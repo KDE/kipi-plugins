@@ -364,7 +364,7 @@ void GPSCorrelatorWidget::slotGPXFilesReadyAt(int beginIndex, int endIndex)
         QTreeWidgetItem* const treeItem = new QTreeWidgetItem(d->gpxFileList);
         treeItem->setText(0, gpxData.url.fileName());
         // TODO: use KDE number formatting
-        treeItem->setText(1, QString::number(gpxData.nPoints));
+        treeItem->setText(1, QString::number(gpxData.gpxDataPoints.count()));
     }
 }
 

@@ -36,10 +36,13 @@ private Q_SLOTS:
 
     void testNoOp();
     void testQDateTimeParsing();
-    void testCustomParsing();
-    void testFileLoadingFunction();
+    void testCustomDateTimeParsing();
+    void testSaxLoader();
+    void testSaxLoaderError();
     void testFileLoading();
     void testInterpolation();
+
+    
 };
 
 #endif /* TEST_GPXPARSING_H */

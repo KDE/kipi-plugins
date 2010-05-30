@@ -38,6 +38,10 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+// local includes
+
+#include "gpsdataparser_p.h"
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -81,129 +85,6 @@ bool GPSDataParser::GPXDataPoint::EarlierThan(const GPXDataPoint& a, const GPXDa
     return a.dateTime < b.dateTime;
 }
 
-GPSDataParser::GPXFileData GPSDataParser::LoadGPXFile(const KUrl& url)
-{
-    // TODO: store some kind of error message
-    GPXFileData parsedData;
-    parsedData.url = url;
-    parsedData.isValid = false;
-
-    QFile gpxfile(url.path());
-
-    if (!gpxfile.open(QIODevice::ReadOnly))
-    {
-        parsedData.loadError = i18n("Failed to open - check permissions!");
-        return parsedData;
-    }
-
-    if (gpxfile.size()==0)
-    {
-        parsedData.loadError = i18n("File is empty!");
-        return parsedData;
-    }
-
-    QDomDocument gpxDoc("gpx");
-    QString parseErrorMsg;
-    int parseErrorLine = 0;
-    int parseErrorColumn = 0;
-    if (!gpxDoc.setContent(&gpxfile, &parseErrorMsg, &parseErrorLine, &parseErrorColumn))
-    {
-        // TODO: make sure the line numbers are correctly formatted!
-        parsedData.loadError = i18n("Parsing error: Line %1, column %2: %3",
-                parseErrorLine,
-                parseErrorColumn,
-                parseErrorMsg);
-
-        return parsedData;
-    }
-
-    QDomElement gpxDocElem = gpxDoc.documentElement();
-    if (gpxDocElem.tagName()!="gpx")
-    {
-        parsedData.loadError = i18n("Could not find a GPX element in the file!");
-        return parsedData;
-    }
-
-    for (QDomNode nTrk = gpxDocElem.firstChild();
-         !nTrk.isNull(); nTrk = nTrk.nextSibling())
-    {
-        QDomElement trkElem = nTrk.toElement();
-        if (trkElem.isNull()) continue;
-        if (trkElem.tagName() != "trk") continue;
-
-        for (QDomNode nTrkseg = trkElem.firstChild();
-            !nTrkseg.isNull(); nTrkseg = nTrkseg.nextSibling())
-        {
-            QDomElement trksegElem = nTrkseg.toElement();
-            if (trksegElem.isNull()) continue;
-            if (trksegElem.tagName() != "trkseg") continue;
-
-            for (QDomNode nTrkpt = trksegElem.firstChild();
-                !nTrkpt.isNull(); nTrkpt = nTrkpt.nextSibling())
-            {
-                QDomElement trkptElem = nTrkpt.toElement();
-                if (trkptElem.isNull()) continue;
-                if (trkptElem.tagName() != "trkpt") continue;
-
-                GPXDataPoint dataPoint;
-
-                // Get GPS position. If not available continue to next point.
-                QString lat = trkptElem.attribute("lat");
-                QString lon = trkptElem.attribute("lon");
-                if (lat.isEmpty() || lon.isEmpty()) continue;
-
-                dataPoint.coordinates.setLatLon(lat.toDouble(), lon.toDouble());
-
-                // Get metadata of track point (altitude and time stamp)
-                for (QDomNode nTrkptMeta = trkptElem.firstChild();
-                    !nTrkptMeta.isNull(); nTrkptMeta = nTrkptMeta.nextSibling())
-                {
-                    QDomElement trkptMetaElem = nTrkptMeta.toElement();
-                    if (trkptMetaElem.isNull()) continue;
-                    if (trkptMetaElem.tagName() == QString("time"))
-                    {
-                        // Get GPS point time stamp. If not available continue to next point.
-                        const QString time = trkptMetaElem.text();
-                        if (time.isEmpty()) continue;
-                        dataPoint.dateTime = ParseTime(time);
-                    }
-                    if (trkptMetaElem.tagName() == QString("ele"))
-                    {
-                        // Get GPS point altitude. If not available continue to next point.
-                        QString ele = trkptMetaElem.text();
-                        if (!ele.isEmpty())
-                            dataPoint.coordinates.setAlt(ele.toDouble());
-                    }
-                }
-
-                if (dataPoint.dateTime.isNull())
-                    continue;
-
-                parsedData.gpxDataPoints << dataPoint;
-                parsedData.nPoints++;
-
-            }
-        }
-    }
-
-//     for (int i=0; i<60000; ++i)
-//     {
-//         parsedData.gpxDataMap.insert(QDateTime(), WMW2::WMWGeoCoordinate());
-//         parsedData.nPoints++;
-//     }
-
-    // the correlation algorithm relies on sorted data, therefore sort now
-    qSort(parsedData.gpxDataPoints.begin(), parsedData.gpxDataPoints.end(), GPSDataParser::GPXDataPoint::EarlierThan);
-
-    parsedData.isValid = parsedData.nPoints > 0;
-    if (!parsedData.isValid)
-    {
-        parsedData.loadError = i18n("File valid, but no datapoints found!");
-    }
-    return parsedData;
-}
-
-
 void GPSDataParser::loadGPXFiles(const KUrl::List& urls)
 {
     d->gpxLoadFutureWatcher = new QFutureWatcher<GPXFileData>(this);
@@ -211,7 +92,7 @@ void GPSDataParser::loadGPXFiles(const KUrl::List& urls)
     connect(d->gpxLoadFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
             this, SLOT(slotGPXFilesReadyAt(int, int)));
 
-    d->gpxLoadFuture = QtConcurrent::mapped(urls, LoadGPXFile);
+    d->gpxLoadFuture = QtConcurrent::mapped(urls, GPXFileReader::loadGPXFile);
     d->gpxLoadFutureWatcher->setFuture(d->gpxLoadFuture);
 
     // results are reported to slotGPXFilesReadyAt
@@ -247,7 +128,7 @@ void GPSDataParser::slotGPXFilesReadyAt(int beginIndex, int endIndex)
     }
 }
 
-QDateTime GPSDataParser::ParseTime(QString timeString)
+QDateTime GPXFileReader::ParseTime(QString timeString)
 {
     if (timeString.isEmpty())
     {
@@ -295,7 +176,7 @@ QDateTime GPSDataParser::ParseTime(QString timeString)
 }
 
 /**
- * @brief GPS-correlated items
+ * @brief GPS-correlate items
  */
 void GPSDataParser::correlate(const GPXCorrelation::List& itemsToCorrelate, const GPXCorrelationOptions& options)
 {
@@ -561,6 +442,176 @@ void GPSDataParser::cancelCorrelation()
     {
         d->thread->doCancel = true;
     }
+}
+
+GPXFileReader::GPXFileReader(GPSDataParser::GPXFileData* const dataTarget)
+: QXmlDefaultHandler(),
+  fileData(dataTarget),
+  currentElementPath(),
+  currentElements(),
+  currentText(),
+  currentDataPoint(),
+  verifyFoundGPXElement(false)
+{
+
+}
+
+/**
+ * @brief The parser found characters
+ */
+bool GPXFileReader::characters(const QString& ch)
+{
+    currentText+= ch;
+    return true;
+}
+
+QString GPXFileReader::myQName(const QString& namespaceURI, const QString& localName)
+{
+    if (namespaceURI=="http://www.topografix.com/GPX/1/0")
+        return "gpx:"+localName;
+
+    return namespaceURI+localName;
+}
+
+bool GPXFileReader::endElement(const QString& namespaceURI, const QString& localName, const QString& qName)
+{
+    Q_UNUSED(qName)
+
+    // we always work with the old path
+    const QString ePath = currentElementPath;
+    const QString eText = currentText;
+    const QString eName = myQName(namespaceURI, localName);
+    currentElements.removeLast();
+    currentText.clear();
+    rebuildElementPath();
+
+    if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt")
+    {
+        if (currentDataPoint.dateTime.isValid()&&currentDataPoint.coordinates.hasCoordinates())
+        {
+            fileData->gpxDataPoints << currentDataPoint;
+        }
+        currentDataPoint = GPSDataParser::GPXDataPoint();
+    }
+    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:time")
+    {
+        currentDataPoint.dateTime = ParseTime(eText.trimmed());
+    }
+    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:ele")
+    {
+        bool haveAltitude = false;
+        const qreal alt = eText.toDouble(&haveAltitude);
+        if (haveAltitude)
+        {
+            currentDataPoint.coordinates.setAlt(alt);
+        }
+    }
+
+    return true;
+}
+
+bool GPXFileReader::startElement(const QString& namespaceURI, const QString& localName, const QString& qName, const QXmlAttributes& atts)
+{
+    Q_UNUSED(qName)
+
+    const QString eName = myQName(namespaceURI, localName);
+    currentElements << eName;
+    rebuildElementPath();
+    const QString& ePath = currentElementPath;
+
+    if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt")
+    {
+        qreal lat;
+        qreal lon;
+        bool haveLat = false;
+        bool haveLon = false;
+
+        for (int i=0; i<atts.count(); ++i)
+        {
+            const QString attName = myQName(atts.uri(i), atts.localName(i));
+            const QString attValue = atts.value(i);
+            if (attName=="lat")
+            {
+                lat = attValue.toDouble(&haveLat);
+            }
+            else if (attName=="lon")
+            {
+                lon = attValue.toDouble(&haveLon);
+            }
+        }
+
+        if (haveLat&&haveLon)
+        {
+            currentDataPoint.coordinates.setLatLon(lat, lon);
+        }
+    }
+    else if (ePath=="gpx:gpx")
+    {
+        verifyFoundGPXElement = true;
+    }
+
+    return true;
+}
+
+void GPXFileReader::rebuildElementPath()
+{
+    currentElementPath = currentElements.join("/");
+}
+
+GPSDataParser::GPXFileData GPXFileReader::loadGPXFile(const KUrl& url)
+{
+    // TODO: store some kind of error message
+    GPSDataParser::GPXFileData parsedData;
+    parsedData.url = url;
+    parsedData.isValid = false;
+
+    QFile file(url.toLocalFile());
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        parsedData.loadError = i18n("Could not open: %1", file.errorString());
+        return parsedData;
+    }
+
+    if (file.size()==0)
+    {
+        parsedData.loadError = i18n("File is empty!");
+        return parsedData;
+    }
+
+    // TODO: load the file
+    GPXFileReader gpxFileReader(&parsedData);
+    QXmlSimpleReader reader;
+    reader.setContentHandler(&gpxFileReader);
+    reader.setErrorHandler(&gpxFileReader);
+
+    QXmlInputSource xmlInputSource(&file);
+
+    // TODO: error handling
+    parsedData.isValid = reader.parse(xmlInputSource);
+    if (!parsedData.isValid)
+    {
+        parsedData.loadError = i18n("Parsing error: %1", gpxFileReader.errorString());
+        return parsedData;
+    }
+
+    parsedData.isValid = !parsedData.gpxDataPoints.isEmpty();
+    if (!parsedData.isValid)
+    {
+        if (!gpxFileReader.verifyFoundGPXElement)
+        {
+            parsedData.loadError = i18n("No GPX element found - probably not a GPX file!");
+        }
+        else
+        {
+            parsedData.loadError = i18n("File is a GPX file, but no datapoints were found!");
+        }
+        return parsedData;
+    }
+
+    // the correlation algorithm relies on sorted data, therefore sort now
+    qSort(parsedData.gpxDataPoints.begin(), parsedData.gpxDataPoints.end(), GPSDataParser::GPXDataPoint::EarlierThan);
+
+    return parsedData;
 }
 
 } // namespace KIPIGPSSyncPlugin

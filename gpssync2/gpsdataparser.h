@@ -119,7 +119,6 @@ public:
         : url(),
           isValid(false),
           loadError(),
-          nPoints(0),
           gpxDataPoints()
         {
         }
@@ -127,7 +126,6 @@ public:
         KUrl url;
         bool isValid;
         QString loadError;
-        int nPoints;
         QList<GPXDataPoint> gpxDataPoints;
     };
 
@@ -150,10 +148,6 @@ Q_SIGNALS:
     void signalAllItemsCorrelated();
     void signalCorrelationCanceled();
 
-protected:
-    static GPXFileData LoadGPXFile(const KUrl& url);
-    static QDateTime ParseTime(QString timeString);
-
 private Q_SLOTS:
     void slotGPXFilesReadyAt(int beginIndex, int endIndex);
     void slotThreadItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
@@ -161,8 +155,6 @@ private Q_SLOTS:
 
 private:
     GPSDataParserPrivate* const d;
-
-    friend class ::TestGPXParsing;
 };
 
 class GPSDataParserThread : public QThread

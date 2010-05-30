@@ -31,6 +31,7 @@
 
 #include "test_gpxparsing.moc"
 #include "../gpsdataparser.h"
+#include "../gpsdataparser_p.h"
 
 using namespace KIPIGPSSyncPlugin;
 
@@ -87,11 +88,11 @@ void TestGPXParsing::testQDateTimeParsing()
 /**
  * @brief Test our custom parsing function
  */
-void TestGPXParsing::testCustomParsing()
+void TestGPXParsing::testCustomDateTimeParsing()
 {
     {
         // this should work as usual:
-        const QDateTime time1 = GPSDataParser::ParseTime("2009-03-11T13:39:55.622Z");
+        const QDateTime time1 = GPXFileReader::ParseTime("2009-03-11T13:39:55.622Z");
         QCOMPARE(time1.timeSpec(), Qt::UTC);
         QCOMPARE(time1.date(), QDate(2009, 03, 11));
         QCOMPARE(time1.time(), QTime(13, 39, 55, 622));
@@ -99,7 +100,7 @@ void TestGPXParsing::testCustomParsing()
 
     {
         // eCoach in N900: 2010-01-14T09:26:02.287+02:00
-        const QDateTime time1 = GPSDataParser::ParseTime("2010-01-14T09:26:02.287+02:00");
+        const QDateTime time1 = GPXFileReader::ParseTime("2010-01-14T09:26:02.287+02:00");
         QCOMPARE(time1.timeSpec(), Qt::UTC);
         QCOMPARE(time1.date(), QDate(2010, 01, 14));
         QCOMPARE(time1.time(), QTime(7, 26, 02, 287));
@@ -107,7 +108,7 @@ void TestGPXParsing::testCustomParsing()
 
     {
         // test negative time zone offset: 2010-01-14T09:26:02.287+02:00
-        const QDateTime time1 = GPSDataParser::ParseTime("2010-01-14T09:26:02.287-02:00");
+        const QDateTime time1 = GPXFileReader::ParseTime("2010-01-14T09:26:02.287-02:00");
         QCOMPARE(time1.timeSpec(), Qt::UTC);
         QCOMPARE(time1.date(), QDate(2010, 01, 14));
         QCOMPARE(time1.time(), QTime(11, 26, 02, 287));
@@ -115,29 +116,10 @@ void TestGPXParsing::testCustomParsing()
 
     {
         // test negative time zone offset with minutes: 2010-01-14T09:26:02.287+03:15
-        const QDateTime time1 = GPSDataParser::ParseTime("2010-01-14T09:26:02.287-03:15");
+        const QDateTime time1 = GPXFileReader::ParseTime("2010-01-14T09:26:02.287-03:15");
         QCOMPARE(time1.timeSpec(), Qt::UTC);
         QCOMPARE(time1.date(), QDate(2010, 01, 14));
         QCOMPARE(time1.time(), QTime(12, 41, 02, 287));
-    }
-}
-
-/**
- * @brief Test loading of gpx files via GPSDataParser::LoadGPXFile
- */
-void TestGPXParsing::testFileLoadingFunction()
-{
-    KUrl testDataDir = GetTestDataDirectory();
-
-    const KUrl gpxFileUrl = KUrl(testDataDir, "gpxfile-1.gpx");
-
-    GPSDataParser::GPXFileData myFileData = GPSDataParser::LoadGPXFile(gpxFileUrl);
-    QVERIFY(myFileData.isValid);
-
-    // verify that the points are sorted by date:
-    for (int i = 1; i<myFileData.gpxDataPoints.count(); ++i)
-    {
-        QVERIFY(GPSDataParser::GPXDataPoint::EarlierThan(myFileData.gpxDataPoints.at(i-1), myFileData.gpxDataPoints.at(i)));
     }
 }
 
@@ -146,7 +128,7 @@ void TestGPXParsing::testFileLoadingFunction()
  */
 void TestGPXParsing::testFileLoading()
 {
-    KUrl testDataDir = GetTestDataDirectory();
+    const KUrl testDataDir = GetTestDataDirectory();
 
     KUrl::List fileList;
     fileList << KUrl(testDataDir, "gpxfile-1.gpx");
@@ -174,7 +156,7 @@ void TestGPXParsing::testFileLoading()
     GPSDataParser::GPXCorrelation::List itemsToCorrelate;
     {
         GPSDataParser::GPXCorrelation myItem;
-        myItem.dateTime = GPSDataParser::ParseTime("2009-07-26T18:00:00Z");
+        myItem.dateTime = GPXFileReader::ParseTime("2009-07-26T18:00:00Z");
         itemsToCorrelate << myItem;
     }
 
@@ -204,7 +186,7 @@ void TestGPXParsing::testFileLoading()
  */
 void TestGPXParsing::testInterpolation()
 {
-    KUrl testDataDir = GetTestDataDirectory();
+    const KUrl testDataDir = GetTestDataDirectory();
 
     KUrl::List fileList;
     fileList << KUrl(testDataDir, "gpxfile-1.gpx");
@@ -232,7 +214,7 @@ void TestGPXParsing::testInterpolation()
     GPSDataParser::GPXCorrelation::List itemsToCorrelate;
     {
         GPSDataParser::GPXCorrelation myItem;
-        myItem.dateTime = GPSDataParser::ParseTime("2009-11-29T17:00:30Z");
+        myItem.dateTime = GPXFileReader::ParseTime("2009-11-29T17:00:30Z");
         itemsToCorrelate << myItem;
     }
 
@@ -257,4 +239,51 @@ void TestGPXParsing::testInterpolation()
     KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
     QCOMPARE(myCorrelatedItems.first().coordinates, WMW2::WMWGeoCoordinate::fromGeoUrl("geo:17.5,0.5,3"));
+}
+
+/**
+ * @brief Test loading of a GPX file directly
+ */
+void TestGPXParsing::testSaxLoader()
+{
+    const KUrl testDataDir = GetTestDataDirectory();
+
+    GPSDataParser::GPXFileData fileData = GPXFileReader::loadGPXFile(KUrl(testDataDir, "gpxfile-1.gpx"));
+    QVERIFY(fileData.isValid);
+    QVERIFY(fileData.loadError.isEmpty());
+
+    // verify that the points are sorted by date:
+    for (int i = 1; i<fileData.gpxDataPoints.count(); ++i)
+    {
+        QVERIFY(GPSDataParser::GPXDataPoint::EarlierThan(fileData.gpxDataPoints.at(i-1), fileData.gpxDataPoints.at(i)));
+    }
+}
+
+/**
+ * @brief Test loading of invalid GPX files
+ */
+void TestGPXParsing::testSaxLoaderError()
+{
+    const KUrl testDataDir = GetTestDataDirectory();
+
+    {
+        GPSDataParser::GPXFileData fileData = GPXFileReader::loadGPXFile(KUrl(testDataDir, "gpx-invalid-empty.gpx"));
+        QVERIFY(!fileData.isValid);
+        QVERIFY(!fileData.loadError.isEmpty());
+        kDebug()<<fileData.loadError;
+    }
+
+    {
+        GPSDataParser::GPXFileData fileData = GPXFileReader::loadGPXFile(KUrl(testDataDir, "gpx-invalid-xml-error.gpx"));
+        QVERIFY(!fileData.isValid);
+        QVERIFY(!fileData.loadError.isEmpty());
+        kDebug()<<fileData.loadError;
+    }
+
+    {
+        GPSDataParser::GPXFileData fileData = GPXFileReader::loadGPXFile(KUrl(testDataDir, "gpx-invalid-no-points.gpx"));
+        QVERIFY(!fileData.isValid);
+        QVERIFY(!fileData.loadError.isEmpty());
+        kDebug()<<fileData.loadError;
+    }
 }

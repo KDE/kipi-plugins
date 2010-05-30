@@ -3,9 +3,6 @@ gpssync parts:
 - read dilution of precision data and add warnings
 - add undo/redo buttons
 - make the coordinates of the images editable
-- add copy/paste of coordinates
-- add bookmark system
-- using QDomDocument to read the GPX files takes up huge amounts of RAM (5 MB GPX takes up 200 MB of RAM here), this is especially problematic if several cores are used. Maybe switch to a SAX-like parsing system?
 - disable closing while a thread is running
 - save the column ordering
 - sorting of the images
@@ -27,3 +24,6 @@ done:
 - add thumbnail size button
 - the displayed thumbnail is not correctly picked by sort order, but changes as the grouping changes (seems fixed)
 - add interpolation
+- using QDomDocument to read the GPX files takes up huge amounts of RAM (5 MB GPX takes up 200 MB of RAM here), this is especially problematic if several cores are used. Maybe switch to a SAX-like parsing system?
+- add copy/paste of coordinates
+- add bookmark system
