@@ -164,11 +164,11 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
     QSpacerItem* spacer = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QLabel* tagsLbl = new QLabel(i18n("Tag path behaviour:"), optionsBox);
+    QLabel* tagsLbl = new QLabel(i18n("Tag path behavior:"), optionsBox);
 
     QRadioButton* leafTagsBtn = new QRadioButton(i18n("Leaf tags only"), optionsBox);
     leafTagsBtn->setWhatsThis(
-        i18n("Export only the leaf tags of tag hierachies"));
+        i18n("Export only the leaf tags of tag hierarchies"));
     QRadioButton* splitTagsBtn = new QRadioButton(i18n("Split tags"), optionsBox);
     splitTagsBtn->setWhatsThis(
         i18n("Export the leaf tag and all ancestors as single tags."));
