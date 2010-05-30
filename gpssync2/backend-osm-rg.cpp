@@ -53,6 +53,9 @@ public:
     }
     
     int counter;
+    int itemCounter;
+    int itemCount;
+    QString wantedLanguage;
     QList<OsmInternalJobs> jobs;
 
 };
@@ -60,7 +63,7 @@ public:
 BackendOsmRG::BackendOsmRG(QObject* const parent)
 : RGBackend(parent), d(new BackendOsmRGPrivate())
 {
-    
+    d->wantedLanguage = "en";
     
 }
 
@@ -71,6 +74,34 @@ BackendOsmRG::~BackendOsmRG()
 
 void BackendOsmRG::nextPhoto()
 {
+    int endValue;
+
+    if(d->itemCounter + 5 > d->itemCount){
+        endValue = d->itemCount % 5;
+    }
+    else{
+        endValue = 5;
+    }
+
+    for(int i = 0; i < endValue; ++i){
+
+        KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
+        jobUrl.addQueryItem("format", "xml");
+        jobUrl.addQueryItem("lat", d->jobs[d->itemCounter + i].request.coordinates.latString());
+        jobUrl.addQueryItem("lon", d->jobs[d->itemCounter + i].request.coordinates.lonString());
+        jobUrl.addQueryItem("zoom", "18");
+        jobUrl.addQueryItem("addressdetails", "1");
+        jobUrl.addQueryItem("accept-language", d->wantedLanguage);
+
+        d->jobs[d->itemCounter + i].kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
+
+        
+        connect(d->jobs[d->itemCounter + i].kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+                this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
+        connect(d->jobs[d->itemCounter + i].kioJob, SIGNAL(result(KJob*)),
+                this, SLOT(slotResult(KJob*)));    
+        
+    }
 
 }
 
@@ -78,33 +109,23 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 {
 
     //TODO: Remove dublicates from rgList to mergedQuery
+    kDebug()<<"Entering OSM backend";
     QList<RGInfo> mergedQuery = rgList;
+    d->itemCount = mergedQuery.count();
+    d->itemCounter = 0;
+    d->wantedLanguage = language;
 
     for( int i = 0; i < mergedQuery.count(); i++){
 
         OsmInternalJobs newJob;
         newJob.request = mergedQuery.at(i);
-  
-        KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
-        jobUrl.addQueryItem("format", "xml");
-        jobUrl.addQueryItem("lat", mergedQuery.at(i).coordinates.latString());
-        jobUrl.addQueryItem("lon", mergedQuery.at(i).coordinates.lonString());
-        jobUrl.addQueryItem("zoom", "18");
-        jobUrl.addQueryItem("addressdetails", "1");
-        jobUrl.addQueryItem("accept-language", language);
 
-        newJob.kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->jobs<<newJob;
         d->jobs[i].kioJob = newJob.kioJob;
 
 
-        connect(newJob.kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
-                this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
-        connect(newJob.kioJob, SIGNAL(result(KJob*)),
-                this, SLOT(slotResult(KJob*)));    
-    
-
     }
+    nextPhoto();
 
 }
 
@@ -173,20 +194,19 @@ void BackendOsmRG::slotResult(KJob* kJob)
             dataString.remove(0,pos);
 
             d->jobs[i].request.rgData = makeQMapFromXML(dataString);
-/*
-            QMap<QString, QString>::const_iterator it = d->jobs[i].request.rgData.constBegin();
-
-            while( it != d->jobs[i].request.rgData.constEnd() ){
-
-                kDebug()<<it.key()<< ":"<< it.value();
-                ++it;
-
-            }
-*/
 
             emit(signalRGReady(QList<RGInfo>()<<d->jobs.at(i).request));
 
-            d->jobs.removeAt(i);
+            //d->jobs.removeAt(i);
+
+            d->itemCounter++;
+            if((d->itemCounter % 5 == 0) && (d->itemCounter < d->itemCount)){
+                nextPhoto();
+            }
+            else if(d->itemCounter == d->itemCount){
+                d->jobs.clear();
+            }
+
 
             break;
         }

@@ -295,7 +295,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     KVBox* vboxTabBar = new KVBox(hboxMain);
     vboxTabBar->layout()->setSpacing(0);
     vboxTabBar->layout()->setMargin(0);
-    d->tabBar = new QTabBar(vboxTabBar);
+   
+     d->tabBar = new QTabBar(vboxTabBar);
     d->tabBar->setShape(QTabBar::RoundedEast);
 
     dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);

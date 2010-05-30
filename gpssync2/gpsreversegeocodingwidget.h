@@ -74,15 +74,11 @@ public:
     void setUIEnabled(const bool state);
 
 private:
-//    QMap<QString, QString> makeQMap(QString);
-//    void runRGScript(QList<RGInfo>);
 
 private Q_SLOTS:
-//    void slotHTMLInitialized();
-//    void slotHTMLEvents( const QStringList& );
     void slotButtonRGSelected();
     void slotRGReady(QList<RGInfo>&);
-//    void nextPhoto();
+    void slotHideOptions();
 
 Q_SIGNALS:
 
@@ -92,7 +88,6 @@ Q_SIGNALS:
     void signalProgressChanged(const int currentProgress);
     void signalUndoCommand(GPSUndoCommand* undoCommand);
 
-//    void signalRGReady(QList<RGInfo>&);
 private:
 
     GPSReverseGeocodingWidgetPrivate* const d;    

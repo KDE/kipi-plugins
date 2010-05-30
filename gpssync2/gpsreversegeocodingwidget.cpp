@@ -33,6 +33,8 @@
 #include <QMap>
 #include <QTimer>
 #include <QLineEdit>
+#include <QHBoxLayout>
+#include <QCheckBox>
 
 // KDE includes
 
@@ -42,6 +44,8 @@
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <kvbox.h>
+#include <kcombobox.h>
+#include <kseparator.h>
 
 //local includes
 
@@ -66,18 +70,26 @@ public:
     {
     }
 
+    bool hideOptions;
     QLabel *label;
     KipiImageModel* imageModel;
     QItemSelectionModel* selectionModel;
     QPushButton* buttonRGSelected;
+    QString wantedLanguage;
 
-
-    QLineEdit *textEdit;
+    
+    KComboBox* serviceComboBox;
+    QLineEdit *languageEdit;
     QList<RGInfo> photoList;
-    //RGBackend* backendRG;
     QList<RGBackend*> backendRGList;
     int requestedRGCount;
     int receivedRGCount;
+    QCheckBox *country, *state, *county, *city, *district, *street, *streetNumber;
+    QLineEdit* baseTagEdit;
+    QPushButton* buttonHideOptions;
+    QCheckBox *autoTag;
+    QCheckBox *iptc, *xmpLoc, *xmpKey;
+    QWidget* UGridContainer;
 };
 
 
@@ -88,28 +100,114 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->imageModel = imageModel;
     d->selectionModel = selectionModel;
 
-    QSplitter *splitter = new QSplitter(Qt::Vertical,this);
-    splitter->resize(300,100);
+    d->wantedLanguage = "EN";
 
-
-    KVBox* const vbox = new KVBox(splitter);
-    splitter->addWidget(vbox);
-
-    d->textEdit = new QLineEdit(vbox);
+    KVBox* const vbox = new KVBox(this);
+    vbox->resize(350,400);
+    vbox->layout()->setSpacing(0);
+    vbox->layout()->setMargin(0);
     
-    d->buttonRGSelected = new QPushButton(i18n("RG selected image"), vbox);
+    d->UGridContainer = new QWidget(vbox);
+    d->UGridContainer->resize(350,400);
     
+    QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
-    d->backendRGList.append(new BackendGoogleRG(this));
+    QLabel* languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
+    d->languageEdit = new QLineEdit(d->UGridContainer);
+
+    QLabel* serviceLabel = new QLabel(i18n("Select service:"), d->UGridContainer);
+    d->serviceComboBox = new KComboBox(d->UGridContainer);
+
+    d->serviceComboBox->addItem(i18n("Geonames.org"));
+    d->serviceComboBox->addItem(i18n("Open Street Map"));
+
+    QLabel* addressElemLabel = new QLabel(i18n("Select address elements"), d->UGridContainer);
+    QWidget* addressElemContainer = new QWidget(d->UGridContainer);
+    QGridLayout* addressElemLayout = new QGridLayout(addressElemContainer);
+    
+    d->country = new QCheckBox( i18n("Country"),addressElemContainer );
+    d->state = new QCheckBox( i18n("State"),addressElemContainer );
+    d->county = new QCheckBox( i18n("County"),addressElemContainer );
+    d->city = new QCheckBox( i18n("City"),addressElemContainer );
+    d->district = new QCheckBox( i18n("District"),addressElemContainer );
+    d->street = new QCheckBox( i18n("Street"),addressElemContainer );
+    d->streetNumber = new QCheckBox( i18n("Street Nb."),addressElemContainer );
+   
+    addressElemLayout->addWidget(d->country, 0,0,1,1);
+    addressElemLayout->addWidget(d->state, 0,1,1,1);
+    addressElemLayout->addWidget(d->county, 0,2,1,1);
+    addressElemLayout->addWidget(d->city, 0,3,1,1);
+    addressElemLayout->addWidget(d->district, 1,0,1,1);
+    addressElemLayout->addWidget(d->street, 1,1,1,1);
+    addressElemLayout->addWidget(d->streetNumber, 1,2,1,1);
+
+    addressElemContainer->setLayout(addressElemLayout);    
+
+    QLabel* baseTagLabel = new QLabel(i18n("Select base tag:"), d->UGridContainer);
+    d->baseTagEdit = new QLineEdit(d->UGridContainer);
+
+
+
+    int row = 0;
+    gridLayout->addWidget(serviceLabel,row,0,1,1);
+    gridLayout->addWidget(d->serviceComboBox,row,1,1,1); 
+    row++;
+    gridLayout->addWidget(addressElemLabel,row,0,1,2);
+    row++;
+    gridLayout->addWidget(addressElemContainer, row,0,1,2);
+    row++;
+    gridLayout->addWidget(languageLabel,row,0,1,1);
+    gridLayout->addWidget(d->languageEdit,row,1,1,1);
+    row++;
+    gridLayout->addWidget(baseTagLabel,row,0,1,2);
+    row++;
+    gridLayout->addWidget(d->baseTagEdit, row, 0,1,2);
+
+    d->UGridContainer->setLayout(gridLayout);
+
+    d->buttonHideOptions = new QPushButton(i18n("More options/Less options"), vbox);
+    d->hideOptions = true;
+
+    KSeparator* const separator = new KSeparator(Qt::Horizontal, vbox);
+
+    QWidget* LGridContainer = new QWidget(vbox);
+    LGridContainer->resize(350,400);
+    QGridLayout* LGridLayout = new QGridLayout(LGridContainer);
+       
+    d->autoTag = new QCheckBox("Tag automatically when coordinates are changed", LGridContainer);
+
+    QLabel* metadataLabel = new QLabel( i18n("Write tags to:"),LGridContainer); 
+
+    d->iptc = new QCheckBox( i18n("IPTC"), LGridContainer);
+    d->xmpLoc = new QCheckBox( i18n("XMP location"), LGridContainer);
+    d->xmpKey = new QCheckBox( i18n("XMP keywords"), LGridContainer);
+
+    row = 0;
+    LGridLayout->addWidget(d->autoTag, row,0,1,3);
+    row++;
+    LGridLayout->addWidget(metadataLabel, row,0,1,3);
+    row++;
+    LGridLayout->addWidget(d->iptc,row,0,1,3);
+    row++;
+    LGridLayout->addWidget(d->xmpLoc,row,0,1,3);
+    row++;
+    LGridLayout->addWidget(d->xmpKey, row,0,1,3);
+
+    LGridContainer->setLayout(LGridLayout);
+
+    d->buttonRGSelected = new QPushButton(i18n("Apply reverse geocoding"), vbox);
+    
+    dynamic_cast<QVBoxLayout*>(vbox->layout())->addStretch(300); 
+
+    //d->backendRGList.append(new BackendGoogleRG(this));
     d->backendRGList.append(new BackendGeonamesRG(this));
     d->backendRGList.append(new BackendOsmRG(this));
 
-    //d->backendRG = new BackendGoogleRG(this);    
-    //d->backendRG = new BackendGeonamesRG(this);
-    //d->backendRG = new BackendOsmRG(this);
-
     connect(d->buttonRGSelected, SIGNAL(clicked()),
             this, SLOT(slotButtonRGSelected()));
+
+    connect(d->buttonHideOptions, SIGNAL(clicked()),
+            this, SLOT(slotHideOptions()));
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
@@ -130,9 +228,11 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 {
     // get the selected image:
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
-    
+    int backendIndex = d->serviceComboBox->currentIndex(); 
+
+
     QList<RGInfo> photoList;
-    const QString wanted_language = d->textEdit->displayText();
+    d->wantedLanguage = d->languageEdit->displayText();
 
     for( int i = 0; i < selectedItems.count(); ++i){
 
@@ -160,16 +260,32 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
         d->requestedRGCount = photoList.count();
         emit(signalProgressSetup(d->requestedRGCount, i18n("Retrieving RG info - %p%")));
         emit(signalSetUIEnabled(false));
-        d->backendRGList[1]->callRGBackend(photoList, wanted_language);
+
+
+        d->backendRGList[backendIndex]->callRGBackend(photoList, d->wantedLanguage);
     }
 }
 
+void GPSReverseGeocodingWidget::slotHideOptions()
+{
+
+    if(d->hideOptions){
+        d->UGridContainer->hide();
+        d->hideOptions = false;
+    }
+    else{
+        d->UGridContainer->show();
+        d->hideOptions = true;
+    }
+
+}
 
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
 
+    //TODO: filter the results using checkboxes from UI
+
     QString address;
-  //  QMessageBox msg;
     for(int i = 0; i < returnedRGList.count(); ++i){
 
         address = "";
@@ -183,8 +299,6 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
         }
 	    kDebug()<<"Address "<<returnedRGList[i].id<<" coord:"<<returnedRGList[i].coordinates.latString()<<"    "<<address;
-    //    msg.setText(QString("Photo ID: %1 , Address: %2").arg(returnedRGList[i].id.toInt()).arg(address));
-   //     msg.exec();
     
 
     }
