@@ -48,6 +48,7 @@
                 <fix>2d</fix>
                 <sat>3</sat>
                 <sym>Dot</sym>
+                <hdop>2.5</hdop>
         </trkpt>
 
         <trkpt lat="14.00" lon="0.00">
@@ -91,6 +92,7 @@
                 <fix>2d</fix>
                 <sat>3</sat>
                 <sym>Dot</sym>
+                <hdop>4</hdop>
         </trkpt>
         <trkpt lat="18.00" lon="1.00">
                 <ele>4</ele>
@@ -98,6 +100,7 @@
                 <fix>2d</fix>
                 <sat>3</sat>
                 <sym>Dot</sym>
+                <hdop>3</hdop>
         </trkpt>
     </trkseg>
 </trk>

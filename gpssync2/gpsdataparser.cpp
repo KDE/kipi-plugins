@@ -362,6 +362,9 @@ void GPSDataParserThread::run()
                 const GPSDataParser::GPXDataPoint& dataPoint = fileList.at(indexToUse.first).gpxDataPoints.at(indexToUse.second);
                 correlatedData.coordinates = dataPoint.coordinates;
                 correlatedData.flags = static_cast<GPSDataParser::GPXFlags>(correlatedData.flags|GPSDataParser::GPXFlagCoordinates);
+
+                correlatedData.nSatellites = dataPoint.nSatellites;
+                correlatedData.hDop = dataPoint.hDop;
             }
         }
         else
@@ -496,6 +499,20 @@ bool GPXFileReader::endElement(const QString& namespaceURI, const QString& local
     else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:time")
     {
         currentDataPoint.dateTime = ParseTime(eText.trimmed());
+    }
+    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:sat")
+    {
+        bool okay = false;
+        int nSatellites = eText.toInt(&okay);
+        if (okay&&(nSatellites>=0))
+            currentDataPoint.nSatellites = nSatellites;
+    }
+    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:hdop")
+    {
+        bool okay = false;
+        qreal hDop = eText.toDouble(&okay);
+        if (okay)
+            currentDataPoint.hDop = hDop;
     }
     else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:ele")
     {

@@ -8,6 +8,7 @@ gpssync parts:
 - sorting of the images
 - fix scroll-wheel interaction of the tabs
 - when resizing the widget horizontally, the star moves back and forth
+- add a tab for forward-geocoding
 
 wmw2 parts:
 - control over clustering grid size (UI)

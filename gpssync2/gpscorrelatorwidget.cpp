@@ -525,6 +525,10 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
             const GPSDataContainer oldData = imageItem->gpsData();
             GPSDataContainer newData = oldData;
             newData.setCoordinates(itemCorrelation.coordinates);
+            if (itemCorrelation.nSatellites>=0)
+                newData.setNSatellites(itemCorrelation.nSatellites);
+            if (itemCorrelation.hDop>=0)
+                newData.setHDop(itemCorrelation.hDop);
             imageItem->setGPSData(newData);
 
             d->correlationUndoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));

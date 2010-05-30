@@ -61,11 +61,17 @@ public:
     {
     public:
         GPXDataPoint()
+        : dateTime(),
+          coordinates(),
+          nSatellites(-1),
+          hDop(-1)
         {
         }
 
         QDateTime dateTime;
         WMW2::WMWGeoCoordinate coordinates;
+        int nSatellites;
+        qreal hDop;
 
         static bool EarlierThan(const GPXDataPoint& a, const GPXDataPoint& b);
 
@@ -78,6 +84,8 @@ public:
         GPXCorrelation()
         : dateTime(),
           userData(),
+          nSatellites(-1),
+          hDop(-1),
           flags(),
           coordinates()
         {
@@ -87,6 +95,8 @@ public:
 
         QDateTime dateTime;
         QVariant userData;
+        int nSatellites;
+        qreal hDop;
         GPXFlags flags;
         WMW2::WMWGeoCoordinate coordinates;
     };

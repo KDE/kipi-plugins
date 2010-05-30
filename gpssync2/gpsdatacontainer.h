@@ -58,13 +58,15 @@ public:
         HasCoordinates = 1,
         HasAltitude = 2,
         HasIsInterpolated = 4,
-        HasNSatellites = 8
+        HasNSatellites = 8,
+        HasHDop = 16
     };
     Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
 
     HasFlags m_hasFlags;
     WMW2::WMWGeoCoordinate m_coordinates;
     int m_nSatellites;
+    qreal m_hDop;
 
     void setCoordinates(const WMW2::WMWGeoCoordinate& coordinates)
     {
@@ -85,6 +87,30 @@ public:
         {
             m_hasFlags&=~HasAltitude;
         }
+
+        clearNonCoordinates();
+    }
+
+    bool hasHDop() const
+    {
+        return m_hasFlags.testFlag(HasHDop);
+    }
+
+    bool hasNSatellites() const
+    {
+        return m_hasFlags.testFlag(HasNSatellites);
+    }
+
+    void clearNonCoordinates()
+    {
+        m_hasFlags&=(~HasNSatellites);
+        m_hasFlags&=(~HasHDop);
+    }
+
+    void setHDop(const qreal hDop)
+    {
+        m_hDop = hDop;
+        m_hasFlags|=HasHDop;
     }
 
     void setAltitude(const qreal alt)
@@ -93,11 +119,18 @@ public:
         m_hasFlags|=HasAltitude;
     }
 
-
     void setLatLon(const qreal lat, const qreal lon)
     {
         m_coordinates.setLatLon(lat, lon);
         m_hasFlags|=HasCoordinates;
+
+        clearNonCoordinates();
+    }
+
+    void setNSatellites(const int nSatellites)
+    {
+        m_nSatellites = nSatellites;
+        m_hasFlags|=HasNSatellites;
     }
 
     void clear()

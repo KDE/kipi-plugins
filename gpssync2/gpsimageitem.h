@@ -40,8 +40,10 @@ public:
     static const int ColumnLatitude = ColumnKipiImageItemCount + 0;
     static const int ColumnLongitude = ColumnKipiImageItemCount + 1;
     static const int ColumnAltitude = ColumnKipiImageItemCount + 2;
-    static const int ColumnStatus = ColumnKipiImageItemCount + 3;
-    static const int ColumnGPSImageItemCount = ColumnKipiImageItemCount + 4;
+    static const int ColumnHDOP = ColumnKipiImageItemCount + 3;
+    static const int ColumnNSatellites = ColumnKipiImageItemCount + 4;
+    static const int ColumnStatus = ColumnKipiImageItemCount + 5;
+    static const int ColumnGPSImageItemCount = ColumnKipiImageItemCount + 6;
 
     GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~GPSImageItem();

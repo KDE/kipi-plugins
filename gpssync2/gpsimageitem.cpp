@@ -104,21 +104,35 @@ QVariant GPSImageItem::data(const int column, const int role) const
         if (!m_gpsData.m_coordinates.hasLatitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.lat());
+        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.lat(), 7);
     }
     else if ((column==ColumnLongitude)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.m_coordinates.hasLongitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.lon());
+        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.lon(), 7);
     }
     else if ((column==ColumnAltitude)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.m_coordinates.hasAltitude())
             return QString();
-    
+
         return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.alt());
+    }
+    else if ((column==ColumnHDOP)&&(role==Qt::DisplayRole))
+    {
+        if (!m_gpsData.hasHDop())
+            return QString();
+
+        return KGlobal::locale()->formatNumber(m_gpsData.m_hDop);
+    }
+    else if ((column==ColumnNSatellites)&&(role==Qt::DisplayRole))
+    {
+        if (!m_gpsData.hasNSatellites())
+            return QString();
+
+        return KGlobal::locale()->formatNumber(m_gpsData.m_nSatellites, 0);
     }
     else if ((column==ColumnStatus)&&(role==Qt::DisplayRole))
     {
@@ -166,6 +180,8 @@ void GPSImageItem::setHeaderData(KipiImageModel* const model)
     model->setHeaderData(ColumnLatitude, Qt::Horizontal, i18n("Latitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnLongitude, Qt::Horizontal, i18n("Longitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnAltitude, Qt::Horizontal, i18n("Altitude"), Qt::DisplayRole);
+    model->setHeaderData(ColumnHDOP, Qt::Horizontal, i18n("HDOP"), Qt::DisplayRole);
+    model->setHeaderData(ColumnNSatellites, Qt::Horizontal, i18n("# satellites"), Qt::DisplayRole);
     model->setHeaderData(ColumnStatus, Qt::Horizontal, i18n("Status"), Qt::DisplayRole);
 }
 
@@ -224,6 +240,7 @@ QString GPSImageItem::saveChanges()
         if (shouldWriteCoordinates)
         {
             // TODO: write the altitude only if we have it
+            // TODO: write HDOP and #satellites
             success = exiv2Iface->setGPSInfo(altitude, latitude, longitude);
             if (!success)
             {
