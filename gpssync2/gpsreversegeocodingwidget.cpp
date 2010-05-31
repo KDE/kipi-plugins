@@ -90,6 +90,7 @@ public:
     QCheckBox *autoTag;
     QCheckBox *iptc, *xmpLoc, *xmpKey;
     QWidget* UGridContainer;
+    QWidget* LGridContainer;
 };
 
 
@@ -121,7 +122,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->serviceComboBox->addItem(i18n("Geonames.org"));
     d->serviceComboBox->addItem(i18n("Open Street Map"));
 
-    QLabel* addressElemLabel = new QLabel(i18n("Select address elements"), d->UGridContainer);
+    QLabel* addressElemLabel = new QLabel(i18n("Select address elements:"), d->UGridContainer);
     QWidget* addressElemContainer = new QWidget(d->UGridContainer);
     QGridLayout* addressElemLayout = new QGridLayout(addressElemContainer);
     
@@ -165,22 +166,22 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
 
     d->UGridContainer->setLayout(gridLayout);
 
+    KSeparator* const separator = new KSeparator(Qt::Horizontal, vbox);
     d->buttonHideOptions = new QPushButton(i18n("More options/Less options"), vbox);
     d->hideOptions = true;
 
-    KSeparator* const separator = new KSeparator(Qt::Horizontal, vbox);
 
-    QWidget* LGridContainer = new QWidget(vbox);
-    LGridContainer->resize(350,400);
-    QGridLayout* LGridLayout = new QGridLayout(LGridContainer);
+    d->LGridContainer = new QWidget(vbox);
+    d->LGridContainer->resize(350,400);
+    QGridLayout* LGridLayout = new QGridLayout(d->LGridContainer);
        
-    d->autoTag = new QCheckBox("Tag automatically when coordinates are changed", LGridContainer);
+    d->autoTag = new QCheckBox("Tag automatically when coordinates are changed", d->LGridContainer);
 
-    QLabel* metadataLabel = new QLabel( i18n("Write tags to:"),LGridContainer); 
+    QLabel* metadataLabel = new QLabel( i18n("Write tags to:"),d->LGridContainer); 
 
-    d->iptc = new QCheckBox( i18n("IPTC"), LGridContainer);
-    d->xmpLoc = new QCheckBox( i18n("XMP location"), LGridContainer);
-    d->xmpKey = new QCheckBox( i18n("XMP keywords"), LGridContainer);
+    d->iptc = new QCheckBox( i18n("IPTC"), d->LGridContainer);
+    d->xmpLoc = new QCheckBox( i18n("XMP location"), d->LGridContainer);
+    d->xmpKey = new QCheckBox( i18n("XMP keywords"), d->LGridContainer);
 
     row = 0;
     LGridLayout->addWidget(d->autoTag, row,0,1,3);
@@ -193,10 +194,16 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     row++;
     LGridLayout->addWidget(d->xmpKey, row,0,1,3);
 
-    LGridContainer->setLayout(LGridLayout);
+    d->LGridContainer->setLayout(LGridLayout);
 
     d->buttonRGSelected = new QPushButton(i18n("Apply reverse geocoding"), vbox);
     
+    if(!d->selectionModel->hasSelection()){
+
+        d->buttonRGSelected->setEnabled(false);
+
+    }
+
     dynamic_cast<QVBoxLayout*>(vbox->layout())->addStretch(300); 
 
     //d->backendRGList.append(new BackendGoogleRG(this));
@@ -209,6 +216,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     connect(d->buttonHideOptions, SIGNAL(clicked()),
             this, SLOT(slotHideOptions()));
 
+    connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
+            this, SLOT(updateUIState()));
+
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
         connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
@@ -216,7 +226,18 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     }
 }
 
+void GPSReverseGeocodingWidget::updateUIState()
+{
 
+    if(d->selectionModel->hasSelection()){
+        d->buttonRGSelected->setEnabled(true);
+
+    }
+    else{
+        d->buttonRGSelected->setEnabled(false);
+    }
+
+}
 
 GPSReverseGeocodingWidget::~GPSReverseGeocodingWidget()
 {
@@ -270,11 +291,11 @@ void GPSReverseGeocodingWidget::slotHideOptions()
 {
 
     if(d->hideOptions){
-        d->UGridContainer->hide();
+        d->LGridContainer->hide();
         d->hideOptions = false;
     }
     else{
-        d->UGridContainer->show();
+        d->LGridContainer->show();
         d->hideOptions = true;
     }
 

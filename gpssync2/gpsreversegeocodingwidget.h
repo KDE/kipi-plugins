@@ -79,6 +79,7 @@ private Q_SLOTS:
     void slotButtonRGSelected();
     void slotRGReady(QList<RGInfo>&);
     void slotHideOptions();
+    void updateUIState();
 
 Q_SIGNALS:
 

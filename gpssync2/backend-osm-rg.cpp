@@ -188,7 +188,11 @@ void BackendOsmRG::slotResult(KJob* kJob)
 
         if(d->jobs.at(i).kioJob == kioJob){
 
-            QString dataString(d->jobs.at(i).data);
+            //QString dataString(d->jobs.at(i).data);
+
+            QString dataString;
+            dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
+
 
             int pos = dataString.indexOf("<reversegeocode");
             dataString.remove(0,pos);
