@@ -71,6 +71,7 @@ public:
     }
 
     bool hideOptions;
+    bool UIEnabled;
     QLabel *label;
     KipiImageModel* imageModel;
     QItemSelectionModel* selectionModel;
@@ -100,6 +101,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
 
     d->imageModel = imageModel;
     d->selectionModel = selectionModel;
+    
+    d->UIEnabled = true;
 
     d->wantedLanguage = "EN";
 
@@ -167,7 +170,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->UGridContainer->setLayout(gridLayout);
 
     KSeparator* const separator = new KSeparator(Qt::Horizontal, vbox);
-    d->buttonHideOptions = new QPushButton(i18n("More options/Less options"), vbox);
+    d->buttonHideOptions = new QPushButton(i18n("Less options"), vbox);
     d->hideOptions = true;
 
 
@@ -197,18 +200,15 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->LGridContainer->setLayout(LGridLayout);
 
     d->buttonRGSelected = new QPushButton(i18n("Apply reverse geocoding"), vbox);
-    
-    if(!d->selectionModel->hasSelection()){
-
-        d->buttonRGSelected->setEnabled(false);
-
-    }
 
     dynamic_cast<QVBoxLayout*>(vbox->layout())->addStretch(300); 
 
     //d->backendRGList.append(new BackendGoogleRG(this));
     d->backendRGList.append(new BackendGeonamesRG(this));
     d->backendRGList.append(new BackendOsmRG(this));
+
+    
+    updateUIState();
 
     connect(d->buttonRGSelected, SIGNAL(clicked()),
             this, SLOT(slotButtonRGSelected()));
@@ -228,14 +228,16 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
 
 void GPSReverseGeocodingWidget::updateUIState()
 {
-
     if(d->selectionModel->hasSelection()){
-        d->buttonRGSelected->setEnabled(true);
+        d->UIEnabled = true;
 
     }
     else{
-        d->buttonRGSelected->setEnabled(false);
+        d->UIEnabled = false;
     }
+
+
+    d->buttonRGSelected->setEnabled(d->UIEnabled);
 
 }
 
@@ -293,10 +295,12 @@ void GPSReverseGeocodingWidget::slotHideOptions()
     if(d->hideOptions){
         d->LGridContainer->hide();
         d->hideOptions = false;
+        d->buttonHideOptions->setText("More options");
     }
     else{
         d->LGridContainer->show();
         d->hideOptions = true;
+        d->buttonHideOptions->setText("Less options");
     }
 
 }
@@ -305,6 +309,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
 
     //TODO: filter the results using checkboxes from UI
+
 
     QString address;
     for(int i = 0; i < returnedRGList.count(); ++i){
@@ -338,6 +343,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 {
     d->buttonRGSelected->setEnabled(state);
+    updateUIState();
 }
 
 } /* KIPIGPSSyncPlugin  */
