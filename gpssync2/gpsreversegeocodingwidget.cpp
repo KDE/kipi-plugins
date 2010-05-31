@@ -228,17 +228,13 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
 
 void GPSReverseGeocodingWidget::updateUIState()
 {
-    if(d->selectionModel->hasSelection()){
-        d->UIEnabled = true;
+    const bool haveSelection = d->selectionModel->hasSelection();
 
-    }
-    else{
-        d->UIEnabled = false;
-    }
+    d->buttonRGSelected->setEnabled(d->UIEnabled && haveSelection);
+    d->serviceComboBox->setEnabled(d->UIEnabled);
+    d->languageEdit->setEnabled(d->UIEnabled);
 
-
-    d->buttonRGSelected->setEnabled(d->UIEnabled);
-
+    // TODO: continue with other UI elements
 }
 
 GPSReverseGeocodingWidget::~GPSReverseGeocodingWidget()
@@ -342,7 +338,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
 void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 {
-    d->buttonRGSelected->setEnabled(state);
+    d->UIEnabled = state;
     updateUIState();
 }
 
