@@ -92,6 +92,11 @@ public:
     QCheckBox *iptc, *xmpLoc, *xmpKey;
     QWidget* UGridContainer;
     QWidget* LGridContainer;
+    QLabel* baseTagLabel;
+    QLabel* addressElemLabel;
+    QLabel* serviceLabel;
+    QLabel* metadataLabel;
+    QLabel* languageLabel;
 };
 
 
@@ -116,16 +121,16 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
-    QLabel* languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
+    d->languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
     d->languageEdit = new QLineEdit(d->UGridContainer);
 
-    QLabel* serviceLabel = new QLabel(i18n("Select service:"), d->UGridContainer);
+    d->serviceLabel = new QLabel(i18n("Select service:"), d->UGridContainer);
     d->serviceComboBox = new KComboBox(d->UGridContainer);
 
     d->serviceComboBox->addItem(i18n("Geonames.org"));
     d->serviceComboBox->addItem(i18n("Open Street Map"));
 
-    QLabel* addressElemLabel = new QLabel(i18n("Select address elements:"), d->UGridContainer);
+    d->addressElemLabel = new QLabel(i18n("Select address elements:"), d->UGridContainer);
     QWidget* addressElemContainer = new QWidget(d->UGridContainer);
     QGridLayout* addressElemLayout = new QGridLayout(addressElemContainer);
     
@@ -147,23 +152,23 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
 
     addressElemContainer->setLayout(addressElemLayout);    
 
-    QLabel* baseTagLabel = new QLabel(i18n("Select base tag:"), d->UGridContainer);
+    d->baseTagLabel = new QLabel(i18n("Select base tag:"), d->UGridContainer);
     d->baseTagEdit = new QLineEdit(d->UGridContainer);
 
 
 
     int row = 0;
-    gridLayout->addWidget(serviceLabel,row,0,1,1);
+    gridLayout->addWidget(d->serviceLabel,row,0,1,1);
     gridLayout->addWidget(d->serviceComboBox,row,1,1,1); 
     row++;
-    gridLayout->addWidget(addressElemLabel,row,0,1,2);
+    gridLayout->addWidget(d->addressElemLabel,row,0,1,2);
     row++;
     gridLayout->addWidget(addressElemContainer, row,0,1,2);
     row++;
-    gridLayout->addWidget(languageLabel,row,0,1,1);
+    gridLayout->addWidget(d->languageLabel,row,0,1,1);
     gridLayout->addWidget(d->languageEdit,row,1,1,1);
     row++;
-    gridLayout->addWidget(baseTagLabel,row,0,1,2);
+    gridLayout->addWidget(d->baseTagLabel,row,0,1,2);
     row++;
     gridLayout->addWidget(d->baseTagEdit, row, 0,1,2);
 
@@ -180,7 +185,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
        
     d->autoTag = new QCheckBox("Tag automatically when coordinates are changed", d->LGridContainer);
 
-    QLabel* metadataLabel = new QLabel( i18n("Write tags to:"),d->LGridContainer); 
+    d->metadataLabel = new QLabel( i18n("Write tags to:"),d->LGridContainer); 
 
     d->iptc = new QCheckBox( i18n("IPTC"), d->LGridContainer);
     d->xmpLoc = new QCheckBox( i18n("XMP location"), d->LGridContainer);
@@ -189,7 +194,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     row = 0;
     LGridLayout->addWidget(d->autoTag, row,0,1,3);
     row++;
-    LGridLayout->addWidget(metadataLabel, row,0,1,3);
+    LGridLayout->addWidget(d->metadataLabel, row,0,1,3);
     row++;
     LGridLayout->addWidget(d->iptc,row,0,1,3);
     row++;
@@ -231,9 +236,28 @@ void GPSReverseGeocodingWidget::updateUIState()
     const bool haveSelection = d->selectionModel->hasSelection();
 
     d->buttonRGSelected->setEnabled(d->UIEnabled && haveSelection);
+    d->serviceLabel->setEnabled(d->UIEnabled);
     d->serviceComboBox->setEnabled(d->UIEnabled);
+    d->languageLabel->setEnabled(d->UIEnabled);
     d->languageEdit->setEnabled(d->UIEnabled);
 
+    d->addressElemLabel->setEnabled(d->UIEnabled);
+    d->country->setEnabled(d->UIEnabled); 
+    d->state->setEnabled(d->UIEnabled); 
+    d->county->setEnabled(d->UIEnabled);
+    d->city->setEnabled(d->UIEnabled);
+    d->district->setEnabled(d->UIEnabled);
+    d->street->setEnabled(d->UIEnabled);
+    d->streetNumber->setEnabled(d->UIEnabled);
+
+    d->baseTagLabel->setEnabled(d->UIEnabled);
+    d->baseTagEdit->setEnabled(d->UIEnabled);
+
+    d->autoTag->setEnabled(d->UIEnabled);
+    d->metadataLabel->setEnabled(d->UIEnabled);
+    d->iptc->setEnabled(d->UIEnabled);
+    d->xmpLoc->setEnabled(d->UIEnabled);
+    d->xmpKey->setEnabled(d->UIEnabled);
     // TODO: continue with other UI elements
 }
 

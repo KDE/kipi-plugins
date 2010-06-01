@@ -38,7 +38,7 @@ public:
     }
 
 
-    RGInfo request;
+    QList<RGInfo> request;
     QByteArray data;
     KIO::Job* kioJob;
 };
@@ -73,32 +73,21 @@ BackendGeonamesRG::~BackendGeonamesRG()
 
 void BackendGeonamesRG::nextPhoto()
 {
-    int endValue;
-
-    if(d->itemCounter + 5 > d->itemCount){
-        endValue = d->itemCount % 5;
-    }
-    else{
-        endValue = 5;
-    }
-
     
-    for(int i = 0; i < endValue; i++){
-    
-        KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
-        jobUrl.addQueryItem("lat", d->jobs[d->itemCounter+i].request.coordinates.latString());
-        jobUrl.addQueryItem("lng", d->jobs[d->itemCounter+i].request.coordinates.lonString());
-        jobUrl.addQueryItem("lang", d->language);
-
-        d->jobs[d->itemCounter+i].kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
-
-        connect(d->jobs[d->itemCounter+i].kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
-                this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
-        connect(d->jobs[d->itemCounter+i].kioJob, SIGNAL(result(KJob*)),
-                this, SLOT(slotResult(KJob*)));    
+    KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
+    jobUrl.addQueryItem("lat", d->jobs[d->itemCounter].request.first().coordinates.latString());
+    jobUrl.addQueryItem("lng", d->jobs[d->itemCounter].request.first().coordinates.lonString());
+    jobUrl.addQueryItem("lang", d->language);
 
 
-    }    
+    d->jobs[d->itemCounter].kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
+
+    d->jobs[d->itemCounter].kioJob->addMetaData("User-Agent", "kde-imaging@kde.org");
+
+    connect(d->jobs[d->itemCounter].kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+            this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
+    connect(d->jobs[d->itemCounter].kioJob, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));    
 
 }
 
@@ -107,28 +96,42 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     kDebug()<<"Entering Geonames backend";
 
-    //TODO: Remove dublicates from rgList to mergedQuery
-    QList<RGInfo> mergedQuery = rgList;
     d->language = language;
-    d->itemCount = mergedQuery.count();
     d->itemCounter = 0;
     d->jobs.clear();
 
-    for( int i = 0; i < mergedQuery.count(); ++i){
+    for( int i = 0; i < rgList.count(); ++i){
 
-        GeonamesInternalJobs newJob;
-        newJob.request = mergedQuery.at(i);
-        d->jobs<<newJob;
-        d->jobs[i].kioJob = newJob.kioJob;
+            bool foundIt = false;
+            for( int j=0; j < d->jobs.count(); j++){
+
+                if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates)){
+
+                    d->jobs[j].request << rgList[i];
+                    foundIt = true;
+                    break;
+
+                }   
+
+
+            }
+
+            if(!foundIt){
+            
+                GeonamesInternalJobs newJob;
+                newJob.request << rgList.at(i);
+                d->jobs << newJob;
+
+            }
     }
-    kDebug()<<"A ajuns inainte de primul nextPhoto()";
+    
+    d->itemCount = d->jobs.count();
     nextPhoto();
 
 }
 
 void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
-
     
     for(int i = 0; i < d->jobs.count(); ++i){
 
@@ -138,10 +141,7 @@ void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
             break;
 
         }
-        
-
     }
-
 }
 
 
@@ -153,9 +153,6 @@ QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(QString xmlData)
     QDomDocument doc;
 
     doc.setContent(xmlData);
-
-    //const char* msg = xmlData.toLatin1();
-    //KMessageBox::information(0, xmlData.fromUtf8(msg, qstrlen(msg)));
 
     QDomElement docElem =  doc.documentElement();
 
@@ -198,19 +195,21 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
             dataString.chop(1);
 
 
-            d->jobs[i].request.rgData =  makeQMapFromXML(dataString);
+            QMap<QString,QString> resultMap = makeQMapFromXML(dataString);
 
-            emit(signalRGReady(QList<RGInfo>()<<d->jobs.at(i).request));
+            for(int j = 0; j < d->jobs[i].request.count(); ++j){
+
+                d->jobs[i].request[j].rgData =  resultMap;
+
+                emit(signalRGReady(QList<RGInfo>()<<d->jobs.at(i).request.at(j)));
+            }
             // d->jobs.removeAt(i);
 
             d->itemCounter++;
-            if((d->itemCounter % 5 == 0) && (d->itemCounter < d->itemCount)){
+            if(d->itemCounter < d->itemCount){
                 nextPhoto();
             }
-            else if(d->itemCounter == d->itemCount){
-                d->jobs.clear();
-            }
- 
+            
             break;
         }
 
