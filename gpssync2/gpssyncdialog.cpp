@@ -96,6 +96,7 @@
 #include "gpsreversegeocodingwidget.h"
 #include "gpsbookmarkowner.h"
 #include "gpslistviewcontextmenu.h"
+#include "searchwidget.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -172,6 +173,7 @@ public:
     GPSBookmarkOwner         *bookmarkOwner;
     QAction *actionBookmarkVisibility;
     GPSListViewContextMenu* listViewContextMenu;
+    SearchWidget* searchWidget;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -307,6 +309,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->tabBar->addTab("Settings");
     d->tabBar->addTab("Undo/Redo");
     d->tabBar->addTab("Reverse Geocoding");
+    d->tabBar->addTab("Search");
     
     d->tabBar->installEventFilter(this);       
 
@@ -327,6 +330,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->rgWidget = new GPSReverseGeocodingWidget(d->imageModel, d->selectionModel, d->stackedWidget);
     d->stackedWidget->addWidget(d->rgWidget);
+
+    d->searchWidget = new SearchWidget(d->stackedWidget);
+    d->mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
+    d->stackedWidget->addWidget(d->searchWidget);
 
 
     // ---------------------------------------------------------------
