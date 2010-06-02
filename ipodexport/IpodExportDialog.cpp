@@ -23,6 +23,13 @@
 
 #include "IpodExportDialog.moc"
 
+// Libgdk includes.
+
+extern "C"
+{
+#include <gdk-pixbuf/gdk-pixbuf.h>
+}
+
 // Qt includes
 
 #include <QDir>
@@ -59,13 +66,6 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kurl.h>
-
-// Libgdk includes.
-
-extern "C"
-{
-#include <gdk-pixbuf/gdk-pixbuf.h>
-}
 
 // Local includes
 
@@ -113,7 +113,7 @@ UploadDialog::UploadDialog
                                            KAboutData::License_GPL,
                                            ki18n("A tool to export image to an iPod device"),
                                            ki18n("(c) 2006-2008, Seb Ruiz\n"
-                                                 "(c) 2008-2009, Gilles Caulier"));
+                                                 "(c) 2008-2010, Gilles Caulier"));
 
     m_about->addAuthor(ki18n("Seb Ruiz"), ki18n("Author and Maintainer"),
                        "ruiz@kde.org");
