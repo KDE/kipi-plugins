@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "IpodHeader.h"
 #include "IpodHeader.moc"
 
 // Qt includes.

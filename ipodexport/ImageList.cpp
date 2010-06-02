@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "ImageList.h"
 #include "ImageList.moc"
 
 // Qt includes
