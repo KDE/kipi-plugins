@@ -21,6 +21,7 @@
 #include <QMap>
 #include <QMessageBox>
 #include <QString>
+#include <qtimer.h>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -201,13 +202,16 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
 
                 d->jobs[i].request[j].rgData =  resultMap;
 
-                emit(signalRGReady(QList<RGInfo>()<<d->jobs.at(i).request.at(j)));
             }
+            emit(signalRGReady(d->jobs[i].request));
+
             // d->jobs.removeAt(i);
 
             d->itemCounter++;
             if(d->itemCounter < d->itemCount){
-                nextPhoto();
+            
+                QTimer::singleShot(500, this, SLOT(nextPhoto()));
+
             }
             
             break;
