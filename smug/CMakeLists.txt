@@ -6,6 +6,7 @@ SET(kipiplugin_smug_PART_SRCS
     smugwidget.cpp
     smugalbum.cpp
     smugtalker.cpp
+    mpform.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_smug ${kipiplugin_smug_PART_SRCS})

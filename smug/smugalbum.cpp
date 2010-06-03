@@ -21,10 +21,10 @@
  *
  * ============================================================ */
 
-#include "smugalbum.h"
 #include "smugalbum.moc"
 
 // Qt includes
+
 #include <QFormLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -32,6 +32,7 @@
 #include <QRadioButton>
 
 // KDE includes
+
 #include <KLocale>
 #include <KDialog>
 #include <KComboBox>
@@ -39,13 +40,14 @@
 #include <KTextEdit>
 
 // local includes
+
 #include <smugitem.h>
 
 namespace KIPISmugPlugin
 {
 
 SmugNewAlbum::SmugNewAlbum(QWidget* parent)
-           : KDialog(parent)
+            : KDialog(parent)
 {
     QString header(i18n("SmugMug New Album"));
     setWindowTitle(header);
@@ -58,6 +60,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     mainWidget->setMinimumSize(400, 400);
 
     // ------------------------------------------------------------------------
+
     QGroupBox* albumBox = new QGroupBox(i18n("Album"), mainWidget);
     albumBox->setWhatsThis(
         i18n("These are basic settings for the new SmugMug album."));
@@ -113,7 +116,7 @@ SmugNewAlbum::SmugNewAlbum(QWidget* parent)
     QHBoxLayout* radioLayout = new QHBoxLayout;
     radioLayout->addWidget(m_publicRBtn);
     radioLayout->addWidget(m_unlistedRBtn);
-    
+
     m_passwdEdt         = new KLineEdit;
     m_passwdEdt->setWhatsThis(
         i18n("Require password to access the album (optional)."));
@@ -147,23 +150,21 @@ SmugNewAlbum::~SmugNewAlbum()
 
 void SmugNewAlbum::getAlbumProperties(SmugAlbum &album)
 {
-    album.title = m_titleEdt->text();
+    album.title      = m_titleEdt->text();
 
-    album.category = m_categCoB->currentText();
+    album.category   = m_categCoB->currentText();
     album.categoryID = m_categCoB->itemData(m_categCoB->currentIndex()).toInt();
 
-    album.subCategory = m_subCategCoB->currentText();
-    album.subCategoryID = m_subCategCoB->itemData(
-                                         m_subCategCoB->currentIndex()).toInt();
+    album.subCategory   = m_subCategCoB->currentText();
+    album.subCategoryID = m_subCategCoB->itemData(m_subCategCoB->currentIndex()).toInt();
 
-    album.description = m_descEdt->toPlainText();
+    album.description   = m_descEdt->toPlainText();
 
-    album.tmpl = m_templateCoB->currentText();
-    album.tmplID = m_templateCoB->itemData(
-                                         m_templateCoB->currentIndex()).toInt();
+    album.tmpl   = m_templateCoB->currentText();
+    album.tmplID = m_templateCoB->itemData(m_templateCoB->currentIndex()).toInt();
 
-    album.isPublic = m_publicRBtn->isChecked();
-    album.password = m_passwdEdt->text();
+    album.isPublic     = m_publicRBtn->isChecked();
+    album.password     = m_passwdEdt->text();
     album.passwordHint = m_hintEdt->text();
 }
 

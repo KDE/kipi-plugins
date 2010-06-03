@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "smugtalker.h"
 #include "smugtalker.moc"
 
 // Qt includes
@@ -44,6 +43,7 @@
 // Local includes
 
 #include "pluginsversion.h"
+#include "mpform.h"
 #include "smugitem.h"
 
 namespace KIPISmugPlugin
@@ -197,8 +197,8 @@ void SmugTalker::listAlbums(const QString& nickName)
     m_buffer.resize(0);
 }
 
-void SmugTalker::listPhotos(int albumID, 
-                            const QString& albumPassword, 
+void SmugTalker::listPhotos(int albumID,
+                            const QString& albumPassword,
                             const QString& sitePassword)
 {
     if (m_job)
@@ -378,7 +378,8 @@ void SmugTalker::createAlbum(const SmugAlbum& album)
     m_buffer.resize(0);
 }
 
-bool SmugTalker::addPhoto(const QString& imgPath, int albumID)
+bool SmugTalker::addPhoto(const QString& imgPath, int albumID,
+                          const QString& caption)
 {
     if (m_job)
     {
@@ -387,6 +388,7 @@ bool SmugTalker::addPhoto(const QString& imgPath, int albumID)
     }
     emit signalBusy(true);
 
+    QString imgName = QFileInfo(imgPath).fileName();
     // load temporary image to buffer
     QFile imgFile(imgPath);
     if (!imgFile.open(QIODevice::ReadOnly))
@@ -399,18 +401,28 @@ bool SmugTalker::addPhoto(const QString& imgPath, int albumID)
     imgFile.close();
     KMD5 imgMD5(imgData);
 
-    KUrl url("http://upload.smugmug.com/photos/xmlrawadd.mg");
-    KIO::TransferJob* job = KIO::http_post(url, imgData, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-length",
-                     QString("Content-Length: %1").arg(QString::number(imgSize)));
+    MPForm form;
+
+    form.addPair("ByteCount", QString::number(imgSize));
+    form.addPair("MD5Sum", QString(imgMD5.hexDigest()));
+    form.addPair("AlbumID", QString::number(albumID));
+    form.addPair("ResponseType", "REST");
+    if (!caption.isEmpty())
+        form.addPair("Caption", caption);
+
+    if (!form.addFile(imgName, imgPath))
+        return false;
+
+    form.finish();
+
     QString customHdr;
-    customHdr += "Content-MD5: " + QString(imgMD5.hexDigest()) + "\r\n";
+    KUrl url("http://upload.smugmug.com/photos/xmladd.mg");
+    KIO::TransferJob *job = KIO::http_post(url, form.formData(),
+            KIO::HideProgressInfo);
+    job->addMetaData("content-type", form.contentType());
+    job->addMetaData("UserAgent", m_userAgent);
     customHdr += "X-Smug-SessionID: " + m_sessionID + "\r\n";
     customHdr += "X-Smug-Version: " + m_apiVersion + "\r\n";
-    customHdr += "X-Smug-ResponseType: REST\r\n";
-    customHdr += "X-Smug-AlbumID: " + QString::number(albumID) + "\r\n";
-    customHdr += "X-Smug-FileName: " + QFileInfo(imgPath).fileName() + "\r\n";
     job->addMetaData("customHTTPHeader", customHdr);
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
@@ -484,10 +496,10 @@ QString SmugTalker::errorToText(int errCode, const QString &errMsg)
     return transError;
 }
 
-void SmugTalker::slotResult(KJob *kjob)
+void SmugTalker::slotResult(KJob* kjob)
 {
-    m_job = 0;
-    KIO::Job *job = static_cast<KIO::Job*>(kjob);
+    m_job         = 0;
+    KIO::Job* job = static_cast<KIO::Job*>(kjob);
 
     if (job->error())
     {
@@ -574,7 +586,9 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
     {
         if (!node.isElement())
             continue;
+
         e = node.toElement();
+
         if (e.tagName() == "Login")
         {
             m_user.accountType = e.attribute("AccountType");
@@ -586,7 +600,9 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
             {
                 if (!nodeL.isElement())
                     continue;
+
                 e = nodeL.toElement();
+
                 if (e.tagName() == "Session")
                 {
                     m_sessionID = e.attribute("id");
@@ -602,7 +618,7 @@ void SmugTalker::parseResponseLogin(const QByteArray& data)
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
-            errMsg = e.attribute("msg");
+            errMsg  = e.attribute("msg");
             kDebug() << "Error:" << errCode << errMsg;
         }
     }
@@ -636,7 +652,9 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
     {
         if (!node.isElement())
             continue;
+
         e = node.toElement();
+
         if (e.tagName() == "Logout")
         {
             errCode = 0;
@@ -658,6 +676,25 @@ void SmugTalker::parseResponseLogout(const QByteArray& data)
 
 void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
 {
+    // A multi-part put response (which we get now) looks like:
+    // <?xml version="1.0" encoding="utf-8"?>
+    // <rsp stat="ok">
+    //   <method>smugmug.images.upload</method>
+    //   <ImageID>884775096</ImageID>
+    //   <ImageKey>L7aq5</ImageKey>
+    //   <ImageURL>http://froody.smugmug.com/Other/Test/12372176_y7yNq#884775096_L7aq5</ImageURL>
+    // </rsp>
+
+    // A simple put response (which we used to get) looks like:
+    // <?xml version="1.0" encoding="utf-8"?>
+    // <rsp stat="ok">
+    //   <method>smugmug.images.upload</method>
+    //   <Image id="884790545" Key="seeQa" URL="http://froody.smugmug.com/Other/Test/12372176_y7yNq#884790545_seeQa"/>
+    // </rsp>
+
+    // Since all we care about is success or not, we can just check the rsp
+    // stat.
+
     int errCode = -1;
     QString errMsg;
     QDomDocument doc("addphoto");
@@ -666,27 +703,27 @@ void SmugTalker::parseResponseAddPhoto(const QByteArray& data)
 
     kDebug() << "Parse Add Photo response:" << endl << data;
 
-    QDomElement e = doc.documentElement();
-    for (QDomNode node = e.firstChild();
-         !node.isNull();
-         node = node.nextSibling())
+    QDomElement document = doc.documentElement();
+    if (document.tagName() == "rsp")
     {
-        if (!node.isElement())
-            continue;
-        e = node.toElement();
-        if (e.tagName() == "Image")
+        kDebug() << "rsp stat: " << document.attribute("stat");
+        if (document.attribute("stat") == "ok")
         {
-            kDebug() << "ImageID: " << e.attribute("id");
-            kDebug() << "Key: " << e.attribute("Key");
-            kDebug() << "URL: " << e.attribute("URL");
             errCode = 0;
         }
-        else if (e.tagName() == "err")
+        else if (document.attribute("stat") == "fail")
         {
-            errCode = e.attribute("code").toInt();
-            errMsg = e.attribute("msg");
-            kDebug() << "Error:" << errCode << errMsg;
+            QDomElement error = document.firstChildElement("err");
+            errCode = error.attribute("code").toInt();
+            errMsg = error.attribute("msg");
+            kDebug() << "error" << errCode << ":" << errMsg << endl;
         }
+    }
+    else
+    {
+        errCode = -2;
+        errMsg = "Malformed response from smugmug: " + document.tagName();
+        kDebug() << "Error:" << errCode << errMsg;
     }
 
     emit signalBusy(false);
@@ -705,14 +742,17 @@ void SmugTalker::parseResponseCreateAlbum(const QByteArray& data)
     kDebug() << "Parse Create Album response:" << endl << data;
 
     int newAlbumID = -1;
-    QDomElement e = doc.documentElement();
+    QDomElement e  = doc.documentElement();
+
     for (QDomNode node = e.firstChild();
          !node.isNull();
          node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
+
         e = node.toElement();
+
         if (e.tagName() == "Album")
         {
             newAlbumID = e.attribute("id").toInt();
@@ -751,7 +791,9 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
     {
         if (!node.isElement())
             continue;
+
         e = node.toElement();
+
         if (e.tagName() == "Albums")
         {
             for (QDomNode nodeA = e.firstChild();
@@ -760,7 +802,9 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
             {
                 if (!nodeA.isElement())
                     continue;
+
                 e = nodeA.toElement();
+
                 if (e.tagName() == "Album")
                 {
                     SmugAlbum album;
@@ -780,7 +824,9 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
                     {
                         if (!nodeC.isElement())
                             continue;
+
                         e = nodeC.toElement();
+
                         if (e.tagName() == "Category")
                         {
                             album.categoryID = e.attribute("id").toInt();
@@ -807,6 +853,7 @@ void SmugTalker::parseResponseListAlbums(const QByteArray& data)
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+
     emit signalBusy(false);
     emit signalListAlbumsDone(errCode, errorToText(errCode, errMsg),
                               albumsList);
@@ -824,13 +871,16 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
 
     QList <SmugPhoto> photosList;
     QDomElement e = doc.documentElement();
+
     for (QDomNode node = e.firstChild();
          !node.isNull();
          node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
+
         e = node.toElement();
+
         if (e.tagName() == "Images")
         {
             for (QDomNode nodeP = e.firstChild();
@@ -839,7 +889,9 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
             {
                 if (!nodeP.isElement())
                     continue;
+
                 e = nodeP.toElement();
+
                 if (e.tagName() == "Image")
                 {
                     SmugPhoto photo;
@@ -879,7 +931,7 @@ void SmugTalker::parseResponseListPhotos(const QByteArray& data)
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
-            errMsg = e.attribute("msg");
+            errMsg  = e.attribute("msg");
             kDebug() << "Error:" << errCode << errMsg;
         }
     }
@@ -909,7 +961,9 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
     {
         if (!node.isElement())
             continue;
+
         e = node.toElement();
+
         if (e.tagName() == "AlbumTemplates")
         {
             for (QDomNode nodeT = e.firstChild();
@@ -918,7 +972,9 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
             {
                 if (!nodeT.isElement())
                     continue;
+
                 QDomElement e = nodeT.toElement();
+
                 if (e.tagName() == "AlbumTemplate")
                 {
                     SmugAlbumTmpl tmpl;
@@ -935,16 +991,17 @@ void SmugTalker::parseResponseListAlbumTmpl(const QByteArray& data)
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
-            errMsg = e.attribute("msg");
+            errMsg  = e.attribute("msg");
             kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+
     emit signalBusy(false);
     emit signalListAlbumTmplDone(errCode, errorToText(errCode, errMsg),
-                                      albumTList);
+                                 albumTList);
 }
 
 void SmugTalker::parseResponseListCategories(const QByteArray& data)
@@ -959,13 +1016,16 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
 
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
+
     for (QDomNode node = e.firstChild();
          !node.isNull();
          node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
+
         e = node.toElement();
+
         if (e.tagName() == "Categories")
         {
             for (QDomNode nodeC = e.firstChild();
@@ -974,7 +1034,9 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
             {
                 if (!nodeC.isElement())
                     continue;
+
                 QDomElement e = nodeC.toElement();
+
                 if (e.tagName() == "Category")
                 {
                     SmugCategory category;
@@ -988,13 +1050,14 @@ void SmugTalker::parseResponseListCategories(const QByteArray& data)
         else if (e.tagName() == "err")
         {
             errCode = e.attribute("code").toInt();
-            errMsg = e.attribute("msg");
+            errMsg  = e.attribute("msg");
             kDebug() << "Error:" << errCode << errMsg;
         }
     }
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+
     emit signalBusy(false);
     emit signalListCategoriesDone(errCode, errorToText(errCode, errMsg),
                                   categoriesList);
@@ -1012,13 +1075,16 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
 
     QList <SmugCategory> categoriesList;
     QDomElement e = doc.documentElement();
+
     for (QDomNode node = e.firstChild();
          !node.isNull();
          node = node.nextSibling())
     {
         if (!node.isElement())
             continue;
+
         e = node.toElement();
+
         if (e.tagName() == "SubCategories")
         {
             for (QDomNode nodeC = e.firstChild();
@@ -1027,7 +1093,9 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
             {
                 if (!nodeC.isElement())
                     continue;
+
                 e = nodeC.toElement();
+
                 if (e.tagName() == "SubCategory")
                 {
                     SmugCategory category;
@@ -1048,6 +1116,7 @@ void SmugTalker::parseResponseListSubCategories(const QByteArray& data)
 
     if (errCode == 15)  // 15: empty list
         errCode = 0;
+
     emit signalBusy(false);
     emit signalListSubCategoriesDone(errCode, errorToText(errCode, errMsg),
                                      categoriesList);

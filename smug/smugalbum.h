@@ -48,21 +48,21 @@ public:
     SmugNewAlbum(QWidget* parent);
     ~SmugNewAlbum();
 
-    void getAlbumProperties(SmugAlbum &album);
+    void getAlbumProperties(SmugAlbum& album);
 
 private:
 
-    KLineEdit       *m_titleEdt;
-    KTextEdit       *m_descEdt;
-    KComboBox       *m_categCoB;
-    KComboBox       *m_subCategCoB;
-    KComboBox       *m_templateCoB;
+    KLineEdit*    m_titleEdt;
+    KTextEdit*    m_descEdt;
+    KComboBox*    m_categCoB;
+    KComboBox*    m_subCategCoB;
+    KComboBox*    m_templateCoB;
 
-    QGroupBox       *m_privBox;
-    KLineEdit       *m_passwdEdt;
-    KLineEdit       *m_hintEdt;
-    QRadioButton    *m_publicRBtn;
-    QRadioButton    *m_unlistedRBtn;
+    QGroupBox*    m_privBox;
+    KLineEdit*    m_passwdEdt;
+    KLineEdit*    m_hintEdt;
+    QRadioButton* m_publicRBtn;
+    QRadioButton* m_unlistedRBtn;
 
     friend class SmugWindow;
 };

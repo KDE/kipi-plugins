@@ -8,7 +8,7 @@
  *               SmugMug web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "plugin_smug.h"
 #include "plugin_smug.moc"
 
 // C ANSI includes
@@ -56,7 +55,7 @@ extern "C"
 K_PLUGIN_FACTORY( SmugFactory, registerPlugin<Plugin_Smug>(); )
 K_EXPORT_PLUGIN ( SmugFactory("kipiplugin_smug") )
 
-Plugin_Smug::Plugin_Smug(QObject *parent, const QVariantList& /*args*/)
+Plugin_Smug::Plugin_Smug(QObject* parent, const QVariantList& /*args*/)
            : KIPI::Plugin(SmugFactory::componentData(), parent, "Smug")
 {
     m_dlgImport = 0;

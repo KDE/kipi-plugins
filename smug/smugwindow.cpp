@@ -8,7 +8,7 @@
  *                SmugMug web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "smugwindow.h"
 #include "smugwindow.moc"
 
 // Qt includes
@@ -321,6 +320,7 @@ void SmugWindow::readSettings()
 
     m_widget->m_dimensionSpB->setValue(grp.readEntry("Maximum Width", 1600));
     m_widget->m_imageQualitySpB->setValue(grp.readEntry("Image Quality", 85));
+
     if (m_import)
     {
         KConfigGroup dialogGroup = config.group("Smug Import Dialog");
@@ -413,6 +413,7 @@ void SmugWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
     }
 
     m_widget->m_albumsCoB->clear();
+
     for (int i = 0; i < albumsList.size(); ++i)
     {
         QString albumIcon;
@@ -453,7 +454,7 @@ void SmugWindow::slotListPhotosDone(int errCode, const QString &errMsg,
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(0);
-    
+
     // start download with first photo in queue
     downloadNextPhoto();
 }
@@ -493,7 +494,7 @@ void SmugWindow::slotListAlbumTmplDone(int errCode, const QString &errMsg,
     m_talker->listCategories();
 }
 
-void SmugWindow::slotListCategoriesDone(int errCode, const QString &errMsg,
+void SmugWindow::slotListCategoriesDone(int errCode, const QString& errMsg,
                                         const QList <SmugCategory>& categoriesList)
 {
     if (errCode != 0)
@@ -738,8 +739,9 @@ void SmugWindow::uploadNextPhoto()
     }
 
     m_widget->m_imgList->processing(m_transferQueue.first());
-    
+
     QString imgPath = m_transferQueue.first().path();
+    KIPI::ImageInfo info(m_interface->info(imgPath));
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);
@@ -757,12 +759,12 @@ void SmugWindow::uploadNextPhoto()
             slotAddPhotoDone(666, i18n("Cannot open file"));
             return;
         }
-        res = m_talker->addPhoto(m_tmpPath, m_currentAlbumID);
+        res = m_talker->addPhoto(m_tmpPath, m_currentAlbumID, info.description());
     }
     else
     {
         m_tmpPath.clear();
-        res = m_talker->addPhoto(imgPath, m_currentAlbumID);
+        res = m_talker->addPhoto(imgPath, m_currentAlbumID, info.description());
     }
 
     if (!res)

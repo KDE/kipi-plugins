@@ -25,14 +25,17 @@
 #define SMUGTALKER_H
 
 // Qt includes
+
 #include <QList>
 #include <QString>
 #include <QObject>
 
 // KDE includes
+
 #include <KIO/Job>
 
 // local includes
+
 #include "smugitem.h"
 
 namespace KIPISmugPlugin
@@ -43,6 +46,7 @@ class SmugTalker : public QObject
     Q_OBJECT
 
 public:
+
     SmugTalker(QWidget* parent);
     ~SmugTalker();
 
@@ -63,10 +67,12 @@ public:
 
     void    createAlbum(const SmugAlbum& album);
 
-    bool    addPhoto(const QString& imgPath, int albumID);
+    bool    addPhoto(const QString& imgPath, int albumID, 
+                     const QString& caption);
     void    getPhoto(const QString& imgPath);
 
 Q_SIGNALS:
+
     void signalBusy(bool val);
     void signalLoginProgress(int step, int maxStep = 0, 
                              const QString& label = "");
@@ -88,19 +94,7 @@ Q_SIGNALS:
                                      const QList <SmugCategory>& categoriesList);
 
 private:
-    enum State
-    {
-        SMUG_LOGIN = 0,
-        SMUG_LOGOUT,
-        SMUG_LISTALBUMS,
-        SMUG_LISTPHOTOS,
-        SMUG_LISTALBUMTEMPLATES,
-        SMUG_LISTCATEGORIES,
-        SMUG_LISTSUBCATEGORIES,
-        SMUG_CREATEALBUM,
-        SMUG_ADDPHOTO,
-        SMUG_GETPHOTO
-    };
+
 
     QString htmlToText(const QString& htmlText);
     QString errorToText(int errCode, const QString& errMsg);
@@ -115,10 +109,26 @@ private:
     void parseResponseListSubCategories(const QByteArray& data);
 
 private Q_SLOTS:
+
     void data(KIO::Job *job, const QByteArray& data);
     void slotResult(KJob *job);
 
 private:
+
+    enum State
+    {
+        SMUG_LOGIN = 0,
+        SMUG_LOGOUT,
+        SMUG_LISTALBUMS,
+        SMUG_LISTPHOTOS,
+        SMUG_LISTALBUMTEMPLATES,
+        SMUG_LISTCATEGORIES,
+        SMUG_LISTSUBCATEGORIES,
+        SMUG_CREATEALBUM,
+        SMUG_ADDPHOTO,
+        SMUG_GETPHOTO
+    };
+
     QWidget*   m_parent;
 
     QByteArray m_buffer;

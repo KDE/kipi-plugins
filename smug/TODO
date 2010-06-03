@@ -4,7 +4,7 @@ Minor improvements:
  - Fix button enable/disable when image list is empty (ImagesList)
  - Fix button enable/disable on new album dialog
  - Check FileSizeLimit before upload
- - Caption, Keywords, GPS coordinates support
+ - Keywords, GPS coordinates support
  - Implement validators for email and password
 
 Short term:

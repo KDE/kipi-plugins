@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "smugwidget.h"
 #include "smugwidget.moc"
 
 // Qt includes
@@ -56,7 +55,7 @@
 namespace KIPISmugPlugin
 {
 
-SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
+SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface* iface, bool import)
           : QWidget(parent)
 {
     setObjectName("SmugWidget");
@@ -65,7 +64,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::ImagesList(iface, this);
+    m_imgList = new KIPIPlugins::ImagesList(iface, this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
@@ -100,9 +99,9 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_userName          = new QLabel(accountBox);
     m_emailLbl          = new QLabel(i18nc("smug account settings", "Email:"), accountBox);
     m_email             = new QLabel(accountBox);
-    m_changeUserBtn     = new KPushButton(
-        KGuiItem(i18n("Change Account"), "system-switch-user",
-                 i18n("Change SmugMug Account used to authenticate")), accountBox);
+    m_changeUserBtn     = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
+                                          i18n("Change SmugMug Account used to authenticate")),
+                                           accountBox);
 
     accountBoxLayout->addWidget(m_anonymousRBtn,        0, 0, 1, 2);
     accountBoxLayout->addWidget(m_accountRBtn,          1, 0, 1, 2);
@@ -116,10 +115,9 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* albumsBox    = new QGroupBox(i18n("Album"), settingsBox);
-    albumsBox->setWhatsThis(
-        i18n("This is the SmugMug album that will be used for transfer."));
-    QGridLayout* albumsBoxLayout  = new QGridLayout(albumsBox);
+    QGroupBox* albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
+    albumsBox->setWhatsThis(i18n("This is the SmugMug album that will be used for transfer."));
+    QGridLayout* albumsBoxLayout = new QGridLayout(albumsBox);
 
     m_albumsCoB         = new KComboBox(albumsBox);
     m_albumsCoB->setEditable(false);
@@ -136,12 +134,10 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_albumPasswordEdt->setWhatsThis(
         i18n("Password for SmugMug album."));
 
-    m_newAlbumBtn       = new KPushButton(
-            KGuiItem(i18n("New Album"), "list-add",
-                     i18n("Create new SmugMug album")), accountBox);
-    m_reloadAlbumsBtn   = new KPushButton(
-            KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
-                     i18n("Reload album list")), accountBox);
+    m_newAlbumBtn       = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
+                                          i18n("Create new SmugMug album")), accountBox);
+    m_reloadAlbumsBtn   = new KPushButton(KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
+                                          i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(m_albumsCoB,         0, 0, 1, 5);
     albumsBoxLayout->addWidget(m_nickNameLbl,       1, 0, 1, 1);
@@ -155,21 +151,19 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(
-        i18n("This is the location where SmugMug images will be downloaded."));
+    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
+    uploadBox->setWhatsThis(i18n("This is the location where SmugMug images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget = iface->uploadWidget(uploadBox);
+    m_uploadWidget               = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
 
     QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
-    optionsBox->setWhatsThis(
-        i18n("These are options that will be applied to images before upload."));
+    optionsBox->setWhatsThis(i18n("These are options that will be applied to images before upload."));
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
 
-    m_resizeChB     = new QCheckBox(optionsBox);
+    m_resizeChB                   = new QCheckBox(optionsBox);
     m_resizeChB->setText(i18n("Resize photos before uploading"));
     m_resizeChB->setChecked(false);
 
@@ -198,7 +192,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     optionsBoxLayout->setRowStretch(3, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
-    
+
     m_progressBar = new QProgressBar(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
@@ -210,7 +204,7 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     settingsBoxLayout->addWidget(albumsBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
-    settingsBoxLayout->addWidget(m_progressBar);    
+    settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 

@@ -74,7 +74,7 @@ public:
     QString getDestinationPath();
 
     KIPIPlugins::ImagesList* imagesList() const;
-    
+
     QProgressBar* progressBar() const;
 
 Q_SIGNALS:
@@ -117,7 +117,7 @@ private:
     KLineEdit*               m_sitePasswordEdt;
 
     QProgressBar*            m_progressBar;
-    
+
     KIPIPlugins::ImagesList* m_imgList;
     KIPI::UploadWidget*      m_uploadWidget;
 
