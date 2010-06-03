@@ -22,6 +22,7 @@
 // Qt includes
 
 #include <QListView>
+#include <QPainter>
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
@@ -37,6 +38,7 @@
 // local includes
 
 #include "searchbackend.h"
+#include <worldmapwidget2/worldmapwidget2.h>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -48,21 +50,26 @@ public:
     {
     }
 
+    WMW2::WorldMapWidget2* mapWidget;
     KLineEdit* searchTermLineEdit;
     QPushButton* searchButton;
     SearchBackend* searchBackend;
     QTreeView* treeView;
     SearchResultModel* searchResultsModel;
+    QItemSelectionModel* searchResultsSelectionModel;
     SearchResultModelHelper* searchResultModelHelper;
     QVBoxLayout* mainVBox;
 };
 
-SearchWidget::SearchWidget(QWidget* parent)
+SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* parent)
 : QWidget(parent), d(new SearchWidgetPrivate())
 {
+    d->mapWidget = mapWidget;
     d->searchBackend = new SearchBackend(this);
     d->searchResultsModel = new SearchResultModel(this);
-    d->searchResultModelHelper = new SearchResultModelHelper(d->searchResultsModel, this);
+    d->searchResultsSelectionModel = new QItemSelectionModel(d->searchResultsModel);
+    d->searchResultsModel->setSelectionModel(d->searchResultsSelectionModel);
+    d->searchResultModelHelper = new SearchResultModelHelper(d->searchResultsModel, d->searchResultsSelectionModel, this);
 
     d->mainVBox = new QVBoxLayout(this);
     setLayout(d->mainVBox);
@@ -77,6 +84,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     d->mainVBox->addWidget(d->treeView);
     d->treeView->setRootIsDecorated(false);
     d->treeView->setModel(d->searchResultsModel);
+    d->treeView->setSelectionModel(d->searchResultsSelectionModel);
 
     connect(d->searchButton, SIGNAL(clicked()),
             this, SLOT(slotTriggerSearch()));
@@ -89,6 +97,9 @@ SearchWidget::SearchWidget(QWidget* parent)
 
     connect(d->searchTermLineEdit, SIGNAL(textChanged(const QString&)),
             this, SLOT(slotUpdateUIState()));
+
+    connect(d->searchResultsSelectionModel, SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+            this, SLOT(slotCurrentlySelectedResultChanged(const QModelIndex&, const QModelIndex&)));
 
     slotUpdateUIState();
 }
@@ -119,9 +130,17 @@ class SearchResultModelPrivate
 public:
     SearchResultModelPrivate()
     {
+        const KUrl markerUrl = KStandardDirs::locate("data", "gpssync2/searchmarker-normal.png");
+        markerNormal = QPixmap(markerUrl.toLocalFile());
+
+        const KUrl markerSelectedUrl = KStandardDirs::locate("data", "gpssync2/searchmarker-selected.png");
+        markerSelected = QPixmap(markerSelectedUrl.toLocalFile());
     }
 
     QList<SearchResultModel::SearchResultItem> searchResults;
+    QPixmap markerNormal;
+    QPixmap markerSelected;
+    QItemSelectionModel* selectionModel;
 };
 
 SearchResultModel::SearchResultModel(QObject* const parent)
@@ -154,9 +173,19 @@ QVariant SearchResultModel::data(const QModelIndex& index, int role) const
 
     const int columnNumber = index.column();
 
-    if ((columnNumber==0)&&(role==Qt::DisplayRole))
+    if (columnNumber==0)
     {
-        return d->searchResults.at(rowNumber).result.name;
+        switch (role)
+        {
+        case Qt::DisplayRole:
+            return d->searchResults.at(rowNumber).result.name;
+
+        case Qt::DecorationRole:
+            return getMarkerIcon(index, 0);
+
+        default:
+            return QVariant();
+        }
     }
 
     return QVariant();
@@ -229,12 +258,14 @@ public:
     }
 
     SearchResultModel* model;
+    QItemSelectionModel* selectionModel;
 };
 
-SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel, QObject* const parent)
+SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, QObject* const parent)
 : WMW2::WMWModelHelper(parent), d(new SearchResultModelHelperPrivate())
 {
     d->model = resultModel;
+    d->selectionModel = selectionModel;
 }
 
 SearchResultModelHelper::~SearchResultModelHelper()
@@ -249,7 +280,7 @@ QAbstractItemModel* SearchResultModelHelper::model() const
 
 QItemSelectionModel* SearchResultModelHelper::selectionModel() const
 {
-    return 0;
+    return d->selectionModel;
 }
 
 bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, WMW2::WMWGeoCoordinate* const coordinates) const
@@ -263,7 +294,7 @@ bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, WMW2::WM
 
 QPixmap SearchResultModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset) const
 {
-    return QPixmap();
+    return d->model->getMarkerIcon(index, offset);
 }
 
 bool SearchResultModelHelper::visible() const
@@ -273,7 +304,7 @@ bool SearchResultModelHelper::visible() const
 
 bool SearchResultModelHelper::snaps() const
 {
-    return false;
+    return true;
 }
 
 SearchResultModel::SearchResultItem SearchResultModel::resultItem(const QModelIndex& index) const
@@ -291,6 +322,48 @@ void SearchWidget::slotUpdateUIState()
     const bool haveSearchText = !d->searchTermLineEdit->text().isEmpty();
 
     d->searchButton->setEnabled(haveSearchText);
+}
+
+QPixmap SearchResultModel::getMarkerIcon(const QModelIndex& index, QPoint* const offset) const
+{
+    const bool itemIsSelected = d->selectionModel ? d->selectionModel->isSelected(index) : false;
+
+    QPixmap markerPixmap = itemIsSelected ? d->markerSelected : d->markerNormal;
+
+    // determine the id of the marker
+    const int markerNumber = index.row();
+    if (markerNumber<26)
+    {
+        const QString markerId = QChar('A'+markerNumber);
+
+        QPainter painter(&markerPixmap);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(Qt::black);
+        QRect textRect(0,2,markerPixmap.width(),markerPixmap.height());
+        painter.drawText(textRect, Qt::AlignHCenter, markerId);
+    }
+
+    if (offset)
+    {
+        *offset = QPoint(markerPixmap.width()/2, 0);
+    }
+
+    return markerPixmap;
+}
+
+void SearchResultModel::setSelectionModel(QItemSelectionModel* const selectionModel)
+{
+    d->selectionModel = selectionModel;
+}
+
+void SearchWidget::slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& previous)
+{
+    if (!current.isValid())
+        return;
+
+    SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(current);
+
+    d->mapWidget->setCenter(currentItem.result.coordinates);
 }
 
 } /* KIPIGPSSyncPlugin */

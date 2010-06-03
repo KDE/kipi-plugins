@@ -61,6 +61,8 @@ public:
 
     void addResults(const SearchBackend::SearchResult::List& results);
     SearchResultItem resultItem(const QModelIndex& index) const;
+    QPixmap getMarkerIcon(const QModelIndex& index, QPoint* const offset) const;
+    void setSelectionModel(QItemSelectionModel* const selectionModel);
 
 private:
     SearchResultModelPrivate* const d;
@@ -71,7 +73,7 @@ class SearchResultModelHelper : public WMW2::WMWModelHelper
 {
 Q_OBJECT
 public:
-    SearchResultModelHelper(SearchResultModel* const resultModel, QObject* const parent = 0);
+    SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, QObject* const parent = 0);
     ~SearchResultModelHelper();
 
     virtual QAbstractItemModel* model() const;
@@ -91,7 +93,7 @@ class SearchWidget : public QWidget
 Q_OBJECT
 
 public:
-    SearchWidget(QWidget* parent = 0);
+    SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* parent = 0);
     ~SearchWidget();
 
     WMW2::WMWModelHelper* getModelHelper();
@@ -100,6 +102,7 @@ private Q_SLOTS:
     void slotSearchCompleted();
     void slotTriggerSearch();
     void slotUpdateUIState();
+    void slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& previous);
 
 private:
     SearchWidgetPrivate* const d;

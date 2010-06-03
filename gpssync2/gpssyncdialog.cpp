@@ -331,7 +331,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->rgWidget = new GPSReverseGeocodingWidget(d->imageModel, d->selectionModel, d->stackedWidget);
     d->stackedWidget->addWidget(d->rgWidget);
 
-    d->searchWidget = new SearchWidget(d->stackedWidget);
+    d->searchWidget = new SearchWidget(d->mapWidget, d->stackedWidget);
     d->mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
     d->stackedWidget->addWidget(d->searchWidget);
 

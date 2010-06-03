@@ -45,6 +45,8 @@ INSTALL(FILES
     reverse-js.js
     rg-google-maps-v3.html
     data/bookmarks-marker.png
+    data/searchmarker-normal.png
+    data/searchmarker-selected.png
     DESTINATION ${DATA_INSTALL_DIR}/gpssync2/)
 
 IF(KDE4_BUILD_TESTS)
