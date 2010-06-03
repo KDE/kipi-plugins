@@ -30,10 +30,12 @@
 #include "searchbackend.h"
 
 class QEvent;
+class KConfigGroup;
 
 namespace KIPIGPSSyncPlugin
 {
 
+class GPSBookmarkOwner;
 class SearchResultItem;
 class SearchResultModelPrivate;
 class SearchResultModel : public QAbstractItemModel
@@ -98,10 +100,12 @@ class SearchWidget : public QWidget
 Q_OBJECT
 
 public:
-    SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* parent = 0);
+    SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, QWidget* parent = 0);
     ~SearchWidget();
 
     WMW2::WMWModelHelper* getModelHelper();
+    void saveSettingsToGroup(KConfigGroup* const group);
+    void readSettingsFromGroup(KConfigGroup* const group);
 
 private Q_SLOTS:
     void slotSearchCompleted();

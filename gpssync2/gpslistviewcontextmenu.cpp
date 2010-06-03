@@ -92,7 +92,6 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
     if (bookmarkOwner)
     {
         d->bookmarkOwner = bookmarkOwner;
-        d->bookmarkOwner->setPositionProvider(getCurrentPosition, this);
         d->actionBookmark = new KAction(i18n("Bookmarks"), this);
         d->actionBookmark->setMenu(d->bookmarkOwner->getMenu());
 
@@ -136,7 +135,12 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         }
         d->actionCopy->setEnabled(copyAvailable);
         if (d->bookmarkOwner)
+        {
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
+            GPSDataContainer position;
+            getCurrentItemPositionAndUrl(&position, 0);
+            d->bookmarkOwner->setPositionAndTitle(position.m_coordinates, QString());
+        }
 
         // "paste" is only available if there is geo data in the clipboard
         // and at least one photo is selected:

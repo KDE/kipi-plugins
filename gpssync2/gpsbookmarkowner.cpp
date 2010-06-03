@@ -60,6 +60,8 @@ public:
     KMenu               *bookmarkMenu;
     bool                addBookmarkEnabled;
     GPSBookmarkModelHelper *bookmarkModelHelper;
+    WMW2::WMWGeoCoordinate lastCoordinates;
+    QString             lastTitle;
 };
 
 GPSBookmarkOwner::GPSBookmarkOwner(QWidget* const parent)
@@ -101,7 +103,7 @@ QString GPSBookmarkOwner::currentTitle() const
     const QString title = InputBoxNoCancel::AskForString(
                     i18n("Bookmark location"),
                     i18nc("Title of the new gps location bookmark", "Title:"),
-                    currentUrl(),
+                    d->lastTitle.isEmpty() ? currentUrl() : d->lastTitle,
                     d->parent);
 
     return title;
@@ -109,14 +111,7 @@ QString GPSBookmarkOwner::currentTitle() const
 
 QString GPSBookmarkOwner::currentUrl() const
 {
-    if (!positionProviderFunction)
-        return QString();
-
-    GPSDataContainer position;
-    if (!positionProviderFunction(&position, positionProviderFunctionData))
-        return QString();
-
-    return position.m_coordinates.geoUrl();
+    return d->lastCoordinates.geoUrl();
 }
 
 bool GPSBookmarkOwner::enableOption(BookmarkOption option) const
@@ -147,12 +142,6 @@ void GPSBookmarkOwner::openBookmark(const KBookmark& bookmark, Qt::MouseButtons,
         position.setCoordinates(coordinate);
         emit(positionSelected(position));
     }
-}
-
-void GPSBookmarkOwner::setPositionProvider(PositionProviderFunction function, void* yourdata)
-{
-    positionProviderFunction = function;
-    positionProviderFunctionData = yourdata;
 }
 
 void GPSBookmarkOwner::changeAddBookmark(const bool state)
@@ -295,6 +284,12 @@ void GPSBookmarkModelHelper::setVisible(const bool state)
 bool GPSBookmarkModelHelper::snaps() const
 {
     return true;
+}
+
+void GPSBookmarkOwner::setPositionAndTitle(const WMW2::WMWGeoCoordinate& coordinates, const QString& title)
+{
+    d->lastCoordinates = coordinates;
+    d->lastTitle = title;
 }
 
 }  // namespace KIPIGPSSyncPlugin

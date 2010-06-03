@@ -34,6 +34,7 @@
 
 #include <kaction.h>
 #include <kcombobox.h>
+#include <kconfiggroup.h>
 #include <khbox.h>
 #include <klineedit.h>
 #include <klocale.h>
@@ -46,6 +47,7 @@
 #include "searchbackend.h"
 #include <worldmapwidget2/worldmapwidget2.h>
 #include "gpssync2_common.h"
+#include "gpsbookmarkowner.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -61,6 +63,7 @@ public:
     }
 
     WMW2::WorldMapWidget2* mapWidget;
+    GPSBookmarkOwner* gpsBookmarkOwner;
     KLineEdit* searchTermLineEdit;
     QPushButton* searchButton;
     SearchBackend* searchBackend;
@@ -78,12 +81,14 @@ public:
     KIcon actionToggleAllResultsVisibilityIconUnchecked;
     KIcon actionToggleAllResultsVisibilityIconChecked;
     KAction* actionCopyCoordinates;
+    KAction* actionBookmark;
 };
 
-SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* parent)
+SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, QWidget* parent)
 : QWidget(parent), d(new SearchWidgetPrivate())
 {
     d->mapWidget = mapWidget;
+    d->gpsBookmarkOwner = gpsBookmarkOwner;
     d->searchBackend = new SearchBackend(this);
     d->searchResultsModel = new SearchResultModel(this);
     d->searchResultsSelectionModel = new QItemSelectionModel(d->searchResultsModel);
@@ -145,6 +150,9 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* pare
     d->treeView->setRootIsDecorated(false);
     d->treeView->setModel(d->searchResultsModel);
     d->treeView->setSelectionModel(d->searchResultsSelectionModel);
+
+    d->actionBookmark = new KAction(i18n("Bookmarks"), this);
+    d->actionBookmark->setMenu(d->gpsBookmarkOwner->getMenu());
 
     connect(d->searchButton, SIGNAL(clicked()),
             this, SLOT(slotTriggerSearch()));
@@ -520,15 +528,15 @@ bool SearchWidget::eventFilter(QObject *watched, QEvent *event)
         // we are only interested in context-menu events:
         if ( (event->type()==QEvent::ContextMenu) && d->searchResultsSelectionModel->hasSelection() )
         {
+            const QModelIndex currentIndex = d->searchResultsSelectionModel->currentIndex();
+            const SearchResultModel::SearchResultItem searchResult = d->searchResultsModel->resultItem(currentIndex);
+            d->gpsBookmarkOwner->setPositionAndTitle(searchResult.result.coordinates, searchResult.result.name);
+
             // construct the context-menu:
             KMenu * const menu = new KMenu(d->treeView);
             menu->addAction(d->actionCopyCoordinates);
-//             if (d->actionBookmark)
-//             {
-//                 menu->addSeparator();
-//                 menu->addAction(d->actionBookmark);
-//                 d->actionBookmark->setEnabled(nSelected>=1);
-//             }
+//             menu->addAction(d->actionBookmark);
+            d->gpsBookmarkOwner->changeAddBookmark(true);
 
             QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
             menu->exec(e->globalPos());
@@ -544,6 +552,28 @@ void SearchWidget::slotCopyCoordinates()
     const SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(currentIndex);
 
     CoordinatesToClipboard(currentItem.result.coordinates, KUrl(), currentItem.result.name);
+}
+
+void SearchWidget::saveSettingsToGroup(KConfigGroup* const group)
+{
+    group->writeEntry("Keep old results", d->actionKeepOldResults->isChecked());
+    group->writeEntry("Search backend", d->backendSelectionBox->itemData(d->backendSelectionBox->currentIndex()).toString());
+
+    slotUpdateUIState();
+}
+
+void SearchWidget::readSettingsFromGroup(KConfigGroup* const group)
+{
+    d->actionKeepOldResults->setChecked(group->readEntry("Keep old results", false));
+    const QString backendId = group->readEntry("Search backend", "osm");
+    for (int i=0; i<d->backendSelectionBox->count(); ++i)
+    {
+        if (d->backendSelectionBox->itemData(i).toString()==backendId)
+        {
+            d->backendSelectionBox->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 } /* KIPIGPSSyncPlugin */

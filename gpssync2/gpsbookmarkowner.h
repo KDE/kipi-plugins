@@ -82,11 +82,8 @@ public:
 
     KMenu* getMenu() const;
 
-    typedef bool (*PositionProviderFunction)(GPSDataContainer* position, void* yourdata);
-    PositionProviderFunction positionProviderFunction;
-    void* positionProviderFunctionData;
-    void setPositionProvider(const PositionProviderFunction function, void* const yourdata);
     void changeAddBookmark(const bool state);
+    void setPositionAndTitle(const WMW2::WMWGeoCoordinate& coordinates, const QString& title);
 
     KBookmarkManager* bookmarkManager() const;
 

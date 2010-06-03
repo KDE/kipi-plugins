@@ -331,7 +331,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->rgWidget = new GPSReverseGeocodingWidget(d->imageModel, d->selectionModel, d->stackedWidget);
     d->stackedWidget->addWidget(d->rgWidget);
 
-    d->searchWidget = new SearchWidget(d->mapWidget, d->stackedWidget);
+    d->searchWidget = new SearchWidget(d->mapWidget, d->bookmarkOwner, d->stackedWidget);
     d->mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
     d->stackedWidget->addWidget(d->searchWidget);
 
@@ -486,6 +486,7 @@ void GPSSyncDialog::readSettings()
     d->mapWidget->readSettingsFromGroup(&group);
     d->correlatorWidget->readSettingsFromGroup(&group);
     d->treeView->readSettingsFromGroup(&group);
+    d->searchWidget->readSettingsFromGroup(&group);
     setCurrentTab(group.readEntry("Current Tab", 0));
     const bool showOldestFirst = group.readEntry("Show oldest images first", false);
 
@@ -536,6 +537,7 @@ void GPSSyncDialog::saveSettings()
     d->mapWidget->saveSettingsToGroup(&group);
     d->correlatorWidget->saveSettingsToGroup(&group);
     d->treeView->saveSettingsToGroup(&group);
+    d->searchWidget->saveSettingsToGroup(&group);
     group.writeEntry("Current Tab", d->tabBar->currentIndex());
     group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
     group.writeEntry("Bookmarks visible", d->actionBookmarkVisibility->isChecked());
