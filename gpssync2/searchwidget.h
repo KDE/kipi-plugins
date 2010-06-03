@@ -36,6 +36,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 class GPSBookmarkOwner;
+class GPSUndoCommand;
 class SearchResultItem;
 class SearchResultModelPrivate;
 class SearchResultModel : public QAbstractItemModel
@@ -78,17 +79,21 @@ class SearchResultModelHelper : public WMW2::WMWModelHelper
 {
 Q_OBJECT
 public:
-    SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, QObject* const parent = 0);
+    SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, KipiImageModel* const imageModel, QObject* const parent = 0);
     ~SearchResultModelHelper();
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
     virtual bool itemCoordinates(const QModelIndex& index, WMW2::WMWGeoCoordinate* const coordinates) const;
     virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
-    virtual bool visible() const;
-    virtual bool snaps() const;
+    virtual Flags modelFlags() const;
+    virtual Flags itemFlags(const QModelIndex& index) const;
+    virtual void snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices);
 
     void setVisibility(const bool state);
+
+Q_SIGNALS:
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
     SearchResultModelHelperPrivate* const d;
@@ -100,7 +105,7 @@ class SearchWidget : public QWidget
 Q_OBJECT
 
 public:
-    SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, QWidget* parent = 0);
+    SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QWidget* parent = 0);
     ~SearchWidget();
 
     WMW2::WMWModelHelper* getModelHelper();
@@ -118,6 +123,9 @@ private Q_SLOTS:
 
 protected:
     virtual bool eventFilter(QObject *watched, QEvent *event);
+
+Q_SIGNALS:
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
     SearchWidgetPrivate* const d;

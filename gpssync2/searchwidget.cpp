@@ -48,6 +48,8 @@
 #include <worldmapwidget2/worldmapwidget2.h>
 #include "gpssync2_common.h"
 #include "gpsbookmarkowner.h"
+#include "gpsundocommand.h"
+#include "kipiimagemodel.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -64,6 +66,7 @@ public:
 
     WMW2::WorldMapWidget2* mapWidget;
     GPSBookmarkOwner* gpsBookmarkOwner;
+    KipiImageModel* kipiImageModel;
     KLineEdit* searchTermLineEdit;
     QPushButton* searchButton;
     SearchBackend* searchBackend;
@@ -84,16 +87,17 @@ public:
     KAction* actionBookmark;
 };
 
-SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, QWidget* parent)
+SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QWidget* parent)
 : QWidget(parent), d(new SearchWidgetPrivate())
 {
     d->mapWidget = mapWidget;
     d->gpsBookmarkOwner = gpsBookmarkOwner;
+    d->kipiImageModel = kipiImageModel;
     d->searchBackend = new SearchBackend(this);
     d->searchResultsModel = new SearchResultModel(this);
     d->searchResultsSelectionModel = new QItemSelectionModel(d->searchResultsModel);
     d->searchResultsModel->setSelectionModel(d->searchResultsSelectionModel);
-    d->searchResultModelHelper = new SearchResultModelHelper(d->searchResultsModel, d->searchResultsSelectionModel, this);
+    d->searchResultModelHelper = new SearchResultModelHelper(d->searchResultsModel, d->searchResultsSelectionModel, d->kipiImageModel, this);
 
     d->mainVBox = new QVBoxLayout(this);
     setLayout(d->mainVBox);
@@ -177,6 +181,9 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOw
 
     connect(d->actionCopyCoordinates, SIGNAL(triggered(bool)),
             this, SLOT(slotCopyCoordinates()));
+
+    connect(d->searchResultModelHelper, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SIGNAL(signalUndoCommand(GPSUndoCommand*)));
 
     d->treeView->installEventFilter(this);
 
@@ -381,14 +388,16 @@ public:
 
     SearchResultModel* model;
     QItemSelectionModel* selectionModel;
+    KipiImageModel* imageModel;
     bool visible;
 };
 
-SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, QObject* const parent)
+SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, KipiImageModel* const imageModel, QObject* const parent)
 : WMW2::WMWModelHelper(parent), d(new SearchResultModelHelperPrivate())
 {
     d->model = resultModel;
     d->selectionModel = selectionModel;
+    d->imageModel = imageModel;
 }
 
 SearchResultModelHelper::~SearchResultModelHelper()
@@ -418,16 +427,6 @@ bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, WMW2::WM
 QPixmap SearchResultModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset) const
 {
     return d->model->getMarkerIcon(index, offset);
-}
-
-bool SearchResultModelHelper::visible() const
-{
-    return d->visible;
-}
-
-bool SearchResultModelHelper::snaps() const
-{
-    return true;
 }
 
 SearchResultModel::SearchResultItem SearchResultModel::resultItem(const QModelIndex& index) const
@@ -574,6 +573,39 @@ void SearchWidget::readSettingsFromGroup(KConfigGroup* const group)
             break;
         }
     }
+}
+
+WMW2::WMWModelHelper::Flags SearchResultModelHelper::modelFlags() const
+{
+    return FlagSnaps|(d->visible?FlagVisible:FlagNull);
+}
+
+WMW2::WMWModelHelper::Flags SearchResultModelHelper::itemFlags(const QModelIndex& index) const
+{
+    return FlagVisible|FlagSnaps;
+}
+
+void SearchResultModelHelper::snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices)
+{
+    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
+
+    SearchResultModel::SearchResultItem targetItem = d->model->resultItem(targetIndex);
+    const WMW2::WMWGeoCoordinate& targetCoordinates = targetItem.result.coordinates;
+    for (int i=0; i<snappedIndices.count(); ++i)
+    {
+        const QPersistentModelIndex itemIndex = snappedIndices.at(i);
+        GPSImageItem* const item = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+        const GPSDataContainer oldData = item->gpsData();
+        GPSDataContainer newData = oldData;
+        newData.setCoordinates(targetCoordinates);
+        item->setGPSData(newData);
+
+        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
+    }
+    undoCommand->setText(i18np("1 image snapped to %2",
+                               "%1 images snapped to %2", snappedIndices.count(), targetItem.result.name));
+
+    emit(signalUndoCommand(undoCommand));
 }
 
 } /* KIPIGPSSyncPlugin */

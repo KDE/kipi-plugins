@@ -36,6 +36,8 @@ class KBookmarkManager;
 namespace KIPIGPSSyncPlugin
 {
 
+class KipiImageModel;
+class GPSUndoCommand;
 class GPSBookmarkModelHelperPrivate;
 class GPSBookmarkModelHelper : public WMW2::WMWModelHelper
 {
@@ -46,20 +48,25 @@ public:
         CoordinatesRole = Qt::UserRole + 1
     };
 
-    GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, QObject* const parent = 0);
+    GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, KipiImageModel* const kipiImageModel, QObject* const parent = 0);
     virtual ~GPSBookmarkModelHelper();
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
     virtual bool itemCoordinates(const QModelIndex& index, WMW2::WMWGeoCoordinate* const coordinates) const;
     virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
-    virtual bool visible() const;
-    virtual bool snaps() const;
+    virtual Flags modelFlags() const;
+    virtual Flags itemFlags(const QModelIndex& index) const;
+    virtual void snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices);
 
     void setVisible(const bool state);
 
 private Q_SLOTS:
     void slotUpdateBookmarksModel();
+
+
+Q_SIGNALS:
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
     GPSBookmarkModelHelperPrivate* const d;
@@ -71,7 +78,7 @@ class GPSBookmarkOwner : public QObject, public KBookmarkOwner
     Q_OBJECT
 
 public:
-    GPSBookmarkOwner(QWidget* const parent);
+    GPSBookmarkOwner(KipiImageModel* const kipiImageModel, QWidget* const parent);
     virtual ~GPSBookmarkOwner();
 
     virtual bool supportsTabs() const;

@@ -36,6 +36,8 @@
 // local includes
 
 #include "inputboxnocancel.h"
+#include "gpsundocommand.h"
+#include "kipiimagemodel.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -64,7 +66,7 @@ public:
     QString             lastTitle;
 };
 
-GPSBookmarkOwner::GPSBookmarkOwner(QWidget* const parent)
+GPSBookmarkOwner::GPSBookmarkOwner(KipiImageModel* const kipiImageModel, QWidget* const parent)
 : d(new GPSBookmarkOwnerPrivate())
 {
     d->parent = parent;
@@ -77,7 +79,7 @@ GPSBookmarkOwner::GPSBookmarkOwner(QWidget* const parent)
     d->bookmarkMenu = new KMenu(parent);
     d->bookmarkMenuController = new KBookmarkMenu(d->bookmarkManager, this, d->bookmarkMenu, d->actionCollection);
 
-    d->bookmarkModelHelper = new GPSBookmarkModelHelper(d->bookmarkManager, this);
+    d->bookmarkModelHelper = new GPSBookmarkModelHelper(d->bookmarkManager, kipiImageModel, this);
 }
 
 GPSBookmarkOwner::~GPSBookmarkOwner()
@@ -170,6 +172,7 @@ public:
 
     QStandardItemModel* model;
     KBookmarkManager* bookmarkManager;
+    KipiImageModel* kipiImageModel;
     QPixmap pixmap;
     bool visible;
 
@@ -177,11 +180,12 @@ public:
     
 };
 
-GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, QObject* const parent)
+GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, KipiImageModel* const kipiImageModel, QObject* const parent)
 : WMWModelHelper(parent), d(new GPSBookmarkModelHelperPrivate())
 {
     d->model = new QStandardItemModel(this);
     d->bookmarkManager = bookmarkManager;
+    d->kipiImageModel = kipiImageModel;
     const KUrl markerUrl = KStandardDirs::locate("data", "gpssync2/bookmarks-marker.png");
     d->pixmap = QPixmap(markerUrl.toLocalFile());
 
@@ -247,6 +251,7 @@ void GPSBookmarkModelHelperPrivate::addBookmarkGroupToModel(const KBookmarkGroup
             if (okay)
             {
                 QStandardItem* const item = new QStandardItem();
+                item->setData(currentBookmark.text(), Qt::DisplayRole);
                 item->setData(QVariant::fromValue(coordinates), GPSBookmarkModelHelper::CoordinatesRole);
 
                 model->appendRow(item);
@@ -270,26 +275,52 @@ GPSBookmarkModelHelper* GPSBookmarkOwner::bookmarkModelHelper() const
     return d->bookmarkModelHelper;
 }
 
-bool GPSBookmarkModelHelper::visible() const
-{
-    return d->visible;
-}
-
 void GPSBookmarkModelHelper::setVisible(const bool state)
 {
     d->visible = state;
     emit(signalVisibilityChanged());
 }
 
-bool GPSBookmarkModelHelper::snaps() const
-{
-    return true;
-}
-
 void GPSBookmarkOwner::setPositionAndTitle(const WMW2::WMWGeoCoordinate& coordinates, const QString& title)
 {
     d->lastCoordinates = coordinates;
     d->lastTitle = title;
+}
+
+WMW2::WMWModelHelper::Flags GPSBookmarkModelHelper::modelFlags() const
+{
+    return FlagSnaps|(d->visible?FlagVisible:FlagNull);
+}
+
+WMW2::WMWModelHelper::Flags GPSBookmarkModelHelper::itemFlags(const QModelIndex& index) const
+{
+    return FlagVisible|FlagSnaps;
+}
+
+void GPSBookmarkModelHelper::snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices)
+{
+    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
+
+    WMW2::WMWGeoCoordinate targetCoordinates;
+    if (!itemCoordinates(targetIndex, &targetCoordinates))
+        return;
+
+    for (int i=0; i<snappedIndices.count(); ++i)
+    {
+        const QPersistentModelIndex itemIndex = snappedIndices.at(i);
+        GPSImageItem* const item = static_cast<GPSImageItem*>(d->kipiImageModel->itemFromIndex(itemIndex));
+        const GPSDataContainer oldData = item->gpsData();
+        GPSDataContainer newData = oldData;
+        newData.setCoordinates(targetCoordinates);
+        item->setGPSData(newData);
+
+        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
+    }
+    kDebug()<<targetIndex.data(Qt::DisplayRole).toString();
+    undoCommand->setText(i18np("1 image snapped to %2",
+                               "%1 images snapped to %2", snappedIndices.count(), targetIndex.data(Qt::DisplayRole).toString()));
+
+    emit(signalUndoCommand(undoCommand));
 }
 
 }  // namespace KIPIGPSSyncPlugin

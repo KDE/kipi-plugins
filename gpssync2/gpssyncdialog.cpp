@@ -194,7 +194,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->representativeChooser = new GPSSyncWMWRepresentativeChooser(d->imageModel, this);
 
     d->undoStack = new KUndoStack(this);
-    d->bookmarkOwner = new GPSBookmarkOwner(this);
+    d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
 
     d->actionBookmarkVisibility = new KAction(this);
     d->actionBookmarkVisibility->setIcon(SmallIcon("bookmarks"));
@@ -331,7 +331,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->rgWidget = new GPSReverseGeocodingWidget(d->imageModel, d->selectionModel, d->stackedWidget);
     d->stackedWidget->addWidget(d->rgWidget);
 
-    d->searchWidget = new SearchWidget(d->mapWidget, d->bookmarkOwner, d->stackedWidget);
+    d->searchWidget = new SearchWidget(d->mapWidget, d->bookmarkOwner, d->imageModel, d->stackedWidget);
     d->mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
     d->stackedWidget->addWidget(d->searchWidget);
 
@@ -392,6 +392,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->rgWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
+    connect(d->searchWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
     connect(d->listViewContextMenu, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
@@ -401,6 +403,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     connect(d->tabBar, SIGNAL(currentChanged(int)),
             this, SLOT(slotCurrentTabChanged(int)));
+
+    connect(d->bookmarkOwner->bookmarkModelHelper(), SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
     readSettings();
 }

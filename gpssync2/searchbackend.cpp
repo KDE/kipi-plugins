@@ -257,7 +257,7 @@ QString SearchBackend::getErrorMessage() const
 QList<QPair<QString, QString> > SearchBackend::getBackends() const
 {
     QList<QPair<QString, QString> > resultList;
-    resultList << QPair<QString, QString>(i18n("geonames.org"), "geonames.org");
+    resultList << QPair<QString, QString>(i18n("GeoNames"), "geonames.org");
     resultList << QPair<QString, QString>(i18n("OSM"), "osm");
 
     return resultList;
