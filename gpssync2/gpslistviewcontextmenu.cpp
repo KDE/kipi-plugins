@@ -4,8 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2009-05-07
- * Description : Context menu for GPS list view which can be used
- *               in the track list editor and the sync dialog
+ * Description : Context menu for GPS list view
  *
  * Copyright (C) 2009 by Michael G. Hansen <mike at mghansen dot de>
  *
@@ -48,6 +47,7 @@
 #include "gpsbookmarkowner.h"
 #include "gpsimageitem.h"
 #include "gpsundocommand.h"
+#include "gpssync2_common.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -79,7 +79,9 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
     d->imagesList  = imagesList;
 
     d->actionCopy  = new KAction(i18n("Copy coordinates"), this);
+    d->actionCopy->setIcon(SmallIcon("edit-copy"));
     d->actionPaste = new KAction(i18n("Paste coordinates"), this);
+    d->actionPaste->setIcon(SmallIcon("edit-paste"));
 
     connect(d->actionCopy, SIGNAL(triggered()),
             this, SLOT(copyActionTriggered()));
@@ -201,53 +203,7 @@ void GPSListViewContextMenu::copyActionTriggered()
     if (!getCurrentItemPositionAndUrl(&gpsInfo, &itemUrl))
         return;
 
-    const QString lat = gpsInfo.m_coordinates.latString();
-    const QString lon = gpsInfo.m_coordinates.lonString();
-    const bool haveAltitude = gpsInfo.m_coordinates.hasAltitude();
-    const QString altitude = gpsInfo.m_coordinates.altString();
-
-    const QString coordinates = haveAltitude ?
-        QString::fromLatin1("%1,%2,%3").arg(lon).arg(lat).arg(altitude) :
-        QString::fromLatin1("%1,%2").arg(lon).arg(lat);
-
-    // importing this representation into Marble does not show anything,
-    // but Merkaartor shows the point
-    const QString kmlRepresentation = QString::fromLatin1(
-      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-      "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n"
-      "<Document>\n"
-      " <Placemark>\n"
-      "   <name>%1</name>\n"
-      "   <Point>\n"
-      "     <coordinates>%2</coordinates>\n"
-      "   </Point>\n"
-      " </Placemark>\n"
-      "</Document>\n"
-      "</kml>\n"
-      ).arg(itemUrl.toLocalFile()).arg(coordinates);
-
-    // importing this data into Marble and Merkaartor works
-    const QString elevationString = haveAltitude ? QString::fromLatin1("   <ele>%1</ele>\n").arg(altitude) : QString();
-    const QString gpxRepresentation = QString::fromLatin1(
-      "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-      "<gpx xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"trippy\" version=\"0.1\"\n"
-      " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-      " xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">\n"
-      "  <wpt lat=\"%1\" lon=\"%2\">\n"
-      "%3"
-//      "   <time></time>\n"
-      "   <name>%4</name>\n"
-      "  </wpt>\n"
-      "</gpx>\n"
-      ).arg(lat).arg(lon).arg(elevationString).arg(itemUrl.toLocalFile());
-
-    QMimeData * const myMimeData = new QMimeData();
-    myMimeData->setText(coordinates);
-    myMimeData->setData(QLatin1String("application/vnd.google-earth.kml+xml"), kmlRepresentation.toUtf8());
-    myMimeData->setData(QLatin1String("application/gpx+xml"), gpxRepresentation.toUtf8());
-
-    QClipboard * const clipboard = QApplication::clipboard();
-    clipboard->setMimeData(myMimeData);
+    CoordinatesToClipboard(gpsInfo.m_coordinates, itemUrl, QString());
 }
 
 void GPSListViewContextMenu::pasteActionTriggered()

@@ -29,6 +29,8 @@
 
 #include "searchbackend.h"
 
+class QEvent;
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -108,6 +110,10 @@ private Q_SLOTS:
     void slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& previous);
     void slotClearSearchResults();
     void slotVisibilityChanged(bool state);
+    void slotCopyCoordinates();
+
+protected:
+    virtual bool eventFilter(QObject *watched, QEvent *event);
 
 private:
     SearchWidgetPrivate* const d;

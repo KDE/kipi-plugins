@@ -21,6 +21,7 @@
 
 // Qt includes
 
+#include <QContextMenuEvent>
 #include <QListView>
 #include <QPainter>
 #include <QPushButton>
@@ -36,6 +37,7 @@
 #include <khbox.h>
 #include <klineedit.h>
 #include <klocale.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <kvbox.h>
 
@@ -43,6 +45,7 @@
 
 #include "searchbackend.h"
 #include <worldmapwidget2/worldmapwidget2.h>
+#include "gpssync2_common.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -74,6 +77,7 @@ public:
     bool searchInProgress;
     KIcon actionToggleAllResultsVisibilityIconUnchecked;
     KIcon actionToggleAllResultsVisibilityIconChecked;
+    KAction* actionCopyCoordinates;
 };
 
 SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* parent)
@@ -118,6 +122,9 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* pare
     QToolButton* const tbToggleAllVisibility = new QToolButton(actionHBox);
     tbToggleAllVisibility->setDefaultAction(d->actionToggleAllResultsVisibility);
 
+    d->actionCopyCoordinates = new KAction(i18n("Copy coordinates"), this);
+    d->actionCopyCoordinates->setIcon(SmallIcon("edit-copy"));
+
     d->backendSelectionBox = new KComboBox(actionHBox);
     d->backendSelectionBox->setToolTip(i18n("Select which service you would like to use."));
     const QList<QPair<QString, QString> > backendList = d->searchBackend->getBackends();
@@ -159,6 +166,11 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* pare
 
     connect(d->actionToggleAllResultsVisibility, SIGNAL(triggered(bool)),
             this, SLOT(slotVisibilityChanged(bool)));
+
+    connect(d->actionCopyCoordinates, SIGNAL(triggered(bool)),
+            this, SLOT(slotCopyCoordinates()));
+
+    d->treeView->installEventFilter(this);
 
     slotUpdateUIState();
 }
@@ -499,6 +511,39 @@ void SearchResultModelHelper::setVisibility(const bool state)
 {
     d->visible = state;
     emit(signalVisibilityChanged());
+}
+
+bool SearchWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched==d->treeView)
+    {
+        // we are only interested in context-menu events:
+        if ( (event->type()==QEvent::ContextMenu) && d->searchResultsSelectionModel->hasSelection() )
+        {
+            // construct the context-menu:
+            KMenu * const menu = new KMenu(d->treeView);
+            menu->addAction(d->actionCopyCoordinates);
+//             if (d->actionBookmark)
+//             {
+//                 menu->addSeparator();
+//                 menu->addAction(d->actionBookmark);
+//                 d->actionBookmark->setEnabled(nSelected>=1);
+//             }
+
+            QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
+            menu->exec(e->globalPos());
+        }
+    }
+
+    return QObject::eventFilter(watched, event);
+}
+
+void SearchWidget::slotCopyCoordinates()
+{
+    const QModelIndex currentIndex = d->searchResultsSelectionModel->currentIndex();
+    const SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(currentIndex);
+
+    CoordinatesToClipboard(currentItem.result.coordinates, KUrl(), currentItem.result.name);
 }
 
 } /* KIPIGPSSyncPlugin */
