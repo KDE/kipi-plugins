@@ -54,6 +54,7 @@ public:
     QTreeView* treeView;
     SearchResultModel* searchResultsModel;
     SearchResultModelHelper* searchResultModelHelper;
+    QVBoxLayout* mainVBox;
 };
 
 SearchWidget::SearchWidget(QWidget* parent)
@@ -63,25 +64,33 @@ SearchWidget::SearchWidget(QWidget* parent)
     d->searchResultsModel = new SearchResultModel(this);
     d->searchResultModelHelper = new SearchResultModelHelper(d->searchResultsModel, this);
 
-    KVBox* const mainVBox = new KVBox(this);
+    d->mainVBox = new QVBoxLayout(this);
+    setLayout(d->mainVBox);
 
-    KHBox* const topHBox = new KHBox(mainVBox);
+    KHBox* const topHBox = new KHBox(this);
+    d->mainVBox->addWidget(topHBox);
     d->searchTermLineEdit = new KLineEdit(topHBox);
+    d->searchTermLineEdit->setClearButtonShown(true);
     d->searchButton = new QPushButton(i18n("Search"), topHBox);
 
-    d->treeView = new QTreeView(mainVBox);
+    d->treeView = new QTreeView(this);
+    d->mainVBox->addWidget(d->treeView);
+    d->treeView->setRootIsDecorated(false);
     d->treeView->setModel(d->searchResultsModel);
-
-    QListView* const listView = new QListView(mainVBox);
-    listView->setModel(d->searchResultsModel);
-
-//     dynamic_cast<QVBoxLayout*>(mainVBox->layout())->addStretch(300);
 
     connect(d->searchButton, SIGNAL(clicked()),
             this, SLOT(slotTriggerSearch()));
 
     connect(d->searchBackend, SIGNAL(signalSearchCompleted()),
             this, SLOT(slotSearchCompleted()));
+
+    connect(d->searchTermLineEdit, SIGNAL(returnPressed()),
+            this, SLOT(slotTriggerSearch()));
+
+    connect(d->searchTermLineEdit, SIGNAL(textChanged(const QString&)),
+            this, SLOT(slotUpdateUIState()));
+
+    slotUpdateUIState();
 }
 
 SearchWidget::~SearchWidget()
@@ -98,6 +107,10 @@ void SearchWidget::slotSearchCompleted()
 
 void SearchWidget::slotTriggerSearch()
 {
+    // this is necessary since this slot is also connected to QLineEdit::returnPressed
+    if (d->searchTermLineEdit->text().isEmpty())
+        return;
+
     d->searchBackend->search("osm", d->searchTermLineEdit->text());
 }
 
@@ -141,7 +154,7 @@ QVariant SearchResultModel::data(const QModelIndex& index, int role) const
 
     const int columnNumber = index.column();
 
-    if (columnNumber==0)
+    if ((columnNumber==0)&&(role==Qt::DisplayRole))
     {
         return d->searchResults.at(rowNumber).result.name;
     }
@@ -172,6 +185,9 @@ QModelIndex SearchResultModel::parent(const QModelIndex& index) const
 
 int SearchResultModel::rowCount(const QModelIndex& parent) const
 {
+    if (parent.isValid())
+        return 0;
+
     return d->searchResults.count();
 }
 
@@ -182,7 +198,10 @@ bool SearchResultModel::setHeaderData(int section, Qt::Orientation orientation, 
 
 QVariant SearchResultModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    return "Name";
+    if ((section>=1)||(orientation!=Qt::Horizontal))
+        return false;
+
+    return QVariant("Name");
 }
 
 Qt::ItemFlags SearchResultModel::flags(const QModelIndex& index) const
@@ -265,6 +284,13 @@ SearchResultModel::SearchResultItem SearchResultModel::resultItem(const QModelIn
 WMW2::WMWModelHelper* SearchWidget::getModelHelper()
 {
     return d->searchResultModelHelper;
+}
+
+void SearchWidget::slotUpdateUIState()
+{
+    const bool haveSearchText = !d->searchTermLineEdit->text().isEmpty();
+
+    d->searchButton->setEnabled(haveSearchText);
 }
 
 } /* KIPIGPSSyncPlugin */

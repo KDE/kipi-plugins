@@ -99,6 +99,7 @@ public:
 private Q_SLOTS:
     void slotSearchCompleted();
     void slotTriggerSearch();
+    void slotUpdateUIState();
 
 private:
     SearchWidgetPrivate* const d;
