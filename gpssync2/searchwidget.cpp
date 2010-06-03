@@ -100,22 +100,26 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* pare
 
     d->actionClearResultsList = new KAction(this);
     d->actionClearResultsList->setIcon(SmallIcon("edit-clear-list"));
+    d->actionClearResultsList->setToolTip(i18n("Clear the search results."));
     QToolButton* const tbClearResultsList = new QToolButton(actionHBox);
     tbClearResultsList->setDefaultAction(d->actionClearResultsList);
 
     d->actionKeepOldResults = new KAction("S", this);
     d->actionKeepOldResults->setCheckable(true);
     d->actionKeepOldResults->setChecked(false);
+    d->actionKeepOldResults->setToolTip(i18n("Keep the results of old searches when doing a new search."));
     QToolButton* const tbKeepOldResults = new QToolButton(actionHBox);
     tbKeepOldResults->setDefaultAction(d->actionKeepOldResults);
 
     d->actionToggleAllResultsVisibility = new KAction(this);
     d->actionToggleAllResultsVisibility->setCheckable(true);
     d->actionToggleAllResultsVisibility->setChecked(true);
+    d->actionToggleAllResultsVisibility->setToolTip(i18n("Toggle the visibility of the search results on the map."));
     QToolButton* const tbToggleAllVisibility = new QToolButton(actionHBox);
     tbToggleAllVisibility->setDefaultAction(d->actionToggleAllResultsVisibility);
 
     d->backendSelectionBox = new KComboBox(actionHBox);
+    d->backendSelectionBox->setToolTip(i18n("Select which service you would like to use."));
     const QList<QPair<QString, QString> > backendList = d->searchBackend->getBackends();
     for (int i=0; i<backendList.count(); ++i)
     {
