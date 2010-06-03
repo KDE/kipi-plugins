@@ -53,6 +53,7 @@ public:
         WMW2::WMWGeoCoordinate coordinates;
         QString name;
         WMW2::WMWGeoCoordinate::Pair boundingBox;
+        QString internalId;
     };
 
     SearchBackend(QObject* const parent = 0);
@@ -61,6 +62,7 @@ public:
     bool search(const QString& backendName, const QString& searchTerm);
     SearchResult::List getResults() const;
     QString getErrorMessage() const;
+    QList<QPair<QString, QString> >  getBackends() const;
 
 Q_SIGNALS:
     void signalSearchCompleted();

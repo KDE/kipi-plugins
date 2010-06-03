@@ -32,6 +32,7 @@
 // KDE includes
 
 #include <kaction.h>
+#include <kcombobox.h>
 #include <khbox.h>
 #include <klineedit.h>
 #include <klocale.h>
@@ -65,6 +66,7 @@ public:
     QItemSelectionModel* searchResultsSelectionModel;
     SearchResultModelHelper* searchResultModelHelper;
     QVBoxLayout* mainVBox;
+    KComboBox* backendSelectionBox;
 
     KAction* actionClearResultsList;
     KAction* actionKeepOldResults;
@@ -113,6 +115,13 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* pare
     QToolButton* const tbToggleAllVisibility = new QToolButton(actionHBox);
     tbToggleAllVisibility->setDefaultAction(d->actionToggleAllResultsVisibility);
 
+    d->backendSelectionBox = new KComboBox(actionHBox);
+    const QList<QPair<QString, QString> > backendList = d->searchBackend->getBackends();
+    for (int i=0; i<backendList.count(); ++i)
+    {
+        d->backendSelectionBox->addItem(backendList.at(i).first, backendList.at(i).second);
+    }
+    
     // add stretch after the controls:
     QHBoxLayout* const hBoxLayout = reinterpret_cast<QHBoxLayout*>(actionHBox->layout());
     if (hBoxLayout)
@@ -184,7 +193,8 @@ void SearchWidget::slotTriggerSearch()
 
     d->searchInProgress = true;
 
-    d->searchBackend->search("osm", d->searchTermLineEdit->text());
+    const QString searchBackendName = d->backendSelectionBox->itemData(d->backendSelectionBox->currentIndex()).toString();
+    d->searchBackend->search(searchBackendName, d->searchTermLineEdit->text());
 
     slotUpdateUIState();
 }
@@ -304,11 +314,34 @@ Qt::ItemFlags SearchResultModel::flags(const QModelIndex& index) const
 
 void SearchResultModel::addResults(const SearchBackend::SearchResult::List& results)
 {
-    beginInsertRows(QModelIndex(), d->searchResults.count(), d->searchResults.count()+results.count());
+    // first check which items are not duplicates
+    QList<int> nonDuplicates;
     for (int i=0; i<results.count(); ++i)
     {
+        const SearchBackend::SearchResult& currentResult = results.at(i);
+        bool isDuplicate = false;
+        for (int j=0; j<d->searchResults.count(); ++j)
+        {
+            if (currentResult.internalId==d->searchResults.at(j).result.internalId)
+            {
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (!isDuplicate)
+        {
+            nonDuplicates << i;
+        }
+    }
+
+    if (nonDuplicates.isEmpty())
+        return;
+
+    beginInsertRows(QModelIndex(), d->searchResults.count(), d->searchResults.count()+nonDuplicates.count());
+    for (int i=0; i<nonDuplicates.count(); ++i)
+    {
         SearchResultItem item;
-        item.result = results.at(i);
+        item.result = results.at(nonDuplicates.at(i));
         d->searchResults << item;
     }
     endInsertRows();

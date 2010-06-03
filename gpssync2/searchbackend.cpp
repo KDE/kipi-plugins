@@ -19,7 +19,6 @@
 
 #include "searchbackend.moc"
 
-
 // Qt includes
 
 #include <QDomDocument>
@@ -27,6 +26,11 @@
 // KDE includes
 
 #include <kio/job.h>
+#include <klocale.h>
+
+// local includes
+
+#include "gpssync2_common.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -70,6 +74,7 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
         jobUrl.addQueryItem("q", searchTerm);
 
         d->kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
+        d->kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
         connect(d->kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)),
                 this, SLOT(slotData(KIO::Job*, const QByteArray&)));
@@ -78,6 +83,29 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
                 this, SLOT(slotResult(KJob*)));
 
         return true;
+    }
+
+    if (backendName=="geonames.org")
+    {
+        d->runningBackend = backendName;
+
+        // documentation: http://www.geonames.org/export/geonames-search.html
+
+        KUrl jobUrl("http://ws.geonames.org/search");
+        jobUrl.addQueryItem("type", "xml");
+        jobUrl.addQueryItem("q", searchTerm);
+
+        d->kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
+        d->kioJob->addMetaData("User-Agent", getKipiUserAgentName());
+
+        connect(d->kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)),
+                this, SLOT(slotData(KIO::Job*, const QByteArray&)));
+
+        connect(d->kioJob, SIGNAL(result(KJob*)),
+                this, SLOT(slotResult(KJob*)));
+
+        return true;
+        
     }
 
     return false;
@@ -117,6 +145,7 @@ void SearchBackend::slotResult(KJob* kJob)
             const QString latString = resultElement.attribute("lat");
             const QString lonString = resultElement.attribute("lon");
             const QString displayName = resultElement.attribute("display_name");
+            const QString placeId = resultElement.attribute("place_id");
 
             if (latString.isEmpty()||lonString.isEmpty()||displayName.isEmpty())
                 continue;
@@ -136,7 +165,77 @@ void SearchBackend::slotResult(KJob* kJob)
             result.coordinates = WMW2::WMWGeoCoordinate(lat, lon);
             result.name = displayName;
 
+            if (!placeId.isEmpty())
+            {
+                result.internalId = "osm-"+placeId;
+            }
+
             // TODO: parse bounding box
+
+            d->results << result;
+        }
+    }
+    else if (d->runningBackend=="geonames.org")
+    {
+        QDomDocument doc;
+        doc.setContent(resultString); // error-handling
+        QDomElement docElement = doc.documentElement(); // error-handling
+        kDebug()<<docElement.toElement().tagName();
+        for (QDomNode resultNode = docElement.firstChild(); !resultNode.isNull(); resultNode = resultNode.nextSibling())
+        {
+            QDomElement resultElement = resultNode.toElement();
+            kDebug()<<resultElement.tagName();
+            if (resultElement.isNull()) continue;
+            if (resultElement.tagName()!="geoname") continue;
+
+            QString latString;
+            QString lonString;
+            QString displayName;
+            QString geoNameId;
+            for (QDomNode resultSubNode = resultElement.firstChild(); !resultSubNode.isNull(); resultSubNode = resultSubNode.nextSibling())
+            {
+                QDomElement resultSubElement = resultSubNode.toElement();
+                if (resultSubElement.isNull()) continue;
+
+                if (resultSubElement.tagName()=="lat")
+                {
+                    latString = resultSubElement.text();
+                }
+                else if (resultSubElement.tagName()=="lng")
+                {
+                    lonString = resultSubElement.text();
+                }
+                else if (resultSubElement.tagName()=="name")
+                {
+                    displayName = resultSubElement.text();
+                }
+                else if (resultSubElement.tagName()=="geonameId")
+                {
+                    geoNameId = resultSubElement.text();
+                }
+            }
+            if (latString.isEmpty()||lonString.isEmpty()||displayName.isEmpty())
+                continue;
+
+            // now parse the strings:
+            qreal lat;
+            qreal lon;
+            bool okay = false;
+            lat = latString.toDouble(&okay);
+            if (okay)
+                lon = lonString.toDouble(&okay);
+
+            if (!okay)
+                continue;
+
+            SearchResult result;
+            result.coordinates = WMW2::WMWGeoCoordinate(lat, lon);
+            result.name = displayName;
+
+            if (!geoNameId.isEmpty())
+            {
+                result.internalId = "geonames.org-"+geoNameId;
+            }
 
             d->results << result;
         }
@@ -153,6 +252,15 @@ SearchBackend::SearchResult::List SearchBackend::getResults() const
 QString SearchBackend::getErrorMessage() const
 {
     return d->errorMessage;
+}
+
+QList<QPair<QString, QString> > SearchBackend::getBackends() const
+{
+    QList<QPair<QString, QString> > resultList;
+    resultList << QPair<QString, QString>(i18n("geonames.org"), "geonames.org");
+    resultList << QPair<QString, QString>(i18n("OSM"), "osm");
+
+    return resultList;
 }
 
 } /* KIPIGPSSyncPlugin */

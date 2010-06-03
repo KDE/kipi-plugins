@@ -15,6 +15,7 @@
 #include "backend-osm-rg.h"
 #include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
+#include "gpssync2_common.h"
 
 //Qt includes
 #include <QDomDocument>
@@ -86,8 +87,8 @@ void BackendOsmRG::nextPhoto()
 
     d->jobs[d->itemCounter].kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
 
-    d->jobs[d->itemCounter].kioJob->addMetaData("User-Agent", "kde-imaging@kde.org");
-        
+    d->jobs[d->itemCounter].kioJob->addMetaData("User-Agent", getKipiUserAgentName());
+
     connect(d->jobs[d->itemCounter].kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
             this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
     connect(d->jobs[d->itemCounter].kioJob, SIGNAL(result(KJob*)),
