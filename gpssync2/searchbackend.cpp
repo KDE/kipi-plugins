@@ -90,6 +90,16 @@ void SearchBackend::slotData(KIO::Job* kioJob, const QByteArray& data)
 
 void SearchBackend::slotResult(KJob* kJob)
 {
+    if (kJob!=d->kioJob)
+        return;
+
+    if (d->kioJob->error())
+    {
+        d->errorMessage = d->kioJob->errorString();
+        emit(signalSearchCompleted());
+        return;
+    }
+
     const QString resultString = QString::fromUtf8(d->searchData.constData(), d->searchData.count());
 
     if (d->runningBackend=="osm")

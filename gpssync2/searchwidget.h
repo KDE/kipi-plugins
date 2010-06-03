@@ -63,6 +63,7 @@ public:
     SearchResultItem resultItem(const QModelIndex& index) const;
     QPixmap getMarkerIcon(const QModelIndex& index, QPoint* const offset) const;
     void setSelectionModel(QItemSelectionModel* const selectionModel);
+    void clearResults();
 
 private:
     SearchResultModelPrivate* const d;
@@ -82,6 +83,8 @@ public:
     virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
     virtual bool visible() const;
     virtual bool snaps() const;
+
+    void setVisibility(const bool state);
 
 private:
     SearchResultModelHelperPrivate* const d;
@@ -103,6 +106,8 @@ private Q_SLOTS:
     void slotTriggerSearch();
     void slotUpdateUIState();
     void slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& previous);
+    void slotClearSearchResults();
+    void slotVisibilityChanged(bool state);
 
 private:
     SearchWidgetPrivate* const d;

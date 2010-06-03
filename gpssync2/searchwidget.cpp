@@ -24,15 +24,18 @@
 #include <QListView>
 #include <QPainter>
 #include <QPushButton>
+#include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <QWidget>
 
 // KDE includes
 
+#include <kaction.h>
 #include <khbox.h>
 #include <klineedit.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kvbox.h>
 
 // local includes
@@ -47,6 +50,9 @@ class SearchWidgetPrivate
 {
 public:
     SearchWidgetPrivate()
+    : searchInProgress(false),
+      actionToggleAllResultsVisibilityIconUnchecked(SmallIcon("layer-visible-off")),
+      actionToggleAllResultsVisibilityIconChecked(SmallIcon("layer-visible-on"))
     {
     }
 
@@ -59,6 +65,13 @@ public:
     QItemSelectionModel* searchResultsSelectionModel;
     SearchResultModelHelper* searchResultModelHelper;
     QVBoxLayout* mainVBox;
+
+    KAction* actionClearResultsList;
+    KAction* actionKeepOldResults;
+    KAction* actionToggleAllResultsVisibility;
+    bool searchInProgress;
+    KIcon actionToggleAllResultsVisibilityIconUnchecked;
+    KIcon actionToggleAllResultsVisibilityIconChecked;
 };
 
 SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* parent)
@@ -79,6 +92,33 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* pare
     d->searchTermLineEdit = new KLineEdit(topHBox);
     d->searchTermLineEdit->setClearButtonShown(true);
     d->searchButton = new QPushButton(i18n("Search"), topHBox);
+
+    KHBox* const actionHBox = new KHBox(this);
+    d->mainVBox->addWidget(actionHBox);
+
+    d->actionClearResultsList = new KAction(this);
+    d->actionClearResultsList->setIcon(SmallIcon("edit-clear-list"));
+    QToolButton* const tbClearResultsList = new QToolButton(actionHBox);
+    tbClearResultsList->setDefaultAction(d->actionClearResultsList);
+
+    d->actionKeepOldResults = new KAction("S", this);
+    d->actionKeepOldResults->setCheckable(true);
+    d->actionKeepOldResults->setChecked(false);
+    QToolButton* const tbKeepOldResults = new QToolButton(actionHBox);
+    tbKeepOldResults->setDefaultAction(d->actionKeepOldResults);
+
+    d->actionToggleAllResultsVisibility = new KAction(this);
+    d->actionToggleAllResultsVisibility->setCheckable(true);
+    d->actionToggleAllResultsVisibility->setChecked(true);
+    QToolButton* const tbToggleAllVisibility = new QToolButton(actionHBox);
+    tbToggleAllVisibility->setDefaultAction(d->actionToggleAllResultsVisibility);
+
+    // add stretch after the controls:
+    QHBoxLayout* const hBoxLayout = reinterpret_cast<QHBoxLayout*>(actionHBox->layout());
+    if (hBoxLayout)
+    {
+        hBoxLayout->addStretch();
+    }
 
     d->treeView = new QTreeView(this);
     d->mainVBox->addWidget(d->treeView);
@@ -101,6 +141,12 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, QWidget* pare
     connect(d->searchResultsSelectionModel, SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(slotCurrentlySelectedResultChanged(const QModelIndex&, const QModelIndex&)));
 
+    connect(d->actionClearResultsList, SIGNAL(triggered(bool)),
+            this, SLOT(slotClearSearchResults()));
+
+    connect(d->actionToggleAllResultsVisibility, SIGNAL(triggered(bool)),
+            this, SLOT(slotVisibilityChanged(bool)));
+
     slotUpdateUIState();
 }
 
@@ -111,18 +157,36 @@ SearchWidget::~SearchWidget()
 
 void SearchWidget::slotSearchCompleted()
 {
-    const SearchBackend::SearchResult::List searchResults = d->searchBackend->getResults();
+    d->searchInProgress = false;
 
+    const QString errorString = d->searchBackend->getErrorMessage();
+    if (!errorString.isEmpty())
+    {
+        KMessageBox::error(this, i18n("Your search failed:\n%1", errorString), i18n("Search failed"));
+        slotUpdateUIState();
+        return;
+    }
+
+    const SearchBackend::SearchResult::List searchResults = d->searchBackend->getResults();
     d->searchResultsModel->addResults(searchResults);
+
+    slotUpdateUIState();
 }
 
 void SearchWidget::slotTriggerSearch()
 {
     // this is necessary since this slot is also connected to QLineEdit::returnPressed
-    if (d->searchTermLineEdit->text().isEmpty())
+    if (d->searchTermLineEdit->text().isEmpty() || d->searchInProgress)
         return;
 
+    if (!d->actionKeepOldResults->isChecked())
+        slotClearSearchResults();
+
+    d->searchInProgress = true;
+
     d->searchBackend->search("osm", d->searchTermLineEdit->text());
+
+    slotUpdateUIState();
 }
 
 class SearchResultModelPrivate
@@ -254,11 +318,13 @@ class SearchResultModelHelperPrivate
 {
 public:
     SearchResultModelHelperPrivate()
+    : visible(true)
     {
     }
 
     SearchResultModel* model;
     QItemSelectionModel* selectionModel;
+    bool visible;
 };
 
 SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, QObject* const parent)
@@ -299,7 +365,7 @@ QPixmap SearchResultModelHelper::itemIcon(const QModelIndex& index, QPoint* cons
 
 bool SearchResultModelHelper::visible() const
 {
-    return true;
+    return d->visible;
 }
 
 bool SearchResultModelHelper::snaps() const
@@ -321,7 +387,13 @@ void SearchWidget::slotUpdateUIState()
 {
     const bool haveSearchText = !d->searchTermLineEdit->text().isEmpty();
 
-    d->searchButton->setEnabled(haveSearchText);
+    d->searchButton->setEnabled(haveSearchText&&!d->searchInProgress);
+    d->actionClearResultsList->setEnabled(d->searchResultsModel->rowCount()>0);
+    d->actionToggleAllResultsVisibility->setIcon(
+            d->actionToggleAllResultsVisibility->isChecked() ?
+            d->actionToggleAllResultsVisibilityIconChecked :
+            d->actionToggleAllResultsVisibilityIconUnchecked
+        );
 }
 
 QPixmap SearchResultModel::getMarkerIcon(const QModelIndex& index, QPoint* const offset) const
@@ -364,6 +436,32 @@ void SearchWidget::slotCurrentlySelectedResultChanged(const QModelIndex& current
     SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(current);
 
     d->mapWidget->setCenter(currentItem.result.coordinates);
+}
+
+void SearchWidget::slotClearSearchResults()
+{
+    d->searchResultsModel->clearResults();
+
+    slotUpdateUIState();
+}
+
+void SearchResultModel::clearResults()
+{
+    beginResetModel();
+    d->searchResults.clear();
+    endResetModel();
+}
+
+void SearchWidget::slotVisibilityChanged(bool state)
+{
+    d->searchResultModelHelper->setVisibility(state);
+    slotUpdateUIState();
+}
+
+void SearchResultModelHelper::setVisibility(const bool state)
+{
+    d->visible = state;
+    emit(signalVisibilityChanged());
 }
 
 } /* KIPIGPSSyncPlugin */
