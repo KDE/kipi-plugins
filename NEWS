@@ -8,7 +8,8 @@ General                   : libkdcraw dependency set to 1.1.0 release.
 DNGConverter              : Update Adobe DNG sdk to 1.3.0.
                             Support non-square pixels.
                             Support 4-color sensors.
-                            Support Fuji-sensors (experimental)
+                            Support Fuji-sensors (experimental).
+SmugExport                : Support export of Captions.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -37,5 +38,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 023 ==> JPEGLossLess      : 228483 : digiKam 1.1.0 with system libjpeg-8 breaks image rotation.
 024 ==> PicasaWebExport   : 215688 : Attempted uploading pics to picasaweb.
 025 ==> AcquireImages     : 238150 : Scangui is untranslated, because it loads no reqired translation catalog.
-026 ==> 
+026 ==> SmugExport        : 240420 : Patch to export captions to smugmug.
+027 ==> 
 
