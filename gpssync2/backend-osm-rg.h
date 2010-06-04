@@ -39,7 +39,7 @@ public:
     QMap<QString,QString> makeQMapFromXML(QString);
 
     virtual void callRGBackend(QList <RGInfo>, QString);
-
+    virtual QString getErrorMessage();
 private Q_SLOTS:
 
     void nextPhoto(); 

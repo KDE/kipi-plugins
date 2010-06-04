@@ -31,6 +31,7 @@ public:
 
     virtual void callRGBackend(QList <RGInfo>, QString); 
     QMap<QString, QString> makeQMap(QString);
+    virtual QString getErrorMessage();
 
 public Q_SLOTS:
 

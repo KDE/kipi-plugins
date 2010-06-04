@@ -48,7 +48,7 @@ public:
     QList<RGInternal> internalList;
     int counter;
     QString language;
-
+    QString errorMessage;
 };
 
 BackendGoogleRG::BackendGoogleRG(QObject* const parent)
@@ -160,6 +160,13 @@ void BackendGoogleRG::nextPhoto()
 
     d->htmlWidget->runScript(QString("reverseGeocoding(%1,'%2',%3,%4);").arg(d->internalList[d->counter].requestId).arg(d->language).arg(photoDetails.coordinates.latString()).arg(photoDetails.coordinates.lonString()));
     d->counter++;
+
+}
+
+QString BackendGoogleRG::getErrorMessage()
+{
+
+    return d->errorMessage;
 
 }
 

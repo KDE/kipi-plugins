@@ -31,7 +31,7 @@ public:
     virtual ~RGBackend();
 
     virtual void callRGBackend(QList<RGInfo>, QString) = 0;
-
+    virtual QString getErrorMessage();
 
 Q_SIGNALS:
 

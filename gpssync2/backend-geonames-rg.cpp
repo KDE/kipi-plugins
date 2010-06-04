@@ -59,6 +59,7 @@ public:
     int itemCounter;
     int itemCount;
     QList<GeonamesInternalJobs> jobs;
+    QString errorMessage;
 };
 
 BackendGeonamesRG::BackendGeonamesRG(QObject* const parent)
@@ -95,6 +96,7 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
 {
 
     kDebug()<<"Entering Geonames backend";
+    d->errorMessage.clear();
 
     for( int i = 0; i < rgList.count(); ++i){
 
@@ -171,6 +173,13 @@ QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(QString xmlData)
     return mappedData;
 }
 
+QString BackendGeonamesRG::getErrorMessage()
+{
+
+    return d->errorMessage;
+
+}
+
 
 void BackendGeonamesRG::slotResult(KJob* kJob)
 {
@@ -178,6 +187,15 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
 
     KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
 
+    if(kioJob->error())
+    {
+
+        d->errorMessage = kioJob->errorString();
+        emit(signalRGReady(d->jobs.first().request));
+        d->jobs.clear();
+        return;
+
+    }
 
     for(int i = 0;i < d->jobs.count(); ++i)
     {

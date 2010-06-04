@@ -47,7 +47,7 @@
 #include <kcombobox.h>
 #include <kseparator.h>
 #include <kconfig.h>
-
+#include <kmessagebox.h>
 //local includes
 
 #include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
@@ -97,6 +97,7 @@ public:
     QLabel* serviceLabel;
     QLabel* metadataLabel;
     QLabel* languageLabel;
+    int backendIndex;
 };
 
 
@@ -285,8 +286,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 {
     // get the selected image:
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
-    int backendIndex = d->serviceComboBox->currentIndex(); 
-
+    d->backendIndex = d->serviceComboBox->currentIndex(); 
 
     QList<RGInfo> photoList;
 
@@ -320,8 +320,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
         emit(signalProgressSetup(d->requestedRGCount, i18n("Retrieving RG info - %p%")));
         emit(signalSetUIEnabled(false));
 
-
-        d->backendRGList[backendIndex]->callRGBackend(photoList, wantedLanguage);
+        d->backendRGList[d->backendIndex]->callRGBackend(photoList, wantedLanguage);
     }
 }
 
@@ -346,6 +345,16 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
     //TODO: filter the results using checkboxes from UI
 
+    const QString errorString = d->backendRGList[d->backendIndex]->getErrorMessage();
+    if(!errorString.isEmpty())
+    {
+
+        KMessageBox::error(this, errorString);
+        
+        d->receivedRGCount+=returnedRGList.count();
+        emit(signalSetUIEnabled(true));
+        return;
+    } 
 
     QString address;
     for(int i = 0; i < returnedRGList.count(); ++i){

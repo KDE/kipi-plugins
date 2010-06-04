@@ -57,7 +57,7 @@ public:
     
     //QString wantedLanguage;
     QList<OsmInternalJobs> jobs;
-
+    QString errorMessage;
 };
 
 BackendOsmRG::BackendOsmRG(QObject* const parent)
@@ -100,6 +100,8 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     //TODO: Remove dublicates from rgList to mergedQuery
     kDebug()<<"Entering OSM backend";
+
+    d->errorMessage.clear();
 
     for( int i = 0; i < rgList.count(); i++){
 
@@ -183,10 +185,27 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
 
 }
 
+QString BackendOsmRG::getErrorMessage()
+{
+
+    return d->errorMessage;
+}
 
 void BackendOsmRG::slotResult(KJob* kJob)
 {
     KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
+
+    if(kioJob->error())
+    {
+
+        d->errorMessage = kioJob->errorString();
+        emit(signalRGReady(d->jobs.first().request));
+        d->jobs.clear();
+        
+        return;
+
+    }
+ 
 
     for(int i = 0; i < d->jobs.count(); ++i){
 

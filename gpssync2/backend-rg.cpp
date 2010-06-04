@@ -25,5 +25,11 @@ RGBackend::~RGBackend()
    delete d;
 }
 
+QString RGBackend::getErrorMessage()
+{
+
+
+}
+
 } //KIPIGPSSyncPlugin
 
