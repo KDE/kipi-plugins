@@ -25,6 +25,7 @@
 //KDE includes
 
 #include <kurl.h>
+#include <kconfig.h>
 
 //Qt includes
 
@@ -72,6 +73,9 @@ public:
     ~GPSReverseGeocodingWidget();
 
     void setUIEnabled(const bool state);
+    void readSettingsFromGroup(KConfigGroup* const);
+    void saveSettingsToGroup(KConfigGroup* const);
+    QString parseLanguageText(QString );
 
 private:
 

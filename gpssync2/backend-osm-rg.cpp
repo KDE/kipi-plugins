@@ -41,6 +41,7 @@ public:
     QList<RGInfo> request;
     QByteArray data;
     KIO::Job* kioJob;
+    QString language;
 };
 
 
@@ -54,10 +55,7 @@ public:
     {
     }
     
-    int counter;
-    int itemCounter;
-    int itemCount;
-    QString wantedLanguage;
+    //QString wantedLanguage;
     QList<OsmInternalJobs> jobs;
 
 };
@@ -65,7 +63,7 @@ public:
 BackendOsmRG::BackendOsmRG(QObject* const parent)
 : RGBackend(parent), d(new BackendOsmRGPrivate())
 {
-    d->wantedLanguage = "en";
+//    d->wantedLanguage = "en";
     
 }
 
@@ -79,19 +77,19 @@ void BackendOsmRG::nextPhoto()
 
     KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
     jobUrl.addQueryItem("format", "xml");
-    jobUrl.addQueryItem("lat", d->jobs[d->itemCounter].request.first().coordinates.latString());
-    jobUrl.addQueryItem("lon", d->jobs[d->itemCounter].request.first().coordinates.lonString());
+    jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
+    jobUrl.addQueryItem("lon", d->jobs.first().request.first().coordinates.lonString());
     jobUrl.addQueryItem("zoom", "18");
     jobUrl.addQueryItem("addressdetails", "1");
-    jobUrl.addQueryItem("accept-language", d->wantedLanguage);
+    jobUrl.addQueryItem("accept-language", d->jobs.first().language);
 
-    d->jobs[d->itemCounter].kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
+    d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
 
-    d->jobs[d->itemCounter].kioJob->addMetaData("User-Agent", getKipiUserAgentName());
+    d->jobs.first().kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
-    connect(d->jobs[d->itemCounter].kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+    connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
             this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
-    connect(d->jobs[d->itemCounter].kioJob, SIGNAL(result(KJob*)),
+    connect(d->jobs.first().kioJob, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));    
         
 
@@ -102,9 +100,6 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     //TODO: Remove dublicates from rgList to mergedQuery
     kDebug()<<"Entering OSM backend";
-    d->itemCounter = 0;
-    d->jobs.clear();
-    d->wantedLanguage = language;
 
     for( int i = 0; i < rgList.count(); i++){
 
@@ -115,6 +110,7 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
             if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates)){
 
                 d->jobs[j].request << rgList[i];
+                d->jobs[j].language = language;
                 foundIt = true;
                 break;
 
@@ -127,14 +123,17 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
         OsmInternalJobs newJob;
         newJob.request << rgList.at(i);
+        newJob.language = language;
         d->jobs<<newJob;
         }
 
     }
     
+    if(!d->jobs.empty()){
     
-    d->itemCount = d->jobs.count();
-    nextPhoto();
+        nextPhoto();
+
+    }
 
 }
 
@@ -145,16 +144,12 @@ void BackendOsmRG::dataIsHere(KIO::Job* job, const QByteArray & data)
     for(int i = 0; i < d->jobs.count(); ++i){
 
         if(d->jobs.at(i).kioJob == job){
-
             
             d->jobs[i].data.append(data);
             break;
 
         }
-        
-
     }
-
 }
 
 
@@ -197,10 +192,8 @@ void BackendOsmRG::slotResult(KJob* kJob)
 
         if(d->jobs.at(i).kioJob == kioJob){
 
-
             QString dataString;
             dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
-
 
             int pos = dataString.indexOf("<reversegeocode");
             dataString.remove(0,pos);
@@ -210,15 +203,13 @@ void BackendOsmRG::slotResult(KJob* kJob)
             for(int j = 0; j < d->jobs[i].request.count(); ++j){
 
                 d->jobs[i].request[j].rgData = resultMap; 
-
             
             }
            emit(signalRGReady(d->jobs[i].request));
  
-            //d->jobs.removeAt(i);
+            d->jobs.removeAt(i);
 
-            d->itemCounter++;
-            if(d->itemCounter < d->itemCount){    
+            if(!d->jobs.empty()){    
                 QTimer::singleShot(500, this, SLOT(nextPhoto()));
             }
 

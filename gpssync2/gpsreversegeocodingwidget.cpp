@@ -46,6 +46,7 @@
 #include <kvbox.h>
 #include <kcombobox.h>
 #include <kseparator.h>
+#include <kconfig.h>
 
 //local includes
 
@@ -76,11 +77,10 @@ public:
     KipiImageModel* imageModel;
     QItemSelectionModel* selectionModel;
     QPushButton* buttonRGSelected;
-    QString wantedLanguage;
 
     
     KComboBox* serviceComboBox;
-    QLineEdit *languageEdit;
+    KComboBox *languageEdit;
     QList<RGInfo> photoList;
     QList<RGBackend*> backendRGList;
     int requestedRGCount;
@@ -109,7 +109,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     
     d->UIEnabled = true;
 
-    d->wantedLanguage = "EN";
 
     KVBox* const vbox = new KVBox(this);
     vbox->resize(350,400);
@@ -122,7 +121,11 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
     d->languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
-    d->languageEdit = new QLineEdit(d->UGridContainer);
+    d->languageEdit = new KComboBox(d->UGridContainer);
+
+    d->languageEdit->addItem("English");
+    d->languageEdit->addItem("German");
+    d->languageEdit->addItem("Romanian");
 
     d->serviceLabel = new QLabel(i18n("Select service:"), d->UGridContainer);
     d->serviceComboBox = new KComboBox(d->UGridContainer);
@@ -253,12 +256,12 @@ void GPSReverseGeocodingWidget::updateUIState()
     d->baseTagLabel->setEnabled(d->UIEnabled);
     d->baseTagEdit->setEnabled(d->UIEnabled);
 
+    d->buttonHideOptions->setEnabled(d->UIEnabled);
     d->autoTag->setEnabled(d->UIEnabled);
     d->metadataLabel->setEnabled(d->UIEnabled);
     d->iptc->setEnabled(d->UIEnabled);
     d->xmpLoc->setEnabled(d->UIEnabled);
     d->xmpKey->setEnabled(d->UIEnabled);
-    // TODO: continue with other UI elements
 }
 
 GPSReverseGeocodingWidget::~GPSReverseGeocodingWidget()
@@ -266,6 +269,17 @@ GPSReverseGeocodingWidget::~GPSReverseGeocodingWidget()
     delete d;
 }
 
+QString GPSReverseGeocodingWidget::parseLanguageText(QString language)
+{
+
+    QString langCode="";
+
+    if(language == "Engish") langCode = "EN";
+    if(language == "German") langCode = "DE";
+    if(language == "Romanian") langCode = "RO";
+
+    return langCode;
+}
 
 void GPSReverseGeocodingWidget::slotButtonRGSelected()
 {
@@ -275,7 +289,9 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
 
     QList<RGInfo> photoList;
-    d->wantedLanguage = d->languageEdit->displayText();
+
+    QString wantedLanguage = parseLanguageText(d->languageEdit->currentText());
+    
 
     for( int i = 0; i < selectedItems.count(); ++i){
 
@@ -305,7 +321,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
         emit(signalSetUIEnabled(false));
 
 
-        d->backendRGList[backendIndex]->callRGBackend(photoList, d->wantedLanguage);
+        d->backendRGList[backendIndex]->callRGBackend(photoList, wantedLanguage);
     }
 }
 
@@ -364,6 +380,55 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 {
     d->UIEnabled = state;
     updateUIState();
+}
+
+
+
+void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
+{
+    
+    group->writeEntry("Backend", d->serviceComboBox->currentIndex()); 
+    group->writeEntry("Language", d->languageEdit->currentIndex());
+
+    group->writeEntry("Hide options", d->hideOptions); 
+    group->writeEntry("IPTC", d->iptc->isChecked());
+    group->writeEntry("XMP location", d->xmpLoc->isChecked());
+    group->writeEntry("XMP keywords", d->xmpKey->isChecked());
+
+    group->writeEntry("Country", d->country->isChecked());
+    group->writeEntry("State", d->state->isChecked());
+    group->writeEntry("County", d->county->isChecked());
+    group->writeEntry("City", d->city->isChecked());
+    group->writeEntry("District", d->district->isChecked());
+    group->writeEntry("Street", d->street->isChecked());
+    group->writeEntry("Street Number", d->streetNumber->isChecked());
+
+}
+
+void GPSReverseGeocodingWidget::readSettingsFromGroup(KConfigGroup* const group)
+{
+
+    d->serviceComboBox->setCurrentIndex(group->readEntry("Backend", 0));
+    d->languageEdit->setCurrentIndex(group->readEntry("Language", 0));
+
+    d->hideOptions = !(group->readEntry("Hide options", false));
+    slotHideOptions();
+
+
+    d->iptc->setChecked(group->readEntry("IPTC", false));
+    d->xmpLoc->setChecked(group->readEntry("XMP location", false));
+    d->xmpKey->setChecked(group->readEntry("XMP keywords", false));
+    
+    d->country->setChecked(group->readEntry("Country", false));
+    d->state->setChecked(group->readEntry("State", false));
+    d->county->setChecked(group->readEntry("County", false));
+    d->city->setChecked(group->readEntry("City", false));
+    d->district->setChecked(group->readEntry("District", false));
+    d->street->setChecked(group->readEntry("Street", false));
+    d->streetNumber->setChecked(group->readEntry("Street Number", false));
+    
+    
+
 }
 
 } /* KIPIGPSSyncPlugin  */

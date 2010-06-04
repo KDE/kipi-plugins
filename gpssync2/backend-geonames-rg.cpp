@@ -39,7 +39,7 @@ public:
     {
     }
 
-
+    QString language;
     QList<RGInfo> request;
     QByteArray data;
     KIO::Job* kioJob;
@@ -56,7 +56,6 @@ public:
     {
     }
 
-    QString language;
     int itemCounter;
     int itemCount;
     QList<GeonamesInternalJobs> jobs;
@@ -65,7 +64,6 @@ public:
 BackendGeonamesRG::BackendGeonamesRG(QObject* const parent)
 : RGBackend(parent), d(new BackendGeonamesRGPrivate())
 {
-    d->language = "EN";
 }
 
 BackendGeonamesRG::~BackendGeonamesRG()
@@ -77,18 +75,18 @@ void BackendGeonamesRG::nextPhoto()
 {
     
     KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
-    jobUrl.addQueryItem("lat", d->jobs[d->itemCounter].request.first().coordinates.latString());
-    jobUrl.addQueryItem("lng", d->jobs[d->itemCounter].request.first().coordinates.lonString());
-    jobUrl.addQueryItem("lang", d->language);
+    jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
+    jobUrl.addQueryItem("lng", d->jobs.first().request.first().coordinates.lonString());
+    jobUrl.addQueryItem("lang", d->jobs.first().language);
 
 
-    d->jobs[d->itemCounter].kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
+    d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
 
-    d->jobs[d->itemCounter].kioJob->addMetaData("User-Agent", getKipiUserAgentName());
+    d->jobs.first().kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
-    connect(d->jobs[d->itemCounter].kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
+    connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
             this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
-    connect(d->jobs[d->itemCounter].kioJob, SIGNAL(result(KJob*)),
+    connect(d->jobs.first().kioJob, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));    
 
 }
@@ -98,10 +96,6 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     kDebug()<<"Entering Geonames backend";
 
-    d->language = language;
-    d->itemCounter = 0;
-    d->jobs.clear();
-
     for( int i = 0; i < rgList.count(); ++i){
 
             bool foundIt = false;
@@ -110,6 +104,7 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
                 if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates)){
 
                     d->jobs[j].request << rgList[i];
+                    d->jobs[j].language = language;
                     foundIt = true;
                     break;
 
@@ -122,12 +117,12 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
             
                 GeonamesInternalJobs newJob;
                 newJob.request << rgList.at(i);
+                newJob.language = language;
                 d->jobs << newJob;
 
             }
     }
     
-    d->itemCount = d->jobs.count();
     nextPhoto();
 
 }
@@ -206,10 +201,9 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
             }
             emit(signalRGReady(d->jobs[i].request));
 
-            // d->jobs.removeAt(i);
+            d->jobs.removeAt(i);
 
-            d->itemCounter++;
-            if(d->itemCounter < d->itemCount){
+            if(!d->jobs.empty()){
             
                 QTimer::singleShot(500, this, SLOT(nextPhoto()));
 
