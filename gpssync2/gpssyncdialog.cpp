@@ -204,15 +204,11 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     setMainWidget(vboxMain);
 
     KHBox* const hboxMain = new KHBox(vboxMain);
-    hboxMain->layout()->setSpacing(spacingHint());
-    hboxMain->layout()->setMargin(marginHint());
 
     d->HSplitter = new QSplitter(Qt::Horizontal, hboxMain);
     d->HSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     KHBox* const hboxBottom = new KHBox(vboxMain);
-    hboxBottom->layout()->setSpacing(spacingHint());
-    hboxBottom->layout()->setMargin(marginHint());
 
     d->progressBar = new QProgressBar(hboxBottom);
     d->progressBar->setVisible(false);
