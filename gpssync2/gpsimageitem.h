@@ -57,6 +57,7 @@ public:
 
     static void setHeaderData(KipiImageModel* const model);
     QString saveChanges();
+    virtual bool lessThan(const KipiImageItem* const otherItem, const int column) const;
 
 protected:
     // these are only to be called by the KipiImageModel

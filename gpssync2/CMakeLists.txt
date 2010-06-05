@@ -1,6 +1,7 @@
 SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/../")
+INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed")
 
 SET(kipiplugin_gpssync_PART_SRCS
         gpssyncdialog.cpp
@@ -25,7 +26,21 @@ SET(kipiplugin_gpssync_PART_SRCS
         backend-osm-rg.cpp
         searchbackend.cpp
         searchwidget.cpp
+        borrowed/modeltest.cpp
    )
+
+MESSAGE(${KDE_VERSION})
+IF (${KDE_VERSION} VERSION_GREATER "4.4.81")
+ELSE (${KDE_VERSION} VERSION_GREATER "4.4.81")
+    # these are borrowed from a new KDE trunk version
+    # and are needed for sorting of the view
+    INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future")
+    SET(kipiplugin_gpssync_PART_SRCS
+            ${kipiplugin_gpssync_PART_SRCS}
+            borrowed-future/klinkitemselectionmodel.cpp
+            borrowed-future/kmodelindexproxymapper.cpp
+        )
+ENDIF (${KDE_VERSION} VERSION_GREATER "4.4.81")
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync2 ${kipiplugin_gpssync_PART_SRCS})
 

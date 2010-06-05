@@ -60,6 +60,7 @@ public:
     inline QDateTime dateTime() const { return m_dateTime; };
 
     static void setHeaderData(KipiImageModel* const model);
+    virtual bool lessThan(const KipiImageItem* const otherItem, const int column) const;
 
 protected:
     // these are only to be called by the KipiImageModel

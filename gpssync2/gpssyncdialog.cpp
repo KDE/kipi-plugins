@@ -27,6 +27,7 @@
 #include "gpssyncdialog.moc"
 
 // Qt includes
+#include <modeltest.h>
 
 #include <qtconcurrentmap.h>
 #include <QButtonGroup>
@@ -185,6 +186,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     setModal(true);
     setMinimumSize(300,400);
     d->imageModel = new KipiImageModel(this);
+    new ModelTest(d->imageModel, this);
     d->imageModel->setKipiInterface(d->interface);
     GPSImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
@@ -351,10 +353,11 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->mapWidget, SIGNAL(signalDisplayMarkersMoved(const QList<QPersistentModelIndex>&, const WMW2::WMWGeoCoordinate&)),
             this, SLOT(slotMapMarkersMoved(const QList<QPersistentModelIndex>&, const WMW2::WMWGeoCoordinate&)));
 
+    // TODO: this does not seem to work any more with klinkitemselectionmodel
     connect(d->selectionModel, SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(slotCurrentImageChanged(const QModelIndex&, const QModelIndex&)));
 
-    connect(d->treeView->view(), SIGNAL(activated(const QModelIndex&)),
+    connect(d->treeView, SIGNAL(signalImageActivated(const QModelIndex&)),
             this, SLOT(slotImageActivated(const QModelIndex&)));
 
     connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool)),
@@ -610,6 +613,10 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
 
 void GPSSyncDialog::slotCurrentImageChanged(const QModelIndex& current, const QModelIndex& previous)
 {
+    // TODO: is this necessary? we can just use the slotImageActivated instead...
+    return;
+
+
     Q_UNUSED(previous);
 
     // TODO: unset the image if no image is the current image
@@ -637,6 +644,7 @@ void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
     {
         d->mapWidget->setCenter(imageCoordinates);
     }
+    d->previewManager->load(item->url().toLocalFile(), true);
 }
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot)

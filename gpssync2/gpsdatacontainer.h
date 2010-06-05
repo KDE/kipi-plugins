@@ -119,6 +119,11 @@ public:
         m_hasFlags|=HasAltitude;
     }
 
+    bool hasAltitude() const
+    {
+        return m_hasFlags.testFlag(HasAltitude);
+    }
+
     void setLatLon(const qreal lat, const qreal lon)
     {
         m_coordinates.setLatLon(lat, lon);

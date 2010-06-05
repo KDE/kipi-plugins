@@ -319,5 +319,57 @@ void GPSImageItem::restoreGPSData(const GPSDataContainer& container)
     emitDataChanged();
 }
 
+bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int column) const
+{
+    const GPSImageItem* const otherGPSItem = dynamic_cast<const GPSImageItem*>(otherItem);
+    if (!otherGPSItem)
+        return false;
+
+    switch (column)
+    {
+    case ColumnAltitude:
+    {
+        if (!m_gpsData.hasAltitude())
+            return false;
+
+        if (!otherGPSItem->m_gpsData.hasAltitude())
+            return true;
+
+        return m_gpsData.m_coordinates.alt() < otherGPSItem->m_gpsData.m_coordinates.alt();
+    }
+
+    case ColumnNSatellites:
+    {
+        if (!m_gpsData.hasNSatellites())
+            return false;
+
+        if (!otherGPSItem->m_gpsData.hasNSatellites())
+            return true;
+
+        return m_gpsData.m_nSatellites < otherGPSItem->m_gpsData.m_nSatellites;
+    }
+
+    case ColumnHDOP:
+    {
+        if (!m_gpsData.hasHDop())
+            return false;
+
+        if (!otherGPSItem->m_gpsData.hasHDop())
+            return true;
+
+        return m_gpsData.m_hDop < otherGPSItem->m_gpsData.m_hDop;
+    }
+
+    case ColumnLatitude:
+
+    case ColumnLongitude:
+
+    case ColumnStatus:
+
+    default:
+        return KipiImageItem::lessThan(otherItem, column);
+    }
+}
+
 } /* KIPIGPSSyncPlugin */
 

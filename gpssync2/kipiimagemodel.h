@@ -23,7 +23,9 @@
 // Qt includes
 
 #include <QAbstractItemModel>
+#include <QItemSelectionModel>
 #include <QPixmap>
+#include <QSortFilterProxyModel>
 
 // libKIPI includes
 
@@ -81,6 +83,25 @@ private:
 
     friend class KipiImageItem;
 };
+
+class KipiImageSortProxyModelPrivate;
+class KipiImageSortProxyModel : public QSortFilterProxyModel
+{
+Q_OBJECT
+
+public:
+    KipiImageSortProxyModel(KipiImageModel* const kipiImageModel, QItemSelectionModel* const sourceSelectionModel);
+    ~KipiImageSortProxyModel();
+
+    QItemSelectionModel* mappedSelectionModel();
+
+protected:
+    virtual bool lessThan(const QModelIndex& left, const QModelIndex& right) const;
+
+private:
+    KipiImageSortProxyModelPrivate* const d;
+};
+
 
 } /* KIPIGPSSyncPlugin */
 

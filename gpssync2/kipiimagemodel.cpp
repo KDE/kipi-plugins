@@ -22,6 +22,7 @@
 // KDE includes
 
 #include <kdebug.h>
+#include <klinkitemselectionmodel.h>
 #include <kpixmapcache.h>
 
 namespace KIPIGPSSyncPlugin
@@ -77,14 +78,15 @@ QVariant KipiImageModel::data(const QModelIndex& index, int role) const
 
 QModelIndex KipiImageModel::index(int row, int column, const QModelIndex& parent) const
 {
+//     kDebug()<<row<<column<<parent;
     if (parent.isValid())
     {
         // there are no child items, only top level items
         return QModelIndex();
     }
 
-    if ( (column>=d->columnCount)
-         || (row>=d->items.count()) )
+    if ( (column<0) || (column>=d->columnCount)
+         || (row<0) || (row>=d->items.count()) )
         return QModelIndex();
 
     return createIndex(row, column, 0);
@@ -98,7 +100,7 @@ QModelIndex KipiImageModel::parent(const QModelIndex& index) const
 
 void KipiImageModel::addItem(KipiImageItem* const newItem)
 {
-    beginInsertRows(QModelIndex(), d->items.count(), d->items.count()+1);
+    beginInsertRows(QModelIndex(), d->items.count(), d->items.count());
     newItem->setModel(this);
     d->items << newItem;
     endInsertRows();
@@ -181,7 +183,8 @@ bool KipiImageModel::setData(const QModelIndex& index, const QVariant& value, in
 
 Qt::ItemFlags KipiImageModel::flags(const QModelIndex& index) const
 {
-    return QAbstractItemModel::flags(index) | Qt::ItemIsDragEnabled;
+    // MODELTEST does not like this - why?
+    return QAbstractItemModel::flags(index);// | Qt::ItemIsDragEnabled;
 }
 
 KipiImageItem* KipiImageModel::itemFromUrl(const KUrl& url) const
@@ -332,6 +335,54 @@ void KipiImageModel::setKipiInterface(KIPI::Interface* const interface)
 
     connect(d->interface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
             this, SLOT(slotThumbnailFromInterface(const KUrl&, const QPixmap&)));
+}
+
+class KipiImageSortProxyModelPrivate
+{
+public:
+    KipiImageSortProxyModelPrivate()
+    {
+    }
+
+    KipiImageModel* imageModel;
+    QItemSelectionModel* sourceSelectionModel;
+    KLinkItemSelectionModel* linkItemSelectionModel;
+};
+
+KipiImageSortProxyModel::KipiImageSortProxyModel(KipiImageModel* const kipiImageModel, QItemSelectionModel* const sourceSelectionModel)
+: QSortFilterProxyModel(kipiImageModel), d(new KipiImageSortProxyModelPrivate())
+{
+    d->imageModel = kipiImageModel;
+    d->sourceSelectionModel = sourceSelectionModel;
+    setSourceModel(kipiImageModel);
+    d->linkItemSelectionModel = new KLinkItemSelectionModel(this, d->sourceSelectionModel);
+}
+
+KipiImageSortProxyModel::~KipiImageSortProxyModel()
+{
+    delete d;
+}
+
+bool KipiImageSortProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
+{
+    if ((!left.isValid())||(!right.isValid()))
+    {
+//         kDebug()<<"INVALID INDICES"<<left<<right;
+        return false;
+    }
+
+    const int column = left.column();
+
+    const KipiImageItem* const itemLeft = d->imageModel->itemFromIndex(left);
+    const KipiImageItem* const itemRight = d->imageModel->itemFromIndex(right);
+
+//     kDebug()<<itemLeft<<itemRight<<column<<rowCount()<<d->imageModel->rowCount();
+    return itemLeft->lessThan(itemRight, column);
+}
+
+QItemSelectionModel* KipiImageSortProxyModel::mappedSelectionModel()
+{
+    return d->linkItemSelectionModel;
 }
 
 } /* KIPIGPSSyncPlugin */

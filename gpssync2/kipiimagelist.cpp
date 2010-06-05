@@ -89,6 +89,7 @@ void KipiImageListViewInternal::startDrag(Qt::DropActions supportedActions)
         return;
     }
 
+    // TODO: map to source!
     const QList<QModelIndex> selectedIndicesFromModel = selectionModel()->selectedIndexes();
     QList<QPersistentModelIndex> selectedIndices;
     for (int i=0; i<selectedIndicesFromModel.count(); ++i)
@@ -122,6 +123,7 @@ public:
     KipiImageListViewInternal* treeView;
     KipiImageItemDelegate* itemDelegate;
     KIPI::Interface* interface;
+    KipiImageSortProxyModel *imageSortProxyModel;
 };
 
 KipiImageList::KipiImageList(KIPI::Interface* const interface, QWidget* const parent)
@@ -149,13 +151,17 @@ void KipiImageList::setModel(KipiImageModel* const model, QItemSelectionModel* c
 {
     d->model = model;
     d->selectionModel = selectionModel;
-    d->treeView->setModel(model);
+    d->imageSortProxyModel = new KipiImageSortProxyModel(d->model, d->selectionModel);
+    d->treeView->setModel(d->imageSortProxyModel);
 
     connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(const QPersistentModelIndex&, const QPixmap&)),
             this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
 
-    if (selectionModel)
-        d->treeView->setSelectionModel(selectionModel);
+    connect(d->treeView, SIGNAL(activated(const QModelIndex&)),
+            this, SLOT(slotInternalTreeViewImageActivated(const QModelIndex&)));
+
+    if (d->imageSortProxyModel->mappedSelectionModel())
+        d->treeView->setSelectionModel(d->imageSortProxyModel->mappedSelectionModel());
 }
 
 QTreeView* KipiImageList::view() const
@@ -194,7 +200,8 @@ KipiImageItemDelegate::~KipiImageItemDelegate()
 
 void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    if (index.column()!=KipiImageItem::ColumnThumbnail)
+    const QModelIndex& sourceModelIndex = d->imageList->getSortProxyModel()->mapToSource(index);
+    if (sourceModelIndex.column()!=KipiImageItem::ColumnThumbnail)
     {
         QItemDelegate::paint(painter, option, index);
         return;
@@ -205,7 +212,7 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
         painter->fillRect(option.rect, option.palette.highlight());
     }
     // TODO: clipping, selected state, disabled state, etc.
-    QPixmap itemPixmap = d->imageList->getModel()->getPixmapForIndex(index, d->thumbnailSize);
+    QPixmap itemPixmap = d->imageList->getModel()->getPixmapForIndex(sourceModelIndex, d->thumbnailSize);
     if (itemPixmap.isNull())
     {
         // TODO: paint some default logo
@@ -300,7 +307,7 @@ void KipiImageListViewInternal::wheelEvent(QWheelEvent* we)
 void KipiImageList::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
 {
     // TODO: verify that the size corresponds to the size of our thumbnails!
-    d->treeView->update(index);
+    d->treeView->update(d->imageSortProxyModel->mapFromSource(index));
 }
 
 void KipiImageList::saveSettingsToGroup(KConfigGroup* const group)
@@ -316,6 +323,17 @@ void KipiImageList::readSettingsFromGroup(KConfigGroup* const group)
 QItemSelectionModel* KipiImageList::getSelectionModel() const
 {
     return d->selectionModel;
+}
+
+void KipiImageList::slotInternalTreeViewImageActivated(const QModelIndex& index)
+{
+    kDebug()<<index<<d->imageSortProxyModel->mapToSource(index);
+    emit(signalImageActivated(d->imageSortProxyModel->mapToSource(index)));
+}
+
+KipiImageSortProxyModel* KipiImageList::getSortProxyModel() const
+{
+    return d->imageSortProxyModel;
 }
 
 } /* KIPIGPSSyncPlugin */

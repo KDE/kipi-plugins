@@ -40,6 +40,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 class KipiImageListPrivate;
+class KipiImageSortProxyModel;
 
 class KipiImageListDragDropHandler : public QObject
 {
@@ -87,9 +88,13 @@ public:
     QItemSelectionModel* getSelectionModel() const;
     void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
     void setThumbnailSize(const int size);
+    KipiImageSortProxyModel* getSortProxyModel() const;
 
     void saveSettingsToGroup(KConfigGroup* const group);
     void readSettingsFromGroup(KConfigGroup* const group);
+
+Q_SIGNALS:
+    void signalImageActivated(const QModelIndex& index);
 
 public Q_SLOTS:
     void slotIncreaseThumbnailSize();
@@ -97,6 +102,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
+    void slotInternalTreeViewImageActivated(const QModelIndex& index);
 
 private:
     KipiImageListPrivate* const d;

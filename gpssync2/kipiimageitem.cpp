@@ -153,6 +153,24 @@ void KipiImageItem::setHeaderData(KipiImageModel* const model)
     model->setHeaderData(ColumnDateTime, Qt::Horizontal, i18n("Date and time"), Qt::DisplayRole);
 }
 
+bool KipiImageItem::lessThan(const KipiImageItem* const otherItem, const int column) const
+{
+    switch (column)
+    {
+    case ColumnThumbnail:
+        return false;
+
+    case ColumnFilename:
+        return m_url < otherItem->m_url;
+
+    case ColumnDateTime:
+        return m_dateTime < otherItem->m_dateTime;
+
+    default:
+        return false;
+    }
+}
+
 } /* KIPIGPSSyncPlugin */
 
 
