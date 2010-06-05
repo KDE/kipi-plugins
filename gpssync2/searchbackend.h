@@ -26,7 +26,7 @@
 
 // local includes
 
-#include <worldmapwidget2/worldmapwidget2_primitives.h>
+#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
 #include "gpsreversegeocodingwidget.h"
 
 namespace KIO { class Job; }

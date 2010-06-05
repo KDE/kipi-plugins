@@ -45,7 +45,7 @@
 // local includes
 
 #include "searchbackend.h"
-#include <worldmapwidget2/worldmapwidget2.h>
+#include "../worldmapwidget2/lib/worldmapwidget2.h"
 #include "gpssync2_common.h"
 #include "gpsbookmarkowner.h"
 #include "gpsundocommand.h"

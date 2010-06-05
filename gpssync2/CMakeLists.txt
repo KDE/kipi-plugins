@@ -1,5 +1,7 @@
 SUBDIRS(icons)
 
+INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/../")
+
 SET(kipiplugin_gpssync_PART_SRCS
         gpssyncdialog.cpp
         plugin_gpssync.cpp

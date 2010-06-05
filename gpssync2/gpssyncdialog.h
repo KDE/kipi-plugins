@@ -33,7 +33,7 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-#include <worldmapwidget2/worldmapwidget2_primitives.h>
+#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
 
 // LibKIPI includes
 

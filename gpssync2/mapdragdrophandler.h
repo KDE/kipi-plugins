@@ -26,7 +26,7 @@
 
 // WorldMapWidget2 includes
 
-#include <worldmapwidget2/worldmapwidget2_dragdrophandler.h>
+#include "../worldmapwidget2/lib/worldmapwidget2_dragdrophandler.h"
 
 namespace KIPIGPSSyncPlugin
 {

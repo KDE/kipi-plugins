@@ -78,7 +78,6 @@
 
 // WorldMapWidget2 includes
 
-//#include <worldmapwidget2/worldmapwidget2.h>
 #include "../worldmapwidget2/lib/worldmapwidget2.h"
 // Local includes
 
