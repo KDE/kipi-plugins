@@ -89,8 +89,9 @@ void KipiImageListViewInternal::startDrag(Qt::DropActions supportedActions)
         return;
     }
 
-    // TODO: map to source!
-    const QList<QModelIndex> selectedIndicesFromModel = selectionModel()->selectedIndexes();
+    // NOTE: read the selected indices from the source selection model, not our selection model,
+    // which is for the sorted model!
+    const QList<QModelIndex> selectedIndicesFromModel = d->kipiImageList->getSelectionModel()->selectedIndexes();
     QList<QPersistentModelIndex> selectedIndices;
     for (int i=0; i<selectedIndicesFromModel.count(); ++i)
     {
@@ -198,14 +199,15 @@ KipiImageItemDelegate::~KipiImageItemDelegate()
     delete d;
 }
 
-void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& sortMappedindex) const
 {
-    const QModelIndex& sourceModelIndex = d->imageList->getSortProxyModel()->mapToSource(index);
-    if (sourceModelIndex.column()!=KipiImageItem::ColumnThumbnail)
+    if (sortMappedindex.column()!=KipiImageItem::ColumnThumbnail)
     {
-        QItemDelegate::paint(painter, option, index);
+        QItemDelegate::paint(painter, option, sortMappedindex);
         return;
     }
+
+    const QModelIndex& sourceModelIndex = d->imageList->getSortProxyModel()->mapToSource(sortMappedindex);
 
     if (option.state & QStyle::State_Selected)
     {
@@ -228,14 +230,14 @@ void KipiImageItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem&
     painter->drawPixmap(QRect(startPoint, pixmapSize), itemPixmap, QRect(QPoint(0, 0), pixmapSize));
 }
 
-QSize KipiImageItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize KipiImageItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& sortMappedindex) const
 {
-    if (index.column()==KipiImageItem::ColumnThumbnail)
+    if (sortMappedindex.column()==KipiImageItem::ColumnThumbnail)
     {
         return QSize(d->thumbnailSize, d->thumbnailSize);
     }
 
-    return QItemDelegate::sizeHint(option, index);
+    return QItemDelegate::sizeHint(option, sortMappedindex);
 }
 
 void KipiImageItemDelegate::setThumbnailSize(const int size)
