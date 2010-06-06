@@ -361,10 +361,31 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
     }
 
     case ColumnLatitude:
+    {
+        if (!m_gpsData.hasCoordinates())
+            return false;
+
+        if (!otherGPSItem->m_gpsData.hasCoordinates())
+            return true;
+
+        return m_gpsData.m_coordinates.lat() < otherGPSItem->m_gpsData.m_coordinates.lat();
+    }
 
     case ColumnLongitude:
+    {
+        if (!m_gpsData.hasCoordinates())
+            return false;
+
+        if (!otherGPSItem->m_gpsData.hasCoordinates())
+            return true;
+
+        return m_gpsData.m_coordinates.lon() < otherGPSItem->m_gpsData.m_coordinates.lon();
+    }
 
     case ColumnStatus:
+    {
+        return m_dirty && !otherGPSItem->m_dirty;
+    }
 
     default:
         return KipiImageItem::lessThan(otherItem, column);
