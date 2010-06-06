@@ -91,9 +91,7 @@ void KipiImageItem::loadImageData()
 void KipiImageItem::loadImageDataInternal()
 {
     KIPI::ImageInfo info = m_interface->info(m_url);
-    // TODO: this appears to return the file modification date in the default implementation
-//     m_dateTime = info.time(KIPI::FromInfo);
-//     kDebug()<<m_url<<m_dateTime;
+    m_dateTime = info.time(KIPI::FromInfo);
     if (!m_dateTime.isValid())
     {
         openExiv2IFaceIfNotOpen(false);
