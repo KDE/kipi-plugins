@@ -183,8 +183,10 @@ bool KipiImageModel::setData(const QModelIndex& index, const QVariant& value, in
 
 Qt::ItemFlags KipiImageModel::flags(const QModelIndex& index) const
 {
-    // MODELTEST does not like this - why?
-    return QAbstractItemModel::flags(index);// | Qt::ItemIsDragEnabled;
+    if (!index.isValid())
+        return 0;
+
+    return QAbstractItemModel::flags(index) | Qt::ItemIsDragEnabled;
 }
 
 KipiImageItem* KipiImageModel::itemFromUrl(const KUrl& url) const
