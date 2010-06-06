@@ -1,7 +1,6 @@
 SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/../")
-INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed")
 
 SET(kipiplugin_gpssync_PART_SRCS
         gpssyncdialog.cpp
@@ -29,7 +28,15 @@ SET(kipiplugin_gpssync_PART_SRCS
         borrowed/modeltest.cpp
    )
 
-MESSAGE(${KDE_VERSION})
+IF(KDE4_BUILD_TESTS)
+    INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed")
+    ADD_DEFINITIONS(-DGPSSYNC2_MODELTEST)
+    SET(kipiplugin_gpssync_PART_SRCS
+            ${kipiplugin_gpssync_PART_SRCS}
+            borrowed/modeltest.cpp
+        )
+ENDIF(KDE4_BUILD_TESTS)
+
 IF (${KDE_VERSION} VERSION_GREATER "4.4.81")
 ELSE (${KDE_VERSION} VERSION_GREATER "4.4.81")
     # these are borrowed from a new KDE trunk version

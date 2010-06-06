@@ -27,7 +27,6 @@
 #include "gpssyncdialog.moc"
 
 // Qt includes
-#include <modeltest.h>
 
 #include <qtconcurrentmap.h>
 #include <QButtonGroup>
@@ -80,6 +79,7 @@
 // WorldMapWidget2 includes
 
 #include "../worldmapwidget2/lib/worldmapwidget2.h"
+
 // Local includes
 
 #include "kipiimagemodel.h"
@@ -97,6 +97,10 @@
 #include "gpsbookmarkowner.h"
 #include "gpslistviewcontextmenu.h"
 #include "searchwidget.h"
+
+#ifdef GPSSYNC2_MODELTEST
+#include <modeltest.h>
+#endif /* GPSSYNC2_MODELTEST */
 
 namespace KIPIGPSSyncPlugin
 {
@@ -186,7 +190,11 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     setModal(true);
     setMinimumSize(300,400);
     d->imageModel = new KipiImageModel(this);
+
+#ifdef GPSSYNC2_MODELTEST
     new ModelTest(d->imageModel, this);
+#endif /* GPSSYNC2_MODELTEST */
+
     d->imageModel->setKipiInterface(d->interface);
     GPSImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);

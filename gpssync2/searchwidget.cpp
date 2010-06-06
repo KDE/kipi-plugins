@@ -51,6 +51,10 @@
 #include "gpsundocommand.h"
 #include "kipiimagemodel.h"
 
+#ifdef GPSSYNC2_MODELTEST
+#include <modeltest.h>
+#endif /* GPSSYNC2_MODELTEST */
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -95,6 +99,9 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOw
     d->kipiImageModel = kipiImageModel;
     d->searchBackend = new SearchBackend(this);
     d->searchResultsModel = new SearchResultModel(this);
+#ifdef GPSSYNC2_MODELTEST
+    new ModelTest(d->searchResultsModel, this);
+#endif /* GPSSYNC2_MODELTEST */
     d->searchResultsSelectionModel = new QItemSelectionModel(d->searchResultsModel);
     d->searchResultsModel->setSelectionModel(d->searchResultsSelectionModel);
     d->searchResultModelHelper = new SearchResultModelHelper(d->searchResultsModel, d->searchResultsSelectionModel, d->kipiImageModel, this);
@@ -304,8 +311,8 @@ QModelIndex SearchResultModel::index(int row, int column, const QModelIndex& par
         return QModelIndex();
     }
 
-    if ( (column>=1)
-         || (row>=d->searchResults.count()) )
+    if ( (column<0) || (column>=1)
+         || (row<0) || (row>=d->searchResults.count()) )
         return QModelIndex();
 
     return createIndex(row, column, 0);
@@ -368,7 +375,7 @@ void SearchResultModel::addResults(const SearchBackend::SearchResult::List& resu
     if (nonDuplicates.isEmpty())
         return;
 
-    beginInsertRows(QModelIndex(), d->searchResults.count(), d->searchResults.count()+nonDuplicates.count());
+    beginInsertRows(QModelIndex(), d->searchResults.count(), d->searchResults.count()+nonDuplicates.count()-1);
     for (int i=0; i<nonDuplicates.count(); ++i)
     {
         SearchResultItem item;
