@@ -335,33 +335,44 @@ void GPSListViewContextMenu::pasteActionTriggered()
     if ((!foundData)&&(mimedata->hasText()))
     {
         const QString textdata  = mimedata->text();
-        const QStringList parts = textdata.split(',');
 
-        if ((parts.size()==3)||(parts.size()==2))
+        bool foundGeoUrl = false;
+        WMW2::WMWGeoCoordinate testCoordinates = WMW2::WMWGeoCoordinate::fromGeoUrl(textdata, &foundGeoUrl);
+        if (foundGeoUrl)
         {
-            bool okay = true;
-            double    ptLongitude = 0.0;
-            double    ptLatitude  = 0.0;
-            double    ptAltitude  = 0.0;
-            bool haveAltitude = false;
+            gpsData.setCoordinates(testCoordinates);
+        }
+        else
+        {
+            // TODO: this is legacy code from before we used geo-url
+            const QStringList parts = textdata.split(',');
 
-            ptLongitude = parts[0].toDouble(&okay);
-            if (okay)
-                ptLatitude = parts[1].toDouble(&okay);
-
-            if (okay&&(parts.size()==3))
+            if ((parts.size()==3)||(parts.size()==2))
             {
-                ptAltitude = parts[2].toDouble(&okay);
-                haveAltitude = okay;
-            }
+                bool okay = true;
+                double    ptLongitude = 0.0;
+                double    ptLatitude  = 0.0;
+                double    ptAltitude  = 0.0;
+                bool haveAltitude = false;
 
-            foundData = okay;
-            if (okay)
-            {
-                WMW2::WMWGeoCoordinate coordinates(ptLatitude, ptLongitude);
-                if (haveAltitude)
-                    coordinates.setAlt(ptAltitude);
-                gpsData.setCoordinates(coordinates);
+                ptLongitude = parts[0].toDouble(&okay);
+                if (okay)
+                    ptLatitude = parts[1].toDouble(&okay);
+
+                if (okay&&(parts.size()==3))
+                {
+                    ptAltitude = parts[2].toDouble(&okay);
+                    haveAltitude = okay;
+                }
+
+                foundData = okay;
+                if (okay)
+                {
+                    WMW2::WMWGeoCoordinate coordinates(ptLatitude, ptLongitude);
+                    if (haveAltitude)
+                        coordinates.setAlt(ptAltitude);
+                    gpsData.setCoordinates(coordinates);
+                }
             }
         }
     }

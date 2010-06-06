@@ -49,14 +49,14 @@ inline void CoordinatesToClipboard(const WMW2::WMWGeoCoordinate& coordinates, co
     const bool haveAltitude = coordinates.hasAltitude();
     const QString altitude = coordinates.altString();
 
-    const QString coordinatesString = haveAltitude ?
-        QString::fromLatin1("%1,%2,%3").arg(lon).arg(lat).arg(altitude) :
-        QString::fromLatin1("%1,%2").arg(lon).arg(lat);
-
     const QString nameToUse = title.isEmpty() ? url.toLocalFile() : title;
 
     // importing this representation into Marble does not show anything,
     // but Merkaartor shows the point
+    const QString kmlCoordinatesString = haveAltitude ?
+        QString::fromLatin1("%1,%2,%3").arg(lon).arg(lat).arg(altitude) :
+        QString::fromLatin1("%1,%2").arg(lon).arg(lat);
+
     const QString kmlRepresentation = QString::fromLatin1(
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
       "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n"
@@ -69,10 +69,10 @@ inline void CoordinatesToClipboard(const WMW2::WMWGeoCoordinate& coordinates, co
       " </Placemark>\n"
       "</Document>\n"
       "</kml>\n"
-      ).arg(nameToUse).arg(coordinatesString);
+      ).arg(nameToUse).arg(kmlCoordinatesString);
 
     // importing this data into Marble and Merkaartor works
-    const QString elevationString = haveAltitude ? QString::fromLatin1("   <ele>%1</ele>\n").arg(altitude) : QString();
+    const QString gpxElevationString = haveAltitude ? QString::fromLatin1("   <ele>%1</ele>\n").arg(altitude) : QString();
     const QString gpxRepresentation = QString::fromLatin1(
       "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
       "<gpx xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"trippy\" version=\"0.1\"\n"
@@ -84,10 +84,10 @@ inline void CoordinatesToClipboard(const WMW2::WMWGeoCoordinate& coordinates, co
       "   <name>%4</name>\n"
       "  </wpt>\n"
       "</gpx>\n"
-      ).arg(lat).arg(lon).arg(elevationString).arg(nameToUse);
+      ).arg(lat).arg(lon).arg(gpxElevationString).arg(nameToUse);
 
     QMimeData * const myMimeData = new QMimeData();
-    myMimeData->setText(coordinatesString);
+    myMimeData->setText(coordinates.geoUrl());
     myMimeData->setData(QLatin1String("application/vnd.google-earth.kml+xml"), kmlRepresentation.toUtf8());
     myMimeData->setData(QLatin1String("application/gpx+xml"), gpxRepresentation.toUtf8());
 
