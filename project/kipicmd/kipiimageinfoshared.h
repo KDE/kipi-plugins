@@ -21,6 +21,7 @@
 
 #include <libkipi/imageinfoshared.h>
 
+class KipiImageInfoSharedPrivate;
 class KipiImageInfoShared : public KIPI::ImageInfoShared
 {
 public:
@@ -35,6 +36,10 @@ public:
     void addAttributes( const QMap<QString,QVariant>& attributesToAdd );
     void delAttributes( const QStringList& attributesToDelete );
 
+    virtual QDateTime time(KIPI::TimeSpec timeSpec);
+
+private:
+    KipiImageInfoSharedPrivate* const d;
 };
 
 #endif // KIPIIMAGEINFOSHARED_H

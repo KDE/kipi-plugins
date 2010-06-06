@@ -16,20 +16,34 @@
 
 #include "kipiimageinfoshared.h"
 
+// LibKExiv2 includes
+
+#include <libkexiv2/version.h>
+#include <libkexiv2/kexiv2.h>
+
 // local includes:
 
 #include "kipitest-debug.h"
 
+class KipiImageInfoSharedPrivate
+{
+public:
+    KipiImageInfoSharedPrivate()
+    {
+    }
+
+    QDateTime dateTime;
+};
 
 KipiImageInfoShared::KipiImageInfoShared( KIPI::Interface* interface, const KUrl& url)
-    : KIPI::ImageInfoShared(interface, url)
+    : KIPI::ImageInfoShared(interface, url), d(new KipiImageInfoSharedPrivate())
 {
 
 }
 
 KipiImageInfoShared::~KipiImageInfoShared()
 {
-
+    delete d;
 }
 
 QString KipiImageInfoShared::description()
@@ -63,4 +77,30 @@ void KipiImageInfoShared::delAttributes( const QStringList& attributesToDelete )
 {
     Q_UNUSED(attributesToDelete);
     kipiDebug("void KipiImageInfoShared::delAttributes( const QStringList& attributesToDelete )");
+}
+
+QDateTime KipiImageInfoShared::time(KIPI::TimeSpec timeSpec)
+{
+    if (d->dateTime.isValid())
+        return d->dateTime;
+
+    if ( ! _url.isLocalFile() )
+    {
+        kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
+        return QDateTime();
+    }
+    else
+    {
+        KExiv2Iface::KExiv2* const exiv2Iface = new KExiv2Iface::KExiv2;
+        exiv2Iface->load(_url.path());
+        d->dateTime = exiv2Iface->getImageDateTime();
+        delete exiv2Iface;
+
+        if (!d->dateTime.isValid())
+        {
+            d->dateTime = ImageInfoShared::time(timeSpec);
+        }
+
+        return d->dateTime;
+    }
 }
