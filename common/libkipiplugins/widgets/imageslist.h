@@ -88,6 +88,14 @@ public:
 
     void updateInformation();
 
+    // implement this, if you have special item widgets, e.g. an edit line
+    // they will be set automatically when adding items, changing order, etc.
+    virtual void updateItemWidgets() {};
+
+protected:
+
+    ImagesListView* view();
+
 private:
 
     int             m_rating;         // Image Rating from Kipi host.

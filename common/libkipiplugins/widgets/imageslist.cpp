@@ -185,6 +185,12 @@ void ImagesListViewItem::setProcessedIcon(const QIcon& icon)
     setIcon(ImagesListView::Thumbnail, QIcon(m_thumb));
 }
 
+
+ImagesListView* ImagesListViewItem::view()
+{
+    return m_view;
+}
+
 // ---------------------------------------------------------------------------
 
 ImagesListView::ImagesListView(ImagesList *parent)
@@ -746,6 +752,7 @@ void ImagesList::slotRemoveItems()
 
 void ImagesList::slotMoveUpItems()
 {
+    // move above item down, then we don't have to fix the focus
     QModelIndex curIndex = listView()->currentIndex();
     if (!curIndex.isValid())
         return;
@@ -756,12 +763,15 @@ void ImagesList::slotMoveUpItems()
 
     QTreeWidgetItem* temp = listView()->takeTopLevelItem(aboveIndex.row());
     listView()->insertTopLevelItem(curIndex.row(), temp);
+    // this is a quick fix. We loose the extra tags in flickr upload, but at list we don't get a crash
+    dynamic_cast<KIPIPlugins::ImagesListViewItem*>(temp)->updateItemWidgets();
 
     emit signalImageListChanged();
 }
 
 void ImagesList::slotMoveDownItems()
 {
+    // move below item up, then we don't have to fix the focus
     QModelIndex curIndex = listView()->currentIndex();
     if (!curIndex.isValid())
         return;
@@ -772,6 +782,8 @@ void ImagesList::slotMoveDownItems()
 
     QTreeWidgetItem* temp = listView()->takeTopLevelItem(belowIndex.row());
     listView()->insertTopLevelItem(curIndex.row(), temp);
+    // this is a quick fix. We loose the extra tags in flickr upload, but at list we don't get a crash
+    dynamic_cast<KIPIPlugins::ImagesListViewItem*>(temp)->updateItemWidgets();
 
     emit signalImageListChanged();
 }

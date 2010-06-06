@@ -151,6 +151,8 @@ public:
     /* This method should be called when one of the checkboxes is clicked. */
     void toggled();
 
+    virtual void updateItemWidgets();
+
 private:
 
     bool                    m_is23;
