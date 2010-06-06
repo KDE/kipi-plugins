@@ -39,5 +39,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 024 ==> PicasaWebExport   : 215688 : Attempted uploading pics to picasaweb.
 025 ==> AcquireImages     : 238150 : Scangui is untranslated, because it loads no reqired translation catalog.
 026 ==> SmugExport        : 240420 : Patch to export captions to smugmug.
-027 ==> 
+027 ==> DNGConverter      : 240749 : DNGConverter produces black files (Canon 5D mkII).
+028 ==>
 

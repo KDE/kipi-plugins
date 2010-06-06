@@ -220,10 +220,11 @@ int DNGWriter::convert()
         }
 
         bool useFullSensorImage = false;
-        if (identifyMake.make == "Canon")
-        {
-            useFullSensorImage = true;
-        }
+        // disable general fullsensor image see #240750
+        //if (identifyMake.make == "Canon")
+        //{
+        //    useFullSensorImage = true;
+        //}
 
         if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, useFullSensorImage, 0))
         {
