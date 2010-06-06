@@ -60,6 +60,10 @@ public:
     virtual void undo();
 
     void changeItemData(const bool redoIt);
+    inline int affectedItemCount() const
+    {
+        return undoList.count();
+    }
 
 private:
     UndoInfo::List undoList;

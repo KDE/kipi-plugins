@@ -67,6 +67,9 @@ public:
     KAction          *actionCopy;
     KAction          *actionPaste;
     KAction          *actionBookmark;
+    KAction          *actionRemoveCoordinates;
+    KAction          *actionRemoveAltitude;
+    KAction          *actionRemoveUncertainty;
 
     GPSBookmarkOwner *bookmarkOwner;
 
@@ -82,12 +85,24 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
     d->actionCopy->setIcon(SmallIcon("edit-copy"));
     d->actionPaste = new KAction(i18n("Paste coordinates"), this);
     d->actionPaste->setIcon(SmallIcon("edit-paste"));
+    d->actionRemoveCoordinates = new KAction(i18n("Remove coordinates"), this);
+    d->actionRemoveAltitude = new KAction(i18n("Remove altitude"), this);
+    d->actionRemoveUncertainty = new KAction(i18n("Remove uncertainty"), this);
 
     connect(d->actionCopy, SIGNAL(triggered()),
             this, SLOT(copyActionTriggered()));
 
     connect(d->actionPaste, SIGNAL(triggered()),
             this, SLOT(pasteActionTriggered()));
+
+    connect(d->actionRemoveCoordinates, SIGNAL(triggered()),
+            this, SLOT(slotRemoveCoordinates()));
+
+    connect(d->actionRemoveAltitude, SIGNAL(triggered()),
+            this, SLOT(slotRemoveAltitude()));
+
+    connect(d->actionRemoveUncertainty, SIGNAL(triggered()),
+            this, SLOT(slotRemoveUncertainty()));
 
     if (bookmarkOwner)
     {
@@ -120,20 +135,27 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         const int nSelected = selectedIndices.size();
 
         // "copy" and "Add bookmark" are only available for one selected image with geo data:
-        bool copyAvailable = (nSelected == 1);
-        if (copyAvailable)
+        bool copyAvailable = (nSelected==1);
+        bool removeAltitudeAvailable = false;
+        bool removeCoordinatesAvailable = false;
+        bool removeUncertaintyAvailable = false;
+        for (int i=0; i<nSelected; ++i)
         {
-            GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(selectedIndices.first()));
+            GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(selectedIndices.at(i)));
             if (gpsItem)
             {
-                copyAvailable = gpsItem->gpsData().m_coordinates.hasCoordinates();
-            }
-            else
-            {
-                copyAvailable = false;
+                const bool itemHasCoordinates = gpsItem->gpsData().m_coordinates.hasCoordinates();
+                copyAvailable&= itemHasCoordinates;
+                removeCoordinatesAvailable|= itemHasCoordinates;
+                removeAltitudeAvailable|= gpsItem->gpsData().m_coordinates.hasAltitude();
+                removeUncertaintyAvailable|= gpsItem->gpsData().hasNSatellites() | gpsItem->gpsData().hasHDop();
             }
         }
+
         d->actionCopy->setEnabled(copyAvailable);
+        d->actionRemoveAltitude->setEnabled(removeAltitudeAvailable);
+        d->actionRemoveCoordinates->setEnabled(removeCoordinatesAvailable);
+        d->actionRemoveUncertainty->setEnabled(removeUncertaintyAvailable);
         if (d->bookmarkOwner)
         {
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
@@ -157,6 +179,10 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         KMenu * const menu = new KMenu(d->imagesList);
         menu->addAction(d->actionCopy);
         menu->addAction(d->actionPaste);
+        menu->addSeparator();
+        menu->addAction(d->actionRemoveCoordinates);
+        menu->addAction(d->actionRemoveAltitude);
+        menu->addAction(d->actionRemoveUncertainty);
         if (d->actionBookmark)
         {
             menu->addSeparator();
@@ -347,7 +373,6 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
 void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer gpsData, const QString& undoDescription)
 {
-    // enable or disable the actions:
     KipiImageModel* const imageModel = d->imagesList->getModel();
     QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
     const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
@@ -358,8 +383,9 @@ void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer g
     {
         const QModelIndex itemIndex = selectedIndices.at(i);
         GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(itemIndex));
+        const GPSDataContainer oldGPSData = gpsItem->gpsData();
         gpsItem->setGPSData(gpsData);
-        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, gpsItem->gpsData(), gpsData));
+        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldGPSData, gpsData));
     }
 
     undoCommand->setText(undoDescription);
@@ -379,6 +405,87 @@ bool GPSListViewContextMenu::getCurrentPosition(GPSDataContainer* position, void
     GPSListViewContextMenu* const me = reinterpret_cast<GPSListViewContextMenu*>(mydata);
     
     return me->getCurrentItemPositionAndUrl(position, 0);
+}
+
+void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataContainer::HasFlags flagsToClear, const QString& undoDescription)
+{
+    // enable or disable the actions:
+    KipiImageModel* const imageModel = d->imagesList->getModel();
+    QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
+    const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
+    const int nSelected = selectedIndices.size();
+
+    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
+    for (int i=0; i<nSelected; ++i)
+    {
+        const QModelIndex itemIndex = selectedIndices.at(i);
+        GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(itemIndex));
+        const GPSDataContainer oldGPSData = gpsItem->gpsData();
+        GPSDataContainer newGPSData = oldGPSData;
+        bool didSomething = false;
+        if (flagsToClear.testFlag(GPSDataContainer::HasCoordinates))
+        {
+            if (newGPSData.hasCoordinates())
+            {
+                didSomething = true;
+                newGPSData.clear();
+            }
+        }
+        if (flagsToClear.testFlag(GPSDataContainer::HasAltitude))
+        {
+            if (newGPSData.hasAltitude())
+            {
+                didSomething = true;
+                newGPSData.clearAltitude();
+            }
+        }
+        if (flagsToClear.testFlag(GPSDataContainer::HasNSatellites))
+        {
+            if (newGPSData.hasNSatellites())
+            {
+                didSomething = true;
+                newGPSData.clearNSatellites();
+            }
+        }
+        if (flagsToClear.testFlag(GPSDataContainer::HasHDop))
+        {
+            if (newGPSData.hasHDop())
+            {
+                didSomething = true;
+                newGPSData.clearHDop();
+            }
+        }
+        if (didSomething)
+        {
+            gpsItem->setGPSData(newGPSData);
+            undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldGPSData, newGPSData));
+        }
+    }
+
+    if (undoCommand->affectedItemCount()>0)
+    {
+        undoCommand->setText(undoDescription);
+        emit(signalUndoCommand(undoCommand));
+    }
+    else
+    {
+        delete undoCommand;
+    }
+}
+
+void GPSListViewContextMenu::slotRemoveCoordinates()
+{
+    removeInformationFromSelectedImages(GPSDataContainer::HasCoordinates, i18n("Remove coordinates information"));
+}
+
+void GPSListViewContextMenu::slotRemoveAltitude()
+{
+    removeInformationFromSelectedImages(GPSDataContainer::HasAltitude, i18n("Remove altitude information"));
+}
+
+void GPSListViewContextMenu::slotRemoveUncertainty()
+{
+    removeInformationFromSelectedImages(GPSDataContainer::HasNSatellites|GPSDataContainer::HasHDop, i18n("Remove uncertainty information"));
 }
 
 } // namespace KIPIGPSSyncPlugin

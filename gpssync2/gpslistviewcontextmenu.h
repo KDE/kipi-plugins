@@ -56,12 +56,16 @@ protected:
     void setGPSDataForSelectedItems(const GPSDataContainer gpsData, const QString& undoDescription);
     static bool getCurrentPosition(GPSDataContainer* position, void* mydata);
     bool getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl);
+    void removeInformationFromSelectedImages(const GPSDataContainer::HasFlags flagsToClear, const QString& undoDescription);
 
-public Q_SLOTS:
+private Q_SLOTS:
 
     void copyActionTriggered();
     void pasteActionTriggered();
     void slotBookmarkSelected(GPSDataContainer bookmarkPosition);
+    void slotRemoveCoordinates();
+    void slotRemoveAltitude();
+    void slotRemoveUncertainty();
 
 Q_SIGNALS:
     void signalUndoCommand(GPSUndoCommand* undoCommand);

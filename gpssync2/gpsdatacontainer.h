@@ -107,6 +107,16 @@ public:
         m_hasFlags&=(~HasHDop);
     }
 
+    void clearNSatellites()
+    {
+        m_hasFlags&=(~HasNSatellites);
+    }
+
+    void clearHDop()
+    {
+        m_hasFlags&=(~HasHDop);
+    }
+
     void setHDop(const qreal hDop)
     {
         m_hDop = hDop;
@@ -141,6 +151,13 @@ public:
     void clear()
     {
         m_hasFlags = 0;
+        m_coordinates.clear();
+    }
+
+    void clearAltitude()
+    {
+        m_hasFlags&=~HasAltitude;
+        m_coordinates.clearAlt();
     }
 
     bool hasCoordinates() const
