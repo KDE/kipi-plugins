@@ -204,9 +204,14 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
 
 bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl)
 {
+    // NOTE: currentIndex does not seem to work any more since we use KLinkItemSelectionModel
     KipiImageModel* const imageModel = d->imagesList->getModel();
     QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
-    const QModelIndex currentIndex = selectionModel->currentIndex();
+    const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
+    if (selectedIndices.count()!=1)
+        return false;
+    
+    const QModelIndex currentIndex = selectedIndices.first();
     if (!currentIndex.isValid())
         return false;
 
