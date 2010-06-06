@@ -124,9 +124,13 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
     d->languageEdit = new KComboBox(d->UGridContainer);
 
-    d->languageEdit->addItem("English");
-    d->languageEdit->addItem("German");
-    d->languageEdit->addItem("Romanian");
+    d->languageEdit->addItem(i18n("English"),"en");
+    d->languageEdit->addItem(i18n("German"), "de");
+    d->languageEdit->addItem(i18n("Romanian"), "ro");
+    d->languageEdit->addItem(i18n("Chinese"), "zh");
+    d->languageEdit->addItem(i18n("Arabic"), "ar");
+    d->languageEdit->addItem(i18n("Morroco"), "ma");
+    d->languageEdit->addItem(i18n("Egiptian"), "eg");
 
     d->serviceLabel = new QLabel(i18n("Select service:"), d->UGridContainer);
     d->serviceComboBox = new KComboBox(d->UGridContainer);
@@ -270,18 +274,6 @@ GPSReverseGeocodingWidget::~GPSReverseGeocodingWidget()
     delete d;
 }
 
-QString GPSReverseGeocodingWidget::parseLanguageText(QString language)
-{
-
-    QString langCode="";
-
-    if(language == "Engish") langCode = "EN";
-    if(language == "German") langCode = "DE";
-    if(language == "Romanian") langCode = "RO";
-
-    return langCode;
-}
-
 void GPSReverseGeocodingWidget::slotButtonRGSelected()
 {
     // get the selected image:
@@ -290,8 +282,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
     QList<RGInfo> photoList;
 
-    QString wantedLanguage = parseLanguageText(d->languageEdit->currentText());
-    
+    QString wantedLanguage = d->languageEdit->itemData(d->languageEdit->currentIndex()).toString(); 
 
     for( int i = 0; i < selectedItems.count(); ++i){
 
