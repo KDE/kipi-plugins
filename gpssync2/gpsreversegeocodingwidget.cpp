@@ -60,6 +60,7 @@
 #include "backend-google-rg.h"
 #include "backend-geonames-rg.h"
 #include "backend-osm-rg.h"
+#include "backend-geonamesUS-rg.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -135,7 +136,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->serviceLabel = new QLabel(i18n("Select service:"), d->UGridContainer);
     d->serviceComboBox = new KComboBox(d->UGridContainer);
 
-    d->serviceComboBox->addItem(i18n("Geonames.org"));
+    d->serviceComboBox->addItem(i18n("Geonames.org place name(non-US)"));
+    d->serviceComboBox->addItem(i18n("Geonames.org full address (US only)"));
     d->serviceComboBox->addItem(i18n("Open Street Map"));
 
     d->addressElemLabel = new QLabel(i18n("Select address elements:"), d->UGridContainer);
@@ -218,8 +220,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
 
     //d->backendRGList.append(new BackendGoogleRG(this));
     d->backendRGList.append(new BackendGeonamesRG(this));
+    d->backendRGList.append(new BackendGeonamesUSRG(this));
     d->backendRGList.append(new BackendOsmRG(this));
-
     
     updateUIState();
 

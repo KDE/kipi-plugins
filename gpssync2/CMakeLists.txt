@@ -26,6 +26,7 @@ SET(kipiplugin_gpssync_PART_SRCS
         searchbackend.cpp
         searchwidget.cpp
         borrowed/modeltest.cpp
+        backend-geonamesUS-rg.cpp
    )
 
 IF(KDE4_BUILD_TESTS)
