@@ -1,3 +1,1302 @@
+1.3.0   2010-06-07
+
+2010-06-07 12:29  cgilles
+
+	* NEWS: update
+
+2010-06-07 11:08  cgilles
+
+	* project/CodingSprint2010.ods: update Martin info
+
+2010-06-07 10:13  cgilles
+
+	* project/CodingSprint2010.ods: update Gabriel info
+
+2010-06-07 06:48  scripty
+
+	* acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/classic/classic.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-06-06 21:30  cgilles
+
+	* NEWS: update
+
+2010-06-06 13:56  eva
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	  common/libkipiplugins/widgets/imageslist.h,
+	  flickrexport/flickrlist.cpp, flickrexport/flickrlist.h: This is a
+	  quickfix for Bug 221298 - Digikam segfaults on Flickr export
+	  ** Analysis:
+	  - ImagesList::slotMoveUpItems() uses
+	  takeTopLevelItem(aboveIndex.row() and
+	  then reinserts the item at new position
+	  - FlickrListViewItem constructor creates a KLineEdit as a special
+	  widget
+	  and sets it using view->setItemWidget(...)
+	  - Issue: view takes ownership of itemwidget. Thus KLineEdit
+	  widget is
+	  broken after calling takeTopLevelItem on the item
+	  - same issue for slotMoveDownItems()
+	  ** QuickFix:
+	  - add new virtual function updateItemWidgets to
+	  ImagesListViewItem and
+	  implement it in FlickrListViewItem. Create a new KlineEdit in
+	  there and
+	  call setItemWidget
+	  - call updateItemWidget after having used takeTopLevelItem
+	  ** Remaining Issue:
+	  we can't preserve the content of KLineEdit (extra tags in case of
+	  flickr)
+	  However, this feature has to be actively activated by the user,
+	  so it is
+	  not being used by default. And at least we don't get crashes now
+	  ** Real fix ideas:
+	  - implement a QItemDelegate (changing the model...)
+	  - there might be a solution based on QLineEdit (needs to be
+	  investigated)
+
+2010-06-06 09:37  mghansen
+
+	* project/kipicmd/kipiimageinfoshared.cpp,
+	  project/kipicmd/kipiimageinfoshared.h: Read date and time from
+	  image metadata instead of using the modification date.
+
+2010-06-06 08:59  jmueller
+
+	* NEWS, dngconverter/dngwriter/dngwriter.cpp: disable encoding of
+	  full sensor image for canon as it causes problems with some
+	  models
+	  
+	  BUGS: 240749
+
+2010-06-03 22:06  cgilles
+
+	* project/CodingSprint2010.ods: update
+
+2010-06-03 09:07  cgilles
+
+	* NEWS: update
+
+2010-06-03 05:36  cgilles
+
+	* NEWS: update
+
+2010-06-03 05:33  cgilles
+
+	* smug/CMakeLists.txt, smug/TODO, smug/mpform.cpp, smug/mpform.h,
+	  smug/plugin_smug.cpp, smug/plugin_smug.h, smug/smugalbum.cpp,
+	  smug/smugalbum.h, smug/smugtalker.cpp, smug/smugtalker.h,
+	  smug/smugwidget.cpp, smug/smugwidget.h, smug/smugwindow.cpp,
+	  smug/smugwindow.h: apply patch #47588 from Tim Newsome to support
+	  Caption with SmugExport tool
+	  BUGS: 240420
+
+2010-06-02 22:46  cgilles
+
+	* ipodexport/IpodExportDialog.cpp: try to fix compilation with
+	  conflictual declaratin of "signals" in Qt4 and Gtk
+	  CCBUGS: 240469
+
+2010-06-02 22:43  cgilles
+
+	* ipodexport/ImageList.cpp, ipodexport/IpodExportDialog.cpp,
+	  ipodexport/IpodHeader.cpp, ipodexport/plugin_ipodexport.cpp: no
+	  need headers file swith .moc
+
+2010-06-02 22:01  cgilles
+
+	* project/CodingSprint2010.ods: update Andreas info
+
+2010-06-02 11:19  cgilles
+
+	* project/CodingSprint2010.ods: update
+
+2010-06-02 10:45  cgilles
+
+	* project/CodingSprint2010.ods: update andreas info
+
+2010-06-01 17:39  cgilles
+
+	* project/CodingSprint2010.ods: update Andreas travels cost
+
+2010-05-31 14:56  cgilles
+
+	* project/CodingSprint2010.ods: update travel costs
+
+2010-05-31 10:42  cgilles
+
+	* jpeglossless/transupp.v7.cpp: fix warnings
+
+2010-05-30 17:55  coles
+
+	* picasawebexport/picasawebwidget.cpp: Proof-reading - two minor
+	  changes:
+	  - behaviour -> behavior (will translate to behaviour in en_GB
+	  localisation)
+	  - added missing r to hierarchies
+
+2010-05-30 10:49  mghansen
+
+	* project/CodingSprint2010.ods: Travelling details for Marcel and
+	  me.
+
+2010-05-29 20:47  cgilles
+
+	* project/CodingSprint2010.ods: update
+
+2010-05-29 20:46  cgilles
+
+	* project/CodingSprint2010.ods: estimate cost from Aditya
+
+2010-05-29 06:56  scripty
+
+	* htmlexport/themes/details/details.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-05-28 16:34  cgilles
+
+	* project/CodingSprint2010.ods: update travel cost for Gabriel. Set
+	  Arrival and departure date
+
+2010-05-28 12:56  cgilles
+
+	* expoblending/expoblending.cpp: fix catalog to load
+
+2010-05-28 12:53  cgilles
+
+	* dngconverter/plugin/dngconverter.cpp: fix catalog to load
+
+2010-05-28 12:42  cgilles
+
+	* NEWS: update
+
+2010-05-28 12:40  cgilles
+
+	* NEWS: update
+
+2010-05-28 07:21  lueck
+
+	* acquireimages/scangui.cpp: load translation catalog properly
+	  BUG:238150
+
+2010-05-27 12:36  cgilles
+
+	* expoblending/expoblending.cpp: use plugin catalog
+
+2010-05-27 12:34  cgilles
+
+	* dngconverter/plugin/dngconverter.cpp: use plugin catalog
+
+2010-05-27 12:27  cgilles
+
+	* acquireimages/scangui.cpp: set main catalog from acuireimages
+	  kipi-plugins
+	  CCBUGS: 238150
+
+2010-05-27 10:13  cgilles
+
+	* acquireimages/scangui.cpp: polish
+
+2010-05-26 21:04  cgilles
+
+	* project/CodingSprint2010.ods: update Andreas info
+
+2010-05-26 20:54  cgilles
+
+	* project/CodingSprint2010.ods: Julien will be busy during coding
+	  sprint
+
+2010-05-26 11:01  cgilles
+
+	* project/CodingSprint2010.ods: Kare is not available for the event
+
+2010-05-26 08:39  cgilles
+
+	* project/CodingSprint2010.ods: polish
+
+2010-05-26 07:18  cgilles
+
+	* project/CodingSprint2010.ods: update
+
+2010-05-25 20:54  cgilles
+
+	* project/CodingSprint2010.ods: polish
+
+2010-05-25 19:06  aclemens
+
+	* project/CodingSprint2010.ods: I will not be available
+
+2010-05-25 16:45  cgilles
+
+	* project/CodingSprint2010.ods: Jain will come to the event
+
+2010-05-25 13:30  cgilles
+
+	* project/CodingSprint2010.ods: Great : Andreas can contribute to
+	  the event this year !!!
+
+2010-05-25 12:24  cgilles
+
+	* project/CodingSprint2010.ods: update
+
+2010-05-25 11:12  cgilles
+
+	* project/CodingSprint2010.ods: Arnd is not available
+
+2010-05-25 10:55  cgilles
+
+	* project/CodingSprint2010.ods: polish
+
+2010-05-25 10:48  gvoicu
+
+	* project/CodingSprint2010.ods: Added prize
+
+2010-05-25 10:37  foerster
+
+	* project/CodingSprint2010.ods: Updated my status. Can't
+	  participate for this year :-(
+
+2010-05-25 08:21  cgilles
+
+	* project/CodingSprint2010.ods: Luka will be in France probably for
+	  summer. If possible, it will pass for one day at Aix en Provence.
+	  No more.
+
+2010-05-25 08:16  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop:
+	  SVN_SILENT made messages (.desktop file, second try)
+
+2010-05-25 08:06  cgilles
+
+	* project/CodingSprint2010.ods: Orcad is not available
+
+2010-05-25 08:02  cgilles
+
+	* project/CodingSprint2010.ods: polish
+
+2010-05-25 07:30  cgilles
+
+	* wallpaper/kipiplugin_wallpaper.desktop: update
+
+2010-05-25 07:30  cgilles
+
+	* timeadjust/kipiplugin_timeadjust.desktop: update
+
+2010-05-25 07:23  cgilles
+
+	* smug/kipiplugin_smug.desktop: polish
+
+2010-05-25 07:22  cgilles
+
+	* shwup/kipiplugin_shwup.desktop: polish
+
+2010-05-25 07:29  cgilles
+
+	* sendimages/kipiplugin_sendimages.desktop: update
+
+2010-05-25 07:28  cgilles
+
+	* removeredeyes/kipiplugin_removeredeyes.desktop: polish
+
+2010-05-25 07:27  cgilles
+
+	* rawconverter/kipiplugin_rawconverter.desktop: update
+
+2010-05-25 07:27  cgilles
+
+	* printimages/kipiplugin_printimages.desktop: update
+
+2010-05-25 07:27  cgilles
+
+	* piwigoexport/kipiplugin_piwigoexport.desktop: update
+
+2010-05-25 07:26  cgilles
+
+	* picasawebexport/kipiplugin_picasawebexport.desktop: update
+
+2010-05-25 07:26  cgilles
+
+	* kioexportimport/kipiplugin_kioexportimport.desktop: update
+
+2010-05-25 07:25  cgilles
+
+	* jpeglossless/kipiplugin_jpeglossless.desktop: update
+
+2010-05-25 07:25  cgilles
+
+	* ipodexport/kipiplugin_ipodexport.desktop: update
+
+2010-05-25 07:24  cgilles
+
+	* imageviewer/kipiplugin_imageviewer.desktop: update
+
+2010-05-25 07:23  cgilles
+
+	* galleryexport/kipiplugin_galleryexport.desktop: update
+
+2010-05-25 07:23  cgilles
+
+	* flickrexport/kipiplugin_flickrexport.desktop: update
+
+2010-05-25 07:23  cgilles
+
+	* flashexport/kipiplugin_flashexport.desktop: update
+
+2010-05-25 07:21  cgilles
+
+	* advancedslideshow/kipiplugin_advancedslideshow.desktop: update
+
+2010-05-25 07:21  cgilles
+
+	* calendar/kipiplugin_calendar.desktop: update
+
+2010-05-25 07:19  cgilles
+
+	* dngconverter/plugin/kipiplugin_dngconverter.desktop: update
+
+2010-05-25 07:18  cgilles
+
+	* expoblending/kipiplugin_expoblending.desktop: update
+
+2010-05-25 07:17  cgilles
+
+	* HACKING: update
+
+2010-05-24 23:47  apol
+
+	* facebook/kipiplugin_facebook.desktop: Use the correct id for the
+	  service icon.
+
+2010-05-24 22:57  apol
+
+	* facebook/facebookjob.cpp: Fix some connections so that the plugin
+	  works again.
+	  
+	  CCMAIL: lure@kubuntu.org
+
+2010-05-24 22:25  cgilles
+
+	* project/CodingSprint2010.ods: update list of peoples
+
+2010-05-21 08:18  cgilles
+
+	* project/CodingSprint2010.ods: Jens is not available at this date
+
+2010-05-20 17:28  cgilles
+
+	* project/CodingSprint2010.ods: Aditya will come, Johannes is not
+	  available.
+
+2010-05-20 17:14  cgilles
+
+	* project/CodingSprint2010.ods: Aureilien is not available
+
+2010-05-20 17:02  cgilles
+
+	* project/CodingSprint2010.ods: Kunal will come in France too
+
+2010-05-20 16:48  cgilles
+
+	* project/CodingSprint2010.ods: Marcel and Michael are fine to come
+	  in France
+
+2010-05-20 06:57  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop: SVN_SILENT made messages (.desktop
+	  file)
+
+2010-05-19 10:00  cgilles
+
+	* project/CodingSprint2010.ods: update
+
+2010-05-19 09:41  cgilles
+
+	* project/kdecodingsprint2010-256.png,
+	  project/kdecodingsprint2010.svgz: add more logo
+
+2010-05-19 09:26  cgilles
+
+	* project/kdecodingsprint2010.svgz: KDE imaging coding sprint 2010
+	  logo
+
+2010-05-18 12:03  cgilles
+
+	* NEWS: update
+
+2010-05-18 07:52  cgilles
+
+	* NEWS: update
+
+2010-05-17 07:26  scripty
+
+	* htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/Photoframe.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-05-15 09:49  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: set shot to extract (needed
+	  for fuji superccd sr & sr II sensors)
+
+2010-05-12 13:39  cgilles
+
+	* project/CodingSprint2010.ods: update
+
+2010-05-11 00:26  kunalghosh
+
+	* project/CodingSprint2010.ods: (kunal ghosh) Added my details for
+	  coding sprint 2010
+
+2010-05-10 07:43  cgilles
+
+	* NEWS: update
+
+2010-05-10 06:41  scripty
+
+	* htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-05-05 16:18  jmueller
+
+	* NEWS, dngconverter/dngwriter/dngwriter.cpp,
+	  dngconverter/dngwriter/dngwriter.h: enable fuji support
+	  rotate fuji raw files accordingly bayer rotation
+	  
+	  BUGS: 233393
+
+2010-05-05 09:49  adityab
+
+	* project/CodingSprint2010.ods: Added my (Aditya Bhatt) details for
+	  the 2010 coding sprint.
+
+2010-05-03 06:58  cgilles
+
+	* NEWS: update
+
+2010-05-03 05:59  cgilles
+
+	* project/CodingSprint2010.ods: added Martin in the event
+
+2010-05-02 06:45  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-04-29 08:53  cgilles
+
+	* NEWS: update
+
+2010-04-29 05:57  gvoicu
+
+	* project/CodingSprint2010.ods: My Coding Sprint confirmation
+
+2010-04-27 13:19  cgilles
+
+	* project/CodingSprint2010.ods: added entries for GOsc
+
+2010-04-25 17:57  cgilles
+
+	* project/CodingSprint2010.ods: update my availability and working
+	  on subject
+
+2010-04-25 15:56  mghansen
+
+	* project/CodingSprint2010.ods: Details for coding sprint
+
+2010-04-25 14:08  mwiesweg
+
+	* project/CodingSPrint2010.ods, project/CodingSprint2010.ods:
+	  Clearing info from 2009, some polish,
+	  my personal cost estimate
+
+2010-04-23 06:31  scripty
+
+	* htmlexport/themes/details/details.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-04-22 06:21  cgilles
+
+	* project/CodingSPrint2010.ods: new doc about Coding sprint 2010
+
+2010-04-21 20:26  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: add experimental fuji
+	  support again, this need further investigations
+
+2010-04-20 20:53  jmueller
+
+	* NEWS, dngconverter/dngwriter/dngwriter.cpp: support non-square
+	  pixels (Nikon D1X, Fuji sensors)
+
+2010-04-18 18:09  jmueller
+
+	* NEWS: remove double entry
+
+2010-04-18 10:34  mlaurent
+
+	* picasawebexport/picasawebwindow.cpp: Fix iterator
+
+2010-04-17 18:07  cgilles
+
+	* NEWS: update
+
+2010-04-17 11:54  jmueller
+
+	* picasawebexport/picasawebwidget.cpp: fix typo
+
+2010-04-17 11:51  jmueller
+
+	* picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebwidget.cpp,
+	  picasawebexport/picasawebwidget.h,
+	  picasawebexport/picasawebwindow.cpp: Added option on how to
+	  export tag paths, look at:
+	  http://www.flickr.com/photos/47251968@N04/4527472537/
+	  
+	  BUGS: 234099
+
+2010-04-16 11:09  cgilles
+
+	* NEWS: update
+
+2010-04-16 01:27  alexmerry
+
+	* jpeglossless/transupp.cpp, jpeglossless/transupp.v7.cpp,
+	  jpeglossless/transupp.v8a.cpp: Make files point to the correct
+	  README, and remove some boilerplate that shouldn't be there
+
+2010-04-16 01:12  alexmerry
+
+	* jpeglossless/jpegtransform.cpp: Better error reporting when
+	  libjpeg throws an error.
+	  
+	  Also, don't do any work to format messages we aren't going to
+	  display.
+
+2010-04-16 00:59  alexmerry
+
+	* jpeglossless/jpegtransform.cpp, jpeglossless/transupp.cpp,
+	  jpeglossless/transupp.h, jpeglossless/transupp.v6b.cpp,
+	  jpeglossless/transupp.v7.cpp, jpeglossless/transupp.v8a.cpp: Make
+	  jpeglossless transforms work with libjpeg v8a.
+	  
+	  transupp.c (taken from libjpeg sources) appears to be somewhat
+	  tied to the libjpeg version. In particular, the one from libjpeg
+	  v6b will not work with libjpeg v8a. Naturally, the one from v8a
+	  doesn't even compile with libjpeg v6b.
+	  
+	  Solution? Use the transupp.c file from the version of libjpeg we
+	  are compiling against. Only minor changes were required to make
+	  them all have the same interface.
+	  
+	  Tested with libjpeg v8a. There should be no real change on
+	  systems running libjpeg v6b. libjpeg v7 untested, but there
+	  shouldn't be an issue.
+
+2010-04-16 00:47  alexmerry
+
+	* jpeglossless/jpegtransform.cpp: Re-order the twopass code to be
+	  more sensible; in particular, don't try to open output_file when
+	  it's already open
+
+2010-04-13 21:20  jmueller
+
+	* NEWS, common/libkipiplugins/dialogs/imagedialog.cpp,
+	  picasawebexport/CMakeLists.txt,
+	  picasawebexport/picasawebimglist.cpp,
+	  picasawebexport/picasawebimglist.h,
+	  picasawebexport/picasawebwidget.cpp: customize imagelist file
+	  selection dialog
+	  
+	  BUGS: 216539
+
+2010-04-12 18:53  jmueller
+
+	* NEWS, picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebwindow.cpp: problem found: picasaweb do
+	  not like percentencodings in urls, what about standards?
+	  
+	  BUGS: 230201
+
+2010-04-12 18:50  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: camXY-matrix is a
+	  matrix[4][3] not [3][4], also correcting libkdcraw
+
+2010-04-12 08:55  cgilles
+
+	* NEWS: update
+
+2010-04-11 22:16  cgilles
+
+	* NEWS: update
+
+2010-04-11 22:09  cgilles
+
+	* NEWS: update
+
+2010-04-11 22:06  cgilles
+
+	* NEWS: update
+
+2010-04-11 19:41  cgilles
+
+	* NEWS: update
+
+2010-04-10 14:35  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: fix lens and focal length
+	  exif entries for canon p&s cameras
+
+2010-04-10 10:55  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: store whole sensor image
+	  (not only active area) to dng file for canon cameras, as adobe do
+
+2010-04-10 10:40  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: - add support for 4 color
+	  raw files (canon powershot 600, a5, a50, pro70, pro90 and g1)
+	  - remove unnecessary memcopy of rawfile
+
+2010-04-09 09:03  cgilles
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_pthread.cpp: compile
+	  under win32
+
+2010-04-08 12:19  cgilles
+
+	* NEWS: update
+
+2010-04-08 12:12  cgilles
+
+	* NEWS: update
+
+2010-04-08 12:11  cgilles
+
+	* picasawebexport/newalbumdialog.h,
+	  picasawebexport/picasawebalbum.cpp,
+	  picasawebexport/picasawebalbum.h,
+	  picasawebexport/picasawebitem.h,
+	  picasawebexport/picasaweblogin.cpp,
+	  picasawebexport/picasawebreplacedialog.cpp,
+	  picasawebexport/picasawebreplacedialog.h,
+	  picasawebexport/picasawebtalker.cpp,
+	  picasawebexport/picasawebtalker.h,
+	  picasawebexport/picasawebwidget.cpp,
+	  picasawebexport/picasawebwidget.h,
+	  picasawebexport/picasawebwindow.cpp,
+	  picasawebexport/picasawebwindow.h,
+	  picasawebexport/plugin_picasawebexport.cpp,
+	  picasawebexport/plugin_picasawebexport.h: remove header if moc
+	  exist.
+	  fix coding style
+	  use namespaces.
+	  use google.com url instead google.de
+	  BUGS: 233728
+
+2010-04-08 07:43  cgilles
+
+	* NEWS: update
+
+2010-04-08 07:42  cgilles
+
+	* printimages/wizard.cpp: typo
+	  BUGS: 233673
+
+2010-04-08 07:30  cgilles
+
+	* expoblending/expoblending.desktop: deprecated
+
+2010-04-08 07:32  cgilles
+
+	* NEWS: update
+
+2010-04-08 07:30  cgilles
+
+	* acquireimages/scangui.desktop: remove deprecated desktop line
+	  BUGS: 233676
+
+2010-04-07 13:59  cgilles
+
+	* metadataedit/common/altlangstringedit.cpp: polish
+
+2010-04-07 11:24  cgilles
+
+	* metadataedit/xmp/xmpcategories.cpp,
+	  metadataedit/xmp/xmpcategories.h,
+	  metadataedit/xmp/xmpcontent.cpp, metadataedit/xmp/xmpcontent.h,
+	  metadataedit/xmp/xmpcredits.cpp, metadataedit/xmp/xmpcredits.h,
+	  metadataedit/xmp/xmpeditdialog.cpp,
+	  metadataedit/xmp/xmpeditdialog.h,
+	  metadataedit/xmp/xmpkeywords.cpp, metadataedit/xmp/xmpkeywords.h,
+	  metadataedit/xmp/xmporigin.cpp, metadataedit/xmp/xmporigin.h,
+	  metadataedit/xmp/xmpproperties.cpp,
+	  metadataedit/xmp/xmpproperties.h, metadataedit/xmp/xmpstatus.cpp,
+	  metadataedit/xmp/xmpstatus.h, metadataedit/xmp/xmpsubjects.cpp:
+	  polish
+
+2010-04-07 11:07  cgilles
+
+	* metadataedit/iptc/iptcsubjects.cpp: polish
+
+2010-04-07 11:06  cgilles
+
+	* metadataedit/iptc/iptccategories.cpp,
+	  metadataedit/iptc/iptccategories.h,
+	  metadataedit/iptc/iptccontent.cpp,
+	  metadataedit/iptc/iptccredits.cpp,
+	  metadataedit/iptc/iptccredits.h,
+	  metadataedit/iptc/iptceditdialog.cpp,
+	  metadataedit/iptc/iptceditdialog.h,
+	  metadataedit/iptc/iptcenvelope.cpp,
+	  metadataedit/iptc/iptcenvelope.h,
+	  metadataedit/iptc/iptckeywords.cpp,
+	  metadataedit/iptc/iptckeywords.h,
+	  metadataedit/iptc/iptcorigin.cpp, metadataedit/iptc/iptcorigin.h,
+	  metadataedit/iptc/iptcproperties.cpp,
+	  metadataedit/iptc/iptcproperties.h,
+	  metadataedit/iptc/iptcstatus.cpp, metadataedit/iptc/iptcstatus.h:
+	  polish
+
+2010-04-07 10:51  cgilles
+
+	* metadataedit/plugin_metadataedit.cpp,
+	  metadataedit/plugin_metadataedit.h: polish
+
+2010-04-07 09:36  cgilles
+
+	* metadataedit/common/metadatacheckbox.cpp,
+	  metadataedit/common/metadatacheckbox.h,
+	  metadataedit/common/multistringsedit.cpp,
+	  metadataedit/common/multistringsedit.h,
+	  metadataedit/common/multivaluesedit.cpp,
+	  metadataedit/common/multivaluesedit.h,
+	  metadataedit/common/objectattributesedit.cpp,
+	  metadataedit/common/objectattributesedit.h: polish
+
+2010-04-07 09:31  cgilles
+
+	* metadataedit/CMakeLists.txt, metadataedit/altlangstringedit.cpp,
+	  metadataedit/altlangstringedit.h, metadataedit/comment,
+	  metadataedit/comment/commenteditdialog.cpp,
+	  metadataedit/comment/commenteditdialog.h,
+	  metadataedit/comment/commentremovedialog.cpp,
+	  metadataedit/comment/commentremovedialog.h,
+	  metadataedit/commenteditdialog.cpp,
+	  metadataedit/commenteditdialog.h,
+	  metadataedit/commentremovedialog.cpp,
+	  metadataedit/commentremovedialog.h, metadataedit/common,
+	  metadataedit/common/altlangstringedit.cpp,
+	  metadataedit/common/altlangstringedit.h,
+	  metadataedit/common/metadatacheckbox.cpp,
+	  metadataedit/common/metadatacheckbox.h,
+	  metadataedit/common/multistringsedit.cpp,
+	  metadataedit/common/multistringsedit.h,
+	  metadataedit/common/multivaluesedit.cpp,
+	  metadataedit/common/multivaluesedit.h,
+	  metadataedit/common/objectattributesedit.cpp,
+	  metadataedit/common/objectattributesedit.h, metadataedit/exif,
+	  metadataedit/exif/exifadjust.cpp, metadataedit/exif/exifadjust.h,
+	  metadataedit/exif/exifcaption.cpp,
+	  metadataedit/exif/exifcaption.h,
+	  metadataedit/exif/exifdatetime.cpp,
+	  metadataedit/exif/exifdatetime.h,
+	  metadataedit/exif/exifdevice.cpp, metadataedit/exif/exifdevice.h,
+	  metadataedit/exif/exifeditdialog.cpp,
+	  metadataedit/exif/exifeditdialog.h,
+	  metadataedit/exif/exiflens.cpp, metadataedit/exif/exiflens.h,
+	  metadataedit/exif/exiflight.cpp, metadataedit/exif/exiflight.h,
+	  metadataedit/exifadjust.cpp, metadataedit/exifadjust.h,
+	  metadataedit/exifcaption.cpp, metadataedit/exifcaption.h,
+	  metadataedit/exifdatetime.cpp, metadataedit/exifdatetime.h,
+	  metadataedit/exifdevice.cpp, metadataedit/exifdevice.h,
+	  metadataedit/exifeditdialog.cpp, metadataedit/exifeditdialog.h,
+	  metadataedit/exiflens.cpp, metadataedit/exiflens.h,
+	  metadataedit/exiflight.cpp, metadataedit/exiflight.h,
+	  metadataedit/iptc, metadataedit/iptc/iptccategories.cpp,
+	  metadataedit/iptc/iptccategories.h,
+	  metadataedit/iptc/iptccontent.cpp,
+	  metadataedit/iptc/iptccontent.h,
+	  metadataedit/iptc/iptccredits.cpp,
+	  metadataedit/iptc/iptccredits.h,
+	  metadataedit/iptc/iptceditdialog.cpp,
+	  metadataedit/iptc/iptceditdialog.h,
+	  metadataedit/iptc/iptcenvelope.cpp,
+	  metadataedit/iptc/iptcenvelope.h,
+	  metadataedit/iptc/iptckeywords.cpp,
+	  metadataedit/iptc/iptckeywords.h,
+	  metadataedit/iptc/iptcorigin.cpp, metadataedit/iptc/iptcorigin.h,
+	  metadataedit/iptc/iptcproperties.cpp,
+	  metadataedit/iptc/iptcproperties.h,
+	  metadataedit/iptc/iptcstatus.cpp, metadataedit/iptc/iptcstatus.h,
+	  metadataedit/iptc/iptcsubjects.cpp,
+	  metadataedit/iptc/iptcsubjects.h,
+	  metadataedit/iptccategories.cpp, metadataedit/iptccategories.h,
+	  metadataedit/iptccontent.cpp, metadataedit/iptccontent.h,
+	  metadataedit/iptccredits.cpp, metadataedit/iptccredits.h,
+	  metadataedit/iptceditdialog.cpp, metadataedit/iptceditdialog.h,
+	  metadataedit/iptcenvelope.cpp, metadataedit/iptcenvelope.h,
+	  metadataedit/iptckeywords.cpp, metadataedit/iptckeywords.h,
+	  metadataedit/iptcorigin.cpp, metadataedit/iptcorigin.h,
+	  metadataedit/iptcproperties.cpp, metadataedit/iptcproperties.h,
+	  metadataedit/iptcstatus.cpp, metadataedit/iptcstatus.h,
+	  metadataedit/iptcsubjects.cpp, metadataedit/iptcsubjects.h,
+	  metadataedit/metadatacheckbox.cpp,
+	  metadataedit/metadatacheckbox.h,
+	  metadataedit/multistringsedit.cpp,
+	  metadataedit/multistringsedit.h,
+	  metadataedit/multivaluesedit.cpp, metadataedit/multivaluesedit.h,
+	  metadataedit/objectattributesedit.cpp,
+	  metadataedit/objectattributesedit.h, metadataedit/xmp,
+	  metadataedit/xmp/xmpcategories.cpp,
+	  metadataedit/xmp/xmpcategories.h,
+	  metadataedit/xmp/xmpcontent.cpp, metadataedit/xmp/xmpcontent.h,
+	  metadataedit/xmp/xmpcredits.cpp, metadataedit/xmp/xmpcredits.h,
+	  metadataedit/xmp/xmpeditdialog.cpp,
+	  metadataedit/xmp/xmpeditdialog.h,
+	  metadataedit/xmp/xmpkeywords.cpp, metadataedit/xmp/xmpkeywords.h,
+	  metadataedit/xmp/xmporigin.cpp, metadataedit/xmp/xmporigin.h,
+	  metadataedit/xmp/xmpproperties.cpp,
+	  metadataedit/xmp/xmpproperties.h, metadataedit/xmp/xmpstatus.cpp,
+	  metadataedit/xmp/xmpstatus.h, metadataedit/xmp/xmpsubjects.cpp,
+	  metadataedit/xmp/xmpsubjects.h, metadataedit/xmpcategories.cpp,
+	  metadataedit/xmpcategories.h, metadataedit/xmpcontent.cpp,
+	  metadataedit/xmpcontent.h, metadataedit/xmpcredits.cpp,
+	  metadataedit/xmpcredits.h, metadataedit/xmpeditdialog.cpp,
+	  metadataedit/xmpeditdialog.h, metadataedit/xmpkeywords.cpp,
+	  metadataedit/xmpkeywords.h, metadataedit/xmporigin.cpp,
+	  metadataedit/xmporigin.h, metadataedit/xmpproperties.cpp,
+	  metadataedit/xmpproperties.h, metadataedit/xmpstatus.cpp,
+	  metadataedit/xmpstatus.h, metadataedit/xmpsubjects.cpp,
+	  metadataedit/xmpsubjects.h: re-organize folders contents to be
+	  more readable
+
+2010-04-07 09:19  cgilles
+
+	* metadataedit/exifadjust.cpp, metadataedit/exifadjust.h,
+	  metadataedit/exifcaption.cpp, metadataedit/exifcaption.h,
+	  metadataedit/exifdatetime.cpp, metadataedit/exifdatetime.h,
+	  metadataedit/exifdevice.cpp, metadataedit/exifdevice.h,
+	  metadataedit/exifeditdialog.cpp, metadataedit/exifeditdialog.h,
+	  metadataedit/exiflens.cpp, metadataedit/exiflens.h,
+	  metadataedit/exiflight.cpp, metadataedit/exiflight.h: polish
+
+2010-04-07 09:08  cgilles
+
+	* metadataedit/altlangstringedit.cpp,
+	  metadataedit/altlangstringedit.h,
+	  metadataedit/commenteditdialog.cpp,
+	  metadataedit/commenteditdialog.h,
+	  metadataedit/commentremovedialog.cpp,
+	  metadataedit/commentremovedialog.h: using namespace
+	  use only moc files
+
+2010-04-07 08:18  cgilles
+
+	* metadataedit/CMakeLists.txt, metadataedit/TODO,
+	  metadataedit/iptcsubjects.cpp, metadataedit/iptcsubjects.h,
+	  metadataedit/subjects.cpp, metadataedit/subjects.h,
+	  metadataedit/xmpsubjects.cpp, metadataedit/xmpsubjects.h:
+	  factoring subject class with KExiv2 widget
+
+2010-04-07 07:06  cgilles
+
+	* metadataedit/TODO: update
+
+2010-04-06 19:24  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: add nikon focus distance to
+	  exif tags
+
+2010-04-06 13:55  cgilles
+
+	* metadataedit/CMakeLists.txt: polish
+
+2010-04-06 13:49  cgilles
+
+	* dngconverter/TODO: update
+
+2010-04-06 13:48  cgilles
+
+	* dngconverter/dngwriter/dngwriter_p.cpp,
+	  dngconverter/dngwriter/dngwriter_p.h,
+	  dngconverter/dngwriter/dngwriterhost.cpp,
+	  dngconverter/dngwriter/dngwriterhost.h: polish
+
+2010-04-06 08:10  cgilles
+
+	* metadataedit/CMakeLists.txt, metadataedit/TODO,
+	  metadataedit/subjects.cpp, metadataedit/subjects.h,
+	  metadataedit/topicset.iptc-subjectcode.xml: use xml data file
+	  from libkexiv2 from trunk
+
+2010-04-06 08:01  cgilles
+
+	* CMakeLists.txt, NEWS, README: set libkexiv2 dependency to 1.1.0
+	  (trunk)
+
+2010-04-06 07:51  cgilles
+
+	* metadataedit/TODO: update
+
+2010-04-05 19:30  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: update reading canon
+	  metering mode and exposure program into standard exif tags
+
+2010-04-05 16:37  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: temporaly disable the
+	  switch for fuji super ccd sensor as this breaks dng file
+	  generation for the nikon d80, but it is a step into right
+	  direction
+
+2010-04-05 09:33  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: read some more markernotes
+	  into standard exif tags
+
+2010-04-05 06:20  aclemens
+
+	* removeredeyes/removeredeyeswindow.cpp: polish
+
+2010-04-05 06:18  aclemens
+
+	* removeredeyes/detection/savemethods/savemethods.cpp: Fix save
+	  methods "prefix" and "suffix" for file names containing dots...
+
+2010-04-04 20:04  jwienke
+
+	* common/libkipiplugins/widgets/imageslist.cpp: Add some debug
+	  output and a null pointer check for bug haunting
+	  
+	  CCBUG: 221862
+
+2010-04-04 11:46  cgilles
+
+	* dngconverter/dngwriter/dngwriter.cpp: add wikipedia links
+
+2010-04-04 11:39  cgilles
+
+	* dngconverter/dngwriter/dngwriter.cpp: Fuji demosaicing do not
+	  work properly. Image size/ratio/demosaicing properties are wrong.
+	  This need investiguations.
+	  Jens, there is a RAF raw image to test there :
+	  http://digikam3rdparty.free.fr/TEST_IMAGES/RAW/VERTICAL/DSCF0019.RAF
+	  CCMAIL: tschenser@gmx.de
+
+2010-04-04 11:23  cgilles
+
+	* AUTHORS, dngconverter/dngwriter/dngwriter.cpp,
+	  dngconverter/dngwriter/dngwriter.h,
+	  dngconverter/plugin/aboutdata.h,
+	  dngconverter/plugin/batchdialog.cpp,
+	  dngconverter/plugin/dngconverter.cpp: give credits to Jens
+	  Muller, of course (:=)))
+	  try to fix issue with RAF raw file converted to DNG. Matrix is
+	  badly embeded to DNG container
+
+2010-04-02 21:53  jmueller
+
+	* NEWS: closing bug fixed with update of dng sdk
+	  
+	  BUGS: 232991
+
+2010-04-02 21:45  jmueller
+
+	* NEWS, dngconverter/dngwriter/extra/dng_sdk/dng_date_time.cpp:
+
+2010-04-01 21:04  cgilles
+
+	* NEWS: update
+
+2010-04-01 20:21  jmueller
+
+	* dngconverter/CMakeLists.txt,
+	  dngconverter/dngwriter/dngwriter.cpp: update dng sdk to version
+	  1.3
+
+2010-04-01 20:20  jmueller
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_1d_function.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_1d_function.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_1d_table.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_1d_table.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_abort_sniffer.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_abort_sniffer.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_area_task.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_area_task.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_assertions.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_auto_ptr.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_bad_pixels.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_bad_pixels.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_bottlenecks.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_bottlenecks.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_camera_profile.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_camera_profile.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_classes.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_color_space.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_color_space.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_color_spec.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_color_spec.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_date_time.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_date_time.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_errors.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_exceptions.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_exceptions.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_exif.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_exif.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_fast_module.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_file_stream.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_file_stream.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_filter_task.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_filter_task.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_fingerprint.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_fingerprint.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_flags.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_gain_map.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_gain_map.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_globals.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_globals.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_host.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_host.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_hue_sat_map.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_hue_sat_map.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_ifd.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_ifd.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_image.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_image.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_image_writer.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_image_writer.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_info.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_info.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_iptc.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_iptc.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_lens_correction.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_lens_correction.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_linearization_info.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_linearization_info.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_lossless_jpeg.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_lossless_jpeg.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_matrix.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_matrix.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_memory.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_memory.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_memory_stream.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_memory_stream.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_misc_opcodes.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_misc_opcodes.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_mosaic_info.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_mosaic_info.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_mutex.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_mutex.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_negative.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_negative.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_opcode_list.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_opcode_list.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_opcodes.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_opcodes.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_orientation.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_orientation.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_parse_utils.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_parse_utils.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_pixel_buffer.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_pixel_buffer.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_point.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_point.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_preview.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_preview.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_pthread.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_pthread.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_rational.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_rational.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_read_image.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_read_image.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_rect.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_rect.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_reference.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_reference.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_render.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_render.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_resample.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_resample.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_sdk_limits.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_shared.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_shared.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_simple_image.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_simple_image.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_spline.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_spline.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_stream.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_stream.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_string.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_string.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_string_list.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_string_list.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_tag_codes.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_tag_types.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_tag_types.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_tag_values.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_temperature.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_temperature.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_tile_iterator.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_tile_iterator.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_tone_curve.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_tone_curve.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_types.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_utils.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_utils.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_validate.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_xmp.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_xmp.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_xmp_sdk.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_xmp_sdk.h,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_xy_coord.cpp,
+	  dngconverter/dngwriter/extra/dng_sdk/dng_xy_coord.h: update dng
+	  sdk to version 1.3
+
+2010-04-01 17:25  pano
+
+	* expoblending/importwizard/preprocessingpage.cpp: krazy fix:
+	  remove duplicate include
+
+2010-03-31 20:54  jmueller
+
+	* NEWS, dngconverter/dngwriter/dngwriter.cpp: - set correct
+	  whitebalance
+	  - add some exif tags from manufactor markernotes (lens, shutter
+	  count, serial, firmware, focal length)
+	  
+	  BUGS: 191907
+
+2010-03-31 05:59  scripty
+
+	* htmlexport/themes/matrix/matrix.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-03-30 18:13  jwienke
+
+	* .: ignore eclipse project files
+
+2010-03-30 18:00  jwienke
+
+	* common/libkipiplugins/tools/kpwritehelp.cpp: fix warning
+
+2010-03-30 18:00  jwienke
+
+	* CMakeLists.txt: fix libkdcraw checks in cmake file
+
+2010-03-30 12:32  cgilles
+
+	* CMakeLists.txt: compile under win32
+
+2010-03-30 11:25  cgilles
+
+	* project/NEWS.1.2.0: polish
+
+2010-03-30 11:16  cgilles
+
+	* common/libkipiplugins/widgets/savesettingswidget.cpp,
+	  common/libkipiplugins/widgets/savesettingswidget.h,
+	  expoblending/blendingdlg/enfusesettings.cpp,
+	  expoblending/blendingdlg/enfusesettings.h,
+	  expoblending/blendingdlg/expoblendingdlg.cpp,
+	  rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp: fix
+	  warnings
+	  fix api
+
+2010-03-30 11:12  cgilles
+
+	* rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+	  remove warnings
+
+2010-03-30 10:52  cgilles
+
+	* rawconverter/batchdialog.cpp, rawconverter/singledialog.cpp:
+	  compile
+
+2010-03-30 09:22  cgilles
+
+	* NEWS: update
+
+2010-03-29 21:55  cgilles
+
+	* CMakeLists.txt, README: libkdcraw depencency is 1.1.0, not 1.2.0
+
+2010-03-29 21:51  cgilles
+
+	* CMakeLists.txt: polish
+
+2010-03-29 15:00  cgilles
+
+	* CMakeLists.txt, README: set libkdcraw dependency to >= 1.2.0
+
+2010-03-29 11:40  cgilles
+
+	* CMakeLists.txt: 1.3.0 is open
+
+2010-03-29 07:56  cgilles
+
+	* NEWS: update
+
+2010-03-29 06:40  cgilles
+
+	* NEWS: update
+
+2010-03-29 06:34  cgilles
+
+	* project/NEWS.1.2.0: archive
+
+2010-03-29 05:41  scripty
+
+	* htmlexport/themes/matrix/matrix.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-03-28 22:39  nlecureuil
+
+	* NEWS: Fix version in NEWS
+
+2010-03-28 22:20  nlecureuil
+
+	* NEWS: Commits are open for release 1.3.0
+
+2010-03-28 21:49  nlecureuil
+
+	* ChangeLog: Prepare for 1.2.0
+
 1.2.0   2010-03-28
 
 2010-03-27 18:48  cgilles
