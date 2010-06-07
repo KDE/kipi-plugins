@@ -3,43 +3,9 @@ Kipi-plugins 1.3.0 - Release date: 2010/06/07
 
 NEW FEATURES:
 
-General                   : libkexiv2 dependency set to 1.1.0 release.
-General                   : libkdcraw dependency set to 1.1.0 release.
-DNGConverter              : Update Adobe DNG sdk to 1.3.0.
-                            Support non-square pixels.
-                            Support 4-color sensors.
-                            Support Fuji-sensors (experimental).
-SmugExport                : Support export of Captions.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> PrintWizard       : 232382 : Setting custom page size is impossible.
-002 ==> Libkdcraw         : 221542 : Build fails due to ambiguities.
-003 ==> DNGConverter      : 191907 : DNG Converter damages white balance metadata.
-004 ==> DNGConverter      : 233088 : Compile error on Win32 with MinGW4.
-005 ==> DNGConverter      : 232991 : DngConverter of kipi-plugins 1.2.0 does not compile under OS X.
-006 ==> AcquireImages     : 233676 : Desktop-entry-contains-deprecated-key usr/share/applications/kde4/scangui.desktop:105 TerminalOptions.
-007 ==> General           : 233673 : Spelling-error-in-binary kipiplugin_metadataedit.so kipiplugin_printimages.so kipiplugin_rawconverter.so.
-008 ==> PicasaWebExport   : 233728 : digiKam picasawebexport unable to display my picasaweb.
-009 ==> AdvancedSlideShow : 225153 : digiKam advanced slide show crashes everytimes.
-010 ==> JPEGLossLess      : 234021 : digikam crash on loading.
-011 ==> GPSSync           : 234073 : digiKam gpssync no altitude.
-012 ==> GPSSync           : 233725 : digiKam gpssync unable to geolocalize a picture or movie.
-013 ==> PicasaWebExport   : 216604 : digiKam crashes on export to picasa.
-014 ==> PicasaWebExport   : 230201 : Error when trying export to picasa.
-015 ==> PicasaWebExport   : 216539 : Picasaweb can't select movie to export.
-016 ==> JPEGLossLess      : 226838 : "Auto Rotate/Flip Using EXIF Information" does not work.
-017 ==> PicasaWebExport   : 234099 : digiKam picasawebexport labels hierarchy disappears.
-018 ==> AdvancedSlideShow : 210959 : Gwenview Advanced Slideshow Crash.
-019 ==> PiwigoExport      : 235555 : digiKam Plugins Export Piwigo fail.
-020 ==> DNGConverter      : 233393 : DNG converter doesn't work for Fuji Finepix S6500fd (= S6000fd).
-021 ==> GPSSync           : 236846 : Geolocation does not work in gnome.
-022 ==> DNGConverter      : 237914 : Can't compile svn version.
-023 ==> JPEGLossLess      : 228483 : digiKam 1.1.0 with system libjpeg-8 breaks image rotation.
-024 ==> PicasaWebExport   : 215688 : Attempted uploading pics to picasaweb.
-025 ==> AcquireImages     : 238150 : Scangui is untranslated, because it loads no reqired translation catalog.
-026 ==> SmugExport        : 240420 : Patch to export captions to smugmug.
-027 ==> DNGConverter      : 240749 : DNGConverter produces black files (Canon 5D mkII).
-028 ==> FlickrExport      : 221298 : digiKam segfaults on Flickr export.
+001 ==> 
 
 
