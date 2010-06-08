@@ -94,8 +94,6 @@ void TestRGParsing::testVerifyRG()
         QString country = QString::fromUtf8("Germany");
         QString city = QString::fromUtf8("Düsseldorf");
 
-        kDebug()<<"City name:"<<city<<" compared to:"<<"Düsseldorf";
-
         const QString howToFormat = "My Tags/{Country}/{City}";  
 
         info.rgData[QString("country")] = country;

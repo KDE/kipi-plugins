@@ -479,6 +479,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
         }
 	    kDebug()<<"Address "<<returnedRGList[i].id<<" coord:"<<returnedRGList[i].coordinates.latString()<<"    "<<address;
         QString result = makeTagString(returnedRGList[i]);
+        KMessageBox::about(result);
         kDebug()<<"Tag value:"<<result;
     }
 
