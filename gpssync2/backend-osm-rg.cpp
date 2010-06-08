@@ -55,7 +55,6 @@ public:
     {
     }
     
-    //QString wantedLanguage;
     QList<OsmInternalJobs> jobs;
     QString errorMessage;
 };
@@ -63,7 +62,6 @@ public:
 BackendOsmRG::BackendOsmRG(QObject* const parent)
 : RGBackend(parent), d(new BackendOsmRGPrivate())
 {
-//    d->wantedLanguage = "en";
     
 }
 
@@ -98,7 +96,6 @@ void BackendOsmRG::nextPhoto()
 void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 {
 
-    //TODO: Remove dublicates from rgList to mergedQuery
     kDebug()<<"Entering OSM backend";
 
     d->errorMessage.clear();
@@ -172,9 +169,18 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
         QDomElement e = n.toElement();
         if(!e.isNull()){
 
-            mappedData.insert(e.tagName(), e.text()); 
+            if( (e.tagName().compare(QString("country")) == 0) ||
+                (e.tagName().compare(QString("city")) == 0) ||
+                (e.tagName().compare(QString("town")) == 0) ||
+                (e.tagName().compare(QString("village")) == 0) ||
+                (e.tagName().compare(QString("hamlet")) == 0) ||
+                (e.tagName().compare(QString("place")) == 0))
+            {
+            
+            mappedData.insert(e.tagName(), e.text());
             resultString.append(e.tagName() + ":" + e.text() + "\n");
 
+            }
         }
 
         n = n.nextSibling();

@@ -78,7 +78,6 @@ public:
     KipiImageModel* imageModel;
     QItemSelectionModel* selectionModel;
     QPushButton* buttonRGSelected;
-
     
     KComboBox* serviceComboBox;
     KComboBox *languageEdit;
@@ -136,7 +135,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     d->serviceLabel = new QLabel(i18n("Select service:"), d->UGridContainer);
     d->serviceComboBox = new KComboBox(d->UGridContainer);
 
-    d->serviceComboBox->addItem(i18n("Geonames.org place name(non-US)"));
+    d->serviceComboBox->addItem(i18n("Geonames.org place name (non-US)"));
     d->serviceComboBox->addItem(i18n("Geonames.org full address (US only)"));
     d->serviceComboBox->addItem(i18n("Open Street Map"));
 
@@ -163,13 +162,14 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     addressElemContainer->setLayout(addressElemLayout);    
 
     d->baseTagLabel = new QLabel(i18n("Select base tag:"), d->UGridContainer);
-    d->baseTagEdit = new QLineEdit(d->UGridContainer);
+    d->baseTagEdit = new QLineEdit("My Tags/{Country}/{City}", d->UGridContainer);
 
 
 
     int row = 0;
-    gridLayout->addWidget(d->serviceLabel,row,0,1,1);
-    gridLayout->addWidget(d->serviceComboBox,row,1,1,1); 
+    gridLayout->addWidget(d->serviceLabel,row,0,1,2);
+    row++;
+    gridLayout->addWidget(d->serviceComboBox,row,0,1,2); 
     row++;
     gridLayout->addWidget(d->addressElemLabel,row,0,1,2);
     row++;
@@ -333,6 +333,107 @@ void GPSReverseGeocodingWidget::slotHideOptions()
 
 }
 
+QString GPSReverseGeocodingWidget::makeTagString(const RGInfo& info)
+{
+
+    QString returnedFormat = d->baseTagEdit->displayText();
+
+    if(d->backendIndex == 0)
+    {
+
+        int countryIndex = returnedFormat.indexOf("{Country}");
+        if(countryIndex != -1)
+        {
+            if(info.rgData[QString("countryName")].isEmpty())
+            {
+                returnedFormat.replace(countryIndex-1, 10, "");
+            }
+            else
+            {
+            returnedFormat.replace(countryIndex, strlen("{Country}"), info.rgData[QString("countryName")]);
+            }
+        }
+
+        int cityIndex = returnedFormat.indexOf("{City}");
+        if(cityIndex != -1)
+        {
+            if(info.rgData[QString("name")].isEmpty())
+            {
+                returnedFormat.replace(cityIndex-1, 7, "");
+            }
+            else
+            {
+                returnedFormat.replace(cityIndex, strlen("{City}"), info.rgData[QString("name")]);
+            }
+        }
+
+    }
+    else if(d->backendIndex == 1)
+    {
+
+        int countryIndex = returnedFormat.indexOf("{Country}");
+        if(countryIndex != -1)
+        {
+            if(info.rgData[QString("adminName1")].isEmpty())
+            {
+                returnedFormat.replace(countryIndex-1, 10, "");
+            }
+            else
+            {
+                returnedFormat.replace(countryIndex, strlen("{Country}"), info.rgData[QString("adminName1")]);
+            }
+        }
+
+        int cityIndex = returnedFormat.indexOf("{City}");
+        if(cityIndex != -1)
+        {
+            if(info.rgData[QString("placeName")].isEmpty())
+            {
+                returnedFormat.replace(cityIndex-1, 7, "");
+            }
+            else
+            {
+            returnedFormat.replace(cityIndex, strlen("{City}"), info.rgData[QString("placeName")]);
+            }
+        }
+
+    }
+    else if(d->backendIndex == 2)
+    {
+
+        int countryIndex = returnedFormat.indexOf("{Country}");
+        if(countryIndex != -1)
+        {
+            if(info.rgData[QString("country")].isEmpty())
+            {
+                returnedFormat.replace(countryIndex-1, 10, "");
+            }
+            else
+            {
+                returnedFormat.replace(countryIndex, strlen("{Country}"), info.rgData[QString("country")]);
+            }
+        }
+
+        int cityIndex = returnedFormat.indexOf("{City}");
+        if(cityIndex != -1)
+        {
+            if(info.rgData[QString("city")].isEmpty())
+            {
+                returnedFormat.replace(cityIndex-1, 7, "");
+            }
+            else
+            {
+            returnedFormat.replace(cityIndex, strlen("{City}"), info.rgData[QString("city")]);
+            }
+        }
+
+    }
+
+    return returnedFormat;
+
+}
+
+
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
 
@@ -350,21 +451,35 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     } 
 
     QString address;
-    for(int i = 0; i < returnedRGList.count(); ++i){
+    for(int i = 0; i < returnedRGList.count(); ++i)
+    {
 
         address = "";
     
         QMap<QString, QString>::const_iterator it = returnedRGList[i].rgData.constBegin();
     
-        while( it != returnedRGList[i].rgData.constEnd() ){
-        
-            address.append(it.key() + ":" + it.value() + "\n");
-            ++it;
+        while( it != returnedRGList[i].rgData.constEnd() )
+        {
 
+            if( d->backendIndex == 0 )
+            {
+                    address.append(it.key() + ":" + it.value() + "\n");
+            }
+            else if( d->backendIndex == 1)
+            {
+                    address.append(it.key() + ":" + it.value() + "\n");
+            }        
+            else if( d->backendIndex == 2)
+            {
+                    address.append(it.key() + ":" + it.value() + "\n");
+            }   
+     
+            //address.append(it.key() + ":" + it.value() + "\n");
+            ++it;
         }
 	    kDebug()<<"Address "<<returnedRGList[i].id<<" coord:"<<returnedRGList[i].coordinates.latString()<<"    "<<address;
-    
-
+        QString result = makeTagString(returnedRGList[i]);
+        kDebug()<<"Tag value:"<<result;
     }
 
     d->receivedRGCount+=returnedRGList.count();

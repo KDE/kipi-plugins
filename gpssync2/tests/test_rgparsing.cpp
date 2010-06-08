@@ -20,7 +20,6 @@
 // Qt includes
 
 #include <QDateTime>
-
 // KDE includes
 
 #include <qtest_kde.h>
@@ -33,6 +32,7 @@
 //#include "../gpsdataparser.h"
 //#include "../gpsdataparser_p.h"
 #include "../gpsreversegeocodingwidget.h"
+
 
 using namespace KIPIGPSSyncPlugin;
 
@@ -67,6 +67,9 @@ QString MakeTagString(const QString& howToFormat, const RGInfo& info)
 
     }
 
+    kDebug()<<returnedFormat;
+
+
     return returnedFormat;
 
 }
@@ -75,8 +78,8 @@ void TestRGParsing::testVerifyRG()
 {
     {
         RGInfo info;
-        QString country = QString::fromUtf8("France", strlen("France"));
-        QString city = QString::fromUtf8("Paris", strlen("Paris"));
+        QString country = QString::fromUtf8("France");
+        QString city = QString::fromUtf8("Paris");
 
         const QString howToFormat = "My Tags/{Country}/{City}";  
 
@@ -88,28 +91,30 @@ void TestRGParsing::testVerifyRG()
 
     {
         RGInfo info;
-        QString country = QString::fromUtf8("Germany", strlen("Germany"));
-        QString city = QString::fromUtf8("Düsseldorf", strlen("Düsseldorf"));
+        QString country = QString::fromUtf8("Germany");
+        QString city = QString::fromUtf8("Düsseldorf");
+
+        kDebug()<<"City name:"<<city<<" compared to:"<<"Düsseldorf";
 
         const QString howToFormat = "My Tags/{Country}/{City}";  
 
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( MakeTagString(howToFormat, info), QString("My Tags/Germany/Düsseldorf"));
+        QCOMPARE( MakeTagString(howToFormat, info), QString("My Tags/"+QString::fromUtf8("Germany")+"/"+QString::fromUtf8("Düsseldorf")));
     } 
 
     {
         RGInfo info;
-        QString country = QString::fromUtf8("Germany", strlen("Germany"));
-        QString city = QString::fromUtf8("Düsseldorf", strlen("Düsseldorf"));
+        QString country = QString::fromUtf8("中国");
+        QString city = QString::fromUtf8("北京市");
 
         const QString howToFormat = "My Tags/{Country}/{City}";  
 
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( MakeTagString(howToFormat, info), QString("My Tags/Germany/Düsseldorf"));
+        QCOMPARE( MakeTagString(howToFormat, info), QString("My Tags/"+QString::fromUtf8("中国")+"/"+QString::fromUtf8("北京市")));
     }
     
 }

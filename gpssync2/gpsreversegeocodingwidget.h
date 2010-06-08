@@ -75,6 +75,7 @@ public:
     void setUIEnabled(const bool state);
     void readSettingsFromGroup(KConfigGroup* const);
     void saveSettingsToGroup(KConfigGroup* const);
+    QString makeTagString(const RGInfo& ); 
 
 private:
 

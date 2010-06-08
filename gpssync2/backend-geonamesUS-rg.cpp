@@ -162,8 +162,13 @@ QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(QString xmlData)
         const QDomElement e = n.toElement();
         if (!e.isNull())
         {
-            mappedData.insert(e.tagName(), e.text());
-            resultString.append(e.tagName() + ":" + e.text() + "\n");
+
+            if((e.tagName().compare(QString("adminName1")) == 0) ||
+               (e.tagName().compare(QString("placeName")) == 0))
+            { 
+                mappedData.insert(e.tagName(), e.text());
+                resultString.append(e.tagName() + ":" + e.text() + "\n");
+            }
         }
 
         n = n.nextSibling();
@@ -208,8 +213,6 @@ void BackendGeonamesUSRG::slotResult(KJob* kJob)
             int pos = dataString.indexOf("<geonames");
             dataString.remove(0,pos);
             dataString.chop(1);
-
-            kDebug()<<dataString;
 
             QMap<QString,QString> resultMap = makeQMapFromXML(dataString);
 

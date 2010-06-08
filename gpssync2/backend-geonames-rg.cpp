@@ -162,8 +162,13 @@ QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(QString xmlData)
         const QDomElement e = n.toElement();
         if (!e.isNull())
         {
-            mappedData.insert(e.tagName(), e.text());
-            resultString.append(e.tagName() + ":" + e.text() + "\n");
+
+            if( (e.tagName().compare(QString("countryName")) == 0) ||
+                (e.tagName().compare(QString("name")) == 0) )
+            {
+                mappedData.insert(e.tagName(), e.text());
+                resultString.append(e.tagName() + ":" + e.text() + "\n");
+            }
         }
 
         n = n.nextSibling();
