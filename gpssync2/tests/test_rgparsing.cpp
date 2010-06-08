@@ -51,6 +51,8 @@ QString MakeTagString(const QString& howToFormat, const RGInfo& info)
 
     QString returnedFormat = howToFormat;
 
+    // TODO: maybe look for {humantag}, retrieve humantag, and then
+    // use some sort of map to match humantag to the name in the RGInfo
     int countryIndex = returnedFormat.indexOf("{Country}");
     if(countryIndex != -1)
     {
@@ -99,7 +101,7 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( MakeTagString(howToFormat, info), QString("My Tags/"+QString::fromUtf8("Germany")+"/"+QString::fromUtf8("Düsseldorf")));
+        QCOMPARE( MakeTagString(howToFormat, info), QString::fromUtf8("My Tags/Germany/Düsseldorf") );
     } 
 
     {
@@ -112,7 +114,11 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( MakeTagString(howToFormat, info), QString("My Tags/"+QString::fromUtf8("中国")+"/"+QString::fromUtf8("北京市")));
+        QCOMPARE( MakeTagString(howToFormat, info), QString::fromUtf8("My Tags/中国/北京市") );
     }
-    
+
+    // TODO:
+    // - some fields are missing (no country)
+    // - invalid field names
+    // - how do we handle these cases in the UI?
 }
