@@ -34,6 +34,7 @@
 //local includes
 #include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
 #include "gpsundocommand.h"
+#include "backend-rg.h"
 
 class QItemSelectionModel;
 
@@ -43,24 +44,6 @@ namespace KIPIGPSSyncPlugin
 
 class GPSReverseGeocodingWidgetPrivate;
 class KipiImageModel;
-
-class RGInfo {
-
-    public:
-
-    RGInfo()
-    :id(),
-     coordinates(),
-     rgData(){   }
-
-
-    QVariant id;
-    WMW2::WMWGeoCoordinate coordinates;
-    QMap<QString, QString> rgData;
-
-};
-
-
 
 class GPSReverseGeocodingWidget : public QWidget
 {
@@ -75,7 +58,6 @@ public:
     void setUIEnabled(const bool state);
     void readSettingsFromGroup(KConfigGroup* const);
     void saveSettingsToGroup(KConfigGroup* const);
-    QString makeTagString(const RGInfo& ); 
 
 private:
 

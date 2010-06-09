@@ -1,9 +1,10 @@
 /* ============================================================
  *
  * Date        : 2010-01-17
- * Description : test parsing gpx data
+ * Description : test parsing rg data
  *
  * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
+ * Copyright (C) 2010 by Gabriel Voicu <ping dot gabi at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,10 +30,8 @@
 // local includes
 
 #include "test_rgparsing.moc"
-//#include "../gpsdataparser.h"
-//#include "../gpsdataparser_p.h"
-#include "../gpsreversegeocodingwidget.h"
-
+#include "../backend-rg.h"
+#include "../parseTagString.h"
 
 using namespace KIPIGPSSyncPlugin;
 
@@ -46,39 +45,10 @@ void TestRGParsing::testNoOp()
 {
 }
 
-QString MakeTagString(const QString& howToFormat, const RGInfo& info)
-{
-
-    QString returnedFormat = howToFormat;
-
-    // TODO: maybe look for {humantag}, retrieve humantag, and then
-    // use some sort of map to match humantag to the name in the RGInfo
-    int countryIndex = returnedFormat.indexOf("{Country}");
-    if(countryIndex != -1)
-    {
-
-        returnedFormat.replace(countryIndex, strlen("{Country}"), info.rgData[QString("country")]);
-
-    }
-
-    int cityIndex = returnedFormat.indexOf("{City}");
-    if(cityIndex != -1)
-    {
-
-        returnedFormat.replace(cityIndex, strlen("{City}"), info.rgData[QString("city")]);
-
-    }
-
-    kDebug()<<returnedFormat;
-
-
-    return returnedFormat;
-
-}
-
 void TestRGParsing::testVerifyRG()
 {
     {
+        //testing tag parsing
         RGInfo info;
         QString country = QString::fromUtf8("France");
         QString city = QString::fromUtf8("Paris");
@@ -88,10 +58,11 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( MakeTagString(howToFormat, info), QString("My Tags/France/Paris"));
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString("My Tags/France/Paris"));
     }
 
     {
+        //german special characters
         RGInfo info;
         QString country = QString::fromUtf8("Germany");
         QString city = QString::fromUtf8("Düsseldorf");
@@ -101,10 +72,11 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( MakeTagString(howToFormat, info), QString::fromUtf8("My Tags/Germany/Düsseldorf") );
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/Germany/Düsseldorf") );
     } 
 
     {
+        //chinese special characters
         RGInfo info;
         QString country = QString::fromUtf8("中国");
         QString city = QString::fromUtf8("北京市");
@@ -114,11 +86,86 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( MakeTagString(howToFormat, info), QString::fromUtf8("My Tags/中国/北京市") );
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/中国/北京市") );
     }
+
+    {
+        //romanian special characters
+        RGInfo info;
+        QString country = QString::fromUtf8("România");
+        QString city = QString::fromUtf8("București");
+
+        const QString howToFormat = "My Tags/{Country}/{City}";
+
+        info.rgData[QString("country")] = country;
+        info.rgData[QString("city")] = city;
+
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/România/București"));
+    }
+
+    {
+        //No {Country}
+        RGInfo info;
+        QString country = QString::fromUtf8("România");
+        QString city = QString::fromUtf8("București");
+    
+        const QString howToFormat = "My Tags/{City}";
+
+        info.rgData[QString("country")] = country;
+        info.rgData[QString("city")] = city;
+
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/București"));
+    }
+    
+    {
+        //No {City}
+        RGInfo info;
+        QString country = QString::fromUtf8("România");
+        QString city = QString::fromUtf8("");
+    
+        const QString howToFormat = "My Tags/{Country}/{City}";
+
+        info.rgData[QString("country")] = country;
+        info.rgData[QString("city")] = city;
+
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/România"));
+    }
+
+    {
+        //{Ctonury} instead of {Country}
+        RGInfo info;
+        QString country = QString::fromUtf8("România");
+        QString city = QString::fromUtf8("București");
+
+        const QString howToFormat = "My Tags/{Ctonury}/{City}";
+
+        info.rgData[QString("country")] = country;
+        info.rgData[QString("city")] = city;
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/București"));
+    }
+
+    {
+        //no retrieved data
+        RGInfo info;
+        QString country = QString::fromUtf8("");
+        QString city = QString::fromUtf8("");
+
+        const QString howToFormat = "My Tags/{Country}/{City}";
+
+        info.rgData[QString("country")] = country;
+        info.rgData[QString("city")] = city;
+
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags"));
+    }
+
+
+
 
     // TODO:
     // - some fields are missing (no country)
+    // * simply deletes {Country}
     // - invalid field names
+    // * if we have {Contry} or {bla} it deletes the etiquette
     // - how do we handle these cases in the UI?
+    // * now that we have makeTagString separate, these are handled same in tests and UI
 }

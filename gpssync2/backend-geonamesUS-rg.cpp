@@ -1,3 +1,22 @@
+/* ============================================================
+ *
+ * Date        : 2010-05-12
+ * Description : OSM Nominatim backend for Reverse Geocoding (US only)
+ *
+ * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
+ * Copyright (C) 2010 by Gabriel Voicu <ping dot gabi at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #include "backend-geonamesUS-rg.moc"
 
@@ -13,7 +32,6 @@
 
 //local includes
 #include "backend-geonamesUS-rg.h"
-#include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
 #include "gpssync2_common.h"
 
@@ -98,12 +116,15 @@ void BackendGeonamesUSRG::callRGBackend(QList<RGInfo> rgList, QString language)
     kDebug()<<"Entering GeonamesUS backend";
     d->errorMessage.clear();
 
-    for( int i = 0; i < rgList.count(); ++i){
+    for( int i = 0; i < rgList.count(); ++i)
+    {
 
             bool foundIt = false;
-            for( int j=0; j < d->jobs.count(); j++){
+            for( int j=0; j < d->jobs.count(); j++)
+            {
 
-                if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates)){
+                if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
+                {
 
                     d->jobs[j].request << rgList[i];
                     d->jobs[j].language = language;
@@ -115,7 +136,8 @@ void BackendGeonamesUSRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
             }
 
-            if(!foundIt){
+            if(!foundIt)
+            {
             
                 GeonamesUSInternalJobs newJob;
                 newJob.request << rgList.at(i);
@@ -132,9 +154,11 @@ void BackendGeonamesUSRG::callRGBackend(QList<RGInfo> rgList, QString language)
 void BackendGeonamesUSRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
     
-    for(int i = 0; i < d->jobs.count(); ++i){
+    for(int i = 0; i < d->jobs.count(); ++i)
+    {
 
-        if(d->jobs.at(i).kioJob == job){
+        if(d->jobs.at(i).kioJob == job)
+        {
             
             d->jobs[i].data.append(data);
             break;
@@ -185,6 +209,10 @@ QString BackendGeonamesUSRG::getErrorMessage()
 
 }
 
+QString BackendGeonamesUSRG::backendName()
+{
+    return QString("GeonamesUS");
+}
 
 void BackendGeonamesUSRG::slotResult(KJob* kJob)
 {
@@ -216,7 +244,8 @@ void BackendGeonamesUSRG::slotResult(KJob* kJob)
 
             QMap<QString,QString> resultMap = makeQMapFromXML(dataString);
 
-            for(int j = 0; j < d->jobs[i].request.count(); ++j){
+            for(int j = 0; j < d->jobs[i].request.count(); ++j)
+            {
 
                 d->jobs[i].request[j].rgData =  resultMap;
 
@@ -225,7 +254,8 @@ void BackendGeonamesUSRG::slotResult(KJob* kJob)
 
             d->jobs.removeAt(i);
 
-            if(!d->jobs.empty()){
+            if(!d->jobs.empty())
+            {
             
                 QTimer::singleShot(500, this, SLOT(nextPhoto()));
 

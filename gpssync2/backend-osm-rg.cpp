@@ -1,3 +1,22 @@
+/* ============================================================
+ *
+ * Date        : 2010-05-12
+ * Description : OSM Nominatim backend for Reverse Geocoding
+ *
+ * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
+ * Copyright (C) 2010 by Gabriel Voicu <ping dot gabi at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 #include "backend-osm-rg.moc"
 
@@ -13,7 +32,6 @@
 
 //local includes
 #include "backend-osm-rg.h"
-#include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
 #include "gpssync2_common.h"
 
@@ -100,13 +118,16 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     d->errorMessage.clear();
 
-    for( int i = 0; i < rgList.count(); i++){
+    for( int i = 0; i < rgList.count(); i++)
+    {
 
 
         bool foundIt = false;
-        for( int j=0; j < d->jobs.count(); j++){
+        for( int j=0; j < d->jobs.count(); j++)
+        {
 
-            if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates)){
+            if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
+            {
 
                 d->jobs[j].request << rgList[i];
                 d->jobs[j].language = language;
@@ -118,7 +139,8 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
         }
 
-        if(!foundIt){
+        if(!foundIt)
+        {
 
         OsmInternalJobs newJob;
         newJob.request << rgList.at(i);
@@ -128,7 +150,8 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     }
     
-    if(!d->jobs.empty()){
+    if(!d->jobs.empty())
+    {
     
         nextPhoto();
 
@@ -140,9 +163,11 @@ void BackendOsmRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
 
     
-    for(int i = 0; i < d->jobs.count(); ++i){
+    for(int i = 0; i < d->jobs.count(); ++i)
+    {
 
-        if(d->jobs.at(i).kioJob == job){
+        if(d->jobs.at(i).kioJob == job)
+        {
             
             d->jobs[i].data.append(data);
             break;
@@ -164,10 +189,12 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
 
     QDomNode n = docElem.lastChild().firstChild();
 
-    while(!n.isNull()){
+    while(!n.isNull())
+    {
 
         QDomElement e = n.toElement();
-        if(!e.isNull()){
+        if(!e.isNull())
+        {
 
             if( (e.tagName().compare(QString("country")) == 0) ||
                 (e.tagName().compare(QString("city")) == 0) ||
@@ -193,8 +220,12 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
 
 QString BackendOsmRG::getErrorMessage()
 {
-
     return d->errorMessage;
+}
+
+QString BackendOsmRG::backendName()
+{
+    return QString("OSM");
 }
 
 void BackendOsmRG::slotResult(KJob* kJob)
@@ -213,9 +244,11 @@ void BackendOsmRG::slotResult(KJob* kJob)
     }
  
 
-    for(int i = 0; i < d->jobs.count(); ++i){
+    for(int i = 0; i < d->jobs.count(); ++i)
+    {
 
-        if(d->jobs.at(i).kioJob == kioJob){
+        if(d->jobs.at(i).kioJob == kioJob)
+        {
 
             QString dataString;
             dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
@@ -225,7 +258,8 @@ void BackendOsmRG::slotResult(KJob* kJob)
 
             QMap<QString, QString> resultMap = makeQMapFromXML(dataString);
 
-            for(int j = 0; j < d->jobs[i].request.count(); ++j){
+            for(int j = 0; j < d->jobs[i].request.count(); ++j)
+            {
 
                 d->jobs[i].request[j].rgData = resultMap; 
             
@@ -234,7 +268,8 @@ void BackendOsmRG::slotResult(KJob* kJob)
  
             d->jobs.removeAt(i);
 
-            if(!d->jobs.empty()){    
+            if(!d->jobs.empty())
+            {    
                 QTimer::singleShot(500, this, SLOT(nextPhoto()));
             }
 

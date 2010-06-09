@@ -57,10 +57,10 @@
 #include "gpsimageitem.h"
 #include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
-#include "backend-google-rg.h"
 #include "backend-geonames-rg.h"
 #include "backend-osm-rg.h"
 #include "backend-geonamesUS-rg.h"
+#include "parseTagString.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -83,6 +83,7 @@ public:
     KComboBox *languageEdit;
     QList<RGInfo> photoList;
     QList<RGBackend*> backendRGList;
+    RGBackend* currentBackend;
     int requestedRGCount;
     int receivedRGCount;
     QCheckBox *country, *state, *county, *city, *district, *street, *streetNumber;
@@ -281,12 +282,15 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     // get the selected image:
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
     d->backendIndex = d->serviceComboBox->currentIndex(); 
+    d->currentBackend = d->backendRGList[d->backendIndex];
+
 
     QList<RGInfo> photoList;
 
     QString wantedLanguage = d->languageEdit->itemData(d->languageEdit->currentIndex()).toString(); 
 
-    for( int i = 0; i < selectedItems.count(); ++i){
+    for( int i = 0; i < selectedItems.count(); ++i)
+    {
 
         const QPersistentModelIndex itemIndex = selectedItems.at(i);
         const GPSImageItem* const selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
@@ -313,14 +317,15 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
         emit(signalProgressSetup(d->requestedRGCount, i18n("Retrieving RG info - %p%")));
         emit(signalSetUIEnabled(false));
 
-        d->backendRGList[d->backendIndex]->callRGBackend(photoList, wantedLanguage);
+        d->currentBackend->callRGBackend(photoList, wantedLanguage);
     }
 }
 
 void GPSReverseGeocodingWidget::slotHideOptions()
 {
 
-    if(d->hideOptions){
+    if(d->hideOptions)
+    {
         d->LGridContainer->hide();
         d->hideOptions = false;
         d->buttonHideOptions->setText("More options");
@@ -333,113 +338,13 @@ void GPSReverseGeocodingWidget::slotHideOptions()
 
 }
 
-QString GPSReverseGeocodingWidget::makeTagString(const RGInfo& info)
-{
-
-    QString returnedFormat = d->baseTagEdit->displayText();
-
-    if(d->backendIndex == 0)
-    {
-
-        int countryIndex = returnedFormat.indexOf("{Country}");
-        if(countryIndex != -1)
-        {
-            if(info.rgData[QString("countryName")].isEmpty())
-            {
-                returnedFormat.replace(countryIndex-1, 10, "");
-            }
-            else
-            {
-            returnedFormat.replace(countryIndex, strlen("{Country}"), info.rgData[QString("countryName")]);
-            }
-        }
-
-        int cityIndex = returnedFormat.indexOf("{City}");
-        if(cityIndex != -1)
-        {
-            if(info.rgData[QString("name")].isEmpty())
-            {
-                returnedFormat.replace(cityIndex-1, 7, "");
-            }
-            else
-            {
-                returnedFormat.replace(cityIndex, strlen("{City}"), info.rgData[QString("name")]);
-            }
-        }
-
-    }
-    else if(d->backendIndex == 1)
-    {
-
-        int countryIndex = returnedFormat.indexOf("{Country}");
-        if(countryIndex != -1)
-        {
-            if(info.rgData[QString("adminName1")].isEmpty())
-            {
-                returnedFormat.replace(countryIndex-1, 10, "");
-            }
-            else
-            {
-                returnedFormat.replace(countryIndex, strlen("{Country}"), info.rgData[QString("adminName1")]);
-            }
-        }
-
-        int cityIndex = returnedFormat.indexOf("{City}");
-        if(cityIndex != -1)
-        {
-            if(info.rgData[QString("placeName")].isEmpty())
-            {
-                returnedFormat.replace(cityIndex-1, 7, "");
-            }
-            else
-            {
-            returnedFormat.replace(cityIndex, strlen("{City}"), info.rgData[QString("placeName")]);
-            }
-        }
-
-    }
-    else if(d->backendIndex == 2)
-    {
-
-        int countryIndex = returnedFormat.indexOf("{Country}");
-        if(countryIndex != -1)
-        {
-            if(info.rgData[QString("country")].isEmpty())
-            {
-                returnedFormat.replace(countryIndex-1, 10, "");
-            }
-            else
-            {
-                returnedFormat.replace(countryIndex, strlen("{Country}"), info.rgData[QString("country")]);
-            }
-        }
-
-        int cityIndex = returnedFormat.indexOf("{City}");
-        if(cityIndex != -1)
-        {
-            if(info.rgData[QString("city")].isEmpty())
-            {
-                returnedFormat.replace(cityIndex-1, 7, "");
-            }
-            else
-            {
-            returnedFormat.replace(cityIndex, strlen("{City}"), info.rgData[QString("city")]);
-            }
-        }
-
-    }
-
-    return returnedFormat;
-
-}
-
-
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
 
     //TODO: filter the results using checkboxes from UI
 
-    const QString errorString = d->backendRGList[d->backendIndex]->getErrorMessage();
+    const QString errorString = d->currentBackend->getErrorMessage();
+    
     if(!errorString.isEmpty())
     {
 
@@ -454,31 +359,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     for(int i = 0; i < returnedRGList.count(); ++i)
     {
 
-        address = "";
-    
-        QMap<QString, QString>::const_iterator it = returnedRGList[i].rgData.constBegin();
-    
-        while( it != returnedRGList[i].rgData.constEnd() )
-        {
-
-            if( d->backendIndex == 0 )
-            {
-                    address.append(it.key() + ":" + it.value() + "\n");
-            }
-            else if( d->backendIndex == 1)
-            {
-                    address.append(it.key() + ":" + it.value() + "\n");
-            }        
-            else if( d->backendIndex == 2)
-            {
-                    address.append(it.key() + ":" + it.value() + "\n");
-            }   
-     
-            //address.append(it.key() + ":" + it.value() + "\n");
-            ++it;
-        }
-	    kDebug()<<"Address "<<returnedRGList[i].id<<" coord:"<<returnedRGList[i].coordinates.latString()<<"    "<<address;
-        QString result = makeTagString(returnedRGList[i]);
+        QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
         KMessageBox::about(this, result);
         kDebug()<<"Tag value:"<<result;
     }

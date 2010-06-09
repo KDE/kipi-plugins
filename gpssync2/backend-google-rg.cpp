@@ -76,7 +76,8 @@ BackendGoogleRG::~BackendGoogleRG()
 
 }
 
-QMap<QString,QString> BackendGoogleRG::makeQMap(QString str){
+QMap<QString,QString> BackendGoogleRG::makeQMap(QString str)
+{
 
 
     QMap<QString, QString> map;
@@ -85,7 +86,8 @@ QMap<QString,QString> BackendGoogleRG::makeQMap(QString str){
     listAddress = str.split("\n");
     listAddress.removeLast();
 
-    for(int i = 0; i < listAddress.size(); ++i){
+    for(int i = 0; i < listAddress.size(); ++i)
+    {
 
         QStringList listKeyValue;
         QString element,name;
@@ -101,7 +103,8 @@ QMap<QString,QString> BackendGoogleRG::makeQMap(QString str){
 }
 
 
-void BackendGoogleRG::slotHTMLInitialized(){
+void BackendGoogleRG::slotHTMLInitialized()
+{
 
 
 }
@@ -114,7 +117,8 @@ void BackendGoogleRG::slotHTMLEvents( const QStringList& events)
 
     
 
-    for( int i = 0; i < events.count(); i++){
+    for( int i = 0; i < events.count(); i++)
+    {
 
         //saves the current address from address lists
         QString currentAddress = events.at(i);
@@ -127,9 +131,11 @@ void BackendGoogleRG::slotHTMLEvents( const QStringList& events)
 
 
         //finds the RGInfo object inside RGinteralList
-        for ( int j = 0; j < d->internalList.count(); ++j){
+        for ( int j = 0; j < d->internalList.count(); ++j)
+        {
 
-            if(d->internalList[j].requestId == photoId){
+            if(d->internalList[j].requestId == photoId)
+            {
                 foundId = j;
                 break;
             }
@@ -143,7 +149,8 @@ void BackendGoogleRG::slotHTMLEvents( const QStringList& events)
         returnedRGList.insert(i, photoObj.request);
 
     }
-    if(d->counter < d->internalList.count()){
+    if(d->counter < d->internalList.count())
+    {
       QTimer::singleShot( 500 , this, SLOT(nextPhoto()));
     }
 
@@ -177,7 +184,8 @@ void BackendGoogleRG::callRGBackend(QList<RGInfo> rgList, QString language)
     d->counter = 0;
     d->language = language;
 
-    for( int i = 0; i < rgList.count(); ++i){
+    for( int i = 0; i < rgList.count(); ++i)
+    {
 
         RGInternal internalObj;
         internalObj.request = rgList.at(i);
