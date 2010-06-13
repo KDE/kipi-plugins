@@ -28,6 +28,8 @@
 
 #include "gpsdatacontainer.h"
 #include "kipiimageitem.h"
+#include "kdebug.h"
+#include "kmessagebox.h"
 
 
 namespace KIPIGPSSyncPlugin
@@ -62,8 +64,8 @@ public:
     static const int ColumnHDOP = ColumnKipiImageItemCount + 3;
     static const int ColumnNSatellites = ColumnKipiImageItemCount + 4;
     static const int ColumnStatus = ColumnKipiImageItemCount + 5;
-    static const int ColumnGPSImageItemCount = ColumnKipiImageItemCount + 6;
-    static const int ColumnTags = 7;
+    static const int ColumnGPSImageItemCount = ColumnKipiImageItemCount + 7;
+    static const int ColumnTags = ColumnKipiImageItemCount + 6;
 
     GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~GPSImageItem();

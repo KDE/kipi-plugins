@@ -366,15 +366,16 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
         const QModelIndexList selectedItems = d->selectionModel->selectedRows();
 
-        for( int i = 0; i < selectedItems.count(); ++i)
+        for( int j = 0; j < selectedItems.count(); ++j)
         {
 
-            const QPersistentModelIndex itemIndex = selectedItems.at(i);
+            const QPersistentModelIndex itemIndex = selectedItems.at(j);
             if(itemIndex == returnedRGList[i].id)
             {
             //KMessageBox::about(this, result);
             GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
             selectedItem->setTagInfo(result);
+            break;
             }
         }
 
