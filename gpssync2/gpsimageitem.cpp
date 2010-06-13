@@ -29,7 +29,7 @@
 #include <libkexiv2/kexiv2.h>
 
 // local includes
-
+#include "kdebug.h"
 #include "kipiimagemodel.h"
 
 namespace KIPIGPSSyncPlugin
@@ -65,7 +65,6 @@ void GPSImageItem::loadImageDataInternal()
             attributes.contains("longitude"))
         {
             m_gpsData.setLatLon(attributes["latitude"].toDouble(), attributes["longitude"].toDouble());
-
             if (attributes.contains("altitude"))
             {
                 m_gpsData.setAltitude(attributes["altitude"].toDouble());
@@ -143,6 +142,15 @@ QVariant GPSImageItem::data(const int column, const int role) const
 
         return QString();
     }
+    else if ((column==ColumnTags)&&(role==Qt::DisplayRole))
+    {
+        if(!tags.isEmpty())
+        {
+            return tags;
+        }
+        
+        return QString();        
+    }
 
     return KipiImageItem::data(column, role);
 }
@@ -157,6 +165,16 @@ bool GPSImageItem::setData(const int column, const int role, const QVariant& val
             m_dirty = true;
         }
     }
+/*
+    else if(role==RoleTags)
+    {
+        if(value.canConvert<QString>())
+        {
+            tags<<value.value<QString>();
+            kDebug()<<"TAGS:"<<tags;
+        }
+    }
+*/
     else
     {
         return KipiImageItem::setData(column, role, value);
@@ -183,6 +201,7 @@ void GPSImageItem::setHeaderData(KipiImageModel* const model)
     model->setHeaderData(ColumnHDOP, Qt::Horizontal, i18n("HDOP"), Qt::DisplayRole);
     model->setHeaderData(ColumnNSatellites, Qt::Horizontal, i18n("# satellites"), Qt::DisplayRole);
     model->setHeaderData(ColumnStatus, Qt::Horizontal, i18n("Status"), Qt::DisplayRole);
+    model->setHeaderData(ColumnTags, Qt::Horizontal, i18n("Tags"), Qt::DisplayRole);
 }
 
 QString GPSImageItem::saveChanges()

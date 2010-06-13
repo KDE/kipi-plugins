@@ -29,13 +29,32 @@
 #include "gpsdatacontainer.h"
 #include "kipiimageitem.h"
 
+
 namespace KIPIGPSSyncPlugin
 {
+
+class RGInfo {
+
+    public:
+
+    RGInfo()
+    :id(),
+     coordinates(),
+     rgData(){   }
+
+
+    //QVariant id;
+    QPersistentModelIndex id;
+    WMW2::WMWGeoCoordinate coordinates;
+    QMap<QString, QString> rgData;
+};
+
 
 class GPSImageItem : public KipiImageItem
 {
 public:
     static const int RoleCoordinates = Qt::UserRole + 1;
+    static const int RoleTags = Qt::UserRole + 2;
 
     static const int ColumnLatitude = ColumnKipiImageItemCount + 0;
     static const int ColumnLongitude = ColumnKipiImageItemCount + 1;
@@ -44,6 +63,7 @@ public:
     static const int ColumnNSatellites = ColumnKipiImageItemCount + 4;
     static const int ColumnStatus = ColumnKipiImageItemCount + 5;
     static const int ColumnGPSImageItemCount = ColumnKipiImageItemCount + 6;
+    static const int ColumnTags = 7;
 
     GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~GPSImageItem();
@@ -52,6 +72,7 @@ public:
     inline WMW2::WMWGeoCoordinate coordinates() const { return m_gpsData.m_coordinates; }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
     inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
+    inline void setTagInfo(QString rgTag){ tags = rgTag; emitDataChanged(); }
     void restoreGPSData(const GPSDataContainer& container);
     inline bool isDirty() const { return m_dirty; }
 
@@ -69,6 +90,7 @@ protected:
     GPSDataContainer m_gpsData;
     GPSDataContainer m_savedState;
     bool m_dirty;
+    QString tags;
 };
 
 } /* KIPIGPSSyncPlugin */

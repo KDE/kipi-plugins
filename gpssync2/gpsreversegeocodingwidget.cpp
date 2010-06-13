@@ -304,7 +304,8 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
         const qreal longitude = gpsData.m_coordinates.lon();
      
         RGInfo photoObj;
-        photoObj.id = QVariant::fromValue(itemIndex);
+        //photoObj.id = QVariant::fromValue(itemIndex);
+        photoObj.id = itemIndex;
         photoObj.coordinates = WMW2::WMWGeoCoordinate(latitude, longitude);
 
         photoList << photoObj;
@@ -360,13 +361,31 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     {
 
         QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
-        KMessageBox::about(this, result);
-        kDebug()<<"Tag value:"<<result;
+        //KMessageBox::about(this, result);
+        //kDebug()<<"Tag value:"<<result;
+
+        const QModelIndexList selectedItems = d->selectionModel->selectedRows();
+
+        for( int i = 0; i < selectedItems.count(); ++i)
+        {
+
+            const QPersistentModelIndex itemIndex = selectedItems.at(i);
+            if(itemIndex == returnedRGList[i].id)
+            {
+            //KMessageBox::about(this, result);
+            GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+            selectedItem->setTagInfo(result);
+            }
+        }
+
+
+
     }
 
     d->receivedRGCount+=returnedRGList.count();
     if (d->receivedRGCount>=d->requestedRGCount)
     {
+
         emit(signalSetUIEnabled(true));
     }
     else

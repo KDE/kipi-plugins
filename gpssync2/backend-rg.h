@@ -31,12 +31,12 @@
 
 //local includes
 #include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
-
+#include "gpsimageitem.h"
 
 namespace KIPIGPSSyncPlugin
 {
 
- 
+/* 
 class RGInfo {
 
     public:
@@ -51,7 +51,7 @@ class RGInfo {
     WMW2::WMWGeoCoordinate coordinates;
     QMap<QString, QString> rgData;
 };
-
+*/
 
 class RGBackendPrivate;
 
