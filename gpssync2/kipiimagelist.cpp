@@ -111,7 +111,9 @@ class KipiImageListPrivate
 {
 public:
     KipiImageListPrivate()
-    : model(0),
+    : editEnabled(true),
+      dragEnabled(false),
+      model(0),
       selectionModel(0),
       treeView(0),
       itemDelegate(0),
@@ -119,6 +121,8 @@ public:
     {
     }
 
+    bool editEnabled;
+    bool dragEnabled;
     KipiImageModel* model;
     QItemSelectionModel* selectionModel;
     KipiImageListViewInternal* treeView;
@@ -141,6 +145,7 @@ KipiImageList::KipiImageList(KIPI::Interface* const interface, QWidget* const pa
     d->itemDelegate = new KipiImageItemDelegate(this, this);
     d->treeView->setItemDelegate(d->itemDelegate);
     setThumbnailSize(60);
+    slotUpdateActionsEnabled();
 }
 
 KipiImageList::~KipiImageList()
@@ -336,6 +341,27 @@ void KipiImageList::slotInternalTreeViewImageActivated(const QModelIndex& index)
 KipiImageSortProxyModel* KipiImageList::getSortProxyModel() const
 {
     return d->imageSortProxyModel;
+}
+
+void KipiImageList::setEditEnabled(const bool state)
+{
+    d->editEnabled = state;
+    slotUpdateActionsEnabled();
+}
+
+void KipiImageList::setDragEnabled(const bool state)
+{
+    d->dragEnabled = state;
+    slotUpdateActionsEnabled();
+}
+
+void KipiImageList::slotUpdateActionsEnabled()
+{
+    d->treeView->setDragEnabled(d->dragEnabled&&d->editEnabled);
+    if (d->dragEnabled&&d->editEnabled)
+    {
+        d->treeView->setDragDropMode(QAbstractItemView::DragOnly);
+    }
 }
 
 } /* KIPIGPSSyncPlugin */

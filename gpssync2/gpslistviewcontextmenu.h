@@ -50,6 +50,8 @@ public:
     explicit GPSListViewContextMenu(KipiImageList *imagesList, GPSBookmarkOwner* const bookmarkOwner = 0);
     ~GPSListViewContextMenu();
 
+    void setEnabled(const bool state);
+
 protected:
 
     virtual bool eventFilter(QObject *watched, QEvent *event);

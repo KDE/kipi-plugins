@@ -282,11 +282,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->treeView = new KipiImageList(d->interface, this);
     d->treeView->setModel(d->imageModel, d->selectionModel);
     d->treeView->setDragDropHandler(new GPSImageListDragDropHandler(this));
+    d->treeView->setDragEnabled(true);
     // TODO: save and restore the state of the header
     // TODO: add a context menu to the header to select which columns should be visible
     // TODO: add sorting by column
-    d->treeView->view()->setDragEnabled(true);
-    d->treeView->view()->setDragDropMode(QAbstractItemView::DragOnly);
     d->treeView->view()->setSelectionMode(QAbstractItemView::ExtendedSelection);
     d->treeView->view()->setSortingEnabled(true);
     d->VSplitter->addWidget(d->treeView);
@@ -671,6 +670,9 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
     d->buttonBox->setEnabled(enabledState);
     d->correlatorWidget->setUIEnabledExternal(enabledState);
     d->rgWidget->setUIEnabled(enabledState);
+    d->treeView->setEditEnabled(enabledState);
+    d->listViewContextMenu->setEnabled(enabledState);
+    d->mapWidget->setEditEnabled(enabledState);
 }
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)

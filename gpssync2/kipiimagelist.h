@@ -92,6 +92,8 @@ public:
 
     void saveSettingsToGroup(KConfigGroup* const group);
     void readSettingsFromGroup(KConfigGroup* const group);
+    void setEditEnabled(const bool state);
+    void setDragEnabled(const bool state);
 
 Q_SIGNALS:
     void signalImageActivated(const QModelIndex& index);
@@ -99,6 +101,7 @@ Q_SIGNALS:
 public Q_SLOTS:
     void slotIncreaseThumbnailSize();
     void slotDecreaseThumbnailSize();
+    void slotUpdateActionsEnabled();
 
 private Q_SLOTS:
     void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);

@@ -57,6 +57,7 @@ class GPSListViewContextMenuPriv
 public:
 
     GPSListViewContextMenuPriv()
+    : enabled(true)
     {
         imagesList     = 0;
         actionCopy     = 0;
@@ -74,6 +75,7 @@ public:
     GPSBookmarkOwner *bookmarkOwner;
 
     KipiImageList       *imagesList;
+    bool enabled;
 };
 
 GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBookmarkOwner* const bookmarkOwner)
@@ -126,7 +128,7 @@ GPSListViewContextMenu::~GPSListViewContextMenu()
 bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
 {
     // we are only interested in context-menu events:
-    if (event->type()==QEvent::ContextMenu)
+    if ((event->type()==QEvent::ContextMenu)&&d->enabled)
     {
         // enable or disable the actions:
         KipiImageModel* const imageModel = d->imagesList->getModel();
@@ -502,6 +504,11 @@ void GPSListViewContextMenu::slotRemoveAltitude()
 void GPSListViewContextMenu::slotRemoveUncertainty()
 {
     removeInformationFromSelectedImages(GPSDataContainer::HasNSatellites|GPSDataContainer::HasHDop, i18n("Remove uncertainty information"));
+}
+
+void GPSListViewContextMenu::setEnabled(const bool state)
+{
+    d->enabled = state;
 }
 
 } // namespace KIPIGPSSyncPlugin
