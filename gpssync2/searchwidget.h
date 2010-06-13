@@ -105,7 +105,7 @@ class SearchWidget : public QWidget
 Q_OBJECT
 
 public:
-    SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QWidget* parent = 0);
+    SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent = 0);
     ~SearchWidget();
 
     WMW2::WMWModelHelper* getModelHelper();
@@ -120,6 +120,7 @@ private Q_SLOTS:
     void slotClearSearchResults();
     void slotVisibilityChanged(bool state);
     void slotCopyCoordinates();
+    void slotMoveSelectedImagesToThisResult();
 
 protected:
     virtual bool eventFilter(QObject *watched, QEvent *event);

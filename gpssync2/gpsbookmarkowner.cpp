@@ -317,8 +317,8 @@ void GPSBookmarkModelHelper::snapItemsTo(const QModelIndex& targetIndex, const Q
         undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
     }
     kDebug()<<targetIndex.data(Qt::DisplayRole).toString();
-    undoCommand->setText(i18np("1 image snapped to %2",
-                               "%1 images snapped to %2", snappedIndices.count(), targetIndex.data(Qt::DisplayRole).toString()));
+    undoCommand->setText(i18np("1 image snapped to '%2'",
+                               "%1 images snapped to '%2'", snappedIndices.count(), targetIndex.data(Qt::DisplayRole).toString()));
 
     emit(signalUndoCommand(undoCommand));
 }

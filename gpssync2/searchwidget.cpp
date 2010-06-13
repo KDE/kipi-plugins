@@ -71,6 +71,7 @@ public:
     WMW2::WorldMapWidget2* mapWidget;
     GPSBookmarkOwner* gpsBookmarkOwner;
     KipiImageModel* kipiImageModel;
+    QItemSelectionModel* kipiImageSelectionModel;
     KLineEdit* searchTermLineEdit;
     QPushButton* searchButton;
     SearchBackend* searchBackend;
@@ -89,14 +90,16 @@ public:
     KIcon actionToggleAllResultsVisibilityIconChecked;
     KAction* actionCopyCoordinates;
     KAction* actionBookmark;
+    KAction* actionMoveImagesToThisResult;
 };
 
-SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QWidget* parent)
+SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent)
 : QWidget(parent), d(new SearchWidgetPrivate())
 {
     d->mapWidget = mapWidget;
     d->gpsBookmarkOwner = gpsBookmarkOwner;
     d->kipiImageModel = kipiImageModel;
+    d->kipiImageSelectionModel = kipiImageSelectionModel;
     d->searchBackend = new SearchBackend(this);
     d->searchResultsModel = new SearchResultModel(this);
 #ifdef GPSSYNC2_MODELTEST
@@ -141,6 +144,8 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOw
     d->actionCopyCoordinates = new KAction(i18n("Copy coordinates"), this);
     d->actionCopyCoordinates->setIcon(SmallIcon("edit-copy"));
 
+    d->actionMoveImagesToThisResult = new KAction(i18n("Move selected images to this position"), this);
+
     d->backendSelectionBox = new KComboBox(actionHBox);
     d->backendSelectionBox->setToolTip(i18n("Select which service you would like to use."));
     const QList<QPair<QString, QString> > backendList = d->searchBackend->getBackends();
@@ -164,6 +169,9 @@ SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOw
 
     d->actionBookmark = new KAction(i18n("Bookmarks"), this);
     d->actionBookmark->setMenu(d->gpsBookmarkOwner->getMenu());
+
+    connect(d->actionMoveImagesToThisResult, SIGNAL(triggered(bool)),
+            this, SLOT(slotMoveSelectedImagesToThisResult()));
 
     connect(d->searchButton, SIGNAL(clicked()),
             this, SLOT(slotTriggerSearch()));
@@ -541,6 +549,8 @@ bool SearchWidget::eventFilter(QObject *watched, QEvent *event)
             // construct the context-menu:
             KMenu * const menu = new KMenu(d->treeView);
             menu->addAction(d->actionCopyCoordinates);
+            menu->addAction(d->actionMoveImagesToThisResult);
+            d->actionMoveImagesToThisResult->setEnabled(!d->kipiImageSelectionModel->selectedRows().isEmpty());
 //             menu->addAction(d->actionBookmark);
             d->gpsBookmarkOwner->changeAddBookmark(true);
 
@@ -609,8 +619,36 @@ void SearchResultModelHelper::snapItemsTo(const QModelIndex& targetIndex, const 
 
         undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
     }
-    undoCommand->setText(i18np("1 image snapped to %2",
-                               "%1 images snapped to %2", snappedIndices.count(), targetItem.result.name));
+    undoCommand->setText(i18np("1 image snapped to '%2'",
+                               "%1 images snapped to '%2'", snappedIndices.count(), targetItem.result.name));
+
+    emit(signalUndoCommand(undoCommand));
+}
+
+void SearchWidget::slotMoveSelectedImagesToThisResult()
+{
+    const QModelIndex currentIndex = d->searchResultsSelectionModel->currentIndex();
+    const SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(currentIndex);
+    const WMW2::WMWGeoCoordinate& targetCoordinates = currentItem.result.coordinates;
+
+    const QModelIndexList selectedImageIndices = d->kipiImageSelectionModel->selectedRows();
+    if (selectedImageIndices.isEmpty())
+        return;
+
+    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
+    for (int i=0; i<selectedImageIndices.count(); ++i)
+    {
+        const QPersistentModelIndex itemIndex = selectedImageIndices.at(i);
+        GPSImageItem* const item = static_cast<GPSImageItem*>(d->kipiImageModel->itemFromIndex(itemIndex));
+        const GPSDataContainer oldData = item->gpsData();
+        GPSDataContainer newData = oldData;
+        newData.setCoordinates(targetCoordinates);
+        item->setGPSData(newData);
+
+        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
+    }
+    undoCommand->setText(i18np("1 image moved to '%2'",
+                               "%1 images moved to '%2'", selectedImageIndices.count(), currentItem.result.name));
 
     emit(signalUndoCommand(undoCommand));
 }
