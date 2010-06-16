@@ -23,10 +23,7 @@
 #ifndef IMAGELISTITEM_H
 #define IMAGELISTITEM_H
 
-extern "C"
-{
-#include <gpod/itdb.h>
-}
+// Qt includes
 
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
@@ -37,16 +34,16 @@ namespace KIPIIpodExportPlugin
 class ImageListItem : public QTreeWidgetItem
 {
     public:
-        ImageListItem( QTreeWidget *parent, const QString &pathSrc, const QString &name )
-            : QTreeWidgetItem( parent )
-            , m_pathSrc( pathSrc )
+        ImageListItem(QTreeWidget* parent, const QString& pathSrc, const QString& name)
+            : QTreeWidgetItem(parent), m_pathSrc(pathSrc)
         {
-            setText( 0, name );
+            setText(0, name);
         }
 
         QString pathSrc() const { return m_pathSrc; }
 
     private:
+
         QString m_pathSrc;
 };
 

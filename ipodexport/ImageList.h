@@ -38,7 +38,7 @@ public:
 
     enum ListType
     {
-        UploadType, 
+        UploadType,
         IpodType
     };
 

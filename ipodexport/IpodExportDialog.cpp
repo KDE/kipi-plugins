@@ -77,7 +77,7 @@ extern "C"
 namespace KIPIIpodExportPlugin
 {
 
-UploadDialog *UploadDialog::s_instance = 0;
+UploadDialog* UploadDialog::s_instance = 0;
 
 UploadDialog::UploadDialog
 (
@@ -127,7 +127,7 @@ UploadDialog::UploadDialog
                this, SLOT( slotHelp() ) );
 
     KHelpMenu* helpMenu = new KHelpMenu( this, m_about, false );
-    QAction *handbook   = new QAction( i18n("Plugin Handbook"), this );
+    QAction* handbook   = new QAction( i18n("Plugin Handbook"), this );
     connect(handbook, SIGNAL( triggered(bool) ),
             this, SLOT( slotHelp() ) );
 
@@ -137,7 +137,7 @@ UploadDialog::UploadDialog
 
     // ------------------------------------------------------------
 
-    QGridLayout *grid = new QGridLayout(box);
+    QGridLayout* grid = new QGridLayout(box);
     m_ipodHeader      = new IpodHeader(box);
 
     // Setup widgets and layout for the source
@@ -367,8 +367,9 @@ void UploadDialog::reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album 
     while( item->child( 0 ) )
         delete item->child( 0 ); // clear the items, so we can reload them again
 
-    Itdb_PhotoAlbum *ipodAlbum = 0;
-    for( GList *it = m_itdb->photoalbums; it; it = it->next )
+    Itdb_PhotoAlbum* ipodAlbum = 0;
+
+    for( GList* it = m_itdb->photoalbums; it; it = it->next )
     {
         ipodAlbum = (Itdb_PhotoAlbum *)it->data;
         if( strcmp( ipodAlbum->name, album->name ) == 0 )
@@ -411,24 +412,24 @@ void UploadDialog::startTransfer()
     if( !m_itdb || !m_uploadList->model()->hasChildren() )
         return;
 
-    QTreeWidgetItem *selected = m_ipodAlbumList->currentItem();
-    IpodAlbumItem *ipodAlbum  = dynamic_cast<IpodAlbumItem*>( selected );
+    QTreeWidgetItem* selected = m_ipodAlbumList->currentItem();
+    IpodAlbumItem* ipodAlbum  = dynamic_cast<IpodAlbumItem*>( selected );
     if( !selected || !ipodAlbum )
         return;
 
     m_transferring         = true;
-    Itdb_PhotoAlbum *album = ipodAlbum->photoAlbum();
+    Itdb_PhotoAlbum* album = ipodAlbum->photoAlbum();
 
     enableButton(KDialog::User1, false);
     enableButton(KDialog::Close, false);
 
-    GError *err = 0;
+    GError* err = 0;
 
-    while( QTreeWidgetItem *item = m_uploadList->takeTopLevelItem(0) )
+    while( QTreeWidgetItem* item = m_uploadList->takeTopLevelItem(0) )
     {
 #define item static_cast<ImageListItem*>(item)
         kDebug() << "Uploading "      << item->pathSrc()
-                      << " to ipod album " << album->name ;
+                 << " to ipod album " << album->name ;
 
         Itdb_Artwork *art = itdb_photodb_add_photo( m_itdb, QFile::encodeName( item->pathSrc() ), 0, 0, &err );
         if( !art )
@@ -469,7 +470,8 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
     if( m_ipodAlbumList->currentItem() )
         m_ipodAlbumList->currentItem()->setSelected( true );
 
-    QTimer::singleShot(0, this, SLOT(enableButtons())); // Need a singleshot, else the selected items don't get updated.
+    // Need a singleshot, else the selected items don't get updated.
+    QTimer::singleShot(0, this, SLOT(enableButtons()));
 
 #define item dynamic_cast<IpodPhotoItem*>(item)
     if( !item )
@@ -502,7 +504,7 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
     gdk_pixbuf_unref ( gpixbuf );
 }
 
-void UploadDialog::imageSelected( QTreeWidgetItem *item )
+void UploadDialog::imageSelected( QTreeWidgetItem* item )
 {
     if( !item || m_transferring )
     {
@@ -510,7 +512,7 @@ void UploadDialog::imageSelected( QTreeWidgetItem *item )
         return;
     }
 
-    ImageListItem *pitem = static_cast<ImageListItem*>( item );
+    ImageListItem* pitem = static_cast<ImageListItem*>( item );
     if ( !pitem ) return;
 
     m_imagePreview->clear();
@@ -694,7 +696,7 @@ void UploadDialog::deleteIpodAlbum()
 {
     QList<QTreeWidgetItem*> selected = m_ipodAlbumList->selectedItems();
 
-    foreach( QTreeWidgetItem *item, selected )
+    Q_FOREACH( QTreeWidgetItem *item, selected )
     {
         IpodAlbumItem *album = dynamic_cast<IpodAlbumItem*>( item );
         if( album )
@@ -721,7 +723,7 @@ void UploadDialog::addDropItems( const QStringList& filesPath )
 {
     if( filesPath.isEmpty() ) return;
 
-    foreach( const QString &dropFile, filesPath )
+    Q_FOREACH( const QString &dropFile, filesPath )
     {
         // TODO: Check if the new item already exist in the list.
         addUrlToList( dropFile );

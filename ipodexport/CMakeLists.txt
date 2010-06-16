@@ -10,6 +10,7 @@ SET(kipiplugin_ipodexport_PART_SRCS
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_ipodexport ${kipiplugin_ipodexport_PART_SRCS})
+ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
 TARGET_LINK_LIBRARIES(kipiplugin_ipodexport
                       ${GOBJECT_LIBRARIES}

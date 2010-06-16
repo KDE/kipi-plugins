@@ -65,14 +65,14 @@ void ImageList::droppedImagesItems(const QList<QUrl>& urls)
 {
     QStringList filesPath;
 
-    foreach( const QUrl &u, urls )
+    Q_FOREACH( const QUrl &u, urls )
     {
         filesPath << u.path();
     }
 
     if( !filesPath.isEmpty() )
     {
-       emit signalAddedDropItems( filesPath );
+       Q_EMIT signalAddedDropItems( filesPath );
     }
 }
 
