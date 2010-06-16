@@ -6,6 +6,7 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> IpodExport : 240469 : IpodExport fails to build with glib >= 2.25.
+002 ==> 
 
 
