@@ -71,7 +71,7 @@ public:
     virtual ~GPSImageItem();
 
     void setCoordinates(const WMW2::WMWGeoCoordinate& newCoordinates);
-    inline WMW2::WMWGeoCoordinate coordinates() const { return m_gpsData.m_coordinates; }
+    inline WMW2::WMWGeoCoordinate coordinates() const { return m_gpsData.getCoordinates(); }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
     inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
     inline void setTagInfo(QString rgTag){ tags = rgTag; emitDataChanged(); }

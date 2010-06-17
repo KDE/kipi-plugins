@@ -232,7 +232,7 @@ bool GPXCorrelationLessThan(const GPSDataParser::GPXCorrelation& a, const GPSDat
 }
 
 void GPSDataParserThread::run()
-{
+{sleep(10);
     // sort the items to correlate by time:
     qSort(itemsToCorrelate.begin(), itemsToCorrelate.end(), GPXCorrelationLessThan);
 

@@ -72,7 +72,7 @@ void GPSImageItem::loadImageDataInternal()
         }
     }
 
-    if (!m_gpsData.m_hasFlags.testFlag(GPSDataContainer::HasCoordinates))
+    if (!m_gpsData.hasCoordinates())
     {
         // could not load the coordinates from the interface,
         // read them directly from the file
@@ -96,42 +96,42 @@ QVariant GPSImageItem::data(const int column, const int role) const
 {
     if (role==RoleCoordinates)
     {
-        return QVariant::fromValue(m_gpsData.m_coordinates);
+        return QVariant::fromValue(m_gpsData.getCoordinates());
     }
     else if ((column==ColumnLatitude)&&(role==Qt::DisplayRole))
     {
-        if (!m_gpsData.m_coordinates.hasLatitude())
+        if (!m_gpsData.getCoordinates().hasLatitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.lat(), 7);
+        return KGlobal::locale()->formatNumber(m_gpsData.getCoordinates().lat(), 7);
     }
     else if ((column==ColumnLongitude)&&(role==Qt::DisplayRole))
     {
-        if (!m_gpsData.m_coordinates.hasLongitude())
+        if (!m_gpsData.getCoordinates().hasLongitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.lon(), 7);
+        return KGlobal::locale()->formatNumber(m_gpsData.getCoordinates().lon(), 7);
     }
     else if ((column==ColumnAltitude)&&(role==Qt::DisplayRole))
     {
-        if (!m_gpsData.m_coordinates.hasAltitude())
+        if (!m_gpsData.getCoordinates().hasAltitude())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.m_coordinates.alt());
+        return KGlobal::locale()->formatNumber(m_gpsData.getCoordinates().alt());
     }
     else if ((column==ColumnHDOP)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.hasHDop())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.m_hDop);
+        return KGlobal::locale()->formatNumber(m_gpsData.getHDop());
     }
     else if ((column==ColumnNSatellites)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.hasNSatellites())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.m_nSatellites, 0);
+        return KGlobal::locale()->formatNumber(m_gpsData.getNSatellites(), 0);
     }
     else if ((column==ColumnStatus)&&(role==Qt::DisplayRole))
     {
@@ -216,16 +216,16 @@ QString GPSImageItem::saveChanges()
     qreal longitude = 0;
 
     // do we have gps information?
-    if (m_gpsData.m_hasFlags.testFlag(GPSDataContainer::HasCoordinates))
+    if (m_gpsData.hasCoordinates())
     {
         shouldWriteCoordinates = true;
-        latitude = m_gpsData.m_coordinates.lat();
-        longitude = m_gpsData.m_coordinates.lon();
+        latitude = m_gpsData.getCoordinates().lat();
+        longitude = m_gpsData.getCoordinates().lon();
         
-        if (m_gpsData.m_hasFlags.testFlag(GPSDataContainer::HasAltitude))
+        if (m_gpsData.hasAltitude())
         {
             shouldWriteAltitude = true;
-            altitude = m_gpsData.m_coordinates.alt();
+            altitude = m_gpsData.getCoordinates().alt();
         }
         else
         {
@@ -354,7 +354,7 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         if (!otherGPSItem->m_gpsData.hasAltitude())
             return true;
 
-        return m_gpsData.m_coordinates.alt() < otherGPSItem->m_gpsData.m_coordinates.alt();
+        return m_gpsData.getCoordinates().alt() < otherGPSItem->m_gpsData.getCoordinates().alt();
     }
 
     case ColumnNSatellites:
@@ -365,7 +365,7 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         if (!otherGPSItem->m_gpsData.hasNSatellites())
             return true;
 
-        return m_gpsData.m_nSatellites < otherGPSItem->m_gpsData.m_nSatellites;
+        return m_gpsData.getNSatellites() < otherGPSItem->m_gpsData.getNSatellites();
     }
 
     case ColumnHDOP:
@@ -376,7 +376,7 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         if (!otherGPSItem->m_gpsData.hasHDop())
             return true;
 
-        return m_gpsData.m_hDop < otherGPSItem->m_gpsData.m_hDop;
+        return m_gpsData.getHDop() < otherGPSItem->m_gpsData.getHDop();
     }
 
     case ColumnLatitude:
@@ -387,7 +387,7 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         if (!otherGPSItem->m_gpsData.hasCoordinates())
             return true;
 
-        return m_gpsData.m_coordinates.lat() < otherGPSItem->m_gpsData.m_coordinates.lat();
+        return m_gpsData.getCoordinates().lat() < otherGPSItem->m_gpsData.getCoordinates().lat();
     }
 
     case ColumnLongitude:
@@ -398,7 +398,7 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         if (!otherGPSItem->m_gpsData.hasCoordinates())
             return true;
 
-        return m_gpsData.m_coordinates.lon() < otherGPSItem->m_gpsData.m_coordinates.lon();
+        return m_gpsData.getCoordinates().lon() < otherGPSItem->m_gpsData.getCoordinates().lon();
     }
 
     case ColumnStatus:

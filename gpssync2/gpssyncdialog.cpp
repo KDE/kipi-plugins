@@ -865,7 +865,7 @@ void GPSSyncDialog::slotMapMarkersMoved(const QList<QPersistentModelIndex>& move
         newData.setCoordinates(coordinates);
         item->setGPSData(newData);
 
-        kDebug()<<oldData.m_coordinates<<newData.m_coordinates;
+        kDebug()<<oldData.getCoordinates()<<newData.getCoordinates();
         undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
     }
     undoCommand->setText(i18np("1 image moved",

@@ -146,10 +146,10 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
             GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(selectedIndices.at(i)));
             if (gpsItem)
             {
-                const bool itemHasCoordinates = gpsItem->gpsData().m_coordinates.hasCoordinates();
+                const bool itemHasCoordinates = gpsItem->gpsData().getCoordinates().hasCoordinates();
                 copyAvailable&= itemHasCoordinates;
                 removeCoordinatesAvailable|= itemHasCoordinates;
-                removeAltitudeAvailable|= gpsItem->gpsData().m_coordinates.hasAltitude();
+                removeAltitudeAvailable|= gpsItem->gpsData().getCoordinates().hasAltitude();
                 removeUncertaintyAvailable|= gpsItem->gpsData().hasNSatellites() | gpsItem->gpsData().hasHDop();
             }
         }
@@ -163,7 +163,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
             GPSDataContainer position;
             getCurrentItemPositionAndUrl(&position, 0);
-            d->bookmarkOwner->setPositionAndTitle(position.m_coordinates, QString());
+            d->bookmarkOwner->setPositionAndTitle(position.getCoordinates(), QString());
         }
 
         // "paste" is only available if there is geo data in the clipboard
@@ -240,7 +240,7 @@ void GPSListViewContextMenu::copyActionTriggered()
     if (!getCurrentItemPositionAndUrl(&gpsInfo, &itemUrl))
         return;
 
-    CoordinatesToClipboard(gpsInfo.m_coordinates, itemUrl, QString());
+    CoordinatesToClipboard(gpsInfo.getCoordinates(), itemUrl, QString());
 }
 
 void GPSListViewContextMenu::pasteActionTriggered()

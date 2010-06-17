@@ -30,12 +30,37 @@ namespace KIPIGPSSyncPlugin
 class GPSDataContainer
 {
 public:
+
     GPSDataContainer()
     : m_hasFlags(0),
       m_coordinates(),
-      m_nSatellites(0)
+      m_nSatellites(0),
+      m_hDop(0),
+      m_pDop(0)
     {
     }
+
+    enum HasFlagsEnum {
+        HasCoordinates = 1,
+        HasAltitude = 2,
+        HasIsInterpolated = 4,
+        HasNSatellites = 8,
+        HasHDop = 16,
+        HasPDop = 32
+    };
+    Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
+
+private:
+
+    HasFlags m_hasFlags;
+    WMW2::WMWGeoCoordinate m_coordinates;
+    int m_nSatellites;
+    qreal m_hDop;
+    qreal m_pDop;
+
+public:
+
+    /* general */
 
     bool operator==(const GPSDataContainer& b) const
     {
@@ -48,27 +73,51 @@ public:
                 return false;
         }
 
-        if (m_nSatellites!=b.m_nSatellites)
-            return false;
+        if (hasNSatellites())
+        {
+            if (m_nSatellites!=b.m_nSatellites)
+                return false;
+        }
+
+        if (hasHDop())
+        {
+            if (m_hDop!=b.m_hDop)
+                return false;
+        }
+
+        if (hasHDop())
+        {
+            if (m_pDop!=b.m_pDop)
+                return false;
+        }
 
         return true;
     }
 
-    enum HasFlagsEnum {
-        HasCoordinates = 1,
-        HasAltitude = 2,
-        HasIsInterpolated = 4,
-        HasNSatellites = 8,
-        HasHDop = 16
-    };
-    Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
+    inline HasFlags flags() const
+    {
+        return m_hasFlags;
+    }
 
-    HasFlags m_hasFlags;
-    WMW2::WMWGeoCoordinate m_coordinates;
-    int m_nSatellites;
-    qreal m_hDop;
+    inline void clear()
+    {
+        m_hasFlags = 0;
+        m_coordinates.clear();
+    }
 
-    void setCoordinates(const WMW2::WMWGeoCoordinate& coordinates)
+    inline void clearNonCoordinates()
+    {
+        m_hasFlags&= ~(HasNSatellites | HasHDop | HasPDop);
+    }
+
+    /* coordinates */
+
+    inline WMW2::WMWGeoCoordinate getCoordinates() const
+    {
+        return m_coordinates;
+    }
+
+    inline void setCoordinates(const WMW2::WMWGeoCoordinate& coordinates)
     {
         m_coordinates = coordinates;
         if (coordinates.hasCoordinates())
@@ -91,50 +140,18 @@ public:
         clearNonCoordinates();
     }
 
-    bool hasHDop() const
-    {
-        return m_hasFlags.testFlag(HasHDop);
-    }
-
-    bool hasNSatellites() const
-    {
-        return m_hasFlags.testFlag(HasNSatellites);
-    }
-
-    void clearNonCoordinates()
-    {
-        m_hasFlags&=(~HasNSatellites);
-        m_hasFlags&=(~HasHDop);
-    }
-
-    void clearNSatellites()
-    {
-        m_hasFlags&=(~HasNSatellites);
-    }
-
-    void clearHDop()
-    {
-        m_hasFlags&=(~HasHDop);
-    }
-
-    void setHDop(const qreal hDop)
-    {
-        m_hDop = hDop;
-        m_hasFlags|=HasHDop;
-    }
-
-    void setAltitude(const qreal alt)
+    inline void setAltitude(const qreal alt)
     {
         m_coordinates.setAlt(alt);
         m_hasFlags|=HasAltitude;
     }
 
-    bool hasAltitude() const
+    inline bool hasAltitude() const
     {
         return m_hasFlags.testFlag(HasAltitude);
     }
 
-    void setLatLon(const qreal lat, const qreal lon)
+    inline void setLatLon(const qreal lat, const qreal lon)
     {
         m_coordinates.setLatLon(lat, lon);
         m_hasFlags|=HasCoordinates;
@@ -142,27 +159,87 @@ public:
         clearNonCoordinates();
     }
 
-    void setNSatellites(const int nSatellites)
-    {
-        m_nSatellites = nSatellites;
-        m_hasFlags|=HasNSatellites;
-    }
-
-    void clear()
-    {
-        m_hasFlags = 0;
-        m_coordinates.clear();
-    }
-
-    void clearAltitude()
+    inline void clearAltitude()
     {
         m_hasFlags&=~HasAltitude;
         m_coordinates.clearAlt();
     }
 
-    bool hasCoordinates() const
+    inline bool hasCoordinates() const
     {
         return m_hasFlags.testFlag(HasCoordinates);
+    }
+
+    /* NSatellites */
+
+    inline int getNSatellites() const
+    {
+        return m_nSatellites;
+    }
+
+    inline bool hasNSatellites() const
+    {
+        return m_hasFlags.testFlag(HasNSatellites);
+    }
+
+    inline void clearNSatellites()
+    {
+        m_hasFlags&= ~HasNSatellites;
+    }
+
+    inline void setNSatellites(const int nSatellites)
+    {
+        m_nSatellites = nSatellites;
+        m_hasFlags|=HasNSatellites;
+    }
+
+    /* DOP */
+
+    inline bool hasHDop() const
+    {
+        return m_hasFlags.testFlag(HasHDop);
+    }
+
+    inline bool hasPDop() const
+    {
+        return m_hasFlags.testFlag(HasPDop);
+    }
+
+    inline void clearHDop()
+    {
+        m_hasFlags&= ~HasHDop;
+    }
+
+    inline void clearPDop()
+    {
+        m_hasFlags&= ~HasPDop;
+    }
+
+    inline void clearAnyDop()
+    {
+        m_hasFlags&= ~(HasHDop | HasPDop);
+    }
+
+    inline void setHDop(const qreal hDop)
+    {
+        m_hDop = hDop;
+        m_hasFlags|=HasHDop;
+    }
+
+    inline void setPDop(const qreal pDop)
+    {
+        m_pDop = pDop;
+        m_hasFlags|=HasPDop;
+    }
+
+    inline qreal getHDop() const
+    {
+        return m_hDop;
+    }
+
+    inline qreal getPDop() const
+    {
+        return m_pDop;
     }
 };
 
