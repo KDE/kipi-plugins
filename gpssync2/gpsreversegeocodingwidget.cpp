@@ -118,7 +118,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->selectionModel = selectionModel;
     
     d->UIEnabled = true;
-
     // we need to have a main layout and add KVBox to it or derive from KVBox
     // - or is there an easier way to use KVBox?
     QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
@@ -407,13 +406,14 @@ void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
 {
     
     kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
+    //d->tagModel->setData(index.child(index.row() + 1, index.column()), "Tag Creat de Mine", Qt::DisplayRole);
 
 }
 
 void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 {
     
-    group->writeEntry("Backend", d->serviceComboBox->currentIndex()); 
+    group->writeEntry("RG Backend", d->serviceComboBox->currentIndex()); 
     group->writeEntry("Language", d->languageEdit->currentIndex());
 
     group->writeEntry("Hide options", d->hideOptions); 
@@ -434,7 +434,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 void GPSReverseGeocodingWidget::readSettingsFromGroup(KConfigGroup* const group)
 {
 
-    d->serviceComboBox->setCurrentIndex(group->readEntry("Backend", 0));
+    d->serviceComboBox->setCurrentIndex(group->readEntry("RG Backend", 0));
     d->languageEdit->setCurrentIndex(group->readEntry("Language", 0));
 
     d->hideOptions = !(group->readEntry("Hide options", false));
