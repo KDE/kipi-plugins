@@ -119,24 +119,22 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     
     d->UIEnabled = true;
 
-    
-    
+    // we need to have a main layout and add KVBox to it or derive from KVBox
+    // - or is there an easier way to use KVBox?
+    QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
 
     KVBox* const vbox = new KVBox(this);
-    vbox->resize(350,500);
+    vBoxLayout->addWidget(vbox);
     vbox->layout()->setSpacing(0);
     vbox->layout()->setMargin(0);
     
 
     d->UGridContainer = new QWidget(vbox);
-    d->UGridContainer->resize(350,400);
-    
     d->tagTreeView = new QTreeView(vbox);
     d->tagModel = interface->getTagTree(d->tagTreeView);
     d->tagTreeView->setModel(d->tagModel);
 
-    QItemSelectionModel *tagSelectionModel = d->tagTreeView->selectionModel();
-
+    QItemSelectionModel* const tagSelectionModel = d->tagTreeView->selectionModel();
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
@@ -209,7 +207,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
 
     d->LGridContainer = new QWidget(vbox);
-    d->LGridContainer->resize(350,400);
     QGridLayout* LGridLayout = new QGridLayout(d->LGridContainer);
        
     d->autoTag = new QCheckBox("Tag automatically when coordinates are changed", d->LGridContainer);
