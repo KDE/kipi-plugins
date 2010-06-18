@@ -30,11 +30,14 @@
 //Qt includes
 
 #include <QWidget>
+#include <QItemSelection>
 
 //local includes
 #include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
 #include "gpsundocommand.h"
 #include "backend-rg.h"
+
+#include <libkipi/interface.h>
 
 class QItemSelectionModel;
 
@@ -52,7 +55,7 @@ Q_OBJECT;
 
 public: 
 
-    GPSReverseGeocodingWidget(KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent = 0);
+    GPSReverseGeocodingWidget(KIPI::Interface* interface, KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent = 0);
     ~GPSReverseGeocodingWidget();
 
     void setUIEnabled(const bool state);
@@ -66,6 +69,7 @@ private Q_SLOTS:
     void slotRGReady(QList<RGInfo>&);
     void slotHideOptions();
     void updateUIState();
+    void tagClicked(const QItemSelection &, const QItemSelection &);
 
 Q_SIGNALS:
 

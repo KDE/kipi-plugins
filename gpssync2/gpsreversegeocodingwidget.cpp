@@ -21,7 +21,7 @@
 
 // Qt includes
 
-#include <QItemSelectionModel>
+//#include <QItemSelectionModel>
 #include <QLabel>
 #include <QPointer>
 #include <QPushButton>
@@ -35,6 +35,8 @@
 #include <QLineEdit>
 #include <QHBoxLayout>
 #include <QCheckBox>
+#include <QAbstractItemModel>
+#include <QTreeView>
 
 // KDE includes
 
@@ -99,10 +101,13 @@ public:
     QLabel* metadataLabel;
     QLabel* languageLabel;
     int backendIndex;
+
+    QAbstractItemModel* tagModel;
+    QTreeView *tagTree;
 };
 
 
-GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget *const parent)
+GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface, KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget *const parent)
 : QWidget(parent), d(new GPSReverseGeocodingWidgetPrivate())
 {
 
@@ -111,15 +116,25 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     
     d->UIEnabled = true;
 
+    
+    
 
     KVBox* const vbox = new KVBox(this);
-    vbox->resize(350,400);
+    vbox->resize(350,500);
     vbox->layout()->setSpacing(0);
     vbox->layout()->setMargin(0);
     
     d->UGridContainer = new QWidget(vbox);
     d->UGridContainer->resize(350,400);
     
+    d->tagTree = new QTreeView(vbox);
+    d->tagModel = interface->getTagTree(d->tagTree);
+    d->tagTree->setModel(d->tagModel);
+
+    QItemSelectionModel *tagSelectionModel = d->tagTree->selectionModel();
+    
+
+
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
     d->languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
@@ -235,6 +250,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KipiImageModel* const image
     connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
             this, SLOT(updateUIState()));
 
+    connect(tagSelectionModel, SIGNAL( selectionChanged(const QItemSelection &, const QItemSelection &)),
+            this, SLOT( tagClicked(const QItemSelection &, const QItemSelection &))); 
+
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
         connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
@@ -297,7 +315,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
 
         const GPSDataContainer gpsData = selectedItem->gpsData();
-        if (!gpsData.hasCoordinates())
+         if (!gpsData.hasCoordinates())
             return;
 
         const qreal latitude = gpsData.getCoordinates().lat();
@@ -373,12 +391,11 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             if(itemIndex == returnedRGList[i].id)
             {
             //KMessageBox::about(this, result);
-            GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(returnedRGList[i].id));
-            kDebug()<<result;
+            GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
             selectedItem->setTagInfo(result);
             break;
             }
-//         }
+        }
 
 
 
@@ -402,7 +419,12 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
     updateUIState();
 }
 
+void GPSReverseGeocodingWidget::tagClicked( const QItemSelection& index, const QItemSelection& previous)
+{
 
+    kDebug()<<"Previous index:"<<previous<<" Current index:"<<index;
+
+}
 
 void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 {
