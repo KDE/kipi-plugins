@@ -55,7 +55,7 @@ Q_OBJECT;
 
 public: 
 
-    GPSReverseGeocodingWidget(KIPI::Interface* interface, KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent = 0);
+    GPSReverseGeocodingWidget(KIPI::Interface*, KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget* const parent = 0);
     ~GPSReverseGeocodingWidget();
 
     void setUIEnabled(const bool state);
@@ -69,7 +69,7 @@ private Q_SLOTS:
     void slotRGReady(QList<RGInfo>&);
     void slotHideOptions();
     void updateUIState();
-    void tagClicked(const QItemSelection &, const QItemSelection &);
+    void treeItemClicked( const QModelIndex &);
 
 Q_SIGNALS:
 

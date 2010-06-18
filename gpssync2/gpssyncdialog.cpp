@@ -97,6 +97,7 @@
 #include "gpsbookmarkowner.h"
 #include "gpslistviewcontextmenu.h"
 #include "searchwidget.h"
+#include "backend-rg.h"
 
 #ifdef GPSSYNC2_MODELTEST
 #include <modeltest.h>
@@ -456,7 +457,8 @@ bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
     return QWidget::eventFilter(o,e);
 }
 
-void GPSSyncDialog::slotCurrentTabChanged(int index){
+void GPSSyncDialog::slotCurrentTabChanged(int index)
+{
 
     d->tabBar->setCurrentIndex(index);
     d->stackedWidget->setCurrentIndex(index);
@@ -497,6 +499,8 @@ void GPSSyncDialog::readSettings()
     d->correlatorWidget->readSettingsFromGroup(&group);
     d->treeView->readSettingsFromGroup(&group);
     d->searchWidget->readSettingsFromGroup(&group);
+    d->rgWidget->readSettingsFromGroup(&group);    
+
     setCurrentTab(group.readEntry("Current Tab", 0));
     const bool showOldestFirst = group.readEntry("Show oldest images first", false);
 
@@ -548,6 +552,7 @@ void GPSSyncDialog::saveSettings()
     d->correlatorWidget->saveSettingsToGroup(&group);
     d->treeView->saveSettingsToGroup(&group);
     d->searchWidget->saveSettingsToGroup(&group);
+    d->rgWidget->saveSettingsToGroup(&group);
     group.writeEntry("Current Tab", d->tabBar->currentIndex());
     group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
     group.writeEntry("Bookmarks visible", d->actionBookmarkVisibility->isChecked());

@@ -64,6 +64,9 @@
 #include "backend-geonamesUS-rg.h"
 #include "parseTagString.h"
 
+#include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -103,7 +106,7 @@ public:
     int backendIndex;
 
     QAbstractItemModel* tagModel;
-    QTreeView *tagTree;
+    QTreeView *tagTreeView;
 };
 
 
@@ -124,15 +127,15 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     vbox->layout()->setSpacing(0);
     vbox->layout()->setMargin(0);
     
+
     d->UGridContainer = new QWidget(vbox);
     d->UGridContainer->resize(350,400);
     
-    d->tagTree = new QTreeView(vbox);
-    d->tagModel = interface->getTagTree(d->tagTree);
-    d->tagTree->setModel(d->tagModel);
+    d->tagTreeView = new QTreeView(vbox);
+    d->tagModel = interface->getTagTree(d->tagTreeView);
+    d->tagTreeView->setModel(d->tagModel);
 
-    QItemSelectionModel *tagSelectionModel = d->tagTree->selectionModel();
-    
+    QItemSelectionModel *tagSelectionModel = d->tagTreeView->selectionModel();
 
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
@@ -249,9 +252,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
             this, SLOT(updateUIState()));
-
-    connect(tagSelectionModel, SIGNAL( selectionChanged(const QItemSelection &, const QItemSelection &)),
-            this, SLOT( tagClicked(const QItemSelection &, const QItemSelection &))); 
+    connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
+            this, SLOT( treeItemClicked(const QModelIndex &)));    
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
@@ -322,7 +324,6 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
         const qreal longitude = gpsData.getCoordinates().lon();
      
         RGInfo photoObj;
-        //photoObj.id = QVariant::fromValue(itemIndex);
         photoObj.id = itemIndex;
         photoObj.coordinates = WMW2::WMWGeoCoordinate(latitude, longitude);
 
@@ -378,26 +379,12 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     for(int i = 0; i < returnedRGList.count(); ++i)
     {
 
+        QPersistentModelIndex currentImageIndex = returnedRGList[i].id;
+
         QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
-        //KMessageBox::about(this, result);
-        //kDebug()<<"Tag value:"<<result;
 
-        const QModelIndexList selectedItems = d->selectionModel->selectedRows();
-
-        for( int j = 0; j < selectedItems.count(); ++j)
-        {
-
-            const QPersistentModelIndex itemIndex = selectedItems.at(j);
-            if(itemIndex == returnedRGList[i].id)
-            {
-            //KMessageBox::about(this, result);
-            GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
-            selectedItem->setTagInfo(result);
-            break;
-            }
-        }
-
-
+       GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
+       currentItem->setTagInfo(result);
 
     }
 
@@ -419,10 +406,10 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
     updateUIState();
 }
 
-void GPSReverseGeocodingWidget::tagClicked( const QItemSelection& index, const QItemSelection& previous)
+void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
 {
-
-    kDebug()<<"Previous index:"<<previous<<" Current index:"<<index;
+    
+    kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
 
 }
 
