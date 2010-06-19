@@ -110,7 +110,7 @@ public:
 
     WMW2::WMWModelHelper* getModelHelper();
     void saveSettingsToGroup(KConfigGroup* const group);
-    void readSettingsFromGroup(KConfigGroup* const group);
+    void readSettingsFromGroup(const KConfigGroup* const group);
 
 private Q_SLOTS:
     void slotSearchCompleted();

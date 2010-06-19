@@ -322,7 +322,7 @@ void KipiImageList::saveSettingsToGroup(KConfigGroup* const group)
     group->writeEntry("Image List Thumbnail Size", d->itemDelegate->getThumbnailSize());
 }
 
-void KipiImageList::readSettingsFromGroup(KConfigGroup* const group)
+void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
 {
     setThumbnailSize(group->readEntry("Image List Thumbnail Size", 60));
 }

@@ -137,15 +137,16 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->UGridContainer = new QWidget(vbox);
     d->tagTreeView = new QTreeView(vbox);
+    Q_ASSERT(d->tagTreeView!=0);
 
     d->externTagModel = interface->getTagTree(d->tagTreeView);
 
     d->tagModel = new RGTagModel(d->externTagModel, d->tagTreeView);
-    d->tagTreeView->setModel(d->tagModel);
+    d->tagTreeView->setModel(d->externTagModel);
 
     #ifdef GPSSYNC2_MODELTEST
-    new ModelTest(d->externTagModel, d->tagTreeView);
-    new ModelTest(d->tagModel, d->tagTreeView);
+//     new ModelTest(d->externTagModel, d->tagTreeView);
+//     new ModelTest(d->tagModel, d->tagTreeView);
     #endif /* GPSSYNC2_MODELTEST */ 
 
     //QItemSelectionModel* const tagSelectionModel = d->tagTreeView->selectionModel();
@@ -445,7 +446,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 
 }
 
-void GPSReverseGeocodingWidget::readSettingsFromGroup(KConfigGroup* const group)
+void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const group)
 {
 
     d->serviceComboBox->setCurrentIndex(group->readEntry("RG Backend", 0));

@@ -188,7 +188,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     setButtons(0);
     setCaption(i18n("Geolocation"));
-    setModal(true);
+//     setModal(true);
     setMinimumSize(300,400);
     d->imageModel = new KipiImageModel(this);
 
@@ -494,12 +494,28 @@ void GPSSyncDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
 
+    // --------------------------
+
     // TODO: sanely determine a default backend
-    d->mapWidget->readSettingsFromGroup(&group);
-    d->correlatorWidget->readSettingsFromGroup(&group);
-    d->treeView->readSettingsFromGroup(&group);
-    d->searchWidget->readSettingsFromGroup(&group);
-    d->rgWidget->readSettingsFromGroup(&group);    
+    const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
+    d->mapWidget->readSettingsFromGroup(&groupMapWidget);
+
+    const KConfigGroup groupCorrelatorWidget = KConfigGroup(&group, "Correlator Widget");
+    d->correlatorWidget->readSettingsFromGroup(&groupCorrelatorWidget);
+
+    const KConfigGroup groupTreeView = KConfigGroup(&group, "Tree View");
+    d->treeView->readSettingsFromGroup(&groupTreeView);
+
+    const KConfigGroup groupSearchWidget = KConfigGroup(&group, "Search Widget");
+    d->searchWidget->readSettingsFromGroup(&groupSearchWidget);
+
+    const KConfigGroup groupRGWidget = KConfigGroup(&group, "Reverse Geocoding Widget");
+    d->rgWidget->readSettingsFromGroup(&groupRGWidget);
+
+    const KConfigGroup groupDialog = KConfigGroup(&group, "Dialog");
+    restoreDialogSize(groupDialog);
+
+    // --------------------------
 
     setCurrentTab(group.readEntry("Current Tab", 0));
     const bool showOldestFirst = group.readEntry("Show oldest images first", false);
@@ -535,29 +551,43 @@ void GPSSyncDialog::readSettings()
         }
     }
     d->splitterSize = group.readEntry("Splitter H1 CollapsedSize", 0);
-
-    KConfigGroup group2 = config.group(QString("GPS Sync 2 Dialog"));
-    restoreDialogSize(group2);
 }
 
 void GPSSyncDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
+
+    // --------------------------
+
+    KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
+    d->mapWidget->saveSettingsToGroup(&groupMapWidget);
+
+    KConfigGroup groupCorrelatorWidget = KConfigGroup(&group, "Correlator Widget");
+    d->correlatorWidget->saveSettingsToGroup(&groupCorrelatorWidget);
+
+    KConfigGroup groupTreeView = KConfigGroup(&group, "Tree View");
+    d->treeView->saveSettingsToGroup(&groupTreeView);
+
+    KConfigGroup groupSearchWidget = KConfigGroup(&group, "Search Widget");
+    d->searchWidget->saveSettingsToGroup(&groupSearchWidget);
+
+    KConfigGroup groupRGWidget = KConfigGroup(&group, "Reverse Geocoding Widget");
+    d->rgWidget->saveSettingsToGroup(&groupRGWidget);
+
+    KConfigGroup groupDialog = KConfigGroup(&group, "Dialog");
+    saveDialogSize(groupDialog);
+
+    // --------------------------
+
+    group.writeEntry("Current Tab", d->tabBar->currentIndex());
+    group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
+    group.writeEntry("Bookmarks visible", d->actionBookmarkVisibility->isChecked());
     group.writeEntry(QString("SplitterState V1"), d->VSplitter->saveState().toBase64());
     group.writeEntry(QString("SplitterState H1"), d->HSplitter->saveState().toBase64());
     group.writeEntry("Splitter H1 CollapsedSize", d->splitterSize);
 
-    d->mapWidget->saveSettingsToGroup(&group);
-    d->correlatorWidget->saveSettingsToGroup(&group);
-    d->treeView->saveSettingsToGroup(&group);
-    d->searchWidget->saveSettingsToGroup(&group);
-    d->rgWidget->saveSettingsToGroup(&group);
-    group.writeEntry("Current Tab", d->tabBar->currentIndex());
-    group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
-    group.writeEntry("Bookmarks visible", d->actionBookmarkVisibility->isChecked());
-    KConfigGroup group2 = config.group(QString("GPS Sync 2 Dialog"));
-    saveDialogSize(group2);
+    // --------------------------
 
     config.sync();
 }

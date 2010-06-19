@@ -59,8 +59,8 @@ public:
     ~GPSReverseGeocodingWidget();
 
     void setUIEnabled(const bool state);
-    void readSettingsFromGroup(KConfigGroup* const);
-    void saveSettingsToGroup(KConfigGroup* const);
+    void readSettingsFromGroup(const KConfigGroup* const group);
+    void saveSettingsToGroup(KConfigGroup* const group);
 
 private:
 

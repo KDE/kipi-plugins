@@ -590,7 +590,7 @@ void GPSCorrelatorWidget::saveSettingsToGroup(KConfigGroup* const group)
     group->writeEntry("GPX File Open Last Directory", d->gpxFileOpenLastDirectory);
 }
 
-void GPSCorrelatorWidget::readSettingsFromGroup(KConfigGroup* const group)
+void GPSCorrelatorWidget::readSettingsFromGroup(const KConfigGroup* const group)
 {
     d->maxGapInput->setValue(group->readEntry("Max Gap Time", 30));
     const int timeZoneGroupIndex = qMax(1, qMin(2, group->readEntry("Time Zone Mode", 1)));

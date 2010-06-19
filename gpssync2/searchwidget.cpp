@@ -578,7 +578,7 @@ void SearchWidget::saveSettingsToGroup(KConfigGroup* const group)
     slotUpdateUIState();
 }
 
-void SearchWidget::readSettingsFromGroup(KConfigGroup* const group)
+void SearchWidget::readSettingsFromGroup(const KConfigGroup* const group)
 {
     d->actionKeepOldResults->setChecked(group->readEntry("Keep old results", false));
     const QString backendId = group->readEntry("Search backend", "osm");

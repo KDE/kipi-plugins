@@ -53,7 +53,7 @@ public:
 
     void setUIEnabledExternal(const bool state);
     void saveSettingsToGroup(KConfigGroup* const group);
-    void readSettingsFromGroup(KConfigGroup* const group);
+    void readSettingsFromGroup(const KConfigGroup* const group);
 
 protected:
     void setUIEnabledInternal(const bool state);

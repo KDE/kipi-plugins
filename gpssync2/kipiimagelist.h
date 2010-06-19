@@ -91,7 +91,7 @@ public:
     KipiImageSortProxyModel* getSortProxyModel() const;
 
     void saveSettingsToGroup(KConfigGroup* const group);
-    void readSettingsFromGroup(KConfigGroup* const group);
+    void readSettingsFromGroup(const KConfigGroup* const group);
     void setEditEnabled(const bool state);
     void setDragEnabled(const bool state);
 
