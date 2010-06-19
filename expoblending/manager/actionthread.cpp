@@ -27,6 +27,11 @@
 
 #include <cmath>
 
+// Under Win32, log2f is not defined...
+#ifdef _WIN32
+#define log2f(x) (logf(x)*1.4426950408889634f)
+#endif
+
 // Qt includes
 
 #include <QMutex>
@@ -175,7 +180,7 @@ void ActionThread::identifyFiles(const KUrl::List& urlList)
 {
     foreach(const KUrl url, urlList)
     {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->action                 = IDENTIFY;
         t->urls.append(url);
 
@@ -187,7 +192,7 @@ void ActionThread::identifyFiles(const KUrl::List& urlList)
 
 void ActionThread::loadProcessed(const KUrl& url)
 {
-    ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+    ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
     t->action                 = LOAD;
     t->urls.append(url);
 
@@ -198,7 +203,7 @@ void ActionThread::loadProcessed(const KUrl& url)
 
 void ActionThread::preProcessFiles(const KUrl::List& urlList)
 {
-    ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+    ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
     t->action                 = PREPROCESSING;
     t->urls                   = urlList;
     t->rawDecodingSettings    = d->rawDecodingSettings;
@@ -211,7 +216,7 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList)
 
 void ActionThread::enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings)
 {
-    ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+    ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
     t->action                 = ENFUSEPREVIEW;
     t->urls                   = alignedUrls;
     t->outputUrl              = outputUrl;
@@ -224,7 +229,7 @@ void ActionThread::enfusePreview(const KUrl::List& alignedUrls, const KUrl& outp
 
 void ActionThread::enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings)
 {
-    ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+    ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
     t->action                 = ENFUSEFINAL;
     t->urls                   = alignedUrls;
     t->outputUrl              = outputUrl;
@@ -263,7 +268,7 @@ void ActionThread::run()
     d->cancel = false;
     while (!d->cancel)
     {
-        ActionThreadPriv::Task *t = 0;
+        ActionThreadPriv::Task* t = 0;
         {
             QMutexLocker lock(&d->mutex);
             if (!d->todo.isEmpty())
