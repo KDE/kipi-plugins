@@ -51,7 +51,7 @@ class KipiImageModel;
 class GPSReverseGeocodingWidget : public QWidget
 {
 
-Q_OBJECT;
+Q_OBJECT
 
 public: 
 
