@@ -20,13 +20,13 @@ SET(kipiplugin_gpssync_PART_SRCS
         inputboxnocancel.cpp
         gpsbookmarkowner.cpp
         backend-rg.cpp
-        backend-google-rg.cpp
         backend-geonames-rg.cpp
         backend-osm-rg.cpp
         searchbackend.cpp
         searchwidget.cpp
         borrowed/modeltest.cpp
         backend-geonamesUS-rg.cpp
+        rgtagmodel.cpp
    )
 
 IF(KDE4_BUILD_TESTS)

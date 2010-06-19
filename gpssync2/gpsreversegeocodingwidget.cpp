@@ -63,9 +63,14 @@
 #include "backend-osm-rg.h"
 #include "backend-geonamesUS-rg.h"
 #include "parseTagString.h"
+#include "rgtagmodel.h"
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+
+#ifdef GPSSYNC2_MODELTEST
+#include <modeltest.h>
+#endif /* GPSSYNC2_MODELTEST */
 
 namespace KIPIGPSSyncPlugin
 {
@@ -105,8 +110,10 @@ public:
     QLabel* languageLabel;
     int backendIndex;
 
-    QAbstractItemModel* tagModel;
+    QAbstractItemModel* externTagModel;
+    RGTagModel* tagModel;
     QTreeView *tagTreeView;
+
 };
 
 
@@ -130,10 +137,18 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->UGridContainer = new QWidget(vbox);
     d->tagTreeView = new QTreeView(vbox);
-    d->tagModel = interface->getTagTree(d->tagTreeView);
+
+    d->externTagModel = interface->getTagTree(d->tagTreeView);
+
+    d->tagModel = new RGTagModel(d->externTagModel, d->tagTreeView);
     d->tagTreeView->setModel(d->tagModel);
 
-    QItemSelectionModel* const tagSelectionModel = d->tagTreeView->selectionModel();
+    #ifdef GPSSYNC2_MODELTEST
+    new ModelTest(d->externTagModel, d->tagTreeView);
+    new ModelTest(d->tagModel, d->tagTreeView);
+    #endif /* GPSSYNC2_MODELTEST */ 
+
+    //QItemSelectionModel* const tagSelectionModel = d->tagTreeView->selectionModel();
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
@@ -248,8 +263,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
             this, SLOT(updateUIState()));
-    connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
-            this, SLOT( treeItemClicked(const QModelIndex &)));    
+//    connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
+//            this, SLOT( treeItemClicked(const QModelIndex &)));    
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
@@ -406,7 +421,6 @@ void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
 {
     
     kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
-    //d->tagModel->setData(index.child(index.row() + 1, index.column()), "Tag Creat de Mine", Qt::DisplayRole);
 
 }
 
