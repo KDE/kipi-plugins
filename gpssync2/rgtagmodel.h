@@ -52,6 +52,26 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 
+public Q_SLOTS:
+    void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 
+    void slotSourceHeaderDataChanged(const Qt::Orientation , int, int);
+    void slotColumnsAboutToBeInserted ( const QModelIndex &, int , int );     
+    void slotColumnsAboutToBeMoved ( const QModelIndex &, int , int , const QModelIndex & , int );
+    void slotColumnsAboutToBeRemoved ( const QModelIndex & , int, int  );
+    void slotColumnsInserted ();
+    void slotColumnsMoved ();
+    void slotColumnsRemoved ();
+    void slotLayoutAboutToBeChanged ();
+    void slotLayoutChanged();
+    void slotModelAboutToBeReset();
+    void slotModelReset();
+    void slotRowsAboutToBeInserted (const QModelIndex &, int , int );
+    void slotRowsAboutToBeMoved (const QModelIndex &, int, int, const QModelIndex &, int );
+    void slotRowsAboutToBeRemoved (const QModelIndex &, int, int );
+    void slotRowsInserted ();
+    void slotRowsMoved ();
+    void slotRowsRemoved ();
+
 private:
     RGTagModelPrivate* const d;
 
