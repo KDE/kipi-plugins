@@ -365,6 +365,8 @@ void GPSDataParserThread::run()
 
                 correlatedData.nSatellites = dataPoint.nSatellites;
                 correlatedData.hDop = dataPoint.hDop;
+                correlatedData.pDop = dataPoint.pDop;
+                correlatedData.fixType = dataPoint.fixType;
             }
         }
         else
@@ -513,6 +515,30 @@ bool GPXFileReader::endElement(const QString& namespaceURI, const QString& local
         qreal hDop = eText.toDouble(&okay);
         if (okay)
             currentDataPoint.hDop = hDop;
+    }
+    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:pdop")
+    {
+        bool okay = false;
+        qreal pDop = eText.toDouble(&okay);
+        if (okay)
+            currentDataPoint.pDop = pDop;
+    }
+    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:fix")
+    {
+        int fixType = -1;
+        if (eText=="2d")
+        {
+            fixType = 2;
+        }
+        else if (eText=="3d")
+        {
+            fixType = 3;
+        }
+
+        if (fixType>=0)
+        {
+            currentDataPoint.fixType = fixType;
+        }
     }
     else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:ele")
     {

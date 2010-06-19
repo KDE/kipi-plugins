@@ -119,12 +119,82 @@ QVariant GPSImageItem::data(const int column, const int role) const
 
         return KGlobal::locale()->formatNumber(m_gpsData.getCoordinates().alt());
     }
+    else if (column==ColumnAccuracy)
+    {
+        if (role==Qt::DisplayRole)
+        {
+            if (m_gpsData.hasPDop())
+            {
+                return i18n("PDOP: %1", m_gpsData.getPDop());
+            }
+
+            if (m_gpsData.hasHDop())
+            {
+                return i18n("HDOP: %1", m_gpsData.getHDop());
+            }
+
+            if (m_gpsData.hasFixType())
+            {
+                return i18n("Fix: %1d", m_gpsData.getFixType());
+            }
+
+            if (m_gpsData.hasFixType())
+            {
+                return i18n("#Sat: %1", m_gpsData.getNSatellites());
+            }
+        }
+        else if (role==Qt::BackgroundRole)
+        {
+            if (m_gpsData.hasPDop())
+            {
+                const int dopValue = m_gpsData.getPDop();
+                if (dopValue<2)
+                    return QBrush(Qt::green);
+                if (dopValue<4)
+                    return QBrush(Qt::yellow);
+                return QBrush(Qt::red);
+            }
+            else if (m_gpsData.hasHDop())
+            {
+                const int dopValue = m_gpsData.getHDop();
+                if (dopValue<2)
+                    return QBrush(Qt::green);
+                if (dopValue<4)
+                    return QBrush(Qt::yellow);
+                return QBrush(Qt::red);
+            }
+            else if (m_gpsData.hasFixType())
+            {
+                if (m_gpsData.getFixType()<3)
+                    return QBrush(Qt::red);
+            }
+            else if (m_gpsData.hasFixType())
+            {
+                if (m_gpsData.getNSatellites()<4)
+                    return QBrush(Qt::red);
+            }
+        }
+    }
     else if ((column==ColumnHDOP)&&(role==Qt::DisplayRole))
     {
         if (!m_gpsData.hasHDop())
             return QString();
 
         return KGlobal::locale()->formatNumber(m_gpsData.getHDop());
+    }
+    else if ((column==ColumnPDOP)&&(role==Qt::DisplayRole))
+    {
+        if (!m_gpsData.hasPDop())
+            return QString();
+
+        return KGlobal::locale()->formatNumber(m_gpsData.getPDop());
+    }
+    else if ((column==ColumnFixType)&&(role==Qt::DisplayRole))
+    {
+        if (!m_gpsData.hasFixType())
+            return QString();
+
+        return KGlobal::locale()->formatNumber(m_gpsData.getFixType());
     }
     else if ((column==ColumnNSatellites)&&(role==Qt::DisplayRole))
     {
@@ -198,7 +268,10 @@ void GPSImageItem::setHeaderData(KipiImageModel* const model)
     model->setHeaderData(ColumnLatitude, Qt::Horizontal, i18n("Latitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnLongitude, Qt::Horizontal, i18n("Longitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnAltitude, Qt::Horizontal, i18n("Altitude"), Qt::DisplayRole);
+    model->setHeaderData(ColumnAccuracy, Qt::Horizontal, i18n("Accuracy"), Qt::DisplayRole);
     model->setHeaderData(ColumnHDOP, Qt::Horizontal, i18n("HDOP"), Qt::DisplayRole);
+    model->setHeaderData(ColumnPDOP, Qt::Horizontal, i18n("PDOP"), Qt::DisplayRole);
+    model->setHeaderData(ColumnFixType, Qt::Horizontal, i18n("Fix type"), Qt::DisplayRole);
     model->setHeaderData(ColumnNSatellites, Qt::Horizontal, i18n("# satellites"), Qt::DisplayRole);
     model->setHeaderData(ColumnStatus, Qt::Horizontal, i18n("Status"), Qt::DisplayRole);
     model->setHeaderData(ColumnTags, Qt::Horizontal, i18n("Tags"), Qt::DisplayRole);
@@ -368,6 +441,11 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         return m_gpsData.getNSatellites() < otherGPSItem->m_gpsData.getNSatellites();
     }
 
+    case ColumnAccuracy:
+    {
+        return false;
+    }
+
     case ColumnHDOP:
     {
         if (!m_gpsData.hasHDop())
@@ -377,6 +455,28 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
             return true;
 
         return m_gpsData.getHDop() < otherGPSItem->m_gpsData.getHDop();
+    }
+
+    case ColumnPDOP:
+    {
+        if (!m_gpsData.hasPDop())
+            return false;
+
+        if (!otherGPSItem->m_gpsData.hasPDop())
+            return true;
+
+        return m_gpsData.getPDop() < otherGPSItem->m_gpsData.getPDop();
+    }
+
+    case ColumnFixType:
+    {
+        if (!m_gpsData.hasFixType())
+            return false;
+
+        if (!otherGPSItem->m_gpsData.hasFixType())
+            return true;
+
+        return m_gpsData.getFixType() < otherGPSItem->m_gpsData.getFixType();
     }
 
     case ColumnLatitude:

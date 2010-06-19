@@ -34,9 +34,10 @@ public:
     GPSDataContainer()
     : m_hasFlags(0),
       m_coordinates(),
-      m_nSatellites(0),
-      m_hDop(0),
-      m_pDop(0)
+      m_nSatellites(-1),
+      m_hDop(-1),
+      m_pDop(-1),
+      m_fixType(-1)
     {
     }
 
@@ -46,7 +47,8 @@ public:
         HasIsInterpolated = 4,
         HasNSatellites = 8,
         HasHDop = 16,
-        HasPDop = 32
+        HasPDop = 32,
+        HasFixType = 64
     };
     Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
 
@@ -57,6 +59,7 @@ private:
     int m_nSatellites;
     qreal m_hDop;
     qreal m_pDop;
+    int m_fixType;
 
 public:
 
@@ -91,6 +94,12 @@ public:
                 return false;
         }
 
+        if (hasFixType())
+        {
+            if (m_fixType!=b.m_fixType)
+                return false;
+        }
+
         return true;
     }
 
@@ -107,7 +116,7 @@ public:
 
     inline void clearNonCoordinates()
     {
-        m_hasFlags&= ~(HasNSatellites | HasHDop | HasPDop);
+        m_hasFlags&= ~(HasNSatellites | HasHDop | HasPDop | HasFixType);
     }
 
     /* coordinates */
@@ -205,6 +214,11 @@ public:
         return m_hasFlags.testFlag(HasPDop);
     }
 
+    inline bool hasFixType() const
+    {
+        return m_hasFlags.testFlag(HasFixType);
+    }
+
     inline void clearHDop()
     {
         m_hasFlags&= ~HasHDop;
@@ -217,7 +231,7 @@ public:
 
     inline void clearAnyDop()
     {
-        m_hasFlags&= ~(HasHDop | HasPDop);
+        m_hasFlags&= ~(HasHDop | HasPDop | HasFixType);
     }
 
     inline void setHDop(const qreal hDop)
@@ -232,6 +246,12 @@ public:
         m_hasFlags|=HasPDop;
     }
 
+    inline void setFixType(const int fixType)
+    {
+        m_fixType = fixType;
+        m_hasFlags|=HasFixType;
+    }
+
     inline qreal getHDop() const
     {
         return m_hDop;
@@ -241,6 +261,12 @@ public:
     {
         return m_pDop;
     }
+
+    inline qreal getFixType() const
+    {
+        return m_fixType;
+    }
+
 };
 
 } /* KIPIGPSSyncPlugin */
