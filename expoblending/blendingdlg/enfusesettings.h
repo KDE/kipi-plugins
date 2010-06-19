@@ -97,9 +97,9 @@ public:
 
     int                              levels;
 
-    float                            exposure;
-    float                            saturation;
-    float                            contrast;
+    double                           exposure;
+    double                           saturation;
+    double                           contrast;
 
     QString                          targetFileName;
 
@@ -119,7 +119,7 @@ class EnfuseSettingsWidget : public QWidget
 
 public:
 
-    EnfuseSettingsWidget(QWidget *parent);
+    EnfuseSettingsWidget(QWidget* parent);
     ~EnfuseSettingsWidget();
 
     void           setSettings(const EnfuseSettings& settings);

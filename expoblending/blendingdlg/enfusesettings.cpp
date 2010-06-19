@@ -78,7 +78,7 @@ public:
     RDoubleNumInput* contrastInput;
 };
 
-EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget *parent)
+EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* parent)
                     : QWidget(parent), d(new EnfuseSettingsWidgetPriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
