@@ -320,11 +320,16 @@ void KipiImageList::slotThumbnailFromModel(const QPersistentModelIndex& index, c
 void KipiImageList::saveSettingsToGroup(KConfigGroup* const group)
 {
     group->writeEntry("Image List Thumbnail Size", d->itemDelegate->getThumbnailSize());
+    group->writeEntry("Header State", d->treeView->header()->saveState());
 }
 
 void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
 {
     setThumbnailSize(group->readEntry("Image List Thumbnail Size", 60));
+
+    const QByteArray headerState = group->readEntry("Header State", QByteArray());
+    if (!headerState.isEmpty())
+        d->treeView->header()->restoreState(headerState);
 }
 
 QItemSelectionModel* KipiImageList::getSelectionModel() const
