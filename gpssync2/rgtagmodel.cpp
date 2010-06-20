@@ -92,6 +92,7 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
 
     QList<QModelIndex> parents;
     QModelIndex myIndex = externalTagModelIndex;
+    parents<<myIndex;
     while(myIndex.isValid())
     {
         kDebug()<<"Entered while:"<<myIndex;
@@ -106,13 +107,11 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
     TreeBranch* subModelBranch;
     if(d->tagTree.count() == 0)
     {
-        TreeBranch* rootBranch = new TreeBranch();
-        rootBranch->parent = NULL;
-        
-        rootBranch->sourceIndex = createIndex(0,0,QModelIndex());
+        subModelBranch = new TreeBranch();
+        subModelBranch->parent = NULL;
+        subModelBranch->sourceIndex = parents[0];
     
-        d->tagTree.append(rootBranch);
-        subModelBranch = d->tagTree.first();
+        d->tagTree.append(subModelBranch);
     }
     else
     {
@@ -153,12 +152,13 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
         }
         else
         {
+            kDebug()<<"Parents:"<<parents;
             //TODO: check when rows are different
             TreeBranch* newTreeBranch = new TreeBranch();
             newTreeBranch->sourceIndex = parents[level+1];
             kDebug()<<"Passes newTreeBranch->sourceIndex = parents[level+1]";
             kDebug()<<"Parent:"<<parents[level]<<" Child:"<<parents[level+1];
-            newTreeBranch->parent->sourceIndex = parents[level];
+            newTreeBranch->parent = subModelBranch;
             kDebug()<<"Passes newTreeBranch->parent->sourceIndex = parents[level]";
             
             
