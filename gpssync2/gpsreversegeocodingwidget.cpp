@@ -141,13 +141,16 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->externTagModel = interface->getTagTree(d->tagTreeView);
 
-    d->tagModel = new RGTagModel(d->externTagModel, d->tagTreeView);
-    d->tagTreeView->setModel(d->externTagModel);
+    if (d->externTagModel)
+    {
+        d->tagModel = new RGTagModel(d->externTagModel, d->tagTreeView);
+        d->tagTreeView->setModel(d->tagModel);
 
-    #ifdef GPSSYNC2_MODELTEST
-//     new ModelTest(d->externTagModel, d->tagTreeView);
-//     new ModelTest(d->tagModel, d->tagTreeView);
-    #endif /* GPSSYNC2_MODELTEST */ 
+#ifdef GPSSYNC2_MODELTEST
+//         new ModelTest(d->externTagModel, d->tagTreeView);
+//         new ModelTest(d->tagModel, d->tagTreeView);
+#endif /* GPSSYNC2_MODELTEST */
+    }
 
     //QItemSelectionModel* const tagSelectionModel = d->tagTreeView->selectionModel();
 
