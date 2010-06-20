@@ -139,13 +139,13 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->tagTreeView = new QTreeView(vbox);
     Q_ASSERT(d->tagTreeView!=0);
 
-    d->externTagModel = interface->getTagTree(d->tagTreeView);
+    d->externTagModel = interface->getTagTree();
 
     if (d->externTagModel)
     {
-        d->tagModel = new RGTagModel(d->externTagModel, d->tagTreeView);
-        d->tagModel->data(d->externTagModel->index(0,0, d->externTagModel->index(0,0)));
-        //d->tagTreeView->setModel(d->tagModel);
+        d->tagModel = new RGTagModel(d->externTagModel);
+        //kDebug()<<d->tagModel->data(d->externTagModel->index(0,0, d->externTagModel->index(0,0)));
+        d->tagTreeView->setModel(d->tagModel);
 
 #ifdef GPSSYNC2_MODELTEST
 //         new ModelTest(d->externTagModel, d->tagTreeView);
