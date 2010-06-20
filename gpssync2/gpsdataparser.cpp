@@ -484,7 +484,7 @@ bool GPXFileReader::endElement(const QString& namespaceURI, const QString& local
 
     // we always work with the old path
     const QString ePath = currentElementPath;
-    const QString eText = currentText;
+    const QString eText = currentText.trimmed();
     const QString eName = myQName(namespaceURI, localName);
     currentElements.removeLast();
     currentText.clear();

@@ -92,6 +92,45 @@ void GPSImageItem::loadImageDataInternal()
     m_savedState = m_gpsData;
 }
 
+int getWarningLevelFromGPSDataContainer(const GPSDataContainer& data)
+{
+    if (data.hasPDop())
+    {
+        const int dopValue = data.getPDop();
+        if (dopValue<2)
+            return 1;
+        if (dopValue<4)
+            return 2;
+        if (dopValue<10)
+            return 3;
+        return 4;
+    }
+    else if (data.hasHDop())
+    {
+        const int dopValue = data.getHDop();
+        if (dopValue<2)
+            return 1;
+        if (dopValue<4)
+            return 2;
+        if (dopValue<10)
+            return 3;
+        return 4;
+    }
+    else if (data.hasFixType())
+    {
+        if (data.getFixType()<3)
+            return 4;
+    }
+    else if (data.hasNSatellites())
+    {
+        if (data.getNSatellites()<4)
+            return 4;
+    }
+
+    // no warning level
+    return -1;
+}
+
 QVariant GPSImageItem::data(const int column, const int role) const
 {
     if (role==RoleCoordinates)
@@ -138,40 +177,27 @@ QVariant GPSImageItem::data(const int column, const int role) const
                 return i18n("Fix: %1d", m_gpsData.getFixType());
             }
 
-            if (m_gpsData.hasFixType())
+            if (m_gpsData.hasNSatellites())
             {
                 return i18n("#Sat: %1", m_gpsData.getNSatellites());
             }
         }
         else if (role==Qt::BackgroundRole)
         {
-            if (m_gpsData.hasPDop())
+            const int warningLevel = getWarningLevelFromGPSDataContainer(m_gpsData);
+            switch (warningLevel)
             {
-                const int dopValue = m_gpsData.getPDop();
-                if (dopValue<2)
-                    return QBrush(Qt::green);
-                if (dopValue<4)
-                    return QBrush(Qt::yellow);
+            case 1:
+                return QBrush(Qt::green);
+            case 2:
+                return QBrush(Qt::yellow);
+            case 3:
+                // orange
+                return QBrush(QColor(0xff, 0x80, 0x00));
+            case 4:
                 return QBrush(Qt::red);
-            }
-            else if (m_gpsData.hasHDop())
-            {
-                const int dopValue = m_gpsData.getHDop();
-                if (dopValue<2)
-                    return QBrush(Qt::green);
-                if (dopValue<4)
-                    return QBrush(Qt::yellow);
-                return QBrush(Qt::red);
-            }
-            else if (m_gpsData.hasFixType())
-            {
-                if (m_gpsData.getFixType()<3)
-                    return QBrush(Qt::red);
-            }
-            else if (m_gpsData.hasFixType())
-            {
-                if (m_gpsData.getNSatellites()<4)
-                    return QBrush(Qt::red);
+            default:
+                break;
             }
         }
     }
@@ -194,7 +220,7 @@ QVariant GPSImageItem::data(const int column, const int role) const
         if (!m_gpsData.hasFixType())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.getFixType());
+        return i18n("%1d", m_gpsData.getFixType());
     }
     else if ((column==ColumnNSatellites)&&(role==Qt::DisplayRole))
     {
@@ -443,6 +469,49 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
 
     case ColumnAccuracy:
     {
+        const int myWarning = getWarningLevelFromGPSDataContainer(m_gpsData);
+        const int otherWarning = getWarningLevelFromGPSDataContainer(otherGPSItem->m_gpsData);
+
+        if (myWarning<0)
+            return false;
+
+        if (otherWarning<0)
+            return true;
+
+        if (myWarning!=otherWarning)
+            return myWarning < otherWarning;
+
+        // TODO: this may not be the best way to sort images with equal warning levels
+        //       but it works for now
+
+        if (m_gpsData.hasPDop()!=otherGPSItem->m_gpsData.hasPDop())
+            return !m_gpsData.hasPDop();
+        if (m_gpsData.hasPDop()&&otherGPSItem->m_gpsData.hasPDop())
+        {
+            return m_gpsData.getPDop()<otherGPSItem->m_gpsData.getPDop();
+        }
+
+        if (m_gpsData.hasHDop()!=otherGPSItem->m_gpsData.hasHDop())
+            return !m_gpsData.hasHDop();
+        if (m_gpsData.hasHDop()&&otherGPSItem->m_gpsData.hasHDop())
+        {
+            return m_gpsData.getHDop()<otherGPSItem->m_gpsData.getHDop();
+        }
+
+        if (m_gpsData.hasFixType()!=otherGPSItem->m_gpsData.hasFixType())
+            return m_gpsData.hasFixType();
+        if (m_gpsData.hasFixType()&&otherGPSItem->m_gpsData.hasFixType())
+        {
+            return m_gpsData.getFixType()>otherGPSItem->m_gpsData.getFixType();
+        }
+
+        if (m_gpsData.hasNSatellites()!=otherGPSItem->m_gpsData.hasNSatellites())
+            return m_gpsData.hasNSatellites();
+        if (m_gpsData.hasNSatellites()&&otherGPSItem->m_gpsData.hasNSatellites())
+        {
+            return m_gpsData.getNSatellites()>otherGPSItem->m_gpsData.getNSatellites();
+        }
+
         return false;
     }
 
