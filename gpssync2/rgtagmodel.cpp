@@ -80,15 +80,24 @@ RGTagModel::~RGTagModel()
     delete d;
 }
 
+void checkTree(TreeBranch* checkBranch, int level)
+{
+    if(!checkBranch->sourceIndex.isValid())
+        return;
+
+    for(int j = 0; j < checkBranch->children.count(); ++j)
+    {
+            kDebug()<<"Index:"<<checkBranch->children[j]->sourceIndex<<" LEVEL:"<<level;
+            checkTree(checkBranch->children[j], level+1);  
+    }
+
+}
 
 QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex) const
 {
 
-    kDebug()<<"Entered in fromSourceIndex";
-    kDebug()<<"Current Index:"<<externalTagModelIndex;
-    kDebug()<<"Parent index:"<<externalTagModelIndex.parent();
-    kDebug()<<"Parent parent index:"<<externalTagModelIndex.parent().parent();
-    kDebug()<<"Parent parent parent index:"<<externalTagModelIndex.parent().parent().parent();
+    if(!externalTagModelIndex.isValid())
+        return QModelIndex();
 
     QList<QModelIndex> parents;
     QModelIndex myIndex = externalTagModelIndex;
@@ -100,9 +109,9 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
         myIndex = myIndex.parent();
         kDebug()<<"Exists while:"<<myIndex;
     }
-    parents.prepend(QModelIndex());  //e ceva dubios aici
 
     kDebug()<<"Exists while good!";
+    kDebug()<<"Parents:"<<parents;
 
     TreeBranch* subModelBranch;
     if(d->tagTree.count() == 0)
@@ -122,7 +131,7 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
 
     int found,where;
     int level = 0;
-    while(level <= parents.count())  
+    while(level < parents.count())  
     {
 
         kDebug()<<"Enters in second while"<<subModelBranch;
@@ -133,6 +142,13 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
             kDebug()<<"Row:"<<subModelBranch->sourceIndex.row(); 
             kDebug()<<"Column:"<<subModelBranch->sourceIndex.column(); 
             kDebug()<<"Branch:"<<subModelBranch;
+           
+            kDebug()<<"TAG MODEL DATA:"<<d->tagModel->data(subModelBranch->sourceIndex ,0);
+            kDebug()<<"THE TREE:";
+
+            kDebug()<<"Index:"<<d->tagTree[0]->sourceIndex<<" LEVEL:0";
+            checkTree(d->tagTree.first(),1);
+
             return createIndex(subModelBranch->sourceIndex.row(), subModelBranch->sourceIndex.column(), subModelBranch);
         }
 
@@ -141,7 +157,8 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
         where = -1;
         for( int i=0; i < subModelBranch->children.count(); ++i)
         {
-            if(subModelBranch->children[i]->sourceIndex == parents[level])
+
+            if(subModelBranch->children[i]->sourceIndex == parents[level+1])
             {
                 where = i;
                 break;
@@ -153,10 +170,10 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
         if(where >= 0)
         {
             subModelBranch = subModelBranch->children[where];
+            kDebug()<<"FOUND A CHILD:"<<subModelBranch->sourceIndex;
         }
         else
         {
-            kDebug()<<"Parents:"<<parents;
             //TODO: check when rows are different
             TreeBranch* newTreeBranch = new TreeBranch();
             newTreeBranch->sourceIndex = parents[level+1];
@@ -202,11 +219,9 @@ bool RGTagModel::setData(const QModelIndex& index, const QVariant& value, int ro
 
 QVariant RGTagModel::data(const QModelIndex& index, int role) const
 {
-
     kDebug()<<"Entered in data";
+    kDebug()<<"DATA:"<<d->tagModel->data(toSourceIndex(index), role)<<"ROLE:"<<role;
     return d->tagModel->data(toSourceIndex(index), role);
-    
-    //return d->tagModel->data(
 }
 
 QModelIndex RGTagModel::index(int row, int column, const QModelIndex& parent) const
@@ -227,6 +242,7 @@ QModelIndex RGTagModel::parent(const QModelIndex& index) const
 int RGTagModel::rowCount(const QModelIndex& parent) const
 {
     kDebug()<<"Entered in rowCount";
+    kDebug()<<"ROWCOUNT:"<<d->tagModel->rowCount(toSourceIndex(parent));
     return d->tagModel->rowCount(toSourceIndex(parent));
 }
 
@@ -264,7 +280,7 @@ void RGTagModel::slotSourceHeaderDataChanged(const Qt::Orientation orientation, 
 void RGTagModel::slotColumnsAboutToBeInserted ( const QModelIndex & parent, int start, int end )
 {
     kDebug()<<"Entered in slotColumnsAboutToBeInserted";
-   beginInsertColumns(fromSourceIndex(parent), start, end);
+    beginInsertColumns(fromSourceIndex(parent), start, end);
 
 }
 void RGTagModel::slotColumnsAboutToBeMoved ( const QModelIndex & sourceParent, int sourceStart, int sourceEnd, const QModelIndex & destinationParent, int destinationColumn )

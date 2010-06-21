@@ -26,8 +26,6 @@
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
-
-
 namespace KIPIGPSSyncPlugin
 {
 
