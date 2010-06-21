@@ -84,4 +84,11 @@ void TestRGTagModel::testModel1()
     const QPersistentModelIndex tagItem2Index = tagModel->fromSourceIndex(treeItem2Index);
     Q_ASSERT(tagItem2Index.isValid());
     Q_ASSERT(tagModel->rowCount(tagItem2Index)==treeModel->rowCount(treeItem2Index));
+
+    // now make sure we can descend:
+    QModelIndex ti1 = tagModel->index(0, 0);
+    Q_ASSERT(ti1.isValid());
+    // TODO: this crashes
+//     QModelIndex ti11 = tagModel->index(0, 0, ti1);
+//     Q_ASSERT(!ti11.isValid());
 }
