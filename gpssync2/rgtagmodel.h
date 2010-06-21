@@ -38,7 +38,7 @@ class RGTagModel : public QAbstractItemModel
 Q_OBJECT
 
 public:
-    RGTagModel(QAbstractItemModel* ,QObject* const parent = 0);
+    RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent = 0);
     ~RGTagModel();
 
     // QAbstractItemModel:
@@ -51,6 +51,9 @@ public:
     virtual bool setHeaderData(int section, Qt::Orientation orientation, const QVariant& value, int role);
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+
+    QModelIndex fromSourceIndex(const QModelIndex& externalTagModelIndex) const;
+    QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 

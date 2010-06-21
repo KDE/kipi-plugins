@@ -29,10 +29,10 @@ public:
     QList<TreeBranch*> tagTree;
 };
 
-RGTagModel::RGTagModel(QAbstractItemModel* tagModel)
-: d(new RGTagModelPrivate)
+RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent)
+: QAbstractItemModel(parent), d(new RGTagModelPrivate)
 {
-    d->tagModel = tagModel;
+    d->tagModel = externalTagModel;
    
     connect(d->tagModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(slotSourceDataChanged(const QModelIndex&, const QModelIndex&))); 
@@ -171,7 +171,7 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
 
     }
     //no index is found
-    return QModelIndex(); 
+    return QModelIndex();
 }
 
 QModelIndex RGTagModel::toSourceIndex(const QModelIndex& tagModelIndex) const
@@ -211,9 +211,11 @@ QVariant RGTagModel::data(const QModelIndex& index, int role) const
 
 QModelIndex RGTagModel::index(int row, int column, const QModelIndex& parent) const
 {
-   
+    
     kDebug()<<"Entered in index";
-    return fromSourceIndex(d->tagModel->index(row,column,fromSourceIndex(parent)));
+    kDebug()<<toSourceIndex(parent);
+    kDebug()<<d->tagModel->index(row,column,toSourceIndex(parent));
+    return fromSourceIndex(d->tagModel->index(row,column,toSourceIndex(parent)));
 }
 
 QModelIndex RGTagModel::parent(const QModelIndex& index) const
@@ -249,7 +251,7 @@ Qt::ItemFlags RGTagModel::flags(const QModelIndex& index) const
 void RGTagModel::slotSourceDataChanged(const QModelIndex& row, const QModelIndex& column)
 {
     kDebug()<<"Entered in slotSourceDataChanged";
-    emit dataChanged(row,column);
+    emit dataChanged(fromSourceIndex(row),fromSourceIndex(column));
 
 }
 
@@ -262,18 +264,18 @@ void RGTagModel::slotSourceHeaderDataChanged(const Qt::Orientation orientation, 
 void RGTagModel::slotColumnsAboutToBeInserted ( const QModelIndex & parent, int start, int end )
 {
     kDebug()<<"Entered in slotColumnsAboutToBeInserted";
-   beginInsertColumns (fromSourceIndex(parent), start, end); 
+   beginInsertColumns(fromSourceIndex(parent), start, end);
 
 }
 void RGTagModel::slotColumnsAboutToBeMoved ( const QModelIndex & sourceParent, int sourceStart, int sourceEnd, const QModelIndex & destinationParent, int destinationColumn )
 {
     kDebug()<<"Entered in slotColumnsAboutToBeMoved";
-    beginMoveColumns( fromSourceIndex(sourceParent), sourceStart, sourceEnd, fromSourceIndex(destinationParent), destinationColumn );
+    beginMoveColumns(fromSourceIndex(sourceParent), sourceStart, sourceEnd, fromSourceIndex(destinationParent), destinationColumn );
 }
 void RGTagModel::slotColumnsAboutToBeRemoved ( const QModelIndex & parent, int start, int end )
 {
     kDebug()<<"Entered in slotColumnsAboutToBeRemoved";
-    beginRemoveColumns ( fromSourceIndex(parent), start, end);
+    beginRemoveColumns(fromSourceIndex(parent), start, end);
 }
 void RGTagModel::slotColumnsInserted ()
 {
@@ -319,7 +321,7 @@ void RGTagModel::slotRowsAboutToBeInserted (const QModelIndex & parent, int star
 void RGTagModel::slotRowsAboutToBeMoved (const QModelIndex & sourceParent, int sourceStart, int sourceEnd, const QModelIndex & destinationParent, int destinationRow )
 {
     kDebug()<<"Entered in slowRowsAboutToBeMoved";
-    beginMoveRows( fromSourceIndex(sourceParent), sourceStart, sourceEnd, fromSourceIndex(destinationParent), destinationRow );
+    beginMoveRows(fromSourceIndex(sourceParent), sourceStart, sourceEnd, fromSourceIndex(destinationParent), destinationRow );
 }
 void RGTagModel::slotRowsAboutToBeRemoved (const QModelIndex & parent, int start, int end )
 {
