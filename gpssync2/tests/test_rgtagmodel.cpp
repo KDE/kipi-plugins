@@ -86,9 +86,17 @@ void TestRGTagModel::testModel1()
     Q_ASSERT(tagModel->rowCount(tagItem2Index)==treeModel->rowCount(treeItem2Index));
 
     // now make sure we can descend:
-    QModelIndex ti1 = tagModel->index(0, 0);
+    const QModelIndex ti1 = tagModel->index(0, 0);
     Q_ASSERT(ti1.isValid());
     // TODO: this crashes
-//     QModelIndex ti11 = tagModel->index(0, 0, ti1);
+//     const QModelIndex ti11 = tagModel->index(0, 0, ti1);
 //     Q_ASSERT(!ti11.isValid());
+
+    // now make sure we can descend:
+    // TODO: this crashes
+//     const QModelIndex ti2 = tagModel->index(1, 0);
+//     Q_ASSERT(ti2.isValid());
+    // TODO: this crashes
+//     QModelIndex ti21 = tagModel->index(0, 0, ti2);
+//     Q_ASSERT(!ti21.isValid());
 }
