@@ -212,6 +212,9 @@ int RGTagModel::columnCount(const QModelIndex& parent) const
 }
 bool RGTagModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
+    if(!index.isValid())
+        return false;
+
     return true;
 }
 

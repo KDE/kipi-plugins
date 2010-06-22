@@ -65,7 +65,7 @@ void TestRGTagModel::testModel1()
 
     KIPIGPSSyncPlugin::RGTagModel* const tagModel = new KIPIGPSSyncPlugin::RGTagModel(treeModel, this);
     // TODO: make sure the ModelTest does not find any errors, currently it does find errors ;-)
-    //new ModelTest(tagModel, this);
+    new ModelTest(tagModel, this);
     kDebug()<<"---------HERE STARTS TESTING:---------------";
     
     // simple tests
@@ -126,17 +126,19 @@ void TestRGTagModel::testModel1()
     const QModelIndex ti111 = tagModel->index(0,0, ti11);
     Q_ASSERT(!ti111.isValid());
 
-    //checks parent of treeItem1
+    //checks parent of tagItem1
     const QModelIndex parent_ti1 = tagModel->parent(ti1);
     Q_ASSERT(!parent_ti1.isValid());
 
-    //checks parent of treeItem11
+    //checks parent of tagItem11
     const QModelIndex parent_ti11 = tagModel->parent(ti11);
     kDebug()<<"parent_ti11="<<parent_ti11<<" tagItem1Index="<<treeItem1Index;
     Q_ASSERT(parent_ti11 == tagItem1Index);
-    
+   
+    //checks parent of tagItem2 
     const QModelIndex parent_ti2 = tagModel->parent(ti2);
     Q_ASSERT(!parent_ti2.isValid());
+
 
     const QModelIndex parent_ti21 = tagModel->parent(ti21);
     Q_ASSERT(parent_ti21.isValid());
