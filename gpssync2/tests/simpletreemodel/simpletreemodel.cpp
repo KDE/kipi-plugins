@@ -26,17 +26,20 @@ class SimpleTreeModelPrivate
 {
 public:
     SimpleTreeModelPrivate()
-    : rootItem(0)
+    : rootItem(0),
+      columnCount(1)
     {
     }
 
     SimpleTreeModel::Item* rootItem;
+    int columnCount;
 };
 
 
-SimpleTreeModel::SimpleTreeModel(QObject* const parent)
+SimpleTreeModel::SimpleTreeModel(const int columnCount, QObject* const parent)
 : QAbstractItemModel(parent), d(new SimpleTreeModelPrivate())
 {
+    d->columnCount = columnCount;
     d->rootItem = new Item();
 }
 
@@ -53,7 +56,7 @@ int SimpleTreeModel::columnCount(const QModelIndex& parent) const
     if (!item)
         return 0;
 
-    return qMax(1, item->dataColumns.count());
+    return d->columnCount;
 }
 
 bool SimpleTreeModel::setData(const QModelIndex& index, const QVariant& value, int role)

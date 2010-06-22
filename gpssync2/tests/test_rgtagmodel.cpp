@@ -45,7 +45,7 @@ void TestRGTagModel::testNoOp()
  */
 void TestRGTagModel::testModelEmpty()
 {
-    SimpleTreeModel* const treeModel = new SimpleTreeModel(this);
+    SimpleTreeModel* const treeModel = new SimpleTreeModel(1, this);
     new ModelTest(treeModel, this);
 
     KIPIGPSSyncPlugin::RGTagModel* const tagModel = new KIPIGPSSyncPlugin::RGTagModel(treeModel, this);
@@ -54,7 +54,7 @@ void TestRGTagModel::testModelEmpty()
 
 void TestRGTagModel::testModel1()
 {
-    SimpleTreeModel* const treeModel = new SimpleTreeModel(this);
+    SimpleTreeModel* const treeModel = new SimpleTreeModel(1, this);
     new ModelTest(treeModel, this);
 
     // add some items before the tagModel is created:

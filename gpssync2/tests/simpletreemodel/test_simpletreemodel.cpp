@@ -41,7 +41,7 @@ void TestSimpleTreeModel::testNoOp()
 
 void TestSimpleTreeModel::testModel1()
 {
-    SimpleTreeModel* const treeModel = new SimpleTreeModel(this);
+    SimpleTreeModel* const treeModel = new SimpleTreeModel(1, this);
     new ModelTest(treeModel, this);
     Q_ASSERT(!treeModel->index(0, 0).isValid());
     Q_ASSERT(treeModel->indexToItem(QModelIndex())==treeModel->rootItem());

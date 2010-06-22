@@ -57,7 +57,7 @@ public:
         friend class SimpleTreeModel;
     };
 
-    SimpleTreeModel(QObject* const parent = 0);
+    SimpleTreeModel(const int columnCount, QObject* const parent = 0);
     ~SimpleTreeModel();
 
     // QAbstractItemModel:
