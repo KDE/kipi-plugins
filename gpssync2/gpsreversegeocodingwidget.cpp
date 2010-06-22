@@ -148,8 +148,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
         d->tagTreeView->setModel(d->tagModel);
 
 #ifdef GPSSYNC2_MODELTEST
-         //new ModelTest(d->externTagModel, d->tagTreeView);
-         //new ModelTest(d->tagModel, d->tagTreeView);
+         new ModelTest(d->externTagModel, d->tagTreeView);
+         new ModelTest(d->tagModel, d->tagTreeView);
 #endif /* GPSSYNC2_MODELTEST */
     }
 
