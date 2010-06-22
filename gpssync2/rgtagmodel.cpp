@@ -125,7 +125,6 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
 
     TreeBranch* subModelBranch = d->rootTag;
 
-    kDebug()<<"Allocates subModelBranch good!";
 
     int found,where;
     int level = 0;
@@ -146,7 +145,11 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
             kDebug()<<"THE TREE:";
 
             kDebug()<<"Index:"<<d->rootTag->sourceIndex<<" LEVEL:0";
-            checkTree(d->rootTag,1);
+            for ( int j=0; j<d->rootTag->children.count(); ++j)
+            {
+                kDebug()<<"Index:"<<d->rootTag->children[j]->sourceIndex<<" LEVEL:1";
+                checkTree(d->rootTag->children[j],2);
+            }
 
             return createIndex(subModelBranch->sourceIndex.row(), subModelBranch->sourceIndex.column(), subModelBranch);
         }
@@ -156,7 +159,6 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
         where = -1;
         for( int i=0; i < subModelBranch->children.count(); ++i)
         {
-
             if(subModelBranch->children[i]->sourceIndex == parents[level+1])
             {
                 where = i;
@@ -192,7 +194,6 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
 
 QModelIndex RGTagModel::toSourceIndex(const QModelIndex& tagModelIndex) const
 {
-
     if(!tagModelIndex.isValid())
         return QModelIndex();
 
@@ -201,8 +202,6 @@ QModelIndex RGTagModel::toSourceIndex(const QModelIndex& tagModelIndex) const
         return QModelIndex();
 
     return treeBranch->sourceIndex;
-
-
 }
 
 int RGTagModel::columnCount(const QModelIndex& parent) const
