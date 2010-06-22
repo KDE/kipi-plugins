@@ -163,7 +163,7 @@ SimpleTreeModel::Item* SimpleTreeModel::addItem(SimpleTreeModel::Item* const par
     newItem->parent = myParent;
 
     // TODO: send model signals
-    beginInsertRows(itemToIndex(myParent), myParent->children.count()-1, myParent->children.count()-1);
+    beginInsertRows(itemToIndex(myParent), myParent->children.count(), myParent->children.count());
     myParent->children.append(newItem);
     endInsertRows();
 

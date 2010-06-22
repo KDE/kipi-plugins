@@ -10,9 +10,16 @@ namespace KIPIGPSSyncPlugin
 
 class TreeBranch {
 public:
- QPersistentModelIndex sourceIndex;
- TreeBranch* parent;
- QList<TreeBranch*> children;
+    TreeBranch()
+    : sourceIndex(),
+      parent(0),
+      children()
+    {
+    }
+
+    QPersistentModelIndex sourceIndex;
+    TreeBranch* parent;
+    QList<TreeBranch*> children;
 };
 
 
@@ -21,18 +28,20 @@ class RGTagModelPrivate
 public:
     
     RGTagModelPrivate()
-    : tagModel()
+    : tagModel(),
+      rootTag(0)
     {
     }
 
     QAbstractItemModel* tagModel;
-    QList<TreeBranch*> tagTree;
+    TreeBranch* rootTag;
 };
 
 RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent)
 : QAbstractItemModel(parent), d(new RGTagModelPrivate)
 {
     d->tagModel = externalTagModel;
+    d->rootTag = new TreeBranch();
    
     connect(d->tagModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(slotSourceDataChanged(const QModelIndex&, const QModelIndex&))); 
@@ -109,23 +118,12 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
         myIndex = myIndex.parent();
         kDebug()<<"Exists while:"<<myIndex;
     }
+    parents.prepend(QModelIndex());
 
     kDebug()<<"Exists while good!";
     kDebug()<<"Parents:"<<parents;
 
-    TreeBranch* subModelBranch;
-    if(d->tagTree.count() == 0)
-    {
-        subModelBranch = new TreeBranch();
-        subModelBranch->parent = NULL;
-        subModelBranch->sourceIndex = parents[0];
-    
-        d->tagTree.append(subModelBranch);
-    }
-    else
-    {
-        subModelBranch = d->tagTree.first();
-    }
+    TreeBranch* subModelBranch = d->rootTag;
 
     kDebug()<<"Allocates subModelBranch good!";
 
@@ -136,6 +134,7 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
 
         kDebug()<<"Enters in second while"<<subModelBranch;
 
+        kDebug()<<subModelBranch->sourceIndex << externalTagModelIndex;
         if(subModelBranch->sourceIndex == externalTagModelIndex)
         {
             kDebug()<<"Found:";
@@ -146,8 +145,8 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
             kDebug()<<"TAG MODEL DATA:"<<d->tagModel->data(subModelBranch->sourceIndex ,0);
             kDebug()<<"THE TREE:";
 
-            kDebug()<<"Index:"<<d->tagTree[0]->sourceIndex<<" LEVEL:0";
-            checkTree(d->tagTree.first(),1);
+            kDebug()<<"Index:"<<d->rootTag->sourceIndex<<" LEVEL:0";
+            checkTree(d->rootTag,1);
 
             return createIndex(subModelBranch->sourceIndex.row(), subModelBranch->sourceIndex.column(), subModelBranch);
         }

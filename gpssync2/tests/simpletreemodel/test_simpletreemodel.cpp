@@ -51,7 +51,7 @@ void TestSimpleTreeModel::testModel1()
 
     SimpleTreeModel::Item* const item1 = treeModel->addItem();
     Q_ASSERT(item1!=0);
-    const QModelIndex item1Index = treeModel->itemToIndex(item1);
+    const QPersistentModelIndex item1Index = treeModel->itemToIndex(item1);
     Q_ASSERT(item1Index.isValid());
     Q_ASSERT(treeModel->indexToItem(item1Index)==item1);
     Q_ASSERT(!treeModel->parent(item1Index).isValid());
@@ -74,14 +74,7 @@ void TestSimpleTreeModel::testModel1()
     // just make sure another modeltest will test things for consistency in case a signal went missing
     new ModelTest(treeModel, this);
 
-    return;
-    kDebug()<<treeModel->indexToItem(treeModel->index(0, 0));
-    
     Q_ASSERT(treeModel->rootItem() == treeModel->indexToItem(QModelIndex()));
-    kDebug()<<treeModel->index(0, 0);
-    kDebug()<<treeModel->indexToItem(treeModel->index(0, 0));
-    kDebug()<<treeModel->itemToIndex(item1);
-    kDebug()<<treeModel->rowCount()<<treeModel->columnCount();
     Q_ASSERT(treeModel->indexToItem(treeModel->itemToIndex(item1))==item1);
     Q_ASSERT(treeModel->hasIndex(0, 0) == true);
 
