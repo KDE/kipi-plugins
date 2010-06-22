@@ -99,7 +99,6 @@ void checkTree(TreeBranch* const checkBranch, int level)
 
     for(int j = 0; j < checkBranch->children.count(); ++j)
     {
-//         kDebug()<<"Index:"<<checkBranch->children[j]->sourceIndex<<" LEVEL:"<<level;
         checkTree(checkBranch->children[j], level+1);  
     }
 }
@@ -117,30 +116,17 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
         myIndex = myIndex.parent();
         parents.prepend(myIndex);
     }
-    kDebug()<<"Parents:"<<parents;
 
     TreeBranch* subModelBranch = d->rootTag;
 
     int level = 0;
     while(level <= parents.count())
     {
-//         kDebug()<<"Enters in second while"<<subModelBranch;
 
-//         kDebug()<<subModelBranch->sourceIndex << externalTagModelIndex;
         if(subModelBranch->sourceIndex == externalTagModelIndex)
         {
-//             kDebug()<<"Found:";
-//             kDebug()<<"Row:"<<subModelBranch->sourceIndex.row(); 
-//             kDebug()<<"Column:"<<subModelBranch->sourceIndex.column(); 
-//             kDebug()<<"Branch:"<<subModelBranch;
-//            
-//             kDebug()<<"TAG MODEL DATA:"<<d->tagModel->data(subModelBranch->sourceIndex ,0);
-//             kDebug()<<"THE TREE:";
-
-//             kDebug()<<"Index:"<<d->rootTag->sourceIndex<<" LEVEL:0";
             for (int j=0; j<d->rootTag->children.count(); ++j)
             {
-//                 kDebug()<<"Index:"<<d->rootTag->children[j]->sourceIndex<<" LEVEL:1";
                 checkTree(d->rootTag->children[j], 2);
             }
 
@@ -157,12 +143,10 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
             }
         }        
 
-//         kDebug()<<"Passes the for.Where:"<<where;
 
         if(where >= 0)
         {
             subModelBranch = subModelBranch->children[where];
-//             kDebug()<<"FOUND A CHILD:"<<subModelBranch->sourceIndex;
         }
         else
         {
@@ -176,10 +160,8 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
 
             subModelBranch->children.append(newTreeBranch); 
             subModelBranch = newTreeBranch;    
-            kDebug()<<"passes adding of newTreeBranch"; 
         }
         level++;
-        kDebug()<<"Passes "<<level<<" iteration in second while";
 
     }
 
@@ -213,16 +195,11 @@ bool RGTagModel::setData(const QModelIndex& index, const QVariant& value, int ro
 
 QVariant RGTagModel::data(const QModelIndex& index, int role) const
 {
-    kDebug()<<"Entered in data";
-    kDebug()<<"DATA:"<<d->tagModel->data(toSourceIndex(index), role)<<"ROLE:"<<role;
     return d->tagModel->data(toSourceIndex(index), role);
 }
 
 QModelIndex RGTagModel::index(int row, int column, const QModelIndex& parent) const
 {
-//     kDebug()<<"Entered in index";
-//     kDebug()<<toSourceIndex(parent);
-//     kDebug()<<d->tagModel->index(row,column,toSourceIndex(parent));
     return fromSourceIndex(d->tagModel->index(row,column,toSourceIndex(parent)));
 }
 
@@ -233,7 +210,6 @@ QModelIndex RGTagModel::parent(const QModelIndex& index) const
 
 int RGTagModel::rowCount(const QModelIndex& parent) const
 {
-    kDebug()<<"ROWCOUNT:"<<d->tagModel->rowCount(toSourceIndex(parent));
     return d->tagModel->rowCount(toSourceIndex(parent));
 }
 
@@ -254,112 +230,93 @@ Qt::ItemFlags RGTagModel::flags(const QModelIndex& index) const
 
 void RGTagModel::slotSourceDataChanged(const QModelIndex& row, const QModelIndex& column)
 {
-    kDebug()<<"Entered in slotSourceDataChanged";
     emit dataChanged(fromSourceIndex(row),fromSourceIndex(column));
 
 }
 
 void RGTagModel::slotSourceHeaderDataChanged(const Qt::Orientation orientation, int first, int last)
 {
-    kDebug()<<"Entered in slotSourceHeaderDataChanged";
     emit headerDataChanged(orientation, first, last); 
 }
 
 void RGTagModel::slotColumnsAboutToBeInserted(const QModelIndex& parent, int start, int end)
 {
-    kDebug()<<"Entered in slotColumnsAboutToBeInserted";
     beginInsertColumns(fromSourceIndex(parent), start, end);
 
 }
 
 void RGTagModel::slotColumnsAboutToBeMoved(const QModelIndex& sourceParent, int sourceStart, int sourceEnd, const QModelIndex& destinationParent, int destinationColumn)
 {
-    kDebug()<<"Entered in slotColumnsAboutToBeMoved";
     beginMoveColumns(fromSourceIndex(sourceParent), sourceStart, sourceEnd, fromSourceIndex(destinationParent), destinationColumn );
 }
 
 void RGTagModel::slotColumnsAboutToBeRemoved(const QModelIndex& parent, int start, int end )
 {
-    kDebug()<<"Entered in slotColumnsAboutToBeRemoved";
     beginRemoveColumns(fromSourceIndex(parent), start, end);
 }
 
 void RGTagModel::slotColumnsInserted()
 {
-    kDebug()<<"Entered in slotColumnsInserted";
     endInsertColumns();
 }
 
 void RGTagModel::slotColumnsMoved()
 {
-    kDebug()<<"Entered in slotColumnsMoved";
     endMoveColumns();
 }
 
 void RGTagModel::slotColumnsRemoved()
 {
-    kDebug()<<"Entered in slotColumnsRemoved";
     endRemoveColumns();
 }
 
 void RGTagModel::slotLayoutAboutToBeChanged()
 {
-    kDebug()<<"Entered in slotLayoutAboutToBeChanged";
     emit layoutAboutToBeChanged();
 }
 
 void RGTagModel::slotLayoutChanged()
 {
-    kDebug()<<"Entered in slotLayoutChanged";
     emit layoutChanged();
 }
 
 void RGTagModel::slotModelAboutToBeReset()
 {
-    kDebug()<<"Entered in slotModelAboutToBeReset";
     beginResetModel();
 }
 
 void RGTagModel::slotModelReset()
 {
-    kDebug()<<"Entered in slotModelReset";
-    
     reset();
 }
 
 void RGTagModel::slotRowsAboutToBeInserted(const QModelIndex& parent, int start, int end )
 {
-    kDebug()<<"Entered in slotRowsAboutToBeInserted";
     beginInsertRows(fromSourceIndex(parent), start, end);
 }
 
 void RGTagModel::slotRowsAboutToBeMoved(const QModelIndex& sourceParent, int sourceStart, int sourceEnd, const QModelIndex& destinationParent, int destinationRow)
 {
-    kDebug()<<"Entered in slowRowsAboutToBeMoved";
     beginMoveRows(fromSourceIndex(sourceParent), sourceStart, sourceEnd, fromSourceIndex(destinationParent), destinationRow );
 }
 
 void RGTagModel::slotRowsAboutToBeRemoved(const QModelIndex& parent, int start, int end)
 {
-    kDebug()<<"Entered in slotRowsAboutToBeRemoved";
     beginRemoveRows(fromSourceIndex(parent), start, end);
 }
 
 void RGTagModel::slotRowsInserted()
 {
-    kDebug()<<"Entered in slotRowsInserted";
     endInsertRows();
 }
 
 void RGTagModel::slotRowsMoved()
 {
-    kDebug()<<"Entered in slotRowsMoved";
     endMoveRows();
 }
 
 void RGTagModel::slotRowsRemoved()
 {
-    kDebug()<<"Entered in slotRowsRemoved";
     endRemoveRows();
 }
 
