@@ -65,7 +65,7 @@ void TestRGTagModel::testModel1()
 
     KIPIGPSSyncPlugin::RGTagModel* const tagModel = new KIPIGPSSyncPlugin::RGTagModel(treeModel, this);
     // TODO: make sure the ModelTest does not find any errors, currently it does find errors ;-)
-    // new ModelTest(tagModel, this);
+    //new ModelTest(tagModel, this);
     kDebug()<<"---------HERE STARTS TESTING:---------------";
     
     // simple tests
@@ -94,26 +94,33 @@ void TestRGTagModel::testModel1()
     Q_ASSERT(tagModel->rowCount(tagItem2Index)==treeModel->rowCount(treeItem2Index));
 
     
+    const QPersistentModelIndex tagItem11Index = tagModel->fromSourceIndex(treeItem11Index);
+    Q_ASSERT(tagItem11Index.isValid());
+    
     QPersistentModelIndex treeItem21Index = treeModel->itemToIndex(treeItem21);
     const QPersistentModelIndex tagItem21Index = tagModel->fromSourceIndex(treeItem21Index);
     Q_ASSERT(tagItem21Index.isValid());
+   
 
     // now make sure we can descend:
-    const QPersistentModelIndex ti1 = tagModel->index(0, 0);
+    const QModelIndex ti1 = tagModel->index(0, 0);
     Q_ASSERT(ti1.isValid());
-    kDebug()<<"ti1 = "<<ti1<<"   tagItem21Index = "<<tagItem21Index;
+    Q_ASSERT(ti1 == tagItem1Index);
 
     // descends level 1 row 0
     const QModelIndex ti11 = tagModel->index(0, 0, ti1);
     Q_ASSERT(ti11.isValid());
+    Q_ASSERT(ti11 == tagItem11Index); 
     
     // descends level 0 row 1
     const QModelIndex ti2 = tagModel->index(1, 0);
-    Q_ASSERT(ti2.isValid()); 
+    Q_ASSERT(ti2.isValid());
+    Q_ASSERT(ti2 == tagItem2Index); 
+    
     // descends level 1 row 0
-     QModelIndex ti21 = tagModel->index(0, 0, ti2);
-     kDebug()<<"INDEX-UL LUI 21 ESTE:"<<ti21;
-     Q_ASSERT(ti21.isValid());
+    QModelIndex ti21 = tagModel->index(0, 0, ti2);
+    Q_ASSERT(ti21.isValid());
+    Q_ASSERT(ti21 == tagItem21Index);
 
     //checks invalid index
     const QModelIndex ti111 = tagModel->index(0,0, ti11);
@@ -125,9 +132,18 @@ void TestRGTagModel::testModel1()
 
     //checks parent of treeItem11
     const QModelIndex parent_ti11 = tagModel->parent(ti11);
-    kDebug()<<"Parent of treeItem11:"<<parent_ti11;
-    Q_ASSERT(parent_ti11.isValid());
+    kDebug()<<"parent_ti11="<<parent_ti11<<" tagItem1Index="<<treeItem1Index;
+    Q_ASSERT(parent_ti11 == tagItem1Index);
+    
+    const QModelIndex parent_ti2 = tagModel->parent(ti2);
+    Q_ASSERT(!parent_ti2.isValid());
 
-    //checks again 
+    const QModelIndex parent_ti21 = tagModel->parent(ti21);
+    Q_ASSERT(parent_ti21.isValid());
+
+    kDebug()<<"Parent of tagItem1:"<<parent_ti1;
+    kDebug()<<"Parent of tagItem11:"<<parent_ti11;
+    kDebug()<<"Parent of tagItem2:"<<parent_ti2;
+    kDebug()<<"Parent of tagItem21:"<<parent_ti21;
 
 }

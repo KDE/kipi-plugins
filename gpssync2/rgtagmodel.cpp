@@ -234,7 +234,7 @@ QModelIndex RGTagModel::index(int row, int column, const QModelIndex& parent) co
 QModelIndex RGTagModel::parent(const QModelIndex& index) const
 {
     kDebug()<<"Entered in parent";
-    return d->tagModel->parent(toSourceIndex(index));
+    return fromSourceIndex(d->tagModel->parent(toSourceIndex(index)));
 }
 
 int RGTagModel::rowCount(const QModelIndex& parent) const
