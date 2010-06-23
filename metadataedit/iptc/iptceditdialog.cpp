@@ -218,7 +218,7 @@ IPTCEditDialog::IPTCEditDialog(QWidget* parent, KUrl::List urls, Interface* ifac
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A Plugin to edit pictures' metadata."),
-                                            ki18n("(c) 2006-2009, Gilles Caulier"));
+                                            ki18n("(c) 2006-2010, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
