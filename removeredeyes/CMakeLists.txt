@@ -7,10 +7,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/commonwidgets
-                    ${OpenCV_CV_INCLUDE_DIR}
-                    ${OpenCV_CXCORE_INCLUDE_DIR}
-                    ${OpenCV_CVAUX_INCLUDE_DIR}
-                    ${OpenCV_HIGHGUI_INCLUDE_DIR}
+                    ${OpenCV_INCLUDE_DIRS}
                    )
 
 SET(libcvblobs_SRCS
@@ -45,7 +42,7 @@ SET(commonwidgets_SRCS
     commonwidgets/storagesettingsbox.cpp
     commonwidgets/unprocessedsettingsbox.cpp
    )
-   
+
 SET(kipiplugin_removeredeyes_PART_SRCS
     plugin_removeredeyes.cpp
     removeredeyeswindow.cpp
@@ -68,10 +65,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                       ${KDE4_KPARTS_LIBS}
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KDEUI_LIBS}
-                      ${OpenCV_CV_LIBRARY}
-                      ${OpenCV_CXCORE_LIBRARY}
-                      ${OpenCV_CVAUX_LIBRARY}
-                      ${OpenCV_HIGHGUI_LIBRARY}
+                      ${OpenCV_LIBS}
                       kipiplugins
                      )
 
