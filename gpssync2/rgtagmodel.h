@@ -50,8 +50,10 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 
+    //Local functions:
     QModelIndex fromSourceIndex(const QModelIndex& externalTagModelIndex) const;
     QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
+    void addSpacerTag(QModelIndex&, QString );
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 

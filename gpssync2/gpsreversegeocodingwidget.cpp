@@ -144,7 +144,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     if (d->externTagModel)
     {
         d->tagModel = new RGTagModel(d->externTagModel, this);
-        //kDebug()<<d->tagModel->data(d->externTagModel->index(0,0, d->externTagModel->index(0,0)));
         d->tagTreeView->setModel(d->tagModel);
 
 #ifdef GPSSYNC2_MODELTEST
@@ -152,8 +151,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
          new ModelTest(d->tagModel, d->tagTreeView);
 #endif /* GPSSYNC2_MODELTEST */
     }
-
-    //QItemSelectionModel* const tagSelectionModel = d->tagTreeView->selectionModel();
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
@@ -268,8 +265,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
             this, SLOT(updateUIState()));
-//    connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
-//            this, SLOT( treeItemClicked(const QModelIndex &)));    
+    connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
+            this, SLOT( treeItemClicked(const QModelIndex &)));    
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
