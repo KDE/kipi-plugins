@@ -74,7 +74,7 @@ public:
     QTimer*      progressTimer;
 };
 
-PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString & _caption,
+PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _caption,
                                                Interface* _iface, const KUrl& _src, const KUrl& _dest)
                       : QDialog(parent), d(new PicasawebReplaceDialogPrivate)
 {
@@ -87,28 +87,33 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString & 
     setWindowTitle(_caption);
 
     d->bCancel = new KPushButton(KStandardGuiItem::cancel(), this);
-    connect(d->bCancel, SIGNAL(clicked()), this, SLOT(cancelPressed()));
+    connect(d->bCancel, SIGNAL(clicked()),
+            this, SLOT(cancelPressed()));
 
     d->bAdd = new KPushButton(i18n("&Add As New"), this);
     d->bAdd->setToolTip(i18n("Item will be added alongside the linked version."));
-    connect(d->bAdd, SIGNAL(clicked()), this, SLOT(addPressed()));
+    connect(d->bAdd, SIGNAL(clicked()),
+            this, SLOT(addPressed()));
 
     d->bAddAll = new KPushButton(i18n("&Add All"), this);
     d->bAddAll->setToolTip(i18n("Items will be added alongside the linked version. You will not be prompted again."));
-    connect(d->bAddAll, SIGNAL(clicked()), this, SLOT(addAllPressed()));
+    connect(d->bAddAll, SIGNAL(clicked()),
+            this, SLOT(addAllPressed()));
 
     d->bReplace = new KPushButton(i18n("&Replace"), this);
     d->bReplace->setToolTip(i18n("Item will be replacing the linked version."));
-    connect(d->bReplace, SIGNAL(clicked()), this, SLOT(replacePressed()));
+    connect(d->bReplace, SIGNAL(clicked()),
+            this, SLOT(replacePressed()));
 
     d->bReplaceAll = new KPushButton(i18n("&Replace All"), this);
     d->bReplaceAll->setToolTip(i18n("Items will be replacing the linked version. You will be prompted again."));
-    connect(d->bReplaceAll, SIGNAL(clicked()), this, SLOT(replaceAllPressed()));
+    connect(d->bReplaceAll, SIGNAL(clicked()),
+            this, SLOT(replaceAllPressed()));
 
     QVBoxLayout* pLayout = new QVBoxLayout(this);
     pLayout->addStrut(360);	// makes dlg at least that wide
 
-    QGridLayout * gridLayout = new QGridLayout();
+    QGridLayout* gridLayout = new QGridLayout();
     pLayout->addLayout(gridLayout);
 
     QString sentence1 = i18n("A linked item already exists.");
@@ -118,8 +123,7 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString & 
     gridLayout->addWidget(lb1, 0, 0, 1, 3);
 
     d->mimePix = KIO::pixmapForUrl(d->dest);
-
-    d->lbDest = new QLabel(this);
+    d->lbDest  = new QLabel(this);
     d->lbDest->setPixmap(d->mimePix);
     d->lbDest->setAlignment(Qt::AlignCenter);
     gridLayout->addWidget(d->lbDest, 1, 0, 1, 1);
@@ -212,7 +216,7 @@ void PicasawebReplaceDialog::slotResult(KJob *job)
     }
 }
 
-void PicasawebReplaceDialog::slotData(KIO::Job */*job*/, const QByteArray& data)
+void PicasawebReplaceDialog::slotData(KIO::Job* /*job*/, const QByteArray& data)
 {
     if (data.isEmpty())
         return;
