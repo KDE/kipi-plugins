@@ -294,7 +294,7 @@ IPTCEditDialog::~IPTCEditDialog()
 
 void IPTCEditDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataeditor", "kipi-plugins");
 }
 
 void IPTCEditDialog::closeEvent(QCloseEvent *e)

@@ -281,7 +281,7 @@ XMPEditDialog::~XMPEditDialog()
 
 void XMPEditDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataeditor", "kipi-plugins");
 }
 
 void XMPEditDialog::closeEvent(QCloseEvent *e)

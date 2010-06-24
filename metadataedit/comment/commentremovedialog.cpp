@@ -157,7 +157,7 @@ CommentRemoveDialog::~CommentRemoveDialog()
 
 void CommentRemoveDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataeditor", "kipi-plugins");
 }
 
 void CommentRemoveDialog::closeEvent(QCloseEvent *e)

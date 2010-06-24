@@ -176,7 +176,7 @@ CommentEditDialog::~CommentEditDialog()
 
 void CommentEditDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataeditor", "kipi-plugins");
 }
 
 void CommentEditDialog::closeEvent(QCloseEvent* e)

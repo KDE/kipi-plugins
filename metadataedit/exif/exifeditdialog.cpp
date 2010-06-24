@@ -249,7 +249,7 @@ EXIFEditDialog::~EXIFEditDialog()
 
 void EXIFEditDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp("metadataedit", "kipi-plugins");
+    KToolInvocation::invokeHelp("metadataeditor", "kipi-plugins");
 }
 
 void EXIFEditDialog::closeEvent(QCloseEvent *e)
