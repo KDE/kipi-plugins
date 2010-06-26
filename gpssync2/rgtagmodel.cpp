@@ -105,9 +105,16 @@ void checkTree(TreeBranch* const checkBranch, int level)
     if(!checkBranch->sourceIndex.isValid())
         return;
 
+    kDebug()<<"LEVEL:"<<level;
+
     for(int j = 0; j < checkBranch->children.count(); ++j)
     {
         checkTree(checkBranch->children[j], level+1);  
+    }
+
+    for(int j = 0; j < checkBranch->spacerChildren.count(); ++j)
+    {
+        checkTree(checkBranch->spacerChildren[j], level+1);
     }
 }
 
@@ -133,9 +140,16 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
 
         if(subModelBranch->sourceIndex == externalTagModelIndex)
         {
+            kDebug()<<"LEVEL:1";
             for (int j=0; j<d->rootTag->children.count(); ++j)
             {
+                
                 checkTree(d->rootTag->children[j], 2);
+            }
+
+            for (int j=0; j<d->rootTag->spacerChildren.count();++j)
+            {
+                checkTree(d->rootTag->spacerChildren[j], 2);
             }
 
             return createIndex(subModelBranch->sourceIndex.row(), subModelBranch->sourceIndex.column(), subModelBranch);
@@ -207,7 +221,7 @@ void RGTagModel::addSpacerTag(QModelIndex& parent, QString spacerName)
 
 int RGTagModel::columnCount(const QModelIndex& parent) const
 {
-    
+    //Change something here?
     return d->tagModel->columnCount(toSourceIndex(parent));
 
 }
@@ -219,7 +233,7 @@ bool RGTagModel::setData(const QModelIndex& index, const QVariant& value, int ro
 
 QVariant RGTagModel::data(const QModelIndex& index, int role) const
 {
-    
+    kDebug()<<"Entered data function"; 
     TreeBranch* const treeBranch = static_cast<TreeBranch*>(index.internalPointer());
     if((!treeBranch) || (treeBranch->type != 1))
         return d->tagModel->data(toSourceIndex(index), role);
@@ -233,18 +247,23 @@ QVariant RGTagModel::data(const QModelIndex& index, int role) const
 
 QModelIndex RGTagModel::index(int row, int column, const QModelIndex& parent) const
 {
+    kDebug()<<"Entered index function";
     TreeBranch* const parentBranch = static_cast<TreeBranch*>(parent.internalPointer());
     
     if(parentBranch)
     {
-        //here are some problems
-        if(row > parentBranch->children.count() && (row != 0))
+        if(row >= parentBranch->children.count() && (row != 0))
         {
             
             return createIndex( row, column, parentBranch->spacerChildren[row-parentBranch->children.count()]);
+            kDebug()<<"Exists index function";
+        }
+        else if(row >= (parentBranch->children.count() + parentBranch->spacerChildren.count()))
+        {
+            return QModelIndex();
         }
     }
-    
+    kDebug()<<"Exists index function";
     return fromSourceIndex(d->tagModel->index(row,column,toSourceIndex(parent)));
 }
 
@@ -257,8 +276,6 @@ QModelIndex RGTagModel::parent(const QModelIndex& index) const
         TreeBranch* const parentBranch = currentBranch->parent;
         if(parentBranch)
         {
-            if(parentBranch->type == 1)
-            {
                 TreeBranch* const gParentBranch = parentBranch->parent;
                 if(gParentBranch)
                 {
@@ -274,7 +291,6 @@ QModelIndex RGTagModel::parent(const QModelIndex& index) const
                     }
                     return createIndex(parentRow, 0, parentBranch);
                 }
-            }
         }
     }
 
