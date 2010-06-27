@@ -211,7 +211,7 @@ QModelIndex RGTagModel::toSourceIndex(const QModelIndex& tagModelIndex) const
     return treeBranch->sourceIndex;
 }
 
-void RGTagModel::addSpacerTag(QModelIndex& parent, QString spacerName)
+void RGTagModel::addSpacerTag(const QModelIndex& parent, const QString& spacerName)
 {
     
     TreeBranch* const parentBranch = static_cast<TreeBranch*>(parent.internalPointer());

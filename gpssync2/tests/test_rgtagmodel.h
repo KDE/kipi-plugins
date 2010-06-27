@@ -37,6 +37,7 @@ private Q_SLOTS:
     void testNoOp();
     void testModelEmpty();
     void testModel1();
+    void testModelSpacerTags();
 };
 
 #endif /* TEST_RGTAGMODEL_H */

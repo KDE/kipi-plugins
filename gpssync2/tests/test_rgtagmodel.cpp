@@ -138,13 +138,48 @@ void TestRGTagModel::testModel1()
 
     const QModelIndex parent_ti21 = tagModel->parent(ti21);
     Q_ASSERT(parent_ti21.isValid());
+}
+
+void TestRGTagModel::testModelSpacerTags()
+{
+    SimpleTreeModel* const treeModel = new SimpleTreeModel(1, this);
+    new ModelTest(treeModel, this);
+
+    // add some items before the tagModel is created:
+    SimpleTreeModel::Item* const treeItem1 = treeModel->addItem();
+    QPersistentModelIndex treeItem1Index = treeModel->itemToIndex(treeItem1);
+    SimpleTreeModel::Item* const treeItem11 = treeModel->addItem(treeItem1);
+    QPersistentModelIndex treeItem11Index = treeModel->itemToIndex(treeItem11);
+
+    KIPIGPSSyncPlugin::RGTagModel* const tagModel = new KIPIGPSSyncPlugin::RGTagModel(treeModel, this);
+    // TODO: make sure the ModelTest does not find any errors, currently it does find errors ;-)
+    new ModelTest(tagModel, this);
+
+    SimpleTreeModel::Item* const treeItem2 = treeModel->addItem();
+    QPersistentModelIndex treeItem2Index = treeModel->itemToIndex(treeItem2);
+    Q_ASSERT(tagModel->rowCount()==treeModel->rowCount());
+    const QPersistentModelIndex tagItem2Index = tagModel->fromSourceIndex(treeItem2Index);
+
+    // - and sub items:
+    SimpleTreeModel::Item* const treeItem21 = treeModel->addItem(treeItem2);
+    Q_ASSERT(tagItem2Index.isValid());
+
+    Q_ASSERT(tagModel->rowCount(tagItem2Index)==treeModel->rowCount(treeItem2Index));
+
+
+    const QPersistentModelIndex tagItem11Index = tagModel->fromSourceIndex(treeItem11Index);
+    Q_ASSERT(tagItem11Index.isValid());
+
+    QPersistentModelIndex treeItem21Index = treeModel->itemToIndex(treeItem21);
+    const QPersistentModelIndex tagItem21Index = tagModel->fromSourceIndex(treeItem21Index);
+    Q_ASSERT(tagItem21Index.isValid());
 
     //insert spacer below ti21
-    tagModel->addSpacerTag(ti21, "New Country Name");
- /*   
+    tagModel->addSpacerTag(tagItem21Index, "New Country Name");
+ /*
     kDebug()<<"VERIFY IF NEW TAG EXISTS:";
     QModelIndex ti211Spacer = tagModel->index(0,0,ti21);
     Q_ASSERT(ti211Spacer.isValid());
-  */  
+  */
 
 }

@@ -53,7 +53,7 @@ public:
     //Local functions:
     QModelIndex fromSourceIndex(const QModelIndex& externalTagModelIndex) const;
     QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
-    void addSpacerTag(QModelIndex&, QString );
+    void addSpacerTag(const QModelIndex&, const QString& );
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 
