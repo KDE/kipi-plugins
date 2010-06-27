@@ -37,6 +37,7 @@
 #include <QCheckBox>
 #include <QAbstractItemModel>
 #include <QTreeView>
+#include <QContextMenuEvent>
 
 // KDE includes
 
@@ -50,6 +51,8 @@
 #include <kseparator.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
+#include <kmenu.h>
+
 //local includes
 
 #include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
@@ -98,7 +101,6 @@ public:
     RGBackend* currentBackend;
     int requestedRGCount;
     int receivedRGCount;
-    QCheckBox *country, *state, *county, *city, *district, *street, *streetNumber;
     QLineEdit* baseTagEdit;
     QPushButton* buttonHideOptions;
     QCheckBox *autoTag;
@@ -106,7 +108,6 @@ public:
     QWidget* UGridContainer;
     QWidget* LGridContainer;
     QLabel* baseTagLabel;
-    QLabel* addressElemLabel;
     QLabel* serviceLabel;
     QLabel* metadataLabel;
     QLabel* languageLabel;
@@ -116,6 +117,9 @@ public:
     RGTagModel* tagModel;
     QTreeView *tagTreeView;
 
+    QItemSelectionModel* tagSelectionModel; 
+    KAction* actionAddCountry;
+    KAction* actionAddCity;
 };
 
 
@@ -163,6 +167,14 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 #endif /* GPSSYNC2_MODELTEST */
     }
 
+
+    d->tagSelectionModel = new QItemSelectionModel(d->tagModel);
+    d->tagTreeView->setSelectionModel(d->tagSelectionModel);
+    //d->tagModel->setSelectionModel(d->tagsSelectionModel);
+
+    d->actionAddCountry = new KAction(i18n("Add country tags"), this);
+    d->actionAddCity = new KAction(i18n("Add city tags"), this);
+
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
     d->languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
@@ -183,27 +195,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->serviceComboBox->addItem(i18n("Geonames.org full address (US only)"));
     d->serviceComboBox->addItem(i18n("Open Street Map"));
 
-    d->addressElemLabel = new QLabel(i18n("Select address elements:"), d->UGridContainer);
-    QWidget* addressElemContainer = new QWidget(d->UGridContainer);
-    QGridLayout* addressElemLayout = new QGridLayout(addressElemContainer);
-    
-    d->country = new QCheckBox( i18n("Country"),addressElemContainer );
-    d->state = new QCheckBox( i18n("State"),addressElemContainer );
-    d->county = new QCheckBox( i18n("County"),addressElemContainer );
-    d->city = new QCheckBox( i18n("City"),addressElemContainer );
-    d->district = new QCheckBox( i18n("District"),addressElemContainer );
-    d->street = new QCheckBox( i18n("Street"),addressElemContainer );
-    d->streetNumber = new QCheckBox( i18n("Street Nb."),addressElemContainer );
-   
-    addressElemLayout->addWidget(d->country, 0,0,1,1);
-    addressElemLayout->addWidget(d->state, 0,1,1,1);
-    addressElemLayout->addWidget(d->county, 0,2,1,1);
-    addressElemLayout->addWidget(d->city, 0,3,1,1);
-    addressElemLayout->addWidget(d->district, 1,0,1,1);
-    addressElemLayout->addWidget(d->street, 1,1,1,1);
-    addressElemLayout->addWidget(d->streetNumber, 1,2,1,1);
-
-    addressElemContainer->setLayout(addressElemLayout);    
 
     d->baseTagLabel = new QLabel(i18n("Select base tag:"), d->UGridContainer);
     d->baseTagEdit = new QLineEdit("My Tags/{Country}/{City}", d->UGridContainer);
@@ -214,10 +205,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     gridLayout->addWidget(d->serviceLabel,row,0,1,2);
     row++;
     gridLayout->addWidget(d->serviceComboBox,row,0,1,2); 
-    row++;
-    gridLayout->addWidget(d->addressElemLabel,row,0,1,2);
-    row++;
-    gridLayout->addWidget(addressElemContainer, row,0,1,2);
     row++;
     gridLayout->addWidget(d->languageLabel,row,0,1,1);
     gridLayout->addWidget(d->languageEdit,row,1,1,1);
@@ -265,7 +252,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->backendRGList.append(new BackendGeonamesRG(this));
     d->backendRGList.append(new BackendGeonamesUSRG(this));
     d->backendRGList.append(new BackendOsmRG(this));
-    
+   
+    d->tagTreeView->installEventFilter(this);
+ 
     updateUIState();
 
     connect(d->buttonRGSelected, SIGNAL(clicked()),
@@ -276,8 +265,15 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
             this, SLOT(updateUIState()));
+
     connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
             this, SLOT( treeItemClicked(const QModelIndex &)));    
+
+    connect(d->actionAddCountry, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddCountry()));
+    
+    connect(d->actionAddCity, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddCity()));
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
@@ -295,15 +291,6 @@ void GPSReverseGeocodingWidget::updateUIState()
     d->serviceComboBox->setEnabled(d->UIEnabled);
     d->languageLabel->setEnabled(d->UIEnabled);
     d->languageEdit->setEnabled(d->UIEnabled);
-
-    d->addressElemLabel->setEnabled(d->UIEnabled);
-    d->country->setEnabled(d->UIEnabled); 
-    d->state->setEnabled(d->UIEnabled); 
-    d->county->setEnabled(d->UIEnabled);
-    d->city->setEnabled(d->UIEnabled);
-    d->district->setEnabled(d->UIEnabled);
-    d->street->setEnabled(d->UIEnabled);
-    d->streetNumber->setEnabled(d->UIEnabled);
 
     d->baseTagLabel->setEnabled(d->UIEnabled);
     d->baseTagEdit->setEnabled(d->UIEnabled);
@@ -435,7 +422,29 @@ void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
     
     kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
 
-    d->tagModel->addSpacerTag(index, "New Country");
+    //d->tagModel->addSpacerTag(index, "New Country");
+
+}
+
+bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
+{
+    if(watched == d->tagTreeView)
+    {
+        if((event->type()==QEvent::ContextMenu) && d->tagSelectionModel->hasSelection() )
+        {
+            
+            KMenu * const menu = new KMenu(d->tagTreeView);
+            menu->addAction(d->actionAddCountry);
+            menu->addAction(d->actionAddCity);
+            
+            QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
+            menu->exec(e->globalPos());
+
+        }
+
+    }
+
+    return QObject::eventFilter(watched, event);
 
 }
 
@@ -449,14 +458,6 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
     group->writeEntry("IPTC", d->iptc->isChecked());
     group->writeEntry("XMP location", d->xmpLoc->isChecked());
     group->writeEntry("XMP keywords", d->xmpKey->isChecked());
-
-    group->writeEntry("Country", d->country->isChecked());
-    group->writeEntry("State", d->state->isChecked());
-    group->writeEntry("County", d->county->isChecked());
-    group->writeEntry("City", d->city->isChecked());
-    group->writeEntry("District", d->district->isChecked());
-    group->writeEntry("Street", d->street->isChecked());
-    group->writeEntry("Street Number", d->streetNumber->isChecked());
 
 }
 
@@ -474,16 +475,21 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
     d->xmpLoc->setChecked(group->readEntry("XMP location", false));
     d->xmpKey->setChecked(group->readEntry("XMP keywords", false));
     
-    d->country->setChecked(group->readEntry("Country", false));
-    d->state->setChecked(group->readEntry("State", false));
-    d->county->setChecked(group->readEntry("County", false));
-    d->city->setChecked(group->readEntry("City", false));
-    d->district->setChecked(group->readEntry("District", false));
-    d->street->setChecked(group->readEntry("Street", false));
-    d->streetNumber->setChecked(group->readEntry("Street Number", false));
-    
     
 
+}
+
+void GPSReverseGeocodingWidget::slotAddCountry()
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    d->tagModel->addSpacerTag(baseIndex, "{Country}");
+
+}
+
+void GPSReverseGeocodingWidget::slotAddCity()
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    d->tagModel->addSpacerTag(baseIndex, "{City}");
 }
 
 } /* KIPIGPSSyncPlugin  */

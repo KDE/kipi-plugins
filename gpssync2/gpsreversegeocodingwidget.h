@@ -70,6 +70,8 @@ private Q_SLOTS:
     void slotHideOptions();
     void updateUIState();
     void treeItemClicked( const QModelIndex &);
+    void slotAddCountry(); 
+    void slotAddCity();
 
 Q_SIGNALS:
 
@@ -78,6 +80,9 @@ Q_SIGNALS:
     void signalProgressSetup(const int maxProgress, const QString& progressText);
     void signalProgressChanged(const int currentProgress);
     void signalUndoCommand(GPSUndoCommand* undoCommand);
+
+protected:
+    virtual bool eventFilter(QObject* watched, QEvent* event);
 
 private:
 
