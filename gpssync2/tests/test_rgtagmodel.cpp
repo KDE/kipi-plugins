@@ -108,7 +108,7 @@ void TestRGTagModel::testModel1()
     const QModelIndex ti11 = tagModel->index(0, 0, ti1);
     Q_ASSERT(ti11.isValid());
     Q_ASSERT(ti11 == tagItem11Index); 
-    
+    kDebug()<<"----------------------_";
     // descends level 0 row 1
     const QModelIndex ti2 = tagModel->index(1, 0);
     Q_ASSERT(ti2.isValid());

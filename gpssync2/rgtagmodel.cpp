@@ -259,33 +259,30 @@ QVariant RGTagModel::data(const QModelIndex& index, int role) const
 QModelIndex RGTagModel::index(int row, int column, const QModelIndex& parent) const
 {
 
-    if(column!=0 || row<0)
+    if ( (column!=0) || (row<0) )
         return QModelIndex();
-    kDebug()<<"Entered index function";
-    kDebug()<<"ROW:"<<row<<" COLUMN:"<<column;
-    if(parent.isValid())
+
+    TreeBranch* parentBranch = d->rootTag;
+    if (parent.isValid())
+        parentBranch = static_cast<TreeBranch*>(parent.internalPointer());
+
+    kDebug()<<row<<column<<parent<<parentBranch;
+
+    // this should not happen!
+    if (!parentBranch)
+        return QModelIndex();
+
+    kDebug()<<"parentBranch->sourceIndex="<<parentBranch->sourceIndex;
+    kDebug()<<"parentBranch->children.count()="<<parentBranch->children.count();
+
+    if (row < parentBranch->spacerChildren.count())
     {
-        TreeBranch* const parentBranch = static_cast<TreeBranch*>(parent.internalPointer());
-        kDebug()<<"parentBranch->sourceIndex="<<parentBranch->sourceIndex;
-        kDebug()<<"parentBranch->children.count()="<<parentBranch->children.count();
-        if(parentBranch)
-        {
-            if(row >= parentBranch->children.count() && (parentBranch->spacerChildren.count()>0) && row!=0)
-            {
-            
-                kDebug()<<"Now, it shouldn't enter here";
-                return createIndex( row, column, parentBranch->spacerChildren[row-parentBranch->children.count()]);
-            }
-            else if(row >= (parentBranch->children.count() + parentBranch->spacerChildren.count()))
-            {
-                kDebug()<<"Exists index and returns QModelIndex()";
-                return QModelIndex();
-            }
-        }
-        kDebug()<<"Exists index function";
+        return createIndex(row, column, parentBranch->spacerChildren[row]);
+    } else {
+        return fromSourceIndex(d->tagModel->index(row-parentBranch->spacerChildren.count(),column,toSourceIndex(parent)));
     }
-    
-    return fromSourceIndex(d->tagModel->index(row,column,toSourceIndex(parent)));
+
+    return QModelIndex();
 }
 
 QModelIndex RGTagModel::parent(const QModelIndex& index) const
