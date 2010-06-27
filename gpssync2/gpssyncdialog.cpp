@@ -432,12 +432,19 @@ bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
         QPoint p (m->x(), m->y());
         const int var = d->tabBar->tabAt(p);
 
+        if (var<0)
+            return false;
+
         QList<int> sizes = d->HSplitter->sizes();
         if (d->splitterSize == 0)
         {
-            if (d->tabBar->currentIndex() == var)
+            if (sizes.at(1) == 0)
             {
-                d->splitterSize = sizes[1];
+                sizes[1] = d->stackedWidget->widget(var)->minimumSizeHint().width();
+            }
+            else if (d->tabBar->currentIndex() == var)
+            {
+                d->splitterSize = sizes.at(1);
                 sizes[1] = 0;
             }
         }
@@ -451,7 +458,7 @@ bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
         d->stackedWidget->setCurrentIndex(var);
         d->HSplitter->setSizes(sizes);
 
-        return true;                        
+        return true;
     }
 
     return QWidget::eventFilter(o,e);
@@ -459,7 +466,6 @@ bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
 
 void GPSSyncDialog::slotCurrentTabChanged(int index)
 {
-
     d->tabBar->setCurrentIndex(index);
     d->stackedWidget->setCurrentIndex(index);
 }
@@ -467,12 +473,11 @@ void GPSSyncDialog::slotCurrentTabChanged(int index)
 
 void GPSSyncDialog::setCurrentTab(int index)
 {
-
     d->tabBar->setCurrentIndex(index);
     d->stackedWidget->setCurrentIndex(index);
 
     QList<int> sizes = d->HSplitter->sizes();
-    if (d->splitterSize != 0)
+    if (d->splitterSize >= 0)
     {
         sizes[1] = d->splitterSize;
         d->splitterSize = 0;
