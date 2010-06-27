@@ -71,7 +71,7 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 
-    Item* addItem(Item* const parentItem = 0);
+    Item* addItem(Item* const parentItem = 0, const int rowNumber = -1);
     Item* indexToItem(const QModelIndex& itemIndex) const;
     Item* rootItem() const;
     QModelIndex itemToIndex(const Item* const item) const;

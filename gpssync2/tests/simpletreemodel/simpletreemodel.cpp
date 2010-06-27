@@ -158,16 +158,22 @@ Qt::ItemFlags SimpleTreeModel::flags(const QModelIndex& index) const
     return QAbstractItemModel::flags(index);
 }
 
-SimpleTreeModel::Item* SimpleTreeModel::addItem(SimpleTreeModel::Item* const parentItem)
+SimpleTreeModel::Item* SimpleTreeModel::addItem(SimpleTreeModel::Item* const parentItem, const int rowNumber)
 {
     Item* const myParent = parentItem ? parentItem : d->rootItem;
 
     Item* const newItem = new Item();
     newItem->parent = myParent;
 
-    // TODO: send model signals
-    beginInsertRows(itemToIndex(myParent), myParent->children.count(), myParent->children.count());
-    myParent->children.append(newItem);
+    const int childrenCount = myParent->children.count();
+    int targetRow = rowNumber;
+    if ((rowNumber<0)||(rowNumber>childrenCount))
+    {
+        targetRow = childrenCount;
+    }
+
+    beginInsertRows(itemToIndex(myParent), targetRow, targetRow);
+    myParent->children.insert(targetRow, newItem);
     endInsertRows();
 
     return newItem;

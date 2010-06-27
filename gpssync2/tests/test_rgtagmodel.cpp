@@ -67,8 +67,7 @@ void TestRGTagModel::testModel2()
     const QPersistentModelIndex treeItem2Index = treeModel->itemToIndex(treeItem2);
 
     KIPIGPSSyncPlugin::RGTagModel* const tagModel = new KIPIGPSSyncPlugin::RGTagModel(treeModel, this);
-    // work without ModelTest here, because ModelTest has some influence on our model, too!
-//     new ModelTest(tagModel, this);
+    // modeltest will be created at the end of this function to make sure it does not influence the result!
 
     // first, verify the row and column counts:
     QCOMPARE(tagModel->rowCount(QModelIndex()), 2);
@@ -101,6 +100,50 @@ void TestRGTagModel::testModel2()
     const QModelIndex tagItem11IndexSource = tagModel->toSourceIndex(tagItem11Index);
     Q_ASSERT(tagItem11IndexSource.isValid());
     Q_ASSERT(tagItem11IndexSource==treeItem11Index);
+
+    // add modeltest as the last test:
+    new ModelTest(tagModel, this);
+}
+
+void TestRGTagModel::testModel3()
+{
+    SimpleTreeModel* const treeModel = new SimpleTreeModel(1, this);
+    new ModelTest(treeModel, this);
+
+    // add some items before the tagModel is created:
+    SimpleTreeModel::Item* const treeItem1 = treeModel->addItem();
+    const QPersistentModelIndex treeItem1Index = treeModel->itemToIndex(treeItem1);
+    SimpleTreeModel::Item* const treeItem11 = treeModel->addItem(treeItem1);
+    const QPersistentModelIndex treeItem11Index = treeModel->itemToIndex(treeItem11);
+
+    SimpleTreeModel::Item* const treeItem2 = treeModel->addItem();
+    const QPersistentModelIndex treeItem2Index = treeModel->itemToIndex(treeItem2);
+
+    KIPIGPSSyncPlugin::RGTagModel* const tagModel = new KIPIGPSSyncPlugin::RGTagModel(treeModel, this);
+    // modeltest will be created at the end of this function to make sure it does not influence the result!
+
+    // first, verify the row and column counts:
+    QCOMPARE(tagModel->rowCount(QModelIndex()), 2);
+    QCOMPARE(tagModel->columnCount(QModelIndex()), 1);
+
+    // now test toSourceIndex:
+    const QModelIndex tagItem1Index = tagModel->index(0, 0);
+
+    // now add a new item to the source model, before the existing item:
+    SimpleTreeModel::Item* const treeItem11a = treeModel->addItem(treeItem1, 0);
+    const QPersistentModelIndex treeItem11aIndex = treeModel->itemToIndex(treeItem11a);
+    QCOMPARE(treeItem11Index.row(), 1);
+    QCOMPARE(treeItem11aIndex.row(), 0);
+
+    // now add a new item to the source model, this time in the middle:
+    SimpleTreeModel::Item* const treeItem11b = treeModel->addItem(treeItem1, 1);
+    const QPersistentModelIndex treeItem11bIndex = treeModel->itemToIndex(treeItem11b);
+    QCOMPARE(treeItem11Index.row(), 2);
+    QCOMPARE(treeItem11aIndex.row(), 0);
+    QCOMPARE(treeItem11bIndex.row(), 1);
+
+    // add modeltest as the last test:
+    new ModelTest(tagModel, this);
 }
 
 void TestRGTagModel::testModel1()

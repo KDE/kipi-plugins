@@ -86,5 +86,29 @@ void TestSimpleTreeModel::testModel1()
         Q_ASSERT(treeModel->parent(childIndex) == topIndex);
     }
 
+    // add another few items:
+    {
+        SimpleTreeModel::Item* const item21 = treeModel->addItem(item2, 0);
+        Q_ASSERT(item21!=0);
+        const QModelIndex item21Index = treeModel->itemToIndex(item21);
+        Q_ASSERT(item21Index.isValid());
+        Q_ASSERT(treeModel->indexToItem(item21Index)==item21);
+        Q_ASSERT(treeModel->parent(item21Index)==item2Index);
+        Q_ASSERT(treeModel->index(0, 0, item2Index)==item21Index);
+        Q_ASSERT(item21Index.row()==0);
+    }
+
+    // add another few items:
+    {
+        SimpleTreeModel::Item* const item21 = treeModel->addItem(item2, 1);
+        Q_ASSERT(item21!=0);
+        const QModelIndex item21Index = treeModel->itemToIndex(item21);
+        Q_ASSERT(item21Index.isValid());
+        Q_ASSERT(treeModel->indexToItem(item21Index)==item21);
+        Q_ASSERT(treeModel->parent(item21Index)==item2Index);
+        Q_ASSERT(treeModel->index(1, 0, item2Index)==item21Index);
+        Q_ASSERT(item21Index.row()==1);
+    }
+
     new ModelTest(treeModel, this);
 }
