@@ -203,19 +203,31 @@ void RGTagModel::addSpacerTag(const QModelIndex& parent, const QString& spacerNa
 {
     TreeBranch* const parentBranch = static_cast<TreeBranch*>(parent.internalPointer());
 
-    TreeBranch* newSpacer = new TreeBranch();
-    newSpacer->parent = parentBranch;
-    newSpacer->data = spacerName;
-    newSpacer->type = TypeSpacer;
+    bool found = false;
+    if(!parentBranch->spacerChildren.empty())
+    {
+        for( int i=0; i < parentBranch->spacerChildren.count(); ++i)
+        {
+            if(parentBranch->spacerChildren[i]->data == spacerName)
+                found = true;
+        }
+    }
 
-    beginInsertRows(parent, parentBranch->spacerChildren.count(), parentBranch->spacerChildren.count());
-    parentBranch->spacerChildren.append(newSpacer);
-    endInsertRows();
+    if(!found)
+    {
+        TreeBranch* newSpacer = new TreeBranch();
+        newSpacer->parent = parentBranch;
+        newSpacer->data = spacerName;
+        newSpacer->type = TypeSpacer;
+
+        beginInsertRows(parent, parentBranch->spacerChildren.count(), parentBranch->spacerChildren.count());
+        parentBranch->spacerChildren.append(newSpacer);
+        endInsertRows();
+    }
 }
 
 int RGTagModel::columnCount(const QModelIndex& parent) const
 {
-    //Change something here?
     TreeBranch* const parentBranch = static_cast<TreeBranch*>(parent.internalPointer());
     if(!parentBranch)
     {
