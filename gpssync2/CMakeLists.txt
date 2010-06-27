@@ -27,6 +27,7 @@ SET(kipiplugin_gpssync_PART_SRCS
         borrowed/modeltest.cpp
         backend-geonamesUS-rg.cpp
         rgtagmodel.cpp
+        tests/simpletreemodel/simpletreemodel.cpp
    )
 
 IF(KDE4_BUILD_TESTS)

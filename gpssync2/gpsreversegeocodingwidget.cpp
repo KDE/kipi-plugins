@@ -64,9 +64,11 @@
 #include "backend-geonamesUS-rg.h"
 #include "parseTagString.h"
 #include "rgtagmodel.h"
+#include "tests/simpletreemodel/simpletreemodel.h"
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+#include <libkipi/version.h>
 
 #ifdef GPSSYNC2_MODELTEST
 #include <modeltest.h>
@@ -139,7 +141,16 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->tagTreeView = new QTreeView(vbox);
     Q_ASSERT(d->tagTreeView!=0);
 
+    // TODO: workaround until the new libkipi hits the streets
+#if KIPI_VERSION>=0x010109
     d->externTagModel = interface->getTagTree();
+#endif
+
+    if (!d->externTagModel)
+    {
+        // we currently require a backend model, even if it is empty
+        d->externTagModel = new SimpleTreeModel(1, this);
+    }
 
     if (d->externTagModel)
     {
