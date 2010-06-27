@@ -45,6 +45,10 @@ public:
 
     QAbstractItemModel* tagModel;
     TreeBranch* rootTag;
+
+    QModelIndex parent;
+    int startInsert, endInsert;   
+ 
 };
 
 RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent)
@@ -202,7 +206,7 @@ void RGTagModel::addSpacerTag(const QModelIndex& parent, const QString& spacerNa
 
     beginInsertRows(parent, parentBranch->spacerChildren.count(), parentBranch->spacerChildren.count());
     parentBranch->spacerChildren.append(newSpacer);
-    endInsertRows();
+    //endInsertRows();
 }
 
 int RGTagModel::columnCount(const QModelIndex& parent) const
@@ -215,9 +219,8 @@ int RGTagModel::columnCount(const QModelIndex& parent) const
     }    
 
     if(parentBranch && parentBranch->type == TypeSpacer)
-    {
         return 1;
-    }
+    
     
     return d->tagModel->columnCount(toSourceIndex(parent));
 
@@ -421,22 +424,8 @@ void RGTagModel::slotModelReset()
 
 void RGTagModel::slotRowsAboutToBeInserted(const QModelIndex& parent, int start, int end )
 {
-/*    kDebug()<<"Entered rowsAboutToBeInserted";
-    kDebug()<<"Start:"<<start<<" End:"<<end; 
     TreeBranch* const parentBranch = static_cast<TreeBranch*>(fromSourceIndex(parent).internalPointer());
-    if(parentBranch)
-        kDebug()<<"children.count()="<<parentBranch->children.count();
-    if(parentBranch && start > parentBranch->children.count())
-    {
-        kDebug()<<"Entered spacer if";
-        beginInsertRows(parent, start, end);
-        kDebug()<<"Exists rowsAboutToBeInserted through spacer if";
-    }
-    else 
-    {*/
-   //     kDebug()<<"Exists rowsAboutToBeInserted through tag model";
-        beginInsertRows(fromSourceIndex(parent), start, end);
-  //  }
+    beginInsertRows(fromSourceIndex(parent), start+parentBranch->spacerChildren.count(), end+parentBranch->spacerChildren.count());
 }
 
 void RGTagModel::slotRowsAboutToBeMoved(const QModelIndex& sourceParent, int sourceStart, int sourceEnd, const QModelIndex& destinationParent, int destinationRow)
@@ -446,11 +435,27 @@ void RGTagModel::slotRowsAboutToBeMoved(const QModelIndex& sourceParent, int sou
 
 void RGTagModel::slotRowsAboutToBeRemoved(const QModelIndex& parent, int start, int end)
 {
-    beginRemoveRows(fromSourceIndex(parent), start, end);
+    d->parent = fromSourceIndex(parent);
+    d->startInsert = start;
+    d->endInsert = end;
+
+    beginRemoveRows(d->parent, start, end);
 }
 
 void RGTagModel::slotRowsInserted()
 {
+    
+    TreeBranch* const parentBranch = d->parent.isValid() ? static_cast<TreeBranch*>(fromSourceIndex(d->parent).internalPointer()) : d->rootTag;
+
+    for(int i=d->startInsert; i<d->endInsert; ++i)
+    {
+    TreeBranch* newBranch = new TreeBranch();
+    newBranch->parent = parentBranch;
+    newBranch->sourceIndex = fromSourceIndex(d->tagModel->index(i,1,d->parent));
+
+    parentBranch->children.insert(i,newBranch);
+
+    }
     kDebug()<<"Entered rowsInserted";
     endInsertRows();
 }
