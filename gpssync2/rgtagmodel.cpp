@@ -430,7 +430,7 @@ void RGTagModel::slotRowsAboutToBeInserted(const QModelIndex& parent, int start,
     d->startInsert = start;
     d->endInsert = end;
 
-    beginInsertRows(fromSourceIndex(parent), start+parentBranch->spacerChildren.count(), end+parentBranch->spacerChildren.count());
+    beginInsertRows(d->parent, start+parentBranch->spacerChildren.count(), end+parentBranch->spacerChildren.count());
 }
 
 void RGTagModel::slotRowsAboutToBeMoved(const QModelIndex& sourceParent, int sourceStart, int sourceEnd, const QModelIndex& destinationParent, int destinationRow)
@@ -440,27 +440,28 @@ void RGTagModel::slotRowsAboutToBeMoved(const QModelIndex& sourceParent, int sou
 
 void RGTagModel::slotRowsAboutToBeRemoved(const QModelIndex& parent, int start, int end)
 {
+    TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(fromSourceIndex(parent).internalPointer()) : d->rootTag;
 
-    beginRemoveRows(parent, start, end);
+    d->parent = fromSourceIndex(parent);
+    d->startInsert = start;
+    d->endInsert = end;
+
+    beginRemoveRows(d->parent, start+parentBranch->spacerChildren.count(), end+parentBranch->spacerChildren.count());
 }
 
 void RGTagModel::slotRowsInserted()
 {
-    
-    TreeBranch* const parentBranch = d->parent.isValid() ? static_cast<TreeBranch*>(fromSourceIndex(d->parent).internalPointer()) : d->rootTag;
-
-    
+    TreeBranch* const parentBranch = d->parent.isValid() ? static_cast<TreeBranch*>(d->parent.internalPointer()) : d->rootTag;
 
     for(int i=d->startInsert; i<d->endInsert; ++i)
     {
-    TreeBranch* newBranch = new TreeBranch();
-    newBranch->parent = parentBranch;
-    newBranch->sourceIndex = d->tagModel->index(i,0,d->parent);
+        TreeBranch* newBranch = new TreeBranch();
+        newBranch->parent = parentBranch;
+        newBranch->sourceIndex = d->tagModel->index(i, 0, d->parent);
 
-    parentBranch->children.insert(i,newBranch);
-
+        parentBranch->children.insert(i, newBranch);
     }
-    kDebug()<<"Entered rowsInserted";
+
     endInsertRows();
 }
 
