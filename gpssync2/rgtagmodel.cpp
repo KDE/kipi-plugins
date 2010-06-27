@@ -320,12 +320,18 @@ QModelIndex RGTagModel::parent(const QModelIndex& index) const
 
 int RGTagModel::rowCount(const QModelIndex& parent) const
 {
-    TreeBranch* const parentBranch = static_cast<TreeBranch*>(parent.internalPointer());
+    TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(parent.internalPointer()) : d->rootTag;
 
-    if (!parentBranch)
-        return d->tagModel->rowCount(toSourceIndex(parent));
-    else 
-        return parentBranch->spacerChildren.count() + parentBranch->children.count();
+    int myRowCount = parentBranch->spacerChildren.count();
+    
+    // TODO: we don't know whether the children have been set up, therefore query the source model
+    if (parentBranch->type==TypeChild)
+    {
+        const QModelIndex sourceIndex = toSourceIndex(parent);
+        myRowCount+=d->tagModel->rowCount(sourceIndex);
+    }
+
+    return myRowCount;
 }
 
 

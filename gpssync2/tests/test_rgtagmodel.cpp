@@ -52,6 +52,57 @@ void TestRGTagModel::testModelEmpty()
     new ModelTest(tagModel, this);
 }
 
+void TestRGTagModel::testModel2()
+{
+    SimpleTreeModel* const treeModel = new SimpleTreeModel(1, this);
+    new ModelTest(treeModel, this);
+
+    // add some items before the tagModel is created:
+    SimpleTreeModel::Item* const treeItem1 = treeModel->addItem();
+    const QPersistentModelIndex treeItem1Index = treeModel->itemToIndex(treeItem1);
+    SimpleTreeModel::Item* const treeItem11 = treeModel->addItem(treeItem1);
+    const QPersistentModelIndex treeItem11Index = treeModel->itemToIndex(treeItem11);
+
+    SimpleTreeModel::Item* const treeItem2 = treeModel->addItem();
+    const QPersistentModelIndex treeItem2Index = treeModel->itemToIndex(treeItem2);
+
+    KIPIGPSSyncPlugin::RGTagModel* const tagModel = new KIPIGPSSyncPlugin::RGTagModel(treeModel, this);
+    // work without ModelTest here, because ModelTest has some influence on our model, too!
+//     new ModelTest(tagModel, this);
+
+    // first, verify the row and column counts:
+    QCOMPARE(tagModel->rowCount(QModelIndex()), 2);
+    QCOMPARE(tagModel->columnCount(QModelIndex()), 1);
+
+    // now test toSourceIndex:
+    const QModelIndex tagItem1Index = tagModel->index(0, 0);
+    Q_ASSERT(tagItem1Index.isValid());
+    QCOMPARE(tagModel->rowCount(tagItem1Index), 1);
+    QCOMPARE(tagModel->columnCount(tagItem1Index), 1);
+
+    const QModelIndex tagItem1IndexSource = tagModel->toSourceIndex(tagItem1Index);
+    Q_ASSERT(tagItem1IndexSource.isValid());
+    Q_ASSERT(tagItem1IndexSource==treeItem1Index);
+
+    const QModelIndex tagItem2Index = tagModel->index(1, 0);
+    Q_ASSERT(tagItem2Index.isValid());
+    QCOMPARE(tagModel->rowCount(tagItem2Index), 0);
+    QCOMPARE(tagModel->columnCount(tagItem2Index), 1);
+
+    const QModelIndex tagItem2IndexSource = tagModel->toSourceIndex(tagItem2Index);
+    Q_ASSERT(tagItem2IndexSource.isValid());
+    Q_ASSERT(tagItem2IndexSource==treeItem2Index);
+
+    const QModelIndex tagItem11Index = tagModel->index(0, 0, tagItem1Index);
+    Q_ASSERT(tagItem11Index.isValid());
+    QCOMPARE(tagModel->rowCount(tagItem11Index), 0);
+    QCOMPARE(tagModel->columnCount(tagItem11Index), 1);
+
+    const QModelIndex tagItem11IndexSource = tagModel->toSourceIndex(tagItem11Index);
+    Q_ASSERT(tagItem11IndexSource.isValid());
+    Q_ASSERT(tagItem11IndexSource==treeItem11Index);
+}
+
 void TestRGTagModel::testModel1()
 {
     SimpleTreeModel* const treeModel = new SimpleTreeModel(1, this);

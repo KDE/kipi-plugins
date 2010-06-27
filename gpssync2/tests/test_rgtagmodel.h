@@ -36,7 +36,9 @@ private Q_SLOTS:
 
     void testNoOp();
     void testModelEmpty();
+
     void testModel1();
+    void testModel2();
     void testModelSpacerTags();
 };
 
