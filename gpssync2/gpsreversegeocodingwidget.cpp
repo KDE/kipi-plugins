@@ -424,6 +424,8 @@ void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
     
     kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
 
+    d->tagModel->addSpacerTag(index, "New Country");
+
 }
 
 void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
