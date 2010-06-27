@@ -66,12 +66,10 @@ void TestRGTagModel::testModel1()
     KIPIGPSSyncPlugin::RGTagModel* const tagModel = new KIPIGPSSyncPlugin::RGTagModel(treeModel, this);
     // TODO: make sure the ModelTest does not find any errors, currently it does find errors ;-)
     new ModelTest(tagModel, this);
-    kDebug()<<"---------HERE STARTS TESTING:---------------";
     
     // simple tests
     Q_ASSERT(tagModel->rowCount()==treeModel->rowCount());
 
-    kDebug()<<"+++++++++++++ADDS first item+++++++++++++++";
     const QPersistentModelIndex tagItem1Index = tagModel->fromSourceIndex(treeItem1Index);
     Q_ASSERT(tagItem1Index.isValid());
     kDebug()<<tagItem1Index;
@@ -79,7 +77,6 @@ void TestRGTagModel::testModel1()
     Q_ASSERT(tagModel->rowCount(tagItem1Index)==treeModel->rowCount(treeItem1Index));
     
     
-    kDebug()<<"+++++++++++++ADDS second item+++++++++++++++";
     // make sure the tagModel handles items inserted after it was created
     // - both top level
     SimpleTreeModel::Item* const treeItem2 = treeModel->addItem();
@@ -87,13 +84,13 @@ void TestRGTagModel::testModel1()
     Q_ASSERT(tagModel->rowCount()==treeModel->rowCount());
     const QPersistentModelIndex tagItem2Index = tagModel->fromSourceIndex(treeItem2Index);
 
-    kDebug()<<"+++++++++++++ADDS subitem of second element+++++++++++++++";
     // - and sub items:
     SimpleTreeModel::Item* const treeItem21 = treeModel->addItem(treeItem2);
     Q_ASSERT(tagItem2Index.isValid());
+
     Q_ASSERT(tagModel->rowCount(tagItem2Index)==treeModel->rowCount(treeItem2Index));
 
-    
+ 
     const QPersistentModelIndex tagItem11Index = tagModel->fromSourceIndex(treeItem11Index);
     Q_ASSERT(tagItem11Index.isValid());
     
@@ -132,7 +129,6 @@ void TestRGTagModel::testModel1()
 
     //checks parent of tagItem11
     const QModelIndex parent_ti11 = tagModel->parent(ti11);
-    kDebug()<<"parent_ti11="<<parent_ti11<<" tagItem1Index="<<treeItem1Index;
     Q_ASSERT(parent_ti11 == tagItem1Index);
    
     //checks parent of tagItem2 
@@ -143,9 +139,12 @@ void TestRGTagModel::testModel1()
     const QModelIndex parent_ti21 = tagModel->parent(ti21);
     Q_ASSERT(parent_ti21.isValid());
 
-    kDebug()<<"Parent of tagItem1:"<<parent_ti1;
-    kDebug()<<"Parent of tagItem11:"<<parent_ti11;
-    kDebug()<<"Parent of tagItem2:"<<parent_ti2;
-    kDebug()<<"Parent of tagItem21:"<<parent_ti21;
+    //insert spacer below ti21
+    tagModel->addSpacerTag(ti21, "New Country Name");
+ /*   
+    kDebug()<<"VERIFY IF NEW TAG EXISTS:";
+    QModelIndex ti211Spacer = tagModel->index(0,0,ti21);
+    Q_ASSERT(ti211Spacer.isValid());
+  */  
 
 }
