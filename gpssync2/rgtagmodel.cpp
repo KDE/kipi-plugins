@@ -424,7 +424,12 @@ void RGTagModel::slotModelReset()
 
 void RGTagModel::slotRowsAboutToBeInserted(const QModelIndex& parent, int start, int end )
 {
-    TreeBranch* const parentBranch = static_cast<TreeBranch*>(fromSourceIndex(parent).internalPointer());
+    TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(fromSourceIndex(parent).internalPointer()) : d->rootTag;
+
+    d->parent = fromSourceIndex(parent);
+    d->startInsert = start;
+    d->endInsert = end;
+
     beginInsertRows(fromSourceIndex(parent), start+parentBranch->spacerChildren.count(), end+parentBranch->spacerChildren.count());
 }
 
@@ -435,11 +440,8 @@ void RGTagModel::slotRowsAboutToBeMoved(const QModelIndex& sourceParent, int sou
 
 void RGTagModel::slotRowsAboutToBeRemoved(const QModelIndex& parent, int start, int end)
 {
-    d->parent = fromSourceIndex(parent);
-    d->startInsert = start;
-    d->endInsert = end;
 
-    beginRemoveRows(d->parent, start, end);
+    beginRemoveRows(parent, start, end);
 }
 
 void RGTagModel::slotRowsInserted()
@@ -447,11 +449,13 @@ void RGTagModel::slotRowsInserted()
     
     TreeBranch* const parentBranch = d->parent.isValid() ? static_cast<TreeBranch*>(fromSourceIndex(d->parent).internalPointer()) : d->rootTag;
 
+    
+
     for(int i=d->startInsert; i<d->endInsert; ++i)
     {
     TreeBranch* newBranch = new TreeBranch();
     newBranch->parent = parentBranch;
-    newBranch->sourceIndex = fromSourceIndex(d->tagModel->index(i,1,d->parent));
+    newBranch->sourceIndex = d->tagModel->index(i,0,d->parent);
 
     parentBranch->children.insert(i,newBranch);
 
