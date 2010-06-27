@@ -39,6 +39,7 @@ public:
     RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent = 0);
     ~RGTagModel();
 
+    enum Type {TypeChild, TypeSpacer};
     // QAbstractItemModel:
     virtual int columnCount(const QModelIndex& parent = QModelIndex() ) const;
     virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
