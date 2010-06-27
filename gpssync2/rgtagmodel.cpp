@@ -126,6 +126,8 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
     if(!externalTagModelIndex.isValid())
         return QModelIndex();
 
+    Q_ASSERT(externalTagModelIndex.model()==d->tagModel);
+
     QList<QModelIndex> parents;
     QModelIndex myIndex = externalTagModelIndex;
     parents<<myIndex;
@@ -188,6 +190,8 @@ QModelIndex RGTagModel::toSourceIndex(const QModelIndex& tagModelIndex) const
     if(!tagModelIndex.isValid())
         return QModelIndex();
 
+    Q_ASSERT(tagModelIndex.model()==this);
+
     TreeBranch* const treeBranch = static_cast<TreeBranch*>(tagModelIndex.internalPointer());
     if(!treeBranch)
         return QModelIndex();
@@ -206,7 +210,7 @@ void RGTagModel::addSpacerTag(const QModelIndex& parent, const QString& spacerNa
 
     beginInsertRows(parent, parentBranch->spacerChildren.count(), parentBranch->spacerChildren.count());
     parentBranch->spacerChildren.append(newSpacer);
-    //endInsertRows();
+    endInsertRows();
 }
 
 int RGTagModel::columnCount(const QModelIndex& parent) const
