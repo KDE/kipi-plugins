@@ -31,6 +31,36 @@ namespace KIPIGPSSyncPlugin
 
 class RGTagModelPrivate;
 
+enum Type {TypeChild, TypeSpacer, TypeNewChild};
+
+class TreeBranch {
+public:
+    TreeBranch()
+    : sourceIndex(),
+      parent(0),
+      data(),
+      type(),
+      oldChildren(),
+      spacerChildren()
+    {
+    }
+
+    ~TreeBranch()
+    {
+        qDeleteAll(oldChildren);
+    }
+
+    QPersistentModelIndex sourceIndex;
+    TreeBranch* parent;
+    QString data;
+    Type type;
+    QList<TreeBranch*> oldChildren;
+    QList<TreeBranch*> spacerChildren;
+    QList<TreeBranch*> newChildren;
+};
+
+
+
 class RGTagModel : public QAbstractItemModel
 {
 Q_OBJECT
@@ -39,7 +69,6 @@ public:
     RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent = 0);
     ~RGTagModel();
 
-    enum Type {TypeChild, TypeSpacer, TypeNewChild};
     // QAbstractItemModel:
     virtual int columnCount(const QModelIndex& parent = QModelIndex() ) const;
     virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
@@ -56,6 +85,8 @@ public:
     QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
     void addSpacerTag(const QModelIndex&, const QString& );
     void addNewTags(const QModelIndex&, const QString& );
+    void addNewData(QStringList& , QStringList&);
+    void addDataInTree(TreeBranch*&, int, QStringList&, QStringList&);
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 

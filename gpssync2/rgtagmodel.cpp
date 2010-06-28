@@ -12,7 +12,7 @@
 
 namespace KIPIGPSSyncPlugin
 {
-
+/*
 class TreeBranch {
 public:
     TreeBranch()
@@ -33,12 +33,12 @@ public:
     QPersistentModelIndex sourceIndex;
     TreeBranch* parent;
     QString data;
-    RGTagModel::Type type;
+    Type type;
     QList<TreeBranch*> oldChildren;
     QList<TreeBranch*> spacerChildren;
     QList<TreeBranch*> newChildren;
 };
-
+*/
 
 class RGTagModelPrivate
 {
@@ -264,6 +264,41 @@ void RGTagModel::addNewTags(const QModelIndex& parent, const QString& newTagName
         parentBranch->newChildren.append(newTagChild);
         endInsertRows();
     }  
+
+}
+
+void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStringList& addressElements, QStringList& elementsData)
+{
+
+    for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
+    {
+        for( int j=0; j<addressElements.count(); ++j)
+        {
+             
+            if(currentBranch->spacerChildren[i]->data == addressElements[j])
+            {
+                QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
+                addNewTags(currentIndex, elementsData[j]);
+            }
+            addDataInTree(currentBranch->spacerChildren[i],i, addressElements, elementsData);
+        }
+        
+    }
+    for(int i=0; i<currentBranch->newChildren.count(); ++i)
+    {
+        addDataInTree(currentBranch->newChildren[i],i+currentBranch->spacerChildren.count(), addressElements, elementsData);
+    }
+    for(int i=0; i<currentBranch->oldChildren.count(); ++i)
+    {
+        addDataInTree(currentBranch->oldChildren[i],i+currentBranch->spacerChildren.count()+currentBranch->newChildren.count(), addressElements, elementsData);
+    }
+
+}
+
+void RGTagModel::addNewData(QStringList& elements, QStringList& resultedData)
+{
+
+    addDataInTree(d->rootTag, 0, elements, resultedData);
 
 }
 

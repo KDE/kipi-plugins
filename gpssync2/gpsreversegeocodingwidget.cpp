@@ -372,8 +372,6 @@ void GPSReverseGeocodingWidget::slotHideOptions()
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
 
-    //TODO: filter the results using checkboxes from UI
-
     const QString errorString = d->currentBackend->getErrorMessage();
     
     if(!errorString.isEmpty())
@@ -394,8 +392,21 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
         QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
 
-       GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
-       currentItem->setTagInfo(result);
+        QString combinedResult = makeTagString(returnedRGList[i], "{Country}/{City}", d->currentBackend->backendName());
+
+        //TODO: see what happens when no country nor city is returned
+        int separatorIndex = combinedResult.indexOf(QString("%1").arg("/"));
+        QString countryResult = combinedResult.left(separatorIndex);
+        QString cityResult = combinedResult.mid(separatorIndex+1, combinedResult.length()-separatorIndex-1);
+
+        QStringList elements, resultedData;
+        elements<<QString("%1").arg("{Country}")<<QString("%1").arg("{City}");
+        resultedData<<countryResult<<cityResult;
+
+        d->tagModel->addNewData(elements, resultedData);   
+
+        GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
+        currentItem->setTagInfo(result);
 
     }
 
@@ -422,7 +433,7 @@ void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
     
     kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
 
-    d->tagModel->addNewTags(index, "New Country");
+    //d->tagModel->addNewTags(index, "New Country");
     //d->tagModel->addSpacerTag(index, "New Country");
 
 }
