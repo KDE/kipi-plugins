@@ -1,9 +1,14 @@
 
 #include "rgtagmodel.moc"
 
+//local includes
 #include "rgtagmodel.h"
+
+//KDE includes
 #include "kdebug.h"
 
+//Qt includes
+#include <QtGui>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -260,6 +265,10 @@ QVariant RGTagModel::data(const QModelIndex& index, int role) const
     else if(role == Qt::DisplayRole)
     {
         return treeBranch->data;
+    }
+    else if(role == Qt::ForegroundRole)
+    {
+        return QColor(Qt::red);
     }
 
     return QVariant();
