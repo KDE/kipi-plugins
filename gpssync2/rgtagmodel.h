@@ -39,7 +39,7 @@ public:
     RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent = 0);
     ~RGTagModel();
 
-    enum Type {TypeChild, TypeSpacer};
+    enum Type {TypeChild, TypeSpacer, TypeNewChild};
     // QAbstractItemModel:
     virtual int columnCount(const QModelIndex& parent = QModelIndex() ) const;
     virtual bool setData(const QModelIndex& index, const QVariant& value, int role);
@@ -55,6 +55,7 @@ public:
     QModelIndex fromSourceIndex(const QModelIndex& externalTagModelIndex) const;
     QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
     void addSpacerTag(const QModelIndex&, const QString& );
+    void addNewTags(const QModelIndex&, const QString& );
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 

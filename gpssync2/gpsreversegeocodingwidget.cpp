@@ -422,6 +422,7 @@ void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
     
     kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
 
+    d->tagModel->addNewTags(index, "New Country");
     //d->tagModel->addSpacerTag(index, "New Country");
 
 }
