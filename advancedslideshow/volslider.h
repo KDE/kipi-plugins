@@ -2,7 +2,7 @@
 #ifndef VOLSLIDER_H
 #define VOLSLIDER_H
 
-#include <Phonon/VolumeSlider>
+#include <Phonon/volumeslider.h>
 
 typedef class Phonon::VolumeSlider VolSlider;
 

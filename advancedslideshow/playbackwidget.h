@@ -30,10 +30,10 @@
 
 // Phonon includes
 
-#include <Phonon/MediaObject>
-#include <Phonon/AudioOutput>
-#include <Phonon/Global>
-#include <Phonon/VolumeSlider>
+#include <Phonon/mediaobject.h>
+#include <Phonon/audiooutput.h>
+#include <Phonon/globalconfig.h>
+#include <Phonon/volumeslider.h>
 
 // KDE includes
 

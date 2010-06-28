@@ -43,9 +43,9 @@
 
 // Phonon includes
 
-#include <Phonon/AudioOutput>
-#include <Phonon/BackendCapabilities>
-#include <Phonon/MediaObject>
+#include <Phonon/audiooutput.h>
+#include <Phonon/backendcapabilities.h>
+#include <Phonon/mediaobject.h>
 
 // Local includes
 
