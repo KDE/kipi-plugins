@@ -311,6 +311,10 @@ QVariant RGTagModel::data(const QModelIndex& index, int role) const
     {
         return treeBranch->data;
     }
+    else if((treeBranch->type == TypeNewChild) && (role == Qt::ForegroundRole))
+    {
+        return QColor(Qt::green);
+    }
 
     return QVariant();
 }
