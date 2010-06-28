@@ -37,8 +37,8 @@
 
 // Phonon includes
 
-#include <Phonon/globalconfig.h>
-#include <Phonon/mediaobject.h>
+#include <phonon/globalconfig.h>
+#include <phonon/mediaobject.h>
 
 // KDE includes
 
