@@ -65,6 +65,7 @@ bool LoadContainerFromFile(KUrl url, GPSDataContainer* const container)
 
     double alt, lat, lng;
     bool hasCoordinates = exiv2Iface->getGPSInfo(alt, lat, lng);
+    kDebug()<<hasCoordinates;
     if (hasCoordinates)
     {
         container->setCoordinates(WMW2::WMWGeoCoordinate(lat, lng, alt));
@@ -96,6 +97,18 @@ void TestGPSExif::testBasicLoading()
         QVERIFY(LoadContainerFromFile(KUrl(testDataDir, "exiftest-nogps.png"), &container));
         QVERIFY(!container.hasCoordinates());
         QVERIFY(!container.hasAltitude());
+        QVERIFY(!container.hasNSatellites());
+        QVERIFY(!container.hasHDop());
+        QVERIFY(!container.hasPDop());
+        QVERIFY(!container.hasFixType());
+    }
+
+    {
+        // load a file with geo:5,15,25
+        GPSDataContainer container;
+        QVERIFY(LoadContainerFromFile(KUrl(testDataDir, "exiftest-5_15_25.jpg"), &container));
+        QVERIFY(container.hasCoordinates());
+        QVERIFY(container.hasAltitude());
         QVERIFY(!container.hasNSatellites());
         QVERIFY(!container.hasHDop());
         QVERIFY(!container.hasPDop());
