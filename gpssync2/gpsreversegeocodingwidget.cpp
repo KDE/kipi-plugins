@@ -372,6 +372,23 @@ void GPSReverseGeocodingWidget::slotHideOptions()
 
 }
 
+QStringList RemoveDuplicateTags(QStringList tagList)
+{
+    for(int i=0; i<tagList.count(); ++i)
+    {
+        for(int j=0; j<tagList.count(); ++j)
+        {
+            if(tagList[i].contains(tagList[j],Qt::CaseSensitive) && (i != j))
+            {
+                tagList.removeAt(j);
+            }
+        }
+    }
+
+    tagList.removeDuplicates();
+    return tagList;
+}
+
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
 
@@ -406,11 +423,18 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
         elements<<QString("%1").arg("{Country}")<<QString("%1").arg("{City}");
         resultedData<<countryResult<<cityResult;
 
-        d->tagModel->addNewData(elements, resultedData);   
+        QStringList returnedTags = d->tagModel->addNewData(elements, resultedData);   
+
+        returnedTags = RemoveDuplicateTags(returnedTags);
+
+        kDebug()<<"Returned tags:"<<returnedTags;
+
+        TagData tagStructure;
+        tagStructure.tags = returnedTags; 
 
         GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
         currentItem->setTagInfo(result);
-
+        currentItem->setTagData(tagStructure);
     }
 
     d->receivedRGCount+=returnedRGList.count();

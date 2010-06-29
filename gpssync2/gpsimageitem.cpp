@@ -261,16 +261,6 @@ bool GPSImageItem::setData(const int column, const int role, const QVariant& val
             m_dirty = true;
         }
     }
-/*
-    else if(role==RoleTags)
-    {
-        if(value.canConvert<QString>())
-        {
-            tags<<value.value<QString>();
-            kDebug()<<"TAGS:"<<tags;
-        }
-    }
-*/
     else
     {
         return KipiImageItem::setData(column, role, value);
@@ -579,6 +569,11 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         return KipiImageItem::lessThan(otherItem, column);
     }
 }
+
+void GPSImageItem::setTagData(TagData& externalTagData)
+{
+   this->imageTags = externalTagData; 
+} 
 
 } /* KIPIGPSSyncPlugin */
 

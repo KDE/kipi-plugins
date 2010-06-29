@@ -85,8 +85,9 @@ public:
     QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
     void addSpacerTag(const QModelIndex&, const QString& );
     void addNewTags(const QModelIndex&, const QString& );
-    void addNewData(QStringList& , QStringList&);
+    QStringList addNewData(QStringList& , QStringList&);
     void addDataInTree(TreeBranch*&, int, QStringList&, QStringList&);
+    QString getTagAddress(TreeBranch*, QStringList&, QStringList&);
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 
