@@ -34,9 +34,9 @@
 
 #include <kurl.h>
 
-// WorldMapWidget2 includes
+// Libkmap includes
 
-#include "../worldmapwidget2/lib//worldmapwidget2_primitives.h"
+#include <libkmap/worldmapwidget2_primitives.h>
 
 class TestGPXParsing;
 

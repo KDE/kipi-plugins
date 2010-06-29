@@ -7,7 +7,7 @@ TARGET_LINK_LIBRARIES(test_gpxparsing
                         ${KDE4_KDECORE_LIBS}
                         ${QT_QTTEST_LIBRARY}
                         ${QT_QTGUI_LIBRARY}
-                        worldmapwidget2
+                        kmap
                      )
 
 KDE4_ADD_EXECUTABLE(test_rgparsing
@@ -41,8 +41,8 @@ TARGET_LINK_LIBRARIES(test_gpsexif
                         ${KDE4_KDECORE_LIBS}
                         ${QT_QTTEST_LIBRARY}
                         ${QT_QTGUI_LIBRARY}
-                        worldmapwidget2
                         ${KEXIV2_LIBRARIES}
+                        kmap
                      )
 
 ADD_TEST(test_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/test_gpxparsing)

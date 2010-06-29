@@ -1,22 +1,23 @@
 #ifndef BACKEND_GOOGLE_MAPS_H
 #define BACKEND_GOOGLE_MAPS_H 
 
-
 //Qt includes
 
-
 #include <QStringList>
+
+// Libkmap includes
+
+#include <libkmap/html_widget.h>
 
 //local includes
 
 //#include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
-#include "../worldmapwidget2/lib/html_widget.h"
 
 
 namespace KIPIGPSSyncPlugin
 {
-   
+
 class BackendGoogleRGPrivate;
 
 class BackendGoogleRG : public RGBackend
@@ -44,8 +45,6 @@ public Q_SLOTS:
 private :
 
     BackendGoogleRGPrivate* const d;
-    
-
 };
 
 } //KipiGPSSyncPlugin

@@ -24,9 +24,9 @@
 
 #include <QAbstractItemModel>
 
-// WorldMapWidget2 includes
+// Libkmap includes
 
-#include "../worldmapwidget2/lib/worldmapwidget2_dragdrophandler.h"
+#include <libkmap/worldmapwidget2_dragdrophandler.h>
 
 namespace KIPIGPSSyncPlugin
 {

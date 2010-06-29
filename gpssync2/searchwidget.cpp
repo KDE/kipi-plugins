@@ -42,10 +42,13 @@
 #include <kmessagebox.h>
 #include <kvbox.h>
 
+// Libkmap includes
+
+#include <libkmap/worldmapwidget2.h>
+
 // local includes
 
 #include "searchbackend.h"
-#include "../worldmapwidget2/lib/worldmapwidget2.h"
 #include "gpssync2_common.h"
 #include "gpsbookmarkowner.h"
 #include "gpsundocommand.h"

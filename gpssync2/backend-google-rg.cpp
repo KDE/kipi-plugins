@@ -2,14 +2,19 @@
 #include "backend-google-rg.moc"
 
 //Qt includes
+
 #include <QTimer>
 #include <QString>
 #include <QStringList>
 #include <QList>
 #include <QMessageBox>
 
+// Libkmap includes
+
+#include <libkmap/html_widget.h>
+
 //local includes
-#include "../worldmapwidget2/lib/html_widget.h"
+
 #include "gpsreversegeocodingwidget.h"
 
 //kde includes

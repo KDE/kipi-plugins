@@ -29,8 +29,12 @@
 
 #include <kurl.h>
 
+// Libkmap includes
+
+#include <libkmap/worldmapwidget2_primitives.h>
+
 //local includes
-#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
+
 #include "gpsimageitem.h"
 
 namespace KIPIGPSSyncPlugin

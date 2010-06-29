@@ -20,9 +20,9 @@
 #ifndef GPSDATACONTAINER_H
 #define GPSDATACONTAINER_H
 
-// WMW2 includes
+// Libkmap includes
 
-#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
+#include <libkmap/worldmapwidget2_primitives.h>
 
 namespace KIPIGPSSyncPlugin
 {

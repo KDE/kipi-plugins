@@ -53,14 +53,14 @@ ENDIF (${KDE_VERSION} VERSION_GREATER "4.4.81")
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync2 ${kipiplugin_gpssync_PART_SRCS})
 
-# TODO: verify that the WorldMapWidget2 library is installed!
+# TODO: verify that the libkmap library is installed!
 TARGET_LINK_LIBRARIES(kipiplugin_gpssync2 
                       ${KDE4_KPARTS_LIBS} 
                       ${KDE4_KHTML_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       kipiplugins
-                      worldmapwidget2
+                      kmap
                      )
 
 INSTALL(TARGETS kipiplugin_gpssync2 DESTINATION ${PLUGIN_INSTALL_DIR})

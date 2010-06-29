@@ -1,10 +1,9 @@
 How to build this:
 
 - check out kipi-plugins and make sure you can compile it
-- check out WorldMapWidget2 (dependencies: libmarble-dev)
-- add links to this directory and the worldmapwidget2 directory to the kipi-plugins directory
+- check out libkmap (dependencies: libmarble-dev)
+- add links to this directory to the kipi-plugins directory
 - add this to the kipi-plugins/CMakeLists.txt:
 
-ADD_SUBDIRECTORY(worldmapwidget2)
 ADD_SUBDIRECTORY(gpssync2)
 

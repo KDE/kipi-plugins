@@ -24,9 +24,12 @@
 
 #include <QObject>
 
+// Libkmap includes
+
+#include <libkmap/worldmapwidget2_primitives.h>
+
 // local includes
 
-#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
 #include "gpsreversegeocodingwidget.h"
 
 namespace KIO { class Job; }

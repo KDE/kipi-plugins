@@ -32,8 +32,12 @@
 #include <QWidget>
 #include <QItemSelection>
 
+// Libkmap includes
+
+#include <libkmap/worldmapwidget2_primitives.h>
+
 //local includes
-#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
+
 #include "gpsundocommand.h"
 #include "backend-rg.h"
 

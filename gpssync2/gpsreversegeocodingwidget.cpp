@@ -53,10 +53,13 @@
 #include <kmessagebox.h>
 #include <kmenu.h>
 
+// Libkmap includes
+
+#include <libkmap/html_widget.h>
+#include <libkmap/worldmapwidget2_primitives.h>
+
 //local includes
 
-#include "../worldmapwidget2/lib/worldmapwidget2_primitives.h"
-#include "../worldmapwidget2/lib/html_widget.h"
 #include "gpssyncdialog.h"
 #include "kipiimagemodel.h"
 #include "gpsimageitem.h"

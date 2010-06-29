@@ -76,9 +76,10 @@
 #include <kundostack.h>
 #include <kvbox.h>
 
-// WorldMapWidget2 includes
+// Libkmap includes
 
-#include "../worldmapwidget2/lib/worldmapwidget2.h"
+#include <libkmap/html_widget.h>
+#include <libkmap/worldmapwidget2.h>
 
 // Local includes
 
