@@ -150,7 +150,7 @@ public:
     KTabWidget               *tabWidget;
     QSplitter                *VSplitter;
     QSplitter                *HSplitter;
-    WMW2::KMap               *mapWidget;
+    KMapIface::KMap               *mapWidget;
     KipiImageList            *treeView;
     KIPIPlugins::PreviewManager *previewManager;
     GPSSettingsWidget        *settingsWidget;
@@ -242,7 +242,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->HSplitter->addWidget(d->VSplitter);
     d->HSplitter->setStretchFactor(0, 10);
 
-    d->mapWidget = new WMW2::KMap(this);
+    d->mapWidget = new KMapIface::KMap(this);
     d->mapWidget->setRepresentativeChooser(d->representativeChooser);
     d->mapWidget->setEditModeAvailable(true);
     d->mapWidget->setDisplayMarkersModel(d->imageModel, GPSImageItem::RoleCoordinates, d->selectionModel);
@@ -358,8 +358,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                         ki18n("Developer and maintainer"),
                               "mike at mghansen dot de");
 
-    connect(d->mapWidget, SIGNAL(signalDisplayMarkersMoved(const QList<QPersistentModelIndex>&, const WMW2::WMWGeoCoordinate&)),
-            this, SLOT(slotMapMarkersMoved(const QList<QPersistentModelIndex>&, const WMW2::WMWGeoCoordinate&)));
+    connect(d->mapWidget, SIGNAL(signalDisplayMarkersMoved(const QList<QPersistentModelIndex>&, const KMapIface::WMWGeoCoordinate&)),
+            this, SLOT(slotMapMarkersMoved(const QList<QPersistentModelIndex>&, const KMapIface::WMWGeoCoordinate&)));
 
     // TODO: this does not seem to work any more with klinkitemselectionmodel
     connect(d->selectionModel, SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
@@ -686,7 +686,7 @@ void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
     if (!item)
         return;
 
-    const WMW2::WMWGeoCoordinate imageCoordinates = item->coordinates();
+    const KMapIface::WMWGeoCoordinate imageCoordinates = item->coordinates();
     if (imageCoordinates.hasCoordinates())
     {
         d->mapWidget->setCenter(imageCoordinates);
@@ -732,7 +732,7 @@ public:
 };
 
 GPSSyncWMWRepresentativeChooser::GPSSyncWMWRepresentativeChooser(KipiImageModel* const model, QObject* const parent)
-: WMW2::WMWRepresentativeChooser(parent), d(new GPSSyncWMWRepresentativeChooserPrivate())
+: KMapIface::WMWRepresentativeChooser(parent), d(new GPSSyncWMWRepresentativeChooserPrivate())
 {
     d->model = model;
 
@@ -892,7 +892,7 @@ void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& prog
     d->progressCancelButton->setVisible(d->progressCancelObject!=0);
 }
 
-void GPSSyncDialog::slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const WMW2::WMWGeoCoordinate& coordinates)
+void GPSSyncDialog::slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMapIface::WMWGeoCoordinate& coordinates)
 {
     GPSUndoCommand* const undoCommand = new GPSUndoCommand();
 

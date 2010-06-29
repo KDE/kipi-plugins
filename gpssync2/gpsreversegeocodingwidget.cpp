@@ -336,10 +336,10 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
         const qreal latitude = gpsData.getCoordinates().lat();
         const qreal longitude = gpsData.getCoordinates().lon();
-     
+
         RGInfo photoObj;
         photoObj.id = itemIndex;
-        photoObj.coordinates = WMW2::WMWGeoCoordinate(latitude, longitude);
+        photoObj.coordinates = KMapIface::WMWGeoCoordinate(latitude, longitude);
 
         photoList << photoObj;
     }

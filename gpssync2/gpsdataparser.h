@@ -71,7 +71,7 @@ public:
         }
 
         QDateTime dateTime;
-        WMW2::WMWGeoCoordinate coordinates;
+        KMapIface::WMWGeoCoordinate coordinates;
         int nSatellites;
         qreal hDop;
         qreal pDop;
@@ -106,7 +106,7 @@ public:
         qreal pDop;
         int fixType;
         GPXFlags flags;
-        WMW2::WMWGeoCoordinate coordinates;
+        KMapIface::WMWGeoCoordinate coordinates;
     };
 
     class GPXCorrelationOptions

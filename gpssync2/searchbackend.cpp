@@ -162,7 +162,7 @@ void SearchBackend::slotResult(KJob* kJob)
                 continue;
 
             SearchResult result;
-            result.coordinates = WMW2::WMWGeoCoordinate(lat, lon);
+            result.coordinates = KMapIface::WMWGeoCoordinate(lat, lon);
             result.name = displayName;
 
             if (!placeId.isEmpty())
@@ -229,7 +229,7 @@ void SearchBackend::slotResult(KJob* kJob)
                 continue;
 
             SearchResult result;
-            result.coordinates = WMW2::WMWGeoCoordinate(lat, lon);
+            result.coordinates = KMapIface::WMWGeoCoordinate(lat, lon);
             result.name = displayName;
 
             if (!geoNameId.isEmpty())

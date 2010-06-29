@@ -67,7 +67,7 @@ bool LoadContainerFromFile(KUrl url, GPSDataContainer* const container)
     bool hasCoordinates = exiv2Iface->getGPSInfo(alt, lat, lng);
     if (hasCoordinates)
     {
-        container->setCoordinates(WMW2::WMWGeoCoordinate(lat, lng, alt));
+        container->setCoordinates(KMapIface::WMWGeoCoordinate(lat, lng, alt));
     }
 
     return true;

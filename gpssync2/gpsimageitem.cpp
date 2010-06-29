@@ -83,7 +83,7 @@ void GPSImageItem::loadImageDataInternal()
         bool infoIsValid = m_exiv2Iface->getGPSInfo(alt, lat, lng);
         if (infoIsValid)
         {
-            m_gpsData.setCoordinates(WMW2::WMWGeoCoordinate(lat, lng, alt));
+            m_gpsData.setCoordinates(KMapIface::WMWGeoCoordinate(lat, lng, alt));
         }
     }
 
@@ -255,9 +255,9 @@ bool GPSImageItem::setData(const int column, const int role, const QVariant& val
 {
     if (role==RoleCoordinates)
     {
-        if (value.canConvert<WMW2::WMWGeoCoordinate>())
+        if (value.canConvert<KMapIface::WMWGeoCoordinate>())
         {
-            m_gpsData.setCoordinates(value.value<WMW2::WMWGeoCoordinate>());
+            m_gpsData.setCoordinates(value.value<KMapIface::WMWGeoCoordinate>());
             m_dirty = true;
         }
     }
@@ -279,7 +279,7 @@ bool GPSImageItem::setData(const int column, const int role, const QVariant& val
     return true;
 }
 
-void GPSImageItem::setCoordinates(const WMW2::WMWGeoCoordinate& newCoordinates)
+void GPSImageItem::setCoordinates(const KMapIface::WMWGeoCoordinate& newCoordinates)
 {
     m_gpsData.setCoordinates(newCoordinates);
     m_dirty = true;

@@ -51,9 +51,10 @@ class GPSSyncDialogPriv;
 
 class GPSSyncWMWRepresentativeChooserPrivate;
 
-class GPSSyncWMWRepresentativeChooser : public WMW2::WMWRepresentativeChooser
+class GPSSyncWMWRepresentativeChooser : public KMapIface::WMWRepresentativeChooser
 {
 Q_OBJECT
+
 public:
     GPSSyncWMWRepresentativeChooser(KipiImageModel* const model, QObject* const parent = 0);
     virtual ~GPSSyncWMWRepresentativeChooser();
@@ -100,7 +101,7 @@ private Q_SLOTS:
     void slotFileChangesSaved(int beginIndex, int endIndex);
     void slotProgressChanged(const int currentProgress);
     void slotProgressSetup(const int maxProgress, const QString& progressText);
-    void slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const WMW2::WMWGeoCoordinate& coordinates);
+    void slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMapIface::WMWGeoCoordinate& coordinates);
     void slotGPSUndoCommand(GPSUndoCommand* undoCommand);
     void slotSortOptionTriggered(QAction* sortAction);
     void setCurrentTab(const int index);

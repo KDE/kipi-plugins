@@ -45,7 +45,7 @@ public:
     QList<QPersistentModelIndex> draggedIndices;
 };
 
-class MapDragDropHandler : public WMW2::DragDropHandler
+class MapDragDropHandler : public KMapIface::DragDropHandler
 {
 Q_OBJECT
 
@@ -54,7 +54,7 @@ public:
     virtual ~MapDragDropHandler();
 
     virtual Qt::DropAction accepts(const QDropEvent* e);
-    virtual bool dropEvent(const QDropEvent* e, const WMW2::WMWGeoCoordinate& dropCoordinates, QList<QPersistentModelIndex>* const droppedIndices);
+    virtual bool dropEvent(const QDropEvent* e, const KMapIface::WMWGeoCoordinate& dropCoordinates, QList<QPersistentModelIndex>* const droppedIndices);
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices);
 
 private:

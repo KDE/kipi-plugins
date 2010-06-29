@@ -49,7 +49,7 @@ public:
     {
     }
 
-    WMW2::HTMLWidget* htmlWidget;
+    KMapIface::HTMLWidget* htmlWidget;
     QList<RGInternal> internalList;
     int counter;
     QString language;
@@ -60,7 +60,7 @@ BackendGoogleRG::BackendGoogleRG(QObject* const parent)
 : RGBackend(parent), d(new BackendGoogleRGPrivate())
 {  
 
-    d->htmlWidget = new WMW2::HTMLWidget();
+    d->htmlWidget = new KMapIface::HTMLWidget();
     KUrl htmlUrl = KStandardDirs::locate("data", "gpssync2/rg-google-maps-v3.html");
     d->htmlWidget->openUrl(htmlUrl);
     d->language = "EN";

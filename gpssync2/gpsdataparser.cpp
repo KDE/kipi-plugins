@@ -391,7 +391,7 @@ void GPSDataParserThread::run()
                 const uint tCor = itemDateTime.toTime_t();
                 if (tCor-tBefore!=0)
                 {
-                    WMW2::WMWGeoCoordinate resultCoordinates;
+                    KMapIface::WMWGeoCoordinate resultCoordinates;
                     const double latBefore = dataPointBefore.coordinates.lat();
                     const double lonBefore = dataPointBefore.coordinates.lon();
                     const double latAfter = dataPointAfter.coordinates.lat();

@@ -46,7 +46,7 @@ class RGInfo {
 
     //QVariant id;
     QPersistentModelIndex id;
-    WMW2::WMWGeoCoordinate coordinates;
+    KMapIface::WMWGeoCoordinate coordinates;
     QMap<QString, QString> rgData;
 };
 
@@ -73,8 +73,8 @@ public:
     GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~GPSImageItem();
 
-    void setCoordinates(const WMW2::WMWGeoCoordinate& newCoordinates);
-    inline WMW2::WMWGeoCoordinate coordinates() const { return m_gpsData.getCoordinates(); }
+    void setCoordinates(const KMapIface::WMWGeoCoordinate& newCoordinates);
+    inline KMapIface::WMWGeoCoordinate coordinates() const { return m_gpsData.getCoordinates(); }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
     inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
     inline void setTagInfo(QString rgTag){ tags = rgTag; emitDataChanged(); }

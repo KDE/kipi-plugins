@@ -42,7 +42,7 @@ inline QString getKipiUserAgentName()
     return "KIPI-Plugins GPSSync - kde-imaging@kde.org";
 }
 
-inline void CoordinatesToClipboard(const WMW2::WMWGeoCoordinate& coordinates, const KUrl& url, const QString& title)
+inline void CoordinatesToClipboard(const KMapIface::WMWGeoCoordinate& coordinates, const KUrl& url, const QString& title)
 {
     const QString lat = coordinates.latString();
     const QString lon = coordinates.lonString();

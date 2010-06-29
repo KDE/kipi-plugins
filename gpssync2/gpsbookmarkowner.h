@@ -39,7 +39,7 @@ namespace KIPIGPSSyncPlugin
 class KipiImageModel;
 class GPSUndoCommand;
 class GPSBookmarkModelHelperPrivate;
-class GPSBookmarkModelHelper : public WMW2::WMWModelHelper
+class GPSBookmarkModelHelper : public KMapIface::WMWModelHelper
 {
 Q_OBJECT
 public:
@@ -53,7 +53,7 @@ public:
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
-    virtual bool itemCoordinates(const QModelIndex& index, WMW2::WMWGeoCoordinate* const coordinates) const;
+    virtual bool itemCoordinates(const QModelIndex& index, KMapIface::WMWGeoCoordinate* const coordinates) const;
     virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
     virtual Flags modelFlags() const;
     virtual Flags itemFlags(const QModelIndex& index) const;
@@ -90,7 +90,7 @@ public:
     KMenu* getMenu() const;
 
     void changeAddBookmark(const bool state);
-    void setPositionAndTitle(const WMW2::WMWGeoCoordinate& coordinates, const QString& title);
+    void setPositionAndTitle(const KMapIface::WMWGeoCoordinate& coordinates, const QString& title);
 
     KBookmarkManager* bookmarkManager() const;
 
