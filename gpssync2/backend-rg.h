@@ -31,7 +31,7 @@
 
 // Libkmap includes
 
-#include <libkmap/worldmapwidget2_primitives.h>
+#include <libkmap/kmap_primitives.h>
 
 //local includes
 

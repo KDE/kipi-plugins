@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "gpssyncdialog.h"
 #include "gpssyncdialog.moc"
 
 // Qt includes
@@ -79,7 +78,7 @@
 // Libkmap includes
 
 #include <libkmap/html_widget.h>
-#include <libkmap/worldmapwidget2.h>
+#include <libkmap/kmap.h>
 
 // Local includes
 
@@ -151,7 +150,7 @@ public:
     KTabWidget               *tabWidget;
     QSplitter                *VSplitter;
     QSplitter                *HSplitter;
-    WMW2::WorldMapWidget2    *mapWidget;
+    WMW2::KMap               *mapWidget;
     KipiImageList            *treeView;
     KIPIPlugins::PreviewManager *previewManager;
     GPSSettingsWidget        *settingsWidget;
@@ -243,7 +242,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->HSplitter->addWidget(d->VSplitter);
     d->HSplitter->setStretchFactor(0, 10);
 
-    d->mapWidget = new WMW2::WorldMapWidget2(this);
+    d->mapWidget = new WMW2::KMap(this);
     d->mapWidget->setRepresentativeChooser(d->representativeChooser);
     d->mapWidget->setEditModeAvailable(true);
     d->mapWidget->setDisplayMarkersModel(d->imageModel, GPSImageItem::RoleCoordinates, d->selectionModel);

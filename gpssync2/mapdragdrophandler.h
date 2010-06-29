@@ -26,7 +26,7 @@
 
 // Libkmap includes
 
-#include <libkmap/worldmapwidget2_dragdrophandler.h>
+#include <libkmap/kmap_dragdrophandler.h>
 
 namespace KIPIGPSSyncPlugin
 {

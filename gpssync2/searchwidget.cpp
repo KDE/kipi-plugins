@@ -44,7 +44,7 @@
 
 // Libkmap includes
 
-#include <libkmap/worldmapwidget2.h>
+#include <libkmap/kmap.h>
 
 // local includes
 
@@ -71,7 +71,7 @@ public:
     {
     }
 
-    WMW2::WorldMapWidget2* mapWidget;
+    WMW2::KMap* mapWidget;
     GPSBookmarkOwner* gpsBookmarkOwner;
     KipiImageModel* kipiImageModel;
     QItemSelectionModel* kipiImageSelectionModel;
@@ -96,8 +96,10 @@ public:
     KAction* actionMoveImagesToThisResult;
 };
 
-SearchWidget::SearchWidget(WMW2::WorldMapWidget2* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent)
-: QWidget(parent), d(new SearchWidgetPrivate())
+SearchWidget::SearchWidget(WMW2::KMap* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, 
+                           KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, 
+                           QWidget* parent)
+            : QWidget(parent), d(new SearchWidgetPrivate())
 {
     d->mapWidget = mapWidget;
     d->gpsBookmarkOwner = gpsBookmarkOwner;

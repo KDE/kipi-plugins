@@ -42,9 +42,10 @@ class KipiImageModelPrivate;
 
 class KipiImageModel : public QAbstractItemModel
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     KipiImageModel(QObject* const parent = 0);
     ~KipiImageModel();
 
@@ -70,44 +71,51 @@ public:
     void setKipiInterface(KIPI::Interface* const interface);
 
 protected:
+
     void itemChanged(KipiImageItem* const changedItem);
 
 Q_SIGNALS:
+
     void signalThumbnailForIndexAvailable(const QPersistentModelIndex& index, const QPixmap& pixmap);
 
 protected Q_SLOTS:
+
     void slotThumbnailFromInterface(const KUrl& url, const QPixmap& pixmap);
 
 private:
+
     KipiImageModelPrivate* const d;
 
     friend class KipiImageItem;
 };
 
 class KipiImageSortProxyModelPrivate;
+
 class KipiImageSortProxyModel : public QSortFilterProxyModel
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     KipiImageSortProxyModel(KipiImageModel* const kipiImageModel, QItemSelectionModel* const sourceSelectionModel);
     ~KipiImageSortProxyModel();
 
     QItemSelectionModel* mappedSelectionModel();
 
 protected:
+
     virtual bool lessThan(const QModelIndex& left, const QModelIndex& right) const;
 
 private:
+
     KipiImageSortProxyModelPrivate* const d;
 };
-
 
 } /* KIPIGPSSyncPlugin */
 
 // TODO: ugly way to prevent double declaration of the metatype
-#ifndef WORLDMAPWIDGET2_PRIMITIVES_H
+#ifndef KMAP_PRIMITIVES_H
 Q_DECLARE_METATYPE(QPersistentModelIndex);
-#endif /* WORLDMAPWIDGET2_PRIMITIVES_H */
+#endif /* KMAP_PRIMITIVES_H */
 
 #endif /* KIPIIMAGEMODEL_H */
