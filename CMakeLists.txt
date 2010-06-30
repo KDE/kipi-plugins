@@ -328,7 +328,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(facebook)
     ADD_SUBDIRECTORY(printimages)
     ADD_SUBDIRECTORY(expoblending)
-    ADD_SUBDIRECTORY(gpssync2)
 
     # Plugins which are optional depencies.
 
