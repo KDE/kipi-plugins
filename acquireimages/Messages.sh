@@ -1,3 +1,4 @@
 #! /bin/sh
-$XGETTEXT *.cpp -o $podir/kipiplugin_acquireimages.pot
-
+$EXTRACTRC `find . -name "*.ui" -o -name "*.rc" -o -name "*.kcfg" ` >> rc.cpp
+$XGETTEXT `find . -name "*.cpp" -o -name "*.h"` -o $podir/kipiplugin_acquireimages.pot
+rm -f rc.cpp
