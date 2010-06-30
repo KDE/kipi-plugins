@@ -1,4 +1,4 @@
-#!/bin/sh
-$EXTRACTRC `find . -name \*.ui` >> rc.cpp
-$XGETTEXT *.cpp *.h -o $podir/kipiplugin_piwigoexport.pot
+#! /bin/sh
+$EXTRACTRC `find . -name "*.ui" -o -name "*.rc" -o -name "*.kcfg" ` >> rc.cpp
+$XGETTEXT `find . -name "*.cpp" -o -name "*.h"` -o $podir/kipiplugin_piwigoexport.pot
 rm -f rc.cpp
