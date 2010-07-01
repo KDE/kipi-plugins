@@ -7,7 +7,7 @@
  * Description : a plugin to synchronize pictures with
  *               a GPS device.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,7 +27,8 @@
 // Qt includes
 
 #include <QModelIndex>
-#include <qwidget.h>
+#include <QWidget>
+
 // KDE includes
 
 #include <kdialog.h>
@@ -56,6 +57,7 @@ class GPSSyncWMWRepresentativeChooser : public KMapIface::WMWRepresentativeChoos
 Q_OBJECT
 
 public:
+
     GPSSyncWMWRepresentativeChooser(KipiImageModel* const model, QObject* const parent = 0);
     virtual ~GPSSyncWMWRepresentativeChooser();
 
@@ -64,12 +66,15 @@ public:
     virtual bool indicesEqual(const QVariant& indexA, const QVariant& indexB);
 
 private Q_SLOTS:
+
     void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
 
 private:
+
     GPSSyncWMWRepresentativeChooserPrivate* const d;
 };
 
+// ------------------------------------------------------------------------------------------------
 
 class GPSSyncDialog : public KDialog
 {
@@ -86,6 +91,7 @@ protected:
 
     void closeEvent(QCloseEvent* e);
     bool eventFilter( QObject *, QEvent *);
+
 private:
 
     void readSettings();
@@ -93,6 +99,7 @@ private:
     void saveChanges(const bool closeAfterwards);
 
 private Q_SLOTS:
+
     void slotCurrentImageChanged(const QModelIndex& current, const QModelIndex& previous);
     void slotImageActivated(const QModelIndex& index);
     void slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
@@ -111,8 +118,8 @@ private Q_SLOTS:
 
 private:
 
+    int                      splitterSize;
     GPSSyncDialogPriv* const d;
-    int splitterSize;
 };
 
 }  // namespace KIPIGPSSyncPlugin
