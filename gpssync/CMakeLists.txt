@@ -67,8 +67,8 @@ INSTALL(TARGETS kipiplugin_gpssync DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_gpssync.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
 INSTALL(FILES
-    reverse-js.js
-    rg-google-maps-v3.html
+    data/reverse-js.js
+    data/rg-google-maps-v3.html
     data/bookmarks-marker.png
     data/searchmarker-normal.png
     data/searchmarker-selected.png
