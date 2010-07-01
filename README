@@ -63,6 +63,7 @@ libpng          >= 1.2.x                        http://www.libpng.org/pub/png/li
 libkipi         >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 libkexiv2       >= 1.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 libkdcraw       >= 1.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
+libkmap         >= 0.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
 Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
