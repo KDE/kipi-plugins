@@ -10,7 +10,7 @@ gpssync parts:
 - when resizing the widget horizontally, the star moves back and forth
 - add a tab for forward-geocoding
 
-wmw2 parts:
+kmap parts:
 - control over clustering grid size (UI)
 - re-cluster only every few pixels of panning
 - the clustering model does not go deep enough - when zooming in on Marble OSM, the positions are quantized
