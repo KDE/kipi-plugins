@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Remote Piwigo Export
+Name[bg]=Изнасяне към Piwigo
 Name[ca]=Remote Piwigo Export
 Name[ca@valencia]=Remote Piwigo Export
 Name[da]=Eksport til ekstern Piwigo
@@ -22,6 +23,7 @@ Name[x-test]=xxRemote Piwigo Exportxx
 Name[zh_CN]=远程 Piwigo 导出
 Name[zh_TW]=遠端 Piwigo 匯出
 Comment=A tool to export images to a remote Piwigo
+Comment[bg]=Инструмент за изнасяне на изображения към отдалечена уеб-услуга Piwigo
 Comment[ca]=Una eina per a exportar imatges a un Piwigo remot
 Comment[ca@valencia]=Una eina per a exportar imatges a un Piwigo remot
 Comment[da]=Et værktøj til at eksportere billeder til en ekstern Piwigo
