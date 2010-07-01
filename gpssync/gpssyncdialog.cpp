@@ -7,7 +7,7 @@
  * Description : a plugin to synchronize pictures with
  *               a GPS device.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
  * Copyright (C) 2010 by Gabriel Voicu <ping dot gabi at gmail dot com>
  *
@@ -315,21 +315,21 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->tabBar->addTab("Undo/Redo");
     d->tabBar->addTab("Reverse Geocoding");
     d->tabBar->addTab("Search");
-    
-    d->tabBar->installEventFilter(this);       
+
+    d->tabBar->installEventFilter(this);
 
     d->previewManager = new KIPIPlugins::PreviewManager(d->stackedWidget);
     // TODO: why is the minimum size hardcoded to 400x300???
-    
+
     d->previewManager->setMinimumSize(QSize(200, 200));
-    d->stackedWidget->addWidget(d->previewManager);           
+    d->stackedWidget->addWidget(d->previewManager);
 
     d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
-    d->stackedWidget->addWidget(d->correlatorWidget);             
+    d->stackedWidget->addWidget(d->correlatorWidget);
 
     d->settingsWidget = new GPSSettingsWidget(d->stackedWidget);
-    d->stackedWidget->addWidget(d->settingsWidget);              
-    
+    d->stackedWidget->addWidget(d->settingsWidget);
+
     d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
     d->stackedWidget->addWidget(d->undoView);
 
@@ -348,7 +348,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Plugin to synchronize pictures' metadata with a GPS device"),
-                   ki18n("(c) 2006-2009, Gilles Caulier"));
+                   ki18n("(c) 2006-2010, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Developer and maintainer"),
@@ -357,6 +357,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->about->addAuthor(ki18n("Michael G. Hansen"),
                         ki18n("Developer and maintainer"),
                               "mike at mghansen dot de");
+
+    d->about->addAuthor(ki18n("Gabriel Voicu"),
+                        ki18n("Developer"),
+                              "ping dot gabi at gmail dot com");
 
     connect(d->mapWidget, SIGNAL(signalDisplayMarkersMoved(const QList<QPersistentModelIndex>&, const KMapIface::WMWGeoCoordinate&)),
             this, SLOT(slotMapMarkersMoved(const QList<QPersistentModelIndex>&, const KMapIface::WMWGeoCoordinate&)));
