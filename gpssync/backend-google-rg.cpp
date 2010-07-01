@@ -61,7 +61,7 @@ BackendGoogleRG::BackendGoogleRG(QObject* const parent)
 {  
 
     d->htmlWidget = new KMapIface::HTMLWidget();
-    KUrl htmlUrl = KStandardDirs::locate("data", "gpssync2/rg-google-maps-v3.html");
+    KUrl htmlUrl = KStandardDirs::locate("data", "gpssync/rg-google-maps-v3.html");
     d->htmlWidget->openUrl(htmlUrl);
     d->language = "EN";
 

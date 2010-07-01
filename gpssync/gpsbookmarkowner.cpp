@@ -186,7 +186,7 @@ GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkM
     d->model = new QStandardItemModel(this);
     d->bookmarkManager = bookmarkManager;
     d->kipiImageModel = kipiImageModel;
-    const KUrl markerUrl = KStandardDirs::locate("data", "gpssync2/bookmarks-marker.png");
+    const KUrl markerUrl = KStandardDirs::locate("data", "gpssync/bookmarks-marker.png");
     d->pixmap = QPixmap(markerUrl.toLocalFile());
 
     connect(d->bookmarkManager, SIGNAL(bookmarksChanged(QString)),

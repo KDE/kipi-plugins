@@ -57,22 +57,22 @@
 #include "gpssyncdialog.h"
 
 K_PLUGIN_FACTORY( GPSSyncFactory, registerPlugin<Plugin_GPSSync>(); )
-K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync2") )
+K_EXPORT_PLUGIN ( GPSSyncFactory("kipiplugin_gpssync") )
 
 Plugin_GPSSync::Plugin_GPSSync(QObject *parent, const QVariantList &)
-              : KIPI::Plugin( GPSSyncFactory::componentData(), parent, "GPSSync2")
+              : KIPI::Plugin( GPSSyncFactory::componentData(), parent, "GPSSync")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_GPSSync2 plugin loaded" ;
+    kDebug(AREA_CODE_LOADING) << "Plugin_GPSSync plugin loaded" ;
 }
 
 void Plugin_GPSSync::setup( QWidget* widget )
 {
     KIPI::Plugin::setup( widget );
 
-    m_action_geolocation = new KActionMenu(KIcon("applications-internet"), i18n("Geolocation2"), actionCollection());
+    m_action_geolocation = new KActionMenu(KIcon("applications-internet"), i18n("Geolocation"), actionCollection());
 
-    KAction *gpssync = actionCollection()->addAction("gpssync2");
-    gpssync->setText(i18n("Correlator2"));
+    KAction *gpssync = actionCollection()->addAction("gpssync");
+    gpssync->setText(i18n("Correlator"));
     gpssync->setIcon(KIcon("gpsimagetag"));
     connect(gpssync, SIGNAL(triggered(bool)),
             this, SLOT(slotGPSSync()));

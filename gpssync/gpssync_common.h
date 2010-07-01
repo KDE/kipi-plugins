@@ -17,8 +17,8 @@
  *
  * ============================================================ */
 
-#ifndef GPSSYNC2_COMMON_H
-#define GPSSYNC2_COMMON_H
+#ifndef GPSSYNC_COMMON_H
+#define GPSSYNC_COMMON_H
 
 // Qt includes
 
@@ -97,4 +97,4 @@ inline void CoordinatesToClipboard(const KMapIface::WMWGeoCoordinate& coordinate
 
 } /* KIPIGPSSyncPlugin */
 
-#endif /* GPSSYNC2_COMMON_H */
+#endif /* GPSSYNC_COMMON_H */

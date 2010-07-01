@@ -20,6 +20,12 @@
 
 #include "backend-geonamesUS-rg.moc"
 
+//Qt includes
+#include <QDomDocument>
+#include <QMap>
+#include <QMessageBox>
+#include <QString>
+#include <QTimer>
 
 //KDE includes
 #include <kio/scheduler.h>
@@ -33,20 +39,13 @@
 //local includes
 #include "backend-geonamesUS-rg.h"
 #include "backend-rg.h"
-#include "gpssync2_common.h"
-
-//Qt includes
-#include <QDomDocument>
-#include <QMap>
-#include <QMessageBox>
-#include <QString>
-#include <qtimer.h>
+#include "gpssync_common.h"
 
 namespace KIPIGPSSyncPlugin
 {
 
-
-class GeonamesUSInternalJobs {
+class GeonamesUSInternalJobs
+{
 
 public:
 

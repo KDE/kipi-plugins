@@ -47,7 +47,7 @@
 #include "gpsbookmarkowner.h"
 #include "gpsimageitem.h"
 #include "gpsundocommand.h"
-#include "gpssync2_common.h"
+#include "gpssync_common.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -65,6 +65,8 @@ public:
         actionBookmark = 0;
     }
 
+    bool              enabled;
+
     KAction          *actionCopy;
     KAction          *actionPaste;
     KAction          *actionBookmark;
@@ -74,8 +76,7 @@ public:
 
     GPSBookmarkOwner *bookmarkOwner;
 
-    KipiImageList       *imagesList;
-    bool enabled;
+    KipiImageList    *imagesList;
 };
 
 GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBookmarkOwner* const bookmarkOwner)

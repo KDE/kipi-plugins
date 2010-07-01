@@ -49,7 +49,7 @@
 // local includes
 
 #include "searchbackend.h"
-#include "gpssync2_common.h"
+#include "gpssync_common.h"
 #include "gpsbookmarkowner.h"
 #include "gpsundocommand.h"
 #include "kipiimagemodel.h"
@@ -255,10 +255,10 @@ class SearchResultModelPrivate
 public:
     SearchResultModelPrivate()
     {
-        const KUrl markerUrl = KStandardDirs::locate("data", "gpssync2/searchmarker-normal.png");
+        const KUrl markerUrl = KStandardDirs::locate("data", "gpssync/searchmarker-normal.png");
         markerNormal = QPixmap(markerUrl.toLocalFile());
 
-        const KUrl markerSelectedUrl = KStandardDirs::locate("data", "gpssync2/searchmarker-selected.png");
+        const KUrl markerSelectedUrl = KStandardDirs::locate("data", "gpssync/searchmarker-selected.png");
         markerSelected = QPixmap(markerSelectedUrl.toLocalFile());
     }
 

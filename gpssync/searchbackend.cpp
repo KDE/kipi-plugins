@@ -30,7 +30,7 @@
 
 // local includes
 
-#include "gpssync2_common.h"
+#include "gpssync_common.h"
 
 namespace KIPIGPSSyncPlugin
 {
