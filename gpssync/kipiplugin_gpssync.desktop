@@ -2,9 +2,9 @@
 Comment=A tool to geolocalize pictures
 Encoding=UTF-8
 Icon=
-Name=GPSSync2
+Name=GPSSync
 ServiceTypes=KIPI/Plugin
 Type=Service
-X-KDE-Library=kipiplugin_gpssync2
+X-KDE-Library=kipiplugin_gpssync
 X-KIPI-ReqFeatures=ImagesHasTime
 author=Gilles Caulier, caulier dot gilles at gmail dot com
