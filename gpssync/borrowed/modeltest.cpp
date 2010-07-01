@@ -23,7 +23,7 @@
 
 #include <QtGui/QtGui>
 
-#include "modeltest.h"
+#include "modeltest.moc"
 
 Q_DECLARE_METATYPE(QModelIndex)
 
