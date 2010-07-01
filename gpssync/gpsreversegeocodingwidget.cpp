@@ -218,14 +218,14 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->UGridContainer->setLayout(gridLayout);
 
-    KSeparator* const separator = new KSeparator(Qt::Horizontal, vbox);
+    new KSeparator(Qt::Horizontal, vbox);
     d->buttonHideOptions = new QPushButton(i18n("Less options"), vbox);
     d->hideOptions = true;
 
 
     d->LGridContainer = new QWidget(vbox);
     QGridLayout* LGridLayout = new QGridLayout(d->LGridContainer);
-       
+
     d->autoTag = new QCheckBox("Tag automatically when coordinates are changed", d->LGridContainer);
 
     d->metadataLabel = new QLabel( i18n("Write tags to:"),d->LGridContainer); 

@@ -278,12 +278,12 @@ SearchResultModel::~SearchResultModel()
     delete d;
 }
 
-int SearchResultModel::columnCount(const QModelIndex& parent) const
+int SearchResultModel::columnCount(const QModelIndex& /*parent*/) const
 {
     return 1;
 }
 
-bool SearchResultModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool SearchResultModel::setData(const QModelIndex& /*index*/, const QVariant& /*value*/, int /*role*/)
 {
     return false;
 }
@@ -331,7 +331,7 @@ QModelIndex SearchResultModel::index(int row, int column, const QModelIndex& par
     return createIndex(row, column, 0);
 }
 
-QModelIndex SearchResultModel::parent(const QModelIndex& index) const
+QModelIndex SearchResultModel::parent(const QModelIndex& /*index*/) const
 {
     // we have only top level items
     return QModelIndex();
@@ -345,14 +345,15 @@ int SearchResultModel::rowCount(const QModelIndex& parent) const
     return d->searchResults.count();
 }
 
-bool SearchResultModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant& value, int role)
+bool SearchResultModel::setHeaderData(int /*section*/, Qt::Orientation /*orientation*/,
+                                      const QVariant& /*value*/, int /*role*/)
 {
     return false;
 }
 
-QVariant SearchResultModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant SearchResultModel::headerData(int section, Qt::Orientation orientation, int /*role*/) const
 {
-    if ((section>=1)||(orientation!=Qt::Horizontal))
+    if ((section >= 1) || (orientation != Qt::Horizontal))
         return false;
 
     return QVariant("Name");
@@ -504,7 +505,7 @@ void SearchResultModel::setSelectionModel(QItemSelectionModel* const selectionMo
     d->selectionModel = selectionModel;
 }
 
-void SearchWidget::slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& previous)
+void SearchWidget::slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& /*previous*/)
 {
     if (!current.isValid())
         return;
@@ -602,7 +603,7 @@ KMapIface::WMWModelHelper::Flags SearchResultModelHelper::modelFlags() const
     return FlagSnaps|(d->visible?FlagVisible:FlagNull);
 }
 
-KMapIface::WMWModelHelper::Flags SearchResultModelHelper::itemFlags(const QModelIndex& index) const
+KMapIface::WMWModelHelper::Flags SearchResultModelHelper::itemFlags(const QModelIndex& /*index*/) const
 {
     return FlagVisible|FlagSnaps;
 }

@@ -105,13 +105,12 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
                 this, SLOT(slotResult(KJob*)));
 
         return true;
-        
     }
 
     return false;
 }
 
-void SearchBackend::slotData(KIO::Job* kioJob, const QByteArray& data)
+void SearchBackend::slotData(KIO::Job* /*kioJob*/, const QByteArray& data)
 {
     d->searchData.append(data);
 }

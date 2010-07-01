@@ -20,8 +20,6 @@
 
 #include "backend-rg.moc"
 
-#include "backend-rg.h"
-
 namespace KIPIGPSSyncPlugin 
 {
 
@@ -34,25 +32,24 @@ public:
 };
 
 RGBackend::RGBackend(QObject* const parent)
-: QObject(parent) , d(new RGBackendPrivate())
+         : QObject(parent) , d(new RGBackendPrivate())
 {
 
 }
 
 RGBackend::~RGBackend()
 {
-   delete d;
+    delete d;
 }
 
 QString RGBackend::getErrorMessage()
 {
-
+    return QString();
 }
 
 QString RGBackend::backendName()
 {
-
+    return QString();
 }
 
 } //KIPIGPSSyncPlugin
-

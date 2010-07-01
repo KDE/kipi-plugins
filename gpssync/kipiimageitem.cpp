@@ -119,7 +119,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
     return QVariant();
 }
 
-bool KipiImageItem::setData(const int column, const int role, const QVariant& value)
+bool KipiImageItem::setData(const int /*column*/, const int /*role*/, const QVariant& /*value*/)
 {
     return false;
 }

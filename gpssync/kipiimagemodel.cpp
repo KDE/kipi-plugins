@@ -60,7 +60,7 @@ KipiImageModel::~KipiImageModel()
     delete d;
 }
 
-int KipiImageModel::columnCount(const QModelIndex& parent) const
+int KipiImageModel::columnCount(const QModelIndex& /*parent*/) const
 {
     return d->columnCount;
 }
@@ -92,7 +92,7 @@ QModelIndex KipiImageModel::index(int row, int column, const QModelIndex& parent
     return createIndex(row, column, 0);
 }
 
-QModelIndex KipiImageModel::parent(const QModelIndex& index) const
+QModelIndex KipiImageModel::parent(const QModelIndex& /*index*/) const
 {
     // we have only top level items
     return QModelIndex();

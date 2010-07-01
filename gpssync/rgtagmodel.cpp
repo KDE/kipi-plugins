@@ -343,18 +343,18 @@ int RGTagModel::columnCount(const QModelIndex& parent) const
     if(!parentBranch)
     {
         return 1;
-    }    
+    }
 
     if(parentBranch && parentBranch->type == TypeSpacer)
         return 1;
     else if(parentBranch && parentBranch->type == TypeNewChild)
         return 1;
-    
+
     return d->tagModel->columnCount(toSourceIndex(parent));
 
 }
 
-bool RGTagModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool RGTagModel::setData(const QModelIndex& /*index*/, const QVariant& /*value*/, int /*role*/)
 {
     return false;
 }
@@ -494,7 +494,7 @@ int RGTagModel::rowCount(const QModelIndex& parent) const
 }
 
 
-bool RGTagModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant& value, int role)
+bool RGTagModel::setHeaderData(int /*section*/, Qt::Orientation /*orientation*/, const QVariant& /*value*/, int /*role*/)
 {
     return false;
 }

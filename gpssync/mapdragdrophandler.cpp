@@ -39,12 +39,12 @@ MapDragDropHandler::~MapDragDropHandler()
 {
 }
 
-Qt::DropAction MapDragDropHandler::accepts(const QDropEvent* e)
+Qt::DropAction MapDragDropHandler::accepts(const QDropEvent* /*e*/)
 {
     return Qt::CopyAction;
 }
 
-bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KMapIface::WMWGeoCoordinate& dropCoordinates, QList<QPersistentModelIndex>* const droppedIndices)
+bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KMapIface::WMWGeoCoordinate& /*dropCoordinates*/, QList<QPersistentModelIndex>* const droppedIndices)
 {
     const MapDragData* const mimeData = qobject_cast<const MapDragData*>(e->mimeData());
     if (!mimeData)

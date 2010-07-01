@@ -225,7 +225,7 @@ bool GPSBookmarkModelHelper::itemCoordinates(const QModelIndex& index, KMapIface
     return itemCoordinates.hasCoordinates();
 }
 
-QPixmap GPSBookmarkModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset) const
+QPixmap GPSBookmarkModelHelper::itemIcon(const QModelIndex& /*index*/, QPoint* const offset) const
 {
     if (offset)
     {
@@ -292,7 +292,7 @@ KMapIface::WMWModelHelper::Flags GPSBookmarkModelHelper::modelFlags() const
     return FlagSnaps|(d->visible?FlagVisible:FlagNull);
 }
 
-KMapIface::WMWModelHelper::Flags GPSBookmarkModelHelper::itemFlags(const QModelIndex& index) const
+KMapIface::WMWModelHelper::Flags GPSBookmarkModelHelper::itemFlags(const QModelIndex& /*index*/) const
 {
     return FlagVisible|FlagSnaps;
 }

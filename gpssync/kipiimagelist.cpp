@@ -311,7 +311,7 @@ void KipiImageListViewInternal::wheelEvent(QWheelEvent* we)
     }
 }
 
-void KipiImageList::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
+void KipiImageList::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& /*pixmap*/)
 {
     // TODO: verify that the size corresponds to the size of our thumbnails!
     d->treeView->update(d->imageSortProxyModel->mapFromSource(index));
