@@ -919,7 +919,7 @@ void GPSSyncDialog::slotGPSUndoCommand(GPSUndoCommand* undoCommand)
     d->undoStack->push(undoCommand);
 }
 
-void GPSSyncDialog::slotSortOptionTriggered(QAction* sortAction)
+void GPSSyncDialog::slotSortOptionTriggered(QAction* /*sortAction*/)
 {
     int newSortKey = 0;
     if (d->sortActionOldestFirst->isChecked())
