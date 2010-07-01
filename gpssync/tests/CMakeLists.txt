@@ -7,7 +7,7 @@ TARGET_LINK_LIBRARIES(test_gpxparsing
                         ${KDE4_KDECORE_LIBS}
                         ${QT_QTTEST_LIBRARY}
                         ${QT_QTGUI_LIBRARY}
-                        kmap
+                        ${KMAP_LIBRARIES}
                      )
 
 KDE4_ADD_EXECUTABLE(test_rgparsing
@@ -38,11 +38,11 @@ KDE4_ADD_EXECUTABLE(test_gpsexif
                    )
 
 TARGET_LINK_LIBRARIES(test_gpsexif
-                        ${KDE4_KDECORE_LIBS}
-                        ${QT_QTTEST_LIBRARY}
-                        ${QT_QTGUI_LIBRARY}
-                        ${KEXIV2_LIBRARIES}
-                        kmap
+                      ${KDE4_KDECORE_LIBS}
+                      ${QT_QTTEST_LIBRARY}
+                      ${QT_QTGUI_LIBRARY}
+                      ${KEXIV2_LIBRARIES}
+                      ${KMAP_LIBRARIES}
                      )
 
 ADD_TEST(test_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/test_gpxparsing)

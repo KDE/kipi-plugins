@@ -58,8 +58,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_gpssync
                       ${KDE4_KHTML_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
+                      ${KMAP_LIBRARIES}
                       kipiplugins
-                      kmap
                      )
 
 INSTALL(TARGETS kipiplugin_gpssync DESTINATION ${PLUGIN_INSTALL_DIR})
