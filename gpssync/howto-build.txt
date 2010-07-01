@@ -1,9 +1,0 @@
-How to build this:
-
-- check out kipi-plugins and make sure you can compile it
-- check out libkmap (dependencies: libmarble-dev)
-- add links to this directory to the kipi-plugins directory
-- add this to the kipi-plugins/CMakeLists.txt:
-
-ADD_SUBDIRECTORY(gpssync2)
-
