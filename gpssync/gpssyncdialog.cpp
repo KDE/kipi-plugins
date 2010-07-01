@@ -99,9 +99,9 @@
 #include "searchwidget.h"
 #include "backend-rg.h"
 
-#ifdef GPSSYNC2_MODELTEST
+#ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>
-#endif /* GPSSYNC2_MODELTEST */
+#endif /* GPSSYNC_MODELTEST */
 
 namespace KIPIGPSSyncPlugin
 {
@@ -192,9 +192,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     setMinimumSize(300,400);
     d->imageModel = new KipiImageModel(this);
 
-#ifdef GPSSYNC2_MODELTEST
+#ifdef GPSSYNC_MODELTEST
     new ModelTest(d->imageModel, this);
-#endif /* GPSSYNC2_MODELTEST */
+#endif /* GPSSYNC_MODELTEST */
 
     d->imageModel->setKipiInterface(d->interface);
     GPSImageItem::setHeaderData(d->imageModel);

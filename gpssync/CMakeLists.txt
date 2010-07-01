@@ -32,14 +32,14 @@ SET(kipiplugin_gpssync_PART_SRCS
 
 IF(KDE4_BUILD_TESTS)
     INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed")
-    ADD_DEFINITIONS(-DGPSSYNC2_MODELTEST)
+    ADD_DEFINITIONS(-DGPSSYNC_MODELTEST)
     SET(kipiplugin_gpssync_PART_SRCS
         ${kipiplugin_gpssync_PART_SRCS}
         borrowed/modeltest.cpp
        )
 ENDIF(KDE4_BUILD_TESTS)
 
-IF NOT (${KDE_VERSION} VERSION_GREATER "4.4.81")
+IF (NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
     # these are borrowed from a new KDE trunk version
     # and are needed for sorting of the view
     INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/borrowed-future")
@@ -48,7 +48,7 @@ IF NOT (${KDE_VERSION} VERSION_GREATER "4.4.81")
         borrowed-future/klinkitemselectionmodel.cpp
         borrowed-future/kmodelindexproxymapper.cpp
        )
-ENDIF (${KDE_VERSION} VERSION_GREATER "4.4.81")
+ENDIF (NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync ${kipiplugin_gpssync_PART_SRCS})
 

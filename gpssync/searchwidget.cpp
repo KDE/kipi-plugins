@@ -54,9 +54,9 @@
 #include "gpsundocommand.h"
 #include "kipiimagemodel.h"
 
-#ifdef GPSSYNC2_MODELTEST
+#ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>
-#endif /* GPSSYNC2_MODELTEST */
+#endif /* GPSSYNC_MODELTEST */
 
 namespace KIPIGPSSyncPlugin
 {
@@ -107,9 +107,9 @@ SearchWidget::SearchWidget(KMapIface::KMap* const mapWidget, GPSBookmarkOwner* c
     d->kipiImageSelectionModel = kipiImageSelectionModel;
     d->searchBackend = new SearchBackend(this);
     d->searchResultsModel = new SearchResultModel(this);
-#ifdef GPSSYNC2_MODELTEST
+#ifdef GPSSYNC_MODELTEST
     new ModelTest(d->searchResultsModel, this);
-#endif /* GPSSYNC2_MODELTEST */
+#endif /* GPSSYNC_MODELTEST */
     d->searchResultsSelectionModel = new QItemSelectionModel(d->searchResultsModel);
     d->searchResultsModel->setSelectionModel(d->searchResultsSelectionModel);
     d->searchResultModelHelper = new SearchResultModelHelper(d->searchResultsModel, d->searchResultsSelectionModel, d->kipiImageModel, this);

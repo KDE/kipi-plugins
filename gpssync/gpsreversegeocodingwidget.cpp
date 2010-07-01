@@ -76,9 +76,9 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/version.h>
 
-#ifdef GPSSYNC2_MODELTEST
+#ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>
-#endif /* GPSSYNC2_MODELTEST */
+#endif /* GPSSYNC_MODELTEST */
 
 namespace KIPIGPSSyncPlugin
 {
@@ -96,7 +96,7 @@ public:
     KipiImageModel* imageModel;
     QItemSelectionModel* selectionModel;
     QPushButton* buttonRGSelected;
-    
+
     KComboBox* serviceComboBox;
     KComboBox *languageEdit;
     QList<RGInfo> photoList;
@@ -164,12 +164,11 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
         d->tagModel = new RGTagModel(d->externTagModel, this);
         d->tagTreeView->setModel(d->tagModel);
 
-#ifdef GPSSYNC2_MODELTEST
+#ifdef GPSSYNC_MODELTEST
          new ModelTest(d->externTagModel, d->tagTreeView);
          new ModelTest(d->tagModel, d->tagTreeView);
-#endif /* GPSSYNC2_MODELTEST */
+#endif /* GPSSYNC_MODELTEST */
     }
-
 
     d->tagSelectionModel = new QItemSelectionModel(d->tagModel);
     d->tagTreeView->setSelectionModel(d->tagSelectionModel);
@@ -198,11 +197,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->serviceComboBox->addItem(i18n("Geonames.org full address (US only)"));
     d->serviceComboBox->addItem(i18n("Open Street Map"));
 
-
     d->baseTagLabel = new QLabel(i18n("Select base tag:"), d->UGridContainer);
     d->baseTagEdit = new QLineEdit("My Tags/{Country}/{City}", d->UGridContainer);
-
-
 
     int row = 0;
     gridLayout->addWidget(d->serviceLabel,row,0,1,2);
