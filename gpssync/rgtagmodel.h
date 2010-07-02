@@ -84,10 +84,10 @@ public:
     QModelIndex fromSourceIndex(const QModelIndex& externalTagModelIndex) const;
     QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
     void addSpacerTag(const QModelIndex&, const QString& );
-    void addNewTags(const QModelIndex&, const QString& );
+    QPersistentModelIndex addNewTags(const QModelIndex&, const QString& );
     QStringList addNewData(QStringList& , QStringList&);
     void addDataInTree(TreeBranch*&, int, QStringList&, QStringList&);
-    QString getTagAddress(TreeBranch*, QStringList&, QStringList&);
+    QString getTagAddress();
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 
