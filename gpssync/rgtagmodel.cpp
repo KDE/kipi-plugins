@@ -296,6 +296,18 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
     {
         newDataAdded = true;
 
+        if(currentBranch->spacerChildren[i]->data.indexOf("{") != 0)
+        {
+        
+
+        d->auxTagList.append(currentBranch->spacerChildren[i]->data);      
+        addDataInTree(currentBranch->spacerChildren[i], i, addressElements, elementsData);
+        d->auxTagList.removeLast();
+        }
+
+        else
+        {
+
         for( int j=0; j<addressElements.count(); ++j)
         {
              
@@ -310,7 +322,7 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
                     QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
 
                     //checks if adds the new tag as a sibling to a spacer, or as a child of a new tag
-                    if(currentBranch->type != TypeSpacer)
+                    if((currentBranch->type != TypeSpacer) || ((currentBranch->type == TypeSpacer) && (currentBranch->data.indexOf("{") != 0)))
                     {
                         QPersistentModelIndex auxIndex = addNewTags(currentIndex, elementsData[j]);
                         d->auxTagList.append(elementsData[j]);
@@ -339,6 +351,8 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
         {    
             d->auxTagList.removeLast();
             d->auxIndexList.removeLast();  
+        }
+
         }
     }
     for(int i=0; i<currentBranch->newChildren.count(); ++i)

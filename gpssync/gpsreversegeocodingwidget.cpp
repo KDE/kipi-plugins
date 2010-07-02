@@ -38,6 +38,7 @@
 #include <QAbstractItemModel>
 #include <QTreeView>
 #include <QContextMenuEvent>
+#include <QInputDialog>
 
 // KDE includes
 
@@ -123,6 +124,7 @@ public:
     QItemSelectionModel* tagSelectionModel; 
     KAction* actionAddCountry;
     KAction* actionAddCity;
+    KAction* actionAddCustomizedSpacer;
 };
 
 
@@ -174,8 +176,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->tagTreeView->setSelectionModel(d->tagSelectionModel);
     //d->tagModel->setSelectionModel(d->tagsSelectionModel);
 
-    d->actionAddCountry = new KAction(i18n("Add country tags"), this);
-    d->actionAddCity = new KAction(i18n("Add city tags"), this);
+    d->actionAddCountry = new KAction(i18n("Add country tag"), this);
+    d->actionAddCity = new KAction(i18n("Add city tag"), this);
+    d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
@@ -274,6 +277,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->actionAddCity, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCity()));
 
+    connect(d->actionAddCustomizedSpacer, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddCustomizedSpacer()));
+
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
         connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
@@ -368,23 +374,6 @@ void GPSReverseGeocodingWidget::slotHideOptions()
 
 }
 
-QStringList RemoveDuplicateTags(QStringList tagList)
-{
-    for(int i=0; i<tagList.count(); ++i)
-    {
-        for(int j=0; j<tagList.count(); ++j)
-        {
-            if(tagList[i].contains(tagList[j],Qt::CaseSensitive) && (i != j))
-            {
-                tagList.removeAt(j);
-            }
-        }
-    }
-
-    tagList.removeDuplicates();
-    return tagList;
-}
-
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
 
@@ -410,11 +399,8 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
         {
             QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
 
-        
-
             QString combinedResult = makeTagString(returnedRGList[i], "{Country}/{City}", d->currentBackend->backendName());
 
-            kDebug()<<"Returned from makeTagString:"<<combinedResult;
 
             QString countryResult, cityResult;
             QStringList elements, resultedData;
@@ -435,11 +421,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             elements<<QString("%1").arg("{Country}")<<QString("%1").arg("{City}");
             resultedData<<countryResult<<cityResult;
 
-        
-
             QStringList returnedTags = d->tagModel->addNewData(elements, resultedData);   
-
-            //returnedTags = RemoveDuplicateTags(returnedTags);
 
             kDebug()<<"Returned tags:"<<returnedTags;
 
@@ -455,7 +437,6 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     d->receivedRGCount+=returnedRGList.count();
     if (d->receivedRGCount>=d->requestedRGCount)
     {
-
         emit(signalSetUIEnabled(true));
     }
     else
@@ -473,7 +454,7 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
 {
     
-    kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
+    //kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
 
     //d->tagModel->addNewTags(index, "New Country");
     //d->tagModel->addSpacerTag(index, "New Country");
@@ -490,7 +471,8 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
             KMenu * const menu = new KMenu(d->tagTreeView);
             menu->addAction(d->actionAddCountry);
             menu->addAction(d->actionAddCity);
-            
+            menu->addAction(d->actionAddCustomizedSpacer);           
+ 
             QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
             menu->exec(e->globalPos());
 
@@ -544,6 +526,21 @@ void GPSReverseGeocodingWidget::slotAddCity()
 {
     const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
     d->tagModel->addSpacerTag(baseIndex, "{City}");
+}
+
+void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    bool ok;
+    QString textString;
+    
+    textString = QInputDialog::getText(this,QString("%1").arg("Add new tag:"), QString("%1").arg("Select a name for the new tag:"), QLineEdit::Normal, QString::null, &ok);
+    if( ok && !textString.isEmpty())
+    {
+        d->tagModel->addSpacerTag(baseIndex, textString);
+    }
+    
+    
 }
 
 } /* KIPIGPSSyncPlugin  */

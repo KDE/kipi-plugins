@@ -76,6 +76,7 @@ private Q_SLOTS:
     void treeItemClicked( const QModelIndex &);
     void slotAddCountry(); 
     void slotAddCity();
+    void slotAddCustomizedSpacer();
 
 Q_SIGNALS:
 
