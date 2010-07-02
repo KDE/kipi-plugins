@@ -32,9 +32,10 @@ QString makeTagString(const RGInfo& info, QString inputFormat, QString backendNa
 
     int indexFBracket = -1;
 
-    while( ( indexFBracket = returnedFormat.indexOf("{") ) != -1)
+    while( ( indexFBracket = returnedFormat.indexOf("{") ) >= 0 )
     {
-
+        kDebug()<<"RGInfo:"<<info.rgData;
+        kDebug()<<"returnedFormat:"<<returnedFormat;
         int indexLBracket = returnedFormat.indexOf("}"); 
 
         QString humanTag = returnedFormat.mid(indexFBracket + 1, indexLBracket-indexFBracket-1);

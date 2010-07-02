@@ -406,31 +406,50 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
         QPersistentModelIndex currentImageIndex = returnedRGList[i].id;
 
-        QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
+        if(!returnedRGList[i].rgData.empty())
+        {
+            QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
 
-        QString combinedResult = makeTagString(returnedRGList[i], "{Country}/{City}", d->currentBackend->backendName());
+        
 
-        //TODO: see what happens when no country nor city is returned
-        int separatorIndex = combinedResult.indexOf(QString("%1").arg("/"));
-        QString countryResult = combinedResult.left(separatorIndex);
-        QString cityResult = combinedResult.mid(separatorIndex+1, combinedResult.length()-separatorIndex-1);
+            QString combinedResult = makeTagString(returnedRGList[i], "{Country}/{City}", d->currentBackend->backendName());
 
-        QStringList elements, resultedData;
-        elements<<QString("%1").arg("{Country}")<<QString("%1").arg("{City}");
-        resultedData<<countryResult<<cityResult;
+            kDebug()<<"Returned from makeTagString:"<<combinedResult;
 
-        QStringList returnedTags = d->tagModel->addNewData(elements, resultedData);   
+            QString countryResult, cityResult;
+            QStringList elements, resultedData;
 
-        returnedTags = RemoveDuplicateTags(returnedTags);
+            //Is it better to let {City} is the value doesn't exist?
+            int separatorIndex = combinedResult.indexOf(QString("%1").arg("/"));
+            if(separatorIndex == -1)
+            {
+                //I suppose that combinedResult has only country, but not city
+                //I shall do something here to determine what kind of address element doesn't exist
+                countryResult = combinedResult;
+            }
+            else
+            {
+                countryResult = combinedResult.left(separatorIndex);
+                cityResult = combinedResult.mid(separatorIndex+1, combinedResult.length()-separatorIndex-1);
+            }
+            elements<<QString("%1").arg("{Country}")<<QString("%1").arg("{City}");
+            resultedData<<countryResult<<cityResult;
 
-        kDebug()<<"Returned tags:"<<returnedTags;
+        
 
-        TagData tagStructure;
-        tagStructure.tags = returnedTags; 
+            QStringList returnedTags = d->tagModel->addNewData(elements, resultedData);   
 
-        GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
-        currentItem->setTagInfo(result);
-        currentItem->setTagData(tagStructure);
+            //returnedTags = RemoveDuplicateTags(returnedTags);
+
+            kDebug()<<"Returned tags:"<<returnedTags;
+
+            TagData tagStructure;
+            tagStructure.tags = returnedTags; 
+
+            GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
+            currentItem->setTagInfo(result);
+            currentItem->setTagData(tagStructure);
+        }
     }
 
     d->receivedRGCount+=returnedRGList.count();

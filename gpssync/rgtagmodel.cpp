@@ -290,45 +290,56 @@ QString RGTagModel::getTagAddress()
 
 void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStringList& addressElements, QStringList& elementsData)
 {
+    bool newDataAdded;
+
     for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
     {
-        
+        newDataAdded = true;
+
         for( int j=0; j<addressElements.count(); ++j)
         {
              
             if(currentBranch->spacerChildren[i]->data == addressElements[j])
             {
-                QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
-
-                //checks if adds the new tag as a sibling to a spacer, or as a child of a new tag
-                if(currentBranch->type != TypeSpacer)
+                if(elementsData[j].isEmpty())
                 {
-                    QPersistentModelIndex auxIndex = addNewTags(currentIndex, elementsData[j]);
-                    d->auxTagList.append(elementsData[j]);
-                    d->auxIndexList.append(auxIndex);
-
+                    newDataAdded = false;
                 }
                 else
                 {
-                    QPersistentModelIndex auxIndex = addNewTags(d->auxIndexList.last(), elementsData[j]);
-                    d->auxTagList.append(elementsData[j]);
-                    d->auxIndexList.append(auxIndex);
-                }
+                    QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
 
-                if(currentBranch->spacerChildren[i]->spacerChildren.count() == 0)
-                {
-                    QString newTag=getTagAddress();
-                    d->newTags.append(newTag);
+                    //checks if adds the new tag as a sibling to a spacer, or as a child of a new tag
+                    if(currentBranch->type != TypeSpacer)
+                    {
+                        QPersistentModelIndex auxIndex = addNewTags(currentIndex, elementsData[j]);
+                        d->auxTagList.append(elementsData[j]);
+                        d->auxIndexList.append(auxIndex);
+
+                    }
+                    else
+                    {
+                        QPersistentModelIndex auxIndex = addNewTags(d->auxIndexList.last(), elementsData[j]);
+                        d->auxTagList.append(elementsData[j]);
+                        d->auxIndexList.append(auxIndex);
+                    }
+
+                    if(currentBranch->spacerChildren[i]->spacerChildren.count() == 0)
+                    {
+                        QString newTag=getTagAddress();
+                        d->newTags.append(newTag);
+                    }
                 }
-                
             }
         }
-            if(currentBranch->spacerChildren[i])
-                addDataInTree(currentBranch->spacerChildren[i],i, addressElements, elementsData);
             
+        if(currentBranch->spacerChildren[i])
+            addDataInTree(currentBranch->spacerChildren[i],i, addressElements, elementsData);
+        if(newDataAdded)
+        {    
             d->auxTagList.removeLast();
-            d->auxIndexList.removeLast();
-        
+            d->auxIndexList.removeLast();  
+        }
     }
     for(int i=0; i<currentBranch->newChildren.count(); ++i)
     {
@@ -350,7 +361,10 @@ QStringList RGTagModel::addNewData(QStringList& elements, QStringList& resultedD
 {
     
     d->newTags.clear();
-    
+   
+    kDebug()<<"ELEMENTS:"<<elements;
+    kDebug()<<"RESULTED DATA:"<<resultedData;
+ 
     //elements contains address elements {Country}, {City}, ...
     //resultedData contains RG data (example Spain,Barcelona)
     addDataInTree(d->rootTag, 0, elements, resultedData);
