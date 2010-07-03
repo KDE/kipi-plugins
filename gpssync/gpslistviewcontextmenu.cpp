@@ -344,6 +344,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
         if (foundGeoUrl)
         {
             gpsData.setCoordinates(testCoordinates);
+            foundData = true;
         }
         else
         {
