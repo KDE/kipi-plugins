@@ -736,9 +736,7 @@ void RGTagModel::slotRowsRemoved()
             
             endInsertRows();
 
-
             parentBranch->spacerChildren.removeAt(i);
-
            
             for(int j=0; j<parentBranch->spacerChildren.count(); ++j)
             {
@@ -762,7 +760,7 @@ void RGTagModel::findAndDeleteNewTag(TreeBranch*& currentBranch, int currentRow)
     
     QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
 
-    
+     
 
     for(int i=currentBranch->newChildren.count()+currentBranch->spacerChildren.count()-1; i>= currentBranch->spacerChildren.count(); --i)
     {

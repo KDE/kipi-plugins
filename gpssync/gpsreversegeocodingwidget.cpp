@@ -125,6 +125,7 @@ public:
     KAction* actionAddCountry;
     KAction* actionAddCity;
     KAction* actionAddCustomizedSpacer;
+    KAction* actionRemoveTag;
 };
 
 
@@ -178,6 +179,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->actionAddCountry = new KAction(i18n("Add country tag"), this);
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
     d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
+    d->actionRemoveTag = new KAction(i18n("Remove selected tag"), this);
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
@@ -278,6 +280,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     connect(d->actionAddCustomizedSpacer, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCustomizedSpacer()));
+
+    connect(d->actionRemoveTag, SIGNAL(triggered(bool)),
+            this, SLOT(slotRemoveTag()));
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
@@ -453,10 +458,8 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
 {
   
-    kDebug()<<"Start to remove rows from index:"<<index; 
-    d->tagModel->slotRowsAboutToBeRemoved(index.parent(), index.row(), index.row());
- 
-    d->tagModel->slotRowsRemoved();
+    //d->tagModel->slotRowsAboutToBeRemoved(index.parent(), index.row(), index.row());
+    //d->tagModel->slotRowsRemoved();
 
     //kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
 
@@ -475,7 +478,8 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
             KMenu * const menu = new KMenu(d->tagTreeView);
             menu->addAction(d->actionAddCountry);
             menu->addAction(d->actionAddCity);
-            menu->addAction(d->actionAddCustomizedSpacer);           
+            menu->addAction(d->actionAddCustomizedSpacer);
+            menu->addAction(d->actionRemoveTag);           
  
             QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
             menu->exec(e->globalPos());
@@ -545,6 +549,15 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
     }
     
     
+}
+
+void GPSReverseGeocodingWidget::slotRemoveTag()
+{
+
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+
+    d->tagModel->slotRowsAboutToBeRemoved(baseIndex.parent(), baseIndex.row(), baseIndex.row());
+    d->tagModel->slotRowsRemoved();
 }
 
 void GPSReverseGeocodingWidget::regenerateNewTags(QStringList& newTags)

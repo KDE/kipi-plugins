@@ -78,6 +78,7 @@ private Q_SLOTS:
     void slotAddCountry(); 
     void slotAddCity();
     void slotAddCustomizedSpacer();
+    void slotRemoveTag();
 
 Q_SIGNALS:
 
