@@ -556,8 +556,9 @@ void GPSReverseGeocodingWidget::slotRemoveTag()
 
     const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
 
-    d->tagModel->slotRowsAboutToBeRemoved(baseIndex.parent(), baseIndex.row(), baseIndex.row());
-    d->tagModel->slotRowsRemoved();
+    //d->tagModel->slotRowsAboutToBeRemoved(baseIndex.parent(), baseIndex.row(), baseIndex.row());
+    //d->tagModel->slotRowsRemoved();
+    d->tagModel->deleteTag(baseIndex);
 }
 
 void GPSReverseGeocodingWidget::regenerateNewTags(QStringList& newTags)

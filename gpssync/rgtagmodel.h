@@ -90,7 +90,7 @@ public:
     QString getTagAddress();
     void findAndDeleteNewTag(TreeBranch*&, int );
     void deleteAllNewTags();
-
+    void deleteTag(const QModelIndex&);
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 
