@@ -88,6 +88,9 @@ public:
     QStringList addNewData(QStringList& , QStringList&);
     void addDataInTree(TreeBranch*&, int, QStringList&, QStringList&);
     QString getTagAddress();
+    void findAndDeleteNewTag(TreeBranch*&, int );
+    void deleteAllNewTags();
+
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 

@@ -174,7 +174,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->tagSelectionModel = new QItemSelectionModel(d->tagModel);
     d->tagTreeView->setSelectionModel(d->tagSelectionModel);
-    //d->tagModel->setSelectionModel(d->tagsSelectionModel);
 
     d->actionAddCountry = new KAction(i18n("Add country tag"), this);
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
@@ -453,7 +452,12 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 
 void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
 {
-    
+  
+    kDebug()<<"Start to remove rows from index:"<<index; 
+    d->tagModel->slotRowsAboutToBeRemoved(index.parent(), index.row(), index.row());
+ 
+    d->tagModel->slotRowsRemoved();
+
     //kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
 
     //d->tagModel->addNewTags(index, "New Country");
@@ -541,6 +545,13 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
     }
     
     
+}
+
+void GPSReverseGeocodingWidget::regenerateNewTags(QStringList& newTags)
+{
+    
+    
+
 }
 
 } /* KIPIGPSSyncPlugin  */

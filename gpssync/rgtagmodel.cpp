@@ -57,6 +57,7 @@ public:
 
     QModelIndex parent;
     int startInsert, endInsert;   
+    int startRemove, endRemove;
  
     QStringList newTags;
 
@@ -644,13 +645,23 @@ void RGTagModel::slotRowsAboutToBeMoved(const QModelIndex& sourceParent, int sou
 
 void RGTagModel::slotRowsAboutToBeRemoved(const QModelIndex& parent, int start, int end)
 {
-    TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(fromSourceIndex(parent).internalPointer()) : d->rootTag;
+    TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(parent.internalPointer()) : d->rootTag;
 
-    d->parent = fromSourceIndex(parent);
-    d->startInsert = start;
-    d->endInsert = end;
+    kDebug()<<"Entered slotRowsAboutToBeRemoved";
+    kDebug()<<"start:"<<start;
+    kDebug()<<"end:"<<end;
 
-    beginRemoveRows(d->parent, start+parentBranch->spacerChildren.count(), end+parentBranch->spacerChildren.count());
+    if(start < parentBranch->spacerChildren.count())
+    {
+
+        d->parent = parent;
+        d->startRemove = start;
+        d->endRemove = end;
+
+        beginRemoveRows(d->parent, start/*+parentBranch->spacerChildren.count()*/, end/*+parentBranch->spacerChildren.count()*/);
+
+    }
+
 }
 
 void RGTagModel::slotRowsInserted()
@@ -667,6 +678,11 @@ void RGTagModel::slotRowsInserted()
     }
 
     endInsertRows();
+
+    d->parent = QModelIndex();
+    d->startInsert = -1;
+    d->endInsert = -1;
+
 }
 
 void RGTagModel::slotRowsMoved()
@@ -676,7 +692,89 @@ void RGTagModel::slotRowsMoved()
 
 void RGTagModel::slotRowsRemoved()
 {
+    
+    TreeBranch* const parentBranch = d->parent.isValid() ? static_cast<TreeBranch*>(d->parent.internalPointer()) : d->rootTag;
+
+    //TODO: Now is for spacer. I must make it for newTags
+    //TODO: Remove a tag that has children
+
+    kDebug()<<"Entered slotRowsRemoved:";
+
+    kDebug()<<"d->startRemove="<<d->startRemove;
+    kDebug()<<"d->endRemove="<<d->endRemove;
+
+    if(d->startRemove >=0 && d->startRemove<parentBranch->spacerChildren.count())
+    {
+
+        for(int i=d->endRemove; i>=d->startRemove; --i)
+        {
+
+            TreeBranch* currentChildBranch = parentBranch->spacerChildren[i];
+
+            beginInsertRows(d->parent, parentBranch->spacerChildren.count(), parentBranch->spacerChildren.count()+ currentChildBranch->spacerChildren.count()-1);
+
+            kDebug()<<"d->parent="<<d->parent;
+            kDebug()<<"parentBranch->spacerChildren.count()="<<parentBranch->spacerChildren.count();
+            kDebug()<<"currentChildBranch->spacerChildren.count()="<<currentChildBranch->spacerChildren.count();
+
+
+            kDebug()<<"i="<<i;
+
+            if(currentChildBranch->spacerChildren.count() >= 0)
+            {
+                parentBranch->spacerChildren.append(currentChildBranch->spacerChildren);
+                currentChildBranch->spacerChildren.clear();
+            }
+
+            kDebug()<<"Appended to parentBranch->spacerChildren. parentBranch->spacerChildren.count()"<<parentBranch->spacerChildren.count();
+
+            for(int j=0; j<parentBranch->spacerChildren.count(); ++j)
+            {
+                kDebug()<<"Data"<<parentBranch->spacerChildren[j]->data;
+            }
+
+            
+            endInsertRows();
+
+
+            parentBranch->spacerChildren.removeAt(i);
+
+           
+            for(int j=0; j<parentBranch->spacerChildren.count(); ++j)
+            {
+                kDebug()<<"Data"<<parentBranch->spacerChildren[j]->data;
+            } 
+        }
+
+    kDebug()<<"Rows are removed.parentBranch->spacerChildren.count()="<<parentBranch->spacerChildren.count();
+
     endRemoveRows();
+
+    }
+
+    d->parent = QModelIndex();
+    d->startRemove = -1;
+    d->endRemove = -1;
+}
+
+void RGTagModel::findAndDeleteNewTag(TreeBranch*& currentBranch, int currentRow)
+{
+    
+    QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
+
+    
+
+    for(int i=currentBranch->newChildren.count()+currentBranch->spacerChildren.count()-1; i>= currentBranch->spacerChildren.count(); --i)
+    {
+        
+    }    
+} 
+
+void RGTagModel::deleteAllNewTags()
+{
+
+    findAndDeleteNewTag(d->rootTag, 0);
+
 }
 
 }    //KIPIGPSSyncPlugin
