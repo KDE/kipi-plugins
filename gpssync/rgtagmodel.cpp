@@ -704,12 +704,14 @@ void RGTagModel::deleteTag(const QModelIndex& index)
     QModelIndex parentIndex = index.parent();
     int currentRow = index.row();
     TreeBranch* const parentBranch = parentIndex.isValid() ? static_cast<TreeBranch*>(parentIndex.internalPointer()) : d->rootTag;
+    TreeBranch* const currentChildBranch = index.isValid() ? static_cast<TreeBranch*>(index.internalPointer()) : d->rootTag;
+
+    if(currentChildBranch->type == TypeChild)
+        return;
 
     beginRemoveRows(parentIndex, currentRow, currentRow);
-        
-    TreeBranch* currentChildBranch = parentBranch->spacerChildren[currentRow];
 
-    if(currentChildBranch->spacerChildren.count() > 0)
+    if(currentChildBranch->spacerChildren.count() > 0 || currentChildBranch->newChildren.count() > 0)
     {
         for(int j=0; j<currentChildBranch->spacerChildren.count(); ++j)
         {
@@ -718,11 +720,26 @@ void RGTagModel::deleteTag(const QModelIndex& index)
             parentBranch->spacerChildren[parentBranch->spacerChildren.count()-1]->parent = parentBranch;
             endMoveRows();
         }
+
+        for(int j=currentChildBranch->spacerChildren.count(); j<currentChildBranch->spacerChildren.count()+currentChildBranch->newChildren.count(); ++j)
+        {
+        
+            beginMoveRows(index, j, j, parentIndex, parentBranch->spacerChildren.count()+parentBranch->newChildren.count());
+            parentBranch->newChildren.append(currentChildBranch->newChildren[j-currentChildBranch->spacerChildren.count()]);
+            parentBranch->newChildren[parentBranch->newChildren.count()-1]->parent = parentBranch;
+            endMoveRows();
+
+        }
        
         currentChildBranch->spacerChildren.clear();
+        currentChildBranch->newChildren.clear();
     }
 
-    parentBranch->spacerChildren.removeAt(currentRow);
+    //TODO: is it good here?
+    if(currentRow < parentBranch->spacerChildren.count())
+        parentBranch->spacerChildren.removeAt(currentRow);
+    else if(currentRow >= parentBranch->spacerChildren.count()) 
+        parentBranch->newChildren.removeAt(currentRow - parentBranch->spacerChildren.count());
 
     endRemoveRows();
 
