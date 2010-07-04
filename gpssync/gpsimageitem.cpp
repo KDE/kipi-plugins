@@ -573,6 +573,11 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
 void GPSImageItem::setTagData(TagData& externalTagData)
 {
    this->imageTags = externalTagData; 
+}
+
+QStringList GPSImageItem::getTagData()
+{
+    return this->imageTags.tags;
 } 
 
 } /* KIPIGPSSyncPlugin */

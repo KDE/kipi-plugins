@@ -126,6 +126,8 @@ public:
     KAction* actionAddCity;
     KAction* actionAddCustomizedSpacer;
     KAction* actionRemoveTag;
+    KAction* actionRemoveAllNewTags;
+    KAction* actionReaddNewTags;
 };
 
 
@@ -180,6 +182,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
     d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
     d->actionRemoveTag = new KAction(i18n("Remove selected tag"), this);
+    d->actionRemoveAllNewTags = new KAction(i18n("Remove all new tags"), this);
+    d->actionReaddNewTags = new KAction(i18n("Readd new tags"), this);
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
@@ -283,6 +287,10 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     connect(d->actionRemoveTag, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveTag()));
+    connect(d->actionRemoveAllNewTags, SIGNAL(triggered(bool)),
+            this, SLOT(slotRemoveAllNewTags()));
+    connect(d->actionReaddNewTags, SIGNAL(triggered(bool)),
+            this, SLOT(slotReaddNewTags()));
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
@@ -465,6 +473,8 @@ void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
 
     //d->tagModel->addNewTags(index, "New Country");
     //d->tagModel->addSpacerTag(index, "New Country");
+    
+
 
 }
 
@@ -479,7 +489,9 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
             menu->addAction(d->actionAddCountry);
             menu->addAction(d->actionAddCity);
             menu->addAction(d->actionAddCustomizedSpacer);
-            menu->addAction(d->actionRemoveTag);           
+            menu->addAction(d->actionRemoveTag);
+            menu->addAction(d->actionRemoveAllNewTags);
+            menu->addAction(d->actionReaddNewTags);           
  
             QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
             menu->exec(e->globalPos());
@@ -561,9 +573,33 @@ void GPSReverseGeocodingWidget::slotRemoveTag()
     d->tagModel->deleteTag(baseIndex);
 }
 
-void GPSReverseGeocodingWidget::regenerateNewTags(QStringList& newTags)
+void GPSReverseGeocodingWidget::slotRemoveAllNewTags()
+{
+    d->tagModel->deleteAllNewTags();
+}
+
+void GPSReverseGeocodingWidget::slotReaddNewTags()
 {
     
+    const QModelIndexList selectedItems = d->selectionModel->selectedRows();
+    for( int i = 0; i < selectedItems.count(); ++i)
+    {
+
+        const QPersistentModelIndex itemIndex = selectedItems.at(i);
+        GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+
+        kDebug()<<selectedItem->getTagData();
+        QStringList tagAddresses = selectedItem->getTagData();
+        d->tagModel->readdNewTags(tagAddresses);
+
+    }
+
+
+}
+
+void GPSReverseGeocodingWidget::regenerateNewTags(QStringList& newTags)
+{
+
     
 
 }

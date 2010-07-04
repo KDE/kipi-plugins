@@ -701,6 +701,9 @@ void RGTagModel::slotRowsRemoved()
 
 void RGTagModel::deleteTag(const QModelIndex& index)
 {
+    if(!index.isValid())
+        return;
+
     QModelIndex parentIndex = index.parent();
     int currentRow = index.row();
     TreeBranch* const parentBranch = parentIndex.isValid() ? static_cast<TreeBranch*>(parentIndex.internalPointer()) : d->rootTag;
@@ -750,12 +753,25 @@ void RGTagModel::findAndDeleteNewTag(TreeBranch*& currentBranch, int currentRow)
     
     QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
 
-     
-
-    for(int i=currentBranch->newChildren.count()+currentBranch->spacerChildren.count()-1; i>= currentBranch->spacerChildren.count(); --i)
+    for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
     {
-        
-    }    
+        findAndDeleteNewTag(currentBranch->spacerChildren[i], i);
+
+    }
+    for(int i=0; i<currentBranch->newChildren.count(); ++i)
+    {
+        findAndDeleteNewTag(currentBranch->newChildren[i], i+currentBranch->spacerChildren.count());
+        QModelIndex newTagIndex = createIndex(i+currentBranch->spacerChildren.count(),0,currentBranch->newChildren[i]);
+        deleteTag(newTagIndex);
+        i--;
+
+    }
+    for(int i=0; i<currentBranch->oldChildren.count(); ++i)
+    {
+        findAndDeleteNewTag(currentBranch->oldChildren[i], i+currentBranch->spacerChildren.count()+currentBranch->newChildren.count());
+
+    } 
+
 } 
 
 void RGTagModel::deleteAllNewTags()
@@ -764,5 +780,94 @@ void RGTagModel::deleteAllNewTags()
     findAndDeleteNewTag(d->rootTag, 0);
 
 }
+
+//tagAddressElements contains address tag: Places,Spain,Barcelona
+//readdTag climbs the tree and checks on each level if tagAddressElements[level] is found.
+//if the tag is found, it climbs up the next level
+//else, it recreates the new tag and climbs up that tree.
+void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QStringList tagAddressElements, int currentAddressElementIndex)
+{
+
+    bool found=false;
+    int foundIndex;
+
+    kDebug()<<"Entered new currentBranch. currentBranch->data="<<currentBranch->data;
+
+    for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
+    {
+        if(currentBranch->spacerChildren[i]->data == tagAddressElements[currentAddressElementIndex])
+        {
+            found = true;
+            foundIndex = i;
+            break;
+        }
+    }
+
+    if(found)
+    {
+        readdTag(currentBranch->spacerChildren[foundIndex], foundIndex, tagAddressElements, currentAddressElementIndex+1);
+        return;
+    }
+
+    for(int i=0; i<currentBranch->newChildren.count(); ++i)
+    {
+        if(currentBranch->newChildren[i]->data == tagAddressElements[currentAddressElementIndex])
+        {
+            found = true;
+            foundIndex = i;
+            break;
+        }
+    }
+
+    if(found)
+    {
+        readdTag(currentBranch->newChildren[foundIndex], foundIndex+currentBranch->spacerChildren.count(),tagAddressElements, currentAddressElementIndex+1);
+        return;
+    }
+
+    for(int i=0; i<currentBranch->oldChildren.count(); ++i)
+    {
+        
+
+        if(currentBranch->oldChildren[i]->data == tagAddressElements[currentAddressElementIndex])
+        {
+            found = true;
+            foundIndex = i;
+            break;
+        }
+    }
+
+    if(found)
+    {
+        readdTag(currentBranch->oldChildren[foundIndex], foundIndex+currentBranch->spacerChildren.count()+currentBranch->newChildren.count(), tagAddressElements, currentAddressElementIndex+1);
+        return;
+    }
+
+    if(!found)
+    {
+        QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch); 
+        addNewTags(currentIndex,tagAddressElements[currentAddressElementIndex]);
+        
+        if( (tagAddressElements.count()-1) > currentAddressElementIndex)
+            readdTag(currentBranch->newChildren[currentBranch->newChildren.count()-1], currentBranch->spacerChildren.count()+currentBranch->newChildren.count()-1, tagAddressElements, currentAddressElementIndex+1);
+    }
+
+}
+
+void RGTagModel::readdNewTags(QStringList& tagAddressList)
+{
+    for(int i=0; i<tagAddressList.count(); ++i)
+    {
+        QString currentAddressTag = tagAddressList[i];
+        //remove "/" from "/Places/rest of tags"
+        currentAddressTag.remove(0,1);          
+        QStringList addressElements = currentAddressTag.split("/");
+        kDebug()<<"AddressElements:"<<addressElements;
+        readdTag(d->rootTag, 0, addressElements, 0);
+
+    }
+
+}
+
 
 }    //KIPIGPSSyncPlugin

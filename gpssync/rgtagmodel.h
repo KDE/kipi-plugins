@@ -90,6 +90,8 @@ public:
     QString getTagAddress();
     void findAndDeleteNewTag(TreeBranch*&, int );
     void deleteAllNewTags();
+    void readdTag(TreeBranch*&, int, QStringList, int);
+    void readdNewTags(QStringList&);
     void deleteTag(const QModelIndex&);
 
 public Q_SLOTS:

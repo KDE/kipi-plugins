@@ -93,6 +93,7 @@ public:
     QString saveChanges();
     virtual bool lessThan(const KipiImageItem* const otherItem, const int column) const;
     void setTagData(TagData&);
+    QStringList getTagData();
 
 protected:
     // these are only to be called by the KipiImageModel
