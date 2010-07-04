@@ -417,7 +417,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             QString countryResult, cityResult;
             QStringList elements, resultedData;
 
-            //Is it better to let {City} is the value doesn't exist?
+            //Is it better to let {City} if the value doesn't exist?
             int separatorIndex = combinedResult.indexOf(QString("%1").arg("/"));
             if(separatorIndex == -1)
             {
@@ -465,16 +465,6 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 
 void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
 {
-  
-    //d->tagModel->slotRowsAboutToBeRemoved(index.parent(), index.row(), index.row());
-    //d->tagModel->slotRowsRemoved();
-
-    //kDebug()<<"Tag data:"<<d->tagModel->data(index, Qt::DisplayRole);
-
-    //d->tagModel->addNewTags(index, "New Country");
-    //d->tagModel->addSpacerTag(index, "New Country");
-    
-
 
 }
 
@@ -526,12 +516,9 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
     d->hideOptions = !(group->readEntry("Hide options", false));
     slotHideOptions();
 
-
     d->iptc->setChecked(group->readEntry("IPTC", false));
     d->xmpLoc->setChecked(group->readEntry("XMP location", false));
     d->xmpKey->setChecked(group->readEntry("XMP keywords", false));
-    
-    
 
 }
 
@@ -565,11 +552,7 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
 
 void GPSReverseGeocodingWidget::slotRemoveTag()
 {
-
     const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-
-    //d->tagModel->slotRowsAboutToBeRemoved(baseIndex.parent(), baseIndex.row(), baseIndex.row());
-    //d->tagModel->slotRowsRemoved();
     d->tagModel->deleteTag(baseIndex);
 }
 
