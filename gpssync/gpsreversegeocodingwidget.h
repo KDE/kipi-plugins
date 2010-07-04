@@ -65,7 +65,7 @@ public:
     void setUIEnabled(const bool state);
     void readSettingsFromGroup(const KConfigGroup* const group);
     void saveSettingsToGroup(KConfigGroup* const group);
-    void regenerateNewTags(QStringList&);
+    void regenerateNewTags();
 
 private:
 

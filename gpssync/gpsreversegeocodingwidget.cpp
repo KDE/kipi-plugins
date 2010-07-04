@@ -597,11 +597,10 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
 }
 
-void GPSReverseGeocodingWidget::regenerateNewTags(QStringList& newTags)
+void GPSReverseGeocodingWidget::regenerateNewTags()
 {
-
-    
-
+   slotRemoveAllNewTags();
+   slotReaddNewTags(); 
 }
 
 } /* KIPIGPSSyncPlugin  */
