@@ -573,6 +573,7 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
 void GPSImageItem::setTagData(TagData& externalTagData)
 {
    this->imageTags = externalTagData; 
+   this->imageTags.modifiedTags = externalTagData.tags;
 }
 
 QStringList GPSImageItem::getTagData()

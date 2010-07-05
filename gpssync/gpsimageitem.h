@@ -53,6 +53,7 @@ class RGInfo {
 typedef struct TagData
 {
     QStringList tags;
+    QStringList modifiedTags;
 
 }TagData;
 
