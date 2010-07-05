@@ -403,9 +403,15 @@ void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer g
     {
         const QModelIndex itemIndex = selectedIndices.at(i);
         GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(itemIndex));
-        const GPSDataContainer oldGPSData = gpsItem->gpsData();
+        
+        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
+        undoInfo.readOldDataFromItem(gpsItem);
+
         gpsItem->setGPSData(gpsData);
-        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldGPSData, gpsData));
+        undoInfo.readNewDataFromItem(gpsItem);
+        
+
+        undoCommand->addUndoInfo(undoInfo);
     }
 
     undoCommand->setText(undoDescription);
@@ -440,8 +446,12 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
     {
         const QModelIndex itemIndex = selectedIndices.at(i);
         GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(itemIndex));
-        const GPSDataContainer oldGPSData = gpsItem->gpsData();
-        GPSDataContainer newGPSData = oldGPSData;
+
+        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
+        undoInfo.readOldDataFromItem(gpsItem);
+
+        GPSDataContainer newGPSData;
+
         bool didSomething = false;
         if (flagsToClear.testFlag(GPSDataContainer::HasCoordinates))
         {
@@ -478,7 +488,8 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
         if (didSomething)
         {
             gpsItem->setGPSData(newGPSData);
-            undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldGPSData, newGPSData));
+            undoInfo.readNewDataFromItem(gpsItem);
+            undoCommand->addUndoInfo(undoInfo);
         }
     }
 

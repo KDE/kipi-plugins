@@ -618,12 +618,17 @@ void SearchResultModelHelper::snapItemsTo(const QModelIndex& targetIndex, const 
     {
         const QPersistentModelIndex itemIndex = snappedIndices.at(i);
         GPSImageItem* const item = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
-        const GPSDataContainer oldData = item->gpsData();
-        GPSDataContainer newData = oldData;
+        
+        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
+        undoInfo.readOldDataFromItem(item);
+
+        GPSDataContainer newData;
         newData.setCoordinates(targetCoordinates);
         item->setGPSData(newData);
 
-        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
+        undoInfo.readNewDataFromItem(item);
+
+        undoCommand->addUndoInfo(undoInfo);
     }
     undoCommand->setText(i18np("1 image snapped to '%2'",
                                "%1 images snapped to '%2'", snappedIndices.count(), targetItem.result.name));
@@ -646,12 +651,17 @@ void SearchWidget::slotMoveSelectedImagesToThisResult()
     {
         const QPersistentModelIndex itemIndex = selectedImageIndices.at(i);
         GPSImageItem* const item = static_cast<GPSImageItem*>(d->kipiImageModel->itemFromIndex(itemIndex));
-        const GPSDataContainer oldData = item->gpsData();
-        GPSDataContainer newData = oldData;
+
+        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
+        undoInfo.readOldDataFromItem(item);        
+
+        GPSDataContainer newData;
         newData.setCoordinates(targetCoordinates);
         item->setGPSData(newData);
 
-        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
+        undoInfo.readNewDataFromItem(item);
+
+        undoCommand->addUndoInfo(undoInfo);
     }
     undoCommand->setText(i18np("1 image moved to '%2'",
                                "%1 images moved to '%2'", selectedImageIndices.count(), currentItem.result.name));

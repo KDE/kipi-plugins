@@ -38,16 +38,20 @@ public:
     class UndoInfo
     {
     public:
-        UndoInfo(QPersistentModelIndex pModelIndex, GPSDataContainer pDataBefore, GPSDataContainer pDataAfter)
-        : modelIndex(pModelIndex),
-          dataBefore(pDataBefore),
-          dataAfter(pDataAfter)
+        UndoInfo(QPersistentModelIndex pModelIndex)
+        : modelIndex(pModelIndex)
         {
         }
+
+        void readOldDataFromItem(GPSImageItem*);
+        void readNewDataFromItem(GPSImageItem*);
 
         QPersistentModelIndex modelIndex;
         GPSDataContainer dataBefore;
         GPSDataContainer dataAfter;
+
+        QStringList oldTagList;
+        QStringList newTagList;
 
         typedef QList<UndoInfo> List;
     };

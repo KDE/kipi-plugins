@@ -49,14 +49,14 @@ class RGInfo {
     KMapIface::WMWGeoCoordinate coordinates;
     QMap<QString, QString> rgData;
 };
-
+/*
 typedef struct TagData
 {
     QStringList tags;
-    QStringList modifiedTags;
+    //QStringList modifiedTags;
 
 }TagData;
-
+*/
 
 class GPSImageItem : public KipiImageItem
 {
@@ -77,7 +77,6 @@ public:
 
     static const int ColumnGPSImageItemCount = ColumnKipiImageItemCount + 10;
 
-    TagData imageTags;
 
     GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~GPSImageItem();
@@ -93,8 +92,8 @@ public:
     static void setHeaderData(KipiImageModel* const model);
     QString saveChanges();
     virtual bool lessThan(const KipiImageItem* const otherItem, const int column) const;
-    void setTagData(TagData&);
-    QStringList getTagData();
+    void setTagList(QStringList&);
+    QStringList getTagList();
 
 protected:
     // these are only to be called by the KipiImageModel
@@ -107,6 +106,7 @@ protected:
     GPSDataContainer m_savedState;
     bool m_dirty;
     QString tags;
+    QStringList tagList;
 };
 
 } /* KIPIGPSSyncPlugin */

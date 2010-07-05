@@ -309,12 +309,18 @@ void GPSBookmarkModelHelper::snapItemsTo(const QModelIndex& targetIndex, const Q
     {
         const QPersistentModelIndex itemIndex = snappedIndices.at(i);
         GPSImageItem* const item = static_cast<GPSImageItem*>(d->kipiImageModel->itemFromIndex(itemIndex));
-        const GPSDataContainer oldData = item->gpsData();
-        GPSDataContainer newData = oldData;
+        
+        GPSDataContainer newData;
         newData.setCoordinates(targetCoordinates);
+        
+        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
+        undoInfo.readOldDataFromItem(item);
+ 
         item->setGPSData(newData);
+        undoInfo.readNewDataFromItem(item);
 
-        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
+        //undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData, oldTagList, newTagList));
+        undoCommand->addUndoInfo(undoInfo);
     }
     kDebug()<<targetIndex.data(Qt::DisplayRole).toString();
     undoCommand->setText(i18np("1 image snapped to '%2'",

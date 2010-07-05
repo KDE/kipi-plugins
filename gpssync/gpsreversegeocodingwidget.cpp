@@ -437,12 +437,11 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
             kDebug()<<"Returned tags:"<<returnedTags;
 
-            TagData tagStructure;
-            tagStructure.tags = returnedTags; 
-
             GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
+
             currentItem->setTagInfo(result);
-            currentItem->setTagData(tagStructure);
+            currentItem->setTagList(returnedTags);
+            
         }
     }
 
@@ -571,8 +570,8 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
         const QPersistentModelIndex itemIndex = selectedItems.at(i);
         GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
 
-        kDebug()<<selectedItem->getTagData();
-        QStringList tagAddresses = selectedItem->getTagData();
+        kDebug()<<selectedItem->getTagList();
+        QStringList tagAddresses = selectedItem->getTagList();
         d->tagModel->readdNewTags(tagAddresses);
 
     }

@@ -118,7 +118,7 @@ private Q_SLOTS:
 
 private:
 
-    int                      splitterSize;
+    int splitterSize;
     GPSSyncDialogPriv* const d;
 };
 

@@ -50,6 +50,7 @@ void GPSUndoCommand::changeItemData(const bool redoIt)
         GPSImageItem* const item = static_cast<GPSImageItem*>(imageModel->itemFromIndex(info.modelIndex));
 
         // TODO: correctly handle the dirty flags
+        // TODO: find a way to regenerate tag tree
         GPSDataContainer newData = redoIt ? info.dataAfter : info.dataBefore;
         item->restoreGPSData(newData);
     }
@@ -68,6 +69,18 @@ void GPSUndoCommand::undo()
 void GPSUndoCommand::addUndoInfo(const UndoInfo& info)
 {
     undoList << info;
+}
+
+void GPSUndoCommand::UndoInfo::readOldDataFromItem(GPSImageItem* imageItem)
+{
+    this->dataBefore = imageItem->gpsData();
+    this->oldTagList = imageItem->getTagList(); 
+}
+
+void GPSUndoCommand::UndoInfo::readNewDataFromItem(GPSImageItem* imageItem)
+{
+    this->dataAfter = imageItem->gpsData();
+    this->newTagList = imageItem->getTagList();
 }
 
 }  // namespace KIPIGPSSyncPlugin

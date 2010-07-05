@@ -904,13 +904,17 @@ void GPSSyncDialog::slotMapMarkersMoved(const QList<QPersistentModelIndex>& move
     {
         const QPersistentModelIndex itemIndex = movedMarkers.at(i);
         GPSImageItem* const item = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
-        const GPSDataContainer oldData = item->gpsData();
-        GPSDataContainer newData = oldData;
+        
+        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
+        undoInfo.readOldDataFromItem(item);
+
+        GPSDataContainer newData;
         newData.setCoordinates(coordinates);
         item->setGPSData(newData);
 
-        kDebug()<<oldData.getCoordinates()<<newData.getCoordinates();
-        undoCommand->addUndoInfo(GPSUndoCommand::UndoInfo(itemIndex, oldData, newData));
+        undoInfo.readNewDataFromItem(item);
+
+        undoCommand->addUndoInfo(undoInfo);
     }
     undoCommand->setText(i18np("1 image moved",
                                "%1 images moved", movedMarkers.count()));
