@@ -286,6 +286,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
             this, SLOT( treeItemClicked(const QModelIndex &)));    
 
+    connect(d->serviceComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT( slotServiceSelectionChanged(int)));
+
     connect(d->actionAddCountry, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCountry()));
 
@@ -323,6 +326,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     }
 
     
+    d->backendIndex = d->serviceComboBox->currentIndex(); 
+    d->currentBackend = d->backendRGList[d->backendIndex];
 
 }
 
@@ -372,7 +377,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
         const GPSDataContainer gpsData = selectedItem->gpsData();
          if (!gpsData.hasCoordinates())
-            return;
+            continue;
 
         const qreal latitude = gpsData.getCoordinates().lat();
         const qreal longitude = gpsData.getCoordinates().lon();
@@ -515,6 +520,12 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     {
         emit(signalProgressChanged(d->receivedRGCount));
     }
+}
+
+void GPSReverseGeocodingWidget::slotServiceSelectionChanged(int index)
+{
+    d->backendIndex = index;
+    //d->currentBackend = 
 } 
 
 void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
@@ -532,31 +543,27 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 {
     if(watched == d->tagTreeView)
     {
-        if((event->type()==QEvent::ContextMenu) && d->tagSelectionModel->hasSelection() )
+        if((event->type()==QEvent::ContextMenu) && d->tagSelectionModel->hasSelection() && d->UIEnabled)
         {
-            
             KMenu * const menu = new KMenu(d->tagTreeView);
-            
-            //QString backendName = d->currentBackend->backendName();
-            //kDebug()<<"BACKEND NAME:"<<backendName;
+           
+            d->currentBackend = d->backendRGList[d->backendIndex]; 
+            QString backendName = d->currentBackend->backendName();
 
-            //if(backendName.compare(QString("OSM")) == 0)
-            //{
+            if(backendName.compare(QString("OSM")) == 0)
+            {
             
                 menu->addAction(d->actionAddCountry);
                 menu->addAction(d->actionAddCounty);
                 menu->addAction(d->actionAddCity);
                 menu->addAction(d->actionAddStreet);
-                menu->addAction(d->actionAddPlace);
-                menu->addAction(d->actionAddLAU2);
-                menu->addAction(d->actionAddLAU1);
                 menu->addAction(d->actionAddCustomizedSpacer);
                 menu->addAction(d->actionRemoveTag);
                 menu->addAction(d->actionRemoveAllNewTags);
                 menu->addAction(d->actionReaddNewTags);  
          
-            //}
-    /*        else if(d->currentBackend->backendName() == QString("Geonames"))
+            }
+            else if(d->currentBackend->backendName() == QString("Geonames"))
             {
                 menu->addAction(d->actionAddCountry);
                 menu->addAction(d->actionAddPlace);
@@ -566,16 +573,14 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionAddLAU2);
                 menu->addAction(d->actionAddLAU1);
                 menu->addAction(d->actionAddCity); 
-            } */
+            }
             QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
             menu->exec(e->globalPos());
 
         }
 
     }
-
     return QObject::eventFilter(watched, event);
-
 }
 
 void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
