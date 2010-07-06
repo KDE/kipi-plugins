@@ -27,7 +27,6 @@ namespace KIPIGPSSyncPlugin
 QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backendName)
 {
 
-    kDebug()<<"Backend name:"<<backendName;
     QString auxReturnedFormat = inputFormat;
     QString returnedAddress = inputFormat;
     QString returnedFormat;        
@@ -40,15 +39,9 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
     while( ( indexFBracket = returnedAddress.indexOf("{") ) >= 0 )
     {
 
-       
-
-        kDebug()<<"RGInfo:"<<info.rgData;
-        kDebug()<<"returnedAddress:"<<returnedAddress;
-        kDebug()<<"returnedFormat:"<<returnedFormat;
         int indexLBracket = returnedAddress.indexOf("}"); 
 
         QString humanTag = returnedAddress.mid(indexFBracket + 1, indexLBracket-indexFBracket-1);
-
 
         if(backendName.compare(QString("OSM")) == 0)
         {
@@ -73,7 +66,25 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
                     returnedFormat.append("/{Country}");
                 }
             }
+            else if(humanTag.compare(QString("County")) == 0)
+            {
+                if(info.rgData[QString("county")].isEmpty())
+                {
+                    returnedAddress.replace(indexFBracket-1, 9, "");
 
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,9,"");
+
+                }
+                else
+                {
+                    returnedAddress.replace(indexFBracket, 8, info.rgData[QString("county")]);
+
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,9,"");
+                    returnedFormat.append("/{County}");
+                }
+            }    
             else if(humanTag.compare(QString("City")) == 0)
             {
                 if(info.rgData[QString("city")].isEmpty())
