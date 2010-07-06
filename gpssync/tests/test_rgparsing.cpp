@@ -58,7 +58,7 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString("My Tags/France/Paris"));
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString("My Tags/France/Paris"));
     }
 
     {
@@ -72,7 +72,7 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/Germany/Düsseldorf") );
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/Germany/Düsseldorf") );
     } 
 
     {
@@ -86,7 +86,7 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;  
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/中国/北京市") );
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/中国/北京市") );
     }
 
     {
@@ -100,7 +100,7 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/România/București"));
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/România/București"));
     }
 
     {
@@ -114,7 +114,7 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/București"));
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/București"));
     }
     
     {
@@ -128,7 +128,7 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/România"));
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/România"));
     }
 
     {
@@ -141,7 +141,7 @@ void TestRGParsing::testVerifyRG()
 
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags/București"));
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/București"));
     }
 
     {
@@ -155,7 +155,7 @@ void TestRGParsing::testVerifyRG()
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;
 
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")), QString::fromUtf8("My Tags"));
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags"));
     }
 
 
