@@ -126,6 +126,9 @@ public:
     KAction* actionAddCounty;
     KAction* actionAddCity;
     KAction* actionAddStreet;
+    KAction* actionAddPlace;
+    KAction* actionAddLAU2;
+    KAction* actionAddLAU1;
     KAction* actionAddCustomizedSpacer;
     KAction* actionRemoveTag;
     KAction* actionRemoveAllNewTags;
@@ -184,6 +187,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->actionAddCounty = new KAction(i18n("Add county tag"), this);
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
     d->actionAddStreet = new KAction(i18n("Add street"), this);
+    d->actionAddPlace = new KAction(i18n("Add place"), this);
+    d->actionAddLAU2 = new KAction(i18n("Add LAU2"), this);
+    d->actionAddLAU1 = new KAction(i18n("Add LAU1"), this);
     d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
     d->actionRemoveTag = new KAction(i18n("Remove selected tag"), this);
     d->actionRemoveAllNewTags = new KAction(i18n("Remove all new tags"), this);
@@ -290,6 +296,15 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
             this, SLOT(slotAddCity()));
     connect(d->actionAddStreet, SIGNAL(triggered(bool)),
             this, SLOT(slotAddStreet()));
+
+    connect(d->actionAddPlace, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddPlace()));
+
+    connect(d->actionAddLAU2, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddLAU2()));
+
+    connect(d->actionAddLAU1, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddLAU1()));
 
     connect(d->actionAddCustomizedSpacer, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCustomizedSpacer()));
@@ -424,7 +439,16 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
             kDebug()<<"RETURNED RG LIST:"<<returnedRGList[i].rgData;
 
-            QString addressElementsWantedFormat("/{Country}/{County}/{City}/{Street}");
+            QString addressElementsWantedFormat;
+            
+
+            if(d->currentBackend->backendName() == QString("Geonames"))
+                addressElementsWantedFormat.append("/{Country}/{Place}");
+            else if(d->currentBackend->backendName() == QString("GeonamesUS"))
+                addressElementsWantedFormat.append("/{LAU2}/{LAU1}/{City}");
+            else     
+                addressElementsWantedFormat.append("/{Country}/{County}/{City}/{Street}");
+            
 
             QStringList combinedResult = makeTagString(returnedRGList[i], addressElementsWantedFormat, d->currentBackend->backendName());
 
@@ -512,15 +536,37 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
         {
             
             KMenu * const menu = new KMenu(d->tagTreeView);
-            menu->addAction(d->actionAddCountry);
-            menu->addAction(d->actionAddCounty);
-            menu->addAction(d->actionAddCity);
-            menu->addAction(d->actionAddStreet);
-            menu->addAction(d->actionAddCustomizedSpacer);
-            menu->addAction(d->actionRemoveTag);
-            menu->addAction(d->actionRemoveAllNewTags);
-            menu->addAction(d->actionReaddNewTags);           
- 
+            
+            //QString backendName = d->currentBackend->backendName();
+            //kDebug()<<"BACKEND NAME:"<<backendName;
+
+            //if(backendName.compare(QString("OSM")) == 0)
+            //{
+            
+                menu->addAction(d->actionAddCountry);
+                menu->addAction(d->actionAddCounty);
+                menu->addAction(d->actionAddCity);
+                menu->addAction(d->actionAddStreet);
+                menu->addAction(d->actionAddPlace);
+                menu->addAction(d->actionAddLAU2);
+                menu->addAction(d->actionAddLAU1);
+                menu->addAction(d->actionAddCustomizedSpacer);
+                menu->addAction(d->actionRemoveTag);
+                menu->addAction(d->actionRemoveAllNewTags);
+                menu->addAction(d->actionReaddNewTags);  
+         
+            //}
+    /*        else if(d->currentBackend->backendName() == QString("Geonames"))
+            {
+                menu->addAction(d->actionAddCountry);
+                menu->addAction(d->actionAddPlace);
+            }
+            else if(d->currentBackend->backendName() == QString("GeonamesUS"))
+            {
+                menu->addAction(d->actionAddLAU2);
+                menu->addAction(d->actionAddLAU1);
+                menu->addAction(d->actionAddCity); 
+            } */
             QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
             menu->exec(e->globalPos());
 
@@ -583,6 +629,24 @@ void GPSReverseGeocodingWidget::slotAddStreet()
 {
     const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
     d->tagModel->addSpacerTag(baseIndex, "{Street}");
+}
+
+void GPSReverseGeocodingWidget::slotAddPlace()
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    d->tagModel->addSpacerTag(baseIndex, "{Place}");
+}
+
+void GPSReverseGeocodingWidget::slotAddLAU1()
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    d->tagModel->addSpacerTag(baseIndex, "{LAU1}");
+}
+
+void GPSReverseGeocodingWidget::slotAddLAU2()
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    d->tagModel->addSpacerTag(baseIndex, "{LAU2}");
 }
 
 void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()

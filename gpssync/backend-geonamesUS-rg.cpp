@@ -121,7 +121,6 @@ void BackendGeonamesUSRG::callRGBackend(QList<RGInfo> rgList, QString language)
             bool foundIt = false;
             for( int j=0; j < d->jobs.count(); j++)
             {
-
                 if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
                 {
 
@@ -131,23 +130,17 @@ void BackendGeonamesUSRG::callRGBackend(QList<RGInfo> rgList, QString language)
                     break;
 
                 }   
-
-
             }
 
             if(!foundIt)
             {
-            
                 GeonamesUSInternalJobs newJob;
                 newJob.request << rgList.at(i);
                 newJob.language = language;
                 d->jobs << newJob;
-
             }
     }
-    
     nextPhoto();
-
 }
 
 void BackendGeonamesUSRG::dataIsHere(KIO::Job* job, const QByteArray & data)
@@ -186,7 +179,8 @@ QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(QString xmlData)
         if (!e.isNull())
         {
 
-            if((e.tagName().compare(QString("adminName1")) == 0) ||
+            if((e.tagName().compare(QString("adminName2")) == 0) ||
+               (e.tagName().compare(QString("adminName1")) == 0) ||
                (e.tagName().compare(QString("placeName")) == 0))
             { 
                 mappedData.insert(e.tagName(), e.text());

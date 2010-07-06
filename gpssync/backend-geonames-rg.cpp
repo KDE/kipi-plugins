@@ -116,7 +116,6 @@ void BackendGeonamesRG::nextPhoto()
 void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
 {
 
-    kDebug()<<"Entering Geonames backend";
     d->errorMessage.clear();
 
     for( int i = 0; i < rgList.count(); ++i)
@@ -135,23 +134,16 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
                     break;
 
                 }   
-
-
             }
-
             if(!foundIt)
             {
-            
                 GeonamesInternalJobs newJob;
                 newJob.request << rgList.at(i);
                 newJob.language = language;
                 d->jobs << newJob;
-
             }
     }
-    
     nextPhoto();
-
 }
 
 void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
@@ -159,13 +151,10 @@ void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
     
     for(int i = 0; i < d->jobs.count(); ++i)
     {
-
         if(d->jobs.at(i).kioJob == job)
         {
-            
             d->jobs[i].data.append(data);
             break;
-
         }
     }
 }

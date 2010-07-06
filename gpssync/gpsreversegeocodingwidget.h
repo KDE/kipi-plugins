@@ -78,6 +78,9 @@ private Q_SLOTS:
     void slotAddCounty(); 
     void slotAddCity();
     void slotAddStreet();
+    void slotAddPlace();
+    void slotAddLAU2();
+    void slotAddLAU1();
     void slotAddCustomizedSpacer();
     void slotRemoveTag();
     void slotRemoveAllNewTags();

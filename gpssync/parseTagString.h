@@ -134,20 +134,49 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
             }
 
         }
-       /* 
+        
         else if(backendName.compare(QString("GeonamesUS")) == 0)
         {
 
-            if(humanTag.compare(QString("Country")) == 0)
+            if(humanTag.compare(QString("LAU2")) == 0)
             {
-                if(info.rgData[QString("adminName1")].isEmpty())
+                if(info.rgData[QString("adminName2")].isEmpty())
                 {
-                    //"My Tags/{Country}" => "My Tags"
-                    returnedAddress.replace(indexFBracket-1, 10, "" );
+                    returnedAddress.replace(indexFBracket-1, 7, "" );
+                    
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,7,"");
+                    
                 }
                 else
                 {
-                    returnedAddress.replace(indexFBracket, 9, info.rgData[QString("adminName1")]);
+                    returnedAddress.replace(indexFBracket, 6, info.rgData[QString("adminName2")]);
+
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,7,"");
+                    returnedFormat.append("/{LAU2}");
+                    
+                }
+            }
+
+           else if(humanTag.compare(QString("LAU1")) == 0)
+            {
+                if(info.rgData[QString("adminName1")].isEmpty())
+                {
+                    returnedAddress.replace(indexFBracket-1, 7, "" );
+
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,7,"");
+
+                }
+                else
+                {
+                    returnedAddress.replace(indexFBracket, 6, info.rgData[QString("adminName1")]);
+
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,7,"");
+                    returnedFormat.append("/{LAU1}");
+
                 }
             }
 
@@ -157,15 +186,27 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
                 {
                     //"My Tags/{City}" => "My Tags"
                     returnedAddress.replace(indexFBracket-1, 7, "" );
+                    
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,7,"");
+                    
                 }
                 else
                 {
                     returnedAddress.replace(indexFBracket, 6, info.rgData[QString("placeName")]);
+                    
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,7,"");
+                    returnedFormat.append("/{City}");
                 }
             }
             else
             {
                 returnedAddress.replace(indexFBracket-1, indexLBracket-indexFBracket+2, "");
+
+                int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                int indexFormatLBracket = auxReturnedFormat.indexOf("}");
+                auxReturnedFormat.replace(indexFormatFBracket-1,indexFormatLBracket-indexFormatFBracket+2,"");
             }
         }
 
@@ -178,31 +219,50 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
                 {
                     //"My Tags/{Country}" => "My Tags"
                     returnedAddress.replace(indexFBracket-1, 10, "" );
+                    
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,10,"");
                 }
                 else
                 {
                     returnedAddress.replace(indexFBracket, 9, info.rgData[QString("countryName")]);
+                    
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,10,"");
+                    returnedFormat.append("/{Country}");
                 }
             }
 
-            else if(humanTag.compare(QString("City")) == 0)
+            else if(humanTag.compare(QString("Place")) == 0)
             {
                 if(info.rgData[QString("name")].isEmpty())
                 {
                     //"My Tags/{City}" => "My Tags"
                     returnedAddress.replace(indexFBracket-1, 7, "" );
+                    
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,7,"");
+                
                 }
                 else
                 {
                     returnedAddress.replace(indexFBracket, 6, info.rgData[QString("name")]);
+                    
+                    int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                    auxReturnedFormat.replace(indexFormatFBracket-1,7,"");
+                    returnedFormat.append("/{Place}");
                 }
             }
             else
             {  
                 returnedAddress.replace(indexFBracket-1, indexLBracket-indexFBracket+2, ""); 
+                
+                int indexFormatFBracket = auxReturnedFormat.indexOf("{");
+                int indexFormatLBracket = auxReturnedFormat.indexOf("}");
+                auxReturnedFormat.replace(indexFormatFBracket-1,indexFormatLBracket-indexFormatFBracket+2,"");
             }
         }
-    */
+    
 
     } 
 
