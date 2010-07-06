@@ -427,6 +427,14 @@ void GPSImageItem::restoreGPSData(const GPSDataContainer& container)
     emitDataChanged();
 }
 
+void GPSImageItem::restoreRGTagList(QStringList& tagList)
+{
+    m_dirty = !(tagList == m_tagList);
+    m_tagList = tagList;
+    //emit RGTagListChanged(); 
+
+}
+
 bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int column) const
 {
     const GPSImageItem* const otherGPSItem = dynamic_cast<const GPSImageItem*>(otherItem);
@@ -572,13 +580,13 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
 
 void GPSImageItem::setTagList(QStringList& externalTagData)
 {
-   this->tagList = externalTagData; 
+   this->m_tagList = externalTagData; 
    //this->imageTags.modifiedTags = externalTagData.tags;
 }
 
 QStringList GPSImageItem::getTagList()
 {
-    return this->tagList;
+    return this->m_tagList;
 } 
 
 } /* KIPIGPSSyncPlugin */

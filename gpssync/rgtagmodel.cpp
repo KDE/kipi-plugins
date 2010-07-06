@@ -295,8 +295,9 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
 
     for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
     {
-        newDataAdded = true;
-
+        newDataAdded = false;
+        
+        //this spacer is not an address element
         if(currentBranch->spacerChildren[i]->data.indexOf("{") != 0)
         {
             d->auxTagList.append(currentBranch->spacerChildren[i]->data);      
@@ -307,72 +308,62 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
         else
         {
 
-        for( int j=0; j<addressElements.count(); ++j)
-        {
-             
-            if(currentBranch->spacerChildren[i]->data == addressElements[j])
+            for( int j=0; j<addressElements.count(); ++j)
             {
-                if(elementsData[j].isEmpty())
+             
+                if(currentBranch->spacerChildren[i]->data == addressElements[j])
                 {
-                    //last spacer doesn't have data
-                    if(currentBranch->spacerChildren[i]->spacerChildren.count() == 0)
-                    {
-                        QString newTag=getTagAddress();
-                        d->newTags.append(newTag);
-                    }
-                    newDataAdded = false;
-                }
-                else
-                {
+                    newDataAdded = true;
                     QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
 
                     //checks if adds the new tag as a sibling to a spacer, or as a child of a new tag
+                    QPersistentModelIndex auxIndex;
                     if((currentBranch->type != TypeSpacer) || ((currentBranch->type == TypeSpacer) && (currentBranch->data.indexOf("{") != 0)))
                     {
-                        QPersistentModelIndex auxIndex = addNewTags(currentIndex, elementsData[j]);
-                        d->auxTagList.append(elementsData[j]);
-                        d->auxIndexList.append(auxIndex);
-
+                        //TODO: change function name from addNewTags to addNewTag
+                        auxIndex = addNewTags(currentIndex, elementsData[j]);
                     }
                     else
                     {
-                        QPersistentModelIndex auxIndex = addNewTags(d->auxIndexList.last(), elementsData[j]);
-                        d->auxTagList.append(elementsData[j]);
-                        d->auxIndexList.append(auxIndex);
+                        auxIndex = addNewTags(d->auxIndexList.last(), elementsData[j]);
                     }
-
+               
+                    d->auxTagList.append(elementsData[j]);
+                    d->auxIndexList.append(auxIndex);
+ 
                     if(currentBranch->spacerChildren[i]->spacerChildren.count() == 0)
                     {
                         QString newTag=getTagAddress();
                         d->newTags.append(newTag);
                     }
+                    //break;
                 }
             }
-        }
             
-        if(currentBranch->spacerChildren[i])
-            addDataInTree(currentBranch->spacerChildren[i],i, addressElements, elementsData);
-        if(newDataAdded)
-        {    
-            d->auxTagList.removeLast();
-            d->auxIndexList.removeLast();  
-        }
+            if(currentBranch->spacerChildren[i])
+                addDataInTree(currentBranch->spacerChildren[i],i, addressElements, elementsData);
+            if(newDataAdded)
+            {    
+                d->auxTagList.removeLast();
+                d->auxIndexList.removeLast();  
+            }
 
         }
     }
+
     for(int i=0; i<currentBranch->newChildren.count(); ++i)
     {
         d->auxTagList.append(currentBranch->newChildren[i]->data);
         addDataInTree(currentBranch->newChildren[i],i+currentBranch->spacerChildren.count(), addressElements, elementsData);
         d->auxTagList.removeLast();
     }
+
     for(int i=0; i<currentBranch->oldChildren.count(); ++i)
     {
         d->auxTagList.append(currentBranch->oldChildren[i]->data);      
         addDataInTree(currentBranch->oldChildren[i],i+currentBranch->spacerChildren.count()+currentBranch->newChildren.count(), addressElements, elementsData);
         d->auxTagList.removeLast();
     }
-
 
 }
 

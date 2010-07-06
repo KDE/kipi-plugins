@@ -124,6 +124,7 @@ public:
     QItemSelectionModel* tagSelectionModel; 
     KAction* actionAddCountry;
     KAction* actionAddCity;
+    KAction* actionAddStreet;
     KAction* actionAddCustomizedSpacer;
     KAction* actionRemoveTag;
     KAction* actionRemoveAllNewTags;
@@ -180,6 +181,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->actionAddCountry = new KAction(i18n("Add country tag"), this);
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
+    d->actionAddStreet = new KAction(i18n("Add street"), this);
     d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
     d->actionRemoveTag = new KAction(i18n("Remove selected tag"), this);
     d->actionRemoveAllNewTags = new KAction(i18n("Remove all new tags"), this);
@@ -281,6 +283,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     
     connect(d->actionAddCity, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCity()));
+    connect(d->actionAddStreet, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddStreet()));
 
     connect(d->actionAddCustomizedSpacer, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCustomizedSpacer()));
@@ -297,6 +301,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
         connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
                 this, SLOT(slotRGReady(QList<RGInfo>&)));
     }
+
+    
+
 }
 
 void GPSReverseGeocodingWidget::updateUIState()
@@ -342,7 +349,6 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
         const QPersistentModelIndex itemIndex = selectedItems.at(i);
         const GPSImageItem* const selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
-
 
         const GPSDataContainer gpsData = selectedItem->gpsData();
          if (!gpsData.hasCoordinates())
@@ -409,45 +415,71 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
         if(!returnedRGList[i].rgData.empty())
         {
-            QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
+            //QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
 
-            QString combinedResult = makeTagString(returnedRGList[i], "{Country}/{City}", d->currentBackend->backendName());
+            kDebug()<<"RETURNED RG LIST:"<<returnedRGList[i].rgData;
 
+            QString addressElementsWantedFormat("/{Country}/{City}/{Street}");
 
-            QString countryResult, cityResult;
+            QStringList combinedResult = makeTagString(returnedRGList[i], addressElementsWantedFormat, d->currentBackend->backendName());
+
+            kDebug()<<"ADDRESS ELEMENTS:"<<combinedResult;
+
+            QString addressFormat = combinedResult[0];
+            QString addressElements = combinedResult[1];
+
+            //removes first "/" from tag addresses
+            addressFormat.remove(0,1);
+            addressElements.remove(0,1);
+            addressElementsWantedFormat.remove(0,1);
+
+            QStringList listAddressElementsWantedFormat = addressElementsWantedFormat.split("/");
+            QStringList listAddressElements = addressElements.split("/");
+            QStringList listAddressFormat = addressFormat.split("/");
+
             QStringList elements, resultedData;
 
-            //Is it better to let {City} if the value doesn't exist?
-            int separatorIndex = combinedResult.indexOf(QString("%1").arg("/"));
-            if(separatorIndex == -1)
+            for(int i=0; i<listAddressElementsWantedFormat.count(); ++i)
             {
-                //I suppose that combinedResult has only country, but not city
-                //I shall do something here to determine what kind of address element doesn't exist
-                countryResult = combinedResult;
+                QString currentAddressFormat = listAddressElementsWantedFormat.at(i);
+
+                int currentIndexFormat = listAddressFormat.indexOf(currentAddressFormat,0);
+                if(currentIndexFormat != -1)
+                {
+                    elements<<currentAddressFormat;
+                    resultedData<<listAddressElements.at(currentIndexFormat);
+                }
+            
             }
-            else
-            {
-                countryResult = combinedResult.left(separatorIndex);
-                cityResult = combinedResult.mid(separatorIndex+1, combinedResult.length()-separatorIndex-1);
-            }
-            elements<<QString("%1").arg("{Country}")<<QString("%1").arg("{City}");
-            resultedData<<countryResult<<cityResult;
+
+            kDebug()<<"ELEMENTS:"<<elements;
+            kDebug()<<"RESULTED DATA:"<<resultedData;              
 
             QStringList returnedTags = d->tagModel->addNewData(elements, resultedData);   
 
             kDebug()<<"Returned tags:"<<returnedTags;
-
+/*
             GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
+            GPSUndoCommand* const undoCommand = new GPSUndoCommand();
+
+            GPSUndoCommand::UndoInfo undoInfo(currentImageIndex);
+            undoInfo.readOldDataFromItem(currentItem);            
 
             currentItem->setTagInfo(result);
             currentItem->setTagList(returnedTags);
-            
+
+            undoInfo.readNewDataFromItem(currentItem);
+            undoCommand->addUndoInfo(undoInfo);
+            undoCommand->setText(i18n("One image tags are changed."));
+            emit(signalUndoCommand(undoCommand));
+  */       
         }
     }
 
     d->receivedRGCount+=returnedRGList.count();
     if (d->receivedRGCount>=d->requestedRGCount)
     {
+        //TODO: I shall move GPSUndoCommand emit signal here
         emit(signalSetUIEnabled(true));
     }
     else
@@ -477,6 +509,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
             KMenu * const menu = new KMenu(d->tagTreeView);
             menu->addAction(d->actionAddCountry);
             menu->addAction(d->actionAddCity);
+            menu->addAction(d->actionAddStreet);
             menu->addAction(d->actionAddCustomizedSpacer);
             menu->addAction(d->actionRemoveTag);
             menu->addAction(d->actionRemoveAllNewTags);
@@ -534,6 +567,12 @@ void GPSReverseGeocodingWidget::slotAddCity()
     d->tagModel->addSpacerTag(baseIndex, "{City}");
 }
 
+void GPSReverseGeocodingWidget::slotAddStreet()
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    d->tagModel->addSpacerTag(baseIndex, "{Street}");
+}
+
 void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
 {
     const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
@@ -562,7 +601,7 @@ void GPSReverseGeocodingWidget::slotRemoveAllNewTags()
 
 void GPSReverseGeocodingWidget::slotReaddNewTags()
 {
-    
+    //TODO:what if selection changes? 
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
     for( int i = 0; i < selectedItems.count(); ++i)
     {
@@ -579,7 +618,7 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
 }
 
-void GPSReverseGeocodingWidget::regenerateNewTags()
+void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 {
    slotRemoveAllNewTags();
    slotReaddNewTags(); 

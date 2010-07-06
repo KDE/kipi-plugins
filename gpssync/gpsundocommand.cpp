@@ -53,6 +53,8 @@ void GPSUndoCommand::changeItemData(const bool redoIt)
         // TODO: find a way to regenerate tag tree
         GPSDataContainer newData = redoIt ? info.dataAfter : info.dataBefore;
         item->restoreGPSData(newData);
+        QStringList newRGTagList = redoIt ? info.oldTagList : info.newTagList;
+        item->restoreRGTagList(newRGTagList);
     }
 }
 

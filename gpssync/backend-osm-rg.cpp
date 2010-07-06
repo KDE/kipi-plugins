@@ -119,41 +119,31 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
     for( int i = 0; i < rgList.count(); i++)
     {
-
-
         bool foundIt = false;
         for( int j=0; j < d->jobs.count(); j++)
         {
-
             if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
             {
-
                 d->jobs[j].request << rgList[i];
                 d->jobs[j].language = language;
                 foundIt = true;
                 break;
-
              }
-
-
         }
 
         if(!foundIt)
         {
-
-        OsmInternalJobs newJob;
-        newJob.request << rgList.at(i);
-        newJob.language = language;
-        d->jobs<<newJob;
+            OsmInternalJobs newJob;
+            newJob.request << rgList.at(i);
+            newJob.language = language;
+            d->jobs<<newJob;
         }
 
     }
     
     if(!d->jobs.empty())
     {
-    
         nextPhoto();
-
     }
 
 }
@@ -196,11 +186,13 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
         {
 
             if( (e.tagName().compare(QString("country")) == 0) ||
+                (e.tagName().compare(QString("county")) == 0) ||
                 (e.tagName().compare(QString("city")) == 0) ||
                 (e.tagName().compare(QString("town")) == 0) ||
                 (e.tagName().compare(QString("village")) == 0) ||
                 (e.tagName().compare(QString("hamlet")) == 0) ||
-                (e.tagName().compare(QString("place")) == 0))
+                (e.tagName().compare(QString("place")) == 0) ||
+                (e.tagName().compare(QString("road")) == 0))     
             {
             
             mappedData.insert(e.tagName(), e.text());

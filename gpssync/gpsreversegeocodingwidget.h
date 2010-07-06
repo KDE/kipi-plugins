@@ -65,7 +65,6 @@ public:
     void setUIEnabled(const bool state);
     void readSettingsFromGroup(const KConfigGroup* const group);
     void saveSettingsToGroup(KConfigGroup* const group);
-    void regenerateNewTags();
 
 private:
 
@@ -77,10 +76,12 @@ private Q_SLOTS:
     void treeItemClicked( const QModelIndex &);
     void slotAddCountry(); 
     void slotAddCity();
+    void slotAddStreet();
     void slotAddCustomizedSpacer();
     void slotRemoveTag();
     void slotRemoveAllNewTags();
     void slotReaddNewTags();
+    void slotRegenerateNewTags();
 
 Q_SIGNALS:
 

@@ -94,6 +94,7 @@ public:
     virtual bool lessThan(const KipiImageItem* const otherItem, const int column) const;
     void setTagList(QStringList&);
     QStringList getTagList();
+    void restoreRGTagList(QStringList&);
 
 protected:
     // these are only to be called by the KipiImageModel
@@ -101,12 +102,15 @@ protected:
     virtual bool setData(const int column, const int role, const QVariant& value);
     virtual void loadImageDataInternal();
 
+Q_SIGNALS:
+    void RGTagListChanged(); 
+
 protected:
     GPSDataContainer m_gpsData;
     GPSDataContainer m_savedState;
     bool m_dirty;
     QString tags;
-    QStringList tagList;
+    QStringList m_tagList;
 };
 
 } /* KIPIGPSSyncPlugin */
