@@ -103,7 +103,7 @@ protected:
     virtual void loadImageDataInternal();
 
 Q_SIGNALS:
-    void RGTagListChanged(); 
+    //void RGTagListChanged(); 
 
 protected:
     GPSDataContainer m_gpsData;

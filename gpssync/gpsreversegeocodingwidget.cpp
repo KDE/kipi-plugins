@@ -133,6 +133,8 @@ public:
     KAction* actionRemoveTag;
     KAction* actionRemoveAllNewTags;
     KAction* actionReaddNewTags;
+
+    GPSUndoCommand* undoCommand;
 };
 
 
@@ -263,6 +265,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->buttonRGSelected = new QPushButton(i18n("Apply reverse geocoding"), vbox);
 
+    d->undoCommand = new GPSUndoCommand();
+
     dynamic_cast<QVBoxLayout*>(vbox->layout())->addStretch(300); 
 
     //d->backendRGList.append(new BackendGoogleRG(this));
@@ -312,6 +316,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->actionAddCustomizedSpacer, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCustomizedSpacer()));
 
+    connect(d->imageModel, SIGNAL(dataChanged(QModelIndex, QModelIndex)),
+            this, SLOT(slotRegenerateNewTags()));
+
     connect(d->actionRemoveTag, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveTag()));
     connect(d->actionRemoveAllNewTags, SIGNAL(triggered(bool)),
@@ -328,6 +335,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     
     d->backendIndex = d->serviceComboBox->currentIndex(); 
     d->currentBackend = d->backendRGList[d->backendIndex];
+
 
 }
 
@@ -492,21 +500,17 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             QStringList returnedTags = d->tagModel->addNewData(elements, resultedData);   
 
             kDebug()<<"Returned tags:"<<returnedTags;
-/*
+
             GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
-            GPSUndoCommand* const undoCommand = new GPSUndoCommand();
 
             GPSUndoCommand::UndoInfo undoInfo(currentImageIndex);
             undoInfo.readOldDataFromItem(currentItem);            
 
-            currentItem->setTagInfo(result);
             currentItem->setTagList(returnedTags);
 
             undoInfo.readNewDataFromItem(currentItem);
-            undoCommand->addUndoInfo(undoInfo);
-            undoCommand->setText(i18n("One image tags are changed."));
-            emit(signalUndoCommand(undoCommand));
-  */       
+            d->undoCommand->addUndoInfo(undoInfo);
+         
         }
     }
 
@@ -514,6 +518,9 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     if (d->receivedRGCount>=d->requestedRGCount)
     {
         //TODO: I shall move GPSUndoCommand emit signal here
+        d->undoCommand->setText(i18n("Image tags are changed."));
+        emit(signalUndoCommand(d->undoCommand));
+
         emit(signalSetUIEnabled(true));
     }
     else
@@ -682,20 +689,15 @@ void GPSReverseGeocodingWidget::slotRemoveAllNewTags()
 
 void GPSReverseGeocodingWidget::slotReaddNewTags()
 {
-    //TODO:what if selection changes? 
-    const QModelIndexList selectedItems = d->selectionModel->selectedRows();
-    for( int i = 0; i < selectedItems.count(); ++i)
+
+    for( int row=0; row<d->imageModel->rowCount(); ++row)
     {
 
-        const QPersistentModelIndex itemIndex = selectedItems.at(i);
-        GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
-
-        kDebug()<<selectedItem->getTagList();
-        QStringList tagAddresses = selectedItem->getTagList();
+        GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(d->imageModel->index(row,0)));
+        QStringList tagAddresses = currentItem->getTagList();
         d->tagModel->readdNewTags(tagAddresses);
 
     }
-
 
 }
 

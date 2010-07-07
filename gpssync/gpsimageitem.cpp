@@ -431,7 +431,7 @@ void GPSImageItem::restoreRGTagList(QStringList& tagList)
 {
     m_dirty = !(tagList == m_tagList);
     m_tagList = tagList;
-    //emit RGTagListChanged(); 
+    emitDataChanged(); 
 
 }
 
