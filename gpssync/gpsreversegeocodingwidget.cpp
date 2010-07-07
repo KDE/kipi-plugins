@@ -265,7 +265,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->buttonRGSelected = new QPushButton(i18n("Apply reverse geocoding"), vbox);
 
-    d->undoCommand = new GPSUndoCommand();
+    //d->undoCommand = new GPSUndoCommand();
 
     dynamic_cast<QVBoxLayout*>(vbox->layout())->addStretch(300); 
 
@@ -371,7 +371,8 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
     d->backendIndex = d->serviceComboBox->currentIndex(); 
     d->currentBackend = d->backendRGList[d->backendIndex];
-
+    
+    d->undoCommand = new GPSUndoCommand();
 
     QList<RGInfo> photoList;
 
@@ -500,6 +501,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             QStringList returnedTags = d->tagModel->addNewData(elements, resultedData);   
 
             kDebug()<<"Returned tags:"<<returnedTags;
+            returnedTags.removeDuplicates();
 
             GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
 
@@ -694,8 +696,10 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
     {
 
         GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(d->imageModel->index(row,0)));
+
         QStringList tagAddresses = currentItem->getTagList();
-        d->tagModel->readdNewTags(tagAddresses);
+        if(!tagAddresses.isEmpty())
+            d->tagModel->readdNewTags(tagAddresses);
 
     }
 
@@ -703,6 +707,8 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
 void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 {
+    kDebug()<<"REGENERATES TAG TREE:";
+
    slotRemoveAllNewTags();
    slotReaddNewTags(); 
 }

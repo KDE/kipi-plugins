@@ -92,8 +92,8 @@ public:
     static void setHeaderData(KipiImageModel* const model);
     QString saveChanges();
     virtual bool lessThan(const KipiImageItem* const otherItem, const int column) const;
-    void setTagList(QStringList&);
-    QStringList getTagList();
+    void setTagList(QStringList& externalTagList) { m_tagList = externalTagList; m_dirty = true;  };
+    inline QStringList getTagList() const { return m_tagList; };
     void restoreRGTagList(QStringList&);
 
 protected:

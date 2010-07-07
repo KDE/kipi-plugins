@@ -586,17 +586,12 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         return KipiImageItem::lessThan(otherItem, column);
     }
 }
-
+/*
 void GPSImageItem::setTagList(QStringList& externalTagData)
 {
    this->m_tagList = externalTagData; 
-   //this->imageTags.modifiedTags = externalTagData.tags;
 }
-
-QStringList GPSImageItem::getTagList()
-{
-    return this->m_tagList;
-} 
+*/
 
 } /* KIPIGPSSyncPlugin */
 

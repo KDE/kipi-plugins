@@ -330,14 +330,14 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
                
                     d->auxTagList.append(elementsData[j]);
                     d->auxIndexList.append(auxIndex);
- 
-                    if(currentBranch->spacerChildren[i]->spacerChildren.count() == 0)
-                    {
-                        QString newTag=getTagAddress();
-                        d->newTags.append(newTag);
-                    }
-                    //break;
                 }
+            }
+
+             
+            if(currentBranch->spacerChildren[i]->spacerChildren.count() == 0)
+            {
+                QString newTag=getTagAddress();
+                d->newTags.append(newTag);
             }
             
             if(currentBranch->spacerChildren[i])
@@ -854,7 +854,7 @@ void RGTagModel::readdNewTags(QStringList& tagAddressList)
     for(int i=0; i<tagAddressList.count(); ++i)
     {
         QString currentAddressTag = tagAddressList[i];
-        //remove "/" from "/Places/rest of tags"
+        //removes first "/" from "/Places/rest of tags"
         currentAddressTag.remove(0,1);          
         QStringList addressElements = currentAddressTag.split("/");
         kDebug()<<"AddressElements:"<<addressElements;
