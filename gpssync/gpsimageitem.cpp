@@ -240,9 +240,18 @@ QVariant GPSImageItem::data(const int column, const int role) const
     }
     else if ((column==ColumnTags)&&(role==Qt::DisplayRole))
     {
-        if(!tags.isEmpty())
+        if(!m_tagList.isEmpty())
         {
-            return tags;
+            QString mytags;
+            for (int i=0; i<m_tagList.count(); ++i)
+            {
+                if (!mytags.isEmpty())
+                    mytags+=", ";
+
+                mytags+=m_tagList.at(i);
+            }
+
+            return mytags;
         }
         
         return QString();        
