@@ -318,6 +318,7 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
 
                     //checks if adds the new tag as a sibling to a spacer, or as a child of a new tag
                     QPersistentModelIndex auxIndex;
+            
                     if((currentBranch->type != TypeSpacer) || ((currentBranch->type == TypeSpacer) && (currentBranch->data.indexOf("{") != 0)))
                     {
                         //TODO: change function name from addNewTags to addNewTag
@@ -327,7 +328,7 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
                     {
                         auxIndex = addNewTags(d->auxIndexList.last(), elementsData[j]);
                     }
-               
+              
                     d->auxTagList.append(elementsData[j]);
                     d->auxIndexList.append(auxIndex);
                 }

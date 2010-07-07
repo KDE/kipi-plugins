@@ -36,8 +36,11 @@ namespace KIPIGPSSyncPlugin
 {
 
 GPSImageItem::GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad)
-: KipiImageItem(interface, url, false), m_gpsData(), m_savedState(), m_dirty(false)
+: KipiImageItem(interface, url, false), m_gpsData(), m_savedState(), m_dirty(false),m_tagList(), m_tagListDirty(false), m_savedTagList()
 {
+
+    m_savedState = m_gpsData;
+
     if (autoLoad)
     {
         loadImageData();
@@ -231,7 +234,7 @@ QVariant GPSImageItem::data(const int column, const int role) const
     }
     else if ((column==ColumnStatus)&&(role==Qt::DisplayRole))
     {
-        if (m_dirty)
+        if (m_dirty || m_tagListDirty)
         {
             return i18n("Modified");
         }
@@ -415,6 +418,15 @@ QString GPSImageItem::saveChanges()
             KIPI::ImageInfo info = m_interface->info(m_url);
             info.delAttributes(listToRemove);
         }
+
+        if(!m_tagList.isEmpty())
+        {
+            QMap<QString, QVariant> attributes;
+            attributes.insert("tagspath", m_tagList);
+            KIPI::ImageInfo info = m_interface->info(m_url);
+            info.addAttributes(attributes);
+        }
+
     }
 
     if (returnString.isEmpty())
@@ -438,7 +450,8 @@ void GPSImageItem::restoreGPSData(const GPSDataContainer& container)
 
 void GPSImageItem::restoreRGTagList(QStringList& tagList)
 {
-    m_dirty = !(tagList == m_tagList);
+    m_tagListDirty = !(tagList == m_savedTagList);
+    
     m_tagList = tagList;
     emitDataChanged(); 
 

@@ -43,8 +43,6 @@ class RGInfo {
      coordinates(),
      rgData(){   }
 
-
-    //QVariant id;
     QPersistentModelIndex id;
     KMapIface::WMWGeoCoordinate coordinates;
     QMap<QString, QString> rgData;
@@ -92,7 +90,8 @@ public:
     static void setHeaderData(KipiImageModel* const model);
     QString saveChanges();
     virtual bool lessThan(const KipiImageItem* const otherItem, const int column) const;
-    void setTagList(QStringList& externalTagList) { m_tagList = externalTagList; m_dirty = true;  };
+    void setTagList(QStringList& externalTagList) { m_tagList = externalTagList; m_tagListDirty = true;  };
+    inline bool isTagListDirty() const { return m_tagListDirty; }
     inline QStringList getTagList() const { return m_tagList; };
     void restoreRGTagList(QStringList&);
 
@@ -111,6 +110,8 @@ protected:
     bool m_dirty;
     QString tags;
     QStringList m_tagList;
+    bool m_tagListDirty;
+    QStringList m_savedTagList;
 };
 
 } /* KIPIGPSSyncPlugin */

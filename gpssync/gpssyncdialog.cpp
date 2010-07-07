@@ -619,7 +619,7 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
         const QModelIndex itemIndex = d->imageModel->index(i, 0);
         GPSImageItem* const item = dynamic_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
 
-        if (item->isDirty())
+        if (item->isDirty() || item->isTagListDirty())
         {
             dirtyImagesCount++;
         }
@@ -810,7 +810,7 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
         const QModelIndex itemIndex = d->imageModel->index(i, 0);
         GPSImageItem* const item = dynamic_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
 
-        if (item->isDirty())
+        if (item->isDirty() || item->isTagListDirty())
         {
             dirtyImages << itemIndex;
         }
