@@ -353,9 +353,12 @@ QString GPSImageItem::saveChanges()
     {
         exiv2Iface->setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
 
+        // TODO: which version do we actually depend on now?
 #if KEXIV2_VERSION >= 0x000600
         exiv2Iface->setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 #endif
+
+        exiv2Iface->setUseXMPSidecar(false);
 
         if (shouldWriteCoordinates)
         {
