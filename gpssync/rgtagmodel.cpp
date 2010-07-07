@@ -331,16 +331,19 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
               
                     d->auxTagList.append(elementsData[j]);
                     d->auxIndexList.append(auxIndex);
+                    QString newTag=getTagAddress();
+                    d->newTags.append(newTag);
+    
                 }
             }
 
-             
+            /* 
             if(currentBranch->spacerChildren[i]->spacerChildren.count() == 0)
             {
                 QString newTag=getTagAddress();
                 d->newTags.append(newTag);
             }
-            
+            */
             if(currentBranch->spacerChildren[i])
                 addDataInTree(currentBranch->spacerChildren[i],i, addressElements, elementsData);
             if(newDataAdded)
@@ -789,6 +792,9 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QStringLis
 
     kDebug()<<"Entered new currentBranch. currentBranch->data="<<currentBranch->data;
 
+    if(currentAddressElementIndex >= tagAddressElements.count())
+        return;
+
     for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
     {
         if(currentBranch->spacerChildren[i]->data == tagAddressElements[currentAddressElementIndex])
@@ -801,6 +807,7 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QStringLis
 
     if(found)
     {
+
         readdTag(currentBranch->spacerChildren[foundIndex], foundIndex, tagAddressElements, currentAddressElementIndex+1);
         return;
     }
@@ -860,9 +867,7 @@ void RGTagModel::readdNewTags(QStringList& tagAddressList)
         QStringList addressElements = currentAddressTag.split("/");
         kDebug()<<"AddressElements:"<<addressElements;
         readdTag(d->rootTag, 0, addressElements, 0);
-
     }
-
 }
 
 
