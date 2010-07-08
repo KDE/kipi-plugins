@@ -498,10 +498,24 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             kDebug()<<"ELEMENTS:"<<elements;
             kDebug()<<"RESULTED DATA:"<<resultedData;              
 
-            QStringList returnedTags = d->tagModel->addNewData(elements, resultedData);   
+            QList<QList<TagData> > returnedTags = d->tagModel->addNewData(elements, resultedData);   
 
-            kDebug()<<"Returned tags:"<<returnedTags;
-            returnedTags.removeDuplicates();
+            kDebug()<<"RETURNED TAGS:";
+            QStringList displayTags;
+            for(int i=0; i<returnedTags.count(); ++i)
+            {
+                QString displayTag;
+
+                for(int j=0; j<returnedTags[i].count(); ++j)
+                {
+                    displayTag.append(QString("%1").arg("/") + returnedTags[i].at(j).tagName);
+                }
+                displayTags.append(displayTag);
+            }
+
+            kDebug()<<displayTags;
+            //kDebug()<<"Returned tags:"<<returnedTags;
+            //returnedTags.removeDuplicates();
 
             GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
 
@@ -697,7 +711,7 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
         GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(d->imageModel->index(row,0)));
 
-        QStringList tagAddresses = currentItem->getTagList();
+        QList<QList<TagData> > tagAddresses = currentItem->getTagList();
         if(!tagAddresses.isEmpty())
             d->tagModel->readdNewTags(tagAddresses);
 

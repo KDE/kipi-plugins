@@ -243,7 +243,7 @@ QVariant GPSImageItem::data(const int column, const int role) const
     }
     else if ((column==ColumnTags)&&(role==Qt::DisplayRole))
     {
-        if(!m_tagList.isEmpty())
+    /*    if(!m_tagList.isEmpty())
         {
             QString mytags;
             for (int i=0; i<m_tagList.count(); ++i)
@@ -256,7 +256,7 @@ QVariant GPSImageItem::data(const int column, const int role) const
 
             return mytags;
         }
-        
+      */  
         return QString();        
     }
 
@@ -425,9 +425,23 @@ QString GPSImageItem::saveChanges()
         if(!m_tagList.isEmpty())
         {
             QMap<QString, QVariant> attributes;
-            attributes.insert("tagspath", m_tagList);
+            QStringList tagsPath;
+            //TODO: this part is not working now, because I must make a qstringlist
+            for(int i=0; i<m_tagList.count(); ++i)
+            {
+                QString singleTagPath;
+                QList<TagData> currentTagPath = m_tagList[i];   
+                for(int j=0; j<currentTagPath.count(); ++j)
+                {
+                    singleTagPath.append(QString("%1").arg("/") + currentTagPath[j].tagName);
+                }
+                tagsPath.append(singleTagPath);
+            }
+
+            attributes.insert("tagspath", tagsPath);
             KIPI::ImageInfo info = m_interface->info(m_url);
             info.addAttributes(attributes);
+            
         }
 
     }
@@ -451,9 +465,30 @@ void GPSImageItem::restoreGPSData(const GPSDataContainer& container)
     emitDataChanged();
 }
 
-void GPSImageItem::restoreRGTagList(QStringList& tagList)
+void GPSImageItem::restoreRGTagList(QList<QList<TagData> >& tagList)
 {
-    m_tagListDirty = !(tagList == m_savedTagList);
+    //TODO: override == operator
+    for(int i=0; i<tagList.count(); ++i)
+    {
+        bool foundNotEqual = false;
+        for(int j=0; j<tagList[i].count(); ++j)
+        {
+
+            if(tagList[i].at(j).tagName != m_tagList[i].at(j).tagName)
+            {
+                foundNotEqual = true;
+                break;
+            }
+        }
+
+        if(foundNotEqual)
+        {
+            m_tagListDirty = true;
+            break;
+        }
+    }
+
+    //m_tagListDirty = !(tagList == m_savedTagList);
     
     m_tagList = tagList;
     emitDataChanged(); 
@@ -602,12 +637,6 @@ bool GPSImageItem::lessThan(const KipiImageItem* const otherItem, const int colu
         return KipiImageItem::lessThan(otherItem, column);
     }
 }
-/*
-void GPSImageItem::setTagList(QStringList& externalTagData)
-{
-   this->m_tagList = externalTagData; 
-}
-*/
 
 } /* KIPIGPSSyncPlugin */
 

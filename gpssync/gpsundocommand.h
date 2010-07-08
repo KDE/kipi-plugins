@@ -50,8 +50,8 @@ public:
         GPSDataContainer dataBefore;
         GPSDataContainer dataAfter;
 
-        QStringList oldTagList;
-        QStringList newTagList;
+        QList<QList<TagData> > oldTagList;
+        QList<QList<TagData> > newTagList;
 
         typedef QList<UndoInfo> List;
     };

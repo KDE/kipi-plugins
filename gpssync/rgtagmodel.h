@@ -26,12 +26,15 @@
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
+//local includes 
+
+#include "gpsimageitem.h"
+
 namespace KIPIGPSSyncPlugin
 {
 
 class RGTagModelPrivate;
 
-enum Type {TypeChild, TypeSpacer, TypeNewChild};
 
 class TreeBranch {
 public:
@@ -85,13 +88,13 @@ public:
     QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
     void addSpacerTag(const QModelIndex&, const QString& );
     QPersistentModelIndex addNewTags(const QModelIndex&, const QString& );
-    QStringList addNewData(QStringList& , QStringList&);
+    QList<QList<TagData> > addNewData(QStringList& , QStringList&);
     void addDataInTree(TreeBranch*&, int, QStringList&, QStringList&);
-    QString getTagAddress();
+    QList<TagData> getTagAddress();
     void findAndDeleteNewTag(TreeBranch*&, int );
     void deleteAllNewTags();
-    void readdTag(TreeBranch*&, int, QStringList, int);
-    void readdNewTags(QStringList&);
+    void readdTag(TreeBranch*&, int, QList<TagData>, int);
+    void readdNewTags(QList<QList<TagData> >&);
     void deleteTag(const QModelIndex&);
 
 public Q_SLOTS:

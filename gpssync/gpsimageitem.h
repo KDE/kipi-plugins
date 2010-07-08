@@ -47,14 +47,18 @@ class RGInfo {
     KMapIface::WMWGeoCoordinate coordinates;
     QMap<QString, QString> rgData;
 };
-/*
+
+
+enum Type {TypeChild, TypeSpacer, TypeNewChild};
+
+
 typedef struct TagData
 {
-    QStringList tags;
-    //QStringList modifiedTags;
+    QString tagName;
+    Type tagType;
 
 }TagData;
-*/
+
 
 class GPSImageItem : public KipiImageItem
 {
@@ -90,10 +94,10 @@ public:
     static void setHeaderData(KipiImageModel* const model);
     QString saveChanges();
     virtual bool lessThan(const KipiImageItem* const otherItem, const int column) const;
-    void setTagList(QStringList& externalTagList) { m_tagList = externalTagList; m_tagListDirty = true;  };
+    void setTagList(QList<QList<TagData> >& externalTagList) { m_tagList = externalTagList; m_tagListDirty = true;  };
     inline bool isTagListDirty() const { return m_tagListDirty; }
-    inline QStringList getTagList() const { return m_tagList; };
-    void restoreRGTagList(QStringList&);
+    inline QList<QList<TagData> > getTagList() const { return m_tagList; };
+    void restoreRGTagList(QList<QList<TagData> >&);
 
 protected:
     // these are only to be called by the KipiImageModel
@@ -109,9 +113,9 @@ protected:
     GPSDataContainer m_savedState;
     bool m_dirty;
     QString tags;
-    QStringList m_tagList;
+    QList<QList<TagData> > m_tagList;
     bool m_tagListDirty;
-    QStringList m_savedTagList;
+    QList<QList<TagData> > m_savedTagList;
 };
 
 } /* KIPIGPSSyncPlugin */
