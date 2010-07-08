@@ -98,7 +98,7 @@ public:
     void deleteTag(const QModelIndex&);
     QList<QList<TagData> > getSpacers();
     void climbTreeAndGetSpacers(TreeBranch*&); 
-    QList<TagData> getSpacerAddress(TreeBranch*&); //const;
+    QList<TagData> getSpacerAddress(TreeBranch*);
 
 
 public Q_SLOTS:

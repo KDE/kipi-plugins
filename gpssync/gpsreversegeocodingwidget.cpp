@@ -378,6 +378,9 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
     QString wantedLanguage = d->languageEdit->itemData(d->languageEdit->currentIndex()).toString(); 
 
+
+    QList<QList<TagData> > returnedSpacers = d->tagModel->getSpacers();
+
     for( int i = 0; i < selectedItems.count(); ++i)
     {
 
@@ -499,24 +502,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             kDebug()<<"RESULTED DATA:"<<resultedData;              
 
             QList<QList<TagData> > returnedTags = d->tagModel->addNewData(elements, resultedData);   
-  /*
-            QList<QList<TagData> > returnedSpacers = d->tagModel->getSpacers();
-
-            kDebug()<<"RETURNED SPACERS:";
-            QStringList displaySpacers;
-            for(int i=0; i<returnedSpacers.count(); ++i)
-            {
-                QString displaySpacer;
-
-                for(int j=0; j<returnedSpacers[i].count(); ++j)
-                {
-                    displaySpacer.append(QString("%1").arg("/") + returnedSpacers[i].at(j).tagName);
-                }
-                displaySpacers.append(displaySpacer);
-            }
             
-            kDebug()<<displaySpacers;
-*/
             //kDebug()<<"Returned tags:"<<returnedTags;
             //returnedTags.removeDuplicates();
 

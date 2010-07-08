@@ -97,7 +97,7 @@ public:
     void setTagList(QList<QList<TagData> >& externalTagList) { m_tagList = externalTagList; m_tagListDirty = true;  };
     inline bool isTagListDirty() const { return m_tagListDirty; }
     inline QList<QList<TagData> > getTagList() const { return m_tagList; };
-    void restoreRGTagList(QList<QList<TagData> >&);
+    void restoreRGTagList(const QList<QList<TagData> >&);
 
 protected:
     // these are only to be called by the KipiImageModel

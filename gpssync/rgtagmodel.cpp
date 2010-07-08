@@ -882,15 +882,12 @@ void RGTagModel::readdNewTags(QList<QList<TagData> >& tagAddressList)
     }
 }
 
-QList<TagData> RGTagModel::getSpacerAddress(TreeBranch*& currentBranch)
+QList<TagData> RGTagModel::getSpacerAddress(TreeBranch* currentBranch)
 {
     QList<TagData> spacerAddress;
 
-    kDebug()<<"Entered getSpacerAddress";
-
     while(currentBranch->parent != NULL)
     {
-        kDebug()<<"LOOP";
         TagData currentTag;
         currentTag.tagName = currentBranch->data;
         currentTag.tagType = currentBranch->type;
@@ -899,29 +896,26 @@ QList<TagData> RGTagModel::getSpacerAddress(TreeBranch*& currentBranch)
         currentBranch = currentBranch->parent;
     }
 
-    kDebug()<<"Exists getSpacerAddress";
-
     return spacerAddress;
 }
 
 void RGTagModel::climbTreeAndGetSpacers(TreeBranch*& currentBranch)
 {
 
-    kDebug()<<"Entered climbTreeAndGetSpacers";
-
-    for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
+    for(int i=0; i<currentBranch->spacerChildren.count(); i++)
     {
         QList<TagData> currentSpacerAddress;
         currentSpacerAddress = getSpacerAddress(currentBranch->spacerChildren[i]);
         d->savedSpacerList.append(currentSpacerAddress);
+        climbTreeAndGetSpacers(currentBranch->spacerChildren[i]);
     }
 
-    for(int i=0; i<currentBranch->newChildren.count(); ++i)
+    for(int i=0; i<currentBranch->newChildren.count(); i++)
     {
         climbTreeAndGetSpacers(currentBranch->newChildren[i]);
     }
     
-    for(int i=0; i<currentBranch->oldChildren.count(); ++i)
+    for(int i=0; i<currentBranch->oldChildren.count(); i++)
     {
         climbTreeAndGetSpacers(currentBranch->oldChildren[i]);
     }
@@ -933,7 +927,6 @@ void RGTagModel::climbTreeAndGetSpacers(TreeBranch*& currentBranch)
 
 QList<QList<TagData> > RGTagModel::getSpacers()
 {
-    kDebug()<<"Entered getSpacers";
 
     d->savedSpacerList.clear();
     climbTreeAndGetSpacers(d->rootTag);    
