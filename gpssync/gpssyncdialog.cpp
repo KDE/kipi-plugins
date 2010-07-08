@@ -186,6 +186,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 {
     d->interface = interface;
 
+    setAttribute(Qt::WA_DeleteOnClose, true);
+
     setButtons(0);
     setCaption(i18n("Geolocation"));
 //     setModal(true);
