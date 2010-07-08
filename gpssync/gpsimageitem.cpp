@@ -434,7 +434,12 @@ QString GPSImageItem::saveChanges()
                 for(int j=0; j<currentTagPath.count(); ++j)
                 {
                     singleTagPath.append(QString("%1").arg("/") + currentTagPath[j].tagName);
+                    if(j == 0)
+                    {
+                        singleTagPath.remove(0,1);
+                    }
                 }
+                
                 tagsPath.append(singleTagPath);
             }
 

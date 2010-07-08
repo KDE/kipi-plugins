@@ -47,7 +47,8 @@ public:
       rootTag(0),
       newTags(),
       auxTagList(),
-      auxIndexList()
+      auxIndexList(),
+      savedSpacerList()
     {
     }
 
@@ -65,6 +66,8 @@ public:
     QStringList auxTagList;
     QList<Type> auxTagTypeList;
     QList<QPersistentModelIndex> auxIndexList;
+    
+    QList<QList<TagData> > savedSpacerList;
 
 };
 
@@ -337,7 +340,6 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
                     }
               
                     d->auxTagList.append(elementsData[j]);
-                    //sure is good like this?
                     d->auxTagTypeList.append(TypeNewChild);
                     d->auxIndexList.append(auxIndex);
                     QList<TagData> newTag=getTagAddress();
@@ -653,18 +655,6 @@ void RGTagModel::slotRowsAboutToBeRemoved(const QModelIndex& parent, int start, 
 {
     TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(parent.internalPointer()) : d->rootTag;
 
-
-    if(start < parentBranch->spacerChildren.count())
-    {
-
-        d->parent = parent;
-        d->startRemove = start;
-        d->endRemove = end;
-
-   //     beginRemoveRows(d->parent, start/*+parentBranch->spacerChildren.count()*/, end/*+parentBranch->spacerChildren.count()*/);
-
-    }
-
 }
 
 void RGTagModel::slotRowsInserted()
@@ -695,14 +685,7 @@ void RGTagModel::slotRowsMoved()
 
 void RGTagModel::slotRowsRemoved()
 {
-    
 
-    //TODO: Now is for spacer. I must make it for newTags
-    //TODO: Remove a tag that has children
-
-    d->parent = QModelIndex();
-    d->startRemove = -1;
-    d->endRemove = -1;
 }
 
 void RGTagModel::deleteTag(const QModelIndex& index)
@@ -899,5 +882,63 @@ void RGTagModel::readdNewTags(QList<QList<TagData> >& tagAddressList)
     }
 }
 
+QList<TagData> RGTagModel::getSpacerAddress(TreeBranch*& currentBranch)
+{
+    QList<TagData> spacerAddress;
+
+    kDebug()<<"Entered getSpacerAddress";
+
+    while(currentBranch->parent != NULL)
+    {
+        kDebug()<<"LOOP";
+        TagData currentTag;
+        currentTag.tagName = currentBranch->data;
+        currentTag.tagType = currentBranch->type;
+
+        spacerAddress.prepend(currentTag);
+        currentBranch = currentBranch->parent;
+    }
+
+    kDebug()<<"Exists getSpacerAddress";
+
+    return spacerAddress;
+}
+
+void RGTagModel::climbTreeAndGetSpacers(TreeBranch*& currentBranch)
+{
+
+    kDebug()<<"Entered climbTreeAndGetSpacers";
+
+    for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
+    {
+        QList<TagData> currentSpacerAddress;
+        currentSpacerAddress = getSpacerAddress(currentBranch->spacerChildren[i]);
+        d->savedSpacerList.append(currentSpacerAddress);
+    }
+
+    for(int i=0; i<currentBranch->newChildren.count(); ++i)
+    {
+        climbTreeAndGetSpacers(currentBranch->newChildren[i]);
+    }
+    
+    for(int i=0; i<currentBranch->oldChildren.count(); ++i)
+    {
+        climbTreeAndGetSpacers(currentBranch->oldChildren[i]);
+    }
+
+
+
+}
+
+
+QList<QList<TagData> > RGTagModel::getSpacers()
+{
+    kDebug()<<"Entered getSpacers";
+
+    d->savedSpacerList.clear();
+    climbTreeAndGetSpacers(d->rootTag);    
+
+    return d->savedSpacerList;
+}
 
 }    //KIPIGPSSyncPlugin

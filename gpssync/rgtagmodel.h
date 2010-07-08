@@ -96,6 +96,10 @@ public:
     void readdTag(TreeBranch*&, int, QList<TagData>, int);
     void readdNewTags(QList<QList<TagData> >&);
     void deleteTag(const QModelIndex&);
+    QList<QList<TagData> > getSpacers();
+    void climbTreeAndGetSpacers(TreeBranch*&); 
+    QList<TagData> getSpacerAddress(TreeBranch*&); //const;
+
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 

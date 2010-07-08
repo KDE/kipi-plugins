@@ -499,21 +499,24 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             kDebug()<<"RESULTED DATA:"<<resultedData;              
 
             QList<QList<TagData> > returnedTags = d->tagModel->addNewData(elements, resultedData);   
+  /*
+            QList<QList<TagData> > returnedSpacers = d->tagModel->getSpacers();
 
-            kDebug()<<"RETURNED TAGS:";
-            QStringList displayTags;
-            for(int i=0; i<returnedTags.count(); ++i)
+            kDebug()<<"RETURNED SPACERS:";
+            QStringList displaySpacers;
+            for(int i=0; i<returnedSpacers.count(); ++i)
             {
-                QString displayTag;
+                QString displaySpacer;
 
-                for(int j=0; j<returnedTags[i].count(); ++j)
+                for(int j=0; j<returnedSpacers[i].count(); ++j)
                 {
-                    displayTag.append(QString("%1").arg("/") + returnedTags[i].at(j).tagName);
+                    displaySpacer.append(QString("%1").arg("/") + returnedSpacers[i].at(j).tagName);
                 }
-                displayTags.append(displayTag);
+                displaySpacers.append(displaySpacer);
             }
-
-            kDebug()<<displayTags;
+            
+            kDebug()<<displaySpacers;
+*/
             //kDebug()<<"Returned tags:"<<returnedTags;
             //returnedTags.removeDuplicates();
 
@@ -533,7 +536,6 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     d->receivedRGCount+=returnedRGList.count();
     if (d->receivedRGCount>=d->requestedRGCount)
     {
-        //TODO: I shall move GPSUndoCommand emit signal here
         d->undoCommand->setText(i18n("Image tags are changed."));
         emit(signalUndoCommand(d->undoCommand));
 
@@ -724,6 +726,9 @@ void GPSReverseGeocodingWidget::slotRegenerateNewTags()
     kDebug()<<"REGENERATES TAG TREE:";
 
    slotRemoveAllNewTags();
+
+    kDebug()<<"All new tags are removed.";
+
    slotReaddNewTags(); 
 }
 
