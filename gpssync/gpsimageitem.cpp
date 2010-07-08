@@ -476,13 +476,9 @@ void GPSImageItem::restoreRGTagList(const QList<QList<TagData> >& tagList)
     
 
     if(tagList.count() != m_savedTagList.count())
-    {
         m_tagListDirty = true;
-
-    }
     else
     {
-
         for(int i=0; i<tagList.count(); ++i)
         {
             bool foundNotEqual = false;
@@ -493,10 +489,8 @@ void GPSImageItem::restoreRGTagList(const QList<QList<TagData> >& tagList)
                 break;
             }
 
-
             for(int j=0; j<tagList[i].count(); ++j)
             {
-
                 if(tagList[i].at(j).tagName != m_savedTagList[i].at(j).tagName)
                 {
                     foundNotEqual = true;
@@ -510,9 +504,7 @@ void GPSImageItem::restoreRGTagList(const QList<QList<TagData> >& tagList)
                 break;
             }
         }
-
     }
-    //m_tagListDirty = !(tagList == m_savedTagList);
     
     m_tagList = tagList;
     emitDataChanged(); 

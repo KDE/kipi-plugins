@@ -99,7 +99,8 @@ public:
     QList<QList<TagData> > getSpacers();
     void climbTreeAndGetSpacers(TreeBranch*&); 
     QList<TagData> getSpacerAddress(TreeBranch*);
-
+    void addExternalTags(TreeBranch*, int);
+    void addAllExternalTagsToTreeView();
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 

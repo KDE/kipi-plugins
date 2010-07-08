@@ -605,10 +605,85 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
     group->writeEntry("XMP location", d->xmpLoc->isChecked());
     group->writeEntry("XMP keywords", d->xmpKey->isChecked());
 
+    QList<QList<TagData> > currentSpacerList = d->tagModel->getSpacers();
+    int spacerCount = currentSpacerList.count();
+    group->writeEntry("Spacers count", spacerCount);
+
+    for(int i=0; i<currentSpacerList.count(); i++)
+    {
+        QString spacerName;
+        spacerName.append(QString("Spacerlistname %1").arg(i));  
+        QString spacerType;
+        spacerType.append(QString("Spacerlisttype %1").arg(i));
+      
+        QStringList spacerTagNames;
+        QStringList spacerTypes;
+        for(int j=0; j<currentSpacerList[i].count(); j++)
+        {   
+            spacerTagNames.append(currentSpacerList[i].at(j).tagName);
+            if(currentSpacerList[i].at(j).tagType == TypeSpacer)
+            {
+                spacerTypes.append(QString("Spacer"));
+            } 
+            else if(currentSpacerList[i].at(j).tagType == TypeNewChild)
+            {
+                spacerTypes.append(QString("NewChild"));
+            }
+            else
+            {
+                spacerTypes.append(QString("OldChild"));
+            }
+        }
+        group->writeEntry(spacerName, spacerTagNames); 
+        group->writeEntry(spacerType, spacerTypes);
+    }
+
 }
 
 void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const group)
 {
+ 
+    int spacerCount = group->readEntry("Spacers count", 0);
+    QList<QList<TagData> > spacersList;
+
+    kDebug()<<"spacerCount="<<spacerCount;
+
+    for(int i=0; i<spacerCount; i++)
+    {
+        QStringList spacerTagNames  = group->readEntry(QString("Spacerlistname %1").arg(i), QStringList());
+        QStringList spacerTypes = group->readEntry(QString("Spacerlisttype %1").arg(i), QStringList());
+
+        QList<TagData> currentSpacerAddress; 
+
+        for(int j=0; j<spacerTagNames.count(); ++j)
+        {
+            TagData currentTagData;
+            currentTagData.tagName = spacerTagNames.at(j);
+            
+            QString currentTagType = spacerTypes.at(j);
+            if(currentTagType == QString("Spacer"))
+                currentTagData.tagType = TypeSpacer;
+            else if(currentTagType == QString("NewChild"))
+                currentTagData.tagType = TypeNewChild;
+            else if(currentTagType == QString("OldChild"))
+                currentTagData.tagType = TypeChild;
+
+            kDebug()<<currentTagData.tagName<<"--"<<currentTagType;
+
+
+            currentSpacerAddress.append(currentTagData);
+        }
+
+        spacersList.append(currentSpacerAddress);
+
+    }
+
+    kDebug()<<"spacerList.count()="<<spacersList.count();
+
+    //this make sure that all external tags are added to tag tree view before spacers are re-added
+    d->tagModel->addAllExternalTagsToTreeView();
+    d->tagModel->readdNewTags(spacersList);
+    
 
     d->serviceComboBox->setCurrentIndex(group->readEntry("RG Backend", 0));
     d->languageEdit->setCurrentIndex(group->readEntry("Language", 0));
@@ -709,12 +784,8 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
 void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 {
-    kDebug()<<"REGENERATES TAG TREE:";
 
    slotRemoveAllNewTags();
-
-    kDebug()<<"All new tags are removed.";
-
    slotReaddNewTags(); 
 }
 

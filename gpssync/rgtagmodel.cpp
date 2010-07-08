@@ -780,10 +780,12 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QList<TagD
     bool found=false;
     int foundIndex;
 
-    kDebug()<<"Entered new currentBranch. currentBranch->data="<<currentBranch->data;
-
     if(currentAddressElementIndex >= tagAddressElements.count())
         return;
+
+
+    kDebug()<<"TypeSpacer";
+
 
     if(tagAddressElements[currentAddressElementIndex].tagType == TypeSpacer)
     {
@@ -817,6 +819,7 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QList<TagD
         }
 
     }
+
     else if(tagAddressElements[currentAddressElementIndex].tagType == TypeNewChild)
     {
     
@@ -849,32 +852,39 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QList<TagD
 
     }
 
+
     else if(tagAddressElements[currentAddressElementIndex].tagType == TypeChild)
     {
-
+        bool found = false; 
         for(int i=0; i<currentBranch->oldChildren.count(); ++i)
         {
         
 
             if(currentBranch->oldChildren[i]->data == tagAddressElements[currentAddressElementIndex].tagName)
             {
-                //TODO: There is any case when oldChildren are deleted?
-                //found = true;
+                found = true;
+                kDebug()<<"Found a child.";
                 foundIndex = i;
                 break;
             }
         }
 
-    //if(found)
-    //{
-        readdTag(currentBranch->oldChildren[foundIndex], foundIndex+currentBranch->spacerChildren.count()+currentBranch->newChildren.count(), tagAddressElements, currentAddressElementIndex+1);
-        return;
-    }
+        if(found)
+        {
+            readdTag(currentBranch->oldChildren[foundIndex], foundIndex+currentBranch->spacerChildren.count()+currentBranch->newChildren.count(), tagAddressElements, currentAddressElementIndex+1);
+            return;
+        }
+        else
+        {
+        //TODO:here will be handled the case when an old tag has needs to be inserted
+        }
 
+    }   
 }
 
 void RGTagModel::readdNewTags(QList<QList<TagData> >& tagAddressList)
 {
+
     for(int i=0; i<tagAddressList.count(); ++i)
     {
         QList<TagData> currentAddressTag = tagAddressList[i];
@@ -920,10 +930,7 @@ void RGTagModel::climbTreeAndGetSpacers(TreeBranch*& currentBranch)
         climbTreeAndGetSpacers(currentBranch->oldChildren[i]);
     }
 
-
-
 }
-
 
 QList<QList<TagData> > RGTagModel::getSpacers()
 {
@@ -932,6 +939,29 @@ QList<QList<TagData> > RGTagModel::getSpacers()
     climbTreeAndGetSpacers(d->rootTag);    
 
     return d->savedSpacerList;
+}
+
+void RGTagModel::addExternalTags(TreeBranch* parentBranch, int currentRow)
+{
+    QModelIndex parentIndex = createIndex(currentRow, 0, parentBranch);
+    
+    int howManyRows = rowCount(parentIndex);
+
+    for(int i = 0; i < howManyRows; ++i)
+    {
+        QModelIndex currentIndex = index(i,0,parentIndex);
+        TreeBranch* const currentBranch = currentIndex.isValid() ? static_cast<TreeBranch*>(currentIndex.internalPointer()) : d->rootTag;
+        if(currentBranch == d->rootTag)
+            return;
+        
+        addExternalTags(currentBranch,i);
+    }
+}
+
+
+void RGTagModel::addAllExternalTagsToTreeView()
+{
+    addExternalTags(d->rootTag,0);
 }
 
 }    //KIPIGPSSyncPlugin
