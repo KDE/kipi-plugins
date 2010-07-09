@@ -379,6 +379,37 @@ QString GPSImageItem::saveChanges()
                 returnString = i18n("Failed to remove GPS info from image");
             }
         }
+
+        if(!m_tagList.isEmpty())
+        {
+
+            QStringList tagSeq;
+
+            for(int i=0; i<m_tagList.count(); ++i)
+            {
+                QList<TagData> currentTagList = m_tagList[i];
+                QString tag;
+
+                for(int j=0; j<currentTagList.count(); ++j)
+                {
+                    tag.append(QString("/") + currentTagList[j].tagName);
+                }
+                tag.remove(0,1);
+
+                tagSeq.append(tag);
+
+            }
+
+            bool succes = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
+            if(!succes)
+            {
+                returnString = i18n("Failed to add tags in XMP");
+            }
+
+        }
+
+
+
     }
     if (success)
     {
@@ -391,9 +422,10 @@ QString GPSImageItem::saveChanges()
         {
             m_dirty = false;
             m_savedState = m_gpsData;
+            m_tagListDirty = false;
+            m_savedTagList = m_tagList;
         }
     }
-
     delete exiv2Iface;
 
     // now tell the interface about the changes
@@ -426,9 +458,10 @@ QString GPSImageItem::saveChanges()
         {
             QMap<QString, QVariant> attributes;
             QStringList tagsPath;
-            //TODO: this part is not working now, because I must make a qstringlist
+            
             for(int i=0; i<m_tagList.count(); ++i)
             {
+                
                 QString singleTagPath;
                 QList<TagData> currentTagPath = m_tagList[i];   
                 for(int j=0; j<currentTagPath.count(); ++j)
