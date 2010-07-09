@@ -136,7 +136,7 @@ public:
     KAction* actionAddCustomizedSpacer;
     KAction* actionRemoveTag;
     KAction* actionRemoveAllNewTags;
-    KAction* actionReaddNewTags;
+    KAction* actionAddAllAddressElementsToTag;
 
     GPSUndoCommand* undoCommand;
 };
@@ -199,7 +199,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
     d->actionRemoveTag = new KAction(i18n("Remove selected tag"), this);
     d->actionRemoveAllNewTags = new KAction(i18n("Remove all new tags"), this);
-    d->actionReaddNewTags = new KAction(i18n("Readd new tags"), this);
+    d->actionAddAllAddressElementsToTag = new KAction(i18n("Add all address elements below this tag"), this);
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
 
@@ -364,6 +364,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->actionAddCustomizedSpacer, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCustomizedSpacer()));
 
+    connect(d->actionAddAllAddressElementsToTag, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddAllAddressElementsToTag()));
+
     connect(d->imageModel, SIGNAL(dataChanged(QModelIndex, QModelIndex)),
             this, SLOT(slotRegenerateNewTags()));
 
@@ -371,8 +374,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
             this, SLOT(slotRemoveTag()));
     connect(d->actionRemoveAllNewTags, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveAllNewTags()));
-    connect(d->actionReaddNewTags, SIGNAL(triggered(bool)),
-            this, SLOT(slotReaddNewTags()));
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
@@ -603,7 +604,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionAddCustomizedSpacer);
                 menu->addAction(d->actionRemoveTag);
                 menu->addAction(d->actionRemoveAllNewTags);
-                menu->addAction(d->actionReaddNewTags);  
+                menu->addAction(d->actionAddAllAddressElementsToTag); 
          
             }
             else if(d->currentBackend->backendName() == QString("Geonames"))
@@ -832,6 +833,24 @@ void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 
    slotRemoveAllNewTags();
    slotReaddNewTags(); 
+}
+
+void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+
+    QStringList spacerList;
+    spacerList.append(QString("{Country}"));
+    spacerList.append(QString("{State}"));
+    spacerList.append(QString("{County}"));
+    spacerList.append(QString("{City}"));
+    spacerList.append(QString("{Town}"));
+    spacerList.append(QString("{Village}"));
+    spacerList.append(QString("{Hamlet}"));
+    spacerList.append(QString("{Street}"));
+
+    d->tagModel->addAllSpacersToTag(baseIndex, spacerList,0);
+
 }
 
 } /* KIPIGPSSyncPlugin  */

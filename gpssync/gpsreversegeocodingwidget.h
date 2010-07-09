@@ -90,7 +90,7 @@ private Q_SLOTS:
     void slotRemoveAllNewTags();
     void slotReaddNewTags();
     void slotRegenerateNewTags();
-
+    void slotAddAllAddressElementsToTag();
 
 Q_SIGNALS:
 

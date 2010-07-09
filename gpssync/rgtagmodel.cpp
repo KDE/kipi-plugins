@@ -934,7 +934,6 @@ QList<QList<TagData> > RGTagModel::getSpacers()
 void RGTagModel::addExternalTags(TreeBranch* parentBranch, int currentRow)
 {
     QModelIndex parentIndex = createIndex(currentRow, 0, parentBranch);
-    
     int howManyRows = rowCount(parentIndex);
 
     for(int i = 0; i < howManyRows; ++i)
@@ -948,10 +947,33 @@ void RGTagModel::addExternalTags(TreeBranch* parentBranch, int currentRow)
     }
 }
 
-
 void RGTagModel::addAllExternalTagsToTreeView()
 {
     addExternalTags(d->rootTag,0);
 }
+
+void RGTagModel::addAllSpacersToTag(const QModelIndex currentIndex,const QStringList spacerList, int spacerListIndex)
+{
+
+    if(spacerListIndex >= spacerList.count())
+        return;
+
+    TreeBranch* const currentBranch = currentIndex.isValid() ? static_cast<TreeBranch*>(currentIndex.internalPointer()) : d->rootTag;
+
+    for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
+    {
+        if(currentBranch->data == spacerList[spacerListIndex])
+        {
+            QModelIndex foundIndex = createIndex(i,0, currentBranch->spacerChildren[i]);
+            addAllSpacersToTag(foundIndex, spacerList, spacerListIndex+1);
+            return;
+        }
+    }
+
+    addSpacerTag(currentIndex, spacerList[spacerListIndex]);
+    QModelIndex newIndex = createIndex(currentBranch->spacerChildren.count()-1, 0, currentBranch->spacerChildren[currentBranch->spacerChildren.count()-1]); 
+    addAllSpacersToTag(newIndex, spacerList, spacerListIndex+1);
+}
+
 
 }    //KIPIGPSSyncPlugin
