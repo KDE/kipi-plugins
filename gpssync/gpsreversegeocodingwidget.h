@@ -75,8 +75,12 @@ private Q_SLOTS:
     void updateUIState();
     void treeItemClicked( const QModelIndex &);
     void slotAddCountry();
+    void slotAddState();
     void slotAddCounty(); 
     void slotAddCity();
+    void slotAddTown();
+    void slotAddVillage();
+    void slotAddHamlet();
     void slotAddStreet();
     void slotAddPlace();
     void slotAddLAU2();

@@ -186,6 +186,7 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
         {
 
             if( (e.tagName().compare(QString("country")) == 0) ||
+                (e.tagName().compare(QString("state")) == 0) ||
                 (e.tagName().compare(QString("county")) == 0) ||
                 (e.tagName().compare(QString("city")) == 0) ||
                 (e.tagName().compare(QString("town")) == 0) ||
