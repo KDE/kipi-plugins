@@ -29,9 +29,11 @@
 
 // KDE includes
 
+#include <kaction.h>
 #include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kiconloader.h>
+#include <kmenu.h>
 
 // libKIPI includes
 
@@ -146,6 +148,8 @@ KipiImageList::KipiImageList(KIPI::Interface* const interface, QWidget* const pa
     d->treeView->setItemDelegate(d->itemDelegate);
     setThumbnailSize(60);
     slotUpdateActionsEnabled();
+
+    d->treeView->header()->installEventFilter(this);
 }
 
 KipiImageList::~KipiImageList()
@@ -367,6 +371,45 @@ void KipiImageList::slotUpdateActionsEnabled()
     {
         d->treeView->setDragDropMode(QAbstractItemView::DragOnly);
     }
+}
+
+bool KipiImageList::eventFilter(QObject *watched, QEvent *event)
+{
+    QHeaderView* const headerView = d->treeView->header();
+    if ( (watched!=headerView) || (event->type()!=QEvent::ContextMenu) || (!d->model) )
+        return QWidget::eventFilter(watched, event);
+
+    QMenu* const menu = new KMenu(this);
+
+    // add action for all the columns
+    for (int i=0; i<d->model->columnCount(); ++i)
+    {
+        const QString columnName = d->model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+        const bool isVisible = !headerView->isSectionHidden(i);
+
+        KAction* const columnAction = new KAction(columnName, menu);
+        columnAction->setCheckable(true);
+        columnAction->setChecked(isVisible);
+        columnAction->setData(i);
+
+        menu->addAction(columnAction);
+    }
+
+    connect(menu, SIGNAL(triggered(QAction*)),
+            this, SLOT(slotColumnVisibilityActionTriggered(QAction*)));
+
+    QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
+    menu->exec(e->globalPos());
+
+    return true;
+}
+
+void KipiImageList::slotColumnVisibilityActionTriggered(QAction* action)
+{
+    const int columnNumber = action->data().toInt();
+    const bool columnIsVisible = action->isChecked();
+
+    d->treeView->header()->setSectionHidden(columnNumber, !columnIsVisible);
 }
 
 } /* KIPIGPSSyncPlugin */

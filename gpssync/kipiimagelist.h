@@ -106,6 +106,10 @@ public Q_SLOTS:
 private Q_SLOTS:
     void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
     void slotInternalTreeViewImageActivated(const QModelIndex& index);
+    void slotColumnVisibilityActionTriggered(QAction* action);
+
+protected:
+    virtual bool eventFilter(QObject *watched, QEvent *event);
 
 private:
     KipiImageListPrivate* const d;
