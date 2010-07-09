@@ -115,7 +115,7 @@ public:
     QLabel* serviceLabel;
     QLabel* metadataLabel;
     QLabel* languageLabel;
-    int backendIndex;
+    KSeparator* separator;
 
     QAbstractItemModel* externTagModel;
     RGTagModel* tagModel;
@@ -150,14 +150,10 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     // - or is there an easier way to use KVBox?
     QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
 
-    KVBox* const vbox = new KVBox(this);
-    vBoxLayout->addWidget(vbox);
-    vbox->layout()->setSpacing(0);
-    vbox->layout()->setMargin(0);
-    
-
-    d->UGridContainer = new QWidget(vbox);
-    d->tagTreeView = new QTreeView(vbox);
+    d->UGridContainer = new QWidget(this);
+    vBoxLayout->addWidget(d->UGridContainer);
+    d->tagTreeView = new QTreeView(this);
+    vBoxLayout->addWidget(d->tagTreeView);
     Q_ASSERT(d->tagTreeView!=0);
 
     // TODO: workaround until the new libkipi hits the streets
@@ -203,12 +199,49 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->languageEdit = new KComboBox(d->UGridContainer);
 
     d->languageEdit->addItem(i18n("English"),"en");
-    d->languageEdit->addItem(i18n("German"), "de");
-    d->languageEdit->addItem(i18n("Romanian"), "ro");
-    d->languageEdit->addItem(i18n("Chinese"), "zh");
     d->languageEdit->addItem(i18n("Arabic"), "ar");
-    d->languageEdit->addItem(i18n("Morroco"), "ma");
-    d->languageEdit->addItem(i18n("Egiptian"), "eg");
+    d->languageEdit->addItem(i18n("Assamese"), "as");
+    d->languageEdit->addItem(i18n("Byelorussian"), "be");
+    d->languageEdit->addItem(i18n("Bulgarian"), "bg");
+    d->languageEdit->addItem(i18n("Bengali"), "bn");
+    d->languageEdit->addItem(i18n("Chinese"), "zh");
+    d->languageEdit->addItem(i18n("Czech"), "cs");
+    d->languageEdit->addItem(i18n("Croatian"), "hr");
+    d->languageEdit->addItem(i18n("Dutch"), "nl");
+    d->languageEdit->addItem(i18n("German"), "de");
+    d->languageEdit->addItem(i18n("Greek"), "el");
+    d->languageEdit->addItem(i18n("Estonian"), "et");
+    d->languageEdit->addItem(i18n("Finnish"), "fi");
+    d->languageEdit->addItem(i18n("French"), "fr");
+    d->languageEdit->addItem(i18n("Georgian"), "ka");
+    d->languageEdit->addItem(i18n("Hebrew"), "iw");
+    d->languageEdit->addItem(i18n("Hindi"), "hi");
+    d->languageEdit->addItem(i18n("Hungarian"), "hu");
+    d->languageEdit->addItem(i18n("Indonesian"), "in");
+    d->languageEdit->addItem(i18n("Icelandic"), "is");
+    d->languageEdit->addItem(i18n("Italian"), "it");
+    d->languageEdit->addItem(i18n("Japanese"), "ja");
+    d->languageEdit->addItem(i18n("Korean"), "ko");
+    d->languageEdit->addItem(i18n("Lithuanian"), "lt");
+    d->languageEdit->addItem(i18n("Macedonian"), "mk");
+    d->languageEdit->addItem(i18n("Mongolian"), "mn");
+    d->languageEdit->addItem(i18n("Moldavian"), "mo");
+    d->languageEdit->addItem(i18n("Nepali"), "ne");
+    d->languageEdit->addItem(i18n("Polish"), "pl");
+    d->languageEdit->addItem(i18n("Portuguese"), "pt");
+    d->languageEdit->addItem(i18n("Romanian"), "ro");
+    d->languageEdit->addItem(i18n("Russian"), "ru");
+    d->languageEdit->addItem(i18n("Slovak"), "sk");
+    d->languageEdit->addItem(i18n("Slovenian"), "sl");
+    d->languageEdit->addItem(i18n("Samoan"), "sm");
+    d->languageEdit->addItem(i18n("Serbian"), "sr");
+    d->languageEdit->addItem(i18n("Sudanese"), "su");
+    d->languageEdit->addItem(i18n("Spanish"), "es");
+    d->languageEdit->addItem(i18n("Swedish"), "sv");
+    d->languageEdit->addItem(i18n("Thai"), "th");
+    d->languageEdit->addItem(i18n("Turkish"), "tr");
+    d->languageEdit->addItem(i18n("Ukrainian"), "uk");
+    d->languageEdit->addItem(i18n("Vietnamese"), "vi");
 
     d->serviceLabel = new QLabel(i18n("Select service:"), d->UGridContainer);
     d->serviceComboBox = new KComboBox(d->UGridContainer);
@@ -234,12 +267,15 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->UGridContainer->setLayout(gridLayout);
 
-    new KSeparator(Qt::Horizontal, vbox);
-    d->buttonHideOptions = new QPushButton(i18n("Less options"), vbox);
+    d->separator = new KSeparator(Qt::Horizontal, this);
+    vBoxLayout->addWidget(d->separator);
+
+    d->buttonHideOptions = new QPushButton(i18n("Less options"), this);
+    vBoxLayout->addWidget(d->buttonHideOptions);
     d->hideOptions = true;
 
-
-    d->LGridContainer = new QWidget(vbox);
+    d->LGridContainer = new QWidget(this);
+    vBoxLayout->addWidget(d->LGridContainer);
     QGridLayout* LGridLayout = new QGridLayout(d->LGridContainer);
 
     d->autoTag = new QCheckBox("Tag automatically when coordinates are changed", d->LGridContainer);
@@ -263,11 +299,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     d->LGridContainer->setLayout(LGridLayout);
 
-    d->buttonRGSelected = new QPushButton(i18n("Apply reverse geocoding"), vbox);
-
-    //d->undoCommand = new GPSUndoCommand();
-
-    dynamic_cast<QVBoxLayout*>(vbox->layout())->addStretch(300); 
+    d->buttonRGSelected = new QPushButton(i18n("Apply reverse geocoding"), this);
+    vBoxLayout->addWidget(d->buttonRGSelected);
 
     //d->backendRGList.append(new BackendGoogleRG(this));
     d->backendRGList.append(new BackendGeonamesRG(this));
@@ -289,9 +322,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
             this, SLOT( treeItemClicked(const QModelIndex &)));    
-
-    connect(d->serviceComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SLOT( slotServiceSelectionChanged(int)));
 
     connect(d->actionAddCountry, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCountry()));
@@ -331,12 +361,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
         connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
                 this, SLOT(slotRGReady(QList<RGInfo>&)));
     }
-
     
-    d->backendIndex = d->serviceComboBox->currentIndex(); 
-    d->currentBackend = d->backendRGList[d->backendIndex];
-
-
+    int currentServiceIndex = d->serviceComboBox->currentIndex(); 
+    d->currentBackend = d->backendRGList[currentServiceIndex];
 }
 
 void GPSReverseGeocodingWidget::updateUIState()
@@ -369,16 +396,12 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 {
     // get the selected image:
     const QModelIndexList selectedItems = d->selectionModel->selectedRows();
-    d->backendIndex = d->serviceComboBox->currentIndex(); 
-    d->currentBackend = d->backendRGList[d->backendIndex];
-    
+    int currentServiceIndex = d->serviceComboBox->currentIndex(); 
+    d->currentBackend = d->backendRGList[currentServiceIndex];
     d->undoCommand = new GPSUndoCommand();
-
+    
     QList<RGInfo> photoList;
-
     QString wantedLanguage = d->languageEdit->itemData(d->languageEdit->currentIndex()).toString(); 
-
-
     QList<QList<TagData> > returnedSpacers = d->tagModel->getSpacers();
 
     for( int i = 0; i < selectedItems.count(); ++i)
@@ -469,8 +492,6 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
             QStringList combinedResult = makeTagString(returnedRGList[i], addressElementsWantedFormat, d->currentBackend->backendName());
 
-            kDebug()<<"ADDRESS ELEMENTS:"<<combinedResult;
-
             QString addressFormat = combinedResult[0];
             QString addressElements = combinedResult[1];
 
@@ -498,13 +519,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             
             }
 
-            kDebug()<<"ELEMENTS:"<<elements;
-            kDebug()<<"RESULTED DATA:"<<resultedData;              
-
             QList<QList<TagData> > returnedTags = d->tagModel->addNewData(elements, resultedData);   
-            
-            //kDebug()<<"Returned tags:"<<returnedTags;
-            //returnedTags.removeDuplicates();
 
             GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
 
@@ -533,12 +548,6 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     }
 }
 
-void GPSReverseGeocodingWidget::slotServiceSelectionChanged(int index)
-{
-    d->backendIndex = index;
-    //d->currentBackend = 
-} 
-
 void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 {
     d->UIEnabled = state;
@@ -558,7 +567,8 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
         {
             KMenu * const menu = new KMenu(d->tagTreeView);
            
-            d->currentBackend = d->backendRGList[d->backendIndex]; 
+            int currentServiceIndex = d->serviceComboBox->currentIndex(); 
+            d->currentBackend = d->backendRGList[currentServiceIndex];
             QString backendName = d->currentBackend->backendName();
 
             if(backendName.compare(QString("OSM")) == 0)
@@ -646,13 +656,10 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
     int spacerCount = group->readEntry("Spacers count", 0);
     QList<QList<TagData> > spacersList;
 
-    kDebug()<<"spacerCount="<<spacerCount;
-
     for(int i=0; i<spacerCount; i++)
     {
         QStringList spacerTagNames  = group->readEntry(QString("Spacerlistname %1").arg(i), QStringList());
         QStringList spacerTypes = group->readEntry(QString("Spacerlisttype %1").arg(i), QStringList());
-
         QList<TagData> currentSpacerAddress; 
 
         for(int j=0; j<spacerTagNames.count(); ++j)
@@ -668,17 +675,10 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
             else if(currentTagType == QString("OldChild"))
                 currentTagData.tagType = TypeChild;
 
-            kDebug()<<currentTagData.tagName<<"--"<<currentTagType;
-
-
             currentSpacerAddress.append(currentTagData);
         }
-
         spacersList.append(currentSpacerAddress);
-
     }
-
-    kDebug()<<"spacerList.count()="<<spacersList.count();
 
     //this make sure that all external tags are added to tag tree view before spacers are re-added
     d->tagModel->addAllExternalTagsToTreeView();

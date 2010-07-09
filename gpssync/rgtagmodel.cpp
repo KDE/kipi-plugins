@@ -130,13 +130,11 @@ void checkTree(TreeBranch* const checkBranch, int level)
 
     for(int j = 0; j < checkBranch->oldChildren.count(); ++j)
     {
-        //kDebug()<<"Index oldChildren:"<<checkBranch->sourceIndex<<"LEVEL:"<<level+1;
         checkTree(checkBranch->oldChildren[j], level+1);  
     }
 
     for(int j = 0; j < checkBranch->spacerChildren.count(); ++j)
     {
-        //kDebug()<<"Index spacer:"<<checkBranch->sourceIndex<<"LEVEL:"<<level+1;
         checkTree(checkBranch->spacerChildren[j], level+1);
     }
 }
@@ -384,9 +382,6 @@ QList<QList<TagData> > RGTagModel::addNewData(QStringList& elements, QStringList
 {
     
     d->newTags.clear();
-   
-    kDebug()<<"ELEMENTS:"<<elements;
-    kDebug()<<"RESULTED DATA:"<<resultedData;
  
     //elements contains address elements {Country}, {City}, ...
     //resultedData contains RG data (example Spain,Barcelona)
@@ -783,10 +778,6 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QList<TagD
     if(currentAddressElementIndex >= tagAddressElements.count())
         return;
 
-
-    kDebug()<<"TypeSpacer";
-
-
     if(tagAddressElements[currentAddressElementIndex].tagType == TypeSpacer)
     {
 
@@ -863,7 +854,6 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QList<TagD
             if(currentBranch->oldChildren[i]->data == tagAddressElements[currentAddressElementIndex].tagName)
             {
                 found = true;
-                kDebug()<<"Found a child.";
                 foundIndex = i;
                 break;
             }

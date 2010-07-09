@@ -384,6 +384,8 @@ QString GPSImageItem::saveChanges()
         {
 
             QStringList tagSeq;
+            QStringList oldIptcTagList = exiv2Iface->getIptcKeywords();
+            QStringList newIptcTagList = oldIptcTagList; 
 
             for(int i=0; i<m_tagList.count(); ++i)
             {
@@ -398,14 +400,33 @@ QString GPSImageItem::saveChanges()
 
                 tagSeq.append(tag);
 
+                newIptcTagList.append(currentTagList[currentTagList.count()-1].tagName);
             }
 
-            bool succes = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
+            newIptcTagList.removeDuplicates();
+
+            bool succes = exiv2Iface->setIptcKeywords(oldIptcTagList, newIptcTagList, true);
             if(!succes)
             {
-                returnString = i18n("Failed to add tags in XMP");
+                returnString = i18n("Failed to save tags to IPTC");
             }
 
+            succes = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
+            if(!succes)
+            {
+                returnString = i18n("Failed to save tags to file");
+            }
+            succes = exiv2Iface->setXmpTagStringSeq("Xmp.dc.subject", tagSeq, true);
+            if(!succes)
+            {
+                returnString = i18n("Failed to save tags to file");
+            }
+            //TODO: this doesn't seem to add the tags anywhere
+            succes = exiv2Iface->setXmpKeywords(tagSeq, true);
+            if(!succes)
+            {   
+                returnString = i18n("Failed to save tags in keywords.");
+            } 
         }
 
 

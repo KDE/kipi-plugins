@@ -74,7 +74,6 @@ private Q_SLOTS:
     void slotHideOptions();
     void updateUIState();
     void treeItemClicked( const QModelIndex &);
-    void slotServiceSelectionChanged(int);
     void slotAddCountry();
     void slotAddCounty(); 
     void slotAddCity();
