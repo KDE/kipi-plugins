@@ -567,7 +567,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 {
     if(watched == d->tagTreeView)
     {
-        if((event->type()==QEvent::ContextMenu) && d->tagSelectionModel->hasSelection() && d->UIEnabled)
+        if((event->type()==QEvent::ContextMenu) && d->UIEnabled) //d->tagSelectionModel->hasSelection() && d->UIEnabled)
         {
             KMenu * const menu = new KMenu(d->tagTreeView);
            

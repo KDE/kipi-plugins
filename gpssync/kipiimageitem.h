@@ -68,7 +68,7 @@ class RGInfo {
 enum Type {
     TypeChild = 1,
     TypeSpacer = 2,
-    TypeNewChild =4
+    TypeNewChild = 4
 };
 
 typedef struct TagData

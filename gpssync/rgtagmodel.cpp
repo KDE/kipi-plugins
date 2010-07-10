@@ -76,7 +76,9 @@ RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* cons
 {
     d->tagModel = externalTagModel;
     d->rootTag = new TreeBranch();
-   
+    d->rootTag->type = TypeChild;  
+
+ 
     connect(d->tagModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(slotSourceDataChanged(const QModelIndex&, const QModelIndex&))); 
 
@@ -192,6 +194,7 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
             newTreeBranch->sourceIndex = parents[level];
             newTreeBranch->data = d->tagModel->data(externalTagModelIndex, Qt::DisplayRole).toString();
             newTreeBranch->parent = subModelBranch;
+            newTreeBranch->type = TypeChild;
 
             subModelBranch->oldChildren.append(newTreeBranch); 
             subModelBranch = newTreeBranch;    
@@ -661,6 +664,7 @@ void RGTagModel::slotRowsInserted()
         TreeBranch* newBranch = new TreeBranch();
         newBranch->parent = parentBranch;
         newBranch->sourceIndex = d->tagModel->index(i, 0, d->parent);
+        newBranch->type = TypeChild;
 
         parentBranch->oldChildren.insert(i, newBranch);
     }
@@ -866,7 +870,11 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow, QList<TagD
         }
         else
         {
-        //TODO:here will be handled the case when an old tag has needs to be inserted
+            QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
+            addSpacerTag(currentIndex,tagAddressElements[currentAddressElementIndex].tagName);
+
+            if( (tagAddressElements.count()-1) > currentAddressElementIndex)
+                readdTag(currentBranch->spacerChildren[currentBranch->spacerChildren.count()-1], currentBranch->spacerChildren.count()-1, tagAddressElements, currentAddressElementIndex+1);
         }
 
     }   
