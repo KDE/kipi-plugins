@@ -251,7 +251,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     kmapMarkerModel->setMarkerModelHelper(d->mapModelHelper);
     d->mapWidget->setGroupedModel(kmapMarkerModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
-    d->mapWidget->setDoUpdateMarkerCoordinatesInModel(false);
     d->mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
 
     QToolButton* const bookmarkVisibilityButton = new QToolButton(this);
