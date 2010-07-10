@@ -185,7 +185,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->tagTreeView->setSelectionModel(d->tagSelectionModel);
 
     d->actionAddCountry = new KAction(i18n("Add country tag"), this);
-    d->actionAddState = new KAction(i18n("Add State tag"), this);
+    d->actionAddState = new KAction(i18n("Add state tag"), this);
     d->actionAddCounty = new KAction(i18n("Add county tag"), this);
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
     d->actionAddTown = new KAction(i18n("Add town tag"), this);
