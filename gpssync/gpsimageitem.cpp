@@ -36,7 +36,7 @@ namespace KIPIGPSSyncPlugin
 {
 
 GPSImageItem::GPSImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad)
-: KipiImageItem(interface, url, false), m_gpsData(), m_savedState(), m_dirty(false),m_tagList(), m_tagListDirty(false), m_savedTagList()
+: KipiImageItem(interface, url, false), m_gpsData(), m_savedState(), m_dirty(false),m_tagList(), m_tagListDirty(false), m_savedTagList(), m_writeXmpTags(true)
 {
 
     m_savedState = m_gpsData;
@@ -380,12 +380,10 @@ QString GPSImageItem::saveChanges()
             }
         }
 
-        if(!m_tagList.isEmpty())
+        if(!m_tagList.isEmpty() && m_writeXmpTags)
         {
 
             QStringList tagSeq;
-            QStringList oldIptcTagList = exiv2Iface->getIptcKeywords();
-            QStringList newIptcTagList = oldIptcTagList; 
 
             for(int i=0; i<m_tagList.count(); ++i)
             {
@@ -399,19 +397,9 @@ QString GPSImageItem::saveChanges()
                 tag.remove(0,1);
 
                 tagSeq.append(tag);
-
-                newIptcTagList.append(currentTagList[currentTagList.count()-1].tagName);
             }
 
-            newIptcTagList.removeDuplicates();
-
-            bool succes = exiv2Iface->setIptcKeywords(oldIptcTagList, newIptcTagList, true);
-            if(!succes)
-            {
-                returnString = i18n("Failed to save tags to IPTC");
-            }
-
-            succes = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
+            bool succes = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
             if(!succes)
             {
                 returnString = i18n("Failed to save tags to file");
@@ -421,15 +409,7 @@ QString GPSImageItem::saveChanges()
             {
                 returnString = i18n("Failed to save tags to file");
             }
-            //TODO: this doesn't seem to add the tags anywhere
-            succes = exiv2Iface->setXmpKeywords(tagSeq, true);
-            if(!succes)
-            {   
-                returnString = i18n("Failed to save tags in keywords.");
-            } 
         }
-
-
 
     }
     if (success)

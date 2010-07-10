@@ -98,6 +98,7 @@ public:
     inline bool isTagListDirty() const { return m_tagListDirty; }
     inline QList<QList<TagData> > getTagList() const { return m_tagList; };
     void restoreRGTagList(const QList<QList<TagData> >&);
+    void writeTagsToXmp(const bool writeXmpTags) { m_writeXmpTags = writeXmpTags; }
 
 protected:
     // these are only to be called by the KipiImageModel
@@ -116,6 +117,7 @@ protected:
     QList<QList<TagData> > m_tagList;
     bool m_tagListDirty;
     QList<QList<TagData> > m_savedTagList;
+    bool m_writeXmpTags;
 };
 
 } /* KIPIGPSSyncPlugin */
