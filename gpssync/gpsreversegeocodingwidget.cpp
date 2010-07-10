@@ -138,7 +138,7 @@ public:
     KAction* actionAddAllAddressElementsToTag;
 
     GPSUndoCommand* undoCommand;
-    QPoint currentTagTreePoint;
+    QModelIndex currentTagTreeIndex;
 };
 
 
@@ -157,6 +157,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->UGridContainer = new QWidget(this);
     vBoxLayout->addWidget(d->UGridContainer);
     d->tagTreeView = new QTreeView(this);
+    d->tagTreeView->setHeaderHidden(true);
     vBoxLayout->addWidget(d->tagTreeView);
     Q_ASSERT(d->tagTreeView!=0);
 
@@ -622,8 +623,8 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionRemoveAllNewTags);
             }
             QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
-            d->currentTagTreePoint = e->pos();        
-        
+            d->currentTagTreeIndex = d->tagTreeView->indexAt(e->pos());       
+ 
             menu->exec(e->globalPos());
 
         }
@@ -725,7 +726,14 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
 
 void GPSReverseGeocodingWidget::slotAddSingleSpacer()
 {
-    const QModelIndex baseIndex = d->tagTreeView->indexAt(d->currentTagTreePoint);
+    //    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    QModelIndex baseIndex;    
+ 
+    if(!d->currentTagTreeIndex.isValid())
+        baseIndex = d->currentTagTreeIndex;
+    else
+        baseIndex = d->tagSelectionModel->currentIndex();
+     
     QAction* senderAction = qobject_cast<QAction*>(sender());
     QString currentSpacerName = senderAction->data().toString();
  
