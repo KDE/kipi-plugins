@@ -119,11 +119,10 @@ public:
     inline KMapIface::WMWGeoCoordinate coordinates() const { return m_gpsData.getCoordinates(); }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
     inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
-    inline void setTagInfo(QString rgTag){ tags = rgTag; emitDataChanged(); }
     void restoreGPSData(const GPSDataContainer& container);
     inline bool isDirty() const { return m_dirty; }
 
-    inline void setTagList(const QList<QList<TagData> >& externalTagList) { m_tagList = externalTagList; m_tagListDirty = true;  };
+    inline void setTagList(const QList<QList<TagData> >& externalTagList) { m_tagList = externalTagList; m_tagListDirty = true; emitDataChanged(); };
     inline bool isTagListDirty() const { return m_tagListDirty; }
     inline QList<QList<TagData> > getTagList() const { return m_tagList; };
     void restoreRGTagList(const QList<QList<TagData> >&);
@@ -142,16 +141,17 @@ protected:
 
 protected:
     KIPI::Interface* m_interface;
+    KipiImageModel* m_model;
+
     KUrl m_url;
     QDateTime m_dateTime;
-    KipiImageModel* m_model;
-    bool m_exiv2IfaceSaveOnClose;
+
+    bool m_dirty;
     GPSDataContainer m_gpsData;
     GPSDataContainer m_savedState;
-    bool m_dirty;
-    QString tags;
-    QList<QList<TagData> > m_tagList;
+
     bool m_tagListDirty;
+    QList<QList<TagData> > m_tagList;
     QList<QList<TagData> > m_savedTagList;
     bool m_writeXmpTags;
 

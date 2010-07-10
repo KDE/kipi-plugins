@@ -42,14 +42,14 @@ namespace KIPIGPSSyncPlugin
 
 KipiImageItem::KipiImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad)
 : m_interface(interface),
-  m_url(url),
   m_model(0),
-  m_exiv2IfaceSaveOnClose(false),
+  m_url(url),
+  m_dateTime(),
+  m_dirty(false),
   m_gpsData(),
   m_savedState(),
-  m_dirty(false),
-  m_tagList(),
   m_tagListDirty(false),
+  m_tagList(),
   m_savedTagList(),
   m_writeXmpTags(true)
 {
