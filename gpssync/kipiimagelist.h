@@ -53,28 +53,7 @@ public:
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices) = 0;
 };
 
-class KipiImageListViewInternalPrivate;
-class KipiImageList;
-
-class KipiImageListViewInternal : public QTreeView
-{
-Q_OBJECT
-
-public:
-    KipiImageListViewInternal(KipiImageList* const parent = 0);
-    ~KipiImageListViewInternal();
-
-    void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
-
-protected:
-    virtual void startDrag(Qt::DropActions supportedActions);
-    virtual void wheelEvent(QWheelEvent* we);
-
-private:
-    KipiImageListViewInternalPrivate* const d;
-};
-
-class KipiImageList : public QWidget
+class KipiImageList : public QTreeView
 {
 Q_OBJECT
 
@@ -82,8 +61,7 @@ public:
     KipiImageList(KIPI::Interface* const interface, QWidget* const parent = 0);
     ~KipiImageList();
 
-    void setModel(KipiImageModel* const model, QItemSelectionModel* const selectionModel);
-    QTreeView* view() const;
+    void setModelAndSelectionModel(KipiImageModel* const model, QItemSelectionModel* const selectionModel);
     KipiImageModel* getModel() const;
     QItemSelectionModel* getSelectionModel() const;
     void setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler);
@@ -110,6 +88,8 @@ private Q_SLOTS:
 
 protected:
     virtual bool eventFilter(QObject *watched, QEvent *event);
+    virtual void startDrag(Qt::DropActions supportedActions);
+    virtual void wheelEvent(QWheelEvent* we);
 
 private:
     KipiImageListPrivate* const d;

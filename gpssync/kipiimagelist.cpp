@@ -51,39 +51,32 @@ KipiImageListDragDropHandler::~KipiImageListDragDropHandler()
 {
 }
 
-class KipiImageListViewInternalPrivate
+class KipiImageListPrivate
 {
 public:
-    KipiImageListViewInternalPrivate()
-    : dragDropHandler(0)
+    KipiImageListPrivate()
+    : editEnabled(true),
+      dragEnabled(false),
+      model(0),
+      selectionModel(0),
+      itemDelegate(0),
+      interface(0),
+      imageSortProxyModel(0),
+      dragDropHandler(0)
     {
     }
 
+    bool editEnabled;
+    bool dragEnabled;
+    KipiImageModel* model;
+    QItemSelectionModel* selectionModel;
+    KipiImageItemDelegate* itemDelegate;
+    KIPI::Interface* interface;
+    KipiImageSortProxyModel *imageSortProxyModel;
     KipiImageListDragDropHandler* dragDropHandler;
-    KipiImageList* kipiImageList;
 };
 
-KipiImageListViewInternal::KipiImageListViewInternal(KipiImageList* const parent)
-: QTreeView(parent), d(new KipiImageListViewInternalPrivate())
-{
-    d->kipiImageList = parent;
-    header()->setMovable(true);
-    setUniformRowHeights(true);
-    setRootIsDecorated(false);
-    setAlternatingRowColors(true);
-}
-
-KipiImageListViewInternal::~KipiImageListViewInternal()
-{
-    delete d;
-}
-
-void KipiImageListViewInternal::setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler)
-{
-    d->dragDropHandler = dragDropHandler;
-}
-
-void KipiImageListViewInternal::startDrag(Qt::DropActions supportedActions)
+void KipiImageList::startDrag(Qt::DropActions supportedActions)
 {
     if (!d->dragDropHandler)
     {
@@ -93,7 +86,7 @@ void KipiImageListViewInternal::startDrag(Qt::DropActions supportedActions)
 
     // NOTE: read the selected indices from the source selection model, not our selection model,
     // which is for the sorted model!
-    const QList<QModelIndex> selectedIndicesFromModel = d->kipiImageList->getSelectionModel()->selectedIndexes();
+    const QList<QModelIndex> selectedIndicesFromModel = d->selectionModel->selectedIndexes();
     QList<QPersistentModelIndex> selectedIndices;
     for (int i=0; i<selectedIndicesFromModel.count(); ++i)
     {
@@ -109,47 +102,22 @@ void KipiImageListViewInternal::startDrag(Qt::DropActions supportedActions)
     drag->start(Qt::CopyAction);
 }
 
-class KipiImageListPrivate
-{
-public:
-    KipiImageListPrivate()
-    : editEnabled(true),
-      dragEnabled(false),
-      model(0),
-      selectionModel(0),
-      treeView(0),
-      itemDelegate(0),
-      interface(0)
-    {
-    }
-
-    bool editEnabled;
-    bool dragEnabled;
-    KipiImageModel* model;
-    QItemSelectionModel* selectionModel;
-    KipiImageListViewInternal* treeView;
-    KipiImageItemDelegate* itemDelegate;
-    KIPI::Interface* interface;
-    KipiImageSortProxyModel *imageSortProxyModel;
-};
-
 KipiImageList::KipiImageList(KIPI::Interface* const interface, QWidget* const parent)
-: QWidget(parent), d(new KipiImageListPrivate())
+: QTreeView(parent), d(new KipiImageListPrivate())
 {
     d->interface = interface;
 
-    QVBoxLayout* const vBoxLayout = new QVBoxLayout(this);
-    d->treeView = new KipiImageListViewInternal(this);
-    vBoxLayout->addWidget(d->treeView);
-
-    setLayout(vBoxLayout);
+    header()->setMovable(true);
+    setUniformRowHeights(true);
+    setRootIsDecorated(false);
+    setAlternatingRowColors(true);
 
     d->itemDelegate = new KipiImageItemDelegate(this, this);
-    d->treeView->setItemDelegate(d->itemDelegate);
+    setItemDelegate(d->itemDelegate);
     setThumbnailSize(60);
     slotUpdateActionsEnabled();
 
-    d->treeView->header()->installEventFilter(this);
+    header()->installEventFilter(this);
 }
 
 KipiImageList::~KipiImageList()
@@ -157,31 +125,26 @@ KipiImageList::~KipiImageList()
     delete d;
 }
 
-void KipiImageList::setModel(KipiImageModel* const model, QItemSelectionModel* const selectionModel)
+void KipiImageList::setModelAndSelectionModel(KipiImageModel* const model, QItemSelectionModel* const selectionModel)
 {
     d->model = model;
     d->selectionModel = selectionModel;
     d->imageSortProxyModel = new KipiImageSortProxyModel(d->model, d->selectionModel);
-    d->treeView->setModel(d->imageSortProxyModel);
+    setModel(d->imageSortProxyModel);
 
     connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(const QPersistentModelIndex&, const QPixmap&)),
             this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
 
-    connect(d->treeView, SIGNAL(activated(const QModelIndex&)),
+    connect(this, SIGNAL(activated(const QModelIndex&)),
             this, SLOT(slotInternalTreeViewImageActivated(const QModelIndex&)));
 
     if (d->imageSortProxyModel->mappedSelectionModel())
-        d->treeView->setSelectionModel(d->imageSortProxyModel->mappedSelectionModel());
-}
-
-QTreeView* KipiImageList::view() const
-{
-    return d->treeView;
+        setSelectionModel(d->imageSortProxyModel->mappedSelectionModel());
 }
 
 void KipiImageList::setDragDropHandler(KipiImageListDragDropHandler* const dragDropHandler)
 {
-    d->treeView->setDragDropHandler(dragDropHandler);
+    d->dragDropHandler = dragDropHandler;
 }
 
 class KipiImageItemDelegatePrivate
@@ -278,7 +241,7 @@ KipiImageModel* KipiImageList::getModel() const
 void KipiImageList::setThumbnailSize(const int size)
 {
     d->itemDelegate->setThumbnailSize(size);
-    d->treeView->setColumnWidth(KipiImageItem::ColumnThumbnail, size);
+    setColumnWidth(KipiImageItem::ColumnThumbnail, size);
 }
 
 void KipiImageList::slotIncreaseThumbnailSize()
@@ -296,7 +259,7 @@ void KipiImageList::slotDecreaseThumbnailSize()
         setThumbnailSize(currentThumbnailSize-5);
 }
 
-void KipiImageListViewInternal::wheelEvent(QWheelEvent* we)
+void KipiImageList::wheelEvent(QWheelEvent* we)
 {
     if ((we->modifiers()&Qt::ControlModifier) == 0)
     {
@@ -307,24 +270,24 @@ void KipiImageListViewInternal::wheelEvent(QWheelEvent* we)
     we->accept();
     if (we->delta()>0)
     {
-        d->kipiImageList->slotIncreaseThumbnailSize();
+        slotIncreaseThumbnailSize();
     }
     else
     {
-        d->kipiImageList->slotDecreaseThumbnailSize();
+        slotDecreaseThumbnailSize();
     }
 }
 
 void KipiImageList::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& /*pixmap*/)
 {
     // TODO: verify that the size corresponds to the size of our thumbnails!
-    d->treeView->update(d->imageSortProxyModel->mapFromSource(index));
+    update(d->imageSortProxyModel->mapFromSource(index));
 }
 
 void KipiImageList::saveSettingsToGroup(KConfigGroup* const group)
 {
     group->writeEntry("Image List Thumbnail Size", d->itemDelegate->getThumbnailSize());
-    group->writeEntry("Header State", d->treeView->header()->saveState());
+    group->writeEntry("Header State", header()->saveState());
 }
 
 void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
@@ -333,7 +296,7 @@ void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
 
     const QByteArray headerState = group->readEntry("Header State", QByteArray());
     if (!headerState.isEmpty())
-        d->treeView->header()->restoreState(headerState);
+        header()->restoreState(headerState);
 }
 
 QItemSelectionModel* KipiImageList::getSelectionModel() const
@@ -366,16 +329,16 @@ void KipiImageList::setDragEnabled(const bool state)
 
 void KipiImageList::slotUpdateActionsEnabled()
 {
-    d->treeView->setDragEnabled(d->dragEnabled&&d->editEnabled);
+    QTreeView::setDragEnabled(d->dragEnabled&&d->editEnabled);
     if (d->dragEnabled&&d->editEnabled)
     {
-        d->treeView->setDragDropMode(QAbstractItemView::DragOnly);
+        QTreeView::setDragDropMode(QAbstractItemView::DragOnly);
     }
 }
 
 bool KipiImageList::eventFilter(QObject *watched, QEvent *event)
 {
-    QHeaderView* const headerView = d->treeView->header();
+    QHeaderView* const headerView = header();
     if ( (watched!=headerView) || (event->type()!=QEvent::ContextMenu) || (!d->model) )
         return QWidget::eventFilter(watched, event);
 
@@ -409,7 +372,7 @@ void KipiImageList::slotColumnVisibilityActionTriggered(QAction* action)
     const int columnNumber = action->data().toInt();
     const bool columnIsVisible = action->isChecked();
 
-    d->treeView->header()->setSectionHidden(columnNumber, !columnIsVisible);
+    header()->setSectionHidden(columnNumber, !columnIsVisible);
 }
 
 } /* KIPIGPSSyncPlugin */

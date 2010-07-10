@@ -117,8 +117,7 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
                 this, SLOT(slotBookmarkSelected(GPSDataContainer)));
     }
 
-
-    d->imagesList->view()->installEventFilter(this);
+    d->imagesList->installEventFilter(this);
 }
 
 GPSListViewContextMenu::~GPSListViewContextMenu()

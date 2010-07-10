@@ -283,14 +283,14 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->VSplitter->addWidget(dummyWidget);
 
     d->treeView = new KipiImageList(d->interface, this);
-    d->treeView->setModel(d->imageModel, d->selectionModel);
+    d->treeView->setModelAndSelectionModel(d->imageModel, d->selectionModel);
     d->treeView->setDragDropHandler(new GPSImageListDragDropHandler(this));
     d->treeView->setDragEnabled(true);
     // TODO: save and restore the state of the header
     // TODO: add a context menu to the header to select which columns should be visible
     // TODO: add sorting by column
-    d->treeView->view()->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    d->treeView->view()->setSortingEnabled(true);
+    d->treeView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    d->treeView->setSortingEnabled(true);
     d->VSplitter->addWidget(d->treeView);
 
     d->listViewContextMenu = new GPSListViewContextMenu(d->treeView, d->bookmarkOwner);
