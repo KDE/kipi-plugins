@@ -11,33 +11,6 @@
 
 namespace KIPIGPSSyncPlugin
 {
-/*
-class TreeBranch {
-public:
-    TreeBranch()
-    : sourceIndex(),
-      parent(0),
-      data(),
-      type(),
-      oldChildren(),
-      spacerChildren()
-    {
-    }
-
-    ~TreeBranch()
-    {
-        qDeleteAll(oldChildren);
-    }
-
-    QPersistentModelIndex sourceIndex;
-    TreeBranch* parent;
-    QString data;
-    Type type;
-    QList<TreeBranch*> oldChildren;
-    QList<TreeBranch*> spacerChildren;
-    QList<TreeBranch*> newChildren;
-};
-*/
 
 class RGTagModelPrivate
 {

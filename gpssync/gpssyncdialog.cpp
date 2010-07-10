@@ -79,6 +79,7 @@
 
 #include <libkmap/html_widget.h>
 #include <libkmap/kmap.h>
+#include <libkmap/markermodel.h>
 
 // Local includes
 
@@ -155,7 +156,7 @@ public:
     KIPIPlugins::PreviewManager *previewManager;
     GPSSettingsWidget        *settingsWidget;
     GPSCorrelatorWidget      *correlatorWidget;
-    GPSSyncWMWRepresentativeChooser *representativeChooser;
+    GPSSyncKMapModelHelper *mapModelHelper;
     bool uiEnabled;
     QFuture<QPair<KUrl,QString> > changedFilesSaveFuture;
     QFutureWatcher<QPair<KUrl,QString> > *changedFilesSaveFutureWatcher;
@@ -203,7 +204,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
     d->selectionModel = new QItemSelectionModel(d->imageModel);
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, this);
-    d->representativeChooser = new GPSSyncWMWRepresentativeChooser(d->imageModel, this);
+    d->mapModelHelper = new GPSSyncKMapModelHelper(d->imageModel, d->selectionModel, this);
 
     d->undoStack = new KUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
@@ -245,9 +246,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->HSplitter->setStretchFactor(0, 10);
 
     d->mapWidget = new KMapIface::KMap(this);
-    d->mapWidget->setRepresentativeChooser(d->representativeChooser);
     d->mapWidget->setEditModeAvailable(true);
-    d->mapWidget->setDisplayMarkersModel(d->imageModel, KipiImageItem::RoleCoordinates, d->selectionModel);
+    KMapIface::MarkerModel* const kmapMarkerModel = new KMapIface::MarkerModel();
+    kmapMarkerModel->setMarkerModelHelper(d->mapModelHelper);
+    d->mapWidget->setGroupedModel(kmapMarkerModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
     d->mapWidget->setDoUpdateMarkerCoordinatesInModel(false);
     d->mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
@@ -727,35 +729,62 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
     slotSetUIEnabled(enabledState, 0, QString());
 }
 
-class GPSSyncWMWRepresentativeChooserPrivate
+class GPSSyncKMapModelHelperPrivate
 {
 public:
-    GPSSyncWMWRepresentativeChooserPrivate()
+    GPSSyncKMapModelHelperPrivate()
     {
     }
 
     KipiImageModel* model;
+    QItemSelectionModel* selectionModel;
 };
 
-GPSSyncWMWRepresentativeChooser::GPSSyncWMWRepresentativeChooser(KipiImageModel* const model, QObject* const parent)
-: KMapIface::WMWRepresentativeChooser(parent), d(new GPSSyncWMWRepresentativeChooserPrivate())
+GPSSyncKMapModelHelper::GPSSyncKMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent)
+: KMapIface::WMWModelHelper(parent), d(new GPSSyncKMapModelHelperPrivate())
 {
     d->model = model;
+    d->selectionModel = selectionModel;
 
     connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(const QPersistentModelIndex&, const QPixmap&)),
             this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
 }
 
-GPSSyncWMWRepresentativeChooser::~GPSSyncWMWRepresentativeChooser()
+QAbstractItemModel* GPSSyncKMapModelHelper::model() const
+{
+    return d->model;
+}
+
+QItemSelectionModel* GPSSyncKMapModelHelper::selectionModel() const
+{
+    return d->selectionModel;
+}
+
+bool GPSSyncKMapModelHelper::itemCoordinates(const QModelIndex& index, KMapIface::WMWGeoCoordinate* const coordinates) const
+{
+    KipiImageItem* const item = d->model->itemFromIndex(index);
+    if (!item)
+        return false;
+
+    if (!item->gpsData().hasCoordinates())
+        return false;
+
+    if (coordinates)
+        *coordinates = item->gpsData().getCoordinates();
+
+    return true;
+}
+
+GPSSyncKMapModelHelper::~GPSSyncKMapModelHelper()
 {
 }
 
-QPixmap GPSSyncWMWRepresentativeChooser::pixmapFromRepresentativeIndex(const QVariant& index, const QSize& size)
+QPixmap GPSSyncKMapModelHelper::pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size)
 {
-    return d->model->getPixmapForIndex(index.value<QPersistentModelIndex>(), qMax(size.width(), size.height()));
+    return d->model->getPixmapForIndex(index, qMax(size.width(), size.height()));
 }
 
-QVariant GPSSyncWMWRepresentativeChooser::bestRepresentativeIndexFromList(const QList<QVariant>& list, const int sortKey)
+QPersistentModelIndex GPSSyncKMapModelHelper::bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey)
 {
     const bool oldestFirst = sortKey & 1;
 
@@ -763,7 +792,7 @@ QVariant GPSSyncWMWRepresentativeChooser::bestRepresentativeIndexFromList(const 
     QDateTime bestTime;
     for (int i=0; i<list.count(); ++i)
     {
-        const QPersistentModelIndex currentIndex = list.at(i).value<QPersistentModelIndex>();
+        const QPersistentModelIndex currentIndex = list.at(i);
         const KipiImageItem* const currentItem = static_cast<KipiImageItem*>(d->model->itemFromIndex(currentIndex));
         const QDateTime currentTime = currentItem->dateTime();
 
@@ -786,20 +815,12 @@ QVariant GPSSyncWMWRepresentativeChooser::bestRepresentativeIndexFromList(const 
         }
     }
 
-    return QVariant::fromValue(bestIndex);
+    return bestIndex;
 }
 
-void GPSSyncWMWRepresentativeChooser::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
+void GPSSyncKMapModelHelper::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
 {
-    emit(signalThumbnailAvailableForIndex(QVariant::fromValue(index), pixmap));
-}
-
-bool GPSSyncWMWRepresentativeChooser::indicesEqual(const QVariant& indexA, const QVariant& indexB)
-{
-    const QPersistentModelIndex a = indexA.value<QPersistentModelIndex>();
-    const QPersistentModelIndex b = indexB.value<QPersistentModelIndex>();
-
-    return a==b;
+    emit(signalThumbnailAvailableForIndex(index, pixmap));
 }
 
 void GPSSyncDialog::saveChanges(const bool closeAfterwards)

@@ -50,20 +50,23 @@ class GPSUndoCommand;
 
 class GPSSyncDialogPriv;
 
-class GPSSyncWMWRepresentativeChooserPrivate;
+class GPSSyncKMapModelHelperPrivate;
 
-class GPSSyncWMWRepresentativeChooser : public KMapIface::WMWRepresentativeChooser
+class GPSSyncKMapModelHelper : public KMapIface::WMWModelHelper
 {
 Q_OBJECT
 
 public:
 
-    GPSSyncWMWRepresentativeChooser(KipiImageModel* const model, QObject* const parent = 0);
-    virtual ~GPSSyncWMWRepresentativeChooser();
+    GPSSyncKMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent = 0);
+    virtual ~GPSSyncKMapModelHelper();
 
-    virtual QPixmap pixmapFromRepresentativeIndex(const QVariant& index, const QSize& size);
-    virtual QVariant bestRepresentativeIndexFromList(const QList<QVariant>& list, const int sortKey);
-    virtual bool indicesEqual(const QVariant& indexA, const QVariant& indexB);
+    virtual QAbstractItemModel* model() const;
+    virtual QItemSelectionModel* selectionModel() const;
+    virtual bool itemCoordinates(const QModelIndex& index, KMapIface::WMWGeoCoordinate* const coordinates) const;
+
+    virtual QPixmap pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size);
+    virtual QPersistentModelIndex bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey);
 
 private Q_SLOTS:
 
@@ -71,7 +74,7 @@ private Q_SLOTS:
 
 private:
 
-    GPSSyncWMWRepresentativeChooserPrivate* const d;
+    GPSSyncKMapModelHelperPrivate* const d;
 };
 
 // ------------------------------------------------------------------------------------------------
