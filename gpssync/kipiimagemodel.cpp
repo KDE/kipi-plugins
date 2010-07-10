@@ -166,19 +166,11 @@ QVariant KipiImageModel::headerData(int section, Qt::Orientation orientation, in
 
 bool KipiImageModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
-    const int rowNumber = index.row();
-    if ((rowNumber<0)||(rowNumber>=d->items.count()))
-    {
-        return false;
-    }
+    Q_UNUSED(index);
+    Q_UNUSED(value);
+    Q_UNUSED(role);
 
-    const bool success = d->items.at(rowNumber)->setData(index.column(), role, value);
-    if (success)
-    {
-        // we have to assume that all columns changed:
-        emit(dataChanged(index, index.sibling(index.row(), d->columnCount-1)));
-    }
-    return success;
+    return false;
 }
 
 Qt::ItemFlags KipiImageModel::flags(const QModelIndex& index) const

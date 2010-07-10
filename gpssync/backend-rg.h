@@ -33,37 +33,18 @@
 
 #include <libkmap/kmap_primitives.h>
 
-//local includes
+// local includes
 
-#include "gpsimageitem.h"
+#include "kipiimageitem.h"
 
 namespace KIPIGPSSyncPlugin
 {
-
-/* 
-class RGInfo {
-
-    public:
-
-    RGInfo()
-    :id(),
-     coordinates(),
-     rgData(){   }
-
-
-    QVariant id;
-    WMW2::WMWGeoCoordinate coordinates;
-    QMap<QString, QString> rgData;
-};
-*/
 
 class RGBackendPrivate;
 
 class RGBackend : public QObject
 {
-
     Q_OBJECT
-
 
 public:
     RGBackend(QObject* const parent);
@@ -80,8 +61,6 @@ Q_SIGNALS:
      * @brief Emitted whenever some items are ready
      */
     void signalRGReady(QList<RGInfo>&);   
-
- 
 
 private:
 

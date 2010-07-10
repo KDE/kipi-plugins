@@ -20,15 +20,14 @@
 #ifndef RGTAGMODEL_H
 #define RGTAGMODEL_H
 
-
 // Qt includes
 
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
-//local includes 
+// local includes
 
-#include "gpsimageitem.h"
+#include "kipiimageitem.h"
 
 namespace KIPIGPSSyncPlugin
 {

@@ -20,7 +20,7 @@
 
 #include "backend-rg.moc"
 
-namespace KIPIGPSSyncPlugin 
+namespace KIPIGPSSyncPlugin
 {
 
 class RGBackendPrivate

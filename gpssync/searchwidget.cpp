@@ -617,8 +617,8 @@ void SearchResultModelHelper::snapItemsTo(const QModelIndex& targetIndex, const 
     for (int i=0; i<snappedIndices.count(); ++i)
     {
         const QPersistentModelIndex itemIndex = snappedIndices.at(i);
-        GPSImageItem* const item = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
-        
+        KipiImageItem* const item = d->imageModel->itemFromIndex(itemIndex);
+
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(item);
 
@@ -650,7 +650,7 @@ void SearchWidget::slotMoveSelectedImagesToThisResult()
     for (int i=0; i<selectedImageIndices.count(); ++i)
     {
         const QPersistentModelIndex itemIndex = selectedImageIndices.at(i);
-        GPSImageItem* const item = static_cast<GPSImageItem*>(d->kipiImageModel->itemFromIndex(itemIndex));
+        KipiImageItem* const item = d->kipiImageModel->itemFromIndex(itemIndex);
 
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(item);        

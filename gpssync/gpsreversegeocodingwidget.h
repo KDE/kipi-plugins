@@ -73,7 +73,6 @@ private Q_SLOTS:
     void slotRGReady(QList<RGInfo>&);
     void slotHideOptions();
     void updateUIState();
-    void treeItemClicked( const QModelIndex &);
     void slotAddCountry();
     void slotAddState();
     void slotAddCounty(); 

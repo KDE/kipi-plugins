@@ -7,7 +7,6 @@ SET(kipiplugin_gpssync_PART_SRCS
     plugin_gpssync.cpp
     kipiimagemodel.cpp
     kipiimageitem.cpp
-    gpsimageitem.cpp
     mapdragdrophandler.cpp
     kipiimagelist.cpp
     gpsimagelistdragdrophandler.cpp

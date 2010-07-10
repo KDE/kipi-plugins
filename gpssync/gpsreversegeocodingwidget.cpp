@@ -63,7 +63,7 @@
 
 #include "gpssyncdialog.h"
 #include "kipiimagemodel.h"
-#include "gpsimageitem.h"
+#include "kipiimageitem.h"
 #include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
 #include "backend-geonames-rg.h"
@@ -415,7 +415,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     {
 
         const QPersistentModelIndex itemIndex = selectedItems.at(i);
-        GPSImageItem* selectedItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+        KipiImageItem* const selectedItem = d->imageModel->itemFromIndex(itemIndex);
 
         const GPSDataContainer gpsData = selectedItem->gpsData();
          if (!gpsData.hasCoordinates())
@@ -530,7 +530,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
             QList<QList<TagData> > returnedTags = d->tagModel->addNewData(elements, resultedData);   
 
-            GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(currentImageIndex));
+            KipiImageItem* const currentItem = d->imageModel->itemFromIndex(currentImageIndex);
 
             GPSUndoCommand::UndoInfo undoInfo(currentImageIndex);
             undoInfo.readOldDataFromItem(currentItem);            
@@ -561,11 +561,6 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 {
     d->UIEnabled = state;
     updateUIState();
-}
-
-void GPSReverseGeocodingWidget::treeItemClicked( const QModelIndex& index)
-{
-
 }
 
 bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
@@ -810,7 +805,7 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
     for( int row=0; row<d->imageModel->rowCount(); ++row)
     {
 
-        GPSImageItem* currentItem = static_cast<GPSImageItem*>(d->imageModel->itemFromIndex(d->imageModel->index(row,0)));
+        KipiImageItem* const currentItem = d->imageModel->itemFromIndex(d->imageModel->index(row,0));
 
         QList<QList<TagData> > tagAddresses = currentItem->getTagList();
         if(!tagAddresses.isEmpty())

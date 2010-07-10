@@ -26,7 +26,7 @@
 
 // local includes
 
-#include "gpsimageitem.h"
+#include "kipiimageitem.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -43,8 +43,8 @@ public:
         {
         }
 
-        void readOldDataFromItem(GPSImageItem*);
-        void readNewDataFromItem(GPSImageItem*);
+        void readOldDataFromItem(const KipiImageItem* const imageItem);
+        void readNewDataFromItem(const KipiImageItem* const imageItem);
 
         QPersistentModelIndex modelIndex;
         GPSDataContainer dataBefore;

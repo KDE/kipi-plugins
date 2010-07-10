@@ -23,10 +23,6 @@
 
 #include <QDropEvent>
 
-// local includes
-
-#include "gpsimageitem.h"
-
 namespace KIPIGPSSyncPlugin
 {
 

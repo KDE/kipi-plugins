@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "gpslistviewcontextmenu.h"
 #include "gpslistviewcontextmenu.moc"
 
 // Qt includes:
@@ -45,9 +44,9 @@
 // Local includes.
 
 #include "gpsbookmarkowner.h"
-#include "gpsimageitem.h"
 #include "gpsundocommand.h"
 #include "gpssync_common.h"
+#include "kipiimageitem.h"
 
 namespace KIPIGPSSyncPlugin
 {
@@ -143,7 +142,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         bool removeUncertaintyAvailable = false;
         for (int i=0; i<nSelected; ++i)
         {
-            GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(selectedIndices.at(i)));
+            KipiImageItem* const gpsItem = imageModel->itemFromIndex(selectedIndices.at(i));
             if (gpsItem)
             {
                 const bool itemHasCoordinates = gpsItem->gpsData().getCoordinates().hasCoordinates();
@@ -217,7 +216,7 @@ bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* cons
     if (!currentIndex.isValid())
         return false;
 
-    GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(currentIndex));
+    KipiImageItem* const gpsItem = imageModel->itemFromIndex(currentIndex);
     if (gpsItem)
     {
         if (gpsInfo)
@@ -401,7 +400,7 @@ void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer g
     for (int i=0; i<nSelected; ++i)
     {
         const QModelIndex itemIndex = selectedIndices.at(i);
-        GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(itemIndex));
+        KipiImageItem* const gpsItem = imageModel->itemFromIndex(itemIndex);
         
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(gpsItem);
@@ -444,7 +443,7 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
     for (int i=0; i<nSelected; ++i)
     {
         const QModelIndex itemIndex = selectedIndices.at(i);
-        GPSImageItem* const gpsItem = static_cast<GPSImageItem*>(imageModel->itemFromIndex(itemIndex));
+        KipiImageItem* const gpsItem = imageModel->itemFromIndex(itemIndex);
 
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(gpsItem);

@@ -308,7 +308,7 @@ void GPSBookmarkModelHelper::snapItemsTo(const QModelIndex& targetIndex, const Q
     for (int i=0; i<snappedIndices.count(); ++i)
     {
         const QPersistentModelIndex itemIndex = snappedIndices.at(i);
-        GPSImageItem* const item = static_cast<GPSImageItem*>(d->kipiImageModel->itemFromIndex(itemIndex));
+        KipiImageItem* const item = d->kipiImageModel->itemFromIndex(itemIndex);
         
         GPSDataContainer newData;
         newData.setCoordinates(targetCoordinates);

@@ -59,7 +59,7 @@
 
 #include "gpsdataparser.h"
 #include "kipiimagemodel.h"
-#include "gpsimageitem.h"
+#include "kipiimageitem.h"
 #include "gpsundocommand.h"
 
 namespace KIPIGPSSyncPlugin
@@ -480,7 +480,7 @@ void GPSCorrelatorWidget::slotCorrelate()
     for (int i = 0; i<imageCount; ++i)
     {
         QPersistentModelIndex imageIndex = d->imageModel->index(i, 0);
-        GPSImageItem* const imageItem = reinterpret_cast<GPSImageItem*>(d->imageModel->itemFromIndex(imageIndex));
+        KipiImageItem* const imageItem = d->imageModel->itemFromIndex(imageIndex);
         if (!imageItem)
             continue;
 
@@ -514,7 +514,7 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
         if (!itemIndex.isValid())
             continue;
 
-        GPSImageItem* const imageItem = reinterpret_cast<GPSImageItem*>(d->imageModel->itemFromIndex(itemIndex));
+        KipiImageItem* const imageItem = d->imageModel->itemFromIndex(itemIndex);
         if (!imageItem)
             continue;
 
