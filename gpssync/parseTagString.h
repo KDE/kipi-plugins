@@ -24,7 +24,7 @@
 namespace KIPIGPSSyncPlugin
 {
 
-QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backendName)
+QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QString& backendName)
 {
 
     QString auxReturnedFormat = inputFormat;
@@ -42,87 +42,85 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
         int indexLBracket = returnedAddress.indexOf("}"); 
 
         QString humanTag = returnedAddress.mid(indexFBracket + 1, indexLBracket-indexFBracket-1);
-
         int indexFormatFBracket = auxReturnedFormat.indexOf("{");
         auxReturnedFormat.replace(indexFormatFBracket-1, humanTag.length()+3, "");
         bool dataAdded = false;      
-
-        kDebug()<<returnedAddress; 
+        QString result; 
  
-        if(backendName.compare(QString("OSM")) == 0)
+        if(backendName == QString("OSM"))
         {
 
-            if(humanTag.compare(QString("Country")) == 0)
+            if(humanTag == QString("Country"))
             {
                 if(!info.rgData[QString("country")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 9, info.rgData[QString("country")]);
+                    result = info.rgData[QString("country")];
                     returnedFormat.append("/{Country}");
                     dataAdded = true;
                 }
             }
-            else if(humanTag.compare(QString("County")) == 0)
+            else if(humanTag == QString("County"))
             {
                 if(!info.rgData[QString("county")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 8, info.rgData[QString("county")]);
+                    result = info.rgData[QString("county")];
                     returnedFormat.append("/{County}");
                     dataAdded = true;
                 }
             }    
-            else if(humanTag.compare(QString("City")) == 0)
+            else if(humanTag == QString("City"))
             {
                 if(!info.rgData[QString("city")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 6, info.rgData[QString("city")]);
+                    result = info.rgData[QString("city")];
                     returnedFormat.append("/{City}");
                     dataAdded = true;
                 }
             }
-            else if(humanTag.compare(QString("Street")) == 0)
+            else if(humanTag == QString("Street"))
             {
                 if(!info.rgData[QString("road")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 8, info.rgData[QString("road")]);
+                    result = info.rgData[QString("road")];
                     returnedFormat.append("/{Street}");
                     dataAdded = true;
                 }
             }
-            else if(humanTag.compare(QString("State")) == 0)
+            else if(humanTag == QString("State"))
             {
                 if(!info.rgData[QString("state")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 7, info.rgData[QString("state")]);
+                    result = info.rgData[QString("state")];
                     returnedFormat.append("/{State}");
                     dataAdded = true;
                 }
 
             }
-            else if(humanTag.compare(QString("Town")) == 0)
+            else if(humanTag == QString("Town"))
             {
                 if(!info.rgData[QString("town")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 6, info.rgData[QString("town")]);
+                    result = info.rgData[QString("town")];
                     returnedFormat.append("/{Town}");
                     dataAdded = true;
                 }
 
             }
-            else if(humanTag.compare(QString("Village")) == 0)
+            else if(humanTag == QString("Village"))
             {
                 if(!info.rgData[QString("village")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 9, info.rgData[QString("village")]);
+                    result = info.rgData[QString("village")];
                     returnedFormat.append("/{Village}");
                     dataAdded = true;
                 }
 
             }
-            else if(humanTag.compare(QString("Hamlet")) == 0)
+            else if(humanTag == QString("Hamlet"))
             {
                 if(!info.rgData[QString("hamlet")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 8, info.rgData[QString("hamlet")]);
+                    result = info.rgData[QString("hamlet")];
                     returnedFormat.append("/{Hamlet}");
                     dataAdded = true;
                 }
@@ -140,34 +138,34 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
 
         }
         
-        else if(backendName.compare(QString("GeonamesUS")) == 0)
+        else if(backendName == QString("GeonamesUS"))
         {
 
             if(humanTag.compare(QString("LAU2")) == 0)
             {
                 if(!info.rgData[QString("adminName2")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 6, info.rgData[QString("adminName2")]);
+                    result = info.rgData[QString("adminName2")];
                     returnedFormat.append("/{LAU2}");
                     dataAdded = true;
                 }
             }
 
-           else if(humanTag.compare(QString("LAU1")) == 0)
+           else if(humanTag == QString("LAU1"))
             {
                 if(!info.rgData[QString("adminName1")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 6, info.rgData[QString("adminName1")]);
+                    result = info.rgData[QString("adminName1")];
                     returnedFormat.append("/{LAU1}");
                     dataAdded = true;
                 }
             }
 
-            else if(humanTag.compare(QString("City")) == 0)
+            else if(humanTag == QString("City"))
             {
                 if(!info.rgData[QString("placeName")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 6, info.rgData[QString("placeName")]);
+                    result = info.rgData[QString("placeName")];
                     returnedFormat.append("/{City}");
                     dataAdded = true;
                 }
@@ -183,23 +181,23 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
             }
         }
 
-        else if(backendName.compare(QString("Geonames")) == 0)
+        else if(backendName == QString("Geonames"))
         {
             if(humanTag.compare(QString("Country")) == 0)
             {
                 if(!info.rgData[QString("countryName")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 9, info.rgData[QString("countryName")]);
+                    result = info.rgData[QString("countryName")];
                     returnedFormat.append("/{Country}");
                     dataAdded = true;
                 }
             }
 
-            else if(humanTag.compare(QString("Place")) == 0)
+            else if(humanTag == QString("Place"))
             {
                 if(!info.rgData[QString("name")].isEmpty())
                 {
-                    returnedAddress.replace(indexFBracket, 6, info.rgData[QString("name")]);
+                    result = info.rgData[QString("name")];
                     returnedFormat.append("/{Place}");
                     dataAdded = true;
                 }
@@ -219,6 +217,8 @@ QStringList makeTagString(const RGInfo& info, QString inputFormat, QString backe
         {
             returnedAddress.replace(indexFBracket-1, humanTag.length()+3, "");
         }
+        else
+            returnedAddress.replace(indexFBracket, humanTag.length()+2, result);
 
     } 
 

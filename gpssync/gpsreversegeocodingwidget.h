@@ -90,6 +90,7 @@ private Q_SLOTS:
     void slotReaddNewTags();
     void slotRegenerateNewTags();
     void slotAddAllAddressElementsToTag();
+    void slotAddSingleSpacer(QAction*);
 
 Q_SIGNALS:
 

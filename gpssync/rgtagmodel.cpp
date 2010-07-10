@@ -5,6 +5,7 @@
 #include "rgtagmodel.h"
 //KDE includes
 #include "kdebug.h"
+#include "klocale.h"
 
 //Qt includes
 #include <QtGui>
@@ -50,6 +51,15 @@ RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* cons
     d->tagModel = externalTagModel;
     d->rootTag = new TreeBranch();
     d->rootTag->type = TypeChild;  
+
+    I18N_NOOP("{Country}");
+    I18N_NOOP("{State}");
+    I18N_NOOP("{County}");
+    I18N_NOOP("{City}");
+    I18N_NOOP("{Town}");
+    I18N_NOOP("{Village}");
+    I18N_NOOP("{Hamlet}");
+    I18N_NOOP("{Street}");
 
  
     connect(d->tagModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
@@ -257,6 +267,8 @@ QPersistentModelIndex RGTagModel::addNewTags(const QModelIndex& parent, const QS
         return createIndex(parentBranch->spacerChildren.count()+parentBranch->newChildren.count()-1, 0, parentBranch->newChildren.last());
     }  
 
+
+    return QPersistentModelIndex();
 }
 
 QList<TagData> RGTagModel::getTagAddress()
@@ -400,7 +412,7 @@ QVariant RGTagModel::data(const QModelIndex& index, int role) const
     }
     else if((treeBranch->type == TypeSpacer) && (role == Qt::DisplayRole))
     {
-        return treeBranch->data;
+        return i18n(treeBranch->data.toUtf8());
     }
     else if((treeBranch->type == TypeSpacer) && (role == Qt::ForegroundRole))
     {
@@ -624,7 +636,10 @@ void RGTagModel::slotRowsAboutToBeMoved(const QModelIndex& sourceParent, int sou
 
 void RGTagModel::slotRowsAboutToBeRemoved(const QModelIndex& parent, int start, int end)
 {
-    TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(parent.internalPointer()) : d->rootTag;
+    
+    Q_UNUSED(parent);
+    Q_UNUSED(start);
+    Q_UNUSED(end);
 
 }
 

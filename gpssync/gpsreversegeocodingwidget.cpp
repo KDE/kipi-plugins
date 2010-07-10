@@ -185,16 +185,27 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->tagTreeView->setSelectionModel(d->tagSelectionModel);
 
     d->actionAddCountry = new KAction(i18n("Add country tag"), this);
+    //d->actionAddCountry->setData("{Country}");
     d->actionAddState = new KAction(i18n("Add state tag"), this);
+    //d->actionAddState->setData("{State}");
     d->actionAddCounty = new KAction(i18n("Add county tag"), this);
+    //d->actionAddCounty->setData("{County}");
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
+    d->actionAddCity->setData("{City}");
     d->actionAddTown = new KAction(i18n("Add town tag"), this);
+    d->actionAddTown->setData("{Town}");
     d->actionAddVillage = new KAction(i18n("Add village tag"), this);
+    d->actionAddVillage->setData("{Village}");
     d->actionAddHamlet = new KAction(i18n("Add hamlet tag"), this);
+    d->actionAddHamlet->setData("{Hamlet}");
     d->actionAddStreet = new KAction(i18n("Add street"), this);
+    d->actionAddStreet->setData("{Street}");
     d->actionAddPlace = new KAction(i18n("Add place"), this);
+    d->actionAddPlace->setData("{Place}");
     d->actionAddLAU2 = new KAction(i18n("Add Local Administrative Area 2"), this);
+    d->actionAddLAU2->setData("{LAU2}");
     d->actionAddLAU1 = new KAction(i18n("Add Local Administrative Area 1"), this);
+    d->actionAddLAU1->setData("{LAU1}");
     d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
     d->actionRemoveTag = new KAction(i18n("Remove selected tag"), this);
     d->actionRemoveAllNewTags = new KAction(i18n("Remove all new tags"), this);
@@ -772,6 +783,15 @@ void GPSReverseGeocodingWidget::slotAddLAU2()
 {
     const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
     d->tagModel->addSpacerTag(baseIndex, "{LAU2}");
+}
+
+
+void GPSReverseGeocodingWidget::slotAddSingleSpacer(QAction* triggeredAction)
+{
+    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    QString currentSpacerName = triggeredAction->data().toString();
+ 
+    d->tagModel->addSpacerTag(baseIndex, currentSpacerName);
 }
 
 void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
