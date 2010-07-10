@@ -296,7 +296,17 @@ void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
 
     const QByteArray headerState = group->readEntry("Header State", QByteArray());
     if (!headerState.isEmpty())
+    {
         header()->restoreState(headerState);
+    }
+    else
+    {
+        // by default, hide the advanced columns:
+        header()->setSectionHidden(KipiImageItem::ColumnHDOP, true);
+        header()->setSectionHidden(KipiImageItem::ColumnPDOP, true);
+        header()->setSectionHidden(KipiImageItem::ColumnFixType, true);
+        header()->setSectionHidden(KipiImageItem::ColumnNSatellites, true);
+    }
 }
 
 QItemSelectionModel* KipiImageList::getSelectionModel() const
