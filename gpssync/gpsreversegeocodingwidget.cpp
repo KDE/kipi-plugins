@@ -319,11 +319,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
             this, SLOT(updateUIState()));
 
-    connect(d->tagTreeView, SIGNAL( clicked(const QModelIndex &)), 
-            this, SLOT( treeItemClicked(const QModelIndex &)));    
-
     connect(d->actionAddCountry, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCountry()));
+
     connect(d->actionAddState, SIGNAL(triggered(bool)),
             this, SLOT(slotAddState()));
 
@@ -335,8 +333,10 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     
     connect(d->actionAddTown, SIGNAL(triggered(bool)),
             this, SLOT(slotAddTown()));
+
     connect(d->actionAddVillage, SIGNAL(triggered(bool)),
             this, SLOT(slotAddVillage()));
+
     connect(d->actionAddHamlet, SIGNAL(triggered(bool)),
             this, SLOT(slotAddHamlet()));
     
@@ -363,6 +363,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     connect(d->actionRemoveTag, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveTag()));
+
     connect(d->actionRemoveAllNewTags, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveAllNewTags()));
 
