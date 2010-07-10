@@ -297,7 +297,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
     }
     else if ((column==ColumnTags)&&(role==Qt::DisplayRole))
     {
-/*        if(!m_tagList.isEmpty())
+        if(!m_tagList.isEmpty())
         {
 
             QString myTagsList;
@@ -306,19 +306,19 @@ QVariant KipiImageItem::data(const int column, const int role) const
                 QString myTag;
                 for(int j=0; j<m_tagList[i].count(); ++j)
                 {
-                    myTag.append(QString("%1").arg("/") + m_tagList[i].at(j));
+                    myTag.append(QString("%1").arg("/") + m_tagList[i].at(j).tagName);
                     if(j == 0)
                         myTag.remove(0,1);
                 }
 
                 if(!myTagsList.isEmpty())
                     myTagsList.append(", ");
-                myTagsList.append(m_tagList.at(i));
+                myTagsList.append(myTag);
             }
 
-            return mytags;
+            return myTagsList;
         }
-  */    
+      
         return QString();
     }
 
