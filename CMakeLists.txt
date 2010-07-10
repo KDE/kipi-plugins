@@ -4,12 +4,12 @@ PROJECT(kipi-plugins)
 # Information to update before to release this package.
 
 # kipi-plugins version
-SET(KIPIPLUGINS_MAJOR_VERSION "1")
-SET(KIPIPLUGINS_MINOR_VERSION "5")
+SET(KIPIPLUGINS_MAJOR_VERSION "2")
+SET(KIPIPLUGINS_MINOR_VERSION "0")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2010-09-xx")
+SET (KIPIPLUGINS_RELEASE_DATE "2010-12-xx")
 
 # Suffix to add at end of version string. Usual values are:
 # "-svn"   : alpha code unstable from svn. Do not use in production
