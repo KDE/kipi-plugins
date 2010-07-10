@@ -73,24 +73,13 @@ private Q_SLOTS:
     void slotRGReady(QList<RGInfo>&);
     void slotHideOptions();
     void updateUIState();
-    void slotAddCountry();
-    void slotAddState();
-    void slotAddCounty(); 
-    void slotAddCity();
-    void slotAddTown();
-    void slotAddVillage();
-    void slotAddHamlet();
-    void slotAddStreet();
-    void slotAddPlace();
-    void slotAddLAU2();
-    void slotAddLAU1();
     void slotAddCustomizedSpacer();
     void slotRemoveTag();
     void slotRemoveAllNewTags();
     void slotReaddNewTags();
     void slotRegenerateNewTags();
     void slotAddAllAddressElementsToTag();
-    void slotAddSingleSpacer(QAction*);
+    void slotAddSingleSpacer();
 
 Q_SIGNALS:
 

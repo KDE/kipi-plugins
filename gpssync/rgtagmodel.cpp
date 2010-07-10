@@ -208,6 +208,7 @@ void RGTagModel::addSpacerTag(const QModelIndex& parent, const QString& spacerNa
 {
     TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(parent.internalPointer()) : d->rootTag;
 
+
     bool found = false;
     if(!parentBranch->spacerChildren.empty())
     {

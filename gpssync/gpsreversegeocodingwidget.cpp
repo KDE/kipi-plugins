@@ -138,6 +138,7 @@ public:
     KAction* actionAddAllAddressElementsToTag;
 
     GPSUndoCommand* undoCommand;
+    QPoint currentTagTreePoint;
 };
 
 
@@ -185,11 +186,11 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->tagTreeView->setSelectionModel(d->tagSelectionModel);
 
     d->actionAddCountry = new KAction(i18n("Add country tag"), this);
-    //d->actionAddCountry->setData("{Country}");
+    d->actionAddCountry->setData("{Country}");
     d->actionAddState = new KAction(i18n("Add state tag"), this);
-    //d->actionAddState->setData("{State}");
+    d->actionAddState->setData("{State}");
     d->actionAddCounty = new KAction(i18n("Add county tag"), this);
-    //d->actionAddCounty->setData("{County}");
+    d->actionAddCounty->setData("{County}");
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
     d->actionAddCity->setData("{City}");
     d->actionAddTown = new KAction(i18n("Add town tag"), this);
@@ -331,37 +332,37 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
             this, SLOT(updateUIState()));
 
     connect(d->actionAddCountry, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddCountry()));
+            this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddState, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddState()));
+            this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddCounty, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddCounty()));
+            this, SLOT(slotAddSingleSpacer()));
     
     connect(d->actionAddCity, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddCity()));
+            this, SLOT(slotAddSingleSpacer()));
     
     connect(d->actionAddTown, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddTown()));
+            this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddVillage, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddVillage()));
+            this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddHamlet, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddHamlet()));
+            this, SLOT(slotAddSingleSpacer()));
     
     connect(d->actionAddStreet, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddStreet()));
+            this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddPlace, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddPlace()));
+            this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddLAU2, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddLAU2()));
+            this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddLAU1, SIGNAL(triggered(bool)),
-            this, SLOT(slotAddLAU1()));
+            this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddCustomizedSpacer, SIGNAL(triggered(bool)),
             this, SLOT(slotAddCustomizedSpacer()));
@@ -496,7 +497,6 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
         if(!returnedRGList[i].rgData.empty())
         {
-            //QString result = makeTagString(returnedRGList[i], d->baseTagEdit->displayText(), d->currentBackend->backendName());
 
             kDebug()<<"RETURNED RG LIST:"<<returnedRGList[i].rgData;
 
@@ -579,10 +579,10 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 {
     if(watched == d->tagTreeView)
     {
-        if((event->type()==QEvent::ContextMenu) && d->UIEnabled) //d->tagSelectionModel->hasSelection() && d->UIEnabled)
+        if((event->type()==QEvent::ContextMenu) && d->UIEnabled) 
         {
             KMenu * const menu = new KMenu(d->tagTreeView);
-           
+ 
             int currentServiceIndex = d->serviceComboBox->currentIndex(); 
             d->currentBackend = d->backendRGList[currentServiceIndex];
             QString backendName = d->currentBackend->backendName();
@@ -622,6 +622,8 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionRemoveAllNewTags);
             }
             QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
+            d->currentTagTreePoint = e->pos();        
+        
             menu->exec(e->globalPos());
 
         }
@@ -719,77 +721,13 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
 
 }
 
-void GPSReverseGeocodingWidget::slotAddCountry()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{Country}");
-}
-
-void GPSReverseGeocodingWidget::slotAddState()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{State}");
-}
-
-void GPSReverseGeocodingWidget::slotAddCounty()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{County}");
-}
-
-void GPSReverseGeocodingWidget::slotAddCity()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{City}");
-}
-
-void GPSReverseGeocodingWidget::slotAddTown()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{Town}");
-}
-
-void GPSReverseGeocodingWidget::slotAddVillage()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{Village}");
-}
-
-void GPSReverseGeocodingWidget::slotAddHamlet()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{Hamlet}");
-}
-
-void GPSReverseGeocodingWidget::slotAddStreet()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{Street}");
-}
-
-void GPSReverseGeocodingWidget::slotAddPlace()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{Place}");
-}
-
-void GPSReverseGeocodingWidget::slotAddLAU1()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{LAU1}");
-}
-
-void GPSReverseGeocodingWidget::slotAddLAU2()
-{
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    d->tagModel->addSpacerTag(baseIndex, "{LAU2}");
-}
 
 
-void GPSReverseGeocodingWidget::slotAddSingleSpacer(QAction* triggeredAction)
+void GPSReverseGeocodingWidget::slotAddSingleSpacer()
 {
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
-    QString currentSpacerName = triggeredAction->data().toString();
+    const QModelIndex baseIndex = d->tagTreeView->indexAt(d->currentTagTreePoint);
+    QAction* senderAction = qobject_cast<QAction*>(sender());
+    QString currentSpacerName = senderAction->data().toString();
  
     d->tagModel->addSpacerTag(baseIndex, currentSpacerName);
 }
