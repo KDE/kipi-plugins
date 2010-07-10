@@ -86,7 +86,6 @@ class KipiImageItem
 public:
 
     static const int RoleCoordinates = Qt::UserRole + 1;
-    static const int RoleTags = Qt::UserRole + 2;
 
     static const int ColumnThumbnail = 0;
     static const int ColumnFilename = 1;
