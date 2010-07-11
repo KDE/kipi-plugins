@@ -138,7 +138,7 @@ public:
     KAction* actionAddLAU1;
     KAction* actionAddCustomizedSpacer;
     KAction* actionRemoveTag;
-    KAction* actionRemoveAllNewTags;
+    KAction* actionRemoveAllSpacers;
     KAction* actionAddAllAddressElementsToTag;
 
     GPSUndoCommand* undoCommand;
@@ -222,7 +222,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->actionAddLAU1->setData("{LAU1}");
     d->actionAddCustomizedSpacer = new KAction(i18n("Add new tag"), this);
     d->actionRemoveTag = new KAction(i18n("Remove selected tag"), this);
-    d->actionRemoveAllNewTags = new KAction(i18n("Remove all new tags"), this);
+    d->actionRemoveAllSpacers = new KAction(i18n("Remove all control tags below this tag"), this);
+    d->actionRemoveAllSpacers->setData("Remove all spacers");
     d->actionAddAllAddressElementsToTag = new KAction(i18n("Add all address elements"), this);
 
     QGridLayout* const gridLayout = new QGridLayout(d->UGridContainer);
@@ -401,8 +402,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->actionRemoveTag, SIGNAL(triggered(bool)),
             this, SLOT(slotRemoveTag()));
 
-    connect(d->actionRemoveAllNewTags, SIGNAL(triggered(bool)),
-            this, SLOT(slotRemoveAllNewTags()));
+    connect(d->actionRemoveAllSpacers, SIGNAL(triggered(bool)),
+            this, SLOT(slotRemoveAllSpacers()));
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
@@ -617,7 +618,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 
             const Type tagType = d->tagModel->getTagType(d->currentTagTreeIndex);
 
-            if(backendName.compare(QString("OSM")) == 0)
+            if( backendName == QString("OSM"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag);
                 menu->addSeparator(); 
@@ -634,13 +635,13 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionAddStreet);
                 menu->addAction(d->actionAddHouseNumber);
             }
-            else if(d->currentBackend->backendName() == QString("Geonames"))
+            else if( backendName == QString("Geonames"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag); 
                 menu->addAction(d->actionAddCountry);
                 menu->addAction(d->actionAddPlace);
             }
-            else if(d->currentBackend->backendName() == QString("GeonamesUS"))
+            else if( backendName == QString("GeonamesUS"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag); 
                 menu->addAction(d->actionAddLAU2);
@@ -654,7 +655,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
             {
                 menu->addAction(d->actionRemoveTag);
             }
-            menu->addAction(d->actionRemoveAllNewTags);
+            menu->addAction(d->actionRemoveAllSpacers);
  
             menu->exec(e->globalPos());
         }
@@ -758,7 +759,6 @@ void GPSReverseGeocodingWidget::slotAddSingleSpacer()
 {
     //    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
     QModelIndex baseIndex;    
- 
     if(!d->currentTagTreeIndex.isValid())
         baseIndex = d->currentTagTreeIndex;
     else
@@ -791,9 +791,17 @@ void GPSReverseGeocodingWidget::slotRemoveTag()
     d->tagModel->deleteTag(baseIndex);
 }
 
-void GPSReverseGeocodingWidget::slotRemoveAllNewTags()
+void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
 {
-    d->tagModel->deleteAllNewTags();
+    QString whatShouldRemove = QString("Spacers");
+    
+    QModelIndex baseIndex;    
+    if(!d->currentTagTreeIndex.isValid())
+        baseIndex = d->currentTagTreeIndex;
+    else
+        baseIndex = d->tagSelectionModel->currentIndex();
+    
+    d->tagModel->deleteAllSpacersOrNewTags(baseIndex, whatShouldRemove);
 }
 
 void GPSReverseGeocodingWidget::slotReaddNewTags()
@@ -811,10 +819,14 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
 }
 
+
 void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 {
-   slotRemoveAllNewTags();
-   slotReaddNewTags(); 
+    QString whatShouldRemove = QString("NewTags");
+    QModelIndex baseIndex = QModelIndex(); 
+    d->tagModel->deleteAllSpacersOrNewTags(baseIndex, whatShouldRemove);   
+    
+    slotReaddNewTags(); 
 }
 
 void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()

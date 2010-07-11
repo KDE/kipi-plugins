@@ -75,7 +75,7 @@ private Q_SLOTS:
     void updateUIState();
     void slotAddCustomizedSpacer();
     void slotRemoveTag();
-    void slotRemoveAllNewTags();
+    void slotRemoveAllSpacers();
     void slotReaddNewTags();
     void slotRegenerateNewTags();
     void slotAddAllAddressElementsToTag();

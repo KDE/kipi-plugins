@@ -737,37 +737,52 @@ void RGTagModel::deleteTag(const QModelIndex& index)
 
 }
 
-void RGTagModel::findAndDeleteNewTag(TreeBranch*& currentBranch, int currentRow)
+void RGTagModel::findAndDeleteSpacersOrNewTags( TreeBranch*& currentBranch, int currentRow, const QString& whatShouldRemove)
 {
     
     QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
 
     for(int i=0; i<currentBranch->spacerChildren.count(); ++i)
     {
-        findAndDeleteNewTag(currentBranch->spacerChildren[i], i);
+        findAndDeleteSpacersOrNewTags(currentBranch->spacerChildren[i], i, whatShouldRemove);
+        if(whatShouldRemove == QString("Spacers"))
+        {
+            QModelIndex spacerIndex = createIndex(i,0,currentBranch->spacerChildren[i]);
+            deleteTag(spacerIndex);
+            i--;
+        }
 
     }
     for(int i=0; i<currentBranch->newChildren.count(); ++i)
     {
-        findAndDeleteNewTag(currentBranch->newChildren[i], i+currentBranch->spacerChildren.count());
-        QModelIndex newTagIndex = createIndex(i+currentBranch->spacerChildren.count(),0,currentBranch->newChildren[i]);
-        deleteTag(newTagIndex);
-        i--;
+        findAndDeleteSpacersOrNewTags(currentBranch->newChildren[i], i+currentBranch->spacerChildren.count(), whatShouldRemove);
+        if(whatShouldRemove == QString("NewTags"))
+        {
+            QModelIndex newTagIndex = createIndex(i+currentBranch->spacerChildren.count(),0,currentBranch->newChildren[i]);
+            deleteTag(newTagIndex);
+            i--;
+        }
 
     }
     for(int i=0; i<currentBranch->oldChildren.count(); ++i)
     {
-        findAndDeleteNewTag(currentBranch->oldChildren[i], i+currentBranch->spacerChildren.count()+currentBranch->newChildren.count());
+        findAndDeleteSpacersOrNewTags(currentBranch->oldChildren[i], i+currentBranch->spacerChildren.count()+currentBranch->newChildren.count(), whatShouldRemove);
 
     } 
 
 } 
 
-void RGTagModel::deleteAllNewTags()
+void RGTagModel::deleteAllSpacersOrNewTags(const QModelIndex& currentIndex, const QString& whatShouldRemove)
 {
-
-    findAndDeleteNewTag(d->rootTag, 0);
-
+    if(whatShouldRemove == QString("Spacers"))
+    {
+        TreeBranch* currentBranch = currentIndex.isValid() ? static_cast<TreeBranch*>(currentIndex.internalPointer()) : d->rootTag;
+        findAndDeleteSpacersOrNewTags(currentBranch, 0, whatShouldRemove);
+    }
+    else if(whatShouldRemove == QString("NewTags"))
+    {
+        findAndDeleteSpacersOrNewTags(d->rootTag,0, whatShouldRemove);
+    }
 }
 
 //tagAddressElements contains address tag: Places,Spain,Barcelona

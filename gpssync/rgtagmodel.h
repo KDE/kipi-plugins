@@ -90,8 +90,8 @@ public:
     QList<QList<TagData> > addNewData(QStringList& , QStringList&);
     void addDataInTree(TreeBranch*&, int, QStringList&, QStringList&);
     QList<TagData> getTagAddress();
-    void findAndDeleteNewTag(TreeBranch*&, int );
-    void deleteAllNewTags();
+    void findAndDeleteSpacersOrNewTags(TreeBranch*&, int, const QString& );
+    void deleteAllSpacersOrNewTags(const QModelIndex& currentIndex, const QString& whatShouldRemove);
     void readdTag(TreeBranch*&, int, QList<TagData>, int);
     void readdNewTags(QList<QList<TagData> >&);
     void deleteTag(const QModelIndex&);
