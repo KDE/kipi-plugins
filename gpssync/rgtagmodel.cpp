@@ -260,12 +260,6 @@ QPersistentModelIndex RGTagModel::addNewTags(const QModelIndex& parent, const QS
     if(!found)
     {
 
-        if(parentBranch == d->rootTag)
-        {
-           // kDebug()<<"Before adding new child.";
-           // kDebug()<<"d->rootTag.rowCount="<<rowCount(parent);
-        }
-
         TreeBranch* newTagChild = new TreeBranch();
         newTagChild->parent = parentBranch;
         newTagChild->data = newTagName;
@@ -274,12 +268,6 @@ QPersistentModelIndex RGTagModel::addNewTags(const QModelIndex& parent, const QS
         beginInsertRows(parent, parentBranch->spacerChildren.count()+parentBranch->newChildren.count(), parentBranch->spacerChildren.count()+parentBranch->newChildren.count());
         parentBranch->newChildren.append(newTagChild);
         endInsertRows();
-
-        if(parentBranch == d->rootTag)
-        {
-          //  kDebug()<<"After adding new child.";
-          //  kDebug()<<"d->rootTag.rowCount="<<rowCount(parent);
-        }
 
         return createIndex(parentBranch->spacerChildren.count()+parentBranch->newChildren.count()-1, 0, parentBranch->newChildren.last());
     }  
@@ -645,7 +633,7 @@ void RGTagModel::slotModelReset()
 
 void RGTagModel::slotRowsAboutToBeInserted(const QModelIndex& parent, int start, int end )
 {
-    TreeBranch* const parentBranch = branchFromIndex(parent);  // parent.isValid() ? static_cast<TreeBranch*>(fromSourceIndex(parent).internalPointer()) : d->rootTag;
+    TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(fromSourceIndex(parent).internalPointer()) : d->rootTag;
 
     d->parent = fromSourceIndex(parent);
     d->startInsert = start;
@@ -670,7 +658,7 @@ void RGTagModel::slotRowsAboutToBeRemoved(const QModelIndex& parent, int start, 
 
 void RGTagModel::slotRowsInserted()
 {
-   TreeBranch* const parentBranch = branchFromIndex(d->parent);  //d->parent.isValid() ? static_cast<TreeBranch*>(d->parent.internalPointer()) : d->rootTag;
+   TreeBranch* const parentBranch = d->parent.isValid() ? static_cast<TreeBranch*>(d->parent.internalPointer()) : d->rootTag;
 
     for(int i=d->startInsert; i<d->endInsert; ++i)
     {

@@ -836,7 +836,11 @@ void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 
 void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
 {
-    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
+    QModelIndex baseIndex;    
+    if(!d->currentTagTreeIndex.isValid())
+        baseIndex = d->currentTagTreeIndex;
+    else
+        baseIndex = d->tagSelectionModel->currentIndex();
 
     QStringList spacerList;
 
