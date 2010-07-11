@@ -257,17 +257,18 @@ void TestRGTagModel::testModelSpacerTags()
     kDebug()<<"Worked before adding spacers";
 
     //insert spacer below ti21
-    tagModel->addSpacerTag(QModelIndex(), "New Country Name");
- //   tagModel->addNewTags(QModelIndex(), "New Tag");
+    tagModel->addSpacerTag(QModelIndex(), "{Country}");
+    tagModel->addNewTags(QModelIndex(), "New Tag");
 
     kDebug()<<"Addeded the spacers.";
-   
-    const QModelIndex index12 = tagModel->index(1,0);
-//    const QModelIndex index13 = tagModel->index(2,0);
-    
  
+    const QModelIndex index11 = tagModel->index(0,0);  
+    const QModelIndex index12 = tagModel->index(1,0);
+    const QModelIndex index13 = tagModel->index(2,0);
+    
+    kDebug()<<tagModel->data(index11, Qt::DisplayRole);
     kDebug()<<tagModel->data(index12, Qt::DisplayRole);
- //   kDebug()<<tagModel->data(index13, Qt::DisplayRole);
+    kDebug()<<tagModel->data(index13, Qt::DisplayRole);
 //    kDebug()<<tagModel->data(2,0,QModelIndex());
    
 
