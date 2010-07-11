@@ -681,14 +681,12 @@ void RGTagModel::deleteTag(const QModelIndex& index)
     if(!index.isValid())
         return;
 
-    kDebug()<<"Enters deleteTag";
 
     QModelIndex parentIndex = index.parent();
     int currentRow = index.row();
     TreeBranch* const parentBranch = parentIndex.isValid() ? static_cast<TreeBranch*>(parentIndex.internalPointer()) : d->rootTag;
     TreeBranch* const currentChildBranch = index.isValid() ? static_cast<TreeBranch*>(index.internalPointer()) : d->rootTag;
 
-    kDebug()<<"Steps over initialisations.";
 
     if(currentChildBranch->type == TypeChild)
         return;
@@ -698,26 +696,28 @@ void RGTagModel::deleteTag(const QModelIndex& index)
         
         beginMoveRows(index,0,currentChildBranch->spacerChildren.count()-1,parentIndex, parentBranch->spacerChildren.count()); 
        
-        kDebug()<<"Begin to remove a spacer.";    
  
         for(int j=0; j<currentChildBranch->spacerChildren.count(); ++j)
         {
             parentBranch->spacerChildren.append(currentChildBranch->spacerChildren[j]);
             parentBranch->spacerChildren.last()->parent = parentBranch;
+
+            QModelIndex testIndex = createIndex(parentBranch->spacerChildren.count()-1,0, parentBranch->spacerChildren.last());
+            kDebug()<<"Index="<<testIndex<<"  Parent of this index="<<testIndex.parent();
+            
+
         }
 
-        kDebug()<<"Finishes removing a spacer.";
-
         endMoveRows();
-
-        kDebug()<<"Removes the spacer.";
-
+        
         beginMoveRows(index, currentChildBranch->spacerChildren.count(), currentChildBranch->spacerChildren.count()+currentChildBranch->newChildren.count()-1, parentIndex, parentBranch->spacerChildren.count()+parentBranch->newChildren.count());
 
         for(int j=currentChildBranch->spacerChildren.count(); j<currentChildBranch->spacerChildren.count()+currentChildBranch->newChildren.count(); ++j)
         {
             parentBranch->newChildren.append(currentChildBranch->newChildren[j-currentChildBranch->spacerChildren.count()]);
             parentBranch->newChildren.last()->parent = parentBranch;
+
+
         }
 
         endMoveRows(); 
@@ -734,7 +734,6 @@ void RGTagModel::deleteTag(const QModelIndex& index)
 
     endRemoveRows();
 
-    kDebug()<<"Exists deleteTag";
 
 }
 
