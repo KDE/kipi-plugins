@@ -707,7 +707,7 @@ void RGTagModel::deleteTag(const QModelIndex& index)
             
 
         }
-
+        currentChildBranch->spacerChildren.clear();
         endMoveRows();
         
         beginMoveRows(index, currentChildBranch->spacerChildren.count(), currentChildBranch->spacerChildren.count()+currentChildBranch->newChildren.count()-1, parentIndex, parentBranch->spacerChildren.count()+parentBranch->newChildren.count());
@@ -719,10 +719,10 @@ void RGTagModel::deleteTag(const QModelIndex& index)
 
 
         }
-
-        endMoveRows(); 
-        currentChildBranch->spacerChildren.clear();
         currentChildBranch->newChildren.clear();
+        endMoveRows(); 
+        
+        
     }
 
     beginRemoveRows(parentIndex, currentRow, currentRow);
