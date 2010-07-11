@@ -612,6 +612,11 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
             d->currentBackend = d->backendRGList[currentServiceIndex];
             QString backendName = d->currentBackend->backendName();
 
+            QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
+            d->currentTagTreeIndex = d->tagTreeView->indexAt(e->pos());
+
+            const Type tagType = d->tagModel->getTagType(d->currentTagTreeIndex);
+
             if(backendName.compare(QString("OSM")) == 0)
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag);
@@ -628,36 +633,30 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionAddHamlet);
                 menu->addAction(d->actionAddStreet);
                 menu->addAction(d->actionAddHouseNumber);
-                menu->addSeparator();
-                menu->addAction(d->actionAddCustomizedSpacer);
-                menu->addSeparator();
-                menu->addAction(d->actionRemoveTag);
-                menu->addAction(d->actionRemoveAllNewTags);
             }
             else if(d->currentBackend->backendName() == QString("Geonames"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag); 
                 menu->addAction(d->actionAddCountry);
                 menu->addAction(d->actionAddPlace);
-                menu->addAction(d->actionAddCustomizedSpacer);
-                menu->addAction(d->actionRemoveTag);
-                menu->addAction(d->actionRemoveAllNewTags);
             }
             else if(d->currentBackend->backendName() == QString("GeonamesUS"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag); 
                 menu->addAction(d->actionAddLAU2);
                 menu->addAction(d->actionAddLAU1);
-                menu->addAction(d->actionAddCity); 
-                menu->addAction(d->actionAddCustomizedSpacer);
-                menu->addAction(d->actionRemoveTag);
-                menu->addAction(d->actionRemoveAllNewTags);
+                menu->addAction(d->actionAddCity);
             }
-            QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
-            d->currentTagTreeIndex = d->tagTreeView->indexAt(e->pos());       
+            menu->addSeparator();
+            menu->addAction(d->actionAddCustomizedSpacer);
+            menu->addSeparator();
+            if (tagType==TypeSpacer)
+            {
+                menu->addAction(d->actionRemoveTag);
+            }
+            menu->addAction(d->actionRemoveAllNewTags);
  
             menu->exec(e->globalPos());
-
         }
 
     }

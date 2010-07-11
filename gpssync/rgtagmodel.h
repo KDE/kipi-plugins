@@ -101,6 +101,7 @@ public:
     void addExternalTags(TreeBranch*, int);
     void addAllExternalTagsToTreeView();
     void addAllSpacersToTag(const QModelIndex, const QStringList, int);
+    Type getTagType(const QModelIndex& index) const;
 
 public Q_SLOTS:
     void slotSourceDataChanged(const QModelIndex& , const QModelIndex&); 

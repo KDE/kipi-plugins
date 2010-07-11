@@ -984,5 +984,11 @@ void RGTagModel::addAllSpacersToTag(const QModelIndex currentIndex,const QString
     addAllSpacersToTag(newIndex, spacerList, spacerListIndex+1);
 }
 
+Type RGTagModel::getTagType(const QModelIndex& index) const
+{
+    const TreeBranch* const treeBranch = index.isValid() ? static_cast<TreeBranch*>(index.internalPointer()) : d->rootTag;
+
+    return treeBranch->type;
+}
 
 }    //KIPIGPSSyncPlugin
