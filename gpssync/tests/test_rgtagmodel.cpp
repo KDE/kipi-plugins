@@ -242,6 +242,8 @@ void TestRGTagModel::testModelSpacerTags()
     // add some items before the tagModel is created:
     SimpleTreeModel::Item* const treeItem1 = treeModel->addItem();
     QPersistentModelIndex treeItem1Index = treeModel->itemToIndex(treeItem1);
+    treeItem1->data = QString("oldChildren");   
+ 
     SimpleTreeModel::Item* const treeItem11 = treeModel->addItem(treeItem1);
     QPersistentModelIndex treeItem11Index = treeModel->itemToIndex(treeItem11);
 
@@ -249,28 +251,26 @@ void TestRGTagModel::testModelSpacerTags()
     // TODO: make sure the ModelTest does not find any errors, currently it does find errors ;-)
     new ModelTest(tagModel, this);
 
-//     SimpleTreeModel::Item* const treeItem2 = treeModel->addItem();
-//     QPersistentModelIndex treeItem2Index = treeModel->itemToIndex(treeItem2);
-//     Q_ASSERT(tagModel->rowCount()==treeModel->rowCount());
-//     const QPersistentModelIndex tagItem2Index = tagModel->fromSourceIndex(treeItem2Index);
-// 
-//     // - and sub items:
-//     SimpleTreeModel::Item* const treeItem21 = treeModel->addItem(treeItem2);
-//     Q_ASSERT(tagItem2Index.isValid());
-// 
-//     Q_ASSERT(tagModel->rowCount(tagItem2Index)==treeModel->rowCount(treeItem2Index));
-
-
     const QPersistentModelIndex tagItem11Index = tagModel->fromSourceIndex(treeItem11Index);
     Q_ASSERT(tagItem11Index.isValid());
 
-//     QPersistentModelIndex treeItem21Index = treeModel->itemToIndex(treeItem21);
-//     const QPersistentModelIndex tagItem21Index = tagModel->fromSourceIndex(treeItem21Index);
-//     Q_ASSERT(tagItem21Index.isValid());
+    kDebug()<<"Worked before adding spacers";
 
     //insert spacer below ti21
-    tagModel->addSpacerTag(tagItem11Index, "New Country Name");
-    tagModel->addNewTags(tagItem11Index, "New Tag");
+    tagModel->addSpacerTag(QModelIndex(), "New Country Name");
+ //   tagModel->addNewTags(QModelIndex(), "New Tag");
+
+    kDebug()<<"Addeded the spacers.";
+   
+    const QModelIndex index12 = tagModel->index(1,0);
+//    const QModelIndex index13 = tagModel->index(2,0);
+    
+ 
+    kDebug()<<tagModel->data(index12, Qt::DisplayRole);
+ //   kDebug()<<tagModel->data(index13, Qt::DisplayRole);
+//    kDebug()<<tagModel->data(2,0,QModelIndex());
+   
+
  /*
     kDebug()<<"VERIFY IF NEW TAG EXISTS:";
     QModelIndex ti211Spacer = tagModel->index(0,0,ti21);

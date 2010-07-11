@@ -49,6 +49,7 @@ public:
             qDeleteAll(children);
         }
 
+        QString data;
     private:
         QList<QMap<int, QVariant> > dataColumns;
         Item* parent;
