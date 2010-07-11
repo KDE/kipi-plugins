@@ -185,15 +185,19 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
         if(!e.isNull())
         {
 
-            if( (e.tagName().compare(QString("country")) == 0) ||
-                (e.tagName().compare(QString("state")) == 0) ||
-                (e.tagName().compare(QString("county")) == 0) ||
-                (e.tagName().compare(QString("city")) == 0) ||
-                (e.tagName().compare(QString("town")) == 0) ||
-                (e.tagName().compare(QString("village")) == 0) ||
-                (e.tagName().compare(QString("hamlet")) == 0) ||
-                (e.tagName().compare(QString("place")) == 0) ||
-                (e.tagName().compare(QString("road")) == 0))     
+            if( (e.tagName() == QString("country")) ||
+                (e.tagName() == QString("state")) ||
+                (e.tagName() == QString("state_district")) ||
+                (e.tagName() == QString("county")) ||
+                (e.tagName() == QString("city")) ||
+                (e.tagName() == QString("city_district")) ||
+                (e.tagName() == QString("suburb")) ||
+                (e.tagName() == QString("town"))  ||
+                (e.tagName() == QString("village")) ||
+                (e.tagName() == QString("hamlet")) ||
+                (e.tagName() == QString("place")) ||
+                (e.tagName() == QString("road")) ||
+                (e.tagName() == QString("house_number")))    
             {
             
             mappedData.insert(e.tagName(), e.text());

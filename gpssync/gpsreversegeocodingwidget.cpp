@@ -123,12 +123,16 @@ public:
     QItemSelectionModel* tagSelectionModel; 
     KAction* actionAddCountry;
     KAction* actionAddState;
+    KAction* actionAddStateDistrict;
     KAction* actionAddCounty;
     KAction* actionAddCity;
+    KAction* actionAddCityDistrict;
+    KAction* actionAddSuburb;
     KAction* actionAddTown;
     KAction* actionAddVillage;
     KAction* actionAddHamlet;
     KAction* actionAddStreet;
+    KAction* actionAddHouseNumber;
     KAction* actionAddPlace;
     KAction* actionAddLAU2;
     KAction* actionAddLAU1;
@@ -178,8 +182,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
         d->tagTreeView->setModel(d->tagModel);
 
 #ifdef GPSSYNC_MODELTEST
-         new ModelTest(d->externTagModel, d->tagTreeView);
-         new ModelTest(d->tagModel, d->tagTreeView);
+        // new ModelTest(d->externTagModel, d->tagTreeView);
+        // new ModelTest(d->tagModel, d->tagTreeView);
 #endif /* GPSSYNC_MODELTEST */
     }
 
@@ -190,10 +194,16 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->actionAddCountry->setData("{Country}");
     d->actionAddState = new KAction(i18n("Add state tag"), this);
     d->actionAddState->setData("{State}");
+    d->actionAddStateDistrict = new KAction(i18n("Add state district tag"), this);
+    d->actionAddStateDistrict->setData("{State district}");
     d->actionAddCounty = new KAction(i18n("Add county tag"), this);
     d->actionAddCounty->setData("{County}");
     d->actionAddCity = new KAction(i18n("Add city tag"), this);
     d->actionAddCity->setData("{City}");
+    d->actionAddCityDistrict = new KAction(i18n("Add city district tag"), this);
+    d->actionAddCityDistrict->setData("{City district}");
+    d->actionAddSuburb = new KAction(i18n("Add suburb tag"), this);
+    d->actionAddSuburb->setData("{Suburb}");
     d->actionAddTown = new KAction(i18n("Add town tag"), this);
     d->actionAddTown->setData("{Town}");
     d->actionAddVillage = new KAction(i18n("Add village tag"), this);
@@ -202,6 +212,8 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->actionAddHamlet->setData("{Hamlet}");
     d->actionAddStreet = new KAction(i18n("Add street"), this);
     d->actionAddStreet->setData("{Street}");
+    d->actionAddHouseNumber = new KAction(i18n("Add house number tag"), this);
+    d->actionAddHouseNumber->setData("{House number}");
     d->actionAddPlace = new KAction(i18n("Add place"), this);
     d->actionAddPlace->setData("{Place}");
     d->actionAddLAU2 = new KAction(i18n("Add Local Administrative Area 2"), this);
@@ -338,12 +350,21 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->actionAddState, SIGNAL(triggered(bool)),
             this, SLOT(slotAddSingleSpacer()));
 
+    connect(d->actionAddStateDistrict, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddSingleSpacer()));
+
     connect(d->actionAddCounty, SIGNAL(triggered(bool)),
             this, SLOT(slotAddSingleSpacer()));
     
     connect(d->actionAddCity, SIGNAL(triggered(bool)),
             this, SLOT(slotAddSingleSpacer()));
     
+    connect(d->actionAddCityDistrict, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddSingleSpacer()));
+    
+    connect(d->actionAddSuburb, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddSingleSpacer()));
+
     connect(d->actionAddTown, SIGNAL(triggered(bool)),
             this, SLOT(slotAddSingleSpacer()));
 
@@ -351,6 +372,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
             this, SLOT(slotAddSingleSpacer()));
 
     connect(d->actionAddHamlet, SIGNAL(triggered(bool)),
+            this, SLOT(slotAddSingleSpacer()));
+    
+    connect(d->actionAddHouseNumber, SIGNAL(triggered(bool)),
             this, SLOT(slotAddSingleSpacer()));
     
     connect(d->actionAddStreet, SIGNAL(triggered(bool)),
@@ -509,7 +533,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             else if(d->currentBackend->backendName() == QString("GeonamesUS"))
                 addressElementsWantedFormat.append("/{LAU2}/{LAU1}/{City}");
             else     
-                addressElementsWantedFormat.append("/{Country}/{State}/{County}/{City}/{Town}/{Village}/{Hamlet}/{Street}");
+                addressElementsWantedFormat.append("/{Country}/{State}/{State district}/{County}/{City}/{City district}/{Suburb}/{Town}/{Village}/{Hamlet}/{Street}/{House number}");
             
 
             QStringList combinedResult = makeTagString(returnedRGList[i], addressElementsWantedFormat, d->currentBackend->backendName());
@@ -590,16 +614,23 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 
             if(backendName.compare(QString("OSM")) == 0)
             {
-                menu->addAction(d->actionAddAllAddressElementsToTag); 
+                menu->addAction(d->actionAddAllAddressElementsToTag);
+                menu->addSeparator(); 
                 menu->addAction(d->actionAddCountry);
                 menu->addAction(d->actionAddState);
+                menu->addAction(d->actionAddStateDistrict);
                 menu->addAction(d->actionAddCounty);
                 menu->addAction(d->actionAddCity);
+                menu->addAction(d->actionAddCityDistrict);
+                menu->addAction(d->actionAddSuburb);
                 menu->addAction(d->actionAddTown);
                 menu->addAction(d->actionAddVillage);   
                 menu->addAction(d->actionAddHamlet);
                 menu->addAction(d->actionAddStreet);
+                menu->addAction(d->actionAddHouseNumber);
+                menu->addSeparator();
                 menu->addAction(d->actionAddCustomizedSpacer);
+                menu->addSeparator();
                 menu->addAction(d->actionRemoveTag);
                 menu->addAction(d->actionRemoveAllNewTags);
             }
@@ -797,12 +828,16 @@ void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
     {
         spacerList.append(QString("{Country}"));
         spacerList.append(QString("{State}"));
+        spacerList.append(QString("{State district}"));
         spacerList.append(QString("{County}"));
         spacerList.append(QString("{City}"));
+        spacerList.append(QString("{City district}"));
+        spacerList.append(QString("{Suburb}"));
         spacerList.append(QString("{Town}"));
         spacerList.append(QString("{Village}"));
         spacerList.append(QString("{Hamlet}"));
         spacerList.append(QString("{Street}"));
+        spacerList.append(QString("{House number}"));
     }
     else if(d->currentBackend->backendName() == QString("Geonames"))
     {

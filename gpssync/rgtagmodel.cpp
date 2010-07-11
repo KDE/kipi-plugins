@@ -316,7 +316,7 @@ void RGTagModel::addDataInTree(TreeBranch*& currentBranch, int currentRow, QStri
 
                     //checks if adds the new tag as a sibling to a spacer, or as a child of a new tag
                     QPersistentModelIndex auxIndex;
-                    if((currentBranch->type != TypeSpacer) || ((currentBranch->type == TypeSpacer) && (currentBranch->data.indexOf("{") != 0)))
+                    if((currentBranch->type != TypeSpacer) || (((currentBranch->type == TypeSpacer) && (currentBranch->data.indexOf("{") != 0))) || (d->auxIndexList.isEmpty()))
                     {
                         //TODO: change function name from addNewTags to addNewTag
                         auxIndex = addNewTags(currentIndex, elementsData[j]);
@@ -681,40 +681,51 @@ void RGTagModel::deleteTag(const QModelIndex& index)
     if(!index.isValid())
         return;
 
+    kDebug()<<"Enters deleteTag";
+
     QModelIndex parentIndex = index.parent();
     int currentRow = index.row();
     TreeBranch* const parentBranch = parentIndex.isValid() ? static_cast<TreeBranch*>(parentIndex.internalPointer()) : d->rootTag;
     TreeBranch* const currentChildBranch = index.isValid() ? static_cast<TreeBranch*>(index.internalPointer()) : d->rootTag;
 
+    kDebug()<<"Steps over initialisations.";
+
     if(currentChildBranch->type == TypeChild)
         return;
 
-    beginRemoveRows(parentIndex, currentRow, currentRow);
-
     if(currentChildBranch->spacerChildren.count() > 0 || currentChildBranch->newChildren.count() > 0)
     {
+        
+        beginMoveRows(index,0,currentChildBranch->spacerChildren.count()-1,parentIndex, parentBranch->spacerChildren.count()); 
+       
+        kDebug()<<"Begin to remove a spacer.";    
+ 
         for(int j=0; j<currentChildBranch->spacerChildren.count(); ++j)
         {
-            beginMoveRows(index, j, j, parentIndex, parentBranch->spacerChildren.count());
             parentBranch->spacerChildren.append(currentChildBranch->spacerChildren[j]);
-            parentBranch->spacerChildren[parentBranch->spacerChildren.count()-1]->parent = parentBranch;
-            endMoveRows();
+            parentBranch->spacerChildren.last()->parent = parentBranch;
         }
+
+        kDebug()<<"Finishes removing a spacer.";
+
+        endMoveRows();
+
+        kDebug()<<"Removes the spacer.";
+
+        beginMoveRows(index, currentChildBranch->spacerChildren.count(), currentChildBranch->spacerChildren.count()+currentChildBranch->newChildren.count()-1, parentIndex, parentBranch->spacerChildren.count()+parentBranch->newChildren.count());
 
         for(int j=currentChildBranch->spacerChildren.count(); j<currentChildBranch->spacerChildren.count()+currentChildBranch->newChildren.count(); ++j)
         {
-        
-            beginMoveRows(index, j, j, parentIndex, parentBranch->spacerChildren.count()+parentBranch->newChildren.count());
             parentBranch->newChildren.append(currentChildBranch->newChildren[j-currentChildBranch->spacerChildren.count()]);
-            parentBranch->newChildren[parentBranch->newChildren.count()-1]->parent = parentBranch;
-            endMoveRows();
-
+            parentBranch->newChildren.last()->parent = parentBranch;
         }
-       
+
+        endMoveRows(); 
         currentChildBranch->spacerChildren.clear();
         currentChildBranch->newChildren.clear();
     }
 
+    beginRemoveRows(parentIndex, currentRow, currentRow);
     //TODO: is it good here?
     if(currentRow < parentBranch->spacerChildren.count())
         parentBranch->spacerChildren.removeAt(currentRow);
@@ -722,6 +733,8 @@ void RGTagModel::deleteTag(const QModelIndex& index)
         parentBranch->newChildren.removeAt(currentRow - parentBranch->spacerChildren.count());
 
     endRemoveRows();
+
+    kDebug()<<"Exists deleteTag";
 
 }
 

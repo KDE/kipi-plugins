@@ -59,6 +59,15 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                     dataAdded = true;
                 }
             }
+            else if(humanTag == QString("State district"))
+            {
+                if(!info.rgData[QString("state_district")].isEmpty())
+                {
+                    result = info.rgData[QString("state_district")];
+                    returnedFormat.append("/{State district}");
+                    dataAdded = true;
+                }
+            }    
             else if(humanTag == QString("County"))
             {
                 if(!info.rgData[QString("county")].isEmpty())
@@ -74,6 +83,24 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                 {
                     result = info.rgData[QString("city")];
                     returnedFormat.append("/{City}");
+                    dataAdded = true;
+                }
+            }
+            else if(humanTag == QString("City district"))
+            {
+                if(!info.rgData[QString("city_district")].isEmpty())
+                {
+                    result = info.rgData[QString("city_district")];
+                    returnedFormat.append("/{City district}");
+                    dataAdded = true;
+                }
+            }
+            else if(humanTag == QString("Suburb"))
+            {
+                if(!info.rgData[QString("suburb")].isEmpty())
+                {
+                    result = info.rgData[QString("suburb")];
+                    returnedFormat.append("/{Suburb}");
                     dataAdded = true;
                 }
             }
@@ -125,6 +152,15 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                     dataAdded = true;
                 }
 
+            }
+            else if(humanTag == QString("House number"))
+            {
+                if(!info.rgData[QString("house_number")].isEmpty())
+                {
+                    result = info.rgData[QString("house_number")];
+                    returnedFormat.append("/{House number}");
+                    dataAdded = true;
+                }
             }
             else
             {
