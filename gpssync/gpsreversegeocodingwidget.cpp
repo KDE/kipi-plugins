@@ -806,7 +806,7 @@ void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
     else
         baseIndex = d->tagSelectionModel->currentIndex();
     
-    d->tagModel->deleteAllSpacersOrNewTags(baseIndex, whatShouldRemove);
+    d->tagModel->deleteAllSpacersOrNewTags(baseIndex, TypeSpacer);
 }
 
 void GPSReverseGeocodingWidget::slotReaddNewTags()
@@ -827,9 +827,10 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
 void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 {
-    QString whatShouldRemove = QString("NewTags");
+    //QString whatShouldRemove = QString("NewTags");
+    
     QModelIndex baseIndex = QModelIndex(); 
-    d->tagModel->deleteAllSpacersOrNewTags(baseIndex, whatShouldRemove);   
+    d->tagModel->deleteAllSpacersOrNewTags(baseIndex, TypeNewChild);   
     
     slotReaddNewTags(); 
 }

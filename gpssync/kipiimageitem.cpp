@@ -306,7 +306,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
                 QString myTag;
                 for(int j=0; j<m_tagList[i].count(); ++j)
                 {
-                    myTag.append(QString("%1").arg("/") + m_tagList[i].at(j).tagName);
+                    myTag.append(QString("/") + m_tagList[i].at(j).tagName);
                     if(j == 0)
                         myTag.remove(0,1);
                 }
