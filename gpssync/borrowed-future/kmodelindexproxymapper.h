@@ -24,8 +24,6 @@
 
 #include <QObject>
 
-#include "kdeui_export.h"
-
 class QAbstractItemModel;
 class QModelIndex;
 class QItemSelection;
@@ -76,7 +74,7 @@ class KModelIndexProxyMapperPrivate;
  * @author Stephen Kelly <steveire@gmail.com>
  *
  */
-class KDEUI_EXPORT KModelIndexProxyMapper : public QObject
+class KModelIndexProxyMapper : public QObject
 {
   Q_OBJECT
 public:
