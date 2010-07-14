@@ -35,15 +35,16 @@ namespace KIPIGPSSyncPlugin
 class RGTagModelPrivate;
 
 
-class TreeBranch {
+class TreeBranch
+{
 public:
     TreeBranch()
-    : sourceIndex(),
-      parent(0),
-      data(),
-      type(),
-      oldChildren(),
-      spacerChildren()
+        : sourceIndex(),
+          parent(0),
+          data(),
+          type(),
+          oldChildren(),
+          spacerChildren()
     {
     }
 
@@ -61,13 +62,14 @@ public:
     QList<TreeBranch*> newChildren;
 };
 
-
+// ----------------------------------------------------------------------------------------
 
 class RGTagModel : public QAbstractItemModel
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
+
     RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent = 0);
     ~RGTagModel();
 
@@ -96,7 +98,7 @@ public:
     void readdNewTags(const QList<QList<TagData> >& tagAddressList);
     void deleteTag(const QModelIndex& currentIndex);
     QList<QList<TagData> > getSpacers();
-    void climbTreeAndGetSpacers(const TreeBranch* currentBranch); 
+    void climbTreeAndGetSpacers(const TreeBranch* currentBranch);
     QList<TagData> getSpacerAddress(TreeBranch* currentBranch);
     void addExternalTags(TreeBranch* parentBranch, int currentRow);
     void addAllExternalTagsToTreeView();
@@ -105,9 +107,10 @@ public:
     TreeBranch* branchFromIndex(const QModelIndex& index) const;
 
 public Q_SLOTS:
-    void slotSourceDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight); 
+
+    void slotSourceDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight);
     void slotSourceHeaderDataChanged(const Qt::Orientation orientation, int first, int last);
-    void slotColumnsAboutToBeInserted ( const QModelIndex & parent, int start, int end);     
+    void slotColumnsAboutToBeInserted ( const QModelIndex & parent, int start, int end);
     void slotColumnsAboutToBeMoved ( const QModelIndex & sourceParent, int sourceStart, int sourceEnd, const QModelIndex & destinationParent, int destinationColumn);
     void slotColumnsAboutToBeRemoved ( const QModelIndex & parent, int start, int end );
     void slotColumnsInserted ();
@@ -125,11 +128,10 @@ public Q_SLOTS:
     void slotRowsRemoved ();
 
 private:
-    RGTagModelPrivate* const d;
 
+    RGTagModelPrivate* const d;
 };
 
+} // namespace KIPIGPSSyncPlugin
 
-} //KIPIGPSSyncPlugin
-
-#endif
+#endif // RGTAGMODEL_H
