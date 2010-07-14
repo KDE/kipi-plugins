@@ -247,7 +247,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->mapWidget = new KMapIface::KMap(this);
     d->mapWidget->setEditModeAvailable(true);
-    KMapIface::MarkerModel* const kmapMarkerModel = new KMapIface::MarkerModel();
+    KMapIface::MarkerModel* const kmapMarkerModel = new KMapIface::MarkerModel(this);
     kmapMarkerModel->setMarkerModelHelper(d->mapModelHelper);
     d->mapWidget->setGroupedModel(kmapMarkerModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
