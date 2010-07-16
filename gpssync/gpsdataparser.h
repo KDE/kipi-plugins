@@ -197,6 +197,6 @@ Q_SIGNALS:
 
 } // namespace KIPIGPSSyncPlugin
 
-Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List);
+Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)
 
 #endif  // GPSDATAPARSER_H
