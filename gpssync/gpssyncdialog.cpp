@@ -79,7 +79,7 @@
 
 #include <libkmap/html_widget.h>
 #include <libkmap/kmap.h>
-#include <libkmap/markermodel.h>
+#include <libkmap/itemmarkertiler.h>
 
 // Local includes
 
@@ -247,8 +247,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->mapWidget = new KMapIface::KMap(this);
     d->mapWidget->setEditModeAvailable(true);
-    KMapIface::MarkerModel* const kmapMarkerModel = new KMapIface::MarkerModel(this);
-    kmapMarkerModel->setMarkerModelHelper(d->mapModelHelper);
+    KMapIface::ItemMarkerTiler* const kmapMarkerModel = new KMapIface::ItemMarkerTiler(d->mapModelHelper, this);
     d->mapWidget->setGroupedModel(kmapMarkerModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
     d->mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
