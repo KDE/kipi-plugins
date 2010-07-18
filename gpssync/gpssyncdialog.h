@@ -68,9 +68,16 @@ public:
     virtual QPixmap pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size);
     virtual QPersistentModelIndex bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey);
 
+    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMapIface::WMWGeoCoordinate& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
+
+    void addUngroupedModelHelper(KMapIface::WMWModelHelper* const newModelHelper);
+
 private Q_SLOTS:
 
     void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
+
+Q_SIGNALS:
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
 
@@ -111,7 +118,6 @@ private Q_SLOTS:
     void slotFileChangesSaved(int beginIndex, int endIndex);
     void slotProgressChanged(const int currentProgress);
     void slotProgressSetup(const int maxProgress, const QString& progressText);
-    void slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMapIface::WMWGeoCoordinate& coordinates);
     void slotGPSUndoCommand(GPSUndoCommand* undoCommand);
     void slotSortOptionTriggered(QAction* sortAction);
     void setCurrentTab(const int index);

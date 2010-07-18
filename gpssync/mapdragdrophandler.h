@@ -31,6 +31,8 @@
 namespace KIPIGPSSyncPlugin
 {
 
+class GPSSyncKMapModelHelper;
+
 class MapDragData : public QMimeData
 {
 Q_OBJECT
@@ -50,15 +52,16 @@ class MapDragDropHandler : public KMapIface::DragDropHandler
 Q_OBJECT
 
 public:
-    MapDragDropHandler(QAbstractItemModel* const pModel, QObject* const parent = 0);
+    MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKMapModelHelper* const parent);
     virtual ~MapDragDropHandler();
 
     virtual Qt::DropAction accepts(const QDropEvent* e);
-    virtual bool dropEvent(const QDropEvent* e, const KMapIface::WMWGeoCoordinate& dropCoordinates, QList<QPersistentModelIndex>* const droppedIndices);
+    virtual bool dropEvent(const QDropEvent* e, const KMapIface::WMWGeoCoordinate& dropCoordinates);
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices);
 
 private:
     QAbstractItemModel* const model;
+    GPSSyncKMapModelHelper* const gpsSyncKMapModelHelper;
 };
 
 } /* KIPIGPSSyncPlugin */

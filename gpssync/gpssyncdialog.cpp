@@ -203,8 +203,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     KipiImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
     d->selectionModel = new QItemSelectionModel(d->imageModel);
-    d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, this);
     d->mapModelHelper = new GPSSyncKMapModelHelper(d->imageModel, d->selectionModel, this);
+    d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
 
     d->undoStack = new KUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
@@ -251,6 +251,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->mapWidget->setGroupedModel(kmapMarkerModel);
     d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
     d->mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
+    d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
 
     QToolButton* const bookmarkVisibilityButton = new QToolButton(this);
     bookmarkVisibilityButton->setDefaultAction(d->actionBookmarkVisibility);
@@ -304,8 +305,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     KVBox* vboxTabBar = new KVBox(hboxMain);
     vboxTabBar->layout()->setSpacing(0);
     vboxTabBar->layout()->setMargin(0);
-   
-     d->tabBar = new QTabBar(vboxTabBar);
+
+    d->tabBar = new QTabBar(vboxTabBar);
     d->tabBar->setShape(QTabBar::RoundedEast);
 
     dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
@@ -340,6 +341,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->searchWidget = new SearchWidget(d->mapWidget, d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
     d->mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
+    d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
     d->stackedWidget->addWidget(d->searchWidget);
 
 
@@ -364,9 +366,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                         ki18n("Developer"),
                               "ping dot gabi at gmail dot com");
 
-    connect(d->mapWidget, SIGNAL(signalDisplayMarkersMoved(const QList<QPersistentModelIndex>&, const KMapIface::WMWGeoCoordinate&)),
-            this, SLOT(slotMapMarkersMoved(const QList<QPersistentModelIndex>&, const KMapIface::WMWGeoCoordinate&)));
-
     // TODO: this does not seem to work any more with klinkitemselectionmodel
     connect(d->selectionModel, SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(slotCurrentImageChanged(const QModelIndex&, const QModelIndex&)));
@@ -387,6 +386,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
             this, SLOT(slotProgressChanged(const int)));
 
     connect(d->correlatorWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
+
+    connect(d->mapModelHelper, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
     connect(d->rgWidget, SIGNAL(signalSetUIEnabled(const bool)),
@@ -736,6 +738,7 @@ public:
 
     KipiImageModel* model;
     QItemSelectionModel* selectionModel;
+    QList<KMapIface::WMWModelHelper*> ungroupedModelHelpers;
 };
 
 GPSSyncKMapModelHelper::GPSSyncKMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent)
@@ -819,6 +822,53 @@ QPersistentModelIndex GPSSyncKMapModelHelper::bestRepresentativeIndexFromList(co
 void GPSSyncKMapModelHelper::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
 {
     emit(signalThumbnailAvailableForIndex(index, pixmap));
+}
+
+void GPSSyncKMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMapIface::WMWGeoCoordinate& targetCoordinates, const QPersistentModelIndex& targetSnapIndex)
+{
+    if (targetSnapIndex.isValid())
+    {
+        const QAbstractItemModel* const targetModel = targetSnapIndex.model();
+        for (int i=0; i<d->ungroupedModelHelpers.count(); ++i)
+        {
+            KMapIface::WMWModelHelper* const ungroupedHelper = d->ungroupedModelHelpers.at(i);
+            if (ungroupedHelper->model()==targetModel)
+            {
+                QList<QModelIndex> iMovedMarkers;
+                for (int i=0; i<movedMarkers.count(); ++i)
+                {
+                    iMovedMarkers << movedMarkers.at(i);
+                }
+
+                ungroupedHelper->snapItemsTo(targetSnapIndex, iMovedMarkers);
+
+                return;
+            }
+        }
+    }
+
+    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
+
+    for (int i=0; i<movedMarkers.count(); ++i)
+    {
+        const QPersistentModelIndex itemIndex = movedMarkers.at(i);
+        KipiImageItem* const item = static_cast<KipiImageItem*>(d->model->itemFromIndex(itemIndex));
+
+        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
+        undoInfo.readOldDataFromItem(item);
+
+        GPSDataContainer newData;
+        newData.setCoordinates(targetCoordinates);
+        item->setGPSData(newData);
+
+        undoInfo.readNewDataFromItem(item);
+
+        undoCommand->addUndoInfo(undoInfo);
+    }
+    undoCommand->setText(i18np("1 image moved",
+                               "%1 images moved", movedMarkers.count()));
+
+    emit(signalUndoCommand(undoCommand));
 }
 
 void GPSSyncDialog::saveChanges(const bool closeAfterwards)
@@ -917,32 +967,6 @@ void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& prog
     d->progressCancelButton->setVisible(d->progressCancelObject!=0);
 }
 
-void GPSSyncDialog::slotMapMarkersMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMapIface::WMWGeoCoordinate& coordinates)
-{
-    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
-
-    for (int i=0; i<movedMarkers.count(); ++i)
-    {
-        const QPersistentModelIndex itemIndex = movedMarkers.at(i);
-        KipiImageItem* const item = static_cast<KipiImageItem*>(d->imageModel->itemFromIndex(itemIndex));
-        
-        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
-        undoInfo.readOldDataFromItem(item);
-
-        GPSDataContainer newData;
-        newData.setCoordinates(coordinates);
-        item->setGPSData(newData);
-
-        undoInfo.readNewDataFromItem(item);
-
-        undoCommand->addUndoInfo(undoInfo);
-    }
-    undoCommand->setText(i18np("1 image moved",
-                               "%1 images moved", movedMarkers.count()));
-
-    d->undoStack->push(undoCommand);
-}
-
 void GPSSyncDialog::slotGPSUndoCommand(GPSUndoCommand* undoCommand)
 {
     d->undoStack->push(undoCommand);
@@ -970,6 +994,11 @@ void GPSSyncDialog::slotProgressCancelButtonClicked()
 void GPSSyncDialog::slotBookmarkVisibilityToggled()
 {
     d->bookmarkOwner->bookmarkModelHelper()->setVisible(d->actionBookmarkVisibility->isChecked());
+}
+
+void GPSSyncKMapModelHelper::addUngroupedModelHelper(KMapIface::WMWModelHelper* const newModelHelper)
+{
+    d->ungroupedModelHelpers << newModelHelper;
 }
 
 }  // namespace KIPIGPSSyncPlugin

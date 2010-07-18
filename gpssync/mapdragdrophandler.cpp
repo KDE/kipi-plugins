@@ -23,11 +23,15 @@
 
 #include <QDropEvent>
 
+// local includes
+
+#include "gpssyncdialog.h"
+
 namespace KIPIGPSSyncPlugin
 {
 
-MapDragDropHandler::MapDragDropHandler(QAbstractItemModel* const pModel, QObject* const parent)
- : DragDropHandler(parent), model(pModel)
+MapDragDropHandler::MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKMapModelHelper* const parent)
+ : DragDropHandler(parent), model(pModel), gpsSyncKMapModelHelper(parent)
 {
 }
 
@@ -40,37 +44,23 @@ Qt::DropAction MapDragDropHandler::accepts(const QDropEvent* /*e*/)
     return Qt::CopyAction;
 }
 
-bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KMapIface::WMWGeoCoordinate& /*dropCoordinates*/, QList<QPersistentModelIndex>* const droppedIndices)
+bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KMapIface::WMWGeoCoordinate& dropCoordinates)
 {
     const MapDragData* const mimeData = qobject_cast<const MapDragData*>(e->mimeData());
     if (!mimeData)
         return false;
 
-    // the model is updated in GPSSyncDialog::slotMapMarkersMoved, which also creates the undo information
-//     for (int i=0; i<mimeData->draggedIndices.count(); ++i)
-//     {
-//         const QPersistentModelIndex itemIndex = mimeData->draggedIndices.at(i);
-//         if (!itemIndex.isValid())
-//             continue;
-// 
-//         model->setData(itemIndex, QVariant::fromValue(dropCoordinates), GPSImageItem::RoleCoordinates);
-//     }
-
-    // let the WorldMapWidget2 know which markers were dropped:
-    if (droppedIndices)
+    QList<QPersistentModelIndex> droppedIndices;
+    for (int i=0; i<mimeData->draggedIndices.count(); ++i)
     {
-        droppedIndices->clear();
-
-        for (int i=0; i<mimeData->draggedIndices.count(); ++i)
+        // TODO: correctly handle items with multiple columns
+        QModelIndex itemIndex = mimeData->draggedIndices.at(i);
+        if (itemIndex.column()==0)
         {
-            // TODO: correctly handle items with multiple columns
-            QModelIndex itemIndex = mimeData->draggedIndices.at(i);
-            if (itemIndex.column()==0)
-            {
-                *droppedIndices << itemIndex;
-            }
+            droppedIndices << itemIndex;
         }
     }
+    gpsSyncKMapModelHelper->onIndicesMoved(droppedIndices, dropCoordinates, QPersistentModelIndex());
 
     return true;
 }
