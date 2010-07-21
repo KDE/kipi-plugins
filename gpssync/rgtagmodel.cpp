@@ -35,7 +35,7 @@ class RGTagModelPrivate
 {
 public:
     RGTagModelPrivate()
-    : tagModel(),
+    : tagModel(0),
       rootTag(0),
       newTags(),
       auxTagList(),
@@ -44,21 +44,20 @@ public:
     {
     }
 
-    QAbstractItemModel* tagModel;
-    TreeBranch* rootTag;
+    QAbstractItemModel*          tagModel;
+    TreeBranch*                  rootTag;
 
-    QModelIndex parent;
-    int startInsert, endInsert;
-    int startRemove, endRemove;
+    QModelIndex                  parent;
+    int                          startInsert, endInsert;
+    int                          startRemove, endRemove;
 
-    QList<QList<TagData> > newTags;
+    QList<QList<TagData> >       newTags;
 
-    QStringList auxTagList;
-    QList<Type> auxTagTypeList;
+    QStringList                  auxTagList;
+    QList<Type>                  auxTagTypeList;
     QList<QPersistentModelIndex> auxIndexList;
 
-    QList<QList<TagData> > savedSpacerList;
-
+    QList<QList<TagData> >       savedSpacerList;
 };
 
 RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent)
@@ -68,14 +67,14 @@ RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* cons
     d->rootTag       = new TreeBranch();
     d->rootTag->type = TypeChild;
 
-    I18N_NOOP("{Country}");
-    I18N_NOOP("{State}");
-    I18N_NOOP("{County}");
-    I18N_NOOP("{City}");
-    I18N_NOOP("{Town}");
-    I18N_NOOP("{Village}");
-    I18N_NOOP("{Hamlet}");
-    I18N_NOOP("{Street}");
+    i18n("{Country}");
+    i18n("{State}");
+    i18n("{County}");
+    i18n("{City}");
+    i18n("{Town}");
+    i18n("{Village}");
+    i18n("{Hamlet}");
+    i18n("{Street}");
 
     connect(d->tagModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
             this, SLOT(slotSourceDataChanged(const QModelIndex&, const QModelIndex&)));
