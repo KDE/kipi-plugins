@@ -1,11 +1,13 @@
 [Desktop Entry]
 Comment=Yet another simple theme. Clean look with more image details.
+Comment[bg]=Още един приятен изглед. Опростен и изчистен, с повече подробности за снимките.
 Comment[ca]=Un altre tema senzill. Una aparença neta amb més detalls d'imatges.
 Comment[ca@valencia]=Un altre tema senzill. Una aparença neta amb més detalls d'imatges.
 Comment[da]=Endnu et simpelt tema. Rent udseende med flere billeddetaljer.
 Comment[en_GB]=Yet another simple theme. Clean look with more image details.
 Comment[es]=Otro tema simple. De aspecto sobrio con más detalles de imagen.
 Comment[et]=Veel üks lihtne teema. Puhas välimus täiendavate pildi üksikasjadega.
+Comment[eu]=Beste gai bakun bat. Itxura garbikoa irudien xehetasun gehiagorekin.
 Comment[gl]=Outro tema simple. Aspecto limpo con máis detalles das imaxes.
 Comment[is]=Enn eitt einfalt þema. Hreinlegt útlit með meiri myndupplýsingum.
 Comment[it]=Un altro tema semplice. Aspetto pulito con più dettagli nelle immagini.
@@ -22,6 +24,7 @@ Comment[zh_CN]=另一款简洁的主题。干净且富含更多图像细节。
 Comment[zh_TW]=還有另一個不錯的主題。非常簡單、清爽且顯示更多影像詳細資訊。
 Icon=
 Name=Details
+Name[bg]=Подробности
 Name[ca]=Detalls
 Name[ca@valencia]=Detalls
 Name[cs]=Podrobnosti
@@ -31,6 +34,7 @@ Name[en_GB]=Details
 Name[eo]=Detaloj
 Name[es]=Detalles
 Name[et]=Üksikasjad
+Name[eu]=Xehetasunak
 Name[ga]=Mionsonraí
 Name[gl]=Detalles
 Name[hu]=Részletek
@@ -52,6 +56,7 @@ Name[zh_TW]=詳細資訊
 
 [X-HTMLExport Author]
 Name=Gianluca Urgese
+Name[bg]=Gianluca Urgese
 Name[ca]=Gianluca Urgese
 Name[ca@valencia]=Gianluca Urgese
 Name[cs]=Gianluca Urgese
@@ -60,6 +65,7 @@ Name[de]=Gianluca Urgese
 Name[en_GB]=Gianluca Urgese
 Name[es]=Gianluca Urgese
 Name[et]=Gianluca Urgese
+Name[eu]=Gianluca Urgese
 Name[gl]=Gianluca Urgese
 Name[hu]=Gianluca Urgese
 Name[is]=Gianluca Urgese
@@ -79,12 +85,14 @@ Url=mailto:g.urgese@jaone.it
 
 [X-HTMLExport Preview]
 Name=Details screenshot
+Name[bg]=Снимка на екрана с подробностите
 Name[ca]=Captura de pantalla dels detalls
 Name[ca@valencia]=Captura de pantalla dels detalls
 Name[da]=Skærmbillede af detaljer
 Name[en_GB]=Details screenshot
 Name[es]=Pantallazo de los detalles
 Name[et]=Üksikasjade pilt
+Name[eu]=Pantailako argazkiaren xehetasunak
 Name[gl]=Detalles da captura de pantalla
 Name[is]=Skjámynd af ítarlegu
 Name[it]=Schermata di Dettagli
@@ -103,12 +111,14 @@ Url=preview.png
 
 [X-HTMLExport Parameter footer]
 Name=Footer information
+Name[bg]=Данни в долния колонтитул
 Name[ca]=Informació del peu
 Name[ca@valencia]=Informació del peu
 Name[da]=Information i sidefod
 Name[en_GB]=Footer information
 Name[es]=Información del pie de imagen
 Name[et]=Jaluse teave
+Name[eu]=Orri-oinaren informazioa
 Name[gl]=Información do rodapé
 Name[is]=Upplýsingar í neðanmáli
 Name[it]=Informazioni sul piè di pagina
