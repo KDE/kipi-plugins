@@ -178,8 +178,8 @@ PRINT_LIBRARY_STATUS("libjpeg" "http://www.ijg.org" "" JPEG_FOUND)
 PRINT_LIBRARY_STATUS("libtiff" "http://www.remotesensing.org/libtiff" "" TIFF_FOUND)
 PRINT_LIBRARY_STATUS("libpng" "http://www.libpng.org/pub/png/libpng.html" " (version >= 1.2.7)" PNG_FOUND)
 PRINT_LIBRARY_STATUS("libkipi" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KIPI_FOUND)
-PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 1.1.0)" KEXIV2_FOUND)
-PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= 1.1.0)" KDCRAW_FOUND)
+PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KEXIV2_FOUND)
+PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KDCRAW_FOUND)
 PRINT_LIBRARY_STATUS("libkmap" "http://www.digikam.org/sharedlibs" " (version >= 0.1.0)" KMAP_FOUND)
 
 # Optional shared libraries results.

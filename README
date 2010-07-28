@@ -61,8 +61,8 @@ libtiff         >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/lib
 libjpeg         >= 6b                           http://www.ijg.org
 libpng          >= 1.2.x                        http://www.libpng.org/pub/png/libpng.html
 libkipi         >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
-libkexiv2       >= 1.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
-libkdcraw       >= 1.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
+libkexiv2       >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
+libkdcraw       >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 libkmap         >= 0.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
