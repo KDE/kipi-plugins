@@ -9,6 +9,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 001 ==> IpodExport   : 240469 : IpodExport fails to build with glib >= 2.25.
 002 ==> MetadataEdit : 242624 : Wrong IPTC hyperlink.
 003 ==> General      : 239841 : I18n bug - missing extraction of messages in expoblending, flickrexport, metadataedit, ...
-004 ==> 
+004 ==> GPSSync      : 246266 : Search for location when adding geo coordinates.
+005 ==> 
+
 
 
