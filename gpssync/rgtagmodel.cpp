@@ -338,7 +338,6 @@ void RGTagModel::addDataInTree(TreeBranch* currentBranch, int currentRow,const Q
                     QPersistentModelIndex auxIndex;
                     if((currentBranch->type != TypeSpacer) || (((currentBranch->type == TypeSpacer) && (currentBranch->data.indexOf("{") != 0))) || (d->auxIndexList.isEmpty()))
                     {
-                        //TODO: change function name from addNewTags to addNewTag
                         auxIndex = addNewTag(currentIndex, elementsData[j]);
                     }
                     else

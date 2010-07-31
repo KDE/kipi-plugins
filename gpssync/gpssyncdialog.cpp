@@ -177,7 +177,7 @@ public:
     int splitterSize;
     GPSReverseGeocodingWidget *rgWidget;
     GPSBookmarkOwner         *bookmarkOwner;
-    QAction *actionBookmarkVisibility;
+    KAction *actionBookmarkVisibility;
     GPSListViewContextMenu* listViewContextMenu;
     SearchWidget* searchWidget;
 };
@@ -210,7 +210,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
 
     d->actionBookmarkVisibility = new KAction(this);
-    d->actionBookmarkVisibility->setIcon(SmallIcon("bookmarks"));
+    d->actionBookmarkVisibility->setIcon(KIcon("user-trash"));
     d->actionBookmarkVisibility->setToolTip(i18n("Display bookmarked positions on the map."));
     d->actionBookmarkVisibility->setCheckable(true);
 
