@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * Date        : 2010-06-28
- * Description : test for reading GPS related exif data using exiv2
+ * Description : test loading and saving of data in KipiImageItem
  *
  * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
  *
@@ -35,12 +35,13 @@
 
 // local includes
 
-#include "test_gpsexif.moc"
+#include "test_kipiimageitem.moc"
 #include "../gpsdatacontainer.h"
+#include "../kipiimageitem.h"
 
 using namespace KIPIGPSSyncPlugin;
 
-QTEST_KDEMAIN_CORE(TestGPSExif)
+QTEST_KDEMAIN_CORE(TestKipiImageItem)
 
 /**
  * @brief Return the path of the directory containing the test data
@@ -54,46 +55,42 @@ KUrl GetTestDataDirectory()
     return testDataDir;
 }
 
-bool LoadContainerFromFile(KUrl url, GPSDataContainer* const container)
+
+KipiImageItem* ItemFromFile(const KUrl& url)
 {
-    if (!container)
-        return false;
+    QScopedPointer<KipiImageItem> imageItem(new KipiImageItem(0, url, false));
 
-    QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(new KExiv2Iface::KExiv2);
-    if (!exiv2Iface->load(url.path()))
-        return false;
-
-    double alt, lat, lng;
-    bool hasCoordinates = exiv2Iface->getGPSInfo(alt, lat, lng);
-    if (hasCoordinates)
+    if (imageItem->loadImageData())
     {
-        container->setCoordinates(KMapIface::WMWGeoCoordinate(lat, lng, alt));
+        return imageItem.take();
     }
 
-    return true;
+    return 0;
 }
 
 /**
  * @brief Dummy test that does nothing
  */
-void TestGPSExif::testNoOp()
+void TestKipiImageItem::testNoOp()
 {
 }
 
-void TestGPSExif::testBasicLoading()
+void TestKipiImageItem::testBasicLoading()
 {
     const KUrl testDataDir = GetTestDataDirectory();
 
     {
         // test failure on not-existing file
-        GPSDataContainer container;
-        QVERIFY(!LoadContainerFromFile(KUrl(testDataDir, "not-existing"), &container));
+        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(KUrl(testDataDir, "not-existing")));
+        QVERIFY(!imageItem);
     }
 
     {
         // load a file without GPS info
-        GPSDataContainer container;
-        QVERIFY(LoadContainerFromFile(KUrl(testDataDir, "exiftest-nogps.png"), &container));
+        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(KUrl(testDataDir, "exiftest-nogps.png")));
+        QVERIFY(imageItem);
+
+        const GPSDataContainer container = imageItem->gpsData();
         QVERIFY(!container.hasCoordinates());
         QVERIFY(!container.hasAltitude());
         QVERIFY(!container.hasNSatellites());
@@ -104,8 +101,10 @@ void TestGPSExif::testBasicLoading()
 
     {
         // load a file with geo:5,15,25
-        GPSDataContainer container;
-        QVERIFY(LoadContainerFromFile(KUrl(testDataDir, "exiftest-5_15_25.jpg"), &container));
+        QScopedPointer<KipiImageItem> imageItem(ItemFromFile(KUrl(testDataDir, "exiftest-5_15_25.jpg")));
+        QVERIFY(imageItem);
+
+        const GPSDataContainer container = imageItem->gpsData();
         QVERIFY(container.hasCoordinates());
         QVERIFY(container.hasAltitude());
         QVERIFY(container.getCoordinates().lat()==5.0);

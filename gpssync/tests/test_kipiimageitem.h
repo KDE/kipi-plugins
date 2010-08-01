@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * Date        : 2010-06-28
- * Description : test for reading GPS related exif data using exiv2
+ * Description : test loading and saving of data in KipiImageItem
  *
  * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
  *
@@ -17,8 +17,8 @@
  *
  * ============================================================ */
 
-#ifndef TEST_GPSEXIF_H
-#define TEST_GPSEXIF_H
+#ifndef TEST_KIPIIMAGEITEM_H
+#define TEST_KIPIIMAGEITEM_H
 
 // Qt includes
 
@@ -28,7 +28,7 @@
 
 // local includes
 
-class TestGPSExif : public QObject
+class TestKipiImageItem : public QObject
 {
     Q_OBJECT
 
@@ -39,5 +39,5 @@ private Q_SLOTS:
 
 };
 
-#endif /* TEST_GPSEXIF_H */
+#endif /* TEST_KIPIIMAGEITEM_H */
 

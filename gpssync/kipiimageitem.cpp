@@ -65,23 +65,24 @@ KipiImageItem::~KipiImageItem()
 
 KExiv2Iface::KExiv2* KipiImageItem::getExiv2ForFile()
 {
-    KExiv2Iface::KExiv2* exiv2Iface = new KExiv2Iface::KExiv2;
+    QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(new KExiv2Iface::KExiv2);
     if (!exiv2Iface->load(m_url.path()))
     {
-        delete exiv2Iface;
         return 0;
     }
 
-    exiv2Iface->setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
-
-    // TODO: which version do we actually depend on now?
-#if KEXIV2_VERSION >= 0x000600
+    if (m_interface)
+    {
+        exiv2Iface->setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
         exiv2Iface->setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-#endif
+        exiv2Iface->setUseXMPSidecar(m_interface->hostSetting("UseXMPSidecar").toBool());
+    }
+    else
+    {
+        exiv2Iface->setUseXMPSidecar(false);
+    }
 
-    exiv2Iface->setUseXMPSidecar(false);
-
-    return exiv2Iface;
+    return exiv2Iface.take();
 }
 
 int getWarningLevelFromGPSDataContainer(const GPSDataContainer& data)
@@ -123,12 +124,18 @@ int getWarningLevelFromGPSDataContainer(const GPSDataContainer& data)
     return -1;
 }
 
-void KipiImageItem::loadImageData()
+bool KipiImageItem::loadImageData()
 {
     QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(getExiv2ForFile());
 
-    KIPI::ImageInfo info = m_interface->info(m_url);
-    m_dateTime = info.time(KIPI::FromInfo);
+    if (!exiv2Iface)
+        return false;
+
+    if (m_interface)
+    {
+        KIPI::ImageInfo info = m_interface->info(m_url);
+        m_dateTime = info.time(KIPI::FromInfo);
+    }
     if (!m_dateTime.isValid())
     {
         if (exiv2Iface)
@@ -160,12 +167,17 @@ void KipiImageItem::loadImageData()
         // could not load the coordinates from the interface,
         // read them directly from the file
 
-        double alt, lat, lng;
-        // TODO: handle missing altitude properly!
-        bool infoIsValid = exiv2Iface->getGPSInfo(alt, lat, lng);
-        if (infoIsValid)
+        double lat, lng;
+        bool haveCoordinates = exiv2Iface->getGPSLatitudeNumber(&lat) && exiv2Iface->getGPSLongitudeNumber(&lng);
+        if (haveCoordinates)
         {
-            m_gpsData.setCoordinates(KMapIface::WMWGeoCoordinate(lat, lng, alt));
+            KMapIface::WMWGeoCoordinate coordinates(lat, lng);
+            double alt;
+            if (exiv2Iface->getGPSAltitude(&alt))
+            {
+                coordinates.setAlt(alt);
+            }
+            m_gpsData.setCoordinates(coordinates);
         }
     }
 
@@ -174,6 +186,8 @@ void KipiImageItem::loadImageData()
     m_savedState = m_gpsData;
 
     emitDataChanged();
+
+    return true;
 }
 
 QVariant KipiImageItem::data(const int column, const int role) const
@@ -587,10 +601,10 @@ QString KipiImageItem::saveChanges()
         {
             // TODO: write the altitude only if we have it
             // TODO: write HDOP and #satellites
-            success = exiv2Iface->setGPSInfo(altitude, latitude, longitude);
+            success = exiv2Iface->setGPSInfo(shouldWriteAltitude ? altitude : 0, latitude, longitude);
             if (!success)
             {
-                returnString = i18n("Failed to add GPS info to image");
+                returnString = i18n("Failed to add GPS info to image.");
             }
         }
         if (shouldRemoveCoordinates)
@@ -625,16 +639,16 @@ QString KipiImageItem::saveChanges()
             bool succes = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
             if(!succes)
             {
-                returnString = i18n("Failed to save tags to file");
+                returnString = i18n("Failed to save tags to file.");
             }
             succes = exiv2Iface->setXmpTagStringSeq("Xmp.dc.subject", tagSeq, true);
             if(!succes)
             {
-                returnString = i18n("Failed to save tags to file");
+                returnString = i18n("Failed to save tags to file.");
             }
         }
-
     }
+
     if (success)
     {
         success = exiv2Iface->save(m_url.path());

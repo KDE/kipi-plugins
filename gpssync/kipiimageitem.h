@@ -128,15 +128,14 @@ public:
     void restoreRGTagList(const QList<QList<TagData> >&);
     void writeTagsToXmp(const bool writeXmpTags) { m_writeXmpTags = writeXmpTags; }
 
-    
     QString saveChanges();
+    bool loadImageData();
 
 protected:
     // these are only to be called by the KipiImageModel
     QVariant data(const int column, const int role) const;
     void setModel(KipiImageModel* const model);
     void emitDataChanged();
-    void loadImageData();
     KExiv2Iface::KExiv2* getExiv2ForFile();
 
 protected:

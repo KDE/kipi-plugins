@@ -33,16 +33,19 @@ TARGET_LINK_LIBRARIES(test_rgtagmodel
                       ${QT_QTGUI_LIBRARY}
                     )
 
-KDE4_ADD_EXECUTABLE(test_gpsexif
-                    test_gpsexif.cpp
+KDE4_ADD_EXECUTABLE(test_kipiimageitem
+                    test_kipiimageitem.cpp
+                    ../kipiimageitem.cpp
+                    ../kipiimagemodel.cpp
                    )
 
-TARGET_LINK_LIBRARIES(test_gpsexif
+TARGET_LINK_LIBRARIES(test_kipiimageitem
                       ${KDE4_KDECORE_LIBS}
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
                       ${KEXIV2_LIBRARIES}
                       ${KMAP_LIBRARIES}
+                      ${KIPI_LIBRARIES}
                      )
 
 ADD_TEST(test_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/test_gpxparsing)
