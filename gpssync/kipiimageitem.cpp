@@ -181,6 +181,51 @@ bool KipiImageItem::loadImageData()
         }
     }
 
+    if (exiv2Iface)
+    {
+        // read the remaining GPS information from the file:
+        const QByteArray speedRef = exiv2Iface->getExifTagData("Exif.GPSInfo.GPSSpeedRef");
+        bool success = !speedRef.isEmpty();
+        long num, den;
+        success&= exiv2Iface->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
+        success&=den!=0;
+        kDebug()<<success<<QString::fromUtf8(speedRef.constData())<<num<<den;
+        if (success)
+        {
+            const qreal speedInRef = qreal(num)/qreal(den);
+
+            qreal FactorToMetersPerSecond;
+            if (speedRef.startsWith('K'))
+            {
+                // km/h = 1000 * 3600
+                FactorToMetersPerSecond = 1.0/3.6;
+            }
+            else if (speedRef.startsWith('M'))
+            {
+                // TODO: someone please check that this is the 'right' mile
+                // miles/hour = 1609.344 meters / hour = 1609.344 meters / 3600 seconds
+                FactorToMetersPerSecond = 1.0 / (1609.344 / 3600.0);
+            }
+            else if (speedRef.startsWith('N'))
+            {
+                // speed is in knots.
+                // knot = one nautic mile / hour = 1852 meters / hour = 1852 meters / 3600 seconds
+                FactorToMetersPerSecond = 1.0 / (1852.0 / 3600.0);
+            }
+            else
+            {
+                success = false;
+            }
+
+            if (success)
+            {
+                const qreal speedInMetersPerSecond = speedInRef * FactorToMetersPerSecond;
+                m_gpsData.setSpeed(speedInMetersPerSecond);
+            }
+        }
+        
+    }
+
     // mark us as not-dirty, because the data was just loaded:
     m_dirty = false;
     m_savedState = m_gpsData;
@@ -602,6 +647,23 @@ QString KipiImageItem::saveChanges()
             // TODO: write the altitude only if we have it
             // TODO: write HDOP and #satellites
             success = exiv2Iface->setGPSInfo(shouldWriteAltitude ? altitude : 0, latitude, longitude);
+
+            // write all other GPS information here too
+            if (success && m_gpsData.hasSpeed())
+            {
+                success = exiv2Iface->setExifTagString("Exif.GPSInfo.GPSSpeedRef", "K");
+
+                if (success)
+                {
+                    const qreal speedInMetersPerSecond = m_gpsData.getSpeed();
+
+                    // km/h = 0.001 * m / ( s * 1/(60*60) ) = 3.6 * m/s
+                    const qreal speedInKilometersPerHour = 3.6 * speedInMetersPerSecond;
+                    success = exiv2Iface->setExifTagVariant("Exif.GPSInfo.GPSSpeed", QVariant(speedInKilometersPerHour), true);
+                    // TODO: XMP
+                }
+            }
+
             if (!success)
             {
                 returnString = i18n("Failed to add GPS info to image.");
