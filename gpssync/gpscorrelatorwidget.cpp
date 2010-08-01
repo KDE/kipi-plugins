@@ -534,6 +534,10 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
             {
                 newData.setFixType(itemCorrelation.fixType);
             }
+            if (itemCorrelation.speed>=0)
+            {
+                newData.setSpeed(itemCorrelation.speed);
+            }
 
             GPSUndoCommand::UndoInfo undoInfo(itemIndex);
             undoInfo.readOldDataFromItem(imageItem);

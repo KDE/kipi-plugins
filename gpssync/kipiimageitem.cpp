@@ -286,6 +286,13 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
         return KGlobal::locale()->formatNumber(m_gpsData.getNSatellites(), 0);
     }
+    else if ((column==ColumnSpeed)&&(role==Qt::DisplayRole))
+    {
+        if (!m_gpsData.hasSpeed())
+            return QString();
+
+        return KGlobal::locale()->formatNumber(m_gpsData.getSpeed());
+    }
     else if ((column==ColumnStatus)&&(role==Qt::DisplayRole))
     {
         if (m_dirty || m_tagListDirty)
@@ -366,6 +373,7 @@ void KipiImageItem::setHeaderData(KipiImageModel* const model)
     model->setHeaderData(ColumnPDOP, Qt::Horizontal, i18n("PDOP"), Qt::DisplayRole);
     model->setHeaderData(ColumnFixType, Qt::Horizontal, i18n("Fix type"), Qt::DisplayRole);
     model->setHeaderData(ColumnNSatellites, Qt::Horizontal, i18n("# satellites"), Qt::DisplayRole);
+    model->setHeaderData(ColumnSpeed, Qt::Horizontal, i18n("Speed"), Qt::DisplayRole);
     model->setHeaderData(ColumnStatus, Qt::Horizontal, i18n("Status"), Qt::DisplayRole);
     model->setHeaderData(ColumnTags, Qt::Horizontal, i18n("Tags"), Qt::DisplayRole);
 }
@@ -484,6 +492,17 @@ bool KipiImageItem::lessThan(const KipiImageItem* const otherItem, const int col
             return true;
 
         return m_gpsData.getFixType() < otherItem->m_gpsData.getFixType();
+    }
+
+    case ColumnSpeed:
+    {
+        if (!m_gpsData.hasSpeed())
+            return false;
+
+        if (!otherItem->m_gpsData.hasSpeed())
+            return true;
+
+        return m_gpsData.getSpeed() < otherItem->m_gpsData.getSpeed();
     }
 
     case ColumnLatitude:

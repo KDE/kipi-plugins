@@ -100,8 +100,9 @@ public:
     static const int ColumnPDOP = 10;
     static const int ColumnFixType = 11;
     static const int ColumnNSatellites = 12;
+    static const int ColumnSpeed = 13;
 
-    static const int ColumnGPSImageItemCount = 13;
+    static const int ColumnGPSImageItemCount = 14;
 
     KipiImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
     virtual ~KipiImageItem();

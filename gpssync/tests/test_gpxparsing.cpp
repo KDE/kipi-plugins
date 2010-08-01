@@ -181,6 +181,7 @@ void TestGPXParsing::testFileLoading()
     QCOMPARE(myCorrelatedItems.first().coordinates, KMapIface::WMWGeoCoordinate::fromGeoUrl("geo:18,7,0"));
     QCOMPARE(myCorrelatedItems.first().nSatellites, 3);
     QCOMPARE(myCorrelatedItems.first().hDop, 2.5);
+    QCOMPARE(myCorrelatedItems.first().speed, 3.14);
 }
 
 /**

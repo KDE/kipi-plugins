@@ -66,7 +66,8 @@ public:
           nSatellites(-1),
           hDop(-1),
           pDop(-1),
-          fixType(-1)
+          fixType(-1),
+          speed(-1)
         {
         }
 
@@ -76,6 +77,7 @@ public:
         qreal hDop;
         qreal pDop;
         int fixType;
+        qreal speed;
 
         static bool EarlierThan(const GPXDataPoint& a, const GPXDataPoint& b);
 
@@ -92,6 +94,7 @@ public:
           hDop(-1),
           pDop(-1),
           fixType(-1),
+          speed(-1),
           flags(),
           coordinates()
         {
@@ -105,6 +108,7 @@ public:
         qreal hDop;
         qreal pDop;
         int fixType;
+        qreal speed;
         GPXFlags flags;
         KMapIface::WMWGeoCoordinate coordinates;
     };

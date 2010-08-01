@@ -49,6 +49,7 @@
                 <sat>3</sat>
                 <sym>Dot</sym>
                 <hdop>2.5</hdop>
+                <speed>3.14</speed>
         </trkpt>
 
         <trkpt lat="14.00" lon="0.00">

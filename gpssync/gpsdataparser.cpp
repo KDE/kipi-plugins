@@ -367,6 +367,7 @@ void GPSDataParserThread::run()
                 correlatedData.hDop = dataPoint.hDop;
                 correlatedData.pDop = dataPoint.pDop;
                 correlatedData.fixType = dataPoint.fixType;
+                correlatedData.speed = dataPoint.speed;
             }
         }
         else
@@ -547,6 +548,15 @@ bool GPXFileReader::endElement(const QString& namespaceURI, const QString& local
         if (haveAltitude)
         {
             currentDataPoint.coordinates.setAlt(alt);
+        }
+    }
+    else if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt/gpx:speed")
+    {
+        bool haveSpeed = false;
+        const qreal speed = eText.toDouble(&haveSpeed);
+        if (haveSpeed)
+        {
+            currentDataPoint.speed = speed;
         }
     }
 

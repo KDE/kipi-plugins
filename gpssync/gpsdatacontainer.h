@@ -37,7 +37,8 @@ public:
       m_nSatellites(-1),
       m_hDop(-1),
       m_pDop(-1),
-      m_fixType(-1)
+      m_fixType(-1),
+      m_speed(0)
     {
     }
 
@@ -48,7 +49,8 @@ public:
         HasNSatellites = 8,
         HasHDop = 16,
         HasPDop = 32,
-        HasFixType = 64
+        HasFixType = 64,
+        HasSpeed = 128
     };
     Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
 
@@ -60,6 +62,7 @@ private:
     qreal m_hDop;
     qreal m_pDop;
     int m_fixType;
+    qreal m_speed;
 
 public:
 
@@ -97,6 +100,12 @@ public:
         if (hasFixType())
         {
             if (m_fixType!=b.m_fixType)
+                return false;
+        }
+
+        if (hasSpeed())
+        {
+            if (m_speed!=b.m_speed)
                 return false;
         }
 
@@ -267,6 +276,34 @@ public:
         return m_fixType;
     }
 
+    /* speed */
+
+    /**
+     * @brief Return the speed in m/s
+     */
+    inline qreal getSpeed() const
+    {
+        return m_speed;
+    }
+
+    inline bool hasSpeed() const
+    {
+        return m_hasFlags.testFlag(HasSpeed);
+    }
+
+    /**
+     * @brief Set the speed in m/s
+     */
+    inline void setSpeed(const qreal speed)
+    {
+        m_hasFlags|= HasSpeed;
+        m_speed = speed;
+    }
+
+    inline void clearSpeed()
+    {
+        m_hasFlags&=~HasSpeed;
+    }
 };
 
 } /* KIPIGPSSyncPlugin */
