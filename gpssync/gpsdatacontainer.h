@@ -125,7 +125,7 @@ public:
 
     inline void clearNonCoordinates()
     {
-        m_hasFlags&= ~(HasNSatellites | HasHDop | HasPDop | HasFixType);
+        m_hasFlags&= ~(HasNSatellites | HasHDop | HasPDop | HasFixType | HasSpeed);
     }
 
     /* coordinates */

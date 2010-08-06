@@ -72,6 +72,7 @@ public:
     KAction          *actionRemoveCoordinates;
     KAction          *actionRemoveAltitude;
     KAction          *actionRemoveUncertainty;
+    KAction          *actionRemoveSpeed;
 
     GPSBookmarkOwner *bookmarkOwner;
 
@@ -90,6 +91,7 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
     d->actionRemoveCoordinates = new KAction(i18n("Remove coordinates"), this);
     d->actionRemoveAltitude = new KAction(i18n("Remove altitude"), this);
     d->actionRemoveUncertainty = new KAction(i18n("Remove uncertainty"), this);
+    d->actionRemoveSpeed = new KAction(i18n("Remove speed"), this);
 
     connect(d->actionCopy, SIGNAL(triggered()),
             this, SLOT(copyActionTriggered()));
@@ -105,6 +107,9 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
 
     connect(d->actionRemoveUncertainty, SIGNAL(triggered()),
             this, SLOT(slotRemoveUncertainty()));
+
+    connect(d->actionRemoveSpeed, SIGNAL(triggered()),
+            this, SLOT(slotRemoveSpeed()));
 
     if (bookmarkOwner)
     {
@@ -140,6 +145,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         bool removeAltitudeAvailable = false;
         bool removeCoordinatesAvailable = false;
         bool removeUncertaintyAvailable = false;
+        bool removeSpeedAvailable = false;
         for (int i=0; i<nSelected; ++i)
         {
             KipiImageItem* const gpsItem = imageModel->itemFromIndex(selectedIndices.at(i));
@@ -150,6 +156,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
                 removeCoordinatesAvailable|= itemHasCoordinates;
                 removeAltitudeAvailable|= gpsItem->gpsData().getCoordinates().hasAltitude();
                 removeUncertaintyAvailable|= gpsItem->gpsData().hasNSatellites() | gpsItem->gpsData().hasHDop();
+                removeSpeedAvailable|= gpsItem->gpsData().hasSpeed();
             }
         }
 
@@ -157,6 +164,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         d->actionRemoveAltitude->setEnabled(removeAltitudeAvailable);
         d->actionRemoveCoordinates->setEnabled(removeCoordinatesAvailable);
         d->actionRemoveUncertainty->setEnabled(removeUncertaintyAvailable);
+        d->actionRemoveSpeed->setEnabled(removeSpeedAvailable);
         if (d->bookmarkOwner)
         {
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
@@ -184,6 +192,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         menu->addAction(d->actionRemoveCoordinates);
         menu->addAction(d->actionRemoveAltitude);
         menu->addAction(d->actionRemoveUncertainty);
+        menu->addAction(d->actionRemoveSpeed);
         if (d->actionBookmark)
         {
             menu->addSeparator();
@@ -448,7 +457,7 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
         GPSUndoCommand::UndoInfo undoInfo(itemIndex);
         undoInfo.readOldDataFromItem(gpsItem);
 
-        GPSDataContainer newGPSData;
+        GPSDataContainer newGPSData = gpsItem->gpsData();
 
         bool didSomething = false;
         if (flagsToClear.testFlag(GPSDataContainer::HasCoordinates))
@@ -481,6 +490,14 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
             {
                 didSomething = true;
                 newGPSData.clearHDop();
+            }
+        }
+        if (flagsToClear.testFlag(GPSDataContainer::HasSpeed))
+        {
+            if (newGPSData.hasSpeed())
+            {
+                didSomething = true;
+                newGPSData.clearSpeed();
             }
         }
         if (didSomething)
@@ -520,6 +537,11 @@ void GPSListViewContextMenu::slotRemoveUncertainty()
 void GPSListViewContextMenu::setEnabled(const bool state)
 {
     d->enabled = state;
+}
+
+void GPSListViewContextMenu::slotRemoveSpeed()
+{
+    removeInformationFromSelectedImages(GPSDataContainer::HasSpeed, i18n("Remove speed"));
 }
 
 } // namespace KIPIGPSSyncPlugin

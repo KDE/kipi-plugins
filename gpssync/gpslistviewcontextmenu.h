@@ -68,6 +68,7 @@ private Q_SLOTS:
     void slotRemoveCoordinates();
     void slotRemoveAltitude();
     void slotRemoveUncertainty();
+    void slotRemoveSpeed();
 
 Q_SIGNALS:
     void signalUndoCommand(GPSUndoCommand* undoCommand);
