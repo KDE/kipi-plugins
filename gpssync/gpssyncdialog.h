@@ -110,7 +110,6 @@ private:
 
 private Q_SLOTS:
 
-    void slotCurrentImageChanged(const QModelIndex& current, const QModelIndex& previous);
     void slotImageActivated(const QModelIndex& index);
     void slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
     void slotSetUIEnabled(const bool enabledState);

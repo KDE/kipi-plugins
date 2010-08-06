@@ -90,7 +90,6 @@
 #include "mapdragdrophandler.h"
 #include "kipiimagelist.h"
 #include "gpsimagelistdragdrophandler.h"
-#include "previewmanager.h"
 #include "gpssettingswidget.h"
 #include "gpscorrelatorwidget.h"
 #include "gpsundocommand.h"
@@ -99,6 +98,7 @@
 #include "gpslistviewcontextmenu.h"
 #include "searchwidget.h"
 #include "backend-rg.h"
+#include "gpsimagedetails.h"
 
 #ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>
@@ -153,7 +153,7 @@ public:
     QSplitter                *HSplitter;
     KMapIface::KMap               *mapWidget;
     KipiImageList            *treeView;
-    KIPIPlugins::PreviewManager *previewManager;
+    GPSImageDetails          *detailsWidget;
     GPSSettingsWidget        *settingsWidget;
     GPSCorrelatorWidget      *correlatorWidget;
     GPSSyncKMapModelHelper *mapModelHelper;
@@ -312,7 +312,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
 
 
-    d->tabBar->addTab("Image viewer");
+    d->tabBar->addTab("Details");
     d->tabBar->addTab("GPS Correlator");
     d->tabBar->addTab("Settings");
     d->tabBar->addTab("Undo/Redo");
@@ -321,11 +321,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->tabBar->installEventFilter(this);
 
-    d->previewManager = new KIPIPlugins::PreviewManager(d->stackedWidget);
-    // TODO: why is the minimum size hardcoded to 400x300???
-
-    d->previewManager->setMinimumSize(QSize(200, 200));
-    d->stackedWidget->addWidget(d->previewManager);
+    d->detailsWidget = new GPSImageDetails(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
+    d->stackedWidget->addWidget(d->detailsWidget);
 
     d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
     d->stackedWidget->addWidget(d->correlatorWidget);
@@ -365,10 +362,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->about->addAuthor(ki18n("Gabriel Voicu"),
                         ki18n("Developer"),
                               "ping dot gabi at gmail dot com");
-
-    // TODO: this does not seem to work any more with klinkitemselectionmodel
-    connect(d->selectionModel, SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-            this, SLOT(slotCurrentImageChanged(const QModelIndex&, const QModelIndex&)));
 
     connect(d->treeView, SIGNAL(signalImageActivated(const QModelIndex&)),
             this, SLOT(slotImageActivated(const QModelIndex&)));
@@ -666,27 +659,10 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
-void GPSSyncDialog::slotCurrentImageChanged(const QModelIndex& current, const QModelIndex& previous)
-{
-    // TODO: is this necessary? we can just use the slotImageActivated instead...
-    return;
-
-
-    Q_UNUSED(previous);
-
-    // TODO: unset the image if no image is the current image
-    if (!current.isValid())
-        return;
-
-    KipiImageItem* const item = d->imageModel->itemFromIndex(current);
-    if (!item)
-        return;
-
-    d->previewManager->load(item->url().toLocalFile(), true);
-}
-
 void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
 {
+    d->detailsWidget->slotSetCurrentImage(index);
+
     if (!index.isValid())
         return;
 
@@ -699,7 +675,6 @@ void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
     {
         d->mapWidget->setCenter(imageCoordinates);
     }
-    d->previewManager->load(item->url().toLocalFile(), true);
 }
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot)
@@ -717,6 +692,7 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
     d->uiEnabled = enabledState;
     d->buttonBox->setEnabled(enabledState);
     d->correlatorWidget->setUIEnabledExternal(enabledState);
+    d->detailsWidget->setUIEnabledExternal(enabledState);
     d->rgWidget->setUIEnabled(enabledState);
     d->treeView->setEditEnabled(enabledState);
     d->listViewContextMenu->setEnabled(enabledState);

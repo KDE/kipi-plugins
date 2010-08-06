@@ -14,6 +14,7 @@ SET(kipiplugin_gpssync_PART_SRCS
     gpssettingswidget.cpp
     gpscorrelatorwidget.cpp
     gpsdataparser.cpp
+    gpsimagedetails.cpp
     gpsundocommand.cpp
     gpsreversegeocodingwidget.cpp
     inputboxnocancel.cpp
