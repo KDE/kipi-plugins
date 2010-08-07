@@ -38,6 +38,7 @@ namespace KIPIGPSSyncPlugin
 
 class KipiImageModel;
 class GPSUndoCommand;
+class GPSDataContainer;
 
 class GPSImageDetails : public QWidget
 {
@@ -60,6 +61,11 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void updateUIState();
+    void slotModelDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight);
+    void slotApply();
+
+protected:
+    void displayGPSDataContainer(const GPSDataContainer* const gpsData);
 
 private:
 
