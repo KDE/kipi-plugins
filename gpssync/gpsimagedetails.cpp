@@ -52,7 +52,9 @@ class GPSImageDetails::GPSImageDetailsPrivate
 {
 public:
     GPSImageDetailsPrivate()
-    : externalEnabledState(true)
+    : externalEnabledState(true),
+      activeState(false),
+      haveDelayedState(false)
     {
     }
 
@@ -72,6 +74,8 @@ public:
     QPersistentModelIndex imageIndex;
     GPSDataContainer infoOld;
     bool externalEnabledState;
+    bool activeState;
+    bool haveDelayedState;
 };
 
 GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint)
@@ -222,13 +226,24 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
 
 void GPSImageDetails::slotSetCurrentImage(const QModelIndex& index)
 {
-    d->imageIndex = index;
+    // TODO: slotSetActive may call this function with d->imageIndex as a parameter
+    // since we get the index as a reference, we overwrite index when changing d->imageIndex
+    QModelIndex indexCopy = index;
+    d->imageIndex = indexCopy;
+
+    if (!d->activeState)
+    {
+        d->haveDelayedState = true;
+        return;
+    }
+    d->haveDelayedState = false;
 
     GPSDataContainer gpsData;
 
     if (index.isValid())
     {
         KipiImageItem* const item = d->imageModel->itemFromIndex(index);
+        kDebug()<<item;
 
         if (item)
         {
@@ -251,6 +266,12 @@ void GPSImageDetails::slotModelDataChanged(const QModelIndex& topLeft, const QMo
     if ( (topLeft.row()<=d->imageIndex.row()&&bottomRight.row()>=d->imageIndex.row()) &&
         (topLeft.column()<=d->imageIndex.column()&&bottomRight.column()>=d->imageIndex.column()) )
     {
+        if (!d->activeState)
+        {
+            d->haveDelayedState = true;
+            return;
+        }
+
         GPSDataContainer gpsData;
         KipiImageItem* const item = d->imageModel->itemFromIndex(d->imageIndex);
         if (item)
@@ -298,6 +319,17 @@ void GPSImageDetails::slotApply()
     undoCommand->addUndoInfo(undoInfo);
     undoCommand->setText(i18n("Details changed"));
     emit(signalUndoCommand(undoCommand));
+}
+
+void GPSImageDetails::slotSetActive(const bool state)
+{
+    d->activeState = state;
+
+    if (state&&d->haveDelayedState)
+    {
+        d->haveDelayedState = false;
+        slotSetCurrentImage(d->imageIndex);
+    }
 }
 
 } /* KIPIGPSSyncPlugin */

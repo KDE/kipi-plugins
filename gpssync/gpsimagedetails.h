@@ -58,6 +58,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void slotSetCurrentImage(const QModelIndex& index);
+    void slotSetActive(const bool state);
 
 private Q_SLOTS:
     void updateUIState();

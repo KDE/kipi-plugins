@@ -67,6 +67,7 @@ int KipiImageModel::columnCount(const QModelIndex& /*parent*/) const
 
 QVariant KipiImageModel::data(const QModelIndex& index, int role) const
 {
+    if (index.isValid()) { Q_ASSERT(index.model()==this); }
     const int rowNumber = index.row();
     if ((rowNumber<0)||(rowNumber>=d->items.count()))
     {
@@ -78,6 +79,7 @@ QVariant KipiImageModel::data(const QModelIndex& index, int role) const
 
 QModelIndex KipiImageModel::index(int row, int column, const QModelIndex& parent) const
 {
+    if (parent.isValid()) { Q_ASSERT(parent.model()==this); }
 //     kDebug()<<row<<column<<parent;
     if (parent.isValid())
     {
@@ -126,6 +128,7 @@ void KipiImageModel::itemChanged(KipiImageItem* const changedItem)
 
 KipiImageItem* KipiImageModel::itemFromIndex(const QModelIndex& index) const
 {
+    if (index.isValid()) { Q_ASSERT(index.model()==this); }
     if (!index.isValid())
         return 0;
 
@@ -138,6 +141,7 @@ KipiImageItem* KipiImageModel::itemFromIndex(const QModelIndex& index) const
 
 int KipiImageModel::rowCount(const QModelIndex& parent) const
 {
+    if (parent.isValid()) { Q_ASSERT(parent.model()==this); }
     if (parent.isValid())
         return 0;
 
@@ -175,6 +179,8 @@ bool KipiImageModel::setData(const QModelIndex& index, const QVariant& value, in
 
 Qt::ItemFlags KipiImageModel::flags(const QModelIndex& index) const
 {
+    if (index.isValid()) { Q_ASSERT(index.model()==this); }
+
     if (!index.isValid())
         return 0;
 
@@ -210,6 +216,8 @@ static QString CacheKeyFromSizeAndUrl(const int size, const KUrl& url)
 
 QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex, const int size)
 {
+    if (itemIndex.isValid()) { Q_ASSERT(itemIndex.model()==this); }
+
     // TODO: should we cache the pixmap on our own here or does the interface usually cache it for us?
     // TODO: do we need to make sure we do not request the same pixmap twice in a row?
     // construct the key under which we stored the pixmap in the cache:

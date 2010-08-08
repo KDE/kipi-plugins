@@ -461,6 +461,7 @@ bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
         d->tabBar->setCurrentIndex(var);
         d->stackedWidget->setCurrentIndex(var);
         d->HSplitter->setSizes(sizes);
+        d->detailsWidget->slotSetActive( (d->stackedWidget->currentWidget()==d->detailsWidget) && (d->splitterSize==0) );
 
         return true;
     }
@@ -472,6 +473,7 @@ void GPSSyncDialog::slotCurrentTabChanged(int index)
 {
     d->tabBar->setCurrentIndex(index);
     d->stackedWidget->setCurrentIndex(index);
+    d->detailsWidget->slotSetActive(d->stackedWidget->currentWidget()==d->detailsWidget);
 }
 
 
@@ -487,6 +489,8 @@ void GPSSyncDialog::setCurrentTab(int index)
         d->splitterSize = 0;
     }
     d->HSplitter->setSizes(sizes);
+
+    d->detailsWidget->slotSetActive( (d->stackedWidget->currentWidget()==d->detailsWidget) && (d->splitterSize==0) );
 }
 
 void GPSSyncDialog::setImages( const KUrl::List& images )
