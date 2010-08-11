@@ -44,23 +44,56 @@ namespace KIPIGPSSyncPlugin
 
 class BackendOsmRGPrivate;
 
+/**
+ * @class BackendOsmRG
+ *
+ * @brief This class calls Open Street Map's reverse geocoding service.
+ */
+
 class BackendOsmRG : public RGBackend
 {
 
     Q_OBJECT
 
 public:
-
+ 
+    /**
+     * Constructor
+     * @param Parent object.
+     */  
     BackendOsmRG(QObject* const parent);
+    /**
+     * Destructor
+     */ 
     virtual ~BackendOsmRG();
-    QMap<QString,QString> makeQMapFromXML(QString);
+    /**
+     * The data is returned from Open Street Map in a XML. This function translates the XML into a QMap.
+     * @param xmlData The returned XML.
+     */ 
+    QMap<QString,QString> makeQMapFromXML(const QString& xmlData);
 
-    virtual void callRGBackend(QList <RGInfo>, QString);
+    /**
+     * Takes the coordinate of each image and then connects to Open Street Map's reverse geocoding service.
+     * @param rgList A list containing information needed in reverse geocoding process. At this point, it contains only coordinates.
+     * @param language The language in which the data will be returned.
+     */ 
+    virtual void callRGBackend(const QList<RGInfo>& rgList,const QString& language);
+
+    /**
+     * @return Error message, if any.
+     */ 
     virtual QString getErrorMessage();
+
+    /**
+     * @return Backend name.
+     */ 
     virtual QString backendName();
 
 private Q_SLOTS:
 
+    /**
+     * This slot calls Open Street Map's reverse geocoding service for each image.
+     */ 
     void nextPhoto(); 
     void dataIsHere(KIO::Job*, const QByteArray &); 
     void slotResult(KJob*);

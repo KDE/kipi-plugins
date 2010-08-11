@@ -50,17 +50,37 @@ namespace KExiv2Iface
 namespace KIPIGPSSyncPlugin
 {
 
+/**
+ * @class RGInfo
+ *
+ * @brief This class contains data needed in reverse geocoding process.
+ */
+
 class RGInfo {
 
     public:
 
+    /**
+     * Constructor
+     */ 
     RGInfo()
     :id(),
      coordinates(),
      rgData(){   }
 
+    /**
+     * The image index.
+     */ 
     QPersistentModelIndex id;
+
+    /**
+     * The coordinates of current image.
+     */ 
     KMapIface::WMWGeoCoordinate coordinates;
+
+    /**
+     * The address elements and their names.
+     */ 
     QMap<QString, QString> rgData;
 };
 
@@ -122,10 +142,30 @@ public:
     void restoreGPSData(const GPSDataContainer& container);
     inline bool isDirty() const { return m_dirty; }
 
+    /**
+     * The tags added in reverse geocoding process are stored in each image, before they end up in external tag model. This function adds them.
+     * @param externalTagList A list containing tags.
+     */ 
     inline void setTagList(const QList<QList<TagData> >& externalTagList) { m_tagList = externalTagList; m_tagListDirty = true; emitDataChanged(); };
+    
+    /**
+     * @return Returns true is the current image has been modified and not saved.
+     */ 
     inline bool isTagListDirty() const { return m_tagListDirty; }
+
+    /**
+     * Returns the tag list of the current image.
+     */ 
     inline QList<QList<TagData> > getTagList() const { return m_tagList; };
-    void restoreRGTagList(const QList<QList<TagData> >&);
+
+    /**
+     * Replaces the current tag list with the one contained in tagList.
+     */ 
+    void restoreRGTagList(const QList<QList<TagData> >& tagList);
+
+    /**
+     * Writes the current tags to XMP metadata.
+     */ 
     void writeTagsToXmp(const bool writeXmpTags) { m_writeXmpTags = writeXmpTags; }
 
     QString saveChanges();

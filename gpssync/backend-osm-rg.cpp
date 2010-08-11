@@ -43,7 +43,6 @@
 namespace KIPIGPSSyncPlugin
 {
 
-
 class OsmInternalJobs {
 
 public:
@@ -51,7 +50,8 @@ public:
     OsmInternalJobs()
     : request(),
       data(),
-      kioJob(0)
+      kioJob(0),
+      language()
     {
     }
 
@@ -89,7 +89,6 @@ BackendOsmRG::~BackendOsmRG()
 
 void BackendOsmRG::nextPhoto()
 {
-
     KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
     jobUrl.addQueryItem("format", "xml");
     jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
@@ -99,22 +98,16 @@ void BackendOsmRG::nextPhoto()
     jobUrl.addQueryItem("accept-language", d->jobs.first().language);
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
-
     d->jobs.first().kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
     connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
             this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
     connect(d->jobs.first().kioJob, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));    
-        
-
 }
 
-void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
+void BackendOsmRG::callRGBackend(const QList<RGInfo>& rgList, const QString& language)
 {
-
-    kDebug()<<"Entering OSM backend";
-
     d->errorMessage.clear();
 
     for( int i = 0; i < rgList.count(); i++)
@@ -138,53 +131,40 @@ void BackendOsmRG::callRGBackend(QList<RGInfo> rgList, QString language)
             newJob.language = language;
             d->jobs<<newJob;
         }
-
     }
     
     if(!d->jobs.empty())
-    {
         nextPhoto();
-    }
-
 }
 
 void BackendOsmRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
-
-    
     for(int i = 0; i < d->jobs.count(); ++i)
     {
-
         if(d->jobs.at(i).kioJob == job)
         {
-            
             d->jobs[i].data.append(data);
             break;
-
         }
     }
 }
 
 
-QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
+QMap<QString,QString> BackendOsmRG::makeQMapFromXML(const QString& xmlData)
 {
-
     QString resultString;
     QMap<QString, QString> mappedData;
     QDomDocument doc;
     doc.setContent(xmlData);
 
     QDomElement docElem =  doc.documentElement();
-
     QDomNode n = docElem.lastChild().firstChild();
 
     while(!n.isNull())
     {
-
         QDomElement e = n.toElement();
         if(!e.isNull())
         {
-
             if( (e.tagName() == QString("country")) ||
                 (e.tagName() == QString("state")) ||
                 (e.tagName() == QString("state_district")) ||
@@ -199,19 +179,13 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(QString xmlData)
                 (e.tagName() == QString("road")) ||
                 (e.tagName() == QString("house_number")))    
             {
-            
-            mappedData.insert(e.tagName(), e.text());
-            resultString.append(e.tagName() + ":" + e.text() + "\n");
-
+                mappedData.insert(e.tagName(), e.text());
+                resultString.append(e.tagName() + ":" + e.text() + "\n");
             }
         }
-
         n = n.nextSibling();
-
     }
-
     return mappedData;
-
 }
 
 QString BackendOsmRG::getErrorMessage()
@@ -230,22 +204,17 @@ void BackendOsmRG::slotResult(KJob* kJob)
 
     if(kioJob->error())
     {
-
         d->errorMessage = kioJob->errorString();
         emit(signalRGReady(d->jobs.first().request));
         d->jobs.clear();
         
         return;
-
     }
- 
 
     for(int i = 0; i < d->jobs.count(); ++i)
     {
-
         if(d->jobs.at(i).kioJob == kioJob)
         {
-
             QString dataString;
             dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
 
@@ -260,7 +229,7 @@ void BackendOsmRG::slotResult(KJob* kJob)
                 d->jobs[i].request[j].rgData = resultMap; 
             
             }
-           emit(signalRGReady(d->jobs[i].request));
+            emit(signalRGReady(d->jobs[i].request));
  
             d->jobs.removeAt(i);
 
@@ -273,7 +242,5 @@ void BackendOsmRG::slotResult(KJob* kJob)
         }
     }
 }
-
-
 
 } //KIPIGPSSyncPlugin

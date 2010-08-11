@@ -109,7 +109,7 @@ void BackendGeonamesUSRG::nextPhoto()
 
 }
 
-void BackendGeonamesUSRG::callRGBackend(QList<RGInfo> rgList, QString language)
+void BackendGeonamesUSRG::callRGBackend(const QList<RGInfo>& rgList, const QString& language)
 {
 
     kDebug()<<"Entering GeonamesUS backend";
@@ -160,7 +160,7 @@ void BackendGeonamesUSRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 }
 
 
-QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(QString xmlData)
+QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(const QString& xmlData)
 {
 
     QMap<QString, QString> mappedData;

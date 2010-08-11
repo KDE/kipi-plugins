@@ -113,26 +113,21 @@ void BackendGeonamesRG::nextPhoto()
 
 }
 
-void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
+void BackendGeonamesRG::callRGBackend(const QList<RGInfo>& rgList, const QString& language)
 {
-
     d->errorMessage.clear();
 
     for( int i = 0; i < rgList.count(); ++i)
     {
-
             bool foundIt = false;
             for( int j=0; j < d->jobs.count(); j++)
             {
-
                 if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
                 {
-
                     d->jobs[j].request << rgList[i];
                     d->jobs[j].language = language;
                     foundIt = true;
                     break;
-
                 }   
             }
             if(!foundIt)
@@ -148,7 +143,6 @@ void BackendGeonamesRG::callRGBackend(QList<RGInfo> rgList, QString language)
 
 void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
-    
     for(int i = 0; i < d->jobs.count(); ++i)
     {
         if(d->jobs.at(i).kioJob == job)
@@ -160,9 +154,8 @@ void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 }
 
 
-QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(QString xmlData)
+QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(const QString& xmlData)
 {
-
     QMap<QString, QString> mappedData;
     QString resultString;
     QDomDocument doc;
@@ -170,7 +163,6 @@ QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(QString xmlData)
     doc.setContent(xmlData);
 
     QDomElement docElem =  doc.documentElement();
-
     QDomNode n = docElem.firstChild().firstChild();
 
     while (!n.isNull())
@@ -178,7 +170,6 @@ QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(QString xmlData)
         const QDomElement e = n.toElement();
         if (!e.isNull())
         {
-
             if( (e.tagName().compare(QString("countryName")) == 0) ||
                 (e.tagName().compare(QString("name")) == 0) )
             {
@@ -186,19 +177,14 @@ QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(QString xmlData)
                 resultString.append(e.tagName() + ":" + e.text() + "\n");
             }
         }
-
         n = n.nextSibling();
-
     }
-    
     return mappedData;
 }
 
 QString BackendGeonamesRG::getErrorMessage()
 {
-
     return d->errorMessage;
-
 }
 
 QString BackendGeonamesRG::backendName()
@@ -208,8 +194,6 @@ QString BackendGeonamesRG::backendName()
 
 void BackendGeonamesRG::slotResult(KJob* kJob)
 {
-
-
     KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
 
     if(kioJob->error())
@@ -219,21 +203,17 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
         emit(signalRGReady(d->jobs.first().request));
         d->jobs.clear();
         return;
-
     }
 
     for(int i = 0;i < d->jobs.count(); ++i)
     {
-
         if(d->jobs.at(i).kioJob == kioJob)
         {
-
             QString dataString;
             dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
             int pos = dataString.indexOf("<geonames");
             dataString.remove(0,pos);
             dataString.chop(1);
-
 
             QMap<QString,QString> resultMap = makeQMapFromXML(dataString);
 
@@ -246,20 +226,13 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
             emit(signalRGReady(d->jobs[i].request));
 
             d->jobs.removeAt(i);
-
             if(!d->jobs.empty())
             {
-            
                 QTimer::singleShot(500, this, SLOT(nextPhoto()));
-
             }
-            
             break;
         }
-
     }
-    
-
 }
 
 } //KIPIGPSSyncPlugin
