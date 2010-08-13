@@ -44,6 +44,12 @@
 namespace KIPIGPSSyncPlugin
 {
 
+/**
+ * @class BackendGeonamesUSRG
+ *
+ * @brief This class calls Geonames's get address service available only for USA locations.
+ */
+  
 class GeonamesUSInternalJobs
 {
 
@@ -79,16 +85,26 @@ public:
     QString errorMessage;
 };
 
+/**
+ * Constructor
+ * @param Parent object.
+ */ 
 BackendGeonamesUSRG::BackendGeonamesUSRG(QObject* const parent)
 : RGBackend(parent), d(new BackendGeonamesUSRGPrivate())
 {
 }
 
+/**
+ * Destructor
+ */ 
 BackendGeonamesUSRG::~BackendGeonamesUSRG()
 {
     delete d;
 }
 
+/**
+ * This slot calls Geonames's get address service for each image.
+ */ 
 void BackendGeonamesUSRG::nextPhoto()
 {
     
@@ -109,6 +125,11 @@ void BackendGeonamesUSRG::nextPhoto()
 
 }
 
+/**
+ * Takes the coordinate of each image and then connects to Open Street Map's reverse geocoding service.
+ * @param rgList A list containing information needed in reverse geocoding process. At this point, it contains only coordinates.
+ * @param language The language in which the data will be returned.
+ */
 void BackendGeonamesUSRG::callRGBackend(const QList<RGInfo>& rgList, const QString& language)
 {
 
@@ -159,7 +180,10 @@ void BackendGeonamesUSRG::dataIsHere(KIO::Job* job, const QByteArray & data)
     }
 }
 
-
+/**
+ * The data is returned from Open Street Map in a XML. This function translates the XML into a QMap.
+ * @param xmlData The returned XML.
+ */ 
 QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(const QString& xmlData)
 {
 
@@ -195,6 +219,9 @@ QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(const QString& xmlDat
     return mappedData;
 }
 
+/**
+ * @return Error message, if any.
+ */ 
 QString BackendGeonamesUSRG::getErrorMessage()
 {
 
@@ -202,6 +229,9 @@ QString BackendGeonamesUSRG::getErrorMessage()
 
 }
 
+/**
+ * @return Backend name.
+ */ 
 QString BackendGeonamesUSRG::backendName()
 {
     return QString("GeonamesUS");

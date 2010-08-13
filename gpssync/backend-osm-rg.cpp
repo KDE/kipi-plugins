@@ -42,7 +42,7 @@
 
 namespace KIPIGPSSyncPlugin
 {
-
+ 
 class OsmInternalJobs {
 
 public:
@@ -76,17 +76,32 @@ public:
     QString errorMessage;
 };
 
+/**
+ * @class BackendOsmRG
+ *
+ * @brief This class calls Open Street Map's reverse geocoding service.
+ */  
+
+/**
+ * Constructor
+ * @param Parent object.
+ */  
 BackendOsmRG::BackendOsmRG(QObject* const parent)
 : RGBackend(parent), d(new BackendOsmRGPrivate())
 {
     
 }
-
+/**
+ * Destructor
+ */ 
 BackendOsmRG::~BackendOsmRG()
 {
     delete d;
 }
 
+/**
+ * This slot calls Open Street Map's reverse geocoding service for each image.
+ */ 
 void BackendOsmRG::nextPhoto()
 {
     KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
@@ -106,6 +121,11 @@ void BackendOsmRG::nextPhoto()
             this, SLOT(slotResult(KJob*)));    
 }
 
+/**
+ * Takes the coordinate of each image and then connects to Open Street Map's reverse geocoding service.
+ * @param rgList A list containing information needed in reverse geocoding process. At this point, it contains only coordinates.
+ * @param language The language in which the data will be returned.
+ */ 
 void BackendOsmRG::callRGBackend(const QList<RGInfo>& rgList, const QString& language)
 {
     d->errorMessage.clear();
@@ -149,7 +169,10 @@ void BackendOsmRG::dataIsHere(KIO::Job* job, const QByteArray & data)
     }
 }
 
-
+/**
+ * The data is returned from Open Street Map in a XML. This function translates the XML into a QMap.
+ * @param xmlData The returned XML.
+ */ 
 QMap<QString,QString> BackendOsmRG::makeQMapFromXML(const QString& xmlData)
 {
     QString resultString;
@@ -188,11 +211,17 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(const QString& xmlData)
     return mappedData;
 }
 
+/**
+ * @return Error message, if any.
+ */ 
 QString BackendOsmRG::getErrorMessage()
 {
     return d->errorMessage;
 }
 
+/**
+ * @return Backend name.
+ */ 
 QString BackendOsmRG::backendName()
 {
     return QString("OSM");

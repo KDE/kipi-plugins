@@ -30,6 +30,17 @@
 
 namespace KIPIGPSSyncPlugin
 {
+  
+/**
+ * @class RGTagModel
+ *
+ * @brief The model that holds data for the tag tree displayed in ReverseGeocodingWidget
+ * 
+ * The RGTagModel class is a wrapper above QAbstractItemModel. It helds data for the tag tree displayed in ReverseGeocodingWidget.
+ * The model gets the data from the tag model of host application and displays it in a QTreeView. 
+ * It stores three type of tags: old tags (the tags that belong to the host's tag model), spacer tags (tags representing address elements
+ * or custom tags) and new tags (tags containing data retrieved from backend).
+ */
 
 class RGTagModelPrivate
 {
@@ -60,6 +71,11 @@ public:
     QList<QList<TagData> >       savedSpacerList;
 };
 
+/**
+ * Constructor
+ * @param externalTagModel The tag model found in the host application.
+ * @param parent The parent object
+ */  
 RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent)
           : QAbstractItemModel(parent), d(new RGTagModelPrivate)
 {
@@ -114,12 +130,20 @@ RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* cons
             this, SLOT(slotRowsRemoved()));
 }
 
+/**
+ * Destructor
+ */ 
 RGTagModel::~RGTagModel()
 {
     delete d->rootTag;
     delete d;
 }
 
+/**
+ * Returns the branch found at index
+ * @param index Current model index.
+ * @return The branch for the current index.
+ */ 
 TreeBranch* RGTagModel::branchFromIndex(const QModelIndex& index) const
 {
     return index.isValid() ? static_cast<TreeBranch*>(index.internalPointer()) : d->rootTag;
@@ -142,6 +166,10 @@ void checkTree(TreeBranch* const checkBranch, int level)
     }
 }
 
+/**
+ * Translates the model index from host's tag model to this model.
+ * @return The index of current old tag.
+ */ 
 QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex) const
 {
     if(!externalTagModelIndex.isValid())
@@ -206,6 +234,10 @@ QModelIndex RGTagModel::fromSourceIndex(const QModelIndex& externalTagModelIndex
     return QModelIndex();
 }
 
+/**
+ * Translates the model index from this model to host's tag model.
+ * @return The index of a tag in host's tag model.
+ */ 
 QModelIndex RGTagModel::toSourceIndex(const QModelIndex& tagModelIndex) const
 {
     if(!tagModelIndex.isValid())
@@ -220,6 +252,12 @@ QModelIndex RGTagModel::toSourceIndex(const QModelIndex& tagModelIndex) const
     return treeBranch->sourceIndex;
 }
 
+/**
+ * Adds a spacer tag.
+ * @param parent The index of the parent. If parent == QModelIndex(), then the spacer is added to top-level
+ * @param spacerName The name of the spacer. If it's an address element, the address element name will have the form {addressElement}.For example: {Country}, {City}...
+ *
+ */ 
 void RGTagModel::addSpacerTag(const QModelIndex& parent, const QString& spacerName)
 {
     //TreeBranch* const parentBranch = parent.isValid() ? static_cast<TreeBranch*>(parent.internalPointer()) : d->rootTag;
@@ -251,6 +289,11 @@ void RGTagModel::addSpacerTag(const QModelIndex& parent, const QString& spacerNa
     }
 }
 
+/**
+ * Adds a tag containing data returned from backends. 
+ * @param parent The index of the parent.
+ * @param newTagName The name of the new tag.
+ */ 
 QPersistentModelIndex RGTagModel::addNewTag(const QModelIndex& parent, const QString& newTagName)
 {
 
@@ -288,6 +331,9 @@ QPersistentModelIndex RGTagModel::addNewTag(const QModelIndex& parent, const QSt
     return QPersistentModelIndex();
 }
 
+/**
+ * Gets the address of a tag.
+ */ 
 QList<TagData> RGTagModel::getTagAddress()
 {
     QList<TagData> tagAddress;
@@ -301,6 +347,15 @@ QList<TagData> RGTagModel::getTagAddress()
     return tagAddress;
 }
 
+
+/**
+ * The function starts to scan the tree starting with currentBranch. When it finds a spacer containing an address element, it
+ * looks to see if the address element is found in addressElements list. If it's found, a new tag is added.
+ * @param currentBranch The branch from where the scan starts.
+ * @param currentRow The row of the current branch.
+ * @param addressElements A list containing address elements. Example: {Country}, {City}...
+ * @param elementsData A list containing the name of each address element found in elements. Example: France, Paris...
+ */ 
 void RGTagModel::addDataInTree(TreeBranch* currentBranch, int currentRow,const QStringList& addressElements,const QStringList& elementsData)
 {
     bool newDataAdded;
@@ -384,6 +439,13 @@ void RGTagModel::addDataInTree(TreeBranch* currentBranch, int currentRow,const Q
     }
 }
 
+/**
+ * Add new tags to tag tree. The function starts to scan the tree from root level. When it finds a spacer containing an address element
+ * , it looks to see if the address element is found in elements list. If it's found, a new tag is added. 
+ * @param elements A list containing address elements. Example: {Country}, {City}...
+ * @param resultedData A list containing the name of each address element found in elements. Example: France, Paris...
+ * @return A list containing new tags
+ */ 
 QList<QList<TagData> > RGTagModel::addNewData(QStringList& elements, QStringList& resultedData)
 {
     d->newTags.clear();
@@ -685,6 +747,10 @@ void RGTagModel::slotRowsRemoved()
 {
 }
 
+/**
+     * Deletes a tag.
+     * @param currentIndex The tag found at this index will be deleted.
+     */ 
 void RGTagModel::deleteTag(const QModelIndex& currentIndex)
 {
     if(!currentIndex.isValid())
@@ -692,8 +758,8 @@ void RGTagModel::deleteTag(const QModelIndex& currentIndex)
 
     QModelIndex parentIndex              = currentIndex.parent();
     int currentRow                       = currentIndex.row();
-    TreeBranch* const parentBranch       =  branchFromIndex(parentIndex);  //parentIndex.isValid() ? static_cast<TreeBranch*>(parentIndex.internalPointer()) : d->rootTag;
-    TreeBranch* const currentChildBranch = branchFromIndex(currentIndex);  //index.isValid() ? static_cast<TreeBranch*>(index.internalPointer()) : d->rootTag;
+    TreeBranch* const parentBranch       =  branchFromIndex(parentIndex);  
+    TreeBranch* const currentChildBranch = branchFromIndex(currentIndex);  
 
     if(currentChildBranch->type == TypeChild)
         return;
@@ -734,6 +800,12 @@ void RGTagModel::deleteTag(const QModelIndex& currentIndex)
     endRemoveRows();
 }
 
+/**
+ * Deletes all spacers or all new tags below @currentBranch.
+ * @param currentBranch The tree branch from where the scan starts.
+ * @param currentRow The row of current branch.
+ * @param whatShouldRemove The tag type that should to be removed. The options are: spacers or new tags.
+ */ 
 void RGTagModel::findAndDeleteSpacersOrNewTags( TreeBranch* currentBranch, int currentRow, Type whatShouldRemove)
 {
     QModelIndex currentIndex = createIndex(currentRow, 0, currentBranch);
@@ -765,6 +837,11 @@ void RGTagModel::findAndDeleteSpacersOrNewTags( TreeBranch* currentBranch, int c
     }
 }
 
+/**
+ * Deletes all spacers or all new tags.
+ * @param currentIndex If whatShouldRemove represents a spacer, the function will remove all spacers below currentIndex.If whatShouldRemove represents a new tag, the function will delete all new tags.
+ * @param whatShouldRemove The tag type that should be removed. The options are: spacers or new tags.
+ */ 
 void RGTagModel::deleteAllSpacersOrNewTags(const QModelIndex& currentIndex, Type whatShouldRemove)
 {
     if(whatShouldRemove == TypeSpacer)
@@ -782,6 +859,13 @@ void RGTagModel::deleteAllSpacersOrNewTags(const QModelIndex& currentIndex, Type
 //readdTag climbs the tree and checks on each level if tagAddressElements[level] is found.
 //if the tag is found, it climbs up the next level
 //else, it recreates the new tag and climbs up that tree.
+/**
+ * Readds new tags to tag tree.
+ * @param currentBranch The branch from where the scan starts.
+ * @param currentRow The row of the currentBranch.
+ * @param tagAddressElements A list containing address elements. Example: {Country}, {City}...
+ * @param elementsData A list containing the name of each address element found in elements. Example: France, Paris...
+ */ 
 void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow,const QList<TagData> tagAddressElements, int currentAddressElementIndex)
 {
 
@@ -893,6 +977,10 @@ void RGTagModel::readdTag(TreeBranch*& currentBranch, int currentRow,const QList
     }
 }
 
+/**
+ * Takes each tag contained in tagAddressList and adds it to the tag tree.
+ * @param tagAddressList A list containing new tags.
+ */ 
 void RGTagModel::readdNewTags(const QList<QList<TagData> >& tagAddressList)
 {
     for(int i=0; i<tagAddressList.count(); ++i)
@@ -902,6 +990,11 @@ void RGTagModel::readdNewTags(const QList<QList<TagData> >& tagAddressList)
     }
 }
 
+/**
+ * Gets the address of a spacer. Address means the path from rootTag to currentBranch
+ * @param currentBranch The branch where the scan stops.
+ * @return The tag address of currentBranch
+ */ 
 QList<TagData> RGTagModel::getSpacerAddress(TreeBranch* currentBranch)
 {
     QList<TagData> spacerAddress;
@@ -919,6 +1012,10 @@ QList<TagData> RGTagModel::getSpacerAddress(TreeBranch* currentBranch)
     return spacerAddress;
 }
 
+/**
+ * Gets the spacers addresses below currentBranch. Address means the path from rootTag to currentBranch.
+ * @param currentBranch The branch from where the search starts. 
+ */ 
 void RGTagModel::climbTreeAndGetSpacers(const TreeBranch* currentBranch)
 {
     for(int i=0; i<currentBranch->spacerChildren.count(); i++)
@@ -940,6 +1037,10 @@ void RGTagModel::climbTreeAndGetSpacers(const TreeBranch* currentBranch)
     }
 }
 
+/**
+ * Gets all spacers.
+ * @return The spacer list.
+ */ 
 QList<QList<TagData> > RGTagModel::getSpacers()
 {
     d->savedSpacerList.clear();
@@ -948,6 +1049,11 @@ QList<QList<TagData> > RGTagModel::getSpacers()
     return d->savedSpacerList;
 }
 
+/**
+ * Add tags from host application to the tag tree.
+ * @param parentBranch The branch that will be parent for the old tag.
+ * @param currentRow The row where this external tag will be added.
+ */ 
 void RGTagModel::addExternalTags(TreeBranch* parentBranch, int currentRow)
 {
     QModelIndex parentIndex = createIndex(currentRow, 0, parentBranch);
@@ -964,11 +1070,17 @@ void RGTagModel::addExternalTags(TreeBranch* parentBranch, int currentRow)
     }
 }
 
+/**
+ * Add all external tags to the tag tree.
+ */ 
 void RGTagModel::addAllExternalTagsToTreeView()
 {
     addExternalTags(d->rootTag,0);
 }
 
+/**
+ * Adds all spacers found in spacerList to the tag tree. 
+ */ 
 void RGTagModel::addAllSpacersToTag(const QModelIndex currentIndex,const QStringList spacerList, int spacerListIndex)
 {
     if(spacerListIndex >= spacerList.count())
@@ -991,6 +1103,11 @@ void RGTagModel::addAllSpacersToTag(const QModelIndex currentIndex,const QString
     addAllSpacersToTag(newIndex, spacerList, spacerListIndex+1);
 }
 
+/**
+ * Gets the type of a tag found at index.
+ * @param index The index of the tag.
+ * @return The type of the tag found at index.
+ */
 Type RGTagModel::getTagType(const QModelIndex& index) const
 {
     const TreeBranch* const treeBranch = branchFromIndex(index);//  index.isValid() ? static_cast<TreeBranch*>(index.internalPointer()) : d->rootTag;

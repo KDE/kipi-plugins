@@ -83,6 +83,12 @@
 
 namespace KIPIGPSSyncPlugin
 {
+  
+/**
+ * @class GPSReverseGeocodingWidget
+ *
+ * @brief The GPSReverseGeocodingWidget class represents the main widget for reverse geocoding.
+ */
 
 class GPSReverseGeocodingWidgetPrivate
 {
@@ -145,7 +151,13 @@ public:
     QModelIndex currentTagTreeIndex;
 };
 
-
+/**
+ * Constructor
+ * @param interface The main KIPI interface
+ * @param imageModel KIPI image model
+ * @param selectionModel KIPI image selection model 
+ * @param parent The parent object
+ */
 GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface, KipiImageModel* const imageModel, QItemSelectionModel* const selectionModel, QWidget *const parent)
 : QWidget(parent), d(new GPSReverseGeocodingWidgetPrivate())
 {
@@ -407,6 +419,9 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->currentBackend = d->backendRGList[currentServiceIndex];
 }
 
+/**
+ * Enables or disables the containing widgets.
+ */ 
 void GPSReverseGeocodingWidget::updateUIState()
 {
     const bool haveSelection = d->selectionModel->hasSelection();
@@ -420,11 +435,17 @@ void GPSReverseGeocodingWidget::updateUIState()
     d->xmpLoc->setEnabled(d->UIEnabled);
 }
 
+/**
+ * Destructor
+ */  
 GPSReverseGeocodingWidget::~GPSReverseGeocodingWidget()
 {
     delete d;
 }
 
+/**
+ * This slot triggeres when the button that start the reverse geocoding process is pressed.
+ */ 
 void GPSReverseGeocodingWidget::slotButtonRGSelected()
 {
     // get the selected images:
@@ -470,6 +491,9 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     }
 }
 
+/**
+ * Hide or shows the extra options.
+ */ 
 void GPSReverseGeocodingWidget::slotHideOptions()
 {
     if(d->hideOptions)
@@ -485,6 +509,10 @@ void GPSReverseGeocodingWidget::slotHideOptions()
     }
 }
 
+ /**
+  * The data has returned from backend and now it's processed here.
+  * @param returnedRGList Contains the data returned by backend.
+  */
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
     const QString errorString = d->currentBackend->getErrorMessage();
@@ -569,12 +597,19 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     }
 }
 
+/**
+ * Sets whether the containing widgets are enabled or disabled.
+ * @param state If true, the controls are enabled.
+ */ 
 void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
 {
     d->UIEnabled = state;
     updateUIState();
 }
 
+/**
+ * Here are filtered the events.
+ */ 
 bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 {
     if(watched == d->tagTreeView)
@@ -637,6 +672,10 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
     return QObject::eventFilter(watched, event);
 }
 
+/**
+ * Saves the settings of widgets contained in reverse geocoding widget.
+ * @param group Here are stored the settings.
+ */ 
 void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 {
     
@@ -681,6 +720,10 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 
 }
 
+/**
+ * Restores the settings of widgets contained in reverse geocoding widget.
+ * @param group Here are stored the settings.
+ */ 
 void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const group)
 {
     int spacerCount = group->readEntry("Spacers count", 0);
@@ -723,6 +766,9 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
     d->xmpLoc->setChecked(group->readEntry("XMP location", false));
 }
 
+/**
+ * Adds a tag to tag tree.
+ */ 
 void GPSReverseGeocodingWidget::slotAddSingleSpacer()
 {
     //    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
@@ -738,6 +784,9 @@ void GPSReverseGeocodingWidget::slotAddSingleSpacer()
     d->tagModel->addSpacerTag(baseIndex, currentSpacerName);
 }
 
+/**
+ * Adds a new tag to the tag tree.
+ */ 
 void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
 {
     QModelIndex baseIndex;    
@@ -756,12 +805,19 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
     }
 }
 
+/**
+ * Removes a tag from tag tree.
+ * Note: If the tag is an external, it is no more deleted.
+ */
 void GPSReverseGeocodingWidget::slotRemoveTag()
 {
     const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
     d->tagModel->deleteTag(baseIndex);
 }
 
+/**
+ * Removes all spacers.
+ */
 void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
 {
     QString whatShouldRemove = QString("Spacers");
@@ -775,6 +831,9 @@ void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
     d->tagModel->deleteAllSpacersOrNewTags(baseIndex, TypeSpacer);
 }
 
+/**
+ * Re-adds all deleted tags based on Undo/Redo widget.
+ */ 
 void GPSReverseGeocodingWidget::slotReaddNewTags()
 {
 
@@ -790,6 +849,9 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
 }
 
+/**
+ * Deletes and re-adds all new added tags.
+ */  
 void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 {
     QModelIndex baseIndex = QModelIndex(); 
@@ -798,6 +860,10 @@ void GPSReverseGeocodingWidget::slotRegenerateNewTags()
     slotReaddNewTags(); 
 }
 
+/**
+ * Adds all address elements below the selected tag. The address ellements are order by area size.
+ * For example: country > state > state district > city ...  
+ */
 void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
 {
     QModelIndex baseIndex;    

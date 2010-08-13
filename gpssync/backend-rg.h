@@ -42,11 +42,7 @@ namespace KIPIGPSSyncPlugin
 
 class RGBackendPrivate;
 
-/**
- * @class RGBackend
- *
- * @brief This class is a base class for Open Street Map and Geonames backends.
- */
+
 
 class RGBackend : public QObject
 {
@@ -54,21 +50,10 @@ class RGBackend : public QObject
 
 public:
 
-    /**
-     * Constructor
-     */ 
     RGBackend(QObject* const parent);
-
-    /**
-     * Constructor
-     */ 
     RGBackend();
-
-    /**
-     * Destructor
-     */ 
     virtual ~RGBackend();
-
+    
     virtual void callRGBackend(const QList<RGInfo>&,const  QString&) = 0;
     virtual QString getErrorMessage();
     virtual QString backendName();
