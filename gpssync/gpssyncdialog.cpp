@@ -78,7 +78,7 @@
 // Libkmap includes
 
 #include <libkmap/html_widget.h>
-#include <libkmap/kmap.h>
+#include <libkmap/kmapwidget.h>
 #include <libkmap/itemmarkertiler.h>
 
 // Local includes
@@ -151,12 +151,12 @@ public:
     KTabWidget               *tabWidget;
     QSplitter                *VSplitter;
     QSplitter                *HSplitter;
-    KMapIface::KMap               *mapWidget;
+    KMapIface::KMapWidget    *mapWidget;
     KipiImageList            *treeView;
     GPSImageDetails          *detailsWidget;
     GPSSettingsWidget        *settingsWidget;
     GPSCorrelatorWidget      *correlatorWidget;
-    GPSSyncKMapModelHelper *mapModelHelper;
+    GPSSyncKMapModelHelper   *mapModelHelper;
     bool uiEnabled;
     QFuture<QPair<KUrl,QString> > changedFilesSaveFuture;
     QFutureWatcher<QPair<KUrl,QString> > *changedFilesSaveFutureWatcher;
@@ -245,7 +245,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->HSplitter->addWidget(d->VSplitter);
     d->HSplitter->setStretchFactor(0, 10);
 
-    d->mapWidget = new KMapIface::KMap(this);
+    d->mapWidget = new KMapIface::KMapWidget(this);
     d->mapWidget->setEditModeAvailable(true);
     KMapIface::ItemMarkerTiler* const kmapMarkerModel = new KMapIface::ItemMarkerTiler(d->mapModelHelper, this);
     d->mapWidget->setGroupedModel(kmapMarkerModel);

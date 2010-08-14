@@ -105,7 +105,7 @@ class SearchWidget : public QWidget
 Q_OBJECT
 
 public:
-    SearchWidget(KMapIface::KMap* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent = 0);
+    SearchWidget(KMapIface::KMapWidget* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent = 0);
     ~SearchWidget();
 
     KMapIface::WMWModelHelper* getModelHelper();
