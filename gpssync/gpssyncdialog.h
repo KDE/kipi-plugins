@@ -52,7 +52,7 @@ class GPSSyncDialogPriv;
 
 class GPSSyncKMapModelHelperPrivate;
 
-class GPSSyncKMapModelHelper : public KMapIface::WMWModelHelper
+class GPSSyncKMapModelHelper : public KMap::WMWModelHelper
 {
 Q_OBJECT
 
@@ -63,14 +63,14 @@ public:
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
-    virtual bool itemCoordinates(const QModelIndex& index, KMapIface::WMWGeoCoordinate* const coordinates) const;
+    virtual bool itemCoordinates(const QModelIndex& index, KMap::WMWGeoCoordinate* const coordinates) const;
 
     virtual QPixmap pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size);
     virtual QPersistentModelIndex bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey);
 
-    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMapIface::WMWGeoCoordinate& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
+    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::WMWGeoCoordinate& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
 
-    void addUngroupedModelHelper(KMapIface::WMWModelHelper* const newModelHelper);
+    void addUngroupedModelHelper(KMap::WMWModelHelper* const newModelHelper);
 
 private Q_SLOTS:
 

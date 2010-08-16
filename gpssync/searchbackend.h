@@ -53,9 +53,9 @@ public:
 
         typedef QList<SearchResult> List;
 
-        KMapIface::WMWGeoCoordinate coordinates;
+        KMap::WMWGeoCoordinate coordinates;
         QString name;
-        KMapIface::WMWGeoCoordinate::Pair boundingBox;
+        KMap::WMWGeoCoordinate::Pair boundingBox;
         QString internalId;
     };
 

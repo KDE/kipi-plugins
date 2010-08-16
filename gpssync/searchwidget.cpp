@@ -71,7 +71,7 @@ public:
     {
     }
 
-    KMapIface::KMapWidget* mapWidget;
+    KMap::KMapWidget* mapWidget;
     GPSBookmarkOwner* gpsBookmarkOwner;
     KipiImageModel* kipiImageModel;
     QItemSelectionModel* kipiImageSelectionModel;
@@ -96,7 +96,7 @@ public:
     KAction* actionMoveImagesToThisResult;
 };
 
-SearchWidget::SearchWidget(KMapIface::KMapWidget* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, 
+SearchWidget::SearchWidget(KMap::KMapWidget* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, 
                            KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, 
                            QWidget* parent)
             : QWidget(parent), d(new SearchWidgetPrivate())
@@ -414,7 +414,7 @@ public:
 };
 
 SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, KipiImageModel* const imageModel, QObject* const parent)
-: KMapIface::WMWModelHelper(parent), d(new SearchResultModelHelperPrivate())
+: KMap::WMWModelHelper(parent), d(new SearchResultModelHelperPrivate())
 {
     d->model = resultModel;
     d->selectionModel = selectionModel;
@@ -436,7 +436,7 @@ QItemSelectionModel* SearchResultModelHelper::selectionModel() const
     return d->selectionModel;
 }
 
-bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, KMapIface::WMWGeoCoordinate* const coordinates) const
+bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, KMap::WMWGeoCoordinate* const coordinates) const
 {
     const SearchResultModel::SearchResultItem item = d->model->resultItem(index);
 
@@ -455,7 +455,7 @@ SearchResultModel::SearchResultItem SearchResultModel::resultItem(const QModelIn
     return d->searchResults.at(index.row());
 }
 
-KMapIface::WMWModelHelper* SearchWidget::getModelHelper()
+KMap::WMWModelHelper* SearchWidget::getModelHelper()
 {
     return d->searchResultModelHelper;
 }
@@ -598,12 +598,12 @@ void SearchWidget::readSettingsFromGroup(const KConfigGroup* const group)
     }
 }
 
-KMapIface::WMWModelHelper::Flags SearchResultModelHelper::modelFlags() const
+KMap::WMWModelHelper::Flags SearchResultModelHelper::modelFlags() const
 {
     return FlagSnaps|(d->visible?FlagVisible:FlagNull);
 }
 
-KMapIface::WMWModelHelper::Flags SearchResultModelHelper::itemFlags(const QModelIndex& /*index*/) const
+KMap::WMWModelHelper::Flags SearchResultModelHelper::itemFlags(const QModelIndex& /*index*/) const
 {
     return FlagVisible|FlagSnaps;
 }
@@ -613,7 +613,7 @@ void SearchResultModelHelper::snapItemsTo(const QModelIndex& targetIndex, const 
     GPSUndoCommand* const undoCommand = new GPSUndoCommand();
 
     SearchResultModel::SearchResultItem targetItem = d->model->resultItem(targetIndex);
-    const KMapIface::WMWGeoCoordinate& targetCoordinates = targetItem.result.coordinates;
+    const KMap::WMWGeoCoordinate& targetCoordinates = targetItem.result.coordinates;
     for (int i=0; i<snappedIndices.count(); ++i)
     {
         const QPersistentModelIndex itemIndex = snappedIndices.at(i);
@@ -640,7 +640,7 @@ void SearchWidget::slotMoveSelectedImagesToThisResult()
 {
     const QModelIndex currentIndex = d->searchResultsSelectionModel->currentIndex();
     const SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(currentIndex);
-    const KMapIface::WMWGeoCoordinate& targetCoordinates = currentItem.result.coordinates;
+    const KMap::WMWGeoCoordinate& targetCoordinates = currentItem.result.coordinates;
 
     const QModelIndexList selectedImageIndices = d->kipiImageSelectionModel->selectedRows();
     if (selectedImageIndices.isEmpty())

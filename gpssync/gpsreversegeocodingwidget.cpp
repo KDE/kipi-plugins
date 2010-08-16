@@ -473,7 +473,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
         RGInfo photoObj;
         photoObj.id = itemIndex;
-        photoObj.coordinates = KMapIface::WMWGeoCoordinate(latitude, longitude);
+        photoObj.coordinates = KMap::WMWGeoCoordinate(latitude, longitude);
 
         photoList << photoObj;
 

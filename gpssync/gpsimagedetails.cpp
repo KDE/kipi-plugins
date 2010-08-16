@@ -293,7 +293,7 @@ void GPSImageDetails::slotApply()
     {
         const qreal lat = KGlobal::locale()->readNumber(d->leLatitude->text());
         const qreal lon = KGlobal::locale()->readNumber(d->leLongitude->text());
-        newData.setCoordinates(KMapIface::WMWGeoCoordinate(lat, lon));
+        newData.setCoordinates(KMap::WMWGeoCoordinate(lat, lon));
 
         if (d->cbAltitude->isChecked())
         {
