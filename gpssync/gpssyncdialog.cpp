@@ -681,7 +681,7 @@ void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
     if (!item)
         return;
 
-    const KMap::WMWGeoCoordinate imageCoordinates = item->coordinates();
+    const KMap::GeoCoordinates imageCoordinates = item->coordinates();
     if (imageCoordinates.hasCoordinates())
     {
         d->mapWidget->setCenter(imageCoordinates);
@@ -725,11 +725,11 @@ public:
 
     KipiImageModel* model;
     QItemSelectionModel* selectionModel;
-    QList<KMap::WMWModelHelper*> ungroupedModelHelpers;
+    QList<KMap::ModelHelper*> ungroupedModelHelpers;
 };
 
 GPSSyncKMapModelHelper::GPSSyncKMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent)
-: KMap::WMWModelHelper(parent), d(new GPSSyncKMapModelHelperPrivate())
+: KMap::ModelHelper(parent), d(new GPSSyncKMapModelHelperPrivate())
 {
     d->model = model;
     d->selectionModel = selectionModel;
@@ -738,7 +738,7 @@ GPSSyncKMapModelHelper::GPSSyncKMapModelHelper(KipiImageModel* const model, QIte
             this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
 
     connect(d->model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
-            this, SLOT(signalModelChangedDrastically()));
+            this, SIGNAL(signalModelChangedDrastically()));
 }
 
 QAbstractItemModel* GPSSyncKMapModelHelper::model() const
@@ -751,7 +751,7 @@ QItemSelectionModel* GPSSyncKMapModelHelper::selectionModel() const
     return d->selectionModel;
 }
 
-bool GPSSyncKMapModelHelper::itemCoordinates(const QModelIndex& index, KMap::WMWGeoCoordinate* const coordinates) const
+bool GPSSyncKMapModelHelper::itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const
 {
     KipiImageItem* const item = d->model->itemFromIndex(index);
     if (!item)
@@ -814,14 +814,14 @@ void GPSSyncKMapModelHelper::slotThumbnailFromModel(const QPersistentModelIndex&
     emit(signalThumbnailAvailableForIndex(index, pixmap));
 }
 
-void GPSSyncKMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::WMWGeoCoordinate& targetCoordinates, const QPersistentModelIndex& targetSnapIndex)
+void GPSSyncKMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex)
 {
     if (targetSnapIndex.isValid())
     {
         const QAbstractItemModel* const targetModel = targetSnapIndex.model();
         for (int i=0; i<d->ungroupedModelHelpers.count(); ++i)
         {
-            KMap::WMWModelHelper* const ungroupedHelper = d->ungroupedModelHelpers.at(i);
+            KMap::ModelHelper* const ungroupedHelper = d->ungroupedModelHelpers.at(i);
             if (ungroupedHelper->model()==targetModel)
             {
                 QList<QModelIndex> iMovedMarkers;
@@ -986,7 +986,7 @@ void GPSSyncDialog::slotBookmarkVisibilityToggled()
     d->bookmarkOwner->bookmarkModelHelper()->setVisible(d->actionBookmarkVisibility->isChecked());
 }
 
-void GPSSyncKMapModelHelper::addUngroupedModelHelper(KMap::WMWModelHelper* const newModelHelper)
+void GPSSyncKMapModelHelper::addUngroupedModelHelper(KMap::ModelHelper* const newModelHelper)
 {
     d->ungroupedModelHelpers << newModelHelper;
 }

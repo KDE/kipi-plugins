@@ -57,7 +57,7 @@ public:
 private:
 
     HasFlags m_hasFlags;
-    KMap::WMWGeoCoordinate m_coordinates;
+    KMap::GeoCoordinates m_coordinates;
     int m_nSatellites;
     qreal m_hDop;
     qreal m_pDop;
@@ -130,12 +130,12 @@ public:
 
     /* coordinates */
 
-    inline KMap::WMWGeoCoordinate getCoordinates() const
+    inline KMap::GeoCoordinates getCoordinates() const
     {
         return m_coordinates;
     }
 
-    inline void setCoordinates(const KMap::WMWGeoCoordinate& coordinates)
+    inline void setCoordinates(const KMap::GeoCoordinates& coordinates)
     {
         m_coordinates = coordinates;
         if (coordinates.hasCoordinates())

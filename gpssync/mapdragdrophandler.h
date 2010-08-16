@@ -23,6 +23,7 @@
 // Qt includes
 
 #include <QAbstractItemModel>
+#include <QMimeData>
 
 // Libkmap includes
 
@@ -56,7 +57,7 @@ public:
     virtual ~MapDragDropHandler();
 
     virtual Qt::DropAction accepts(const QDropEvent* e);
-    virtual bool dropEvent(const QDropEvent* e, const KMap::WMWGeoCoordinate& dropCoordinates);
+    virtual bool dropEvent(const QDropEvent* e, const KMap::GeoCoordinates& dropCoordinates);
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices);
 
 private:

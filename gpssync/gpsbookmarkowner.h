@@ -27,6 +27,10 @@
 
 #include <kbookmarkmanager.h>
 
+// libkmap includes
+
+#include <libkmap/kmap_modelhelper.h>
+
 // local includes:
 
 #include "gpsdatacontainer.h"
@@ -39,7 +43,7 @@ namespace KIPIGPSSyncPlugin
 class KipiImageModel;
 class GPSUndoCommand;
 class GPSBookmarkModelHelperPrivate;
-class GPSBookmarkModelHelper : public KMap::WMWModelHelper
+class GPSBookmarkModelHelper : public KMap::ModelHelper
 {
 Q_OBJECT
 public:
@@ -53,7 +57,7 @@ public:
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
-    virtual bool itemCoordinates(const QModelIndex& index, KMap::WMWGeoCoordinate* const coordinates) const;
+    virtual bool itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const;
     virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
     virtual Flags modelFlags() const;
     virtual Flags itemFlags(const QModelIndex& index) const;
@@ -90,7 +94,7 @@ public:
     KMenu* getMenu() const;
 
     void changeAddBookmark(const bool state);
-    void setPositionAndTitle(const KMap::WMWGeoCoordinate& coordinates, const QString& title);
+    void setPositionAndTitle(const KMap::GeoCoordinates& coordinates, const QString& title);
 
     KBookmarkManager* bookmarkManager() const;
 

@@ -22,6 +22,7 @@
 
 // Qt includes
 
+#include <QPersistentModelIndex>
 #include <QVariant>
 
 // KDE includes
@@ -76,7 +77,7 @@ class RGInfo {
     /**
      * The coordinates of current image.
      */ 
-    KMap::WMWGeoCoordinate coordinates;
+    KMap::GeoCoordinates coordinates;
 
     /**
      * The address elements and their names.
@@ -135,8 +136,8 @@ public:
     static void setHeaderData(KipiImageModel* const model);
     bool lessThan(const KipiImageItem* const otherItem, const int column) const;
 
-    void setCoordinates(const KMap::WMWGeoCoordinate& newCoordinates);
-    inline KMap::WMWGeoCoordinate coordinates() const { return m_gpsData.getCoordinates(); }
+    void setCoordinates(const KMap::GeoCoordinates& newCoordinates);
+    inline KMap::GeoCoordinates coordinates() const { return m_gpsData.getCoordinates(); }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
     inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
     void restoreGPSData(const GPSDataContainer& container);

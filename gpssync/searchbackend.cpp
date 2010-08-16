@@ -161,7 +161,7 @@ void SearchBackend::slotResult(KJob* kJob)
                 continue;
 
             SearchResult result;
-            result.coordinates = KMap::WMWGeoCoordinate(lat, lon);
+            result.coordinates = KMap::GeoCoordinates(lat, lon);
             result.name = displayName;
 
             if (!placeId.isEmpty())
@@ -228,7 +228,7 @@ void SearchBackend::slotResult(KJob* kJob)
                 continue;
 
             SearchResult result;
-            result.coordinates = KMap::WMWGeoCoordinate(lat, lon);
+            result.coordinates = KMap::GeoCoordinates(lat, lon);
             result.name = displayName;
 
             if (!geoNameId.isEmpty())

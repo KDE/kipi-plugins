@@ -24,6 +24,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QMimeData>
 #include <QString>
 
 // KDE includes
@@ -42,7 +43,7 @@ inline QString getKipiUserAgentName()
     return "KIPI-Plugins GPSSync - kde-imaging@kde.org";
 }
 
-inline void CoordinatesToClipboard(const KMap::WMWGeoCoordinate& coordinates, const KUrl& url, const QString& title)
+inline void CoordinatesToClipboard(const KMap::GeoCoordinates& coordinates, const KUrl& url, const QString& title)
 {
     const QString lat = coordinates.latString();
     const QString lon = coordinates.lonString();

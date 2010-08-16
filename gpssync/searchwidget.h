@@ -25,6 +25,10 @@
 #include <QAbstractItemModel>
 #include <QWidget>
 
+// libkmap includes
+
+#include <libkmap/kmap_modelhelper.h>
+
 // local includes
 
 #include "searchbackend.h"
@@ -75,7 +79,7 @@ private:
 };
 
 class SearchResultModelHelperPrivate;
-class SearchResultModelHelper : public KMap::WMWModelHelper
+class SearchResultModelHelper : public KMap::ModelHelper
 {
 Q_OBJECT
 public:
@@ -84,7 +88,7 @@ public:
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
-    virtual bool itemCoordinates(const QModelIndex& index, KMap::WMWGeoCoordinate* const coordinates) const;
+    virtual bool itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const;
     virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
     virtual Flags modelFlags() const;
     virtual Flags itemFlags(const QModelIndex& index) const;
@@ -108,7 +112,7 @@ public:
     SearchWidget(KMap::KMapWidget* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent = 0);
     ~SearchWidget();
 
-    KMap::WMWModelHelper* getModelHelper();
+    KMap::ModelHelper* getModelHelper();
     void saveSettingsToGroup(KConfigGroup* const group);
     void readSettingsFromGroup(const KConfigGroup* const group);
 

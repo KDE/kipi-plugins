@@ -40,6 +40,7 @@
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
 #include <kvbox.h>
 
 // Libkmap includes
@@ -414,7 +415,7 @@ public:
 };
 
 SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, KipiImageModel* const imageModel, QObject* const parent)
-: KMap::WMWModelHelper(parent), d(new SearchResultModelHelperPrivate())
+: KMap::ModelHelper(parent), d(new SearchResultModelHelperPrivate())
 {
     d->model = resultModel;
     d->selectionModel = selectionModel;
@@ -436,7 +437,7 @@ QItemSelectionModel* SearchResultModelHelper::selectionModel() const
     return d->selectionModel;
 }
 
-bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, KMap::WMWGeoCoordinate* const coordinates) const
+bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const
 {
     const SearchResultModel::SearchResultItem item = d->model->resultItem(index);
 
@@ -455,7 +456,7 @@ SearchResultModel::SearchResultItem SearchResultModel::resultItem(const QModelIn
     return d->searchResults.at(index.row());
 }
 
-KMap::WMWModelHelper* SearchWidget::getModelHelper()
+KMap::ModelHelper* SearchWidget::getModelHelper()
 {
     return d->searchResultModelHelper;
 }
@@ -598,12 +599,12 @@ void SearchWidget::readSettingsFromGroup(const KConfigGroup* const group)
     }
 }
 
-KMap::WMWModelHelper::Flags SearchResultModelHelper::modelFlags() const
+KMap::ModelHelper::Flags SearchResultModelHelper::modelFlags() const
 {
     return FlagSnaps|(d->visible?FlagVisible:FlagNull);
 }
 
-KMap::WMWModelHelper::Flags SearchResultModelHelper::itemFlags(const QModelIndex& /*index*/) const
+KMap::ModelHelper::Flags SearchResultModelHelper::itemFlags(const QModelIndex& /*index*/) const
 {
     return FlagVisible|FlagSnaps;
 }
@@ -613,7 +614,7 @@ void SearchResultModelHelper::snapItemsTo(const QModelIndex& targetIndex, const 
     GPSUndoCommand* const undoCommand = new GPSUndoCommand();
 
     SearchResultModel::SearchResultItem targetItem = d->model->resultItem(targetIndex);
-    const KMap::WMWGeoCoordinate& targetCoordinates = targetItem.result.coordinates;
+    const KMap::GeoCoordinates& targetCoordinates = targetItem.result.coordinates;
     for (int i=0; i<snappedIndices.count(); ++i)
     {
         const QPersistentModelIndex itemIndex = snappedIndices.at(i);
@@ -640,7 +641,7 @@ void SearchWidget::slotMoveSelectedImagesToThisResult()
 {
     const QModelIndex currentIndex = d->searchResultsSelectionModel->currentIndex();
     const SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(currentIndex);
-    const KMap::WMWGeoCoordinate& targetCoordinates = currentItem.result.coordinates;
+    const KMap::GeoCoordinates& targetCoordinates = currentItem.result.coordinates;
 
     const QModelIndexList selectedImageIndices = d->kipiImageSelectionModel->selectedRows();
     if (selectedImageIndices.isEmpty())

@@ -37,6 +37,7 @@
 // Libkmap includes
 
 #include <libkmap/kmap_primitives.h>
+#include <libkmap/kmap_modelhelper.h>
 
 // LibKIPI includes
 
@@ -52,7 +53,7 @@ class GPSSyncDialogPriv;
 
 class GPSSyncKMapModelHelperPrivate;
 
-class GPSSyncKMapModelHelper : public KMap::WMWModelHelper
+class GPSSyncKMapModelHelper : public KMap::ModelHelper
 {
 Q_OBJECT
 
@@ -63,14 +64,14 @@ public:
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
-    virtual bool itemCoordinates(const QModelIndex& index, KMap::WMWGeoCoordinate* const coordinates) const;
+    virtual bool itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const;
 
     virtual QPixmap pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size);
     virtual QPersistentModelIndex bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey);
 
-    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::WMWGeoCoordinate& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
+    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
 
-    void addUngroupedModelHelper(KMap::WMWModelHelper* const newModelHelper);
+    void addUngroupedModelHelper(KMap::ModelHelper* const newModelHelper);
 
 private Q_SLOTS:
 

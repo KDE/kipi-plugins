@@ -326,7 +326,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
                     }
 
                     foundData = true;
-                    KMap::WMWGeoCoordinate coordinates(ptLatitude, ptLongitude);
+                    KMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
                     if (haveAltitude)
                         coordinates.setAlt(ptAltitude);
                     gpsData.setCoordinates(coordinates);
@@ -347,7 +347,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
         const QString textdata  = mimedata->text();
 
         bool foundGeoUrl = false;
-        KMap::WMWGeoCoordinate testCoordinates = KMap::WMWGeoCoordinate::fromGeoUrl(textdata, &foundGeoUrl);
+        KMap::GeoCoordinates testCoordinates = KMap::GeoCoordinates::fromGeoUrl(textdata, &foundGeoUrl);
         if (foundGeoUrl)
         {
             gpsData.setCoordinates(testCoordinates);
@@ -379,7 +379,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
                 foundData = okay;
                 if (okay)
                 {
-                    KMap::WMWGeoCoordinate coordinates(ptLatitude, ptLongitude);
+                    KMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
                     if (haveAltitude)
                         coordinates.setAlt(ptAltitude);
                     gpsData.setCoordinates(coordinates);
