@@ -205,6 +205,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->selectionModel = new QItemSelectionModel(d->imageModel);
     d->mapModelHelper = new GPSSyncKMapModelHelper(d->imageModel, d->selectionModel, this);
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
+    
 
     d->undoStack = new KUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
@@ -246,6 +247,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->HSplitter->setStretchFactor(0, 10);
 
     d->mapWidget = new KMapIface::KMapWidget(this);
+    d->mapWidget->setAvailableMouseModes(KMapIface::MouseModePan|KMapIface::MouseModeZoom|KMapIface::MouseModeSelectThumbnail);
+    d->mapWidget->setVisibleMouseModes(KMapIface::MouseModePan|KMapIface::MouseModeZoom|KMapIface::MouseModeSelectThumbnail);
     d->mapWidget->setEditModeAvailable(true);
     KMapIface::ItemMarkerTiler* const kmapMarkerModel = new KMapIface::ItemMarkerTiler(d->mapModelHelper, this);
     d->mapWidget->setGroupedModel(kmapMarkerModel);
@@ -310,7 +313,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->tabBar->setShape(QTabBar::RoundedEast);
 
     dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
-
 
     d->tabBar->addTab("Details");
     d->tabBar->addTab("GPS Correlator");
@@ -418,6 +420,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
     readSettings();
+
+    d->mapWidget->setActive(true);
 }
 
 GPSSyncDialog::~GPSSyncDialog()
@@ -732,6 +736,9 @@ GPSSyncKMapModelHelper::GPSSyncKMapModelHelper(KipiImageModel* const model, QIte
 
     connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(const QPersistentModelIndex&, const QPixmap&)),
             this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
+
+    connect(d->model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
+            this, SLOT(signalModelChangedDrastically()));
 }
 
 QAbstractItemModel* GPSSyncKMapModelHelper::model() const
