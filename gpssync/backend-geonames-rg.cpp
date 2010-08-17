@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * Date        : 2010-05-12
- * Description : OSM Nominatim backend for Reverse Geocoding (non-US)
+ * Description : Backend for reverse geocoding using geonames.org (non-US)
  *
  * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
  * Copyright (C) 2010 by Gabriel Voicu <ping dot gabi at gmail dot com>
@@ -55,11 +55,11 @@ namespace KIPIGPSSyncPlugin
 
 class GeonamesInternalJobs
 {
-
 public:
 
     GeonamesInternalJobs()
-    : request(),
+    : language(),
+      request(),
       data(),
       kioJob(0)
     {
@@ -72,13 +72,15 @@ public:
 };
 
 
-class BackendGeonamesRGPrivate
+class BackendGeonamesRG::BackendGeonamesRGPrivate
 {
-
 public:
 
     BackendGeonamesRGPrivate()
-    :jobs()
+    : itemCounter(0),
+      itemCount(0),
+      jobs(),
+      errorMessage()
     {
     }
 
@@ -96,6 +98,7 @@ BackendGeonamesRG::BackendGeonamesRG(QObject* const parent)
 : RGBackend(parent), d(new BackendGeonamesRGPrivate())
 {
 }
+
 /**
  * Destructor
  */
@@ -109,12 +112,10 @@ BackendGeonamesRG::~BackendGeonamesRG()
  */
 void BackendGeonamesRG::nextPhoto()
 {
-    
     KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
     jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
     jobUrl.addQueryItem("lng", d->jobs.first().request.first().coordinates.lonString());
     jobUrl.addQueryItem("lang", d->jobs.first().language);
-
 
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
 
@@ -123,8 +124,7 @@ void BackendGeonamesRG::nextPhoto()
     connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
             this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
     connect(d->jobs.first().kioJob, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));    
-
+            this, SLOT(slotResult(KJob*)));
 }
 
 /**
@@ -247,9 +247,7 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
 
             for(int j = 0; j < d->jobs[i].request.count(); ++j)
             {
-
                 d->jobs[i].request[j].rgData =  resultMap;
-
             }
             emit(signalRGReady(d->jobs[i].request));
 

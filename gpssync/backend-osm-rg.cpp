@@ -21,12 +21,14 @@
 #include "backend-osm-rg.moc"
 
 //Qt includes
+
 #include <QDomDocument>
 #include <QMap>
 #include <QString>
 #include <QTimer>
 
 //KDE includes
+
 #include <kio/scheduler.h>
 #include <kurl.h>
 #include <kio/jobclasses.h>
@@ -36,6 +38,7 @@
 #include <klocale.h>
 
 //local includes
+
 #include "backend-osm-rg.h"
 #include "backend-rg.h"
 #include "gpssync_common.h"
@@ -62,13 +65,13 @@ public:
 };
 
 
-class BackendOsmRGPrivate
+class BackendOsmRG::BackendOsmRGPrivate
 {
-
 public:
-    
+
     BackendOsmRGPrivate()
-    : jobs()
+    : jobs(),
+      errorMessage()
     {
     }
     
@@ -89,8 +92,9 @@ public:
 BackendOsmRG::BackendOsmRG(QObject* const parent)
 : RGBackend(parent), d(new BackendOsmRGPrivate())
 {
-    
+
 }
+
 /**
  * Destructor
  */ 
@@ -152,7 +156,7 @@ void BackendOsmRG::callRGBackend(const QList<RGInfo>& rgList, const QString& lan
             d->jobs<<newJob;
         }
     }
-    
+
     if(!d->jobs.empty())
         nextPhoto();
 }
@@ -231,7 +235,7 @@ void BackendOsmRG::slotResult(KJob* kJob)
 {
     KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
 
-    if(kioJob->error())
+    if (kioJob->error())
     {
         d->errorMessage = kioJob->errorString();
         emit(signalRGReady(d->jobs.first().request));
@@ -240,9 +244,9 @@ void BackendOsmRG::slotResult(KJob* kJob)
         return;
     }
 
-    for(int i = 0; i < d->jobs.count(); ++i)
+    for (int i = 0; i < d->jobs.count(); ++i)
     {
-        if(d->jobs.at(i).kioJob == kioJob)
+        if (d->jobs.at(i).kioJob == kioJob)
         {
             QString dataString;
             dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
@@ -252,17 +256,15 @@ void BackendOsmRG::slotResult(KJob* kJob)
 
             QMap<QString, QString> resultMap = makeQMapFromXML(dataString);
 
-            for(int j = 0; j < d->jobs[i].request.count(); ++j)
+            for (int j = 0; j < d->jobs[i].request.count(); ++j)
             {
-
-                d->jobs[i].request[j].rgData = resultMap; 
-            
+                d->jobs[i].request[j].rgData = resultMap;
             }
             emit(signalRGReady(d->jobs[i].request));
  
             d->jobs.removeAt(i);
 
-            if(!d->jobs.empty())
+            if (!d->jobs.empty())
             {    
                 QTimer::singleShot(500, this, SLOT(nextPhoto()));
             }
@@ -272,4 +274,4 @@ void BackendOsmRG::slotResult(KJob* kJob)
     }
 }
 
-} //KIPIGPSSyncPlugin
+} // KIPIGPSSyncPlugin

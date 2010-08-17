@@ -29,20 +29,12 @@
 
 #include <kurl.h>
 
-// Libkmap includes
-
-#include <libkmap/kmap_primitives.h>
-
 // local includes
 
 #include "kipiimageitem.h"
 
 namespace KIPIGPSSyncPlugin
 {
-
-class RGBackendPrivate;
-
-
 
 class RGBackend : public QObject
 {
@@ -65,12 +57,8 @@ Q_SIGNALS:
      */
     void signalRGReady(QList<RGInfo>&);   
 
-private:
-
-    RGBackendPrivate* const d;    
-
 };
 
 } //KIPIGPSPlugin
 
-#endif
+#endif /* BACKEND_RG_H */

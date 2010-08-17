@@ -17,10 +17,12 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef BACKEND_OSM_RG_H
 #define BACKEND_OSM_RG_H
 
 //kde includes
+
 #include <kmainwindow.h>
 #include <kio/scheduler.h>
 #include <kurl.h>
@@ -29,11 +31,13 @@
 #include <klocale.h>
 
 //Qt includes
+
 #include <QWidget>
 #include <QList>
 #include <QMap>
 
 //local includes
+
 #include "backend-rg.h"
 
 namespace KIO { class Job; }
@@ -42,11 +46,8 @@ class KJob;
 namespace KIPIGPSSyncPlugin
 {
 
-class BackendOsmRGPrivate;
-
 class BackendOsmRG : public RGBackend
 {
-
     Q_OBJECT
 
 public:
@@ -59,17 +60,18 @@ public:
     virtual QString backendName();
 
 private Q_SLOTS:
-   
+
     void nextPhoto(); 
-    void dataIsHere(KIO::Job*, const QByteArray &); 
-    void slotResult(KJob*);
+    void dataIsHere(KIO::Job* kJob, const QByteArray &); 
+    void slotResult(KJob* kJob);
 
 private:
-    BackendOsmRGPrivate *d;
 
+    class BackendOsmRGPrivate;
+    BackendOsmRGPrivate* const d;
 };
 
 
-} //KIPIGISSyncPlugin
+} // KIPIGISSyncPlugin
 
-#endif
+#endif /* BACKEND_OSM_RG_H */

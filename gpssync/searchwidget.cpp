@@ -45,7 +45,7 @@
 
 // Libkmap includes
 
-#include <libkmap/kmapwidget.h>
+#include <libkmap/kmap_widget.h>
 
 // local includes
 

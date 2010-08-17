@@ -77,8 +77,7 @@
 
 // Libkmap includes
 
-#include <libkmap/html_widget.h>
-#include <libkmap/kmapwidget.h>
+#include <libkmap/kmap_widget.h>
 #include <libkmap/itemmarkertiler.h>
 
 // Local includes

@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * Date        : 2010-05-12
- * Description : OSM Nominatim backend for Reverse Geocoding (non-US)
+ * Description : Backend for reverse geocoding using geonames.org (non-US)
  *
  * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
  * Copyright (C) 2010 by Gabriel Voicu <ping dot gabi at gmail dot com>
@@ -22,6 +22,7 @@
 #define BACKEND_GEONAMES_RG_H
 
 //kde includes
+
 #include <kmainwindow.h>
 #include <kio/scheduler.h>
 #include <kurl.h>
@@ -30,12 +31,14 @@
 #include <klocale.h>
 
 //Qt includes
+
 #include <QWidget>
 #include <QList>
 #include <QMap>
 #include <QString>
 
 //local includes
+
 #include "backend-rg.h"
 
 namespace KIO { class Job; }
@@ -44,11 +47,8 @@ class KJob;
 namespace KIPIGPSSyncPlugin
 {
 
-class BackendGeonamesRGPrivate;
-
 class BackendGeonamesRG : public RGBackend
 {
-
     Q_OBJECT
 
 public:
@@ -63,14 +63,16 @@ public:
 private Q_SLOTS:
   
     void nextPhoto(); 
-    void dataIsHere(KIO::Job*, const QByteArray &); 
-    void slotResult(KJob*);
-private:
-    BackendGeonamesRGPrivate *d;
+    void dataIsHere(KIO::Job* kJob, const QByteArray &);
+    void slotResult(KJob* kJob);
 
+private:
+
+    class BackendGeonamesRGPrivate;
+    BackendGeonamesRGPrivate* const d;
 };
 
 
 } //KIPIGISSyncPlugin
 
-#endif
+#endif /* BACKEND_GEONAMES_RG_H */
