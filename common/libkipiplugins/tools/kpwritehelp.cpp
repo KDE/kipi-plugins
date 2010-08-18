@@ -8,7 +8,7 @@
  *               Helper functions for writing images
  *
  * Copyright (C) 1994-1996, Thomas G. Lane.
- * Copyright (C) 2009 by Patrick Spendrin <ps_ml@gmx.de>
+ * Copyright (C) 2009-2010 by Patrick Spendrin <ps_ml@gmx.de>
  *
  * This file is based on jdatadst.c from libjpeg.
  *
@@ -54,8 +54,8 @@ typedef struct
 {
     struct jpeg_destination_mgr pub; /* public fields */
 
-    QIODevice* outDevice;		   /* target stream */
-    JOCTET*    buffer;		   /* start of buffer */
+    QIODevice* outDevice;   /* target stream */
+    JOCTET*    buffer;      /* start of buffer */
 } my_destination_mgr;
 
 typedef my_destination_mgr * my_dest_ptr;
