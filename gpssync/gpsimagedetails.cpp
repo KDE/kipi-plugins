@@ -17,8 +17,9 @@
  *
  * ============================================================ */
 
-#include "gpsimagedetails.h"
 #include "gpsimagedetails.moc"
+
+// C++ includes
 
 #include <limits.h>
 #include <math.h>
@@ -44,42 +45,52 @@
 #include "kipiimagemodel.h"
 #include "gpsundocommand.h"
 
-
 namespace KIPIGPSSyncPlugin
 {
 
 class GPSImageDetails::GPSImageDetailsPrivate
 {
 public:
+
     GPSImageDetailsPrivate()
-    : externalEnabledState(true),
-      activeState(false),
-      haveDelayedState(false)
+        : imageModel(0),
+          previewManager(0),
+          cbCoordinates(0),
+          leLatitude(0),
+          leLongitude(0),
+          cbAltitude(0),
+          leAltitude(0),
+          cbSpeed(0),
+          leSpeed(0),
+          externalEnabledState(true),
+          activeState(false),
+          haveDelayedState(false)
     {
     }
 
-    KipiImageModel           *imageModel;
-    KIPIPlugins::PreviewManager *previewManager;
+    KipiImageModel*              imageModel;
+    KIPIPlugins::PreviewManager* previewManager;
 
-    QCheckBox *cbCoordinates;
-    KLineEdit *leLatitude;
-    KLineEdit *leLongitude;
-    QCheckBox *cbAltitude;
-    KLineEdit *leAltitude;
-    QCheckBox *cbSpeed;
-    KLineEdit *leSpeed;
+    QCheckBox*                   cbCoordinates;
+    KLineEdit*                   leLatitude;
+    KLineEdit*                   leLongitude;
+    QCheckBox*                   cbAltitude;
+    KLineEdit*                   leAltitude;
+    QCheckBox*                   cbSpeed;
+    KLineEdit*                   leSpeed;
 
-    QPushButton *pbApply;
+    QPushButton*                 pbApply;
 
-    QPersistentModelIndex imageIndex;
-    GPSDataContainer infoOld;
-    bool externalEnabledState;
-    bool activeState;
-    bool haveDelayedState;
+    QPersistentModelIndex        imageIndex;
+    GPSDataContainer             infoOld;
+    bool                         externalEnabledState;
+    bool                         activeState;
+    bool                         haveDelayedState;
 };
 
-GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel, const int marginHint, const int spacingHint)
-: QWidget(parent), d(new GPSImageDetailsPrivate())
+GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const imageModel,
+                                 const int /*marginHint*/, const int /*spacingHint*/)
+               : QWidget(parent), d(new GPSImageDetailsPrivate())
 {
     d->imageModel = imageModel;
 
@@ -160,11 +171,11 @@ void GPSImageDetails::setUIEnabledExternal(const bool state)
     updateUIState();
 }
 
-void GPSImageDetails::saveSettingsToGroup(KConfigGroup* const group)
+void GPSImageDetails::saveSettingsToGroup(KConfigGroup* const /*group*/)
 {
 }
 
-void GPSImageDetails::readSettingsFromGroup(const KConfigGroup* const group)
+void GPSImageDetails::readSettingsFromGroup(const KConfigGroup* const /*group*/)
 {
 }
 
@@ -333,4 +344,3 @@ void GPSImageDetails::slotSetActive(const bool state)
 }
 
 } /* KIPIGPSSyncPlugin */
-

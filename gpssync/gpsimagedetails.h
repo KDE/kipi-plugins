@@ -42,7 +42,7 @@ class GPSDataContainer;
 
 class GPSImageDetails : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -54,18 +54,22 @@ public:
     void readSettingsFromGroup(const KConfigGroup* const group);
 
 Q_SIGNALS:
+
     void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 public Q_SLOTS:
+
     void slotSetCurrentImage(const QModelIndex& index);
     void slotSetActive(const bool state);
 
 private Q_SLOTS:
+
     void updateUIState();
     void slotModelDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight);
     void slotApply();
 
 protected:
+
     void displayGPSDataContainer(const GPSDataContainer* const gpsData);
 
 private:
@@ -77,4 +81,3 @@ private:
 } /* KIPIGPSSyncPlugin */
 
 #endif /* GPSIMAGEDETAILS_H */
-
