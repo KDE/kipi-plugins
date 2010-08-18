@@ -48,7 +48,7 @@
 namespace KIPIPlugins
 {
 
-class PreviewImagePriv
+class PreviewImage::PreviewImagePriv
 {
 
 public:

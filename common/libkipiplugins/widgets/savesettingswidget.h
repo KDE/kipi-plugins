@@ -38,8 +38,6 @@
 namespace KIPIPlugins
 {
 
-class SaveSettingsWidgetPriv;
-
 class KIPIPLUGINS_EXPORT SaveSettingsWidget : public QWidget
 {
     Q_OBJECT
@@ -93,6 +91,7 @@ Q_SIGNALS:
 
 private:
 
+    class SaveSettingsWidgetPriv;
     SaveSettingsWidgetPriv* const d;
 };
 

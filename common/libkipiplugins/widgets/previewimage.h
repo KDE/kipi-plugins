@@ -41,7 +41,6 @@ class QEvent;
 
 namespace KIPIPlugins
 {
-class PreviewImagePriv;
 
 class KIPIPLUGINS_EXPORT PreviewImage : public QGraphicsView
 {
@@ -73,6 +72,7 @@ protected:
 
 private:
 
+    class PreviewImagePriv;
     PreviewImagePriv* const d;
 };
 
