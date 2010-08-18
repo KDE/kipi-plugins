@@ -66,13 +66,31 @@ namespace KIPIPlugins
 
 const int DEFAULTSIZE = KIconLoader::SizeLarge;
 
-ImagesListViewItem::ImagesListViewItem(ImagesListView *view, const KUrl& url)
-                  : QTreeWidgetItem(view)
+class ImagesListViewItem::ImagesListViewItemPriv
+{
+public:
+
+    ImagesListViewItemPriv()
+    {
+        rating = -1;
+        view   = 0;
+    }
+
+    int             rating;         // Image Rating from Kipi host.
+    QString         comments;       // Image comments from Kipi host.
+    QStringList     tags;           // List of keywords from Kipi host.
+    KUrl            url;            // Image url provided by Kipi host.
+    QPixmap         thumb;          // Image thumbnail
+    ImagesListView* view;
+};
+
+ImagesListViewItem::ImagesListViewItem(ImagesListView* view, const KUrl& url)
+                  : QTreeWidgetItem(view), d(new ImagesListViewItemPriv)
 {
     kDebug() << "Creating new ImageListViewItem with url " << url
              << " for list view " << view;
-    m_view       = view;
-    int iconSize = m_view->iconSize().width();
+    d->view      = view;
+    int iconSize = d->view->iconSize().width();
     setThumb(SmallIcon("image-x-generic", iconSize, KIconLoader::DisabledState));
     setUrl(url);
     setRating(-1);
@@ -81,24 +99,25 @@ ImagesListViewItem::ImagesListViewItem(ImagesListView *view, const KUrl& url)
 
 ImagesListViewItem::~ImagesListViewItem()
 {
+    delete d;
 }
 
 void ImagesListViewItem::updateInformation()
 {
-    if (m_view->iface())
+    if (d->view->iface())
     {
-        ImageInfo info = m_view->iface()->info(m_url);
+        ImageInfo info = d->view->iface()->info(d->url);
 
         setComments(info.description());
 
         setTags(QStringList());
-        if (m_view->iface()->hasFeature(HostSupportsTags))
+        if (d->view->iface()->hasFeature(HostSupportsTags))
         {
             QMap<QString, QVariant> attribs = info.attributes();
             setTags(attribs["tags"].toStringList());
         }
 
-        if (m_view->iface()->hasFeature(HostSupportsRating))
+        if (d->view->iface()->hasFeature(HostSupportsRating))
         {
             QMap<QString, QVariant> attribs = info.attributes();
             setRating(attribs["rating"].toInt());
@@ -108,98 +127,110 @@ void ImagesListViewItem::updateInformation()
 
 void ImagesListViewItem::setUrl(const KUrl& url)
 {
-    m_url = url;
-    setText(ImagesListView::Filename, m_url.fileName());
+    d->url = url;
+    setText(ImagesListView::Filename, d->url.fileName());
 }
 
 KUrl ImagesListViewItem::url() const
 {
-    return m_url;
+    return d->url;
 }
 
 void ImagesListViewItem::setComments(const QString& comments)
 {
-    m_comments = comments;
+    d->comments = comments;
 }
 
-QString ImagesListViewItem::comments()
+QString ImagesListViewItem::comments() const
 {
-    return m_comments;
+    return d->comments;
 }
 
 void ImagesListViewItem::setTags(const QStringList& tags)
 {
-    m_tags = tags;
+    d->tags = tags;
 }
 
-QStringList ImagesListViewItem::tags()
+QStringList ImagesListViewItem::tags() const
 {
-    return m_tags;
+    return d->tags;
 }
 
 void ImagesListViewItem::setRating(int rating)
 {
-    m_rating = rating;
+    d->rating = rating;
 }
 
-int ImagesListViewItem::rating()
+int ImagesListViewItem::rating() const
 {
-    return m_rating;
+    return d->rating;
+}
+
+void ImagesListViewItem::setPixmap(const QPixmap& pix)
+{
+    QIcon icon = QIcon(pix);
+    //  We make sure the preview icon stays the same regardless of the role
+    icon.addPixmap(pix, QIcon::Selected, QIcon::On);
+    icon.addPixmap(pix, QIcon::Selected, QIcon::Off);
+    icon.addPixmap(pix, QIcon::Active,   QIcon::On);
+    icon.addPixmap(pix, QIcon::Active,   QIcon::Off);
+    icon.addPixmap(pix, QIcon::Normal,   QIcon::On);
+    icon.addPixmap(pix, QIcon::Normal,   QIcon::Off);
+    setIcon(ImagesListView::Thumbnail, icon);
 }
 
 void ImagesListViewItem::setThumb(const QPixmap& pix)
 {
-    kDebug() << "Received new thumbnail for url " << m_url
-             << ". My view is " << m_view;
-    if (!m_view)
+    kDebug() << "Received new thumbnail for url " << d->url
+             << ". My view is " << d->view;
+    if (!d->view)
     {
         kError() << "This item doesn't have a tree view. "
                  << "This should never happen!";
         return;
     }
 
-    int iconSize = qMax<int>(m_view->iconSize().width(), m_view->iconSize().height());
+    int iconSize = qMax<int>(d->view->iconSize().width(), d->view->iconSize().height());
     QPixmap pixmap(iconSize+2, iconSize+2);
     pixmap.fill(Qt::transparent);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
-    m_thumb = pixmap;
-    setIcon(ImagesListView::Thumbnail, QIcon(m_thumb));
+    d->thumb = pixmap;
+    setPixmap(d->thumb);
 }
 
 void ImagesListViewItem::setProgressAnimation(const QPixmap& pix)
 {
-    QPixmap overlay = m_thumb;
+    QPixmap overlay = d->thumb;
     QPixmap mask(overlay.size());
     mask.fill(QColor(128, 128, 128, 192));
     QPainter p(&overlay);
     p.drawPixmap(0, 0, mask);
     p.drawPixmap((overlay.width()/2) - (pix.width()/2), (overlay.height()/2) - (pix.height()/2), pix);
-    setIcon(ImagesListView::Thumbnail, QIcon(overlay));
+    setPixmap(overlay);
 }
 
 void ImagesListViewItem::setProcessedIcon(const QIcon& icon)
 {
     setIcon(ImagesListView::Filename, icon);
     // reset thumbnail back to no animation pix
-    setIcon(ImagesListView::Thumbnail, QIcon(m_thumb));
+    setPixmap(d->thumb);
 }
 
-
-ImagesListView* ImagesListViewItem::view()
+ImagesListView* ImagesListViewItem::view() const
 {
-    return m_view;
+    return d->view;
 }
 
 // ---------------------------------------------------------------------------
 
-ImagesListView::ImagesListView(ImagesList *parent)
+ImagesListView::ImagesListView(ImagesList* parent)
               : QTreeWidget(parent)
 {
     setup(DEFAULTSIZE);
 }
 
-ImagesListView::ImagesListView(int iconSize, ImagesList *parent)
+ImagesListView::ImagesListView(int iconSize, ImagesList* parent)
               : QTreeWidget(parent)
 {
     setup(iconSize);
@@ -292,7 +323,7 @@ ImagesListViewItem* ImagesListView::findItem(const KUrl& url)
     QTreeWidgetItemIterator it(this);
     while (*it)
     {
-        ImagesListViewItem *lvItem = dynamic_cast<ImagesListViewItem*>(*it);
+        ImagesListViewItem* lvItem = dynamic_cast<ImagesListViewItem*>(*it);
         if (lvItem && lvItem->url() == url)
         {
             return lvItem;
@@ -302,21 +333,21 @@ ImagesListViewItem* ImagesListView::findItem(const KUrl& url)
     return 0;
 }
 
-void ImagesListView::dragEnterEvent(QDragEnterEvent *e)
+void ImagesListView::dragEnterEvent(QDragEnterEvent* e)
 {
     QTreeWidget::dragEnterEvent(e);
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();
 }
 
-void ImagesListView::dragMoveEvent(QDragMoveEvent *e)
+void ImagesListView::dragMoveEvent(QDragMoveEvent* e)
 {
     QTreeWidget::dragMoveEvent(e);
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();
 }
 
-void ImagesListView::dropEvent(QDropEvent *e)
+void ImagesListView::dropEvent(QDropEvent* e)
 {
     QTreeWidget::dropEvent(e);
     QList<QUrl> list = e->mimeData()->urls();
@@ -335,7 +366,7 @@ void ImagesListView::dropEvent(QDropEvent *e)
 
 KIPI::Interface* ImagesListView::iface() const
 {
-    ImagesList *p = dynamic_cast<ImagesList*>(parent());
+    ImagesList* p = dynamic_cast<ImagesList*>(parent());
     if (p)
         return p->iface();
 
@@ -347,7 +378,6 @@ KIPI::Interface* ImagesListView::iface() const
 CtrlButton::CtrlButton(const QIcon& icon, QWidget* parent)
           : QPushButton(parent)
 {
-
     const int btnSize = 32;
 
     setMinimumSize(btnSize, btnSize);
@@ -361,7 +391,7 @@ CtrlButton::~CtrlButton()
 
 // ---------------------------------------------------------------------------
 
-class ImagesListPriv
+class ImagesList::ImagesListPriv
 {
 public:
 
@@ -408,7 +438,7 @@ public:
     LoadRawThumbThread* loadRawThumb;
 };
 
-ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
+ImagesList::ImagesList(Interface* iface, QWidget* parent, int iconSize)
           : QWidget(parent), d(new ImagesListPriv)
 {
     d->iface = iface;
@@ -418,7 +448,7 @@ ImagesList::ImagesList(Interface *iface, QWidget* parent, int iconSize)
 
     // --------------------------------------------------------
 
-    d->listView  = new ImagesListView(d->iconSize, this);
+    d->listView = new ImagesListView(d->iconSize, this);
     d->listView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     // --------------------------------------------------------
@@ -530,7 +560,7 @@ void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
 
     // --------------------------------------------------------
 
-    QHBoxLayout *hBtnLayout = new QHBoxLayout;
+    QHBoxLayout* hBtnLayout = new QHBoxLayout;
     hBtnLayout->addStretch(10);
     hBtnLayout->addWidget(d->moveUpButton);
     hBtnLayout->addWidget(d->moveDownButton);
@@ -543,7 +573,7 @@ void ImagesList::setControlButtonsPlacement(ControlButtonPlacement placement)
 
     // --------------------------------------------------------
 
-    QVBoxLayout *vBtnLayout = new QVBoxLayout;
+    QVBoxLayout* vBtnLayout = new QVBoxLayout;
     vBtnLayout->addStretch(10);
     vBtnLayout->addWidget(d->moveUpButton);
     vBtnLayout->addWidget(d->moveDownButton);
@@ -678,7 +708,7 @@ void ImagesList::slotAddImages(const KUrl::List& list)
     }
     else
     {
-        KIO::PreviewJob *job = KIO::filePreview(urls, DEFAULTSIZE);
+        KIO::PreviewJob* job = KIO::filePreview(urls, DEFAULTSIZE);
 
         connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
                 this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
@@ -744,7 +774,7 @@ void ImagesList::slotRemoveItems()
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin();
          it!=selectedItemsList.constEnd(); ++it)
     {
-        d->listView->removeItemWidget( *it, 0);
+        d->listView->removeItemWidget(*it, 0);
         delete *it;
     }
     emit signalImageListChanged();
@@ -870,7 +900,7 @@ void ImagesList::clearProcessedStatus()
     QTreeWidgetItemIterator it(d->listView);
     while (*it)
     {
-        ImagesListViewItem *lvItem = dynamic_cast<ImagesListViewItem*>(*it);
+        ImagesListViewItem* lvItem = dynamic_cast<ImagesListViewItem*>(*it);
         if (lvItem)
         {
             lvItem->setProcessedIcon(QIcon());
@@ -889,7 +919,7 @@ KIPI::Interface* ImagesList::iface() const
     return d->iface;
 }
 
-bool ImagesList::isRAWFile(const QString & filePath)
+bool ImagesList::isRAWFile(const QString& filePath)
 {
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 
