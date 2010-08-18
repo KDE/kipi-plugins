@@ -7,7 +7,7 @@
  * Description : Kipi-Plugins shared library.
  *               Interface to write image data to common picture format.
  *
- * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -62,7 +62,7 @@ extern "C"
 namespace KIPIPlugins
 {
 
-class KPWriteImagePriv
+class KPWriteImage::KPWriteImagePriv
 {
 public:
 
@@ -76,7 +76,7 @@ public:
         kipipluginsVer = QString("Kipi-plugins v.%1").arg(kipiplugins_version);
     }
 
-    bool                *cancel;
+    bool*                cancel;
 
     bool                 sixteenBit;
     bool                 hasAlpha;
@@ -351,7 +351,7 @@ bool KPWriteImage::write2PNG(const QString& destPath)
         return false;
     }
 
-    uchar       *data       = 0;
+    uchar*       data       = 0;
     int          bitsDepth  = d->sixteenBit ? 16 : 8;
     png_color_8  sig_bit;
     png_bytep    row_ptr;
@@ -813,8 +813,8 @@ QByteArray KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::
     return data;
 }
 
-void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *profile_type,
-                                   char *profile_data, png_uint_32 length)
+void KPWriteImage::writeRawProfile(png_struct* ping, png_info* ping_info, char* profile_type,
+                                   char* profile_data, png_uint_32 length)
 {
     png_textp      text;
 
@@ -876,11 +876,11 @@ void KPWriteImage::writeRawProfile(png_struct *ping, png_info *ping_info, char *
     png_free(ping, text);
 }
 
-size_t KPWriteImage::concatenateString(char *destination, const char *source, const size_t length)
+size_t KPWriteImage::concatenateString(char* destination, const char* source, const size_t length)
 {
-    register char       *q;
+    register char*       q;
 
-    register const char *p;
+    register const char* p;
 
     register size_t      i;
 
@@ -917,11 +917,11 @@ size_t KPWriteImage::concatenateString(char *destination, const char *source, co
     return(count+(p-source));
 }
 
-size_t KPWriteImage::copyString(char *destination, const char *source, const size_t length)
+size_t KPWriteImage::copyString(char* destination, const char* source, const size_t length)
 {
-    register char       *q;
+    register char*       q;
 
-    register const char *p;
+    register const char* p;
 
     register size_t      i;
 
@@ -956,7 +956,7 @@ size_t KPWriteImage::copyString(char *destination, const char *source, const siz
     return((size_t) (p-source-1));
 }
 
-long KPWriteImage::formatString(char *string, const size_t length, const char *format,...)
+long KPWriteImage::formatString(char* string, const size_t length, const char* format, ...)
 {
     long n;
 
@@ -968,7 +968,7 @@ long KPWriteImage::formatString(char *string, const size_t length, const char *f
     return(n);
 }
 
-long KPWriteImage::formatStringList(char *string, const size_t length, const char *format, va_list operands)
+long KPWriteImage::formatStringList(char* string, const size_t length, const char* format, va_list operands)
 {
     int n = vsnprintf(string, length, format, operands);
 

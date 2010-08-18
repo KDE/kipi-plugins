@@ -39,7 +39,7 @@
 namespace KIPIPlugins
 {
 
-class SaveSettingsWidgetPriv
+class SaveSettingsWidget::SaveSettingsWidgetPriv
 {
 public:
 

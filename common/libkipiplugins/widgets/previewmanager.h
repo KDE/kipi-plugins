@@ -41,7 +41,6 @@
 
 namespace KIPIPlugins
 {
-class PreviewManagerPriv;
 
 class KIPIPLUGINS_EXPORT PreviewManager : public QStackedWidget
 {
@@ -82,6 +81,7 @@ private Q_SLOTS:
 
 private:
 
+    class PreviewManagerPriv;
     PreviewManagerPriv* const d;
 };
 

@@ -6,7 +6,7 @@
  * Date        : 2004-05-01
  * Description : image files selector dialog.
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,7 +55,7 @@ using namespace KDcrawIface;
 namespace KIPIPlugins
 {
 
-class ImageDialogPreviewPrivate
+class ImageDialogPreview::ImageDialogPreviewPrivate
 {
 
 public:
@@ -68,24 +68,24 @@ public:
         loadRawThumb = 0;
     }
 
-    QLabel              *imageLabel;
-    QLabel              *infoLabel;
+    QLabel*             imageLabel;
+    QLabel*             infoLabel;
 
-    KUrl                 currentUrl;
+    KUrl                currentUrl;
 
-    KExiv2Iface::KExiv2  exiv2Iface;
+    KExiv2Iface::KExiv2 exiv2Iface;
 
-    KIPI::Interface     *iface;
+    KIPI::Interface*    iface;
 
-    LoadRawThumbThread  *loadRawThumb;
+    LoadRawThumbThread* loadRawThumb;
 };
 
-ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
+ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
                   : KPreviewWidgetBase(parent), d(new ImageDialogPreviewPrivate)
 {
     d->iface = iface;
 
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    QVBoxLayout* vlay = new QVBoxLayout(this);
     d->imageLabel     = new QLabel(this);
     d->imageLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->imageLabel->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
@@ -123,7 +123,7 @@ QSize ImageDialogPreview::sizeHint() const
     return QSize(256, 256);
 }
 
-void ImageDialogPreview::resizeEvent(QResizeEvent *)
+void ImageDialogPreview::resizeEvent(QResizeEvent*)
 {
     QMetaObject::invokeMethod(this, "showPreview", Qt::QueuedConnection);
 }
@@ -329,7 +329,7 @@ void ImageDialogPreview::clearPreview()
 
 // ------------------------------------------------------------------------
 
-class ImageDialogPrivate
+class ImageDialog::ImageDialogPrivate
 {
 
 public:
@@ -386,10 +386,10 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
 
     d->fileFormats = patternList.join("\n");
 
-    QPointer<KFileDialog> dlg = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
-                                                         : KGlobalSettings::documentPath(),
-                                                d->fileFormats, parent);
-    ImageDialogPreview *preview = new ImageDialogPreview(d->iface, dlg);
+    QPointer<KFileDialog> dlg   = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
+                                                           : KGlobalSettings::documentPath(),
+                                                  d->fileFormats, parent);
+    ImageDialogPreview* preview = new ImageDialogPreview(d->iface, dlg);
     dlg->setPreviewWidget(preview);
     dlg->setOperationMode(KFileDialog::Opening);
 
@@ -470,7 +470,7 @@ KUrl::List ImageDialog::getImageUrls(QWidget* parent, KIPI::Interface* iface, bo
 
 // ------------------------------------------------------------------------
 
-class LoadRawThumbThreadPriv
+class LoadRawThumbThread::LoadRawThumbThreadPriv
 {
 public:
 
@@ -491,7 +491,7 @@ public:
     KUrl::List     todo;
 };
 
-LoadRawThumbThread::LoadRawThumbThread(QObject *parent, int size)
+LoadRawThumbThread::LoadRawThumbThread(QObject* parent, int size)
                   : QThread(parent), d(new LoadRawThumbThreadPriv)
 {
     d->size = size;

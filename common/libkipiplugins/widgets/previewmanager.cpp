@@ -47,7 +47,7 @@
 namespace KIPIPlugins
 {
 
-class PreviewManagerPriv
+class PreviewManager::PreviewManagerPriv
 {
 public:
 

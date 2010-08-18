@@ -6,7 +6,7 @@
  * Date        : 2006-14-09
  * Description : Kipi-Plugins shared library.
  *
- * Copyright (C) 2006-2009 Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2006-2010 Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

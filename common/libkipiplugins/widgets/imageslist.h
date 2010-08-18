@@ -59,7 +59,6 @@ namespace KIPIPlugins
 
 class ImagesList;
 class ImagesListView;
-class ImagesListPriv;
 
 class KIPIPLUGINS_EXPORT ImagesListViewItem : public QTreeWidgetItem
 {
@@ -73,13 +72,13 @@ public:
     KUrl url() const;
 
     void setComments(const QString& comments);
-    QString comments();
+    QString comments() const;
 
     void setTags(const QStringList& tags);
-    QStringList tags();
+    QStringList tags() const;
 
     void setRating(int rating);
-    int rating();
+    int rating() const;
 
     void setThumb(const QPixmap& pix);
     void setProgressAnimation(const QPixmap& pix);
@@ -94,16 +93,16 @@ public:
 
 protected:
 
-    ImagesListView* view();
+    ImagesListView* view() const;
 
 private:
 
-    int             m_rating;         // Image Rating from Kipi host.
-    QString         m_comments;       // Image comments from Kipi host.
-    QStringList     m_tags;           // List of keywords from Kipi host.
-    KUrl            m_url;            // Image url provided by Kipi host.
-    QPixmap         m_thumb;          // Image thumbnail
-    ImagesListView* m_view;
+    void setPixmap(const QPixmap& pix);
+
+private:
+
+    class ImagesListViewItemPriv;
+    ImagesListViewItemPriv* const d;
 };
 
 // -------------------------------------------------------------------------
@@ -126,8 +125,8 @@ public:
         User6
     };
 
-    explicit ImagesListView(ImagesList *parent = 0);
-    explicit ImagesListView(int iconSize, ImagesList *parent = 0);
+    explicit ImagesListView(ImagesList* parent = 0);
+    explicit ImagesListView(int iconSize, ImagesList* parent = 0);
     ~ImagesListView();
 
     void setColumnLabel(ColumnType column, const QString& label);
@@ -152,9 +151,9 @@ public:
 
 private:
 
-    void dragEnterEvent(QDragEnterEvent *e);
-    void dragMoveEvent(QDragMoveEvent *e);
-    void dropEvent(QDropEvent *e);
+    void dragEnterEvent(QDragEnterEvent* e);
+    void dragMoveEvent(QDragMoveEvent* e);
+    void dropEvent(QDropEvent* e);
 
     void setup(int iconSize);
 
@@ -266,6 +265,7 @@ private:
 
 private:
 
+    class ImagesListPriv;
     ImagesListPriv* const d;
 };
 
