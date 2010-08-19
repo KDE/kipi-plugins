@@ -169,9 +169,9 @@ void BackendGeonamesUSRG::callRGBackend(const QList<RGInfo>& rgList, const QStri
 
 void BackendGeonamesUSRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
-    for(int i = 0; i < d->jobs.count(); ++i)
+    for (int i = 0; i < d->jobs.count(); ++i)
     {
-        if(d->jobs.at(i).kioJob == job)
+        if (d->jobs.at(i).kioJob == job)
         {
             d->jobs[i].data.append(data);
             break;
@@ -201,7 +201,7 @@ QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(const QString& xmlDat
         if (!e.isNull())
         {
 
-            if((e.tagName().compare(QString("adminName2")) == 0) ||
+            if ((e.tagName().compare(QString("adminName2")) == 0) ||
                (e.tagName().compare(QString("adminName1")) == 0) ||
                (e.tagName().compare(QString("placeName")) == 0))
             { 

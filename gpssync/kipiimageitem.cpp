@@ -363,21 +363,21 @@ QVariant KipiImageItem::data(const int column, const int role) const
     }
     else if ((column==ColumnTags)&&(role==Qt::DisplayRole))
     {
-        if(!m_tagList.isEmpty())
+        if (!m_tagList.isEmpty())
         {
 
             QString myTagsList;
             for (int i=0; i<m_tagList.count(); ++i)
             {
                 QString myTag;
-                for(int j=0; j<m_tagList[i].count(); ++j)
+                for (int j=0; j<m_tagList[i].count(); ++j)
                 {
                     myTag.append(QString("/") + m_tagList[i].at(j).tagName);
-                    if(j == 0)
+                    if (j == 0)
                         myTag.remove(0,1);
                 }
 
-                if(!myTagsList.isEmpty())
+                if (!myTagsList.isEmpty())
                     myTagsList.append(", ");
                 myTagsList.append(myTag);
             }
@@ -679,17 +679,17 @@ QString KipiImageItem::saveChanges()
             }
         }
 
-        if(!m_tagList.isEmpty() && m_writeXmpTags)
+        if (!m_tagList.isEmpty() && m_writeXmpTags)
         {
 
             QStringList tagSeq;
 
-            for(int i=0; i<m_tagList.count(); ++i)
+            for (int i=0; i<m_tagList.count(); ++i)
             {
                 QList<TagData> currentTagList = m_tagList[i];
                 QString tag;
 
-                for(int j=0; j<currentTagList.count(); ++j)
+                for (int j=0; j<currentTagList.count(); ++j)
                 {
                     tag.append(QString("/") + currentTagList[j].tagName);
                 }
@@ -699,12 +699,12 @@ QString KipiImageItem::saveChanges()
             }
 
             bool succes = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
-            if(!succes)
+            if (!succes)
             {
                 returnString = i18n("Failed to save tags to file.");
             }
             succes = exiv2Iface->setXmpTagStringSeq("Xmp.dc.subject", tagSeq, true);
-            if(!succes)
+            if (!succes)
             {
                 returnString = i18n("Failed to save tags to file.");
             }
@@ -753,20 +753,20 @@ QString KipiImageItem::saveChanges()
             info.delAttributes(listToRemove);
         }
 
-        if(!m_tagList.isEmpty())
+        if (!m_tagList.isEmpty())
         {
             QMap<QString, QVariant> attributes;
             QStringList tagsPath;
 
-            for(int i=0; i<m_tagList.count(); ++i)
+            for (int i=0; i<m_tagList.count(); ++i)
             {
 
                 QString singleTagPath;
                 QList<TagData> currentTagPath = m_tagList[i];
-                for(int j=0; j<currentTagPath.count(); ++j)
+                for (int j=0; j<currentTagPath.count(); ++j)
                 {
                     singleTagPath.append(QString("%1").arg("/") + currentTagPath[j].tagName);
-                    if(j == 0)
+                    if (j == 0)
                     {
                         singleTagPath.remove(0,1);
                     }
@@ -805,30 +805,30 @@ void KipiImageItem::restoreRGTagList(const QList<QList<TagData> >& tagList)
     //TODO: override == operator
 
 
-    if(tagList.count() != m_savedTagList.count())
+    if (tagList.count() != m_savedTagList.count())
         m_tagListDirty = true;
     else
     {
-        for(int i=0; i<tagList.count(); ++i)
+        for (int i=0; i<tagList.count(); ++i)
         {
             bool foundNotEqual = false;
 
-            if(tagList[i].count() != m_savedTagList[i].count())
+            if (tagList[i].count() != m_savedTagList[i].count())
             {
                 m_tagListDirty = true;
                 break;
             }
 
-            for(int j=0; j<tagList[i].count(); ++j)
+            for (int j=0; j<tagList[i].count(); ++j)
             {
-                if(tagList[i].at(j).tagName != m_savedTagList[i].at(j).tagName)
+                if (tagList[i].at(j).tagName != m_savedTagList[i].at(j).tagName)
                 {
                     foundNotEqual = true;
                     break;
                 }
             }
 
-            if(foundNotEqual)
+            if (foundNotEqual)
             {
                 m_tagListDirty = true;
                 break;

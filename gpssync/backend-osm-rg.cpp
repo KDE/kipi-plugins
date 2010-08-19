@@ -134,12 +134,12 @@ void BackendOsmRG::callRGBackend(const QList<RGInfo>& rgList, const QString& lan
 {
     d->errorMessage.clear();
 
-    for( int i = 0; i < rgList.count(); i++)
+    for ( int i = 0; i < rgList.count(); i++)
     {
         bool foundIt = false;
-        for( int j=0; j < d->jobs.count(); j++)
+        for ( int j=0; j < d->jobs.count(); j++)
         {
-            if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
+            if (d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
             {
                 d->jobs[j].request << rgList[i];
                 d->jobs[j].language = language;
@@ -148,7 +148,7 @@ void BackendOsmRG::callRGBackend(const QList<RGInfo>& rgList, const QString& lan
              }
         }
 
-        if(!foundIt)
+        if (!foundIt)
         {
             OsmInternalJobs newJob;
             newJob.request << rgList.at(i);
@@ -157,15 +157,15 @@ void BackendOsmRG::callRGBackend(const QList<RGInfo>& rgList, const QString& lan
         }
     }
 
-    if(!d->jobs.empty())
+    if (!d->jobs.empty())
         nextPhoto();
 }
 
 void BackendOsmRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
-    for(int i = 0; i < d->jobs.count(); ++i)
+    for (int i = 0; i < d->jobs.count(); ++i)
     {
-        if(d->jobs.at(i).kioJob == job)
+        if (d->jobs.at(i).kioJob == job)
         {
             d->jobs[i].data.append(data);
             break;
@@ -187,12 +187,12 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(const QString& xmlData)
     QDomElement docElem =  doc.documentElement();
     QDomNode n = docElem.lastChild().firstChild();
 
-    while(!n.isNull())
+    while (!n.isNull())
     {
         QDomElement e = n.toElement();
-        if(!e.isNull())
+        if (!e.isNull())
         {
-            if( (e.tagName() == QString("country")) ||
+            if ( (e.tagName() == QString("country")) ||
                 (e.tagName() == QString("state")) ||
                 (e.tagName() == QString("state_district")) ||
                 (e.tagName() == QString("county")) ||

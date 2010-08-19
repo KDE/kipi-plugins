@@ -498,7 +498,7 @@ void GPSSyncDialog::setCurrentTab(int index)
 
 void GPSSyncDialog::setImages( const KUrl::List& images )
 {
-    for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
+    for ( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
     {
         KipiImageItem* const newItem = new KipiImageItem(d->interface, *it);
         d->imageModel->addItem(newItem);

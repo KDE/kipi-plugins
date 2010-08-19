@@ -136,12 +136,12 @@ void BackendGeonamesRG::callRGBackend(const QList<RGInfo>& rgList, const QString
 {
     d->errorMessage.clear();
 
-    for( int i = 0; i < rgList.count(); ++i)
+    for ( int i = 0; i < rgList.count(); ++i)
     {
             bool foundIt = false;
-            for( int j=0; j < d->jobs.count(); j++)
+            for ( int j=0; j < d->jobs.count(); j++)
             {
-                if(d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
+                if (d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
                 {
                     d->jobs[j].request << rgList[i];
                     d->jobs[j].language = language;
@@ -149,7 +149,7 @@ void BackendGeonamesRG::callRGBackend(const QList<RGInfo>& rgList, const QString
                     break;
                 }   
             }
-            if(!foundIt)
+            if (!foundIt)
             {
                 GeonamesInternalJobs newJob;
                 newJob.request << rgList.at(i);
@@ -162,9 +162,9 @@ void BackendGeonamesRG::callRGBackend(const QList<RGInfo>& rgList, const QString
 
 void BackendGeonamesRG::dataIsHere(KIO::Job* job, const QByteArray & data)
 {
-    for(int i = 0; i < d->jobs.count(); ++i)
+    for (int i = 0; i < d->jobs.count(); ++i)
     {
-        if(d->jobs.at(i).kioJob == job)
+        if (d->jobs.at(i).kioJob == job)
         {
             d->jobs[i].data.append(data);
             break;
@@ -192,7 +192,7 @@ QMap<QString,QString> BackendGeonamesRG::makeQMapFromXML(const QString& xmlData)
         const QDomElement e = n.toElement();
         if (!e.isNull())
         {
-            if( (e.tagName().compare(QString("countryName")) == 0) ||
+            if ( (e.tagName().compare(QString("countryName")) == 0) ||
                 (e.tagName().compare(QString("name")) == 0) )
             {
                 mappedData.insert(e.tagName(), e.text());
@@ -224,7 +224,7 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
 {
     KIO::Job* kioJob = qobject_cast<KIO::Job*>(kJob);
 
-    if(kioJob->error())
+    if (kioJob->error())
     {
 
         d->errorMessage = kioJob->errorString();
@@ -233,9 +233,9 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
         return;
     }
 
-    for(int i = 0;i < d->jobs.count(); ++i)
+    for (int i = 0;i < d->jobs.count(); ++i)
     {
-        if(d->jobs.at(i).kioJob == kioJob)
+        if (d->jobs.at(i).kioJob == kioJob)
         {
             QString dataString;
             dataString = QString::fromUtf8(d->jobs[i].data.constData(),qstrlen(d->jobs[i].data.constData()));
@@ -245,14 +245,14 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
 
             QMap<QString,QString> resultMap = makeQMapFromXML(dataString);
 
-            for(int j = 0; j < d->jobs[i].request.count(); ++j)
+            for (int j = 0; j < d->jobs[i].request.count(); ++j)
             {
                 d->jobs[i].request[j].rgData =  resultMap;
             }
             emit(signalRGReady(d->jobs[i].request));
 
             d->jobs.removeAt(i);
-            if(!d->jobs.empty())
+            if (!d->jobs.empty())
             {
                 QTimer::singleShot(500, this, SLOT(nextPhoto()));
             }

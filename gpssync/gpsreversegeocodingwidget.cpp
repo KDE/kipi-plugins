@@ -457,7 +457,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     QString wantedLanguage = d->languageEdit->itemData(d->languageEdit->currentIndex()).toString(); 
     QList<QList<TagData> > returnedSpacers = d->tagModel->getSpacers();
 
-    for( int i = 0; i < selectedItems.count(); ++i)
+    for ( int i = 0; i < selectedItems.count(); ++i)
     {
 
         const QPersistentModelIndex itemIndex = selectedItems.at(i);
@@ -495,7 +495,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
  */ 
 void GPSReverseGeocodingWidget::slotHideOptions()
 {
-    if(d->hideOptions)
+    if (d->hideOptions)
     {
         d->LGridContainer->hide();
         d->hideOptions = false;
@@ -516,7 +516,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
     const QString errorString = d->currentBackend->getErrorMessage();
     
-    if(!errorString.isEmpty())
+    if (!errorString.isEmpty())
     {
         KMessageBox::error(this, errorString);
         
@@ -526,17 +526,17 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     } 
 
     QString address;
-    for(int i = 0; i < returnedRGList.count(); ++i)
+    for (int i = 0; i < returnedRGList.count(); ++i)
     {
         QPersistentModelIndex currentImageIndex = returnedRGList[i].id;
 
-        if(!returnedRGList[i].rgData.empty())
+        if (!returnedRGList[i].rgData.empty())
         {
             QString addressElementsWantedFormat;
 
-            if(d->currentBackend->backendName() == QString("Geonames"))
+            if (d->currentBackend->backendName() == QString("Geonames"))
                 addressElementsWantedFormat.append("/{Country}/{Place}");
-            else if(d->currentBackend->backendName() == QString("GeonamesUS"))
+            else if (d->currentBackend->backendName() == QString("GeonamesUS"))
                 addressElementsWantedFormat.append("/{LAU2}/{LAU1}/{City}");
             else     
                 addressElementsWantedFormat.append("/{Country}/{State}/{State district}/{County}/{City}/{City district}/{Suburb}/{Town}/{Village}/{Hamlet}/{Street}/{House number}");
@@ -557,11 +557,11 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 
             QStringList elements, resultedData;
 
-            for(int i=0; i<listAddressElementsWantedFormat.count(); ++i)
+            for (int i=0; i<listAddressElementsWantedFormat.count(); ++i)
             {
                 QString currentAddressFormat = listAddressElementsWantedFormat.at(i);
                 int currentIndexFormat = listAddressFormat.indexOf(currentAddressFormat,0);
-                if(currentIndexFormat != -1)
+                if (currentIndexFormat != -1)
                 {
                     elements<<currentAddressFormat;
                     resultedData<<listAddressElements.at(currentIndexFormat);
@@ -611,9 +611,9 @@ void GPSReverseGeocodingWidget::setUIEnabled(const bool state)
  */ 
 bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 {
-    if(watched == d->tagTreeView)
+    if (watched == d->tagTreeView)
     {
-        if((event->type()==QEvent::ContextMenu) && d->UIEnabled) 
+        if ((event->type()==QEvent::ContextMenu) && d->UIEnabled) 
         {
             KMenu * const menu = new KMenu(d->tagTreeView);
  
@@ -626,7 +626,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 
             const Type tagType = d->tagModel->getTagType(d->currentTagTreeIndex);
 
-            if( backendName == QString("OSM"))
+            if ( backendName == QString("OSM"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag);
                 menu->addSeparator(); 
@@ -643,13 +643,13 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionAddStreet);
                 menu->addAction(d->actionAddHouseNumber);
             }
-            else if( backendName == QString("Geonames"))
+            else if ( backendName == QString("Geonames"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag); 
                 menu->addAction(d->actionAddCountry);
                 menu->addAction(d->actionAddPlace);
             }
-            else if( backendName == QString("GeonamesUS"))
+            else if ( backendName == QString("GeonamesUS"))
             {
                 menu->addAction(d->actionAddAllAddressElementsToTag); 
                 menu->addAction(d->actionAddLAU2);
@@ -688,7 +688,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
     int spacerCount = currentSpacerList.count();
     group->writeEntry("Spacers count", spacerCount);
 
-    for(int i=0; i<currentSpacerList.count(); i++)
+    for (int i=0; i<currentSpacerList.count(); i++)
     {
         QString spacerName;
         spacerName.append(QString("Spacerlistname %1").arg(i));  
@@ -697,14 +697,14 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
       
         QStringList spacerTagNames;
         QStringList spacerTypes;
-        for(int j=0; j<currentSpacerList[i].count(); j++)
+        for (int j=0; j<currentSpacerList[i].count(); j++)
         {   
             spacerTagNames.append(currentSpacerList[i].at(j).tagName);
-            if(currentSpacerList[i].at(j).tagType == TypeSpacer)
+            if (currentSpacerList[i].at(j).tagType == TypeSpacer)
             {
                 spacerTypes.append(QString("Spacer"));
             } 
-            else if(currentSpacerList[i].at(j).tagType == TypeNewChild)
+            else if (currentSpacerList[i].at(j).tagType == TypeNewChild)
             {
                 spacerTypes.append(QString("NewChild"));
             }
@@ -728,23 +728,23 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
     int spacerCount = group->readEntry("Spacers count", 0);
     QList<QList<TagData> > spacersList;
 
-    for(int i=0; i<spacerCount; i++)
+    for (int i=0; i<spacerCount; i++)
     {
         QStringList spacerTagNames  = group->readEntry(QString("Spacerlistname %1").arg(i), QStringList());
         QStringList spacerTypes = group->readEntry(QString("Spacerlisttype %1").arg(i), QStringList());
         QList<TagData> currentSpacerAddress; 
 
-        for(int j=0; j<spacerTagNames.count(); ++j)
+        for (int j=0; j<spacerTagNames.count(); ++j)
         {
             TagData currentTagData;
             currentTagData.tagName = spacerTagNames.at(j);
             
             QString currentTagType = spacerTypes.at(j);
-            if(currentTagType == QString("Spacer"))
+            if (currentTagType == QString("Spacer"))
                 currentTagData.tagType = TypeSpacer;
-            else if(currentTagType == QString("NewChild"))
+            else if (currentTagType == QString("NewChild"))
                 currentTagData.tagType = TypeNewChild;
-            else if(currentTagType == QString("OldChild"))
+            else if (currentTagType == QString("OldChild"))
                 currentTagData.tagType = TypeChild;
 
             currentSpacerAddress.append(currentTagData);
@@ -772,7 +772,7 @@ void GPSReverseGeocodingWidget::slotAddSingleSpacer()
 {
     //    const QModelIndex baseIndex = d->tagSelectionModel->currentIndex();
     QModelIndex baseIndex;    
-    if(!d->currentTagTreeIndex.isValid())
+    if (!d->currentTagTreeIndex.isValid())
         baseIndex = d->currentTagTreeIndex;
     else
         baseIndex = d->tagSelectionModel->currentIndex();
@@ -789,7 +789,7 @@ void GPSReverseGeocodingWidget::slotAddSingleSpacer()
 void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
 {
     QModelIndex baseIndex;    
-    if(!d->currentTagTreeIndex.isValid())
+    if (!d->currentTagTreeIndex.isValid())
         baseIndex = d->currentTagTreeIndex;
     else
         baseIndex = d->tagSelectionModel->currentIndex();
@@ -798,7 +798,7 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
     QString textString;
     
     textString = QInputDialog::getText(this,QString("%1").arg("Add new tag:"), QString("%1").arg("Select a name for the new tag:"), QLineEdit::Normal, QString::null, &ok);
-    if( ok && !textString.isEmpty())
+    if ( ok && !textString.isEmpty())
     {
         d->tagModel->addSpacerTag(baseIndex, textString);
     }
@@ -822,7 +822,7 @@ void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
     QString whatShouldRemove = QString("Spacers");
     
     QModelIndex baseIndex;    
-    if(!d->currentTagTreeIndex.isValid())
+    if (!d->currentTagTreeIndex.isValid())
         baseIndex = d->currentTagTreeIndex;
     else
         baseIndex = d->tagSelectionModel->currentIndex();
@@ -836,13 +836,13 @@ void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
 void GPSReverseGeocodingWidget::slotReaddNewTags()
 {
 
-    for( int row=0; row<d->imageModel->rowCount(); ++row)
+    for ( int row=0; row<d->imageModel->rowCount(); ++row)
     {
 
         KipiImageItem* const currentItem = d->imageModel->itemFromIndex(d->imageModel->index(row,0));
 
         QList<QList<TagData> > tagAddresses = currentItem->getTagList();
-        if(!tagAddresses.isEmpty())
+        if (!tagAddresses.isEmpty())
             d->tagModel->readdNewTags(tagAddresses);
     }
 
@@ -866,14 +866,14 @@ void GPSReverseGeocodingWidget::slotRegenerateNewTags()
 void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
 {
     QModelIndex baseIndex;    
-    if(!d->currentTagTreeIndex.isValid())
+    if (!d->currentTagTreeIndex.isValid())
         baseIndex = d->currentTagTreeIndex;
     else
         baseIndex = d->tagSelectionModel->currentIndex();
 
     QStringList spacerList;
 
-    if(d->currentBackend->backendName() == QString("OSM"))
+    if (d->currentBackend->backendName() == QString("OSM"))
     {
         spacerList.append(QString("{Country}"));
         spacerList.append(QString("{State}"));
@@ -888,7 +888,7 @@ void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
         spacerList.append(QString("{Street}"));
         spacerList.append(QString("{House number}"));
     }
-    else if(d->currentBackend->backendName() == QString("Geonames"))
+    else if (d->currentBackend->backendName() == QString("Geonames"))
     {
         spacerList.append(QString("{Country}"));
         spacerList.append(QString("{Place}"));
