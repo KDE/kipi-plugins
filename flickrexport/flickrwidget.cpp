@@ -557,6 +557,14 @@ void FlickrWidget::slotExtendedPublicationToggled(bool status)
     m_extendedPublicationBox->setVisible(status);
     m_imglst->listView()->setColumnHidden(FlickrList::SAFETYLEVEL, !status);
     m_imglst->listView()->setColumnHidden(FlickrList::CONTENTTYPE, !status);
+    if (status)
+    {
+        m_extendedPublicationButton->setText(i18n("Less publication options"));
+    }
+    else
+    {
+        m_extendedPublicationButton->setText(i18n("More publication options"));
+    }
 }
 
 void FlickrWidget::slotExtendedTagsToggled(bool status)
@@ -567,10 +575,12 @@ void FlickrWidget::slotExtendedTagsToggled(bool status)
     if (!status)
     {
         m_imglst->listView()->setColumnHidden(FlickrList::TAGS, true);
+        m_extendedTagsButton->setText(i18n("More tag options"));
     }
     else
     {
         m_imglst->listView()->setColumnHidden(FlickrList::TAGS, !m_addExtraTagsCheckBox->isChecked());
+        m_extendedTagsButton->setText(i18n("Less tag options"));
     }
 }
 
