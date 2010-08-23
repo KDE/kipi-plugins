@@ -12,5 +12,4 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> GPSSync         : 246266 : Search for location when adding geo coordinates.
 005 ==> PicasaWebExport : 247106 : Google picassa plugin does not work anymore since google changed parts of the interface.
 006 ==> GPSSync         : 246897 : GPSSync bad coordinate rounding.
-007 ==> 
 
