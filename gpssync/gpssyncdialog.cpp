@@ -23,6 +23,7 @@
  *
  * ============================================================ */
 
+#include "gpssync_common.h"
 #include "gpssyncdialog.moc"
 
 // Qt includes
@@ -98,6 +99,7 @@
 #include "searchwidget.h"
 #include "backend-rg.h"
 #include "gpsimagedetails.h"
+#include "setup.h"
 
 #ifdef GPSSYNC_MODELTEST
 #include <modeltest.h>
@@ -138,6 +140,9 @@ public:
       uiEnabled(true),
       splitterSize(0)
     {
+        // TODO: initialize in the initializer list
+        mapWidget2 = 0;
+        setupGlobalObject = SetupGlobalObject::instance();
     }
 
     KIPI::Interface          *interface;
@@ -150,12 +155,15 @@ public:
     KTabWidget               *tabWidget;
     QSplitter                *VSplitter;
     QSplitter                *HSplitter;
-    KMap::KMapWidget    *mapWidget;
+    QSplitter                *mapSplitter;
+    KMap::KMapWidget         *mapWidget;
+    KMap::KMapWidget         *mapWidget2;
     KipiImageList            *treeView;
     GPSImageDetails          *detailsWidget;
     GPSSettingsWidget        *settingsWidget;
     GPSCorrelatorWidget      *correlatorWidget;
     GPSSyncKMapModelHelper   *mapModelHelper;
+    KMap::ItemMarkerTiler    *kmapMarkerModel;
     bool uiEnabled;
     QFuture<QPair<KUrl,QString> > changedFilesSaveFuture;
     QFutureWatcher<QPair<KUrl,QString> > *changedFilesSaveFutureWatcher;
@@ -170,6 +178,7 @@ public:
     QUndoView *undoView;
     QAction *sortActionOldestFirst;
     QAction *sortActionYoungestFirst;
+    QMenu* sortMenu;
 
     QStackedWidget	     *stackedWidget;
     QTabBar                  *tabBar;
@@ -179,6 +188,8 @@ public:
     KAction *actionBookmarkVisibility;
     GPSListViewContextMenu* listViewContextMenu;
     SearchWidget* searchWidget;
+    MapLayout mapLayout;
+    SetupGlobalObject* setupGlobalObject;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -198,16 +209,17 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     new ModelTest(d->imageModel, this);
 #endif /* GPSSYNC_MODELTEST */
 
+    d->undoStack = new KUndoStack(this);
+    d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
+
     d->imageModel->setKipiInterface(d->interface);
     KipiImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
     d->selectionModel = new QItemSelectionModel(d->imageModel);
     d->mapModelHelper = new GPSSyncKMapModelHelper(d->imageModel, d->selectionModel, this);
+    d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
-    
-
-    d->undoStack = new KUndoStack(this);
-    d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
+    d->kmapMarkerModel = new KMap::ItemMarkerTiler(d->mapModelHelper, this);
 
     d->actionBookmarkVisibility = new KAction(this);
     d->actionBookmarkVisibility->setIcon(KIcon("user-trash"));
@@ -238,6 +250,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
             this, SLOT(slotProgressCancelButtonClicked()));
 
     d->buttonBox = new KDialogButtonBox(hboxBottom);
+    d->buttonBox->addButton(KStandardGuiItem::configure(), QDialogButtonBox::ActionRole, this, SLOT(slotConfigureClicked()));
     d->buttonBox->addButton(KStandardGuiItem::apply(), QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
     d->buttonBox->addButton(KStandardGuiItem::close(), QDialogButtonBox::RejectRole, this, SLOT(close()));
 
@@ -245,45 +258,30 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->HSplitter->addWidget(d->VSplitter);
     d->HSplitter->setStretchFactor(0, 10);
 
-    d->mapWidget = new KMap::KMapWidget(this);
-    d->mapWidget->setAvailableMouseModes(KMap::MouseModePan|KMap::MouseModeZoom|KMap::MouseModeSelectThumbnail);
-    d->mapWidget->setVisibleMouseModes(KMap::MouseModePan|KMap::MouseModeZoom|KMap::MouseModeSelectThumbnail);
-    d->mapWidget->setEditModeAvailable(true);
-    KMap::ItemMarkerTiler* const kmapMarkerModel = new KMap::ItemMarkerTiler(d->mapModelHelper, this);
-    d->mapWidget->setGroupedModel(kmapMarkerModel);
-    d->mapWidget->setDragDropHandler(d->mapDragDropHandler);
-    d->mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
-    d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
-
-    QToolButton* const bookmarkVisibilityButton = new QToolButton(this);
-    bookmarkVisibilityButton->setDefaultAction(d->actionBookmarkVisibility);
-    d->mapWidget->addWidgetToControlWidget(bookmarkVisibilityButton);
-
-    connect(d->actionBookmarkVisibility, SIGNAL(changed()),
-            this, SLOT(slotBookmarkVisibilityToggled()));
-
-    QMenu* const sortMenu = new QMenu(this);
-    sortMenu->setTitle(i18n("Sorting"));
-    QActionGroup* const sortOrderExclusive = new QActionGroup(sortMenu);
+    d->sortMenu = new QMenu(this);
+    d->sortMenu->setTitle(i18n("Sorting"));
+    QActionGroup* const sortOrderExclusive = new QActionGroup(d->sortMenu);
     sortOrderExclusive->setExclusive(true);
     connect(sortOrderExclusive, SIGNAL(triggered(QAction*)),
             this, SLOT(slotSortOptionTriggered(QAction*)));
 
     d->sortActionOldestFirst = new KAction(i18n("Show oldest first"), sortOrderExclusive);
     d->sortActionOldestFirst->setCheckable(true);
-    sortMenu->addAction(d->sortActionOldestFirst);
+    d->sortMenu->addAction(d->sortActionOldestFirst);
 
     d->sortActionYoungestFirst = new KAction(i18n("Show youngest first"), sortOrderExclusive);
-    sortMenu->addAction(d->sortActionYoungestFirst);
+    d->sortMenu->addAction(d->sortActionYoungestFirst);
     d->sortActionYoungestFirst->setCheckable(true);
 
-    d->mapWidget->setSortOptionsMenu(sortMenu);
+    connect(d->actionBookmarkVisibility, SIGNAL(changed()),
+            this, SLOT(slotBookmarkVisibilityToggled()));
 
-    QWidget* const dummyWidget = new QWidget(this);
-    QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
-    vbox->addWidget(d->mapWidget);
-    vbox->addWidget(d->mapWidget->getControlWidget());
-    d->VSplitter->addWidget(dummyWidget);
+
+    QWidget* mapVBox;
+    d->mapWidget = makeMapWidget(&mapVBox);
+    d->mapSplitter = new QSplitter(this);
+    d->mapSplitter->addWidget(mapVBox);
+    d->VSplitter->addWidget(d->mapSplitter);
 
     d->treeView = new KipiImageList(d->interface, this);
     d->treeView->setModelAndSelectionModel(d->imageModel, d->selectionModel);
@@ -417,6 +415,10 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     connect(d->detailsWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
+
+
+    connect(d->setupGlobalObject, SIGNAL(signalSetupChanged()),
+            this, SLOT(slotSetupChanged()));
 
     readSettings();
 
@@ -567,6 +569,19 @@ void GPSSyncDialog::readSettings()
         }
     }
     d->splitterSize = group.readEntry("Splitter H1 CollapsedSize", 0);
+
+    // ----------------------------------
+
+    d->mapLayout = MapLayout(group.readEntry("Map Layout", QVariant::fromValue(int(MapLayoutOne))).value<int>());
+    d->setupGlobalObject->writeEntry("Map Layout", QVariant::fromValue(d->mapLayout));
+    adjustMapLayout(false);
+    if (d->mapWidget2)
+    {
+        const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget 2");
+        d->mapWidget2->readSettingsFromGroup(&groupMapWidget);
+
+        d->mapWidget2->setActive(true);
+    }
 }
 
 void GPSSyncDialog::saveSettings()
@@ -578,6 +593,12 @@ void GPSSyncDialog::saveSettings()
 
     KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
     d->mapWidget->saveSettingsToGroup(&groupMapWidget);
+
+    if (d->mapWidget2)
+    {
+        KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget 2");
+        d->mapWidget2->saveSettingsToGroup(&groupMapWidget);
+    }
 
     KConfigGroup groupCorrelatorWidget = KConfigGroup(&group, "Correlator Widget");
     d->correlatorWidget->saveSettingsToGroup(&groupCorrelatorWidget);
@@ -602,6 +623,7 @@ void GPSSyncDialog::saveSettings()
     group.writeEntry(QString("SplitterState V1"), d->VSplitter->saveState().toBase64());
     group.writeEntry(QString("SplitterState H1"), d->HSplitter->saveState().toBase64());
     group.writeEntry("Splitter H1 CollapsedSize", d->splitterSize);
+    group.writeEntry("Map Layout", QVariant::fromValue(int(d->mapLayout)));
 
     // --------------------------
 
@@ -711,7 +733,6 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
 {
-
     slotSetUIEnabled(enabledState, 0, QString());
 }
 
@@ -988,6 +1009,88 @@ void GPSSyncDialog::slotBookmarkVisibilityToggled()
 void GPSSyncKMapModelHelper::addUngroupedModelHelper(KMap::ModelHelper* const newModelHelper)
 {
     d->ungroupedModelHelpers << newModelHelper;
+}
+
+void GPSSyncDialog::slotConfigureClicked()
+{
+    KConfig config("kipirc");
+    QScopedPointer<Setup> setup(new Setup(this));
+
+    setup->exec();
+}
+
+void GPSSyncDialog::slotSetupChanged()
+{
+    d->mapLayout = d->setupGlobalObject->readEntry("Map Layout").value<MapLayout>();
+
+    adjustMapLayout(true);
+}
+
+KMap::KMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
+{
+    QWidget* const dummyWidget = new QWidget(this);
+    QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
+
+    KMap::KMapWidget* const mapWidget = new KMap::KMapWidget(dummyWidget);
+    mapWidget->setAvailableMouseModes(KMap::MouseModePan|KMap::MouseModeZoom|KMap::MouseModeSelectThumbnail);
+    mapWidget->setVisibleMouseModes(KMap::MouseModePan|KMap::MouseModeZoom|KMap::MouseModeSelectThumbnail);
+    mapWidget->setEditModeAvailable(true);
+    mapWidget->setGroupedModel(d->kmapMarkerModel);
+    mapWidget->setDragDropHandler(d->mapDragDropHandler);
+    mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
+    mapWidget->setSortOptionsMenu(d->sortMenu);
+
+    vbox->addWidget(mapWidget);
+    vbox->addWidget(mapWidget->getControlWidget());
+
+    QToolButton* const bookmarkVisibilityButton = new QToolButton(mapWidget);
+    bookmarkVisibilityButton->setDefaultAction(d->actionBookmarkVisibility);
+    mapWidget->addWidgetToControlWidget(bookmarkVisibilityButton);
+
+    *pvbox = dummyWidget;
+
+    return mapWidget;
+}
+
+void GPSSyncDialog::adjustMapLayout(const bool syncSettings)
+{
+    if (d->mapLayout==MapLayoutOne)
+    {
+        if (d->mapSplitter->count()>1)
+        {
+            delete d->mapSplitter->widget(1);
+            d->mapWidget2 = 0;
+        }
+    }
+    else
+    {
+        if (d->mapSplitter->count()==1)
+        {
+            QWidget* mapHolder;
+            d->mapWidget2 = makeMapWidget(&mapHolder);
+            d->mapSplitter->addWidget(mapHolder);
+
+            if (syncSettings)
+            {
+                KConfig config("kipirc");
+                KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
+
+                const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
+                d->mapWidget2->readSettingsFromGroup(&groupMapWidget);
+
+                d->mapWidget2->setActive(true);
+            }
+        }
+
+        if (d->mapLayout==MapLayoutHorizontal)
+        {
+            d->mapSplitter->setOrientation(Qt::Horizontal);
+        }
+        else
+        {
+            d->mapSplitter->setOrientation(Qt::Vertical);
+        }
+    }
 }
 
 }  // namespace KIPIGPSSyncPlugin

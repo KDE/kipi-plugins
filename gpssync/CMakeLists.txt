@@ -24,6 +24,8 @@ SET(kipiplugin_gpssync_PART_SRCS
     backend-osm-rg.cpp
     searchbackend.cpp
     searchwidget.cpp
+    setup.cpp
+    setup_general.cpp
     borrowed/modeltest.cpp
     backend-geonamesUS-rg.cpp
     rgtagmodel.cpp

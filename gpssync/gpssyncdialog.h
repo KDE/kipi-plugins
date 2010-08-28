@@ -43,6 +43,11 @@
 
 #include <libkipi/interface.h>
 
+namespace KMap
+{
+    class KMapWidget;
+}
+
 namespace KIPIGPSSyncPlugin
 {
 
@@ -108,6 +113,8 @@ private:
     void readSettings();
     void saveSettings();
     void saveChanges(const bool closeAfterwards);
+    KMap::KMapWidget* makeMapWidget(QWidget** const pvbox);
+    void adjustMapLayout(const bool syncSettings);
 
 private Q_SLOTS:
 
@@ -115,6 +122,7 @@ private Q_SLOTS:
     void slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
     void slotSetUIEnabled(const bool enabledState);
     void slotApplyClicked();
+    void slotConfigureClicked();
     void slotFileChangesSaved(int beginIndex, int endIndex);
     void slotProgressChanged(const int currentProgress);
     void slotProgressSetup(const int maxProgress, const QString& progressText);
@@ -124,6 +132,7 @@ private Q_SLOTS:
     void slotProgressCancelButtonClicked();
     void slotCurrentTabChanged(int);
     void slotBookmarkVisibilityToggled();
+    void slotSetupChanged();
 
 private:
 

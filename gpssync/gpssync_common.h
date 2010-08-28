@@ -38,6 +38,13 @@
 namespace KIPIGPSSyncPlugin
 {
 
+enum MapLayout
+{
+    MapLayoutOne = 0,
+    MapLayoutHorizontal = 1,
+    MapLayoutVertical = 2
+};
+
 inline QString getKipiUserAgentName()
 {
     return "KIPI-Plugins GPSSync - kde-imaging@kde.org";
@@ -97,5 +104,7 @@ inline void CoordinatesToClipboard(const KMap::GeoCoordinates& coordinates, cons
 }
 
 } /* KIPIGPSSyncPlugin */
+
+Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::MapLayout);
 
 #endif /* GPSSYNC_COMMON_H */
