@@ -66,35 +66,40 @@ class SearchWidgetPrivate
 {
 public:
     SearchWidgetPrivate()
-    : searchInProgress(false),
-      actionToggleAllResultsVisibilityIconUnchecked(SmallIcon("layer-visible-off")),
-      actionToggleAllResultsVisibilityIconChecked(SmallIcon("layer-visible-on"))
     {
+        // TODO: initialize in initializer list
+        searchInProgress = false;
+        actionToggleAllResultsVisibilityIconUnchecked=KIcon(SmallIcon("layer-visible-off"));
+        actionToggleAllResultsVisibilityIconChecked=KIcon(SmallIcon("layer-visible-on"));
     }
 
-    KMap::KMapWidget* mapWidget;
-    GPSBookmarkOwner* gpsBookmarkOwner;
-    KipiImageModel* kipiImageModel;
-    QItemSelectionModel* kipiImageSelectionModel;
-    KLineEdit* searchTermLineEdit;
-    QPushButton* searchButton;
-    SearchBackend* searchBackend;
-    QTreeView* treeView;
-    SearchResultModel* searchResultsModel;
-    QItemSelectionModel* searchResultsSelectionModel;
-    SearchResultModelHelper* searchResultModelHelper;
-    QVBoxLayout* mainVBox;
-    KComboBox* backendSelectionBox;
+    // Map
+    KMap::KMapWidget                          *mapWidget;
+    GPSBookmarkOwner                          *gpsBookmarkOwner;
+    KipiImageModel                            *kipiImageModel;
+    QItemSelectionModel                       *kipiImageSelectionModel;
+    KLineEdit                                 *searchTermLineEdit;
+    QPushButton                               *searchButton;
 
-    KAction* actionClearResultsList;
-    KAction* actionKeepOldResults;
-    KAction* actionToggleAllResultsVisibility;
-    bool searchInProgress;
-    KIcon actionToggleAllResultsVisibilityIconUnchecked;
-    KIcon actionToggleAllResultsVisibilityIconChecked;
-    KAction* actionCopyCoordinates;
-    KAction* actionBookmark;
-    KAction* actionMoveImagesToThisResult;
+    // Search: backend
+    SearchBackend                             *searchBackend;
+    SearchResultModel                         *searchResultsModel;
+    QItemSelectionModel                       *searchResultsSelectionModel;
+    SearchResultModelHelper                   *searchResultModelHelper;
+
+    // Search: UI
+    QTreeView                                 *treeView;
+    QVBoxLayout                               *mainVBox;
+    KComboBox                                 *backendSelectionBox;
+    KAction                                   *actionClearResultsList;
+    KAction                                   *actionKeepOldResults;
+    KAction                                   *actionToggleAllResultsVisibility;
+    bool                                       searchInProgress;
+    KIcon                                      actionToggleAllResultsVisibilityIconUnchecked;
+    KIcon                                      actionToggleAllResultsVisibilityIconChecked;
+    KAction                                   *actionCopyCoordinates;
+    KAction                                   *actionBookmark;
+    KAction                                   *actionMoveImagesToThisResult;
 };
 
 SearchWidget::SearchWidget(KMap::KMapWidget* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, 
