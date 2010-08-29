@@ -90,7 +90,6 @@
 #include "mapdragdrophandler.h"
 #include "kipiimagelist.h"
 #include "gpsimagelistdragdrophandler.h"
-#include "gpssettingswidget.h"
 #include "gpscorrelatorwidget.h"
 #include "gpsundocommand.h"
 #include "gpsreversegeocodingwidget.h"
@@ -160,7 +159,6 @@ public:
     KMap::KMapWidget         *mapWidget2;
     KipiImageList            *treeView;
     GPSImageDetails          *detailsWidget;
-    GPSSettingsWidget        *settingsWidget;
     GPSCorrelatorWidget      *correlatorWidget;
     GPSSyncKMapModelHelper   *mapModelHelper;
     KMap::ItemMarkerTiler    *kmapMarkerModel;
@@ -313,7 +311,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->tabBar->addTab("Details");
     d->tabBar->addTab("GPS Correlator");
-    d->tabBar->addTab("Settings");
     d->tabBar->addTab("Undo/Redo");
     d->tabBar->addTab("Reverse Geocoding");
     d->tabBar->addTab("Search");
@@ -325,9 +322,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
     d->stackedWidget->addWidget(d->correlatorWidget);
-
-    d->settingsWidget = new GPSSettingsWidget(d->stackedWidget);
-    d->stackedWidget->addWidget(d->settingsWidget);
 
     d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
     d->stackedWidget->addWidget(d->undoView);

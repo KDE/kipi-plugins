@@ -11,7 +11,6 @@ SET(kipiplugin_gpssync_PART_SRCS
     kipiimagelist.cpp
     gpsimagelistdragdrophandler.cpp
     gpslistviewcontextmenu.cpp
-    gpssettingswidget.cpp
     gpscorrelatorwidget.cpp
     gpsdataparser.cpp
     gpsimagedetails.cpp

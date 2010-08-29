@@ -83,7 +83,6 @@ void SetupGeneral::readSettings()
 {
     SetupGlobalObject* const setupGlobalObject = SetupGlobalObject::instance();
     const MapLayout targetLayout = setupGlobalObject->readEntry("Map Layout").value<MapLayout>();
-    
 
     for (int i=0; i<d->cbMapLayout->count(); ++i)
     {
