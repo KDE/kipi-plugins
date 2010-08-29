@@ -133,61 +133,71 @@ class GPSSyncDialogPriv
 public:
 
     GPSSyncDialogPriv()
-    : interface(0),
-      about(0),
-      mapWidget(0),
-      uiEnabled(true),
-      splitterSize(0)
     {
         // TODO: initialize in the initializer list
+        interface = 0;
+        mapWidget = 0;
+        uiEnabled = true;
+        splitterSize = 0;
         mapWidget2 = 0;
         setupGlobalObject = SetupGlobalObject::instance();
     }
 
-    KIPI::Interface          *interface;
-    KIPIPlugins::KPAboutData *about;
-    KipiImageModel           *imageModel;
-    QItemSelectionModel      *selectionModel;
-    MapDragDropHandler       *mapDragDropHandler;
+    // General things
+    KIPI::Interface                         *interface;
+    KIPIPlugins::KPAboutData                *about;
+    KipiImageModel                          *imageModel;
+    QItemSelectionModel                     *selectionModel;
+    bool                                     uiEnabled;
+    QFuture<QPair<KUrl,QString> >            changedFilesSaveFuture;
+    QFutureWatcher<QPair<KUrl,QString> >    *changedFilesSaveFutureWatcher;
+    int                                      changedFilesCountDone;
+    int                                      changedFilesCountTotal;
+    bool                                     changedFilesCloseAfterwards;
+    SetupGlobalObject                       *setupGlobalObject;
+    GPSBookmarkOwner                        *bookmarkOwner;
+    KAction                                 *actionBookmarkVisibility;
+    GPSListViewContextMenu                  *listViewContextMenu;
 
-    KDialogButtonBox         *buttonBox;
-    KTabWidget               *tabWidget;
-    QSplitter                *VSplitter;
-    QSplitter                *HSplitter;
-    QSplitter                *mapSplitter;
-    KMap::KMapWidget         *mapWidget;
-    KMap::KMapWidget         *mapWidget2;
-    KipiImageList            *treeView;
-    GPSImageDetails          *detailsWidget;
-    GPSCorrelatorWidget      *correlatorWidget;
-    GPSSyncKMapModelHelper   *mapModelHelper;
-    KMap::ItemMarkerTiler    *kmapMarkerModel;
-    bool uiEnabled;
-    QFuture<QPair<KUrl,QString> > changedFilesSaveFuture;
-    QFutureWatcher<QPair<KUrl,QString> > *changedFilesSaveFutureWatcher;
-    int changedFilesCountDone;
-    int changedFilesCountTotal;
-    bool changedFilesCloseAfterwards;
-    QProgressBar *progressBar;
-    QPushButton *progressCancelButton;
-    QObject* progressCancelObject;
-    QString progressCancelSlot;
-    KUndoStack *undoStack;
-    QUndoView *undoView;
-    QAction *sortActionOldestFirst;
-    QAction *sortActionYoungestFirst;
-    QMenu* sortMenu;
+    // UI
+    KDialogButtonBox                        *buttonBox;
+    KTabWidget                              *tabWidget;
+    QSplitter                               *VSplitter;
+    QSplitter                               *HSplitter;
+    KipiImageList                           *treeView;
+    QStackedWidget                          *stackedWidget;
+    QTabBar                                 *tabBar;
+    int                                      splitterSize;
+    KUndoStack                              *undoStack;
+    QUndoView                               *undoView;
 
-    QStackedWidget	     *stackedWidget;
-    QTabBar                  *tabBar;
-    int splitterSize;
-    GPSReverseGeocodingWidget *rgWidget;
-    GPSBookmarkOwner         *bookmarkOwner;
-    KAction *actionBookmarkVisibility;
-    GPSListViewContextMenu* listViewContextMenu;
-    SearchWidget* searchWidget;
-    MapLayout mapLayout;
-    SetupGlobalObject* setupGlobalObject;
+    // UI: progress
+    QProgressBar                            *progressBar;
+    QPushButton                             *progressCancelButton;
+    QObject                                 *progressCancelObject;
+    QString                                  progressCancelSlot;
+
+    // UI: tab widgets
+    GPSImageDetails                         *detailsWidget;
+    GPSCorrelatorWidget                     *correlatorWidget;
+    GPSReverseGeocodingWidget               *rgWidget;
+    SearchWidget                            *searchWidget;
+
+    // map: UI
+    MapLayout                                mapLayout;
+    QSplitter                               *mapSplitter;
+    KMap::KMapWidget                        *mapWidget;
+    KMap::KMapWidget                        *mapWidget2;
+
+    // map: helpers
+    MapDragDropHandler                      *mapDragDropHandler;
+    GPSSyncKMapModelHelper                  *mapModelHelper;
+    KMap::ItemMarkerTiler                   *kmapMarkerModel;
+
+    // map: actions
+    QAction                                 *sortActionOldestFirst;
+    QAction                                 *sortActionYoungestFirst;
+    QMenu                                   *sortMenu;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
