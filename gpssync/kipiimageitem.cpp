@@ -37,21 +37,23 @@
 
 #include "kipiimagemodel.h"
 
+using namespace KExiv2Iface;
+
 namespace KIPIGPSSyncPlugin
 {
 
 KipiImageItem::KipiImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad)
-: m_interface(interface),
-  m_model(0),
-  m_url(url),
-  m_dateTime(),
-  m_dirty(false),
-  m_gpsData(),
-  m_savedState(),
-  m_tagListDirty(false),
-  m_tagList(),
-  m_savedTagList(),
-  m_writeXmpTags(true)
+             : m_interface(interface),
+               m_model(0),
+               m_url(url),
+               m_dateTime(),
+               m_dirty(false),
+               m_gpsData(),
+               m_savedState(),
+               m_tagListDirty(false),
+               m_tagList(),
+               m_savedTagList(),
+               m_writeXmpTags(true)
 {
     if (autoLoad)
     {
@@ -75,11 +77,13 @@ KExiv2Iface::KExiv2* KipiImageItem::getExiv2ForFile()
     {
         exiv2Iface->setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
         exiv2Iface->setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-        exiv2Iface->setUseXMPSidecar(m_interface->hostSetting("UseXMPSidecar").toBool());
+        exiv2Iface->setUseXMPSidecar4Reading(m_interface->hostSetting("UseXMPSidecar4Reading").toBool());
+        exiv2Iface->setMetadataWritingMode(m_interface->hostSetting("MetadataWritingMode").toInt());
     }
     else
     {
-        exiv2Iface->setUseXMPSidecar(false);
+        exiv2Iface->setUseXMPSidecar4Reading(false);
+        exiv2Iface->setMetadataWritingMode(KExiv2::WRITETOIMAGEONLY);
     }
 
     return exiv2Iface.take();
@@ -223,7 +227,7 @@ bool KipiImageItem::loadImageData()
                 m_gpsData.setSpeed(speedInMetersPerSecond);
             }
         }
-        
+
     }
 
     // mark us as not-dirty, because the data was just loaded:
@@ -384,7 +388,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
             return myTagsList;
         }
-      
+
         return QString();
     }
 
@@ -804,7 +808,6 @@ void KipiImageItem::restoreRGTagList(const QList<QList<TagData> >& tagList)
 {
     //TODO: override == operator
 
-
     if (tagList.count() != m_savedTagList.count())
         m_tagListDirty = true;
     else
@@ -838,9 +841,6 @@ void KipiImageItem::restoreRGTagList(const QList<QList<TagData> >& tagList)
 
     m_tagList = tagList;
     emitDataChanged();
-
 }
 
 } /* KIPIGPSSyncPlugin */
-
-
