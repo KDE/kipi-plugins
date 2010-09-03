@@ -299,7 +299,14 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${QT4_INCLUDES}
                        )
 
+    # To prevent warnings from M$ compiler
+
+    IF(WIN32 AND MSVC)
+       ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS)
+    ENDIF(WIN32 AND MSVC)
+
     # debug settings
+
     SET(AREA_CODE_GENERAL "51000")
     SET(AREA_CODE_LOADING "51001")
     ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${AREA_CODE_GENERAL})

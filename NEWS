@@ -1,4 +1,4 @@
-Kipi-plugins 1.4.0 - Release date: 2010/08/22
+Kipi-plugins 1.5.0 - Release date: 2010/10/??
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -6,14 +6,8 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> IpodExport      : 240469 : IpodExport fails to build with glib >= 2.25.
-002 ==> MetadataEdit    : 242624 : Wrong IPTC hyperlink.
-003 ==> General         : 239841 : I18n bug - missing extraction of messages in expoblending, flickrexport, metadataedit, ...
-004 ==> GPSSync         : 246266 : Search for location when adding geo coordinates.
-005 ==> PicasaWebExport : 247106 : Google picassa plugin does not work anymore since google changed parts of the interface.
-006 ==> GPSSync         : 246897 : GPSSync bad coordinate rounding.
-007 ==> 
-
+001 ==> FlickrExport : 218169 : Less/More options buttons don't change label.
+002 ==> 
 
 
 

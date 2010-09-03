@@ -1,3 +1,584 @@
+1.4.0   2010-08-22
+
+2010-08-18 08:08  cgilles
+
+	* common/libkipiplugins/tools/binaryiface.cpp,
+	  common/libkipiplugins/tools/binaryiface.h,
+	  common/libkipiplugins/tools/kpaboutdata.cpp,
+	  common/libkipiplugins/tools/kpaboutdata.h,
+	  common/libkipiplugins/tools/kpwritehelp.cpp,
+	  common/libkipiplugins/tools/kpwritehelp.h,
+	  common/libkipiplugins/tools/kpwriteimage.cpp,
+	  common/libkipiplugins/tools/kpwriteimage.h: more private d
+	  internal container
+
+2010-08-18 08:02  cgilles
+
+	* common/libkipiplugins/dialogs/batchprogressdialog.cpp,
+	  common/libkipiplugins/dialogs/batchprogressdialog.h,
+	  common/libkipiplugins/dialogs/imagedialog.cpp,
+	  common/libkipiplugins/dialogs/imagedialog.h,
+	  common/libkipiplugins/dialogs/outputdialog.cpp,
+	  common/libkipiplugins/dialogs/outputdialog.h,
+	  common/libkipiplugins/dialogs/wizardpage.cpp,
+	  common/libkipiplugins/dialogs/wizardpage.h: more private d
+	  container
+
+2010-08-18 07:54  cgilles
+
+	* common/libkipiplugins/widgets/previewimage.cpp,
+	  common/libkipiplugins/widgets/previewimage.h,
+	  common/libkipiplugins/widgets/previewmanager.cpp,
+	  common/libkipiplugins/widgets/previewmanager.h,
+	  common/libkipiplugins/widgets/savesettingswidget.cpp,
+	  common/libkipiplugins/widgets/savesettingswidget.h: more private
+	  internal containers
+
+2010-08-18 07:52  cgilles
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	  common/libkipiplugins/widgets/imageslist.h: use private internal
+	  container
+	  more private d container
+	  constify pointers
+	  set thumbnails visible if item is selected
+
+2010-08-17 08:07  cgilles
+
+	* NEWS: update
+
+2010-08-16 14:18  cgilles
+
+	* NEWS: update
+
+2010-07-30 12:39  cgilles
+
+	* NEWS: update
+
+2010-07-25 16:41  cgilles
+
+	* project/CodingSprint2010.ods: update
+
+2010-07-23 07:12  scripty
+
+	* facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-07-18 19:02  jwienke
+
+	* CMakeLists.txt: * check that the opengl module is installed
+	  * remove duplicated check for opengl stuff
+
+2010-07-11 07:02  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop: SVN_SILENT made messages (.desktop
+	  file)
+
+2010-07-05 07:05  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-07-01 06:54  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  shwup/kipiplugin_shwup.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-06-30 10:12  cgilles
+
+	* CMakeLists.txt: compile
+
+2010-06-30 10:09  cgilles
+
+	* dngconverter/Messages.sh, dngconverter/plugin/Messages.sh: this
+	  script is at the wrong place
+
+2010-06-30 10:09  cgilles
+
+	* NEWS: update
+
+2010-06-30 10:07  cgilles
+
+	* CMakeLists.txt, acquireimages/Messages.sh,
+	  advancedslideshow/Messages.sh, batchprocessimages/Messages.sh,
+	  calendar/Messages.sh, dngconverter/plugin/Messages.sh,
+	  expoblending/Messages.sh, facebook/Messages.sh,
+	  flashexport/Messages.sh, flickrexport/Messages.sh,
+	  galleryexport/Messages.sh, gpssync/Messages.sh,
+	  htmlexport/Messages.sh, imageviewer/Messages.sh,
+	  ipodexport/Messages.sh, jpeglossless/Messages.sh,
+	  kioexportimport/Messages.sh, metadataedit/Messages.sh,
+	  picasawebexport/Messages.sh, piwigoexport/Messages.sh,
+	  printimages/Messages.sh, rawconverter/Messages.sh,
+	  removeredeyes/Messages.sh, sendimages/Messages.sh,
+	  shwup/Messages.sh, smug/Messages.sh, timeadjust/Messages.sh,
+	  wallpaper/Messages.sh: update message extraction script to parse
+	  subfolder and all releavant file with i18n
+	  BUGS: 239841
+
+2010-06-29 10:29  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-06-29 04:55  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  calendar/kipiplugin_calendar.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop,
+	  gpssync/kipiplugin_gpssync.desktop,
+	  htmlexport/kipiplugin_htmlexport.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop,
+	  ipodexport/kipiplugin_ipodexport.desktop,
+	  jpeglossless/kipiplugin_jpeglossless.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  metadataedit/kipiplugin_metadataedit.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  rawconverter/kipiplugin_rawconverter.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  sendimages/kipiplugin_sendimages.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	  timeadjust/kipiplugin_timeadjust.desktop,
+	  wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-06-28 23:05  cfeck
+
+	* advancedslideshow/listsounditems.h,
+	  advancedslideshow/playbackwidget.h,
+	  advancedslideshow/soundtrackdialog.cpp,
+	  advancedslideshow/volslider.h: SVN_SILENT Fix phonon includes
+	  
+	  Yes, it broke here :)
+	  
+	  According to #kde-devel:
+	  <sandsmark> lowercase
+	  <sandsmark> phonon/class.h
+	  <sandsmark> because of some stupid os x stuff
+	  
+	  CCMAIL: languitar@semipol.de
+	  CCMAIL: kde-imaging@kde.org
+
+2010-06-28 21:42  jwienke
+
+	* advancedslideshow/commoncontainer.h,
+	  advancedslideshow/listsounditems.h,
+	  advancedslideshow/playbackwidget.h,
+	  advancedslideshow/soundtrackdialog.cpp,
+	  advancedslideshow/volslider.h: fix compilation on recent ubuntu.
+	  Does this break for other systems?
+	  
+	  CCMAIL: kde-imaging@kde.org
+
+2010-06-24 17:47  cgilles
+
+	* picasawebexport/picasawebreplacedialog.cpp: polish
+
+2010-06-24 07:50  lueck
+
+	* metadataedit/comment/commenteditdialog.cpp,
+	  metadataedit/comment/commentremovedialog.cpp,
+	  metadataedit/exif/exifeditdialog.cpp,
+	  metadataedit/iptc/iptceditdialog.cpp,
+	  metadataedit/xmp/xmpeditdialog.cpp: fix anchor to jump directly
+	  to the Metadata chapter in the handbook
+
+2010-06-24 06:33  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  shwup/kipiplugin_shwup.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-06-23 21:42  cgilles
+
+	* NEWS: update
+
+2010-06-23 21:42  cgilles
+
+	* metadataedit/iptc/iptccategories.cpp,
+	  metadataedit/iptc/iptccontent.cpp,
+	  metadataedit/iptc/iptccredits.cpp,
+	  metadataedit/iptc/iptceditdialog.cpp,
+	  metadataedit/iptc/iptcenvelope.cpp,
+	  metadataedit/iptc/iptckeywords.cpp,
+	  metadataedit/iptc/iptcorigin.cpp,
+	  metadataedit/iptc/iptcproperties.cpp,
+	  metadataedit/iptc/iptcstatus.cpp,
+	  metadataedit/iptc/iptcsubjects.cpp: Fix IPTC url to wikipedia
+	  BUGS: 242624
+
+2010-06-23 13:49  cgilles
+
+	* README: update
+
+2010-06-23 13:49  cgilles
+
+	* CMakeLists.txt, cmake/modules/FindOpenCV.cmake,
+	  removeredeyes/CMakeLists.txt: Use OPenCV 2.0 cmake script to
+	  detect this library
+
+2010-06-21 06:55  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  dngconverter/plugin/dngconverter.desktop,
+	  dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  htmlexport/themes/frames/frames.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  imageviewer/kipiplugin_imageviewer.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-06-20 06:50  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	  acquireimages/scangui.desktop,
+	  htmlexport/themes/classic/classic.desktop,
+	  htmlexport/themes/cleanframes/cleanframes.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  htmlexport/themes/snow/snow.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-06-19 11:24  cgilles
+
+	* expoblending/manager/actionthread.cpp: Fix broken compilation
+	  under MSVC
+
+2010-06-19 10:54  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.cpp,
+	  expoblending/blendingdlg/enfusesettings.h: Fix MSVC warnings
+
+2010-06-19 10:34  cgilles
+
+	* project/CodingSprint2010.ods: update Laurent info
+
+2010-06-17 14:38  cgilles
+
+	* project/CodingSprint2010.ods: add Laurent Espitalier for the
+	  event
+
+2010-06-17 14:27  cgilles
+
+	* project/CodingSprint2010.ods: updated kunal info
+
+2010-06-16 22:06  cgilles
+
+	* NEWS: update
+
+2010-06-16 22:04  cgilles
+
+	* ipodexport/CMakeLists.txt, ipodexport/ImageList.cpp,
+	  ipodexport/ImageList.h, ipodexport/ImageListItem.h,
+	  ipodexport/IpodExportDialog.cpp: apply patch #48063
+	  BUGS: 240469
+
+2010-06-14 07:09  scripty
+
+	* gpssync/kipiplugin_gpssync.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-06-11 07:48  cgilles
+
+	* project/CodingSprint2010.ods: update Kunal info
+
+2010-06-09 13:09  cgilles
+
+	* project/CodingSprint2010.ods: update Kunal cost
+
+2010-06-08 15:22  cgilles
+
+	* CMakeLists.txt: 1.4.0
+
+2010-06-08 08:13  scripty
+
+	* htmlexport/themes/details/details.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-06-07 22:49  cgilles
+
+	* NEWS: polish
+
+2010-06-07 22:49  cgilles
+
+	* project/NEWS.1.3.0: archive
+
+2010-06-07 22:48  cgilles
+
+	* NEWS: update
+
+2010-06-07 22:32  nlecureuil
+
+	* NEWS: Open for 1.4.0
+
+2010-06-07 22:07  nlecureuil
+
+	* ChangeLog: Prepare for 1.3.0
+
 1.3.0   2010-06-07
 
 2010-06-07 12:29  cgilles
