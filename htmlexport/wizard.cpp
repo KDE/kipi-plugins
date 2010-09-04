@@ -213,12 +213,18 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
         QByteArray(),
         KAboutData::License_GPL,
         ki18n("A KIPI plugin to export image collections to HTML pages"),
-        ki18n("(c) 2006-2008, Aurelien Gateau"));
+        ki18n("(c) 2006-2009, Aurelien Gateau\n"
+              "(c) 2010, Gianluca Urgese"));
+
+    d->mAbout->addAuthor(
+        ki18n("Gianluca Urgese"),
+        ki18n("Maintainer"),
+        "giasone.82@gmail.com");
 
     d->mAbout->addAuthor(
         ki18n("Aurelien Gateau"),
-        ki18n("Author and Maintainer"),
-        "aurelien.gateau@free.fr");
+        ki18n("Former Author and Maintainer"),
+        "agateau@kde.org");
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
