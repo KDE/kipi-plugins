@@ -802,7 +802,7 @@ QByteArray KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::
 
     QFile file(filePath);
     if ( !file.open(QIODevice::ReadOnly) )
-        return false;
+        return QByteArray();
 
     QByteArray data;
     data.resize(file.size());
