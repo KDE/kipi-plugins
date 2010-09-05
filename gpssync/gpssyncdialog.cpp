@@ -732,7 +732,7 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
     d->rgWidget->setUIEnabled(enabledState);
     d->treeView->setEditEnabled(enabledState);
     d->listViewContextMenu->setEnabled(enabledState);
-    d->mapWidget->setEditEnabled(enabledState);
+    d->mapWidget->setAllowModifications(enabledState);
 }
 
 void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
@@ -1038,7 +1038,6 @@ KMap::KMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
     KMap::KMapWidget* const mapWidget = new KMap::KMapWidget(dummyWidget);
     mapWidget->setAvailableMouseModes(KMap::MouseModePan|KMap::MouseModeZoom|KMap::MouseModeSelectThumbnail);
     mapWidget->setVisibleMouseModes(KMap::MouseModePan|KMap::MouseModeZoom|KMap::MouseModeSelectThumbnail);
-    mapWidget->setEditModeAvailable(true);
     mapWidget->setGroupedModel(d->kmapMarkerModel);
     mapWidget->setDragDropHandler(d->mapDragDropHandler);
     mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
@@ -1095,6 +1094,11 @@ void GPSSyncDialog::adjustMapLayout(const bool syncSettings)
             d->mapSplitter->setOrientation(Qt::Vertical);
         }
     }
+}
+
+KMap::ModelHelper::Flags GPSSyncKMapModelHelper::modelFlags() const
+{
+    return FlagMovable;
 }
 
 }  // namespace KIPIGPSSyncPlugin
