@@ -262,6 +262,25 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->buttonBox->addButton(KStandardGuiItem::apply(), QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
     d->buttonBox->addButton(KStandardGuiItem::close(), QDialogButtonBox::RejectRole, this, SLOT(close()));
 
+    // TODO: the code below does not seem to have any effect, slotApplyClicked is still triggered
+    //       when 'Enter' is pressed...
+    // make sure the 'Apply' button is not triggered when enter is pressed,
+    // because that causes problems with the search widget
+    QAbstractButton* testButton;
+    Q_FOREACH(testButton, d->buttonBox->buttons())
+    {
+//         if (d->buttonBox->buttonRole(testButton)==QDialogButtonBox::AcceptRole)
+        {
+            QPushButton* const pushButton = dynamic_cast<QPushButton*>(testButton);
+            kDebug()<<pushButton<<pushButton->isDefault();
+            if (pushButton)
+            {
+                pushButton->setDefault(false);
+            }
+        }
+    }
+    setDefaultButton(NoDefault);
+
     d->VSplitter = new QSplitter(Qt::Vertical, d->HSplitter);
     d->HSplitter->addWidget(d->VSplitter);
     d->HSplitter->setStretchFactor(0, 10);
