@@ -83,7 +83,7 @@ bool kmlExport::createDir(QDir dir)
 
     QDir parent = dir;
     parent.cdUp();
-    bool ok = createDir(parent);
+    bool ok     = createDir(parent);
     if (!ok)
     {
         logError(i18n("Could not create '%1'",parent.path()));
@@ -97,10 +97,10 @@ bool kmlExport::createDir(QDir dir)
  */
 QString kmlExport::webifyFileName(const QString &fileName)
 {
-    QString webFileName=fileName.toLower();
+    QString webFileName = fileName.toLower();
 
     // Remove potentially troublesome chars
-    webFileName=webFileName.replace(QRegExp("[^-0-9a-z]+"), "_");
+    webFileName         = webFileName.replace(QRegExp("[^-0-9a-z]+"), "_");
 
     return webFileName;
 }
@@ -122,11 +122,11 @@ QImage kmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
     int sx=0, sy=0;
     if (image.width()>size)
     {
-        sx=(image.width() - size)/2;
+        sx = (image.width() - size)/2;
     }
     else
     {
-        sy=(image.height() - size)/2;
+        sy = (image.height() - size)/2;
     }
     painter.drawImage(0, 0, image, sx, sy, size, size);
     painter.end();
@@ -142,7 +142,7 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
     int image_border = 3;
 
     // getting an image minus the border
-    QImage image = fullImage.scaled(size -(2*image_border), size - (2*image_border), Qt::KeepAspectRatioByExpanding);
+    QImage image     = fullImage.scaled(size -(2*image_border), size - (2*image_border), Qt::KeepAspectRatioByExpanding);
 
     QPixmap croppedPix(image.width() + (2*image_border), image.height() + (2*image_border));
     QPainter painter(&croppedPix);
@@ -391,8 +391,8 @@ void kmlExport::addTrack(QDomElement &kmlAlbum)
         // style of points and track
         QDomElement kmlTrackStyle = addKmlElement(kmlAlbum, "Style");
         kmlTrackStyle.setAttribute("id","track");
-        QDomElement kmlIconStyle = addKmlElement(kmlTrackStyle, "IconStyle");
-        QDomElement kmlIcon      = addKmlElement(kmlIconStyle, "Icon");
+        QDomElement kmlIconStyle  = addKmlElement(kmlTrackStyle, "IconStyle");
+        QDomElement kmlIcon       = addKmlElement(kmlIconStyle, "Icon");
         //! FIXME is there a way to be sure of the location of the icon?
         addKmlTextElement(kmlIcon, "href", "http://maps.google.com/mapfiles/kml/pal4/icon60.png");
 
@@ -431,11 +431,11 @@ void kmlExport::generate()
     QDomImplementation impl;
     QDomProcessingInstruction instr = kmlDocument->createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
     kmlDocument->appendChild(instr);
-    QDomElement kmlRoot = kmlDocument->createElementNS( "http://earth.google.com/kml/2.1","kml");
+    QDomElement kmlRoot             = kmlDocument->createElementNS( "http://earth.google.com/kml/2.1","kml");
     kmlDocument->appendChild( kmlRoot );
 
-    QDomElement kmlAlbum = addKmlElement( kmlRoot, "Document");
-    QDomElement kmlName= addKmlTextElement( kmlAlbum, "name", album.name());
+    QDomElement kmlAlbum       = addKmlElement( kmlRoot, "Document");
+    QDomElement kmlName        = addKmlTextElement( kmlAlbum, "name", album.name());
     QDomElement kmlDescription = addKmlHtmlElement( kmlAlbum, "description", "Created with kmlexport <a href=\"http://www.kipi-plugins.org/\">kipi-plugin</a>");
 
     if (m_GPXtracks)
@@ -451,10 +451,10 @@ void kmlExport::generate()
     KUrl::List::ConstIterator imagesEnd (images.constEnd());
     for( KUrl::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos)
     {
-        KUrl url = *selIt;
+        KUrl url             = *selIt;
 
         double alt, lat, lng;
-        bool hasGPSInfo = false;
+        bool hasGPSInfo      = false;
         QMap<QString, QVariant> attributes;
         KIPI::ImageInfo info = m_interface->info(url);
         attributes           = info.attributes();
@@ -506,7 +506,10 @@ void kmlExport::generate()
 
     delete kmlDocument;
 
-    KIO::moveAs(m_tempDestDir,m_baseDestDir,false);
+    KIO::moveAs(m_tempDestDir,
+                m_baseDestDir,
+                false);
+
     logInfo(i18n("Move to final directory"));
     m_progressDialog->close();
 }
@@ -517,27 +520,27 @@ void kmlExport::generate()
 int kmlExport::getConfig()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group("KMLExport Settings");
+    KConfigGroup group   = config.group("KMLExport Settings");
 
-    m_localTarget           = group.readEntry("localTarget", true);
-    m_optimize_googlemap    = group.readEntry("optimize_googlemap", false);
-    m_iconSize              = group.readEntry("iconSize", 33);
-    //	googlemapSize       = group.readNumEntry("googlemapSize");
-    m_size                  = group.readEntry("size", 320);
+    m_localTarget        = group.readEntry("localTarget", true);
+    m_optimize_googlemap = group.readEntry("optimize_googlemap", false);
+    m_iconSize           = group.readEntry("iconSize", 33);
+    //	googlemapSize    = group.readNumEntry("googlemapSize");
+    m_size               = group.readEntry("size", 320);
 
     // UrlDestDir have to have the trailing
-    m_baseDestDir           = group.readEntry("baseDestDir", QString("/tmp/"));
-    m_UrlDestDir            = group.readEntry("UrlDestDir", QString("http://www.example.com/"));
-    m_KMLFileName           = group.readEntry("KMLFileName", QString("kmldocument"));
-    m_altitudeMode          = group.readEntry("Altitude Mode", 0);
+    m_baseDestDir        = group.readEntry("baseDestDir", QString("/tmp/"));
+    m_UrlDestDir         = group.readEntry("UrlDestDir", QString("http://www.example.com/"));
+    m_KMLFileName        = group.readEntry("KMLFileName", QString("kmldocument"));
+    m_altitudeMode       = group.readEntry("Altitude Mode", 0);
 
-    m_GPXtracks             = group.readEntry("UseGPXTracks", false);
-    m_GPXFile               = group.readEntry("GPXFile", QString());
-    m_TimeZone              = group.readEntry("Time Zone", 12);
-    m_LineWidth             = group.readEntry("Line Width", 4);
-    m_GPXColor              = group.readEntry("Track Color", "#17eeee" );
-    m_GPXOpacity            = group.readEntry("Track Opacity", 64 );
-    m_GPXAltitudeMode       = group.readEntry("GPX Altitude Mode", 0);
+    m_GPXtracks          = group.readEntry("UseGPXTracks", false);
+    m_GPXFile            = group.readEntry("GPXFile", QString());
+    m_TimeZone           = group.readEntry("Time Zone", 12);
+    m_LineWidth          = group.readEntry("Line Width", 4);
+    m_GPXColor           = group.readEntry("Track Color", "#17eeee" );
+    m_GPXOpacity         = group.readEntry("Track Opacity", 64 );
+    m_GPXAltitudeMode    = group.readEntry("GPX Altitude Mode", 0);
 
     KStandardDirs dir;
     m_tempDestDir   = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + '/');
@@ -562,4 +565,4 @@ void kmlExport::logWarning(const QString& msg)
     // mWarnings=true;
 }
 
-} //namespace KIPIGPSSyncPlugin
+} // namespace KIPIGPSSyncPlugin
