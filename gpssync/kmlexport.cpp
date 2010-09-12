@@ -508,7 +508,7 @@ void kmlExport::generate()
 
     KIO::moveAs(m_tempDestDir,
                 m_baseDestDir,
-                false);
+                KIO::HideProgressInfo);
 
     logInfo(i18n("Move to final directory"));
     m_progressDialog->close();
