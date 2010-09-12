@@ -62,14 +62,14 @@ public:
     kmlExport(KIPI::Interface* interface);
     ~kmlExport();
 
-    bool createDir(QDir dir);
+    bool createDir(const QDir& dir);
 
     /*! generate the kml element for pictures with tumbnails
      *  @param interface the kipi interface
      *  @param KUrl the URL of the picture
      *  @param kmlAlbum the album used
      */
-    void generateImagesthumb(KIPI::Interface* interface, const KUrl&, QDomElement &kmlAlbum);
+    void generateImagesthumb(KIPI::Interface* interface, const KUrl&, QDomElement& kmlAlbum);
 
     /*! Produce a web-friendly file name
      *  otherwise, while google earth works fine, maps.google.com may not find pictures and thumbnail
@@ -77,7 +77,7 @@ public:
      *  @param the filename
      *  @return the webifyed filename
      */
-    QString webifyFileName(const QString &fileName);
+    QString webifyFileName(const QString& fileName);
 
     /*! Generate a square thumbnail from @fullImage of @size x @size pixels
      *  @param fullImage the original image
@@ -93,7 +93,7 @@ public:
      *  @return the thumbnail
      */
     QImage generateBorderedThumbnail(const QImage& fullImage, int size);
-    void   addTrack(QDomElement &kmlAlbum);
+    void   addTrack(QDomElement& kmlAlbum);
     void   generate();
     int    getConfig();
 
@@ -128,17 +128,17 @@ public:
 
     QColor           m_GPXColor;
 
-    KIPI::Interface *m_interface;
+    KIPI::Interface* m_interface;
 
 private:
 
     /*! the root document, used to create all QDomElements */
-    QDomDocument                     *kmlDocument;
+    QDomDocument*                     kmlDocument;
 
     /*! the GPS parsed data */
     KMLGPSDataParser                  m_gpxParser;
 
-    KIPIPlugins::BatchProgressDialog *m_progressDialog;
+    KIPIPlugins::BatchProgressDialog* m_progressDialog;
 
 private:
 
@@ -153,7 +153,7 @@ private:
      *  @param tag the new element name
      *  @return the New element
      */
-    QDomElement addKmlElement(QDomElement &target, QString tag)
+    QDomElement addKmlElement(QDomElement& target, const QString& tag)
     {
         QDomElement kmlElement = kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
@@ -168,7 +168,7 @@ private:
      *  @param text the text content of the new element
      *  @return the New element
      */
-    QDomElement addKmlTextElement(QDomElement &target, QString tag, QString text)
+    QDomElement addKmlTextElement(QDomElement& target, const QString& tag, const QString& text)
     {
         QDomElement kmlElement  = kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
@@ -185,7 +185,7 @@ private:
      *  @param text the HTML content of the new element
      *  @return the New element
      */
-    QDomElement addKmlHtmlElement(QDomElement &target, QString tag, QString text)
+    QDomElement addKmlHtmlElement(QDomElement& target, const QString& tag, const QString& text)
     {
         QDomElement kmlElement  = kmlDocument->createElement( tag );
         target.appendChild( kmlElement );

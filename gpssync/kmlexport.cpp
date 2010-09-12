@@ -77,7 +77,7 @@ kmlExport::~kmlExport()
 /*!
 	\fn kmlExport::createDir(QDir dir)
  */
-bool kmlExport::createDir(QDir dir)
+bool kmlExport::createDir(const QDir& dir)
 {
     if (dir.exists()) return true;
 
@@ -95,7 +95,7 @@ bool kmlExport::createDir(QDir dir)
 /*!
 \fn kmlExport::webifyFileName(const QString &fileName)
  */
-QString kmlExport::webifyFileName(const QString &fileName)
+QString kmlExport::webifyFileName(const QString& fileName)
 {
     QString webFileName = fileName.toLower();
 
@@ -158,9 +158,9 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
 }
 
 /*!
-\fn kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement &kmlAlbum )
+\fn kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement& kmlAlbum )
  */
-void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement &kmlAlbum )
+void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement& kmlAlbum )
 {
     KIPI::Interface* mInterface = interface;
     KIPI::ImageInfo info        = mInterface->info(imageURL);
@@ -358,7 +358,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
 /*!
 \fn kmlExport::addTrack(QDomElement &kmlAlbum)
  */
-void kmlExport::addTrack(QDomElement &kmlAlbum)
+void kmlExport::addTrack(QDomElement& kmlAlbum)
 {
     if( m_GPXFile.isEmpty() )
     {
