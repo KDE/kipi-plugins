@@ -86,6 +86,18 @@ enum DNGBayerPattern
     FourColor
 };
 
+dng_date_time dngDateTime(QDateTime qDT)
+{
+    dng_date_time dngDT;    
+    dngDT.fYear   = qDT.date().year();
+    dngDT.fMonth  = qDT.date().month();
+    dngDT.fDay    = qDT.date().day();
+    dngDT.fHour   = qDT.time().hour();
+    dngDT.fMinute = qDT.time().minute();
+    dngDT.fSecond = qDT.time().second();
+    return dngDT;
+}
+
 DNGWriter::DNGWriter()
          : d(new DNGWriterPrivate)
 {
@@ -695,27 +707,22 @@ int DNGWriter::convert()
         exif->fModel.Set_ASCII(identify.model.toAscii());
         exif->fMake.Set_ASCII(identify.make.toAscii());
 
-        // Time from original shot
-        dng_date_time dt;
-        dt.fYear   = identify.dateTime.date().year();
-        dt.fMonth  = identify.dateTime.date().month();
-        dt.fDay    = identify.dateTime.date().day();
-        dt.fHour   = identify.dateTime.time().hour();
-        dt.fMinute = identify.dateTime.time().minute();
-        dt.fSecond = identify.dateTime.time().second();
-
-        dng_date_time_info dti;
-        dti.SetDateTime(dt);
-        exif->fDateTimeOriginal  = dti;
-        exif->fDateTimeDigitized = dti;
-        negative->UpdateDateTime(dti);
-
         long int num, den;
         long     val;
         QString  str;
         KExiv2   meta;
         if (meta.load(inputFile()))
-        {
+	{
+	    // Time from original shot
+	    dng_date_time_info dti;
+	    dti.SetDateTime(dngDateTime(meta.getImageDateTime()));
+	    exif->fDateTimeOriginal = dti;
+	    
+	    dti.SetDateTime(dngDateTime(meta.getDigitizationDateTime(true)));
+	    exif->fDateTimeDigitized = dti;
+ 
+            negative->UpdateDateTime(dti);
+
             // String Tags
 
             str = meta.getExifTagString("Exif.Image.Make");
