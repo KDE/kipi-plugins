@@ -71,11 +71,11 @@ public:
         ret.append("\n");
         ret.append(i18n("Levels: %1",     autoLevels ? i18n("auto") : QString::number(levels)));
         ret.append("\n");
-        ret.append(i18n("Exposure: %1",   exposure));
+        ret.append(i18n("Exposure: %1",   QString::number(exposure)));
         ret.append("\n");
-        ret.append(i18n("Saturation: %1", saturation));
+        ret.append(i18n("Saturation: %1", QString::number(saturation)));
         ret.append("\n");
-        ret.append(i18n("Contrast: %1",   contrast));
+        ret.append(i18n("Contrast: %1",   QString::number(contrast)));
 
         return ret;
     }
