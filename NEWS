@@ -9,6 +9,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 001 ==> FlickrExport   : 218169 : Less/More options buttons don't change label.
 002 ==> DngConverter   : 249785 : DNG Converter adds 1 hour to timestamp of Sony .arw files.
 003 ==> RedEyesRemoval : 251391 : OpenCV not detected during configuration.
-004 ==> 
+004 ==> JPEGLossLess   : 252362 : digiKam crash when launching.
+005 ==> 
+
 
 
