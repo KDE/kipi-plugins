@@ -125,24 +125,38 @@ public:
 
     static const int ColumnGPSImageItemCount = 14;
 
-    KipiImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad = true);
+    KipiImageItem(KIPI::Interface* const interface, const KUrl& url);
     virtual ~KipiImageItem();
 
-    void setUrl(const KUrl& url);
+    /// @name Loading and saving
+    //@{
+    QString saveChanges(const bool toInterface, const bool toFile);
+    bool loadImageData(const bool fromInterface, const bool fromFile);
+
+    inline bool isDirty() const { return m_dirty; }
+    //@}
+
     inline KUrl url() const { return m_url; };
 
     inline QDateTime dateTime() const { return m_dateTime; };
 
+    /// @name Functions used by the model
+    //@{
     static void setHeaderData(KipiImageModel* const model);
     bool lessThan(const KipiImageItem* const otherItem, const int column) const;
+    //@}
 
+    /// @name GPS related functions
+    //@{
     void setCoordinates(const KMap::GeoCoordinates& newCoordinates);
     inline KMap::GeoCoordinates coordinates() const { return m_gpsData.getCoordinates(); }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
     inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
     void restoreGPSData(const GPSDataContainer& container);
-    inline bool isDirty() const { return m_dirty; }
+    //@}
 
+    /// @name Tag related functions
+    //@{
     /**
      * The tags added in reverse geocoding process are stored in each image, before they end up in external tag model. This function adds them.
      * @param externalTagList A list containing tags.
@@ -168,9 +182,7 @@ public:
      * Writes the current tags to XMP metadata.
      */ 
     void writeTagsToXmp(const bool writeXmpTags) { m_writeXmpTags = writeXmpTags; }
-
-    QString saveChanges();
-    bool loadImageData();
+    //@}
 
 protected:
     // these are only to be called by the KipiImageModel

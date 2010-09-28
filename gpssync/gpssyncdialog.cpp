@@ -124,7 +124,30 @@ public:
         if (!item)
             return QPair<KUrl, QString>(KUrl(), QString());
 
-        return QPair<KUrl, QString>(item->url(), item->saveChanges());
+        return QPair<KUrl, QString>(item->url(), item->saveChanges(true, true));
+    }
+};
+
+struct LoadFileMetadataHelper
+{
+public:
+    LoadFileMetadataHelper(KipiImageModel* const model)
+    : imageModel(model)
+    {
+    }
+
+    typedef QPair<KUrl, QString> result_type;
+    KipiImageModel* const imageModel;
+
+    QPair<KUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
+    {
+        KipiImageItem* const item = imageModel->itemFromIndex(itemIndex);
+        if (!item)
+            return QPair<KUrl, QString>(KUrl(), QString());
+
+        item->loadImageData(false, true);
+
+        return QPair<KUrl, QString>(item->url(), QString());
     }
 };
 
@@ -149,15 +172,17 @@ public:
     KipiImageModel                          *imageModel;
     QItemSelectionModel                     *selectionModel;
     bool                                     uiEnabled;
-    QFuture<QPair<KUrl,QString> >            changedFilesSaveFuture;
-    QFutureWatcher<QPair<KUrl,QString> >    *changedFilesSaveFutureWatcher;
-    int                                      changedFilesCountDone;
-    int                                      changedFilesCountTotal;
-    bool                                     changedFilesCloseAfterwards;
     SetupGlobalObject                       *setupGlobalObject;
     GPSBookmarkOwner                        *bookmarkOwner;
     KAction                                 *actionBookmarkVisibility;
     GPSListViewContextMenu                  *listViewContextMenu;
+
+    // Loading and saving
+    QFuture<QPair<KUrl,QString> >            fileIOFuture;
+    QFutureWatcher<QPair<KUrl,QString> >    *fileIOFutureWatcher;
+    int                                      fileIOCountDone;
+    int                                      fileIOCountTotal;
+    bool                                     fileIOCloseAfterSaving;
 
     // UI
     KDialogButtonBox                        *buttonBox;
@@ -521,12 +546,44 @@ void GPSSyncDialog::setCurrentTab(int index)
     d->detailsWidget->slotSetActive( (d->stackedWidget->currentWidget()==d->detailsWidget) && (d->splitterSize==0) );
 }
 
-void GPSSyncDialog::setImages( const KUrl::List& images )
+void GPSSyncDialog::setImages(const KUrl::List& images)
 {
     for ( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
     {
         KipiImageItem* const newItem = new KipiImageItem(d->interface, *it);
+        newItem->loadImageData(true, false);
         d->imageModel->addItem(newItem);
+    }
+
+    QList<QPersistentModelIndex> imagesToLoad;
+    for (int i=0; i<d->imageModel->rowCount(); ++i)
+    {
+        imagesToLoad << d->imageModel->index(i, 0);
+    }
+
+    slotSetUIEnabled(false);
+    slotProgressSetup(imagesToLoad.count(), i18n("Loading metadata - %p%"));
+
+    // initiate the saving
+    d->fileIOCountDone = 0;
+    d->fileIOCountTotal = imagesToLoad.count();
+    d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+    connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
+            this, SLOT(slotFileMetadataLoaded(int, int)));
+
+    d->fileIOFuture = QtConcurrent::mapped(imagesToLoad, LoadFileMetadataHelper(d->imageModel));
+    d->fileIOFutureWatcher->setFuture(d->fileIOFuture);
+}
+
+void GPSSyncDialog::slotFileMetadataLoaded(int beginIndex, int endIndex)
+{
+    kDebug()<<beginIndex<<endIndex;
+    d->fileIOCountDone+=(endIndex-beginIndex);
+    slotProgressChanged(d->fileIOCountDone);
+
+    if (d->fileIOCountDone==d->fileIOCountTotal)
+    {
+        slotSetUIEnabled(true);
     }
 }
 
@@ -934,32 +991,32 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
     slotProgressSetup(dirtyImages.count(), i18n("Saving changes - %p%"));
 
     // initiate the saving
-    d->changedFilesCountDone = 0;
-    d->changedFilesCountTotal = dirtyImages.count();
-    d->changedFilesCloseAfterwards = closeAfterwards;
-    d->changedFilesSaveFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
-    connect(d->changedFilesSaveFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
+    d->fileIOCountDone = 0;
+    d->fileIOCountTotal = dirtyImages.count();
+    d->fileIOCloseAfterSaving = closeAfterwards;
+    d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+    connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
             this, SLOT(slotFileChangesSaved(int, int)));
 
-    d->changedFilesSaveFuture = QtConcurrent::mapped(dirtyImages, SaveChangedImagesHelper(d->imageModel));
-    d->changedFilesSaveFutureWatcher->setFuture(d->changedFilesSaveFuture);
+    d->fileIOFuture = QtConcurrent::mapped(dirtyImages, SaveChangedImagesHelper(d->imageModel));
+    d->fileIOFutureWatcher->setFuture(d->fileIOFuture);
 }
 
 void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
 {
     kDebug()<<beginIndex<<endIndex;
-    d->changedFilesCountDone+=(endIndex-beginIndex);
-    slotProgressChanged(d->changedFilesCountDone);
-    if (d->changedFilesCountDone==d->changedFilesCountTotal)
+    d->fileIOCountDone+=(endIndex-beginIndex);
+    slotProgressChanged(d->fileIOCountDone);
+    if (d->fileIOCountDone==d->fileIOCountTotal)
     {
         slotSetUIEnabled(true);
 
         // any errors?
         QList<QPair<KUrl, QString> > errorList;
-        for (int i=0; i<d->changedFilesSaveFuture.resultCount(); ++i)
+        for (int i=0; i<d->fileIOFuture.resultCount(); ++i)
         {
-            if (!d->changedFilesSaveFuture.resultAt(i).second.isEmpty())
-                errorList << d->changedFilesSaveFuture.resultAt(i);
+            if (!d->fileIOFuture.resultAt(i).second.isEmpty())
+                errorList << d->fileIOFuture.resultAt(i);
         }
         if (!errorList.isEmpty())
         {
@@ -973,7 +1030,7 @@ void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
         }
 
         // done saving files
-        if (d->changedFilesCloseAfterwards)
+        if (d->fileIOCloseAfterSaving)
         {
             close();
         }

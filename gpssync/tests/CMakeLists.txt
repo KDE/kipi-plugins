@@ -51,6 +51,6 @@ TARGET_LINK_LIBRARIES(test_kipiimageitem
 ADD_TEST(test_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/test_gpxparsing)
 ADD_TEST(test_gpsrgparsing ${EXECUTABLE_OUTPUT_PATH}/test_rgparsing)
 ADD_TEST(test_gpsrgtagmodel ${EXECUTABLE_OUTPUT_PATH}/test_rgtagmodel)
-ADD_TEST(test_gpsexif ${EXECUTABLE_OUTPUT_PATH}/test_gpsexif)
+ADD_TEST(test_gpskipiimageitem ${EXECUTABLE_OUTPUT_PATH}/test_kipiimageitem)
 
 MACRO_OPTIONAL_ADD_SUBDIRECTORY(simpletreemodel)

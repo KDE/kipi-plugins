@@ -58,9 +58,9 @@ KUrl GetTestDataDirectory()
 
 KipiImageItem* ItemFromFile(const KUrl& url)
 {
-    QScopedPointer<KipiImageItem> imageItem(new KipiImageItem(0, url, false));
+    QScopedPointer<KipiImageItem> imageItem(new KipiImageItem(0, url));
 
-    if (imageItem->loadImageData())
+    if (imageItem->loadImageData(true, true))
     {
         return imageItem.take();
     }

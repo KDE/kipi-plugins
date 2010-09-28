@@ -125,6 +125,7 @@ private Q_SLOTS:
     void slotApplyClicked();
     void slotConfigureClicked();
     void slotFileChangesSaved(int beginIndex, int endIndex);
+    void slotFileMetadataLoaded(int beginIndex, int endIndex);
     void slotProgressChanged(const int currentProgress);
     void slotProgressSetup(const int maxProgress, const QString& progressText);
     void slotGPSUndoCommand(GPSUndoCommand* undoCommand);

@@ -42,7 +42,7 @@ using namespace KExiv2Iface;
 namespace KIPIGPSSyncPlugin
 {
 
-KipiImageItem::KipiImageItem(KIPI::Interface* const interface, const KUrl& url, const bool autoLoad)
+KipiImageItem::KipiImageItem(KIPI::Interface* const interface, const KUrl& url)
              : m_interface(interface),
                m_model(0),
                m_url(url),
@@ -55,10 +55,6 @@ KipiImageItem::KipiImageItem(KIPI::Interface* const interface, const KUrl& url, 
                m_savedTagList(),
                m_writeXmpTags(true)
 {
-    if (autoLoad)
-    {
-        loadImageData();
-    }
 }
 
 KipiImageItem::~KipiImageItem()
@@ -128,27 +124,9 @@ int getWarningLevelFromGPSDataContainer(const GPSDataContainer& data)
     return -1;
 }
 
-bool KipiImageItem::loadImageData()
+bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
 {
-    QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(getExiv2ForFile());
-
-    if (!exiv2Iface)
-        return false;
-
-    if (m_interface)
-    {
-        KIPI::ImageInfo info = m_interface->info(m_url);
-        m_dateTime = info.time(KIPI::FromInfo);
-    }
-    if (!m_dateTime.isValid())
-    {
-        if (exiv2Iface)
-            m_dateTime = exiv2Iface->getImageDateTime();
-    }
-
-    m_gpsData.clear();
-
-    if (m_interface)
+    if (fromInterface && m_interface)
     {
         // try to load the GPS data from the KIPI interface:
         QMap<QString, QVariant> attributes;
@@ -164,29 +142,44 @@ bool KipiImageItem::loadImageData()
                 m_gpsData.setAltitude(attributes["altitude"].toDouble());
             }
         }
+
+        m_dateTime = info.time(KIPI::FromInfo);
     }
 
-    if ( (!m_gpsData.hasCoordinates()) && exiv2Iface)
+    if (fromFile)
     {
-        // could not load the coordinates from the interface,
-        // read them directly from the file
+        QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(getExiv2ForFile());
 
-        double lat, lng;
-        bool haveCoordinates = exiv2Iface->getGPSLatitudeNumber(&lat) && exiv2Iface->getGPSLongitudeNumber(&lng);
-        if (haveCoordinates)
+        if (!exiv2Iface)
+            return false;
+
+        if (!m_dateTime.isValid())
         {
-            KMap::GeoCoordinates coordinates(lat, lng);
-            double alt;
-            if (exiv2Iface->getGPSAltitude(&alt))
-            {
-                coordinates.setAlt(alt);
-            }
-            m_gpsData.setCoordinates(coordinates);
+            if (exiv2Iface)
+                m_dateTime = exiv2Iface->getImageDateTime();
         }
-    }
 
-    if (exiv2Iface)
-    {
+        m_gpsData.clear();
+
+        if (!m_gpsData.hasCoordinates())
+        {
+            // could not load the coordinates from the interface,
+            // read them directly from the file
+
+            double lat, lng;
+            bool haveCoordinates = exiv2Iface->getGPSLatitudeNumber(&lat) && exiv2Iface->getGPSLongitudeNumber(&lng);
+            if (haveCoordinates)
+            {
+                KMap::GeoCoordinates coordinates(lat, lng);
+                double alt;
+                if (exiv2Iface->getGPSAltitude(&alt))
+                {
+                    coordinates.setAlt(alt);
+                }
+                m_gpsData.setCoordinates(coordinates);
+            }
+        }
+
         // read the remaining GPS information from the file:
         const QByteArray speedRef = exiv2Iface->getExifTagData("Exif.GPSInfo.GPSSpeedRef");
         bool success = !speedRef.isEmpty();
@@ -403,12 +396,6 @@ void KipiImageItem::setCoordinates(const KMap::GeoCoordinates& newCoordinates)
     emitDataChanged();
 }
 
-void KipiImageItem::setUrl(const KUrl& url)
-{
-    m_url = url;
-    emitDataChanged();
-}
-
 void KipiImageItem::setModel(KipiImageModel* const model)
 {
     m_model = model;
@@ -600,7 +587,7 @@ bool KipiImageItem::lessThan(const KipiImageItem* const otherItem, const int col
     }
 }
 
-QString KipiImageItem::saveChanges()
+QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 {
     // determine what is to be done first
     bool shouldRemoveCoordinates = false;
