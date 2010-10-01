@@ -74,6 +74,7 @@ public:
     {
         rating = -1;
         view   = 0;
+        state  = Waiting;
     }
 
     int             rating;         // Image Rating from Kipi host.
@@ -82,6 +83,7 @@ public:
     KUrl            url;            // Image url provided by Kipi host.
     QPixmap         thumb;          // Image thumbnail
     ImagesListView* view;
+    State           state;
 };
 
 ImagesListViewItem::ImagesListViewItem(ImagesListView* view, const KUrl& url)
@@ -215,6 +217,16 @@ void ImagesListViewItem::setProcessedIcon(const QIcon& icon)
     setIcon(ImagesListView::Filename, icon);
     // reset thumbnail back to no animation pix
     setPixmap(d->thumb);
+}
+
+void ImagesListViewItem::setState(State state)
+{
+    d->state = state;
+}
+
+ImagesListViewItem::State ImagesListViewItem::state() const
+{
+    return d->state;
 }
 
 ImagesListView* ImagesListViewItem::view() const
@@ -848,14 +860,15 @@ void ImagesList::removeItemByUrl(const KUrl& url)
     emit signalImageListChanged();
 }
 
-KUrl::List ImagesList::imageUrls() const
+KUrl::List ImagesList::imageUrls(bool onlyUnprocessed) const
 {
     KUrl::List list;
     QTreeWidgetItemIterator it(d->listView);
     while (*it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
-        list.append(item->url());
+        if ((onlyUnprocessed == false) || (item->state() != ImagesListViewItem::Success))
+            list.append(item->url());
         ++it;
     }
     return list;
@@ -891,6 +904,7 @@ void ImagesList::processed(bool success)
         d->progressTimer->stop();
         d->processItem->setProcessedIcon(
             SmallIcon(success ?  "dialog-ok" : "dialog-cancel"));
+        d->processItem->setState(success ? ImagesListViewItem::Success : ImagesListViewItem::Failed);
         d->processItem = 0;
     }
 }
