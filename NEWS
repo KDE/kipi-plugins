@@ -10,7 +10,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> DngConverter   : 249785 : DNG Converter adds 1 hour to timestamp of Sony .arw files.
 003 ==> RedEyesRemoval : 251391 : OpenCV not detected during configuration.
 004 ==> JPEGLossLess   : 252362 : digiKam crash when launching.
-005 ==> 
+005 ==> JPEGLossLess   : 224043 : Rotating certain images results in zero length file.
+006 ==> 
+
 
 
 
