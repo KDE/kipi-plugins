@@ -64,10 +64,6 @@ KipiImageItem::~KipiImageItem()
 KExiv2Iface::KExiv2* KipiImageItem::getExiv2ForFile()
 {
     QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(new KExiv2Iface::KExiv2);
-    if (!exiv2Iface->load(m_url.path()))
-    {
-        return 0;
-    }
 
     if (m_interface)
     {
@@ -80,6 +76,11 @@ KExiv2Iface::KExiv2* KipiImageItem::getExiv2ForFile()
     {
         exiv2Iface->setUseXMPSidecar4Reading(true);
         exiv2Iface->setMetadataWritingMode(KExiv2::WRITETOSIDECARONLY4READONLYFILES);
+    }
+
+    if (!exiv2Iface->load(m_url.path()))
+    {
+        return 0;
     }
 
     return exiv2Iface.take();
@@ -155,8 +156,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
 
         if (!m_dateTime.isValid())
         {
-            if (exiv2Iface)
-                m_dateTime = exiv2Iface->getImageDateTime();
+            m_dateTime = exiv2Iface->getImageDateTime();
         }
 
         m_gpsData.clear();
