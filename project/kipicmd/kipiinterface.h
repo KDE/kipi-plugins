@@ -53,6 +53,7 @@ public:
     void refreshImages( const KUrl::List& urls );
 
     int features() const;
+    QVariant hostSetting(const QString& settingName);
 
     KIPI::ImageCollectionSelector* imageCollectionSelector( QWidget *parent );
     KIPI::UploadWidget* uploadWidget( QWidget *parent);

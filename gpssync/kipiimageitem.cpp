@@ -78,8 +78,8 @@ KExiv2Iface::KExiv2* KipiImageItem::getExiv2ForFile()
     }
     else
     {
-        exiv2Iface->setUseXMPSidecar4Reading(false);
-        exiv2Iface->setMetadataWritingMode(KExiv2::WRITETOIMAGEONLY);
+        exiv2Iface->setUseXMPSidecar4Reading(true);
+        exiv2Iface->setMetadataWritingMode(KExiv2::WRITETOSIDECARONLY4READONLYFILES);
     }
 
     return exiv2Iface.take();
