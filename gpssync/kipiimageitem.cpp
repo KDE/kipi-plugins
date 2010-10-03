@@ -42,6 +42,76 @@ using namespace KExiv2Iface;
 namespace KIPIGPSSyncPlugin
 {
 
+bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const char* const exifTagName, const char* const xmpTagName, const QVariant& value)
+{
+    bool success = exiv2Iface->setExifTagVariant(exifTagName, value);
+
+    if (success)
+    {
+        /** @todo Here we save all data types as XMP Strings. Is that okay or do we have to store them as some other type?
+         */
+        switch (value.type())
+        {
+            case QVariant::Int:
+            case QVariant::UInt:
+            case QVariant::Bool:
+            case QVariant::LongLong:
+            case QVariant::ULongLong:
+                success = exiv2Iface->setXmpTagString(xmpTagName, QString::number(value.toInt()));
+                break;
+
+            case QVariant::Double:
+            {
+                long num, den;
+                exiv2Iface->convertToRationalSmallDenominator(value.toDouble(), &num, &den);
+                success = exiv2Iface->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
+                break;
+            }
+            case QVariant::List:
+            {
+                long num = 0, den = 1;
+                QList<QVariant> list = value.toList();
+                if (list.size() >= 1)
+                    num = list[0].toInt();
+                if (list.size() >= 2)
+                    den = list[1].toInt();
+                success = exiv2Iface->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
+                break;
+            }
+
+            case QVariant::Date:
+            case QVariant::DateTime:
+            {
+                QDateTime dateTime = value.toDateTime();
+                if(!dateTime.isValid())
+                {
+                    success = false;
+                    break;
+                }
+
+                success = exiv2Iface->setXmpTagString(xmpTagName, dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")));
+                break;
+            }
+
+            case QVariant::String:
+            case QVariant::Char:
+                success = exiv2Iface->setXmpTagString(xmpTagName, value.toString());
+                break;
+
+            case QVariant::ByteArray:
+                /// @todo I don't know a straightforward way to convert a byte array to XMP
+                success = false;
+                break;
+                
+            default:
+                success = false;
+                break;
+        }
+    }
+
+    return success;
+}
+
 KipiImageItem::KipiImageItem(KIPI::Interface* const interface, const KUrl& url)
              : m_interface(interface),
                m_model(0),
@@ -180,13 +250,15 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
             }
         }
 
+        /** @todo It seems that exiv2 provides EXIF entries if XMP sidecar entries exist,
+         *  therefore no need to read XMP as well?
+         */
         // read the remaining GPS information from the file:
         const QByteArray speedRef = exiv2Iface->getExifTagData("Exif.GPSInfo.GPSSpeedRef");
         bool success = !speedRef.isEmpty();
         long num, den;
         success&= exiv2Iface->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
         success&=den!=0;
-        kDebug()<<success<<QString::fromUtf8(speedRef.constData())<<num<<den;
         if (success)
         {
             const qreal speedInRef = qreal(num)/qreal(den);
@@ -642,7 +714,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
             // write all other GPS information here too
             if (success && m_gpsData.hasSpeed())
             {
-                success = exiv2Iface->setExifTagString("Exif.GPSInfo.GPSSpeedRef", "K");
+                success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(), "Exif.GPSInfo.GPSSpeedRef", "Xmp.exif.GPSSpeedRef", QVariant(QString("K")));
 
                 if (success)
                 {
@@ -650,8 +722,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
                     // km/h = 0.001 * m / ( s * 1/(60*60) ) = 3.6 * m/s
                     const qreal speedInKilometersPerHour = 3.6 * speedInMetersPerSecond;
-                    success = exiv2Iface->setExifTagVariant("Exif.GPSInfo.GPSSpeed", QVariant(speedInKilometersPerHour), true);
-                    // TODO: XMP
+                    success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(), "Exif.GPSInfo.GPSSpeed", "Xmp.exif.GPSSpeed", QVariant(speedInKilometersPerHour));
                 }
             }
 
