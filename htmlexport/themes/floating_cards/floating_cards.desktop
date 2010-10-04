@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Floating Cards
 Name[bg]=Плаващи карти
-Name[ca]=Cartes flotants
+Name[ca]=Targetes flotants
 Name[ca@valencia]=Cartes flotants
 Name[da]=Flydende kort
 Name[en_GB]=Floating Cards
@@ -26,7 +26,7 @@ Name[zh_CN]=浮动卡片
 Name[zh_TW]=紙牌浮空
 Comment=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
 Comment[bg]=Тъмен изглед с плаващи карти с миниатюри и описания. Бързо прелистване на галериите.
-Comment[ca]=Un tema fosc amb cartes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
+Comment[ca]=Un tema fosc amb targetes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
 Comment[ca@valencia]=Un tema fosc amb cartes de miniatures/descripcions flotants. Navegació ràpida per la galeria.
 Comment[da]=Et mørkt tema med flydende kort med miniaturer/beskrivelse. Hurtig navigation gennem galleriet.
 Comment[en_GB]=A dark theme with floating thumbnail/description cards. Fast navigation through the gallery.
@@ -87,7 +87,7 @@ Url=mailto:jbohac@jikos.cz
 [X-HTMLExport Preview]
 Name=Floating Cards
 Name[bg]=Плаващи карти
-Name[ca]=Cartes flotants
+Name[ca]=Targetes flotants
 Name[ca@valencia]=Cartes flotants
 Name[da]=Flydende kort
 Name[en_GB]=Floating Cards
