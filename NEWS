@@ -12,7 +12,11 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> JPEGLossLess    : 252362 : digiKam crash when launching.
 005 ==> JPEGLossLess    : 224043 : Rotating certain images results in zero length file.
 006 ==> PicasaWebExport : 252799 : After successful export of photo it should not be exported again.
-007 ==>
+007 ==> RAWConverter    : 238823 : Batch RAW Conversion should copy tags / captions / ratings to the converted file.
+008 ==> RAWConverter    : 211558 : Raw converter: copy tags and rating.
+009 ==> RAWConverter    : 199318 : RAW to JPG Export doesn't use Digikam description.
+010 ==> BatchProcess    : 152208 : Comments lost when converting from png to jpeg.
+011 ==> 
 
 
 
