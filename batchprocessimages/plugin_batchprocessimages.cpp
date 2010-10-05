@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "plugin_batchprocessimages.h"
 #include "plugin_batchprocessimages.moc"
 
 // C ANSI includes

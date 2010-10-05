@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "filteroptionsdialog.h"
 #include "filteroptionsdialog.moc"
 
 // Qt includes

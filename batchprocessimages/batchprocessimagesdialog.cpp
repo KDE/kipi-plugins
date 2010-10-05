@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "batchprocessimagesdialog.h"
 #include "batchprocessimagesdialog.moc"
 
 // C ANSI includes
@@ -621,9 +620,9 @@ void BatchProcessImagesDialog::slotFinished()
 
             if (src != dest)
             {
-                KIPI::ImageInfo srcInfo = m_interface->info(src);
+                KIPI::ImageInfo srcInfo  = m_interface->info(src);
                 KIPI::ImageInfo destInfo = m_interface->info(dest);
-                destInfo.cloneData(srcInfo);
+                srcInfo.cloneData(destInfo);
             }
 
             if (m_ui->m_removeOriginal->isChecked() && src != dest)

@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "resizeimagesdialog.h"
 #include "resizeimagesdialog.moc"
 
 // Qt includes

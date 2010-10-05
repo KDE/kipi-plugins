@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "borderoptionsdialog.h"
 #include "borderoptionsdialog.moc"
 
 // Qt includes

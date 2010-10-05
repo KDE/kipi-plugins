@@ -410,7 +410,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
 
     m_transferQueue.clear();
 
-    KUrl::List urlList = m_widget->m_imgList->imageUrls();
+    KUrl::List urlList = m_widget->m_imgList->imageUrls(true);
 
     if (urlList.isEmpty())
         return;

@@ -65,6 +65,13 @@ class KIPIPLUGINS_EXPORT ImagesListViewItem : public QTreeWidgetItem
 
 public:
 
+    enum State
+    {
+        Waiting,
+        Success,
+        Failed
+    };
+
     explicit ImagesListViewItem(ImagesListView* view, const KUrl& url);
     ~ImagesListViewItem();
 
@@ -84,6 +91,8 @@ public:
     void setProgressAnimation(const QPixmap& pix);
 
     void setProcessedIcon(const QIcon& icon);
+    void setState(State state);
+    State state() const;
 
     void updateInformation();
 
@@ -214,7 +223,7 @@ public:
     ImagesListView*    listView()  const;
     KIPI::Interface*   iface()     const;
 
-    virtual KUrl::List imageUrls() const;
+    virtual KUrl::List imageUrls(bool onlyUnprocessed = false) const;
     virtual void       removeItemByUrl(const KUrl& url);
 
     void               processing(const KUrl& url);

@@ -39,6 +39,7 @@ namespace KIPIBatchProcessImagesPlugin
 class BatchProcessImagesItem : public QTreeWidgetItem
 {
 public:
+
     static int columnOfSortKey();
 
     BatchProcessImagesItem(QTreeWidget * parent, QString const & pathSrc, QString const & nameSrc,

@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "convertimagesdialog.h"
 #include "convertimagesdialog.moc"
 
 // Qt includes

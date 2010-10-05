@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "recompressoptionsdialog.h"
 #include "recompressoptionsdialog.moc"
 
 // Qt includes

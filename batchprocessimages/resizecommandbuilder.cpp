@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "resizecommandbuilder.h"
 #include "resizecommandbuilder.moc"
 
 // Qt includes
