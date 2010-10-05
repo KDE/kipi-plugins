@@ -469,7 +469,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
 
             KIPI::ImageInfo orgInfo = d->iface->info(url);
             KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
-            newInfo.cloneData(orgInfo);
+            orgInfo.cloneData(newInfo);
         }
     }
 }
