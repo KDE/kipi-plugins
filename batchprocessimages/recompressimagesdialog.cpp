@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "recompressimagesdialog.h"
 #include "recompressimagesdialog.moc"
 
 // Qt includes

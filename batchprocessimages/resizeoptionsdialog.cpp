@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "resizeoptionsdialog.h"
 #include "resizeoptionsdialog.moc"
 
 // Qt includes
@@ -575,7 +574,7 @@ void PrintPrepareResizeOptionsDialog::prependWidgets()
     customGroupBoxLayout->addWidget(m_customPaperHeightLabel, 2, 0, 1, -1);
     customGroupBoxLayout->addWidget(m_customPaperHeightInput, 3, 0, 1, -1);
     customGroupBoxLayout->addWidget(m_customDpiLabel,         4, 0, 1, -1);
-    customGroupBoxLayout->addWidget(m_customDpiInput,         5, 1, 1, -1);
+    customGroupBoxLayout->addWidget(m_customDpiInput,         5, 0, 1, -1);
     customGroupBox->setLayout(customGroupBoxLayout);
 
     addOptionWidget(customGroupBox);

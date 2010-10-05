@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "colorimagesdialog.h"
 #include "colorimagesdialog.moc"
 
 // Qt includes

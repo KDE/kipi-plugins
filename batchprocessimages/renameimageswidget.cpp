@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "renameimageswidget.h"
 #include "renameimageswidget.moc"
 
 // C++ includes

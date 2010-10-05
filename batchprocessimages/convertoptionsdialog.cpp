@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "convertoptionsdialog.h"
 #include "convertoptionsdialog.moc"
 
 // Qt includes

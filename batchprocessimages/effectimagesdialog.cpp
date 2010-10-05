@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "effectimagesdialog.h"
 #include "effectimagesdialog.moc"
 
 // Qt includes

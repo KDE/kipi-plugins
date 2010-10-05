@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "renameimagesdialog.h"
 #include "renameimagesdialog.moc"
 
 // Qt includes

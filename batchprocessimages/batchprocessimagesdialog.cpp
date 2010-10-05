@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "batchprocessimagesdialog.h"
 #include "batchprocessimagesdialog.moc"
 
 // C ANSI includes
