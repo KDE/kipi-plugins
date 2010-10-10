@@ -760,13 +760,13 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
                 tagSeq.append(tag);
             }
 
-            bool succes = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
-            if (!succes)
+            bool success = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
+            if (!success)
             {
                 returnString = i18n("Failed to save tags to file.");
             }
-            succes = exiv2Iface->setXmpTagStringSeq("Xmp.dc.subject", tagSeq, true);
-            if (!succes)
+            success = exiv2Iface->setXmpTagStringSeq("Xmp.dc.subject", tagSeq, true);
+            if (!success)
             {
                 returnString = i18n("Failed to save tags to file.");
             }
