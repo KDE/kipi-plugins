@@ -1,24 +1,12 @@
-Kipi-plugins 1.5.0 - Release date: 2010/10/10
+Kipi-plugins 1.6.0 - Release date: 2010/12/??
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-General                 : Fix compilation under windows with TDM-GCC and MSVC compilers.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> FlickrExport    : 218169 : Less/More options buttons don't change label.
-002 ==> DngConverter    : 249785 : DNG Converter adds 1 hour to timestamp of Sony .arw files.
-003 ==> RedEyesRemoval  : 251391 : OpenCV not detected during configuration.
-004 ==> JPEGLossLess    : 252362 : digiKam crash when launching.
-005 ==> JPEGLossLess    : 224043 : Rotating certain images results in zero length file.
-006 ==> PicasaWebExport : 252799 : After successful export of photo it should not be exported again.
-007 ==> RAWConverter    : 238823 : Batch RAW Conversion should copy tags / captions / ratings to the converted file.
-008 ==> RAWConverter    : 211558 : Raw converter: copy tags and rating.
-009 ==> RAWConverter    : 199318 : RAW to JPG Export doesn't use Digikam description.
-010 ==> BatchProcess    : 152208 : Comments lost when converting from png to jpeg.
-011 ==> ImageViewer     : 231763 : Crash when closing opengl viewer.
-012 ==> 
+001 ==> 
 
 
 
