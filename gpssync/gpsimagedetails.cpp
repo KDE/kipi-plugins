@@ -27,8 +27,10 @@
 // Qt includes
 
 #include <QCheckBox>
+#include <QComboBox>
 #include <QDoubleValidator>
 #include <QFormLayout>
+#include <QIntValidator>
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -78,6 +80,10 @@ public:
     KLineEdit*                   leAltitude;
     QCheckBox*                   cbSpeed;
     KLineEdit*                   leSpeed;
+    QCheckBox*                   cbNSatellites;
+    KLineEdit*                   leNSatellites;
+    QCheckBox*                   cbFixType;
+    QComboBox*                   comboFixType;
 
     QPushButton*                 pbApply;
 
@@ -127,6 +133,18 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
     d->leSpeed->setValidator(new QDoubleValidator(0, HUGE_VAL, 12, this));
     formLayout->addRow(d->cbSpeed, d->leSpeed);
 
+    d->cbNSatellites = new QCheckBox(i18n("# satellites"), this);
+    d->leNSatellites = new KLineEdit(this);
+    d->leNSatellites->setClearButtonShown(true);
+    d->leNSatellites->setValidator(new QIntValidator(0, 2000, this));
+    formLayout->addRow(d->cbNSatellites, d->leNSatellites);
+
+    d->cbFixType = new QCheckBox(i18n("Fix type"), this);
+    d->comboFixType = new QComboBox(this);
+    d->comboFixType->addItem(i18n("2-d"), QVariant(2));
+    d->comboFixType->addItem(i18n("3-d"), QVariant(3));
+    formLayout->addRow(d->cbFixType, d->comboFixType);
+
     d->pbApply = new QPushButton(i18n("Apply"), this);
     formLayout->setWidget(formLayout->rowCount(), QFormLayout::SpanningRole, d->pbApply);
 
@@ -149,6 +167,12 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
             this, SLOT(updateUIState()));
 
     connect(d->cbSpeed, SIGNAL(stateChanged(int)),
+            this, SLOT(updateUIState()));
+
+    connect(d->cbNSatellites, SIGNAL(stateChanged(int)),
+            this, SLOT(updateUIState()));
+
+    connect(d->cbFixType, SIGNAL(stateChanged(int)),
             this, SLOT(updateUIState()));
 
     connect(d->imageModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
@@ -198,6 +222,14 @@ void GPSImageDetails::updateUIState()
     d->cbSpeed->setEnabled(haveCoordinates&&externalEnabled);
     d->leSpeed->setEnabled(d->cbSpeed->isChecked()&&haveCoordinates&&externalEnabled);
 
+    /* NSatellites */
+    d->cbNSatellites->setEnabled(haveCoordinates&&externalEnabled);
+    d->leNSatellites->setEnabled(d->cbNSatellites->isChecked()&&haveCoordinates&&externalEnabled);
+
+    /* fix type */
+    d->cbFixType->setEnabled(haveCoordinates&&externalEnabled);
+    d->comboFixType->setEnabled(d->cbFixType->isChecked()&&haveCoordinates&&externalEnabled);
+
     /* apply */
     d->pbApply->setEnabled(externalEnabled);
 }
@@ -210,6 +242,7 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
     d->leLongitude->clear();
     d->leAltitude->clear();
     d->leSpeed->clear();
+    d->leNSatellites->clear();
 
     d->cbCoordinates->setChecked(gpsData->hasCoordinates());
     if (gpsData->hasCoordinates())
@@ -230,6 +263,32 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
         {
             d->leSpeed->setText(KGlobal::locale()->formatNumber(gpsData->getSpeed(), 12));
         }
+
+        const bool haveNSatellites = gpsData->hasNSatellites();
+        d->cbNSatellites->setChecked(haveNSatellites);
+        if (haveNSatellites)
+        {
+            /// @todo Is this enough for simple integers or do we have to use KLocale?
+            d->leNSatellites->setText(QString::number(gpsData->getNSatellites()));
+        }
+
+        const int haveFixType = gpsData->hasFixType();
+        d->cbFixType->setChecked(haveFixType);
+        if (haveFixType)
+        {
+            const int fixType = gpsData->getFixType();
+            const int fixTypeIndex = d->comboFixType->findData(QVariant(fixType));
+
+            if (fixTypeIndex<0)
+            {
+                d->cbFixType->setChecked(false);
+            }
+            else
+            {
+                d->comboFixType->setCurrentIndex(fixTypeIndex);
+            }
+        }
+
     }
 
     updateUIState();
@@ -316,6 +375,18 @@ void GPSImageDetails::slotApply()
         {
             const qreal speed = KGlobal::locale()->readNumber(d->leSpeed->text());
             newData.setSpeed(speed);
+        }
+
+        if (d->cbNSatellites->isChecked())
+        {
+            const int nSatellites = KGlobal::locale()->readNumber(d->leNSatellites->text());
+            newData.setNSatellites(nSatellites);
+        }
+
+        if (d->cbFixType->isChecked())
+        {
+            const int fixType = d->comboFixType->itemData(d->comboFixType->currentIndex()).toInt();
+            newData.setFixType(fixType);
         }
     }
 
