@@ -209,7 +209,9 @@ QSize KipiImageItemDelegate::sizeHint(const QStyleOptionViewItem& option, const 
         return QSize(d->thumbnailSize, d->thumbnailSize);
     }
 
-    return QItemDelegate::sizeHint(option, sortMappedindex);
+    const QSize realSizeHint = QItemDelegate::sizeHint(option, sortMappedindex);
+
+    return QSize(realSizeHint.width(), d->thumbnailSize);
 }
 
 void KipiImageItemDelegate::setThumbnailSize(const int size)
