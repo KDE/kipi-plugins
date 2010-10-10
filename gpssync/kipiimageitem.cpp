@@ -293,6 +293,37 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
             }
         }
 
+        // number of satellites
+        const QString gpsSatellitesString = exiv2Iface->getExifTagString("Exif.GPSInfo.GPSSatellites");
+        bool satellitesOkay = !gpsSatellitesString.isEmpty();
+        if (satellitesOkay)
+        {
+            /**
+             * @todo Here we only accept a single integer denoting the number of satellites used
+             *       but not detailed information about all satellites.
+             */
+            const int nSatellites = gpsSatellitesString.toInt(&satellitesOkay);
+            if (satellitesOkay)
+            {
+                m_gpsData.setNSatellites(nSatellites);
+            }
+        }
+
+        // fix type / measure mode
+        const QByteArray gpsMeasureModeByteArray = exiv2Iface->getExifTagData("Exif.GPSInfo.GPSMeasureMode");
+        bool measureModeOkay = !gpsMeasureModeByteArray.isEmpty();
+        if (measureModeOkay)
+        {
+            const int measureMode = gpsMeasureModeByteArray.toInt(&measureModeOkay);
+            if (measureModeOkay)
+            {
+                if ((measureMode==2)||(measureMode==3))
+                {
+                    m_gpsData.setFixType(measureMode);
+                }
+            }
+        }
+
     }
 
     // mark us as not-dirty, because the data was just loaded:
@@ -724,6 +755,25 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
                     const qreal speedInKilometersPerHour = 3.6 * speedInMetersPerSecond;
                     success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(), "Exif.GPSInfo.GPSSpeed", "Xmp.exif.GPSSpeed", QVariant(speedInKilometersPerHour));
                 }
+            }
+
+            if (success && m_gpsData.hasNSatellites())
+            {
+                /**
+                 * @todo According to the EXIF 2.2 spec, GPSSatellites is a free form field which can either hold only the
+                 * number of satellites or more details about each satellite used. For now, we just write
+                 * the number of satellites. Are we using the correct format for the number of satellites here?
+                 */
+                success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(),
+                                                         "Exif.GPSInfo.GPSSatellites", "Xmp.exif.GPSSatellites",
+                                                         QVariant(QString::number(m_gpsData.getNSatellites())));
+            }
+
+            if (success && m_gpsData.hasFixType())
+            {
+                success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(),
+                                                         "Exif.GPSInfo.GPSMeasureMode", "Xmp.exif.GPSMeasureMode",
+                                                         QVariant(QString::number(m_gpsData.getFixType())));
             }
 
             if (!success)
