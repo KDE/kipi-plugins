@@ -158,20 +158,9 @@ KExiv2Iface::KExiv2* KipiImageItem::getExiv2ForFile()
 
 int getWarningLevelFromGPSDataContainer(const GPSDataContainer& data)
 {
-    if (data.hasPDop())
+    if (data.hasDop())
     {
-        const int dopValue = data.getPDop();
-        if (dopValue<2)
-            return 1;
-        if (dopValue<4)
-            return 2;
-        if (dopValue<10)
-            return 3;
-        return 4;
-    }
-    else if (data.hasHDop())
-    {
-        const int dopValue = data.getHDop();
+        const int dopValue = data.getDop();
         if (dopValue<2)
             return 1;
         if (dopValue<4)
@@ -378,14 +367,9 @@ QVariant KipiImageItem::data(const int column, const int role) const
     {
         if (role==Qt::DisplayRole)
         {
-            if (m_gpsData.hasPDop())
+            if (m_gpsData.hasDop())
             {
-                return i18n("PDOP: %1", m_gpsData.getPDop());
-            }
-
-            if (m_gpsData.hasHDop())
-            {
-                return i18n("HDOP: %1", m_gpsData.getHDop());
+                return i18n("DOP: %1", m_gpsData.getDop());
             }
 
             if (m_gpsData.hasFixType())
@@ -417,19 +401,12 @@ QVariant KipiImageItem::data(const int column, const int role) const
             }
         }
     }
-    else if ((column==ColumnHDOP)&&(role==Qt::DisplayRole))
+    else if ((column==ColumnDOP)&&(role==Qt::DisplayRole))
     {
-        if (!m_gpsData.hasHDop())
+        if (!m_gpsData.hasDop())
             return QString();
 
-        return KGlobal::locale()->formatNumber(m_gpsData.getHDop());
-    }
-    else if ((column==ColumnPDOP)&&(role==Qt::DisplayRole))
-    {
-        if (!m_gpsData.hasPDop())
-            return QString();
-
-        return KGlobal::locale()->formatNumber(m_gpsData.getPDop());
+        return KGlobal::locale()->formatNumber(m_gpsData.getDop());
     }
     else if ((column==ColumnFixType)&&(role==Qt::DisplayRole))
     {
@@ -522,8 +499,7 @@ void KipiImageItem::setHeaderData(KipiImageModel* const model)
     model->setHeaderData(ColumnLongitude, Qt::Horizontal, i18n("Longitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnAltitude, Qt::Horizontal, i18n("Altitude"), Qt::DisplayRole);
     model->setHeaderData(ColumnAccuracy, Qt::Horizontal, i18n("Accuracy"), Qt::DisplayRole);
-    model->setHeaderData(ColumnHDOP, Qt::Horizontal, i18n("HDOP"), Qt::DisplayRole);
-    model->setHeaderData(ColumnPDOP, Qt::Horizontal, i18n("PDOP"), Qt::DisplayRole);
+    model->setHeaderData(ColumnDOP, Qt::Horizontal, i18n("DOP"), Qt::DisplayRole);
     model->setHeaderData(ColumnFixType, Qt::Horizontal, i18n("Fix type"), Qt::DisplayRole);
     model->setHeaderData(ColumnNSatellites, Qt::Horizontal, i18n("# satellites"), Qt::DisplayRole);
     model->setHeaderData(ColumnSpeed, Qt::Horizontal, i18n("Speed"), Qt::DisplayRole);
@@ -583,18 +559,11 @@ bool KipiImageItem::lessThan(const KipiImageItem* const otherItem, const int col
         // TODO: this may not be the best way to sort images with equal warning levels
         //       but it works for now
 
-        if (m_gpsData.hasPDop()!=otherItem->m_gpsData.hasPDop())
-            return !m_gpsData.hasPDop();
-        if (m_gpsData.hasPDop()&&otherItem->m_gpsData.hasPDop())
+        if (m_gpsData.hasDop()!=otherItem->m_gpsData.hasDop())
+            return !m_gpsData.hasDop();
+        if (m_gpsData.hasDop()&&otherItem->m_gpsData.hasDop())
         {
-            return m_gpsData.getPDop()<otherItem->m_gpsData.getPDop();
-        }
-
-        if (m_gpsData.hasHDop()!=otherItem->m_gpsData.hasHDop())
-            return !m_gpsData.hasHDop();
-        if (m_gpsData.hasHDop()&&otherItem->m_gpsData.hasHDop())
-        {
-            return m_gpsData.getHDop()<otherItem->m_gpsData.getHDop();
+            return m_gpsData.getDop()<otherItem->m_gpsData.getDop();
         }
 
         if (m_gpsData.hasFixType()!=otherItem->m_gpsData.hasFixType())
@@ -614,26 +583,15 @@ bool KipiImageItem::lessThan(const KipiImageItem* const otherItem, const int col
         return false;
     }
 
-    case ColumnHDOP:
+    case ColumnDOP:
     {
-        if (!m_gpsData.hasHDop())
+        if (!m_gpsData.hasDop())
             return false;
 
-        if (!otherItem->m_gpsData.hasHDop())
+        if (!otherItem->m_gpsData.hasDop())
             return true;
 
-        return m_gpsData.getHDop() < otherItem->m_gpsData.getHDop();
-    }
-
-    case ColumnPDOP:
-    {
-        if (!m_gpsData.hasPDop())
-            return false;
-
-        if (!otherItem->m_gpsData.hasPDop())
-            return true;
-
-        return m_gpsData.getPDop() < otherItem->m_gpsData.getPDop();
+        return m_gpsData.getDop() < otherItem->m_gpsData.getDop();
     }
 
     case ColumnFixType:

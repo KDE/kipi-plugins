@@ -304,8 +304,7 @@ void KipiImageList::readSettingsFromGroup(const KConfigGroup* const group)
     else
     {
         // by default, hide the advanced columns:
-        header()->setSectionHidden(KipiImageItem::ColumnHDOP, true);
-        header()->setSectionHidden(KipiImageItem::ColumnPDOP, true);
+        header()->setSectionHidden(KipiImageItem::ColumnDOP, true);
         header()->setSectionHidden(KipiImageItem::ColumnFixType, true);
         header()->setSectionHidden(KipiImageItem::ColumnNSatellites, true);
     }

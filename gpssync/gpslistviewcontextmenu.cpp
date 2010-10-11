@@ -155,7 +155,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
                 copyAvailable&= itemHasCoordinates;
                 removeCoordinatesAvailable|= itemHasCoordinates;
                 removeAltitudeAvailable|= gpsItem->gpsData().getCoordinates().hasAltitude();
-                removeUncertaintyAvailable|= gpsItem->gpsData().hasNSatellites() | gpsItem->gpsData().hasHDop();
+                removeUncertaintyAvailable|= gpsItem->gpsData().hasNSatellites() | gpsItem->gpsData().hasDop() | gpsItem->gpsData().hasFixType();
                 removeSpeedAvailable|= gpsItem->gpsData().hasSpeed();
             }
         }
@@ -484,12 +484,20 @@ void GPSListViewContextMenu::removeInformationFromSelectedImages(const GPSDataCo
                 newGPSData.clearNSatellites();
             }
         }
-        if (flagsToClear.testFlag(GPSDataContainer::HasHDop))
+        if (flagsToClear.testFlag(GPSDataContainer::HasDop))
         {
-            if (newGPSData.hasHDop())
+            if (newGPSData.hasDop())
             {
                 didSomething = true;
-                newGPSData.clearHDop();
+                newGPSData.clearDop();
+            }
+        }
+        if (flagsToClear.testFlag(GPSDataContainer::HasFixType))
+        {
+            if (newGPSData.hasFixType())
+            {
+                didSomething = true;
+                newGPSData.clearFixType();
             }
         }
         if (flagsToClear.testFlag(GPSDataContainer::HasSpeed))
@@ -531,7 +539,10 @@ void GPSListViewContextMenu::slotRemoveAltitude()
 
 void GPSListViewContextMenu::slotRemoveUncertainty()
 {
-    removeInformationFromSelectedImages(GPSDataContainer::HasNSatellites|GPSDataContainer::HasHDop, i18n("Remove uncertainty information"));
+    removeInformationFromSelectedImages(
+            GPSDataContainer::HasNSatellites|GPSDataContainer::HasDop|GPSDataContainer::HasFixType,
+            i18n("Remove uncertainty information")
+        );
 }
 
 void GPSListViewContextMenu::setEnabled(const bool state)

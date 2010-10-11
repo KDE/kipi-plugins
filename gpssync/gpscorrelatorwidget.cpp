@@ -526,10 +526,15 @@ void GPSCorrelatorWidget::slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataPa
             newData.setCoordinates(itemCorrelation.coordinates);
             if (itemCorrelation.nSatellites>=0)
                 newData.setNSatellites(itemCorrelation.nSatellites);
+
+            // if hDop is available, use it
             if (itemCorrelation.hDop>=0)
-                newData.setHDop(itemCorrelation.hDop);
+                newData.setDop(itemCorrelation.hDop);
+
+            // but if pDop is available, prefer pDop over hDop
             if (itemCorrelation.pDop>=0)
-                newData.setPDop(itemCorrelation.pDop);
+                newData.setDop(itemCorrelation.pDop);
+
             if (itemCorrelation.fixType>=0)
             {
                 newData.setFixType(itemCorrelation.fixType);

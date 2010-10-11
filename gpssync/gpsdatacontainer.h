@@ -35,8 +35,7 @@ public:
     : m_hasFlags(0),
       m_coordinates(),
       m_nSatellites(-1),
-      m_hDop(-1),
-      m_pDop(-1),
+      m_dop(-1),
       m_fixType(-1),
       m_speed(0)
     {
@@ -47,10 +46,9 @@ public:
         HasAltitude = 2,
         HasIsInterpolated = 4,
         HasNSatellites = 8,
-        HasHDop = 16,
-        HasPDop = 32,
-        HasFixType = 64,
-        HasSpeed = 128
+        HasDop = 16,
+        HasFixType = 32,
+        HasSpeed = 64
     };
     Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
 
@@ -59,8 +57,7 @@ private:
     HasFlags m_hasFlags;
     KMap::GeoCoordinates m_coordinates;
     int m_nSatellites;
-    qreal m_hDop;
-    qreal m_pDop;
+    qreal m_dop;
     int m_fixType;
     qreal m_speed;
 
@@ -85,15 +82,9 @@ public:
                 return false;
         }
 
-        if (hasHDop())
+        if (hasDop())
         {
-            if (m_hDop!=b.m_hDop)
-                return false;
-        }
-
-        if (hasHDop())
-        {
-            if (m_pDop!=b.m_pDop)
+            if (m_dop!=b.m_dop)
                 return false;
         }
 
@@ -125,7 +116,7 @@ public:
 
     inline void clearNonCoordinates()
     {
-        m_hasFlags&= ~(HasNSatellites | HasHDop | HasPDop | HasFixType | HasSpeed);
+        m_hasFlags&= ~(HasNSatellites | HasDop | HasFixType | HasSpeed);
     }
 
     /* coordinates */
@@ -213,46 +204,32 @@ public:
 
     /* DOP */
 
-    inline bool hasHDop() const
+    inline bool hasDop() const
     {
-        return m_hasFlags.testFlag(HasHDop);
+        return m_hasFlags.testFlag(HasDop);
     }
 
-    inline bool hasPDop() const
+    inline void clearDop()
     {
-        return m_hasFlags.testFlag(HasPDop);
+        m_hasFlags&= ~HasDop;
     }
+
+    inline void setDop(const qreal dop)
+    {
+        m_dop = dop;
+        m_hasFlags|=HasDop;
+    }
+
+    inline qreal getDop() const
+    {
+        return m_dop;
+    }
+
+    /* fix type */
 
     inline bool hasFixType() const
     {
         return m_hasFlags.testFlag(HasFixType);
-    }
-
-    inline void clearHDop()
-    {
-        m_hasFlags&= ~HasHDop;
-    }
-
-    inline void clearPDop()
-    {
-        m_hasFlags&= ~HasPDop;
-    }
-
-    inline void clearAnyDop()
-    {
-        m_hasFlags&= ~(HasHDop | HasPDop | HasFixType);
-    }
-
-    inline void setHDop(const qreal hDop)
-    {
-        m_hDop = hDop;
-        m_hasFlags|=HasHDop;
-    }
-
-    inline void setPDop(const qreal pDop)
-    {
-        m_pDop = pDop;
-        m_hasFlags|=HasPDop;
     }
 
     inline void setFixType(const int fixType)
@@ -261,19 +238,14 @@ public:
         m_hasFlags|=HasFixType;
     }
 
-    inline qreal getHDop() const
-    {
-        return m_hDop;
-    }
-
-    inline qreal getPDop() const
-    {
-        return m_pDop;
-    }
-
     inline qreal getFixType() const
     {
         return m_fixType;
+    }
+
+    inline void clearFixType()
+    {
+        m_hasFlags&= ~HasFixType;
     }
 
     /* speed */

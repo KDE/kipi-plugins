@@ -117,13 +117,12 @@ public:
     static const int ColumnAccuracy = 6;
     static const int ColumnTags = 7;
     static const int ColumnStatus = 8;
-    static const int ColumnHDOP = 9;
-    static const int ColumnPDOP = 10;
-    static const int ColumnFixType = 11;
-    static const int ColumnNSatellites = 12;
-    static const int ColumnSpeed = 13;
+    static const int ColumnDOP = 9;
+    static const int ColumnFixType = 10;
+    static const int ColumnNSatellites = 11;
+    static const int ColumnSpeed = 12;
 
-    static const int ColumnGPSImageItemCount = 14;
+    static const int ColumnGPSImageItemCount = 13;
 
     KipiImageItem(KIPI::Interface* const interface, const KUrl& url);
     virtual ~KipiImageItem();

@@ -94,8 +94,7 @@ void TestKipiImageItem::testBasicLoading()
         QVERIFY(!container.hasCoordinates());
         QVERIFY(!container.hasAltitude());
         QVERIFY(!container.hasNSatellites());
-        QVERIFY(!container.hasHDop());
-        QVERIFY(!container.hasPDop());
+        QVERIFY(!container.hasDop());
         QVERIFY(!container.hasFixType());
     }
 
@@ -111,8 +110,7 @@ void TestKipiImageItem::testBasicLoading()
         QVERIFY(container.getCoordinates().lon()==15.0);
         QVERIFY(container.getCoordinates().alt()==25.0);
         QVERIFY(!container.hasNSatellites());
-        QVERIFY(!container.hasHDop());
-        QVERIFY(!container.hasPDop());
+        QVERIFY(!container.hasDop());
         QVERIFY(!container.hasFixType());
     }
 }
