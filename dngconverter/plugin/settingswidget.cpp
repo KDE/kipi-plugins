@@ -107,8 +107,8 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     d->compressLossLess      = new QCheckBox(i18n("Lossless Compression"), this);
 
     d->updateFileDate        = new QCheckBox(i18n("Update File Modification Date"), this);
-    d->updateFileDate->setWhatsThis("Sets the file modification date "
-        "to the creation date provided in the image metadata.");
+    d->updateFileDate->setWhatsThis(i18n("Sets the file modification date "
+        "to the creation date provided in the image metadata."));
 
     d->previewModeLabel      = new QLabel(i18n("JPEG Preview:"), this);
     d->previewModeCB         = new RComboBox(this);
