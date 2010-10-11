@@ -84,6 +84,8 @@ public:
     KLineEdit*                   leNSatellites;
     QCheckBox*                   cbFixType;
     QComboBox*                   comboFixType;
+    QCheckBox*                   cbDop;
+    KLineEdit*                   leDop;
 
     QPushButton*                 pbApply;
 
@@ -145,6 +147,12 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
     d->comboFixType->addItem(i18n("3-d"), QVariant(3));
     formLayout->addRow(d->cbFixType, d->comboFixType);
 
+    d->cbDop = new QCheckBox(i18n("DOP"), this);
+    d->leDop = new KLineEdit(this);
+    d->leDop->setClearButtonShown(true);
+    d->leDop->setValidator(new QDoubleValidator(0, HUGE_VAL, 2, this));
+    formLayout->addRow(d->cbDop, d->leDop);
+
     d->pbApply = new QPushButton(i18n("Apply"), this);
     formLayout->setWidget(formLayout->rowCount(), QFormLayout::SpanningRole, d->pbApply);
 
@@ -173,6 +181,9 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
             this, SLOT(updateUIState()));
 
     connect(d->cbFixType, SIGNAL(stateChanged(int)),
+            this, SLOT(updateUIState()));
+
+    connect(d->cbDop, SIGNAL(stateChanged(int)),
             this, SLOT(updateUIState()));
 
     connect(d->imageModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
@@ -230,6 +241,10 @@ void GPSImageDetails::updateUIState()
     d->cbFixType->setEnabled(haveCoordinates&&externalEnabled);
     d->comboFixType->setEnabled(d->cbFixType->isChecked()&&haveCoordinates&&externalEnabled);
 
+    /* dop */
+    d->cbDop->setEnabled(haveCoordinates&&externalEnabled);
+    d->leDop->setEnabled(d->cbDop->isChecked()&&haveCoordinates&&externalEnabled);
+
     /* apply */
     d->pbApply->setEnabled(externalEnabled);
 }
@@ -243,6 +258,7 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
     d->leAltitude->clear();
     d->leSpeed->clear();
     d->leNSatellites->clear();
+    d->leDop->clear();
 
     d->cbCoordinates->setChecked(gpsData->hasCoordinates());
     if (gpsData->hasCoordinates())
@@ -289,6 +305,12 @@ void GPSImageDetails::displayGPSDataContainer(const GPSDataContainer* const gpsD
             }
         }
 
+        const bool haveDop = gpsData->hasDop();
+        d->cbDop->setChecked(haveDop);
+        if (haveDop)
+        {
+            d->leDop->setText(KGlobal::locale()->formatNumber(gpsData->getDop(), 2));
+        }
     }
 
     updateUIState();
@@ -387,6 +409,12 @@ void GPSImageDetails::slotApply()
         {
             const int fixType = d->comboFixType->itemData(d->comboFixType->currentIndex()).toInt();
             newData.setFixType(fixType);
+        }
+
+        if (d->cbDop->isChecked())
+        {
+            const qreal dop = KGlobal::locale()->readNumber(d->leDop->text());
+            newData.setDop(dop);
         }
     }
 

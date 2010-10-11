@@ -316,6 +316,19 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
             }
         }
 
+        // read the DOP value:
+        success= exiv2Iface->getExifTagRational("Exif.GPSInfo.GPSDOP", num, den);
+        if (success)
+        {
+            // be relaxed about 0/0
+            if ((num==0.0)&&(den==0.0))
+                den = 1.0;
+
+            const qreal dop = qreal(num)/qreal(den);
+
+            m_gpsData.setDop(dop);
+        }
+
     }
 
     // mark us as not-dirty, because the data was just loaded:
@@ -736,6 +749,18 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
                                                          "Exif.GPSInfo.GPSMeasureMode", "Xmp.exif.GPSMeasureMode",
                                                          QVariant(QString::number(m_gpsData.getFixType())));
             }
+
+            // write DOP
+            if (success && m_gpsData.hasDop())
+            {
+                success = KExiv2SetExifXmpTagDataVariant(
+                        exiv2Iface.data(),
+                        "Exif.GPSInfo.GPSDOP",
+                        "Xmp.exif.GPSDOP",
+                        QVariant(m_gpsData.getDop())
+                    );
+            }
+
 
             if (!success)
             {
