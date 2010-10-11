@@ -247,9 +247,12 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
         bool success = !speedRef.isEmpty();
         long num, den;
         success&= exiv2Iface->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
-        success&=den!=0;
         if (success)
         {
+            // be relaxed about 0/0
+            if ((num==0.0)&&(den==0.0))
+                den = 1.0;
+
             const qreal speedInRef = qreal(num)/qreal(den);
 
             qreal FactorToMetersPerSecond;
