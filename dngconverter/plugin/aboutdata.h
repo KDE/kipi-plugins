@@ -35,6 +35,7 @@
 // Local includes
 
 #include "kpaboutdata.h"
+#include "XMP_Version.h"
 
 namespace KIPIDNGConverterPlugin
 {
@@ -45,10 +46,13 @@ class DNGConverterAboutData : public KIPIPlugins::KPAboutData
 public:
 
     DNGConverterAboutData()
-        : KPAboutData(ki18n("DNG Image Converter"), 0,
+        : KPAboutData(ki18n("DNG Image Converter"), 
+                      0,
                       KAboutData::License_GPL,
-                      ki18n("A tool to batch convert RAW camera images to DNG"),
-                      ki18n("(c) 2008-2009, Gilles Caulier\n"
+                      ki18n("A tool to batch convert RAW camera images to DNG\n"
+                            "Using XMP toolkit %1\n"
+                            "Using DNG toolkit 1.3").subs(QString(XMP_API_VERSION_STRING)),
+                      ki18n("(c) 2008-2010, Gilles Caulier\n"
                             "(c) 2010, Jens Mueller"))
     {
          addAuthor(ki18n("Gilles Caulier"),

@@ -1,3 +1,197 @@
+1.5.0   2010-10-10 
+ 
+2010-10-08 10:58  cgilles
+
+	* dngconverter/plugin/aboutdata.h: add XMP and DNG sdk version to
+	  about data
+	  
+	  Warning : DNG version is not available in sdk. i set it by hand
+	  in data.
+	  This value need to be updated at this place when DNG sdk will be
+	  update later.
+	  
+	  Note : new XMP sdk is available. We use 4.4. current version is
+	  5.1.2 (http://www.adobe.com.ph/devnet/xmp.html)
+	  
+	  CCMAIL : tschenser@gmx.de
+
+2010-10-08 07:13  cgilles
+
+	* NEWS: update
+
+2010-10-06 07:24  cgilles
+
+	* NEWS: update
+
+2010-10-05 13:47  cgilles
+
+	* rawconverter/singledialog.cpp: missing to commit this change
+
+2010-10-05 13:46  cgilles
+
+	* NEWS: update
+
+2010-10-05 13:44  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	  dngconverter/plugin/batchdialog.cpp,
+	  rawconverter/batchdialog.cpp: Use right order to clone data from
+	  one item to another one.
+	  BUGS: 238823
+	  BUGS: 152208
+	  BUGS: 211558
+	  BUGS: 199318
+
+2010-10-05 08:00  cgilles
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	  batchprocessimages/batchprocessimagesitem.h,
+	  batchprocessimages/batchprocessimageslist.cpp,
+	  batchprocessimages/borderimagesdialog.cpp,
+	  batchprocessimages/borderoptionsdialog.cpp,
+	  batchprocessimages/colorimagesdialog.cpp,
+	  batchprocessimages/coloroptionsdialog.cpp,
+	  batchprocessimages/convertimagesdialog.cpp,
+	  batchprocessimages/convertoptionsdialog.cpp,
+	  batchprocessimages/effectimagesdialog.cpp,
+	  batchprocessimages/effectoptionsdialog.cpp,
+	  batchprocessimages/filterimagesdialog.cpp,
+	  batchprocessimages/filteroptionsdialog.cpp,
+	  batchprocessimages/imagepreview.cpp,
+	  batchprocessimages/plugin_batchprocessimages.cpp,
+	  batchprocessimages/recompressimagesdialog.cpp,
+	  batchprocessimages/recompressoptionsdialog.cpp,
+	  batchprocessimages/renameimagesdialog.cpp,
+	  batchprocessimages/renameimageswidget.cpp,
+	  batchprocessimages/resizecommandbuilder.cpp,
+	  batchprocessimages/resizeimagesdialog.cpp,
+	  batchprocessimages/resizeoptionsdialog.cpp: there is a layout
+	  problem in resize image dialog, with prepare to print option:
+	  custom DPI input is not visible
+	  no need to include .h if .moc is there.
+
+2010-10-04 08:25  scripty
+
+	* htmlexport/themes/floating_cards/floating_cards.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2010-10-01 18:58  jmueller
+
+	* NEWS, common/libkipiplugins/widgets/imageslist.cpp,
+	  common/libkipiplugins/widgets/imageslist.h,
+	  picasawebexport/picasawebwindow.cpp: Do not reupload already
+	  processed items.
+	  
+	  BUGS: 252799
+
+2010-10-01 08:23  cgilles
+
+	* NEWS: update
+
+2010-09-26 04:23  cgilles
+
+	* NEWS: update
+
+2010-09-20 09:52  cgilles
+
+	* expoblending/blendingdlg/enfusesettings.h: cast values to string
+
+2010-09-20 04:31  cgilles
+
+	* NEWS: update
+
+2010-09-19 08:51  scripty
+
+	* timeadjust/kipiplugin_timeadjust.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-09-13 18:40  jmueller
+
+	* NEWS: update
+
+2010-09-13 18:38  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: Use timestamps from
+	  libkexiv as Libraw do not support daylight savings time.
+	  
+	  BUGS: 249785
+
+2010-09-12 08:35  scripty
+
+	* htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-09-12 08:21  cgilles
+
+	* gpssync/kmlexport.cpp: why GCC 4.4 do not warn this param error
+	  there. Only GCC 4.5 report it. I suspect that a lots of KIO
+	  functions are badly called in digiKam & co.
+	  This is another advantage to compile all source code under
+	  windows.
+
+2010-09-12 08:09  cgilles
+
+	* gpssync/kmlexport.cpp, gpssync/kmlexport.h: use const ref
+
+2010-09-12 08:02  cgilles
+
+	* gpssync/kmlexport.cpp: polish
+
+2010-09-04 18:31  gateau
+
+	* htmlexport/wizard.cpp: Gianluca is now the official maintainer of
+	  the plugin.
+
+2010-09-04 14:37  cgilles
+
+	* common/libkipiplugins/tools/kpwriteimage.cpp: thanks to GCC 4.5.1
+	  under windows to found this problem with return bool value
+	  instead a QByteArray...
+
+2010-09-03 10:33  cgilles
+
+	* CMakeLists.txt: to prevent warnings with MSVC
+
+2010-08-25 07:30  scripty
+
+	* acquireimages/kipiplugin_acquireimages.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-08-24 09:00  scripty
+
+	* galleryexport/kipiplugin_galleryexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-08-23 05:14  cgilles
+
+	* CMakeLists.txt: update
+
+2010-08-23 05:13  cgilles
+
+	* NEWS: update
+
+2010-08-23 05:11  cgilles
+
+	* flickrexport/flickrwidget.cpp: apply patch #50825 from Nathanaël
+	  Restori
+	  BUGS: 218169
+
+2010-08-23 05:09  cgilles
+
+	* project/NEWS.1.4.0: polish
+
+2010-08-22 08:38  nlecureuil
+
+	* project/NEWS.1.4.0: Add 1.4.0 NEWS file
+
+2010-08-22 08:06  nlecureuil
+
+	* ChangeLog, NEWS: Prepare for 1.4.0
+
 1.4.0   2010-08-22
 
 2010-08-18 08:08  cgilles
