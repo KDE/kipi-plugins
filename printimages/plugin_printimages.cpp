@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "plugin_printimages.h"
 #include "plugin_printimages.moc"
 
 // C ANSI includes

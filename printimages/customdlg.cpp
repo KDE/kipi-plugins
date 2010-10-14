@@ -23,7 +23,6 @@
 
 // Local includes.
 
-#include "customdlg.h"
 #include "customdlg.moc"
 
 namespace KIPIPrintImagesPlugin
