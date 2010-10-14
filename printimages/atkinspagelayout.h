@@ -6,7 +6,7 @@
  * Date        : 2007-02-13
  * Description : Layouting photos on a page
  *
- * Copyright 2007-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright 2007-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,8 +31,6 @@
 namespace KIPIPrintImagesPlugin
 {
 
-class AtkinsPageLayoutPriv;
-
 /**
     Implements the algorithm described in
 
@@ -54,7 +52,7 @@ public:
     /**
         Create a page layout object which lays out in the given page rectangle
     */
-    AtkinsPageLayout(const QRectF &pageRect);
+    AtkinsPageLayout(const QRectF& pageRect);
     ~AtkinsPageLayout();
 
     /**
@@ -62,7 +60,7 @@ public:
         The specified key parameter is used to retrieve the layout
         rectangle with itemRect().
     */
-    void addLayoutItem(int key, const QSizeF &itemSize);
+    void addLayoutItem(int key, const QSizeF& itemSize);
 
     /**
         Retrieve the layout rectangle for the item that was added with the given key.
@@ -75,15 +73,15 @@ public:
 private:
 
     void addLayoutItem(int key, double aspectRatio, double relativeArea);
-    double aspectRatio(const QSizeF &size);
-    double absoluteArea(const QSizeF &size);
+    double aspectRatio(const QSizeF& size);
+    double absoluteArea(const QSizeF& size);
 
 private:
 
+    class AtkinsPageLayoutPriv;
     AtkinsPageLayoutPriv* const d;
 };
 
 }  // NameSpace KIPIPrintImagesPlugin
 
 #endif /* ATKINSPAGELAYOUT_H */
-

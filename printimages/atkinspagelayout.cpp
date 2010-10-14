@@ -6,7 +6,7 @@
  * Date        : 2007-02-13
  * Description : Layouting photos on a page
  *
- * Copyright 2007-2009 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright 2007-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,8 +37,9 @@
 namespace KIPIPrintImagesPlugin
 {
 
-class AtkinsPageLayoutPriv
+class AtkinsPageLayout::AtkinsPageLayoutPriv
 {
+
 public:
     AtkinsPageLayoutPriv()
     {
@@ -50,7 +51,7 @@ public:
     QRectF         pageRect;
 };
 
-AtkinsPageLayout::AtkinsPageLayout(const QRectF &pageRect)
+AtkinsPageLayout::AtkinsPageLayout(const QRectF& pageRect)
                 : d(new AtkinsPageLayoutPriv)
 {
     d->pageRect = pageRect;
@@ -63,7 +64,7 @@ AtkinsPageLayout::~AtkinsPageLayout()
     delete d;
 }
 
-double AtkinsPageLayout::aspectRatio(const QSizeF &size)
+double AtkinsPageLayout::aspectRatio(const QSizeF& size)
 {
     return size.height() / size.width();
 }
@@ -73,7 +74,7 @@ double AtkinsPageLayout::absoluteArea(const QSizeF &size)
     return size.height() * size.width();
 }
 
-void AtkinsPageLayout::addLayoutItem(int key, const QSizeF &size)
+void AtkinsPageLayout::addLayoutItem(int key, const QSizeF& size)
 {
     double relativeArea = absoluteArea(size) / absoluteArea(d->pageRect.size());
     addLayoutItem(key, aspectRatio(size), relativeArea);

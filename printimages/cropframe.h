@@ -7,7 +7,7 @@
  * Description : a kipi plugin to print images
  *
  * Copyright 2002-2003 by Todd Shoemaker <todd@theshoemakers.net>
- * Copyright 2007-2008 by 2007 Angelo Naselli <anaselli at linux dot it>
+ * Copyright 2007-2008 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,38 +39,42 @@ namespace KIPIPrintImagesPlugin
 
 class CropFrame : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    CropFrame(QWidget *parent);
+public:
+
+    CropFrame(QWidget* parent);
     ~CropFrame();
-    void init(TPhoto *photo, int width, int height, bool autoRotate, bool paint = true);
+    void init(TPhoto* photo, int width, int height, bool autoRotate, bool paint = true);
     void setColor(QColor);
     QColor color();
-    void drawCropRectangle(bool draw=true) {m_drawRec=draw; };
+    void drawCropRectangle(bool draw=true) { m_drawRec=draw; };
 
-  private:
-    TPhoto *m_photo;
-    bool m_mouseDown;
-    QPixmap *m_pixmap;
-    int m_pixmapX;
-    int m_pixmapY;
+protected:
 
-    QColor m_color;
+    virtual void paintEvent(QPaintEvent*);
+    virtual void mousePressEvent(QMouseEvent*);
+    virtual void mouseReleaseEvent(QMouseEvent*);
+    virtual void mouseMoveEvent(QMouseEvent*);
+    virtual void keyPressEvent(QKeyEvent*);
 
-    QRect m_cropRegion;
-    bool m_drawRec;
-
+private:
 
     QRect _screenToPhotoRect(QRect r);
     QRect _photoToScreenRect(QRect r);
 
-  protected:
-    virtual void paintEvent (QPaintEvent *);
-    virtual void mousePressEvent(QMouseEvent *);
-    virtual void mouseReleaseEvent(QMouseEvent *);
-    virtual void mouseMoveEvent(QMouseEvent *);
-    virtual void keyPressEvent(QKeyEvent *);
+private:
+
+    TPhoto*  m_photo;
+    bool     m_mouseDown;
+    QPixmap* m_pixmap;
+    int      m_pixmapX;
+    int      m_pixmapY;
+
+    QColor   m_color;
+
+    QRect    m_cropRegion;
+    bool     m_drawRec;
 };
 
 }  // NameSpace KIPIPrintImagesPlugin
