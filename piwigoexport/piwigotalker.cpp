@@ -97,6 +97,11 @@ void PiwigoTalker::login(const KUrl& url, const QString& name, const QString& pa
     m_state = GE_LOGIN;
     m_talker_buffer.resize(0);
 
+	// Add the page to the URL
+	if (!m_url.url().endsWith(QLatin1String(".php"))) {
+        m_url.addPath("/ws.php");
+    }
+	
     QString auth = name + QString(":") + passwd;
     s_authToken = "Basic " + auth.toUtf8().toBase64();
 
@@ -208,7 +213,9 @@ bool PiwigoTalker::addPhoto(int albumId,
                 if (captionIsTitle) m_name = exiv2Iface.getExifComment();
                 if (captionIsDescription) m_comment = exiv2Iface.getExifComment();
             }
-            m_date = exiv2Iface.getImageDateTime();
+            if (!exiv2Iface.getImageDateTime().isNull()) {
+				m_date = exiv2Iface.getImageDateTime();
+			}
         } else {
             kWarning() << "Image " << photoPath << " has no exif data";
         }
@@ -573,7 +580,7 @@ void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
     qsl.append("categories=" + QString::number(m_albumId));
     qsl.append("file_sum=" + computeMD5Sum(m_path).toHex());
     qsl.append("thumbnail_sum=" + computeMD5Sum(m_thumbpath).toHex());
-    qsl.append("date_creation=" + m_date.toString("yyyy:MM:dd").toUtf8().toPercentEncoding());
+    qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd").toUtf8().toPercentEncoding());
     qsl.append("tag_ids=");
     qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
     QString dataParameters = qsl.join("&");
