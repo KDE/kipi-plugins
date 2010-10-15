@@ -393,7 +393,7 @@ void PiwigoWindow::slotDoLogin()
     }
 
     if (!url.url().endsWith(QLatin1String(".php"))) {
-        url.addPath("ws.php");
+        url.addPath("/ws.php");
     }
 
     // If we've done something clever, save it back to the piwigo.
