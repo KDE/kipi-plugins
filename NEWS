@@ -8,7 +8,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> RedEyesRemoval : 236385 : digiKam and Gwenview crash on red eye removing.
 002 ==> PrintWizzard   : 254103 : "previous photo" and "next page" in the same context.
-003 ==> 
+003 ==> DNGConverter   : 254205 : Compiling fails on SPARC platform because "qDNGBigEndian" macro is not defined.
+004 ==> 
+
 
 
 
