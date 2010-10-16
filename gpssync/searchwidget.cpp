@@ -261,14 +261,16 @@ class SearchResultModelPrivate
 public:
     SearchResultModelPrivate()
     {
-        const KUrl markerUrl = KStandardDirs::locate("data", "gpssync/searchmarker-normal.png");
-        markerNormal = QPixmap(markerUrl.toLocalFile());
+        markerNormalUrl = KStandardDirs::locate("data", "gpssync/searchmarker-normal.png");
+        markerNormal = QPixmap(markerNormalUrl.toLocalFile());
 
-        const KUrl markerSelectedUrl = KStandardDirs::locate("data", "gpssync/searchmarker-selected.png");
+        markerSelectedUrl = KStandardDirs::locate("data", "gpssync/searchmarker-selected.png");
         markerSelected = QPixmap(markerSelectedUrl.toLocalFile());
     }
 
     QList<SearchResultModel::SearchResultItem> searchResults;
+    KUrl markerNormalUrl;
+    KUrl markerSelectedUrl;
     QPixmap markerNormal;
     QPixmap markerSelected;
     QItemSelectionModel* selectionModel;
@@ -312,7 +314,11 @@ QVariant SearchResultModel::data(const QModelIndex& index, int role) const
             return d->searchResults.at(rowNumber).result.name;
 
         case Qt::DecorationRole:
-            return getMarkerIcon(index, 0);
+        {
+            QPixmap markerIcon;
+            getMarkerIcon(index, 0, 0, &markerIcon, 0);
+            return markerIcon;
+        }
 
         default:
             return QVariant();
@@ -451,9 +457,9 @@ bool SearchResultModelHelper::itemCoordinates(const QModelIndex& index, KMap::Ge
     return true;
 }
 
-QPixmap SearchResultModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset) const
+bool SearchResultModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const
 {
-    return d->model->getMarkerIcon(index, offset);
+    return d->model->getMarkerIcon(index, offset, size, pixmap, url);
 }
 
 SearchResultModel::SearchResultItem SearchResultModel::resultItem(const QModelIndex& index) const
@@ -479,23 +485,40 @@ void SearchWidget::slotUpdateUIState()
         );
 }
 
-QPixmap SearchResultModel::getMarkerIcon(const QModelIndex& index, QPoint* const offset) const
+bool SearchResultModel::getMarkerIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const
 {
-    const bool itemIsSelected = d->selectionModel ? d->selectionModel->isSelected(index) : false;
-
-    QPixmap markerPixmap = itemIsSelected ? d->markerSelected : d->markerNormal;
-
     // determine the id of the marker
     const int markerNumber = index.row();
-    if (markerNumber<26)
-    {
-        const QString markerId = QChar('A'+markerNumber);
 
-        QPainter painter(&markerPixmap);
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.setPen(Qt::black);
-        QRect textRect(0,2,markerPixmap.width(),markerPixmap.height());
-        painter.drawText(textRect, Qt::AlignHCenter, markerId);
+    const bool itemIsSelected = d->selectionModel ? d->selectionModel->isSelected(index) : false;
+    QPixmap markerPixmap = itemIsSelected ? d->markerSelected : d->markerNormal;
+
+    // if the caller requests a URL and the marker will not get
+    // a special label, return a URL. Otherwise, return a pixmap.
+    const bool returnViaUrl = url && markerNumber>26;
+    if (returnViaUrl)
+    {
+        *url = itemIsSelected ? d->markerSelectedUrl : d->markerNormalUrl;
+
+        if (size)
+        {
+            *size = markerPixmap.size();
+        }
+    }
+    else
+    {
+        if (markerNumber<=26)
+        {
+            const QString markerId = QChar('A'+markerNumber);
+
+            QPainter painter(&markerPixmap);
+            painter.setRenderHint(QPainter::Antialiasing);
+            painter.setPen(Qt::black);
+            QRect textRect(0,2,markerPixmap.width(),markerPixmap.height());
+            painter.drawText(textRect, Qt::AlignHCenter, markerId);
+        }
+
+        *pixmap = markerPixmap;
     }
 
     if (offset)
@@ -503,7 +526,7 @@ QPixmap SearchResultModel::getMarkerIcon(const QModelIndex& index, QPoint* const
         *offset = QPoint(markerPixmap.width()/2, 0);
     }
 
-    return markerPixmap;
+    return true;
 }
 
 void SearchResultModel::setSelectionModel(QItemSelectionModel* const selectionModel)

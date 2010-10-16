@@ -58,7 +58,7 @@ public:
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
     virtual bool itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const;
-    virtual QPixmap itemIcon(const QModelIndex& index, QPoint* const offset) const;
+    virtual bool itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const;
     virtual Flags modelFlags() const;
     virtual Flags itemFlags(const QModelIndex& index) const;
     virtual void snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices);

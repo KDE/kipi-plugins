@@ -174,6 +174,7 @@ public:
     KBookmarkManager* bookmarkManager;
     KipiImageModel* kipiImageModel;
     QPixmap pixmap;
+    KUrl bookmarkIconUrl;
     bool visible;
 
     void addBookmarkGroupToModel(const KBookmarkGroup& group);
@@ -186,8 +187,8 @@ GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkM
     d->model = new QStandardItemModel(this);
     d->bookmarkManager = bookmarkManager;
     d->kipiImageModel = kipiImageModel;
-    const KUrl markerUrl = KStandardDirs::locate("data", "gpssync/bookmarks-marker.png");
-    d->pixmap = QPixmap(markerUrl.toLocalFile());
+    d->bookmarkIconUrl = KStandardDirs::locate("data", "gpssync/bookmarks-marker.png");
+    d->pixmap = QPixmap(d->bookmarkIconUrl.toLocalFile());
 
     connect(d->bookmarkManager, SIGNAL(bookmarksChanged(QString)),
             this, SLOT(slotUpdateBookmarksModel()));
@@ -225,14 +226,30 @@ bool GPSBookmarkModelHelper::itemCoordinates(const QModelIndex& index, KMap::Geo
     return itemCoordinates.hasCoordinates();
 }
 
-QPixmap GPSBookmarkModelHelper::itemIcon(const QModelIndex& /*index*/, QPoint* const offset) const
+bool GPSBookmarkModelHelper::itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const
 {
+    Q_UNUSED(index)
+
     if (offset)
     {
         *offset = QPoint(d->pixmap.width()/2, 0);
     }
 
-    return d->pixmap;
+    if (url)
+    {
+        *url = d->bookmarkIconUrl;
+
+        if (size)
+        {
+            *size = d->pixmap.size();
+        }
+    }
+    else
+    {
+        *pixmap = d->pixmap;
+    }
+
+    return true;
 }
 
 void GPSBookmarkModelHelperPrivate::addBookmarkGroupToModel(const KBookmarkGroup& group)
