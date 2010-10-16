@@ -109,12 +109,14 @@ class SearchWidget : public QWidget
 Q_OBJECT
 
 public:
-    SearchWidget(KMap::KMapWidget* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent = 0);
+    SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent = 0);
     ~SearchWidget();
 
     KMap::ModelHelper* getModelHelper();
     void saveSettingsToGroup(KConfigGroup* const group);
     void readSettingsFromGroup(const KConfigGroup* const group);
+
+    void setPrimaryMapWidget(KMap::KMapWidget* const mapWidget);
 
 private Q_SLOTS:
     void slotSearchCompleted();

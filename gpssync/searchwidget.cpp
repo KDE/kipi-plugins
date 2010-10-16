@@ -102,12 +102,11 @@ public:
     KAction                                   *actionMoveImagesToThisResult;
 };
 
-SearchWidget::SearchWidget(KMap::KMapWidget* const mapWidget, GPSBookmarkOwner* const gpsBookmarkOwner, 
+SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
                            KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, 
                            QWidget* parent)
             : QWidget(parent), d(new SearchWidgetPrivate())
 {
-    d->mapWidget = mapWidget;
     d->gpsBookmarkOwner = gpsBookmarkOwner;
     d->kipiImageModel = kipiImageModel;
     d->kipiImageSelectionModel = kipiImageSelectionModel;
@@ -541,7 +540,10 @@ void SearchWidget::slotCurrentlySelectedResultChanged(const QModelIndex& current
 
     SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(current);
 
-    d->mapWidget->setCenter(currentItem.result.coordinates);
+    if (d->mapWidget)
+    {
+        d->mapWidget->setCenter(currentItem.result.coordinates);
+    }
 }
 
 void SearchWidget::slotClearSearchResults()
@@ -696,6 +698,11 @@ void SearchWidget::slotMoveSelectedImagesToThisResult()
                                "%1 images moved to '%2'", selectedImageIndices.count(), currentItem.result.name));
 
     emit(signalUndoCommand(undoCommand));
+}
+
+void SearchWidget::setPrimaryMapWidget(KMap::KMapWidget* const mapWidget)
+{
+    d->mapWidget = mapWidget;
 }
 
 } /* KIPIGPSSyncPlugin */

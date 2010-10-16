@@ -244,6 +244,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->undoStack = new KUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
+    d->searchWidget = new SearchWidget(d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
 
     d->imageModel->setKipiInterface(d->interface);
     KipiImageItem::setHeaderData(d->imageModel);
@@ -251,6 +252,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->selectionModel = new QItemSelectionModel(d->imageModel);
     d->mapModelHelper = new GPSSyncKMapModelHelper(d->imageModel, d->selectionModel, this);
     d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
+    d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
     d->kmapMarkerModel = new KMap::ItemMarkerTiler(d->mapModelHelper, this);
 
@@ -331,6 +333,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     QWidget* mapVBox;
     d->mapWidget = makeMapWidget(&mapVBox);
+    d->searchWidget->setPrimaryMapWidget(d->mapWidget);
     d->mapSplitter = new QSplitter(this);
     d->mapSplitter->addWidget(mapVBox);
     d->VSplitter->addWidget(d->mapSplitter);
@@ -383,9 +386,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->rgWidget = new GPSReverseGeocodingWidget(d->interface, d->imageModel, d->selectionModel, d->stackedWidget);
     d->stackedWidget->addWidget(d->rgWidget);
 
-    d->searchWidget = new SearchWidget(d->mapWidget, d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
-    d->mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
-    d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
     d->stackedWidget->addWidget(d->searchWidget);
 
 
@@ -463,7 +463,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     connect(d->detailsWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
-
 
     connect(d->setupGlobalObject, SIGNAL(signalSetupChanged()),
             this, SLOT(slotSetupChanged()));
@@ -1117,6 +1116,7 @@ KMap::KMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
     mapWidget->setGroupedModel(d->kmapMarkerModel);
     mapWidget->setDragDropHandler(d->mapDragDropHandler);
     mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
+    mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
     mapWidget->setSortOptionsMenu(d->sortMenu);
 
     vbox->addWidget(mapWidget);
