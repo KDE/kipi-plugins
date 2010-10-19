@@ -73,6 +73,9 @@
 #elif defined(__POWERPC__)
 #define qDNGBigEndian 1
 
+#elif defined(__sparc__)
+#define qDNGBigEndian 1
+
 #elif defined(__INTEL__)
 #define qDNGBigEndian 0
 

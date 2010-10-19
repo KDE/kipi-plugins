@@ -392,10 +392,6 @@ void PiwigoWindow::slotDoLogin()
         url.setHost(mpPiwigo->url());
     }
 
-    if (!url.url().endsWith(QLatin1String(".php"))) {
-        url.addPath("ws.php");
-    }
-
     // If we've done something clever, save it back to the piwigo.
     if (mpPiwigo->url() != url.url()) {
         mpPiwigo->setUrl(url.url());
