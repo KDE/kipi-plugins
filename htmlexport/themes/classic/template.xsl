@@ -224,6 +224,7 @@
 	<p>
 	
 		<xsl:for-each select="collections/collection">
+			<xsl:sort select="name" order="ascending" data-type="text" />
 			<xsl:variable name="title" select='concat(name, " [", count(image), "]")'/>
 				<a href="{fileName}.html">
 					<!-- Use first image as collection image -->

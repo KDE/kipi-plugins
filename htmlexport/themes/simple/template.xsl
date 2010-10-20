@@ -159,6 +159,7 @@
 	<div id="content">
 		<ul>
 			<xsl:for-each select="collections/collection">
+				<xsl:sort select="name" order="ascending" data-type="text" />
 				<li>
 					<a href="{fileName}.html">
 						<!-- Use first image as collection image -->
