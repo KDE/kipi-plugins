@@ -237,19 +237,21 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 //     setModal(true);
     setMinimumSize(300,400);
     d->imageModel = new KipiImageModel(this);
+    d->selectionModel = new QItemSelectionModel(d->imageModel);
 
 #ifdef GPSSYNC_MODELTEST
     new ModelTest(d->imageModel, this);
 #endif /* GPSSYNC_MODELTEST */
 
+    
     d->undoStack = new KUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
+    d->stackedWidget = new QStackedWidget();
     d->searchWidget = new SearchWidget(d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
 
     d->imageModel->setKipiInterface(d->interface);
     KipiImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
-    d->selectionModel = new QItemSelectionModel(d->imageModel);
     d->mapModelHelper = new GPSSyncKMapModelHelper(d->imageModel, d->selectionModel, this);
     d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
     d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
@@ -353,7 +355,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->HSplitter->setCollapsible(1, true);
 
-    d->stackedWidget = new QStackedWidget(d->HSplitter);
     d->HSplitter->addWidget(d->stackedWidget);          
     d->splitterSize = 0;
 
