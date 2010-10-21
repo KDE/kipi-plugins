@@ -280,7 +280,7 @@ void XMPCategories::readMetadata(QByteArray& xmpData)
         d->subCategoriesCheck->setChecked(true);
     }
 
-    // And in second, the main category because all sub-categories status depand of this one.
+    // And in second, the main category because all sub-categories status depend of this one.
 
     d->categoryEdit->clear();
     d->categoryCheck->setChecked(false);
