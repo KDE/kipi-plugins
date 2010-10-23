@@ -317,9 +317,10 @@ void BatchDialog::slotStartStop()
             CListViewItem *lvItem = dynamic_cast<CListViewItem*>(*it);
             if (lvItem)
             {
-                if (lvItem->isEnabled())
+                if (lvItem->isEnabled() && (lvItem->state() != CListViewItem::Success))
                 {
                     lvItem->setIcon(1, QIcon());
+                    lvItem->setState(CListViewItem::Waiting);
                     d->fileList.append(lvItem->url().path());
                 }
             }
@@ -556,11 +557,13 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
             d->currentConvertItem->setProgressIcon(SmallIcon("dialog-error"));
+            d->currentConvertItem->setState(CListViewItem::Failed);
         }
         else
         {
             d->currentConvertItem->setDestFileName(QFileInfo(destFile).fileName());
             d->currentConvertItem->setProgressIcon(SmallIcon("dialog-ok"));
+            d->currentConvertItem->setState(CListViewItem::Success);
 
             if (d->iface)
             {
