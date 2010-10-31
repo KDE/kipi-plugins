@@ -93,15 +93,47 @@ class GPSReverseGeocodingWidgetPrivate
 {
 public:
     GPSReverseGeocodingWidgetPrivate()
+    : currentlyAskingCancelQuestion(false),
+      hideOptions(true),
+      UIEnabled(true),
+      label(0),
+      imageModel(0),
+      selectionModel(0),
+      buttonRGSelected(0),
+      undoCommand(0),
+      currentTagTreeIndex(),
+      serviceComboBox(0),
+      languageEdit(0),
+      photoList(),
+      backendRGList(),
+      currentBackend(0),
+      requestedRGCount(0),
+      receivedRGCount(0),
+      buttonHideOptions(0),
+      iptc(0),
+      xmpLoc(0),
+      xmpKey(0),
+      UGridContainer(0),
+      LGridContainer(0),
+      serviceLabel(0),
+      languageLabel(0),
+      separator(0),
+      externTagModel(0),
+      tagModel(0),
+      tagTreeView(0)
     {
     }
 
+    bool currentlyAskingCancelQuestion;
     bool hideOptions;
     bool UIEnabled;
     QLabel *label;
     KipiImageModel* imageModel;
     QItemSelectionModel* selectionModel;
     QPushButton* buttonRGSelected;
+
+    GPSUndoCommand* undoCommand;
+    QModelIndex currentTagTreeIndex;
 
     KComboBox* serviceComboBox;
     KComboBox *languageEdit;
@@ -145,9 +177,6 @@ public:
     KAction* actionRemoveTag;
     KAction* actionRemoveAllSpacers;
     KAction* actionAddAllAddressElementsToTag;
-
-    GPSUndoCommand* undoCommand;
-    QModelIndex currentTagTreeIndex;
 };
 
 /**
@@ -452,6 +481,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     int currentServiceIndex = d->serviceComboBox->currentIndex(); 
     d->currentBackend = d->backendRGList[currentServiceIndex];
     d->undoCommand = new GPSUndoCommand();
+    d->undoCommand->setText(i18n("Image tags are changed."));
     
     QList<RGInfo> photoList;
     QString wantedLanguage = d->languageEdit->itemData(d->languageEdit->currentIndex()).toString(); 
@@ -483,8 +513,8 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
     {
         d->receivedRGCount = 0;
         d->requestedRGCount = photoList.count();
+        emit(signalSetUIEnabled(false, this, SLOT(slotRGCanceled())));
         emit(signalProgressSetup(d->requestedRGCount, i18n("Retrieving RG info - %p%")));
-        emit(signalSetUIEnabled(false));
 
         d->currentBackend->callRGBackend(photoList, wantedLanguage);
     }
@@ -508,10 +538,10 @@ void GPSReverseGeocodingWidget::slotHideOptions()
     }
 }
 
- /**
-  * The data has returned from backend and now it's processed here.
-  * @param returnedRGList Contains the data returned by backend.
-  */
+/**
+ * The data has returned from backend and now it's processed here.
+ * @param returnedRGList Contains the data returned by backend.
+ */
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
     const QString errorString = d->currentBackend->getErrorMessage();
@@ -585,10 +615,18 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
     d->receivedRGCount+=returnedRGList.count();
     if (d->receivedRGCount>=d->requestedRGCount)
     {
-        d->undoCommand->setText(i18n("Image tags are changed."));
-        emit(signalUndoCommand(d->undoCommand));
+        if (d->currentlyAskingCancelQuestion)
+        {
+            // if the user is currently answering the cancel question, do nothing, only report progress
+            emit(signalProgressChanged(d->receivedRGCount));
+        }
+        else
+        {
+            emit(signalUndoCommand(d->undoCommand));
+            d->undoCommand = 0;
 
-        emit(signalSetUIEnabled(true));
+            emit(signalSetUIEnabled(true));
+        }
     }
     else
     {
@@ -902,6 +940,87 @@ void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
 
     d->tagModel->addAllSpacersToTag(baseIndex, spacerList,0);
 
+}
+
+void GPSReverseGeocodingWidget::slotRGCanceled()
+{
+    if (!d->undoCommand)
+    {
+        // the undo command object is not available, therefore
+        // RG has probably been finished already
+        return;
+    }
+
+    if (d->receivedRGCount>0)
+    {
+        // Before we abort, ask the user whether he wants to discard
+        // the information obtained so far.
+
+        // ATTENTION: While we ask the question, the RG backend continues running
+        //            and sends information about new images to this widget.
+        //            This means that RG might finish while we ask the question!!!
+        d->currentlyAskingCancelQuestion = true;
+
+        const QString question = i18n("%1 out of %2 images have been reverse geocoded. Would you like to keep the tags which were already obtained or discard them?", d->receivedRGCount, d->requestedRGCount);
+
+        const int result = KMessageBox::questionYesNoCancel(
+                this,
+                question,
+                i18n("Abort reverse geocoding?"),
+                KGuiItem(i18n("Keep tags")),
+                KGuiItem(i18n("Discard tags")),
+                KGuiItem(i18n("Continue"))
+                                        );
+
+        d->currentlyAskingCancelQuestion = false;
+
+        if (result==KMessageBox::Cancel)
+        {
+            // continue
+
+            // did RG finish while we asked the question?
+            if (d->receivedRGCount==d->requestedRGCount)
+            {
+                // the undo data was delayed, now send it
+                if (d->undoCommand)
+                {
+                    emit(signalUndoCommand(d->undoCommand));
+                    d->undoCommand = 0;
+                }
+
+                // unlock the UI
+                emit(signalSetUIEnabled(true));
+            }
+
+            return;
+        }
+
+        if (result==KMessageBox::No)
+        {
+            // discard the tags
+            d->undoCommand->undo();
+        }
+
+        if (result==KMessageBox::Yes)
+        {
+            if (d->undoCommand)
+            {
+                emit(signalUndoCommand(d->undoCommand));
+                d->undoCommand = 0;
+            }
+        }
+    }
+
+    // clean up the RG request:
+    d->currentBackend->cancelRequests();
+
+    if (d->undoCommand)
+    {
+        delete d->undoCommand;
+        d->undoCommand = 0;
+    }
+
+    emit(signalSetUIEnabled(true));
 }
 
 } /* KIPIGPSSyncPlugin  */

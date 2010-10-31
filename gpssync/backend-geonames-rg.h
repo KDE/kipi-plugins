@@ -56,9 +56,11 @@ public:
     BackendGeonamesRG(QObject* const parent);
     virtual ~BackendGeonamesRG();
     QMap<QString, QString> makeQMapFromXML(const QString& xmlData);
+
     virtual void callRGBackend(const QList<RGInfo>& rgList, const QString& language);
     virtual QString getErrorMessage();
     virtual QString backendName();
+    virtual void cancelRequests();
 
 private Q_SLOTS:
   

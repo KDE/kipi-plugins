@@ -25,6 +25,7 @@
 #include <QDomDocument>
 #include <QMap>
 #include <QMessageBox>
+#include <QPointer>
 #include <QString>
 #include <QTimer>
 
@@ -65,10 +66,16 @@ public:
     {
     }
 
+    ~GeonamesInternalJobs()
+    {
+        if (kioJob)
+            kioJob->deleteLater();
+    }
+
     QString language;
     QList<RGInfo> request;
     QByteArray data;
-    KIO::Job* kioJob;
+    QPointer<KIO::Job> kioJob;
 };
 
 
@@ -112,6 +119,9 @@ BackendGeonamesRG::~BackendGeonamesRG()
  */
 void BackendGeonamesRG::nextPhoto()
 {
+    if (d->jobs.isEmpty())
+        return;
+
     KUrl jobUrl("http://ws.geonames.org/findNearbyPlaceName");
     jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
     jobUrl.addQueryItem("lng", d->jobs.first().request.first().coordinates.lonString());
@@ -259,6 +269,12 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
             break;
         }
     }
+}
+
+void BackendGeonamesRG::cancelRequests()
+{
+    d->jobs.clear();
+    d->errorMessage.clear();
 }
 
 } //KIPIGPSSyncPlugin

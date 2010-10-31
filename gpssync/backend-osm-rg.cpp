@@ -24,6 +24,7 @@
 
 #include <QDomDocument>
 #include <QMap>
+#include <QPointer>
 #include <QString>
 #include <QTimer>
 
@@ -51,17 +52,23 @@ class OsmInternalJobs {
 public:
 
     OsmInternalJobs()
-    : request(),
+    : language(),
+      request(),
       data(),
-      kioJob(0),
-      language()
+      kioJob(0)
     {
     }
 
+    ~OsmInternalJobs()
+    {
+        if (kioJob)
+            kioJob->deleteLater();
+    }
+
+    QString language;
     QList<RGInfo> request;
     QByteArray data;
-    KIO::Job* kioJob;
-    QString language;
+    QPointer<KIO::Job> kioJob;
 };
 
 
@@ -108,6 +115,9 @@ BackendOsmRG::~BackendOsmRG()
  */ 
 void BackendOsmRG::nextPhoto()
 {
+    if (d->jobs.isEmpty())
+        return;
+
     KUrl jobUrl("http://nominatim.openstreetmap.org/reverse");
     jobUrl.addQueryItem("format", "xml");
     jobUrl.addQueryItem("lat", d->jobs.first().request.first().coordinates.latString());
@@ -272,6 +282,12 @@ void BackendOsmRG::slotResult(KJob* kJob)
             break;
         }
     }
+}
+
+void BackendOsmRG::cancelRequests()
+{
+    d->jobs.clear();
+    d->errorMessage.clear();
 }
 
 } // KIPIGPSSyncPlugin
