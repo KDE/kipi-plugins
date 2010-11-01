@@ -36,7 +36,6 @@
 #include <kdebug.h>
 #include <kio/job.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 
 //local includes
 

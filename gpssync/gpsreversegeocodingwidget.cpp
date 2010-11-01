@@ -21,38 +21,31 @@
 
 // Qt includes
 
-//#include <QItemSelectionModel>
+#include <QCheckBox>
+#include <QContextMenuEvent>
+#include <QHBoxLayout>
+#include <QInputDialog>
 #include <QLabel>
-#include <QPointer>
-#include <QPushButton>
-#include <QSplitter>
-#include <QString>
-#include <QMessageBox>
-#include <QVBoxLayout>
+#include <QLineEdit>
 #include <QList>
 #include <QMap>
-#include <QTimer>
-#include <QLineEdit>
-#include <QHBoxLayout>
-#include <QCheckBox>
-#include <QAbstractItemModel>
+#include <QPointer>
+#include <QPushButton>
 #include <QTreeView>
-#include <QContextMenuEvent>
-#include <QInputDialog>
+#include <QVBoxLayout>
 
 // KDE includes
 
 #include <kaction.h>
+#include <kcombobox.h>
+#include <kconfig.h>
 #include <kconfiggroup.h>
-#include <khtml_part.h>
+#include <kmenu.h>
+#include <kmessagebox.h>
+#include <kseparator.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <kvbox.h>
-#include <kcombobox.h>
-#include <kseparator.h>
-#include <kconfig.h>
-#include <kmessagebox.h>
-#include <kmenu.h>
 
 // Libkmap includes
 
@@ -63,7 +56,6 @@
 #include "gpssyncdialog.h"
 #include "kipiimagemodel.h"
 #include "kipiimageitem.h"
-#include "gpsreversegeocodingwidget.h"
 #include "backend-rg.h"
 #include "backend-geonames-rg.h"
 #include "backend-osm-rg.h"
@@ -142,13 +134,10 @@ public:
     RGBackend* currentBackend;
     int requestedRGCount;
     int receivedRGCount;
-    //QLineEdit* baseTagEdit;
     QPushButton* buttonHideOptions;
-    //QCheckBox *autoTag;
     QCheckBox *iptc, *xmpLoc, *xmpKey;
     QWidget* UGridContainer;
     QWidget* LGridContainer;
-    //QLabel* baseTagLabel;
     QLabel* serviceLabel;
     QLabel* languageLabel;
     KSeparator* separator;
@@ -323,9 +312,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->serviceComboBox->addItem(i18n("Geonames.org place name (non-US)"));
     d->serviceComboBox->addItem(i18n("Geonames.org full address (US only)"));
 
-    //d->baseTagLabel = new QLabel(i18n("Select base tag:"), d->UGridContainer);
-    //d->baseTagEdit = new QLineEdit("My Tags/{Country}/{City}", d->UGridContainer);
-
     int row = 0;
     gridLayout->addWidget(d->serviceLabel,row,0,1,2);
     row++;
@@ -333,10 +319,6 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     row++;
     gridLayout->addWidget(d->languageLabel,row,0,1,1);
     gridLayout->addWidget(d->languageEdit,row,1,1,1);
-    //row++;
-    //gridLayout->addWidget(d->baseTagLabel,row,0,1,2);
-    //row++;
-    //gridLayout->addWidget(d->baseTagEdit, row, 0,1,2);
 
     d->UGridContainer->setLayout(gridLayout);
 
@@ -442,7 +424,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
         connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
                 this, SLOT(slotRGReady(QList<RGInfo>&)));
     }
-    
+
     int currentServiceIndex = d->serviceComboBox->currentIndex(); 
     d->currentBackend = d->backendRGList[currentServiceIndex];
 }
@@ -531,7 +513,8 @@ void GPSReverseGeocodingWidget::slotHideOptions()
         d->hideOptions = false;
         d->buttonHideOptions->setText("More options");
     }
-    else{
+    else
+    {
         d->LGridContainer->show();
         d->hideOptions = true;
         d->buttonHideOptions->setText("Less options");
@@ -545,9 +528,10 @@ void GPSReverseGeocodingWidget::slotHideOptions()
 void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
 {
     const QString errorString = d->currentBackend->getErrorMessage();
-    
+
     if (!errorString.isEmpty())
     {
+        /// @todo This collides with the message box displayed if the user aborts the RG process
         KMessageBox::error(this, errorString);
         
         d->receivedRGCount+=returnedRGList.count();
@@ -565,11 +549,17 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             QString addressElementsWantedFormat;
 
             if (d->currentBackend->backendName() == QString("Geonames"))
+            {
                 addressElementsWantedFormat.append("/{Country}/{Place}");
+            }
             else if (d->currentBackend->backendName() == QString("GeonamesUS"))
+            {
                 addressElementsWantedFormat.append("/{LAU2}/{LAU1}/{City}");
-            else     
+            }
+            else
+            {
                 addressElementsWantedFormat.append("/{Country}/{State}/{State district}/{County}/{City}/{City district}/{Suburb}/{Town}/{Village}/{Hamlet}/{Street}/{House number}");
+            }
 
             QStringList combinedResult = makeTagString(returnedRGList[i], addressElementsWantedFormat, d->currentBackend->backendName());
 
@@ -653,9 +643,9 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
     {
         if ((event->type()==QEvent::ContextMenu) && d->UIEnabled) 
         {
-            KMenu * const menu = new KMenu(d->tagTreeView);
+            KMenu* const menu = new KMenu(d->tagTreeView);
  
-            int currentServiceIndex = d->serviceComboBox->currentIndex(); 
+            const int currentServiceIndex = d->serviceComboBox->currentIndex(); 
             d->currentBackend = d->backendRGList[currentServiceIndex];
             QString backendName = d->currentBackend->backendName();
 
@@ -694,17 +684,19 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
                 menu->addAction(d->actionAddLAU1);
                 menu->addAction(d->actionAddCity);
             }
+
             menu->addSeparator();
             menu->addAction(d->actionAddCustomizedSpacer);
             menu->addSeparator();
+
             if (tagType==TypeSpacer)
             {
                 menu->addAction(d->actionRemoveTag);
             }
+
             menu->addAction(d->actionRemoveAllSpacers);
             menu->exec(e->globalPos());
         }
-
     }
     return QObject::eventFilter(watched, event);
 }
@@ -715,7 +707,6 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
  */ 
 void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
 {
-    
     group->writeEntry("RG Backend", d->serviceComboBox->currentIndex()); 
     group->writeEntry("Language", d->languageEdit->currentIndex());
 
@@ -723,7 +714,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
     group->writeEntry("XMP location", d->xmpLoc->isChecked());
 
     QList<QList<TagData> > currentSpacerList = d->tagModel->getSpacers();
-    int spacerCount = currentSpacerList.count();
+    const int spacerCount = currentSpacerList.count();
     group->writeEntry("Spacers count", spacerCount);
 
     for (int i=0; i<currentSpacerList.count(); i++)
@@ -754,7 +745,6 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
         group->writeEntry(spacerName, spacerTagNames); 
         group->writeEntry(spacerType, spacerTypes);
     }
-
 }
 
 /**
@@ -763,7 +753,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
  */ 
 void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const group)
 {
-    int spacerCount = group->readEntry("Spacers count", 0);
+    const int spacerCount = group->readEntry("Spacers count", 0);
     QList<QList<TagData> > spacersList;
 
     for (int i=0; i<spacerCount; i++)
@@ -814,7 +804,7 @@ void GPSReverseGeocodingWidget::slotAddSingleSpacer()
         baseIndex = d->currentTagTreeIndex;
     else
         baseIndex = d->tagSelectionModel->currentIndex();
-     
+
     QAction* senderAction = qobject_cast<QAction*>(sender());
     QString currentSpacerName = senderAction->data().toString();
  
@@ -834,7 +824,7 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
 
     bool ok;
     QString textString;
-    
+
     textString = QInputDialog::getText(this,QString("%1").arg("Add new tag:"), QString("%1").arg("Select a name for the new tag:"), QLineEdit::Normal, QString::null, &ok);
     if ( ok && !textString.isEmpty())
     {
@@ -858,7 +848,7 @@ void GPSReverseGeocodingWidget::slotRemoveTag()
 void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
 {
     QString whatShouldRemove = QString("Spacers");
-    
+
     QModelIndex baseIndex;    
     if (!d->currentTagTreeIndex.isValid())
         baseIndex = d->currentTagTreeIndex;
@@ -873,17 +863,14 @@ void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
  */ 
 void GPSReverseGeocodingWidget::slotReaddNewTags()
 {
-
     for ( int row=0; row<d->imageModel->rowCount(); ++row)
     {
-
         KipiImageItem* const currentItem = d->imageModel->itemFromIndex(d->imageModel->index(row,0));
 
         QList<QList<TagData> > tagAddresses = currentItem->getTagList();
         if (!tagAddresses.isEmpty())
             d->tagModel->readdNewTags(tagAddresses);
     }
-
 }
 
 /**
@@ -939,7 +926,6 @@ void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
     }
 
     d->tagModel->addAllSpacersToTag(baseIndex, spacerList,0);
-
 }
 
 void GPSReverseGeocodingWidget::slotRGCanceled()

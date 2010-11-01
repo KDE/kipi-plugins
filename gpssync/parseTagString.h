@@ -18,19 +18,22 @@
  *
  * ============================================================ */
 
-#include "backend-rg.h"
+// KDE includes
+
 #include "kdebug.h"
+
+// local includes
+
+#include "backend-rg.h"
 
 namespace KIPIGPSSyncPlugin
 {
 
 QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QString& backendName)
 {
-
     QString auxReturnedFormat = inputFormat;
     QString returnedAddress = inputFormat;
     QString returnedFormat;        
-    
 
     QStringList returnedAddressElements;   
 
@@ -38,7 +41,6 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
 
     while ( ( indexFBracket = returnedAddress.indexOf("{") ) >= 0 )
     {
-
         int indexLBracket = returnedAddress.indexOf("}"); 
 
         QString humanTag = returnedAddress.mid(indexFBracket + 1, indexLBracket-indexFBracket-1);
@@ -49,7 +51,6 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
  
         if (backendName == QString("OSM"))
         {
-
             if (humanTag == QString("Country"))
             {
                 if (!info.rgData[QString("country")].isEmpty())
@@ -121,7 +122,6 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                     returnedFormat.append("/{State}");
                     dataAdded = true;
                 }
-
             }
             else if (humanTag == QString("Town"))
             {
@@ -131,7 +131,6 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                     returnedFormat.append("/{Town}");
                     dataAdded = true;
                 }
-
             }
             else if (humanTag == QString("Village"))
             {
@@ -141,7 +140,6 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                     returnedFormat.append("/{Village}");
                     dataAdded = true;
                 }
-
             }
             else if (humanTag == QString("Hamlet"))
             {
@@ -151,7 +149,6 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
                     returnedFormat.append("/{Hamlet}");
                     dataAdded = true;
                 }
-
             }
             else if (humanTag == QString("House number"))
             {
@@ -173,7 +170,7 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
             }
 
         }
-        
+
         else if (backendName == QString("GeonamesUS"))
         {
 
@@ -241,7 +238,7 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
             else
             {  
                 returnedAddress.replace(indexFBracket-1, indexLBracket-indexFBracket+2, ""); 
-                
+
                 int indexFormatFBracket = auxReturnedFormat.indexOf("{");
                 int indexFormatLBracket = auxReturnedFormat.indexOf("}");
                 auxReturnedFormat.replace(indexFormatFBracket-1,indexFormatLBracket-indexFormatFBracket+2,"");
@@ -254,15 +251,16 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
             returnedAddress.replace(indexFBracket-1, humanTag.length()+3, "");
         }
         else
+        {
             returnedAddress.replace(indexFBracket, humanTag.length()+2, result);
-
+        }
     } 
 
     returnedAddressElements.append(returnedFormat);
     returnedAddressElements.append(returnedAddress);
 
     return returnedAddressElements;
-
 }
 
-}
+} // KIPIGPSSyncPlugin
+

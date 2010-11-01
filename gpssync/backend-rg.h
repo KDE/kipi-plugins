@@ -46,7 +46,7 @@ public:
     RGBackend();
     virtual ~RGBackend();
     
-    virtual void callRGBackend(const QList<RGInfo>&,const  QString&) = 0;
+    virtual void callRGBackend(const QList<RGInfo>&, const  QString&) = 0;
     virtual QString getErrorMessage();
     virtual QString backendName();
     virtual void cancelRequests() = 0;
@@ -56,7 +56,7 @@ Q_SIGNALS:
     /**
      * @brief Emitted whenever some items are ready
      */
-    void signalRGReady(QList<RGInfo>&);   
+    void signalRGReady(QList<RGInfo>&);
 
 };
 

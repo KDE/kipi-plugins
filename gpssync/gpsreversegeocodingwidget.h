@@ -65,8 +65,6 @@ public:
     void readSettingsFromGroup(const KConfigGroup* const group);    
     void saveSettingsToGroup(KConfigGroup* const group);
 
-private:
-
 private Q_SLOTS:
 
     void slotButtonRGSelected();
