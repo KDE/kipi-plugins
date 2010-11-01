@@ -34,7 +34,6 @@
 #include <kurl.h>
 #include <kio/jobclasses.h>
 #include <kdebug.h>
-#include <QMessageBox>
 #include <kio/job.h>
 #include <klocale.h>
 

@@ -64,9 +64,6 @@ public:
 
 // ----------------------------------------------------------------------------------------
 
-
- 
-
 class RGTagModel : public QAbstractItemModel
 {
     Q_OBJECT

@@ -236,7 +236,6 @@ void BackendGeonamesRG::slotResult(KJob* kJob)
 
     if (kioJob->error())
     {
-
         d->errorMessage = kioJob->errorString();
         emit(signalRGReady(d->jobs.first().request));
         d->jobs.clear();
