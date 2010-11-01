@@ -1,12 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Date        : 2009-05-07
- * Description : Context menu for GPS list view
+ * @date   2009-05-07
+ * @brief  Context menu for GPS list view.
  *
- * Copyright (C) 2009 by Michael G. Hansen <mike at mghansen dot de>
+ * @author Copyright (C) 2009,2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

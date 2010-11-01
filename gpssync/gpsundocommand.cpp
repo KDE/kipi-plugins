@@ -1,9 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
- * Date        : 2010-04-25
- * Description : A class to hold undo/redo commands
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
+ * @date   2010-04-25
+ * @brief  A class to hold undo/redo commands.
+ *
+ * @author Copyright (C) 2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -12,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */

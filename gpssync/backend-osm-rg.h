@@ -1,10 +1,16 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
- * Date        : 2010-05-12
- * Description : OSM Nominatim backend for Reverse Geocoding
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
- * Copyright (C) 2010 by Gabriel Voicu <ping dot gabi at gmail dot com>
+ * @date   2010-05-12
+ * @brief  OSM Nominatim backend for Reverse Geocoding
+ *
+ * @author Copyright (C) 2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2010 by Gabriel Voicu
+ *         <a href="mailto:ping dot gabi at gmail dot com">ping dot gabi at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -13,10 +19,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 
 #ifndef BACKEND_OSM_RG_H
 #define BACKEND_OSM_RG_H
