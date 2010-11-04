@@ -58,9 +58,8 @@ void CalSelect::setupView( KIPI::Interface* interface )
     connect(ui.yearSpin, SIGNAL(valueChanged(int)),
             this, SLOT(yearChanged(int)));
 
-    ui.yearSpin->setRange(KGlobal::locale()->calendar()->earliestValidDate().year() + 1,
-                          KGlobal::locale()->calendar()->latestValidDate().year() - 1);
-    ui.yearSpin->setValue(KGlobal::locale()->calendar()->year(QDate::currentDate()));
+    const KCalendarSystem *cal = KGlobal::locale()->calendar();
+    int currentYear = cal->year(QDate::currentDate());
 
     KUrl::List urlList;
     KIPI::ImageCollection images = interface->currentSelection();
@@ -68,8 +67,8 @@ void CalSelect::setupView( KIPI::Interface* interface )
         urlList = images.images();
 
     QDate d;
-    KGlobal::locale()->calendar()->setYMD(d, ui.yearSpin->value(), 1, 1);
-    int months = KGlobal::locale()->calendar()->monthsInYear(d);
+    cal->setYMD(d, currentYear, 1, 1);
+    int months = cal->monthsInYear(d);
     // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
     int inRow = (months / 2) + ((months % 2) != 0);
     MonthWidget *w;
@@ -85,26 +84,30 @@ void CalSelect::setupView( KIPI::Interface* interface )
             w->hide();
         mwVector_.insert(i, w);
     }
+    ui.yearSpin->setRange(cal->year(cal->earliestValidDate()) + 1,
+                          cal->year(cal->latestValidDate()) - 1);
+    ui.yearSpin->setValue(currentYear);
 }
 
 void CalSelect::yearChanged(int year)
 {
     int i, months;
     QDate d, oldD;
-    KGlobal::locale()->calendar()->setYMD(d, year, 1, 1);
-    KGlobal::locale()->calendar()->setYMD(oldD, CalSettings::instance()->year(), 1, 1);
-    months = KGlobal::locale()->calendar()->monthsInYear(d);
+    const KCalendarSystem *cal = KGlobal::locale()->calendar();
+    cal->setYMD(d, year, 1, 1);
+    cal->setYMD(oldD, CalSettings::instance()->year(), 1, 1);
+    months = cal->monthsInYear(d);
 
-    if ((KGlobal::locale()->calendar()->monthsInYear(oldD) != months) && !mwVector_.isEmpty())
+    if ((cal->monthsInYear(oldD) != months) && !mwVector_.isEmpty())
     {
         // hide the last months that are not present on the current year
-        for (i=months; (i<KGlobal::locale()->calendar()->monthsInYear(oldD)) && (i<mwVector_.count()); ++i)
+        for (i=months; (i<cal->monthsInYear(oldD)) && (i<mwVector_.count()); ++i)
             mwVector_.at(i)->hide();
 
         // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
         int inRow = (months / 2) + ((months % 2) != 0);
         // remove all the monthWidgets, then readd the needed ones
-        for (i=0; i<KGlobal::locale()->calendar()->monthsInYear(oldD); ++i)
+        for (i=0; i<cal->monthsInYear(oldD); ++i)
         {
             ui.monthBoxLayout->removeWidget(mwVector_.at(i));
         }
