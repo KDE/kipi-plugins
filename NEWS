@@ -10,7 +10,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> PrintWizzard   : 254103 : "previous photo" and "next page" in the same context.
 003 ==> DNGConverter   : 254205 : Compiling fails on SPARC platform because "qDNGBigEndian" macro is not defined.
 004 ==> PicasaExport   : 232896 :  Application crashed after restarting an upload to picassa with previous change of selected photos.
-005 ==> 
+005 ==> DNGConverter   : 212125 : DNG files do not have image contents.
+006 ==> 
 
 
 
