@@ -1013,11 +1013,14 @@ int DNGWriter::convert()
                 identPriv.append(QString("Adobe"));
                 identPriv.append((char)0x00);
                 identPriv.append(QString("MakN"));
+                // next four byte are makernote size
                 identPriv.append((char)0x00);
                 identPriv.append((char)0x00);
                 identPriv.append((char)0xa0);
                 identPriv.append((char)0xbe);
+                // byte order
                 identPriv.append(QString("II"));
+                // next four byte are original offset
                 identPriv.append((char)0x00);
                 identPriv.append((char)0x00);
                 identPriv.append((char)0x03);
