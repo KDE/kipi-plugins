@@ -955,7 +955,6 @@ int DNGWriter::convert()
             {
                 double focalLenght = (double)exif->fLensInfo[0].n / (double)exif->fLensInfo[0].d;
                 QString lensName = QString("%1").arg(focalLenght, 0, 'f', 1);
-                kDebug() << lensName << "|" << focalLenght;
                 if (exif->fLensInfo[0].n != exif->fLensInfo[1].n)
                 {
                     focalLenght = (double)exif->fLensInfo[1].n / (double)exif->fLensInfo[1].d;
@@ -1007,31 +1006,43 @@ int DNGWriter::convert()
                     negative->SetMakerNoteSafety(true);
                 }
 
-                /*
-                dng_memory_stream streamPriv(memalloc);
-                QByteArray identPriv;
-                identPriv.append(QString("Adobe"));
-                identPriv.append((char)0x00);
-                identPriv.append(QString("MakN"));
-                // next four byte are makernote size
-                identPriv.append((char)0x00);
-                identPriv.append((char)0x00);
-                identPriv.append((char)0xa0);
-                identPriv.append((char)0xbe);
-                // byte order
-                identPriv.append(QString("II"));
-                // next four byte are original offset
-                identPriv.append((char)0x00);
-                identPriv.append((char)0x00);
-                identPriv.append((char)0x03);
-                identPriv.append((char)0x84);
-                streamPriv.Put(identPriv, identPriv.size());
-                streamPriv.Put(mkrnts.data(), mkrnts.size());
-                AutoPtr<dng_memory_block> blockPriv(host.Allocate(mkrnts.size()));
-                streamPriv.SetReadPosition(0);
-                streamPriv.Get(blockPriv->Buffer(), identPriv.size() + mkrnts.size());
-                negative->SetPrivateData(blockPriv);
-                */
+                long mknOffset = 0;
+                QString mknByteOrder = meta.getExifTagString("Exif.MakerNote.ByteOrder");
+                if ((meta.getExifTagLong("Exif.MakerNote.Offset", mknOffset)) && !mknByteOrder.isEmpty())
+                {
+                    dng_memory_stream streamPriv(memalloc);
+                    QByteArray identPriv;
+
+                    identPriv.append(QString("Adobe"));
+                    identPriv.append((char)0x00);
+                    identPriv.append(QString("MakN"));
+
+                    // next four byte are makernote size
+                    int mknSize = mkrnts.size();
+                    int size = mknSize + 6;
+                    identPriv.append((char)((size >> 24) & 0xFF));
+                    identPriv.append((char)((size >> 16) & 0xFF));
+                    identPriv.append((char)((size >> 8) & 0xFF));
+                    identPriv.append((char)((size) & 0xFF));
+                    kDebug() << mknSize << " " << mknOffset << " " << mknByteOrder;
+
+                    // byte order
+                    identPriv.append(mknByteOrder);
+
+                    // next four byte are original offset
+                    identPriv.append((char)((mknOffset >> 24) & 0xFF));
+                    identPriv.append((char)((mknOffset >> 16) & 0xFF));
+                    identPriv.append((char)((mknOffset >> 8) & 0xFF));
+                    identPriv.append((char)((mknOffset) & 0xFF));
+
+
+                    streamPriv.Put(identPriv, identPriv.size());
+                    streamPriv.Put(mkrnts.data(), mkrnts.size());
+                    AutoPtr<dng_memory_block> blockPriv(host.Allocate(identPriv.size() + mkrnts.size()));
+                    streamPriv.SetReadPosition(0);
+                    streamPriv.Get(blockPriv->Buffer(), identPriv.size() + mkrnts.size());
+                    negative->SetPrivateData(blockPriv);
+                }
             }
         }
 
