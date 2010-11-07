@@ -44,6 +44,13 @@ class CListViewItem : public QTreeWidgetItem
 
 public:
 
+    enum State
+    {
+        Waiting,
+        Success,
+        Failed
+    };
+
     CListViewItem(QTreeWidget *view, const QPixmap& pixmap, const KUrl& url, const QString& fileName)
         : QTreeWidgetItem(view)
     {
@@ -51,6 +58,7 @@ public:
          setUrl(url);
          setDestFileName(fileName);
          setEnabled(true);
+         setState(Waiting);
     }
 
     ~CListViewItem(){}
@@ -69,6 +77,16 @@ public:
     void setProgressIcon(const QIcon& icon) 
     {
         setIcon(1, icon);
+    }
+
+    void setState(State state)
+    {
+        m_state = state;
+    }
+
+    State state() const
+    {
+        return m_state;
     }
 
     void setUrl(const KUrl& url) 
@@ -132,6 +150,7 @@ private:
     QString m_identity;
 
     KUrl    m_url;
+    State   m_state;
 };
 
 } // namespace KIPIDNGConverterPlugin

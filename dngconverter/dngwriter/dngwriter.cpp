@@ -878,12 +878,18 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.NikonLd3.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
             if (meta.getExifTagLong("Exif.NikonLd2.FocusDistance", val))               exif->fSubjectDistance          = dng_urational((uint32)pow(10.0, val/40.0), 100);
             if (meta.getExifTagLong("Exif.NikonLd3.FocusDistance", val))               exif->fSubjectDistance          = dng_urational((uint32)pow(10.0, val/40.0), 100);
+            str = meta.getExifTagString("NikonLd1.LensIDNumber");
+            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
+            str = meta.getExifTagString("NikonLd2.LensIDNumber");
+            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
+            str = meta.getExifTagString("NikonLd3.LensIDNumber");
+            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
 
             // Canon Markernotes
 
             if (meta.getExifTagLong("Exif.Canon.SerialNumber", val))                   exif->fCameraSerialNumber.Set_ASCII((QString("%1").arg(val)).toAscii());
-            if (meta.getExifTagLong("Exif.CanonCs.LensType", val))                     exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
-            if (meta.getExifTagLong("Exif.CanonCs.FlashActivity", val))                exif->fFlash                    = (uint32)val;
+            //if (meta.getExifTagLong("Exif.CanonCs.LensType", val))                     exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
+            //if (meta.getExifTagLong("Exif.CanonCs.FlashActivity", val))                exif->fFlash                    = (uint32)val;
             //if (meta.getExifTagLong("Exif.CanonFi.FileNumber", val))                   exif->fImageNumber              = (uint32)val;
             //if (meta.getExifTagLong("Exif.CanonCs.MaxAperture", val))                  exif->fMaxApertureValue         = dng_urational(val, 100000);
             if (meta.getExifTagLong("Exif.CanonCs.ExposureProgram", val))
@@ -935,6 +941,29 @@ int DNGWriter::convert()
             if (meta.getExifTagRational("Exif.CanonCs.Lens", num, den, 0))             exif->fLensInfo[1]              = dng_urational(num, canonLensUnits);
             if (meta.getExifTagRational("Exif.CanonCs.Lens", num, den, 1))             exif->fLensInfo[0]              = dng_urational(num, canonLensUnits);
             if (meta.getExifTagRational("Exif.Canon.FocalLength", num, den, 1))        exif->fFocalLength              = dng_urational(num, canonLensUnits);
+            long canonLensType = 65535;
+            if (meta.getExifTagLong("Exif.CanonCs.LensType", canonLensType))           exif->fLensID.Set_ASCII((QString("%1").arg(canonLensType)).toAscii());
+            str = meta.getExifTagString("Exif.Canon.LensModel");
+            if (!str.isEmpty())
+                exif->fLensName.Set_ASCII(str.toAscii());
+            else if (canonLensType != 65535)
+            {
+                str = meta.getExifTagString("Exif.CanonCs.LensType");
+                if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
+            }
+            else if ((exif->fLensInfo[0].n > 0) && (exif->fLensInfo[1].n > 0))
+            {
+                double focalLenght = (double)exif->fLensInfo[0].n / (double)exif->fLensInfo[0].d;
+                QString lensName = QString("%1").arg(focalLenght, 0, 'f', 1);
+                kDebug() << lensName << "|" << focalLenght;
+                if (exif->fLensInfo[0].n != exif->fLensInfo[1].n)
+                {
+                    focalLenght = (double)exif->fLensInfo[1].n / (double)exif->fLensInfo[1].d;
+                    lensName.append(QString("-%1").arg(focalLenght, 0, 'f', 1));
+                }
+                lensName.append(" mm");
+                exif->fLensName.Set_ASCII(lensName.toAscii());
+            }
 
             str = meta.getExifTagString("Exif.Canon.OwnerName");
             if (!str.isEmpty()) exif->fOwnerName.Set_ASCII(str.toAscii());
@@ -972,8 +1001,37 @@ int DNGWriter::convert()
                 AutoPtr<dng_memory_block> block(host.Allocate(mkrnts.size()));
                 stream.SetReadPosition(0);
                 stream.Get(block->Buffer(), mkrnts.size());
-                negative->SetMakerNote(block);
-                negative->SetMakerNoteSafety(true);
+                if (identifyMake.make != "Canon")
+                {
+                    negative->SetMakerNote(block);
+                    negative->SetMakerNoteSafety(true);
+                }
+
+                /*
+                dng_memory_stream streamPriv(memalloc);
+                QByteArray identPriv;
+                identPriv.append(QString("Adobe"));
+                identPriv.append((char)0x00);
+                identPriv.append(QString("MakN"));
+                // next four byte are makernote size
+                identPriv.append((char)0x00);
+                identPriv.append((char)0x00);
+                identPriv.append((char)0xa0);
+                identPriv.append((char)0xbe);
+                // byte order
+                identPriv.append(QString("II"));
+                // next four byte are original offset
+                identPriv.append((char)0x00);
+                identPriv.append((char)0x00);
+                identPriv.append((char)0x03);
+                identPriv.append((char)0x84);
+                streamPriv.Put(identPriv, identPriv.size());
+                streamPriv.Put(mkrnts.data(), mkrnts.size());
+                AutoPtr<dng_memory_block> blockPriv(host.Allocate(mkrnts.size()));
+                streamPriv.SetReadPosition(0);
+                streamPriv.Get(blockPriv->Buffer(), identPriv.size() + mkrnts.size());
+                negative->SetPrivateData(blockPriv);
+                */
             }
         }
 

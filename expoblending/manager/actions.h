@@ -65,7 +65,7 @@ public:
 
     virtual ~ItemPreprocessedUrls(){};
 
-    KUrl preprocessedUrl;              // Can be original file or aligned version, depanding of user choice.
+    KUrl preprocessedUrl;              // Can be original file or aligned version, depending of user choice.
     KUrl previewUrl;                   // The JPEG preview version, accordingly of preprocessedUrl constent.
 };
 

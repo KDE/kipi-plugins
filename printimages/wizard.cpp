@@ -164,7 +164,7 @@ Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
           QByteArray(),
           KAboutData::License_GPL,
           ki18n ( "A KIPI plugin to print images" ),
-          ki18n ( "(c) 2003-2004, Todd Shoemaker\n(c) 2007-2008, Angelo Naselli" ) );
+          ki18n ( "(c) 2003-2004, Todd Shoemaker\n(c) 2007-2010, Angelo Naselli" ) );
 
   d->mAbout->addAuthor ( ki18n ( "Todd Shoemaker" ), ki18n ( "Author" ),
                           "todd@theshoemakers.net" );
@@ -532,11 +532,11 @@ void Wizard::parseTemplateFile( QString fn, QSizeF pageSize )
                   if( et.tagName() == "photo" )
                   {
                     float value = et.attribute("width","0").toFloat();
-                    int width   = (int)(value == 0 ? size.width() : value)*scaleValue;
+                    int width   = (int)((value == 0 ? size.width() : value)*scaleValue);
                     value       = et.attribute("height","0").toFloat();
-                    int height  = (int)(value == 0 ? size.height() : value)*scaleValue;
-                    int photoX  = (int)(et.attribute("x","0").toFloat()*scaleValue);
-                    int photoY  = (int)(et.attribute("y","0").toFloat()*scaleValue);
+                    int height  = (int)((value == 0 ? size.height() : value)*scaleValue);
+                    int photoX  = (int)((et.attribute("x","0").toFloat()*scaleValue));
+                    int photoY  = (int)((et.attribute("y","0").toFloat()*scaleValue));
                     p->layouts.append( new QRect ( photoX,
                                                     photoY,
                                                     width, height) );
@@ -545,9 +545,9 @@ void Wizard::parseTemplateFile( QString fn, QSizeF pageSize )
                   else if( et.tagName() == "photogrid" )
                   {
                     float value    = et.attribute("pageWidth","0").toFloat();
-                    int pageWidth  = (int)(value == 0 ? size.width() : value)*scaleValue;
+                    int pageWidth  = (int)((value == 0 ? size.width() : value)*scaleValue);
                     value          = et.attribute("pageHeight","0").toFloat();
-                    int pageHeight = (int)(value == 0 ? size.height() : value)*scaleValue;
+                    int pageHeight = (int)((value == 0 ? size.height() : value)*scaleValue);
                     int rows       = et.attribute("rows","0").toInt();
                     int columns    = et.attribute("columns","0").toInt();
                     if (rows >0 && columns >0 )
@@ -966,6 +966,10 @@ bool Wizard::paintOnePage ( QPainter &p, QList<TPhoto*> photos, QList<QRect*> la
     QRect rectViewPort = p.viewport();
     QRect newRectViewPort = QRect ( x1 + left, y1 + top, w, h );
     QSize imageSize = img.size();
+    
+//     kDebug() << "Image         " << photo->filename << " size " << imageSize;
+//     kDebug() << "viewport size " << newRectViewPort.size();
+    
     QPoint point;
     if ( cropDisabled) //->mCropPage->m_disableCrop->isChecked() )
     {

@@ -29,6 +29,7 @@
 #include <QPointer>
 #include <QMutex>
 #include <QWaitCondition>
+#include <QDesktopServices>
 
 // KDE includes
 
@@ -37,7 +38,6 @@
 #include <kstandarddirs.h>
 #include <kfiledialog.h>
 #include <kimageio.h>
-#include <kglobalsettings.h>
 #include <kio/previewjob.h>
 
 // LibKExiv2 includes
@@ -386,8 +386,9 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
 
     d->fileFormats = patternList.join("\n");
 
+    QString alternatePath = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
     QPointer<KFileDialog> dlg   = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
-                                                           : KGlobalSettings::documentPath(),
+                                                           : alternatePath,
                                                   d->fileFormats, parent);
     ImageDialogPreview* preview = new ImageDialogPreview(d->iface, dlg);
     dlg->setPreviewWidget(preview);

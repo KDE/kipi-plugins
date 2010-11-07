@@ -1,1 +1,12 @@
-Add support of Linear DNG conversion
+All:
+- Per channel black level offset (require API change in libkdcraw)
+- Use calibration matrixes if possible, user has to store them in specific folder
+  Question: are there others outside than Adobe ones (free?)
+- Add support of Linear DNG conversion
+
+Canon:
+- Check if storing active sensor area could be enabled again (Bug with 5MKII, propably solved)
+- Store makernotes in DNGPrivateData field
+  Question: how to decode them, they are currently not displayed (Exiv2 or Digikam bug?)
+
+

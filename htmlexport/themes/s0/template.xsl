@@ -154,6 +154,7 @@
     <h1><xsl:value-of select="$i18nCollectionList"/></h1>
     <div id="content">
             <xsl:for-each select="collections/collection">
+                <xsl:sort select="name" order="ascending" data-type="text" />
                 <span class="thumbnail">
                     <a href="{fileName}.html">
                         <!-- Use first image as collection image -->

@@ -207,6 +207,7 @@
 	<!-- list of collection thumbnails -->
 	<ul>
 		<xsl:for-each select="collections/collection">
+			<xsl:sort select="name" order="ascending" data-type="text" />
 			<!-- Use first image as collection image -->
 			<xsl:for-each select="image[1]">
 			<xsl:call-template name="thumbnail">

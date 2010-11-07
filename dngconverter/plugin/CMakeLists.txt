@@ -35,7 +35,7 @@ TARGET_LINK_LIBRARIES(dngconverter
                      )
 
 INSTALL(TARGETS dngconverter ${INSTALL_TARGETS_DEFAULT_ARGS})
-INSTALL(FILES dngconverter.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+INSTALL(PROGRAMS dngconverter.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 # ========================================================================================
 # Plugin

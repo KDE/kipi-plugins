@@ -126,6 +126,7 @@
 	<body id="collectPage">
 	<div id="CollectPageContent">
 			<xsl:for-each select="collections/collection">
+					<xsl:sort select="name" order="ascending" data-type="text" />
 					&blank;
 					<a href="Thmbs{fileName}.html" target="mythmbs">
 						<xsl:value-of select="name"/>
