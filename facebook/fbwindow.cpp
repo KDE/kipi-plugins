@@ -200,7 +200,6 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
 FbWindow::~FbWindow()
 {
-    delete m_talker;
     delete m_about;
 }
 
