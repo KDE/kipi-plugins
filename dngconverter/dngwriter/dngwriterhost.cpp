@@ -31,7 +31,7 @@
 namespace DNGIface
 {
 
-DNGWriterHost::DNGWriterHost(DNGWriterPrivate* priv, dng_memory_allocator* allocator)
+DNGWriterHost::DNGWriterHost(DNGWriter::DNGWriterPrivate* priv, dng_memory_allocator* allocator)
              : dng_host(allocator), m_priv(priv)
 {
 }

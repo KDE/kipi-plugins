@@ -32,11 +32,8 @@
 
 #include <libkdcraw/kdcraw.h>
 
-
 namespace DNGIface
 {
-
-class DNGWriterPrivate;
 
 class DNGWriter
 {
@@ -77,7 +74,12 @@ public:
     void cancel();
     void reset();
 
-    bool fujiRotate(QByteArray &rawData, KDcrawIface::DcrawInfoContainer &identify);
+    bool fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer& identify);
+
+public:
+
+    // Declared public because of DNGWriterHost class.
+    class DNGWriterPrivate;
 
 private:
 

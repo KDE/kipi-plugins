@@ -40,16 +40,16 @@
 namespace DNGIface
 {
 
-DNGWriterPrivate::DNGWriterPrivate()
+DNGWriter::DNGWriterPrivate::DNGWriterPrivate()
 {
     reset();
 }
 
-DNGWriterPrivate::~DNGWriterPrivate()
+DNGWriter::DNGWriterPrivate::~DNGWriterPrivate()
 {
 }
 
-void DNGWriterPrivate::reset()
+void DNGWriter::DNGWriterPrivate::reset()
 {
     cancel                  = false;
     jpegLossLessCompression = true;
@@ -58,7 +58,7 @@ void DNGWriterPrivate::reset()
     previewMode             = DNGWriter::MEDIUM;
 }
 
-void DNGWriterPrivate::cleanup()
+void DNGWriter::DNGWriterPrivate::cleanup()
 {
     ::remove(QFile::encodeName(outputFile));
 }

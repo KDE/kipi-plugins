@@ -56,12 +56,16 @@
 #include "dng_xmp.h"
 #include "dng_xmp_sdk.h"
 
+// Local includes
+
+#include "dngwriter.h"
+
 using namespace KDcrawIface;
 
 namespace DNGIface
 {
 
-class DNGWriterPrivate
+class DNGWriter::DNGWriterPrivate
 {
 
 public:

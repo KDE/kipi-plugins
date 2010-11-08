@@ -71,7 +71,6 @@ extern "C"
 
 #include "dngwriter_p.h"
 #include "dngwriterhost.h"
-#include "dngwriter.h"
 
 using namespace KExiv2Iface;
 
@@ -88,7 +87,7 @@ enum DNGBayerPattern
 
 dng_date_time dngDateTime(QDateTime qDT)
 {
-    dng_date_time dngDT;    
+    dng_date_time dngDT;
     dngDT.fYear   = qDT.date().year();
     dngDT.fMonth  = qDT.date().month();
     dngDT.fDay    = qDT.date().day();
@@ -717,7 +716,7 @@ int DNGWriter::convert()
 	    dng_date_time_info dti;
 	    dti.SetDateTime(dngDateTime(meta.getImageDateTime()));
 	    exif->fDateTimeOriginal = dti;
-	    
+
 	    dti.SetDateTime(dngDateTime(meta.getDigitizationDateTime(true)));
 	    exif->fDateTimeDigitized = dti;
  
@@ -1000,40 +999,43 @@ int DNGWriter::convert()
                 AutoPtr<dng_memory_block> block(host.Allocate(mkrnts.size()));
                 stream.SetReadPosition(0);
                 stream.Get(block->Buffer(), mkrnts.size());
+
                 if (identifyMake.make != "Canon")
                 {
                     negative->SetMakerNote(block);
                     negative->SetMakerNoteSafety(true);
                 }
 
-                long mknOffset = 0;
+                long mknOffset       = 0;
                 QString mknByteOrder = meta.getExifTagString("Exif.MakerNote.ByteOrder");
+
                 if ((meta.getExifTagLong("Exif.MakerNote.Offset", mknOffset)) && !mknByteOrder.isEmpty())
                 {
                     dng_memory_stream streamPriv(memalloc);
                     QByteArray identPriv;
 
-                    identPriv.append(QString("Adobe"));
+                    identPriv.append(QString("Adobe").toAscii());
                     identPriv.append((char)0x00);
-                    identPriv.append(QString("MakN"));
+                    identPriv.append(QString("MakN").toAscii());
 
                     // next four byte are makernote size
                     int mknSize = mkrnts.size();
-                    int size = mknSize + 6;
+                    int size    = mknSize + 6;
                     identPriv.append((char)((size >> 24) & 0xFF));
                     identPriv.append((char)((size >> 16) & 0xFF));
-                    identPriv.append((char)((size >> 8) & 0xFF));
-                    identPriv.append((char)((size) & 0xFF));
+                    identPriv.append((char)((size >> 8 ) & 0xFF));
+                    identPriv.append((char)((size      ) & 0xFF));
+
                     kDebug() << mknSize << " " << mknOffset << " " << mknByteOrder;
 
                     // byte order
-                    identPriv.append(mknByteOrder);
+                    identPriv.append(mknByteOrder.toAscii());
 
                     // next four byte are original offset
                     identPriv.append((char)((mknOffset >> 24) & 0xFF));
                     identPriv.append((char)((mknOffset >> 16) & 0xFF));
-                    identPriv.append((char)((mknOffset >> 8) & 0xFF));
-                    identPriv.append((char)((mknOffset) & 0xFF));
+                    identPriv.append((char)((mknOffset >> 8 ) & 0xFF));
+                    identPriv.append((char)((mknOffset      ) & 0xFF));
 
 
                     streamPriv.Put(identPriv, identPriv.size());
@@ -1261,14 +1263,15 @@ int DNGWriter::convert()
     return dng_error_none;
 }
 
-bool DNGWriter::fujiRotate(QByteArray &rawData, KDcrawIface::DcrawInfoContainer &identify)
+bool DNGWriter::fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer& identify)
 {
     QByteArray tmpData(rawData);
     int height = identify.outputSize.height();
     int width  = identify.outputSize.width();
 
-    unsigned short *tmp = (unsigned short *)tmpData.data();
-    unsigned short *output = (unsigned short *)rawData.data();
+    unsigned short* tmp    = (unsigned short*)tmpData.data();
+    unsigned short* output = (unsigned short*)rawData.data();
+
     for (int row=0; row < height; row++)
     {
         for (int col=0; col < width; col++)
