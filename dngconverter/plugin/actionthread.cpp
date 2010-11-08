@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : a class to manage plugin actions using threads
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,7 +52,7 @@ using namespace DNGIface;
 namespace KIPIDNGConverterPlugin
 {
 
-class ActionThreadPriv
+class ActionThread::ActionThreadPriv
 {
 public:
 
@@ -89,7 +89,7 @@ public:
     DNGWriter      dngProcessor;
 };
 
-ActionThread::ActionThread(QObject *parent)
+ActionThread::ActionThread(QObject* parent)
             : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
@@ -144,7 +144,7 @@ void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
         t->action                 = full ? IDENTIFY_FULL : IDENTIFY;
 
@@ -166,7 +166,7 @@ void ActionThread::thumbRawFiles(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
         t->action                 = THUMBNAIL;
 
@@ -181,7 +181,7 @@ void ActionThread::processRawFiles(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
         t->action                 = PROCESS;
 
@@ -205,7 +205,7 @@ void ActionThread::run()
     d->running = true;
     while (d->running)
     {
-        ActionThreadPriv::Task *t = 0;
+        ActionThreadPriv::Task* t = 0;
         {
             QMutexLocker lock(&d->mutex);
             if (!d->todo.isEmpty())
@@ -298,7 +298,7 @@ void ActionThread::run()
 
                     QFileInfo fi(t->fileUrl.path());
                     QString destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-"
-                                 + QString::number(QDateTime::currentDateTime().toTime_t());
+                                     + QString::number(QDateTime::currentDateTime().toTime_t());
 
                     d->dngProcessor.reset();
                     d->dngProcessor.setInputFile(t->fileUrl.path());
@@ -321,7 +321,7 @@ void ActionThread::run()
                 default:
                 {
                     kError() << "KIPIDNGConverterPlugin:ActionThread: "
-                                  << "Unknown action specified";
+                             << "Unknown action specified";
                 }
             }
         }

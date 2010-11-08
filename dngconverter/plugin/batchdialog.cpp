@@ -74,50 +74,50 @@ using namespace KIPIPlugins;
 namespace KIPIDNGConverterPlugin
 {
 
-class BatchDialogPriv
+class BatchDialog::BatchDialogPriv
 {
 public:
 
     BatchDialogPriv()
     {
-        busy                = false;
-        convertBlink        = false;
-        blinkConvertTimer   = 0;
-        page                = 0;
-        progressBar         = 0;
-        listView            = 0;
-        currentConvertItem  = 0;
-        thread              = 0;
-        settingsBox         = 0;
-        iface               = 0;
-        about               = 0;
+        busy               = false;
+        convertBlink       = false;
+        blinkConvertTimer  = 0;
+        page               = 0;
+        progressBar        = 0;
+        listView           = 0;
+        currentConvertItem = 0;
+        thread             = 0;
+        settingsBox        = 0;
+        iface              = 0;
+        about              = 0;
     }
 
     bool                   busy;
     bool                   convertBlink;
 
-    QTimer                *blinkConvertTimer;
+    QTimer*                blinkConvertTimer;
 
-    QWidget               *page;
+    QWidget*               page;
 
     QStringList            fileList;
 
-    QProgressBar          *progressBar;
+    QProgressBar*          progressBar;
 
-    QTreeWidget           *listView;
+    QTreeWidget*           listView;
 
-    CListViewItem         *currentConvertItem;
+    CListViewItem*         currentConvertItem;
 
-    ActionThread          *thread;
+    ActionThread*          thread;
 
-    SettingsWidget        *settingsBox;
+    SettingsWidget*        settingsBox;
 
-    KIPI::Interface       *iface;
+    KIPI::Interface*       iface;
 
-    DNGConverterAboutData *about;
+    DNGConverterAboutData* about;
 };
 
-BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData *about)
+BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
            : KDialog(0), d(new BatchDialogPriv)
 {
     d->iface = iface;
@@ -247,7 +247,7 @@ void BatchDialog::slotHelp()
     KToolInvocation::invokeHelp("dngconverter", "kipi-plugins");
 }
 
-void BatchDialog::closeEvent(QCloseEvent *e)
+void BatchDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
 
@@ -314,7 +314,7 @@ void BatchDialog::slotStartStop()
         QTreeWidgetItemIterator it(d->listView);
         while (*it)
         {
-            CListViewItem *lvItem = dynamic_cast<CListViewItem*>(*it);
+            CListViewItem* lvItem = dynamic_cast<CListViewItem*>(*it);
             if (lvItem)
             {
                 if (lvItem->isEnabled() && (lvItem->state() != CListViewItem::Success))
@@ -427,7 +427,7 @@ void BatchDialog::addItems(const KUrl::List& itemList)
 
 void BatchDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    CListViewItem *item = findItem(url);
+    CListViewItem* item = findItem(url);
     if (item)
     {
         if (!pix.isNull())
@@ -639,7 +639,7 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
             {
                 case(IDENTIFY):
                 {
-                    CListViewItem *item = findItem(ad.fileUrl);
+                    CListViewItem* item = findItem(ad.fileUrl);
                     if (item)
                     {
                         item->setIdentity(ad.message);
@@ -648,7 +648,7 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
                 }
                 case(THUMBNAIL):
                 {
-                    CListViewItem *item = findItem(ad.fileUrl);
+                    CListViewItem* item = findItem(ad.fileUrl);
                     if (item)
                     {
                         if (!ad.image.isNull())
@@ -680,7 +680,7 @@ CListViewItem* BatchDialog::findItem(const KUrl& url)
     QTreeWidgetItemIterator it(d->listView);
     while (*it)
     {
-        CListViewItem *lvItem = dynamic_cast<CListViewItem*>(*it);
+        CListViewItem* lvItem = dynamic_cast<CListViewItem*>(*it);
         if (lvItem)
         {
             if (lvItem->url() == url)

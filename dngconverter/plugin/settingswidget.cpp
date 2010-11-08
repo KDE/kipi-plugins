@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : save settings widgets
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,7 +55,7 @@ using namespace KDcrawIface;
 namespace KIPIDNGConverterPlugin
 {
 
-class SettingsWidgetPriv
+class SettingsWidget::SettingsWidgetPriv
 {
 public:
 
@@ -72,19 +72,19 @@ public:
         updateFileDate        = 0;
     }
 
-    QLabel       *conflictLabel;
-    QLabel       *previewModeLabel;
+    QLabel*       conflictLabel;
+    QLabel*       previewModeLabel;
 
-    QButtonGroup *conflictButtonGroup;
+    QButtonGroup* conflictButtonGroup;
 
-    QRadioButton *overwriteButton;
-    QRadioButton *promptButton;
+    QRadioButton* overwriteButton;
+    QRadioButton* promptButton;
 
-    QCheckBox    *compressLossLess;
-    QCheckBox    *backupOriginalRawFile;
-    QCheckBox    *updateFileDate;
+    QCheckBox*    compressLossLess;
+    QCheckBox*    backupOriginalRawFile;
+    QCheckBox*    updateFileDate;
 
-    RComboBox    *previewModeCB;
+    RComboBox*    previewModeCB;
 };
 
 SettingsWidget::SettingsWidget(QWidget *parent)
@@ -94,7 +94,7 @@ SettingsWidget::SettingsWidget(QWidget *parent)
 
     QGridLayout* settingsBoxLayout = new QGridLayout(this);
 
-    KUrlLabel *dngLogoLabel        = new KUrlLabel(this);
+    KUrlLabel* dngLogoLabel        = new KUrlLabel(this);
     dngLogoLabel->setText(QString());
     dngLogoLabel->setUrl("http://en.wikipedia.org/wiki/Digital_Negative_(file_format)");
     dngLogoLabel->setPixmap(KIconLoader::global()->loadIcon("dngconverter", KIconLoader::NoGroup, 96));
@@ -119,10 +119,10 @@ SettingsWidget::SettingsWidget(QWidget *parent)
 
     // ------------------------------------------------------------------------
 
-    KSeparator *line       = new KSeparator(Qt::Horizontal, this);
+    KSeparator* line       = new KSeparator(Qt::Horizontal, this);
     d->conflictLabel       = new QLabel(i18n("If Target File Exists:"), this);
-    QWidget *conflictBox   = new QWidget(this);
-    QVBoxLayout *vlay      = new QVBoxLayout(conflictBox);
+    QWidget* conflictBox   = new QWidget(this);
+    QVBoxLayout* vlay      = new QVBoxLayout(conflictBox);
     d->conflictButtonGroup = new QButtonGroup(conflictBox);
     d->overwriteButton     = new QRadioButton(i18n("Overwrite automatically"), conflictBox);
     d->promptButton        = new QRadioButton(i18n("Open rename-file dialog"), conflictBox);

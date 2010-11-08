@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : Raw file list view used into batch DNG converter.
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,7 +51,7 @@ public:
         Failed
     };
 
-    CListViewItem(QTreeWidget *view, const QPixmap& pixmap, const KUrl& url, const QString& fileName)
+    CListViewItem(QTreeWidget* view, const QPixmap& pixmap, const KUrl& url, const QString& fileName)
         : QTreeWidgetItem(view)
     {
          setThumbnail(pixmap);

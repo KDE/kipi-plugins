@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : a kipi plugin to convert Raw file to DNG
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,7 +44,7 @@ class Plugin_DNGConverter : public KIPI::Plugin
 
 public:
 
-    Plugin_DNGConverter(QObject *parent, const QVariantList& args);
+    Plugin_DNGConverter(QObject* parent, const QVariantList& args);
     ~Plugin_DNGConverter();
 
     KIPI::Category category(KAction* action) const;
@@ -60,9 +60,9 @@ private Q_SLOTS:
 
 private:
 
-    KAction                             *m_action;
+    KAction*                             m_action;
 
-    KIPIDNGConverterPlugin::BatchDialog *m_batchDlg;
+    KIPIDNGConverterPlugin::BatchDialog* m_batchDlg;
 };
 
 #endif /* PLUGIN_DNGCONVERTER_H */
