@@ -32,8 +32,9 @@ namespace KIPIFacebookPlugin
 {
 
 FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent)
-           : KJob(parent), m_urls(url), talk(0), m_albumName(albumName)
+           : KJob(parent), m_urls(url), talk(0), m_albumName(albumName), m_sent(-1)
 {
+    setObjectName("FacebookJob");
     connect(&talk, SIGNAL(signalLoginDone(int, QString)),
             this, SLOT(loginDone(int, QString)));
             
@@ -42,6 +43,9 @@ FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObjec
 
     connect(&talk, SIGNAL(signalCreateAlbumDone(int,QString, QString)),
             this, SLOT(albumCreated(int, QString, QString)));
+    
+    connect(&talk, SIGNAL(signalAddPhotoDone(int,QString)),
+            this, SLOT(photoAdded(int,QString)));
 }
 
 void FacebookJob::start()
@@ -102,7 +106,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
     {
         FbAlbum album;
         album.title=m_albumName;
-        album.description=i18n("Photos taken with the webcam");
+        album.description=i18n("Photos taken with KDE");
         
         talk.createAlbum(album);
     }
@@ -134,6 +138,8 @@ void FacebookJob::sendPhoto(const QString &album)
     setPercent(50);
     int step  = 50/m_urls.size();
     int count = 50;
+    
+    m_sent=0;
     foreach(const KUrl& url, m_urls)
     {
         bool c = talk.addPhoto(url.toLocalFile(), album, url.fileName());
@@ -141,7 +147,14 @@ void FacebookJob::sendPhoto(const QString &album)
         setPercent(count);
         count += step;
     }
-    emit emitResult();
+}
+
+void FacebookJob::photoAdded(int code, const QString& message)
+{
+    Q_ASSERT(m_sent>=0);
+    m_sent++;
+    if(m_sent==m_urls.size())
+        emitResult();
 }
 
 KIcon FacebookJob::icon() const

@@ -66,6 +66,9 @@ class FacebookJob : public KJob
         KUrl::List m_urls;
         FbTalker   talk;
         QString    m_albumName;
+        int        m_sent;
+public slots:
+    void photoAdded(int code, const QString& message);
 };
 
 } // namespace KIPIFacebookPlugin
