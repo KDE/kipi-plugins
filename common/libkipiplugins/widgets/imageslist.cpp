@@ -786,6 +786,11 @@ void ImagesList::slotRemoveItems()
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin();
          it!=selectedItemsList.constEnd(); ++it)
     {
+        if (*it == d->processItem)
+        {
+            d->progressTimer->stop();
+            d->processItem = NULL;
+        }
         d->listView->removeItemWidget(*it, 0);
         delete *it;
     }
@@ -848,6 +853,11 @@ void ImagesList::removeItemByUrl(const KUrl& url)
             ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
             if (item->url() == url)
             {
+                if (item == d->processItem)
+                {
+                    d->progressTimer->stop();
+                    d->processItem = NULL;
+                }
                 delete item;
                 found = true;
                 break;
@@ -876,14 +886,17 @@ KUrl::List ImagesList::imageUrls(bool onlyUnprocessed) const
 
 void ImagesList::slotProgressTimerDone()
 {
-    QPixmap pix(d->progressPix.copy(0, d->progressCount*22, 22, 22));
-    d->processItem->setProgressAnimation(pix);
+    if (d->processItem)
+    {
+        QPixmap pix(d->progressPix.copy(0, d->progressCount*22, 22, 22));
+        d->processItem->setProgressAnimation(pix);
 
-    d->progressCount++;
-    if (d->progressCount == 8)
-        d->progressCount = 0;
+        d->progressCount++;
+        if (d->progressCount == 8)
+            d->progressCount = 0;
 
-    d->progressTimer->start(300);
+        d->progressTimer->start(300);
+    }
 }
 
 void ImagesList::processing(const KUrl& url)

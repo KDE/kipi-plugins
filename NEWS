@@ -14,7 +14,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> DNGConverter    : 255137 : some exifdata lost when converting CR2.
 007 ==> PicasaWebExport : 256303 : quotation marks in caption appear as &quot; in picasaweb.
 008 ==> PicasaWebExport : 244706 : picasawebexport special symbol kde gui freeze.
-009 ==> 
+009 ==> PicasaWebExport : 243877 : Picasaweb plugin crashes when active video upload removed.
+010 ==> PicasaWebExport : 240382 : picasaweb: pressing of "-" while photo uploading causes crash.
+011 ==>
 
 
 
