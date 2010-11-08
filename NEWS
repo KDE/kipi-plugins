@@ -13,7 +13,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> DNGConverter    : 212125 : DNG files do not have image contents.
 006 ==> DNGConverter    : 255137 : some exifdata lost when converting CR2.
 007 ==> PicasaWebExport : 256303 : quotation marks in caption appear as &quot; in picasaweb.
-008 ==>
+008 ==> PicasaWebExport : 244706 : picasawebexport special symbol kde gui freeze.
+009 ==> 
 
 
 
