@@ -144,6 +144,12 @@ void FacebookJob::addPhoto(int code, const QString& message)
         Q_ASSERT(c && "could not add the photo to the album");             //FIXME: Report error
         
         setPercent(count);
+    } else {
+        if(code!=0) {
+            setError(code);
+            setErrorText(message);
+        }
+        emitResult();
     }
 }
 
