@@ -89,8 +89,8 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("smugmug"));
-    setButtons(Help|User1|Cancel);
-    setDefaultButton(Cancel);
+    setButtons(Help|User1|Close);
+    setDefaultButton(Close);
     setModal(false);
 
     if (import)
@@ -259,7 +259,7 @@ void SmugWindow::slotButtonClicked(int button)
 {
     switch (button)
     {
-        case Cancel:
+        case Close:
             if (m_widget->progressBar()->isHidden())
             {
                 writeSettings();
