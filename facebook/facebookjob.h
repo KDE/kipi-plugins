@@ -56,6 +56,7 @@ class FacebookJob : public KJob
         void albumList(int, const QString&, const QList<FbAlbum>&);
         void loginDone(int, const QString&);
         void albumCreated(int, const QString&, const QString &albumId);
+        void addPhoto(int code, const QString& message);
 
     private:
 
@@ -66,9 +67,7 @@ class FacebookJob : public KJob
         KUrl::List m_urls;
         FbTalker   talk;
         QString    m_albumName;
-        int        m_sent;
-public slots:
-    void photoAdded(int code, const QString& message);
+        QString    m_albumId;
 };
 
 } // namespace KIPIFacebookPlugin
