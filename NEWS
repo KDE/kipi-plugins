@@ -11,12 +11,14 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> DNGConverter    : 254205 : Compiling fails on SPARC platform because "qDNGBigEndian" macro is not defined.
 004 ==> PicasaExport    : 232896 : Application crashed after restarting an upload to picassa with previous change of selected photos.
 005 ==> DNGConverter    : 212125 : DNG files do not have image contents.
-006 ==> DNGConverter    : 255137 : some exifdata lost when converting CR2.
-007 ==> PicasaWebExport : 256303 : quotation marks in caption appear as &quot; in picasaweb.
-008 ==> PicasaWebExport : 244706 : picasawebexport special symbol kde gui freeze.
+006 ==> DNGConverter    : 255137 : Some exifdata lost when converting CR2.
+007 ==> PicasaWebExport : 256303 : Quotation marks in caption appear as &quot; in picasaweb.
+008 ==> PicasaWebExport : 244706 : PicasawebExport special symbol kde gui freeze.
 009 ==> PicasaWebExport : 243877 : Picasaweb plugin crashes when active video upload removed.
-010 ==> PicasaWebExport : 240382 : picasaweb: pressing of "-" while photo uploading causes crash.
-011 ==>
+010 ==> PicasaWebExport : 240382 : Picasaweb: pressing of "-" while photo uploading causes crash.
+011 ==> MetadataEdit    : 256471 : Add spell checking to text areas.
+012 ==> 
+
 
 
 
