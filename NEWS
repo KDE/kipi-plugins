@@ -17,7 +17,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> PicasaWebExport : 243877 : Picasaweb plugin crashes when active video upload removed.
 010 ==> PicasaWebExport : 240382 : Picasaweb: pressing of "-" while photo uploading causes crash.
 011 ==> MetadataEdit    : 256471 : Add spell checking to text areas.
-012 ==> 
+012 ==> FlickrExport    : 248284 : After upload finishes Cancel button should turn into Close.
+013 ==> FacebookExport  : 251860 : [patch] Cancel button should change to close once photo upload is complete.
+014 ==> 
 
 
 
