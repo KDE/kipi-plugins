@@ -102,7 +102,7 @@ public:
 
     ~EmailSettingsContainer(){};
 
-    int size()
+    int size() const
     {
         if(imageSize == SMALL)
             return 640;
@@ -151,7 +151,7 @@ public:
         }
     };
 
-    qint64 attachementLimitInBytes()
+    qint64 attachementLimitInBytes() const
     {
         qint64 val = attachmentLimitInMbytes * 1024 * 1024;
         return val;

@@ -93,8 +93,8 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("picasa"));
-    setButtons(Help|User1|Cancel);
-    setDefaultButton(Cancel);
+    setButtons(Help|User1|Close);
+    setDefaultButton(Close);
     setModal(false);
 
     if (import)
@@ -214,7 +214,7 @@ void PicasawebWindow::slotButtonClicked(int button)
 {
     switch (button)
     {
-        case Cancel:
+        case Close:
             if (m_widget->progressBar()->isHidden())
             {
                 writeSettings();

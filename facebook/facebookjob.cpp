@@ -34,6 +34,7 @@ namespace KIPIFacebookPlugin
 FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent)
            : KJob(parent), m_urls(url), talk(0), m_albumName(albumName)
 {
+    setObjectName("FacebookJob");
     connect(&talk, SIGNAL(signalLoginDone(int, QString)),
             this, SLOT(loginDone(int, QString)));
             
@@ -42,6 +43,9 @@ FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObjec
 
     connect(&talk, SIGNAL(signalCreateAlbumDone(int,QString, QString)),
             this, SLOT(albumCreated(int, QString, QString)));
+    
+    connect(&talk, SIGNAL(signalAddPhotoDone(int,QString)),
+            this, SLOT(addPhoto(int,QString)));
 }
 
 void FacebookJob::start()
@@ -102,13 +106,14 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
     {
         FbAlbum album;
         album.title=m_albumName;
-        album.description=i18n("Photos taken with the webcam");
+        album.description=i18n("Photos taken with KDE");
         
         talk.createAlbum(album);
     }
     else
     {
-        sendPhoto(id);
+        m_albumId = id;
+        addPhoto(0, QString());
     }
     
     kDebug() << "listed" << id;
@@ -125,23 +130,27 @@ void FacebookJob::albumCreated(int errCode, const QString& error, const QString 
         return;
     }
     setPercent(30);
-    sendPhoto(albumId);
+    m_albumId = albumId;
+    addPhoto(0, QString());
     kDebug() << "album created" << albumId;
 }
 
-void FacebookJob::sendPhoto(const QString &album)
+void FacebookJob::addPhoto(int code, const QString& message)
 {
-    setPercent(50);
-    int step  = 50/m_urls.size();
-    int count = 50;
-    foreach(const KUrl& url, m_urls)
-    {
-        bool c = talk.addPhoto(url.toLocalFile(), album, url.fileName());
+    if(code==0 && !m_urls.isEmpty()) {
+        int count = percent()+(100-percent())/m_urls.size();
+        KUrl url = m_urls.takeLast();
+        bool c = talk.addPhoto(url.toLocalFile(), m_albumId, url.fileName());
         Q_ASSERT(c && "could not add the photo to the album");             //FIXME: Report error
+        
         setPercent(count);
-        count += step;
+    } else {
+        if(code!=0) {
+            setError(code);
+            setErrorText(message);
+        }
+        emitResult();
     }
-    emit emitResult();
 }
 
 KIcon FacebookJob::icon() const

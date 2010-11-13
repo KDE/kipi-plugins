@@ -294,27 +294,27 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
     entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
     QDomElement titleElem = docMeta.createElement("title");
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(Qt::escape(album.title));
+    QDomText titleText = docMeta.createTextNode(album.title);
     titleElem.appendChild(titleText);
     QDomElement summaryElem = docMeta.createElement("summary");
     entryElem.appendChild(summaryElem);
-    QDomText summaryText = docMeta.createTextNode(Qt::escape(album.description));
+    QDomText summaryText = docMeta.createTextNode(album.description);
     summaryElem.appendChild(summaryText);
     QDomElement locationElem = docMeta.createElementNS("http://schemas.google.com/photos/2007", "gphoto:location");
     entryElem.appendChild(locationElem);
-    QDomText locationText = docMeta.createTextNode(Qt::escape(album.location));
+    QDomText locationText = docMeta.createTextNode(album.location);
     locationElem.appendChild(locationText);
     QDomElement accessElem = docMeta.createElementNS("http://schemas.google.com/photos/2007", "gphoto:access");
     entryElem.appendChild(accessElem);
-    QDomText accessText = docMeta.createTextNode(Qt::escape(album.access));
+    QDomText accessText = docMeta.createTextNode(album.access);
     accessElem.appendChild(accessText);
     QDomElement commentElem = docMeta.createElementNS("http://schemas.google.com/photos/2007", "gphoto:commentingEnabled");
     entryElem.appendChild(commentElem);
-    QDomText commentText = docMeta.createTextNode(Qt::escape(album.canComment ? "true" : "false"));
+    QDomText commentText = docMeta.createTextNode(album.canComment ? "true" : "false");
     commentElem.appendChild(commentText);
     QDomElement timestampElem = docMeta.createElementNS("http://schemas.google.com/photos/2007", "gphoto:timestamp");
     entryElem.appendChild(timestampElem);
-    QDomText timestampText = docMeta.createTextNode(Qt::escape(album.timestamp));
+    QDomText timestampText = docMeta.createTextNode(album.timestamp);
     timestampElem.appendChild(timestampText);
     QDomElement categoryElem = docMeta.createElement("category");
     entryElem.appendChild(categoryElem);
@@ -324,7 +324,7 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
     entryElem.appendChild(mediaGroupElem);
     QDomElement mediaKeywordsElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:keywords");
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(Qt::escape(album.tags.join(",")));
+    QDomText mediaKeywordsText = docMeta.createTextNode(album.tags.join(","));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
 
     QByteArray buffer;
@@ -376,11 +376,11 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
     entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
     QDomElement titleElem = docMeta.createElement("title");
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(Qt::escape(info.title));
+    QDomText titleText = docMeta.createTextNode(info.title);
     titleElem.appendChild(titleText);
     QDomElement summaryElem = docMeta.createElement("summary");
     entryElem.appendChild(summaryElem);
-    QDomText summaryText = docMeta.createTextNode(Qt::escape(info.description));
+    QDomText summaryText = docMeta.createTextNode(info.description);
     summaryElem.appendChild(summaryText);
     QDomElement categoryElem = docMeta.createElement("category");
     entryElem.appendChild(categoryElem);
@@ -390,7 +390,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
     entryElem.appendChild(mediaGroupElem);
     QDomElement mediaKeywordsElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:keywords");
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(Qt::escape(info.tags.join(",")));
+    QDomText mediaKeywordsText = docMeta.createTextNode(info.tags.join(","));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
     if (!info.gpsLat.isEmpty() && !info.gpsLon.isEmpty())
     {
@@ -450,11 +450,11 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info
     entryElem.setAttribute("xmlns", "http://www.w3.org/2005/Atom");
     QDomElement titleElem = docMeta.createElement("title");
     entryElem.appendChild(titleElem);
-    QDomText titleText = docMeta.createTextNode(Qt::escape(info.title));
+    QDomText titleText = docMeta.createTextNode(info.title);
     titleElem.appendChild(titleText);
     QDomElement summaryElem = docMeta.createElement("summary");
     entryElem.appendChild(summaryElem);
-    QDomText summaryText = docMeta.createTextNode(Qt::escape(info.description));
+    QDomText summaryText = docMeta.createTextNode(info.description);
     summaryElem.appendChild(summaryText);
     QDomElement categoryElem = docMeta.createElement("category");
     entryElem.appendChild(categoryElem);
@@ -464,7 +464,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info
     entryElem.appendChild(mediaGroupElem);
     QDomElement mediaKeywordsElem = docMeta.createElementNS("http://search.yahoo.com/mrss/", "media:keywords");
     mediaGroupElem.appendChild(mediaKeywordsElem);
-    QDomText mediaKeywordsText = docMeta.createTextNode(Qt::escape(info.tags.join(",")));
+    QDomText mediaKeywordsText = docMeta.createTextNode(info.tags.join(","));
     mediaKeywordsElem.appendChild(mediaKeywordsText);
     if (!info.gpsLat.isEmpty() && !info.gpsLon.isEmpty())
     {
