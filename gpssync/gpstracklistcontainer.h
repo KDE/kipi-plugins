@@ -47,7 +47,7 @@ public:
     GPSTrackListItem(): m_dirty(false), m_id(0), m_url(KUrl()), m_gpsData(GPSDataContainer())
     {};
 
-    GPSTrackListItem(const KUrl& url, const GPSDataContainer gpsData)
+    GPSTrackListItem(const KUrl& url, const GPSDataContainer& gpsData)
                    : m_dirty(false), m_id(0), m_url(url), m_gpsData(gpsData)
     {};
 

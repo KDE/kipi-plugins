@@ -186,7 +186,7 @@ bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* cons
     {
         if (gpsInfo)
             *gpsInfo = lvItem->GPSInfo();
-        
+
         if (itemUrl)
             *itemUrl = lvItem->url();
 
@@ -384,7 +384,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
     setGPSDataForSelectedItems(gpsData);
 }
 
-void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer gpsData)
+void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer& gpsData)
 {
     const QList<QTreeWidgetItem*> selectedItems = d->imagesList->listView()->selectedItems();
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItems.begin(); it!=selectedItems.end(); ++it)
@@ -421,7 +421,7 @@ bool GPSListViewContextMenu::getCurrentPosition(GPSDataContainer* position, void
         return false;
 
     GPSListViewContextMenu* me = reinterpret_cast<GPSListViewContextMenu*>(mydata);
-    
+
     return me->getCurrentItemPositionAndUrl(position, 0);
 }
 
