@@ -44,10 +44,12 @@ namespace KIPIRemoveRedEyesPlugin
 
 struct StorageSettingsBoxPriv
 {
-    StorageSettingsBoxPriv()
+    StorageSettingsBoxPriv() :
+        keywordCB(0),
+        saveMethodCB(0),
+        keywordLineEdit(0),
+        saveMethodLineEdit(0)
     {
-        saveMethodLineEdit   = 0;
-        keywordLineEdit = 0;
     }
     QCheckBox*      keywordCB;
 

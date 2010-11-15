@@ -43,16 +43,18 @@ class HaarSettings
     {
     public:
 
-        HaarSettings()
+        HaarSettings() :
+            useStandardClassifier(true),
+            useSimpleMode(true),
+            addKeyword(true),
+            minRoundness(0.0),
+            scaleFactor(0.0),
+            minBlobsize(0),
+            neighborGroups(0),
+            storageMode(0),
+            unprocessedMode(0),
+            simpleMode(0)
         {
-
-            useStandardClassifier = true;
-            useSimpleMode         = true;
-            minRoundness          = 0.0;
-            scaleFactor           = 0.0;
-            minBlobsize           = 0;
-            neighborGroups        = 0;
-            simpleMode            = 0;
         };
 
         void debug()

@@ -45,15 +45,17 @@ namespace KIPIRemoveRedEyesPlugin
 
 struct PreviewWidgetPriv
 {
-    PreviewWidgetPriv()
+    PreviewWidgetPriv() :
+        locked(false),
+        busyLabel(0),
+        noSelectionLabel(0),
+        originalLabel(0),
+        correctedLabel(0),
+        maskLabel(0),
+        stack(0),
+        controller(0),
+        modeInfo(0)
     {
-        busyLabel           = 0;
-        noSelectionLabel    = 0;
-        originalLabel       = 0;
-        correctedLabel      = 0;
-        maskLabel           = 0;
-        modeInfo            = 0;
-        controller          = 0;
     }
 
     bool                locked;

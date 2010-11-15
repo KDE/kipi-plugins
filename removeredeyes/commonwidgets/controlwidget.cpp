@@ -42,11 +42,12 @@ namespace KIPIRemoveRedEyesPlugin
 
 struct ControlWidgetPriv
 {
-    ControlWidgetPriv()
+    ControlWidgetPriv() :
+        mode(0),
+        renderer(0),
+        timerFadeIn(0),
+        timerFadeOut(0)
     {
-        renderer     = 0;
-        timerFadeIn  = 0;
-        timerFadeOut = 0;
     }
 
     int           mode;

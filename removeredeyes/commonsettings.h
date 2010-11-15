@@ -35,7 +35,7 @@ class CommonSettings
 {
 public:
 
-    CommonSettings() {};
+    CommonSettings() : addKeyword(true), storageMode(0), unprocessedMode(0) {};
 
     bool    addKeyword;
     int     storageMode;
