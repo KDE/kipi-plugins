@@ -3,6 +3,7 @@ Kipi-plugins 1.6.0 - Release date: 2010/12/19
 
 NEW FEATURES:
 
+General : Fix compilation under Mac OS-X through MacPorts project.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
