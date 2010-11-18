@@ -48,10 +48,9 @@ K_PLUGIN_FACTORY( RemoveRedEyesFactory, registerPlugin<Plugin_RemoveRedEyes>(); 
 K_EXPORT_PLUGIN ( RemoveRedEyesFactory("kipiplugin_removeredeyes") )
 
 Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject *parent, const QVariantList &/*args*/)
-                    : KIPI::Plugin(RemoveRedEyesFactory::componentData(),
-                                   parent, "RemoveRedEyes")
+                    : KIPI::Plugin(RemoveRedEyesFactory::componentData(), parent, "RemoveRedEyes"),
+                      m_action(0)
 {
-
     kDebug(AREA_CODE_LOADING) << "Plugin_RemoveRedEyes plugin loaded";
 }
 
@@ -101,7 +100,9 @@ void Plugin_RemoveRedEyes::activate()
 KIPI::Category Plugin_RemoveRedEyes::category(KAction* action) const
 {
     if (action == m_action)
+    {
         return KIPI::BatchPlugin;
+    }
 
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::BatchPlugin; // no warning from compiler, please

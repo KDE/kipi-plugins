@@ -47,29 +47,30 @@ namespace KIPIRemoveRedEyesPlugin
 
 struct SettingsTabPriv
 {
-    SettingsTabPriv()
+    SettingsTabPriv() :
+        simpleCorrectionMode(true),
+        settingsSwitcherBtn(0),
+        settingsStack(0),
+        advancedSettings(0),
+        simpleSettings(0)
     {
-        advancedSettings    = 0;
-        simpleSettings      = 0;
-        settingsSwitcherBtn = 0;
-        settingsStack       = 0;
     }
 
-    bool                        simpleCorrectionMode;
+    bool              simpleCorrectionMode;
 
-    QPushButton*                settingsSwitcherBtn;
-    QStackedWidget*             settingsStack;
+    QPushButton*      settingsSwitcherBtn;
+    QStackedWidget*   settingsStack;
 
-    AdvancedSettings*           advancedSettings;
-    HaarSettings                settings;
-    SimpleSettings*             simpleSettings;
+    AdvancedSettings* advancedSettings;
+    HaarSettings      settings;
+    SimpleSettings*   simpleSettings;
 };
 
 HaarSettingsWidget::HaarSettingsWidget(QWidget* parent)
-              : QWidget(parent), d(new SettingsTabPriv)
+                  : QWidget(parent), d(new SettingsTabPriv)
 {
-    d->simpleCorrectionMode     = true;
-    d->settingsSwitcherBtn      = new QPushButton;
+    d->simpleCorrectionMode = true;
+    d->settingsSwitcherBtn  = new QPushButton;
 
     // settings stack widget ----------------------------------------------------------
 
@@ -154,9 +155,13 @@ void HaarSettingsWidget::settingsModeChanged()
 void HaarSettingsWidget::updateSettings()
 {
     if (d->simpleCorrectionMode)
+    {
         d->settings = d->simpleSettings->readSettings();
+    }
     else
+    {
         d->settings = d->advancedSettings->readSettings();
+    }
 }
 
 } // namespace KIPIRemoveRedEyesPlugin
