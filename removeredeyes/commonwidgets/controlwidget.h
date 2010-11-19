@@ -75,7 +75,7 @@ Q_SIGNALS:
 
 protected:
 
-    void leaveEvent (QEvent * e);
+    void leaveEvent (QEvent* e);
     void mouseMoveEvent (QMouseEvent* e);
     void mouseReleaseEvent (QMouseEvent* e);
     void mousePressEvent (QMouseEvent* e);

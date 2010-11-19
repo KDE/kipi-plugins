@@ -60,21 +60,21 @@ struct StorageSettingsBoxPriv
 };
 
 StorageSettingsBox::StorageSettingsBox(QWidget* parent)
-                  : QGroupBox(parent), d(new StorageSettingsBoxPriv)
+    : QGroupBox(parent), d(new StorageSettingsBoxPriv)
 {
     setTitle(i18n("Storage Settings"));
 
     QString whatsThis = i18n("<p>These settings control the storage of the corrected images. "
-            "There are three modes to choose from:</p>"
-            "<p><ul>"
-            "<li><b>Subfolder:</b> The corrected images will be saved in a subfolder "
-            "under the current album path.</li>"
-            "<li><b>Prefix:</b> A custom prefix will be added to the corrected image.</li>"
-            "<li><b>Suffix:</b> A custom suffix will be added to the corrected image.</li>"
-            "<li><b>Overwrite:</b> All original images will be replaced.</li>"
-            "</ul></p>"
-            "<p>Each of the three modes allows you to add an optional keyword to the image "
-            "metadata.</p>");
+                             "There are three modes to choose from:</p>"
+                             "<p><ul>"
+                             "<li><b>Subfolder:</b> The corrected images will be saved in a subfolder "
+                             "under the current album path.</li>"
+                             "<li><b>Prefix:</b> A custom prefix will be added to the corrected image.</li>"
+                             "<li><b>Suffix:</b> A custom suffix will be added to the corrected image.</li>"
+                             "<li><b>Overwrite:</b> All original images will be replaced.</li>"
+                             "</ul></p>"
+                             "<p>Each of the three modes allows you to add an optional keyword to the image "
+                             "metadata.</p>");
     setWhatsThis(whatsThis);
 
     // ----------------------------------------------------------------
@@ -126,8 +126,12 @@ StorageSettingsBox::~StorageSettingsBox()
 void StorageSettingsBox::buttonClicked(int mode)
 {
     d->saveMethodLineEdit->setEnabled(true);
+
     if (mode == Overwrite)
+    {
         d->saveMethodLineEdit->setEnabled(false);
+    }
+
     emit settingsChanged();
 }
 

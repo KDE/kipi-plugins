@@ -47,9 +47,9 @@
 K_PLUGIN_FACTORY( RemoveRedEyesFactory, registerPlugin<Plugin_RemoveRedEyes>(); )
 K_EXPORT_PLUGIN ( RemoveRedEyesFactory("kipiplugin_removeredeyes") )
 
-Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject *parent, const QVariantList &/*args*/)
-                    : KIPI::Plugin(RemoveRedEyesFactory::componentData(), parent, "RemoveRedEyes"),
-                      m_action(0)
+Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject* parent, const QVariantList &/*args*/)
+    : KIPI::Plugin(RemoveRedEyesFactory::componentData(), parent, "RemoveRedEyes"),
+      m_action(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_RemoveRedEyes plugin loaded";
 }
@@ -86,6 +86,7 @@ Plugin_RemoveRedEyes::~Plugin_RemoveRedEyes()
 void Plugin_RemoveRedEyes::activate()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*> (parent());
+
     if (!interface)
     {
         kError() << "Kipi interface is null!";

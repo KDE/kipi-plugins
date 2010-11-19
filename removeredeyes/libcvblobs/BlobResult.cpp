@@ -109,7 +109,7 @@ CBlobResult::CBlobResult()
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-CBlobResult::CBlobResult(IplImage *source, IplImage *mask, int threshold, bool findmoments)
+CBlobResult::CBlobResult(IplImage* source, IplImage* mask, int threshold, bool findmoments)
 {
     bool success;
 
@@ -118,12 +118,15 @@ CBlobResult::CBlobResult(IplImage *source, IplImage *mask, int threshold, bool f
         // cridem la funci� amb el marc a true=1=blanc (aix� no unir� els blobs externs)
         success = BlobAnalysis(source,(uchar)threshold,mask,true,findmoments, m_blobs );
     }
-    catch(...)
+    catch (...)
     {
         success = false;
     }
 
-    if( !success ) throw EXCEPCIO_CALCUL_BLOBS;
+    if ( !success )
+    {
+        throw EXCEPCIO_CALCUL_BLOBS;
+    }
 }
 
 /**
@@ -150,7 +153,7 @@ CBlobResult::CBlobResult(IplImage *source, IplImage *mask, int threshold, bool f
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-CBlobResult::CBlobResult( const CBlobResult &source )
+CBlobResult::CBlobResult( const CBlobResult& source )
 {
     m_blobs = blob_vector( source.GetNumBlobs() );
 
@@ -160,7 +163,7 @@ CBlobResult::CBlobResult( const CBlobResult &source )
     blob_vector::const_iterator pBlobsSrc = source.m_blobs.begin();
     blob_vector::iterator pBlobsDst = m_blobs.begin();
 
-    while( pBlobsSrc != source.m_blobs.end() )
+    while ( pBlobsSrc != source.m_blobs.end() )
     {
         // no podem cridar a l'operador = ja que blob_vector �s un
         // vector de CBlob*. Per tant, creem un blob nou a partir del
@@ -230,10 +233,11 @@ CBlobResult& CBlobResult::operator=(const CBlobResult& source)
     if (this != &source)
     {
         // alliberem el conjunt de blobs antic
-        for( int i = 0; i < GetNumBlobs(); ++i )
+        for ( int i = 0; i < GetNumBlobs(); ++i )
         {
             delete m_blobs[i];
         }
+
         m_blobs.clear();
         // creem el nou a partir del passat com a par�metre
         m_blobs = blob_vector( source.GetNumBlobs() );
@@ -241,7 +245,7 @@ CBlobResult& CBlobResult::operator=(const CBlobResult& source)
         blob_vector::const_iterator pBlobsSrc = source.m_blobs.begin();
         blob_vector::iterator pBlobsDst = m_blobs.begin();
 
-        while( pBlobsSrc != source.m_blobs.end() )
+        while ( pBlobsSrc != source.m_blobs.end() )
         {
             // no podem cridar a l'operador = ja que blob_vector �s un
             // vector de CBlob*. Per tant, creem un blob nou a partir del
@@ -251,6 +255,7 @@ CBlobResult& CBlobResult::operator=(const CBlobResult& source)
             ++pBlobsDst;
         }
     }
+
     return *this;
 }
 
@@ -293,7 +298,7 @@ CBlobResult CBlobResult::operator+( const CBlobResult& source )
     blob_vector::iterator pBlobsDst = resultat.m_blobs.end();
 
     // insertem els blobs de l'origen a l'actual
-    while( pBlobsSrc != source.m_blobs.end() )
+    while ( pBlobsSrc != source.m_blobs.end() )
     {
         --pBlobsDst;
         *pBlobsDst = new CBlob(**pBlobsSrc);
@@ -319,10 +324,12 @@ CBlobResult CBlobResult::operator+( const CBlobResult& source )
 - DATA DE CREACI�: 2006/03/01
 - MODIFICACI�: Data. Autor. Descripci�.
 */
-void CBlobResult::AddBlob( CBlob *blob )
+void CBlobResult::AddBlob( CBlob* blob )
 {
-    if( blob != NULL )
+    if ( blob != NULL )
+    {
         m_blobs.push_back( new CBlob( blob ) );
+    }
 }
 
 #ifdef MATRIXCV_ACTIU
@@ -353,9 +360,9 @@ void CBlobResult::AddBlob( CBlob *blob )
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double_vector CBlobResult::GetResult( funcio_calculBlob *evaluador ) const
+double_vector CBlobResult::GetResult( funcio_calculBlob* evaluador ) const
 {
-    if( GetNumBlobs() <= 0 )
+    if ( GetNumBlobs() <= 0 )
     {
         return double_vector();
     }
@@ -367,12 +374,13 @@ double_vector CBlobResult::GetResult( funcio_calculBlob *evaluador ) const
     blob_vector::const_iterator itBlobs = m_blobs.begin();
 
     // avaluem la funci� en tots els blobs
-    while( itBlobs != m_blobs.end() )
+    while ( itBlobs != m_blobs.end() )
     {
         *itResult = (*evaluador)(**itBlobs);
         ++itBlobs;
         ++itResult;
     }
+
     return result;
 }
 
@@ -404,9 +412,9 @@ double_vector CBlobResult::GetResult( funcio_calculBlob *evaluador ) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double_stl_vector CBlobResult::GetSTLResult( funcio_calculBlob *evaluador ) const
+double_stl_vector CBlobResult::GetSTLResult( funcio_calculBlob* evaluador ) const
 {
-    if( GetNumBlobs() <= 0 )
+    if ( GetNumBlobs() <= 0 )
     {
         return double_stl_vector();
     }
@@ -418,12 +426,13 @@ double_stl_vector CBlobResult::GetSTLResult( funcio_calculBlob *evaluador ) cons
     blob_vector::const_iterator itBlobs = m_blobs.begin();
 
     // avaluem la funci� en tots els blobs
-    while( itBlobs != m_blobs.end() )
+    while ( itBlobs != m_blobs.end() )
     {
         *itResult = (*evaluador)(**itBlobs);
         ++itBlobs;
         ++itResult;
     }
+
     return result;
 }
 
@@ -453,10 +462,12 @@ double_stl_vector CBlobResult::GetSTLResult( funcio_calculBlob *evaluador ) cons
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob *evaluador ) const
+double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob* evaluador ) const
 {
-    if( indexBlob < 0 || indexBlob >= GetNumBlobs() )
+    if ( indexBlob < 0 || indexBlob >= GetNumBlobs() )
+    {
         RaiseError( EXCEPTION_BLOB_OUT_OF_BOUNDS );
+    }
 
     return (*evaluador)( *m_blobs[indexBlob] );
 }
@@ -516,7 +527,7 @@ double CBlobResult::GetNumber( int indexBlob, funcio_calculBlob *evaluador ) con
 */
 void CBlobResult::Filter(CBlobResult& dst,
                          int filterAction,
-                         funcio_calculBlob *evaluador,
+                         funcio_calculBlob* evaluador,
                          int condition,
                          double lowLimit, double highLimit /*=0*/)
 {
@@ -525,120 +536,153 @@ void CBlobResult::Filter(CBlobResult& dst,
     double_stl_vector avaluacioBlobs;
     double_stl_vector::iterator itavaluacioBlobs;
 
-    if( GetNumBlobs() <= 0 ) return;
-    if( !evaluador ) return;
+    if ( GetNumBlobs() <= 0 )
+    {
+        return;
+    }
+
+    if ( !evaluador )
+    {
+        return;
+    }
+
     //avaluem els blobs amb la funci� pertinent
     avaluacioBlobs = GetSTLResult(evaluador);
     itavaluacioBlobs = avaluacioBlobs.begin();
     numBlobs = GetNumBlobs();
-    switch(condition)
+
+    switch (condition)
     {
         case B_EQUAL:
-            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
+
+            for (i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs == lowLimit;
-                if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
-                    ( !resultavaluacio && filterAction == B_EXCLUDE ))
+
+                if ( ( resultavaluacio && filterAction == B_INCLUDE ) ||
+                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
                     dst.m_blobs.push_back( new CBlob( GetBlob( i ) ));
                 }
             }
+
             break;
 
         case B_NOT_EQUAL:
-            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
+
+            for (i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio = *itavaluacioBlobs != lowLimit;
-                if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
-                    ( !resultavaluacio && filterAction == B_EXCLUDE ))
+
+                if ( ( resultavaluacio && filterAction == B_INCLUDE ) ||
+                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
                     dst.m_blobs.push_back( new CBlob( GetBlob( i ) ));
                 }
             }
+
             break;
 
         case B_GREATER:
-            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
+
+            for (i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs > lowLimit;
-                if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
-                    ( !resultavaluacio && filterAction == B_EXCLUDE ))
+
+                if ( ( resultavaluacio && filterAction == B_INCLUDE ) ||
+                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
                     dst.m_blobs.push_back( new CBlob( GetBlob( i ) ));
                 }
             }
+
             break;
 
         case B_LESS:
-            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
+
+            for (i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs < lowLimit;
-                if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
-                    ( !resultavaluacio && filterAction == B_EXCLUDE ))
+
+                if ( ( resultavaluacio && filterAction == B_INCLUDE ) ||
+                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
                     dst.m_blobs.push_back( new CBlob( GetBlob( i ) ));
                 }
             }
+
             break;
 
         case B_GREATER_OR_EQUAL:
-            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
+
+            for (i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs>= lowLimit;
-                if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
-                    ( !resultavaluacio && filterAction == B_EXCLUDE ))
+
+                if ( ( resultavaluacio && filterAction == B_INCLUDE ) ||
+                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
                     dst.m_blobs.push_back( new CBlob( GetBlob( i ) ));
                 }
             }
+
             break;
 
         case B_LESS_OR_EQUAL:
-            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
+
+            for (i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio= *itavaluacioBlobs <= lowLimit;
-                if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
-                    ( !resultavaluacio && filterAction == B_EXCLUDE ))
+
+                if ( ( resultavaluacio && filterAction == B_INCLUDE ) ||
+                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
                     dst.m_blobs.push_back( new CBlob( GetBlob( i ) ));
                 }
             }
+
             break;
 
         case B_INSIDE:
-            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
+
+            for (i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio=( *itavaluacioBlobs >= lowLimit) && ( *itavaluacioBlobs <= highLimit);
-                if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
-                    ( !resultavaluacio && filterAction == B_EXCLUDE ))
+
+                if ( ( resultavaluacio && filterAction == B_INCLUDE ) ||
+                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
                     dst.m_blobs.push_back( new CBlob( GetBlob( i ) ));
                 }
             }
+
             break;
 
         case B_OUTSIDE:
-            for(i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
+
+            for (i=0 ; i<numBlobs ; ++i, ++itavaluacioBlobs)
             {
                 resultavaluacio=( *itavaluacioBlobs < lowLimit) || ( *itavaluacioBlobs > highLimit);
-                if( ( resultavaluacio && filterAction == B_INCLUDE ) ||
-                    ( !resultavaluacio && filterAction == B_EXCLUDE ))
+
+                if ( ( resultavaluacio && filterAction == B_INCLUDE ) ||
+                     ( !resultavaluacio && filterAction == B_EXCLUDE ))
                 {
                     dst.m_blobs.push_back( new CBlob( GetBlob( i ) ));
                 }
             }
+
             break;
     }
 
     // en cas de voler filtrar un CBlobResult i deixar-ho en el mateix CBlobResult
     // ( operacio inline )
-    if( &dst == this )
+    if ( &dst == this )
     {
         // esborrem els primers blobs ( que s�n els originals )
         // ja que els tindrem replicats al final si passen el filtre
         blob_vector::iterator itBlobs = m_blobs.begin();
 
-        for( int i = 0; i < numBlobs; ++i )
+        for ( int i = 0; i < numBlobs; ++i )
         {
             delete *itBlobs;
             ++itBlobs;
@@ -673,16 +717,20 @@ void CBlobResult::Filter(CBlobResult& dst,
 */
 CBlob CBlobResult::GetBlob(int indexblob) const
 {
-    if( indexblob < 0 || indexblob >= GetNumBlobs() )
+    if ( indexblob < 0 || indexblob >= GetNumBlobs() )
+    {
         RaiseError( EXCEPTION_BLOB_OUT_OF_BOUNDS );
+    }
 
     return *m_blobs[indexblob];
 }
 
-CBlob *CBlobResult::GetBlob(int indexblob)
+CBlob* CBlobResult::GetBlob(int indexblob)
 {
-    if( indexblob < 0 || indexblob >= GetNumBlobs() )
+    if ( indexblob < 0 || indexblob >= GetNumBlobs() )
+    {
         RaiseError( EXCEPTION_BLOB_OUT_OF_BOUNDS );
+    }
 
     return m_blobs[indexblob];
 }
@@ -717,10 +765,10 @@ CBlob *CBlobResult::GetBlob(int indexblob)
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-void CBlobResult::GetNthBlob( funcio_calculBlob *criteri, int nBlob, CBlob &dst ) const
+void CBlobResult::GetNthBlob( funcio_calculBlob* criteri, int nBlob, CBlob& dst ) const
 {
     // verifiquem que no estem accedint fora el vector de blobs
-    if( nBlob < 0 || nBlob >= GetNumBlobs() )
+    if ( nBlob < 0 || nBlob >= GetNumBlobs() )
     {
         //RaiseError( EXCEPTION_BLOB_OUT_OF_BOUNDS );
         dst = CBlob();
@@ -749,14 +797,15 @@ void CBlobResult::GetNthBlob( funcio_calculBlob *criteri, int nBlob, CBlob &dst 
 
     bool trobatBlob = false;
     int  indexBlob  = 0;
-    
-    while( itAvaluacio != avaluacioBlobs.end() && !trobatBlob )
+
+    while ( itAvaluacio != avaluacioBlobs.end() && !trobatBlob )
     {
-        if( *itAvaluacio == valorEnessim )
+        if ( *itAvaluacio == valorEnessim )
         {
             trobatBlob = true;
             dst        = CBlob( GetBlob(indexBlob));
         }
+
         ++itAvaluacio;
         ++indexBlob;
     }
@@ -790,7 +839,8 @@ void CBlobResult::ClearBlobs()
         delete m_blobs[i];
     }*/
     blob_vector::iterator itBlobs = m_blobs.begin();
-    while( itBlobs != m_blobs.end() )
+
+    while ( itBlobs != m_blobs.end() )
     {
         delete *itBlobs;
         ++itBlobs;
@@ -818,7 +868,7 @@ void CBlobResult::ClearBlobs()
 - PARAMETERS:
     - errorCode: reason of the error
 - RESULT:
-	- throws an exception with the error.
+    - throws an exception with the error.
 - RESTRICTIONS:
 - AUTHOR: Ricard Borr�s
 - CREATION DATE: 25-05-2005.
@@ -833,12 +883,13 @@ void CBlobResult::RaiseError(const int errorCode) const
     {
         case EXCEPTION_BLOB_OUT_OF_BOUNDS:
             kDebug() << "Error en CBlobResult: Intentant accedir a un blob no existent";
-        break;
+            break;
 
         default:
             kDebug() << "Error en CBlobResult: Codi d'error desconegut";
-        break;
+            break;
     }
+
 #endif
 
     throw errorCode;
@@ -876,7 +927,7 @@ void CBlobResult::PrintBlobs( char* nom_fitxer ) const
     double_stl_vector area, /*perimetre,*/ exterior, mitjana, compacitat, longitud,
                       externPerimeter, perimetreConvex, perimetre;
     int i;
-    FILE *fitxer_sortida;
+    FILE* fitxer_sortida;
 
     area            = GetSTLResult(CBlobGetArea());
     perimetre       = GetSTLResult(CBlobGetPerimeter());
@@ -889,11 +940,12 @@ void CBlobResult::PrintBlobs( char* nom_fitxer ) const
 
     fitxer_sortida = fopen( nom_fitxer, "w" );
 
-    for(i=0; i<GetNumBlobs(); ++i)
+    for (i=0; i<GetNumBlobs(); ++i)
     {
         fprintf( fitxer_sortida, "blob %d ->\t a=%7.0f\t p=%8.2f (%8.2f extern)\t pconvex=%8.2f\t ext=%.0f\t m=%7.2f\t c=%3.2f\t l=%8.2f\n",
                  i, area[i], perimetre[i], externPerimeter[i], perimetreConvex[i], exterior[i], mitjana[i], compacitat[i], longitud[i] );
     }
+
     fclose( fitxer_sortida );
 }
 

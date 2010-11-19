@@ -110,10 +110,10 @@ public:
     CBlobResult();
     //! constructor a partir d'una imatge
     //! Image constructor, it creates an object with the blobs of the image
-    CBlobResult(IplImage *source, IplImage *mask, int threshold, bool findmoments);
+    CBlobResult(IplImage* source, IplImage* mask, int threshold, bool findmoments);
     //! constructor de c�pia
     //! Copy constructor
-    CBlobResult( const CBlobResult &source );
+    CBlobResult( const CBlobResult& source );
     //! Destructor
     virtual ~CBlobResult();
 
@@ -126,31 +126,31 @@ public:
 
     //! Afegeix un blob al conjunt
     //! Adds a blob to the set of blobs
-    void AddBlob( CBlob *blob );
+    void AddBlob( CBlob* blob );
 
 #ifdef MATRIXCV_ACTIU
     //! Calcula un valor sobre tots els blobs de la classe retornant una MatrixCV
     //! Computes some property on all the blobs of the class
-    double_vector GetResult( funcio_calculBlob *evaluador ) const;
+    double_vector GetResult( funcio_calculBlob* evaluador ) const;
 #endif
 
     //! Calcula un valor sobre tots els blobs de la classe retornant un std::vector<double>
     //! Computes some property on all the blobs of the class
-    double_stl_vector GetSTLResult( funcio_calculBlob *evaluador ) const;
+    double_stl_vector GetSTLResult( funcio_calculBlob* evaluador ) const;
 
     //! Calcula un valor sobre un blob de la classe
     //! Computes some property on one blob of the class
-    double GetNumber( int indexblob, funcio_calculBlob *evaluador ) const;
+    double GetNumber( int indexblob, funcio_calculBlob* evaluador ) const;
 
     //! Retorna aquells blobs que compleixen les condicions del filtre en el destination
     //! Filters the blobs of the class using some property
-    void Filter(CBlobResult &dst,
-                int filterAction, funcio_calculBlob *evaluador,
+    void Filter(CBlobResult& dst,
+                int filterAction, funcio_calculBlob* evaluador,
                 int condition, double lowLimit, double highLimit = 0 );
 
     //! Retorna l'en�ssim blob segons un determinat criteri
     //! Sorts the blobs of the class according to some criteria and returns the n-th blob
-    void GetNthBlob( funcio_calculBlob *criteri, int nBlob, CBlob &dst ) const;
+    void GetNthBlob( funcio_calculBlob* criteri, int nBlob, CBlob& dst ) const;
 
     //! Retorna el blob en�ssim
     //! Gets the n-th blob of the class ( without sorting )

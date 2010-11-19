@@ -108,7 +108,7 @@ public:
         saveMethod(0),
         interface(0),
         about(0)
-        {}
+    {}
 
     const QString             configGroupName;
     const QString             configStorageModeEntry;
@@ -157,8 +157,8 @@ public:
     KIPIPlugins::KPAboutData* about;
 };
 
-RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
-                   : KDialog(0), d(new RemoveRedEyesWindowPriv)
+RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* interface)
+    : KDialog(0), d(new RemoveRedEyesWindowPriv)
 {
     setWindowTitle(i18n("Automatic Red-Eye Removal"));
     setButtons(Help|User1|User2|Close);
@@ -190,15 +190,15 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A plugin to automatically "
-                                                  "detect and remove red-eye effect."),
+                                                    "detect and remove red-eye effect."),
                                             ki18n("(c) 2008-2009, Andi Clemens"));
 
     d->about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
-                              "andi dot clemens at gmx dot net");
+                        "andi dot clemens at gmx dot net");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
 
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
@@ -243,11 +243,11 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     d->failedLabel->setAlignment(Qt::AlignRight | Qt::AlignTop);
 
     QLabel* l1 = new QLabel(i18nc("The total number of images in the list",
-            "Total:"));
+                                  "Total:"));
     QLabel* l2 = new QLabel(i18nc("number of images successfully processed",
-            "Success:"));
+                                  "Success:"));
     QLabel* l3 = new QLabel(i18nc("number of images failed to process",
-            "Failed:"));
+                                  "Failed:"));
 
     QWidget* summaryBox           = new QWidget;
     QHBoxLayout* summaryBoxLayout = new QHBoxLayout;
@@ -282,7 +282,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
 
     d->tabWidget->insertTab(FileList, imagesTab,      i18n("File List"));
     d->tabWidget->insertTab(Settings, d->settingsTab, i18n("Settings"));
-//    d->tabWidget->insertTab(Preview,  previewTab,     i18n("Preview"));
+    //    d->tabWidget->insertTab(Preview,  previewTab,     i18n("Preview"));
 
     QWidget* mainWidget     = new QWidget;
     QVBoxLayout* mainLayout = new QVBoxLayout;
@@ -325,15 +325,17 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface *interface)
     connect(this, SIGNAL(locatorUpdated()),
             this, SLOT(locatorChanged()));
 
-//    connect(d->settingsTab, SIGNAL(settingsChanged()),
-//            d->previewWidget, SLOT(reset()));
+    //    connect(d->settingsTab, SIGNAL(settingsChanged()),
+    //            d->previewWidget, SLOT(reset()));
 
     // ----------------------------------------------------------
 
     KIPI::ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
+    {
         d->imageList->slotAddImages(images.images());
+    }
 
     // ----------------------------------------------------------
 
@@ -390,6 +392,7 @@ void RemoveRedEyesWindow::writeSettings()
     {
         group.writeEntry(d->configLocatorTypeEntry, d->locator->objectName());
     }
+
     group.writeEntry(d->configStorageModeEntry,     d->settings.storageMode);
     group.writeEntry(d->configUnprocessedModeEntry, d->settings.unprocessedMode);
     group.writeEntry(d->configExtraNameEntry,       d->settings.extraName);
@@ -410,7 +413,11 @@ void RemoveRedEyesWindow::updateSettings()
     d->settings.unprocessedMode = d->unprocessedSettingsBox->handleMode();
 
     // reset save method
-    if (d->saveMethod) delete d->saveMethod;
+    if (d->saveMethod)
+    {
+        delete d->saveMethod;
+    }
+
     d->saveMethod = SaveMethodFactory::create(d->settings.storageMode);
 }
 
@@ -427,14 +434,19 @@ bool RemoveRedEyesWindow::acceptStorageSettings()
             return false;
         }
     }
+
     return true;
 }
 
 void RemoveRedEyesWindow::startCorrection()
 {
     updateSettings();
+
     if (!acceptStorageSettings())
+    {
         return;
+    }
+
     d->runtype = WorkerThread::Correction;
 
     d->imageList->resetEyeCounterColumn();
@@ -459,7 +471,8 @@ void RemoveRedEyesWindow::startTestrun()
 void RemoveRedEyesWindow::startPreview()
 {
     KIPIPlugins::ImagesListViewItem* item = dynamic_cast<KIPIPlugins::ImagesListViewItem*>(
-                                            d->imageList->listView()->currentItem());
+            d->imageList->listView()->currentItem());
+
     if (!item)
     {
         d->previewWidget->reset();
@@ -476,7 +489,9 @@ void RemoveRedEyesWindow::startPreview()
     updateSettings();
 
     if (item->url().path() == d->previewWidget->currentImage())
+    {
         return;
+    }
 
     d->previewWidget->setCurrentImage(item->url().path());
     d->runtype = WorkerThread::Preview;
@@ -498,8 +513,12 @@ void RemoveRedEyesWindow::cancelCorrection()
 void RemoveRedEyesWindow::closeClicked()
 {
     writeSettings();
+
     if (d->locator)
+    {
         d->locator->writeSettings();
+    }
+
     done(Close);
 }
 
@@ -510,9 +529,20 @@ void RemoveRedEyesWindow::helpClicked()
 
 void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
 {
-    if (urls.isEmpty()) return;
-    if (d->busy) return;
-    if (!d->locator || !d->saveMethod) return;
+    if (urls.isEmpty())
+    {
+        return;
+    }
+
+    if (d->busy)
+    {
+        return;
+    }
+
+    if (!d->locator || !d->saveMethod)
+    {
+        return;
+    }
 
     if (!d->thread)
     {
@@ -541,15 +571,20 @@ void RemoveRedEyesWindow::startWorkerThread(const KUrl::List& urls)
     setBusy(true);
 
     initProgressBar(urls.count());
+
     if (d->progress->isHidden())
+    {
         d->progress->show();
+    }
 
     connect(d->thread, SIGNAL(calculationFinished(WorkerThreadData*)),
             this, SLOT(calculationFinished(WorkerThreadData*)));
 
     // start image processing
     if (!d->thread->isRunning())
+    {
         d->thread->start();
+    }
 }
 
 void RemoveRedEyesWindow::setBusy(bool busy)
@@ -561,7 +596,7 @@ void RemoveRedEyesWindow::setBusy(bool busy)
         // disable connection to make sure that the "test run" and "correct photos"
         // buttons are not enabled again on ImageListChange
         disconnect(d->imageList, SIGNAL(signalImageListChanged()),
-                this, SLOT(imageListChanged()));
+                   this, SLOT(imageListChanged()));
 
         disconnect(this, SIGNAL(myCloseClicked()),
                    this, SLOT(closeClicked()));
@@ -613,10 +648,11 @@ void RemoveRedEyesWindow::handleUnprocessedImages()
                                        "from the list?</b></p>");
 
                 if (KMessageBox::questionYesNo(this, message, i18n("Remove unprocessed images?"))
-                        == KMessageBox::Yes)
+                    == KMessageBox::Yes)
                 {
                     d->imageList->removeUnprocessedImages();
                 }
+
                 break;
             }
 
@@ -637,7 +673,9 @@ void RemoveRedEyesWindow::imageListChanged()
 void RemoveRedEyesWindow::tabwidgetChanged(int tab)
 {
     if (tab == Preview)
+    {
         startPreview();
+    }
 }
 
 void RemoveRedEyesWindow::foundRAWImages(bool raw)
@@ -655,7 +693,9 @@ void RemoveRedEyesWindow::foundRAWImages(bool raw)
 void RemoveRedEyesWindow::calculationFinished(WorkerThreadData* data)
 {
     if (!data)
+    {
         return;
+    }
 
     int current     = data->current;
     const KUrl& url = data->urls;
@@ -713,11 +753,11 @@ void RemoveRedEyesWindow::threadFinished()
         case WorkerThread::Preview:
             // load generated preview images
             d->previewWidget->setPreviewImage(PreviewWidget::OriginalImage,
-                    d->originalImageTempFile.fileName());
+                                              d->originalImageTempFile.fileName());
             d->previewWidget->setPreviewImage(PreviewWidget::CorrectedImage,
-                    d->correctedImageTempFile.fileName());
+                                              d->correctedImageTempFile.fileName());
             d->previewWidget->setPreviewImage(PreviewWidget::MaskImage,
-                    d->maskImageTempFile.fileName());
+                                              d->maskImageTempFile.fileName());
             break;
     }
 
@@ -753,7 +793,9 @@ void RemoveRedEyesWindow::initProgressBar(int max)
 void RemoveRedEyesWindow::loadLocator(const QString& locator)
 {
     if (locator.isEmpty())
+    {
         return;
+    }
 
     unloadLocator();
 
@@ -781,7 +823,9 @@ void RemoveRedEyesWindow::loadLocator(const QString& locator)
 void RemoveRedEyesWindow::unloadLocator()
 {
     if (d->locator)
+    {
         delete d->locator;
+    }
 
     if (d->locatorSettingsWidget)
     {
@@ -834,16 +878,23 @@ void RemoveRedEyesWindow::updateSummary()
     resetSummary();
 
     QTreeWidgetItemIterator it(d->imageList->listView());
+
     while (*it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+
         if (!item->text(ImagesListView::User1).isEmpty())
         {
             if (item->text(ImagesListView::User1).toInt() > 0)
+            {
                 d->processed++;
+            }
             else
+            {
                 d->failed++;
+            }
         }
+
         ++it;
     }
 

@@ -44,7 +44,9 @@ QString SaveSubfolder::savePath(const QString& path, const QString& extra) const
 
     // check if subfolder exists
     if (!QDir(savePath.path()).exists())
+    {
         QDir(info.path()).mkdir(extra);
+    }
 
     savePath.addPath(info.fileName());
     return savePath.path();

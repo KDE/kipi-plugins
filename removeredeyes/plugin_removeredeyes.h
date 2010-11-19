@@ -41,7 +41,7 @@ class Plugin_RemoveRedEyes: public KIPI::Plugin
 
 public:
 
-    Plugin_RemoveRedEyes(QObject *parent, const QVariantList &args);
+    Plugin_RemoveRedEyes(QObject* parent, const QVariantList& args);
     ~Plugin_RemoveRedEyes();
 
     KIPI::Category category(KAction* action) const;

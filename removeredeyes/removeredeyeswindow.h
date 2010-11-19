@@ -56,7 +56,7 @@ public:
 
 public:
 
-    RemoveRedEyesWindow(KIPI::Interface *interface);
+    RemoveRedEyesWindow(KIPI::Interface* interface);
     ~RemoveRedEyesWindow();
 
 Q_SIGNALS:

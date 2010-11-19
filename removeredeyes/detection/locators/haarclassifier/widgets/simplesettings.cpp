@@ -55,7 +55,7 @@ struct SimpleSettingsPriv
 };
 
 SimpleSettings::SimpleSettings(QWidget* parent)
-              : QWidget(parent), d(new SimpleSettingsPriv)
+    : QWidget(parent), d(new SimpleSettingsPriv)
 {
     d->settingsSlider = new QSlider(Qt::Vertical);
     d->settingsSlider->setRange(0, 2);
@@ -82,7 +82,7 @@ SimpleSettings::SimpleSettings(QWidget* parent)
                         "   background: #cccccc;"
                         "   margin: 0 -8px; /* expand outside the groove */"
                         "}"
-    );
+                       );
     d->settingsSlider->setStyleSheet(sliderStyle);
 
     QLabel* lSlow = new QLabel(i18n("<p><b>Slower<br/>(low-res / slightly blurred images)</b></p>"
@@ -171,6 +171,7 @@ void SimpleSettings::simpleModeChanged(int value)
             d->settings.neighborGroups = 2;
             break;
     }
+
     d->settings.simpleMode = value;
 }
 

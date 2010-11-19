@@ -77,7 +77,7 @@ struct WorkerThreadPriv
 };
 
 WorkerThread::WorkerThread(QObject* parent, bool updateFileTimeStamp)
-            : QThread(parent), d(new WorkerThreadPriv)
+    : QThread(parent), d(new WorkerThreadPriv)
 {
     d->updateFileTimeStamp = updateFileTimeStamp;
 }
@@ -88,7 +88,10 @@ WorkerThread::~ WorkerThread()
     wait();
 
     if (d->saveMethod)
+    {
         delete d->saveMethod;
+    }
+
     delete d;
 }
 
@@ -99,8 +102,16 @@ void WorkerThread::run()
         kDebug() << "no locator has been defined";
         return;
     }
-    if (d->urls.count() <= 0) return;
-    if (!d->saveMethod) return;
+
+    if (d->urls.count() <= 0)
+    {
+        return;
+    }
+
+    if (!d->saveMethod)
+    {
+        return;
+    }
 
 
     // --------------------------------------------------------
@@ -111,8 +122,11 @@ void WorkerThread::run()
     for (KUrl::List::const_iterator it = d->urls.constBegin(); it != d->urls.constEnd(); ++it, ++i)
     {
         KUrl& url = (KUrl&)(*it);
+
         if (!url.isLocalFile())
+        {
             break;
+        }
 
         QString src  = url.path();
         int eyes     = 0;
@@ -145,14 +159,20 @@ void WorkerThread::run()
                 meta.save(dest);
                 break;
             }
-            case Testrun: eyes = d->locator->startTestrun(src); break;
-            case Preview: eyes = d->locator->startPreview(src); break;
+            case Testrun:
+                eyes = d->locator->startTestrun(src);
+                break;
+            case Preview:
+                eyes = d->locator->startPreview(src);
+                break;
         }
 
         emit calculationFinished(new WorkerThreadData(url, i, eyes));
 
         if (d->cancel)
+        {
             break;
+        }
     }
 }
 
@@ -174,11 +194,11 @@ void WorkerThread::cancel()
 void WorkerThread::loadSettings(const CommonSettings& newSettings)
 {
     d->settings = newSettings;
-//    d->settings.addKeyword      = newSettings.addKeyword;
-//    d->settings.storageMode     = newSettings.storageMode;
-//    d->settings.unprocessedMode = newSettings.unprocessedMode;
-//    d->settings.extraName       = newSettings.extraName;
-//    d->settings.keywordName     = newSettings.keywordName;
+    //    d->settings.addKeyword      = newSettings.addKeyword;
+    //    d->settings.storageMode     = newSettings.storageMode;
+    //    d->settings.unprocessedMode = newSettings.unprocessedMode;
+    //    d->settings.extraName       = newSettings.extraName;
+    //    d->settings.keywordName     = newSettings.keywordName;
 }
 
 void WorkerThread::setImagesList(const KUrl::List& list)
@@ -207,7 +227,9 @@ void WorkerThread::setTempFile(const QString& temp, ImageType type)
 void WorkerThread::setSaveMethod(SaveMethod* method)
 {
     if (!method)
+    {
         return;
+    }
 
     d->saveMethod = method;
 }
@@ -215,7 +237,9 @@ void WorkerThread::setSaveMethod(SaveMethod* method)
 void WorkerThread::setLocator(Locator* locator)
 {
     if (!locator)
+    {
         return;
+    }
 
     d->locator = locator;
 }

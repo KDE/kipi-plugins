@@ -52,7 +52,7 @@ public:
     InfoMessageWidget(QWidget* parent = 0);
     ~InfoMessageWidget();
 
-    void display(const QString & message, Icon icon = Info, int durationMs = 0);
+    void display(const QString& message, Icon icon = Info, int durationMs = 0);
     void reset();
 
 protected:
