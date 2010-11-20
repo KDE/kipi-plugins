@@ -16,20 +16,22 @@ else (GDK_INCLUDE_DIR AND GDK_LIBRARIES)
   if(NOT WIN32)
     # use pkg-config to get the directories and then use these values
     # in the FIND_PATH() and FIND_LIBRARY() calls
-    INCLUDE(UsePkgConfig)
-  
-    PKGCONFIG(gdk-pixbuf-2.0 _GDKIncDir _GDKLinkDir _GDKLinkFlags _GDKCflags)
-  
-    set(GDK_DEFINITIONS ${_GDKCflags})
+    find_package(PkgConfig)
+
+    pkg_check_modules(PC_GDK gdk-pixbuf-2.0)
+
+    set(GDK_DEFINITIONS ${PC_GDK_CFLAGS_OTHER})
   endif(NOT WIN32)
 
   FIND_PATH(GDK_INCLUDE_DIR gdk-pixbuf/gdk-pixbuf.h /usr/include/gtk-2.0
-    ${_GDKIncDir}
+    ${PC_GDK_INCLUDEDIR}
+    ${PC_GDK_INCLUDE_DIRS}
   )
   
   FIND_LIBRARY(GDK_LIBRARIES NAMES gdk_pixbuf-2.0
     PATHS
-    ${_GDKLinkDir}
+    ${PC_GDK_LIBDIR}
+    ${PC_GDK_LIBRARY_DIRS}
   )
 
   if (GDK_INCLUDE_DIR AND GDK_LIBRARIES)
