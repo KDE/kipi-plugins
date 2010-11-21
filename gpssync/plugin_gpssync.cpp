@@ -396,7 +396,7 @@ void Plugin_GPSSync::slotGPSRemove()
     if (KMessageBox::warningYesNo(
                      kapp->activeWindow(),
                      i18n("Geographical coordinates will be definitively removed from all selected images.\n"
-                          "Do you want to continue ?"),
+                          "Do you want to continue?"),
                      i18n("Remove Geographical Coordinates")) != KMessageBox::Yes)
         return;
 
