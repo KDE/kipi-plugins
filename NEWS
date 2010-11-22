@@ -1,28 +1,12 @@
-Kipi-plugins 1.6.0 - Release date: 2010/11/22
+Kipi-plugins 1.7.0 - Release date: 2010/??/??
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-General : Fix compilation under Mac OS-X through MacPorts project.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> RedEyesRemoval  : 236385 : digiKam and Gwenview crash on red eye removing.
-002 ==> PrintWizzard    : 254103 : "previous photo" and "next page" in the same context.
-003 ==> DNGConverter    : 254205 : Compiling fails on SPARC platform because "qDNGBigEndian" macro is not defined.
-004 ==> PicasaExport    : 232896 : Application crashed after restarting an upload to picassa with previous change of selected photos.
-005 ==> DNGConverter    : 212125 : DNG files do not have image contents.
-006 ==> DNGConverter    : 255137 : Some exifdata lost when converting CR2.
-007 ==> PicasaWebExport : 256303 : Quotation marks in caption appear as &quot; in picasaweb.
-008 ==> PicasaWebExport : 244706 : PicasawebExport special symbol kde gui freeze.
-009 ==> PicasaWebExport : 243877 : Picasaweb plugin crashes when active video upload removed.
-010 ==> PicasaWebExport : 240382 : Picasaweb: pressing of "-" while photo uploading causes crash.
-011 ==> MetadataEdit    : 256471 : Add spell checking to text areas.
-012 ==> FlickrExport    : 248284 : After upload finishes Cancel button should turn into Close.
-013 ==> FacebookExport  : 251860 : [patch] Cancel button should change to close once photo upload is complete.
-014 ==> DNGConverter    : 256177 : Strange picture coloring and missing meta data when creating from CR2 file.
-015 ==> SmungExport     : 253864 : digiKam crash when removing file from export to smugmug list.
-016 ==> 
+001 ==> 
 
 
 
