@@ -10,7 +10,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> 254110 : Facebook : Unable to upload photos to a selected album
 003 ==> 254457 : Facebook : Album target fails
 004 ==> 247107 : Facebook : Export to notes, export to pinboard, export to profile.
-005 ==> 
+005 ==> 219284 : Facebook : digiKam facebook export album.
+006 ==> 
 
 
 
