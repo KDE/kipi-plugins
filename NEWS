@@ -6,7 +6,10 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> 225174: Facebook: support new permission API for applications
+002 ==> 254110: Facebook: unable to upload photos to a selected album
+003 ==> 254457: Facebook: album target fails
+004 ==> 
 
 
 

@@ -6,7 +6,7 @@
  * Date        : 2008-12-26
  * Description : a kipi plugin to import/export images to Facebook web service
  *
- * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2008-2010 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -377,10 +377,10 @@ void FbTalker::changePerm()
 
     emit signalBusy(true);
 
-    KUrl url("https://www.facebook.com/authorize.php");
-    url.addQueryItem("api_key", m_apiKey);
-    url.addQueryItem("v", m_apiVersion);
-    url.addQueryItem("ext_perm", "photo_upload");
+    KUrl url("https://graph.facebook.com/oauth/authorize");
+    url.addQueryItem("client_id", m_apiKey);
+    url.addQueryItem("redirect_uri", "http://www.facebook.com/apps/application.php?id=107648075065");
+    url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags");
     kDebug() << "Change Perm URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
 
