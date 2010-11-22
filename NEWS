@@ -1,4 +1,4 @@
-Kipi-plugins 1.7.0 - Release date: 2010/??/??
+Kipi-plugins 1.7.0 - Release date: 2010/12/18
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -6,10 +6,11 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 225174: Facebook: support new permission API for applications
-002 ==> 254110: Facebook: unable to upload photos to a selected album
-003 ==> 254457: Facebook: album target fails
-004 ==> 
+001 ==> 225174 : Facebook : Support new permission API for applications
+002 ==> 254110 : Facebook : Unable to upload photos to a selected album
+003 ==> 254457 : Facebook : Album target fails
+004 ==> 247107 : Facebook : Export to notes, export to pinboard, export to profile.
+005 ==> 
 
 
 
