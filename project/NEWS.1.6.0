@@ -22,11 +22,3 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> FacebookExport  : 251860 : [patch] Cancel button should change to close once photo upload is complete.
 014 ==> DNGConverter    : 256177 : Strange picture coloring and missing meta data when creating from CR2 file.
 015 ==> SmungExport     : 253864 : digiKam crash when removing file from export to smugmug list.
-016 ==> 
-
-
-
-
-
-
-
