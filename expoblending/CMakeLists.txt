@@ -23,6 +23,12 @@ SET(expoblending_common_SRCS
 
 IF(OPENMP_FOUND AND NOT APPLE)
     ADD_DEFINITIONS(${OpenMP_CXX_FLAGS})
+    IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
+        SET(OPENMP_LDFLAGS "-lgomp")
+    ENDIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
+    IF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
+        SET(OPENMP_LDFLAGS "-xopenmp")
+    ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
 ENDIF(OPENMP_FOUND AND NOT APPLE)
 
 INSTALL(DIRECTORY pics
@@ -47,18 +53,9 @@ TARGET_LINK_LIBRARIES(kipiplugin_expoblending
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
+                      ${OPENMP_LDFLAGS}
                       kipiplugins
                      )
-
-IF(OPENMP_FOUND AND NOT APPLE)
-    ADD_DEFINITIONS(${OpenMP_CXX_FLAGS})
-    IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-        SET(OPENMP_LDFLAGS "-lgomp")
-    ENDIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-    IF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
-        SET(OPENMP_LDFLAGS "-xopenmp")
-    ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
-ENDIF(OPENMP_FOUND AND NOT APPLE)
 
 INSTALL(TARGETS kipiplugin_expoblending DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
@@ -81,18 +78,9 @@ TARGET_LINK_LIBRARIES(expoblending
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
+                      ${OPENMP_LDFLAGS}
                       kipiplugins
                      )
-
-IF(OPENMP_FOUND AND NOT APPLE)
-    ADD_DEFINITIONS(${OpenMP_CXX_FLAGS})
-    IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-        SET(OPENMP_LDFLAGS "-lgomp")
-    ENDIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-    IF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
-        SET(OPENMP_LDFLAGS "-xopenmp")
-    ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
-ENDIF(OPENMP_FOUND AND NOT APPLE)
 
 INSTALL(TARGETS expoblending ${INSTALL_TARGETS_DEFAULT_ARGS})
 INSTALL(PROGRAMS expoblending.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
