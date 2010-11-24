@@ -13,7 +13,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 219284 : Facebook    : digiKam facebook export album.
 006 ==> 243381 : ImageViewer : Gwenview (gwenview), signal: Segmentation fault.
 007 ==> 241046 : Facebook    : Export Facebook.
-006 ==> 
+006 ==> 232015 : Facebook    : KPhotoAlbum Facebook import plugin.
+007 ==> 
 
 
 
