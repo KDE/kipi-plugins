@@ -11,10 +11,12 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 254457 : Facebook    : Album target fails.
 004 ==> 247107 : Facebook    : Export to notes, export to pinboard, export to profile.
 005 ==> 219284 : Facebook    : digiKam facebook export album.
-006 ==> 243381 : ImageViewer : Gwenview (gwenview), signal: Segmentation fault.
-007 ==> 241046 : Facebook    : Export Facebook.
-006 ==> 232015 : Facebook    : KPhotoAlbum Facebook import plugin.
-007 ==> 
+006 ==> 241046 : Facebook    : Export Facebook.
+007 ==> 232015 : Facebook    : KPhotoAlbum Facebook import plugin.
+008 ==> 223601 : Facebook    : digiKam can't upload image to facebook.
+009 ==> 243381 : ImageViewer : Gwenview (gwenview), signal: Segmentation fault.
+010 ==> 
+
 
 
 
