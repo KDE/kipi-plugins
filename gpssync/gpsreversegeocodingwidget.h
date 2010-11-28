@@ -30,31 +30,32 @@
 //KDE includes
 
 #include <kurl.h>
-#include <kconfig.h>
 
 //Qt includes
 
 #include <QWidget>
-#include <QItemSelection>
 
 // Libkmap includes
 
 #include <libkmap/kmap_primitives.h>
 
-//local includes
-
-#include "gpsundocommand.h"
-#include "backend-rg.h"
+// libkipi includes
 
 #include <libkipi/interface.h>
 
+// local includes
+
+#include "kipiimageitem.h"
+
 class QItemSelectionModel;
+class KConfigGroup;
 
 namespace KIPIGPSSyncPlugin
 {
 
 class GPSReverseGeocodingWidgetPrivate;
 class KipiImageModel;
+class GPSUndoCommand;
 
 class GPSReverseGeocodingWidget : public QWidget
 {

@@ -46,7 +46,6 @@
 
 #include "gpsdatacontainer.h"
 #include "kdebug.h"
-#include "kmessagebox.h"
 
 namespace KExiv2Iface
 {

@@ -42,6 +42,7 @@
 // KDE includes
 
 #include <kconfiggroup.h>
+#include <kglobal.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kseparator.h>

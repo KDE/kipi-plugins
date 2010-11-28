@@ -29,20 +29,16 @@
 
 //kde includes
 
-#include <kmainwindow.h>
-#include <kio/scheduler.h>
 #include <kurl.h>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
-#include <klocale.h>
 
 //Qt includes
-#include <QWidget>
+
 #include <QList>
 #include <QMap>
 #include <QString>
 
 //local includes
+
 #include "backend-rg.h"
 
 namespace KIO { class Job; }
@@ -62,7 +58,7 @@ public:
     virtual ~BackendGeonamesUSRG();
     QMap<QString, QString> makeQMapFromXML(const QString& xmlData);
 
-    virtual void callRGBackend(const QList<RGInfo>& rgList,const QString& language);
+    virtual void callRGBackend(const QList<RGInfo>& rgList, const QString& language);
     virtual QString getErrorMessage();
     virtual QString backendName();
     virtual void cancelRequests();
@@ -72,6 +68,7 @@ private Q_SLOTS:
     void nextPhoto(); 
     void dataIsHere(KIO::Job* kJob, const QByteArray &); 
     void slotResult(KJob* kJob);
+
 private:
 
     class BackendGeonamesUSRGPrivate;

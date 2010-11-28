@@ -31,22 +31,17 @@
 #include <QDomDocument>
 #include <QMap>
 #include <QPointer>
-#include <QString>
 #include <QTimer>
 
 //KDE includes
 
-#include <kio/scheduler.h>
 #include <kurl.h>
-#include <kio/jobclasses.h>
 #include <kdebug.h>
 #include <kio/job.h>
-#include <klocale.h>
 
 //local includes
 
 #include "backend-osm-rg.h"
-#include "backend-rg.h"
 #include "gpssync_common.h"
 
 namespace KIPIGPSSyncPlugin

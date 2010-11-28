@@ -26,10 +26,14 @@
 
 #include "rgtagmodel.moc"
 
-//KDE includes
+// Qt includes
+
+#include <QColor>
+
+// KDE includes
 
 #include "kdebug.h"
-#include "klocale.h"
+#include <klocale.h>
 
 namespace KIPIGPSSyncPlugin
 {

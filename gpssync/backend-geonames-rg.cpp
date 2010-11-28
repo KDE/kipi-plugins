@@ -30,25 +30,18 @@
 
 #include <QDomDocument>
 #include <QMap>
-#include <QMessageBox>
 #include <QPointer>
-#include <QString>
 #include <QTimer>
 
 //KDE includes
 
-#include <kio/scheduler.h>
 #include <kurl.h>
-#include <kio/jobclasses.h>
 #include <kdebug.h>
 #include <kio/job.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 
 //local includes
 
 #include "backend-geonames-rg.h"
-#include "backend-rg.h"
 #include "gpssync_common.h"
 
 namespace KIPIGPSSyncPlugin
@@ -57,7 +50,7 @@ namespace KIPIGPSSyncPlugin
 /** 
  * @class BackendGeonamesRG
  *
- * @brief This class calls Geonames's reverse geocoding service.
+ * @brief This class calls Geonames' reverse geocoding service.
  */
 
 class GeonamesInternalJobs

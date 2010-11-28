@@ -27,14 +27,6 @@
 #ifndef BACKEND_RG_H
 #define BACKEND_RG_H
 
-//Qt includes
-
-#include <QWidget>
-
-//KDE includes
-
-#include <kurl.h>
-
 // local includes
 
 #include "kipiimageitem.h"

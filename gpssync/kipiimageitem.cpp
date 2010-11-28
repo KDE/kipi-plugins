@@ -26,11 +26,13 @@
 
 // Qt includes
 
+#include <QBrush>
 #include <QScopedPointer>
 
 // KDE includes
 
 #include <kdebug.h>
+#include <kglobal.h>
 #include <klocale.h>
 
 // LibKExiv2 includes

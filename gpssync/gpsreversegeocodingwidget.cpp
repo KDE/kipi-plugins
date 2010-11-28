@@ -47,6 +47,7 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
 #include <kseparator.h>
@@ -58,12 +59,12 @@
 
 #include <libkmap/kmap_primitives.h>
 
-//local includes
+// local includes
 
+#include "gpsundocommand.h"
 #include "gpssyncdialog.h"
 #include "kipiimagemodel.h"
 #include "kipiimageitem.h"
-#include "backend-rg.h"
 #include "backend-geonames-rg.h"
 #include "backend-osm-rg.h"
 #include "backend-geonamesUS-rg.h"

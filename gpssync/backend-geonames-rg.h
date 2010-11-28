@@ -29,16 +29,10 @@
 
 //kde includes
 
-#include <kmainwindow.h>
-#include <kio/scheduler.h>
 #include <kurl.h>
-#include <kio/jobclasses.h>
-#include <kio/job.h>
-#include <klocale.h>
 
 //Qt includes
 
-#include <QWidget>
 #include <QList>
 #include <QMap>
 #include <QString>
