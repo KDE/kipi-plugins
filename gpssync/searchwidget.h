@@ -41,6 +41,11 @@
 class QEvent;
 class KConfigGroup;
 
+namespace KMap
+{
+    class KMapWidget;
+}
+
 namespace KIPIGPSSyncPlugin
 {
 
