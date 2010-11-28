@@ -47,8 +47,8 @@ bool BinaryIface::showResults() const
         KMessageBox::information(
                 kapp->activeWindow(),
                 i18n("<qt><p>Unable to find <i>%1</i> executable.</p>"
-                    "<p>This program is required to continue. "
-                    "Please install it from <b>%2</b> package provided by your distributor "
+                    "<p>This program is required to continue.<br/>"
+                    "Please install it from <b>%2</b> package provided by your distributor<br/>"
                     "or download and install <a href=\"%3\">the source</a>.</p>"
                     "<p>Note: at least, <i>%4</i> version <b>%5</b> is required.</p></qt>",
                     path(),
