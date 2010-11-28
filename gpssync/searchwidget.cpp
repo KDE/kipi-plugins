@@ -527,7 +527,7 @@ bool SearchResultModel::getMarkerIcon(const QModelIndex& index, QPoint* const of
 
     if (offset)
     {
-        *offset = QPoint(markerPixmap.width()/2, 0);
+        *offset = QPoint(markerPixmap.width()/2, markerPixmap.height()-1);
     }
 
     return true;

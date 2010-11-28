@@ -234,7 +234,7 @@ bool GPSBookmarkModelHelper::itemIcon(const QModelIndex& index, QPoint* const of
 
     if (offset)
     {
-        *offset = QPoint(d->pixmap.width()/2, 0);
+        *offset = QPoint(d->pixmap.width()/2, d->pixmap.height()-1);
     }
 
     if (url)
