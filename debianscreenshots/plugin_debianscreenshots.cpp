@@ -20,10 +20,14 @@
  *
  * ============================================================ */
 
-#include "plugin_debianscreenshots.h"
 #include "plugin_debianscreenshots.moc"
 
+// C++ includes
+
+#include <unistd.h>
+
 // KDE includes
+
 #include <kdebug.h>
 #include <KApplication>
 #include <KAction>
@@ -35,9 +39,11 @@
 #include <kwindowsystem.h>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 
 // Local includes
+
 #include "dswindow.h"
 //#include "dsjob.h"
 
@@ -119,8 +125,10 @@ KIPI::Category Plugin_DebianScreenshots::category( KAction* /* action */ ) const
     return KIPI::ExportPlugin;
 }
 
-//KJob* Plugin_DebianScreenshots::exportFiles(const QString& album)
-//{
-//    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-//    return new KIPIDebianScreenshotsPlugin::DebianScreenshotsJob(album, interface->currentSelection().images());
-//}
+/*
+KJob* Plugin_DebianScreenshots::exportFiles(const QString& album)
+{
+    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    return new KIPIDebianScreenshotsPlugin::DebianScreenshotsJob(album, interface->currentSelection().images());
+}
+*/
