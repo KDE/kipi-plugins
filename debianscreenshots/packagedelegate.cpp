@@ -20,32 +20,37 @@
  *
  * ============================================================ */
 
-#include "packagedelegate.h"
+#include "packagedelegate.moc"
+
+// Qt includes
+
 #include <QPainter>
 
 namespace KIPIDebianScreenshotsPlugin {
 
-PackageDelegate::PackageDelegate(QObject *parent) :
-    QStyledItemDelegate(parent)
+PackageDelegate::PackageDelegate(QObject* parent)
+    : QStyledItemDelegate(parent)
 {
 }
 
-void PackageDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    if (option.state & QStyle::State_Selected) {
-      painter->fillRect( option.rect, option.palette.color(QPalette::Highlight) );
+void PackageDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    if (option.state & QStyle::State_Selected)
+    {
+        painter->fillRect( option.rect, option.palette.color(QPalette::Highlight) );
     }
 
-    QString pkgName = index.data(Qt::DisplayRole).toString();
+    QString pkgName        = index.data(Qt::DisplayRole).toString();
     QString pkgDescription = index.model()->index(index.row(), 1, QModelIndex()).data(Qt::DisplayRole).toString();
-
-    QRect r = option.rect.adjusted(2, 2, -2, -2);
+    QRect r                = option.rect.adjusted(2, 2, -2, -2);
     painter->save();
     painter->drawText(r.left(), r.top(), r.width(), r.height()/2, Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWordWrap, pkgName);
     painter->drawText(r.left() + 20, r.top() + r.height()/2, r.width(), r.height()/2, Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWordWrap, pkgDescription);
     painter->restore();
 }
 
-QSize PackageDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
+QSize PackageDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
     return 2.2*QStyledItemDelegate::sizeHint(option, index);
 }
 
