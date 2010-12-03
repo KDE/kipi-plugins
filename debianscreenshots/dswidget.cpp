@@ -35,7 +35,6 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
 #include <QStandardItemModel>
@@ -50,6 +49,7 @@
 #include <KCompletion>
 #include <KCompletionBox>
 #include <kdebug.h>
+#include <KIO/AccessManager>
 
 // LibKIPI includes
 #include <libkipi/interface.h>
@@ -69,8 +69,8 @@ namespace KIPIDebianScreenshotsPlugin
 
 DsWidget::DsWidget(QWidget* parent, KIPI::Interface *iface)
     : QWidget(parent),
-      m_httpManager( new QNetworkAccessManager(this) ),
-      m_jsonManager( new QNetworkAccessManager(this) ),
+      m_httpManager( new KIO::AccessManager(this) ),
+      m_jsonManager( new KIO::AccessManager(this) ),
       m_lastTip( QString() ),
       m_lastQueryUrl( QUrl() )
 

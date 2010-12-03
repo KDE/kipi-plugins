@@ -35,6 +35,11 @@ class QNetworkReply;
 class KComboBox;
 class KLineEdit;
 
+namespace KIO
+{
+    class AccessManager;
+}
+
 namespace KIPI
 {
     class Interface;
@@ -88,8 +93,8 @@ private:
     KComboBox* m_versionsComboBox;
     KLineEdit* m_descriptionLineEdit;
     QProgressBar* m_progressBar;
-    QNetworkAccessManager* m_httpManager;
-    QNetworkAccessManager* m_jsonManager;
+    KIO::AccessManager* m_httpManager;
+    KIO::AccessManager* m_jsonManager;
     QString m_lastTip;
     QUrl m_lastQueryUrl;
 
