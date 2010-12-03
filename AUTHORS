@@ -15,7 +15,7 @@ Aurelien Gateau      <aurelien dot gateau at free dot fr>
 Angelo Naselli       <anaselli at linux dot it>
 Kare Sars            <kare dot sars at iki dot fi>
 Valerio Fuoglio      <valerio dot fuoglio at gmail dot com>
-Andrea Diamantini    <adjam7 at gmail dot com>
+Pau Garcia i Quiles  <pgquiles at elpauer dot org>
 Timothee Groleau     <kde at timotheegroleau dot com>
 
 CONTRIBUTORS:
@@ -35,6 +35,7 @@ Colin Guthrie        <kde at colin dot guthr dot ie>
 Achim Bohnet         <ach at mpe dot mpg dot de>
 
 OLD CONTRIBUTORS:
+Andrea Diamantini    <adjam7 at gmail dot com>
 Tudor Calin          <tudor at 1xtech dot com>
 Owen Hirst           <n8rider at sbcglobal dot net>
 Todd Shoemaker       <todd at theshoemakers dot net>
@@ -46,7 +47,7 @@ PLUGINS MAINTAINERS
 Acquire images          : Gilles Caulier and Kare Sars
 Advanced Slideshow      : Valerio Fuoglio
 Calendar                : Orgad Shaneh
-DngConverter            : Gilles Caulier and Jens Muller
+DngConverter            : Jens Muller and Gilles Caulier
 Facebook import/export  : Luka Renko
 Flash export            : Gilles Caulier
 Flickr export           : Pieter Edelman and Gilles Caulier
@@ -68,6 +69,7 @@ Wallpaper               : Laurent Montel
 KIOExport               : Johannes Wienke
 ShwupExport             : Timothee Groleau
 PiwigoExport            : Frederic Coiffier
+DebianScreenshots       : Pau Garcia i Quiles
 
 PROJECT COORDINATORS:
 Gilles Caulier and Angelo Naselli
