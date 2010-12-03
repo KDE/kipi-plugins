@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Debian Screenshots Export
+Comment=A tool to export images to the Debian Screenshots site
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_debianscreenshots
+Icon=debian
+X-KIPI-Mimetypes=image/png,image/jpg
+X-KIPI-Interfaces=org.kde.kipi.ExportPlugin
+author=Pau Garcia i Quiles, pgquiles@elpauer.org
