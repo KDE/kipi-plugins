@@ -27,6 +27,14 @@
 #include <cstdio>
 #include <cstdlib>
 
+/*
+ * Define libjpeg_EXPORTS: kde-win emerged jpeg lib uses this define to 
+ * decide wether to make dllimport (by default) or dllexport. We need to 
+ * export. 
+ */
+
+#define libjpeg_EXPORTS
+
 // C ANSI includes
 
 extern "C"
