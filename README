@@ -80,6 +80,7 @@ libopencv       >= 2.x                          http://opencv.willowgarage.com
 libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.html
 libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
+libqjson        >= 0.6.0                        http://qjson.sourceforge.net
 libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
 
 Plugin Specific Dependencies (for compiling and for running) :
@@ -95,6 +96,7 @@ RemoveRedEyes      : libopencv.
 IpodExport         : libgpod, libgdk.
 Calendar           : libkcal (kdepimlibs).
 Shwup              : libqca.
+DebianScreenshots  : libqjson.
 ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
 
 -- CONTACT ------------------------------------------------------------
