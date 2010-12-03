@@ -27,8 +27,8 @@
 
 namespace KIPIDebianScreenshotsPlugin {
 
-//static const QString debshotsUrl = "http://screenshots.debian.net";
-const QString debshotsUrl("http://localhost:15000"); // Test URL
+const QString debshotsUrl = "http://screenshots.debian.net";
+//const QString debshotsUrl("http://localhost:15000"); // Test URL
 
 } // namespace KIPIDebianScreenshotsPlugin
 
