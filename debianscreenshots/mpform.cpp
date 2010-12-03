@@ -26,9 +26,11 @@
 #include "mpform.h"
 
 // Qt includes
+
 #include <QFile>
 
 // KDE includes
+
 #include <KMimeType>
 #include <KRandom>
 
@@ -96,6 +98,7 @@ bool MPForm::addFile(const QString& fileName, const QString& path, const QString
     QFile imageFile(path);
     if (!imageFile.open(QIODevice::ReadOnly))
         return false;
+
     QByteArray imageData = imageFile.readAll();
 
     imageFile.close();
@@ -106,9 +109,11 @@ bool MPForm::addFile(const QString& fileName, const QString& path, const QString
     str += "\r\n";
     str += "Content-Disposition: form-data; ";
 
-    if( !fieldName.isEmpty() ) {
-        str += "name=\"" + fieldName + "\"; ";
+    if( !fieldName.isEmpty() )
+    {
+        str += "name=\"" + QByteArray(fieldName.toAscii()) + "\"; ";
     }
+
     str += "filename=\"";
     str += QFile::encodeName(fileName);
     str += "\"\r\n";
