@@ -559,7 +559,7 @@ void FlickrWidget::slotExtendedPublicationToggled(bool status)
     m_imglst->listView()->setColumnHidden(FlickrList::CONTENTTYPE, !status);
     if (status)
     {
-        m_extendedPublicationButton->setText(i18n("Less publication options"));
+        m_extendedPublicationButton->setText(i18n("Fewer publication options"));
     }
     else
     {
