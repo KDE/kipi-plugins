@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "plugin_kopete.h"
 #include "plugin_kopete.moc"
 
 // C++ includes
@@ -50,10 +49,10 @@ K_PLUGIN_FACTORY( KopeteFactory, registerPlugin<Plugin_Kopete>(); )
 K_EXPORT_PLUGIN ( KopeteFactory("kipiplugin_kopete") )
 
 Plugin_Kopete::Plugin_Kopete(QObject* parent, const QVariantList& /*args*/)
-               : KIPI::Plugin(KopeteFactory::componentData(),
-                              parent, "Kopete Export"),
-                 m_kopeteDBus("org.kde.kopete","/Kopete","org.kde.Kopete"),
-                 m_kopeteDBusTest("org.kde.kopete", "/Kopete", "org.freedesktop.DBus.Introspectable")
+             : KIPI::Plugin(KopeteFactory::componentData(),
+                            parent, "Kopete Export"),
+                            m_kopeteDBus("org.kde.kopete","/Kopete","org.kde.Kopete"),
+                            m_kopeteDBusTest("org.kde.kopete", "/Kopete", "org.freedesktop.DBus.Introspectable")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Kopete plugin loaded";
 }
@@ -72,7 +71,8 @@ void Plugin_Kopete::setup(QWidget* widget)
     addAction(m_actionExport);
 
     // Check if Kopete is running. If not running, disable action? launch kopete? ask user?
-    if (!kopeteRunning()) {
+    if (!kopeteRunning())
+    {
           m_actionExport->setEnabled(false);
           m_actionExport->setToolTip(i18n("Kopete is not running"));
           return;
@@ -82,7 +82,8 @@ void Plugin_Kopete::setup(QWidget* widget)
 
     KMenu* contactsMenu = new KMenu(widget);
     m_actionExport->setMenu(contactsMenu);
-    connect( contactsMenu, SIGNAL(aboutToShow()), this, SLOT(slotAboutToShowMenu()));
+    connect(contactsMenu, SIGNAL(aboutToShow()), 
+            this, SLOT(slotAboutToShowMenu()));
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
     if (!interface)
@@ -111,18 +112,21 @@ void Plugin_Kopete::slotAboutToShowMenu()
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-kopete-") + QString::number(getpid()) + QString("/"));
 
-    if (!kopeteRunning()) {
+    if (!kopeteRunning())
+    {
           m_actionExport->setEnabled(false);
           m_actionExport->setToolTip(i18n("Kopete is not running"));
           return;
     }
 
     QDBusReply<QStringList> kopeteContacts = m_kopeteDBus.call("contacts");
-    if(!kopeteContacts.isValid()) {
+    if(!kopeteContacts.isValid())
+    {
         return;
     }
 
-    if(kopeteContacts.value().size() == 0 ) {
+    if(kopeteContacts.value().size() == 0 )
+    {
         m_actionExport->setEnabled(false);
         m_actionExport->setToolTip(i18n("None of your contacts are online now"));
         return;
@@ -131,58 +135,66 @@ void Plugin_Kopete::slotAboutToShowMenu()
     m_actionExport->menu()->clear();
 
     QString contact;
-    foreach(contact, kopeteContacts.value()) {
-
+    foreach(contact, kopeteContacts.value())
+    {
         // TODO Check status using contactProperties.value().value("status", QString()) and Kopete::OnlineStatus::statusTypeToString()
         QDBusReply<bool> online = m_kopeteDBus.call("isContactOnline", contact);
-        if(!online.isValid()) {
+        if(!online.isValid())
+        {
             continue;
         }
 
-        if(!online.value()) {
+        if(!online.value())
+        {
             continue;
         }
 
         QDBusReply<QVariantMap> contactProperties = m_kopeteDBus.call("contactProperties", contact);
-        if(!contactProperties.isValid()) {
+        if(!contactProperties.isValid()) 
+        {
             continue;
         }
 
-        if(contactProperties.value().size() == 0) {
+        if(contactProperties.value().size() == 0)
+        {
             continue;
         }
 
         bool canAcceptFiles = contactProperties.value().value("file_reachable", false).toBool();
         qDebug() << "Contact " << contact << (canAcceptFiles ? "can" : "cannot") << " accept files via IM";
-        if(!canAcceptFiles) {
+        if(!canAcceptFiles)
+        {
             continue;
         }
 
         // Get display name for contact
         QString displayName = contactProperties.value().value("display_name", QString()).toString();
-        if(displayName.isEmpty()) {
+        if(displayName.isEmpty())
+        {
             continue;
         }
 
         // Add contact with avatar, if possible
-        QString avatar = contactProperties.value().value("picture", QString()).toString();
+        QString avatar  = contactProperties.value().value("picture", QString()).toString();
         QAction* action = m_actionExport->menu()->addAction(QIcon(avatar), displayName, m_signalMapper, SLOT(map()));
 
         m_signalMapper->setMapping(action, contact);
     }
 
-    connect(m_signalMapper, SIGNAL(mapped(QString)), this, SLOT(slotTransferFiles(QString)));
-
+    connect(m_signalMapper, SIGNAL(mapped(QString)),
+            this, SLOT(slotTransferFiles(QString)));
 }
 
-void Plugin_Kopete::slotTransferFiles(const QString& contactId) {
+void Plugin_Kopete::slotTransferFiles(const QString& contactId)
+{
     kDebug() << "Received a request to transfer file(s) to contact " << contactId;
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    KUrl::List imgList = interface->currentSelection().images();
+    KUrl::List imgList         = interface->currentSelection().images();
 
     // Check if Kopete is still running
-    if (!kopeteRunning()) {
+    if (!kopeteRunning())
+    {
         // TODO Show KMessageBox::critical or alike
           return;
     }
@@ -190,18 +202,21 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId) {
     // Check if contact is still online
     // TODO Connect to Kopete's contactChanged signal to add/remove contacts dynamically
     QDBusReply<bool> online = m_kopeteDBus.call("isContactOnline", contactId);
-    if(!online.isValid()) {
+    if(!online.isValid())
+    {
         // TODO Show KMessageBox::critical or alike
-          return;
+        return;
     }
 
-    if(!online.value()) {
+    if(!online.value())
+    {
         // TODO Show KMessageBox::critical or alike
-          return;
+        return;
     }
 
     KUrl imgUrl;
-    foreach(imgUrl, imgList) {
+    foreach(imgUrl, imgList)
+    {
         kDebug() << "Sending file " << imgUrl.toLocalFile();
         m_kopeteDBus.asyncCall("sendFile", imgUrl.toLocalFile());
     }
@@ -212,9 +227,11 @@ KIPI::Category Plugin_Kopete::category( KAction* /* action */ ) const
     return KIPI::ExportPlugin;
 }
 
-bool Plugin_Kopete::kopeteRunning() {
+bool Plugin_Kopete::kopeteRunning()
+{
     QDBusReply<QString> kopeteReply = m_kopeteDBusTest.call("Introspect");
-    if (kopeteReply.isValid()) {
+    if (kopeteReply.isValid())
+    {
           return true;
     }
     return false;

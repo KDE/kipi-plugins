@@ -24,10 +24,12 @@
 #define PLUGIN_KOPETE_H
 
 // Qt includes
+
 #include <QVariant>
 #include <QDBusInterface>
 
 // LibKIPI includes
+
 #include <libkipi/plugin.h>
 
 class QSignalMapper;
@@ -44,7 +46,7 @@ class Plugin_Kopete
 
 public:
 
-    Plugin_Kopete(QObject *parent, const QVariantList &args);
+    Plugin_Kopete(QObject* parent, const QVariantList& args);
     ~Plugin_Kopete();
 
     KIPI::Category category(KAction* action) const;
@@ -57,11 +59,14 @@ public Q_SLOTS:
 
 private:
 
+    bool kopeteRunning();
+
+private:
+
     QDBusInterface m_kopeteDBus;
     QDBusInterface m_kopeteDBusTest;
-    KAction *m_actionExport;
+    KAction*       m_actionExport;
     QSignalMapper* m_signalMapper;
-    bool kopeteRunning();
 };
 
 #endif // PLUGIN_KOPETE_H

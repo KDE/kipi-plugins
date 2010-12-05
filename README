@@ -43,6 +43,7 @@ Shwup              : A tool to export images to Shwup web service (http://www.sh
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
 PiwigoExport       : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
 DebianScreenshots  : A tool to export images to Debian Screenshots web service (http://screenshots.debian.net).
+Kopete             : A tool to export images to an instant messaging contact.
 
 Porting under progress to Qt4/KDE4:
 
