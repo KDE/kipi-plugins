@@ -1,7 +1,19 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Debian Screenshots Export
+Name[en_GB]=Debian Screenshots Export
+Name[it]=Esportazione delle schermate di Debian
+Name[pt_BR]=Exportar para o Debian Screenshots
+Name[sv]=Exportera skärmbilder för Debian
+Name[uk]=Експортування до знімків Debian
+Name[x-test]=xxDebian Screenshots Exportxx
 Comment=A tool to export images to the Debian Screenshots site
+Comment[en_GB]=A tool to export images to the Debian Screenshots site
+Comment[it]=Uno strumento per esportare immagini al sito delle schermate di Debian
+Comment[pt_BR]=Uma ferramenta para exportar imagens para o site Debian Screenshots
+Comment[sv]=Ett verktyg för att exportera bilder till Debian Skärmbilder
+Comment[uk]=Інструмент для експортування зображень до сховища знімків вікон Debian
+Comment[x-test]=xxA tool to export images to the Debian Screenshots sitexx
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_debianscreenshots
