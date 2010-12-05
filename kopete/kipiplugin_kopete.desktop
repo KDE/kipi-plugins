@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Instant Messaging Export
+Comment=A tool to export images to an instant messaging contact
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_kopete
+Icon=kopete
+X-KIPI-Mimetypes=image/png,image/jpg
+X-KIPI-Interfaces=org.kde.kipi.ExportPlugin
+author=Pau Garcia i Quiles, pgquiles@elpauer.org
