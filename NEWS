@@ -3,7 +3,8 @@ Kipi-plugins 1.7.0 - Release date: 2010/12/18
 
 NEW FEATURES:
 
-General : New plugin to export image to Debian Screenshoots web service (http://screenshots.debian.net).
+General : New plugin to export images to Debian Screenshoots web service (http://screenshots.debian.net).
+General : New plugin to export images to an instant messaging contact.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
