@@ -26,7 +26,8 @@
 
 #include <QPainter>
 
-namespace KIPIDebianScreenshotsPlugin {
+namespace KIPIDebianScreenshotsPlugin
+{
 
 PackageDelegate::PackageDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
@@ -49,7 +50,7 @@ void PackageDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
     painter->restore();
 }
 
-QSize PackageDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize PackageDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     return 2.2*QStyledItemDelegate::sizeHint(option, index);
 }

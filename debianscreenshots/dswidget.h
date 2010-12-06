@@ -24,6 +24,7 @@
 #define DSWIDGET_H
 
 // Qt includes
+
 #include <QWidget>
 #include <QUrl>
 
@@ -62,7 +63,7 @@ class DsWidget : public QWidget
 
 public:
 
-    DsWidget(QWidget* parent, KIPI::Interface *iface);
+    DsWidget(QWidget* parent, KIPI::Interface* iface);
     ~DsWidget();
 
      QString getDestinationPath();
@@ -85,18 +86,22 @@ private Q_SLOTS:
 
 private:
 
+    QButtonGroup*            m_dlGrp;
+    QString                  m_lastTip;
+    QUrl                     m_lastQueryUrl;
+    QProgressBar*            m_progressBar;
+
+    KLineEdit*               m_pkgLineEdit;
+    KComboBox*               m_versionsComboBox;
+    KLineEdit*               m_descriptionLineEdit;
+
+    KIO::AccessManager*      m_httpManager;
+    KIO::AccessManager*      m_jsonManager;
+
+    KClickableImageLabel*    m_headerLabel;
+
     KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget* m_uploadWidget;
-    KClickableImageLabel* m_headerLabel;
-    QButtonGroup* m_dlGrp;
-    KLineEdit* m_pkgLineEdit;
-    KComboBox* m_versionsComboBox;
-    KLineEdit* m_descriptionLineEdit;
-    QProgressBar* m_progressBar;
-    KIO::AccessManager* m_httpManager;
-    KIO::AccessManager* m_jsonManager;
-    QString m_lastTip;
-    QUrl m_lastQueryUrl;
+    KIPI::UploadWidget*      m_uploadWidget;
 
     friend class DsWindow;
 };

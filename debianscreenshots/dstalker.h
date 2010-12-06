@@ -24,6 +24,7 @@
 #define DSTALKER_H
 
 // KDE includes
+
 #include <KIO/Job>
 
 namespace KIPIDebianScreenshotsPlugin
@@ -34,21 +35,26 @@ class DsTalker : public QObject
     Q_OBJECT
 
 public:
+
     DsTalker(QWidget* parent);
     ~DsTalker();
 
     bool addScreenshot(const QString& imgPath, const QString& packageName,
-                     const QString& packageVersion = QString(), const QString& description = QString() );
+                       const QString& packageVersion = QString(),
+                       const QString& description = QString() );
 
 Q_SIGNALS:
+
      void signalBusy(bool val);
      void signalAddScreenshotDone(int errCode, const QString& errMsg);
 
 private Q_SLOTS:
-     void data(KIO::Job *job, const QByteArray& data);
-     void slotResult(KJob *job);
+
+     void data(KIO::Job* job, const QByteArray& data);
+     void slotResult(KJob* job);
 
 private:
+
     QWidget*        m_parent;
 
     QByteArray      m_buffer;

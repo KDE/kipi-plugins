@@ -32,18 +32,19 @@ namespace KIPIDebianScreenshotsPlugin
 {
 
 DebianScreenshotsJob::DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* parent)
-           : KJob(parent), m_urls(url), m_packageName(packageName)
+    : KJob(parent), m_urls(url), m_packageName(packageName)
 {
     setObjectName("DebianScreenshotsJob");
-/*    connect(&talk, SIGNAL(signalLoginDone(int, QString)),
+/*
+    connect(&talk, SIGNAL(signalLoginDone(int, QString)),
             this, SLOT(loginDone(int, QString)));
-            
+
     connect(&talk, SIGNAL(signalListAlbumsDone(int, QString, QList<FbAlbum>)),
             this, SLOT(albumList(int, QString, QList<FbAlbum>)));
 
     connect(&talk, SIGNAL(signalCreateAlbumDone(int,QString, QString)),
             this, SLOT(albumCreated(int, QString, QString)));
-    
+
     connect(&talk, SIGNAL(signalAddPhotoDone(int,QString)),
             this, SLOT(addPhoto(int,QString)));*/
 }

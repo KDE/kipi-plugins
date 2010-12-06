@@ -25,7 +25,8 @@
 
 #define ENUM_NAME(o,e,v) (o::staticMetaObject.enumerator(o::staticMetaObject.indexOfEnumerator(#e)).valueToKey((v)))
 
-namespace KIPIDebianScreenshotsPlugin {
+namespace KIPIDebianScreenshotsPlugin
+{
 
 const QString debshotsUrl = "http://screenshots.debian.net";
 //const QString debshotsUrl("http://localhost:15000"); // Test URL

@@ -51,8 +51,8 @@ K_PLUGIN_FACTORY( DebianScreenshotsFactory, registerPlugin<Plugin_DebianScreensh
 K_EXPORT_PLUGIN ( DebianScreenshotsFactory("kipiplugin_debianscreenshots") )
 
 Plugin_DebianScreenshots::Plugin_DebianScreenshots(QObject* parent, const QVariantList& /*args*/)
-               : KIPI::Plugin(DebianScreenshotsFactory::componentData(),
-                              parent, "Debian Screenshots Export")
+    : KIPI::Plugin(DebianScreenshotsFactory::componentData(),
+                   parent, "Debian Screenshots Export")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_DebianScreenshots plugin loaded";
 }

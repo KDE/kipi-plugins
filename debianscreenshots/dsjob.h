@@ -36,26 +36,26 @@ class DebianScreenshotsJob : public KJob
 {
     Q_OBJECT
 
-    public:
+public:
 
-        DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* parent=0);
+    DebianScreenshotsJob(const QString& packageName, const KUrl::List& url, QObject* parent=0);
 
-        virtual void start();
-        virtual QList< KUrl > urls() const;
-        virtual KIcon icon() const;
+    virtual void start();
+    virtual QList< KUrl > urls() const;
+    virtual KIcon icon() const;
 
-    private slots:
+private slots:
 
-        void addScreenshot(int code, const QString& message);
+    void addScreenshot(int code, const QString& message);
 
-    private:
+private:
 
-        void sendScreenshot(const QString &package);
+    void sendScreenshot(const QString& package);
 
-    private:
+private:
 
-        KUrl::List m_urls;
-        QString m_packageName;
+    KUrl::List m_urls;
+    QString    m_packageName;
 };
 
 } // namespace KIPIDebianScreenshotsPlugin

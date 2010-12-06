@@ -24,9 +24,11 @@
 #define DSWINDOW_H
 
 // KDE includes
+
 #include <KDialog>
 
 // LibKIPI includes
+
 #include <libkipi/interface.h>
 
 class QCloseEvent;
@@ -57,7 +59,7 @@ class DsWindow : public KDialog
 
 public:
 
-    DsWindow(KIPI::Interface *interface, const QString& tmpFolder, QWidget *parent);
+    DsWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
     ~DsWindow();
 
     /**
@@ -77,7 +79,13 @@ private Q_SLOTS:
 
 private:
 
-    enum MassageType { None = 0, ImageIsRaw, ResizeRequired, NotPNG };
+    enum MassageType
+    {
+        None = 0,
+        ImageIsRaw,
+        ResizeRequired, 
+        NotPNG
+    };
 
     bool prepareImageForUpload(const QString& imgPath, MassageType massage);
     void uploadNextPhoto();
@@ -86,16 +94,22 @@ private:
 
 private:
 
-    unsigned int m_imagesCount;
-    unsigned int m_imagesTotal;
-    QString m_tmpDir;
-    QString m_tmpPath;
-    KUrl::List m_transferQueue;
-    DsTalker *m_talker;
-    DsWidget *m_widget;
-    KIPI::Interface *m_interface;
-    KIPIPlugins::KPAboutData *m_about;
-    bool m_uploadEnabled;
+    bool                      m_uploadEnabled;
+
+    unsigned int              m_imagesCount;
+    unsigned int              m_imagesTotal;
+
+    QString                   m_tmpDir;
+    QString                   m_tmpPath;
+
+    KUrl::List                m_transferQueue;
+
+    KIPI::Interface*          m_interface;
+    KIPIPlugins::KPAboutData* m_about;
+
+    DsTalker*                 m_talker;
+    DsWidget*                 m_widget;
+
 };
 
 } // namespace KIPIDebianScreenshotsPlugin

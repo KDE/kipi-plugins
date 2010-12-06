@@ -24,15 +24,18 @@
 #include "dstalker.moc"
 
 // C++ includes
+
 #include <ctime>
 
 // Qt includes
+
 #include <QByteArray>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QtAlgorithms>
 
 // KDE includes
+
 #include <KCodecs>
 #include <kdebug.h>
 #include <KIO/Job>
@@ -42,6 +45,7 @@
 #include <KToolInvocation>
 
 // Local includes
+
 #include "pluginsversion.h"
 #include "mpform.h"
 #include "debshots.h"
@@ -59,16 +63,17 @@ DsTalker::DsTalker(QWidget* parent) : QObject(parent), m_parent(parent), m_job(0
 
 DsTalker::~DsTalker()
 {
-    if (m_job) {
+    if (m_job)
+    {
         m_job->kill();
     }
 }
 
 bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
-                     const QString& packageVersion, const QString& description )
+                             const QString& packageVersion, const QString& description)
 {
     kDebug() << "Adding screenshot " << imgPath << " to package "
-                  << packageName << " " << packageVersion<< " using description '" << description << "'";
+             << packageName << " " << packageVersion<< " using description '" << description << "'";
 
     if (m_job)
     {
@@ -105,7 +110,8 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
  {
      kDebug() << Q_FUNC_INFO;
 
-     if (data.isEmpty()) {
+     if (data.isEmpty())
+     {
          return;
      }
 
@@ -113,10 +119,10 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
      m_buffer.resize(m_buffer.size() + data.size());
      memcpy(m_buffer.data()+oldSize, data.data(), data.size());
  }
- void DsTalker::slotResult(KJob *kjob)
+ void DsTalker::slotResult(KJob* kjob)
  {
-     m_job = 0;
-     KIO::Job *job = static_cast<KIO::Job*>(kjob);
+     m_job         = 0;
+     KIO::Job* job = static_cast<KIO::Job*>(kjob);
 
      if (job->error())
      {

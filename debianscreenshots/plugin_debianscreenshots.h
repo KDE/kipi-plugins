@@ -55,7 +55,7 @@ Q_OBJECT
 
 public:
 
-    Plugin_DebianScreenshots(QObject *parent, const QVariantList &args);
+    Plugin_DebianScreenshots(QObject* parent, const QVariantList& args);
     ~Plugin_DebianScreenshots();
 
     KIPI::Category category(KAction* action) const;
@@ -68,9 +68,8 @@ public Q_SLOTS:
 
 private:
 
-    KAction *m_actionExport;
-
-    KIPIDebianScreenshotsPlugin::DsWindow *m_dlgExport;
+    KAction*                               m_actionExport;
+    KIPIDebianScreenshotsPlugin::DsWindow* m_dlgExport;
 };
 
 #endif // PLUGIN_DEBIANSCREENSHOTS_H
