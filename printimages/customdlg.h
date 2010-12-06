@@ -36,18 +36,18 @@ namespace KIPIPrintImagesPlugin
 
 class CustomLayoutDlg : public QDialog , public Ui::CustomLayout
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
 
-  CustomLayoutDlg ( QWidget *parent = 0 );
-  ~CustomLayoutDlg();
-  
-  // retrieve last used data  
-  void readSettings();
-  // save used data
-  void saveSettings();
-  
+    CustomLayoutDlg ( QWidget* parent = 0 );
+    ~CustomLayoutDlg();
+
+    // retrieve last used data  
+    void readSettings();
+    // save used data
+    void saveSettings();
+
 };
 
 } // namespace KIPIPrintImagesPlugin

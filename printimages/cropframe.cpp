@@ -42,7 +42,7 @@ namespace KIPIPrintImagesPlugin
 {
 
 CropFrame::CropFrame(QWidget* parent=0)
-         : QWidget(parent)
+    : QWidget(parent)
 {
     m_mouseDown = false;
     m_drawRec   = true;
@@ -141,7 +141,7 @@ void CropFrame::init(TPhoto* photo, int width, int height, bool autoRotate, bool
     //repaint(m_cropRegion);
  }
 
-QRect CropFrame::_screenToPhotoRect(QRect r)
+QRect CropFrame::_screenToPhotoRect(const QRect& r) const
 {
     // r is given in screen coordinates, and we want to convert that
     // to photo coordinates
@@ -180,7 +180,7 @@ QRect CropFrame::_screenToPhotoRect(QRect r)
     return result;
 }
 
-QRect CropFrame::_photoToScreenRect(QRect r)
+QRect CropFrame::_photoToScreenRect(const QRect& r) const
 {
     // r is given in photo coordinates, and we want to convert that
     // to screen coordinates
@@ -319,14 +319,14 @@ void CropFrame::keyPressEvent(QKeyEvent* e)
     //repaint(m_cropRegion);
 }
 
-void CropFrame::setColor(QColor c)
+void CropFrame::setColor(const QColor& c)
 {
     m_color = c;
     update();
     //repaint();
 }
 
-QColor CropFrame::color()
+QColor CropFrame::color() const
 {
     return m_color;
 }
