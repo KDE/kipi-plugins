@@ -34,12 +34,10 @@ class QStringList;
 namespace KIPIPrintImagesPlugin
 {
 
-int NINT(double n);
-
-bool launchExternalApp(QString &program, QStringList &args);
-bool checkTempPath(QWidget *parent, QString tempPath);
+int  NINT(double n);
+bool launchExternalApp(QString& program, QStringList& args);
+bool checkTempPath(QWidget* parent, const QString& tempPath);
 
 }  // NameSpace KIPIPrintImagesPlugin
 
 #endif // UTILS_H
-

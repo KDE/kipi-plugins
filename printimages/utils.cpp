@@ -54,13 +54,13 @@ int NINT(double n)
 
 // given a list of args, launch this app as a separate thread.
 // args[0] is the application to run.
-bool launchExternalApp(QString &program, QStringList &args)
+bool launchExternalApp(QString& program, QStringList& args)
 {
     QProcess process;
     return process.startDetached(program, args);
 }
 
-bool checkTempPath(QWidget *parent, QString tempPath)
+bool checkTempPath(QWidget* parent, const QString& tempPath)
 {
     // does the temp path exist?
     QDir tempDir(tempPath);
