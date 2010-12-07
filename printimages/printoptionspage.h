@@ -34,71 +34,74 @@
 namespace KIPIPrintImagesPlugin
 {
 
-  class PrintOptionsPagePrivate;
-  class PrintOptionsPage : public QWidget
-  {
+class PrintOptionsPage : public QWidget
+{
       Q_OBJECT
 
-    public:
+public:
 
-      enum ScaleMode
-      {
+    enum ScaleMode
+    {
         NoScale,
         ScaleToPage,
         ScaleToCustomSize
-      };
+    };
 
-      // Order should match the content of the unit combbox in the ui file
-      enum Unit
-      {
+    // Order should match the content of the unit combbox in the ui file
+    enum Unit
+    {
         Millimeters,
         Centimeters,
         Inches
-      };
+    };
 
-      PrintOptionsPage (QWidget *parent, QList<TPhoto*> *photoList );
-      ~PrintOptionsPage();
+public:
 
-      int photoXPage() const;
-      int mp_horPages() const;
-      int mp_verPages() const;
-      bool printUsingAtkinsLayout() const;
+    PrintOptionsPage (QWidget* parent, QList<TPhoto*>* photoList );
+    ~PrintOptionsPage();
 
-      void loadConfig();
+    int photoXPage() const;
+    int mp_horPages() const;
+    int mp_verPages() const;
+    bool printUsingAtkinsLayout() const;
 
-      static double unitToInches ( PrintOptionsPage::Unit unit );
+    void loadConfig();
 
-    private Q_SLOTS:
+    static double unitToInches ( PrintOptionsPage::Unit unit );
 
-      void adjustWidthToRatio();
-      void adjustHeightToRatio();
-      void manageQPrintDialogChanges ( QPrinter * printer );
-      void selectNext();
-      void selectPrev();
-      void photoXpageChanged ( int i );
-      void horizontalPagesChanged ( int i );
-      void verticalPagesChanged ( int i );
-      void saveConfig();
-      void scaleOption();
-      void autoRotate(bool);
+private Q_SLOTS:
 
-    private:
+    void adjustWidthToRatio();
+    void adjustHeightToRatio();
+    void manageQPrintDialogChanges ( QPrinter * printer );
+    void selectNext();
+    void selectPrev();
+    void photoXpageChanged ( int i );
+    void horizontalPagesChanged ( int i );
+    void verticalPagesChanged ( int i );
+    void saveConfig();
+    void scaleOption();
+    void autoRotate(bool);
 
-      PrintOptionsPagePrivate* const d;
+private:
 
-      void imagePreview();
-      void enableButtons();
-      void setAdditionalInfo();
-      void showAdditionalInfo();
+    void imagePreview();
+    void enableButtons();
+    void setAdditionalInfo();
+    void showAdditionalInfo();
 
-      // TODO fix remove what is not needed
-      Qt::Alignment alignment() const;
-      Unit scaleUnit() const;
-      double scaleWidth() const;
-      double scaleHeight() const;
+    // TODO fix remove what is not needed
+    Qt::Alignment alignment() const;
+    Unit scaleUnit() const;
+    double scaleWidth() const;
+    double scaleHeight() const;
 
-  };
+private:
 
-} // namespace
+    class PrintOptionsPagePrivate;
+    PrintOptionsPagePrivate* const d;
+};
+
+} // namespace KIPIPrintImagesPlugin
 
 #endif /* PRINTOPTIONSPAGE_H */
