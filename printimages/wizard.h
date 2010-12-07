@@ -32,7 +32,6 @@
 
 #include <kassistantdialog.h>
 
-
 namespace KIPI
 {
 class Interface;
@@ -45,99 +44,103 @@ class TPhoto;
 
 typedef struct _TPhotoSize
 {
-  QString label;
-  int dpi;
-  bool autoRotate;
-  QList<QRect*> layouts;  // first element is page size
-  QIcon         icon;
+    QString       label;
+    int           dpi;
+    bool          autoRotate;
+    QList<QRect*> layouts;  // first element is page size
+    QIcon         icon;
 } TPhotoSize;
-
 
 /**
  * The wizard used by the user to select the various settings.
  */
-  class Wizard : public KAssistantDialog 
-  {
+class Wizard : public KAssistantDialog 
+{
     Q_OBJECT
-    public:
-      Wizard(QWidget* parent, KIPI::Interface*);
-      ~Wizard();
-      void print( KUrl::List fileList, QString tempPath);
 
-    protected Q_SLOTS:
-      virtual void accept();
-      virtual void slotHelp();
-      virtual void pageChanged(KPageWidgetItem *, KPageWidgetItem *);
-      virtual void captionChanged(const QString & text);
-      virtual void saveCaptionSettings();
-      virtual void outputChanged ( const QString & );
-      virtual void BtnPrintOrderUp_clicked();
-      virtual void BtnPrintOrderDown_clicked();
+public:
 
-      virtual void BtnPreviewPageDown_clicked();
-      virtual void BtnPreviewPageUp_clicked();
-      virtual void BtnCropRotate_clicked();
-      virtual void BtnCropNext_clicked();
-      virtual void BtnCropPrev_clicked();
-      virtual void ListPrintOrder_selected();
-      virtual void ListPhotoOrder_highlighted (int );
-      virtual void ListPhotoSizes_selected();
+    Wizard(QWidget* parent, KIPI::Interface*);
+    ~Wizard();
 
-      virtual void reject();
-      virtual void crop_selection(int);
-      virtual void PageRemoved(KPageWidgetItem *page);
+    void print(const KUrl::List& fileList, const QString& tempPath);
 
-      virtual void pagesetupclicked();
-      virtual void pagesetupdialogexit();
-      virtual void infopage_imageSelected();
-      virtual void infopage_selectNext();
-      virtual void infopage_selectPrev();
-      virtual void infopage_decreaseCopies();
-      virtual void infopage_increaseCopies();
-      virtual void infopage_updateCaptions();
-      //private slots:
-      //	void updateFinishButton();
+protected Q_SLOTS:
 
-    private:     
+    virtual void accept();
+    virtual void slotHelp();
+    virtual void pageChanged(KPageWidgetItem*, KPageWidgetItem*);
+    virtual void captionChanged(const QString& text);
+    virtual void saveCaptionSettings();
+    virtual void outputChanged ( const QString& );
+    virtual void BtnPrintOrderUp_clicked();
+    virtual void BtnPrintOrderDown_clicked();
 
-      // Initialize page layout to the given pageSize in mm
-      void initPhotoSizes(QSizeF pageSize);
-      void previewPhotos();
-      
-      void infopage_enableButtons();
-      void infopage_imagePreview();
-      void infopage_blockCaptionButtons(bool block=true);
-      void infopage_setCaptionButtons();
-      void infopage_readCaptionSettings();
-      
-      // fn filename, pageSize in mm 
-      void parseTemplateFile( QString fn, QSizeF pageSize );
-      
-      void updateCaption(TPhoto *);
-      void updateCropFrame(TPhoto *, int);
-      void setBtnCropEnabled();
-      void removeGimpFiles();
-      void printPhotos(QList<TPhoto*> photos, QList<QRect*> layouts, QPrinter &printer);
-      QStringList printPhotosToFile(QList<TPhoto*> photos, QString &baseFilename, TPhotoSize *layouts);
+    virtual void BtnPreviewPageDown_clicked();
+    virtual void BtnPreviewPageUp_clicked();
+    virtual void BtnCropRotate_clicked();
+    virtual void BtnCropNext_clicked();
+    virtual void BtnCropPrev_clicked();
+    virtual void ListPrintOrder_selected();
+    virtual void ListPhotoOrder_highlighted (int );
+    virtual void ListPhotoSizes_selected();
 
-      int getPageCount();
-      QRect *getLayout(int photoIndex);
-      QString captionFormatter(TPhoto *photo);
-      void printCaption(QPainter &p, TPhoto* photo, int captionW, int captionH, QString caption);
+    virtual void reject();
+    virtual void crop_selection(int);
+    virtual void PageRemoved(KPageWidgetItem* page);
 
-      bool paintOnePage(QPainter &p, QList<TPhoto*> photos, QList<QRect*> layouts,
-                        int &current, bool cropDisabled, bool useThumbnails = false);
+    virtual void pagesetupclicked();
+    virtual void pagesetupdialogexit();
+    virtual void infopage_imageSelected();
+    virtual void infopage_selectNext();
+    virtual void infopage_selectPrev();
+    virtual void infopage_decreaseCopies();
+    virtual void infopage_increaseCopies();
+    virtual void infopage_updateCaptions();
+    //private slots:
+    //	void updateFinishButton();
 
-      void manageBtnPrintOrder();
-      void manageBtnPreviewPage();
+private:
 
+    // Initialize page layout to the given pageSize in mm
+    void initPhotoSizes(const QSizeF& pageSize);
+    void previewPhotos();
 
-      void saveSettings(QString pageName);
-      void readSettings(QString pageName);
+    void infopage_enableButtons();
+    void infopage_imagePreview();
+    void infopage_blockCaptionButtons(bool block=true);
+    void infopage_setCaptionButtons();
+    void infopage_readCaptionSettings();
 
-      struct Private;
-      Private* d;
-  };
+    // fn filename, pageSize in mm 
+    void parseTemplateFile( const QString& fn, const QSizeF& pageSize );
+
+    void updateCaption(TPhoto*);
+    void updateCropFrame(TPhoto*, int);
+    void setBtnCropEnabled();
+    void removeGimpFiles();
+    void printPhotos(const QList<TPhoto*>& photos, const QList<QRect*>& layouts, QPrinter& printer);
+    QStringList printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* layouts);
+
+    int     getPageCount();
+    QRect*  getLayout(int photoIndex);
+    QString captionFormatter(TPhoto* photo);
+    void    printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH, const QString& caption);
+
+    bool paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList<QRect*>& layouts,
+                      int& current, bool cropDisabled, bool useThumbnails = false);
+
+    void manageBtnPrintOrder();
+    void manageBtnPreviewPage();
+
+    void saveSettings(const QString& pageName);
+    void readSettings(const QString& pageName);
+
+private:
+
+    struct Private;
+    Private* const d;
+};
 
 } // namespace KIPIPrintImagesPlugin
 
