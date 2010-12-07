@@ -51,7 +51,7 @@ struct AdvancedSettingsPriv
 };
 
 AdvancedSettings::AdvancedSettings(QWidget* parent)
-                : QWidget(parent), d(new AdvancedSettingsPriv)
+    : QWidget(parent), d(new AdvancedSettingsPriv)
 {
     d->blobSettingsBox       = new BlobSettingsBox;
     d->classifierSettingsBox = new ClassifierSettingsBox;
@@ -90,9 +90,13 @@ void AdvancedSettings::prepareSettings()
     d->settings.useSimpleMode          = false;
 
     if (d->classifierSettingsBox->useStandardClassifier())
+    {
         d->settings.classifierFile = STANDARD_CLASSIFIER;
+    }
     else
+    {
         d->settings.classifierFile = d->classifierSettingsBox->classifierUrl();
+    }
 
     d->settings.neighborGroups = d->classifierSettingsBox->neighborGroups();
     d->settings.scaleFactor    = d->classifierSettingsBox->scalingFactor();

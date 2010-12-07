@@ -62,8 +62,8 @@ struct MyImagesListPriv
     KIPI::Interface* iface;
 };
 
-MyImagesList::MyImagesList(KIPI::Interface *iface, QWidget* parent)
-            : ImagesList(iface, parent), d(new MyImagesListPriv)
+MyImagesList::MyImagesList(KIPI::Interface* iface, QWidget* parent)
+    : ImagesList(iface, parent), d(new MyImagesListPriv)
 {
     d->iface = iface;
     setAllowRAW(false);
@@ -83,28 +83,34 @@ MyImagesList::~MyImagesList()
 void MyImagesList::addEyeCounterByUrl(const KUrl& url, int eyes)
 {
     QTreeWidgetItemIterator it(listView());
+
     while (*it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+
         if (item->url() == url)
         {
             item->setText(ImagesListView::User1, QString::number(eyes));
             break;
         }
+
         ++it;
     }
+
     emit signalImageListChanged();
 }
 
 void MyImagesList::resetEyeCounterColumn()
 {
     QTreeWidgetItemIterator it(listView());
+
     while (*it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
         item->setText(ImagesListView::User1, QString(""));
         ++it;
     }
+
     emit signalImageListChanged();
 }
 
@@ -113,22 +119,27 @@ bool MyImagesList::hasUnprocessedImages()
     bool hasNone = false;
 
     QTreeWidgetItemIterator it(listView());
+
     while (*it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+
         if (item->text(ImagesListView::User1).toInt() <= 0)
         {
             hasNone = true;
             break;
         }
+
         ++it;
     }
+
     return hasNone;
 }
 
 void MyImagesList::removeUnprocessedImages()
 {
     QTreeWidgetItemIterator it(listView());
+
     while (*it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
@@ -141,8 +152,10 @@ void MyImagesList::removeUnprocessedImages()
         {
             item->setSelected(true);
         }
+
         ++it;
     }
+
     slotRemoveItems();
 }
 

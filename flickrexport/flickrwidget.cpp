@@ -559,7 +559,7 @@ void FlickrWidget::slotExtendedPublicationToggled(bool status)
     m_imglst->listView()->setColumnHidden(FlickrList::CONTENTTYPE, !status);
     if (status)
     {
-        m_extendedPublicationButton->setText(i18n("Less publication options"));
+        m_extendedPublicationButton->setText(i18n("Fewer publication options"));
     }
     else
     {
@@ -580,7 +580,7 @@ void FlickrWidget::slotExtendedTagsToggled(bool status)
     else
     {
         m_imglst->listView()->setColumnHidden(FlickrList::TAGS, !m_addExtraTagsCheckBox->isChecked());
-        m_extendedTagsButton->setText(i18n("Less tag options"));
+        m_extendedTagsButton->setText(i18n("Fewer tag options"));
     }
 }
 

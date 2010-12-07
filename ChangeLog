@@ -1,3 +1,397 @@
+1.6.0   2010-11-22 
+
+2010-11-22 14:34  cgilles
+
+	* expoblending/CMakeLists.txt: compile and link
+
+2010-11-22 11:59  cgilles
+
+	* CMakeLists.txt, expoblending/CMakeLists.txt: polish
+
+2010-11-22 09:03  cgilles
+
+	* NEWS: update
+
+2010-11-22 09:01  cgilles
+
+	* NEWS: update
+
+2010-11-21 15:45  pino
+
+	* expoblending/manager/actionthread.cpp,
+	  gpssync/plugin_gpssync.cpp: i18n fixes
+	  
+	  - remove space before colon or question mark
+
+2010-11-21 09:25  scripty
+
+	* wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-11-20 16:30  alexmerry
+
+	* cmake/modules/FindGdk.cmake: Fix the FindGdk.cmake file (modelled
+	  on FindGpod.cmake, so it should work exactly as well as that).
+
+2010-11-19 21:34  aclemens
+
+	* removeredeyes/commonwidgets/controlwidget.cpp,
+	  removeredeyes/commonwidgets/controlwidget.h,
+	  removeredeyes/commonwidgets/infomessagewidget.cpp,
+	  removeredeyes/commonwidgets/infomessagewidget.h,
+	  removeredeyes/commonwidgets/myimageslist.cpp,
+	  removeredeyes/commonwidgets/myimageslist.h,
+	  removeredeyes/commonwidgets/previewwidget.cpp,
+	  removeredeyes/commonwidgets/storagesettingsbox.cpp,
+	  removeredeyes/commonwidgets/unprocessedsettingsbox.cpp,
+	  removeredeyes/detection/locators/haarclassifier/haarclassifierlocator.cpp,
+	  removeredeyes/detection/locators/haarclassifier/haarsettings.h,
+	  removeredeyes/detection/locators/haarclassifier/widgets/advancedsettings.cpp,
+	  removeredeyes/detection/locators/haarclassifier/widgets/blobsettingsbox.cpp,
+	  removeredeyes/detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp,
+	  removeredeyes/detection/locators/haarclassifier/widgets/haarsettingswidget.cpp,
+	  removeredeyes/detection/locators/haarclassifier/widgets/simplesettings.cpp,
+	  removeredeyes/detection/locators/locatorfactory.cpp,
+	  removeredeyes/detection/savemethods/savemethods.cpp,
+	  removeredeyes/libcvblobs/Blob.cpp,
+	  removeredeyes/libcvblobs/Blob.h,
+	  removeredeyes/libcvblobs/BlobExtraction.cpp,
+	  removeredeyes/libcvblobs/BlobExtraction.h,
+	  removeredeyes/libcvblobs/BlobResult.cpp,
+	  removeredeyes/libcvblobs/BlobResult.h,
+	  removeredeyes/plugin_removeredeyes.cpp,
+	  removeredeyes/plugin_removeredeyes.h,
+	  removeredeyes/removeredeyeswindow.cpp,
+	  removeredeyes/removeredeyeswindow.h,
+	  removeredeyes/workerthread.cpp: code polish
+
+2010-11-19 14:14  cgilles
+
+	* CMakeLists.txt, NEWS: fix release date
+
+2010-11-18 09:27  scripty
+
+	* acquireimages/scangui.desktop,
+	  advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	  batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	  common/libkipiplugins/kipiplugins.desktop,
+	  expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  facebook/kipiplugin_facebook.desktop,
+	  flashexport/kipiplugin_flashexport.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/floating_cards/floating_cards.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/kipiplugin_printimages.desktop,
+	  printimages/templates/1_photo_10.5x14.8cm.desktop,
+	  printimages/templates/1_photo_10x15cm.desktop,
+	  printimages/templates/1_photo_20x25cm.desktop,
+	  printimages/templates/1_photo_8x10.desktop,
+	  printimages/templates/1_photo_9x13cm.desktop,
+	  printimages/templates/2_photos_13x18cm.desktop,
+	  printimages/templates/2_photos_5x7.desktop,
+	  printimages/templates/3_photos_10x15cm.desktop,
+	  printimages/templates/3_photos_4x6.desktop,
+	  printimages/templates/4_photos_10x13.33cm.desktop,
+	  printimages/templates/4_photos_3.5x5.desktop,
+	  printimages/templates/4_photos_4.5x5cm.desktop,
+	  printimages/templates/4_photos_9x13cm.desktop,
+	  printimages/templates/4x6Album.desktop,
+	  printimages/templates/6_photos_3.5x4cm.desktop,
+	  printimages/templates/8_photos_6x9cm.desktop,
+	  printimages/templates/Album-Collage.desktop,
+	  printimages/templates/Album-Collage1.desktop,
+	  printimages/templates/Album_10x15cm.desktop,
+	  printimages/templates/Album_11.5x15cm.desktop,
+	  printimages/templates/FullPage.desktop,
+	  printimages/templates/Photoframe.desktop,
+	  printimages/templates/Thumbnails_5x4.desktop,
+	  printimages/templates/Thumbnails_6x5.desktop,
+	  removeredeyes/kipiplugin_removeredeyes.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2010-11-16 20:22  cgilles
+
+	* NEWS: update
+
+2010-11-16 20:21  cgilles
+
+	* expoblending/CMakeLists.txt: under MAC OSX, OpenMP used under
+	  multithreading is not suppoorted. So it's disabled with Apple
+	  comuters.
+
+2010-11-15 01:44  aclemens
+
+	* removeredeyes/commonsettings.h,
+	  removeredeyes/commonwidgets/controlwidget.cpp,
+	  removeredeyes/commonwidgets/previewwidget.cpp,
+	  removeredeyes/commonwidgets/storagesettingsbox.cpp,
+	  removeredeyes/detection/locators/haarclassifier/haarsettings.h,
+	  removeredeyes/detection/locators/haarclassifier/widgets/haarsettingswidget.cpp,
+	  removeredeyes/plugin_removeredeyes.cpp: code polish (init lists
+	  etc)
+
+2010-11-13 16:07  aclemens
+
+	* sendimages/emailsettingscontainer.h: These methods can be const.
+
+2010-11-13 16:07  aclemens
+
+	* gpssync/gpslistviewcontextmenu.cpp,
+	  gpssync/gpslistviewcontextmenu.h,
+	  gpssync/gpstracklistcontainer.h: Use pass-by-reference
+
+2010-11-13 16:02  aclemens
+
+	* galleryexport/gallerywindow.cpp: Fix dangerous code (possible
+	  null pointer crash)
+
+2010-11-13 16:02  aclemens
+
+	* removeredeyes/libcvblobs/BlobExtraction.cpp: Fix memory leaks in
+	  blobextraction library. I will not update this lib, so
+	  fixing it locally is ok.
+
+2010-11-10 18:56  cgilles
+
+	* NEWS: update
+
+2010-11-10 16:47  cgilles
+
+	* NEWS: update
+
+2010-11-09 21:15  pgquiles
+
+	* facebook/fbwindow.cpp, picasawebexport/picasawebwindow.cpp,
+	  smug/smugwindow.cpp: Rename the 'Cancel' button to 'Close', which
+	  is what it is named in the other KIPI plugins.
+	  
+	  Rationale:
+	  - When user tries to export some picture(s), he will be presented
+	  with this dialog.
+	  It's OK for the button to be 'Cancel' here, and 'Close' would be
+	  equally fine.
+	  
+	  - After the user has exported picture(s), he will be back to this
+	  dialog. The user
+	  does not want to 'Cancel' anything, he has already done what he
+	  wanted. Now he
+	  wants to get back to the application, so the button should be
+	  'Close'
+
+2010-11-09 02:17  apol
+
+	* facebook/facebookjob.cpp: Let the job actually finish sometime.
+
+2010-11-09 00:54  apol
+
+	* facebook/facebookjob.cpp, facebook/facebookjob.h: Improve upload
+	  of many files using the job.
+
+2010-11-08 23:41  apol
+
+	* facebook/facebookjob.cpp, facebook/facebookjob.h: Don't emit
+	  result until fbtalker has told us that all photos have been
+	  uploaded.
+
+2010-11-08 23:33  apol
+
+	* facebook/fbwindow.cpp: no reason to delete it, it's a qobject
+	  with parent
+
+2010-11-08 18:00  jmueller
+
+	* NEWS, common/libkipiplugins/widgets/imageslist.cpp: fix crash
+	  when current processing item is removed
+	  
+	  BUG: 243877
+	  BUG: 240382
+
+2010-11-08 16:58  jmueller
+
+	* NEWS: update
+
+2010-11-08 13:42  cgilles
+
+	* dngconverter/plugin/actionthread.cpp,
+	  dngconverter/plugin/actionthread.h,
+	  dngconverter/plugin/batchdialog.cpp,
+	  dngconverter/plugin/batchdialog.h,
+	  dngconverter/plugin/clistviewitem.h,
+	  dngconverter/plugin/plugin_dngconverter.cpp,
+	  dngconverter/plugin/plugin_dngconverter.h,
+	  dngconverter/plugin/settingswidget.cpp,
+	  dngconverter/plugin/settingswidget.h: use private internal
+	  container
+
+2010-11-08 09:25  cgilles
+
+	* dngconverter/dngwriter/dngwriter.cpp,
+	  dngconverter/dngwriter/dngwriter.h,
+	  dngconverter/dngwriter/dngwriter_p.cpp,
+	  dngconverter/dngwriter/dngwriter_p.h,
+	  dngconverter/dngwriter/dngwriterhost.cpp,
+	  dngconverter/dngwriter/dngwriterhost.h: compile with Qt 4.6
+	  use a more private internal container
+
+2010-11-07 19:14  jmueller
+
+	* NEWS, picasawebexport/picasawebtalker.cpp: remove double
+	  string-encoding
+	  
+	  BUGS: 256303
+
+2010-11-07 17:09  jmueller
+
+	* NEWS, dngconverter/TODO, dngconverter/dngwriter/dngwriter.cpp:
+	  store makernotes in DngPrivateData field
+	  
+	  BUGS: 255137
+
+2010-11-06 15:39  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: prepare makernote in
+	  dngprivatedata field
+
+2010-11-06 15:10  jmueller
+
+	* dngconverter/dngwriter/dngwriter.cpp: adjust some canon lens tags
+	  do not store makernotes directly for canon
+	  
+	  CCBUGS: 255137
+
+2010-11-05 19:10  cgilles
+
+	* NEWS: update
+
+2010-11-04 12:49  orgads
+
+	* calendar/calselect.cpp: * Correct year handling for non-gregorian
+	  calendars (year should be retrieved from KCalendarSystem, NOT
+	  from QDate)
+
+2010-10-30 21:50  anaselli
+
+	* printimages/templates/templates.xml, printimages/wizard.cpp: -
+	  Cropping error was found by Gary Montalbine.
+	  - fixed 4_photos_3.5x5 layout also
+
+2010-10-26 20:59  jmueller
+
+	* dngconverter/TODO: update todo
+	  
+	  CCBUGS: 255137
+
+2010-10-23 15:15  jmueller
+
+	* common/libkipiplugins/dialogs/imagedialog.cpp,
+	  dngconverter/plugin/batchdialog.cpp,
+	  dngconverter/plugin/clistviewitem.h: dngconverter: don't proccess
+	  items twice
+	  common: use picture location, not document location as fallback
+
+2010-10-21 15:44  dfaure
+
+	* acquireimages/CMakeLists.txt,
+	  common/libkipiplugins/CMakeLists.txt,
+	  dngconverter/plugin/CMakeLists.txt, expoblending/CMakeLists.txt:
+	  Make executable the Type=Application .desktop files we install,
+	  so that they can be used even from a KDE running in another
+	  prefix (http://markmail.org/message/4p3krovtnzwx35zd)
+
+2010-10-21 05:12  yurchor
+
+	* expoblending/manager/actions.h,
+	  metadataedit/iptc/iptccategories.cpp,
+	  metadataedit/xmp/xmpcategories.cpp: fix typos
+
+2010-10-20 16:48  jmueller
+
+	* htmlexport/themes/classic/template.xsl,
+	  htmlexport/themes/cleanframes/template.xsl,
+	  htmlexport/themes/dateframes/template.xsl,
+	  htmlexport/themes/details/template.xsl,
+	  htmlexport/themes/floating_cards/template.xsl,
+	  htmlexport/themes/frames/template.xsl,
+	  htmlexport/themes/matrix/template.xsl,
+	  htmlexport/themes/s0/template.xsl,
+	  htmlexport/themes/simple/template.xsl,
+	  htmlexport/themes/snow/template.xsl: do sort collections by name
+	  again
+
+2010-10-16 16:24  cgilles
+
+	* NEWS: update
+
+2010-10-15 12:02  fcoiffier
+
+	* piwigoexport/piwigotalker.cpp, piwigoexport/piwigowindow.cpp: *
+	  Don't use EXIF date if this one is null
+	  * Add the ws.php to the URL only during use and don't store it in
+	  settings
+	  * Correct the date format (yyyy-MM-dd instead of yyyy:MM:dd) in
+	  the web API
+
+2010-10-15 08:27  cgilles
+
+	* NEWS: update
+
+2010-10-15 08:26  cgilles
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_flags.h: fix broken
+	  compilation under SPARC architecture.
+	  BUGS: 254205
+
+2010-10-15 07:15  fcoiffier
+
+	* piwigoexport/piwigowindow.cpp: Add '/ws.php' (with the /) to the
+	  URL
+
+2010-10-14 12:12  cgilles
+
+	* printimages/atkinspagelayout.cpp, printimages/atkinspagelayout.h,
+	  printimages/cropframe.cpp, printimages/cropframe.h,
+	  printimages/customdlg.cpp, printimages/plugin_printimages.cpp,
+	  printimages/wizard.cpp: no need .h if .moc is there
+	  Use more private internal container
+
+2010-10-14 12:03  cgilles
+
+	* NEWS: update
+
+2010-10-14 12:02  cgilles
+
+	* printimages/infopage.ui: fix typo
+	  BUGS: 254103
+
+2010-10-12 15:18  cgilles
+
+	* NEWS: update
+
+2010-10-12 14:08  cgilles
+
+	* CMakeLists.txt: bump version to 1.6.0
+
+2010-10-11 08:19  cgilles
+
+	* NEWS: update
+
+2010-10-11 07:25  mlaurent
+
+	* dngconverter/plugin/settingswidget.cpp: Fix missing i18n
+
+2010-10-10 21:00  nlecureuil
+
+	* NEWS: Open for next version
+
+2010-10-10 20:33  nlecureuil
+
+	* ChangeLog, NEWS, project/NEWS.1.5.0: Update changelog
+
 1.5.0   2010-10-10 
  
 2010-10-08 10:58  cgilles

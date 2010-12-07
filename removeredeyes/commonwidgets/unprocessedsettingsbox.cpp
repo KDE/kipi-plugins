@@ -52,19 +52,19 @@ struct UnprocessedSettingsBoxPriv
 };
 
 UnprocessedSettingsBox::UnprocessedSettingsBox(QWidget* parent)
-                  : QGroupBox(parent), d(new UnprocessedSettingsBoxPriv)
+    : QGroupBox(parent), d(new UnprocessedSettingsBoxPriv)
 {
     setTitle(i18n("Unprocessed Image Handling"));
 
     QString whatsThis = i18n("<p>These settings control the handling of unprocessed images when "
-            "running in test-mode. To speed up the final correction, unprocessed images can be "
-            "removed from the list, so that they are not analyzed again. There are three modes "
-            "to choose from:</p>"
-            "<p><ul>"
-            "<li><b>Ask the user:</b> A popup window will appear to ask for further actions.</li>"
-            "<li><b>Keep in file list:</b> All unprocessed images will be kept in the list.</li>"
-            "<li><b>Remove from file list:</b> All unprocessed images are removed after the test run.</li>"
-            "</ul></p>");
+                             "running in test-mode. To speed up the final correction, unprocessed images can be "
+                             "removed from the list, so that they are not analyzed again. There are three modes "
+                             "to choose from:</p>"
+                             "<p><ul>"
+                             "<li><b>Ask the user:</b> A popup window will appear to ask for further actions.</li>"
+                             "<li><b>Keep in file list:</b> All unprocessed images will be kept in the list.</li>"
+                             "<li><b>Remove from file list:</b> All unprocessed images are removed after the test run.</li>"
+                             "</ul></p>");
     setWhatsThis(whatsThis);
 
     // ----------------------------------------------------------------

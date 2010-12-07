@@ -64,19 +64,19 @@ LayoutNode::~LayoutNode()
 
 LayoutNode &LayoutNode::operator=(const LayoutNode &other)
 {
-    m_a = other.m_a;
-    m_e = other.m_e;
-    m_division = other.m_division;
-    m_type = other.m_type;
-    m_index = other.m_index;
-    m_leftChild  = other.m_leftChild ? new LayoutNode(*other.m_leftChild) : 0;
+    m_a          = other.m_a;
+    m_e          = other.m_e;
+    m_division   = other.m_division;
+    m_type       = other.m_type;
+    m_index      = other.m_index;
+    m_leftChild  = other.m_leftChild  ? new LayoutNode(*other.m_leftChild)  : 0;
     m_rightChild = other.m_rightChild ? new LayoutNode(*other.m_rightChild) : 0;
 
     return *this;
 }
 
 // replace one child with a new one
-void LayoutNode::takeAndSetChild(LayoutNode *oldChild, LayoutNode *newChild)
+void LayoutNode::takeAndSetChild(LayoutNode* oldChild, LayoutNode* newChild)
 {
     if (m_leftChild == oldChild)
         m_leftChild = newChild;
@@ -85,7 +85,7 @@ void LayoutNode::takeAndSetChild(LayoutNode *oldChild, LayoutNode *newChild)
 }
 
 // retrieve the node which has the given index in the hierarchy of this node
-LayoutNode *LayoutNode::nodeForIndex(int index)
+LayoutNode* LayoutNode::nodeForIndex(int index)
 {
     if (m_index == index)
         return this;
@@ -93,14 +93,15 @@ LayoutNode *LayoutNode::nodeForIndex(int index)
     if (m_type == TerminalNode)
         return 0;
 
-    LayoutNode *fromLeft = m_leftChild->nodeForIndex(index);
+    LayoutNode* fromLeft = m_leftChild->nodeForIndex(index);
     if (fromLeft)
         return fromLeft;
+
     return m_rightChild->nodeForIndex(index);
 }
 
 // retrieve the parent node of the given child in the hierarchy of this node
-LayoutNode *LayoutNode::parentOf(LayoutNode *child)
+LayoutNode* LayoutNode::parentOf(LayoutNode* child)
 {
     if (m_type == TerminalNode)
         return 0;
@@ -108,7 +109,7 @@ LayoutNode *LayoutNode::parentOf(LayoutNode *child)
     if (m_leftChild == child || m_rightChild == child)
         return this;
 
-    LayoutNode *fromLeft = m_leftChild->parentOf(child);
+    LayoutNode* fromLeft = m_leftChild->parentOf(child);
     if (fromLeft)
         return fromLeft;
 
@@ -156,7 +157,7 @@ void LayoutNode::computeDivisions()
 
     if (m_type == VerticalDivision) // side by side
     {
-        double leftDivisionRoot = sqrt(m_leftChild->m_e / m_leftChild->m_a);
+        double leftDivisionRoot  = sqrt(m_leftChild->m_e / m_leftChild->m_a);
         double rightDivisionRoot = sqrt(m_rightChild->m_e / m_rightChild->m_a);
 
         m_division = leftDivisionRoot / (leftDivisionRoot + rightDivisionRoot);
@@ -164,7 +165,7 @@ void LayoutNode::computeDivisions()
     else if (m_type == HorizontalDivision) // one on top of the other
     {
         // left child is topmost
-        double leftProductRoot = sqrt(m_leftChild->m_a * m_leftChild->m_e);
+        double leftProductRoot  = sqrt(m_leftChild->m_a * m_leftChild->m_e);
         double rightProductRoot = sqrt(m_rightChild->m_a * m_rightChild->m_e);
 
         // the term in the paper takes 0 = bottom, we use 0 = top
@@ -180,16 +181,16 @@ LayoutTree::LayoutTree(double aspectRatioPage, double absoluteAreaPage)
 {
 }
 
-LayoutTree::LayoutTree(const LayoutTree &other)
+LayoutTree::LayoutTree(const LayoutTree& other)
 {
     *this = other;
 }
 
-LayoutTree &LayoutTree::operator=(const LayoutTree &other)
+LayoutTree &LayoutTree::operator=(const LayoutTree& other)
 {
-    m_root = new LayoutNode(*(other.m_root));
-    m_count = other.m_count;
-    m_aspectRatioPage = other.m_aspectRatioPage;
+    m_root             = new LayoutNode(*(other.m_root));
+    m_count            = other.m_count;
+    m_aspectRatioPage  = other.m_aspectRatioPage;
     m_absoluteAreaPage = other.m_absoluteAreaPage;
 
     return *this;
@@ -212,8 +213,9 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
     }
 
     // Section 2.1
-    LayoutNode *bestTree = 0;
-    double highScore = 0;
+    LayoutNode* bestTree = 0;
+    double highScore     = 0;
+
     for (int i=0; i< m_count; i++)
     {
         for (int horizontal=0; horizontal<2; horizontal++)
@@ -265,7 +267,7 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
 }
 
 // Section 2.2.1
-double LayoutTree::score(LayoutNode *root, int nodeCount)
+double LayoutTree::score(LayoutNode* root, int nodeCount)
 {
     if (!root)
         return 0;
@@ -273,7 +275,7 @@ double LayoutTree::score(LayoutNode *root, int nodeCount)
     double areaSum = 0;
     for (int i = 0; i<nodeCount; i++)
     {
-        LayoutNode *node = root->nodeForIndex(i);
+        LayoutNode* node = root->nodeForIndex(i);
         if (node->type() == LayoutNode::TerminalNode)
             areaSum += node->relativeArea();
     }
@@ -291,7 +293,7 @@ double LayoutTree::G() const
 }
 
 // Section 2.2.2
-double LayoutTree::absoluteArea(LayoutNode *node)
+double LayoutTree::absoluteArea(LayoutNode* node)
 {
     // min(a_pbb, a_page), max(a_pbb, a_page)
     double minRatioPage = m_root->aspectRatio() < m_aspectRatioPage ? m_root->aspectRatio() : m_aspectRatioPage;
@@ -307,7 +309,7 @@ double LayoutTree::absoluteArea(LayoutNode *node)
     return G() * node->relativeArea() / m_root->relativeArea() * absoluteAreaRoot;
 }
 
-QRectF LayoutTree::drawingArea(int index, const QRectF &absoluteRectPage)
+QRectF LayoutTree::drawingArea(int index, const QRectF& absoluteRectPage)
 {
     LayoutNode *node = m_root->nodeForIndex(index);
     if (!node)

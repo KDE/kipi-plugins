@@ -42,6 +42,8 @@ KIOExport          : A tool to export images to remote computer using network pr
 Shwup              : A tool to export images to Shwup web service (http://www.shwup.com).
 ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed images.
 PiwigoExport       : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
+DebianScreenshots  : A tool to export images to Debian Screenshots web service (http://screenshots.debian.net).
+Kopete             : A tool to export images to an instant messaging contact.
 
 Porting under progress to Qt4/KDE4:
 
@@ -80,6 +82,7 @@ libopencv       >= 2.x                          http://opencv.willowgarage.com
 libgpod         >= 0.7.0                        http://www.gtkpod.org/libgpod.html
 libgdk          >= 2.0.0                        http://library.gnome.org/devel/gdk-pixbuf
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
+libqjson        >= 0.6.0                        http://qjson.sourceforge.net
 libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
 
 Plugin Specific Dependencies (for compiling and for running) :
@@ -95,6 +98,7 @@ RemoveRedEyes      : libopencv.
 IpodExport         : libgpod, libgdk.
 Calendar           : libkcal (kdepimlibs).
 Shwup              : libqca.
+DebianScreenshots  : libqjson.
 ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
 
 -- CONTACT ------------------------------------------------------------

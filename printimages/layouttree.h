@@ -65,29 +65,29 @@ public:
     };
 
     LayoutNode(double aspectRatio, double relativeArea, int index);
-    LayoutNode(LayoutNode *subtree, LayoutNode *terminalChild, bool horizontal, int index);
-    LayoutNode(const LayoutNode &);
+    LayoutNode(LayoutNode* subtree, LayoutNode* terminalChild, bool horizontal, int index);
+    LayoutNode(const LayoutNode&);
     ~LayoutNode();
 
-    double aspectRatio() const { return m_a; }
+    double aspectRatio()  const { return m_a; }
     double relativeArea() const { return m_e; }
-    double division() const { return m_division; }
+    double division()     const { return m_division; }
 
     Type type() const { return m_type; }
     int index() const { return m_index; }
 
-    LayoutNode *leftChild() const { return m_leftChild; }
-    LayoutNode *rightChild() const { return m_rightChild; }
+    LayoutNode* leftChild()  const { return m_leftChild; }
+    LayoutNode* rightChild() const { return m_rightChild; }
 
-    void takeAndSetChild(LayoutNode *oldChild, LayoutNode *newChild);
+    void takeAndSetChild(LayoutNode* oldChild, LayoutNode* newChild);
 
-    LayoutNode *nodeForIndex(int index);
-    LayoutNode *parentOf(LayoutNode *child);
+    LayoutNode* nodeForIndex(int index);
+    LayoutNode* parentOf(LayoutNode* child);
 
     void computeRelativeSizes();
     void computeDivisions();
 
-    LayoutNode &operator=(const LayoutNode &);
+    LayoutNode& operator=(const LayoutNode&);
 
 private:
 
@@ -99,31 +99,33 @@ private:
 
     int         m_index;
 
-    LayoutNode *m_leftChild;
-    LayoutNode *m_rightChild;
+    LayoutNode* m_leftChild;
+    LayoutNode* m_rightChild;
 };
+
+// ---------------------------------------------------------------------
 
 class LayoutTree
 {
 public:
 
     LayoutTree(double aspectRatioPage, double absoluteAreaPage);
-    LayoutTree(const LayoutTree &);
+    LayoutTree(const LayoutTree&);
     ~LayoutTree();
 
     int addImage(double aspectRatio, double relativeArea);
-    QRectF drawingArea(int index, const QRectF &absoluteRectPage);
+    QRectF drawingArea(int index, const QRectF& absoluteRectPage);
 
     int count() const;
-    double score(LayoutNode *root, int nodeCount);
+    double score(LayoutNode* root, int nodeCount);
     double G() const;
 
-    LayoutTree &operator=(const LayoutTree &other);
+    LayoutTree& operator=(const LayoutTree& other);
 
 private:
 
-    double absoluteArea(LayoutNode *node);
-    QRectF rectInRect(const QRectF &rect, double aspectRatio, double absoluteArea);
+    double absoluteArea(LayoutNode* node);
+    QRectF rectInRect(const QRectF& rect, double aspectRatio, double absoluteArea);
 
 private:
 
@@ -137,4 +139,3 @@ private:
 }  // NameSpace KIPIPrintImagesPlugin
 
 #endif /* LAYOUTTREE_H */
-

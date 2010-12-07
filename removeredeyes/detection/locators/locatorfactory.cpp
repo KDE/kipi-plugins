@@ -38,12 +38,16 @@ namespace KIPIRemoveRedEyesPlugin
 Locator* LocatorFactory::create(const QString& type)
 {
     if (type.isEmpty())
+    {
         return 0;
+    }
 
     Locator* locator = 0;
 
     if (type.contains("HaarClassifierLocator"))
+    {
         locator = new HaarClassifierLocator;
+    }
 
     return locator;
 }

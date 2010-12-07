@@ -40,54 +40,54 @@ const QString STANDARD_CLASSIFIER = KGlobal::dirs()->findResource( "data",
                                     "kipiplugin_removeredeyes/removeredeyes_classifier_eye_20_20.xml");
 
 class HaarSettings
+{
+public:
+
+    HaarSettings() :
+        useStandardClassifier(true),
+        useSimpleMode(true),
+        addKeyword(true),
+        minRoundness(0.0),
+        scaleFactor(0.0),
+        minBlobsize(0),
+        neighborGroups(0),
+        storageMode(0),
+        unprocessedMode(0),
+        simpleMode(0)
     {
-    public:
-
-        HaarSettings() :
-            useStandardClassifier(true),
-            useSimpleMode(true),
-            addKeyword(true),
-            minRoundness(0.0),
-            scaleFactor(0.0),
-            minBlobsize(0),
-            neighborGroups(0),
-            storageMode(0),
-            unprocessedMode(0),
-            simpleMode(0)
-        {
-        };
-
-        void debug()
-        {
-            kDebug() << "***************";
-            kDebug() << "HaarSettings";
-            kDebug() << "***************";
-            kDebug() << "useStandardClassifier = " << useStandardClassifier;
-            kDebug() << "minRoundness          = " << minRoundness;
-            kDebug() << "scaleFactor           = " << scaleFactor;
-            kDebug() << "minBlobsize           = " << minBlobsize;
-            kDebug() << "neighborGroups        = " << neighborGroups;
-            kDebug() << "simpleMode            = " << simpleMode;
-            kDebug() << "classifierFile        = " << classifierFile;
-        };
-
-        bool    useStandardClassifier;
-        bool    useSimpleMode;
-        bool    addKeyword;
-
-        double  minRoundness;
-        double  scaleFactor;
-
-        int     minBlobsize;
-        int     neighborGroups;
-        int     storageMode;
-        int     unprocessedMode;
-        int     simpleMode;
-
-        QString classifierFile;
-        QString extraName;
-        QString keywordName;
     };
+
+    void debug()
+    {
+        kDebug() << "***************";
+        kDebug() << "HaarSettings";
+        kDebug() << "***************";
+        kDebug() << "useStandardClassifier = " << useStandardClassifier;
+        kDebug() << "minRoundness          = " << minRoundness;
+        kDebug() << "scaleFactor           = " << scaleFactor;
+        kDebug() << "minBlobsize           = " << minBlobsize;
+        kDebug() << "neighborGroups        = " << neighborGroups;
+        kDebug() << "simpleMode            = " << simpleMode;
+        kDebug() << "classifierFile        = " << classifierFile;
+    };
+
+    bool    useStandardClassifier;
+    bool    useSimpleMode;
+    bool    addKeyword;
+
+    double  minRoundness;
+    double  scaleFactor;
+
+    int     minBlobsize;
+    int     neighborGroups;
+    int     storageMode;
+    int     unprocessedMode;
+    int     simpleMode;
+
+    QString classifierFile;
+    QString extraName;
+    QString keywordName;
+};
 
 } // namespace KIPIRemoveRedEyesPlugin
 

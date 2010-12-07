@@ -65,7 +65,7 @@ struct ControlWidgetPriv
 };
 
 ControlWidget::ControlWidget(QWidget* parent, int w, int h)
-             : QWidget(parent), d(new ControlWidgetPriv)
+    : QWidget(parent), d(new ControlWidgetPriv)
 {
     setMinimumSize(w, h);
     setMaximumSize(w, h);
@@ -171,15 +171,25 @@ void ControlWidget::mouseMoveEvent (QMouseEvent* e)
     d->mode = Normal;
 
     if (mousePos.intersects(d->zoomOut))
+    {
         setMode(ZoomOut);
+    }
     else if (mousePos.intersects(d->zoomIn))
+    {
         setMode(ZoomIn);
+    }
     else if (mousePos.intersects(d->mask))
+    {
         setMode(Mask);
+    }
     else if (mousePos.intersects(d->original))
+    {
         setMode(Original);
+    }
     else if (mousePos.intersects(d->corrected))
+    {
         setMode(Corrected);
+    }
 }
 
 void ControlWidget::mousePressEvent (QMouseEvent* e)
@@ -189,15 +199,25 @@ void ControlWidget::mousePressEvent (QMouseEvent* e)
     d->mode = Normal;
 
     if (mousePos.intersects(d->zoomOut))
+    {
         setMode(ZoomOutPressed);
+    }
     else if (mousePos.intersects(d->zoomIn))
+    {
         setMode(ZoomInPressed);
+    }
     else if (mousePos.intersects(d->mask))
+    {
         setMode(MaskPressed);
+    }
     else if (mousePos.intersects(d->original))
+    {
         setMode(OriginalPressed);
+    }
     else if (mousePos.intersects(d->corrected))
+    {
         setMode(CorrectedPressed);
+    }
 }
 
 void ControlWidget::leaveEvent(QEvent*)

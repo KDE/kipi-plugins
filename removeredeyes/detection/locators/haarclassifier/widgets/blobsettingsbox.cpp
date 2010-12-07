@@ -49,7 +49,7 @@ struct BlobSettingsBoxPriv
 };
 
 BlobSettingsBox::BlobSettingsBox(QWidget* parent)
-               : QGroupBox(parent), d(new BlobSettingsBoxPriv)
+    : QGroupBox(parent), d(new BlobSettingsBoxPriv)
 {
     setTitle(i18n("Blob Extraction Settings"));
 

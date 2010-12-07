@@ -67,7 +67,7 @@ struct HaarClassifierLocatorPriv
         possible_eyes(0),
         red_eyes(0),
         settingsWidget(0)
-        {};
+    {};
 
     const QString       configGroupName;
     const QString       configSimpleModeEntry;
@@ -112,6 +112,7 @@ int HaarClassifierLocator::findPossibleEyes(double csf, int ngf, const char* cla
 
     // extract each region as a new image
     numEyes = eyes ? eyes->total : 0;
+
     if (numEyes > 0)
     {
         // generate LAB color space image
@@ -121,7 +122,9 @@ int HaarClassifierLocator::findPossibleEyes(double csf, int ngf, const char* cla
         cvSplit(d->lab, 0, d->aChannel, 0, 0);
 
         for (int v = 0; v < numEyes; ++v)
+        {
             generateMask(v, eyes);
+        }
     }
 
     cvReleaseMemStorage(&storage);
@@ -142,12 +145,13 @@ void HaarClassifierLocator::removeRedEyes()
     for (int y = 0; y < removed_redchannel->height; ++y)
     {
         ptr = (uchar*)(removed_redchannel->imageData + y * removed_redchannel->widthStep);
+
         for (int x = 0; x < removed_redchannel->width; ++x)
         {
             // remember: we are in BGR colorspace
-            ptr[nc*x+2] = (uchar)((ptr[nc*x+2] * 0.02)
-                                + (ptr[nc*x+1] * 0.68)
-                                + (ptr[nc*x+0] * 0.3));
+            ptr[nc* x+2] = (uchar)((ptr[nc*x+2] * 0.02)
+                                   + (ptr[nc*x+1] * 0.68)
+                                   + (ptr[nc*x+0] * 0.3));
         }
     }
 
@@ -220,7 +224,10 @@ void HaarClassifierLocator::findBlobs(IplImage* i_mask, int minsize)
 
 void HaarClassifierLocator::allocateBuffers()
 {
-    if (!d->original) return;
+    if (!d->original)
+    {
+        return;
+    }
 
     // allocate all buffers
     d->lab      = cvCreateImage(cvGetSize(d->original), d->original->depth, 3);
@@ -245,7 +252,7 @@ void HaarClassifierLocator::clearBuffers()
 // --------------------------------------------------------------------
 
 HaarClassifierLocator::HaarClassifierLocator()
-                     : Locator(), d(new HaarClassifierLocatorPriv)
+    : Locator(), d(new HaarClassifierLocatorPriv)
 {
     setObjectName("HaarClassifierLocator");
     d->settingsWidget = new HaarSettingsWidget;
@@ -266,10 +273,18 @@ void HaarClassifierLocator::saveImage(const QString& path, SaveResult type)
 
     switch (type)
     {
-        case Final:             cvSaveImage(savePath, d->original); break;
-        case OriginalPreview:   cvSaveImage(savePath, d->original); break;
-        case CorrectedPreview:  cvSaveImage(savePath, d->original); break;
-        case MaskPreview:       cvSaveImage(savePath, d->redMask);  break;
+        case Final:
+            cvSaveImage(savePath, d->original);
+            break;
+        case OriginalPreview:
+            cvSaveImage(savePath, d->original);
+            break;
+        case CorrectedPreview:
+            cvSaveImage(savePath, d->original);
+            break;
+        case MaskPreview:
+            cvSaveImage(savePath, d->redMask);
+            break;
     }
 }
 
@@ -281,7 +296,9 @@ QWidget* HaarClassifierLocator::settingsWidget()
 int HaarClassifierLocator::startCorrection(const QString& src, const QString& dest)
 {
     if (src.isEmpty())
+    {
         return -1;
+    }
 
     // update settings
     updateSettings();
@@ -304,11 +321,15 @@ int HaarClassifierLocator::startCorrection(const QString& src, const QString& de
 
     // remove red-eye effect
     if (d->possible_eyes > 0)
+    {
         removeRedEyes();
+    }
 
     // save image
     if (!dest.isEmpty())
+    {
         saveImage(dest, Final);
+    }
 
     clearBuffers();
     return (d->red_eyes > 0) ? d->red_eyes : 0;

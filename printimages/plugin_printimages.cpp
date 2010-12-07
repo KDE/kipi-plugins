@@ -43,6 +43,7 @@ extern "C"
 #include <kstandarddirs.h>
 
 // LibKIPI includes
+
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
@@ -55,13 +56,13 @@ extern "C"
 K_PLUGIN_FACTORY ( PrintImagesFactory, registerPlugin<Plugin_PrintImages>(); )
 K_EXPORT_PLUGIN ( PrintImagesFactory ( "kipiplugin_printimages" ) )
 
-Plugin_PrintImages::Plugin_PrintImages ( QObject *parent, const QVariantList& /*args*/ )
+Plugin_PrintImages::Plugin_PrintImages ( QObject* parent, const QVariantList& /*args*/ )
                   : KIPI::Plugin ( PrintImagesFactory::componentData(), parent, "PrintImages" )
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_PrintImages plugin loaded" ;
 }
 
-void Plugin_PrintImages::setup ( QWidget* widget )
+void Plugin_PrintImages::setup( QWidget* widget )
 {
     KIPI::Plugin::setup ( widget );
 

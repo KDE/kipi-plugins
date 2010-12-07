@@ -56,7 +56,7 @@ struct ClassifierSettingsBoxPriv
 };
 
 ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
-                     : QGroupBox(parent), d(new ClassifierSettingsBoxPriv)
+    : QGroupBox(parent), d(new ClassifierSettingsBoxPriv)
 {
     setTitle(i18n("Classifier Settings"));
 
@@ -64,7 +64,7 @@ ClassifierSettingsBox::ClassifierSettingsBox(QWidget* parent)
     d->classifierUrlRequester        = new KUrlRequester;
     d->classifierUrlRequester->setFilter("*.xml");
     d->standardClassifierCheckBox->setToolTip(i18n("If checked, the standard classifier "
-                                                   "shipped with this KIPI plugin is used."));
+            "shipped with this KIPI plugin is used."));
     d->classifierUrlRequester->setToolTip(i18n("Enter the location of the classifier here."));
 
     d->neighborGroupsNumInput    = new KIntNumInput;

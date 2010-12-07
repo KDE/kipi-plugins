@@ -145,7 +145,7 @@ CBlob::CBlob( const CBlob& src )
     cvStartReadSeq( src.Edges(), &reader);
     cvStartAppendToSeq( edges, &writer );
 
-    for( int i=0; i< src.Edges()->total; ++i)
+    for ( int i=0; i< src.Edges()->total; ++i)
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader);
         CV_WRITE_SEQ_ELEM( edgeactual , writer );
@@ -153,7 +153,7 @@ CBlob::CBlob( const CBlob& src )
 
     cvEndWriteSeq( &writer );
 }
-CBlob::CBlob( const CBlob *src )
+CBlob::CBlob( const CBlob* src )
 {
     // copiem les propietats del blob origen a l'actual
     etiqueta        = src->etiqueta;
@@ -188,7 +188,7 @@ CBlob::CBlob( const CBlob *src )
     cvStartReadSeq( src->Edges(), &reader);
     cvStartAppendToSeq( edges, &writer );
 
-    for( int i=0; i< src->Edges()->total; ++i)
+    for ( int i=0; i< src->Edges()->total; ++i)
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader);
         CV_WRITE_SEQ_ELEM( edgeactual , writer );
@@ -249,7 +249,7 @@ CBlob::~CBlob()
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-CBlob& CBlob::operator=(const CBlob &src )
+CBlob& CBlob::operator=(const CBlob& src )
 {
     // si ja s�n el mateix, no cal fer res
     if (this != &src)
@@ -292,7 +292,7 @@ CBlob& CBlob::operator=(const CBlob &src )
         cvStartReadSeq( src.Edges(), &reader);
         cvStartAppendToSeq( edges, &writer );
 
-        for( int i=0; i< src.Edges()->total; ++i)
+        for ( int i=0; i< src.Edges()->total; ++i)
         {
             CV_READ_SEQ_ELEM( edgeactual ,reader);
             CV_WRITE_SEQ_ELEM( edgeactual , writer );
@@ -300,6 +300,7 @@ CBlob& CBlob::operator=(const CBlob &src )
 
         cvEndWriteSeq( &writer );
     }
+
     return *this;
 }
 
@@ -331,10 +332,13 @@ CBlob& CBlob::operator=(const CBlob &src )
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int offsetY /*=0*/) const
+void CBlob::FillBlob( IplImage* imatge, CvScalar color, int offsetX /*=0*/, int offsetY /*=0*/) const
 {
     //verifiquem que existeixi el blob i que tingui cantonades
-    if( edges == NULL || edges->total == 0 ) return;
+    if ( edges == NULL || edges->total == 0 )
+    {
+        return;
+    }
 
     CvPoint edgeactual, pt1, pt2;
     CvSeqReader reader;
@@ -346,12 +350,14 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
     // passem els punts del blob a un vector de punts de les STL
     cvStartReadSeq( edges, &reader);
     itEdges = vectorEdges.begin();
-    while( itEdges != vectorEdges.end() )
+
+    while ( itEdges != vectorEdges.end() )
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader);
         *itEdges = edgeactual;
         ++itEdges;
     }
+
     // ordenem el vector per les Y's i les X's d'esquerra a dreta
     std::sort( vectorEdges.begin(), vectorEdges.end(), comparaCvPoint() );
 
@@ -359,15 +365,16 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
     itEdges        = vectorEdges.begin();
     itEdgesSeguent = vectorEdges.begin() + 1;
     dinsBlob       = true;
-    while( itEdges != (vectorEdges.end() - 1))
+
+    while ( itEdges != (vectorEdges.end() - 1))
     {
         yActual = (*itEdges).y;
 
-        if( ( (*itEdges).x != (*itEdgesSeguent).x ) &&
-            ( (*itEdgesSeguent).y == yActual )
-          )
+        if ( ( (*itEdges).x != (*itEdgesSeguent).x ) &&
+             ( (*itEdgesSeguent).y == yActual )
+           )
         {
-            if( dinsBlob )
+            if ( dinsBlob )
             {
                 pt1   = *itEdges;
                 pt1.x += offsetX;
@@ -379,15 +386,19 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
 
                 cvLine( imatge, pt1, pt2, color );
             }
+
             dinsBlob =! dinsBlob;
         }
-        
+
         ++itEdges;
         ++itEdgesSeguent;
-        
-        if( (*itEdges).y != yActual )
+
+        if ( (*itEdges).y != yActual )
+        {
             dinsBlob = true;
+        }
     }
+
     vectorEdges.clear();
 }
 
@@ -413,7 +424,7 @@ void CBlob::FillBlob( IplImage *imatge, CvScalar color, int offsetX /*=0*/, int 
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-void CBlob::CopyEdges( CBlob &destination ) const
+void CBlob::CopyEdges( CBlob& destination ) const
 {
     CvSeqReader reader;
     CvSeqWriter writer;
@@ -422,7 +433,7 @@ void CBlob::CopyEdges( CBlob &destination ) const
     cvStartReadSeq( edges, &reader);
     cvStartAppendToSeq( destination.Edges(), &writer );
 
-    for( int i=0; i<edges->total; ++i)
+    for ( int i=0; i<edges->total; ++i)
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader);
         CV_WRITE_SEQ_ELEM( edgeactual , writer );
@@ -481,13 +492,14 @@ void CBlob::ClearEdges()
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-bool CBlob::GetConvexHull( CvSeq **dst ) const
+bool CBlob::GetConvexHull( CvSeq** dst ) const
 {
-    if( edges != NULL && edges->total > 0)
+    if ( edges != NULL && edges->total > 0)
     {
         *dst = cvConvexHull2( edges, 0, CV_CLOCKWISE, 0 );
         return true;
     }
+
     return false;
 }
 
@@ -516,8 +528,9 @@ bool CBlob::GetConvexHull( CvSeq **dst ) const
 CvBox2D CBlob::GetEllipse() const
 {
     CvBox2D elipse;
+
     // necessitem 6 punts per calcular l'elipse
-    if( edges != NULL && edges->total > 6)
+    if ( edges != NULL && edges->total > 6)
     {
         elipse = cvFitEllipse2( edges );
     }
@@ -529,6 +542,7 @@ CvBox2D CBlob::GetEllipse() const
         elipse.size.height = 0.0;
         elipse.angle       = 0.0;
     }
+
     return elipse;
 }
 
@@ -561,27 +575,37 @@ CvBox2D CBlob::GetEllipse() const
 - CREATION DATE: 20-07-2004.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetMoment::operator()(const CBlob &blob) const
+double CBlobGetMoment::operator()(const CBlob& blob) const
 {
     //Moment 00
-    if((m_p==0) && (m_q==0))
+    if ((m_p==0) && (m_q==0))
+    {
         return blob.Area();
+    }
 
     //Moment 10
-    if((m_p==1) && (m_q==0))
+    if ((m_p==1) && (m_q==0))
+    {
         return blob.SumX();
+    }
 
     //Moment 01
-    if((m_p==0) && (m_q==1))
+    if ((m_p==0) && (m_q==1))
+    {
         return blob.SumY();
+    }
 
     //Moment 20
-    if((m_p==2) && (m_q==0))
+    if ((m_p==2) && (m_q==0))
+    {
         return blob.SumXX();
+    }
 
     //Moment 02
-    if((m_p==0) && (m_q==2))
+    if ((m_p==0) && (m_q==2))
+    {
         return blob.SumYY();
+    }
 
     return 0;
 }
@@ -613,23 +637,25 @@ double CBlobGetMoment::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetHullPerimeter::operator()(const CBlob &blob) const
+double CBlobGetHullPerimeter::operator()(const CBlob& blob) const
 {
-    if(blob.Edges() != NULL && blob.Edges()->total > 0)
+    if (blob.Edges() != NULL && blob.Edges()->total > 0)
     {
-        CvSeq *hull = cvConvexHull2( blob.Edges(), 0, CV_CLOCKWISE, 1 );
+        CvSeq* hull = cvConvexHull2( blob.Edges(), 0, CV_CLOCKWISE, 1 );
         return fabs(cvArcLength(hull,CV_WHOLE_SEQ,1));
     }
+
     return blob.Perimeter();
 }
 
-double CBlobGetHullArea::operator()(const CBlob &blob) const
+double CBlobGetHullArea::operator()(const CBlob& blob) const
 {
-    if(blob.Edges() != NULL && blob.Edges()->total > 0)
+    if (blob.Edges() != NULL && blob.Edges()->total > 0)
     {
-        CvSeq *hull = cvConvexHull2( blob.Edges(), 0, CV_CLOCKWISE, 1 );
+        CvSeq* hull = cvConvexHull2( blob.Edges(), 0, CV_CLOCKWISE, 1 );
         return fabs(cvContourArea(hull));
     }
+
     return blob.Perimeter();
 }
 
@@ -655,7 +681,7 @@ double CBlobGetHullArea::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetMinXatMinY::operator()(const CBlob &blob) const
+double CBlobGetMinXatMinY::operator()(const CBlob& blob) const
 {
     double MinX_at_MinY = LONG_MAX;
 
@@ -664,10 +690,11 @@ double CBlobGetMinXatMinY::operator()(const CBlob &blob) const
 
     cvStartReadSeq(blob.Edges(),&reader);
 
-    for(int j=0;j<blob.Edges()->total;++j)
+    for (int j=0; j<blob.Edges()->total; ++j)
     {
         CV_READ_SEQ_ELEM(edgeactual,reader);
-        if( (edgeactual.y == blob.MinY()) && (edgeactual.x < MinX_at_MinY) )
+
+        if ( (edgeactual.y == blob.MinY()) && (edgeactual.x < MinX_at_MinY) )
         {
             MinX_at_MinY = edgeactual.x;
         }
@@ -698,7 +725,7 @@ double CBlobGetMinXatMinY::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetMinYatMaxX::operator()(const CBlob &blob) const
+double CBlobGetMinYatMaxX::operator()(const CBlob& blob) const
 {
     double MinY_at_MaxX = LONG_MAX;
 
@@ -707,10 +734,11 @@ double CBlobGetMinYatMaxX::operator()(const CBlob &blob) const
 
     cvStartReadSeq(blob.Edges(),&reader);
 
-    for(int j=0;j<blob.Edges()->total;++j)
+    for (int j=0; j<blob.Edges()->total; ++j)
     {
         CV_READ_SEQ_ELEM(edgeactual,reader);
-        if( (edgeactual.x == blob.MaxX()) && (edgeactual.y < MinY_at_MaxX) )
+
+        if ( (edgeactual.x == blob.MaxX()) && (edgeactual.y < MinY_at_MaxX) )
         {
             MinY_at_MaxX = edgeactual.y;
         }
@@ -741,7 +769,7 @@ double CBlobGetMinYatMaxX::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetMaxXatMaxY::operator()(const CBlob &blob) const
+double CBlobGetMaxXatMaxY::operator()(const CBlob& blob) const
 {
     double MaxX_at_MaxY = LONG_MIN;
 
@@ -750,10 +778,11 @@ double CBlobGetMaxXatMaxY::operator()(const CBlob &blob) const
 
     cvStartReadSeq(blob.Edges(),&reader);
 
-    for(int j=0;j<blob.Edges()->total;++j)
+    for (int j=0; j<blob.Edges()->total; ++j)
     {
         CV_READ_SEQ_ELEM(edgeactual,reader);
-        if( (edgeactual.y == blob.MaxY()) && (edgeactual.x > MaxX_at_MaxY) )
+
+        if ( (edgeactual.y == blob.MaxY()) && (edgeactual.x > MaxX_at_MaxY) )
         {
             MaxX_at_MaxY = edgeactual.x;
         }
@@ -784,7 +813,7 @@ double CBlobGetMaxXatMaxY::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetMaxYatMinX::operator()(const CBlob &blob) const
+double CBlobGetMaxYatMinX::operator()(const CBlob& blob) const
 {
     double MaxY_at_MinX = LONG_MIN;
 
@@ -793,10 +822,11 @@ double CBlobGetMaxYatMinX::operator()(const CBlob &blob) const
 
     cvStartReadSeq(blob.Edges(),&reader);
 
-    for(int j=0;j<blob.Edges()->total;++j)
+    for (int j=0; j<blob.Edges()->total; ++j)
     {
         CV_READ_SEQ_ELEM(edgeactual,reader);
-        if( (edgeactual.x == blob.MinY()) && (edgeactual.y > MaxY_at_MinX) )
+
+        if ( (edgeactual.x == blob.MinY()) && (edgeactual.y > MaxY_at_MinX) )
         {
             MaxY_at_MinX = edgeactual.y;
         }
@@ -819,12 +849,17 @@ double CBlobGetMaxYatMinX::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetElongation::operator()(const CBlob &blob) const
+double CBlobGetElongation::operator()(const CBlob& blob) const
 {
     double ampladaC,longitudC,amplada,longitud;
 
     ampladaC=(double) (blob.Perimeter()+sqrt(pow(blob.Perimeter(),2)-16*blob.Area()))/4;
-    if(ampladaC<=0.0) return 0;
+
+    if (ampladaC<=0.0)
+    {
+        return 0;
+    }
+
     longitudC=(double) blob.Area()/ampladaC;
 
     longitud=MAX( longitudC , ampladaC );
@@ -847,12 +882,16 @@ double CBlobGetElongation::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetCompactness::operator()(const CBlob &blob) const
+double CBlobGetCompactness::operator()(const CBlob& blob) const
 {
-    if( blob.Area() != 0.0 )
+    if ( blob.Area() != 0.0 )
+    {
         return (double) pow(blob.Perimeter(),2)/(4*CV_PI*blob.Area());
+    }
     else
+    {
         return 0.0;
+    }
 }
 
 /**
@@ -869,14 +908,16 @@ double CBlobGetCompactness::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetRoughness::operator()(const CBlob &blob) const
+double CBlobGetRoughness::operator()(const CBlob& blob) const
 {
     CBlobGetHullPerimeter getHullPerimeter = CBlobGetHullPerimeter();
 
     double hullPerimeter = getHullPerimeter(blob);
 
-    if( hullPerimeter != 0.0 )
-        return blob.Perimeter() / hullPerimeter;//HullPerimeter();
+    if ( hullPerimeter != 0.0 )
+    {
+        return blob.Perimeter() / hullPerimeter;    //HullPerimeter();
+    }
 
     return 0.0;
 }
@@ -895,20 +936,28 @@ double CBlobGetRoughness::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetLength::operator()(const CBlob &blob) const
+double CBlobGetLength::operator()(const CBlob& blob) const
 {
     double ampladaC,longitudC;
     double tmp;
 
     tmp = blob.Perimeter()*blob.Perimeter() - 16*blob.Area();
 
-    if( tmp > 0.0 )
+    if ( tmp > 0.0 )
+    {
         ampladaC = (double) (blob.Perimeter()+sqrt(tmp))/4;
+    }
     // error intr�nsec en els c�lculs de l'�rea i el per�metre
     else
+    {
         ampladaC = (double) (blob.Perimeter())/4;
+    }
 
-    if(ampladaC<=0.0) return 0;
+    if (ampladaC<=0.0)
+    {
+        return 0;
+    }
+
     longitudC=(double) blob.Area()/ampladaC;
 
     return MAX( longitudC , ampladaC );
@@ -928,20 +977,28 @@ double CBlobGetLength::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetBreadth::operator()(const CBlob &blob) const
+double CBlobGetBreadth::operator()(const CBlob& blob) const
 {
     double ampladaC,longitudC;
     double tmp;
 
     tmp = blob.Perimeter()*blob.Perimeter() - 16*blob.Area();
 
-    if( tmp > 0.0 )
+    if ( tmp > 0.0 )
+    {
         ampladaC = (double) (blob.Perimeter()+sqrt(tmp))/4;
+    }
     // error intr�nsec en els c�lculs de l'�rea i el per�metre
     else
+    {
         ampladaC = (double) (blob.Perimeter())/4;
+    }
 
-    if(ampladaC <= 0.0) return 0;
+    if (ampladaC <= 0.0)
+    {
+        return 0;
+    }
+
     longitudC = (double) blob.Area()/ampladaC;
 
     return MIN( longitudC , ampladaC );
@@ -961,7 +1018,7 @@ double CBlobGetBreadth::operator()(const CBlob &blob) const
 - CREATION DATE: 25-05-2005.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetDistanceFromPoint::operator()(const CBlob &blob) const
+double CBlobGetDistanceFromPoint::operator()(const CBlob& blob) const
 {
     double xmitjana, ymitjana;
     CBlobGetXCenter getXCenter;
@@ -996,9 +1053,12 @@ double CBlobGetDistanceFromPoint::operator()(const CBlob &blob) const
 - CREATION DATE: 16-01-2006.
 - MODIFICATION: Date. Author. Description.
 */
-double CBlobGetXYInside::operator()(const CBlob &blob) const
+double CBlobGetXYInside::operator()(const CBlob& blob) const
 {
-    if( blob.Edges() == NULL || blob.Edges()->total == 0 ) return 0.0;
+    if ( blob.Edges() == NULL || blob.Edges()->total == 0 )
+    {
+        return 0.0;
+    }
 
     // passem els punts del blob a un vector de punts de les STL
     CvSeqReader reader;
@@ -1010,14 +1070,20 @@ double CBlobGetXYInside::operator()(const CBlob &blob) const
     // agafem tots els punts amb la mateixa y que l'actual
     cvStartReadSeq( blob.Edges(), &reader);
 
-    for( int i=0; i< blob.Edges()->total; ++i)
+    for ( int i=0; i< blob.Edges()->total; ++i)
     {
         CV_READ_SEQ_ELEM( edgeactual ,reader );
-        if( edgeactual.y == m_p.y )
+
+        if ( edgeactual.y == m_p.y )
+        {
             vectorEdges.push_back( edgeactual );
+        }
     }
 
-    if( vectorEdges.size() == 0 ) return 0.0;
+    if ( vectorEdges.size() == 0 )
+    {
+        return 0.0;
+    }
 
     // ordenem el vector per les Y's i les X's d'esquerra a dreta
     std::sort( vectorEdges.begin(), vectorEdges.end(), CBlob::comparaCvPoint() );
@@ -1029,9 +1095,9 @@ double CBlobGetXYInside::operator()(const CBlob &blob) const
     itEdgesSeguent = vectorEdges.begin() + 1;
     dinsBlob       = true;
 
-    while( itEdges != (vectorEdges.end() - 1) )
+    while ( itEdges != (vectorEdges.end() - 1) )
     {
-        if( (*itEdges).x <= m_p.x && (*itEdgesSeguent).x >= m_p.x && dinsBlob )
+        if ( (*itEdges).x <= m_p.x && (*itEdgesSeguent).x >= m_p.x && dinsBlob )
         {
             vectorEdges.clear();
             return 1.0;
@@ -1062,7 +1128,7 @@ double CBlobGetXYInside::operator()(const CBlob &blob) const
 - DATA DE CREACI�: 2006/05/18
 - MODIFICACI�: Data. Autor. Descripci�.
 */
-void RegistraTotsOperadors( t_OperadorBlobFactory &fabricaOperadorsBlob )
+void RegistraTotsOperadors( t_OperadorBlobFactory& fabricaOperadorsBlob )
 {
     // blob shape
     fabricaOperadorsBlob.Register( CBlobGetArea().GetNom(), Type2Type<CBlobGetArea>());

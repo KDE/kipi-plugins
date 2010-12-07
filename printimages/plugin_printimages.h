@@ -35,29 +35,31 @@ class KAction;
 
 namespace KIPI
 {
-  class Interface;
-} // namespace KIPI
+    class Interface;
+}
 
 class Plugin_PrintImages : public KIPI::Plugin
 {
     Q_OBJECT
 
-  public:
-    Plugin_PrintImages ( QObject *parent, const QVariantList &args );
+public:
+
+    Plugin_PrintImages( QObject* parent, const QVariantList& args );
 
     ~Plugin_PrintImages();
-    virtual KIPI::Category category ( KAction* action ) const;
-    virtual void setup ( QWidget* widget );
+    virtual KIPI::Category category( KAction* action ) const;
+    virtual void setup( QWidget* widget );
 
-  public Q_SLOTS:
+public Q_SLOTS:
 
     void slotPrintImagesActivate();
     void slotPrintAssistantActivate();
 
-  private:
-    KAction         *m_printImagesAction;
-    KAction         *m_printAssistantAction;
-    KIPI::Interface *m_interface;
+private:
+
+    KAction*         m_printImagesAction;
+    KAction*         m_printAssistantAction;
+    KIPI::Interface* m_interface;
 };
 
 #endif // PLUGIN_PRINTIMAGES_H

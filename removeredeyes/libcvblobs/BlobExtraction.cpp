@@ -79,7 +79,7 @@ bool BlobAnalysis(  IplImage* inputImage,
     // dimensions of input image taking in account the ROI
     int Cols, Rows, startCol, startRow;
 
-    if( inputImage->roi )
+    if ( inputImage->roi )
     {
         CvRect imageRoi = cvGetImageROI( inputImage );
         startCol = imageRoi.x;
@@ -107,32 +107,35 @@ bool BlobAnalysis(  IplImage* inputImage,
 
     // row 0 and row Rows+1 represent the border
     int i;
-    int *Transition;                // Transition Matrix
+    int* Transition;                // Transition Matrix
 
     int nombre_pixels_mascara = 0;
     //! Imatge amb el perimetre extern de cada pixel
-    IplImage *imatgePerimetreExtern;
+    IplImage* imatgePerimetreExtern;
 
     // input images must have only 1-channel and be an image
-    if( !CV_IS_IMAGE( inputImage ) || (inputImage->nChannels != 1) )
+    if ( !CV_IS_IMAGE( inputImage ) || (inputImage->nChannels != 1) )
     {
         return false;
     }
-    if( maskImage != NULL )
+
+    if ( maskImage != NULL )
     {
         // input image and mask are a valid image?
-        if( !CV_IS_IMAGE( inputImage ) || !CV_IS_IMAGE( maskImage ))
+        if ( !CV_IS_IMAGE( inputImage ) || !CV_IS_IMAGE( maskImage ))
+        {
             return false;
+        }
 
         // comprova que la m�scara tingui les mateixes dimensions que la imatge
 
-        if( !((inputImage)->height == (maskImage)->height && (inputImage)->width == (maskImage)->width) )
+        if ( !((inputImage)->height == (maskImage)->height && (inputImage)->width == (maskImage)->width) )
         {
             return false;
         }
 
         // comprova que la m�scara sigui una imatge d'un sol canal (grayscale)
-        if( maskImage->nChannels != 1 )
+        if ( maskImage->nChannels != 1 )
         {
             return false;
         }
@@ -146,30 +149,34 @@ bool BlobAnalysis(  IplImage* inputImage,
     // Start at the beginning of the image (startCol, startRow)
     pImage = inputImage->imageData + startCol - 1 + startRow * inputImage->widthStep;
 
-/*
-    Paral�lelitzaci� del c�lcul de la matriu de transicions
-    Fem que cada iteraci� del for el faci un thread o l'altre ( tenim 2 possibles threads )
-*/
-    if(maskImage == NULL)
+    /*
+        Paral�lelitzaci� del c�lcul de la matriu de transicions
+        Fem que cada iteraci� del for el faci un thread o l'altre ( tenim 2 possibles threads )
+    */
+    if (maskImage == NULL)
     {
         imatgePerimetreExtern = NULL;
 
         //Fill Transition array
-        for(iRow = 1; iRow < Rows + 1; ++iRow)        // Choose a row of Bordered image
+        for (iRow = 1; iRow < Rows + 1; ++iRow)       // Choose a row of Bordered image
         {
             TransitionOffset = iRow*(Cols + 2); //per a que sigui paral�litzable
             iTran = 0;                    // Index into Transition array
             Tran = 0;                    // No transitions at row start
             LastCell = borderColor;
 
-            for(iCol = 0; iCol < Cols + 2; ++iCol)    // Scan that row of Bordered image
+            for (iCol = 0; iCol < Cols + 2; ++iCol)   // Scan that row of Bordered image
             {
-                if(iCol == 0 || iCol == Cols+1)
+                if (iCol == 0 || iCol == Cols+1)
+                {
                     ThisCell = borderColor;
+                }
                 else
+                {
                     ThisCell = ((unsigned char) *(pImage)) > threshold;
+                }
 
-                if(ThisCell != LastCell)
+                if (ThisCell != LastCell)
                 {
                     Transition[TransitionOffset + iTran] = Tran;    // Save completed Tran
                     ++iTran;                        // Prepare new index
@@ -181,10 +188,12 @@ bool BlobAnalysis(  IplImage* inputImage,
             }
 
             Transition[TransitionOffset + iTran] = Tran;    // Save completed run
+
             if ( (TransitionOffset + iTran + 1) < (Rows + 1)*(Cols + 2) )
             {
                 Transition[TransitionOffset + iTran + 1] = -1;
             }
+
             //jump to next row (beginning from (startCol, startRow))
             pImage = inputImage->imageData - 1 + startCol + (iRow+startRow)*inputImage->widthStep;
         }
@@ -194,7 +203,7 @@ bool BlobAnalysis(  IplImage* inputImage,
         //maskImage not NULL: Cal rec�rrer la m�scara tamb� per calcular la matriu de transicions
 
         char perimeter;
-        char *pPerimetre;
+        char* pPerimetre;
 
         // creem la imatge que contindr� el perimetre extern de cada pixel
         imatgePerimetreExtern = cvCreateImage( cvSize(maskImage->width, maskImage->height), IPL_DEPTH_8U, 1);
@@ -203,7 +212,7 @@ bool BlobAnalysis(  IplImage* inputImage,
         pMask = maskImage->imageData - 1;
 
         //Fill Transition array
-        for(iRow = 1; iRow < Rows + 1; ++iRow)        // Choose a row of Bordered image
+        for (iRow = 1; iRow < Rows + 1; ++iRow)       // Choose a row of Bordered image
         {
             TransitionOffset = iRow*(Cols + 2);
             iTran = 0;                    // Index into Transition array
@@ -213,14 +222,18 @@ bool BlobAnalysis(  IplImage* inputImage,
             pPerimetre = imatgePerimetreExtern->imageData + (iRow - 1) * imatgePerimetreExtern->widthStep;
             //pMask = maskImage->imageData + (iRow-1) * maskImage->widthStep;
 
-            for(iCol = 0; iCol < Cols + 2; ++iCol)    // Scan that row of Bordered image
+            for (iCol = 0; iCol < Cols + 2; ++iCol)   // Scan that row of Bordered image
             {
-                if(iCol == 0 || iCol == Cols+1 || ((unsigned char) *pMask) == PIXEL_EXTERIOR)
+                if (iCol == 0 || iCol == Cols+1 || ((unsigned char) *pMask) == PIXEL_EXTERIOR)
+                {
                     ThisCell = borderColor;
+                }
                 else
+                {
                     ThisCell = ((unsigned char) *(pImage)) > threshold;
+                }
 
-                if(ThisCell != LastCell)
+                if (ThisCell != LastCell)
                 {
                     Transition[TransitionOffset + iTran] = Tran;    // Save completed Tran
                     ++iTran;                        // Prepare new index
@@ -231,9 +244,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                 Calcul de la imatge amb els pixels externs
                 ////////////////////////////////////////////////////////////////////////*/
                 // pels pixels externs no cal calcular res pq no hi accedir-hem
-                if( (iCol > 0) && (iCol < Cols) )
+                if ( (iCol > 0) && (iCol < Cols) )
                 {
-                    if( *pMask == PIXEL_EXTERIOR )
+                    if ( *pMask == PIXEL_EXTERIOR )
                     {
                         *pPerimetre = 0;
                     }
@@ -242,27 +255,35 @@ bool BlobAnalysis(  IplImage* inputImage,
                         perimeter = 0;
 
                         // pixels al nord de l'actual
-                        if(iRow>1)
+                        if (iRow>1)
                         {
-                            if( *(pMask - maskImage->widthStep ) == PIXEL_EXTERIOR)
+                            if ( *(pMask - maskImage->widthStep ) == PIXEL_EXTERIOR)
+                            {
                                 ++perimeter;
+                            }
                         }
 
                         // pixels a l'est i oest de l'actual
-                        if( iRow < imatgePerimetreExtern->height )
+                        if ( iRow < imatgePerimetreExtern->height )
                         {
-                            if( (iCol>0) && (*(pMask-1) == PIXEL_EXTERIOR) )
+                            if ( (iCol>0) && (*(pMask-1) == PIXEL_EXTERIOR) )
+                            {
                                 ++perimeter;
+                            }
 
-                            if( ( iCol < imatgePerimetreExtern->width - 1) && (*(pMask+1) == PIXEL_EXTERIOR) )
+                            if ( ( iCol < imatgePerimetreExtern->width - 1) && (*(pMask+1) == PIXEL_EXTERIOR) )
+                            {
                                 ++perimeter;
+                            }
                         }
 
                         // pixels al sud de l'actual
-                        if( iRow < imatgePerimetreExtern->height - 1)
+                        if ( iRow < imatgePerimetreExtern->height - 1)
                         {
-                            if( (*(pMask+maskImage->widthStep) == PIXEL_EXTERIOR) )
+                            if ( (*(pMask+maskImage->widthStep) == PIXEL_EXTERIOR) )
+                            {
                                 ++perimeter;
+                            }
                         }
 
                         *pPerimetre = perimeter;
@@ -274,6 +295,7 @@ bool BlobAnalysis(  IplImage* inputImage,
                 ++pMask;
                 ++pPerimetre;
             }
+
             Transition[TransitionOffset + iTran] = Tran;    // Save completed run
 
             if ( (TransitionOffset + iTran + 1) < (Rows + 1)*(Cols + 2) )
@@ -346,7 +368,7 @@ bool BlobAnalysis(  IplImage* inputImage,
     //           ThisIndex++;
     //   Case 8: ThisIndex++;
 
-    int *SubsumedRegion = NULL;
+    int* SubsumedRegion = NULL;
 
     double ThisParent;    // These data can change when the line is current
     double ThisArea;
@@ -364,7 +386,7 @@ bool BlobAnalysis(  IplImage* inputImage,
     double ThisExternPerimeter;
 
     int HighRegionNum = 0;
-/*    int RegionNum = 0;*/
+    /*    int RegionNum = 0;*/
     int ErrorFlag = 0;
 
     int LastRow, ThisRow;            // Row number
@@ -375,8 +397,8 @@ bool BlobAnalysis(  IplImage* inputImage,
     int LastIndex, ThisIndex;        // Which run are we up to
     int LastIndexCount, ThisIndexCount;    // Out of these runs
     int LastRegionNum, ThisRegionNum;    // Which assignment
-    int *LastRegion;                // Row assignment of region number
-    int *ThisRegion;        // Row assignment of region number
+    int* LastRegion;                // Row assignment of region number
+    int* ThisRegion;        // Row assignment of region number
 
     int LastOffset = -(Trans + 2);    // For performance to avoid multiplication
     int ThisOffset = 0;                // For performance to avoid multiplication
@@ -387,12 +409,12 @@ bool BlobAnalysis(  IplImage* inputImage,
     bool CandidatExterior = false;
 
     // apuntadors als blobs de la regi� actual i last
-    CBlob *regionDataThisRegion, *regionDataLastRegion;
+    CBlob* regionDataThisRegion, *regionDataLastRegion;
 
     LastRegion=new int[Cols+2];
     ThisRegion=new int[Cols+2];
 
-    for(i = 0; i < Cols + 2; ++i)    // Initialize result arrays
+    for (i = 0; i < Cols + 2; ++i)   // Initialize result arrays
     {
         LastRegion[i] = -1;
         ThisRegion[i] = -1;
@@ -411,13 +433,17 @@ bool BlobAnalysis(  IplImage* inputImage,
     // beginning of the image
     // en cada linia, pimage apunta al primer pixel de la fila
     pImage = inputImage->imageData - 1 + startCol + startRow * inputImage->widthStep;
-    //the mask should be the same size as image Roi, so don't take into account the offset
-    if(maskImage!=NULL) pMask = maskImage->imageData - 1;
 
-    char *pImageAux, *pMaskAux;
+    //the mask should be the same size as image Roi, so don't take into account the offset
+    if (maskImage!=NULL)
+    {
+        pMask = maskImage->imageData - 1;
+    }
+
+    char* pImageAux, *pMaskAux;
 
     // Loop over all rows
-    for(ThisRow = 1; ThisRow < Rows + 2; ++ThisRow)
+    for (ThisRow = 1; ThisRow < Rows + 2; ++ThisRow)
     {
         //cout << "========= THIS ROW = " << ThisRow << endl;    // for debugging
         ThisOffset += Trans + 2;
@@ -430,52 +456,89 @@ bool BlobAnalysis(  IplImage* inputImage,
         int EndLast = 0;
         int EndThis = 0;
 
-        for(int j = 0; j < Trans + 2; ++j)
+        for (int j = 0; j < Trans + 2; ++j)
         {
             int Index = ThisOffset + j;
             int TranVal = Transition[Index];
-            if(TranVal > 0) ThisIndexCount = j + 1;    // stop at highest
 
-            if(ThisRegion[j] == -1)  { EndLast = 1; }
-            if(TranVal < 0) { EndThis = 1; }
+            if (TranVal > 0)
+            {
+                ThisIndexCount = j + 1;    // stop at highest
+            }
 
-            if(EndLast > 0 && EndThis > 0) { break; }
+            if (ThisRegion[j] == -1)
+            {
+                EndLast = 1;
+            }
+
+            if (TranVal < 0)
+            {
+                EndThis = 1;
+            }
+
+            if (EndLast > 0 && EndThis > 0)
+            {
+                break;
+            }
 
             LastRegion[j] = ThisRegion[j];
             ThisRegion[j] = -1;        // Flag indicates region is not initialized
         }
 
         int MaxIndexCount = LastIndexCount;
-        if(ThisIndexCount > MaxIndexCount) MaxIndexCount = ThisIndexCount;
+
+        if (ThisIndexCount > MaxIndexCount)
+        {
+            MaxIndexCount = ThisIndexCount;
+        }
 
         // Main loop over runs within Last and This rows
         while (LastIndex < LastIndexCount && ThisIndex < ThisIndexCount)
         {
             ComputeData = 0;
 
-            if(LastIndex == 0) LastStart = 0;
-            else LastStart = Transition[LastOffset + LastIndex - 1];
+            if (LastIndex == 0)
+            {
+                LastStart = 0;
+            }
+            else
+            {
+                LastStart = Transition[LastOffset + LastIndex - 1];
+            }
+
             LastEnd = Transition[LastOffset + LastIndex] - 1;
             LastColor = LastIndex - 2 * (LastIndex / 2);
             LastRegionNum = LastRegion[LastIndex];
 
             regionDataLastRegion = RegionData[LastRegionNum];
 
-            if(ThisIndex == 0) ThisStart = 0;
-            else ThisStart = Transition[ThisOffset + ThisIndex - 1];
+            if (ThisIndex == 0)
+            {
+                ThisStart = 0;
+            }
+            else
+            {
+                ThisStart = Transition[ThisOffset + ThisIndex - 1];
+            }
+
             ThisEnd = Transition[ThisOffset + ThisIndex] - 1;
             ThisColor = ThisIndex - 2 * (ThisIndex / 2);
             ThisRegionNum = ThisRegion[ThisIndex];
 
-            if( ThisRegionNum >= 0 )
+            if ( ThisRegionNum >= 0 )
+            {
                 regionDataThisRegion = RegionData[ThisRegionNum];
+            }
             else
+            {
                 regionDataThisRegion = NULL;
+            }
 
 
             // blobs externs
             CandidatExterior = false;
-            if(
+
+            if (
 #if !IMATGE_CICLICA_VERTICAL
                 ThisRow == 1 || ThisRow == Rows ||
 #endif
@@ -483,7 +546,7 @@ bool BlobAnalysis(  IplImage* inputImage,
                 ThisStart <= 1 || ThisEnd >= Cols ||
 #endif
                 GetExternPerimeter( ThisStart, ThisEnd, ThisRow, inputImage->width, inputImage->height, imatgePerimetreExtern )
-                )
+            )
             {
                 CandidatExterior = true;
             }
@@ -498,29 +561,55 @@ bool BlobAnalysis(  IplImage* inputImage,
             int TestKnown = (ThisRegion[ThisIndex] >= 0);    // initially false
 
             int Case = 0;
-            if(TestA) Case = 1;
-            else if(TestB) Case = 8;
-            else if(TestC)
+
+            if (TestA)
             {
-                if(TestD) Case = 3;
-                else if(!TestE) Case = 2;
-                else Case = 4;
+                Case = 1;
+            }
+            else if (TestB)
+            {
+                Case = 8;
+            }
+            else if (TestC)
+            {
+                if (TestD)
+                {
+                    Case = 3;
+                }
+                else if (!TestE)
+                {
+                    Case = 2;
+                }
+                else
+                {
+                    Case = 4;
+                }
             }
             else
             {
-                if(TestE) Case = 5;
-                else if(TestD) Case = 7;
-                else Case = 6;
+                if (TestE)
+                {
+                    Case = 5;
+                }
+                else if (TestD)
+                {
+                    Case = 7;
+                }
+                else
+                {
+                    Case = 6;
+                }
             }
 
             // Initialize common variables
             ThisArea = (float) 0.0;
 
-            if(findmoments)
+            if (findmoments)
             {
                 ThisSumX = ThisSumY = (float) 0.0;
                 ThisSumXX = ThisSumYY = ThisSumXY = (float) 0.0;
             }
+
             ThisMinX = ThisMinY = (float) 1000000.0;
             ThisMaxX = ThisMaxY = (float) -1.0;
 
@@ -532,7 +621,7 @@ bool BlobAnalysis(  IplImage* inputImage,
             switch (Case)
             {
                 case 1: //|xxx    |
-                        //|    yyy|
+                    //|    yyy|
 
                     ThisRegion[ThisIndex] = ThisRegionNum;
                     LastRegion[LastIndex] = LastRegionNum;
@@ -551,9 +640,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                     break;
 
                 case 2: //|xxxxoo |
-                        //|    yyy|
+                    //|    yyy|
 
-                    if(TestMatch)    // Same color
+                    if (TestMatch)   // Same color
                     {
                         ThisRegionNum = LastRegionNum;
                         regionDataThisRegion = regionDataLastRegion;
@@ -563,35 +652,38 @@ bool BlobAnalysis(  IplImage* inputImage,
                         ThisPerimeter = 2 + 2 * ThisArea - LastPerimeter +
                                         PERIMETRE_DIAGONAL*2;
 
-                        if( CandidatExterior )
+                        if ( CandidatExterior )
                         {
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
                             ThisExternPerimeter += PERIMETRE_DIAGONAL*2;
                         }
+
                         ComputeData = 1;
                     }
 
                     //afegim la cantonada a ThisRegion
-                    if(ThisRegionNum!=-1)
+                    if (ThisRegionNum!=-1)
                     {
                         // afegim dos vertexs si s�n diferents, nom�s
-                        if(ThisStart - 1 != ThisEnd)
+                        if (ThisStart - 1 != ThisEnd)
                         {
                             actualedge.x = ThisStart - 1;
                             actualedge.y = ThisRow - 1;
                             cvSeqPush(regionDataThisRegion->edges,&actualedge);
                         }
+
                         actualedge.x = ThisEnd;
                         actualedge.y = ThisRow - 1;
                         cvSeqPush(regionDataThisRegion->edges,&actualedge);
                     }
+
                     //afegim la cantonada a ThisRegion
-                    if(LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
+                    if (LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
                     {
                         // afegim dos vertexs si s�n diferents, nom�s
-                        if(ThisStart - 1 != ThisEnd)
+                        if (ThisStart - 1 != ThisEnd)
                         {
                             actualedge.x = ThisStart - 1;
                             actualedge.y = ThisRow - 1;
@@ -605,9 +697,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                     break;
 
                 case 3: //|xxxxxxx|
-                        //|  yyyy |
+                    //|  yyyy |
 
-                    if(TestMatch)    // Same color
+                    if (TestMatch)   // Same color
                     {
                         ThisRegionNum = LastRegionNum;
                         regionDataThisRegion = regionDataLastRegion;
@@ -615,11 +707,12 @@ bool BlobAnalysis(  IplImage* inputImage,
                         ThisArea = ThisEnd - ThisStart + 1;
                         LastPerimeter = ThisArea;    // to subtract
                         ThisPerimeter = 2 + ThisArea + PERIMETRE_DIAGONAL*2;
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                         {
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
                             ThisExternPerimeter += PERIMETRE_DIAGONAL * 2;
                         }
@@ -634,14 +727,15 @@ bool BlobAnalysis(  IplImage* inputImage,
                         regionDataThisRegion = RegionData.back();
 
                         SubsumedRegion = NewSubsume(SubsumedRegion,HighRegionNum);
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
                     }
 
-                    if(ThisRegionNum!=-1)
+                    if (ThisRegionNum!=-1)
                     {
                         //afegim la cantonada a la regio
                         actualedge.x = ThisStart - 1;
@@ -652,8 +746,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                         actualedge.y = ThisRow - 1;
                         cvSeqPush(regionDataThisRegion->edges,&actualedge);
                     }
+
                     // si hem creat un nou blob, afegim tb a l'anterior
-                    if(!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
+                    if (!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
                     {
                         //afegim la cantonada a la regio
                         actualedge.x = ThisStart - 1;
@@ -672,20 +767,21 @@ bool BlobAnalysis(  IplImage* inputImage,
                     break;
 
                 case 4:    //|xxxxxxx|
-                        //|  yyyyy|
+                    //|  yyyyy|
 
-                    if(TestMatch)    // Same color
+                    if (TestMatch)   // Same color
                     {
                         ThisRegionNum = LastRegionNum;
                         regionDataThisRegion = regionDataLastRegion;
                         ThisArea = ThisEnd - ThisStart + 1;
                         LastPerimeter = ThisArea;    // to subtract
                         ThisPerimeter = 2 + ThisArea + PERIMETRE_DIAGONAL;
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                         {
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
                             ThisExternPerimeter += PERIMETRE_DIAGONAL;
                         }
@@ -699,14 +795,15 @@ bool BlobAnalysis(  IplImage* inputImage,
                         RegionData.push_back( new CBlob() );
                         regionDataThisRegion = RegionData.back();
                         SubsumedRegion = NewSubsume(SubsumedRegion,HighRegionNum);
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
                     }
 
-                    if(ThisRegionNum!=-1)
+                    if (ThisRegionNum!=-1)
                     {
                         //afegim la cantonada a la regio
                         actualedge.x = ThisStart - 1;
@@ -716,8 +813,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                         actualedge.y = ThisRow - 1;
                         cvSeqPush(regionDataThisRegion->edges,&actualedge);
                     }
+
                     // si hem creat un nou blob, afegim tb a l'anterior
-                    if(!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
+                    if (!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
                     {
                         actualedge.x = ThisStart - 1;
                         actualedge.y = ThisRow - 1;
@@ -732,7 +830,8 @@ bool BlobAnalysis(  IplImage* inputImage,
                     ComputeData = 1;
 
 #ifdef B_CONNECTIVITAT_8
-                    if( TestMatch )
+
+                    if ( TestMatch )
                     {
                         ++LastIndex;
                         ++ThisIndex;
@@ -741,6 +840,7 @@ bool BlobAnalysis(  IplImage* inputImage,
                     {
                         ++LastIndex;
                     }
+
 #else
                     ++LastIndex;
                     ++ThisIndex;
@@ -748,9 +848,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                     break;
 
                 case 5:    //|ooxxxxx|
-                        //|yyyyyyy|
+                    //|yyyyyyy|
 
-                    if(!TestMatch && !TestKnown)    // Different color and unknown => new region
+                    if (!TestMatch && !TestKnown)   // Different color and unknown => new region
                     {
                         ThisParent = LastRegionNum;
                         ThisRegionNum = ++HighRegionNum;
@@ -759,13 +859,14 @@ bool BlobAnalysis(  IplImage* inputImage,
                         RegionData.push_back( new CBlob() );
                         regionDataThisRegion = RegionData.back();
                         SubsumedRegion = NewSubsume(SubsumedRegion,HighRegionNum);
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
                     }
-                    else if(TestMatch && !TestKnown)    // Same color and unknown
+                    else if (TestMatch && !TestKnown)   // Same color and unknown
                     {
                         ThisRegionNum = LastRegionNum;
                         regionDataThisRegion = regionDataLastRegion;
@@ -773,56 +874,75 @@ bool BlobAnalysis(  IplImage* inputImage,
                         LastPerimeter = LastEnd - LastStart + 1;    // to subtract
                         ThisPerimeter = 2 + 2 * ThisArea - LastPerimeter
                                         + PERIMETRE_DIAGONAL * (LastStart != ThisStart);
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                         {
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
 
                             ThisExternPerimeter += PERIMETRE_DIAGONAL * (LastStart != ThisStart);
                         }
+
                         ComputeData = 1;
                     }
-                    else if(TestMatch && TestKnown)    // Same color and known
+                    else if (TestMatch && TestKnown)   // Same color and known
                     {
                         LastPerimeter = LastEnd - LastStart + 1;    // to subtract
                         //ThisPerimeter = - LastPerimeter;
                         ThisPerimeter = - 2 * LastPerimeter
                                         + PERIMETRE_DIAGONAL * (LastStart != ThisStart);
 
-                        if(ThisRegionNum > LastRegionNum)
+                        if (ThisRegionNum > LastRegionNum)
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataThisRegion, regionDataLastRegion,
                                     findmoments, ThisRegionNum, LastRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
+
+                            for (int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
-                                if(ThisRegion[iOld] == ThisRegionNum) ThisRegion[iOld] = LastRegionNum;
-                                if(LastRegion[iOld] == ThisRegionNum) LastRegion[iOld] = LastRegionNum;
+                                if (ThisRegion[iOld] == ThisRegionNum)
+                                {
+                                    ThisRegion[iOld] = LastRegionNum;
+                                }
+
+                                if (LastRegion[iOld] == ThisRegionNum)
+                                {
+                                    LastRegion[iOld] = LastRegionNum;
+                                }
                             }
+
                             ThisRegionNum = LastRegionNum;
                         }
-                        else if(ThisRegionNum < LastRegionNum)
+                        else if (ThisRegionNum < LastRegionNum)
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataLastRegion, regionDataThisRegion,
                                     findmoments, LastRegionNum, ThisRegionNum );
 
-                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
+                            for (int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
-                                if(ThisRegion[iOld] == LastRegionNum) ThisRegion[iOld] = ThisRegionNum;
-                                if(LastRegion[iOld] == LastRegionNum) LastRegion[iOld] = ThisRegionNum;
+                                if (ThisRegion[iOld] == LastRegionNum)
+                                {
+                                    ThisRegion[iOld] = ThisRegionNum;
+                                }
+
+                                if (LastRegion[iOld] == LastRegionNum)
+                                {
+                                    LastRegion[iOld] = ThisRegionNum;
+                                }
                             }
+
                             LastRegionNum = ThisRegionNum;
                         }
                     }
 
-                    if(ThisRegionNum!=-1)
+                    if (ThisRegionNum!=-1)
                     {
                         actualedge.x = ThisEnd;
                         actualedge.y = ThisRow - 1;
                         cvSeqPush(regionDataThisRegion->edges,&actualedge);
 
-                        if( ThisStart - 1 != LastEnd )
+                        if ( ThisStart - 1 != LastEnd )
                         {
                             //afegim la cantonada a la regio
                             actualedge.x = ThisStart - 1;
@@ -830,8 +950,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                             cvSeqPush(regionDataThisRegion->edges,&actualedge);
                         }
                     }
+
                     // si hem creat un nou blob, afegim tb a l'anterior
-                    if(!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
+                    if (!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
                     {
                         actualedge.x = ThisEnd;
                         actualedge.y = ThisRow - 1;
@@ -842,7 +963,8 @@ bool BlobAnalysis(  IplImage* inputImage,
                     LastRegion[LastIndex] = LastRegionNum;
 
 #ifdef B_CONNECTIVITAT_8
-                    if( TestMatch )
+
+                    if ( TestMatch )
                     {
                         ++LastIndex;
                         ++ThisIndex;
@@ -851,6 +973,7 @@ bool BlobAnalysis(  IplImage* inputImage,
                     {
                         ++LastIndex;
                     }
+
 #else
                     ++LastIndex;
                     ++ThisIndex;
@@ -858,9 +981,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                     break;
 
                 case 6:    //|ooxxx  |
-                        //|yyyyyyy|
+                    //|yyyyyyy|
 
-                    if(TestMatch && !TestKnown)
+                    if (TestMatch && !TestKnown)
                     {
                         ThisRegionNum = LastRegionNum;
                         regionDataThisRegion = regionDataLastRegion;
@@ -868,66 +991,88 @@ bool BlobAnalysis(  IplImage* inputImage,
                         LastPerimeter = LastEnd - LastStart + 1;    // to subtract
                         ThisPerimeter = 2 + 2 * ThisArea - LastPerimeter
                                         + PERIMETRE_DIAGONAL + PERIMETRE_DIAGONAL * (ThisStart!=LastStart);
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                         {
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
 
                             ThisExternPerimeter += PERIMETRE_DIAGONAL + PERIMETRE_DIAGONAL * (ThisStart!=LastStart);
                         }
+
                         ComputeData = 1;
                     }
-                    else if(TestMatch && TestKnown)
+                    else if (TestMatch && TestKnown)
                     {
                         LastPerimeter = LastEnd - LastStart + 1;    // to subtract
                         //ThisPerimeter = - LastPerimeter;
                         ThisPerimeter = - 2 * LastPerimeter
                                         + PERIMETRE_DIAGONAL + PERIMETRE_DIAGONAL * (ThisStart!=LastStart);
 
-                        if(ThisRegionNum > LastRegionNum)
+                        if (ThisRegionNum > LastRegionNum)
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataThisRegion, regionDataLastRegion,
                                     findmoments, ThisRegionNum, LastRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
+
+                            for (int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
-                                if(ThisRegion[iOld] == ThisRegionNum) ThisRegion[iOld] = LastRegionNum;
-                                if(LastRegion[iOld] == ThisRegionNum) LastRegion[iOld] = LastRegionNum;
+                                if (ThisRegion[iOld] == ThisRegionNum)
+                                {
+                                    ThisRegion[iOld] = LastRegionNum;
+                                }
+
+                                if (LastRegion[iOld] == ThisRegionNum)
+                                {
+                                    LastRegion[iOld] = LastRegionNum;
+                                }
                             }
+
                             ThisRegionNum = LastRegionNum;
                         }
-                        else if(ThisRegionNum < LastRegionNum)
+                        else if (ThisRegionNum < LastRegionNum)
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataLastRegion, regionDataThisRegion,
                                     findmoments, LastRegionNum, ThisRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
+
+                            for (int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
-                                if(ThisRegion[iOld] == LastRegionNum) ThisRegion[iOld] = ThisRegionNum;
-                                if(LastRegion[iOld] == LastRegionNum) LastRegion[iOld] = ThisRegionNum;
+                                if (ThisRegion[iOld] == LastRegionNum)
+                                {
+                                    ThisRegion[iOld] = ThisRegionNum;
+                                }
+
+                                if (LastRegion[iOld] == LastRegionNum)
+                                {
+                                    LastRegion[iOld] = ThisRegionNum;
+                                }
                             }
+
                             LastRegionNum = ThisRegionNum;
                         }
                     }
 
-                    if(ThisRegionNum!=-1)
+                    if (ThisRegionNum!=-1)
                     {
                         //afegim la cantonada a la regio
                         actualedge.x = ThisEnd;
                         actualedge.y = ThisRow - 1;
                         cvSeqPush(regionDataThisRegion->edges,&actualedge);
-                        if( ThisStart - 1 != LastEnd )
+
+                        if ( ThisStart - 1 != LastEnd )
                         {
                             actualedge.x = ThisStart - 1;
                             actualedge.y = ThisRow - 1;
                             cvSeqPush(regionDataThisRegion->edges,&actualedge);
                         }
                     }
+
                     // si hem creat un nou blob, afegim tb a l'anterior
-                    if(!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
+                    if (!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
                     {
                         //afegim la cantonada a la regio
-                        if( ThisStart - 1 != LastEnd )
+                        if ( ThisStart - 1 != LastEnd )
                         {
                             actualedge.x = ThisStart - 1;
                             actualedge.y = ThisRow - 1;
@@ -941,9 +1086,9 @@ bool BlobAnalysis(  IplImage* inputImage,
                     break;
 
                 case 7:    //|ooxxxxx|
-                        //|yyyy   |
+                    //|yyyy   |
 
-                    if(!TestMatch && !TestKnown)    // Different color and unknown => new region
+                    if (!TestMatch && !TestKnown)   // Different color and unknown => new region
                     {
                         ThisParent = LastRegionNum;
                         ThisRegionNum = ++HighRegionNum;
@@ -952,13 +1097,14 @@ bool BlobAnalysis(  IplImage* inputImage,
                         RegionData.push_back( new CBlob() );
                         regionDataThisRegion = RegionData.back();
                         SubsumedRegion = NewSubsume(SubsumedRegion,HighRegionNum);
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
                     }
-                    else if(TestMatch && !TestKnown)
+                    else if (TestMatch && !TestKnown)
                     {
                         ThisRegionNum = LastRegionNum;
                         regionDataThisRegion = regionDataLastRegion;
@@ -967,68 +1113,91 @@ bool BlobAnalysis(  IplImage* inputImage,
                         LastPerimeter = ThisEnd - LastStart + 1;
                         ThisPerimeter = 2 + 2 * ThisArea - LastPerimeter
                                         + PERIMETRE_DIAGONAL + PERIMETRE_DIAGONAL * (ThisStart!=LastStart);
-                        if( CandidatExterior )
+
+                        if ( CandidatExterior )
                         {
                             ThisExternPerimeter = GetExternPerimeter( ThisStart, ThisEnd, ThisRow,
-                                                                      inputImage->width, inputImage->height,
-                                                                      imatgePerimetreExtern );
+                                                  inputImage->width, inputImage->height,
+                                                  imatgePerimetreExtern );
 
                             ThisExternPerimeter += PERIMETRE_DIAGONAL + PERIMETRE_DIAGONAL * (ThisStart!=LastStart);
                         }
+
                         ComputeData = 1;
                     }
-                    else if(TestMatch && TestKnown)
+                    else if (TestMatch && TestKnown)
                     {
                         LastPerimeter = ThisEnd - LastStart + 1;    // to subtract
                         //ThisPerimeter = - LastPerimeter;
                         ThisPerimeter = - 2 * LastPerimeter
                                         + PERIMETRE_DIAGONAL + PERIMETRE_DIAGONAL * (ThisStart!=LastStart);
 
-                        if(ThisRegionNum > LastRegionNum)
+                        if (ThisRegionNum > LastRegionNum)
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataThisRegion, regionDataLastRegion,
                                     findmoments, ThisRegionNum, LastRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
+
+                            for (int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
-                                if(ThisRegion[iOld] == ThisRegionNum) ThisRegion[iOld] = LastRegionNum;
-                                if(LastRegion[iOld] == ThisRegionNum) LastRegion[iOld] = LastRegionNum;
+                                if (ThisRegion[iOld] == ThisRegionNum)
+                                {
+                                    ThisRegion[iOld] = LastRegionNum;
+                                }
+
+                                if (LastRegion[iOld] == ThisRegionNum)
+                                {
+                                    LastRegion[iOld] = LastRegionNum;
+                                }
                             }
+
                             ThisRegionNum = LastRegionNum;
                         }
-                        else if(ThisRegionNum < LastRegionNum)
+                        else if (ThisRegionNum < LastRegionNum)
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataLastRegion, regionDataThisRegion,
                                     findmoments, LastRegionNum, ThisRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
+
+                            for (int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
-                                if(ThisRegion[iOld] == LastRegionNum) ThisRegion[iOld] = ThisRegionNum;
-                                if(LastRegion[iOld] == LastRegionNum) LastRegion[iOld] = ThisRegionNum;
+                                if (ThisRegion[iOld] == LastRegionNum)
+                                {
+                                    ThisRegion[iOld] = ThisRegionNum;
+                                }
+
+                                if (LastRegion[iOld] == LastRegionNum)
+                                {
+                                    LastRegion[iOld] = ThisRegionNum;
+                                }
                             }
+
                             LastRegionNum = ThisRegionNum;
                         }
                     }
 
-                    if(ThisRegionNum!=-1)
+                    if (ThisRegionNum!=-1)
                     {
                         //afegim la cantonada a la regio
                         actualedge.x = ThisEnd;
                         actualedge.y = ThisRow - 1;
                         cvSeqPush(regionDataThisRegion->edges,&actualedge);
-                        if( ThisStart - 1 != LastEnd )
+
+                        if ( ThisStart - 1 != LastEnd )
                         {
                             actualedge.x = ThisStart - 1;
                             actualedge.y = ThisRow - 1;
                             cvSeqPush(regionDataThisRegion->edges,&actualedge);
                         }
                     }
+
                     // si hem creat un nou blob, afegim tb a l'anterior
-                    if(!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
+                    if (!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
                     {
                         //afegim la cantonada a la regio
                         actualedge.x = ThisEnd;
                         actualedge.y = ThisRow - 1;
                         cvSeqPush(regionDataLastRegion->edges,&actualedge);
-                        if( ThisStart - 1 != LastEnd )
+
+                        if ( ThisStart - 1 != LastEnd )
                         {
                             actualedge.x = ThisStart - 1;
                             actualedge.y = ThisRow - 1;
@@ -1042,49 +1211,71 @@ bool BlobAnalysis(  IplImage* inputImage,
                     break;
 
                 case 8:    //|    xxx|
-                        //|yyyy   |
+                    //|yyyy   |
 
 #ifdef B_CONNECTIVITAT_8
+
                     // fusionem blobs
-                    if( TestMatch )
+                    if ( TestMatch )
                     {
-                        if(ThisRegionNum > LastRegionNum)
+                        if (ThisRegionNum > LastRegionNum)
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataThisRegion, regionDataLastRegion,
                                     findmoments, ThisRegionNum, LastRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
+
+                            for (int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
-                                if(ThisRegion[iOld] == ThisRegionNum) ThisRegion[iOld] = LastRegionNum;
-                                if(LastRegion[iOld] == ThisRegionNum) LastRegion[iOld] = LastRegionNum;
+                                if (ThisRegion[iOld] == ThisRegionNum)
+                                {
+                                    ThisRegion[iOld] = LastRegionNum;
+                                }
+
+                                if (LastRegion[iOld] == ThisRegionNum)
+                                {
+                                    LastRegion[iOld] = LastRegionNum;
+                                }
                             }
+
                             ThisRegionNum = LastRegionNum;
                         }
-                        else if(ThisRegionNum < LastRegionNum)
+                        else if (ThisRegionNum < LastRegionNum)
                         {
                             Subsume(RegionData, HighRegionNum, SubsumedRegion, regionDataLastRegion, regionDataThisRegion,
                                     findmoments, LastRegionNum, ThisRegionNum );
-                            for(int iOld = 0; iOld < MaxIndexCount; ++iOld)
+
+                            for (int iOld = 0; iOld < MaxIndexCount; ++iOld)
                             {
-                                if(ThisRegion[iOld] == LastRegionNum) ThisRegion[iOld] = ThisRegionNum;
-                                if(LastRegion[iOld] == LastRegionNum) LastRegion[iOld] = ThisRegionNum;
+                                if (ThisRegion[iOld] == LastRegionNum)
+                                {
+                                    ThisRegion[iOld] = ThisRegionNum;
+                                }
+
+                                if (LastRegion[iOld] == LastRegionNum)
+                                {
+                                    LastRegion[iOld] = ThisRegionNum;
+                                }
                             }
+
                             LastRegionNum = ThisRegionNum;
                         }
 
                         regionDataThisRegion->perimeter = regionDataThisRegion->perimeter + PERIMETRE_DIAGONAL*2;
                     }
+
 #endif
 
-                    if(ThisRegionNum!=-1)
+                    if (ThisRegionNum!=-1)
                     {
                         //afegim la cantonada a la regio
                         actualedge.x = ThisStart - 1;
                         actualedge.y = ThisRow - 1;
                         cvSeqPush(regionDataThisRegion->edges,&actualedge);
                     }
+
 #ifdef B_CONNECTIVITAT_8
+
                     // si hem creat un nou blob, afegim tb a l'anterior
-                    if(!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
+                    if (!TestMatch && LastRegionNum!=-1 && LastRegionNum != ThisRegionNum )
                     {
 #endif
                         //afegim la cantonada a la regio
@@ -1093,6 +1284,7 @@ bool BlobAnalysis(  IplImage* inputImage,
                         cvSeqPush(regionDataLastRegion->edges,&actualedge);
 #ifdef B_CONNECTIVITAT_8
                     }
+
 #endif
 
                     ThisRegion[ThisIndex] = ThisRegionNum;
@@ -1108,14 +1300,14 @@ bool BlobAnalysis(  IplImage* inputImage,
             }    // end switch case
 
             // calculate the blob moments and mean gray level of the current blob (ThisRegionNum)
-            if(ComputeData > 0)
+            if (ComputeData > 0)
             {
                 // compute blob moments if necessary
-                if(findmoments)
+                if (findmoments)
                 {
                     float ImageRow = (float) (ThisRow - 1);
 
-                    for(int k = ThisStart; k <= ThisEnd; ++k)
+                    for (int k = ThisStart; k <= ThisEnd; ++k)
                     {
                         ThisSumX += (float) (k - 1);
                         ThisSumXX += (float) (k - 1) * (k - 1);
@@ -1127,20 +1319,25 @@ bool BlobAnalysis(  IplImage* inputImage,
                 }
 
                 // compute the mean gray level and its std deviation
-                if(ThisRow <= Rows )
+                if (ThisRow <= Rows )
                 {
                     pImageAux = pImage + ThisStart;
-                    if(maskImage!=NULL) pMaskAux = pMask + ThisStart;
-                    for(int k = ThisStart; k <= ThisEnd; ++k)
+
+                    if (maskImage!=NULL)
                     {
-                        if((k>0) && (k <= Cols))
+                        pMaskAux = pMask + ThisStart;
+                    }
+
+                    for (int k = ThisStart; k <= ThisEnd; ++k)
+                    {
+                        if ((k>0) && (k <= Cols))
                         {
-                            if( maskImage!= NULL)
+                            if ( maskImage!= NULL)
                             {
                                 // nom�s es t� en compte el valor del p�xel de la
                                 // imatge que queda dins de la m�scara
                                 // (de pas, comptem el nombre de p�xels de la m�scara)
-                                if( ((unsigned char) *pMaskAux) != PIXEL_EXTERIOR )
+                                if ( ((unsigned char) *pMaskAux) != PIXEL_EXTERIOR )
                                 {
                                     imagevalue = (unsigned char) (*pImageAux);
                                     regionDataThisRegion->mean+=imagevalue;
@@ -1159,34 +1356,64 @@ bool BlobAnalysis(  IplImage* inputImage,
 
                             }
                         }
+
                         ++pImageAux;
-                        if(maskImage!=NULL)
+
+                        if (maskImage!=NULL)
+                        {
                             ++pMaskAux;
+                        }
                     }
                 }
 
                 // compute the min and max values of X and Y
-                if(ThisStart - 1 < (int) ThisMinX) ThisMinX = (float) (ThisStart - 1);
-                if(ThisMinX < (float) 0.0) ThisMinX = (float) 0.0;
-                if(ThisEnd > (int) ThisMaxX) ThisMaxX = (float) ThisEnd;
+                if (ThisStart - 1 < (int) ThisMinX)
+                {
+                    ThisMinX = (float) (ThisStart - 1);
+                }
 
-                if(ThisRow - 1 < ThisMinY) ThisMinY = ThisRow - 1;
-                if(ThisMinY < (float) 0.0) ThisMinY = (float) 0.0;
-                if(ThisRow > ThisMaxY) ThisMaxY = ThisRow;
+                if (ThisMinX < (float) 0.0)
+                {
+                    ThisMinX = (float) 0.0;
+                }
+
+                if (ThisEnd > (int) ThisMaxX)
+                {
+                    ThisMaxX = (float) ThisEnd;
+                }
+
+                if (ThisRow - 1 < ThisMinY)
+                {
+                    ThisMinY = ThisRow - 1;
+                }
+
+                if (ThisMinY < (float) 0.0)
+                {
+                    ThisMinY = (float) 0.0;
+                }
+
+                if (ThisRow > ThisMaxY)
+                {
+                    ThisMaxY = ThisRow;
+                }
             }
 
             // put the current results into RegionData
-            if(ThisRegionNum >= 0)
+            if (ThisRegionNum >= 0)
             {
-                if(ThisParent >= 0) { regionDataThisRegion->parent = (int) ThisParent; }
+                if (ThisParent >= 0)
+                {
+                    regionDataThisRegion->parent = (int) ThisParent;
+                }
+
                 regionDataThisRegion->etiqueta = ThisRegionNum;
                 regionDataThisRegion->area += ThisArea;
                 regionDataThisRegion->perimeter += ThisPerimeter;
                 regionDataThisRegion->externPerimeter += ThisExternPerimeter;
 
-                if(ComputeData > 0)
+                if (ComputeData > 0)
                 {
-                    if(findmoments)
+                    if (findmoments)
                     {
                         regionDataThisRegion->sumx += ThisSumX;
                         regionDataThisRegion->sumy += ThisSumY;
@@ -1194,32 +1421,37 @@ bool BlobAnalysis(  IplImage* inputImage,
                         regionDataThisRegion->sumyy += ThisSumYY;
                         regionDataThisRegion->sumxy += ThisSumXY;
                     }
+
                     regionDataThisRegion->perimeter -= LastPerimeter;
                     regionDataThisRegion->minx=MIN(regionDataThisRegion->minx,ThisMinX);
                     regionDataThisRegion->maxx=MAX(regionDataThisRegion->maxx,ThisMaxX);
                     regionDataThisRegion->miny=MIN(regionDataThisRegion->miny,ThisMinY);
                     regionDataThisRegion->maxy=MAX(regionDataThisRegion->maxy,ThisMaxY);
                 }
+
                 // blobs externs
-                if( CandidatExterior )
+                if ( CandidatExterior )
                 {
                     regionDataThisRegion->exterior = true;
                 }
             }
         }    // end Main loop
 
-        if(ErrorFlag != 0)
+        if (ErrorFlag != 0)
         {
             delete [] Transition;
             delete [] ThisRegion;
             delete [] LastRegion;
             return false;
         }
+
         // ens situem al primer pixel de la seguent fila
         pImage = inputImage->imageData - 1 + startCol + (ThisRow+startRow) * inputImage->widthStep;
 
-        if(maskImage!=NULL)
+        if (maskImage!=NULL)
+        {
             pMask = maskImage->imageData - 1 + ThisRow * maskImage->widthStep;
+        }
     }    // end Loop over all rows
 
     // eliminem l'�rea del marc
@@ -1238,17 +1470,18 @@ bool BlobAnalysis(  IplImage* inputImage,
     RegionData[0]->perimeter -= 8.0;
 
     blob_vector::iterator iti;
-    CBlob *blobActual;
+    CBlob* blobActual;
 
-    if(findmoments)
+    if (findmoments)
     {
         iti = RegionData.begin();
+
         // Normalize summation fields into moments
-        for(ThisRegionNum = 0; ThisRegionNum <= HighRegionNum; ++ThisRegionNum, ++iti)
+        for (ThisRegionNum = 0; ThisRegionNum <= HighRegionNum; ++ThisRegionNum, ++iti)
         {
             blobActual = *iti;
 
-            if(!SubsumedRegion[ThisRegionNum])    // is a valid blob?
+            if (!SubsumedRegion[ThisRegionNum])   // is a valid blob?
             {
                 // Get averages
                 blobActual->sumx /= blobActual->area;
@@ -1261,7 +1494,8 @@ bool BlobAnalysis(  IplImage* inputImage,
                 blobActual->sumxx -= blobActual->sumx * blobActual->sumx;
                 blobActual->sumyy -= blobActual->sumy * blobActual->sumy;
                 blobActual->sumxy -= blobActual->sumx * blobActual->sumy;
-                if(blobActual->sumxy > -1.0E-14 && blobActual->sumxy < 1.0E-14)
+
+                if (blobActual->sumxy > -1.0E-14 && blobActual->sumxy < 1.0E-14)
                 {
                     blobActual->sumxy = (float) 0.0; // Eliminate roundoff error
                 }
@@ -1271,29 +1505,37 @@ bool BlobAnalysis(  IplImage* inputImage,
 
     //Get the real mean and std deviation
     iti = RegionData.begin();
-    for(ThisRegionNum = 0; ThisRegionNum <= HighRegionNum; ++ThisRegionNum, ++iti)
+
+    for (ThisRegionNum = 0; ThisRegionNum <= HighRegionNum; ++ThisRegionNum, ++iti)
     {
         blobActual = *iti;
-        if(!SubsumedRegion[ThisRegionNum])    // is a valid blob?
+
+        if (!SubsumedRegion[ThisRegionNum])   // is a valid blob?
         {
-            if(blobActual->area > 1)
+            if (blobActual->area > 1)
             {
                 blobActual->stddev =
-                                    sqrt(
-                                    (
-                                    blobActual->stddev * blobActual->area -
-                                    blobActual->mean * blobActual->mean
-                                    )/
-                                    (blobActual->area*(blobActual->area-1))
-                                    );
+                    sqrt(
+                        (
+                            blobActual->stddev * blobActual->area -
+                            blobActual->mean * blobActual->mean
+                        )/
+                        (blobActual->area*(blobActual->area-1))
+                    );
             }
             else
+            {
                 blobActual->stddev=0;
+            }
 
-            if(blobActual->area > 0)
+            if (blobActual->area > 0)
+            {
                 blobActual->mean/=blobActual->area;
+            }
             else
+            {
                 blobActual->mean = 0;
+            }
         }
 
     }
@@ -1303,15 +1545,18 @@ bool BlobAnalysis(  IplImage* inputImage,
     blob_vector::iterator itBlobs = RegionData.begin();
 
     ThisRegionNum = 0;
-    while( itBlobs != RegionData.end() )
+
+    while ( itBlobs != RegionData.end() )
     {
-        if(SubsumedRegion[ThisRegionNum])    // is not a valid blob?
+        if (SubsumedRegion[ThisRegionNum])   // is not a valid blob?
         {
             delete *itBlobs;
             itBlobs = RegionData.erase( itBlobs );
         }
         else
+        {
             ++itBlobs;
+        }
 
         ++ThisRegionNum;
     }
@@ -1321,15 +1566,18 @@ bool BlobAnalysis(  IplImage* inputImage,
     delete [] ThisRegion;
     delete [] LastRegion;
 
-    if( imatgePerimetreExtern ) cvReleaseImage(&imatgePerimetreExtern);
+    if ( imatgePerimetreExtern )
+    {
+        cvReleaseImage(&imatgePerimetreExtern);
+    }
 
     return true;
 }
 
 
-int *NewSubsume(int *subsumed, int index_subsume)
+int* NewSubsume(int* subsumed, int index_subsume)
 {
-    if( index_subsume == 0 )
+    if ( index_subsume == 0 )
     {
         subsumed = (int*)malloc(sizeof(int));
     }
@@ -1337,6 +1585,7 @@ int *NewSubsume(int *subsumed, int index_subsume)
     {
         subsumed = (int*)realloc(subsumed,(index_subsume+1)*sizeof(int));
     }
+
     subsumed[index_subsume]=0;
     return subsumed;
 }
@@ -1345,14 +1594,14 @@ int *NewSubsume(int *subsumed, int index_subsume)
  Fusiona dos blobs i afegeix el blob les caracter�stiques del blob RegionData[HiNum]
  al blob RegionData[LoNum]. Al final allibera el blob de RegionData[HiNum]
 */
-void Subsume(blob_vector &RegionData,
-            int HighRegionNum,
-            int* SubsumedRegion,
-            CBlob* blobHi,
-            CBlob* blobLo,
-            bool findmoments,
-            int HiNum,
-            int LoNum)
+void Subsume(blob_vector& RegionData,
+             int HighRegionNum,
+             int* SubsumedRegion,
+             CBlob* blobHi,
+             CBlob* blobLo,
+             bool findmoments,
+             int HiNum,
+             int LoNum)
 {
     // cout << "\nSubsuming " << HiNum << " into " << LoNum << endl; // for debugging
 
@@ -1369,7 +1618,7 @@ void Subsume(blob_vector &RegionData,
     blobLo->mean += blobHi->mean;
     blobLo->stddev += blobHi->stddev;
 
-    if( findmoments )
+    if ( findmoments )
     {
         blobLo->sumx+=blobHi->sumx;
         blobLo->sumy+=blobHi->sumy;
@@ -1377,12 +1626,16 @@ void Subsume(blob_vector &RegionData,
         blobLo->sumyy+=blobHi->sumyy;
         blobLo->sumxy+=blobHi->sumxy;
     }
+
     // Make sure no region still has subsumed region as parent
     blob_vector::iterator it = (RegionData.begin() + HiNum + 1);
 
-    for(i = HiNum + 1; i <= HighRegionNum; ++i, ++it)
+    for (i = HiNum + 1; i <= HighRegionNum; ++i, ++it)
     {
-        if((*it)->parent == (float) HiNum) { (*it)->parent = LoNum; }
+        if ((*it)->parent == (float) HiNum)
+        {
+            (*it)->parent = LoNum;
+        }
     }
 
     // Mark dead region number for future compression
@@ -1412,27 +1665,46 @@ void Subsume(blob_vector &RegionData,
 - DATA DE CREACI�: 2006/02/27
 - MODIFICACI�: Data. Autor. Descripci�.
 */
-double GetExternPerimeter( int start, int end, int row, int width, int height, IplImage *imatgePerimetreExtern )
+double GetExternPerimeter( int start, int end, int row, int width, int height, IplImage* imatgePerimetreExtern )
 {
     double perimeter = 0.0f;
-    char *pPerimetre;
+    char* pPerimetre;
 
 
     // comprovem les dimensions de la imatge
     perimeter += ( start <= 0 ) + ( end >= width - 1 );
-    if(row <= 1 ) perimeter+= start - end;
-    if(row >= height - 1 ) perimeter+= start - end;
+
+    if (row <= 1 )
+    {
+        perimeter+= start - end;
+    }
+
+    if (row >= height - 1 )
+    {
+        perimeter+= start - end;
+    }
 
 
     // comprovem els pixels que toquen a la m�scara (si s'escau)
-    if( imatgePerimetreExtern != NULL )
+    if ( imatgePerimetreExtern != NULL )
     {
-        if( row <= 0 || row >= height ) return perimeter;
+        if ( row <= 0 || row >= height )
+        {
+            return perimeter;
+        }
 
-        if( start < 0 ) start = 1;
-        if( end >= width ) end = width - 2;
+        if ( start < 0 )
+        {
+            start = 1;
+        }
+
+        if ( end >= width )
+        {
+            end = width - 2;
+        }
 
         pPerimetre = imatgePerimetreExtern->imageData + (row - 1) * imatgePerimetreExtern->widthStep + start;
+
         for (int x = start - 1; x <= end; ++x )
         {
             perimeter += *pPerimetre;

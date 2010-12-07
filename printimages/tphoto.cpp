@@ -45,43 +45,44 @@ namespace KIPIPrintImagesPlugin
 TPhoto::TPhoto(int thumbnailSize)
       : pAddInfo(NULL), pCaptionInfo(NULL)
 {
-    m_size = 0;
-    cropRegion = QRect(-1, -1, -1, -1);
-    rotation = 0;
-    first = false;
+    m_size                = 0;
+    cropRegion            = QRect(-1, -1, -1, -1);
+    rotation              = 0;
+    first                 = false;
 
-    copies = 1;
+    copies                = 1;
     //TODO mPrintPosition;
-    filename = "";
-    m_exiv2Iface = NULL;
+    filename              = "";
+    m_exiv2Iface          = NULL;
 
-    m_thumbnail = NULL;
+    m_thumbnail           = NULL;
 
     this->m_thumbnailSize = thumbnailSize;
 }
 
 //to get old photo info
-TPhoto::TPhoto (const TPhoto& photo): pAddInfo(NULL), pCaptionInfo(NULL)
+TPhoto::TPhoto (const TPhoto& photo)
+    : pAddInfo(NULL), pCaptionInfo(NULL)
 {
-  m_thumbnailSize = photo.m_thumbnailSize;
-  cropRegion      = photo.cropRegion;
-  filename        = photo.filename;
-  first           = photo.first;
-  copies          = photo.copies;
-  rotation        = photo.rotation;
-  
-  if (photo.pAddInfo)
-  {
-    pAddInfo = new AdditionalInfo(*photo.pAddInfo);
-  }
-  if (photo.pCaptionInfo)
-  {
-    pCaptionInfo = new CaptionInfo(*photo.pCaptionInfo);
-  }
-  
-  m_size       = 0;
-  m_exiv2Iface = NULL;
-  m_thumbnail  = NULL;
+    m_thumbnailSize = photo.m_thumbnailSize;
+    cropRegion      = photo.cropRegion;
+    filename        = photo.filename;
+    first           = photo.first;
+    copies          = photo.copies;
+    rotation        = photo.rotation;
+
+    if (photo.pAddInfo)
+    {
+        pAddInfo = new AdditionalInfo(*photo.pAddInfo);
+    }
+    if (photo.pCaptionInfo)
+    {
+        pCaptionInfo = new CaptionInfo(*photo.pCaptionInfo);
+    }
+
+    m_size       = 0;
+    m_exiv2Iface = NULL;
+    m_thumbnail  = NULL;
 }
 
 TPhoto::~TPhoto()
@@ -111,14 +112,14 @@ void TPhoto::loadCache()
     m_size = new QSize(photo.width(), photo.height());
 }
 
-QPixmap & TPhoto::thumbnail()
+QPixmap& TPhoto::thumbnail()
 {
     if (!m_thumbnail)
         loadCache();
     return *m_thumbnail;
 }
 
-QImage  TPhoto::loadPhoto()
+QImage TPhoto::loadPhoto()
 {
     QImage photo;
 
@@ -133,14 +134,14 @@ QImage  TPhoto::loadPhoto()
     return photo;
 }
 
-QSize & TPhoto::size()  // private
+QSize& TPhoto::size()  // private
 {
     if (m_size == 0)
         loadCache();
     return *m_size;
 }
 
-KExiv2Iface::KExiv2 *TPhoto::exiv2Iface()
+KExiv2Iface::KExiv2* TPhoto::exiv2Iface()
 {
     if (!m_exiv2Iface && !filename.url().isEmpty())
     {
@@ -162,21 +163,21 @@ int TPhoto::height()
 
 double TPhoto::scaleWidth(double unitToInches)
 {
-  Q_ASSERT(pAddInfo != NULL);
-  cropRegion = QRect(0, 0,
-                     (int)(pAddInfo->mPrintWidth * unitToInches),
-                     (int)(pAddInfo->mPrintHeight * unitToInches));
-  return pAddInfo->mPrintWidth * unitToInches;
+    Q_ASSERT(pAddInfo != NULL);
+    cropRegion = QRect(0, 0,
+                       (int)(pAddInfo->mPrintWidth * unitToInches),
+                       (int)(pAddInfo->mPrintHeight * unitToInches));
+    return pAddInfo->mPrintWidth * unitToInches;
 }
 
 double TPhoto::scaleHeight(double unitToInches)
 {
-  Q_ASSERT(pAddInfo != NULL);
-  cropRegion = QRect(0,
-                     0,
-                     (int)(pAddInfo->mPrintWidth * unitToInches),
-                     (int)(pAddInfo->mPrintHeight * unitToInches));
-              return pAddInfo->mPrintHeight * unitToInches;
+    Q_ASSERT(pAddInfo != NULL);
+    cropRegion = QRect(0,
+                       0,
+                       (int)(pAddInfo->mPrintWidth * unitToInches),
+                       (int)(pAddInfo->mPrintHeight * unitToInches));
+    return pAddInfo->mPrintHeight * unitToInches;
 }
 
 }  // NameSpace KIPIPrintImagesPlugin

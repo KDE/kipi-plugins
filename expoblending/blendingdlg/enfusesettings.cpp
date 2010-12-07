@@ -111,7 +111,7 @@ EnfuseSettingsWidget::EnfuseSettingsWidget(QWidget* parent)
     d->exposureInput->input()->setRange(0.0, 1.0, 0.01, true);
     d->exposureInput->setDefaultValue(1.0);
     d->exposureInput->setWhatsThis( i18n("Set the exposure contribution for the blending process. "
-                                         "Higher values will favour well-exposed pixels."));
+                                         "Higher values will favor well-exposed pixels."));
 
     d->saturationLabel = new QLabel(i18nc("enfuse settings", "Saturation:"));
     d->saturationInput = new RDoubleNumInput();

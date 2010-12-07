@@ -97,6 +97,7 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
     vlay->setSpacing(KDialog::spacingHint());
     vlay->addWidget(d->imageLabel);
     vlay->addWidget(d->infoLabel);
+    vlay->addStretch();
 
     setSupportedMimeTypes(KImageIO::mimeTypes());
 

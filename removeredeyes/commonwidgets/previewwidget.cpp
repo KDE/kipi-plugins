@@ -76,17 +76,17 @@ struct PreviewWidgetPriv
 };
 
 PreviewWidget::PreviewWidget(QWidget* parent)
-             : QGraphicsView(parent), d(new PreviewWidgetPriv)
+    : QGraphicsView(parent), d(new PreviewWidgetPriv)
 {
     QString whatsThis = i18n("<p>This widget will display a correction "
-            "preview for the currently selected image.</p>"
-            "<p><ul>"
-            "<li>Move the mouse <b>over</b> the preview to display the original image.</li>"
-            "<li>Move the mouse <b>out of</b> the preview to display the corrected image.</li>"
-            "<li><b>Click on</b> the preview to display the correction mask.</li>"
-            "</ul></p>"
-            "<p>The zoom buttons and panning widget allow you to view certain parts of the image "
-            "more closely.</p>");
+                             "preview for the currently selected image.</p>"
+                             "<p><ul>"
+                             "<li>Move the mouse <b>over</b> the preview to display the original image.</li>"
+                             "<li>Move the mouse <b>out of</b> the preview to display the corrected image.</li>"
+                             "<li><b>Click on</b> the preview to display the correction mask.</li>"
+                             "</ul></p>"
+                             "<p>The zoom buttons and panning widget allow you to view certain parts of the image "
+                             "more closely.</p>");
 
     setWhatsThis(whatsThis);
 
@@ -174,7 +174,9 @@ QString& PreviewWidget::currentImage() const
 void PreviewWidget::setCurrentImage(const QString& image)
 {
     if (d->image == image)
-            return;
+    {
+        return;
+    }
 
     d->image = image;
     resetPreviews();
@@ -197,6 +199,7 @@ void PreviewWidget::setPreviewImage(ImageType type, const QString& filename)
             d->maskLabel->setPixmap(openFile(filename));
             break;
     }
+
     emit settingsChanged();
 }
 
@@ -216,13 +219,16 @@ QPixmap PreviewWidget::openFile(const QString& filename)
             return QPixmap();
         }
     }
+
     return image;
 }
 
 void PreviewWidget::originalClicked()
 {
     if (d->locked)
+    {
         return;
+    }
 
     setMode(OriginalMode);
 }
@@ -230,7 +236,9 @@ void PreviewWidget::originalClicked()
 void PreviewWidget::correctedClicked()
 {
     if (d->locked)
+    {
         return;
+    }
 
     setMode(CorrectedMode);
 }
@@ -238,12 +246,18 @@ void PreviewWidget::correctedClicked()
 void PreviewWidget::maskClicked()
 {
     if (d->locked)
+    {
         return;
+    }
 
     if (d->stack->currentIndex() == MaskMode)
+    {
         setMode(OriginalMode);
+    }
     else
+    {
         setMode(MaskMode);
+    }
 }
 
 void PreviewWidget::resizeEvent(QResizeEvent* e)
@@ -317,6 +331,7 @@ bool PreviewWidget::previewsComplete()
     {
         return false;
     }
+
     return true;
 }
 

@@ -154,13 +154,13 @@ void PreProcessingPage::resetTitle()
 {
     d->title->setText(i18n("<qt>"
                            "<p>Now, we will pre-process bracketed images before fusing them.</p>"
-                           "<p>To perform auto-alignment, <b>%1</b> program from "
+                           "<p>To perform auto-alignment, the <b>%1</b> program from the "
                            "<a href='%2'>%3</a> project will be used. "
-                           "Alignment must be performed if you haven't used a tripod to take bracketed images. "
-                           "Alignment operation can take a while.</p>"
+                           "Alignment must be performed if you have not used a tripod to take bracketed images. "
+                           "Alignment operations can take a while.</p>"
                            "<p>Pre-processing operations include Raw demosaicing. Raw images will be converted "
                            "to 16-bit sRGB images with auto-gamma."
-                           "<p>Press \"Next\" button to start pre-processing.</p>"
+                           "<p>Press \"Next\" to start pre-processing.</p>"
                            "</qt>",
                            QString(d->mngr->alignBinary().path()),
                            d->mngr->alignBinary().url().url(),
@@ -233,9 +233,9 @@ void PreProcessingPage::slotAction(const KIPIExpoBlendingPlugin::ActionData& ad)
                 case(PREPROCESSING):
                 {
                     d->title->setText(i18n("<qt>"
-                                           "<p>Pre-processing has failed!</p>"
+                                           "<p>Pre-processing has failed.</p>"
                                            "<p>Please check your bracketed images stack...</p>"
-                                           "<p>Press \"Details\" button to show processing messages.</p>"
+                                           "<p>Press \"Details\" to show processing messages.</p>"
                                            "</qt>"));
                     d->progressTimer->stop();
                     d->alignCheckBox->hide();

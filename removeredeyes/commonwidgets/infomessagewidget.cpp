@@ -54,14 +54,14 @@ struct InfoMessageWidgetPriv
 };
 
 InfoMessageWidget::InfoMessageWidget(QWidget* parent)
-                 : QWidget(parent), d(new InfoMessageWidgetPriv)
+    : QWidget(parent), d(new InfoMessageWidgetPriv)
 {
     setFocusPolicy(Qt::NoFocus);
 
     QPalette pal = palette();
     pal.setColor(QPalette::Active, QPalette::Window,
                  KApplication::palette().color(QPalette::Active,
-                 QPalette::Window));
+                         QPalette::Window));
     setPalette(pal);
 
     move(10, 10);
@@ -74,7 +74,7 @@ InfoMessageWidget::~InfoMessageWidget()
     delete d;
 }
 
-void InfoMessageWidget::display(const QString & message, Icon icon, int durationMs)
+void InfoMessageWidget::display(const QString& message, Icon icon, int durationMs)
 {
     // set text
     d->message = message;
@@ -88,6 +88,7 @@ void InfoMessageWidget::display(const QString & message, Icon icon, int duration
 
     // load icon (if set) and update geometry
     d->symbol = QPixmap();
+
     if (icon != None)
     {
         switch (icon)
@@ -111,11 +112,15 @@ void InfoMessageWidget::display(const QString & message, Icon icon, int duration
     // if the layout is RtL, we can move it to the right place only after we
     // know how much size it will take
     if (layoutDirection() == Qt::RightToLeft)
+    {
         move(parentWidget()->width() - geometry().width() - 10 - 1, 10);
+    }
 
     // show widget and schedule a repaint
     if (!d->hidden)
+    {
         show();
+    }
 
     update();
 
@@ -129,6 +134,7 @@ void InfoMessageWidget::display(const QString & message, Icon icon, int duration
             connect(d->timer, SIGNAL(timeout()),
                     SLOT(hide()));
         }
+
         d->timer->start(durationMs);
     }
     else if (d->timer)
@@ -144,15 +150,19 @@ void InfoMessageWidget::paintEvent( QPaintEvent * /* e */)
     textRect.adjust( 0, 0, 2, 2 );
 
     int textXOffset = 0,
-    textYOffset = geometry().height() - textRect.height() / 2,
-    iconXOffset = 0,
-    iconYOffset = !d->symbol.isNull() ? ( geometry().height() - d->symbol.height() ) / 2
-                                      : 0, shadowOffset = 1;
+        textYOffset = geometry().height() - textRect.height() / 2,
+        iconXOffset = 0,
+        iconYOffset = !d->symbol.isNull() ? ( geometry().height() - d->symbol.height() ) / 2
+                      : 0, shadowOffset = 1;
 
     if ( layoutDirection() == Qt::RightToLeft )
+    {
         iconXOffset = 2 + textRect.width();
+    }
     else
+    {
         textXOffset = 2 + d->symbol.width();
+    }
 
     // draw background
     QPainter painter( this );
@@ -169,7 +179,9 @@ void InfoMessageWidget::paintEvent( QPaintEvent * /* e */)
 
     // draw icon if present
     if ( !d->symbol.isNull() )
+    {
         painter.drawPixmap(5 + iconXOffset, iconYOffset, d->symbol, 0, 0, d->symbol.width(), d->symbol.height());
+    }
 
     // draw shadow and text
     painter.setPen( palette().color( QPalette::Window ).dark( 115 ) );
