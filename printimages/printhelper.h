@@ -24,7 +24,7 @@
 #ifndef PRINTHELPER_H
 #define PRINTHELPER_H
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
@@ -32,27 +32,26 @@ class QWidget;
 
 namespace KIPI 
 {
-  class Interface;
+    class Interface;
 }
 
 namespace KIPIPrintImagesPlugin
 {
-
-class PrintHelperPrivate;
 
 class PrintHelper 
 {
 
 public:
 
-  PrintHelper(QWidget* parent, KIPI::Interface*);
-  ~PrintHelper();
+    PrintHelper(QWidget* parent, KIPI::Interface*);
+    ~PrintHelper();
 
-  void print(KUrl::List fileList);
+    void print(KUrl::List fileList);
 
 private:
 
-  PrintHelperPrivate* const d;
+    class PrintHelperPrivate;
+    PrintHelperPrivate* const d;
 };
 
 } // namespace
