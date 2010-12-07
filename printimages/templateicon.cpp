@@ -45,14 +45,14 @@ TemplateIcon::TemplateIcon(int height, const QSize &template_size)
     icon    = NULL;
 }
 
-TemplateIcon::~TemplateIcon( void )
+TemplateIcon::~TemplateIcon()
 {
     delete pixmap;
     delete painter;
     delete icon;
 }
 
-void TemplateIcon::begin( void )
+void TemplateIcon::begin()
  {
     // compute scaling values
     m_icon_size.rwidth() = (int)(float(m_icon_size.height()) * float(m_paper_size.width()) / float(m_paper_size.height()));
@@ -78,7 +78,7 @@ void TemplateIcon::begin( void )
     painter->drawRect(pixmap->rect());
 }
 
-void TemplateIcon::fillRect( int x, int y, int w, int h, QColor color )
+void TemplateIcon::fillRect( int x, int y, int w, int h, const QColor& color )
 {
 #ifdef DEBUG_OUTPUT
     kDebug() << "fillRect: x1=" << x << " => " << x     * scale_width;
@@ -94,7 +94,7 @@ void TemplateIcon::fillRect( int x, int y, int w, int h, QColor color )
                        color );
 }
 
-void TemplateIcon::end( void )
+void TemplateIcon::end()
 {
     // paint boundary of template
     painter->setPen( Qt::color1 );
@@ -108,17 +108,17 @@ void TemplateIcon::end( void )
     icon = new QIcon( *pixmap );
 }
 
-QIcon& TemplateIcon::getIcon( void )
+QIcon& TemplateIcon::getIcon() const
 {
     return *icon;
 }
 
-QSize& TemplateIcon::getSize( void )
+QSize& TemplateIcon::getSize()
 {
     return m_icon_size;
 }
 
-QPainter& TemplateIcon::getPainter( void )
+QPainter& TemplateIcon::getPainter() const
 {
     return *painter;
 }

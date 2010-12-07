@@ -23,35 +23,37 @@
 #ifndef SIGNALBLOCKER_H
 #define SIGNALBLOCKER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QObject>
 
 namespace KIPIPrintImagesPlugin
 {
 
-  /**
-   * An RAII class to block and unblock signals from a QObject instance
-   */
-  class SignalBlocker
-  {
-    public:
-      SignalBlocker ( QObject* object )
-      {
-        mObject = object;
+/**
+* An RAII class to block and unblock signals from a QObject instance
+*/
+class SignalBlocker
+{
+public:
+
+    SignalBlocker( QObject* object )
+    {
+        mObject     = object;
         mWasBlocked = object->blockSignals ( true );
-      }
+    }
 
-      ~SignalBlocker()
-      {
+    ~SignalBlocker()
+    {
         mObject->blockSignals ( mWasBlocked );
-      }
+    }
 
-    private:
-      QObject* mObject;
-      bool mWasBlocked;
-  };
+private:
 
-} // namespace
+    QObject* mObject;
+    bool     mWasBlocked;
+};
+
+} // namespace KIPIPrintImagesPlugin
 
 #endif /* SIGNALBLOCKER_H */
