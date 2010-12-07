@@ -25,11 +25,13 @@
 #define TPHOTO_H
 
 // Qt includes
+
 #include <QRect>
 #include <QFont>
 #include <QColor>
 
 // KDE includes
+
 #include <kurl.h>
 
 namespace KExiv2Iface
@@ -40,111 +42,127 @@ class KExiv2;
 namespace KIPIPrintImagesPlugin
 {
 
-  class AdditionalInfo
-  {
-    public:
-      int mUnit;
-      int mPrintPosition;
-      int mScaleMode;
-      bool mKeepRatio;
-      bool mAutoRotate;
-      double mPrintWidth, mPrintHeight;
-      bool mEnlargeSmallerImages;
-      AdditionalInfo() : mUnit(0), mPrintPosition(0), mScaleMode(0), mKeepRatio(true),
-                         mAutoRotate(true), mPrintWidth(0.0), mPrintHeight(0.0),
-                         mEnlargeSmallerImages(false)
-                         {}
-                         
-      AdditionalInfo(const AdditionalInfo& ai)
-      {
-        mUnit          = ai.mUnit;
-        mPrintPosition = ai.mPrintPosition;
-        mScaleMode     = ai.mScaleMode;
-        mKeepRatio     = ai.mKeepRatio;
-        mAutoRotate    = ai.mAutoRotate;
-        mPrintWidth    = ai.mPrintWidth;
-        mPrintHeight   = ai.mPrintHeight;
-        mEnlargeSmallerImages = ai.mEnlargeSmallerImages;
-      }
-  };
+class AdditionalInfo
+{
+public:
 
-  class CaptionInfo
-  {
-    public:
-      enum AvailableCaptions {
+    int    mUnit;
+    int    mPrintPosition;
+    int    mScaleMode;
+    bool   mKeepRatio;
+    bool   mAutoRotate;
+    double mPrintWidth, mPrintHeight;
+    bool   mEnlargeSmallerImages;
+
+public:
+
+    AdditionalInfo() : mUnit(0), mPrintPosition(0), mScaleMode(0), mKeepRatio(true),
+                       mAutoRotate(true), mPrintWidth(0.0), mPrintHeight(0.0),
+                       mEnlargeSmallerImages(false)
+                       {}
+
+    AdditionalInfo(const AdditionalInfo& ai)
+    {
+        mUnit                 = ai.mUnit;
+        mPrintPosition        = ai.mPrintPosition;
+        mScaleMode            = ai.mScaleMode;
+        mKeepRatio            = ai.mKeepRatio;
+        mAutoRotate           = ai.mAutoRotate;
+        mPrintWidth           = ai.mPrintWidth;
+        mPrintHeight          = ai.mPrintHeight;
+        mEnlargeSmallerImages = ai.mEnlargeSmallerImages;
+    }
+};
+
+// -----------------------------------------------------------
+
+class CaptionInfo
+{
+public:
+
+    enum AvailableCaptions
+    {
         NoCaptions = 0,
         FileNames,
         ExifDateTime,
         Comment,
         Free
-      };
-      
-      AvailableCaptions m_caption_type;
-      QFont             m_caption_font;
-      QColor            m_caption_color;
-      int               m_caption_size;
-      QString           m_caption_text;
+    };
 
-      CaptionInfo() : m_caption_type(NoCaptions), m_caption_font("Sans Serif"), m_caption_color(Qt::yellow),
-                      m_caption_size(2),m_caption_text()
-      {}
-                         
-      CaptionInfo(const CaptionInfo& ci)
-      {
+public:
+
+    AvailableCaptions m_caption_type;
+    QFont             m_caption_font;
+    QColor            m_caption_color;
+    int               m_caption_size;
+    QString           m_caption_text;
+
+public:
+
+    CaptionInfo() : m_caption_type(NoCaptions), m_caption_font("Sans Serif"), m_caption_color(Qt::yellow),
+                    m_caption_size(2),m_caption_text()
+    {}
+
+    CaptionInfo(const CaptionInfo& ci)
+    {
         m_caption_type   = ci.m_caption_type;
         m_caption_font   = ci.m_caption_font;
         m_caption_color  = ci.m_caption_color;
         m_caption_size   = ci.m_caption_size;
         m_caption_text   = ci.m_caption_text;
-      }
-      
-      virtual ~CaptionInfo() {}
-  };
+    }
 
-  class TPhoto
-  {
+    virtual ~CaptionInfo() {}
+};
 
-  public:
+// -----------------------------------------------------------
 
-      TPhoto ( int thumbnailSize );
-      TPhoto (const TPhoto& );
-      ~TPhoto();
+class TPhoto
+{
 
-      KUrl filename; // full path
+public:
 
-      QPixmap & thumbnail();
-      QImage    loadPhoto();
+    TPhoto(int thumbnailSize);
+    TPhoto(const TPhoto&);
+    ~TPhoto();
 
-      int m_thumbnailSize;
+    QPixmap& thumbnail();
+    QImage   loadPhoto();
 
-      int width();
-      int height();
-      QSize& size();
+    int    width();
+    int    height();
+    QSize& size();
 
-      QRect cropRegion;
-      // to get first copy quickly
-      bool first;
-      // number of copies
-      int copies;
-      int rotation;
-      AdditionalInfo *pAddInfo;
-      CaptionInfo    *pCaptionInfo;
+    double scaleWidth(double unitToInches);
+    double scaleHeight(double unitToInches);
 
-      double scaleWidth(double unitToInches);
-      double scaleHeight(double unitToInches);
+    KExiv2Iface::KExiv2* exiv2Iface();
 
-      KExiv2Iface::KExiv2 *exiv2Iface();
+public:
 
-  private:
+    // full path
+    KUrl            filename;
+    int             m_thumbnailSize;
 
-      void   loadCache();
+    QRect           cropRegion;
+    // to get first copy quickly
+    bool            first;
+    // number of copies
+    int             copies;
+    int             rotation;
+    AdditionalInfo* pAddInfo;
+    CaptionInfo*    pCaptionInfo;
 
-  private:
+private:
 
-      QPixmap             *m_thumbnail;
-      QSize               *m_size;
-      KExiv2Iface::KExiv2 *m_exiv2Iface;
-  };
+    void   loadCache();
+
+private:
+
+    QPixmap*             m_thumbnail;
+    QSize*               m_size;
+    KExiv2Iface::KExiv2* m_exiv2Iface;
+};
 
 }  // NameSpace KIPIPrintImagesPlugin
 
