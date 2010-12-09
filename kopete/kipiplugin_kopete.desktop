@@ -1,7 +1,23 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Instant Messaging Export
+Name[ca]=Exportació a missatgeria instantània
+Name[en_GB]=Instant Messaging Export
+Name[it]=Esportazione a messaggistica
+Name[pt]=Exportação para Mensagens Instantâneas
+Name[pt_BR]=Exportar mensagens instantâneas
+Name[sv]=Export som direktmeddelande
+Name[uk]=Експорт до мережі обміну повідомленнями
+Name[x-test]=xxInstant Messaging Exportxx
 Comment=A tool to export images to an instant messaging contact
+Comment[ca]=Una eina per a exportar imatges a un contacte de missatgeria instantània
+Comment[en_GB]=A tool to export images to an instant messaging contact
+Comment[it]=Uno strumento per esportare immagini a un contatto di messaggistica
+Comment[pt]=Uma ferramenta para exportar imagens para um contacto de mensagens instantâneas
+Comment[pt_BR]=Uma ferramenta para exportar imagens para um contato de mensagens instantâneas
+Comment[sv]=Ett verktyg för att exportera bilder till en direktmeddelandekontakt
+Comment[uk]=Інструмент для експорту зображення до контакту мережі миттєвого обміну повідомленнями
+Comment[x-test]=xxA tool to export images to an instant messaging contactxx
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kopete
