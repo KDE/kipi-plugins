@@ -218,7 +218,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
     foreach(imgUrl, imgList)
     {
         kDebug() << "Sending file " << imgUrl.toLocalFile();
-        m_kopeteDBus.asyncCall("sendFile", imgUrl.toLocalFile());
+        m_kopeteDBus.call("sendFile", contactId, imgUrl.toLocalFile());
     }
 }
 
