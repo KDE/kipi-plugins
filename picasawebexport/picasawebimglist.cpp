@@ -44,7 +44,7 @@ using namespace KDcrawIface;
 namespace KIPIPicasawebExportPlugin
 {
 
-static const char picasaweb_video_extentions[] = "*.3gpp *.avi *.mp4 *.mpg *.mpeg *.mpeg4 *.asf *.wmv ";
+static const char picasaweb_video_extentions[] = "*.3gp *.avi *.asf *.mov *.wmv *.mpg *.mp4 *.m2t *.mmv *.m2ts *.3gpp";
 
 PicasawebImagesList::PicasawebImagesList(Interface *iface, QWidget* parent, int iconSize)
   : ImagesList(iface, parent, iconSize)
