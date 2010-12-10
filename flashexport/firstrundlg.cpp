@@ -135,7 +135,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
                          "so it is available for further use.</p>"));
 
     QLabel *info2 = new QLabel(page);
-    info2->setText(i18n("<p>1.) Download SimpleViewer Version 1.9.x</p>"));
+    info2->setText(i18n("<p>1.) Download SimpleViewer Version 2.1.x</p>"));
 
     KUrlLabel *link = new KUrlLabel(page);
     link->setText("http://www.simpleviewer.net");
