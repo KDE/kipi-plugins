@@ -21,7 +21,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> 258953 : DNGConverter       : DngConverter changes luminosity of sony ARW files.
 012 ==> 255069 : SendImage          : error with spaces in file names in send by email
 013 ==> 251235 : FlashExport        : Flash export plugin does not install.
-014 ==> 
+014 ==> 244702 : PicasaWebExport    : picasawebexport unable to select movie
+015 ==> 
 
 
 
