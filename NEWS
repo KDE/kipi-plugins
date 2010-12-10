@@ -19,7 +19,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> 243381 : ImageViewer        : Gwenview (gwenview), signal: Segmentation fault.
 010 ==> 256714 : DebianScreenshoots : Add export to screenshots.debian.net.
 011 ==> 258953 : DNGConverter       : DngConverter changes luminosity of sony ARW files.
-012 ==> 
+012 ==> 255069 : SendImage          : error with spaces in file names in send by email
+013 ==> 
 
 
 
