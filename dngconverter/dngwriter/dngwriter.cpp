@@ -63,6 +63,10 @@ extern "C"
 #include <kdebug.h>
 #include <kzip.h>
 
+// LibKDcraw includes
+
+#include <libkdcraw/version.h>
+
 // Libkexiv2 includes
 
 #include <libkexiv2/kexiv2.h>
@@ -231,11 +235,14 @@ int DNGWriter::convert()
         }
 
         bool useFullSensorImage = false;
+#if KDCRAW_VERSION >= 0x010300
         // disable general fullsensor image see #240750
-        //if (identifyMake.make == "Canon")
-        //{
-        //    useFullSensorImage = true;
-        //}
+        // seems this bug is fixed with libRaw 0.12beta4
+        if (identifyMake.make == "Canon")
+        {
+            useFullSensorImage = true;
+        }
+#endif
 
         if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, useFullSensorImage, 0))
         {
