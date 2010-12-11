@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Instant Messaging Export
 Name[ca]=Exportació a missatgeria instantània
+Name[da]=Eksport til instant messaging
 Name[en_GB]=Instant Messaging Export
 Name[it]=Esportazione a messaggistica
 Name[nl]=Exporteren van Instant Messaging
@@ -13,6 +14,7 @@ Name[x-test]=xxInstant Messaging Exportxx
 Name[zh_TW]=即時訊息匯出
 Comment=A tool to export images to an instant messaging contact
 Comment[ca]=Una eina per a exportar imatges a un contacte de missatgeria instantània
+Comment[da]=Et værktøj til at eksportere billeder til en instant messaging-kontakt
 Comment[en_GB]=A tool to export images to an instant messaging contact
 Comment[it]=Uno strumento per esportare immagini a un contatto di messaggistica
 Comment[nl]=Een hulpmiddel om afbeeldingen te exporteren naar een contactpersoon in Instant Messaging
