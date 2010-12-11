@@ -22,7 +22,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 012 ==> 255069 : SendImage          : error with spaces in file names in send by email
 013 ==> 251235 : FlashExport        : Flash export plugin does not install.
 014 ==> 244702 : PicasaWebExport    : picasawebexport unable to select movie
-015 ==> 
+015 ==> 258824 : PicasaWebExport    : After export images to Picasaweb cancel button should change to close.
+016 ==>
 
 
 
