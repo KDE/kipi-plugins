@@ -96,8 +96,8 @@ bool BlobAnalysis(  IplImage* inputImage,
     }
 
     int Trans = Cols;                // MAX trans in any row
-    char* pMask;
-    char* pImage;
+    char* pMask = 0;
+    char* pImage ;
 
     // Convert image array into transition array. In each row
     // the transition array tells which columns have a color change
@@ -370,20 +370,20 @@ bool BlobAnalysis(  IplImage* inputImage,
 
     int* SubsumedRegion = NULL;
 
-    double ThisParent;    // These data can change when the line is current
-    double ThisArea;
-    double ThisPerimeter;
-    double ThisSumX;
-    double ThisSumY;
-    double ThisSumXX;
-    double ThisSumYY;
-    double ThisSumXY;
-    double ThisMinX;
-    double ThisMaxX;
-    double ThisMinY;
-    double ThisMaxY;
-    double LastPerimeter;    // This is the only data for retroactive change
-    double ThisExternPerimeter;
+    double ThisParent = 0.0; // These data can change when the line is current
+    double ThisArea = 0.0;
+    double ThisPerimeter = 0.0;
+    double ThisSumX = 0.0;
+    double ThisSumY = 0.0;
+    double ThisSumXX = 0.0;
+    double ThisSumYY = 0.0;
+    double ThisSumXY = 0.0;
+    double ThisMinX = 0.0;
+    double ThisMaxX = 0.0;
+    double ThisMinY = 0.0;
+    double ThisMaxY = 0.0;
+    double LastPerimeter = 0.0; // This is the only data for retroactive change
+    double ThisExternPerimeter = 0.0;
 
     int HighRegionNum = 0;
     /*    int RegionNum = 0;*/
@@ -440,7 +440,8 @@ bool BlobAnalysis(  IplImage* inputImage,
         pMask = maskImage->imageData - 1;
     }
 
-    char* pImageAux, *pMaskAux;
+    char* pImageAux = 0;
+    char* pMaskAux  = 0;
 
     // Loop over all rows
     for (ThisRow = 1; ThisRow < Rows + 2; ++ThisRow)
