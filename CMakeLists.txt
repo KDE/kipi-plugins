@@ -1,5 +1,8 @@
 PROJECT(kipi-plugins)
 
+MESSAGE(STATUS "----------------------------------------------------------------------------------")
+MESSAGE(STATUS "Starting CMake configuration for: kipi-plugins")
+
 # =======================================================
 # Information to update before to release this package.
 
