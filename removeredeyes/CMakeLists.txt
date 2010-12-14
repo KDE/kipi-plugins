@@ -57,6 +57,13 @@ SET(kipiplugin_removeredeyes_PART_SRCS
 
 KDE4_ADD_PLUGIN(kipiplugin_removeredeyes ${kipiplugin_removeredeyes_PART_SRCS})
 
+# there are two versions of FindOpenCV.cmake in the wild, one defining
+# OpenCV_LIBRARIES, the other defining OpenCV_LIBS. Make sure we handle
+# both cases.
+IF (NOT OpenCV_LIBRARIES)
+  SET(OPENCV_LIBRARIES ${OpenCV_LIBS})
+ENDIF (NOT OpenCV_LIBRARIES)
+
 TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                       ${KIPI_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
