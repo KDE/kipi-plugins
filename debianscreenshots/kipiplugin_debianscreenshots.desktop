@@ -1,9 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Debian Screenshots Export
+Name[ca]=Exportació a Debian Screenshots
+Name[da]=Eksport til Debian Screenshots
 Name[en_GB]=Debian Screenshots Export
+Name[et]=Debiani ekraanipiltide eksport
 Name[it]=Esportazione delle schermate di Debian
 Name[nl]=Debian schermafdrukken exporteren
+Name[pt]=Exportação para as Imagens da Debian
 Name[pt_BR]=Exportar para o Debian Screenshots
 Name[ru]=Экспорт в снимки экрана Debian
 Name[sv]=Exportera skärmbilder för Debian
@@ -11,9 +15,13 @@ Name[uk]=Експортування до знімків Debian
 Name[x-test]=xxDebian Screenshots Exportxx
 Name[zh_TW]=Debian Screenshots 匯出
 Comment=A tool to export images to the Debian Screenshots site
+Comment[ca]=Una eina per a exportar imatges al lloc web de Debian Screenshots
+Comment[da]=Et værktøj til at eksportere billeder til websiden Debian Screenshots
 Comment[en_GB]=A tool to export images to the Debian Screenshots site
+Comment[et]=Tööriist piltide eksportimiseks Debiani ekraanipiltide saidile
 Comment[it]=Uno strumento per esportare immagini al sito delle schermate di Debian
 Comment[nl]=Een hulpmiddel om afbeeldingen te exporteren naar de Debian site voor schermafdrukken
+Comment[pt]=Uma ferramenta para exportar imagens para a página de Imagens da Debian
 Comment[pt_BR]=Uma ferramenta para exportar imagens para o site Debian Screenshots
 Comment[ru]=Инструмент для экспорта изображений на сайт снимков экрана Debian
 Comment[sv]=Ett verktyg för att exportera bilder till Debian Skärmbilder

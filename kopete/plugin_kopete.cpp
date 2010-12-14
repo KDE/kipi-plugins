@@ -31,6 +31,7 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QSignalMapper>
+#include <QVariant>
 
 // KDE includes
 
@@ -66,23 +67,16 @@ void Plugin_Kopete::setup(QWidget* widget)
     m_actionExport = actionCollection()->addAction("kopeteexport");
     m_actionExport->setText(i18n("&Instant Messaging contact..."));
     m_actionExport->setIcon(KIcon("kopete"));
-//    m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_I));
 
     addAction(m_actionExport);
 
-    // Check if Kopete is running. If not running, disable action? launch kopete? ask user?
-    if (!kopeteRunning())
-    {
-          m_actionExport->setEnabled(false);
-          m_actionExport->setToolTip(i18n("Kopete is not running"));
-          return;
-    }
-
     m_signalMapper = new QSignalMapper(widget);
+    connect(m_signalMapper, SIGNAL(mapped(QString)),
+            this, SLOT(slotTransferFiles(QString)));
 
     KMenu* contactsMenu = new KMenu(widget);
     m_actionExport->setMenu(contactsMenu);
-    connect(contactsMenu, SIGNAL(aboutToShow()), 
+    connect(contactsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotAboutToShowMenu()));
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
@@ -112,50 +106,40 @@ void Plugin_Kopete::slotAboutToShowMenu()
     KStandardDirs dir;
     QString tmp = dir.saveLocation("tmp", QString("kipi-kopete-") + QString::number(getpid()) + QString("/"));
 
+    m_actionExport->menu()->clear();
+
     if (!kopeteRunning())
     {
-          m_actionExport->setEnabled(false);
-          m_actionExport->setToolTip(i18n("Kopete is not running"));
-          return;
+        QAction* action = m_actionExport->menu()->addAction(QIcon::fromTheme("network-offline"), i18n("Please start Kopete to enable this action"), m_signalMapper, SLOT(map()));
+        m_signalMapper->setMapping(action, QString());
+        return;
     }
 
     QDBusReply<QStringList> kopeteContacts = m_kopeteDBus.call("contacts");
-    if(!kopeteContacts.isValid())
+    if( (!kopeteContacts.isValid()) || (kopeteContacts.value().size() == 0) )
     {
+        QAction* action = m_actionExport->menu()->addAction(QIcon::fromTheme("user-offline"), i18n("None of your contacts are online now"), m_signalMapper, SLOT(map()));
+        m_signalMapper->setMapping(action, QString());
         return;
     }
-
-    if(kopeteContacts.value().size() == 0 )
-    {
-        m_actionExport->setEnabled(false);
-        m_actionExport->setToolTip(i18n("None of your contacts are online now"));
-        return;
-    }
-
-    m_actionExport->menu()->clear();
 
     QString contact;
     foreach(contact, kopeteContacts.value())
     {
-        // TODO Check status using contactProperties.value().value("status", QString()) and Kopete::OnlineStatus::statusTypeToString()
-        QDBusReply<bool> online = m_kopeteDBus.call("isContactOnline", contact);
-        if(!online.isValid())
+        // TODO? Check status using contactProperties.value().value("status", QString())
+        // and Kopete::OnlineStatus::statusTypeToString() ?
+        // - Advantage: one less DBUS call per contact
+        // - Disadvantage: dependency on Kopete sources. Using isContactOnline makes code totally
+        //   independent from Kopete sources, so not changing the way the check is performed for now.
+        QDBusReply<bool> online = m_kopeteDBus.call("isContactOnline", QVariant::fromValue(contact));
+        if( !online.isValid() || !online.value() )
         {
             continue;
         }
 
-        if(!online.value())
-        {
-            continue;
-        }
 
-        QDBusReply<QVariantMap> contactProperties = m_kopeteDBus.call("contactProperties", contact);
-        if(!contactProperties.isValid()) 
-        {
-            continue;
-        }
-
-        if(contactProperties.value().size() == 0)
+        QDBusReply<QVariantMap> contactProperties = m_kopeteDBus.call("contactProperties", QVariant::fromValue(contact));
+        if( ( !contactProperties.isValid() ) || ( contactProperties.value().size() == 0 ) )
         {
             continue;
         }
@@ -181,8 +165,6 @@ void Plugin_Kopete::slotAboutToShowMenu()
         m_signalMapper->setMapping(action, contact);
     }
 
-    connect(m_signalMapper, SIGNAL(mapped(QString)),
-            this, SLOT(slotTransferFiles(QString)));
 }
 
 void Plugin_Kopete::slotTransferFiles(const QString& contactId)
@@ -193,7 +175,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
     KUrl::List imgList         = interface->currentSelection().images();
 
     // Check if Kopete is still running
-    if (!kopeteRunning())
+    if ( contactId.isEmpty() || !kopeteRunning() )
     {
         // TODO Show KMessageBox::critical or alike
           return;
@@ -201,14 +183,8 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
 
     // Check if contact is still online
     // TODO Connect to Kopete's contactChanged signal to add/remove contacts dynamically
-    QDBusReply<bool> online = m_kopeteDBus.call("isContactOnline", contactId);
-    if(!online.isValid())
-    {
-        // TODO Show KMessageBox::critical or alike
-        return;
-    }
-
-    if(!online.value())
+    QDBusReply<bool> online = m_kopeteDBus.call("isContactOnline", QVariant::fromValue(contactId));
+    if( !online.isValid() || !online.value() )
     {
         // TODO Show KMessageBox::critical or alike
         return;
@@ -218,7 +194,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
     foreach(imgUrl, imgList)
     {
         kDebug() << "Sending file " << imgUrl.toLocalFile();
-        m_kopeteDBus.asyncCall("sendFile", imgUrl.toLocalFile());
+        m_kopeteDBus.call("sendFile", QVariant::fromValue(contactId), QVariant::fromValue(imgUrl.toLocalFile()));
     }
 }
 

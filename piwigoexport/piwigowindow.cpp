@@ -561,7 +561,7 @@ void PiwigoWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText( i18n("Uploading file ") +  KUrl(photoPath).fileName() );
+    m_progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
 
     if (m_progressDlg->isHidden())
         m_progressDlg->show();

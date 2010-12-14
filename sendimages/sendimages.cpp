@@ -513,8 +513,7 @@ bool SendImages::invokeMailAgent()
                     for (KUrl::List::ConstIterator it = fileList.constBegin() ; it != fileList.constEnd() ; ++it )
                     {
                         tmp.append( "file://" );
-                        QString toencode=(*it).encodedPathAndQuery();
-                        tmp.append(toencode);
+                        tmp.append((*it).path());
                         tmp.append( "," );
                     }
                     tmp.remove(tmp.length()-1, 1);
