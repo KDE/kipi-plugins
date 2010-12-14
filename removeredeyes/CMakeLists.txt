@@ -7,7 +7,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/commonwidgets
-                    ${OpenCV_INCLUDE_DIRS}
+                    ${OpenCV_INCLUDE_DIR}
                    )
 
 SET(libcvblobs_SRCS
@@ -65,7 +65,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                       ${KDE4_KPARTS_LIBS}
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KDEUI_LIBS}
-                      ${OpenCV_LIBS}
+                      ${OpenCV_LIBRARIES}
                       kipiplugins
                      )
 
