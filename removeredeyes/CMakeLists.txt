@@ -3,7 +3,7 @@
 # OpenCV_LIBRARIES, the other defining OpenCV_LIBS. Make sure we handle
 # both cases.
 IF (NOT OpenCV_LIBRARIES)
-  SET(OPENCV_LIBRARIES ${OpenCV_LIBS})
+  SET(OpenCV_LIBRARIES ${OpenCV_LIBS})
 ENDIF (NOT OpenCV_LIBRARIES)
 
 # same story with OpenCV_INCLUDE_DIRS and OpenCV_INCLUDE_DIR:
