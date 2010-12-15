@@ -1,4 +1,4 @@
-Kipi-plugins 1.7.0 - Release date: 2010/12/18
+Kipi-plugins 1.7.0 - Release date: 2010/12/19
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -19,7 +19,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> 243381 : ImageViewer        : Gwenview (gwenview), signal: Segmentation fault.
 010 ==> 256714 : DebianScreenshoots : Add export to screenshots.debian.net.
 011 ==> 258953 : DNGConverter       : DngConverter changes luminosity of sony ARW files.
-012 ==> 255069 : SendImage          : error with spaces in file names in send by email
+012 ==> 255069 : SendImage          : Error with spaces in file names in send by email.
 013 ==> 251235 : FlashExport        : Flash export plugin does not install.
 014 ==> 244702 : PicasaWebExport    : picasawebexport unable to select movie
 015 ==> 258824 : PicasaWebExport    : After export images to Picasaweb cancel button should change to close.
