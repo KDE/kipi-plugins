@@ -268,7 +268,7 @@ public:
     //! Obt� el nom de l'operador
     virtual const char* GetNom() const = 0;
 
-    operator COperadorBlob*() const
+    operator COperadorBlob* () const
     {
         return (COperadorBlob*)this;
     }

@@ -143,7 +143,7 @@ void InfoMessageWidget::display(const QString& message, Icon icon, int durationM
     }
 }
 
-void InfoMessageWidget::paintEvent( QPaintEvent * /* e */)
+void InfoMessageWidget::paintEvent( QPaintEvent* /* e */)
 {
     QRect textRect = fontMetrics().boundingRect( d->message );
     textRect.translate( -textRect.left(), -textRect.top() );
