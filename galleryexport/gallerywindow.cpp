@@ -542,6 +542,8 @@ void GalleryWindow::slotAlbumSelected()
     }
 
     QString albumName = item->text(1);
+
+    // FIXME: This check is not needed? We check for item above already, so this condition here is never reached.
     if (!item)
     {
         d->addPhotoBtn->setEnabled(false);
