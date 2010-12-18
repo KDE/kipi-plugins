@@ -50,15 +50,6 @@ namespace KIPIRemoveRedEyesPlugin
 struct HaarClassifierLocatorPriv
 {
     HaarClassifierLocatorPriv() :
-        configGroupName("RemoveRedEyes %1 Settings"),
-        configSimpleModeEntry("Simple Mode"),
-        configMinimumBlobSizeEntry("Minimum Blob Size"),
-        configMinimumRoundnessEntry("Minimum Roundness"),
-        configNeighborGroupsEntry("Neighbor Groups"),
-        configScalingFactorEntry("Scaling Factor"),
-        configUseStandardClassifierEntry("Use Standard Classifier"),
-        configClassifierEntry("Classifier"),
-
         aChannel(0),
         gray(0),
         lab(0),
@@ -69,27 +60,37 @@ struct HaarClassifierLocatorPriv
         settingsWidget(0)
     {};
 
-    const QString       configGroupName;
-    const QString       configSimpleModeEntry;
-    const QString       configMinimumBlobSizeEntry;
-    const QString       configMinimumRoundnessEntry;
-    const QString       configNeighborGroupsEntry;
-    const QString       configScalingFactorEntry;
-    const QString       configUseStandardClassifierEntry;
-    const QString       configClassifierEntry;
+    static const QString  configGroupName;
+    static const QString  configSimpleModeEntry;
+    static const QString  configMinimumBlobSizeEntry;
+    static const QString  configMinimumRoundnessEntry;
+    static const QString  configNeighborGroupsEntry;
+    static const QString  configScalingFactorEntry;
+    static const QString  configUseStandardClassifierEntry;
+    static const QString  configClassifierEntry;
 
-    IplImage*           aChannel;
-    IplImage*           gray;
-    IplImage*           lab;
-    IplImage*           redMask;
-    IplImage*           original;
+    IplImage*             aChannel;
+    IplImage*             gray;
+    IplImage*             lab;
+    IplImage*             redMask;
+    IplImage*             original;
 
-    int                 possible_eyes;
-    int                 red_eyes;
-    QString             classifierFile;
-    HaarSettingsWidget* settingsWidget;
-    HaarSettings        settings;
+    int                   possible_eyes;
+    int                   red_eyes;
+    QString               classifierFile;
+    HaarSettingsWidget*   settingsWidget;
+    HaarSettings          settings;
 };
+const QString HaarClassifierLocatorPriv::configGroupName("RemoveRedEyes %1 Settings");
+const QString HaarClassifierLocatorPriv::configSimpleModeEntry("Simple Mode");
+const QString HaarClassifierLocatorPriv::configMinimumBlobSizeEntry("Minimum Blob Size");
+const QString HaarClassifierLocatorPriv::configMinimumRoundnessEntry("Minimum Roundness");
+const QString HaarClassifierLocatorPriv::configNeighborGroupsEntry("Neighbor Groups");
+const QString HaarClassifierLocatorPriv::configScalingFactorEntry("Scaling Factor");
+const QString HaarClassifierLocatorPriv::configUseStandardClassifierEntry("Use Standard Classifier");
+const QString HaarClassifierLocatorPriv::configClassifierEntry("Classifier");
+
+// --------------------------------------------------------
 
 int HaarClassifierLocator::findPossibleEyes(double csf, int ngf, const char* classifierFile)
 {
