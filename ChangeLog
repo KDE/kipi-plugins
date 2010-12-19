@@ -1,3 +1,467 @@
+1.6.0   2010-12-19 
+
+2010-12-18 23:54  aclemens
+
+	* removeredeyes/detection/locators/haarclassifier/widgets/advancedsettings.cpp:
+	  No need to have an extra layout here, the mainLayout is enough
+
+2010-12-18 23:53  aclemens
+
+	* removeredeyes/removeredeyeswindow.cpp: static const for config
+	  parameters
+
+2010-12-18 23:53  aclemens
+
+	* removeredeyes/commonwidgets/infomessagewidget.cpp,
+	  removeredeyes/commonwidgets/storagesettingsbox.cpp,
+	  removeredeyes/libcvblobs/Blob.h,
+	  removeredeyes/plugin_removeredeyes.cpp: code polish
+
+2010-12-18 23:53  aclemens
+
+	* removeredeyes/detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:
+	  code polish
+
+2010-12-18 23:53  aclemens
+
+	* removeredeyes/detection/locators/haarclassifier/haarclassifierlocator.cpp:
+	  static const for config parameters
+
+2010-12-18 15:18  aclemens
+
+	* galleryexport/gallerywindow.cpp: Add comment, wrong logic...
+
+2010-12-18 12:53  alexmerry
+
+	* CMakeLists.txt: Indicate that optional Qt modules are optional in
+	  the cmake output
+
+2010-12-15 11:41  cgilles
+
+	* NEWS: update
+
+2010-12-15 11:35  cgilles
+
+	* NEWS: update
+
+2010-12-15 08:27  cgilles
+
+	* CMakeLists.txt, NEWS: fix release date
+
+2010-12-14 07:37  scripty
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	  kopete/kipiplugin_kopete.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-12-13 11:17  cgilles
+
+	* NEWS: update
+
+2010-12-12 13:13  aclemens
+
+	* removeredeyes/libcvblobs/BlobExtraction.cpp: fix warnings
+
+2010-12-11 08:54  jmueller
+
+	* NEWS: fixed with
+	  http://websvn.kde.org/?view=revision&revision=1194777
+	  
+	  BUGS: 258824
+
+2010-12-11 08:48  jmueller
+
+	* dngconverter/TODO, dngconverter/dngwriter/dngwriter.cpp: enable
+	  full sensor image for canon again
+
+2010-12-11 05:56  scripty
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	  kopete/kipiplugin_kopete.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-12-11 01:18  pgquiles
+
+	* kopete/plugin_kopete.cpp: Enable plugin after Kopete is started
+	  in this case:
+	  1. KIPI-enabled application (for instance, Gwenview) is started
+	  but Kopete is not running
+	  2. User starts Kopete
+	  3. Export to IM contact should be available
+	  
+	  There is still an issue when sending to Pidgin, it seems I'm
+	  calling sendFile too fast.
+	  It works fine with KMess.
+
+2010-12-10 18:31  pgquiles
+
+	* kopete/plugin_kopete.cpp: Fix sending in Kopete plugin. There's
+	  still the problem of Facebook being incorrectly reported as
+	  potential receivers of files. That's a bug in Kopete, though.
+
+2010-12-10 14:37  nlecureuil
+
+	* NEWS: Update NEWS
+
+2010-12-10 14:34  nlecureuil
+
+	* picasawebexport/picasawebimglist.cpp: Allow to upload mov files
+	  into picasa webalbum
+	  Add some file formats from picasa website
+	  BUG: 244702
+
+2010-12-10 10:22  nlecureuil
+
+	* NEWS, flashexport/index.template, flashexport/simpleviewer.cpp:
+	  Adapt simpleviewer with new version
+	  BUG: 251235
+
+2010-12-10 09:34  nlecureuil
+
+	* flashexport/firstrundlg.cpp: The version in download is 2.1.1
+	  there is on 1.9 available
+
+2010-12-10 09:25  nlecureuil
+
+	* NEWS, sendimages/sendimages.cpp: Fix sending mails with spaces or
+	  accents inside the filename
+	  BUG: 255069
+
+2010-12-10 06:28  scripty
+
+	* kopete/kipiplugin_kopete.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-12-09 12:27  pino
+
+	* galleryexport/gallerywindow.cpp, piwigoexport/piwigowindow.cpp:
+	  i18n: avoid string puzzles
+
+2010-12-09 05:39  scripty
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	  kopete/kipiplugin_kopete.desktop: SVN_SILENT made messages
+	  (.desktop file)
+
+2010-12-07 11:32  cgilles
+
+	* printimages/wizard.cpp, printimages/wizard.h: polish
+
+2010-12-07 10:53  cgilles
+
+	* printimages/utils.cpp, printimages/utils.h: polish
+
+2010-12-07 10:33  cgilles
+
+	* printimages/tphoto.cpp, printimages/tphoto.h: polish
+
+2010-12-07 10:22  cgilles
+
+	* printimages/signalblocker.h, printimages/templateicon.cpp,
+	  printimages/templateicon.h: polish
+
+2010-12-07 10:16  cgilles
+
+	* printimages/printoptionspage.cpp, printimages/printoptionspage.h:
+	  polish
+
+2010-12-07 10:06  cgilles
+
+	* printimages/printhelper.cpp, printimages/printhelper.h: polish
+
+2010-12-07 09:14  cgilles
+
+	* printimages/plugin_printimages.cpp,
+	  printimages/plugin_printimages.h: polish
+
+2010-12-07 09:02  cgilles
+
+	* printimages/layouttree.cpp, printimages/layouttree.h: polish
+
+2010-12-06 14:10  cgilles
+
+	* printimages/cropframe.cpp, printimages/cropframe.h,
+	  printimages/customdlg.cpp, printimages/customdlg.h: sync with
+	  branch
+
+2010-12-06 13:32  cgilles
+
+	* debianscreenshots/debshots.h, debianscreenshots/dsjob.cpp,
+	  debianscreenshots/dsjob.h, debianscreenshots/dstalker.cpp,
+	  debianscreenshots/dstalker.h, debianscreenshots/dswidget.cpp,
+	  debianscreenshots/dswidget.h, debianscreenshots/dswindow.cpp,
+	  debianscreenshots/dswindow.h,
+	  debianscreenshots/packagedelegate.cpp,
+	  debianscreenshots/plugin_debianscreenshots.cpp,
+	  debianscreenshots/plugin_debianscreenshots.h: polish
+
+2010-12-06 09:40  cgilles
+
+	* NEWS: update
+
+2010-12-06 06:12  scripty
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2010-12-05 11:32  coles
+
+	* flickrexport/flickrwidget.cpp: Proof-reading - missed spotting
+	  this one yesterday.
+	  
+	  * Less tag options -> Fewer tag options. If it's countable,
+	  use fewer rather than less: fewer cars, less traffic.
+
+2010-12-05 11:04  cgilles
+
+	* NEWS: update
+
+2010-12-05 11:03  cgilles
+
+	* AUTHORS, README, kopete/plugin_kopete.cpp,
+	  kopete/plugin_kopete.h: polish
+
+2010-12-05 05:34  scripty
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	  galleryexport/kipiplugin_galleryexport.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-12-05 01:41  pgquiles
+
+	* CMakeLists.txt, kopete, kopete/CMakeLists.txt,
+	  kopete/Messages.sh, kopete/kipiplugin_kopete.desktop,
+	  kopete/plugin_kopete.cpp, kopete/plugin_kopete.h: Add initial
+	  implementation of Kopete plugin, using DBUS.
+	  
+	  Sending files does not work, at least for me, with MSN (I don't
+	  know why) or
+	  Facebook (expected because FB does not allow file transfers; OTOH
+	  Kopete
+	  erroneusly reports FB contacts as file_transfer-enabled).
+	  
+	  Let's see if Kopete developers can help with file transfer; I'll
+	  try to use
+	  libkopete-dev if I don't get a solution. In the future, this
+	  plugin should
+	  use Telepathy KDE.
+	  
+	  CCMAIL: caulier.gilles@gmail.com
+
+2010-12-04 17:48  coles
+
+	* expoblending/blendingdlg/enfusesettings.cpp,
+	  expoblending/importwizard/preprocessingpage.cpp,
+	  flickrexport/flickrwidget.cpp: Proof-reading changes. Some notes:
+	  
+	  * Less publication options -> Fewer publication options. If it's
+	  countable,
+	  use fewer rather than less: fewer cars, less traffic.
+	  
+	  * Removed the word 'button' in a few places, after e.g. 'Press
+	  Next button'.
+	  The alternative would be to write 'Press /the/ Next button', but
+	  'Press
+	  Next' is fine.
+
+2010-12-03 23:11  pgquiles
+
+	* debianscreenshots/dswidget.cpp, debianscreenshots/dswidget.h: Use
+	  KIO::AccessManager to integrate with KDE proxy settings. Not the
+	  ideal solution but given that we may (will) have delayed replies
+	  from debshots, this is much easier to use than KIO::get +
+	  connecting to KTransferJob::data.
+
+2010-12-03 19:19  pgquiles
+
+	* debianscreenshots/plugin_debianscreenshots.cpp: Oops, Shift + Alt
+	  + F is taken by the Facebook plugin, changing to Shift + Alt + D
+
+2010-12-03 13:37  cgilles
+
+	* AUTHORS: update
+
+2010-12-03 13:32  cgilles
+
+	* debianscreenshots/packagedelegate.cpp,
+	  debianscreenshots/packagedelegate.h: use moc file
+
+2010-12-03 13:29  cgilles
+
+	* debianscreenshots/kclickableimagelabel.cpp,
+	  debianscreenshots/kclickableimagelabel.h: use moc file
+
+2010-12-03 13:27  cgilles
+
+	* debianscreenshots/mpform.cpp, debianscreenshots/mpform.h: compile
+	  with Qt 4.6.x
+
+2010-12-03 13:22  cgilles
+
+	* debianscreenshots/plugin_debianscreenshots.cpp: missing includes
+	  for getpid
+
+2010-12-03 13:19  cgilles
+
+	* NEWS: update
+
+2010-12-03 13:17  cgilles
+
+	* README: update
+
+2010-12-03 13:13  cgilles
+
+	* README: update
+
+2010-12-03 11:45  pgquiles
+
+	* debianscreenshots/debshots.h,
+	  debianscreenshots/kclickableimagelabel.cpp,
+	  debianscreenshots/kclickableimagelabel.h: Use
+	  screenshots.debian.net instead of test server, add license to
+	  KClickableImageLabel
+
+2010-12-03 11:42  pgquiles
+
+	* CMakeLists.txt, cmake/modules/FindQJSON.cmake, debianscreenshots,
+	  debianscreenshots/CMakeLists.txt, debianscreenshots/Messages.sh,
+	  debianscreenshots/debshots.h, debianscreenshots/dsjob.cpp,
+	  debianscreenshots/dsjob.h, debianscreenshots/dstalker.cpp,
+	  debianscreenshots/dstalker.h, debianscreenshots/dswidget.cpp,
+	  debianscreenshots/dswidget.h, debianscreenshots/dswindow.cpp,
+	  debianscreenshots/dswindow.h, debianscreenshots/icons,
+	  debianscreenshots/icons/CMakeLists.txt,
+	  debianscreenshots/icons/hi16-action-debianscreenshots.png,
+	  debianscreenshots/icons/hi22-action-debianscreenshots.png,
+	  debianscreenshots/icons/hi32-action-debianscreenshots.png,
+	  debianscreenshots/icons/hi48-action-debianscreenshots.png,
+	  debianscreenshots/icons/hisc-action-debianscreenshots.svgz,
+	  debianscreenshots/kclickableimagelabel.cpp,
+	  debianscreenshots/kclickableimagelabel.h,
+	  debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	  debianscreenshots/mpform.cpp, debianscreenshots/mpform.h,
+	  debianscreenshots/packagedelegate.cpp,
+	  debianscreenshots/packagedelegate.h,
+	  debianscreenshots/plugin_debianscreenshots.cpp,
+	  debianscreenshots/plugin_debianscreenshots.h,
+	  debianscreenshots/plugin_debianscreenshots.qrc,
+	  debianscreenshots/sdnlogo.png, kipi-plugins.lsm.cmake: Add KIPI
+	  export plugin for screenshots.debian.net
+	  
+	  CCMAIL: haas@debian.org
+	  CCMAIL: nospam@vuorela.dk
+	  BUG: 256714
+
+2010-12-03 10:32  cgilles
+
+	* jpeglossless/convert2grayscale.cpp, jpeglossless/imageflip.cpp,
+	  jpeglossless/imagerotate.cpp, jpeglossless/jpegtransform.cpp,
+	  jpeglossless/transupp.cpp: apply patch #54002 from Gert Kello
+	  BUGS: 258600
+
+2010-11-30 07:28  scripty
+
+	* expoblending/expoblending.desktop,
+	  expoblending/kipiplugin_expoblending.desktop,
+	  htmlexport/themes/dateframes/dateframes.desktop,
+	  htmlexport/themes/details/details.desktop,
+	  htmlexport/themes/matrix/matrix.desktop,
+	  htmlexport/themes/s0/s0.desktop,
+	  htmlexport/themes/simple/simple.desktop,
+	  piwigoexport/kipiplugin_piwigoexport.desktop,
+	  printimages/templates/Photoframe.desktop: SVN_SILENT made
+	  messages (.desktop file)
+
+2010-11-29 06:34  scripty
+
+	* facebook/kipiplugin_facebook.desktop,
+	  flickrexport/kipiplugin_flickrexport.desktop,
+	  kioexportimport/kipiplugin_kioexportimport.desktop,
+	  picasawebexport/kipiplugin_picasawebexport.desktop,
+	  shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop:
+	  SVN_SILENT made messages (.desktop file)
+
+2010-11-28 18:33  aclemens
+
+	* common/libkipiplugins/tools/binaryiface.cpp: The dialog box is
+	  way too wide, we should add newlines...
+
+2010-11-26 12:58  cgilles
+
+	* common/libkipiplugins/dialogs/imagedialog.cpp: fix layout
+
+2010-11-26 10:19  cgilles
+
+	* NEWS: update
+
+2010-11-25 07:42  nlecureuil
+
+	* project/release/config.ini: Remove non existing entry on
+	  config.init
+
+2010-11-25 07:42  nlecureuil
+
+	* project/release/README: Add back the README file with new
+	  instructions, on how create the tarball
+
+2010-11-24 23:51  nlecureuil
+
+	* project/release/README, project/release/config.ini,
+	  project/release/create_tarball.rb, project/release/icons,
+	  project/release/lib, project/release/release_kipiplugins.rb: Use
+	  create_tarball script from extragear
+
+2010-11-24 21:50  cgilles
+
+	* NEWS: update
+
+2010-11-24 18:47  cgilles
+
+	* NEWS: update
+
+2010-11-24 18:46  cgilles
+
+	* NEWS: update
+
+2010-11-23 08:39  cgilles
+
+	* project/NEWS.1.6.0: polish
+
+2010-11-23 08:18  cgilles
+
+	* NEWS: polish
+
+2010-11-22 22:03  cgilles
+
+	* NEWS: update
+
+2010-11-22 22:01  cgilles
+
+	* CMakeLists.txt, NEWS: bump version and update
+
+2010-11-22 21:35  lure
+
+	* facebook/TODO: Update Facebook plugin TODO list
+
+2010-11-22 21:25  lure
+
+	* NEWS, facebook/fbtalker.cpp: Switch to new Facebook API for
+	  requesting application permissions. This
+	  have prevented all new users since July 2010 to upload photos to
+	  specific
+	  album or download photos (own or from their friends).
+	  BUG: 225174
+	  BUG: 254110
+	  BUG: 254457
+
+2010-11-22 17:44  nlecureuil
+
+	* NEWS: Open for version 1.7.0
+
+2010-11-22 17:21  nlecureuil
+
+	* ChangeLog, project/NEWS.1.6.0: Update Changelog
+
 1.6.0   2010-11-22 
 
 2010-11-22 14:34  cgilles
