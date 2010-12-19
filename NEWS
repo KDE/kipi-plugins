@@ -1,32 +1,12 @@
-Kipi-plugins 1.7.0 - Release date: 2010/12/19
+Kipi-plugins 1.8.0 - Release date: 2011/01/23
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-General : New plugin to export images to Debian Screenshoots web service (http://screenshots.debian.net).
-General : New plugin to export images to an instant messaging contact.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 225174 : Facebook           : Support new permission API for applications.
-002 ==> 254110 : Facebook           : Unable to upload photos to a selected album.
-003 ==> 254457 : Facebook           : Album target fails.
-004 ==> 247107 : Facebook           : Export to notes, export to pinboard, export to profile.
-005 ==> 219284 : Facebook           : digiKam facebook export album.
-006 ==> 241046 : Facebook           : Export Facebook.
-007 ==> 232015 : Facebook           : KPhotoAlbum Facebook import plugin.
-008 ==> 223601 : Facebook           : digiKam can't upload image to facebook.
-009 ==> 243381 : ImageViewer        : Gwenview (gwenview), signal: Segmentation fault.
-010 ==> 256714 : DebianScreenshoots : Add export to screenshots.debian.net.
-011 ==> 258953 : DNGConverter       : DngConverter changes luminosity of sony ARW files.
-012 ==> 255069 : SendImage          : Error with spaces in file names in send by email.
-013 ==> 251235 : FlashExport        : Flash export plugin does not install.
-014 ==> 244702 : PicasaWebExport    : Picasawebexport unable to select movie
-015 ==> 258824 : PicasaWebExport    : After export images to Picasaweb cancel button should change to close.
-016 ==> 256713 : Kopete             : Send to Kopete contact plugin.
-017 ==> 250449 : AdvancedSlideshow  : Slideshow does not work with compositing on.
-018 ==> 256284 : RemoveRedEyes      : digiKam crash on start.
-019 ==> 
+001 ==> 
 
 
 
