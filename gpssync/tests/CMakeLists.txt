@@ -1,45 +1,45 @@
-KDE4_ADD_EXECUTABLE(test_gpxparsing
+KDE4_ADD_EXECUTABLE(gpssync_test_gpxparsing
                     test_gpxparsing.cpp
                     ../gpsdataparser.cpp
                    )
 
-TARGET_LINK_LIBRARIES(test_gpxparsing
+TARGET_LINK_LIBRARIES(gpssync_test_gpxparsing
                         ${KDE4_KDECORE_LIBS}
                         ${QT_QTTEST_LIBRARY}
                         ${QT_QTGUI_LIBRARY}
                         ${KMAP_LIBRARIES}
                      )
 
-KDE4_ADD_EXECUTABLE(test_rgparsing
+KDE4_ADD_EXECUTABLE(gpssync_test_rgparsing
                     test_rgparsing.cpp
                     )
 
-TARGET_LINK_LIBRARIES(test_rgparsing
+TARGET_LINK_LIBRARIES(gpssync_test_rgparsing
                       ${KDE4_KDECORE_LIBS}
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
                     )
 
-KDE4_ADD_EXECUTABLE(test_rgtagmodel
+KDE4_ADD_EXECUTABLE(gpssync_test_rgtagmodel
                     test_rgtagmodel.cpp
                     simpletreemodel/simpletreemodel.cpp
                     ../borrowed/modeltest.cpp
                     ../rgtagmodel.cpp
                     )
 
-TARGET_LINK_LIBRARIES(test_rgtagmodel
+TARGET_LINK_LIBRARIES(gpssync_test_rgtagmodel
                       ${KDE4_KDECORE_LIBS}
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
                     )
 
-KDE4_ADD_EXECUTABLE(test_kipiimageitem
+KDE4_ADD_EXECUTABLE(gpssync_test_kipiimageitem
                     test_kipiimageitem.cpp
                     ../kipiimageitem.cpp
                     ../kipiimagemodel.cpp
                    )
 
-TARGET_LINK_LIBRARIES(test_kipiimageitem
+TARGET_LINK_LIBRARIES(gpssync_test_kipiimageitem
                       ${KDE4_KDECORE_LIBS}
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
@@ -48,9 +48,9 @@ TARGET_LINK_LIBRARIES(test_kipiimageitem
                       ${KIPI_LIBRARIES}
                      )
 
-ADD_TEST(test_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/test_gpxparsing)
-ADD_TEST(test_gpsrgparsing ${EXECUTABLE_OUTPUT_PATH}/test_rgparsing)
-ADD_TEST(test_gpsrgtagmodel ${EXECUTABLE_OUTPUT_PATH}/test_rgtagmodel)
-ADD_TEST(test_gpskipiimageitem ${EXECUTABLE_OUTPUT_PATH}/test_kipiimageitem)
+ADD_TEST(gpssync_test_gpxparsing ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_gpxparsing)
+ADD_TEST(gpssync_test_gpsrgparsing ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgparsing)
+ADD_TEST(gpssync_test_gpsrgtagmodel ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_rgtagmodel)
+ADD_TEST(gpssync_test_gpskipiimageitem ${EXECUTABLE_OUTPUT_PATH}/gpssync_test_kipiimageitem)
 
 MACRO_OPTIONAL_ADD_SUBDIRECTORY(simpletreemodel)
