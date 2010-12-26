@@ -106,7 +106,7 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _
             this, SLOT(replacePressed()));
 
     d->bReplaceAll = new KPushButton(i18n("&Replace All"), this);
-    d->bReplaceAll->setToolTip(i18n("Items will be replacing the linked version. You will be prompted again."));
+    d->bReplaceAll->setToolTip(i18n("Items will be replacing the linked version. You will not be prompted again."));
     connect(d->bReplaceAll, SIGNAL(clicked()),
             this, SLOT(replaceAllPressed()));
 
