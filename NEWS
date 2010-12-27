@@ -7,7 +7,8 @@ NEW FEATURES:
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 261275 : [PATCH] kipi-plugins 1.6.0 fails to build (final).
-002 ==> 
+002 ==> 253257 : Program uploads only part of file or smaller version of file and match error occurs.
+003 ==> 
 
 
 
