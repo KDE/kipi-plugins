@@ -39,6 +39,8 @@ class TestKipiImageItem : public QObject
 
 private Q_SLOTS:
 
+    void initTestCase();
+    void cleanupTestCase();
     void testNoOp();
     void testBasicLoading();
 

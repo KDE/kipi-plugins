@@ -48,6 +48,18 @@ using namespace KIPIGPSSyncPlugin;
 
 QTEST_KDEMAIN_CORE(TestKipiImageItem)
 
+void TestKipiImageItem::initTestCase()
+{
+    // initialize kexiv2 before doing any multitasking
+    KExiv2Iface::KExiv2::initializeExiv2();
+}
+
+void TestKipiImageItem::cleanupTestCase()
+{
+    // clean up the kexiv2 memory:
+    KExiv2Iface::KExiv2::cleanupExiv2();
+}
+
 /**
  * @brief Return the path of the directory containing the test data
  */
