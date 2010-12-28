@@ -78,7 +78,7 @@ HaarSettingsWidget::HaarSettingsWidget(QWidget* parent)
     d->advancedSettings = new AdvancedSettings;
 
     d->settingsStack = new QStackedWidget;
-    d->settingsStack->insertWidget(Simple, d->simpleSettings);
+    d->settingsStack->insertWidget(Simple,   d->simpleSettings);
     d->settingsStack->insertWidget(Advanced, d->advancedSettings);
     d->settingsStack->setCurrentIndex(Simple);
 

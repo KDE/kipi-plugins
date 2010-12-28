@@ -324,7 +324,7 @@ void DsWindow::slotAddScreenshotDone(int errCode, const QString& errMsg)
     else
     {
         if (KMessageBox::warningContinueCancel(this,
-                         i18n("Failed to upload photo to Debian Snapshots: %1\n"
+                         i18n("Failed to upload photo to Debian Screenshots: %1\n"
                               "Do you want to continue?", errMsg))
                          != KMessageBox::Continue)
         {

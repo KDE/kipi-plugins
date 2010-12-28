@@ -47,7 +47,7 @@
 K_PLUGIN_FACTORY( RemoveRedEyesFactory, registerPlugin<Plugin_RemoveRedEyes>(); )
 K_EXPORT_PLUGIN ( RemoveRedEyesFactory("kipiplugin_removeredeyes") )
 
-Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject* parent, const QVariantList &/*args*/)
+Plugin_RemoveRedEyes::Plugin_RemoveRedEyes(QObject* parent, const QVariantList& /*args*/)
     : KIPI::Plugin(RemoveRedEyesFactory::componentData(), parent, "RemoveRedEyes"),
       m_action(0)
 {

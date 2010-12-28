@@ -77,15 +77,6 @@ class RemoveRedEyesWindowPriv
 public:
 
     RemoveRedEyesWindowPriv() :
-        configGroupName("RemoveRedEyes Settings"),
-        configStorageModeEntry("Storage Mode"),
-        configExtraNameEntry("Extra Name"),
-        configAddkeywordEntry("Add keyword"),
-        configKeywordNameEntry("Keyword Name"),
-        configUnprocessedModeEntry("Unprocessed Mode"),
-        configLocatorTypeEntry("Locator Type"),
-        configLocatorDefaultType("HaarClassifierLocator"),
-
         total(0),
         processed(0),
         failed(0),
@@ -110,14 +101,14 @@ public:
         about(0)
     {}
 
-    const QString             configGroupName;
-    const QString             configStorageModeEntry;
-    const QString             configExtraNameEntry;
-    const QString             configAddkeywordEntry;
-    const QString             configKeywordNameEntry;
-    const QString             configUnprocessedModeEntry;
-    const QString             configLocatorTypeEntry;
-    const QString             configLocatorDefaultType;
+    static const QString      configGroupName;
+    static const QString      configStorageModeEntry;
+    static const QString      configExtraNameEntry;
+    static const QString      configAddkeywordEntry;
+    static const QString      configKeywordNameEntry;
+    static const QString      configUnprocessedModeEntry;
+    static const QString      configLocatorTypeEntry;
+    static const QString      configLocatorDefaultType;
 
     int                       total;
     int                       processed;
@@ -156,6 +147,16 @@ public:
     KIPI::Interface*          interface;
     KIPIPlugins::KPAboutData* about;
 };
+const QString RemoveRedEyesWindowPriv::configGroupName("RemoveRedEyes Settings");
+const QString RemoveRedEyesWindowPriv::configStorageModeEntry("Storage Mode");
+const QString RemoveRedEyesWindowPriv::configExtraNameEntry("Extra Name");
+const QString RemoveRedEyesWindowPriv::configAddkeywordEntry("Add keyword");
+const QString RemoveRedEyesWindowPriv::configKeywordNameEntry("Keyword Name");
+const QString RemoveRedEyesWindowPriv::configUnprocessedModeEntry("Unprocessed Mode");
+const QString RemoveRedEyesWindowPriv::configLocatorTypeEntry("Locator Type");
+const QString RemoveRedEyesWindowPriv::configLocatorDefaultType("HaarClassifierLocator");
+
+// --------------------------------------------------------
 
 RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* interface)
     : KDialog(0), d(new RemoveRedEyesWindowPriv)

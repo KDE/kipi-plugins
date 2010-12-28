@@ -51,12 +51,12 @@ struct StorageSettingsBoxPriv
         saveMethodLineEdit(0)
     {
     }
-    QCheckBox*      keywordCB;
+    QCheckBox* keywordCB;
 
-    KComboBox*      saveMethodCB;
+    KComboBox* saveMethodCB;
 
-    KLineEdit*      keywordLineEdit;
-    KLineEdit*      saveMethodLineEdit;
+    KLineEdit* keywordLineEdit;
+    KLineEdit* saveMethodLineEdit;
 };
 
 StorageSettingsBox::StorageSettingsBox(QWidget* parent)
@@ -81,8 +81,8 @@ StorageSettingsBox::StorageSettingsBox(QWidget* parent)
 
     d->saveMethodCB = new KComboBox;
     d->saveMethodCB->insertItem(Subfolder, i18n("Save in Subfolder"));
-    d->saveMethodCB->insertItem(Prefix, i18n("Add Prefix"));
-    d->saveMethodCB->insertItem(Suffix, i18n("Add Suffix"));
+    d->saveMethodCB->insertItem(Prefix,    i18n("Add Prefix"));
+    d->saveMethodCB->insertItem(Suffix,    i18n("Add Suffix"));
     d->saveMethodCB->insertItem(Overwrite, i18n("Overwrite"));
 
     d->saveMethodLineEdit = new KLineEdit;

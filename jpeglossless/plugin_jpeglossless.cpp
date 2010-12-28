@@ -163,11 +163,6 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
         return;
     }
 
-    d->action_RotateImage->setEnabled( false );
-    d->action_FlipImage->setEnabled( false );
-    d->action_AutoExif->setEnabled( false );
-    d->action_Convert2GrayScale->setEnabled( false );
-
     d->thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
 
     connect( d->thread, SIGNAL(starting(const QString&, int)),
@@ -179,15 +174,21 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
     connect( d->thread, SIGNAL(failed(const QString&, int, const QString&)),
              this, SLOT(slotFailed(const QString&, int, const QString&)));
 
+    bool hasSelection = interface->currentSelection().isValid();
+
+    d->action_AutoExif->setEnabled( hasSelection );
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              d->action_AutoExif, SLOT( setEnabled( bool ) ) );
 
+    d->action_RotateImage->setEnabled( hasSelection );
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              d->action_RotateImage, SLOT( setEnabled( bool ) ) );
 
+    d->action_FlipImage->setEnabled( hasSelection );
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              d->action_FlipImage, SLOT( setEnabled( bool ) ) );
 
+    d->action_Convert2GrayScale->setEnabled( hasSelection );
     connect( interface, SIGNAL( selectionChanged( bool ) ),
              d->action_Convert2GrayScale, SLOT( setEnabled( bool ) ) );
 }
