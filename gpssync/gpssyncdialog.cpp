@@ -1115,8 +1115,8 @@ KMap::KMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
     QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
 
     KMap::KMapWidget* const mapWidget = new KMap::KMapWidget(dummyWidget);
-    mapWidget->setAvailableMouseModes(KMap::MouseModePan|KMap::MouseModeZoom|KMap::MouseModeSelectThumbnail);
-    mapWidget->setVisibleMouseModes(KMap::MouseModePan|KMap::MouseModeZoom|KMap::MouseModeSelectThumbnail);
+    mapWidget->setAvailableMouseModes(KMap::MouseModePan|KMap::MouseModeZoomIntoGroup|KMap::MouseModeSelectThumbnail);
+    mapWidget->setVisibleMouseModes(KMap::MouseModePan|KMap::MouseModeZoomIntoGroup|KMap::MouseModeSelectThumbnail);
     mapWidget->setGroupedModel(d->kmapMarkerModel);
     mapWidget->setDragDropHandler(d->mapDragDropHandler);
     mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
