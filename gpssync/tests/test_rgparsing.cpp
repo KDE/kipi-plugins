@@ -138,7 +138,7 @@ void TestRGParsing::testVerifyRG()
     }
 
     {
-        //{Ctonury} instead of {Country}
+        //{Ctonury} instead of {Country} -> parsing is aborted
         RGInfo info;
         QString country = QString::fromUtf8("România");
         QString city = QString::fromUtf8("București");
@@ -147,7 +147,7 @@ void TestRGParsing::testVerifyRG()
 
         info.rgData[QString("country")] = country;
         info.rgData[QString("city")] = city;
-        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/București"));
+        QCOMPARE( makeTagString(info, howToFormat, QString("OSM")).last(), QString::fromUtf8("My Tags/"));
     }
 
     {
