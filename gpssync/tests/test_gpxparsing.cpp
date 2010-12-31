@@ -77,9 +77,17 @@ void TestGPXParsing::testQDateTimeParsing()
     {
         // eCoach in N900: 2010-01-14T09:26:02.287+02:00
         QDateTime time1 = QDateTime::fromString("2010-01-14T09:26:02.287+02:00", Qt::ISODate);
-        // the date is parsed fine, but the time fails:
+
+#if QT_VERSION>=0x040700
+        // Qt >= 4.7: both date and time are parsed fine
+        /// @todo What about the timezone?
+        QCOMPARE(time1.date(), QDate(2010, 01, 14));
+        QCOMPARE(time1.time(), QTime(9, 26, 2, 287));
+#else
+        // Qt < 4.7: the date is parsed fine, but the time fails:
         QCOMPARE(time1.date(), QDate(2010, 01, 14));
         QCOMPARE(time1.time(), QTime(0, 0, 0));
+#endif
 
         // when we omit the time zone data, parsing succeeds
         // time is interpreted as local time
