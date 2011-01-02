@@ -60,13 +60,13 @@ public:
         qDeleteAll(oldChildren);
     }
 
-    QPersistentModelIndex sourceIndex;
-    TreeBranch* parent;
-    QString data;
-    Type type;
-    QList<TreeBranch*> oldChildren;
-    QList<TreeBranch*> spacerChildren;
-    QList<TreeBranch*> newChildren;
+    QPersistentModelIndex   sourceIndex;
+    TreeBranch*             parent;
+    QString                 data;
+    Type                    type;
+    QList<TreeBranch*>      oldChildren;
+    QList<TreeBranch*>      spacerChildren;
+    QList<TreeBranch*>      newChildren;
 };
 
 // ----------------------------------------------------------------------------------------
@@ -77,10 +77,8 @@ class RGTagModel : public QAbstractItemModel
 
 public:
 
-    
-    RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent = 0);
+    explicit RGTagModel(QAbstractItemModel* const externalTagModel, QObject* const parent = 0);
 
-    
     ~RGTagModel();
 
     // QAbstractItemModel:
@@ -95,7 +93,6 @@ public:
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 
     //Local functions:
-
     QModelIndex fromSourceIndex(const QModelIndex& externalTagModelIndex) const;
     QModelIndex toSourceIndex(const QModelIndex& tagModelIndex) const;
     void addSpacerTag(const QModelIndex& parent, const QString& spacerName);

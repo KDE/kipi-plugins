@@ -268,6 +268,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     d->languageLabel = new QLabel(i18n("Select language:"), d->UGridContainer);
     d->languageEdit = new KComboBox(d->UGridContainer);
 
+    /// @todo Is there a ready-made widget for this?
     d->languageEdit->addItem(i18n("English"),"en");
     d->languageEdit->addItem(i18n("Arabic"), "ar");
     d->languageEdit->addItem(i18n("Assamese"), "as");
@@ -579,9 +580,9 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             addressElements.remove(0,1);
             addressElementsWantedFormat.remove(0,1);
 
-            QStringList listAddressElementsWantedFormat = addressElementsWantedFormat.split("/");
-            QStringList listAddressElements = addressElements.split("/");
-            QStringList listAddressFormat = addressFormat.split("/");
+            const QStringList listAddressElementsWantedFormat = addressElementsWantedFormat.split('/');
+            const QStringList listAddressElements = addressElements.split('/');
+            const QStringList listAddressFormat = addressFormat.split('/');
 
             QStringList elements, resultedData;
 
@@ -597,7 +598,7 @@ void GPSReverseGeocodingWidget::slotRGReady(QList<RGInfo>& returnedRGList)
             }
 
             QList<QList<TagData> > returnedTags = d->tagModel->addNewData(elements, resultedData);   
-            
+
             KipiImageItem* const currentItem = d->imageModel->itemFromIndex(currentImageIndex);
 
             GPSUndoCommand::UndoInfo undoInfo(currentImageIndex);
@@ -826,15 +827,24 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
 {
     QModelIndex baseIndex;    
     if (!d->currentTagTreeIndex.isValid())
+    {
         baseIndex = d->currentTagTreeIndex;
+    }
     else
+    {
         baseIndex = d->tagSelectionModel->currentIndex();
+    }
 
     bool ok;
     QString textString;
 
-    textString = QInputDialog::getText(this,QString("%1").arg("Add new tag:"), QString("%1").arg("Select a name for the new tag:"), QLineEdit::Normal, QString::null, &ok);
-    if ( ok && !textString.isEmpty())
+    textString = QInputDialog::getText(
+            this,
+            QString("%1").arg("Add new tag:"),
+            QString("%1").arg("Select a name for the new tag:"),
+            QLineEdit::Normal, QString(), &ok
+        );
+    if ( ok && !textString.isEmpty() )
     {
         d->tagModel->addSpacerTag(baseIndex, textString);
     }
@@ -859,10 +869,14 @@ void GPSReverseGeocodingWidget::slotRemoveAllSpacers()
 
     QModelIndex baseIndex;    
     if (!d->currentTagTreeIndex.isValid())
+    {
         baseIndex = d->currentTagTreeIndex;
+    }
     else
+    {
         baseIndex = d->tagSelectionModel->currentIndex();
-    
+    }
+
     d->tagModel->deleteAllSpacersOrNewTags(baseIndex, TypeSpacer);
 }
 
@@ -877,7 +891,9 @@ void GPSReverseGeocodingWidget::slotReaddNewTags()
 
         QList<QList<TagData> > tagAddresses = currentItem->getTagList();
         if (!tagAddresses.isEmpty())
+        {
             d->tagModel->readdNewTags(tagAddresses);
+        }
     }
 }
 
@@ -900,14 +916,19 @@ void GPSReverseGeocodingWidget::slotAddAllAddressElementsToTag()
 {
     QModelIndex baseIndex;    
     if (!d->currentTagTreeIndex.isValid())
+    {
         baseIndex = d->currentTagTreeIndex;
+    }
     else
+    {
         baseIndex = d->tagSelectionModel->currentIndex();
+    }
 
     QStringList spacerList;
 
     if (d->currentBackend->backendName() == QString("OSM"))
     {
+        /// @todo Why are these wrapped in QString?
         spacerList.append(QString("{Country}"));
         spacerList.append(QString("{State}"));
         spacerList.append(QString("{State district}"));
@@ -964,7 +985,7 @@ void GPSReverseGeocodingWidget::slotRGCanceled()
                 KGuiItem(i18n("Keep tags")),
                 KGuiItem(i18n("Discard tags")),
                 KGuiItem(i18n("Continue"))
-                                        );
+            );
 
         d->currentlyAskingCancelQuestion = false;
 

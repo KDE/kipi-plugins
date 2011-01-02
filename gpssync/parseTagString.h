@@ -24,6 +24,9 @@
  *
  * ============================================================ */
 
+#ifndef PARSETAGSTRING_H
+#define PARSETAGSTRING_H
+
 // KDE includes
 
 #include "kdebug.h"
@@ -270,3 +273,4 @@ QStringList makeTagString(const RGInfo& info,const QString& inputFormat,const QS
 
 } // KIPIGPSSyncPlugin
 
+#endif /* PARSETAGSTRING_H */

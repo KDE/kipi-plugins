@@ -41,7 +41,6 @@
 
 //local includes
 
-#include "backend-osm-rg.h"
 #include "gpssync_common.h"
 
 namespace KIPIGPSSyncPlugin
@@ -217,7 +216,7 @@ QMap<QString,QString> BackendOsmRG::makeQMapFromXML(const QString& xmlData)
                 (e.tagName() == QString("house_number")))    
             {
                 mappedData.insert(e.tagName(), e.text());
-                resultString.append(e.tagName() + ":" + e.text() + "\n");
+                resultString.append(e.tagName() + ':' + e.text() + '\n');
             }
         }
         n = n.nextSibling();

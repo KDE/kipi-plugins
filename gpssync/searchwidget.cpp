@@ -131,7 +131,7 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     d->mainVBox->addWidget(topHBox);
     d->searchTermLineEdit = new KLineEdit(topHBox);
     d->searchTermLineEdit->setClearButtonShown(true);
-    d->searchButton = new QPushButton(i18n("Search"), topHBox);
+    d->searchButton = new QPushButton(i18nc("Start the search", "Search"), topHBox);
 
     KHBox* const actionHBox = new KHBox(this);
     d->mainVBox->addWidget(actionHBox);

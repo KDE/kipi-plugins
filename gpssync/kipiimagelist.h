@@ -63,7 +63,7 @@ class KipiImageList : public QTreeView
 Q_OBJECT
 
 public:
-    KipiImageList(KIPI::Interface* const interface, QWidget* const parent = 0);
+    explicit KipiImageList(KIPI::Interface* const interface, QWidget* const parent = 0);
     ~KipiImageList();
 
     void setModelAndSelectionModel(KipiImageModel* const model, QItemSelectionModel* const selectionModel);
@@ -106,7 +106,7 @@ class KipiImageItemDelegate : public QItemDelegate
 {
 Q_OBJECT
 public:
-    KipiImageItemDelegate(KipiImageList* const imageList, QObject* const parent = 0);
+    explicit KipiImageItemDelegate(KipiImageList* const imageList, QObject* const parent = 0);
     virtual ~KipiImageItemDelegate();
 
     void setThumbnailSize(const int size);

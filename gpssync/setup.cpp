@@ -115,7 +115,7 @@ Setup::Setup(QWidget* const parent)
     setModal(true);
 
     d->setupGeneral = new SetupGeneral(this);
-    d->pageGeneral = addPage(d->setupGeneral, i18n("General"));
+    d->pageGeneral = addPage(d->setupGeneral, i18nc("General setup", "General"));
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotApplyClicked()));

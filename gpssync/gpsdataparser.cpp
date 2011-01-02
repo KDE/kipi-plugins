@@ -25,6 +25,7 @@
  * ============================================================ */
 
 #include "gpsdataparser.moc"
+#include "gpsdataparser_p.h"
 
 // Qt includes
 
@@ -39,10 +40,6 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-
-// local includes
-
-#include "gpsdataparser_p.h"
 
 namespace KIPIGPSSyncPlugin
 {

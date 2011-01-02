@@ -41,7 +41,6 @@
 
 //local includes
 
-#include "backend-geonamesUS-rg.h"
 #include "gpssync_common.h"
 
 namespace KIPIGPSSyncPlugin
@@ -215,7 +214,7 @@ QMap<QString,QString> BackendGeonamesUSRG::makeQMapFromXML(const QString& xmlDat
                (e.tagName().compare(QString("placeName")) == 0))
             { 
                 mappedData.insert(e.tagName(), e.text());
-                resultString.append(e.tagName() + ":" + e.text() + "\n");
+                resultString.append(e.tagName() + ':' + e.text() + '\n');
             }
         }
 

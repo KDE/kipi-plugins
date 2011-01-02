@@ -91,7 +91,7 @@ RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* cons
     d->rootTag->type = TypeChild;
 
     i18n("{Country}");
-    i18n("{State}");
+    i18nc("Part of a country", "{State}");
     i18n("{County}");
     i18n("{City}");
     i18n("{Town}");
