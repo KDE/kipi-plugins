@@ -150,6 +150,7 @@ PrintOptionsPage::PrintOptionsPage ( QWidget *parent, QList<TPhoto*> *photoList 
     //Change cursor to waitCursor during transition
     QApplication::setOverrideCursor ( QCursor ( Qt::WaitCursor ) );
 
+    showAdditionalInfo();
     imagePreview();
     enableButtons();
     QApplication::restoreOverrideCursor();
@@ -245,7 +246,7 @@ void PrintOptionsPage::adjustWidthToRatio()
     d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth  =  width ? width : 1.;
     SignalBlocker blocker ( d->kcfg_PrintWidth );
     d->kcfg_PrintWidth->setValue ( d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth );
-    //kDebug() << "calc width " <<  width << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth << " height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight;
+    kDebug() << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth << " height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight;
 }
 
 void PrintOptionsPage::adjustHeightToRatio()
@@ -259,7 +260,7 @@ void PrintOptionsPage::adjustHeightToRatio()
     d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight =  height ? height : 1. ;
     SignalBlocker blocker ( d->kcfg_PrintHeight );
     d->kcfg_PrintHeight->setValue ( d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight );
-    //kDebug() << "height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth;
+    kDebug() << "height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth;
 }
 
 void PrintOptionsPage::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
@@ -361,14 +362,22 @@ void PrintOptionsPage::setAdditionalInfo()
         TPhoto* pPhoto = d->m_photos->at ( i );
         if ( pPhoto )
         {
-            pPhoto->pAddInfo->mUnit                 = PrintImagesConfig::printUnit();
-            pPhoto->pAddInfo->mPrintPosition        = PrintImagesConfig::printPosition();
-            pPhoto->pAddInfo->mKeepRatio            = PrintImagesConfig::printKeepRatio();
-            pPhoto->pAddInfo->mScaleMode            = PrintImagesConfig::printScaleMode();
-            pPhoto->pAddInfo->mAutoRotate           = PrintImagesConfig::printAutoRotate();
-            pPhoto->pAddInfo->mPrintWidth           = PrintImagesConfig::printWidth();
-            pPhoto->pAddInfo->mPrintHeight          = PrintImagesConfig::printHeight();
-            pPhoto->pAddInfo->mEnlargeSmallerImages = PrintImagesConfig::printEnlargeSmallerImages();
+          pPhoto->pAddInfo->mUnit                 = PrintImagesConfig::printUnit();
+          pPhoto->pAddInfo->mPrintPosition        = PrintImagesConfig::printPosition();
+          pPhoto->pAddInfo->mKeepRatio            = PrintImagesConfig::printKeepRatio();
+          pPhoto->pAddInfo->mScaleMode            = PrintImagesConfig::printScaleMode();
+          pPhoto->pAddInfo->mAutoRotate           = PrintImagesConfig::printAutoRotate();
+          pPhoto->pAddInfo->mPrintWidth           = PrintImagesConfig::printWidth();
+          pPhoto->pAddInfo->mPrintHeight          = PrintImagesConfig::printHeight();
+          pPhoto->pAddInfo->mEnlargeSmallerImages = PrintImagesConfig::printEnlargeSmallerImages();
+          if (pPhoto->pAddInfo->mKeepRatio)
+          {
+            double height = d->m_photos->at(i)->height() * pPhoto->pAddInfo->mPrintWidth / d->m_photos->at(i)->width();
+            d->m_photos->at(i)->pAddInfo->mPrintHeight =  height ? height : PrintImagesConfig::printHeight();
+          }
+          kDebug() << " photo " << i << " printWidth " <<  pPhoto->pAddInfo->mPrintWidth
+                   << " printHeight " << pPhoto->pAddInfo->mPrintHeight; 
+    
         }
     }
 }
@@ -439,11 +448,6 @@ void PrintOptionsPage::loadConfig()
     }
 
     d->mConfigDialogManager->updateWidgets();
-
-    if ( d->kcfg_PrintKeepRatio->isChecked() )
-    {
-        adjustHeightToRatio();
-    }
 
     // config has been read, now we set photo additional info
     setAdditionalInfo();
@@ -546,14 +550,18 @@ void PrintOptionsPage::verticalPagesChanged ( int i )
 
 void PrintOptionsPage::scaleOption()
 {
-    ScaleMode scaleMode = ScaleMode ( d->mScaleGroup.checkedId() );
-    kDebug() << "ScaleMode " << int ( scaleMode );
-    int i = d->m_currentPhoto;
-    TPhoto* pPhoto = d->m_photos->at ( i );
-    if ( pPhoto )
-    {
-        pPhoto->pAddInfo->mScaleMode = scaleMode;
-    }
+  ScaleMode scaleMode = ScaleMode ( d->mScaleGroup.checkedId() );
+  kDebug() << "ScaleMode " << int ( scaleMode );
+  int i = d->m_currentPhoto;
+  TPhoto* pPhoto = d->m_photos->at ( i );
+  if (pPhoto)
+  {
+    pPhoto->pAddInfo->mScaleMode = scaleMode;
+  }
+  if (scaleMode == ScaleToCustomSize &&  d->kcfg_PrintKeepRatio->isChecked())
+  {
+    adjustHeightToRatio();
+  }
 }
 
 void PrintOptionsPage::autoRotate ( bool value )
