@@ -241,10 +241,11 @@ void PrintOptionsPage::adjustWidthToRatio()
     }
     double width = d->m_photos->at ( d->m_currentPhoto )->width() * d->kcfg_PrintHeight->value() /
                    d->m_photos->at ( d->m_currentPhoto )->height();
-
-    d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth =  width ? width : 1.;
+    d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight = d->kcfg_PrintHeight->value();
+    d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth  =  width ? width : 1.;
     SignalBlocker blocker ( d->kcfg_PrintWidth );
     d->kcfg_PrintWidth->setValue ( d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth );
+    //kDebug() << "calc width " <<  width << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth << " height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight;
 }
 
 void PrintOptionsPage::adjustHeightToRatio()
@@ -254,9 +255,11 @@ void PrintOptionsPage::adjustHeightToRatio()
       return;
     }
     double height = d->m_photos->at ( d->m_currentPhoto )->height() * d->kcfg_PrintWidth->value() / d->m_photos->at ( d->m_currentPhoto )->width();
+    d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth  = d->kcfg_PrintWidth->value();
     d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight =  height ? height : 1. ;
     SignalBlocker blocker ( d->kcfg_PrintHeight );
     d->kcfg_PrintHeight->setValue ( d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight );
+    //kDebug() << "height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth;
 }
 
 void PrintOptionsPage::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
