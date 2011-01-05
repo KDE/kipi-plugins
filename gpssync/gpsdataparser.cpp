@@ -575,6 +575,7 @@ bool GPXFileReader::startElement(const QString& namespaceURI, const QString& loc
     {
         qreal lat;
         qreal lon;
+        Q_UNUSED(lat); Q_UNUSED(lon); // actually not unused, but prevent compiler warnings
         bool haveLat = false;
         bool haveLon = false;
 
