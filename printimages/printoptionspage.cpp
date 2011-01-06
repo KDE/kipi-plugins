@@ -6,7 +6,7 @@
  * Date        : 2009-02-08
  * Description : a kipi plugin to print images
  *
- * Copyright 2009 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright 2009-2011 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -150,7 +150,7 @@ PrintOptionsPage::PrintOptionsPage ( QWidget *parent, QList<TPhoto*> *photoList 
     //Change cursor to waitCursor during transition
     QApplication::setOverrideCursor ( QCursor ( Qt::WaitCursor ) );
 
-    showAdditionalInfo();
+//     showAdditionalInfo();
     imagePreview();
     enableButtons();
     QApplication::restoreOverrideCursor();
@@ -180,7 +180,7 @@ PrintOptionsPage::PrintOptionsPage ( QWidget *parent, QList<TPhoto*> *photoList 
     connect ( d->mScaleToPage, SIGNAL ( clicked ( bool ) ), SLOT ( scaleOption() ) );
     connect ( d->mScaleTo, SIGNAL ( clicked ( bool ) ), SLOT ( scaleOption() ) );
     connect ( d->kcfg_PrintAutoRotate, SIGNAL ( toggled ( bool ) ), SLOT ( autoRotate ( bool ) ) );
-
+    connect ( &d->mPositionGroup, SIGNAL (buttonClicked(int )), SLOT ( positionChosen(int)));
     layout()->setMargin ( 0 );
 }
 
@@ -208,7 +208,7 @@ double PrintOptionsPage::unitToInches ( PrintOptionsPage::Unit unit )
 Qt::Alignment PrintOptionsPage::alignment() const
 {
     int id = d->mPositionGroup.checkedId();
-    kDebug() << "alignment=" << id;
+//     kDebug() << "alignment=" << id;
     return Qt::Alignment ( id );
 }
 
@@ -246,7 +246,7 @@ void PrintOptionsPage::adjustWidthToRatio()
     d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth  =  width ? width : 1.;
     SignalBlocker blocker ( d->kcfg_PrintWidth );
     d->kcfg_PrintWidth->setValue ( d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth );
-    kDebug() << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth << " height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight;
+//     kDebug() << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth << " height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight;
 }
 
 void PrintOptionsPage::adjustHeightToRatio()
@@ -260,7 +260,7 @@ void PrintOptionsPage::adjustHeightToRatio()
     d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight =  height ? height : 1. ;
     SignalBlocker blocker ( d->kcfg_PrintHeight );
     d->kcfg_PrintHeight->setValue ( d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight );
-    kDebug() << "height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth;
+//     kDebug() << "height " <<  d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintHeight << " width " << d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintWidth;
 }
 
 void PrintOptionsPage::manageQPrintDialogChanges ( QPrinter * /*printer*/ )
@@ -313,7 +313,7 @@ void PrintOptionsPage::enableButtons()
 
 void PrintOptionsPage::imagePreview()
 {
-    kDebug() << d->m_currentPhoto;
+//     kDebug() << d->m_currentPhoto;
     TPhoto *pPhoto = d->m_photos->at ( d->m_currentPhoto );
     d->mPreview->setPixmap ( pPhoto->thumbnail() );
     if ( pPhoto->cropRegion != QRect() )
@@ -327,7 +327,7 @@ void PrintOptionsPage::selectNext()
     //Change cursor to waitCursor during transition
     QApplication::setOverrideCursor ( QCursor ( Qt::WaitCursor ) );
 
-    kDebug() << d->m_currentPhoto;
+//     kDebug() << d->m_currentPhoto;
 
     d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintPosition = alignment();
     if ( d->m_currentPhoto+1 < d->m_photos->size() )
@@ -344,7 +344,7 @@ void PrintOptionsPage::selectPrev()
     //Change cursor to waitCursor during transition
     QApplication::setOverrideCursor ( QCursor ( Qt::WaitCursor ) );
 
-    kDebug() << d->m_currentPhoto;
+//     kDebug() << d->m_currentPhoto;
     d->m_photos->at ( d->m_currentPhoto )->pAddInfo->mPrintPosition = alignment();
     if ( d->m_currentPhoto-1 >= 0 )
       d->m_currentPhoto--;
@@ -375,9 +375,9 @@ void PrintOptionsPage::setAdditionalInfo()
             double height = d->m_photos->at(i)->height() * pPhoto->pAddInfo->mPrintWidth / d->m_photos->at(i)->width();
             d->m_photos->at(i)->pAddInfo->mPrintHeight =  height ? height : PrintImagesConfig::printHeight();
           }
-          kDebug() << " photo " << i << " printWidth " <<  pPhoto->pAddInfo->mPrintWidth
-                   << " printHeight " << pPhoto->pAddInfo->mPrintHeight; 
-    
+//           kDebug() << " photo " << i << " printWidth " <<  pPhoto->pAddInfo->mPrintWidth
+//                    << " printHeight " << pPhoto->pAddInfo->mPrintHeight; 
+//     
         }
     }
 }
@@ -551,7 +551,7 @@ void PrintOptionsPage::verticalPagesChanged ( int i )
 void PrintOptionsPage::scaleOption()
 {
   ScaleMode scaleMode = ScaleMode ( d->mScaleGroup.checkedId() );
-  kDebug() << "ScaleMode " << int ( scaleMode );
+//   kDebug() << "ScaleMode " << int ( scaleMode );
   int i = d->m_currentPhoto;
   TPhoto* pPhoto = d->m_photos->at ( i );
   if (pPhoto)
@@ -572,6 +572,12 @@ void PrintOptionsPage::autoRotate ( bool value )
     {
         pPhoto->pAddInfo->mAutoRotate = value;
     }
+}
+
+void PrintOptionsPage::positionChosen(int id)
+{
+//   kDebug() << "Current photo " << d->m_currentPhoto << "position " << id;
+  d->m_photos->at(d->m_currentPhoto)->pAddInfo->mPrintPosition = Qt::Alignment(id);
 }
 
 } // namespace KIPIPrintImagesPlugin
