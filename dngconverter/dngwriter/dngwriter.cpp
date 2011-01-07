@@ -61,7 +61,6 @@ extern "C"
 // KDE includes
 
 #include <kdebug.h>
-#include <kzip.h>
 
 // LibKDcraw includes
 
@@ -75,6 +74,8 @@ extern "C"
 
 #include "dngwriter_p.h"
 #include "dngwriterhost.h"
+
+#define CHUNK 65536
 
 using namespace KExiv2Iface;
 
@@ -1057,47 +1058,80 @@ int DNGWriter::convert()
 
         if (d->backupOriginalRawFile)
         {
-            kDebug() << "DNGWriter: Backup Original RAW file (" << inputInfo.size() << " bytes)" ;
+            kDebug() << "DNGWriter: Backup Original RAW file (" << inputInfo.size() << " bytes)";
 
-            // Compress Raw file data to Zip archive.
+            QFileInfo originalFileInfo(inputFile());
 
-            QTemporaryFile zipFile;
-            if (!zipFile.open())
+            QFile originalFile(originalFileInfo.absoluteFilePath());
+            originalFile.open(QIODevice::ReadOnly);
+            QDataStream originalDataStream(&originalFile);
+
+            quint32 forkLength = originalFileInfo.size();
+            quint32 forkBlocks = (quint32)floor((forkLength + 65535.0) / 65536.0);
+
+            QVector<quint32> offsets;
+            quint32 offset = (2 + forkBlocks) * sizeof(quint32);
+            offsets.push_back(offset);
+
+            QByteArray originalDataBlock;
+            originalDataBlock.resize(CHUNK);
+
+            QTemporaryFile compressedFile;
+            if (!compressedFile.open())
             {
-                kDebug() << "DNGWriter: Cannot open temporary file to write Zip Raw file. Aborted..." ;
+                kDebug() << "DNGWriter: Cannot open temporary file to write Zip Raw file. Aborted...";
                 return -1;
             }
-            KZip zipArchive(zipFile.fileName());
-            zipArchive.open(QIODevice::WriteOnly);
-            zipArchive.setCompression(KZip::DeflateCompression);
-            zipArchive.addLocalFile(inputFile(), inputFile());
-            zipArchive.close();
+            QDataStream compressedDataStream(&compressedFile);
 
-            // Load Zip Archive in a byte array
+            for (quint32 block = 0; block < forkBlocks; block++)
+            {
+                int originalBlockLength = originalDataStream.readRawData(originalDataBlock.data(), CHUNK);
 
-            QFileInfo zipFileInfo(zipFile.fileName());
-            QByteArray zipRawFileData;
-            zipRawFileData.resize(zipFileInfo.size());
-            QDataStream dataStream(&zipFile);
-            dataStream.readRawData(zipRawFileData.data(), zipRawFileData.size());
-            kDebug() << "DNGWriter: Zipped RAW file size " << zipRawFileData.size() << " bytes" ;
+                QByteArray compressedDataBlock = qCompress((const uchar*)originalDataBlock.data(), originalBlockLength, -1);
+                compressedDataBlock.remove(0, 4); // removes qCompress own header
+                kDebug() << "DNGWriter: compressed data block " << originalBlockLength << " -> " << compressedDataBlock.size();
 
-            // Pass byte array to DNG sdk and compute MD5 fingerprint.
+                offset += compressedDataBlock.size();
+                offsets.push_back(offset);
+
+                compressedDataStream.writeRawData(compressedDataBlock.data(), compressedDataBlock.size());
+            }
 
             dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
-            dng_memory_stream stream(memalloc);
-            stream.Put(zipRawFileData.data(), zipRawFileData.size());
-            AutoPtr<dng_memory_block> block(host.Allocate(zipRawFileData.size()));
-            stream.SetReadPosition(0);
-            stream.Get(block->Buffer(), zipRawFileData.size());
+            dng_memory_stream tempDataStream(memalloc);
+            tempDataStream.SetBigEndian(true);
+            tempDataStream.Put_uint32(forkLength);
+            for (qint32 idx = 0; idx < offsets.size(); idx++)
+            {
+                tempDataStream.Put_uint32(offsets[idx]);
+            }
+
+            QByteArray compressedData;
+            compressedData.resize(compressedFile.size());
+            compressedFile.seek(0);
+            compressedDataStream.readRawData(compressedData.data(), compressedData.size());
+            tempDataStream.Put(compressedData.data(), compressedData.size());
+
+            compressedFile.remove();
+
+            tempDataStream.Put_uint32(0);
+            tempDataStream.Put_uint32(0);
+            tempDataStream.Put_uint32(0);
+            tempDataStream.Put_uint32(0);
+            tempDataStream.Put_uint32(0);
+            tempDataStream.Put_uint32(0);
+            tempDataStream.Put_uint32(0);
+
+            AutoPtr<dng_memory_block> block(host.Allocate(tempDataStream.Length()));
+            tempDataStream.SetReadPosition(0);
+            tempDataStream.Get(block->Buffer(), tempDataStream.Length());
 
             dng_md5_printer md5;
             md5.Process(block->Buffer(), block->LogicalSize());
             negative->SetOriginalRawFileData(block);
             negative->SetOriginalRawFileDigest(md5.Result());
             negative->ValidateOriginalRawFileDigest();
-
-            zipFile.remove();
         }
 
         if (d->cancel) return -2;
