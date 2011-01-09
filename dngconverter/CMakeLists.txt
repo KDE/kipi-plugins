@@ -198,3 +198,4 @@ SET(dngconverter_common_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/actionthread.cpp
 ADD_SUBDIRECTORY(icons)
 ADD_SUBDIRECTORY(plugin)
 ADD_SUBDIRECTORY(test)
+ADD_SUBDIRECTORY(dnginfo)
