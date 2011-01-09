@@ -51,7 +51,7 @@ int main(int argc, char **argv)
                 "dnginfo - DNG information tool\n"
                 "Usage: %s [options] dngfile\n"
                 "Valid options:\n"
-                "  -extraxtraw            extract embedded original\n",
+                "  -extractraw            extract embedded original\n",
                 argv[0]);
 
         return -1;
