@@ -96,7 +96,7 @@ int main(int argc, char **argv)
         negative->Parse(host, stream, info);
         negative->PostParse(host, stream, info);
 
-        QString originalFileName( + negative->OriginalRawFileName().Get());
+        QString originalFileName(negative->OriginalRawFileName().Get());
         dng_fingerprint originalDigest = negative->OriginalRawFileDigest();
         quint32 originalDataLength = negative->OriginalRawFileDataLength();
         const void* originalData = negative->OriginalRawFileData();
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
             }
             else
             {
-                fprintf(stderr, "no embedded originals found");
+                fprintf(stderr, "no embedded originals found\n");
             }
         }
     }
