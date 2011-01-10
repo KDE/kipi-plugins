@@ -6,7 +6,7 @@
  * Date        : 2011-01-07
  * Description : a command line tool to extract embedded originals
  *
- * Copyright (C) 2011 by Jens Mueller <tschenser at gmx dot de> 
+ * Copyright (C) 2011 by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "stdio.h"
+#include <cstdio>
 
 // Qt includes
 
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 
         return -1;
     }
-    
+
     qint32 index;
     for (index = 1; index < argc && argv[index][0] == '-'; index++)
     {
@@ -66,19 +66,19 @@ int main(int argc, char **argv)
             extractOriginal = true;
         }
     }
-    
+
     if (index == argc)
     {
         fprintf (stderr, "*** No file specified\n");
         return 1;
     }
-   
+
     QFileInfo dngFileInfo(argv[index]);
-        
+
     dng_xmp_sdk::InitializeSDK();
 
     dng_file_stream stream(QFile::encodeName(dngFileInfo.absoluteFilePath()));
-    dng_host host;
+    dng_host        host;
     host.SetKeepOriginalFile(true);
 
     AutoPtr<dng_negative> negative;
@@ -112,32 +112,32 @@ int main(int argc, char **argv)
                 compressedDataStream.SetBigEndian(true);
                 quint32 forkLength = compressedDataStream.Get_uint32();
                 quint32 forkBlocks = (uint32)floor((forkLength + 65535.0) / 65536.0);
-                QVector<quint32> offsets;    
-                
+                QVector<quint32> offsets;
+
                 for(quint32 block = 0; block <= forkBlocks; block++)
                 {
                     quint32 offset = compressedDataStream.Get_uint32();
                     offsets.push_back(offset);
                 }
-            
+
                 QFile originalFile(dngFileInfo.absolutePath() + "/" + originalFileName);
                 qDebug() << "extracting embedded original to " << dngFileInfo.fileName();
                 originalFile.open(QIODevice::WriteOnly);
                 QDataStream originalDataStream(&originalFile);
-            
+
                 for (quint32 block = 0; block < forkBlocks; block++)
                 {
                     QByteArray compressedDataBlock;
                     compressedDataBlock.resize(offsets[block + 1] - offsets[block]);
                     compressedDataStream.Get(compressedDataBlock.data(), compressedDataBlock.size());
                     quint32 uncompressedDataSize = qMin((quint32)CHUNK, forkLength);
-                    
+
                     compressedDataBlock.prepend(uncompressedDataSize         & 0xFF);
                     compressedDataBlock.prepend((uncompressedDataSize >>  8) & 0xFF);
                     compressedDataBlock.prepend((uncompressedDataSize >> 16) & 0xFF);
                     compressedDataBlock.prepend((uncompressedDataSize >> 24) & 0xFF);
                     forkLength -= uncompressedDataSize;
-                                
+
                     QByteArray originalDataBlock = qUncompress((const uchar*)compressedDataBlock.data(), compressedDataBlock.size());
                     //qDebug() << "compressed data block " << compressedDataBlock.size() << " -> " << originalDataBlock.size();
                     originalDataStream.writeRawData(originalDataBlock.data(), originalDataBlock.size());
@@ -155,4 +155,3 @@ int main(int argc, char **argv)
 
     return 0;
 }
- 
