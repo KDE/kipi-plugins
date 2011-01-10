@@ -1,6 +1,6 @@
 
 # =======================================================
-# DNGVALIDATE tool from DNG SDK
+# DNGINFO command line tool
 
 # Disable DNG SDK warnings: we will never touch this code.
 FOREACH(_currentfile ${libdng_SRCS})
@@ -21,10 +21,10 @@ KDE4_ADD_EXECUTABLE(dnginfo NOGUI
                     ${dnginfo_SRCS}
                    )
 
-TARGET_LINK_LIBRARIES(dnginfo 
-                      ${KDE4_KDECORE_LIBS} 
-                      ${QT_AND_KDECORE_LIBS} 
-                      ${QT_LIBRARIES} 
+TARGET_LINK_LIBRARIES(dnginfo
+                      ${KDE4_KDECORE_LIBS}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${QT_LIBRARIES}
                       ${EXPAT_LIBRARY}
                       ${CMAKE_THREAD_LIBS_INIT}
                      )
