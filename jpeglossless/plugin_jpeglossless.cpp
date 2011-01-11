@@ -214,11 +214,8 @@ void Plugin_JPEGLossless::flip(KIPIJPEGLossLessPlugin::FlipAction action, const 
     d->current = 0;
     d->failed  = false;
 
-    if (d->progressDlg)
-    {
-        delete d->progressDlg;
-        d->progressDlg = 0;
-    }
+    delete d->progressDlg;
+    d->progressDlg = 0;
 
     d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
                         i18n("Flip images %1", title));
@@ -258,12 +255,8 @@ void Plugin_JPEGLossless::rotate(KIPIJPEGLossLessPlugin::RotateAction action, co
     d->current = 0;
     d->failed  = false;
 
-    if (d->progressDlg)
-    {
-        delete d->progressDlg;
-        d->progressDlg = 0;
-    }
-
+    delete d->progressDlg;
+    d->progressDlg = 0;
     d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
                         i18n("Rotate images %1", title));
 
@@ -291,11 +284,8 @@ void Plugin_JPEGLossless::slotConvert2GrayScale()
     d->current = 0;
     d->failed  = false;
 
-    if (d->progressDlg)
-    {
-        delete d->progressDlg;
-        d->progressDlg = 0;
-    }
+    delete d->progressDlg;
+    d->progressDlg = 0;
 
     d->progressDlg = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(),
                         i18n("Convert images to black & white"));

@@ -91,8 +91,7 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 
 Plugin_GalleryExport::~Plugin_GalleryExport()
 {
-    if (mpGallery)
-        delete mpGallery;
+    delete mpGallery;
 }
 
 // this slot uses GalleryWindow Class

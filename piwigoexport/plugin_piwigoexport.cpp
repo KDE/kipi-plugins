@@ -90,8 +90,7 @@ void Plugin_PiwigoExport::setup(QWidget* widget)
 
 Plugin_PiwigoExport::~Plugin_PiwigoExport()
 {
-    if (mpPiwigo)
-        delete mpPiwigo;
+    delete mpPiwigo;
 }
 
 // this slot uses PiwigoWindow Class

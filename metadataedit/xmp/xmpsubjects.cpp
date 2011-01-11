@@ -83,7 +83,7 @@ XMPSubjects::XMPSubjects(QWidget* parent)
                                      "if you selected a standard XMP/NAA reference code."));
 
     // reset the note label, not used in XMP view
-    if (m_note) delete m_note;
+    delete m_note;
 
     m_subjectsCheck->setVisible(true);
 }
