@@ -1466,15 +1466,14 @@ void Wizard::outputChanged ( const QString& text)
         text == i18n ( "Print to JPG" ) || 
         text == i18n ( "Print to gimp" ) )
     {
-        if (d->m_printer)
-            delete d->m_printer;
+        delete d->m_printer;
+
         d->m_printer = new QPrinter();
         d->m_printer->setOutputFormat(QPrinter::PdfFormat);
     }
     else if (text == i18n ( "Print to PS" ))
     {
-        if (d->m_printer)
-            delete d->m_printer;
+        delete d->m_printer;
         d->m_printer = new QPrinter();
         d->m_printer->setOutputFormat(QPrinter::PostScriptFormat);
     }
@@ -1489,8 +1488,7 @@ void Wizard::outputChanged ( const QString& text)
             if (it->printerName () == text)
             {
                 kDebug() << "Chosen printer: " << it->printerName ();
-                if (d->m_printer)
-                  delete d->m_printer;
+                 delete d->m_printer;
                 d->m_printer = new QPrinter(*it);
             }
         }
@@ -2275,8 +2273,7 @@ void Wizard::accept()
 
 void Wizard::pagesetupclicked()
 {
-    if (d->m_pDlg)
-        delete d->m_pDlg;
+    delete d->m_pDlg;
     d->m_pDlg = new QPageSetupDialog (d->m_printer, this);
     // TODO next line should work but it doesn't because of a QT bug
     //d->m_pDlg->open(this, SLOT(pagesetupdialogexit()));

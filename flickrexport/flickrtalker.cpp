@@ -123,8 +123,8 @@ FlickrTalker::~FlickrTalker()
 {
     if (m_job)
         m_job->kill();
-    if (m_photoSetsList)
-        delete m_photoSetsList;
+    delete m_photoSetsList;
+
 }
 
 /** Compute MD5 signature using url queries keys and values following Flickr notice:
