@@ -11,8 +11,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 257514 : PrintImages  : Scaling of Pictures for print 
 004 ==> 196855 : GPSSync      : Remember last postition, remember last view mode, cache the last view.
 005 ==> 262125 : DngConverter : DNG Conversion can't be inverted. Embedded file is corrupted.
-006 ==>
-
+006 ==> 245956 : PicasaWeb    : Upload video from Digikam to Picasa.
+007 ==> 
 
 
 
