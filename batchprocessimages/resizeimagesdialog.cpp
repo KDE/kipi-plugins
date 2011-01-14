@@ -82,6 +82,7 @@ public:
     const static QString RC_GROUP_NAME;
 
     ResizeImagesDialogPriv(ResizeImagesDialog *dialog) :
+	aboutData(0)
         m_dialog(dialog)
     {
     }

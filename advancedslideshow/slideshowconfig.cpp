@@ -117,7 +117,7 @@ SlideShowConfig::SlideShowConfig (QWidget* parent, SharedContainer* sharedData)
                                             KAboutData::License_GPL,
                                             ki18n("A Kipi plugin for image slideshows"),
                                             ki18n("(c) 2003-2004, Renchi Raju\n"
-                                                  "(c) 2006-2008, Valerio Fuoglio"));
+                                                  "(c) 2006-2009, Valerio Fuoglio"));
 
     d->about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
                         "renchi dot raju at gmail dot com");
@@ -128,7 +128,7 @@ SlideShowConfig::SlideShowConfig (QWidget* parent, SharedContainer* sharedData)
                this, SLOT(slotHelp()));
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
 
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
