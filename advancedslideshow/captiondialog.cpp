@@ -38,8 +38,7 @@ CaptionDialog::CaptionDialog( QWidget* parent, SharedContainer* sharedData)
 {
     setupUi(this);
     m_sharedData = sharedData;
-    m_commentsFontChooser->setSampleText(i18n("AdvancedSlideshow is part of "
-                                              "KIPI-Plugins (http://www.kipi-plugins.org)"));
+    m_commentsFontChooser->setSampleText(i18n("This is a comment sample..."));
 }
 
 CaptionDialog::~CaptionDialog()
