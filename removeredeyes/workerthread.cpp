@@ -87,10 +87,7 @@ WorkerThread::~ WorkerThread()
     // wait for the thread to finish
     wait();
 
-    if (d->saveMethod)
-    {
-        delete d->saveMethod;
-    }
+    delete d->saveMethod;
 
     delete d;
 }
