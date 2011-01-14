@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "slideshowconfig.h"
 #include "slideshowconfig.moc"
 
 // Qt includes
@@ -73,7 +72,7 @@ public:
     KConfig*                  config;
 };
 
-SlideShowConfig::SlideShowConfig (QWidget *parent, SharedContainer* sharedData)
+SlideShowConfig::SlideShowConfig (QWidget* parent, SharedContainer* sharedData)
                : KPageDialog(parent), d(new SlideShowConfigPrivate)
 {
     setObjectName("Advanced Slideshow Settings");
@@ -189,7 +188,8 @@ void SlideShowConfig::readSettings()
 
     d->sharedData->commentsFontColor   = grp.readEntry("Comments Font Color", 0xffffff);
     d->sharedData->commentsBgColor     = grp.readEntry("Comments Bg Color", 0x000000);
-    d->sharedData->transparentBg       = grp.readEntry("Transparent Bg", true);
+    d->sharedData->commentsDrawOutline = grp.readEntry("Comments Text Outline", true);
+    d->sharedData->bgOpacity           = grp.readEntry("Background Opacity", 10);
 
     d->sharedData->commentsLinesLength = grp.readEntry("Comments Lines Length", 72);
 
@@ -266,7 +266,8 @@ void SlideShowConfig::saveSettings()
     grp.writeEntry("Comments Font FixedPitch", commentsFont->fixedPitch());
     grp.writeEntry("Comments Font Color",      d->sharedData->commentsFontColor);
     grp.writeEntry("Comments Bg Color",        d->sharedData->commentsBgColor);
-    grp.writeEntry("Transparent Bg",           d->sharedData->transparentBg);
+    grp.writeEntry("Comments Text Outline",    d->sharedData->commentsDrawOutline);
+    grp.writeEntry("Background Opacity",       d->sharedData->bgOpacity);
     grp.writeEntry("Comments Lines Length",    d->sharedData->commentsLinesLength);
     grp.writeEntry("Effect Name (OpenGL)",     d->sharedData->effectNameGL);
     grp.writeEntry("Effect Name",              d->sharedData->effectName);

@@ -23,7 +23,6 @@
 
 #define ICONSIZE 256
 
-#include "maindialog.h"
 #include "maindialog.moc"
 
 // Qt includes
@@ -47,7 +46,6 @@
 #include <kmessagebox.h>
 #include <kurl.h>
 #include <kstandarddirs.h>
-
 
 // Local includes
 
@@ -74,7 +72,7 @@ MainDialog::MainDialog(QWidget* parent, SharedContainer* sharedData)
 
     // --------------------------------------------------------
 
-    QVBoxLayout *listBoxContainerLayout = new QVBoxLayout;
+    QVBoxLayout* listBoxContainerLayout = new QVBoxLayout;
     m_ImagesFilesListBox                = new ImagesList(m_sharedData->iface(),
                                                          m_ImagesFilesListBoxContainer,
                                                          KIconLoader::SizeMedium);
@@ -375,7 +373,7 @@ void MainDialog::addItems(const KUrl::List& fileList)
     slotImagesFilesSelected(m_ImagesFilesListBox->listView()->currentItem());
 }
 
-void MainDialog::slotOpenGLToggled( void )
+void MainDialog::slotOpenGLToggled()
 {
     if (m_openglCheckBox->isChecked())
     {
@@ -390,7 +388,7 @@ void MainDialog::slotOpenGLToggled( void )
     slotEffectChanged();
 }
 
-void MainDialog::slotEffectChanged( void )
+void MainDialog::slotEffectChanged()
 {
     bool isKB = m_effectsComboBox->currentText() == i18n("Ken Burns");
 
@@ -408,7 +406,7 @@ void MainDialog::slotDelayChanged( int delay )
     showNumberImages();
 }
 
-void MainDialog::slotUseMillisecondsToggled( void )
+void MainDialog::slotUseMillisecondsToggled()
 {
     int delay = m_sharedData->delay;
 
@@ -431,7 +429,7 @@ void MainDialog::slotUseMillisecondsToggled( void )
     m_delaySpinBox->setValue(delay);
 }
 
-void MainDialog::slotSelection( void )
+void MainDialog::slotSelection()
 {
     KUrl::List urlList;
 
@@ -487,7 +485,7 @@ void MainDialog::slotThumbnail(const KUrl& /*url*/, const QPixmap& pix)
                this, 0);
 }
 
-void MainDialog::slotPrintCommentsToggled( void )
+void MainDialog::slotPrintCommentsToggled()
 {
     m_sharedData->printFileComments =  m_printCommentsCheckBox->isChecked();
     m_sharedData->page_caption->setEnabled(m_printCommentsCheckBox->isChecked());

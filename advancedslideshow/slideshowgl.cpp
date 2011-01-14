@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "slideshowgl.h"
 #include "slideshowgl.moc"
 
 // C++ includes
@@ -272,7 +271,7 @@ void SlideShowGL::resizeGL(int w, int h)
     glLoadIdentity();
 }
 
-void SlideShowGL::keyPressEvent(QKeyEvent *event)
+void SlideShowGL::keyPressEvent(QKeyEvent* event)
 {
     if (!event)
         return;
@@ -281,7 +280,7 @@ void SlideShowGL::keyPressEvent(QKeyEvent *event)
     m_playbackWidget->keyPressEvent(event);
 }
 
-void SlideShowGL::mousePressEvent(QMouseEvent *e)
+void SlideShowGL::mousePressEvent(QMouseEvent* e)
 {
     if (m_endOfShow)
         slotClose();
@@ -300,7 +299,7 @@ void SlideShowGL::mousePressEvent(QMouseEvent *e)
     }
 }
 
-void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
+void SlideShowGL::mouseMoveEvent(QMouseEvent* e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
     m_mouseMoveTimer->setSingleShot(true);
@@ -329,7 +328,7 @@ void SlideShowGL::mouseMoveEvent(QMouseEvent *e)
     m_playbackWidget->show();
 }
 
-void SlideShowGL::wheelEvent(QWheelEvent *e)
+void SlideShowGL::wheelEvent(QWheelEvent* e)
 {
     if (!m_sharedData->enableMouseWheel) return;
 
@@ -557,9 +556,9 @@ void SlideShowGL::montage(QImage& top, QImage& bot)
     int eh = bh / 2 + th / 2;
 
 
-    unsigned int *tdata = (unsigned int*) top.scanLine(0);
+    unsigned int* tdata = (unsigned int*) top.scanLine(0);
 
-    unsigned int *bdata = 0;
+    unsigned int* bdata = 0;
 
     for (int y = sh; y < eh; ++y)
     {
@@ -664,17 +663,20 @@ void SlideShowGL::printComments(QImage& layer)
     QFont  font(*m_sharedData->captionFont);
     QColor fgColor(m_sharedData->commentsFontColor);
     QColor bgColor(m_sharedData->commentsBgColor);
-    bool   transBg = m_sharedData->transparentBg;
+    bool   drawTextOutline = m_sharedData->commentsDrawOutline;
+    int    opacity = m_sharedData->bgOpacity;
 
     for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ )
     {
         QPixmap pix = generateCustomOutlinedTextPixmap(commentsByLines[lineNumber],
-                                                       font, fgColor, bgColor, transBg);
+                                                       font, fgColor, bgColor, opacity, drawTextOutline);
 
         QPainter painter;
         painter.begin(&layer);
 
-        painter.drawPixmap(m_xMargin, layer.height() - pix.height() - yPos, pix);
+        int xPos = (layer.width() / 2) - (pix.width() / 2);
+        painter.drawPixmap(xPos, layer.height() - pix.height() - yPos, pix);
+
         painter.end();
 
         yPos += int(pix.height() + m_height / 400);
@@ -1616,23 +1618,28 @@ QPixmap SlideShowGL::generateOutlinedTextPixmap(const QString& text, QFont& fn)
 {
     QColor fgColor(Qt::white);
     QColor bgColor(Qt::black);
-    return generateCustomOutlinedTextPixmap(text, fn, fgColor, bgColor, true);
+    return generateCustomOutlinedTextPixmap(text, fn, fgColor, bgColor, 0, true);
 }
 
 QPixmap SlideShowGL::generateCustomOutlinedTextPixmap(const QString& text, QFont& fn,
                                                       QColor& fgColor, QColor& bgColor,
-                                                      bool transBg)
+                                                      int opacity, bool drawTextOutline)
 {
     QFontMetrics fm(fn);
     QRect rect = fm.boundingRect(text);
-    rect.adjust( 0, 0, 2, 2 );
+    rect.adjust( -fm.maxWidth(), -fm.height(), fm.maxWidth(), fm.height() / 2 );
 
     QPixmap pix(rect.width(), rect.height());
 
-    if (transBg)
-        pix.fill(Qt::transparent);
-    else
-        pix.fill(bgColor);
+    pix.fill(Qt::transparent);
+    if(opacity > 0)
+    {
+        QPainter pbg(&pix);
+        pbg.setBrush(bgColor);
+        pbg.setPen(bgColor);
+        pbg.setOpacity(opacity / 10.0);
+        pbg.drawRoundedRect(0, 0, (int)pix.width(), (int)pix.height(), (int)pix.height()/3, (int)pix.height()/3);
+    }
 
     QPainter p(&pix);
     p.setRenderHint(QPainter::Antialiasing, true);
@@ -1641,7 +1648,7 @@ QPixmap SlideShowGL::generateCustomOutlinedTextPixmap(const QString& text, QFont
 
     // draw outline
     QPainterPath path;
-    path.addText(1, fn.pointSize() +1, fn, text);
+    path.addText(fm.maxWidth(), fm.height() * 1.5, fn, text);
 
     QPainterPathStroker stroker;
     stroker.setWidth(2);
@@ -1649,7 +1656,7 @@ QPixmap SlideShowGL::generateCustomOutlinedTextPixmap(const QString& text, QFont
     stroker.setJoinStyle(Qt::RoundJoin);
     QPainterPath outline = stroker.createStroke(path);
 
-    if (transBg)
+    if (drawTextOutline)
         p.fillPath(outline, Qt::black);
     p.fillPath(path,    QBrush(fgColor));
 

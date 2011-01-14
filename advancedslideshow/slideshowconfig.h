@@ -41,7 +41,7 @@ class SlideShowConfig : public KPageDialog
 
 public:
 
-    SlideShowConfig (QWidget *parent, SharedContainer* sharedData);
+    SlideShowConfig (QWidget* parent, SharedContainer* sharedData);
     ~SlideShowConfig();
 
 Q_SIGNALS:

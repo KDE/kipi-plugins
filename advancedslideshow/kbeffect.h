@@ -30,7 +30,6 @@ namespace KIPIAdvancedSlideshowPlugin
 {
 
 class Image;
-
 class SlideShowKB;
 
 class KBEffect
@@ -46,7 +45,7 @@ public:
 
 public:
 
-    explicit KBEffect(SlideShowKB *parent, bool m_needFadeIn = true);
+    explicit KBEffect(SlideShowKB* parent, bool m_needFadeIn = true);
     virtual ~KBEffect();
 
     virtual void advanceTime(float step) = 0;
@@ -63,17 +62,17 @@ protected:
 
     void   setupNewImage(int img);
     void   swapImages();
-    Image *image(int img);
+    Image* image(int img) const;
 
 protected:
 
     static int m_numKBEffectRepeated;
     bool       m_needFadeIn;
-    Image     *m_img[2];
+    Image*     m_img[2];
 
 private:
 
-    SlideShowKB *slideWidget;
+    SlideShowKB* slideWidget;
 };
 
 // -------------------------------------------------------------------------

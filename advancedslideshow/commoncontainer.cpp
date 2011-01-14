@@ -52,7 +52,8 @@ SharedContainer::SharedContainer()
     showSelectedFilesOnly         = false;
     commentsFontColor             = 0;
     commentsBgColor               = 0;
-    transparentBg                 = false;
+    commentsDrawOutline           = false;
+    bgOpacity                     = 10;
     commentsLinesLength           = 0;
     captionFont                   = 0;
 

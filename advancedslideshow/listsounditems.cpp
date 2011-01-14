@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "listsounditems.h"
 #include "listsounditems.moc"
 
 // Qt includes
@@ -45,7 +44,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-SoundItem::SoundItem(QListWidget* parent, KUrl &url)
+SoundItem::SoundItem(QListWidget* parent, const KUrl& url)
          : QListWidgetItem(parent)
 {
     m_url = url;
@@ -68,7 +67,7 @@ KUrl SoundItem::url()
     return m_url;
 }
 
-void SoundItem::setName(QString text)
+void SoundItem::setName(const QString& text)
 {
     setText(text);
 }
@@ -125,7 +124,7 @@ void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*ol
 
 // ------------------------------------------------------------------
 
-ListSoundItems::ListSoundItems(QWidget *parent)
+ListSoundItems::ListSoundItems(QWidget* parent)
               : QListWidget(parent)
 {
     setSelectionMode(QAbstractItemView::SingleSelection);
@@ -134,19 +133,19 @@ ListSoundItems::ListSoundItems(QWidget *parent)
     setIconSize(QSize(32, 32));
 }
 
-void ListSoundItems::dragEnterEvent(QDragEnterEvent *e)
+void ListSoundItems::dragEnterEvent(QDragEnterEvent* e)
 {
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();
 }
 
-void ListSoundItems::dragMoveEvent(QDragMoveEvent *e)
+void ListSoundItems::dragMoveEvent(QDragMoveEvent* e)
 {
     if (e->mimeData()->hasUrls())
         e->acceptProposedAction();
 }
 
-void ListSoundItems::dropEvent(QDropEvent *e)
+void ListSoundItems::dropEvent(QDropEvent* e)
 {
     QList<QUrl> list = e->mimeData()->urls();
     KUrl::List urls;

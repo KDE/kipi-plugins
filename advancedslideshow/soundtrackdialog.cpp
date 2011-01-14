@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "soundtrackdialog.h"
 #include "soundtrackdialog.moc"
 
 #ifdef Q_WS_X11
@@ -193,10 +192,10 @@ void SoundtrackDialog::addItems(const KUrl::List& fileList)
 
     for (KUrl::List::ConstIterator it = Files.constBegin(); it != Files.constEnd(); ++it)
     {
-        KUrl currentFile = *it;
-        KUrl path = KUrl(currentFile.path().section('/', 0, -1));
+        KUrl currentFile             = *it;
+        KUrl path                    = KUrl(currentFile.path().section('/', 0, -1));
         m_sharedData->soundtrackPath = path;
-        SoundItem *item = new SoundItem(m_SoundFilesListBox, path);
+        SoundItem *item              = new SoundItem(m_SoundFilesListBox, path);
         item->setName(currentFile.path().section('/', -1));
         m_SoundFilesListBox->insertItem(m_SoundFilesListBox->count() - 1, item);
 
@@ -359,6 +358,7 @@ void SoundtrackDialog::slotSoundFilesButtonDelete()
     int Index = m_SoundFilesListBox->currentRow();
     if( Index < 0 )
        return;
+
     SoundItem* pitem = static_cast<SoundItem*>(m_SoundFilesListBox->takeItem(Index));
     m_urlList.removeAll(pitem->url());
     m_soundItems->remove(pitem->url());

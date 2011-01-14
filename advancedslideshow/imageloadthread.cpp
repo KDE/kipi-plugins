@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "imageloadthread.h"
 #include "imageloadthread.moc"
 
 // Qt includes

@@ -78,10 +78,10 @@ protected:
     void paintGL();
     void resizeGL(int w, int h);
 
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *);
-    void wheelEvent(QWheelEvent *e);
-    void keyPressEvent(QKeyEvent *event);
+    void mousePressEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
+    void wheelEvent(QWheelEvent*);
+    void keyPressEvent(QKeyEvent*);
 
 private:
 
@@ -91,7 +91,7 @@ private:
     QPixmap       generateOutlinedTextPixmap(const QString& text, QFont& fn);
     QPixmap       generateCustomOutlinedTextPixmap(const QString& text,
                                                    QFont& fn, QColor& fgColor, QColor& bgColor,
-                                                   bool transBg = true);
+                                                   int opacity, bool transBg = true);
 
     void          paintTexture();
     void          advanceFrame();

@@ -117,7 +117,7 @@ class Image
 
 public:
 
-    explicit Image(ViewTrans *viewTrans, float aspect = 1.0);
+    explicit Image(ViewTrans* viewTrans, float aspect = 1.0);
     ~Image();
 
     ViewTrans* m_viewTrans;
@@ -160,17 +160,17 @@ private:
     void     initializeGL();
     void     paintGL();
     void     resizeGL(int w, int h);
-    void     applyTexture(Image *img, const QImage &image);
-    void     paintTexture(Image *img);
+    void     applyTexture(Image* img, const QImage& image);
+    void     paintTexture(Image* img);
     unsigned suggestFrameRate(unsigned forceRate);
 
     void     readSettings();
 
 protected:
 
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *);
-    void keyPressEvent(QKeyEvent *event);
+    void mousePressEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
+    void keyPressEvent(QKeyEvent*);
 
 private Q_SLOTS:
 
