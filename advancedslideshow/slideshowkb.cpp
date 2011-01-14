@@ -24,7 +24,6 @@
  *
  * ============================================================ */
 
-#include "slideshowkb.h"
 #include "slideshowkb.moc"
 
 // C++ includes
@@ -140,7 +139,7 @@ ViewTrans::ViewTrans(bool zoomIn, float relAspect)
 
 // -------------------------------------------------------------------------
 
-Image::Image(ViewTrans *viewTrans, float aspect)
+Image::Image(ViewTrans* viewTrans, float aspect)
 {
     this->m_viewTrans = viewTrans;
     this->m_aspect    = aspect;
@@ -450,7 +449,7 @@ void SlideShowKB::applyTexture(Image *img, const QImage &texture)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
-void SlideShowKB::paintTexture(Image *img)
+void SlideShowKB::paintTexture(Image* img)
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -577,7 +576,7 @@ QMap<QString, QString> SlideShowKB::effectNamesI18N()
     return effects;
 }
 
-void SlideShowKB::keyPressEvent(QKeyEvent *event)
+void SlideShowKB::keyPressEvent(QKeyEvent* event)
 {
     if (!event)
         return;
@@ -589,7 +588,7 @@ void SlideShowKB::keyPressEvent(QKeyEvent *event)
 }
 
 
-void SlideShowKB::mousePressEvent(QMouseEvent *e)
+void SlideShowKB::mousePressEvent(QMouseEvent* e)
 {
     if ( !e )
         return;
@@ -598,7 +597,7 @@ void SlideShowKB::mousePressEvent(QMouseEvent *e)
         slotClose();
 }
 
-void SlideShowKB::mouseMoveEvent(QMouseEvent *e)
+void SlideShowKB::mouseMoveEvent(QMouseEvent* e)
 {
     setCursor(QCursor(Qt::ArrowCursor));
     m_mouseMoveTimer->start(1000);

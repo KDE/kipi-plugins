@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "slideshow.h"
 #include "slideshow.moc"
 
 // C++ includes
@@ -553,7 +552,7 @@ void SlideShow::showEndOfShow()
     m_slidePlaybackWidget->setEnabledPrev( false );
 }
 
-void SlideShow::keyPressEvent(QKeyEvent *event)
+void SlideShow::keyPressEvent(QKeyEvent* event)
 {
     if (!event)
         return;
@@ -562,7 +561,7 @@ void SlideShow::keyPressEvent(QKeyEvent *event)
     m_slidePlaybackWidget->keyPressEvent(event);
 }
 
-void SlideShow::mousePressEvent( QMouseEvent *e )
+void SlideShow::mousePressEvent( QMouseEvent* e )
 {
     if ( m_endOfShow )
         slotClose();
@@ -581,7 +580,7 @@ void SlideShow::mousePressEvent( QMouseEvent *e )
     }
 }
 
-void SlideShow::mouseMoveEvent( QMouseEvent *e )
+void SlideShow::mouseMoveEvent( QMouseEvent* e )
 {
     setCursor( QCursor( Qt::ArrowCursor ) );
     m_mouseMoveTimer->setSingleShot( true );
@@ -635,7 +634,7 @@ void SlideShow::mouseMoveEvent( QMouseEvent *e )
     m_playbackWidget->show();
 }
 
-void SlideShow::wheelEvent( QWheelEvent *e )
+void SlideShow::wheelEvent( QWheelEvent* e )
 {
     if ( ! m_sharedData->enableMouseWheel ) return;
 
@@ -1290,7 +1289,7 @@ int SlideShow::effectBlobs( bool aInit )
     return 10;
 }
 
-void SlideShow::paintEvent( QPaintEvent * )
+void SlideShow::paintEvent( QPaintEvent* )
 {
 
     QPainter p( this );

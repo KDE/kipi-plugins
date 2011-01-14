@@ -42,7 +42,7 @@ int KBEffect::m_numKBEffectRepeated = 0;
 
 // -------------------------------------------------------------------------
 
-KBEffect::KBEffect(SlideShowKB *parent, bool needFadeIn)
+KBEffect::KBEffect(SlideShowKB* parent, bool needFadeIn)
 {
 
     this->slideWidget  = parent;
@@ -65,7 +65,7 @@ void KBEffect::swapImages()
     slideWidget->swapImages();
 }
 
-Image *KBEffect::image(int img)
+Image* KBEffect::image(int img) const
 {
 
     assert(img >= 0 && img < 2);
@@ -93,7 +93,7 @@ KBEffect::Type KBEffect::chooseKBEffect(KBEffect::Type oldType)
 
 // -------------------------------------------------------------------------
 
-FadeKBEffect::FadeKBEffect(SlideShowKB *parent, bool needFadeIn):
+FadeKBEffect::FadeKBEffect(SlideShowKB* parent, bool needFadeIn):
         KBEffect(parent, needFadeIn)
 {
     m_img[0] = image(0);
@@ -133,7 +133,7 @@ void FadeKBEffect::advanceTime(float step)
 
 // -------------------------------------------------------------------------
 
-BlendKBEffect::BlendKBEffect(SlideShowKB *parent, bool needFadeIn)
+BlendKBEffect::BlendKBEffect(SlideShowKB* parent, bool needFadeIn)
              : KBEffect(parent, needFadeIn)
 {
     m_img[0] = image(0);

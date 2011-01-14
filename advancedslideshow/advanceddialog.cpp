@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "advanceddialog.h"
 #include "advanceddialog.moc"
 
 // Local includes

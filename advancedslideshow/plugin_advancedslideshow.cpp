@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "plugin_advancedslideshow.h"
 #include "plugin_advancedslideshow.moc"
 
 // C ANSI includes
@@ -72,7 +71,7 @@ using namespace KIPIAdvancedSlideshowPlugin;
 K_PLUGIN_FACTORY( AdvancedSlideshowFactory, registerPlugin<Plugin_AdvancedSlideshow>(); )
 K_EXPORT_PLUGIN ( AdvancedSlideshowFactory("kipiplugin_advancedslideshow") )
 
-Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject *parent, const QVariantList &/*args*/)
+Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject* parent, const QVariantList &/*args*/)
                         : KIPI::Plugin(AdvancedSlideshowFactory::componentData(),
                                        parent, "AdvancedSlideshow")
 {

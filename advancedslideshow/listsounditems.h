@@ -53,14 +53,14 @@ class SoundItem : public QObject, public QListWidgetItem
 
 public:
 
-    SoundItem(QListWidget* parent, KUrl &url);
+    SoundItem(QListWidget* parent, const KUrl& url);
     ~SoundItem();
 
     KUrl    url();
     QString artist();
     QString title();
     QTime   totalTime();
-    void    setName(QString text);
+    void    setName(const QString& text);
 
 Q_SIGNALS:
 
@@ -87,7 +87,7 @@ class ListSoundItems : public QListWidget
 
 public:
 
-    ListSoundItems(QWidget *parent = 0);
+    ListSoundItems(QWidget* parent = 0);
 
 public:
 
@@ -99,9 +99,9 @@ Q_SIGNALS:
 
 protected:
 
-    void dragEnterEvent(QDragEnterEvent *e);
+    void dragEnterEvent(QDragEnterEvent*);
     void dragMoveEvent(QDragMoveEvent*);
-    void dropEvent(QDropEvent *e);
+    void dropEvent(QDropEvent*);
 };
 
 }  // namespace KIPIAdvancedSlideshowPlugin

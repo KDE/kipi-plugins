@@ -98,7 +98,8 @@ public:
     // --> Captions page
     uint                 commentsFontColor;
     uint                 commentsBgColor;
-    bool                 transparentBg;
+    bool                 commentsDrawOutline;
+    uint                 bgOpacity;
     int                  commentsLinesLength;
     QFont*               captionFont;
 

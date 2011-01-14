@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "captiondialog.h"
 #include "captiondialog.moc"
 
 // Qt includes
@@ -55,17 +54,13 @@ void CaptionDialog::readSettings()
     connect(m_commentsBgColor, SIGNAL(changed(const QColor&)), 
             this, SLOT(slotCommentsBgColorChanged()));
 
-    connect(m_transparentBgCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(slotTransparentBgToggled()));
-
     m_commentsLinesLengthSpinBox->setValue(m_sharedData->commentsLinesLength);
     m_commentsFontColor->setColor(QColor(m_sharedData->commentsFontColor));
     m_commentsBgColor->setColor(QColor(m_sharedData->commentsBgColor));
-    m_commentsBgColor->setEnabled(!m_sharedData->transparentBg);
-    m_transparentBgCheckBox->setChecked(m_sharedData->transparentBg);
+    m_commentsDrawOutlineCheckBox->setChecked(m_sharedData->commentsDrawOutline);
     m_commentsFontChooser->setFont(*(m_sharedData->captionFont));
 
-    slotTransparentBgToggled();
+    m_commentsBgTransparency->setValue(m_sharedData->bgOpacity);
 }
 
 void CaptionDialog::saveSettings()
@@ -76,8 +71,10 @@ void CaptionDialog::saveSettings()
     m_sharedData->commentsFontColor   = fontColor.rgb();
     QColor bgColor                    = QColor(m_commentsBgColor->color());
     m_sharedData->commentsBgColor     = bgColor.rgb();
-    m_sharedData->transparentBg       = m_transparentBgCheckBox->isChecked();
+    m_sharedData->commentsDrawOutline = m_commentsDrawOutlineCheckBox->isChecked();
     m_sharedData->commentsLinesLength = m_commentsLinesLengthSpinBox->value();
+
+    m_sharedData->bgOpacity = m_commentsBgTransparency->value();
 }
 
 // --- Slots
@@ -90,11 +87,6 @@ void CaptionDialog::slotCommentsBgColorChanged()
 void CaptionDialog::slotCommentsFontColorChanged()
 {
     m_commentsFontChooser->setColor(m_commentsFontColor->color());
-}
-
-void CaptionDialog::slotTransparentBgToggled()
-{
-    m_commentsBgColor->setEnabled(!m_transparentBgCheckBox->isChecked());
 }
 
 }  // namespace KIPIAdvancedSlideshowPlugin

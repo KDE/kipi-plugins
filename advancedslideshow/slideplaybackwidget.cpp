@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "slideplaybackwidget.h"
 #include "slideplaybackwidget.moc"
 
 // Qt includes
@@ -42,7 +41,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 SlidePlaybackWidget::SlidePlaybackWidget(QWidget* parent)
-        : QWidget(parent)
+                   : QWidget(parent)
 {
     setupUi(this);
 
@@ -152,7 +151,7 @@ void SlidePlaybackWidget::slotNexPrevClicked()
     }
 }
 
-void SlidePlaybackWidget::keyPressEvent(QKeyEvent *event)
+void SlidePlaybackWidget::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key())
     {

@@ -48,7 +48,6 @@ private Q_SLOTS:
 
     void slotCommentsFontColorChanged();
     void slotCommentsBgColorChanged();
-    void slotTransparentBgToggled();
 
 private:
 

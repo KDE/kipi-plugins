@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "playbackwidget.h"
 #include "playbackwidget.moc"
 
 // Qt includes
@@ -47,10 +46,10 @@ PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedContaine
     setupUi(this);
 
     m_sharedData = sharedData;
-    m_currIndex = 0;
-    m_urlList = urls;
+    m_currIndex  = 0;
+    m_urlList    = urls;
     m_stopCalled = false;
-    m_canHide = true;
+    m_canHide    = true;
 
     m_soundLabel->setPixmap(KIcon("speaker").pixmap(64, 64));
 
@@ -185,7 +184,7 @@ void PlaybackWidget::setPaused(bool val)
     slotPlay();
 }
 
-void PlaybackWidget::keyPressEvent(QKeyEvent *event)
+void PlaybackWidget::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key())
     {
@@ -229,7 +228,7 @@ void PlaybackWidget::keyPressEvent(QKeyEvent *event)
 void PlaybackWidget::slotPlay()
 {
     if ( m_mediaObject->state() == Phonon::PlayingState ||
-            m_mediaObject->state() == Phonon::BufferingState )
+         m_mediaObject->state() == Phonon::BufferingState )
     {
         m_mediaObject->pause();
         setGUIPlay(true);
@@ -239,7 +238,7 @@ void PlaybackWidget::slotPlay()
     }
 
     if ( m_mediaObject->state() == Phonon::PausedState ||
-            m_mediaObject->state() == Phonon::StoppedState )
+         m_mediaObject->state() == Phonon::StoppedState )
     {
         m_mediaObject->play();
         setGUIPlay(false);

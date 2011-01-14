@@ -47,7 +47,7 @@ class Plugin_AdvancedSlideshow : public KIPI::Plugin
 
 public:
 
-    Plugin_AdvancedSlideshow(QObject *parent, const QVariantList& args);
+    Plugin_AdvancedSlideshow(QObject* parent, const QVariantList& args);
     ~Plugin_AdvancedSlideshow();
 
     virtual KIPI::Category category(KAction* action) const;

@@ -38,12 +38,12 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 #include <fixx11h.h>
-#endif
+#endif // Q_WS_X11
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-ScreenProperties::ScreenProperties(QWidget *mainWidget)
+ScreenProperties::ScreenProperties(QWidget* mainWidget)
 {
     activeScreen = QApplication::desktop()->screenNumber(mainWidget);
 }
@@ -63,7 +63,7 @@ unsigned ScreenProperties::suggestFrameRate()
     }
 
     // ask X11 for the refresh rate of the current screen
-    XRRScreenConfiguration* config;
+    XRRScreenConfiguration* config = 0;
 
     int screenRate;
 
