@@ -216,7 +216,7 @@ void PixmapView::updateView()
 
     QImage imgTmp = m_img.scaled(w, h);
 
-    if (m_pix) delete m_pix;
+    delete m_pix;
 
     m_pix = new QPixmap(QPixmap::fromImage(imgTmp));
 
