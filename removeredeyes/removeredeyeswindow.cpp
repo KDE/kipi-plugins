@@ -414,10 +414,7 @@ void RemoveRedEyesWindow::updateSettings()
     d->settings.unprocessedMode = d->unprocessedSettingsBox->handleMode();
 
     // reset save method
-    if (d->saveMethod)
-    {
-        delete d->saveMethod;
-    }
+    delete d->saveMethod;
 
     d->saveMethod = SaveMethodFactory::create(d->settings.storageMode);
 }
@@ -823,10 +820,7 @@ void RemoveRedEyesWindow::loadLocator(const QString& locator)
 
 void RemoveRedEyesWindow::unloadLocator()
 {
-    if (d->locator)
-    {
-        delete d->locator;
-    }
+    delete d->locator;
 
     if (d->locatorSettingsWidget)
     {

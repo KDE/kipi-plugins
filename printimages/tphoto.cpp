@@ -107,8 +107,7 @@ void TPhoto::loadCache()
     painter.drawImage(0, 0, image );
     painter.end();
 
-    if (m_size)
-        delete m_size;
+    delete m_size;
     m_size = new QSize(photo.width(), photo.height());
 }
 

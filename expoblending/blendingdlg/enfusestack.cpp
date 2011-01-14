@@ -225,8 +225,7 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
 void EnfuseStackList::slotRemoveItem()
 {
     EnfuseStackItem* item = dynamic_cast<EnfuseStackItem*>(currentItem());
-    if (item)
-        delete item;
+    delete item;
 }
 
 QList<EnfuseSettings> EnfuseStackList::settingsList()
@@ -275,8 +274,7 @@ void EnfuseStackList::setOnItem(const KUrl& url, bool on)
 void EnfuseStackList::removeItem(const KUrl& url)
 {
     EnfuseStackItem* item = findItemByUrl(url);
-    if (item)
-        delete item;
+    delete item;
 }
 
 void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)

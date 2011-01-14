@@ -85,12 +85,8 @@ Manager::~Manager()
 {
     delete d->about;
     delete d->thread;
-
-    if (d->wizard)
-        delete d->wizard;
-
-    if (d->dlg)
-        delete d->dlg;
+    delete d->wizard;
+    delete d->dlg;
 
     delete d;
 }
