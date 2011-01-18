@@ -18,7 +18,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> RAWConverter    : 199318 : RAW to JPG Export doesn't use Digikam description.
 010 ==> BatchProcess    : 152208 : Comments lost when converting from png to jpeg.
 011 ==> ImageViewer     : 231763 : Crash when closing opengl viewer.
-012 ==> 
 
 
 
