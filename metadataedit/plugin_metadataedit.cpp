@@ -695,8 +695,10 @@ void Plugin_MetadataEdit::slotEditComments()
 
     QPointer<CommentEditDialog> dlg = new CommentEditDialog(comment, kapp->activeWindow());
 
-    if (dlg->exec() != KMessageBox::Ok)
+    if (dlg->exec() != KMessageBox::Ok) {
+        delete dlg;
         return;
+    }
 
     KUrl::List  imageURLs = images.images();
     KUrl::List  updatedURLs;
@@ -779,8 +781,10 @@ void Plugin_MetadataEdit::slotRemoveComments()
     QPointer<CommentRemoveDialog> dlg = new CommentRemoveDialog(
                                                                     kapp->activeWindow());
 
-    if (dlg->exec() != KMessageBox::Ok)
+    if (dlg->exec() != KMessageBox::Ok) {
+        delete dlg;
         return;
+    }
 
     KUrl::List  imageURLs = images.images();
     KUrl::List  updatedURLs;

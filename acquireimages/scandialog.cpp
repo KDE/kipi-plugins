@@ -187,8 +187,10 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     imageFileSaveDialog->setMimeFilter(writableMimetypes, defaultMimeType);
 
     // Start dialog and check if canceled.
-    if ( imageFileSaveDialog->exec() != KFileDialog::Accepted )
+    if ( imageFileSaveDialog->exec() != KFileDialog::Accepted ) {
+       delete imageFileSaveDialog;
        return;
+    }
 
     KUrl newURL = imageFileSaveDialog->selectedUrl();
     QFileInfo fi(newURL.toLocalFile());
@@ -218,6 +220,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
         {
             KMessageBox::error(0, i18n("The target image file format \"%1\" is unsupported.", format));
             kWarning() << "target image file format " << format << " is unsupported!";
+	    delete imageFileSaveDialog;
             return;
         }
     }
@@ -228,6 +231,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
                               newURL.fileName(),
                               newURL.path().section('/', -2, -2)));
         kWarning() << "target URL is not valid !";
+	delete imageFileSaveDialog;
         return;
     }
 
@@ -243,8 +247,10 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
                                                KStandardGuiItem::overwrite(),
                                                KStandardGuiItem::cancel());
 
-        if (result != KMessageBox::Yes)
+        if (result != KMessageBox::Yes) {
+            delete imageFileSaveDialog;
             return;
+	}
     }
 
     delete imageFileSaveDialog;

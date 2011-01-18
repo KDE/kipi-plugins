@@ -443,6 +443,8 @@ void SoundtrackDialog::slotSoundFilesButtonLoad()
 
     if (dlg->exec() != KFileDialog::Accepted)
     {
+
+	delete dlg;
         return;
     }
 
@@ -496,6 +498,7 @@ void SoundtrackDialog::slotSoundFilesButtonSave()
 
     if (dlg->exec() != KFileDialog::Accepted)
     {
+	delete dlg;
         return;
     }
 
