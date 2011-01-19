@@ -13,7 +13,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 262125 : DngConverter      : DNG Conversion can't be inverted. Embedded file is corrupted.
 006 ==> 245956 : PicasaWeb         : Upload video from Digikam to Picasa.
 007 ==> 262642 : AdvancedSlideshow : Better looking of "captions" during slideshow [patch].
-008 ==> 
+008 ==> 263545 : PicasaWeb         : Crashed, when trying to import photo from picasaweb.
+009 ==> 
 
 
 
