@@ -67,9 +67,14 @@ public:
         GE_CHECKPHOTOEXIST,
         GE_ADDPHOTO,
         GE_ADDTHUMB,
+        GE_ADDHQ,
         GE_ADDPHOTOSUMMARY
     };
 
+    enum {
+        CHUNK_MAX_SIZE = 500000
+    };
+    
 public:
 
     PiwigoTalker(QWidget* parent);
@@ -94,12 +99,13 @@ public:
                   const QString& photoPath,
                   const QString& caption = QString(),
                   bool  captionIsTitle = true, bool captionIsDescription = false,
-                  bool rescale = false, int maxDim = 600, int thumbDim = 128);
+                  bool rescale = false, bool downloadHQ = false, int maxDim = 600, int thumbDim = 128);
 
     void cancel();
 
 Q_SIGNALS:
 
+    void signalProgressInfo(const QString& msg);
     void signalError(const QString& msg);
     void signalLoginFailed(const QString& msg);
     void signalBusy(bool val);
@@ -114,6 +120,9 @@ private:
     void parseResponseDoesPhotoExist(const QByteArray& data);
     void parseResponseAddPhoto(const QByteArray& data);
     void parseResponseAddThumbnail(const QByteArray& data);
+    void addHQNextChunk();
+    void parseResponseAddHQPhoto(const QByteArray& data);
+    void addPhotoSummary();
     void parseResponseAddPhotoSummary(const QByteArray& data);
 
     QByteArray computeMD5Sum(const QString &filepath);
@@ -132,11 +141,13 @@ private:
     KIO::TransferJob* m_job;
     bool              m_loggedIn;
     QByteArray        m_talker_buffer;
+    uint              m_chunkId;
 
     QByteArray        m_md5sum;
     QString           m_path;
     int               m_albumId;
     QString           m_thumbpath;
+    QString           m_hqpath;
     QString           m_comment;
     QString           m_name;
     QDateTime         m_date;

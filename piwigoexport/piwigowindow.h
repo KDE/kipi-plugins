@@ -77,6 +77,7 @@ private Q_SLOTS:
     void slotDoLogin();
     void slotLoginFailed(const QString& msg);
     void slotBusy(bool val);
+    void slotProgressInfo(const QString& msg);
     void slotError(const QString& msg);
     void slotAlbums(const QList<GAlbum>& albumList);
     void slotAlbumSelected();

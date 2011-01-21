@@ -89,6 +89,7 @@ public:
     QCheckBox*             captTitleCheckBox;
     QCheckBox*             captDescrCheckBox;
     QCheckBox*             resizeCheckBox;
+    QCheckBox*             downloadHQCheckBox;
 
     QSpinBox*              dimensionSpinBox;
     QSpinBox*              thumbDimensionSpinBox;
@@ -158,11 +159,15 @@ PiwigoWindow::Private::Private(PiwigoWindow* parent)
     thumbDimensionSpinBox->setRange(32,800);
     thumbDimensionSpinBox->setValue(128);
 
+    downloadHQCheckBox    = new QCheckBox(optionsBox);
+    downloadHQCheckBox->setText(i18n("Also download the full size version"));
+
     captTitleCheckBox->setChecked(true);
     captDescrCheckBox->setChecked(false);
     resizeCheckBox->setChecked(false);
     dimensionSpinBox->setEnabled(false);
     thumbDimensionSpinBox->setEnabled(true);
+    downloadHQCheckBox->setChecked(false);
 
     // ---------------------------------------------------------------------------
 
@@ -185,6 +190,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* parent)
     vlay2->addWidget(resizeCheckBox);
     vlay2->addLayout(hlay2);
     vlay2->addLayout(hlay3);
+    vlay2->addWidget(downloadHQCheckBox);
     vlay2->setSpacing(KDialog::spacingHint());
     vlay2->setMargin(KDialog::spacingHint());
 
@@ -298,6 +304,7 @@ PiwigoWindow::~PiwigoWindow()
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
     group.writeEntry("Set title",       d->captTitleCheckBox->isChecked());
     group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
+    group.writeEntry("Download HQ",     d->downloadHQCheckBox->isChecked());
     group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
     group.writeEntry("Thumbnail Width", d->thumbDimensionSpinBox->value());
 
@@ -325,6 +332,9 @@ void PiwigoWindow::connectSignals()
 
     connect(m_progressDlg, SIGNAL( canceled() ),
             this, SLOT( slotAddPhotoCancel() ));
+
+    connect(m_talker, SIGNAL(signalProgressInfo(const QString&)),
+            this, SLOT(slotProgressInfo(const QString&)));
 
     connect(m_talker, SIGNAL(signalError(const QString&)),
             this, SLOT(slotError(const QString&)));
@@ -375,6 +385,10 @@ void PiwigoWindow::readSettings()
     else
         d->captDescrCheckBox->setChecked(false);
 
+    if (group.readEntry("Download HQ", false))
+        d->downloadHQCheckBox->setChecked(true);
+    else
+        d->downloadHQCheckBox->setChecked(false);
 
     d->thumbDimensionSpinBox->setValue(group.readEntry("Thumbnail Width", 128));
 }
@@ -431,6 +445,11 @@ void PiwigoWindow::slotBusy(bool val)
         bool loggedIn = m_talker->loggedIn();
         d->addPhotoBtn->setEnabled(loggedIn && d->albumView->currentItem());
     }
+}
+
+void PiwigoWindow::slotProgressInfo(const QString& msg)
+{
+    m_progressDlg->setLabelText(msg);
 }
 
 void PiwigoWindow::slotError(const QString& msg)
@@ -553,6 +572,7 @@ void PiwigoWindow::slotAddPhotoNext()
                             d->captTitleCheckBox->isChecked(),
                             d->captDescrCheckBox->isChecked(),
                             d->resizeCheckBox->isChecked(),
+                            d->downloadHQCheckBox->isChecked(),
                             d->dimensionSpinBox->value(),
                             d->thumbDimensionSpinBox->value() );
 
