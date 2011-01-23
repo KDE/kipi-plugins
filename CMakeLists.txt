@@ -5,11 +5,11 @@ PROJECT(kipi-plugins)
 
 # kipi-plugins version
 SET(KIPIPLUGINS_MAJOR_VERSION "1")
-SET(KIPIPLUGINS_MINOR_VERSION "8")
+SET(KIPIPLUGINS_MINOR_VERSION "9")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2011-01-23")
+SET (KIPIPLUGINS_RELEASE_DATE "2011-02-19")
 
 # Suffix to add at end of version string. Usual values are:
 # "-svn"   : alpha code unstable from svn. Do not use in production
