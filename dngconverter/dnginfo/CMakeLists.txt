@@ -29,3 +29,4 @@ TARGET_LINK_LIBRARIES(dnginfo
                       ${CMAKE_THREAD_LIBS_INIT}
                      )
 
+INSTALL(TARGETS dnginfo ${INSTALL_TARGETS_DEFAULT_ARGS})
