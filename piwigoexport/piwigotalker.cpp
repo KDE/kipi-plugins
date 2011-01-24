@@ -157,6 +157,7 @@ bool PiwigoTalker::addPhoto(int albumId,
                             bool  captionIsTitle,
                             bool  captionIsDescription,
                             bool  rescale,
+                            bool  downloadHQ, 
                             int   maxDim,
                             int   thumbDim)
 {
@@ -167,6 +168,13 @@ bool PiwigoTalker::addPhoto(int albumId,
     m_path = photoPath;
     m_albumId = albumId;
     m_md5sum = computeMD5Sum(photoPath);
+
+    if (downloadHQ) {
+        m_hqpath = photoPath;
+        kDebug() << "Download HQ version: " << m_hqpath;
+    } else {
+        m_hqpath = "";
+    }
 
     kDebug() << photoPath << " " << m_md5sum.toHex();
 
@@ -236,6 +244,8 @@ bool PiwigoTalker::addPhoto(int albumId,
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
+    emit signalProgressInfo( i18n("Check if %1 already exists", KUrl(m_path).fileName()) );
+    
     connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
 
@@ -274,7 +284,7 @@ void PiwigoTalker::slotResult(KJob *job)
             emit signalLoginFailed(tempjob->errorString());
             kDebug() << tempjob->errorString();
         } else {
-            if (m_state == GE_CHECKPHOTOEXIST || m_state == GE_ADDPHOTO || m_state == GE_ADDTHUMB || m_state == GE_ADDPHOTOSUMMARY) {
+            if (m_state == GE_CHECKPHOTOEXIST || m_state == GE_ADDPHOTO || m_state == GE_ADDTHUMB || m_state == GE_ADDHQ || m_state == GE_ADDPHOTOSUMMARY) {
                 emit signalAddPhotoFailed(tempjob->errorString());
             } else {
                 tempjob->ui()->setWindow(m_parent);
@@ -300,6 +310,9 @@ void PiwigoTalker::slotResult(KJob *job)
         break;
     case(GE_ADDTHUMB):
         parseResponseAddThumbnail(m_talker_buffer);
+        break;
+    case(GE_ADDHQ):
+        parseResponseAddHQPhoto(m_talker_buffer);
         break;
     case(GE_ADDPHOTOSUMMARY):
         parseResponseAddPhotoSummary(m_talker_buffer);
@@ -466,6 +479,8 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
+    emit signalProgressInfo( i18n("Upload resized version of %1", KUrl(m_path).fileName()) );
+
     connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
 
@@ -527,12 +542,48 @@ void PiwigoTalker::parseResponseAddPhoto(const QByteArray& data)
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
+    emit signalProgressInfo( i18n("Upload the thumbnail of %1", KUrl(m_path).fileName()) );
+
     connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
 
     connect(m_job, SIGNAL(result(KJob *)),
             this, SLOT(slotResult(KJob *)));
 
+}
+
+void PiwigoTalker::addHQNextChunk()
+{
+    QFile imagefile(m_hqpath);
+    imagefile.open(QIODevice::ReadOnly);
+    
+    m_chunkId++; // We start with chunk 1
+    
+    imagefile.seek((m_chunkId - 1) * CHUNK_MAX_SIZE);
+    
+    QStringList qsl;
+    qsl.append("method=pwg.images.addChunk");
+    qsl.append("original_sum=" + m_md5sum.toHex());
+    qsl.append("position=" + QString::number(m_chunkId));
+    qsl.append("type=high");
+    qsl.append("data=" + imagefile.read(CHUNK_MAX_SIZE).toBase64().toPercentEncoding());
+    QString dataParameters = qsl.join("&");
+    QByteArray buffer;
+    buffer.append(dataParameters.toUtf8());
+    
+    imagefile.close();
+    
+    m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
+    m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
+    m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
+    
+    emit signalProgressInfo( i18n("Upload the chunk %1 of %2", m_chunkId, KUrl(m_path).fileName()) );
+
+    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
+            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    
+    connect(m_job, SIGNAL(result(KJob *)),
+            this, SLOT(slotResult(KJob *)));
 }
 
 void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
@@ -567,6 +618,53 @@ void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
         return;
     }
 
+    if (m_hqpath.isNull()) {
+        addPhotoSummary();
+    } else {
+        m_state = GE_ADDHQ;
+        m_chunkId = 0;
+
+        addHQNextChunk();
+    }
+}
+
+void PiwigoTalker::parseResponseAddHQPhoto(const QByteArray& data)
+{
+    QString str = QString::fromUtf8(data);
+    QXmlStreamReader ts(data);
+    QString line;
+    bool foundResponse = false;
+    bool success       = false;
+
+    kDebug() << "parseResponseAddHQPhoto: " << QString(data);
+
+    while (!ts.atEnd()) {
+        ts.readNext();
+
+        if (ts.isStartElement()) {
+            if (ts.name() == "rsp") {
+                foundResponse = true;
+                if (ts.attributes().value("stat") == "ok") success = true;
+                break;
+            }
+        }
+    }
+
+    if (!foundResponse || !success) {
+        emit signalProgressInfo(i18n("Warning : The full size photo cannot be uploaded."));
+    }
+
+    // If the HQ photo wasn't completely sent, send the next chunk
+    QFileInfo fi(m_hqpath);
+    if (m_chunkId * CHUNK_MAX_SIZE < fi.size()) {
+        addHQNextChunk();
+    } else {
+        addPhotoSummary();
+    }
+}
+
+void PiwigoTalker::addPhotoSummary()
+{
     m_state = GE_ADDPHOTOSUMMARY;
 
     QFile imagefile(m_thumbpath);
@@ -580,6 +678,9 @@ void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
     qsl.append("categories=" + QString::number(m_albumId));
     qsl.append("file_sum=" + computeMD5Sum(m_path).toHex());
     qsl.append("thumbnail_sum=" + computeMD5Sum(m_thumbpath).toHex());
+    if (!m_hqpath.isNull()) {
+        qsl.append("high_sum=" + m_md5sum.toHex());
+    }
     qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd").toUtf8().toPercentEncoding());
     qsl.append("tag_ids=");
     qsl.append("comment=" + m_comment.toUtf8().toPercentEncoding());
@@ -592,6 +693,8 @@ void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
+
+    emit signalProgressInfo( i18n("Upload the metadata of %1", KUrl(m_path).fileName()) );
 
     connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
