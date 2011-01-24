@@ -104,7 +104,7 @@ public:
     /* Try to load the photo specified by the KUrl, and set the datetime widget
      * to the photo time. Return true on succes, or false if eithe the photo
      * can't be read or the datetime information can't be read. */
-    bool setImage(KUrl);
+    bool setImage(const KUrl&);
 
 protected:
 

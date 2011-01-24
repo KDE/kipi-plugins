@@ -275,7 +275,7 @@ ClockPhotoDialog::~ClockPhotoDialog()
     delete d;
 }
 
-bool ClockPhotoDialog::setImage(KUrl imageFile)
+bool ClockPhotoDialog::setImage(const KUrl &imageFile)
 {
     bool success = false;
 
