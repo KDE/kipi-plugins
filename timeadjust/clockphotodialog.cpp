@@ -270,6 +270,8 @@ ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface, QWidget* parent)
 
 ClockPhotoDialog::~ClockPhotoDialog()
 {
+    delete d->image;
+    delete d->photoDateTime;
     delete d;
 }
 
@@ -289,6 +291,7 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
         // the QPixmap for display.
         QImage tmp  = QImage();
         imageLoaded = KDcrawIface::KDcraw::loadDcrawPreview(tmp, imageFile.path());
+        delete d->image;
         d->image    = new QPixmap(d->image->fromImage(tmp));
     }
     else
@@ -303,6 +306,7 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
         bool result = exiv2Iface.load(imageFile.path());
         if (result)
         {
+            delete d->photoDateTime;
             d->photoDateTime = new QDateTime(exiv2Iface.getImageDateTime());
             if (d->photoDateTime->isValid()) {
                 // Set the datetime widget to the photo datetime.
@@ -357,6 +361,7 @@ bool ClockPhotoDialog::setImage(KUrl imageFile)
         d->calendar->setEnabled(false);
 
         // Make sure we de-load a previous image if a faulty url was provided.
+        delete d->image;
         d->image = new QPixmap();
 
         // Scale the imageLabel so that the warning shows up.
