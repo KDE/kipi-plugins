@@ -109,6 +109,7 @@ void PixmapView::setImage(const QString& ImagePath, const QString& tmpPath, bool
 
 void PixmapView::PreviewCal(const QString& ImagePath, const QString& /*tmpPath*/)
 {
+    delete m_pix;
     m_pix = new QPixmap(300, 300);
     QPainter p;
     p.begin(m_pix);
