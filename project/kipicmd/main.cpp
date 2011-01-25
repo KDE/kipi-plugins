@@ -206,7 +206,7 @@ bool ListPlugins(const QString& libraryName = "")
 
     std::auto_ptr<QWidget> dummyWidget( new QWidget() );
 
-    qerr << i18n("Found %1 plugins:", nPlugins) << endl;
+    qerr << i18np("Found 1 plugin:", "Found %1 plugins:", nPlugins) << endl;
 
     for ( KIPI::PluginLoader::PluginList::ConstIterator it = pluginList.constBegin(); it!= pluginList.constEnd(); ++ it)
     {
@@ -220,7 +220,7 @@ bool ListPlugins(const QString& libraryName = "")
 
         if (plugin == 0)
         {
-            qerr << preSpace << i18n( "Plugin not loaded!" ) << endl;
+            qerr << preSpace << i18n( "Plugin not loaded." ) << endl;
             continue;
         }
 
@@ -268,7 +268,7 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 
         if (plugin == 0)
         {
-            qerr << i18n("Plugin \"%1\" failed to load!", (*info)->library()) << endl;
+            qerr << i18n("Plugin \"%1\" failed to load.", (*info)->library()) << endl;
             continue;
         }
 
@@ -282,10 +282,10 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
             if ( pluginAction->text() != actionText )
                 continue;
 
-            qerr << i18n("Found action \"%1\" in library \"%2\", will now call it!", actionText, (*info)->library() ) << endl;
+            qerr << i18n("Found action \"%1\" in library \"%2\", will now call it.", actionText, (*info)->library() ) << endl;
             // call the action:
             pluginAction->trigger();
-            qerr << i18n("Plugin is done!") << endl;
+            qerr << i18n("Plugin is done.") << endl;
             foundAction = true;
 
             break;
@@ -293,7 +293,7 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
     }
 
     if (!foundAction)
-        qerr << i18n("Could not find action \"%1\"!", actionText) << endl;
+        qerr << i18n("Could not find action \"%1\".", actionText) << endl;
 
     return foundAction;
 }
@@ -394,7 +394,7 @@ int main(int argc, char *argv[])
             if (startList==0)
             {
                 kError()<<"startList==0";
-                args->usageError(i18n("Please specify how the filenames you provided should be used!"));
+                args->usageError(i18n("Please specify how the filenames you provided should be used."));
             }
             else
             {
@@ -437,7 +437,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        KCmdLineArgs::usageError( i18n("No argument specified! Use either --listplugins or specify an action to be called!") );
+        KCmdLineArgs::usageError( i18n("No argument specified: either use --listplugins, or specify an action to be called.") );
     }
 
     if (startedPlugin&&args->isSet("wait"))
