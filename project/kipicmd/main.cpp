@@ -308,7 +308,7 @@ int main(int argc, char *argv[])
         ki18n("Call kipi-plugins from the command line"),
         KAboutData::License_GPL,
         ki18n("(c) 2010 Michael G. Hansen"),
-        ki18n(""), // optional text
+        KLocalizedString(), // optional text
         "", // URI of homepage
         "" // bugs e-mail address
     );
