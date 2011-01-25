@@ -133,7 +133,7 @@ PicasawebImageDialog::PicasawebImageDialog(QWidget* parent, KIPI::Interface* ifa
 
 PicasawebImageDialog::~PicasawebImageDialog()
 {
-
+    delete d;
 }
 
 KUrl::List PicasawebImageDialog::urls() const

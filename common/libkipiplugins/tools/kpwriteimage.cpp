@@ -398,8 +398,16 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     // Write ICC profile.
     if (!d->iccProfile.isEmpty())
     {
+        // In libpng 1.5, the icc profile data changed from png_charp to png_bytep
+        // BUG: 264184
+
+        #if PNG_LIBPNG_VER_MAJOR >= 1 && PNG_LIBPNG_VER_MINOR >= 5
+        png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE,
+                     (png_bytep)d->iccProfile.data(), d->iccProfile.size());
+        #else
         png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE,
                      d->iccProfile.data(), d->iccProfile.size());
+        #endif
     }
 
     // Write Software info.
