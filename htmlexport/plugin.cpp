@@ -86,14 +86,20 @@ void Plugin::slotActivate() {
     info.readConfig();
     QWidget* parent=QApplication::activeWindow();
     QPointer<Wizard> wizard = new Wizard(parent, &info, interface);
-    if (wizard->exec()==QDialog::Rejected) return;
+    if (wizard->exec()==QDialog::Rejected)  {
+	    delete wizard;
+	    return;
+    }
     info.writeConfig();
 
     KIPIPlugins::BatchProgressDialog* progressDialog=new KIPIPlugins::BatchProgressDialog(parent, i18n("Generating gallery..."));
 
     Generator generator(interface, &info, progressDialog);
     progressDialog->show();
-    if (!generator.run()) return;
+    if (!generator.run())  {
+	    delete wizard;
+	    return;
+    }
 
     if (generator.warnings()) {
         progressDialog->addedAction(i18n("Finished, but some warnings occurred."), KIPIPlugins::WarningMessage);

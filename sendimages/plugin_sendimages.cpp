@@ -119,7 +119,7 @@ void Plugin_SendImages::slotActivate()
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    if (d->dialog) delete d->dialog;
+    delete d->dialog;
 
     d->dialog = new SendImagesDialog(kapp->activeWindow(), interface, images.images());
     d->dialog->show();
