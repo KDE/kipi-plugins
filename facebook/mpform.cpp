@@ -32,10 +32,8 @@
 #include <QFile>
 
 // KDE includes
-#include <KApplication>
 #include <kdebug.h>
 #include <KMimeType>
-#include <KUrl>
 #include <KRandom>
 
 namespace KIPIFacebookPlugin

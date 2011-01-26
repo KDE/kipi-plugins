@@ -28,20 +28,18 @@
 // Qt includes
 
 #include <QFileInfo>
-#include <QSpinBox>
 #include <QCheckBox>
 #include <QProgressBar>
 #include <QCloseEvent>
+#include <QSpinBox>
 
 // KDE includes
-
+#include <KComboBox>
+#include <KMenu>
 #include <kdebug.h>
 #include <KConfig>
 #include <KLocale>
-#include <KMenu>
 #include <KHelpMenu>
-#include <KLineEdit>
-#include <KComboBox>
 #include <KPushButton>
 #include <KMessageBox>
 #include <KToolInvocation>
