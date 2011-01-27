@@ -46,7 +46,6 @@ class QRadioButton;
 class QProgressBar;
 class KPushButton;
 class KComboBox;
-class KLineEdit;
 
 using namespace KIPI;
 using namespace KIPIPlugins;
