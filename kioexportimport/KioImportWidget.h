@@ -74,7 +74,7 @@ public:
      *
      * @return list of urls, potentially from remote system
      */
-    KUrl::List sourceUrls();
+    KUrl::List sourceUrls() const;
 
     /**
      * Returns the image list used to manage images to import.

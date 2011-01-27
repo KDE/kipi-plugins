@@ -82,7 +82,7 @@ KIPI::UploadWidget* KioImportWidget::uploadWidget() const
     return m_uploadWidget;
 }
 
-KUrl::List KioImportWidget::sourceUrls()
+KUrl::List KioImportWidget::sourceUrls() const
 {
     return m_imageList->imageUrls();
 }
