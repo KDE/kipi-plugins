@@ -43,11 +43,8 @@
 
 #include "kpaboutdata.h"
 
-class QCloseEvent;
 
 class KUrl;
-class KProgressDialog;
-class KPasswordDialog;
 
 namespace KIPI
 {

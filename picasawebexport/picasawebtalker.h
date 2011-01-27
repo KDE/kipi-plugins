@@ -42,7 +42,6 @@ namespace KIO
     class Job;
 }
 
-class KUrl;
 
 namespace KIPIPicasawebExportPlugin
 {
