@@ -58,60 +58,60 @@ BatchProcessImagesItem::~BatchProcessImagesItem()
 {
 }
 
-QString BatchProcessImagesItem::pathSrc()
+QString BatchProcessImagesItem::pathSrc() const
 {
     return _pathSrc;
 }
-QString BatchProcessImagesItem::nameSrc()
+QString BatchProcessImagesItem::nameSrc() const
 {
     return _nameSrc;
 }
-QString BatchProcessImagesItem::nameDest()
+QString BatchProcessImagesItem::nameDest() const
 {
     return _nameDest;
 }
-QString BatchProcessImagesItem::result()
+QString BatchProcessImagesItem::result() const
 {
     return _result;
 }
-QString BatchProcessImagesItem::error()
+QString BatchProcessImagesItem::error() const
 {
     return _error;
 }
-QString BatchProcessImagesItem::outputMess()
+QString BatchProcessImagesItem::outputMess() const
 {
     return _outputMess;
 }
 
-QString BatchProcessImagesItem::sortKey()
+QString BatchProcessImagesItem::sortKey() const
 {
     return _sortKey;
 }
 
-void BatchProcessImagesItem::changeResult(QString text)
+void BatchProcessImagesItem::changeResult(const QString& text)
 {
     setText(3, text);
 }
-void BatchProcessImagesItem::changeError(QString text)
+void BatchProcessImagesItem::changeError(const QString& text)
 {
     _error = text;
 }
-void BatchProcessImagesItem::changeNameDest(QString text)
+void BatchProcessImagesItem::changeNameDest(const QString& text)
 {
     _nameDest = text; setText(2, _nameDest);
 }
-void BatchProcessImagesItem::changeOutputMess(QString text)
+void BatchProcessImagesItem::changeOutputMess(const QString& text)
 {
     _outputMess.append(text);
 }
 
-void BatchProcessImagesItem::changeSortKey(QString text)
+void BatchProcessImagesItem::changeSortKey(const QString& text)
 {
     _sortKey = text;
     setText(columnOfSortKey(), text);
 }
 
-bool BatchProcessImagesItem::overWrote()
+bool BatchProcessImagesItem::overWrote() const
 {
     return _overwrote;
 }
