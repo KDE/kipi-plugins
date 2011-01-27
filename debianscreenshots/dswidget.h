@@ -28,10 +28,8 @@
 #include <QWidget>
 #include <QUrl>
 
-class QLabel;
 class QButtonGroup;
 class QProgressBar;
-class QNetworkAccessManager;
 class QNetworkReply;
 class KComboBox;
 class KLineEdit;
