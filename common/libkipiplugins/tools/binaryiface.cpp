@@ -89,7 +89,7 @@ bool BinaryIface::versionIsRight() const
 
 QString BinaryIface::findHeader(const QStringList& output, const QString& header) const
 {
-    foreach(QString s, output)
+    foreach(const QString& s, output)
     {
         if (s.startsWith(header))
             return s;
