@@ -45,17 +45,17 @@ public:
     CommentEditDialog(const QString& comment, QWidget* parent);
     ~CommentEditDialog();
 
-    bool syncJFIFCommentIsChecked();
-    bool syncEXIFCommentIsChecked();
-    bool syncXMPCaptionIsChecked();
-    bool syncIPTCCaptionIsChecked();
+    bool syncJFIFCommentIsChecked() const;
+    bool syncEXIFCommentIsChecked() const;
+    bool syncXMPCaptionIsChecked() const;
+    bool syncIPTCCaptionIsChecked() const;
 
     void setCheckedSyncJFIFComment(bool c);
     void setCheckedSyncEXIFComment(bool c);
     void setCheckedSyncXMPCaption(bool c);
     void setCheckedSyncIPTCCaption(bool c);
 
-    QString getComments();
+    QString getComments() const;
 
 protected Q_SLOTS:
 
