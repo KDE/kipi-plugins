@@ -270,11 +270,11 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
     { // Add noise
         QString Temp;
         if (m_noiseType == i18nc("image noise type", "Uniform")) Temp = "Uniform";
-        if (m_noiseType == i18nc("image noise type", "Gaussian")) Temp = "Gaussian";
-        if (m_noiseType == i18nc("image noise type", "Multiplicative")) Temp = "Multiplicative";
-        if (m_noiseType == i18nc("image noise type", "Impulse")) Temp = "Impulse";
-        if (m_noiseType == i18nc("image noise type", "Laplacian")) Temp = "Laplacian";
-        if (m_noiseType == i18nc("image noise type", "Poisson")) Temp = "Poisson";
+	else if (m_noiseType == i18nc("image noise type", "Gaussian")) Temp = "Gaussian";
+	else if (m_noiseType == i18nc("image noise type", "Multiplicative")) Temp = "Multiplicative";
+	else if (m_noiseType == i18nc("image noise type", "Impulse")) Temp = "Impulse";
+	else if (m_noiseType == i18nc("image noise type", "Laplacian")) Temp = "Laplacian";
+	else if (m_noiseType == i18nc("image noise type", "Poisson")) Temp = "Poisson";
         *proc << "+noise" << Temp;
     }
 

@@ -153,43 +153,43 @@ void EffectImagesDialog::slotOptionsClicked(void)
         optionsDialog->m_latOffset->setValue(m_latOffset);
     }
 
-    if (Type == 1)
+    else if (Type == 1)
     { // Charcoal
         optionsDialog->m_charcoalRadius->setValue(m_charcoalRadius);
         optionsDialog->m_charcoalDeviation->setValue(m_charcoalDeviation);
     }
 
-    if (Type == 2)  // Detect edges
+    else if (Type == 2)  // Detect edges
         optionsDialog->m_edgeRadius->setValue(m_edgeRadius);
 
-    if (Type == 3)
+    else if (Type == 3)
     { // Emboss
         optionsDialog->m_embossRadius->setValue(m_embossRadius);
         optionsDialog->m_embossDeviation->setValue(m_embossDeviation);
     }
 
-    if (Type == 4)  // Implode
+    else if (Type == 4)  // Implode
         optionsDialog->m_implodeFactor->setValue(m_implodeFactor);
 
-    if (Type == 5)  // Paint
+    else if (Type == 5)  // Paint
         optionsDialog->m_paintRadius->setValue(m_paintRadius);
 
-    if (Type == 6)
+    else if (Type == 6)
     { // Shade light
         optionsDialog->m_shadeAzimuth->setValue(m_shadeAzimuth);
         optionsDialog->m_shadeElevation->setValue(m_shadeElevation);
     }
 
-    if (Type == 7)  // Solarize
+    else if (Type == 7)  // Solarize
         optionsDialog->m_solarizeFactor->setValue(m_solarizeFactor);
 
-    if (Type == 8)  // Spread
+    else if (Type == 8)  // Spread
         optionsDialog->m_spreadRadius->setValue(m_spreadRadius);
 
-    if (Type == 9)  // Swirl
+    else if (Type == 9)  // Swirl
         optionsDialog->m_swirlDegrees->setValue(m_swirlDegrees);
 
-    if (Type == 10)
+    else if (Type == 10)
     { // Wave
         optionsDialog->m_waveAmplitude->setValue(m_waveAmplitude);
         optionsDialog->m_waveLenght->setValue(m_waveLenght);
@@ -204,43 +204,43 @@ void EffectImagesDialog::slotOptionsClicked(void)
             m_latOffset = optionsDialog->m_latOffset->value();
         }
 
-        if (Type == 1)
+	else if (Type == 1)
         { // Charcoal
             m_charcoalRadius = optionsDialog->m_charcoalRadius->value();
             m_charcoalDeviation = optionsDialog->m_charcoalDeviation->value();
         }
 
-        if (Type == 2)  // Detect edges
+	else if (Type == 2)  // Detect edges
             m_edgeRadius = optionsDialog->m_edgeRadius->value();
 
-        if (Type == 3)
+	else if (Type == 3)
         { // Emboss
             m_embossRadius = optionsDialog->m_embossRadius->value();
             m_embossDeviation = optionsDialog->m_embossDeviation->value();
         }
 
-        if (Type == 4)  // Implode
+	else if (Type == 4)  // Implode
             m_implodeFactor = optionsDialog->m_implodeFactor->value();
 
-        if (Type == 5)  // Paint
+	else if (Type == 5)  // Paint
             m_paintRadius = optionsDialog->m_paintRadius->value();
 
-        if (Type == 6)
+	else if (Type == 6)
         { // Shade light
             m_shadeAzimuth = optionsDialog->m_shadeAzimuth->value();
             m_shadeElevation = optionsDialog->m_shadeElevation->value();
         }
 
-        if (Type == 7)  // Solarize
+	else if (Type == 7)  // Solarize
             m_solarizeFactor = optionsDialog->m_solarizeFactor->value();
 
-        if (Type == 8)  // Spread
+	else if (Type == 8)  // Spread
             m_spreadRadius = optionsDialog->m_spreadRadius->value();
 
-        if (Type == 9)  // Swirl
+	else if (Type == 9)  // Swirl
             m_swirlDegrees = optionsDialog->m_swirlDegrees->value();
 
-        if (Type == 10)
+	else if (Type == 10)
         { // Wave
             m_waveAmplitude = optionsDialog->m_waveAmplitude->value();
             m_waveLenght = optionsDialog->m_waveLenght->value();

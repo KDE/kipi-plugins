@@ -47,21 +47,21 @@ public:
 
     ~BatchProcessImagesItem();
 
-    QString pathSrc();
-    QString nameSrc();
-    QString nameDest();
-    QString result();
-    QString error();
-    QString outputMess();
-    QString sortKey();
-    bool overWrote();
+    QString pathSrc() const;
+    QString nameSrc() const;
+    QString nameDest() const;
+    QString result() const;
+    QString error() const;
+    QString outputMess() const;
+    QString sortKey() const;
+    bool overWrote() const;
     void setDidOverWrite(bool b);
 
-    void changeResult(QString text);
-    void changeError(QString text);
-    void changeNameDest(QString text);
-    void changeOutputMess(QString text);
-    void changeSortKey(QString text);
+    void changeResult(const QString& text);
+    void changeError(const QString& text);
+    void changeNameDest(const QString& text);
+    void changeOutputMess(const QString& text);
+    void changeSortKey(const QString& text);
 
     //void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment);
 

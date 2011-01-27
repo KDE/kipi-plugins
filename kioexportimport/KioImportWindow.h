@@ -42,7 +42,6 @@ namespace KIPI
 namespace KIPIPlugins
 {
     class KPAboutData;
-    class ImagesList;
 }
 
 namespace KIPIKioExportPlugin

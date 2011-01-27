@@ -223,27 +223,27 @@ void CommentEditDialog::slotOk()
     accept();
 }
 
-bool CommentEditDialog::syncJFIFCommentIsChecked()
+bool CommentEditDialog::syncJFIFCommentIsChecked() const
 {
     return d->syncJFIFCommentCheck->isChecked();
 }
 
-bool CommentEditDialog::syncEXIFCommentIsChecked()
+bool CommentEditDialog::syncEXIFCommentIsChecked() const
 {
     return d->syncEXIFCommentCheck->isChecked();
 }
 
-bool CommentEditDialog::syncXMPCaptionIsChecked()
+bool CommentEditDialog::syncXMPCaptionIsChecked() const 
 {
     return d->syncXMPCaptionCheck->isChecked();
 }
 
-bool CommentEditDialog::syncIPTCCaptionIsChecked()
+bool CommentEditDialog::syncIPTCCaptionIsChecked() const 
 {
     return d->syncIPTCCaptionCheck->isChecked();
 }
 
-QString CommentEditDialog::getComments()
+QString CommentEditDialog::getComments() const
 {
     return d->userCommentEdit->toPlainText();
 }
