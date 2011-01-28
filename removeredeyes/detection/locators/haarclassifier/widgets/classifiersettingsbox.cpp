@@ -142,7 +142,7 @@ QString ClassifierSettingsBox::classifierUrl() const
     return d->classifierUrlRequester->url().pathOrUrl();
 }
 
-void ClassifierSettingsBox::setClassifierUrl(QString& url)
+void ClassifierSettingsBox::setClassifierUrl(const QString& url)
 {
     d->classifierUrlRequester->setUrl(url);
 }

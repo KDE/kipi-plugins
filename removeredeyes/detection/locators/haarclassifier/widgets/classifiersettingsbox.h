@@ -54,7 +54,7 @@ public:
     void setScalingFactor(double);
 
     QString classifierUrl() const;
-    void setClassifierUrl(QString&);
+    void setClassifierUrl(const QString&);
 
 Q_SIGNALS:
 
