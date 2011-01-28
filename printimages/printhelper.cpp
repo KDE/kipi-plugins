@@ -196,13 +196,12 @@ PrintHelper::~PrintHelper()
     delete d;
 }
 
-void PrintHelper::print ( KUrl::List fileList )
+void PrintHelper::print ( const KUrl::List& fileList )
 {
   QPrinter printer;
   for (int i = 0; i < d->m_photos.count(); i++)
   {
-    if (d->m_photos.at(i))
-      delete d->m_photos.at(i);
+    delete d->m_photos.at(i);
     KApplication::kApplication()->processEvents();
   }
   d->m_photos.clear();

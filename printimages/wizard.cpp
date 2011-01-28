@@ -310,8 +310,7 @@ Wizard::~Wizard()
     delete d->m_printer;
 
     for ( int i=0; i < d->m_photos.count(); i++ )
-        if ( d->m_photos.at ( i ) )
-            delete d->m_photos.at ( i );
+         delete d->m_photos.at ( i );
 
     d->m_photos.clear();
     delete d;
@@ -342,8 +341,7 @@ void createPhotoGrid ( TPhotoSize* p, int pageWidth, int pageHeight, int rows, i
 void Wizard::print ( const KUrl::List& fileList, const QString& tempPath )
 {
     for ( int i=0; i < d->m_photos.count(); i++ )
-        if ( d->m_photos.at ( i ) )
-            delete d->m_photos.at ( i );
+         delete d->m_photos.at ( i );
 
     d->m_photos.clear();
     d->mPhotoPage->ListPrintOrder->clear();
@@ -608,8 +606,7 @@ void Wizard::initPhotoSizes ( const QSizeF& pageSize )
 
     // cleaning m_pageSize memory before invoking clear()
     for ( int i=0; i < d->m_photoSizes.count(); i++ )
-        if ( d->m_photoSizes.at ( i ) )
-            delete d->m_photoSizes.at ( i );
+        delete d->m_photoSizes.at ( i );
     d->m_photoSizes.clear();
 
     // get template-files and parse them
