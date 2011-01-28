@@ -118,7 +118,7 @@ void Plugin_PrintImages::slotPrintImagesActivate()
 
     KUrl::List fileList = album.images();
 
-    if ( fileList.count() == 0 )
+    if ( fileList.isEmpty() )
     {
         KMessageBox::sorry ( kapp->activeWindow(), i18n ( "Please select one or more photos to print." ),
                             i18n ( "Print images" ) );
@@ -139,7 +139,7 @@ void Plugin_PrintImages::slotPrintAssistantActivate()
 
     KUrl::List fileList = album.images();
 
-    if (fileList.count() == 0)
+    if (fileList.isEmpty())
     {
         KMessageBox::sorry(kapp->activeWindow(), i18n("Please select one or more photos to print."),
                            i18n("Print assistant"));
