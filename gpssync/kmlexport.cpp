@@ -65,6 +65,7 @@ namespace KIPIGPSSyncPlugin
 
 kmlExport::kmlExport(KIPI::Interface* interface)
 {
+    kmlDocument =0;
     m_interface      = interface;
     m_progressDialog = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), i18n("Generating KML file..."));
 }
@@ -505,7 +506,7 @@ void kmlExport::generate()
     file.close();
 
     delete kmlDocument;
-
+    kmlDocument = 0;
     KIO::moveAs(m_tempDestDir,
                 m_baseDestDir,
                 KIO::HideProgressInfo);
