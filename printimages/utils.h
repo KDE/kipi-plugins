@@ -35,7 +35,7 @@ namespace KIPIPrintImagesPlugin
 {
 
 int  NINT(double n);
-bool launchExternalApp(QString& program, QStringList& args);
+bool launchExternalApp(const QString& program, const QStringList& args);
 bool checkTempPath(QWidget* parent, const QString& tempPath);
 
 }  // NameSpace KIPIPrintImagesPlugin
