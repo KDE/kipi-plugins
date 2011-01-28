@@ -46,7 +46,7 @@ public:
     PrintHelper(QWidget* parent, KIPI::Interface*);
     ~PrintHelper();
 
-    void print(KUrl::List fileList);
+    void print(const KUrl::List& fileList);
 
 private:
 
