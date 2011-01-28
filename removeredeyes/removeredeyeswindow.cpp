@@ -821,11 +821,12 @@ void RemoveRedEyesWindow::loadLocator(const QString& locator)
 void RemoveRedEyesWindow::unloadLocator()
 {
     delete d->locator;
-
+    d->locator = 0;
     if (d->locatorSettingsWidget)
     {
         d->settingsTab->layout()->removeWidget(d->locatorSettingsWidget);
         delete d->locatorSettingsWidget;
+	d->locatorSettingsWidget = 0;
     }
 
     d->hasLocator = false;
