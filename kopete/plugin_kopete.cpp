@@ -123,8 +123,7 @@ void Plugin_Kopete::slotAboutToShowMenu()
         return;
     }
 
-    QString contact;
-    foreach(contact, kopeteContacts.value())
+    foreach(const QString &contact, kopeteContacts.value())
     {
         // TODO? Check status using contactProperties.value().value("status", QString())
         // and Kopete::OnlineStatus::statusTypeToString() ?
