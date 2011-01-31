@@ -56,6 +56,10 @@ static Theme::List sList;
 
 
 struct Theme::Private {
+	Private()
+		: mDesktopFile(0)
+	{
+	}
 	KDesktopFile* mDesktopFile;
 	KUrl mUrl;
 	ParameterList mParameterList;
@@ -93,6 +97,7 @@ struct Theme::Private {
 	}
 
 	void init(const QString& desktopFileName) {
+		delete mDesktopFile;
 		mDesktopFile=new KDesktopFile(desktopFileName);
 		mUrl.setPath(desktopFileName);
 
