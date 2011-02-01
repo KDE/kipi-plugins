@@ -105,8 +105,7 @@ QString InputBoxNoCancel::AskForString(const QString& title, const QString& labe
     QPointer<InputBoxNoCancel> inputBox(new InputBoxNoCancel(title, label, &workString, parent));
     inputBox->exec();
 
-    if (!inputBox.isNull())
-        delete inputBox.data();
+    delete inputBox;
 
     return workString;
 }

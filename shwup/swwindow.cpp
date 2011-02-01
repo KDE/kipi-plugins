@@ -148,6 +148,7 @@ SwWindow::SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
             this, SLOT( slotShwupKipiBlackListed() ),
             Qt::QueuedConnection);
 
+    //FIXME: this slot doesn't exist
     connect(m_connector, SIGNAL( signalShwupSignatureError() ),
             this, SLOT( slotShwupSignatureError() ),
             Qt::QueuedConnection);
