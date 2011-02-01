@@ -87,7 +87,7 @@ void GPSTrackListWidget::setMapType(const QString& mapType)
     d->mapType = mapType;
 }
 
-QString GPSTrackListWidget::mapType()
+QString GPSTrackListWidget::mapType() const
 {
     return d->mapType;
 }
@@ -97,7 +97,7 @@ void GPSTrackListWidget::setZoomLevel(int zoomLevel)
     d->zoomLevel = QString::number(zoomLevel);
 }
 
-int GPSTrackListWidget::zoomLevel()
+int GPSTrackListWidget::zoomLevel() const
 {
     return d->zoomLevel.toInt();
 }

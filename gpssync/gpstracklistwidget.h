@@ -53,10 +53,10 @@ public:
     void    setTrackList(const GPSTrackList& trackList);
 
     void    setZoomLevel(int zoomLevel);
-    int     zoomLevel();
+    int     zoomLevel() const;
 
     void    setMapType(const QString& mapType);
-    QString mapType();
+    QString mapType() const;
 
 public Q_SLOTS:
 
