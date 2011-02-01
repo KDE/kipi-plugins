@@ -102,7 +102,7 @@ void GPSMapWidget::setApiVersion(const int apiVersion)
     d->apiVersion = apiVersion;
 }
 
-int GPSMapWidget::apiVersion()
+int GPSMapWidget::apiVersion() const
 {
     return d->apiVersion;
 }
@@ -112,7 +112,7 @@ void GPSMapWidget::setAltitudeService(const QString& altitudeService)
     d->altitudeService = altitudeService;
 }
 
-QString GPSMapWidget::altitudeService()
+QString GPSMapWidget::altitudeService() const
 {
     return d->altitudeService;
 }
@@ -122,7 +122,7 @@ void GPSMapWidget::setFileName(const QString& fileName)
     d->fileName = fileName;
 }
 
-QString GPSMapWidget::fileName()
+QString GPSMapWidget::fileName() const
 {
     return d->fileName;
 }
@@ -138,7 +138,7 @@ void GPSMapWidget::setMapType(const QString& mapType)
     d->mapType = mapType;
 }
 
-QString GPSMapWidget::mapType()
+QString GPSMapWidget::mapType() const
 {
     return d->mapType;
 }
@@ -148,7 +148,7 @@ void GPSMapWidget::setZoomLevel(int zoomLevel)
     d->zoomLevel = QString::number(zoomLevel);
 }
 
-int GPSMapWidget::zoomLevel()
+int GPSMapWidget::zoomLevel() const
 {
     return d->zoomLevel.toInt();
 }

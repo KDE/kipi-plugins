@@ -50,19 +50,19 @@ public:
     void    setGPSPosition(const QString& lat, const QString& lon);
 
     void    setZoomLevel(int zoomLevel);
-    int     zoomLevel();
+    int     zoomLevel() const;
 
     void    setMapType(const QString& mapType);
-    QString mapType();
+    QString mapType() const;
 
     void    setFileName(const QString& fileName);
-    QString fileName();
+    QString fileName() const;
 
     void    setApiVersion(const int apiVersion);
-    int     apiVersion();
+    int     apiVersion() const;
 
     void    setAltitudeService(const QString& altitudeService);
-    QString altitudeService();
+    QString altitudeService() const;
 
     void    resized();
 
