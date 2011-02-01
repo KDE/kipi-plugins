@@ -51,7 +51,7 @@ public:
     bool loadGPXFile(const KUrl& url);
 
     void clear();
-    int  numPoints();
+    int  numPoints() const;
     bool matchDate(const QDateTime& photoDateTime, int maxGapTime, int secondsOffset,
                    bool photoHasSystemTimeZone,
                    bool interpolate, int interpolationDstTime,

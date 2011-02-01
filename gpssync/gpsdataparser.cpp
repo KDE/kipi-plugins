@@ -52,7 +52,7 @@ void GPSDataParser::clear()
     m_GPSDataMap.clear();
 }
 
-int GPSDataParser::numPoints()
+int GPSDataParser::numPoints() const
 {
     return m_GPSDataMap.count();
 }
