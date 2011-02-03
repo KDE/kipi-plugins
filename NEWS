@@ -12,7 +12,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> 209718 : Adding geolocation tag to a dozen pictures blocks digikam GUI for >10 seconds.
 005 ==> 215989 : Multiple GPX files for one geotagging one album.
 006 ==> 206133 : Support for Open Street Map.
-007 ==>
+007 ==> 265126 : kipi-plugins-2.0.0_beta2 compile failure in libkmap/abstractmarkertiler.h.
+008 ==> 
 
 
 
