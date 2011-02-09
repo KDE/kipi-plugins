@@ -7,6 +7,7 @@
  * Description : Kipi-Plugins shared library.
  *
  * Copyright (C) 2006-2010 Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2010-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,7 +44,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          const KLocalizedString& copyrightStatement)
            : KAboutData (QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.
                          QByteArray(),
-                         pluginName,
+                         pluginName + (!pluginVersion.isNull() ? QString(" (%1)").arg(pluginVersion.data())),
                          kipipluginsVersion().toAscii(),
                          KLocalizedString(),
                          licenseType,
@@ -64,11 +65,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
     setOtherText(pluginDescription);
 
     // put the plugin name and version with kipi-plugins and kipi-plugins version
-    KLocalizedString shortDesc = ki18n("%1 %2 - Kipi-plugins %3\nBuild date: %4")
-                                       .subs(pluginName.toString())
-                                       .subs(QString(pluginVersion))
-                                       .subs(QString(kipiplugins_version))
-                                       .subs(QString(__DATE__));
+    KLocalizedString shortDesc = additionalInformation();
 
     if (KGlobal::hasMainComponent())
     {
