@@ -38,13 +38,13 @@ namespace KIPIPlugins
 {
 
 KPAboutData::KPAboutData(const KLocalizedString& pluginName,
-                         const QByteArray& pluginVersion,
+                         const QByteArray& /*pluginVersion*/,
                          enum LicenseKey licenseType,
                          const KLocalizedString& pluginDescription,
                          const KLocalizedString& copyrightStatement)
            : KAboutData (QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.
                          QByteArray(),
-                         pluginName + (!pluginVersion.isNull() ? QString(" (%1)").arg(pluginVersion.data())),
+                         pluginName,
                          kipipluginsVersion().toAscii(),
                          KLocalizedString(),
                          licenseType,
