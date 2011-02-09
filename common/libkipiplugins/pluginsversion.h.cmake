@@ -63,7 +63,7 @@ static inline KLocalizedString additionalInformation()
                     "Rev.: %3")
                     .subs(__DATE__)
                     .subs("@CMAKE_BUILD_TYPE@")
-                    .subs(gitVer);
+                    .subs(QString("<a href='http://commits.kde.org/kipi-plugins/%1'>%2</a>").arg(gitVer).arg(gitVer));
     }
 
     return ret;
