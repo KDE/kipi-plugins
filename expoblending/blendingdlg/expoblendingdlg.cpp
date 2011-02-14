@@ -395,7 +395,7 @@ void ExpoBlendingDlg::slotPreview()
     ItemUrlsMap map = d->mngr->preProcessedMap();
     KUrl::List preprocessedList;
 
-    foreach(KUrl url, selectedUrl)
+    foreach(const KUrl& url, selectedUrl)
     {
         ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
         preprocessedList.append(preprocessedUrls.previewUrl);
@@ -417,11 +417,11 @@ void ExpoBlendingDlg::slotProcess()
     ItemUrlsMap map = d->mngr->preProcessedMap();
     KUrl::List preprocessedList;
 
-    foreach(EnfuseSettings settings, list)
+    foreach(const EnfuseSettings& settings, list)
     {
         preprocessedList.clear();
         
-        foreach(KUrl url, settings.inputUrls)
+        foreach(const KUrl& url, settings.inputUrls)
         {
             ItemPreprocessedUrls preprocessedUrls = *(map.find(url));
             preprocessedList.append(preprocessedUrls.preprocessedUrl);
