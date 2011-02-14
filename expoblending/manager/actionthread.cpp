@@ -162,7 +162,7 @@ void ActionThread::cleanUpResultFiles()
 {
     // Cleanup all tmp files created by Enfuse process.
     QMutexLocker(&d->enfuseTmpUrlsMutex);
-    foreach(const KUrl url, d->enfuseTmpUrls)
+    foreach(const KUrl& url, d->enfuseTmpUrls)
     {
         kDebug() << "Removing temp file " << url.toLocalFile();
         KTempDir::removeDir(url.toLocalFile());
@@ -178,7 +178,7 @@ void ActionThread::setPreProcessingSettings(bool align, const RawDecodingSetting
 
 void ActionThread::identifyFiles(const KUrl::List& urlList)
 {
-    foreach(const KUrl url, urlList)
+    foreach(const KUrl& url, urlList)
     {
         ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->action                 = IDENTIFY;
@@ -540,7 +540,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
         args << "-a";
         args << "aligned";
 
-        foreach(const KUrl url, mixedUrls)
+        foreach(const KUrl& url, mixedUrls)
         {
             args << url.toLocalFile();
         }
@@ -561,7 +561,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
         QString temp;
         preProcessedUrlsMap.clear();
 
-        foreach(const KUrl url, inUrls)
+        foreach(const KUrl& url, inUrls)
         {
             KUrl previewUrl;
             KUrl alignedUrl = KUrl(d->preprocessingTmpDir->name() + temp.sprintf("aligned%04i", i) + QString(".tif"));
@@ -765,7 +765,7 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     args << "-o";
     args << outUrl.toLocalFile();
 
-    foreach(const KUrl url, inUrls)
+    foreach(const KUrl& url, inUrls)
         args << url.toLocalFile();
 
     d->enfuseProcess->setProgram(args);
