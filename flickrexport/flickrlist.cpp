@@ -554,30 +554,30 @@ void FlickrListViewItem::setContentType(FlickrList::ContentType contentType)
     kDebug() << "Content type set to" << contentType;
 }
 
-bool FlickrListViewItem::isPublic()
+bool FlickrListViewItem::isPublic() const
 {
     /* Return whether the photo is public. */
     return m_public;
 }
 
-bool FlickrListViewItem::isFamily()
+bool FlickrListViewItem::isFamily() const
 {
     /* Return whether the photo is accessible for family. */
     return m_family;
 }
 
-bool FlickrListViewItem::isFriends()
+bool FlickrListViewItem::isFriends() const
 {
     /* Return whether the photo is accessible for friends. */
     return m_friends;
 }
 
-FlickrList::SafetyLevel FlickrListViewItem::safetyLevel()
+FlickrList::SafetyLevel FlickrListViewItem::safetyLevel() const
 {
     return m_safetyLevel;
 }
 
-FlickrList::ContentType FlickrListViewItem::contentType()
+FlickrList::ContentType FlickrListViewItem::contentType() const
 {
     return m_contentType;
 }

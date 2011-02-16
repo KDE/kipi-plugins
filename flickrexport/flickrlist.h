@@ -137,11 +137,11 @@ public:
     void setFriends(bool);
     void setSafetyLevel(FlickrList::SafetyLevel);
     void setContentType(FlickrList::ContentType);
-    bool isPublic();
-    bool isFamily();
-    bool isFriends();
-    FlickrList::SafetyLevel safetyLevel();
-    FlickrList::ContentType contentType();
+    bool isPublic() const;
+    bool isFamily() const;
+    bool isFriends() const;
+    FlickrList::SafetyLevel safetyLevel() const;
+    FlickrList::ContentType contentType() const;
 
     /**
      * Returns the list of extra tags that the user specified for this image.
