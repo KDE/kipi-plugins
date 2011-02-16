@@ -57,7 +57,7 @@ public:
     /**
      * Returns the URL, where the SimpleViewer package is stored
      */
-    KUrl getUrl();
+    KUrl getUrl() const;
 
 private Q_SLOTS:
 

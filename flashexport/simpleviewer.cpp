@@ -296,6 +296,7 @@ void SimpleViewer::slotProcess()
 
 bool SimpleViewer::createExportDirectories()
 {
+    delete d->tempDir;
     d->tempDir = new KTempDir(KStandardDirs::locateLocal("tmp", "flashexport"));
     d->tempDir->setAutoRemove(true);
 
@@ -653,6 +654,7 @@ bool SimpleViewer::installSimpleViewer()
 
         if(unzip(url.path()))
         {
+	    delete firstRunDlg;
             return true;
         }
         else

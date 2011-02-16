@@ -183,7 +183,7 @@ void FirstRunDlg::slotUrlSelected(const KUrl &url)
     d->url = url;
 }
 
-KUrl FirstRunDlg::getUrl()
+KUrl FirstRunDlg::getUrl() const
 {
     return d->url;
 }
