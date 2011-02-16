@@ -32,7 +32,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-ComboBoxIntermediate::ComboBoxIntermediate(QWidget *parent, QString text) 
+ComboBoxIntermediate::ComboBoxIntermediate(QWidget *parent, const QString& text) 
                     : QComboBox(parent),
                       m_isIntermediate(false),
                       m_intermediateText(text)
