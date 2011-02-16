@@ -75,8 +75,8 @@ public:
     FlickrTalker(QWidget* parent, const QString& serviceName);
     ~FlickrTalker();
 
-    QString getUserName();
-    QString getUserId();
+    QString getUserName() const;
+    QString getUserId() const;
     void    getFrob();
     void    getToken();
     void    checkToken(const QString& token);

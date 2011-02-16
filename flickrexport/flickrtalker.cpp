@@ -657,12 +657,12 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     return true;
 }
 
-QString FlickrTalker::getUserName()
+QString FlickrTalker::getUserName() const
 {
     return m_username;
 }
 
-QString FlickrTalker::getUserId()
+QString FlickrTalker::getUserId() const
 {
     return m_userId;
 }
