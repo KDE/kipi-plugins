@@ -82,7 +82,7 @@ public:
     /**
      * Sets the target url this widget should point at.
      */
-    void setTargetUrl(KUrl url);
+    void setTargetUrl(const KUrl& url);
 
 private Q_SLOTS:
 

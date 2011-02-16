@@ -109,7 +109,7 @@ KUrl KioExportWidget::targetUrl() const
     return m_targetUrl;
 }
 
-void KioExportWidget::setTargetUrl(KUrl url)
+void KioExportWidget::setTargetUrl(const KUrl& url)
 {
     m_targetUrl = url;
     m_targetDialog->setUrl(url);
