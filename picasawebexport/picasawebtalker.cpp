@@ -110,11 +110,6 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
 
     QString username_edit, password_edit;
 
-    if (!loginDialog)
-    {
-        kDebug() << " Out of memory error " ;
-    }
-
     if (loginDialog->exec() == QDialog::Accepted)
     {
         username_edit = loginDialog->username();
