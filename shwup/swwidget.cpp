@@ -200,7 +200,7 @@ KIPIPlugins::ImagesList* SwWidget::imagesList() const
     return m_imgList;
 }
 
-QString SwWidget::getDestinationPath()
+QString SwWidget::getDestinationPath() const
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }
@@ -234,7 +234,7 @@ void SwWidget::slotResizeChecked()
     m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
 }
 
-long long SwWidget::getAlbumID()
+long long SwWidget::getAlbumID() const
 {
     return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toLongLong();
 }

@@ -58,11 +58,11 @@ public:
     SwWidget(QWidget* parent, KIPI::Interface *iface);
     ~SwWidget();
 
-    QString getDestinationPath();
+    QString getDestinationPath() const;
 
     void updateLabels(const QString& name = "", const QString& url = "");
 
-    long long getAlbumID();
+    long long getAlbumID() const;
 
     KIPIPlugins::ImagesList* imagesList() const;
 
