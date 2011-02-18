@@ -536,14 +536,14 @@ void PiwigoWindow::slotAlbumSelected()
 
 void PiwigoWindow::slotAddPhoto()
 {
-    KUrl::List *urls = new KUrl::List(m_interface->currentSelection().images());
+    const KUrl::List urls(m_interface->currentSelection().images());
 
-    if (urls == NULL || urls->isEmpty()) {
+    if ( urls.isEmpty()) {
         KMessageBox::error(this, i18n("Nothing to upload - please select photos to upload."));
         return;
     }
 
-    for (KUrl::List::iterator it = urls->begin(); it != urls->end(); ++it) {
+    for (KUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it) {
         mpUploadList->append( (*it).path() );
     }
 
