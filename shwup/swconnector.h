@@ -53,8 +53,8 @@ public:
     ~SwConnector();
 
     SwUser  getUser() const;
-    void    setUser(SwUser user);
-    bool    isLoggedIn();
+    void    setUser(const SwUser& user);
+    bool    isLoggedIn() const;
     void    logout();
 
     void    getRestServiceURL();

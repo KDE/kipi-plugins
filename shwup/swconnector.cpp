@@ -100,12 +100,12 @@ SwUser SwConnector::getUser() const
     return m_user;
 }
 
-void SwConnector::setUser(SwUser user)
+void SwConnector::setUser(const SwUser& user)
 {
     m_user = user;
 }
 
-bool SwConnector::isLoggedIn()
+bool SwConnector::isLoggedIn() const
 {
     return m_loggedIn;
 }
