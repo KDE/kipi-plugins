@@ -69,7 +69,7 @@ SmugTalker::~SmugTalker()
         m_job->kill();
 }
 
-bool SmugTalker::loggedIn()
+bool SmugTalker::loggedIn() const
 {
     return !m_sessionID.isEmpty();
 }
