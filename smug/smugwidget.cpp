@@ -266,7 +266,7 @@ QProgressBar* SmugWidget::progressBar() const
     return m_progressBar;
 }
 
-bool SmugWidget::isAnonymous()
+bool SmugWidget::isAnonymous() const
 {
     return m_anonymousRBtn->isChecked();
 }
@@ -277,22 +277,22 @@ void SmugWidget::setAnonymous(bool checked)
     m_accountRBtn->setChecked(!checked);
 }
 
-QString SmugWidget::getNickName()
+QString SmugWidget::getNickName() const
 {
     return m_nickNameEdt->text();
 }
 
-QString SmugWidget::getSitePassword()
+QString SmugWidget::getSitePassword() const
 {
     return m_sitePasswordEdt->text();
 }
 
-QString SmugWidget::getAlbumPassword()
+QString SmugWidget::getAlbumPassword() const
 {
     return m_albumPasswordEdt->text();
 }
 
-QString SmugWidget::getDestinationPath()
+QString SmugWidget::getDestinationPath() const
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }

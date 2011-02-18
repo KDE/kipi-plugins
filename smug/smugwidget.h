@@ -63,15 +63,15 @@ public:
     void updateLabels(const QString& email = "", const QString& name = "", 
                       const QString& nick = "");
 
-    bool isAnonymous();
+    bool isAnonymous() const;
     void setAnonymous(bool checked);
 
-    QString getNickName();
+    QString getNickName() const;
     void    setNickName(const QString& nick);
 
-    QString getSitePassword();
-    QString getAlbumPassword();
-    QString getDestinationPath();
+    QString getSitePassword() const ;
+    QString getAlbumPassword() const;
+    QString getDestinationPath() const;
 
     KIPIPlugins::ImagesList* imagesList() const;
 
