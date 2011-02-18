@@ -62,7 +62,7 @@ SoundItem::~SoundItem()
 {
 }
 
-KUrl SoundItem::url()
+KUrl SoundItem::url() const
 {
     return m_url;
 }
@@ -72,14 +72,19 @@ void SoundItem::setName(const QString& text)
     setText(text);
 }
 
-QString SoundItem::artist()
+QString SoundItem::artist() const
 {
     return m_artist;
 }
 
-QString SoundItem::title()
+QString SoundItem::title() const
 {
     return m_title;
+}
+
+QTime SoundItem::totalTime() const
+{
+    return m_totalTime;
 }
 
 void SoundItem::slotMediaStateChanged(Phonon::State newstate, Phonon::State /*oldstate*/)

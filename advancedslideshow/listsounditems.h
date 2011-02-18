@@ -56,10 +56,10 @@ public:
     SoundItem(QListWidget* parent, const KUrl& url);
     ~SoundItem();
 
-    KUrl    url();
-    QString artist();
-    QString title();
-    QTime   totalTime();
+    KUrl    url() const;
+    QString artist() const;
+    QString title() const;
+    QTime   totalTime() const;
     void    setName(const QString& text);
 
 Q_SIGNALS:
