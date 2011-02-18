@@ -89,8 +89,8 @@ public:
     void    prev();
 
     QImage  getCurrent();
-    QString currFileName();
-    KUrl    currPath();
+    QString currFileName() const;
+    KUrl    currPath() const;
 
 private:
 

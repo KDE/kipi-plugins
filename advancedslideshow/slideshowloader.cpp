@@ -261,12 +261,12 @@ QImage SlideShowLoader::getCurrent()
     return returned;
 }
 
-QString SlideShowLoader::currFileName()
+QString SlideShowLoader::currFileName() const
 {
     return KUrl(m_pathList[m_currIndex].first).fileName();
 }
 
-KUrl SlideShowLoader::currPath()
+KUrl SlideShowLoader::currPath() const
 {
     return KUrl(m_pathList[m_currIndex].first);
 }
