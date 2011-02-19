@@ -1,0 +1,11 @@
+Features:
+ - Downloading images from the service
+ - Token reusing (not tested)
+
+GUI:
+ - Progress bar, hide KIO
+ - Icon (copyright problems)
+
+Other:
+ - Cleanup
+

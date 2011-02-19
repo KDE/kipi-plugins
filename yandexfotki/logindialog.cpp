@@ -1,0 +1,184 @@
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2007-16-07
+ * Description : a kipi plugin to export images to Yandex.Fotki web service
+ *
+ * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
+ * Copyright (C) 2011 by Roman Tsisyk <roman at tsisyk dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+#include "logindialog.h"
+#include "logindialog.moc"
+
+// Qt includes
+
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QFrame>
+#include <QLabel>
+#include <QPushButton>
+
+// KDE includes
+#include <KLineEdit>
+#include <KUrlLabel>
+#include <KToolInvocation> // for URLs
+#include <KMessageBox>
+#include <kdebug.h>
+#include <klineedit.h>
+#include <klocale.h>
+
+namespace KIPIYandexFotkiPlugin
+{
+
+LoginDialog::LoginDialog(QWidget* parent,
+                         const QString& login, const QString& password)
+    : QDialog(parent)
+{
+    setSizeGripEnabled(false);
+
+    QVBoxLayout* vbox = new QVBoxLayout(this);
+
+    m_headerLabel = new QLabel(this);
+    m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
+
+    m_headerLabel->setTextFormat(Qt::RichText);
+    m_headerLabel->setText(QString("<b><h2>"
+                                   "<font color=\"#ff000a\">%1</font>%2"
+                                   "<font color=\"#009d00\">%3</font>"
+                                   "</b></h2>")
+                           .arg(i18nc("Yandex.Fotki", "Y"))
+                           .arg(i18nc("Yandex.Fotki", "andex."))
+                           .arg(i18nc("Yandex.Fotki", "Fotki")));
+
+    QFrame* hline = new QFrame(this);
+    hline->setObjectName("hline");
+    hline->setFrameShape( QFrame::HLine );
+    hline->setFrameShadow( QFrame::Sunken );
+    hline->setFrameShape( QFrame::HLine );
+
+    QGridLayout* centerLayout = new QGridLayout();
+
+    m_loginEdit   = new KLineEdit(this);
+    m_passwordEdit = new KLineEdit(this);
+    m_passwordEdit->setEchoMode(KLineEdit::Password);
+
+    QLabel* loginLabel = new QLabel(this);
+    loginLabel->setText(i18n( "Login:" ));
+
+    QLabel* passwordLabel = new QLabel(this);
+    passwordLabel->setText(i18n("Password:"));
+
+    KUrlLabel *forgotLabel = new KUrlLabel(this);
+    forgotLabel->setText(tr("Forgot your password?"));
+    forgotLabel->setUrl("http://passport.yandex.ru/passport?mode=restore");
+    connect(forgotLabel, SIGNAL(leftClickedUrl(const QString&)),
+            this, SLOT(slotProcessUrl(const QString&)));
+
+    centerLayout->addWidget(m_loginEdit,   0, 1);
+    centerLayout->addWidget(m_passwordEdit, 1, 1);
+    centerLayout->addWidget(loginLabel,    0, 0);
+    centerLayout->addWidget(passwordLabel,  1, 0);
+    centerLayout->addWidget(forgotLabel,  2, 1);
+
+    QHBoxLayout* btnLayout = new QHBoxLayout();
+    QPushButton* okBtn = new QPushButton(this);
+    okBtn->setAutoDefault(true);
+    okBtn->setDefault(true);
+    okBtn->setText(i18n("&Login"));
+
+    QPushButton* cancelBtn = new QPushButton(this);
+    cancelBtn->setText(i18n("&Skip"));
+
+    btnLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    btnLayout->addWidget(okBtn);
+    btnLayout->addWidget(cancelBtn);
+    btnLayout->setMargin(0);
+    btnLayout->setSpacing(5);
+
+    QHBoxLayout* footerLayout = new QHBoxLayout();
+    KUrlLabel *licenseLabel = new KUrlLabel(this);
+    licenseLabel->setText(tr("Yandex User Agreement"));
+    licenseLabel->setUrl("http://fotki.yandex.ru/agreement.xml");
+    connect(licenseLabel, SIGNAL(leftClickedUrl(const QString&)),
+            this, SLOT(slotProcessUrl(const QString&)));
+
+    footerLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    footerLayout->addWidget(licenseLabel);
+
+    vbox->setMargin(5);
+    vbox->setSpacing(5);
+    vbox->setObjectName("vbox");
+    vbox->addWidget(m_headerLabel);
+    vbox->addWidget(hline);
+    vbox->addLayout(centerLayout);
+    vbox->addLayout(btnLayout);
+    vbox->addLayout(footerLayout);
+
+    resize(QSize(300, 150).expandedTo(minimumSizeHint()));
+
+    setLogin(login);
+    setPassword(password);
+
+    connect(okBtn, SIGNAL(clicked()),
+            this, SLOT(slotAccept()));
+
+    connect(cancelBtn, SIGNAL(clicked()),
+            this, SLOT(reject()));
+}
+
+LoginDialog::~LoginDialog()
+{
+}
+
+QString LoginDialog::login() const
+{
+    return m_loginEdit->text();
+}
+
+QString LoginDialog::password() const
+{
+    return m_passwordEdit->text();
+}
+
+void LoginDialog::setLogin(const QString& login)
+{
+    m_loginEdit->setText(login);
+}
+
+void LoginDialog::setPassword(const QString& password)
+{
+    m_passwordEdit->setText(password);
+}
+
+void LoginDialog::slotAccept() {
+    if (!m_passwordEdit->text().isEmpty()) {
+        accept();
+    }
+    else
+    {
+        KMessageBox::error(this, i18n("Password can not be empty!"),
+                           i18n("Error"));
+    }
+}
+
+void LoginDialog::slotProcessUrl(const QString& url)
+{
+    KToolInvocation::self()->invokeBrowser(url);
+}
+
+} // namespace KIPIYandexFotkiPlugin
