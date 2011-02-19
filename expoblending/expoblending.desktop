@@ -85,7 +85,6 @@ Name[uk]=Злиття експозиції
 Name[x-test]=xxExpoBlendingxx
 Name[zh_CN]=曝光混合
 Name[zh_TW]=曝光混合
-Path=
 StartupNotify=true
 Terminal=false
 Type=Application
