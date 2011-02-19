@@ -113,7 +113,6 @@ Name[uk]=Отримання зображень
 Name[x-test]=xxAcquireImagesxx
 Name[zh_CN]=图像捕获
 Name[zh_TW]=擷取影像
-Path=
 StartupNotify=true
 Terminal=false
 Type=Application
