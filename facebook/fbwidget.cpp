@@ -300,7 +300,7 @@ QProgressBar* FbWidget::progressBar() const
     return m_progressBar;
 }
 
-QString FbWidget::getDestinationPath()
+QString FbWidget::getDestinationPath() const 
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().toLocalFile();
 }
@@ -383,7 +383,7 @@ void FbWidget::slotResizeChecked()
     m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
 }
 
-long long FbWidget::getFriendID()
+long long FbWidget::getFriendID() const
 {
     if (m_dlGrp->checkedId() == FbPhotosFriend)
         return m_friendsCoB->itemData(m_friendsCoB->currentIndex()).toLongLong();
@@ -391,7 +391,7 @@ long long FbWidget::getFriendID()
     return 0;
 }
 
-QString FbWidget::getAlbumID()
+QString FbWidget::getAlbumID() const
 {
     if (m_dlGrp->checkedId() == FbMyAlbum
         || m_dlGrp->checkedId() == FbFriendAlbum)

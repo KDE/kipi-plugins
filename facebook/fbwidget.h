@@ -65,12 +65,12 @@ public:
     FbWidget(QWidget* parent, KIPI::Interface *iface, bool import);
     ~FbWidget();
 
-    QString getDestinationPath();
+    QString getDestinationPath() const;
 
     void updateLabels(const QString& name = "", const QString& url = "", bool uplPerm = false);
 
-    long long getFriendID();
-    QString getAlbumID();
+    long long getFriendID() const;
+    QString getAlbumID() const;
 
     KIPIPlugins::ImagesList* imagesList() const;
 
