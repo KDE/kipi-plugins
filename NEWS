@@ -3,6 +3,8 @@ Kipi-plugins 2.0.0-beta3 - Release date: 2011/02/27
 
 NEW FEATURES:
 
+GPSSync        : Complete rewrite of GUI, including reverse-geocoding feature.
+YandexFotki    : New tool to export collection to Yandex web service (http://fotki.yandex.ru).
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -14,7 +16,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> 206133 : Support for Open Street Map.
 007 ==> 265126 : kipi-plugins-2.0.0_beta2 compile failure in libkmap/abstractmarkertiler.h.
 008 ==> 262412 : Request to setup git repo for kipi-plugins.
-009 ==> 
+009 ==> 202226 : Yandex Fotki support export.
+010 ==> 
 
 
 
