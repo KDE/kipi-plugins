@@ -462,7 +462,7 @@ KIPI::Category Plugin_GPSSync::category( KAction* action ) const
 {
     if ( action == m_action_geolocation )
        return KIPI::ImagesPlugin;
-    if ( action == m_actionKMLExport )
+    else if ( action == m_actionKMLExport )
        return KIPI::ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification" ;
