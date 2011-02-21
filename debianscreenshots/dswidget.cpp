@@ -184,7 +184,7 @@ QProgressBar* DsWidget::progressBar() const
     return m_progressBar;
 }
 
-QString DsWidget::getDestinationPath()
+QString DsWidget::getDestinationPath() const
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().toLocalFile();
 }

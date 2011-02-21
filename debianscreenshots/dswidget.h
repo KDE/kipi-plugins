@@ -64,7 +64,7 @@ public:
     DsWidget(QWidget* parent, KIPI::Interface* iface);
     ~DsWidget();
 
-     QString getDestinationPath();
+     QString getDestinationPath() const;
 
      KIPIPlugins::ImagesList* imagesList() const;
 
