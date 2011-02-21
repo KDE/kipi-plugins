@@ -79,8 +79,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
                                        "to add random noise to the images."));
         layout->addRow(i18n("Noise algorithm:"), m_noiseType);
     }
-
-    if (FilterType == 2)
+    else if (FilterType == 2)
     { // Blur
         m_blurRadius = new KIntNumInput(3, box);
         initInput(m_blurRadius, 0, 20, i18n("px"));
@@ -95,8 +94,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
         m_blurDeviation->setWhatsThis(i18n("Select here the standard deviation of the blur Gaussian."));
         layout->addRow(i18n("Deviation:"), m_blurDeviation);
     }
-
-    if (FilterType == 5)
+    else if (FilterType == 5)
     { // Median
         m_medianRadius = new KIntNumInput(3, box);
         initInput(m_medianRadius, 0, 20, i18n("px"));
@@ -106,9 +104,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
                                           "set of neighboring pixels as defined by the radius."));
         layout->addRow(i18n("Radius:"), m_medianRadius);
     }
-
-
-    if (FilterType == 6)
+    else if (FilterType == 6)
     { // Noise reduction
         m_noiseRadius = new KIntNumInput(3, box);
         initInput(m_noiseRadius, 0, 20, i18n("px"));
@@ -120,8 +116,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
                                          "selects a suitable radius."));
         layout->addRow(i18n("Radius:"), m_noiseRadius);
     }
-
-    if (FilterType == 7)
+    else if (FilterType == 7)
     { // Sharpen
         m_sharpenRadius = new KIntNumInput(3, box);
         initInput(m_sharpenRadius, 0, 20, i18n("px"));
@@ -138,8 +133,7 @@ FilterOptionsDialog::FilterOptionsDialog(QWidget *parent, int FilterType)
                                               "Laplacian."));
         layout->addRow(i18n("Deviation:"), m_sharpenDeviation);
     }
-
-    if (FilterType == 8)
+    else if (FilterType == 8)
     { // Unsharp
         m_unsharpenRadius = new KIntNumInput(3, box);
         initInput(m_unsharpenRadius, 0, 20, i18n("px"));

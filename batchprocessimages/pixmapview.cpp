@@ -179,6 +179,7 @@ void PixmapView::slotPreviewProcessFinished()
         }
         else
         {
+	    delete m_pix;
             m_pix = new QPixmap(viewport()->size());
             QPainter p;
             p.begin(m_pix);

@@ -148,26 +148,21 @@ void FilterImagesDialog::slotOptionsClicked()
         int index = optionsDialog->m_noiseType->findText(m_noiseType);
         if (index != -1) optionsDialog->m_noiseType->setCurrentIndex(index);
     }
-
-    if (Type == 2)
+    else if (Type == 2)
     { // Blur
         optionsDialog->m_blurRadius->setValue(m_blurRadius);
         optionsDialog->m_blurDeviation->setValue(m_blurDeviation);
     }
-
-    if (Type == 5)  // Median
+    else if (Type == 5)  // Median
         optionsDialog->m_medianRadius->setValue(m_medianRadius);
-
-    if (Type == 6)  // Noise reduction
+    else if (Type == 6)  // Noise reduction
         optionsDialog->m_noiseRadius->setValue(m_noiseRadius);
-
-    if (Type == 7)
+    else if (Type == 7)
     { // Sharpen
         optionsDialog->m_sharpenRadius->setValue(m_sharpenRadius);
         optionsDialog->m_sharpenDeviation->setValue(m_sharpenDeviation);
     }
-
-    if (Type == 8)
+    else if (Type == 8)
     { // Unsharp
         optionsDialog->m_unsharpenRadius->setValue(m_unsharpenRadius);
         optionsDialog->m_unsharpenDeviation->setValue(m_unsharpenDeviation);
@@ -180,24 +175,22 @@ void FilterImagesDialog::slotOptionsClicked()
         if (Type == 0)  // Add noise
             m_noiseType = optionsDialog->m_noiseType->currentText();
 
-        if (Type == 2)
+	else if (Type == 2)
         { // Blur
             m_blurRadius = optionsDialog->m_blurRadius->value();
             m_blurDeviation = optionsDialog->m_blurDeviation->value();
         }
 
-        if (Type == 5)  // Median
+	else if (Type == 5)  // Median
             m_medianRadius = optionsDialog->m_medianRadius->value();
 
-        if (Type == 6)  // Noise reduction
+	else if (Type == 6)  // Noise reduction
             m_noiseRadius = optionsDialog->m_noiseRadius->value();
-
-        if (Type == 7) { // Sharpen
+	else if (Type == 7) { // Sharpen
             m_sharpenRadius = optionsDialog->m_sharpenRadius->value();
             m_sharpenDeviation = optionsDialog->m_sharpenDeviation->value();
         }
-
-        if (Type == 8)
+	else if (Type == 8)
         { // Unsharp
             m_unsharpenRadius = optionsDialog->m_unsharpenRadius->value();
             m_unsharpenDeviation = optionsDialog->m_unsharpenDeviation->value();
@@ -277,13 +270,11 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
 	else if (m_noiseType == i18nc("image noise type", "Poisson")) Temp = "Poisson";
         *proc << "+noise" << Temp;
     }
-
-    if (m_Type->currentIndex() == 1)
+    else if (m_Type->currentIndex() == 1)
     { // Antialias
         *proc << "-antialias";
     }
-
-    if (m_Type->currentIndex() == 2)
+    else if (m_Type->currentIndex() == 2)
     { // Blur
         *proc << "-blur";
         QString Temp, Temp2;
@@ -291,32 +282,27 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_blurDeviation));
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 3)
+    else if (m_Type->currentIndex() == 3)
     { // Despeckle
         *proc << "-despeckle";
     }
-
-    if (m_Type->currentIndex() == 4)
+    else if (m_Type->currentIndex() == 4)
     { // Enhance
         *proc << "-enhance";
     }
-
-    if (m_Type->currentIndex() == 5)
+    else if (m_Type->currentIndex() == 5)
     { // Median
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_medianRadius);
         *proc << "-median" << Temp2;
     }
-
-    if (m_Type->currentIndex() == 6)
+    else if (m_Type->currentIndex() == 6)
     { // Noise reduction
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_noiseRadius);
         *proc << "-noise" << Temp2;
     }
-
-    if (m_Type->currentIndex() == 7)
+    else if (m_Type->currentIndex() == 7)
     { // Sharpen
         *proc << "-sharpen";
         QString Temp, Temp2;
@@ -324,8 +310,7 @@ void FilterImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_sharpenDeviation));
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 8)
+    else if (m_Type->currentIndex() == 8)
     { // Unsharp
         QString arg = QString("%1x%2+%3+%4")
             .arg(m_unsharpenRadius)

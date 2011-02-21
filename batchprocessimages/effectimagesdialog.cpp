@@ -326,8 +326,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_latOffset));
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 1)
+    else if (m_Type->currentIndex() == 1)
     { // Charcoal
         *proc << "-charcoal";
         QString Temp, Temp2;
@@ -335,16 +334,14 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_charcoalDeviation));
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 2)
+    else if (m_Type->currentIndex() == 2)
     { // Detect edges
         *proc << "-edge";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_edgeRadius);
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 3)
+    else if (m_Type->currentIndex() == 3)
     { // Emboss
         *proc << "-emboss";
         QString Temp, Temp2;
@@ -352,24 +349,21 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_embossDeviation));
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 4)
+    else if (m_Type->currentIndex() == 4)
     { // Implode
         *proc << "-implode";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_implodeFactor);
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 5)
+    else if (m_Type->currentIndex() == 5)
     { // Paint
         *proc << "-paint";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_paintRadius);
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 6)
+    else if (m_Type->currentIndex() == 6)
     { // Shade light
         *proc << "-shade";
         QString Temp, Temp2;
@@ -377,24 +371,21 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_shadeElevation));
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 7)
+    else if (m_Type->currentIndex() == 7)
     { // Solarize
         *proc << "-solarize";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_solarizeFactor);
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 8)
+    else if (m_Type->currentIndex() == 8)
     { // Spread
         *proc << "-spread";
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_spreadRadius);
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 9)
+    else if (m_Type->currentIndex() == 9)
     { // Swirl
         *proc << "-swirl";
         QString Temp, Temp2;
@@ -402,7 +393,7 @@ void EffectImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         *proc << Temp2;
     }
 
-    if (m_Type->currentIndex() == 10)
+    else if (m_Type->currentIndex() == 10)
     { // Wave
         *proc << "-wave";
         QString Temp, Temp2;
