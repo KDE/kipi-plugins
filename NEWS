@@ -10,8 +10,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> 264655 : JPEGLossLess : ksnapshot is crashing on "send to".
 003 ==> 243908 : GPSSync      : Coordinates do not get retrieved.
 004 ==> 181319 : GPSSync      : Provide a batch tool to add geolocation coordinates to a complete album.
-005 ==> 
-
+005 ==> 266771 : GPSSync      : Unable to get GPS coordinates from map with Geolocation function of digiKam.
+006 ==> 
 
 
 
