@@ -167,8 +167,7 @@ KIPI::Category Plugin_Facebook::category( KAction* action ) const
 {
     if (action == m_actionExport)
         return KIPI::ExportPlugin;
-
-    if (action == m_actionImport)
+    else if (action == m_actionImport)
         return KIPI::ImportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
