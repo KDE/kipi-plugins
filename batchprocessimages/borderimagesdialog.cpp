@@ -133,18 +133,18 @@ void BorderImagesDialog::slotOptionsClicked()
         optionsDialog->m_solidBorderWidth->setValue(m_solidWidth);
         optionsDialog->m_button_solidBorderColor->setColor(m_solidColor);
     }
-    if (Type == 1)
+    else if (Type == 1)
     { // Niepce
         optionsDialog->m_lineNiepceBorderWidth->setValue(m_lineNiepceWidth);
         optionsDialog->m_button_lineNiepceBorderColor->setColor(m_lineNiepceColor);
         optionsDialog->m_NiepceBorderWidth->setValue(m_NiepceWidth);
         optionsDialog->m_button_NiepceBorderColor->setColor(m_NiepceColor);
     }
-    if (Type == 2)
+    else if (Type == 2)
     { // Raise
         optionsDialog->m_raiseBorderWidth->setValue(m_raiseWidth);
     }
-    if (Type == 3)
+    else if (Type == 3)
     { // Frame
         optionsDialog->m_frameBorderWidth->setValue(m_frameWidth);
         optionsDialog->m_frameBevelBorderWidth->setValue(m_bevelWidth);
@@ -158,18 +158,18 @@ void BorderImagesDialog::slotOptionsClicked()
             m_solidWidth = optionsDialog->m_solidBorderWidth->value();
             m_solidColor = optionsDialog->m_button_solidBorderColor->color();
         }
-        if (Type == 1)
+	else if (Type == 1)
         { // Niepce
             m_lineNiepceWidth = optionsDialog->m_lineNiepceBorderWidth->value();
             m_lineNiepceColor = optionsDialog->m_button_lineNiepceBorderColor->color();
             m_NiepceWidth = optionsDialog->m_NiepceBorderWidth->value();
             m_NiepceColor = optionsDialog->m_button_NiepceBorderColor->color();
         }
-        if (Type == 2)
+	else if (Type == 2)
         { // Raise
             m_raiseWidth = optionsDialog->m_raiseBorderWidth->value();
         }
-        if (Type == 3)
+	else if (Type == 3)
         { // Frame
             m_frameWidth = optionsDialog->m_frameBorderWidth->value();
             m_bevelWidth = optionsDialog->m_frameBevelBorderWidth->value();
@@ -254,8 +254,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_solidColor.blue()) + ')');
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 1)
+    else if (m_Type->currentIndex() == 1)
     { // Niepce
         QString Temp, Temp2;
 
@@ -281,8 +280,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_lineNiepceColor.blue()) + ')');
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 2)
+    else if (m_Type->currentIndex() == 2)
     { // Raise
         *proc << "-raise";
         QString Temp, Temp2;
@@ -290,8 +288,7 @@ void BorderImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *ite
         Temp2.append(Temp.setNum(m_raiseWidth));
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 3)
+    else if (m_Type->currentIndex() == 3)
     { // Frame
         *proc << "-frame";
         QString Temp, Temp2;

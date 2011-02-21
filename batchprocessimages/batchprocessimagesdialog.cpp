@@ -216,12 +216,12 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd()
 {
     QStringList ImageFilesList;
 
-    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
+    const KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
 
     if (urls.isEmpty())
         return;
 
-    for (KUrl::List::Iterator it = urls.begin(); it != urls.end(); ++it)
+    for (KUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
         ImageFilesList << (*it).path(); // PENDING(blackie) handle remote URLS
 
     slotAddDropItems(ImageFilesList);
