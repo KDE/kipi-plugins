@@ -172,16 +172,16 @@ void ConvertImagesDialog::slotOptionsClicked()
         optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
         optionsDialog->m_compressLossLess->setChecked(m_compressLossLess);
     }
-    if (Type == 1) // PNG
+    else if (Type == 1) // PNG
     {
         optionsDialog->m_JPEGPNGCompression->setValue(m_JPEGPNGCompression);
     }
-    if (Type == 2) // TIFF
+    else if (Type == 2) // TIFF
     {
         int index = optionsDialog->m_TIFFCompressionAlgo->findText(m_TIFFCompressionAlgo);
         if (index != -1) optionsDialog->m_TIFFCompressionAlgo->setCurrentIndex(index);
     }
-    if (Type == 5) // TGA
+    else if (Type == 5) // TGA
     {
         int index = optionsDialog->m_TGACompressionAlgo->findText(m_TGACompressionAlgo);
         if (index != -1) optionsDialog->m_TGACompressionAlgo->setCurrentIndex(index);
@@ -194,11 +194,11 @@ void ConvertImagesDialog::slotOptionsClicked()
             m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
             m_compressLossLess = optionsDialog->m_compressLossLess->isChecked();
         }
-        if (Type == 1) // PNG
+	else if (Type == 1) // PNG
             m_JPEGPNGCompression = optionsDialog->m_JPEGPNGCompression->value();
-        if (Type == 2) // TIFF
+	else if (Type == 2) // TIFF
             m_TIFFCompressionAlgo = optionsDialog->m_TIFFCompressionAlgo->currentText();
-        if (Type == 5) // TGA
+	else if (Type == 5) // TGA
             m_TGACompressionAlgo = optionsDialog->m_TGACompressionAlgo->currentText();
     }
 
@@ -259,15 +259,13 @@ void ConvertImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *it
             *proc << Temp.setNum(m_JPEGPNGCompression);
         }
     }
-
-    if (m_Type->currentIndex() == 1)
+    else if (m_Type->currentIndex() == 1)
     { // PNG
         *proc << "-quality";
         QString Temp;
         *proc << Temp.setNum(m_JPEGPNGCompression);
     }
-
-    if (m_Type->currentIndex() == 2)
+    else if (m_Type->currentIndex() == 2)
     { // TIFF
         *proc << "-compress";
 
@@ -280,8 +278,7 @@ void ConvertImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *it
             *proc << m_TIFFCompressionAlgo;
         }
     }
-
-    if (m_Type->currentIndex() == 5)
+    else if (m_Type->currentIndex() == 5)
     { // TGA
         *proc << "-compress";
 

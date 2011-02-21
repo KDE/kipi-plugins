@@ -69,8 +69,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
         m_label_depthValue->setBuddy(m_depthValue);
         dvlay->addWidget(m_depthValue);
     }
-
-    if (ColorType == 3)
+    else if (ColorType == 3)
     { // Fuzz
         QLabel *m_label_fuzzDistance = new QLabel(i18n("Distance:"), box);
         dvlay->addWidget(m_label_fuzzDistance);
@@ -82,8 +81,7 @@ ColorOptionsDialog::ColorOptionsDialog(QWidget *parent, int ColorType)
         m_label_fuzzDistance->setBuddy(m_fuzzDistance);
         dvlay->addWidget(m_fuzzDistance);
     }
-
-    if (ColorType == 9)
+    else if (ColorType == 9)
     { // Segment
         QLabel *m_label_segmentCluster = new QLabel(i18n("Cluster threshold:"), box);
         dvlay->addWidget(m_label_segmentCluster);

@@ -74,8 +74,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
         m_button_solidBorderColor->setWhatsThis(i18n("You can select here the border color."));
         dvlay->addWidget(m_button_solidBorderColor);
     }
-
-    if (BorderType == 1)
+    else if (BorderType == 1)
     { // Niepce
         QLabel *m_label_lineNiepceBorderWidth = new QLabel(i18n("Line border width:"), box);
         dvlay->addWidget(m_label_lineNiepceBorderWidth);
@@ -109,8 +108,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
         m_button_NiepceBorderColor->setWhatsThis(i18n("You can select here the border color."));
         dvlay->addWidget(m_button_NiepceBorderColor);
     }
-
-    if (BorderType == 2)
+    else if (BorderType == 2)
     { // Raise
         QLabel *m_label_raiseBorderWidth = new QLabel(i18n("Border width:"), box);
         dvlay->addWidget(m_label_raiseBorderWidth);
@@ -121,8 +119,7 @@ BorderOptionsDialog::BorderOptionsDialog(QWidget *parent, int BorderType)
         m_label_raiseBorderWidth->setBuddy(m_raiseBorderWidth);
         dvlay->addWidget(m_raiseBorderWidth);
     }
-
-    if (BorderType == 3)
+    else if (BorderType == 3)
     { // Frame
         QLabel *m_label_frameBorderWidth = new QLabel(i18n("Border width:"), box);
         dvlay->addWidget(m_label_frameBorderWidth);

@@ -165,11 +165,9 @@ void ColorImagesDialog::slotOptionsClicked()
         int index = optionsDialog->m_depthValue->findText(m_depthValue);
         if (index != -1) optionsDialog->m_depthValue->setCurrentIndex(index);
     }
-
-    if (Type == 3)  // Fuzz
+    else if (Type == 3)  // Fuzz
         optionsDialog->m_fuzzDistance->setValue(m_fuzzDistance);
-
-    if (Type == 9)
+    else if (Type == 9)
     { // Segment
         optionsDialog->m_segmentCluster->setValue(m_segmentCluster);
         optionsDialog->m_segmentSmooth->setValue(m_segmentSmooth);
@@ -179,11 +177,9 @@ void ColorImagesDialog::slotOptionsClicked()
     {
         if (Type == 1)  // Depth
             m_depthValue = optionsDialog->m_depthValue->currentText();
-
-        if (Type == 3)  // Fuzz
+	else if (Type == 3)  // Fuzz
             m_fuzzDistance = optionsDialog->m_fuzzDistance->value();
-
-        if (Type == 9)
+	else if (Type == 9)
         { // Segment
             m_segmentCluster = optionsDialog->m_segmentCluster->value();
             m_segmentSmooth = optionsDialog->m_segmentSmooth->value();
@@ -240,51 +236,42 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
     { // Decrease contrast"
         *proc << "-contrast";
     }
-
-    if (m_Type->currentIndex() == 1)
+    else if (m_Type->currentIndex() == 1)
     { // Depth
         *proc << "-depth" << m_depthValue;
     }
-
-    if (m_Type->currentIndex() == 2)
+    else if (m_Type->currentIndex() == 2)
     { // Equalize
         *proc << "-equalize";
     }
-
-    if (m_Type->currentIndex() == 3)
+    else if (m_Type->currentIndex() == 3)
     { // Fuzz
         QString Temp, Temp2;
         Temp2 = Temp.setNum(m_fuzzDistance);
         *proc << "-fuzz" << Temp2;
     }
-
-    if (m_Type->currentIndex() == 4)
+    else if (m_Type->currentIndex() == 4)
     { // Gray scales
         *proc << "-type";
         *proc << "Grayscale";
     }
-
-    if (m_Type->currentIndex() == 5)
+    else if (m_Type->currentIndex() == 5)
     { // Increase contrast
         *proc << "+contrast";
     }
-
-    if (m_Type->currentIndex() == 6)
+    else if (m_Type->currentIndex() == 6)
     { // Monochrome
         *proc << "-monochrome";
     }
-
-    if (m_Type->currentIndex() == 7)
+    else if (m_Type->currentIndex() == 7)
     { // Negate
         *proc << "-negate";
     }
-
-    if (m_Type->currentIndex() == 8)
+    else if (m_Type->currentIndex() == 8)
     { // Normalize
         *proc << "-normalize";
     }
-
-    if (m_Type->currentIndex() == 9)
+    else if (m_Type->currentIndex() == 9)
     { // Segment
         *proc << "-segment";
         QString Temp, Temp2;
@@ -292,8 +279,7 @@ void ColorImagesDialog::initProcess(KProcess* proc, BatchProcessImagesItem *item
         Temp2.append(Temp.setNum(m_segmentSmooth));
         *proc << Temp2;
     }
-
-    if (m_Type->currentIndex() == 10)
+    else if (m_Type->currentIndex() == 10)
     { // Trim
         *proc << "-trim";
     }
