@@ -20,7 +20,9 @@
  *
  * ============================================================ */
 
-#include "yftalker.h"
+#include "yftalker.moc"
+
+// Qt includes
 
 #include <QTextDocument>
 #include <QByteArray>
@@ -31,13 +33,16 @@
 #include <QFile>
 #include <QFileInfo>
 
+// KDE includes
+
 #include <KDebug>
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>
 
-#include "pluginsversion.h"
+// Local includes
 
+#include "pluginsversion.h"
 #include "yandexauth.h" // authentication
 #include "yfalbum.h"
 
@@ -64,7 +69,6 @@ YandexFotkiTalker::YandexFotkiTalker( QObject* parent )
       m_state(STATE_UNAUTHENTICATED),
       m_job( 0 )
 {
-
 }
 
 YandexFotkiTalker::~YandexFotkiTalker()
@@ -268,7 +272,6 @@ void YandexFotkiTalker::updatePhoto(YandexFotkiPhoto& photo,
         // for new images also upload file
         updatePhotoFile(photo);
     }
-
 }
 
 void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
@@ -638,7 +641,8 @@ void YandexFotkiTalker::parseResponseGetService(KJob* job)
 }
 
 /*
-void YandexFotkiTalker::parseResponseCheckToken(KJob *job) {
+void YandexFotkiTalker::parseResponseCheckToken(KJob *job)
+{
     m_job = 0;
 
     kDebug() << "checkToken" << job->error() << job->errorString() << job->errorText();
@@ -732,7 +736,6 @@ void YandexFotkiTalker::parseResponseGetToken(KJob* job)
     kDebug() << "Token got" << m_token;
     m_state = STATE_GETTOKEN_DONE;
     emit signalGetTokenDone();
-
 }
 
 

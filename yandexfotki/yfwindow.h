@@ -28,6 +28,19 @@
 #ifndef YANDEXFOTKI_WINDOW_H
 #define YANDEXFOTKI_WINDOW_H
 
+// Qt includes
+
+#include <QStack>
+
+// KDE includes
+
+#include <KDialog>
+
+// Local includes
+
+#include "logindialog.h"
+#include "yftalker.h"
+
 class QLabel;
 class QSpinBox;
 class QCheckBox;
@@ -35,18 +48,13 @@ class QGroupBox;
 class QButtonGroup;
 class QCloseEvent;
 class QProgressBar;
+
 class KUrl;
 class KProgressDialog;
 class KPasswordDialog;
 class KComboBox;
 class KPushButton;
 class KLineEdit;
-
-#include <QStack>
-#include <KDialog>
-
-#include "logindialog.h"
-#include "yftalker.h"
 
 namespace KIPI
 {
@@ -81,6 +89,7 @@ public:
     QString getDestinationPath();
 
 protected Q_SLOTS:
+
     // ui slots
     void slotCloseEvent(QCloseEvent* event);
     void slotChangeUserClicked();
@@ -107,6 +116,7 @@ protected Q_SLOTS:
     void slotButtonClicked(int button);
 
 protected:
+
     enum UpdatePolicy
     {
         POLICY_UPDATE_MERGE = 0,
@@ -131,7 +141,6 @@ protected:
 
     bool m_import;
     KIPI::Interface* m_interface;
-
 
     /*
      * User interface

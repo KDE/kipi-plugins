@@ -20,12 +20,16 @@
  *
  * ============================================================ */
 
-#include "yfalbumdialog.h"
+#include "yfalbumdialog.moc"
+
+// Qt includes
 
 #include <QFormLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
+
+// KDE includes
 
 #include <KLocale>
 #include <KDebug>
@@ -33,6 +37,8 @@
 #include <KLineEdit>
 #include <KTextEdit>
 #include <KMessageBox>
+
+// Local includes
 
 #include "yfalbum.h"
 
@@ -108,7 +114,6 @@ void YandexFotkiAlbumDialog::slotButtonClicked(int button)
 
     return KDialog::slotButtonClicked(button);
 }
-
 
 } // namespace KIPIYandexFotkiPlugin
 

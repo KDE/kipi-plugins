@@ -27,6 +27,8 @@
 #ifndef YANDEXAUTH_H
 #define YANDEXAUTH_H
 
+// Qt includes
+
 #include <QString>
 
 namespace YandexAuth

@@ -22,9 +22,16 @@
 
 #include "yandexauth.h"
 
-#include <stdlib.h> // size_t
+// C++ includes
+
+#include <cstdlib> // size_t
+
+// Qt includes.
+
 #include <QString>
 #include <QtCrypto> // Base64
+
+// Local includes
 
 #include "yandexrsa.h" // CCryptoProviderRSA
 
@@ -34,7 +41,6 @@ namespace YandexAuth
 QString makeCredentials(const QString& publicKey, const QString& login,
                         const QString& password)
 {
-
     // prepare string
     QByteArray credentials = "<credentials login=\"";
     credentials.append(login.toLocal8Bit());

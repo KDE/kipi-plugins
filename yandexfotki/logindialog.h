@@ -37,6 +37,7 @@ class LoginDialog : public QDialog
     Q_OBJECT
 
 public:
+
     LoginDialog(QWidget* parent, const QString& header,
                 const QString& passwd=QString());
     ~LoginDialog();
@@ -47,14 +48,16 @@ public:
     void setLogin(const QString&);
     void setPassword(const QString&);
 
+protected Q_SLOTS:
+
+    void slotAccept();
+    void slotProcessUrl(const QString& url);
+
 protected:
+
     QLabel*    m_headerLabel;
     KLineEdit* m_loginEdit;
     KLineEdit* m_passwordEdit;
-
-protected Q_SLOTS:
-    void slotAccept();
-    void slotProcessUrl(const QString& url);
 };
 
 } // namespace KIPIYandexFotkiPlugin

@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+// Local includes
+
 #include "yfalbum.h"
 
 #ifndef KDE_NO_DEBUG_OUTPUT

@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "logindialog.h"
 #include "logindialog.moc"
 
 // Qt includes
@@ -34,10 +33,10 @@
 #include <QPushButton>
 
 // KDE includes
-#include <KLineEdit>
-#include <KUrlLabel>
-#include <KToolInvocation> // for URLs
-#include <KMessageBox>
+#include <klineedit.h>
+#include <kurllabel.h>
+#include <ktoolinvocation.h> // for URLs
+#include <kmessagebox.h>
 #include <kdebug.h>
 #include <klineedit.h>
 #include <klocale.h>

@@ -23,10 +23,16 @@
 #ifndef YANDEXFOTKI_TALKER_H
 #define YANDEXFOTKI_TALKER_H
 
+// Qt includes
+
 #include <QObject>
 #include <QPointer>
 
+// KDE includes
+
 #include <kio/jobclasses.h>
+
+// Local includes
 
 #include "yfphoto.h"
 #include "yfalbum.h"
@@ -46,6 +52,7 @@ class YandexFotkiTalker : public QObject
     Q_OBJECT
 
 public:
+
     YandexFotkiTalker(QObject* parent = 0);
     ~YandexFotkiTalker();
 
@@ -197,6 +204,7 @@ Q_SIGNALS:
     void signalUpdateAlbumDone();
 
 protected Q_SLOTS:
+
     void handleJobData(KIO::Job* job, const QByteArray& data);
     // special method for ugly KIO::put API
     void handleJobReq(KIO::Job* job, QByteArray& data);

@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+#include "plugin_yandexfotki.moc"
+
 // KDE includes
 
 #include <KLocale>
@@ -37,8 +39,7 @@
 #include <libkipi/interface.h>
 
 // Local includes
-#include "plugin_yandexfotki.h"
-#include "plugin_yandexfotki.moc"
+
 #include "yfwindow.h"
 
 K_PLUGIN_FACTORY( Factory, registerPlugin<Plugin_YandexFotki>(); )
@@ -126,7 +127,8 @@ void Plugin_YandexFotki::slotExport()
     m_dlgExport->reactivate();
 }
 
-void Plugin_YandexFotki::slotDialogFinished(int) {
+void Plugin_YandexFotki::slotDialogFinished(int)
+{
     // don't use Qt::WA_DeleteOnClose, delete explicitly
     kDebug() << "Dialog destroyed";
     delete m_dlgExport;
@@ -143,4 +145,3 @@ KIPI::Category Plugin_YandexFotki::category( KAction* action ) const
     kWarning() << "Unrecognized action for plugin category identification" ;
     return KIPI::ExportPlugin;
 }
-

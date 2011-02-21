@@ -25,8 +25,9 @@
  *
  * ============================================================ */
 
-#include "yfwindow.h"
 #include "yfwindow.moc"
+
+// C ANSI includes
 
 extern "C"
 {
@@ -35,6 +36,7 @@ extern "C"
 }
 
 // Qt includes
+
 #include <QFileInfo>
 #include <QSpinBox>
 #include <QCheckBox>
@@ -53,6 +55,7 @@ extern "C"
 #include <QVBoxLayout>
 
 // KDE includes
+
 #include <kdeversion.h>
 #include <kde_file.h>
 #include <kdebug.h>
@@ -534,8 +537,6 @@ QString YandexFotkiWindow::getDestinationPath()
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }
 
-
-
 void YandexFotkiWindow::slotChangeUserClicked()
 {
     // force authenticate window
@@ -558,7 +559,8 @@ void YandexFotkiWindow::slotButtonClicked(int button)
             slotStartTransfer();
             break;
         case KDialog::Close:
-            if (!isButtonEnabled(KDialog::User1)) {
+            if (!isButtonEnabled(KDialog::User1))
+            {
                 m_talker.cancel();
                 updateControls(true);
                 break;
@@ -776,10 +778,8 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
     updateNextPhoto();
 }
 
-
 void YandexFotkiWindow::updateNextPhoto()
 {
-
     // select only one image from stack
     while (!m_transferQueue.isEmpty())
     {
@@ -892,7 +892,6 @@ void YandexFotkiWindow::slotReloadAlbumsRequest()
     updateControls(false);
     m_talker.listAlbums();
 }
-
 
 void YandexFotkiWindow::slotStartTransfer()
 {

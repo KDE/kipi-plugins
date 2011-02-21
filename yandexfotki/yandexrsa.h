@@ -32,6 +32,8 @@
 #ifndef YANDEX_RSA_H
 #define YANDEX_RSA_H
 
+// C++ includes
+
 #include <cstdlib> // std::size_t
 
 namespace YandexAuth
@@ -121,7 +123,6 @@ public:
         void MakePqStr(char *);
     */
 };
-
 
 #define MAX_CRYPT_BITS 1024
 

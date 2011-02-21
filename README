@@ -44,6 +44,7 @@ ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed
 PiwigoExport       : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
 DebianScreenshots  : A tool to export images to Debian Screenshots web service (http://screenshots.debian.net).
 Kopete             : A tool to export images to an instant messaging contact.
+YandexFotki        : A tool to export images to Yandex web service (http://fotki.yandex.ru).
 
 Porting under progress to Qt4/KDE4:
 
@@ -98,6 +99,7 @@ RemoveRedEyes      : libopencv.
 IpodExport         : libgpod, libgdk.
 Calendar           : libkcal (kdepimlibs).
 Shwup              : libqca.
+YandexFotki        : libqca.
 DebianScreenshots  : libqjson.
 ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
 

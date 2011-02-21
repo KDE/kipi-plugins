@@ -20,11 +20,15 @@
  *
  * ============================================================ */
 
-#include "yfphoto.h"
+// Qt includes
 
 #ifndef KDE_NO_DEBUG_OUTPUT
 #include <QDebug>
 #endif // KDE_NO_DEBUG_OUTPUT
+
+// Local includes
+
+#include "yfphoto.h"
 
 namespace KIPIYandexFotkiPlugin
 {

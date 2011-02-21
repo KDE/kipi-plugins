@@ -23,8 +23,15 @@
 #ifndef PLUGIN_YANDEXFOTKI_H
 #define PLUGIN_YANDEXFOTKI_H
 
+// KDE includes
+
 #include <KAction>
+
+// Libkipi includes
+
 #include <libkipi/plugin.h>
+
+// Local includes
 
 #include "yfwindow.h"
 
@@ -33,6 +40,7 @@ class Plugin_YandexFotki : public KIPI::Plugin
     Q_OBJECT
 
 public:
+
     Plugin_YandexFotki(QObject* parent, const QVariantList& args);
     ~Plugin_YandexFotki();
 
@@ -40,19 +48,22 @@ public:
     virtual void setup(QWidget*);
 
 public Q_SLOTS:
+
     void slotExport();
 //    void slotImport();
 
+private Q_SLOTS:
+
+    // slot for cleaning up dialog data after closing
+    void slotDialogFinished(int result);
+
 private:
-    KAction* m_actionExport;
+
+    KAction*                                  m_actionExport;
     KIPIYandexFotkiPlugin::YandexFotkiWindow* m_dlgExport;
 
 //    KAction* m_actionImport;
 //    YandexFotkiWindow* m_dlgImport;
-
-private Q_SLOTS:
-    // slot for cleaning up dialog data after closing
-    void slotDialogFinished(int result);
 };
 
 #endif // PLUGIN_YANDEXFOTKI_H

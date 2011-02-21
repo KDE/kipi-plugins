@@ -23,9 +23,13 @@
 #ifndef YANDEXFOTKI_ALBUMDIALOG_H
 #define YANDEXFOTKI_ALBUMDIALOG_H
 
+// KDE includes
+
 #include <KDialog>
 #include <KLineEdit>
 #include <KTextEdit>
+
+// Local includes
 
 #include "yfalbum.h"
 
@@ -41,17 +45,20 @@ public:
     YandexFotkiAlbumDialog(QWidget* parent, YandexFotkiAlbum& album);
     ~YandexFotkiAlbumDialog();
 
-    YandexFotkiAlbum& album() const {
+    YandexFotkiAlbum& album() const
+    {
         return m_album;
     }
 
 protected Q_SLOTS:
+
     void slotButtonClicked(int button);
 
 protected:
-    KLineEdit* m_titleEdit;
-    KTextEdit* m_summaryEdit;
-    KLineEdit* m_passwordEdit;
+
+    KLineEdit*        m_titleEdit;
+    KTextEdit*        m_summaryEdit;
+    KLineEdit*        m_passwordEdit;
 
     YandexFotkiAlbum& m_album;
 };

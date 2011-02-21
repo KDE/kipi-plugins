@@ -23,6 +23,8 @@
 #ifndef YANDEXFOTKI_ALBUM_H
 #define YANDEXFOTKI_ALBUM_H
 
+// Qt includes
+
 #include <QObject>
 #include <QString>
 #include <QDateTime>
@@ -33,6 +35,7 @@ namespace KIPIYandexFotkiPlugin
 class YandexFotkiAlbum
 {
 public:
+
     YandexFotkiAlbum();
     YandexFotkiAlbum(const YandexFotkiAlbum& album);
 
@@ -104,6 +107,7 @@ public:
     // virtual YandexFotkiAlbum& operator=(const YandexFotkiAlbum& album);
 
 protected:
+
     friend class YandexFotkiTalker;
 
     YandexFotkiAlbum(const QString& urn,

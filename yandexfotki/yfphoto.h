@@ -23,6 +23,8 @@
 #ifndef YANDEXFOTKI_PHOTO_H
 #define YANDEXFOTKI_PHOTO_H
 
+// Qt includes
+
 #include <QString>
 #include <QDateTime>
 #include <QStringList>
@@ -33,6 +35,7 @@ namespace KIPIYandexFotkiPlugin
 class YandexFotkiPhoto
 {
 public:
+
     enum Access
     {
         ACCESS_PUBLIC = 0,
@@ -178,7 +181,9 @@ public:
 
     // public
     QStringList tags;
+
 protected:
+
     friend class YandexFotkiTalker;
 
     YandexFotkiPhoto(const QString& urn,
