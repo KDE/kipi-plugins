@@ -116,7 +116,7 @@ EmailPage::EmailPage(QWidget* parent)
     d->attachmentlimit->setRange(1, 50, 1);
     d->attachmentlimit->setValue(17);
     d->attachmentlimit->setLabel( i18n("Maximum email size limit:"), Qt::AlignLeft | Qt::AlignVCenter);
-    d->attachmentlimit->setSuffix(i18n("MB"));
+    d->attachmentlimit->setSuffix(i18n(" MB"));
 
     //---------------------------------------------
 
