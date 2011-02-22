@@ -569,10 +569,10 @@ void UploadDialog::imagesFilesButtonAdd()
     delete dlg;
 #endif
 
-    for( KUrl::List::Iterator it = urls.begin() ; it != urls.end() ; ++it )
-        fileList << (*it).path();
-
     if ( urls.isEmpty() ) return;
+
+    for( KUrl::List::ConstIterator it = urls.constBegin() ; it != urls.constEnd() ; ++it )
+        fileList << (*it).path();
 
     addDropItems( fileList );
 }
@@ -734,11 +734,9 @@ void UploadDialog::addDropItems( const QStringList& filesPath )
 
 void UploadDialog::addUrlToList( const QString& file )
 {
-    QFileInfo *fi = new QFileInfo( file );
+    QFileInfo fi( file );
 
     new ImageListItem( m_uploadList, file.section('/', 0, -1), fi->fileName() );
-
-    delete fi;
 }
 
 bool UploadDialog::openDevice()
