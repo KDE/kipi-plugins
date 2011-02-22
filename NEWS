@@ -17,7 +17,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> 265126 : kipi-plugins-2.0.0_beta2 compile failure in libkmap/abstractmarkertiler.h.
 008 ==> 262412 : Request to setup git repo for kipi-plugins.
 009 ==> 202226 : Yandex Fotki support export.
-010 ==> 
+010 ==> 266911 : Add space to suffix "MB" (" MB").
+011 ==> 
 
 
 
