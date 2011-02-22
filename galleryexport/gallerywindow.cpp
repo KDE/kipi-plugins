@@ -710,7 +710,7 @@ void GalleryWindow::slotAddPhoto()
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
-    for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
+    for (KUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
         mpUploadList->append( (*it).path() );
     }
