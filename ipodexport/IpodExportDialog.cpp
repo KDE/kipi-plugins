@@ -736,7 +736,7 @@ void UploadDialog::addUrlToList( const QString& file )
 {
     QFileInfo fi( file );
 
-    new ImageListItem( m_uploadList, file.section('/', 0, -1), fi->fileName() );
+    new ImageListItem( m_uploadList, file.section('/', 0, -1), fi.fileName() );
 }
 
 bool UploadDialog::openDevice()
