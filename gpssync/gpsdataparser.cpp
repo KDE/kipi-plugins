@@ -573,9 +573,8 @@ bool GPXFileReader::startElement(const QString& namespaceURI, const QString& loc
 
     if (ePath=="gpx:gpx/gpx:trk/gpx:trkseg/gpx:trkpt")
     {
-        qreal lat;
-        qreal lon;
-        Q_UNUSED(lat); Q_UNUSED(lon); // actually not unused, but prevent compiler warnings
+        qreal lat = 0.0;
+        qreal lon = 0.0;
         bool haveLat = false;
         bool haveLon = false;
 
