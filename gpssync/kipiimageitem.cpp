@@ -719,9 +719,14 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
     {
         if (shouldWriteCoordinates)
         {
-            // TODO: write the altitude only if we have it
-            // TODO: write HDOP and #satellites
-            success = exiv2Iface->setGPSInfo(shouldWriteAltitude ? altitude : 0, latitude, longitude);
+            if (shouldWriteAltitude)
+            {
+                success = exiv2Iface->setGPSInfo(altitude, latitude, longitude);
+            }
+            else
+            {
+                success = exiv2Iface->setGPSInfo(static_cast<const double* const>(0), latitude, longitude);
+            }
 
             // write all other GPS information here too
             if (success && m_gpsData.hasSpeed())
