@@ -618,7 +618,7 @@ void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
         return;
     }
 
-    if (m_hqpath.isNull()) {
+    if (m_hqpath.isNull() || m_hqpath.isEmpty()) {
         addPhotoSummary();
     } else {
         m_state = GE_ADDHQ;
@@ -678,7 +678,7 @@ void PiwigoTalker::addPhotoSummary()
     qsl.append("categories=" + QString::number(m_albumId));
     qsl.append("file_sum=" + computeMD5Sum(m_path).toHex());
     qsl.append("thumbnail_sum=" + computeMD5Sum(m_thumbpath).toHex());
-    if (!m_hqpath.isNull()) {
+    if (!m_hqpath.isNull() && !m_hqpath.isEmpty()) {
         qsl.append("high_sum=" + m_md5sum.toHex());
     }
     qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd").toUtf8().toPercentEncoding());
