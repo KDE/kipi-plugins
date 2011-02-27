@@ -6,7 +6,7 @@ See AUTHORS file for details.
 
 -- ABOUT --------------------------------------------------------------
 
-Libkipi and kipi-plugins allows image applications as digiKam (http://www.digikam.org)
+Libkipi and kipi-plugins allow image applications such as digiKam (http://www.digikam.org)
 to use a plugin architecture for additional functionalities.
 
 Notes:
@@ -106,7 +106,7 @@ GPSSync            : libkmap.
 
 -- CONTACT ------------------------------------------------------------
 
-If you have questions, comments, suggestions to make do email at :
+If you have questions, comments, suggestions to make send an email to :
 
 kde-imaging@kde.org
 
@@ -119,8 +119,8 @@ A mail will be automaticly sent to the Kipi mailing list.
 There is no need to contact directly the Kipi mailing list for a bug report 
 or a devel wish.
 
-The current Kipi bugs and devel wish reported to the Kde bugs report can be see 
-at this url :
+The current Kipi bugs and devel wishes reported to the Kde bugs report can be
+seen at this url :
 
 http://bugs.kde.org/buglist.cgi?product=kipiplugins&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED
 
@@ -146,6 +146,6 @@ Compared to old KDE3 autoconf options:
 "cmake . -DCMAKE_BUILD_TYPE=debugfull" is equivalent to "./configure --enable-debug=full"
 "cmake . -DCMAKE_INSTALL_PREFIX=/usr"  is equivalent to "./configure --prefix=/usr"
 
-More details can be found ata this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
+More details can be found at this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
 
 Note: To know KDE install path on your computer, use 'kde-config --prefix' command line.
