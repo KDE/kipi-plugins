@@ -134,7 +134,7 @@ ENDIF (KDCRAW_LIB_VERSION)
 # check the libkmap version
 # note that old versions don't specify version information, so for now
 # just inform the user if version information was found
-IF (KMAP_ERSION)
+IF (KMAP_VERSION)
   MESSAGE(STATUS "libkmap: Found version ${KMAP_VERSION}")
   # TODO: fail if the version is too low
 ENDIF (KMAP_VERSION)
