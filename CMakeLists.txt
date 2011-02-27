@@ -125,9 +125,14 @@ FIND_PACKAGE(TIFF REQUIRED)
 # check the libkdcraw version
 # note that old versions don't specify version information, so for now
 # just inform the user if version information was found
+SET(KDCRAW_MIN_VERSION "1.1.0")
 IF (KDCRAW_VERSION)
-  MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION}")
-  # TODO: fail if the version is too low
+  MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION} (required: ${KDCRAW_MIN_VERSION})")
+  IF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
+    SET(KDCRAW_FOUND FALSE)
+  ENDIF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
+ELSE (KDCRAW_VERSION)
+  MESSAGE(WARNING "libkdcraw: Version information not found, your version is probably too old.")
 ENDIF (KDCRAW_VERSION)
 
 # Optional depencies detection required by some plugins
@@ -194,7 +199,7 @@ PRINT_LIBRARY_STATUS("libtiff" "http://www.remotesensing.org/libtiff" "" TIFF_FO
 PRINT_LIBRARY_STATUS("libpng" "http://www.libpng.org/pub/png/libpng.html" " (version >= 1.2.7)" PNG_FOUND)
 PRINT_LIBRARY_STATUS("libkipi" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KIPI_FOUND)
 PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KEXIV2_FOUND)
-PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KDCRAW_FOUND)
+PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= ${KDCRAW_MIN_VERSION})" KDCRAW_FOUND)
 
 # Optional shared libraries results.
 
