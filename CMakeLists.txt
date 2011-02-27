@@ -118,7 +118,6 @@ INCLUDE(MacroLibrary)
 FIND_PACKAGE(Kexiv2 REQUIRED)
 FIND_PACKAGE(Kdcraw REQUIRED)
 FIND_PACKAGE(Kipi REQUIRED)
-FIND_PACKAGE(Kmap REQUIRED)
 FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
 FIND_PACKAGE(TIFF REQUIRED)
@@ -130,14 +129,6 @@ IF (KDCRAW_VERSION)
   MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION}")
   # TODO: fail if the version is too low
 ENDIF (KDCRAW_VERSION)
-
-# check the libkmap version
-# note that old versions don't specify version information, so for now
-# just inform the user if version information was found
-IF (KMAP_VERSION)
-  MESSAGE(STATUS "libkmap: Found version ${KMAP_VERSION}")
-  # TODO: fail if the version is too low
-ENDIF (KMAP_VERSION)
 
 # Optional depencies detection required by some plugins
 
@@ -157,6 +148,15 @@ MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup and YandexFotki.
 MACRO_OPTIONAL_FIND_PACKAGE(KSane)      # For AcquireImages.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
 MACRO_OPTIONAL_FIND_PACKAGE(QJSON)      # For Debian Screenshots.
+MACRO_OPTIONAL_FIND_PACKAGE(Kmap)       # For GPSSync.
+
+# check the libkmap version
+# note that old versions don't specify version information, so for now
+# just inform the user if version information was found
+IF (KMAP_VERSION)
+  MESSAGE(STATUS "libkmap: Found version ${KMAP_VERSION}")
+  # TODO: fail if the version is too low
+ENDIF (KMAP_VERSION)
 
 # X11 check, LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
@@ -195,7 +195,6 @@ PRINT_LIBRARY_STATUS("libpng" "http://www.libpng.org/pub/png/libpng.html" " (ver
 PRINT_LIBRARY_STATUS("libkipi" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KIPI_FOUND)
 PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KEXIV2_FOUND)
 PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KDCRAW_FOUND)
-PRINT_LIBRARY_STATUS("libkmap" "http://www.digikam.org/sharedlibs" " (version >= 0.1.0)" KMAP_FOUND)
 
 # Optional shared libraries results.
 
@@ -211,6 +210,7 @@ PRINT_OPTIONAL_LIBRARY_STATUS("libgpod" GPOD_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("Gdk" GDK_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkdepim" KDEPIMLIBS_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("qca2" QCA2_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkmap" KMAP_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -227,15 +227,15 @@ PRINT_OPTIONAL_LIBRARY_STATUS("libksane" KSANE_FOUND)
 
 MESSAGE(STATUS "")
 
-IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND AND KMAP_FOUND)
+IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
     SET(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
     FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
     MESSAGE(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
     SET(KIPIPLUGINS_CAN_BE_COMPILED true)
-ELSE(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND AND KMAP_FOUND)
+ELSE(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
     MESSAGE(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
     SET(KIPIPLUGINS_CAN_BE_COMPILED false)
-ENDIF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND AND KMAP_FOUND)
+ENDIF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
 
 PRINT_PLUGIN_COMPILE_STATUS("Shwup" QCA2_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("YandexFotki" QCA2_FOUND)
@@ -265,6 +265,7 @@ PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes" OpenCV_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("IpodExport" GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KMAP_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
@@ -310,7 +311,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${KEXIV2_INCLUDE_DIR}
                         ${KDCRAW_INCLUDE_DIR}
                         ${KIPI_INCLUDE_DIR}
-                        ${KMAP_INCLUDE_DIR}
                         ${KDE4_INCLUDES}
                         ${QT4_INCLUDES}
                        )
@@ -337,7 +337,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(rawconverter)
     ADD_SUBDIRECTORY(metadataedit)
     ADD_SUBDIRECTORY(sendimages)
-    ADD_SUBDIRECTORY(gpssync)
     ADD_SUBDIRECTORY(flashexport)
     ADD_SUBDIRECTORY(flickrexport)
     ADD_SUBDIRECTORY(galleryexport)
@@ -391,6 +390,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(dngconverter)
         ENDIF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     ENDIF(EXPAT_FOUND)
+
+    IF(KMAP_FOUND)
+        ADD_SUBDIRECTORY(gpssync)
+    ENDIF(KMAP_FOUND)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
 #

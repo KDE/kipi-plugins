@@ -1,6 +1,7 @@
 SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/../")
+INCLUDE_DIRECTORIES(${KMAP_INCLUDE_DIR})
 
 SET(kipiplugin_gpssync_PART_SRCS
     gpssyncdialog.cpp

@@ -66,7 +66,6 @@ libpng          >= 1.2.x                        http://www.libpng.org/pub/png/li
 libkipi         >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 libkexiv2       >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 libkdcraw       >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
-libkmap         >= 0.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
 Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
@@ -85,6 +84,7 @@ libgdk          >= 2.0.0                        http://library.gnome.org/devel/g
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
 libqjson        >= 0.6.0                        http://qjson.sourceforge.net
 libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
+libkmap         >= 0.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -102,6 +102,7 @@ Shwup              : libqca.
 YandexFotki        : libqca.
 DebianScreenshots  : libqjson.
 ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
+GPSSync            : libkmap.
 
 -- CONTACT ------------------------------------------------------------
 
