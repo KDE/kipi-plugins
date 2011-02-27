@@ -1,3 +1,5 @@
+2.0.0-beta3 2011-02-27
+
 2011-02-27  Michael Georg Hansen <mike@mghansen.de>
 
 	* CMakeLists.txt: Check the version of libkdcraw before compilation,
