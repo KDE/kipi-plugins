@@ -1,4 +1,4 @@
-Kipi-plugins 1.9.0 - Release date: 2011/02/19
+Kipi-plugins 2.0.0-beta4 - Release date: 2011/03/27
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -6,13 +6,6 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 264184 : General      : png-1.5 compatibility fix.
-002 ==> 264655 : JPEGLossLess : ksnapshot is crashing on "send to".
-003 ==> 243908 : GPSSync      : Coordinates do not get retrieved.
-004 ==> 181319 : GPSSync      : Provide a batch tool to add geolocation coordinates to a complete album.
-005 ==> 266771 : GPSSync      : Unable to get GPS coordinates from map with Geolocation function of digiKam.
-006 ==> 
-
-
+001 ==> 
 
 

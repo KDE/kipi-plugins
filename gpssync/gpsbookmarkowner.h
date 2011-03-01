@@ -1,12 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Date        : 2009-11-21
- * Description : Central object for managing bookmarks
+ * @date   2009-11-21
+ * @brief  Central object for managing bookmarks
  *
- * Copyright (C) 2009 by Michael G. Hansen <mike at mghansen dot de>
+ * @author Copyright (C) 2009,2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,21 +29,62 @@
 
 #include <kbookmarkmanager.h>
 
+// libkmap includes
+
+#include <libkmap/kmap_modelhelper.h>
+
 // local includes:
 
 #include "gpsdatacontainer.h"
 
+class KBookmarkManager;
+
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSBookmarkOwnerPrivate;
+class KipiImageModel;
+class GPSUndoCommand;
+class GPSBookmarkModelHelperPrivate;
+class GPSBookmarkModelHelper : public KMap::ModelHelper
+{
+Q_OBJECT
+public:
+    enum Constants
+    {
+        CoordinatesRole = Qt::UserRole + 1
+    };
 
+    GPSBookmarkModelHelper(KBookmarkManager* const bookmarkManager, KipiImageModel* const kipiImageModel, QObject* const parent = 0);
+    virtual ~GPSBookmarkModelHelper();
+
+    virtual QAbstractItemModel* model() const;
+    virtual QItemSelectionModel* selectionModel() const;
+    virtual bool itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const;
+    virtual bool itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const;
+    virtual Flags modelFlags() const;
+    virtual Flags itemFlags(const QModelIndex& index) const;
+    virtual void snapItemsTo(const QModelIndex& targetIndex, const QList<QModelIndex>& snappedIndices);
+
+    void setVisible(const bool state);
+
+private Q_SLOTS:
+    void slotUpdateBookmarksModel();
+
+
+Q_SIGNALS:
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
+
+private:
+    GPSBookmarkModelHelperPrivate* const d;
+};
+
+class GPSBookmarkOwnerPrivate;
 class GPSBookmarkOwner : public QObject, public KBookmarkOwner
 {
     Q_OBJECT
 
 public:
-    GPSBookmarkOwner(QWidget* const parent);
+    GPSBookmarkOwner(KipiImageModel* const kipiImageModel, QWidget* const parent);
     virtual ~GPSBookmarkOwner();
 
     virtual bool supportsTabs() const;
@@ -52,11 +95,12 @@ public:
 
     KMenu* getMenu() const;
 
-    typedef bool (*PositionProviderFunction)(GPSDataContainer* position, void* yourdata);
-    PositionProviderFunction positionProviderFunction;
-    void* positionProviderFunctionData;
-    void setPositionProvider(const PositionProviderFunction function, void* const yourdata);
     void changeAddBookmark(const bool state);
+    void setPositionAndTitle(const KMap::GeoCoordinates& coordinates, const QString& title);
+
+    KBookmarkManager* bookmarkManager() const;
+
+    GPSBookmarkModelHelper* bookmarkModelHelper() const;
 
 Q_SIGNALS:
     void positionSelected(GPSDataContainer position);

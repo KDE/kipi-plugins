@@ -145,7 +145,7 @@ void Plugin_SendImages::slotPrepareEmail()
 KIPI::Category Plugin_SendImages::category( KAction* action ) const
 {
     if ( action == d->action_sendimages )
-       return KIPI::ImagesPlugin;
+       return KIPI::ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ImagesPlugin; // no warning from compiler, please

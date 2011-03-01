@@ -1,4 +1,16 @@
 
+# there are two versions of FindOpenCV.cmake in the wild, one defining
+# OpenCV_LIBRARIES, the other defining OpenCV_LIBS. Make sure we handle
+# both cases.
+IF (NOT OpenCV_LIBRARIES)
+  SET(OpenCV_LIBRARIES ${OpenCV_LIBS})
+ENDIF (NOT OpenCV_LIBRARIES)
+
+# same story with OpenCV_INCLUDE_DIRS and OpenCV_INCLUDE_DIR:
+IF (NOT OpenCV_INCLUDE_DIRS)
+  SET(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIR})
+ENDIF (NOT OpenCV_INCLUDE_DIRS)
+
 ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
@@ -7,7 +19,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier/widgets
                     ${CMAKE_CURRENT_SOURCE_DIR}/commonwidgets
-                    ${OpenCV_INCLUDE_DIRS}
+                    ${OpenCV_INCLUDE_DIR}
                    )
 
 SET(libcvblobs_SRCS
@@ -65,7 +77,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
                       ${KDE4_KPARTS_LIBS}
                       ${KDE4_KDECORE_LIBS}
                       ${KDE4_KDEUI_LIBS}
-                      ${OpenCV_LIBS}
+                      ${OpenCV_LIBRARIES}
                       kipiplugins
                      )
 

@@ -1,13 +1,18 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Date        : 2006-05-16
- * Description : a plugin to synchronize pictures with
- *               a GPS device.
+ * @date   2006-05-16
+ * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * @author Copyright (C) 2006-2010 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2010, 2011 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2010 by Gabriel Voicu
+ *         <a href="mailto:ping dot gabi at gmail dot com">ping dot gabi at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,27 +26,42 @@
  *
  * ============================================================ */
 
-#include "gpssyncdialog.h"
+#include "gpssync_common.h"
 #include "gpssyncdialog.moc"
 
 // Qt includes
 
+#include <qtconcurrentmap.h>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QCloseEvent>
+#include <QFuture>
+#include <QFutureWatcher>
 #include <QGroupBox>
+#include <QHBoxLayout>
+#include <QHeaderView>
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
 #include <QPointer>
+#include <QProgressBar>
 #include <QRadioButton>
+#include <QSplitter>
+#include <QStackedLayout>
+#include <QStackedWidget>
+#include <QTimer>
+#include <QToolButton>
+#include <QTreeView>
+#include <QUndoView>
 
 // KDE includes
 
+#include <kaction.h>
 #include <kapplication.h>
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kdialogbuttonbox.h>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <khelpmenu.h>
@@ -54,75 +74,158 @@
 #include <kseparator.h>
 #include <ksqueezedtextlabel.h>
 #include <kstandarddirs.h>
+#include <ktabwidget.h>
 #include <ktoolinvocation.h>
+#include <kundostack.h>
+#include <kvbox.h>
+
+// Libkmap includes
+
+#include <libkmap/kmap_widget.h>
+#include <libkmap/itemmarkertiler.h>
 
 // Local includes
 
-#include "gpsdataparser.h"
-#include "gpseditdialog.h"
-#include "gpslistviewitem.h"
-#include "imageslist.h"
+#include "kipiimagemodel.h"
+#include "kipiimageitem.h"
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
-#include "gpslistviewcontextmenu.h"
+#include "mapdragdrophandler.h"
+#include "kipiimagelist.h"
+#include "gpsimagelistdragdrophandler.h"
+#include "gpscorrelatorwidget.h"
+#include "gpsundocommand.h"
+#include "gpsreversegeocodingwidget.h"
 #include "gpsbookmarkowner.h"
+#include "gpslistviewcontextmenu.h"
+#include "searchwidget.h"
+#include "backend-rg.h"
+#include "gpsimagedetails.h"
+#include "setup.h"
+
+#ifdef GPSSYNC_MODELTEST
+#include <modeltest.h>
+#endif /* GPSSYNC_MODELTEST */
 
 namespace KIPIGPSSyncPlugin
 {
+
+struct SaveChangedImagesHelper
+{
+public:
+    SaveChangedImagesHelper(KipiImageModel* const model)
+    : imageModel(model)
+    {
+    }
+
+    typedef QPair<KUrl, QString> result_type;
+    KipiImageModel* const imageModel;
+
+    QPair<KUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
+    {
+        KipiImageItem* const item = imageModel->itemFromIndex(itemIndex);
+        if (!item)
+            return QPair<KUrl, QString>(KUrl(), QString());
+
+        return QPair<KUrl, QString>(item->url(), item->saveChanges(true, true));
+    }
+};
+
+struct LoadFileMetadataHelper
+{
+public:
+    LoadFileMetadataHelper(KipiImageModel* const model)
+    : imageModel(model)
+    {
+    }
+
+    typedef QPair<KUrl, QString> result_type;
+    KipiImageModel* const imageModel;
+
+    QPair<KUrl, QString> operator()(const QPersistentModelIndex& itemIndex)
+    {
+        KipiImageItem* const item = imageModel->itemFromIndex(itemIndex);
+        if (!item)
+            return QPair<KUrl, QString>(KUrl(), QString());
+
+        item->loadImageData(false, true);
+
+        return QPair<KUrl, QString>(item->url(), QString());
+    }
+};
 
 class GPSSyncDialogPriv
 {
 public:
 
     GPSSyncDialogPriv()
-    : gpxPointsLabel(0),
-      maxTimeLabel(0),
-      timeZoneGroup(0),
-      timeZoneSystem(0),
-      timeZoneManual(0),
-      timeZoneCB(0),
-      offsetSign(0),
-      offsetMin(0),
-      offsetSec(0),
-      interpolateBox(0),
-      maxGapInput(0),
-      maxTimeInput(0),
-      gpxFileName(0),
-      interface(0),
-      about(0),
-      imagesList(0),
-      gpxParser(),
-      gpxFileOpenLastDirectory(KGlobalSettings::documentPath())
     {
+        // TODO: initialize in the initializer list
+        interface = 0;
+        mapWidget = 0;
+        uiEnabled = true;
+        splitterSize = 0;
+        mapWidget2 = 0;
+        setupGlobalObject = SetupGlobalObject::instance();
     }
 
-    QLabel                   *gpxPointsLabel;
-    QLabel                   *maxTimeLabel;
+    // General things
+    KIPI::Interface                         *interface;
+    KIPIPlugins::KPAboutData                *about;
+    KipiImageModel                          *imageModel;
+    QItemSelectionModel                     *selectionModel;
+    bool                                     uiEnabled;
+    SetupGlobalObject                       *setupGlobalObject;
+    GPSBookmarkOwner                        *bookmarkOwner;
+    KAction                                 *actionBookmarkVisibility;
+    GPSListViewContextMenu                  *listViewContextMenu;
 
-    QButtonGroup             *timeZoneGroup;
-    QRadioButton             *timeZoneSystem;
-    QRadioButton             *timeZoneManual;
-    KComboBox                *timeZoneCB;
-    KComboBox                *offsetSign;
-    KIntSpinBox              *offsetMin;
-    KIntSpinBox              *offsetSec;
+    // Loading and saving
+    QFuture<QPair<KUrl,QString> >            fileIOFuture;
+    QFutureWatcher<QPair<KUrl,QString> >    *fileIOFutureWatcher;
+    int                                      fileIOCountDone;
+    int                                      fileIOCountTotal;
+    bool                                     fileIOCloseAfterSaving;
 
-    QCheckBox                *interpolateBox;
+    // UI
+    KDialogButtonBox                        *buttonBox;
+    KTabWidget                              *tabWidget;
+    QSplitter                               *VSplitter;
+    QSplitter                               *HSplitter;
+    KipiImageList                           *treeView;
+    QStackedWidget                          *stackedWidget;
+    QTabBar                                 *tabBar;
+    int                                      splitterSize;
+    KUndoStack                              *undoStack;
+    QUndoView                               *undoView;
 
-    KIntSpinBox              *maxGapInput;
-    KIntSpinBox              *maxTimeInput;
+    // UI: progress
+    QProgressBar                            *progressBar;
+    QPushButton                             *progressCancelButton;
+    QObject                                 *progressCancelObject;
+    QString                                  progressCancelSlot;
 
-    KSqueezedTextLabel       *gpxFileName;
+    // UI: tab widgets
+    GPSImageDetails                         *detailsWidget;
+    GPSCorrelatorWidget                     *correlatorWidget;
+    GPSReverseGeocodingWidget               *rgWidget;
+    SearchWidget                            *searchWidget;
 
-    KIPI::Interface          *interface;
+    // map: UI
+    MapLayout                                mapLayout;
+    QSplitter                               *mapSplitter;
+    KMap::KMapWidget                        *mapWidget;
+    KMap::KMapWidget                        *mapWidget2;
 
-    KIPIPlugins::KPAboutData *about;
-    KIPIPlugins::ImagesList  *imagesList;
+    // map: helpers
+    MapDragDropHandler                      *mapDragDropHandler;
+    GPSSyncKMapModelHelper                  *mapModelHelper;
+    KMap::ItemMarkerTiler                   *kmapMarkerModel;
 
-    GPSDataParser             gpxParser;
-    KUrl                      gpxFileOpenLastDirectory;
-
-    GPSBookmarkOwner         *bookmarkOwner;
+    // map: actions
+    QAction                                 *sortActionOldestFirst;
+    QAction                                 *sortActionYoungestFirst;
+    QMenu                                   *sortMenu;
 };
 
 GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
@@ -130,216 +233,165 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 {
     d->interface = interface;
 
-    setButtons(Help|User1|User2|User3|Apply|Close);
-    setDefaultButton(Close);
+    setAttribute(Qt::WA_DeleteOnClose, true);
+
+    setButtons(0);
     setCaption(i18n("Geolocation"));
-    setModal(true);
+//     setModal(true);
+    setMinimumSize(300,400);
+    d->imageModel = new KipiImageModel(this);
+    d->selectionModel = new QItemSelectionModel(d->imageModel);
 
-    setButtonText(User1, i18n("Correlate"));
-    setButtonText(User2, i18n("Edit..."));
-    setButtonText(User3, i18n("Remove"));
+#ifdef GPSSYNC_MODELTEST
+    new ModelTest(d->imageModel, this);
+#endif /* GPSSYNC_MODELTEST */
 
-    setButtonToolTip(User1, i18n("Correlate in time and interpolate distance of data from GPX file with all images on the list."));
-    setButtonToolTip(User2, i18n("Manually edit GPS coordinates of selected images from the list."));
-    setButtonToolTip(User3, i18n("Remove GPS coordinates of selected images from the list."));
-
-    enableButton(User1, false);
-    enableButton(User2, true);
-    enableButton(User3, true);
-
-    QWidget *page = new QWidget( this );
-    setMainWidget( page );
-    QGridLayout *mainLayout = new QGridLayout(page);
-
-    // --------------------------------------------------------------
-
-    d->imagesList = new KIPIPlugins::ImagesList(d->interface, this);
-    d->imagesList->setControlButtonsPlacement(KIPIPlugins::ImagesList::NoControlButtons);
-    d->imagesList->enableDragAndDrop(false);
-    d->imagesList->setAllowRAW(true);
-    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User1,
-                                       i18n("Date"), true);
-    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User2,
-                                       i18n("Latitude"), true);
-    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User3,
-                                       i18n("Longitude"), true);
-    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User4,
-                                       i18n("Altitude"), true);
-    d->imagesList->listView()->setColumn(KIPIPlugins::ImagesListView::User5,
-                                       i18n("Status"), true);
-    d->imagesList->setMinimumWidth(450);
-
-    d->bookmarkOwner = new GPSBookmarkOwner(this);
     
-    // add the context menu provider to the imagesList:
-    new GPSListViewContextMenu(d->imagesList, d->bookmarkOwner);
+    d->undoStack = new KUndoStack(this);
+    d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
+    d->stackedWidget = new QStackedWidget();
+    d->searchWidget = new SearchWidget(d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
 
-//    d->listView->setIconSize(QSize(64, 64));
-//    d->listView->setColumnWidth(0, 70);
+    d->imageModel->setKipiInterface(d->interface);
+    KipiImageItem::setHeaderData(d->imageModel);
+    d->imageModel->setSupportedDragActions(Qt::CopyAction);
+    d->mapModelHelper = new GPSSyncKMapModelHelper(d->imageModel, d->selectionModel, this);
+    d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
+    d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
+    d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
+    d->kmapMarkerModel = new KMap::ItemMarkerTiler(d->mapModelHelper, this);
 
-    // ---------------------------------------------------------------
+    d->actionBookmarkVisibility = new KAction(this);
+    d->actionBookmarkVisibility->setIcon(KIcon("user-trash"));
+    d->actionBookmarkVisibility->setToolTip(i18n("Display bookmarked positions on the map."));
+    d->actionBookmarkVisibility->setCheckable(true);
 
-    QGroupBox *settingsBox         = new QGroupBox(i18n("Settings"), page);
-    QGridLayout *settingsBoxLayout = new QGridLayout(settingsBox);
+    KVBox* const vboxMain = new KVBox(this);
+    setMainWidget(vboxMain);
 
-    QPushButton *loadGPXButton = new QPushButton(i18n("Load GPX File..."), settingsBox);
+    KHBox* const hboxMain = new KHBox(vboxMain);
 
-    QLabel *gpxFileLabel = new QLabel(i18n("Current GPX file:"), settingsBox);
-    d->gpxFileName       = new KSqueezedTextLabel(i18n("No GPX file"), settingsBox);
-    d->gpxPointsLabel    = new QLabel(settingsBox);
-    KSeparator *line     = new KSeparator(Qt::Horizontal, settingsBox);
+    d->HSplitter = new QSplitter(Qt::Horizontal, hboxMain);
+    d->HSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QLabel *maxGapLabel = new QLabel(i18n("Max. time gap (sec.):"), settingsBox);
-    d->maxGapInput      = new KIntSpinBox(0, 1000000, 1, 30, settingsBox);
-    d->maxGapInput->setWhatsThis(i18n("Sets the maximum difference in "
-                    "seconds from a GPS track point to the image time to be matched. "
-                    "If the time difference exceeds this setting, no match will be attempted."));
+    KHBox* const hboxBottom = new KHBox(vboxMain);
 
-    QLabel *timeZoneLabel = new QLabel(i18n("Camera time zone:"), settingsBox);
-    d->timeZoneSystem     = new QRadioButton(i18n("Same as system"), settingsBox);
-    d->timeZoneSystem->setWhatsThis(i18n(
-                    "Use this option if the timezone of the camera "
-                    "is the same as the timezone of this system. "
-                    "The conversion to GMT will be done automatically."));
-    d->timeZoneManual     = new QRadioButton(i18nc("manual time zone selection for gps syncing", "Manual:"), settingsBox);
-    d->timeZoneManual->setWhatsThis(i18n(
-                    "Use this option if the timezone of the camera "
-                    "is different from this system and you have to "
-                    "specify the difference to GMT manually."));
-    d->timeZoneGroup = new QButtonGroup(settingsBox);
-    d->timeZoneGroup->addButton(d->timeZoneSystem, 1);
-    d->timeZoneGroup->addButton(d->timeZoneManual, 2);
-    
-    d->timeZoneCB         = new KComboBox(settingsBox);
+    d->progressBar = new QProgressBar(hboxBottom);
+    d->progressBar->setVisible(false);
+    d->progressBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    // we need a really large stretch factor here because the QDialogButtonBox also stretches a lot...
+    dynamic_cast<QHBoxLayout*>(hboxBottom->layout())->setStretch(200, 0);
 
-    // See list of time zones over the world :
-    // http://en.wikipedia.org/wiki/List_of_time_zones
-    // NOTE: Combobox strings are not i18n.
-    d->timeZoneCB->addItem("GMT-12:00");
-    d->timeZoneCB->addItem("GMT-11:00");
-    d->timeZoneCB->addItem("GMT-10:00");
-    d->timeZoneCB->addItem("GMT-09:30");
-    d->timeZoneCB->addItem("GMT-09:00");
-    d->timeZoneCB->addItem("GMT-08:00");
-    d->timeZoneCB->addItem("GMT-07:00");
-    d->timeZoneCB->addItem("GMT-06:00");
-    d->timeZoneCB->addItem("GMT-05:30");
-    d->timeZoneCB->addItem("GMT-05:00");
-    d->timeZoneCB->addItem("GMT-04:30");
-    d->timeZoneCB->addItem("GMT-04:00");
-    d->timeZoneCB->addItem("GMT-03:30");
-    d->timeZoneCB->addItem("GMT-03:00");
-    d->timeZoneCB->addItem("GMT-02:00");
-    d->timeZoneCB->addItem("GMT-01:00");
-    d->timeZoneCB->addItem("GMT+00:00");
-    d->timeZoneCB->addItem("GMT+01:00");
-    d->timeZoneCB->addItem("GMT+02:00");
-    d->timeZoneCB->addItem("GMT+03:00");
-    d->timeZoneCB->addItem("GMT+03:30");
-    d->timeZoneCB->addItem("GMT+04:00");
-    d->timeZoneCB->addItem("GMT+05:00");
-    d->timeZoneCB->addItem("GMT+05:30");    // See B.K.O # 149491
-    d->timeZoneCB->addItem("GMT+05:45");
-    d->timeZoneCB->addItem("GMT+06:00");
-    d->timeZoneCB->addItem("GMT+06:30");
-    d->timeZoneCB->addItem("GMT+07:00");
-    d->timeZoneCB->addItem("GMT+08:00");
-    d->timeZoneCB->addItem("GMT+08:45");
-    d->timeZoneCB->addItem("GMT+09:00");
-    d->timeZoneCB->addItem("GMT+09:30");
-    d->timeZoneCB->addItem("GMT+10:00");
-    d->timeZoneCB->addItem("GMT+10:30");
-    d->timeZoneCB->addItem("GMT+11:00");
-    d->timeZoneCB->addItem("GMT+11:30");
-    d->timeZoneCB->addItem("GMT+12:00");
-    d->timeZoneCB->addItem("GMT+12:45");
-    d->timeZoneCB->addItem("GMT+13:00");
-    d->timeZoneCB->addItem("GMT+14:00");
-    d->timeZoneCB->setWhatsThis(i18n("<p>Sets the time zone the camera was set to "
-                    "during photo shooting, so that the time stamps of the images "
-                    "can be converted to GMT to match the GPS time reference.</p>"
-                    "<p>Note: positive offsets count eastwards from zero longitude (GMT), "
-                    "they are 'ahead of time'.</p>"));
+    d->progressCancelButton = new QPushButton(hboxBottom);
+    d->progressCancelButton->setVisible(false);
+    d->progressCancelButton->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
+    d->progressCancelButton->setIcon(SmallIcon("dialog-cancel"));
+    connect(d->progressCancelButton, SIGNAL(clicked()),
+            this, SLOT(slotProgressCancelButtonClicked()));
 
-    // additional camera offset to respect
-    QLabel *offsetLabel = new QLabel(i18n("Fine offset (mm:ss):"), settingsBox);
-    offsetLabel->setWhatsThis(i18n(
-                        "Sets an additional offset in minutes and "
-                        "seconds that is used to correlate the photos "
-                        "to the GPS track. "
-                        "This can be used for fine tuning to adjust a "
-                        "wrong camera clock."));
+    d->buttonBox = new KDialogButtonBox(hboxBottom);
+    d->buttonBox->addButton(KStandardGuiItem::configure(), QDialogButtonBox::ActionRole, this, SLOT(slotConfigureClicked()));
+    d->buttonBox->addButton(KStandardGuiItem::apply(), QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
+    d->buttonBox->addButton(KStandardGuiItem::close(), QDialogButtonBox::RejectRole, this, SLOT(close()));
 
-    QWidget *offsetWidget = new QWidget(settingsBox);
-    d->offsetSign = new KComboBox(offsetWidget);
-    d->offsetSign->addItem("+");
-    d->offsetSign->addItem("-");
-    d->offsetSign->setWhatsThis(i18n("Set whether the camera offset "
-        "is negative or positive."));
+    // TODO: the code below does not seem to have any effect, slotApplyClicked is still triggered
+    //       when 'Enter' is pressed...
+    // make sure the 'Apply' button is not triggered when enter is pressed,
+    // because that causes problems with the search widget
+    QAbstractButton* testButton;
+    Q_FOREACH(testButton, d->buttonBox->buttons())
+    {
+//         if (d->buttonBox->buttonRole(testButton)==QDialogButtonBox::AcceptRole)
+        {
+            QPushButton* const pushButton = dynamic_cast<QPushButton*>(testButton);
+            kDebug()<<pushButton<<pushButton->isDefault();
+            if (pushButton)
+            {
+                pushButton->setDefault(false);
+            }
+        }
+    }
+    setDefaultButton(NoDefault);
 
-    d->offsetMin = new KIntSpinBox(0, 59, 1, 0, offsetWidget);
-    d->offsetMin->setWhatsThis(i18n("Minutes to fine tune camera offset."));
+    d->VSplitter = new QSplitter(Qt::Vertical, d->HSplitter);
+    d->HSplitter->addWidget(d->VSplitter);
+    d->HSplitter->setStretchFactor(0, 10);
 
-    d->offsetSec = new KIntSpinBox(0, 59, 1, 0, offsetWidget);
-    d->offsetSec->setWhatsThis(i18n("Seconds to fine tune camera offset."));
+    d->sortMenu = new QMenu(this);
+    d->sortMenu->setTitle(i18n("Sorting"));
+    QActionGroup* const sortOrderExclusive = new QActionGroup(d->sortMenu);
+    sortOrderExclusive->setExclusive(true);
+    connect(sortOrderExclusive, SIGNAL(triggered(QAction*)),
+            this, SLOT(slotSortOptionTriggered(QAction*)));
 
-    QGridLayout *offsetLayout = new QGridLayout(offsetWidget);
-    offsetLayout->addWidget(d->offsetSign, 0, 0, 1, 1);
-    offsetLayout->addWidget(d->offsetMin, 0, 1, 1, 1);
-    offsetLayout->addWidget(d->offsetSec, 0, 2, 1, 1);
-    offsetLayout->setSpacing(spacingHint());
-    offsetLayout->setMargin(spacingHint());
+    d->sortActionOldestFirst = new KAction(i18n("Show oldest first"), sortOrderExclusive);
+    d->sortActionOldestFirst->setCheckable(true);
+    d->sortMenu->addAction(d->sortActionOldestFirst);
 
-    // interpolation options
-    d->interpolateBox = new QCheckBox(i18n("Interpolate"), settingsBox);
-    d->interpolateBox->setWhatsThis(i18n("Set this option to interpolate GPS track points "
-                    "which are not closely matched to the GPX data file."));
+    d->sortActionYoungestFirst = new KAction(i18n("Show youngest first"), sortOrderExclusive);
+    d->sortMenu->addAction(d->sortActionYoungestFirst);
+    d->sortActionYoungestFirst->setCheckable(true);
 
-    d->maxTimeLabel = new QLabel(i18n("Difference in min.:"), settingsBox);
-    d->maxTimeInput = new KIntSpinBox(0, 240, 1, 15, settingsBox);
-    d->maxTimeInput->setWhatsThis(i18n("Sets the maximum time difference in minutes (240 max.)"
-                    " to interpolate GPX file points to image time data."));
+    connect(d->actionBookmarkVisibility, SIGNAL(changed()),
+            this, SLOT(slotBookmarkVisibilityToggled()));
 
-    // layout form
-    int row = 0;
-    settingsBoxLayout->addWidget(loadGPXButton,     row, 0, 1, 2);
-    row++;
-    settingsBoxLayout->addWidget(gpxFileLabel,      row, 0, 1, 2);
-    row++;
-    settingsBoxLayout->addWidget(d->gpxFileName,    row, 0, 1, 2);
-    row++;
-    settingsBoxLayout->addWidget(d->gpxPointsLabel, row, 0, 1, 2);
-    row++;
-    settingsBoxLayout->addWidget(line,              row, 0, 1, 2);
-    row++;
-    settingsBoxLayout->addWidget(maxGapLabel,       row, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->maxGapInput,    row, 1, 1, 1);
-    row++;
-    settingsBoxLayout->addWidget(timeZoneLabel,     row, 0, 1, 2);
-    row++;
-    settingsBoxLayout->addWidget(d->timeZoneSystem, row, 0, 1, 2);
-    row++;
-    settingsBoxLayout->addWidget(d->timeZoneManual, row, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->timeZoneCB,     row, 1, 1, 1);
-    row++;
-    settingsBoxLayout->addWidget(offsetLabel,       row, 0, 1, 1);
-    settingsBoxLayout->addWidget(offsetWidget,      row, 1, 1, 1);
-    row++;
-    settingsBoxLayout->addWidget(d->interpolateBox, row, 0, 1, 2);
-    row++;
-    settingsBoxLayout->addWidget(d->maxTimeLabel,   row, 0, 1, 1);
-    settingsBoxLayout->addWidget(d->maxTimeInput,   row, 1, 1, 1);
-    settingsBoxLayout->setSpacing(spacingHint());
-    settingsBoxLayout->setMargin(spacingHint());
 
-    // ---------------------------------------------------------------
+    QWidget* mapVBox;
+    d->mapWidget = makeMapWidget(&mapVBox);
+    d->searchWidget->setPrimaryMapWidget(d->mapWidget);
+    d->mapSplitter = new QSplitter(this);
+    d->mapSplitter->addWidget(mapVBox);
+    d->VSplitter->addWidget(d->mapSplitter);
 
-    mainLayout->addWidget(d->imagesList, 0, 0, 3, 2);
-    mainLayout->addWidget(settingsBox, 0, 2, 2, 1);
-    mainLayout->setColumnStretch(1, 10);
-    mainLayout->setRowStretch(2, 10);
-    mainLayout->setSpacing(spacingHint());
-    mainLayout->setMargin(0);
+    d->treeView = new KipiImageList(d->interface, this);
+    d->treeView->setModelAndSelectionModel(d->imageModel, d->selectionModel);
+    d->treeView->setDragDropHandler(new GPSImageListDragDropHandler(this));
+    d->treeView->setDragEnabled(true);
+    // TODO: save and restore the state of the header
+    // TODO: add a context menu to the header to select which columns should be visible
+    // TODO: add sorting by column
+    d->treeView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    d->treeView->setSortingEnabled(true);
+    d->VSplitter->addWidget(d->treeView);
+
+    d->listViewContextMenu = new GPSListViewContextMenu(d->treeView, d->bookmarkOwner);
+
+    d->HSplitter->setCollapsible(1, true);
+
+    d->HSplitter->addWidget(d->stackedWidget);          
+    d->splitterSize = 0;
+
+    KVBox* vboxTabBar = new KVBox(hboxMain);
+    vboxTabBar->layout()->setSpacing(0);
+    vboxTabBar->layout()->setMargin(0);
+
+    d->tabBar = new QTabBar(vboxTabBar);
+    d->tabBar->setShape(QTabBar::RoundedEast);
+
+    dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
+
+    d->tabBar->addTab("Details");
+    d->tabBar->addTab("GPS Correlator");
+    d->tabBar->addTab("Undo/Redo");
+    d->tabBar->addTab("Reverse Geocoding");
+    d->tabBar->addTab("Search");
+
+    d->tabBar->installEventFilter(this);
+
+    d->detailsWidget = new GPSImageDetails(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
+    d->stackedWidget->addWidget(d->detailsWidget);
+
+    d->correlatorWidget = new GPSCorrelatorWidget(d->stackedWidget, d->imageModel, marginHint(), spacingHint());
+    d->stackedWidget->addWidget(d->correlatorWidget);
+
+    d->undoView = new QUndoView(d->undoStack, d->stackedWidget);
+    d->stackedWidget->addWidget(d->undoView);
+
+    d->rgWidget = new GPSReverseGeocodingWidget(d->interface, d->imageModel, d->selectionModel, d->stackedWidget);
+    d->stackedWidget->addWidget(d->rgWidget);
+
+    d->stackedWidget->addWidget(d->searchWidget);
+
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -348,50 +400,80 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Plugin to synchronize pictures' metadata with a GPS device"),
-                   ki18n("(c) 2006-2009, Gilles Caulier"));
+                   ki18n("(c) 2006-2010, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"),
                         ki18n("Developer and maintainer"),
                               "caulier dot gilles at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
+    d->about->addAuthor(ki18n("Michael G. Hansen"),
+                        ki18n("Developer and maintainer"),
+                              "mike at mghansen dot de");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    d->about->addAuthor(ki18n("Gabriel Voicu"),
+                        ki18n("Developer"),
+                              "ping dot gabi at gmail dot com");
 
-    // ---------------------------------------------------------------
+    connect(d->treeView, SIGNAL(signalImageActivated(const QModelIndex&)),
+            this, SLOT(slotImageActivated(const QModelIndex&)));
+
+    connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool)),
+            this, SLOT(slotSetUIEnabled(const bool)));
+
+    connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool, QObject* const, const QString&)),
+            this, SLOT(slotSetUIEnabled(const bool, QObject* const, const QString&)));
+
+    connect(d->correlatorWidget, SIGNAL(signalProgressSetup(const int, const QString&)),
+            this, SLOT(slotProgressSetup(const int, const QString&)));
+
+    connect(d->correlatorWidget, SIGNAL(signalProgressChanged(const int)),
+            this, SLOT(slotProgressChanged(const int)));
+
+    connect(d->correlatorWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
+
+    connect(d->mapModelHelper, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
+
+    connect(d->rgWidget, SIGNAL(signalSetUIEnabled(const bool)),
+            this, SLOT(slotSetUIEnabled(const bool)));
+
+    connect(d->rgWidget, SIGNAL(signalSetUIEnabled(const bool, QObject* const, const QString&)),
+            this, SLOT(slotSetUIEnabled(const bool, QObject* const, const QString&)));
+
+    connect(d->rgWidget, SIGNAL(signalProgressSetup(const int, const QString&)),
+            this, SLOT(slotProgressSetup(const int, const QString&)));
+
+    connect(d->rgWidget, SIGNAL(signalProgressChanged(const int)),
+            this, SLOT(slotProgressChanged(const int)));
+
+    connect(d->rgWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
+
+    connect(d->searchWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
+
+    connect(d->listViewContextMenu, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
     connect(this, SIGNAL(applyClicked()),
-            this, SLOT(slotApply()));
+             this, SLOT(slotApplyClicked()));
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotUser1Correlate()));
+    connect(d->tabBar, SIGNAL(currentChanged(int)),
+            this, SLOT(slotCurrentTabChanged(int)));
 
-    connect(this, SIGNAL(user2Clicked()),
-            this, SLOT(slotUser2EditCoordinates()));
+    connect(d->bookmarkOwner->bookmarkModelHelper(), SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
-    connect(this, SIGNAL(user3Clicked()),
-            this, SLOT(slotUser3RemoveCoordinates()));
+    connect(d->detailsWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
+            this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
-    connect(loadGPXButton, SIGNAL(released()),
-            this, SLOT(slotLoadGPXFile()));
-
-    connect(d->interpolateBox, SIGNAL(toggled(bool)),
-            d->maxTimeLabel, SLOT(setEnabled(bool)));
-
-    connect(d->interpolateBox, SIGNAL(toggled(bool)),
-            d->maxTimeInput, SLOT(setEnabled(bool)));
-
-    connect(d->timeZoneGroup, SIGNAL(buttonClicked(int)),
-            this, SLOT(slotTimeZoneModeChanged(int)));
+    connect(d->setupGlobalObject, SIGNAL(signalSetupChanged()),
+            this, SLOT(slotSetupChanged()));
 
     readSettings();
+
+    d->mapWidget->setActive(true);
 }
 
 GPSSyncDialog::~GPSSyncDialog()
@@ -400,59 +482,290 @@ GPSSyncDialog::~GPSSyncDialog()
     delete d;
 }
 
-void GPSSyncDialog::slotHelp()
+
+bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
 {
-    KToolInvocation::invokeHelp("gpssync", "kipi-plugins");
-}
-
-void GPSSyncDialog::setImages( const KUrl::List& images )
-{
-    for( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
-        new GPSListViewItem(d->interface, d->imagesList->listView(), *it);
-
-    d->interface->thumbnails(images, 64);
-}
-
-void GPSSyncDialog::slotLoadGPXFile()
-{
-    KUrl loadGPXFile = KFileDialog::getOpenUrl(d->gpxFileOpenLastDirectory,
-                                               i18n("%1|GPS Exchange Format", QString("*.gpx")), this,
-                                               i18n("Select GPX File to Load") );
-    if( loadGPXFile.isEmpty() )
-       return;
-    
-    d->gpxFileOpenLastDirectory = loadGPXFile.upUrl();
-
-    d->gpxParser.clear();
-    bool ret = d->gpxParser.loadGPXFile(loadGPXFile);
-
-    if (!ret)
+    if ( ( o == d->tabBar ) && ( e->type() == QEvent::MouseButtonPress ) )
     {
-        KMessageBox::error(this, i18n("Cannot parse %1 GPX file.",
-                           loadGPXFile.fileName()), i18n("GPS Sync"));
-        enableButton(User1, false);
-        return;
+        QMouseEvent const *m = static_cast<QMouseEvent *>(e);           
+
+        QPoint p (m->x(), m->y());
+        const int var = d->tabBar->tabAt(p);
+
+        if (var<0)
+            return false;
+
+        QList<int> sizes = d->HSplitter->sizes();
+        if (d->splitterSize == 0)
+        {
+            if (sizes.at(1) == 0)
+            {
+                sizes[1] = d->stackedWidget->widget(var)->minimumSizeHint().width();
+            }
+            else if (d->tabBar->currentIndex() == var)
+            {
+                d->splitterSize = sizes.at(1);
+                sizes[1] = 0;
+            }
+        }
+        else
+        {
+            sizes[1] = d->splitterSize;
+            d->splitterSize = 0;
+        }
+
+        d->tabBar->setCurrentIndex(var);
+        d->stackedWidget->setCurrentIndex(var);
+        d->HSplitter->setSizes(sizes);
+        d->detailsWidget->slotSetActive( (d->stackedWidget->currentWidget()==d->detailsWidget) && (d->splitterSize==0) );
+
+        return true;
     }
 
-    if (d->gpxParser.numPoints() <= 0)
+    return QWidget::eventFilter(o,e);
+}
+
+void GPSSyncDialog::slotCurrentTabChanged(int index)
+{
+    d->tabBar->setCurrentIndex(index);
+    d->stackedWidget->setCurrentIndex(index);
+    d->detailsWidget->slotSetActive(d->stackedWidget->currentWidget()==d->detailsWidget);
+}
+
+
+void GPSSyncDialog::setCurrentTab(int index)
+{
+    d->tabBar->setCurrentIndex(index);
+    d->stackedWidget->setCurrentIndex(index);
+
+    QList<int> sizes = d->HSplitter->sizes();
+    if (d->splitterSize >= 0)
     {
-        KMessageBox::sorry(this, i18n("The %1 GPX file does not have a date-time track to use.",
-                           loadGPXFile.fileName()), i18n("GPS Sync"));
-        enableButton(User1, false);
-        return;
+        sizes[1] = d->splitterSize;
+        d->splitterSize = 0;
+    }
+    d->HSplitter->setSizes(sizes);
+
+    d->detailsWidget->slotSetActive( (d->stackedWidget->currentWidget()==d->detailsWidget) && (d->splitterSize==0) );
+}
+
+void GPSSyncDialog::setImages(const KUrl::List& images)
+{
+    for ( KUrl::List::ConstIterator it = images.begin(); it != images.end(); ++it )
+    {
+        KipiImageItem* const newItem = new KipiImageItem(d->interface, *it);
+        newItem->loadImageData(true, false);
+        d->imageModel->addItem(newItem);
     }
 
-    d->gpxFileName->setText(loadGPXFile.fileName());
-    d->gpxPointsLabel->setText(i18n("Points parsed: %1", d->gpxParser.numPoints()));
-    enableButton(User1, true);
-    slotUser1Correlate();
+    QList<QPersistentModelIndex> imagesToLoad;
+    for (int i=0; i<d->imageModel->rowCount(); ++i)
+    {
+        imagesToLoad << d->imageModel->index(i, 0);
+    }
+
+    slotSetUIEnabled(false);
+    slotProgressSetup(imagesToLoad.count(), i18n("Loading metadata - %p%"));
+
+    // initiate the saving
+    d->fileIOCountDone = 0;
+    d->fileIOCountTotal = imagesToLoad.count();
+    d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+    connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
+            this, SLOT(slotFileMetadataLoaded(int, int)));
+
+    d->fileIOFuture = QtConcurrent::mapped(imagesToLoad, LoadFileMetadataHelper(d->imageModel));
+    d->fileIOFutureWatcher->setFuture(d->fileIOFuture);
+}
+
+void GPSSyncDialog::slotFileMetadataLoaded(int beginIndex, int endIndex)
+{
+    kDebug()<<beginIndex<<endIndex;
+    d->fileIOCountDone+=(endIndex-beginIndex);
+    slotProgressChanged(d->fileIOCountDone);
+
+    if (d->fileIOCountDone==d->fileIOCountTotal)
+    {
+        slotSetUIEnabled(true);
+    }
+}
+
+void GPSSyncDialog::readSettings()
+{
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
+
+    // --------------------------
+
+    // TODO: sanely determine a default backend
+    const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
+    d->mapWidget->readSettingsFromGroup(&groupMapWidget);
+
+    const KConfigGroup groupCorrelatorWidget = KConfigGroup(&group, "Correlator Widget");
+    d->correlatorWidget->readSettingsFromGroup(&groupCorrelatorWidget);
+
+    const KConfigGroup groupTreeView = KConfigGroup(&group, "Tree View");
+    d->treeView->readSettingsFromGroup(&groupTreeView);
+
+    const KConfigGroup groupSearchWidget = KConfigGroup(&group, "Search Widget");
+    d->searchWidget->readSettingsFromGroup(&groupSearchWidget);
+
+    const KConfigGroup groupRGWidget = KConfigGroup(&group, "Reverse Geocoding Widget");
+    d->rgWidget->readSettingsFromGroup(&groupRGWidget);
+
+    const KConfigGroup groupDialog = KConfigGroup(&group, "Dialog");
+    restoreDialogSize(groupDialog);
+
+    // --------------------------
+
+    setCurrentTab(group.readEntry("Current Tab", 0));
+    const bool showOldestFirst = group.readEntry("Show oldest images first", false);
+
+    if (showOldestFirst)
+    {
+        d->sortActionOldestFirst->setChecked(true);
+        d->mapWidget->setSortKey(1);
+    }
+    else
+    {
+        d->sortActionYoungestFirst->setChecked(true);
+        d->mapWidget->setSortKey(0);
+    }
+
+    d->actionBookmarkVisibility->setChecked(group.readEntry("Bookmarks visible", false));
+    slotBookmarkVisibilityToggled();
+
+    if (group.hasKey("SplitterState V1"))
+    {
+        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState V1"), QByteArray()));
+        if (!splitterState.isEmpty())
+        {
+            d->VSplitter->restoreState(splitterState);
+        }
+    }
+    if (group.hasKey("SplitterState H1"))
+    {
+        const QByteArray splitterState = QByteArray::fromBase64(group.readEntry(QString("SplitterState H1"), QByteArray()));
+        if (!splitterState.isEmpty())
+        {
+            d->HSplitter->restoreState(splitterState);
+        }
+    }
+    d->splitterSize = group.readEntry("Splitter H1 CollapsedSize", 0);
+
+    // ----------------------------------
+
+    d->mapLayout = MapLayout(group.readEntry("Map Layout", QVariant::fromValue(int(MapLayoutOne))).value<int>());
+    d->setupGlobalObject->writeEntry("Map Layout", QVariant::fromValue(d->mapLayout));
+    adjustMapLayout(false);
+    if (d->mapWidget2)
+    {
+        const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget 2");
+        d->mapWidget2->readSettingsFromGroup(&groupMapWidget);
+
+        d->mapWidget2->setActive(true);
+    }
+}
+
+void GPSSyncDialog::saveSettings()
+{
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
+
+    // --------------------------
+
+    KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
+    d->mapWidget->saveSettingsToGroup(&groupMapWidget);
+
+    if (d->mapWidget2)
+    {
+        KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget 2");
+        d->mapWidget2->saveSettingsToGroup(&groupMapWidget);
+    }
+
+    KConfigGroup groupCorrelatorWidget = KConfigGroup(&group, "Correlator Widget");
+    d->correlatorWidget->saveSettingsToGroup(&groupCorrelatorWidget);
+
+    KConfigGroup groupTreeView = KConfigGroup(&group, "Tree View");
+    d->treeView->saveSettingsToGroup(&groupTreeView);
+
+    KConfigGroup groupSearchWidget = KConfigGroup(&group, "Search Widget");
+    d->searchWidget->saveSettingsToGroup(&groupSearchWidget);
+
+    KConfigGroup groupRGWidget = KConfigGroup(&group, "Reverse Geocoding Widget");
+    d->rgWidget->saveSettingsToGroup(&groupRGWidget);
+
+    KConfigGroup groupDialog = KConfigGroup(&group, "Dialog");
+    saveDialogSize(groupDialog);
+
+    // --------------------------
+
+    group.writeEntry("Current Tab", d->tabBar->currentIndex());
+    group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
+    group.writeEntry("Bookmarks visible", d->actionBookmarkVisibility->isChecked());
+    group.writeEntry(QString("SplitterState V1"), d->VSplitter->saveState().toBase64());
+    group.writeEntry(QString("SplitterState H1"), d->HSplitter->saveState().toBase64());
+    group.writeEntry("Splitter H1 CollapsedSize", d->splitterSize);
+    group.writeEntry("Map Layout", QVariant::fromValue(int(d->mapLayout)));
+
+    // --------------------------
+
+    config.sync();
 }
 
 void GPSSyncDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
-    if (!promptUserClose())
+
+    // is the UI locked?
+    if (!d->uiEnabled)
     {
+        // please wait until we are done ...
+        return;
+    }
+
+    // are there any modified images?
+    int dirtyImagesCount = 0;
+    for (int i=0; i<d->imageModel->rowCount(); ++i)
+    {
+        const QModelIndex itemIndex = d->imageModel->index(i, 0);
+        KipiImageItem* const item = d->imageModel->itemFromIndex(itemIndex);
+
+        if (item->isDirty() || item->isTagListDirty())
+        {
+            dirtyImagesCount++;
+        }
+    }
+
+    if (dirtyImagesCount>0)
+    {
+        const QString message = i18np(
+                    "You have 1 modified image.",
+                    "You have %1 modified images.",
+                    dirtyImagesCount
+                );
+
+        const int chosenAction = KMessageBox::warningYesNoCancel(this,
+            i18n("%1 Would you like to save the changes you made to them?", message),
+            i18n("Unsaved changes"),
+            KGuiItem(i18n("Save changes")),
+            KGuiItem(i18n("Close and discard changes"))
+            );
+
+        if (chosenAction==KMessageBox::No)
+        {
+            saveSettings();
+            e->accept();
+            return;
+        }
+        if (chosenAction==KMessageBox::Yes)
+        {
+            // the user wants to save his changes.
+            // this will initiate the saving process and then close the dialog.
+            saveChanges(true);
+        }
+
+        // do not close the dialog for now
         e->ignore();
         return;
     }
@@ -461,227 +774,412 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
-bool GPSSyncDialog::promptUserClose()
+void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
 {
-    // Check if one item is dirty in the list.
+    d->detailsWidget->slotSetCurrentImage(index);
 
-    int dirty             = 0;
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    if (!index.isValid())
+        return;
+
+    KipiImageItem* const item = d->imageModel->itemFromIndex(index);
+    if (!item)
+        return;
+
+    const KMap::GeoCoordinates imageCoordinates = item->coordinates();
+    if (imageCoordinates.hasCoordinates())
     {
-        item = d->imagesList->listView()->topLevelItem(i);
-        GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
-        if (lvItem)
-        {
-            if (lvItem->isDirty())
-                dirty++;
-        }
-        i++;
+        d->mapWidget->setCenter(imageCoordinates);
     }
-    while (item);
+}
 
-    if (dirty > 0)
+void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot)
+{
+    if (enabledState)
     {
-        QString msg = i18np("1 image from the list is not updated.",
-                           "%1 images from the list are not updated.", dirty);
-
-        if (KMessageBox::No == KMessageBox::warningYesNo(this,
-                     i18n("<p>%1\n"
-                          "Do you really want to close this window without applying changes?</p>", msg)))
-            return false;
+        // hide the progress bar
+        d->progressBar->setVisible(false);
+        d->progressCancelButton->setVisible(false);
     }
+
+    // TODO: disable the worldmapwidget and the images list (at least disable editing operations)
+    d->progressCancelObject = cancelObject;
+    d->progressCancelSlot = cancelSlot;
+    d->uiEnabled = enabledState;
+    d->buttonBox->setEnabled(enabledState);
+    d->correlatorWidget->setUIEnabledExternal(enabledState);
+    d->detailsWidget->setUIEnabledExternal(enabledState);
+    d->rgWidget->setUIEnabled(enabledState);
+    d->treeView->setEditEnabled(enabledState);
+    d->listViewContextMenu->setEnabled(enabledState);
+    d->mapWidget->setAllowModifications(enabledState);
+}
+
+void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
+{
+    slotSetUIEnabled(enabledState, 0, QString());
+}
+
+class GPSSyncKMapModelHelperPrivate
+{
+public:
+    GPSSyncKMapModelHelperPrivate()
+    {
+    }
+
+    KipiImageModel* model;
+    QItemSelectionModel* selectionModel;
+    QList<KMap::ModelHelper*> ungroupedModelHelpers;
+};
+
+GPSSyncKMapModelHelper::GPSSyncKMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent)
+: KMap::ModelHelper(parent), d(new GPSSyncKMapModelHelperPrivate())
+{
+    d->model = model;
+    d->selectionModel = selectionModel;
+
+    connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(const QPersistentModelIndex&, const QPixmap&)),
+            this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
+
+    connect(d->model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
+            this, SIGNAL(signalModelChangedDrastically()));
+}
+
+QAbstractItemModel* GPSSyncKMapModelHelper::model() const
+{
+    return d->model;
+}
+
+QItemSelectionModel* GPSSyncKMapModelHelper::selectionModel() const
+{
+    return d->selectionModel;
+}
+
+bool GPSSyncKMapModelHelper::itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const
+{
+    KipiImageItem* const item = d->model->itemFromIndex(index);
+    if (!item)
+        return false;
+
+    if (!item->gpsData().hasCoordinates())
+        return false;
+
+    if (coordinates)
+        *coordinates = item->gpsData().getCoordinates();
 
     return true;
 }
 
-void GPSSyncDialog::readSettings()
+GPSSyncKMapModelHelper::~GPSSyncKMapModelHelper()
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("GPS Sync Settings"));
-
-    d->maxGapInput->setValue(group.readEntry("Max Gap Time", 30));
-    const int timeZoneGroupIndex = qMax(1, qMin(2, group.readEntry("Time Zone Mode", 1)));
-    d->timeZoneGroup->button(timeZoneGroupIndex)->setChecked(true);
-    slotTimeZoneModeChanged(timeZoneGroupIndex);
-    d->timeZoneCB->setCurrentIndex(group.readEntry("Time Zone", 16));  // GMT+00:00
-    d->interpolateBox->setChecked(group.readEntry("Interpolate", false));
-    d->maxTimeInput->setValue(group.readEntry("Max Inter Dist Time", 15));
-    d->offsetSign->setCurrentIndex(group.readEntry("Offset Sign", 0));
-    d->offsetMin->setValue(group.readEntry("Offset Min", 0));
-    d->offsetSec->setValue(group.readEntry("Offset Sec", 0));
-    d->gpxFileOpenLastDirectory = group.readEntry("GPX File Open Last Directory", KGlobalSettings::documentPath());
-
-    d->maxTimeLabel->setEnabled(d->interpolateBox->isChecked());
-    d->maxTimeInput->setEnabled(d->interpolateBox->isChecked());
-
-    KConfigGroup group2 = config.group(QString("GPS Sync Dialog"));
-    restoreDialogSize(group2);
 }
 
-void GPSSyncDialog::saveSettings()
+QPixmap GPSSyncKMapModelHelper::pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size)
 {
-    KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("GPS Sync Settings"));
-    group.writeEntry("Max Gap Time", d->maxGapInput->value() );
-    group.writeEntry("Time Zone Mode", d->timeZoneGroup->checkedId() );
-    group.writeEntry("Time Zone", d->timeZoneCB->currentIndex() );
-    group.writeEntry("Interpolate", d->interpolateBox->isChecked() );
-    group.writeEntry("Max Inter Dist Time", d->maxTimeInput->value() );
-    group.writeEntry("Offset Sign", d->offsetSign->currentIndex());
-    group.writeEntry("Offset Min", d->offsetMin->value());
-    group.writeEntry("Offset Sec", d->offsetSec->value());
-    group.writeEntry("GPX File Open Last Directory", d->gpxFileOpenLastDirectory);
-
-    KConfigGroup group2 = config.group(QString("GPS Sync Dialog"));
-    saveDialogSize(group2);
-
-    config.sync();
+    return d->model->getPixmapForIndex(index, qMax(size.width(), size.height()));
 }
 
-// Correlate the GPS positions from Pictures using a GPX file data.
-void GPSSyncDialog::slotUser1Correlate()
+QPersistentModelIndex GPSSyncKMapModelHelper::bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey)
 {
-    const bool cameraHasSystemTimeZone = (d->timeZoneGroup->checkedId() == 1);
-    int itemsUpdated      = 0;
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    const bool oldestFirst = sortKey & 1;
+
+    QPersistentModelIndex bestIndex;
+    QDateTime bestTime;
+    for (int i=0; i<list.count(); ++i)
     {
-        item = d->imagesList->listView()->topLevelItem(i);
-        GPSListViewItem *lvItem = dynamic_cast<GPSListViewItem*>(item);
-        if (lvItem)
+        const QPersistentModelIndex currentIndex = list.at(i);
+        const KipiImageItem* const currentItem = static_cast<KipiImageItem*>(d->model->itemFromIndex(currentIndex));
+        const QDateTime currentTime = currentItem->dateTime();
+
+        bool takeThisIndex = bestTime.isNull();
+        if (!takeThisIndex)
         {
-            GPSDataContainer gpsData;
-
-            int offset = 0;
-
-            if (!cameraHasSystemTimeZone)
+            if (oldestFirst)
             {
-                QString tz = d->timeZoneCB->currentText();
-                int hh     = QString(QString(tz[4])+QString(tz[5])).toInt();
-                int mm     = QString(QString(tz[7])+QString(tz[8])).toInt();
-                int timeZoneOffset = hh*3600 + mm*60;
-                if (tz[3] == QChar('-')) {
-                    timeZoneOffset = (-1) * timeZoneOffset;
+                takeThisIndex = currentTime < bestTime;
+            }
+            else
+            {
+                takeThisIndex = bestTime < currentTime;
+            }
+        }
+        if (takeThisIndex)
+        {
+            bestIndex = currentIndex;
+            bestTime = currentTime;
+        }
+    }
+
+    return bestIndex;
+}
+
+void GPSSyncKMapModelHelper::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
+{
+    emit(signalThumbnailAvailableForIndex(index, pixmap));
+}
+
+void GPSSyncKMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex)
+{
+    if (targetSnapIndex.isValid())
+    {
+        const QAbstractItemModel* const targetModel = targetSnapIndex.model();
+        for (int i=0; i<d->ungroupedModelHelpers.count(); ++i)
+        {
+            KMap::ModelHelper* const ungroupedHelper = d->ungroupedModelHelpers.at(i);
+            if (ungroupedHelper->model()==targetModel)
+            {
+                QList<QModelIndex> iMovedMarkers;
+                for (int i=0; i<movedMarkers.count(); ++i)
+                {
+                    iMovedMarkers << movedMarkers.at(i);
                 }
 
-                offset+= timeZoneOffset;
-            }
+                ungroupedHelper->snapItemsTo(targetSnapIndex, iMovedMarkers);
 
-            int userOffset = d->offsetMin->value() * 60 + d->offsetSec->value();
-            if (d->offsetSign->currentText() == "-") {
-                userOffset = (-1) * userOffset;
-            }
-
-            offset+= userOffset;
-
-            if (d->gpxParser.matchDate(lvItem->dateTime(),
-                                       d->maxGapInput->value(),
-                                       offset,
-                                       !cameraHasSystemTimeZone,
-                                       d->interpolateBox->isChecked(),
-                                       d->maxTimeInput->value()*60,
-                                       &gpsData))
-            {
-                lvItem->setGPSInfo(gpsData);
-                itemsUpdated++;
+                return;
             }
         }
-        i++;
     }
-    while (item);
 
-    if (itemsUpdated == 0)
+    GPSUndoCommand* const undoCommand = new GPSUndoCommand();
+
+    for (int i=0; i<movedMarkers.count(); ++i)
     {
-        KMessageBox::sorry(this, i18n("Cannot find pictures to correlate with GPX file data."),
-                           i18n("GPS Sync"));
-        return;
+        const QPersistentModelIndex itemIndex = movedMarkers.at(i);
+        KipiImageItem* const item = static_cast<KipiImageItem*>(d->model->itemFromIndex(itemIndex));
+
+        GPSUndoCommand::UndoInfo undoInfo(itemIndex);
+        undoInfo.readOldDataFromItem(item);
+
+        GPSDataContainer newData;
+        newData.setCoordinates(targetCoordinates);
+        item->setGPSData(newData);
+
+        undoInfo.readNewDataFromItem(item);
+
+        undoCommand->addUndoInfo(undoInfo);
     }
+    undoCommand->setText(i18np("1 image moved",
+                               "%1 images moved", movedMarkers.count()));
 
-    QString msg = i18np("The GPS data of 1 image have been updated using the GPX data file.",    // this is correct - data is plural
-                        "The GPS data of %1 images have been updated using the GPX data file.",
-                        itemsUpdated);
-    msg += '\n';
-    msg += i18np("Press the Apply button to update the image's metadata.","Press the Apply button to update the images' metadata.", itemsUpdated);
-
-    KMessageBox::information(this, msg, i18n("GPS Sync"));
+    emit(signalUndoCommand(undoCommand));
 }
 
-// Start the GPS coordinates editor dialog.
-void GPSSyncDialog::slotUser2EditCoordinates()
+void GPSSyncDialog::saveChanges(const bool closeAfterwards)
 {
-    const QList<QTreeWidgetItem*> selectedItemsList = d->imagesList->listView()->selectedItems();
-    
-    if (selectedItemsList.isEmpty())
+    // TODO: actually save the changes
+    // are there any modified images?
+    QList<QPersistentModelIndex> dirtyImages;
+    for (int i=0; i<d->imageModel->rowCount(); ++i)
     {
-        KMessageBox::information(this, i18n("Please select at least one image from "
-                     "the list to edit GPS coordinates manually."), i18n("GPS Sync"));
-        return;
-    }
+        const QModelIndex itemIndex = d->imageModel->index(i, 0);
+        KipiImageItem* const item = d->imageModel->itemFromIndex(itemIndex);
 
-    GPSListViewItem* const item = dynamic_cast<GPSListViewItem*>(d->imagesList->listView()->currentItem());
-
-    QPointer<GPSEditDialog> dlg = new GPSEditDialog(this, item->GPSInfo(),
-                                                    item->url().fileName(),
-                                                    item->hasGPSInfo());
-
-    if (dlg->exec() == KDialog::Accepted)
-    {
-        for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); it!=selectedItemsList.constEnd(); ++it)
+        if (item->isDirty() || item->isTagListDirty())
         {
-            GPSListViewItem* const lvItem = dynamic_cast<GPSListViewItem*>(*it);
-            lvItem->setGPSInfo(dlg->getGPSInfo(), true, true);
+            dirtyImages << itemIndex;
         }
     }
 
-    delete dlg;
-}
-
-// Remove GPS coordinates from pictures.
-void GPSSyncDialog::slotUser3RemoveCoordinates()
-{
-    const QList<QTreeWidgetItem*> selectedItemsList = d->imagesList->listView()->selectedItems();
-    if (selectedItemsList.isEmpty())
+    if (dirtyImages.isEmpty())
     {
-        KMessageBox::information(this, i18n("Please select at least one image from "
-                     "which to remove GPS coordinates."), i18n("GPS Sync"));
+        if (closeAfterwards)
+        {
+            close();
+        }
         return;
     }
 
-    for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin(); it!=selectedItemsList.constEnd(); ++it)
+    // TODO: disable the UI and provide progress and cancel information
+    slotSetUIEnabled(false);
+    slotProgressSetup(dirtyImages.count(), i18n("Saving changes - %p%"));
+
+    // initiate the saving
+    d->fileIOCountDone = 0;
+    d->fileIOCountTotal = dirtyImages.count();
+    d->fileIOCloseAfterSaving = closeAfterwards;
+    d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+    connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
+            this, SLOT(slotFileChangesSaved(int, int)));
+
+    d->fileIOFuture = QtConcurrent::mapped(dirtyImages, SaveChangedImagesHelper(d->imageModel));
+    d->fileIOFutureWatcher->setFuture(d->fileIOFuture);
+}
+
+void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
+{
+    kDebug()<<beginIndex<<endIndex;
+    d->fileIOCountDone+=(endIndex-beginIndex);
+    slotProgressChanged(d->fileIOCountDone);
+    if (d->fileIOCountDone==d->fileIOCountTotal)
     {
-        GPSListViewItem* const lvItem = dynamic_cast<GPSListViewItem*>(*it);
-        lvItem->eraseGPSInfo();
+        slotSetUIEnabled(true);
+
+        // any errors?
+        QList<QPair<KUrl, QString> > errorList;
+        for (int i=0; i<d->fileIOFuture.resultCount(); ++i)
+        {
+            if (!d->fileIOFuture.resultAt(i).second.isEmpty())
+                errorList << d->fileIOFuture.resultAt(i);
+        }
+        if (!errorList.isEmpty())
+        {
+            QStringList errorStrings;
+            for (int i=0; i<errorList.count(); ++i)
+            {
+                // TODO: how to do kurl->qstring?
+                errorStrings << QString("%1: %2").arg(errorList.at(i).first.toLocalFile()).arg(errorList.at(i).second);
+            }
+            KMessageBox::errorList(this, i18n("Failed to save some information:"), errorStrings, i18n("Error"));
+        }
+
+        // done saving files
+        if (d->fileIOCloseAfterSaving)
+        {
+            close();
+        }
     }
 }
 
-void GPSSyncDialog::slotApply()
+void GPSSyncDialog::slotApplyClicked()
 {
-    int i                 = 0;
-    QTreeWidgetItem *item = 0;
-    do
+    // save the changes, but do not close afterwards
+    saveChanges(false);
+}
+
+void GPSSyncDialog::slotProgressChanged(const int currentProgress)
+{
+    d->progressBar->setValue(currentProgress);
+}
+
+void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& progressText)
+{
+    d->progressBar->setFormat(progressText);
+    d->progressBar->setMaximum(maxProgress);
+    d->progressBar->setValue(0);
+    d->progressBar->setVisible(true);
+    d->progressCancelButton->setVisible(d->progressCancelObject!=0);
+}
+
+void GPSSyncDialog::slotGPSUndoCommand(GPSUndoCommand* undoCommand)
+{
+    d->undoStack->push(undoCommand);
+}
+
+void GPSSyncDialog::slotSortOptionTriggered(QAction* /*sortAction*/)
+{
+    int newSortKey = 0;
+    if (d->sortActionOldestFirst->isChecked())
     {
-        item = d->imagesList->listView()->topLevelItem(i);
-        GPSListViewItem* const lvItem = dynamic_cast<GPSListViewItem*>(item);
-        if (lvItem)
+        newSortKey|=1;
+    }
+
+    d->mapWidget->setSortKey(newSortKey);
+}
+
+void GPSSyncDialog::slotProgressCancelButtonClicked()
+{
+    if (d->progressCancelObject)
+    {
+        QTimer::singleShot(0, d->progressCancelObject, d->progressCancelSlot.toUtf8());
+    }
+}
+
+void GPSSyncDialog::slotBookmarkVisibilityToggled()
+{
+    d->bookmarkOwner->bookmarkModelHelper()->setVisible(d->actionBookmarkVisibility->isChecked());
+}
+
+void GPSSyncKMapModelHelper::addUngroupedModelHelper(KMap::ModelHelper* const newModelHelper)
+{
+    d->ungroupedModelHelpers << newModelHelper;
+}
+
+void GPSSyncDialog::slotConfigureClicked()
+{
+    KConfig config("kipirc");
+    QScopedPointer<Setup> setup(new Setup(this));
+
+    setup->exec();
+}
+
+void GPSSyncDialog::slotSetupChanged()
+{
+    d->mapLayout = d->setupGlobalObject->readEntry("Map Layout").value<MapLayout>();
+
+    adjustMapLayout(true);
+}
+
+KMap::KMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
+{
+    QWidget* const dummyWidget = new QWidget(this);
+    QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
+
+    KMap::KMapWidget* const mapWidget = new KMap::KMapWidget(dummyWidget);
+    mapWidget->setAvailableMouseModes(KMap::MouseModePan|KMap::MouseModeZoomIntoGroup|KMap::MouseModeSelectThumbnail);
+    mapWidget->setVisibleMouseModes(KMap::MouseModePan|KMap::MouseModeZoomIntoGroup|KMap::MouseModeSelectThumbnail);
+    mapWidget->setMouseMode(KMap::MouseModeSelectThumbnail);
+    mapWidget->setGroupedModel(d->kmapMarkerModel);
+    mapWidget->setDragDropHandler(d->mapDragDropHandler);
+    mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
+    mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
+    mapWidget->setSortOptionsMenu(d->sortMenu);
+
+    vbox->addWidget(mapWidget);
+    vbox->addWidget(mapWidget->getControlWidget());
+
+    QToolButton* const bookmarkVisibilityButton = new QToolButton(mapWidget);
+    bookmarkVisibilityButton->setDefaultAction(d->actionBookmarkVisibility);
+    mapWidget->addWidgetToControlWidget(bookmarkVisibilityButton);
+
+    *pvbox = dummyWidget;
+
+    return mapWidget;
+}
+
+void GPSSyncDialog::adjustMapLayout(const bool syncSettings)
+{
+    if (d->mapLayout==MapLayoutOne)
+    {
+        if (d->mapSplitter->count()>1)
         {
-            if (lvItem->isDirty())
+            delete d->mapSplitter->widget(1);
+            d->mapWidget2 = 0;
+        }
+    }
+    else
+    {
+        if (d->mapSplitter->count()==1)
+        {
+            QWidget* mapHolder;
+            d->mapWidget2 = makeMapWidget(&mapHolder);
+            d->mapSplitter->addWidget(mapHolder);
+
+            if (syncSettings)
             {
-                d->imagesList->listView()->setCurrentItem(lvItem);
-                d->imagesList->listView()->scrollToItem(lvItem);
-                lvItem->writeGPSInfoToFile();
+                KConfig config("kipirc");
+                KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
+
+                const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
+                d->mapWidget2->readSettingsFromGroup(&groupMapWidget);
+
+                d->mapWidget2->setActive(true);
             }
         }
-        kapp->processEvents();
-        i++;
+
+        if (d->mapLayout==MapLayoutHorizontal)
+        {
+            d->mapSplitter->setOrientation(Qt::Horizontal);
+        }
+        else
+        {
+            d->mapSplitter->setOrientation(Qt::Vertical);
+        }
     }
-    while (item);
 }
 
-void GPSSyncDialog::slotTimeZoneModeChanged(int id)
+KMap::ModelHelper::Flags GPSSyncKMapModelHelper::modelFlags() const
 {
-    d->timeZoneCB->setEnabled(id==2);
+    return FlagMovable;
 }
 
 }  // namespace KIPIGPSSyncPlugin

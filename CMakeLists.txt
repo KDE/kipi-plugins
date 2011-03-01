@@ -1,15 +1,18 @@
 PROJECT(kipi-plugins)
 
+MESSAGE(STATUS "----------------------------------------------------------------------------------")
+MESSAGE(STATUS "Starting CMake configuration for: kipi-plugins")
+
 # =======================================================
 # Information to update before to release this package.
 
 # kipi-plugins version
-SET(KIPIPLUGINS_MAJOR_VERSION "1")
-SET(KIPIPLUGINS_MINOR_VERSION "9")
+SET(KIPIPLUGINS_MAJOR_VERSION "2")
+SET(KIPIPLUGINS_MINOR_VERSION "0")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2011-02-19")
+SET (KIPIPLUGINS_RELEASE_DATE "2011-03-27")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -18,7 +21,7 @@ SET (KIPIPLUGINS_RELEASE_DATE "2011-02-19")
 # "-beta3" : beta3 release.
 # "-rc"    : release candidate.
 # ""       : final relase. Can be used in production.
-SET(KIPIPLUGINS_SUFFIX_VERSION "")
+SET(KIPIPLUGINS_SUFFIX_VERSION "-beta4")
 
 # =======================================================
 # Set env. variables accordinly.
@@ -95,9 +98,9 @@ MACRO(PRINT_OPTIONAL_QTMODULE_STATUS NAME)
     FILL_WITH_DOTS(LIB_MESSAGE)
 
     IF(${ARGN})
-        MESSAGE(STATUS " ${LIB_MESSAGE} YES (optional)")
+        MESSAGE(STATUS " ${LIB_MESSAGE} YES")
     ELSE(${ARGN})
-        MESSAGE(STATUS " ${LIB_MESSAGE} NO (optional)")
+        MESSAGE(STATUS " ${LIB_MESSAGE} NO")
     ENDIF(${ARGN})
 
 ENDMACRO(PRINT_OPTIONAL_QTMODULE_STATUS)
@@ -119,6 +122,19 @@ FIND_PACKAGE(JPEG REQUIRED)
 FIND_PACKAGE(PNG REQUIRED)
 FIND_PACKAGE(TIFF REQUIRED)
 
+# check the libkdcraw version
+# note that old versions don't specify version information, so for now
+# just inform the user if version information was found
+SET(KDCRAW_MIN_VERSION "1.1.0")
+IF (KDCRAW_VERSION)
+  MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION} (required: ${KDCRAW_MIN_VERSION})")
+  IF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
+    SET(KDCRAW_FOUND FALSE)
+  ENDIF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
+ELSE (KDCRAW_VERSION)
+  MESSAGE(WARNING "libkdcraw: Version information not found, your version is probably too old.")
+ENDIF (KDCRAW_VERSION)
+
 # Optional depencies detection required by some plugins
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
@@ -133,47 +149,24 @@ MACRO_OPTIONAL_FIND_PACKAGE(Gdk)        # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)      # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(GObject)    # For ipodexport.
 MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
-MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup.
+MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup and YandexFotki.
 MACRO_OPTIONAL_FIND_PACKAGE(KSane)      # For AcquireImages.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
 MACRO_OPTIONAL_FIND_PACKAGE(QJSON)      # For Debian Screenshots.
-IF (OpenCV_LIBS AND OpenCV_INCLUDE_DIRS)
-    SET(OPENCV_FOUND TRUE)
-ELSE (OpenCV_LIBS AND OpenCV_INCLUDE_DIRS)
-    SET(OPENCV_FOUND FALSE)
-ENDIF (OpenCV_LIBS AND OpenCV_INCLUDE_DIRS)
+MACRO_OPTIONAL_FIND_PACKAGE(Kmap)       # For GPSSync.
+
+# check the libkmap version
+# note that old versions don't specify version information, so for now
+# just inform the user if version information was found
+IF (KMAP_VERSION)
+  MESSAGE(STATUS "libkmap: Found version ${KMAP_VERSION}")
+  # TODO: fail if the version is too low
+ENDIF (KMAP_VERSION)
 
 # X11 check, LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
     MACRO_OPTIONAL_FIND_PACKAGE(X11)   # For AdvancedSlideshow and ImageViewer.
 ENDIF(NOT WIN32 AND NOT APPLE)
-
-# Check KDcraw version installed to compile fine.
-IF(NOT WIN32)
-    FIND_PACKAGE(PkgConfig)
-    # Check KDcraw version.
-    PKG_CHECK_MODULES(Kdcraw libkdcraw>=1.1.0)
-    IF(Kdcraw_FOUND)
-        SET(KDCRAW_FOR_KIPIPLUGINS TRUE)
-    ELSE(Kdcraw_FOUND)
-        SET(KDCRAW_FOR_KIPIPLUGINS FALSE)
-    ENDIF(Kdcraw_FOUND)
-ELSE(NOT WIN32)
-    SET(KDCRAW_FOR_KIPIPLUGINS TRUE)
-ENDIF(NOT WIN32)
-
-# Check KExiv2 version installed to compile fine.
-IF(NOT WIN32)
-    FIND_PACKAGE(PkgConfig)
-    PKG_CHECK_MODULES(Kexiv2 libkexiv2>=1.1.0)
-    IF(Kexiv2_FOUND)
-        SET(KEXIV2_FOR_KIPIPLUGINS TRUE)
-    ELSE(Kexiv2_FOUND)
-        SET(KEXIV2_FOR_KIPIPLUGINS FALSE)
-    ENDIF(Kexiv2_FOUND)
-ELSE(NOT WIN32)
-    SET(KEXIV2_FOR_KIPIPLUGINS TRUE)
-ENDIF(NOT WIN32)
 
 # OpenMP detection requires CMake >= 2.6.3
 
@@ -204,9 +197,9 @@ MESSAGE(STATUS "")
 PRINT_LIBRARY_STATUS("libjpeg" "http://www.ijg.org" "" JPEG_FOUND)
 PRINT_LIBRARY_STATUS("libtiff" "http://www.remotesensing.org/libtiff" "" TIFF_FOUND)
 PRINT_LIBRARY_STATUS("libpng" "http://www.libpng.org/pub/png/libpng.html" " (version >= 1.2.7)" PNG_FOUND)
-PRINT_LIBRARY_STATUS("libkipi" "http://www.digikam.org/sharedlibs" " (version >= 0.2.0)" KIPI_FOUND)
-PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 0.2.0)" KEXIV2_FOUND)
-PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= 1.1.0)" KDCRAW_FOUND)
+PRINT_LIBRARY_STATUS("libkipi" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KIPI_FOUND)
+PRINT_LIBRARY_STATUS("libkexiv2" "http://www.digikam.org/sharedlibs" " (version >= 1.2.0)" KEXIV2_FOUND)
+PRINT_LIBRARY_STATUS("libkdcraw" "http://www.digikam.org/sharedlibs" " (version >= ${KDCRAW_MIN_VERSION})" KDCRAW_FOUND)
 
 # Optional shared libraries results.
 
@@ -216,14 +209,13 @@ PRINT_OPTIONAL_LIBRARY_STATUS("libexpat" EXPAT_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("native threads support" CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
 PRINT_OPTIONAL_LIBRARY_STATUS("libopengl" OPENGL_FOUND AND OPENGL_GLU_FOUND)
 PRINT_OPTIONAL_QTMODULE_STATUS("Qt4 OpenGL" QT_QTOPENGL_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libopencv" OPENCV_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libopencv" OpenCV_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("QJson" QJSON_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libgpod" GPOD_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("Gdk" GDK_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkdepim" KDEPIMLIBS_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("qca2" QCA2_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkdcraw >= 1.1.0" KDCRAW_FOR_KIPIPLUGINS)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkexiv2 >= 1.1.0" KEXIV2_FOR_KIPIPLUGINS)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkmap" KMAP_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -240,17 +232,18 @@ PRINT_OPTIONAL_LIBRARY_STATUS("libksane" KSANE_FOUND)
 
 MESSAGE(STATUS "")
 
-IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOR_KIPIPLUGINS AND KEXIV2_FOR_KIPIPLUGINS AND KIPI_FOUND)
+IF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
     SET(KIPI_COMPILE_MESSAGE "kipi-plugins will be compiled")
     FILL_WITH_DOTS(KIPI_COMPILE_MESSAGE)
     MESSAGE(STATUS " ${KIPI_COMPILE_MESSAGE} YES")
     SET(KIPIPLUGINS_CAN_BE_COMPILED true)
-ELSE(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOR_KIPIPLUGINS AND KEXIV2_FOR_KIPIPLUGINS AND KIPI_FOUND)
+ELSE(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
     MESSAGE(FATAL_ERROR " kipi-plugins will not be compiled! Look README file for more details about dependencies...")
     SET(KIPIPLUGINS_CAN_BE_COMPILED false)
-ENDIF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOR_KIPIPLUGINS AND KEXIV2_FOR_KIPIPLUGINS AND KIPI_FOUND)
+ENDIF(JPEG_FOUND AND PNG_FOUND AND TIFF_FOUND AND KDCRAW_FOUND AND KEXIV2_FOUND AND KIPI_FOUND)
 
 PRINT_PLUGIN_COMPILE_STATUS("Shwup" QCA2_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("YandexFotki" QCA2_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("HtmlExport" LIBXML2_FOUND AND LIBXSLT_FOUND)
 
 # decide if AdvancedSlideshow and ImageViewer can be built
@@ -273,10 +266,11 @@ PRINT_PLUGIN_COMPILE_STATUS("ImageViewer" BUILD_VIEWERS)
 
 PRINT_PLUGIN_COMPILE_STATUS("AcquireImages" KSANE_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("DNGConverter" EXPAT_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes" OPENCV_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes" OpenCV_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("IpodExport" GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KMAP_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
@@ -326,17 +320,19 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${QT4_INCLUDES}
                        )
 
+    # To prevent warnings from M$ compiler
+
+    IF(WIN32 AND MSVC)
+       ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS)
+    ENDIF(WIN32 AND MSVC)
+
     # debug settings
+
     SET(AREA_CODE_GENERAL "51000")
     SET(AREA_CODE_LOADING "51001")
     ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${AREA_CODE_GENERAL})
     ADD_DEFINITIONS(-DAREA_CODE_GENERAL=${AREA_CODE_GENERAL})
     ADD_DEFINITIONS(-DAREA_CODE_LOADING=${AREA_CODE_LOADING})
-
-    # To prevent warnings from M$ compiler
-    IF(WIN32 AND MSVC)
-	ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS)
-    ENDIF(WIN32 AND MSVC)
 
     # Plugins which will be always compiled
 
@@ -346,7 +342,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(rawconverter)
     ADD_SUBDIRECTORY(metadataedit)
     ADD_SUBDIRECTORY(sendimages)
-    ADD_SUBDIRECTORY(gpssync)
     ADD_SUBDIRECTORY(flashexport)
     ADD_SUBDIRECTORY(flickrexport)
     ADD_SUBDIRECTORY(galleryexport)
@@ -367,15 +362,16 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     IF(QCA2_FOUND)
        ADD_SUBDIRECTORY(shwup)
+       ADD_SUBDIRECTORY(yandexfotki)
     ENDIF(QCA2_FOUND)
 
     IF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
        ADD_SUBDIRECTORY(ipodexport)
     ENDIF(GPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 
-    IF(OPENCV_FOUND)
+    IF(OpenCV_FOUND)
         ADD_SUBDIRECTORY(removeredeyes)
-    ENDIF(OPENCV_FOUND)
+    ENDIF(OpenCV_FOUND)
 
     IF(QJSON_FOUND)
         ADD_SUBDIRECTORY(debianscreenshots)
@@ -399,6 +395,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
             ADD_SUBDIRECTORY(dngconverter)
         ENDIF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     ENDIF(EXPAT_FOUND)
+
+    IF(KMAP_FOUND)
+        ADD_SUBDIRECTORY(gpssync)
+    ENDIF(KMAP_FOUND)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
 #

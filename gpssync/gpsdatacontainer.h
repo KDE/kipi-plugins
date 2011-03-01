@@ -1,12 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Date        : 2006-09-19
- * Description : GPS data container.
+ * @date   2010-04-19
+ * @brief  A class to hold the GPS related data
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * @author Copyright (C) 2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,7 +25,9 @@
 #ifndef GPSDATACONTAINER_H
 #define GPSDATACONTAINER_H
 
-#include <QStringList>
+// Libkmap includes
+
+#include <libkmap/kmap_primitives.h>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -32,114 +36,256 @@ class GPSDataContainer
 {
 public:
 
-    GPSDataContainer(): m_interpolated(false), m_altitude(0.0), 
-                        m_latitude(0.0), m_longitude(0.0) 
-    {};
-
-    GPSDataContainer(double altitude, double latitude, 
-                     double longitude, bool interpolated)
-                   : m_interpolated(interpolated), m_altitude(altitude),
-                     m_latitude(latitude), m_longitude(longitude)
-    {};
-
-    ~GPSDataContainer()
-    {};
-
-    GPSDataContainer& operator=(const GPSDataContainer& data)
+    GPSDataContainer()
+    : m_hasFlags(0),
+      m_coordinates(),
+      m_nSatellites(-1),
+      m_dop(-1),
+      m_fixType(-1),
+      m_speed(0)
     {
-        m_interpolated = data.isInterpolated();
-        m_altitude     = data.altitude();
-        m_latitude     = data.latitude();
-        m_longitude    = data.longitude();
-        return *this;
+    }
+
+    enum HasFlagsEnum {
+        HasCoordinates = 1,
+        HasAltitude = 2,
+        HasIsInterpolated = 4,
+        HasNSatellites = 8,
+        HasDop = 16,
+        HasFixType = 32,
+        HasSpeed = 64
     };
-
-    // use this instead of '==', because '==' implies having the
-    // same value for m_interpolated
-    bool sameCoordinatesAs(const GPSDataContainer& a) const
-    {
-        return ( a.m_altitude == m_altitude ) &&
-               ( a.m_latitude == m_latitude ) &&
-               ( a.m_longitude == m_longitude);
-    }
-
-    void setInterpolated(bool ite) { m_interpolated = ite; };
-    void setAltitude(double alt)   { m_altitude     = alt; };
-    void setLatitude(double lat)   { m_latitude     = lat; };
-    void setLongitude(double lng)  { m_longitude    = lng; };
-
-    bool   isInterpolated() const { return m_interpolated; };
-    double altitude()       const { return m_altitude;     };
-    double latitude()       const { return m_latitude;     };
-    double longitude()      const { return m_longitude;    };
-
-    QString altitudeString() const { return QString::number(m_altitude, 'g', 12); }
-    QString latitudeString() const { return QString::number(m_latitude, 'g', 12); }
-    QString longitudeString() const { return QString::number(m_longitude, 'g', 12); }
-
-    QString geoUrl() const { return QString::fromLatin1("geo:%1,%2,%3").arg(latitudeString()).arg(longitudeString()).arg(altitudeString()); }
-
-    static GPSDataContainer fromGeoUrl(const QString& url, bool* const parsedOkay)
-    {
-        // parse geo:-uri according to (only partially implemented):
-        // http://tools.ietf.org/html/draft-ietf-geopriv-geo-uri-04
-        // TODO: verify that we follow the spec fully!
-        if (!url.startsWith("geo:"))
-        {
-            // TODO: error
-            if (parsedOkay)
-                *parsedOkay = false;
-            return GPSDataContainer();
-        }
-
-        const QStringList parts = url.mid(4).split(',');
-
-        GPSDataContainer position;
-        if ((parts.size()==3)||(parts.size()==2))
-        {
-            bool okay = true;
-            double ptLongitude = 0.0;
-            double ptLatitude  = 0.0;
-            double ptAltitude  = 0.0;
-
-            ptLatitude = parts[0].toDouble(&okay);
-            if (okay)
-                ptLongitude = parts[1].toDouble(&okay);
-
-            if (okay&&(parts.size()==3))
-                ptAltitude = parts[2].toDouble(&okay);
-
-            if (!okay)
-            {
-                *parsedOkay = false;
-                return GPSDataContainer();
-            }
-
-            position = GPSDataContainer(ptAltitude, ptLatitude, ptLongitude, false);
-        }
-        else
-        {
-            if (parsedOkay)
-                *parsedOkay = false;
-            return GPSDataContainer();
-        }
-
-        if (parsedOkay)
-                *parsedOkay = true;
-        return position;
-    }
+    Q_DECLARE_FLAGS(HasFlags, HasFlagsEnum)
 
 private:
 
-    bool   m_interpolated;
+    HasFlags m_hasFlags;
+    KMap::GeoCoordinates m_coordinates;
+    int m_nSatellites;
+    qreal m_dop;
+    int m_fixType;
+    qreal m_speed;
 
-    double m_altitude;
-    double m_latitude;
-    double m_longitude;
+public:
+
+    /* general */
+
+    bool operator==(const GPSDataContainer& b) const
+    {
+        if (m_hasFlags != b.m_hasFlags)
+            return false;
+
+        if (m_hasFlags.testFlag(HasCoordinates))
+        {
+            if (!(m_coordinates==b.m_coordinates))
+                return false;
+        }
+
+        if (hasNSatellites())
+        {
+            if (m_nSatellites!=b.m_nSatellites)
+                return false;
+        }
+
+        if (hasDop())
+        {
+            if (m_dop!=b.m_dop)
+                return false;
+        }
+
+        if (hasFixType())
+        {
+            if (m_fixType!=b.m_fixType)
+                return false;
+        }
+
+        if (hasSpeed())
+        {
+            if (m_speed!=b.m_speed)
+                return false;
+        }
+
+        return true;
+    }
+
+    inline HasFlags flags() const
+    {
+        return m_hasFlags;
+    }
+
+    inline void clear()
+    {
+        m_hasFlags = 0;
+        m_coordinates.clear();
+    }
+
+    inline void clearNonCoordinates()
+    {
+        m_hasFlags&= ~(HasNSatellites | HasDop | HasFixType | HasSpeed);
+    }
+
+    /* coordinates */
+
+    inline KMap::GeoCoordinates getCoordinates() const
+    {
+        return m_coordinates;
+    }
+
+    inline void setCoordinates(const KMap::GeoCoordinates& coordinates)
+    {
+        m_coordinates = coordinates;
+        if (coordinates.hasCoordinates())
+        {
+            m_hasFlags|=HasCoordinates;
+        }
+        else
+        {
+            m_hasFlags&=~HasCoordinates;
+        }
+        if (coordinates.hasAltitude())
+        {
+            m_hasFlags|=HasAltitude;
+        }
+        else
+        {
+            m_hasFlags&=~HasAltitude;
+        }
+
+        clearNonCoordinates();
+    }
+
+    inline void setAltitude(const qreal alt)
+    {
+        m_coordinates.setAlt(alt);
+        m_hasFlags|=HasAltitude;
+    }
+
+    inline bool hasAltitude() const
+    {
+        return m_hasFlags.testFlag(HasAltitude);
+    }
+
+    inline void setLatLon(const qreal lat, const qreal lon)
+    {
+        m_coordinates.setLatLon(lat, lon);
+        m_hasFlags|=HasCoordinates;
+
+        clearNonCoordinates();
+    }
+
+    inline void clearAltitude()
+    {
+        m_hasFlags&=~HasAltitude;
+        m_coordinates.clearAlt();
+    }
+
+    inline bool hasCoordinates() const
+    {
+        return m_hasFlags.testFlag(HasCoordinates);
+    }
+
+    /* NSatellites */
+
+    inline int getNSatellites() const
+    {
+        return m_nSatellites;
+    }
+
+    inline bool hasNSatellites() const
+    {
+        return m_hasFlags.testFlag(HasNSatellites);
+    }
+
+    inline void clearNSatellites()
+    {
+        m_hasFlags&= ~HasNSatellites;
+    }
+
+    inline void setNSatellites(const int nSatellites)
+    {
+        m_nSatellites = nSatellites;
+        m_hasFlags|=HasNSatellites;
+    }
+
+    /* DOP */
+
+    inline bool hasDop() const
+    {
+        return m_hasFlags.testFlag(HasDop);
+    }
+
+    inline void clearDop()
+    {
+        m_hasFlags&= ~HasDop;
+    }
+
+    inline void setDop(const qreal dop)
+    {
+        m_dop = dop;
+        m_hasFlags|=HasDop;
+    }
+
+    inline qreal getDop() const
+    {
+        return m_dop;
+    }
+
+    /* fix type */
+
+    inline bool hasFixType() const
+    {
+        return m_hasFlags.testFlag(HasFixType);
+    }
+
+    inline void setFixType(const int fixType)
+    {
+        m_fixType = fixType;
+        m_hasFlags|=HasFixType;
+    }
+
+    inline qreal getFixType() const
+    {
+        return m_fixType;
+    }
+
+    inline void clearFixType()
+    {
+        m_hasFlags&= ~HasFixType;
+    }
+
+    /* speed */
+
+    /**
+     * @brief Return the speed in m/s
+     */
+    inline qreal getSpeed() const
+    {
+        return m_speed;
+    }
+
+    inline bool hasSpeed() const
+    {
+        return m_hasFlags.testFlag(HasSpeed);
+    }
+
+    /**
+     * @brief Set the speed in m/s
+     */
+    inline void setSpeed(const qreal speed)
+    {
+        m_hasFlags|= HasSpeed;
+        m_speed = speed;
+    }
+
+    inline void clearSpeed()
+    {
+        m_hasFlags&=~HasSpeed;
+    }
 };
 
-} // namespace KIPIGPSSyncPlugin
+} /* KIPIGPSSyncPlugin */
 
-Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::GPSDataContainer)
+Q_DECLARE_OPERATORS_FOR_FLAGS(KIPIGPSSyncPlugin::GPSDataContainer::HasFlags)
 
-#endif  // GPSDATACONTAINER_H
+#endif /* GPSDATACONTAINER_H */
+

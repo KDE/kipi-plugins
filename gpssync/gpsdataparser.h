@@ -1,13 +1,16 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Date        : 2006-09-19
- * Description : GPS data file parser.
- *               (GPX format http://www.topografix.com/gpx.asp).
+ * @date   2006-09-19
+ * @brief  GPS data file parser (GPX format http://www.topografix.com/gpx.asp).
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * @author Copyright (C) 2006-2010 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,49 +30,179 @@
 // Qt includes
 
 #include <QDateTime>
-#include <QMap>
+#include <QThread>
 
 // KDE includes
 
 #include <kurl.h>
 
-// Local includes
+// Libkmap includes
 
-#include "gpsdatacontainer.h"
+#include <libkmap/kmap_primitives.h>
+
+class TestGPXParsing;
 
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSDataParser
-{
+class GPSDataParserPrivate;
 
+class GPSDataParser : public QObject
+{
+Q_OBJECT
 public:
 
-    GPSDataParser();
-    ~GPSDataParser(){};	
+    enum GPXFlags
+    {
+        GPXFlagCoordinates = 1,
+        GPXFlagInterpolated = 2,
+        GPXFlagAltitude = 3
+    };
 
-    bool loadGPXFile(const KUrl& url);
+    class GPXDataPoint
+    {
+    public:
+        GPXDataPoint()
+        : dateTime(),
+          coordinates(),
+          nSatellites(-1),
+          hDop(-1),
+          pDop(-1),
+          fixType(-1),
+          speed(-1)
+        {
+        }
 
+        QDateTime dateTime;
+        KMap::GeoCoordinates coordinates;
+        int nSatellites;
+        qreal hDop;
+        qreal pDop;
+        int fixType;
+        qreal speed;
+
+        static bool EarlierThan(const GPXDataPoint& a, const GPXDataPoint& b);
+
+        typedef QList<GPXDataPoint> List;
+    };
+
+    class GPXCorrelation
+    {
+    public:
+        GPXCorrelation()
+        : dateTime(),
+          userData(),
+          nSatellites(-1),
+          hDop(-1),
+          pDop(-1),
+          fixType(-1),
+          speed(-1),
+          flags(),
+          coordinates()
+        {
+        }
+
+        typedef QList<GPXCorrelation> List;
+
+        QDateTime dateTime;
+        QVariant userData;
+        int nSatellites;
+        qreal hDop;
+        qreal pDop;
+        int fixType;
+        qreal speed;
+        GPXFlags flags;
+        KMap::GeoCoordinates coordinates;
+    };
+
+    class GPXCorrelationOptions
+    {
+    public:
+        GPXCorrelationOptions()
+        : photosHaveSystemTimeZone(false),
+          interpolate(false),
+          interpolationDstTime(0),
+          maxGapTime(0),
+          secondsOffset(0)
+        {
+        }
+        bool photosHaveSystemTimeZone;
+        bool interpolate;
+        int interpolationDstTime;
+        int maxGapTime;
+        int secondsOffset;
+    };
+
+    class GPXFileData
+    {
+    public:
+
+        typedef QList<GPXFileData> List;
+
+        GPXFileData()
+        : url(),
+          isValid(false),
+          loadError(),
+          gpxDataPoints()
+        {
+        }
+
+        KUrl url;
+        bool isValid;
+        QString loadError;
+        QList<GPXDataPoint> gpxDataPoints;
+    };
+
+    GPSDataParser(QObject* const parent = 0);
+    ~GPSDataParser();
+
+    void loadGPXFiles(const KUrl::List& urls);
+    QList<QPair<KUrl, QString> > readLoadErrors();
     void clear();
-    int  numPoints() const;
-    bool matchDate(const QDateTime& photoDateTime, int maxGapTime, int secondsOffset,
-                   bool photoHasSystemTimeZone,
-                   bool interpolate, int interpolationDstTime,
-                   GPSDataContainer* const gpsData);
+    const GPXFileData& fileData(const int index) const;
+    int fileCount() const;
+
+    void correlate(const GPXCorrelation::List& itemsToCorrelate, const GPXCorrelationOptions& options);
+    void cancelCorrelation();
+
+Q_SIGNALS:
+    void signalGPXFilesReadyAt(const int startIndex, const int endIndex);
+    void signalAllGPXFilesReady();
+    void signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
+    void signalAllItemsCorrelated();
+    void signalCorrelationCanceled();
+
+private Q_SLOTS:
+    void slotGPXFilesReadyAt(int beginIndex, int endIndex);
+    void slotThreadItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
+    void slotThreadFinished();
 
 private:
+    GPSDataParserPrivate* const d;
+};
 
-    // Methods used to perform interpolation.
-    QDateTime findNextDate(const QDateTime& dateTime, int secs);
-    QDateTime findPrevDate(const QDateTime& dateTime, int secs);
+class GPSDataParserThread : public QThread
+{
+Q_OBJECT
+public:
+    GPSDataParserThread(QObject* const parent = 0);
+    ~GPSDataParserThread();
+
+    GPSDataParser::GPXCorrelation::List itemsToCorrelate;
+    GPSDataParser::GPXCorrelationOptions options;
+    GPSDataParser::GPXFileData::List fileList;
+    bool doCancel;
+    bool canceled;
 
 protected:
+    virtual void run();
 
-    typedef QMap<QDateTime, GPSDataContainer> GPSDataMap; 
-
-    GPSDataMap m_GPSDataMap;
+Q_SIGNALS:
+    void signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
 };
 
 } // namespace KIPIGPSSyncPlugin
+
+Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)
 
 #endif  // GPSDATAPARSER_H

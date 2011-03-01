@@ -1,13 +1,18 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Date        : 2006-05-16
- * Description : a plugin to synchronize pictures with
- *               a GPS device.
+ * @date   2006-05-16
+ * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * @author Copyright (C) 2006-2010 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2010 by Gabriel Voicu
+ *         <a href="mailto:ping dot gabi at gmail dot com">ping dot gabi at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,21 +29,76 @@
 #ifndef GPSSYNCDIALOG_H
 #define GPSSYNCDIALOG_H
 
+// Qt includes
+
+#include <QModelIndex>
+#include <QWidget>
+
 // KDE includes
 
 #include <kdialog.h>
 #include <kurl.h>
 
+// Libkmap includes
+
+#include <libkmap/kmap_primitives.h>
+#include <libkmap/kmap_modelhelper.h>
+
 // LibKIPI includes
 
 #include <libkipi/interface.h>
 
+namespace KMap
+{
+    class KMapWidget;
+}
+
 namespace KIPIGPSSyncPlugin
 {
 
+class KipiImageModel;
+class GPSUndoCommand;
+
 class GPSSyncDialogPriv;
 
-class GPSSyncDialog :public KDialog
+class GPSSyncKMapModelHelperPrivate;
+
+class GPSSyncKMapModelHelper : public KMap::ModelHelper
+{
+Q_OBJECT
+
+public:
+
+    GPSSyncKMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent = 0);
+    virtual ~GPSSyncKMapModelHelper();
+
+    virtual QAbstractItemModel* model() const;
+    virtual QItemSelectionModel* selectionModel() const;
+    virtual bool itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const;
+    virtual Flags modelFlags() const;
+
+    virtual QPixmap pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size);
+    virtual QPersistentModelIndex bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey);
+
+    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
+
+    void addUngroupedModelHelper(KMap::ModelHelper* const newModelHelper);
+
+private Q_SLOTS:
+
+    void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
+
+Q_SIGNALS:
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
+
+private:
+
+    GPSSyncKMapModelHelperPrivate* const d;
+};
+
+// ------------------------------------------------------------------------------------------------
+
+class GPSSyncDialog : public KDialog
 {
     Q_OBJECT
 
@@ -51,29 +111,39 @@ public:
 
 protected:
 
-    void closeEvent(QCloseEvent *);
+    void closeEvent(QCloseEvent* e);
+    bool eventFilter( QObject *, QEvent *);
 
-protected Q_SLOTS:
+private:
 
-    void slotApply();
-    void slotHelp();
-    void slotUser1Correlate();
-    void slotUser2EditCoordinates();
-    void slotUser3RemoveCoordinates();
+    void readSettings();
+    void saveSettings();
+    void saveChanges(const bool closeAfterwards);
+    KMap::KMapWidget* makeMapWidget(QWidget** const pvbox);
+    void adjustMapLayout(const bool syncSettings);
 
 private Q_SLOTS:
 
-    void slotLoadGPXFile();
-    void slotTimeZoneModeChanged(int id);
+    void slotImageActivated(const QModelIndex& index);
+    void slotSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
+    void slotSetUIEnabled(const bool enabledState);
+    void slotApplyClicked();
+    void slotConfigureClicked();
+    void slotFileChangesSaved(int beginIndex, int endIndex);
+    void slotFileMetadataLoaded(int beginIndex, int endIndex);
+    void slotProgressChanged(const int currentProgress);
+    void slotProgressSetup(const int maxProgress, const QString& progressText);
+    void slotGPSUndoCommand(GPSUndoCommand* undoCommand);
+    void slotSortOptionTriggered(QAction* sortAction);
+    void setCurrentTab(const int index);
+    void slotProgressCancelButtonClicked();
+    void slotCurrentTabChanged(int);
+    void slotBookmarkVisibilityToggled();
+    void slotSetupChanged();
 
 private:
 
-    bool promptUserClose();
-    void readSettings();
-    void saveSettings();
-
-private:
-
+    int splitterSize;
     GPSSyncDialogPriv* const d;
 };
 

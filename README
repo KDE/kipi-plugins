@@ -6,7 +6,7 @@ See AUTHORS file for details.
 
 -- ABOUT --------------------------------------------------------------
 
-Libkipi and kipi-plugins allows image applications as digiKam (http://www.digikam.org)
+Libkipi and kipi-plugins allow image applications such as digiKam (http://www.digikam.org)
 to use a plugin architecture for additional functionalities.
 
 Notes:
@@ -44,6 +44,7 @@ ExpoBlending       : A tool to create pseudo HDR image with a stack of bracketed
 PiwigoExport       : A tool to export images to a remote Piwigo (PHPWebGallery) server (http://piwigo.org).
 DebianScreenshots  : A tool to export images to Debian Screenshots web service (http://screenshots.debian.net).
 Kopete             : A tool to export images to an instant messaging contact.
+YandexFotki        : A tool to export images to Yandex web service (http://fotki.yandex.ru).
 
 Porting under progress to Qt4/KDE4:
 
@@ -62,9 +63,9 @@ libkde          >= 4.0.x                        http://www.kde.org
 libtiff         >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
 libjpeg         >= 6b                           http://www.ijg.org
 libpng          >= 1.2.x                        http://www.libpng.org/pub/png/libpng.html
-libkipi         >= 0.2.0                        http://www.digikam.org/sharedlibs
-libkexiv2       >= 1.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
-libkdcraw       >= 1.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
+libkipi         >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
+libkexiv2       >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
+libkdcraw       >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
 Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
@@ -83,6 +84,7 @@ libgdk          >= 2.0.0                        http://library.gnome.org/devel/g
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
 libqjson        >= 0.6.0                        http://qjson.sourceforge.net
 libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
+libkmap         >= 0.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -97,12 +99,14 @@ RemoveRedEyes      : libopencv.
 IpodExport         : libgpod, libgdk.
 Calendar           : libkcal (kdepimlibs).
 Shwup              : libqca.
+YandexFotki        : libqca.
 DebianScreenshots  : libqjson.
 ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
+GPSSync            : libkmap.
 
 -- CONTACT ------------------------------------------------------------
 
-If you have questions, comments, suggestions to make do email at :
+If you have questions, comments, suggestions to make send an email to :
 
 kde-imaging@kde.org
 
@@ -115,8 +119,8 @@ A mail will be automaticly sent to the Kipi mailing list.
 There is no need to contact directly the Kipi mailing list for a bug report 
 or a devel wish.
 
-The current Kipi bugs and devel wish reported to the Kde bugs report can be see 
-at this url :
+The current Kipi bugs and devel wishes reported to the Kde bugs report can be
+seen at this url :
 
 http://bugs.kde.org/buglist.cgi?product=kipiplugins&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED
 
@@ -142,6 +146,6 @@ Compared to old KDE3 autoconf options:
 "cmake . -DCMAKE_BUILD_TYPE=debugfull" is equivalent to "./configure --enable-debug=full"
 "cmake . -DCMAKE_INSTALL_PREFIX=/usr"  is equivalent to "./configure --prefix=/usr"
 
-More details can be found ata this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
+More details can be found at this url: http://techbase.kde.org/Development/Tutorials/CMake#Environment_Variables
 
 Note: To know KDE install path on your computer, use 'kde-config --prefix' command line.

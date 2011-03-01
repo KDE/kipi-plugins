@@ -36,7 +36,7 @@
 
 // Phonon includes
 
-#include <phonon/volumeslider.h>
+#include <Phonon/VolumeSlider>
 
 // libkipi includes
 

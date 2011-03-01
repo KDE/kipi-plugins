@@ -1,16 +1,31 @@
-- port Googlemaps widget to API v3 : 
+gpssync parts:
+- correctly update the dirty state on undo/redo
+- read dilution of precision data and add warnings
+- add undo/redo buttons
+- make the coordinates of the images editable
+- disable closing while a thread is running
+- save the column ordering
+- sorting of the images
+- fix scroll-wheel interaction of the tabs
+- when resizing the widget horizontally, the star moves back and forth
+- add a tab for forward-geocoding
 
-just came across the Google Maps API v3:
-http://code.google.com/intl/de/apis/maps/documentation/v3/
+kmap parts:
+- control over clustering grid size (UI)
+- re-cluster only every few pixels of panning
+- the clustering model does not go deep enough - when zooming in on Marble OSM, the positions are quantized
+- snapping for drag-and-drop coming in from outside the map
+- snapping in the Google Maps backend
 
-It no longer needs an API key, this means embedding in the GPS sync plugin
-would no longer require using digikam3rdparty (=> faster loading?). Embedding
-in Desktop apps seems to be encouraged:
-http://groups.google.com/group/google-maps-js-api-
-v3/browse_thread/thread/8c187e778ce921c8
-
-- implement automatic tagging of geotagged images using (reverse) geocoding:
-http://code.google.com/intl/de/apis/maps/documentation/v3/services.html
-For functionality like "tag all images here with the name of the city they are
-taken in", or "find all images taken in city <...>"...
-
+done:
+- numbers on clusters google maps
+- make tabs collapsible
+- resizing of thumbnails
+- There may be an issue in the Marble backend, because thumbnails are not shown directly when increasing their size, only after a redraw.
+- add warnings when gpx files failed to load
+- add thumbnail size button
+- the displayed thumbnail is not correctly picked by sort order, but changes as the grouping changes (seems fixed)
+- add interpolation
+- using QDomDocument to read the GPX files takes up huge amounts of RAM (5 MB GPX takes up 200 MB of RAM here), this is especially problematic if several cores are used. Maybe switch to a SAX-like parsing system?
+- add copy/paste of coordinates
+- add bookmark system

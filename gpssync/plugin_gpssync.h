@@ -1,23 +1,25 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Date        : 2006-05-16
- * Description : a plugin to synchronize pictures with
- *               a GPS device.
+ * @date   2006-05-16
+ * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * Copyright 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * @author Copyright (C) 2006-2010 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
+ * either version 2, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -33,13 +35,12 @@
 
 #include <libkipi/plugin.h>
 
-class KActionMenu;
 class KAction;
 
 namespace KIPI
 {
 class Interface;
-} // namespace KIPI
+}
 
 class Plugin_GPSSync : public KIPI::Plugin
 {
@@ -47,28 +48,18 @@ class Plugin_GPSSync : public KIPI::Plugin
 
 public:
 
-    Plugin_GPSSync(QObject *parent, const QVariantList &args);
+    Plugin_GPSSync(QObject* parent, const QVariantList& args);
 
-    KIPI::Category category( KAction* action ) const;
-    void setup( QWidget* );
+    KIPI::Category category(KAction* action) const;
+    void setup(QWidget*);
 
 protected Q_SLOTS:
 
     void slotGPSSync();
-    void slotGPSEdit();
-    void slotGPSTrackListEdit();
-    void slotGPSRemove();
-    void slotKMLGenerate();
-    void slotKMLExport();
 
 private:
 
-    bool checkBinaries(QString &gpsBabelVersion);
-
-private:
-
-    KActionMenu     *m_action_geolocation;
-    KAction         *m_actionKMLExport;
+    KAction         *m_action_geolocation;
 
     KIPI::Interface *m_interface;
 };

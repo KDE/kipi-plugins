@@ -1,70 +1,105 @@
-1.9.0 2011-02-27
+2.0.0-beta3 2011-02-27
 
-2011-02-25  Alex Merry <kde@randomguy3.me.uk>
+2011-02-27  Michael Georg Hansen <mike@mghansen.de>
 
-	* ipodexport/IpodExportDialog.cpp: Fix build Use the correct member operator for a struct.
+	* CMakeLists.txt: Check the version of libkdcraw before compilation,
+	if version information is available.
 
-2011-02-24  Frédéric COIFFIER <fcoiffie@gmail.com>
+2011-02-27  Michael Georg Hansen <mike@mghansen.de>
 
-	* piwigoexport/piwigotalker.cpp: piwigoexport : Correct downloading
-	w/o full size version
+	* README: Polish.
 
-2011-02-22  Montel Laurent <montel@kde.org>
+2011-02-27  Michael Georg Hansen <mike@mghansen.de>
 
-	* galleryexport/gallerywindow.cpp: Const'ify
+	* CMakeLists.txt, README, gpssync/CMakeLists.txt: Make libkmap an
+	optional dependency, and compile gpssync only if libkmap can be
+	found.
 
-2011-02-22  Montel Laurent <montel@kde.org>
+2011-02-27  Michael Georg Hansen <mike@mghansen.de>
 
-	* ipodexport/IpodExportDialog.cpp: const'ify Not necessary to create
-	a pointer here
+	* CMakeLists.txt: KDCRAW_LIB_VERSION -> KDCRAW_VERSION
+
+2011-02-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* CMakeLists.txt: Fix typo.
+
+2011-02-26  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp: Fix writing of altitude information.
+
+2011-02-26  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsdataparser.cpp: Fix compiler warning.
+
+2011-02-26  Michael Georg Hansen <mike@mghansen.de>
+
+	* CMakeLists.txt: KMAP_LIB_VERSION -> KMAP_VERSION
+
+2011-02-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* piwigoexport/piwigotalker.cpp: backport commit
+	http://commits.kde.org/kipi-plugins/545748be34b37ac9d5c8fcbf8db910a1fad8d1ee...from 1.x branch
+
+2011-02-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* ipodexport/IpodExportDialog.cpp: backport commit
+	http://commits.kde.org/kipi-plugins/5ad3b9e838b2fa3ea4d27c866999d986abcb64b2.. from 1.x branch
+
+2011-02-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-02-22  Alexander Potashev <aspotashev@gmail.com>
+
+	* sendimages/emailpage.cpp: add space before suffix ("MB" -> " MB") BUG:266911
+
+2011-02-21  Michael Georg Hansen <mike@mghansen.de>
+
+	* CMakeLists.txt: Report version information for libkmap, but do not
+	yet abort on versions which are too low.
+
+2011-02-21  Michael Georg Hansen <mike@mghansen.de>
+
+	* CMakeLists.txt: Report libkdcraw version if available. Later, a
+	check for the required version can be added.
+
+2011-02-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* AUTHORS, CMakeLists.txt, README, yandexfotki/logindialog.cpp,
+	yandexfotki/logindialog.h, yandexfotki/plugin_yandexfotki.cpp,
+	yandexfotki/plugin_yandexfotki.h, yandexfotki/yandexauth.cpp,
+	yandexfotki/yandexauth.h, yandexfotki/yandexrsa.cpp,
+	yandexfotki/yandexrsa.h, yandexfotki/yfalbum.cpp,
+	yandexfotki/yfalbum.h, yandexfotki/yfalbumdialog.cpp,
+	yandexfotki/yfalbumdialog.h, yandexfotki/yfphoto.cpp,
+	yandexfotki/yfphoto.h, yandexfotki/yftalker.cpp,
+	yandexfotki/yftalker.h, yandexfotki/yfwindow.cpp,
+	yandexfotki/yfwindow.h: polish source code : no need header if moc
+	are includes.  fix coding style a little bit.  Adjust compilation
+	rules for QCA2 dependecy with Yandex tool Patch Authors, News, and
+	Readme files for Yandex tool.
 
 2011-02-21  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update
 
-2011-02-21  Montel Laurent <montel@kde.org>
+2011-02-19  Roman Tsisyk <roman@tsisyk.com>
 
-	* gpssync/plugin_gpssync.cpp: Minor optimisation
-
-2011-02-21  Montel Laurent <montel@kde.org>
-
-	* facebook/plugin_facebook.cpp: Minor optimisation
-
-2011-02-21  Montel Laurent <montel@kde.org>
-
-	* facebook/fbwidget.cpp, facebook/fbwidget.h: const'ify
-
-2011-02-21  Montel Laurent <montel@kde.org>
-
-	* debianscreenshots/dswidget.cpp, debianscreenshots/dswidget.h: 
-	const'ify
-
-2011-02-21  Montel Laurent <montel@kde.org>
-
-	* batchprocessimages/effectimagesdialog.cpp,
-	batchprocessimages/filterimagesdialog.cpp,
-	batchprocessimages/filteroptionsdialog.cpp,
-	batchprocessimages/pixmapview.cpp: Minor optimisation + fix mem leak
-
-2011-02-21  Montel Laurent <montel@kde.org>
-
-	* batchprocessimages/borderoptionsdialog.cpp,
-	batchprocessimages/colorimagesdialog.cpp,
-	batchprocessimages/coloroptionsdialog.cpp,
-	batchprocessimages/convertimagesdialog.cpp: Minor optimisation
-
-2011-02-21  Montel Laurent <montel@kde.org>
-
-	* batchprocessimages/batchprocessimagesdialog.cpp,
-	batchprocessimages/borderimagesdialog.cpp: Minor fix
-
-2011-02-21  Script Kiddy <scripty@kde.org>
-
-	* facebook/kipiplugin_facebook.desktop,
-	flickrexport/kipiplugin_flickrexport.desktop,
-	picasawebexport/kipiplugin_picasawebexport.desktop,
-	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop: 
-	SVN_SILENT made messages (.desktop file)
+	* CMakeLists.txt, yandexfotki/CMakeLists.txt,
+	yandexfotki/Messages.sh, yandexfotki/TODO,
+	yandexfotki/icons/CMakeLists.txt,
+	yandexfotki/kipiplugin_yandexfotki.desktop,
+	yandexfotki/logindialog.cpp, yandexfotki/logindialog.h,
+	yandexfotki/plugin_yandexfotki.cpp,
+	yandexfotki/plugin_yandexfotki.h, yandexfotki/yandexauth.cpp,
+	yandexfotki/yandexauth.h, yandexfotki/yandexrsa.cpp,
+	yandexfotki/yandexrsa.h, yandexfotki/yfalbum.cpp,
+	yandexfotki/yfalbum.h, yandexfotki/yfalbumdialog.cpp,
+	yandexfotki/yfalbumdialog.h, yandexfotki/yfphoto.cpp,
+	yandexfotki/yfphoto.h, yandexfotki/yftalker.cpp,
+	yandexfotki/yftalker.h, yandexfotki/yfwindow.cpp,
+	yandexfotki/yfwindow.h: Yandex Fotki plugin initial import YF is a popular Russian photo hosting with unlimited storage space
+	See http://fotki.yandex.ru/ for details FEATURE: 202226 Currently implemented:  - Authentication without web browser  - Album listing  - New album creation  - Photo exporting  - Metadata updating: title, description, access, flags, tags, etc.   - Handling of duplicate files in albums
 
 2011-02-19  Pino Toscano <pino@kde.org>
 
@@ -76,90 +111,26 @@
 	* acquireimages/scangui.desktop: acquireimages: remove empty Path
 	key from .desktop file
 
-2011-02-18  Montel Laurent <montel@kde.org>
+2011-02-18  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* advancedslideshow/slideshowloader.cpp,
-	advancedslideshow/slideshowloader.h: const'ify
-
-2011-02-18  Montel Laurent <montel@kde.org>
-
-	* advancedslideshow/listsounditems.cpp,
-	advancedslideshow/listsounditems.h: constify Add implement missing
-	function
-
-2011-02-18  Montel Laurent <montel@kde.org>
-
-	* shwup/swwidget.cpp, shwup/swwidget.h: const'ref
-
-2011-02-18  Montel Laurent <montel@kde.org>
-
-	* shwup/swconnector.cpp, shwup/swconnector.h: const'ref
-
-2011-02-18  Montel Laurent <montel@kde.org>
-
-	* smug/smugwidget.cpp, smug/smugwidget.h: const
-
-2011-02-18  Montel Laurent <montel@kde.org>
-
-	* smug/smugtalker.cpp, smug/smugtalker.h: Const
-
-2011-02-18  Montel Laurent <montel@kde.org>
-
-	* picasawebexport/picasawebtalker.cpp: This check is not necessary
-
-2011-02-18  Montel Laurent <montel@kde.org>
-
-	* piwigoexport/piwigowindow.cpp: I don't like mem leak
-
-2011-02-16  Montel Laurent <montel@kde.org>
-
-	* kioexportimport/KioExportWidget.cpp,
-	kioexportimport/KioExportWidget.h: Const'ref
-
-2011-02-16  Montel Laurent <montel@kde.org>
-
-	* flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h: 
-	const'ref
-
-2011-02-16  Montel Laurent <montel@kde.org>
-
-	* flickrexport/flickrlist.cpp, flickrexport/flickrlist.h: const'ify
-
-2011-02-16  Montel Laurent <montel@kde.org>
-
-	* flickrexport/comboboxintermediate.cpp,
-	flickrexport/comboboxintermediate.h: Const'ref
-
-2011-02-16  Montel Laurent <montel@kde.org>
-
-	* flashexport/firstrundlg.cpp, flashexport/firstrundlg.h,
-	flashexport/simpleviewer.cpp: Fix mem leak add const
-
-2011-02-16  Script Kiddy <scripty@kde.org>
-
-	* debianscreenshots/kipiplugin_debianscreenshots.desktop: SVN_SILENT
-	made messages (.desktop file)
+	* jpeglossless/plugin_jpeglossless.cpp,
+	jpeglossless/plugin_jpeglossless.h: pluginmain actions afetr sub
+	actrion are created.  Give a name to lead flip action
 
 2011-02-15  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* cmake/templates/gitscript.cmake.in_cmake: sync with 2.x branch
+	* cmake/templates/gitscript.cmake.in_cmake: backport commit
+	#c491f97b1ef201825c1382191ea14dfd63dc71ea from 1.x
 
-2011-02-15  Ben Cooksley <bcooksley@kde.org>
+2011-02-13  Marcel Wiesweg <marcel.wiesweg@gmx.de>
 
-	* cmake/templates/gitscript.cmake.in_cmake: Fix build where the
-	build root is in a completely different place to the git clone
+	* sendimages/plugin_sendimages.cpp: Why should sending emails be an
+	editing operation? It's an export operation, not so much different
+	to uploading to facebook really.
 
-2011-02-14  Montel Laurent <montel@kde.org>
+2011-02-10  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* calendar/calprinter.cpp: not necessary to use a ref for int
-
-2011-02-14  Montel Laurent <montel@kde.org>
-
-	* expoblending/manager/actionthread.cpp: Const'ref
-
-2011-02-14  Montel Laurent <montel@kde.org>
-
-	* expoblending/blendingdlg/expoblendingdlg.cpp: const'ref
+	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1212626
 
 2011-02-09  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -167,16 +138,35 @@
 
 2011-02-09  Gilles Caulier <caulier.gilles@gmail.com>
 
+	* common/libkipiplugins/tools/kpaboutdata.cpp: compile
+
+2011-02-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/pluginsversion.h.cmake: use link to
+	commits.kde.org for Git revision information
+
+2011-02-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/tools/kpaboutdata.cpp: if plugin version is
+	not null, show it along plugin name
+
+2011-02-08  Gilles Caulier <caulier.gilles@gmail.com>
+
 	* CMakeLists.txt, cmake/templates/gitscript.cmake.in_cmake,
 	cmake/templates/gitversion.h.in_cmake,
 	cmake/templates/svnscript.cmake.in_cmake,
 	cmake/templates/svnversion.h.in_cmake,
 	common/libkipiplugins/pluginsversion.h.cmake,
 	common/libkipiplugins/tools/kpaboutdata.cpp,
-	common/libkipiplugins/tools/kpaboutdata.h: backport git revision
-	handling from 2.x to replace subversion revision information
+	common/libkipiplugins/tools/kpaboutdata.h: Into plugins about
+	dialog, register Git revision instead Subversion revision
 
-2011-02-03  Script Kiddy <scripty@kde.org>
+2011-02-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1218652
+
+2011-02-03  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* acquireimages/kipiplugin_acquireimages.desktop,
 	acquireimages/scangui.desktop,
@@ -193,7 +183,6 @@
 	flashexport/kipiplugin_flashexport.desktop,
 	flickrexport/kipiplugin_flickrexport.desktop,
 	galleryexport/kipiplugin_galleryexport.desktop,
-	gpssync/kipiplugin_gpssync.desktop,
 	htmlexport/kipiplugin_htmlexport.desktop,
 	htmlexport/themes/classic/classic.desktop,
 	htmlexport/themes/cleanframes/cleanframes.desktop,
@@ -243,148 +232,89 @@
 	sendimages/kipiplugin_sendimages.desktop,
 	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
 	timeadjust/kipiplugin_timeadjust.desktop,
-	wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
-	(.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1218597
+	wallpaper/kipiplugin_wallpaper.desktop: sync with trunk rev.
+	#1218606.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1218607
 
-2011-02-03  Gilles Caulier <caulier.gilles@gmail.com>
+2011-02-02  Michael Georg Hansen <mike@mghansen.de>
 
-	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1218595
+	* NEWS: Update NEWS. These bugs/wishes are fixed in kipi-plugins 2
+	beta 2.  FEATURE: 150981 FEATURE: 185143 FEATURE: 195944 FEATURE: 215989
+	FEATURE: 206133 BUG: 209718 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1218561
 
-2011-02-03  Gilles Caulier <caulier.gilles@gmail.com>
+2011-02-01  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1218594
+	* gpssync/inputboxnocancel.cpp, shwup/swwindow.cpp: sync with trunk
+	rev. #1218266.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1218267
 
-2011-02-01  Laurent Montel <montel@kde.org>
+2011-01-31  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* shwup/swwindow.cpp: add info about missing slots svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1218231
+	* htmlexport/theme.cpp: sync with trunk rev. #1218146.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1218147
 
-2011-02-01  Laurent Montel <montel@kde.org>
+2011-01-31  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* gpssync/gpstracklistwidget.cpp, gpssync/gpstracklistwidget.h,
-	gpssync/inputboxnocancel.cpp: const'ify svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1218228
+	* NEWS: beta3 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1218090
 
-2011-02-01  Laurent Montel <montel@kde.org>
+2011-01-31  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* gpssync/gpsmapwidget.cpp, gpssync/gpsmapwidget.h: const'ify svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1218227
+	* CMakeLists.txt: beta3 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1218088
 
-2011-02-01  Laurent Montel <montel@kde.org>
+2011-01-28  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h: const'ify svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1218224
-
-2011-01-31  Laurent Montel <montel@kde.org>
-
-	* htmlexport/theme.cpp: Be sure to not leak svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1218109
-
-2011-01-29  Gilles Caulier <caulier.gilles@gmail.com>
-
-	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217916
-
-2011-01-28  Laurent Montel <montel@kde.org>
-
-	* gpssync/kmlexport.cpp: initialize pointer to 0 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217755
-
-2011-01-28  Laurent Montel <montel@kde.org>
-
-	* kopete/plugin_kopete.cpp: minor optimisation svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217754
-
-2011-01-28  Laurent Montel <montel@kde.org>
-
-	*
+	* kopete/plugin_kopete.cpp, printimages/plugin_printimages.cpp,
+	printimages/printhelper.cpp, printimages/printhelper.h,
+	printimages/utils.cpp, printimages/utils.h, printimages/wizard.cpp,
 	removeredeyes/detection/locators/haarclassifier/widgets/classifiers
 	ettingsbox.cpp,
 	removeredeyes/detection/locators/haarclassifier/widgets/classifiers
-	ettingsbox.h: const'ify svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217753
+	ettingsbox.h, removeredeyes/removeredeyeswindow.cpp: sync with trunk
+	rev. #1217770.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1217771
 
-2011-01-28  Laurent Montel <montel@kde.org>
-
-	* removeredeyes/removeredeyeswindow.cpp: Set to 0 pointer after
-	delete it svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217752
-
-2011-01-28  Laurent Montel <montel@kde.org>
-
-	* : not necessary to keep an empty directory svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217751
-
-2011-01-28  Laurent Montel <montel@kde.org>
-
-	* printimages/utils.cpp, printimages/utils.h: const'ify svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217749
-
-2011-01-28  Laurent Montel <montel@kde.org>
-
-	* printimages/printhelper.cpp, printimages/printhelper.h: const'ref svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217748
-
-2011-01-28  Laurent Montel <montel@kde.org>
-
-	* printimages/plugin_printimages.cpp: use isEmpty svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217747
-
-2011-01-27  Laurent Montel <montel@kde.org>
-
-	* metadataedit/comment/commenteditdialog.cpp,
-	metadataedit/comment/commenteditdialog.h: const'ify svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217476
-
-2011-01-27  Laurent Montel <montel@kde.org>
-
-	* debianscreenshots/dswidget.h: Fix forward declaration svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217475
-
-2011-01-27  Laurent Montel <montel@kde.org>
-
-	* kioexportimport/KioImportWindow.h: fix forward declaration svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217474
-
-2011-01-27  Laurent Montel <montel@kde.org>
-
-	* kioexportimport/KioImportWidget.cpp,
-	kioexportimport/KioImportWidget.h: const svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217473
-
-2011-01-27  Laurent Montel <montel@kde.org>
-
-	* common/libkipiplugins/tools/binaryiface.cpp: const'ref svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217471
-
-2011-01-27  Laurent Montel <montel@kde.org>
-
-	* batchprocessimages/filterimagesdialog.cpp: use else if svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217470
-
-2011-01-27  Laurent Montel <montel@kde.org>
-
-	* batchprocessimages/effectimagesdialog.cpp: Use 'else if' minor
-	optimisation svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217469
-
-2011-01-27  Laurent Montel <montel@kde.org>
+2011-01-27  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* batchprocessimages/batchprocessimagesitem.cpp,
-	batchprocessimages/batchprocessimagesitem.h: const'ref svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217467
+	batchprocessimages/batchprocessimagesitem.h,
+	batchprocessimages/effectimagesdialog.cpp,
+	batchprocessimages/filterimagesdialog.cpp,
+	common/libkipiplugins/tools/binaryiface.cpp,
+	debianscreenshots/dswidget.h, kioexportimport/KioImportWidget.cpp,
+	kioexportimport/KioImportWidget.h,
+	kioexportimport/KioImportWindow.h,
+	metadataedit/comment/commenteditdialog.cpp,
+	metadataedit/comment/commenteditdialog.h: sync with trunk rev.
+	#1217479 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1217480
 
-2011-01-27  Laurent Montel <montel@kde.org>
+2011-01-27  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* picasawebexport/picasawebtalker.h,
 	picasawebexport/picasawebwidget.h,
-	picasawebexport/picasawebwindow.h: Fix forward declaration svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217430
+	picasawebexport/picasawebwindow.h: sync with trunk rev. #1217454.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1217455
 
-2011-01-26  Laurent Montel <montel@kde.org>
-
-	* sendimages/plugin_sendimages.cpp: Not necessary to check pointer
-	before remove it svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217224
-
-2011-01-26  Laurent Montel <montel@kde.org>
-
-	* htmlexport/plugin.cpp: fix mem leak svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217220
-
-2011-01-26  Laurent Montel <montel@kde.org>
-
-	* htmlexport/stringthemeparameter.cpp: Fix includes svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217219
-
-2011-01-26  Laurent Montel <montel@kde.org>
+2011-01-26  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* facebook/fbwindow.cpp, facebook/mpform.cpp,
-	facebook/plugin_facebook.cpp: Fix includes svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1217175
-
-2011-01-25  Andrew Coles <andrew.i.coles@googlemail.com>
-
-	* project/kipicmd/main.cpp: Proof-reading:  * One missing plural form usage (%1 albums)  * Eliminated many exclamation marks.  See the note in the HIG for
-	   details:
-	http://techbase.kde.org/Projects/Usability/HIG/Exclamation_points svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1216985
+	facebook/plugin_facebook.cpp, htmlexport/plugin.cpp,
+	htmlexport/stringthemeparameter.cpp,
+	sendimages/plugin_sendimages.cpp: sync with trunk rev. #1217263.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1217264
 
 2011-01-25  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* project/NEWS.1.8.0: polish svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1216982
+	* project/kipicmd/main.cpp: sync with trunk rev. #1217010.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1217011
+
+2011-01-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : sync with trunk rev. #1216982.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1216983
 
 2011-01-25  Andrew Coles <andrew.i.coles@googlemail.com>
 
@@ -433,9 +363,10 @@
 
 	* project/kipicmd/Messages.sh: Extract messages svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1216728
 
-2011-01-23  Nicolas Lécureuil <neoclust.kde@free.fr>
+2011-01-24  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* CMakeLists.txt, NEWS: Open for 1.9.0 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1216537
+	* : sync with trunk rev. #1215692 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1216693
 
 2011-01-23  Nicolas Lécureuil <neoclust.kde@free.fr>
 
@@ -454,11 +385,23 @@
 
 2011-01-19  Gilles Caulier <caulier.gilles@gmail.com>
 
+	* project/NEWS.1.5.0: sync with trunk rev. #1215690.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1215692
+
+2011-01-19  Gilles Caulier <caulier.gilles@gmail.com>
+
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1215677
 
 2011-01-18  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* project/NEWS.1.5.0: polish svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1215396
+
+2011-01-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* acquireimages/scandialog.cpp,
+	advancedslideshow/soundtrackdialog.cpp,
+	metadataedit/plugin_metadataedit.cpp: sync with trunk rev. #1215331.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1215332
 
 2011-01-17  Laurent Montel <montel@kde.org>
 
@@ -472,9 +415,22 @@
 
 	* acquireimages/scandialog.cpp: Fix mem leak svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1215053
 
+2011-01-15  Jens Mueller <tschenser@gmx.de>
+
+	* batchprocessimages/resizeimagesdialog.cpp: fix compile error svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1214569
+
 2011-01-14  Christoph Feck <christoph@maxiom.de>
 
 	* batchprocessimages/resizeimagesdialog.cpp: SVN_SILENT compile svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1214460
+
+2011-01-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* advancedslideshow/captiondialog.cpp,
+	advancedslideshow/slideshowconfig.cpp,
+	batchprocessimages/resizeimagesdialog.cpp: sync with trunk rev.
+	#1214385 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1214386
 
 2011-01-14  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -484,6 +440,35 @@
 2011-01-14  Laurent Montel <montel@kde.org>
 
 	* batchprocessimages/resizeimagesdialog.cpp: Initialize variable svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1214380
+
+2011-01-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* advancedslideshow/advanceddialog.cpp,
+	advancedslideshow/captiondialog.cpp,
+	advancedslideshow/captiondialog.h,
+	advancedslideshow/captiondialog.ui,
+	advancedslideshow/commoncontainer.cpp,
+	advancedslideshow/commoncontainer.h,
+	advancedslideshow/imageloadthread.cpp,
+	advancedslideshow/kbeffect.cpp, advancedslideshow/kbeffect.h,
+	advancedslideshow/listsounditems.cpp,
+	advancedslideshow/listsounditems.h,
+	advancedslideshow/maindialog.cpp,
+	advancedslideshow/playbackwidget.cpp,
+	advancedslideshow/plugin_advancedslideshow.cpp,
+	advancedslideshow/plugin_advancedslideshow.h,
+	advancedslideshow/screenproperties.cpp,
+	advancedslideshow/screenproperties.h,
+	advancedslideshow/slideplaybackwidget.cpp,
+	advancedslideshow/slideplaybackwidget.h,
+	advancedslideshow/slideshow.cpp, advancedslideshow/slideshow.h,
+	advancedslideshow/slideshowconfig.cpp,
+	advancedslideshow/slideshowconfig.h,
+	advancedslideshow/slideshowgl.cpp, advancedslideshow/slideshowgl.h,
+	advancedslideshow/slideshowkb.cpp, advancedslideshow/slideshowkb.h,
+	advancedslideshow/soundtrackdialog.cpp: sync with trunk rev.
+	#1214374.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1214375
 
 2011-01-14  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -517,6 +502,15 @@
 	advancedslideshow/soundtrackdialog.cpp: apply patch #55764 from
 	Harald Haspl BUGS: 262642 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1214372
 
+2011-01-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS, batchprocessimages/pixmapview.cpp,
+	expoblending/blendingdlg/enfusestack.cpp,
+	expoblending/manager/manager.cpp, printimages/tphoto.cpp,
+	removeredeyes/removeredeyeswindow.cpp,
+	removeredeyes/workerthread.cpp: sync with trunk rev. #1214366.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1214367
+
 2011-01-14  Laurent Montel <montel@kde.org>
 
 	* expoblending/blendingdlg/enfusestack.cpp,
@@ -532,6 +526,11 @@
 2011-01-13  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1214129
+
+2011-01-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : restore this file svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1213939
 
 2011-01-11  Laurent Montel <montel@kde.org>
 
@@ -569,10 +568,22 @@
 	dngconverter/dnginfo/dnginfo.cpp: add first version of simple dng
 	tool, able to extract embedded original raws CCBUGS: 262125 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1213193
 
+2011-01-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: beta2 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1212991
+
 2011-01-08  Script Kiddy <scripty@kde.org>
 
 	* galleryexport/kipiplugin_galleryexport.desktop: SVN_SILENT made
 	messages (.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1212835
+
+2011-01-07  Jens Mueller <tschenser@gmx.de>
+
+	* dngconverter/dngwriter/dngwriter.cpp: implement adobe compression
+	scheme. Please test carefully before removing originals. I will try
+	to build a simple commandline extractor too.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1212627
 
 2011-01-07  Jens Mueller <tschenser@gmx.de>
 
@@ -584,10 +595,32 @@
 	scheme. Please test carefully before removing originals. I will try
 	to build a simple commandline extractor too.  BUGS: 262125 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1212625
 
+2011-01-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* printimages/printhelper.cpp, printimages/printoptionspage.cpp,
+	printimages/printoptionspage.h: sync with trunk rev. #1212275.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1212276
+
 2011-01-06  Angelo Naselli <anaselli@linux.it>
 
 	* printimages/printhelper.cpp, printimages/printoptionspage.cpp,
 	printimages/printoptionspage.h: PrintImages fixing: - Fixed page layout if autorotation is checked - Fixed photo position printing - Removed debug print out CC:caulier.gilles@gmail.com svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1212175
+
+2011-01-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Save the current mouse mode to the
+	settings.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1212072
+
+2011-01-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsdataparser.cpp: Fix compiler warnings.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1212034
+
+2011-01-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: digiKam and kipi-plugins are merged into one common file now svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1211998
 
 2011-01-05  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -598,6 +631,16 @@
 	* printimages/printoptionspage.cpp: CCBUG: 257514 Fixed also first
 	photo scaling and scale to default value (10x15 cm).  Reporter
 	you've just opened a pandora pot :) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1211747
+
+2011-01-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	htmlexport/themes/floating_cards/floating_cards.desktop,
+	kopete/kipiplugin_kopete.desktop, printimages/printoptionspage.cpp,
+	timeadjust/kipiplugin_timeadjust.desktop,
+	wallpaper/kipiplugin_wallpaper.desktop: sync with trunk rev.
+	#1211478.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1211479
 
 2011-01-04  Script Kiddy <scripty@kde.org>
 
@@ -616,15 +659,59 @@
 
 	* printimages/printoptionspage.cpp: BUG: 257514 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1211416
 
+2011-01-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: polish svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1211202
+
+2011-01-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, NEWS: fix release date for Beta1. I will rebuild
+	it today, synchronized with trunk + announcements.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1211201
+
+2011-01-02  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/backend-geonames-rg.cpp,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-osm-rg.cpp,
+	gpssync/gpsdataparser.cpp, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/kipiimagelist.h, gpssync/parseTagString.h,
+	gpssync/rgtagmodel.cpp, gpssync/rgtagmodel.h,
+	gpssync/searchwidget.cpp, gpssync/setup.cpp: Fix some krazy2 issues.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1210965
+
 2011-01-01  Script Kiddy <scripty@kde.org>
 
 	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
 	kopete/kipiplugin_kopete.desktop: SVN_SILENT made messages (.desktop
 	file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1210583
 
-2010-12-27  Gilles Caulier <caulier.gilles@gmail.com>
+2010-12-31  Michael Georg Hansen <mike@mghansen.de>
 
-	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1209628
+	* gpssync/tests/test_rgparsing.cpp: Fix the rgparsing test.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1210478
+
+2010-12-31  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/tests/test_gpxparsing.cpp: Adapt to changes in Qt 4.7.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1210477
+
+2010-12-29  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Change mouse mode names.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1210120
+
+2010-12-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : sync with trunk rev. #1209995 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1209996
+
+2010-12-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/tests/test_kipiimageitem.cpp,
+	gpssync/tests/test_kipiimageitem.h: Correctly initialize and cleanup
+	exiv2 in this testcase.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1209622
 
 2010-12-27  Script Kiddy <scripty@kde.org>
 
@@ -659,6 +746,18 @@
 2010-12-26  Jens Mueller <tschenser@gmx.de>
 
 	* picasawebexport/picasawebreplacedialog.cpp: fix typo svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1209492
+
+2010-12-26  Jens Mueller <tschenser@gmx.de>
+
+	* picasawebexport/picasawebreplacedialog.cpp: fix typo svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1209491
+
+2010-12-26  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/tests/CMakeLists.txt,
+	gpssync/tests/simpletreemodel/CMakeLists.txt: Add kmap_ and gpssync_
+	to test names.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1209453
 
 2010-12-26  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -762,6 +861,16 @@
 	* CMakeLists.txt: Indicate that optional Qt modules are optional in
 	the cmake output svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1207522
 
+2010-12-15  Michael Georg Hansen <mike@mghansen.de>
+
+	* CMakeLists.txt: Changed legacy OPENCV_FOUND into OpenCV_FOUND.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1206767
+
+2010-12-15  Michael Georg Hansen <mike@mghansen.de>
+
+	* removeredeyes/CMakeLists.txt: Fix typos: OPENCV -> OpenCV.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1206763
+
 2010-12-15  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1206674
@@ -774,6 +883,42 @@
 
 	* CMakeLists.txt, NEWS: fix release date svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1206649
 
+2010-12-14  Michael Georg Hansen <mike@mghansen.de>
+
+	* removeredeyes/CMakeLists.txt: Add an option to force usage of an
+	external FindOpenCV.cmake file.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1206536
+
+2010-12-14  Michael Georg Hansen <mike@mghansen.de>
+
+	* removeredeyes/CMakeLists.txt: Handle both versions of
+	FindOpenCV.cmake, they use different variable names.  svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1206532
+
+2010-12-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: 2.0.0-beta1 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1206449
+
+2010-12-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	dngconverter/TODO, dngconverter/dngwriter/dngwriter.cpp,
+	flashexport/firstrundlg.cpp, flashexport/index.template,
+	flashexport/simpleviewer.cpp, galleryexport/gallerywindow.cpp,
+	kopete/kipiplugin_kopete.desktop, kopete/plugin_kopete.cpp,
+	picasawebexport/picasawebimglist.cpp,
+	piwigoexport/piwigowindow.cpp,
+	removeredeyes/libcvblobs/BlobExtraction.cpp,
+	sendimages/sendimages.cpp: sync with trunk rev. #1206445 svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1206446
+
+2010-12-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, removeredeyes/CMakeLists.txt: use find cmake
+	script from libkface to detect opencv with kipi-plugins svn path=/branches/extragear/graphics/digikam/extra/kipi-plugins/;
+	revision=1206444
+
 2010-12-14  Script Kiddy <scripty@kde.org>
 
 	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
@@ -784,14 +929,23 @@
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1206089
 
+2010-12-12  Michael Georg Hansen <mike@mghansen.de>
+
+	* CMakeLists.txt: Indicate where the configuration of the individual
+	projects starts, because we get a very long CMake output when trying
+	to configure them all at once.  svn
+	path=/branches/extragear/graphics/digikam/3rdparty/kipi-plugins/;
+	revision=1205807
+
 2010-12-12  Andi Clemens <andi.clemens@gmx.net>
 
 	* removeredeyes/libcvblobs/BlobExtraction.cpp: fix warnings svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1205762
 
-2010-12-11  Jens Mueller <tschenser@gmx.de>
+2010-12-11  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* NEWS: fixed with
-	http://websvn.kde.org/?view=revision&revision=1194777 BUGS: 258824 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1205492
+	* : mv kipi-plugins svn
+	path=/branches/extragear/graphics/digikam/3rdparty/kipi-plugins/;
+	revision=1205534
 
 2010-12-11  Jens Mueller <tschenser@gmx.de>
 
@@ -860,7 +1014,8 @@
 
 2010-12-07  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* printimages/wizard.cpp, printimages/wizard.h: polish svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1204455
+	* : sync with trunk rev. #1204456.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1204457
 
 2010-12-07  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -897,6 +1052,12 @@
 
 	* printimages/cropframe.cpp, printimages/cropframe.h,
 	printimages/customdlg.cpp, printimages/customdlg.h: sync with branch svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1204253
+
+2010-12-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* printimages/cropframe.cpp, printimages/cropframe.h,
+	printimages/customdlg.cpp, printimages/customdlg.h: constify svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1204242
 
 2010-12-06  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -1071,6 +1232,29 @@
 	* common/libkipiplugins/tools/binaryiface.cpp: The dialog box is way
 	too wide, we should add newlines...  svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1201802
 
+2010-11-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsbookmarkowner.cpp, gpssync/searchwidget.cpp: Adapt to
+	changes in libkmap: The origin for the offset in pixmaps for markers
+	is now at the top-left and no longer at the bottom-left.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1201771
+
+2010-11-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/backend-geonames-rg.cpp, gpssync/backend-geonames-rg.h,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-geonamesUS-rg.h,
+	gpssync/backend-osm-rg.cpp, gpssync/backend-osm-rg.h,
+	gpssync/backend-rg.h, gpssync/gpsimagedetails.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/kipiimageitem.cpp,
+	gpssync/kipiimageitem.h, gpssync/rgtagmodel.cpp: Update includes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1201758
+
+2010-11-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/searchwidget.h: Compile.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1201745
+
 2010-11-26  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* common/libkipiplugins/dialogs/imagedialog.cpp: fix layout svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1200989
@@ -1120,6 +1304,11 @@
 
 	* NEWS: polish svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1199919
 
+2010-11-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/CMakeLists.txt: sync with trunk svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1199917
+
 2010-11-22  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1199850
@@ -1154,7 +1343,18 @@
 
 2010-11-22  Gilles Caulier <caulier.gilles@gmail.com>
 
+	* expoblending/CMakeLists.txt: revert svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1199694
+
+2010-11-22  Gilles Caulier <caulier.gilles@gmail.com>
+
 	* CMakeLists.txt, expoblending/CMakeLists.txt: polish svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1199693
+
+2010-11-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/CMakeLists.txt: same similar patch need to be applied
+	to ExpoBlending tool about openmp.  CCBUGS: 257329 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1199679
 
 2010-11-22  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -1218,6 +1418,59 @@
 2010-11-19  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* CMakeLists.txt, NEWS: fix release date svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1198735
+
+2010-11-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS, acquireimages/scangui.desktop,
+	advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	common/libkipiplugins/kipiplugins.desktop,
+	expoblending/CMakeLists.txt, expoblending/expoblending.desktop,
+	expoblending/kipiplugin_expoblending.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	htmlexport/themes/dateframes/dateframes.desktop,
+	htmlexport/themes/details/details.desktop,
+	htmlexport/themes/floating_cards/floating_cards.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	printimages/kipiplugin_printimages.desktop,
+	printimages/templates/1_photo_10.5x14.8cm.desktop,
+	printimages/templates/1_photo_10x15cm.desktop,
+	printimages/templates/1_photo_20x25cm.desktop,
+	printimages/templates/1_photo_8x10.desktop,
+	printimages/templates/1_photo_9x13cm.desktop,
+	printimages/templates/2_photos_13x18cm.desktop,
+	printimages/templates/2_photos_5x7.desktop,
+	printimages/templates/3_photos_10x15cm.desktop,
+	printimages/templates/3_photos_4x6.desktop,
+	printimages/templates/4_photos_10x13.33cm.desktop,
+	printimages/templates/4_photos_3.5x5.desktop,
+	printimages/templates/4_photos_4.5x5cm.desktop,
+	printimages/templates/4_photos_9x13cm.desktop,
+	printimages/templates/4x6Album.desktop,
+	printimages/templates/6_photos_3.5x4cm.desktop,
+	printimages/templates/8_photos_6x9cm.desktop,
+	printimages/templates/Album-Collage.desktop,
+	printimages/templates/Album-Collage1.desktop,
+	printimages/templates/Album_10x15cm.desktop,
+	printimages/templates/Album_11.5x15cm.desktop,
+	printimages/templates/FullPage.desktop,
+	printimages/templates/Photoframe.desktop,
+	printimages/templates/Thumbnails_5x4.desktop,
+	printimages/templates/Thumbnails_6x5.desktop,
+	removeredeyes/commonsettings.h,
+	removeredeyes/commonwidgets/controlwidget.cpp,
+	removeredeyes/commonwidgets/previewwidget.cpp,
+	removeredeyes/commonwidgets/storagesettingsbox.cpp,
+	removeredeyes/detection/locators/haarclassifier/haarsettings.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/haarsetting
+	swidget.cpp, removeredeyes/kipiplugin_removeredeyes.desktop,
+	removeredeyes/plugin_removeredeyes.cpp,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop: sync
+	with trunk rev. #1198456 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1198457
 
 2010-11-18  Script Kiddy <scripty@kde.org>
 
@@ -1284,6 +1537,33 @@
 	removeredeyes/detection/locators/haarclassifier/widgets/haarsetting
 	swidget.cpp, removeredeyes/plugin_removeredeyes.cpp: code polish
 	(init lists etc) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1197153
+
+2010-11-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp, dngconverter/TODO,
+	dngconverter/dngwriter/dngwriter.cpp,
+	dngconverter/dngwriter/dngwriter.h,
+	dngconverter/dngwriter/dngwriter_p.cpp,
+	dngconverter/dngwriter/dngwriter_p.h,
+	dngconverter/dngwriter/dngwriterhost.cpp,
+	dngconverter/dngwriter/dngwriterhost.h,
+	dngconverter/plugin/actionthread.cpp,
+	dngconverter/plugin/actionthread.h,
+	dngconverter/plugin/batchdialog.cpp,
+	dngconverter/plugin/batchdialog.h,
+	dngconverter/plugin/clistviewitem.h,
+	dngconverter/plugin/plugin_dngconverter.cpp,
+	dngconverter/plugin/plugin_dngconverter.h,
+	dngconverter/plugin/settingswidget.cpp,
+	dngconverter/plugin/settingswidget.h, facebook/facebookjob.cpp,
+	facebook/facebookjob.h, facebook/fbwindow.cpp,
+	galleryexport/gallerywindow.cpp,
+	picasawebexport/picasawebtalker.cpp,
+	picasawebexport/picasawebwindow.cpp,
+	removeredeyes/libcvblobs/BlobExtraction.cpp,
+	sendimages/emailsettingscontainer.h, smug/smugwindow.cpp: sync with
+	trunk rev #1196621.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1196622
 
 2010-11-13  Andi Clemens <andi.clemens@gmx.net>
 
@@ -1386,6 +1666,32 @@
 	* NEWS, dngconverter/TODO, dngconverter/dngwriter/dngwriter.cpp: 
 	store makernotes in DngPrivateData field BUGS: 255137 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1193951
 
+2010-11-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* acquireimages/CMakeLists.txt, calendar/calselect.cpp,
+	common/libkipiplugins/CMakeLists.txt,
+	common/libkipiplugins/dialogs/imagedialog.cpp, dngconverter/TODO,
+	dngconverter/dngwriter/dngwriter.cpp,
+	dngconverter/plugin/CMakeLists.txt,
+	dngconverter/plugin/batchdialog.cpp,
+	dngconverter/plugin/clistviewitem.h, expoblending/CMakeLists.txt,
+	expoblending/manager/actions.h,
+	htmlexport/themes/classic/template.xsl,
+	htmlexport/themes/cleanframes/template.xsl,
+	htmlexport/themes/dateframes/template.xsl,
+	htmlexport/themes/details/template.xsl,
+	htmlexport/themes/floating_cards/template.xsl,
+	htmlexport/themes/frames/template.xsl,
+	htmlexport/themes/matrix/template.xsl,
+	htmlexport/themes/s0/template.xsl,
+	htmlexport/themes/simple/template.xsl,
+	htmlexport/themes/snow/template.xsl,
+	metadataedit/iptc/iptccategories.cpp,
+	metadataedit/xmp/xmpcategories.cpp,
+	printimages/templates/templates.xml, printimages/wizard.cpp: sync
+	with trunk rev. #1193904 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1193905
+
 2010-11-06  Jens Mueller <tschenser@gmx.de>
 
 	* dngconverter/dngwriter/dngwriter.cpp: prepare makernote in
@@ -1405,6 +1711,79 @@
 	* calendar/calselect.cpp: * Correct year handling for non-gregorian calendars (year should be
 	retrieved from KCalendarSystem, NOT from QDate) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1193065
 
+2010-11-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/tests/simpletreemodel/simpletreemodel.cpp,
+	gpssync/tests/simpletreemodel/simpletreemodel.h,
+	gpssync/tests/simpletreemodel/test_simpletreemodel.cpp,
+	gpssync/tests/simpletreemodel/test_simpletreemodel.h,
+	gpssync/tests/test_gpxparsing.cpp, gpssync/tests/test_gpxparsing.h,
+	gpssync/tests/test_kipiimageitem.cpp,
+	gpssync/tests/test_kipiimageitem.h,
+	gpssync/tests/test_rgparsing.cpp, gpssync/tests/test_rgparsing.h,
+	gpssync/tests/test_rgtagmodel.cpp, gpssync/tests/test_rgtagmodel.h: 
+	Polish doxygen.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1191994
+
+2010-11-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/CMakeLists.txt, gpssync/backend-geonames-rg.cpp,
+	gpssync/backend-geonames-rg.h, gpssync/backend-geonamesUS-rg.cpp,
+	gpssync/backend-geonamesUS-rg.h, gpssync/backend-google-rg.cpp,
+	gpssync/backend-google-rg.h, gpssync/backend-osm-rg.cpp,
+	gpssync/backend-osm-rg.h, gpssync/backend-rg.cpp,
+	gpssync/backend-rg.h, gpssync/data/reverse-js.js,
+	gpssync/data/rg-google-maps-v3.html, gpssync/gpsbookmarkowner.cpp,
+	gpssync/gpsbookmarkowner.h, gpssync/gpscorrelatorwidget.cpp,
+	gpssync/gpscorrelatorwidget.h, gpssync/gpsdatacontainer.h,
+	gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	gpssync/gpsdataparser_p.h, gpssync/gpsimagedetails.cpp,
+	gpssync/gpsimagedetails.h, gpssync/gpsimagelistdragdrophandler.cpp,
+	gpssync/gpsimagelistdragdrophandler.h,
+	gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpslistviewcontextmenu.h,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/gpssync_common.h,
+	gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	gpssync/gpsundocommand.cpp, gpssync/gpsundocommand.h,
+	gpssync/inputboxnocancel.cpp, gpssync/inputboxnocancel.h,
+	gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h,
+	gpssync/kipiimagelist.cpp, gpssync/kipiimagelist.h,
+	gpssync/kipiimagemodel.cpp, gpssync/kipiimagemodel.h,
+	gpssync/mapdragdrophandler.cpp, gpssync/mapdragdrophandler.h,
+	gpssync/parseTagString.h, gpssync/plugin_gpssync.cpp,
+	gpssync/plugin_gpssync.h, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h, gpssync/searchbackend.cpp,
+	gpssync/searchbackend.h, gpssync/searchwidget.cpp,
+	gpssync/searchwidget.h, gpssync/setup.cpp, gpssync/setup.h,
+	gpssync/setup_general.cpp, gpssync/setup_general.h: Polish doxygen
+	and remove abandoned Google Maps RG backend.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1191992
+
+2010-11-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/backend-geonames-rg.cpp, gpssync/backend-osm-rg.cpp,
+	gpssync/rgtagmodel.h: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1191978
+
+2010-11-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-rg.h,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/parseTagString.h,
+	gpssync/rgtagmodel.cpp: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1191974
+
+2010-10-31  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/backend-geonames-rg.cpp, gpssync/backend-geonames-rg.h,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-geonamesUS-rg.h,
+	gpssync/backend-osm-rg.cpp, gpssync/backend-osm-rg.h,
+	gpssync/backend-rg.h, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h: Add a cancel button for reverse
+	geocoding.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1191608
+
 2010-10-30  Angelo Naselli <anaselli@linux.it>
 
 	* printimages/templates/templates.xml, printimages/wizard.cpp: - Cropping error was found by  Gary Montalbine.  - fixed 4_photos_3.5x5 layout also svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1191388
@@ -1420,6 +1799,11 @@
 	dngconverter/plugin/clistviewitem.h: dngconverter: don't proccess
 	items twice common: use picture location, not document location as
 	fallback svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1188976
+
+2010-10-21  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Fix order of initialization.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1188257
 
 2010-10-21  David Faure <faure@kde.org>
 
@@ -1450,6 +1834,26 @@
 	htmlexport/themes/snow/template.xsl: do sort collections by name
 	again svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1187902
 
+2010-10-19  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_flags.h,
+	piwigoexport/piwigotalker.cpp, piwigoexport/piwigowindow.cpp: sync
+	with trunk rev. #1187458 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1187459
+
+2010-10-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp, gpssync/searchwidget.cpp,
+	gpssync/searchwidget.h: Display search results on both maps.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1186541
+
+2010-10-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsbookmarkowner.cpp, gpssync/gpsbookmarkowner.h,
+	gpssync/searchwidget.cpp, gpssync/searchwidget.h: Make it possible
+	to return URLs instead of QPixmaps for ungrouped markers.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1186537
+
 2010-10-16  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1186480
@@ -1478,6 +1882,15 @@
 
 	* printimages/atkinspagelayout.cpp, printimages/atkinspagelayout.h,
 	printimages/cropframe.cpp, printimages/cropframe.h,
+	printimages/customdlg.cpp, printimages/infopage.ui,
+	printimages/plugin_printimages.cpp, printimages/wizard.cpp: sync
+	with trunk rev.#1185861 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1185862
+
+2010-10-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* printimages/atkinspagelayout.cpp, printimages/atkinspagelayout.h,
+	printimages/cropframe.cpp, printimages/cropframe.h,
 	printimages/customdlg.cpp, printimages/plugin_printimages.cpp,
 	printimages/wizard.cpp: no need .h if .moc is there Use more private
 	internal container svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1185859
@@ -1498,6 +1911,26 @@
 
 	* CMakeLists.txt: bump version to 1.6.0 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1185194
 
+2010-10-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : sync with trunk rev.#1185192 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1185193
+
+2010-10-11  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp: Be relaxed about 0/0.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1184913
+
+2010-10-11  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpscorrelatorwidget.cpp, gpssync/gpsdatacontainer.h,
+	gpssync/gpslistviewcontextmenu.cpp, gpssync/kipiimageitem.cpp,
+	gpssync/kipiimageitem.h, gpssync/kipiimagelist.cpp,
+	gpssync/tests/test_kipiimageitem.cpp: EXIF only allows storage of
+	one DOP value, therefore merge HDOP and PDOP into DOP. When parsing
+	GPX files, prefer PDOP over HDOP.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1184910
+
 2010-10-11  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1184669
@@ -1514,6 +1947,29 @@
 
 	* ChangeLog, NEWS, project/NEWS.1.5.0: Update changelog svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1184579
 
+2010-10-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp: Add loading and saving of number of
+	satellites and fix type to metadata.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1184523
+
+2010-10-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1184519
+
+2010-10-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimagelist.cpp: Fix wrong size hint: All columns have
+	to be as high as the thumbnail.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1184517
+
+2010-10-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsimagedetails.cpp: Add number of satellites and fix type
+	to the details widget.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1184516
+
 2010-10-08  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* dngconverter/plugin/aboutdata.h: add XMP and DNG sdk version to
@@ -1529,6 +1985,42 @@
 2010-10-06  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1182976
+
+2010-10-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	batchprocessimages/batchprocessimagesitem.h,
+	batchprocessimages/batchprocessimageslist.cpp,
+	batchprocessimages/borderimagesdialog.cpp,
+	batchprocessimages/borderoptionsdialog.cpp,
+	batchprocessimages/colorimagesdialog.cpp,
+	batchprocessimages/coloroptionsdialog.cpp,
+	batchprocessimages/convertimagesdialog.cpp,
+	batchprocessimages/convertoptionsdialog.cpp,
+	batchprocessimages/effectimagesdialog.cpp,
+	batchprocessimages/effectoptionsdialog.cpp,
+	batchprocessimages/filterimagesdialog.cpp,
+	batchprocessimages/filteroptionsdialog.cpp,
+	batchprocessimages/imagepreview.cpp,
+	batchprocessimages/plugin_batchprocessimages.cpp,
+	batchprocessimages/recompressimagesdialog.cpp,
+	batchprocessimages/recompressoptionsdialog.cpp,
+	batchprocessimages/renameimagesdialog.cpp,
+	batchprocessimages/renameimageswidget.cpp,
+	batchprocessimages/resizecommandbuilder.cpp,
+	batchprocessimages/resizeimagesdialog.cpp,
+	batchprocessimages/resizeoptionsdialog.cpp,
+	common/libkipiplugins/widgets/imageslist.cpp,
+	common/libkipiplugins/widgets/imageslist.h,
+	dngconverter/dngwriter/dngwriter.cpp,
+	dngconverter/plugin/batchdialog.cpp,
+	expoblending/blendingdlg/enfusesettings.h,
+	htmlexport/themes/floating_cards/floating_cards.desktop,
+	picasawebexport/picasawebwindow.cpp, rawconverter/batchdialog.cpp,
+	rawconverter/singledialog.cpp,
+	timeadjust/kipiplugin_timeadjust.desktop: sync with trunk rev.
+	#1182732 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1182734
 
 2010-10-05  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -1577,6 +2069,24 @@
 	* htmlexport/themes/floating_cards/floating_cards.desktop: 
 	SVN_SILENT made messages (.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1182325
 
+2010-10-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp: Write the speed information to XMP as
+	well.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1182191
+
+2010-10-02  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp: Configure exiv2 interface before
+	loading a file, not afterwards.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1181941
+
+2010-10-02  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp, project/kipicmd/kipiinterface.cpp,
+	project/kipicmd/kipiinterface.h: Change sidecar defaults.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1181938
+
 2010-10-01  Jens Mueller <tschenser@gmx.de>
 
 	* NEWS, common/libkipiplugins/widgets/imageslist.cpp,
@@ -1587,6 +2097,16 @@
 2010-10-01  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1181481
+
+2010-09-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h,
+	gpssync/tests/CMakeLists.txt, gpssync/tests/test_kipiimageitem.cpp: 
+	Split loading of image metadata into two parts: 1. Load metadata from the KIPI interface while blocking the UI
+	thread because thread safety is unknown.  2. Load metadata from EXIF using multithreading to provide feedback
+	for the user.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1180721
 
 2010-09-26  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -1605,6 +2125,11 @@
 	* timeadjust/kipiplugin_timeadjust.desktop: SVN_SILENT made messages
 	(.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1177059
 
+2010-09-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1175195
+
 2010-09-13  Jens Mueller <tschenser@gmx.de>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1174970
@@ -1613,6 +2138,16 @@
 
 	* dngconverter/dngwriter/dngwriter.cpp: Use timestamps from libkexiv
 	as Libraw do not support daylight savings time.  BUGS: 249785 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1174969
+
+2010-09-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* htmlexport/themes/dateframes/dateframes.desktop,
+	htmlexport/themes/details/details.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	printimages/templates/Album-Collage.desktop,
+	printimages/templates/Album-Collage1.desktop: sync with trunk rev.
+	#1174895 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1174896
 
 2010-09-12  Script Kiddy <scripty@kde.org>
 
@@ -1638,6 +2173,29 @@
 
 	* gpssync/kmlexport.cpp: polish svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1174372
 
+2010-09-11  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Try to disable that 'Enter' causes the
+	'Apply' button to be triggered, but the code does not have any
+	effect. Any ideas? svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1174260
+
+2010-09-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/tools/kpwriteimage.cpp,
+	htmlexport/wizard.cpp: sync with trunk rev.#1172472 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1172474
+
+2010-09-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h: Change the
+	edit mode/browse mode buttons into one button to switch between
+	markers and thumbnails. This button is now always visible, but
+	markers are only movable if the marker tiler returns FlagMovable.
+	The Google Maps backend still does not honor movability of items for
+	all cases.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1171816
+
 2010-09-04  Aurélien Gâteau <agateau@kde.org>
 
 	* htmlexport/wizard.cpp: Gianluca is now the official maintainer of
@@ -1651,7 +2209,40 @@
 
 2010-09-03  Gilles Caulier <caulier.gilles@gmail.com>
 
-	* CMakeLists.txt: to prevent warnings with MSVC svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1171301
+	* : sync with trunk rev. #1171307 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1171308
+
+2010-08-31  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/kipiimageitem.cpp: compile with last libkexiv2 API svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1170287
+
+2010-08-29  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/searchwidget.cpp: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1169491
+
+2010-08-29  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1169483
+
+2010-08-29  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/CMakeLists.txt, gpssync/gpssettingswidget.cpp,
+	gpssync/gpssettingswidget.h, gpssync/gpssyncdialog.cpp,
+	gpssync/setup_general.cpp: Remove the settings tab - we have a
+	configuration dialog now.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1169455
+
+2010-08-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/CMakeLists.txt, gpssync/gpssync_common.h,
+	gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	gpssync/setup.cpp, gpssync/setup.h, gpssync/setup_general.cpp,
+	gpssync/setup_general.h: Add a configuration dialog to GPSSync and
+	add first support for two maps at once.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1169136
 
 2010-08-25  Script Kiddy <scripty@kde.org>
 
@@ -1687,6 +2278,51 @@
 2010-08-22  Nicolas Lécureuil <neoclust.kde@free.fr>
 
 	* ChangeLog, NEWS: Prepare for 1.4.0 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1166538
+
+2010-08-19  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/backend-geonames-rg.cpp,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-google-rg.cpp,
+	gpssync/backend-osm-rg.cpp, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpssyncdialog.cpp, gpssync/kipiimageitem.cpp,
+	gpssync/parseTagString.h, gpssync/rgtagmodel.cpp: Polished the
+	coding-style svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1165516
+
+2010-08-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/gpsimagedetails.cpp, gpssync/gpsimagedetails.h: fiw
+	warnings and polish svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1165166
+
+2010-08-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/dialogs/batchprogressdialog.cpp,
+	common/libkipiplugins/dialogs/batchprogressdialog.h,
+	common/libkipiplugins/dialogs/imagedialog.cpp,
+	common/libkipiplugins/dialogs/imagedialog.h,
+	common/libkipiplugins/dialogs/outputdialog.cpp,
+	common/libkipiplugins/dialogs/outputdialog.h,
+	common/libkipiplugins/dialogs/wizardpage.cpp,
+	common/libkipiplugins/dialogs/wizardpage.h,
+	common/libkipiplugins/tools/binaryiface.cpp,
+	common/libkipiplugins/tools/binaryiface.h,
+	common/libkipiplugins/tools/kpaboutdata.cpp,
+	common/libkipiplugins/tools/kpaboutdata.h,
+	common/libkipiplugins/tools/kpwritehelp.cpp,
+	common/libkipiplugins/tools/kpwritehelp.h,
+	common/libkipiplugins/tools/kpwriteimage.cpp,
+	common/libkipiplugins/tools/kpwriteimage.h,
+	common/libkipiplugins/widgets/imageslist.cpp,
+	common/libkipiplugins/widgets/imageslist.h,
+	common/libkipiplugins/widgets/previewimage.cpp,
+	common/libkipiplugins/widgets/previewimage.h,
+	common/libkipiplugins/widgets/previewmanager.cpp,
+	common/libkipiplugins/widgets/previewmanager.h,
+	common/libkipiplugins/widgets/savesettingswidget.cpp,
+	common/libkipiplugins/widgets/savesettingswidget.h: sync with trunk
+	rev. #1165078 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1165083
 
 2010-08-18  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -1728,21 +2364,242 @@
 	container more private d container constify pointers set thumbnails
 	visible if item is selected svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1165069
 
+2010-08-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: sync with trunk rev. #1165008 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1165023
+
+2010-08-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/backend-geonames-rg.cpp, gpssync/backend-geonames-rg.h,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-geonamesUS-rg.h,
+	gpssync/backend-osm-rg.cpp, gpssync/backend-osm-rg.h,
+	gpssync/backend-rg.cpp, gpssync/backend-rg.h,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpssyncdialog.cpp,
+	gpssync/searchwidget.cpp: Some more cleanup.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1164686
+
 2010-08-17  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1164579
+
+2010-08-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsbookmarkowner.cpp, gpssync/gpsbookmarkowner.h,
+	gpssync/gpsdatacontainer.h, gpssync/gpsdataparser.cpp,
+	gpssync/gpsdataparser.h, gpssync/gpsimagedetails.cpp,
+	gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpssync_common.h,
+	gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h,
+	gpssync/mapdragdrophandler.cpp, gpssync/mapdragdrophandler.h,
+	gpssync/searchbackend.cpp, gpssync/searchbackend.h,
+	gpssync/searchwidget.cpp, gpssync/searchwidget.h,
+	gpssync/tests/test_gpxparsing.cpp: More cleanup: - Rename WMWGeocoordinate to GeoCoordinates - Separate the big common headers into smaller chunks svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1164471
+
+2010-08-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/backend-google-rg.cpp, gpssync/gpsbookmarkowner.cpp,
+	gpssync/gpsbookmarkowner.h, gpssync/gpsdatacontainer.h,
+	gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	gpssync/gpsimagedetails.cpp, gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpssync_common.h,
+	gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h,
+	gpssync/mapdragdrophandler.cpp, gpssync/mapdragdrophandler.h,
+	gpssync/searchbackend.cpp, gpssync/searchbackend.h,
+	gpssync/searchwidget.cpp, gpssync/searchwidget.h,
+	gpssync/tests/test_gpxparsing.cpp: Rename the KMapIface namespace to
+	KMap - easier to type.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1164461
+
+2010-08-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Several changes: - make modes mouse available individually - set available mouse modes for all current kmap instances - call setActive where missing - move monitoring of dataChanged signal into the model helper - ground work for monitoring changes to items in digikam via
+	database watcher to prevent to many refreshes of the map view svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1164360
 
 2010-08-16  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1164321
 
+2010-08-14  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp, gpssync/searchwidget.cpp,
+	gpssync/searchwidget.h: Polish: Rename KMap to KMapWidget, as in
+	Marble and MarbleWidget.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1163679
+
+2010-08-13  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/backend-geonames-rg.cpp, gpssync/backend-geonames-rg.h,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-geonamesUS-rg.h,
+	gpssync/backend-osm-rg.cpp, gpssync/backend-osm-rg.h,
+	gpssync/backend-rg.cpp, gpssync/backend-rg.h,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Moved the reverse geocoding documentation from
+	.h to .cpp files.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1162895
+
+2010-08-11  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/backend-geonames-rg.cpp, gpssync/backend-geonames-rg.h,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-geonamesUS-rg.h,
+	gpssync/backend-osm-rg.cpp, gpssync/backend-osm-rg.h,
+	gpssync/backend-rg.h, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/kipiimageitem.h,
+	gpssync/rgtagmodel.h: Documentation for reverse geocoding + code
+	polishing.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1162076
+
+2010-08-08  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsimagedetails.cpp, gpssync/gpsimagedetails.h,
+	gpssync/gpssyncdialog.cpp, gpssync/kipiimagemodel.cpp: Don't update
+	the details widget when it is not active.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1160551
+
+2010-08-07  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsimagedetails.cpp, gpssync/gpsimagedetails.h,
+	gpssync/gpssyncdialog.cpp: Add more fields to the details widget and
+	implement the apply button.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1160325
+
+2010-08-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/CMakeLists.txt, gpssync/gpsimagedetails.cpp,
+	gpssync/gpsimagedetails.h, gpssync/gpssyncdialog.cpp,
+	gpssync/gpssyncdialog.h: Start work on replacing the image view tab
+	with a details tab.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1160051
+
+2010-08-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsdatacontainer.h, gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpslistviewcontextmenu.h: Add an action to remove the speed.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1160022
+
+2010-08-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp: Support for storing the speed in EXIF.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1157926
+
+2010-08-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h,
+	gpssync/tests/CMakeLists.txt, gpssync/tests/test_gpsexif.cpp,
+	gpssync/tests/test_gpsexif.h, gpssync/tests/test_kipiimageitem.cpp,
+	gpssync/tests/test_kipiimageitem.h: Start tests for loading/saving
+	of GPS information from/to files.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1157911
+
+2010-08-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpscorrelatorwidget.cpp, gpssync/gpsdatacontainer.h,
+	gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h,
+	gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h,
+	gpssync/tests/data/gpxfile-1.gpx, gpssync/tests/test_gpxparsing.cpp: 
+	Start support for also reading the speed from the GPX data.
+	Currently, the speed is only shown in m/s.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1157876
+
+2010-07-31  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpssyncdialog.cpp, gpssync/rgtagmodel.cpp: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1157616
+
 2010-07-30  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1157189
 
+2010-07-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : sync with trunk rev #1156673 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1156674
+
+2010-07-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, README: bum libkdcraw depency to 1.2.0 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1156035
+
+2010-07-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/CMakeLists.txt: bump to 2.0 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1155274
+
 2010-07-25  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1154507
+
+2010-07-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, acquireimages/kipiplugin_acquireimages.desktop,
+	acquireimages/scangui.desktop,
+	advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	calendar/kipiplugin_calendar.desktop,
+	common/libkipiplugins/kipiplugins.desktop,
+	dngconverter/plugin/dngconverter.desktop,
+	dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	expoblending/expoblending.desktop,
+	expoblending/kipiplugin_expoblending.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	htmlexport/themes/classic/classic.desktop,
+	htmlexport/themes/cleanframes/cleanframes.desktop,
+	htmlexport/themes/dateframes/dateframes.desktop,
+	htmlexport/themes/details/details.desktop,
+	htmlexport/themes/floating_cards/floating_cards.desktop,
+	htmlexport/themes/frames/frames.desktop,
+	htmlexport/themes/matrix/matrix.desktop,
+	htmlexport/themes/s0/s0.desktop,
+	htmlexport/themes/simple/simple.desktop,
+	htmlexport/themes/snow/snow.desktop,
+	imageviewer/kipiplugin_imageviewer.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	jpeglossless/kipiplugin_jpeglossless.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	metadataedit/kipiplugin_metadataedit.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	printimages/kipiplugin_printimages.desktop,
+	printimages/templates/1_photo_10.5x14.8cm.desktop,
+	printimages/templates/1_photo_10x15cm.desktop,
+	printimages/templates/1_photo_20x25cm.desktop,
+	printimages/templates/1_photo_8x10.desktop,
+	printimages/templates/1_photo_9x13cm.desktop,
+	printimages/templates/2_photos_13x18cm.desktop,
+	printimages/templates/2_photos_5x7.desktop,
+	printimages/templates/3_photos_10x15cm.desktop,
+	printimages/templates/3_photos_4x6.desktop,
+	printimages/templates/4_photos_10x13.33cm.desktop,
+	printimages/templates/4_photos_3.5x5.desktop,
+	printimages/templates/4_photos_4.5x5cm.desktop,
+	printimages/templates/4_photos_9x13cm.desktop,
+	printimages/templates/4x6Album.desktop,
+	printimages/templates/6_photos_3.5x4cm.desktop,
+	printimages/templates/8_photos_6x9cm.desktop,
+	printimages/templates/Album-Collage.desktop,
+	printimages/templates/Album-Collage1.desktop,
+	printimages/templates/Album_10x15cm.desktop,
+	printimages/templates/Album_11.5x15cm.desktop,
+	printimages/templates/FullPage.desktop,
+	printimages/templates/Photoframe.desktop,
+	printimages/templates/Thumbnails_5x4.desktop,
+	printimages/templates/Thumbnails_6x5.desktop,
+	rawconverter/kipiplugin_rawconverter.desktop,
+	removeredeyes/kipiplugin_removeredeyes.desktop,
+	sendimages/kipiplugin_sendimages.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	timeadjust/kipiplugin_timeadjust.desktop,
+	wallpaper/kipiplugin_wallpaper.desktop: sync with trunk rev #1144569 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1154367
 
 2010-07-23  Script Kiddy <scripty@kde.org>
 
@@ -1752,15 +2609,404 @@
 	ipodexport/kipiplugin_ipodexport.desktop: SVN_SILENT made messages
 	(.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1153429
 
+2010-07-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/rgtagmodel.cpp: fix warnings svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1152584
+
 2010-07-18  Johannes Wienke <languitar@semipol.de>
 
 	* CMakeLists.txt:  * check that the opengl module is installed  * remove duplicated check for opengl stuff svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1151310
+
+2010-07-18  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	gpssync/mapdragdrophandler.cpp, gpssync/mapdragdrophandler.h: Moving
+	of markers is now reported directly to the marker tiler, which
+	reports it to the model helper. No more signals involved, and no
+	need for model indices if there are none ;-) Next step is handling
+	of clicks on markers.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1151257
+
+2010-07-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Adapt to changes in libkmap.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1150954
+
+2010-07-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/tests/test_rgtagmodel.cpp: Fix build.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1150791
+
+2010-07-16  Andi Clemens <andi.clemens@gmx.net>
+
+	* gpssync/gpsdataparser.h: fix warning svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1150760
+
+2010-07-14  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Add a parent to MarkerModel.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1149993
+
+2010-07-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/rgtagmodel.cpp, gpssync/rgtagmodel.h: polish coding style
+	mising header svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1149951
+
+2010-07-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/borrowed-future/klinkitemselectionmodel.h,
+	gpssync/borrowed-future/kmodelindexproxymapper.h: patch from David
+	Eriksson to compile under mingw4 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1149819
+
+2010-07-12  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/kipiimageitem.cpp,
+	gpssync/rgtagmodel.cpp, gpssync/rgtagmodel.h: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148806
+
+2010-07-11  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/kipiimageitem.h,
+	gpssync/rgtagmodel.cpp: Fixed bug when adding old children on
+	top-level.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148799
+
+2010-07-11  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/kipiimageitem.h,
+	gpssync/rgtagmodel.cpp, gpssync/rgtagmodel.h,
+	gpssync/tests/test_rgtagmodel.cpp: Fixed the bug when adding new
+	children to root tag.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148790
+
+2010-07-11  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/tests/simpletreemodel/simpletreemodel.h,
+	gpssync/tests/test_rgtagmodel.cpp: Write a test to top-level new
+	tags svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148710
+
+2010-07-11  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Replace --delete all new tags-- menu item with
+	--delete all new spacers-- .  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148648
+
+2010-07-11  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Some cleanup and UI polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148596
+
+2010-07-11  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/rgtagmodel.cpp: Actually remove the moved items from their
+	old position before calling endMoveRows.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148587
 
 2010-07-11  Script Kiddy <scripty@kde.org>
 
 	* acquireimages/kipiplugin_acquireimages.desktop,
 	acquireimages/scangui.desktop: SVN_SILENT made messages (.desktop
 	file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1148585
+
+2010-07-11  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/rgtagmodel.cpp: 
+	Cleaning the debugging.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148547
+
+2010-07-11  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/backend-osm-rg.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/parseTagString.h,
+	gpssync/rgtagmodel.cpp: Added more address elements. Fixed a hidden
+	bug.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148533
+
+2010-07-10  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp: Fixed index selection. Now
+	only the last tag has sometimes problems.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148476
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Adapt to changes in libkmap.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148474
+
+2010-07-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: 1.5 => 2.0 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148465
+
+2010-07-10  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp: Spacers
+	can be added as top level items.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148463
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/rgtagmodel.cpp: Fix crash on adding a spacer when the
+	model has no items.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148457
+
+2010-07-10  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/parseTagString.h,
+	gpssync/rgtagmodel.cpp: Made some parts of code more robust.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148448
+
+2010-07-10  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/kipiimageitem.cpp: New tags are now displayed in Tags
+	column also.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148407
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsreversegeocodingwidget.cpp: Remove invalid connect.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148388
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	gpssync/rgtagmodel.cpp: Adapt to libkmap changes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148386
+
+2010-07-10  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/kipiimageitem.cpp,
+	gpssync/kipiimageitem.h, gpssync/rgtagmodel.cpp: Small changes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148378
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimagelist.cpp: Hide advanced columns by default.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148352
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.h: Remove unneccesary constant.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148336
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h: Some more
+	cleanup.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148334
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/CMakeLists.txt, gpssync/backend-rg.cpp,
+	gpssync/backend-rg.h, gpssync/gpsbookmarkowner.cpp,
+	gpssync/gpscorrelatorwidget.cpp, gpssync/gpsimageitem.cpp,
+	gpssync/gpsimageitem.h, gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/gpssyncdialog.cpp,
+	gpssync/gpsundocommand.cpp, gpssync/gpsundocommand.h,
+	gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h,
+	gpssync/kipiimagemodel.cpp, gpssync/mapdragdrophandler.cpp,
+	gpssync/rgtagmodel.h, gpssync/searchwidget.cpp: Merge KipiImageItem
+	and GPSImageItem to reduce abstraction.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148331
+
+2010-07-10  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpslistviewcontextmenu.cpp, gpssync/gpssyncdialog.cpp,
+	gpssync/kipiimagelist.cpp, gpssync/kipiimagelist.h: Remove one layer
+	of abstraction.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148321
+
+2010-07-10  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp: Small changes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148196
+
+2010-07-10  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h,
+	gpssync/gpsreversegeocodingwidget.cpp: Now, tags are added to XMP
+	only if the checkbox is checked. I've also removed from the UI the
+	unusefull inputs.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148187
+
+2010-07-09  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/parseTagString.h: Made some ugly code look a little
+	better.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148182
+
+2010-07-09  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Made a function that adds all spacers
+	containing address elements.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148125
+
+2010-07-09  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimagelist.cpp, gpssync/kipiimagelist.h: Add a context
+	menu to change the visibility of columns.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148120
+
+2010-07-09  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/backend-osm-rg.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/parseTagString.h: Added
+	the other address elements.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148066
+
+2010-07-09  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp: Small
+	fixes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1148052
+
+2010-07-09  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp: RG tags are now stored in metadata.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147658
+
+2010-07-08  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/rgtagmodel.cpp, gpssync/rgtagmodel.h: Now, spacers are saved
+	when closing gpssync.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147643
+
+2010-07-08  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Delete the dialog on closing.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147582
+
+2010-07-08  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Some fixes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147547
+
+2010-07-08  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/rgtagmodel.cpp, gpssync/rgtagmodel.h: Wrote functions that
+	retrieve the spacers. They have a bug until now.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147529
+
+2010-07-08  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpsundocommand.cpp,
+	gpssync/gpsundocommand.h, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Fixed bug where host application tags created
+	conflicts with new RG tags.Now, in gpsimageitem, tags are stored as
+	structures.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147476
+
+2010-07-07  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsimageitem.cpp: Fix problem with XMP sidecars for now.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147316
+
+2010-07-07  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/rgtagmodel.cpp: Now old tags work with new tags, but still
+	is not the ideal formula.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147278
+
+2010-07-07  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h,
+	gpssync/gpssyncdialog.cpp, gpssync/rgtagmodel.cpp: Adds new resulted
+	RG tags to digikam. For now, it has some problems if changes are
+	made after clicking Apply button.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147255
+
+2010-07-07  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/rgtagmodel.cpp: 
+	Repaired undo/redo and tag retrieving bugs.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1147137
+
+2010-07-07  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsimageitem.cpp: Display the tags.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146943
+
+2010-07-07  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpsundocommand.cpp: 
+	Added RG data to undo/redo structure. Unfortunately, it has some
+	bugs.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146908
+
+2010-07-06  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h: Context menu is personalized
+	for each backend service. Also, now RGwidget skips the photos
+	without coordinates.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146901
+
+2010-07-06  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/backend-geonames-rg.cpp,
+	gpssync/backend-geonamesUS-rg.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/parseTagString.h: Fixed
+	geonames and geonames-us backends.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146851
+
+2010-07-06  Marcel Wiesweg <marcel.wiesweg@gmx.de>
+
+	* gpssync/tests/test_rgparsing.cpp: Comparing QStringList with
+	QString does not compile.  Seems this is the right fix, but not
+	absolutely sure.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146818
+
+2010-07-06  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/parseTagString.h: Added
+	county address element tag.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146781
+
+2010-07-06  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/backend-osm-rg.cpp, gpssync/gpsimageitem.cpp,
+	gpssync/gpsimageitem.h, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/gpsundocommand.cpp,
+	gpssync/parseTagString.h, gpssync/rgtagmodel.cpp: Changed the way
+	that retrieved RG data is added to tag tree and added Street spacer.
+	Now, just OSM backend works, but I will change the others
+	immediately.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146778
+
+2010-07-05  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsbookmarkowner.cpp, gpssync/gpscorrelatorwidget.cpp,
+	gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h,
+	gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpssyncdialog.cpp,
+	gpssync/gpssyncdialog.h, gpssync/gpsundocommand.cpp,
+	gpssync/gpsundocommand.h, gpssync/searchwidget.cpp: Made two
+	functions that add oldData and newData from gpsImageItem instead of
+	adding them manually.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146411
 
 2010-07-05  Script Kiddy <scripty@kde.org>
 
@@ -1830,6 +3076,173 @@
 	wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
 	(.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1146075
 
+2010-07-05  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h: I added a
+	QStringList to tagData structure, which will keep modified tags in
+	undo/remove.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1146028
+
+2010-07-04  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/rgtagmodel.cpp: 
+	Fixed tag regeneration when last child doesn't have data.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145992
+
+2010-07-04  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h: Made a function that refreshes
+	the tag tree.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145967
+
+2010-07-04  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsimageitem.cpp, gpssync/gpsimageitem.h,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Made a function that readds new RG tags.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145961
+
+2010-07-03  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/rgtagmodel.cpp: Now, deleteTag function deletes RG tags
+	aswell.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145726
+
+2010-07-03  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Fixed spacer deletion from tag tree.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145723
+
+2010-07-03  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp: Added
+	remove tag option in context menu.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145706
+
+2010-07-03  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp,
+	gpssync/rgtagmodel.h: Deletes a tag when one clicks it.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145705
+
+2010-07-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpslistviewcontextmenu.cpp: Fix pasting of geo-urls.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145625
+
+2010-07-02  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/rgtagmodel.cpp: Now,
+	user can add a new tag to tag tree from gpssync.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145413
+
+2010-07-02  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/parseTagString.h,
+	gpssync/rgtagmodel.cpp: Fixed for the moment the case when Country
+	or City RG data doesn't exist.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145365
+
+2010-07-02  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync/rgtagmodel.cpp, gpssync/rgtagmodel.h: I've put new tags
+	addresses in gpsimageitem structure.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145322
+
+2010-07-02  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/plugin_gpssync.cpp, gpssync/plugin_gpssync.h: simplify
+	menu entry. Just on item to add svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145289
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/gpssyncdialog.cpp: update credits svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145012
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/gpssyncdialog.h: why splittersize is not in d private
+	container ??? svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145011
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/backend-geonames-rg.cpp,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-google-rg.cpp,
+	gpssync/backend-osm-rg.cpp, gpssync/gpsbookmarkowner.cpp,
+	gpssync/gpslistviewcontextmenu.cpp, gpssync/gpssync2_common.h,
+	gpssync/gpssync_common.h, gpssync/plugin_gpssync.cpp,
+	gpssync/searchbackend.cpp, gpssync/searchwidget.cpp: gpssync2 =>
+	gpssync svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145009
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/CMakeLists.txt, gpssync/data/reverse-js.js,
+	gpssync/data/rg-google-maps-v3.html, gpssync/reverse-js.js,
+	gpssync/rg-google-maps-v3.html: move these files to data dir svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1145004
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* README: update svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144949
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, README, gpssync/CMakeLists.txt,
+	gpssync/tests/CMakeLists.txt: add libkmap depency svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144948
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/CMakeLists.txt, gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpssyncdialog.cpp, gpssync/searchwidget.cpp: GPSSYNC2 ->
+	GPSSYNC svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144908
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/howto-build.txt: obsolete svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144905
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/TODO: polish svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144904
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/CMakeLists.txt, gpssync/kipiplugin_gpssync.desktop,
+	gpssync/kipiplugin_gpssync2.desktop: GPSSync2 => GPSSync svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144903
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/borrowed/modeltest.cpp: handle moc file svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144901
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/backend-rg.cpp, gpssync/gpsbookmarkowner.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/kipiimageitem.cpp,
+	gpssync/kipiimagelist.cpp, gpssync/kipiimagemodel.cpp,
+	gpssync/mapdragdrophandler.cpp, gpssync/rgtagmodel.cpp,
+	gpssync/searchbackend.cpp, gpssync/searchwidget.cpp: fix warnings svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144900
+
+2010-07-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/gpssyncdialog.cpp: fix warnings svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144898
+
 2010-07-01  Script Kiddy <scripty@kde.org>
 
 	* expoblending/expoblending.desktop,
@@ -1857,6 +3270,21 @@
 	printimages/templates/Thumbnails_6x5.desktop,
 	shwup/kipiplugin_shwup.desktop: SVN_SILENT made messages (.desktop
 	file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1144883
+
+2010-06-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: fix version svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144583
+
+2010-06-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : mv gpssync2 to kipi-plugins svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144582
+
+2010-06-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : start to branch kipi-plugins for GoSC2010 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144580
 
 2010-06-30  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -1888,6 +3316,51 @@
 	shwup/Messages.sh, smug/Messages.sh, timeadjust/Messages.sh,
 	wallpaper/Messages.sh: update message extraction script to parse
 	subfolder and all releavant file with i18n BUGS: 239841 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1144568
+
+2010-06-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : mv svn path=/branches/extragear/graphics/gpssync2/; revision=1144520
+
+2010-06-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync2/backend-google-rg.cpp, gpssync2/gpsbookmarkowner.cpp,
+	gpssync2/gpsbookmarkowner.h, gpssync2/gpsdatacontainer.h,
+	gpssync2/gpsdataparser.cpp, gpssync2/gpsdataparser.h,
+	gpssync2/gpsimageitem.cpp, gpssync2/gpsimageitem.h,
+	gpssync2/gpslistviewcontextmenu.cpp,
+	gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/gpssync2_common.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h,
+	gpssync2/mapdragdrophandler.cpp, gpssync2/mapdragdrophandler.h,
+	gpssync2/searchbackend.cpp, gpssync2/searchbackend.h,
+	gpssync2/searchwidget.cpp, gpssync2/searchwidget.h,
+	gpssync2/tests/test_gpsexif.cpp, gpssync2/tests/test_gpxparsing.cpp: 
+	fix namespace svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144253
+
+2010-06-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync2/backend-rg.h, gpssync2/gpsdatacontainer.h,
+	gpssync2/gpsdataparser.h, gpssync2/gpsimageitem.h,
+	gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/gpssync2_common.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h,
+	gpssync2/kipiimagemodel.h, gpssync2/mapdragdrophandler.h,
+	gpssync2/searchbackend.h, gpssync2/searchwidget.cpp,
+	gpssync2/searchwidget.h: use KMap svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144217
+
+2010-06-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync2/CMakeLists.txt, gpssync2/backend-google-rg.cpp,
+	gpssync2/backend-google-rg.h, gpssync2/backend-rg.h,
+	gpssync2/gpsdatacontainer.h, gpssync2/gpsdataparser.h,
+	gpssync2/gpsimageitem.h, gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/gpssync2_common.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h,
+	gpssync2/howto-build.txt, gpssync2/mapdragdrophandler.h,
+	gpssync2/searchbackend.h, gpssync2/searchwidget.cpp,
+	gpssync2/tests/CMakeLists.txt: link and compile against libkmap svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1144183
 
 2010-06-29  Script Kiddy <scripty@kde.org>
 
@@ -2033,6 +3506,13 @@
 	advancedslideshow/volslider.h: SVN_SILENT Fix phonon includes Yes, it broke here :) According to #kde-devel: <sandsmark> lowercase <sandsmark>
 	phonon/class.h <sandsmark> because of some stupid os x stuff CCMAIL: languitar@semipol.de CCMAIL: kde-imaging@kde.org svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1143874
 
+2010-06-28  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/rgtagmodel.cpp,
+	gpssync2/rgtagmodel.h: Added new tags to tag tree when RG Button is
+	clicked.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143856
+
 2010-06-28  Johannes Wienke <languitar@semipol.de>
 
 	* advancedslideshow/commoncontainer.h,
@@ -2041,6 +3521,147 @@
 	advancedslideshow/soundtrackdialog.cpp,
 	advancedslideshow/volslider.h: fix compilation on recent ubuntu.
 	Does this break for other systems? CCMAIL: kde-imaging@kde.org svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1143847
+
+2010-06-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/test_gpsexif.cpp: Also test the values.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143839
+
+2010-06-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/test_gpsexif.cpp: Add a test for loading a file
+	with coordinates.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143838
+
+2010-06-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/CMakeLists.txt, gpssync2/tests/test_gpsexif.cpp,
+	gpssync2/tests/test_gpsexif.h: Start work on loading/storing more
+	GPS info than lat/lon/alt.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143831
+
+2010-06-28  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: New RG tags have green foreground.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143700
+
+2010-06-28  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/rgtagmodel.cpp,
+	gpssync2/rgtagmodel.h, gpssync2/tests/test_rgtagmodel.cpp: Added new
+	RG tags to tag model.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143696
+
+2010-06-28  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: Spacers have now red color as foreground.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143497
+
+2010-06-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h: Added a context menu to
+	tagTreeView, so when a user right-clicks a tag, he can select what
+	address element will be added.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143495
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp: Fix tabs not opening on first start.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143448
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpsreversegeocodingwidget.cpp: 
+	Compile with older libkipi versions.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143440
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/simpletreemodel/simpletreemodel.cpp,
+	gpssync2/tests/simpletreemodel/simpletreemodel.h,
+	gpssync2/tests/simpletreemodel/test_simpletreemodel.cpp,
+	gpssync2/tests/test_rgtagmodel.cpp,
+	gpssync2/tests/test_rgtagmodel.h: Make it possible to add items at
+	any position, not just as a new row.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143431
+
+2010-06-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp: Adds a spacer when one
+	clicks a tag svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143392
+
+2010-06-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: Check to not add duplicate spacers svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143390
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/rgtagmodel.cpp: Strictly check that the indices are from
+	the right model before converting them.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143388
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/rgtagmodel.cpp: Small fixes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143387
+
+2010-06-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: Changed rowAboutToBeInserted svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143386
+
+2010-06-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: Small change to rowsAboutToBeInserted svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143384
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/tests/test_rgtagmodel.cpp,
+	gpssync2/tests/test_rgtagmodel.h: Fix rowCount.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143377
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/tests/test_rgtagmodel.cpp: Pass
+	more tests, except tests where items were added to the source model
+	after the creation of the rgtagmodel.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143372
+
+2010-06-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/rgtagmodel.h: Added a enum to
+	store branch types and changed a little index translation svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143354
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/tests/test_rgtagmodel.cpp: 
+	Reverse source tags and spacer tags order. Now the tests at least
+	don't fail.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143322
+
+2010-06-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/rgtagmodel.h,
+	gpssync2/tests/test_rgtagmodel.cpp,
+	gpssync2/tests/test_rgtagmodel.h: Separate tests for spacers into a
+	new function.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143321
+
+2010-06-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/tests/test_rgtagmodel.cpp: Small
+	changes svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143316
+
+2010-06-26  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: Fixed index function.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1143163
 
 2010-06-24  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2113,6 +3734,12 @@
 	metadataedit/iptc/iptcsubjects.cpp: Fix IPTC url to wikipedia BUGS:
 	242624 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1141956
 
+2010-06-23  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: I've modified the model to add new data.
+	Still not tested.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141796
+
 2010-06-23  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* README: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1141787
@@ -2122,6 +3749,91 @@
 	* CMakeLists.txt, cmake/modules/FindOpenCV.cmake,
 	removeredeyes/CMakeLists.txt: Use OPenCV 2.0 cmake script to detect
 	this library svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1141786
+
+2010-06-23  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/rgtagmodel.cpp,
+	gpssync2/rgtagmodel.h: Added function that adds extra tags to model.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141585
+
+2010-06-22  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: Deleted all unwanted kDebug svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141413
+
+2010-06-22  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/simpletreemodel/simpletreemodel.cpp,
+	gpssync2/tests/simpletreemodel/simpletreemodel.h,
+	gpssync2/tests/simpletreemodel/test_simpletreemodel.cpp,
+	gpssync2/tests/test_rgtagmodel.cpp: Make the number of columns fixed
+	for the model.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141395
+
+2010-06-22  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/rgtagmodel.cpp: 
+	Make debug output less verbose and polish model code a little.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141388
+
+2010-06-22  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/tests/test_rgtagmodel.cpp: Fix
+	tag tree model bug.It's showing the tag tree now svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141332
+
+2010-06-22  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/tests/test_rgtagmodel.cpp: Fixed
+	parent bug svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141328
+
+2010-06-22  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/tests/test_rgtagmodel.cpp: Added
+	more tests.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141311
+
+2010-06-22  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/rgtagmodel.cpp,
+	gpssync2/tests/simpletreemodel/simpletreemodel.cpp,
+	gpssync2/tests/simpletreemodel/test_simpletreemodel.cpp,
+	gpssync2/tests/test_rgtagmodel.cpp: Fix some bugs in the models.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1141057
+
+2010-06-21  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/test_rgtagmodel.cpp: And two more crashes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140929
+
+2010-06-21  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/test_rgtagmodel.cpp: Add a test that crashes the
+	model.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140927
+
+2010-06-21  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/CMakeLists.txt,
+	gpssync2/tests/simpletreemodel/CMakeLists.txt,
+	gpssync2/tests/simpletreemodel/simpletreemodel.cpp,
+	gpssync2/tests/simpletreemodel/simpletreemodel.h,
+	gpssync2/tests/simpletreemodel/test_simpletreemodel.cpp,
+	gpssync2/tests/simpletreemodel/test_simpletreemodel.h,
+	gpssync2/tests/test_rgtagmodel.cpp,
+	gpssync2/tests/test_rgtagmodel.h: Make a simple tree model which can
+	be used to test the RG tag model and later be used in kipicmd to
+	provide tag data.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140924
+
+2010-06-21  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/rgtagmodel.cpp,
+	gpssync2/rgtagmodel.h: Made some small changes to submodel. The tree
+	is building fine, but it doesn't show the created tags and it
+	crashes when trying to expand the second level.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140881
 
 2010-06-21  Script Kiddy <scripty@kde.org>
 
@@ -2143,6 +3855,44 @@
 	htmlexport/themes/snow/snow.desktop,
 	imageviewer/kipiplugin_imageviewer.desktop: SVN_SILENT made messages
 	(.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1140607
+
+2010-06-21  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/rgtagmodel.cpp,
+	gpssync2/rgtagmodel.h: Some small fixes.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140594
+
+2010-06-20  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/rgtagmodel.cpp: 
+	Some changes to submodel, the root tag appears, but still expansion
+	doesn't working.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140565
+
+2010-06-20  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp: Changed the model so now adds the root
+	tag svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140461
+
+2010-06-20  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/rgtagmodel.cpp: 
+	Changes to submodel svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140458
+
+2010-06-20  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpscorrelatorwidget.cpp, gpssync2/gpsdataparser.cpp,
+	gpssync2/gpsimageitem.cpp: Fix parsing of 'fix type' and enable
+	sorting by accuracy.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140322
+
+2010-06-20  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp: Don't crash on missing
+	external tag model.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140318
 
 2010-06-20  Script Kiddy <scripty@kde.org>
 
@@ -2175,6 +3925,53 @@
 	printimages/templates/Album_11.5x15cm.desktop: SVN_SILENT made
 	messages (.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1140288
 
+2010-06-19  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/rgtagmodel.cpp, gpssync2/rgtagmodel.h: Added signals to
+	tag submodel svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140108
+
+2010-06-19  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsdataparser.cpp: Remove accidental sleep.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140095
+
+2010-06-19  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsdatacontainer.h, gpssync2/gpsdataparser.cpp,
+	gpssync2/gpsdataparser.h, gpssync2/gpsimageitem.cpp,
+	gpssync2/gpsimageitem.h: Add support for PDOP and fix type, start
+	work on accuracy warnings based on HDOP, PDOP, fix type and number
+	of satellites.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140094
+
+2010-06-19  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimagelist.cpp: Save the state of the header.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140092
+
+2010-06-19  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsreversegeocodingwidget.h: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140082
+
+2010-06-19  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpscorrelatorwidget.cpp, gpssync2/gpscorrelatorwidget.h,
+	gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/gpssyncdialog.cpp,
+	gpssync2/kipiimagelist.cpp, gpssync2/kipiimagelist.h,
+	gpssync2/searchwidget.cpp, gpssync2/searchwidget.h: Save settings of
+	components to their own groups.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1140081
+
+2010-06-19  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/rgtagmodel.cpp, gpssync2/rgtagmodel.h: Added a submodel for
+	tag model svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1139907
+
 2010-06-19  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* expoblending/manager/actionthread.cpp: Fix broken compilation
@@ -2188,6 +3985,42 @@
 2010-06-19  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update Laurent info svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1139887
+
+2010-06-18  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp: Changed settings conflict
+	with worldmapwidget2 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1139626
+
+2010-06-18  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp: Add a main layout to the
+	RG widget.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1139623
+
+2010-06-18  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/gpssyncdialog.cpp: 
+	Added click item event in tag tree svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1139500
+
+2010-06-18  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/gpssyncdialog.cpp: 
+	Added the tag model from interface in a qtreeview svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1139415
+
+2010-06-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsdatacontainer.h, gpssync2/gpsdataparser.cpp,
+	gpssync2/gpsimageitem.cpp, gpssync2/gpsimageitem.h,
+	gpssync2/gpslistviewcontextmenu.cpp,
+	gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/gpssyncdialog.cpp: 
+	Make variable members of GPSDataContainer private and add a field
+	for PDop.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1139242
 
 2010-06-17  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2212,17 +4045,92 @@
 	* gpssync/kipiplugin_gpssync.desktop: SVN_SILENT made messages
 	(.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1137738
 
+2010-06-13  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsimageitem.h, gpssync2/gpsreversegeocodingwidget.cpp: 
+	Small corrections svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1137670
+
+2010-06-13  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-rg.h, gpssync2/gpsimageitem.cpp,
+	gpssync2/gpsimageitem.h, gpssync2/gpsreversegeocodingwidget.cpp: 
+	Added tags to photo list svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1137644
+
+2010-06-13  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpslistviewcontextmenu.cpp,
+	gpssync2/gpslistviewcontextmenu.h, gpssync2/gpssyncdialog.cpp,
+	gpssync2/kipiimagelist.cpp, gpssync2/kipiimagelist.h: Disable
+	editing in the map or the list while the UI is locked.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1137587
+
+2010-06-13  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsbookmarkowner.cpp, gpssync2/gpssyncdialog.cpp,
+	gpssync2/searchwidget.cpp, gpssync2/searchwidget.h: Add an action to
+	move selected images to the position of a search result.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1137568
+
 2010-06-11  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update Kunal info svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1136934
+
+2010-06-09  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/parseTagString.h: moved makeTagString(...) code from UI
+	to other file svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1136465
+
+2010-06-09  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-geonames-rg.h,
+	gpssync2/backend-geonamesUS-rg.cpp,
+	gpssync2/backend-geonamesUS-rg.h, gpssync2/backend-google-rg.cpp,
+	gpssync2/backend-osm-rg.cpp, gpssync2/backend-osm-rg.h,
+	gpssync2/backend-rg.cpp, gpssync2/backend-rg.h,
+	gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h,
+	gpssync2/tests/test_rgparsing.cpp, gpssync2/tests/test_rgparsing.h: 
+	Added licenses. Corrected coding style. Completed tests and some
+	other small changes svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1136464
 
 2010-06-09  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update Kunal cost svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1136298
 
+2010-06-08  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/test_rgparsing.cpp: Simplify and TODO.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1136044
+
+2010-06-08  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp: Add missing parent for
+	KMessageBox::about.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1136041
+
+2010-06-08  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/tests/test_rgparsing.cpp: Small changes svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135997
+
 2010-06-08  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* CMakeLists.txt: 1.4.0 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1135983
+
+2010-06-08  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp,
+	gpssync2/backend-geonamesUS-rg.cpp, gpssync2/backend-osm-rg.cpp,
+	gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h,
+	gpssync2/tests/test_rgparsing.cpp: Parsed the tag string with
+	country and city svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135968
 
 2010-06-08  Script Kiddy <scripty@kde.org>
 
@@ -2248,6 +4156,14 @@
 2010-06-07  Nicolas Lécureuil <neoclust.kde@free.fr>
 
 	* ChangeLog: Prepare for 1.3.0 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1135670
+
+2010-06-07  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/CMakeLists.txt, gpssync2/backend-geonamesUS-rg.cpp,
+	gpssync2/backend-geonamesUS-rg.h,
+	gpssync2/gpsreversegeocodingwidget.cpp: Added findNearbyAddress
+	service for US svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135520
 
 2010-06-07  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2278,6 +4194,36 @@
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1135224
 
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpslistviewcontextmenu.cpp, gpssync2/gpssync2_common.h: 
+	Use geo-url for copy and paste.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135206
+
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpslistviewcontextmenu.cpp: Fix copy and paste.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135195
+
+2010-06-06  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/tests/CMakeLists.txt, gpssync2/tests/test_rgparsing.cpp,
+	gpssync2/tests/test_rgparsing.h: Added rg tests svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135187
+
+2010-06-06  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h: modified language edit svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135185
+
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsdatacontainer.h, gpssync2/gpslistviewcontextmenu.cpp,
+	gpssync2/gpslistviewcontextmenu.h, gpssync2/gpsundocommand.h: Add
+	actions to remove coordinates, altitude and uncertainty from images.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135172
+
 2010-06-06  Eva Brucherseifer <eva@kde.org>
 
 	* common/libkipiplugins/widgets/imageslist.cpp,
@@ -2298,22 +4244,169 @@
 
 2010-06-06  Michael Georg Hansen <mike@mghansen.de>
 
+	* gpssync2/kipiimagelist.cpp, gpssync2/kipiimagelist.h: Fix and drag
+	and drop with sorting.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135065
+
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimagemodel.cpp: Fix flags for invalid model indices.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135062
+
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsimageitem.cpp: Add sorting by latitude, longitude and
+	status.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135060
+
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimageitem.cpp: Can now read date and time from the
+	interface, kipicmd was fixed to read date and time from the
+	metadata.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135059
+
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
 	* project/kipicmd/kipiimageinfoshared.cpp,
 	project/kipicmd/kipiimageinfoshared.h: Read date and time from image
 	metadata instead of using the modification date.  svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1135058
+
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/borrowed/README: Add some info on where the code is from.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135052
+
+2010-06-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpssyncdialog.cpp,
+	gpssync2/searchwidget.cpp: Only run modeltests if KDE4_BUILD_TESTS
+	was specified. Also, fix some bugs in the search results model.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1135050
 
 2010-06-06  Jens Mueller <tschenser@gmx.de>
 
 	* NEWS, dngconverter/dngwriter/dngwriter.cpp: disable encoding of
 	full sensor image for canon as it causes problems with some models BUGS: 240749 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1135045
 
+2010-06-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt,
+	gpssync2/borrowed-future/klinkitemselectionmodel.cpp,
+	gpssync2/borrowed-future/klinkitemselectionmodel.h,
+	gpssync2/borrowed-future/kmodelindexproxymapper.cpp,
+	gpssync2/borrowed-future/kmodelindexproxymapper.h,
+	gpssync2/borrowed/modeltest.cpp, gpssync2/borrowed/modeltest.h,
+	gpssync2/gpsdatacontainer.h, gpssync2/gpsimageitem.cpp,
+	gpssync2/gpsimageitem.h, gpssync2/gpssyncdialog.cpp,
+	gpssync2/kipiimageitem.cpp, gpssync2/kipiimageitem.h,
+	gpssync2/kipiimagelist.cpp, gpssync2/kipiimagelist.h,
+	gpssync2/kipiimagemodel.cpp, gpssync2/kipiimagemodel.h: Implement
+	sorting of the columns. Borrowed KLinkItemSelectionModel from trunk
+	for older KDE versions.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134953
+
+2010-06-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp: Remove margins and spacings.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134933
+
+2010-06-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpsdatacontainer.h,
+	gpssync2/gpsdataparser.h, gpssync2/gpsimageitem.h,
+	gpssync2/gpssync2_common.h, gpssync2/gpssyncdialog.cpp,
+	gpssync2/gpssyncdialog.h, gpssync2/mapdragdrophandler.h,
+	gpssync2/searchbackend.h, gpssync2/searchwidget.cpp: Proper include
+	directives for WMW2 include files.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134929
+
+2010-06-04  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-geonames-rg.h,
+	gpssync2/backend-google-rg.cpp, gpssync2/backend-google-rg.h,
+	gpssync2/backend-osm-rg.cpp, gpssync2/backend-osm-rg.h,
+	gpssync2/backend-rg.cpp, gpssync2/backend-rg.h,
+	gpssync2/gpsreversegeocodingwidget.cpp: Checking for network
+	problems svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134567
+
+2010-06-04  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-osm-rg.cpp,
+	gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h: Save RG widget configuration
+	and made the job list to not be deleted when a new backend call is
+	made svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134495
+
 2010-06-03  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1134322
 
+2010-06-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsbookmarkowner.cpp, gpssync2/gpsbookmarkowner.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/searchbackend.cpp,
+	gpssync2/searchwidget.cpp, gpssync2/searchwidget.h: Undo/redo names
+	now include the name of the object to which the images were snapped.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134303
+
+2010-06-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsbookmarkowner.cpp, gpssync2/gpsbookmarkowner.h,
+	gpssync2/gpslistviewcontextmenu.cpp, gpssync2/gpssyncdialog.cpp,
+	gpssync2/searchwidget.cpp, gpssync2/searchwidget.h: Add bookmarks to
+	the search context menu, but disable them for now since I could not
+	find a way to hide existing bookmarks - we just want to add
+	bookmarks here.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134253
+
+2010-06-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpslistviewcontextmenu.cpp, gpssync2/gpssync2_common.h,
+	gpssync2/searchwidget.cpp, gpssync2/searchwidget.h: Add a context
+	menu to the search results. Currently only for copying, but
+	bookmarking should follow soon.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134199
+
+2010-06-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/searchwidget.cpp: Add tooltips.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134195
+
+2010-06-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-osm-rg.cpp,
+	gpssync2/gpssync2_common.h, gpssync2/searchbackend.cpp,
+	gpssync2/searchbackend.h, gpssync2/searchwidget.cpp: Unify the user
+	agent string and merge duplicate query results.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134194
+
+2010-06-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/searchbackend.cpp, gpssync2/searchwidget.cpp,
+	gpssync2/searchwidget.h: Add an error message on failure of the
+	search and options to control the behavior of the results.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134113
+
+2010-06-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/data/searchmarker.svg,
+	gpssync2/gpssyncdialog.cpp, gpssync2/searchwidget.cpp,
+	gpssync2/searchwidget.h: Add markers with letters to the search.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134089
+
 2010-06-03  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1134043
+
+2010-06-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/searchwidget.cpp, gpssync2/searchwidget.h: Make the model
+	work with the QTreeView. The problem was that a QString was returned
+	for every role, even for the sizehint role.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1134036
 
 2010-06-03  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2343,6 +4436,12 @@
 
 	* : update Andreas info svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1133935
 
+2010-06-02  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-osm-rg.cpp: 
+	Small changes svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1133824
+
 2010-06-02  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1133748
@@ -2351,9 +4450,37 @@
 
 	* : update andreas info svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1133741
 
+2010-06-01  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-osm-rg.cpp,
+	gpssync2/gpsreversegeocodingwidget.cpp: Merged photos with same
+	coordinates and added user agent to kio job svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1133546
+
+2010-06-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpssyncdialog.cpp,
+	gpssync2/searchbackend.cpp, gpssync2/searchbackend.h,
+	gpssync2/searchwidget.cpp, gpssync2/searchwidget.h: Initial version
+	of a search tab which displays the search results on the map and in
+	a list.  TODO: - the lists don't show anything, probably something wrong with the
+	model - icons - reset the search when a new search is done svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1133495
+
 2010-06-01  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update Andreas travels cost svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1133412
+
+2010-05-31  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp: Change updateUIState
+	behavior.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1132975
+
+2010-05-31  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp: Polish svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1132948
 
 2010-05-31  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2363,11 +4490,55 @@
 
 	* jpeglossless/transupp.v7.cpp: fix warnings svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1132756
 
+2010-05-31  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-osm-rg.cpp,
+	gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h: Resolved encoding problem and
+	made some UI changes svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1132706
+
+2010-05-30  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO, gpssync2/gpscorrelatorwidget.cpp,
+	gpssync2/gpsdatacontainer.h, gpssync2/gpsdataparser.cpp,
+	gpssync2/gpsdataparser.h, gpssync2/gpsimageitem.cpp,
+	gpssync2/gpsimageitem.h, gpssync2/tests/data/gpxfile-1.gpx,
+	gpssync2/tests/test_gpxparsing.cpp: Read HDOP and number of
+	satellites from the GPX files.  TODO: Save this information to the images.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1132483
+
 2010-05-30  Andrew Coles <andrew.i.coles@googlemail.com>
 
 	* picasawebexport/picasawebwidget.cpp: Proof-reading - two minor
 	changes: - behaviour -> behavior (will translate to behaviour in en_GB
 	localisation) - added missing r to hierarchies svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1132458
+
+2010-05-30  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO: Update TODO svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1132450
+
+2010-05-30  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO, gpssync2/gpscorrelatorwidget.cpp,
+	gpssync2/gpsdataparser.cpp, gpssync2/gpsdataparser.h,
+	gpssync2/gpsdataparser_p.h,
+	gpssync2/tests/data/gpx-invalid-empty.gpx,
+	gpssync2/tests/data/gpx-invalid-no-points.gpx,
+	gpssync2/tests/data/gpx-invalid-xml-error.gpx,
+	gpssync2/tests/test_gpxparsing.cpp,
+	gpssync2/tests/test_gpxparsing.h: Use a SAX interface for parsing
+	GPX files.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1132444
+
+2010-05-30  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-osm-rg.cpp,
+	gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/gpssyncdialog.cpp: RG
+	widget UI and kio-requests grouping svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1132386
 
 2010-05-30  Michael Georg Hansen <mike@mghansen.de>
 
@@ -2381,14 +4552,32 @@
 
 	* : estimate cost from Aditya svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1132132
 
+2010-05-29  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-osm-rg.cpp,
+	gpssync2/backend-osm-rg.h, gpssync2/backend-rg.cpp,
+	gpssync2/backend-rg.h, gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/gpssyncdialog.cpp: 
+	Add progress reporting.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1131914
+
 2010-05-29  Script Kiddy <scripty@kde.org>
 
 	* htmlexport/themes/details/details.desktop: SVN_SILENT made
 	messages (.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1131907
 
-2010-05-28  Gilles Caulier <caulier.gilles@gmail.com>
+2010-05-29  Gabriel Voicu <ping.gabi@gmail.com>
 
-	* : update travel cost for Gabriel. Set Arrival and departure date svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1131673
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-geonames-rg.h,
+	gpssync2/backend-osm-rg.cpp, gpssync2/backend-osm-rg.h,
+	gpssync2/gpsreversegeocodingwidget.cpp: completed OSM and geonames
+	backends svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1131778
+
+2010-05-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* : Reintroduce bookmarks and copy and paste of coordinates.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1131730
 
 2010-05-28  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2410,6 +4599,20 @@
 
 	* acquireimages/scangui.cpp: load translation catalog properly
 	BUG:238150 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1131425
+
+2010-05-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-google-rg.cpp: Polish svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1131276
+
+2010-05-27  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/CMakeLists.txt, gpssync2/backend-geonames-rg.cpp,
+	gpssync2/backend-geonames-rg.h, gpssync2/backend-google-rg.h,
+	gpssync2/backend-osm-rg.cpp, gpssync2/backend-osm-rg.h,
+	gpssync2/backend-rg.cpp, gpssync2/backend-rg.h,
+	gpssync2/gpsreversegeocodingwidget.cpp: Added OSM svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1131275
 
 2010-05-27  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2436,6 +4639,17 @@
 
 	* : Julien will be busy during coding sprint svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1130949
 
+2010-05-26  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp: Polish svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1130924
+
+2010-05-26  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-geonames-rg.h: 
+	Geonames backend work svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1130890
+
 2010-05-26  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : Kare is not available for the event svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1130792
@@ -2447,6 +4661,13 @@
 2010-05-26  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1130738
+
+2010-05-25  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-geonames-rg.cpp, gpssync2/backend-geonames-rg.h,
+	gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/gpssyncdialog.cpp: 
+	added geonames backend svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1130660
 
 2010-05-25  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2607,6 +4828,81 @@
 
 	* : update list of peoples svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1130277
 
+2010-05-24  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/backend-google-rg.cpp, gpssync2/backend-google-rg.h,
+	gpssync2/backend-rg.cpp, gpssync2/backend-rg.h,
+	gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h: Splitted the Reverse Geocoding
+	Widget svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1130269
+
+2010-05-24  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO, gpssync2/gpsbookmarkowner.cpp,
+	gpssync2/gpsbookmarkowner.h: Adjustments for snapping.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1130033
+
+2010-05-23  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp: Save the state of bookmarks
+	visibility.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1129756
+
+2010-05-23  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsbookmarkowner.cpp, gpssync2/gpsbookmarkowner.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h: More
+	improvements for the bookmarks on map display.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1129755
+
+2010-05-23  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsbookmarkowner.cpp: Fix file missing from last commit.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1129733
+
+2010-05-23  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h,
+	gpssync2/reverse-js.js: Fix bug on tab change, add language too
+	RGWidget and add QTimer svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1129728
+
+2010-05-23  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpsbookmarkowner.h,
+	gpssync2/gpsreversegeocodingwidget.cpp, gpssync2/gpssyncdialog.cpp,
+	gpssync2/gpssyncdialog.h: Better handling of bookmarks display on
+	the map.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1129705
+
+2010-05-22  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/TODO,
+	gpssync2/gpsbookmarkowner.cpp, gpssync2/gpsbookmarkowner.h,
+	gpssync2/gpsdataparser.cpp, gpssync2/gpssyncdialog.cpp,
+	gpssync2/gpssyncdialog.h, gpssync2/inputboxnocancel.cpp,
+	gpssync2/inputboxnocancel.h: Initial support for displaying
+	bookmarks on the map.  Next steps: - better icons - show/hide - snapping svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1129590
+
+2010-05-22  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO, gpssync2/gpscorrelatorwidget.cpp,
+	gpssync2/tests/data/gpxfile-1.gpx,
+	gpssync2/tests/test_gpxparsing.cpp,
+	gpssync2/tests/test_gpxparsing.h: Add interpolation to the
+	correlator.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1129539
+
+2010-05-22  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/reverse-js.js: Adding
+	support for many photos svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1129514
+
 2010-05-21  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : Jens is not available at this date svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1129065
@@ -2633,6 +4929,12 @@
 	acquireimages/scangui.desktop: SVN_SILENT made messages (.desktop
 	file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1128745
 
+2010-05-19  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h: added RGInfo and RGInternal svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1128619
+
 2010-05-19  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1128449
@@ -2644,6 +4946,42 @@
 2010-05-19  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : KDE imaging coding sprint 2010 logo svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1128429
+
+2010-05-19  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h: address inside qmap svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1128343
+
+2010-05-18  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/reverse-js.js: Insert newlines.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1128270
+
+2010-05-18  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/gpssyncdialog.cpp: 
+	Add a button to display reverse geocoding for one selected image.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1128269
+
+2010-05-18  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1128259
+
+2010-05-18  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpssyncdialog.cpp: changed
+	gpssyncdialog.cpp and CMakeLists.txt svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1128258
+
+2010-05-18  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/gpsreversegeocodingwidget.cpp,
+	gpssync2/gpsreversegeocodingwidget.h, gpssync2/reverse-js.js,
+	gpssync2/rg-google-maps-v3.html: Adding reverse geocode widget svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1128245
 
 2010-05-18  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2671,14 +5009,78 @@
 	printimages/templates/Photoframe.desktop: SVN_SILENT made messages
 	(.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1127627
 
+2010-05-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpscorrelatorwidget.cpp, gpssync2/gpscorrelatorwidget.h,
+	gpssync2/gpsdataparser.cpp, gpssync2/gpsdataparser.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h: Make it
+	possible to cancel the correlation.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1127415
+
+2010-05-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO, gpssync2/gpscorrelatorwidget.cpp,
+	gpssync2/gpsdataparser.cpp, gpssync2/gpsdataparser.h: Report errors
+	when loading GPX files.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1127403
+
+2010-05-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpscorrelatorwidget.cpp: Polish.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1127385
+
+2010-05-15  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp: Fix initialization of the sortkey.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1127204
+
+2010-05-15  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp: Fix progress bar stretching.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1127195
+
+2010-05-15  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO, gpssync2/gpsdatacontainer.h,
+	gpssync2/gpsimageitem.cpp, gpssync2/gpsimageitem.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpsundocommand.cpp: Simpler
+	handling of whether images are modified or not.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1127194
+
+2010-05-15  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp: Fix the loop start index.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1127017
+
 2010-05-15  Jens Mueller <tschenser@gmx.de>
 
 	* dngconverter/dngwriter/dngwriter.cpp: set shot to extract (needed
 	for fuji superccd sr & sr II sensors) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1127010
 
+2010-05-13  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO: Update TODO.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1126360
+
+2010-05-12  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO: Update TODO svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1125990
+
 2010-05-12  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1125842
+
+2010-05-12  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.h: Commit missing gpssyncdialog.h CCMAIL: ping.gabi@gmail.com svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1125732
+
+2010-05-11  Gabriel Voicu <ping.gabi@gmail.com>
+
+	* gpssync2/TODO, gpssync2/gpssyncdialog.cpp: Added tab collapsing
+	into the Correlator2 Widget svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1125636
 
 2010-05-11  Kunal Ghosh <kunal.t2@gmail.com>
 
@@ -2696,6 +5098,11 @@
 	piwigoexport/kipiplugin_piwigoexport.desktop: SVN_SILENT made
 	messages (.desktop file) svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1124879
 
+2010-05-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/TODO: Update TODO.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1123323
+
 2010-05-05  Jens Mueller <tschenser@gmx.de>
 
 	* NEWS, dngconverter/dngwriter/dngwriter.cpp,
@@ -2705,6 +5112,11 @@
 2010-05-05  Aditya Jitesh Bhatt <adityabhatt1991@gmail.com>
 
 	* : Added my (Aditya Bhatt) details for the 2010 coding sprint.  svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1123107
+
+2010-05-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimagelist.cpp: Fix initialization of column widths.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1122397
 
 2010-05-03  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2734,9 +5146,27 @@
 
 	* : added entries for GOsc svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1119608
 
+2010-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h,
+	gpssync2/kipiimagemodel.cpp: Options to choose whether to display
+	thumbnails of oldest or youngest images.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1118720
+
+2010-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimagelist.cpp: Fix crash on uninitialized values.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1118713
+
 2010-04-25  Gilles Caulier <caulier.gilles@gmail.com>
 
 	* : update my availability and working on subject svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1118696
+
+2010-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsundocommand.cpp, gpssync2/kipiimagemodel.cpp: Less
+	debug output.  SVN_SILENT svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1118659
 
 2010-04-25  Michael Georg Hansen <mike@mghansen.de>
 
@@ -2745,6 +5175,30 @@
 2010-04-25  Marcel Wiesweg <marcel.wiesweg@gmx.de>
 
 	* : Clearing info from 2009, some polish, my personal cost estimate svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1118629
+
+2010-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/mapdragdrophandler.cpp: Workaround for multiple columns
+	being reported as multiple images. Is there a better way? svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1118604
+
+2010-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpscorrelatorwidget.cpp,
+	gpssync2/gpscorrelatorwidget.h, gpssync2/gpsimageitem.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h,
+	gpssync2/gpsundocommand.cpp, gpssync2/gpsundocommand.h,
+	gpssync2/mapdragdrophandler.cpp: Introduce an undo/redo framework.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1118591
+
+2010-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpscorrelatorwidget.cpp, gpssync2/gpscorrelatorwidget.h,
+	gpssync2/gpsdatacontainer.h, gpssync2/gpsimageitem.cpp,
+	gpssync2/gpsimageitem.h, gpssync2/gpssyncdialog.cpp,
+	gpssync2/gpssyncdialog.h, gpssync2/kipiimagelist.h: Changes can now
+	be saved.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1118576
 
 2010-04-23  Script Kiddy <scripty@kde.org>
 
@@ -2772,6 +5226,31 @@
 2010-04-18  Laurent Montel <montel@kde.org>
 
 	* picasawebexport/picasawebwindow.cpp: Fix iterator svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1115987
+
+2010-04-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp, gpssync2/kipiimagelist.cpp,
+	gpssync2/kipiimagelist.h: Save and restore the thumbnail size,
+	respect the selected state when drawing the thumbnail.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1115883
+
+2010-04-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimagelist.cpp: Fix rezising of thumbnails in the list
+	of images.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1115880
+
+2010-04-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpscorrelatorwidget.cpp, gpssync2/gpscorrelatorwidget.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h: Save and
+	restore the UI state.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1115879
+
+2010-04-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimagemodel.cpp: Fix reporting of changed columns.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1115874
 
 2010-04-17  Gilles Caulier <caulier.gilles@gmail.com>
 
@@ -2834,6 +5313,12 @@
 	picasawebexport/picasawebimglist.h,
 	picasawebexport/picasawebwidget.cpp: customize imagelist file
 	selection dialog BUGS: 216539 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1114544
+
+2010-04-13  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/tests/data/gpxfile-1.gpx,
+	gpssync2/tests/test_gpxparsing.cpp: Improve tests a little.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1114516
 
 2010-04-12  Jens Mueller <tschenser@gmx.de>
 
@@ -3110,6 +5595,13 @@
 
 	* metadataedit/TODO: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1112049
 
+2010-04-06  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimagemodel.cpp: Fix thumbnail retrieval for kipi
+	interfaces which do not return images at the requested size
+	(digikam).  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1111848
+
 2010-04-06  Jens Mueller <tschenser@gmx.de>
 
 	* dngconverter/dngwriter/dngwriter.cpp: add nikon focus distance to
@@ -3157,6 +5649,22 @@
 	for fuji super ccd sensor as this breaks dng file generation for the
 	nikon d80, but it is a step into right direction svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1111429
 
+2010-04-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h: Adapt to
+	changes in WorldMapWidget2 to allow thumbnails on Google Maps.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1111417
+
+2010-04-05  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsimagelistdragdrophandler.cpp,
+	gpssync2/gpsimagelistdragdrophandler.h, gpssync2/gpssyncdialog.cpp,
+	gpssync2/gpssyncdialog.h, gpssync2/kipiimagelist.cpp,
+	gpssync2/kipiimagelist.h, gpssync2/kipiimagemodel.cpp,
+	gpssync2/kipiimagemodel.h: Display thumbnails of the images on the
+	WorldMapWidget2.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1111266
+
 2010-04-05  Jens Mueller <tschenser@gmx.de>
 
 	* dngconverter/dngwriter/dngwriter.cpp: read some more markernotes
@@ -3199,18 +5707,64 @@
 	of course (:=))) try to fix issue with RAF raw file converted to
 	DNG. Matrix is badly embeded to DNG container svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1110847
 
+2010-04-04  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/kipiimagelist.cpp, gpssync2/kipiimagelist.h: 
+	Ctrl+scrollwheel now changes the thumbnail size, but the row height
+	is not updated properly.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1110843
+
+2010-04-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpssyncdialog.cpp, gpssync2/kipiimageitem.cpp,
+	gpssync2/kipiimagelist.cpp, gpssync2/kipiimagelist.h,
+	gpssync2/kipiimagemodel.cpp, gpssync2/kipiimagemodel.h: Basic
+	support for image thumbnails in the tree view.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1110622
+
+2010-04-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsdataparser.cpp, gpssync2/kipiimageitem.cpp: Less debug
+	output.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1110519
+
+2010-04-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpscorrelatorwidget.cpp, gpssync2/gpscorrelatorwidget.h,
+	gpssync2/gpsdataparser.cpp, gpssync2/gpsdataparser.h: More UI
+	integration.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1110518
+
+2010-04-03  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpsimageitem.cpp, gpssync2/gpsimageitem.h,
+	gpssync2/kipiimageitem.cpp, gpssync2/kipiimageitem.h: Fix column
+	headers.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1110516
+
 2010-04-02  Jens Mueller <tschenser@gmx.de>
 
 	* NEWS: closing bug fixed with update of dng sdk BUGS: 232991 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1110381
+
+2010-04-02  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/gpscorrelatorwidget.cpp, gpssync2/gpscorrelatorwidget.h,
+	gpssync2/gpsdataparser.cpp, gpssync2/gpsdataparser.h,
+	gpssync2/gpsimageitem.h, gpssync2/gpssyncdialog.cpp,
+	gpssync2/kipiimageitem.cpp, gpssync2/kipiimageitem.h,
+	gpssync2/kipiimagemodel.h, gpssync2/tests/test_gpxparsing.cpp: Start
+	implementing correlation in the GUI. Most options are still ignored.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1110380
 
 2010-04-02  Jens Mueller <tschenser@gmx.de>
 
 	* NEWS, dngconverter/dngwriter/extra/dng_sdk/dng_date_time.cpp: svn
 	path=/trunk/extragear/graphics/kipi-plugins/; revision=1110379
 
-2010-04-01  Gilles Caulier <caulier.gilles@gmail.com>
+2010-04-02  Michael Georg Hansen <mike@mghansen.de>
 
-	* NEWS: update svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1110093
+	* : Implement loading of GPX files with some tests.  svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1110293
 
 2010-04-01  Jens Mueller <tschenser@gmx.de>
 
@@ -3464,6 +6018,25 @@
 
 	* flashexport/firstrundlg.cpp, flashexport/svedialog.cpp: Fix
 	simpleviewer url BUG: 232339 svn path=/trunk/extragear/graphics/kipi-plugins/; revision=1107982
+
+2010-03-26  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync2/CMakeLists.txt, gpssync2/gpscorrelatorwidget.cpp,
+	gpssync2/gpscorrelatorwidget.h, gpssync2/gpsdataparser_time.h,
+	gpssync2/gpsimageitem.cpp, gpssync2/gpsimageitem.h,
+	gpssync2/gpsimagelistdragdrophandler.cpp,
+	gpssync2/gpsimagelistdragdrophandler.h,
+	gpssync2/gpssettingswidget.cpp, gpssync2/gpssettingswidget.h,
+	gpssync2/gpssyncdialog.cpp, gpssync2/gpssyncdialog.h,
+	gpssync2/howto-build.txt, gpssync2/icons/CMakeLists.txt,
+	gpssync2/kipiimageitem.cpp, gpssync2/kipiimageitem.h,
+	gpssync2/kipiimagelist.cpp, gpssync2/kipiimagelist.h,
+	gpssync2/kipiimagemodel.cpp, gpssync2/kipiimagemodel.h,
+	gpssync2/kipiplugin_gpssync2.desktop,
+	gpssync2/mapdragdrophandler.cpp, gpssync2/mapdragdrophandler.h,
+	gpssync2/plugin_gpssync.cpp, gpssync2/plugin_gpssync.h: Initial
+	version of a GPSSync plugin based on WorldMapWidget2 svn path=/branches/extragear/graphics/kipi-plugins/;
+	revision=1107788
 
 2010-03-23  Gilles Caulier <caulier.gilles@gmail.com>
 

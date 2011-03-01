@@ -164,3 +164,17 @@ void KipiInterface::addSelectedAlbum(const KUrl& album)
 
     // TODO: recurse through sub-directories?
 }
+
+QVariant KipiInterface::hostSetting(const QString& settingName)
+{
+    if (settingName == QString("UseXMPSidecar4Reading"))
+    {
+        return (QVariant::fromValue(true));
+    }
+    else if (settingName == QString("MetadataWritingMode"))
+    {
+        return (QVariant::fromValue(3 /* KExiv2::WRITETOSIDECARONLY4READONLYFILES*/));
+    }
+
+    return QVariant();
+}

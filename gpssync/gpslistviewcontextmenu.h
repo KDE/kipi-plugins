@@ -1,13 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Date        : 2009-05-07
- * Description : Context menu for GPS list view which can be used
- *               in the track list editor and the sync dialog
+ * @date   2009-05-07
+ * @brief  Context menu for GPS list view.
  *
- * Copyright (C) 2009 by Michael G. Hansen <mike at mghansen dot de>
+ * @author Copyright (C) 2009,2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +21,6 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-
 #ifndef GPSLISTVIEWCONTEXTMENU_H
 #define GPSLISTVIEWCONTEXTMENU_H
 
@@ -30,8 +30,8 @@
 
 // local includes:
 
-#include "imageslist.h"
 #include "gpsdatacontainer.h"
+#include "kipiimagelist.h"
 
 class KUrl;
 
@@ -40,6 +40,7 @@ namespace KIPIGPSSyncPlugin
 
 class GPSListViewContextMenuPriv;
 class GPSBookmarkOwner;
+class GPSUndoCommand;
 
 class GPSListViewContextMenu : public QObject
 {
@@ -47,25 +48,31 @@ class GPSListViewContextMenu : public QObject
 
 public:
 
-    explicit GPSListViewContextMenu(KIPIPlugins::ImagesList *imagesList, GPSBookmarkOwner* const bookmarkOwner = 0);
+    explicit GPSListViewContextMenu(KipiImageList *imagesList, GPSBookmarkOwner* const bookmarkOwner = 0);
     ~GPSListViewContextMenu();
+
+    void setEnabled(const bool state);
 
 protected:
 
     virtual bool eventFilter(QObject *watched, QEvent *event);
-    void setGPSDataForSelectedItems(const GPSDataContainer& gpsData);
+    void setGPSDataForSelectedItems(const GPSDataContainer gpsData, const QString& undoDescription);
     static bool getCurrentPosition(GPSDataContainer* position, void* mydata);
     bool getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl);
+    void removeInformationFromSelectedImages(const GPSDataContainer::HasFlags flagsToClear, const QString& undoDescription);
 
-public Q_SLOTS:
+private Q_SLOTS:
 
     void copyActionTriggered();
     void pasteActionTriggered();
     void slotBookmarkSelected(GPSDataContainer bookmarkPosition);
+    void slotRemoveCoordinates();
+    void slotRemoveAltitude();
+    void slotRemoveUncertainty();
+    void slotRemoveSpeed();
 
 Q_SIGNALS:
-
-    void signalItemsChanged(const QList<QTreeWidgetItem*>& items);
+    void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
 
