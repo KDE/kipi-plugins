@@ -7,7 +7,7 @@
  * Description : a tool to convert RAW file to DNG
  *
  * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2010-2011 by Jens Mueller <tschenser at gmx dot de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -84,7 +84,8 @@ namespace DNGIface
 
 enum DNGBayerPattern
 {
-    None = 1,
+    Unknown = 1,
+    LinearRaw,
     Standard,
     Fuji,
     FourColor
@@ -239,7 +240,8 @@ int DNGWriter::convert()
 #if KDCRAW_VERSION >= 0x010300
         // disable general fullsensor image see #240750
         // seems this bug is fixed with libRaw 0.12beta4
-        if (identifyMake.make == "Canon")
+        if ((identifyMake.make == "Canon") && 
+            (identify.filterPattern != QString("")))
         {
             useFullSensorImage = true;
         }
@@ -254,22 +256,22 @@ int DNGWriter::convert()
         if (d->cancel) return -2;
 
         kDebug() << "DNGWriter: Raw data loaded:" ;
-        kDebug() << "--- Data Size:     " << rawData.size() << " bytes" ;
-        kDebug() << "--- Date:          " << identify.dateTime.toString(Qt::ISODate) ;
-        kDebug() << "--- Make:          " << identify.make ;
-        kDebug() << "--- Model:         " << identify.model ;
-        kDebug() << "--- ImageSize:     " << identify.imageSize.width() << "x" << identify.imageSize.height() ;
-        kDebug() << "--- FullSize:      " << identify.fullSize.width() << "x" << identify.fullSize.height() ;
-        kDebug() << "--- OutputSize:    " << identify.outputSize.width() << "x" << identify.outputSize.height() ;
-        kDebug() << "--- Orientation:   " << identify.orientation ;
-        kDebug() << "--- Top margin:    " << identify.topMargin ;
-        kDebug() << "--- Left margin:   " << identify.leftMargin ;
-        kDebug() << "--- Right margin:  " << identify.rightMargin ;
-        kDebug() << "--- Bottom margin: " << identify.bottomMargin ;
-        kDebug() << "--- Filter:        " << identify.filterPattern ;
-        kDebug() << "--- Colors:        " << identify.rawColors ;
-        kDebug() << "--- Black:         " << identify.blackPoint ;
-        kDebug() << "--- White:         " << identify.whitePoint ;
+        kDebug() << "--- Data Size:     " << rawData.size() << " bytes";
+        kDebug() << "--- Date:          " << identify.dateTime.toString(Qt::ISODate);
+        kDebug() << "--- Make:          " << identify.make;
+        kDebug() << "--- Model:         " << identify.model;
+        kDebug() << "--- ImageSize:     " << identify.imageSize.width() << "x" << identify.imageSize.height();
+        kDebug() << "--- FullSize:      " << identify.fullSize.width() << "x" << identify.fullSize.height();
+        kDebug() << "--- OutputSize:    " << identify.outputSize.width() << "x" << identify.outputSize.height();
+        kDebug() << "--- Orientation:   " << identify.orientation;
+        kDebug() << "--- Top margin:    " << identify.topMargin;
+        kDebug() << "--- Left margin:   " << identify.leftMargin;
+        kDebug() << "--- Right margin:  " << identify.rightMargin;
+        kDebug() << "--- Bottom margin: " << identify.bottomMargin;
+        kDebug() << "--- Filter:        " << identify.filterPattern;
+        kDebug() << "--- Colors:        " << identify.rawColors;
+        kDebug() << "--- Black:         " << identify.blackPoint;
+        kDebug() << "--- White:         " << identify.whitePoint;
         kDebug() << "--- CAM->XYZ:" ;
 
         QString matrixVal;
@@ -282,7 +284,7 @@ int DNGWriter::convert()
         }
 
         // Check if CFA layout is supported by DNG SDK.
-        DNGBayerPattern bayerPattern = None;
+        DNGBayerPattern bayerPattern = Unknown;
         uint32 filter = 0;
         bool fujiRotate90 = false;
 
@@ -308,19 +310,26 @@ int DNGWriter::convert()
             filter = 3;
         }
         // Fuji layouts
-        else if ((identify.filterPattern == QString("RGBGRGBGRGBGRGBG"))
-            && (identifyMake.make == QString("FUJIFILM")))
+        else if ((identify.filterPattern == QString("RGBGRGBGRGBGRGBG")) &&
+                 (identifyMake.make == QString("FUJIFILM")))
         {
             bayerPattern = Fuji;
             fujiRotate90 = false;
             filter = 0;
         }
-        else if ((identify.filterPattern == QString("RBGGBRGGRBGGBRGG"))
-            && (identifyMake.make == QString("FUJIFILM")))
+        else if ((identify.filterPattern == QString("RBGGBRGGRBGGBRGG")) &&
+                 (identifyMake.make == QString("FUJIFILM")))
         {
             bayerPattern = Fuji;
             fujiRotate90 = true;
             filter = 0;
+        }
+        else if ((identify.rawColors == 3) &&
+                 (identify.filterPattern.isEmpty()) &&
+                 //(identify.filterPattern == QString("")) &&
+                 ((uint32)rawData.size() == identify.outputSize.width() * identify.outputSize.height() * 3 * sizeof(uint16)))
+        {
+            bayerPattern = LinearRaw;
         }
         // Four color sensors
         else if (identify.rawColors == 4)
@@ -400,7 +409,6 @@ int DNGWriter::convert()
 
         int width      = identify.outputSize.width();
         int height     = identify.outputSize.height();
-        int pixelRange = 16;
 
 /*      // NOTE: code to hack RAW data extraction
 
@@ -424,8 +432,6 @@ int DNGWriter::convert()
         kDebug() << "DNGWriter: DNG memory allocation and initialization" ;
 
         dng_memory_allocator memalloc(gDefaultDNGMemoryAllocator);
-        dng_memory_stream stream(memalloc);
-        stream.Put(rawData.data(), rawData.size());
 
         dng_rect rect(height, width);
         DNGWriterHost host(d, &memalloc);
@@ -434,92 +440,24 @@ int DNGWriter::convert()
         host.SetSaveLinearDNG(false);
         host.SetKeepOriginalFile(true);
 
-        AutoPtr<dng_image> image(new dng_simple_image(rect, 1, ttShort, memalloc));
+        AutoPtr<dng_image> image(new dng_simple_image(rect, (bayerPattern == LinearRaw) ? 3 : 1, ttShort, memalloc));
 
         if (d->cancel) return -2;
 
         // -----------------------------------------------------------------------------------------
 
-        kDebug() << "DNGWriter: DNG IFD structure creation" ;
+        dng_pixel_buffer buffer;
 
-        dng_ifd ifd;
-
-        ifd.fUsesNewSubFileType        = true;
-        ifd.fNewSubFileType            = 0;
-        ifd.fImageWidth                = width;
-        ifd.fImageLength               = height;
-        ifd.fBitsPerSample[0]          = pixelRange;
-        ifd.fBitsPerSample[1]          = 0;
-        ifd.fBitsPerSample[2]          = 0;
-        ifd.fBitsPerSample[3]          = 0;
-        ifd.fCompression               = ccUncompressed;
-        ifd.fPredictor                 = 1;
-        ifd.fCFALayout                 = 1;                 // Rectangular (or square) layout.
-        ifd.fPhotometricInterpretation = piCFA;
-        ifd.fFillOrder                 = 1;
-        ifd.fOrientation               = identify.orientation;
-        ifd.fSamplesPerPixel           = 1;
-        ifd.fPlanarConfiguration       = 1;
-        ifd.fXResolution               = 0.0;
-        ifd.fYResolution               = 0.0;
-        ifd.fResolutionUnit            = 0;
-
-        ifd.fUsesStrips                = true;
-        ifd.fUsesTiles                 = false;
-
-        ifd.fTileWidth                 = width;
-        ifd.fTileLength                = height;
-        ifd.fTileOffsetsType           = 4;
-        ifd.fTileOffsetsCount          = 0;
-
-        ifd.fSubIFDsCount              = 0;
-        ifd.fSubIFDsOffset             = 0;
-        ifd.fExtraSamplesCount         = 0;
-        ifd.fSampleFormat[0]           = 1;
-        ifd.fSampleFormat[1]           = 1;
-        ifd.fSampleFormat[2]           = 1;
-        ifd.fSampleFormat[3]           = 1;
-
-        ifd.fLinearizationTableType    = 0;
-        ifd.fLinearizationTableCount   = 0;
-        ifd.fLinearizationTableOffset  = 0;
-
-        ifd.fBlackLevelRepeatRows      = 1;
-        ifd.fBlackLevelRepeatCols      = 1;
-        ifd.fBlackLevel[0][0][0]       = identify.blackPoint;
-        ifd.fBlackLevelDeltaHType      = 0;
-        ifd.fBlackLevelDeltaHCount     = 0;
-        ifd.fBlackLevelDeltaHOffset    = 0;
-        ifd.fBlackLevelDeltaVType      = 0;
-        ifd.fBlackLevelDeltaVCount     = 0;
-        ifd.fBlackLevelDeltaVOffset    = 0;
-        ifd.fWhiteLevel[0]             = identify.whitePoint;
-        ifd.fWhiteLevel[1]             = identify.whitePoint;
-        ifd.fWhiteLevel[2]             = identify.whitePoint;
-        ifd.fWhiteLevel[3]             = identify.whitePoint;
-
-        ifd.fDefaultScaleH             = dng_urational(outputWidth, activeWidth);
-        ifd.fDefaultScaleV             = dng_urational(outputHeight, activeHeight);
-        ifd.fBestQualityScale          = dng_urational(1, 1);
-
-        ifd.fCFARepeatPatternRows      = 0;
-        ifd.fCFARepeatPatternCols      = 0;
-
-        ifd.fBayerGreenSplit           = 0;
-        ifd.fChromaBlurRadius          = dng_urational(0, 0);
-        ifd.fAntiAliasStrength         = dng_urational(100, 100);
-
-        ifd.fActiveArea                = activeArea;
-        ifd.fDefaultCropOriginH        = dng_urational(0, 1);
-        ifd.fDefaultCropOriginV        = dng_urational(0, 1);
-        ifd.fDefaultCropSizeH          = dng_urational(activeWidth, 1);
-        ifd.fDefaultCropSizeV          = dng_urational(activeHeight, 1);
-
-        ifd.fMaskedAreaCount           = 0;
-        ifd.fLosslessJPEGBug16         = false;
-        ifd.fSampleBitShift            = 0;
-
-        ifd.ReadImage(host, stream, *image.Get());
+        buffer.fArea       = rect;
+        buffer.fPlane      = 0;
+        buffer.fPlanes     = bayerPattern == LinearRaw ? 3 : 1;
+        buffer.fRowStep    = buffer.fPlanes * width;
+        buffer.fColStep    = buffer.fPlanes;
+        buffer.fPlaneStep  = 1;
+        buffer.fPixelType  = ttShort;
+        buffer.fPixelSize  = TagTypeSize(ttShort);
+        buffer.fData       = rawData.data();
+        image->Put(buffer);
 
         if (d->cancel) return -2;
 
@@ -529,13 +467,21 @@ int DNGWriter::convert()
 
         AutoPtr<dng_negative> negative(host.Make_dng_negative());
 
-        negative->SetDefaultScale(ifd.fDefaultScaleH, ifd.fDefaultScaleV);
-        negative->SetDefaultCropOrigin(ifd.fDefaultCropOriginH, ifd.fDefaultCropOriginV);
-        negative->SetDefaultCropSize(ifd.fDefaultCropSizeH, ifd.fDefaultCropSizeV);
-        negative->SetActiveArea(ifd.fActiveArea);
+        negative->SetDefaultScale(dng_urational(outputWidth, activeWidth), dng_urational(outputHeight, activeHeight));    
+        if (bayerPattern != LinearRaw)
+        {
+            negative->SetDefaultCropOrigin(8, 8);
+            negative->SetDefaultCropSize(activeWidth - 16, activeHeight - 16);
+        }
+        else
+        {
+            negative->SetDefaultCropOrigin(0, 0);
+            negative->SetDefaultCropSize(activeWidth, activeHeight);
+        }
+        negative->SetActiveArea(activeArea);
 
         negative->SetModelName(identify.model.toAscii());
-        negative->SetLocalName(QString("%1 %2").arg(identify.make).arg(identify.model).toAscii());
+        negative->SetLocalName(QString("%1 %2").arg(identify.make, identify.model).toAscii());
         negative->SetOriginalRawFileName(inputInfo.fileName().toAscii());
 
         negative->SetColorChannels(identify.rawColors);
@@ -588,16 +534,26 @@ int DNGWriter::convert()
             negative->SetQuadMosaic(filter);
             break;
         default:
-            kDebug() << "DNGWriter: unknown bayer pattern" ;
-            return -1;
+            break;
         }
 
         negative->SetWhiteLevel(identify.whitePoint, 0);
         negative->SetWhiteLevel(identify.whitePoint, 1);
         negative->SetWhiteLevel(identify.whitePoint, 2);
-        negative->SetBlackLevel(identify.blackPoint, 0);
-        negative->SetBlackLevel(identify.blackPoint, 1);
-        negative->SetBlackLevel(identify.blackPoint, 2);
+        negative->SetWhiteLevel(identify.whitePoint, 3);
+
+        const dng_mosaic_info* mosaicinfo = negative->GetMosaicInfo();
+        if ((mosaicinfo != NULL) && (mosaicinfo->fCFAPatternSize == dng_point(2, 2)))
+        {
+            negative->SetQuadBlacks(identify.blackPoint + identify.blackPointCh[0],
+                                    identify.blackPoint + identify.blackPointCh[1],
+                                    identify.blackPoint + identify.blackPointCh[2],
+                                    identify.blackPoint + identify.blackPointCh[3]);
+        }
+        else
+        {
+            negative->SetBlackLevel(identify.blackPoint, 0);
+        }
 
         negative->SetBaselineExposure(0.0);
         negative->SetBaselineNoise(1.0);
@@ -638,7 +594,7 @@ int DNGWriter::convert()
 
 
         AutoPtr<dng_camera_profile> prof(new dng_camera_profile);
-        prof->SetName(QString("%1 %2").arg(identify.make).arg(identify.model).toAscii());
+        prof->SetName(QString("%1 %2").arg(identify.make, identify.model).toAscii());
 
         // Set Camera->XYZ Color matrix as profile.
         dng_matrix matrix;
@@ -719,14 +675,14 @@ int DNGWriter::convert()
         QString  str;
         KExiv2   meta;
         if (meta.load(inputFile()))
-	{
-	    // Time from original shot
-	    dng_date_time_info dti;
-	    dti.SetDateTime(dngDateTime(meta.getImageDateTime()));
-	    exif->fDateTimeOriginal = dti;
+        {
+            // Time from original shot
+            dng_date_time_info dti;
+            dti.SetDateTime(dngDateTime(meta.getImageDateTime()));
+            exif->fDateTimeOriginal = dti;
 
-	    dti.SetDateTime(dngDateTime(meta.getDigitizationDateTime(true)));
-	    exif->fDateTimeDigitized = dti;
+            dti.SetDateTime(dngDateTime(meta.getDigitizationDateTime(true)));
+            exif->fDateTimeDigitized = dti;
  
             negative->UpdateDateTime(dti);
 
@@ -885,11 +841,11 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.NikonLd3.LensIDNumber", val))                exif->fLensID.Set_ASCII((QString("%1").arg(val)).toAscii());
             if (meta.getExifTagLong("Exif.NikonLd2.FocusDistance", val))               exif->fSubjectDistance          = dng_urational((uint32)pow(10.0, val/40.0), 100);
             if (meta.getExifTagLong("Exif.NikonLd3.FocusDistance", val))               exif->fSubjectDistance          = dng_urational((uint32)pow(10.0, val/40.0), 100);
-            str = meta.getExifTagString("NikonLd1.LensIDNumber");
+            str = meta.getExifTagString("Exif.NikonLd1.LensIDNumber");
             if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
-            str = meta.getExifTagString("NikonLd2.LensIDNumber");
+            str = meta.getExifTagString("Exif.NikonLd2.LensIDNumber");
             if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
-            str = meta.getExifTagString("NikonLd3.LensIDNumber");
+            str = meta.getExifTagString("Exif.NikonLd3.LensIDNumber");
             if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
 
             // Canon Markernotes
@@ -958,18 +914,6 @@ int DNGWriter::convert()
                 str = meta.getExifTagString("Exif.CanonCs.LensType");
                 if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
             }
-            else if ((exif->fLensInfo[0].n > 0) && (exif->fLensInfo[1].n > 0))
-            {
-                double focalLenght = (double)exif->fLensInfo[0].n / (double)exif->fLensInfo[0].d;
-                QString lensName = QString("%1").arg(focalLenght, 0, 'f', 1);
-                if (exif->fLensInfo[0].n != exif->fLensInfo[1].n)
-                {
-                    focalLenght = (double)exif->fLensInfo[1].n / (double)exif->fLensInfo[1].d;
-                    lensName.append(QString("-%1").arg(focalLenght, 0, 'f', 1));
-                }
-                lensName.append(" mm");
-                exif->fLensName.Set_ASCII(lensName.toAscii());
-            }
 
             str = meta.getExifTagString("Exif.Canon.OwnerName");
             if (!str.isEmpty()) exif->fOwnerName.Set_ASCII(str.toAscii());
@@ -985,15 +929,118 @@ int DNGWriter::convert()
 
             // Pentax Markernotes
 
-            if (meta.getExifTagRational("Exif.Pentax.LensType", num, den, 0))          str = QString("%1").arg(num);
-            if (meta.getExifTagRational("Exif.Pentax.LensType", num, den, 1))          str = str + QString(" %1").arg(num);
-            if (!str.isEmpty()) exif->fLensID.Set_ASCII(str.toAscii());
+            str = meta.getExifTagString("Exif.Pentax.LensType");
+            if (str.length()) 
+            {
+                exif->fLensName.Set_ASCII(str.toAscii());
+                exif->fLensName.TrimLeadingBlanks();
+                exif->fLensName.TrimTrailingBlanks();
+            }
 
-            // Olympus Markernotes
+            long pentaxLensId1 = 0;
+            long pentaxLensId2 = 0;
+            if ((meta.getExifTagLong("Exif.Pentax.LensType", pentaxLensId1, 0)) && 
+                (meta.getExifTagLong("Exif.Pentax.LensType", pentaxLensId2, 1)))
+            {
+                exif->fLensID.Set_ASCII(QString("%1").arg(pentaxLensId1, pentaxLensId2).toAscii());
+            }
+
+           // Olympus Makernotes
 
             str = meta.getExifTagString("Exif.OlympusEq.SerialNumber");
-            if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
+            if (str.length()) 
+            {
+                exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
+                exif->fCameraSerialNumber.TrimLeadingBlanks();
+                exif->fCameraSerialNumber.TrimTrailingBlanks();
+            }
 
+            str = meta.getExifTagString("Exif.OlympusEq.LensSerialNumber");
+            if (str.length()) 
+            {
+                exif->fLensSerialNumber.Set_ASCII(str.toAscii());
+                exif->fLensSerialNumber.TrimLeadingBlanks();
+                exif->fLensSerialNumber.TrimTrailingBlanks();
+            }
+
+            str = meta.getExifTagString("Exif.OlympusEq.LensModel");
+            if (str.length()) 
+            {
+                exif->fLensName.Set_ASCII(str.toAscii());
+                exif->fLensName.TrimLeadingBlanks();
+                exif->fLensName.TrimTrailingBlanks();
+            }
+
+            if (meta.getExifTagLong("Exif.OlympusEq.MinFocalLength", val))             exif->fLensInfo[0]              = dng_urational(val, 1);
+            if (meta.getExifTagLong("Exif.OlympusEq.MaxFocalLength", val))             exif->fLensInfo[1]              = dng_urational(val, 1);
+
+            // Panasonic Makernotes
+            
+            str = meta.getExifTagString("Exif.Panasonic.LensType");
+            if (str.length()) 
+            {
+                exif->fLensName.Set_ASCII(str.toAscii());
+                exif->fLensName.TrimLeadingBlanks();
+                exif->fLensName.TrimTrailingBlanks();
+            }
+
+            str = meta.getExifTagString("Exif.Panasonic.LensSerialNumber");
+            if (str.length()) 
+            {
+                exif->fLensSerialNumber.Set_ASCII(str.toAscii());
+                exif->fLensSerialNumber.TrimLeadingBlanks();
+                exif->fLensSerialNumber.TrimTrailingBlanks();
+            }
+
+
+            // Sony Makernotes
+
+            if (meta.getExifTagLong("Exif.Sony2.LensID", val))
+            {
+                exif->fLensID.Set_ASCII(QString("%1").arg(val).toAscii());
+            }
+
+            str = meta.getExifTagString("Exif.Sony2.LensID");
+            if (str.length()) 
+            {
+                exif->fLensName.Set_ASCII(str.toAscii());
+                exif->fLensName.TrimLeadingBlanks();
+                exif->fLensName.TrimTrailingBlanks();
+            }
+
+            // 
+
+            if ((exif->fLensName.IsEmpty()) && 
+                (exif->fLensInfo[0].As_real64() > 0) &&
+                (exif->fLensInfo[1].As_real64() > 0)) 
+            {
+                QString lensName;
+                QTextStream stream(&lensName);
+                double dval = (double)exif->fLensInfo[0].n / (double)exif->fLensInfo[0].d;
+                stream << QString("%1").arg(dval, 0, 'f', 1);
+                if (exif->fLensInfo[0].As_real64() != exif->fLensInfo[1].As_real64())
+                {
+                    dval = (double)exif->fLensInfo[1].n / (double)exif->fLensInfo[1].d;
+                    stream << QString("-%1").arg(dval, 0, 'f', 1);
+                }
+                stream << " mm";
+                
+                if (exif->fLensInfo[2].As_real64() > 0)
+                {
+                    dval = (double)exif->fLensInfo[2].n / (double)exif->fLensInfo[2].d;
+                    stream << QString(" 1/%1").arg(dval, 0, 'f', 1);
+                }
+                
+                if ((exif->fLensInfo[3].As_real64() > 0) &&
+                    (exif->fLensInfo[2].As_real64() != exif->fLensInfo[3].As_real64()))
+                {
+                    dval = (double)exif->fLensInfo[3].n / (double)exif->fLensInfo[3].d;
+                    stream << QString("-%1").arg(dval, 0, 'f', 1);
+                }
+
+                exif->fLensName.Set_ASCII(lensName.toAscii());
+            }
+            
             // Markernote backup.
 
             QByteArray mkrnts = meta.getExifTagData("Exif.Photo.MakerNote");
@@ -1018,39 +1065,20 @@ int DNGWriter::convert()
                 QString mknByteOrder = meta.getExifTagString("Exif.MakerNote.ByteOrder");
 
                 if ((meta.getExifTagLong("Exif.MakerNote.Offset", mknOffset)) && !mknByteOrder.isEmpty())
-                {
+                {                   
                     dng_memory_stream streamPriv(memalloc);
-                    QByteArray identPriv;
+                    streamPriv.SetBigEndian();
 
-                    identPriv.append(QString("Adobe").toAscii());
-                    identPriv.append((char)0x00);
-                    identPriv.append(QString("MakN").toAscii());
-
-                    // next four byte are makernote size
-                    int mknSize = mkrnts.size();
-                    int size    = mknSize + 6;
-                    identPriv.append((char)((size >> 24) & 0xFF));
-                    identPriv.append((char)((size >> 16) & 0xFF));
-                    identPriv.append((char)((size >> 8 ) & 0xFF));
-                    identPriv.append((char)((size      ) & 0xFF));
-
-                    kDebug() << mknSize << " " << mknOffset << " " << mknByteOrder;
-
-                    // byte order
-                    identPriv.append(mknByteOrder.toAscii());
-
-                    // next four byte are original offset
-                    identPriv.append((char)((mknOffset >> 24) & 0xFF));
-                    identPriv.append((char)((mknOffset >> 16) & 0xFF));
-                    identPriv.append((char)((mknOffset >> 8 ) & 0xFF));
-                    identPriv.append((char)((mknOffset      ) & 0xFF));
-
-
-                    streamPriv.Put(identPriv, identPriv.size());
+                    streamPriv.Put("Adobe", 5);
+                    streamPriv.Put_uint8(0x00);
+                    streamPriv.Put("MakN", 4);
+                    streamPriv.Put_uint32(mkrnts.size() + mknByteOrder.size() + 4);
+                    streamPriv.Put(mknByteOrder.toAscii(), mknByteOrder.size());
+                    streamPriv.Put_uint32(mknOffset);
                     streamPriv.Put(mkrnts.data(), mkrnts.size());
-                    AutoPtr<dng_memory_block> blockPriv(host.Allocate(identPriv.size() + mkrnts.size()));
+                    AutoPtr<dng_memory_block> blockPriv(host.Allocate(streamPriv.Length()));
                     streamPriv.SetReadPosition(0);
-                    streamPriv.Get(blockPriv->Buffer(), identPriv.size() + mkrnts.size());
+                    streamPriv.Get(blockPriv->Buffer(), streamPriv.Length());
                     negative->SetPrivateData(blockPriv);
                 }
             }

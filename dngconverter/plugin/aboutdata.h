@@ -53,7 +53,7 @@ public:
                             "Using XMP toolkit %1\n"
                             "Using DNG toolkit 1.3").subs(QString(XMP_API_VERSION_STRING)),
                       ki18n("(c) 2008-2010, Gilles Caulier\n"
-                            "(c) 2010, Jens Mueller"))
+                            "(c) 2010-2011, Jens Mueller"))
     {
          addAuthor(ki18n("Gilles Caulier"),
                    ki18n("Author"),
