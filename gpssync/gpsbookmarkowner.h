@@ -31,7 +31,7 @@
 
 // libkmap includes
 
-#include <libkmap/kmap_modelhelper.h>
+#include <libkmap/modelhelper.h>
 
 // local includes:
 
