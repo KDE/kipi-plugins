@@ -1,11 +1,31 @@
-Kipi-plugins 2.0.0-beta4 - Release date: 2011/03/27
+Kipi-plugins 2.0.0-beta3 - Release date: 2011/02/27
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
+GPSSync        : Complete rewrite of GUI, including reverse-geocoding feature.
+YandexFotki    : New tool to export collection to Yandex web service (http://fotki.yandex.ru).
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> 150981 : Usage of ws.geonames.org to associate place names with coordinates.
+002 ==> 185143 : Track List Editor: Make images in the List selectable.
+003 ==> 195944 : Concentrate location manipulation functions in single dialog.
+004 ==> 209718 : Adding geolocation tag to a dozen pictures blocks digikam GUI for >10 seconds.
+005 ==> 215989 : Multiple GPX files for one geotagging one album.
+006 ==> 206133 : Support for Open Street Map.
+007 ==> 265126 : kipi-plugins-2.0.0_beta2 compile failure in libkmap/abstractmarkertiler.h.
+008 ==> 262412 : Request to setup git repo for kipi-plugins.
+009 ==> 202226 : Yandex Fotki support export.
+010 ==> 266911 : Add space to suffix "MB" (" MB").
+011 ==> 260754 : DngConverter doesn't support sraw files.
+012 ==> 
+
+
+
+
+
+
+
 
 
