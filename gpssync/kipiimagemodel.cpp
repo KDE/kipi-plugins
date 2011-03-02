@@ -61,7 +61,7 @@ KipiImageModel::~KipiImageModel()
 {
     // TODO: send a signal before deleting the items?
     qDeleteAll(d->items);
-
+    delete d->pixmapCache;
     delete d;
 }
 
