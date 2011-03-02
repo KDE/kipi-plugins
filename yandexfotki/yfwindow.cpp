@@ -532,7 +532,7 @@ void YandexFotkiWindow::writeSettings()
 }
 
 
-QString YandexFotkiWindow::getDestinationPath()
+QString YandexFotkiWindow::getDestinationPath() const
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
 }

@@ -86,7 +86,7 @@ public:
      */
     void reactivate();
 
-    QString getDestinationPath();
+    QString getDestinationPath() const;
 
 protected Q_SLOTS:
 
