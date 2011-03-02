@@ -130,7 +130,7 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLabel = new QLabel(settingsBox);
-    m_headerLabel->setWhatsThis(i18n("This is a clickable link to open the"
+    m_headerLabel->setWhatsThis(i18n("This is a clickable link to open the "
                                      "Yandex.Fotki service in a web browser."));
     m_headerLabel->setOpenExternalLinks(true);
     m_headerLabel->setFocusPolicy(Qt::NoFocus);
@@ -195,7 +195,7 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
 
     QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(
-        i18n("This is the location where YandexFotki images will be downloaded."));
+        i18n("This is the location where Yandex.Fotki images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget = interface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
