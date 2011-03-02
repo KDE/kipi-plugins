@@ -370,11 +370,11 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
 
-    d->tabBar->addTab("Details");
-    d->tabBar->addTab("GPS Correlator");
-    d->tabBar->addTab("Undo/Redo");
-    d->tabBar->addTab("Reverse Geocoding");
-    d->tabBar->addTab("Search");
+    d->tabBar->addTab(i18n("Details"));
+    d->tabBar->addTab(i18n("GPS Correlator"));
+    d->tabBar->addTab(i18n("Undo/Redo"));
+    d->tabBar->addTab(i18n("Reverse Geocoding"));
+    d->tabBar->addTab(i18n("Search"));
 
     d->tabBar->installEventFilter(this);
 

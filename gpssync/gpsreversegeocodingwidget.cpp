@@ -520,13 +520,13 @@ void GPSReverseGeocodingWidget::slotHideOptions()
     {
         d->LGridContainer->hide();
         d->hideOptions = false;
-        d->buttonHideOptions->setText("More options");
+        d->buttonHideOptions->setText(i18n("More options"));
     }
     else
     {
         d->LGridContainer->show();
         d->hideOptions = true;
-        d->buttonHideOptions->setText("Less options");
+        d->buttonHideOptions->setText(i18n("Less options"));
     }
 }
 
