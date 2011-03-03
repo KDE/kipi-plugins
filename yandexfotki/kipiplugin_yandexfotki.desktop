@@ -1,7 +1,15 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Yandex.Fotki Exporter
+Name[sv]=Export till Yandex.Fotki
+Name[uk]=Експорт до Яндекс.Фотки
+Name[x-test]=xxYandex.Fotki Exporterxx
+Name[zh_TW]=Yandex.Fotki 匯出器
 Comment=A tool to export images to a remote Yandex.Fotki web service
+Comment[sv]=Ett verktyg för att exportera bilder till en Yandex.Fotki fjärrwebbtjänst
+Comment[uk]=Інструмент для експорту зображень до віддаленої служби Yandex.Fotki
+Comment[x-test]=xxA tool to export images to a remote Yandex.Fotki web servicexx
+Comment[zh_TW]=匯出影像到遠端 Yandex.Fotki 網頁服務的工具
 Type=Service
 Icon=
 ServiceTypes=KIPI/Plugin
