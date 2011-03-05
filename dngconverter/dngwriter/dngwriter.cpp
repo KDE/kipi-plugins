@@ -689,79 +689,79 @@ int DNGWriter::convert()
             // String Tags
 
             str = meta.getExifTagString("Exif.Image.Make");
-            if (!str.isEmpty()) exif->fMake.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fMake.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Image.Model");
-            if (!str.isEmpty()) exif->fModel.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fModel.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Image.Software");
-            if (!str.isEmpty()) exif->fSoftware.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fSoftware.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Image.ImageDescription");
-            if (!str.isEmpty()) exif->fImageDescription.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fImageDescription.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Image.Artist");
-            if (!str.isEmpty()) exif->fArtist.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fArtist.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Image.Copyright");
-            if (!str.isEmpty()) exif->fCopyright.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fCopyright.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Photo.UserComment");
-            if (!str.isEmpty()) exif->fUserComment.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fUserComment.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Image.CameraSerialNumber");
-            if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSLatitudeRef");
-            if (!str.isEmpty()) exif->fGPSLatitudeRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSLatitudeRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSLongitudeRef");
-            if (!str.isEmpty()) exif->fGPSLongitudeRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSLongitudeRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSSatellites");
-            if (!str.isEmpty()) exif->fGPSSatellites.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSSatellites.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSStatus");
-            if (!str.isEmpty()) exif->fGPSStatus.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSStatus.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSMeasureMode");
-            if (!str.isEmpty()) exif->fGPSMeasureMode.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSMeasureMode.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSSpeedRef");
-            if (!str.isEmpty()) exif->fGPSSpeedRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSSpeedRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSTrackRef");
-            if (!str.isEmpty()) exif->fGPSTrackRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSTrackRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSSpeedRef");
-            if (!str.isEmpty()) exif->fGPSSpeedRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSSpeedRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSImgDirectionRef");
-            if (!str.isEmpty()) exif->fGPSSpeedRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSSpeedRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSMapDatum");
-            if (!str.isEmpty()) exif->fGPSMapDatum.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSMapDatum.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSDestLatitudeRef");
-            if (!str.isEmpty()) exif->fGPSDestLatitudeRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSDestLatitudeRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSDestLongitudeRef");
-            if (!str.isEmpty()) exif->fGPSDestLongitudeRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSDestLongitudeRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSDestBearingRef");
-            if (!str.isEmpty()) exif->fGPSDestBearingRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSDestBearingRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSDestDistanceRef");
-            if (!str.isEmpty()) exif->fGPSDestDistanceRef.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSDestDistanceRef.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSProcessingMethod");
-            if (!str.isEmpty()) exif->fGPSProcessingMethod.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSProcessingMethod.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSAreaInformation");
-            if (!str.isEmpty()) exif->fGPSAreaInformation.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSAreaInformation.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.GPSInfo.GPSDateStamp");
-            if (!str.isEmpty()) exif->fGPSDateStamp.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fGPSDateStamp.Set_ASCII(str.trimmed().toAscii());
 
             // Rational Tags
 
@@ -785,11 +785,21 @@ int DNGWriter::convert()
             if (meta.getExifTagRational("Exif.GPSInfo.GPSImgDirection", num, den))     exif->fGPSImgDirection          = dng_urational(num, den);
             if (meta.getExifTagRational("Exif.GPSInfo.GPSDestBearing", num, den))      exif->fGPSDestBearing           = dng_urational(num, den);
             if (meta.getExifTagRational("Exif.GPSInfo.GPSDestDistance", num, den))     exif->fGPSDestDistance          = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSLatitude", num, den))         exif->fGPSLatitude[0]           = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSLongitude", num, den))        exif->fGPSLongitude[0]          = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSTimeStamp", num, den))        exif->fGPSTimeStamp[0]          = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLatitude", num, den))     exif->fGPSDestLatitude[0]       = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLongitude", num, den))    exif->fGPSDestLongitude[0]      = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSLatitude", num, den, 0))      exif->fGPSLatitude[0]           = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSLatitude", num, den, 1))      exif->fGPSLatitude[1]           = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSLatitude", num, den, 2))      exif->fGPSLatitude[2]           = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSLongitude", num, den, 0))     exif->fGPSLongitude[0]          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSLongitude", num, den, 1))     exif->fGPSLongitude[1]          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSLongitude", num, den, 2))     exif->fGPSLongitude[2]          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSTimeStamp", num, den, 0))     exif->fGPSTimeStamp[0]          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSTimeStamp", num, den, 1))     exif->fGPSTimeStamp[1]          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSTimeStamp", num, den, 2))     exif->fGPSTimeStamp[2]          = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLatitude", num, den, 0))  exif->fGPSDestLatitude[0]       = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLatitude", num, den, 1))  exif->fGPSDestLatitude[1]       = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLatitude", num, den, 2))  exif->fGPSDestLatitude[2]       = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLongitude", num, den, 0)) exif->fGPSDestLongitude[0]      = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLongitude", num, den, 1)) exif->fGPSDestLongitude[1]      = dng_urational(num, den);
+            if (meta.getExifTagRational("Exif.GPSInfo.GPSDestLongitude", num, den, 2)) exif->fGPSDestLongitude[2]      = dng_urational(num, den);
 
             // Integer Tags
 
@@ -815,9 +825,22 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.Photo.PixelXDimension", val))                exif->fPixelXDimension          = (uint32)val;
             if (meta.getExifTagLong("Exif.Photo.PixelYDimension", val))                exif->fPixelYDimension          = (uint32)val;
             if (meta.getExifTagLong("Exif.Photo.FocalPlaneResolutionUnit", val))       exif->fFocalPlaneResolutionUnit = (uint32)val;
-            if (meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", val))                 exif->fGPSVersionID             = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSAltitudeRef", val))               exif->fGPSAltitudeRef           = (uint32)val;
             if (meta.getExifTagLong("Exif.GPSInfo.GPSDifferential", val))              exif->fGPSDifferential          = (uint32)val;
+            long gpsVer1 = 0;
+            long gpsVer2 = 0;
+            long gpsVer3 = 0;
+            long gpsVer4 = 0;
+            meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", gpsVer1, 0);
+            meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", gpsVer2, 1);
+            meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", gpsVer3, 2);
+            meta.getExifTagLong("Exif.GPSInfo.GPSVersionID", gpsVer4, 3);
+            long gpsVer = 0;
+            gpsVer += gpsVer1 << 24;
+            gpsVer += gpsVer2 << 16;
+            gpsVer += gpsVer3 <<  8;
+            gpsVer += gpsVer4;
+            exif->fGPSVersionID = (uint32)gpsVer;
 
             // Nikon Markernotes
 
@@ -825,12 +848,11 @@ int DNGWriter::convert()
             if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 1))              exif->fLensInfo[1]              = dng_urational(num, den);
             if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 2))              exif->fLensInfo[2]              = dng_urational(num, den);
             if (meta.getExifTagRational("Exif.Nikon3.Lens", num, den, 3))              exif->fLensInfo[3]              = dng_urational(num, den);
-            if (meta.getExifTagRational("Exif.Nikon3.ISOSpeed", num, den, 1))          exif->fISOSpeedRatings[0]       = (uint32)num;
+            if (meta.getExifTagLong("Exif.Nikon3.ISOSpeed", val, 1))                   exif->fISOSpeedRatings[0]       = (uint32)val;
 
             str = meta.getExifTagString("Exif.Nikon3.SerialNO");
             if (!str.isEmpty()) str = str.replace("NO=", "");
-            if (!str.isEmpty()) str = str.replace(" ", "");
-            if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Nikon3.SerialNumber");
             if (!str.isEmpty()) exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
@@ -842,11 +864,11 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.NikonLd2.FocusDistance", val))               exif->fSubjectDistance          = dng_urational((uint32)pow(10.0, val/40.0), 100);
             if (meta.getExifTagLong("Exif.NikonLd3.FocusDistance", val))               exif->fSubjectDistance          = dng_urational((uint32)pow(10.0, val/40.0), 100);
             str = meta.getExifTagString("Exif.NikonLd1.LensIDNumber");
-            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
             str = meta.getExifTagString("Exif.NikonLd2.LensIDNumber");
-            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
             str = meta.getExifTagString("Exif.NikonLd3.LensIDNumber");
-            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
 
             // Canon Markernotes
 
@@ -908,21 +930,20 @@ int DNGWriter::convert()
             if (meta.getExifTagLong("Exif.CanonCs.LensType", canonLensType))           exif->fLensID.Set_ASCII((QString("%1").arg(canonLensType)).toAscii());
             str = meta.getExifTagString("Exif.Canon.LensModel");
             if (!str.isEmpty())
-                exif->fLensName.Set_ASCII(str.toAscii());
+                exif->fLensName.Set_ASCII(str.trimmed().toAscii());
             else if (canonLensType != 65535)
             {
                 str = meta.getExifTagString("Exif.CanonCs.LensType");
-                if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.toAscii());
+                if (!str.isEmpty()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
             }
 
             str = meta.getExifTagString("Exif.Canon.OwnerName");
-            if (!str.isEmpty()) exif->fOwnerName.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fOwnerName.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Canon.FirmwareVersion");
             if (!str.isEmpty()) str = str.replace("Firmware", "");
             if (!str.isEmpty()) str = str.replace("Version", "");
-            if (!str.isEmpty()) str = str.replace(" ", "");
-            if (!str.isEmpty()) exif->fFirmware.Set_ASCII(str.toAscii());
+            if (!str.isEmpty()) exif->fFirmware.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.CanonSi.ISOSpeed");
             if (!str.isEmpty()) exif->fISOSpeedRatings[0] = str.toInt();
@@ -932,7 +953,7 @@ int DNGWriter::convert()
             str = meta.getExifTagString("Exif.Pentax.LensType");
             if (str.length()) 
             {
-                exif->fLensName.Set_ASCII(str.toAscii());
+                exif->fLensName.Set_ASCII(str.trimmed().toAscii());
                 exif->fLensName.TrimLeadingBlanks();
                 exif->fLensName.TrimTrailingBlanks();
             }
@@ -948,28 +969,13 @@ int DNGWriter::convert()
            // Olympus Makernotes
 
             str = meta.getExifTagString("Exif.OlympusEq.SerialNumber");
-            if (str.length()) 
-            {
-                exif->fCameraSerialNumber.Set_ASCII(str.toAscii());
-                exif->fCameraSerialNumber.TrimLeadingBlanks();
-                exif->fCameraSerialNumber.TrimTrailingBlanks();
-            }
+            if (str.length()) exif->fCameraSerialNumber.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.OlympusEq.LensSerialNumber");
-            if (str.length()) 
-            {
-                exif->fLensSerialNumber.Set_ASCII(str.toAscii());
-                exif->fLensSerialNumber.TrimLeadingBlanks();
-                exif->fLensSerialNumber.TrimTrailingBlanks();
-            }
-
+            if (str.length()) exif->fLensSerialNumber.Set_ASCII(str.trimmed().toAscii());
+            
             str = meta.getExifTagString("Exif.OlympusEq.LensModel");
-            if (str.length()) 
-            {
-                exif->fLensName.Set_ASCII(str.toAscii());
-                exif->fLensName.TrimLeadingBlanks();
-                exif->fLensName.TrimTrailingBlanks();
-            }
+            if (str.length()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
 
             if (meta.getExifTagLong("Exif.OlympusEq.MinFocalLength", val))             exif->fLensInfo[0]              = dng_urational(val, 1);
             if (meta.getExifTagLong("Exif.OlympusEq.MaxFocalLength", val))             exif->fLensInfo[1]              = dng_urational(val, 1);
@@ -977,21 +983,10 @@ int DNGWriter::convert()
             // Panasonic Makernotes
             
             str = meta.getExifTagString("Exif.Panasonic.LensType");
-            if (str.length()) 
-            {
-                exif->fLensName.Set_ASCII(str.toAscii());
-                exif->fLensName.TrimLeadingBlanks();
-                exif->fLensName.TrimTrailingBlanks();
-            }
+            if (str.length()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
 
             str = meta.getExifTagString("Exif.Panasonic.LensSerialNumber");
-            if (str.length()) 
-            {
-                exif->fLensSerialNumber.Set_ASCII(str.toAscii());
-                exif->fLensSerialNumber.TrimLeadingBlanks();
-                exif->fLensSerialNumber.TrimTrailingBlanks();
-            }
-
+            if (str.length()) exif->fLensSerialNumber.Set_ASCII(str.trimmed().toAscii());
 
             // Sony Makernotes
 
@@ -1001,13 +996,8 @@ int DNGWriter::convert()
             }
 
             str = meta.getExifTagString("Exif.Sony2.LensID");
-            if (str.length()) 
-            {
-                exif->fLensName.Set_ASCII(str.toAscii());
-                exif->fLensName.TrimLeadingBlanks();
-                exif->fLensName.TrimTrailingBlanks();
-            }
-
+            if (str.length()) exif->fLensName.Set_ASCII(str.trimmed().toAscii());
+            
             // 
 
             if ((exif->fLensName.IsEmpty()) && 
