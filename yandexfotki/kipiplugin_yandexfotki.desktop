@@ -1,13 +1,17 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Yandex.Fotki Exporter
+Name[nl]=Exportprogramma van Yandex.Fotki
 Name[pt]=Exportação para o Yandex.Fotki
+Name[pt_BR]=Exportação para o Yandex.Fotki
 Name[sv]=Export till Yandex.Fotki
 Name[uk]=Експорт до Яндекс.Фотки
 Name[x-test]=xxYandex.Fotki Exporterxx
 Name[zh_TW]=Yandex.Fotki 匯出器
 Comment=A tool to export images to a remote Yandex.Fotki web service
+Comment[nl]=Een hulpmiddel om afbeeldingen naar een Yandex.Fotki-webservice te exporteren
 Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto Yandex.Fotki
+Comment[pt_BR]=Uma ferramenta para exportar imagens para um serviço da Internet Yandex.Fotki
 Comment[sv]=Ett verktyg för att exportera bilder till en Yandex.Fotki fjärrwebbtjänst
 Comment[uk]=Інструмент для експорту зображень до віддаленої служби Yandex.Fotki
 Comment[x-test]=xxA tool to export images to a remote Yandex.Fotki web servicexx
