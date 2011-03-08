@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "flickrtalker.h"
 #include "flickrtalker.moc"
 
 // C++ includes
@@ -77,15 +76,15 @@ namespace KIPIFlickrExportPlugin
 
 FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
 {
-    m_parent = parent;
-    m_job    = 0;
+    m_parent        = parent;
+    m_job           = 0;
     m_photoSetsList = 0;
 
     m_serviceName = serviceName;
     if (serviceName == "23")
     {
-        m_apiUrl = QString("http://www.23hq.com/services/rest/");
-        m_authUrl = QString("http://www.23hq.com/services/auth/");
+        m_apiUrl    = QString("http://www.23hq.com/services/rest/");
+        m_authUrl   = QString("http://www.23hq.com/services/auth/");
         m_uploadUrl = QString("http://www.23hq.com/services/upload/");
 
         // bshanks: do 23 and flickr really share API keys? or does 23 not need
@@ -95,8 +94,8 @@ FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
     }
     else if (serviceName == "Zooomr")
     {
-        m_apiUrl = QString("http://api.zooomr.com/services/rest/");
-        m_authUrl = QString("http://www.zooomr.com/services/auth/");
+        m_apiUrl    = QString("http://api.zooomr.com/services/rest/");
+        m_authUrl   = QString("http://www.zooomr.com/services/auth/");
         m_uploadUrl = QString("http://upload.zooomr.com/services/upload/");
 
         m_apikey = "18c8db5ce9ed4e15a7b484136f5080c5";
@@ -104,8 +103,8 @@ FlickrTalker::FlickrTalker(QWidget* parent, const QString& serviceName)
     }
     else
     {
-        m_apiUrl = QString("http://www.flickr.com/services/rest/");
-        m_authUrl = QString("http://www.flickr.com/services/auth/");
+        m_apiUrl    = QString("http://www.flickr.com/services/rest/");
+        m_authUrl   = QString("http://www.flickr.com/services/auth/");
         m_uploadUrl = QString("http://api.flickr.com/services/upload/");
 
         m_apikey = "49d585bafa0758cb5c58ab67198bf632";
@@ -181,7 +180,7 @@ void FlickrTalker::getFrob()
     url.addQueryItem("api_sig", md5);
     kDebug() << "Get frob url: " << url;
 
-    KIO::TransferJob* job;
+    KIO::TransferJob* job = 0;
     if (m_serviceName == "Zooomr")
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
@@ -227,7 +226,7 @@ void FlickrTalker::checkToken(const QString& token)
     kDebug() << "Check token url: " << url;
     QByteArray tmp;
 
-    KIO::TransferJob* job;
+    KIO::TransferJob* job = 0;
     if (m_serviceName == "Zooomr")
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow the
@@ -308,7 +307,7 @@ void FlickrTalker::getToken()
     url.addQueryItem("api_sig", md5);
     kDebug() << "Get token url: " << url;
 
-    KIO::TransferJob* job;
+    KIO::TransferJob* job = 0;
     if (m_serviceName == "Zooomr")
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
@@ -348,7 +347,7 @@ void FlickrTalker::listPhotoSets()
     url.addQueryItem("api_sig", md5);
     kDebug() << "List photoset URL" << url;
     QByteArray tmp;
-    KIO::TransferJob* job;
+    KIO::TransferJob* job = 0;
     if (m_serviceName == "Zooomr")
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
@@ -396,7 +395,7 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
     url.addQueryItem("api_sig", md5);
     kDebug() << "Get photo property url: " << url;
     QByteArray tmp;
-    KIO::TransferJob* job;
+    KIO::TransferJob* job = 0;
     if (m_serviceName == "Zooomr")
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
@@ -450,7 +449,7 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     url.addQueryItem("api_sig", md5);
     kDebug() << "List photo sets url: " << url;
     QByteArray tmp;
-    KIO::TransferJob* job;
+    KIO::TransferJob* job = 0;
     if (m_serviceName == "Zooomr")
     {
         // Zooomr redirects the POST at this url to a GET; KIO doesn't follow
@@ -750,14 +749,14 @@ void FlickrTalker::slotError(const QString& error)
     };
 
     KMessageBox::error(kapp->activeWindow(),
-                 i18n("Error Occurred: %1\nCannot proceed any further.",transError));
+                       i18n("Error Occurred: %1\nCannot proceed any further.",transError));
 }
 
 void FlickrTalker::slotResult(KJob *kjob)
 {
     m_job = 0;
     emit signalBusy(false);
-    KIO::Job *job = static_cast<KIO::Job*>(kjob);
+    KIO::Job* job = static_cast<KIO::Job*>(kjob);
 
     if (job->error())
     {
@@ -963,7 +962,7 @@ void FlickrTalker::parseResponseGetToken(const QByteArray& data)
         return;
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node       = docElem.firstChild();
+    QDomNode    node    = docElem.firstChild();
     QDomElement e;
 
     while(!node.isNull())
@@ -1038,7 +1037,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
         return;
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node       = docElem.firstChild();
+    QDomNode    node    = docElem.firstChild();
     QDomElement e;
 
     while(!node.isNull())
@@ -1089,8 +1088,9 @@ void FlickrTalker::parseResponseListPhotoSets(const QByteArray& data)
         return;
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node       = docElem.firstChild();
+    QDomNode    node    = docElem.firstChild();
     QDomElement e;
+
     QString photoSet_id, photoSet_title, photoSet_description;
     m_photoSetsList = new QLinkedList <FPhotoSet> ();
 
@@ -1268,7 +1268,7 @@ void FlickrTalker::parseResponsePhotoProperty(const QByteArray& data)
         return;
 
     QDomElement docElem = doc.documentElement();
-    QDomNode node       = docElem.firstChild();
+    QDomNode    node    = docElem.firstChild();
     QDomElement e;
 
     while(!node.isNull())

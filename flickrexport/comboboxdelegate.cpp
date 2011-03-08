@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "comboboxdelegate.h"
 #include "comboboxdelegate.moc"
 
 // Qt includes
@@ -42,7 +41,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-ComboBoxDelegate::ComboBoxDelegate(KIPIPlugins::ImagesList *parent,
+ComboBoxDelegate::ComboBoxDelegate(KIPIPlugins::ImagesList* parent,
                                    QMap<int, QString> items)
                 : QAbstractItemDelegate(parent),
                   m_parent(parent),
@@ -63,7 +62,7 @@ ComboBoxDelegate::ComboBoxDelegate(KIPIPlugins::ImagesList *parent,
     }
 }
 
-void ComboBoxDelegate::startEditing(QTreeWidgetItem *item, int column)
+void ComboBoxDelegate::startEditing(QTreeWidgetItem* item, int column)
 {
     // Start editing the item. This is part of a hack to make sure the item text
     // doesn't get painted whenever a combobox is drawn (otherwise the text can
@@ -75,12 +74,12 @@ void ComboBoxDelegate::startEditing(QTreeWidgetItem *item, int column)
     item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 }
 
-void ComboBoxDelegate::paint(QPainter *painter,
-                             const QStyleOptionViewItem &option,
-                             const QModelIndex &index) const
+void ComboBoxDelegate::paint(QPainter* painter,
+                             const QStyleOptionViewItem& option,
+                             const QModelIndex& index) const
 {
     // Draw a panel item primitive element as background.
-    QStyle *style = QApplication::style();
+    QStyle* style = QApplication::style();
     style->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter);
 
     // If the element that gets painted is not currently edited, the item text
@@ -107,23 +106,22 @@ void ComboBoxDelegate::paint(QPainter *painter,
     }
 }
 
-QSize ComboBoxDelegate::sizeHint(const QStyleOptionViewItem &,
-                                 const QModelIndex &) const
+QSize ComboBoxDelegate::sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const
 {
     // Return the size based on the widest item in the items list.
     return m_size;
 }
 
-QWidget *ComboBoxDelegate::createEditor(QWidget *parent,
-                                        const QStyleOptionViewItem &option,
-                                        const QModelIndex &) const
+QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option,
+                                        const QModelIndex&) const
 {
     // This method returns the widget that should be used to edit the current
     // element, which is in this case a QComboBox with the items supplied by
     // the user items list on construction.
-    QComboBox *cb = new QComboBox(parent);
+    QComboBox* cb = new QComboBox(parent);
     QMapIterator<int, QString> i(m_items);
-    while (i.hasNext()) {
+    while (i.hasNext())
+    {
         i.next();
         cb->addItem(i.value(), QVariant(i.key()));
     }
@@ -144,11 +142,11 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent,
     return cb;
 }
 
-void ComboBoxDelegate::setEditorData(QWidget *editor,
-                                     const QModelIndex &index) const
+void ComboBoxDelegate::setEditorData(QWidget* editor,
+                                     const QModelIndex& index) const
 {
     // Scroll the combobox to the current selected state on initialization.
-    QComboBox *cb = qobject_cast<QComboBox *>(editor);
+    QComboBox* cb = qobject_cast<QComboBox*>(editor);
     for (int i = 0; i < cb->count(); i++)
     {
         if (cb->itemData(i).toInt() == index.data().toInt())
@@ -156,24 +154,24 @@ void ComboBoxDelegate::setEditorData(QWidget *editor,
     }
 }
 
-void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
-                                    const QModelIndex &index) const
+void ComboBoxDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
+                                    const QModelIndex& index) const
 {
     // Write the data to the model when finishing has completed.
-    QComboBox *cb = qobject_cast<QComboBox *>(editor);
-    int selected = cb->itemData(cb->currentIndex()).toInt();
+    QComboBox* cb = qobject_cast<QComboBox*>(editor);
+    int selected  = cb->itemData(cb->currentIndex()).toInt();
     model->setData(index, selected);
 }
 
 void ComboBoxDelegate::commitAndCloseEditor(int)
 {
     // Emit the proper signals when editing has finished.
-    QComboBox *editor = qobject_cast<QComboBox *>(sender());
+    QComboBox* editor = qobject_cast<QComboBox*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
 }
 
-void ComboBoxDelegate::slotResetEditedState(QObject *)
+void ComboBoxDelegate::slotResetEditedState(QObject*)
 {
     m_rowEdited = -1;
 }

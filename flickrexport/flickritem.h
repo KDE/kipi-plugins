@@ -77,13 +77,13 @@ public:
         content_type = FlickrList::PHOTO;
     }
 
-    bool        is_public;
-    bool        is_friend;
-    bool        is_family;
+    bool                    is_public;
+    bool                    is_friend;
+    bool                    is_family;
 
-    QString     title;
-    QString     description;
-    QStringList tags;
+    QString                 title;
+    QString                 description;
+    QStringList             tags;
 
     FlickrList::SafetyLevel safety_level;
     FlickrList::ContentType content_type;

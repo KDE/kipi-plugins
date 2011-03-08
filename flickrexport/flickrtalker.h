@@ -155,7 +155,7 @@ private:
     QString    m_token;
     QString    m_username;
     QString    m_userId;
-    
+
     KIO::Job*  m_job;
 
     State      m_state;

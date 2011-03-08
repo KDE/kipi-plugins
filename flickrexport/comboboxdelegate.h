@@ -48,37 +48,28 @@ class ComboBoxDelegate : public QAbstractItemDelegate
 
 public:
 
-    ComboBoxDelegate(KIPIPlugins::ImagesList *, QMap<int, QString>);
+    ComboBoxDelegate(KIPIPlugins::ImagesList*, QMap<int, QString>);
 
     /* Whenever an element needs to be edited, this method should be called.
      * It's actually a hack to prevent the item text shining through whenever
      * editing occurs. */
-    void startEditing(QTreeWidgetItem *, int);
+    void startEditing(QTreeWidgetItem*, int);
 
     /* Overloaded functions to provide the delegate functionality. */
-    void paint(QPainter *,
-               const QStyleOptionViewItem &,
-               const QModelIndex &) const;
-    QSize sizeHint(const QStyleOptionViewItem &,
-                   const QModelIndex &) const;
-    QWidget *createEditor(QWidget *,
-                          const QStyleOptionViewItem &,
-                          const QModelIndex &) const;
-    void setEditorData(QWidget *,
-                       const QModelIndex &) const;
-    void setModelData(QWidget *,
-                      QAbstractItemModel *,
-                      const QModelIndex &) const;
-
+    void paint(QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
+    QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const;
+    QWidget* createEditor(QWidget*, const QStyleOptionViewItem&, const QModelIndex&) const;
+    void setEditorData(QWidget*, const QModelIndex&) const;
+    void setModelData(QWidget*, QAbstractItemModel*, const QModelIndex&) const;
 
 private Q_SLOTS:
 
     void commitAndCloseEditor(int);
-    void slotResetEditedState(QObject *);
+    void slotResetEditedState(QObject*);
 
 private:
 
-    KIPIPlugins::ImagesList *m_parent;
+    KIPIPlugins::ImagesList* m_parent;
     QMap<int, QString>       m_items;
 
     /* The row in the view that is currently being edited. Should be -1 to

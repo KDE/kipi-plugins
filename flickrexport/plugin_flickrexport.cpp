@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "plugin_flickrexport.h"
 #include "plugin_flickrexport.moc"
 
 // C ANSI includes

@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "flickrwidget.h"
 #include "flickrwidget.moc"
 
 // Qt includes
