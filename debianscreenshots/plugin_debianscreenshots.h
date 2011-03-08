@@ -24,9 +24,11 @@
 #define PLUGIN_DEBIANSCREENSHOTS_H
 
 // Qt includes
+
 #include <QVariant>
 
 // LibKIPI includes
+
 #include <libkipi/plugin.h>
 
 //#if KDE_IS_VERSION(4,3,60)

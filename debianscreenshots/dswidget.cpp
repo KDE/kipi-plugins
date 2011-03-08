@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "dswidget.h"
 #include "dswidget.moc"
 
 // Qt includes

@@ -25,8 +25,8 @@
 // KDE includes
 
 #include <kdebug.h>
-#include <KConfig>
-#include <KLocale>
+#include <kconfig.h>
+#include <klocale.h>
 
 namespace KIPIDebianScreenshotsPlugin
 {

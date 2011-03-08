@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "dstalker.h"
 #include "dstalker.moc"
 
 // C++ includes

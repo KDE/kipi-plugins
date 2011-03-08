@@ -25,9 +25,9 @@
 
 // KDE includes
 
-#include <KJob>
-#include <KUrl>
-#include <KIcon>
+#include <kjob.h>
+#include <kurl.h>
+#include <kicon.h>
 
 namespace KIPIDebianScreenshotsPlugin
 {

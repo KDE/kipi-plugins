@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "dswindow.h"
 #include "dswindow.moc"
 
 // Qt includes
