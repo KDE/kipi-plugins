@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "calpainter.h"
 #include "calpainter.moc"
 
 // Qt includes
@@ -52,7 +51,7 @@
 namespace KIPICalendarPlugin
 {
 
-CalPainter::CalPainter(QPaintDevice *pd)
+CalPainter::CalPainter(QPaintDevice* pd)
           : QPainter(pd)
 {
     angle_     = 0;
@@ -63,7 +62,7 @@ CalPainter::~CalPainter()
 {
 }
 
-void CalPainter::setImage(const KUrl &imagePath, int angle)
+void CalPainter::setImage(const KUrl& imagePath, int angle)
 {
     imagePath_ = imagePath;
     angle_     = angle;
@@ -76,8 +75,8 @@ void CalPainter::paint(int month)
     int width  = device()->width();
     int height = device()->height();
 
-    CalSettings *settings = CalSettings::instance();
-    CalParams& params = CalSettings::instance()->params;
+    CalSettings* settings = CalSettings::instance();
+    CalParams& params     = CalSettings::instance()->params;
 
     // --------------------------------------------------
 
@@ -219,7 +218,7 @@ void CalPainter::paint(int month)
         if (dayname > 7)
             dayname = dayname-7;
 
-        sx = cellSizeX * i + rCal.left();
+        sx     = cellSizeX * i + rCal.left();
         r.moveTopLeft(QPoint(sx,sy));
         rsmall = r;
         rsmall.setWidth(r.width() - 2);
@@ -236,7 +235,7 @@ void CalPainter::paint(int month)
         sy = cellSizeY * (j + 1) + rCal.top();
         for (int i=0; i<7; i++)
         {
-            sx = cellSizeX * i + rCal.left();
+            sx     = cellSizeX * i + rCal.left();
             r.moveTopLeft(QPoint(sx,sy));
             rsmall = r;
             rsmall.setWidth(r.width() - 2);

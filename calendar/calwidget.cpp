@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "calwidget.h"
 #include "calwidget.moc"
 
 // Local includes
@@ -33,7 +32,7 @@
 namespace KIPICalendarPlugin
 {
 
-CalWidget::CalWidget(QWidget *parent)
+CalWidget::CalWidget(QWidget* parent)
          : QWidget(parent,0)
 {
     setAttribute(Qt::WA_NoBackground);
@@ -44,7 +43,7 @@ CalWidget::~CalWidget()
 {
 }
 
-void CalWidget::paintEvent(QPaintEvent *e)
+void CalWidget::paintEvent(QPaintEvent* e)
 {
     CalPainter painter( this );
     painter.paint( 1 );

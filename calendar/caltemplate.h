@@ -28,7 +28,7 @@
 
 #include <QWidget>
 
-// Local include.
+// Local include
 
 #include "ui_caltemplate.h"
 

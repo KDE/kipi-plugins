@@ -54,7 +54,7 @@ class MonthWidget : public QPushButton
 
 public:
 
-    MonthWidget( KIPI::Interface* interface, QWidget *parent, int month );
+    MonthWidget( KIPI::Interface* interface, QWidget* parent, int month );
     ~MonthWidget();
 
     KUrl imagePath();
@@ -62,19 +62,19 @@ public:
 
 protected:
 
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
-    void paintEvent(QPaintEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
+    void dragEnterEvent(QDragEnterEvent* event);
+    void dropEvent(QDropEvent* event);
+    void paintEvent(QPaintEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
 
 private Q_SLOTS:
 
-   void gotThumbnail( const KUrl &url, const QPixmap &pix );
+   void gotThumbnail( const KUrl& url, const QPixmap& pix );
 
 private:
 
     QPixmap thumb() const;
-    void setThumb(const QPixmap &pic);
+    void setThumb(const QPixmap& pic);
     Q_PROPERTY(QPixmap thumb READ thumb WRITE setThumb)
 
 private:

@@ -81,8 +81,8 @@ public:
     void setImage(int month, const KUrl& url);
     KUrl image(int month) const;
     void clearSpecial();
-    void addSpecial(const QDate &date, const Day &info);
-    void loadSpecial(const KUrl &url, const QColor &color);
+    void addSpecial(const QDate& date, const Day& info);
+    void loadSpecial(const KUrl& url, const QColor& color);
     bool isSpecial(int month, int day) const;
 
     QColor getDayColor(int month, int day) const;
@@ -102,15 +102,15 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    void setPaperSize(const QString &paperSize);
+    void setPaperSize(const QString& paperSize);
     void setImagePos(int pos);
     void setDrawLines(bool draw);
     void setRatio(int ratio);
-    void setFont(const QString &font);
+    void setFont(const QString& font);
 
 protected:
 
-    bool isPrayDay(const QDate &date) const;
+    bool isPrayDay(const QDate& date) const;
 
 private:
 

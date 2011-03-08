@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "calsettings.h"
 #include "calsettings.moc"
 
 // KDE includes
@@ -152,7 +151,7 @@ void CalSettings::setRatio(int ratio)
     }
 }
 
-void CalSettings::setFont(const QString &font)
+void CalSettings::setFont(const QString& font)
 {
     if (params.baseFont.family() != font)
     {
@@ -166,7 +165,7 @@ void CalSettings::clearSpecial()
     special.clear();
 }
 
-void CalSettings::addSpecial(const QDate &date, const Day &info)
+void CalSettings::addSpecial(const QDate& date, const Day& info)
 {
     if (special.contains(date))
         special[date].second.append("; ").append(info.second);
@@ -174,7 +173,7 @@ void CalSettings::addSpecial(const QDate &date, const Day &info)
         special[date] = info;
 }
 
-void CalSettings::loadSpecial(const KUrl &url, const QColor &color)
+void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
 {
     KCal::CalendarLocal calendar("UTC");
 
@@ -222,7 +221,7 @@ void CalSettings::loadSpecial(const KUrl &url, const QColor &color)
     }
 }
 
-bool CalSettings::isPrayDay(const QDate &date) const
+bool CalSettings::isPrayDay(const QDate& date) const
 {
     return (date.dayOfWeek() == KGlobal::locale()->calendar()->weekDayOfPray());
 }

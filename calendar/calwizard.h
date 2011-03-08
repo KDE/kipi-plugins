@@ -66,7 +66,7 @@ class CalWizard : public KAssistantDialog
 
 public:
 
-    explicit CalWizard( KIPI::Interface* interface, QWidget *parent=0 );
+    explicit CalWizard( KIPI::Interface* interface, QWidget* parent=0 );
     virtual ~CalWizard();
 
 private:
@@ -75,35 +75,35 @@ private:
 
 private Q_SLOTS:
 
-    void slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *before);
+    void slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* before);
     void slotHelp();
     void printComplete();
     void updatePage(int page);
 
 private:
 
-    CalSettings              *cSettings_;
-    CalTemplate              *wTemplate_;
-    CalSelect                *wSelect_;
-    QWidget                  *wEvents_;
+    CalSettings*              cSettings_;
+    CalTemplate*              wTemplate_;
+    CalSelect*                wSelect_;
+    QWidget*                  wEvents_;
     Ui::CalEvents             calEventsUI;
     Ui::CalProgress           calProgressUI;
 
-    QLabel                   *wPrintLabel_;
-    QWidget                  *wFinish_;
+    QLabel*                   wPrintLabel_;
+    QWidget*                  wFinish_;
 
-    KPageWidgetItem          *wPrintPage_;
-    KPageWidgetItem          *wFinishPage_;
+    KPageWidgetItem*          wPrintPage_;
+    KPageWidgetItem*          wFinishPage_;
 
-    QPrinter                 *printer_;
+    QPrinter*                 printer_;
 
-    CalPrinter               *printThread_;
+    CalPrinter*               printThread_;
 
     QMap<int, KUrl>           months_;
 
-    KIPI::Interface          *interface_;
+    KIPI::Interface*          interface_;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData* m_about;
 };
 
 }  // NameSpace KIPICalendarPlugin

@@ -45,10 +45,10 @@ class CalPainter : public QObject, public QPainter
 
 public:
 
-    CalPainter(QPaintDevice *pd);
+    CalPainter(QPaintDevice* pd);
     virtual ~CalPainter();
 
-    void setImage(const KUrl &imagePath, int angle);
+    void setImage(const KUrl& imagePath, int angle);
     void paint(int month);
 
 Q_SIGNALS:
@@ -66,13 +66,13 @@ public Q_SLOTS:
 
 private:
 
-    QImage image_;
-
-    KUrl   imagePath_;
+    bool   cancelled_;
 
     int    angle_;
 
-    bool   cancelled_;
+    QImage image_;
+
+    KUrl   imagePath_;
 };
 
 }  // NameSpace KIPICalendarPlugin

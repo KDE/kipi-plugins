@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "plugin_calendar.h"
 #include "plugin_calendar.moc"
 
 // KDE includes
@@ -44,7 +43,7 @@
 K_PLUGIN_FACTORY( CalendarFactory, registerPlugin<Plugin_Calendar>(); )
 K_EXPORT_PLUGIN ( CalendarFactory("kipiplugin_calendar") )
 
-Plugin_Calendar::Plugin_Calendar(QObject *parent, const QVariantList&)
+Plugin_Calendar::Plugin_Calendar(QObject* parent, const QVariantList&)
                : KIPI::Plugin(CalendarFactory::componentData(), parent, "Calendar")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Calendar plugin loaded";

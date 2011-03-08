@@ -45,7 +45,7 @@ class Plugin_Calendar : public KIPI::Plugin
 
 public:
 
-    Plugin_Calendar(QObject *parent, const QVariantList& args);
+    Plugin_Calendar(QObject* parent, const QVariantList& args);
     ~Plugin_Calendar();
     virtual KIPI::Category category( KAction* action ) const;
     virtual void setup( QWidget* widget );
@@ -56,9 +56,9 @@ protected Q_SLOTS:
 
 private:
 
-    KAction         *m_actionCalendar;
+    KAction*         m_actionCalendar;
 
-    KIPI::Interface *m_interface;
+    KIPI::Interface* m_interface;
 };
 
 #endif // PLUGIN_CALENDAR_H

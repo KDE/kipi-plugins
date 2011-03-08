@@ -35,7 +35,7 @@ CalTemplate::CalTemplate(QWidget* parent)
 {
     ui.setupUi( this );
 
-    CalSettings *settings = CalSettings::instance();
+    CalSettings* settings = CalSettings::instance();
 
     // set initial settings
     settings->setPaperSize(ui.paperSizeCombo->currentText());

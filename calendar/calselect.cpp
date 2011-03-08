@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "calselect.h"
 #include "calselect.moc"
 
 // KDE includes
@@ -41,7 +40,7 @@
 namespace KIPICalendarPlugin
 {
 
-CalSelect::CalSelect( KIPI::Interface* interface, QWidget *parent )
+CalSelect::CalSelect( KIPI::Interface* interface, QWidget* parent )
          : QWidget(parent), mwVector_(MAX_MONTHS)
 {
     setupView( interface );
@@ -58,8 +57,8 @@ void CalSelect::setupView( KIPI::Interface* interface )
     connect(ui.yearSpin, SIGNAL(valueChanged(int)),
             this, SLOT(yearChanged(int)));
 
-    const KCalendarSystem *cal = KGlobal::locale()->calendar();
-    int currentYear = cal->year(QDate::currentDate());
+    const KCalendarSystem* cal = KGlobal::locale()->calendar();
+    int currentYear            = cal->year(QDate::currentDate());
 
     KUrl::List urlList;
     KIPI::ImageCollection images = interface->currentSelection();
@@ -68,20 +67,22 @@ void CalSelect::setupView( KIPI::Interface* interface )
 
     QDate d;
     cal->setYMD(d, currentYear, 1, 1);
-    int months = cal->monthsInYear(d);
+    int months     = cal->monthsInYear(d);
     // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
-    int inRow = (months / 2) + ((months % 2) != 0);
-    MonthWidget *w;
+    int inRow      = (months / 2) + ((months % 2) != 0);
+    MonthWidget* w = 0;
 
     for (int i=0; i<MAX_MONTHS; ++i)
     {
         w = new MonthWidget( interface, ui.monthBox, i+1 );
+
         if (i < urlList.count())
             w->setImage( urlList[i] );
         if (i<months)
             ui.monthBoxLayout->addWidget( w, i / inRow, i % inRow );
         else
             w->hide();
+
         mwVector_.insert(i, w);
     }
     ui.yearSpin->setRange(cal->year(cal->earliestValidDate()) + 1,
@@ -93,7 +94,7 @@ void CalSelect::yearChanged(int year)
 {
     int i, months;
     QDate d, oldD;
-    const KCalendarSystem *cal = KGlobal::locale()->calendar();
+    const KCalendarSystem* cal = KGlobal::locale()->calendar();
     cal->setYMD(d, year, 1, 1);
     cal->setYMD(oldD, CalSettings::instance()->year(), 1, 1);
     months = cal->monthsInYear(d);

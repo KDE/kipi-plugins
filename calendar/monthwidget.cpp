@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "monthwidget.h"
 #include "monthwidget.moc"
 
 // Qt includes
@@ -62,7 +61,7 @@
 namespace KIPICalendarPlugin
 {
 
-MonthWidget::MonthWidget( KIPI::Interface* interface, QWidget *parent, int month )
+MonthWidget::MonthWidget( KIPI::Interface* interface, QWidget* parent, int month )
            : QPushButton(parent), thumbSize( 64, 64 ), interface_( interface )
 {
     setAcceptDrops(true);
@@ -86,7 +85,7 @@ KUrl MonthWidget::imagePath()
     return imagePath_;
 }
 
-void MonthWidget::paintEvent(QPaintEvent *event)
+void MonthWidget::paintEvent(QPaintEvent* event)
 {
   QRect cr;
 
@@ -117,13 +116,13 @@ QPixmap MonthWidget::thumb() const
   return thumb_;
 }
 
-void MonthWidget::setThumb(const QPixmap &pic)
+void MonthWidget::setThumb(const QPixmap& pic)
 {
   thumb_ = pic.scaled(thumbSize, Qt::KeepAspectRatio);
   update();
 }
 
-void MonthWidget::setImage( const KUrl &url )
+void MonthWidget::setImage( const KUrl& url )
 {
     if (!url.isValid())
         return;
@@ -161,7 +160,7 @@ void MonthWidget::dropEvent(QDropEvent* event)
     setImage( url );
 }
 
-void MonthWidget::gotThumbnail( const KUrl &url, const QPixmap &pix )
+void MonthWidget::gotThumbnail( const KUrl& url, const QPixmap& pix )
 {
     if ( url != imagePath_ )
       return;

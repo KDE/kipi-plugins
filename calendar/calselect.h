@@ -48,7 +48,7 @@ class CalSelect : public QWidget
 
 public:
 
-    CalSelect( KIPI::Interface* interface, QWidget *parent );
+    CalSelect( KIPI::Interface* interface, QWidget* parent );
     ~CalSelect();
 
 private:
@@ -61,10 +61,10 @@ private Q_SLOTS:
 
 private:
 
-    Ui::CalSelect          ui;
-
     QVector<MonthWidget*>  mwVector_;
-    QGridLayout           *monthBoxLayout_;
+    QGridLayout*           monthBoxLayout_;
+
+    Ui::CalSelect          ui;
 };
 
 }  // NameSpace KIPICalendarPlugin

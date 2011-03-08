@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "calwizard.h"
 #include "calwizard.moc"
 
 // Qt includes
@@ -58,27 +57,27 @@
 namespace KIPICalendarPlugin
 {
 
-CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
+CalWizard::CalWizard( KIPI::Interface* interface, QWidget* parent )
          : KAssistantDialog(parent),
            interface_( interface )
 {
     setMaximumSize( 800, 600 );
-    cSettings_ = CalSettings::instance();
+    cSettings_   = CalSettings::instance();
 
     // ---------------------------------------------------------------
 
-    wTemplate_ = new CalTemplate( this );
+    wTemplate_   = new CalTemplate( this );
     addPage(wTemplate_, i18n( "Create Template for Calendar" ));
 
     // ---------------------------------------------------------------
 
-    wEvents_ = new QWidget( this );
+    wEvents_     = new QWidget( this );
     calEventsUI.setupUi( wEvents_ );
     addPage(wEvents_, i18n( "Choose events to show on the Calendar" ));
 
     // ---------------------------------------------------------------
 
-    wSelect_ = new CalSelect( interface, this );
+    wSelect_     = new CalSelect( interface, this );
     addPage(wSelect_, i18n( "Select Year & Images" ));
 
     // ---------------------------------------------------------------
@@ -91,7 +90,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     // ---------------------------------------------------------------
 
-    wFinish_ = new QWidget( this );
+    wFinish_     = new QWidget( this );
     calProgressUI.setupUi( wFinish_ );
     wFinishPage_ = addPage(wFinish_, i18n( "Printing" ));
 
@@ -121,7 +120,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget *parent )
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered()),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -157,7 +156,7 @@ void CalWizard::slotHelp()
     KToolInvocation::invokeHelp("calendar", "kipi-plugins");
 }
 
-void CalWizard::slotPageSelected(KPageWidgetItem *current, KPageWidgetItem *before)
+void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* before)
 {
     Q_UNUSED(before);
 

@@ -40,7 +40,7 @@ class CalWidget : public QWidget
 
 public:
 
-    CalWidget(QWidget *parent);
+    CalWidget(QWidget* parent);
     ~CalWidget();
 
 public Q_SLOTS:
@@ -49,7 +49,7 @@ public Q_SLOTS:
 
 protected:
 
-    void paintEvent(QPaintEvent *e);
+    void paintEvent(QPaintEvent* e);
 };
 
 }  // NameSpace KIPICalendarPlugin

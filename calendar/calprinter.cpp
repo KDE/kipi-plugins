@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "calprinter.h"
 #include "calprinter.moc"
 
 // Qt includes

@@ -73,14 +73,14 @@ public Q_SLOTS:
 
 private:
 
+    bool             cancelled_;
+
     QMap<int, KUrl>  months_;
     QPrinter*        printer_;
 
     CalPainter*      painter_;
 
     KIPI::Interface* interface_;
-
-    bool             cancelled_;
 };
 
 }  // NameSpace KIPICalendarPlugin
