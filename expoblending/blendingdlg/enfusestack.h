@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a tool to blend bracketed images.
  *
- * Copyright (C) 2009-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,8 +52,6 @@ using namespace KIPI;
 namespace KIPIExpoBlendingPlugin
 {
 
-class EnfuseStackItemPriv;
-class EnfuseStackListPriv;
 
 class EnfuseStackItem : public QTreeWidgetItem
 {
@@ -79,6 +77,8 @@ public:
     bool asValidThumb();
 
 private:
+
+    class EnfuseStackItemPriv;
 
     EnfuseStackItemPriv* const d;
 };
@@ -123,6 +123,7 @@ private Q_SLOTS:
 
 private:
 
+    class EnfuseStackListPriv;
     EnfuseStackListPriv* const d;
 };
 
