@@ -63,9 +63,9 @@ libkde          >= 4.0.x                        http://www.kde.org
 libtiff         >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
 libjpeg         >= 6b                           http://www.ijg.org
 libpng          >= 1.2.x                        http://www.libpng.org/pub/png/libpng.html
-libkipi         >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
-libkexiv2       >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
-libkdcraw       >= 1.2.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
+libkipi         >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
+libkexiv2       >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
+libkdcraw       >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
 Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
@@ -84,7 +84,8 @@ libgdk          >= 2.0.0                        http://library.gnome.org/devel/g
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
 libqjson        >= 0.6.0                        http://qjson.sourceforge.net
 libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
-libkmap         >= 0.1.0                        http://www.digikam.org/sharedlibs          Version from trunk KDE svn repository.
+libksane        >= 0.3.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
+libkmap         >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
 
 Plugin Specific Dependencies (for compiling and for running) :
 
