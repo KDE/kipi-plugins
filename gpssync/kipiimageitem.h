@@ -61,17 +61,19 @@ namespace KIPIGPSSyncPlugin
  * @brief This class contains data needed in reverse geocoding process.
  */
 
-class RGInfo {
-
+class RGInfo
+{
     public:
 
     /**
      * Constructor
      */ 
     RGInfo()
-    :id(),
-     coordinates(),
-     rgData(){   }
+	:id(),
+         coordinates(),
+         rgData()
+    {
+    }
 
     /**
      * The image index.
@@ -90,7 +92,8 @@ class RGInfo {
 };
 
 
-enum Type {
+enum Type
+{
     TypeChild = 1,
     TypeSpacer = 2,
     TypeNewChild = 4
@@ -102,7 +105,6 @@ typedef struct TagData
     Type tagType;
 
 } TagData;
-
 
 class KipiImageModel;
 
@@ -165,7 +167,7 @@ public:
      * @param externalTagList A list containing tags.
      */ 
     inline void setTagList(const QList<QList<TagData> >& externalTagList) { m_tagList = externalTagList; m_tagListDirty = true; emitDataChanged(); };
-    
+
     /**
      * @return Returns true is the current image has been modified and not saved.
      */ 
@@ -188,6 +190,7 @@ public:
     //@}
 
 protected:
+
     // these are only to be called by the KipiImageModel
     QVariant data(const int column, const int role) const;
     void setModel(KipiImageModel* const model);
@@ -195,6 +198,7 @@ protected:
     KExiv2Iface::KExiv2* getExiv2ForFile();
 
 protected:
+
     KIPI::Interface* m_interface;
     KipiImageModel* m_model;
 
@@ -216,4 +220,3 @@ protected:
 } /* KIPIGPSSyncPlugin */
 
 #endif /* KIPIIMAGEITEM_H */
-

@@ -109,7 +109,7 @@ bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const
                 /// @todo I don't know a straightforward way to convert a byte array to XMP
                 success = false;
                 break;
-                
+
             default:
                 success = false;
                 break;
@@ -673,13 +673,16 @@ bool KipiImageItem::lessThan(const KipiImageItem* const otherItem, const int col
 
 QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 {
+    Q_UNUSED(toInterface);
+    Q_UNUSED(toFile);
+
     // determine what is to be done first
     bool shouldRemoveCoordinates = false;
-    bool shouldRemoveAltitude = false;
-    bool shouldWriteCoordinates = false;
-    bool shouldWriteAltitude = false;
-    qreal altitude = 0;
-    qreal latitude = 0;
+    bool shouldRemoveAltitude    = false;
+    bool shouldWriteCoordinates  = false;
+    bool shouldWriteAltitude     = false;
+    qreal altitude  = 0;
+    qreal latitude  = 0;
     qreal longitude = 0;
 
     // do we have gps information?
