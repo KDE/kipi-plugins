@@ -6,7 +6,7 @@
  * Date        : 2008-02-21
  * Description : look settings page.
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Look
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "lookpage.h"
 #include "lookpage.moc"
 
 // Qt includes
@@ -41,7 +40,7 @@
 namespace KIPIFlashExportPlugin
 {
 
-class LookPagePriv
+class LookPage::LookPagePriv
 {
 public:
 
@@ -58,17 +57,17 @@ public:
         thumbnailRows     = 0;
     }
 
-    KComboBox    *thumbnailPosition;
-    KComboBox    *navDirection;
+    KComboBox*    thumbnailPosition;
+    KComboBox*    navDirection;
 
-    KColorButton *textColor;
-    KColorButton *backgroundColor;
-    KColorButton *frameColor;
+    KColorButton* textColor;
+    KColorButton* backgroundColor;
+    KColorButton* frameColor;
 
-    KIntNumInput *frameWidth;
-    KIntNumInput *stagePadding;
-    KIntNumInput *thumbnailColumns;
-    KIntNumInput *thumbnailRows;
+    KIntNumInput* frameWidth;
+    KIntNumInput* stagePadding;
+    KIntNumInput* thumbnailColumns;
+    KIntNumInput* thumbnailRows;
 };
 
 LookPage::LookPage(QWidget* parent)
@@ -78,8 +77,8 @@ LookPage::LookPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), this);
-    QVBoxLayout *vlay = new QVBoxLayout(box);
+    QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), this);
+    QVBoxLayout* vlay = new QVBoxLayout(box);
 
     d->thumbnailRows = new KIntNumInput(this);
     d->thumbnailRows->setRange(1, 10, 1);
@@ -93,8 +92,8 @@ LookPage::LookPage(QWidget* parent)
     d->thumbnailColumns->setLabel(i18n("Thumbnail &Columns:"), Qt::AlignVCenter);
     d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
 
-    KHBox *hbox          = new KHBox;
-    QLabel *label        = new QLabel(i18n("Thumbnail &Position:"), hbox);
+    KHBox* hbox          = new KHBox;
+    QLabel* label        = new QLabel(i18n("Thumbnail &Position:"), hbox);
     d->thumbnailPosition = new KComboBox(hbox);
     QString pos_right  = i18nc("thumbnail position: right",  "Right");
     QString pos_left   = i18nc("thumbnail position: left",   "Left");
@@ -107,8 +106,8 @@ LookPage::LookPage(QWidget* parent)
     d->thumbnailPosition->setCurrentIndex(SimpleViewerSettingsContainer::RIGHT);
     label->setBuddy(d->thumbnailPosition);
 
-    KHBox *hbox2    = new KHBox;
-    QLabel *label2  = new QLabel(i18n("&Direction of Navigation:"), hbox2);
+    KHBox* hbox2    = new KHBox;
+    QLabel* label2  = new QLabel(i18n("&Direction of Navigation:"), hbox2);
     d->navDirection = new KComboBox(hbox2);
     d->navDirection->insertItem(SimpleViewerSettingsContainer::LEFT2RIGHT, i18n("Left to Right"));
     d->navDirection->insertItem(SimpleViewerSettingsContainer::RIGHT2LEFT, i18n("Right to Left"));
@@ -124,24 +123,24 @@ LookPage::LookPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box2    = new QGroupBox(i18n("Colors"), this);
-    QVBoxLayout *vlay2 = new QVBoxLayout(box2);
+    QGroupBox* box2    = new QGroupBox(i18n("Colors"), this);
+    QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-    KHBox *hbox3    = new KHBox;
-    QLabel *label3  = new QLabel(i18n("&Text Color:"), hbox3);
+    KHBox* hbox3    = new KHBox;
+    QLabel* label3  = new QLabel(i18n("&Text Color:"), hbox3);
     d->textColor    = new KColorButton(hbox3);
     d->textColor->setColor(QColor("#FFFFFF"));
     d->textColor->setWhatsThis(i18n("Color of title and caption text"));
     label3->setBuddy(d->textColor);
 
-    KHBox *hbox4       = new KHBox;
-    QLabel *label4     = new QLabel(i18n("&Background Color:"), hbox4);
+    KHBox* hbox4       = new KHBox;
+    QLabel* label4     = new QLabel(i18n("&Background Color:"), hbox4);
     d->backgroundColor = new KColorButton(hbox4);
     d->backgroundColor->setColor(QColor("#181818"));
     label4->setBuddy(d->backgroundColor);
 
-    KHBox *hbox5    = new KHBox;
-    QLabel *label5  = new QLabel(i18n("&Frame Color:"), hbox5);
+    KHBox* hbox5    = new KHBox;
+    QLabel* label5  = new QLabel(i18n("&Frame Color:"), hbox5);
     d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox5);
     d->frameColor->setColor(QColor("#FFFFFF"));
     d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
@@ -155,8 +154,8 @@ LookPage::LookPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box3    = new QGroupBox(i18n("Style"), this);
-    QVBoxLayout *vlay3 = new QVBoxLayout(box3);
+    QGroupBox* box3    = new QGroupBox(i18n("Style"), this);
+    QVBoxLayout* vlay3 = new QVBoxLayout(box3);
 
     d->frameWidth = new KIntNumInput(this);
     d->frameWidth->setRange(0, 10, 1);

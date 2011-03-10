@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "svedialog.h"
 #include "svedialog.moc"
 
 // Qt includes
@@ -54,7 +53,7 @@
 namespace KIPIFlashExportPlugin
 {
 
-class SVEDialogPriv
+class SVEDialog::SVEDialogPriv
 {
 public:
 
@@ -70,21 +69,21 @@ public:
         interface      = 0;
     }
 
-    KPageWidgetItem               *page_selection;
-    KPageWidgetItem               *page_general;
-    KPageWidgetItem               *page_look;
+    KPageWidgetItem*               page_selection;
+    KPageWidgetItem*               page_general;
+    KPageWidgetItem*               page_look;
 
-    SelectionPage                 *selectionPage;
-    GeneralPage                   *generalPage;
-    LookPage                      *lookPage;
+    SelectionPage*                 selectionPage;
+    GeneralPage*                   generalPage;
+    LookPage*                      lookPage;
     SimpleViewerSettingsContainer  settings;
 
-    KIPIPlugins::KPAboutData       *about;
+    KIPIPlugins::KPAboutData*      about;
 
-    KIPI::Interface                *interface;
+    KIPI::Interface*               interface;
 };
 
-SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
+SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget* parent)
          : KPageDialog(parent), d(new SVEDialogPriv)
 {
     d->interface = interface;
@@ -123,7 +122,7 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to export images to Flash using the Simple Viewer component."),
                    ki18n("(c) 2005-2006, Joern Ahrens\n"
-                         "(c) 2008-2009, Gilles Caulier"));
+                         "(c) 2008-2011, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Joern Ahrens"),
                        ki18n("Author"),
@@ -148,7 +147,7 @@ SVEDialog::SVEDialog(KIPI::Interface *interface, QWidget *parent)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -208,7 +207,7 @@ void SVEDialog::slotHelp()
     KToolInvocation::invokeHelp("flashexport", "kipi-plugins");
 }
 
-void SVEDialog::closeEvent(QCloseEvent *e)
+void SVEDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
     saveSettings();

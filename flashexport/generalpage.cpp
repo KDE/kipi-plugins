@@ -6,7 +6,7 @@
  * Date        : 2008-02-21
  * Description : general settings page.
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "generalpage.h"
 #include "generalpage.moc"
 
 // Qt includes
@@ -41,7 +40,7 @@
 namespace KIPIFlashExportPlugin
 {
 
-class GeneralPagePriv
+class GeneralPage::GeneralPagePriv
 {
 public:
 
@@ -58,29 +57,29 @@ public:
         openInKonqueror    = 0;
     }
 
-    KLineEdit     *title;
+    KLineEdit*     title;
 
-    QCheckBox     *resizeExportImages;
-    QCheckBox     *showComments;
-    QCheckBox     *rightClick;
-    QCheckBox     *fixOrientation;
-    QCheckBox     *openInKonqueror;
+    QCheckBox*     resizeExportImages;
+    QCheckBox*     showComments;
+    QCheckBox*     rightClick;
+    QCheckBox*     fixOrientation;
+    QCheckBox*     openInKonqueror;
 
-    KIntNumInput  *imagesExportSize;
-    KIntNumInput  *maxImageDimension;
+    KIntNumInput*  imagesExportSize;
+    KIntNumInput*  maxImageDimension;
 
-    KUrlRequester *exportUrl;
+    KUrlRequester* exportUrl;
 };
 
 GeneralPage::GeneralPage(QWidget* parent)
            : QWidget(parent), d(new GeneralPagePriv)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box    = new QGroupBox(i18n("Gallery &Title"), this);
-    QVBoxLayout *vlay = new QVBoxLayout(box);
+    QGroupBox* box    = new QGroupBox(i18n("Gallery &Title"), this);
+    QVBoxLayout* vlay = new QVBoxLayout(box);
     d->title          = new KLineEdit(this);
     d->title->setWhatsThis(i18n("Enter here the gallery title"));
 
@@ -90,8 +89,8 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box2    = new QGroupBox(i18n("Save Gallery To"), this);
-    QVBoxLayout *vlay2 = new QVBoxLayout(box2);
+    QGroupBox* box2    = new QGroupBox(i18n("Save Gallery To"), this);
+    QVBoxLayout* vlay2 = new QVBoxLayout(box2);
     d->exportUrl       = new KUrlRequester(KGlobalSettings::documentPath() + "/simpleviewer", this);
     d->exportUrl->setMode(KFile::Directory | KFile::LocalOnly);
 
@@ -101,8 +100,8 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box3       = new QGroupBox(i18n("Image Properties"), this);
-    QGridLayout *grid     = new QGridLayout(box3);
+    QGroupBox* box3       = new QGroupBox(i18n("Image Properties"), this);
+    QGridLayout* grid     = new QGridLayout(box3);
     d->resizeExportImages = new QCheckBox(i18n("Resize Target Images"), this);
     d->resizeExportImages->setChecked(true);
     d->resizeExportImages->setWhatsThis(i18n("If you enable this option, "
@@ -148,8 +147,8 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox *box4    = new QGroupBox(i18n("Misc"), this);
-    QVBoxLayout *vlay4 = new QVBoxLayout(box4);
+    QGroupBox* box4    = new QGroupBox(i18n("Misc"), this);
+    QVBoxLayout* vlay4 = new QVBoxLayout(box4);
 
     d->showComments = new QCheckBox(i18n("Display Captions"), this);
     d->showComments->setChecked(true);

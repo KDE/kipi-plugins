@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "simpleviewer.h"
 #include "simpleviewer.moc"
 
 // Qt includes
@@ -67,7 +66,7 @@
 namespace KIPIFlashExportPlugin
 {
 
-class SimpleViewerPriv
+class SimpleViewer::SimpleViewerPriv
 {
 public:
 
@@ -96,19 +95,19 @@ public:
     QString                           hostUrl;
     QStringList                       simpleViewerFiles;
 
-    KTempDir                         *tempDir;
+    KTempDir*                         tempDir;
 
     QList<KIPI::ImageCollection>      collectionsList;
 
-    KIPI::Interface                  *interface;
+    KIPI::Interface*                  interface;
 
-    KIPIPlugins::BatchProgressDialog *progressDlg;
+    KIPIPlugins::BatchProgressDialog* progressDlg;
 
-    SVEDialog                        *configDlg;
+    SVEDialog*                        configDlg;
 };
 
-SimpleViewer::SimpleViewer(KIPI::Interface* interface, QObject *parent)
-                  : QObject(parent), d(new SimpleViewerPriv)
+SimpleViewer::SimpleViewer(KIPI::Interface* interface, QObject* parent)
+            : QObject(parent), d(new SimpleViewerPriv)
 {
     d->interface = interface;
 
@@ -130,7 +129,7 @@ SimpleViewer::~SimpleViewer()
     delete d;
 }
 
-void SimpleViewer::run(KIPI::Interface* interface, QObject *parent)
+void SimpleViewer::run(KIPI::Interface* interface, QObject* parent)
 {
     SimpleViewer plugin(interface, parent);
 
@@ -461,7 +460,7 @@ bool SimpleViewer::exportImages()
     return true;
 }
 
-bool SimpleViewer::createThumbnail(const QImage &image, QImage &thumbnail)
+bool SimpleViewer::createThumbnail(const QImage& image, QImage& thumbnail)
 {
     int w = image.width();
     int h = image.height();
@@ -485,7 +484,7 @@ bool SimpleViewer::createThumbnail(const QImage &image, QImage &thumbnail)
     return resizeImage(image, maxSize, thumbnail);
 }
 
-bool SimpleViewer::resizeImage(const QImage &image, int maxSize, QImage &resizedImage)
+bool SimpleViewer::resizeImage(const QImage& image, int maxSize, QImage& resizedImage)
 {
     int w = image.width();
     int h = image.height();
@@ -511,8 +510,8 @@ bool SimpleViewer::resizeImage(const QImage &image, int maxSize, QImage &resized
     return true;
 }
 
-void SimpleViewer::cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem,
-                                     const KUrl &url, const QString& newName)
+void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
+                                     const KUrl& url, const QString& newName)
 {
     if(d->canceled)
         return;
@@ -667,7 +666,7 @@ bool SimpleViewer::installSimpleViewer()
     return false;
 }
 
-bool SimpleViewer::unzip(const QString &url)
+bool SimpleViewer::unzip(const QString& url)
 {
     KZip zip(url);
 
@@ -679,7 +678,7 @@ bool SimpleViewer::unzip(const QString &url)
     return extractArchive(zip);
 }
 
-bool SimpleViewer::openArchive(KZip &zip)
+bool SimpleViewer::openArchive(KZip& zip)
 {
     if(!zip.open(QIODevice::ReadOnly))
     {
@@ -689,7 +688,7 @@ bool SimpleViewer::openArchive(KZip &zip)
     return true;
 }
 
-bool SimpleViewer::extractArchive(KZip &zip)
+bool SimpleViewer::extractArchive(KZip& zip)
 {
     // read root directory content
     QStringList names = zip.directory()->entries();
@@ -701,20 +700,20 @@ bool SimpleViewer::extractArchive(KZip &zip)
     }
 
     // open root directory
-    const KArchiveEntry *root = zip.directory()->entry(names[0]);
+    const KArchiveEntry* root = zip.directory()->entry(names[0]);
     if(!root || !root->isDirectory())
     {
         kDebug() << "could not open " << names[0] << " of zipname" ;
         return false;
     }
 
-    const KArchiveDirectory *dir = dynamic_cast<const KArchiveDirectory*>(root);
+    const KArchiveDirectory* dir = dynamic_cast<const KArchiveDirectory*>(root);
 
     // extract the needed files from SimpleViewer archive
     for(QStringList::ConstIterator it = d->simpleViewerFiles.constBegin();
         it != d->simpleViewerFiles.constEnd(); ++it )
     {
-        const KArchiveEntry *entry = dir->entry(*it);
+        const KArchiveEntry* entry = dir->entry(*it);
         if(!extractFile(entry))
         {
             //TODO error msg
@@ -726,12 +725,12 @@ bool SimpleViewer::extractArchive(KZip &zip)
     return true;
 }
 
-bool SimpleViewer::extractFile(const KArchiveEntry *entry)
+bool SimpleViewer::extractFile(const KArchiveEntry* entry)
 {
     if( !entry || !entry->isFile() )
         return false;
 
-    const KArchiveFile *entryFile = dynamic_cast<const KArchiveFile*>(entry);
+    const KArchiveFile* entryFile = dynamic_cast<const KArchiveFile*>(entry);
     QByteArray array = entryFile->data();
 
     QFile file( d->dataLocal + entry->name() );

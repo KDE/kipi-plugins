@@ -6,7 +6,7 @@
  * Date        : 2008-02-21
  * Description : general settings page.
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,8 +34,6 @@
 namespace KIPIFlashExportPlugin
 {
 
-class GeneralPagePriv;
-
 class GeneralPage : public QWidget
 {
     Q_OBJECT
@@ -50,6 +48,7 @@ public:
 
 private:
 
+    class GeneralPagePriv;
     GeneralPagePriv* const d;
 };
 

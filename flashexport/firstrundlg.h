@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,8 +36,6 @@
 namespace KIPIFlashExportPlugin
 {
 
-class FirstRunDlgPriv;
-
 /**
  * To avoid licensing problems with some distributions, the SimpleViewer
  * Flash cannot be shipped with the plugin. During the first run of the
@@ -51,7 +49,7 @@ class FirstRunDlg : public KDialog
 
 public:
 
-    FirstRunDlg(QWidget *parent=0);
+    FirstRunDlg(QWidget* parent=0);
     ~FirstRunDlg();
 
     /**
@@ -64,17 +62,18 @@ private Q_SLOTS:
     /**
      * Opens the browser with the SimpleViewer download page
      */
-    void slotDownload(const QString &url);
+    void slotDownload(const QString& url);
 
     /**
      * Starts the installation of SimpleViewer
      */
-    void slotUrlSelected(const KUrl &url);
+    void slotUrlSelected(const KUrl& url);
 
     void slotHelp();
 
 private:
 
+    class FirstRunDlgPriv;
     FirstRunDlgPriv* const d;
 };
 

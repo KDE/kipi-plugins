@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "firstrundlg.h"
 #include "firstrundlg.moc"
 
 // Qt includes
@@ -52,7 +51,7 @@
 namespace KIPIFlashExportPlugin
 {
 
-class FirstRunDlgPriv
+class FirstRunDlg::FirstRunDlgPriv
 {
 public:
 
@@ -64,12 +63,12 @@ public:
 
     KUrl                      url;
 
-    KUrlRequester            *urlRequester;
+    KUrlRequester*            urlRequester;
 
-    KIPIPlugins::KPAboutData *about;
+    KIPIPlugins::KPAboutData* about;
 };
 
-FirstRunDlg::FirstRunDlg(QWidget *parent)
+FirstRunDlg::FirstRunDlg(QWidget* parent)
            : KDialog(parent), d(new FirstRunDlgPriv)
 {
     setButtons(Help | Ok | Cancel);
@@ -79,7 +78,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
     setWindowIcon(KIcon("flash"));
     enableButton(Ok, false);
 
-    QFrame *page = new QFrame(this);
+    QFrame* page = new QFrame(this);
     setMainWidget(page);
 
     // ---------------------------------------------------------------
@@ -90,7 +89,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to export images to Flash using the Simple Viewer component."),
                    ki18n("(c) 2005-2006, Joern Ahrens\n"
-                         "(c) 2008-2009, Gilles Caulier"));
+                         "(c) 2008-2011, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Joern Ahrens"),
                         ki18n("Author"),
@@ -115,7 +114,7 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -123,9 +122,9 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
 
     // ---------------------------------------------------------------
 
-    QVBoxLayout *topLayout = new QVBoxLayout(page);
+    QVBoxLayout* topLayout = new QVBoxLayout(page);
 
-    QLabel *info1 = new QLabel(page);
+    QLabel* info1 = new QLabel(page);
     info1->setWordWrap(true);
     info1->setText( i18n("<p>SimpleViewer is a Flash component which is free to use, "
                          "but uses a license which comes into conflict with several distributions. "
@@ -134,17 +133,17 @@ FirstRunDlg::FirstRunDlg(QWidget *parent)
                          "to the downloaded archive. The archive will be stored with the plugin configuration, "
                          "so it is available for further use.</p>"));
 
-    QLabel *info2 = new QLabel(page);
+    QLabel* info2 = new QLabel(page);
     info2->setText(i18n("<p>1.) Download SimpleViewer Version 2.1.x</p>"));
 
-    KUrlLabel *link = new KUrlLabel(page);
+    KUrlLabel* link = new KUrlLabel(page);
     link->setText("http://www.simpleviewer.net");
     link->setUrl("http://www.simpleviewer.net");
 
     connect(link, SIGNAL(leftClickedUrl(const QString&)),
             this, SLOT(slotDownload(const QString&)));
 
-    QLabel *info3 = new QLabel(page);
+    QLabel* info3 = new QLabel(page);
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
 
     d->urlRequester = new KUrlRequester(page);
@@ -172,12 +171,12 @@ void FirstRunDlg::slotHelp()
     KToolInvocation::invokeHelp("flashexport", "kipi-plugins");
 }
 
-void FirstRunDlg::slotDownload(const QString &url)
+void FirstRunDlg::slotDownload(const QString& url)
 {
     KToolInvocation::invokeBrowser(url);
 }
 
-void FirstRunDlg::slotUrlSelected(const KUrl &url)
+void FirstRunDlg::slotUrlSelected(const KUrl& url)
 {
     enableButton(Ok, true);
     d->url = url;

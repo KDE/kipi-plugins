@@ -6,7 +6,7 @@
  * Date        : 2008-02-21
  * Description : collections selection settings page.
  *
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "selectionpage.h"
 #include "selectionpage.moc"
 
 // Qt includes
@@ -39,7 +38,7 @@
 namespace KIPIFlashExportPlugin
 {
 
-class SelectionPagePriv
+class SelectionPage::SelectionPagePriv
 {
 public:
 
@@ -48,13 +47,13 @@ public:
         imageCollectionSelector = 0;
     }
 
-    KIPI::ImageCollectionSelector *imageCollectionSelector;
+    KIPI::ImageCollectionSelector* imageCollectionSelector;
 };
 
 SelectionPage::SelectionPage(KIPI::Interface* interface, QWidget* parent)
              : QWidget(parent), d(new SelectionPagePriv)
 {
-    QVBoxLayout *layout        = new QVBoxLayout(this);
+    QVBoxLayout* layout        = new QVBoxLayout(this);
     d->imageCollectionSelector = interface->imageCollectionSelector(this);
 
     layout->addWidget(d->imageCollectionSelector);

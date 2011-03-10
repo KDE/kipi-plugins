@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,7 +47,6 @@
 
 namespace KIPIFlashExportPlugin
 {
-class SimpleViewerPriv;
 
 class SimpleViewer : public QObject
 {
@@ -55,11 +54,11 @@ class SimpleViewer : public QObject
 
 public:
 
-    static void run(KIPI::Interface *interface, QObject *parent=0);
+    static void run(KIPI::Interface* interface, QObject* parent=0);
 
 private:
 
-    explicit SimpleViewer(KIPI::Interface *interface, QObject *parent=0);
+    explicit SimpleViewer(KIPI::Interface* interface, QObject* parent=0);
     ~SimpleViewer();
 
     bool configure();
@@ -87,7 +86,7 @@ private:
      *
      * @return true=ok
      */
-    bool createThumbnail(const QImage &image, QImage &thumbnail);
+    bool createThumbnail(const QImage& image, QImage& thumbnail);
 
     /**
      * Resizes the image for the gallery
@@ -97,7 +96,7 @@ private:
      *
      * @return true=ok
      */
-    bool resizeImage(const QImage &image, int maxSize, QImage &resized);
+    bool resizeImage(const QImage& image, int maxSize, QImage& resized);
 
     /**
      * Adds an image to the simpleviewer config file
@@ -107,8 +106,8 @@ private:
      * @param url path to original image
      * @param newName new image file name used by gallery
      */
-    void cfgAddImage(QDomDocument &xmlDoc, QDomElement &galleryElem,
-                     const KUrl &url, const QString& newName);
+    void cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
+                     const KUrl& url, const QString& newName);
 
     /**
      * Creates the index.html file
@@ -133,13 +132,13 @@ private:
 
     bool upload();
 
-    bool unzip(const QString &url);
+    bool unzip(const QString& url);
 
-    bool openArchive(KZip &zip);
+    bool openArchive(KZip& zip);
 
-    bool extractArchive(KZip &zip);
+    bool extractArchive(KZip& zip);
 
-    bool extractFile(const KArchiveEntry *entry);
+    bool extractFile(const KArchiveEntry* entry);
 
 public Q_SLOTS:
 
@@ -148,6 +147,7 @@ public Q_SLOTS:
 
 private:
 
+    class SimpleViewerPriv;
     SimpleViewerPriv* const d;
 };
 
