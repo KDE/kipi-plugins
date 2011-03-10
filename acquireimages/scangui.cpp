@@ -6,7 +6,7 @@
  * Date        : 2008-09-30
  * Description : stand alone Scanner interface.
  *
- * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -80,7 +80,6 @@ int main(int argc, char* argv[])
     ScanDialog* dlg = new ScanDialog(0, saneWidget, app.activeWindow(), aboutData);
     app.setTopWidget(dlg);
     dlg->show();
-
 
     int ret = app.exec();
 

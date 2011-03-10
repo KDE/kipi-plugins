@@ -6,7 +6,7 @@
  * Date        : 2007-09-09
  * Description : scanner dialog
  *
- * Copyright (C) 2007-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,7 +47,6 @@ namespace KIPIAcquireImagesPlugin
 {
 
 class ScanDialogAboutData;
-class ScanDialogPriv;
 
 class ScanDialog : public KDialog
 {
@@ -76,6 +75,7 @@ private:
 
 private:
 
+    class ScanDialogPriv;
     ScanDialogPriv* const d;
 };
 

@@ -6,7 +6,7 @@
  * Date        : 2003-05-16
  * Description : a plugin to acquire image using flat scanner.
  *
- * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -69,15 +69,15 @@ public Q_SLOTS:
 
 private:
 
-    QWidget                                        *m_parentWidget;
+    QWidget*                                       m_parentWidget;
 
-    KAction                                        *m_action_scanimages;
+    KAction*                                       m_action_scanimages;
 
-    KSaneIface::KSaneWidget                        *m_saneWidget;
+    KSaneIface::KSaneWidget*                       m_saneWidget;
 
-    KIPI::Interface                                *m_interface;
+    KIPI::Interface*                               m_interface;
 
-    QPointer <KIPIAcquireImagesPlugin::ScanDialog>  m_scanDlg;
+    QPointer <KIPIAcquireImagesPlugin::ScanDialog> m_scanDlg;
 };
 
 #endif /* PLUGIN_ACQUIREIMAGES_H */

@@ -6,7 +6,7 @@
  * Date        : 2009-10-11
  * Description : save image thread
  *
- * Copyright (C) 2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,15 +37,13 @@
 namespace KIPIAcquireImagesPlugin
 {
 
-class SaveImgThreadPriv;
-
 class SaveImgThread : public QThread
 {
     Q_OBJECT
 
 public:
 
-    SaveImgThread(QObject *parent);
+    SaveImgThread(QObject* parent);
     ~SaveImgThread();
 
     void setPreviewImage(const QImage& img);
@@ -64,6 +62,7 @@ private:
 
 private:
 
+    class SaveImgThreadPriv;
     SaveImgThreadPriv* const d;
 };
 
