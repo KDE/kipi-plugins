@@ -43,7 +43,7 @@ public:
     SetupGlobalObject object;
 };
 
-K_GLOBAL_STATIC(SetupGlobalObjectCreator, setupGlobalObjectCreator);
+K_GLOBAL_STATIC(SetupGlobalObjectCreator, setupGlobalObjectCreator)
 
 class SetupGlobalObject::Private
 {

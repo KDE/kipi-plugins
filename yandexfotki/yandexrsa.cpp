@@ -247,7 +247,7 @@ void flex_unit::fast_mul( flex_unit& x, flex_unit& y, unsigned keep )
     }
 
     n = limit;
-};
+}
 
 vlong_value::operator unsigned()
 {
