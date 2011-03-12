@@ -122,7 +122,7 @@ protected:
         POLICY_UPDATE_MERGE = 0,
         POLICY_UPDATE_KEEP, // is not used in GUI
         POLICY_SKIP,
-        POLICY_ADDNEW,
+        POLICY_ADDNEW
     };
 
     void readSettings();

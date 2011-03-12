@@ -40,7 +40,7 @@ public:
     {
         ACCESS_PUBLIC = 0,
         ACCESS_FRIENDS,
-        ACCESS_PRIVATE ,
+        ACCESS_PRIVATE
     };
 
     YandexFotkiPhoto()

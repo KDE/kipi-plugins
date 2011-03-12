@@ -110,6 +110,6 @@ inline void CoordinatesToClipboard(const KMap::GeoCoordinates& coordinates, cons
 
 } /* KIPIGPSSyncPlugin */
 
-Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::MapLayout);
+Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::MapLayout)
 
 #endif /* GPSSYNC_COMMON_H */
