@@ -26,8 +26,8 @@
 
 // KDE includes
 
-#include <KDialog>
-#include <KUrl>
+#include <kdialog.h>
+#include <kurl.h>
 #include <kio/job.h>
 
 // Local includes

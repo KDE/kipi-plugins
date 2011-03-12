@@ -33,7 +33,7 @@
 
 // KDE includes
 
-#include <KDialog>
+#include <kdialog.h>
 
 // LibKIPI includes
 

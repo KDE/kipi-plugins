@@ -38,7 +38,7 @@
 
 // KDE includes
 
-#include <KUrl>
+#include <kurl.h>
 #include <kio/job.h>
 
 namespace KIO

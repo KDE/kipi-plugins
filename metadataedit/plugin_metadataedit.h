@@ -29,7 +29,7 @@
 
 // KDE includes
 
-#include <KUrl>
+#include <kurl.h>
 
 // LibKIPI includes
 

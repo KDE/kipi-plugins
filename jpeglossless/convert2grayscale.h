@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <KTemporaryFile>
+#include <ktemporaryfile.h>
 
 namespace KIPIJPEGLossLessPlugin
 {

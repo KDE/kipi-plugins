@@ -33,8 +33,8 @@
 
 // KDE includes
 #include <kdebug.h>
-#include <KMimeType>
-#include <KRandom>
+#include <kmimetype.h>
+#include <krandom.h>
 
 namespace KIPIFacebookPlugin
 {

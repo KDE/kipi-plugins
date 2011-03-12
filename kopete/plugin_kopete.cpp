@@ -35,12 +35,12 @@
 
 // KDE includes
 
-#include <KAction>
-#include <KActionCollection>
-#include <KGenericFactory>
-#include <KIconLoader>
-#include <KStandardDirs>
-#include <KMenu>
+#include <kaction.h>
+#include <kactioncollection.h>
+#include <kgenericfactory.h>
+#include <kiconloader.h>
+#include <kstandarddirs.h>
+#include <kmenu.h>
 
 // LibKIPI includes
 

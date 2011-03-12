@@ -45,15 +45,15 @@
 
 // KDE includes
 
-#include <KCodecs>
+#include <kcodecs.h>
 #include <kdebug.h>
-#include <KUrl>
-#include <KIO/Job>
-#include <KIO/JobUiDelegate>
-#include <KMimeType>
-#include <KApplication>
-#include <KMessageBox>
-#include <KToolInvocation>
+#include <kurl.h>
+#include <kio/job.h>
+#include <kio/jobuidelegate.h>
+#include <kmimetype.h>
+#include <kapplication.h>
+#include <kmessagebox.h>
+#include <ktoolinvocation.h>
 
 // Local includes
 

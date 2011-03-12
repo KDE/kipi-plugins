@@ -37,11 +37,11 @@
 
 // KDE includes
 
-#include <KLocale>
-#include <KDialog>
-#include <KLineEdit>
-#include <KComboBox>
-#include <KPushButton>
+#include <klocale.h>
+#include <kdialog.h>
+#include <klineedit.h>
+#include <kcombobox.h>
+#include <kpushbutton.h>
 
 // LibKIPI includes
 

@@ -37,16 +37,16 @@
 // KDE includes
 
 #include <kdebug.h>
-#include <KConfig>
-#include <KLocale>
-#include <KMenu>
-#include <KHelpMenu>
-#include <KComboBox>
-#include <KLineEdit>
-#include <KMessageBox>
-#include <KPushButton>
-#include <KPasswordDialog>
-#include <KToolInvocation>
+#include <kconfig.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <khelpmenu.h>
+#include <kcombobox.h>
+#include <klineedit.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <kpassworddialog.h>
+#include <ktoolinvocation.h>
 
 // LibKExiv2 includes
 

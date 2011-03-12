@@ -42,15 +42,15 @@
 
 // KDE includes
 
-#include <KLocale>
-#include <KDialog>
-#include <KComboBox>
-#include <KPushButton>
-#include <KLineEdit>
-#include <KCompletion>
-#include <KCompletionBox>
+#include <klocale.h>
+#include <kdialog.h>
+#include <kcombobox.h>
+#include <kpushbutton.h>
+#include <klineedit.h>
+#include <kcompletion.h>
+#include <kcompletionbox.h>
 #include <kdebug.h>
-#include <KIO/AccessManager>
+#include <kio/accessmanager.h>
 
 // LibKIPI includes
 

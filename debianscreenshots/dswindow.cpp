@@ -31,13 +31,13 @@
 
 // KDE includes
 
-#include <KMenu>
-#include <KHelpMenu>
-#include <KLineEdit>
-#include <KComboBox>
-#include <KPushButton>
-#include <KMessageBox>
-#include <KToolInvocation>
+#include <kmenu.h>
+#include <khelpmenu.h>
+#include <klineedit.h>
+#include <kcombobox.h>
+#include <kpushbutton.h>
+#include <kmessagebox.h>
+#include <ktoolinvocation.h>
 #include <kdebug.h>
 
 // LibKDcraw includes

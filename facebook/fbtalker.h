@@ -30,7 +30,7 @@
 #include <QObject>
 
 // KDE includes
-#include <KIO/Job>
+#include <kio/job.h>
 
 // local includes
 #include "fbitem.h"

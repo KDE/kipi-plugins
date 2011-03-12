@@ -35,7 +35,7 @@
 
 // KDE includes
 
-#include <KDebug>
+#include <kdebug.h>
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/jobuidelegate.h>

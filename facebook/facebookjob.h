@@ -27,7 +27,7 @@
 
 // KDE includes
 
-#include <KJob>
+#include <kjob.h>
 
 // Local includes
 

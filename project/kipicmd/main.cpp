@@ -28,13 +28,13 @@
 
 // KDE includes
 
-#include <KApplication>
-#include <KAboutData>
-#include <KCmdLineArgs>
-#include <KCmdLineOptions>
-#include <KDebug>
-#include <KAction>
-#include <KActionCollection>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <kcmdlineargs.h>
+#include <kcmdlineoptions.h>
+#include <kdebug.h>
+#include <kaction.h>
+#include <kactioncollection.h>
 
 // LibKIPI includes
 

@@ -31,8 +31,8 @@
 
 // KDE includes
 
-#include <KMimeType>
-#include <KRandom>
+#include <kmimetype.h>
+#include <krandom.h>
 
 namespace KIPIDebianScreenshotsPlugin
 {

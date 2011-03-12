@@ -34,7 +34,7 @@
 
 // KDE includes
 
-#include <KTemporaryFile>
+#include <ktemporaryfile.h>
 
 class QString;
 

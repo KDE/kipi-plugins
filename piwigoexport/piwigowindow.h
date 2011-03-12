@@ -29,7 +29,7 @@
 
 // KDE includes
 
-#include <KDialog>
+#include <kdialog.h>
 
 // Qt includes
 

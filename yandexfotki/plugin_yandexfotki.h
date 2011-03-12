@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <KAction>
+#include <kaction.h>
 
 // Libkipi includes
 

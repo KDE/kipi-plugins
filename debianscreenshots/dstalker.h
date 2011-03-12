@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <KIO/Job>
+#include <kio/job.h>
 
 namespace KIPIDebianScreenshotsPlugin
 {

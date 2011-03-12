@@ -34,15 +34,15 @@
 #include <QSpinBox>
 
 // KDE includes
-#include <KComboBox>
-#include <KMenu>
+#include <kcombobox.h>
+#include <kmenu.h>
 #include <kdebug.h>
-#include <KConfig>
-#include <KLocale>
-#include <KHelpMenu>
-#include <KPushButton>
-#include <KMessageBox>
-#include <KToolInvocation>
+#include <kconfig.h>
+#include <klocale.h>
+#include <khelpmenu.h>
+#include <kpushbutton.h>
+#include <kmessagebox.h>
+#include <ktoolinvocation.h>
 
 // LibKExiv2 includes
 

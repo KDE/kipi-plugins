@@ -25,7 +25,7 @@
 #ifndef INPUTBOXNOCANCEL_H
 #define INPUTBOXNOCANCEL_H
 
-#include <KDialog>
+#include <kdialog.h>
 
 class QCloseEvent;
 

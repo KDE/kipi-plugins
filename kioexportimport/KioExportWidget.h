@@ -31,9 +31,9 @@
 
 // KDE includes
 
-#include <KFileDialog>
-#include <KPushButton>
-#include <KUrl>
+#include <kfiledialog.h>
+#include <kpushbutton.h>
+#include <kurl.h>
 
 class KUrlLabel;
 

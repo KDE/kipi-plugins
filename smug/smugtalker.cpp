@@ -35,10 +35,10 @@
 
 // KDE includes
 
-#include <KCodecs>
+#include <kcodecs.h>
 #include <kdebug.h>
-#include <KIO/Job>
-#include <KIO/JobUiDelegate>
+#include <kio/job.h>
+#include <kio/jobuidelegate.h>
 
 // Local includes
 

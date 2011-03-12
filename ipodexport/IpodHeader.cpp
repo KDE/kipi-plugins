@@ -30,8 +30,8 @@
 
 // KDE includes.
 
-#include <KLocale>
-#include <KPushButton>
+#include <klocale.h>
+#include <kpushbutton.h>
 
 // Locale includes.
 

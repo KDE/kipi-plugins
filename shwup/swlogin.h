@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <KDialog>
+#include <kdialog.h>
 
 class KLineEdit;
 

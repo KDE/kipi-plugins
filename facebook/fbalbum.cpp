@@ -29,11 +29,11 @@
 
 // KDE includes
 
-#include <KLocale>
-#include <KDialog>
-#include <KLineEdit>
-#include <KTextEdit>
-#include <KComboBox>
+#include <klocale.h>
+#include <kdialog.h>
+#include <klineedit.h>
+#include <ktextedit.h>
+#include <kcombobox.h>
 
 // local includes
 

@@ -24,15 +24,15 @@
 
 // KDE includes
 
-#include <KLocale>
-#include <KAction>
-#include <KGenericFactory>
-#include <KLibLoader>
-#include <KConfig>
-#include <KDebug>
-#include <KApplication>
-#include <KActionCollection>
-#include <KWindowSystem>
+#include <klocale.h>
+#include <kaction.h>
+#include <kgenericfactory.h>
+#include <klibloader.h>
+#include <kconfig.h>
+#include <kdebug.h>
+#include <kapplication.h>
+#include <kactioncollection.h>
+#include <kwindowsystem.h>
 
 // LibKIPI includes
 

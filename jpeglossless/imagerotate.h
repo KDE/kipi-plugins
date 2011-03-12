@@ -31,7 +31,7 @@
 
 // KDE includes
 
-#include <KTemporaryFile>
+#include <ktemporaryfile.h>
 
 // Local includes
 

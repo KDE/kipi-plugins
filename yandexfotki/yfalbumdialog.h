@@ -25,9 +25,9 @@
 
 // KDE includes
 
-#include <KDialog>
-#include <KLineEdit>
-#include <KTextEdit>
+#include <kdialog.h>
+#include <klineedit.h>
+#include <ktextedit.h>
 
 // Local includes
 

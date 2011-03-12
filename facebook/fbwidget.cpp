@@ -38,10 +38,10 @@
 
 // KDE includes
 
-#include <KLocale>
-#include <KDialog>
-#include <KComboBox>
-#include <KPushButton>
+#include <klocale.h>
+#include <kdialog.h>
+#include <kcombobox.h>
+#include <kpushbutton.h>
 
 // LibKIPI includes
 

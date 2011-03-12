@@ -30,7 +30,7 @@
 
 // KDE includes
 
-#include <KLocale>
+#include <klocale.h>
 
 namespace KIPIIpodExportPlugin
 {

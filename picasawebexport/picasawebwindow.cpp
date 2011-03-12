@@ -39,18 +39,18 @@
 #include <kdeversion.h>
 #include <kde_file.h>
 #include <kdebug.h>
-#include <KConfig>
-#include <KLocale>
-#include <KMenu>
-#include <KHelpMenu>
-#include <KComboBox>
-#include <KLineEdit>
-#include <KMessageBox>
-#include <KPushButton>
-#include <KPasswordDialog>
-#include <KProgressDialog>
-#include <KToolInvocation>
-#include <KIO/RenameDialog>
+#include <kconfig.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <khelpmenu.h>
+#include <kcombobox.h>
+#include <klineedit.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <kpassworddialog.h>
+#include <kprogressdialog.h>
+#include <ktoolinvocation.h>
+#include <kio/renamedialog.h>
 
 // LibKExiv2 includes
 

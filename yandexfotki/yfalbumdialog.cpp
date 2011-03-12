@@ -31,12 +31,12 @@
 
 // KDE includes
 
-#include <KLocale>
-#include <KDebug>
-#include <KDialog>
-#include <KLineEdit>
-#include <KTextEdit>
-#include <KMessageBox>
+#include <klocale.h>
+#include <kdebug.h>
+#include <kdialog.h>
+#include <klineedit.h>
+#include <ktextedit.h>
+#include <kmessagebox.h>
 
 // Local includes
 
