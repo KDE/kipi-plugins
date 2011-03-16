@@ -7,7 +7,7 @@
  * Description : Raw converter batch dialog
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -92,7 +92,7 @@ using namespace KIPIPlugins;
 namespace KIPIRawConverterPlugin
 {
 
-class BatchDialogPriv
+class BatchDialog::BatchDialogPriv
 {
 public:
 
@@ -222,7 +222,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to batch convert RAW images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
-                         "(c) 2006-2010, Gilles Caulier"));
+                         "(c) 2006-2011, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Renchi Raju"),
                        ki18n("Author"),
@@ -237,7 +237,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -674,7 +674,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 
             KIPI::ImageInfo orgInfo = d->iface->info(url);
             KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
-            orgInfo.cloneData(newInfo);
+            newInfo.cloneData(orgInfo);
         }
     }
 

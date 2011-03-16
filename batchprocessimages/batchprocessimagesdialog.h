@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -66,7 +66,7 @@ public:
     // children dialog class.
 
     BatchProcessImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface,
-                             const QString& caption, QWidget *parent = 0);
+                             const QString& caption, QWidget* parent = 0);
     ~BatchProcessImagesDialog();protected:
 
     virtual QSize sizeHint() const;
@@ -142,7 +142,7 @@ protected:
 
     // Called for rename the target current image file name if already exist.
 
-    QString RenameTargetImageFile(QFileInfo *fi);
+    QString RenameTargetImageFile(QFileInfo* fi);
 
     // --------------------------------------------------------------------------------------------------------
     // Standard virtual functions for re-implementation.
@@ -212,11 +212,11 @@ private Q_SLOTS:
     void slotPreviewReadyRead();
     void slotPreviewStop();
 
-    void slotListDoubleClicked(QTreeWidgetItem *itemClicked);
+    void slotListDoubleClicked(QTreeWidgetItem* itemClicked);
 
     void slotAddDropItems(const QStringList& filesPath);
 
-    void slotImageSelected(QTreeWidgetItem * item);
+    void slotImageSelected(QTreeWidgetItem* item);
     void slotGotPreview(const KFileItem&, const QPixmap& pixmap);
 
     void slotImagesFilesButtonAdd();

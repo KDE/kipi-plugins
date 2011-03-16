@@ -8,7 +8,7 @@
  *               or batch mode.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,7 +47,7 @@ class Plugin_RawConverter : public KIPI::Plugin
 
 public:
 
-    Plugin_RawConverter(QObject *parent, const QVariantList& args);
+    Plugin_RawConverter(QObject* parent, const QVariantList& args);
     ~Plugin_RawConverter();
 
     KIPI::Category category(KAction* action) const;
@@ -65,11 +65,11 @@ private Q_SLOTS:
 
 private:
 
-    KAction                              *m_singleAction;
-    KAction                              *m_batchAction;
+    KAction*                              m_singleAction;
+    KAction*                              m_batchAction;
 
-    KIPIRawConverterPlugin::SingleDialog *m_singleDlg;
-    KIPIRawConverterPlugin::BatchDialog  *m_batchDlg;
+    KIPIRawConverterPlugin::SingleDialog* m_singleDlg;
+    KIPIRawConverterPlugin::BatchDialog*  m_batchDlg;
 };
 
 #endif /* PLUGIN_RAWCONVERTER_H */

@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -89,7 +89,7 @@ enum ProcessState
 };
 
 BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface,
-                                                   const QString& caption, QWidget *parent)
+                                                   const QString& caption, QWidget* parent)
                         : KDialog(parent),
                           m_listFile2Process_iterator(0),
                           m_selectedImageFiles(urlList),
@@ -363,7 +363,7 @@ bool BatchProcessImagesDialog::startProcess()
         return true;
     }
 
-    BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(**m_listFile2Process_iterator);
+    BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(**m_listFile2Process_iterator);
     m_listFiles->setCurrentItem(item);
 
     if (prepareStartProcess(item, targetAlbum) == false)   // If there is a problem during the
@@ -622,7 +622,7 @@ void BatchProcessImagesDialog::slotFinished()
             {
                 KIPI::ImageInfo srcInfo  = m_interface->info(src);
                 KIPI::ImageInfo destInfo = m_interface->info(dest);
-                srcInfo.cloneData(destInfo);
+                destInfo.cloneData(srcInfo);
             }
 
             if (m_ui->m_removeOriginal->isChecked() && src != dest)
@@ -666,7 +666,7 @@ void BatchProcessImagesDialog::slotFinished()
 
 void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicked)
 {
-    BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(itemClicked);
+    BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(itemClicked);
 
     if (m_convertStatus == PROCESS_DONE)
     {
@@ -690,7 +690,7 @@ void BatchProcessImagesDialog::slotPreview(void)
         return;
     }
 
-    BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(m_listFiles->currentItem());
+    BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(m_listFiles->currentItem());
 
     enableWidgets(false);
 
@@ -743,7 +743,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
         return;
     }
 
-    BatchProcessImagesItem *item = static_cast<BatchProcessImagesItem*>(m_listFiles->currentItem());
+    BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(m_listFiles->currentItem());
     int ValRet                   = m_PreviewProc->exitCode();
 
     kDebug() << "Convert exit (" << ValRet << ")";
@@ -824,7 +824,7 @@ void BatchProcessImagesDialog::listImageFiles()
 
         while (*it2)
         {
-            BatchProcessImagesItem *pitem = static_cast<BatchProcessImagesItem*>(*it2);
+            BatchProcessImagesItem* pitem = static_cast<BatchProcessImagesItem*>(*it2);
 
             if (pitem->pathSrc() == currentFile.section('/', 0, -1))
                 findItem = true;
