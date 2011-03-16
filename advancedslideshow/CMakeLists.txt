@@ -20,12 +20,12 @@ SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS
-                  maindialog.ui
-                  captiondialog.ui
-                  advanceddialog.ui
-                  soundtrackdialog.ui
-                  slideplaybackwidget.ui
-                  playbackwidget.ui
+                  ui/maindialog.ui
+                  ui/captiondialog.ui
+                  ui/advanceddialog.ui
+                  ui/soundtrackdialog.ui
+                  ui/slideplaybackwidget.ui
+                  ui/playbackwidget.ui
                  )
 
 KDE4_ADD_PLUGIN(kipiplugin_advancedslideshow ${kipiplugin_advancedslideshow_PART_SRCS})
