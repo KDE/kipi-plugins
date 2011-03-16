@@ -3,6 +3,7 @@ SUBDIRS(icons)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
 SET(expoblending_common_SRCS
@@ -33,14 +34,14 @@ ENDIF(OPENMP_FOUND AND NOT APPLE)
 
 INSTALL(DIRECTORY pics
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_expoblending
-        PATTERN ".svn" EXCLUDE
+        PATTERN ".git" EXCLUDE
        )
 
 # =======================================================
 # ExpoBlending plugin
 
 SET(kipiplugin_expoblending_PART_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/plugin_expoblending.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_expoblending.cpp
 
     ${expoblending_common_SRCS}
    )
@@ -58,13 +59,13 @@ TARGET_LINK_LIBRARIES(kipiplugin_expoblending
                      )
 
 INSTALL(TARGETS kipiplugin_expoblending DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
 # =======================================================
 # Stand alone version of ExpoBlending plugin
 
 SET(expoblending_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/expoblending.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp
     ${expoblending_common_SRCS}
    )
 
@@ -83,4 +84,4 @@ TARGET_LINK_LIBRARIES(expoblending
                      )
 
 INSTALL(TARGETS expoblending ${INSTALL_TARGETS_DEFAULT_ARGS})
-INSTALL(PROGRAMS expoblending.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+INSTALL(PROGRAMS plugin/expoblending.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
