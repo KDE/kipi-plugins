@@ -1,25 +1,27 @@
 SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
+                    ${CMAKE_CURRENT_SOURCE_DIR}/widgets
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
 SET(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
                                            dialogs/soundtrackdialog.cpp
                                            dialogs/advanceddialog.cpp
                                            dialogs/maindialog.cpp
-                                           commoncontainer.cpp
-                                           screenproperties.cpp
-                                           playbackwidget.cpp
-                                           slideplaybackwidget.cpp
-                                           slideshowconfig.cpp
-                                           slideshowloader.cpp
-                                           listsounditems.cpp
-                                           slideshow.cpp
-                                           kbeffect.cpp
-                                           imageloadthread.cpp
-                                           slideshowgl.cpp
-                                           slideshowkb.cpp
-                                           plugin_advancedslideshow.cpp
+                                           dialogs/slideshowconfig.cpp
+                                           widgets/playbackwidget.cpp
+                                           widgets/slideplaybackwidget.cpp
+                                           widgets/listsounditems.cpp
+                                           widgets/slideshow.cpp
+                                           widgets/slideshowgl.cpp
+                                           widgets/slideshowkb.cpp
+                                           plugin/commoncontainer.cpp
+                                           plugin/screenproperties.cpp
+                                           plugin/slideshowloader.cpp
+                                           plugin/kbeffect.cpp
+                                           plugin/imageloadthread.cpp
+                                           plugin/plugin_advancedslideshow.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_advancedslideshow_PART_SRCS
@@ -51,4 +53,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_advancedslideshow
                      )
 
 INSTALL(TARGETS kipiplugin_advancedslideshow DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_advancedslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_advancedslideshow.desktop DESTINATION ${SERVICES_INSTALL_DIR})
