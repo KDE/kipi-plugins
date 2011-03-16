@@ -62,5 +62,5 @@ INSTALL(FILES THEME_HOWTO
 
 INSTALL(DIRECTORY themes
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_htmlexport
-        PATTERN ".svn" EXCLUDE
+        PATTERN ".git" EXCLUDE
        )
