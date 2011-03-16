@@ -7,8 +7,8 @@
  * Description : Lossless JPEG files transformations.
  *
  * Copyright (C) 2004      by Ralf Hoelzer <kde at ralfhoelzer.com>
- * Copyright (C) 2004-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -137,7 +137,7 @@ static bool transformJPEG(const QString& src, const QString& destGiven,
                           JXFORM_CODE flip, JXFORM_CODE rotate, QString& err);
 
 bool transformJPEG(const QString& src, const QString& dest,
-                   Matrix &userAction, QString& err, bool updateFileTimeStamp)
+                   Matrix& userAction, QString& err, bool updateFileTimeStamp)
 {
     // Get Exif orientation action to do.
     KExiv2Iface::KExiv2 exiv2Iface;
@@ -153,8 +153,8 @@ bool transformJPEG(const QString& src, const QString& dest,
     getExifAction(exifAction, exiv2Iface.getImageOrientation());
 
     // Compose actions: first exif, then user
-    action*=exifAction;
-    action*=userAction;
+    action *= exifAction;
+    action *= userAction;
 
     // Convert action into flip+rotate action
     convertTransform(action, flip, rotate);
@@ -211,8 +211,8 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     struct jpeg_decompress_struct srcinfo;
     struct jpeg_compress_struct dstinfo;
     struct jpegtransform_jpeg_error_mgr jsrcerr, jdsterr;
-    jvirt_barray_ptr * src_coef_arrays;
-    jvirt_barray_ptr * dst_coef_arrays;
+    jvirt_barray_ptr* src_coef_arrays = 0;
+    jvirt_barray_ptr* dst_coef_arrays = 0;
 
     // Initialize the JPEG decompression object with default error handling
     srcinfo.err                 = jpeg_std_error(&jsrcerr);
@@ -398,7 +398,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
 /** Converts the mathematically correct description
     into the primitive operations that can be carried out losslessly.
 */
-void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate) 
+void convertTransform(Matrix& action, JXFORM_CODE& flip, JXFORM_CODE& rotate) 
 {
     flip   = JXFORM_NONE;
     rotate = JXFORM_NONE;
@@ -437,7 +437,7 @@ void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate)
     }
 }
 
-void getExifAction(Matrix &action, KExiv2Iface::KExiv2::ImageOrientation exifOrientation) 
+void getExifAction(Matrix& action, KExiv2Iface::KExiv2::ImageOrientation exifOrientation) 
 {
     switch (exifOrientation) 
     {
@@ -445,35 +445,35 @@ void getExifAction(Matrix &action, KExiv2Iface::KExiv2::ImageOrientation exifOri
             break;
 
         case KExiv2Iface::KExiv2::ORIENTATION_HFLIP:
-            action*=Matrix::flipHorizontal;
+            action *= Matrix::flipHorizontal;
             break;
 
         case KExiv2Iface::KExiv2::ORIENTATION_ROT_180:
-            action*=Matrix::rotate180;
+            action *= Matrix::rotate180;
             break;
 
         case KExiv2Iface::KExiv2::ORIENTATION_VFLIP:
-            action*=Matrix::flipVertical;
+            action *= Matrix::flipVertical;
             break;
 
         case KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP:
-            action*=Matrix::rotate90flipHorizontal;
+            action *= Matrix::rotate90flipHorizontal;
             break;
 
         case KExiv2Iface::KExiv2::ORIENTATION_ROT_90:
-            action*=Matrix::rotate90;
+            action *= Matrix::rotate90;
             break;
 
         case KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP:
-            action*=Matrix::rotate90flipVertical;
+            action *= Matrix::rotate90flipVertical;
             break;
 
         case KExiv2Iface::KExiv2::ORIENTATION_ROT_270:
-            action*=Matrix::rotate270;
+            action *= Matrix::rotate270;
             break;
 
         case KExiv2Iface::KExiv2::ORIENTATION_UNSPECIFIED:
-            action*=Matrix::none;
+            action *= Matrix::none;
             break;
     }
 }

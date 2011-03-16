@@ -5,16 +5,20 @@ SUBDIRS(icons)
 # So make sure nofinal is always used here!
 KDE4_NO_ENABLE_FINAL(kipiplugin_jpeglossless)
 
-INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR}
+                    ${CMAKE_CURRENT_SOURCE_DIR}/libjpeg
+                    ${CMAKE_CURRENT_SOURCE_DIR}/transform
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                   )
 
-SET(kipiplugin_jpeglossless_PART_SRCS plugin_jpeglossless.cpp 
-                                      transupp.cpp 
-                                      jpegtransform.cpp 
-                                      utils.cpp 
-                                      imagerotate.cpp 
-                                      convert2grayscale.cpp 
-                                      imageflip.cpp 
-                                      actionthread.cpp
+SET(kipiplugin_jpeglossless_PART_SRCS plugin/plugin_jpeglossless.cpp 
+                                      plugin/utils.cpp 
+                                      plugin/actionthread.cpp
+                                      transform/jpegtransform.cpp 
+                                      transform/imagerotate.cpp 
+                                      transform/convert2grayscale.cpp 
+                                      transform/imageflip.cpp 
+                                      libjpeg/transupp.cpp 
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
@@ -34,4 +38,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless
                      )
 
 INSTALL(TARGETS kipiplugin_jpeglossless DESTINATION ${PLUGIN_INSTALL_DIR})
-INSTALL(FILES kipiplugin_jpeglossless.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_jpeglossless.desktop DESTINATION ${SERVICES_INSTALL_DIR})

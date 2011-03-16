@@ -56,7 +56,7 @@
 K_PLUGIN_FACTORY( JPEGLosslessFactory, registerPlugin<Plugin_JPEGLossless>(); )
 K_EXPORT_PLUGIN ( JPEGLosslessFactory("kipiplugin_jpeglossless") )
 
-class Plugin_JPEGLosslessPriv
+class Plugin_JPEGLossless::Plugin_JPEGLosslessPriv
 {
 public:
 

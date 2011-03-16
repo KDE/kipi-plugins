@@ -6,8 +6,8 @@
  * Date        : 2003-10-14
  * Description : batch images grayscale conversion
  *
- * Copyright (C) 2004-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2003-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -146,7 +146,7 @@ bool ImageGrayScale::image2GrayScale(const QString& src, QString& err, bool upda
 bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest, 
                                          QString& err, bool updateFileTimeStamp)
 {
-    JCOPY_OPTION copyoption = JCOPYOPT_ALL;
+    JCOPY_OPTION copyoption         = JCOPYOPT_ALL;
     jpeg_transform_info transformoption;
 
     transformoption.transform       = JXFORM_NONE;
@@ -157,8 +157,8 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     struct jpeg_compress_struct dstinfo;
     struct jpeg_error_mgr jsrcerr;
     struct jpeg_error_mgr jdsterr;
-    jvirt_barray_ptr * src_coef_arrays;
-    jvirt_barray_ptr * dst_coef_arrays;
+    jvirt_barray_ptr* src_coef_arrays = 0;
+    jvirt_barray_ptr* dst_coef_arrays = 0;
 
     // Initialize the JPEG decompression object with default error handling
     srcinfo.err = jpeg_std_error(&jsrcerr);

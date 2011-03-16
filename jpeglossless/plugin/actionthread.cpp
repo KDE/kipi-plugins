@@ -8,8 +8,8 @@
  *               actions using threads
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2004-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -56,7 +56,7 @@ extern "C"
 namespace KIPIJPEGLossLessPlugin
 {
 
-class ActionThreadPriv
+class ActionThread::ActionThreadPriv
 {
 public:
 
@@ -86,10 +86,10 @@ public:
 
     QList<Task*>     todo;
 
-    KIPI::Interface *interface;
+    KIPI::Interface* interface;
 };
 
-ActionThread::ActionThread(KIPI::Interface* interface, QObject *parent)
+ActionThread::ActionThread(KIPI::Interface* interface, QObject* parent)
             : QThread(parent), d(new ActionThreadPriv)
 {
     d->interface = interface;
@@ -114,7 +114,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
     {
         KIPI::ImageInfo info = d->interface->info( *it );
 
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->filePath               = (*it).toLocalFile();
         t->action                 = Rotate;
         t->rotAction              = val;
@@ -142,7 +142,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
             val = (FlipAction) !val;
         }
 
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->filePath               = (*it).toLocalFile();
         t->action                 = Flip;
         t->flipAction             = val;
@@ -158,7 +158,7 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        ActionThreadPriv::Task *t = new ActionThreadPriv::Task;
+        ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->filePath               = (*it).toLocalFile();
         t->action                 = GrayScale;
 
@@ -181,7 +181,7 @@ void ActionThread::run()
     d->running = true;
     while (d->running)
     {
-        ActionThreadPriv::Task *t = 0;
+        ActionThreadPriv::Task* t = 0;
         {
             QMutexLocker lock(&d->mutex);
             if (!d->todo.isEmpty())
@@ -202,7 +202,7 @@ void ActionThread::run()
 
                     bool result = true;
                     ImageRotate imageRotate;
-                    result = imageRotate.rotate(t->filePath, t->rotAction, errString, d->updateFileTimeStamp);
+                    result      = imageRotate.rotate(t->filePath, t->rotAction, errString, d->updateFileTimeStamp);
 
                     if (result)
                         emit finished(t->filePath, Rotate);
@@ -239,7 +239,7 @@ void ActionThread::run()
                 default:
                 {
                     kError() << "KIPIJPEGLossLessPlugin:ActionThread: "
-                                    << "Unknown action specified";
+                             << "Unknown action specified";
                 }
             }
 

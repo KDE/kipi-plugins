@@ -73,6 +73,7 @@ private:
 
 private:
 
+    class Plugin_JPEGLosslessPriv;
     Plugin_JPEGLosslessPriv* const d;
 };
 

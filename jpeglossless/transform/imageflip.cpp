@@ -4,11 +4,10 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2003-10-14
- * Description : batch image rotation
+ * Description : batch image flip
  *
- * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2004-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2003-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,7 +23,7 @@
 
 #define XMD_H
 
-#include "imagerotate.moc"
+#include "imageflip.moc"
 
 // C++ includes
 
@@ -40,7 +39,7 @@
 
 // C ANSI includes
 
-extern "C"
+extern "C" 
 {
 #include <sys/types.h>
 #include <unistd.h>
@@ -61,25 +60,25 @@ extern "C"
 
 // Local includes
 
-#include "utils.h"
 #include "transupp.h"
 #include "jpegtransform.h"
+#include "utils.h"
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-ImageRotate::ImageRotate()
-           : QObject()
+ImageFlip::ImageFlip()
+         : QObject()
 {
-    m_tmpFile.setSuffix("kipiplugin-rotate");
+    m_tmpFile.setSuffix("kipiplugin-flip");
     m_tmpFile.setAutoRemove(true);
 }
 
-ImageRotate::~ImageRotate()
+ImageFlip::~ImageFlip()
 {
 }
 
-bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, bool updateFileTimeStamp)
+bool ImageFlip::flip(const QString& src, FlipAction action, QString& err, bool updateFileTimeStamp)
 {
     QFileInfo fi(src);
 
@@ -88,8 +87,6 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, b
         err = i18n("Error in opening input file");
         return false;
     }
-
-    m_tmpFile.setSuffix("kipiplugin-rotate." + fi.suffix());
 
     if ( !m_tmpFile.open() )
     {
@@ -111,17 +108,14 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, b
     }
     else if (Utils::isJPEG(src))
     {
-        if (!rotateJPEG(src, tmp, angle, err, updateFileTimeStamp))
-        {
-            if (err == "nothing to do") { err.clear(); return true; }
+        if (!flipJPEG(src, tmp, action, err, updateFileTimeStamp))
             return false;
-        }
     }
     else
     {
         // B.K.O #123499 : we using Image Magick API here instead QT API 
         // else TIFF/PNG 16 bits image are broken!
-        if (!rotateImageMagick(src, tmp, angle, err))
+        if (!flipImageMagick(src, tmp, action, err))
             return false;
 
         // We update metadata on new image.
@@ -140,37 +134,27 @@ bool ImageRotate::rotate(const QString& src, RotateAction angle, QString& err, b
     return true;
 }
 
-bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateAction angle,
-                             QString& err, bool updateFileTimeStamp)
+bool ImageFlip::flipJPEG(const QString& src, const QString& dest, FlipAction action, 
+                         QString& err, bool updateFileTimeStamp)
 {
-    Matrix transform=Matrix::none;
+    Matrix transform = Matrix::none;
 
-    switch(angle)
+    switch(action)
     {
-        case (Rot90):
+        case (FlipHorizontal):
         {
-            transform = Matrix::rotate90;
+            transform = Matrix::flipHorizontal;
             break;
         }
-        case (Rot180):
+        case (FlipVertical):
         {
-            transform = Matrix::rotate180;
-            break;
-        }
-        case (Rot270):
-        {
-            transform = Matrix::rotate270;
-            break;
-        }
-        case (Rot0):
-        {
-            transform = Matrix::none;
+            transform = Matrix::flipVertical;
             break;
         }
         default:
         {
-            kError() << "ImageRotate: Nonstandard rotation angle";
-            err = i18n("Nonstandard rotation angle");
+            qCritical() << "ImageFlip: Nonstandard flip action";
+            err = i18n("Nonstandard flip action");
             return false;
         }
     }
@@ -178,39 +162,28 @@ bool ImageRotate::rotateJPEG(const QString& src, const QString& dest, RotateActi
     return transformJPEG(src, dest, transform, err, updateFileTimeStamp);
 }
 
-bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest, 
-                                    RotateAction angle, QString& err)
+bool ImageFlip::flipImageMagick(const QString& src, const QString& dest, FlipAction action, QString& err)
 {
     KProcess process;
     process.clearProgram();
     process << "convert";
-    process << "-rotate";
 
-    switch(angle)
+    switch(action)
     {
-        case (Rot90):
+        case FlipHorizontal:
         {
-            process << "90";
+            process << "-flop";
             break;
         }
-        case (Rot180):
+        case FlipVertical:
         {
-            process << "180";
-            break;
-        }
-        case (Rot270):
-        {
-            process << "270";
-            break;
-        }
-        case (Rot0):
-        {
+            process << "-flip";
             break;
         }
         default:
         {
-            kError() << "ImageRotate: Nonstandard rotation angle";
-            err = i18n("Nonstandard rotation angle");
+            qCritical() << "ImageFlip: Nonstandard flip action";
+            err = i18n("Nonstandard flip action");
             return false;
         }
     }
@@ -243,7 +216,7 @@ bool ImageRotate::rotateImageMagick(const QString& src, const QString& dest,
 
     // Processing error !
     m_stdErr = process.readAllStandardError();
-    err      = i18n("Cannot rotate: %1", m_stdErr.replace('\n', ' '));
+    err      = i18n("Cannot flip: %1", m_stdErr.replace('\n', ' '));
     return false;
 }
 

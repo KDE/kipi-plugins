@@ -7,8 +7,8 @@
  * Description : Lossless JPEG files transformations.
  *
  * Copyright (C) 2004      by Ralf Hoelzer <kde at ralfhoelzer.com>
- * Copyright (C) 2004-2010 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -119,9 +119,9 @@ protected:
 bool transformJPEG(const QString& src, const QString& dest, Matrix &action, 
                    QString& err, bool updateFileTimeStamp);
 
-void convertTransform(Matrix &action, JXFORM_CODE &flip, JXFORM_CODE &rotate);
+void convertTransform(Matrix& action, JXFORM_CODE& flip, JXFORM_CODE& rotate);
 
-void getExifAction(Matrix &action, KExiv2Iface::KExiv2::ImageOrientation exifOrientation);
+void getExifAction(Matrix& action, KExiv2Iface::KExiv2::ImageOrientation exifOrientation);
 
 }  // namespace KIPIJPEGLossLessPlugin
 
