@@ -1,11 +1,14 @@
 SUBDIRS(icons)
 
-SET(kipiplugin_advancedslideshow_PART_SRCS commoncontainer.cpp
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/dialogs
+                   )
+
+SET(kipiplugin_advancedslideshow_PART_SRCS dialogs/captiondialog.cpp
+                                           dialogs/soundtrackdialog.cpp
+                                           dialogs/advanceddialog.cpp
+                                           dialogs/maindialog.cpp
+                                           commoncontainer.cpp
                                            screenproperties.cpp
-                                           captiondialog.cpp
-                                           soundtrackdialog.cpp
-                                           advanceddialog.cpp
-                                           maindialog.cpp
                                            playbackwidget.cpp
                                            slideplaybackwidget.cpp
                                            slideshowconfig.cpp
