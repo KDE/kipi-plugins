@@ -21,4 +21,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> 260754 : DngConverter doesn't support sraw files.
 012 ==> 267775 : Import from facebook fails, no write permissions, no album selection.
 013 ==> 155030 : Meta information about picture dimension not updated after batch resize.
-014 ==> 
+014 ==> 258202 : Keep custom metadata (tags, rating) when converting.
+015 ==> 267650 : Resizing image causes Digikam caption to disappear in original.
+016 ==> 
+
