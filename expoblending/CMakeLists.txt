@@ -34,7 +34,6 @@ ENDIF(OPENMP_FOUND AND NOT APPLE)
 
 INSTALL(DIRECTORY pics
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_expoblending
-        PATTERN ".git" EXCLUDE
        )
 
 # =======================================================

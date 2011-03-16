@@ -52,5 +52,4 @@ INSTALL(FILES TEMPLATE_HOWTO
 
 INSTALL(DIRECTORY templates
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_printimages
-        PATTERN ".git" EXCLUDE
        )
