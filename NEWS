@@ -20,4 +20,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> 266911 : Add space to suffix "MB" (" MB").
 011 ==> 260754 : DngConverter doesn't support sraw files.
 012 ==> 267775 : Import from facebook fails, no write permissions, no album selection.
-013 ==> 
+013 ==> 155030 : Meta information about picture dimension not updated after batch resize.
+014 ==> 
