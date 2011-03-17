@@ -18,7 +18,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier
                     ${CMAKE_CURRENT_SOURCE_DIR}/detection/locators/haarclassifier/widgets
-                    ${CMAKE_CURRENT_SOURCE_DIR}/commonwidgets
+                    ${CMAKE_CURRENT_SOURCE_DIR}/widgets
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${OpenCV_INCLUDE_DIR}
                    )
 
@@ -46,22 +47,22 @@ SET(savemethods_SRCS
     detection/savemethods/savemethodfactory.cpp
    )
 
-SET(commonwidgets_SRCS
-    commonwidgets/controlwidget.cpp
-    commonwidgets/infomessagewidget.cpp
-    commonwidgets/myimageslist.cpp
-    commonwidgets/previewwidget.cpp
-    commonwidgets/storagesettingsbox.cpp
-    commonwidgets/unprocessedsettingsbox.cpp
+SET(widgets_SRCS
+    widgets/controlwidget.cpp
+    widgets/infomessagewidget.cpp
+    widgets/myimageslist.cpp
+    widgets/previewwidget.cpp
+    widgets/storagesettingsbox.cpp
+    widgets/unprocessedsettingsbox.cpp
    )
 
 SET(kipiplugin_removeredeyes_PART_SRCS
-    plugin_removeredeyes.cpp
-    removeredeyeswindow.cpp
-    workerthread.cpp
-    workerthreaddata.cpp
+    plugin/plugin_removeredeyes.cpp
+    plugin/removeredeyeswindow.cpp
+    plugin/workerthread.cpp
+    plugin/workerthreaddata.cpp
     ${savemethods_SRCS}
-    ${commonwidgets_SRCS}
+    ${widgets_SRCS}
     ${locators_SRCS}
     ${locators_haarclassifier_SRCS}
     ${libcvblobs_SRCS}
@@ -83,7 +84,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_removeredeyes
 
 INSTALL(TARGETS kipiplugin_removeredeyes DESTINATION ${PLUGIN_INSTALL_DIR})
 
-INSTALL(FILES commonwidgets/controlwidget.svg removeredeyes_classifier_eye_20_20.xml
+INSTALL(FILES widgets/controlwidget.svg plugin/removeredeyes_classifier_eye_20_20.xml
         DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_removeredeyes)
 
-INSTALL(FILES kipiplugin_removeredeyes.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_removeredeyes.desktop DESTINATION ${SERVICES_INSTALL_DIR})
