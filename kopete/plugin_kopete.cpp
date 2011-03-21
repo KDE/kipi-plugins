@@ -144,7 +144,7 @@ void Plugin_Kopete::slotAboutToShowMenu()
         }
 
         bool canAcceptFiles = contactProperties.value().value("file_reachable", false).toBool();
-        qDebug() << "Contact " << contact << (canAcceptFiles ? "can" : "cannot") << " accept files via IM";
+        kDebug() << "Contact " << contact << (canAcceptFiles ? "can" : "cannot") << " accept files via IM";
         if(!canAcceptFiles)
         {
             continue;
