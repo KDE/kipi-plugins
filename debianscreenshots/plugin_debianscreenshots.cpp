@@ -61,8 +61,6 @@ void Plugin_DebianScreenshots::setup(QWidget* widget)
 {
     m_dlgExport = 0;
 
-    kWarning() << Q_FUNC_INFO;
-
     KIPI::Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_debianscreenshots");
