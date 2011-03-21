@@ -22,7 +22,6 @@
 
 // Local includes.
 
-#include "albumdlg.h"
 #include "albumdlg.moc"
 
 namespace KIPIGalleryExportPlugin

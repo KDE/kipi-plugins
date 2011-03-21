@@ -23,7 +23,6 @@
 *
 * ============================================================ */
 
-#include "gallerytalker.h"
 #include "gallerytalker.moc"
 
 // C++ includes

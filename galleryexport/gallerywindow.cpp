@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "gallerywindow.h"
 #include "gallerywindow.moc"
 
 // Qt includes

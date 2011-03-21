@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "plugin_galleryexport.h"
 #include "plugin_galleryexport.moc"
 
 // Qt includes
