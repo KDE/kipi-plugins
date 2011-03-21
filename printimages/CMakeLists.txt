@@ -14,11 +14,11 @@ SET(kipiplugin_printimages_PART_SRCS
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_printimages_PART_SRCS
-                  infopage.ui
-                  photopage.ui
-                  croppage.ui
-                  customlayout.ui
-                  printoptionspage.ui
+                  ui/infopage.ui
+                  ui/photopage.ui
+                  ui/croppage.ui
+                  ui/customlayout.ui
+                  ui/printoptionspage.ui
                  )
 
 KDE4_ADD_KCFG_FILES(kipiplugin_printimages_PART_SRCS
