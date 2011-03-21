@@ -1,12 +1,18 @@
 SUBDIRS(icons)
 
-INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_PNG_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                    ${CMAKE_CURRENT_SOURCE_DIR}/manager
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs
+                    ${JPEG_INCLUDE_DIR}
+                    ${PNG_PNG_INCLUDE_DIR}
+                   )
 
-SET(kipiplugin_rawconverter_PART_SRCS plugin_rawconverter.cpp
-                                      rawdecodingiface.cpp
-                                      actionthread.cpp
-                                      batchdialog.cpp
-                                      singledialog.cpp
+SET(kipiplugin_rawconverter_PART_SRCS plugin/plugin_rawconverter.cpp
+                                      manager/rawdecodingiface.cpp
+                                      manager/actionthread.cpp
+                                      dialogs/batchdialog.cpp
+                                      dialogs/singledialog.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_rawconverter ${kipiplugin_rawconverter_PART_SRCS})
@@ -22,4 +28,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_rawconverter
 
 INSTALL(TARGETS kipiplugin_rawconverter DESTINATION ${PLUGIN_INSTALL_DIR})
 
-INSTALL(FILES kipiplugin_rawconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_rawconverter.desktop DESTINATION ${SERVICES_INSTALL_DIR})
