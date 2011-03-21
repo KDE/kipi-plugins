@@ -10,6 +10,6 @@ ELSE (GITEXEC)
     SET(MYVERSION unknown)
 ENDIF (GITEXEC)
 
-# Configure the svnversion.h
+# Configure the gitversion.h
 CONFIGURE_FILE("@CMAKE_CURRENT_SOURCE_DIR@/cmake/templates/gitversion.h.in_cmake"
                "@CMAKE_CURRENT_BINARY_DIR@/common/libkipiplugins/gitversion.h")
