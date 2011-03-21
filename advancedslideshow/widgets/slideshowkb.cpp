@@ -48,6 +48,7 @@
 #include <kconfiggroup.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <kdebug.h>
 #include <kdeversion.h>
 #include <kglobalsettings.h>
 
