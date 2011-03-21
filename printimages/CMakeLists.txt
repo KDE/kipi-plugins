@@ -1,6 +1,6 @@
 
 SET(kipiplugin_printimages_PART_SRCS
-    plugin_printimages.cpp
+    plugin/plugin_printimages.cpp
     printhelper.cpp
     tphoto.cpp
     cropframe.cpp
@@ -42,7 +42,7 @@ INSTALL(TARGETS kipiplugin_printimages
         DESTINATION ${PLUGIN_INSTALL_DIR}
        )
 
-INSTALL(FILES kipiplugin_printimages.desktop
+INSTALL(FILES plugin/kipiplugin_printimages.desktop
         DESTINATION ${SERVICES_INSTALL_DIR}
        )
 
