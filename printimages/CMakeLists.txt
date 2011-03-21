@@ -1,16 +1,20 @@
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/wizard
+                    ${CMAKE_CURRENT_SOURCE_DIR}/tools
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                   )
 
 SET(kipiplugin_printimages_PART_SRCS
     plugin/plugin_printimages.cpp
-    printhelper.cpp
-    tphoto.cpp
-    cropframe.cpp
-    wizard.cpp
-    utils.cpp
-    printoptionspage.cpp
-    layouttree.cpp
-    atkinspagelayout.cpp 
-    templateicon.cpp
-    customdlg.cpp
+    tools/tphoto.cpp
+    tools/utils.cpp
+    tools/atkinspagelayout.cpp
+    tools/templateicon.cpp
+    tools/layouttree.cpp
+    wizard/cropframe.cpp
+    wizard/wizard.cpp
+    wizard/printoptionspage.cpp
+    wizard/printhelper.cpp
+    wizard/customdlg.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_printimages_PART_SRCS
@@ -22,7 +26,7 @@ KDE4_ADD_UI_FILES(kipiplugin_printimages_PART_SRCS
                  )
 
 KDE4_ADD_KCFG_FILES(kipiplugin_printimages_PART_SRCS
-                    printimagesconfig.kcfgc
+                    ${CMAKE_CURRENT_SOURCE_DIR}/wizard/printimagesconfig.kcfgc
                    )
 
 KDE4_ADD_PLUGIN(kipiplugin_printimages ${kipiplugin_printimages_PART_SRCS})
