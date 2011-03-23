@@ -1,5 +1,5 @@
 
-INCLUDE_DIRECTORIES(${GPOD_INCLUDE_DIR} ${GLIB2_INCLUDE_DIR} ${GDK_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${IPOD_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIR} ${GDK_INCLUDE_DIR})
 
 SET(kipiplugin_ipodexport_PART_SRCS
     plugin_ipodexport.cpp
@@ -16,7 +16,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_ipodexport
                       ${GOBJECT_LIBRARIES}
                       ${GLIB2_LIBRARIES}
                       ${KDE4_KDEUI_LIBS}
-                      ${GPOD_LIBRARIES}
+                      ${IPOD_LIBRARIES}
                       ${GDK_LIBRARIES}
                       ${KIPI_LIBRARIES}
                       ${KDE4_KIO_LIBRARY}
