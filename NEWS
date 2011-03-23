@@ -23,5 +23,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> 155030 : Meta information about picture dimension not updated after batch resize.
 014 ==> 258202 : Keep custom metadata (tags, rating) when converting.
 015 ==> 267650 : Resizing image causes Digikam caption to disappear in original.
-016 ==> 
+016 ==> 269121 : Failure to find libgpod.
+017 ==> 
 
