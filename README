@@ -45,6 +45,7 @@ PiwigoExport       : A tool to export images to a remote Piwigo (PHPWebGallery) 
 DebianScreenshots  : A tool to export images to Debian Screenshots web service (http://screenshots.debian.net).
 Kopete             : A tool to export images to an instant messaging contact.
 YandexFotki        : A tool to export images to Yandex web service (http://fotki.yandex.ru).
+MediaWiki          : A tool to export images to Mediawiki based web service (http://www.mediawiki.org).
 
 Porting under progress to Qt4/KDE4:
 
@@ -86,6 +87,7 @@ libqjson        >= 0.6.0                        http://qjson.sourceforge.net
 libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
 libksane        >= 0.3.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
 libkmap         >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
+libmediawiki    >= 1.0.0                        http://www.digikam.org/sharedlibs
 
 Plugin Specific Dependencies (for compiling and for running) :
 
@@ -104,6 +106,7 @@ YandexFotki        : libqca.
 DebianScreenshots  : libqjson.
 ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
 GPSSync            : libkmap.
+Mediawiki          : libmediawiki.
 
 -- CONTACT ------------------------------------------------------------
 
