@@ -5,6 +5,7 @@ NEW FEATURES:
 
 GPSSync        : Complete rewrite of GUI, including reverse-geocoding feature.
 YandexFotki    : New tool to export collection to Yandex web service (http://fotki.yandex.ru).
+MediaWiki      : New tool to export collection to MediaWiki based web service (http://www.mediawiki.org).
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
@@ -24,5 +25,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 014 ==> 258202 : Keep custom metadata (tags, rating) when converting.
 015 ==> 267650 : Resizing image causes Digikam caption to disappear in original.
 016 ==> 269121 : Failure to find libgpod.
-017 ==> 
+017 ==> 206842 : Export to Wikimedia Commons.
+018 ==> 
 
