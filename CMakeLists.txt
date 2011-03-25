@@ -154,6 +154,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(KSane)      # For AcquireImages.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
 MACRO_OPTIONAL_FIND_PACKAGE(QJSON)      # For Debian Screenshots.
 MACRO_OPTIONAL_FIND_PACKAGE(Kmap)       # For GPSSync.
+MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)  # For Mediawiki.
 
 # check the libkmap version
 # note that old versions don't specify version information, so for now
@@ -216,6 +217,7 @@ PRINT_OPTIONAL_LIBRARY_STATUS("Gdk" GDK_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkdepim" KDEPIMLIBS_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("qca2" QCA2_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkmap" KMAP_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki" MEDIAWIKI_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -271,6 +273,7 @@ PRINT_PLUGIN_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("IpodExport" IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KMAP_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Mediawiki" MEDIAWIKI_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
@@ -353,6 +356,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(printimages)
     ADD_SUBDIRECTORY(expoblending)
     ADD_SUBDIRECTORY(kopete)
+    ADD_SUBDIRECTORY(batchprocessimages)
 
     # Plugins which are optional depencies.
 
@@ -400,6 +404,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(gpssync)
     ENDIF(KMAP_FOUND)
 
+    IF(MEDIAWIKI_FOUND)
+        ADD_SUBDIRECTORY(mediawiki)
+    ENDIF(MEDIAWIKI_FOUND)
+
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
 #
 #   FIND_FILE(KDESKTOP_INTERFACE_FILE_FOUND org.kde.kdesktop.Background.xml PATHS ${DBUS_INTERFACES_INSTALL_DIR} )
@@ -409,8 +417,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 #   ELSE(KDESKTOP_INTERFACE_FILE_FOUND)
 #       MESSAGE(STATUS "Wallpaper plugins will not compile. Kdebase (kdesktop) must be installed before compiling it")
 #   ENDIF(KDESKTOP_INTERFACE_FILE_FOUND)
-
-    ADD_SUBDIRECTORY(batchprocessimages)
 
     IF(NOT WIN32)
         CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/kipi-plugins.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/kipi-plugins.lsm)
