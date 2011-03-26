@@ -1,16 +1,4 @@
 
-# there are two versions of FindOpenCV.cmake in the wild, one defining
-# OpenCV_LIBRARIES, the other defining OpenCV_LIBS. Make sure we handle
-# both cases.
-IF (NOT OpenCV_LIBRARIES)
-  SET(OpenCV_LIBRARIES ${OpenCV_LIBS})
-ENDIF (NOT OpenCV_LIBRARIES)
-
-# same story with OpenCV_INCLUDE_DIRS and OpenCV_INCLUDE_DIR:
-IF (NOT OpenCV_INCLUDE_DIRS)
-  SET(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIR})
-ENDIF (NOT OpenCV_INCLUDE_DIRS)
-
 ADD_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/libcvblobs
