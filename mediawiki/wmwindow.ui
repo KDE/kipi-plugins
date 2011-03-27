@@ -10,9 +10,6 @@
     <height>157</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
   <widget class="ImagesList" name="widget" native="true">
    <property name="geometry">
     <rect>
