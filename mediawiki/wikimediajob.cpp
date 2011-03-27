@@ -80,13 +80,15 @@ void WikiMediaJob::uploadHandle(KJob* j)
         //error from previous upload
         if((int)j->error() != 0)
         {
-            m_error.append(i18n("Error on file : "));
-            m_error.append(m_currentFile);
-            if(j->errorText()==0){
-                m_error.append(i18n(" : An error has occurred"));
+            const QString errorText = j->errorText();
+            if(errorText.isEmpty())
+            {
+                m_error = i18n("Error on file '%1'\n", m_currentFile);
             }
-            m_error.append(" : "+ j->errorText());
-            m_error.append('\n');
+            else
+            {
+                m_error = i18n("Error on file '%1': %2\n", m_currentFile, errorText.isEmpty());
+            }
         }
     }
     //upload next image
