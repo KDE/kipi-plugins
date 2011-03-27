@@ -203,7 +203,7 @@ int WMWindow::loginHandle(KJob* loginJob)
         m_pass.clear();
         m_uploadJob = NULL;
         //TODO Message d'erreur de login
-        KMessageBox::error(this, i18n("Login Error\n Please re-enter your information"));
+        KMessageBox::error(this, i18n("Login Error\nPlease re-enter your information."));
     }
     else
     {

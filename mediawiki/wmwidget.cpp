@@ -148,13 +148,13 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_textBox->setWhatsThis(i18n("This is the login form to your Wikimedia account."));
     QGridLayout* textBoxLayout = new QGridLayout(m_textBox);
 
-    QLabel * desc     = new QLabel(i18nc("Description:","Description:"), m_textBox);
+    QLabel * desc     = new QLabel(i18n("Description:"), m_textBox);
     m_descriptionEdit = new QTextEdit(m_textBox);
 
-    QLabel * aut = new QLabel(i18nc("Author:","Author:"), m_textBox);
+    QLabel * aut = new QLabel(i18n("Author:"), m_textBox);
     m_authorEdit = new KLineEdit(m_textBox);
 
-    QLabel * licenceLabel = new QLabel(i18nc("Licence:","Licence:"), m_textBox);
+    QLabel * licenceLabel = new QLabel(i18n("License:"), m_textBox);
     m_licenceComboBox     = new QComboBox(m_textBox);
 
     m_licenceComboBox->addItem(QString("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), QString("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
@@ -199,7 +199,7 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_dimensionSpB->setValue(600);
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpB->setEnabled(false);
-    QLabel* dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
+    QLabel* dimensionLbl = new QLabel(i18n("Maximum size:"), optionsBox);
 
     m_imageQualitySpB = new QSpinBox(optionsBox);
     m_imageQualitySpB->setMinimum(0);
