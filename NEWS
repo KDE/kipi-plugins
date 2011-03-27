@@ -26,5 +26,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 015 ==> 267650 : Resizing image causes Digikam caption to disappear in original.
 016 ==> 269121 : Failure to find libgpod.
 017 ==> 206842 : Export to Wikimedia Commons.
-018 ==> 
-
+018 ==> 269511 : Cmake install files include wrong path for libmediawiki/version.h.
+019 ==> 
