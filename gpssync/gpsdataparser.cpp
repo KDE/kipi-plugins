@@ -472,8 +472,11 @@ bool GPXFileReader::characters(const QString& ch)
 
 QString GPXFileReader::myQName(const QString& namespaceURI, const QString& localName)
 {
-    if (namespaceURI=="http://www.topografix.com/GPX/1/0")
+    if (    (namespaceURI=="http://www.topografix.com/GPX/1/0")
+         || (namespaceURI=="http://www.topografix.com/GPX/1/1") )
+    {
         return "gpx:"+localName;
+    }
 
     return namespaceURI+localName;
 }
