@@ -1,3 +1,888 @@
+2.0.0-beta4 2011-03-28
+
+2011-03-27  Pino Toscano <pino@kde.org>
+
+	* mediawiki/wmwindow.ui: fixuifiles
+
+2011-03-27  Pino Toscano <pino@kde.org>
+
+	* mediawiki/wmwidget.cpp, mediawiki/wmwindow.cpp: i18n: general
+	style fixups - remove comment when equal to the string (and the string is a
+	single word) - fix spelling - few minor stuff
+
+2011-03-27  Pino Toscano <pino@kde.org>
+
+	* mediawiki/wikimediajob.cpp: i18n: avoid string puzzle use two different i18n strings for the empty/non-empty error text
+	cases instead
+
+2011-03-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-03-27  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-03-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: update
+
+2011-03-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, removeredeyes/CMakeLists.txt: backport OpenCV
+	rules from libkface written my Michael. Compilation is fine now
+	under Windows
+
+2011-03-26  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-03-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : file moved to digiKam SC
+
+2011-03-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/bootstrap.mandriva.2008, project/bootstrap.mandriva.2009,
+	project/bootstrap.ubuntu.8.04: rm obsolete files
+
+2011-03-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* AUTHORS: update
+
+2011-03-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* README: update
+
+2011-03-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: add mediawiki tool to kipi-plugins 2.0.0 BUGS : 206842
+
+2011-03-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: manage mediawiki plugin
+
+2011-03-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/image.cpp, mediawiki/image.h: these files are not used
+
+2011-03-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/CMakeLists.txt, mediawiki/Messages.sh, mediawiki/TODO,
+	mediawiki/icons/CMakeLists.txt, mediawiki/image.cpp,
+	mediawiki/image.h, mediawiki/kipiplugin_wikimedia.desktop,
+	mediawiki/plugin_wikimedia.cpp, mediawiki/plugin_wikimedia.h,
+	mediawiki/wikimediajob.cpp, mediawiki/wikimediajob.h,
+	mediawiki/wmlogin.cpp, mediawiki/wmlogin.h, mediawiki/wmwidget.cpp,
+	mediawiki/wmwidget.h, mediawiki/wmwindow.cpp, mediawiki/wmwindow.h,
+	mediawiki/wmwindow.ui: add mediawiki plugin for next release
+
+2011-03-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-03-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* cmake/modules/FindIpod.cmake: file missing
+
+2011-03-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, cmake/modules/FindGpod.cmake,
+	ipodexport/CMakeLists.txt: use ipod cmake script from Amarok to
+	detect libgpod, instead old FindGpod cmake script CCBUGS: 269121
+
+2011-03-23  Script Kiddy <scripty@kde.org>
+
+	* yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* advancedslideshow/widgets/slideshowkb.cpp: compile under macosx
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* advancedslideshow/widgets/slideshowkb.cpp,
+	kopete/plugin_kopete.cpp: qDebug => kDebug
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rawconverter/CMakeLists.txt, rawconverter/actions.h,
+	rawconverter/actionthread.cpp, rawconverter/actionthread.h,
+	rawconverter/batchdialog.cpp, rawconverter/batchdialog.h,
+	rawconverter/clistviewitem.h, rawconverter/dialogs/batchdialog.cpp,
+	rawconverter/dialogs/batchdialog.h,
+	rawconverter/dialogs/clistviewitem.h,
+	rawconverter/dialogs/singledialog.cpp,
+	rawconverter/dialogs/singledialog.h,
+	rawconverter/kipiplugin_rawconverter.desktop,
+	rawconverter/manager/actions.h,
+	rawconverter/manager/actionthread.cpp,
+	rawconverter/manager/actionthread.h,
+	rawconverter/manager/rawdecodingiface.cpp,
+	rawconverter/manager/rawdecodingiface.h,
+	rawconverter/plugin/kipiplugin_rawconverter.desktop,
+	rawconverter/plugin/plugin_rawconverter.cpp,
+	rawconverter/plugin/plugin_rawconverter.h,
+	rawconverter/plugin_rawconverter.cpp,
+	rawconverter/plugin_rawconverter.h,
+	rawconverter/rawdecodingiface.cpp, rawconverter/rawdecodingiface.h,
+	rawconverter/singledialog.cpp, rawconverter/singledialog.h: move
+	source code to dedicated sub folders
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* debianscreenshots/plugin_debianscreenshots.cpp: no need this
+	message on the console
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* galleryexport/albumdlg.cpp, galleryexport/galleryconfig.cpp,
+	galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp,
+	galleryexport/plugin_galleryexport.cpp: no need .h if .moc file
+	exist
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop: wrong icon
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* printimages/CMakeLists.txt, printimages/atkinspagelayout.cpp,
+	printimages/atkinspagelayout.h, printimages/cropframe.cpp,
+	printimages/cropframe.h, printimages/customdlg.cpp,
+	printimages/customdlg.h, printimages/layouttree.cpp,
+	printimages/layouttree.h, printimages/printhelper.cpp,
+	printimages/printhelper.h, printimages/printimagesconfig.kcfg,
+	printimages/printimagesconfig.kcfgc,
+	printimages/printoptionspage.cpp, printimages/printoptionspage.h,
+	printimages/signalblocker.h, printimages/templateicon.cpp,
+	printimages/templateicon.h, printimages/tools/atkinspagelayout.cpp,
+	printimages/tools/atkinspagelayout.h,
+	printimages/tools/layouttree.cpp, printimages/tools/layouttree.h,
+	printimages/tools/signalblocker.h,
+	printimages/tools/templateicon.cpp,
+	printimages/tools/templateicon.h, printimages/tools/tphoto.cpp,
+	printimages/tools/tphoto.h, printimages/tools/utils.cpp,
+	printimages/tools/utils.h, printimages/tphoto.cpp,
+	printimages/tphoto.h, printimages/utils.cpp, printimages/utils.h,
+	printimages/wizard.cpp, printimages/wizard.h,
+	printimages/wizard/cropframe.cpp, printimages/wizard/cropframe.h,
+	printimages/wizard/customdlg.cpp, printimages/wizard/customdlg.h,
+	printimages/wizard/printhelper.cpp,
+	printimages/wizard/printhelper.h,
+	printimages/wizard/printimagesconfig.kcfg,
+	printimages/wizard/printimagesconfig.kcfgc,
+	printimages/wizard/printoptionspage.cpp,
+	printimages/wizard/printoptionspage.h,
+	printimages/wizard/wizard.cpp, printimages/wizard/wizard.h: move
+	files to dedicated subfolders
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* printimages/CMakeLists.txt,
+	printimages/kipiplugin_printimages.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	printimages/plugin/plugin_printimages.cpp,
+	printimages/plugin/plugin_printimages.h,
+	printimages/plugin_printimages.cpp,
+	printimages/plugin_printimages.h: create plugin sub folder
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* printimages/CMakeLists.txt, printimages/croppage.ui,
+	printimages/customlayout.ui, printimages/infopage.ui,
+	printimages/photopage.ui, printimages/printoptionspage.ui,
+	printimages/ui/croppage.ui, printimages/ui/customlayout.ui,
+	printimages/ui/infopage.ui, printimages/ui/photopage.ui,
+	printimages/ui/printoptionspage.ui: move ui files to a dedicated
+	sub-folder
+
+2011-03-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* cmake/templates/gitscript.cmake.in_cmake: typo
+
+2011-03-19  Script Kiddy <scripty@kde.org>
+
+	* common/libkipiplugins/kipiplugins.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	shwup/kipiplugin_shwup.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-03-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* calendar/CMakeLists.txt, calendar/calevents.ui,
+	calendar/calpainter.cpp, calendar/calpainter.h,
+	calendar/calprinter.cpp, calendar/calprinter.h,
+	calendar/calprogress.ui, calendar/calselect.cpp,
+	calendar/calselect.h, calendar/calselect.ui,
+	calendar/calsettings.cpp, calendar/calsettings.h,
+	calendar/caltemplate.cpp, calendar/caltemplate.h,
+	calendar/caltemplate.ui, calendar/calwidget.cpp,
+	calendar/calwidget.h, calendar/calwizard.cpp, calendar/calwizard.h,
+	calendar/kipiplugin_calendar.desktop, calendar/monthwidget.cpp,
+	calendar/monthwidget.h,
+	calendar/plugin/kipiplugin_calendar.desktop,
+	calendar/plugin/plugin_calendar.cpp,
+	calendar/plugin/plugin_calendar.h, calendar/plugin_calendar.cpp,
+	calendar/plugin_calendar.h, calendar/print/calpainter.cpp,
+	calendar/print/calpainter.h, calendar/print/calprinter.cpp,
+	calendar/print/calprinter.h, calendar/print/calsettings.cpp,
+	calendar/print/calsettings.h, calendar/ui/calevents.ui,
+	calendar/ui/calprogress.ui, calendar/ui/calselect.ui,
+	calendar/ui/caltemplate.ui, calendar/wizard/calselect.cpp,
+	calendar/wizard/calselect.h, calendar/wizard/caltemplate.cpp,
+	calendar/wizard/caltemplate.h, calendar/wizard/calwidget.cpp,
+	calendar/wizard/calwidget.h, calendar/wizard/calwizard.cpp,
+	calendar/wizard/calwizard.h, calendar/wizard/monthwidget.cpp,
+	calendar/wizard/monthwidget.h: move source code to dedicated
+	sub-folders
+
+2011-03-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* removeredeyes/CMakeLists.txt, removeredeyes/commonsettings.h,
+	removeredeyes/commonwidgets/controlwidget.cpp,
+	removeredeyes/commonwidgets/controlwidget.h,
+	removeredeyes/commonwidgets/controlwidget.svg,
+	removeredeyes/commonwidgets/infomessagewidget.cpp,
+	removeredeyes/commonwidgets/infomessagewidget.h,
+	removeredeyes/commonwidgets/myimageslist.cpp,
+	removeredeyes/commonwidgets/myimageslist.h,
+	removeredeyes/commonwidgets/previewwidget.cpp,
+	removeredeyes/commonwidgets/previewwidget.h,
+	removeredeyes/commonwidgets/storagesettingsbox.cpp,
+	removeredeyes/commonwidgets/storagesettingsbox.h,
+	removeredeyes/commonwidgets/unprocessedsettingsbox.cpp,
+	removeredeyes/commonwidgets/unprocessedsettingsbox.h,
+	removeredeyes/kipiplugin_removeredeyes.desktop,
+	removeredeyes/plugin/commonsettings.h,
+	removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	removeredeyes/plugin/plugin_removeredeyes.cpp,
+	removeredeyes/plugin/plugin_removeredeyes.h,
+	removeredeyes/plugin/removeredeyes_classifier_eye_20_20.xml,
+	removeredeyes/plugin/removeredeyeswindow.cpp,
+	removeredeyes/plugin/removeredeyeswindow.h,
+	removeredeyes/plugin/workerthread.cpp,
+	removeredeyes/plugin/workerthread.h,
+	removeredeyes/plugin/workerthreaddata.cpp,
+	removeredeyes/plugin/workerthreaddata.h,
+	removeredeyes/plugin_removeredeyes.cpp,
+	removeredeyes/plugin_removeredeyes.h,
+	removeredeyes/removeredeyes_classifier_eye_20_20.xml,
+	removeredeyes/removeredeyeswindow.cpp,
+	removeredeyes/removeredeyeswindow.h,
+	removeredeyes/widgets/controlwidget.cpp,
+	removeredeyes/widgets/controlwidget.h,
+	removeredeyes/widgets/controlwidget.svg,
+	removeredeyes/widgets/infomessagewidget.cpp,
+	removeredeyes/widgets/infomessagewidget.h,
+	removeredeyes/widgets/myimageslist.cpp,
+	removeredeyes/widgets/myimageslist.h,
+	removeredeyes/widgets/previewwidget.cpp,
+	removeredeyes/widgets/previewwidget.h,
+	removeredeyes/widgets/storagesettingsbox.cpp,
+	removeredeyes/widgets/storagesettingsbox.h,
+	removeredeyes/widgets/unprocessedsettingsbox.cpp,
+	removeredeyes/widgets/unprocessedsettingsbox.h,
+	removeredeyes/workerthread.cpp, removeredeyes/workerthread.h,
+	removeredeyes/workerthreaddata.cpp,
+	removeredeyes/workerthreaddata.h: move source code to dedicated
+	sub-folders
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* batchprocessimages/CMakeLists.txt,
+	batchprocessimages/batchprocessimagesdialog.cpp,
+	batchprocessimages/batchprocessimagesdialog.h,
+	batchprocessimages/batchprocessimagesdialog.ui,
+	batchprocessimages/batchprocessimagesitem.cpp,
+	batchprocessimages/batchprocessimagesitem.h,
+	batchprocessimages/batchprocessimageslist.cpp,
+	batchprocessimages/batchprocessimageslist.h,
+	batchprocessimages/borderimagesdialog.cpp,
+	batchprocessimages/borderimagesdialog.h,
+	batchprocessimages/borderoptionsdialog.cpp,
+	batchprocessimages/borderoptionsdialog.h,
+	batchprocessimages/colorimagesdialog.cpp,
+	batchprocessimages/colorimagesdialog.h,
+	batchprocessimages/coloroptionsdialog.cpp,
+	batchprocessimages/coloroptionsdialog.h,
+	batchprocessimages/common/batchprocessimagesdialog.cpp,
+	batchprocessimages/common/batchprocessimagesdialog.h,
+	batchprocessimages/common/batchprocessimagesitem.cpp,
+	batchprocessimages/common/batchprocessimagesitem.h,
+	batchprocessimages/common/batchprocessimageslist.cpp,
+	batchprocessimages/common/batchprocessimageslist.h,
+	batchprocessimages/common/dialogutils.cpp,
+	batchprocessimages/common/dialogutils.h,
+	batchprocessimages/common/imagepreview.cpp,
+	batchprocessimages/common/imagepreview.h,
+	batchprocessimages/common/pixmapview.cpp,
+	batchprocessimages/common/pixmapview.h,
+	batchprocessimages/convertimagesdialog.cpp,
+	batchprocessimages/convertimagesdialog.h,
+	batchprocessimages/convertoptionsdialog.cpp,
+	batchprocessimages/convertoptionsdialog.h,
+	batchprocessimages/dialogutils.cpp,
+	batchprocessimages/dialogutils.h,
+	batchprocessimages/effectimagesdialog.cpp,
+	batchprocessimages/effectimagesdialog.h,
+	batchprocessimages/effectoptionsdialog.cpp,
+	batchprocessimages/effectoptionsdialog.h,
+	batchprocessimages/filterimagesdialog.cpp,
+	batchprocessimages/filterimagesdialog.h,
+	batchprocessimages/filteroptionsdialog.cpp,
+	batchprocessimages/filteroptionsdialog.h,
+	batchprocessimages/imagepreview.cpp,
+	batchprocessimages/imagepreview.h,
+	batchprocessimages/imagepreview.ui,
+	batchprocessimages/kipiplugin_batchprocessimages.desktop,
+	batchprocessimages/pixmapview.cpp, batchprocessimages/pixmapview.h,
+	batchprocessimages/plugin/kipiplugin_batchprocessimages.desktop,
+	batchprocessimages/plugin/plugin_batchprocessimages.cpp,
+	batchprocessimages/plugin/plugin_batchprocessimages.h,
+	batchprocessimages/plugin_batchprocessimages.cpp,
+	batchprocessimages/plugin_batchprocessimages.h,
+	batchprocessimages/recompressimagesdialog.cpp,
+	batchprocessimages/recompressimagesdialog.h,
+	batchprocessimages/recompressoptionsdialog.cpp,
+	batchprocessimages/recompressoptionsdialog.h,
+	batchprocessimages/renameimagesbase.ui,
+	batchprocessimages/renameimagesdialog.cpp,
+	batchprocessimages/renameimagesdialog.h,
+	batchprocessimages/renameimageswidget.cpp,
+	batchprocessimages/renameimageswidget.h,
+	batchprocessimages/resizecommandbuilder.cpp,
+	batchprocessimages/resizecommandbuilder.h,
+	batchprocessimages/resizeimagesdialog.cpp,
+	batchprocessimages/resizeimagesdialog.h,
+	batchprocessimages/resizeoptionsdialog.cpp,
+	batchprocessimages/resizeoptionsdialog.h,
+	batchprocessimages/tools/borderimagesdialog.cpp,
+	batchprocessimages/tools/borderimagesdialog.h,
+	batchprocessimages/tools/borderoptionsdialog.cpp,
+	batchprocessimages/tools/borderoptionsdialog.h,
+	batchprocessimages/tools/colorimagesdialog.cpp,
+	batchprocessimages/tools/colorimagesdialog.h,
+	batchprocessimages/tools/coloroptionsdialog.cpp,
+	batchprocessimages/tools/coloroptionsdialog.h,
+	batchprocessimages/tools/convertimagesdialog.cpp,
+	batchprocessimages/tools/convertimagesdialog.h,
+	batchprocessimages/tools/convertoptionsdialog.cpp,
+	batchprocessimages/tools/convertoptionsdialog.h,
+	batchprocessimages/tools/effectimagesdialog.cpp,
+	batchprocessimages/tools/effectimagesdialog.h,
+	batchprocessimages/tools/effectoptionsdialog.cpp,
+	batchprocessimages/tools/effectoptionsdialog.h,
+	batchprocessimages/tools/filterimagesdialog.cpp,
+	batchprocessimages/tools/filterimagesdialog.h,
+	batchprocessimages/tools/filteroptionsdialog.cpp,
+	batchprocessimages/tools/filteroptionsdialog.h,
+	batchprocessimages/tools/recompressimagesdialog.cpp,
+	batchprocessimages/tools/recompressimagesdialog.h,
+	batchprocessimages/tools/recompressoptionsdialog.cpp,
+	batchprocessimages/tools/recompressoptionsdialog.h,
+	batchprocessimages/tools/renameimagesdialog.cpp,
+	batchprocessimages/tools/renameimagesdialog.h,
+	batchprocessimages/tools/renameimageswidget.cpp,
+	batchprocessimages/tools/renameimageswidget.h,
+	batchprocessimages/tools/resizecommandbuilder.cpp,
+	batchprocessimages/tools/resizecommandbuilder.h,
+	batchprocessimages/tools/resizeimagesdialog.cpp,
+	batchprocessimages/tools/resizeimagesdialog.h,
+	batchprocessimages/tools/resizeoptionsdialog.cpp,
+	batchprocessimages/tools/resizeoptionsdialog.h,
+	batchprocessimages/ui/batchprocessimagesdialog.ui,
+	batchprocessimages/ui/imagepreview.ui,
+	batchprocessimages/ui/renameimagesbase.ui: move code to dedicated
+	sub folders.
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* advancedslideshow/CMakeLists.txt,
+	advancedslideshow/commoncontainer.cpp,
+	advancedslideshow/commoncontainer.h,
+	advancedslideshow/dialogs/slideshowconfig.cpp,
+	advancedslideshow/dialogs/slideshowconfig.h,
+	advancedslideshow/imageloadthread.cpp,
+	advancedslideshow/imageloadthread.h,
+	advancedslideshow/kbeffect.cpp, advancedslideshow/kbeffect.h,
+	advancedslideshow/kipiplugin_advancedslideshow.desktop,
+	advancedslideshow/listsounditems.cpp,
+	advancedslideshow/listsounditems.h,
+	advancedslideshow/playbackwidget.cpp,
+	advancedslideshow/playbackwidget.h,
+	advancedslideshow/plugin/commoncontainer.cpp,
+	advancedslideshow/plugin/commoncontainer.h,
+	advancedslideshow/plugin/imageloadthread.cpp,
+	advancedslideshow/plugin/imageloadthread.h,
+	advancedslideshow/plugin/kbeffect.cpp,
+	advancedslideshow/plugin/kbeffect.h,
+	advancedslideshow/plugin/kipiplugin_advancedslideshow.desktop,
+	advancedslideshow/plugin/plugin_advancedslideshow.cpp,
+	advancedslideshow/plugin/plugin_advancedslideshow.h,
+	advancedslideshow/plugin/screenproperties.cpp,
+	advancedslideshow/plugin/screenproperties.h,
+	advancedslideshow/plugin/slideshowloader.cpp,
+	advancedslideshow/plugin/slideshowloader.h,
+	advancedslideshow/plugin_advancedslideshow.cpp,
+	advancedslideshow/plugin_advancedslideshow.h,
+	advancedslideshow/screenproperties.cpp,
+	advancedslideshow/screenproperties.h,
+	advancedslideshow/slideplaybackwidget.cpp,
+	advancedslideshow/slideplaybackwidget.h,
+	advancedslideshow/slideshow.cpp, advancedslideshow/slideshow.h,
+	advancedslideshow/slideshowconfig.cpp,
+	advancedslideshow/slideshowconfig.h,
+	advancedslideshow/slideshowgl.cpp, advancedslideshow/slideshowgl.h,
+	advancedslideshow/slideshowkb.cpp, advancedslideshow/slideshowkb.h,
+	advancedslideshow/slideshowloader.cpp,
+	advancedslideshow/slideshowloader.h, advancedslideshow/volslider.h,
+	advancedslideshow/widgets/listsounditems.cpp,
+	advancedslideshow/widgets/listsounditems.h,
+	advancedslideshow/widgets/playbackwidget.cpp,
+	advancedslideshow/widgets/playbackwidget.h,
+	advancedslideshow/widgets/slideplaybackwidget.cpp,
+	advancedslideshow/widgets/slideplaybackwidget.h,
+	advancedslideshow/widgets/slideshow.cpp,
+	advancedslideshow/widgets/slideshow.h,
+	advancedslideshow/widgets/slideshowgl.cpp,
+	advancedslideshow/widgets/slideshowgl.h,
+	advancedslideshow/widgets/slideshowkb.cpp,
+	advancedslideshow/widgets/slideshowkb.h,
+	advancedslideshow/widgets/volslider.h: move source code to dedicated
+	sub-folders
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* advancedslideshow/CMakeLists.txt,
+	advancedslideshow/advanceddialog.cpp,
+	advancedslideshow/advanceddialog.h,
+	advancedslideshow/captiondialog.cpp,
+	advancedslideshow/captiondialog.h,
+	advancedslideshow/dialogs/advanceddialog.cpp,
+	advancedslideshow/dialogs/advanceddialog.h,
+	advancedslideshow/dialogs/captiondialog.cpp,
+	advancedslideshow/dialogs/captiondialog.h,
+	advancedslideshow/dialogs/maindialog.cpp,
+	advancedslideshow/dialogs/maindialog.h,
+	advancedslideshow/dialogs/soundtrackdialog.cpp,
+	advancedslideshow/dialogs/soundtrackdialog.h,
+	advancedslideshow/maindialog.cpp, advancedslideshow/maindialog.h,
+	advancedslideshow/soundtrackdialog.cpp,
+	advancedslideshow/soundtrackdialog.h: move dialogs to a dedicated
+	sub-folder
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* advancedslideshow/CMakeLists.txt,
+	advancedslideshow/advanceddialog.ui,
+	advancedslideshow/captiondialog.ui,
+	advancedslideshow/maindialog.ui,
+	advancedslideshow/playbackwidget.ui,
+	advancedslideshow/slideplaybackwidget.ui,
+	advancedslideshow/soundtrackdialog.ui,
+	advancedslideshow/ui/advanceddialog.ui,
+	advancedslideshow/ui/captiondialog.ui,
+	advancedslideshow/ui/maindialog.ui,
+	advancedslideshow/ui/playbackwidget.ui,
+	advancedslideshow/ui/slideplaybackwidget.ui,
+	advancedslideshow/ui/soundtrackdialog.ui: move ui files to a
+	dedicated sub-folder
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* jpeglossless/CMakeLists.txt, jpeglossless/actions.h,
+	jpeglossless/actionthread.cpp, jpeglossless/actionthread.h,
+	jpeglossless/convert2grayscale.cpp,
+	jpeglossless/convert2grayscale.h, jpeglossless/imageflip.cpp,
+	jpeglossless/imageflip.h, jpeglossless/imagerotate.cpp,
+	jpeglossless/imagerotate.h, jpeglossless/jinclude.h,
+	jpeglossless/jpegint.h, jpeglossless/jpegtransform.cpp,
+	jpeglossless/jpegtransform.h,
+	jpeglossless/kipiplugin_jpeglossless.desktop,
+	jpeglossless/libjpeg/jinclude.h, jpeglossless/libjpeg/jpegint.h,
+	jpeglossless/libjpeg/libjpeg62.README,
+	jpeglossless/libjpeg/transupp.cpp, jpeglossless/libjpeg/transupp.h,
+	jpeglossless/libjpeg/transupp.v6b.cpp,
+	jpeglossless/libjpeg/transupp.v7.cpp,
+	jpeglossless/libjpeg/transupp.v8a.cpp,
+	jpeglossless/libjpeg62.README, jpeglossless/plugin/actions.h,
+	jpeglossless/plugin/actionthread.cpp,
+	jpeglossless/plugin/actionthread.h,
+	jpeglossless/plugin/kipiplugin_jpeglossless.desktop,
+	jpeglossless/plugin/plugin_jpeglossless.cpp,
+	jpeglossless/plugin/plugin_jpeglossless.h,
+	jpeglossless/plugin/utils.cpp, jpeglossless/plugin/utils.h,
+	jpeglossless/plugin_jpeglossless.cpp,
+	jpeglossless/plugin_jpeglossless.h,
+	jpeglossless/transform/convert2grayscale.cpp,
+	jpeglossless/transform/convert2grayscale.h,
+	jpeglossless/transform/imageflip.cpp,
+	jpeglossless/transform/imageflip.h,
+	jpeglossless/transform/imagerotate.cpp,
+	jpeglossless/transform/imagerotate.h,
+	jpeglossless/transform/jpegtransform.cpp,
+	jpeglossless/transform/jpegtransform.h, jpeglossless/transupp.cpp,
+	jpeglossless/transupp.h, jpeglossless/transupp.v6b.cpp,
+	jpeglossless/transupp.v7.cpp, jpeglossless/transupp.v8a.cpp,
+	jpeglossless/utils.cpp, jpeglossless/utils.h: manage file by
+	functions in sub-folder.  polish source code more private internal
+	container
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/icons/oxygen/CMakeLists.txt,
+	expoblending/CMakeLists.txt, htmlexport/CMakeLists.txt,
+	printimages/CMakeLists.txt,
+	rawconverter/icons/oxygen/CMakeLists.txt: no need this rules here
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/icons/oxygen/CMakeLists.txt,
+	htmlexport/CMakeLists.txt, printimages/CMakeLists.txt,
+	rawconverter/icons/oxygen/CMakeLists.txt: .svn => .git
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/CMakeLists.txt, expoblending/aboutdata.h,
+	expoblending/expoblending.cpp, expoblending/expoblending.desktop,
+	expoblending/kipiplugin_expoblending.desktop,
+	expoblending/plugin/aboutdata.h,
+	expoblending/plugin/expoblending.cpp,
+	expoblending/plugin/expoblending.desktop,
+	expoblending/plugin/kipiplugin_expoblending.desktop,
+	expoblending/plugin/plugin_expoblending.cpp,
+	expoblending/plugin/plugin_expoblending.h,
+	expoblending/plugin_expoblending.cpp,
+	expoblending/plugin_expoblending.h: move plugin file to a dedicated
+	subfolder
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* batchprocessimages/batchprocessimagesdialog.cpp,
+	batchprocessimages/batchprocessimagesdialog.h,
+	dngconverter/plugin/aboutdata.h,
+	dngconverter/plugin/batchdialog.cpp,
+	dngconverter/plugin/batchdialog.h, rawconverter/actions.h,
+	rawconverter/actionthread.cpp, rawconverter/actionthread.h,
+	rawconverter/batchdialog.cpp, rawconverter/batchdialog.h,
+	rawconverter/clistviewitem.h, rawconverter/plugin_rawconverter.cpp,
+	rawconverter/plugin_rawconverter.h,
+	rawconverter/rawdecodingiface.cpp, rawconverter/rawdecodingiface.h,
+	rawconverter/singledialog.cpp, rawconverter/singledialog.h: original
+	and destination url are inverted when cloning data is processed.
+	BUGS: 267650 BUGS: 258202
+
+2011-03-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-03-13  Script Kiddy <scripty@kde.org>
+
+	* acquireimages/scangui.desktop,
+	common/libkipiplugins/kipiplugins.desktop,
+	debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	expoblending/expoblending.desktop,
+	expoblending/kipiplugin_expoblending.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	removeredeyes/kipiplugin_removeredeyes.desktop,
+	shwup/kipiplugin_shwup.desktop: SVN_SILENT made messages (.desktop
+	file)
+
+2011-03-12  Andi Clemens <andi.clemens@gmx.net>
+
+	* gpssync/setup.cpp, yandexfotki/yandexrsa.cpp: fix warnings
+
+2011-03-12  Andi Clemens <andi.clemens@gmx.net>
+
+	* debianscreenshots/dstalker.cpp, debianscreenshots/dstalker.h,
+	debianscreenshots/dswidget.cpp, debianscreenshots/dswindow.cpp,
+	debianscreenshots/dswindow.h, debianscreenshots/mpform.cpp,
+	debianscreenshots/plugin_debianscreenshots.cpp,
+	facebook/facebookjob.cpp, facebook/facebookjob.h,
+	facebook/fbalbum.cpp, facebook/fbalbum.h, facebook/fbtalker.cpp,
+	facebook/fbtalker.h, facebook/fbwidget.cpp, facebook/fbwindow.cpp,
+	facebook/fbwindow.h, facebook/mpform.cpp,
+	facebook/plugin_facebook.cpp, galleryexport/gallerytalker.h,
+	galleryexport/gallerywindow.h, gpssync/inputboxnocancel.h,
+	ipodexport/ImageList.cpp, ipodexport/IpodHeader.cpp,
+	ipodexport/IpodListItem.cpp, jpeglossless/convert2grayscale.h,
+	jpeglossless/imageflip.h, jpeglossless/imagerotate.h,
+	kioexportimport/KioExportWidget.h,
+	kioexportimport/KioExportWindow.h, kopete/plugin_kopete.cpp,
+	metadataedit/plugin_metadataedit.h,
+	picasawebexport/picasawebalbum.cpp,
+	picasawebexport/picasawebalbum.h,
+	picasawebexport/picasawebwidget.cpp,
+	picasawebexport/picasawebwindow.cpp,
+	picasawebexport/picasawebwindow.h, piwigoexport/piwigotalker.h,
+	piwigoexport/piwigowindow.h, project/kipicmd/main.cpp,
+	shwup/plugin_shwup.cpp, shwup/swalbum.cpp, shwup/swalbum.h,
+	shwup/swconnector.cpp, shwup/swconnector.h, shwup/swlogin.cpp,
+	shwup/swlogin.h, shwup/swwidget.cpp, shwup/swwindow.cpp,
+	shwup/swwindow.h, smug/plugin_smug.cpp, smug/smugalbum.cpp,
+	smug/smugalbum.h, smug/smugtalker.cpp, smug/smugtalker.h,
+	smug/smugwidget.cpp, smug/smugwindow.cpp, smug/smugwindow.h,
+	yandexfotki/plugin_yandexfotki.cpp,
+	yandexfotki/plugin_yandexfotki.h, yandexfotki/yfalbumdialog.cpp,
+	yandexfotki/yfalbumdialog.h, yandexfotki/yftalker.cpp,
+	yandexfotki/yfwindow.cpp, yandexfotki/yfwindow.h: Fix KDE includes
+	(compile warnings): kdebug and other macros are not working
+	correctly when using the "<KClass>" import style.
+
+2011-03-12  Andi Clemens <andi.clemens@gmx.net>
+
+	* gpssync/gpssync_common.h, yandexfotki/yfphoto.h,
+	yandexfotki/yftalker.h, yandexfotki/yfwindow.h: fix warnings
+
+2011-03-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flashexport/firstrundlg.cpp, flashexport/firstrundlg.h,
+	flashexport/generalpage.cpp, flashexport/generalpage.h,
+	flashexport/lookpage.cpp, flashexport/lookpage.h,
+	flashexport/plugin_flashexport.cpp,
+	flashexport/plugin_flashexport.h, flashexport/selectionpage.cpp,
+	flashexport/selectionpage.h, flashexport/simpleviewer.cpp,
+	flashexport/simpleviewer.h,
+	flashexport/simpleviewersettingscontainer.h,
+	flashexport/svedialog.cpp, flashexport/svedialog.h: more private
+	internal container include only moc files
+
+2011-03-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* acquireimages/aboutdata.h,
+	acquireimages/plugin_acquireimages.cpp,
+	acquireimages/plugin_acquireimages.h,
+	acquireimages/saveimgthread.cpp, acquireimages/saveimgthread.h,
+	acquireimages/scandialog.cpp, acquireimages/scandialog.h,
+	acquireimages/scangui.cpp: more private internal container no need
+	header files if moc is present
+
+2011-03-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/aboutdata.h,
+	expoblending/blendingdlg/bracketstack.cpp,
+	expoblending/blendingdlg/bracketstack.h,
+	expoblending/blendingdlg/enfusesettings.cpp,
+	expoblending/blendingdlg/enfusesettings.h,
+	expoblending/blendingdlg/enfusestack.cpp,
+	expoblending/blendingdlg/enfusestack.h,
+	expoblending/blendingdlg/expoblendingdlg.cpp,
+	expoblending/blendingdlg/expoblendingdlg.h,
+	expoblending/expoblending.cpp,
+	expoblending/importwizard/importwizarddlg.cpp,
+	expoblending/importwizard/importwizarddlg.h,
+	expoblending/importwizard/intropage.cpp,
+	expoblending/importwizard/intropage.h,
+	expoblending/importwizard/itemspage.cpp,
+	expoblending/importwizard/itemspage.h,
+	expoblending/importwizard/lastpage.cpp,
+	expoblending/importwizard/lastpage.h,
+	expoblending/importwizard/preprocessingpage.cpp,
+	expoblending/importwizard/preprocessingpage.h,
+	expoblending/manager/actions.h,
+	expoblending/manager/actionthread.cpp,
+	expoblending/manager/actionthread.h,
+	expoblending/manager/alignbinary.cpp,
+	expoblending/manager/alignbinary.h,
+	expoblending/manager/enfusebinary.cpp,
+	expoblending/manager/enfusebinary.h,
+	expoblending/manager/manager.cpp, expoblending/manager/manager.h,
+	expoblending/plugin_expoblending.cpp,
+	expoblending/plugin_expoblending.h: more private internal container
+
+2011-03-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* README: svn => git
+
+2011-03-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h: fix warnings
+
+2011-03-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* debianscreenshots/dsjob.cpp, debianscreenshots/dsjob.h,
+	debianscreenshots/dstalker.cpp, debianscreenshots/dswidget.cpp,
+	debianscreenshots/dswindow.cpp,
+	debianscreenshots/plugin_debianscreenshots.h: no need header files
+	if moc exist polish
+
+2011-03-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* calendar/calpainter.cpp, calendar/calpainter.h,
+	calendar/calprinter.cpp, calendar/calprinter.h,
+	calendar/calselect.cpp, calendar/calselect.h,
+	calendar/calsettings.cpp, calendar/calsettings.h,
+	calendar/caltemplate.cpp, calendar/caltemplate.h,
+	calendar/calwidget.cpp, calendar/calwidget.h,
+	calendar/calwizard.cpp, calendar/calwizard.h,
+	calendar/monthwidget.cpp, calendar/monthwidget.h,
+	calendar/plugin_calendar.cpp, calendar/plugin_calendar.h: polish
+	implementation.  Remove header if moc files exist
+
+2011-03-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/release/README, project/release/config.ini,
+	project/release/create_tarball.rb, project/release/kipi-plugins.rb,
+	project/release/kipi-pluginsrc, project/release/lib/config.rb,
+	project/release/lib/core.rb, project/release/lib/doc.rb,
+	project/release/lib/kdialog.rb, project/release/lib/l10n.rb,
+	project/release/lib/l10ncore.rb, project/release/lib/l10nstat.rb,
+	project/release/lib/optparse.rb, project/release/lib/query.rb,
+	project/release/lib/release.rb,
+	project/release/lib/releasedigikamkipi.rb,
+	project/release/lib/starter.rb, project/release/lib/tag.rb,
+	project/release/lib/vcs-git.rb, project/release/lib/vcs-svn.rb: 
+	update
+
+2011-03-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flickrexport/comboboxdelegate.cpp,
+	flickrexport/comboboxdelegate.h,
+	flickrexport/comboboxintermediate.cpp,
+	flickrexport/comboboxintermediate.h, flickrexport/flickritem.h,
+	flickrexport/flickrlist.cpp, flickrexport/flickrtalker.cpp,
+	flickrexport/flickrtalker.h, flickrexport/flickrwidget.cpp,
+	flickrexport/flickrwindow.cpp, flickrexport/login.cpp,
+	flickrexport/plugin_flickrexport.cpp: polish implementation.  Fix
+	indent.  remove header if moc is included.
+
+2011-03-08  Script Kiddy <scripty@kde.org>
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-03-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-03-06  Script Kiddy <scripty@kde.org>
+
+	* yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-03-05  Jens Mueller <tschenser@gmx.de>
+
+	* dngconverter/dngwriter/dngwriter.cpp: code cleanup
+
+2011-03-04  Script Kiddy <scripty@kde.org>
+
+	* yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-03-03  Script Kiddy <scripty@kde.org>
+
+	* yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-03-02  Montel Laurent <montel@kde.org>
+
+	* gpssync/kipiimagemodel.cpp: Fix mem leak
+
+2011-03-02  Montel Laurent <montel@kde.org>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpssyncdialog.cpp: 
+	Add missing i18n
+
+2011-03-02  Montel Laurent <montel@kde.org>
+
+	* gpssync/borrowed-future/kmodelindexproxymapper.cpp,
+	gpssync/borrowed-future/kmodelindexproxymapper.h: Fix mem leak
+
+2011-03-02  Montel Laurent <montel@kde.org>
+
+	* yandexfotki/yfwindow.cpp, yandexfotki/yfwindow.h: Const'ify
+
+2011-03-02  Montel Laurent <montel@kde.org>
+
+	* yandexfotki/logindialog.cpp: tr(...) -> i18n(...)
+
+2011-03-02  Script Kiddy <scripty@kde.org>
+
+	* gpssync/kipiplugin_gpssync.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-03-02  Yuri Chornoivan <yurchor@ukr.net>
+
+	* yandexfotki/yfwindow.cpp: fix formatting
+
+2011-03-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS, project/NEWS.2.0.0-beta3: restore
+
+2011-03-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/NEWS.2.0.0-beta3: update
+
+2011-03-01  Jens Mueller <tschenser@gmx.de>
+
+	* dngconverter/dngwriter/dngwriter.cpp,
+	dngconverter/plugin/aboutdata.h: add canon sraw to linear dng
+	conversion BUGS: 260754
+
+2011-03-01  Michael Georg Hansen <mike@mghansen.de>
+
+	* : commit a3f72cb598b8c128717239cf1237981f86eebb76 Author: Michael
+	Georg Hansen <mike@mghansen.de> Date:   Tue Mar 1 21:55:13 2011
+	+0100
+
+2011-03-01  Marcel Wiesweg <marcel.wiesweg@gmx.de>
+
+	* : commit 3d9c943ac5d2d45eaef9571221987b2ace7a2490 Author: Michael
+	Georg Hansen <mike@mghansen.de> Date:   Tue Mar 1 20:38:16 2011
+	+0100
+
+2011-02-28  Script Kiddy <scripty@kde.org>
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	acquireimages/scangui.desktop,
+	debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	printimages/templates/4_photos_4.5x5cm.desktop,
+	printimages/templates/6_photos_3.5x4cm.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-02-28  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.1.9.0: Update changelog Add
+	project/NEWS.1.9.0
+
+2011-02-27  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* CMakeLists.txt, NEWS: Open for 2.0.0-beta4
+
+2011-02-27  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog: Fix Changelog
+
+2011-02-27  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.0.0-beta3: Update Changelog Add
+	project/NEWS.2.0.0-beta3
+
 2.0.0-beta3 2011-02-27
 
 2011-02-27  Michael Georg Hansen <mike@mghansen.de>
