@@ -60,7 +60,7 @@ WMWindow::WMWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_tmpDir    = tmpFolder;
     m_interface = interface;
     m_widget    = new WmWidget(this, interface);
-    m_uploadJob = NULL;
+    m_uploadJob = 0;
     m_login     = QString();
     m_pass      = QString();
 
@@ -85,9 +85,12 @@ WMWindow::WMWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_about->addAuthor(ki18n("Alexandre Mendes"), ki18n("Author"),
                        "alex dot mendes1988 at gmail dot com");
 
+    m_about->addAuthor(ki18n("Guillaume Hormiere"), ki18n("Developer"),
+                       "hormiere dot guillaume at gmail dot com");
+
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
