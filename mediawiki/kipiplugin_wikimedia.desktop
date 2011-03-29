@@ -2,12 +2,16 @@
 Encoding=UTF-8
 Name=Wikimedia Export
 Name[ca]=Exportació a Wikimedia
+Name[et]=Wikimedia eksport
+Name[it]=Esportazione a Wikimedia
 Name[pt]=Exportação para o Wikimedia
 Name[pt_BR]=Exportar para o Wikimedia
 Name[uk]=Експорт до Wikimedia
 Name[x-test]=xxWikimedia Exportxx
 Comment=A tool to export images to a remote Wikimedia web service
 Comment[ca]=Una eina per exportar imatges a un servei web remot Wikimedia
+Comment[et]=Tööriist piltide eksportimiseks Wikimedia veebiteenusesse
+Comment[it]=Uno strumento per esportare immagini al servizio Web remoto Wikimedia
 Comment[pt]=Uma ferramenta de exportação de imagens para um serviço Web remoto do Wikimedia
 Comment[pt_BR]=Uma ferramenta para exportar imagens para um serviço remoto da Internet Wikimedia
 Comment[uk]=Інструмент для експорту зображень до віддаленої служби Wikimedia
