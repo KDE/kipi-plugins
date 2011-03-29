@@ -78,8 +78,8 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     QWidget* tab1Box               = new QWidget(this);
     QWidget* tab2Box               = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(tab1Box);
-    m_tabBar->addTab(tab1Box, "Account");
-    m_tabBar->addTab(tab2Box, "Options");
+    m_tabBar->addTab(tab1Box, i18n("Account"));
+    m_tabBar->addTab(tab2Box, i18n("Options"));
 
     m_headerLbl = new QLabel(tab1Box);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Wikimedia home page in a web browser."));
