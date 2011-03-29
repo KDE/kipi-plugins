@@ -78,8 +78,8 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     QWidget* tab1Box               = new QWidget(this);
     QWidget* tab2Box               = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(tab1Box);
-    m_tabBar->addTab(tab1Box,"Account");
-    m_tabBar->addTab(tab2Box,"Options");
+    m_tabBar->addTab(tab1Box, "Account");
+    m_tabBar->addTab(tab2Box, "Options");
 
     m_headerLbl = new QLabel(tab1Box);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Wikimedia home page in a web browser."));
@@ -101,16 +101,16 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_wikiSelect->addItem(QString("en wikipedia"),   QUrl("http://en.wikipedia.org/w/api.php"));
     m_wikiSelect->addItem(QString("fr wikipedia"),   QUrl("http://fr.wikipedia.org/w/api.php"));
 
-    QLabel* nameLabel = new QLabel(m_loginBox);
+    QLabel* nameLabel     = new QLabel(m_loginBox);
     nameLabel->setText(i18n( "Wiki Login:" ));
 
-    QLabel* passwdLabel = new QLabel(m_loginBox);
+    QLabel* passwdLabel   = new QLabel(m_loginBox);
     passwdLabel->setText(i18n("Password:"));
 
-    QLabel* wikiLabel = new QLabel(m_loginBox);
+    QLabel* wikiLabel     = new QLabel(m_loginBox);
     wikiLabel->setText(i18n("Wiki:"));
 
-    QPushButton *loginBtn     = new QPushButton(m_loginBox);
+    QPushButton *loginBtn = new QPushButton(m_loginBox);
     loginBtn->setAutoDefault(true);
     loginBtn->setDefault(true);
     loginBtn->setText(i18n("&OK"));
@@ -130,7 +130,7 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_accountBox->setWhatsThis(i18n("This is the Wikimedia account that is currently logged in."));
     QGridLayout* accountBoxLayout = new QGridLayout(m_accountBox);
 
-    QLabel *userNameLbl  = new QLabel(i18nc("Wikimedia account settings", "Account:"), m_accountBox);
+    QLabel* userNameLbl  = new QLabel(i18nc("Wikimedia account settings", "Account:"), m_accountBox);
     m_userNameDisplayLbl = new QLabel(m_accountBox);
     m_changeUserBtn      = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
                                i18n("Logout and change Wikimedia Account used for transfer")),
@@ -209,11 +209,11 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
-    optionsBoxLayout->addWidget(m_resizeChB,        0, 0, 1, 5);
-    optionsBoxLayout->addWidget(imageQualityLbl,    1, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_imageQualitySpB,  1, 2, 1, 1);
-    optionsBoxLayout->addWidget(dimensionLbl,       2, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_dimensionSpB,     2, 2, 1, 1);
+    optionsBoxLayout->addWidget(m_resizeChB,       0, 0, 1, 2);
+    optionsBoxLayout->addWidget(imageQualityLbl,   1, 1, 1, 1);
+    optionsBoxLayout->addWidget(m_imageQualitySpB, 1, 2, 1, 1);
+    optionsBoxLayout->addWidget(dimensionLbl,      2, 1, 1, 1);
+    optionsBoxLayout->addWidget(m_dimensionSpB,    2, 2, 1, 1);
     optionsBoxLayout->setRowStretch(3, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
