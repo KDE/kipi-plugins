@@ -91,16 +91,18 @@ void WikiMediaJob::uploadHandle(KJob* j)
             }
         }
     }
-    //upload next image
+
+    // upload next image
     if(m_imageDesc.size() > 0)
     {
         QMap<QString,QString> info = m_imageDesc.takeFirst();
-        mediawiki::Upload * e1     = new mediawiki::Upload( *m_mediawiki, this);
+        mediawiki::Upload* e1      = new mediawiki::Upload( *m_mediawiki, this);
 
         kDebug() << "image path : " << info["url"].remove("file://");
         QFile* file = new QFile(info["url"].remove("file://"),this);
         file->open(QIODevice::ReadOnly);
         //emit fileUploadProgress(done = 0, total file.size());
+
         e1->setFile(file);
         m_currentFile=file->fileName();
         kDebug() << "image name : " << file->fileName().split("/").last();
@@ -109,6 +111,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
 
         connect(e1, SIGNAL(result(KJob* )),
                 this, SLOT(uploadHandle(KJob*)));
+
         connect(e1, SIGNAL(percent(KJob *, unsigned long)),
                 this, SLOT(slotUploadProgress(KJob*, ulong)));
 
