@@ -100,7 +100,7 @@ void Plugin_WikiMedia::slotExport()
     }
 
     KStandardDirs dir;
-    QString tmp = dir.saveLocation("tmp", QString("kipi-wm-") + QString::number(getpid()) + QString("/"));
+    QString tmp = dir.saveLocation("tmp", QString("kipi-mediawiki-") + QString::number(getpid()) + QString("/"));
 
     if (!m_dlgExport)
     {

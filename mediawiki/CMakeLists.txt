@@ -10,7 +10,6 @@ SET(kipiplugin_wikimedia_PART_SRCS
     wmwidget.cpp
     wikimediajob.cpp
     wmwidget.cpp
-    wmlogin.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_wikimedia ${kipiplugin_wikimedia_PART_SRCS} ${ui_src})

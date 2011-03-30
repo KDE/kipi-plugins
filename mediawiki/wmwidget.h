@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to WikiMedia web service
  *
  * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,13 +27,13 @@
 // Qt includes
 
 #include <QWidget>
-#include <QGroupBox>
 #include <QTextEdit>
 
 //KDE includes
 
 #include <KLineEdit>
 #include <KTextEdit>
+#include <KConfig>
 
 class QLabel;
 class QSpinBox;
@@ -40,10 +41,13 @@ class QCheckBox;
 class QButtonGroup;
 class QProgressBar;
 class QTabWidget;
-class KComboBox;
-class KPushButton;
 class QComboBox;
 class QLineEdit;
+
+class KVBox;
+class KHBox;
+class KComboBox;
+class KPushButton;
 
 namespace KIPI
 {
@@ -54,6 +58,11 @@ namespace KIPI
 namespace KIPIPlugins
 {
     class ImagesList;
+}
+
+namespace KDcrawIface
+{
+    class RExpanderBox;
 }
 
 namespace KIPIWikiMediaPlugin
@@ -88,6 +97,9 @@ public:
     QString licence();
     QString description();
 
+    void readSettings(KConfigGroup& group);
+    void saveSettings(KConfigGroup& group);
+
 Q_SIGNALS:
 
     void signalChangeUserRequest();
@@ -101,32 +113,33 @@ private Q_SLOTS:
 
 private:
 
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
+    KVBox*                     m_userBox;
+    QWidget*                   m_loginBox;
+    QLabel*                    m_loginHeaderLbl;
+    KLineEdit*                 m_nameEdit;
+    KLineEdit*                 m_passwdEdit;
+    QComboBox*                 m_wikiSelect;
 
-    QGroupBox*               m_loginBox;
-    QLabel*                  m_loginHeaderLbl;
-    KLineEdit*               m_nameEdit;
-    KLineEdit*               m_passwdEdit;
-    QComboBox*               m_wikiSelect;
+    QWidget*                   m_textBox;
+    QTextEdit*                 m_descriptionEdit;
+    KLineEdit*                 m_authorEdit;
 
-    QGroupBox*               m_textBox;
-    QTextEdit*               m_descriptionEdit;
-    KLineEdit*               m_authorEdit;
+    KHBox*                     m_accountBox;
+    QLabel*                    m_headerLbl;
+    QLabel*                    m_userNameDisplayLbl;
+    KPushButton*               m_changeUserBtn;
 
-    QGroupBox*               m_accountBox;
-    QLabel*                  m_headerLbl;
-    QLabel*                  m_userNameDisplayLbl;
-    KPushButton*             m_changeUserBtn;
+    QWidget*                   m_optionsBox;
+    QCheckBox*                 m_resizeChB;
+    QSpinBox*                  m_dimensionSpB;
+    QSpinBox*                  m_imageQualitySpB;
+    QComboBox*                 m_licenceComboBox;
 
-    QCheckBox*               m_resizeChB;
-    QSpinBox*                m_dimensionSpB;
-    QSpinBox*                m_imageQualitySpB;
-    QComboBox*               m_licenceComboBox;
+    QProgressBar*              m_progressBar;
 
-    QProgressBar*            m_progressBar;
-
-    QTabWidget*              m_tabBar;
+    KDcrawIface::RExpanderBox* m_settingsExpander;
+    KIPIPlugins::ImagesList*   m_imgList;
+    KIPI::UploadWidget*        m_uploadWidget;
 
     friend class WmWindow;
 };

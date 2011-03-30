@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to WikiMedia web service
  *
  * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,6 +37,8 @@
 #include <libmediawiki/login.h>
 #include <libmediawiki/mediawiki.h>
 
+class QCloseEvent;
+
 namespace KIPI
 {
     class Interface;
@@ -59,38 +62,43 @@ class WMWindow : public KDialog
 
 public:
 
-   WMWindow(KIPI::Interface* interface, const QString& tmpFolder,
-            QWidget* parent);
-   ~WMWindow();
+    WMWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
+    ~WMWindow();
 
-   void reactivate();
-   int runLWindow();
+    void reactivate();
 
 private Q_SLOTS:
 
-   void slotHelp();
-   void slotStartTransfer();
-   void slotChangeUserClicked();
-   void slotDoLogin(const QString& login, const QString& pass, const QUrl& wiki);
-   int loginHandle(KJob* loginJob);
-   void slotEndUpload();
+    void slotHelp();
+    void slotStartTransfer();
+    void slotChangeUserClicked();
+    void slotDoLogin(const QString& login, const QString& pass, const QUrl& wiki);
+    void slotEndUpload();
+    int  loginHandle(KJob* loginJob);
 
 private:
 
-   QString                            m_tmpDir;
-   QString                            m_tmpPath;
-   QString                            m_login;
-   QString                            m_pass;
-   QUrl                               m_wiki;
+    void closeEvent(QCloseEvent*);
+    void readSettings();
+    void saveSettings();
 
-   WmWidget*                          m_widget;
-   mediawiki::MediaWiki*              m_mediawiki;
+private:
 
-   KIPI::Interface*                   m_interface;
-   KIPIPlugins::KPAboutData*          m_about;
-   KIPIWikiMediaPlugin::WmLogin*      m_dlgLoginExport;
-   KIPIWikiMediaPlugin::WikiMediaJob* m_uploadJob;
+    QString                            m_tmpDir;
+    QString                            m_tmpPath;
+    QString                            m_login;
+    QString                            m_pass;
+    QUrl                               m_wiki;
+
+    WmWidget*                          m_widget;
+    mediawiki::MediaWiki*              m_mediawiki;
+
+    KIPI::Interface*                   m_interface;
+    KIPIPlugins::KPAboutData*          m_about;
+    KIPIWikiMediaPlugin::WmLogin*      m_dlgLoginExport;
+    KIPIWikiMediaPlugin::WikiMediaJob* m_uploadJob;
 };
 
-}
+} // namespace KIPIWikiMediaPlugin
+
 #endif // WMWINDOW_H

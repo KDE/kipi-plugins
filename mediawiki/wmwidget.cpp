@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to wikimedia commons
  *
  * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,10 +38,12 @@
 #include <QTabWidget>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QScrollArea>
 
 // KDE includes
 
 #include <kdebug.h>
+#include <kvbox.h>
 #include <KLocale>
 #include <KDialog>
 #include <KComboBox>
@@ -52,9 +55,15 @@
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
+// libKdcraw includes
+
+#include <libkdcraw/rexpanderbox.h>
+
 // Local includes
 
 #include "imageslist.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIWikiMediaPlugin
 {
@@ -74,21 +83,28 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Wikimedia account."));
 
-    m_tabBar                       = new QTabWidget(this);
-    QWidget* tab1Box               = new QWidget(this);
-    QWidget* tab2Box               = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(tab1Box);
-    m_tabBar->addTab(tab1Box, i18n("Account"));
-    m_tabBar->addTab(tab2Box, i18n("Options"));
+    // ------------------------------------------------------------------------
 
-    m_headerLbl = new QLabel(tab1Box);
+    QScrollArea* sv = new QScrollArea(this);
+    KVBox* panel    = new KVBox(sv->viewport());
+    panel->setAutoFillBackground(false);
+    sv->setWidget(panel);
+    sv->setWidgetResizable(true);
+    sv->setAutoFillBackground(false);
+    sv->viewport()->setAutoFillBackground(false);
+
+    m_headerLbl = new QLabel(panel);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Wikimedia home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
+    m_settingsExpander = new RExpanderBox(panel);
+    m_settingsExpander->setObjectName("MediaWiki Settings Expander");
+
     // ------------------------------------------------------------------------
 
-    m_loginBox = new QGroupBox(i18n("Login"), tab1Box);
+    m_userBox    = new KVBox(panel);
+    m_loginBox   = new QWidget(m_userBox);
     m_loginBox->setWhatsThis(i18n("This is the login form to your Wikimedia account."));
     QGridLayout* loginBoxLayout = new QGridLayout(m_loginBox);
 
@@ -110,52 +126,50 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     QLabel* wikiLabel     = new QLabel(m_loginBox);
     wikiLabel->setText(i18n("Wiki:"));
 
-    QPushButton *loginBtn = new QPushButton(m_loginBox);
+    QPushButton* loginBtn = new QPushButton(m_loginBox);
     loginBtn->setAutoDefault(true);
     loginBtn->setDefault(true);
-    loginBtn->setText(i18n("&OK"));
+    loginBtn->setText(i18n("&Loggin"));
 
-    loginBoxLayout->addWidget(m_nameEdit,   0, 1);
-    loginBoxLayout->addWidget(m_passwdEdit, 1, 1);
-    loginBoxLayout->addWidget(m_wikiSelect, 2, 1);
-    loginBoxLayout->addWidget(nameLabel,    0, 0);
-    loginBoxLayout->addWidget(passwdLabel,  1, 0);
-    loginBoxLayout->addWidget(wikiLabel,    2, 0);
-    loginBoxLayout->addWidget(loginBtn, 3, 0);
+    loginBoxLayout->addWidget(nameLabel,    0, 0, 1, 1);
+    loginBoxLayout->addWidget(m_nameEdit,   0, 1, 1, 1);
+    loginBoxLayout->addWidget(m_passwdEdit, 1, 1, 1, 1);
+    loginBoxLayout->addWidget(m_wikiSelect, 2, 1, 1, 1);
+    loginBoxLayout->addWidget(passwdLabel,  1, 0, 1, 1);
+    loginBoxLayout->addWidget(wikiLabel,    2, 0, 1, 1);
+    loginBoxLayout->addWidget(loginBtn,     3, 0, 1, 1);
     loginBoxLayout->setObjectName("m_loginBoxLayout");
 
-    // ------------------------------------------------------------------------
-
-    m_accountBox                  = new QGroupBox(i18n("Account"), tab1Box);
+    m_accountBox         = new KHBox(m_userBox);
     m_accountBox->setWhatsThis(i18n("This is the Wikimedia account that is currently logged in."));
-    QGridLayout* accountBoxLayout = new QGridLayout(m_accountBox);
 
-    QLabel* userNameLbl  = new QLabel(i18nc("Wikimedia account settings", "Account:"), m_accountBox);
+    QLabel* userNameLbl  = new QLabel(m_accountBox);
+    userNameLbl->setText(i18nc("Wikimedia account settings", "Logged as: "));
     m_userNameDisplayLbl = new QLabel(m_accountBox);
+    QLabel* space        = new QLabel(m_accountBox);
     m_changeUserBtn      = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
                                i18n("Logout and change Wikimedia Account used for transfer")),
                                m_accountBox);
+    m_accountBox->setStretchFactor(space, 10);
+    m_accountBox->hide();
 
-    accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
-    accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
-    accountBoxLayout->addWidget(m_changeUserBtn,        2, 0, 1, 2);
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+    m_settingsExpander->addItem(m_userBox, i18n("Account"), QString("account"), true);
+    m_settingsExpander->setItemIcon(0, SmallIcon("user-properties"));
 
     // ------------------------------------------------------------------------
 
-    m_textBox                  = new QGroupBox(i18n("Text"), tab1Box);
+    m_textBox                  = new QWidget(panel);
     m_textBox->setWhatsThis(i18n("This is the login form to your Wikimedia account."));
     QGridLayout* textBoxLayout = new QGridLayout(m_textBox);
 
-    QLabel * desc     = new QLabel(i18n("Description:"), m_textBox);
+    QLabel* desc      = new QLabel(i18n("Description:"), m_textBox);
     m_descriptionEdit = new QTextEdit(m_textBox);
 
-    QLabel * aut = new QLabel(i18n("Author:"), m_textBox);
+    QLabel* aut  = new QLabel(i18n("Author:"), m_textBox);
     m_authorEdit = new KLineEdit(m_textBox);
 
-    QLabel * licenceLabel = new QLabel(i18n("License:"), m_textBox);
-    m_licenceComboBox     = new QComboBox(m_textBox);
+    QLabel* licenceLabel = new QLabel(i18n("License:"), m_textBox);
+    m_licenceComboBox    = new QComboBox(m_textBox);
 
     m_licenceComboBox->addItem(QString("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), QString("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
     m_licenceComboBox->addItem(QString("Own work, multi-license with CC-BY-SA-3.0 and older"), QString("{{self|cc-by-sa-3.0,2.5,2.0,1.0}}"));
@@ -169,75 +183,66 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_licenceComboBox->addItem(QString("Simple typefaces, individual words or geometric shapes"), QString("{{PD-text}}"));
     m_licenceComboBox->addItem(QString("Logos with only simple typefaces, individual words or geometric shapes"), QString("{{PD-textlogo}}"));
 
-    accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
-    accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
-    accountBoxLayout->addWidget(m_changeUserBtn,        2, 0, 1, 2);
-    textBoxLayout->addWidget(desc,                      0, 0, 1, 1);
-    textBoxLayout->addWidget(m_descriptionEdit,         0, 2, 1, 2);
-    textBoxLayout->addWidget(aut,                       1, 0, 1, 1);
-    textBoxLayout->addWidget(m_authorEdit,              1, 2, 1, 2);
-    textBoxLayout->addWidget(licenceLabel,              3, 0, 1, 1);
-    textBoxLayout->addWidget(m_licenceComboBox,         3, 2, 1, 2);
+    textBoxLayout->addWidget(desc,              0, 0, 1, 1);
+    textBoxLayout->addWidget(m_descriptionEdit, 0, 2, 1, 2);
+    textBoxLayout->addWidget(aut,               1, 0, 1, 1);
+    textBoxLayout->addWidget(m_authorEdit,      1, 2, 1, 2);
+    textBoxLayout->addWidget(licenceLabel,      3, 0, 1, 1);
+    textBoxLayout->addWidget(m_licenceComboBox, 3, 2, 1, 2);
     textBoxLayout->setObjectName("m_textBoxLayout");
-    accountBoxLayout->setSpacing(KDialog::spacingHint());
-    accountBoxLayout->setMargin(KDialog::spacingHint());
+
+    m_settingsExpander->addItem(m_textBox, i18n("Information"), QString("information"), true);
+    m_settingsExpander->setItemIcon(1, SmallIcon("document-properties"));
 
     //------------------------------------------------------------------------------------
 
-    QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), tab2Box);
-    optionsBox->setWhatsThis(i18n("These are options that will be applied to photos before upload."));
-    QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
+    m_optionsBox                  = new QWidget(panel);
+    m_optionsBox->setWhatsThis(i18n("These are options that will be applied to photos before upload."));
+    QGridLayout* optionsBoxLayout = new QGridLayout(m_optionsBox);
 
-    m_resizeChB = new QCheckBox(optionsBox);
+    m_resizeChB = new QCheckBox(m_optionsBox);
     m_resizeChB->setText(i18n("Resize photos before uploading"));
     m_resizeChB->setChecked(false);
 
-    m_dimensionSpB = new QSpinBox(optionsBox);
+    m_dimensionSpB = new QSpinBox(m_optionsBox);
     m_dimensionSpB->setMinimum(0);
     m_dimensionSpB->setMaximum(5000);
     m_dimensionSpB->setSingleStep(10);
     m_dimensionSpB->setValue(600);
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpB->setEnabled(false);
-    QLabel* dimensionLbl = new QLabel(i18n("Maximum size:"), optionsBox);
+    QLabel* dimensionLbl = new QLabel(i18n("Maximum size:"), m_optionsBox);
 
-    m_imageQualitySpB = new QSpinBox(optionsBox);
+    m_imageQualitySpB = new QSpinBox(m_optionsBox);
     m_imageQualitySpB->setMinimum(0);
     m_imageQualitySpB->setMaximum(100);
     m_imageQualitySpB->setSingleStep(1);
     m_imageQualitySpB->setValue(85);
     m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
+    QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), m_optionsBox);
 
     optionsBoxLayout->addWidget(m_resizeChB,       0, 0, 1, 2);
-    optionsBoxLayout->addWidget(imageQualityLbl,   1, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_imageQualitySpB, 1, 2, 1, 1);
-    optionsBoxLayout->addWidget(dimensionLbl,      2, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_dimensionSpB,    2, 2, 1, 1);
+    optionsBoxLayout->addWidget(imageQualityLbl,   1, 0, 1, 1);
+    optionsBoxLayout->addWidget(m_imageQualitySpB, 1, 1, 1, 1);
+    optionsBoxLayout->addWidget(dimensionLbl,      2, 0, 1, 1);
+    optionsBoxLayout->addWidget(m_dimensionSpB,    2, 1, 1, 1);
     optionsBoxLayout->setRowStretch(3, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
-    m_progressBar = new QProgressBar(tab1Box);
+    m_settingsExpander->addItem(m_optionsBox, i18n("Options"), QString("options"), true);
+    m_settingsExpander->setItemIcon(2, SmallIcon("system-run"));
+
+    // ------------------------------------------------------------------------
+
+    m_progressBar = new QProgressBar(panel);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
     // ------------------------------------------------------------------------
 
-    settingsBoxLayout->addWidget(m_headerLbl);
-    settingsBoxLayout->addWidget(m_loginBox);
-    settingsBoxLayout->addWidget(m_accountBox);
-    settingsBoxLayout->addWidget(m_textBox);
-    settingsBoxLayout->addWidget(m_progressBar);
-    settingsBoxLayout->setSpacing(KDialog::spacingHint());
-    settingsBoxLayout->setMargin(KDialog::spacingHint());
-
-    m_accountBox->hide();
-
-    // ------------------------------------------------------------------------
-
     mainLayout->addWidget(m_imgList);
-    mainLayout->addWidget(m_tabBar);
+    mainLayout->addWidget(sv);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
@@ -257,6 +262,23 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
 
 WmWidget::~WmWidget()
 {
+}
+
+void WmWidget::readSettings(KConfigGroup& group)
+{
+    m_settingsExpander->readSettings();
+    m_resizeChB->setChecked(group.readEntry("Resize", false));
+    m_dimensionSpB->setValue(group.readEntry("Dimension", 600));
+    m_imageQualitySpB->setValue(group.readEntry("Quality", 85));
+    slotResizeChecked();
+}
+
+void WmWidget::saveSettings(KConfigGroup& group)
+{
+    m_settingsExpander->writeSettings();
+    group.writeEntry("Resize", m_resizeChB->isChecked());
+    group.readEntry("Dimension", m_dimensionSpB->value());
+    group.readEntry("Quality", m_imageQualitySpB->value());
 }
 
 KIPIPlugins::ImagesList* WmWidget::imagesList() const
@@ -330,6 +352,7 @@ QString WmWidget::description()
     kDebug() << "WmWidget::description()";
     return this->m_descriptionEdit->toPlainText();
 }
+
 QString WmWidget::licence()
 {
     kDebug() << "WmWidget::licence()";
