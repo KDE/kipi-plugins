@@ -44,6 +44,10 @@
 #include <KToolInvocation>
 #include <KMessageBox>
 
+// Mediawiki includes
+
+#include <libmediawiki/version.h>
+
 // Local includes
 
 #include "kpaboutdata.h"
@@ -80,7 +84,8 @@ WMWindow::WMWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
     m_about = new KIPIPlugins::KPAboutData(ki18n("WikiMedia Commons Export"), 0,
                                KAboutData::License_GPL,
                                ki18n("A Kipi plugin to export image collection "
-                                     "to WikiMedia Commons."),
+                                     "to WikiMedia Commons.\n"
+                                     "Using libmediawiki version %1").subs(QString(mediawiki_version)),
                                ki18n("(c) 2011, Alexandre Mendes"));
 
     m_about->addAuthor(ki18n("Alexandre Mendes"), ki18n("Author"),
