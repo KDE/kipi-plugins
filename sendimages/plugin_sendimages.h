@@ -6,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,12 +36,9 @@ class QObject;
 
 class KAction;
 
-class Plugin_SendImagesPriv;
-
 class Plugin_SendImages : public KIPI::Plugin
 {
-
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -61,6 +58,7 @@ private Q_SLOTS:
 
 private:
 
+    class Plugin_SendImagesPriv;
     Plugin_SendImagesPriv* const d;
 };
 

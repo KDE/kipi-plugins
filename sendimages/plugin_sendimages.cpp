@@ -6,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,7 +48,7 @@ K_EXPORT_PLUGIN ( SendImagesFactory("kipiplugin_sendimages") )
 
 using namespace KIPISendimagesPlugin;
 
-class Plugin_SendImagesPriv
+class Plugin_SendImages::Plugin_SendImagesPriv
 {
 public:
 
@@ -59,14 +59,14 @@ public:
         sendImagesOperation = 0;
     }
 
-    KAction          *action_sendimages;
+    KAction*          action_sendimages;
 
-    SendImagesDialog *dialog;
+    SendImagesDialog* dialog;
 
-    SendImages       *sendImagesOperation;
+    SendImages*       sendImagesOperation;
 };
 
-Plugin_SendImages::Plugin_SendImages(QObject *parent, const QVariantList&)
+Plugin_SendImages::Plugin_SendImages(QObject* parent, const QVariantList&)
                  : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
                    d(new Plugin_SendImagesPriv)
 {

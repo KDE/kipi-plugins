@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : a dialog to edit EXIF metadata
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2006 by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006 by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *
@@ -57,7 +57,7 @@
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesDialogPrivate
+class SendImagesDialog::SendImagesDialogPrivate
 {
 
 public:
@@ -71,18 +71,18 @@ public:
         emailPage   = 0;
     }
 
-    KPageWidgetItem          *page_images;
-    KPageWidgetItem          *page_email;
+    KPageWidgetItem*          page_images;
+    KPageWidgetItem*          page_email;
 
     KUrl::List                urls;
 
-    ImagesPage               *imagesPage;
-    EmailPage                *emailPage;
+    ImagesPage*               imagesPage;
+    EmailPage*                emailPage;
 
-    KIPIPlugins::KPAboutData *about;
+    KIPIPlugins::KPAboutData* about;
 };
 
-SendImagesDialog::SendImagesDialog(QWidget* /*parent*/, KIPI::Interface *iface, const KUrl::List& urls)
+SendImagesDialog::SendImagesDialog(QWidget* /*parent*/, KIPI::Interface* iface, const KUrl::List& urls)
                 : KPageDialog(0), d(new SendImagesDialogPrivate)
 {
     d->urls = urls;
@@ -113,7 +113,7 @@ SendImagesDialog::SendImagesDialog(QWidget* /*parent*/, KIPI::Interface *iface, 
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A plugin to email pictures"),
-                                            ki18n("(c) 2003-2009, Gilles Caulier"));
+                                            ki18n("(c) 2003-2011, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
@@ -129,7 +129,7 @@ SendImagesDialog::SendImagesDialog(QWidget* /*parent*/, KIPI::Interface *iface, 
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -142,6 +142,9 @@ SendImagesDialog::SendImagesDialog(QWidget* /*parent*/, KIPI::Interface *iface, 
 
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
+
+    connect(d->imagesPage, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImagesCountChanged()));
 
     // ------------------------------------------------------------
 
@@ -251,6 +254,11 @@ int SendImagesDialog::activePageIndex()
     if (cur == d->page_email)   return 1;
 
     return 0;
+}
+
+void SendImagesDialog::slotImagesCountChanged()
+{
+   enableButtonOk(!d->imagesPage->imagesList().isEmpty());
 }
 
 }  // namespace KIPISendimagesPlugin

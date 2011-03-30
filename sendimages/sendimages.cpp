@@ -6,7 +6,7 @@
  * Date        : 2004-02-25
  * Description : a kipi plugin to e-mailing images
  *
- * Copyright (C) 2004-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010 by Andi Clemens <andi dot clemens at gmx dot net>
  * Copyright (C) 2006 by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006 by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
@@ -58,7 +58,7 @@
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesPriv
+class SendImages::SendImagesPriv
 {
 public:
 
@@ -72,20 +72,20 @@ public:
     KUrl::List                        attachementFiles;
     KUrl::List                        failedResizedImages;
 
-    KIPI::Interface                  *iface;
+    KIPI::Interface*                  iface;
 
-    KIPIPlugins::BatchProgressDialog *progressDlg;
+    KIPIPlugins::BatchProgressDialog* progressDlg;
 
     EmailSettingsContainer            settings;
 
-    ImageResize                      *threadImgResize;
+    ImageResize*                      threadImgResize;
 };
 
-SendImages::SendImages(const EmailSettingsContainer& settings, QObject *parent, KIPI::Interface *iface)
+SendImages::SendImages(const EmailSettingsContainer& settings, QObject* parent, KIPI::Interface* iface)
           : QObject(parent), d(new SendImagesPriv)
 {
-    d->settings = settings;
-    d->iface    = iface;
+    d->settings        = settings;
+    d->iface           = iface;
     d->threadImgResize = new KIPISendimagesPlugin::ImageResize(this);
 
     connect(d->threadImgResize, SIGNAL(startingResize(const KUrl&)),

@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : e-mail settings page.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,7 +43,7 @@
 namespace KIPISendimagesPlugin
 {
 
-class EmailPagePriv
+class EmailPage::EmailPagePriv
 {
 public:
 
@@ -61,19 +61,19 @@ public:
         attachmentlimit   = 0;
     }
 
-    QLabel       *labelMailAgent;
-    QLabel       *labelImagesResize;
-    QLabel       *labelImagesFormat;
+    QLabel*       labelMailAgent;
+    QLabel*       labelImagesResize;
+    QLabel*       labelImagesFormat;
 
-    KComboBox    *mailAgentName;
-    KComboBox    *imagesResize;
-    KComboBox    *imagesFormat;
+    KComboBox*    mailAgentName;
+    KComboBox*    imagesResize;
+    KComboBox*    imagesFormat;
 
-    QCheckBox    *changeImagesProp;
-    QCheckBox    *addComments;
+    QCheckBox*    changeImagesProp;
+    QCheckBox*    addComments;
 
-    KIntNumInput *imageCompression;
-    KIntNumInput *attachmentlimit;
+    KIntNumInput* imageCompression;
+    KIntNumInput* attachmentlimit;
 };
 
 EmailPage::EmailPage(QWidget* parent)
