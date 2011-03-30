@@ -28,4 +28,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 017 ==> 206842 : Export to Wikimedia Commons.
 018 ==> 269511 : Cmake install files include wrong path for libmediawiki/version.h.
 019 ==> 269220 : Move MediaWiki C++ interface for KDE to git.
-020 ==> 
+020 ==> 268316 : OK button not disabled on empty image list, following progress dialog never finishes [patch].
+021 ==> 
