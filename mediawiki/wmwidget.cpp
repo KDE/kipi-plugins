@@ -171,17 +171,17 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     QLabel* licenceLabel = new QLabel(i18n("License:"), m_textBox);
     m_licenceComboBox    = new QComboBox(m_textBox);
 
-    m_licenceComboBox->addItem(QString("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), QString("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
-    m_licenceComboBox->addItem(QString("Own work, multi-license with CC-BY-SA-3.0 and older"), QString("{{self|cc-by-sa-3.0,2.5,2.0,1.0}}"));
-    m_licenceComboBox->addItem(QString("Creative Commons Attribution-Share Alike 3.0"), QString("{{self|cc-by-sa-3.0}}"));
-    m_licenceComboBox->addItem(QString("Own work, Creative Commons Attribution 3.0"), QString("{{self|cc-by-3.0}}"));
-    m_licenceComboBox->addItem(QString("Own work, release into public domain under the CC-Zero license"), QString("{{self|cc-zero}}"));
-    m_licenceComboBox->addItem(QString("Author died more than 100 years ago"), QString("{{PD-old}}"));
-    m_licenceComboBox->addItem(QString("Photo of a two-dimensional work whose author died more than 100 years ago"), QString("{{PD-art}}"));
-    m_licenceComboBox->addItem(QString("First published in the United States before 1923"), QString("{{PD-US}}"));
-    m_licenceComboBox->addItem(QString("Work of a U.S. government agency"), QString("{{PD-USGov}}"));
-    m_licenceComboBox->addItem(QString("Simple typefaces, individual words or geometric shapes"), QString("{{PD-text}}"));
-    m_licenceComboBox->addItem(QString("Logos with only simple typefaces, individual words or geometric shapes"), QString("{{PD-textlogo}}"));
+    m_licenceComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), QString("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
+    m_licenceComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and older"), QString("{{self|cc-by-sa-3.0,2.5,2.0,1.0}}"));
+    m_licenceComboBox->addItem(i18n("Creative Commons Attribution-Share Alike 3.0"), QString("{{self|cc-by-sa-3.0}}"));
+    m_licenceComboBox->addItem(i18n("Own work, Creative Commons Attribution 3.0"), QString("{{self|cc-by-3.0}}"));
+    m_licenceComboBox->addItem(i18n("Own work, release into public domain under the CC-Zero license"), QString("{{self|cc-zero}}"));
+    m_licenceComboBox->addItem(i18n("Author died more than 100 years ago"), QString("{{PD-old}}"));
+    m_licenceComboBox->addItem(i18n("Photo of a two-dimensional work whose author died more than 100 years ago"), QString("{{PD-art}}"));
+    m_licenceComboBox->addItem(i18n("First published in the United States before 1923"), QString("{{PD-US}}"));
+    m_licenceComboBox->addItem(i18n("Work of a U.S. government agency"), QString("{{PD-USGov}}"));
+    m_licenceComboBox->addItem(i18n("Simple typefaces, individual words or geometric shapes"), QString("{{PD-text}}"));
+    m_licenceComboBox->addItem(i18n("Logos with only simple typefaces, individual words or geometric shapes"), QString("{{PD-textlogo}}"));
 
     textBoxLayout->addWidget(desc,              0, 0, 1, 1);
     textBoxLayout->addWidget(m_descriptionEdit, 0, 2, 1, 2);
@@ -298,15 +298,15 @@ void WmWidget::updateLabels(const QString& name, const QString& url)
         web = url;
 
     m_headerLbl->setText(QString("<b><h2><a href='%1'>"
-                                 "<font color=\"#3B5998\">Wikimedia commons</font>"
-                                 "</a></h2></b>").arg(web));
+                                 "<font color=\"#3B5998\">%2</font>"
+                                 "</a></h2></b>").arg(web).arg(i18n("Wikimedia commons")));
     if (name.isEmpty())
     {
         m_userNameDisplayLbl->clear();
     }
     else
     {
-        m_userNameDisplayLbl->setText(QString("<b>%1</b>").arg(name));
+        m_userNameDisplayLbl->setText(QString::fromLatin1("<b>%1</b>").arg(name));
     }
 }
 
