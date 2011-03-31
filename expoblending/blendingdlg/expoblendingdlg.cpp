@@ -74,6 +74,7 @@ extern "C"
 
 // libKdcraw includes
 
+#include <libkdcraw/version.h>
 #include <libkdcraw/rexpanderbox.h>
 
 // Local includes
@@ -365,7 +366,13 @@ void ExpoBlendingDlg::readSettings()
 
     d->enfuseSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
+
+#if KDCRAW_VERSION >= 0x020000
+    d->settingsExpander->readSettings(group);
+#else
     d->settingsExpander->readSettings();
+#endif
+
     d->templateFileName->setText(group.readEntry("Template File Name", QString("enfuse")));
 
     KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));
@@ -379,7 +386,13 @@ void ExpoBlendingDlg::saveSettings()
 
     d->enfuseSettingsBox->writeSettings(group);
     d->saveSettingsBox->writeSettings(group);
+
+#if KDCRAW_VERSION >= 0x020000
+    d->settingsExpander->writeSettings(group);
+#else
     d->settingsExpander->writeSettings();
+#endif
+
     group.writeEntry("Template File Name", d->templateFileName->text());
 
     KConfigGroup group2 = config.group(QString("ExpoBlending Dialog"));

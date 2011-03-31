@@ -58,6 +58,7 @@
 // libKdcraw includes
 
 #include <libkdcraw/rexpanderbox.h>
+#include <libkdcraw/version.h>
 
 // Local includes
 
@@ -266,7 +267,12 @@ WmWidget::~WmWidget()
 
 void WmWidget::readSettings(KConfigGroup& group)
 {
+#if KDCRAW_VERSION >= 0x020000
+    m_settingsExpander->readSettings(group);
+#else
     m_settingsExpander->readSettings();
+#endif
+
     m_resizeChB->setChecked(group.readEntry("Resize", false));
     m_dimensionSpB->setValue(group.readEntry("Dimension", 600));
     m_imageQualitySpB->setValue(group.readEntry("Quality", 85));
@@ -275,7 +281,12 @@ void WmWidget::readSettings(KConfigGroup& group)
 
 void WmWidget::saveSettings(KConfigGroup& group)
 {
+#if KDCRAW_VERSION >= 0x020000
+    m_settingsExpander->writeSettings(group);
+#else
     m_settingsExpander->writeSettings();
+#endif
+
     group.writeEntry("Resize", m_resizeChB->isChecked());
     group.readEntry("Dimension", m_dimensionSpB->value());
     group.readEntry("Quality", m_imageQualitySpB->value());
