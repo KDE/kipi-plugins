@@ -39,6 +39,8 @@ ENDIF(WIN32)
 
 SET(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
 
+KDE4_ADD_LIBRARY(libmd5 STATIC ${libmd5_SRCS})
+
 SET(libxmp_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/XML_Node.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/common/UnicodeConversions.cpp
@@ -57,6 +59,15 @@ SET(libxmp_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/ExpatAdapter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/xmp_sdk/XMPCore/ParseRDF.cpp
    )
+
+# Disable XMP SDK warnings: we will never touch this code.
+FOREACH(_currentfile ${libxmp_SRCS})
+    SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS -w)
+ENDFOREACH(_currentfile ${libxmp_SRCS})
+
+KDE4_ADD_LIBRARY(libxmp STATIC ${libxmp_SRCS})
+
+TARGET_LINK_LIBRARIES(libxmp libmd5 ${EXPAT_LIBRARY})
 
 # =======================================================
 # DNG SDK source code
@@ -105,6 +116,7 @@ ENDIF(NOT WIN32)
 
 # Level of debug info in the console.
 ADD_DEFINITIONS(-DqDNGDebug=0)
+ADD_DEFINITIONS(-DqDNGValidateTarget=1)
 
 SET(libdng_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_1d_function.cpp
@@ -171,6 +183,15 @@ SET(libdng_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/dng_sdk/dng_pthread.cpp
    )
 
+# Disable DNG SDK warnings: we will never touch this code.
+FOREACH(_currentfile ${libdng_SRCS})
+    SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS -w)
+ENDFOREACH(_currentfile ${libdng_SRCS})
+
+KDE4_ADD_LIBRARY(libdng STATIC ${libdng_SRCS})
+
+TARGET_LINK_LIBRARIES(libdng libxmp)
+
 # =======================================================
 # DNGWritter interface
 
@@ -180,9 +201,6 @@ SET(libdngwriter_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriter_p.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/dngwriterhost.cpp
-    ${libxmp_SRCS}
-    ${libmd5_SRCS}
-    ${libdng_SRCS}
    )
 
 # =======================================================
