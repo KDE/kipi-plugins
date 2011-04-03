@@ -7,6 +7,7 @@
  * Description : a plugin to edit pictures metadata
  *
  * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,7 +30,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <KUrl>
 
 // LibKIPI includes
 
@@ -57,15 +58,14 @@ public:
 
 protected Q_SLOTS:
 
-    void slotEditExif();
+    void slotEditAllMetadata();
+
     void slotRemoveExif();
     void slotImportExif();
 
-    void slotEditIptc();
     void slotRemoveIptc();
     void slotImportIptc();
 
-    void slotEditXmp();
     void slotRemoveXmp();
     void slotImportXmp();
 
