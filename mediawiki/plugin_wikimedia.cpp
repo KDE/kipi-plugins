@@ -21,6 +21,11 @@
  *
  * ============================================================ */
 
+// To disable warnings under MSVC2008 about getpid().
+#ifdef _MSC_VER
+#pragma warning(disable : 4996)
+#endif
+
 #include "plugin_wikimedia.moc"
 
 // C ANSI includes
