@@ -39,9 +39,11 @@ ENDIF(WIN32)
 
 SET(libmd5_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/dngwriter/extra/md5/MD5.cpp)
 
-# Adjust flag for static lib and 64 bits computers (similar to B.K.O: #269903)
+# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
 FOREACH(_currentfile ${libmd5_SRCS})
-    SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
+    IF(WIN32 AND NOT MSVC)
+        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-fPIC")
+    ENDIF(WIN32 AND NOT MSVC)
 ENDFOREACH(_currentfile ${libmd5_SRCS})
 
 KDE4_ADD_LIBRARY(libmd5 STATIC ${libmd5_SRCS})
@@ -66,9 +68,13 @@ SET(libxmp_SRCS
    )
 
 # Disable XMP SDK warnings: we will never touch this code.
-# and adjust flag for static lib and 64 bits computers (similar to B.K.O: #269903)
+# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
 FOREACH(_currentfile ${libxmp_SRCS})
-    SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
+    IF(WIN32 AND MSVC)
+        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
+    ELSE(WIN32 AND MSVC)
+        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
+    ENDIF(WIN32 AND MSVC)
 ENDFOREACH(_currentfile ${libxmp_SRCS})
 
 KDE4_ADD_LIBRARY(libxmp STATIC ${libxmp_SRCS})
@@ -190,9 +196,13 @@ SET(libdng_SRCS
    )
 
 # Disable DNG SDK warnings: we will never touch this code.
-# and adjust flag for static lib and 64 bits computers (similar to B.K.O: #269903)
+# Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
 FOREACH(_currentfile ${libdng_SRCS})
-    SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
+    IF(WIN32 AND MSVC)
+        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w")
+    ELSE(WIN32 AND MSVC)
+        SET_SOURCE_FILES_PROPERTIES(${_currentfile} PROPERTIES COMPILE_FLAGS "-w -fPIC")
+    ENDIF(WIN32 AND MSVC)
 ENDFOREACH(_currentfile ${libdng_SRCS})
 
 KDE4_ADD_LIBRARY(libdng STATIC ${libdng_SRCS})
