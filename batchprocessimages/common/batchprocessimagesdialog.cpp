@@ -20,6 +20,11 @@
  *
  * ============================================================ */
 
+// To disable warnings under MSVC2008 about POSIX methods().
+#ifdef _MSC_VER
+#pragma warning(disable : 4996)
+#endif
+
 #include "batchprocessimagesdialog.moc"
 
 // C ANSI includes
