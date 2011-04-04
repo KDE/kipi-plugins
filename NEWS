@@ -6,6 +6,7 @@ NEW FEATURES:
 GPSSync        : Complete rewrite of GUI, including reverse-geocoding feature.
 YandexFotki    : New tool to export collection to Yandex web service (http://fotki.yandex.ru).
 MediaWiki      : New tool to export collection to MediaWiki based web service (http://www.mediawiki.org).
+MetadataEdit   : Factoring Exif/Iptc/Xmp editor to a common dialog.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
