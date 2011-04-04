@@ -6,6 +6,23 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
+IF(OPENMP_FOUND AND NOT APPLE)
+    ADD_DEFINITIONS(${OpenMP_CXX_FLAGS})
+    IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
+        SET(OPENMP_LDFLAGS "-lgomp")
+    ENDIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
+    IF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
+        SET(OPENMP_LDFLAGS "-xopenmp")
+    ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
+ENDIF(OPENMP_FOUND AND NOT APPLE)
+
+INSTALL(DIRECTORY pics
+        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_expoblending
+       )
+
+# =======================================================
+# Common source code
+
 SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/actionthread.cpp
@@ -22,32 +39,9 @@ SET(expoblending_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg/enfusestack.cpp
    )
 
-IF(OPENMP_FOUND AND NOT APPLE)
-    ADD_DEFINITIONS(${OpenMP_CXX_FLAGS})
-    IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-        SET(OPENMP_LDFLAGS "-lgomp")
-    ENDIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-    IF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
-        SET(OPENMP_LDFLAGS "-xopenmp")
-    ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
-ENDIF(OPENMP_FOUND AND NOT APPLE)
+KDE4_ADD_LIBRARY(libexpoblending STATIC ${expoblending_common_SRCS})
 
-INSTALL(DIRECTORY pics
-        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_expoblending
-       )
-
-# =======================================================
-# ExpoBlending plugin
-
-SET(kipiplugin_expoblending_PART_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_expoblending.cpp
-
-    ${expoblending_common_SRCS}
-   )
-
-KDE4_ADD_PLUGIN(kipiplugin_expoblending ${kipiplugin_expoblending_PART_SRCS})
-
-TARGET_LINK_LIBRARIES(kipiplugin_expoblending
+TARGET_LINK_LIBRARIES(libexpoblending
                       ${KDE4_KPARTS_LIBS}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
@@ -56,6 +50,15 @@ TARGET_LINK_LIBRARIES(kipiplugin_expoblending
                       ${OPENMP_LDFLAGS}
                       kipiplugins
                      )
+
+# =======================================================
+# ExpoBlending plugin
+
+SET(kipiplugin_expoblending_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_expoblending.cpp)
+
+KDE4_ADD_PLUGIN(kipiplugin_expoblending ${kipiplugin_expoblending_PART_SRCS})
+
+TARGET_LINK_LIBRARIES(kipiplugin_expoblending libexpoblending)
 
 INSTALL(TARGETS kipiplugin_expoblending DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES plugin/kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INSTALL_DIR})
@@ -63,24 +66,13 @@ INSTALL(FILES plugin/kipiplugin_expoblending.desktop DESTINATION ${SERVICES_INST
 # =======================================================
 # Stand alone version of ExpoBlending plugin
 
-SET(expoblending_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp
-    ${expoblending_common_SRCS}
-   )
+SET(expoblending_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/expoblending.cpp)
 
 KDE4_ADD_APP_ICON(hdrgui_SRCS "expoblending")
 
 KDE4_ADD_EXECUTABLE(expoblending ${expoblending_SRCS})
 
-TARGET_LINK_LIBRARIES(expoblending
-                      ${KDE4_KPARTS_LIBS}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      ${OPENMP_LDFLAGS}
-                      kipiplugins
-                     )
+TARGET_LINK_LIBRARIES(expoblending libexpoblending)
 
 INSTALL(TARGETS expoblending ${INSTALL_TARGETS_DEFAULT_ARGS})
 INSTALL(PROGRAMS plugin/expoblending.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
