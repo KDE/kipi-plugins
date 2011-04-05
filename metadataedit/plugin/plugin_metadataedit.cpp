@@ -90,43 +90,17 @@ void Plugin_MetadataEdit::setup(QWidget* widget)
 
     m_actionMetadataEdit->menu()->addSeparator();
 
-    KAction* removeEXIF = actionCollection()->addAction("removeexif");
-    removeEXIF->setText(i18n("Remove EXIF..."));
-    connect(removeEXIF, SIGNAL(triggered(bool)),
-            this, SLOT(slotRemoveExif()));
-    m_actionMetadataEdit->addAction(removeEXIF);
-
     KAction* importEXIF = actionCollection()->addAction("importexif");
     importEXIF->setText(i18n("Import EXIF..."));
     connect(importEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotImportExif()));
     m_actionMetadataEdit->addAction(importEXIF);
 
-    // -----------------------------------------------------
-
-    m_actionMetadataEdit->menu()->addSeparator();
-
-    KAction* removeIPTC = actionCollection()->addAction("removeiptc");
-    removeIPTC->setText(i18n("Remove IPTC..."));
-    connect(removeIPTC, SIGNAL(triggered(bool)),
-            this, SLOT(slotRemoveIptc()));
-    m_actionMetadataEdit->addAction(removeIPTC);
-
     KAction* importIPTC = actionCollection()->addAction("importiptc");
     importIPTC->setText(i18n("Import IPTC..."));
     connect(importIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotImportIptc()));
     m_actionMetadataEdit->addAction(importIPTC);
-
-    // -----------------------------------------------------
-
-    m_actionMetadataEdit->menu()->addSeparator();
-
-    KAction* removeXMP = actionCollection()->addAction("removexmp");
-    removeXMP->setText(i18n("Remove XMP..."));
-    connect(removeXMP, SIGNAL(triggered(bool)),
-            this, SLOT(slotRemoveXmp()));
-    m_actionMetadataEdit->addAction(removeXMP);
 
     KAction* importXMP = actionCollection()->addAction("importxmp");
     importXMP->setText(i18n("Import XMP..."));
@@ -164,66 +138,6 @@ void Plugin_MetadataEdit::slotEditAllMetadata()
     m_interface->refreshImages(images.images());
 
     delete dialog;
-}
-
-void Plugin_MetadataEdit::slotRemoveExif()
-{
-    ImageCollection images = m_interface->currentSelection();
-
-    if ( !images.isValid() || images.images().isEmpty() )
-        return;
-
-    if (KMessageBox::warningYesNo(
-                     kapp->activeWindow(),
-                     i18n("EXIF metadata will be permanently removed from all currently selected pictures.\n"
-                          "Do you want to continue?"),
-                     i18n("Remove EXIF Metadata")) != KMessageBox::Yes)
-        return;
-
-    KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
-    QStringList errorFiles;
-
-    for( KUrl::List::iterator it = imageURLs.begin() ;
-         it != imageURLs.end(); ++it)
-    {
-        KUrl url = *it;
-        bool ret = false;
-
-        if (KExiv2::canWriteExif(url.path()))
-        {
-            ret = true;
-            KExiv2 exiv2Iface;
-            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
-
-#if KEXIV2_VERSION >= 0x000600
-            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-#endif
-
-            ret &= exiv2Iface.load(url.path());
-            ret &= exiv2Iface.clearExif();
-            ret &= exiv2Iface.save(url.path());
-        }
-
-        if (!ret)
-            errorFiles.append(url.fileName());
-        else
-            updatedURLs.append(url);
-    }
-
-    // We use kipi interface refreshImages() method to tell to host than
-    // metadata from pictures have changed and need to be re-read.
-
-    m_interface->refreshImages(updatedURLs);
-
-    if (!errorFiles.isEmpty())
-    {
-        KMessageBox::errorList(
-                    kapp->activeWindow(),
-                    i18n("Unable to remove EXIF metadata from:"),
-                    errorFiles,
-                    i18n("Remove EXIF Metadata"));
-    }
 }
 
 void Plugin_MetadataEdit::slotImportExif()
@@ -323,66 +237,6 @@ void Plugin_MetadataEdit::slotImportExif()
     }
 }
 
-void Plugin_MetadataEdit::slotRemoveIptc()
-{
-    ImageCollection images = m_interface->currentSelection();
-
-    if ( !images.isValid() || images.images().isEmpty() )
-        return;
-
-    if (KMessageBox::warningYesNo(
-                     kapp->activeWindow(),
-                     i18n("IPTC metadata will be permanently removed from all currently selected pictures.\n"
-                          "Do you want to continue?"),
-                     i18n("Remove IPTC Metadata")) != KMessageBox::Yes)
-        return;
-
-    KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
-    QStringList errorFiles;
-
-    for( KUrl::List::iterator it = imageURLs.begin() ;
-         it != imageURLs.end(); ++it)
-    {
-        KUrl url = *it;
-        bool ret = false;
-
-        if (KExiv2::canWriteIptc(url.path()))
-        {
-            ret = true;
-            KExiv2 exiv2Iface;
-            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
-
-#if KEXIV2_VERSION >= 0x000600
-            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-#endif
-
-            ret &= exiv2Iface.load(url.path());
-            ret &= exiv2Iface.clearIptc();
-            ret &= exiv2Iface.save(url.path());
-        }
-
-        if (!ret)
-            errorFiles.append(url.fileName());
-        else
-            updatedURLs.append(url);
-    }
-
-    // We use kipi interface refreshImages() method to tell to host than
-    // metadata from pictures have changed and need to be re-read.
-
-    m_interface->refreshImages(updatedURLs);
-
-    if (!errorFiles.isEmpty())
-    {
-        KMessageBox::errorList(
-                    kapp->activeWindow(),
-                    i18n("Unable to remove IPTC metadata from:"),
-                    errorFiles,
-                    i18n("Remove IPTC Metadata"));
-    }
-}
-
 void Plugin_MetadataEdit::slotImportIptc()
 {
     ImageCollection images = m_interface->currentSelection();
@@ -472,66 +326,6 @@ void Plugin_MetadataEdit::slotImportIptc()
                     i18n("Unable to set IPTC metadata from:"),
                     errorFiles,
                     i18n("Import IPTC Metadata"));
-    }
-}
-
-void Plugin_MetadataEdit::slotRemoveXmp()
-{
-    ImageCollection images = m_interface->currentSelection();
-
-    if ( !images.isValid() || images.images().isEmpty() )
-        return;
-
-    if (KMessageBox::warningYesNo(
-                     kapp->activeWindow(),
-                     i18n("XMP metadata will be permanently removed from all of the currently selected pictures.\n"
-                          "Do you want to continue?"),
-                     i18n("Remove XMP Metadata")) != KMessageBox::Yes)
-        return;
-
-    KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
-    QStringList errorFiles;
-
-    for( KUrl::List::iterator it = imageURLs.begin() ;
-         it != imageURLs.end(); ++it)
-    {
-        KUrl url = *it;
-        bool ret = false;
-
-        if (KExiv2::canWriteXmp(url.path()))
-        {
-            ret = true;
-            KExiv2 exiv2Iface;
-            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
-
-#if KEXIV2_VERSION >= 0x000600
-            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-#endif
-
-            ret &= exiv2Iface.load(url.path());
-            ret &= exiv2Iface.clearXmp();
-            ret &= exiv2Iface.save(url.path());
-        }
-
-        if (!ret)
-            errorFiles.append(url.fileName());
-        else
-            updatedURLs.append(url);
-    }
-
-    // We use kipi interface refreshImages() method to tell to host than
-    // metadata from pictures have changed and need to be re-read.
-
-    m_interface->refreshImages(updatedURLs);
-
-    if (!errorFiles.isEmpty())
-    {
-        KMessageBox::errorList(
-                    kapp->activeWindow(),
-                    i18n("Unable to remove XMP metadata from:"),
-                    errorFiles,
-                    i18n("Remove XMP Metadata"));
     }
 }
 
