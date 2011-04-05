@@ -288,6 +288,7 @@ void MetadataEditDialog::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Metadata Edit Dialog"));
+    d->tabWidget->setCurrentIndex(group.readEntry("Tab Index", 0));
     restoreDialogSize(group);
 }
 
@@ -295,6 +296,7 @@ void MetadataEditDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(QString("Metadata Edit Dialog"));
+    group.writeEntry("Tab Index", d->tabWidget->currentIndex());
     saveDialogSize(group);
 }
 
