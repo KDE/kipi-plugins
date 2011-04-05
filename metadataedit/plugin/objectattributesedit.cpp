@@ -7,7 +7,7 @@
  * Description : a widget to edit Application2 ObjectAttribute
  *               Iptc tag.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,7 +52,7 @@ using namespace KDcrawIface;
 namespace KIPIMetadataEditPlugin
 {
 
-class ObjectAttributesEditPriv
+class ObjectAttributesEdit::ObjectAttributesEditPriv
 {
 public:
 
@@ -67,29 +67,29 @@ public:
         dataList       = 0;
     }
 
-    QStringList                    oldValues;
+    QStringList       oldValues;
 
-    QPushButton                   *addValueButton;
-    QPushButton                   *delValueButton;
-    QPushButton                   *repValueButton;
+    QPushButton*      addValueButton;
+    QPushButton*      delValueButton;
+    QPushButton*      repValueButton;
 
-    KLineEdit                     *valueEdit;
+    KLineEdit*        valueEdit;
 
-    KListWidget                   *valueBox;
+    KListWidget*      valueBox;
 
-    MetadataCheckBox              *valueCheck;
+    MetadataCheckBox* valueCheck;
 
-    SqueezedComboBox              *dataList;
+    SqueezedComboBox* dataList;
 };
 
 ObjectAttributesEdit::ObjectAttributesEdit(QWidget* parent, bool ascii, int size)
-                    : QWidget(parent), d(new ObjectAttributesEditPriv)
+    : QWidget(parent), d(new ObjectAttributesEditPriv)
 {
     QGridLayout *grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -237,7 +237,7 @@ ObjectAttributesEdit::~ObjectAttributesEdit()
 
 void ObjectAttributesEdit::slotDeleteValue()
 {
-    QListWidgetItem *item = d->valueBox->currentItem();
+    QListWidgetItem* item = d->valueBox->currentItem();
     if (!item) return;
     d->valueBox->takeItem(d->valueBox->row(item));
     delete item;
@@ -280,7 +280,7 @@ void ObjectAttributesEdit::slotAddValue()
     bool found = false;
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
-        QListWidgetItem *item = d->valueBox->item(i);
+        QListWidgetItem* item = d->valueBox->item(i);
         if (newValue == item->text())
         {
             found = true;
@@ -319,7 +319,7 @@ bool ObjectAttributesEdit::getValues(QStringList& oldValues, QStringList& newVal
     newValues.clear();
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
-        QListWidgetItem *item = d->valueBox->item(i);
+        QListWidgetItem* item = d->valueBox->item(i);
         newValues.append(item->text());
     }
 

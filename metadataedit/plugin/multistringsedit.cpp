@@ -6,7 +6,7 @@
  * Date        : 2007-10-08
  * Description : a widget to edit a tag with multiple string entries.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,7 +40,7 @@
 namespace KIPIMetadataEditPlugin
 {
 
-class MultiStringsEditPriv
+class MultiStringsEdit::MultiStringsEditPriv
 {
 public:
 
@@ -56,20 +56,20 @@ public:
 
     QStringList  oldValues;
 
-    QPushButton *addValueButton;
-    QPushButton *delValueButton;
-    QPushButton *repValueButton;
+    QPushButton* addValueButton;
+    QPushButton* delValueButton;
+    QPushButton* repValueButton;
 
-    QCheckBox   *valueCheck;
+    QCheckBox*   valueCheck;
 
-    KLineEdit   *valueEdit;
+    KLineEdit*   valueEdit;
 
-    KListWidget *valueBox;
+    KListWidget* valueBox;
 };
 
 MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
                                    const QString& desc, bool ascii, int size)
-                : QWidget(parent), d(new MultiStringsEditPriv)
+    : QWidget(parent), d(new MultiStringsEditPriv)
 {
     QGridLayout *grid = new QGridLayout(this);
 
@@ -188,7 +188,7 @@ MultiStringsEdit::~MultiStringsEdit()
 
 void MultiStringsEdit::slotDeleteValue()
 {
-    QListWidgetItem *item = d->valueBox->currentItem();
+    QListWidgetItem* item = d->valueBox->currentItem();
     if (!item) return;
     d->valueBox->takeItem(d->valueBox->row(item));
     delete item;
@@ -229,7 +229,7 @@ void MultiStringsEdit::slotAddValue()
     bool found = false;
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
-        QListWidgetItem *item = d->valueBox->item(i);
+        QListWidgetItem* item = d->valueBox->item(i);
         if (newValue == item->text())
         {
             found = true;
@@ -271,7 +271,7 @@ bool MultiStringsEdit::getValues(QStringList& oldValues, QStringList& newValues)
     newValues.clear();
     for (int i = 0 ; i < d->valueBox->count(); i++)
     {
-        QListWidgetItem *item = d->valueBox->item(i);
+        QListWidgetItem* item = d->valueBox->item(i);
         newValues.append(item->text());
     }
 
