@@ -35,7 +35,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 023 ==> 203047 : Edit Exif does not allow editing of seconds.
 024 ==> 169230 : "Remove Metadata" plugin necessary.
 025 ==> 208500 : XMP tags GUI incorrectly manages language.
-026 ==> 
-
+026 ==> 178660 : Quick navigation "disabled" in list of languages (XMP).
+027 ==> 
 
 
