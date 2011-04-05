@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP workflow status settings page.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,7 +52,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPStatusPriv
+class XMPStatus::XMPStatusPriv
 {
 public:
 
@@ -66,22 +66,22 @@ public:
         identifiersEdit         = 0;
     }
 
-    QCheckBox          *nicknameCheck;
-    QCheckBox          *specialInstructionCheck;
+    QCheckBox*          nicknameCheck;
+    QCheckBox*          specialInstructionCheck;
 
-    KLineEdit          *nicknameEdit;
+    KLineEdit*          nicknameEdit;
 
-    KTextEdit          *specialInstructionEdit;
+    KTextEdit*          specialInstructionEdit;
 
-    MultiStringsEdit   *identifiersEdit;
+    MultiStringsEdit*   identifiersEdit;
 
-    AltLangStringsEdit *objectNameEdit;
+    AltLangStringsEdit* objectNameEdit;
 };
 
 XMPStatus::XMPStatus(QWidget* parent)
-         : QWidget(parent), d(new XMPStatusPriv)
+    : QWidget(parent), d(new XMPStatusPriv)
 {
-    QGridLayout* grid = new QGridLayout(this);
+    QGridLayout* grid  = new QGridLayout(this);
 
     // --------------------------------------------------------
 
@@ -97,8 +97,8 @@ XMPStatus::XMPStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->identifiersEdit  = new MultiStringsEdit(this, i18n("Identifiers:"),
-                              i18n("Set here the strings that identify content that recurs."));
+    d->identifiersEdit = new MultiStringsEdit(this, i18n("Identifiers:"),
+                             i18n("Set here the strings that identify content that recurs."));
 
     // --------------------------------------------------------
 
@@ -115,7 +115,7 @@ XMPStatus::XMPStatus(QWidget* parent)
     grid->addWidget(d->specialInstructionCheck, 3, 0, 1, 3);
     grid->addWidget(d->specialInstructionEdit,  4, 0, 1, 3);
     grid->setRowStretch(5, 10);
-    grid->setColumnStretch(3, 10);
+    grid->setColumnStretch(2, 10);
     grid->setMargin(0);
     grid->setSpacing(KDialog::spacingHint());
 
@@ -164,8 +164,8 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     KExiv2 exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
-    QString                         data;
-    QStringList                     list;
+    QString            data;
+    QStringList        list;
     KExiv2::AltLangMap map;
 
     d->objectNameEdit->setValid(false);
@@ -202,7 +202,7 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
 void XMPStatus::applyMetadata(QByteArray& xmpData)
 {
     QStringList oldList, newList;
-    KExiv2 exiv2Iface;
+    KExiv2      exiv2Iface;
     exiv2Iface.setXmp(xmpData);
 
     KExiv2::AltLangMap oldAltLangMap, newAltLangMap;
