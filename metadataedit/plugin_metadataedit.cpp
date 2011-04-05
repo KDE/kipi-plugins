@@ -7,6 +7,7 @@
  * Description : a plugin to edit pictures metadata
  *
  * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -56,9 +57,7 @@
 
 #include "commenteditdialog.h"
 #include "commentremovedialog.h"
-#include "exifeditdialog.h"
-#include "iptceditdialog.h"
-#include "xmpeditdialog.h"
+#include "metadataedit.h"
 
 using namespace KExiv2Iface;
 using namespace KIPIMetadataEditPlugin;
@@ -82,12 +81,17 @@ void Plugin_MetadataEdit::setup(QWidget* widget)
     m_actionMetadataEdit = new KActionMenu(KIcon("metadataedit"), i18n("Metadata"), actionCollection());
     m_actionMetadataEdit->setObjectName("metadataedit");
 
-    KAction* editEXIF = actionCollection()->addAction("editexif");
-    editEXIF->setText(i18n("Edit EXIF..."));
-    connect(editEXIF, SIGNAL(triggered(bool)),
-            this, SLOT(slotEditExif()));
-    m_actionMetadataEdit->addAction(editEXIF);
 
+    KAction* metadataEdit = actionCollection()->addAction("editallmetadata");
+    metadataEdit->setText(i18n("Edit &All Metadata..."));
+    connect(metadataEdit, SIGNAL(triggered(bool)),
+            this,SLOT(slotEditAllMetadata()));
+    m_actionMetadataEdit->addAction(metadataEdit);
+
+    // ---------------------------------------------------
+
+    m_actionMetadataEdit->menu()->addSeparator();
+    
     KAction* removeEXIF = actionCollection()->addAction("removeexif");
     removeEXIF->setText(i18n("Remove EXIF..."));
     connect(removeEXIF, SIGNAL(triggered(bool)),
@@ -104,12 +108,6 @@ void Plugin_MetadataEdit::setup(QWidget* widget)
 
     m_actionMetadataEdit->menu()->addSeparator();
 
-    KAction* editIPTC = actionCollection()->addAction("editiptc");
-    editIPTC->setText(i18n("Edit IPTC..."));
-    connect(editIPTC, SIGNAL(triggered(bool)),
-            this, SLOT(slotEditIptc()));
-    m_actionMetadataEdit->addAction(editIPTC);
-
     KAction* removeIPTC = actionCollection()->addAction("removeiptc");
     removeIPTC->setText(i18n("Remove IPTC..."));
     connect(removeIPTC, SIGNAL(triggered(bool)),
@@ -125,12 +123,6 @@ void Plugin_MetadataEdit::setup(QWidget* widget)
     // -----------------------------------------------------
 
     m_actionMetadataEdit->menu()->addSeparator();
-
-    KAction* editXMP = actionCollection()->addAction("editxmp");
-    editXMP->setText(i18n("Edit XMP..."));
-    connect(editXMP, SIGNAL(triggered(bool)),
-            this, SLOT(slotEditXmp()));
-    m_actionMetadataEdit->addAction(editXMP);
 
     KAction* removeXMP = actionCollection()->addAction("removexmp");
     removeXMP->setText(i18n("Remove XMP..."));
@@ -160,6 +152,8 @@ void Plugin_MetadataEdit::setup(QWidget* widget)
             this, SLOT(slotRemoveComments()));
     m_actionMetadataEdit->addAction(removeComments);
 
+    // ------------------------------------------------------
+
     addAction( m_actionMetadataEdit );
 
     m_interface = dynamic_cast<Interface*>( parent() );
@@ -176,14 +170,14 @@ void Plugin_MetadataEdit::setup(QWidget* widget)
             m_actionMetadataEdit, SLOT(setEnabled(bool)));
 }
 
-void Plugin_MetadataEdit::slotEditExif()
+void Plugin_MetadataEdit::slotEditAllMetadata()
 {
     ImageCollection images = m_interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    QPointer<EXIFEditDialog> dialog = new EXIFEditDialog(kapp->activeWindow(), images.images(), m_interface);
+    QPointer<MetadataEditDialog> dialog = new MetadataEditDialog(kapp->activeWindow(), images.images(), m_interface);
     dialog->exec();
     m_interface->refreshImages(images.images());
 
@@ -347,20 +341,6 @@ void Plugin_MetadataEdit::slotImportExif()
     }
 }
 
-void Plugin_MetadataEdit::slotEditIptc()
-{
-    ImageCollection images = m_interface->currentSelection();
-
-    if ( !images.isValid() || images.images().isEmpty() )
-        return;
-
-    QPointer<IPTCEditDialog> dialog = new IPTCEditDialog(kapp->activeWindow(), images.images(), m_interface);
-    dialog->exec();
-    m_interface->refreshImages(images.images());
-
-    delete dialog;
-}
-
 void Plugin_MetadataEdit::slotRemoveIptc()
 {
     ImageCollection images = m_interface->currentSelection();
@@ -511,20 +491,6 @@ void Plugin_MetadataEdit::slotImportIptc()
                     errorFiles,
                     i18n("Import IPTC Metadata"));
     }
-}
-
-void Plugin_MetadataEdit::slotEditXmp()
-{
-    ImageCollection images = m_interface->currentSelection();
-
-    if ( !images.isValid() || images.images().isEmpty() )
-        return;
-
-    QPointer<XMPEditDialog> dialog = new XMPEditDialog(kapp->activeWindow(), images.images(), m_interface);
-    dialog->exec();
-    m_interface->refreshImages(images.images());
-
-    delete dialog;
 }
 
 void Plugin_MetadataEdit::slotRemoveXmp()

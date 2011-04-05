@@ -1,4 +1,4 @@
-Use shared widgets from libkexiv2 1.1.0 (KDE 4.5), already used in digiKam core :
+Use shared widgets from libkexiv2 1.1.0 (KDE 4.5), already used in digiKam core:
 
 - Remove topicset.iptc-subjectcode.xml                                                                      DONE
 - Port IPTCSubject and XMPSubject classes to KExiv2::SubjectWidget (see Digikam::SubjectEdit for details).  DONE
