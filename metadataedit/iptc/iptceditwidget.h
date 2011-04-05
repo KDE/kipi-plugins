@@ -6,8 +6,8 @@
  * Date        : 2011-03-14
  * Description : a KPageWidget to edit IPTC metadata
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,22 +43,21 @@ using namespace KIPI;
 namespace KIPIMetadataEditPlugin
 {
 
-class allIPTCEditWidgetPrivate;
-
 class allIPTCEditWidget : public KPageWidget
 {
     Q_OBJECT
 
 public:
 
-    allIPTCEditWidget(QWidget* parent, KUrl::List urls, Interface* iface);
+    allIPTCEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface);
     ~allIPTCEditWidget();
-    
+
     bool isModified();
 
 Q_SIGNALS:
+
     void signalModified();
-    void signalSetReadOnly( bool );
+    void signalSetReadOnly(bool);
 
 public Q_SLOTS:
 
@@ -84,6 +83,7 @@ private:
 
 private:
 
+    class allIPTCEditWidgetPrivate;
     allIPTCEditWidgetPrivate* const d;
 };
 

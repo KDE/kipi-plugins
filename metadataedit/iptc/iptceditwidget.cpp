@@ -6,8 +6,8 @@
  * Date        : 2011-03-14
  * Description : a KPageWidget to edit IPTC metadata
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -74,7 +74,7 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class allIPTCEditWidgetPrivate
+class allIPTCEditWidget::allIPTCEditWidgetPrivate
 {
 
 public:
@@ -110,37 +110,37 @@ public:
     QByteArray            exifData;
     QByteArray            iptcData;
 
-    KPageWidgetItem      *page_content;
-    KPageWidgetItem      *page_properties;
-    KPageWidgetItem      *page_subjects;
-    KPageWidgetItem      *page_keywords;
-    KPageWidgetItem      *page_categories;
-    KPageWidgetItem      *page_credits;
-    KPageWidgetItem      *page_status;
-    KPageWidgetItem      *page_origin;
-    KPageWidgetItem      *page_envelope;
+    KPageWidgetItem*     page_content;
+    KPageWidgetItem*     page_properties;
+    KPageWidgetItem*     page_subjects;
+    KPageWidgetItem*     page_keywords;
+    KPageWidgetItem*     page_categories;
+    KPageWidgetItem*     page_credits;
+    KPageWidgetItem*     page_status;
+    KPageWidgetItem*     page_origin;
+    KPageWidgetItem*     page_envelope;
 
-    KUrl::List            urls;
+    KUrl::List           urls;
 
-    KUrl::List::iterator  currItem;
+    KUrl::List::iterator currItem;
 
-    IPTCContent          *contentPage;
-    IPTCProperties       *propertiesPage;
-    IPTCSubjects         *subjectsPage;
-    IPTCKeywords         *keywordsPage;
-    IPTCCategories       *categoriesPage;
-    IPTCCredits          *creditsPage;
-    IPTCStatus           *statusPage;
-    IPTCOrigin           *originPage;
-    IPTCEnvelope         *envelopePage;
+    IPTCContent*         contentPage;
+    IPTCProperties*      propertiesPage;
+    IPTCSubjects*        subjectsPage;
+    IPTCKeywords*        keywordsPage;
+    IPTCCategories*      categoriesPage;
+    IPTCCredits*         creditsPage;
+    IPTCStatus*          statusPage;
+    IPTCOrigin*          originPage;
+    IPTCEnvelope*        envelopePage;
 
-    Interface            *interface;
+    Interface*           interface;
 
-    KPAboutData          *about;
+    KPAboutData*         about;
 };
 
-allIPTCEditWidget::allIPTCEditWidget(QWidget* parent, KUrl::List urls, Interface* iface)
-              : KPageWidget(parent), d(new allIPTCEditWidgetPrivate)
+allIPTCEditWidget::allIPTCEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+    : KPageWidget(parent), d(new allIPTCEditWidgetPrivate)
 {
     d->urls      = urls;
     d->interface = iface;
@@ -297,7 +297,7 @@ void allIPTCEditWidget::slotItemChanged()
 
     d->isReadOnly = !KExiv2::canWriteIptc((*d->currItem).path());
     emit signalSetReadOnly(d->isReadOnly);
-    
+
     d->page_content->setEnabled(!d->isReadOnly);
     d->page_origin->setEnabled(!d->isReadOnly);
     d->page_credits->setEnabled(!d->isReadOnly);
@@ -418,7 +418,7 @@ void allIPTCEditWidget::showPage(int page)
 
 int allIPTCEditWidget::activePageIndex()
 {
-    KPageWidgetItem *cur = currentPage();
+    KPageWidgetItem* cur = currentPage();
 
     if (cur == d->page_content)    return 0;
     if (cur == d->page_origin)     return 1;

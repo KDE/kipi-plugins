@@ -6,8 +6,8 @@
  * Date        : 2011-10-11
  * Description : a KPageWidget to edit XMP metadata
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -73,7 +73,7 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class allXMPEditWidgetPrivate
+class allXMPEditWidget::allXMPEditWidgetPrivate
 {
 
 public:
@@ -101,42 +101,42 @@ public:
         propertiesPage  = 0;
     }
 
-    bool                  modified;
-    bool                  isReadOnly;
+    bool                 modified;
+    bool                 isReadOnly;
 
-    QByteArray            exifData;
-    QByteArray            iptcData;
-    QByteArray            xmpData;
+    QByteArray           exifData;
+    QByteArray           iptcData;
+    QByteArray           xmpData;
 
-    KPageWidgetItem      *page_content;
-    KPageWidgetItem      *page_origin;
-    KPageWidgetItem      *page_subjects;
-    KPageWidgetItem      *page_keywords;
-    KPageWidgetItem      *page_categories;
-    KPageWidgetItem      *page_credits;
-    KPageWidgetItem      *page_status;
-    KPageWidgetItem      *page_properties;
+    KPageWidgetItem*     page_content;
+    KPageWidgetItem*     page_origin;
+    KPageWidgetItem*     page_subjects;
+    KPageWidgetItem*     page_keywords;
+    KPageWidgetItem*     page_categories;
+    KPageWidgetItem*     page_credits;
+    KPageWidgetItem*     page_status;
+    KPageWidgetItem*     page_properties;
 
-    KUrl::List            urls;
+    KUrl::List           urls;
 
-    KUrl::List::iterator  currItem;
+    KUrl::List::iterator currItem;
 
-    XMPContent           *contentPage;
-    XMPKeywords          *keywordsPage;
-    XMPCategories        *categoriesPage;
-    XMPSubjects          *subjectsPage;
-    XMPOrigin            *originPage;
-    XMPCredits           *creditsPage;
-    XMPStatus            *statusPage;
-    XMPProperties        *propertiesPage;
+    XMPContent*          contentPage;
+    XMPKeywords*         keywordsPage;
+    XMPCategories*       categoriesPage;
+    XMPSubjects*         subjectsPage;
+    XMPOrigin*           originPage;
+    XMPCredits*          creditsPage;
+    XMPStatus*           statusPage;
+    XMPProperties*       propertiesPage;
 
-    Interface            *interface;
+    Interface*           interface;
 
-    KPAboutData          *about;
+    KPAboutData*         about;
 };
 
-allXMPEditWidget::allXMPEditWidget(QWidget* parent, KUrl::List urls, Interface *iface)
-             : KPageWidget(parent), d(new allXMPEditWidgetPrivate)
+allXMPEditWidget::allXMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+    : KPageWidget(parent), d(new allXMPEditWidgetPrivate)
 {
     d->urls      = urls;
     d->interface = iface;
@@ -408,7 +408,7 @@ void allXMPEditWidget::showPage(int page)
 
 int allXMPEditWidget::activePageIndex()
 {
-    KPageWidgetItem *cur = currentPage();
+    KPageWidgetItem* cur = currentPage();
 
     if (cur == d->page_content)    return 0;
     if (cur == d->page_origin)     return 1;

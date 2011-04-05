@@ -6,8 +6,8 @@
  * Date        : 2011-03-14
  * Description : a KPageWidget to edit EXIF metadata
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,21 +43,19 @@ using namespace KIPI;
 namespace KIPIMetadataEditPlugin
 {
 
-class allEXIFEditWidgetPrivate;
-
 class allEXIFEditWidget : public KPageWidget
 {
     Q_OBJECT
 
 public:
 
-    allEXIFEditWidget(QWidget* parent, KUrl::List urls, Interface* iface);
+    allEXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface);
     ~allEXIFEditWidget();
-    
+
     bool isModified();
 
 Q_SIGNALS:
-    void signalSetReadOnly( bool );
+    void signalSetReadOnly(bool);
     void signalModified();
 
 public Q_SLOTS:
@@ -69,6 +67,7 @@ protected Q_SLOTS:
     void slotOk();
 
 private Q_SLOTS:
+
     void slotClose();
     void slotItemChanged();
     void slotApply();
@@ -84,6 +83,7 @@ private:
 
 private:
 
+    class allEXIFEditWidgetPrivate;
     allEXIFEditWidgetPrivate* const d;
 };
 

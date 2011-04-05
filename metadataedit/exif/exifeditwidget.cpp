@@ -6,8 +6,8 @@
  * Date        : 2011-03-14
  * Description : a KPageWidget to edit EXIF metadata
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
 
  *
  * This program is free software; you can redistribute it
@@ -73,7 +73,7 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class allEXIFEditWidgetPrivate
+class allEXIFEditWidget::allEXIFEditWidgetPrivate
 {
 
 public:
@@ -101,38 +101,38 @@ public:
         adjustPage    = 0;
     }
 
-    bool                      modified;
-    bool                      isReadOnly;
+    bool                 modified;
+    bool                 isReadOnly;
 
-    QByteArray                exifData;
-    QByteArray                iptcData;
-    QByteArray                xmpData;
+    QByteArray           exifData;
+    QByteArray           iptcData;
+    QByteArray           xmpData;
 
-    KPageWidgetItem          *page_caption;
-    KPageWidgetItem          *page_datetime;
-    KPageWidgetItem          *page_lens;
-    KPageWidgetItem          *page_device;
-    KPageWidgetItem          *page_light;
-    KPageWidgetItem          *page_adjust;
+    KPageWidgetItem*     page_caption;
+    KPageWidgetItem*     page_datetime;
+    KPageWidgetItem*     page_lens;
+    KPageWidgetItem*     page_device;
+    KPageWidgetItem*     page_light;
+    KPageWidgetItem*     page_adjust;
 
-    KUrl::List                urls;
+    KUrl::List           urls;
 
-    KUrl::List::iterator      currItem;
+    KUrl::List::iterator currItem;
 
-    EXIFCaption              *captionPage;
-    EXIFDateTime             *datetimePage;
-    EXIFLens                 *lensPage;
-    EXIFDevice               *devicePage;
-    EXIFLight                *lightPage;
-    EXIFAdjust               *adjustPage;
+    EXIFCaption*         captionPage;
+    EXIFDateTime*        datetimePage;
+    EXIFLens*            lensPage;
+    EXIFDevice*          devicePage;
+    EXIFLight*           lightPage;
+    EXIFAdjust*          adjustPage;
 
-    Interface                *interface;
+    Interface*           interface;
 
-    KPAboutData              *about;
+    KPAboutData*         about;
 };
 
-allEXIFEditWidget::allEXIFEditWidget(QWidget* parent, KUrl::List urls, Interface *iface)
-              : KPageWidget(parent), d(new allEXIFEditWidgetPrivate)
+allEXIFEditWidget::allEXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+    : KPageWidget(parent), d(new allEXIFEditWidgetPrivate)
 {
     d->urls      = urls;
     d->interface = iface;
