@@ -106,14 +106,14 @@ MetadataEditDialog::MetadataEditDialog(QWidget* parent,KUrl::List urls, Interfac
     d->interface = iface;
     d->currItem  = d->urls.begin();
 
-    setCaption(tr("Metadata edit dialog"));
+    setCaption(i18n("Metadata edit dialog"));
     d->tabWidget = new KTabWidget(this);
     d->tabExif   = new allEXIFEditWidget(this, urls, iface);
     d->tabIptc   = new allIPTCEditWidget(this, urls, iface);
     d->tabXmp    = new allXMPEditWidget(this, urls, iface);
-    d->tabWidget->addTab(d->tabExif,QObject::tr("Edit EXIF"));
-    d->tabWidget->addTab(d->tabIptc,QObject::tr("Edit IPTC"));
-    d->tabWidget->addTab(d->tabXmp,QObject::tr("Edit XMP"));
+    d->tabWidget->addTab(d->tabExif, i18n("Edit EXIF"));
+    d->tabWidget->addTab(d->tabIptc, i18n("Edit IPTC"));
+    d->tabWidget->addTab(d->tabXmp,  i18n("Edit XMP"));
 
     setMainWidget(d->tabWidget);
     setButtons(urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close
