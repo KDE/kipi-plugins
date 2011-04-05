@@ -31,4 +31,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 019 ==> 269220 : Move MediaWiki C++ interface for KDE to git.
 020 ==> 268316 : OK button not disabled on empty image list, following progress dialog never finishes [patch].
 021 ==> 269991 : DngConverter doesn't compile on 64bits platforms due to linking error [patch].
-022 ==> 
+022 ==> 184763 : Edit Image Caption dialog - not populated with existing caption.
+023 ==> 
+
