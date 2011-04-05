@@ -37,5 +37,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 025 ==> 208500 : XMP tags GUI incorrectly manages language.
 026 ==> 178660 : Quick navigation "disabled" in list of languages (XMP).
 027 ==> 242632 : The Subject classification reference code is not saved.
-028 ==> 
-
+028 ==> 138753 : Add new menu option for Batch Copyrighting of images using IPTC.
+029 ==> 
