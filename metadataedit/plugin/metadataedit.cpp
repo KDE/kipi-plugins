@@ -96,7 +96,6 @@ public:
     allIPTCEditWidget*   tabIptc;
     allXMPEditWidget*    tabXmp;
     KPAboutData*         about;
-    QString              tabName;
 };
 
 MetadataEditDialog::MetadataEditDialog(QWidget* parent,KUrl::List urls, Interface* iface)
@@ -379,18 +378,19 @@ void MetadataEditDialog::slotSetReadOnly(bool state)
 
 void MetadataEditDialog::setWindowTitle(int tabIndex)
 {
+    QString tabName;
     switch (tabIndex)
     {
         case 0:
-            d->tabName = "EXIF";
+            tabName = "EXIF";
             break;
 
         case 1:
-            d->tabName = "IPTC";
+            tabName = "IPTC";
             break;
 
         case 2:
-            d->tabName = "XMP";
+            tabName = "XMP";
             break;
     }
 
@@ -399,7 +399,7 @@ void MetadataEditDialog::setWindowTitle(int tabIndex)
         .arg(d->urls.indexOf(*(d->currItem))+1)
         .arg(d->urls.count())
         .arg(i18n("Edit"))
-        .arg(d->tabName)
+        .arg(tabName)
         .arg(i18n("Metadata")));
 }
 
