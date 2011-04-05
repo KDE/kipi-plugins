@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : IPTC keywords settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,7 +47,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCKeywordsPriv
+class IPTCKeywords::IPTCKeywordsPriv
 {
 public:
 
@@ -63,25 +63,25 @@ public:
 
     QStringList  oldKeywords;
 
-    QPushButton *addKeywordButton;
-    QPushButton *delKeywordButton;
-    QPushButton *repKeywordButton;
+    QPushButton* addKeywordButton;
+    QPushButton* delKeywordButton;
+    QPushButton* repKeywordButton;
 
-    QCheckBox   *keywordsCheck;
+    QCheckBox*   keywordsCheck;
 
-    KLineEdit   *keywordEdit;
+    KLineEdit*   keywordEdit;
 
-    KListWidget *keywordsBox;
+    KListWidget* keywordsBox;
 };
 
 IPTCKeywords::IPTCKeywords(QWidget* parent)
-            : QWidget(parent), d(new IPTCKeywordsPriv)
+    : QWidget(parent), d(new IPTCKeywordsPriv)
 {
-    QGridLayout *grid = new QGridLayout(this);
+    QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -108,7 +108,7 @@ IPTCKeywords::IPTCKeywords(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *note = new QLabel(i18n("<b>Note: "
+    QLabel* note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC_Information_Interchange_Model'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
@@ -187,7 +187,7 @@ IPTCKeywords::~IPTCKeywords()
 
 void IPTCKeywords::slotDelKeyword()
 {
-    QListWidgetItem *item = d->keywordsBox->currentItem();
+    QListWidgetItem* item = d->keywordsBox->currentItem();
     if (!item) return;
     d->keywordsBox->takeItem(d->keywordsBox->row(item));
     delete item;
@@ -228,7 +228,7 @@ void IPTCKeywords::slotAddKeyword()
     bool found = false;
     for (int i = 0 ; i < d->keywordsBox->count(); i++)
     {
-        QListWidgetItem *item = d->keywordsBox->item(i);
+        QListWidgetItem* item = d->keywordsBox->item(i);
         if (newKeyword == item->text())
         {
             found = true;
@@ -273,7 +273,7 @@ void IPTCKeywords::applyMetadata(QByteArray& iptcData)
 
     for (int i = 0 ; i < d->keywordsBox->count(); i++)
     {
-        QListWidgetItem *item = d->keywordsBox->item(i);
+        QListWidgetItem* item = d->keywordsBox->item(i);
         newKeywords.append(item->text());
     }
 

@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC credits settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,7 +49,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCCreditsPriv
+class IPTCCredits::IPTCCreditsPriv
 {
 public:
 
@@ -69,30 +69,30 @@ public:
         contactCheck     = 0;
     }
 
-    QCheckBox        *copyrightCheck;
-    QCheckBox        *bylineCheck;
-    QCheckBox        *bylineTitleCheck;
-    QCheckBox        *creditCheck;
-    QCheckBox        *sourceCheck;
-    QCheckBox        *contactCheck;
+    QCheckBox*        copyrightCheck;
+    QCheckBox*        bylineCheck;
+    QCheckBox*        bylineTitleCheck;
+    QCheckBox*        creditCheck;
+    QCheckBox*        sourceCheck;
+    QCheckBox*        contactCheck;
 
-    KLineEdit        *copyrightEdit;
-    KLineEdit        *creditEdit;
-    KLineEdit        *sourceEdit;
+    KLineEdit*        copyrightEdit;
+    KLineEdit*        creditEdit;
+    KLineEdit*        sourceEdit;
 
-    MultiStringsEdit *bylineEdit;
-    MultiStringsEdit *bylineTitleEdit;
-    MultiStringsEdit *contactEdit;
+    MultiStringsEdit* bylineEdit;
+    MultiStringsEdit* bylineTitleEdit;
+    MultiStringsEdit* contactEdit;
 };
 
 IPTCCredits::IPTCCredits(QWidget* parent)
-           : QWidget(parent), d(new IPTCCreditsPriv)
+    : QWidget(parent), d(new IPTCCreditsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -205,13 +205,13 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->copyrightEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->copyrightEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->creditEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->creditEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->sourceEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->sourceEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 

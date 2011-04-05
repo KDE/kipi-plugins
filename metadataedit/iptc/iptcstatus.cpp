@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC status settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,7 +49,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCStatusPriv
+class IPTCStatus::IPTCStatusPriv
 {
 public:
 
@@ -65,16 +65,16 @@ public:
         objectNameCheck         = 0;
     }
 
-    QCheckBox *statusCheck;
-    QCheckBox *JobIDCheck;
-    QCheckBox *specialInstructionCheck;
-    QCheckBox *objectNameCheck;
+    QCheckBox* statusCheck;
+    QCheckBox* JobIDCheck;
+    QCheckBox* specialInstructionCheck;
+    QCheckBox* objectNameCheck;
 
-    KLineEdit *objectNameEdit;
-    KLineEdit *statusEdit;
-    KLineEdit *JobIDEdit;
+    KLineEdit* objectNameEdit;
+    KLineEdit* statusEdit;
+    KLineEdit* JobIDEdit;
 
-    KTextEdit *specialInstructionEdit;
+    KTextEdit* specialInstructionEdit;
 };
 
 IPTCStatus::IPTCStatus(QWidget* parent)
@@ -84,7 +84,7 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -183,13 +183,13 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->objectNameEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->objectNameEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->statusEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->statusEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->JobIDEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->JobIDEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
     connect(d->specialInstructionEdit, SIGNAL(textChanged()),

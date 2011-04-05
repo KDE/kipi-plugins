@@ -6,7 +6,7 @@
  * Date        : 2006-10-13
  * Description : IPTC origin settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -65,7 +65,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCOriginPriv
+class IPTCOrigin::IPTCOriginPriv
 {
 public:
 
@@ -359,44 +359,44 @@ public:
 
     CountryCodeMap                 countryCodeMap;
 
-    QCheckBox                     *dateCreatedCheck;
-    QCheckBox                     *dateDigitalizedCheck;
-    QCheckBox                     *timeCreatedCheck;
-    QCheckBox                     *timeDigitalizedCheck;
-    QCheckBox                     *syncHOSTDateCheck;
-    QCheckBox                     *syncEXIFDateCheck;
-    QCheckBox                     *cityCheck;
-    QCheckBox                     *sublocationCheck;
-    QCheckBox                     *provinceCheck;
+    QCheckBox*                     dateCreatedCheck;
+    QCheckBox*                     dateDigitalizedCheck;
+    QCheckBox*                     timeCreatedCheck;
+    QCheckBox*                     timeDigitalizedCheck;
+    QCheckBox*                     syncHOSTDateCheck;
+    QCheckBox*                     syncEXIFDateCheck;
+    QCheckBox*                     cityCheck;
+    QCheckBox*                     sublocationCheck;
+    QCheckBox*                     provinceCheck;
 
-    QTimeEdit                     *timeCreatedSel;
-    QTimeEdit                     *timeDigitalizedSel;
+    QTimeEdit*                     timeCreatedSel;
+    QTimeEdit*                     timeDigitalizedSel;
 
-    QPushButton                   *setTodayCreatedBtn;
-    QPushButton                   *setTodayDigitalizedBtn;
+    QPushButton*                   setTodayCreatedBtn;
+    QPushButton*                   setTodayDigitalizedBtn;
 
-    KDateWidget                   *dateCreatedSel;
-    KDateWidget                   *dateDigitalizedSel;
+    KDateWidget*                   dateCreatedSel;
+    KDateWidget*                   dateDigitalizedSel;
 
-    KLineEdit                     *cityEdit;
-    KLineEdit                     *sublocationEdit;
-    KLineEdit                     *provinceEdit;
+    KLineEdit*                     cityEdit;
+    KLineEdit*                     sublocationEdit;
+    KLineEdit*                     provinceEdit;
 
-    MultiValuesEdit               *locationEdit;
+    MultiValuesEdit*               locationEdit;
 
-    MetadataCheckBox              *countryCheck;
+    MetadataCheckBox*              countryCheck;
 
-    SqueezedComboBox              *countryCB;
+    SqueezedComboBox*              countryCB;
 };
 
 IPTCOrigin::IPTCOrigin(QWidget* parent)
-          : QWidget(parent), d(new IPTCOriginPriv)
+    : QWidget(parent), d(new IPTCOriginPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -603,10 +603,10 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     connect(d->dateDigitalizedSel, SIGNAL(changed(const QDate&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeCreatedSel, SIGNAL(timeChanged(const QTime &)),
+    connect(d->timeCreatedSel, SIGNAL(timeChanged(const QTime&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeDigitalizedSel, SIGNAL(timeChanged(const QTime &)),
+    connect(d->timeDigitalizedSel, SIGNAL(timeChanged(const QTime&)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -622,13 +622,13 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     connect(d->countryCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->cityEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->cityEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->sublocationEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->sublocationEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->provinceEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->provinceEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 

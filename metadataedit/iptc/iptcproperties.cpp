@@ -6,7 +6,7 @@
  * Date        : 2007-11-10
  * Description : IPTC workflow status properties settings page.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -59,7 +59,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCPropertiesPriv
+class IPTCProperties::IPTCPropertiesPriv
 {
 public:
 
@@ -89,46 +89,46 @@ public:
 
     }
 
-    QCheckBox                     *dateReleasedCheck;
-    QCheckBox                     *timeReleasedCheck;
-    QCheckBox                     *dateExpiredCheck;
-    QCheckBox                     *timeExpiredCheck;
-    QCheckBox                     *originalTransCheck;
+    QCheckBox*                     dateReleasedCheck;
+    QCheckBox*                     timeReleasedCheck;
+    QCheckBox*                     dateExpiredCheck;
+    QCheckBox*                     timeExpiredCheck;
+    QCheckBox*                     originalTransCheck;
 
-    QTimeEdit                     *timeReleasedSel;
-    QTimeEdit                     *timeExpiredSel;
+    QTimeEdit*                     timeReleasedSel;
+    QTimeEdit*                     timeExpiredSel;
 
-    QPushButton                   *setTodayReleasedBtn;
-    QPushButton                   *setTodayExpiredBtn;
+    QPushButton*                   setTodayReleasedBtn;
+    QPushButton*                   setTodayExpiredBtn;
 
-    KComboBox                     *priorityCB;
-    KComboBox                     *objectCycleCB;
-    KComboBox                     *objectTypeCB;
+    KComboBox*                     priorityCB;
+    KComboBox*                     objectCycleCB;
+    KComboBox*                     objectTypeCB;
 
-    KLineEdit                     *objectTypeDescEdit;
-    KLineEdit                     *originalTransEdit;
+    KLineEdit*                     objectTypeDescEdit;
+    KLineEdit*                     originalTransEdit;
 
-    KLanguageButton               *languageBtn;
+    KLanguageButton*               languageBtn;
 
-    KDateWidget                   *dateReleasedSel;
-    KDateWidget                   *dateExpiredSel;
+    KDateWidget*                   dateReleasedSel;
+    KDateWidget*                   dateExpiredSel;
 
-    MetadataCheckBox              *priorityCheck;
-    MetadataCheckBox              *objectCycleCheck;
-    MetadataCheckBox              *objectTypeCheck;
-    MetadataCheckBox              *languageCheck;
+    MetadataCheckBox*              priorityCheck;
+    MetadataCheckBox*              objectCycleCheck;
+    MetadataCheckBox*              objectTypeCheck;
+    MetadataCheckBox*              languageCheck;
 
-    ObjectAttributesEdit          *objectAttribute;
+    ObjectAttributesEdit*          objectAttribute;
 };
 
 IPTCProperties::IPTCProperties(QWidget* parent)
-              : QWidget(parent), d(new IPTCPropertiesPriv)
+    : QWidget(parent), d(new IPTCPropertiesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -236,7 +236,7 @@ IPTCProperties::IPTCProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *note = new QLabel(i18n("<b>Note: "
+    QLabel* note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/IPTC_Information_Interchange_Model'>IPTC</a></b> "
                  "text tags only support the printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
@@ -351,10 +351,10 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     connect(d->dateExpiredSel, SIGNAL(changed(const QDate&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeReleasedSel, SIGNAL(timeChanged(const QTime &)),
+    connect(d->timeReleasedSel, SIGNAL(timeChanged(const QTime&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeExpiredSel, SIGNAL(timeChanged(const QTime &)),
+    connect(d->timeExpiredSel, SIGNAL(timeChanged(const QTime&)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -379,10 +379,10 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     connect(d->objectTypeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->objectTypeDescEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->objectTypeDescEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->originalTransEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->originalTransEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 

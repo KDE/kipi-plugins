@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : IPTC categories settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,7 +47,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCCategoriesPriv
+class IPTCCategories::IPTCCategoriesPriv
 {
 public:
 
@@ -65,27 +65,27 @@ public:
 
     QStringList  oldSubCategories;
 
-    QPushButton *addSubCategoryButton;
-    QPushButton *delSubCategoryButton;
-    QPushButton *repSubCategoryButton;
+    QPushButton* addSubCategoryButton;
+    QPushButton* delSubCategoryButton;
+    QPushButton* repSubCategoryButton;
 
-    QCheckBox   *subCategoriesCheck;
-    QCheckBox   *categoryCheck;
+    QCheckBox*   subCategoriesCheck;
+    QCheckBox*   categoryCheck;
 
-    KLineEdit   *categoryEdit;
-    KLineEdit   *subCategoryEdit;
+    KLineEdit*   categoryEdit;
+    KLineEdit*   subCategoryEdit;
 
-    KListWidget *subCategoriesBox;
+    KListWidget* subCategoriesBox;
 };
 
 IPTCCategories::IPTCCategories(QWidget* parent)
-              : QWidget(parent), d(new IPTCCategoriesPriv)
+    : QWidget(parent), d(new IPTCCategoriesPriv)
 {
-    QGridLayout *grid = new QGridLayout(this);
+    QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -219,7 +219,7 @@ IPTCCategories::IPTCCategories(QWidget* parent)
     connect(d->repSubCategoryButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
-    connect(d->categoryEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->categoryEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 

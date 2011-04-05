@@ -6,7 +6,7 @@
  * Date        : 2007-11-10
  * Description : IPTC envelope settings page.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -60,7 +60,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCEnvelopePriv
+class IPTCEnvelope::IPTCEnvelopePriv
 {
 public:
 
@@ -131,43 +131,43 @@ public:
 
     FileFormatMap                  fileFormatMap;
 
-    QTimeEdit                     *timeSentSel;
+    QTimeEdit*                     timeSentSel;
 
-    KComboBox                     *priorityCB;
+    KComboBox*                     priorityCB;
 
-    QCheckBox                     *unoIDCheck;
-    QCheckBox                     *destinationCheck;
-    QCheckBox                     *serviceIDCheck;
-    QCheckBox                     *productIDCheck;
-    QCheckBox                     *envelopeIDCheck;
-    QCheckBox                     *dateSentCheck;
-    QCheckBox                     *timeSentCheck;
+    QCheckBox*                     unoIDCheck;
+    QCheckBox*                     destinationCheck;
+    QCheckBox*                     serviceIDCheck;
+    QCheckBox*                     productIDCheck;
+    QCheckBox*                     envelopeIDCheck;
+    QCheckBox*                     dateSentCheck;
+    QCheckBox*                     timeSentCheck;
 
-    QPushButton                   *setTodaySentBtn;
+    QPushButton*                   setTodaySentBtn;
 
-    KLineEdit                     *unoIDEdit;
-    KLineEdit                     *envelopeIDEdit;
-    KLineEdit                     *serviceIDEdit;
-    KLineEdit                     *productIDEdit;
+    KLineEdit*                     unoIDEdit;
+    KLineEdit*                     envelopeIDEdit;
+    KLineEdit*                     serviceIDEdit;
+    KLineEdit*                     productIDEdit;
 
-    KDateWidget                   *dateSentSel;
+    KDateWidget*                   dateSentSel;
 
-    KTextEdit                     *destinationEdit;
+    KTextEdit*                     destinationEdit;
 
-    MetadataCheckBox              *priorityCheck;
-    MetadataCheckBox              *formatCheck;
+    MetadataCheckBox*              priorityCheck;
+    MetadataCheckBox*              formatCheck;
 
-    SqueezedComboBox              *formatCB;
+    SqueezedComboBox*              formatCB;
 };
 
 IPTCEnvelope::IPTCEnvelope(QWidget* parent)
-            : QWidget(parent), d(new IPTCEnvelopePriv)
+    : QWidget(parent), d(new IPTCEnvelopePriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -363,19 +363,19 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->envelopeIDEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->envelopeIDEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
     connect(d->destinationEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
 
-    connect(d->serviceIDEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->serviceIDEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->productIDEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->productIDEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->unoIDEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->unoIDEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
@@ -387,7 +387,7 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     connect(d->dateSentSel, SIGNAL(changed(const QDate&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeSentSel, SIGNAL(timeChanged(const QTime &)),
+    connect(d->timeSentSel, SIGNAL(timeChanged(const QTime&)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------

@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC content settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,43 +54,43 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class IPTCContentPriv
+class IPTCContent::IPTCContentPriv
 {
 public:
 
     IPTCContentPriv()
     {
-        headlineCheck           = 0;
-        captionEdit             = 0;
-        writerEdit              = 0;
-        headlineEdit            = 0;
-        captionCheck            = 0;
-        syncJFIFCommentCheck    = 0;
-        syncHOSTCommentCheck    = 0;
-        syncEXIFCommentCheck    = 0;
+        headlineCheck        = 0;
+        captionEdit          = 0;
+        writerEdit           = 0;
+        headlineEdit         = 0;
+        captionCheck         = 0;
+        syncJFIFCommentCheck = 0;
+        syncHOSTCommentCheck = 0;
+        syncEXIFCommentCheck = 0;
     }
 
-    QCheckBox        *captionCheck;
-    QCheckBox        *headlineCheck;
-    QCheckBox        *syncJFIFCommentCheck;
-    QCheckBox        *syncHOSTCommentCheck;
-    QCheckBox        *syncEXIFCommentCheck;
+    QCheckBox*        captionCheck;
+    QCheckBox*        headlineCheck;
+    QCheckBox*        syncJFIFCommentCheck;
+    QCheckBox*        syncHOSTCommentCheck;
+    QCheckBox*        syncEXIFCommentCheck;
 
-    KTextEdit        *captionEdit;
+    KTextEdit*        captionEdit;
 
-    KLineEdit        *headlineEdit;
+    KLineEdit*        headlineEdit;
 
-    MultiStringsEdit *writerEdit;
+    MultiStringsEdit* writerEdit;
 };
 
 IPTCContent::IPTCContent(QWidget* parent)
-           : QWidget(parent), d(new IPTCContentPriv)
+    : QWidget(parent), d(new IPTCContentPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
     // IPTC only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
