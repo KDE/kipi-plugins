@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF date and time settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -50,7 +50,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFDateTimePriv
+class EXIFDateTime::EXIFDateTimePriv
 {
 public:
 
@@ -78,40 +78,40 @@ public:
         setTodayDigitalizedBtn     = 0;
     }
 
-    QCheckBox       *dateCreatedCheck;
-    QCheckBox       *dateOriginalCheck;
-    QCheckBox       *dateDigitalizedCheck;
-    QCheckBox       *dateCreatedSubSecCheck;
-    QCheckBox       *dateOriginalSubSecCheck;
-    QCheckBox       *dateDigitalizedSubSecCheck;
-    QCheckBox       *syncHOSTDateCheck;
-    QCheckBox       *syncXMPDateCheck;
-    QCheckBox       *syncIPTCDateCheck;
+    QCheckBox*       dateCreatedCheck;
+    QCheckBox*       dateOriginalCheck;
+    QCheckBox*       dateDigitalizedCheck;
+    QCheckBox*       dateCreatedSubSecCheck;
+    QCheckBox*       dateOriginalSubSecCheck;
+    QCheckBox*       dateDigitalizedSubSecCheck;
+    QCheckBox*       syncHOSTDateCheck;
+    QCheckBox*       syncXMPDateCheck;
+    QCheckBox*       syncIPTCDateCheck;
 
-    QPushButton     *setTodayCreatedBtn;
-    QPushButton     *setTodayOriginalBtn;
-    QPushButton     *setTodayDigitalizedBtn;
+    QPushButton*     setTodayCreatedBtn;
+    QPushButton*     setTodayOriginalBtn;
+    QPushButton*     setTodayDigitalizedBtn;
 
-    KIntSpinBox     *dateCreatedSubSecEdit;
-    KIntSpinBox     *dateOriginalSubSecEdit;
-    KIntSpinBox     *dateDigitalizedSubSecEdit;
+    KIntSpinBox*     dateCreatedSubSecEdit;
+    KIntSpinBox*     dateOriginalSubSecEdit;
+    KIntSpinBox*     dateDigitalizedSubSecEdit;
 
-    KDateTimeWidget *dateCreatedSel;
-    KDateTimeWidget *dateOriginalSel;
-    KDateTimeWidget *dateDigitalizedSel;
+    KDateTimeWidget* dateCreatedSel;
+    KDateTimeWidget* dateOriginalSel;
+    KDateTimeWidget* dateDigitalizedSel;
 };
 
 EXIFDateTime::EXIFDateTime(QWidget* parent)
-            : QWidget(parent), d(new EXIFDateTimePriv)
+    : QWidget(parent), d(new EXIFDateTimePriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
     d->dateCreatedCheck       = new QCheckBox(i18n("Creation date and time"), this);
-    d->dateCreatedSubSecCheck = new QCheckBox(i18n("Creation sub-second"), this);
+    d->dateCreatedSubSecCheck = new QCheckBox(i18n("Creation second"), this);
     d->dateCreatedSel         = new KDateTimeWidget(this);
-    d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
+    d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 59, 1, 0, this);
     d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by %1",
                                               KGlobal::mainComponent().aboutData()->programName()),
                                               this);
@@ -135,9 +135,9 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     // --------------------------------------------------------
 
     d->dateOriginalCheck       = new QCheckBox(i18n("Original date and time"), this);
-    d->dateOriginalSubSecCheck = new QCheckBox(i18n("Original sub-second"), this);
+    d->dateOriginalSubSecCheck = new QCheckBox(i18n("Original second"), this);
     d->dateOriginalSel         = new KDateTimeWidget(this);
-    d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
+    d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 59, 1, 0, this);
 
     d->setTodayOriginalBtn      = new QPushButton();
     d->setTodayOriginalBtn->setIcon(SmallIcon("go-jump-today"));
@@ -154,9 +154,9 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     // --------------------------------------------------------
 
     d->dateDigitalizedCheck       = new QCheckBox(i18n("Digitization date and time"), this);
-    d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization sub-second"), this);
+    d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization second"), this);
     d->dateDigitalizedSel         = new KDateTimeWidget(this);
-    d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
+    d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 59, 1, 0, this);
 
     d->setTodayDigitalizedBtn     = new QPushButton();
     d->setTodayDigitalizedBtn->setIcon(SmallIcon("go-jump-today"));
