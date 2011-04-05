@@ -5,9 +5,10 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/comment
                     ${CMAKE_CURRENT_SOURCE_DIR}/exif
                     ${CMAKE_CURRENT_SOURCE_DIR}/iptc
                     ${CMAKE_CURRENT_SOURCE_DIR}/xmp
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
-SET(kipiplugin_metadataedit_PART_SRCS plugin_metadataedit.cpp
+SET(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
                                       common/metadatacheckbox.cpp
                                       common/altlangstringedit.cpp
                                       common/multistringsedit.cpp
@@ -57,4 +58,4 @@ TARGET_LINK_LIBRARIES(kipiplugin_metadataedit
 
 INSTALL(TARGETS kipiplugin_metadataedit DESTINATION ${PLUGIN_INSTALL_DIR})
 
-INSTALL(FILES kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES plugin/kipiplugin_metadataedit.desktop DESTINATION ${SERVICES_INSTALL_DIR})
