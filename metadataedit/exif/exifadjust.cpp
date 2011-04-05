@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF adjustments settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,7 +51,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFAdjustPriv
+class EXIFAdjust::EXIFAdjustPriv
 {
 public:
 
@@ -71,25 +71,25 @@ public:
         customRenderedCB    = 0;
     }
 
-    QCheckBox        *brightnessCheck;
+    QCheckBox*        brightnessCheck;
 
-    KComboBox        *gainControlCB;
-    KComboBox        *contrastCB;
-    KComboBox        *saturationCB;
-    KComboBox        *sharpnessCB;
-    KComboBox        *customRenderedCB;
+    KComboBox*        gainControlCB;
+    KComboBox*        contrastCB;
+    KComboBox*        saturationCB;
+    KComboBox*        sharpnessCB;
+    KComboBox*        customRenderedCB;
 
-    QDoubleSpinBox   *brightnessEdit;
+    QDoubleSpinBox*   brightnessEdit;
 
-    MetadataCheckBox *gainControlCheck;
-    MetadataCheckBox *contrastCheck;
-    MetadataCheckBox *saturationCheck;
-    MetadataCheckBox *sharpnessCheck;
-    MetadataCheckBox *customRenderedCheck;
+    MetadataCheckBox* gainControlCheck;
+    MetadataCheckBox* contrastCheck;
+    MetadataCheckBox* saturationCheck;
+    MetadataCheckBox* sharpnessCheck;
+    MetadataCheckBox* customRenderedCheck;
 };
 
 EXIFAdjust::EXIFAdjust(QWidget* parent)
-          : QWidget(parent), d(new EXIFAdjustPriv)
+    : QWidget(parent), d(new EXIFAdjustPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 

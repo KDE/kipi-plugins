@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : EXIF caption settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,8 +30,6 @@
 
 namespace KIPIMetadataEditPlugin
 {
-
-class EXIFCaptionPriv;
 
 class EXIFCaption : public QWidget
 {
@@ -63,6 +61,7 @@ Q_SIGNALS:
 
 private:
 
+    class EXIFCaptionPriv;
     EXIFCaptionPriv* const d;
 };
 

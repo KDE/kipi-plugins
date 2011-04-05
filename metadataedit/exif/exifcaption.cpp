@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : EXIF caption settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,6 +28,7 @@
 #include <QLabel>
 #include <QValidator>
 #include <QGridLayout>
+
 // KDE includes
 
 #include <kaboutdata.h>
@@ -52,7 +53,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFCaptionPriv
+class EXIFCaption::EXIFCaptionPriv
 {
 public:
 
@@ -74,32 +75,32 @@ public:
         syncIPTCCaptionCheck = 0;
     }
 
-    QCheckBox *documentNameCheck;
-    QCheckBox *imageDescCheck;
-    QCheckBox *artistCheck;
-    QCheckBox *copyrightCheck;
-    QCheckBox *userCommentCheck;
-    QCheckBox *syncJFIFCommentCheck;
-    QCheckBox *syncHOSTCommentCheck;
-    QCheckBox *syncXMPCaptionCheck;
-    QCheckBox *syncIPTCCaptionCheck;
+    QCheckBox* documentNameCheck;
+    QCheckBox* imageDescCheck;
+    QCheckBox* artistCheck;
+    QCheckBox* copyrightCheck;
+    QCheckBox* userCommentCheck;
+    QCheckBox* syncJFIFCommentCheck;
+    QCheckBox* syncHOSTCommentCheck;
+    QCheckBox* syncXMPCaptionCheck;
+    QCheckBox* syncIPTCCaptionCheck;
 
-    KTextEdit *userCommentEdit;
+    KTextEdit* userCommentEdit;
 
-    KLineEdit *documentNameEdit;
-    KLineEdit *imageDescEdit;
-    KLineEdit *artistEdit;
-    KLineEdit *copyrightEdit;
+    KLineEdit* documentNameEdit;
+    KLineEdit* imageDescEdit;
+    KLineEdit* artistEdit;
+    KLineEdit* copyrightEdit;
 };
 
 EXIFCaption::EXIFCaption(QWidget* parent)
-           : QWidget(parent), d(new EXIFCaptionPriv)
+    : QWidget(parent), d(new EXIFCaptionPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -159,7 +160,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *note = new QLabel(i18n("<b>Note: "
+    QLabel* note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
                  "text tags marked by (*) only support printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
@@ -241,16 +242,16 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     connect(d->userCommentEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
 
-    connect(d->documentNameEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->documentNameEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->imageDescEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->imageDescEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->artistEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->artistEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->copyrightEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->copyrightEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 

@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF device settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,7 +55,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFDevicePriv
+class EXIFDevice::EXIFDevicePriv
 {
 public:
 
@@ -87,36 +87,36 @@ public:
         modelEdit                = 0;
     }
 
-    QCheckBox        *makeCheck;
-    QCheckBox        *modelCheck;
-    QCheckBox        *exposureTimeCheck;
-    QCheckBox        *exposureBiasCheck;
+    QCheckBox*        makeCheck;
+    QCheckBox*        modelCheck;
+    QCheckBox*        exposureTimeCheck;
+    QCheckBox*        exposureBiasCheck;
 
-    KComboBox        *deviceTypeCB;
-    KComboBox        *exposureProgramCB;
-    KComboBox        *exposureModeCB;
-    KComboBox        *ISOSpeedCB;
-    KComboBox        *meteringModeCB;
-    KComboBox        *sensingMethodCB;
-    KComboBox        *sceneTypeCB;
-    KComboBox        *subjectDistanceTypeCB;
+    KComboBox*        deviceTypeCB;
+    KComboBox*        exposureProgramCB;
+    KComboBox*        exposureModeCB;
+    KComboBox*        ISOSpeedCB;
+    KComboBox*        meteringModeCB;
+    KComboBox*        sensingMethodCB;
+    KComboBox*        sceneTypeCB;
+    KComboBox*        subjectDistanceTypeCB;
 
-    KLineEdit        *makeEdit;
-    KLineEdit        *modelEdit;
+    KLineEdit*        makeEdit;
+    KLineEdit*        modelEdit;
 
-    KIntSpinBox      *exposureTimeNumEdit;
-    KIntSpinBox      *exposureTimeDenEdit;
+    KIntSpinBox*      exposureTimeNumEdit;
+    KIntSpinBox*      exposureTimeDenEdit;
 
-    QDoubleSpinBox   *exposureBiasEdit;
+    QDoubleSpinBox*   exposureBiasEdit;
 
-    MetadataCheckBox *deviceTypeCheck;
-    MetadataCheckBox *exposureProgramCheck;
-    MetadataCheckBox *exposureModeCheck;
-    MetadataCheckBox *meteringModeCheck;
-    MetadataCheckBox *ISOSpeedCheck;
-    MetadataCheckBox *sensingMethodCheck;
-    MetadataCheckBox *sceneTypeCheck;
-    MetadataCheckBox *subjectDistanceTypeCheck;
+    MetadataCheckBox* deviceTypeCheck;
+    MetadataCheckBox* exposureProgramCheck;
+    MetadataCheckBox* exposureModeCheck;
+    MetadataCheckBox* meteringModeCheck;
+    MetadataCheckBox* ISOSpeedCheck;
+    MetadataCheckBox* sensingMethodCheck;
+    MetadataCheckBox* sceneTypeCheck;
+    MetadataCheckBox* subjectDistanceTypeCheck;
 };
 
 EXIFDevice::EXIFDevice(QWidget* parent)
@@ -126,7 +126,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // EXIF only accept printable Ascii char.
     QRegExp asciiRx("[\x20-\x7F]+$");
-    QValidator *asciiValidator = new QRegExpValidator(asciiRx, this);
+    QValidator* asciiValidator = new QRegExpValidator(asciiRx, this);
 
     // --------------------------------------------------------
 
@@ -313,7 +313,7 @@ EXIFDevice::EXIFDevice(QWidget* parent)
 
     // --------------------------------------------------------
 
-    QLabel *note = new QLabel(i18n("<b>Note: "
+    QLabel* note = new QLabel(i18n("<b>Note: "
                  "<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> "
                  "text tags marked by (*) only support printable "
                  "<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
@@ -465,10 +465,10 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     connect(d->subjectDistanceTypeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->makeEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->makeEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->modelEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->modelEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
     connect(d->exposureTimeNumEdit, SIGNAL(valueChanged(int)),

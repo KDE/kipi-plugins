@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF lens settings page.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,7 +51,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class EXIFLensPriv
+class EXIFLens::EXIFLensPriv
 {
 public:
 
@@ -130,24 +130,24 @@ public:
 
     QStringList       apertureValues;
 
-    QCheckBox        *focalLength35mmCheck;
-    QCheckBox        *focalLengthCheck;
-    QCheckBox        *digitalZoomRatioCheck;
+    QCheckBox*        focalLength35mmCheck;
+    QCheckBox*        focalLengthCheck;
+    QCheckBox*        digitalZoomRatioCheck;
 
-    KComboBox        *apertureCB;
-    KComboBox        *maxApertureCB;
+    KComboBox*        apertureCB;
+    KComboBox*        maxApertureCB;
 
-    KIntSpinBox      *focalLength35mmEdit;
+    KIntSpinBox*      focalLength35mmEdit;
 
-    QDoubleSpinBox   *focalLengthEdit;
-    QDoubleSpinBox   *digitalZoomRatioEdit;
+    QDoubleSpinBox*   focalLengthEdit;
+    QDoubleSpinBox*   digitalZoomRatioEdit;
 
-    MetadataCheckBox *apertureCheck;
-    MetadataCheckBox *maxApertureCheck;
+    MetadataCheckBox* apertureCheck;
+    MetadataCheckBox* maxApertureCheck;
 };
 
 EXIFLens::EXIFLens(QWidget* parent)
-        : QWidget(parent), d(new EXIFLensPriv)
+    : QWidget(parent), d(new EXIFLensPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
