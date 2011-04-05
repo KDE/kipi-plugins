@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP credits settings page.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,7 +48,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPCreditsPriv
+class XMPCredits::XMPCreditsPriv
 {
 public:
 
@@ -77,34 +77,34 @@ public:
         countryCheck     = 0;
     }
 
-    QCheckBox        *bylineTitleCheck;
-    QCheckBox        *creditCheck;
-    QCheckBox        *sourceCheck;
-    QCheckBox        *contactCheck;
-    QCheckBox        *emailCheck;
-    QCheckBox        *urlCheck;
-    QCheckBox        *phoneCheck;
-    QCheckBox        *addressCheck;
-    QCheckBox        *postalCodeCheck;
-    QCheckBox        *cityCheck;
-    QCheckBox        *countryCheck;
+    QCheckBox*        bylineTitleCheck;
+    QCheckBox*        creditCheck;
+    QCheckBox*        sourceCheck;
+    QCheckBox*        contactCheck;
+    QCheckBox*        emailCheck;
+    QCheckBox*        urlCheck;
+    QCheckBox*        phoneCheck;
+    QCheckBox*        addressCheck;
+    QCheckBox*        postalCodeCheck;
+    QCheckBox*        cityCheck;
+    QCheckBox*        countryCheck;
 
-    KLineEdit        *bylineTitleEdit;
-    KLineEdit        *creditEdit;
-    KLineEdit        *sourceEdit;
-    KLineEdit        *emailEdit;
-    KLineEdit        *urlEdit;
-    KLineEdit        *phoneEdit;
-    KLineEdit        *addressEdit;
-    KLineEdit        *postalCodeEdit;
-    KLineEdit        *cityEdit;
-    KLineEdit        *countryEdit;
+    KLineEdit*        bylineTitleEdit;
+    KLineEdit*        creditEdit;
+    KLineEdit*        sourceEdit;
+    KLineEdit*        emailEdit;
+    KLineEdit*        urlEdit;
+    KLineEdit*        phoneEdit;
+    KLineEdit*        addressEdit;
+    KLineEdit*        postalCodeEdit;
+    KLineEdit*        cityEdit;
+    KLineEdit*        countryEdit;
 
-    MultiStringsEdit *bylineEdit;
+    MultiStringsEdit* bylineEdit;
 };
 
 XMPCredits::XMPCredits(QWidget* parent)
-          : QWidget(parent), d(new XMPCreditsPriv)
+    : QWidget(parent), d(new XMPCreditsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
@@ -276,34 +276,34 @@ XMPCredits::XMPCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->bylineTitleEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->bylineTitleEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->emailEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->emailEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->urlEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->urlEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->phoneEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->phoneEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->addressEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->addressEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->postalCodeEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->postalCodeEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->cityEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->cityEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->countryEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->countryEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->creditEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->creditEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->sourceEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->sourceEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 

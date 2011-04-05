@@ -6,7 +6,7 @@
  * Date        : 2007-10-16
  * Description : XMP categories settings page.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,7 +45,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPCategoriesPriv
+class XMPCategories::XMPCategoriesPriv
 {
 public:
 
@@ -63,23 +63,23 @@ public:
 
     QStringList  oldSubCategories;
 
-    QPushButton *addSubCategoryButton;
-    QPushButton *delSubCategoryButton;
-    QPushButton *repSubCategoryButton;
+    QPushButton* addSubCategoryButton;
+    QPushButton* delSubCategoryButton;
+    QPushButton* repSubCategoryButton;
 
-    QCheckBox   *subCategoriesCheck;
-    QCheckBox   *categoryCheck;
+    QCheckBox*   subCategoriesCheck;
+    QCheckBox*   categoryCheck;
 
-    KLineEdit   *categoryEdit;
-    KLineEdit   *subCategoryEdit;
+    KLineEdit*   categoryEdit;
+    KLineEdit*   subCategoryEdit;
 
-    KListWidget *subCategoriesBox;
+    KListWidget* subCategoriesBox;
 };
 
 XMPCategories::XMPCategories(QWidget* parent)
-             : QWidget(parent), d(new XMPCategoriesPriv)
+    : QWidget(parent), d(new XMPCategoriesPriv)
 {
-    QGridLayout *grid = new QGridLayout(this);
+    QGridLayout* grid = new QGridLayout(this);
 
     // --------------------------------------------------------
 
@@ -111,14 +111,14 @@ XMPCategories::XMPCategories(QWidget* parent)
     // --------------------------------------------------------
 
     grid->setAlignment( Qt::AlignTop );
-    grid->addWidget(d->categoryCheck,           0, 0, 1, 2);
-    grid->addWidget(d->categoryEdit,            0, 2, 1, 1);
-    grid->addWidget(d->subCategoriesCheck,      1, 0, 1, 3);
-    grid->addWidget(d->subCategoryEdit,         2, 0, 1, 3);
-    grid->addWidget(d->subCategoriesBox,        3, 0, 5, 3);
-    grid->addWidget(d->addSubCategoryButton,    3, 3, 1, 1);
-    grid->addWidget(d->delSubCategoryButton,    4, 3, 1, 1);
-    grid->addWidget(d->repSubCategoryButton,    5, 3, 1, 1);
+    grid->addWidget(d->categoryCheck,        0, 0, 1, 2);
+    grid->addWidget(d->categoryEdit,         0, 2, 1, 1);
+    grid->addWidget(d->subCategoriesCheck,   1, 0, 1, 3);
+    grid->addWidget(d->subCategoryEdit,      2, 0, 1, 3);
+    grid->addWidget(d->subCategoriesBox,     3, 0, 5, 3);
+    grid->addWidget(d->addSubCategoryButton, 3, 3, 1, 1);
+    grid->addWidget(d->delSubCategoryButton, 4, 3, 1, 1);
+    grid->addWidget(d->repSubCategoryButton, 5, 3, 1, 1);
     grid->setColumnStretch(1, 10);
     grid->setRowStretch(6, 10);
     grid->setMargin(0);
@@ -195,7 +195,7 @@ XMPCategories::XMPCategories(QWidget* parent)
     connect(d->repSubCategoryButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
-    connect(d->categoryEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->categoryEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 

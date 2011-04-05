@@ -6,7 +6,7 @@
  * Date        : 2007-10-18
  * Description : XMP content settings page.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -53,7 +53,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPContentPriv
+class XMPContent::XMPContentPriv
 {
 public:
 
@@ -69,21 +69,21 @@ public:
         syncEXIFCommentCheck = 0;
     }
 
-    QCheckBox          *headlineCheck;
-    QCheckBox          *syncJFIFCommentCheck;
-    QCheckBox          *syncHOSTCommentCheck;
-    QCheckBox          *syncEXIFCommentCheck;
-    QCheckBox          *writerCheck;
+    QCheckBox*          headlineCheck;
+    QCheckBox*          syncJFIFCommentCheck;
+    QCheckBox*          syncHOSTCommentCheck;
+    QCheckBox*          syncEXIFCommentCheck;
+    QCheckBox*          writerCheck;
 
-    KLineEdit          *headlineEdit;
-    KLineEdit          *writerEdit;
+    KLineEdit*          headlineEdit;
+    KLineEdit*          writerEdit;
 
-    AltLangStringsEdit *captionEdit;
-    AltLangStringsEdit *copyrightEdit;
+    AltLangStringsEdit* captionEdit;
+    AltLangStringsEdit* copyrightEdit;
 };
 
 XMPContent::XMPContent(QWidget* parent)
-          : QWidget(parent), d(new XMPContentPriv)
+    : QWidget(parent), d(new XMPContentPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
@@ -172,10 +172,10 @@ XMPContent::XMPContent(QWidget* parent)
     connect(d->copyrightEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
-    connect(d->headlineEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->headlineEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->writerEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->writerEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 

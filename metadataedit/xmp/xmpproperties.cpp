@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP workflow status properties settings page.
  *
- * Copyright (C) 2007-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -63,7 +63,7 @@ using namespace KExiv2Iface;
 namespace KIPIMetadataEditPlugin
 {
 
-class XMPPropertiesPriv
+class XMPProperties::XMPPropertiesPriv
 {
 public:
 
@@ -146,26 +146,26 @@ public:
     TypeCodeMap                     typeCodeMap;
     LanguageCodeMap                 languageCodeMap;
 
-    QCheckBox                      *originalTransCheck;
+    QCheckBox*                      originalTransCheck;
 
-    KComboBox                      *priorityCB;
-    KComboBox                      *objectTypeCB;
+    KComboBox*                      priorityCB;
+    KComboBox*                      objectTypeCB;
 
-    KLineEdit                      *objectAttributeEdit;
-    KLineEdit                      *originalTransEdit;
+    KLineEdit*                      objectAttributeEdit;
+    KLineEdit*                      originalTransEdit;
 
-    MetadataCheckBox               *priorityCheck;
-    MetadataCheckBox               *objectAttributeCheck;
+    MetadataCheckBox*               priorityCheck;
+    MetadataCheckBox*               objectAttributeCheck;
 
-    MultiValuesEdit                *sceneEdit;
-    MultiValuesEdit                *objectTypeEdit;
-    MultiValuesEdit                *languageEdit;
+    MultiValuesEdit*                sceneEdit;
+    MultiValuesEdit*                objectTypeEdit;
+    MultiValuesEdit*                languageEdit;
 
-    SqueezedComboBox               *objectAttributeCB;
+    SqueezedComboBox*               objectAttributeCB;
 };
 
 XMPProperties::XMPProperties(QWidget* parent)
-             : QWidget(parent), d(new XMPPropertiesPriv)
+    : QWidget(parent), d(new XMPPropertiesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
@@ -321,10 +321,10 @@ XMPProperties::XMPProperties(QWidget* parent)
     connect(d->objectAttributeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->objectAttributeEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->objectAttributeEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 
-    connect(d->originalTransEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->originalTransEdit, SIGNAL(textChanged(const QString&)),
             this, SIGNAL(signalModified()));
 }
 
