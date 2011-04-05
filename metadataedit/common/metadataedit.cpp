@@ -6,7 +6,7 @@
  * Date        : 2011-03-14
  * Description : a dialog to edit EXIF,IPTC and XMP metadata
  *
- * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -70,170 +70,173 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class MetadataEditDialogPrivate
+class MetadataEditDialog::MetadataEditDialogPrivate
 {
 public:
+
     MetadataEditDialogPrivate()
     {
         isReadOnly = false;
-        about = 0;
-        tabWidget = 0;
-        tabExif = 0;
-        tabIptc = 0;
-        tabXmp = 0;
+        about      = 0;
+        tabWidget  = 0;
+        tabExif    = 0;
+        tabIptc    = 0;
+        tabXmp     = 0;
     }
-    
-    bool isReadOnly;
-    
-    KUrl::List                            urls;
-    KUrl::List::iterator                  currItem;
-    
-    Interface                             *interface;
-    
-    KTabWidget                            *tabWidget;
-    allEXIFEditWidget                     *tabExif;
-    allIPTCEditWidget                     *tabIptc;
-    allXMPEditWidget                      *tabXmp;
-    KPAboutData                           *about;
-    QString                               tabName;
+
+    bool                 isReadOnly;
+
+    KUrl::List           urls;
+    KUrl::List::iterator currItem;
+
+    Interface*           interface;
+
+    KTabWidget*          tabWidget;
+    allEXIFEditWidget*   tabExif;
+    allIPTCEditWidget*   tabIptc;
+    allXMPEditWidget*    tabXmp;
+    KPAboutData*         about;
+    QString              tabName;
 };
 
-MetadataEditDialog::MetadataEditDialog(QWidget *parent,KUrl::List urls,
-        Interface *iface): KDialog(parent),d(new MetadataEditDialogPrivate)
+MetadataEditDialog::MetadataEditDialog(QWidget* parent,KUrl::List urls, Interface* iface)
+    : KDialog(parent), d(new MetadataEditDialogPrivate)
 {
     d->urls      = urls;
     d->interface = iface;
     d->currItem  = d->urls.begin();
-    
-    this-> setCaption(tr("Metadata edit dialog"));
+
+    setCaption(tr("Metadata edit dialog"));
     d->tabWidget = new KTabWidget(this);
-    d->tabExif = new allEXIFEditWidget(this, urls, iface);
-    d->tabIptc = new allIPTCEditWidget(this, urls, iface);
-    d->tabXmp = new allXMPEditWidget(this, urls, iface);
+    d->tabExif   = new allEXIFEditWidget(this, urls, iface);
+    d->tabIptc   = new allIPTCEditWidget(this, urls, iface);
+    d->tabXmp    = new allXMPEditWidget(this, urls, iface);
     d->tabWidget->addTab(d->tabExif,QObject::tr("Edit EXIF"));
     d->tabWidget->addTab(d->tabIptc,QObject::tr("Edit IPTC"));
     d->tabWidget->addTab(d->tabXmp,QObject::tr("Edit XMP"));
-    
+
     setMainWidget(d->tabWidget);
     setButtons(urls.count() > 1 ? Help|User1|User2|Ok|Apply|Close
-                                   : Help|Ok|Apply|Close);
+                                : Help|Ok|Apply|Close);
     setDefaultButton(Ok);
     setButtonIcon(User1, KIcon("go-next"));
     setButtonIcon(User2, KIcon("go-previous"));
     setButtonText(User1, i18n("Next"));
     setButtonText(User2, i18n("Previous"));
     setModal(true);
-    
+
     //----------------------------------------------------------
-    
+
     connect(d->tabExif,SIGNAL(signalModified()),
         this,SLOT(slotModified()));
-    
+
     connect(d->tabIptc,SIGNAL(signalModified()),
         this,SLOT(slotModified()));
-    
+
     connect(d->tabXmp,SIGNAL(signalModified()),
-        this,SLOT(slotModified()));    
-        
+        this,SLOT(slotModified()));
+
     connect(this,SIGNAL(applyClicked()),
         this,SLOT(slotApply()));
-        
+
     connect(this,SIGNAL(signalApply()),
         d->tabExif,SLOT(slotApply()));
-        
+
     connect(this,SIGNAL(signalApply()),
         d->tabIptc,SLOT(slotApply()));
-        
+
     connect(this,SIGNAL(signalApply()),
         d->tabXmp,SLOT(slotApply()));
-        
+
     connect(this,SIGNAL(closeClicked()),
         this,SLOT(slotClose()));
-        
+
     connect(this,SIGNAL(signalClose()),
         d->tabExif,SLOT(slotClose()));
-        
+
     connect(this,SIGNAL(signalClose()),
         d->tabIptc,SLOT(slotClose()));
-    
+
     connect(this,SIGNAL(signalClose()),
         d->tabXmp,SLOT(slotClose()));
-        
+
     connect(this,SIGNAL(user1Clicked()),
         this,SLOT(slotUser1()));
-        
+
     connect(this,SIGNAL(signalUser1()),
         d->tabExif,SLOT(slotUser1()));
-        
+
     connect(this,SIGNAL(signalUser1()),
         d->tabIptc,SLOT(slotUser1()));
-    
+
     connect(this,SIGNAL(signalUser1()),
         d->tabXmp,SLOT(slotUser1()));
-        
+
     connect(this,SIGNAL(user2Clicked()),
         this,SLOT(slotUser2()));
-        
+
     connect(this,SIGNAL(signalUser2()),
         d->tabExif,SLOT(slotUser2()));
-        
+
     connect(this,SIGNAL(signalUser2()),
         d->tabIptc,SLOT(slotUser2()));
-    
+
     connect(this,SIGNAL(signalUser2()),
         d->tabXmp,SLOT(slotUser2()));
-        
+
     connect(this,SIGNAL(okClicked()),
         this,SLOT(slotOk()));
-        
+
     connect(this,SIGNAL(signalOk()),
         d->tabExif,SLOT(slotOk()));
-        
+
     connect(this,SIGNAL(signalOk()),
         d->tabIptc,SLOT(slotOk()));
-    
+
     connect(this,SIGNAL(signalOk()),
         d->tabXmp,SLOT(slotOk()));
-        
+
     connect(d->tabExif,SIGNAL(signalSetReadOnly(bool)),
         this,SLOT(slotSetReadOnly(bool)));
-        
+
     connect(d->tabIptc,SIGNAL(signalSetReadOnly(bool)),
         this,SLOT(slotSetReadOnly(bool)));
-        
+
     connect(d->tabXmp,SIGNAL(signalSetReadOnly(bool)),
         this,SLOT(slotSetReadOnly(bool)));
-        
+
     connect(d->tabWidget,SIGNAL(currentChanged(int)),
         this,SLOT(setWindowTitle(int)));
-    
+
     //----------------------------------------------------------
-    
-    enableButton(Apply,false);
-    
+
+    enableButton(Apply, false);
+
     d->about = new KPAboutData(ki18n("Edit Metadata"),
                                0,
                                KAboutData::License_GPL,
                                ki18n("A Plugin to edit pictures' metadata."),
-                               ki18n("(c) 2006-2010, Gilles Caulier"));
+                               ki18n("(c) 2006-2011, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
+
+    d->about->addAuthor(ki18n("Victor Dodon"), ki18n("Developer"),
+                        "victor dot dodon at cti dot pub dot ro");
 
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
-    
+
     readSettings();
     slotItemChanged();
-
 }
 
 MetadataEditDialog::~MetadataEditDialog()
@@ -256,24 +259,24 @@ void MetadataEditDialog::slotClose()
 
 void MetadataEditDialog::slotModified()
 {
-    bool modified=false;
-    
-    switch (d->tabWidget->currentIndex()) {
-    
+    bool modified = false;
+
+    switch (d->tabWidget->currentIndex())
+    {
         case 0:
             modified = d->tabExif->isModified();
             break;
-    
+
         case 1:
             modified = d->tabIptc->isModified();
             break;
-    
+
         case 2:
             modified = d->tabXmp->isModified();
             break;
-        }
-    
-    enableButton(Apply,modified);    
+    }
+
+    enableButton(Apply, modified);
 }
 
 void MetadataEditDialog::slotApply()
@@ -329,11 +332,11 @@ void MetadataEditDialog::slotOk()
     accept();
 }
 
-bool MetadataEditDialog::eventFilter(QObject *, QEvent *e)
+bool MetadataEditDialog::eventFilter(QObject*, QEvent* e)
 {
     if ( e->type() == QEvent::KeyPress )
     {
-        QKeyEvent *k = (QKeyEvent *)e;
+        QKeyEvent* k = (QKeyEvent*)e;
 
         if (k->modifiers() == Qt::ControlModifier &&
             (k->key() == Qt::Key_Enter || k->key() == Qt::Key_Return))
@@ -362,7 +365,7 @@ bool MetadataEditDialog::eventFilter(QObject *, QEvent *e)
     return false;
 }
 
-void MetadataEditDialog::closeEvent(QCloseEvent *e)
+void MetadataEditDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
     saveSettings();
@@ -376,21 +379,21 @@ void MetadataEditDialog::slotSetReadOnly(bool state)
 
 void MetadataEditDialog::setWindowTitle(int tabIndex)
 {
-    switch (tabIndex) { 
-       
+    switch (tabIndex)
+    {
         case 0:
             d->tabName = "EXIF";
             break;
-        
+
         case 1:
             d->tabName = "IPTC";
             break;
-        
+
         case 2:
             d->tabName = "XMP";
             break;
     }
-    
+
     setCaption(QString("%1 (%2/%3) - %4 %5 %6 ")
         .arg((*d->currItem).fileName())
         .arg(d->urls.indexOf(*(d->currItem))+1)
