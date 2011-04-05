@@ -43,14 +43,14 @@ using namespace KIPI;
 namespace KIPIMetadataEditPlugin
 {
 
-class allXMPEditWidget : public KPageWidget
+class XMPEditWidget : public KPageWidget
 {
     Q_OBJECT
 
 public:
 
-    allXMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface);
-    ~allXMPEditWidget();
+    XMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface);
+    ~XMPEditWidget();
 
     bool isModified();
 
@@ -84,8 +84,8 @@ private:
 
 private:
 
-    class allXMPEditWidgetPrivate;
-    allXMPEditWidgetPrivate* const d;
+    class XMPEditWidgetPrivate;
+    XMPEditWidgetPrivate* const d;
 };
 
 }  // namespace KIPIMetadataEditPlugin

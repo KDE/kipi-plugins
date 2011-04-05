@@ -74,12 +74,12 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class allIPTCEditWidget::allIPTCEditWidgetPrivate
+class IPTCEditWidget::IPTCEditWidgetPrivate
 {
 
 public:
 
-    allIPTCEditWidgetPrivate()
+    IPTCEditWidgetPrivate()
     {
         modified        = false;
         isReadOnly      = false;
@@ -139,13 +139,13 @@ public:
     KPAboutData*         about;
 };
 
-allIPTCEditWidget::allIPTCEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
-    : KPageWidget(parent), d(new allIPTCEditWidgetPrivate)
+IPTCEditWidget::IPTCEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+    : KPageWidget(parent), d(new IPTCEditWidgetPrivate)
 {
     d->urls      = urls;
     d->interface = iface;
     d->currItem  = d->urls.begin();
- 
+
     // ---------------------------------------------------------------
 
     d->contentPage   = new IPTCContent(this);
@@ -237,18 +237,18 @@ allIPTCEditWidget::allIPTCEditWidget(QWidget* parent, const KUrl::List& urls, In
     slotItemChanged();
 }
 
-allIPTCEditWidget::~allIPTCEditWidget()
+IPTCEditWidget::~IPTCEditWidget()
 {
     delete d->about;
     delete d;
 }
 
-void allIPTCEditWidget::slotClose()
+void IPTCEditWidget::slotClose()
 {
     saveSettings();
 }
 
-void allIPTCEditWidget::readSettings()
+void IPTCEditWidget::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("All Metadata Edit Settings");
@@ -260,7 +260,7 @@ void allIPTCEditWidget::readSettings()
     d->originPage->setCheckedSyncEXIFDate(group.readEntry("All Sync EXIF Date", true));
 }
 
-void allIPTCEditWidget::saveSettings()
+void IPTCEditWidget::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("All Metadata Edit Settings");
@@ -273,7 +273,7 @@ void allIPTCEditWidget::saveSettings()
     config.sync();
 }
 
-void allIPTCEditWidget::slotItemChanged()
+void IPTCEditWidget::slotItemChanged()
 {
     KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
@@ -309,7 +309,7 @@ void allIPTCEditWidget::slotItemChanged()
     d->page_envelope->setEnabled(!d->isReadOnly);
 }
 
-void allIPTCEditWidget::slotApply()
+void IPTCEditWidget::slotApply()
 {
     if (d->modified && !d->isReadOnly)
     {
@@ -350,21 +350,21 @@ void allIPTCEditWidget::slotApply()
     }
 }
 
-void allIPTCEditWidget::slotUser1()
+void IPTCEditWidget::slotUser1()
 {
     slotApply();
     d->currItem++;
     slotItemChanged();
 }
 
-void allIPTCEditWidget::slotUser2()
+void IPTCEditWidget::slotUser2()
 {
     slotApply();
     d->currItem--;
     slotItemChanged();
 }
 
-void allIPTCEditWidget::slotModified()
+void IPTCEditWidget::slotModified()
 {
     if (!d->isReadOnly)
     {
@@ -373,13 +373,13 @@ void allIPTCEditWidget::slotModified()
     }
 }
 
-void allIPTCEditWidget::slotOk()
+void IPTCEditWidget::slotOk()
 {
     slotApply();
     saveSettings();
 }
 
-void allIPTCEditWidget::showPage(int page)
+void IPTCEditWidget::showPage(int page)
 {
     switch(page)
     {
@@ -416,7 +416,7 @@ void allIPTCEditWidget::showPage(int page)
     }
 }
 
-int allIPTCEditWidget::activePageIndex()
+int IPTCEditWidget::activePageIndex()
 {
     KPageWidgetItem* cur = currentPage();
 
@@ -433,7 +433,7 @@ int allIPTCEditWidget::activePageIndex()
     return 0;
 }
 
-bool allIPTCEditWidget::isModified()
+bool IPTCEditWidget::isModified()
 {
     return d->modified;
 }

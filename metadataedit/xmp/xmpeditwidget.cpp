@@ -73,12 +73,12 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class allXMPEditWidget::allXMPEditWidgetPrivate
+class XMPEditWidget::XMPEditWidgetPrivate
 {
 
 public:
 
-    allXMPEditWidgetPrivate()
+    XMPEditWidgetPrivate()
     {
         modified        = false;
         isReadOnly      = false;
@@ -135,8 +135,8 @@ public:
     KPAboutData*         about;
 };
 
-allXMPEditWidget::allXMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
-    : KPageWidget(parent), d(new allXMPEditWidgetPrivate)
+XMPEditWidget::XMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+    : KPageWidget(parent), d(new XMPEditWidgetPrivate)
 {
     d->urls      = urls;
     d->interface = iface;
@@ -224,18 +224,18 @@ allXMPEditWidget::allXMPEditWidget(QWidget* parent, const KUrl::List& urls, Inte
     slotItemChanged();
 }
 
-allXMPEditWidget::~allXMPEditWidget()
+XMPEditWidget::~XMPEditWidget()
 {
     delete d->about;
     delete d;
 }
 
-void allXMPEditWidget::slotClose()
+void XMPEditWidget::slotClose()
 {
     saveSettings();
 }
 
-void allXMPEditWidget::readSettings()
+void XMPEditWidget::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("All Metadata Edit Settings");
@@ -250,7 +250,7 @@ void allXMPEditWidget::readSettings()
     KConfigGroup group2 = config.group(QString("All XMP Edit Dialog"));
 }
 
-void allXMPEditWidget::saveSettings()
+void XMPEditWidget::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("All Metadata Edit Settings");
@@ -266,7 +266,7 @@ void allXMPEditWidget::saveSettings()
     config.sync();
 }
 
-void allXMPEditWidget::slotItemChanged()
+void XMPEditWidget::slotItemChanged()
 {
     KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
@@ -302,7 +302,7 @@ void allXMPEditWidget::slotItemChanged()
 
 }
 
-void allXMPEditWidget::slotApply()
+void XMPEditWidget::slotApply()
 {
     if (d->modified && !d->isReadOnly)
     {
@@ -343,21 +343,21 @@ void allXMPEditWidget::slotApply()
     }
 }
 
-void allXMPEditWidget::slotUser1()
+void XMPEditWidget::slotUser1()
 {
     slotApply();
     d->currItem++;
     slotItemChanged();
 }
 
-void allXMPEditWidget::slotUser2()
+void XMPEditWidget::slotUser2()
 {
     slotApply();
     d->currItem--;
     slotItemChanged();
 }
 
-void allXMPEditWidget::slotModified()
+void XMPEditWidget::slotModified()
 {
     if (!d->isReadOnly)
     {
@@ -366,13 +366,13 @@ void allXMPEditWidget::slotModified()
     }
 }
 
-void allXMPEditWidget::slotOk()
+void XMPEditWidget::slotOk()
 {
     slotApply();
     saveSettings();
 }
 
-void allXMPEditWidget::showPage(int page)
+void XMPEditWidget::showPage(int page)
 {
     switch(page)
     {
@@ -406,7 +406,7 @@ void allXMPEditWidget::showPage(int page)
     }
 }
 
-int allXMPEditWidget::activePageIndex()
+int XMPEditWidget::activePageIndex()
 {
     KPageWidgetItem* cur = currentPage();
 
@@ -422,7 +422,7 @@ int allXMPEditWidget::activePageIndex()
     return 0;
 }
 
-bool allXMPEditWidget::isModified()
+bool XMPEditWidget::isModified()
 {
     return d->modified;
 }

@@ -73,12 +73,12 @@ using namespace KIPIPlugins;
 namespace KIPIMetadataEditPlugin
 {
 
-class allEXIFEditWidget::allEXIFEditWidgetPrivate
+class EXIFEditWidget::EXIFEditWidgetPrivate
 {
 
 public:
 
-    allEXIFEditWidgetPrivate()
+    EXIFEditWidgetPrivate()
     {
         modified      = false;
         isReadOnly    = false;
@@ -131,8 +131,8 @@ public:
     KPAboutData*         about;
 };
 
-allEXIFEditWidget::allEXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
-    : KPageWidget(parent), d(new allEXIFEditWidgetPrivate)
+EXIFEditWidget::EXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+    : KPageWidget(parent), d(new EXIFEditWidgetPrivate)
 {
     d->urls      = urls;
     d->interface = iface;
@@ -196,18 +196,18 @@ allEXIFEditWidget::allEXIFEditWidget(QWidget* parent, const KUrl::List& urls, In
     slotItemChanged();
 }
 
-allEXIFEditWidget::~allEXIFEditWidget()
+EXIFEditWidget::~EXIFEditWidget()
 {
     delete d->about;
     delete d;
 }
 
-void allEXIFEditWidget::slotClose()
+void EXIFEditWidget::slotClose()
 {
     saveSettings();
 }
 
-void allEXIFEditWidget::readSettings()
+void EXIFEditWidget::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("All Metadata Edit Settings");
@@ -221,7 +221,7 @@ void allEXIFEditWidget::readSettings()
     d->datetimePage->setCheckedSyncIPTCDate(group.readEntry("All Sync IPTC Date", true));
 }
 
-void allEXIFEditWidget::saveSettings()
+void EXIFEditWidget::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("All Metadata Edit Settings");
@@ -236,7 +236,7 @@ void allEXIFEditWidget::saveSettings()
     config.sync();
 }
 
-void allEXIFEditWidget::slotItemChanged()
+void EXIFEditWidget::slotItemChanged()
 {
     KExiv2 exiv2Iface;
     exiv2Iface.load((*d->currItem).path());
@@ -266,7 +266,7 @@ void allEXIFEditWidget::slotItemChanged()
     d->page_adjust->setEnabled(!d->isReadOnly);
 }
 
-void allEXIFEditWidget::slotApply()
+void EXIFEditWidget::slotApply()
 {
     if (d->modified && !d->isReadOnly)
     {
@@ -306,21 +306,21 @@ void allEXIFEditWidget::slotApply()
     }
 }
 
-void allEXIFEditWidget::slotUser1()
+void EXIFEditWidget::slotUser1()
 {
     slotApply();
     d->currItem++;
     slotItemChanged();
 }
 
-void allEXIFEditWidget::slotUser2()
+void EXIFEditWidget::slotUser2()
 {
     slotApply();
     d->currItem--;
     slotItemChanged();
 }
 
-void allEXIFEditWidget::slotModified()
+void EXIFEditWidget::slotModified()
 {
     if (!d->isReadOnly)
     {
@@ -329,13 +329,13 @@ void allEXIFEditWidget::slotModified()
     }
 }
 
-void allEXIFEditWidget::slotOk()
+void EXIFEditWidget::slotOk()
 {
     slotApply();
     saveSettings();
 }
 
-void allEXIFEditWidget::showPage(int page)
+void EXIFEditWidget::showPage(int page)
 {
     switch(page)
     {
@@ -363,7 +363,7 @@ void allEXIFEditWidget::showPage(int page)
     }
 }
 
-int allEXIFEditWidget::activePageIndex()
+int EXIFEditWidget::activePageIndex()
 {
     KPageWidgetItem *cur = currentPage();
 
@@ -377,7 +377,7 @@ int allEXIFEditWidget::activePageIndex()
     return 0;
 }
 
-bool allEXIFEditWidget::isModified()
+bool EXIFEditWidget::isModified()
 {
     return d->modified;
 }

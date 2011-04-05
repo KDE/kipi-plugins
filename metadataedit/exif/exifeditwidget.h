@@ -43,14 +43,14 @@ using namespace KIPI;
 namespace KIPIMetadataEditPlugin
 {
 
-class allEXIFEditWidget : public KPageWidget
+class EXIFEditWidget : public KPageWidget
 {
     Q_OBJECT
 
 public:
 
-    allEXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface);
-    ~allEXIFEditWidget();
+    EXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface);
+    ~EXIFEditWidget();
 
     bool isModified();
 
@@ -83,8 +83,8 @@ private:
 
 private:
 
-    class allEXIFEditWidgetPrivate;
-    allEXIFEditWidgetPrivate* const d;
+    class EXIFEditWidgetPrivate;
+    EXIFEditWidgetPrivate* const d;
 };
 
 }  // namespace KIPIMetadataEditPlugin

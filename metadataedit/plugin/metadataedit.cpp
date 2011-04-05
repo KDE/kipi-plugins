@@ -89,13 +89,14 @@ public:
     KUrl::List           urls;
     KUrl::List::iterator currItem;
 
-    Interface*           interface;
-
     KTabWidget*          tabWidget;
-    allEXIFEditWidget*   tabExif;
-    allIPTCEditWidget*   tabIptc;
-    allXMPEditWidget*    tabXmp;
+
+    Interface*           interface;
     KPAboutData*         about;
+
+    EXIFEditWidget*      tabExif;
+    IPTCEditWidget*      tabIptc;
+    XMPEditWidget*       tabXmp;
 };
 
 MetadataEditDialog::MetadataEditDialog(QWidget* parent,KUrl::List urls, Interface* iface)
@@ -107,9 +108,9 @@ MetadataEditDialog::MetadataEditDialog(QWidget* parent,KUrl::List urls, Interfac
 
     setCaption(i18n("Metadata edit dialog"));
     d->tabWidget = new KTabWidget(this);
-    d->tabExif   = new allEXIFEditWidget(this, urls, iface);
-    d->tabIptc   = new allIPTCEditWidget(this, urls, iface);
-    d->tabXmp    = new allXMPEditWidget(this, urls, iface);
+    d->tabExif   = new EXIFEditWidget(this, urls, iface);
+    d->tabIptc   = new IPTCEditWidget(this, urls, iface);
+    d->tabXmp    = new XMPEditWidget(this, urls, iface);
     d->tabWidget->addTab(d->tabExif, i18n("Edit EXIF"));
     d->tabWidget->addTab(d->tabIptc, i18n("Edit IPTC"));
     d->tabWidget->addTab(d->tabXmp,  i18n("Edit XMP"));
