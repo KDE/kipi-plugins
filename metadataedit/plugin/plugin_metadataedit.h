@@ -6,7 +6,7 @@
  * Date        : 2006-10-11
  * Description : a plugin to edit pictures metadata
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -52,6 +52,7 @@ class Plugin_MetadataEdit : public Plugin
 public:
 
     Plugin_MetadataEdit(QObject* parent, const QVariantList& args);
+    ~Plugin_MetadataEdit();
 
     virtual KIPI::Category category(KAction* action) const;
     virtual void setup(QWidget*);
@@ -65,11 +66,8 @@ protected Q_SLOTS:
 
 private:
 
-    KActionMenu* m_actionMetadataEdit;
-
-    Interface*   m_interface;
-
-    KUrl         m_lastSelectedDirectory;
+    class Plugin_MetadataEditPriv;
+    Plugin_MetadataEditPriv* const d;
 };
 
 #endif // PLUGIN_METADATAEDIT_H

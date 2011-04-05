@@ -63,102 +63,122 @@ using namespace KIPIMetadataEditPlugin;
 K_PLUGIN_FACTORY( MetadataEditFactory, registerPlugin<Plugin_MetadataEdit>(); )
 K_EXPORT_PLUGIN ( MetadataEditFactory("kipiplugin_metadataedit") )
 
+class Plugin_MetadataEdit::Plugin_MetadataEditPriv
+{
+public:
+
+    Plugin_MetadataEditPriv()
+    {
+        actionMetadataEdit = 0;
+        interface          = 0;
+    }
+
+    KActionMenu* actionMetadataEdit;
+
+    Interface*   interface;
+
+    KUrl         lastSelectedDirectory;
+};
+
 Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* parent, const QVariantList&)
-                   : Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit"),
-                     m_actionMetadataEdit(0),
-                     m_interface(0),
-                     m_lastSelectedDirectory()
+    : Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit"),
+    d(new Plugin_MetadataEditPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_MetadataEdit plugin loaded";
+}
+
+Plugin_MetadataEdit::~Plugin_MetadataEdit()
+{
+    delete d;
 }
 
 void Plugin_MetadataEdit::setup(QWidget* widget)
 {
     Plugin::setup(widget);
 
-    m_actionMetadataEdit = new KActionMenu(KIcon("metadataedit"), i18n("Metadata"), actionCollection());
-    m_actionMetadataEdit->setObjectName("metadataedit");
+    d->actionMetadataEdit = new KActionMenu(KIcon("metadataedit"), i18n("Metadata"), actionCollection());
+    d->actionMetadataEdit->setObjectName("metadataedit");
 
 
     KAction* metadataEdit = actionCollection()->addAction("editallmetadata");
     metadataEdit->setText(i18n("Edit &All Metadata..."));
     connect(metadataEdit, SIGNAL(triggered(bool)),
             this,SLOT(slotEditAllMetadata()));
-    m_actionMetadataEdit->addAction(metadataEdit);
+    d->actionMetadataEdit->addAction(metadataEdit);
 
     // ---------------------------------------------------
 
-    m_actionMetadataEdit->menu()->addSeparator();
+    d->actionMetadataEdit->menu()->addSeparator();
 
     KAction* importEXIF = actionCollection()->addAction("importexif");
     importEXIF->setText(i18n("Import EXIF..."));
     connect(importEXIF, SIGNAL(triggered(bool)),
             this, SLOT(slotImportExif()));
-    m_actionMetadataEdit->addAction(importEXIF);
+    d->actionMetadataEdit->addAction(importEXIF);
 
     KAction* importIPTC = actionCollection()->addAction("importiptc");
     importIPTC->setText(i18n("Import IPTC..."));
     connect(importIPTC, SIGNAL(triggered(bool)),
             this, SLOT(slotImportIptc()));
-    m_actionMetadataEdit->addAction(importIPTC);
+    d->actionMetadataEdit->addAction(importIPTC);
 
     KAction* importXMP = actionCollection()->addAction("importxmp");
     importXMP->setText(i18n("Import XMP..."));
     connect(importXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotImportXmp()));
-    m_actionMetadataEdit->addAction(importXMP);
+    d->actionMetadataEdit->addAction(importXMP);
 
     // ------------------------------------------------------
 
-    addAction( m_actionMetadataEdit );
+    addAction( d->actionMetadataEdit );
 
-    m_interface = dynamic_cast<Interface*>( parent() );
-    if ( !m_interface )
+    d->interface = dynamic_cast<Interface*>( parent() );
+    if ( !d->interface )
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    ImageCollection selection = m_interface->currentSelection();
-    m_actionMetadataEdit->setEnabled( selection.isValid() && !selection.images().isEmpty() );
+    ImageCollection selection = d->interface->currentSelection();
+    d->actionMetadataEdit->setEnabled( selection.isValid() && !selection.images().isEmpty() );
 
-    connect(m_interface, SIGNAL(selectionChanged(bool)),
-            m_actionMetadataEdit, SLOT(setEnabled(bool)));
+    connect(d->interface, SIGNAL(selectionChanged(bool)),
+            d->actionMetadataEdit, SLOT(setEnabled(bool)));
 }
 
 void Plugin_MetadataEdit::slotEditAllMetadata()
 {
-    ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = d->interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
-    QPointer<MetadataEditDialog> dialog = new MetadataEditDialog(kapp->activeWindow(), images.images(), m_interface);
+    QPointer<MetadataEditDialog> dialog = new MetadataEditDialog(kapp->activeWindow(), images.images(), d->interface);
     dialog->exec();
-    m_interface->refreshImages(images.images());
+    d->interface->refreshImages(images.images());
 
     delete dialog;
 }
 
 void Plugin_MetadataEdit::slotImportExif()
 {
-    ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = d->interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     // extract the path to the first image:
-    if ( m_lastSelectedDirectory.isEmpty() )
+    if ( d->lastSelectedDirectory.isEmpty() )
     {
-        m_lastSelectedDirectory = images.images().first().upUrl();
+        d->lastSelectedDirectory = images.images().first().upUrl();
     }
-    KUrl importEXIFFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
+    KUrl importEXIFFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
                                                   QString(), kapp->activeWindow(),
                                                   i18n("Select File to Import EXIF metadata") );
     if( importEXIFFile.isEmpty() )
        return;
 
-    m_lastSelectedDirectory = importEXIFFile.upUrl();
+    d->lastSelectedDirectory = importEXIFFile.upUrl();
 
     KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importEXIFFile.path()))
@@ -205,10 +225,10 @@ void Plugin_MetadataEdit::slotImportExif()
         {
             ret = true;
             KExiv2 exiv2Iface;
-            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+            exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
-            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+            exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 #endif
 
             ret &= exiv2Iface.load(url.path());
@@ -225,7 +245,7 @@ void Plugin_MetadataEdit::slotImportExif()
     // We use kipi interface refreshImages() method to tell to host than
     // metadata from pictures have changed and need to be re-read.
 
-    m_interface->refreshImages(updatedURLs);
+    d->interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
     {
@@ -239,23 +259,23 @@ void Plugin_MetadataEdit::slotImportExif()
 
 void Plugin_MetadataEdit::slotImportIptc()
 {
-    ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = d->interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     // extract the path to the first image:
-    if ( m_lastSelectedDirectory.isEmpty() )
+    if ( d->lastSelectedDirectory.isEmpty() )
     {
-        m_lastSelectedDirectory = images.images().first().upUrl();
+        d->lastSelectedDirectory = images.images().first().upUrl();
     }
-    KUrl importIPTCFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
+    KUrl importIPTCFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
                                                   QString(), kapp->activeWindow(),
                                                   i18n("Select File to Import IPTC metadata") );
     if( importIPTCFile.isEmpty() )
        return;
 
-    m_lastSelectedDirectory = importIPTCFile.upUrl();
+    d->lastSelectedDirectory = importIPTCFile.upUrl();
 
     KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importIPTCFile.path()))
@@ -297,10 +317,10 @@ void Plugin_MetadataEdit::slotImportIptc()
         {
             ret = true;
             KExiv2 exiv2Iface;
-            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+            exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
-            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+            exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 #endif
 
             ret &= exiv2Iface.load(url.path());
@@ -317,7 +337,7 @@ void Plugin_MetadataEdit::slotImportIptc()
     // We use kipi interface refreshImages() method to tell to host than
     // metadata from pictures have changed and need to be re-read.
 
-    m_interface->refreshImages(updatedURLs);
+    d->interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
     {
@@ -331,23 +351,23 @@ void Plugin_MetadataEdit::slotImportIptc()
 
 void Plugin_MetadataEdit::slotImportXmp()
 {
-    ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = d->interface->currentSelection();
 
     if ( !images.isValid() || images.images().isEmpty() )
         return;
 
     // extract the path to the first image:
-    if ( m_lastSelectedDirectory.isEmpty() )
+    if ( d->lastSelectedDirectory.isEmpty() )
     {
-        m_lastSelectedDirectory = images.images().first().upUrl();
+        d->lastSelectedDirectory = images.images().first().upUrl();
     }
-    KUrl importXMPFile = KFileDialog::getOpenUrl(m_lastSelectedDirectory,
+    KUrl importXMPFile = KFileDialog::getOpenUrl(d->lastSelectedDirectory,
                                                  QString(), kapp->activeWindow(),
                                                  i18n("Select File to Import XMP metadata") );
     if( importXMPFile.isEmpty() )
        return;
 
-    m_lastSelectedDirectory = importXMPFile.upUrl();
+    d->lastSelectedDirectory = importXMPFile.upUrl();
 
     KExiv2 exiv2Iface;
     if (!exiv2Iface.load(importXMPFile.path()))
@@ -389,10 +409,10 @@ void Plugin_MetadataEdit::slotImportXmp()
         {
             ret = true;
             KExiv2 exiv2Iface;
-            exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
+            exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
-            exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+            exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 #endif
 
             ret &= exiv2Iface.load(url.path());
@@ -409,7 +429,7 @@ void Plugin_MetadataEdit::slotImportXmp()
     // We use kipi interface refreshImages() method to tell to host than
     // metadata from pictures have changed and need to be re-read.
 
-    m_interface->refreshImages(updatedURLs);
+    d->interface->refreshImages(updatedURLs);
 
     if (!errorFiles.isEmpty())
     {
@@ -423,7 +443,7 @@ void Plugin_MetadataEdit::slotImportXmp()
 
 Category Plugin_MetadataEdit::category(KAction* action) const
 {
-    if ( action == m_actionMetadataEdit )
+    if ( action == d->actionMetadataEdit )
        return ImagesPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
