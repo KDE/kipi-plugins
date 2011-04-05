@@ -36,6 +36,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 024 ==> 169230 : "Remove Metadata" plugin necessary.
 025 ==> 208500 : XMP tags GUI incorrectly manages language.
 026 ==> 178660 : Quick navigation "disabled" in list of languages (XMP).
-027 ==> 
-
+027 ==> 242632 : The Subject classification reference code is not saved.
+028 ==> 
 
