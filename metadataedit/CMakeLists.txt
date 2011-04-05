@@ -1,20 +1,18 @@
 SUBDIRS(icons)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/comment
-                    ${CMAKE_CURRENT_SOURCE_DIR}/common
-                    ${CMAKE_CURRENT_SOURCE_DIR}/exif
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/exif
                     ${CMAKE_CURRENT_SOURCE_DIR}/iptc
                     ${CMAKE_CURRENT_SOURCE_DIR}/xmp
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
 SET(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
-                                      common/metadatacheckbox.cpp
-                                      common/altlangstringedit.cpp
-                                      common/multistringsedit.cpp
-                                      common/multivaluesedit.cpp
-                                      common/objectattributesedit.cpp
-                                      common/metadataedit.cpp
+                                      plugin/metadatacheckbox.cpp
+                                      plugin/altlangstringedit.cpp
+                                      plugin/multistringsedit.cpp
+                                      plugin/multivaluesedit.cpp
+                                      plugin/objectattributesedit.cpp
+                                      plugin/metadataedit.cpp
                                       exif/exifeditwidget.cpp
                                       exif/exifcaption.cpp
                                       exif/exifdatetime.cpp
@@ -41,8 +39,6 @@ SET(kipiplugin_metadataedit_PART_SRCS plugin/plugin_metadataedit.cpp
                                       xmp/xmpcredits.cpp
                                       xmp/xmpstatus.cpp
                                       xmp/xmpproperties.cpp
-                                      comment/commenteditdialog.cpp
-                                      comment/commentremovedialog.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_metadataedit ${kipiplugin_metadataedit_PART_SRCS})

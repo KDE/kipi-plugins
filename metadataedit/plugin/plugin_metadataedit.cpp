@@ -6,8 +6,8 @@
  * Date        : 2006-10-11
  * Description : a plugin to edit pictures metadata
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Victor Dodon <dodonvictor at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,8 +55,6 @@
 
 // Local includes
 
-#include "commenteditdialog.h"
-#include "commentremovedialog.h"
 #include "metadataedit.h"
 
 using namespace KExiv2Iface;
@@ -91,7 +89,7 @@ void Plugin_MetadataEdit::setup(QWidget* widget)
     // ---------------------------------------------------
 
     m_actionMetadataEdit->menu()->addSeparator();
-    
+
     KAction* removeEXIF = actionCollection()->addAction("removeexif");
     removeEXIF->setText(i18n("Remove EXIF..."));
     connect(removeEXIF, SIGNAL(triggered(bool)),
@@ -135,22 +133,6 @@ void Plugin_MetadataEdit::setup(QWidget* widget)
     connect(importXMP, SIGNAL(triggered(bool)),
             this, SLOT(slotImportXmp()));
     m_actionMetadataEdit->addAction(importXMP);
-
-    // -----------------------------------------------------
-
-    m_actionMetadataEdit->menu()->addSeparator();
-
-    KAction* editComments = actionCollection()->addAction("editcomments");
-    editComments->setText(i18n("Edit Captions..."));
-    connect(editComments, SIGNAL(triggered(bool)),
-            this, SLOT(slotEditComments()));
-    m_actionMetadataEdit->addAction(editComments);
-
-    KAction* removeComments = actionCollection()->addAction("removecomments");
-    removeComments->setText(i18n("Remove Captions..."));
-    connect(removeComments, SIGNAL(triggered(bool)),
-            this, SLOT(slotRemoveComments()));
-    m_actionMetadataEdit->addAction(removeComments);
 
     // ------------------------------------------------------
 
@@ -643,181 +625,6 @@ void Plugin_MetadataEdit::slotImportXmp()
                     errorFiles,
                     i18n("Import XMP Metadata"));
     }
-}
-
-void Plugin_MetadataEdit::slotEditComments()
-{
-    ImageCollection images = m_interface->currentSelection();
-
-    if ( !images.isValid() || images.images().isEmpty() )
-        return;
-
-    QString comment;
-    if  (images.images().count() == 1)
-    {
-        ImageInfo info = m_interface->info(images.images().first());
-        comment              = info.description();
-    }
-
-    QPointer<CommentEditDialog> dlg = new CommentEditDialog(comment, kapp->activeWindow());
-
-    if (dlg->exec() != KMessageBox::Ok) {
-        delete dlg;
-        return;
-    }
-
-    KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
-    QStringList errorFiles;
-
-    for( KUrl::List::iterator it = imageURLs.begin() ;
-         it != imageURLs.end(); ++it)
-    {
-        KUrl url = *it;
-        bool ret = true;
-
-        ImageInfo info = m_interface->info(url);
-        info.setDescription(dlg->getComments());
-
-        KExiv2 exiv2Iface;
-        exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
-
-#if KEXIV2_VERSION >= 0x000600
-        exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-#endif
-
-        ret &= exiv2Iface.load(url.path());
-
-        if (ret)
-        {
-            if (dlg->syncJFIFCommentIsChecked() && exiv2Iface.canWriteComment(url.path()))
-                ret &= exiv2Iface.setComments(dlg->getComments().toUtf8());
-
-            if (dlg->syncEXIFCommentIsChecked() && exiv2Iface.canWriteExif(url.path()))
-                ret &= exiv2Iface.setExifComment(dlg->getComments());
-
-            if (exiv2Iface.supportXmp() && dlg->syncXMPCaptionIsChecked() && exiv2Iface.canWriteXmp(url.path()))
-            {
-                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description", dlg->getComments(),
-                                                         QString(), false);
-
-                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment", dlg->getComments(),
-                                                         QString(), false);
-
-                ret &= exiv2Iface.setXmpTagStringLangAlt("Xmp.tiff.ImageDescription", dlg->getComments(),
-                                                         QString(), false);
-            }
-
-            if (dlg->syncIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
-                ret &= exiv2Iface.setIptcTagString("Iptc.Application2.Caption", dlg->getComments());
-
-            ret &= exiv2Iface.save(url.path());
-        }
-
-        if (!ret)
-            errorFiles.append(url.fileName());
-        else
-            updatedURLs.append(url);
-    }
-
-    // We use kipi interface refreshImages() method to tell to host than
-    // metadata from pictures have changed and need to be re-read.
-
-    m_interface->refreshImages(updatedURLs);
-
-    if (!errorFiles.isEmpty())
-    {
-        KMessageBox::informationList(
-                     kapp->activeWindow(),
-                     i18n("Unable to set captions as image metadata from:"),
-                     errorFiles,
-                     i18n("Edit Image Caption"));
-    }
-
-    delete dlg;
-}
-
-void Plugin_MetadataEdit::slotRemoveComments()
-{
-    ImageCollection images = m_interface->currentSelection();
-
-    if ( !images.isValid() || images.images().isEmpty() )
-        return;
-
-    QPointer<CommentRemoveDialog> dlg = new CommentRemoveDialog(
-                                                                    kapp->activeWindow());
-
-    if (dlg->exec() != KMessageBox::Ok) {
-        delete dlg;
-        return;
-    }
-
-    KUrl::List  imageURLs = images.images();
-    KUrl::List  updatedURLs;
-    QStringList errorFiles;
-
-    for( KUrl::List::iterator it = imageURLs.begin() ;
-         it != imageURLs.end(); ++it)
-    {
-        KUrl url = *it;
-        bool ret = true;
-
-        if (dlg->removeHOSTCommentIsChecked())
-        {
-            ImageInfo info = m_interface->info(url);
-            info.setDescription(QString());
-        }
-
-        KExiv2 exiv2Iface;
-        exiv2Iface.setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
-
-#if KEXIV2_VERSION >= 0x000600
-        exiv2Iface.setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-#endif
-
-        ret &= exiv2Iface.load(url.path());
-        if (ret)
-        {
-            if (dlg->removeJFIFCommentIsChecked() && exiv2Iface.canWriteComment(url.path()))
-                ret &= exiv2Iface.setComments(QByteArray());
-
-            if (dlg->removeEXIFCommentIsChecked() && exiv2Iface.canWriteExif(url.path()))
-                ret &= exiv2Iface.removeExifTag("Exif.Photo.UserComment");
-
-            if (exiv2Iface.supportXmp() && dlg->removeXMPCaptionIsChecked() && exiv2Iface.canWriteXmp(url.path()))
-            {
-                ret &= exiv2Iface.removeXmpTag("Xmp.dc.description");
-                ret &= exiv2Iface.removeXmpTag("Xmp.exif.UserComment");
-                ret &= exiv2Iface.removeXmpTag("Xmp.tiff.ImageDescription");
-            }
-
-            if (dlg->removeIPTCCaptionIsChecked() && exiv2Iface.canWriteIptc(url.path()))
-                ret &= exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
-
-            ret &= exiv2Iface.save(url.path());
-        }
-
-        if (!ret)
-            errorFiles.append(url.fileName());
-        else
-            updatedURLs.append(url);
-    }
-
-    // We use kipi interface refreshImages() method to tell to host than
-    // metadata from pictures have changed and need to be re-read.
-
-    m_interface->refreshImages(updatedURLs);
-
-    if (!errorFiles.isEmpty())
-    {
-        KMessageBox::informationList(
-                     kapp->activeWindow(),
-                     i18n("Unable to remove caption as image metadata from:"),
-                     errorFiles,
-                     i18n("Remove Image Caption"));
-    }
-
-    delete dlg;
 }
 
 Category Plugin_MetadataEdit::category(KAction* action) const
