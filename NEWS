@@ -34,6 +34,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 022 ==> 184763 : Edit Image Caption dialog - not populated with existing caption.
 023 ==> 203047 : Edit Exif does not allow editing of seconds.
 024 ==> 169230 : "Remove Metadata" plugin necessary.
-025 ==> 
+025 ==> 208500 : XMP tags GUI incorrectly manages language.
+026 ==> 
+
 
 
