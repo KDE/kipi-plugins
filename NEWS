@@ -32,5 +32,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 020 ==> 268316 : OK button not disabled on empty image list, following progress dialog never finishes [patch].
 021 ==> 269991 : DngConverter doesn't compile on 64bits platforms due to linking error [patch].
 022 ==> 184763 : Edit Image Caption dialog - not populated with existing caption.
-023 ==> 
+023 ==> 203047 : Edit Exif does not allow editing of seconds.
+024 ==> 
 
