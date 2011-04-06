@@ -56,8 +56,6 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
 #include "xmpcategories.h"
 #include "xmpcontent.h"
 #include "xmpcredits.h"
@@ -68,7 +66,6 @@
 #include "xmpsubjects.h"
 
 using namespace KExiv2Iface;
-using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -90,7 +87,6 @@ public:
         page_credits    = 0;
         page_status     = 0;
         page_origin     = 0;
-        about           = 0;
         keywordsPage    = 0;
         categoriesPage  = 0;
         contentPage     = 0;
@@ -99,6 +95,7 @@ public:
         creditsPage     = 0;
         statusPage      = 0;
         propertiesPage  = 0;
+        interface       = 0;
     }
 
     bool                 modified;
@@ -131,8 +128,6 @@ public:
     XMPProperties*       propertiesPage;
 
     Interface*           interface;
-
-    KPAboutData*         about;
 };
 
 XMPEditWidget::XMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
@@ -226,7 +221,6 @@ XMPEditWidget::XMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface*
 
 XMPEditWidget::~XMPEditWidget()
 {
-    delete d->about;
     delete d;
 }
 

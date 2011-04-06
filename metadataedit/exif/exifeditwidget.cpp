@@ -64,11 +64,8 @@
 #include "exifdevice.h"
 #include "exiflens.h"
 #include "exiflight.h"
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
 
 using namespace KExiv2Iface;
-using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -82,23 +79,19 @@ public:
     {
         modified      = false;
         isReadOnly    = false;
-        interface     = 0;
-
-        about         = 0;
-
         page_caption  = 0;
         page_datetime = 0;
         page_lens     = 0;
         page_device   = 0;
         page_light    = 0;
         page_adjust   = 0;
-
         captionPage   = 0;
         datetimePage  = 0;
         lensPage      = 0;
         devicePage    = 0;
         lightPage     = 0;
         adjustPage    = 0;
+        interface     = 0;
     }
 
     bool                 modified;
@@ -127,8 +120,6 @@ public:
     EXIFAdjust*          adjustPage;
 
     Interface*           interface;
-
-    KPAboutData*         about;
 };
 
 EXIFEditWidget::EXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
@@ -198,7 +189,6 @@ EXIFEditWidget::EXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interfac
 
 EXIFEditWidget::~EXIFEditWidget()
 {
-    delete d->about;
     delete d;
 }
 

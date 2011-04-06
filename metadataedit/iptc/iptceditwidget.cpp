@@ -65,11 +65,8 @@
 #include "iptcproperties.h"
 #include "iptcstatus.h"
 #include "iptcsubjects.h"
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
 
 using namespace KExiv2Iface;
-using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -92,7 +89,6 @@ public:
         page_status     = 0;
         page_origin     = 0;
         page_envelope   = 0;
-        about           = 0;
         contentPage     = 0;
         propertiesPage  = 0;
         subjectsPage    = 0;
@@ -102,6 +98,7 @@ public:
         statusPage      = 0;
         originPage      = 0;
         envelopePage    = 0;
+        interface       = 0;
     }
 
     bool                  modified;
@@ -135,8 +132,6 @@ public:
     IPTCEnvelope*        envelopePage;
 
     Interface*           interface;
-
-    KPAboutData*         about;
 };
 
 IPTCEditWidget::IPTCEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
@@ -239,7 +234,6 @@ IPTCEditWidget::IPTCEditWidget(QWidget* parent, const KUrl::List& urls, Interfac
 
 IPTCEditWidget::~IPTCEditWidget()
 {
-    delete d->about;
     delete d;
 }
 
