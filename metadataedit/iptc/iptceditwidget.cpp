@@ -298,7 +298,7 @@ void IPTCEditWidget::slotItemChanged()
     d->page_envelope->setEnabled(!d->isReadOnly);
 }
 
-void IPTCEditWidget::slotApply()
+void IPTCEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
@@ -339,16 +339,14 @@ void IPTCEditWidget::slotApply()
     }
 }
 
-void IPTCEditWidget::slotUser1()
+void IPTCEditWidget::next()
 {
-    slotApply();
     d->currItem++;
     slotItemChanged();
 }
 
-void IPTCEditWidget::slotUser2()
+void IPTCEditWidget::previous()
 {
-    slotApply();
     d->currItem--;
     slotItemChanged();
 }
@@ -360,12 +358,6 @@ void IPTCEditWidget::slotModified()
         d->modified = true;
         emit signalModified();
     }
-}
-
-void IPTCEditWidget::slotOk()
-{
-    slotApply();
-    saveSettings();
 }
 
 void IPTCEditWidget::showPage(int page)

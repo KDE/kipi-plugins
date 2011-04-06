@@ -251,7 +251,7 @@ void EXIFEditWidget::slotItemChanged()
     d->page_adjust->setEnabled(!d->isReadOnly);
 }
 
-void EXIFEditWidget::slotApply()
+void EXIFEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
@@ -291,16 +291,14 @@ void EXIFEditWidget::slotApply()
     }
 }
 
-void EXIFEditWidget::slotUser1()
+void EXIFEditWidget::next()
 {
-    slotApply();
     d->currItem++;
     slotItemChanged();
 }
 
-void EXIFEditWidget::slotUser2()
+void EXIFEditWidget::previous()
 {
-    slotApply();
     d->currItem--;
     slotItemChanged();
 }
@@ -312,12 +310,6 @@ void EXIFEditWidget::slotModified()
         d->modified = true;
         emit signalModified();
     }
-}
-
-void EXIFEditWidget::slotOk()
-{
-    slotApply();
-    saveSettings();
 }
 
 void EXIFEditWidget::showPage(int page)

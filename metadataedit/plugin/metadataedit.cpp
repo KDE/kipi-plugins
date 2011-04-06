@@ -140,53 +140,17 @@ MetadataEditDialog::MetadataEditDialog(QWidget* parent,KUrl::List urls, Interfac
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotApply()));
 
-    connect(this, SIGNAL(signalApply()),
-            d->tabExif, SLOT(slotApply()));
-
-    connect(this, SIGNAL(signalApply()),
-            d->tabIptc, SLOT(slotApply()));
-
-    connect(this, SIGNAL(signalApply()),
-            d->tabXmp, SLOT(slotApply()));
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
     connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotUser1()));
-
-    connect(this, SIGNAL(signalUser1()),
-            d->tabExif, SLOT(slotUser1()));
-
-    connect(this, SIGNAL(signalUser1()),
-            d->tabIptc, SLOT(slotUser1()));
-
-    connect(this, SIGNAL(signalUser1()),
-            d->tabXmp, SLOT(slotUser1()));
+            this, SLOT(slotNext()));
 
     connect(this, SIGNAL(user2Clicked()),
-            this, SLOT(slotUser2()));
-
-    connect(this, SIGNAL(signalUser2()),
-            d->tabExif, SLOT(slotUser2()));
-
-    connect(this, SIGNAL(signalUser2()),
-            d->tabIptc, SLOT(slotUser2()));
-
-    connect(this, SIGNAL(signalUser2()),
-            d->tabXmp, SLOT(slotUser2()));
-
-    connect(this, SIGNAL(okClicked()),
-            this, SLOT(slotOk()));
-
-    connect(this, SIGNAL(signalOk()),
-            d->tabExif, SLOT(slotOk()));
-
-    connect(this, SIGNAL(signalOk()),
-            d->tabIptc, SLOT(slotOk()));
-
-    connect(this, SIGNAL(signalOk()),
-            d->tabXmp, SLOT(slotOk()));
+            this, SLOT(slotPrevious()));
 
     connect(d->tabExif, SIGNAL(signalSetReadOnly(bool)),
             this, SLOT(slotSetReadOnly(bool)));
@@ -242,15 +206,6 @@ void MetadataEditDialog::slotHelp()
     KToolInvocation::invokeHelp("metadataeditor", "kipi-plugins");
 }
 
-void MetadataEditDialog::slotClose()
-{
-    d->tabExif->saveSettings();
-    d->tabIptc->saveSettings();
-    d->tabXmp->saveSettings();
-    saveSettings();
-    close();
-}
-
 void MetadataEditDialog::slotModified()
 {
     bool modified = false;
@@ -273,9 +228,38 @@ void MetadataEditDialog::slotModified()
     enableButton(Apply, modified);
 }
 
+void MetadataEditDialog::slotOk()
+{
+    slotApply();
+    saveSettings();
+    accept();
+}
+
+void MetadataEditDialog::slotClose()
+{
+    saveSettings();
+    close();
+}
+
 void MetadataEditDialog::slotApply()
 {
-    emit signalApply();
+    d->tabExif->apply();
+    d->tabIptc->apply();
+    d->tabXmp->apply();
+    slotItemChanged();
+}
+
+void MetadataEditDialog::slotNext()
+{
+    slotApply();
+    d->currItem++;
+    slotItemChanged();
+}
+
+void MetadataEditDialog::slotPrevious()
+{
+    slotApply();
+    d->currItem--;
     slotItemChanged();
 }
 
@@ -293,22 +277,10 @@ void MetadataEditDialog::saveSettings()
     KConfigGroup group = config.group(QString("Metadata Edit Dialog"));
     group.writeEntry("Tab Index", d->tabWidget->currentIndex());
     saveDialogSize(group);
-}
 
-void MetadataEditDialog::slotUser1()
-{
-    slotApply();
-    d->currItem++;
-    emit signalUser1();
-    slotItemChanged();
-}
-
-void MetadataEditDialog::slotUser2()
-{
-    slotApply();
-    d->currItem--;
-    emit signalUser2();
-    slotItemChanged();
+    d->tabExif->saveSettings();
+    d->tabIptc->saveSettings();
+    d->tabXmp->saveSettings();
 }
 
 void MetadataEditDialog::slotItemChanged()
@@ -318,14 +290,6 @@ void MetadataEditDialog::slotItemChanged()
     enableButton(User1, *(d->currItem) != d->urls.last());
     enableButton(User2, *(d->currItem) != d->urls.first());
     enableButton(Apply, false);
-}
-
-void MetadataEditDialog::slotOk()
-{
-    slotApply();
-    saveSettings();
-    emit signalOk();
-    accept();
 }
 
 bool MetadataEditDialog::eventFilter(QObject*, QEvent* e)
@@ -340,7 +304,7 @@ bool MetadataEditDialog::eventFilter(QObject*, QEvent* e)
             slotApply();
 
             if (isButtonEnabled(User1))
-                slotUser1();
+                slotNext();
 
             return true;
         }
@@ -350,7 +314,7 @@ bool MetadataEditDialog::eventFilter(QObject*, QEvent* e)
             slotApply();
 
             if (isButtonEnabled(User2))
-                slotUser2();
+                slotPrevious();
 
             return true;
         }

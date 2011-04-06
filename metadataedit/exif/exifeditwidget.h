@@ -54,6 +54,9 @@ public:
 
     bool isModified();
     void saveSettings();
+    void apply();
+    void next();
+    void previous();
 
 Q_SIGNALS:
 
@@ -64,16 +67,9 @@ public Q_SLOTS:
 
     void slotModified();
 
-protected Q_SLOTS:
-
-    void slotOk();
-
 private Q_SLOTS:
 
     void slotItemChanged();
-    void slotApply();
-    void slotUser1();
-    void slotUser2();
 
 private:
 

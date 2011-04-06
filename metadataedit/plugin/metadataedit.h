@@ -67,18 +67,10 @@ private Q_SLOTS:
     void slotClose();
     void slotItemChanged();
     void slotApply();
-    void slotUser1();
-    void slotUser2();
+    void slotNext();
+    void slotPrevious();
     void slotSetReadOnly(bool);
     void setWindowTitle(int);
-
-Q_SIGNALS:
-
-    void signalApply();
-    void signalClose();
-    void signalUser1();
-    void signalUser2();
-    void signalOk();
 
 protected:
 

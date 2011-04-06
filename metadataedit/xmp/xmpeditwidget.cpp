@@ -291,7 +291,7 @@ void XMPEditWidget::slotItemChanged()
 
 }
 
-void XMPEditWidget::slotApply()
+void XMPEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
@@ -332,16 +332,14 @@ void XMPEditWidget::slotApply()
     }
 }
 
-void XMPEditWidget::slotUser1()
+void XMPEditWidget::next()
 {
-    slotApply();
     d->currItem++;
     slotItemChanged();
 }
 
-void XMPEditWidget::slotUser2()
+void XMPEditWidget::previous()
 {
-    slotApply();
     d->currItem--;
     slotItemChanged();
 }
@@ -353,12 +351,6 @@ void XMPEditWidget::slotModified()
         d->modified = true;
         emit signalModified();
     }
-}
-
-void XMPEditWidget::slotOk()
-{
-    slotApply();
-    saveSettings();
 }
 
 void XMPEditWidget::showPage(int page)
