@@ -56,6 +56,9 @@ public:
     MetadataEditDialog(QWidget* parent, const KUrl::List& urls, Interface* iface);
     ~MetadataEditDialog();
 
+    KUrl::List::iterator currentItem() const;
+    Interface* iface() const;
+
 public Q_SLOTS:
 
     void slotModified();

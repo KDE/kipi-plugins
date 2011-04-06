@@ -58,6 +58,7 @@
 
 // Local includes
 
+#include "metadataedit.h"
 #include "exifadjust.h"
 #include "exifcaption.h"
 #include "exifdatetime.h"
@@ -91,7 +92,7 @@ public:
         devicePage    = 0;
         lightPage     = 0;
         adjustPage    = 0;
-        interface     = 0;
+        dlg           = 0;
     }
 
     bool                 modified;
@@ -108,10 +109,6 @@ public:
     KPageWidgetItem*     page_light;
     KPageWidgetItem*     page_adjust;
 
-    KUrl::List           urls;
-
-    KUrl::List::iterator currItem;
-
     EXIFCaption*         captionPage;
     EXIFDateTime*        datetimePage;
     EXIFLens*            lensPage;
@@ -119,17 +116,13 @@ public:
     EXIFLight*           lightPage;
     EXIFAdjust*          adjustPage;
 
-    Interface*           interface;
+    MetadataEditDialog*  dlg;
 };
 
-EXIFEditWidget::EXIFEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+EXIFEditWidget::EXIFEditWidget(MetadataEditDialog* parent)
     : KPageWidget(parent), d(new EXIFEditWidgetPrivate)
 {
-    d->urls      = urls;
-    d->interface = iface;
-    d->currItem  = d->urls.begin();
-
-    // ---------------------------------------------------------------
+    d->dlg       = parent;
 
     d->captionPage   = new EXIFCaption(this);
     d->page_caption  = addPage(d->captionPage, i18nc("image caption", "Caption"));
@@ -224,7 +217,7 @@ void EXIFEditWidget::saveSettings()
 void EXIFEditWidget::slotItemChanged()
 {
     KExiv2 exiv2Iface;
-    exiv2Iface.load((*d->currItem).path());
+    exiv2Iface.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
     d->exifData = exiv2Iface.getExifEncoded();
@@ -241,7 +234,7 @@ void EXIFEditWidget::slotItemChanged()
     d->lightPage->readMetadata(d->exifData);
     d->adjustPage->readMetadata(d->exifData);
 
-    d->isReadOnly = !KExiv2::canWriteExif((*d->currItem).path());
+    d->isReadOnly = !KExiv2::canWriteExif((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
@@ -255,7 +248,7 @@ void EXIFEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        ImageInfo info = d->interface->info(*d->currItem);
+        ImageInfo info = d->dlg->iface()->info(*d->dlg->currentItem());
 
         if (d->captionPage->syncHOSTCommentIsChecked())
         {
@@ -275,32 +268,20 @@ void EXIFEditWidget::apply()
         d->adjustPage->applyMetadata(d->exifData);
 
         KExiv2 exiv2Iface;
-        exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
+        exiv2Iface.setWriteRawFiles(d->dlg->iface()->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
-        exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+        exiv2Iface.setUpdateFileTimeStamp(d->dlg->iface()->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 #endif
 
-        exiv2Iface.load((*d->currItem).path());
+        exiv2Iface.load((*d->dlg->currentItem()).path());
         exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);
         exiv2Iface.setXmp(d->xmpData);
-        exiv2Iface.save((*d->currItem).path());
+        exiv2Iface.save((*d->dlg->currentItem()).path());
 
         d->modified = false;
     }
-}
-
-void EXIFEditWidget::next()
-{
-    d->currItem++;
-    slotItemChanged();
-}
-
-void EXIFEditWidget::previous()
-{
-    d->currItem--;
-    slotItemChanged();
 }
 
 void EXIFEditWidget::slotModified()

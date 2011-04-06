@@ -109,9 +109,9 @@ MetadataEditDialog::MetadataEditDialog(QWidget* parent, const KUrl::List& urls, 
 
     setCaption(i18n("Metadata edit dialog"));
     d->tabWidget = new KTabWidget(this);
-    d->tabExif   = new EXIFEditWidget(this, urls, iface);
-    d->tabIptc   = new IPTCEditWidget(this, urls, iface);
-    d->tabXmp    = new XMPEditWidget(this, urls, iface);
+    d->tabExif   = new EXIFEditWidget(this);
+    d->tabIptc   = new IPTCEditWidget(this);
+    d->tabXmp    = new XMPEditWidget(this);
     d->tabWidget->addTab(d->tabExif, i18n("Edit EXIF"));
     d->tabWidget->addTab(d->tabIptc, i18n("Edit IPTC"));
     d->tabWidget->addTab(d->tabXmp,  i18n("Edit XMP"));
@@ -201,6 +201,16 @@ MetadataEditDialog::~MetadataEditDialog()
     delete d;
 };
 
+KUrl::List::iterator MetadataEditDialog::currentItem() const
+{
+    return d->currItem;
+}
+
+Interface* MetadataEditDialog::iface() const
+{
+    return d->interface;
+}
+
 void MetadataEditDialog::slotHelp()
 {
     KToolInvocation::invokeHelp("metadataeditor", "kipi-plugins");
@@ -253,9 +263,6 @@ void MetadataEditDialog::slotApply()
 void MetadataEditDialog::slotNext()
 {
     slotApply();
-    d->tabExif->next();
-    d->tabIptc->next();
-    d->tabXmp->next();
     d->currItem++;
     slotItemChanged();
 }
@@ -263,9 +270,6 @@ void MetadataEditDialog::slotNext()
 void MetadataEditDialog::slotPrevious()
 {
     slotApply();
-    d->tabExif->previous();
-    d->tabIptc->previous();
-    d->tabXmp->previous();
     d->currItem--;
     slotItemChanged();
 }
@@ -292,6 +296,9 @@ void MetadataEditDialog::saveSettings()
 
 void MetadataEditDialog::slotItemChanged()
 {
+    d->tabExif->slotItemChanged();
+    d->tabIptc->slotItemChanged();
+    d->tabXmp->slotItemChanged();
     enableButton(Apply, !d->isReadOnly);
     setWindowTitle(d->tabWidget->currentIndex());
     enableButton(User1, *(d->currItem) != d->urls.last());

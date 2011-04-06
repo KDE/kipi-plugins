@@ -56,6 +56,7 @@
 
 // Local includes
 
+#include "metadataedit.h"
 #include "iptccategories.h"
 #include "iptccontent.h"
 #include "iptccredits.h"
@@ -98,7 +99,7 @@ public:
         statusPage      = 0;
         originPage      = 0;
         envelopePage    = 0;
-        interface       = 0;
+        dlg             = 0;
     }
 
     bool                  modified;
@@ -117,10 +118,6 @@ public:
     KPageWidgetItem*     page_origin;
     KPageWidgetItem*     page_envelope;
 
-    KUrl::List           urls;
-
-    KUrl::List::iterator currItem;
-
     IPTCContent*         contentPage;
     IPTCProperties*      propertiesPage;
     IPTCSubjects*        subjectsPage;
@@ -131,17 +128,13 @@ public:
     IPTCOrigin*          originPage;
     IPTCEnvelope*        envelopePage;
 
-    Interface*           interface;
+    MetadataEditDialog*  dlg;
 };
 
-IPTCEditWidget::IPTCEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+IPTCEditWidget::IPTCEditWidget(MetadataEditDialog* parent)
     : KPageWidget(parent), d(new IPTCEditWidgetPrivate)
 {
-    d->urls      = urls;
-    d->interface = iface;
-    d->currItem  = d->urls.begin();
-
-    // ---------------------------------------------------------------
+    d->dlg       = parent;
 
     d->contentPage   = new IPTCContent(this);
     d->page_content  = addPage(d->contentPage, i18n("Content"));
@@ -265,7 +258,7 @@ void IPTCEditWidget::saveSettings()
 void IPTCEditWidget::slotItemChanged()
 {
     KExiv2 exiv2Iface;
-    exiv2Iface.load((*d->currItem).path());
+    exiv2Iface.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
     d->exifData = exiv2Iface.getExifEncoded();
@@ -284,7 +277,7 @@ void IPTCEditWidget::slotItemChanged()
     d->propertiesPage->readMetadata(d->iptcData);
     d->envelopePage->readMetadata(d->iptcData);
 
-    d->isReadOnly = !KExiv2::canWriteIptc((*d->currItem).path());
+    d->isReadOnly = !KExiv2::canWriteIptc((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
 
     d->page_content->setEnabled(!d->isReadOnly);
@@ -302,7 +295,7 @@ void IPTCEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        ImageInfo info = d->interface->info(*d->currItem);
+        ImageInfo info = d->dlg->iface()->info(*d->dlg->currentItem());
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
@@ -325,30 +318,18 @@ void IPTCEditWidget::apply()
         d->envelopePage->applyMetadata(d->iptcData);
 
         KExiv2 exiv2Iface;
-        exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
+        exiv2Iface.setWriteRawFiles(d->dlg->iface()->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
-        exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+        exiv2Iface.setUpdateFileTimeStamp(d->dlg->iface()->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 #endif
 
-        exiv2Iface.load((*d->currItem).path());
+        exiv2Iface.load((*d->dlg->currentItem()).path());
         exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);
-        exiv2Iface.save((*d->currItem).path());
+        exiv2Iface.save((*d->dlg->currentItem()).path());
         d->modified = false;
     }
-}
-
-void IPTCEditWidget::next()
-{
-    d->currItem++;
-    slotItemChanged();
-}
-
-void IPTCEditWidget::previous()
-{
-    d->currItem--;
-    slotItemChanged();
 }
 
 void IPTCEditWidget::slotModified()

@@ -56,6 +56,7 @@
 
 // Local includes
 
+#include "metadataedit.h"
 #include "xmpcategories.h"
 #include "xmpcontent.h"
 #include "xmpcredits.h"
@@ -95,7 +96,7 @@ public:
         creditsPage     = 0;
         statusPage      = 0;
         propertiesPage  = 0;
-        interface       = 0;
+        dlg             = 0;
     }
 
     bool                 modified;
@@ -127,17 +128,13 @@ public:
     XMPStatus*           statusPage;
     XMPProperties*       propertiesPage;
 
-    Interface*           interface;
+    MetadataEditDialog*  dlg;
 };
 
-XMPEditWidget::XMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface)
+XMPEditWidget::XMPEditWidget(MetadataEditDialog* parent)
     : KPageWidget(parent), d(new XMPEditWidgetPrivate)
 {
-    d->urls      = urls;
-    d->interface = iface;
-    d->currItem  = d->urls.begin();
-
-    // ---------------------------------------------------------------
+    d->dlg       = parent;
 
     d->contentPage   = new XMPContent(this);
     d->page_content  = addPage(d->contentPage, i18n("Content"));
@@ -258,7 +255,7 @@ void XMPEditWidget::saveSettings()
 void XMPEditWidget::slotItemChanged()
 {
     KExiv2 exiv2Iface;
-    exiv2Iface.load((*d->currItem).path());
+    exiv2Iface.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
     d->exifData = exiv2Iface.getExifEncoded();
@@ -277,7 +274,7 @@ void XMPEditWidget::slotItemChanged()
     d->creditsPage->readMetadata(d->xmpData);
     d->statusPage->readMetadata(d->xmpData);
     d->propertiesPage->readMetadata(d->xmpData);
-    d->isReadOnly = !KExiv2::canWriteXmp((*d->currItem).path());
+    d->isReadOnly = !KExiv2::canWriteXmp((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
 
     d->page_content->setEnabled(!d->isReadOnly);
@@ -295,7 +292,7 @@ void XMPEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        ImageInfo info = d->interface->info(*d->currItem);
+        ImageInfo info = d->dlg->iface()->info(*d->dlg->currentItem());
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
@@ -317,31 +314,19 @@ void XMPEditWidget::apply()
         d->propertiesPage->applyMetadata(d->xmpData);
 
         KExiv2 exiv2Iface;
-        exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
+        exiv2Iface.setWriteRawFiles(d->dlg->iface()->hostSetting("WriteMetadataToRAW").toBool());
 
 #if KEXIV2_VERSION >= 0x000600
-        exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+        exiv2Iface.setUpdateFileTimeStamp(d->dlg->iface()->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 #endif
 
-        exiv2Iface.load((*d->currItem).path());
+        exiv2Iface.load((*d->dlg->currentItem()).path());
         exiv2Iface.setExif(d->exifData);
         exiv2Iface.setIptc(d->iptcData);
         exiv2Iface.setXmp(d->xmpData);
-        exiv2Iface.save((*d->currItem).path());
+        exiv2Iface.save((*d->dlg->currentItem()).path());
         d->modified = false;
     }
-}
-
-void XMPEditWidget::next()
-{
-    d->currItem++;
-    slotItemChanged();
-}
-
-void XMPEditWidget::previous()
-{
-    d->currItem--;
-    slotItemChanged();
 }
 
 void XMPEditWidget::slotModified()

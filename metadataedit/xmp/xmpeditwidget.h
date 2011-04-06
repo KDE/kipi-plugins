@@ -33,15 +33,10 @@ class QCloseEvent;
 class QEvent;
 class QObject;
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIMetadataEditPlugin
 {
+
+class MetadataEditDialog;
 
 class XMPEditWidget : public KPageWidget
 {
@@ -49,14 +44,12 @@ class XMPEditWidget : public KPageWidget
 
 public:
 
-    XMPEditWidget(QWidget* parent, const KUrl::List& urls, Interface* iface);
+    XMPEditWidget(MetadataEditDialog* parent);
     ~XMPEditWidget();
 
     bool isModified();
     void saveSettings();
     void apply();
-    void next();
-    void previous();
 
 Q_SIGNALS:
 
@@ -66,9 +59,6 @@ Q_SIGNALS:
 public Q_SLOTS:
 
     void slotModified();
-
-private Q_SLOTS:
-
     void slotItemChanged();
 
 private:
