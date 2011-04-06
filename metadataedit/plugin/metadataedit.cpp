@@ -247,6 +247,7 @@ void MetadataEditDialog::slotApply()
     d->tabIptc->apply();
     d->tabXmp->apply();
     slotItemChanged();
+    d->interface->refreshImages(*d->currItem);
 }
 
 void MetadataEditDialog::slotNext()

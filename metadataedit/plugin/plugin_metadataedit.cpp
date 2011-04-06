@@ -155,7 +155,6 @@ void Plugin_MetadataEdit::slotEditAllMetadata()
 
     QPointer<MetadataEditDialog> dialog = new MetadataEditDialog(kapp->activeWindow(), images.images(), d->interface);
     dialog->exec();
-    d->interface->refreshImages(images.images());
 
     delete dialog;
 }
