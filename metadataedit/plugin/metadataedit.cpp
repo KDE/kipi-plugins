@@ -253,6 +253,9 @@ void MetadataEditDialog::slotApply()
 void MetadataEditDialog::slotNext()
 {
     slotApply();
+    d->tabExif->next();
+    d->tabIptc->next();
+    d->tabXmp->next();
     d->currItem++;
     slotItemChanged();
 }
@@ -260,6 +263,9 @@ void MetadataEditDialog::slotNext()
 void MetadataEditDialog::slotPrevious()
 {
     slotApply();
+    d->tabExif->previous();
+    d->tabIptc->previous();
+    d->tabXmp->previous();
     d->currItem--;
     slotItemChanged();
 }
