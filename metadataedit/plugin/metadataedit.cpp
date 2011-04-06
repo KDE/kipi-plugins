@@ -7,6 +7,7 @@
  * Description : a dialog to edit EXIF,IPTC and XMP metadata
  *
  * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -127,86 +128,86 @@ MetadataEditDialog::MetadataEditDialog(QWidget* parent,KUrl::List urls, Interfac
 
     //----------------------------------------------------------
 
-    connect(d->tabExif,SIGNAL(signalModified()),
-        this,SLOT(slotModified()));
+    connect(d->tabExif, SIGNAL(signalModified()),
+            this, SLOT(slotModified()));
 
-    connect(d->tabIptc,SIGNAL(signalModified()),
-        this,SLOT(slotModified()));
+    connect(d->tabIptc, SIGNAL(signalModified()),
+            this, SLOT(slotModified()));
 
-    connect(d->tabXmp,SIGNAL(signalModified()),
-        this,SLOT(slotModified()));
+    connect(d->tabXmp, SIGNAL(signalModified()),
+            this, SLOT(slotModified()));
 
-    connect(this,SIGNAL(applyClicked()),
-        this,SLOT(slotApply()));
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotApply()));
 
-    connect(this,SIGNAL(signalApply()),
-        d->tabExif,SLOT(slotApply()));
+    connect(this, SIGNAL(signalApply()),
+            d->tabExif, SLOT(slotApply()));
 
-    connect(this,SIGNAL(signalApply()),
-        d->tabIptc,SLOT(slotApply()));
+    connect(this, SIGNAL(signalApply()),
+            d->tabIptc, SLOT(slotApply()));
 
-    connect(this,SIGNAL(signalApply()),
-        d->tabXmp,SLOT(slotApply()));
+    connect(this, SIGNAL(signalApply()),
+            d->tabXmp, SLOT(slotApply()));
 
-    connect(this,SIGNAL(closeClicked()),
-        this,SLOT(slotClose()));
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
 
-    connect(this,SIGNAL(signalClose()),
-        d->tabExif,SLOT(slotClose()));
+    connect(this, SIGNAL(signalClose()),
+            d->tabExif, SLOT(slotClose()));
 
-    connect(this,SIGNAL(signalClose()),
-        d->tabIptc,SLOT(slotClose()));
+    connect(this, SIGNAL(signalClose()),
+            d->tabIptc, SLOT(slotClose()));
 
-    connect(this,SIGNAL(signalClose()),
-        d->tabXmp,SLOT(slotClose()));
+    connect(this, SIGNAL(signalClose()),
+            d->tabXmp, SLOT(slotClose()));
 
-    connect(this,SIGNAL(user1Clicked()),
-        this,SLOT(slotUser1()));
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotUser1()));
 
-    connect(this,SIGNAL(signalUser1()),
-        d->tabExif,SLOT(slotUser1()));
+    connect(this, SIGNAL(signalUser1()),
+            d->tabExif, SLOT(slotUser1()));
 
-    connect(this,SIGNAL(signalUser1()),
-        d->tabIptc,SLOT(slotUser1()));
+    connect(this, SIGNAL(signalUser1()),
+            d->tabIptc, SLOT(slotUser1()));
 
-    connect(this,SIGNAL(signalUser1()),
-        d->tabXmp,SLOT(slotUser1()));
+    connect(this, SIGNAL(signalUser1()),
+            d->tabXmp, SLOT(slotUser1()));
 
-    connect(this,SIGNAL(user2Clicked()),
-        this,SLOT(slotUser2()));
+    connect(this, SIGNAL(user2Clicked()),
+            this, SLOT(slotUser2()));
 
-    connect(this,SIGNAL(signalUser2()),
-        d->tabExif,SLOT(slotUser2()));
+    connect(this, SIGNAL(signalUser2()),
+            d->tabExif, SLOT(slotUser2()));
 
-    connect(this,SIGNAL(signalUser2()),
-        d->tabIptc,SLOT(slotUser2()));
+    connect(this, SIGNAL(signalUser2()),
+            d->tabIptc, SLOT(slotUser2()));
 
-    connect(this,SIGNAL(signalUser2()),
-        d->tabXmp,SLOT(slotUser2()));
+    connect(this, SIGNAL(signalUser2()),
+            d->tabXmp, SLOT(slotUser2()));
 
-    connect(this,SIGNAL(okClicked()),
-        this,SLOT(slotOk()));
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
 
-    connect(this,SIGNAL(signalOk()),
-        d->tabExif,SLOT(slotOk()));
+    connect(this, SIGNAL(signalOk()),
+            d->tabExif, SLOT(slotOk()));
 
-    connect(this,SIGNAL(signalOk()),
-        d->tabIptc,SLOT(slotOk()));
+    connect(this, SIGNAL(signalOk()),
+            d->tabIptc, SLOT(slotOk()));
 
-    connect(this,SIGNAL(signalOk()),
-        d->tabXmp,SLOT(slotOk()));
+    connect(this, SIGNAL(signalOk()),
+            d->tabXmp, SLOT(slotOk()));
 
-    connect(d->tabExif,SIGNAL(signalSetReadOnly(bool)),
-        this,SLOT(slotSetReadOnly(bool)));
+    connect(d->tabExif, SIGNAL(signalSetReadOnly(bool)),
+            this, SLOT(slotSetReadOnly(bool)));
 
-    connect(d->tabIptc,SIGNAL(signalSetReadOnly(bool)),
-        this,SLOT(slotSetReadOnly(bool)));
+    connect(d->tabIptc, SIGNAL(signalSetReadOnly(bool)),
+            this, SLOT(slotSetReadOnly(bool)));
 
-    connect(d->tabXmp,SIGNAL(signalSetReadOnly(bool)),
-        this,SLOT(slotSetReadOnly(bool)));
+    connect(d->tabXmp, SIGNAL(signalSetReadOnly(bool)),
+            this, SLOT(slotSetReadOnly(bool)));
 
-    connect(d->tabWidget,SIGNAL(currentChanged(int)),
-        this,SLOT(setWindowTitle(int)));
+    connect(d->tabWidget, SIGNAL(currentChanged(int)),
+            this, SLOT(setWindowTitle(int)));
 
     //----------------------------------------------------------
 
