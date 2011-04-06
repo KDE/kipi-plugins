@@ -152,15 +152,6 @@ MetadataEditDialog::MetadataEditDialog(QWidget* parent,KUrl::List urls, Interfac
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
 
-    connect(this, SIGNAL(signalClose()),
-            d->tabExif, SLOT(slotClose()));
-
-    connect(this, SIGNAL(signalClose()),
-            d->tabIptc, SLOT(slotClose()));
-
-    connect(this, SIGNAL(signalClose()),
-            d->tabXmp, SLOT(slotClose()));
-
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotUser1()));
 
@@ -253,7 +244,9 @@ void MetadataEditDialog::slotHelp()
 
 void MetadataEditDialog::slotClose()
 {
-    emit signalClose();
+    d->tabExif->saveSettings();
+    d->tabIptc->saveSettings();
+    d->tabXmp->saveSettings();
     saveSettings();
     close();
 }

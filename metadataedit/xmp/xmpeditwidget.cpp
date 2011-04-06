@@ -224,11 +224,6 @@ XMPEditWidget::~XMPEditWidget()
     delete d;
 }
 
-void XMPEditWidget::slotClose()
-{
-    saveSettings();
-}
-
 void XMPEditWidget::readSettings()
 {
     KConfig config("kipirc");

@@ -53,8 +53,10 @@ public:
     ~EXIFEditWidget();
 
     bool isModified();
+    void saveSettings();
 
 Q_SIGNALS:
+
     void signalSetReadOnly(bool);
     void signalModified();
 
@@ -68,15 +70,14 @@ protected Q_SLOTS:
 
 private Q_SLOTS:
 
-    void slotClose();
     void slotItemChanged();
     void slotApply();
     void slotUser1();
     void slotUser2();
 
 private:
+
     void readSettings();
-    void saveSettings();
 
     int  activePageIndex();
     void showPage(int page);

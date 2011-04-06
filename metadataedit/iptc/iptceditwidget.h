@@ -53,6 +53,7 @@ public:
     ~IPTCEditWidget();
 
     bool isModified();
+    void saveSettings();
 
 Q_SIGNALS:
 
@@ -66,17 +67,17 @@ public Q_SLOTS:
 protected Q_SLOTS:
 
     void slotOk();
-    void slotClose();
 
 private Q_SLOTS:
+
     void slotItemChanged();
     void slotApply();
     void slotUser1();
     void slotUser2();
 
 private:
+
     void readSettings();
-    void saveSettings();
 
     int  activePageIndex();
     void showPage(int page);

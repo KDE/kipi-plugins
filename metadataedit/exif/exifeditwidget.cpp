@@ -192,11 +192,6 @@ EXIFEditWidget::~EXIFEditWidget()
     delete d;
 }
 
-void EXIFEditWidget::slotClose()
-{
-    saveSettings();
-}
-
 void EXIFEditWidget::readSettings()
 {
     KConfig config("kipirc");

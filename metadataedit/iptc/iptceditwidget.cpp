@@ -237,11 +237,6 @@ IPTCEditWidget::~IPTCEditWidget()
     delete d;
 }
 
-void IPTCEditWidget::slotClose()
-{
-    saveSettings();
-}
-
 void IPTCEditWidget::readSettings()
 {
     KConfig config("kipirc");
