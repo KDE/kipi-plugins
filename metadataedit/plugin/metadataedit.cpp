@@ -199,7 +199,7 @@ MetadataEditDialog::~MetadataEditDialog()
 {
     delete d->about;
     delete d;
-};
+}
 
 KUrl::List::iterator MetadataEditDialog::currentItem() const
 {
