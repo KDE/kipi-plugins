@@ -39,4 +39,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 027 ==> 242632 : The Subject classification reference code is not saved.
 028 ==> 138753 : Add new menu option for Batch Copyrighting of images using IPTC.
 029 ==> 198960 : Change exif date taken field of selected images.
-030 ==> 
+030 ==> 270579 : Images previously selected persist in the plugin window list [patch].
+031 ==> 
