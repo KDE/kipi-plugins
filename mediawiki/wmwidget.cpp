@@ -119,7 +119,7 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_wikiSelect->addItem(QString("fr wikipedia"),   QUrl("http://fr.wikipedia.org/w/api.php"));
 
     QLabel* nameLabel     = new QLabel(m_loginBox);
-    nameLabel->setText(i18n( "Wiki Login:" ));
+    nameLabel->setText(i18n( "Login:" ));
 
     QLabel* passwdLabel   = new QLabel(m_loginBox);
     passwdLabel->setText(i18n("Password:"));
@@ -130,7 +130,7 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     QPushButton* loginBtn = new QPushButton(m_loginBox);
     loginBtn->setAutoDefault(true);
     loginBtn->setDefault(true);
-    loginBtn->setText(i18n("&Loggin"));
+    loginBtn->setText(i18n("&Log in"));
 
     loginBoxLayout->addWidget(nameLabel,    0, 0, 1, 1);
     loginBoxLayout->addWidget(m_nameEdit,   0, 1, 1, 1);
