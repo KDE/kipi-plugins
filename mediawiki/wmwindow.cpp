@@ -74,17 +74,17 @@ WMWindow::WMWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
     setButtons(Help|User1|Close);
     setDefaultButton(Close);
     setModal(false);
-    setWindowTitle(i18n("Export to WikiMedia Commons"));
+    setWindowTitle(i18n("Export to Wikimedia Commons"));
     setButtonGuiItem(User1,
                      KGuiItem(i18n("Start Upload"), "network-workgroup",
-                              i18n("Start upload to WikiMedia Commons")));
+                              i18n("Start upload to Wikimedia Commons")));
     enableButton(User1,false);
     m_widget->setMinimumSize(700, 500);
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("WikiMedia Commons Export"), 0,
+    m_about = new KIPIPlugins::KPAboutData(ki18n("Wikimedia Commons Export"), 0,
                                KAboutData::License_GPL,
                                ki18n("A Kipi plugin to export image collection "
-                                     "to WikiMedia Commons.\n"
+                                     "to Wikimedia Commons.\n"
                                      "Using libmediawiki version %1").subs(QString(mediawiki_version)),
                                ki18n("(c) 2011, Alexandre Mendes"));
 
@@ -143,22 +143,22 @@ void WMWindow::reactivate()
 void WMWindow::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("WikiMedia Settings"));
+    KConfigGroup group = config.group(QString("Wikimedia Commons settings"));
 
     m_widget->readSettings(group);
 
-    KConfigGroup group2 = config.group(QString("WikiMedia Dialog"));
+    KConfigGroup group2 = config.group(QString("Wikimedia Commons dialog"));
     restoreDialogSize(group2);
 }
 
 void WMWindow::saveSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("WikiMedia Settings"));
+    KConfigGroup group = config.group(QString("Wikimedia Commons settings"));
 
     m_widget->saveSettings(group);
 
-    KConfigGroup group2 = config.group(QString("WikiMedia Dialog"));
+    KConfigGroup group2 = config.group(QString("Wikimedia Commons dialog"));
     saveDialogSize(group2);
     config.sync();
 }
@@ -247,7 +247,7 @@ int WMWindow::loginHandle(KJob* loginJob)
         m_pass.clear();
         m_uploadJob = NULL;
         //TODO Message d'erreur de login
-        KMessageBox::error(this, i18n("Login Error\nPlease re-enter your information."));
+        KMessageBox::error(this, i18n("Login error\nPlease check your credentials and try again."));
     }
     else
     {
