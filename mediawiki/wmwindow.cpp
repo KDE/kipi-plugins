@@ -135,6 +135,7 @@ void WMWindow::closeEvent(QCloseEvent* e)
 
 void WMWindow::reactivate()
 {
+    m_widget->imagesList()->listView()->clear();
     m_widget->imagesList()->loadImagesFromCurrentSelection();
     show();
 }
