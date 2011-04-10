@@ -40,5 +40,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 028 ==> 138753 : Add new menu option for Batch Copyrighting of images using IPTC.
 029 ==> 198960 : Change exif date taken field of selected images.
 030 ==> 270579 : Images previously selected persist in the plugin window list [patch].
-031 ==> 270587 - Text fixes for the Commons export widget [patch].
-032 ==> 
+031 ==> 270587 : Text fixes for the Commons export widget [patch].
+032 ==> 270593 : Acquireimages fail to link on amd64.
+033 ==> 
