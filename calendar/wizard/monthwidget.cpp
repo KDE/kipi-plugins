@@ -80,7 +80,7 @@ MonthWidget::~MonthWidget()
 {
 }
 
-KUrl MonthWidget::imagePath()
+KUrl MonthWidget::imagePath() const
 {
     return imagePath_;
 }

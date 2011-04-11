@@ -57,7 +57,7 @@ public:
     MonthWidget( KIPI::Interface* interface, QWidget* parent, int month );
     ~MonthWidget();
 
-    KUrl imagePath();
+    KUrl imagePath() const;
     void setImage( const KUrl& url );
 
 protected:
