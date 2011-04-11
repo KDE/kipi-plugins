@@ -161,9 +161,6 @@ MetadataEditDialog::MetadataEditDialog(QWidget* parent, const KUrl::List& urls, 
     connect(d->tabXmp, SIGNAL(signalSetReadOnly(bool)),
             this, SLOT(slotSetReadOnly(bool)));
 
-    connect(d->tabWidget, SIGNAL(currentChanged(int)),
-            this, SLOT(setWindowTitle(int)));
-
     //----------------------------------------------------------
 
     enableButton(Apply, false);
@@ -300,7 +297,10 @@ void MetadataEditDialog::slotItemChanged()
     d->tabIptc->slotItemChanged();
     d->tabXmp->slotItemChanged();
     enableButton(Apply, !d->isReadOnly);
-    setWindowTitle(d->tabWidget->currentIndex());
+    setCaption(i18n("%1 (%2/%3) - Edit Metadata")
+        .arg((*d->currItem).fileName())
+        .arg(d->urls.indexOf(*(d->currItem))+1)
+        .arg(d->urls.count()));
     enableButton(User1, *(d->currItem) != d->urls.last());
     enableButton(User2, *(d->currItem) != d->urls.first());
     enableButton(Apply, false);
@@ -349,33 +349,6 @@ void MetadataEditDialog::closeEvent(QCloseEvent* e)
 void MetadataEditDialog::slotSetReadOnly(bool state)
 {
     d->isReadOnly = state;
-}
-
-void MetadataEditDialog::setWindowTitle(int tabIndex)
-{
-    QString tabName;
-    switch (tabIndex)
-    {
-        case 0:
-            tabName = "EXIF";
-            break;
-
-        case 1:
-            tabName = "IPTC";
-            break;
-
-        case 2:
-            tabName = "XMP";
-            break;
-    }
-
-    setCaption(QString("%1 (%2/%3) - %4 %5 %6 ")
-        .arg((*d->currItem).fileName())
-        .arg(d->urls.indexOf(*(d->currItem))+1)
-        .arg(d->urls.count())
-        .arg(i18n("Edit"))
-        .arg(tabName)
-        .arg(i18n("Metadata")));
 }
 
 }  // namespace KIPIMetadataEditPlugin

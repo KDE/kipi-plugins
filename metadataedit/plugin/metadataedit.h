@@ -73,7 +73,6 @@ private Q_SLOTS:
     void slotNext();
     void slotPrevious();
     void slotSetReadOnly(bool);
-    void setWindowTitle(int);
 
 protected:
 
