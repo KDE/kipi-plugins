@@ -42,4 +42,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 030 ==> 270579 : Images previously selected persist in the plugin window list [patch].
 031 ==> 270587 : Text fixes for the Commons export widget [patch].
 032 ==> 270593 : Acquireimages fail to link on amd64.
-033 ==> 
+033 ==> 270649 : Bad use of arguments for translation.
+034 ==> 
+
