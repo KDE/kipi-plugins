@@ -377,6 +377,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(expoblending)
     ADD_SUBDIRECTORY(kopete)
     ADD_SUBDIRECTORY(batchprocessimages)
+    ADD_SUBDIRECTORY(rajceexport)
 
     # Plugins which are optional depencies.
 
