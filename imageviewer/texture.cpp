@@ -69,7 +69,7 @@ Texture::~Texture()
 /*!
     \fn Texture::height()
  */
-int Texture::height()
+int Texture::height() const 
 {
     return glimage.height();
 }
@@ -77,7 +77,7 @@ int Texture::height()
 /*!
     \fn Texture::width()
  */
-int Texture::width()
+int Texture::width() const
 {
     return glimage.width();
 }
@@ -91,7 +91,7 @@ int Texture::width()
     if "size" is set to image size, scaling is only performed by the GPU but not
     by the CPU, however the AGP usage to texture memory is increased (20MB for a 5mp image)
  */
-bool Texture::load(QString fn, QSize size, GLuint tn)
+bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 {
     filename=fn;
     initial_size=size;
@@ -136,7 +136,7 @@ bool Texture::load(QString fn, QSize size, GLuint tn)
     if "size" is set to image size, scaling is only performed by the GPU but not
     by the CPU, however the AGP usage to texture memory is increased (20MB for a 5mp image)
  */
-bool Texture::load(QImage im, QSize size, GLuint tn)
+bool Texture::load(const QImage& im, const QSize& size, GLuint tn)
 {
     qimage=im;
     initial_size=size;

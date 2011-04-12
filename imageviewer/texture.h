@@ -52,10 +52,10 @@ public:
     Texture(KIPI::Interface *);
     ~Texture();
 
-    int height();
-    int width();
-    bool load(QString fn, QSize size, GLuint tn);
-    bool load(QImage im, QSize size, GLuint tn);
+    int height() const;
+    int width() const ;
+    bool load(const QString& fn, const QSize& size, GLuint tn);
+    bool load(const QImage& im, const QSize& size, GLuint tn);
     GLvoid * data();
     GLuint texnr();
     GLfloat vertex_bottom();
