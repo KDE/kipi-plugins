@@ -45,7 +45,7 @@ public:
     Timer();
     ~Timer();
     void start();
-    void at(QString s);
+    void at(const QString& s);
 
 protected:
 

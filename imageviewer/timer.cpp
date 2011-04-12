@@ -39,7 +39,7 @@ void Timer::start()
     meantime=0;
 }
 
-void Timer::at(QString s)
+void Timer::at(const QString& s)
 {
     meantime=timer.elapsed()-meantime;
     kDebug() << "stopwatch:"<< s << ": " << meantime << " ms    overall: " << timer.elapsed() << " ms";

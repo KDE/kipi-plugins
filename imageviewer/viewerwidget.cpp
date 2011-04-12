@@ -688,7 +688,7 @@ void ViewerWidget::nextImage()
     \param pos position of mouse
     \param factor zoom factor:scrollwheel needs a higher factor that right click mouse move. factor=1 -> no zoom
  */
-void ViewerWidget::zoom(int mdelta, QPoint pos, float factor)
+void ViewerWidget::zoom(int mdelta, const QPoint& pos, float factor)
 {
     if (mdelta==0) {
         //do nothing
@@ -778,7 +778,7 @@ OGLstate ViewerWidget::getOGLstate()
     value of the visible size.
     \return true if screenwidth==widgedwidth
  */
-bool ViewerWidget::isReallyFullScreen()
+bool ViewerWidget::isReallyFullScreen() const
 {
     return (width()==screen_width);
 }

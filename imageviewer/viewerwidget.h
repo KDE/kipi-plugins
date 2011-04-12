@@ -93,7 +93,7 @@ public:
     void prevImage();
     void nextImage();
     bool listOfFilesIsEmpty() const;
-    void zoom(int mdelta, QPoint pos, float factor);
+    void zoom(int mdelta, const QPoint& pos, float factor);
     virtual void mouseReleaseEvent(QMouseEvent * e);
     virtual void keyReleaseEvent ( QKeyEvent * e );
     OGLstate getOGLstate();
@@ -135,7 +135,7 @@ protected:
     virtual void mouseMoveEvent ( QMouseEvent * e );
     virtual void mousePressEvent ( QMouseEvent * e );
     virtual void mouseDoubleClickEvent(QMouseEvent * e );
-    bool isReallyFullScreen();
+    bool isReallyFullScreen() const;
 
 private Q_SLOTS:
     void timeoutMouseMove();
