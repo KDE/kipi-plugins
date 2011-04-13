@@ -37,11 +37,11 @@ class NewAlbumDialog : public KDialog
 public:
     explicit NewAlbumDialog(QWidget* parent = 0);
 
-    QString albumName();
+    QString albumName() const;
 
-    QString albumDescription();
+    QString albumDescription() const;
 
-    bool albumVisible();
+    bool albumVisible() const;
 
 private:
     KLineEdit * _albumName;

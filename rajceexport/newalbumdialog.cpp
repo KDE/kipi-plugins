@@ -55,17 +55,17 @@ NewAlbumDialog::NewAlbumDialog(QWidget* parent): KDialog(parent)
     mainWidget->setLayout(layout);
 }
 
-QString KIPIRajceExportPlugin::NewAlbumDialog::albumDescription()
+QString KIPIRajceExportPlugin::NewAlbumDialog::albumDescription() const
 {
     return _albumDescription->toPlainText();
 }
 
-QString NewAlbumDialog::albumName()
+QString NewAlbumDialog::albumName() const
 {
     return _albumName->text();
 }
 
-bool NewAlbumDialog::albumVisible()
+bool NewAlbumDialog::albumVisible() const
 {
     return _albumVisible->isChecked();
 }
