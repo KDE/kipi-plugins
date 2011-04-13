@@ -23,11 +23,14 @@
 #ifndef KIPIRAJCEEXPORTPLUGIN_RAJCELOGINDIALOG_H
 #define KIPIRAJCEEXPORTPLUGIN_RAJCELOGINDIALOG_H
 
+// Qt includes
+
 #include <QDialog>
 
 class KLineEdit;
 
-namespace KIPIRajceExportPlugin {
+namespace KIPIRajceExportPlugin
+{
 
 class RajceLoginDialog : public QDialog
 {
@@ -36,7 +39,7 @@ class RajceLoginDialog : public QDialog
 public:
 
     RajceLoginDialog(QWidget* parent, const QString& _name=QString(),
-                   const QString& _passwd=QString());
+                     const QString& _passwd=QString());
     ~RajceLoginDialog();
 
     QString password() const;
@@ -50,6 +53,6 @@ private:
     KLineEdit* _passwdEdit;
 };
 
-}
+} // namespace KIPIRajceExportPlugin
 
 #endif // KIPIRAJCEEXPORTPLUGIN_RAJCELOGINDIALOG_H

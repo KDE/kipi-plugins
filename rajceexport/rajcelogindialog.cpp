@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "rajcelogindialog.h"
 #include "rajcelogindialog.moc"
 
 // Qt includes
@@ -38,21 +37,21 @@
 #include <klineedit.h>
 #include <klocale.h>
 
-using namespace KIPIRajceExportPlugin;
+namespace KIPIRajceExportPlugin
+{
 
-RajceLoginDialog::RajceLoginDialog(QWidget* parent, const QString& _name, const QString& _passwd): QDialog(parent)
+RajceLoginDialog::RajceLoginDialog(QWidget* parent, const QString& _name, const QString& _passwd)
+    : QDialog(parent)
 {
     setSizeGripEnabled(false);
 
-    QVBoxLayout* vbox = new QVBoxLayout(this);
-
+    QVBoxLayout* vbox         = new QVBoxLayout(this);
     QGridLayout* centerLayout = new QGridLayout();
-
-    _nameEdit   = new KLineEdit(this);
-    _passwdEdit = new KLineEdit(this);
+    _nameEdit                 = new KLineEdit(this);
+    _passwdEdit               = new KLineEdit(this);
     _passwdEdit->setEchoMode(KLineEdit::Password);
 
-    QLabel* nameLabel = new QLabel(this);
+    QLabel* nameLabel   = new QLabel(this);
     nameLabel->setText(i18n( "Login:" ));
     // centerLayout->addWidget(nameLabel, 0, 0);
 
@@ -65,12 +64,12 @@ RajceLoginDialog::RajceLoginDialog(QWidget* parent, const QString& _name, const 
     centerLayout->addWidget(passwdLabel,  1, 0);
 
     QHBoxLayout* btnLayout = new QHBoxLayout();
-    QPushButton *okBtn     = new QPushButton(this);
+    QPushButton* okBtn     = new QPushButton(this);
     okBtn->setAutoDefault(true);
     okBtn->setDefault(true);
     okBtn->setText(i18n("&OK"));
 
-    QPushButton *cancelBtn = new QPushButton(this);
+    QPushButton* cancelBtn = new QPushButton(this);
     cancelBtn->setText(i18n("&Cancel"));
 
     btnLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
@@ -101,7 +100,6 @@ RajceLoginDialog::RajceLoginDialog(QWidget* parent, const QString& _name, const 
 
 RajceLoginDialog::~RajceLoginDialog()
 {
-
 }
 
 QString RajceLoginDialog::password() const
@@ -123,3 +121,5 @@ QString RajceLoginDialog::username() const
 {
     return _nameEdit->text();
 }
+
+} // namespace KIPIRajceExportPlugin

@@ -1,7 +1,6 @@
 SUBDIRS(icons)
 
-SET(QT_USE_QTXMLPATTERNS 1)
-INCLUDE(${QT_USE_FILE})
+INCLUDE(${QT_QTXMLPATTERNS_INCLUDE_DIR})
 
 SET(kipiplugin_rajceexport_PART_SRCS
     mpform.cpp
@@ -24,6 +23,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_rajceexport
                       ${KDE4_KDEUI_LIBS}
                       ${KDE4_KIO_LIBS}
                       ${QT_LIBRARIES}
+                      ${QT_QTXMLPATTERNS_LIBRARY}
                       kipiplugins
                      )
 
