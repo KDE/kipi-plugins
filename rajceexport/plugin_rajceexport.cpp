@@ -20,9 +20,9 @@
  *
  * ============================================================ */
 
-#include "plugin_rajceexport.h"
+#include "plugin_rajceexport.moc"
 
-#include "rajcewindow.h"
+// KDE includes
 
 #include <kaction.h>
 #include <klibloader.h>
@@ -34,6 +34,8 @@
 #include <kwindowsystem.h>
 #include <kapplication.h>
 
+// Libkipi includes
+
 #include <libkipi/interface.h>
 
 K_PLUGIN_FACTORY( RajceExportFactory, registerPlugin<Plugin_RajceExport>(); )
@@ -42,21 +44,10 @@ K_EXPORT_PLUGIN ( RajceExportFactory("kipiplugin_rajceexport") )
 Plugin_RajceExport::Plugin_RajceExport(QObject* parent, const QVariantList& args):
         Plugin(RajceExportFactory::componentData(), parent, "RajceExport"), m_dlgExport(0)
 {
-
 }
 
 Plugin_RajceExport::~Plugin_RajceExport()
 {
-
-}
-
-KIPI::Category Plugin_RajceExport::category(KAction* action) const
-{
-    if (action == m_actionExport)
-        return KIPI::ExportPlugin;
-
-    kWarning() << "Unrecognized action";
-    return KIPI::ExportPlugin;
 }
 
 void Plugin_RajceExport::setup(QWidget* widget)
@@ -106,4 +97,13 @@ void Plugin_RajceExport::slotExport()
     }
 
     m_dlgExport->reactivate();
+}
+
+KIPI::Category Plugin_RajceExport::category(KAction* action) const
+{
+    if (action == m_actionExport)
+        return KIPI::ExportPlugin;
+
+    kWarning() << "Unrecognized action";
+    return KIPI::ExportPlugin;
 }

@@ -23,8 +23,15 @@
 #ifndef PLUGIN_RAJCEEXPORT_H
 #define PLUGIN_RAJCEEXPORT_H
 
+// Qt includes
+
+#include <QVariant>
+
+// Libkipi includes
+
 #include <libkipi/plugin.h>
-#include <qvariant.h>
+
+// Local includes
 
 #include "rajcewindow.h"
 
@@ -38,12 +45,12 @@ class Plugin_RajceExport : public KIPI::Plugin
 
 public:
 
-    Plugin_RajceExport(QObject * parent, const QVariantList& args);
+    Plugin_RajceExport(QObject* parent, const QVariantList& args);
     ~Plugin_RajceExport();
 
-    KIPI::Category category(KAction * action) const;
+    KIPI::Category category(KAction* action) const;
 
-    void setup(QWidget *);
+    void setup(QWidget*);
 
 public Q_SLOTS:
 
@@ -51,10 +58,9 @@ public Q_SLOTS:
 
 private:
 
-    KAction*         m_actionExport;
+    KAction*     m_actionExport;
 
     RajceWindow* m_dlgExport;
-
 };
 
 #endif // PLUGIN_RAJCEEXPORT_H

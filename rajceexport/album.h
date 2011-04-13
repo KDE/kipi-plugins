@@ -23,33 +23,39 @@
 #ifndef KIPIRAJCEEXPORTPLUGIN_ALBUM_H
 #define KIPIRAJCEEXPORTPLUGIN_ALBUM_H
 
+// Qt includes
+
 #include <QDateTime>
 #include <QString>
 #include <QDebug>
 #include <QMetaType>
 
-namespace KIPIRajceExportPlugin {
+namespace KIPIRajceExportPlugin
+{
 
 struct Album
 {
-    unsigned id;
-    QString name;
-    QString description;
-    QString url;
+    bool      isHidden;
+    bool      isSecure;
+
+    unsigned  photoCount;
+    unsigned  id;
+
+    QString   name;
+    QString   description;
+    QString   url;
+    QString   thumbUrl;
+    QString   bestQualityThumbUrl;
+
     QDateTime createDate;
     QDateTime updateDate;
     QDateTime validFrom;
     QDateTime validTo;
-    bool isHidden;
-    bool isSecure;
-    unsigned photoCount;
-    QString thumbUrl;
-    QString bestQualityThumbUrl;
 };
 
-}
+} // namespace KIPIRajceExportPlugin
 
-QTextStream & operator<<(QTextStream & str, const KIPIRajceExportPlugin::Album& a);
+QTextStream& operator<<(QTextStream& str, const KIPIRajceExportPlugin::Album& a);
 QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::Album& a);
 
 Q_DECLARE_METATYPE(KIPIRajceExportPlugin::Album)

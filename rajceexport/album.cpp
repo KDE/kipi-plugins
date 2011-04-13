@@ -22,7 +22,8 @@
 
 #include "album.h"
 
-QTextStream & operator<<(QTextStream & str, const KIPIRajceExportPlugin::Album& a) {
+QTextStream& operator << (QTextStream& str, const KIPIRajceExportPlugin::Album& a)
+{
     str << "Album[";
     str << "id=" << a.id;
     str << ", name='" << a.name << "'";
@@ -42,8 +43,9 @@ QTextStream & operator<<(QTextStream & str, const KIPIRajceExportPlugin::Album& 
     return str;
 }
 
-QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::Album& a) {
-    QString s;
+QDebug operator << (QDebug d, const KIPIRajceExportPlugin::Album& a)
+{
+    QString     s;
     QTextStream str(&s);
 
     str << a;
@@ -52,4 +54,3 @@ QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::Album& a) {
 
     return d;
 }
-
