@@ -76,32 +76,32 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
     _imgList->setAllowRAW(true);
     _imgList->loadImagesFromCurrentSelection();
     _imgList->listView()->setWhatsThis(
-    i18n("This is the list of images to upload to your Rajce.net account."));
+    i18n("This is the list of images to upload to your Rajce account."));
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     _headerLbl = new QLabel(settingsBox);
-    _headerLbl->setWhatsThis(i18n("This is a clickable link to open the Rajce.net home page in a web browser."));
+    _headerLbl->setWhatsThis(i18n("This is a clickable link to open the Rajce home page in a web browser."));
     _headerLbl->setOpenExternalLinks(true);
     _headerLbl->setFocusPolicy(Qt::NoFocus);
 
     // ------------------------------------------------------------------------
 
     QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
-    accountBox->setWhatsThis(i18n("This is the Rajce.net account that will be used to authenticate."));
+    accountBox->setWhatsThis(i18n("This is the Rajce account that will be used to authenticate."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    _anonymousRBtn = new QRadioButton(i18nc("Picasaweb account login", "Anonymous"), accountBox);
+    _anonymousRBtn = new QRadioButton(i18nc("Rajce account login", "Anonymous"), accountBox);
     _anonymousRBtn->setWhatsThis(i18n("Login as anonymous to Picasaweb web service."));
 
-    _accountRBtn   = new QRadioButton(i18n("Rajce.net Account"), accountBox);
-    _accountRBtn->setWhatsThis(i18n("Login to Rajce.net using username and password."));
+    _accountRBtn   = new QRadioButton(i18n("Rajce Account"), accountBox);
+    _accountRBtn->setWhatsThis(i18n("Login to Rajce using username and password."));
 
-    _userNameLbl   = new QLabel(i18nc("Rajce.net account settings", "Name:"), accountBox);
+    _userNameLbl   = new QLabel(i18nc("Rajce account settings", "Name:"), accountBox);
     _userName = new QLabel(accountBox);
     _changeUserBtn = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
-                                     i18n("Change Rajce.net Account used to authenticate")), accountBox);
+                                     i18n("Change Rajce Account used to authenticate")), accountBox);
 
     accountBoxLayout->addWidget(_anonymousRBtn, 0, 0, 1, 2);
     accountBoxLayout->addWidget(_accountRBtn,   1, 0, 1, 2);
@@ -114,14 +114,14 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
     // ------------------------------------------------------------------------
 
     QGroupBox* albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
-    albumsBox->setWhatsThis(i18n("This is the Rajce.net album that will be used for transfer."));
+    albumsBox->setWhatsThis(i18n("This is the Rajce album that will be used for transfer."));
     QGridLayout* albumsBoxLayout = new QGridLayout(albumsBox);
 
     _albumsCoB       = new KComboBox(albumsBox);
     _albumsCoB->setEditable(false);
 
     _newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
-                                       i18n("Create new Rajce.net album")), accountBox);
+                                       i18n("Create new Rajce album")), accountBox);
     _reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
                                        i18n("Reload album list")), accountBox);
 
@@ -132,7 +132,7 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
     // ------------------------------------------------------------------------
 
     QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(i18n("This is the location where Rajce.net images will be downloaded."));
+    uploadBox->setWhatsThis(i18n("This is the location where Rajce images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     _uploadWidget = interface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(_uploadWidget);

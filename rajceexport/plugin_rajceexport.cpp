@@ -59,7 +59,7 @@ void Plugin_RajceExport::setup(QWidget* widget)
     KIconLoader::global()->addAppDir("kipiplugin_rajceexport");
 
     m_actionExport = actionCollection()->addAction("rajceexport");
-    m_actionExport->setText(i18n("Export to &Rajce.net..."));
+    m_actionExport->setText(i18n("Export to &Rajce..."));
     m_actionExport->setIcon(KIcon("rajce"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_J));
 
