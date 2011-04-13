@@ -52,26 +52,26 @@ enum RajceCommandType
 
 enum RajceErrorCode
 {
-/*
-    1 Neznámá chyba.
-    2 Neplatný příkaz.
-    3 Chybné přihlašovací údaje.
-    4 Chybný přihlašovací token.
-    5 Neznámý nebo opakující se sloupec {colName}.
-    6 Není uvedeno správné albumID.
-    7 Album neexistuje nebo není přihlášeného uživatele.
-    8 Chybný token alba.
-    9 Album nemůže mít prázdné jméno.
-    10 Nepodařilo se vytvořit album. (těžko říct, proč ... asi chyba na straně serveru)
-    11 Album neexistuje.
-    12 Neexistující aplikace.
-    13 Chybný klíč aplikace.
-    14 Není přiložený soubor.
-    15 Již existuje novější verze {version}.
-    16 Chyba při ukládání souboru.
-    17 Nepovolená přípona souboru {extension}.
-    18 Chybné číslo verze klienta.
-    19 Neexistující cíl (target).
+/* Taken from the semi-official documentation: https://docs.google.com/View?id=ajkd99k8zcw6_120ctqvnjd5#Chybov_k_dy
+    1 Unknown error.
+    2 Invalid command.
+    3 Invalid credentials.
+    4 Invalid session token.
+    5 Unknown or repeated column name {colName}.
+    6 Invalid album ID.
+    7 The album doesn't exist or is not owned by the logged in user.
+    8 Invalid album token.
+    9 Album can't have an empty name.
+    10 Failed to create an album (probably a serverside error).
+    11 Album doesn't exist.
+    12 Nonexistent application.
+    13 Invalid application key.
+    14 A file is not attached.
+    15 A newer version already exists {version}.
+    16 Failed to save the file.
+    17 Unsupported file extension {extension}.
+    18 Unknown client version.
+    19 Unknown target.
 */
     UnknownError = 1,
     InvalidCommand,
@@ -81,6 +81,7 @@ enum RajceErrorCode
     InvalidAlbumId,
     AlbumDoesntExistOrNoPrivileges,
     InvalidAlbumToken,
+    AlbumNameEmpty,
     FailedToCreateAlbum,
     AlbumDoesntExist,
     UnknownApplication,

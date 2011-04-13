@@ -309,6 +309,7 @@ void RajceWidget::update()
             case InvalidAlbumId:                 _progressBar->setFormat(i18n("Unknown album"));                  break;
             case AlbumDoesntExistOrNoPrivileges: _progressBar->setFormat(i18n("Unknown album"));                  break;
             case InvalidAlbumToken:              _progressBar->setFormat(i18n("Failed to open album"));           break;
+            case AlbumNameEmpty:                 _progressBar->setFormat(i18n("The album name can't be empty"));  break;
             case FailedToCreateAlbum:            _progressBar->setFormat(i18n("Failed to create album"));         break;
             case AlbumDoesntExist:               _progressBar->setFormat(i18n("Album doesn't exist"));            break;
             case UnknownApplication:                                                                              break;
