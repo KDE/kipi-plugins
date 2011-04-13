@@ -21,15 +21,23 @@
  * ============================================================ */
 
 #include "newalbumdialog.h"
-#include <klocalizedstring.h>
-#include <QFormLayout>
-#include <KLineEdit>
-#include <KTextEdit>
+
+// Qt includes
+
 #include <QCheckBox>
+#include <QFormLayout>
 
-using namespace KIPIRajceExportPlugin;
+// KDE includes
 
-NewAlbumDialog::NewAlbumDialog(QWidget* parent): KDialog(parent)
+#include <klocalizedstring.h>
+#include <klineedit.h>
+#include <ktextedit.h>
+
+namespace KIPIRajceExportPlugin
+{
+
+NewAlbumDialog::NewAlbumDialog(QWidget* parent)
+    : KDialog(parent)
 {
     setCaption(i18n("New Album"));
     setButtons(Ok | Cancel);
@@ -39,13 +47,13 @@ NewAlbumDialog::NewAlbumDialog(QWidget* parent): KDialog(parent)
     QWidget * mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
 
-    _albumName = new KLineEdit;
+    _albumName        = new KLineEdit;
     _albumDescription = new KTextEdit;
-    _albumVisible = new QCheckBox;
+    _albumVisible     = new QCheckBox;
 
     _albumVisible->setChecked(true);
 
-    QFormLayout * layout = new QFormLayout();
+    QFormLayout* layout = new QFormLayout();
     layout->setMargin(10);
     layout->setRowWrapPolicy(QFormLayout::WrapLongRows);
     layout->addRow(i18n("Name"), _albumName);
@@ -55,7 +63,7 @@ NewAlbumDialog::NewAlbumDialog(QWidget* parent): KDialog(parent)
     mainWidget->setLayout(layout);
 }
 
-QString KIPIRajceExportPlugin::NewAlbumDialog::albumDescription() const
+QString NewAlbumDialog::albumDescription() const
 {
     return _albumDescription->toPlainText();
 }
@@ -70,3 +78,4 @@ bool NewAlbumDialog::albumVisible() const
     return _albumVisible->isChecked();
 }
 
+} // namespace KIPIRajceExportPlugin

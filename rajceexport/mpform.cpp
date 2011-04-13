@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2005-07-07
- * Description : a kipi plugin to export images to Picasa web service
+ * Description : A KIPI Plugin to export albums to rajce.net
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Caulier Gilles <caulier dot gilles at gmail dot com>

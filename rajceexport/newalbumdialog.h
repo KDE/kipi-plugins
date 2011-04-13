@@ -23,32 +23,35 @@
 #ifndef KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
 #define KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H
 
+// KDE includes
+
 #include <KDialog>
-#include <QCheckBox>
+
+class QCheckBox;
 
 class KLineEdit;
 class KTextEdit;
 
-namespace KIPIRajceExportPlugin {
+namespace KIPIRajceExportPlugin
+{
 
 class NewAlbumDialog : public KDialog
 {
-
 public:
+
     explicit NewAlbumDialog(QWidget* parent = 0);
 
     QString albumName() const;
-
     QString albumDescription() const;
-
-    bool albumVisible() const;
+    bool    albumVisible() const;
 
 private:
-    KLineEdit * _albumName;
-    KTextEdit * _albumDescription;
-    QCheckBox * _albumVisible;
+
+    KLineEdit* _albumName;
+    KTextEdit* _albumDescription;
+    QCheckBox* _albumVisible;
 };
 
-}
+} // namespace KIPIRajceExportPlugin
 
 #endif // KIPIRAJCEEXPORTPLUGIN_NEWALBUMDIALOG_H

@@ -332,7 +332,7 @@ void RajceWidget::reactivate()
     update();
 }
 
-void RajceWidget::progressChange(unsigned commandType, unsigned int percent)
+void RajceWidget::progressChange(unsigned /*commandType*/, unsigned int percent)
 {
     if (_uploadingPhotos) {
         unsigned idx = _currentUploadImage - _uploadQueue.begin();

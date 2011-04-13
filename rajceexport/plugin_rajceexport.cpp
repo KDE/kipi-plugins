@@ -41,8 +41,10 @@
 K_PLUGIN_FACTORY( RajceExportFactory, registerPlugin<Plugin_RajceExport>(); )
 K_EXPORT_PLUGIN ( RajceExportFactory("kipiplugin_rajceexport") )
 
-Plugin_RajceExport::Plugin_RajceExport(QObject* parent, const QVariantList& args):
-        Plugin(RajceExportFactory::componentData(), parent, "RajceExport"), m_dlgExport(0)
+Plugin_RajceExport::Plugin_RajceExport(QObject* parent, const QVariantList& /*args*/)
+    : Plugin(RajceExportFactory::componentData(), parent, "RajceExport"),
+      m_actionExport(0),
+      m_dlgExport(0)
 {
 }
 
