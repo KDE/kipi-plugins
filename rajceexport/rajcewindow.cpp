@@ -20,17 +20,18 @@
  *
  * ============================================================ */
 
-#include "rajcewindow.h"
-#include "rajcewidget.h"
-
-#include "kpaboutdata.h"
+#include "rajcewindow.moc"
 
 #include <QAction>
+
 #include <KLocalizedString>
 #include <KToolInvocation>
 #include <KHelpMenu>
 #include <KMenu>
 #include <KPushButton>
+
+#include "kpaboutdata.h"
+#include "rajcewidget.h"
 
 namespace KIPIRajceExportPlugin
 {
