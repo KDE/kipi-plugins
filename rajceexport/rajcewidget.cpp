@@ -20,14 +20,7 @@
  *
  * ============================================================ */
 
-#include "rajcewidget.h"
 #include "rajcewidget.moc"
-
-#include "rajcesession.h"
-#include "rajcelogindialog.h"
-#include "newalbumdialog.h"
-
-#include "imageslist.h"
 
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
@@ -53,6 +46,12 @@
 #include <KPushButton>
 #include <KConfig>
 #include <KColorScheme>
+
+#include "rajcesession.h"
+#include "rajcelogindialog.h"
+#include "newalbumdialog.h"
+#include "imageslist.h"
+
 
 using namespace KIPIRajceExportPlugin;
 
