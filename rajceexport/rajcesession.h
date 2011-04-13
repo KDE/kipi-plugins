@@ -23,22 +23,33 @@
 #ifndef KIPIRAJCEEXPORTPLUGIN_RAJCESESSION_H
 #define KIPIRAJCEEXPORTPLUGIN_RAJCESESSION_H
 
+// Qt includes
+
 #include <QObject>
-#include <kio/global.h>
-#include "sessionstate.h"
 #include <QMutex>
 #include <QQueue>
 
-class KJob;
+// KDE includes
+
+#include <kio/global.h>
+
+// Local includes
+
+#include "sessionstate.h"
+
 class QWidget;
 
-namespace KIO {
+class KJob;
+
+namespace KIO
+{
     class Job;
 }
 
-class RajceCommand;
+namespace KIPIRajceExportPlugin
+{
 
-namespace KIPIRajceExportPlugin {
+class RajceCommand;
 
 class RajceSession : public QObject
 {
@@ -49,59 +60,49 @@ public:
     explicit RajceSession(QWidget * jobParent, const QString& tmpDir);
 
     void init(const SessionState& initialState);
-
     const SessionState& state() const;
-
     void login(const QString& username, const QString& password);
-
     void logout();
 
     void loadAlbums();
-
     void createAlbum(const QString& name, const QString& description, bool visible);
-
     void openAlbum(const Album& album);
-
     void closeAlbum();
 
     void uploadPhoto(const QString& path, unsigned dimension, int jpgQuality);
 
     void clearLastError();
-
     void cancelCurrentCommand();
 
 Q_SIGNALS:
 
     void busyStarted(unsigned);
-
     void busyFinished(unsigned);
-
     void busyProgress(unsigned, unsigned percent);
 
 private Q_SLOTS:
 
-    void data(KIO::Job * job, const QByteArray& data);
-
-    void finished(KJob * job);
-
-    void slotPercent(KJob * job, ulong percent);
+    void data(KIO::Job* job, const QByteArray& data);
+    void finished(KJob* job);
+    void slotPercent(KJob* job, ulong percent);
 
 private:
 
-    void _startJob(RajceCommand *);
+    void _startJob(RajceCommand*);
+    void _enqueue(RajceCommand*);
 
-    void _enqueue(RajceCommand *);
+private:
 
-    SessionState _state;
+    SessionState          _state;
 
-    QWidget * _jobParent;
-    KJob * _currentJob;
-    QQueue<RajceCommand *> _commandQueue;
-    QMutex _queueAccess;
-    QByteArray _buffer;
-    QString _tmpDir;
+    QWidget*              _jobParent;
+    KJob*                 _currentJob;
+    QQueue<RajceCommand*> _commandQueue;
+    QMutex                _queueAccess;
+    QByteArray            _buffer;
+    QString               _tmpDir;
 };
 
-}
+} // namespace KIPIRajceExportPlugin
 
 #endif // KIPIRAJCEEXPORTPLUGIN_RAJCESESSION_H

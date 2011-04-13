@@ -22,11 +22,15 @@
 
 #include "rajcesession.moc"
 
+// Qt includes
+
 #include <QWidget>
 #include <QCryptographicHash>
 #include <QXmlQuery>
 #include <QXmlResultItems>
 #include <QFileInfo>
+
+// KDE includes
 
 #include <kurl.h>
 #include <kdebug.h>
@@ -34,16 +38,72 @@
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
 
+// Libkdcraw includes
+
 #include <libkdcraw/kdcraw.h>
+
+// Libkexiv2 includes
+
 #include <libkexiv2/kexiv2.h>
+
+// Local includes
 
 #include "mpform.h"
 #include "pluginsversion.h"
 
-using namespace KIPIRajceExportPlugin;
+namespace KIPIRajceExportPlugin
+{
 
-KUrl RAJCE_URL("http://www.rajce.idnes.cz/liveAPI/index.php");
+KUrl     RAJCE_URL("http://www.rajce.idnes.cz/liveAPI/index.php");
 unsigned THUMB_SIZE = 100;
+
+struct PreparedImage
+{
+    QString scaledImagePath;
+    QString thumbPath;
+};
+
+PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, const QString& imagePath,
+                                     unsigned maxDimension, unsigned thumbDimension, int jpgQuality)
+{
+    PreparedImage ret;
+
+    if (img.isNull())
+        return ret;
+
+    QImage image(img);
+
+    // get temporary file name
+    QString baseName     = saveDir + QFileInfo(imagePath).baseName().trimmed();
+    ret.scaledImagePath  = baseName + ".jpg";
+    ret.thumbPath        = baseName + ".thumb.jpg";
+
+    if (maxDimension > 0 &&
+        ((unsigned) image.width() > maxDimension || (unsigned) image.height() > maxDimension))
+    {
+        kDebug() << "Resizing to " << maxDimension;
+        image = image.scaled(maxDimension, maxDimension, Qt::KeepAspectRatio,
+                             Qt::SmoothTransformation);
+    }
+
+    kDebug() << "Saving to temp file: " << ret.scaledImagePath;
+    image.save(ret.scaledImagePath, "JPEG", jpgQuality);
+
+    QImage thumb = image.scaled(thumbDimension, thumbDimension, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    kDebug() << "Saving thumb to temp file: " << ret.thumbPath;
+    thumb.save(ret.thumbPath, "JPEG", jpgQuality);
+
+    // copy meta data to temporary image
+    KExiv2Iface::KExiv2 exiv2Iface;
+    if (exiv2Iface.load(imagePath))
+    {
+        exiv2Iface.setImageDimensions(image.size());
+        exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
+        exiv2Iface.save(ret.scaledImagePath);
+    }
+
+    return ret;
+}
 
 /// Commands definitions
 
@@ -68,17 +128,18 @@ public:
 protected:
 
     virtual void parseResponse(QXmlQuery& query, SessionState& state) = 0;
-
     virtual void cleanUpOnError(SessionState& state) = 0;
 
-    QMap<QString, QString>& parameters() const; //allow modification in const methods for lazy init to be possible
+    QMap<QString, QString>& parameters() const; // allow modification in const methods for lazy init to be possible
 
-    //additional xml after the "parameters"
+    // additional xml after the "parameters"
     virtual QString additionalXml() const;
 
 private:
 
     bool _parseError(QXmlQuery& query, SessionState& state);
+
+private:
 
     QString                _name;
     RajceCommandType       _commandType;
@@ -105,9 +166,11 @@ class OpenAlbumCommand : public RajceCommand
 {
 
 public:
+
     explicit OpenAlbumCommand(unsigned albumId, const SessionState& state);
 
 protected:
+
     virtual void parseResponse(QXmlQuery& response, SessionState& state);
     virtual void cleanUpOnError(SessionState& state);
 };
@@ -117,9 +180,11 @@ protected:
 class CreateAlbumCommand : public RajceCommand
 {
 public:
+
     CreateAlbumCommand(const QString& name, const QString& description, bool visible, const SessionState& state);
 
 protected:
+
     virtual void parseResponse(QXmlQuery& response, SessionState& state);
     virtual void cleanUpOnError(SessionState& state);
 };
@@ -173,17 +238,18 @@ protected:
 private:
 
     MPForm * _form;
-    QString _tmpDir;
-    QString _imagePath;
-    QImage _image;
+    QString  _tmpDir;
+    QString  _imagePath;
+    QImage   _image;
     unsigned _desiredDimension;
-    int _jpgQuality;
+    int      _jpgQuality;
     unsigned _maxDimension;
 };
 
 /// Commands impls
 
-RajceCommand::RajceCommand(const QString& name, RajceCommandType type) : _name(name), _commandType(type)
+RajceCommand::RajceCommand(const QString& name, RajceCommandType type)
+    : _name(name), _commandType(type)
 {
 }
 
@@ -275,6 +341,8 @@ RajceCommandType RajceCommand::commandType() const
     return _commandType;
 }
 
+// -----------------------------------------------------------------------
+
 OpenAlbumCommand::OpenAlbumCommand(unsigned albumId, const SessionState& state)
     : RajceCommand("openAlbum", OpenAlbum)
 {
@@ -299,7 +367,10 @@ void OpenAlbumCommand::cleanUpOnError(SessionState& state)
     state.openAlbumToken() = QString();
 }
 
-LoginCommand::LoginCommand(const QString& username, const QString& password): RajceCommand("login", Login)
+// -----------------------------------------------------------------------
+
+LoginCommand::LoginCommand(const QString& username, const QString& password)
+    : RajceCommand("login", Login)
 {
     parameters()["login"]    = username;
     parameters()["password"] = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Md5).toHex();
@@ -344,7 +415,10 @@ void LoginCommand::cleanUpOnError(SessionState& state)
     state.albums().clear();
 }
 
-CreateAlbumCommand::CreateAlbumCommand(const QString& name, const QString& description, bool visible, const SessionState& state)
+// -----------------------------------------------------------------------
+
+CreateAlbumCommand::CreateAlbumCommand(const QString& name, const QString& description,
+                                       bool visible, const SessionState& state)
     : RajceCommand("createAlbum", CreateAlbum)
 {
     parameters()["token"]            = state.sessionToken();
@@ -369,11 +443,21 @@ void CloseAlbumCommand::cleanUpOnError(SessionState&)
 {
 }
 
+// -----------------------------------------------------------------------
+
 CloseAlbumCommand::CloseAlbumCommand(const SessionState& state)
     : RajceCommand("closeAlbum", CloseAlbum)
 {
     parameters()["token"]      = state.sessionToken();
     parameters()["albumToken"] = state.openAlbumToken();
+}
+
+// -----------------------------------------------------------------------
+
+AlbumListCommand::AlbumListCommand(const SessionState& state)
+    : RajceCommand("getAlbumList", ListAlbums)
+{
+    parameters()["token"] = state.sessionToken();
 }
 
 void AlbumListCommand::parseResponse(QXmlQuery& q, SessionState& state)
@@ -457,62 +541,12 @@ void AlbumListCommand::cleanUpOnError(SessionState& state)
     state.albums().clear();
 }
 
-AlbumListCommand::AlbumListCommand(const SessionState& state)
-    : RajceCommand("getAlbumList", ListAlbums)
-{
-    parameters()["token"] = state.sessionToken();
-}
+// -----------------------------------------------------------------------
 
-struct PreparedImage
-{
-    QString scaledImagePath;
-    QString thumbPath;
-};
-
-PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, const QString& imagePath,
-                                     unsigned maxDimension, unsigned thumbDimension, int jpgQuality)
-{
-    PreparedImage ret;
-
-    if (img.isNull())
-        return ret;
-
-    QImage image(img);
-
-    // get temporary file name
-    QString baseName     = saveDir + QFileInfo(imagePath).baseName().trimmed();
-    ret.scaledImagePath  = baseName + ".jpg";
-    ret.thumbPath        = baseName + ".thumb.jpg";
-
-    if (maxDimension > 0 &&
-        ((unsigned) image.width() > maxDimension || (unsigned) image.height() > maxDimension))
-    {
-        kDebug() << "Resizing to " << maxDimension;
-        image = image.scaled(maxDimension, maxDimension, Qt::KeepAspectRatio,
-                             Qt::SmoothTransformation);
-    }
-
-    kDebug() << "Saving to temp file: " << ret.scaledImagePath;
-    image.save(ret.scaledImagePath, "JPEG", jpgQuality);
-
-    QImage thumb = image.scaled(thumbDimension, thumbDimension, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    kDebug() << "Saving thumb to temp file: " << ret.thumbPath;
-    thumb.save(ret.thumbPath, "JPEG", jpgQuality);
-
-    // copy meta data to temporary image
-    KExiv2Iface::KExiv2 exiv2Iface;
-    if (exiv2Iface.load(imagePath))
-    {
-        exiv2Iface.setImageDimensions(image.size());
-        exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
-        exiv2Iface.save(ret.scaledImagePath);
-    }
-
-    return ret;
-}
-
-AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, unsigned dimension, int jpgQuality, const SessionState& state)
-    : RajceCommand("addPhoto", AddPhoto), _tmpDir(tmpDir), _imagePath(path), _desiredDimension(dimension), _jpgQuality(jpgQuality)
+AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, unsigned dimension,
+                                 int jpgQuality, const SessionState& state)
+    : RajceCommand("addPhoto", AddPhoto), _tmpDir(tmpDir), _imagePath(path),
+                   _desiredDimension(dimension), _jpgQuality(jpgQuality)
 {
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
     QFileInfo fileInfo(path);
@@ -665,12 +699,12 @@ const SessionState& RajceSession::state() const
     return _state;
 }
 
-void RajceSession::_startJob(RajceCommand * command)
+void RajceSession::_startJob(RajceCommand* command)
 {
     kDebug() << "Sending command:\n" << command->getXml();
 
-    QByteArray data        = command->encode();
-    KIO::TransferJob * job = KIO::http_post(RAJCE_URL, data, KIO::HideProgressInfo);
+    QByteArray data       = command->encode();
+    KIO::TransferJob* job = KIO::http_post(RAJCE_URL, data, KIO::HideProgressInfo);
     job->ui()->setWindow(static_cast<QWidget*>(parent()));
     job->addMetaData("content-type", command->contentType());
 
@@ -703,7 +737,7 @@ void RajceSession::loadAlbums()
 
 void RajceSession::createAlbum(const QString& name, const QString& description, bool visible)
 {
-    CreateAlbumCommand * command = new CreateAlbumCommand(name, description, visible, _state);
+    CreateAlbumCommand* command = new CreateAlbumCommand(name, description, visible, _state);
     _enqueue(command);
 }
 
@@ -767,7 +801,7 @@ void RajceSession::logout()
 
 void RajceSession::openAlbum(const KIPIRajceExportPlugin::Album& album)
 {
-    OpenAlbumCommand * command = new OpenAlbumCommand(album.id, _state);
+    OpenAlbumCommand* command = new OpenAlbumCommand(album.id, _state);
     _enqueue(command);
 }
 
@@ -775,7 +809,7 @@ void RajceSession::closeAlbum()
 {
     if (!_state.openAlbumToken().isEmpty())
     {
-        CloseAlbumCommand * command = new CloseAlbumCommand(_state);
+        CloseAlbumCommand* command = new CloseAlbumCommand(_state);
         _enqueue(command);
     }
     else
@@ -786,7 +820,7 @@ void RajceSession::closeAlbum()
 
 void RajceSession::uploadPhoto(const QString& path, unsigned dimension, int jpgQuality)
 {
-    AddPhotoCommand * command = new AddPhotoCommand(_tmpDir, path, dimension, jpgQuality, _state);
+    AddPhotoCommand* command = new AddPhotoCommand(_tmpDir, path, dimension, jpgQuality, _state);
     _enqueue(command);
 }
 
@@ -814,7 +848,6 @@ void RajceSession::_enqueue(RajceCommand* command)
     }
 
     _queueAccess.lock();
-
     _commandQueue.enqueue(command);
 
     if (_commandQueue.size() == 1)
@@ -829,7 +862,7 @@ void RajceSession::cancelCurrentCommand()
 {
     if (_currentJob != 0)
     {
-        KJob * job = _currentJob;
+        KJob* job = _currentJob;
         finished(job);
         job->kill();
     }
@@ -839,3 +872,5 @@ void RajceSession::init(const KIPIRajceExportPlugin::SessionState& initialState)
 {
     _state = initialState;
 }
+
+} // namespace KIPIRajceExportPlugin
