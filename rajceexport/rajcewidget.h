@@ -23,7 +23,12 @@
 #ifndef KIPIRAJCEEXPORTPLUGIN_RAJCEWIDGET_H
 #define KIPIRAJCEEXPORTPLUGIN_RAJCEWIDGET_H
 
+// Qt includes
+
 #include <QWidget>
+
+// Local includes
+
 #include "sessionstate.h"
 
 class QLabel;
@@ -34,16 +39,19 @@ class QProgressBar;
 class KComboBox;
 class KPushButton;
 
-namespace KIPI {
+namespace KIPI
+{
     class Interface;
     class UploadWidget;
 }
 
-namespace KIPIPlugins {
+namespace KIPIPlugins
+{
     class ImagesList;
 }
 
-namespace KIPIRajceExportPlugin {
+namespace KIPIRajceExportPlugin
+{
 
 class RajceSession;
 class Album;
@@ -51,7 +59,9 @@ class Album;
 class RajceWidget : public QWidget
 {
     Q_OBJECT
+
 public:
+
     explicit RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
 
 Q_SIGNALS:
@@ -61,15 +71,12 @@ Q_SIGNALS:
 public Q_SLOTS:
 
     void update();
-
     void reactivate();
 
     void startUpload();
-
     void cancelUpload();
 
     void writeSettings();
-
     void readSettings();
 
 private Q_SLOTS:
@@ -77,58 +84,55 @@ private Q_SLOTS:
     void changeUserClicked();
 
     void progressStarted(unsigned);
-
     void progressFinished(unsigned);
-
     void progressChange(unsigned, unsigned percent);
 
     void loadAlbums();
-
     void createAlbum();
+    void closeAlbum();
 
     void uploadNext();
 
     void startUploadAfterAlbumOpened();
-
-    void closeAlbum();
-
     void selectedAlbumChanged(const QString&);
 
 private:
 
     void _setEnabled(bool);
 
-    QLabel * _headerLbl;
-    QLabel * _userNameLbl;
-    QLabel * _userName;
+private:
 
-    QRadioButton * _anonymousRBtn;
-    QRadioButton * _accountRBtn;
+    QLabel*                  _headerLbl;
+    QLabel*                  _userNameLbl;
+    QLabel*                  _userName;
 
-    QSpinBox * _dimensionSpB;
-    QSpinBox * _imageQualitySpB;
+    QRadioButton*            _anonymousRBtn;
+    QRadioButton*            _accountRBtn;
 
-    KComboBox * _albumsCoB;
+    QSpinBox*                _dimensionSpB;
+    QSpinBox*                _imageQualitySpB;
 
-    KPushButton * _newAlbumBtn;
-    KPushButton * _reloadAlbumsBtn;
-    KPushButton * _changeUserBtn;
+    KComboBox*               _albumsCoB;
 
-    KIPIPlugins::ImagesList * _imgList;
-    KIPI::UploadWidget * _uploadWidget;
+    KPushButton*             _newAlbumBtn;
+    KPushButton*             _reloadAlbumsBtn;
+    KPushButton*             _changeUserBtn;
 
-    QProgressBar * _progressBar;
+    KIPIPlugins::ImagesList* _imgList;
+    KIPI::UploadWidget*      _uploadWidget;
 
-    RajceSession * _session;
+    QProgressBar*            _progressBar;
 
-    QList<QString> _uploadQueue;
+    RajceSession*            _session;
+
+    QList<QString>           _uploadQueue;
     QList<QString>::Iterator _currentUploadImage;
 
-    bool _uploadingPhotos;
-    bool _lastLoggedInState;
-    QString _currentAlbumName;
+    bool                     _uploadingPhotos;
+    bool                     _lastLoggedInState;
+    QString                  _currentAlbumName;
 };
 
-}
+} // namespace KIPIRajceExportPlugin
 
 #endif // KIPIRAJCEEXPORTPLUGIN_RAJCEWIDGET_H

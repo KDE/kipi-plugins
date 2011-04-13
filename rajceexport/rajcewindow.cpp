@@ -22,13 +22,19 @@
 
 #include "rajcewindow.moc"
 
+// Qt includes
+
 #include <QAction>
 
-#include <KLocalizedString>
-#include <KToolInvocation>
-#include <KHelpMenu>
-#include <KMenu>
-#include <KPushButton>
+// KDE includes
+
+#include <klocalizedstring.h>
+#include <ktoolinvocation.h>
+#include <khelpmenu.h>
+#include <kmenu.h>
+#include <kpushbutton.h>
+
+// Local includes
 
 #include "kpaboutdata.h"
 #include "rajcewidget.h"
@@ -36,11 +42,11 @@
 namespace KIPIRajceExportPlugin
 {
 
-RajceWindow::RajceWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent,
-    Qt::WFlags flags): KDialog(0), _interface(interface)
+RajceWindow::RajceWindow(KIPI::Interface* interface, const QString& tmpFolder,
+                         QWidget* /*parent*/, Qt::WFlags /*flags*/)
+    : KDialog(0), _interface(interface)
 {
     _widget = new RajceWidget(interface, tmpFolder, this);
-
     _widget->readSettings();
 
     setMainWidget(_widget);
@@ -50,9 +56,8 @@ RajceWindow::RajceWindow(KIPI::Interface* interface, const QString& tmpFolder, Q
     setModal(false);
 
     setWindowTitle(i18n("Export to Rajce.net"));
-    setButtonGuiItem(User1,
-                     KGuiItem(i18n("Start Upload"), "network-workgroup",
-                                   i18n("Start upload to Rajce.net")));
+    setButtonGuiItem(User1, KGuiItem(i18n("Start Upload"), "network-workgroup",
+                                     i18n("Start upload to Rajce.net")));
     _widget->setMinimumSize(700, 500);
 
     connect(this, SIGNAL(user1Clicked()),
@@ -81,7 +86,7 @@ RajceWindow::RajceWindow(KIPI::Interface* interface, const QString& tmpFolder, Q
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(showHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -113,4 +118,3 @@ void RajceWindow::slotClose()
 }
 
 } //namespace KIPIRajceExportPlugin
-

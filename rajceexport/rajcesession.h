@@ -57,12 +57,12 @@ class RajceSession : public QObject
 
 public:
 
-    explicit RajceSession(QWidget * jobParent, const QString& tmpDir);
+    explicit RajceSession(QWidget* jobParent, const QString& tmpDir);
 
-    void init(const SessionState& initialState);
+    void  init(const SessionState& initialState);
     const SessionState& state() const;
-    void login(const QString& username, const QString& password);
-    void logout();
+    void  login(const QString& username, const QString& password);
+    void  logout();
 
     void loadAlbums();
     void createAlbum(const QString& name, const QString& description, bool visible);
