@@ -33,7 +33,6 @@ class KJob;
 class QWidget;
 
 namespace KIO {
-    class TransferJob;
     class Job;
 }
 

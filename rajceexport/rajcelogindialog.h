@@ -25,7 +25,6 @@
 
 #include <QDialog>
 
-class QLabel;
 class KLineEdit;
 
 namespace KIPIRajceExportPlugin {

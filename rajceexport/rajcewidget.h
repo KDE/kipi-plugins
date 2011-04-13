@@ -28,9 +28,7 @@
 
 class QLabel;
 class QRadioButton;
-class QCheckBox;
 class QSpinBox;
-class QButtonGroup;
 class QProgressBar;
 
 class KComboBox;
