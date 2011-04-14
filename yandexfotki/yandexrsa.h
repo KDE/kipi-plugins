@@ -43,6 +43,7 @@ namespace YandexAuth
 class vlong // very long integer - can be used like long
 {
 public:
+
     // Standard arithmetic operators
     friend vlong operator +( const vlong& x, const vlong& y );
     friend vlong operator -( const vlong& x, const vlong& y );
@@ -82,19 +83,22 @@ public:
     vlong ( unsigned x=0 );
     vlong ( const vlong& x ); // copy constructor
     ~vlong();
+
     operator unsigned ();
     vlong& operator =(const vlong& x);
 
-    void load( unsigned* a, unsigned n );  // load value, a[0] is lsw
-    void store( unsigned* a, unsigned n ) const;  // low level save, a[0] is lsw
+    void     load( unsigned* a, unsigned n );  // load value, a[0] is lsw
+    void     store( unsigned* a, unsigned n ) const;  // low level save, a[0] is lsw
     unsigned get_nunits() const;
     unsigned bits() const;
 
 private:
+
     class vlong_value* value;
-    int negative;
-    int cf( const vlong x ) const;
-    void docopy();
+    int   negative;
+    int   cf( const vlong x ) const;
+    void  docopy();
+
     friend class monty;
 };
 
@@ -103,14 +107,16 @@ private:
 class public_key
 {
 public:
+
     vlong m,e;
     vlong encrypt( const vlong& plain ); // Requires 0 <= plain < m
-    void MakeMe(const char*);
+    void  MakeMe(const char*);
 };
 
 class private_key : public public_key
 {
 public:
+
     vlong p,q;
     /*
         vlong decrypt( const vlong& cipher );
@@ -130,7 +136,7 @@ class CCryptoProviderRSA
 {
     class private_key prkface;
 
-    void EncryptPortion(const char* pt, std::size_t,char* ct, std::size_t&);
+    void EncryptPortion(const char* pt, std::size_t, char* ct, std::size_t&);
     /*
         void DecryptPortion(const char *ct, std::size_t,char *pt, std::size_t &);
     */

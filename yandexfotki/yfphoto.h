@@ -205,29 +205,29 @@ protected:
                      const QString& remoteUrl
                     );
 
-    QString m_urn;
-    QString m_author;
-    QString m_title;
-    QString m_summary;
+    QString   m_urn;
+    QString   m_author;
+    QString   m_title;
+    QString   m_summary;
 
-    QString m_apiEditUrl;
-    QString m_apiSelfUrl;
-    QString m_apiMediaUrl;
-    QString m_apiAlbumUrl;
+    QString   m_apiEditUrl;
+    QString   m_apiSelfUrl;
+    QString   m_apiMediaUrl;
+    QString   m_apiAlbumUrl;
 
     QDateTime m_publishedDate;
     QDateTime m_editedDate;
     QDateTime m_updatedDate;
     QDateTime m_createdDate;
 
-    Access m_access;
-    bool m_hideOriginal;
-    bool m_disableComments;
-    bool m_adult;
+    Access    m_access;
+    bool      m_hideOriginal;
+    bool      m_disableComments;
+    bool      m_adult;
 
-    QString m_remoteUrl;
-    QString m_localUrl;
-    QString m_originalUrl;
+    QString   m_remoteUrl;
+    QString   m_localUrl;
+    QString   m_originalUrl;
 
 #ifndef KDE_NO_DEBUG_OUTPUT
     friend QDebug operator<<(QDebug d, const YandexFotkiPhoto& p);
@@ -239,6 +239,6 @@ protected:
 QDebug operator<<(QDebug d, const YandexFotkiPhoto& p);
 #endif // KDE_NO_DEBUG_OUTPUT
 
-} // KIPIYandexFotkiPlugin
+} // namespace KIPIYandexFotkiPlugin
 
 #endif // YANDEXFOTKI_PHOTO_H

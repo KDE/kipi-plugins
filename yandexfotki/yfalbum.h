@@ -123,20 +123,20 @@ protected:
                      const QString& password
                     );
 
-    QString m_urn;
-    QString m_author;
-    QString m_title;
-    QString m_summary;
+    QString   m_urn;
+    QString   m_author;
+    QString   m_title;
+    QString   m_summary;
 
-    QString m_apiEditUrl;
-    QString m_apiSelfUrl;
-    QString m_apiPhotosUrl;
+    QString   m_apiEditUrl;
+    QString   m_apiSelfUrl;
+    QString   m_apiPhotosUrl;
 
     QDateTime m_publishedDate;
     QDateTime m_editedDate;
     QDateTime m_updatedDate;
 
-    QString m_password;
+    QString   m_password;
 
 #ifndef KDE_NO_DEBUG_OUTPUT
     friend QDebug operator<<(QDebug d, const YandexFotkiAlbum& p);
@@ -148,6 +148,6 @@ protected:
 QDebug operator<<(QDebug d, const YandexFotkiAlbum& p);
 #endif // KDE_NO_DEBUG_OUTPUT
 
-} // KIPIYandexFotkiPlugin
+} // namespace KIPIYandexFotkiPlugin
 
 #endif // YANDEXFOTKI_ALBUM_H

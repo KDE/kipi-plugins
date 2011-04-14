@@ -117,14 +117,6 @@ protected Q_SLOTS:
 
 protected:
 
-    enum UpdatePolicy
-    {
-        POLICY_UPDATE_MERGE = 0,
-        POLICY_UPDATE_KEEP, // is not used in GUI
-        POLICY_SKIP,
-        POLICY_ADDNEW
-    };
-
     void readSettings();
     void writeSettings();
 
@@ -135,55 +127,65 @@ protected:
     void authenticate(bool forceAuthWindow);
     void updateNextPhoto();
 
+protected:
+
+    enum UpdatePolicy
+    {
+        POLICY_UPDATE_MERGE = 0,
+        POLICY_UPDATE_KEEP, // is not used in GUI
+        POLICY_SKIP,
+        POLICY_ADDNEW
+    };
+
     /*
      * Plugin
      */
 
-    bool m_import;
-    KIPI::Interface* m_interface;
+    bool                     m_import;
+    KIPI::Interface*         m_interface;
 
     /*
      * User interface
      */
 
-    QWidget* m_mainWidget;
+    QWidget*                 m_mainWidget;
     // accounts
-    QGroupBox* m_accountBox;
-    QLabel* m_loginLabel;
-    QLabel* m_headerLabel;
-    KPushButton* m_changeUserButton;
+    QGroupBox*               m_accountBox;
+    QLabel*                  m_loginLabel;
+    QLabel*                  m_headerLabel;
+    KPushButton*             m_changeUserButton;
 
     // albums
-    QGroupBox* m_albumsBox;
-    KPushButton* m_newAlbumButton;
-    KPushButton* m_reloadAlbumsButton;
-    KComboBox* m_albumsCombo;
+    QGroupBox*               m_albumsBox;
+    KPushButton*             m_newAlbumButton;
+    KPushButton*             m_reloadAlbumsButton;
+    KComboBox*               m_albumsCombo;
 
     // upload settings
-    KComboBox* m_accessCombo;
-    QCheckBox* m_hideOriginalCheck;
-    QCheckBox* m_disableCommentsCheck;
-    QCheckBox* m_adultCheck;
-    QCheckBox* m_resizeCheck;
-    QSpinBox* m_dimensionSpin;
-    QSpinBox* m_imageQualitySpin;
-    QButtonGroup* m_policyGroup;
+    KComboBox*               m_accessCombo;
+    QCheckBox*               m_hideOriginalCheck;
+    QCheckBox*               m_disableCommentsCheck;
+    QCheckBox*               m_adultCheck;
+    QCheckBox*               m_resizeCheck;
+    QSpinBox*                m_dimensionSpin;
+    QSpinBox*                m_imageQualitySpin;
+    QButtonGroup*            m_policyGroup;
 
     KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget* m_uploadWidget;
+    KIPI::UploadWidget*      m_uploadWidget;
 
-    QProgressBar* m_progressBar;
+    QProgressBar*            m_progressBar;
 
     /*
      * Backend
      */
-    QString m_tmpDir;
-    YandexFotkiTalker m_talker;
+    QString                  m_tmpDir;
+    YandexFotkiTalker        m_talker;
 
     QStack<YandexFotkiPhoto> m_transferQueue;
 
     // XMP id const for images
-    static const char* XMP_SERVICE_ID;
+    static const char*       XMP_SERVICE_ID;
 };
 
 } // namespace KIPIYandexFotkiPlugin

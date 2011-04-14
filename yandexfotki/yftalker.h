@@ -63,45 +63,45 @@ public:
     enum State
     {
         // FSM states
-        STATE_UNAUTHENTICATED = 0x0,
-        STATE_AUTHENTICATED = 0x80,
-        STATE_ERROR = 0x40,
+        STATE_UNAUTHENTICATED        = 0x0,
+        STATE_AUTHENTICATED          = 0x80,
+        STATE_ERROR                  = 0x40,
 
-        STATE_GETSERVICE = STATE_UNAUTHENTICATED | 0x1,
-        STATE_GETSERVICE_ERROR = STATE_UNAUTHENTICATED | STATE_ERROR | 0x2,
-        STATE_GETSERVICE_DONE = STATE_UNAUTHENTICATED | 0x3,
+        STATE_GETSERVICE             = STATE_UNAUTHENTICATED | 0x1,
+        STATE_GETSERVICE_ERROR       = STATE_UNAUTHENTICATED | STATE_ERROR | 0x2,
+        STATE_GETSERVICE_DONE        = STATE_UNAUTHENTICATED | 0x3,
         /*
-                // for future use
-                STATE_CHECKTOKEN = STATE_UNAUTHENTICATED | 0x4,
-                STATE_CHECKTOKEN_INVALID = STATE_UNAUTHENTICATED | 0x5,
-                STATE_CHECKTOKEN_DONE = STATE_UNAUTHENTICATED | 0x6,
+        // for future use
+        STATE_CHECKTOKEN             = STATE_UNAUTHENTICATED | 0x4,
+        STATE_CHECKTOKEN_INVALID     = STATE_UNAUTHENTICATED | 0x5,
+        STATE_CHECKTOKEN_DONE        = STATE_UNAUTHENTICATED | 0x6,
         */
-        STATE_GETSESSION = STATE_UNAUTHENTICATED | 0x7,
-        STATE_GETSESSION_ERROR = STATE_UNAUTHENTICATED | STATE_ERROR | 0x8,
-        STATE_GETSESSION_DONE = STATE_UNAUTHENTICATED | 0x9,
+        STATE_GETSESSION             = STATE_UNAUTHENTICATED | 0x7,
+        STATE_GETSESSION_ERROR       = STATE_UNAUTHENTICATED | STATE_ERROR | 0x8,
+        STATE_GETSESSION_DONE        = STATE_UNAUTHENTICATED | 0x9,
 
-        STATE_GETTOKEN = STATE_UNAUTHENTICATED | 0xa,
-        STATE_INVALID_CREDENTIALS = STATE_UNAUTHENTICATED | STATE_ERROR | 0xb,
-        STATE_GETTOKEN_ERROR = STATE_UNAUTHENTICATED | STATE_ERROR | 0xc,
-        STATE_GETTOKEN_DONE = STATE_AUTHENTICATED, // simple alias
+        STATE_GETTOKEN               = STATE_UNAUTHENTICATED | 0xa,
+        STATE_INVALID_CREDENTIALS    = STATE_UNAUTHENTICATED | STATE_ERROR | 0xb,
+        STATE_GETTOKEN_ERROR         = STATE_UNAUTHENTICATED | STATE_ERROR | 0xc,
+        STATE_GETTOKEN_DONE          = STATE_AUTHENTICATED, // simple alias
 
-        STATE_LISTALBUMS = STATE_AUTHENTICATED | 0x1,
-        STATE_LISTALBUMS_ERROR = STATE_AUTHENTICATED | STATE_ERROR | 0x2,
-        STATE_LISTALBUMS_DONE = STATE_AUTHENTICATED,
+        STATE_LISTALBUMS             = STATE_AUTHENTICATED | 0x1,
+        STATE_LISTALBUMS_ERROR       = STATE_AUTHENTICATED | STATE_ERROR | 0x2,
+        STATE_LISTALBUMS_DONE        = STATE_AUTHENTICATED,
 
-        STATE_LISTPHOTOS = STATE_AUTHENTICATED | 0x4,
-        STATE_LISTPHOTOS_ERROR = STATE_AUTHENTICATED | STATE_ERROR | 0x5,
-        STATE_LISTPHOTOS_DONE = STATE_AUTHENTICATED,
+        STATE_LISTPHOTOS             = STATE_AUTHENTICATED | 0x4,
+        STATE_LISTPHOTOS_ERROR       = STATE_AUTHENTICATED | STATE_ERROR | 0x5,
+        STATE_LISTPHOTOS_DONE        = STATE_AUTHENTICATED,
 
-        STATE_UPDATEPHOTO_FILE = STATE_AUTHENTICATED | 0x7,
+        STATE_UPDATEPHOTO_FILE       = STATE_AUTHENTICATED | 0x7,
         STATE_UPDATEPHOTO_FILE_ERROR = STATE_AUTHENTICATED | STATE_ERROR | 0x8,
-        STATE_UPDATEPHOTO_INFO = STATE_AUTHENTICATED | 0x9,
+        STATE_UPDATEPHOTO_INFO       = STATE_AUTHENTICATED | 0x9,
         STATE_UPDATEPHOTO_INFO_ERROR = STATE_AUTHENTICATED | STATE_ERROR | 0xa,
-        STATE_UPDATEPHOTO_DONE = STATE_AUTHENTICATED,
+        STATE_UPDATEPHOTO_DONE       = STATE_AUTHENTICATED,
 
-        STATE_UPDATEALBUM = STATE_AUTHENTICATED | 0xb,
-        STATE_UPDATEALBUM_ERROR = STATE_AUTHENTICATED | STATE_ERROR | 0xc,
-        STATE_UPDATEALBUM_DONE = STATE_AUTHENTICATED
+        STATE_UPDATEALBUM            = STATE_AUTHENTICATED | 0xb,
+        STATE_UPDATEALBUM_ERROR      = STATE_AUTHENTICATED | STATE_ERROR | 0xc,
+        STATE_UPDATEALBUM_DONE       = STATE_AUTHENTICATED
     };
 
     /*
@@ -246,6 +246,8 @@ protected:
     static const QString AUTH_REALM;
     static const QString ACCESS_STRINGS[];
 
+protected:
+
     /*
      * Utils
      */
@@ -262,28 +264,33 @@ protected:
     // return result from any place
     void setErrorState(State state);
 
-    /*
-     * FSM data
-     */
-    State m_state;
-    // temporary data
-    YandexFotkiPhoto* m_lastPhoto;
-    QString m_lastPhotosUrl;
-
-    // for albums pagination in listAlbums()
-    QList<YandexFotkiAlbum> m_albums;
     void listAlbumsNext(); // see listPhotos();
-    QString m_albumsNextUrl;
 
     // for photos pagination in listPhotos()
     void listPhotosNext(); // see listPhotos();
+
+protected:
+
+    /*
+     * FSM data
+     */
+    State                   m_state;
+    // temporary data
+    YandexFotkiPhoto*       m_lastPhoto;
+    QString                 m_lastPhotosUrl;
+
+    // for albums pagination in listAlbums()
+    QList<YandexFotkiAlbum> m_albums;
+
+    QString                 m_albumsNextUrl;
+
     QList<YandexFotkiPhoto> m_photos;
-    QString m_photosNextUrl;
+    QString                 m_photosNextUrl;
 
     // KIO job
-    QPointer<KIO::Job> m_job;
+    QPointer<KIO::Job>      m_job;
     // KIO buffer
-    QByteArray m_buffer;
+    QByteArray              m_buffer;
 };
 
 } // namespace KIPIYandexFotkiPlugin
