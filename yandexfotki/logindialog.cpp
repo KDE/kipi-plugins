@@ -164,8 +164,10 @@ void LoginDialog::setPassword(const QString& password)
     m_passwordEdit->setText(password);
 }
 
-void LoginDialog::slotAccept() {
-    if (!m_passwordEdit->text().isEmpty()) {
+void LoginDialog::slotAccept()
+{
+    if (!m_passwordEdit->text().isEmpty())
+    {
         accept();
     }
     else
