@@ -93,7 +93,7 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
     _anonymousRBtn = new QRadioButton(i18nc("Rajce account login", "Anonymous"), accountBox);
-    _anonymousRBtn->setWhatsThis(i18n("Login as anonymous to Picasaweb web service."));
+    _anonymousRBtn->setWhatsThis(i18n("Login as anonymous to Rajce web service."));
 
     _accountRBtn   = new QRadioButton(i18n("Rajce Account"), accountBox);
     _accountRBtn->setWhatsThis(i18n("Login to Rajce using username and password."));
