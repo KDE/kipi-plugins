@@ -1,7 +1,5 @@
 SUBDIRS(icons)
 
-INCLUDE(${QT_QTXMLPATTERNS_INCLUDE_DIR})
-
 SET(kipiplugin_rajceexport_PART_SRCS
     mpform.cpp
     newalbumdialog.cpp
