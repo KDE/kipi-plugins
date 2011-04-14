@@ -102,35 +102,35 @@ private:
 
 private:
 
-    QLabel*                  _headerLbl;
-    QLabel*                  _userNameLbl;
-    QLabel*                  _userName;
+    QLabel*                  m_headerLbl;
+    QLabel*                  m_userNameLbl;
+    QLabel*                  m_userName;
 
-    QRadioButton*            _anonymousRBtn;
-    QRadioButton*            _accountRBtn;
+    QRadioButton*            m_anonymousRBtn;
+    QRadioButton*            m_accountRBtn;
 
-    QSpinBox*                _dimensionSpB;
-    QSpinBox*                _imageQualitySpB;
+    QSpinBox*                m_dimensionSpB;
+    QSpinBox*                m_imageQualitySpB;
 
-    KComboBox*               _albumsCoB;
+    KComboBox*               m_albumsCoB;
 
-    KPushButton*             _newAlbumBtn;
-    KPushButton*             _reloadAlbumsBtn;
-    KPushButton*             _changeUserBtn;
+    KPushButton*             m_newAlbumBtn;
+    KPushButton*             m_reloadAlbumsBtn;
+    KPushButton*             m_changeUserBtn;
 
-    KIPIPlugins::ImagesList* _imgList;
-    KIPI::UploadWidget*      _uploadWidget;
+    KIPIPlugins::ImagesList* m_imgList;
+    KIPI::UploadWidget*      m_uploadWidget;
 
-    QProgressBar*            _progressBar;
+    QProgressBar*            m_progressBar;
 
-    RajceSession*            _session;
+    RajceSession*            m_session;
 
-    QList<QString>           _uploadQueue;
-    QList<QString>::Iterator _currentUploadImage;
+    QList<QString>           m_uploadQueue;
+    QList<QString>::Iterator m_currentUploadImage;
 
-    bool                     _uploadingPhotos;
-    bool                     _lastLoggedInState;
-    QString                  _currentAlbumName;
+    bool                     m_uploadingPhotos;
+    bool                     m_lastLoggedInState;
+    QString                  m_currentAlbumName;
 };
 
 } // namespace KIPIRajceExportPlugin

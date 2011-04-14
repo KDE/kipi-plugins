@@ -64,78 +64,78 @@ namespace KIPIRajceExportPlugin
 RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent)
     : QWidget(parent)
 {
-    _lastLoggedInState      = false;
-    _session                = new RajceSession(this, tmpFolder);
+    m_lastLoggedInState      = false;
+    m_session                = new RajceSession(this, tmpFolder);
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
 
     // -------------------------------------------------------------------
 
-    _imgList = new KIPIPlugins::ImagesList(interface, this);
+    m_imgList = new KIPIPlugins::ImagesList(interface, this);
 
-    _imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
-    _imgList->setAllowRAW(true);
-    _imgList->loadImagesFromCurrentSelection();
-    _imgList->listView()->setWhatsThis(
-    i18n("This is the list of images to upload to your Rajce account."));
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList->setAllowRAW(true);
+    m_imgList->loadImagesFromCurrentSelection();
+    m_imgList->listView()->setWhatsThis(
+    i18n("This is the list of images to upload to your Rajce.net account."));
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-    _headerLbl = new QLabel(settingsBox);
-    _headerLbl->setWhatsThis(i18n("This is a clickable link to open the Rajce home page in a web browser."));
-    _headerLbl->setOpenExternalLinks(true);
-    _headerLbl->setFocusPolicy(Qt::NoFocus);
+    m_headerLbl = new QLabel(settingsBox);
+    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Rajce.net home page in a web browser."));
+    m_headerLbl->setOpenExternalLinks(true);
+    m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     // ------------------------------------------------------------------------
 
     QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
-    accountBox->setWhatsThis(i18n("This is the Rajce account that will be used to authenticate."));
+    accountBox->setWhatsThis(i18n("This is the Rajce.net account that will be used to authenticate."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    _anonymousRBtn = new QRadioButton(i18nc("Rajce account login", "Anonymous"), accountBox);
-    _anonymousRBtn->setWhatsThis(i18n("Login as anonymous to Rajce web service."));
+    m_anonymousRBtn = new QRadioButton(i18nc("Rajce.net account login", "Anonymous"), accountBox);
+    m_anonymousRBtn->setWhatsThis(i18n("Login as anonymous to Rajce.net web service."));
 
-    _accountRBtn   = new QRadioButton(i18n("Rajce Account"), accountBox);
-    _accountRBtn->setWhatsThis(i18n("Login to Rajce using username and password."));
+    m_accountRBtn   = new QRadioButton(i18n("Rajce.net Account"), accountBox);
+    m_accountRBtn->setWhatsThis(i18n("Login to Rajce.net using username and password."));
 
-    _userNameLbl   = new QLabel(i18nc("Rajce account settings", "Name:"), accountBox);
-    _userName = new QLabel(accountBox);
-    _changeUserBtn = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
-                                     i18n("Change Rajce Account used to authenticate")), accountBox);
+    m_userNameLbl   = new QLabel(i18nc("Rajce.net account settings", "Name:"), accountBox);
+    m_userName      = new QLabel(accountBox);
+    m_changeUserBtn = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
+                                     i18n("Change Rajce.net Account used to authenticate")), accountBox);
 
-    accountBoxLayout->addWidget(_anonymousRBtn, 0, 0, 1, 2);
-    accountBoxLayout->addWidget(_accountRBtn,   1, 0, 1, 2);
-    accountBoxLayout->addWidget(_userNameLbl,   2, 0, 1, 1);
-    accountBoxLayout->addWidget(_userName,      2, 1, 1, 1);
-    accountBoxLayout->addWidget(_changeUserBtn, 3, 1, 1, 1);
+    accountBoxLayout->addWidget(m_anonymousRBtn, 0, 0, 1, 2);
+    accountBoxLayout->addWidget(m_accountRBtn,   1, 0, 1, 2);
+    accountBoxLayout->addWidget(m_userNameLbl,   2, 0, 1, 1);
+    accountBoxLayout->addWidget(m_userName,      2, 1, 1, 1);
+    accountBoxLayout->addWidget(m_changeUserBtn, 3, 1, 1, 1);
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
 
     QGroupBox* albumsBox         = new QGroupBox(i18n("Album"), settingsBox);
-    albumsBox->setWhatsThis(i18n("This is the Rajce album that will be used for transfer."));
+    albumsBox->setWhatsThis(i18n("This is the Rajce.net album that will be used for transfer."));
     QGridLayout* albumsBoxLayout = new QGridLayout(albumsBox);
 
-    _albumsCoB       = new KComboBox(albumsBox);
-    _albumsCoB->setEditable(false);
+    m_albumsCoB       = new KComboBox(albumsBox);
+    m_albumsCoB->setEditable(false);
 
-    _newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
-                                       i18n("Create new Rajce album")), accountBox);
-    _reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
+    m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
+                                       i18n("Create new Rajce.net album")), accountBox);
+    m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("reload album list", "Reload"), "view-refresh",
                                        i18n("Reload album list")), accountBox);
 
-    albumsBoxLayout->addWidget(_albumsCoB,       0, 0, 1, 5);
-    albumsBoxLayout->addWidget(_newAlbumBtn,     1, 3, 1, 1);
-    albumsBoxLayout->addWidget(_reloadAlbumsBtn, 1, 4, 1, 1);
+    albumsBoxLayout->addWidget(m_albumsCoB,       0, 0, 1, 5);
+    albumsBoxLayout->addWidget(m_newAlbumBtn,     1, 3, 1, 1);
+    albumsBoxLayout->addWidget(m_reloadAlbumsBtn, 1, 4, 1, 1);
 
     // ------------------------------------------------------------------------
 
     QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(i18n("This is the location where Rajce images will be downloaded."));
+    uploadBox->setWhatsThis(i18n("This is the location where Rajce.net images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    _uploadWidget = interface->uploadWidget(uploadBox);
-    uploadBoxLayout->addWidget(_uploadWidget);
+    m_uploadWidget = interface->uploadWidget(uploadBox);
+    uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
 
@@ -143,50 +143,50 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
     optionsBox->setWhatsThis(i18n("These are options that will be applied to images before upload."));
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
 
-    _dimensionSpB        = new QSpinBox(optionsBox);
-    _dimensionSpB->setMinimum(0);
-    _dimensionSpB->setMaximum(5000);
-    _dimensionSpB->setSingleStep(10);
-    _dimensionSpB->setValue(1024);
-    _dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_dimensionSpB        = new QSpinBox(optionsBox);
+    m_dimensionSpB->setMinimum(0);
+    m_dimensionSpB->setMaximum(5000);
+    m_dimensionSpB->setSingleStep(10);
+    m_dimensionSpB->setValue(1024);
+    m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel* dimensionLbl = new QLabel(i18n("Maximum dimension:"), optionsBox);
 
-    _imageQualitySpB        = new QSpinBox(optionsBox);
-    _imageQualitySpB->setMinimum(0);
-    _imageQualitySpB->setMaximum(100);
-    _imageQualitySpB->setSingleStep(1);
-    _imageQualitySpB->setValue(85);
-    _imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_imageQualitySpB        = new QSpinBox(optionsBox);
+    m_imageQualitySpB->setMinimum(0);
+    m_imageQualitySpB->setMaximum(100);
+    m_imageQualitySpB->setSingleStep(1);
+    m_imageQualitySpB->setValue(85);
+    m_imageQualitySpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
     optionsBoxLayout->addWidget(imageQualityLbl,   0, 1, 1, 1);
-    optionsBoxLayout->addWidget(_imageQualitySpB,  0, 2, 1, 1);
+    optionsBoxLayout->addWidget(m_imageQualitySpB,  0, 2, 1, 1);
     optionsBoxLayout->addWidget(dimensionLbl,      1, 1, 1, 1);
-    optionsBoxLayout->addWidget(_dimensionSpB,     1, 2, 1, 1);
+    optionsBoxLayout->addWidget(m_dimensionSpB,     1, 2, 1, 1);
     optionsBoxLayout->setRowStretch(8, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
-    _progressBar = new QProgressBar(settingsBox);
-    _progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    _progressBar->hide();
-    _progressBar->setMinimum(0);
-    _progressBar->setMaximum(100);
+    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    m_progressBar->hide();
+    m_progressBar->setMinimum(0);
+    m_progressBar->setMaximum(100);
 
     // ------------------------------------------------------------------------
 
-    settingsBoxLayout->addWidget(_headerLbl);
+    settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
     settingsBoxLayout->addWidget(albumsBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
-    settingsBoxLayout->addWidget(_progressBar);
+    settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
 
-    mainLayout->addWidget(_imgList);
+    mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
@@ -195,73 +195,73 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
 
     // ------------------------------------------------------------------------
 
-    connect(_session, SIGNAL(busyStarted(unsigned)),
+    connect(m_session, SIGNAL(busyStarted(unsigned)),
             this, SLOT(progressStarted(unsigned)));
 
-    connect(_session, SIGNAL(busyFinished(unsigned)),
+    connect(m_session, SIGNAL(busyFinished(unsigned)),
             this, SLOT(progressFinished(unsigned)));
 
-    connect(_session, SIGNAL(busyProgress(unsigned, unsigned)),
+    connect(m_session, SIGNAL(busyProgress(unsigned, unsigned)),
             this, SLOT(progressChange(unsigned, unsigned)));
 
-    connect(_changeUserBtn, SIGNAL(clicked()),
+    connect(m_changeUserBtn, SIGNAL(clicked()),
             this, SLOT(changeUserClicked()));
 
-    connect(_newAlbumBtn, SIGNAL(clicked()),
+    connect(m_newAlbumBtn, SIGNAL(clicked()),
             this, SLOT(createAlbum()));
 
-    connect(_reloadAlbumsBtn, SIGNAL(clicked()),
+    connect(m_reloadAlbumsBtn, SIGNAL(clicked()),
             this, SLOT(loadAlbums()));
 
-    connect(_albumsCoB, SIGNAL(currentIndexChanged(QString)),
+    connect(m_albumsCoB, SIGNAL(currentIndexChanged(QString)),
             this, SLOT(selectedAlbumChanged(QString)));
 
     // ------------------------------------------------------------------------
 
-    _anonymousRBtn->hide();
-    _accountRBtn->hide();
+    m_anonymousRBtn->hide();
+    m_accountRBtn->hide();
     uploadBox->hide();
 
-    _uploadingPhotos = false;
+    m_uploadingPhotos = false;
 }
 
 void RajceWidget::update()
 {
-    bool loggedIn = !_session->state().sessionToken().isEmpty();
+    bool loggedIn = !m_session->state().sessionToken().isEmpty();
 
-    if (loggedIn != _lastLoggedInState)
+    if (loggedIn != m_lastLoggedInState)
     {
-        _lastLoggedInState = loggedIn;
+        m_lastLoggedInState = loggedIn;
         emit loginStatusChanged(loggedIn);
     }
 
-    QString username = loggedIn ? _session->state().username() : "";
-    QString nickname = loggedIn ? _session->state().nickname() : i18n("Not logged in");
+    QString username = loggedIn ? m_session->state().username() : "";
+    QString nickname = loggedIn ? m_session->state().nickname() : i18n("Not logged in");
 
-    _userName->setText(QString("<b>%2</b> <small>%1</small>").arg(username, nickname));
+    m_userName->setText(QString("<b>%2</b> <small>%1</small>").arg(username, nickname));
 
     QString link = loggedIn
-        ? "<b><h2><a href='http://" + _session->state().nickname() + ".rajce.net'>"
+        ? "<b><h2><a href='http://" + m_session->state().nickname() + ".rajce.net'>"
         "<font color=\"#9ACD32\">Rajce.net</font>"
         "</a></h2></b>"
         : "<b><h2><a href='http://www.rajce.net'>"
         "<font color=\"#9ACD32\">Rajce.net</font>"
         "</a></h2></b>";
 
-    _headerLbl->setText(link);
+    m_headerLbl->setText(link);
 
-    disconnect(_albumsCoB, SIGNAL(currentIndexChanged(QString)),
+    disconnect(m_albumsCoB, SIGNAL(currentIndexChanged(QString)),
                this, SLOT(selectedAlbumChanged(QString)));
 
-    _albumsCoB->clear();
+    m_albumsCoB->clear();
     Album album;
     int   selIdx = 0, i = 0;
 
-    foreach(album, _session->state().albums())
+    foreach(album, m_session->state().albums())
     {
-        _albumsCoB->addItem(album.name, QVariant::fromValue(album));
+        m_albumsCoB->addItem(album.name, QVariant::fromValue(album));
 
-        if (_currentAlbumName == album.name)
+        if (m_currentAlbumName == album.name)
         {
             selIdx = i;
         }
@@ -269,99 +269,99 @@ void RajceWidget::update()
         ++i;
     }
 
-    if (!_currentAlbumName.isEmpty())
+    if (!m_currentAlbumName.isEmpty())
     {
-        _albumsCoB->setCurrentIndex(selIdx);
+        m_albumsCoB->setCurrentIndex(selIdx);
     }
 
-    connect(_albumsCoB, SIGNAL(currentIndexChanged(QString)),
+    connect(m_albumsCoB, SIGNAL(currentIndexChanged(QString)),
                this, SLOT(selectedAlbumChanged(QString)));
 
-    unsigned max = _session->state().maxHeight();
-    max          = max > _session->state().maxWidth() ? max : _session->state().maxWidth();
-    _dimensionSpB->setMaximum(max);
+    unsigned max = m_session->state().maxHeight();
+    max          = max > m_session->state().maxWidth() ? max : m_session->state().maxWidth();
+    m_dimensionSpB->setMaximum(max);
 
-    if (_dimensionSpB->value() == 0)
+    if (m_dimensionSpB->value() == 0)
     {
-        _dimensionSpB->setValue(max);
+        m_dimensionSpB->setValue(max);
     }
 
-    _newAlbumBtn->setEnabled(loggedIn);
-    _albumsCoB->setEnabled(loggedIn);
-    _reloadAlbumsBtn->setEnabled(loggedIn);
-    _dimensionSpB->setEnabled(loggedIn);
-    _imageQualitySpB->setEnabled(loggedIn);
+    m_newAlbumBtn->setEnabled(loggedIn);
+    m_albumsCoB->setEnabled(loggedIn);
+    m_reloadAlbumsBtn->setEnabled(loggedIn);
+    m_dimensionSpB->setEnabled(loggedIn);
+    m_imageQualitySpB->setEnabled(loggedIn);
 
     KColorScheme scheme(palette().currentColorGroup(), KColorScheme::Window);
     QColor backgroundColor = scheme.background().color();
-    if (_session->state().lastErrorCode() != 0)
+    if (m_session->state().lastErrorCode() != 0)
     {
-        _progressBar->setVisible(true);
+        m_progressBar->setVisible(true);
         backgroundColor = scheme.background(KColorScheme::NegativeBackground).color();
 
-        switch (_session->state().lastErrorCode())
+        switch (m_session->state().lastErrorCode())
         {
-            case UnknownError:                   _progressBar->setFormat(i18n("Unknown error"));                  break;
-            case InvalidCommand:                 _progressBar->setFormat(i18n("Invalid command"));                break;
-            case InvalidCredentials:             _progressBar->setFormat(i18n("Invalid login name or password")); break;
-            case InvalidSessionToken:            _progressBar->setFormat(i18n("Session expired"));                break;
+            case UnknownError:                   m_progressBar->setFormat(i18n("Unknown error"));                  break;
+            case InvalidCommand:                 m_progressBar->setFormat(i18n("Invalid command"));                break;
+            case InvalidCredentials:             m_progressBar->setFormat(i18n("Invalid login name or password")); break;
+            case InvalidSessionToken:            m_progressBar->setFormat(i18n("Session expired"));                break;
             case InvalidOrRepeatedColumnName:                                                                     break;
-            case InvalidAlbumId:                 _progressBar->setFormat(i18n("Unknown album"));                  break;
-            case AlbumDoesntExistOrNoPrivileges: _progressBar->setFormat(i18n("Unknown album"));                  break;
-            case InvalidAlbumToken:              _progressBar->setFormat(i18n("Failed to open album"));           break;
-            case AlbumNameEmpty:                 _progressBar->setFormat(i18n("The album name can't be empty"));  break;
-            case FailedToCreateAlbum:            _progressBar->setFormat(i18n("Failed to create album"));         break;
-            case AlbumDoesntExist:               _progressBar->setFormat(i18n("Album doesn't exist"));            break;
+            case InvalidAlbumId:                 m_progressBar->setFormat(i18n("Unknown album"));                  break;
+            case AlbumDoesntExistOrNoPrivileges: m_progressBar->setFormat(i18n("Unknown album"));                  break;
+            case InvalidAlbumToken:              m_progressBar->setFormat(i18n("Failed to open album"));           break;
+            case AlbumNameEmpty:                 m_progressBar->setFormat(i18n("The album name can't be empty"));  break;
+            case FailedToCreateAlbum:            m_progressBar->setFormat(i18n("Failed to create album"));         break;
+            case AlbumDoesntExist:               m_progressBar->setFormat(i18n("Album doesn't exist"));            break;
             case UnknownApplication:                                                                              break;
             case InvalidApplicationKey:                                                                           break;
-            case FileNotAttached:                _progressBar->setFormat(i18n("File upload failed"));             break;
+            case FileNotAttached:                m_progressBar->setFormat(i18n("File upload failed"));             break;
             case NewerVersionExists:                                                                              break;
-            case SavingFileFailed:               _progressBar->setFormat(i18n("File upload failed"));             break;
-            case UnsupportedFileExtension:       _progressBar->setFormat(i18n("Unsupported file extension"));     break;
+            case SavingFileFailed:               m_progressBar->setFormat(i18n("File upload failed"));             break;
+            case UnsupportedFileExtension:       m_progressBar->setFormat(i18n("Unsupported file extension"));     break;
             case UnknownClientVersion:                                                                            break;
             case NonexistentTarget:                                                                               break;
             default:                                                                                              break;
         }
     }
 
-    QPalette palette = _progressBar->palette();
+    QPalette palette = m_progressBar->palette();
     palette.setColor(QPalette::Active, QPalette::Background, backgroundColor);
-    _progressBar->setPalette(palette);
+    m_progressBar->setPalette(palette);
 }
 
 void RajceWidget::reactivate()
 {
-    _imgList->listView()->clear();
-    _imgList->loadImagesFromCurrentSelection();
-    _session->clearLastError();
+    m_imgList->listView()->clear();
+    m_imgList->loadImagesFromCurrentSelection();
+    m_session->clearLastError();
     update();
 }
 
 void RajceWidget::progressChange(unsigned /*commandType*/, unsigned int percent)
 {
-    if (_uploadingPhotos)
+    if (m_uploadingPhotos)
     {
-        unsigned idx = _currentUploadImage - _uploadQueue.begin();
-        float perc   = (float) idx / _uploadQueue.size();
-        perc         += percent / 100.0 / _uploadQueue.size();
+        unsigned idx = m_currentUploadImage - m_uploadQueue.begin();
+        float perc   = (float) idx / m_uploadQueue.size();
+        perc         += percent / 100.0 / m_uploadQueue.size();
         percent      = perc * 100;
     }
 
-    _progressBar->setValue(percent);
+    m_progressBar->setValue(percent);
 }
 
 void RajceWidget::progressFinished(unsigned)
 {
-    if (_uploadingPhotos)
+    if (m_uploadingPhotos)
     {
-        unsigned idx = _currentUploadImage - _uploadQueue.begin();
-        float perc   = (float) idx / _uploadQueue.size();
+        unsigned idx = m_currentUploadImage - m_uploadQueue.begin();
+        float perc   = (float) idx / m_uploadQueue.size();
 
-        _progressBar->setValue(perc * 100);
+        m_progressBar->setValue(perc * 100);
     }
     else
     {
-        _progressBar->setVisible(false);
+        m_progressBar->setVisible(false);
         _setEnabled(true);
         update();
     }
@@ -397,25 +397,26 @@ void RajceWidget::progressStarted(unsigned commandType)
 
     text += " %v%";
 
-    if (!_uploadingPhotos) {
-        _progressBar->setValue(0);
+    if (!m_uploadingPhotos)
+    {
+        m_progressBar->setValue(0);
     }
 
-    _progressBar->setFormat(text);
-    _progressBar->setVisible(true);
+    m_progressBar->setFormat(text);
+    m_progressBar->setVisible(true);
     _setEnabled(false);
 }
 
 void RajceWidget::changeUserClicked()
 {
-    RajceLoginDialog* dlg = new RajceLoginDialog(this, _session->state().username());
+    RajceLoginDialog* dlg = new RajceLoginDialog(this, m_session->state().username());
 
     if (dlg->exec() == QDialog::Accepted)
     {
-        _session->clearLastError();
-        connect(_session, SIGNAL(busyFinished(unsigned)),
+        m_session->clearLastError();
+        connect(m_session, SIGNAL(busyFinished(unsigned)),
                 this, SLOT(loadAlbums()));
-        _session->login(dlg->username(), dlg->password());
+        m_session->login(dlg->username(), dlg->password());
     }
 
     delete dlg;
@@ -423,10 +424,10 @@ void RajceWidget::changeUserClicked()
 
 void RajceWidget::loadAlbums()
 {
-    disconnect(_session, SIGNAL(busyFinished(unsigned)),
+    disconnect(m_session, SIGNAL(busyFinished(unsigned)),
                this, SLOT(loadAlbums()));
 
-    _session->loadAlbums();
+    m_session->loadAlbums();
 }
 
 void RajceWidget::createAlbum()
@@ -435,10 +436,10 @@ void RajceWidget::createAlbum()
 
     if (dlg->exec() == QDialog::Accepted)
     {
-        _session->clearLastError();
-        connect(_session, SIGNAL(busyFinished(unsigned)),
+        m_session->clearLastError();
+        connect(m_session, SIGNAL(busyFinished(unsigned)),
                 this, SLOT(loadAlbums()));
-        _session->createAlbum(dlg->albumName(), dlg->albumDescription(), dlg->albumVisible());
+        m_session->createAlbum(dlg->albumName(), dlg->albumDescription(), dlg->albumVisible());
     }
 
     delete dlg;
@@ -446,22 +447,22 @@ void RajceWidget::createAlbum()
 
 void RajceWidget::startUpload()
 {
-    _session->clearLastError();
+    m_session->clearLastError();
     _setEnabled(false);
 
-    _uploadQueue.clear();
-    foreach(KUrl image, _imgList->imageUrls(true))
+    m_uploadQueue.clear();
+    foreach(KUrl image, m_imgList->imageUrls(true))
     {
         QString imagePath = image.toLocalFile();
-        _uploadQueue.append(imagePath);
+        m_uploadQueue.append(imagePath);
     }
 
-    connect(_session, SIGNAL(busyFinished(unsigned)),
+    connect(m_session, SIGNAL(busyFinished(unsigned)),
             this, SLOT(startUploadAfterAlbumOpened()));
 
-    QString albumName = _albumsCoB->currentText();
+    QString albumName = m_albumsCoB->currentText();
     Album album;
-    foreach(Album a, _session->state().albums())
+    foreach(Album a, m_session->state().albums())
     {
         if (a.name == albumName)
         {
@@ -472,22 +473,22 @@ void RajceWidget::startUpload()
 
     if (album.name == albumName)
     {
-        _session->openAlbum(album);
+        m_session->openAlbum(album);
     }
 }
 
 void RajceWidget::startUploadAfterAlbumOpened()
 {
-    disconnect(_session, SIGNAL(busyFinished(unsigned)),
+    disconnect(m_session, SIGNAL(busyFinished(unsigned)),
                this, SLOT(startUploadAfterAlbumOpened()));
 
-    connect(_session, SIGNAL(busyFinished(unsigned)),
+    connect(m_session, SIGNAL(busyFinished(unsigned)),
             this, SLOT(uploadNext()));
 
-    _uploadingPhotos    = true;
-    _progressBar->setValue(0);
+    m_uploadingPhotos    = true;
+    m_progressBar->setValue(0);
     progressStarted(AddPhoto);
-    _currentUploadImage = _uploadQueue.begin();
+    m_currentUploadImage = m_uploadQueue.begin();
     uploadNext();
 }
 
@@ -495,71 +496,71 @@ void RajceWidget::closeAlbum()
 {
     _setEnabled(true);
 
-    disconnect(_session, SIGNAL(busyFinished(unsigned)),
+    disconnect(m_session, SIGNAL(busyFinished(unsigned)),
                this, SLOT(closeAlbum()));
 
-    _uploadQueue.clear();
-    _progressBar->setVisible(false);
+    m_uploadQueue.clear();
+    m_progressBar->setVisible(false);
 
-    _uploadingPhotos = false;
+    m_uploadingPhotos = false;
 }
 
 void RajceWidget::uploadNext()
 {
-    if (_currentUploadImage != _uploadQueue.begin())
+    if (m_currentUploadImage != m_uploadQueue.begin())
     {
-        _imgList->processed(_session->state().lastErrorCode() == 0);
+        m_imgList->processed(m_session->state().lastErrorCode() == 0);
     }
 
-    if (_currentUploadImage == _uploadQueue.end())
+    if (m_currentUploadImage == m_uploadQueue.end())
     {
         cancelUpload();
         return;
     }
 
-    _imgList->processing(KUrl::fromLocalFile(*_currentUploadImage));
+    m_imgList->processing(KUrl::fromLocalFile(*m_currentUploadImage));
 
-    QString currentPhoto = *_currentUploadImage;
-    ++_currentUploadImage;
+    QString currentPhoto = *m_currentUploadImage;
+    ++m_currentUploadImage;
 
-    unsigned dimension   = _dimensionSpB->value();
-    int jpgQuality       = _imageQualitySpB->value();
+    unsigned dimension   = m_dimensionSpB->value();
+    int jpgQuality       = m_imageQualitySpB->value();
 
-    _session->uploadPhoto(currentPhoto, dimension, jpgQuality);
+    m_session->uploadPhoto(currentPhoto, dimension, jpgQuality);
 }
 
 void RajceWidget::cancelUpload()
 {
-    if (_currentUploadImage != _uploadQueue.begin() && _currentUploadImage != _uploadQueue.end())
+    if (m_currentUploadImage != m_uploadQueue.begin() && m_currentUploadImage != m_uploadQueue.end())
     {
-        _imgList->processed(false);
+        m_imgList->processed(false);
     }
 
-    disconnect(_session, SIGNAL(busyFinished(unsigned)),
+    disconnect(m_session, SIGNAL(busyFinished(unsigned)),
                this, SLOT(uploadNext()));
 
-    connect(_session, SIGNAL(busyFinished(unsigned)),
+    connect(m_session, SIGNAL(busyFinished(unsigned)),
             this, SLOT(closeAlbum()));
 
-    _session->cancelCurrentCommand();
-    _session->closeAlbum();
-    _uploadQueue.clear();
+    m_session->cancelCurrentCommand();
+    m_session->closeAlbum();
+    m_uploadQueue.clear();
 }
 
 void RajceWidget::selectedAlbumChanged(const QString& newName)
 {
-    _currentAlbumName = newName;
+    m_currentAlbumName = newName;
 }
 
 void RajceWidget::_setEnabled(bool enabled)
 {
-    _changeUserBtn->setEnabled(enabled);
-    _accountRBtn->setEnabled(enabled);
-    _newAlbumBtn->setEnabled(enabled);
-    _albumsCoB->setEnabled(enabled);
-    _reloadAlbumsBtn->setEnabled(enabled);
-    _dimensionSpB->setEnabled(enabled);
-    _imageQualitySpB->setEnabled(enabled);
+    m_changeUserBtn->setEnabled(enabled);
+    m_accountRBtn->setEnabled(enabled);
+    m_newAlbumBtn->setEnabled(enabled);
+    m_albumsCoB->setEnabled(enabled);
+    m_reloadAlbumsBtn->setEnabled(enabled);
+    m_dimensionSpB->setEnabled(enabled);
+    m_imageQualitySpB->setEnabled(enabled);
     emit loginStatusChanged(enabled);
 }
 
@@ -573,16 +574,16 @@ void RajceWidget::readSettings()
     state.sessionToken() = grp.readEntry("token");
     state.username()     = grp.readEntry("username");
     state.nickname()     = grp.readEntry("nickname");
-    _currentAlbumName    = grp.readEntry("album");
+    m_currentAlbumName    = grp.readEntry("album");
     state.maxHeight()    = grp.readEntry("maxHeight",    1200);
     state.maxWidth()     = grp.readEntry("maxWidth",     1200);
     state.imageQuality() = grp.readEntry("imageQuality", 85);
 
-    _session->init(state);
+    m_session->init(state);
 
-    if (!_session->state().sessionToken().isEmpty())
+    if (!m_session->state().sessionToken().isEmpty())
     {
-        _session->loadAlbums();
+        m_session->loadAlbums();
     }
 }
 
@@ -590,12 +591,12 @@ void RajceWidget::writeSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp          = config.group("RajceExport Settings");
-    const SessionState& state = _session->state();
+    const SessionState& state = m_session->state();
 
     grp.writeEntry("token",        state.sessionToken());
     grp.writeEntry("username",     state.username());
     grp.writeEntry("nickname",     state.nickname());
-    grp.writeEntry("album",        _currentAlbumName);
+    grp.writeEntry("album",        m_currentAlbumName);
     grp.writeEntry("maxWidth",     state.maxWidth());
     grp.writeEntry("maxHeight",    state.maxHeight());
     grp.writeEntry("imageQuality", state.imageQuality());
