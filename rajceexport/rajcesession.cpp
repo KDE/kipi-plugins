@@ -74,9 +74,9 @@ PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, 
     QImage image(img);
 
     // get temporary file name
-    QString baseName     = saveDir + QFileInfo(imagePath).baseName().trimmed();
-    ret.scaledImagePath  = baseName + ".jpg";
-    ret.thumbPath        = baseName + ".thumb.jpg";
+    QString baseName    = saveDir + QFileInfo(imagePath).baseName().trimmed();
+    ret.scaledImagePath = baseName + ".jpg";
+    ret.thumbPath       = baseName + ".thumb.jpg";
 
     if (maxDimension > 0 &&
         ((unsigned) image.width() > maxDimension || (unsigned) image.height() > maxDimension))
@@ -141,9 +141,9 @@ private:
 
 private:
 
-    QString                _name;
-    RajceCommandType       _commandType;
-    QMap<QString, QString> _parameters;
+    QString                m_name;
+    RajceCommandType       m_commandType;
+    QMap<QString, QString> m_parameters;
 };
 
 // -----------------------------------------------------------------------
@@ -164,7 +164,6 @@ protected:
 
 class OpenAlbumCommand : public RajceCommand
 {
-
 public:
 
     explicit OpenAlbumCommand(unsigned albumId, const SessionState& state);
@@ -237,19 +236,23 @@ protected:
 
 private:
 
-    MPForm * _form;
+    int      m_jpgQuality;
+
+    unsigned m_desiredDimension;
+    unsigned m_maxDimension;
+
     QString  m_tmpDir;
-    QString  _imagePath;
-    QImage   _image;
-    unsigned _desiredDimension;
-    int      _jpgQuality;
-    unsigned _maxDimension;
+    QString  m_imagePath;
+
+    QImage   m_image;
+
+    MPForm*  m_form;
 };
 
 /// Commands impls
 
 RajceCommand::RajceCommand(const QString& name, RajceCommandType type)
-    : _name(name), _commandType(type)
+    : m_name(name), m_commandType(type)
 {
 }
 
@@ -259,7 +262,7 @@ RajceCommand::~RajceCommand()
 
 QMap<QString, QString>& RajceCommand::parameters() const
 {
-    return const_cast<QMap<QString, QString> &>(_parameters);
+    return const_cast<QMap<QString, QString> &>(m_parameters);
 }
 
 QString RajceCommand::getXml() const
@@ -267,12 +270,12 @@ QString RajceCommand::getXml() const
     QString ret("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 
     ret.append("<request>\n");
-    ret.append("  <command>").append(_name).append("</command>\n");
+    ret.append("  <command>").append(m_name).append("</command>\n");
     ret.append("  <parameters>\n");
-    foreach(QString key, _parameters.keys())
+    foreach(QString key, m_parameters.keys())
     {
         ret.append("    <").append(key).append(">");
-        ret.append(_parameters[key]);
+        ret.append(m_parameters[key]);
         ret.append("</").append(key).append(">\n");
     }
     ret.append("</parameters>\n");
@@ -306,7 +309,7 @@ void RajceCommand::processResponse(const QString& response, SessionState& state)
     QXmlQuery q;
     q.setFocus(response);
 
-    state.lastCommand() = _commandType;
+    state.lastCommand() = m_commandType;
 
     if (_parseError(q, state))
     {
@@ -338,7 +341,7 @@ QString RajceCommand::contentType() const
 
 RajceCommandType RajceCommand::commandType() const
 {
-    return _commandType;
+    return m_commandType;
 }
 
 // -----------------------------------------------------------------------
@@ -545,40 +548,43 @@ void AlbumListCommand::cleanUpOnError(SessionState& state)
 
 AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, unsigned dimension,
                                  int jpgQuality, const SessionState& state)
-    : RajceCommand("addPhoto", AddPhoto), m_tmpDir(tmpDir), _imagePath(path),
-                   _desiredDimension(dimension), _jpgQuality(jpgQuality)
+    : RajceCommand("addPhoto", AddPhoto),
+      m_jpgQuality(jpgQuality),
+      m_desiredDimension(dimension),
+      m_tmpDir(tmpDir),
+      m_imagePath(path)
 {
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QString   rawFilesExt(KDcrawIface::KDcraw::rawFiles());
     QFileInfo fileInfo(path);
-    bool isRaw = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
+    bool      isRaw = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
 
     if (isRaw)
     {
         kDebug() << "Get RAW preview " << path;
-        KDcrawIface::KDcraw::loadDcrawPreview(_image, path);
+        KDcrawIface::KDcraw::loadDcrawPreview(m_image, path);
     }
     else
     {
-        _image.load(path);
+        m_image.load(path);
     }
 
-    if (_image.isNull())
+    if (m_image.isNull())
     {
         kDebug() << "Could not read in an image from " << path << ". Adding the photo will not work.";
         return;
     }
 
-    _maxDimension = state.maxHeight() > state.maxWidth() ? state.maxWidth() : state.maxHeight();
+    m_maxDimension = state.maxHeight() > state.maxWidth() ? state.maxWidth() : state.maxHeight();
 
     parameters()["token"] = state.sessionToken();
     parameters()["albumToken"] = state.openAlbumToken();
 
-    _form = new MPForm;
+    m_form = new MPForm;
 }
 
 AddPhotoCommand::~AddPhotoCommand()
 {
-    delete _form;
+    delete m_form;
 }
 
 void AddPhotoCommand::cleanUpOnError(KIPIRajceExportPlugin::SessionState&)
@@ -591,26 +597,26 @@ void AddPhotoCommand::parseResponse(QXmlQuery&, KIPIRajceExportPlugin::SessionSt
 
 QString AddPhotoCommand::additionalXml() const
 {
-    if (_image.isNull())
+    if (m_image.isNull())
     {
         return QString();
     }
 
     QMap<QString, QString> metadata;
-    QFileInfo f(_imagePath);
+    QFileInfo f(m_imagePath);
 
-    metadata["FullFilePath"] = _imagePath;
+    metadata["FullFilePath"] = m_imagePath;
     metadata["OriginalFileName"] = f.fileName();
     metadata["OriginalFileExtension"] = QString(".") + f.suffix();
     metadata["PerceivedType"] = "image"; //what are the other values here? video?
-    metadata["OriginalWidth"] = QString::number(_image.width());
-    metadata["OriginalHeight"] = QString::number(_image.height());
+    metadata["OriginalWidth"] = QString::number(m_image.width());
+    metadata["OriginalHeight"] = QString::number(m_image.height());
     metadata["LengthMS"] = "0";
     metadata["FileSize"] = QString::number(f.size());
 
     //TODO extract these from exif
     //    KExiv2Iface::KExiv2 exiv2Iface;
-    //    if (exiv2Iface.load(_imagePath)) {
+    //    if (exiv2Iface.load(m_imagePath)) {
         metadata["Title"] = "";
         metadata["KeywordSet"] = "";
         metadata["PeopleRegionSet"] = "";
@@ -647,18 +653,18 @@ QString AddPhotoCommand::additionalXml() const
 
 QString AddPhotoCommand::contentType() const
 {
-    return _form->contentType();
+    return m_form->contentType();
 }
 
 QByteArray AddPhotoCommand::encode() const
 {
-    if (_image.isNull())
+    if (m_image.isNull())
     {
-        kDebug() << _imagePath << " could not be read, no data will be sent.";
+        kDebug() << m_imagePath << " could not be read, no data will be sent.";
         return QByteArray();
     }
 
-    PreparedImage prepared = _prepareImageForUpload(m_tmpDir, _image, _imagePath, _desiredDimension, THUMB_SIZE, _jpgQuality);
+    PreparedImage prepared = _prepareImageForUpload(m_tmpDir, m_image, m_imagePath, m_desiredDimension, THUMB_SIZE, m_jpgQuality);
 
     //add the rest of the parameters to be encoded as xml
     QImage scaled(prepared.scaledImagePath);
@@ -670,19 +676,19 @@ QByteArray AddPhotoCommand::encode() const
     kDebug() << "Really sending:\n" << xml;
 
     //now we can create the form with all the info
-    _form->reset();
+    m_form->reset();
 
-    _form->addPair("data", xml);
+    m_form->addPair("data", xml);
 
-    _form->addFile("thumb", prepared.thumbPath);
-    _form->addFile("photo", prepared.scaledImagePath);
+    m_form->addFile("thumb", prepared.thumbPath);
+    m_form->addFile("photo", prepared.scaledImagePath);
 
     QFile::remove(prepared.thumbPath);
     QFile::remove(prepared.scaledImagePath);
 
-    _form->finish();
+    m_form->finish();
 
-    QByteArray ret = _form->formData();
+    QByteArray ret = m_form->formData();
 
     return ret;
 }
