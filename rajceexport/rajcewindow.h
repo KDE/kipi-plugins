@@ -48,6 +48,7 @@ class RajceWindow : public KDialog
 public:
 
     explicit RajceWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent = 0, Qt::WFlags flags = 0);
+    ~RajceWindow();
 
     void reactivate();
 
@@ -59,8 +60,8 @@ private Q_SLOTS:
 
 private:
 
-    KIPI::Interface*          _interface;
-    RajceWidget*              _widget;
+    KIPI::Interface*          m_interface;
+    RajceWidget*              m_widget;
     KIPIPlugins::KPAboutData* m_about;
 };
 
