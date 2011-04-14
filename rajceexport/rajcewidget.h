@@ -54,7 +54,6 @@ namespace KIPIRajceExportPlugin
 {
 
 class RajceSession;
-class Album;
 
 class RajceWidget : public QWidget
 {
