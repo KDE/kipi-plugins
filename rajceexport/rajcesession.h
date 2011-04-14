@@ -93,14 +93,14 @@ private:
 
 private:
 
-    SessionState          _state;
+    QQueue<RajceCommand*> m_commandQueue;
+    QMutex                m_queueAccess;
+    QByteArray            m_buffer;
+    QString               m_tmpDir;
 
-    QWidget*              _jobParent;
-    KJob*                 _currentJob;
-    QQueue<RajceCommand*> _commandQueue;
-    QMutex                _queueAccess;
-    QByteArray            _buffer;
-    QString               _tmpDir;
+    KJob*                 m_currentJob;
+
+    SessionState          m_state;
 };
 
 } // namespace KIPIRajceExportPlugin

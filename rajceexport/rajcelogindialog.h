@@ -49,8 +49,8 @@ public:
 
 private:
 
-    KLineEdit* _nameEdit;
-    KLineEdit* _passwdEdit;
+    KLineEdit* m_nameEdit;
+    KLineEdit* m_passwdEdit;
 };
 
 } // namespace KIPIRajceExportPlugin

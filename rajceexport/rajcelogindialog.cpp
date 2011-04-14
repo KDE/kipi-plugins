@@ -45,21 +45,21 @@ RajceLoginDialog::RajceLoginDialog(QWidget* parent, const QString& _name, const 
 {
     setSizeGripEnabled(false);
 
-    QVBoxLayout* vbox         = new QVBoxLayout(this);
-    QGridLayout* centerLayout = new QGridLayout();
-    _nameEdit                 = new KLineEdit(this);
-    _passwdEdit               = new KLineEdit(this);
-    _passwdEdit->setEchoMode(KLineEdit::Password);
+    QVBoxLayout* vbox          = new QVBoxLayout(this);
+    QGridLayout* centerLayout  = new QGridLayout();
+    m_nameEdit                 = new KLineEdit(this);
+    m_passwdEdit               = new KLineEdit(this);
+    m_passwdEdit->setEchoMode(KLineEdit::Password);
 
-    QLabel* nameLabel   = new QLabel(this);
+    QLabel* nameLabel = new QLabel(this);
     nameLabel->setText(i18n( "Login:" ));
     // centerLayout->addWidget(nameLabel, 0, 0);
 
     QLabel* passwdLabel = new QLabel(this);
     passwdLabel->setText(i18n("Password:"));
 
-    centerLayout->addWidget(_nameEdit,   0, 1);
-    centerLayout->addWidget(_passwdEdit, 1, 1);
+    centerLayout->addWidget(m_nameEdit,   0, 1);
+    centerLayout->addWidget(m_passwdEdit, 1, 1);
     centerLayout->addWidget(nameLabel,    0, 0);
     centerLayout->addWidget(passwdLabel,  1, 0);
 
@@ -86,8 +86,8 @@ RajceLoginDialog::RajceLoginDialog(QWidget* parent, const QString& _name, const 
 
     resize(QSize(300, 150).expandedTo(minimumSizeHint()));
 
-    _nameEdit->setText(_name);
-    _passwdEdit->setText(_passwd);
+    m_nameEdit->setText(_name);
+    m_passwdEdit->setText(_passwd);
 
     // signals and slots connections
 
@@ -104,22 +104,22 @@ RajceLoginDialog::~RajceLoginDialog()
 
 QString RajceLoginDialog::password() const
 {
-    return _passwdEdit->text();
+    return m_passwdEdit->text();
 }
 
 void RajceLoginDialog::setPassword(const QString& value)
 {
-    _passwdEdit->setText(value);
+    m_passwdEdit->setText(value);
 }
 
 void RajceLoginDialog::setUsername(const QString& value)
 {
-    _nameEdit->setText(value);
+    m_nameEdit->setText(value);
 }
 
 QString RajceLoginDialog::username() const
 {
-    return _nameEdit->text();
+    return m_nameEdit->text();
 }
 
 } // namespace KIPIRajceExportPlugin

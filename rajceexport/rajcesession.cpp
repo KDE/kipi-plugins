@@ -54,8 +54,8 @@
 namespace KIPIRajceExportPlugin
 {
 
-KUrl     RAJCE_URL("http://www.rajce.idnes.cz/liveAPI/index.php");
-unsigned THUMB_SIZE = 100;
+const KUrl     RAJCE_URL("http://www.rajce.idnes.cz/liveAPI/index.php");
+const unsigned THUMB_SIZE = 100;
 
 struct PreparedImage
 {
@@ -238,7 +238,7 @@ protected:
 private:
 
     MPForm * _form;
-    QString  _tmpDir;
+    QString  m_tmpDir;
     QString  _imagePath;
     QImage   _image;
     unsigned _desiredDimension;
@@ -545,7 +545,7 @@ void AlbumListCommand::cleanUpOnError(SessionState& state)
 
 AddPhotoCommand::AddPhotoCommand(const QString& tmpDir, const QString& path, unsigned dimension,
                                  int jpgQuality, const SessionState& state)
-    : RajceCommand("addPhoto", AddPhoto), _tmpDir(tmpDir), _imagePath(path),
+    : RajceCommand("addPhoto", AddPhoto), m_tmpDir(tmpDir), _imagePath(path),
                    _desiredDimension(dimension), _jpgQuality(jpgQuality)
 {
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
@@ -658,7 +658,7 @@ QByteArray AddPhotoCommand::encode() const
         return QByteArray();
     }
 
-    PreparedImage prepared = _prepareImageForUpload(_tmpDir, _image, _imagePath, _desiredDimension, THUMB_SIZE, _jpgQuality);
+    PreparedImage prepared = _prepareImageForUpload(m_tmpDir, _image, _imagePath, _desiredDimension, THUMB_SIZE, _jpgQuality);
 
     //add the rest of the parameters to be encoded as xml
     QImage scaled(prepared.scaledImagePath);
@@ -690,13 +690,13 @@ QByteArray AddPhotoCommand::encode() const
 /// RajceSession impl
 
 RajceSession::RajceSession(QWidget* parent, const QString& tmpDir)
-    : QObject(parent), _currentJob(0), _queueAccess(QMutex::Recursive), _tmpDir(tmpDir)
+    : QObject(parent), m_queueAccess(QMutex::Recursive), m_tmpDir(tmpDir), m_currentJob(0)
 {
 }
 
 const SessionState& RajceSession::state() const
 {
-    return _state;
+    return m_state;
 }
 
 void RajceSession::_startJob(RajceCommand* command)
@@ -717,8 +717,8 @@ void RajceSession::_startJob(RajceCommand* command)
     connect(job, SIGNAL(percent(KJob*,ulong)),
             this, SLOT(slotPercent(KJob*,ulong)));
 
-    _currentJob = job;
-    _buffer.resize(0);
+    m_currentJob = job;
+    m_buffer.resize(0);
 
     emit busyStarted(command->commandType());
 }
@@ -731,13 +731,13 @@ void RajceSession::login(const QString& username, const QString& password)
 
 void RajceSession::loadAlbums()
 {
-    AlbumListCommand* command = new AlbumListCommand(_state);
+    AlbumListCommand* command = new AlbumListCommand(m_state);
     _enqueue(command);
 }
 
 void RajceSession::createAlbum(const QString& name, const QString& description, bool visible)
 {
-    CreateAlbumCommand* command = new CreateAlbumCommand(name, description, visible, _state);
+    CreateAlbumCommand* command = new CreateAlbumCommand(name, description, visible, m_state);
     _enqueue(command);
 }
 
@@ -746,29 +746,29 @@ void RajceSession::data(KIO::Job*, const QByteArray& data)
     if (data.isEmpty())
         return;
 
-    int oldSize = _buffer.size();
-    _buffer.resize(_buffer.size() + data.size());
-    memcpy(_buffer.data() + oldSize, data.data(), data.size());
+    int oldSize = m_buffer.size();
+    m_buffer.resize(m_buffer.size() + data.size());
+    memcpy(m_buffer.data() + oldSize, data.data(), data.size());
 }
 
 void RajceSession::finished(KJob*)
 {
-    QString response = QString::fromUtf8(_buffer.data());
+    QString response = QString::fromUtf8(m_buffer.data());
 
     kDebug() << response;
 
-    _queueAccess.lock();
+    m_queueAccess.lock();
 
-    RajceCommand* c = _commandQueue.head();
-    _currentJob     = 0;
+    RajceCommand* c = m_commandQueue.head();
+    m_currentJob     = 0;
 
-    c->processResponse(response, _state);
+    c->processResponse(response, m_state);
 
     RajceCommandType type = c->commandType();
 
     delete c;
 
-    kDebug() << "State after command: " << _state;
+    kDebug() << "State after command: " << m_state;
 
     //let the users react on the command before we
     //let the next queued command in.
@@ -783,15 +783,15 @@ void RajceSession::finished(KJob*)
     //method which would happen if the command was dequed
     //before the signal and the signal was emitted in the same
     //thread (which is the case (always?)).
-    _commandQueue.dequeue();
+    m_commandQueue.dequeue();
 
     //see if there's something to continue with
-    if (_commandQueue.size() > 0)
+    if (m_commandQueue.size() > 0)
     {
-        _startJob(_commandQueue.head());
+        _startJob(m_commandQueue.head());
     }
 
-    _queueAccess.unlock();
+    m_queueAccess.unlock();
 }
 
 void RajceSession::logout()
@@ -801,15 +801,15 @@ void RajceSession::logout()
 
 void RajceSession::openAlbum(const KIPIRajceExportPlugin::Album& album)
 {
-    OpenAlbumCommand* command = new OpenAlbumCommand(album.id, _state);
+    OpenAlbumCommand* command = new OpenAlbumCommand(album.id, m_state);
     _enqueue(command);
 }
 
 void RajceSession::closeAlbum()
 {
-    if (!_state.openAlbumToken().isEmpty())
+    if (!m_state.openAlbumToken().isEmpty())
     {
-        CloseAlbumCommand* command = new CloseAlbumCommand(_state);
+        CloseAlbumCommand* command = new CloseAlbumCommand(m_state);
         _enqueue(command);
     }
     else
@@ -820,49 +820,49 @@ void RajceSession::closeAlbum()
 
 void RajceSession::uploadPhoto(const QString& path, unsigned dimension, int jpgQuality)
 {
-    AddPhotoCommand* command = new AddPhotoCommand(_tmpDir, path, dimension, jpgQuality, _state);
+    AddPhotoCommand* command = new AddPhotoCommand(m_tmpDir, path, dimension, jpgQuality, m_state);
     _enqueue(command);
 }
 
 void RajceSession::clearLastError()
 {
-    _state.lastErrorCode()    = 0;
-    _state.lastErrorMessage() = "";
+    m_state.lastErrorCode()    = 0;
+    m_state.lastErrorMessage() = "";
 }
 
 void RajceSession::slotPercent(KJob* job, ulong percent)
 {
     kDebug() << "Percent signalled: " << percent;
-    if (job == _currentJob)
+    if (job == m_currentJob)
     {
         kDebug() << "Re-emitting percent";
-        emit busyProgress(_commandQueue.head()->commandType(), percent);
+        emit busyProgress(m_commandQueue.head()->commandType(), percent);
     }
 }
 
 void RajceSession::_enqueue(RajceCommand* command)
 {
-    if (_state.lastErrorCode() != 0)
+    if (m_state.lastErrorCode() != 0)
     {
         return;
     }
 
-    _queueAccess.lock();
-    _commandQueue.enqueue(command);
+    m_queueAccess.lock();
+    m_commandQueue.enqueue(command);
 
-    if (_commandQueue.size() == 1)
+    if (m_commandQueue.size() == 1)
     {
         _startJob(command);
     }
 
-    _queueAccess.unlock();
+    m_queueAccess.unlock();
 }
 
 void RajceSession::cancelCurrentCommand()
 {
-    if (_currentJob != 0)
+    if (m_currentJob != 0)
     {
-        KJob* job = _currentJob;
+        KJob* job = m_currentJob;
         finished(job);
         job->kill();
     }
@@ -870,7 +870,7 @@ void RajceSession::cancelCurrentCommand()
 
 void RajceSession::init(const KIPIRajceExportPlugin::SessionState& initialState)
 {
-    _state = initialState;
+    m_state = initialState;
 }
 
 } // namespace KIPIRajceExportPlugin
