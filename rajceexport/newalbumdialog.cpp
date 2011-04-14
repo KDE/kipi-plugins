@@ -44,38 +44,38 @@ NewAlbumDialog::NewAlbumDialog(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(false);
 
-    QWidget * mainWidget = new QWidget(this);
+    QWidget* mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
 
-    _albumName        = new KLineEdit;
-    _albumDescription = new KTextEdit;
-    _albumVisible     = new QCheckBox;
+    m_albumName         = new KLineEdit;
+    m_albumDescription  = new KTextEdit;
+    m_albumVisible      = new QCheckBox;
 
-    _albumVisible->setChecked(true);
+    m_albumVisible->setChecked(true);
 
     QFormLayout* layout = new QFormLayout();
     layout->setMargin(10);
     layout->setRowWrapPolicy(QFormLayout::WrapLongRows);
-    layout->addRow(i18n("Name"), _albumName);
-    layout->addRow(i18n("Description"), _albumDescription);
-    layout->addRow(i18n("Public"), _albumVisible);
+    layout->addRow(i18n("Name"), m_albumName);
+    layout->addRow(i18n("Description"), m_albumDescription);
+    layout->addRow(i18n("Public"), m_albumVisible);
 
     mainWidget->setLayout(layout);
 }
 
 QString NewAlbumDialog::albumDescription() const
 {
-    return _albumDescription->toPlainText();
+    return m_albumDescription->toPlainText();
 }
 
 QString NewAlbumDialog::albumName() const
 {
-    return _albumName->text();
+    return m_albumName->text();
 }
 
 bool NewAlbumDialog::albumVisible() const
 {
-    return _albumVisible->isChecked();
+    return m_albumVisible->isChecked();
 }
 
 } // namespace KIPIRajceExportPlugin

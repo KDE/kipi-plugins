@@ -47,9 +47,9 @@ public:
 
 private:
 
-    KLineEdit* _albumName;
-    KTextEdit* _albumDescription;
-    QCheckBox* _albumVisible;
+    KLineEdit* m_albumName;
+    KTextEdit* m_albumDescription;
+    QCheckBox* m_albumVisible;
 };
 
 } // namespace KIPIRajceExportPlugin
