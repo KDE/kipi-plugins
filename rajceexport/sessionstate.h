@@ -99,135 +99,138 @@ class SessionState
 public:
 
     SessionState()
-        : _maxWidth(0),
-          _maxHeight(0),
-          _imageQuality(0),
-          _lastErrorCode(0)
+        : m_maxWidth(0),
+          m_maxHeight(0),
+          m_imageQuality(0),
+          m_lastErrorCode(0)
     {}
 
     inline QString& sessionToken()
     {
-        return _sessionToken;
+        return m_sessionToken;
     }
 
     inline QString const& sessionToken() const
     {
-        return _sessionToken;
+        return m_sessionToken;
     }
 
     inline QString& nickname()
     {
-        return _nickname;
+        return m_nickname;
     }
 
     inline QString const& nickname() const
     {
-        return _nickname;
+        return m_nickname;
     }
 
     inline QString& username()
     {
-        return _username;
+        return m_username;
     }
 
     inline QString const& username() const
     {
-        return _username;
+        return m_username;
     }
 
     inline QString& openAlbumToken()
     {
-        return _albumToken;
+        return m_albumToken;
     }
 
     inline QString const& openAlbumToken() const
     {
-        return _albumToken;
+        return m_albumToken;
     }
 
     inline QString& lastErrorMessage()
     {
-        return _lastErrorMessage;
+        return m_lastErrorMessage;
     }
 
     inline QString const& lastErrorMessage() const
     {
-        return _lastErrorMessage;
+        return m_lastErrorMessage;
     }
 
     inline unsigned& maxWidth()
     {
-        return _maxWidth;
+        return m_maxWidth;
     }
 
     inline unsigned maxWidth() const
     {
-        return _maxWidth;
+        return m_maxWidth;
     }
 
     inline unsigned& maxHeight()
     {
-        return _maxHeight;
+        return m_maxHeight;
     }
 
     inline unsigned maxHeight() const
     {
-        return _maxHeight;
+        return m_maxHeight;
     }
 
     inline unsigned& imageQuality()
     {
-        return _imageQuality;
+        return m_imageQuality;
     }
 
     inline unsigned imageQuality() const
     {
-        return _imageQuality;
+        return m_imageQuality;
     }
 
     inline unsigned& lastErrorCode()
     {
-        return _lastErrorCode;
+        return m_lastErrorCode;
     }
 
     inline unsigned lastErrorCode() const
     {
-        return _lastErrorCode;
+        return m_lastErrorCode;
     }
 
     inline QVector<Album>& albums()
     {
-        return _albums;
+        return m_albums;
     }
 
     inline const QVector<Album>& albums() const
     {
-        return _albums;
+        return m_albums;
     }
 
     inline RajceCommandType lastCommand() const
     {
-        return _lastCommand;
+        return m_lastCommand;
     }
 
     inline RajceCommandType& lastCommand()
     {
-        return _lastCommand;
+        return m_lastCommand;
     }
 
 private:
 
-    QString          _sessionToken;
-    QString          _nickname;
-    QString          _username;
-    QString          _albumToken;
-    QString          _lastErrorMessage;
-    unsigned         _maxWidth;
-    unsigned         _maxHeight;
-    unsigned         _imageQuality;
-    unsigned         _lastErrorCode;
-    RajceCommandType _lastCommand;
-    QVector<Album>   _albums;
+    unsigned         m_maxWidth;
+    unsigned         m_maxHeight;
+    unsigned         m_imageQuality;
+    unsigned         m_lastErrorCode;
+
+    QString          m_sessionToken;
+    QString          m_nickname;
+    QString          m_username;
+    QString          m_albumToken;
+    QString          m_lastErrorMessage;
+
+    QVector<Album>   m_albums;
+
+    RajceCommandType m_lastCommand;
 };
 
 } // namespace KIPIRajceExportPlugin

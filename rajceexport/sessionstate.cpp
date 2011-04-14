@@ -28,15 +28,15 @@ QDebug operator<<(QDebug d, const KIPIRajceExportPlugin::SessionState& s)
     QTextStream str(&ss);
 
     str << "SessionState[";
-    str << "sessionToken='" << s.sessionToken() << "'";
-    str << ", nickname='" << s.nickname() << "'";
-    str << ", username='" << s.username() << "'";
-    str << ", albumToken='" << s.openAlbumToken() << "'";
+    str << "sessionToken='"       << s.sessionToken()     << "'";
+    str << ", nickname='"         << s.nickname()         << "'";
+    str << ", username='"         << s.username()         << "'";
+    str << ", albumToken='"       << s.openAlbumToken()   << "'";
     str << ", lastErrorMessage='" << s.lastErrorMessage() << "'";
-    str << ", lastErrorCode=" << s.lastErrorCode();
-    str << ", maxWidth=" << s.maxWidth();
-    str << ", maxHeight=" << s.maxHeight();
-    str << ", imageQuality=" << s.imageQuality();
+    str << ", lastErrorCode="     << s.lastErrorCode();
+    str << ", maxWidth="          << s.maxWidth();
+    str << ", maxHeight="         << s.maxHeight();
+    str << ", imageQuality="      << s.imageQuality();
     str << ", albums=[";
 
     KIPIRajceExportPlugin::Album a;
