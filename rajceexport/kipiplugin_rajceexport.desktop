@@ -16,4 +16,4 @@ Type=Service
 Icon=
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_rajceexport
-author=Lukas Krejci­, krejci.l at centrum dot cz
+author=Lukas Krejci, krejci.l at centrum dot cz
