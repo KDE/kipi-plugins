@@ -31,7 +31,6 @@
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
-#include <kcmdlineoptions.h>
 #include <kdebug.h>
 #include <kaction.h>
 #include <kactioncollection.h>

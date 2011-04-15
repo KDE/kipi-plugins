@@ -26,13 +26,13 @@ FIND_PACKAGE(Kipi)
 ADD_DEFINITIONS(${KEXIV2_DEFINITIONS})
 
 set(kipicmd_sources
-    main.cpp
     kipiinterface.cpp
     kipiimagecollectionshared.cpp
     kipiimageinfoshared.cpp
     kipiimagecollectionselector.cpp
     kipiuploadwidget.cpp
     kipitest-debug.cpp
+    main.cpp
    )
 
 kde4_add_executable( kipicmd ${kipicmd_sources} )
