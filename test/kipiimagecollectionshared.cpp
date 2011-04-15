@@ -1,6 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
- * Copyright (C) 2009,2010 by Michael G. Hansen <mike at mghansen dot de>
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
+ *
+ * @date   2009-11-21
+ * @brief  kipi host test application
+ *
+ * @author Copyright (C) 2009-2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -9,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -25,7 +33,9 @@
 #include "kipitest-debug.h"
 
 KipiImageCollectionShared::KipiImageCollectionShared(const KUrl& albumPath)
-    : KIPI::ImageCollectionShared(), m_albumPath(albumPath), m_images()
+    : KIPI::ImageCollectionShared(),
+      m_albumPath(albumPath),
+      m_images()
 {
     // go through the album and add its images:
     const QString albumPathString = m_albumPath.path();
@@ -33,7 +43,7 @@ KipiImageCollectionShared::KipiImageCollectionShared(const KUrl& albumPath)
     // add only the files, because recursion through directories should be
     // handled in KipiInterface::add[Selected]Album
     // TODO: restrict the search to images!
-    const QFileInfoList files = QDir(albumPathString).entryInfoList(QDir::Files);
+    const QFileInfoList files     = QDir(albumPathString).entryInfoList(QDir::Files);
 
     for (QFileInfoList::const_iterator it = files.constBegin(); it!=files.constEnd(); ++it)
     {
@@ -42,13 +52,13 @@ KipiImageCollectionShared::KipiImageCollectionShared(const KUrl& albumPath)
 }
 
 KipiImageCollectionShared::KipiImageCollectionShared(const KUrl::List& images)
-    : KIPI::ImageCollectionShared(), m_images(images)
+    : KIPI::ImageCollectionShared(),
+      m_images(images)
 {
 }
 
 KipiImageCollectionShared::~KipiImageCollectionShared()
 {
-
 }
 
 QString KipiImageCollectionShared::name()
