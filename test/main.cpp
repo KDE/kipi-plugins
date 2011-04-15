@@ -316,7 +316,7 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 
 int main(int argc, char* argv[])
 {
-    const KAboutData aboutData("kipicmd",
+    const KAboutData aboutData("kipiplugins",
                                "kipi",
                                ki18n("kipicmd"),
                                kipiplugins_version,            // version
@@ -353,7 +353,7 @@ int main(int argc, char* argv[])
     // create an instance of the plugin loader:
     new KIPI::PluginLoader(QStringList(), kipiInterface);
 
-    KCmdLineArgs * const args          = KCmdLineArgs::parsedArgs();
+    KCmdLineArgs* const args           = KCmdLineArgs::parsedArgs();
 
     if (args->isSet("stderr"))
     {
@@ -390,9 +390,10 @@ int main(int argc, char* argv[])
     }
 
     // append the remaining arguments to the lists:
-    for (int i=0; i<args->count(); ++i)
+    for (int i = 0; i < args->count(); ++i)
     {
         const QString argValue = args->arg(i);
+
         if (argValue == "--selectedimages")
         {
             startList = &listSelectedImages;
@@ -407,7 +408,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            if (startList==0)
+            if (startList == 0)
             {
                 kError()<<"startList==0";
                 args->usageError(i18n("Please specify how the filenames you provided should be used."));
@@ -431,8 +432,8 @@ int main(int argc, char* argv[])
     const QString nameOfOnlyOnePluginToLoad = args->getOption("library");
 
     // determine what to do:
-    int returnValue    = 0;
-    bool startedPlugin = false;
+    int returnValue                         = 0;
+    bool startedPlugin                      = false;
 
     if ( args->isSet("listplugins") )
     {
