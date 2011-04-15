@@ -49,6 +49,7 @@
 
 #include "kipiinterface.h"
 #include "kipitest-debug.h"
+#include "pluginsversion.h"
 
 /**
 * \brief Returns the name of a KIPI::Category
@@ -313,21 +314,21 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
     return foundAction;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     const KAboutData aboutData("kipitest",
-                               0,
-                               ki18n("Kipi Cmd"),
-                               "0.1", // version
-                               ki18n("Call kipi-plugins from the command line"),
+                               "kipi",
+                               ki18n("kipitest"),
+                               kipiplugins_version,            // version
+                               ki18n("Kipi host test application"),
                                KAboutData::License_GPL,
                                ki18n("(c) 2009-2010 Michael G. Hansen"),
-                               KLocalizedString(), // optional text
-                               "", // URI of homepage
-                               "" // bugs e-mail address
+                               KLocalizedString(),             // optional text
+                               "http://www.kipi-plugins.org",  // URI of homepage
+                               "kde-imaging@kde.org"           // bugs e-mail address
                               );
 
-    KCmdLineArgs::init( argc, argv, &aboutData);
+    KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineOptions options;
     options.add( "listplugins", ki18n("List the available plugins") );
     options.add( "l" ).add("library <libraryname>", ki18n("Library name of plugin to use") );
