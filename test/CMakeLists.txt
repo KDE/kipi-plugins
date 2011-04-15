@@ -15,14 +15,17 @@
 # * ============================================================
 
 project( kipitest )
+
 find_package( KDE4 REQUIRED )
+
 include_directories( ${KDE4_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} )
+
 FIND_PACKAGE(Kexiv2)
 FIND_PACKAGE(Kipi)
 
-ADD_DEFINITIONS( -Wall ${KEXIV2_DEFINITIONS} )
+ADD_DEFINITIONS(${KEXIV2_DEFINITIONS})
 
-set( kipicmd_sources
+set(kipicmd_sources
     main.cpp
     kipiinterface.cpp
     kipiimagecollectionshared.cpp
@@ -30,8 +33,8 @@ set( kipicmd_sources
     kipiimagecollectionselector.cpp
     kipiuploadwidget.cpp
     kipitest-debug.cpp
-  )
+   )
 
 kde4_add_executable( kipicmd ${kipicmd_sources} )
 target_link_libraries( kipicmd ${KDE4_UI_LIBS} ${KDE4_KPARTS_LIBS} ${KEXIV2_LIBRARIES} ${KIPI_LIBRARIES} )
-install( TARGETS kipicmd ${INSTALL_TARGETS_DEFAULT_ARGS} )
+

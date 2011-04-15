@@ -357,6 +357,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_DEFINITIONS(-DAREA_CODE_GENERAL=${AREA_CODE_GENERAL})
     ADD_DEFINITIONS(-DAREA_CODE_LOADING=${AREA_CODE_LOADING})
 
+    # kipi host test program to check plugins
+
+    ADD_SUBDIRECTORY(test)
+
     # Plugins which will be always compiled
 
     ADD_SUBDIRECTORY(common)
