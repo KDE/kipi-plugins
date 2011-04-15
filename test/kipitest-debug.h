@@ -1,9 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
- * Date        : 2010-02-16
- * Description : Special handler for debug output for kipi-test
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
- * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
+ * @date   2009-11-21
+ * @brief  kipi host test application
+ *
+ * @author Copyright (C) 2009-2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -12,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -30,15 +35,24 @@
 
 extern QTextStream qerr;
 
-extern enum KipiTestDebugTarget {
+extern enum KipiTestDebugTarget
+{
     KipiTestDebugNone = 0,
     KipiTestDebugStdErr = 1,
     KipiTestDebugKDebug = 2
 } kipiTestDebugTarget;
 
-#define kipiDebug(debugtext) if (kipiTestDebugTarget == KipiTestDebugNone) { } \
-                    else if (kipiTestDebugTarget == KipiTestDebugStdErr) { qerr << debugtext << "\n"; } \
-                    else { kDebug() << debugtext; }
+#define kipiDebug(debugtext)                                \
+    if (kipiTestDebugTarget == KipiTestDebugNone)           \
+    {                                                       \
+    }                                                       \
+    else if (kipiTestDebugTarget == KipiTestDebugStdErr)    \
+    {                                                       \
+        qerr << debugtext << "\n";                          \
+    }                                                       \
+    else                                                    \
+    {                                                       \
+        kDebug() << debugtext;                              \
+    }                                                       \
 
 #endif /* KIPITEST_DEBUG_H */
-

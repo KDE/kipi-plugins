@@ -1,21 +1,26 @@
-/* ============================================================
-*
-* Date        : 2009-07-30
-* Description : test-program for kipi-plugins
-*
-* Copyright (C) 2009,2010 by Michael G. Hansen <mike at mghansen dot de>
-*
-* This program is free software; you can redistribute it
-* and/or modify it under the terms of the GNU General
-* Public License as published by the Free Software Foundation;
-* either version 2, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* ============================================================ */
+/** ===========================================================
+ * @file
+ *
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
+ *
+ * @date   2009-11-21
+ * @brief  kipi host test application
+ *
+ * @author Copyright (C) 2009-2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 
 // C++ include
 
@@ -157,9 +162,10 @@ bool LoadPlugins(const QString& libraryName = "")
     }
 
     const KIPI::PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
+    bool foundPlugin                                = false;
 
-    bool foundPlugin = false;
-    for (KIPI::PluginLoader::PluginList::ConstIterator it = pluginList.constBegin(); it!=pluginList.constEnd(); ++it)
+    for (KIPI::PluginLoader::PluginList::ConstIterator it = pluginList.constBegin();
+         it!=pluginList.constEnd(); ++it)
     {
         if ( (*it)->library() == libraryName )
         {
@@ -168,13 +174,16 @@ bool LoadPlugins(const QString& libraryName = "")
                 qerr << i18n("Can not load plugin \"%1\": Loader says it should not load.", libraryName) << endl;
                 return false;
             }
+
             foundPlugin = true;
             kipiPluginLoader->loadPlugin(*it);
+
             if ( !(*it)->plugin() )
             {
                 qerr << i18n("Plugin \"%1\" failed to load.", libraryName) << endl;
                 return false;
             }
+
             qerr << i18n("Plugin \"%1\" loaded.", libraryName) << endl;
             return true;
         }
@@ -197,17 +206,17 @@ bool ListPlugins(const QString& libraryName = "")
         return false;
 
     const KIPI::PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
-
-    int pluginNumber = 1;
-    const int nPlugins = pluginList.size();
-    const int nDigits = QString::number(nPlugins).size();
-    const QString preSpace = QString(nDigits+1+1, ' ');
+    int pluginNumber                                = 1;
+    const int nPlugins                              = pluginList.size();
+    const int nDigits                               = QString::number(nPlugins).size();
+    const QString preSpace                          = QString(nDigits+1+1, ' ');
 
     std::auto_ptr<QWidget> dummyWidget( new QWidget() );
 
     qerr << i18np("Found 1 plugin:", "Found %1 plugins:", nPlugins) << endl;
 
-    for ( KIPI::PluginLoader::PluginList::ConstIterator it = pluginList.constBegin(); it!= pluginList.constEnd(); ++ it)
+    for (KIPI::PluginLoader::PluginList::ConstIterator it = pluginList.constBegin();
+         it!= pluginList.constEnd(); ++ it)
     {
         const QString pluginNumberString = QString("%1").arg(pluginNumber, nDigits); ++pluginNumber;
 
@@ -228,9 +237,10 @@ bool ListPlugins(const QString& libraryName = "")
         qerr << preSpace<<i18n("Actions:") << endl;
         const QString preSpaceActions = preSpace + "  ";
 
-        for ( QList<QPair<int, QAction*> >::ConstIterator it = actionsList.constBegin(); it!=actionsList.constEnd(); ++it)
+        for (QList<QPair<int, QAction*> >::ConstIterator it = actionsList.constBegin();
+             it!=actionsList.constEnd(); ++it)
         {
-            const int level = (*it).first;
+            const int level             = (*it).first;
             const QAction* const action = (*it).second;
             qerr << preSpaceActions << QString(level*2, ' ') << '"' << action->text() << '"' << endl;
         }
@@ -257,7 +267,9 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
     /*std::auto_ptr<*/QWidget* dummyWidget( new QWidget() );
 
     bool foundAction = false;
-    for (KIPI::PluginLoader::PluginList::ConstIterator info = pluginList.constBegin(); (info!=pluginList.constEnd())&&!foundAction; ++info)
+
+    for (KIPI::PluginLoader::PluginList::ConstIterator info = pluginList.constBegin();
+         (info!=pluginList.constEnd()) && !foundAction; ++info)
     {
         if ( !libraryName.isEmpty() && ( (*info)->library() != libraryName ) )
             continue;
@@ -274,14 +286,18 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
         plugin->setup(dummyWidget/*.get()*/);
         const QList<QPair<int, QAction*> > actionsList = FlattenActionList(QListKAction2QListQAction(plugin->actions()));
 
-        for ( QList<QPair<int, QAction*> >::ConstIterator it = actionsList.constBegin(); it!=actionsList.constEnd(); ++it)
+        for (QList<QPair<int, QAction*> >::ConstIterator it = actionsList.constBegin();
+             it!=actionsList.constEnd(); ++it)
         {
             QAction* const pluginAction = (*it).second;
             qDebug()<<pluginAction->text();
+
             if ( pluginAction->text() != actionText )
                 continue;
 
-            qerr << i18n("Found action \"%1\" in library \"%2\", will now call it.", actionText, (*info)->library() ) << endl;
+            qerr << i18n("Found action \"%1\" in library \"%2\", will now call it.", actionText, (*info)->library() )
+                 << endl;
+
             // call the action:
             pluginAction->trigger();
             qerr << i18n("Plugin is done.") << endl;
@@ -299,18 +315,17 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 
 int main(int argc, char *argv[])
 {
-    const KAboutData aboutData(
-        "kipitest",
-        0,
-        ki18n("Kipi Cmd"),
-        "0.1", // version
-        ki18n("Call kipi-plugins from the command line"),
-        KAboutData::License_GPL,
-        ki18n("(c) 2010 Michael G. Hansen"),
-        KLocalizedString(), // optional text
-        "", // URI of homepage
-        "" // bugs e-mail address
-    );
+    const KAboutData aboutData("kipitest",
+                               0,
+                               ki18n("Kipi Cmd"),
+                               "0.1", // version
+                               ki18n("Call kipi-plugins from the command line"),
+                               KAboutData::License_GPL,
+                               ki18n("(c) 2009-2010 Michael G. Hansen"),
+                               KLocalizedString(), // optional text
+                               "", // URI of homepage
+                               "" // bugs e-mail address
+                              );
 
     KCmdLineArgs::init( argc, argv, &aboutData);
     KCmdLineOptions options;
@@ -335,9 +350,9 @@ int main(int argc, char *argv[])
     KipiInterface* const kipiInterface = new KipiInterface(&app);
 
     // create an instance of the plugin loader:
-    KIPI::PluginLoader* const pluginLoader = new KIPI::PluginLoader(QStringList(), kipiInterface);
+    new KIPI::PluginLoader(QStringList(), kipiInterface);
 
-    KCmdLineArgs * const args = KCmdLineArgs::parsedArgs();
+    KCmdLineArgs * const args          = KCmdLineArgs::parsedArgs();
 
     if (args->isSet("stderr"))
     {
@@ -355,7 +370,8 @@ int main(int argc, char *argv[])
     KUrl::List listAllAlbums;
 
     // determine which with list we start:
-    KUrl::List *startList = 0;
+    KUrl::List* startList = 0;
+
     if (args->isSet("selectedimages"))
     {
         startList = &listSelectedImages;
@@ -376,15 +392,15 @@ int main(int argc, char *argv[])
     for (int i=0; i<args->count(); ++i)
     {
         const QString argValue = args->arg(i);
-        if (argValue=="--selectedimages")
+        if (argValue == "--selectedimages")
         {
             startList = &listSelectedImages;
         }
-        else if (argValue=="--selectedalbums")
+        else if (argValue == "--selectedalbums")
         {
             startList = &listSelectedAlbums;
         }
-        else if (argValue=="--allalbums")
+        else if (argValue == "--allalbums")
         {
             startList = &listAllAlbums;
         }
@@ -414,8 +430,9 @@ int main(int argc, char *argv[])
     const QString nameOfOnlyOnePluginToLoad = args->getOption("library");
 
     // determine what to do:
-    int returnValue = 0;
+    int returnValue    = 0;
     bool startedPlugin = false;
+
     if ( args->isSet("listplugins") )
     {
         if (!ListPlugins( nameOfOnlyOnePluginToLoad ))
@@ -436,7 +453,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-        KCmdLineArgs::usageError( i18n("No argument specified: either use --listplugins, or specify an action to be called.") );
+        KCmdLineArgs::usageError( i18n("No argument specified: either use --listplugins, "
+                                       "or specify an action to be called.") );
     }
 
     if (startedPlugin&&args->isSet("wait"))
