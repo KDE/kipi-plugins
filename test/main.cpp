@@ -316,9 +316,9 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 
 int main(int argc, char* argv[])
 {
-    const KAboutData aboutData("kipitest",
+    const KAboutData aboutData("kipicmd",
                                "kipi",
-                               ki18n("kipitest"),
+                               ki18n("kipicmd"),
                                kipiplugins_version,            // version
                                ki18n("Kipi host test application"),
                                KAboutData::License_GPL,

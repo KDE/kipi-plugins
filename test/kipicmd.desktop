@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=kipicmd
+Name[x-test]=xxkipicmdxx
+GenericName=
+GenericName[x-test]=xxDNG Image Converterxx
+Comment=Kipi host test application
+Comment[x-test]=xxKipi host test applicationxx
+Exec=kipicmd %i -caption "%c" %U
+Icon=kipi
+Type=Application
+Terminal=false
