@@ -1,6 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
- * Copyright (C) 2009,2010 by Michael G. Hansen <mike at mghansen dot de>
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
+ *
+ * @date   2009-11-21
+ * @brief  kipi host test application
+ *
+ * @author Copyright (C) 2009-2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -9,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -32,19 +40,23 @@
 #include "kipitest-debug.h"
 
 KipiUploadWidget::KipiUploadWidget(KipiInterface* interface, QWidget* parent)
-    : KIPI::UploadWidget(parent), m_interface(interface), m_listWidget(0)
+    : KIPI::UploadWidget(parent),
+      m_interface(interface),
+      m_listWidget(0)
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->addWidget(new QLabel(i18n("Please select a target album:")));
-    m_listWidget = new QListWidget(this);
+    m_listWidget        = new QListWidget(this);
     layout->addWidget(m_listWidget);
 
     setLayout(layout);
 
-    connect(m_listWidget, SIGNAL(itemSelectionChanged()), this, SLOT(on_m_listWidget_itemSelectionChanged()));
+    connect(m_listWidget, SIGNAL(itemSelectionChanged()),
+            this, SLOT(on_m_listWidget_itemSelectionChanged()));
 
     // add all albums to the list widget:
     m_allAlbums = m_interface->allAlbums();
+
     for (QList<KIPI::ImageCollection>::const_iterator it = m_allAlbums.constBegin(); it!=m_allAlbums.constEnd(); ++it)
     {
         m_listWidget->addItem(it->name());
@@ -62,7 +74,7 @@ KipiUploadWidget::~KipiUploadWidget()
 KIPI::ImageCollection KipiUploadWidget::selectedImageCollection() const
 {
     // return the selected albums (should be only one):
-    const QList<QListWidgetItem *> selectedItems = m_listWidget->selectedItems();
+    const QList<QListWidgetItem*> selectedItems = m_listWidget->selectedItems();
     if (selectedItems.isEmpty())
     {
         // this should not happen!!! the calling application will probably crash now...

@@ -1,6 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
- * Copyright (C) 2009,2010 by Michael G. Hansen <mike at mghansen dot de>
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
+ *
+ * @date   2009-11-21
+ * @brief  kipi host test application
+ *
+ * @author Copyright (C) 2009-2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -9,12 +17,10 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
-
-#include "kipiimageinfoshared.h"
 
 // LibKExiv2 includes
 
@@ -24,10 +30,12 @@
 // local includes:
 
 #include "kipitest-debug.h"
+#include "kipiimageinfoshared.h"
 
-class KipiImageInfoSharedPrivate
+class KipiImageInfoShared::KipiImageInfoSharedPrivate
 {
 public:
+
     KipiImageInfoSharedPrivate()
     {
     }
@@ -35,10 +43,10 @@ public:
     QDateTime dateTime;
 };
 
-KipiImageInfoShared::KipiImageInfoShared( KIPI::Interface* interface, const KUrl& url)
-    : KIPI::ImageInfoShared(interface, url), d(new KipiImageInfoSharedPrivate())
+KipiImageInfoShared::KipiImageInfoShared(KIPI::Interface* interface, const KUrl& url)
+    : KIPI::ImageInfoShared(interface, url),
+      d(new KipiImageInfoSharedPrivate())
 {
-
 }
 
 KipiImageInfoShared::~KipiImageInfoShared()
@@ -52,28 +60,28 @@ QString KipiImageInfoShared::description()
     return QString("Image located at \"%1\"").arg(path().url());
 }
 
-void KipiImageInfoShared::setDescription( const QString& newDescription)
+void KipiImageInfoShared::setDescription(const QString& newDescription)
 {
     kipiDebug(QString("void KipiImageInfoShared::setDescription( \"%1\" )").arg(newDescription));
 }
 
-QMap<QString,QVariant> KipiImageInfoShared::attributes()
+QMap<QString, QVariant> KipiImageInfoShared::attributes()
 {
     kipiDebug("QMap<QString,QVariant> attributes()");
-    return QMap<QString,QVariant>();
+    return QMap<QString, QVariant>();
 }
 void KipiImageInfoShared::clearAttributes()
 {
     kipiDebug("void KipiImageInfoShared::clearAttributes()");
 }
 
-void KipiImageInfoShared::addAttributes( const QMap<QString,QVariant>& attributesToAdd )
+void KipiImageInfoShared::addAttributes(const QMap<QString, QVariant>& attributesToAdd)
 {
     Q_UNUSED(attributesToAdd);
     kipiDebug("void KipiImageInfoShared::addAttributes( const QMap<QString,QVariant>& attributesToAdd )");
 }
 
-void KipiImageInfoShared::delAttributes( const QStringList& attributesToDelete )
+void KipiImageInfoShared::delAttributes(const QStringList& attributesToDelete)
 {
     Q_UNUSED(attributesToDelete);
     kipiDebug("void KipiImageInfoShared::delAttributes( const QStringList& attributesToDelete )");

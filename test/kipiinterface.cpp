@@ -1,6 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
- * Copyright (C) 2010 by Michael G. Hansen <mike at mghansen dot de>
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
+ *
+ * @date   2009-11-21
+ * @brief  kipi host test application
+ *
+ * @author Copyright (C) 2009-2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -9,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -31,8 +39,11 @@
 #include "kipiuploadwidget.h"
 #include "kipitest-debug.h"
 
-KipiInterface::KipiInterface(QObject *parent, const char *name)
-: KIPI::Interface(parent, name), m_selectedImages(), m_selectedAlbums(), m_albums()
+KipiInterface::KipiInterface(QObject* parent, const char* name)
+    : KIPI::Interface(parent, name),
+      m_selectedImages(),
+      m_selectedAlbums(),
+      m_albums()
 {
 }
 
@@ -79,26 +90,26 @@ QList<KIPI::ImageCollection> KipiInterface::allAlbums()
     return listAllAlbums;
 }
 
-KIPI::ImageInfo KipiInterface::info( const KUrl& url)
+KIPI::ImageInfo KipiInterface::info(const KUrl& url)
 {
     kipiDebug(QString( "KipiInterface::info: Plugin wants information about image \"%1\"").arg( url.url() ));
 
     return KIPI::ImageInfo( new KipiImageInfoShared(this, url ) );
 }
 
-bool KipiInterface::addImage( const KUrl& url, QString& errmsg )
+bool KipiInterface::addImage(const KUrl& url, QString& errmsg)
 {
     Q_UNUSED(errmsg);
     kipiDebug(QString( "KipiInterface::addImage: Plugin added an image: \"%1\"").arg( url.url() ));
     return true;
 }
 
-void KipiInterface::delImage( const KUrl& url)
+void KipiInterface::delImage(const KUrl& url)
 {
     kipiDebug(QString( "KipiInterface::delImage: Plugin deleted an image: \"%1\"").arg( url.url() ));
 }
 
-void KipiInterface::refreshImages( const KUrl::List& urls)
+void KipiInterface::refreshImages(const KUrl::List& urls)
 {
     kipiDebug(QString( "KipiInterface::refreshImages: Plugin asks to refresh %1 images:").arg( urls.size() ));
     for (KUrl::List::ConstIterator it = urls.constBegin(); it!=urls.constEnd(); ++it)
@@ -113,13 +124,13 @@ int KipiInterface::features() const
     return KIPI::ImagesHasTime;
 }
 
-KIPI::ImageCollectionSelector* KipiInterface::imageCollectionSelector(QWidget *parent)
+KIPI::ImageCollectionSelector* KipiInterface::imageCollectionSelector(QWidget* parent)
 {
     kipiDebug("KipiInterface::imageCollectionSelector");
     return new KipiImageCollectionSelector(this, parent);
 }
 
-KIPI::UploadWidget* KipiInterface::uploadWidget(QWidget *parent)
+KIPI::UploadWidget* KipiInterface::uploadWidget(QWidget* parent)
 {
     kipiDebug("KipiInterface::uploadWidget");
     return new KipiUploadWidget(this, parent);

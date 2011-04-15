@@ -1,6 +1,14 @@
-/* ============================================================
+/** ===========================================================
+ * @file
  *
- * Copyright (C) 2009,2010 by Michael G. Hansen <mike at mghansen dot de>
+ * This file is a part of kipi-plugins project
+ * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
+ *
+ * @date   2009-11-21
+ * @brief  kipi host test application
+ *
+ * @author Copyright (C) 2009-2010 by Michael G. Hansen
+ *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -9,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -35,28 +43,30 @@ class KipiInterface : public KIPI::Interface
     Q_OBJECT
 
 private:
+
     KUrl::List m_selectedImages;
     KUrl::List m_selectedAlbums;
     KUrl::List m_albums;
 
 public:
-    KipiInterface(QObject* parent, const char *name=0);
+
+    KipiInterface(QObject* parent, const char* name=0);
     ~KipiInterface();
 
-    KIPI::ImageCollection currentAlbum();
-    KIPI::ImageCollection currentSelection();
+    KIPI::ImageCollection        currentAlbum();
+    KIPI::ImageCollection        currentSelection();
     QList<KIPI::ImageCollection> allAlbums();
-    KIPI::ImageInfo info( const KUrl& );
+    KIPI::ImageInfo              info(const KUrl&);
 
-    bool addImage( const KUrl& url, QString& errmsg );
-    void delImage( const KUrl& url );
-    void refreshImages( const KUrl::List& urls );
+    bool addImage(const KUrl& url, QString& errmsg);
+    void delImage(const KUrl& url);
+    void refreshImages(const KUrl::List& urls);
 
     int features() const;
     QVariant hostSetting(const QString& settingName);
 
-    KIPI::ImageCollectionSelector* imageCollectionSelector( QWidget *parent );
-    KIPI::UploadWidget* uploadWidget( QWidget *parent);
+    KIPI::ImageCollectionSelector* imageCollectionSelector(QWidget * parent);
+    KIPI::UploadWidget* uploadWidget(QWidget* parent);
 
     void addSelectedImages(const KUrl::List& images);
     void addSelectedImage(const KUrl& image);
@@ -66,6 +76,8 @@ public:
 
     void addAlbums(const KUrl::List& albums);
     void addAlbum(const KUrl& album);
+
+public:
 
     friend class KipiUploadWidget;
     friend class KipiImageCollectionSelector;
