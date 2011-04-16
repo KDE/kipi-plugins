@@ -483,17 +483,19 @@ GPSSyncDialog::~GPSSyncDialog()
 }
 
 
-bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
+bool GPSSyncDialog::eventFilter(QObject* const o, QEvent* const e)
 {
     if ( ( o == d->tabBar ) && ( e->type() == QEvent::MouseButtonPress ) )
     {
-        QMouseEvent const *m = static_cast<QMouseEvent *>(e);           
+        QMouseEvent const *m = static_cast<QMouseEvent*>(e);
 
         QPoint p (m->x(), m->y());
         const int var = d->tabBar->tabAt(p);
 
         if (var<0)
+        {
             return false;
+        }
 
         QList<int> sizes = d->HSplitter->sizes();
         if (d->splitterSize == 0)
@@ -522,7 +524,7 @@ bool GPSSyncDialog::eventFilter( QObject* o, QEvent* e)
         return true;
     }
 
-    return QWidget::eventFilter(o,e);
+    return QWidget::eventFilter(o, e);
 }
 
 void GPSSyncDialog::slotCurrentTabChanged(int index)
