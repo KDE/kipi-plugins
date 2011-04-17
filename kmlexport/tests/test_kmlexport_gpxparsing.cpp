@@ -31,7 +31,7 @@
 
 #include "../gpsdataparser_time.h"
 
-using namespace KIPIGPSSyncPlugin;
+using namespace KIPIKMLExportPlugin;
 
 QTEST_KDEMAIN_CORE(TestGPXParsing)
 

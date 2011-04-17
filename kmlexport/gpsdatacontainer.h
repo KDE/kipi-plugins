@@ -25,7 +25,7 @@
 
 #include <QStringList>
 
-namespace KIPIGPSSyncPlugin
+namespace KIPIKMLExportPlugin
 {
 
 class GPSDataContainer
@@ -138,8 +138,8 @@ private:
     double m_longitude;
 };
 
-} // namespace KIPIGPSSyncPlugin
+} // namespace KIPIKMLExportPlugin
 
-Q_DECLARE_METATYPE(KIPIGPSSyncPlugin::GPSDataContainer)
+Q_DECLARE_METATYPE(KIPIKMLExportPlugin::GPSDataContainer)
 
 #endif  // GPSDATACONTAINER_H

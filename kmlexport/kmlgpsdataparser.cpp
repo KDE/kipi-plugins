@@ -28,7 +28,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-namespace KIPIGPSSyncPlugin
+namespace KIPIKMLExportPlugin
 {
 
 KMLGPSDataParser::KMLGPSDataParser()
@@ -53,10 +53,7 @@ QString KMLGPSDataParser::lineString()
     return line;
 }
 
-/*!
-\fn void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode)
- */
-void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode)
+void KMLGPSDataParser::CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode)
 {
     kmlDocument = &root;
 
@@ -80,10 +77,7 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackLine(QDomElement &parent, Q
     }
 }
 
-/*!
-\fn void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode)
- */
-void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root,
+void KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root,
                                                             int timeZone, int altitudeMode)
 {
     kmlDocument = &root;
@@ -137,4 +131,4 @@ void KIPIGPSSyncPlugin::KMLGPSDataParser::CreateTrackPoints(QDomElement &parent,
     }
 }
 
-} // namespace KIPIGPSSyncPlugin
+} // namespace KIPIKMLExportPlugin

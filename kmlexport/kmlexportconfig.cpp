@@ -56,11 +56,11 @@
 #include "kpaboutdata.h"
 #include "pluginsversion.h"
 
-namespace KIPIGPSSyncPlugin
+namespace KIPIKMLExportPlugin
 {
 
-/*
- *  Constructs a KIPIKMLExport::KMLExportConfig which is a child of 'parent'.
+/**
+ * @brief Constructs a KIPIKMLExport::KMLExportConfig which is a child of @parent.
  */
 KMLExportConfig::KMLExportConfig(QWidget* parent)
                : KDialog(parent)
@@ -86,8 +86,8 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     LocalTargetRadioButton_     = new QRadioButton( i18n( "&Local or web target used by GoogleEarth" ), TargetTypeGroupBox);
     LocalTargetRadioButton_->setChecked( true );
 
-    GoogleMapTargetRadioButton_ = new QRadioButton( i18n( "Web target used by GoogleMap" ), TargetTypeGroupBox);
-    GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMap, all images must have complete URLs, icons are "
+    GoogleMapTargetRadioButton_ = new QRadioButton( i18n( "Web target used by GoogleMaps" ), TargetTypeGroupBox);
+    GoogleMapTargetRadioButton_->setToolTip(i18n("When using GoogleMaps, all images must have complete URLs, icons are "
                                                  "squared, and when drawing a track, only line track is exported." ) );
 
     buttonGroupTargetTypeLayout->addWidget( LocalTargetRadioButton_,     0, 0, 1, 1);
@@ -291,6 +291,10 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
                        ki18n("Developer and maintainer"),
                              "caulier dot gilles at gmail dot com");
 
+    m_about->addAuthor(ki18n("Michael G. Hansen"),
+                       ki18n("Maintainer"),
+                             "mike at mghansen dot de");
+
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
 
@@ -313,8 +317,8 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     KMLTracksCheckButton__toggled(false);
 }
 
-/*
- *  Destroys the object and frees any allocated resources
+/**
+ * @brief Destroys the object and frees any allocated resources
  */
 KMLExportConfig::~KMLExportConfig()
 {
@@ -496,4 +500,4 @@ void KMLExportConfig::saveSettings()
     config.sync();
 }
 
-} //namespace KIPIGPSSyncPlugin
+} //namespace KIPIKMLExportPlugin

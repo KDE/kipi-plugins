@@ -28,7 +28,7 @@
 
 #include <QDateTime>
 
-namespace KIPIGPSSyncPlugin
+namespace KIPIKMLExportPlugin
 {
 
 QDateTime GPSDataParserParseTime(QString timeString)
@@ -78,7 +78,7 @@ QDateTime GPSDataParserParseTime(QString timeString)
     return theTime;
 }
 
-} /* KIPIGPSSyncPlugin */
+} /* KIPIKMLExportPlugin */
 
 #endif /* GPSDATAPARSER_TIME_H */
 

@@ -32,7 +32,7 @@
 
 #include <QDomDocument>
 
-namespace KIPIGPSSyncPlugin 
+namespace KIPIKMLExportPlugin 
 {
 
 /*! a classe derivated from GPSDataParser mainly to transform GPS data to KML
@@ -72,8 +72,7 @@ private:
     QDomDocument *kmlDocument;
 
     /*!
-    \fn QDomElement KIPIGPSSyncPlugin::KMLGPSDataParser::addKmlElement(QDomElement target, QString tag)
-     *  Add a new element
+     *  @brief Add a new element
      *  @param target the parent element to which add the element
      *  @param tag the new element name
      *  @return the New element
@@ -85,9 +84,8 @@ private:
         return kmlElement;
     }
 
-    /*!
-    \fn QDomElement KIPIGPSSyncPlugin::KMLGPSDataParser::addKmlTextElement(QDomElement target, QString tag, QString text)
-     *  Add a new element with a text
+    /**
+     *  @brief Add a new element with a text
      *  @param target the parent element to which add the element
      *  @param tag the new element name
      *  @param text the text content of the new element
@@ -103,6 +101,6 @@ private:
     }
 };
 
-} // namespace KIPIGPSSyncPlugin 
+} // namespace KIPIKMLExportPlugin 
 
 #endif // KIPIGPSSYNCPLUGINKMLGPSDATAPARSER_H

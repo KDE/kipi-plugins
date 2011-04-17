@@ -94,7 +94,7 @@ void Plugin_KMLExport::slotKMLExport()
     }
     else
     {
-        KIPIGPSSyncPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIGPSSyncPlugin::KMLExportConfig(kapp->activeWindow());
+        KIPIKMLExportPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIKMLExportPlugin::KMLExportConfig(kapp->activeWindow());
         connect(kmlExportConfigGui, SIGNAL(okButtonClicked()),
                 this, SLOT(slotKMLGenerate()));
         kmlExportConfigGui->show();
@@ -104,7 +104,7 @@ void Plugin_KMLExport::slotKMLExport()
 void Plugin_KMLExport::slotKMLGenerate()
 {
     KIPI::ImageCollection selection = m_interface->currentSelection();
-    KIPIGPSSyncPlugin::kmlExport myExport(m_interface);
+    KIPIKMLExportPlugin::kmlExport myExport(m_interface);
     if(!myExport.getConfig())
         return;
     myExport.generate();

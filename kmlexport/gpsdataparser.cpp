@@ -39,7 +39,7 @@
 
 #include <kdebug.h>
 
-namespace KIPIGPSSyncPlugin
+namespace KIPIKMLExportPlugin
 {
 
 GPSDataParser::GPSDataParser()
@@ -279,4 +279,4 @@ bool GPSDataParser::loadGPXFile(const KUrl& url)
     return true;
 }
 
-} // namespace KIPIGPSSyncPlugin
+} // namespace KIPIKMLExportPlugin

@@ -37,7 +37,7 @@
 
 #include "gpsdatacontainer.h"
 
-namespace KIPIGPSSyncPlugin
+namespace KIPIKMLExportPlugin
 {
 
 class GPSDataParser
@@ -70,6 +70,6 @@ protected:
     GPSDataMap m_GPSDataMap;
 };
 
-} // namespace KIPIGPSSyncPlugin
+} // namespace KIPIKMLExportPlugin
 
 #endif  // GPSDATAPARSER_H

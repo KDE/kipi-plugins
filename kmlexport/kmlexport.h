@@ -46,14 +46,13 @@ namespace KIPIPlugins
     class BatchProgressDialog;
 }
 
-namespace KIPIGPSSyncPlugin 
+namespace KIPIKMLExportPlugin 
 {
 
 /**
-Exporter to KML
-
-	@author KIPI dev. team
-*/
+ * @brief Exporte to KML
+ * @author KIPI dev. team
+ */
 class kmlExport
 {
 
@@ -195,6 +194,6 @@ private:
     }
 };
 
-} // namespace KIPIGPSSyncPlugin
+} // namespace KIPIKMLExportPlugin
 
 #endif // KIPIKMLEXPORTKMLEXPORT_H

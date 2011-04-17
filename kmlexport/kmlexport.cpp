@@ -60,7 +60,7 @@ extern "C"
 
 #include "batchprogressdialog.h"
 
-namespace KIPIGPSSyncPlugin
+namespace KIPIKMLExportPlugin
 {
 
 kmlExport::kmlExport(KIPI::Interface* interface)
@@ -421,7 +421,7 @@ void kmlExport::addTrack(QDomElement& kmlAlbum)
  */
 void kmlExport::generate()
 {
-    //! @todo perform a test here before to continue.
+    //! @todo perform a test here before continuing.
     createDir(m_tempDestDir + m_imageDir);
 
     m_progressDialog->show();
@@ -491,7 +491,7 @@ void kmlExport::generate()
 
     if (defectImage)
     {
-        /** @todo if defectImage==count there are no pictures exported, does it worst to continue? */
+        /** @todo if defectImage==count there are no pictures exported, does is it worth to continue? */
         KMessageBox::information(kapp->activeWindow(),
                                  i18np("No position data for 1 picture",
                                        "No position data for %1 pictures", defectImage));
@@ -566,4 +566,4 @@ void kmlExport::logWarning(const QString& msg)
     // mWarnings=true;
 }
 
-} // namespace KIPIGPSSyncPlugin
+} // namespace KIPIKMLExportPlugin

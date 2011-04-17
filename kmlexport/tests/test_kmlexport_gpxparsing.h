@@ -24,10 +24,6 @@
 
 #include <QtTest/QtTest>
 
-// KDE includes
-
-// local includes
-
 class TestGPXParsing : public QObject
 {
     Q_OBJECT

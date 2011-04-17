@@ -47,7 +47,7 @@ namespace KIPIPlugins
     class KPAboutData;
 }
 
-namespace KIPIGPSSyncPlugin
+namespace KIPIKMLExportPlugin
 {
 
 class KMLExportConfig : public KDialog
@@ -133,6 +133,6 @@ protected Q_SLOTS:
     void slotHelp();
 };
 
-} // namespace
+} // KIPIKMLExportPlugin
 
 #endif // KMLEXPORTCONFIG_H
