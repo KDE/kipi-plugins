@@ -382,6 +382,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(kopete)
     ADD_SUBDIRECTORY(batchprocessimages)
     ADD_SUBDIRECTORY(rajceexport)
+    ADD_SUBDIRECTORY(kmlexport)
 
     # Plugins which are optional depencies.
 
