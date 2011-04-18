@@ -1,9 +1,9 @@
 
 SET(kipiplugin_kmlexport_PART_SRCS plugin_kmlexport.cpp
-                                 gpsdataparser.cpp 
-                                 kmlexport.cpp 
-                                 kmlgpsdataparser.cpp 
-                                 kmlexportconfig.cpp 
+                                   gpsdataparser.cpp
+                                   kmlexport.cpp
+                                   kmlgpsdataparser.cpp
+                                   kmlexportconfig.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_kmlexport ${kipiplugin_kmlexport_PART_SRCS})
