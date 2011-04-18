@@ -131,16 +131,6 @@ public:
 
 private:
 
-    /*! the root document, used to create all QDomElements */
-    QDomDocument*                     kmlDocument;
-
-    /*! the GPS parsed data */
-    KMLGPSDataParser                  m_gpxParser;
-
-    KIPIPlugins::BatchProgressDialog* m_progressDialog;
-
-private:
-
     void logInfo(const QString& msg);
     void logError(const QString& msg);
     void logWarning(const QString& msg);
@@ -154,7 +144,7 @@ private:
      */
     QDomElement addKmlElement(QDomElement& target, const QString& tag)
     {
-        QDomElement kmlElement = kmlDocument->createElement( tag );
+        QDomElement kmlElement = m_kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
         return kmlElement;
     }
@@ -169,9 +159,9 @@ private:
      */
     QDomElement addKmlTextElement(QDomElement& target, const QString& tag, const QString& text)
     {
-        QDomElement kmlElement  = kmlDocument->createElement( tag );
+        QDomElement kmlElement  = m_kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
-        QDomText kmlTextElement = kmlDocument->createTextNode( text );
+        QDomText kmlTextElement = m_kmlDocument->createTextNode( text );
         kmlElement.appendChild( kmlTextElement );
         return kmlElement;
     }
@@ -186,12 +176,22 @@ private:
      */
     QDomElement addKmlHtmlElement(QDomElement& target, const QString& tag, const QString& text)
     {
-        QDomElement kmlElement  = kmlDocument->createElement( tag );
+        QDomElement kmlElement  = m_kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
-        QDomText kmlTextElement = kmlDocument->createCDATASection( text );
+        QDomText kmlTextElement = m_kmlDocument->createCDATASection( text );
         kmlElement.appendChild( kmlTextElement );
         return kmlElement;
     }
+
+private:
+
+    /*! the root document, used to create all QDomElements */
+    QDomDocument*                     m_kmlDocument;
+
+    /*! the GPS parsed data */
+    KMLGPSDataParser                  m_gpxParser;
+
+    KIPIPlugins::BatchProgressDialog* m_progressDialog;
 };
 
 } // namespace KIPIKMLExportPlugin

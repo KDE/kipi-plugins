@@ -61,44 +61,44 @@ public:
 
 public:
 
-    QLabel        *ImageSizeLabel;
-    QLabel        *IconSizeLabel;
-    QLabel        *destinationDirectoryLabel_;
-    QLabel        *FileNameLabel_;
-    QLabel        *DestinationUrlLabel_;
-    QLabel        *GPXFileLabel_;
-    QLabel        *timeZoneLabel_;
-    QLabel        *GPXLineWidthLabel_;
-    QLabel        *GPXColorLabel_;
-    QLabel        *GPXTracksOpacityLabel_;
-    QLabel        *GPXAltitudeLabel_;
+    QLabel*        ImageSizeLabel;
+    QLabel*        IconSizeLabel;
+    QLabel*        destinationDirectoryLabel_;
+    QLabel*        FileNameLabel_;
+    QLabel*        DestinationUrlLabel_;
+    QLabel*        GPXFileLabel_;
+    QLabel*        timeZoneLabel_;
+    QLabel*        GPXLineWidthLabel_;
+    QLabel*        GPXColorLabel_;
+    QLabel*        GPXTracksOpacityLabel_;
+    QLabel*        GPXAltitudeLabel_;
 
-    QGroupBox     *TargetPreferenceGroupBox;
-    QGroupBox     *TargetTypeGroupBox;
+    QGroupBox*     TargetPreferenceGroupBox;
+    QGroupBox*     TargetTypeGroupBox;
 
-    QButtonGroup  *buttonGroupTargetType;
+    QButtonGroup*  buttonGroupTargetType;
 
-    QRadioButton  *LocalTargetRadioButton_;
-    QRadioButton  *GoogleMapTargetRadioButton_;
+    QRadioButton*  LocalTargetRadioButton_;
+    QRadioButton*  GoogleMapTargetRadioButton_;
 
-    KLineEdit     *DestinationUrl_;
-    KLineEdit     *FileName_;
+    KLineEdit*     DestinationUrl_;
+    KLineEdit*     FileName_;
 
-    QCheckBox     *GPXTracksCheckBox_;
+    QCheckBox*     GPXTracksCheckBox_;
 
-    KComboBox     *AltitudeCB_;
-    KComboBox     *timeZoneCB;
-    KComboBox     *GPXAltitudeCB_;
+    KComboBox*     AltitudeCB_;
+    KComboBox*     timeZoneCB;
+    KComboBox*     GPXAltitudeCB_;
 
-    KColorButton  *GPXTrackColor_;
+    KColorButton*  GPXTrackColor_;
 
-    KUrlRequester *DestinationDirectory_;
-    KUrlRequester *GPXFileKUrlRequester_;
+    KUrlRequester* DestinationDirectory_;
+    KUrlRequester* GPXFileKUrlRequester_;
 
-    KIntNumInput  *ImageSizeInput_;
-    KIntNumInput  *IconSizeInput_;
-    KIntNumInput  *GPXTracksOpacityInput_;
-    KIntNumInput  *GPXLineWidthInput_;
+    KIntNumInput*  ImageSizeInput_;
+    KIntNumInput*  IconSizeInput_;
+    KIntNumInput*  GPXTracksOpacityInput_;
+    KIntNumInput*  GPXLineWidthInput_;
 
 public Q_SLOTS:
 
@@ -111,18 +111,6 @@ Q_SIGNALS:
 
 protected:
 
-    QSpacerItem              *spacer3;
-    QSpacerItem              *spacer4;
-
-    QGridLayout              *KMLExportConfigLayout;
-    QGridLayout              *SizeGroupBoxLayout;
-    QGridLayout              *TargetPreferenceGroupBoxLayout;
-    QGridLayout              *buttonGroupTargetTypeLayout;
-
-    KIPIPlugins::KPAboutData *m_about;
-
-protected:
-
     void saveSettings();
     void readSettings();
 
@@ -131,6 +119,18 @@ protected Q_SLOTS:
     void slotOk();
     void slotCancel();
     void slotHelp();
+
+protected:
+
+    QSpacerItem*              spacer3;
+    QSpacerItem*              spacer4;
+
+    QGridLayout*              KMLExportConfigLayout;
+    QGridLayout*              SizeGroupBoxLayout;
+    QGridLayout*              TargetPreferenceGroupBoxLayout;
+    QGridLayout*              buttonGroupTargetTypeLayout;
+
+    KIPIPlugins::KPAboutData* m_about;
 };
 
 } // KIPIKMLExportPlugin

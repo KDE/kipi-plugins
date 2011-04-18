@@ -146,7 +146,7 @@ QDateTime GPSDataParser::findNextDate(const QDateTime& dateTime, int secs)
     // We will find the item in GPS data list where the time is
     // at the maximum bigger than 'secs' mn of the value to match.
     QDateTime itemFound = dateTime.addSecs(secs);
-    bool found = false;
+    bool found          = false;
 
     for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
         it != m_GPSDataMap.constEnd(); ++it )
@@ -172,7 +172,7 @@ QDateTime GPSDataParser::findPrevDate(const QDateTime& dateTime, int secs)
     // We will find the item in GPS data list where the time is
     // at the maximum smaller than 'secs' mn of the value to match.
     QDateTime itemFound = dateTime.addSecs((-1)*secs);
-    bool found = false;
+    bool found          = false;
 
     for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
         it != m_GPSDataMap.constEnd(); ++it )

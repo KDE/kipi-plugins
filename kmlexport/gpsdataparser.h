@@ -46,7 +46,7 @@ class GPSDataParser
 public:
 
     GPSDataParser();
-    ~GPSDataParser(){};	
+    ~GPSDataParser(){};
 
     bool loadGPXFile(const KUrl& url);
 
@@ -67,7 +67,7 @@ protected:
 
     typedef QMap<QDateTime, GPSDataContainer> GPSDataMap; 
 
-    GPSDataMap m_GPSDataMap;
+    GPSDataMap                                m_GPSDataMap;
 };
 
 } // namespace KIPIKMLExportPlugin

@@ -32,14 +32,19 @@ class GPSDataContainer
 {
 public:
 
-    GPSDataContainer(): m_interpolated(false), m_altitude(0.0), 
-                        m_latitude(0.0), m_longitude(0.0) 
+    GPSDataContainer()
+        : m_interpolated(false),
+          m_altitude(0.0),
+          m_latitude(0.0),
+          m_longitude(0.0)
     {};
 
-    GPSDataContainer(double altitude, double latitude, 
+    GPSDataContainer(double altitude, double latitude,
                      double longitude, bool interpolated)
-                   : m_interpolated(interpolated), m_altitude(altitude),
-                     m_latitude(latitude), m_longitude(longitude)
+        : m_interpolated(interpolated),
+          m_altitude(altitude),
+          m_latitude(latitude),
+          m_longitude(longitude)
     {};
 
     ~GPSDataContainer()
@@ -73,11 +78,17 @@ public:
     double latitude()       const { return m_latitude;     };
     double longitude()      const { return m_longitude;    };
 
-    QString altitudeString() const { return QString::number(m_altitude, 'g', 12); }
-    QString latitudeString() const { return QString::number(m_latitude, 'g', 12); }
+    QString altitudeString() const  { return QString::number(m_altitude,  'g', 12); }
+    QString latitudeString() const  { return QString::number(m_latitude,  'g', 12); }
     QString longitudeString() const { return QString::number(m_longitude, 'g', 12); }
 
-    QString geoUrl() const { return QString::fromLatin1("geo:%1,%2,%3").arg(latitudeString()).arg(longitudeString()).arg(altitudeString()); }
+    QString geoUrl() const
+    {
+        return QString::fromLatin1("geo:%1,%2,%3")
+                                   .arg(latitudeString())
+                                   .arg(longitudeString())
+                                   .arg(altitudeString());
+    }
 
     static GPSDataContainer fromGeoUrl(const QString& url, bool* const parsedOkay)
     {
@@ -89,20 +100,22 @@ public:
             // TODO: error
             if (parsedOkay)
                 *parsedOkay = false;
+
             return GPSDataContainer();
         }
 
         const QStringList parts = url.mid(4).split(',');
 
         GPSDataContainer position;
-        if ((parts.size()==3)||(parts.size()==2))
+
+        if ((parts.size() == 3) || (parts.size() == 2))
         {
-            bool okay = true;
+            bool okay          = true;
             double ptLongitude = 0.0;
             double ptLatitude  = 0.0;
             double ptAltitude  = 0.0;
+            ptLatitude         = parts[0].toDouble(&okay);
 
-            ptLatitude = parts[0].toDouble(&okay);
             if (okay)
                 ptLongitude = parts[1].toDouble(&okay);
 
@@ -121,11 +134,13 @@ public:
         {
             if (parsedOkay)
                 *parsedOkay = false;
+
             return GPSDataContainer();
         }
 
         if (parsedOkay)
                 *parsedOkay = true;
+
         return position;
     }
 

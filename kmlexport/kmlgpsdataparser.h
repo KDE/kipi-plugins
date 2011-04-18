@@ -56,20 +56,16 @@ public:
      *  @param altitudeMode altitude mode of the line and points
      */
 
-    void CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode);
+    void CreateTrackLine(QDomElement& parent, QDomDocument& root, int altitudeMode);
     /*! Create a KML Element that will contain the points and of the GPS
      *  @param parent the QDomElement to which the track will be added
      *  @param root the QDomDocument used to create all elements
      *  @param timeZone the Timezone of the pictures
      *  @param altitudeMode altitude mode of the line and points
      */
-    void CreateTrackPoints(QDomElement &parent, QDomDocument &root, int timeZone, int altitudeMode);
+    void CreateTrackPoints(QDomElement& parent, QDomDocument& root, int timeZone, int altitudeMode);
 
 private:
-
-    /*! @todo maybe initialize it in the constructor */
-    /*! the root document, used to create all QDomElements */
-    QDomDocument *kmlDocument;
 
     /*!
      *  @brief Add a new element
@@ -77,7 +73,7 @@ private:
      *  @param tag the new element name
      *  @return the New element
      */
-    QDomElement addKmlElement(QDomElement &target, QString tag)
+    QDomElement addKmlElement(QDomElement& target, const QString& tag)
     {
         QDomElement kmlElement = kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
@@ -91,14 +87,20 @@ private:
      *  @param text the text content of the new element
      *  @return the New element
      */
-    QDomElement addKmlTextElement(QDomElement &target, QString tag, QString text)
+    QDomElement addKmlTextElement(QDomElement& target, const QString& tag, const QString& text)
     {
-        QDomElement kmlElement = kmlDocument->createElement( tag );
+        QDomElement kmlElement  = kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
         QDomText kmlTextElement = kmlDocument->createTextNode( text );
         kmlElement.appendChild( kmlTextElement );
         return kmlElement;
     }
+
+private:
+
+    /*! @todo maybe initialize it in the constructor */
+    /*! the root document, used to create all QDomElements */
+    QDomDocument* kmlDocument;
 };
 
 } // namespace KIPIKMLExportPlugin 

@@ -46,7 +46,7 @@ class Plugin_KMLExport : public KIPI::Plugin
 
 public:
 
-    Plugin_KMLExport(QObject *parent, const QVariantList &args);
+    Plugin_KMLExport(QObject* parent, const QVariantList& args);
 
     KIPI::Category category( KAction* action ) const;
     void setup( QWidget* );
@@ -58,9 +58,9 @@ protected Q_SLOTS:
 
 private:
 
-    KAction         *m_actionKMLExport;
+    KAction*         m_actionKMLExport;
 
-    KIPI::Interface *m_interface;
+    KIPI::Interface* m_interface;
 };
 
 #endif // PLUGIN_KMLEXPORT_H

@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "kmlexportconfig.h"
 #include "kmlexportconfig.moc"
 
 // Qt includes
@@ -416,27 +415,27 @@ void KMLExportConfig::readSettings()
     int GPXAltitudeMode;
 
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("KMLExport Settings"));
+    KConfigGroup group  = config.group(QString("KMLExport Settings"));
 
-    localTarget	       = group.readEntry("localTarget", true);
-    optimize_googlemap = group.readEntry("optimize_googlemap", false);
-    iconSize           = group.readEntry("iconSize", 33);
+    localTarget	        = group.readEntry("localTarget", true);
+    optimize_googlemap  = group.readEntry("optimize_googlemap", false);
+    iconSize            = group.readEntry("iconSize", 33);
     // not saving this size as it should not change
     //	googlemapSize = group.readNumEntry("googlemapSize", 32);
-    size               = group.readEntry("size", 320);
+    size                = group.readEntry("size", 320);
     // UrlDestDir have to have the trailing /
-    baseDestDir	       = group.readEntry("baseDestDir", "/tmp/");
-    UrlDestDir	       = group.readEntry("UrlDestDir", "http://www.example.com/");
-    KMLFileName        = group.readEntry("KMLFileName", "kmldocument");
-    AltitudeMode       = group.readEntry("Altitude Mode", 0);
+    baseDestDir	        = group.readEntry("baseDestDir", "/tmp/");
+    UrlDestDir	        = group.readEntry("UrlDestDir", "http://www.example.com/");
+    KMLFileName         = group.readEntry("KMLFileName", "kmldocument");
+    AltitudeMode        = group.readEntry("Altitude Mode", 0);
 
-    GPXtracks          = group.readEntry("UseGPXTracks", false);
-    GPXFile            = group.readEntry("GPXFile", QString());
-    TimeZone           = group.readEntry("Time Zone", 12);
-    LineWidth          = group.readEntry("Line Width", 4);
-    GPXColor           = group.readEntry("Track Color", "#17eeee" );
-    GPXOpacity         = group.readEntry("Track Opacity", 64 );
-    GPXAltitudeMode    = group.readEntry("GPX Altitude Mode", 0);
+    GPXtracks           = group.readEntry("UseGPXTracks", false);
+    GPXFile             = group.readEntry("GPXFile", QString());
+    TimeZone            = group.readEntry("Time Zone", 12);
+    LineWidth           = group.readEntry("Line Width", 4);
+    GPXColor            = group.readEntry("Track Color", "#17eeee" );
+    GPXOpacity          = group.readEntry("Track Opacity", 64 );
+    GPXAltitudeMode     = group.readEntry("GPX Altitude Mode", 0);
 
     KConfigGroup group2 = config.group(QString("KMLExport Dialog"));
     restoreDialogSize(group2);
@@ -470,23 +469,24 @@ void KMLExportConfig::saveSettings()
     group.writeEntry("optimize_googlemap", GoogleMapTargetRadioButton_->isChecked());
     group.writeEntry("iconSize", IconSizeInput_->value());
     group.writeEntry("size", ImageSizeInput_->value());
+
     QString destination = DestinationDirectory_->url().path();
     if (!destination.endsWith('/'))
     {
         destination.append('/');
     }
+
     group.writeEntry("baseDestDir", destination);
     QString url = DestinationUrl_->text();
     if (!url.endsWith('/'))
     {
         url.append('/');
     }
+
     group.writeEntry("UrlDestDir",url);
     group.writeEntry("KMLFileName",FileName_->text());
     group.writeEntry("Altitude Mode", AltitudeCB_->currentIndex() );
-
     group.writeEntry("UseGPXTracks", GPXTracksCheckBox_->isChecked());
-
     group.writeEntry("GPXFile", GPXFileKUrlRequester_->lineEdit()->originalText());
     group.writeEntry("Time Zone", timeZoneCB->currentIndex() );
     group.writeEntry("Line Width", GPXLineWidthInput_->value());
@@ -500,4 +500,4 @@ void KMLExportConfig::saveSettings()
     config.sync();
 }
 
-} //namespace KIPIKMLExportPlugin
+} // namespace KIPIKMLExportPlugin

@@ -65,7 +65,7 @@ namespace KIPIKMLExportPlugin
 
 kmlExport::kmlExport(KIPI::Interface* interface)
 {
-    kmlDocument =0;
+    m_kmlDocument    = 0;
     m_interface      = interface;
     m_progressDialog = new KIPIPlugins::BatchProgressDialog(kapp->activeWindow(), i18n("Generating KML file..."));
 }
@@ -222,10 +222,11 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         * which already seems to strip the extension
         */
     QString baseFileName = webifyFileName(info.title());
-    //	baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
+    //baseFileName       = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
-    fullFileName     = baseFileName + '.' + imageFormat.toLower();
-    QString destPath = m_tempDestDir + m_imageDir + fullFileName;
+    fullFileName         = baseFileName + '.' + imageFormat.toLower();
+    QString destPath     = m_tempDestDir + m_imageDir + fullFileName;
+
     if (!image.save(destPath, imageFormat.toAscii(), 85))
     {
         // if not able to save the image, it's pointless to create a placemark
@@ -258,7 +259,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         QDomElement kmlPlacemark = addKmlElement(kmlAlbum, "Placemark");
         addKmlTextElement(kmlPlacemark,"name",fullFileName);
         // location and altitude
-        QDomElement kmlGeometry = addKmlElement(kmlPlacemark, "Point");
+        QDomElement kmlGeometry  = addKmlElement(kmlPlacemark, "Point");
 
         if (alt)
         {
@@ -397,13 +398,14 @@ void kmlExport::addTrack(QDomElement& kmlAlbum)
         //! FIXME is there a way to be sure of the location of the icon?
         addKmlTextElement(kmlIcon, "href", "http://maps.google.com/mapfiles/kml/pal4/icon60.png");
 
-        m_gpxParser.CreateTrackPoints(kmlFolder, *kmlDocument, m_TimeZone - 12, m_GPXAltitudeMode);
+        m_gpxParser.CreateTrackPoints(kmlFolder, *m_kmlDocument, m_TimeZone - 12, m_GPXAltitudeMode);
     }
 
     // linetrack style
     QDomElement kmlLineTrackStyle = addKmlElement(kmlAlbum, "Style");
     kmlLineTrackStyle.setAttribute("id","linetrack");
-    QDomElement kmlLineStyle = addKmlElement(kmlLineTrackStyle, "LineStyle");
+    QDomElement kmlLineStyle      = addKmlElement(kmlLineTrackStyle, "LineStyle");
+
     // the KML color is not #RRGGBB but AABBGGRR
     QString KMLColorValue = QString("%1%2%3%4")
         .arg((int)m_GPXOpacity*256/100, 2, 16)
@@ -413,7 +415,7 @@ void kmlExport::addTrack(QDomElement& kmlAlbum)
     addKmlTextElement(kmlLineStyle, "color", KMLColorValue);
     addKmlTextElement(kmlLineStyle, "width", QString("%1").arg(m_LineWidth) );
 
-    m_gpxParser.CreateTrackLine(kmlAlbum, *kmlDocument, m_GPXAltitudeMode);
+    m_gpxParser.CreateTrackLine(kmlAlbum, *m_kmlDocument, m_GPXAltitudeMode);
 }
 
 /*!
@@ -427,17 +429,19 @@ void kmlExport::generate()
     m_progressDialog->show();
     KIPI::ImageCollection selection = m_interface->currentSelection();
     KIPI::ImageCollection album     = m_interface->currentAlbum();
+
     // create the document, and it's root
-    kmlDocument = new QDomDocument("");
+    m_kmlDocument = new QDomDocument("");
     QDomImplementation impl;
-    QDomProcessingInstruction instr = kmlDocument->createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
-    kmlDocument->appendChild(instr);
-    QDomElement kmlRoot             = kmlDocument->createElementNS( "http://earth.google.com/kml/2.1","kml");
-    kmlDocument->appendChild( kmlRoot );
+    QDomProcessingInstruction instr = m_kmlDocument->createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
+    m_kmlDocument->appendChild(instr);
+    QDomElement kmlRoot             = m_kmlDocument->createElementNS( "http://earth.google.com/kml/2.1","kml");
+    m_kmlDocument->appendChild( kmlRoot );
 
     QDomElement kmlAlbum       = addKmlElement( kmlRoot, "Document");
     QDomElement kmlName        = addKmlTextElement( kmlAlbum, "name", album.name());
-    QDomElement kmlDescription = addKmlHtmlElement( kmlAlbum, "description", "Created with kmlexport <a href=\"http://www.kipi-plugins.org/\">kipi-plugin</a>");
+    QDomElement kmlDescription = addKmlHtmlElement( kmlAlbum, "description",
+                                                    "Created with kmlexport <a href=\"http://www.kipi-plugins.org/\">kipi-plugin</a>");
 
     if (m_GPXtracks)
     {
@@ -450,6 +454,7 @@ void kmlExport::generate()
     int pos           = 1;
     int count         = images.count();
     KUrl::List::ConstIterator imagesEnd (images.constEnd());
+
     for( KUrl::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos)
     {
         KUrl url             = *selIt;
@@ -460,13 +465,13 @@ void kmlExport::generate()
         KIPI::ImageInfo info = m_interface->info(url);
         attributes           = info.attributes();
 
-        if (attributes.contains("latitude") &&
+        if (attributes.contains("latitude")  &&
             attributes.contains("longitude") &&
             attributes.contains("altitude"))
         {
-            lat = attributes["latitude"].toDouble();
-            lng = attributes["longitude"].toDouble();
-            alt = attributes["altitude"].toDouble();
+            lat        = attributes["latitude"].toDouble();
+            lng        = attributes["longitude"].toDouble();
+            alt        = attributes["altitude"].toDouble();
             hasGPSInfo = true;
         }
         else
@@ -478,11 +483,11 @@ void kmlExport::generate()
         if ( hasGPSInfo )
         {
             // generation de l'image et de l'icone
-            generateImagesthumb(m_interface,url,kmlAlbum);
+            generateImagesthumb(m_interface, url, kmlAlbum);
         }
         else
         {
-            logWarning(i18n("No position data for '%1'",info.title()));
+            logWarning(i18n("No position data for '%1'", info.title()));
             defectImage++;
         }
         m_progressDialog->setProgress(pos, count);
@@ -502,15 +507,13 @@ void kmlExport::generate()
     /** @todo handle file opening problems */
     file.open( QIODevice::WriteOnly );
     QTextStream stream( &file ); // we will serialize the data into the file
-    stream << kmlDocument->toString();
+    stream << m_kmlDocument->toString();
     file.close();
 
-    delete kmlDocument;
-    kmlDocument = 0;
-    KIO::moveAs(m_tempDestDir,
-                m_baseDestDir,
-                KIO::HideProgressInfo);
+    delete m_kmlDocument;
+    m_kmlDocument = 0;
 
+    KIO::moveAs(m_tempDestDir, m_baseDestDir, KIO::HideProgressInfo);
     logInfo(i18n("Move to final directory"));
     m_progressDialog->close();
 }

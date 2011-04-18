@@ -57,8 +57,8 @@
 K_PLUGIN_FACTORY( KMLExportFactory, registerPlugin<Plugin_KMLExport>(); )
 K_EXPORT_PLUGIN ( KMLExportFactory("kipiplugin_kmlexport") )
 
-Plugin_KMLExport::Plugin_KMLExport(QObject *parent, const QVariantList &)
-              : KIPI::Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
+Plugin_KMLExport::Plugin_KMLExport(QObject* parent, const QVariantList&)
+    : KIPI::Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
 }
@@ -70,12 +70,13 @@ void Plugin_KMLExport::setup( QWidget* widget )
     m_actionKMLExport = actionCollection()->addAction("kmlexport");
     m_actionKMLExport->setText(i18n("Export to KML..."));
     m_actionKMLExport->setIcon(KIcon("applications-internet"));
+
     connect(m_actionKMLExport, SIGNAL(triggered(bool)),
             this, SLOT(slotKMLExport()));
 
     addAction( m_actionKMLExport );
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    m_interface = dynamic_cast<KIPI::Interface*>( parent() );
 
     if ( !m_interface )
     {
@@ -94,9 +95,11 @@ void Plugin_KMLExport::slotKMLExport()
     }
     else
     {
-        KIPIKMLExportPlugin::KMLExportConfig *kmlExportConfigGui = new KIPIKMLExportPlugin::KMLExportConfig(kapp->activeWindow());
+        KIPIKMLExportPlugin::KMLExportConfig* kmlExportConfigGui = new KIPIKMLExportPlugin::KMLExportConfig(kapp->activeWindow());
+
         connect(kmlExportConfigGui, SIGNAL(okButtonClicked()),
                 this, SLOT(slotKMLGenerate()));
+
         kmlExportConfigGui->show();
     }
 }
@@ -107,6 +110,7 @@ void Plugin_KMLExport::slotKMLGenerate()
     KIPIKMLExportPlugin::kmlExport myExport(m_interface);
     if(!myExport.getConfig())
         return;
+
     myExport.generate();
 }
 

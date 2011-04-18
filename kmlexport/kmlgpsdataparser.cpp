@@ -48,21 +48,23 @@ QString KMLGPSDataParser::lineString()
     for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
          it != end; ++it )
     {
-        line += QString("%1,%2,%3 ").arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude());
+        line += QString("%1,%2,%3")
+                        .arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude());
     }
     return line;
 }
 
-void KMLGPSDataParser::CreateTrackLine(QDomElement &parent, QDomDocument &root, int altitudeMode)
+void KMLGPSDataParser::CreateTrackLine(QDomElement& parent, QDomDocument& root, int altitudeMode)
 {
     kmlDocument = &root;
 
     // add the linetrack
-    QDomElement kmlPlacemark = addKmlElement(parent, "Placemark");
+    QDomElement kmlPlacemark  = addKmlElement(parent, "Placemark");
     addKmlTextElement(kmlPlacemark, "name", i18n("Track"));
     QDomElement kmlLineString = addKmlElement(kmlPlacemark, "LineString");
     addKmlTextElement(kmlLineString, "coordinates", lineString());
     addKmlTextElement(kmlPlacemark, "styleUrl", "#linetrack");
+
     if (altitudeMode == 2 )
     {
         addKmlTextElement(kmlLineString, "altitudeMode", "absolute");
@@ -77,8 +79,8 @@ void KMLGPSDataParser::CreateTrackLine(QDomElement &parent, QDomDocument &root, 
     }
 }
 
-void KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root,
-                                                            int timeZone, int altitudeMode)
+void KMLGPSDataParser::CreateTrackPoints(QDomElement& parent, QDomDocument& root,
+                                         int timeZone, int altitudeMode)
 {
     kmlDocument = &root;
     kDebug(AREA_CODE_LOADING) << "creation d'un trackpoint" ;
@@ -89,15 +91,17 @@ void KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root
     addKmlTextElement(kmlPointsFolder, "visibility", "0");
     addKmlTextElement(kmlPointsFolder, "open", "0");
     int i = 0;
+
     // cache the end to not recalculate it with large number of points
     GPSDataMap::ConstIterator end (m_GPSDataMap.constEnd());
+
     for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
          it != end; ++it, i++)
     {
         QDomElement kmlPointPlacemark = addKmlElement(kmlPointsFolder, "Placemark");
         addKmlTextElement(kmlPointPlacemark, "name", QString("%1 %2 ").arg(i18n("Point")).arg(i));
         addKmlTextElement(kmlPointPlacemark, "styleUrl", "#track");
-        QDomElement kmlTimeStamp = addKmlElement(kmlPointPlacemark, "TimeStamp");
+        QDomElement kmlTimeStamp      = addKmlElement(kmlPointPlacemark, "TimeStamp");
         // GPS device are sync in time by satellite using GMT time.
         // If the camera time is different than GMT time, we want to
         // convert the GPS time to localtime of the picture to be display
@@ -107,10 +111,12 @@ void KMLGPSDataParser::CreateTrackPoints(QDomElement &parent, QDomDocument &root
         addKmlTextElement(kmlTimeStamp, "when", GPSLocalizedTime.toString("yyyy-MM-ddThh:mm:ssZ"));
         QDomElement kmlGeometry = addKmlElement(kmlPointPlacemark, "Point");
         addKmlTextElement(kmlPointPlacemark, "visibility", "0");
+
         if (it.value().latitude())
         {
             addKmlTextElement(kmlGeometry, "coordinates",
-                              QString("%1,%2,%3").arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude()));
+                              QString("%1,%2,%3")
+                              .arg(it.value().longitude()).arg(it.value().latitude()).arg(it.value().altitude()));
         }
         else
         {
