@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Rajce.net Exporter
+Name[et]=Rajce.net-i eksportija
 Name[it]=Esportatore a Rajce.net
 Name[nl]=Exportprogramma van Rajce.net
 Name[pt]=Exportação para o Rajce.net
@@ -10,6 +11,7 @@ Name[sv]=Export till Rajce.net
 Name[uk]=Експорт до Rajce.net
 Name[x-test]=xxRajce.net Exporterxx
 Comment=A tool to export images to a remote rajce.net service
+Comment[et]=Tööriist piltide eksportimiseks rajce.net-i veebiteenusesse
 Comment[it]=Uno strumento per esportare immagini al servizio Web remoto rajce.net
 Comment[nl]=Een hulpmiddel om afbeeldingen naar een rajce.net-service te exporteren
 Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do Rajce.net

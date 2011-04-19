@@ -1,8 +1,20 @@
 [Desktop Entry]
 Comment=A plugin to create KML files to present images with coordinates.
+Comment[et]=Plugin KML-failide loomiseks, mis tähistavad koordinaatidega pilte.
+Comment[nl]=Een plugin om KML-bestanden aan te maken om afbeeldingen met coördinaten te bieden.
+Comment[pt]=Um 'plugin' para criar ficheiros KML que apresentem imagens com coordenadas.
+Comment[sv]=Ett insticksprogram för att skapa KML-filer som visar bilder med koordinater.
+Comment[uk]=Додаток для створення файлів KML для показу зображення з координатами.
+Comment[x-test]=xxA plugin to create KML files to present images with coordinates.xx
 Encoding=UTF-8
 Icon=
 Name=KMLExport
+Name[et]=KML-i eksport
+Name[nl]=KMLExport
+Name[pt]=KMLExport
+Name[sv]=Export till KML
+Name[uk]=KMLExport
+Name[x-test]=xxKMLExportxx
 ServiceTypes=KIPI/Plugin
 Type=Service
 X-KDE-Library=kipiplugin_kmlexport
