@@ -67,6 +67,16 @@
 namespace KIPIGPSSyncPlugin
 {
 
+static int QItemSelectionModel_selectedRowsCount(const QItemSelectionModel* const selectionModel)
+{
+    if (!selectionModel->hasSelection())
+    {
+        return 0;
+    }
+
+    return selectionModel->selectedRows().count();
+}
+
 class SearchWidgetPrivate
 {
 public:
@@ -182,6 +192,7 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     d->treeView->setRootIsDecorated(false);
     d->treeView->setModel(d->searchResultsModel);
     d->treeView->setSelectionModel(d->searchResultsSelectionModel);
+    d->treeView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     d->actionBookmark = new KAction(i18n("Bookmarks"), this);
     d->actionBookmark->setMenu(d->gpsBookmarkOwner->getMenu());
@@ -615,22 +626,33 @@ void SearchResultModelHelper::setVisibility(const bool state)
     emit(signalVisibilityChanged());
 }
 
+void SearchWidget::slotUpdateActionAvailability()
+{
+    const int nSelectedResults = QItemSelectionModel_selectedRowsCount(d->searchResultsSelectionModel);
+    const bool haveOneSelectedResult = nSelectedResults == 1;
+    const bool haveSelectedImages = !d->kipiImageSelectionModel->selectedRows().isEmpty();
+
+    d->actionCopyCoordinates->setEnabled(haveOneSelectedResult);
+    d->actionMoveImagesToThisResult->setEnabled(haveOneSelectedResult && haveSelectedImages);
+}
+
 bool SearchWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if (watched==d->treeView)
     {
         // we are only interested in context-menu events:
-        if ( (event->type()==QEvent::ContextMenu) && d->searchResultsSelectionModel->hasSelection() )
+        if (event->type()==QEvent::ContextMenu)
         {
             const QModelIndex currentIndex = d->searchResultsSelectionModel->currentIndex();
             const SearchResultModel::SearchResultItem searchResult = d->searchResultsModel->resultItem(currentIndex);
             d->gpsBookmarkOwner->setPositionAndTitle(searchResult.result.coordinates, searchResult.result.name);
 
+            slotUpdateActionAvailability();
+
             // construct the context-menu:
             KMenu* const menu = new KMenu(d->treeView);
             menu->addAction(d->actionCopyCoordinates);
             menu->addAction(d->actionMoveImagesToThisResult);
-            d->actionMoveImagesToThisResult->setEnabled(!d->kipiImageSelectionModel->selectedRows().isEmpty());
 //             menu->addAction(d->actionBookmark);
             d->gpsBookmarkOwner->changeAddBookmark(true);
 

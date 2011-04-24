@@ -140,6 +140,7 @@ private Q_SLOTS:
     void slotVisibilityChanged(bool state);
     void slotCopyCoordinates();
     void slotMoveSelectedImagesToThisResult();
+    void slotUpdateActionAvailability();
 
 protected:
     virtual bool eventFilter(QObject *watched, QEvent *event);
