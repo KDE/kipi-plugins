@@ -93,7 +93,10 @@ class SearchResultModelHelper : public KMap::ModelHelper
 {
 Q_OBJECT
 public:
-    SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, KipiImageModel* const imageModel, QObject* const parent = 0);
+    SearchResultModelHelper(SearchResultModel* const resultModel,
+                            QItemSelectionModel* const selectionModel,
+                            KipiImageModel* const imageModel,
+                            QObject* const parent = 0);
     ~SearchResultModelHelper();
 
     virtual QAbstractItemModel* model() const;

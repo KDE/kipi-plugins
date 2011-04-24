@@ -7,7 +7,7 @@
  * @date   2010-06-01
  * @brief  A widget to search for places.
  *
- * @author Copyright (C) 2010 by Michael G. Hansen
+ * @author Copyright (C) 2010, 2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -108,8 +108,9 @@ public:
 };
 
 SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
-                           KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, 
-                           QWidget* parent)
+                           KipiImageModel* const kipiImageModel,
+                           QItemSelectionModel* const kipiImageSelectionModel,
+                           QWidget* const parent)
             : QWidget(parent), d(new SearchWidgetPrivate())
 {
     d->gpsBookmarkOwner = gpsBookmarkOwner;
@@ -247,10 +248,14 @@ void SearchWidget::slotTriggerSearch()
 {
     // this is necessary since this slot is also connected to QLineEdit::returnPressed
     if (d->searchTermLineEdit->text().isEmpty() || d->searchInProgress)
+    {
         return;
+    }
 
     if (!d->actionKeepOldResults->isChecked())
+    {
         slotClearSearchResults();
+    }
 
     d->searchInProgress = true;
 
@@ -290,13 +295,19 @@ SearchResultModel::~SearchResultModel()
     delete d;
 }
 
-int SearchResultModel::columnCount(const QModelIndex& /*parent*/) const
+int SearchResultModel::columnCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent)
+
     return 1;
 }
 
-bool SearchResultModel::setData(const QModelIndex& /*index*/, const QVariant& /*value*/, int /*role*/)
+bool SearchResultModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
+    Q_UNUSED(index)
+    Q_UNUSED(value)
+    Q_UNUSED(role)
+
     return false;
 }
 
@@ -342,13 +353,17 @@ QModelIndex SearchResultModel::index(int row, int column, const QModelIndex& par
 
     if ( (column<0) || (column>=1)
          || (row<0) || (row>=d->searchResults.count()) )
+    {
         return QModelIndex();
+    }
 
     return createIndex(row, column, 0);
 }
 
-QModelIndex SearchResultModel::parent(const QModelIndex& /*index*/) const
+QModelIndex SearchResultModel::parent(const QModelIndex& index) const
 {
+    Q_UNUSED(index)
+
     // we have only top level items
     return QModelIndex();
 }
@@ -356,21 +371,32 @@ QModelIndex SearchResultModel::parent(const QModelIndex& /*index*/) const
 int SearchResultModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
+    {
         return 0;
+    }
 
     return d->searchResults.count();
 }
 
-bool SearchResultModel::setHeaderData(int /*section*/, Qt::Orientation /*orientation*/,
-                                      const QVariant& /*value*/, int /*role*/)
+bool SearchResultModel::setHeaderData(int section, Qt::Orientation orientation,
+                                      const QVariant& value, int role)
 {
+    Q_UNUSED(section)
+    Q_UNUSED(orientation)
+    Q_UNUSED(value)
+    Q_UNUSED(role)
+
     return false;
 }
 
-QVariant SearchResultModel::headerData(int section, Qt::Orientation orientation, int /*role*/) const
+QVariant SearchResultModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    Q_UNUSED(role)
+
     if ((section >= 1) || (orientation != Qt::Horizontal))
+    {
         return false;
+    }
 
     return QVariant("Name");
 }
@@ -403,7 +429,9 @@ void SearchResultModel::addResults(const SearchBackend::SearchResult::List& resu
     }
 
     if (nonDuplicates.isEmpty())
+    {
         return;
+    }
 
     beginInsertRows(QModelIndex(), d->searchResults.count(), d->searchResults.count()+nonDuplicates.count()-1);
     for (int i=0; i<nonDuplicates.count(); ++i)
@@ -419,7 +447,10 @@ class SearchResultModelHelperPrivate
 {
 public:
     SearchResultModelHelperPrivate()
-    : visible(true)
+    : model(0),
+      selectionModel(0),
+      imageModel(0),
+      visible(true)
     {
     }
 
@@ -429,7 +460,10 @@ public:
     bool visible;
 };
 
-SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel, QItemSelectionModel* const selectionModel, KipiImageModel* const imageModel, QObject* const parent)
+SearchResultModelHelper::SearchResultModelHelper(SearchResultModel* const resultModel,
+                                                 QItemSelectionModel* const selectionModel,
+                                                 KipiImageModel* const imageModel,
+                                                 QObject* const parent)
 : KMap::ModelHelper(parent), d(new SearchResultModelHelperPrivate())
 {
     d->model = resultModel;
@@ -538,12 +572,16 @@ void SearchResultModel::setSelectionModel(QItemSelectionModel* const selectionMo
     d->selectionModel = selectionModel;
 }
 
-void SearchWidget::slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& /*previous*/)
+void SearchWidget::slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& previous)
 {
-    if (!current.isValid())
-        return;
+    Q_UNUSED(previous)
 
-    SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(current);
+    if (!current.isValid())
+    {
+        return;
+    }
+
+    const SearchResultModel::SearchResultItem currentItem = d->searchResultsModel->resultItem(current);
 
     if (d->mapWidget)
     {
@@ -589,14 +627,14 @@ bool SearchWidget::eventFilter(QObject *watched, QEvent *event)
             d->gpsBookmarkOwner->setPositionAndTitle(searchResult.result.coordinates, searchResult.result.name);
 
             // construct the context-menu:
-            KMenu * const menu = new KMenu(d->treeView);
+            KMenu* const menu = new KMenu(d->treeView);
             menu->addAction(d->actionCopyCoordinates);
             menu->addAction(d->actionMoveImagesToThisResult);
             d->actionMoveImagesToThisResult->setEnabled(!d->kipiImageSelectionModel->selectedRows().isEmpty());
 //             menu->addAction(d->actionBookmark);
             d->gpsBookmarkOwner->changeAddBookmark(true);
 
-            QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
+            QContextMenuEvent* const e = static_cast<QContextMenuEvent*>(event);
             menu->exec(e->globalPos());
         }
     }
@@ -680,7 +718,9 @@ void SearchWidget::slotMoveSelectedImagesToThisResult()
 
     const QModelIndexList selectedImageIndices = d->kipiImageSelectionModel->selectedRows();
     if (selectedImageIndices.isEmpty())
+    {
         return;
+    }
 
     GPSUndoCommand* const undoCommand = new GPSUndoCommand();
     for (int i=0; i<selectedImageIndices.count(); ++i)

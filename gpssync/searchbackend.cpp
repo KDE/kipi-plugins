@@ -7,7 +7,7 @@
  * @date   2010-06-01
  * @brief  A simple backend to search OSM and Geonames.org.
  *
- * @author Copyright (C) 2010 by Michael G. Hansen
+ * @author Copyright (C) 2010, 2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -44,6 +44,11 @@ class SearchBackendPrivate
 {
 public:
     SearchBackendPrivate()
+    : results(),
+      kioJob(0),
+      runningBackend(),
+      searchData(),
+      errorMessage()
     {
     }
 
@@ -115,15 +120,19 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
     return false;
 }
 
-void SearchBackend::slotData(KIO::Job* /*kioJob*/, const QByteArray& data)
+void SearchBackend::slotData(KIO::Job* kioJob, const QByteArray& data)
 {
+    Q_UNUSED(kioJob)
+
     d->searchData.append(data);
 }
 
 void SearchBackend::slotResult(KJob* kJob)
 {
     if (kJob!=d->kioJob)
+    {
         return;
+    }
 
     if (d->kioJob->error())
     {
@@ -142,8 +151,14 @@ void SearchBackend::slotResult(KJob* kJob)
         for (QDomNode resultNode = docElement.firstChild(); !resultNode.isNull(); resultNode = resultNode.nextSibling())
         {
             QDomElement resultElement = resultNode.toElement();
-            if (resultElement.isNull()) continue;
-            if (resultElement.tagName()!="place") continue;
+            if (resultElement.isNull())
+            {
+                continue;
+            }
+            if (resultElement.tagName()!="place")
+            {
+                continue;
+            }
 
             const QString boundingBoxString = resultElement.attribute("boundingbox");
             const QString latString = resultElement.attribute("lat");
@@ -152,7 +167,9 @@ void SearchBackend::slotResult(KJob* kJob)
             const QString placeId = resultElement.attribute("place_id");
 
             if (latString.isEmpty()||lonString.isEmpty()||displayName.isEmpty())
+            {
                 continue;
+            }
 
             // now parse the strings:
             qreal lat;
@@ -160,10 +177,14 @@ void SearchBackend::slotResult(KJob* kJob)
             bool okay = false;
             lat = latString.toDouble(&okay);
             if (okay)
+            {
                 lon = lonString.toDouble(&okay);
+            }
 
             if (!okay)
+            {
                 continue;
+            }
 
             SearchResult result;
             result.coordinates = KMap::GeoCoordinates(lat, lon);
@@ -189,8 +210,14 @@ void SearchBackend::slotResult(KJob* kJob)
         {
             QDomElement resultElement = resultNode.toElement();
             kDebug()<<resultElement.tagName();
-            if (resultElement.isNull()) continue;
-            if (resultElement.tagName()!="geoname") continue;
+            if (resultElement.isNull())
+            {
+                continue;
+            }
+            if (resultElement.tagName()!="geoname")
+            {
+                continue;
+            }
 
             QString latString;
             QString lonString;
@@ -199,7 +226,10 @@ void SearchBackend::slotResult(KJob* kJob)
             for (QDomNode resultSubNode = resultElement.firstChild(); !resultSubNode.isNull(); resultSubNode = resultSubNode.nextSibling())
             {
                 QDomElement resultSubElement = resultSubNode.toElement();
-                if (resultSubElement.isNull()) continue;
+                if (resultSubElement.isNull())
+                {
+                    continue;
+                }
 
                 if (resultSubElement.tagName()=="lat")
                 {
@@ -219,7 +249,9 @@ void SearchBackend::slotResult(KJob* kJob)
                 }
             }
             if (latString.isEmpty()||lonString.isEmpty()||displayName.isEmpty())
+            {
                 continue;
+            }
 
             // now parse the strings:
             qreal lat;
@@ -227,10 +259,14 @@ void SearchBackend::slotResult(KJob* kJob)
             bool okay = false;
             lat = latString.toDouble(&okay);
             if (okay)
+            {
                 lon = lonString.toDouble(&okay);
+            }
 
             if (!okay)
+            {
                 continue;
+            }
 
             SearchResult result;
             result.coordinates = KMap::GeoCoordinates(lat, lon);

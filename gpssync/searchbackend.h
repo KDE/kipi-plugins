@@ -7,7 +7,7 @@
  * @date   2010-06-01
  * @brief  A simple backend to search OSM and Geonames.org.
  *
- * @author Copyright (C) 2010 by Michael G. Hansen
+ * @author Copyright (C) 2010, 2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -37,8 +37,10 @@
 
 #include "gpsreversegeocodingwidget.h"
 
+/// @cond false
 namespace KIO { class Job; }
 class KJob;
+/// @endcond
 
 namespace KIPIGPSSyncPlugin
 {
