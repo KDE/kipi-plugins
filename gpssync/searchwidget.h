@@ -39,6 +39,7 @@
 #include "searchbackend.h"
 
 class QEvent;
+class QItemSelection;
 class KConfigGroup;
 
 namespace KMap
@@ -83,6 +84,8 @@ public:
     bool getMarkerIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const;
     void setSelectionModel(QItemSelectionModel* const selectionModel);
     void clearResults();
+    void removeRowsByIndexes(const QModelIndexList& rowsList);
+    void removeRowsBySelection(const QItemSelection& selection);
 
 private:
     SearchResultModelPrivate* const d;
@@ -134,13 +137,13 @@ public:
 private Q_SLOTS:
     void slotSearchCompleted();
     void slotTriggerSearch();
-    void slotUpdateUIState();
     void slotCurrentlySelectedResultChanged(const QModelIndex& current, const QModelIndex& previous);
     void slotClearSearchResults();
     void slotVisibilityChanged(bool state);
     void slotCopyCoordinates();
     void slotMoveSelectedImagesToThisResult();
     void slotUpdateActionAvailability();
+    void slotRemoveSelectedFromResultsList();
 
 protected:
     virtual bool eventFilter(QObject *watched, QEvent *event);
