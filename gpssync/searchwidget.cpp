@@ -154,7 +154,8 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     QToolButton* const tbClearResultsList = new QToolButton(actionHBox);
     tbClearResultsList->setDefaultAction(d->actionClearResultsList);
 
-    d->actionKeepOldResults = new KAction("S", this);
+    d->actionKeepOldResults = new KAction(this);
+    d->actionKeepOldResults->setIcon(SmallIcon("flag"));
     d->actionKeepOldResults->setCheckable(true);
     d->actionKeepOldResults->setChecked(false);
     d->actionKeepOldResults->setToolTip(i18n("Keep the results of old searches when doing a new search."));
@@ -174,6 +175,7 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     d->actionMoveImagesToThisResult = new KAction(i18n("Move selected images to this position"), this);
 
     d->actionRemovedSelectedSearchResultsFromList = new KAction(i18n("Remove from results list"), this);
+    d->actionRemovedSelectedSearchResultsFromList->setIcon(SmallIcon("list-remove"));
 
     d->backendSelectionBox = new KComboBox(actionHBox);
     d->backendSelectionBox->setToolTip(i18n("Select which service you would like to use."));
@@ -856,6 +858,8 @@ void SearchWidget::slotRemoveSelectedFromResultsList()
     }
 
     d->searchResultsModel->removeRowsBySelection(selectedRows);
+
+    slotUpdateActionAvailability();
 }
 
 } /* KIPIGPSSyncPlugin */
