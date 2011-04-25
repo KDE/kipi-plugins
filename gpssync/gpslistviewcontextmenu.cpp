@@ -7,7 +7,7 @@
  * @date   2009-05-07
  * @brief  Context menu for GPS list view.
  *
- * @author Copyright (C) 2009,2010 by Michael G. Hansen
+ * @author Copyright (C) 2009,2010,2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -221,20 +221,28 @@ bool GPSListViewContextMenu::getCurrentItemPositionAndUrl(GPSDataContainer* cons
     QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
     const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
     if (selectedIndices.count()!=1)
+    {
         return false;
+    }
     
     const QModelIndex currentIndex = selectedIndices.first();
     if (!currentIndex.isValid())
+    {
         return false;
+    }
 
     KipiImageItem* const gpsItem = imageModel->itemFromIndex(currentIndex);
     if (gpsItem)
     {
         if (gpsInfo)
+        {
             *gpsInfo = gpsItem->gpsData();
+        }
 
         if (itemUrl)
+        {
             *itemUrl = gpsItem->url();
+        }
 
         return true;
     }
@@ -248,7 +256,9 @@ void GPSListViewContextMenu::copyActionTriggered()
     KUrl itemUrl;
 
     if (!getCurrentItemPositionAndUrl(&gpsInfo, &itemUrl))
+    {
         return;
+    }
 
     CoordinatesToClipboard(gpsInfo.getCoordinates(), itemUrl, QString());
 }
@@ -272,13 +282,17 @@ void GPSListViewContextMenu::pasteActionTriggered()
         // code adapted from gpsdataparser.cpp
         QDomDocument gpxDoc("gpx");
         if (!gpxDoc.setContent(data))
+        {
             xmlOkay = false;
+        }
 
         if (xmlOkay)
         {
             const QDomElement gpxDocElem = gpxDoc.documentElement();
             if (gpxDocElem.tagName()!="gpx")
-            xmlOkay = false;
+            {
+                xmlOkay = false;
+            }
 
             if (xmlOkay)
             {
@@ -286,8 +300,14 @@ void GPSListViewContextMenu::pasteActionTriggered()
                     !nWpt.isNull(); nWpt = nWpt.nextSibling())
                 {
                     const QDomElement wptElem = nWpt.toElement();
-                    if (wptElem.isNull()) continue;
-                    if (wptElem.tagName() != "wpt") continue;
+                    if (wptElem.isNull())
+                    {
+                        continue;
+                    }
+                    if (wptElem.tagName() != "wpt")
+                    {
+                        continue;
+                    }
 
                     double    ptAltitude  = 0.0;
                     double    ptLatitude  = 0.0;
@@ -297,7 +317,10 @@ void GPSListViewContextMenu::pasteActionTriggered()
                     // Get GPS position. If not available continue to next point.
                     const QString lat = wptElem.attribute("lat");
                     const QString lon = wptElem.attribute("lon");
-                    if (lat.isEmpty() || lon.isEmpty()) continue;
+                    if (lat.isEmpty() || lon.isEmpty())
+                    {
+                        continue;
+                    }
 
                     ptLatitude  = lat.toDouble();
                     ptLongitude = lon.toDouble();
@@ -313,7 +336,10 @@ void GPSListViewContextMenu::pasteActionTriggered()
                         !nWptMeta.isNull(); nWptMeta = nWptMeta.nextSibling())
                     {
                         const QDomElement wptMetaElem = nWptMeta.toElement();
-                        if (wptMetaElem.isNull()) continue;
+                        if (wptMetaElem.isNull())
+                        {
+                            continue;
+                        }
 
                         if (wptMetaElem.tagName() == QString("ele"))
                         {
@@ -330,7 +356,9 @@ void GPSListViewContextMenu::pasteActionTriggered()
                     foundData = true;
                     KMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
                     if (haveAltitude)
+                    {
                         coordinates.setAlt(ptAltitude);
+                    }
                     gpsData.setCoordinates(coordinates);
                 }
             }
@@ -357,7 +385,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
         }
         else
         {
-            // TODO: this is legacy code from before we used geo-url
+            /// @todo this is legacy code from before we used geo-url
             const QStringList parts = textdata.split(',');
 
             if ((parts.size()==3)||(parts.size()==2))
@@ -370,7 +398,9 @@ void GPSListViewContextMenu::pasteActionTriggered()
 
                 ptLongitude = parts[0].toDouble(&okay);
                 if (okay)
+                {
                     ptLatitude = parts[1].toDouble(&okay);
+                }
 
                 if (okay&&(parts.size()==3))
                 {
@@ -383,7 +413,9 @@ void GPSListViewContextMenu::pasteActionTriggered()
                 {
                     KMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
                     if (haveAltitude)
+                    {
                         coordinates.setAlt(ptAltitude);
+                    }
                     gpsData.setCoordinates(coordinates);
                 }
             }
@@ -418,7 +450,6 @@ void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer g
 
         gpsItem->setGPSData(gpsData);
         undoInfo.readNewDataFromItem(gpsItem);
-        
 
         undoCommand->addUndoInfo(undoInfo);
     }
@@ -435,10 +466,12 @@ void GPSListViewContextMenu::slotBookmarkSelected(GPSDataContainer bookmarkPosit
 bool GPSListViewContextMenu::getCurrentPosition(GPSDataContainer* position, void* mydata)
 {
     if (!position || !mydata)
+    {
         return false;
+    }
 
     GPSListViewContextMenu* const me = reinterpret_cast<GPSListViewContextMenu*>(mydata);
-    
+
     return me->getCurrentItemPositionAndUrl(position, 0);
 }
 
