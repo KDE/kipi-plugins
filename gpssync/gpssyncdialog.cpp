@@ -453,6 +453,18 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->searchWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
+    connect(d->listViewContextMenu, SIGNAL(signalSetUIEnabled(const bool)),
+            this, SLOT(slotSetUIEnabled(const bool)));
+
+    connect(d->listViewContextMenu, SIGNAL(signalSetUIEnabled(const bool, QObject* const, const QString&)),
+            this, SLOT(slotSetUIEnabled(const bool, QObject* const, const QString&)));
+
+    connect(d->listViewContextMenu, SIGNAL(signalProgressSetup(const int, const QString&)),
+            this, SLOT(slotProgressSetup(const int, const QString&)));
+
+    connect(d->listViewContextMenu, SIGNAL(signalProgressChanged(const int)),
+            this, SLOT(slotProgressChanged(const int)));
+
     connect(d->listViewContextMenu, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 

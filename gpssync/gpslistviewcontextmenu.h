@@ -7,7 +7,7 @@
  * @date   2009-05-07
  * @brief  Context menu for GPS list view.
  *
- * @author Copyright (C) 2009,2010 by Michael G. Hansen
+ * @author Copyright (C) 2009,2010,2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  *
  * This program is free software; you can redistribute it
@@ -21,6 +21,7 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef GPSLISTVIEWCONTEXTMENU_H
 #define GPSLISTVIEWCONTEXTMENU_H
 
@@ -28,12 +29,18 @@
 
 #include <QObject>
 
+// libkmap includes
+
+#include <libkmap/backend_altitude.h>
+
 // local includes:
 
 #include "gpsdatacontainer.h"
 #include "kipiimagelist.h"
 
+/// @cond false
 class KUrl;
+/// @endcond
 
 namespace KIPIGPSSyncPlugin
 {
@@ -70,8 +77,15 @@ private Q_SLOTS:
     void slotRemoveAltitude();
     void slotRemoveUncertainty();
     void slotRemoveSpeed();
+    void slotLookupMissingAltitudes();
+    void slotAltitudeLookupReady(const KMap::AltitudeBackend::LookupRequest::List& altitudes);
 
 Q_SIGNALS:
+
+    void signalSetUIEnabled(const bool enabledState);
+    void signalSetUIEnabled(const bool enabledState, QObject* const cancelObject, const QString& cancelSlot);
+    void signalProgressSetup(const int maxProgress, const QString& progressText);
+    void signalProgressChanged(const int currentProgress);
     void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:

@@ -39,6 +39,10 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
+// libkmap includes
+
+#include <libkmap/backend_helper.h>
+
 // LibKIPI includes.
 
 #include <libkipi/interface.h>
@@ -64,6 +68,8 @@ public:
         actionCopy     = 0;
         actionPaste    = 0;
         actionBookmark = 0;
+        altitudeBackend = 0;
+        altitudeUndoCommand = 0;
     }
 
     bool              enabled;
@@ -75,10 +81,17 @@ public:
     KAction          *actionRemoveAltitude;
     KAction          *actionRemoveUncertainty;
     KAction          *actionRemoveSpeed;
+    KAction          *actionLookupMissingAltitudes;
 
     GPSBookmarkOwner *bookmarkOwner;
 
     KipiImageList    *imagesList;
+
+    // Altitude lookup
+    KMap::AltitudeBackend *altitudeBackend;
+    GPSUndoCommand        *altitudeUndoCommand;
+    int                    altitudeRequestedCount;
+    int                    altitudeReceivedCount;
 };
 
 GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBookmarkOwner* const bookmarkOwner)
@@ -94,6 +107,7 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
     d->actionRemoveAltitude = new KAction(i18n("Remove altitude"), this);
     d->actionRemoveUncertainty = new KAction(i18n("Remove uncertainty"), this);
     d->actionRemoveSpeed = new KAction(i18n("Remove speed"), this);
+    d->actionLookupMissingAltitudes = new KAction(i18n("Look up missing altitude values"), this);
 
     connect(d->actionCopy, SIGNAL(triggered()),
             this, SLOT(copyActionTriggered()));
@@ -113,6 +127,9 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
     connect(d->actionRemoveSpeed, SIGNAL(triggered()),
             this, SLOT(slotRemoveSpeed()));
 
+    connect(d->actionLookupMissingAltitudes, SIGNAL(triggered()),
+            this, SLOT(slotLookupMissingAltitudes()));
+
     if (bookmarkOwner)
     {
         d->bookmarkOwner = bookmarkOwner;
@@ -128,6 +145,11 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
 
 GPSListViewContextMenu::~GPSListViewContextMenu()
 {
+    if (d->altitudeUndoCommand)
+    {
+        delete d->altitudeUndoCommand;
+    }
+
     delete d;
 }
 
@@ -148,6 +170,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         bool removeCoordinatesAvailable = false;
         bool removeUncertaintyAvailable = false;
         bool removeSpeedAvailable = false;
+        bool lookupMissingAltitudesAvailable = false;
         for (int i=0; i<nSelected; ++i)
         {
             KipiImageItem* const gpsItem = imageModel->itemFromIndex(selectedIndices.at(i));
@@ -161,6 +184,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
                 removeAltitudeAvailable|= gpsData.getCoordinates().hasAltitude();
                 removeUncertaintyAvailable|= gpsData.hasNSatellites() | gpsData.hasDop() | gpsData.hasFixType();
                 removeSpeedAvailable|= gpsData.hasSpeed();
+                lookupMissingAltitudesAvailable|= itemHasCoordinates && !gpsData.getCoordinates().hasAltitude();
             }
         }
 
@@ -169,6 +193,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         d->actionRemoveCoordinates->setEnabled(removeCoordinatesAvailable);
         d->actionRemoveUncertainty->setEnabled(removeUncertaintyAvailable);
         d->actionRemoveSpeed->setEnabled(removeSpeedAvailable);
+        d->actionLookupMissingAltitudes->setEnabled(lookupMissingAltitudesAvailable);
         if (d->bookmarkOwner)
         {
             d->bookmarkOwner->changeAddBookmark(copyAvailable);
@@ -197,6 +222,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         menu->addAction(d->actionRemoveAltitude);
         menu->addAction(d->actionRemoveUncertainty);
         menu->addAction(d->actionRemoveSpeed);
+        menu->addAction(d->actionLookupMissingAltitudes);
         if (d->actionBookmark)
         {
             menu->addSeparator();
@@ -590,6 +616,104 @@ void GPSListViewContextMenu::setEnabled(const bool state)
 void GPSListViewContextMenu::slotRemoveSpeed()
 {
     removeInformationFromSelectedImages(GPSDataContainer::HasSpeed, i18n("Remove speed"));
+}
+
+void GPSListViewContextMenu::slotLookupMissingAltitudes()
+{
+    KipiImageModel* const imageModel = d->imagesList->getModel();
+    QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();
+    const QList<QModelIndex> selectedIndices = selectionModel->selectedRows();
+//     const int nSelected = selectedIndices.size();
+
+    // find the indices which have coordinates but no altitude
+    KMap::AltitudeBackend::LookupRequest::List altitudeQueries;
+    Q_FOREACH (const QModelIndex& currentIndex, selectedIndices)
+    {
+        KipiImageItem* const gpsItem = imageModel->itemFromIndex(currentIndex);
+        if (!gpsItem)
+        {
+            continue;
+        }
+
+        const GPSDataContainer gpsData = gpsItem->gpsData();
+        const KMap::GeoCoordinates coordinates = gpsData.getCoordinates();
+        if ((!coordinates.hasCoordinates()) || coordinates.hasAltitude())
+        {
+            continue;
+        }
+
+        // the item has coordinates but no altitude, create a query
+        KMap::AltitudeBackend::LookupRequest myLookup;
+        myLookup.coordinates = coordinates;
+        myLookup.data = QVariant::fromValue(QPersistentModelIndex(currentIndex));
+
+        altitudeQueries << myLookup;
+    }
+
+    if (altitudeQueries.isEmpty())
+    {
+        return;
+    }
+
+    if (!d->altitudeBackend)
+    {
+        d->altitudeBackend = KMap::BackendHelper::getAltitudeBackend("geonames", this);
+
+        connect(d->altitudeBackend, SIGNAL(signalAltitudes(const KMap::AltitudeBackend::LookupRequest::List&)),
+            this, SLOT(slotAltitudeLookupReady(const KMap::AltitudeBackend::LookupRequest::List&)));
+    }
+
+    emit(signalSetUIEnabled(false));
+    emit(signalProgressSetup(altitudeQueries.count(), i18n("Looking up altitudes")));
+    d->altitudeUndoCommand = new GPSUndoCommand();
+    d->altitudeRequestedCount = altitudeQueries.count();
+    d->altitudeReceivedCount = 0;
+    d->altitudeBackend->queryAltitudes(altitudeQueries);
+}
+
+void GPSListViewContextMenu::slotAltitudeLookupReady(const KMap::AltitudeBackend::LookupRequest::List& altitudes)
+{
+    KipiImageModel* const imageModel = d->imagesList->getModel();
+    Q_FOREACH(const KMap::AltitudeBackend::LookupRequest& myLookup, altitudes)
+    {
+        const QPersistentModelIndex markerIndex = myLookup.data.value<QPersistentModelIndex>();
+        if (!markerIndex.isValid())
+        {
+            continue;
+        }
+
+        KipiImageItem* const gpsItem = imageModel->itemFromIndex(markerIndex);
+        if (!gpsItem)
+        {
+            continue;
+        }
+
+        GPSUndoCommand::UndoInfo undoInfo(markerIndex);
+        undoInfo.readOldDataFromItem(gpsItem);
+
+        GPSDataContainer gpsData = gpsItem->gpsData();
+        gpsData.setCoordinates(myLookup.coordinates);
+        gpsItem->setGPSData(gpsData);
+        undoInfo.readNewDataFromItem(gpsItem);
+
+        d->altitudeUndoCommand->addUndoInfo(undoInfo);
+        d->altitudeReceivedCount++;
+    }
+
+    if (d->altitudeReceivedCount==d->altitudeRequestedCount)
+    {
+        // all queries have been returned, send out the undo command
+        d->altitudeUndoCommand->setText(i18n("Altitude looked up"));
+        emit(signalUndoCommand(d->altitudeUndoCommand));
+
+        d->altitudeUndoCommand = 0;
+
+        emit(signalSetUIEnabled(true));
+    }
+    else
+    {
+        signalProgressChanged(d->altitudeReceivedCount);
+    }
 }
 
 } // namespace KIPIGPSSyncPlugin
