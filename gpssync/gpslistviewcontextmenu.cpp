@@ -153,12 +153,14 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
             KipiImageItem* const gpsItem = imageModel->itemFromIndex(selectedIndices.at(i));
             if (gpsItem)
             {
-                const bool itemHasCoordinates = gpsItem->gpsData().getCoordinates().hasCoordinates();
+                const GPSDataContainer gpsData = gpsItem->gpsData();
+
+                const bool itemHasCoordinates = gpsData.getCoordinates().hasCoordinates();
                 copyAvailable&= itemHasCoordinates;
                 removeCoordinatesAvailable|= itemHasCoordinates;
-                removeAltitudeAvailable|= gpsItem->gpsData().getCoordinates().hasAltitude();
-                removeUncertaintyAvailable|= gpsItem->gpsData().hasNSatellites() | gpsItem->gpsData().hasDop() | gpsItem->gpsData().hasFixType();
-                removeSpeedAvailable|= gpsItem->gpsData().hasSpeed();
+                removeAltitudeAvailable|= gpsData.getCoordinates().hasAltitude();
+                removeUncertaintyAvailable|= gpsData.hasNSatellites() | gpsData.hasDop() | gpsData.hasFixType();
+                removeSpeedAvailable|= gpsData.hasSpeed();
             }
         }
 
