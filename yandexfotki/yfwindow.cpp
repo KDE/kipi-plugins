@@ -144,7 +144,7 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
      * Account box
      */
     m_accountBox = new QGroupBox(i18n("Account"), settingsBox);
-    m_accountBox->setWhatsThis(i18n("This account is used to authentication."));
+    m_accountBox->setWhatsThis(i18n("This account is used for authentication."));
 
     QGridLayout* accountBoxLayout = new QGridLayout(m_accountBox);
     QLabel* loginDescLabel = new QLabel(m_accountBox);
@@ -937,7 +937,7 @@ void YandexFotkiWindow::slotError()
 //            authenticate(true);
             break;
         case YandexFotkiTalker::STATE_GETSERVICE_ERROR:
-            KMessageBox::error(this, i18n("Can't get service document"));
+            KMessageBox::error(this, i18n("Cannot get service document"));
             break;
 /*
         case YandexFotkiTalker::STATE_CHECKTOKEN_INVALID:
@@ -950,13 +950,13 @@ void YandexFotkiWindow::slotError()
 */
         case YandexFotkiTalker::STATE_LISTALBUMS_ERROR:
             m_albumsCombo->clear();
-            KMessageBox::error(this, i18n("Can't list albums"));
+            KMessageBox::error(this, i18n("Cannot list albums"));
             break;
         case YandexFotkiTalker::STATE_LISTPHOTOS_ERROR:
-            KMessageBox::error(this, i18n("Can't list photos"));
+            KMessageBox::error(this, i18n("Cannot list photos"));
             break;
         case YandexFotkiTalker::STATE_UPDATEALBUM_ERROR:
-            KMessageBox::error(this, i18n("Can't update album info"));
+            KMessageBox::error(this, i18n("Cannot update album info"));
             break;
         case YandexFotkiTalker::STATE_UPDATEPHOTO_FILE_ERROR:
         case YandexFotkiTalker::STATE_UPDATEPHOTO_INFO_ERROR:

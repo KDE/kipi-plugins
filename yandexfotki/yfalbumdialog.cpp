@@ -94,7 +94,7 @@ void YandexFotkiAlbumDialog::slotButtonClicked(int button)
     {
         if (m_titleEdit->text().isEmpty())
         {
-            KMessageBox::error(this, i18n("Title can not be empty!"),
+            KMessageBox::error(this, i18n("Title cannot be empty."),
                                i18n("Error"));
             return;
         }

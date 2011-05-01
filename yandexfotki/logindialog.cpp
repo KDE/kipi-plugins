@@ -172,7 +172,7 @@ void LoginDialog::slotAccept()
     }
     else
     {
-        KMessageBox::error(this, i18n("Password can not be empty!"),
+        KMessageBox::error(this, i18n("Password cannot be empty."),
                            i18n("Error"));
     }
 }
