@@ -629,7 +629,7 @@ GPSDataParser::GPXFileData GPXFileReader::loadGPXFile(const KUrl& url)
 
     if (file.size()==0)
     {
-        parsedData.loadError = i18n("File is empty!");
+        parsedData.loadError = i18n("File is empty.");
         return parsedData;
     }
 
@@ -654,11 +654,11 @@ GPSDataParser::GPXFileData GPXFileReader::loadGPXFile(const KUrl& url)
     {
         if (!gpxFileReader.verifyFoundGPXElement)
         {
-            parsedData.loadError = i18n("No GPX element found - probably not a GPX file!");
+            parsedData.loadError = i18n("No GPX element found - probably not a GPX file.");
         }
         else
         {
-            parsedData.loadError = i18n("File is a GPX file, but no datapoints were found!");
+            parsedData.loadError = i18n("File is a GPX file, but no datapoints were found.");
         }
         return parsedData;
     }
