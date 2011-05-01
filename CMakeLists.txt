@@ -431,7 +431,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ENDIF(KMAP_FOUND)
 
     IF(MEDIAWIKI_FOUND)
-        ADD_SUBDIRECTORY(mediawiki)
+#        Disabled for the moment due to problem with libmediawiki api  
+#        ADD_SUBDIRECTORY(mediawiki)
     ENDIF(MEDIAWIKI_FOUND)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
