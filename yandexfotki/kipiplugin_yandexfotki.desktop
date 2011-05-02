@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Yandex.Fotki Exporter
 Name[ca]=Exportador a Yandex.Fotki
+Name[en_GB]=Yandex.Fotki Exporter
 Name[et]=Yandex.Fotki eksportija
 Name[is]=Yandex.Fotki útflutningstól
 Name[it]=Esportatore a Yandex.Fotki
@@ -18,6 +19,7 @@ Name[zh_TW]=Yandex.Fotki 匯出器
 Comment=A tool to export images to a remote Yandex.Fotki web service
 Comment[ca]=Una eina per exportar imatges al servei web remot Yandex.Fotki
 Comment[cs]=Nástroj pro export obrázků do vzdálené webové služby Yandex.Fotki
+Comment[en_GB]=A tool to export images to a remote Yandex.Fotki web service
 Comment[et]=Tööriist piltide eksportimiseks Yandex.Fotki veebiteenusesse
 Comment[is]=Verkfæri til að senda myndir á fjarlæga Yandex.Fotki vefþjónustu
 Comment[it]=Uno strumento per esportare immagini al servizio Web remoto Yandex.Fotki
