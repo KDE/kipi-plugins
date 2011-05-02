@@ -55,7 +55,6 @@ for lang in i18nlangs
     end
     Dir.chdir("..")
     topmakefile << "add_subdirectory( #{lang} )\n"
-    puts "POUET #{lang}\n"
 end
 
 puts "\n"
