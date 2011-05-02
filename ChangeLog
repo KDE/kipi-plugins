@@ -1,3 +1,1097 @@
+2.0.0-beta5 2011-05-02
+
+2011-05-02  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-05-01  Andrew Coles <andrew.i.coles@googlemail.com>
+
+	* gpssync/gpsdataparser.cpp: Proof-reading - avoid the use of
+	exclamation points.  See the note in the HIG for further details: http://techbase.kde.org/Projects/Usability/HIG/Exclamation_points
+
+2011-05-01  Andrew Coles <andrew.i.coles@googlemail.com>
+
+	* yandexfotki/logindialog.cpp, yandexfotki/yfalbumdialog.cpp,
+	yandexfotki/yfwindow.cpp: Proof-reading.  - Avoid the use of contractions and exclamation points in strings.
+	  See the relevant sections in the HIG:   http://techbase.kde.org/Projects/Usability/HIG - 'Used to authentication' -> 'Used for authentication'.  - Can not -> Cannot, for consistency with rest of KDE.
+
+2011-05-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: mediawiki tool must be disable for beta5. There is
+	a problem with libmediawiki API compatibility with comunication
+	protocol against web service. It must be fix for stable release
+
+2011-04-27  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpslistviewcontextmenu.h, gpssync/gpssyncdialog.cpp: Add a
+	context menu entry for manual altitude lookups. Requires libkmap
+	newer than this commit:
+	http://commits.kde.org/libkmap/8de231bb7290bf0130ae743a196c22ca0254307f
+
+2011-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpslistviewcontextmenu.cpp: Polish.
+
+2011-04-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpslistviewcontextmenu.cpp: Polish.
+
+2011-04-24  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/searchwidget.cpp: Add icons and update the UI state after
+	removing an item from the list.
+
+2011-04-24  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/searchwidget.cpp, gpssync/searchwidget.h: Make it possible
+	to remove selected results from the search results list.
+
+2011-04-24  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/searchwidget.cpp, gpssync/searchwidget.h: Make it possible
+	to select several search results.
+
+2011-04-24  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/searchbackend.cpp, gpssync/searchbackend.h,
+	gpssync/searchwidget.cpp, gpssync/searchwidget.h: Polish.
+
+2011-04-24  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	shwup/kipiplugin_shwup.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-04-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* kmlexport/plugin_kmlexport.cpp: fix MSVC warnings
+
+2011-04-23  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-04-21  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-04-19  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-04-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/NEWS.2.0.0-beta4: do not archive yet this file here.
+
+2011-04-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* kmlexport/CMakeLists.txt: polish
+
+2011-04-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* kmlexport/gpsdatacontainer.h, kmlexport/gpsdataparser.cpp,
+	kmlexport/gpsdataparser.h, kmlexport/gpsdataparser_time.h,
+	kmlexport/kmlexport.cpp, kmlexport/kmlexport.h,
+	kmlexport/kmlexportconfig.cpp, kmlexport/kmlexportconfig.h,
+	kmlexport/kmlgpsdataparser.cpp, kmlexport/kmlgpsdataparser.h,
+	kmlexport/plugin_kmlexport.cpp, kmlexport/plugin_kmlexport.h: use
+	moc file constify use const ref.  use m_ prefix for data members
+
+2011-04-18  Script Kiddy <scripty@kde.org>
+
+	* rajceexport/kipiplugin_rajceexport.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-04-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* kmlexport/gpsdatacontainer.h, kmlexport/gpsdataparser.cpp,
+	kmlexport/gpsdataparser.h, kmlexport/gpsdataparser_time.h,
+	kmlexport/kmlexport.cpp, kmlexport/kmlexport.h,
+	kmlexport/kmlexportconfig.cpp, kmlexport/kmlexportconfig.h,
+	kmlexport/kmlgpsdataparser.cpp, kmlexport/kmlgpsdataparser.h,
+	kmlexport/plugin_kmlexport.cpp,
+	kmlexport/tests/test_kmlexport_gpxparsing.cpp,
+	kmlexport/tests/test_kmlexport_gpxparsing.h: Polish.
+
+2011-04-17  Michael Georg Hansen <mike@mghansen.de>
+
+	* CMakeLists.txt, kmlexport/CMakeLists.txt, kmlexport/Messages.sh,
+	kmlexport/gpsdatacontainer.h, kmlexport/gpsdataparser.cpp,
+	kmlexport/gpsdataparser.h, kmlexport/gpsdataparser_time.h,
+	kmlexport/kipiplugin_kmlexport.desktop, kmlexport/kmlexport.cpp,
+	kmlexport/kmlexport.h, kmlexport/kmlexportconfig.cpp,
+	kmlexport/kmlexportconfig.h, kmlexport/kmlgpsdataparser.cpp,
+	kmlexport/kmlgpsdataparser.h, kmlexport/plugin_kmlexport.cpp,
+	kmlexport/plugin_kmlexport.h, kmlexport/tests/CMakeLists.txt,
+	kmlexport/tests/test_kmlexport_gpxparsing.cpp,
+	kmlexport/tests/test_kmlexport_gpxparsing.h: Import KMLExport from
+	v1.9.0 and turn it into a separate plugin.
+
+2011-04-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/kipicmd.desktop: file not used here
+
+2011-04-17  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop, test/kipicmd.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-04-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpssyncdialog.cpp: Polish.
+
+2011-04-16  Script Kiddy <scripty@kde.org>
+
+	* rajceexport/kipiplugin_rajceexport.desktop, test/kipicmd.desktop: 
+	SVN_SILENT made messages (.desktop file)
+
+2011-04-15  Pino Toscano <pino@kde.org>
+
+	* rajceexport/rajcewidget.cpp: i18n: do not use contractions
+	("can't" -> "cannot", etc)
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/kipiplugin_rajceexport.desktop: polish
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/main.cpp: polish
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/kipicmd.desktop, test/main.cpp: missing file
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/main.cpp: polish
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/CMakeLists.txt: polish
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/CMakeLists.txt: polish
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/kipiimagecollectionselector.cpp,
+	test/kipiimagecollectionselector.h,
+	test/kipiimagecollectionshared.cpp,
+	test/kipiimagecollectionshared.h: polish
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/kipitest-debug.cpp, test/kipitest-debug.h, test/main.cpp: 
+	polish
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/CMakeLists.txt, test/kipiimageinfoshared.cpp,
+	test/kipiimageinfoshared.h, test/kipiinterface.cpp,
+	test/kipiinterface.h, test/kipiuploadwidget.cpp,
+	test/kipiuploadwidget.h: polish
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* test/CMakeLists.txt, test/main.cpp: compile
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, test/CMakeLists.txt, test/README: add test in
+	compilation rules
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/kipicmd/CMakeLists.txt, project/kipicmd/README,
+	project/kipicmd/kipiimagecollectionselector.cpp,
+	project/kipicmd/kipiimagecollectionselector.h,
+	project/kipicmd/kipiimagecollectionshared.cpp,
+	project/kipicmd/kipiimagecollectionshared.h,
+	project/kipicmd/kipiimageinfoshared.cpp,
+	project/kipicmd/kipiimageinfoshared.h,
+	project/kipicmd/kipiinterface.cpp, project/kipicmd/kipiinterface.h,
+	project/kipicmd/kipitest-debug.cpp,
+	project/kipicmd/kipitest-debug.h,
+	project/kipicmd/kipiuploadwidget.cpp,
+	project/kipicmd/kipiuploadwidget.h, project/kipicmd/main.cpp,
+	test/CMakeLists.txt, test/README,
+	test/kipiimagecollectionselector.cpp,
+	test/kipiimagecollectionselector.h,
+	test/kipiimagecollectionshared.cpp,
+	test/kipiimagecollectionshared.h, test/kipiimageinfoshared.cpp,
+	test/kipiimageinfoshared.h, test/kipiinterface.cpp,
+	test/kipiinterface.h, test/kipitest-debug.cpp,
+	test/kipitest-debug.h, test/kipiuploadwidget.cpp,
+	test/kipiuploadwidget.h, test/main.cpp: move this test program to
+	root folder
+
+2011-04-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/kipicmd/Messages.sh: no need i18n handling with this test
+	program
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* yandexfotki/yandexrsa.h, yandexfotki/yfalbum.h,
+	yandexfotki/yfphoto.h, yandexfotki/yftalker.h,
+	yandexfotki/yfwindow.h: polish
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* yandexfotki/logindialog.cpp: polish
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/CMakeLists.txt: compile under Win32. Still valid under
+	Linux
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/plugin_rajceexport.cpp: compile under MSVC
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcewidget.h: compile under MSVC
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcesession.cpp: _ prefix ==> m_
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/sessionstate.cpp, rajceexport/sessionstate.h: _ prefix
+	==> m_
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/kipiplugin_rajceexport.desktop: anti spam
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/newalbumdialog.cpp, rajceexport/newalbumdialog.h: _
+	prefix => m_
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcewindow.cpp, rajceexport/rajcewindow.h: polish Fix
+	memory leak
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcelogindialog.cpp, rajceexport/rajcelogindialog.h,
+	rajceexport/rajcesession.cpp, rajceexport/rajcesession.h: constify
+	static private members use m_ prefix instead _ for private members
+
+2011-04-14  Script Kiddy <scripty@kde.org>
+
+	* rajceexport/kipiplugin_rajceexport.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-04-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/plugin_rajceexport.cpp, rajceexport/rajcewidget.cpp,
+	rajceexport/rajcewidget.h: polish
+
+2011-04-14  Yuri Chornoivan <yurchor@ukr.net>
+
+	* rajceexport/rajcewidget.cpp: fix copy-paste bug: Picasaweb->Rajce
+
+2011-04-13  Lukas Krejci <krejci.l@centrum.cz>
+
+	* rajceexport/rajcewidget.cpp, rajceexport/sessionstate.h: 
+	Translated the error messages taken out of the czech only
+	documentation, added a missed out error code in the enum.
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/plugin_rajceexport.cpp, rajceexport/rajcewidget.cpp: 
+	polish
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcesession.h, rajceexport/rajcewidget.cpp,
+	rajceexport/rajcewidget.h, rajceexport/rajcewindow.cpp,
+	rajceexport/rajcewindow.h: polish
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcewidget.cpp, rajceexport/sessionstate.cpp,
+	rajceexport/sessionstate.h: polish
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* AUTHORS: polish
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/icons/CMakeLists.txt: polish
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcesession.cpp, rajceexport/rajcesession.h: polish
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/CMakeLists.txt, rajceexport/rajcelogindialog.cpp,
+	rajceexport/rajcelogindialog.h: polish
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/mpform.cpp, rajceexport/mpform.h,
+	rajceexport/newalbumdialog.cpp, rajceexport/newalbumdialog.h,
+	rajceexport/plugin_rajceexport.cpp, rajceexport/rajcewidget.cpp: Fix
+	coding style.  Polish implementation.  Fix warnings.
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* AUTHORS: update
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* README: update
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/Messages.sh, rajceexport/TODO: enable i18n for new
+	kipi-plugin RajceExport.  CCMAIL: kde-i18n-doc@kde.org
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcewindow.cpp: use moc file
+
+2011-04-13  Montel Laurent <montel@kde.org>
+
+	* rajceexport/rajcelogindialog.h, rajceexport/rajcesession.h,
+	rajceexport/rajcewidget.h: Fix forward declaration
+
+2011-04-13  Montel Laurent <montel@kde.org>
+
+	* rajceexport/newalbumdialog.cpp, rajceexport/newalbumdialog.h: 
+	const'ify
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/album.cpp, rajceexport/album.h,
+	rajceexport/plugin_rajceexport.cpp,
+	rajceexport/plugin_rajceexport.h, rajceexport/rajcesession.cpp: Use
+	moc file Polish implementation Fix indent and coding style
+
+2011-04-13  Script Kiddy <scripty@kde.org>
+
+	* rajceexport/kipiplugin_rajceexport.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-04-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: polish
+
+2011-04-12  Lukas Krejci <krejci.l@centrum.cz>
+
+	* CMakeLists.txt, rajceexport/.gitignore,
+	rajceexport/CMakeLists.txt, rajceexport/album.cpp,
+	rajceexport/album.h, rajceexport/icons/CMakeLists.txt,
+	rajceexport/kipiplugin_rajceexport.desktop, rajceexport/mpform.cpp,
+	rajceexport/mpform.h, rajceexport/newalbumdialog.cpp,
+	rajceexport/newalbumdialog.h, rajceexport/plugin_rajceexport.cpp,
+	rajceexport/plugin_rajceexport.h, rajceexport/rajcelogindialog.cpp,
+	rajceexport/rajcelogindialog.h, rajceexport/rajcesession.cpp,
+	rajceexport/rajcesession.h, rajceexport/rajcewidget.cpp,
+	rajceexport/rajcewidget.h, rajceexport/rajcewindow.cpp,
+	rajceexport/rajcewindow.h, rajceexport/sessionstate.cpp,
+	rajceexport/sessionstate.h: importing rajce.net export plugin
+
+2011-04-12  Montel Laurent <montel@kde.org>
+
+	* imageviewer/timer.cpp, imageviewer/timer.h,
+	imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h: Const'ify
+
+2011-04-12  Montel Laurent <montel@kde.org>
+
+	* imageviewer/texture.cpp, imageviewer/texture.h: const'ify
+
+2011-04-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-11  Montel Laurent <montel@kde.org>
+
+	* calendar/wizard/monthwidget.cpp, calendar/wizard/monthwidget.h: 
+	Const'ify
+
+2011-04-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.cpp,
+	metadataedit/plugin/metadataedit.h: Remove i18n puzzle in dialog
+	title.  BUGS: 270649
+
+2011-04-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/wmwidget.cpp: apply patch #58765 CCBUGS: 270587
+
+2011-04-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* acquireimages/CMakeLists.txt: compile under 64bits computer with
+	GCC BUGS: 270593
+
+2011-04-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/wmwindow.cpp: apply patch #58767 from Guillame Paumier
+	BUGS: 270587
+
+2011-04-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/wmwindow.cpp: apply patch #58766 from Guillame Paumier
+	BUGS: 270579
+
+2011-04-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/CMakeLists.txt: compile under 64bits
+
+2011-04-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/CMakeLists.txt: Win32 rule is not necessary here.
+	MSVC is pure Win32 compiler
+
+2011-04-08  Andi Clemens <andi.clemens@gmx.net>
+
+	* metadataedit/plugin/metadataedit.cpp: fix pedantic
+
+2011-04-07  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifeditwidget.cpp,
+	metadataedit/exif/exifeditwidget.h,
+	metadataedit/iptc/iptceditwidget.cpp,
+	metadataedit/iptc/iptceditwidget.h,
+	metadataedit/plugin/metadataedit.cpp,
+	metadataedit/plugin/metadataedit.h,
+	metadataedit/xmp/xmpeditwidget.cpp,
+	metadataedit/xmp/xmpeditwidget.h: factoring
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.cpp: missing to call methods here
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.cpp,
+	metadataedit/plugin/metadataedit.h: use const ref
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.cpp,
+	metadataedit/plugin/plugin_metadataedit.cpp: do not refresh all
+	items on kipi host application, but only current one if it's
+	modified CCMAIL:  dodon.victor@gmail.com
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifeditwidget.cpp,
+	metadataedit/exif/exifeditwidget.h,
+	metadataedit/iptc/iptceditwidget.cpp,
+	metadataedit/iptc/iptceditwidget.h,
+	metadataedit/plugin/metadataedit.cpp,
+	metadataedit/plugin/metadataedit.h,
+	metadataedit/xmp/xmpeditwidget.cpp,
+	metadataedit/xmp/xmpeditwidget.h: same race condition here with
+	previous, next, apply, ok buttons.  Factoring code in dialog and
+	call relevant methods in metadata widget fix the problem.  CCMAIL :
+	dodon.victor@gmail.com
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifeditwidget.cpp,
+	metadataedit/exif/exifeditwidget.h,
+	metadataedit/iptc/iptceditwidget.cpp,
+	metadataedit/iptc/iptceditwidget.h,
+	metadataedit/plugin/metadataedit.cpp,
+	metadataedit/xmp/xmpeditwidget.cpp,
+	metadataedit/xmp/xmpeditwidget.h: it dangerous to emit close signal
+	from dialog to metadata widget for save settings.  This emit is done
+	when dioalog is closed. there is a chance is to see a race
+	condition.  Because signal is not instantaneous, they can be emit to
+	null place, if metatada widget have disapear from memory.  Calling
+	directly saveSettings() methods is better and prevent this
+	problem...  CCMAIL: dodon.victor@gmail.com
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifeditwidget.cpp,
+	metadataedit/iptc/iptceditwidget.cpp,
+	metadataedit/xmp/xmpeditwidget.cpp: about data is not used here.
+	init interface pointer to null CCMAIL: dodon.victor@gmail.com
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.h: polish
+
+2011-04-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.cpp: fix coding style
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/TODO: update
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifeditwidget.cpp,
+	metadataedit/exif/exifeditwidget.h,
+	metadataedit/iptc/iptceditwidget.cpp,
+	metadataedit/iptc/iptceditwidget.h,
+	metadataedit/plugin/metadataedit.cpp,
+	metadataedit/xmp/xmpeditwidget.cpp,
+	metadataedit/xmp/xmpeditwidget.h: fix classes naming CCMAIL:
+	dodon.victor@gmail.com
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/plugin_metadataedit.cpp,
+	metadataedit/plugin/plugin_metadataedit.h: use d private internal
+	container
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadatacheckbox.cpp,
+	metadataedit/plugin/metadatacheckbox.h,
+	metadataedit/plugin/multistringsedit.cpp,
+	metadataedit/plugin/multistringsedit.h,
+	metadataedit/plugin/multivaluesedit.cpp,
+	metadataedit/plugin/multivaluesedit.h,
+	metadataedit/plugin/objectattributesedit.cpp,
+	metadataedit/plugin/objectattributesedit.h: more private internal
+	container
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifadjust.cpp, metadataedit/exif/exifadjust.h,
+	metadataedit/exif/exifcaption.cpp, metadataedit/exif/exifcaption.h,
+	metadataedit/exif/exifdevice.cpp, metadataedit/exif/exifdevice.h,
+	metadataedit/exif/exiflens.cpp, metadataedit/exif/exiflens.h,
+	metadataedit/exif/exiflight.cpp, metadataedit/exif/exiflight.h: more
+	private internal container
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/iptc/iptccategories.cpp,
+	metadataedit/iptc/iptccategories.h,
+	metadataedit/iptc/iptccontent.cpp, metadataedit/iptc/iptccontent.h,
+	metadataedit/iptc/iptccredits.cpp, metadataedit/iptc/iptccredits.h,
+	metadataedit/iptc/iptcenvelope.cpp,
+	metadataedit/iptc/iptcenvelope.h,
+	metadataedit/iptc/iptckeywords.cpp,
+	metadataedit/iptc/iptckeywords.h, metadataedit/iptc/iptcorigin.cpp,
+	metadataedit/iptc/iptcorigin.h,
+	metadataedit/iptc/iptcproperties.cpp,
+	metadataedit/iptc/iptcproperties.h,
+	metadataedit/iptc/iptcstatus.cpp, metadataedit/iptc/iptcstatus.h,
+	metadataedit/iptc/iptcsubjects.cpp,
+	metadataedit/iptc/iptcsubjects.h: more private internal container
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/xmp/xmpcategories.cpp,
+	metadataedit/xmp/xmpcategories.h, metadataedit/xmp/xmpcontent.cpp,
+	metadataedit/xmp/xmpcontent.h, metadataedit/xmp/xmpcredits.cpp,
+	metadataedit/xmp/xmpcredits.h, metadataedit/xmp/xmpkeywords.cpp,
+	metadataedit/xmp/xmpkeywords.h, metadataedit/xmp/xmporigin.cpp,
+	metadataedit/xmp/xmporigin.h, metadataedit/xmp/xmpproperties.cpp,
+	metadataedit/xmp/xmpproperties.h: more private internal container
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifeditwidget.cpp,
+	metadataedit/exif/exifeditwidget.h,
+	metadataedit/iptc/iptceditwidget.cpp,
+	metadataedit/iptc/iptceditwidget.h,
+	metadataedit/xmp/xmpeditwidget.cpp,
+	metadataedit/xmp/xmpeditwidget.h: more private internal container
+	use const ref fix indent and coding style CCMAIL:
+	victor.dodon@cti.pub.ro
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.cpp: save/restore current tab
+	index between sessions CCMAIL: victor.dodon@cti.pub.ro
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.cpp: no need a private memeber to
+	host tab name. It's only used in this method.  CCMAIL:
+	victor.dodon@cti.pub.ro
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/metadataedit.cpp: Use KDE internationalization
+	: tr() => i18n() CCMAIL: victor.dodon@cti.pub.ro
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/xmp/xmpstatus.cpp, metadataedit/xmp/xmpstatus.h: Fix
+	layout.  More private internal container CCMAIL:
+	victor.dodon@cti.pub.ro
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/xmp/xmpsubjects.cpp, metadataedit/xmp/xmpsubjects.h: 
+	polish
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/plugin/plugin_metadataedit.cpp,
+	metadataedit/plugin/plugin_metadataedit.h: remove actions relevant
+	of "Remove metadata", which exist in Batch Queue Manager as tool and
+	is more powerfull to batch items.  BUGS: 169230
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifdatetime.cpp,
+	metadataedit/exif/exifdatetime.h: sub second informations must be
+	wrapped around 0-59 seconds.  use more private internal container
+	polish implementation BUGS: 203047
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/CMakeLists.txt,
+	metadataedit/comment/commenteditdialog.cpp,
+	metadataedit/comment/commenteditdialog.h,
+	metadataedit/comment/commentremovedialog.cpp,
+	metadataedit/comment/commentremovedialog.h,
+	metadataedit/common/altlangstringedit.cpp,
+	metadataedit/common/altlangstringedit.h,
+	metadataedit/common/metadatacheckbox.cpp,
+	metadataedit/common/metadatacheckbox.h,
+	metadataedit/common/metadataedit.cpp,
+	metadataedit/common/metadataedit.h,
+	metadataedit/common/multistringsedit.cpp,
+	metadataedit/common/multistringsedit.h,
+	metadataedit/common/multivaluesedit.cpp,
+	metadataedit/common/multivaluesedit.h,
+	metadataedit/common/objectattributesedit.cpp,
+	metadataedit/common/objectattributesedit.h,
+	metadataedit/plugin/altlangstringedit.cpp,
+	metadataedit/plugin/altlangstringedit.h,
+	metadataedit/plugin/metadatacheckbox.cpp,
+	metadataedit/plugin/metadatacheckbox.h,
+	metadataedit/plugin/metadataedit.cpp,
+	metadataedit/plugin/metadataedit.h,
+	metadataedit/plugin/multistringsedit.cpp,
+	metadataedit/plugin/multistringsedit.h,
+	metadataedit/plugin/multivaluesedit.cpp,
+	metadataedit/plugin/multivaluesedit.h,
+	metadataedit/plugin/objectattributesedit.cpp,
+	metadataedit/plugin/objectattributesedit.h,
+	metadataedit/plugin/plugin_metadataedit.cpp,
+	metadataedit/plugin/plugin_metadataedit.h: remove obsolete caption
+	edit dialog. Use Caption and tags tab for digiKAm right side bar
+	instead, which is more powerfull.  I support multi-language,
+	multi-authors, Exif, Iptc, and XMP BUGS: 184763
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/common/metadataedit.cpp,
+	metadataedit/common/metadataedit.h: give credit to Victor.  polish
+	implementation : - More private internal container.  - Remove orphelin space.  - Remove tabs (never use tabs as separators in source code).  - Fix indent an coding style.  CCMAIL : victor.dodon@cti.pub.ro
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/CMakeLists.txt,
+	metadataedit/kipiplugin_metadataedit.desktop,
+	metadataedit/plugin/kipiplugin_metadataedit.desktop,
+	metadataedit/plugin/plugin_metadataedit.cpp,
+	metadataedit/plugin/plugin_metadataedit.h,
+	metadataedit/plugin_metadataedit.cpp,
+	metadataedit/plugin_metadataedit.h: move plugin files to a dedicated
+	sub folder
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/TODO: all is done here
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/common/altlangstringedit.cpp,
+	metadataedit/common/altlangstringedit.h: port this widget to KEXiv2
+	to reduce duplicate code.  more private internal container. Code
+	polish CCMAIL: victor.dodon@cti.pub.ro
+
+2011-04-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/CMakeLists.txt, metadataedit/TODO,
+	metadataedit/exif/exifeditdialog.cpp,
+	metadataedit/exif/exifeditdialog.h,
+	metadataedit/iptc/iptceditdialog.cpp,
+	metadataedit/iptc/iptceditdialog.h,
+	metadataedit/plugin_metadataedit.cpp,
+	metadataedit/plugin_metadataedit.h,
+	metadataedit/xmp/xmpeditdialog.cpp,
+	metadataedit/xmp/xmpeditdialog.h: missing to commit these files from
+	Victor dialog page factoring patch
+
+2011-04-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* batchprocessimages/common/batchprocessimagesdialog.cpp,
+	debianscreenshots/plugin_debianscreenshots.cpp,
+	facebook/plugin_facebook.cpp, flickrexport/plugin_flickrexport.cpp,
+	jpeglossless/plugin/utils.cpp,
+	jpeglossless/transform/jpegtransform.cpp, kopete/plugin_kopete.cpp,
+	picasawebexport/plugin_picasawebexport.cpp,
+	printimages/plugin/plugin_printimages.cpp, shwup/plugin_shwup.cpp,
+	smug/plugin_smug.cpp, yandexfotki/yfwindow.cpp: disable MSVC 2008
+	C4996 warnings about POSIX methods
+
+2011-04-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/common/metadataedit.cpp,
+	metadataedit/common/metadataedit.h,
+	metadataedit/exif/exifeditwidget.cpp,
+	metadataedit/exif/exifeditwidget.h,
+	metadataedit/iptc/iptceditwidget.cpp,
+	metadataedit/iptc/iptceditwidget.h,
+	metadataedit/xmp/xmpeditwidget.cpp,
+	metadataedit/xmp/xmpeditwidget.h: big patch from Victor Dodon to
+	merger exif/iptc/and Xmp edito to a common dialog.  By this way, no
+	need to open a different dialog for each metadata type.  CCMAIL:
+	victor.dodon@cti.pub.ro
+
+2011-04-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/plugin_wikimedia.cpp: disable C4996
+
+2011-04-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/CMakeLists.txt: fix warnings under MSVC
+
+2011-04-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* acquireimages/CMakeLists.txt: use staic library to speedup
+	compilation
+
+2011-04-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/CMakeLists.txt: use static lib to speedup compilation
+
+2011-04-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/CMakeLists.txt, metadataedit/Messages.sh,
+	metadataedit/TODO, metadataedit/comment/commenteditdialog.cpp,
+	metadataedit/comment/commenteditdialog.h,
+	metadataedit/comment/commentremovedialog.cpp,
+	metadataedit/comment/commentremovedialog.h,
+	metadataedit/common/altlangstringedit.cpp,
+	metadataedit/common/altlangstringedit.h,
+	metadataedit/common/metadatacheckbox.cpp,
+	metadataedit/common/metadatacheckbox.h,
+	metadataedit/common/multistringsedit.cpp,
+	metadataedit/common/multistringsedit.h,
+	metadataedit/common/multivaluesedit.cpp,
+	metadataedit/common/multivaluesedit.h,
+	metadataedit/common/objectattributesedit.cpp,
+	metadataedit/common/objectattributesedit.h,
+	metadataedit/exif/exifadjust.cpp, metadataedit/exif/exifadjust.h,
+	metadataedit/exif/exifcaption.cpp, metadataedit/exif/exifcaption.h,
+	metadataedit/exif/exifdatetime.cpp,
+	metadataedit/exif/exifdatetime.h, metadataedit/exif/exifdevice.cpp,
+	metadataedit/exif/exifdevice.h,
+	metadataedit/exif/exifeditdialog.cpp,
+	metadataedit/exif/exifeditdialog.h, metadataedit/exif/exiflens.cpp,
+	metadataedit/exif/exiflens.h, metadataedit/exif/exiflight.cpp,
+	metadataedit/exif/exiflight.h, metadataedit/icons/CMakeLists.txt,
+	metadataedit/iptc/iptccategories.cpp,
+	metadataedit/iptc/iptccategories.h,
+	metadataedit/iptc/iptccontent.cpp, metadataedit/iptc/iptccontent.h,
+	metadataedit/iptc/iptccredits.cpp, metadataedit/iptc/iptccredits.h,
+	metadataedit/iptc/iptceditdialog.cpp,
+	metadataedit/iptc/iptceditdialog.h,
+	metadataedit/iptc/iptcenvelope.cpp,
+	metadataedit/iptc/iptcenvelope.h,
+	metadataedit/iptc/iptckeywords.cpp,
+	metadataedit/iptc/iptckeywords.h, metadataedit/iptc/iptcorigin.cpp,
+	metadataedit/iptc/iptcorigin.h,
+	metadataedit/iptc/iptcproperties.cpp,
+	metadataedit/iptc/iptcproperties.h,
+	metadataedit/iptc/iptcstatus.cpp, metadataedit/iptc/iptcstatus.h,
+	metadataedit/iptc/iptcsubjects.cpp,
+	metadataedit/iptc/iptcsubjects.h,
+	metadataedit/kipiplugin_metadataedit.desktop,
+	metadataedit/plugin_metadataedit.cpp,
+	metadataedit/plugin_metadataedit.h,
+	metadataedit/xmp/xmpcategories.cpp,
+	metadataedit/xmp/xmpcategories.h, metadataedit/xmp/xmpcontent.cpp,
+	metadataedit/xmp/xmpcontent.h, metadataedit/xmp/xmpcredits.cpp,
+	metadataedit/xmp/xmpcredits.h, metadataedit/xmp/xmpeditdialog.cpp,
+	metadataedit/xmp/xmpeditdialog.h, metadataedit/xmp/xmpkeywords.cpp,
+	metadataedit/xmp/xmpkeywords.h, metadataedit/xmp/xmporigin.cpp,
+	metadataedit/xmp/xmporigin.h, metadataedit/xmp/xmpproperties.cpp,
+	metadataedit/xmp/xmpproperties.h, metadataedit/xmp/xmpstatus.cpp,
+	metadataedit/xmp/xmpstatus.h, metadataedit/xmp/xmpsubjects.cpp,
+	metadataedit/xmp/xmpsubjects.h: revert
+
+2011-04-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/CMakeLists.txt, metadataedit/Messages.sh,
+	metadataedit/TODO, metadataedit/comment/commenteditdialog.cpp,
+	metadataedit/comment/commenteditdialog.h,
+	metadataedit/comment/commentremovedialog.cpp,
+	metadataedit/comment/commentremovedialog.h,
+	metadataedit/common/altlangstringedit.cpp,
+	metadataedit/common/altlangstringedit.h,
+	metadataedit/common/metadatacheckbox.cpp,
+	metadataedit/common/metadatacheckbox.h,
+	metadataedit/common/multistringsedit.cpp,
+	metadataedit/common/multistringsedit.h,
+	metadataedit/common/multivaluesedit.cpp,
+	metadataedit/common/multivaluesedit.h,
+	metadataedit/common/objectattributesedit.cpp,
+	metadataedit/common/objectattributesedit.h,
+	metadataedit/exif/exifadjust.cpp, metadataedit/exif/exifadjust.h,
+	metadataedit/exif/exifcaption.cpp, metadataedit/exif/exifcaption.h,
+	metadataedit/exif/exifdatetime.cpp,
+	metadataedit/exif/exifdatetime.h, metadataedit/exif/exifdevice.cpp,
+	metadataedit/exif/exifdevice.h, metadataedit/exif/exiflens.cpp,
+	metadataedit/exif/exiflens.h, metadataedit/exif/exiflight.cpp,
+	metadataedit/exif/exiflight.h, metadataedit/icons/CMakeLists.txt,
+	metadataedit/iptc/iptccategories.cpp,
+	metadataedit/iptc/iptccategories.h,
+	metadataedit/iptc/iptccontent.cpp, metadataedit/iptc/iptccontent.h,
+	metadataedit/iptc/iptccredits.cpp, metadataedit/iptc/iptccredits.h,
+	metadataedit/iptc/iptcenvelope.cpp,
+	metadataedit/iptc/iptcenvelope.h,
+	metadataedit/iptc/iptckeywords.cpp,
+	metadataedit/iptc/iptckeywords.h, metadataedit/iptc/iptcorigin.cpp,
+	metadataedit/iptc/iptcorigin.h,
+	metadataedit/iptc/iptcproperties.cpp,
+	metadataedit/iptc/iptcproperties.h,
+	metadataedit/iptc/iptcstatus.cpp, metadataedit/iptc/iptcstatus.h,
+	metadataedit/iptc/iptcsubjects.cpp,
+	metadataedit/iptc/iptcsubjects.h,
+	metadataedit/kipiplugin_metadataedit.desktop,
+	metadataedit/plugin_metadataedit.cpp,
+	metadataedit/plugin_metadataedit.h,
+	metadataedit/xmp/xmpcategories.cpp,
+	metadataedit/xmp/xmpcategories.h, metadataedit/xmp/xmpcontent.cpp,
+	metadataedit/xmp/xmpcontent.h, metadataedit/xmp/xmpcredits.cpp,
+	metadataedit/xmp/xmpcredits.h, metadataedit/xmp/xmpkeywords.cpp,
+	metadataedit/xmp/xmpkeywords.h, metadataedit/xmp/xmporigin.cpp,
+	metadataedit/xmp/xmporigin.h, metadataedit/xmp/xmpproperties.cpp,
+	metadataedit/xmp/xmpproperties.h, metadataedit/xmp/xmpstatus.cpp,
+	metadataedit/xmp/xmpstatus.h, metadataedit/xmp/xmpsubjects.cpp,
+	metadataedit/xmp/xmpsubjects.h: revert
+
+2011-04-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-04-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/CMakeLists.txt, metadataedit/CMakeLists.txt,
+	metadataedit/TODO, metadataedit/exif/exifeditdialog.cpp,
+	metadataedit/exif/exifeditdialog.h,
+	metadataedit/iptc/iptceditdialog.cpp,
+	metadataedit/iptc/iptceditdialog.h,
+	metadataedit/plugin_metadataedit.cpp,
+	metadataedit/plugin_metadataedit.h,
+	metadataedit/xmp/xmpeditdialog.cpp,
+	metadataedit/xmp/xmpeditdialog.h: link under 64 bits computers BUGS:
+	269991
+
+2011-04-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* yandexfotki/yandexrsa.cpp: use new/delete allocation here, because
+	MSVC 2008 don't like char[] array allocation with a variable size...
+	CCMAIL: roman@tsisyk.com
+
+2011-04-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/CMakeLists.txt, dngconverter/dnginfo/CMakeLists.txt,
+	dngconverter/plugin/CMakeLists.txt,
+	dngconverter/test/CMakeLists.txt: use static lib to compile faster
+	this plugin
+
+2011-04-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: suppress more interanl MSVC warnings
+
+2011-04-01  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-03-31  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/blendingdlg/expoblendingdlg.cpp,
+	mediawiki/wmwidget.cpp: handle new changes in libkdcraw API
+
+2011-03-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/wmwindow.cpp: show mediawiki lib version in about dialog
+
+2011-03-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, NEWS: update
+
+2011-03-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/TODO, mediawiki/plugin_wikimedia.cpp,
+	mediawiki/plugin_wikimedia.h, mediawiki/wikimediajob.cpp: update
+
+2011-03-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit eb720c65491e245294c2a99da3b2055c903f9262 Author: Gilles
+	Caulier <caulier.gilles@gmail.com> Date:   Wed Mar 30 14:21:44 2011
+	+0200
+
+2011-03-30  Montel Laurent <montel@kde.org>
+
+	* mediawiki/wmwidget.cpp: Add missing i18n
+
+2011-03-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-03-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* sendimages/emailpage.cpp, sendimages/emailpage.h,
+	sendimages/emailsettingscontainer.h, sendimages/imageresize.cpp,
+	sendimages/imageresize.h, sendimages/imagespage.cpp,
+	sendimages/imagespage.h, sendimages/plugin_sendimages.cpp,
+	sendimages/plugin_sendimages.h, sendimages/sendimages.cpp,
+	sendimages/sendimages.h, sendimages/sendimagesdialog.cpp,
+	sendimages/sendimagesdialog.h: apply patch #58451 from MAx Lin More
+	private internal containers BUGS: 268316
+
+2011-03-30  Script Kiddy <scripty@kde.org>
+
+	* yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-03-29  Montel Laurent <montel@kde.org>
+
+	* mediawiki/wmwidget.cpp: Add missing i18n
+
+2011-03-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/wmwidget.cpp: polish
+
+2011-03-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-03-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* mediawiki/wmwindow.cpp: polish
+
+2011-03-29  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-03-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsdataparser.cpp: Also read GPX V1.1 schema files.
+
+2011-03-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-03-28  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* : commit 48a33a35f649493f5ea5c59172e5196d91552e95 Author: Nicolas
+	Lécureuil <neoclust.kde@free.fr> Date:   Mon Mar 28 09:59:54 2011
+	+0200
+
+2011-03-28  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+
 2.0.0-beta4 2011-03-28
 
 2011-03-27  Pino Toscano <pino@kde.org>
