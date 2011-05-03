@@ -1,0 +1,202 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_ipodexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-13 03:18+0100\n"
+"PO-Revision-Date: 2009-02-17 18:04+0200\n"
+"Last-Translator: Toussis Manolis <manolis@koppermind.homelinux.org>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin_ipodexport.cpp:71
+msgid "Export to &iPod..."
+msgstr "Εξαγωγή στο &iPod..."
+
+#: plugin_ipodexport.cpp:87 IpodExportDialog.cpp:111
+msgid "iPod Export"
+msgstr "Εξαγωγή iPod"
+
+#: IpodExportDialog.cpp:114
+msgid "A tool to export image to an iPod device"
+msgstr "Ένα εργαλείο εξαγωγής εικόνων σε μια συσκευή iPod"
+
+#: IpodExportDialog.cpp:115
+#, fuzzy
+#| msgid "(c) 2006-2008, Seb Ruiz"
+msgid ""
+"(c) 2006-2008, Seb Ruiz\n"
+"(c) 2008-2010, Gilles Caulier"
+msgstr "(c) 2006-2008, Seb Ruiz"
+
+#: IpodExportDialog.cpp:118
+msgid "Seb Ruiz"
+msgstr "Seb Ruiz"
+
+#: IpodExportDialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Συγγραφέας και συντηρητής"
+
+#: IpodExportDialog.cpp:121
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: IpodExportDialog.cpp:121
+msgid "Developer"
+msgstr "Προγραμματιστής"
+
+#: IpodExportDialog.cpp:130
+msgid "Plugin Handbook"
+msgstr "Εγχειρίδιο πρόσθετου"
+
+#: IpodExportDialog.cpp:144
+msgid "Hard Disk"
+msgstr "Σκληρός δίσκος"
+
+#: IpodExportDialog.cpp:154
+msgid "&Add..."
+msgstr "&Προσθήκη..."
+
+#: IpodExportDialog.cpp:155
+msgid "Add images to be queued for the iPod."
+msgstr "Προσθήκη εικόνων για αναμονή μεταφοράς στο iPod."
+
+#: IpodExportDialog.cpp:157 IpodExportDialog.cpp:199
+msgid "&Remove"
+msgstr "Α&φαίρεση"
+
+#: IpodExportDialog.cpp:158
+msgid "Remove selected image from the list."
+msgstr "Αφαίρεση της επιλεγμένης εικόνας από τη λίστα."
+
+#: IpodExportDialog.cpp:160
+msgid "&Transfer"
+msgstr "&Μεταφορά"
+
+#: IpodExportDialog.cpp:161
+msgid "Transfer images to the selected iPod album."
+msgstr "Μεταφορά εικόνων στο επιλεγμένο άλμπουμ του iPod."
+
+#: IpodExportDialog.cpp:167
+msgid "The preview of the selected image in the list."
+msgstr "Η προεπισκόπηση της επιλεγμένης εικόνας της λίστας."
+
+#: IpodExportDialog.cpp:188
+msgid "iPod"
+msgstr "iPod"
+
+#: IpodExportDialog.cpp:196
+msgid "&New..."
+msgstr "&Νέο"
+
+#: IpodExportDialog.cpp:197
+msgid "Create a new photo album on the iPod."
+msgstr "Δημιουργία ενός νέου άλμπουμ φωτογραφιών στο iPod."
+
+#: IpodExportDialog.cpp:200
+msgid "R&ename..."
+msgstr "&Μετονομασία..."
+
+#: IpodExportDialog.cpp:205
+msgid "Remove the selected photos or albums from the iPod."
+msgstr "Αφαίρεση των επιλεγμένων εικόνων ή άλμπουμ από το iPod."
+
+#: IpodExportDialog.cpp:206
+msgid "Rename the selected photo album on the iPod."
+msgstr "Μετονομασία του επιλεγμένου άλμπουμ εικόνων στο iPod."
+
+#: IpodExportDialog.cpp:562
+msgid "Image files"
+msgstr "Αρχεία εικόνας"
+
+#: IpodExportDialog.cpp:565
+msgid "Add Images"
+msgstr "Προσθήκη εικόνων"
+
+#: IpodExportDialog.cpp:599
+msgid "New iPod Photo Album"
+msgstr "Νέο άλμπουμ εικόνων iPod"
+
+#: IpodExportDialog.cpp:600
+msgid "Create a new album:"
+msgstr "Δημιουργία ενός νέου άλμπουμ:"
+
+#: IpodExportDialog.cpp:631
+msgid "Rename iPod Photo Album"
+msgstr "Μετονομασία άλμπουμ εικόνων iPod"
+
+#: IpodExportDialog.cpp:632
+msgid "New album title:"
+msgstr "Νέος τίτλος άλμπουμ:"
+
+#: IpodExportDialog.cpp:819
+#, fuzzy, kde-format
+#| msgid ""
+#| "An iPod photo database could not be found on device mounted at %1. Should "
+#| "I try to initialize your iPod photo database?"
+msgid ""
+"An iPod photo database could not be found on the device mounted at %1. "
+"Initialize the iPod photo database?"
+msgstr ""
+"Δε βρέθηκε βάση δεδομένων εικόνων iPod στην προσαρτημένη συσκευή στο %1. Να "
+"γίνει αρχικοποίηση της βάσης δεδομένων εικόνων iPod;"
+
+#: IpodExportDialog.cpp:823
+msgid "Initialize iPod Photo Database?"
+msgstr "Αρχικοποίηση βάσης δεδομένων φωτογραφιών iPod;"
+
+#: IpodExportDialog.cpp:824
+msgid "&Initialize"
+msgstr "&Αρχικοποίηση"
+
+#: IpodHeader.cpp:94
+msgid "<p align=\"center\"><b>No iPod was detected</b></p>"
+msgstr "<p align=\"center\"><b>Δεν ανιχνεύθηκαν iPod</b></p>"
+
+#: IpodHeader.cpp:101
+msgid "Refresh"
+msgstr "Ανανέωση"
+
+#: IpodHeader.cpp:114
+#, kde-format
+msgid ""
+"<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></"
+"p>"
+msgstr ""
+"<p align=\"center\"><b>Το iPod σας (%1) δε φαίνεται να υποστηρίζει γραφικά.</"
+"b></p>"
+
+#: IpodHeader.cpp:122
+msgid "Set iPod Model"
+msgstr "Ορισμός μοντέλου iPod"
+
+#: IpodHeader.cpp:138
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected at: %2</b></p>"
+msgstr "<p align=\"center\"><b>Ανιχνεύθηκε το iPod %1 στο: %2</b></p>"
+
+#: IpodHeader.cpp:143
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected</b></p>"
+msgstr "<p align=\"center\"><b>Ανιχνεύθηκε το iPod %1</b></p>"
+
+#: IpodListItem.cpp:40
+msgid "Unnamed"
+msgstr "Χωρίς όνομα"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Τούσης Μανώλης"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "manolis@koppermind.homelinux.org"

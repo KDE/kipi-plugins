@@ -1,0 +1,282 @@
+# translation of kipiplugin_timeadjust.po to 简体中文
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ni Hui <shuizhuyuanluo@126.com>, 2007, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_timeadjust\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-01-25 03:02+0100\n"
+"PO-Revision-Date: 2010-05-17 01:26+0800\n"
+"Last-Translator: Ni Hui <shuizhuyuanluo@126.com>\n"
+"Language-Team: Chinese Simplified <kde-china@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: clockphotodialog.cpp:169
+msgid "Determine time difference with clock photo"
+msgstr "以时钟照片判定时间差"
+
+#: clockphotodialog.cpp:171
+msgid "Load different photo"
+msgstr "装入不同的照片"
+
+#: clockphotodialog.cpp:181
+msgid ""
+"If you have a photo in your set with a clock or another external time source "
+"on it, you can load it here and set the indicator to the (date and) time "
+"displayed. The difference of your internal camera clock will be determined "
+"from this setting."
+msgstr ""
+"如果您的相册集中有张照片里有时钟或者其它外部时间来源，那么您 可以在此装入该时"
+"间来源以设定所显示的日期和时间标示。您相机的 内部时钟差将从此设置中判定。"
+
+#: clockphotodialog.cpp:210
+msgid "Scale:"
+msgstr "比例："
+
+#: clockphotodialog.cpp:230
+msgid "The clock date and time:"
+msgstr "时钟日期和时间："
+
+#: clockphotodialog.cpp:321
+#, kde-format
+msgid ""
+"<font color=\"red\"><b>Could not obtain date and time information from image "
+"%1.</b></font>"
+msgstr "<font color=\"red\"><b>无法从图像 %1 中获取日期和时间信息。</b></font>"
+
+#: clockphotodialog.cpp:333
+#, kde-format
+msgid "<font color=\"red\"><b>Could not load image %1.</b></font>"
+msgstr "<font color=\"red\"><b>无法装入图像 %1。</b></font>"
+
+#: plugin_timeadjust.cpp:65
+msgid "Adjust Time && Date..."
+msgstr "调整时间和日期..."
+
+#: timeadjustdialog.cpp:183 timeadjustdialog.cpp:921 timeadjustdialog.cpp:930
+msgid "Adjust Time & Date"
+msgstr "调整时间和日期"
+
+#: timeadjustdialog.cpp:191
+msgid "Time Adjust"
+msgstr "调整时间"
+
+#: timeadjustdialog.cpp:194
+msgid "A Kipi plugin for adjusting the timestamp of picture files"
+msgstr "一个用于调整图片文件时间戳的 Kipi 插件"
+
+#: timeadjustdialog.cpp:195
+msgid ""
+"(c) 2003-2005, Jesper K. Pedersen\n"
+"(c) 2006-2009, Gilles Caulier"
+msgstr ""
+"(c) 2003-2005，Jesper K. Pedersen\n"
+"(c) 2006-2009，Gilles Caulier"
+
+#: timeadjustdialog.cpp:198
+msgid "Jesper K. Pedersen"
+msgstr "Jesper K. Pedersen"
+
+#: timeadjustdialog.cpp:199
+msgid "Author"
+msgstr "作者"
+
+#: timeadjustdialog.cpp:202
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: timeadjustdialog.cpp:203
+msgid "Developer and maintainer"
+msgstr "开发者和维护者"
+
+#: timeadjustdialog.cpp:211
+msgid "Handbook"
+msgstr "手册"
+
+#: timeadjustdialog.cpp:219
+msgid "Use Time && Date"
+msgstr "使用时间和日期"
+
+#: timeadjustdialog.cpp:225
+#, kde-format
+msgid "%1 timestamp"
+msgstr "%1 时间戳"
+
+#: timeadjustdialog.cpp:233 timeadjustdialog.cpp:310
+msgid "File last modified"
+msgstr "上次修改的文件"
+
+#: timeadjustdialog.cpp:237
+msgid "EXIF/IPTC/XMP"
+msgstr "EXIF/IPTC/XMP"
+
+#: timeadjustdialog.cpp:238 timeadjustdialog.cpp:311
+msgid "EXIF: created"
+msgstr "EXIF：创建时间"
+
+#: timeadjustdialog.cpp:239 timeadjustdialog.cpp:312
+msgid "EXIF: original"
+msgstr "EXIF：原始时间"
+
+#: timeadjustdialog.cpp:240 timeadjustdialog.cpp:313
+msgid "EXIF: digitized"
+msgstr "EXIF：数字化时间"
+
+#: timeadjustdialog.cpp:241 timeadjustdialog.cpp:314
+msgid "IPTC: created"
+msgstr "IPTC：创建时间"
+
+#: timeadjustdialog.cpp:242
+msgid "XMP: created"
+msgstr "XMP：创建时间"
+
+#: timeadjustdialog.cpp:252
+msgid "Reset to current date"
+msgstr "重置为当前日期"
+
+#: timeadjustdialog.cpp:278
+msgid "Adjust"
+msgstr "调整"
+
+#: timeadjustdialog.cpp:282
+msgid "Copy value"
+msgstr "复制值"
+
+#: timeadjustdialog.cpp:283
+msgid "Add"
+msgstr "加"
+
+#: timeadjustdialog.cpp:284
+msgid "Subtract"
+msgstr "减"
+
+#: timeadjustdialog.cpp:288
+msgctxt "time adjust offset, days value label"
+msgid "days"
+msgstr "天"
+
+#: timeadjustdialog.cpp:291
+msgid "Determine from clock photo"
+msgstr "以时钟照片判定"
+
+#: timeadjustdialog.cpp:306
+msgid "Update Time && Date"
+msgstr "更新时间和日期"
+
+#: timeadjustdialog.cpp:315
+msgid "XMP"
+msgstr "XMP"
+
+#: timeadjustdialog.cpp:337
+msgid "Example"
+msgstr "示例"
+
+#: timeadjustdialog.cpp:515 timeadjustdialog.cpp:546 timeadjustdialog.cpp:572
+#: timeadjustdialog.cpp:632
+#, kde-format
+msgid "1 image will be changed"
+msgid_plural "%1 images will be changed"
+msgstr[0] "将更改 %1 张图像"
+
+#: timeadjustdialog.cpp:552 timeadjustdialog.cpp:638
+#, kde-format
+msgid "1 image will be changed; "
+msgid_plural "%1 images will be changed; "
+msgstr[0] "将更改 %1 张图像；"
+
+#: timeadjustdialog.cpp:556
+#, kde-format
+msgid "1 image will be skipped due to an inexact date."
+msgid_plural "%1 images will be skipped due to inexact dates."
+msgstr[0] "由于日期不正确，将会跳过 %1 张图像。"
+
+#: timeadjustdialog.cpp:642
+#, kde-format
+msgid "1 image will be skipped due to a missing source timestamp."
+msgid_plural "%1 images will be skipped due to missing source timestamps."
+msgstr[0] "由于缺少来源时间戳，将会跳过 %1 张图像。"
+
+#: timeadjustdialog.cpp:739
+#, kde-format
+msgid "Custom: <b>%1</b>"
+msgstr "自定义：<b>%1</b>"
+
+#: timeadjustdialog.cpp:755
+msgid "Original: <b>N/A</b><br/>Image will be skipped"
+msgstr "原始：将跳过<br/><b>未知</b>图像"
+
+#: timeadjustdialog.cpp:764
+#, kde-format
+msgid "Original: <b>%1</b>"
+msgstr "原始：<b>%1</b>"
+
+#: timeadjustdialog.cpp:771
+#, kde-format
+msgid "Original: <b>%1</b><br/>Adjusted: <b>%2</b>"
+msgstr "原始：<b>%1</b><br/>调整后：<b>%2</b>"
+
+#: timeadjustdialog.cpp:919
+msgid "Unable to update metadata in:"
+msgstr "无法更新元数据："
+
+#: timeadjustdialog.cpp:928
+msgid "Unable to update file modification time in:"
+msgstr "无法更新文件修改时间："
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ni Hui"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "shuizhuyuanluo@126.com"
+
+#~ msgid "Adjustment Type"
+#~ msgstr "调整类型"
+
+#~ msgid "Set file date to EXIF/IPTC/XMP creation date"
+#~ msgstr "设定文件数据为 EXIF/IPTC/XMP 创建日期"
+
+#~ msgid "Custom date"
+#~ msgstr "自定义日期"
+
+#~ msgid "Update EXIF creation date"
+#~ msgstr "更新 EXIF 创建时间"
+
+#~ msgid "Update IPTC creation date"
+#~ msgstr "更新 IPTC 创建时间"
+
+#~ msgid "Update XMP creation date"
+#~ msgstr "更新 XMP 创建时间"
+
+#~ msgid "Adjustments"
+#~ msgstr "调整"
+
+#~ msgid "Hours:"
+#~ msgstr "小时："
+
+#~ msgid "Minutes:"
+#~ msgstr "分钟："
+
+#~ msgid "Seconds:"
+#~ msgstr "秒："
+
+#~ msgid "Months:"
+#~ msgstr "月："
+
+#~ msgid "Years:"
+#~ msgstr "年："
+
+#~ msgid "<b>%1</b><br/>would, for example, change into<br/><b>%2</b>"
+#~ msgstr "例如，<b>%1</b><br/>将会更改为<br/><b>%2</b>"
+
+#~ msgid "Unable to set date and time like picture metadata from:"
+#~ msgstr "无法设定诸如图片元数据的日期和时间从："

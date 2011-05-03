@@ -1,0 +1,242 @@
+# translation of kipiplugin_dngconverter.po to Italian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Federico Zenith <federico.zenith@member.fsf.org>, 2008, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dngconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2011-03-18 08:09+0100\n"
+"Last-Translator: Federico Zenith <federico.zenith@member.fsf.org>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: it\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr "Impossibile identificare immagine raw"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "Produttore: %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "Modello: %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "Creazione: %1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "Diaframma: f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "Lunghezza focale: %1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "Esposizione: 1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Sensibilità: %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "File da convertire"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "Convertitore DNG..."
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "Incorpora file originale"
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "Compressione senza perdita"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr "Aggiorna la data di modifica del file"
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+"Imposta la data di modifica del file alla data di creazione presa dai dati "
+"aggiuntivi dell'immagine."
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "Anteprima JPEG:"
+
+#: plugin/settingswidget.cpp:115
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "Nessuna"
+
+#: plugin/settingswidget.cpp:116
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "Media"
+
+#: plugin/settingswidget.cpp:117
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "Di pari dimensioni"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "Se il file di destinazione esiste già:"
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "Sovrascrivi automaticamente"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr "Apri una finestra di rinomina del file"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr "Convertitore di immagini DNG"
+
+#: plugin/aboutdata.h:52
+#, kde-format
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr ""
+"Uno strumento per convertire in serie le immagini raw di una macchina "
+"fotografica in DNG\n"
+"Con gli strumenti XMP %1\n"
+"Con gli strumenti DNG 1.3"
+
+#: plugin/aboutdata.h:55
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+"© 2008-2011, Gilles Caulier\n"
+"© 2010-2011, Jens Müller"
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr "Autore"
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr "Jens Müller"
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr "Sviluppatore"
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "Esci dal convertitore DNG"
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr ""
+"Conversione in serie delle immagini raw di una macchina fotografica in DNG"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "&Aggiungi"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr "Aggiungi nuovi file raw all'elenco"
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "&Rimuovi"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr "Rimuovi i file raw selezionati dall'elenco"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "Miniature"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "File raw"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "File di destinazione"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "Macchina fotografica"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr "Manuale"
+
+#: plugin/batchdialog.cpp:332
+msgid "The list does not contain any Raw files to process."
+msgstr "L'elenco non contiene file raw da elaborare."
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "&Interrompi"
+
+#: plugin/batchdialog.cpp:474
+msgid "Abort the conversion of Raw files."
+msgstr "Interrompi la conversione dei file raw."
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "Con&verti"
+
+#: plugin/batchdialog.cpp:480
+msgid "Start converting the Raw images using the current settings."
+msgstr "Avvia la conversione delle immagini raw con le impostazioni attuali"
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "Salva l'immagine raw convertita da «%1» come"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "Salvataggio dell'immagine %1 non riuscito"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Federico Zenith"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "federico.zenith@member.fsf.org"

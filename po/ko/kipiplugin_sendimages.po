@@ -1,0 +1,424 @@
+# Translation of kipiplugin_sendimages to Korean.
+# Copyright (C) 2007 This_file_is_part_of_KDE
+# This file is distributed under the same license as the extragear-base package.
+# Park Shinjo <kde@peremen.name>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-libs\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2007-12-27 11:17+0900\n"
+"Last-Translator: Park Shinjo <kde@peremen.name>\n"
+"Language-Team: Korean <cho.sungjae@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "전자 우편 프로그램:"
+
+#: emailpage.cpp:89
+#, fuzzy
+#| msgid "Default"
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "기본값"
+
+#: emailpage.cpp:100
+#, fuzzy
+#| msgid ""
+#| "<p>Select here your preferred external e-mail program. <b>Default</b> is "
+#| "the current e-mail program set on KDE Control Panel."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"<p>선호하는 외부 전자 우편 프로그램을 선택하십시오. <b>기본값</b>은 KDE 제어"
+"판에서 설정한 전자 우편 프로그램입니다."
+
+#: emailpage.cpp:106
+#, fuzzy, kde-format
+#| msgid "Attach a file with caption and tags"
+msgid "Attach a file with image properties from %1"
+msgstr "캡션과 태그를 달아서 파일 첨부하기"
+
+#: emailpage.cpp:109
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>If you enable this option, all image captions and tags will be added "
+#| "as an attached file."
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr "<p>이 옵션을 사용하면 모든 그림 캡션과 태그가 첨부 파일로 추가됩니다."
+
+#: emailpage.cpp:118
+#, fuzzy
+#| msgid "Maximum e-mail size limit:"
+msgid "Maximum email size limit:"
+msgstr "최대 전자 우편 크기 제한:"
+
+#: emailpage.cpp:119
+#, fuzzy
+#| msgid "MB"
+msgid " MB"
+msgstr "MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "그림 속성 조정"
+
+#: emailpage.cpp:125
+#, fuzzy
+#| msgid ""
+#| "<p>If you enable this option, all images to send can be resized and "
+#| "recompressed."
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"<p>이 옵션을 사용하면 모든 그림을 보내기 전에 크기를 조정하고 압축합니다."
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "그림 속성"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "가장 작게 (320 픽셀)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "작게 (640 픽셀)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "중간 (800 픽셀)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "크게 (1024 픽셀)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "아주 크게 (1280 픽셀)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "매우 크게 - 인쇄용 (1600 픽셀)"
+
+#: emailpage.cpp:139
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "그림 크기:"
+
+#: emailpage.cpp:168
+#, fuzzy
+#| msgid "<p>Select here the images files format to send.<p>"
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>보낼 그림의 형식을 선택하십시오.<p>"
+
+#: emailpage.cpp:169
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "그림 파일 형식:"
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "그림 품질:"
+
+#: emailpage.cpp:188
+#, fuzzy
+#| msgid "<p>The new compression value of JPEG images to send:<p>"
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>보낼 JPEG 그림의 새 압축률 설정:<p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+
+#: imageresize.cpp:191
+#, fuzzy
+#| msgid "Error in opening input file"
+msgid "Error opening input file"
+msgstr "입력 파일을 여는 중 오류 발생"
+
+#: imageresize.cpp:202
+#, fuzzy
+#| msgid "Error in opening temporary folder"
+msgid "Error opening temporary folder"
+msgstr "임시 폴더를 여는 중 오류 발생"
+
+#: imageresize.cpp:247
+#, fuzzy
+#| msgid "Cannot resizing image. Aborting."
+msgid "Cannot resize image. Aborting."
+msgstr "그림 크기를 조절할 수 없습니다. 중단합니다."
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "크기 조정된 그림(JPEG)을 저장할 수 없습니다. 중단합니다."
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "크기 조정된 그림(PNG)을 저장할 수 없습니다. 중단합니다."
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "전자 우편으로 그림 보내기..."
+
+#: sendimages.cpp:130
+#, fuzzy
+#| msgid "E-mail images"
+msgid "Email images"
+msgstr "전자 우편으로 그림 보내기"
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "사용자가 작업을 취소함"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "%1 크기 조정 중"
+
+#: sendimages.cpp:187
+#, fuzzy, kde-format
+#| msgid "%1 resized succesfully"
+msgid "%1 resized successfully"
+msgstr "%1 크기 조정 완료"
+
+#: sendimages.cpp:194
+#, fuzzy, kde-format
+#| msgid "Failed to resize %1 : %2"
+msgid "Failed to resize %1: %2"
+msgstr "%1의 크기를 조정하는 데 실패함: %2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "그림 속성 파일 만들기"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "캡션 없음"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "키워드 없음"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"파일 \"%1\":\n"
+"원본 그림: %2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "설명: %1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "태그: %1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "별점: %1\n"
+
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:264
+#, fuzzy
+#| msgid "Images properties file done"
+msgid "Image properties file done"
+msgstr "그림 속성 파일 완료됨"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"아래에 있는 그림의 크기를 조정할 수 없습니다.\n"
+"크기 조정 없이 첨부 파일로 추가하시겠습니까?"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "그림 크기 조정하는 데 실패함"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+
+#: sendimages.cpp:391
+#, fuzzy
+#| msgid "Starting default KDE e-mail program..."
+msgid "Starting default KDE email program..."
+msgstr "기본 KDE 전자 우편 프로그램 시작하는 중..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "프로그램 \"%1\"을(를) 시작할 수 없습니다. 시스템을 확인하십시오."
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "프로그램 \"%1\" 시작하는 중..."
+
+#: sendimages.cpp:568
+#, fuzzy
+#| msgid "After to have sent your images by e-mail..."
+msgid "After having sent your images by email..."
+msgstr "그림을 전자 우편으로 보낸 후..."
+
+#: sendimages.cpp:569
+#, fuzzy
+#| msgid "Press 'Close' button to clean-up temporary files"
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "임시 파일을 삭제하기 위해서 닫기 단추를 누르십시오"
+
+#: sendimagesdialog.cpp:90
+#, fuzzy
+#| msgid "E-Mail Images Options"
+msgid "Email Images Options"
+msgstr "그림 보내기 옵션"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "그림"
+
+#: sendimagesdialog.cpp:100
+#, fuzzy
+#| msgid "Images List"
+msgid "Image List"
+msgstr "그림 목록"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "전자 우편"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "전자 우편 옵션"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "그림 보내기"
+
+#: sendimagesdialog.cpp:115
+#, fuzzy
+#| msgid "A Plugin to e-mail pictures"
+msgid "A plugin to email pictures"
+msgstr "그림을 전자 우편으로 보내는 플러그인"
+
+#: sendimagesdialog.cpp:116
+#, fuzzy
+#| msgid "(c) 2003-2007, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "(c) 2003-2007, Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "작성자와 관리자"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "개발자"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+#, fuzzy
+#| msgid "Plugin Handbook"
+msgid "Handbook"
+msgstr "플러그인 도움말"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Park Shinjo"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "가장 작게 (320 픽셀)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "작게 (640 픽셀)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "중간 (800 픽셀)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "크게 (1024 픽셀)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "아주 크게 (1280 픽셀)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "매우 크게 - 인쇄용 (1600 픽셀)"
+
+#, fuzzy
+#~| msgid "<p>This is the list of images to e-mail."
+#~ msgid "This is the list of images to e-mail."
+#~ msgstr "<p>이것은 전자 우편으로 보낼 그림의 목록입니다."
+
+#~ msgid "&Add"
+#~ msgstr "추가(&A)"
+
+#~ msgid "&Remove"
+#~ msgstr "삭제(&R)"

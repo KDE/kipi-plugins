@@ -1,0 +1,256 @@
+# translation of kipiplugin_dngconverter.po to Khmer
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dngconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2010-11-05 16:28+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Language: km_KH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: plugin/actionthread.cpp:228
+#, fuzzy
+msgid "Cannot identify Raw image"
+msgstr "មិន​អាច​មើល​រូប​ភាព​ដើម​បាន​ឡើយ"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "បង្កើត ៖ %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "ម៉ូដែល ៖ %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "បាន​បង្កើត ៖ %1\n"
+
+#: plugin/actionthread.cpp:247
+#, fuzzy, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "រន្ធ ៖ f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "ដែល​ប្រសព្វគ្នា ៖ %1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, fuzzy, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "ការ​ដាក់​ឲ្យ​ត្រូវ ៖ 1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, fuzzy, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr ""
+"ភាព​ច្បាស់លាស់​\n"
+" ៖ %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "ឯកសារ​ត្រូវ​បម្លែង​"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "កម្មវិធី​បម្លែង DNG ..."
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "បង្កប់​ឯកសារ​ដើម​"
+
+#: plugin/settingswidget.cpp:107
+#, fuzzy
+msgid "Lossless Compression"
+msgstr "ការ​បង្ហាប់ Lossless "
+
+#: plugin/settingswidget.cpp:109
+#, fuzzy
+msgid "Update File Modification Date"
+msgstr "ធ្វើ​បច្ចុប្បន្នភាព​កាលបរិច្ឆេទ​កំណែប្រែ​​ឯកសារ​"
+
+#: plugin/settingswidget.cpp:110
+#, fuzzy
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+"កំណត់​កាលបរិច្ឆេទ​កំណែប្រែ​ឯកសារ​​ ដើម្បី​​ការ​​ធ្វើ​កាលបរិច្ឆេទ​ដែល​បាន​ផ្ដល់​ក្នុង​ទិន្នន័យ​មេតា​រូបភាព​ ។​"
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "មើល​ JPEG ជាមុន​ ៖"
+
+#: plugin/settingswidget.cpp:115
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "គ្មាន​"
+
+#: plugin/settingswidget.cpp:116
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "មធ្យម​​"
+
+#: plugin/settingswidget.cpp:117
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "ទំហំ​ពេញ​"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "ប្រសិនបើ​មាន​ឯកសារ​គោលដៅ​ ៖​"
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "សរសេរ​ជាន់​លើ​ដោយ​ស្វ័យប្រវត្តិ​"
+
+#: plugin/settingswidget.cpp:128
+#, fuzzy
+msgid "Open rename-file dialog"
+msgstr "បើក​ប្ដូរ​ឈ្មោះ​ប្រអប់​ឯកសារ​"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr "កម្មវិធី​បម្លែង​រូបភាព​ DNG "
+
+#: plugin/aboutdata.h:52
+#, fuzzy, kde-format
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr ""
+"ឧបករណ៍​ត្រូវ​បម្លែង​រូបភាព​ម៉ាស៊ីន​ថតរូប​​ដើម​ ទៅជា​ DNG\n"
+"ដោយ​ប្រើ​ XMP toolkit %1\n"
+"ដោយ​ប្រើ​ DNG toolkit 1.3"
+
+#: plugin/aboutdata.h:55
+#, fuzzy
+#| msgid ""
+#| "(c) 2008-2010, Gilles Caulier\n"
+#| "(c) 2010, Jens Mueller"
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៨​-២០១០ ដោយ Gilles Caulier\n"
+" រក្សាសិទ្ធិ​ឆ្នាំ​ ២០១០ ដោយ Jens Mueller"
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr "អ្នក​និពន្ធ​"
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: plugin/aboutdata.h:63
+#, fuzzy
+msgid "Developer"
+msgstr "អ្នក​អភិវឌ្ឍន៍​"
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "ចេញ​កម្មវិធី​បម្លែង​  DNG "
+
+#: plugin/batchdialog.cpp:130
+#, fuzzy
+msgid "Batch convert RAW camera images to DNG"
+msgstr "បម្លែង​រូបភាព​ម៉ាស៊ីន​ថត​រូប​ដើម​ទៅជា​​ DNG"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "បន្ថែម​"
+
+#: plugin/batchdialog.cpp:134
+#, fuzzy
+msgid "Add new Raw files to the list"
+msgstr "បន្ថែម​​ឯកសារ​​ដើម​​ថ្មី​ទៅកាន់​បញ្ជី "
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "យកចេញ​"
+
+#: plugin/batchdialog.cpp:137
+#, fuzzy
+msgid "Remove selected Raw files from the list"
+msgstr "យក​ឯកសារ​ដើម​​ដែល​បាន​ជ្រើស​ចេញ​ពី​បញ្ជី​"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "រូបភាព​តូច​"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "ឯកសារដើម​"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "ឯកសារ​គោល​ដៅ​"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "ម៉ាស៊ីន​ថត​រូប​​"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ​"
+
+#: plugin/batchdialog.cpp:332
+#, fuzzy
+msgid "The list does not contain any Raw files to process."
+msgstr "បញ្ជី​មិន​មាន​ឯកសារ​ដើម​​មួយ​ចំនួន​ត្រូវ​ដំណើរការ ។"
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "បោះបង់​"
+
+#: plugin/batchdialog.cpp:474
+#, fuzzy
+msgid "Abort the conversion of Raw files."
+msgstr "បោះបង់​ការ​បម្លែង​នៃ​ឯកសារ​ដើម​ ។"
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "បម្លែង​"
+
+#: plugin/batchdialog.cpp:480
+#, fuzzy
+msgid "Start converting the Raw images using the current settings."
+msgstr "ចាប់ផ្ដើម​ការ​បម្លែង​រូបភាព​​ដើម​​ដោយ​​ប្រើ​ការកំណត់​បច្ចុប្បន្ន ។"
+
+#: plugin/batchdialog.cpp:529
+#, fuzzy, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "រក្សាទុក​រូបភាព​ដើម​​ដែល​បាន​បម្លែង​​ពី​ '%1' ជា​"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "បាន​បរាជ័យ​រក្សាទុក​រូបភាព​ %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info, ..."

@@ -30,8 +30,8 @@ puts "**** l10n ****"
 puts "\n"
 
 i18nlangs = `cat subdirs`
-Dir.mkdir( "l10n" )
-Dir.chdir( "l10n" )
+Dir.mkdir( "po" )
+Dir.chdir( "po" )
 topmakefile = File.new( "CMakeLists.txt", File::CREAT | File::RDWR | File::TRUNC )
 for lang in i18nlangs
     lang.chomp!()
@@ -55,7 +55,6 @@ for lang in i18nlangs
     end
     Dir.chdir("..")
     topmakefile << "add_subdirectory( #{lang} )\n"
-    puts "POUET #{lang}\n"
 end
 
 puts "\n"

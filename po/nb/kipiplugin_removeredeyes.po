@@ -1,0 +1,412 @@
+# Translation of kipiplugin_removeredeyes to Norwegian Bokmål
+#
+# Bjørn Kvisli <bjorn.kvisli@gmail.com>, 2008.
+# Bjørn Steensrud <bjornst@skogkatt.homelinux.org>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_removeredeyes\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2009-12-28 15:47+0100\n"
+"Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
+"Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "Innstillinger for uttrekk av klumper"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "Minste &klumpstørrelse:"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "Minste &rundhet:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "Innstillinger for klassifiserer"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "Bruk &standard klassifiserer"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr ""
+"Hvis dette er krysset av. brukes standardklassifisereren som leveres med "
+"dette KIPI-programtillegget"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "Oppgi her hvor klassifisereren finnes."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "&Nabogrupper:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "&Skaleringsfaktor:"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "&Avansert modus"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "&Enkel modus"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>Langsommere<br /> (lavoppløsning/lett slørede bilder)</b></p> <p>I "
+"denne kjøremåten er det mest pålitelig fangst og korrigering av røde øyne. "
+"Ulempen med høyere fangstrate er en mye langsommere beregning.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>Standard</b></p> <p>Denne kjøremåten passer for de fleste "
+"bildeoppløsninger. Forsøk alltid dette først.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>Raskere<br /> (høyoppløsningsbilder)</b></p> <p>I denne kjøremåten er "
+"den automatiske fangsten raskere, men det kan være flere falske positive. "
+"Bruk dette bare for skarpe bilder med svært høy oppløsning.</p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "&Rødøyefjerning …"
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "Automatisk rødøyefjerning"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "Fjern røde øyne"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr "Et programtillegg som automatisk oppdager og fjerner rødøye-effekten."
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "© 2008–2009 Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "Forfatter og vedlikeholder"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "Håndbok"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "Korriger &bilder"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "Start korrigering av bildene i lista"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "&Prøvekjøring"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr "Simuler korrigeringsprosessen uten å lagre resultatene."
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "Totalt:"
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "Vellykket: "
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "Mislykket:"
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "Filliste"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "Innstillinger"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p>Du valgte <b>«Skriv over» som korreksjonsmodus</b>.<br /> Er du sikker på "
+"at du vil miste de originale bildefilene dine?</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "Overskrivingsmodus"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>Noen av bildene kunne ikke analyseres med de gjeldende innstilllingene, "
+"eller de inneholder ikke røde øyne i det hele tatt.</p> <p><b>Skal disse "
+"bildene tas ut av lista?</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "Ta bort ubehandlede bilder?"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p>Du forsøkte å legge til <b>RAW-bilder</b> i programtillegget,<br /> men "
+"disse filtypene støttes ikke.</p> <p><b>De ble automatisk fjernet fra lista."
+"</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "RAW-bilder ble funnet"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>%1 bilde vellykket behandlet.</p>"
+msgstr[1] "<p>%1 bilder vellykket behandlet.</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>Korrigering fullført</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "Korrigering fullført"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr ""
+"<h2>Ingen finner er lastet inn.<br /> Programtillegget kan ikke kjøres.</h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "Rettede øyne"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "Her er lista over bilder der røde øyne skal fjernes."
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>Dette skjermelementet viser en forhåndsvisning av rettelsen for det "
+"valgte bildet.</p> <p> <ul> <li>Flytt musepekeren <b>over</"
+"b>forhåndsvisningen for å vise originalbildet.</li> <li>Flytt musepekeren "
+"<b>ut av</b> forhåndsvisningen for å vise det korrigerte bildet,</li> "
+"<li><b>Trykk på</b> forhåndsvisningen for å vise korreksjonsmasken.</li> </"
+"ul> </p> <p>Du kan se enkelte deler av bildet nærmere ved å bruke zoom-"
+"knappen og panoreringselementet.</p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>oppretter forhåndsvisning…</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>Klarer ikke åpne forhåndsvisningsbilde <br/> «%1» </p>"
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "Feil ved innlasting av fil til forhåndsvsning"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "Opprinnelig bilde"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "Korrigert bilde"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "Korreksjonsmaske"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "Ikke valgt noe bilde"
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "Lagringsinnstillinger"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>Disse innstillingene styrer hvordan korrigerte bilder lagres. En kan "
+"velge mellom tre måter:</p> <p> <ul> <li><b>Undermappe:</b> Korrigerte "
+"bilder lagres i en undermappe under gjeldende albumsti.</li> "
+"<li><b>Prefiks:</b>Et egendefinert prefiks blir lagt til det korrigerte "
+"bildet.</li> <li><b>Suffiks:</b>Et egendefinert suffiks blir lagt til det "
+"korrigerte bildet.</li> <li><b>Overskriv:</b>Alle originalbilder blir "
+"erstattet.</li> </ul> </p> <p>I alle fall kan du legge til et valgfritt "
+"nøkkelord i bildenes metadata.</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "Lagre i undermappe"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "Legg til prefiks"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "Legg til suffiks"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "Skriv over"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr ""
+"Oppgi navn på undermappe, prefiks eller suffiks som skal brukes for de "
+"korrigerte bildene."
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "Legg til &metadata-nøkkelord"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr ""
+"Hvis dette er krysset av blir et selvvalgt nøkkelord lagt til bildenes "
+"metadata."
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "Oppgi navn på det selvvalgte nøkkelordet her …"
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "Håndtering av ubehandlede bilder"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>Disse innstillingene styrer hva som gjøres med ubehandlede bilder i "
+"prøvekjøring. Ubehandlede bilder kan fjernes fra lista så de ikke behandles "
+"igjen, slik at den endelige korrigeringen blir raskere. Det er tre "
+"kjøremåter å velge mellom:</p> <p><ul> <li><b>Spør bruker:</b> Et "
+"oppsprettsvindu dukker opp for å spørre hva som skal gjøres.</li> "
+"<li><b>Behold i fillista:</b> Alle ubehandlede bilder blir beholdt i lista.</"
+"li> <li><b>Fjern fra fillista:</b> Alle ubehandlede bilder fjernes fra lista "
+"etter prøvekjøringen.</li> </ul> </p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "&Spør bruker"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr ""
+"Hvis du velger dette blir brukeren spurt om ubehandlede bilder skal beholdes "
+"eller fjernes."
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "&Behold i fillista"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr ""
+"Hvis du velger dette blir ubehandlede filer beholdt i fillista etter "
+"prøvekjøringen."
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "Fje&rn fra fillista"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr ""
+"Hvis du velger dette blir ubehandlede filer fjernet fra fillista etter "
+"prøvekjøringen."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Bjørn Steensrud"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bjornst@skogkatt.homelinux.org"

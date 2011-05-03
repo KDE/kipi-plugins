@@ -1,0 +1,578 @@
+# translation of kipiplugin_flickrexport.po to
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sveinn í Felli <sveinki@nett.is>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-12-21 08:27+0000\n"
+"Last-Translator: Sveinn í Felli\n"
+"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+"\n"
+
+#: comboboxintermediate.h:53
+msgid "Various"
+msgstr "Ýmislegt"
+
+#: flickrlist.cpp:390
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Hakaðu við hvort myndin eigi að vera sýnileg öllum eða notaðu valkosti í "
+"sendingu til að tilgreina það fyrir allar myndirnar"
+
+#: flickrlist.cpp:394
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Hakaðu við hvort myndin eigi að vera sýnileg fjölskyldunni eða notaðu "
+"valkosti í sendingu til að tilgreina það fyrir allar myndirnar"
+
+#: flickrlist.cpp:398
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Hakaðu við hvort myndin eigi að vera sýnileg vinum þínum eða notaðu valkosti "
+"í sendingu til að tilgreina það fyrir allar myndirnar"
+
+#: flickrlist.cpp:402
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Settu inn öryggisstig fyrir hverja mynd eða notaðu valkosti í sendingu til "
+"að tilgreina það fyrir allar myndirnar"
+
+#: flickrlist.cpp:406
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Settu inn tegund viðfangsefnis fyrir hverja mynd eða notaðu valkosti í "
+"sendingu til að tilgreina það fyrir allar myndirnar"
+
+#: flickrlist.cpp:419
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Settu inn aukamerki á hverja mynd eða notaðu valkosti í sendingu til að bæta "
+"inn merkjum fyrir allar myndirnar"
+
+#: flickrlist.cpp:431
+msgid "Enter extra tags, separated by commas."
+msgstr "Settu aukamerki inn hér, aðskilin með kommum."
+
+#: flickrtalker.cpp:204
+msgid "Getting the Frob"
+msgstr "Næ í Frob"
+
+#: flickrtalker.cpp:249
+msgid "Checking if previous token is still valid"
+msgstr "Athuga hvort eldri auðkennistákn séu ennþá gild"
+
+#: flickrtalker.cpp:275
+msgid ""
+"Please follow the instructions in the browser window, then return to press "
+"Yes if you are authenticated, or No otherwise."
+msgstr ""
+"Farðu eftir leiðbeiningunum í vafraglugganum, komdu síðan aftur hingað til "
+"að ýta á 'Já' ef þú ert innskráð(ur), annars ýttu á 'Nei'."
+
+#: flickrtalker.cpp:277
+#, kde-format
+msgid "%1 Service Web Authorization"
+msgstr "Aðgangsheimildir á %1 vefþjónustu"
+
+#: flickrtalker.cpp:282
+msgid "Authenticating the User on web"
+msgstr "Aukenni notanda á vefnum"
+
+#: flickrtalker.cpp:334
+msgid "Getting the Token from the server"
+msgstr "Næ í auðkennistákn frá þjóninum"
+
+#: flickrtalker.cpp:699
+msgid "No photo specified"
+msgstr "Engin mynd tilgreind"
+
+#: flickrtalker.cpp:702
+msgid "General upload failure"
+msgstr "Almenn villa við sendingu"
+
+#: flickrtalker.cpp:705
+msgid "Filesize was zero"
+msgstr "Skráarstærð var engin"
+
+#: flickrtalker.cpp:708
+msgid "Filetype was not recognized"
+msgstr "Skráartegund var ekki þekkt"
+
+#: flickrtalker.cpp:711
+msgid "User exceeded upload limit"
+msgstr "Notandi fór fram yfir upphleðslutakmarkanir"
+
+#: flickrtalker.cpp:714
+msgid "Invalid signature"
+msgstr "Ógild undirskrift"
+
+#: flickrtalker.cpp:717
+msgid "Missing signature"
+msgstr "Vantar undirskrift"
+
+#: flickrtalker.cpp:720
+msgid "Login Failed / Invalid auth token"
+msgstr "Innskráning mistókst / Ógilt auðkennistákn"
+
+#: flickrtalker.cpp:723
+msgid "Invalid API Key"
+msgstr "Ógildur API lykill"
+
+#: flickrtalker.cpp:726
+msgid "Service currently unavailable"
+msgstr "Þjónustan er tímabundið ekki tiltæk"
+
+#: flickrtalker.cpp:729
+msgid "Invalid Frob"
+msgstr "Ógilt Frob"
+
+#: flickrtalker.cpp:732
+msgid "Format \"xxx\" not found"
+msgstr "Sniðið \"xxx\" finnst ekki"
+
+#: flickrtalker.cpp:735
+msgid "Method \"xxx\" not found"
+msgstr "Aðferðin \"xxx\" finnst ekki"
+
+#: flickrtalker.cpp:738
+msgid "Invalid SOAP envelope"
+msgstr "Ógilt SOAP umslag"
+
+#: flickrtalker.cpp:741
+msgid "Invalid XML-RPC Method Call"
+msgstr "Ógilt XML-RPC Method Call"
+
+#: flickrtalker.cpp:744
+msgid "The POST method is now required for all setters"
+msgstr "POST-aðferðarinnar er núna krafist fyrir alla"
+
+#: flickrtalker.cpp:747
+msgid "Unknown error"
+msgstr "Óþekkt villa"
+
+#: flickrtalker.cpp:752
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Villa kom upp: %1\n"
+"Get ekki haldið áfram."
+
+#: flickrtalker.cpp:899
+msgctxt "As in the permission to"
+msgid "write"
+msgstr "skrifa"
+
+#: flickrtalker.cpp:901
+msgctxt "As in the permission to"
+msgid "read"
+msgstr "lestur"
+
+#: flickrtalker.cpp:903
+msgctxt "As in the permission to"
+msgid "delete"
+msgstr "eyða"
+
+#: flickrtalker.cpp:933
+msgid "Your token is invalid. Would you like to get a new token to proceed?\n"
+msgstr ""
+"Aðgangstáknið þitt er ógilt. Viltu nálgast nýtt aðgangstákn til að geta "
+"haldið áfram?\n"
+
+#: flickrtalker.cpp:1075
+msgid "PhotoSet creation failed: "
+msgstr "Mistókst að búa til myndasett: "
+
+#: flickrtalker.cpp:1166
+msgid "Failed to fetch list of photo sets."
+msgstr "Mistókst að ná í lista með myndasettum."
+
+#: flickrtalker.cpp:1236
+msgid "Failed to upload photo"
+msgstr "Mistókst að senda ljósmynd"
+
+#: flickrtalker.cpp:1300
+msgid "Failed to query photo information"
+msgstr "Mistókst að ná í ljósmyndaupplýsingar"
+
+#: flickrwidget.cpp:80
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Senda</h2></b>"
+
+#: flickrwidget.cpp:85
+msgid ""
+"<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+"font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+"font></a> Senda</h2></b>"
+
+#: flickrwidget.cpp:90
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Senda</h2></b>"
+
+#: flickrwidget.cpp:103 flickrwidget.cpp:108
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Opið (public)"
+
+#: flickrwidget.cpp:107
+msgid "This is the list of images to upload to your Flickr account."
+msgstr ""
+"Þetta er listi með þeim myndum sem verða sendar á Flickr aðganginn þinn."
+
+#: flickrwidget.cpp:112
+msgid "Extra tags"
+msgstr "Aukamerki"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:127
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Fjölskyldan"
+
+#: flickrwidget.cpp:121 flickrwidget.cpp:129
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Vinir"
+
+#: flickrwidget.cpp:136
+msgid "Safety level"
+msgstr "Öryggisstig"
+
+#: flickrwidget.cpp:138
+msgid "Content type"
+msgstr "Tegund efnis"
+
+#: flickrwidget.cpp:141
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Öruggt"
+
+#: flickrwidget.cpp:142
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Hóflegt"
+
+#: flickrwidget.cpp:143
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Takmarkað"
+
+#: flickrwidget.cpp:144 flickrwidget.cpp:277
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Ljósmynd"
+
+#: flickrwidget.cpp:145 flickrwidget.cpp:278
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Skjámynd"
+
+#: flickrwidget.cpp:146 flickrwidget.cpp:279
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Annað"
+
+#: flickrwidget.cpp:172
+msgid "Account"
+msgstr "Aðgangur"
+
+#: flickrwidget.cpp:175
+msgctxt "account settings"
+msgid "Username: "
+msgstr "Notandanafn: "
+
+#: flickrwidget.cpp:178
+msgid "Use a different account"
+msgstr "Skrá inn á öðru nafni"
+
+#: flickrwidget.cpp:181
+msgid "PhotoSet:"
+msgstr "Myndasett:"
+
+#: flickrwidget.cpp:184
+msgid "&New PhotoSet"
+msgstr "&Nýtt myndasett"
+
+#: flickrwidget.cpp:199
+msgid "Tag options"
+msgstr "Valkostir merkja"
+
+#: flickrwidget.cpp:203
+msgid "Use Host Application Tags"
+msgstr "Nota merkingar frá forriti"
+
+#: flickrwidget.cpp:205 flickrwidget.cpp:577
+msgid "More tag options"
+msgstr "Fleiri valkostir merkja"
+
+#: flickrwidget.cpp:219
+msgid "Added Tags: "
+msgstr "Viðbætt merki: "
+
+#: flickrwidget.cpp:222
+msgid "Enter new tags here, separated by commas."
+msgstr "Settu ný merki inn hér, aðskilin með kommum."
+
+#: flickrwidget.cpp:224
+msgid "Add tags per image"
+msgstr "Bæta við merkjum frá hverri mynd"
+
+#: flickrwidget.cpp:225
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Ef þetta er valið, geturðu sett aukamerki fyrir hverja mynd á "
+"skráalistaflipanum"
+
+#: flickrwidget.cpp:229
+msgid "Strip Spaces From Tags"
+msgstr "Fjarlægja auð bil í merkingum"
+
+#: flickrwidget.cpp:242
+msgid "Publication Options"
+msgstr "Möguleikar birtingu"
+
+#: flickrwidget.cpp:247
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Opið (allir geta séð þær)"
+
+#: flickrwidget.cpp:250
+msgid "Visible to Family"
+msgstr "Sjáanleg fjölskyldunni"
+
+#: flickrwidget.cpp:253
+msgid "Visible to Friends"
+msgstr "Sjáanleg vinum"
+
+#: flickrwidget.cpp:256 flickrwidget.cpp:565
+msgid "More publication options"
+msgstr "Fleiri birtingarmöguleikar"
+
+#: flickrwidget.cpp:269
+msgid "Safety level:"
+msgstr "Öryggisstig:"
+
+#: flickrwidget.cpp:271
+msgid "Safe"
+msgstr "Öruggt"
+
+#: flickrwidget.cpp:272
+msgid "Moderate"
+msgstr "Hóflegt"
+
+#: flickrwidget.cpp:273
+msgid "Restricted"
+msgstr "Takmarkað"
+
+#: flickrwidget.cpp:275
+msgid "Content type:"
+msgstr "Tegund efnis:"
+
+#: flickrwidget.cpp:296
+msgid "Resizing Options"
+msgstr "Valkostir við stærðabreytingar"
+
+#: flickrwidget.cpp:301
+msgid "Resize photos before uploading"
+msgstr "Breyta stærð mynda fyrir útflutning"
+
+#: flickrwidget.cpp:312
+msgid "Maximum dimension (pixels):"
+msgstr "Hámarksstærð (dílar):"
+
+#: flickrwidget.cpp:322
+msgid "JPEG Image Quality (higher is better):"
+msgstr "JPEG myndgæði (hærra er betra):"
+
+#: flickrwidget.cpp:350
+msgid "File List"
+msgstr "Skráalisti"
+
+#: flickrwidget.cpp:351
+msgid "Upload Options"
+msgstr "Valmöguleikar við sendingu"
+
+#: flickrwidget.cpp:561
+msgid "Fewer publication options"
+msgstr "Færri birtingarmöguleikar"
+
+#: flickrwidget.cpp:582
+msgid "Fewer tag options"
+msgstr "Færri valkostir merkja"
+
+#: flickrwindow.cpp:84
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Útflutningur á %1 vefþjónustu"
+
+#: flickrwindow.cpp:123
+msgid "Start Uploading"
+msgstr "Byrja sendingu"
+
+#: flickrwindow.cpp:135
+msgid "Flickr/23/Zooomr Export"
+msgstr "Útflutningur á Flickr / 23 / Zooomr"
+
+#: flickrwindow.cpp:138
+msgid ""
+"A Kipi plugin to export an image collection to a Flickr / 23 / Zooomr web "
+"service."
+msgstr ""
+"KIPI-íforrit til útflutnings myndasafna á Flickr / 23 / Zooomr vefþjónustur."
+
+#: flickrwindow.cpp:140
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+
+#: flickrwindow.cpp:144
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:144
+msgid "Author and maintainer"
+msgstr "Höfundur og umsjónaraðili"
+
+#: flickrwindow.cpp:147
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:147
+msgid "Developer"
+msgstr "Forritari"
+
+#: flickrwindow.cpp:155
+msgid "Handbook"
+msgstr "Handbók"
+
+#: flickrwindow.cpp:492
+msgid "&lt;Photostream Only&gt;"
+msgstr "&lt;Einungis Photostream&gt;"
+
+#: flickrwindow.cpp:666
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Sendi skrá %1"
+
+#: flickrwindow.cpp:686
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "Tókst ekki að ná í upplýsingar um myndasett frá %1. %2\n"
+
+#: flickrwindow.cpp:691
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"Mistókst að senda mynd í %1. %2\n"
+"Viltu halda áfram?"
+
+#: login.cpp:68
+msgctxt "flickr login"
+msgid "Username:"
+msgstr "Notandanafn:"
+
+#: login.cpp:71
+msgid "Password:"
+msgstr "Lykilorð:"
+
+#: plugin_flickrexport.cpp:80
+msgid "Export to Flick&r..."
+msgstr "Flytja út til Flick&r..."
+
+#: plugin_flickrexport.cpp:91
+msgid "Export to &23..."
+msgstr "Flytja út til &23..."
+
+#: plugin_flickrexport.cpp:102
+msgid "Export to &Zooomr..."
+msgstr "Flytja út til &Zooomr..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sveinn í Felli"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sveinki@nett.is"
+
+#. i18n: file: flickralbumdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, FlickrAlbumDialog)
+#: rc.cpp:5
+msgid "New PhotoSet"
+msgstr "Nýtt myndasett"
+
+#. i18n: file: flickralbumdialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:8
+msgid "<h3>Create New PhotoSet </h3>"
+msgstr "<h3>Búa til nýtt myndasett </h3>"
+
+#. i18n: file: flickralbumdialog.ui:86
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:11
+msgid "&OK"
+msgstr "Í &lagi"
+
+#. i18n: file: flickralbumdialog.ui:102
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:14
+msgid "&Cancel"
+msgstr "&Hætta við"
+
+#. i18n: file: flickralbumdialog.ui:130
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:17
+msgid "Title (required):"
+msgstr "Titill (krafist):"
+
+#. i18n: file: flickralbumdialog.ui:143
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:20
+msgid "Description (optional)"
+msgstr "Lýsing (valkvætt)"
+
+#~ msgid "Less tag options"
+#~ msgstr "Færri valkostir merkja"
+
+#~ msgid "Less publication options"
+#~ msgstr "Færri birtingarmöguleikar"

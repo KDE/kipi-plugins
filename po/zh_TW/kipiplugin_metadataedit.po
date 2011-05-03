@@ -1,0 +1,4214 @@
+# Dongjun Wu <ziyawu@gmail.com>, 2009.
+# Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2010.
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_metadataedit\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-12 03:49+0200\n"
+"PO-Revision-Date: 2011-04-20 15:21+0800\n"
+"Last-Translator: Franklin Weng <franklin@goodhorse.idv.tw>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: exif/exifadjust.cpp:98
+msgid "Brightness (APEX):"
+msgstr "亮度 (APEX)："
+
+#: exif/exifadjust.cpp:103
+msgid ""
+"Set here the brightness adjustment value in APEX unit used by camera to take "
+"the picture."
+msgstr "在這裡設定圖片拍攝時相機使用的亮度調整值，單位為 APEX。"
+
+#: exif/exifadjust.cpp:108
+msgid "Gain Control:"
+msgstr "增益控制："
+
+#: exif/exifadjust.cpp:110
+msgctxt "gain control"
+msgid "None"
+msgstr "無"
+
+#: exif/exifadjust.cpp:111
+msgctxt "gain control"
+msgid "Low gain up"
+msgstr "中低增益"
+
+#: exif/exifadjust.cpp:112
+msgctxt "gain control"
+msgid "High gain up"
+msgstr "高增益"
+
+#: exif/exifadjust.cpp:113
+msgctxt "gain control"
+msgid "Low gain down"
+msgstr "低增益"
+
+#: exif/exifadjust.cpp:114
+msgctxt "gain control"
+msgid "High gain down"
+msgstr "中高增益"
+
+#: exif/exifadjust.cpp:115
+msgid ""
+"Set here the degree of overall image gain adjustment used by camera to take "
+"the picture."
+msgstr "在這裡設定相機拍攝圖片時使用的整體影像增益調整度數。"
+
+#: exif/exifadjust.cpp:120
+msgid "Contrast:"
+msgstr "對比："
+
+#: exif/exifadjust.cpp:122
+msgctxt "contrast mode"
+msgid "Normal"
+msgstr "普通"
+
+#: exif/exifadjust.cpp:123
+msgctxt "contrast mode"
+msgid "Soft"
+msgstr "軟"
+
+#: exif/exifadjust.cpp:124
+msgctxt "contrast mode"
+msgid "Hard"
+msgstr "硬"
+
+#: exif/exifadjust.cpp:125
+msgid ""
+"Set here the direction of contrast processing applied by the camera to take "
+"the picture."
+msgstr "在這裡設定相機拍攝圖片時套用的對比處理方向。"
+
+#: exif/exifadjust.cpp:130
+msgid "Saturation:"
+msgstr "飽和度："
+
+#: exif/exifadjust.cpp:132
+msgctxt "saturation mode"
+msgid "Normal"
+msgstr "普通"
+
+#: exif/exifadjust.cpp:133
+msgctxt "saturation mode"
+msgid "Low"
+msgstr "低"
+
+#: exif/exifadjust.cpp:134
+msgctxt "saturation mode"
+msgid "High"
+msgstr "高"
+
+#: exif/exifadjust.cpp:135
+msgid ""
+"Set here the direction of saturation processing applied by the camera to "
+"take the picture."
+msgstr "在這裡設定相機拍攝圖片時套用的飽和度處理方向。"
+
+#: exif/exifadjust.cpp:140
+msgid "Sharpness:"
+msgstr "銳利度："
+
+#: exif/exifadjust.cpp:142
+msgctxt "sharpness mode"
+msgid "Normal"
+msgstr "普通"
+
+#: exif/exifadjust.cpp:143
+msgctxt "sharpness mode"
+msgid "Soft"
+msgstr "軟"
+
+#: exif/exifadjust.cpp:144
+msgctxt "sharpness mode"
+msgid "Hard"
+msgstr "硬"
+
+#: exif/exifadjust.cpp:145
+msgid ""
+"Set here the direction of sharpness processing applied by the camera to take "
+"the picture."
+msgstr "在這裡設定相機拍攝圖片時套用的銳利化處理方向。"
+
+#: exif/exifadjust.cpp:150
+msgid "Custom rendered:"
+msgstr "自訂演算方式："
+
+#: exif/exifadjust.cpp:152
+msgid "Normal process"
+msgstr "普通處理"
+
+#: exif/exifadjust.cpp:153
+msgid "Custom process"
+msgstr "自訂處理"
+
+#: exif/exifadjust.cpp:154
+msgid ""
+"Set here the use of special processing on image data, such as rendering "
+"geared to output."
+msgstr "在這裡設定影像資料上特殊處理的使用，例如適合輸出的演算方式。"
+
+#: exif/exifcaption.cpp:107
+msgctxt "name of the document this image has been scanned from"
+msgid "Name (*):"
+msgstr "名稱 (*)："
+
+#: exif/exifcaption.cpp:111
+msgid ""
+"Enter the name of the document from which this image was been scanned. This "
+"field is limited to ASCII characters."
+msgstr "輸入已掃描影像的文件名稱。這個字段限制為 ASCII 字元。"
+
+#: exif/exifcaption.cpp:117
+msgctxt "image title"
+msgid "Title (*):"
+msgstr "標題 (*)："
+
+#: exif/exifcaption.cpp:121
+msgid "Enter the image title. This field is limited to ASCII characters."
+msgstr "輸入影像標題。這個字段限制為 ASCII 字元。"
+
+#: exif/exifcaption.cpp:126
+msgid "Artist (*):"
+msgstr "藝術家 (*)："
+
+#: exif/exifcaption.cpp:130
+msgid ""
+"Enter the image author's name. This field is limited to ASCII characters."
+msgstr "輸入影像作者的姓名。這個字段限制為 ASCII 字元。"
+
+#: exif/exifcaption.cpp:135
+msgid "Copyright (*):"
+msgstr "著作權 (*)："
+
+#: exif/exifcaption.cpp:139
+msgid ""
+"Enter the copyright owner of the image. This field is limited to ASCII "
+"characters."
+msgstr "輸入影像的著作權擁有人。這個字段限制為 ASCII 字元。"
+
+#: exif/exifcaption.cpp:144
+msgctxt "image cpation"
+msgid "Caption:"
+msgstr "標題："
+
+#: exif/exifcaption.cpp:146
+msgid ""
+"Enter the image's caption. This field is not limited. UTF8 encoding will be "
+"used to save the text."
+msgstr "輸入影像的標題。這個字段沒有限制。文字會用 UTF8 編碼儲存。"
+
+#: exif/exifcaption.cpp:150
+#, kde-format
+msgid "Sync captions entered through %1"
+msgstr "同步透過 %1 輸入的標題"
+
+#: exif/exifcaption.cpp:153 iptc/iptccontent.cpp:109 xmp/xmpcontent.cpp:105
+msgid "Sync JFIF Comment section"
+msgstr "同步 JFIF 註解部份"
+
+#: exif/exifcaption.cpp:154
+msgid "Sync XMP caption"
+msgstr "同步 XMP 標題"
+
+#: exif/exifcaption.cpp:155
+msgid "Sync IPTC caption (warning: limited to 2000 printable Ascii characters)"
+msgstr "同步 IPTC 標題 (警告：限制 2000 個可列印 ASCII 字元)"
+
+#: exif/exifcaption.cpp:163 exif/exifdevice.cpp:316
+msgid ""
+"<b>Note: <b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> text "
+"tags marked by (*) only support printable <b><a href='http://en.wikipedia."
+"org/wiki/Ascii'>ASCII</a></b> characters.</b>"
+msgstr ""
+"<b>備註：<b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> 文字標籤"
+"的特點是 (*) 只支援可列印的 <b><a href='http://en.wikipedia.org/wiki/"
+"Ascii'>ASCII</a></b> 字元。</b>"
+
+#: exif/exifdatetime.cpp:111
+msgid "Creation date and time"
+msgstr "建立日期和時間"
+
+#: exif/exifdatetime.cpp:112
+msgid "Creation second"
+msgstr "建立秒"
+
+#: exif/exifdatetime.cpp:115 iptc/iptcorigin.cpp:425 xmp/xmporigin.cpp:399
+#, kde-format
+msgid "Sync creation date hosted by %1"
+msgstr "同步由 %1 託管的建立日期"
+
+#: exif/exifdatetime.cpp:118
+msgid "Sync XMP creation date"
+msgstr "同步 XMP 建立日期"
+
+#: exif/exifdatetime.cpp:119
+msgid "Sync IPTC creation date"
+msgstr "同步 IPTC 建立日期"
+
+#: exif/exifdatetime.cpp:123 iptc/iptcorigin.cpp:432 xmp/xmporigin.cpp:406
+msgid "Set creation date to today"
+msgstr "將建立日期設為今天"
+
+#: exif/exifdatetime.cpp:128
+msgid ""
+"Set here the date and time of image creation. In this standard it is the "
+"date and time the file was changed."
+msgstr "在這裡設定影像建立的日期和時間。使用這項標準會改變日期和時間檔案。"
+
+#: exif/exifdatetime.cpp:130
+msgid ""
+"Set here the fractions of seconds for the date and time of image creation."
+msgstr "在這裡設定影像建立日期和時間的秒數分數。"
+
+#: exif/exifdatetime.cpp:137
+msgid "Original date and time"
+msgstr "原始日期和時間"
+
+#: exif/exifdatetime.cpp:138
+msgid "Original second"
+msgstr "原始秒"
+
+#: exif/exifdatetime.cpp:144
+msgid "Set original date to today"
+msgstr "將原始日期設為今天"
+
+#: exif/exifdatetime.cpp:146
+msgid ""
+"Set here the date and time when the original image data was generated. For a "
+"digital still camera the date and time the picture was taken are recorded."
+msgstr ""
+"在這裡設定原始影像生成時的日期和時間。數位靜態相機的日期和時間是圖片拍攝時所"
+"記錄。"
+
+#: exif/exifdatetime.cpp:149
+msgid ""
+"Set here the fractions of seconds for the date and time when the original "
+"image data was generated."
+msgstr "在這裡設定原始影像生成的日期和時間的秒數分數。"
+
+#: exif/exifdatetime.cpp:156
+msgid "Digitization date and time"
+msgstr "數位化日期和時間"
+
+#: exif/exifdatetime.cpp:157
+msgid "Digitization second"
+msgstr "數位化秒"
+
+#: exif/exifdatetime.cpp:163 iptc/iptcorigin.cpp:410 xmp/xmporigin.cpp:388
+msgid "Set digitization date to today"
+msgstr "將數位化日期設為今天"
+
+#: exif/exifdatetime.cpp:165
+msgid ""
+"Set here the date and time when the image was stored as digital data. If, "
+"for example, an image was captured by a digital still camera and at the same "
+"time the file was recorded, then Original and Digitization date and time "
+"will have the same contents."
+msgstr ""
+"在這裡設定影像儲存為數位資料時的日期和時間。例如用數位靜態相機擷取影像的同時"
+"記錄檔案，那麼原始和數位化日期、時間就會相同。"
+
+#: exif/exifdatetime.cpp:170
+msgid ""
+"Set here the fractions of seconds for the date and time when the image was "
+"stored as digital data."
+msgstr "在這裡設定影像儲存為數位資料的日期和時間的秒數分數。"
+
+#: exif/exifdevice.cpp:133
+msgid "Device manufacturer (*):"
+msgstr "裝置製造廠商 (*)："
+
+#: exif/exifdevice.cpp:137
+msgid ""
+"Set here the manufacturer of image input equipment used to take the picture. "
+"This field is limited to ASCII characters."
+msgstr "在這裡設定影像輸入設備的製造廠商。這個字段限制為 ASCII 字元。"
+
+#: exif/exifdevice.cpp:142
+msgid "Device model (*):"
+msgstr "裝置型號 (*)："
+
+#: exif/exifdevice.cpp:146
+msgid ""
+"Set here the model of image input equipment used to take the picture. This "
+"field is limited to ASCII characters."
+msgstr "在這裡設定影像輸入設備的型號。這個字段限制為 ASCII 字元。"
+
+#: exif/exifdevice.cpp:151
+msgid "Device type:"
+msgstr "裝置類型："
+
+#: exif/exifdevice.cpp:153
+msgid "Film scanner"
+msgstr "底片掃描器"
+
+#: exif/exifdevice.cpp:154
+msgid "Reflection print scanner"
+msgstr "反射列印掃描器"
+
+#: exif/exifdevice.cpp:155
+msgid "Digital still camera"
+msgstr "數位靜態相機"
+
+#: exif/exifdevice.cpp:156
+msgid "Select here the image input equipment type used to take the picture."
+msgstr "在這裡選擇影像輸入設備的類型。"
+
+#: exif/exifdevice.cpp:159
+msgid ""
+"<b>Warning: EXIF <b><a href='http://en.wikipedia.org/wiki/"
+"Exchangeable_image_file_format#MakerNote_data'>Makernotes</a></b> can be "
+"unreadable if you set wrong device manufacturer/model description.</b>"
+msgstr ""
+"<b>警告：如果您設定錯誤的裝置製造商/型號描述，那麼 EXIF <b><a href='http://"
+"en.wikipedia.org/wiki/"
+"Exchangeable_image_file_format#MakerNote_data'>Makernotes</a></b> 會無法讀"
+"取。</b>"
+
+#: exif/exifdevice.cpp:171
+msgid "Exposure time (seconds):"
+msgstr "曝光時間 (秒)："
+
+#: exif/exifdevice.cpp:176
+msgid ""
+"Set on this option to set the exposure time of picture, given in seconds."
+msgstr "設定這個選項以設定圖片的曝光時間，單位為秒。"
+
+#: exif/exifdevice.cpp:181
+msgid "Exposure program:"
+msgstr "曝光程式："
+
+#: exif/exifdevice.cpp:183
+msgctxt "exposure program"
+msgid "Not defined"
+msgstr "未定義"
+
+#: exif/exifdevice.cpp:184
+msgctxt "exposure program"
+msgid "Manual"
+msgstr "手動"
+
+#: exif/exifdevice.cpp:185
+msgctxt "exposure program"
+msgid "Auto"
+msgstr "自動"
+
+#: exif/exifdevice.cpp:186
+msgctxt "exposure program"
+msgid "Aperture priority"
+msgstr "光圈先決"
+
+#: exif/exifdevice.cpp:187
+msgctxt "exposure program"
+msgid "Shutter priority"
+msgstr "快門先決"
+
+#: exif/exifdevice.cpp:188
+msgctxt "exposure program"
+msgid "Creative program"
+msgstr "創意程式"
+
+#: exif/exifdevice.cpp:189
+msgctxt "exposure program"
+msgid "Action program"
+msgstr "動作程式"
+
+#: exif/exifdevice.cpp:190
+msgctxt "exposure program"
+msgid "Portrait mode"
+msgstr "縱向模式"
+
+#: exif/exifdevice.cpp:191
+msgctxt "exposure program"
+msgid "Landscape mode"
+msgstr "橫向模式"
+
+#: exif/exifdevice.cpp:192
+msgid ""
+"Select here the program used by the camera to set exposure when the picture "
+"was taken."
+msgstr "在這裡選擇圖片拍攝時相機設定曝光使用的程式。"
+
+#: exif/exifdevice.cpp:197
+msgid "Exposure mode:"
+msgstr "曝光模式："
+
+#: exif/exifdevice.cpp:199
+msgctxt "exposure mode"
+msgid "Auto"
+msgstr "自動"
+
+#: exif/exifdevice.cpp:200
+msgctxt "exposure mode"
+msgid "Manual"
+msgstr "手動"
+
+#: exif/exifdevice.cpp:201
+msgctxt "exposure mode"
+msgid "Auto bracket"
+msgstr "自動包圍"
+
+#: exif/exifdevice.cpp:202
+msgid ""
+"Select here the mode used by the camera to set exposure when the picture was "
+"taken. In auto-bracketing mode, the camera shoots a series of frames of the "
+"same scene at different exposure settings."
+msgstr ""
+"在這裡選擇圖片拍攝時相機設定曝光使用的模式。在自動包圍模式，相機會用不同曝光"
+"設定值拍攝一系列同場景的對照圖。"
+
+#: exif/exifdevice.cpp:210
+msgid "Exposure bias (APEX):"
+msgstr "曝光補償 (APEX)："
+
+#: exif/exifdevice.cpp:215
+msgid ""
+"Set here the exposure bias value (in APEX units) used by camera to take the "
+"picture."
+msgstr "在這裡設定圖片拍攝時相機使用的曝光補償 (單位為 APEX)。"
+
+#: exif/exifdevice.cpp:222
+msgid "Metering mode:"
+msgstr "測光模式："
+
+#: exif/exifdevice.cpp:224
+msgctxt "metering mode"
+msgid "Unknown"
+msgstr "不明"
+
+#: exif/exifdevice.cpp:225
+msgctxt "metering mode"
+msgid "Average"
+msgstr "平均測光"
+
+#: exif/exifdevice.cpp:226
+msgctxt "metering mode"
+msgid "Center weighted average"
+msgstr "中央重點平均測光"
+
+#: exif/exifdevice.cpp:227
+msgctxt "metering mode"
+msgid "Spot"
+msgstr "點測光"
+
+#: exif/exifdevice.cpp:228
+msgctxt "metering mode"
+msgid "Multi-spot"
+msgstr "多點測光"
+
+#: exif/exifdevice.cpp:229
+msgctxt "metering mode"
+msgid "Multi-segment"
+msgstr "矩陣測光"
+
+#: exif/exifdevice.cpp:230
+msgctxt "metering mode"
+msgid "Partial"
+msgstr "局部測光"
+
+#: exif/exifdevice.cpp:231
+msgctxt "metering mode"
+msgid "Other"
+msgstr "其他"
+
+#: exif/exifdevice.cpp:232
+msgid ""
+"Select here the metering mode used by the camera to set exposure when the "
+"picture was taken."
+msgstr "在這裡選擇圖片拍攝時相機設定曝光使用的測光模式。"
+
+#: exif/exifdevice.cpp:237
+msgid "Sensitivity (ISO):"
+msgstr "靈敏度 (ISO):"
+
+#: exif/exifdevice.cpp:275
+msgid "Select here the ISO Speed of the camera which took the picture."
+msgstr "在這裡選擇圖片拍攝時相機的 ISO 速度。"
+
+#: exif/exifdevice.cpp:280
+msgid "Sensing method:"
+msgstr "連續彩色線性傳感器："
+
+#: exif/exifdevice.cpp:282
+msgid "Not defined"
+msgstr "未定義"
+
+#: exif/exifdevice.cpp:283
+msgid "One-chip color area"
+msgstr "單晶片彩色區域"
+
+#: exif/exifdevice.cpp:284
+msgid "Two-chip color area"
+msgstr "雙晶片彩色區域"
+
+#: exif/exifdevice.cpp:285
+msgid "Three-chip color area"
+msgstr "三晶片彩色區域"
+
+#: exif/exifdevice.cpp:286
+msgid "Color sequential area"
+msgstr "色序區域"
+
+#: exif/exifdevice.cpp:287
+msgid "Trilinear sensor"
+msgstr "三線性感測器"
+
+#: exif/exifdevice.cpp:288
+msgid "Color sequential linear"
+msgstr "色序線性"
+
+#: exif/exifdevice.cpp:289
+msgid ""
+"Select here the image sensor type used by the camera to take the picture."
+msgstr "在這裡選擇圖片拍攝時相機使用的影像感測器。"
+
+#: exif/exifdevice.cpp:294
+msgid "Scene capture type:"
+msgstr "場景拍攝模式："
+
+#: exif/exifdevice.cpp:296
+msgid "Standard"
+msgstr "標準"
+
+#: exif/exifdevice.cpp:297
+msgid "Landscape"
+msgstr "橫向"
+
+#: exif/exifdevice.cpp:298
+msgid "Portrait"
+msgstr "縱向"
+
+#: exif/exifdevice.cpp:299 xmp/xmpproperties.cpp:98
+msgid "Night scene"
+msgstr "夜景"
+
+#: exif/exifdevice.cpp:300
+msgid "Select here the type of scene used by the camera to take the picture."
+msgstr "在這裡選擇圖片拍攝時相機使用的場景類型。"
+
+#: exif/exifdevice.cpp:305
+msgid "Subject distance type:"
+msgstr "拍攝主體距離類型："
+
+#: exif/exifdevice.cpp:307
+msgid "Unknown"
+msgstr "不明"
+
+#: exif/exifdevice.cpp:308
+msgid "Macro"
+msgstr "微距攝影"
+
+#: exif/exifdevice.cpp:309
+msgid "Close view"
+msgstr "特寫攝影"
+
+#: exif/exifdevice.cpp:310
+msgid "Distant view"
+msgstr "遠景攝影"
+
+#: exif/exifdevice.cpp:311
+msgid ""
+"Select here the type of distance between the subject and the image input "
+"equipment."
+msgstr "在這裡選擇影像輸入設備和拍攝主體之間的距離類型。"
+
+#: exif/exiflens.cpp:156
+msgid "Focal length (mm):"
+msgstr "焦距 (mm)："
+
+#: exif/exiflens.cpp:162
+msgid ""
+"Set here the lens focal length in millimeters used by camera to take the "
+"picture."
+msgstr "在這裡設定圖片拍攝時相機使用的焦距，單位為公釐。"
+
+#: exif/exiflens.cpp:167
+msgid "Focal length in 35mm film (mm):"
+msgstr "35 mm 底片的焦距 (mm)："
+
+#: exif/exiflens.cpp:169
+msgid ""
+"Set here equivalent focal length assuming a 35mm film camera, in mm. A value "
+"of 0 means the focal length is unknown."
+msgstr ""
+"在這裡設定假設為 35 mm 底片相機的等效焦距，單位為公釐。數值為 0 未知的焦距。"
+
+#: exif/exiflens.cpp:175
+msgid "Digital zoom ratio:"
+msgstr "數位變焦比率："
+
+#: exif/exiflens.cpp:181
+msgid "Set here the digital zoom ratio used by camera to take the picture."
+msgstr "在這裡設定圖片拍攝時相機使用的數位變焦比率。"
+
+#: exif/exiflens.cpp:186
+msgid "Lens aperture (f-number):"
+msgstr "鏡頭光圈 (光圈值)："
+
+#: exif/exiflens.cpp:189
+msgid "Select here the lens aperture used by camera to take the picture."
+msgstr "在這裡選擇圖片拍攝時相機使用的鏡頭光圈。"
+
+#: exif/exiflens.cpp:194
+msgid "Max. lens aperture (f-number):"
+msgstr "最大鏡頭光圈 (光圈數)："
+
+#: exif/exiflens.cpp:197
+msgid ""
+"Select here the smallest aperture of the lens used by camera to take the "
+"picture."
+msgstr "在這裡選擇圖片拍攝時相機使用的鏡頭最小光圈。"
+
+#: exif/exiflight.cpp:88
+msgid "No flash"
+msgstr "無閃光"
+
+#: exif/exiflight.cpp:89
+msgid "Fired"
+msgstr "開啟"
+
+#: exif/exiflight.cpp:90
+msgid "Fired, no strobe return light"
+msgstr "開啟，無閃光燈"
+
+#: exif/exiflight.cpp:91
+msgid "Fired, strobe return light"
+msgstr "開啟，閃光燈"
+
+#: exif/exiflight.cpp:92
+msgid "Yes, compulsory"
+msgstr "是，強制"
+
+#: exif/exiflight.cpp:93
+msgid "Yes, compulsory, no return light"
+msgstr "是，強制，無閃光燈"
+
+#: exif/exiflight.cpp:94
+msgid "Yes, compulsory, return light"
+msgstr "是，強制，閃光燈"
+
+#: exif/exiflight.cpp:95
+msgid "No, compulsory"
+msgstr "否，強制"
+
+#: exif/exiflight.cpp:96
+msgid "No, auto"
+msgstr "否，自動"
+
+#: exif/exiflight.cpp:97
+msgid "Yes, auto"
+msgstr "是，自動"
+
+#: exif/exiflight.cpp:98
+msgid "Yes, auto, no return light"
+msgstr "是，自動，無閃光燈"
+
+#: exif/exiflight.cpp:99
+msgid "Yes, auto, return light"
+msgstr "是，自動，閃光燈"
+
+#: exif/exiflight.cpp:100
+msgid "No flash function"
+msgstr "無閃光功能"
+
+#: exif/exiflight.cpp:101
+msgid "Yes, red-eye"
+msgstr "是，紅眼"
+
+#: exif/exiflight.cpp:102
+msgid "Yes, red-eye, no return light"
+msgstr "是，紅眼，無閃光燈"
+
+#: exif/exiflight.cpp:103
+msgid "Yes, red-eye, return light"
+msgstr "是，紅眼，閃光燈"
+
+#: exif/exiflight.cpp:104
+msgid "Yes, compulsory, red-eye"
+msgstr "是，強制，紅眼"
+
+#: exif/exiflight.cpp:105
+msgid "Yes, compulsory, red-eye, no return light"
+msgstr "是，強制，紅眼，無閃光燈"
+
+#: exif/exiflight.cpp:106
+msgid "Yes, compulsory, red-eye, return light"
+msgstr "是，強制，紅眼，閃光燈"
+
+#: exif/exiflight.cpp:107
+msgid "Yes, auto, red-eye"
+msgstr "是，自動，紅眼"
+
+#: exif/exiflight.cpp:108
+msgid "Yes, auto, red-eye, no return light"
+msgstr "是，自動，紅眼，無閃光燈"
+
+#: exif/exiflight.cpp:109
+msgid "Yes, auto, red-eye, return light"
+msgstr "是，自動，紅眼，閃光燈"
+
+#: exif/exiflight.cpp:138
+msgid "Light source:"
+msgstr "光源："
+
+#: exif/exiflight.cpp:140
+msgctxt "light source"
+msgid "Unknown"
+msgstr "不明"
+
+#: exif/exiflight.cpp:141
+msgctxt "light source"
+msgid "Daylight"
+msgstr "晝光"
+
+#: exif/exiflight.cpp:142
+msgctxt "light source"
+msgid "Fluorescent"
+msgstr "螢光燈"
+
+#: exif/exiflight.cpp:143
+msgctxt "light source"
+msgid "Tungsten (incandescent light)"
+msgstr "鎢絲燈 (白熾燈)"
+
+#: exif/exiflight.cpp:144
+msgctxt "light source"
+msgid "Flash"
+msgstr "閃光"
+
+#: exif/exiflight.cpp:145
+msgctxt "light source"
+msgid "Fine weather"
+msgstr "晴天"
+
+#: exif/exiflight.cpp:146
+msgctxt "light source"
+msgid "Cloudy weather"
+msgstr "陰天"
+
+#: exif/exiflight.cpp:147
+msgctxt "light source"
+msgid "Shade"
+msgstr "陰暗"
+
+#: exif/exiflight.cpp:148
+msgctxt "light source"
+msgid "Daylight fluorescent (D 5700 - 7100K)"
+msgstr "晝光螢光燈 (D 5700 - 7100K)"
+
+#: exif/exiflight.cpp:149
+msgctxt "light source"
+msgid "Day white fluorescent (N 4600 - 5400K)"
+msgstr "白晝螢光燈 (N 4600 - 5400K)"
+
+#: exif/exiflight.cpp:150
+msgctxt "light source"
+msgid "Cool white fluorescent (W 3900 - 4500K)"
+msgstr "亮白螢光燈 (W 3900 - 4500K)"
+
+#: exif/exiflight.cpp:151
+msgctxt "light source"
+msgid "White fluorescent (WW 3200 - 3700K)"
+msgstr "白螢光燈 (WW 3200 - 3700K)"
+
+#: exif/exiflight.cpp:152
+msgctxt "light source"
+msgid "Standard light A"
+msgstr "標準光線 A"
+
+#: exif/exiflight.cpp:153
+msgctxt "light source"
+msgid "Standard light B"
+msgstr "標準光線 B"
+
+#: exif/exiflight.cpp:154
+msgctxt "light source"
+msgid "Standard light C"
+msgstr "標準光線 C"
+
+#: exif/exiflight.cpp:155
+msgctxt "light source"
+msgid "D55"
+msgstr "D55"
+
+#: exif/exiflight.cpp:156
+msgctxt "light source"
+msgid "D65"
+msgstr "D65"
+
+#: exif/exiflight.cpp:157
+msgctxt "light source"
+msgid "D75"
+msgstr "D75"
+
+#: exif/exiflight.cpp:158
+msgctxt "light source"
+msgid "D50"
+msgstr "D50"
+
+#: exif/exiflight.cpp:159
+msgctxt "light source"
+msgid "ISO studio tungsten"
+msgstr "ISO 攝影棚燈"
+
+#: exif/exiflight.cpp:160
+msgctxt "light source"
+msgid "Other light source"
+msgstr "其他光源"
+
+#: exif/exiflight.cpp:161
+msgid "Select here the kind of light source used to take the picture."
+msgstr "在這裡選擇圖片拍攝時使用的光源種類。"
+
+#: exif/exiflight.cpp:166
+msgid "Flash mode:"
+msgstr "閃光模式："
+
+#: exif/exiflight.cpp:173
+msgid ""
+"Select here the flash program mode used by the camera to take the picture."
+msgstr "在這裡選擇圖片拍攝時相機使用的閃光程式模式。"
+
+#: exif/exiflight.cpp:178
+msgid "Flash energy (BCPS):"
+msgstr "閃光能量 (BCPS)："
+
+#: exif/exiflight.cpp:184
+msgid ""
+"Set here the flash energy used to take the picture in BCPS units.  Beam "
+"Candle Power Seconds is the measure of effective intensity of a light source "
+"when it is focused into a beam by a reflector or lens. This value is the "
+"effective intensity for a period of one second."
+msgstr ""
+"在這裡設定圖片拍攝時的閃光能量，單位為 BCPS。光束燭光秒 (Beam Candle Power "
+"Seconds) 是當光源藉由反射鏡或透鏡集中成一束時所測量到的有效光強度。這項數值是"
+"一秒鐘期間內的有效光強度。"
+
+#: exif/exiflight.cpp:192
+msgid "White balance:"
+msgstr "白平衡："
+
+#: exif/exiflight.cpp:194
+msgid "Auto"
+msgstr "自動"
+
+#: exif/exiflight.cpp:195
+msgid "Manual"
+msgstr "手動"
+
+#: exif/exiflight.cpp:196
+msgid ""
+"Select here the white balance mode set by the camera when the picture was "
+"taken."
+msgstr "在這裡選擇圖片拍攝時相機使用的白平衡模式設定。"
+
+#: exif/exifeditwidget.cpp:128
+msgctxt "image caption"
+msgid "Caption"
+msgstr "標題"
+
+#: exif/exifeditwidget.cpp:129
+msgid "Caption Information"
+msgstr "標題資訊"
+
+#: exif/exifeditwidget.cpp:133
+msgid "Date & Time"
+msgstr "日期和時間"
+
+#: exif/exifeditwidget.cpp:134
+msgid "Date and Time Information"
+msgstr "日期和時間資訊"
+
+#: exif/exifeditwidget.cpp:138
+msgid "Lens"
+msgstr "鏡頭"
+
+#: exif/exifeditwidget.cpp:139
+msgid "Lens Settings"
+msgstr "鏡頭設定值"
+
+#: exif/exifeditwidget.cpp:143
+msgid "Device"
+msgstr "裝置"
+
+#: exif/exifeditwidget.cpp:144
+msgid "Capture Device Settings"
+msgstr "擷取裝置設定值"
+
+#: exif/exifeditwidget.cpp:148
+msgid "Light"
+msgstr "燈光"
+
+#: exif/exifeditwidget.cpp:149
+msgid "Light Source Information"
+msgstr "光源資訊"
+
+#: exif/exifeditwidget.cpp:153
+msgctxt "Picture adjustments"
+msgid "Adjustments"
+msgstr "調整"
+
+#: exif/exifeditwidget.cpp:154
+msgid "Pictures Adjustments"
+msgstr "圖片調整"
+
+#: iptc/iptccategories.cpp:92 xmp/xmpcategories.cpp:86
+msgid "Identify subject of content (3 chars max):"
+msgstr "內容的識別主題 (最多 3 個字元)："
+
+#: iptc/iptccategories.cpp:97
+msgid ""
+"Set here the category of content. This field is limited to 3 ASCII "
+"characters."
+msgstr "在這裡設定內容的類別。這個字段限制為 3 個 ASCII 字元。"
+
+#: iptc/iptccategories.cpp:100 xmp/xmpcategories.cpp:93
+msgid "Supplemental categories:"
+msgstr "參考分類："
+
+#: iptc/iptccategories.cpp:106
+msgid ""
+"Enter here a new supplemental category of content. This field is limited to "
+"32 ASCII characters."
+msgstr "在這裡輸入內容的參考分類。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptccategories.cpp:112 iptc/iptckeywords.cpp:100
+#: xmp/xmpcategories.cpp:102 xmp/xmpkeywords.cpp:91
+msgid "&Add"
+msgstr "加入(&A)"
+
+#: iptc/iptccategories.cpp:113 iptc/iptckeywords.cpp:101
+#: xmp/xmpcategories.cpp:103 xmp/xmpkeywords.cpp:92
+msgid "&Delete"
+msgstr "刪除(&D)"
+
+#: iptc/iptccategories.cpp:114 iptc/iptckeywords.cpp:102
+#: xmp/xmpcategories.cpp:104 xmp/xmpkeywords.cpp:93
+msgid "&Replace"
+msgstr "取代 (&R)"
+
+#: iptc/iptccategories.cpp:123 iptc/iptccontent.cpp:128
+#: iptc/iptccredits.cpp:147 iptc/iptcenvelope.cpp:269
+#: iptc/iptckeywords.cpp:111 iptc/iptcorigin.cpp:497
+#: iptc/iptcproperties.cpp:239 iptc/iptcstatus.cpp:130
+#: iptc/iptcsubjects.cpp:98
+msgid ""
+"<b>Note: <b><a href='http://en.wikipedia.org/wiki/"
+"IPTC_Information_Interchange_Model'>IPTC</a></b> text tags only support the "
+"printable <b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
+"characters and limit string sizes. Use contextual help for details.</b>"
+msgstr ""
+"<b>備註：<b><a href='http://en.wikipedia.org/wiki/"
+"IPTC_Information_Interchange_Model'>IPTC</a></b> 文件標籤只支援可列印的 "
+"<b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> 字元並且有限制"
+"字串大小。使用內容說明來取得詳細資訊。</b>"
+
+#: iptc/iptccontent.cpp:97 xmp/xmpcontent.cpp:92
+msgid "Headline:"
+msgstr "大標題："
+
+#: iptc/iptccontent.cpp:102
+msgid ""
+"Enter here the content synopsis. This field is limited to 256 ASCII "
+"characters."
+msgstr "在這裡輸入內容簡介。這個字段限制為 256 個 ASCII 字元。"
+
+#: iptc/iptccontent.cpp:107 xmp/xmpcontent.cpp:99
+msgctxt "content description"
+msgid "Caption:"
+msgstr "標題："
+
+#: iptc/iptccontent.cpp:110 xmp/xmpcontent.cpp:106
+#, kde-format
+msgid "Sync caption entered through %1"
+msgstr "同步透過 %1 輸入的標題"
+
+#: iptc/iptccontent.cpp:113 xmp/xmpcontent.cpp:109
+msgid "Sync EXIF Comment"
+msgstr "同步 EXIF 註解"
+
+#: iptc/iptccontent.cpp:117
+msgid ""
+"Enter the content description. This field is limited to 2000 ASCII "
+"characters."
+msgstr "輸入內容描述。這個字段限制為 2000 個 ASCII 字元。"
+
+#: iptc/iptccontent.cpp:122 xmp/xmpcontent.cpp:119
+msgid "Caption Writer:"
+msgstr "標題作者："
+
+#: iptc/iptccontent.cpp:123 xmp/xmpcontent.cpp:122
+msgid "Enter the name of the caption author."
+msgstr "輸入標題作者的姓名。"
+
+#: iptc/iptccredits.cpp:99 xmp/xmpcontent.cpp:124
+msgid "Copyright:"
+msgstr "著作權："
+
+#: iptc/iptccredits.cpp:104
+msgid ""
+"Set here the necessary copyright notice. This field is limited to 128 ASCII "
+"characters."
+msgstr "在這裡設定必要的著作權聲明。這個字段限制為 128 個 ASCII 字元。"
+
+#: iptc/iptccredits.cpp:109 xmp/xmpcredits.cpp:113
+msgid "Byline:"
+msgstr "姓名標示："
+
+#: iptc/iptccredits.cpp:110 xmp/xmpcredits.cpp:114
+msgid "Set here the name of content creator."
+msgstr "在這裡設定內容創作者的姓名。"
+
+#: iptc/iptccredits.cpp:115 xmp/xmpcredits.cpp:118
+msgid "Byline Title:"
+msgstr "職稱標示："
+
+#: iptc/iptccredits.cpp:116 xmp/xmpcredits.cpp:121
+msgid "Set here the title of content creator."
+msgstr "在這裡設定內容創作者的職稱。"
+
+#: iptc/iptccredits.cpp:121 xmp/xmpcredits.cpp:183
+msgid "Credit:"
+msgstr "授權："
+
+#: iptc/iptccredits.cpp:126
+msgid ""
+"Set here the content provider. This field is limited to 32 ASCII characters."
+msgstr "在這裡設定提供者。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptccredits.cpp:131 xmp/xmpcredits.cpp:190
+msgctxt "original owner of content"
+msgid "Source:"
+msgstr "來源："
+
+#: iptc/iptccredits.cpp:136
+msgid ""
+"Set here the original owner of content. This field is limited to 32 ASCII "
+"characters."
+msgstr "在這裡設定內容的原擁有者。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptccredits.cpp:141
+msgid "Contact:"
+msgstr "連絡："
+
+#: iptc/iptccredits.cpp:142
+msgid "Set here the person or organisation to contact."
+msgstr "在這裡設定個人或機構的連絡資料。"
+
+#: iptc/iptcenvelope.cpp:91
+msgid "No ObjectData"
+msgstr "無物件資料"
+
+#: iptc/iptcenvelope.cpp:92
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 1)"
+msgstr "IPTC-NAA 數位新聞照片參數記錄 (版本 1)"
+
+#: iptc/iptcenvelope.cpp:93
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 2)"
+msgstr "IPTC-NAA 數位新聞照片參數記錄 (版本 2)"
+
+#: iptc/iptcenvelope.cpp:94
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 3)"
+msgstr "IPTC-NAA 數位新聞照片參數記錄 (版本 3)"
+
+#: iptc/iptcenvelope.cpp:95
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 4)"
+msgstr "IPTC-NAA 數位新聞照片參數記錄 (版本 4)"
+
+#: iptc/iptcenvelope.cpp:96
+msgid "IPTC7901 Recommended Message Format"
+msgstr "IPTC7901 推薦訊息格式"
+
+#: iptc/iptcenvelope.cpp:97
+msgid "Tagged Image File Format (version 5.0)"
+msgstr "編籤圖像檔案格式 (版本 5.0)"
+
+#: iptc/iptcenvelope.cpp:98
+msgid "Tagged Image File Format (version 6.0)"
+msgstr "編籤圖像檔案格式 (版本 6.0)"
+
+#: iptc/iptcenvelope.cpp:99
+msgid "Illustrator"
+msgstr "Illustrator"
+
+#: iptc/iptcenvelope.cpp:100
+msgid "AppleSingle"
+msgstr "AppleSingle"
+
+#: iptc/iptcenvelope.cpp:101
+msgid "NAA 89-3 (ANPA 1312)"
+msgstr "NAA 89-3 (ANPA 1312)"
+
+#: iptc/iptcenvelope.cpp:102
+msgid "MacBinary II"
+msgstr "MacBinary II"
+
+#: iptc/iptcenvelope.cpp:103
+msgid "IPTC Unstructured Character Oriented File Format"
+msgstr "IPTC 非結構化字元導向檔案格式"
+
+#: iptc/iptcenvelope.cpp:104
+msgid "United Press International ANPA 1312 variant"
+msgstr "合眾國際社 ANPA 1312 變異類型"
+
+#: iptc/iptcenvelope.cpp:105
+msgid "United Press International Down-Load Message"
+msgstr "合眾國際社下載訊息"
+
+#: iptc/iptcenvelope.cpp:106
+msgid "JPEG File Interchange"
+msgstr "JPEG 檔案交換格式"
+
+#: iptc/iptcenvelope.cpp:107
+msgid "Photo-CD Image-Pac"
+msgstr "Photo-CD Image-Pac"
+
+#: iptc/iptcenvelope.cpp:108
+msgid "Microsoft Bit Mapped Graphics File [*.BMP]"
+msgstr "微軟位元對應圖形檔 [*.BMP]"
+
+#: iptc/iptcenvelope.cpp:109
+msgid "Digital Audio File [*.WAV]"
+msgstr "數位音訊檔 [*.WAV]"
+
+#: iptc/iptcenvelope.cpp:110
+msgid "Audio plus Moving Video [*.AVI]"
+msgstr "音訊加上移動視訊 [*.AVI]"
+
+#: iptc/iptcenvelope.cpp:111
+msgid "PC DOS/Windows Executable Files [*.COM][*.EXE]"
+msgstr "PC DOS/Windows 可執行檔 [*.COM][*.EXE]"
+
+#: iptc/iptcenvelope.cpp:112
+msgid "Compressed Binary File [*.ZIP]"
+msgstr "壓縮的二進位檔 [*.ZIP]"
+
+#: iptc/iptcenvelope.cpp:113
+msgid "Audio Interchange File Format AIFF"
+msgstr "音訊交換檔案格式 AIFF"
+
+#: iptc/iptcenvelope.cpp:114
+msgid "RIFF Wave (Microsoft Corporation)"
+msgstr "RIFF Wave (微軟公司)"
+
+#: iptc/iptcenvelope.cpp:115
+msgid "Freehand (version 3.1)"
+msgstr "Freehand (版本 3.1)"
+
+#: iptc/iptcenvelope.cpp:116
+msgid "Freehand (version 4.0)"
+msgstr "Freehand (版本 4.0)"
+
+#: iptc/iptcenvelope.cpp:117
+msgid "Freehand (version 5.0)"
+msgstr "Freehand (版本 5.0)"
+
+#: iptc/iptcenvelope.cpp:118
+msgid "Freehand (version 5.5)"
+msgstr "Freehand (版本 5.5)"
+
+#: iptc/iptcenvelope.cpp:119
+msgid "Hypertext Markup Language \"HTML\""
+msgstr "超文件標示語言 「HTML」"
+
+#: iptc/iptcenvelope.cpp:120
+msgid "MPEG 2 Audio Layer 2 (Musicom), ISO/IEC"
+msgstr "MPEG 2 Audio Layer 2 (Musicom), ISO/IEC"
+
+#: iptc/iptcenvelope.cpp:121
+msgid "MPEG 2 Audio Layer 3, ISO/IEC"
+msgstr "MPEG 2 Audio Layer 3, ISO/IEC"
+
+#: iptc/iptcenvelope.cpp:122
+msgid "Portable Document File [*.PDF] Adobe"
+msgstr "可攜式文件檔案 [*.PDF] Adobe"
+
+#: iptc/iptcenvelope.cpp:123
+msgid "News Industry Text Format"
+msgstr "新聞業文件格式 (NITF)"
+
+#: iptc/iptcenvelope.cpp:124
+msgid "Tape Archive [*.TAR]"
+msgstr "磁帶存檔 [*.TAR]"
+
+#: iptc/iptcenvelope.cpp:125
+msgid "Tidningarnas Telegrambyra NITF version (TTNITF DTD)"
+msgstr "瑞典通訊社 NITF 版本 (TTNITF DTD)"
+
+#: iptc/iptcenvelope.cpp:126
+msgid "Ritzaus Bureau NITF version (RBNITF DTD)"
+msgstr "丹麥通訊社 NITF 版本 (RBNITF DTD)"
+
+#: iptc/iptcenvelope.cpp:127
+msgid "Corel Draw [*.CDR]"
+msgstr "Corel Draw [*.CDR]"
+
+#: iptc/iptcenvelope.cpp:174
+msgid "Destination:"
+msgstr "目的地："
+
+#: iptc/iptcenvelope.cpp:178
+msgid ""
+"Enter the envelope destination. This field is limited to 1024 ASCII "
+"characters."
+msgstr "輸入封裝目的地。這個字段限制為 1024 個 ASCII 字元。"
+
+#: iptc/iptcenvelope.cpp:183
+msgid "U.N.O ID:"
+msgstr "U.N.O ID："
+
+#: iptc/iptcenvelope.cpp:188
+msgid ""
+"Set here the Unique Name of Object identifier. This field is limited to 80 "
+"ASCII characters."
+msgstr "在這裡設定物件識別碼的唯一名稱。這個字段限制為 80 個 ASCII 字元。"
+
+#: iptc/iptcenvelope.cpp:193
+msgid "Product ID:"
+msgstr "產品 ID："
+
+#: iptc/iptcenvelope.cpp:198
+msgid ""
+"Set here the product identifier. This field is limited to 32 ASCII "
+"characters."
+msgstr "在這裡設定產品識別碼。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptcenvelope.cpp:203
+msgid "Service ID:"
+msgstr "服務 ID："
+
+#: iptc/iptcenvelope.cpp:208
+msgid ""
+"Set here the service identifier. This field is limited to 10 ASCII "
+"characters."
+msgstr "在這裡設定服務識別碼。這個字段限制為 10 個 ASCII 字元。"
+
+#: iptc/iptcenvelope.cpp:213
+msgid "Envelope ID:"
+msgstr "封裝 ID："
+
+#: iptc/iptcenvelope.cpp:218
+msgid ""
+"Set here the envelope identifier. This field is limited to 8 ASCII "
+"characters."
+msgstr "在這裡設定封裝識別碼。這個字段限制為 8 個 ASCII 字元。"
+
+#: iptc/iptcenvelope.cpp:223 iptc/iptcproperties.cpp:186
+#: xmp/xmpproperties.cpp:186
+msgid "Priority:"
+msgstr "優先順序："
+
+#: iptc/iptcenvelope.cpp:225
+msgctxt "priority for the envelope"
+msgid "0: None"
+msgstr "0：無"
+
+#: iptc/iptcenvelope.cpp:226
+msgctxt "priority for the envelope"
+msgid "1: High"
+msgstr "1：高"
+
+#: iptc/iptcenvelope.cpp:230
+msgctxt "priority for the envelope"
+msgid "5: Normal"
+msgstr "5：普通"
+
+#: iptc/iptcenvelope.cpp:233
+msgctxt "priority for the envelope"
+msgid "8: Low"
+msgstr "8：低"
+
+#: iptc/iptcenvelope.cpp:234
+msgid "Select here the envelope priority."
+msgstr "在這裡選擇封裝優先順序。"
+
+#: iptc/iptcenvelope.cpp:238
+msgid "Format:"
+msgstr "格式："
+
+#: iptc/iptcenvelope.cpp:250
+msgid "Select here envelope file format."
+msgstr "在這裡選擇封裝的檔案格式。"
+
+#: iptc/iptcenvelope.cpp:254
+msgid "Sent date:"
+msgstr "寄出日期："
+
+#: iptc/iptcenvelope.cpp:255
+msgid "Sent time:"
+msgstr "寄出時間："
+
+#: iptc/iptcenvelope.cpp:261
+msgid "Set envelope sent date to today"
+msgstr "將封裝寄出日期設為今天"
+
+#: iptc/iptcenvelope.cpp:263
+msgid "Set here the date when the service sent the material."
+msgstr "在這裡設定服務寄出材料的日期。"
+
+#: iptc/iptcenvelope.cpp:264
+msgid "Set here the time when the service sent the material."
+msgstr "在這裡設定服務寄出材料的時間。"
+
+#: iptc/iptckeywords.cpp:88 xmp/xmpkeywords.cpp:82
+msgid "Use information retrieval words:"
+msgstr "使用資訊檢索詞："
+
+#: iptc/iptckeywords.cpp:94
+msgid "Enter here a new keyword. This field is limited to 64 ASCII characters."
+msgstr "在這裡輸入新的關鍵字。這個字段限制為 64 個 ASCII 字元。"
+
+#: iptc/iptcorigin.cpp:101 xmp/xmporigin.cpp:92
+msgid "Afghanistan"
+msgstr "阿富汗"
+
+#: iptc/iptcorigin.cpp:102 xmp/xmporigin.cpp:93
+msgid "Albania"
+msgstr "阿爾巴尼亞"
+
+#: iptc/iptcorigin.cpp:103 xmp/xmporigin.cpp:94
+msgid "Algeria"
+msgstr "阿爾及利亞"
+
+#: iptc/iptcorigin.cpp:104 xmp/xmporigin.cpp:95
+msgid "American Samoa"
+msgstr "美屬薩摩亞"
+
+#: iptc/iptcorigin.cpp:105 xmp/xmporigin.cpp:96
+msgid "Andorra"
+msgstr "安道爾"
+
+#: iptc/iptcorigin.cpp:106 iptc/iptcorigin.cpp:108 xmp/xmporigin.cpp:97
+#: xmp/xmporigin.cpp:99
+msgid "Angola"
+msgstr "安哥拉"
+
+#: iptc/iptcorigin.cpp:107 xmp/xmporigin.cpp:98
+msgid "Anguilla"
+msgstr "安圭拉"
+
+#: iptc/iptcorigin.cpp:109 xmp/xmporigin.cpp:100
+msgid "Antarctica"
+msgstr "南極洲"
+
+#: iptc/iptcorigin.cpp:110 xmp/xmporigin.cpp:101
+msgid "Antigua and Barbuda"
+msgstr "安地卡及巴布達"
+
+#: iptc/iptcorigin.cpp:111 xmp/xmporigin.cpp:102
+msgid "Argentina"
+msgstr "阿根廷"
+
+#: iptc/iptcorigin.cpp:112 xmp/xmporigin.cpp:103
+msgid "Armenia"
+msgstr "亞美尼亞"
+
+#: iptc/iptcorigin.cpp:113 xmp/xmporigin.cpp:104
+msgid "Aruba"
+msgstr "阿魯巴"
+
+#: iptc/iptcorigin.cpp:114 xmp/xmporigin.cpp:105
+msgid "Australia"
+msgstr "澳大利亞"
+
+#: iptc/iptcorigin.cpp:115 xmp/xmporigin.cpp:106
+msgid "Austria"
+msgstr "奧地利"
+
+#: iptc/iptcorigin.cpp:116 xmp/xmporigin.cpp:107
+msgid "Azerbaijan"
+msgstr "亞塞拜然"
+
+#: iptc/iptcorigin.cpp:117 xmp/xmporigin.cpp:108
+msgid "Bahamas"
+msgstr "巴哈馬"
+
+#: iptc/iptcorigin.cpp:118 xmp/xmporigin.cpp:109
+msgid "Bahrain"
+msgstr "巴林"
+
+#: iptc/iptcorigin.cpp:119 xmp/xmporigin.cpp:110
+msgid "Bangladesh"
+msgstr "孟加拉"
+
+#: iptc/iptcorigin.cpp:120 xmp/xmporigin.cpp:111
+msgid "Barbados"
+msgstr "巴貝多"
+
+#: iptc/iptcorigin.cpp:121 xmp/xmporigin.cpp:112
+msgid "Belarus"
+msgstr "白俄羅斯"
+
+#: iptc/iptcorigin.cpp:122 xmp/xmporigin.cpp:113
+msgid "Belgium"
+msgstr "比利時"
+
+#: iptc/iptcorigin.cpp:123 xmp/xmporigin.cpp:114
+msgid "Belize"
+msgstr "貝里斯"
+
+#: iptc/iptcorigin.cpp:124 xmp/xmporigin.cpp:115
+msgid "Benin"
+msgstr "貝南"
+
+#: iptc/iptcorigin.cpp:125 xmp/xmporigin.cpp:116
+msgid "Bermuda"
+msgstr "百慕達"
+
+#: iptc/iptcorigin.cpp:126 xmp/xmporigin.cpp:117
+msgid "Bhutan"
+msgstr "不丹"
+
+#: iptc/iptcorigin.cpp:127 xmp/xmporigin.cpp:118
+msgid "Bolivia"
+msgstr "玻利維亞"
+
+#: iptc/iptcorigin.cpp:128 xmp/xmporigin.cpp:119
+msgid "Bosnia and Herzegovina"
+msgstr "波斯尼亞和黑塞哥維那"
+
+#: iptc/iptcorigin.cpp:129 xmp/xmporigin.cpp:120
+msgid "Botswana"
+msgstr "波紮那"
+
+#: iptc/iptcorigin.cpp:130 xmp/xmporigin.cpp:121
+msgid "Bouvet Island"
+msgstr "布維島"
+
+#: iptc/iptcorigin.cpp:131 xmp/xmporigin.cpp:122
+msgid "Brazil"
+msgstr "巴西"
+
+#: iptc/iptcorigin.cpp:132 xmp/xmporigin.cpp:123
+msgid "British Indian Ocean Territory"
+msgstr "英屬印度洋領地"
+
+#: iptc/iptcorigin.cpp:133 xmp/xmporigin.cpp:124
+msgid "British Virgin Islands"
+msgstr "英屬維爾京群島 "
+
+#: iptc/iptcorigin.cpp:134 xmp/xmporigin.cpp:125
+msgid "Brunei Darussalam"
+msgstr "汶萊"
+
+#: iptc/iptcorigin.cpp:135 xmp/xmporigin.cpp:126
+msgid "Bulgaria"
+msgstr "保加利亞"
+
+#: iptc/iptcorigin.cpp:136 xmp/xmporigin.cpp:127
+msgid "Burkina Faso"
+msgstr "布吉納法索"
+
+#: iptc/iptcorigin.cpp:137 xmp/xmporigin.cpp:128
+msgid "Burundi"
+msgstr "蒲隆地"
+
+#: iptc/iptcorigin.cpp:138 xmp/xmporigin.cpp:129
+msgid "Cambodia"
+msgstr "柬埔寨"
+
+#: iptc/iptcorigin.cpp:139 xmp/xmporigin.cpp:130
+msgid "Cameroon"
+msgstr "喀麥隆"
+
+#: iptc/iptcorigin.cpp:140 xmp/xmporigin.cpp:131
+msgid "Canada"
+msgstr "加拿大"
+
+#: iptc/iptcorigin.cpp:141 xmp/xmporigin.cpp:132
+msgid "Cape Verde"
+msgstr "維德角"
+
+#: iptc/iptcorigin.cpp:142 xmp/xmporigin.cpp:133
+msgid "Cayman Islands"
+msgstr "開曼群島"
+
+#: iptc/iptcorigin.cpp:143 xmp/xmporigin.cpp:134
+msgid "Central African Republic"
+msgstr "中非"
+
+#: iptc/iptcorigin.cpp:144 xmp/xmporigin.cpp:135
+msgid "Chad"
+msgstr "查德"
+
+#: iptc/iptcorigin.cpp:145 xmp/xmporigin.cpp:136
+msgid "Chile"
+msgstr "智利"
+
+#: iptc/iptcorigin.cpp:146 xmp/xmporigin.cpp:137
+msgid "China"
+msgstr "中國"
+
+#: iptc/iptcorigin.cpp:147 xmp/xmporigin.cpp:138
+msgid "Christmas Island "
+msgstr "聖誕島"
+
+#: iptc/iptcorigin.cpp:148 xmp/xmporigin.cpp:139
+msgid "Cocos Islands"
+msgstr "科科斯群島"
+
+#: iptc/iptcorigin.cpp:149 xmp/xmporigin.cpp:140
+msgid "Colombia"
+msgstr "哥倫比亞"
+
+#: iptc/iptcorigin.cpp:150 xmp/xmporigin.cpp:141
+msgid "Comoros"
+msgstr "葛摩"
+
+#: iptc/iptcorigin.cpp:151 xmp/xmporigin.cpp:142
+msgid "Zaire"
+msgstr "薩伊"
+
+#: iptc/iptcorigin.cpp:152 xmp/xmporigin.cpp:143
+msgid "Congo"
+msgstr "剛果"
+
+#: iptc/iptcorigin.cpp:153 xmp/xmporigin.cpp:144
+msgid "Cook Islands"
+msgstr "庫克群島"
+
+#: iptc/iptcorigin.cpp:154 xmp/xmporigin.cpp:145
+msgid "Costa Rica"
+msgstr "哥斯大黎加"
+
+#: iptc/iptcorigin.cpp:155 xmp/xmporigin.cpp:146
+msgid "Ivory Coast"
+msgstr "象牙海岸"
+
+#: iptc/iptcorigin.cpp:156 xmp/xmporigin.cpp:147
+msgid "Cuba"
+msgstr "古巴"
+
+#: iptc/iptcorigin.cpp:157 xmp/xmporigin.cpp:148
+msgid "Cyprus"
+msgstr "賽普勒斯"
+
+#: iptc/iptcorigin.cpp:158 xmp/xmporigin.cpp:149
+msgid "Czech Republic"
+msgstr "捷克"
+
+#: iptc/iptcorigin.cpp:159 xmp/xmporigin.cpp:150
+msgid "Denmark"
+msgstr "丹麥"
+
+#: iptc/iptcorigin.cpp:160 xmp/xmporigin.cpp:151
+msgid "Djibouti"
+msgstr "吉布地"
+
+#: iptc/iptcorigin.cpp:161 xmp/xmporigin.cpp:152
+msgid "Dominica"
+msgstr "多米尼克"
+
+#: iptc/iptcorigin.cpp:162 xmp/xmporigin.cpp:153
+msgid "Dominican Republic"
+msgstr "多明尼加"
+
+#: iptc/iptcorigin.cpp:163 xmp/xmporigin.cpp:154
+msgid "Ecuador"
+msgstr "厄瓜多"
+
+#: iptc/iptcorigin.cpp:164 xmp/xmporigin.cpp:155
+msgid "Egypt"
+msgstr "埃及"
+
+#: iptc/iptcorigin.cpp:165 xmp/xmporigin.cpp:156
+msgid "El Salvador"
+msgstr "薩爾瓦多"
+
+#: iptc/iptcorigin.cpp:166 xmp/xmporigin.cpp:157
+msgid "Equatorial Guinea"
+msgstr "赤道幾內亞"
+
+#: iptc/iptcorigin.cpp:167 xmp/xmporigin.cpp:158
+msgid "Eritrea"
+msgstr "厄利垂亞"
+
+#: iptc/iptcorigin.cpp:168 xmp/xmporigin.cpp:159
+msgid "Estonia"
+msgstr "愛沙尼亞"
+
+#: iptc/iptcorigin.cpp:169 xmp/xmporigin.cpp:160
+msgid "Ethiopia"
+msgstr "衣索比亞"
+
+#: iptc/iptcorigin.cpp:170 xmp/xmporigin.cpp:161
+msgid "Faeroe Islands"
+msgstr "法羅群島"
+
+#: iptc/iptcorigin.cpp:171 xmp/xmporigin.cpp:162
+msgid "Falkland Islands"
+msgstr "福克蘭群島"
+
+#: iptc/iptcorigin.cpp:172 xmp/xmporigin.cpp:163
+msgid "Fiji Islands"
+msgstr "斐濟"
+
+#: iptc/iptcorigin.cpp:173 xmp/xmporigin.cpp:164
+msgid "Finland"
+msgstr "芬蘭"
+
+#: iptc/iptcorigin.cpp:174 xmp/xmporigin.cpp:165
+msgid "France"
+msgstr "法國"
+
+#: iptc/iptcorigin.cpp:175 xmp/xmporigin.cpp:166
+msgid "French Guiana"
+msgstr "法屬圭亞那"
+
+#: iptc/iptcorigin.cpp:176 xmp/xmporigin.cpp:167
+msgid "French Polynesia"
+msgstr "法屬玻里尼西亞"
+
+#: iptc/iptcorigin.cpp:177 xmp/xmporigin.cpp:168
+msgid "French Southern Territories"
+msgstr "法屬南部領土 "
+
+#: iptc/iptcorigin.cpp:178 xmp/xmporigin.cpp:169
+msgid "Gabon"
+msgstr "加彭"
+
+#: iptc/iptcorigin.cpp:179 xmp/xmporigin.cpp:170
+msgid "Gambia"
+msgstr "甘比亞"
+
+#: iptc/iptcorigin.cpp:180 xmp/xmporigin.cpp:171
+msgid "Georgia"
+msgstr "喬治亞"
+
+#: iptc/iptcorigin.cpp:181 xmp/xmporigin.cpp:172
+msgid "Germany"
+msgstr "德國"
+
+#: iptc/iptcorigin.cpp:182 xmp/xmporigin.cpp:173
+msgid "Ghana"
+msgstr "迦納"
+
+#: iptc/iptcorigin.cpp:183 xmp/xmporigin.cpp:174
+msgid "Gibraltar"
+msgstr "直布羅陀"
+
+#: iptc/iptcorigin.cpp:184 xmp/xmporigin.cpp:175
+msgid "Greece"
+msgstr "希臘"
+
+#: iptc/iptcorigin.cpp:185 xmp/xmporigin.cpp:176
+msgid "Greenland"
+msgstr "格陵蘭"
+
+#: iptc/iptcorigin.cpp:186 xmp/xmporigin.cpp:177
+msgid "Grenada"
+msgstr "格瑞那達"
+
+#: iptc/iptcorigin.cpp:187 xmp/xmporigin.cpp:178
+msgid "Guadaloupe"
+msgstr "瓜達洛普"
+
+#: iptc/iptcorigin.cpp:188 xmp/xmporigin.cpp:179
+msgid "Guam"
+msgstr "關島"
+
+#: iptc/iptcorigin.cpp:189 xmp/xmporigin.cpp:180
+msgid "Guatemala"
+msgstr "瓜地馬拉"
+
+#: iptc/iptcorigin.cpp:190 xmp/xmporigin.cpp:181
+msgid "Guinea"
+msgstr "幾內亞"
+
+#: iptc/iptcorigin.cpp:191 xmp/xmporigin.cpp:182
+msgid "Guinea-Bissau"
+msgstr "幾內亞比紹"
+
+#: iptc/iptcorigin.cpp:192 xmp/xmporigin.cpp:183
+msgid "Guyana"
+msgstr "蓋亞那"
+
+#: iptc/iptcorigin.cpp:193 xmp/xmporigin.cpp:184
+msgid "Haiti"
+msgstr "海地"
+
+#: iptc/iptcorigin.cpp:194 xmp/xmporigin.cpp:185
+msgid "Heard and McDonald Islands"
+msgstr "赫德和麥克唐納群島"
+
+#: iptc/iptcorigin.cpp:195 xmp/xmporigin.cpp:186
+msgid "Vatican"
+msgstr "梵蒂岡"
+
+#: iptc/iptcorigin.cpp:196 xmp/xmporigin.cpp:187
+msgid "Honduras"
+msgstr "宏都拉斯"
+
+#: iptc/iptcorigin.cpp:197 xmp/xmporigin.cpp:188
+msgid "Hong Kong"
+msgstr "香港"
+
+#: iptc/iptcorigin.cpp:198 xmp/xmporigin.cpp:189
+msgid "Croatia"
+msgstr "克羅埃西亞"
+
+#: iptc/iptcorigin.cpp:199 xmp/xmporigin.cpp:190
+msgid "Hungary"
+msgstr "匈牙利"
+
+#: iptc/iptcorigin.cpp:200 xmp/xmporigin.cpp:191
+msgid "Iceland"
+msgstr "冰島"
+
+#: iptc/iptcorigin.cpp:201 xmp/xmporigin.cpp:192
+msgid "India"
+msgstr "印度"
+
+#: iptc/iptcorigin.cpp:202 xmp/xmporigin.cpp:193
+msgid "Indonesia"
+msgstr "印度尼西亞"
+
+#: iptc/iptcorigin.cpp:203 xmp/xmporigin.cpp:194
+msgid "Iran"
+msgstr "伊朗"
+
+#: iptc/iptcorigin.cpp:204 xmp/xmporigin.cpp:195
+msgid "Iraq"
+msgstr "伊拉克"
+
+#: iptc/iptcorigin.cpp:205 xmp/xmporigin.cpp:196
+msgid "Ireland"
+msgstr "愛爾蘭"
+
+#: iptc/iptcorigin.cpp:206 xmp/xmporigin.cpp:197
+msgid "Israel"
+msgstr "以色列"
+
+#: iptc/iptcorigin.cpp:207 xmp/xmporigin.cpp:198
+msgid "Italy"
+msgstr "義大利"
+
+#: iptc/iptcorigin.cpp:208 xmp/xmporigin.cpp:199
+msgid "Jamaica"
+msgstr "牙買加"
+
+#: iptc/iptcorigin.cpp:209 xmp/xmporigin.cpp:200
+msgid "Japan"
+msgstr "日本"
+
+#: iptc/iptcorigin.cpp:210 xmp/xmporigin.cpp:201
+msgid "Jordan"
+msgstr "約旦"
+
+#: iptc/iptcorigin.cpp:211 xmp/xmporigin.cpp:202
+msgid "Kazakhstan"
+msgstr "哈薩克"
+
+#: iptc/iptcorigin.cpp:212 xmp/xmporigin.cpp:203
+msgid "Kenya"
+msgstr "肯亞"
+
+#: iptc/iptcorigin.cpp:213 xmp/xmporigin.cpp:204
+msgid "Kiribati"
+msgstr "吉里巴斯"
+
+#: iptc/iptcorigin.cpp:214 iptc/iptcorigin.cpp:215 xmp/xmporigin.cpp:205
+#: xmp/xmporigin.cpp:206
+msgid "Korea"
+msgstr "韓國"
+
+#: iptc/iptcorigin.cpp:216 xmp/xmporigin.cpp:207
+msgid "Kuwait"
+msgstr "科威特"
+
+#: iptc/iptcorigin.cpp:217 xmp/xmporigin.cpp:208
+msgid "Kyrgyz Republic"
+msgstr "吉爾吉斯"
+
+#: iptc/iptcorigin.cpp:218 xmp/xmporigin.cpp:209
+msgid "Lao"
+msgstr "寮國"
+
+#: iptc/iptcorigin.cpp:219 xmp/xmporigin.cpp:210
+msgid "Latvia"
+msgstr "拉脫維亞"
+
+#: iptc/iptcorigin.cpp:220 xmp/xmporigin.cpp:211
+msgid "Lebanon"
+msgstr "黎巴嫩"
+
+#: iptc/iptcorigin.cpp:221 xmp/xmporigin.cpp:212
+msgid "Lesotho"
+msgstr "賴索托"
+
+#: iptc/iptcorigin.cpp:222 xmp/xmporigin.cpp:213
+msgid "Liberia"
+msgstr "賴比瑞亞"
+
+#: iptc/iptcorigin.cpp:223 xmp/xmporigin.cpp:214
+msgid "Libyan Arab Jamahiriya"
+msgstr "利比亞"
+
+#: iptc/iptcorigin.cpp:224 xmp/xmporigin.cpp:215
+msgid "Liechtenstein"
+msgstr "列支敦斯登"
+
+#: iptc/iptcorigin.cpp:225 xmp/xmporigin.cpp:216
+msgid "Lithuania"
+msgstr "立陶宛"
+
+#: iptc/iptcorigin.cpp:226 xmp/xmporigin.cpp:217
+msgid "Luxembourg"
+msgstr "盧森堡"
+
+#: iptc/iptcorigin.cpp:227 xmp/xmporigin.cpp:218
+msgid "Macao"
+msgstr "澳門"
+
+#: iptc/iptcorigin.cpp:228 xmp/xmporigin.cpp:219
+msgid "Macedonia"
+msgstr "馬其頓"
+
+#: iptc/iptcorigin.cpp:229 xmp/xmporigin.cpp:220
+msgid "Madagascar"
+msgstr "馬達加斯加"
+
+#: iptc/iptcorigin.cpp:230 xmp/xmporigin.cpp:221
+msgid "Malawi"
+msgstr "馬拉威"
+
+#: iptc/iptcorigin.cpp:231 xmp/xmporigin.cpp:222
+msgid "Malaysia"
+msgstr "馬來西亞"
+
+#: iptc/iptcorigin.cpp:232 xmp/xmporigin.cpp:223
+msgid "Maldives"
+msgstr "馬爾地夫"
+
+#: iptc/iptcorigin.cpp:233 xmp/xmporigin.cpp:224
+msgid "Mali"
+msgstr "馬利"
+
+#: iptc/iptcorigin.cpp:234 xmp/xmporigin.cpp:225
+msgid "Malta"
+msgstr "馬爾他"
+
+#: iptc/iptcorigin.cpp:235 xmp/xmporigin.cpp:226
+msgid "Marshall Islands"
+msgstr "馬紹爾群島"
+
+#: iptc/iptcorigin.cpp:236 xmp/xmporigin.cpp:227
+msgid "Martinique"
+msgstr "馬丁尼克"
+
+#: iptc/iptcorigin.cpp:237 xmp/xmporigin.cpp:228
+msgid "Mauritania"
+msgstr "茅利塔尼亞"
+
+#: iptc/iptcorigin.cpp:238 xmp/xmporigin.cpp:229
+msgid "Mauritius"
+msgstr "模裡西斯"
+
+#: iptc/iptcorigin.cpp:239 xmp/xmporigin.cpp:230
+msgid "Mayotte"
+msgstr "馬約特"
+
+#: iptc/iptcorigin.cpp:240 xmp/xmporigin.cpp:231
+msgid "Mexico"
+msgstr "墨西哥"
+
+#: iptc/iptcorigin.cpp:241 xmp/xmporigin.cpp:232
+msgid "Micronesia"
+msgstr "密克羅西尼亞"
+
+#: iptc/iptcorigin.cpp:242 xmp/xmporigin.cpp:233
+msgid "Moldova"
+msgstr "摩爾多瓦"
+
+#: iptc/iptcorigin.cpp:243 xmp/xmporigin.cpp:234
+msgid "Monaco"
+msgstr "摩納哥"
+
+#: iptc/iptcorigin.cpp:244 xmp/xmporigin.cpp:235
+msgid "Mongolia"
+msgstr "蒙古"
+
+#: iptc/iptcorigin.cpp:245 xmp/xmporigin.cpp:236
+msgid "Montserrat"
+msgstr "蒙瑟拉特"
+
+#: iptc/iptcorigin.cpp:246 xmp/xmporigin.cpp:237
+msgid "Morocco"
+msgstr "摩洛哥"
+
+#: iptc/iptcorigin.cpp:247 xmp/xmporigin.cpp:238
+msgid "Mozambique"
+msgstr "莫三比克"
+
+#: iptc/iptcorigin.cpp:248 xmp/xmporigin.cpp:239
+msgid "Myanmar"
+msgstr "緬甸"
+
+#: iptc/iptcorigin.cpp:249 xmp/xmporigin.cpp:240
+msgid "Namibia"
+msgstr "納米比亞"
+
+#: iptc/iptcorigin.cpp:250 xmp/xmporigin.cpp:241
+msgid "Nauru"
+msgstr "諾魯"
+
+#: iptc/iptcorigin.cpp:251 xmp/xmporigin.cpp:242
+msgid "Nepal"
+msgstr "尼泊爾"
+
+#: iptc/iptcorigin.cpp:252 xmp/xmporigin.cpp:243
+msgid "Netherlands Antilles"
+msgstr "荷屬安地列斯"
+
+#: iptc/iptcorigin.cpp:253 xmp/xmporigin.cpp:244
+msgid "Netherlands"
+msgstr "荷蘭"
+
+#: iptc/iptcorigin.cpp:254 xmp/xmporigin.cpp:245
+msgid "New Caledonia"
+msgstr "新喀裡多尼亞"
+
+#: iptc/iptcorigin.cpp:255 xmp/xmporigin.cpp:246
+msgid "New Zealand"
+msgstr "紐西蘭"
+
+#: iptc/iptcorigin.cpp:256 xmp/xmporigin.cpp:247
+msgid "Nicaragua"
+msgstr "尼加拉瓜"
+
+#: iptc/iptcorigin.cpp:257 xmp/xmporigin.cpp:248
+msgid "Niger"
+msgstr "尼日"
+
+#: iptc/iptcorigin.cpp:258 xmp/xmporigin.cpp:249
+msgid "Nigeria"
+msgstr "奈及利亞"
+
+#: iptc/iptcorigin.cpp:259 xmp/xmporigin.cpp:250
+msgid "Niue"
+msgstr "紐埃"
+
+#: iptc/iptcorigin.cpp:260 xmp/xmporigin.cpp:251
+msgid "Norfolk Island"
+msgstr "諾福克島"
+
+#: iptc/iptcorigin.cpp:261 xmp/xmporigin.cpp:252
+msgid "Northern Mariana Islands"
+msgstr "北馬里亞納群島 "
+
+#: iptc/iptcorigin.cpp:262 xmp/xmporigin.cpp:253
+msgid "Norway"
+msgstr "挪威"
+
+#: iptc/iptcorigin.cpp:263 xmp/xmporigin.cpp:254
+msgid "Oman"
+msgstr "阿曼"
+
+#: iptc/iptcorigin.cpp:264 xmp/xmporigin.cpp:255
+msgid "Pakistan"
+msgstr "巴基斯坦"
+
+#: iptc/iptcorigin.cpp:265 xmp/xmporigin.cpp:256
+msgid "Palau"
+msgstr "帛琉"
+
+#: iptc/iptcorigin.cpp:266 xmp/xmporigin.cpp:257
+msgid "Palestinian Territory"
+msgstr "巴勒斯坦領土 "
+
+#: iptc/iptcorigin.cpp:267 xmp/xmporigin.cpp:258
+msgid "Panama"
+msgstr "巴拿馬"
+
+#: iptc/iptcorigin.cpp:268 xmp/xmporigin.cpp:259
+msgid "Papua New Guinea"
+msgstr "巴布亞紐幾內亞"
+
+#: iptc/iptcorigin.cpp:269 xmp/xmporigin.cpp:260
+msgid "Paraguay"
+msgstr "巴拉圭"
+
+#: iptc/iptcorigin.cpp:270 xmp/xmporigin.cpp:261
+msgid "Peru"
+msgstr "秘魯"
+
+#: iptc/iptcorigin.cpp:271 xmp/xmporigin.cpp:262
+msgid "Philippines"
+msgstr "菲律賓"
+
+#: iptc/iptcorigin.cpp:272 xmp/xmporigin.cpp:263
+msgid "Pitcairn Island"
+msgstr "皮特凱恩島 "
+
+#: iptc/iptcorigin.cpp:273 xmp/xmporigin.cpp:264
+msgid "Poland"
+msgstr "波蘭"
+
+#: iptc/iptcorigin.cpp:274 xmp/xmporigin.cpp:265
+msgid "Portugal"
+msgstr "葡萄牙"
+
+#: iptc/iptcorigin.cpp:275 xmp/xmporigin.cpp:266
+msgid "Puerto Rico"
+msgstr "波多黎各"
+
+#: iptc/iptcorigin.cpp:276 xmp/xmporigin.cpp:267
+msgid "Qatar"
+msgstr "卡達"
+
+#: iptc/iptcorigin.cpp:277 xmp/xmporigin.cpp:268
+msgid "Reunion"
+msgstr "留尼旺"
+
+#: iptc/iptcorigin.cpp:278 xmp/xmporigin.cpp:269
+msgid "Romania"
+msgstr "羅馬尼亞"
+
+#: iptc/iptcorigin.cpp:279 xmp/xmporigin.cpp:270
+msgid "Russian Federation"
+msgstr "俄羅斯"
+
+#: iptc/iptcorigin.cpp:280 xmp/xmporigin.cpp:271
+msgid "Rwanda"
+msgstr "盧安達"
+
+#: iptc/iptcorigin.cpp:281 xmp/xmporigin.cpp:272
+msgid "St. Helena"
+msgstr "聖赫勒拿"
+
+#: iptc/iptcorigin.cpp:282 xmp/xmporigin.cpp:273
+msgid "St. Kitts and Nevis"
+msgstr "聖基茨和尼維斯"
+
+#: iptc/iptcorigin.cpp:283 xmp/xmporigin.cpp:274
+msgid "St. Lucia"
+msgstr "聖露西亞"
+
+#: iptc/iptcorigin.cpp:284 xmp/xmporigin.cpp:275
+msgid "St. Pierre and Miquelon"
+msgstr "聖皮耳和密克隆"
+
+#: iptc/iptcorigin.cpp:285 xmp/xmporigin.cpp:276
+msgid "St. Vincent and the Grenadines"
+msgstr "聖文森和格瑞那丁"
+
+#: iptc/iptcorigin.cpp:286 xmp/xmporigin.cpp:277
+msgid "Samoa"
+msgstr "薩摩亞"
+
+#: iptc/iptcorigin.cpp:287 xmp/xmporigin.cpp:278
+msgid "San Marino"
+msgstr "聖馬利諾"
+
+#: iptc/iptcorigin.cpp:288 xmp/xmporigin.cpp:279
+msgid "Sao Tome and Principe"
+msgstr "聖多美普林西比"
+
+#: iptc/iptcorigin.cpp:289 xmp/xmporigin.cpp:280
+msgid "Saudi Arabia"
+msgstr "沙烏地阿拉伯"
+
+#: iptc/iptcorigin.cpp:290 xmp/xmporigin.cpp:281
+msgid "Senegal"
+msgstr "塞內加爾"
+
+#: iptc/iptcorigin.cpp:291 xmp/xmporigin.cpp:282
+msgid "Serbia and Montenegro"
+msgstr "塞爾維亞和黑山 "
+
+#: iptc/iptcorigin.cpp:292 xmp/xmporigin.cpp:283
+msgid "Seychelles"
+msgstr "塞席爾"
+
+#: iptc/iptcorigin.cpp:293 xmp/xmporigin.cpp:284
+msgid "Sierra Leone"
+msgstr "獅子山共和國"
+
+#: iptc/iptcorigin.cpp:294 xmp/xmporigin.cpp:285
+msgid "Singapore"
+msgstr "新加坡"
+
+#: iptc/iptcorigin.cpp:295 xmp/xmporigin.cpp:286
+msgid "Slovakia"
+msgstr "斯洛伐克"
+
+#: iptc/iptcorigin.cpp:296 xmp/xmporigin.cpp:287
+msgid "Slovenia"
+msgstr "斯洛維尼亞"
+
+#: iptc/iptcorigin.cpp:297 xmp/xmporigin.cpp:288
+msgid "Solomon Islands"
+msgstr "索羅門群島"
+
+#: iptc/iptcorigin.cpp:298 xmp/xmporigin.cpp:289
+msgid "Somalia"
+msgstr "索馬利亞"
+
+#: iptc/iptcorigin.cpp:299 xmp/xmporigin.cpp:290
+msgid "South Africa"
+msgstr "南非"
+
+#: iptc/iptcorigin.cpp:300 xmp/xmporigin.cpp:291
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "南喬治亞島和南桑威奇群島"
+
+#: iptc/iptcorigin.cpp:301 xmp/xmporigin.cpp:292
+msgid "Spain"
+msgstr "西班牙"
+
+#: iptc/iptcorigin.cpp:302 xmp/xmporigin.cpp:293
+msgid "Sri Lanka"
+msgstr "斯里蘭卡"
+
+#: iptc/iptcorigin.cpp:303 xmp/xmporigin.cpp:294
+msgid "Sudan"
+msgstr "蘇丹"
+
+#: iptc/iptcorigin.cpp:304 xmp/xmporigin.cpp:295
+msgid "Suriname"
+msgstr "蘇利南"
+
+#: iptc/iptcorigin.cpp:305 xmp/xmporigin.cpp:296
+msgid "Svalbard & Jan Mayen Islands"
+msgstr "斯瓦爾巴群島和揚馬延"
+
+#: iptc/iptcorigin.cpp:306 xmp/xmporigin.cpp:297
+msgid "Swaziland"
+msgstr "史瓦濟蘭"
+
+#: iptc/iptcorigin.cpp:307 xmp/xmporigin.cpp:298
+msgid "Sweden"
+msgstr "瑞典"
+
+#: iptc/iptcorigin.cpp:308 xmp/xmporigin.cpp:299
+msgid "Switzerland"
+msgstr "瑞士"
+
+#: iptc/iptcorigin.cpp:309 xmp/xmporigin.cpp:300
+msgid "Syrian Arab Republic"
+msgstr "敘利亞"
+
+#: iptc/iptcorigin.cpp:310 xmp/xmporigin.cpp:301
+msgid "Taiwan"
+msgstr "臺灣"
+
+#: iptc/iptcorigin.cpp:311 xmp/xmporigin.cpp:302
+msgid "Tajikistan"
+msgstr "塔吉克"
+
+#: iptc/iptcorigin.cpp:312 xmp/xmporigin.cpp:303
+msgid "Tanzania"
+msgstr "坦尚尼亞"
+
+#: iptc/iptcorigin.cpp:313 xmp/xmporigin.cpp:304
+msgid "Thailand"
+msgstr "泰國"
+
+#: iptc/iptcorigin.cpp:314 xmp/xmporigin.cpp:305
+msgid "Timor-Leste"
+msgstr "帝汶"
+
+#: iptc/iptcorigin.cpp:315 xmp/xmporigin.cpp:306
+msgid "Togo"
+msgstr "多哥"
+
+#: iptc/iptcorigin.cpp:316 xmp/xmporigin.cpp:307
+msgid "Tokelau Islands"
+msgstr "托克勞群島"
+
+#: iptc/iptcorigin.cpp:317 xmp/xmporigin.cpp:308
+msgid "Tonga"
+msgstr "東加"
+
+#: iptc/iptcorigin.cpp:318 xmp/xmporigin.cpp:309
+msgid "Trinidad and Tobago"
+msgstr "千里達"
+
+#: iptc/iptcorigin.cpp:319 xmp/xmporigin.cpp:310
+msgid "Tunisia"
+msgstr "突尼西亞"
+
+#: iptc/iptcorigin.cpp:320 xmp/xmporigin.cpp:311
+msgid "Turkey"
+msgstr "土耳其"
+
+#: iptc/iptcorigin.cpp:321 xmp/xmporigin.cpp:312
+msgid "Turkmenistan"
+msgstr "土庫曼"
+
+#: iptc/iptcorigin.cpp:322 xmp/xmporigin.cpp:313
+msgid "Turks and Caicos Islands"
+msgstr "特克斯和凱科斯群島"
+
+#: iptc/iptcorigin.cpp:323 xmp/xmporigin.cpp:314
+msgid "Tuvalu"
+msgstr "吐瓦魯"
+
+#: iptc/iptcorigin.cpp:324 xmp/xmporigin.cpp:315
+msgid "US Virgin Islands"
+msgstr "美屬維京群島"
+
+#: iptc/iptcorigin.cpp:325 xmp/xmporigin.cpp:316
+msgid "Uganda"
+msgstr "烏干達"
+
+#: iptc/iptcorigin.cpp:326 xmp/xmporigin.cpp:317
+msgid "Ukraine"
+msgstr "烏克蘭"
+
+#: iptc/iptcorigin.cpp:327 xmp/xmporigin.cpp:318
+msgid "United Arab Emirates"
+msgstr "阿拉伯聯合大公國"
+
+#: iptc/iptcorigin.cpp:328 xmp/xmporigin.cpp:319
+msgid "United Kingdom"
+msgstr "英國"
+
+#: iptc/iptcorigin.cpp:329 xmp/xmporigin.cpp:320
+msgid "United States Minor Outlying Islands"
+msgstr "美屬邊疆群島"
+
+#: iptc/iptcorigin.cpp:330 xmp/xmporigin.cpp:321
+msgid "United States of America"
+msgstr "美國"
+
+#: iptc/iptcorigin.cpp:331 xmp/xmporigin.cpp:322
+msgid "Uruguay, Eastern Republic of"
+msgstr "烏拉圭東岸共和國"
+
+#: iptc/iptcorigin.cpp:332 xmp/xmporigin.cpp:323
+msgid "Uzbekistan"
+msgstr "烏茲別克"
+
+#: iptc/iptcorigin.cpp:333 xmp/xmporigin.cpp:324
+msgid "Vanuatu"
+msgstr "萬那杜"
+
+#: iptc/iptcorigin.cpp:334 xmp/xmporigin.cpp:325
+msgid "Venezuela"
+msgstr "委內瑞拉"
+
+#: iptc/iptcorigin.cpp:335 xmp/xmporigin.cpp:326
+msgid "Viet Nam"
+msgstr "越南"
+
+#: iptc/iptcorigin.cpp:336 xmp/xmporigin.cpp:327
+msgid "Wallis and Futuna Islands "
+msgstr "瓦裡斯及福塔納群島"
+
+#: iptc/iptcorigin.cpp:337 xmp/xmporigin.cpp:328
+msgid "Western Sahara"
+msgstr "西撒哈拉"
+
+#: iptc/iptcorigin.cpp:338 xmp/xmporigin.cpp:329
+msgid "Yemen"
+msgstr "葉門"
+
+#: iptc/iptcorigin.cpp:339 xmp/xmporigin.cpp:330
+msgid "Zambia"
+msgstr "尚比亞"
+
+#: iptc/iptcorigin.cpp:340 xmp/xmporigin.cpp:331
+msgid "Zimbabwe"
+msgstr "辛巴威"
+
+#: iptc/iptcorigin.cpp:344 xmp/xmporigin.cpp:335
+msgid "United Nations"
+msgstr "聯合國"
+
+#: iptc/iptcorigin.cpp:345 xmp/xmporigin.cpp:336
+msgid "European Union"
+msgstr "歐洲聯盟"
+
+#: iptc/iptcorigin.cpp:346 xmp/xmporigin.cpp:337
+msgid "Space"
+msgstr "太空"
+
+#: iptc/iptcorigin.cpp:347 xmp/xmporigin.cpp:338
+msgid "At Sea"
+msgstr "航海"
+
+#: iptc/iptcorigin.cpp:348 xmp/xmporigin.cpp:339
+msgid "In Flight"
+msgstr "飛航"
+
+#: iptc/iptcorigin.cpp:349 xmp/xmporigin.cpp:340
+msgid "England"
+msgstr "英格蘭"
+
+#: iptc/iptcorigin.cpp:350 xmp/xmporigin.cpp:341
+msgid "Scotland"
+msgstr "蘇格蘭"
+
+#: iptc/iptcorigin.cpp:351 xmp/xmporigin.cpp:342
+msgid "Northern Ireland"
+msgstr "北愛爾蘭"
+
+#: iptc/iptcorigin.cpp:352 xmp/xmporigin.cpp:343
+msgid "Wales"
+msgstr "威爾斯"
+
+#: iptc/iptcorigin.cpp:353 xmp/xmporigin.cpp:344
+msgid "Palestine"
+msgstr "巴勒斯坦"
+
+#: iptc/iptcorigin.cpp:354 xmp/xmporigin.cpp:345
+msgid "Gaza"
+msgstr "加沙"
+
+#: iptc/iptcorigin.cpp:355 xmp/xmporigin.cpp:346
+msgid "Jericho"
+msgstr "耶利哥"
+
+#: iptc/iptcorigin.cpp:403 xmp/xmporigin.cpp:383
+msgid "Digitization date"
+msgstr "數位化日期"
+
+#: iptc/iptcorigin.cpp:404
+msgid "Digitization time"
+msgstr "數位化時間"
+
+#: iptc/iptcorigin.cpp:412 xmp/xmporigin.cpp:390
+msgid "Set here the creation date of digital representation."
+msgstr "在這裡設定用數字表示的建立日期。"
+
+#: iptc/iptcorigin.cpp:414
+msgid "Set here the creation time of digital representation."
+msgstr "在這裡設定用數字表示的建立時間。"
+
+#: iptc/iptcorigin.cpp:421 xmp/xmporigin.cpp:397
+msgid "Creation date"
+msgstr "建立日期"
+
+#: iptc/iptcorigin.cpp:422
+msgid "Creation time"
+msgstr "建立時間"
+
+#: iptc/iptcorigin.cpp:428 xmp/xmporigin.cpp:402
+msgid "Sync EXIF creation date"
+msgstr "同步 EXIF 建立日期"
+
+#: iptc/iptcorigin.cpp:434 xmp/xmporigin.cpp:408
+msgid "Set here the creation date of intellectual content."
+msgstr "在這裡設定知識內容的建立日期。"
+
+#: iptc/iptcorigin.cpp:436
+msgid "Set here the creation time of intellectual content."
+msgstr "在這裡設定知識內容的建立時間。"
+
+#: iptc/iptcorigin.cpp:443
+msgid "Location:"
+msgstr "地點："
+
+#: iptc/iptcorigin.cpp:444
+msgid "Set here the full country name referenced by the content."
+msgstr "在這裡設定內容引用的國家完整名稱。"
+
+#: iptc/iptcorigin.cpp:455 xmp/xmpcredits.cpp:153 xmp/xmporigin.cpp:415
+msgid "City:"
+msgstr "城市："
+
+#: iptc/iptcorigin.cpp:460
+msgid ""
+"Set here the city of content origin. This field is limited to 32 ASCII "
+"characters."
+msgstr "在這裡設定內容來源的城市。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptcorigin.cpp:465 xmp/xmporigin.cpp:422
+msgid "Sublocation:"
+msgstr "轄區："
+
+#: iptc/iptcorigin.cpp:470
+msgid ""
+"Set here the content location within city. This field is limited to 32 ASCII "
+"characters."
+msgstr "在這裡設定內容所在的城市。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptcorigin.cpp:475 xmp/xmporigin.cpp:429
+msgid "State/Province:"
+msgstr "州/省："
+
+#: iptc/iptcorigin.cpp:480
+msgid ""
+"Set here the Province or State of content origin. This field is limited to "
+"32 ASCII characters."
+msgstr "在這裡設定內容來源的省份或州。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptcorigin.cpp:485 xmp/xmpcredits.cpp:158 xmp/xmporigin.cpp:436
+msgid "Country:"
+msgstr "國家："
+
+#: iptc/iptcorigin.cpp:493
+msgid "Select here country name of content origin."
+msgstr "在這裡選擇內容來源的國家名稱。"
+
+#: iptc/iptcproperties.cpp:135
+msgid "Release date"
+msgstr "發佈日期"
+
+#: iptc/iptcproperties.cpp:136
+msgid "Release time"
+msgstr "發佈時間"
+
+#: iptc/iptcproperties.cpp:142
+msgid "Set release date to today"
+msgstr "將發佈日期設為今天"
+
+#: iptc/iptcproperties.cpp:144
+msgid "Set here the earliest intended usable date of intellectual content."
+msgstr "在這裡設定知識內容預期可用的最早日期。"
+
+#: iptc/iptcproperties.cpp:146
+msgid "Set here the earliest intended usable time of intellectual content."
+msgstr "在這裡設定知識內容預期可用的最早時間。"
+
+#: iptc/iptcproperties.cpp:152
+msgid "Expiration date"
+msgstr "到期日期"
+
+#: iptc/iptcproperties.cpp:153
+msgid "Expiration time"
+msgstr "到期時間"
+
+#: iptc/iptcproperties.cpp:159
+msgid "Set expiration date to today"
+msgstr "將到期日期設為今天"
+
+#: iptc/iptcproperties.cpp:161
+msgid "Set here the latest intended usable date of intellectual content."
+msgstr "在這裡設定知識內容預期可用的最晚日期。"
+
+#: iptc/iptcproperties.cpp:163
+msgid "Set here the latest intended usable time of intellectual content."
+msgstr "在這裡設定知識內容預期可用的最晚時間。"
+
+#: iptc/iptcproperties.cpp:170 xmp/xmpproperties.cpp:174
+msgid "Language:"
+msgstr "語言："
+
+#: iptc/iptcproperties.cpp:182 xmp/xmpproperties.cpp:175
+msgid "Select here the language of content."
+msgstr "在這裡選擇內容的語言。"
+
+#: iptc/iptcproperties.cpp:188 xmp/xmpproperties.cpp:188
+msgctxt "editorial urgency of content"
+msgid "0: None"
+msgstr "0：無"
+
+#: iptc/iptcproperties.cpp:189 xmp/xmpproperties.cpp:189
+msgctxt "editorial urgency of content"
+msgid "1: High"
+msgstr "1：高"
+
+#: iptc/iptcproperties.cpp:193 xmp/xmpproperties.cpp:193
+msgctxt "editorial urgency of content"
+msgid "5: Normal"
+msgstr "5：普通"
+
+#: iptc/iptcproperties.cpp:196 xmp/xmpproperties.cpp:196
+msgctxt "editorial urgency of content"
+msgid "8: Low"
+msgstr "8：低"
+
+#: iptc/iptcproperties.cpp:197 xmp/xmpproperties.cpp:197
+msgid "Select here the editorial urgency of content."
+msgstr "在這裡選擇內容的編輯緊迫性。"
+
+#: iptc/iptcproperties.cpp:201
+msgid "Cycle:"
+msgstr "週期："
+
+#: iptc/iptcproperties.cpp:203
+msgid "Morning"
+msgstr "早上"
+
+#: iptc/iptcproperties.cpp:204
+msgid "Afternoon"
+msgstr "下午"
+
+#: iptc/iptcproperties.cpp:205
+msgid "Evening"
+msgstr "晚上"
+
+#: iptc/iptcproperties.cpp:206
+msgid "Select here the editorial cycle of content."
+msgstr "在這裡設定內容的編輯週期。"
+
+#: iptc/iptcproperties.cpp:210 xmp/xmpproperties.cpp:213
+msgid "Type:"
+msgstr "類型："
+
+#: iptc/iptcproperties.cpp:216 xmp/xmpproperties.cpp:117
+msgid "News"
+msgstr "新聞"
+
+#: iptc/iptcproperties.cpp:217 xmp/xmpproperties.cpp:113
+msgid "Data"
+msgstr "資料"
+
+#: iptc/iptcproperties.cpp:218 xmp/xmpproperties.cpp:110
+msgid "Advisory"
+msgstr "諮詢"
+
+#: iptc/iptcproperties.cpp:219
+msgid "Select here the editorial type of content."
+msgstr "在這裡選擇內容的編輯類型。"
+
+#: iptc/iptcproperties.cpp:220
+msgid ""
+"Set here the editorial type description of content. This field is limited to "
+"64 ASCII characters."
+msgstr "在這裡選擇內容的編輯類型描述。這個字段限制為 64 個 ASCII 字元。"
+
+#: iptc/iptcproperties.cpp:229 xmp/xmpproperties.cpp:257
+msgid "Reference:"
+msgstr "參考："
+
+#: iptc/iptcproperties.cpp:234
+msgid ""
+"Set here the original content transmission reference. This field is limited "
+"to 32 ASCII characters."
+msgstr "在這裡設定原始內容辦理事項偏好設定。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptcstatus.cpp:91
+msgctxt "image title"
+msgid "Title:"
+msgstr "標題："
+
+#: iptc/iptcstatus.cpp:96
+msgid ""
+"Set here the shorthand reference of content. This field is limited to 64 "
+"ASCII characters."
+msgstr "在這裡設定內容的簡略偏好設定。這個字段限制為 64 個 ASCII 字元。"
+
+#: iptc/iptcstatus.cpp:101
+msgid "Edit Status:"
+msgstr "編輯狀態："
+
+#: iptc/iptcstatus.cpp:106
+msgid ""
+"Set here the title of content status. This field is limited to 64 ASCII "
+"characters."
+msgstr "在這裡輸入內容狀態的標題。這個字段限制為 64 個 ASCII 字元。"
+
+#: iptc/iptcstatus.cpp:111
+msgid "Job Identifier:"
+msgstr "作業識別碼："
+
+#: iptc/iptcstatus.cpp:116
+msgid ""
+"Set here the string that identifies content that recurs. This field is "
+"limited to 32 ASCII characters."
+msgstr "在這裡設定辨識內容重現的字串。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptcstatus.cpp:121 xmp/xmpstatus.cpp:105
+msgid "Special Instructions:"
+msgstr "特別須知："
+
+#: iptc/iptcstatus.cpp:125
+msgid ""
+"Enter the editorial usage instructions. This field is limited to 256 ASCII "
+"characters."
+msgstr "輸入編輯使用須知。這個字段限制為 256 個 ASCII 字元。"
+
+#: iptc/iptcsubjects.cpp:57
+msgid ""
+"Enter here the Informative Provider Reference. I.P.R is a name registered "
+"with the IPTC/NAA, identifying the provider that provides an indicator of "
+"the content. The default value for the I.P.R is \"IPTC\" if a standard "
+"Reference Code is used. This field is limited to 32 ASCII characters."
+msgstr ""
+"在這裡輸入提供者參考資訊 (Informative Provider Reference)。I.P.R 是由 IPTC/"
+"NAA 註冊的名稱，說明提供者所提供的指標性內容。如果使用標準參考代碼 I.P.R 的預"
+"設值是「IPTC」。這個字段限制為 32 個 ASCII 字元。"
+
+#: iptc/iptcsubjects.cpp:65
+msgid ""
+"Enter here the Subject Reference Number. Provides a numeric code to indicate "
+"the Subject Name plus optional Subject Matter and Subject Detail Names in "
+"the language of the service. Subject Reference is a number from the range "
+"01000000 to 17999999 and represent a language independent international "
+"reference to a Subject. A Subject is identified by its Reference Number and "
+"corresponding Names taken from a standard lists given by IPTC/NAA. If a "
+"standard reference code is used, these lists are the English language "
+"reference versions. This field is limited to 8 ASCII digit code."
+msgstr ""
+"在這裡輸入主題參考編號。提供數字的代碼來辨識主題名稱加上選擇性服務之語言的主"
+"題內容和主題詳細名稱。主題參考為範圍 01000000 到 17999999 的數字相當於一個主"
+"題的獨立語言國際參考。藉由從 IPTC/NAA 給予的標準清單取得的參考編號和對應名稱"
+"來辨識主題。如果使用標準參考代碼，這些清單會是英語參考版本。這字段限制為 8 個"
+"數字碼。"
+
+#: iptc/iptcsubjects.cpp:80
+msgid ""
+"Enter here the Subject Name. English language is used if you selected a "
+"standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"在這裡輸入主題名稱。如果您選擇標準 IPTC/NAA 參考代碼請使用英文。這個字段限制"
+"為 64 個 ASCII 字元。"
+
+#: iptc/iptcsubjects.cpp:87
+msgid ""
+"Enter here the Subject Matter Name. English language is used if you selected "
+"a standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"在這裡輸入主題內容名稱。如果您選擇標準 IPTC/NAA 參考代碼請使用英文。這個字段"
+"限制為 64 個 ASCII 字元。"
+
+#: iptc/iptcsubjects.cpp:94
+msgid ""
+"Enter here the Subject Detail Name. English language is used if you selected "
+"a standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"在這裡輸入主題詳細名稱。如果您選擇標準 IPTC/NAA 參考代碼請使用英文。這個字段"
+"限制為 64 個 ASCII 字元。"
+
+#: iptc/iptceditwidget.cpp:140 xmp/xmpeditwidget.cpp:140
+msgid "Content"
+msgstr "連絡資料"
+
+#: iptc/iptceditwidget.cpp:141 xmp/xmpeditwidget.cpp:141
+msgid ""
+"<qt>Content Information<br/><i>Use this panel to describe the visual content "
+"of the image</i></qt>"
+msgstr "<qt>內容資訊<br/><i>使用這個面板來描述此影像的視覺內容</i></qt>"
+
+#: iptc/iptceditwidget.cpp:146 xmp/xmpeditwidget.cpp:146
+msgid "Origin"
+msgstr "來源"
+
+#: iptc/iptceditwidget.cpp:147 xmp/xmpeditwidget.cpp:147
+msgid ""
+"<qt>Origin Information<br/><i>Use this panel for formal descriptive "
+"information about the image</i></qt>"
+msgstr "<qt>來源資訊<br/><i>使用這個面板來取得此影像正式的描述資訊</i></qt>"
+
+#: iptc/iptceditwidget.cpp:152 xmp/xmpeditwidget.cpp:152
+msgid "Credits"
+msgstr "授權"
+
+#: iptc/iptceditwidget.cpp:153 xmp/xmpeditwidget.cpp:153
+msgid ""
+"<qt>Credit Information<br/><i>Use this panel to record copyright information "
+"about the image</i></qt>"
+msgstr "<qt>授權資訊<br/><i>使用這個面板來記錄此影像的著作權資訊</i></qt>"
+
+#: iptc/iptceditwidget.cpp:158 xmp/xmpeditwidget.cpp:158
+msgid "Subjects"
+msgstr "主題"
+
+#: iptc/iptceditwidget.cpp:159 xmp/xmpeditwidget.cpp:159
+msgid ""
+"<qt>Subject Information<br/><i>Use this panel to record subject information "
+"about the image</i></qt>"
+msgstr "<qt>主題資訊<br/><i>使用這個面板來記錄此影像的主題資訊</i></qt>"
+
+#: iptc/iptceditwidget.cpp:164 xmp/xmpeditwidget.cpp:164
+msgid "Keywords"
+msgstr "關鍵字"
+
+#: iptc/iptceditwidget.cpp:165 xmp/xmpeditwidget.cpp:165
+msgid ""
+"<qt>Keyword Information<br/><i>Use this panel to record keywords relevant to "
+"the image</i></qt>"
+msgstr "<qt>關鍵字資訊<br/><i>使用這個面板來記錄與此影像相關的關鍵字</i></qt>"
+
+#: iptc/iptceditwidget.cpp:170 xmp/xmpeditwidget.cpp:170
+msgid "Categories"
+msgstr "類別"
+
+#: iptc/iptceditwidget.cpp:171 xmp/xmpeditwidget.cpp:171
+msgid ""
+"<qt>Category Information<br/><i>Use this panel to record categories relevant "
+"to the image</i></qt>"
+msgstr "<qt>類別資訊<br/><i>使用這個面板來記錄與此影像相關的類別</i></qt>"
+
+#: iptc/iptceditwidget.cpp:176 xmp/xmpeditwidget.cpp:176
+msgid "Status"
+msgstr "狀態"
+
+#: iptc/iptceditwidget.cpp:177 xmp/xmpeditwidget.cpp:177
+msgid ""
+"<qt>Status Information<br/><i>Use this panel to record workflow information</"
+"i></qt>"
+msgstr "<qt>狀態資訊<br/><i>使用這個面板記錄工作流程資訊</i></qt>"
+
+#: iptc/iptceditwidget.cpp:182 xmp/xmpeditwidget.cpp:182
+msgid "Properties"
+msgstr "屬性"
+
+#: iptc/iptceditwidget.cpp:183 xmp/xmpeditwidget.cpp:183
+msgid ""
+"<qt>Status Properties<br/><i>Use this panel to record workflow properties</"
+"i></qt>"
+msgstr "<qt>狀態資訊<br/><i>使用這個面板記錄工作流程性質</i></qt>"
+
+#: iptc/iptceditwidget.cpp:188
+msgid "Envelope"
+msgstr "封裝"
+
+#: iptc/iptceditwidget.cpp:189
+msgid ""
+"<qt>Envelope Information<br/><i>Use this panel to record editorial details</"
+"i></qt>"
+msgstr "<qt>封裝資訊<br/><i>使用這個面板記錄編輯詳細資訊</i></qt>"
+
+#: xmp/xmpcategories.cpp:90
+msgid ""
+"Set here the category of content. This field is limited to 3 characters."
+msgstr "在這裡設定內容的類別。這個字段限制為 3 個字元。"
+
+#: xmp/xmpcategories.cpp:97
+msgid "Enter here a new supplemental category of content."
+msgstr "在這裡輸入內容的新參考分類。"
+
+#: xmp/xmpcontent.cpp:95
+msgid "Enter here the content synopsis."
+msgstr "在這裡輸入內容的簡單介紹。"
+
+#: xmp/xmpcontent.cpp:100
+msgid "Enter the content description."
+msgstr "在這裡輸入內容描述。"
+
+#: xmp/xmpcontent.cpp:102
+msgid "Default Language Caption Options"
+msgstr "預設語言標題選項"
+
+#: xmp/xmpcontent.cpp:125
+msgid "Enter the necessary copyright notice."
+msgstr "輸入必要的著作權聲明。"
+
+#: xmp/xmpcredits.cpp:125
+msgid "Contact"
+msgstr "連絡資料"
+
+#: xmp/xmpcredits.cpp:128
+msgctxt "contact email address"
+msgid "E-mail:"
+msgstr "電子信箱："
+
+#: xmp/xmpcredits.cpp:131
+msgid "Set here the contact e-mail."
+msgstr "在這裡設定連絡的電子信箱。"
+
+#: xmp/xmpcredits.cpp:133
+msgid "URL:"
+msgstr "網址："
+
+#: xmp/xmpcredits.cpp:136
+msgid "Set here the contact URL."
+msgstr "在這裡設定連絡的網址。"
+
+#: xmp/xmpcredits.cpp:138
+msgid "Phone:"
+msgstr "電話："
+
+#: xmp/xmpcredits.cpp:141
+msgid "Set here the contact 'phone number."
+msgstr "在這裡設定連絡的電話號碼。"
+
+#: xmp/xmpcredits.cpp:143
+msgctxt "Street address"
+msgid "Address:"
+msgstr "地址："
+
+#: xmp/xmpcredits.cpp:146
+msgid "Set here the contact address."
+msgstr "在這裡設定連絡的地址。"
+
+#: xmp/xmpcredits.cpp:148
+msgid "Postal code:"
+msgstr "郵遞區號："
+
+#: xmp/xmpcredits.cpp:151
+msgid "Set here the contact postal code."
+msgstr "在這裡設定連絡的郵遞區號。"
+
+#: xmp/xmpcredits.cpp:156
+msgid "Set here the contact city."
+msgstr "在這裡設定連絡的城市。"
+
+#: xmp/xmpcredits.cpp:161
+msgid "Set here the contact country."
+msgstr "在這裡設定連絡的國家。"
+
+#: xmp/xmpcredits.cpp:186
+msgid "Set here the content provider."
+msgstr "在這裡設定內容提供者。"
+
+#: xmp/xmpcredits.cpp:193
+msgid "Set here the original owner of content."
+msgstr "在這裡設定內容的原擁有者。"
+
+#: xmp/xmpkeywords.cpp:86
+msgid "Enter here a new keyword."
+msgstr "在這裡輸入新的關鍵字。"
+
+#: xmp/xmporigin.cpp:418
+msgid "Set here the content's city of origin."
+msgstr "在這裡設定內容的城市來源。"
+
+#: xmp/xmporigin.cpp:425
+msgid "Set here the content's location within the city."
+msgstr "在這裡設定城市裡內容的位置。"
+
+#: xmp/xmporigin.cpp:432
+msgid "Set here the content's Province or State of origin."
+msgstr "在這裡設定內容的省份或州來源。"
+
+#: xmp/xmporigin.cpp:444
+msgid "Select here the content's country of origin."
+msgstr "在這裡設定內容的國家來源。"
+
+#: xmp/xmpproperties.cpp:85
+msgid "Headshot"
+msgstr "頭像"
+
+#: xmp/xmpproperties.cpp:86
+msgid "Half-length"
+msgstr "半身"
+
+#: xmp/xmpproperties.cpp:87
+msgid "Full-length"
+msgstr "全身"
+
+#: xmp/xmpproperties.cpp:88
+msgctxt "Side view of a person"
+msgid "Profile"
+msgstr "側面"
+
+#: xmp/xmpproperties.cpp:89
+msgid "Rear view"
+msgstr "後視圖"
+
+#: xmp/xmpproperties.cpp:90
+msgid "Single"
+msgstr "單視角"
+
+#: xmp/xmpproperties.cpp:91
+msgid "Couple"
+msgstr "情侶"
+
+#: xmp/xmpproperties.cpp:92
+msgid "Two"
+msgstr "雙視角"
+
+#: xmp/xmpproperties.cpp:93
+msgctxt "group of people"
+msgid "Group"
+msgstr "團體"
+
+#: xmp/xmpproperties.cpp:94
+msgid "General view"
+msgstr "普通視角"
+
+#: xmp/xmpproperties.cpp:95
+msgid "Panoramic view"
+msgstr "全景"
+
+#: xmp/xmpproperties.cpp:96
+msgid "Aerial view"
+msgstr "鳥瞰圖"
+
+#: xmp/xmpproperties.cpp:97
+msgid "Under-water"
+msgstr "水底"
+
+#: xmp/xmpproperties.cpp:99
+msgid "Satellite"
+msgstr "衛星"
+
+#: xmp/xmpproperties.cpp:100
+msgid "Exterior view"
+msgstr "室外"
+
+#: xmp/xmpproperties.cpp:101
+msgid "Interior view"
+msgstr "室內"
+
+#: xmp/xmpproperties.cpp:102
+msgid "Close-up"
+msgstr "特寫"
+
+#: xmp/xmpproperties.cpp:103
+msgid "Action"
+msgstr "動作"
+
+#: xmp/xmpproperties.cpp:104
+msgid "Performing"
+msgstr "表演"
+
+#: xmp/xmpproperties.cpp:105
+msgid "Posing"
+msgstr "姿勢"
+
+#: xmp/xmpproperties.cpp:106
+msgid "Symbolic"
+msgstr "象徵"
+
+#: xmp/xmpproperties.cpp:107
+msgid "Off-beat"
+msgstr "離奇"
+
+#: xmp/xmpproperties.cpp:108
+msgid "Movie scene"
+msgstr "電影場景"
+
+#: xmp/xmpproperties.cpp:111
+msgid "Alert"
+msgstr "警戒"
+
+#: xmp/xmpproperties.cpp:112
+msgid "Catalog"
+msgstr "目錄"
+
+#: xmp/xmpproperties.cpp:114
+msgctxt "type is a document"
+msgid "Document"
+msgstr "文件"
+
+#: xmp/xmpproperties.cpp:115
+msgid "DTD"
+msgstr "DTD"
+
+#: xmp/xmpproperties.cpp:116
+msgid "Maintenance"
+msgstr "維護"
+
+#: xmp/xmpproperties.cpp:118
+msgid "News Management Mode"
+msgstr "新聞管理模式"
+
+#: xmp/xmpproperties.cpp:119
+msgid "Package"
+msgstr "包裝"
+
+#: xmp/xmpproperties.cpp:120
+msgid "Schema"
+msgstr "摘要"
+
+#: xmp/xmpproperties.cpp:121
+msgid "Topic"
+msgstr "主題"
+
+#: xmp/xmpproperties.cpp:122
+msgid "Topic Set"
+msgstr "主題集"
+
+#: xmp/xmpproperties.cpp:201
+msgid "Scene:"
+msgstr "場景："
+
+#: xmp/xmpproperties.cpp:202
+msgid "Select here the scene type of the content."
+msgstr "在這裡選擇內容的場景種類。"
+
+#: xmp/xmpproperties.cpp:214
+msgid "Select here the editorial type of the content."
+msgstr "在這裡選擇內容的編輯類型。"
+
+#: xmp/xmpproperties.cpp:225 plugin/objectattributesedit.cpp:96
+msgid "Attribute:"
+msgstr "屬性："
+
+#: xmp/xmpproperties.cpp:229
+msgid "Set here the editorial attribute description of the content."
+msgstr "在這裡設定內容的編輯屬性描述。"
+
+#: xmp/xmpproperties.cpp:231
+msgid "Select here the editorial attribute of the content."
+msgstr "在這裡選擇內容的編輯屬性。"
+
+#: xmp/xmpproperties.cpp:232
+msgctxt "editorial content attribute"
+msgid "Current"
+msgstr "目前"
+
+#: xmp/xmpproperties.cpp:233
+msgctxt "editorial content attribute"
+msgid "Analysis"
+msgstr "分析"
+
+#: xmp/xmpproperties.cpp:234
+msgctxt "editorial content attribute"
+msgid "Archive material"
+msgstr "檔案材料"
+
+#: xmp/xmpproperties.cpp:235
+msgctxt "editorial content attribute"
+msgid "Background"
+msgstr "背景"
+
+#: xmp/xmpproperties.cpp:236
+msgctxt "editorial content attribute"
+msgid "Feature"
+msgstr "專題"
+
+#: xmp/xmpproperties.cpp:237
+msgctxt "editorial content attribute"
+msgid "Forecast"
+msgstr "預報"
+
+#: xmp/xmpproperties.cpp:238
+msgctxt "editorial content attribute"
+msgid "History"
+msgstr "歷史"
+
+#: xmp/xmpproperties.cpp:239
+msgctxt "editorial content attribute"
+msgid "Obituary"
+msgstr "訃聞"
+
+#: xmp/xmpproperties.cpp:240
+msgctxt "editorial content attribute"
+msgid "Opinion"
+msgstr "意見"
+
+#: xmp/xmpproperties.cpp:241
+msgctxt "editorial content attribute"
+msgid "Polls & Surveys"
+msgstr "投票和調查"
+
+#: xmp/xmpproperties.cpp:242
+msgctxt "editorial content attribute"
+msgid "Profile"
+msgstr "簡介"
+
+#: xmp/xmpproperties.cpp:243
+msgctxt "editorial content attribute"
+msgid "Results Listings & Table"
+msgstr "結果表格"
+
+#: xmp/xmpproperties.cpp:244
+msgctxt "editorial content attribute"
+msgid "Side bar & Supporting information"
+msgstr "側邊欄和支援資訊"
+
+#: xmp/xmpproperties.cpp:245
+msgctxt "editorial content attribute"
+msgid "Summary"
+msgstr "摘要"
+
+#: xmp/xmpproperties.cpp:246
+msgctxt "editorial content attribute"
+msgid "Transcript & Verbatim"
+msgstr "謄本和逐字稿"
+
+#: xmp/xmpproperties.cpp:247
+msgctxt "editorial content attribute"
+msgid "Interview"
+msgstr "訪談"
+
+#: xmp/xmpproperties.cpp:248
+msgctxt "editorial content attribute"
+msgid "From the Scene"
+msgstr "現場"
+
+#: xmp/xmpproperties.cpp:249
+msgctxt "editorial content attribute"
+msgid "Retrospective"
+msgstr "回顧"
+
+#: xmp/xmpproperties.cpp:250
+msgctxt "editorial content attribute"
+msgid "Statistics"
+msgstr "統計"
+
+#: xmp/xmpproperties.cpp:251
+msgctxt "editorial content attribute"
+msgid "Update"
+msgstr "更新"
+
+#: xmp/xmpproperties.cpp:252
+msgctxt "editorial content attribute"
+msgid "Wrap-up"
+msgstr "簡訊"
+
+#: xmp/xmpproperties.cpp:253
+msgctxt "editorial content attribute"
+msgid "Press Release"
+msgstr "新聞稿"
+
+#: xmp/xmpproperties.cpp:260
+msgid "Set here the original content transmission reference."
+msgstr "在這裡設定原始內容辦理項目偏好設定。"
+
+#: xmp/xmpstatus.cpp:88
+msgctxt "short title for the content"
+msgid "Title:"
+msgstr "標題："
+
+#: xmp/xmpstatus.cpp:89
+msgid "Set here a shorthand reference for the content."
+msgstr "在這裡設定內容的簡略偏好設定。"
+
+#: xmp/xmpstatus.cpp:93
+msgid "Nickname:"
+msgstr "暱稱："
+
+#: xmp/xmpstatus.cpp:96
+msgid "A short informal name for the resource."
+msgstr "資源的簡短非正式名稱。"
+
+#: xmp/xmpstatus.cpp:100
+msgid "Identifiers:"
+msgstr "辨識碼："
+
+#: xmp/xmpstatus.cpp:101
+msgid "Set here the strings that identify content that recurs."
+msgstr "在這裡設定辨識內容重現的字串。"
+
+#: xmp/xmpstatus.cpp:107
+msgid "Enter the editorial usage instructions."
+msgstr "輸入編輯使用須知。"
+
+#: xmp/xmpsubjects.cpp:55
+msgid ""
+"Enter here the Informative Provider Reference. I.P.R is a name registered "
+"with the XMP/NAA, identifying the provider that provides an indicator of the "
+"content. The default value for the I.P.R is \"XMP\" if a standard Reference "
+"Code is used."
+msgstr ""
+"在這裡輸入提供者參考資訊 (Informative Provider Reference)。I.P.R 是由 XMP/"
+"NAA 註冊的名稱，說明提供者所提供的指標性內容。如果使用標準參考代碼 I.P.R 的預"
+"設值是「XMP」。"
+
+#: xmp/xmpsubjects.cpp:61
+msgid ""
+"Enter here the Subject Reference Number. Provides a numeric code to indicate "
+"the Subject Name plus optional Subject Matter and Subject Detail Names in "
+"the language of the service. Subject Reference is a number from the range "
+"01000000 to 17999999 and represent a language independent international "
+"reference to a Subject. A Subject is identified by its Reference Number and "
+"corresponding Names taken from a standard lists given by XMP/NAA. If a "
+"standard reference code is used, these lists are the English language "
+"reference versions. This field is limited to 8 digit code."
+msgstr ""
+"在這裡輸入主題參考編號。提供數字的代碼來辨識主題名稱加上選擇性服務之語言的主"
+"題內容和主題詳細名稱。主題參考為範圍 01000000 到 17999999 的數字相當於一個主"
+"題的獨立語言國際參考。藉由從 XMP/NAA 給予的標準清單取得的參考編號和對應名稱來"
+"辨識主題。如果使用標準參考代碼，這些清單會是英語參考版本。這字段限制為 8 個數"
+"字碼。"
+
+#: xmp/xmpsubjects.cpp:74
+msgid ""
+"Enter here the Subject Name. English language is used if you selected a "
+"standard XMP/NAA reference code."
+msgstr "在這裡輸入主題名稱。如果您選擇標準 XMP/NAA 參考代碼請使用英文。"
+
+#: xmp/xmpsubjects.cpp:78
+msgid ""
+"Enter here the Subject Matter Name. English language is used if you selected "
+"a standard XMP/NAA reference code."
+msgstr "在這裡輸入主題內容名稱。如果您選擇標準 XMP/NAA 參考代碼請使用英文。"
+
+#: xmp/xmpsubjects.cpp:82
+msgid ""
+"Enter here the Subject Detail Name. English language is used if you selected "
+"a standard XMP/NAA reference code."
+msgstr "在這裡輸入主題詳細名稱。如果您選擇標準 XMP/NAA 參考代碼請使用英文。"
+
+#: plugin/multistringsedit.cpp:90 plugin/multivaluesedit.cpp:94
+#: plugin/objectattributesedit.cpp:104
+msgid "Add a new value to the list"
+msgstr "加入新數值到清單中"
+
+#: plugin/multistringsedit.cpp:91 plugin/multivaluesedit.cpp:95
+#: plugin/objectattributesedit.cpp:105
+msgid "Remove the current selected value from the list"
+msgstr "從清單中移除目前選擇的數值"
+
+#: plugin/multistringsedit.cpp:92 plugin/multivaluesedit.cpp:96
+#: plugin/objectattributesedit.cpp:106
+msgid "Replace the current selected value from the list"
+msgstr "從清單中取代目前選擇的數值"
+
+#: plugin/multistringsedit.cpp:106 plugin/objectattributesedit.cpp:151
+msgid " This field is limited to:"
+msgstr "這個字段的限制："
+
+#: plugin/multistringsedit.cpp:112 plugin/objectattributesedit.cpp:157
+msgid "<p>Printable ASCII characters.</p>"
+msgstr "<p>可列印的 ASCII 字元。</p>"
+
+#: plugin/multistringsedit.cpp:118 plugin/objectattributesedit.cpp:163
+#, kde-format
+msgid "<p>1 character.</p>"
+msgid_plural "<p>%1 characters.</p>"
+msgstr[0] "<p>%1 個字元。</p>"
+
+#: plugin/objectattributesedit.cpp:118
+msgid "Select here the editorial attribute of content."
+msgstr "在這裡選擇內容的編輯屬性。"
+
+#: plugin/objectattributesedit.cpp:119
+msgctxt "Content type"
+msgid "Current"
+msgstr "目前"
+
+#: plugin/objectattributesedit.cpp:120
+msgctxt "Content type"
+msgid "Analysis"
+msgstr "分析"
+
+#: plugin/objectattributesedit.cpp:121
+msgctxt "Content type"
+msgid "Archive material"
+msgstr "檔案材料"
+
+#: plugin/objectattributesedit.cpp:122
+msgctxt "Content type"
+msgid "Background"
+msgstr "背景"
+
+#: plugin/objectattributesedit.cpp:123
+msgctxt "Content type"
+msgid "Feature"
+msgstr "專題"
+
+#: plugin/objectattributesedit.cpp:124
+msgctxt "Content type"
+msgid "Forecast"
+msgstr "預報"
+
+#: plugin/objectattributesedit.cpp:125
+msgctxt "Content type"
+msgid "History"
+msgstr "歷史"
+
+#: plugin/objectattributesedit.cpp:126
+msgctxt "Content type"
+msgid "Obituary"
+msgstr "訃聞"
+
+#: plugin/objectattributesedit.cpp:127
+msgctxt "Content type"
+msgid "Opinion"
+msgstr "意見"
+
+#: plugin/objectattributesedit.cpp:128
+msgctxt "Content type"
+msgid "Polls & Surveys"
+msgstr "投票和調查"
+
+#: plugin/objectattributesedit.cpp:129
+msgctxt "Content type"
+msgid "Profile"
+msgstr "簡介"
+
+#: plugin/objectattributesedit.cpp:130
+msgctxt "Content type"
+msgid "Results Listings & Table"
+msgstr "結果表格"
+
+#: plugin/objectattributesedit.cpp:131
+msgctxt "Content type"
+msgid "Side bar & Supporting information"
+msgstr "側邊欄和支援資訊"
+
+#: plugin/objectattributesedit.cpp:132
+msgctxt "Content type"
+msgid "Summary"
+msgstr "摘要"
+
+#: plugin/objectattributesedit.cpp:133
+msgctxt "Content type"
+msgid "Transcript & Verbatim"
+msgstr "謄本和逐字稿"
+
+#: plugin/objectattributesedit.cpp:134
+msgctxt "Content type"
+msgid "Interview"
+msgstr "訪談"
+
+#: plugin/objectattributesedit.cpp:135
+msgctxt "Content type"
+msgid "From the Scene"
+msgstr "現場"
+
+#: plugin/objectattributesedit.cpp:136
+msgctxt "Content type"
+msgid "Retrospective"
+msgstr "回顧"
+
+#: plugin/objectattributesedit.cpp:137
+msgctxt "Content type"
+msgid "Statistics"
+msgstr "統計"
+
+#: plugin/objectattributesedit.cpp:138
+msgctxt "Content type"
+msgid "Update"
+msgstr "更新"
+
+#: plugin/objectattributesedit.cpp:139
+msgctxt "Content type"
+msgid "Wrap-up"
+msgstr "特寫鏡頭"
+
+#: plugin/objectattributesedit.cpp:140
+msgctxt "Content type"
+msgid "Press Release"
+msgstr "新聞稿"
+
+#: plugin/objectattributesedit.cpp:146
+msgid ""
+"Set here the editorial attribute description of content. This field is "
+"limited to 64 ASCII characters."
+msgstr "在這裡設定內容的編輯屬性描述。這個字段限制為 64 個 ASCII 字元。"
+
+#: plugin/plugin_metadataedit.cpp:99
+msgid "Metadata"
+msgstr "中繼資料"
+
+#: plugin/plugin_metadataedit.cpp:104
+msgid "Edit &All Metadata..."
+msgstr "編輯所有的中繼資料(&A)..."
+
+#: plugin/plugin_metadataedit.cpp:114
+msgid "Import EXIF..."
+msgstr "匯入 EXIF..."
+
+#: plugin/plugin_metadataedit.cpp:120
+msgid "Import IPTC..."
+msgstr "匯入 IPTC..."
+
+#: plugin/plugin_metadataedit.cpp:126
+msgid "Import XMP..."
+msgstr "匯入 XMP..."
+
+#: plugin/plugin_metadataedit.cpp:176
+msgid "Select File to Import EXIF metadata"
+msgstr "選擇要匯入 EXIF 中繼資料的檔案"
+
+#: plugin/plugin_metadataedit.cpp:186 plugin/plugin_metadataedit.cpp:283
+#: plugin/plugin_metadataedit.cpp:375
+#, kde-format
+msgid "Cannot load metadata from \"%1\""
+msgstr "無法從「%1」載入中繼資料"
+
+#: plugin/plugin_metadataedit.cpp:187 plugin/plugin_metadataedit.cpp:201
+#: plugin/plugin_metadataedit.cpp:210 plugin/plugin_metadataedit.cpp:255
+msgid "Import EXIF Metadata"
+msgstr "匯入 EXIF 中繼資料"
+
+#: plugin/plugin_metadataedit.cpp:200
+#, kde-format
+msgid "\"%1\" does not have EXIF metadata."
+msgstr "「%1」沒有 EXIF 中繼資料。"
+
+#: plugin/plugin_metadataedit.cpp:207
+#, kde-format
+msgid ""
+"EXIF metadata from the currently selected pictures will be permanently "
+"replaced by the EXIF content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+"用「%1」的 EXIF 內容永久取代目前選擇圖片的 EXIF 中繼資料。\n"
+"您是否要繼續？"
+
+#: plugin/plugin_metadataedit.cpp:253
+msgid "Unable to set EXIF metadata from:"
+msgstr "無法設定 EXIF 中繼資料："
+
+#: plugin/plugin_metadataedit.cpp:273
+msgid "Select File to Import IPTC metadata"
+msgstr "選擇要匯入 IPTC 中繼資料的檔案"
+
+#: plugin/plugin_metadataedit.cpp:284 plugin/plugin_metadataedit.cpp:293
+#: plugin/plugin_metadataedit.cpp:302 plugin/plugin_metadataedit.cpp:347
+msgid "Import IPTC Metadata"
+msgstr "匯入 IPTC 中繼資料"
+
+#: plugin/plugin_metadataedit.cpp:292
+#, kde-format
+msgid "\"%1\" does not have IPTC metadata."
+msgstr "「%1」沒有 IPTC 中繼資料。"
+
+#: plugin/plugin_metadataedit.cpp:299
+#, kde-format
+msgid ""
+"IPTC metadata from the currently selected pictures will be permanently "
+"replaced by the IPTC content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+"用「%1」的 IPTC 內容永久取代目前選擇圖片的 IPTC 中繼資料。\n"
+"您是否要繼續？"
+
+#: plugin/plugin_metadataedit.cpp:345
+msgid "Unable to set IPTC metadata from:"
+msgstr "無法設定 IPTC 中繼資料："
+
+#: plugin/plugin_metadataedit.cpp:365
+msgid "Select File to Import XMP metadata"
+msgstr "選擇要匯入 XMP 中繼資料的檔案"
+
+#: plugin/plugin_metadataedit.cpp:376 plugin/plugin_metadataedit.cpp:385
+#: plugin/plugin_metadataedit.cpp:394 plugin/plugin_metadataedit.cpp:439
+msgid "Import XMP Metadata"
+msgstr "匯入 XMP 中繼資料"
+
+#: plugin/plugin_metadataedit.cpp:384
+#, kde-format
+msgid "\"%1\" does not have XMP metadata."
+msgstr "「%1」沒有 XMP 中繼資料。"
+
+#: plugin/plugin_metadataedit.cpp:391
+#, kde-format
+msgid ""
+"XMP metadata from the currently selected pictures will be permanently "
+"replaced by the XMP content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+"用「%1」的 XMP 內容永久取代目前選擇圖片的 XMP 中繼資料。\n"
+"您是否要繼續？"
+
+#: plugin/plugin_metadataedit.cpp:437
+msgid "Unable to set XMP metadata from:"
+msgstr "無法設定 XMP 中繼資料："
+
+#: plugin/metadataedit.cpp:110
+msgid "Metadata edit dialog"
+msgstr "中繼資料編輯對話框"
+
+#: plugin/metadataedit.cpp:115
+msgid "Edit EXIF"
+msgstr "編輯 EXIF"
+
+#: plugin/metadataedit.cpp:116
+msgid "Edit IPTC"
+msgstr "編輯 IPTC"
+
+#: plugin/metadataedit.cpp:117
+msgid "Edit XMP"
+msgstr "編輯 XMP"
+
+#: plugin/metadataedit.cpp:125
+msgid "Next"
+msgstr "下一步"
+
+#: plugin/metadataedit.cpp:126
+msgid "Previous"
+msgstr "上一步"
+
+#: plugin/metadataedit.cpp:168
+msgid "Edit Metadata"
+msgstr "編輯中繼資料"
+
+#: plugin/metadataedit.cpp:171
+msgid "A Plugin to edit pictures' metadata."
+msgstr "編輯圖片中繼資料的外掛程式。"
+
+#: plugin/metadataedit.cpp:172
+msgid "(c) 2006-2011, Gilles Caulier"
+msgstr "(c) 2006-2011, Gilles Caulier"
+
+#: plugin/metadataedit.cpp:174
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/metadataedit.cpp:174
+msgid "Author and Maintainer"
+msgstr "作者和維護者"
+
+#: plugin/metadataedit.cpp:177
+msgid "Victor Dodon"
+msgstr "Victor Dodon"
+
+#: plugin/metadataedit.cpp:177
+msgid "Developer"
+msgstr "開發者"
+
+#: plugin/metadataedit.cpp:185
+msgid "Handbook"
+msgstr "手冊"
+
+#: plugin/metadataedit.cpp:300
+#, kde-format
+msgid "%1 (%2/%3) - Edit Metadata"
+msgstr "%1（%2/%3） - 編輯中繼資料"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frank Weng (a.k.a. Franklin)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin at goodhorse dot idv dot tw"
+
+#~ msgid "Edit"
+#~ msgstr "編輯"
+
+#~ msgid "Edit Image Caption"
+#~ msgstr "編輯影像標題"
+
+#~ msgid ""
+#~ "Enter the image caption entered through <b>%1</b>. This field is not "
+#~ "limited (excepted with IPTC). UTF-8 encoding will be used to save text."
+#~ msgstr ""
+#~ "透過 <b>%1</b> 輸入影像標題。這個字段沒有限制 (除了 IPTC 以外)。文字會用 "
+#~ "UTF-8 編碼儲存。"
+
+#~ msgid "Sync XMP Caption"
+#~ msgstr "同步 XMP 標題"
+
+#~ msgid ""
+#~ "<b>Note: captions from currently selected images will be permanently "
+#~ "replaced.</b>"
+#~ msgstr "<b>備註：會永久取代目前選擇影像的標題。</b>"
+
+#~ msgid "Remove Image Caption"
+#~ msgstr "移除影像標題"
+
+#~ msgid "Remove caption hosted by %1"
+#~ msgstr "移除由 %1 託管的標題 "
+
+#~ msgid "Remove JFIF Comment section"
+#~ msgstr "移除 JFIF 註解部份"
+
+#~ msgid "Remove EXIF Comment"
+#~ msgstr "移除 EXIF 註解"
+
+#~ msgid "Remove XMP Caption"
+#~ msgstr "移除 XMP 標題"
+
+#~ msgid "Remove IPTC Caption"
+#~ msgstr "移除 IPTC 標題"
+
+#~ msgid ""
+#~ "<b>Note: Captions from currently selected images will be permanently "
+#~ "removed.</b>"
+#~ msgstr "<b>備註：會永久移除目前選擇影像的標題。</b>"
+
+#~ msgid "Default Language"
+#~ msgstr "預設語言"
+
+#~ msgid "Afrikaans (South Africa)"
+#~ msgstr "南非荷蘭語 (南非)"
+
+#~ msgid "Amharic (Ethiopia)"
+#~ msgstr "阿姆哈拉語 (衣索比亞)"
+
+#~ msgid "Arabic (UAE)"
+#~ msgstr "阿拉伯語 (阿拉伯聯合大公國)"
+
+#~ msgid "Arabic (Bahrain)"
+#~ msgstr "阿拉伯語 (巴林)"
+
+#~ msgid "Arabic (Algeria)"
+#~ msgstr "阿拉伯語 (阿爾及利亞)"
+
+#~ msgid "Arabic (Egypt)"
+#~ msgstr "阿拉伯語 (埃及)"
+
+#~ msgid "Arabic (Iraq)"
+#~ msgstr "阿拉伯語 (伊拉克)"
+
+#~ msgid "Arabic (Jordan)"
+#~ msgstr "阿拉伯語 (約旦)"
+
+#~ msgid "Arabic (Kuwait)"
+#~ msgstr "阿拉伯語 (科威特)"
+
+#~ msgid "Arabic (Lebanon)"
+#~ msgstr "阿拉伯語 (黎巴嫩)"
+
+#~ msgid "Arabic (Libya)"
+#~ msgstr "阿拉伯語 (利比亞)"
+
+#~ msgid "Arabic (Morocco)"
+#~ msgstr "阿拉伯語 (摩洛哥)"
+
+#~ msgid "Arabic (Oman)"
+#~ msgstr "阿拉伯語 (阿曼)"
+
+#~ msgid "Arabic (Qatar)"
+#~ msgstr "阿拉伯語 (卡達)"
+
+#~ msgid "Arabic (Saudi Arabia)"
+#~ msgstr "阿拉伯語 (沙烏地阿拉伯)"
+
+#~ msgid "Arabic (Syria)"
+#~ msgstr "阿拉伯語 (敘利亞)"
+
+#~ msgid "Arabic (Tunisia)"
+#~ msgstr "阿拉伯語 (突尼西亞)"
+
+#~ msgid "Arabic (Yemen)"
+#~ msgstr "阿拉伯語 (葉門)"
+
+#~ msgid "Assamese (India)"
+#~ msgstr "阿薩姆語 (印度)"
+
+#~ msgid "Bashkir (Russia)"
+#~ msgstr "巴什吉爾語 (俄羅斯)"
+
+#~ msgid "Belarusian (Belarus)"
+#~ msgstr "白俄羅斯語 (白俄羅斯)"
+
+#~ msgid "Bulgarian (Bulgaria)"
+#~ msgstr "保加利亞語 (保加利亞)"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "孟加拉語 (印度)"
+
+#~ msgid "Tibetan (Bhutan)"
+#~ msgstr "藏語 (不丹)"
+
+#~ msgid "Tibetan (PRC)"
+#~ msgstr "藏語 (中共)"
+
+#~ msgid "Breton (France)"
+#~ msgstr "布列塔尼語 (法國)"
+
+#~ msgid "Catalan (Andorra)"
+#~ msgstr "加達朗語 (安道爾)"
+
+#~ msgid "Catalan (Spain)"
+#~ msgstr "加達朗語 (西班牙)"
+
+#~ msgid "Catalan (France)"
+#~ msgstr "加達朗語 (法國)"
+
+#~ msgid "Corsican (France)"
+#~ msgstr "科西嘉語 (法國)"
+
+#~ msgid "Czech (Czech Republic)"
+#~ msgstr "捷克語 (捷克)"
+
+#~ msgid "Welsh (United Kingdom)"
+#~ msgstr "威爾斯語 (英國)"
+
+#~ msgid "Danish (Denmark)"
+#~ msgstr "丹麥語 (丹麥)"
+
+#~ msgid "German (Austria)"
+#~ msgstr "德語 (奧地利)"
+
+#~ msgid "German (Switzerland)"
+#~ msgstr "德語 (瑞士)"
+
+#~ msgid "German (Germany)"
+#~ msgstr "德語 (德國)"
+
+#~ msgid "German (Liechtenstein)"
+#~ msgstr "德語 (列支敦斯登)"
+
+#~ msgid "German (Luxembourg)"
+#~ msgstr "德語 (盧森堡)"
+
+#~ msgid "Greek (Greece)"
+#~ msgstr "希臘語 (希臘)"
+
+#~ msgid "English (Australia)"
+#~ msgstr "英語 (澳大利亞)"
+
+#~ msgid "English (Belize)"
+#~ msgstr "英語 (貝里斯)"
+
+#~ msgid "English (Canada)"
+#~ msgstr "英語 (加拿大)"
+
+#~ msgid "English (Caribbean)"
+#~ msgstr "英語 (加勒比海)"
+
+#~ msgid "English (United Kingdom)"
+#~ msgstr "英語 (英國)"
+
+#~ msgid "English (Ireland)"
+#~ msgstr "英語 (愛爾蘭)"
+
+#~ msgid "English (India)"
+#~ msgstr "英語 (印度)"
+
+#~ msgid "English (Jamaica)"
+#~ msgstr "英語 (牙買加)"
+
+#~ msgid "English (Malaysia)"
+#~ msgstr "英語 (馬來西亞)"
+
+#~ msgid "English (New Zealand)"
+#~ msgstr "英語 (紐西蘭)"
+
+#~ msgid "English (Philippines)"
+#~ msgstr "英語 (菲律賓)"
+
+#~ msgid "English (Singapore)"
+#~ msgstr "英語 (新加坡)"
+
+#~ msgid "English (Trinidad)"
+#~ msgstr "英語 (千里達)"
+
+#~ msgid "English (United States)"
+#~ msgstr "英語 (美國)"
+
+#~ msgid "English (South Africa)"
+#~ msgstr "英語 (南非)"
+
+#~ msgid "English (Zimbabwe)"
+#~ msgstr "英語 (辛巴威)"
+
+#~ msgid "Spanish (Argentina)"
+#~ msgstr "西班牙語 (阿根廷)"
+
+#~ msgid "Spanish (Bolivia)"
+#~ msgstr "西班牙語 (玻利維亞)"
+
+#~ msgid "Spanish (Chile)"
+#~ msgstr "西班牙語 (智利)"
+
+#~ msgid "Spanish (Colombia)"
+#~ msgstr "西班牙語 (哥倫比亞)"
+
+#~ msgid "Spanish (Costa Rica)"
+#~ msgstr "西班牙語 (哥斯大黎加)"
+
+#~ msgid "Spanish (Dominican Republic)"
+#~ msgstr "西班牙語 (多明尼加)"
+
+#~ msgid "Spanish (Ecuador)"
+#~ msgstr "西班牙語 (厄瓜多)"
+
+#~ msgid "Spanish (Spain)"
+#~ msgstr "西班牙語 (西班牙)"
+
+#~ msgid "Spanish (Guatemala)"
+#~ msgstr "西班牙語 (瓜地馬拉)"
+
+#~ msgid "Spanish (Honduras)"
+#~ msgstr "西班牙語 (宏都拉斯)"
+
+#~ msgid "Spanish (Mexico)"
+#~ msgstr "西班牙語 (墨西哥)"
+
+#~ msgid "Spanish (Nicaragua)"
+#~ msgstr "西班牙語 (尼加拉瓜)"
+
+#~ msgid "Spanish (Panama)"
+#~ msgstr "西班牙語 (巴拿馬)"
+
+#~ msgid "Spanish (Peru)"
+#~ msgstr "西班牙語 (秘魯)"
+
+#~ msgid "Spanish (Puerto Rico)"
+#~ msgstr "西班牙語 (波多黎各)"
+
+#~ msgid "Spanish (Paraguay)"
+#~ msgstr "西班牙語 (巴拉圭)"
+
+#~ msgid "Spanish (El Salvador)"
+#~ msgstr "西班牙語 (薩爾瓦多)"
+
+#~ msgid "Spanish (Uruguay)"
+#~ msgstr "西班牙語 (烏拉圭)"
+
+#~ msgid "Spanish (United States)"
+#~ msgstr "西班牙語 (美國)"
+
+#~ msgid "Spanish (Venezuela)"
+#~ msgstr "西班牙語 (委內瑞拉)"
+
+#~ msgid "Estonian (Estonia)"
+#~ msgstr "愛沙尼亞語 (愛沙尼亞)"
+
+#~ msgid "Basque (Basque Country)"
+#~ msgstr "巴斯克語 (巴斯克地區)"
+
+#~ msgid "Persian (Iran)"
+#~ msgstr "波斯語 (伊朗)"
+
+#~ msgid "Finnish (Finland)"
+#~ msgstr "芬蘭語 (芬蘭)"
+
+#~ msgid "Faeroese (Faero Islands)"
+#~ msgstr "法羅文 (法羅群島)"
+
+#~ msgid "French (Belgium)"
+#~ msgstr "法語 (比利時)"
+
+#~ msgid "French (Canada)"
+#~ msgstr "法語 (加拿大)"
+
+#~ msgid "French (Switzerland)"
+#~ msgstr "法語 (瑞士)"
+
+#~ msgid "French (France)"
+#~ msgstr "法語 (法國)"
+
+#~ msgid "French (Luxembourg)"
+#~ msgstr "法語 (盧森堡)"
+
+#~ msgid "French (Monaco)"
+#~ msgstr "法語 (摩納哥)"
+
+#~ msgid "Frisian (Netherlands)"
+#~ msgstr "弗裡斯蘭語 (安地列斯)"
+
+#~ msgid "Irish (Ireland)"
+#~ msgstr "愛爾蘭語 (愛爾蘭)"
+
+#~ msgid "Galician (Galicia)"
+#~ msgstr "加利西亞語 (加利西亞)"
+
+#~ msgid "Gujarati (India)"
+#~ msgstr "古吉拉特語 (印度)"
+
+#~ msgid "Hebrew (Israel)"
+#~ msgstr "希伯來語 (以色列)"
+
+#~ msgid "Hindi (India)"
+#~ msgstr "印地語 (印度)"
+
+#~ msgid "Croatian (Bosnia and Herzegovina, Latin)"
+#~ msgstr "克羅埃西亞語 (波斯尼亞和黑塞哥維那)"
+
+#~ msgid "Croatian (Croatia)"
+#~ msgstr "克羅埃西亞語 (克羅埃西亞)"
+
+#~ msgid "Hungarian (Hungary)"
+#~ msgstr "匈牙利語 (匈牙利)"
+
+#~ msgid "Armenian (Armenia)"
+#~ msgstr "亞美尼亞語 (亞美尼亞)"
+
+#~ msgid "(Indonesian)"
+#~ msgstr "印尼語 (印尼)"
+
+#~ msgid "Yi (PRC)"
+#~ msgstr "易 (中共)"
+
+#~ msgid "Icelandic (Iceland)"
+#~ msgstr "冰島語 (冰島)"
+
+#~ msgid "Italian (Switzerland)"
+#~ msgstr "義大利語 (瑞士)"
+
+#~ msgid "Italian (Italy)"
+#~ msgstr "義大利語 (義大利)"
+
+#~ msgid "Japanese (Japan)"
+#~ msgstr "日語 (日本)"
+
+#~ msgid "Georgian (Georgia)"
+#~ msgstr "喬治亞語 (喬治亞)"
+
+#~ msgid "Kazakh (Kazakhstan)"
+#~ msgstr "哈薩克語 (哈薩克)"
+
+#~ msgid "Greenlandic (Greenland)"
+#~ msgstr "格陵蘭語 (格陵蘭)"
+
+#~ msgid "Khmer (Cambodia)"
+#~ msgstr "高棉語 (柬埔寨)"
+
+#~ msgid "Kannada (India)"
+#~ msgstr "坎那達語 (印度)"
+
+#~ msgid "Korean (South Korea)"
+#~ msgstr "韓語 (南韓)"
+
+#~ msgid "Kyrgyz (Kyrgyzstan)"
+#~ msgstr "吉爾吉斯語 (吉爾吉斯)"
+
+#~ msgid "Luxembourgish (Luxembourg)"
+#~ msgstr "盧森堡語 (盧森堡)"
+
+#~ msgid "Lao (Lao PDR)"
+#~ msgstr "寮國語 (寮國)"
+
+#~ msgid "Lithuanian (Lithuania)"
+#~ msgstr "立陶宛語 (立陶宛)"
+
+#~ msgid "Latvian (Latvia)"
+#~ msgstr "拉脫維亞語 (拉脫維亞)"
+
+#~ msgid "Maori (New Zealand)"
+#~ msgstr "毛利語 (紐西蘭)"
+
+#~ msgid "Macedonian (Macedonia)"
+#~ msgstr "馬其頓語 (馬其頓)"
+
+#~ msgid "Malayalam (India)"
+#~ msgstr "馬來亞拉姆語 (印度)"
+
+#~ msgid "Mongolian (PRC)"
+#~ msgstr "蒙古語 (中共)"
+
+#~ msgid "Mongolian (Mongolia)"
+#~ msgstr "蒙古語 (蒙古)"
+
+#~ msgid "Marathi (India)"
+#~ msgstr "馬拉塔語 (印度)"
+
+#~ msgid "Malay (Brunei Darussalam)"
+#~ msgstr "馬來語 (汶萊)"
+
+#~ msgid "Malay (Malaysia)"
+#~ msgstr "馬來語 (馬來西亞)"
+
+#~ msgid "Maltese (Malta)"
+#~ msgstr "馬爾他語 (馬爾他)"
+
+#~ msgid "Norwegian Bokmål (Norway)"
+#~ msgstr "標準挪威語 (挪威)"
+
+#~ msgid "Nepali (Nepal)"
+#~ msgstr "尼泊爾語 (尼泊爾)"
+
+#~ msgid "Dutch (Belgium)"
+#~ msgstr "荷蘭語 (比利時)"
+
+#~ msgid "Dutch (Netherlands)"
+#~ msgstr "荷蘭語 (安地列斯)"
+
+#~ msgid "Norwegian Nynorsk (Norway)"
+#~ msgstr "新挪威語 (挪威)"
+
+#~ msgid "Sesotho sa Leboa (South Africa)"
+#~ msgstr "南梭蘇語 (南非)"
+
+#~ msgid "Occitan (France)"
+#~ msgstr "奧西坦語 (法國)"
+
+#~ msgid "Oriya (India)"
+#~ msgstr "奧里亞語 (印度)"
+
+#~ msgid "Punjabi (India)"
+#~ msgstr "旁遮普語 (印度)"
+
+#~ msgid "Polish (Poland)"
+#~ msgstr "波蘭語 (波蘭)"
+
+#~ msgid "Pashto (Afghanistan)"
+#~ msgstr "帕什圖語 (阿富汗)"
+
+#~ msgid "Portuguese (Brazil)"
+#~ msgstr "葡萄牙語 (巴西)"
+
+#~ msgid "Portuguese (Portugal)"
+#~ msgstr "葡萄牙語 (葡萄牙)"
+
+#~ msgid "Romansh (Switzerland)"
+#~ msgstr "羅曼斯方言 (瑞士)"
+
+#~ msgid "Romanian (Romania)"
+#~ msgstr "羅馬尼亞語 (羅馬尼亞)"
+
+#~ msgid "Russian (Russia)"
+#~ msgstr "俄語 (俄羅斯)"
+
+#~ msgid "Kinyarwanda (Rwanda)"
+#~ msgstr "盧安達語 (盧安達)"
+
+#~ msgid "Sanskrit (India)"
+#~ msgstr "梵文 (印度)"
+
+#~ msgid "Sami (Northern, Finland)"
+#~ msgstr "薩米語 (芬蘭北部)"
+
+#~ msgid "Sami (Northern, Norway)"
+#~ msgstr "薩米語 (挪威北部)"
+
+#~ msgid "Sami (Northern, Sweden)"
+#~ msgstr "薩米語 (瑞典北部)"
+
+#~ msgid "Sinhala (Sri Lanka)"
+#~ msgstr "僧伽羅語 (斯里蘭卡)"
+
+#~ msgid "Slovak (Slovakia)"
+#~ msgstr "斯洛伐克語 (斯洛伐克)"
+
+#~ msgid "Slovenian (Slovenia)"
+#~ msgstr "斯洛維尼亞語 (斯洛維尼亞)"
+
+#~ msgid "Albanian (Albania)"
+#~ msgstr "阿爾巴尼亞語 (阿爾巴尼亞)"
+
+#~ msgid "Swedish (Finland)"
+#~ msgstr "瑞典語 (芬蘭)"
+
+#~ msgid "Swedish (Sweden)"
+#~ msgstr "瑞典語 (瑞典)"
+
+#~ msgid "Swahili (Kenya)"
+#~ msgstr "斯瓦西里語 (肯亞)"
+
+#~ msgid "Tamil (India)"
+#~ msgstr "泰米爾語 (印度)"
+
+#~ msgid "Telugu (India)"
+#~ msgstr "泰盧固語 (印度)"
+
+#~ msgid "Thai (Thailand)"
+#~ msgstr "泰語 (泰國)"
+
+#~ msgid "Turkmen (Turkmenistan)"
+#~ msgstr "土庫曼語 (土庫曼)"
+
+#~ msgid "Setswana Tswana (South Africa)"
+#~ msgstr "茨瓦納語 (南非)"
+
+#~ msgid "Urdu (India)"
+#~ msgstr "烏爾都語 (印度)"
+
+#~ msgid "Turkish (Turkey)"
+#~ msgstr "土耳其語 (土耳其)"
+
+#~ msgid "Tatar (Russia)"
+#~ msgstr "韃靼語 (俄羅斯)"
+
+#~ msgid "Uighur (PRC)"
+#~ msgstr "維吾爾語 (中共)"
+
+#~ msgid "Ukrainian (Ukraine)"
+#~ msgstr "烏克蘭語 (烏克蘭)"
+
+#~ msgid "Urdu (Pakistan)"
+#~ msgstr "烏爾都語 (巴基斯坦)"
+
+#~ msgid "Vietnamese (Vietnam)"
+#~ msgstr "越南語 (越南)"
+
+#~ msgid "Wolof (Senegal)"
+#~ msgstr "渥魯夫語 (塞內加爾)"
+
+#~ msgid "isiXhosa Xhosa (South Africa)"
+#~ msgstr "科薩語 (南非)"
+
+#~ msgid "Yoruba (Nigeria)"
+#~ msgstr "約魯巴語 (奈及利亞)"
+
+#~ msgid "Chinese (PRC)"
+#~ msgstr "中文 (中共)"
+
+#~ msgid "Chinese (Hong Kong SAR, PRC)"
+#~ msgstr "中文 (香港特區, 中共)"
+
+#~ msgid "Chinese (Macao SAR)"
+#~ msgstr "中文 (澳門特區)"
+
+#~ msgid "Chinese (Singapore)"
+#~ msgstr "中文 (新加坡)"
+
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "中文 (臺灣)"
+
+#~ msgid "isiZulu Zulu (South Africa)"
+#~ msgstr "祖魯語 (南非)"
+
+#~ msgid "Select here language code."
+#~ msgstr "在這裡選擇語言編碼。"
+
+#~ msgid "Edit EXIF Metadata"
+#~ msgstr "編輯 EXIF 中繼資料"
+
+#~ msgid "(read only)"
+#~ msgstr "(唯讀)"
+
+#~ msgid "Edit IPTC Metadata"
+#~ msgstr "編輯 IPTC 中繼資料"
+
+#~ msgid "Remove EXIF..."
+#~ msgstr "移除 EXIF..."
+
+#~ msgid "Remove IPTC..."
+#~ msgstr "移除 IPTC..."
+
+#~ msgid "Remove XMP..."
+#~ msgstr "移除 XMP..."
+
+#~ msgid "Edit Captions..."
+#~ msgstr "編輯標題..."
+
+#~ msgid "Remove Captions..."
+#~ msgstr "移除標題..."
+
+#~ msgid ""
+#~ "EXIF metadata will be permanently removed from all currently selected "
+#~ "pictures.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "從目前選擇所有的圖片中永久移除 EXIP 中繼資料。\n"
+#~ "您是否要繼續？"
+
+#~ msgid "Remove EXIF Metadata"
+#~ msgstr "移除 EXIF 中繼資料"
+
+#~ msgid "Unable to remove EXIF metadata from:"
+#~ msgstr "無法移除 EXIF 中繼資料："
+
+#~ msgid ""
+#~ "IPTC metadata will be permanently removed from all currently selected "
+#~ "pictures.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "從目前選擇所有的圖片中永久移除 IPTC 中繼資料。\n"
+#~ "您是否要繼續？"
+
+#~ msgid "Remove IPTC Metadata"
+#~ msgstr "移除 IPTC 中繼資料"
+
+#~ msgid "Unable to remove IPTC metadata from:"
+#~ msgstr "無法移除 IPTC 中繼資料："
+
+#~ msgid ""
+#~ "XMP metadata will be permanently removed from all of the currently "
+#~ "selected pictures.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "從目前選擇所有的圖片中永久移除 XMP 中繼資料。\n"
+#~ "您是否要繼續？"
+
+#~ msgid "Remove XMP Metadata"
+#~ msgstr "移除 XMP 中繼資料"
+
+#~ msgid "Unable to remove XMP metadata from:"
+#~ msgstr "無法移除 XMP 中繼資料："
+
+#~ msgid "Unable to set captions as image metadata from:"
+#~ msgstr "無法設定影像中繼資料的標題："
+
+#~ msgid "Unable to remove caption as image metadata from:"
+#~ msgstr "無法移除影像中繼資料的標題："
+
+#~ msgid "(c) 2007-2009, Gilles Caulier"
+#~ msgstr "(c) 2007-2009, Gilles Caulier"
+
+#~ msgid "Edit XMP Metadata"
+#~ msgstr "編輯 XMP 中繼資料"
+
+#~ msgid "Use structured definition of the subject matter:"
+#~ msgstr "使用主題內容的結構化定義："
+
+#~ msgid ""
+#~ "Use standard <b><a href='http://www.iptc.org/NewsCodes'>reference code</"
+#~ "a></b>"
+#~ msgstr ""
+#~ "使用標準 <b><a href='http://www.iptc.org/NewsCodes'>參考代碼</a></b>"
+
+#~ msgid "Use custom definition"
+#~ msgstr "使用自訂定義"
+
+#~ msgid "I.P.R:"
+#~ msgstr "I.P.R："
+
+#~ msgctxt "name of the subject"
+#~ msgid "Name:"
+#~ msgstr "名稱："
+
+#~ msgid "Matter:"
+#~ msgstr "內容："
+
+#~ msgid "Detail:"
+#~ msgstr "詳細："

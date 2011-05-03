@@ -1,0 +1,147 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2009-11-15 00:58+0100\n"
+"Last-Translator: Zdeněk Pech <dom.toretto@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "Export do vzdáleného počítače"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "Spustit export"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "Spustit export do zadaného cíle"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "Export do vzdáleného počítače"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr "Modul KIPI pro export obrázků po síti pomocí KIO-slave"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "Vývojář a správce"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "Příručka"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Některé obrázky nebyly přeneseny a jsou stále v seznamu. Přejete si nyní "
+"tyto obrázky exportovat?"
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "Odesílání nebylo dokončeno"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr "Seznam obrázků pro import do aktuálního alba."
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "Import ze vzdáleného počítače"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "Spustit import"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Spustit import zadaných obrázků do aktuálně vybraného alba."
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "Import ze vzdáleného počítače"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr "Modul KIPI pro import obrázků po síti pomocí KIO-slave"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Některé obrázky nebyly přeneseny a jsou stále v seznamu. Přejete si nyní "
+"tyto obrázky importovat?"
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "Import nebyl dokončen"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "Export do vzdáleného počítače..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "Import ze vzdáleného počítače..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "Umístění cíle:"
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Nastavení cílové adresy pro odeslání obrázků. Může to být adresa jako se "
+"používá v Dolphinu nebo Konqueroru, např. ftp://my.server.org/sub/folder."
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "Vyberte cíl..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "Vyberte cílové umístění..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr "Seznam obrázků pro odeslání do zadaného cíle."
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "nevybráno"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Vít Pelčák,Zdeněk Pech"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "vit@pelcak.org,dom.toretto@seznam.cz"

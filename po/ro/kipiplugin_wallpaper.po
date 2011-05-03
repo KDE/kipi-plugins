@@ -1,0 +1,77 @@
+# Traducerea kipiplugin_wallpaper.po în Română
+# translation of kipiplugin_wallpaper to Romanian
+# Copyright (C) 2008 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kipiplugin_wallpaper package.
+#
+# Laurenţiu Buzdugan <lbuz@rolix.org>, 2008".
+# Sergiu Bivol <sergiu-bivol@mail.md>, 2008.
+# Sergiu Bivol <sergiu@ase.md>, 2009.
+# Florin Cătălin RUSSEN <cfrussen@yahoo.co.uk>, 2011.
+# Cristian Oneț <onet.cristian@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2011-02-03 20:58+0200\n"
+"Last-Translator: Cristian Oneț <onet.cristian@gmail.com>\n"
+"Language-Team: Romanian <kde-i18n-ro@lists.kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "&Stabiliește ca fundal"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Centrat"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Dale centrate"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Aspect maxim, centrat"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Aspect maxim, dale"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Scalat"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Centrat, potrivire"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Scalare și decupare"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Ați ales o imagine distantă. Aceasta trebuie salvată pe discul local "
+"înainte de a putea fi folosită ca fundal.</p><p>Acum veți fi întrebat unde "
+"salvați imaginea.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Schimbă fundalul"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "Imaginea de fundal nu poate fi schimbată."
+
+#~ msgid "We can not change background."
+#~ msgstr "Nu se poate schimba fundalul."

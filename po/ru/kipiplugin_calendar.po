@@ -1,0 +1,325 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Dmitriy Simbiriatin <slpiv@mail.ru>, 2010.
+# Alexander Potashev <aspotashev@gmail.com>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2011-02-02 01:19+0300\n"
+"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin/plugin_calendar.cpp:61
+msgid "Create Calendar..."
+msgstr "Создать календарь..."
+
+#. i18n: file: ui/caltemplate.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, CalTemplate)
+#: wizard/calwizard.cpp:70 rc.cpp:54
+msgid "Create Template for Calendar"
+msgstr "Создание шаблона календаря"
+
+#: wizard/calwizard.cpp:76
+msgid "Choose events to show on the Calendar"
+msgstr "Выбор событий, отмеченных на календаре"
+
+#: wizard/calwizard.cpp:81
+msgid "Select Year & Images"
+msgstr "Выбор года и изображений"
+
+#: wizard/calwizard.cpp:89
+msgid "Print"
+msgstr "Печать"
+
+#. i18n: file: ui/calprogress.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, CalProgress)
+#: wizard/calwizard.cpp:95 rc.cpp:32
+msgid "Printing"
+msgstr "Печать"
+
+#: wizard/calwizard.cpp:101
+msgid "Calendar"
+msgstr "Календарь"
+
+#: wizard/calwizard.cpp:104
+msgid "A Kipi plugin to create a calendar"
+msgstr "Модуль расширения Kipi для создания календарей"
+
+#: wizard/calwizard.cpp:105
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006 Tom Albers\n"
+"(c) 2007-2008 Orgad Shaneh"
+msgstr ""
+"© Renchi Raju, 2003-2005\n"
+"© Tom Albers, 2006\n"
+"© Orgad Shaneh, 2007-2008"
+
+#: wizard/calwizard.cpp:109
+msgid "Orgad Shaneh"
+msgstr "Orgad Shaneh"
+
+#: wizard/calwizard.cpp:109
+msgid "Author and maintainer"
+msgstr "Автор и сопровождающий"
+
+#: wizard/calwizard.cpp:112
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: wizard/calwizard.cpp:112 wizard/calwizard.cpp:115
+msgid "Former author and maintainer"
+msgstr "Прежний автор и сопровождающий"
+
+#: wizard/calwizard.cpp:115
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: wizard/calwizard.cpp:123
+msgid "Handbook"
+msgstr "Руководство"
+
+#. i18n: file: ui/calselect.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, CalSelect)
+#: wizard/calwizard.cpp:137 rc.cpp:41
+msgid "Create Calendar"
+msgstr "Создание календаря"
+
+#: wizard/calwizard.cpp:184
+msgid "No valid images selected for months<br/>Click Back to select images"
+msgstr "Изображения не выбраны<br/>Нажмите Назад, чтобы выбрать изображения"
+
+#: wizard/calwizard.cpp:196
+msgid ""
+"Please note that you are making a calendar for<br/>the current year or a "
+"year in the past."
+msgstr "Вы создаёте календарь для текущего или прошедшего года."
+
+#: wizard/calwizard.cpp:204
+#, kde-format
+msgid ""
+"Click Next to start Printing<br/><br/>Following months will be printed for "
+"year %1:<br/>"
+msgstr ""
+"Нажмите Далее для начала печати<br/><br/>Следующие месяцы будут напечатаны "
+"для %1 года:<br/>"
+
+#: wizard/calwizard.cpp:256
+msgid "Printing Cancelled"
+msgstr "Печать отменена"
+
+#: wizard/calwizard.cpp:312
+#, kde-format
+msgid "Printing Calendar Page for %1 of %2"
+msgstr "Печатается страница %1 из %2"
+
+#: wizard/calwizard.cpp:321
+msgid "Printing Complete"
+msgstr "Печать завершена"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Симбирятин Дмитрий"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "slpiv@mail.ru"
+
+#. i18n: file: ui/calevents.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, CalEvents)
+#: rc.cpp:5
+msgid "Calendar events"
+msgstr "События календаря"
+
+#. i18n: file: ui/calevents.ui:25
+#. i18n: ectx: property (text), widget (QLabel, ohHeaderLabel)
+#: rc.cpp:8
+msgid "Select an optional calendar file with the official holidays"
+msgstr "Выберите файл календаря с государственными праздниками"
+
+#. i18n: file: ui/calevents.ui:32
+#. i18n: ectx: property (filter), widget (KUrlRequester, ohUrlRequester)
+#. i18n: file: ui/calevents.ui:88
+#. i18n: ectx: property (filter), widget (KUrlRequester, fhUrlRequester)
+#: rc.cpp:11 rc.cpp:25
+msgid "*.ics"
+msgstr "*.ics"
+
+#. i18n: file: ui/calevents.ui:49
+#. i18n: ectx: property (text), widget (QLabel, ohExplainLabel)
+#: rc.cpp:14
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:italic;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">You can download a "
+"calendar for your country from <a href=\"http://www.icalshare.com\"><span "
+"style=\" text-decoration: underline; color:#0057ae;\">http://www.icalshare."
+"com</span></a> or other sites.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">This is fully optional. "
+"All the events from this calendar will be printed in red.</p></body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:italic;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Вы можете загрузить "
+"календарь для вашей страны на <a href=\"http://www.icalshare.com\"><span "
+"style=\" text-decoration: underline; color:#0057ae;\">http://www.icalshare."
+"com</span></a> или на других веб-сайтах.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Это совершенно не "
+"обязательно. Все праздники из этого календаря будут выделены красным цветом."
+"</p></body></html>"
+
+#. i18n: file: ui/calevents.ui:78
+#. i18n: ectx: property (text), widget (QLabel, fhHeaderLabel)
+#: rc.cpp:22
+msgid "Select an optional calendar file with your \"family holidays\""
+msgstr "Выберите файл календаря с семейными праздниками"
+
+#. i18n: file: ui/calevents.ui:101
+#. i18n: ectx: property (text), widget (QLabel, fhExplainLabel)
+#: rc.cpp:28
+msgid ""
+"You can create such a calendar using KOrganizer or any other calendar "
+"program.\n"
+"This is fully optional. All the events from this calendar will be printed in "
+"green."
+msgstr ""
+"Вы можете создать такой календарь с помощью программы KOrganizer\n"
+"или других программ для создания календарей.\n"
+"Это совершенно не обязательно.\n"
+"Все события из этого календаря будут выделены зелёным цветом."
+
+#. i18n: file: ui/calprogress.ui:22
+#. i18n: ectx: property (text), widget (QLabel, currentLabel)
+#: rc.cpp:35
+msgid "Current Page"
+msgstr "Текущая страница"
+
+#. i18n: file: ui/calprogress.ui:32
+#. i18n: ectx: property (text), widget (QLabel, totalLabel)
+#: rc.cpp:38
+msgid "Total Pages"
+msgstr "Всего страниц"
+
+#. i18n: file: ui/calselect.ui:19
+#. i18n: ectx: property (title), widget (QGroupBox, yearBox)
+#: rc.cpp:44
+msgid "Select Year"
+msgstr "Выберите год"
+
+#. i18n: file: ui/calselect.ui:44
+#. i18n: ectx: property (title), widget (QGroupBox, monthBox)
+#: rc.cpp:47
+msgid "Select Images"
+msgstr "Выберите изображения"
+
+#. i18n: file: ui/calselect.ui:54
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:50
+msgid ""
+"Left click on Months to Select Images. Right click to Clear Month.\n"
+"You can also drag and drop images onto the Months"
+msgstr ""
+"Щёлкните левой кнопкой мыши по месяцу для выбора изображения.\n"
+"Щёлкните правой кнопкой мыши, чтобы убрать изображение.\n"
+"Также возможно перетаскивание изображений на месяц."
+
+#. i18n: file: ui/caltemplate.ui:25
+#. i18n: ectx: property (title), widget (QGroupBox, previewGroupBox)
+#: rc.cpp:57
+msgid "Preview"
+msgstr "Предварительный просмотр"
+
+#. i18n: file: ui/caltemplate.ui:40
+#. i18n: ectx: property (title), widget (QGroupBox, settingsGroupBox)
+#: rc.cpp:60
+msgid "Settings"
+msgstr "Параметры"
+
+#. i18n: file: ui/caltemplate.ui:54
+#. i18n: ectx: property (text), widget (QLabel, paperSizeLabel)
+#: rc.cpp:63
+msgid "Paper Size:"
+msgstr "Размер бумаги:"
+
+#. i18n: file: ui/caltemplate.ui:62
+#. i18n: ectx: property (text), item, widget (KComboBox, paperSizeCombo)
+#: rc.cpp:66
+msgid "A4"
+msgstr "A4"
+
+#. i18n: file: ui/caltemplate.ui:67
+#. i18n: ectx: property (text), item, widget (KComboBox, paperSizeCombo)
+#: rc.cpp:69
+msgid "US Letter"
+msgstr "US Letter"
+
+#. i18n: file: ui/caltemplate.ui:77
+#. i18n: ectx: property (title), widget (KButtonGroup, imagePosButtonGroup)
+#: rc.cpp:72
+msgid "Image Position"
+msgstr "Расположение изображения"
+
+#. i18n: file: ui/caltemplate.ui:86
+#. i18n: ectx: property (text), widget (QRadioButton, topRadio)
+#: rc.cpp:75
+msgid "&Top"
+msgstr "&Cверху"
+
+#. i18n: file: ui/caltemplate.ui:93
+#. i18n: ectx: property (text), widget (QRadioButton, leftRadio)
+#: rc.cpp:78
+msgid "&Left"
+msgstr "&Слева"
+
+#. i18n: file: ui/caltemplate.ui:100
+#. i18n: ectx: property (text), widget (QRadioButton, rightRadio)
+#: rc.cpp:81
+msgid "&Right"
+msgstr "&Справа"
+
+#. i18n: file: ui/caltemplate.ui:110
+#. i18n: ectx: property (text), widget (QCheckBox, drawLinesCheckBox)
+#: rc.cpp:84
+msgid "Draw lines on calendar"
+msgstr "Рисовать сетку"
+
+#. i18n: file: ui/caltemplate.ui:122
+#. i18n: ectx: property (text), widget (QLabel, ratioLabel)
+#: rc.cpp:87
+msgid "Image to text ratio:"
+msgstr "Соотношение изображения к календарю:"
+
+#. i18n: file: ui/caltemplate.ui:152
+#. i18n: ectx: property (text), widget (QLabel, fontLabel)
+#: rc.cpp:90
+msgid "Font:"
+msgstr "Шрифт:"

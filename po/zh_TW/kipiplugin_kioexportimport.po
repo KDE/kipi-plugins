@@ -1,0 +1,139 @@
+# Dongjun Wu <ziyawu@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2009-12-12 14:58+0800\n"
+"Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "匯出到遠端電腦"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "開始匯出"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "開始匯出到指定目標"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "匯出到遠端電腦"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr "使用 KIO-Slave 匯出影像到網路的 Kipi 外掛程式"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "開發者和維護者"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "手冊"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr "某些影像沒有傳輸仍在清單中。您可以現在重新試著匯出這些影像。"
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "上傳未完成"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr "這是要匯入到目前相簿的影像清單。"
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "從遠端電腦匯入"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "開始匯入"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr "開始匯入指定的影像到目前選擇的相簿。"
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "從遠端電腦匯入"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr "使用 KIO-Slave 從網路匯入影像的 Kipi 外掛程式"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr "某些影像沒有傳輸仍在清單中。您可以現在重新試著匯入這些影像。"
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "匯入未完成"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "匯出到遠端電腦..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "從遠端電腦匯入..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "目標位置："
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"設定要上傳影像到此位置的目標地址。這可以是任何 Dolphin 或 Konqueror 使用的地"
+"址，例如 ftp://my.server.org/sub/folder。"
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "選擇目標..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "選擇目標位置..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr "這是要上傳到指定目標的影像清單。"
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "沒有選擇"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frank Weng (a.k.a. Franklin)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin at goodhorse dot idv dot tw"

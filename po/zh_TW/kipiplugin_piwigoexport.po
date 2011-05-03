@@ -1,0 +1,242 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2010.
+# Franklin Weng <franklin at goodhorse dot idv dot tw>, 2010.
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-25 03:14+0100\n"
+"PO-Revision-Date: 2011-02-10 08:40+0800\n"
+"Last-Translator: Franklin Weng <franklin@goodhorse.idv.tw>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: piwigoconfig.cpp:76
+msgctxt "piwigo login settings"
+msgid "URL:"
+msgstr "網址："
+
+#: piwigoconfig.cpp:80
+msgctxt "piwigo login settings"
+msgid "Username:"
+msgstr "使用者名稱："
+
+#: piwigoconfig.cpp:84
+msgctxt "piwigo login settings"
+msgid "Password:"
+msgstr "密碼："
+
+#: plugin_piwigoexport.cpp:81
+msgid "Export to &Piwigo..."
+msgstr "匯出到 Piwigo(&P)..."
+
+#: plugin_piwigoexport.cpp:111 piwigowindow.cpp:429 piwigowindow.cpp:640
+msgid "Edit Piwigo Data"
+msgstr "編輯 Piwigo 資料"
+
+#: piwigowindow.cpp:122
+msgid "Albums"
+msgstr "相簿"
+
+#: piwigowindow.cpp:131
+msgid "&Add Selected Photos"
+msgstr "新增選取的相片(&A)"
+
+#: piwigowindow.cpp:136
+msgid "Override Default Options"
+msgstr "覆蓋預設選項"
+
+#: piwigowindow.cpp:140
+msgid "EXIF Comment (instead of file name) sets Title"
+msgstr "用 EXIF 註解（而不是用檔名）設定標題"
+
+#: piwigowindow.cpp:143
+msgid "EXIF Comment (instead of file name) sets Comment"
+msgstr "用 EXIF 註解（而不是用檔名）設定註解"
+
+#: piwigowindow.cpp:146
+msgid "Resize photos before uploading"
+msgstr "上傳前調整照片大小"
+
+#: piwigowindow.cpp:149
+msgid "Maximum dimension:"
+msgstr "最大尺寸："
+
+#: piwigowindow.cpp:156
+msgid "Maximum thumbnail dimension:"
+msgstr "最大縮圖尺寸："
+
+#: piwigowindow.cpp:163
+msgid "Also download the full size version"
+msgstr "同時下載完整大小的版本"
+
+#: piwigowindow.cpp:227 piwigowindow.cpp:232
+msgid "Piwigo Export"
+msgstr "Piwigo 匯出"
+
+#: piwigowindow.cpp:235
+msgid "A Kipi plugin to export image collections to a remote Piwigo server."
+msgstr "將影像收藏匯出到遠端 Piwigo 伺服器的 Kipi 外掛模組。"
+
+#: piwigowindow.cpp:236
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010, Frédéric Coiffier\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010, Frédéric Coiffier\n"
+
+#: piwigowindow.cpp:242
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: piwigowindow.cpp:242
+msgid "Author"
+msgstr "作者"
+
+#: piwigowindow.cpp:245
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: piwigowindow.cpp:245
+msgid "Maintainer"
+msgstr "維護者"
+
+#: piwigowindow.cpp:248
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: piwigowindow.cpp:248 piwigowindow.cpp:251 piwigowindow.cpp:254
+msgid "Developer"
+msgstr "開發者"
+
+#: piwigowindow.cpp:251
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: piwigowindow.cpp:254
+msgid "Frédéric Coiffier"
+msgstr "Frédéric Coiffier"
+
+#: piwigowindow.cpp:264
+msgid "Handbook"
+msgstr "手冊"
+
+#: piwigowindow.cpp:272
+msgid "Settings"
+msgstr "設定"
+
+#: piwigowindow.cpp:421
+msgid "Failed to login into remote piwigo. "
+msgstr "登入遠端 piwigo 失敗。"
+
+#: piwigowindow.cpp:423
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"您是否要檢查您的設定值後重試一次？"
+
+#: piwigowindow.cpp:481 piwigowindow.cpp:501
+msgid "Album"
+msgstr "相簿"
+
+#: piwigowindow.cpp:519
+msgid "Image"
+msgstr "影像"
+
+#: piwigowindow.cpp:542
+msgid "Nothing to upload - please select photos to upload."
+msgstr "沒有照片可上傳 - 請選擇照片進行上傳。"
+
+#: piwigowindow.cpp:584
+#, kde-format
+msgid "Uploading file %1"
+msgstr "上傳檔案 %1 中"
+
+#: piwigowindow.cpp:603
+msgid "Failed to upload photo into remote piwigo. "
+msgstr "上傳相片到遠端 piwigo 時失敗。"
+
+#: piwigowindow.cpp:606
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"您要繼續嗎？"
+
+#: piwigotalker.cpp:247
+#, kde-format
+msgid "Check if %1 already exists"
+msgstr "檢查 %1 是否已存在"
+
+#: piwigotalker.cpp:353
+msgid "Piwigo URL probably incorrect"
+msgstr "Piwigo 網址可能不正確"
+
+#: piwigotalker.cpp:358
+msgid "Incorrect username or password specified"
+msgstr "不正確的使用者名稱或密碼錯誤"
+
+#: piwigotalker.cpp:414 piwigotalker.cpp:452 piwigotalker.cpp:515
+#: piwigotalker.cpp:612 piwigotalker.cpp:729 piwigotalker.cpp:739
+msgid "Invalid response received from remote Piwigo"
+msgstr "從遠端 Piwigo 收到無效的回應"
+
+#: piwigotalker.cpp:419
+msgid "Failed to list albums"
+msgstr "列出相簿失敗"
+
+#: piwigotalker.cpp:457 piwigotalker.cpp:520 piwigotalker.cpp:617
+#: piwigotalker.cpp:734 piwigotalker.cpp:752
+msgid "Failed to upload photo"
+msgstr "上傳照片失敗"
+
+#: piwigotalker.cpp:482
+#, kde-format
+msgid "Upload resized version of %1"
+msgstr "上傳 %1 調整過大小的版本"
+
+#: piwigotalker.cpp:545
+#, kde-format
+msgid "Upload the thumbnail of %1"
+msgstr "上傳 %1 的縮圖"
+
+#: piwigotalker.cpp:580
+#, kde-format
+msgid "Upload the chunk %1 of %2"
+msgstr "上傳 %2 的區塊 %1"
+
+#: piwigotalker.cpp:654
+msgid "Warning : The full size photo cannot be uploaded."
+msgstr "警告：無法上傳完整大小的相片"
+
+#: piwigotalker.cpp:697
+#, kde-format
+msgid "Upload the metadata of %1"
+msgstr "上傳 %1 的中繼資料"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frank Weng (a.k.a. Franklin)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin at goodhorse dot idv dot tw"

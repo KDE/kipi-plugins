@@ -1,0 +1,1527 @@
+# tradução do kipiplugin_gpssync.po para Brazilian Portuguese
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# André Marcelo Alvarenga <andrealvarenga@gmx.net>, 2009, 2010, 2011.
+# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2010.
+# Marcus Gama <marcus.gama@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_gpssync\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-05-02 03:35+0200\n"
+"PO-Revision-Date: 2011-04-26 09:50-0300\n"
+"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_br@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Lokalize 1.2\n"
+"Language: pt_BR\n"
+
+#: plugin_gpssync.cpp:74
+msgid "Geo-location"
+msgstr "Localização geográfica"
+
+#: gpsreversegeocodingwidget.cpp:230
+msgid "Add country tag"
+msgstr "Adicionar etiqueta de país"
+
+#: gpsreversegeocodingwidget.cpp:232
+msgid "Add state tag"
+msgstr "Adicionar etiqueta de estado"
+
+#: gpsreversegeocodingwidget.cpp:234
+msgid "Add state district tag"
+msgstr "Adicionar etiqueta de distrito"
+
+#: gpsreversegeocodingwidget.cpp:236
+msgid "Add county tag"
+msgstr "Adicionar etiqueta de condado"
+
+#: gpsreversegeocodingwidget.cpp:238
+msgid "Add city tag"
+msgstr "Adicionar etiqueta de cidade grande"
+
+#: gpsreversegeocodingwidget.cpp:240
+msgid "Add city district tag"
+msgstr "Adicionar etiqueta de distrito da cidade grande"
+
+#: gpsreversegeocodingwidget.cpp:242
+msgid "Add suburb tag"
+msgstr "Adicionar etiqueta de subúrbio"
+
+#: gpsreversegeocodingwidget.cpp:244
+msgid "Add town tag"
+msgstr "Adicionar etiqueta de cidade média"
+
+#: gpsreversegeocodingwidget.cpp:246
+msgid "Add village tag"
+msgstr "Adicionar etiqueta de cidade pequena"
+
+#: gpsreversegeocodingwidget.cpp:248
+msgid "Add hamlet tag"
+msgstr "Adicionar etiqueta de aldeia"
+
+#: gpsreversegeocodingwidget.cpp:250
+msgid "Add street"
+msgstr "Adicionar rua"
+
+#: gpsreversegeocodingwidget.cpp:252
+msgid "Add house number tag"
+msgstr "Adicionar etiqueta de número da casa"
+
+#: gpsreversegeocodingwidget.cpp:254
+msgid "Add place"
+msgstr "Adicionar local"
+
+#: gpsreversegeocodingwidget.cpp:256
+msgid "Add Local Administrative Area 2"
+msgstr "Adicionar área administrativa local 1"
+
+#: gpsreversegeocodingwidget.cpp:258
+msgid "Add Local Administrative Area 1"
+msgstr "Adicionar área administrativa local 2"
+
+#: gpsreversegeocodingwidget.cpp:260
+msgid "Add new tag"
+msgstr "Adicionar nova etiqueta"
+
+#: gpsreversegeocodingwidget.cpp:261
+msgid "Remove selected tag"
+msgstr "Remover etiqueta selecionada"
+
+#: gpsreversegeocodingwidget.cpp:262
+msgid "Remove all control tags below this tag"
+msgstr "Remover todas as etiquetas de controle abaixo desta etiqueta"
+
+#: gpsreversegeocodingwidget.cpp:264
+msgid "Add all address elements"
+msgstr "Adicionar todos os elementos do endereço"
+
+#: gpsreversegeocodingwidget.cpp:268
+msgid "Select language:"
+msgstr "Selecionar idioma:"
+
+#: gpsreversegeocodingwidget.cpp:272
+msgid "English"
+msgstr "Inglês"
+
+#: gpsreversegeocodingwidget.cpp:273
+msgid "Arabic"
+msgstr "Árabe"
+
+#: gpsreversegeocodingwidget.cpp:274
+msgid "Assamese"
+msgstr "Assamês"
+
+#: gpsreversegeocodingwidget.cpp:275
+msgid "Byelorussian"
+msgstr "Bielorrusso"
+
+#: gpsreversegeocodingwidget.cpp:276
+msgid "Bulgarian"
+msgstr "Búlgaro"
+
+#: gpsreversegeocodingwidget.cpp:277
+msgid "Bengali"
+msgstr "Bengali"
+
+#: gpsreversegeocodingwidget.cpp:278
+msgid "Chinese"
+msgstr "Chinês"
+
+#: gpsreversegeocodingwidget.cpp:279
+msgid "Czech"
+msgstr "Tcheco"
+
+#: gpsreversegeocodingwidget.cpp:280
+msgid "Croatian"
+msgstr "Croata"
+
+#: gpsreversegeocodingwidget.cpp:281
+msgid "Dutch"
+msgstr "Holandês"
+
+#: gpsreversegeocodingwidget.cpp:282
+msgid "German"
+msgstr "Alemão"
+
+#: gpsreversegeocodingwidget.cpp:283
+msgid "Greek"
+msgstr "Grego"
+
+#: gpsreversegeocodingwidget.cpp:284
+msgid "Estonian"
+msgstr "Estoniano"
+
+#: gpsreversegeocodingwidget.cpp:285
+msgid "Finnish"
+msgstr "Finlandês"
+
+#: gpsreversegeocodingwidget.cpp:286
+msgid "French"
+msgstr "Francês"
+
+#: gpsreversegeocodingwidget.cpp:287
+msgid "Georgian"
+msgstr "Georgiano"
+
+#: gpsreversegeocodingwidget.cpp:288
+msgid "Hebrew"
+msgstr "Hebraico"
+
+#: gpsreversegeocodingwidget.cpp:289
+msgid "Hindi"
+msgstr "Hindi"
+
+#: gpsreversegeocodingwidget.cpp:290
+msgid "Hungarian"
+msgstr "Húngaro"
+
+#: gpsreversegeocodingwidget.cpp:291
+msgid "Indonesian"
+msgstr "Indonésio"
+
+#: gpsreversegeocodingwidget.cpp:292
+msgid "Icelandic"
+msgstr "Islandês"
+
+#: gpsreversegeocodingwidget.cpp:293
+msgid "Italian"
+msgstr "Italiano"
+
+#: gpsreversegeocodingwidget.cpp:294
+msgid "Japanese"
+msgstr "Japonês"
+
+#: gpsreversegeocodingwidget.cpp:295
+msgid "Korean"
+msgstr "Coreano"
+
+#: gpsreversegeocodingwidget.cpp:296
+msgid "Lithuanian"
+msgstr "Lituano"
+
+#: gpsreversegeocodingwidget.cpp:297
+msgid "Macedonian"
+msgstr "Macedônio"
+
+#: gpsreversegeocodingwidget.cpp:298
+msgid "Mongolian"
+msgstr "Mongol"
+
+#: gpsreversegeocodingwidget.cpp:299
+msgid "Moldavian"
+msgstr "Moldavo"
+
+#: gpsreversegeocodingwidget.cpp:300
+msgid "Nepali"
+msgstr "Nepalês"
+
+#: gpsreversegeocodingwidget.cpp:301
+msgid "Polish"
+msgstr "Polonês"
+
+#: gpsreversegeocodingwidget.cpp:302
+msgid "Portuguese"
+msgstr "Português"
+
+#: gpsreversegeocodingwidget.cpp:303
+msgid "Romanian"
+msgstr "Romeno"
+
+#: gpsreversegeocodingwidget.cpp:304
+msgid "Russian"
+msgstr "Russo"
+
+#: gpsreversegeocodingwidget.cpp:305
+msgid "Slovak"
+msgstr "Eslovaco"
+
+#: gpsreversegeocodingwidget.cpp:306
+msgid "Slovenian"
+msgstr "Esloveno"
+
+#: gpsreversegeocodingwidget.cpp:307
+msgid "Samoan"
+msgstr "Samoano"
+
+#: gpsreversegeocodingwidget.cpp:308
+msgid "Serbian"
+msgstr "Sérvio"
+
+#: gpsreversegeocodingwidget.cpp:309
+msgid "Sudanese"
+msgstr "Sudanês"
+
+#: gpsreversegeocodingwidget.cpp:310
+msgid "Spanish"
+msgstr "Espanhol"
+
+#: gpsreversegeocodingwidget.cpp:311
+msgid "Swedish"
+msgstr "Sueco"
+
+#: gpsreversegeocodingwidget.cpp:312
+msgid "Thai"
+msgstr "Tailandês"
+
+#: gpsreversegeocodingwidget.cpp:313
+msgid "Turkish"
+msgstr "Turco"
+
+#: gpsreversegeocodingwidget.cpp:314
+msgid "Ukrainian"
+msgstr "Ucraniano"
+
+#: gpsreversegeocodingwidget.cpp:315
+msgid "Vietnamese"
+msgstr "Vietnamita"
+
+#: gpsreversegeocodingwidget.cpp:317
+msgid "Select service:"
+msgstr "Selecionar serviço:"
+
+#: gpsreversegeocodingwidget.cpp:320
+msgid "Open Street Map"
+msgstr "Open Street Map"
+
+#: gpsreversegeocodingwidget.cpp:321
+msgid "Geonames.org place name (non-US)"
+msgstr "Nome do local no Geonames.org (não-EUA)"
+
+#: gpsreversegeocodingwidget.cpp:322
+msgid "Geonames.org full address (US only)"
+msgstr "Endereço completo do Geonames.org (somente EUA)"
+
+#: gpsreversegeocodingwidget.cpp:337 gpsreversegeocodingwidget.cpp:529
+msgid "Less options"
+msgstr "Menos opções"
+
+#: gpsreversegeocodingwidget.cpp:345
+msgid "Write tags to XMP"
+msgstr "Gravar as etiquetas no XMP"
+
+#: gpsreversegeocodingwidget.cpp:351
+msgid "Apply reverse geocoding"
+msgstr "Aplicar a geocodificação inversa"
+
+#: gpsreversegeocodingwidget.cpp:475
+msgid "Image tags are changed."
+msgstr "As etiquetas da imagem estão alteradas."
+
+#: gpsreversegeocodingwidget.cpp:508
+msgid "Retrieving RG info - %p%"
+msgstr "Obtendo informações de GI - %p%"
+
+#: gpsreversegeocodingwidget.cpp:523
+msgid "More options"
+msgstr "Mais opções"
+
+#: gpsreversegeocodingwidget.cpp:979
+#, kde-format
+msgid ""
+"%1 out of %2 images have been reverse geocoded. Would you like to keep the "
+"tags which were already obtained or discard them?"
+msgstr ""
+"%1 em %2 imagens foram geocodificadas de forma inversa. Deseja manter as "
+"etiquetas que já foram obtidas ou eliminá-las?"
+
+#: gpsreversegeocodingwidget.cpp:984
+msgid "Abort reverse geocoding?"
+msgstr "Cancelar geocodificação inversa?"
+
+#: gpsreversegeocodingwidget.cpp:985
+msgid "Keep tags"
+msgstr "Manter etiquetas"
+
+#: gpsreversegeocodingwidget.cpp:986
+msgid "Discard tags"
+msgstr "Descartar etiquetas"
+
+#: gpsreversegeocodingwidget.cpp:987
+msgid "Continue"
+msgstr "Continuar"
+
+#: searchbackend.cpp:300
+msgid "GeoNames"
+msgstr "GeoNames"
+
+#: searchbackend.cpp:301
+msgid "OSM"
+msgstr "OSM"
+
+#: searchwidget.cpp:146
+msgctxt "Start the search"
+msgid "Search"
+msgstr "Pesquisar"
+
+#: searchwidget.cpp:153
+msgid "Clear the search results."
+msgstr "Limpar os resultados da pesquisa."
+
+#: searchwidget.cpp:161
+msgid "Keep the results of old searches when doing a new search."
+msgstr ""
+"Manter os resultados das pesquisas antigas ao efetuar uma pesquisa nova."
+
+#: searchwidget.cpp:168
+msgid "Toggle the visibility of the search results on the map."
+msgstr "Alternar a visibilidade dos resultados da pesquisa no mapa."
+
+#: searchwidget.cpp:172 gpslistviewcontextmenu.cpp:102
+msgid "Copy coordinates"
+msgstr "Copiar coordenadas"
+
+#: searchwidget.cpp:175
+msgid "Move selected images to this position"
+msgstr "Mover as imagens selecionadas para esta posição"
+
+#: searchwidget.cpp:177
+msgid "Remove from results list"
+msgstr "Remover da lista de resultados"
+
+#: searchwidget.cpp:181
+msgid "Select which service you would like to use."
+msgstr "Selecione o serviço que deseja usar."
+
+#: searchwidget.cpp:202 gpslistviewcontextmenu.cpp:136
+msgid "Bookmarks"
+msgstr "Favoritos"
+
+#: searchwidget.cpp:255
+#, kde-format
+msgid ""
+"Your search failed:\n"
+"%1"
+msgstr ""
+"A sua pesquisa falhou:\n"
+"%1"
+
+#: searchwidget.cpp:255
+msgid "Search failed"
+msgstr "A sua pesquisa falhou"
+
+#: searchwidget.cpp:744 gpsbookmarkowner.cpp:345
+#, kde-format
+msgid "1 image snapped to '%2'"
+msgid_plural "%1 images snapped to '%2'"
+msgstr[0] "1 imagem ajustada para '%2'"
+msgstr[1] "%1 imagens ajustadas para '%2'"
+
+#: searchwidget.cpp:779
+#, kde-format
+msgid "1 image moved to '%2'"
+msgid_plural "%1 images moved to '%2'"
+msgstr[0] "1 imagem movida para '%2'"
+msgstr[1] "%1 imagens movidas para '%2'"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Luiz Fernando Ranghetti, André Marcelo Alvarenga"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "elchevive@opensuse.org, andrealvarenga@gmx.net"
+
+#: gpslistviewcontextmenu.cpp:104
+msgid "Paste coordinates"
+msgstr "Colar coordenadas"
+
+#: gpslistviewcontextmenu.cpp:106
+msgid "Remove coordinates"
+msgstr "Remover coordenadas"
+
+#: gpslistviewcontextmenu.cpp:107
+msgid "Remove altitude"
+msgstr "Remover altitude"
+
+#: gpslistviewcontextmenu.cpp:108
+msgid "Remove uncertainty"
+msgstr "Remover incerteza"
+
+#: gpslistviewcontextmenu.cpp:109 gpslistviewcontextmenu.cpp:618
+msgid "Remove speed"
+msgstr "Remover velocidade"
+
+#: gpslistviewcontextmenu.cpp:110
+msgid "Look up missing altitude values"
+msgstr "Procurando valores de altitude em falta"
+
+#: gpslistviewcontextmenu.cpp:398
+msgid ""
+"Found more than one point on the clipboard - can only assign one point at a "
+"time."
+msgstr ""
+"Foi encontrado mais de um ponto na área de transferência. Só é possível "
+"atribuir um ponto de cada vez."
+
+#: gpslistviewcontextmenu.cpp:399 gpslistviewcontextmenu.cpp:456
+#: gpssyncdialog.cpp:399
+msgid "GPS Sync"
+msgstr "Sincronização com o GPS"
+
+#: gpslistviewcontextmenu.cpp:456
+msgid "Could not find any coordinates on the clipboard."
+msgstr "Não foi possível encontrar nenhuma coordenada na área de transferência"
+
+#: gpslistviewcontextmenu.cpp:460
+msgid "Coordinates pasted"
+msgstr "As coordenadas foram coladas"
+
+#: gpslistviewcontextmenu.cpp:491
+msgid "Bookmark selected"
+msgstr "O favorito foi selecionado"
+
+#: gpslistviewcontextmenu.cpp:595
+msgid "Remove coordinates information"
+msgstr "Remover informação das coordenadas"
+
+#: gpslistviewcontextmenu.cpp:600
+msgid "Remove altitude information"
+msgstr "Remover informação da altitude"
+
+#: gpslistviewcontextmenu.cpp:607
+msgid "Remove uncertainty information"
+msgstr "Remover informação de incerteza"
+
+#: gpslistviewcontextmenu.cpp:667
+msgid "Looking up altitudes"
+msgstr "Procurando altitudes"
+
+#: gpslistviewcontextmenu.cpp:706
+msgid "Altitude looked up"
+msgstr "Procura de altitude"
+
+#: gpsdataparser.cpp:626
+#, kde-format
+msgid "Could not open: %1"
+msgstr "Não foi possível abrir: %1"
+
+#: gpsdataparser.cpp:632
+#, fuzzy
+#| msgid "File is empty!"
+msgid "File is empty."
+msgstr "O arquivo está vazio!"
+
+#: gpsdataparser.cpp:648
+#, kde-format
+msgid "Parsing error: %1"
+msgstr "Erro de processamento: %1"
+
+#: gpsdataparser.cpp:657
+#, fuzzy
+#| msgid "No GPX element found - probably not a GPX file!"
+msgid "No GPX element found - probably not a GPX file."
+msgstr ""
+"Não foi encontrado nenhum elemento GPX - provavelmente não é um arquivo GPX!"
+
+#: gpsdataparser.cpp:661
+#, fuzzy
+#| msgid "File is a GPX file, but no datapoints were found!"
+msgid "File is a GPX file, but no datapoints were found."
+msgstr "O arquivo é GPX, mas não foram encontrados pontos de dados!"
+
+#: gpsbookmarkowner.cpp:108
+msgid "Bookmark location"
+msgstr "Localização do favorito"
+
+#: gpsbookmarkowner.cpp:109
+msgctxt "Title of the new gps location bookmark"
+msgid "Title:"
+msgstr "Título:"
+
+#: gpscorrelatorwidget.cpp:164
+msgid "Load GPX files..."
+msgstr "Carregar arquivos GPX..."
+
+#: gpscorrelatorwidget.cpp:169 kipiimageitem.cpp:519
+msgid "Filename"
+msgstr "Nome do arquivo"
+
+#: gpscorrelatorwidget.cpp:169
+msgid "#points"
+msgstr "#pontos"
+
+#: gpscorrelatorwidget.cpp:174
+msgid "Max. time gap (sec.):"
+msgstr "Intervalo máximo (segundos):"
+
+#: gpscorrelatorwidget.cpp:176
+msgid ""
+"Sets the maximum difference in seconds from a GPS track point to the image "
+"time to be matched. If the time difference exceeds this setting, no match "
+"will be attempted."
+msgstr ""
+"Defina a diferença máxima em segundos de um ponto de rota do GPS para o "
+"tempo da imagem correspondente. Se a diferença dos tempos exceder o "
+"definido, nenhuma correspondência será tentada."
+
+#: gpscorrelatorwidget.cpp:180
+msgid "Camera time zone:"
+msgstr "Fuso horário da câmera:"
+
+#: gpscorrelatorwidget.cpp:181
+msgid "Same as system"
+msgstr "Igual ao sistema"
+
+#: gpscorrelatorwidget.cpp:183
+msgid ""
+"Use this option if the timezone of the camera is the same as the timezone of "
+"this system. The conversion to GMT will be done automatically."
+msgstr ""
+"Use esta opção se o fuso horário da câmera for o mesmo deste sistema. A "
+"conversão para o GMT será feita automaticamente."
+
+#: gpscorrelatorwidget.cpp:186
+msgctxt "manual time zone selection for gps syncing"
+msgid "Manual:"
+msgstr "Manual:"
+
+#: gpscorrelatorwidget.cpp:188
+msgid ""
+"Use this option if the timezone of the camera is different from this system "
+"and you have to specify the difference to GMT manually."
+msgstr ""
+"Use esta opção se o fuso horário da câmera for diferente deste sistema e se "
+"você precisa especificar manualmente a diferença em relação ao GMT."
+
+#: gpscorrelatorwidget.cpp:240
+msgid ""
+"<p>Sets the time zone the camera was set to during photo shooting, so that "
+"the time stamps of the images can be converted to GMT to match the GPS time "
+"reference.</p><p>Note: positive offsets count eastwards from zero longitude "
+"(GMT), they are 'ahead of time'.</p>"
+msgstr ""
+"<p>Defina o fuso horário da câmera que foi usado durante a sessão de fotos, "
+"para que as marcas de tempo das imagens possam ser convertidos para GMT para "
+"corresponder à referência de tempo do GPS.</p><p>Nota: deslocamento positivo "
+"conta a leste da longitude zero (GMT), eles estão 'a frente do tempo'.</p>"
+
+#: gpscorrelatorwidget.cpp:247
+msgid "Fine offset (mm:ss):"
+msgstr "Ajuste fino (mm:ss):"
+
+#: gpscorrelatorwidget.cpp:249
+msgid ""
+"Sets an additional offset in minutes and seconds that is used to correlate "
+"the photos to the GPS track. This can be used for fine tuning to adjust a "
+"wrong camera clock."
+msgstr ""
+"Define um desvio adicional em minutos e segundos, o qual é usado para "
+"correlacionar as fotos com a trilha de GPS. Isto pode ser usado para um "
+"ajuste fino, de modo a ajustar um relógio da câmera incorreto."
+
+#: gpscorrelatorwidget.cpp:259
+msgid "Set whether the camera offset is negative or positive."
+msgstr "Indica se o desvio da câmera é negativo ou positivo."
+
+#: gpscorrelatorwidget.cpp:263
+msgid "Minutes to fine tune camera offset."
+msgstr "Minutos do ajuste fino do desvio da câmera."
+
+#: gpscorrelatorwidget.cpp:266
+msgid "Seconds to fine tune camera offset."
+msgstr "Segundos do ajuste fino do desvio da câmera."
+
+#: gpscorrelatorwidget.cpp:276
+msgid "Interpolate"
+msgstr "Interpolar"
+
+#: gpscorrelatorwidget.cpp:277
+msgid ""
+"Set this option to interpolate GPS track points which are not closely "
+"matched to the GPX data file."
+msgstr ""
+"Defina esta opção para interpolar os pontos de rota GPS que não correspondem "
+"estreitamente com os dados do arquivo GPX."
+
+#: gpscorrelatorwidget.cpp:283
+msgid "Difference in min.:"
+msgstr "Diferença em minutos:"
+
+#: gpscorrelatorwidget.cpp:285
+msgid ""
+"Sets the maximum time difference in minutes (240 max.) to interpolate GPX "
+"file points to image time data."
+msgstr ""
+"Defina a diferença máxima de tempo em minutos (máx. 240) para interpolar os "
+"pontos do arquivo GPX com os dados de tempo da imagem."
+
+#: gpscorrelatorwidget.cpp:288
+msgid "Correlate"
+msgstr "Correlacionar"
+
+#: gpscorrelatorwidget.cpp:346
+#, kde-format
+msgid "%1|GPS Exchange Format"
+msgstr "%1|Formato de intercâmbio GPS"
+
+#: gpscorrelatorwidget.cpp:347
+msgid "Select GPX File to Load"
+msgstr "Selecionar arquivo GPX a carregar"
+
+#: gpscorrelatorwidget.cpp:392
+#, kde-format
+msgid "The following GPX file could not be loaded:"
+msgid_plural "The following %1 GPX files could not be loaded:"
+msgstr[0] "O arquivo GPX a seguir não pôde ser carregado:"
+msgstr[1] "Os %1 arquivos GPX a seguir não puderam ser carregados:"
+
+#: gpscorrelatorwidget.cpp:398
+msgid "Error loading GPX file"
+msgid_plural "Error loading GPX files"
+msgstr[0] "Erro ao carregar o arquivo GPX"
+msgstr[1] "Erro ao carregar os arquivos GPX"
+
+#: gpscorrelatorwidget.cpp:503
+msgid "Correlating images - %p%"
+msgstr "Correlacionando imagens - %p%"
+
+#: gpscorrelatorwidget.cpp:570
+msgid ""
+"Could not correlate any image - please make sure the timezone and gap "
+"settings are correct."
+msgstr ""
+"Não foi possível correlacionar nenhuma imagem - certifique-se de que o fuso "
+"horário e as definições do intervalo estão corretos."
+
+#: gpscorrelatorwidget.cpp:571
+msgid "Correlation failed"
+msgstr "Falha na correlação"
+
+#: gpscorrelatorwidget.cpp:576
+msgid ""
+"All images have been correlated. You can now check their position on the map."
+msgstr ""
+"Todas as imagens foram correlacionadas. Você pode verificar agora a sua "
+"posição no mapa."
+
+#: gpscorrelatorwidget.cpp:577
+msgid "Correlation succeeded"
+msgstr "Correlação concluída com sucesso"
+
+#: gpscorrelatorwidget.cpp:583
+#, kde-format
+msgid ""
+"%1 out of %2 images have been correlated. Please check the timezone and gap "
+"settings if you think that more images should have been correlated."
+msgstr ""
+"%1 em %2 imagens foram correlacionadas. Verifique o fuso horário e as "
+"configurações do intervalo se você acha que deveria ter correlacionado mais "
+"imagens."
+
+#: gpscorrelatorwidget.cpp:584
+msgid "Correlation finished"
+msgstr "Correlação concluída"
+
+#: gpscorrelatorwidget.cpp:593
+#, kde-format
+msgid "1 image correlated"
+msgid_plural "%1 images correlated"
+msgstr[0] "1 imagem correlacionada"
+msgstr[1] "%1 imagens correlacionadas"
+
+#: gpsimagedetails.cpp:120
+msgid "Coordinates"
+msgstr "Coordenadas"
+
+#: gpsimagedetails.cpp:126 kipiimageitem.cpp:521
+msgid "Latitude"
+msgstr "Latitude"
+
+#: gpsimagedetails.cpp:130 kipiimageitem.cpp:522
+msgid "Longitude"
+msgstr "Longitude"
+
+#: gpsimagedetails.cpp:132 kipiimageitem.cpp:523
+msgid "Altitude"
+msgstr "Altitude"
+
+#: gpsimagedetails.cpp:138 kipiimageitem.cpp:528
+msgid "Speed"
+msgstr "Velocidade"
+
+#: gpsimagedetails.cpp:144 kipiimageitem.cpp:527
+msgid "# satellites"
+msgstr "# satélites"
+
+#: gpsimagedetails.cpp:150 kipiimageitem.cpp:526
+msgid "Fix type"
+msgstr "Tipo de correção"
+
+#: gpsimagedetails.cpp:152
+msgid "2-d"
+msgstr "2-D"
+
+#: gpsimagedetails.cpp:153
+msgid "3-d"
+msgstr "3-D"
+
+#: gpsimagedetails.cpp:156 kipiimageitem.cpp:525
+msgid "DOP"
+msgstr "DOP"
+
+#: gpsimagedetails.cpp:162
+msgid "Apply"
+msgstr "Aplicar"
+
+#: gpsimagedetails.cpp:436
+msgid "Details changed"
+msgstr "Os detalhes foram alterados"
+
+#: rgtagmodel.cpp:93
+msgid "{Country}"
+msgstr "{País}"
+
+#: rgtagmodel.cpp:94
+msgctxt "Part of a country"
+msgid "{State}"
+msgstr "{Estado}"
+
+#: rgtagmodel.cpp:95
+msgid "{County}"
+msgstr "{Condado}"
+
+#: rgtagmodel.cpp:96
+msgid "{City}"
+msgstr "{Cidade grande}"
+
+#: rgtagmodel.cpp:97
+msgid "{Town}"
+msgstr "{Cidade média}"
+
+#: rgtagmodel.cpp:98
+msgid "{Village}"
+msgstr "{Cidade pequena}"
+
+#: rgtagmodel.cpp:99
+msgid "{Hamlet}"
+msgstr "{Aldeia}"
+
+#: rgtagmodel.cpp:100
+msgid "{Street}"
+msgstr "{Rua}"
+
+#: setup_general.cpp:62
+msgid "One map"
+msgstr "Um mapa"
+
+#: setup_general.cpp:63
+msgid "Two maps - horizontal"
+msgstr "Dois mapas - horizontal"
+
+#: setup_general.cpp:64
+msgid "Two maps - vertical"
+msgstr "Dois mapas - vertical"
+
+#: setup_general.cpp:66
+msgid "Layout:"
+msgstr "Leiaute:"
+
+#: kipiimageitem.cpp:362
+msgid "Not available"
+msgstr "Não disponível"
+
+#: kipiimageitem.cpp:395
+#, kde-format
+msgid "DOP: %1"
+msgstr "DOP: %1"
+
+#: kipiimageitem.cpp:400
+#, c-format, kde-format
+msgid "Fix: %1d"
+msgstr "Correção: %1d"
+
+#: kipiimageitem.cpp:405
+#, kde-format
+msgid "#Sat: %1"
+msgstr "#Sat: %1"
+
+#: kipiimageitem.cpp:439
+#, c-format, kde-format
+msgid "%1d"
+msgstr "%1d"
+
+#: kipiimageitem.cpp:459
+msgid "Modified"
+msgstr "Modificado"
+
+#: kipiimageitem.cpp:518
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: kipiimageitem.cpp:520
+msgid "Date and time"
+msgstr "Data e hora"
+
+#: kipiimageitem.cpp:524
+msgid "Accuracy"
+msgstr "Precisão"
+
+#: kipiimageitem.cpp:529
+msgid "Status"
+msgstr "Status"
+
+#: kipiimageitem.cpp:530
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: kipiimageitem.cpp:719
+msgid "Failed to open file."
+msgstr "Falha ao abrir o arquivo."
+
+#: kipiimageitem.cpp:782
+msgid "Failed to add GPS info to image."
+msgstr "Não foi possível adicionar a informação de GPS à imagem."
+
+#: kipiimageitem.cpp:791
+msgid "Failed to remove GPS info from image"
+msgstr "Não foi possível remover a informação de GPS da imagem."
+
+#: kipiimageitem.cpp:817 kipiimageitem.cpp:822
+msgid "Failed to save tags to file."
+msgstr "Não foi possível salvar as etiquetas no arquivo."
+
+#: kipiimageitem.cpp:832
+msgid "Unable to save changes to file"
+msgstr "Não foi possível salvar as alterações no arquivo"
+
+#: setup.cpp:112
+msgid "Configure"
+msgstr "Configurar"
+
+#: setup.cpp:118
+msgctxt "General setup"
+msgid "General"
+msgstr "Geral"
+
+#: gpssyncdialog.cpp:239
+msgid "Geolocation"
+msgstr "Localização geográfica"
+
+#: gpssyncdialog.cpp:266
+msgid "Display bookmarked positions on the map."
+msgstr "Mostrar as posições marcadas no mapa."
+
+#: gpssyncdialog.cpp:321
+msgid "Sorting"
+msgstr "Ordenação"
+
+#: gpssyncdialog.cpp:327
+msgid "Show oldest first"
+msgstr "Mostrar a mais antiga primeiro"
+
+#: gpssyncdialog.cpp:331
+msgid "Show youngest first"
+msgstr "Mostrar a mais nova primeiro"
+
+#: gpssyncdialog.cpp:373
+msgid "Details"
+msgstr "Detalhes"
+
+#: gpssyncdialog.cpp:374
+msgid "GPS Correlator"
+msgstr "Correlacionador de GPS"
+
+#: gpssyncdialog.cpp:375
+msgid "Undo/Redo"
+msgstr "Desfazer/refazer"
+
+#: gpssyncdialog.cpp:376
+msgid "Reverse Geocoding"
+msgstr "Geocodificação inversa"
+
+#: gpssyncdialog.cpp:377
+msgid "Search"
+msgstr "Pesquisar"
+
+#: gpssyncdialog.cpp:402
+msgid "A Plugin to synchronize pictures' metadata with a GPS device"
+msgstr ""
+"Um plug-in para sincronizar os metadados das imagens com um dispositivo GPS"
+
+#: gpssyncdialog.cpp:403
+msgid "(c) 2006-2010, Gilles Caulier"
+msgstr "(c) 2006-2010, Gilles Caulier"
+
+#: gpssyncdialog.cpp:405
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gpssyncdialog.cpp:406 gpssyncdialog.cpp:410
+msgid "Developer and maintainer"
+msgstr "Desenvolvedor e mantenedor"
+
+#: gpssyncdialog.cpp:409
+msgid "Michael G. Hansen"
+msgstr "Michael G. Hansen"
+
+#: gpssyncdialog.cpp:413
+msgid "Gabriel Voicu"
+msgstr "Muitos tentáculos. Escrito por Gabriel Finch"
+
+#: gpssyncdialog.cpp:414
+msgid "Developer"
+msgstr "Desenvolvedor"
+
+#: gpssyncdialog.cpp:582
+msgid "Loading metadata - %p%"
+msgstr "Carregando metadados - %p%"
+
+#: gpssyncdialog.cpp:757
+#, kde-format
+msgid "You have 1 modified image."
+msgid_plural "You have %1 modified images."
+msgstr[0] "Você tem 1 imagem modificada."
+msgstr[1] "Você tem %1 imagens modificadas."
+
+#: gpssyncdialog.cpp:763
+#, kde-format
+msgid "%1 Would you like to save the changes you made to them?"
+msgstr "%1 Deseja salvar as alterações que você fez?"
+
+#: gpssyncdialog.cpp:764
+msgid "Unsaved changes"
+msgstr "Alterações não salvas"
+
+#: gpssyncdialog.cpp:765
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+#: gpssyncdialog.cpp:766
+msgid "Close and discard changes"
+msgstr "Fechar e descartar todas as alterações"
+
+#: gpssyncdialog.cpp:975
+#, kde-format
+msgid "1 image moved"
+msgid_plural "%1 images moved"
+msgstr[0] "1 imagem movida"
+msgstr[1] "%1 imagens movida"
+
+#: gpssyncdialog.cpp:1008
+msgid "Saving changes - %p%"
+msgstr "Salvando alterações - %p%"
+
+#: gpssyncdialog.cpp:1046
+msgid "Failed to save some information:"
+msgstr "Não foi possível salvar algumas informações:"
+
+#: gpssyncdialog.cpp:1046
+msgid "Error"
+msgstr "Erro"
+
+#~ msgid "%1 - Edit Geographical Coordinates"
+#~ msgstr "%1 - Editar as coordenadas geográficas"
+
+#~ msgid ""
+#~ "<p>Use the map on the right to select the location where the picture was "
+#~ "taken. Click with left mouse button or move the marker on the map to get "
+#~ "the GPS coordinates.</p>"
+#~ msgstr ""
+#~ "<p>Use o mapa à direita para selecionar o local onde a foto foi tirada. "
+#~ "Clique com o botão esquerdo do mouse ou mova o marcador no mapa para "
+#~ "obter as coordenadas do GPS.</p>"
+
+#~ msgid "Altitude:"
+#~ msgstr "Altitude:"
+
+#~ msgid "Latitude:"
+#~ msgstr "Latitude:"
+
+#~ msgid "Longitude:"
+#~ msgstr "Longitude:"
+
+#~ msgid "Go to Location"
+#~ msgstr "Ir para localização"
+
+#~ msgid "Recent locations"
+#~ msgstr "Localizações recentes"
+
+#~ msgid ""
+#~ "<p>Allows you to configure some aspects of the map: The Google Maps API "
+#~ "version to be used and the service to be used for altitude lookup.</"
+#~ "p><p>Use the Google Maps API V2 if you want the search bar which is not "
+#~ "yet available in version 3. If you do not need the search bar, you can "
+#~ "use version 3 to try out the new terrain map.</p><p>If you use no "
+#~ "altitude lookup, all altitudes will be set to zero. The <a href=\"http://"
+#~ "geonames.org\">geonames.org</a> service has no limits on the number of "
+#~ "lookups which we can make, but has limited coverage. The <a href=\"http://"
+#~ "topocoding.com/\">topocoding.com</a> service has better coverage, but the "
+#~ "number of altitude lookups which we can perform per day is limited. If "
+#~ "you get error messages while using it, switch to <a href=\"http://"
+#~ "geonames.org\">geonames.org</a>.</p>"
+#~ msgstr ""
+#~ "<p>Permite a você configurar alguns aspectos do mapa: A versão da API do "
+#~ "Google Maps a ser usada e o serviço a ser usado para a consulta de "
+#~ "altitude.</p><p>Use a API do Google Maps V2 se você quiser usar a barra "
+#~ "de pesquisa que ainda não está disponível na versão 3. Se você não "
+#~ "precisar da barra de pesquisa, você pode usar a versão 3 para testar o "
+#~ "novo mapa de terrenos.</p><p>Se você não usar a consulta de altitude, "
+#~ "todas as altitudes serão definidas como zero. O serviço <a href=\"http://"
+#~ "geonames.org\">geonames.org</a> não tem limites no número de consultas "
+#~ "que podem ser feitas, mas tem uma cobertura limitada. O serviço <a href="
+#~ "\"http://topocoding.com/\">topocoding.com</a> tem uma cobertura melhor, "
+#~ "mas o número de consultas de altitude que podem ser feitas por dia é "
+#~ "limitado. Se você obtiver uma mensagem de erro durante o uso, troque para "
+#~ "o <a href=\"http://geonames.org\">geonames.org</a>.</p>"
+
+#~ msgid "Google Maps API V2"
+#~ msgstr "API do Google Maps V2"
+
+#~ msgid "Google Maps API V3"
+#~ msgstr "API do Google Maps V3"
+
+#~ msgid "Use geonames.org for altitude lookup"
+#~ msgstr "Usar o geonames.org para a consulta de altitude"
+
+#~ msgid "Use topocoding for altitude lookup"
+#~ msgstr "Usar o topocoding para a consulta de altitude"
+
+#~ msgid "A Plugin to edit geographical coordinates"
+#~ msgstr "Um plug-in para editar as coordenadas geográficas"
+
+#~ msgid "Handbook"
+#~ msgstr "Manual"
+
+#~ msgid "Altitude value is invalid."
+#~ msgstr "O valor da altitude é inválido."
+
+#~ msgid "Edit Geographical Coordinates"
+#~ msgstr "Editar coordenadas geográficas"
+
+#~ msgid "Latitude value is invalid."
+#~ msgstr "O valor da latitude é inválido."
+
+#~ msgid "Longitude value is invalid."
+#~ msgstr "O valor da longitude é inválido."
+
+#~ msgid "Interpolated"
+#~ msgstr "Interpolado"
+
+#~ msgctxt "entry was added manually"
+#~ msgid "Added"
+#~ msgstr "Adicionado"
+
+#~ msgctxt "entry was added automatically"
+#~ msgid "Found"
+#~ msgstr "Localizado"
+
+#~ msgid "Deleted"
+#~ msgstr "Excluído"
+
+#~ msgctxt ""
+#~ "Language code for the embedded Google Maps. Please take a look at http://"
+#~ "spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 for "
+#~ "supported languages. If your language is not on the list, pick 'en'."
+#~ msgid "en"
+#~ msgstr "pt-BR"
+
+#~ msgid "Edit..."
+#~ msgstr "Editar..."
+
+#~ msgid ""
+#~ "Correlate in time and interpolate distance of data from GPX file with all "
+#~ "images on the list."
+#~ msgstr ""
+#~ "Correlacionar no tempo e interpolar a distância dos dados do arquivo GPX "
+#~ "com todas as imagens da lista."
+
+#~ msgid "Manually edit GPS coordinates of selected images from the list."
+#~ msgstr ""
+#~ "Editar manualmente as coordenadas do GPS das imagens selecionadas da "
+#~ "lista."
+
+#~ msgid "Remove GPS coordinates of selected images from the list."
+#~ msgstr "Remova as coordenadas do GPS ou selecione as imagens da lista."
+
+#~ msgid "Date"
+#~ msgstr "Data"
+
+#~ msgid "Current GPX file:"
+#~ msgstr "Arquivo GPX atual:"
+
+#~ msgid "No GPX file"
+#~ msgstr "Nenhum arquivo GPX"
+
+#~ msgid "Cannot parse %1 GPX file."
+#~ msgstr "Não foi possível analisar o arquivo GPX %1."
+
+#~ msgid "The %1 GPX file does not have a date-time track to use."
+#~ msgstr "O arquivo GPX %1 não tem uma rota de data-hora a ser usada."
+
+#~ msgid "Points parsed: %1"
+#~ msgstr "Pontos analisados: %1"
+
+#~ msgid "1 image from the list is not updated."
+#~ msgid_plural "%1 images from the list are not updated."
+#~ msgstr[0] "1 imagem da lista não está atualizada."
+#~ msgstr[1] "%1 imagens da lista não estão atualizadas."
+
+#~ msgid ""
+#~ "<p>%1\n"
+#~ "Do you really want to close this window without applying changes?</p>"
+#~ msgstr ""
+#~ "<p>%1\n"
+#~ "Deseja realmente fechar esta janela sem aplicar as alterações?</p>"
+
+#~ msgid "Cannot find pictures to correlate with GPX file data."
+#~ msgstr ""
+#~ "Não foi possível encontrar imagens para correlacionar com os dados do "
+#~ "arquivo GPX."
+
+#~ msgid "The GPS data of 1 image have been updated using the GPX data file."
+#~ msgid_plural ""
+#~ "The GPS data of %1 images have been updated using the GPX data file."
+#~ msgstr[0] ""
+#~ "Os dados GPS de 1 imagem foram atualizados usando os dados do arquivo GPX."
+#~ msgstr[1] ""
+#~ "Os dados GPS de %1 imagens foram atualizados usando os dados do arquivo "
+#~ "GPX."
+
+#~ msgid "Press the Apply button to update the image's metadata."
+#~ msgid_plural "Press the Apply button to update the images' metadata."
+#~ msgstr[0] ""
+#~ "Pressione o botão Aplicar para atualizar os metadados das imagens."
+#~ msgstr[1] ""
+#~ "Pressione o botão Aplicar para atualizar os metadados das imagens."
+
+#~ msgid ""
+#~ "Please select at least one image from the list to edit GPS coordinates "
+#~ "manually."
+#~ msgstr ""
+#~ "Selecione ao menos uma imagem da lista para editar as coordenadas GPS "
+#~ "manualmente."
+
+#~ msgid ""
+#~ "Please select at least one image from which to remove GPS coordinates."
+#~ msgstr "Selecione ao menos uma imagem para remover as coordenadas GPS."
+
+#~ msgid "Edit Track List Geographical Coordinates"
+#~ msgstr "Editar as coordenadas geográficas da lista de rotas"
+
+#~ msgid "Id"
+#~ msgstr "Id"
+
+#~ msgctxt "entry changed"
+#~ msgid "Changed"
+#~ msgstr "Alterado"
+
+#~ msgid "A plugin to edit GPS track lists."
+#~ msgstr "Um plug-in para editar a lista de rotas do GPS."
+
+#~ msgid "(c) 2008-2009, Gilles Caulier"
+#~ msgstr "(c) 2008-2009, Gilles Caulier"
+
+#~ msgctxt "dirty gps info"
+#~ msgid "Yes"
+#~ msgstr "Sim"
+
+#~ msgctxt "dirty gps info"
+#~ msgid "No"
+#~ msgstr "Não"
+
+#~ msgid "Generating KML file..."
+#~ msgstr "Gerando arquivo KML..."
+
+#~ msgid "Could not read image '%1'"
+#~ msgstr "Não foi possível ler a imagem '%1'"
+
+#~ msgid "Format of image '%1' is unknown"
+#~ msgstr "O formato da imagem '%1' é desconhecido"
+
+#~ msgid "Could not save image '%1' to '%2'"
+#~ msgstr "Não foi possível salvar a imagem '%1' para '%2'"
+
+#~ msgid "Creation of placemark '%1'"
+#~ msgstr "Criação do marcador '%1'"
+
+#~ msgid "Could not save icon for image '%1' to '%2'"
+#~ msgstr "Não foi possível salvar a miniatura para a imagem '%1' para '%2'"
+
+#~ msgid "No GPX file chosen."
+#~ msgstr "Nenhum arquivo GPX foi escolhido."
+
+#~ msgid "The %1 GPX file do not have a date-time track to use."
+#~ msgstr "O arquivo GPX %1 não tem uma rota de data-hora a ser usada."
+
+#~ msgid "No position data for '%1'"
+#~ msgstr "Nenhum dado de posição para '%1'"
+
+#~ msgid "No position data for 1 picture"
+#~ msgid_plural "No position data for %1 pictures"
+#~ msgstr[0] "Nenhum dado de posição para 1 imagem"
+#~ msgstr[1] "Nenhum dado de posição para %1 imagens"
+
+#~ msgid "Move to final directory"
+#~ msgstr "Mover para o diretório final"
+
+#~ msgid "KML Export"
+#~ msgstr "Exportar para KML"
+
+#~ msgid "Target Preferences"
+#~ msgstr "Preferências do destino"
+
+#~ msgid "Target Type"
+#~ msgstr "Tipo de destino"
+
+#~ msgid "&Local or web target used by GoogleEarth"
+#~ msgstr "&Local ou destino da Internet usado pelo GoogleEarth"
+
+#~ msgid "Web target used by GoogleMap"
+#~ msgstr "Destino da Internet usado pelo GoogleMaps"
+
+#~ msgid ""
+#~ "When using GoogleMap, all images must have complete URLs, icons are "
+#~ "squared, and when drawing a track, only line track is exported."
+#~ msgstr ""
+#~ "Quando usar o GoogleMaps, todas as imagens devem ter a URL completa, os "
+#~ "ícones serão quadrados e quando desenhar uma rota, somente a linha da "
+#~ "rota será exportada."
+
+#~ msgid "Picture Altitude:"
+#~ msgstr "Altitude da imagem:"
+
+#~ msgid "clamp to ground"
+#~ msgstr "grampear no solo"
+
+#~ msgid "relative to ground"
+#~ msgstr "relativa ao solo"
+
+#~ msgid "absolute"
+#~ msgstr "absoluto"
+
+#~ msgid ""
+#~ "<p>Specifies how pictures are displayed<dl><dt>clamp to ground (default)</"
+#~ "dt><dd>Indicates to ignore an altitude specification</dd><dt>relative to "
+#~ "ground</dt><dd>Sets the altitude of the element relative to the actual "
+#~ "ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets "
+#~ "the altitude of the coordinate relative to sea level, regardless of the "
+#~ "actual elevation of the terrain beneath the element.</dd></dl>"
+#~ msgstr ""
+#~ "<p>Especifique como as imagens serão exibidas<dl><dt>grampear no solo "
+#~ "(padrão)</dt><dd>Ignora a especificação de altitude</dd><dt>relativo ao "
+#~ "solo</dt><dd>Define a altitude do elemento relativo a elevação atual do "
+#~ "solo de uma localização particular.</dd><dt>absoluto</dt><dd>Define a "
+#~ "altitude da coordenada relativa ao nível do mar, independente da elevação "
+#~ "atual do terreno abaixo do elemento.</dd></dl>"
+
+#~ msgid "Destination Directory:"
+#~ msgstr "Diretório de destino:"
+
+#~ msgid "Select a directory in which to save the kml file and pictures"
+#~ msgstr "Selecione uma pasta para salvar o arquivo kml e as imagens"
+
+#~ msgid "Destination URL:"
+#~ msgstr "URL de destino:"
+
+#~ msgid "Sizes"
+#~ msgstr "Tamanhos"
+
+#~ msgid "Icon Size:"
+#~ msgstr "Tamanho do ícone:"
+
+#~ msgid "Image Size:"
+#~ msgstr "Tamanho da imagem:"
+
+#~ msgid "GPX Tracks"
+#~ msgstr "Rotas GPX"
+
+#~ msgid "Draw GPX Track"
+#~ msgstr "Desenhar rota GPX"
+
+#~ msgid "GPX file:"
+#~ msgstr "Arquivo GPX:"
+
+#~ msgid "Time Zone:"
+#~ msgstr "Fuso horário:"
+
+#~ msgid "GMT-12:00"
+#~ msgstr "GMT-12:00"
+
+#~ msgid "GMT-11:00"
+#~ msgstr "GMT-11:00"
+
+#~ msgid "GMT-10:00"
+#~ msgstr "GMT-10:00"
+
+#~ msgid "GMT-09:00"
+#~ msgstr "GMT-09:00"
+
+#~ msgid "GMT-08:00"
+#~ msgstr "GMT-08:00"
+
+#~ msgid "GMT-07:00"
+#~ msgstr "GMT-07:00"
+
+#~ msgid "GMT-06:00"
+#~ msgstr "GMT-06:00"
+
+#~ msgid "GMT-05:00"
+#~ msgstr "GMT-05:00"
+
+#~ msgid "GMT-04:00"
+#~ msgstr "GMT-04:00"
+
+#~ msgid "GMT-03:00"
+#~ msgstr "GMT-03:00"
+
+#~ msgid "GMT-02:00"
+#~ msgstr "GMT-02:00"
+
+#~ msgid "GMT-01:00"
+#~ msgstr "GMT-01:00"
+
+#~ msgid "GMT"
+#~ msgstr "GMT"
+
+#~ msgid "GMT+01:00"
+#~ msgstr "GMT+01:00"
+
+#~ msgid "GMT+02:00"
+#~ msgstr "GMT+02:00"
+
+#~ msgid "GMT+03:00"
+#~ msgstr "GMT+03:00"
+
+#~ msgid "GMT+04:00"
+#~ msgstr "GMT+04:00"
+
+#~ msgid "GMT+05:00"
+#~ msgstr "GMT+05:00"
+
+#~ msgid "GMT+06:00"
+#~ msgstr "GMT+06:00"
+
+#~ msgid "GMT+07:00"
+#~ msgstr "GMT+07:00"
+
+#~ msgid "GMT+08:00"
+#~ msgstr "GMT+08:00"
+
+#~ msgid "GMT+09:00"
+#~ msgstr "GMT+09:00"
+
+#~ msgid "GMT+10:00"
+#~ msgstr "GMT+10:00"
+
+#~ msgid "GMT+11:00"
+#~ msgstr "GMT+11:00"
+
+#~ msgid "GMT+12:00"
+#~ msgstr "GMT+12:00"
+
+#~ msgid "GMT+13:00"
+#~ msgstr "GMT+13:00"
+
+#~ msgid "GMT+14:00"
+#~ msgstr "GMT+14:00"
+
+#~ msgid ""
+#~ "Sets the time zone of the camera during picture shooting, so that the "
+#~ "time stamps of the GPS can be converted to match the local time"
+#~ msgstr ""
+#~ "Defina o fuso horário da câmera que foi usado durante a sessão de fotos, "
+#~ "para que as marcas de tempo do GPS possam ser convertidos para "
+#~ "corresponder à referência de tempo local"
+
+#~ msgid "Track Width:"
+#~ msgstr "Largura da rota:"
+
+#~ msgid "Track Color:"
+#~ msgstr "Cor da rota:"
+
+#~ msgid "Opacity:"
+#~ msgstr "Opacidade:"
+
+#~ msgid "Track Altitude:"
+#~ msgstr "Altitude da rota:"
+
+#~ msgid ""
+#~ "<p>Specifies how the points are displayed<dl><dt>clamp to ground (default)"
+#~ "</dt><dd>Indicates to ignore an altitude specification</dd><dt>relative "
+#~ "to ground</dt><dd>Sets the altitude of the element relative to the actual "
+#~ "ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets "
+#~ "the altitude of the coordinate relative to sea level, regardless of the "
+#~ "actual elevation of the terrain beneath the element.</dd></dl>"
+#~ msgstr ""
+#~ "<p>Especifica como as imagens serão exibidas<dl><dt>grampear no solo "
+#~ "(padrão)</dt><dd>Ignora a especificação de altitude</dd><dt>relativo ao "
+#~ "solo</dt><dd>Define a altitude do elemento relativo a elevação atual do "
+#~ "solo de uma localização particular.</dd><dt>absoluto</dt><dd>Define a "
+#~ "altitude da coordenada relativa ao nível do mar, independente da elevação "
+#~ "atual do terreno abaixo do elemento.</dd></dl>"
+
+#~ msgid "A Kipi plugin for KML exporting"
+#~ msgstr "Um plug-in do Kipi para exportação em KML"
+
+#~ msgid "(c) 2006-2007, Stéphane Pontier"
+#~ msgstr "(c) 2006-2007, Stéphane Pontier"
+
+#~ msgid "Stéphane Pontier"
+#~ msgstr "Stéphane Pontier"
+
+#~ msgid "Track"
+#~ msgstr "Rota"
+
+#~ msgid "Point"
+#~ msgstr "Ponto"
+
+#~ msgid "Edit Coordinates..."
+#~ msgstr "Editar coordenadas..."
+
+#~ msgid "Track List Editor..."
+#~ msgstr "Editor de lista de rotas..."
+
+#~ msgid "Export to KML..."
+#~ msgstr "Exportar para KML..."
+
+#~ msgid ""
+#~ "<p>Unable to find the gpsbabel executable:<br/> This program is required "
+#~ "by this plugin to support GPS data file decoding. Please install gpsbabel "
+#~ "as a package from your distributor or <a href=\"%1\">download the source</"
+#~ "a>.</p><p>Note: at least, gpsbabel version %2 is required by this plugin."
+#~ "</p>"
+#~ msgstr ""
+#~ "<p>Não foi possível encontrar o executável do gpsbabel:<br/> Este "
+#~ "programa é necessário para este plug-in suportar a decodificação de dados "
+#~ "do GPS. Por favor instale o gpsbabel como um pacote de sua distribuição "
+#~ "ou <a href=\"%1\">baixe o arquivo fonte</a>.</p><p>Nota: ao menos o "
+#~ "gpsbabel versão %2 é necessário para este plug-in.</p>"
+
+#~ msgid ""
+#~ "<p>gpsbabel executable is not up to date:<br/> The version %1 of gpsbabel "
+#~ "have been found on your computer. This version is too old to run properly "
+#~ "with this plugin. Please update gpsbabel as a package from your "
+#~ "distributor or <a href=\"%2\">download the source</a>.</p><p>Note: at "
+#~ "least, gpsbabel version %3 is required by this plugin</p>"
+#~ msgstr ""
+#~ "<p>O executável do gpsbabel não está atualizado:<br/> A versão %1 do "
+#~ "gpsbabel foi encontrada no seu computador. Esta versão é muito antiga "
+#~ "para executar apropriadamente com este plug-in. Por favor atualize o "
+#~ "gpsbabel como um pacote de sua distribuição ou <a href=\"%2\">baixe o "
+#~ "arquivo fonte</a>.</p><p>Nota: ao menos, a versão %3 é necessária para "
+#~ "este plug-in</p>"
+
+#~ msgid "No GPS locations have been found in your pictures."
+#~ msgstr "Nenhuma localização GPS foi encontrada em suas imagens."
+
+#~ msgid ""
+#~ "Geographical coordinates will be definitively removed from all selected "
+#~ "images.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "As coordenadas geográficas serão definitivamente removidas de todas as "
+#~ "imagens selecionadas.\n"
+#~ "Deseja continuar?"
+
+#~ msgid "Remove Geographical Coordinates"
+#~ msgstr "Remover coordenadas geográficas"

@@ -1,0 +1,280 @@
+# translation of kipiplugin_rawconverter.po to Punjabi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# A S Alam <aalam@users.sf.net>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rawconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2009-01-14 08:50+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi <punjabi-l10n@users.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: dialogs/batchdialog.cpp:148 dialogs/singledialog.cpp:203
+#, fuzzy
+#| msgid "Exit Raw Converter"
+msgid "Exit RAW Converter"
+msgstr "ਰਾਅ ਕੰਨਵਰਟਰ ਬੰਦ ਕਰੋ"
+
+#: dialogs/batchdialog.cpp:149
+#, fuzzy
+#| msgid "Raw Images Batch Converter"
+msgid "RAW Image Batch Converter"
+msgstr "ਰਾਅ ਚਿੱਤਰ ਬੈਂਚ ਕੰਨਵਰਟਰ"
+
+#: dialogs/batchdialog.cpp:152
+msgid "&Add"
+msgstr "ਸ਼ਾਮਲ(&A)"
+
+#: dialogs/batchdialog.cpp:153
+msgid "Add new RAW files to the list"
+msgstr ""
+
+#: dialogs/batchdialog.cpp:155
+msgid "&Remove"
+msgstr "ਹਟਾਓ(&R)"
+
+#: dialogs/batchdialog.cpp:156
+msgid "Remove selected RAW files from the list"
+msgstr ""
+
+#: dialogs/batchdialog.cpp:175
+msgid "Thumbnail"
+msgstr "ਥੰਮਨੇਲ"
+
+#: dialogs/batchdialog.cpp:176
+#, fuzzy
+#| msgid "Raw File"
+msgid "RAW File"
+msgstr "ਰਾਅ ਫਾਇਲ"
+
+#: dialogs/batchdialog.cpp:177
+msgid "Target File"
+msgstr "ਟਾਰਗੇਟ ਫਾਇਲ"
+
+#: dialogs/batchdialog.cpp:178
+msgid "Camera"
+msgstr "ਕੈਮਰਾ"
+
+#: dialogs/batchdialog.cpp:195 dialogs/batchdialog.cpp:199
+#: dialogs/singledialog.cpp:148 dialogs/singledialog.cpp:151
+msgid "Save settings"
+msgstr "ਸੈਟਿੰਗ ਸੰਭਾਲੋ"
+
+#: dialogs/batchdialog.cpp:220 dialogs/singledialog.cpp:130
+#: dialogs/singledialog.cpp:166
+msgid "RAW Image Converter"
+msgstr "RAW ਚਿੱਤਰ ਕੰਨਵਰਟਰ"
+
+#: dialogs/batchdialog.cpp:223
+#, fuzzy
+#| msgid "Failed to convert Raw image"
+msgid "A Kipi plugin to batch convert RAW images"
+msgstr "ਰਾਅ ਚਿੱਤਰ ਬਦਲਣ ਲਈ ਫੇਲ੍ਹ ਹੈ"
+
+#: dialogs/batchdialog.cpp:224 dialogs/singledialog.cpp:170
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2008, Gilles Caulier"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2008, Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:227 dialogs/singledialog.cpp:173
+msgid "Renchi Raju"
+msgstr "ਰਾਂਚੀ ਰਾਜੂ"
+
+#: dialogs/batchdialog.cpp:228 dialogs/singledialog.cpp:174
+msgid "Author"
+msgstr "ਲੇਖਕ"
+
+#: dialogs/batchdialog.cpp:231 dialogs/singledialog.cpp:177
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:232 dialogs/singledialog.cpp:178
+msgid "Developer and maintainer"
+msgstr "ਡਿਵੈਲਪਰ ਅਤੇ ਪਰਬੰਧਕ"
+
+#: dialogs/batchdialog.cpp:240 dialogs/singledialog.cpp:186
+#, fuzzy
+#| msgid "Plugin Handbook"
+msgid "Handbook"
+msgstr "ਪਲੱਗਇਨ ਹੈਂਡਬੁੱਕ"
+
+#: dialogs/batchdialog.cpp:388
+msgid "There is no RAW file in the list to process."
+msgstr ""
+
+#: dialogs/batchdialog.cpp:579 dialogs/singledialog.cpp:129
+msgid "&Abort"
+msgstr "ਅਧੂਰਾ ਛੱਡੋ(&A)"
+
+#: dialogs/batchdialog.cpp:580 dialogs/singledialog.cpp:201
+msgid "Abort the current RAW file conversion"
+msgstr ""
+
+#: dialogs/batchdialog.cpp:585 dialogs/singledialog.cpp:128
+msgid "Con&vert"
+msgstr "ਬਦਲੋ(&v)"
+
+#: dialogs/batchdialog.cpp:586
+msgid "Start converting the RAW images using current settings."
+msgstr ""
+
+#: dialogs/batchdialog.cpp:636 dialogs/singledialog.cpp:437
+#, fuzzy, kde-format
+#| msgid "RAW Image Converter"
+msgid "Save RAW image converted from '%1' as"
+msgstr "RAW ਚਿੱਤਰ ਕੰਨਵਰਟਰ"
+
+#: dialogs/batchdialog.cpp:665 dialogs/singledialog.cpp:464
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "ਚਿੱਤਰ %1 ਸੰਭਾਲਣ ਲਈ ਫੇਲ੍ਹ ਹੈ"
+
+#: dialogs/singledialog.cpp:127
+msgid "&Preview"
+msgstr "ਝਲਕ(&P)"
+
+#: dialogs/singledialog.cpp:169
+#, fuzzy
+#| msgid "Failed to convert Raw image"
+msgid "A Kipi plugin to convert RAW images"
+msgstr "ਰਾਅ ਚਿੱਤਰ ਬਦਲਣ ਲਈ ਫੇਲ੍ਹ ਹੈ"
+
+#: dialogs/singledialog.cpp:194
+msgid ""
+"Generate a preview using current settings. Uses a simple bilinear "
+"interpolation for quick results."
+msgstr ""
+
+#: dialogs/singledialog.cpp:198
+msgid ""
+"Convert the RAW Image using current settings. This uses a high-quality "
+"adaptive algorithm."
+msgstr ""
+
+#: dialogs/singledialog.cpp:387
+msgid "Generating Preview..."
+msgstr "ਝਲਕ ਬਣਾਈ ਜਾ ਰਹੀ ਹੈ..."
+
+#: dialogs/singledialog.cpp:398
+msgid "Failed to generate preview"
+msgstr "ਝਲਕ ਬਣਾਉਣ ਲਈ ਫੇਲ੍ਹ ਹੈ"
+
+#: dialogs/singledialog.cpp:403
+#, fuzzy
+#| msgid "Converting Raw Image..."
+msgid "Processing Images..."
+msgstr "ਰਾਅ ਚਿੱਤਰ ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ..."
+
+#: dialogs/singledialog.cpp:480
+#, fuzzy
+#| msgid "Failed to convert Raw image"
+msgid "Failed to convert RAW image"
+msgstr "ਰਾਅ ਚਿੱਤਰ ਬਦਲਣ ਲਈ ਫੇਲ੍ਹ ਹੈ"
+
+#: manager/actionthread.cpp:234
+#, fuzzy
+#| msgid "Cannot identify Raw image"
+msgid "Cannot identify RAW image"
+msgstr "ਰਾਅ (raw) ਚਿੱਤਰ ਪਛਾਣਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ"
+
+#: manager/actionthread.cpp:241
+#, fuzzy, kde-format
+#| msgid "Make: %1\n"
+msgid "<br>Make: %1<br>"
+msgstr "ਮੇਕ: %1\n"
+
+#: manager/actionthread.cpp:242
+#, fuzzy, kde-format
+#| msgid "Model: %1\n"
+msgid "Model: %1<br>"
+msgstr "ਮਾਡਲ: %1\n"
+
+#: manager/actionthread.cpp:246
+#, fuzzy, kde-format
+#| msgid "Created: %1\n"
+msgid "Created: %1<br>"
+msgstr "ਬਣਾਇਆ: %1\n"
+
+#: manager/actionthread.cpp:253
+#, fuzzy, kde-format
+#| msgid "Aperture: f/%1\n"
+msgid "Aperture: f/%1<br>"
+msgstr "ਅਪਰਚਰ: f/%1\n"
+
+#: manager/actionthread.cpp:258
+#, fuzzy, kde-format
+#| msgid "Focal: %1 mm\n"
+msgid "Focal: %1 mm<br>"
+msgstr "ਫੋਕਲ: %1 mm\n"
+
+#: manager/actionthread.cpp:263
+#, fuzzy, kde-format
+#| msgid "Exposure: 1/%1 s\n"
+msgid "Exposure: 1/%1 s<br>"
+msgstr "ਐਕਸਪੋਜ਼ਰ: 1/%1 s\n"
+
+#: manager/actionthread.cpp:268
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "ਸੈਨਸਵਿਟੀ: %1 ISO"
+
+#: plugin/plugin_rawconverter.cpp:81
+#, fuzzy
+#| msgid "RAW Image Converter"
+msgid "RAW Image Converter..."
+msgstr "RAW ਚਿੱਤਰ ਕੰਨਵਰਟਰ"
+
+#: plugin/plugin_rawconverter.cpp:90
+#, fuzzy
+#| msgid "Batch Raw Converter..."
+msgid "Batch RAW Converter..."
+msgstr "ਬੈਂਚ ਰਾਅ ਕੰਨਵਰਟਰ..."
+
+#: plugin/plugin_rawconverter.cpp:154
+#, fuzzy, kde-format
+#| msgid "\"%1\" is not a Raw file."
+msgid "\"%1\" is not a RAW file."
+msgstr "\"%1\" ਇੱਕ ਰਾਅ ਫਾਇਲ ਨਹੀਂ ਹੈ।"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "aalam@users.sf.net"
+
+#~ msgid "Output file format:"
+#~ msgstr "ਆਉਟਪੁੱਟ ਫਾਇਲ ਫਾਰਮੈਟ:"
+
+#~ msgid "If Target File Exists:"
+#~ msgstr "ਜੇ ਟਾਰਗੇਟ ਫਾਇਲ ਮੌਜੂਦ ਹੋਵੇ:"
+
+#~ msgid "Overwrite automatically"
+#~ msgstr "ਆਟੋਮੈਟਿਕ ਹੀ ਉੱਤੇ ਲਿਖੋ"
+
+#~ msgid "Open rename-file dialog"
+#~ msgstr "ਫਾਇਲ ਨਾਂ-ਬਦਲੋ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
+
+#~ msgid "Raw Image Converter..."
+#~ msgstr "ਰਾਅ ਚਿੱਤਰ ਕੰਨਵਰਟਰ..."
+
+#~ msgid "Raw Image Converter"
+#~ msgstr "ਰਾਅ ਚਿੱਤਰ ਕੰਨਵਰਟਰ"

@@ -1,0 +1,223 @@
+# translation of kipiplugin_ipodexport.po to Italian
+#
+# Federico Zenith <federico.zenith@member.fsf.org>, 2007, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_ipodexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-13 03:18+0100\n"
+"PO-Revision-Date: 2010-06-05 11:30+0200\n"
+"Last-Translator: Federico Zenith <federico.zenith@member.fsf.org>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin_ipodexport.cpp:71
+msgid "Export to &iPod..."
+msgstr "Esporta sull'&iPod..."
+
+#: plugin_ipodexport.cpp:87 IpodExportDialog.cpp:111
+msgid "iPod Export"
+msgstr "Esportazione a iPod"
+
+#: IpodExportDialog.cpp:114
+msgid "A tool to export image to an iPod device"
+msgstr "Uno strumento per esportare immagini su un dispositivo iPod"
+
+#: IpodExportDialog.cpp:115
+msgid ""
+"(c) 2006-2008, Seb Ruiz\n"
+"(c) 2008-2010, Gilles Caulier"
+msgstr ""
+"© 2006-2008, Seb Ruiz\n"
+"© 2008-2010, Gilles Caulier"
+
+#: IpodExportDialog.cpp:118
+msgid "Seb Ruiz"
+msgstr "Seb Ruiz"
+
+#: IpodExportDialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Autore e responsabile"
+
+#: IpodExportDialog.cpp:121
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: IpodExportDialog.cpp:121
+msgid "Developer"
+msgstr "Sviluppatore"
+
+#: IpodExportDialog.cpp:130
+msgid "Plugin Handbook"
+msgstr "Manuale dell'estensione"
+
+#: IpodExportDialog.cpp:144
+msgid "Hard Disk"
+msgstr "Disco fisso"
+
+#: IpodExportDialog.cpp:154
+msgid "&Add..."
+msgstr "&Aggiungi..."
+
+#: IpodExportDialog.cpp:155
+msgid "Add images to be queued for the iPod."
+msgstr "Aggiungi immagini in coda per l'iPod."
+
+#: IpodExportDialog.cpp:157 IpodExportDialog.cpp:199
+msgid "&Remove"
+msgstr "&Rimuovi"
+
+#: IpodExportDialog.cpp:158
+msgid "Remove selected image from the list."
+msgstr "Rimuovi l'immagine selezionata dall'elenco."
+
+#: IpodExportDialog.cpp:160
+msgid "&Transfer"
+msgstr "&Trasferisci"
+
+#: IpodExportDialog.cpp:161
+msgid "Transfer images to the selected iPod album."
+msgstr "Trasferisci le immagini all'album selezionato dell'iPod."
+
+#: IpodExportDialog.cpp:167
+msgid "The preview of the selected image in the list."
+msgstr "L'anteprima dell'immagine selezionata nell'elenco."
+
+#: IpodExportDialog.cpp:188
+msgid "iPod"
+msgstr "iPod"
+
+#: IpodExportDialog.cpp:196
+msgid "&New..."
+msgstr "&Nuovo..."
+
+#: IpodExportDialog.cpp:197
+msgid "Create a new photo album on the iPod."
+msgstr "Crea un nuovo album di foto sull'iPod."
+
+#: IpodExportDialog.cpp:200
+msgid "R&ename..."
+msgstr "R&inomina..."
+
+#: IpodExportDialog.cpp:205
+msgid "Remove the selected photos or albums from the iPod."
+msgstr "Rimuovi le foto o album selezionati dall'iPod."
+
+#: IpodExportDialog.cpp:206
+msgid "Rename the selected photo album on the iPod."
+msgstr "Rinomina l'album di foto selezionato sull'iPod."
+
+#: IpodExportDialog.cpp:562
+msgid "Image files"
+msgstr "File delle immagini"
+
+#: IpodExportDialog.cpp:565
+msgid "Add Images"
+msgstr "Aggiungi immagini"
+
+#: IpodExportDialog.cpp:599
+msgid "New iPod Photo Album"
+msgstr "Nuovo album di foto per l'iPod"
+
+#: IpodExportDialog.cpp:600
+msgid "Create a new album:"
+msgstr "Crea un nuovo album:"
+
+#: IpodExportDialog.cpp:631
+msgid "Rename iPod Photo Album"
+msgstr "Rinomina l'album di foto dell'iPod"
+
+#: IpodExportDialog.cpp:632
+msgid "New album title:"
+msgstr "Nuovo titolo dell'album:"
+
+#: IpodExportDialog.cpp:819
+#, kde-format
+msgid ""
+"An iPod photo database could not be found on the device mounted at %1. "
+"Initialize the iPod photo database?"
+msgstr ""
+"Non è stata trovata una banca dati delle foto dell'iPod sul dispositivo "
+"montato su %1. Deve essere inizializzata?"
+
+#: IpodExportDialog.cpp:823
+msgid "Initialize iPod Photo Database?"
+msgstr "Inizializzare la banca dati delle foto dell'iPod?"
+
+#: IpodExportDialog.cpp:824
+msgid "&Initialize"
+msgstr "&Inizializza"
+
+#: IpodHeader.cpp:94
+msgid "<p align=\"center\"><b>No iPod was detected</b></p>"
+msgstr "<p style=\"text-align:center\"><b>Nessun iPod rilevato</b></p>"
+
+#: IpodHeader.cpp:101
+msgid "Refresh"
+msgstr "Aggiorna"
+
+#: IpodHeader.cpp:114
+#, kde-format
+msgid ""
+"<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></"
+"p>"
+msgstr ""
+"<p style=\"text-align:center\"><b>Il tuo iPod (%1) non sembra supportare la "
+"grafica.</b></p>"
+
+#: IpodHeader.cpp:122
+msgid "Set iPod Model"
+msgstr "Imposta modello di iPod"
+
+#: IpodHeader.cpp:138
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected at: %2</b></p>"
+msgstr "<p style=\"text-align:center\"><b>iPod %1 rilevato a: %2</b></p>"
+
+#: IpodHeader.cpp:143
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected</b></p>"
+msgstr "<p style=\"text-align:center\"><b>iPod %1 rilevato</b></p>"
+
+#: IpodListItem.cpp:40
+msgid "Unnamed"
+msgstr "Senza nome"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Federico Zenith"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "federico.zenith@member.fsf.org"
+
+#~ msgid "Source Album"
+#~ msgstr "Album sorgente"
+
+#~ msgid "Image"
+#~ msgstr "Immagine"
+
+#~ msgid "Albums"
+#~ msgstr "Album"
+
+#~ msgid ""
+#~ "<div align=center><h3>Upload Queue</h3>To create a queue, <b>drag</b> "
+#~ "images and <b>drop</b> them here.<br><br></div>"
+#~ msgstr ""
+#~ "<div style=\"text-align:center\"><h3>Coda di caricamento</h3><p>Per "
+#~ "creare una coda, <b>trascina</b> le immagini e <b>rilasciale</b> qui.<br/"
+#~ "></p></div>"
+
+#~ msgid ""
+#~ "<div align=center><h3>iPod Albums</h3>An album needs to be created before "
+#~ "images can be transferred to the iPod.</div>"
+#~ msgstr ""
+#~ "<div style=\"text-align:center\"><h3>Album per iPod</h3>Deve essere "
+#~ "creato un album prima che le immagini possano essere trasferite sull'iPod."
+#~ "</div>"

@@ -1,0 +1,396 @@
+# translation of kipiplugin_htmlexport.po to Türkçe
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ahmet Emre Aladağ <emre@emrealadag.com>, 2008.
+# Serdar Soytetir <tulliana@gmail.com>, 2008, 2009.
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_htmlexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2011-04-26 09:07+0300\n"
+"Last-Translator: Ozan Çağlayan <ozan@pardus.org.tr>\n"
+"Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: tr\n"
+
+#: generator.cpp:136
+#, kde-format
+msgid "Could not find theme in '%1'"
+msgstr "'%1' içerisinde tema bulunamadı"
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr "Tema kopyalanıyor"
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr "Tema  kopyalanamadı"
+
+#: generator.cpp:178
+#, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr "\"%1\" için uzak dosyalar indiriliyor"
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr "Geçici dosya açılamadı"
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr "%1 indirilemedi"
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr "gallery.xml oluşturulamadı"
+
+#: generator.cpp:258
+#, kde-format
+msgid "Generating files for \"%1\""
+msgstr "\"%1\" için dosyalar oluşturuluyor"
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr "Önceki"
+
+#: generator.cpp:291
+msgid "Next"
+msgstr "Sonraki"
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr "Koleksiyon Listesi"
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr "Özgün Görüntü"
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr "Yukarı Git"
+
+#: generator.cpp:296
+msgid "Make"
+msgstr "Marka"
+
+#: generator.cpp:297
+msgid "Model"
+msgstr "Model"
+
+#: generator.cpp:298
+msgid "Image Orientation"
+msgstr "Resim Yönü"
+
+#: generator.cpp:299
+msgid "Image X Resolution"
+msgstr "Yatay Resim Çözünürlüğü"
+
+#: generator.cpp:300
+msgid "Image Y Resolution"
+msgstr "Dikey Resim Çözünürlüğü"
+
+#: generator.cpp:301
+msgid "Image Resolution Unit"
+msgstr "Resim Çözünürlük Birimi"
+
+#: generator.cpp:302
+msgid "Image Date Time"
+msgstr "Resim Saat Tarih Bilgisi"
+
+#: generator.cpp:303
+msgid "YCBCR Positioning"
+msgstr "YCBCR Konumlama"
+
+#: generator.cpp:304
+msgid "Exposure Time"
+msgstr "Pozlama Zamanı"
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr "F Sayısı"
+
+#: generator.cpp:306
+msgid "Exposure Index"
+msgstr "Pozlama İndeksi"
+
+#: generator.cpp:307
+msgid "ISO Speed Ratings"
+msgstr "ISO Hızı Oranları"
+
+#: generator.cpp:308
+msgid "Shutter Speed Value"
+msgstr "Deklanşör Hızı Değeri"
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr "Açıklık Değeri"
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr "Odak Uzaklığı"
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr "HTML Dosyaları oluşturuluyor"
+
+#: generator.cpp:343
+#, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr "XSL Dosyası '%1' yüklenemedi"
+
+#: generator.cpp:349
+#, kde-format
+msgid "Could not load XML file '%1'"
+msgstr "XML Dosyası '%1' yüklenemedi"
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr "XML dosyasının işlenmesinde hata"
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr "'%1', yazılmak için açılamadı"
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr "'%2' içerisinde '%1' dizini oluşturulamadı"
+
+#: imagegenerationfunctor.cpp:89
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "'%1' görüntüsünden okunamadı"
+
+#: imagegenerationfunctor.cpp:95
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "'%1' görüntüsünün biçimi bilinmiyor"
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "'%1' görüntüsü yüklenirken hata oluştu"
+
+#: imagegenerationfunctor.cpp:140
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "'%1' görüntüsü '%2' olarak kaydedilemedi"
+
+#: imagegenerationfunctor.cpp:161
+#, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr "Resim '%1' 'den resim '%2' 'ye küçük resimler kaydedilemiyor"
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr "mevcut değil"
+
+#: imagegenerationfunctor.cpp:338
+#, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr "'%1' dosyası yazmak için açılamıyor"
+
+#: imagegenerationfunctor.cpp:342
+#, kde-format
+msgid "Could not save image to file '%1'"
+msgstr "Görüntü '%1' dosyasına kaydedilemedi"
+
+#: plugin.cpp:72
+msgid "Export to &HTML..."
+msgstr "&HTML Olarak Aktar..."
+
+#: plugin.cpp:95
+msgid "Generating gallery..."
+msgstr "Sergi oluşturuluyor..."
+
+#: plugin.cpp:105
+msgid "Finished, but some warnings occurred."
+msgstr "Bitti, ancak birtakım uyarılar oluştu."
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr "%1:"
+
+#: wizard.cpp:206
+msgid "Export image collections to HTML pages"
+msgstr "Resim koleksiyonlarını HTML sayfalarına aktar"
+
+#: wizard.cpp:212
+msgid "HTML Export"
+msgstr "Dışarı HTML Aktar"
+
+#: wizard.cpp:215
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr "Resim koleksiyonlarını HTML sayfalarına aktaran bir KIPI eklentisi"
+
+#: wizard.cpp:216
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr "Gianluca Urgese"
+
+#: wizard.cpp:221
+msgid "Maintainer"
+msgstr "Yürütücü"
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: wizard.cpp:226
+msgid "Former Author and Maintainer"
+msgstr "Eski Yazar ve Projeyi Yürüten"
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr "El Kitabı"
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr "Derlem Seçimi"
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr "Tema"
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr "Tema Parametreleri"
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr "Görüntü Ayarları"
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr "Çıktı"
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr "Yazar: %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ahmet Emre Aladağ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "emre@emrealadag.com"
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr "Tüm Görüntü"
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr "Görüntüyü kaydet"
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr "Biçim:"
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr "JPEG"
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr "PNG"
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr "Kalite:"
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+msgid "Max size:"
+msgstr "En fazla boyut:"
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+msgid "Include full-size original images for download"
+msgstr "Karşıdan indirme için tam boyutlu özgün resimleri dahil et"
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr "Özgün görüntüyü kullan"
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr "Küçük resim"
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr "Boyut:"
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr "Hedef dizin:"
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr "Tarayıcıda aç"
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""
+"Bu sayfada, bazı tema parametrelerini değiştirebilirsiniz. Temaya bağlı "
+"olarak değişik parametreler mevcuttur."
+
+#~ msgid "&HTML Gallery..."
+#~ msgstr "&HTML Galerisi..."

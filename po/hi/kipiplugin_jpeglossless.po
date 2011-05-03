@@ -1,0 +1,211 @@
+# translation of kipiplugin_jpeglossless.po to Hindi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ravishankar Shrivastava <raviratlami@yahoo.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_jpeglossless\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2008-03-30 13:14+0530\n"
+"Last-Translator: Ravishankar Shrivastava <aviratlami@aol.in>\n"
+"Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: plugin/plugin_jpeglossless.cpp:111
+msgid "Rotate"
+msgstr "घुमाएँ"
+
+#: plugin/plugin_jpeglossless.cpp:115
+#, fuzzy
+#| msgid "Left"
+msgctxt "rotate image left"
+msgid "Left"
+msgstr "बायाँ"
+
+#: plugin/plugin_jpeglossless.cpp:122
+#, fuzzy
+#| msgid "Right"
+msgctxt "rotate image right"
+msgid "Right"
+msgstr "दायाँ"
+
+#: plugin/plugin_jpeglossless.cpp:132
+msgid "Flip"
+msgstr "पलटें"
+
+#: plugin/plugin_jpeglossless.cpp:136
+msgid "Horizontally"
+msgstr "आड़ा"
+
+#: plugin/plugin_jpeglossless.cpp:143
+msgid "Vertically"
+msgstr "खड़ा"
+
+#: plugin/plugin_jpeglossless.cpp:154
+msgid "Auto Rotate/Flip Using Exif Information"
+msgstr "एक्जइफ जानकारी के इस्तेमाल से स्वचालित घुमाएँ/पलटें"
+
+#: plugin/plugin_jpeglossless.cpp:163
+msgid "Convert to Black && White"
+msgstr "श्वेत-श्याम में बदलें"
+
+#: plugin/plugin_jpeglossless.cpp:211
+msgid "horizontally"
+msgstr "आड़ा"
+
+#: plugin/plugin_jpeglossless.cpp:216
+msgid "vertically"
+msgstr "खड़ा"
+
+#: plugin/plugin_jpeglossless.cpp:234
+#, kde-format
+msgid "Flip images %1"
+msgstr "छवियाँ पलटें %1"
+
+#: plugin/plugin_jpeglossless.cpp:247
+msgid "right (clockwise)"
+msgstr "दाएं (घड़ी की दिशा में)"
+
+#: plugin/plugin_jpeglossless.cpp:252
+msgid "left (counterclockwise)"
+msgstr "बाएं (घड़ी की विपरीत दिशा में)"
+
+#: plugin/plugin_jpeglossless.cpp:257
+msgid "using Exif orientation tag"
+msgstr "एक्सइफ दिशा-निर्धारण टैग के जरिए"
+
+#: plugin/plugin_jpeglossless.cpp:274
+#, kde-format
+msgid "Rotate images %1"
+msgstr "छवियों को घुमाएँ %1"
+
+#: plugin/plugin_jpeglossless.cpp:290
+msgid ""
+"<p>Are you sure you wish to convert the selected image(s) to black and "
+"white? This operation <b>cannot</b> be undone.</p>"
+msgstr ""
+"<p>क्या आप सुनिश्चित हैं कि आप चयनित छवियों को श्वेत श्याम में परिवर्तित करना चाहते हैं? यह "
+"क्रिया वापस पूर्ववत् <b>नहीं</b> की जा सकेगी.</p>"
+
+#: plugin/plugin_jpeglossless.cpp:304
+msgid "Convert images to black & white"
+msgstr "छवियों को श्वेत श्याम में बदलें "
+
+#: plugin/plugin_jpeglossless.cpp:339
+#, kde-format
+msgid "Rotating Image \"%1\""
+msgstr "छवि घुमाया जा रहा है \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:344
+#, kde-format
+msgid "Flipping Image \"%1\""
+msgstr "पलटी जा रही है छवि \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:349
+#, kde-format
+msgid "Converting to Black & White \"%1\""
+msgstr "श्वेत-श्याम में बदला जा रहा है \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:371
+msgid "Rotate image complete"
+msgstr "छवि घुमाना सम्पन्न"
+
+#: plugin/plugin_jpeglossless.cpp:376
+msgid "Flip image complete"
+msgstr "छवि पलटना सम्पन्न"
+
+#: plugin/plugin_jpeglossless.cpp:381
+msgid "Convert to Black & White complete"
+msgstr "श्वेत श्याम में बदलना सम्पन्न"
+
+#: plugin/plugin_jpeglossless.cpp:406
+msgid "Failed to Rotate image"
+msgstr "छवि घुमाने में असफल"
+
+#: plugin/plugin_jpeglossless.cpp:411
+msgid "Failed to Flip image"
+msgstr "छवि पलटने में असफल"
+
+#: plugin/plugin_jpeglossless.cpp:416
+msgid "Failed to convert image to Black & White"
+msgstr "छवि श्वेत-श्याम में बदलने में असफल"
+
+#: plugin/utils.cpp:89
+msgid "unable to open source file"
+msgstr "स्रोत फ़ाइल खोलने में अक्षम"
+
+#: plugin/utils.cpp:119 plugin/utils.cpp:146
+msgid "unable to open temp file"
+msgstr "अस्थाई फ़ाइल खोलने में अक्षम"
+
+#: plugin/utils.cpp:133
+msgid "Cannot rotate: unable to open temp file"
+msgstr "घुमाया नहीं जा सका: अस्थाई फ़ाइल खोलने में अक्षम"
+
+#: plugin/utils.cpp:195
+#, kde-format
+msgid "Cannot update metadata: %1"
+msgstr "मेटाडाटा अद्यतन नहीं किया जा सका: %1"
+
+#: transform/convert2grayscale.cpp:96 transform/convert2grayscale.cpp:177
+#: transform/imageflip.cpp:87 transform/imagerotate.cpp:88
+#: transform/jpegtransform.cpp:238 transform/jpegtransform.cpp:340
+msgid "Error in opening input file"
+msgstr "इनपुट फ़ाइल में त्रुटियाँ"
+
+#: transform/convert2grayscale.cpp:102 transform/imageflip.cpp:93
+#: transform/imagerotate.cpp:96
+msgid "Error in opening temporary file"
+msgstr "अस्थाई फ़ाइल को खोलने में त्रुटि"
+
+#: transform/convert2grayscale.cpp:115
+msgid "Cannot convert to gray scale RAW file"
+msgstr "ग्रे स्केल रॉ फ़ाइल में परिवर्तित नहीं किया जा सका"
+
+#: transform/convert2grayscale.cpp:139 transform/imageflip.cpp:130
+#: transform/imagerotate.cpp:136
+msgid "Cannot update source image"
+msgstr "स्रोत छवियाँ अद्यतन नहीं कर सका"
+
+#: transform/convert2grayscale.cpp:185 transform/jpegtransform.cpp:256
+#: transform/jpegtransform.cpp:349
+msgid "Error in opening output file"
+msgstr "आउटपुट फ़ाइल खोलने में त्रुटि"
+
+#: transform/convert2grayscale.cpp:285
+#, kde-format
+msgid "Cannot convert to gray scale: %1"
+msgstr "ग्रे स्केल में परिवर्तित नहीं किया जा सका: %1"
+
+#: transform/imageflip.cpp:106 transform/imagerotate.cpp:109
+msgid "Cannot rotate RAW file"
+msgstr "रॉ फ़ाइल घुमाया नहीं जा सका"
+
+#: transform/imageflip.cpp:157 transform/imageflip.cpp:186
+msgid "Nonstandard flip action"
+msgstr "पलटने की अ-मानक क्रिया"
+
+#: transform/imageflip.cpp:219
+#, kde-format
+msgid "Cannot flip: %1"
+msgstr "पलटा नहीं जा सका: %1"
+
+#: transform/imagerotate.cpp:173 transform/imagerotate.cpp:213
+msgid "Nonstandard rotation angle"
+msgstr "घुमाने की अ-मानक क्रिया"
+
+#: transform/imagerotate.cpp:246
+#, kde-format
+msgid "Cannot rotate: %1"
+msgstr "घुमाया नहीं जा सका: %1"
+
+#: transform/jpegtransform.cpp:266 transform/jpegtransform.cpp:275
+#, kde-format
+msgid "The JPEG library reported an error: %1"
+msgstr ""

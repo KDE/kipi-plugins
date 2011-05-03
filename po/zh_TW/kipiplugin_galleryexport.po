@@ -1,0 +1,256 @@
+# Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2009.
+# Dongjun Wu <ziyawu@gmail.com>, 2009.
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2010-12-13 16:30+0800\n"
+"Last-Translator: Franklin Weng <franklin@goodhorse.idv.tw>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: galleryconfig.cpp:77
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "名稱："
+
+#: galleryconfig.cpp:81
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "網址："
+
+#: galleryconfig.cpp:85
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "使用者名稱："
+
+#: galleryconfig.cpp:89
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "密碼："
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "使用 &Gallery 2"
+
+#: gallerytalker.cpp:427
+msgid "Gallery URL probably incorrect"
+msgstr "Gallery 網址可能不正確"
+
+#: gallerytalker.cpp:433
+msgid "Incorrect username or password specified"
+msgstr "不正確的使用者名稱或密碼錯誤"
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+msgid "Invalid response received from remote Gallery"
+msgstr "從遠端 Gallery 收到無效的回應"
+
+#: gallerytalker.cpp:523
+msgid "Failed to list albums"
+msgstr "列出相簿失敗"
+
+#: gallerytalker.cpp:598
+msgid "Failed to list photos"
+msgstr "列出照片失敗"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "建立新相簿失敗"
+
+#: gallerytalker.cpp:705
+msgid "Failed to upload photo"
+msgstr "上傳照片失敗"
+
+#: gallerywindow.cpp:118
+msgid "Albums"
+msgstr "相簿"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "新增相簿(&N)"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "加入照片(&A)"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr "覆蓋預設選項"
+
+#: gallerywindow.cpp:142
+msgid "Comment sets Title"
+msgstr "註解設定標題"
+
+#: gallerywindow.cpp:145
+msgid "Comment sets Description"
+msgstr "註解設定描述"
+
+#: gallerywindow.cpp:148
+msgid "Resize photos before uploading"
+msgstr "上傳前調整照片大小"
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr "最大尺寸："
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+msgid "Gallery Export"
+msgstr "Gallery 匯出"
+
+#: gallerywindow.cpp:217
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr "將影像收藏匯出到遠端 Gallery 伺服器的 Kipi 外掛程式。"
+
+#: gallerywindow.cpp:218
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "作者"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "維護者"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+msgid "Developer"
+msgstr "開發者"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gallerywindow.cpp:242
+msgid "Handbook"
+msgstr "手冊"
+
+#: gallerywindow.cpp:250
+msgid "Settings"
+msgstr "設定值"
+
+#: gallerywindow.cpp:407
+msgid "Failed to login into remote gallery. "
+msgstr "登入到遠端藝廊失敗。"
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"您是否要檢查您的設定值後重試一次？"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "編輯藝廊資料"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+msgid "Album"
+msgstr "相簿"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr "影像"
+
+#: gallerywindow.cpp:675
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+"抱歉，相簿名稱不允許含有這些字元： \\ / * ? \" ' & &lt; &gt; | . + # ( ) 或空"
+"白"
+
+#: gallerywindow.cpp:752
+#, kde-format
+msgid "Uploading file %1"
+msgstr "上傳檔案 %1 中"
+
+#: gallerywindow.cpp:771
+msgid "Failed to upload photo into remote gallery. "
+msgstr "上傳照片到遠端藝廊失敗。"
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"您要繼續嗎？"
+
+#: plugin_galleryexport.cpp:80
+msgid "Export to &Gallery..."
+msgstr "匯出到 &Gallery..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frank Weng (a.k.a. Franklin)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin at goodhorse dot idv dot tw"
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>輸入新相簿名稱</h3>"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "標題："
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "名稱 (選擇性):"
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "說明文字 (選擇性)："
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "確認(&O)"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "取消(&C)"

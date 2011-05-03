@@ -1,0 +1,463 @@
+# translation of kipiplugin_facebook.po to Ukrainian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_facebook\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2011-02-20 12:13+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: uk\n"
+
+#: facebookjob.cpp:109
+msgid "Photos taken with KDE"
+msgstr "Фотографій, зроблені за допомогою KDE"
+
+#: fbalbum.cpp:48
+msgid "Facebook New Album"
+msgstr "Створити альбом Facebook"
+
+#: fbalbum.cpp:61
+msgid "Title of the album that will be created (required)."
+msgstr "Назва альбому, який буде створено (обов’язкова)."
+
+#: fbalbum.cpp:65
+msgid "Location of the album that will be created (optional)."
+msgstr "Адреса альбому, який буде створено (необов’язкова)"
+
+#: fbalbum.cpp:69
+msgid "Description of the album that will be created (optional)."
+msgstr "Опис альбому, який буде створено (необов’язковий)."
+
+#: fbalbum.cpp:74
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "Параметр конфіденційності альбому, який буде створено (обов’язковий)"
+
+#: fbalbum.cpp:76
+msgid "Only Friends"
+msgstr "Лише друзі"
+
+#: fbalbum.cpp:78
+msgid "Friends of Friends"
+msgstr "Друзі друзів"
+
+#: fbalbum.cpp:80
+msgid "My Networks and Friends"
+msgstr "Моя мережа і друзі"
+
+#: fbalbum.cpp:82
+msgid "Everyone"
+msgstr "Будь-хто"
+
+#: fbalbum.cpp:85
+msgctxt "new facebook album"
+msgid "Title:"
+msgstr "Назва:"
+
+#: fbalbum.cpp:86
+msgctxt "new facebook album"
+msgid "Location:"
+msgstr "Адреса:"
+
+#: fbalbum.cpp:87
+msgctxt "new facebook album"
+msgid "Description:"
+msgstr "Опис:"
+
+#: fbalbum.cpp:88
+msgctxt "new facebook album"
+msgid "Privacy:"
+msgstr "Конфіденційність:"
+
+#: fbtalker.cpp:178
+msgid "Validate previous session..."
+msgstr "Підтвердити попередній сеанс..."
+
+#: fbtalker.cpp:198
+msgid "Logging in to Facebook service..."
+msgstr "Реєстрація на службі Facebook..."
+
+#: fbtalker.cpp:389
+msgid ""
+"Please follow the instructions in the browser window. Press \"OK\" when done."
+msgstr ""
+"Будь ласка, виконуйте настанови у вікні переглядача. Будь ласка, натисніть "
+"кнопку «Так», коли завершите."
+
+#: fbtalker.cpp:391
+msgid "Facebook Application Authorization"
+msgstr "Розпізнавання програми на Facebook"
+
+#: fbtalker.cpp:706
+msgid "The service is not available at this time."
+msgstr "Зараз служба недоступна."
+
+#: fbtalker.cpp:709
+msgid "The application has reached the maximum number of requests allowed."
+msgstr ""
+"Кількість запитів, виконаних програмою, зрівнялася з максимальною дозволеною "
+"кількістю запитів."
+
+#: fbtalker.cpp:712
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"Некоректний або прострочений ключ сеансу. Спробуйте повторно зареєструватися."
+
+#: fbtalker.cpp:715
+msgid "Invalid album ID."
+msgstr "Некоректний ідентифікатор альбому."
+
+#: fbtalker.cpp:718
+msgid "Album is full."
+msgstr "У альбомі немає вільного місця."
+
+#: fbtalker.cpp:721
+msgid "Missing or invalid file."
+msgstr "Відсутній або некоректний файл."
+
+#: fbtalker.cpp:724
+msgid "Too many unapproved photos pending."
+msgstr "У черзі забагато непідтверджених фотографій."
+
+#: fbtalker.cpp:884
+msgid ""
+"Please follow the instructions in the browser window. Press \"Yes\" if you "
+"have authenticated and \"No\" if you failed."
+msgstr ""
+"Будь ласка, виконуйте настанови у вікні переглядача. Будь ласка, натисніть "
+"кнопку «Так», якщо ви пройшли розпізнавання, кнопку «Ні» слід натиснути, якщо "
+"спроба розпізнавання виявилася невдалою."
+
+#: fbtalker.cpp:886
+msgid "Facebook Service Web Authorization"
+msgstr "Веброзпізнавання служби Facebook"
+
+#: fbtalker.cpp:895
+msgid "Canceled by user."
+msgstr "Скасовано користувачем."
+
+#: fbwidget.cpp:72
+msgid "This is the list of images to upload to your Facebook account."
+msgstr ""
+"Це список зображень, які буде вивантажено на ваш обліковий запис Facebook."
+
+#: fbwidget.cpp:79
+msgid ""
+"This is a clickable link to open the Facebook home page in a web browser."
+msgstr ""
+"Це посилання на домашню сторінку Facebook, натисніть його, і цю сторінку "
+"буде відкрито у переглядачі Тенет."
+
+#: fbwidget.cpp:85
+msgid "Account"
+msgstr "Обліковий запис"
+
+#: fbwidget.cpp:87
+msgid "This is the Facebook account that is currently logged in."
+msgstr "Це обліковий запис Facebook, до якого ви увійшли."
+
+#: fbwidget.cpp:90
+msgctxt "facebook account settings"
+msgid "Name:"
+msgstr "Назва:"
+
+#: fbwidget.cpp:92
+msgid "Permission:"
+msgstr "Дозвіл:"
+
+#: fbwidget.cpp:94
+msgid ""
+"Permission of KIPI Plugin application to upload photos directly. If not, "
+"user will need to manually approve uploaded photos in Facebook."
+msgstr ""
+"Дозвіл на безпосереднє вивантаження фотографій додатком KIPI. Якщо цей пункт "
+"не буде позначено, користувачеві доведеться вручну підтверджувати "
+"вивантаження фотографій до Facebook."
+
+#: fbwidget.cpp:97
+msgid "Change Account"
+msgstr "Змінити обліковий запис"
+
+#: fbwidget.cpp:98
+msgid "Logout and change Facebook Account used for transfer"
+msgstr ""
+"Вийти з облікового запису і змінити запис Facebook для передавання даних"
+
+#: fbwidget.cpp:101
+msgid "Change Permission"
+msgstr "Змінити дозвіл"
+
+#: fbwidget.cpp:102
+msgid "Change permission for KIPI application for photo upload"
+msgstr ""
+"Змінити права доступу для програми KIPI, призначеної для вивантаження "
+"фотографій"
+
+#: fbwidget.cpp:119
+msgid "Download Selection"
+msgstr "Звантажити вибране"
+
+#: fbwidget.cpp:121
+msgid "This is the selection of Facebook albums/photos to download."
+msgstr "Це список альбомів/фотографій Facebook, які слід звантажити."
+
+#: fbwidget.cpp:125 fbwidget.cpp:178
+msgid "Destination"
+msgstr "Призначення"
+
+#: fbwidget.cpp:127
+msgid "This is the Facebook album to which selected photos will be uploaded."
+msgstr "Це альбом Facebook, куди буде вивантажено вибрані фотографії."
+
+#: fbwidget.cpp:131
+msgid "My &Album"
+msgstr "Мій &альбом"
+
+#: fbwidget.cpp:133
+msgid "Download complete album of currently logged in user."
+msgstr "Звантажити весь альбом поточного користувача."
+
+#: fbwidget.cpp:134
+msgid "Album &of My Friend"
+msgstr "Альбом &мого друга"
+
+#: fbwidget.cpp:136
+msgid "Download complete album of selected friend."
+msgstr "Звантажити весь альбом вибраного друга (подруги)."
+
+#: fbwidget.cpp:137
+msgid "Photos of &Me"
+msgstr "Мо&ї фотографії"
+
+#: fbwidget.cpp:139
+msgid "Download all photos of currently logged in user."
+msgstr "Звантажити всі фотографії поточного користувача."
+
+#: fbwidget.cpp:140
+msgid "Photos of My &Friend"
+msgstr "Фотографії мого &друга"
+
+#: fbwidget.cpp:142
+msgid "Download all photos of selected friend."
+msgstr "Звантажити всі фотографії вибраного друга (подруги)."
+
+#: fbwidget.cpp:150
+msgid "Friend:"
+msgstr "Друг:"
+
+#: fbwidget.cpp:154
+msgid "Album:"
+msgstr "Альбом:"
+
+#: fbwidget.cpp:159
+msgid "New Album"
+msgstr "Новий альбом"
+
+#: fbwidget.cpp:160
+msgid "Create new Facebook album"
+msgstr "Створити альбом Facebook"
+
+#: fbwidget.cpp:162
+msgctxt "facebook album list"
+msgid "Reload"
+msgstr "Перезавантажити"
+
+#: fbwidget.cpp:163
+msgid "Reload album list"
+msgstr "Перезавантажити список альбомів"
+
+#: fbwidget.cpp:180
+msgid "This is the location to which Facebook images will be downloaded."
+msgstr "Це адреса, куди буде звантажено зображення з Facebook."
+
+#: fbwidget.cpp:187
+msgid "Options"
+msgstr "Параметри"
+
+#: fbwidget.cpp:189
+msgid "These are options that will be applied to photos before upload."
+msgstr "Це параметри, які буде застосовано до фотографій перед вивантаженням."
+
+#: fbwidget.cpp:193
+msgid "Resize photos before uploading"
+msgstr "Змінити розмір фотографій перед вивантаженням"
+
+#: fbwidget.cpp:203
+msgid "Maximum dimension:"
+msgstr "Максимальний розмір:"
+
+#: fbwidget.cpp:211
+msgid "JPEG quality:"
+msgstr "Якість JPEG:"
+
+#: fbwidget.cpp:326
+msgid "Direct upload"
+msgstr "Безпосереднє вивантаження"
+
+#: fbwidget.cpp:328
+msgid "Uploaded photos will not need manual approval by user."
+msgstr ""
+"Вивантаження фотографій не потребує безпосереднього підтвердження "
+"користувачем."
+
+#: fbwidget.cpp:332
+msgid "Manual upload approval"
+msgstr "Безпосереднє підтвердження вивантаження"
+
+#: fbwidget.cpp:334
+msgid ""
+"Uploaded photos will wait in pending state until manually approved by user."
+msgstr ""
+"Фотографії для вивантаження очікуватимуть у черзі до безпосереднього "
+"підтвердження користувачем."
+
+#: fbwindow.cpp:93
+msgid "Import from Facebook Web Service"
+msgstr "Імпортувати з вебслужби Facebook"
+
+#: fbwindow.cpp:95
+msgid "Start Download"
+msgstr "Почати звантаження"
+
+#: fbwindow.cpp:96
+msgid "Start download from Facebook web service"
+msgstr "Почати звантаження з вебслужби Facebook"
+
+#: fbwindow.cpp:101
+msgid "Export to Facebook Web Service"
+msgstr "Експортувати до вебслужби Facebook"
+
+#: fbwindow.cpp:103
+msgid "Start Upload"
+msgstr "Почати вивантаження"
+
+#: fbwindow.cpp:104
+msgid "Start upload to Facebook web service"
+msgstr "Почати вивантаження до вебслужби Facebook"
+
+#: fbwindow.cpp:130
+msgid "Facebook Import/Export"
+msgstr "Імпорт/Експорт до Facebook"
+
+#: fbwindow.cpp:132
+msgid ""
+"A Kipi plugin to import/export image collection to/from Facebook web service."
+msgstr ""
+"Додаток Kipi для імпорту/експорту збірок зображень до/з вебслужби Facebook."
+
+#: fbwindow.cpp:134
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"© Vardhman Jain, 2005–2008,\n"
+"© Gilles Caulier, 2008–2009,\n"
+"© Luka Renko, 2008–2009"
+
+#: fbwindow.cpp:138
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:138
+msgid "Author and maintainer"
+msgstr "Автор та супровідник"
+
+#: fbwindow.cpp:146
+msgid "Handbook"
+msgstr "Підручник"
+
+#: fbwindow.cpp:343 fbwindow.cpp:402
+msgid "&lt;auto create&gt;"
+msgstr "&lt;створено автоматично&gt;"
+
+#: fbwindow.cpp:358 fbwindow.cpp:371 fbwindow.cpp:388 fbwindow.cpp:436
+#: fbwindow.cpp:463
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Спроба виклику Facebook завершилася невдало: %1\n"
+
+#: fbwindow.cpp:397
+msgctxt "name of special Facebook album for profile pictures"
+msgid "Profile Pictures"
+msgstr "Малюнки профілю"
+
+#: fbwindow.cpp:560 fbwindow.cpp:581
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:709 fbwindow.cpp:728
+msgid "Cannot open file"
+msgstr "Не вдалося відкрити файл"
+
+#: fbwindow.cpp:752
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Не вдалося вивантажити фотографію до Facebook: %1\n"
+"Бажаєте продовжити вивантаження?"
+
+#: fbwindow.cpp:811
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Не вдалося зберегти фотографію: %1\n"
+"Бажаєте продовжити звантаження?"
+
+#: fbwindow.cpp:824
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Не вдалося звантажити фотографію: %1\n"
+"Бажаєте продовжити звантаження?"
+
+#: fbwindow.cpp:841
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Спроба виклику Facebook завершилася невдало: %1"
+
+#: plugin_facebook.cpp:78
+msgid "Export to &Facebook..."
+msgstr "Експортувати до &Facebook..."
+
+#: plugin_facebook.cpp:88
+msgid "Import from &Facebook..."
+msgstr "Імпортувати з &Facebook..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#~ msgid "Authentication"
+#~ msgstr "Розпізнавання"
+
+#~ msgid "Transfer Progress"
+#~ msgstr "Поступ передавання"
+
+#~ msgid "Uploading file %1"
+#~ msgstr "Вивантаження файла %1"
+
+#~ msgid "Downloading file %1"
+#~ msgstr "Звантаження файла %1"

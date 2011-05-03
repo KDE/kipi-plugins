@@ -1,0 +1,151 @@
+# translation of kipiplugin_kioexportimport.po to Icelandic
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sveinn í Felli <sveinki@nett.is>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2009-10-28 21:07+0000\n"
+"Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
+"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "Flytja út á fjarlæga vél"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "Hefja útflutning"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "Hefja útflutning á tilgreint úttak"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "Flytja út á fjarlæga vél"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr ""
+"KIPI-íforrit til að flytja myndir út á fjarlægar vélar með notkun KIO-Slave"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "Forritun og viðhald"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "Handbók"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Sumar myndirnar hafa ekki verið sendar og eru ennþá á listanum. Þú getur "
+"reynt að flytja þær núna."
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "Sendingu skráa er ekki lokið"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr "Þetta er listi yfir þær myndir sem á að senda í tilgreint albúm."
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "Flytja inn frá fjarlægri vél"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "Hefja innflutning"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Hefja innflutning á tilgreindum myndum inn í valið albúm."
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "Flytja inn frá fjarlægri vél"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr "KIPI-íforrit til að ná í myndir af neti með notkun KIO-Slave"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Sumar myndirnar hafa ekki verið fluttar og eru ennþá á listanum. Þú getur "
+"reynt að flytja þær inn núna."
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "Innflutningi skráa er ekki lokið"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "Flytja út á fjarlæga vél..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "Flytja inn frá fjarlægri vél..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "Úttaksstaðsetning: "
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Veldu úttaksstaðsetningu til að senda myndirnar á. Þetta getur verið "
+"hverskonar vistfang sem notað er í Dolphin eða Konqueror, t.d. ftp://my."
+"server.org/sub/folder."
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "Veldu úttak..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "Veldu úttaksstaðsetningu..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr "Þetta er listi yfir þær myndir sem á að senda á tilgreint úttak."
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "ekki valið"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sveinn í Felli"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sveinki@nett.is"

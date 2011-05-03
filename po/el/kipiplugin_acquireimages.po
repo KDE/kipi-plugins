@@ -1,0 +1,141 @@
+# translation of kipiplugin_acquireimages.po to greek
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Spiros Georgaras <sng@hellug.gr>, 2007.
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2007, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2009-02-07 13:25+0200\n"
+"Last-Translator: Toussis Manolis <manolis@koppermind.homelinux.org>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Ανάκτηση εικόνων"
+
+#: aboutdata.h:41
+#, fuzzy
+#| msgid "A Kipi plugin to acquire images using a flat scanner"
+msgid "A tool to acquire images using a flat scanner"
+msgstr ""
+"Ένα πρόσθετο του Kipi για την ανάκτηση εικόνων χρησιμοποιώντας ένα σαρωτή"
+
+#: aboutdata.h:42
+#, fuzzy
+#| msgid "(c) 2008-2009, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "(c) 2008-2009, Gilles Caulier"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Συγγραφέας"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Προγραμματιστής"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr ""
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Αδυναμία ανοίγματος συσκευής σαρωτή."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Σάρωση εικόνας"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Εγχειρίδιο"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Νέο όνομα αρχείου εικόνας"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "Ο τύπος αρχείου προορισμού \"%1\" δεν υποστηρίζεται."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"Αποτυχία αποθήκευσης του αρχείου\n"
+"\"%1\" στο\n"
+"\"%2\"."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"Ένα αρχείο με όνομα \"%1\" υπάρχει ήδη. Σίγουρα θέλετε να αντικατασταθεί;"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Αντικατάσταση αρχείου;"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Σπύρος Γεωργαράς, Τούσης Μανώλης"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sng@hellug.gr, manolis@koppermind.homelinux.org"
+
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+
+#~ msgid "Scan Images..."
+#~ msgstr "Σάρωση εικόνων..."
+
+#~ msgid "Cannot acquire image..."
+#~ msgstr "Αδύνατη η ανάκτηση εικόνας..."
+
+#~ msgid "Cannot handle parent windows..."
+#~ msgstr "Αδυναμία χειρισμού γονικών παραθύρων..."
+
+#~ msgid "A Kipi plugin to acquire images using a flat bed scanner"
+#~ msgstr ""
+#~ "Ένα πρόσθετο του Kipi για την ανάκτηση εικόνων χρησιμοποιώντας ένα σαρωτή"
+
+#~ msgid "image is here."
+#~ msgstr "η εικόνα είναι εδώ."

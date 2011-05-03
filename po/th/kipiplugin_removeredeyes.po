@@ -1,0 +1,397 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2010-03-19 23:36+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "การตั้งค่าการแตก Blob"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "ค่าน้อยสุดของ &blob:"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "ค่าน้อยสุดของความก&ลม:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "ตั้งค่าต่าง ๆ ของตัวแบ่งประเภท"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "ใช้ตัวแบ่งประเภทแบบ&มาตรฐาน"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr "หากกาเลือก จะมีการเลือกใช้ตัวแบ่งประเภทมาตรฐานที่มากับส่วนเสริม KIPI นี้"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "ป้อนตำแหน่งของตัวแบ่งประเภทได้ที่นี่"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "&กลุ่มใกล้เคียง:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "&ระดับของการปรับขนาด:"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "โหมดขั้น&สูง"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "โหมด&พื้นฐาน"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>ทำงานช้า<br/>(ความละเอียดต่ำ / ภาพมีความเบลอ)</b></p><p> "
+"ในโหมดนี้จะทำให้ตัวตรวจจับและปรับแก้ตาแดง มีการทำงานที่เที่ยงตรงและเชื่อถือได้มากขึ้น "
+"เนื่องจากมันจะมีอัตราการคำนวณหาส่วนตาแดงของภาพสูงขึ้น แต่จะทำงานได้ช้า</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>มาตรฐาน</b></p><p>โหมดนี้เหมาะกับภาพทั่ว ๆ ไปที่มีความละเอียดภาพปานกลาง "
+"โปรดลองใช้โหมดนี้ก่อน</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>ทำงานเร็ว<br/>(ภาพแบบความละเอียดสูง)</b></p><p>ในโหมดนี้ "
+"การตรวจจับจะทำงานเร็วขึ้น แต่อาจจะได้ผลลัพธ์ที่ไม่เที่ยงตรงนัก "
+"โปรดใช้โหมดนี้กับภาพที่มีความละเอียดสูง ๆ และมีความคมชัดของภาพสูงเท่านั้น</p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "ปรับแ&ก้ตาแดง..."
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "ปรับแก้ตาแดงอัตโนมัติ"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "ปรับแก้ตาแดง"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr "ส่วนเสริมสำหรับตรวจจับและปรับแก้ตาแดงของภาพถ่ายบุคคลให้อัตโนมัติ"
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "สงวนลิขสิทธิ์ (c) 2008-2009, Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "ผู้เขียนและผู้ดูแล"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "คู่มือการใช้งาน"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "ทำการ&ปรับแก้ภาพ"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "เริ่มการปรับแก้ภาพต่าง ๆ ในรายการ"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "&ทำงานทดสอบ"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr "จำลองสถานการณ์การปรับแก้ โดยไม่มีการบันทึกผลลัพธ์ที่ได้"
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "รวม:"
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "สำเร็จ:"
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "ล้มเหลว:"
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "รายการแฟ้ม"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "ตั้งค่าต่าง ๆ"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p>คุณได้เลือก<b>โหมดปรับแก้แบบ 'เขียนทับ'</b><br/> "
+"คุณจะให้ภาพที่ปรับแก้แล้วทำการเขียนทับภาพต้นฉบับของมันจริงหรือไม่ ?</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "โหมดเขียนทับ"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>ไม่สามารถจะวิเคราะห์ภาพบางภาพด้วยการตั้งค่าต่าง ๆ ในปัจจุบันได้ <br/"
+">หรือพวกมันอาจจะไม่ได้มีส่วนตาแดงอยู่ในภาพก็ได้</p> <p><b>คุณต้องการจะทำการเอาภาพต่าง ๆ "
+"เหล่านี้ออกไปจากรายการหรือไม่ ?</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "เอาภาพต่าง ๆ ที่ยังไม่ผ่านการประมวลผลออกหรือไม่ ?"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p>คุณได้พยายามจะเพิ่ม<b>ภาพรูปแบบ RAW</b> ให้กับส่วนเสริม<br/> "
+"แต่ส่วนเสริมยังไม่รองรับแฟ้มในรูปแบบนี้</p> <p><b>ดังนั้น "
+"พวกมันจะถูกเอาออกจากรายการให้โดยอัตโนมัติ</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "พบแฟ้มภาพต่าง ๆ ที่เป็นภาพประเภท RAW"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>ประมวลผลภาพไปแล้ว %1 ภาพ</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>ทำการปรับแก้เสร็จสมบูรณ์แล้ว</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "ทำการปรับแก้เสร็จสมบูรณ์แล้ว"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr "<h2>ยังไม่มีการโหลดตัวหาตำแหน่งใด ๆ<br/>ส่วนเสริมไม่ใช่แฟ้มที่ประมวลผลได้</h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "ดวงตาที่ถูกปรับแก้แล้ว"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "นี่เป็นรายการของภาพต่าง ๆ ที่ได้ผ่านการปรับแก้ตาแดงแล้ว"
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>วิดเจ็ตนี้จะใช้ในการแสดงตัวอย่างภาพที่ถูกปรับแก้แล้วของภาพที่เลือกไว้ในปัจจุบัน </"
+"p><p><ul><li>เคลื่อนตัวชี้ของเมาส์<b>เหนือ</b>ภาพตัวอย่าง เพื่อแสดงภาพต้นฉบับ </"
+"li><li>เคลื่อนตัวชี้ของเมาส์<b>ออกจาก</b>ภาพตัวอย่าง เพื่อแสดงภาพที่ถูกปรับแก้แล้ว </"
+"li><li><b>คลิกที่</b>ภาพตัวอย่าง เพื่อแสดงมาสก์ของส่วนที่จะถูกปรับแก้ </li></ul></"
+"p><p>ปุ่มดูย่อ/ดูขยาย และการแพนภาพ จะช่วยให้คุณสามารถดูส่วนต่าง ๆ ของภาพได้อย่างละเอียดขึ้น</"
+"p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>กำลังสร้างภาพตัวอย่าง...</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>ไม่สามารถเปิดภาพตัวอย่าง<br/>'%1'</p>ได้"
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "เกิดข้อผิดพลาดในการโหลดแฟ้มภาพตัวอย่าง"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "ภาพต้นฉบับ"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "ภาพที่ถูกปรับแก้แล้ว"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "มาสก์ของการปรับแก้"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "ยังไม่มีการเลือกภาพใด ๆ"
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "ตั้งค่าต่าง ๆ ของส่วนจัดเก็บข้อมูล"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>การตั้งค่าต่าง ๆ เหล่านี้ ใช้ในการควบคุมส่วนจัดเก็บข้อมูลของแฟ้มภาพต่าง ๆ ที่ถูกปรับแก้แล้ว "
+"โดยมีสามโหมดให้เลือกคือ:</p><p><ul><li><b>โฟลเดอร์ย่อย:</b> แฟ้มภาพต่าง ๆ "
+"ที่ถูกปรับแก้แล้ว จะถูกบันทึกไว้ในโฟลเดอร์ย่อยภายใต้โฟลเดอร์ของอัลบั้มปัจจุบัน</"
+"li><li><b>ส่วนนำหน้า:</b> จะมีการเพิ่มส่วนนำหน้าตามที่กำหนดให้ นำหน้าไปยังแฟ้มภาพต่าง ๆ "
+"ที่ถูกปรับแก้แล้ว</li> <li><b>ส่วนต่อท้าย:</b> จะมีการเพิ่มส่วนต่อหน้าตามที่กำหนดให้ "
+"ต่อท้ายไปยังแฟ้มภาพต่าง ๆ ที่ถูกปรับแก้แล้ว</li><li><b>เขียนทับ:</b> "
+"แฟ้มภาพต้นฉบับจะถูกเขียนทับด้วยแฟ้มภาพต่าง ๆ ที่ถูกปรับแก้แล้วของมัน</li></ul></"
+"p><p>แต่ละโหมดจะอนุญาตให้คุณได้เพิ่มตัวเลือกคำค้น ไปยังข้อมูลกำกับภาพอีกด้วย</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "บันทึกไว้ในโฟลเดอร์ย่อย"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "เพิ่มส่วนนำหน้า"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "เพิ่มส่วนต่อท้าย"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "เขียนทับ"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr ""
+"ป้อนชื่อของโฟลเดอร์ย่อย, ส่วนนำหน้า หรือส่วนต่อท้าย ที่จะใช้กับแฟ้มภาพต่าง ๆ ที่ถูกปรับแก้แล้ว"
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "เพิ่มคำค้นให้กับข้อมูลกำกับ&ภาพ"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr "หากกาเลือก จะมีการปรับใช้คำค้นที่กำหนดให้ไปยังข้อมูลกำกับภาพด้วย"
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "ป้อนชื่อของคำค้นที่กำหนดเองที่นี่..."
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "การจัดการภาพที่ไม่ผ่านการประมวลผล"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>การตั้งค่าต่าง ๆ เหล่านี้ ใช้สำหรับควบคุมการจัดการกับภาพที่ไม่ผ่านการประมวลผล "
+"เมื่อทำงานในโหมดทำงานทดสอบ เพื่อให้การปรับแก้ในขั้นตอนสุดท้ายมีความรวดเร็วมากขึ้น "
+"ควรจะทำการเอาภาพต่าง ๆ ที่ไม่ผ่านการประมวลผลออกไปจากรายการแฟ้ม "
+"เนื่องจากจะได้ไม่ต้องมีการวิเคราะห์พวกมันอีก โดยมีสามโหมดให้เลือกคือ: </"
+"p><p><ul><li><b>ถามผู้ใช้ก่อน:</b> จะมีการแสดงกล่องแจ้งถามผู้ใช้ ก่อนจะมีการกระทำใด ๆ "
+"ต่อไป</li><li><b>คงไว้ในรายการแฟ้ม:</b> ภาพต่าง ๆ "
+"ที่ไม่ผ่านการประมวลผลทั้งหมดจะยังคงอยู่ในรายการแฟ้มต่อไป </li><li><b>เอาออกจากรายการแฟ้ม:"
+"</b> ภาพที่ไม่ผ่านการประมวลผลAll จะถูกเอาออกไปจากรายการแฟ้มหลังจากทำงานทดสอบแล้ว</"
+"li></ul></p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "&ถามผู้ใช้ก่อน"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr "หากกาเลือก จะมีการถามผู้ใช้ก่อนเพื่อยืนยันว่าจะคงภาพที่ไม่ผ่านการประมวลผลไว้หรือเอาออก"
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "&คงไว้ในรายการแฟ้ม"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr ""
+"หากกาเลือก ภาพที่ไม่ผ่านการประมวลผลจะถูกคงไว้ในรายการแฟ้มหลังจากการทำงานทดสอบแล้ว"
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "เ&อาออกจากรายการแฟ้ม"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr ""
+"หากกาเลือก ภาพที่ไม่ผ่านการประมวลผลจะถูกเอาออกจากรายการแฟ้มหลังจากการทำงานทดสอบ"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"

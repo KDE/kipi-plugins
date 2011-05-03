@@ -1,0 +1,365 @@
+# translation of kipiplugin_sendimages.po to 简体中文
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ni Hui <shuizhuyuanluo@126.com>, 2007, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2010-01-05 13:48+0800\n"
+"Last-Translator: Ni Hui <shuizhuyuanluo@126.com>\n"
+"Language-Team: Chinese Simplified <kde-china@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "邮件程序："
+
+#: emailpage.cpp:89
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "默认"
+
+#: emailpage.cpp:100
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"在此选择您首选的外部电子邮件程序。<b>默认</b>采取当前 KDE 控制中心的设定。"
+
+#: emailpage.cpp:106
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "从 %1 附加带图像属性的文件"
+
+#: emailpage.cpp:109
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"如果您启用此选项，所有由 %1 设定为注释、评分或标记的图像属性都会以附件形式添"
+"加。"
+
+#: emailpage.cpp:118
+msgid "Maximum email size limit:"
+msgstr "电子邮件大小限制："
+
+#: emailpage.cpp:119
+#, fuzzy
+#| msgid "MB"
+msgid " MB"
+msgstr "MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "调整图像属性"
+
+#: emailpage.cpp:125
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr "如果您启用此选项，所有发送的图像都会重新调整大小并再压缩。"
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "图像属性"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "非常小(320 像素)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "小(640 像素)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "中(800 像素)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "大(1024 像素)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "非常大(1280 像素)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "极大 - 用于打印(1600 像素)"
+
+#: emailpage.cpp:139
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+"<p>在此选择发送的图像尺寸：</p><p><b>%1</b>：如果您网络连接速度很慢或者目标邮"
+"箱容量十分有限，那么使用此选项。</p><p><b>%2</b>：如果您网络连接速度较慢或者"
+"目标邮箱容量有限，那么使用此选项。</p><p><b>%3</b>：这是默认值，用于中等速度"
+"的网络连接和目标邮箱容量。</p><p><b>%4</b>：如果您使用高速的网络连接或者目标"
+"邮箱容量无限，那么使用此选项。</p><p><b>%5</b>：如果没有容量或速度限制，那么"
+"使用此选项。</p><p><b>%6</b>：仅用于打印。</p>"
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "图像尺寸："
+
+#: emailpage.cpp:168
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>在此选择发送的图像文件格式。</p>"
+
+#: emailpage.cpp:169
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>：Joint Photographic Experts Group(联合图像专家小组)的文件格式"
+"是一种很好的互联网文件格式，但它使用有损压缩。</p><p><b>PNG</b>：Portable "
+"Network Graphics(便携式网络图片)格式是一种可扩展的文件格式，使用无损压缩、可"
+"移植、对于光栅图像有良好的压缩存储。PNG 提供了一个 GIF 的自由专利替代方案，并"
+"且也可以替代许多一般的 TIFF 应用。PNG 被设计用于在线浏览程序，比如在万维网上"
+"它就工作得很好，所以 PNG 有先进的完整流式显示特性。同时，PNG 可以存储伽玛和色"
+"度数据以改善在各种复杂的平台环境上的颜色匹配。</p>"
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "图像文件格式："
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "图像质量："
+
+#: emailpage.cpp:188
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>发送的 JPEG 图像的新压缩值：</p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>：非常高的压缩<br/><b>25</b>：高压缩<br/><b>50</b>：中等压缩<br/"
+"><b>75</b>：低压缩 (默认值)<br/><b>100</b>：不压缩</p>"
+
+#: imageresize.cpp:191
+msgid "Error opening input file"
+msgstr "打开输入文件出错"
+
+#: imageresize.cpp:202
+msgid "Error opening temporary folder"
+msgstr "打开临时文件夹出错"
+
+#: imageresize.cpp:247
+msgid "Cannot resize image. Aborting."
+msgstr "无法调整图像尺寸。中止。"
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "无法保存调整后的图像(JPEG)。中止。"
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "无法保存调整后的图像(PNG)。中止。"
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "发送图像..."
+
+#: sendimages.cpp:130
+msgid "Email images"
+msgstr "发送图像"
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "用户已经取消发送"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "正在调整 %1 的尺寸"
+
+#: sendimages.cpp:187
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "成功调整了 %1 的尺寸"
+
+#: sendimages.cpp:194
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "无法调整 %1 的尺寸：%2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "建立图像属性文件"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "无标题"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "无关键字"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"文件“%1”：\n"
+"原图像：%2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "注释：%1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "标签：%1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "评分：%1\n"
+
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:264
+msgid "Image properties file done"
+msgstr "完成图像属性文件"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"以下列出的图像无法调整尺寸。\n"
+"您想要将它们作为附件添加吗(不调整大小)？"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "调整图像尺寸失败"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr "文件“%1”太大，无法发送，请减小其大小或更改您的设置"
+
+#: sendimages.cpp:391
+msgid "Starting default KDE email program..."
+msgstr "启动 KDE 默认电子邮件程序..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "启动程序“%1”失败。请检查您的系统。"
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "正在启动程序“%1”..."
+
+#: sendimages.cpp:568
+msgid "After having sent your images by email..."
+msgstr "以后通过电子邮件发送您的图像..."
+
+#: sendimages.cpp:569
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "按“关闭”按钮来清理临时文件"
+
+#: sendimagesdialog.cpp:90
+msgid "Email Images Options"
+msgstr "发送图像选项"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "图像"
+
+#: sendimagesdialog.cpp:100
+msgid "Image List"
+msgstr "图像列表"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "邮件"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "邮件列表"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "发送图像"
+
+#: sendimagesdialog.cpp:115
+msgid "A plugin to email pictures"
+msgstr "一个邮寄图片的插件"
+
+#: sendimagesdialog.cpp:116
+#, fuzzy
+#| msgid "(c) 2003-2009, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "(c) 2003-2009，Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "作者和维护者"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "开发者"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+msgid "Handbook"
+msgstr "手册"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ni Hui"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "shuizhuyuanluo@126.com"

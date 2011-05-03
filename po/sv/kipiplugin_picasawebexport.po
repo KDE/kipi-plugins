@@ -1,0 +1,638 @@
+# translation of kipiplugin_picasawebexport.po to Swedish
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Stefan Asserhäll <stefan.asserhall@comhem.se>, 2008, 2009, 2010.
+# Stefan Asserhall <stefan.asserhall@comhem.se>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_picasawebexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-12-28 14:35+0100\n"
+"Last-Translator: Stefan Asserhall <stefan.asserhall@comhem.se>\n"
+"Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: sv\n"
+
+#: picasawebimglist.cpp:101
+#, kde-format
+msgid "%1|All supported files"
+msgstr "%1|Alla filer som stöds"
+
+#: picasawebimglist.cpp:113
+#, kde-format
+msgid "%1|Camera RAW files"
+msgstr "%1|Obehandlade kamerafiler"
+
+#: picasawebimglist.cpp:115
+#, kde-format
+msgid "%1|Video files"
+msgstr "%1|Videofiler"
+
+#: picasawebimglist.cpp:127
+msgid "Select Images"
+msgstr "Välj bilder"
+
+#: picasaweblogin.cpp:68
+msgid "Google Login:"
+msgstr "Google inloggning:"
+
+#: picasaweblogin.cpp:72
+msgid "Password:"
+msgstr "Lösenord:"
+
+#: picasaweblogin.cpp:83
+msgid "&OK"
+msgstr "&Ok"
+
+#: picasaweblogin.cpp:86
+msgid "&Cancel"
+msgstr "&Avbryt"
+
+#: picasawebreplacedialog.cpp:93
+msgid "&Add As New"
+msgstr "&Lägg till som ny"
+
+#: picasawebreplacedialog.cpp:94
+msgid "Item will be added alongside the linked version."
+msgstr "Objektet kommer att läggas till vid sidan om den länkade versionen."
+
+#: picasawebreplacedialog.cpp:98
+msgid "&Add All"
+msgstr "&Lägg till alla"
+
+#: picasawebreplacedialog.cpp:99
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr ""
+"Objekt kommer att läggas till vid sidan om den länkade versionen. Du kommer "
+"inte att bli tillfrågad igen."
+
+#: picasawebreplacedialog.cpp:103
+msgid "&Replace"
+msgstr "E&rsätt"
+
+#: picasawebreplacedialog.cpp:104
+msgid "Item will be replacing the linked version."
+msgstr "Objekt kommer att ersätta den länkade versionen."
+
+#: picasawebreplacedialog.cpp:108
+msgid "&Replace All"
+msgstr "E&rsätt alla"
+
+#: picasawebreplacedialog.cpp:109
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr ""
+"Objekt kommer att ersätta den länkade versionen. Du kommer inte att bli "
+"tillfrågad igen."
+
+#: picasawebreplacedialog.cpp:119
+msgid "A linked item already exists."
+msgstr "Ett länkat objekt finns redan."
+
+#: picasawebreplacedialog.cpp:136 picasawebwidget.cpp:131
+msgid "Destination"
+msgstr "Mål"
+
+#: picasawebreplacedialog.cpp:140
+msgid "Source"
+msgstr "Källa"
+
+#: picasawebtalker.cpp:109
+msgid "Login"
+msgstr "Inloggning"
+
+#: picasawebtalker.cpp:578
+msgid "No photo specified"
+msgstr "Inget foto angivet"
+
+#: picasawebtalker.cpp:580
+msgid "General upload failure"
+msgstr "Allmänt uppladdningsfel"
+
+#: picasawebtalker.cpp:582
+msgid "File-size was zero"
+msgstr "Filstorleken var noll"
+
+#: picasawebtalker.cpp:584
+msgid "File-type was not recognized"
+msgstr "Filtypen kändes inte igen"
+
+#: picasawebtalker.cpp:586
+msgid "User exceeded upload limit"
+msgstr "Användaren överskred uppladdningsgräns"
+
+#: picasawebtalker.cpp:588
+msgid "Invalid signature"
+msgstr "Ogiltig signatur"
+
+#: picasawebtalker.cpp:590
+msgid "Missing signature"
+msgstr "Signatur saknas"
+
+#: picasawebtalker.cpp:592
+msgid "Login failed / Invalid auth token"
+msgstr "Inloggning misslyckades/ogiltig ordverifiering"
+
+#: picasawebtalker.cpp:594
+msgid "Invalid API Key"
+msgstr "Felaktig API-nyckel"
+
+#: picasawebtalker.cpp:596
+msgid "Service currently unavailable"
+msgstr "Tjänsten för närvarande inte tillgänglig"
+
+#: picasawebtalker.cpp:598
+msgid "Invalid Frob"
+msgstr "Ogiltig grej"
+
+#: picasawebtalker.cpp:600
+msgid "Format \"xxx\" not found"
+msgstr "Formatet \"xxx\" hittades inte"
+
+#: picasawebtalker.cpp:602
+msgid "Method \"xxx\" not found"
+msgstr "Metoden \"xxx\" hittades inte"
+
+#: picasawebtalker.cpp:604
+msgid "Invalid SOAP envelope"
+msgstr "Ogiltig SOAP-hölje"
+
+#: picasawebtalker.cpp:606
+msgid "Invalid XML-RPC Method Call"
+msgstr "Ogiltigt XML-RPC metodanrop"
+
+#: picasawebtalker.cpp:608
+msgid "The POST method is now required for all setters."
+msgstr "Metoden POST krävs nu för alla som sätter."
+
+#: picasawebtalker.cpp:610
+msgid "Unknown error"
+msgstr "Okänt fel"
+
+#: picasawebtalker.cpp:613
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"Fel uppstod: %1\n"
+"Det går inte att gå vidare."
+
+#: picasawebtalker.cpp:719 picasawebtalker.cpp:777
+msgid "Failed to fetch photo-set list"
+msgstr "Misslyckades hämta lista med fotouppsättningar"
+
+#: picasawebtalker.cpp:890 picasawebtalker.cpp:920
+msgid "Failed to create album"
+msgstr "Misslyckades skapa album"
+
+#: picasawebtalker.cpp:929
+msgid "Failed to upload photo"
+msgstr "Misslyckades ladda upp foto"
+
+#: picasawebalbum.cpp:51
+msgid "Picasaweb New Album"
+msgstr "Nytt album på Picasaweb"
+
+#: picasawebalbum.cpp:61 picasawebwidget.cpp:110
+msgid "Album"
+msgstr "Album"
+
+#: picasawebalbum.cpp:63
+msgid "These are basic settings for the new Picasaweb album."
+msgstr "Grundinställningar för det nya albumet hos Picasaweb."
+
+#: picasawebalbum.cpp:66
+msgid "Title of the album that will be created (required)."
+msgstr "Rubrik för albumet som ska skapas (krävs)."
+
+#: picasawebalbum.cpp:70
+msgid "Date and Time of the album that will be created (optional)."
+msgstr "Datum och tid för albumet som ska skapas (valfri)."
+
+#: picasawebalbum.cpp:73
+msgid "Description of the album that will be created (optional)."
+msgstr "Beskrivning av albumet som ska skapas (valfri)."
+
+#: picasawebalbum.cpp:76
+msgid "Location of the album that will be created (optional)."
+msgstr "Plats för albumet som ska skapas (valfri)."
+
+#: picasawebalbum.cpp:79
+msgctxt "new picasaweb album dialog"
+msgid "Title:"
+msgstr "Titel:"
+
+#: picasawebalbum.cpp:80
+msgctxt "new picasaweb album dialog"
+msgid "Date & Time:"
+msgstr "Datum och tid:"
+
+#: picasawebalbum.cpp:81
+msgctxt "new picasaweb album dialog"
+msgid "Description:"
+msgstr "Beskrivning:"
+
+#: picasawebalbum.cpp:82
+msgctxt "new picasaweb album dialog"
+msgid "Location:"
+msgstr "Plats:"
+
+#: picasawebalbum.cpp:90
+msgid "Access Level"
+msgstr "Åtkomstnivå"
+
+#: picasawebalbum.cpp:91
+msgid "These are security and privacy settings for the new Picasaweb album."
+msgstr ""
+"Inställningar av säkerhet och integritet för det nya albumet hos Picasaweb."
+
+#: picasawebalbum.cpp:93
+msgctxt "picasaweb album privacy"
+msgid "Public"
+msgstr "Öppen"
+
+#: picasawebalbum.cpp:95
+msgid "Public album is listed on your public Picasaweb page."
+msgstr "Öppna album listas på din öppna sida hos Picasaweb."
+
+#: picasawebalbum.cpp:96
+msgctxt "picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "Olistad eller privat"
+
+#: picasawebalbum.cpp:97
+msgid "Unlisted album is only accessible via URL."
+msgstr "Olistade album är bara tillgängliga via en webbadress."
+
+#: picasawebalbum.cpp:98
+msgctxt "picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "Inloggning krävs för att titta"
+
+#: picasawebalbum.cpp:99
+msgid "Unlisted album require Sign-In to View"
+msgstr "Inloggning krävs för att titta på olistade album"
+
+#: picasawebalbum.cpp:107
+msgid "Privacy:"
+msgstr "Integritet:"
+
+#: picasawebwidget.cpp:68
+msgid "This is the list of images to upload to your Picasaweb account."
+msgstr "Det här är listan med bilder att ladda upp till Picasaweb-kontot."
+
+#: picasawebwidget.cpp:75
+msgid ""
+"This is a clickable link to open the Picasaweb home page in a web browser."
+msgstr "En klickbar länk för att öppna Picasawebs hemsida i en webbläsare."
+
+#: picasawebwidget.cpp:81
+msgid "Account"
+msgstr "Konto"
+
+#: picasawebwidget.cpp:83
+msgid "This is the Picasaweb account that will be used to authenticate."
+msgstr "Kontot hos Picasaweb som kommer att användas för behörighetskontroll."
+
+#: picasawebwidget.cpp:86
+msgctxt "Picasaweb account login"
+msgid "Anonymous"
+msgstr "Anonym"
+
+#: picasawebwidget.cpp:88
+msgid "Login as anonymous to Picasaweb web service."
+msgstr "Logga in anonymt på Picasaweb webbtjänst."
+
+#: picasawebwidget.cpp:90
+msgid "Picasaweb Account"
+msgstr "Picasaweb-konto"
+
+#: picasawebwidget.cpp:92
+msgid "Login to Picasaweb web service using username and password."
+msgstr ""
+"Logga in till Picasawebs webbtjänst genom att använda användarnamn och "
+"lösenord."
+
+#: picasawebwidget.cpp:94
+msgctxt "Picasaweb account settings"
+msgid "Name:"
+msgstr "Namn:"
+
+#: picasawebwidget.cpp:97
+msgid "Change Account"
+msgstr "Ändra konto"
+
+#: picasawebwidget.cpp:98
+msgid "Change Picasaweb Account used to authenticate"
+msgstr "Ändra konto hos Picasaweb använt för behörighetskontroll"
+
+#: picasawebwidget.cpp:112
+msgid "This is the Picasaweb album that will be used for transfer."
+msgstr "Albumet hos Picasaweb som kommer att användas för överföringen."
+
+#: picasawebwidget.cpp:119
+msgid "New Album"
+msgstr "Nytt album"
+
+#: picasawebwidget.cpp:120
+msgid "Create new Picasaweb album"
+msgstr "Skapa nytt album på Picasaweb"
+
+#: picasawebwidget.cpp:122
+msgctxt "reload album list"
+msgid "Reload"
+msgstr "Uppdatera"
+
+#: picasawebwidget.cpp:123
+msgid "Reload album list"
+msgstr "Uppdatera albumlista"
+
+#: picasawebwidget.cpp:133
+msgid "This is the location where Picasaweb images will be downloaded."
+msgstr "Platsen dit Picasaweb-bilder kommer att laddas ner."
+
+#: picasawebwidget.cpp:140
+msgid "Options"
+msgstr "Alternativ"
+
+#: picasawebwidget.cpp:142
+msgid "These are options that will be applied to images before upload."
+msgstr "Alternativ som utförs på bilder innan uppladdning."
+
+#: picasawebwidget.cpp:146
+msgid "Resize photos before uploading"
+msgstr "Ändra storlek på foton innan uppladdning"
+
+#: picasawebwidget.cpp:156
+msgid "Maximum dimension:"
+msgstr "Maximal dimension:"
+
+#: picasawebwidget.cpp:164
+msgid "JPEG quality:"
+msgstr "JPEG-kvalitet:"
+
+#: picasawebwidget.cpp:167
+msgid "Tag path behavior:"
+msgstr "Beteende för etikettsökväg:"
+
+#: picasawebwidget.cpp:169
+msgid "Leaf tags only"
+msgstr "Bara lövetiketter"
+
+#: picasawebwidget.cpp:171
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "Exportera bara lövetiketter i etiketthierarkier"
+
+#: picasawebwidget.cpp:172
+msgid "Split tags"
+msgstr "Dela etiketter"
+
+#: picasawebwidget.cpp:174
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr ""
+"Exportera lövetiketter och alla överliggande etiketter som enkla etiketter."
+
+#: picasawebwidget.cpp:175
+msgid "Combined String"
+msgstr "Kombinerad sträng"
+
+#: picasawebwidget.cpp:177
+msgid "Build a combined tag string."
+msgstr "Bygg en kombinerad etikettsträng"
+
+#: picasawebwindow.cpp:102
+msgid "Import from Picasa Web Service"
+msgstr "Importera från Picasa webbtjänst"
+
+#: picasawebwindow.cpp:104
+msgid "Start Download"
+msgstr "Starta nerladdning"
+
+#: picasawebwindow.cpp:105
+msgid "Start download from Picasaweb service"
+msgstr "Starta nerladdning från Picasaweb-tjänst"
+
+#: picasawebwindow.cpp:110
+msgid "Export to Picasa Web Service"
+msgstr "Exportera till Picasa webbtjänst"
+
+#: picasawebwindow.cpp:112
+msgid "Start Upload"
+msgstr "Starta uppladdning"
+
+#: picasawebwindow.cpp:113
+msgid "Start upload to Picasaweb service"
+msgstr "Starta uppladdning till Picasaweb-tjänst"
+
+#: picasawebwindow.cpp:134
+msgid "PicasaWeb Export"
+msgstr "Export till Picasa webbalbum"
+
+#: picasawebwindow.cpp:137
+msgid "A Kipi plugin to export image collections to PicasaWeb web service."
+msgstr ""
+"Ett KIPI-insticksprogram för att exportera bildsamlingar till Picasa "
+"webbtjänst."
+
+#: picasawebwindow.cpp:139
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2010, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller"
+msgstr ""
+"© 2007-2009, Vardhman Jain\n"
+"© 2008-2010, Gilles Caulier\n"
+"© 2009, Luka Renko\n"
+"© 2010, Jens Mueller"
+
+#: picasawebwindow.cpp:144
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: picasawebwindow.cpp:144
+msgid "Author and maintainer"
+msgstr "Upphovsman och utvecklare"
+
+#: picasawebwindow.cpp:147
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: picasawebwindow.cpp:147 picasawebwindow.cpp:150 picasawebwindow.cpp:153
+msgid "Developer"
+msgstr "Utvecklare"
+
+#: picasawebwindow.cpp:150
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: picasawebwindow.cpp:153
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: picasawebwindow.cpp:161
+msgid "Handbook"
+msgstr "Handbok"
+
+#: picasawebwindow.cpp:326 picasawebwindow.cpp:335 picasawebwindow.cpp:368
+#: picasawebwindow.cpp:405 picasawebwindow.cpp:988
+#, kde-format
+msgid "Picasaweb Call Failed: %1\n"
+msgstr "Anrop till Picasaweb misslyckades: %1\n"
+
+#: picasawebwindow.cpp:388 picasawebwindow.cpp:462
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: picasawebwindow.cpp:629 picasawebwindow.cpp:741
+msgid "Cannot open file"
+msgstr "Kan inte öppna fil"
+
+#: picasawebwindow.cpp:775
+#, kde-format
+msgid ""
+"Failed to upload photo into Picasaweb: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Misslyckades ladda upp foto till Picasaweb: %1\n"
+"Vill du fortsätta?"
+
+#: picasawebwindow.cpp:856
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Misslyckades spara foto: %1\n"
+"Vill du fortsätta?"
+
+#: picasawebwindow.cpp:868
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Misslyckades ladda ner foto: %1\n"
+"Vill du fortsätta?"
+
+#: picasawebwindow.cpp:894
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"En fil med namnet \"%1\" finns redan. Är du säker på att du vill skriva över "
+"den?"
+
+#: picasawebwindow.cpp:955
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "Misslyckades med att spara bilden i %1"
+
+#: plugin_picasawebexport.cpp:78
+msgid "Export to &PicasaWeb..."
+msgstr "Exportera till &Picasa webbalbum..."
+
+#: plugin_picasawebexport.cpp:88
+msgid "Import from &PicasaWeb..."
+msgstr "Importera från &Picasaweb..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Stefan Asserhäll"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "stefan.asserhall@comhem.se"
+
+#~ msgid "Failed to fetch photo list"
+#~ msgstr "Misslyckades hämta fotolista"
+
+#, fuzzy
+#~| msgid "Password:"
+#~ msgid "Site Password:"
+#~ msgstr "Lösenord:"
+
+#, fuzzy
+#~| msgid "Password:"
+#~ msgid "Album Password:"
+#~ msgstr "Lösenord:"
+
+#~ msgid "Getting the token"
+#~ msgstr "Hämtar ordverifiering"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "Kontrollerar om tidigare ordverifiering fortfarande är giltig"
+
+#~ msgid "Failed to query photo information"
+#~ msgstr "Misslyckades hämta fotoinformation"
+
+#~ msgid "No album selected - please create and select album."
+#~ msgstr "Inget album valt: skapa och välj album."
+
+#~ msgid "Nothing to upload - please select photos to upload."
+#~ msgstr "Ingenting att ladda upp: välj foton att ladda upp."
+
+#~ msgid "Uploading file %1 "
+#~ msgstr "Laddar upp filen %1 "
+
+#~ msgid "New Album Dialog"
+#~ msgstr "Ny albumdialogruta"
+
+#~ msgid "Place Taken"
+#~ msgstr "Plats taken"
+
+#~ msgid "Create"
+#~ msgstr "Skapa"
+
+#~ msgid "Cancel"
+#~ msgstr "Avbryt"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "PicasaWeb Exporter Upload"
+#~ msgstr "Uppladdning med export till Picasa webbalbum"
+
+#~ msgid "PicasaWeb Uploader"
+#~ msgstr "Uppladdning till Picasa webbalbum"
+
+#~ msgid "Tags:<p align=\"center\"></p>"
+#~ msgstr "Etiketter:<p align=\"center\"></p>"
+
+#~ msgid "E&xport Application Tags"
+#~ msgstr "E&xportera programetiketter"
+
+#~ msgid "Resi&ze"
+#~ msgstr "Ändra sto&rlek"
+
+#~ msgid "Size (pixels):"
+#~ msgstr "Storlek (bildpunkter):"
+
+#~ msgid "Compression:"
+#~ msgstr "Komprimering:"
+
+#~ msgid "Images to upload"
+#~ msgstr "Bilder att ladda upp"
+
+#~ msgid "Currentl&y Selected Images"
+#~ msgstr "Bilder som &för närvarande är valda"
+
+#~ msgid "Select Photos"
+#~ msgstr "Välj foton"
+
+#~ msgid "Username:"
+#~ msgstr "Användarnamn:"
+
+#~ msgid "Change User"
+#~ msgstr "Byt användare"

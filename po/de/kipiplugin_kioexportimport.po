@@ -1,0 +1,159 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Panagiotis Papadopoulos <pano_90@gmx.net>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2010-03-20 19:36+0100\n"
+"Last-Translator: Panagiotis Papadopoulos <pano_90@gmx.net>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "Auf Fremdrechner exportieren"
+
+# Exportieren starten?
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "Export starten"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "Das Exportieren zum ausgewählten Speicherort beginnen."
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "Auf Fremdrechner exportieren"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr ""
+"Ein KIPI-Modul zum Exportieren von Bildern über das Netzwerk mittels Ein-/"
+"Ausgabemodul"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "© 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "Entwickler und Betreuer"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "Handbuch"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Einige Bilder sind noch nicht übertragen worden und befinden sich noch in "
+"der Liste. Sie können nun versuchen diese Bilder erneut zu exportieren."
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "Exportieren noch nicht abgeschlossen"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr ""
+"Das ist die Liste der Bilder, die in das aktuelle Album importiert werden."
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "Von Fremdrechner importieren"
+
+# Importieren starten?
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "Import starten"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr ""
+"Das Importieren der ausgewählten Bilder in das aktuell ausgewählte Album "
+"beginnen."
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "Von Fremdrechner importieren"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr ""
+"Ein KIPI-Modul zum Importieren von Bildern über das Netzwerk mittels Ein-/"
+"Ausgabemodul"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Einige Bilder sind noch nicht übertragen worden und befinden sich noch in "
+"der Liste. Sie können nun versuchen diese Bilder erneut zu importieren."
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "Import noch nicht abgeschlossen"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "Auf Fremdrechner exportieren ..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "Von Fremdrechner importieren ..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "Speicherort: "
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Der Speicherort, in den die Bilder hochgeladen werden sollen. Das kann jede "
+"Adresse sein, die auch in Dolphin oder Konqueror funktioniert, wie z. B. "
+"„ftp://my.server.org/sub/folder“."
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "Speicherort wählen"
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "Speicherort auswählen ..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr ""
+"Das ist die Liste der Bilder, die in den ausgewählten Speicherort "
+"hochgeladen werden."
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "nicht ausgewählt"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Panagiotis Papadopoulos"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "pano_90@gmx.net"

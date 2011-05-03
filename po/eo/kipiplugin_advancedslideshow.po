@@ -1,0 +1,754 @@
+# Translation of kipiplugin_advancedslideshow into esperanto.
+# Axel Rousseau <axel@esperanto-jeunes.org>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_advancedslideshow\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2009-11-15 12:06+0100\n"
+"Last-Translator: Axel Rousseau <axel@esperanto-jeunes.org>\n"
+"Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: pology\n"
+
+#: dialogs/captiondialog.cpp:41
+msgid "This is a comment sample..."
+msgstr ""
+
+#: dialogs/maindialog.cpp:247
+#, kde-format
+msgid "%1 image [%2]"
+msgid_plural "%1 images [%2]"
+msgstr[0] ""
+msgstr[1] ""
+
+#: dialogs/maindialog.cpp:326 dialogs/soundtrackdialog.cpp:551
+#, kde-format
+msgid "Cannot access file %1. Please check the path is correct."
+msgstr ""
+
+#: dialogs/maindialog.cpp:362
+#, kde-format
+msgctxt "Image number %1"
+msgid "Image #%1"
+msgstr ""
+
+#: dialogs/maindialog.cpp:393 widgets/slideshowkb.cpp:575
+msgid "Ken Burns"
+msgstr "Ken Burns"
+
+#: dialogs/maindialog.cpp:415
+msgid "Delay between images (ms):"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:265
+#. i18n: ectx: property (text), widget (QLabel, m_delayLabel)
+#: dialogs/maindialog.cpp:422 rc.cpp:130
+msgid "Delay between images (s):"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:79 dialogs/slideshowconfig.cpp:115
+msgid "Advanced Slideshow"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:87
+#, fuzzy
+#| msgid "Start slideshow"
+msgid "Start Slideshow"
+msgstr "Starti la lumbildon"
+
+#: dialogs/slideshowconfig.cpp:94
+msgid "Main"
+msgstr "Ĉefa"
+
+#: dialogs/slideshowconfig.cpp:95
+msgid "Main Settings"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:99 dialogs/slideshowconfig.cpp:100
+#, fuzzy
+#| msgid "Options"
+msgctxt "captions for the slideshow"
+msgid "Caption"
+msgstr "Opcioj"
+
+#: dialogs/slideshowconfig.cpp:104 dialogs/slideshowconfig.cpp:105
+#, fuzzy
+#| msgid "%n track"
+#| msgid_plural "%n tracks"
+msgid "Soundtrack"
+msgstr "%n trako"
+
+#: dialogs/slideshowconfig.cpp:109 dialogs/slideshowconfig.cpp:110
+msgid "Advanced"
+msgstr "Plie"
+
+#: dialogs/slideshowconfig.cpp:118
+msgid "A Kipi plugin for image slideshows"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:119
+msgid ""
+"(c) 2003-2004, Renchi Raju\n"
+"(c) 2006-2009, Valerio Fuoglio"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:122
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/slideshowconfig.cpp:122
+msgid "Author"
+msgstr "Aŭtoro"
+
+#: dialogs/slideshowconfig.cpp:124
+msgid "Valerio Fuoglio"
+msgstr "Valerio Fuoglio"
+
+#: dialogs/slideshowconfig.cpp:124
+msgid "Author and maintainer"
+msgstr "Aŭtoro kaj prizorganto"
+
+#: dialogs/slideshowconfig.cpp:131
+msgid "Handbook"
+msgstr "Manlibro"
+
+#: dialogs/soundtrackdialog.cpp:63
+msgid "Soundtrack preview"
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:90
+msgid ""
+"If set, the soundtrack for the current album will be saved and restored "
+"automatically on the next startup."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:111
+msgid "Move the selected track up in the playlist."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:112
+msgid "Move the selected track down in the playlist."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:113
+msgid "Add new tracks to the playlist."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:114
+msgid "Delete the selected track from the playlist."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:115
+msgid "Load playlist from a file."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:116
+msgid "Save playlist to a file."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:117
+msgid "Clear the playlist."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:243
+#, kde-format
+msgctxt "number of tracks and running time"
+msgid "1 track [%2]"
+msgid_plural "%1 tracks [%2]"
+msgstr[0] ""
+msgstr[1] ""
+
+#: dialogs/soundtrackdialog.cpp:271
+msgid ""
+"Slide time is greater than soundtrack time. Suggestion: add more sound files."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:342
+msgid "Select sound files"
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:389
+msgid "You can only move image files up one at a time."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:419
+msgid "You can only move files down one at a time."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:442
+msgid "Load playlist"
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:497
+msgid "Save playlist"
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:561
+msgid "Cannot create a preview of an empty file list."
+msgstr ""
+
+#: plugin/plugin_advancedslideshow.cpp:87
+msgid "Advanced Slideshow..."
+msgstr ""
+
+#: plugin/plugin_advancedslideshow.cpp:195
+msgid "There are no images to show."
+msgstr ""
+
+#: plugin/plugin_advancedslideshow.cpp:251
+msgid "OpenGL support is not available on your system."
+msgstr ""
+
+#: widgets/listsounditems.cpp:95
+#, kde-format
+msgid "%1 is damaged and may not be playable."
+msgstr ""
+
+#: widgets/listsounditems.cpp:97
+msgid "Phonon error"
+msgstr ""
+
+#: widgets/listsounditems.cpp:100
+msgid "This file is damaged and may not be playable."
+msgstr ""
+
+#: widgets/slideshow.cpp:235 widgets/slideshowgl.cpp:389
+msgctxt "Filter Effect: No effect"
+msgid "None"
+msgstr ""
+
+#: widgets/slideshow.cpp:236
+msgctxt "Filter Effect: Chess Board"
+msgid "Chess Board"
+msgstr ""
+
+#: widgets/slideshow.cpp:237
+msgctxt "Filter Effect: Melt Down"
+msgid "Melt Down"
+msgstr ""
+
+#: widgets/slideshow.cpp:238
+msgctxt "Filter Effect: Sweep"
+msgid "Sweep"
+msgstr ""
+
+#: widgets/slideshow.cpp:239
+msgctxt "Filter Effect: Mosaic"
+msgid "Mosaic"
+msgstr ""
+
+#: widgets/slideshow.cpp:240
+msgctxt "Filter Effect: Cubism"
+msgid "Cubism"
+msgstr ""
+
+#: widgets/slideshow.cpp:241
+msgctxt "Filter Effect: Growing"
+msgid "Growing"
+msgstr ""
+
+#: widgets/slideshow.cpp:242
+msgctxt "Filter Effect: Horizontal Lines"
+msgid "Horizontal Lines"
+msgstr ""
+
+#: widgets/slideshow.cpp:243
+msgctxt "Filter Effect: Vertical Lines"
+msgid "Vertical Lines"
+msgstr ""
+
+#: widgets/slideshow.cpp:244
+msgctxt "Filter Effect: Circle Out"
+msgid "Circle Out"
+msgstr ""
+
+#: widgets/slideshow.cpp:245
+msgctxt "Filter Effect: Multi-Circle Out"
+msgid "Multi-Circle Out"
+msgstr ""
+
+#: widgets/slideshow.cpp:246
+msgctxt "Filter Effect: Spiral In"
+msgid "Spiral In"
+msgstr ""
+
+#: widgets/slideshow.cpp:247
+msgctxt "Filter Effect: Blobs"
+msgid "Blobs"
+msgstr ""
+
+#: widgets/slideshow.cpp:248 widgets/slideshowgl.cpp:398
+msgctxt "Filter Effect: Random effect"
+msgid "Random"
+msgstr ""
+
+#: widgets/slideshow.cpp:1329 widgets/slideshowgl.cpp:698
+msgid "Slideshow Completed"
+msgstr ""
+
+#: widgets/slideshow.cpp:1330 widgets/slideshowgl.cpp:699
+#: widgets/slideshowkb.cpp:517
+msgid "Click to Exit..."
+msgstr ""
+
+#: widgets/slideshowgl.cpp:390
+msgctxt "Filter Effect: Bend"
+msgid "Bend"
+msgstr ""
+
+#: widgets/slideshowgl.cpp:391
+msgctxt "Filter Effect: Blend"
+msgid "Blend"
+msgstr ""
+
+#: widgets/slideshowgl.cpp:392
+msgctxt "Filter Effect: Cube"
+msgid "Cube"
+msgstr ""
+
+#: widgets/slideshowgl.cpp:393
+msgctxt "Filter Effect: Fade"
+msgid "Fade"
+msgstr ""
+
+#: widgets/slideshowgl.cpp:394
+msgctxt "Filter Effect: Flutter"
+msgid "Flutter"
+msgstr ""
+
+#: widgets/slideshowgl.cpp:395
+msgctxt "Filter Effect: In Out"
+msgid "In Out"
+msgstr ""
+
+#: widgets/slideshowgl.cpp:396
+msgctxt "Filter Effect: Rotate"
+msgid "Rotate"
+msgstr ""
+
+#: widgets/slideshowgl.cpp:397
+msgctxt "Filter Effect: Slide"
+msgid "Slide"
+msgstr ""
+
+#: widgets/slideshowkb.cpp:516
+msgid "SlideShow Completed"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Axel Rousseau"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "axel@esperanto-jeunes.org"
+
+#. i18n: file: ui/advanceddialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, AdvancedDialog)
+#: rc.cpp:5
+msgid "advancedDialog"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:27
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:8
+msgid "&Interface"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, m_useMillisecondsCheckBox)
+#: rc.cpp:11
+msgid "Use &milliseconds instead of seconds"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:55
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:14
+msgid "&Controls"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:67
+#. i18n: ectx: property (toolTip), widget (QCheckBox, m_enableMouseWheelCheckBox)
+#: rc.cpp:17
+msgid "Enable mouse wheel to move between slides."
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:70
+#. i18n: ectx: property (text), widget (QCheckBox, m_enableMouseWheelCheckBox)
+#: rc.cpp:20
+msgid "Enable mouse &wheel "
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:88
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:23
+msgid "&Ken Burns effect"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:100
+#. i18n: ectx: property (text), widget (QCheckBox, m_kbDisableFadeCheckBox)
+#: rc.cpp:26
+msgid "Disable &fade-in / fade-out"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:113
+#. i18n: ectx: property (text), widget (QCheckBox, m_kbDisableCrossfadeCheckBox)
+#: rc.cpp:29
+msgid "Disable &cross-fade"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:129
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
+#: rc.cpp:32
+msgid "&Others"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:143
+#. i18n: ectx: property (text), widget (QCheckBox, m_cacheCheckBox)
+#: rc.cpp:35
+msgid "Enable &Cache"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:158
+#. i18n: ectx: property (text), widget (QLabel, m_cacheSizeLabel1)
+#: rc.cpp:38
+msgid "Cache size:"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:200
+#. i18n: ectx: property (text), widget (QLabel, m_cacheSizeLabel2)
+#: rc.cpp:41
+msgid "images"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:215
+#. i18n: ectx: property (text), widget (QLabel, m_KBCacheLabel)
+#: rc.cpp:44
+msgid ""
+"<b>Notice</b>:\n"
+"Ken Burns effect does not use this cache mechanism."
+msgstr ""
+
+#. i18n: file: ui/captiondialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, CaptionDialog)
+#: rc.cpp:48
+msgid "captionDialog"
+msgstr ""
+
+#. i18n: file: ui/captiondialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:51
+msgid "Line length (in characters)"
+msgstr ""
+
+#. i18n: file: ui/captiondialog.ui:80
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:54
+msgid "Colors"
+msgstr "Koloroj"
+
+#. i18n: file: ui/captiondialog.ui:86
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:57
+#, fuzzy
+#| msgid "Custom color"
+msgid "Font color:"
+msgstr "Propra koloro"
+
+#. i18n: file: ui/captiondialog.ui:109
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:60
+msgid "Background color:"
+msgstr "Fona koloro:"
+
+#. i18n: file: ui/captiondialog.ui:170
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:63
+#, fuzzy
+#| msgid "Background color:"
+msgid "Background opacity:"
+msgstr "Fona koloro:"
+
+#. i18n: file: ui/captiondialog.ui:177
+#. i18n: ectx: property (text), widget (QCheckBox, m_commentsDrawOutlineCheckBox)
+#: rc.cpp:66
+msgid "Outlined Text"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, MainDialog)
+#: rc.cpp:69
+msgid "mainDialog"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, m_allFilesButton)
+#: rc.cpp:72
+msgid "Show all images in current al&bum"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:36
+#. i18n: ectx: property (text), widget (QRadioButton, m_selectedFilesButton)
+#: rc.cpp:75
+msgid "Show onl&y selected images"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:43
+#. i18n: ectx: property (text), widget (QRadioButton, m_customButton)
+#: rc.cpp:78
+msgid "Cu&stom"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:53
+#. i18n: ectx: property (whatsThis), widget (QGroupBox, m_ImagesFilesGroup)
+#: rc.cpp:81
+msgid "Preview the currently selected image."
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:56
+#. i18n: ectx: property (title), widget (QGroupBox, m_ImagesFilesGroup)
+#: rc.cpp:84
+msgid "Image Files in Slideshow"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:123
+#. i18n: ectx: property (whatsThis), widget (QLabel, m_label6)
+#: rc.cpp:88
+msgid "Total number of images in the portfolio and sequence duration."
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:126
+#. i18n: ectx: property (text), widget (QLabel, m_label6)
+#. i18n: file: ui/maindialog.ui:145
+#. i18n: ectx: property (text), widget (QLabel, m_label7)
+#: rc.cpp:91 rc.cpp:97
+msgid "None"
+msgstr "Neniu"
+
+#. i18n: file: ui/maindialog.ui:142
+#. i18n: ectx: property (whatsThis), widget (QLabel, m_label7)
+#: rc.cpp:94
+msgid "Currently selected image in the portfolio list."
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:160
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:100
+#, fuzzy
+#| msgid "&Connect"
+msgid "Content"
+msgstr "&Konekti"
+
+#. i18n: file: ui/maindialog.ui:168
+#. i18n: ectx: property (text), widget (QCheckBox, m_printNameCheckBox)
+#: rc.cpp:103
+msgid "P&rint filename"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:175
+#. i18n: ectx: property (text), widget (QCheckBox, m_printProgressCheckBox)
+#: rc.cpp:106
+msgid "Progress indicator"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:184
+#. i18n: ectx: property (text), widget (QCheckBox, m_printCommentsCheckBox)
+#: rc.cpp:109
+msgid "Pr&int captions "
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:207
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:112
+msgid "Video"
+msgstr "Video"
+
+#. i18n: file: ui/maindialog.ui:213
+#. i18n: ectx: property (text), widget (QCheckBox, m_openglCheckBox)
+#: rc.cpp:115
+msgid "Use Open&GL slideshow transitions"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:220
+#. i18n: ectx: property (text), widget (QCheckBox, m_openGlFullScale)
+#: rc.cpp:118
+msgid "Use full screen resolution (slower)"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:243
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:121
+msgid "Playback"
+msgstr "Ludado"
+
+#. i18n: file: ui/maindialog.ui:249
+#. i18n: ectx: property (text), widget (QCheckBox, m_loopCheckBox)
+#. i18n: file: ui/soundtrackdialog.ui:331
+#. i18n: ectx: property (text), widget (QCheckBox, m_loopCheckBox)
+#: rc.cpp:124 rc.cpp:212
+msgid "&Loop"
+msgstr "&Ripeto"
+
+#. i18n: file: ui/maindialog.ui:256
+#. i18n: ectx: property (text), widget (QCheckBox, m_shuffleCheckBox)
+#: rc.cpp:127
+msgid "&Shuffle images"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:291
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:133
+msgid "Transition effect:"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:28
+#. i18n: ectx: property (text), widget (QPushButton, m_playButton)
+#. i18n: file: ui/slideplaybackwidget.ui:31
+#. i18n: ectx: property (text), widget (QPushButton, m_playButton)
+#: rc.cpp:136 rc.cpp:169
+msgid "Play"
+msgstr "Ludi"
+
+#. i18n: file: ui/playbackwidget.ui:35
+#. i18n: ectx: property (text), widget (QPushButton, m_stopButton)
+#. i18n: file: ui/slideplaybackwidget.ui:38
+#. i18n: ectx: property (text), widget (QPushButton, m_stopButton)
+#: rc.cpp:139 rc.cpp:172
+msgid "Stop"
+msgstr "Halti"
+
+#. i18n: file: ui/playbackwidget.ui:42
+#. i18n: ectx: property (text), widget (QPushButton, m_prevButton)
+#. i18n: file: ui/slideplaybackwidget.ui:45
+#. i18n: ectx: property (text), widget (QPushButton, m_prevButton)
+#: rc.cpp:142 rc.cpp:175
+msgid "Prev"
+msgstr "Antaŭa"
+
+#. i18n: file: ui/playbackwidget.ui:49
+#. i18n: ectx: property (text), widget (QPushButton, m_nextButton)
+#. i18n: file: ui/slideplaybackwidget.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, m_nextButton)
+#: rc.cpp:145 rc.cpp:178
+msgid "Next"
+msgstr "Sekva"
+
+#. i18n: file: ui/playbackwidget.ui:69
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:148
+msgid "Time"
+msgstr "Tempo"
+
+#. i18n: file: ui/playbackwidget.ui:78
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:151
+msgid "elapsed:"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:85
+#. i18n: ectx: property (text), widget (QLabel, m_elapsedTimeLabel)
+#. i18n: file: ui/playbackwidget.ui:99
+#. i18n: ectx: property (text), widget (QLabel, m_totalTimeLabel)
+#: rc.cpp:154 rc.cpp:160
+msgid "0:00:00"
+msgstr "0:00:00"
+
+#. i18n: file: ui/playbackwidget.ui:92
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:157
+msgid "total:"
+msgstr "total:"
+
+#. i18n: file: ui/playbackwidget.ui:127
+#. i18n: ectx: property (text), widget (QLabel, m_soundLabel)
+#: rc.cpp:163
+msgid "SoundPixmap"
+msgstr ""
+
+#. i18n: file: ui/slideplaybackwidget.ui:22
+#. i18n: ectx: property (text), widget (QLabel, m_slideLabel)
+#: rc.cpp:166
+msgid "SlidePixmap"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, m_selectionGroupBox)
+#: rc.cpp:181
+msgid "Select audio files"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:76
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonUp)
+#: rc.cpp:184
+msgid "Move the current image up in the portfolio list."
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:104
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonAdd)
+#: rc.cpp:187
+msgid "Add some image files to the portfolio list."
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:132
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonDelete)
+#: rc.cpp:190
+msgid "Remove some image files from the portfolio list."
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:160
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonDown)
+#. i18n: file: ui/soundtrackdialog.ui:191
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonLoad)
+#. i18n: file: ui/soundtrackdialog.ui:219
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonSave)
+#. i18n: file: ui/soundtrackdialog.ui:247
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonReset)
+#: rc.cpp:193 rc.cpp:196 rc.cpp:199 rc.cpp:202
+msgid "Move the current image down in the portfolio list."
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:305
+#. i18n: ectx: property (text), widget (QPushButton, m_previewButton)
+#: rc.cpp:206
+msgid "Preview..."
+msgstr "Antaŭrigardo..."
+
+#. i18n: file: ui/soundtrackdialog.ui:325
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:209
+msgid "Options"
+msgstr "Opcioj"
+
+#. i18n: file: ui/soundtrackdialog.ui:338
+#. i18n: ectx: property (text), widget (QCheckBox, m_rememberSoundtrack)
+#: rc.cpp:215
+msgid "Remember soundtrack"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:361
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:218
+msgid "Time comparison"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:369
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:221
+msgid "Slide:"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:383
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:225
+msgid "Soundtrack:"
+msgstr ""
+
+#~ msgid "Transparent background"
+#~ msgstr "Travidebla fono"

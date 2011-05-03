@@ -1,0 +1,348 @@
+# Translation of kipiplugin_rawconverter to Korean.
+# Copyright (C) 2007 This_file_is_part_of_KDE
+# This file is distributed under the same license as the extragear-base package.
+# Park Shinjo <kde@peremen.name>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-libs\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2007-12-27 11:17+0900\n"
+"Last-Translator: Park Shinjo <kde@peremen.name>\n"
+"Language-Team: Korean <cho.sungjae@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: dialogs/batchdialog.cpp:148 dialogs/singledialog.cpp:203
+#, fuzzy
+#| msgid "<p>Exit Raw Converter"
+msgid "Exit RAW Converter"
+msgstr "<p>RAW 변환기 끝내기"
+
+#: dialogs/batchdialog.cpp:149
+#, fuzzy
+#| msgid "Raw Images Batch Converter"
+msgid "RAW Image Batch Converter"
+msgstr "RAW 그림 일괄 변환기"
+
+#: dialogs/batchdialog.cpp:152
+msgid "&Add"
+msgstr "추가(&A)"
+
+#: dialogs/batchdialog.cpp:153
+#, fuzzy
+#| msgid "<p>Add new Raw files to the list"
+msgid "Add new RAW files to the list"
+msgstr "<p>새 RAW 파일을 목록에 추가하기"
+
+#: dialogs/batchdialog.cpp:155
+msgid "&Remove"
+msgstr "삭제(&R)"
+
+#: dialogs/batchdialog.cpp:156
+#, fuzzy
+#| msgid "<p>Remove selected Raw files from the list"
+msgid "Remove selected RAW files from the list"
+msgstr "<p>선택한 RAW 파일을 목록에서 삭제하기"
+
+#: dialogs/batchdialog.cpp:175
+#, fuzzy
+#| msgid "Thumb"
+msgid "Thumbnail"
+msgstr "미리 보기"
+
+#: dialogs/batchdialog.cpp:176
+#, fuzzy
+#| msgid "Raw File"
+msgid "RAW File"
+msgstr "RAW 파일"
+
+#: dialogs/batchdialog.cpp:177
+msgid "Target File"
+msgstr "대상 파일"
+
+#: dialogs/batchdialog.cpp:178
+msgid "Camera"
+msgstr "카메라"
+
+#: dialogs/batchdialog.cpp:195 dialogs/batchdialog.cpp:199
+#: dialogs/singledialog.cpp:148 dialogs/singledialog.cpp:151
+msgid "Save settings"
+msgstr "설정 저장"
+
+#: dialogs/batchdialog.cpp:220 dialogs/singledialog.cpp:130
+#: dialogs/singledialog.cpp:166
+msgid "RAW Image Converter"
+msgstr "RAW 그림 변환기"
+
+#: dialogs/batchdialog.cpp:223
+#, fuzzy
+#| msgid "A Kipi plugin to batch convert Raw images"
+msgid "A Kipi plugin to batch convert RAW images"
+msgstr "RAW 그림을 일괄적으로 변환하는 Kipi 플러그인"
+
+#: dialogs/batchdialog.cpp:224 dialogs/singledialog.cpp:170
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2007, Gilles Caulier"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:227 dialogs/singledialog.cpp:173
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/batchdialog.cpp:228 dialogs/singledialog.cpp:174
+msgid "Author"
+msgstr "작성자"
+
+#: dialogs/batchdialog.cpp:231 dialogs/singledialog.cpp:177
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:232 dialogs/singledialog.cpp:178
+#, fuzzy
+#| msgid "Developper and maintainer"
+msgid "Developer and maintainer"
+msgstr "개발자와 관리자"
+
+#: dialogs/batchdialog.cpp:240 dialogs/singledialog.cpp:186
+#, fuzzy
+#| msgid "Plugin Handbook"
+msgid "Handbook"
+msgstr "플러그인 도움말"
+
+#: dialogs/batchdialog.cpp:388
+#, fuzzy
+#| msgid "There is no Raw file to process in the list!"
+msgid "There is no RAW file in the list to process."
+msgstr "목록에 처리할 RAW 파일이 없습니다!"
+
+#: dialogs/batchdialog.cpp:579 dialogs/singledialog.cpp:129
+msgid "&Abort"
+msgstr "중단(&A)"
+
+#: dialogs/batchdialog.cpp:580 dialogs/singledialog.cpp:201
+#, fuzzy
+#| msgid "<p>Abort the current Raw file conversion"
+msgid "Abort the current RAW file conversion"
+msgstr "<p>현재 RAW 파일 변환 중단하기"
+
+#: dialogs/batchdialog.cpp:585 dialogs/singledialog.cpp:128
+msgid "Con&vert"
+msgstr "변환(&V)"
+
+#: dialogs/batchdialog.cpp:586
+#, fuzzy
+#| msgid "<p>Start converting the Raw images from current settings"
+msgid "Start converting the RAW images using current settings."
+msgstr "<p>현재 설정으로 RAW 그림 변환을 시작합니다"
+
+#: dialogs/batchdialog.cpp:636 dialogs/singledialog.cpp:437
+#, fuzzy, kde-format
+#| msgid "Save Raw Image converted from '%1' as"
+msgid "Save RAW image converted from '%1' as"
+msgstr "'%1'에서 변환된 RAW 그림을 다음으로 저장하기"
+
+#: dialogs/batchdialog.cpp:665 dialogs/singledialog.cpp:464
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "그림 %1을(를) 저장하는 데 실패함"
+
+#: dialogs/singledialog.cpp:127
+msgid "&Preview"
+msgstr "미리 보기(&P)"
+
+#: dialogs/singledialog.cpp:169
+#, fuzzy
+#| msgid "A Kipi plugin to convert a Raw image"
+msgid "A Kipi plugin to convert RAW images"
+msgstr "RAW 그림을 변환하는 Kipi 플러그인"
+
+#: dialogs/singledialog.cpp:194
+#, fuzzy
+#| msgid ""
+#| "<p>Generate a Preview from current settings. Uses a simple bilinear "
+#| "interpolation for quick results."
+msgid ""
+"Generate a preview using current settings. Uses a simple bilinear "
+"interpolation for quick results."
+msgstr ""
+"<p>현재 설정으로 미리 보기 그림을 만듭니다. 간단한 이중 보간법으로 빠른 결과"
+"를 만듭니다."
+
+#: dialogs/singledialog.cpp:198
+#, fuzzy
+#| msgid ""
+#| "<p>Convert the Raw Image from current settings. This uses a high-quality "
+#| "adaptive algorithm."
+msgid ""
+"Convert the RAW Image using current settings. This uses a high-quality "
+"adaptive algorithm."
+msgstr ""
+"<p>현재 설정으로 RAW 그림을 만듭니다. 이것은 고품질 알고리즘을 사용합니다."
+
+#: dialogs/singledialog.cpp:387
+msgid "Generating Preview..."
+msgstr "미리 보기 만드는 중..."
+
+#: dialogs/singledialog.cpp:398
+msgid "Failed to generate preview"
+msgstr "미리 보기 만드는 데 실패함"
+
+#: dialogs/singledialog.cpp:403
+#, fuzzy
+#| msgid "Converting Raw Image..."
+msgid "Processing Images..."
+msgstr "RAW 그림 변환하는 중..."
+
+#: dialogs/singledialog.cpp:480
+#, fuzzy
+#| msgid "Failed to convert Raw image"
+msgid "Failed to convert RAW image"
+msgstr "RAW 그림을 변환하는 데 실패함"
+
+#: manager/actionthread.cpp:234
+#, fuzzy
+#| msgid "Cannot identify Raw image"
+msgid "Cannot identify RAW image"
+msgstr "RAW 그림을 식별할 수 없음"
+
+#: manager/actionthread.cpp:241
+#, fuzzy, kde-format
+#| msgid "Make: %1\n"
+msgid "<br>Make: %1<br>"
+msgstr "제조사: %1\n"
+
+#: manager/actionthread.cpp:242
+#, fuzzy, kde-format
+#| msgid "Model: %1\n"
+msgid "Model: %1<br>"
+msgstr "모델: %1\n"
+
+#: manager/actionthread.cpp:246
+#, fuzzy, kde-format
+#| msgid "Created: %1\n"
+msgid "Created: %1<br>"
+msgstr "만든 날짜: %1\n"
+
+#: manager/actionthread.cpp:253
+#, fuzzy, kde-format
+#| msgid "Aperture: f/%1\n"
+msgid "Aperture: f/%1<br>"
+msgstr "조리개 구경: f/%1\n"
+
+#: manager/actionthread.cpp:258
+#, fuzzy, kde-format
+#| msgid "Focal: %1 mm\n"
+msgid "Focal: %1 mm<br>"
+msgstr "초점 거리: %1 mm\n"
+
+#: manager/actionthread.cpp:263
+#, fuzzy, kde-format
+#| msgid "Exposure: 1/%1 s\n"
+msgid "Exposure: 1/%1 s<br>"
+msgstr "노출: 1/%1 초\n"
+
+#: manager/actionthread.cpp:268
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "감도: ISO %1"
+
+#: plugin/plugin_rawconverter.cpp:81
+#, fuzzy
+#| msgid "RAW Image Converter"
+msgid "RAW Image Converter..."
+msgstr "RAW 그림 변환기"
+
+#: plugin/plugin_rawconverter.cpp:90
+#, fuzzy
+#| msgid "Batch Raw Converter..."
+msgid "Batch RAW Converter..."
+msgstr "일괄 RAW 변환기..."
+
+#: plugin/plugin_rawconverter.cpp:154
+#, fuzzy, kde-format
+#| msgid "\"%1\" is not a Raw file."
+msgid "\"%1\" is not a RAW file."
+msgstr "\"%1\"은(는) RAW 파일이 아닙니다."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Park Shinjo"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#~ msgid "Failed to load image after processing"
+#~ msgstr "처리 후 그림을 불러오는 데 실패함"
+
+#~ msgid "Output file format:"
+#~ msgstr "출력 파일 형식:"
+
+#, fuzzy
+#~| msgid ""
+#~| "<p>Set here the output file format to use:<p><b>JPEG</b>: output the "
+#~| "processed image in JPEG Format. this format will give smaller-sized "
+#~| "files. Minimum JPEG compression level will be used during Raw conversion."
+#~| "<p><b>Warning!!! duing of destructive compression algorithm, JPEG is a "
+#~| "lossy quality format.</b><p><b>TIFF</b>: output the processed image in "
+#~| "TIFF Format. This generates larges, without losing quality. Adobe "
+#~| "Deflate compression will be used during conversion.<p><b>PPM</b>: output "
+#~| "the processed image in PPM Format. This generates the largest files, "
+#~| "without losing quality.<p><b>PNG</b>: output the processed image in PNG "
+#~| "Format. This generates larges, without losing quality. Maximum PNG "
+#~| "compression will be used during conversion."
+#~ msgid ""
+#~ "<p>Set the output file format to use here:</p><p><b>JPEG</b>: output the "
+#~ "processed image in JPEG format. This format will give smaller-sized "
+#~ "files. Minimum JPEG compression level will be used during RAW conversion."
+#~ "</p><p><b>Warning: Due to the destructive compression algorithm, JPEG is "
+#~ "a lossy quality format.</b></p><p><b>TIFF</b>: output the processed image "
+#~ "in TIFF format. This generates large files, without losing quality. Adobe "
+#~ "Deflate compression will be used during conversion.</p><p><b>PPM</b>: "
+#~ "output the processed image in PPM format. This generates the largest "
+#~ "files, without losing quality.</p><p><b>PNG</b>: output the processed "
+#~ "image in PNG format. This generates large files, without losing quality. "
+#~ "Maximum PNG compression will be used during conversion.</p>"
+#~ msgstr ""
+#~ "<p>이 곳에서 출력 파일 형식을 선택할 수 있습니다:<p><b>JPEG</b>: 출력 파일"
+#~ "을 JPEG 형식으로 저장합니다. 이 형식을 사용하면 파일 크기가 작습니다. RAW "
+#~ "변환 도중에는 가장 낮은 JPEG 압축률을 사용합니다.<p><b>경고! JPEG는 손실 "
+#~ "압축을 사용합니다.</b><p><b>TIFF</b>: 출력 파일을 TIFF 형식으로 저장합니"
+#~ "다. 이것은 큰 무손실 파일을 생성합니다. 변환할 때 Adobe Deflate 압축 방식"
+#~ "을 사용합니다.<p><b>PPM</b>: 출력 파일을 PPM 형식으로 저장합니다. 이것은 "
+#~ "가장 큰 무손실 파일을 생성합니다.<p><b>PNG</b>: 출력 파일을 PNG 형식으로 "
+#~ "저장합니다. 이것은 큰 무손실 파일을 선택합니다. 변환 도중에는 가장 높은 "
+#~ "PNG 압축률을 사용합니다."
+
+#~ msgid "If Target File Exists:"
+#~ msgstr "대상 파일이 존재할 때:"
+
+#~ msgid "Overwrite automatically"
+#~ msgstr "자동으로 덮어쓰기"
+
+#~ msgid "Open rename-file dialog"
+#~ msgstr "파일 이름 바꾸기 대화상자 열기"
+
+#, fuzzy
+#~| msgid "<p>Abort the current Raw files conversion"
+#~ msgid "Abort the current Raw files conversion"
+#~ msgstr "<p>현재 RAW 파일 변환을 중단합니다"
+
+#~ msgid "Raw Image Converter..."
+#~ msgstr "RAW 그림 변환기..."
+
+#~ msgid "Raw Image Converter"
+#~ msgstr "RAW 그림 변환기"

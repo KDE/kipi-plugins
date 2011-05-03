@@ -1,0 +1,135 @@
+# Translation of kipiplugin_acquireimages.po to Low Saxon
+#
+# Sönke Dibbern <s_dibbern@web.de>, 2007, 2008.
+# Manfred Wiese <m.j.wiese@web.de>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2010-08-24 15:40+0200\n"
+"Last-Translator: Manfred Wiese <m.j.wiese@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Biller rankriegen"
+
+#: aboutdata.h:41
+msgid "A tool to acquire images using a flat scanner"
+msgstr "En Warktüüch för't Rankriegen vun Biller över en Inleser"
+
+#: aboutdata.h:42
+#, fuzzy
+#| msgid "(c) 2008-2009, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "(c) 2008-2009, Gilles Caulier"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Autor"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Schriever"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr "Vun Inleser importeren..."
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Inleser lett sik nich opmaken."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Bild inlesen"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Handbook"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Nieg Bilddatei-Naam"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "Teelbild-Dateiformaat \"%1\" nich ünnerstütt."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"Sekern fehlslaan:\n"
+"Datei \"%1\"\n"
+"op \"%2\""
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"Dat gifft al en Datei mit den Naam \"%1\". Wullt Du ehr redig överschrieven?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Datei överschrieven?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr "Datei \"%1\" lett sik nich sekern."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sönke Dibbern, Manfred Wiese"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "s_dibbern@web.de, m.j.wiese@web.de"
+
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr ""
+#~ "© 2003-2009, Gilles Caulier\n"
+#~ "© 2007-2009, Kare Sars"
+
+#~ msgid "Scan Images..."
+#~ msgstr "Biller inlesen..."
+
+#~ msgid "Cannot acquire image..."
+#~ msgstr "Bild lett sik nich rankriegen..."
+
+#~ msgid "Cannot handle parent windows..."
+#~ msgstr "Böverfinstern laat sik nich kuntrulleren..."
+
+#~ msgid "A Kipi plugin to acquire images using a flat bed scanner"
+#~ msgstr "En KIPI-Moduul för't Rankriegen vun Biller över en Sietbett-Inleser"
+
+#~ msgid "image is here."
+#~ msgstr "Bild is dor."

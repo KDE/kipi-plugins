@@ -1,0 +1,590 @@
+# translation of kipiplugin_flickrexport.po to Estonian
+#
+# Marek Laane <bald@starman.ee>, 2006-2009.
+# Marek Laane <bald@smail.ee>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-12-13 15:09+0200\n"
+"Last-Translator: Marek Laane <bald@smail.ee>\n"
+"Language-Team: Estonian <kde-et@linux.ee>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: comboboxintermediate.h:53
+msgid "Various"
+msgstr "Mitmesugust"
+
+#: flickrlist.cpp:390
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Määra, kas foto on avalikult nähtav, või kasuta üleslaadimise valikute "
+"kaarti selle määramiseks kõigile piltidele"
+
+#: flickrlist.cpp:394
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Määra, kas foto on perekonnale nähtav, või kasuta üleslaadimise valikute "
+"kaarti selle määramiseks kõigile piltidele"
+
+#: flickrlist.cpp:398
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Määra, kas foto on sõpradele nähtav, või kasuta üleslaadimise valikute "
+"kaarti selle määramiseks kõigile piltidele"
+
+#: flickrlist.cpp:402
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Määra foto turbetase või kasuta üleslaadimise valikute kaarti selle "
+"määramiseks kõigile piltidele"
+
+#: flickrlist.cpp:406
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Määra foto tüüp või kasuta üleslaadimise valikute kaarti selle määramiseks "
+"kõigile piltidele"
+
+#: flickrlist.cpp:419
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Lisa lisasilte igale pildile eraldi või kasuta üleslaadimise valikute kaarti "
+"siltide lisamiseks kõigile piltidele"
+
+#: flickrlist.cpp:431
+msgid "Enter extra tags, separated by commas."
+msgstr "Siin saab sisestada komaga eraldatult lisasildid."
+
+#: flickrtalker.cpp:204
+msgid "Getting the Frob"
+msgstr "Frobi hankimine"
+
+#: flickrtalker.cpp:249
+msgid "Checking if previous token is still valid"
+msgstr "Endise märgise kehtivuse kontroll"
+
+#: flickrtalker.cpp:275
+msgid ""
+"Please follow the instructions in the browser window, then return to press "
+"Yes if you are authenticated, or No otherwise."
+msgstr ""
+"Palun järgi brauseriaknas toodud juhiseid ja tule seejärel tagasi ning "
+"klõpsa Jah, kui oled ennast autentinud, või vastasel juhul Ei."
+
+#: flickrtalker.cpp:277
+#, kde-format
+msgid "%1 Service Web Authorization"
+msgstr "%1 teenuse veebis autentimine"
+
+#: flickrtalker.cpp:282
+msgid "Authenticating the User on web"
+msgstr "Kasutaja autentimine veebis"
+
+#: flickrtalker.cpp:334
+msgid "Getting the Token from the server"
+msgstr "Märgise hankimine serverist"
+
+#: flickrtalker.cpp:699
+msgid "No photo specified"
+msgstr "Fotot ei ole määratud"
+
+#: flickrtalker.cpp:702
+msgid "General upload failure"
+msgstr "Üldine üleslaadimise viga"
+
+#: flickrtalker.cpp:705
+msgid "Filesize was zero"
+msgstr "Faili suurus oli null"
+
+#: flickrtalker.cpp:708
+msgid "Filetype was not recognized"
+msgstr "Failitüüpi ei tuntud ära"
+
+#: flickrtalker.cpp:711
+msgid "User exceeded upload limit"
+msgstr "Kasutaja on ületanud üleslaadimise limiidi"
+
+#: flickrtalker.cpp:714
+msgid "Invalid signature"
+msgstr "Vigane signatuur"
+
+#: flickrtalker.cpp:717
+msgid "Missing signature"
+msgstr "Puuduv signatuur"
+
+#: flickrtalker.cpp:720
+msgid "Login Failed / Invalid auth token"
+msgstr "Sisselogimine nurjus / Vigane autentimismärgis"
+
+#: flickrtalker.cpp:723
+msgid "Invalid API Key"
+msgstr "Vigane API võti"
+
+#: flickrtalker.cpp:726
+msgid "Service currently unavailable"
+msgstr "Teenus pole praegu kättesaadav"
+
+#: flickrtalker.cpp:729
+msgid "Invalid Frob"
+msgstr "Vigane frob"
+
+#: flickrtalker.cpp:732
+msgid "Format \"xxx\" not found"
+msgstr "Vormingut \"xxx\" ei leitud"
+
+#: flickrtalker.cpp:735
+msgid "Method \"xxx\" not found"
+msgstr "Meetodit \"xxx\" ei leitud"
+
+#: flickrtalker.cpp:738
+msgid "Invalid SOAP envelope"
+msgstr "Vigane SOAP ümbrik"
+
+#: flickrtalker.cpp:741
+msgid "Invalid XML-RPC Method Call"
+msgstr "Vigane XML-RPC meetodi väljakutse"
+
+#: flickrtalker.cpp:744
+msgid "The POST method is now required for all setters"
+msgstr "POST meetod on vajalik kõigi 'setterite' jaoks"
+
+#: flickrtalker.cpp:747
+msgid "Unknown error"
+msgstr "Tundmatu viga"
+
+#: flickrtalker.cpp:752
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Tekkis viga: %1\n"
+"Jätkamine ei ole võimalik."
+
+#: flickrtalker.cpp:899
+msgctxt "As in the permission to"
+msgid "write"
+msgstr "kirjutamine"
+
+#: flickrtalker.cpp:901
+msgctxt "As in the permission to"
+msgid "read"
+msgstr "lugemine"
+
+#: flickrtalker.cpp:903
+msgctxt "As in the permission to"
+msgid "delete"
+msgstr "kustutamine"
+
+#: flickrtalker.cpp:933
+msgid "Your token is invalid. Would you like to get a new token to proceed?\n"
+msgstr "Märgis on vigane. Kas soovid jätkamiseks hankida uue märgise?\n"
+
+#: flickrtalker.cpp:1075
+msgid "PhotoSet creation failed: "
+msgstr "Fotokogu loomine nurjus: "
+
+#: flickrtalker.cpp:1166
+msgid "Failed to fetch list of photo sets."
+msgstr "Fotokogude nimekirja hankimine nurjus."
+
+#: flickrtalker.cpp:1236
+msgid "Failed to upload photo"
+msgstr "Foto üleslaadimine nurjus"
+
+#: flickrtalker.cpp:1300
+msgid "Failed to query photo information"
+msgstr "Fotoinfo päring nurjus"
+
+#: flickrwidget.cpp:80
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"eksport</h2></b>"
+
+#: flickrwidget.cpp:85
+msgid ""
+"<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+"font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+"font></a> eksport</h2></b>"
+
+#: flickrwidget.cpp:90
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> eksport</h2></b>"
+
+#: flickrwidget.cpp:103 flickrwidget.cpp:108
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Avalik"
+
+#: flickrwidget.cpp:107
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "See on piltide nimekiri, mis laaditakse sinu Flickri kontosse."
+
+#: flickrwidget.cpp:112
+msgid "Extra tags"
+msgstr "Lisasildid"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:127
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Perekond"
+
+#: flickrwidget.cpp:121 flickrwidget.cpp:129
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Sõbrad"
+
+#: flickrwidget.cpp:136
+msgid "Safety level"
+msgstr "Turbetase"
+
+#: flickrwidget.cpp:138
+msgid "Content type"
+msgstr "Sisu tüüp"
+
+#: flickrwidget.cpp:141
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Turvaline"
+
+#: flickrwidget.cpp:142
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Keskmine"
+
+#: flickrwidget.cpp:143
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Piiratud"
+
+#: flickrwidget.cpp:144 flickrwidget.cpp:277
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Foto"
+
+#: flickrwidget.cpp:145 flickrwidget.cpp:278
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Ekraanipilt"
+
+#: flickrwidget.cpp:146 flickrwidget.cpp:279
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Muu"
+
+#: flickrwidget.cpp:172
+msgid "Account"
+msgstr "Konto"
+
+#: flickrwidget.cpp:175
+msgctxt "account settings"
+msgid "Username: "
+msgstr "Kasutajanimi: "
+
+#: flickrwidget.cpp:178
+msgid "Use a different account"
+msgstr "Teise konto kasutamine"
+
+#: flickrwidget.cpp:181
+msgid "PhotoSet:"
+msgstr "Fotokogu:"
+
+#: flickrwidget.cpp:184
+msgid "&New PhotoSet"
+msgstr "&Uus fotokogu"
+
+#: flickrwidget.cpp:199
+msgid "Tag options"
+msgstr "Siltide valikud"
+
+#: flickrwidget.cpp:203
+msgid "Use Host Application Tags"
+msgstr "Rakenduse siltide kasutamine"
+
+#: flickrwidget.cpp:205 flickrwidget.cpp:577
+msgid "More tag options"
+msgstr "Rohkem siltide valikuid"
+
+#: flickrwidget.cpp:219
+msgid "Added Tags: "
+msgstr "Lisatud sildid:"
+
+#: flickrwidget.cpp:222
+msgid "Enter new tags here, separated by commas."
+msgstr "Siin saab sisestada komaga eraldatult uued sildid."
+
+#: flickrwidget.cpp:224
+msgid "Add tags per image"
+msgstr "Siltide lisamine igale pildile eraldi"
+
+#: flickrwidget.cpp:225
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Märkimise korral saab faililoendi kaardil lisada lisasilte igale pildile "
+"eraldi"
+
+#: flickrwidget.cpp:229
+msgid "Strip Spaces From Tags"
+msgstr "Tühikute kõrvaldamine siltidest"
+
+#: flickrwidget.cpp:242
+msgid "Publication Options"
+msgstr "Avaldamisvalikud"
+
+#: flickrwidget.cpp:247
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Avalik (kõik näevad)"
+
+#: flickrwidget.cpp:250
+msgid "Visible to Family"
+msgstr "Nähtav perekonnale"
+
+#: flickrwidget.cpp:253
+msgid "Visible to Friends"
+msgstr "Nähtav sõpradele"
+
+#: flickrwidget.cpp:256 flickrwidget.cpp:565
+msgid "More publication options"
+msgstr "Rohkem avaldamisvalikuid"
+
+#: flickrwidget.cpp:269
+msgid "Safety level:"
+msgstr "Turbetase:"
+
+#: flickrwidget.cpp:271
+msgid "Safe"
+msgstr "Turvaline"
+
+#: flickrwidget.cpp:272
+msgid "Moderate"
+msgstr "Keskmine"
+
+#: flickrwidget.cpp:273
+msgid "Restricted"
+msgstr "Piiratud"
+
+#: flickrwidget.cpp:275
+msgid "Content type:"
+msgstr "Sisu tüüp:"
+
+#: flickrwidget.cpp:296
+msgid "Resizing Options"
+msgstr "Suuruse muutmise valikud"
+
+#: flickrwidget.cpp:301
+msgid "Resize photos before uploading"
+msgstr "Fotode suuruse muutmine enne üleslaadimist"
+
+#: flickrwidget.cpp:312
+msgid "Maximum dimension (pixels):"
+msgstr "Maksimummõõtmed (pikslites):"
+
+#: flickrwidget.cpp:322
+msgid "JPEG Image Quality (higher is better):"
+msgstr "JPEG pildi kvaliteet (mida suurem, seda parem):"
+
+#: flickrwidget.cpp:350
+msgid "File List"
+msgstr "Failide nimekiri"
+
+#: flickrwidget.cpp:351
+msgid "Upload Options"
+msgstr "Üleslaadimise valikud"
+
+#: flickrwidget.cpp:561
+msgid "Fewer publication options"
+msgstr "Vähem avaldamisvalikuid"
+
+#: flickrwidget.cpp:582
+msgid "Fewer tag options"
+msgstr "Vähem siltide valikuid"
+
+#: flickrwindow.cpp:84
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Eksport %1 veebiteenusesse"
+
+#: flickrwindow.cpp:123
+msgid "Start Uploading"
+msgstr "Alusta üleslaadimist"
+
+#: flickrwindow.cpp:135
+msgid "Flickr/23/Zooomr Export"
+msgstr "Flickr/23/Zooomr eksport"
+
+#: flickrwindow.cpp:138
+msgid ""
+"A Kipi plugin to export an image collection to a Flickr / 23 / Zooomr web "
+"service."
+msgstr "Kipi plugin pildikogu eksportimiseks Flickr/23/Zooomr veebiteenusesse."
+
+#: flickrwindow.cpp:140
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008: Vardhman Jain\n"
+"(c) 2008-2009: Gilles Caulier\n"
+"(c) 2009: Luka Renko"
+
+#: flickrwindow.cpp:144
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:144
+msgid "Author and maintainer"
+msgstr "Autor ja hooldaja"
+
+#: flickrwindow.cpp:147
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:147
+msgid "Developer"
+msgstr "Arendaja"
+
+#: flickrwindow.cpp:155
+msgid "Handbook"
+msgstr "Käsiraamat"
+
+#: flickrwindow.cpp:492
+msgid "&lt;Photostream Only&gt;"
+msgstr "&lt;Ainult fotovoog&gt;"
+
+#: flickrwindow.cpp:666
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Faili %1 üleslaadimine"
+
+#: flickrwindow.cpp:686
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "Fotokogu teabe hankimine %1 teenusest nurjus. %2\n"
+
+#: flickrwindow.cpp:691
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"Foto laadimine %1 teenusesse nurjus. %2\n"
+"Kas soovid jätkata?"
+
+#: login.cpp:68
+msgctxt "flickr login"
+msgid "Username:"
+msgstr "Kasutajanimi:"
+
+#: login.cpp:71
+msgid "Password:"
+msgstr "Parool:"
+
+#: plugin_flickrexport.cpp:80
+msgid "Export to Flick&r..."
+msgstr "Ekspo&rdi Flickrisse..."
+
+#: plugin_flickrexport.cpp:91
+msgid "Export to &23..."
+msgstr "Ekspordi &23-e..."
+
+#: plugin_flickrexport.cpp:102
+msgid "Export to &Zooomr..."
+msgstr "Ekspordi &Zooomri..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bald@smail.ee"
+
+#. i18n: file: flickralbumdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, FlickrAlbumDialog)
+#: rc.cpp:5
+msgid "New PhotoSet"
+msgstr "Uus fotokogu"
+
+#. i18n: file: flickralbumdialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:8
+msgid "<h3>Create New PhotoSet </h3>"
+msgstr "<h3>Uue fotokogu loomine </h3>"
+
+#. i18n: file: flickralbumdialog.ui:86
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:11
+msgid "&OK"
+msgstr "&OK"
+
+#. i18n: file: flickralbumdialog.ui:102
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:14
+msgid "&Cancel"
+msgstr "&Loobu"
+
+#. i18n: file: flickralbumdialog.ui:130
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:17
+msgid "Title (required):"
+msgstr "Pealkiri (nõutav):"
+
+#. i18n: file: flickralbumdialog.ui:143
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:20
+msgid "Description (optional)"
+msgstr "Kirjeldus (pole kohustuslik)"
+
+#~ msgid "Less tag options"
+#~ msgstr "Vähem siltide valikuid"
+
+#~ msgid "Less publication options"
+#~ msgstr "Vähem avaldamisvalikuid"
+
+#~ msgid "Override Default Options"
+#~ msgstr "Vaikevalikute tühistamine"
+
+#~ msgid "Extended options"
+#~ msgstr "Muud valikud"
+
+#~ msgid "PhotoSet created successfully"
+#~ msgstr "Fotokogu loodi edukalt"
+
+#~ msgid "Name (optional):"
+#~ msgstr "Nimi (pole kohustuslik):"
+
+#~ msgid "Primary Photo Id"
+#~ msgstr "Foto primaarne ID"
+
+#~ msgid "User Name: "
+#~ msgstr "Kasutajanimi: "

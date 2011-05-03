@@ -1,0 +1,4383 @@
+# translation of kipiplugin_metadataedit.po to Dutch
+#
+# Rinse de Vries <rinsedevries@kde.nl>, 2006, 2007, 2008.
+# Jurriaan Pruis <email@jurriaanpruis.nl>, 2006.
+# Freek de Kruijf <f.de.kruijf@hetnet.nl>, 2006, 2008, 2009.
+# Kristof Bal <kristof.bal@gmail.com>, 2008.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_metadataedit\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-12 03:49+0200\n"
+"PO-Revision-Date: 2011-04-12 22:23+0200\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: exif/exifadjust.cpp:98
+msgid "Brightness (APEX):"
+msgstr "Helderheid (APEX)"
+
+#: exif/exifadjust.cpp:103
+msgid ""
+"Set here the brightness adjustment value in APEX unit used by camera to take "
+"the picture."
+msgstr ""
+"Stel de waarde van de aanpassing van de helderheid in APEX-eenheden in die "
+"gebruikt wordt door de camera om de foto te maken."
+
+#: exif/exifadjust.cpp:108
+msgid "Gain Control:"
+msgstr "Controle op versterking"
+
+#: exif/exifadjust.cpp:110
+msgctxt "gain control"
+msgid "None"
+msgstr "Geen"
+
+#: exif/exifadjust.cpp:111
+msgctxt "gain control"
+msgid "Low gain up"
+msgstr "Lage versterking ophoog"
+
+#: exif/exifadjust.cpp:112
+msgctxt "gain control"
+msgid "High gain up"
+msgstr "Hoge versterking omhoog"
+
+#: exif/exifadjust.cpp:113
+msgctxt "gain control"
+msgid "Low gain down"
+msgstr "Lage versterking omlaag"
+
+#: exif/exifadjust.cpp:114
+msgctxt "gain control"
+msgid "High gain down"
+msgstr "Hoge versterking omlaag"
+
+#: exif/exifadjust.cpp:115
+msgid ""
+"Set here the degree of overall image gain adjustment used by camera to take "
+"the picture."
+msgstr ""
+"Stel de mate van de aanpassing van de versterking voor het gehele beeld in "
+"die door de camera wordt toegepast bij het nemen van de foto."
+
+#: exif/exifadjust.cpp:120
+msgid "Contrast:"
+msgstr "Contrast:"
+
+#: exif/exifadjust.cpp:122
+msgctxt "contrast mode"
+msgid "Normal"
+msgstr "Normaal"
+
+#: exif/exifadjust.cpp:123
+msgctxt "contrast mode"
+msgid "Soft"
+msgstr "Zacht"
+
+#: exif/exifadjust.cpp:124
+msgctxt "contrast mode"
+msgid "Hard"
+msgstr "Hard"
+
+#: exif/exifadjust.cpp:125
+msgid ""
+"Set here the direction of contrast processing applied by the camera to take "
+"the picture."
+msgstr ""
+"Stel de richting van de contrastbewerking in die door de camera wordt "
+"toegepast bij het nemen van de foto."
+
+#: exif/exifadjust.cpp:130
+msgid "Saturation:"
+msgstr "Verzadiging:"
+
+#: exif/exifadjust.cpp:132
+msgctxt "saturation mode"
+msgid "Normal"
+msgstr "Normaal"
+
+#: exif/exifadjust.cpp:133
+msgctxt "saturation mode"
+msgid "Low"
+msgstr "Laag"
+
+#: exif/exifadjust.cpp:134
+msgctxt "saturation mode"
+msgid "High"
+msgstr "Hoog"
+
+#: exif/exifadjust.cpp:135
+msgid ""
+"Set here the direction of saturation processing applied by the camera to "
+"take the picture."
+msgstr ""
+"Stel de richting van verzadigingsbewerking in die door de camera wordt "
+"toegepast bij het nemen van de foto."
+
+#: exif/exifadjust.cpp:140
+msgid "Sharpness:"
+msgstr "Scherpte:"
+
+#: exif/exifadjust.cpp:142
+msgctxt "sharpness mode"
+msgid "Normal"
+msgstr "Normaal"
+
+#: exif/exifadjust.cpp:143
+msgctxt "sharpness mode"
+msgid "Soft"
+msgstr "Zacht"
+
+#: exif/exifadjust.cpp:144
+msgctxt "sharpness mode"
+msgid "Hard"
+msgstr "Hard"
+
+#: exif/exifadjust.cpp:145
+msgid ""
+"Set here the direction of sharpness processing applied by the camera to take "
+"the picture."
+msgstr ""
+"Stel de richting van scherptebewerking in die door de camera wordt toegepast "
+"bij het nemen van de foto."
+
+#: exif/exifadjust.cpp:150
+msgid "Custom rendered:"
+msgstr "Aangepast gerenderd:"
+
+#: exif/exifadjust.cpp:152
+msgid "Normal process"
+msgstr "Normaal proces"
+
+#: exif/exifadjust.cpp:153
+msgid "Custom process"
+msgstr "Aangepast proces"
+
+#: exif/exifadjust.cpp:154
+msgid ""
+"Set here the use of special processing on image data, such as rendering "
+"geared to output."
+msgstr ""
+"Stel het gebruik van de speciale bewerking op de beeldgegevens in, zoals "
+"rendering aangepast aan de uitvoer."
+
+#: exif/exifcaption.cpp:107
+msgctxt "name of the document this image has been scanned from"
+msgid "Name (*):"
+msgstr "Naam (*):"
+
+#: exif/exifcaption.cpp:111
+msgid ""
+"Enter the name of the document from which this image was been scanned. This "
+"field is limited to ASCII characters."
+msgstr ""
+"Voer de naam van het document in waarvan deze afbeelding is gescand. Dit "
+"veld mag alleen ASCII-tekens bevatten."
+
+#: exif/exifcaption.cpp:117
+msgctxt "image title"
+msgid "Title (*):"
+msgstr "Titel (*):"
+
+#: exif/exifcaption.cpp:121
+msgid "Enter the image title. This field is limited to ASCII characters."
+msgstr ""
+"Voer de titel van de afbeelding in. Hier mogen alleen ASCII-tekens gebruikt "
+"worden."
+
+#: exif/exifcaption.cpp:126
+msgid "Artist (*):"
+msgstr "Artiest (*)"
+
+#: exif/exifcaption.cpp:130
+msgid ""
+"Enter the image author's name. This field is limited to ASCII characters."
+msgstr ""
+"Voer de naam van de auteur van de afbeelding in. Dit veld is beperkt tot "
+"ASCII-tekens."
+
+#: exif/exifcaption.cpp:135
+msgid "Copyright (*):"
+msgstr "Copyright (*):"
+
+#: exif/exifcaption.cpp:139
+msgid ""
+"Enter the copyright owner of the image. This field is limited to ASCII "
+"characters."
+msgstr ""
+"Voer de auteursrechthebbende van de afbeelding in. Dit veld is beperkt tot "
+"het gebruik van ASCII-tekens."
+
+#: exif/exifcaption.cpp:144
+msgctxt "image cpation"
+msgid "Caption:"
+msgstr "Titel:"
+
+#: exif/exifcaption.cpp:146
+msgid ""
+"Enter the image's caption. This field is not limited. UTF8 encoding will be "
+"used to save the text."
+msgstr ""
+"Voer de titel van de afbeelding in. Dit veld is niet gelimiteerd en wordt "
+"als UTF8-code opgeslagen."
+
+#: exif/exifcaption.cpp:150
+#, kde-format
+msgid "Sync captions entered through %1"
+msgstr "Titels invoerd door %1 synchroniseren"
+
+#: exif/exifcaption.cpp:153 iptc/iptccontent.cpp:109 xmp/xmpcontent.cpp:105
+msgid "Sync JFIF Comment section"
+msgstr "JFIF-commentaarsectie synchroniseren"
+
+#: exif/exifcaption.cpp:154
+msgid "Sync XMP caption"
+msgstr "XMP-titel synchroniseren"
+
+#: exif/exifcaption.cpp:155
+msgid "Sync IPTC caption (warning: limited to 2000 printable Ascii characters)"
+msgstr ""
+"IPTC-titel synchroniseren (waarschuwing: beperkt tot 2000 afdrukbare ASCII-"
+"tekens)"
+
+#: exif/exifcaption.cpp:163 exif/exifdevice.cpp:316
+msgid ""
+"<b>Note: <b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> text "
+"tags marked by (*) only support printable <b><a href='http://en.wikipedia."
+"org/wiki/Ascii'>ASCII</a></b> characters.</b>"
+msgstr ""
+"<b>Let op: de <a href='http://nl.wikipedia.org/wiki/"
+"Exchangeable_image_file_format'>EXIF-tekstmarkeringen</a>, aangegeven door "
+"(*), mogen alleen <a href='http://nl.wikipedia.org/wiki/ASCII_"
+"(tekenset)'>ASCII</a>-tekens bevatten.</b>"
+
+#: exif/exifdatetime.cpp:111
+msgid "Creation date and time"
+msgstr "Datum en tijd van aanmaken"
+
+#: exif/exifdatetime.cpp:112
+msgid "Creation second"
+msgstr "Seconde van aanmaak"
+
+#: exif/exifdatetime.cpp:115 iptc/iptcorigin.cpp:425 xmp/xmporigin.cpp:399
+#, kde-format
+msgid "Sync creation date hosted by %1"
+msgstr "Aanmaakdatum gehost door %1 synchroniseren"
+
+#: exif/exifdatetime.cpp:118
+msgid "Sync XMP creation date"
+msgstr "XMP-aanmaakdatum synchroniseren"
+
+#: exif/exifdatetime.cpp:119
+msgid "Sync IPTC creation date"
+msgstr "IPTC-aanmaakdatum synchroniseren"
+
+#: exif/exifdatetime.cpp:123 iptc/iptcorigin.cpp:432 xmp/xmporigin.cpp:406
+msgid "Set creation date to today"
+msgstr "Stel aanmaakdatum in op vandaag"
+
+#: exif/exifdatetime.cpp:128
+msgid ""
+"Set here the date and time of image creation. In this standard it is the "
+"date and time the file was changed."
+msgstr ""
+"Voer de datum en tijd in van het maken van de afbeelding. In deze standaard "
+"is het de datum en tijd dat het bestand is gewijzigd."
+
+#: exif/exifdatetime.cpp:130
+msgid ""
+"Set here the fractions of seconds for the date and time of image creation."
+msgstr ""
+"Stel de fractie.van de seconden in voor de datum en tijd van het maken van "
+"het beeld."
+
+#: exif/exifdatetime.cpp:137
+msgid "Original date and time"
+msgstr "Orgineel-datum en tijd"
+
+#: exif/exifdatetime.cpp:138
+msgid "Original second"
+msgstr "Orgineel-seconde"
+
+#: exif/exifdatetime.cpp:144
+msgid "Set original date to today"
+msgstr "Stel de origineel-datum op vandaag"
+
+#: exif/exifdatetime.cpp:146
+msgid ""
+"Set here the date and time when the original image data was generated. For a "
+"digital still camera the date and time the picture was taken are recorded."
+msgstr ""
+"Stel de datum en tijd in toen het originele beeld werd gemaakt. Voor een "
+"digitale camera wordt de datum en tijd dat de foto werd gemaakt opgeslagen."
+
+#: exif/exifdatetime.cpp:149
+msgid ""
+"Set here the fractions of seconds for the date and time when the original "
+"image data was generated."
+msgstr ""
+"Stel de fractie van een seconde in voor de datum en tijd, toen het originele "
+"beeld werd gemaakt."
+
+#: exif/exifdatetime.cpp:156
+msgid "Digitization date and time"
+msgstr "Digitalisatie-datum en tijd"
+
+#: exif/exifdatetime.cpp:157
+msgid "Digitization second"
+msgstr "Digitalisatie-seconde"
+
+#: exif/exifdatetime.cpp:163 iptc/iptcorigin.cpp:410 xmp/xmporigin.cpp:388
+msgid "Set digitization date to today"
+msgstr "Stel de digitalisatiedatum in op vandaag"
+
+# sorteer deze zelf maar even, ik heb namelijk de plugin zelf niet
+#: exif/exifdatetime.cpp:165
+msgid ""
+"Set here the date and time when the image was stored as digital data. If, "
+"for example, an image was captured by a digital still camera and at the same "
+"time the file was recorded, then Original and Digitization date and time "
+"will have the same contents."
+msgstr ""
+"Stel de datum en de tijd in toen de afbeelding digitaal werd opgeslagen. "
+"Als, bijvoorbeeld, een foto door een digitale camera wordt genomen en op "
+"hetzelfde moment opgeslagen, dan zijn de originele en de digitalisatiedatum "
+"en tijd hetzelfde."
+
+#: exif/exifdatetime.cpp:170
+msgid ""
+"Set here the fractions of seconds for the date and time when the image was "
+"stored as digital data."
+msgstr ""
+"Stel de fractie van een seconde voor de datum en tijd in toen de afbeelding "
+"digitaal werd opgeslagen."
+
+#: exif/exifdevice.cpp:133
+msgid "Device manufacturer (*):"
+msgstr "Apparaatfabrikant (*):"
+
+#: exif/exifdevice.cpp:137
+msgid ""
+"Set here the manufacturer of image input equipment used to take the picture. "
+"This field is limited to ASCII characters."
+msgstr ""
+"Stel de fabrikant van de aparatuur in waarmee de afbeelding is gemaakt. Dit "
+"veld is beperkt tot ASCII-tekens."
+
+#: exif/exifdevice.cpp:142
+msgid "Device model (*):"
+msgstr "Apparaatmodel (*):"
+
+#: exif/exifdevice.cpp:146
+msgid ""
+"Set here the model of image input equipment used to take the picture. This "
+"field is limited to ASCII characters."
+msgstr ""
+"Stel hier het model van de aparatuur in waarmee de afbeelding is gemaakt. "
+"Dit veld is beperkt tot ASCII-tekens."
+
+#: exif/exifdevice.cpp:151
+msgid "Device type:"
+msgstr "Apparaattype:"
+
+#: exif/exifdevice.cpp:153
+msgid "Film scanner"
+msgstr "Filmscanner"
+
+#: exif/exifdevice.cpp:154
+msgid "Reflection print scanner"
+msgstr "Reflectiedrukscanner"
+
+#: exif/exifdevice.cpp:155
+msgid "Digital still camera"
+msgstr "Digitale camera"
+
+#: exif/exifdevice.cpp:156
+msgid "Select here the image input equipment type used to take the picture."
+msgstr ""
+"Stel hier het type apparaat in dat gebruikt is om de afbeelding te maken."
+
+#: exif/exifdevice.cpp:159
+msgid ""
+"<b>Warning: EXIF <b><a href='http://en.wikipedia.org/wiki/"
+"Exchangeable_image_file_format#MakerNote_data'>Makernotes</a></b> can be "
+"unreadable if you set wrong device manufacturer/model description.</b>"
+msgstr ""
+"<b>Waarschuwing: EXIF </b><b><a href='http://en.wikipedia.org/wiki/"
+"Exchangeable_image_file_format#MakerNote_data'>Fabrikantnotities</a> kunnen "
+"onleesbaar worden als u een onjuiste fabrikant/modelbeschrijving instelt.</b>"
+
+#: exif/exifdevice.cpp:171
+msgid "Exposure time (seconds):"
+msgstr "Belichtingstijd (seconden):"
+
+#: exif/exifdevice.cpp:176
+msgid ""
+"Set on this option to set the exposure time of picture, given in seconds."
+msgstr ""
+"Stel deze optie in om de belichtingstijd van de foto in te stellen, in "
+"seconden."
+
+#: exif/exifdevice.cpp:181
+msgid "Exposure program:"
+msgstr "Belichting-programma:"
+
+#: exif/exifdevice.cpp:183
+msgctxt "exposure program"
+msgid "Not defined"
+msgstr "Niet gedefinieerd"
+
+#: exif/exifdevice.cpp:184
+msgctxt "exposure program"
+msgid "Manual"
+msgstr "Handmatig"
+
+#: exif/exifdevice.cpp:185
+msgctxt "exposure program"
+msgid "Auto"
+msgstr "Auto"
+
+#: exif/exifdevice.cpp:186
+msgctxt "exposure program"
+msgid "Aperture priority"
+msgstr "Diafragma-prioriteit"
+
+#: exif/exifdevice.cpp:187
+msgctxt "exposure program"
+msgid "Shutter priority"
+msgstr "Sluiter-prioriteit"
+
+#: exif/exifdevice.cpp:188
+msgctxt "exposure program"
+msgid "Creative program"
+msgstr "Creatief programma"
+
+#: exif/exifdevice.cpp:189
+msgctxt "exposure program"
+msgid "Action program"
+msgstr "Actieprogramma"
+
+#: exif/exifdevice.cpp:190
+msgctxt "exposure program"
+msgid "Portrait mode"
+msgstr "Portret-modus"
+
+#: exif/exifdevice.cpp:191
+msgctxt "exposure program"
+msgid "Landscape mode"
+msgstr "Landschap-modus"
+
+#: exif/exifdevice.cpp:192
+msgid ""
+"Select here the program used by the camera to set exposure when the picture "
+"was taken."
+msgstr ""
+"Selecteer het programma dat de camera gebruikt voor het instellen van de "
+"sluitertijd bij het nemen van de foto."
+
+#: exif/exifdevice.cpp:197
+msgid "Exposure mode:"
+msgstr "Opname-modus:"
+
+#: exif/exifdevice.cpp:199
+msgctxt "exposure mode"
+msgid "Auto"
+msgstr "Auto"
+
+#: exif/exifdevice.cpp:200
+msgctxt "exposure mode"
+msgid "Manual"
+msgstr "Handmatig"
+
+#: exif/exifdevice.cpp:201
+msgctxt "exposure mode"
+msgid "Auto bracket"
+msgstr "Auto-bracket"
+
+#: exif/exifdevice.cpp:202
+msgid ""
+"Select here the mode used by the camera to set exposure when the picture was "
+"taken. In auto-bracketing mode, the camera shoots a series of frames of the "
+"same scene at different exposure settings."
+msgstr ""
+"Selecteer de manier die door de camera is gebruikt om de sluitertijd in te "
+"stellen toen de foto genomen werd. Op de auto-bracket manier, worden er door "
+"de camera een reeks frames van dezelfde scène genomen met verschillende "
+"sluitertijdinstellingen."
+
+#: exif/exifdevice.cpp:210
+msgid "Exposure bias (APEX):"
+msgstr "Belichtingsinstelling (APEX)"
+
+#: exif/exifdevice.cpp:215
+msgid ""
+"Set here the exposure bias value (in APEX units) used by camera to take the "
+"picture."
+msgstr ""
+"Stel de waarde in van de belichtingsinstelling (in APEX-eenheden) die de "
+"camera moet gebruiken bij het nemen van de foto."
+
+#: exif/exifdevice.cpp:222
+msgid "Metering mode:"
+msgstr "Meetmethode:"
+
+#: exif/exifdevice.cpp:224
+msgctxt "metering mode"
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: exif/exifdevice.cpp:225
+msgctxt "metering mode"
+msgid "Average"
+msgstr "Gemiddeld"
+
+#: exif/exifdevice.cpp:226
+msgctxt "metering mode"
+msgid "Center weighted average"
+msgstr "Centrumgewogen gemiddelde"
+
+#: exif/exifdevice.cpp:227
+msgctxt "metering mode"
+msgid "Spot"
+msgstr "Punt"
+
+#: exif/exifdevice.cpp:228
+msgctxt "metering mode"
+msgid "Multi-spot"
+msgstr "Meerpunts"
+
+#: exif/exifdevice.cpp:229
+msgctxt "metering mode"
+msgid "Multi-segment"
+msgstr "Meer segmenten"
+
+#: exif/exifdevice.cpp:230
+msgctxt "metering mode"
+msgid "Partial"
+msgstr "Gedeeltelijk"
+
+#: exif/exifdevice.cpp:231
+msgctxt "metering mode"
+msgid "Other"
+msgstr "Overig"
+
+#: exif/exifdevice.cpp:232
+msgid ""
+"Select here the metering mode used by the camera to set exposure when the "
+"picture was taken."
+msgstr ""
+"Selecteer de meetmethode van de camera voor de belichting bij het nemen van "
+"de foto."
+
+#: exif/exifdevice.cpp:237
+msgid "Sensitivity (ISO):"
+msgstr "Gevoeligheid (ISO):"
+
+#: exif/exifdevice.cpp:275
+msgid "Select here the ISO Speed of the camera which took the picture."
+msgstr "Selecteer de ISO-snelheid van de camera waarmee de foto is gemaakt."
+
+#: exif/exifdevice.cpp:280
+msgid "Sensing method:"
+msgstr "Door sensor gebruikte methode:"
+
+#: exif/exifdevice.cpp:282
+msgid "Not defined"
+msgstr "Niet gedefinieerd"
+
+#: exif/exifdevice.cpp:283
+msgid "One-chip color area"
+msgstr "Een-chip kleurgebied"
+
+#: exif/exifdevice.cpp:284
+msgid "Two-chip color area"
+msgstr "Twee-chip kleurgebied"
+
+#: exif/exifdevice.cpp:285
+msgid "Three-chip color area"
+msgstr "Drie-chip kleurgebied"
+
+#: exif/exifdevice.cpp:286
+msgid "Color sequential area"
+msgstr "Gebied met kleurvolgorde"
+
+#: exif/exifdevice.cpp:287
+msgid "Trilinear sensor"
+msgstr "Trilinaire sensor"
+
+#: exif/exifdevice.cpp:288
+msgid "Color sequential linear"
+msgstr "Lineaire kleurvolgorde"
+
+#: exif/exifdevice.cpp:289
+msgid ""
+"Select here the image sensor type used by the camera to take the picture."
+msgstr ""
+"Selecteer het type van de beeldsensor gebruikt door de camera bij het nemen "
+"van de foto."
+
+#: exif/exifdevice.cpp:294
+msgid "Scene capture type:"
+msgstr "Type scene-opname:"
+
+#: exif/exifdevice.cpp:296
+msgid "Standard"
+msgstr "Standaard"
+
+#: exif/exifdevice.cpp:297
+msgid "Landscape"
+msgstr "Landschap"
+
+#: exif/exifdevice.cpp:298
+msgid "Portrait"
+msgstr "Portret"
+
+#: exif/exifdevice.cpp:299 xmp/xmpproperties.cpp:98
+msgid "Night scene"
+msgstr "Nachtscene"
+
+#: exif/exifdevice.cpp:300
+msgid "Select here the type of scene used by the camera to take the picture."
+msgstr ""
+"Selecteer het type scene dat gebruikt wordt door de camera om de foto te "
+"maken."
+
+#: exif/exifdevice.cpp:305
+msgid "Subject distance type:"
+msgstr "Type onderwerpafstand:"
+
+#: exif/exifdevice.cpp:307
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: exif/exifdevice.cpp:308
+msgid "Macro"
+msgstr "Macro"
+
+#: exif/exifdevice.cpp:309
+msgid "Close view"
+msgstr "Dichtbij"
+
+#: exif/exifdevice.cpp:310
+msgid "Distant view"
+msgstr "Ver af"
+
+#: exif/exifdevice.cpp:311
+msgid ""
+"Select here the type of distance between the subject and the image input "
+"equipment."
+msgstr "Selecteer het type afstand tussen het ondewerp en de opnameapperatuur."
+
+#: exif/exiflens.cpp:156
+msgid "Focal length (mm):"
+msgstr "Brandpuntsafstand (mm):"
+
+#: exif/exiflens.cpp:162
+msgid ""
+"Set here the lens focal length in millimeters used by camera to take the "
+"picture."
+msgstr ""
+"Stel de brandpuntsafstand van de cameralens bij het nemen van de foto in in "
+"millimeters."
+
+#: exif/exiflens.cpp:167
+msgid "Focal length in 35mm film (mm):"
+msgstr "Brandpuntsafstand bij 35 mm film (mm):"
+
+#: exif/exiflens.cpp:169
+msgid ""
+"Set here equivalent focal length assuming a 35mm film camera, in mm. A value "
+"of 0 means the focal length is unknown."
+msgstr ""
+"Stel de brandpuntsafstand in zoals deze zou zijn bij een camera voor 35mm "
+"film, in mm. Een waarde 0 betekent dat de afstand niet bekend is."
+
+#: exif/exiflens.cpp:175
+msgid "Digital zoom ratio:"
+msgstr "Digitale zoom-verhouding:"
+
+#: exif/exiflens.cpp:181
+msgid "Set here the digital zoom ratio used by camera to take the picture."
+msgstr ""
+"Stel de digitale zoom-verhouding in gebruikt door de camera bij het maken "
+"van de foto."
+
+#: exif/exiflens.cpp:186
+msgid "Lens aperture (f-number):"
+msgstr "Diafragma (f-nummer):"
+
+#: exif/exiflens.cpp:189
+msgid "Select here the lens aperture used by camera to take the picture."
+msgstr ""
+"Selecteer het diafragma gebruikt door de camera om de afbeelding te maken."
+
+#: exif/exiflens.cpp:194
+msgid "Max. lens aperture (f-number):"
+msgstr "Max. diafragma (f-nummer):"
+
+#: exif/exiflens.cpp:197
+msgid ""
+"Select here the smallest aperture of the lens used by camera to take the "
+"picture."
+msgstr ""
+"Selecteer het kleinste diafragma, gebruikt door de camera bij het maken van "
+"de foto."
+
+#: exif/exiflight.cpp:88
+msgid "No flash"
+msgstr "Geen flits"
+
+#: exif/exiflight.cpp:89
+msgid "Fired"
+msgstr "Geflitst"
+
+#: exif/exiflight.cpp:90
+msgid "Fired, no strobe return light"
+msgstr "Geflitst, geen meting van het teruggekeerde licht"
+
+#: exif/exiflight.cpp:91
+msgid "Fired, strobe return light"
+msgstr "Geflitst, teruggekeerd licht gemeten"
+
+#: exif/exiflight.cpp:92
+msgid "Yes, compulsory"
+msgstr "Ja, vereist"
+
+#: exif/exiflight.cpp:93
+msgid "Yes, compulsory, no return light"
+msgstr "Ja, vereist, geen teruggekeerd licht"
+
+#: exif/exiflight.cpp:94
+msgid "Yes, compulsory, return light"
+msgstr "Ja, vereist, teruggekeerd licht"
+
+#: exif/exiflight.cpp:95
+msgid "No, compulsory"
+msgstr "Nee, vereist"
+
+#: exif/exiflight.cpp:96
+msgid "No, auto"
+msgstr "Nee, automatisch"
+
+#: exif/exiflight.cpp:97
+msgid "Yes, auto"
+msgstr "Ja, automatisch"
+
+#: exif/exiflight.cpp:98
+msgid "Yes, auto, no return light"
+msgstr "Ja, automatisch, geen teruggekeerd licht"
+
+#: exif/exiflight.cpp:99
+msgid "Yes, auto, return light"
+msgstr "Ja, automatisch, teruggekeerd licht"
+
+#: exif/exiflight.cpp:100
+msgid "No flash function"
+msgstr "Geen flitsfunctie"
+
+#: exif/exiflight.cpp:101
+msgid "Yes, red-eye"
+msgstr "Ja, rode ogen"
+
+#: exif/exiflight.cpp:102
+msgid "Yes, red-eye, no return light"
+msgstr "Ja, rode ogen, geen teruggekeerd licht"
+
+#: exif/exiflight.cpp:103
+msgid "Yes, red-eye, return light"
+msgstr "Ja, rode ogen, teruggekeerd licht"
+
+#: exif/exiflight.cpp:104
+msgid "Yes, compulsory, red-eye"
+msgstr "Ja, vereist, rode ogen"
+
+#: exif/exiflight.cpp:105
+msgid "Yes, compulsory, red-eye, no return light"
+msgstr "Ja, vereist, rode ogen, geen teruggekeerd licht"
+
+#: exif/exiflight.cpp:106
+msgid "Yes, compulsory, red-eye, return light"
+msgstr "Ja, vereist, rode ogen, teruggekeerd licht"
+
+#: exif/exiflight.cpp:107
+msgid "Yes, auto, red-eye"
+msgstr "Ja, automatisch, rode ogen"
+
+#: exif/exiflight.cpp:108
+msgid "Yes, auto, red-eye, no return light"
+msgstr "Ja, automatisch, geen teruggekeerd licht"
+
+#: exif/exiflight.cpp:109
+msgid "Yes, auto, red-eye, return light"
+msgstr "Ja, automatisch, rode ogen, teruggekeerd licht"
+
+#: exif/exiflight.cpp:138
+msgid "Light source:"
+msgstr "Lichtbron:"
+
+#: exif/exiflight.cpp:140
+msgctxt "light source"
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: exif/exiflight.cpp:141
+msgctxt "light source"
+msgid "Daylight"
+msgstr "Daglicht"
+
+#: exif/exiflight.cpp:142
+msgctxt "light source"
+msgid "Fluorescent"
+msgstr "TL-lamp"
+
+#: exif/exiflight.cpp:143
+msgctxt "light source"
+msgid "Tungsten (incandescent light)"
+msgstr "Wolfram (gloeilamp)"
+
+#: exif/exiflight.cpp:144
+msgctxt "light source"
+msgid "Flash"
+msgstr "Flits"
+
+#: exif/exiflight.cpp:145
+msgctxt "light source"
+msgid "Fine weather"
+msgstr "Goed weer"
+
+#: exif/exiflight.cpp:146
+msgctxt "light source"
+msgid "Cloudy weather"
+msgstr "Bewolkt"
+
+#: exif/exiflight.cpp:147
+msgctxt "light source"
+msgid "Shade"
+msgstr "Schaduw"
+
+#: exif/exiflight.cpp:148
+msgctxt "light source"
+msgid "Daylight fluorescent (D 5700 - 7100K)"
+msgstr "Daglicht TL-lamp (D 5700 - 7100K)"
+
+#: exif/exiflight.cpp:149
+msgctxt "light source"
+msgid "Day white fluorescent (N 4600 - 5400K)"
+msgstr "Daglicht witte TL-lamp (N 4600 - 5400K)"
+
+#: exif/exiflight.cpp:150
+msgctxt "light source"
+msgid "Cool white fluorescent (W 3900 - 4500K)"
+msgstr "Koelwitte TL-lamp (W 3900 - 4500K)"
+
+#: exif/exiflight.cpp:151
+msgctxt "light source"
+msgid "White fluorescent (WW 3200 - 3700K)"
+msgstr "Witte TL-lamp (WW 3200 - 3700K)"
+
+#: exif/exiflight.cpp:152
+msgctxt "light source"
+msgid "Standard light A"
+msgstr "Standaard licht A"
+
+#: exif/exiflight.cpp:153
+msgctxt "light source"
+msgid "Standard light B"
+msgstr "Standaard licht B"
+
+#: exif/exiflight.cpp:154
+msgctxt "light source"
+msgid "Standard light C"
+msgstr "Standaard licht C"
+
+#: exif/exiflight.cpp:155
+msgctxt "light source"
+msgid "D55"
+msgstr "D55"
+
+#: exif/exiflight.cpp:156
+msgctxt "light source"
+msgid "D65"
+msgstr "D65"
+
+#: exif/exiflight.cpp:157
+msgctxt "light source"
+msgid "D75"
+msgstr "D75"
+
+#: exif/exiflight.cpp:158
+msgctxt "light source"
+msgid "D50"
+msgstr "D50"
+
+#: exif/exiflight.cpp:159
+msgctxt "light source"
+msgid "ISO studio tungsten"
+msgstr "ISO studio-wolfram"
+
+#: exif/exiflight.cpp:160
+msgctxt "light source"
+msgid "Other light source"
+msgstr "Andere lichtbron"
+
+#: exif/exiflight.cpp:161
+msgid "Select here the kind of light source used to take the picture."
+msgstr "Stel het soort lichtbron in die gebruikt is om de afbeelding te maken."
+
+#: exif/exiflight.cpp:166
+msgid "Flash mode:"
+msgstr "Flits modus:"
+
+#: exif/exiflight.cpp:173
+msgid ""
+"Select here the flash program mode used by the camera to take the picture."
+msgstr ""
+"Selecteer de flits modus gebruikt door de camera om de afbeelding te maken."
+
+#: exif/exiflight.cpp:178
+msgid "Flash energy (BCPS):"
+msgstr "Flitsenergie (BCPS):"
+
+#: exif/exiflight.cpp:184
+msgid ""
+"Set here the flash energy used to take the picture in BCPS units.  Beam "
+"Candle Power Seconds is the measure of effective intensity of a light source "
+"when it is focused into a beam by a reflector or lens. This value is the "
+"effective intensity for a period of one second."
+msgstr ""
+"Stel de flitsenergie in BCPS-eenheden in die gebruikt werd bij het maken van "
+"de foto . Beam Candle Power Seconds is de maat van de effectieve intensiteit "
+"van een lichtbron als het gefocuseerd wordt in een straal door een reflector "
+"of lens. Deze waarde is de effectieve intensiteit gedurende een seconde."
+
+#: exif/exiflight.cpp:192
+msgid "White balance:"
+msgstr "Witbalans:"
+
+#: exif/exiflight.cpp:194
+msgid "Auto"
+msgstr "Automatisch"
+
+#: exif/exiflight.cpp:195
+msgid "Manual"
+msgstr "Handmatig"
+
+#: exif/exiflight.cpp:196
+msgid ""
+"Select here the white balance mode set by the camera when the picture was "
+"taken."
+msgstr "Selecteer de witbalans-modus van de camera toen de foto werd gemaakt."
+
+#: exif/exifeditwidget.cpp:128
+msgctxt "image caption"
+msgid "Caption"
+msgstr "Titel"
+
+#: exif/exifeditwidget.cpp:129
+msgid "Caption Information"
+msgstr "Titelinformatie"
+
+#: exif/exifeditwidget.cpp:133
+msgid "Date & Time"
+msgstr "Datum en tijd"
+
+#: exif/exifeditwidget.cpp:134
+msgid "Date and Time Information"
+msgstr "Datum- en tijdinformatie"
+
+#: exif/exifeditwidget.cpp:138
+msgid "Lens"
+msgstr "Lens"
+
+#: exif/exifeditwidget.cpp:139
+msgid "Lens Settings"
+msgstr "Lensinstellingen"
+
+#: exif/exifeditwidget.cpp:143
+msgid "Device"
+msgstr "Apparaat"
+
+#: exif/exifeditwidget.cpp:144
+msgid "Capture Device Settings"
+msgstr "Instellingen van opnameapparaat"
+
+#: exif/exifeditwidget.cpp:148
+msgid "Light"
+msgstr "Licht"
+
+#: exif/exifeditwidget.cpp:149
+msgid "Light Source Information"
+msgstr "Lichtbroninformatie"
+
+#: exif/exifeditwidget.cpp:153
+msgctxt "Picture adjustments"
+msgid "Adjustments"
+msgstr "Aanpassingen"
+
+#: exif/exifeditwidget.cpp:154
+msgid "Pictures Adjustments"
+msgstr "Afbeeldingsaanpassingen"
+
+#: iptc/iptccategories.cpp:92 xmp/xmpcategories.cpp:86
+msgid "Identify subject of content (3 chars max):"
+msgstr "Beschrijf het onderwerp van de inhoud(maximaal 3 tekens):"
+
+#: iptc/iptccategories.cpp:97
+msgid ""
+"Set here the category of content. This field is limited to 3 ASCII "
+"characters."
+msgstr "Stel de categorie van de inhoud in. Maximaal 3 ASCII-tekens."
+
+#: iptc/iptccategories.cpp:100 xmp/xmpcategories.cpp:93
+msgid "Supplemental categories:"
+msgstr "Aanvullende Categorieen"
+
+#: iptc/iptccategories.cpp:106
+msgid ""
+"Enter here a new supplemental category of content. This field is limited to "
+"32 ASCII characters."
+msgstr ""
+"Voer een nieuwe aanvullende categorie in voor de inhoud. Dit veld is beperkt "
+"tot 32 ASCII-tekens."
+
+#: iptc/iptccategories.cpp:112 iptc/iptckeywords.cpp:100
+#: xmp/xmpcategories.cpp:102 xmp/xmpkeywords.cpp:91
+msgid "&Add"
+msgstr "&Toevoegen"
+
+#: iptc/iptccategories.cpp:113 iptc/iptckeywords.cpp:101
+#: xmp/xmpcategories.cpp:103 xmp/xmpkeywords.cpp:92
+msgid "&Delete"
+msgstr "Verwij&deren"
+
+#: iptc/iptccategories.cpp:114 iptc/iptckeywords.cpp:102
+#: xmp/xmpcategories.cpp:104 xmp/xmpkeywords.cpp:93
+msgid "&Replace"
+msgstr "Ve&rvangen"
+
+#: iptc/iptccategories.cpp:123 iptc/iptccontent.cpp:128
+#: iptc/iptccredits.cpp:147 iptc/iptcenvelope.cpp:269
+#: iptc/iptckeywords.cpp:111 iptc/iptcorigin.cpp:497
+#: iptc/iptcproperties.cpp:239 iptc/iptcstatus.cpp:130
+#: iptc/iptcsubjects.cpp:98
+msgid ""
+"<b>Note: <b><a href='http://en.wikipedia.org/wiki/"
+"IPTC_Information_Interchange_Model'>IPTC</a></b> text tags only support the "
+"printable <b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
+"characters and limit string sizes. Use contextual help for details.</b>"
+msgstr ""
+"<b>Opmerking: <b><a href='http://nl.wikipedia.org/wiki/"
+"IPTC_Information_Interchange_Model'>IPTC</a></b>-teksttags bieden alleen "
+"ondersteuning voor afdrukbare <b><a href='http://nl.wikipedia.org/wiki/ASCII_"
+"(tekenset)'>ASCII</a></b>-lettertekens en hebben een beperkte tekstgrootte. "
+"Gebruik de contexthulpinformatie voor meer details.</b>"
+
+#: iptc/iptccontent.cpp:97 xmp/xmpcontent.cpp:92
+msgid "Headline:"
+msgstr "Opschrift:"
+
+#: iptc/iptccontent.cpp:102
+msgid ""
+"Enter here the content synopsis. This field is limited to 256 ASCII "
+"characters."
+msgstr ""
+"Voer de samenvatting van de inhoud in. Dit veld is beperkt tot 256 ASCII-"
+"tekens."
+
+#: iptc/iptccontent.cpp:107 xmp/xmpcontent.cpp:99
+msgctxt "content description"
+msgid "Caption:"
+msgstr "Titel:"
+
+#: iptc/iptccontent.cpp:110 xmp/xmpcontent.cpp:106
+#, kde-format
+msgid "Sync caption entered through %1"
+msgstr "Titel ingevoerd door %1 synchroniseren"
+
+#: iptc/iptccontent.cpp:113 xmp/xmpcontent.cpp:109
+msgid "Sync EXIF Comment"
+msgstr "EXIF-commentaar synchroniseren"
+
+#: iptc/iptccontent.cpp:117
+msgid ""
+"Enter the content description. This field is limited to 2000 ASCII "
+"characters."
+msgstr ""
+"Voer de inhoudsbeschrijving in. Dit veld is beperkt tot 2000 ASCII-tekens."
+
+#: iptc/iptccontent.cpp:122 xmp/xmpcontent.cpp:119
+msgid "Caption Writer:"
+msgstr "Opschrift schrijver:"
+
+#: iptc/iptccontent.cpp:123 xmp/xmpcontent.cpp:122
+msgid "Enter the name of the caption author."
+msgstr "Voer de naam in van de auteur van de titel."
+
+#: iptc/iptccredits.cpp:99 xmp/xmpcontent.cpp:124
+msgid "Copyright:"
+msgstr "Copyright:"
+
+#: iptc/iptccredits.cpp:104
+msgid ""
+"Set here the necessary copyright notice. This field is limited to 128 ASCII "
+"characters."
+msgstr ""
+"Voer de noodzakelijke copyright notitie in. Dit veld is beperkt tot 128 "
+"ASCII-tekens."
+
+# ik denk dat er dit bedoelt word: "a line giving the name of the writer of a story or article. " klopt dat?
+#: iptc/iptccredits.cpp:109 xmp/xmpcredits.cpp:113
+msgid "Byline:"
+msgstr "Bijschrift:"
+
+#: iptc/iptccredits.cpp:110 xmp/xmpcredits.cpp:114
+msgid "Set here the name of content creator."
+msgstr "Stel de naam in van de maker van de inhoud."
+
+#: iptc/iptccredits.cpp:115 xmp/xmpcredits.cpp:118
+msgid "Byline Title:"
+msgstr "Bijschrift titel:"
+
+#: iptc/iptccredits.cpp:116 xmp/xmpcredits.cpp:121
+msgid "Set here the title of content creator."
+msgstr "Stel de titel in van de maker van de inhoud."
+
+#: iptc/iptccredits.cpp:121 xmp/xmpcredits.cpp:183
+msgid "Credit:"
+msgstr "Dankbetuiging:"
+
+#: iptc/iptccredits.cpp:126
+msgid ""
+"Set here the content provider. This field is limited to 32 ASCII characters."
+msgstr ""
+"Voer de leverancier van de inhoudsbeschrijving in. Dit veld is beperkt tot "
+"32 ASCII-tekens."
+
+#: iptc/iptccredits.cpp:131 xmp/xmpcredits.cpp:190
+msgctxt "original owner of content"
+msgid "Source:"
+msgstr "Bron:"
+
+#: iptc/iptccredits.cpp:136
+msgid ""
+"Set here the original owner of content. This field is limited to 32 ASCII "
+"characters."
+msgstr ""
+"Voer de originele eigenaar van de inhoudsbeschrijving in. Dit veld is "
+"beperkt tot 32 ASCII-tekens."
+
+#: iptc/iptccredits.cpp:141
+msgid "Contact:"
+msgstr "Contact:"
+
+#: iptc/iptccredits.cpp:142
+msgid "Set here the person or organisation to contact."
+msgstr "Voer de contactpersoon of organisatie in."
+
+#: iptc/iptcenvelope.cpp:91
+msgid "No ObjectData"
+msgstr "Geen objectdata"
+
+#: iptc/iptcenvelope.cpp:92
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 1)"
+msgstr "IPTC-NAA Digitale nieuwsfoto parameterrecord (versie 1)"
+
+#: iptc/iptcenvelope.cpp:93
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 2)"
+msgstr "IPTC-NAA Digitale nieuwsfoto parameterrecord (versie 2)"
+
+#: iptc/iptcenvelope.cpp:94
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 3)"
+msgstr "IPTC-NAA Digitale nieuwsfoto parameterrecord (versie 3)"
+
+#: iptc/iptcenvelope.cpp:95
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 4)"
+msgstr "IPTC-NAA Digitale nieuwsfoto parameterrecord (versie 4)"
+
+#: iptc/iptcenvelope.cpp:96
+msgid "IPTC7901 Recommended Message Format"
+msgstr "IPTC7901 Aanbevolen berichtformaat"
+
+#: iptc/iptcenvelope.cpp:97
+msgid "Tagged Image File Format (version 5.0)"
+msgstr "Tagged-formaat van afbeeldingsbestand (versie 5.0)"
+
+#: iptc/iptcenvelope.cpp:98
+msgid "Tagged Image File Format (version 6.0)"
+msgstr "Tagged-formaat van afbeeldingsbestand (versie 6.0)"
+
+#: iptc/iptcenvelope.cpp:99
+msgid "Illustrator"
+msgstr "Illustrator"
+
+#: iptc/iptcenvelope.cpp:100
+msgid "AppleSingle"
+msgstr "AppleSingle"
+
+#: iptc/iptcenvelope.cpp:101
+msgid "NAA 89-3 (ANPA 1312)"
+msgstr "NAA 89-3 (ANPA 1312)"
+
+#: iptc/iptcenvelope.cpp:102
+msgid "MacBinary II"
+msgstr "MacBinary II"
+
+#: iptc/iptcenvelope.cpp:103
+msgid "IPTC Unstructured Character Oriented File Format"
+msgstr "IPTC Ongestructureerd karaktergeörienteerd bestandsformaat"
+
+#: iptc/iptcenvelope.cpp:104
+msgid "United Press International ANPA 1312 variant"
+msgstr "United Press International ANPA 1312 variant"
+
+#: iptc/iptcenvelope.cpp:105
+msgid "United Press International Down-Load Message"
+msgstr "United Press International Download-bericht"
+
+#: iptc/iptcenvelope.cpp:106
+msgid "JPEG File Interchange"
+msgstr "JPEG Bestandsuitwisseling"
+
+#: iptc/iptcenvelope.cpp:107
+msgid "Photo-CD Image-Pac"
+msgstr "Foto-cd image-pac"
+
+#: iptc/iptcenvelope.cpp:108
+msgid "Microsoft Bit Mapped Graphics File [*.BMP]"
+msgstr "Microsoft bitmapped-graphics-bestand [*.BMP]"
+
+#: iptc/iptcenvelope.cpp:109
+msgid "Digital Audio File [*.WAV]"
+msgstr "Digital-audio bestand [*.WAV]"
+
+#: iptc/iptcenvelope.cpp:110
+msgid "Audio plus Moving Video [*.AVI]"
+msgstr "Audio plus bewegende video [*.AVI]"
+
+#: iptc/iptcenvelope.cpp:111
+msgid "PC DOS/Windows Executable Files [*.COM][*.EXE]"
+msgstr "PC DOS/Windows uitvoerbare bestanden [*.COM][*.EXE]"
+
+#: iptc/iptcenvelope.cpp:112
+msgid "Compressed Binary File [*.ZIP]"
+msgstr "Gecomprimeerd binair bestand [*.ZIP]"
+
+#: iptc/iptcenvelope.cpp:113
+msgid "Audio Interchange File Format AIFF"
+msgstr ""
+"Audio Interchange File Format AIFF (Audio uitwisselingsbestandsformaat)"
+
+#: iptc/iptcenvelope.cpp:114
+msgid "RIFF Wave (Microsoft Corporation)"
+msgstr "RIFF Wave (Microsoft Corporation)"
+
+#: iptc/iptcenvelope.cpp:115
+msgid "Freehand (version 3.1)"
+msgstr "Freehand (versie 3.1)"
+
+#: iptc/iptcenvelope.cpp:116
+msgid "Freehand (version 4.0)"
+msgstr "Freehand (versie 4.0)"
+
+#: iptc/iptcenvelope.cpp:117
+msgid "Freehand (version 5.0)"
+msgstr "Freehand (versie 5.0)"
+
+#: iptc/iptcenvelope.cpp:118
+msgid "Freehand (version 5.5)"
+msgstr "Freehand (versie 5.5)"
+
+#: iptc/iptcenvelope.cpp:119
+msgid "Hypertext Markup Language \"HTML\""
+msgstr "Hypertext Markup Language \"HTML\""
+
+#: iptc/iptcenvelope.cpp:120
+msgid "MPEG 2 Audio Layer 2 (Musicom), ISO/IEC"
+msgstr "MPEG 2 Audio Layer 2 (Musicom), ISO/IEC"
+
+#: iptc/iptcenvelope.cpp:121
+msgid "MPEG 2 Audio Layer 3, ISO/IEC"
+msgstr "MPEG 2 Audio Layer 3, ISO/IEC"
+
+#: iptc/iptcenvelope.cpp:122
+msgid "Portable Document File [*.PDF] Adobe"
+msgstr "Portable Document File [*.PDF] Adobe"
+
+#: iptc/iptcenvelope.cpp:123
+msgid "News Industry Text Format"
+msgstr "News Industry Text Format"
+
+#: iptc/iptcenvelope.cpp:124
+msgid "Tape Archive [*.TAR]"
+msgstr "Tape Archive [*.TAR]"
+
+#: iptc/iptcenvelope.cpp:125
+msgid "Tidningarnas Telegrambyra NITF version (TTNITF DTD)"
+msgstr "Tidningarnas Telegrambyra NITF versie (TTNITF DTD)"
+
+#: iptc/iptcenvelope.cpp:126
+msgid "Ritzaus Bureau NITF version (RBNITF DTD)"
+msgstr "Ritzaus Bureau NITF versie (RBNITF DTD)"
+
+#: iptc/iptcenvelope.cpp:127
+msgid "Corel Draw [*.CDR]"
+msgstr "Corel Draw [*.CDR]"
+
+#: iptc/iptcenvelope.cpp:174
+msgid "Destination:"
+msgstr "Doel:"
+
+#: iptc/iptcenvelope.cpp:178
+msgid ""
+"Enter the envelope destination. This field is limited to 1024 ASCII "
+"characters."
+msgstr ""
+"Voer de envelopbeschrijving in. Dit veld is beperkt tot 1024 ASCII-tekens."
+
+#: iptc/iptcenvelope.cpp:183
+msgid "U.N.O ID:"
+msgstr "U.N.O ID:"
+
+#: iptc/iptcenvelope.cpp:188
+msgid ""
+"Set here the Unique Name of Object identifier. This field is limited to 80 "
+"ASCII characters."
+msgstr ""
+"Voer de naam in van de maker van de inhoudsbeschrijving. Dit veld is beperkt "
+"tot 80 ASCII-tekens."
+
+#: iptc/iptcenvelope.cpp:193
+msgid "Product ID:"
+msgstr "Product-ID:"
+
+#: iptc/iptcenvelope.cpp:198
+msgid ""
+"Set here the product identifier. This field is limited to 32 ASCII "
+"characters."
+msgstr ""
+"Voer de product-identificatie in. Dit veld is beperkt tot 32 ASCII-tekens."
+
+#: iptc/iptcenvelope.cpp:203
+msgid "Service ID:"
+msgstr "ID van service:"
+
+#: iptc/iptcenvelope.cpp:208
+msgid ""
+"Set here the service identifier. This field is limited to 10 ASCII "
+"characters."
+msgstr ""
+"Voer de identificatie van de service in. Dit veld is beperkt tot 10 ASCII-"
+"tekens."
+
+#: iptc/iptcenvelope.cpp:213
+msgid "Envelope ID:"
+msgstr "Envelop-ID:"
+
+#: iptc/iptcenvelope.cpp:218
+msgid ""
+"Set here the envelope identifier. This field is limited to 8 ASCII "
+"characters."
+msgstr ""
+"Voer de identificatie van de envelop in. Dit veld is beperkt tot 8 ASCII-"
+"tekens."
+
+#: iptc/iptcenvelope.cpp:223 iptc/iptcproperties.cpp:186
+#: xmp/xmpproperties.cpp:186
+msgid "Priority:"
+msgstr "Prioriteit:"
+
+#: iptc/iptcenvelope.cpp:225
+msgctxt "priority for the envelope"
+msgid "0: None"
+msgstr "0: Geen"
+
+#: iptc/iptcenvelope.cpp:226
+msgctxt "priority for the envelope"
+msgid "1: High"
+msgstr "1: Hoog"
+
+#: iptc/iptcenvelope.cpp:230
+msgctxt "priority for the envelope"
+msgid "5: Normal"
+msgstr "5: Normaal"
+
+#: iptc/iptcenvelope.cpp:233
+msgctxt "priority for the envelope"
+msgid "8: Low"
+msgstr "8: Laag"
+
+#: iptc/iptcenvelope.cpp:234
+msgid "Select here the envelope priority."
+msgstr "Selecteer de prioriteit van de envelop."
+
+#: iptc/iptcenvelope.cpp:238
+msgid "Format:"
+msgstr "Opmaak:"
+
+#: iptc/iptcenvelope.cpp:250
+msgid "Select here envelope file format."
+msgstr "Selecteer de opmaak van het envelopbestand."
+
+#: iptc/iptcenvelope.cpp:254
+msgid "Sent date:"
+msgstr "Verzenddatum:"
+
+#: iptc/iptcenvelope.cpp:255
+msgid "Sent time:"
+msgstr "Verzendtijd:"
+
+#: iptc/iptcenvelope.cpp:261
+msgid "Set envelope sent date to today"
+msgstr "Stel de verzenddatum van de envelop in op vandaag"
+
+#: iptc/iptcenvelope.cpp:263
+msgid "Set here the date when the service sent the material."
+msgstr "Stel de datum in van het verzenden van het materiaal door de service."
+
+#: iptc/iptcenvelope.cpp:264
+msgid "Set here the time when the service sent the material."
+msgstr "Stel de tijd in van het verzenden van het materiaal door de service."
+
+#: iptc/iptckeywords.cpp:88 xmp/xmpkeywords.cpp:82
+msgid "Use information retrieval words:"
+msgstr "Gebruik informatiezoekwoorden:"
+
+#: iptc/iptckeywords.cpp:94
+msgid "Enter here a new keyword. This field is limited to 64 ASCII characters."
+msgstr "Voer een nieuw trefwoord in. Dit veld mag maximaal 64 tekens bevatten."
+
+#: iptc/iptcorigin.cpp:101 xmp/xmporigin.cpp:92
+msgid "Afghanistan"
+msgstr "Afghanistan"
+
+#: iptc/iptcorigin.cpp:102 xmp/xmporigin.cpp:93
+msgid "Albania"
+msgstr "Albanië"
+
+#: iptc/iptcorigin.cpp:103 xmp/xmporigin.cpp:94
+msgid "Algeria"
+msgstr "Algerije"
+
+#: iptc/iptcorigin.cpp:104 xmp/xmporigin.cpp:95
+msgid "American Samoa"
+msgstr "Amerikaans Samoa"
+
+#: iptc/iptcorigin.cpp:105 xmp/xmporigin.cpp:96
+msgid "Andorra"
+msgstr "Andorra"
+
+#: iptc/iptcorigin.cpp:106 iptc/iptcorigin.cpp:108 xmp/xmporigin.cpp:97
+#: xmp/xmporigin.cpp:99
+msgid "Angola"
+msgstr "Angola"
+
+#: iptc/iptcorigin.cpp:107 xmp/xmporigin.cpp:98
+msgid "Anguilla"
+msgstr "Anguilla"
+
+#: iptc/iptcorigin.cpp:109 xmp/xmporigin.cpp:100
+msgid "Antarctica"
+msgstr "Antarctica"
+
+#: iptc/iptcorigin.cpp:110 xmp/xmporigin.cpp:101
+msgid "Antigua and Barbuda"
+msgstr "Antigua en Barbuda"
+
+#: iptc/iptcorigin.cpp:111 xmp/xmporigin.cpp:102
+msgid "Argentina"
+msgstr "Argentinië"
+
+#: iptc/iptcorigin.cpp:112 xmp/xmporigin.cpp:103
+msgid "Armenia"
+msgstr "Armenië"
+
+#: iptc/iptcorigin.cpp:113 xmp/xmporigin.cpp:104
+msgid "Aruba"
+msgstr "Aruba"
+
+#: iptc/iptcorigin.cpp:114 xmp/xmporigin.cpp:105
+msgid "Australia"
+msgstr "Australië"
+
+#: iptc/iptcorigin.cpp:115 xmp/xmporigin.cpp:106
+msgid "Austria"
+msgstr "Oostenrijk"
+
+#: iptc/iptcorigin.cpp:116 xmp/xmporigin.cpp:107
+msgid "Azerbaijan"
+msgstr "Azerbeidzjan"
+
+#: iptc/iptcorigin.cpp:117 xmp/xmporigin.cpp:108
+msgid "Bahamas"
+msgstr "Bahama's"
+
+#: iptc/iptcorigin.cpp:118 xmp/xmporigin.cpp:109
+msgid "Bahrain"
+msgstr "Bahrein"
+
+#: iptc/iptcorigin.cpp:119 xmp/xmporigin.cpp:110
+msgid "Bangladesh"
+msgstr "Bangladesh"
+
+#: iptc/iptcorigin.cpp:120 xmp/xmporigin.cpp:111
+msgid "Barbados"
+msgstr "Barbados"
+
+#: iptc/iptcorigin.cpp:121 xmp/xmporigin.cpp:112
+msgid "Belarus"
+msgstr "Wit-Rusland"
+
+#: iptc/iptcorigin.cpp:122 xmp/xmporigin.cpp:113
+msgid "Belgium"
+msgstr "België"
+
+#: iptc/iptcorigin.cpp:123 xmp/xmporigin.cpp:114
+msgid "Belize"
+msgstr "Belize"
+
+#: iptc/iptcorigin.cpp:124 xmp/xmporigin.cpp:115
+msgid "Benin"
+msgstr "Benin"
+
+#: iptc/iptcorigin.cpp:125 xmp/xmporigin.cpp:116
+msgid "Bermuda"
+msgstr "Bermuda"
+
+#: iptc/iptcorigin.cpp:126 xmp/xmporigin.cpp:117
+msgid "Bhutan"
+msgstr "Bhutan"
+
+#: iptc/iptcorigin.cpp:127 xmp/xmporigin.cpp:118
+msgid "Bolivia"
+msgstr "Bolivia"
+
+#: iptc/iptcorigin.cpp:128 xmp/xmporigin.cpp:119
+msgid "Bosnia and Herzegovina"
+msgstr "Bosnië-Hercegovina"
+
+#: iptc/iptcorigin.cpp:129 xmp/xmporigin.cpp:120
+msgid "Botswana"
+msgstr "Botswana"
+
+#: iptc/iptcorigin.cpp:130 xmp/xmporigin.cpp:121
+msgid "Bouvet Island"
+msgstr "Bouvet Island"
+
+#: iptc/iptcorigin.cpp:131 xmp/xmporigin.cpp:122
+msgid "Brazil"
+msgstr "Brazilië"
+
+#: iptc/iptcorigin.cpp:132 xmp/xmporigin.cpp:123
+msgid "British Indian Ocean Territory"
+msgstr "British Indian Ocean Territory"
+
+#: iptc/iptcorigin.cpp:133 xmp/xmporigin.cpp:124
+msgid "British Virgin Islands"
+msgstr "Britse Maagdeneilanden"
+
+#: iptc/iptcorigin.cpp:134 xmp/xmporigin.cpp:125
+msgid "Brunei Darussalam"
+msgstr "Brunei Darussalam"
+
+#: iptc/iptcorigin.cpp:135 xmp/xmporigin.cpp:126
+msgid "Bulgaria"
+msgstr "Bulgarije"
+
+#: iptc/iptcorigin.cpp:136 xmp/xmporigin.cpp:127
+msgid "Burkina Faso"
+msgstr "Burkina Faso"
+
+#: iptc/iptcorigin.cpp:137 xmp/xmporigin.cpp:128
+msgid "Burundi"
+msgstr "Burundi"
+
+#: iptc/iptcorigin.cpp:138 xmp/xmporigin.cpp:129
+msgid "Cambodia"
+msgstr "Cambodja"
+
+#: iptc/iptcorigin.cpp:139 xmp/xmporigin.cpp:130
+msgid "Cameroon"
+msgstr "Cameroen"
+
+#: iptc/iptcorigin.cpp:140 xmp/xmporigin.cpp:131
+msgid "Canada"
+msgstr "Canada"
+
+#: iptc/iptcorigin.cpp:141 xmp/xmporigin.cpp:132
+msgid "Cape Verde"
+msgstr "Kaapverdische eilanden"
+
+#: iptc/iptcorigin.cpp:142 xmp/xmporigin.cpp:133
+msgid "Cayman Islands"
+msgstr "Kaaiman eilanden"
+
+#: iptc/iptcorigin.cpp:143 xmp/xmporigin.cpp:134
+msgid "Central African Republic"
+msgstr "Centraal-Afrikaanse Republiek"
+
+#: iptc/iptcorigin.cpp:144 xmp/xmporigin.cpp:135
+msgid "Chad"
+msgstr "Tsjaad"
+
+#: iptc/iptcorigin.cpp:145 xmp/xmporigin.cpp:136
+msgid "Chile"
+msgstr "Chili"
+
+#: iptc/iptcorigin.cpp:146 xmp/xmporigin.cpp:137
+msgid "China"
+msgstr "China"
+
+#: iptc/iptcorigin.cpp:147 xmp/xmporigin.cpp:138
+msgid "Christmas Island "
+msgstr "Kerstmis eiland"
+
+#: iptc/iptcorigin.cpp:148 xmp/xmporigin.cpp:139
+msgid "Cocos Islands"
+msgstr "Cocos eilanden"
+
+#: iptc/iptcorigin.cpp:149 xmp/xmporigin.cpp:140
+msgid "Colombia"
+msgstr "Colombia"
+
+#: iptc/iptcorigin.cpp:150 xmp/xmporigin.cpp:141
+msgid "Comoros"
+msgstr "Comoren"
+
+#: iptc/iptcorigin.cpp:151 xmp/xmporigin.cpp:142
+msgid "Zaire"
+msgstr "Zaïre"
+
+#: iptc/iptcorigin.cpp:152 xmp/xmporigin.cpp:143
+msgid "Congo"
+msgstr "Congo"
+
+#: iptc/iptcorigin.cpp:153 xmp/xmporigin.cpp:144
+msgid "Cook Islands"
+msgstr "Cookeilanden"
+
+#: iptc/iptcorigin.cpp:154 xmp/xmporigin.cpp:145
+msgid "Costa Rica"
+msgstr "Costa Rica"
+
+#: iptc/iptcorigin.cpp:155 xmp/xmporigin.cpp:146
+msgid "Ivory Coast"
+msgstr "Ivoorkust"
+
+#: iptc/iptcorigin.cpp:156 xmp/xmporigin.cpp:147
+msgid "Cuba"
+msgstr "Cuba"
+
+#: iptc/iptcorigin.cpp:157 xmp/xmporigin.cpp:148
+msgid "Cyprus"
+msgstr "Cyprus"
+
+#: iptc/iptcorigin.cpp:158 xmp/xmporigin.cpp:149
+msgid "Czech Republic"
+msgstr "Tsjechië"
+
+#: iptc/iptcorigin.cpp:159 xmp/xmporigin.cpp:150
+msgid "Denmark"
+msgstr "Denemarken"
+
+#: iptc/iptcorigin.cpp:160 xmp/xmporigin.cpp:151
+msgid "Djibouti"
+msgstr "Djibouti"
+
+#: iptc/iptcorigin.cpp:161 xmp/xmporigin.cpp:152
+msgid "Dominica"
+msgstr "Dominica"
+
+#: iptc/iptcorigin.cpp:162 xmp/xmporigin.cpp:153
+msgid "Dominican Republic"
+msgstr "Dominicaanse Republiek"
+
+#: iptc/iptcorigin.cpp:163 xmp/xmporigin.cpp:154
+msgid "Ecuador"
+msgstr "Ecuador"
+
+#: iptc/iptcorigin.cpp:164 xmp/xmporigin.cpp:155
+msgid "Egypt"
+msgstr "Egypte"
+
+#: iptc/iptcorigin.cpp:165 xmp/xmporigin.cpp:156
+msgid "El Salvador"
+msgstr "El Salvador"
+
+#: iptc/iptcorigin.cpp:166 xmp/xmporigin.cpp:157
+msgid "Equatorial Guinea"
+msgstr "Equatoriaal Guinea"
+
+#: iptc/iptcorigin.cpp:167 xmp/xmporigin.cpp:158
+msgid "Eritrea"
+msgstr "Eritrea"
+
+#: iptc/iptcorigin.cpp:168 xmp/xmporigin.cpp:159
+msgid "Estonia"
+msgstr "Estland"
+
+#: iptc/iptcorigin.cpp:169 xmp/xmporigin.cpp:160
+msgid "Ethiopia"
+msgstr "Ethiopië"
+
+#: iptc/iptcorigin.cpp:170 xmp/xmporigin.cpp:161
+msgid "Faeroe Islands"
+msgstr "Faeröer"
+
+#: iptc/iptcorigin.cpp:171 xmp/xmporigin.cpp:162
+msgid "Falkland Islands"
+msgstr "Falkland eilanden"
+
+#: iptc/iptcorigin.cpp:172 xmp/xmporigin.cpp:163
+msgid "Fiji Islands"
+msgstr "Fiji eilanden"
+
+#: iptc/iptcorigin.cpp:173 xmp/xmporigin.cpp:164
+msgid "Finland"
+msgstr "Finland"
+
+#: iptc/iptcorigin.cpp:174 xmp/xmporigin.cpp:165
+msgid "France"
+msgstr "Frankrijk"
+
+#: iptc/iptcorigin.cpp:175 xmp/xmporigin.cpp:166
+msgid "French Guiana"
+msgstr "Frans-Guyana"
+
+#: iptc/iptcorigin.cpp:176 xmp/xmporigin.cpp:167
+msgid "French Polynesia"
+msgstr "Frans Polinesië"
+
+#: iptc/iptcorigin.cpp:177 xmp/xmporigin.cpp:168
+msgid "French Southern Territories"
+msgstr "Franse Zuidelijke Gebieden"
+
+#: iptc/iptcorigin.cpp:178 xmp/xmporigin.cpp:169
+msgid "Gabon"
+msgstr "Gabon"
+
+#: iptc/iptcorigin.cpp:179 xmp/xmporigin.cpp:170
+msgid "Gambia"
+msgstr "Gambia"
+
+#: iptc/iptcorigin.cpp:180 xmp/xmporigin.cpp:171
+msgid "Georgia"
+msgstr "Georgië"
+
+#: iptc/iptcorigin.cpp:181 xmp/xmporigin.cpp:172
+msgid "Germany"
+msgstr "Duitsland"
+
+#: iptc/iptcorigin.cpp:182 xmp/xmporigin.cpp:173
+msgid "Ghana"
+msgstr "Ghana"
+
+#: iptc/iptcorigin.cpp:183 xmp/xmporigin.cpp:174
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+#: iptc/iptcorigin.cpp:184 xmp/xmporigin.cpp:175
+msgid "Greece"
+msgstr "Griekenland"
+
+#: iptc/iptcorigin.cpp:185 xmp/xmporigin.cpp:176
+msgid "Greenland"
+msgstr "Groenland"
+
+#: iptc/iptcorigin.cpp:186 xmp/xmporigin.cpp:177
+msgid "Grenada"
+msgstr "Grenada"
+
+#: iptc/iptcorigin.cpp:187 xmp/xmporigin.cpp:178
+msgid "Guadaloupe"
+msgstr "Guadaloupe"
+
+#: iptc/iptcorigin.cpp:188 xmp/xmporigin.cpp:179
+msgid "Guam"
+msgstr "Guam"
+
+#: iptc/iptcorigin.cpp:189 xmp/xmporigin.cpp:180
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: iptc/iptcorigin.cpp:190 xmp/xmporigin.cpp:181
+msgid "Guinea"
+msgstr "Guinea"
+
+#: iptc/iptcorigin.cpp:191 xmp/xmporigin.cpp:182
+msgid "Guinea-Bissau"
+msgstr "Guinea-Bissau"
+
+#: iptc/iptcorigin.cpp:192 xmp/xmporigin.cpp:183
+msgid "Guyana"
+msgstr "Guyana"
+
+#: iptc/iptcorigin.cpp:193 xmp/xmporigin.cpp:184
+msgid "Haiti"
+msgstr "Haïti"
+
+#: iptc/iptcorigin.cpp:194 xmp/xmporigin.cpp:185
+msgid "Heard and McDonald Islands"
+msgstr "Heard en McDonald eilanden"
+
+#: iptc/iptcorigin.cpp:195 xmp/xmporigin.cpp:186
+msgid "Vatican"
+msgstr "Vaticaan"
+
+#: iptc/iptcorigin.cpp:196 xmp/xmporigin.cpp:187
+msgid "Honduras"
+msgstr "Honduras"
+
+#: iptc/iptcorigin.cpp:197 xmp/xmporigin.cpp:188
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+#: iptc/iptcorigin.cpp:198 xmp/xmporigin.cpp:189
+msgid "Croatia"
+msgstr "Kroatië"
+
+#: iptc/iptcorigin.cpp:199 xmp/xmporigin.cpp:190
+msgid "Hungary"
+msgstr "Hongarije"
+
+#: iptc/iptcorigin.cpp:200 xmp/xmporigin.cpp:191
+msgid "Iceland"
+msgstr "IJsland"
+
+#: iptc/iptcorigin.cpp:201 xmp/xmporigin.cpp:192
+msgid "India"
+msgstr "India"
+
+#: iptc/iptcorigin.cpp:202 xmp/xmporigin.cpp:193
+msgid "Indonesia"
+msgstr "Indonesië"
+
+#: iptc/iptcorigin.cpp:203 xmp/xmporigin.cpp:194
+msgid "Iran"
+msgstr "Iran"
+
+#: iptc/iptcorigin.cpp:204 xmp/xmporigin.cpp:195
+msgid "Iraq"
+msgstr "Irak"
+
+#: iptc/iptcorigin.cpp:205 xmp/xmporigin.cpp:196
+msgid "Ireland"
+msgstr "Ierland"
+
+#: iptc/iptcorigin.cpp:206 xmp/xmporigin.cpp:197
+msgid "Israel"
+msgstr "Israël"
+
+#: iptc/iptcorigin.cpp:207 xmp/xmporigin.cpp:198
+msgid "Italy"
+msgstr "Italië"
+
+#: iptc/iptcorigin.cpp:208 xmp/xmporigin.cpp:199
+msgid "Jamaica"
+msgstr "Jamaica"
+
+#: iptc/iptcorigin.cpp:209 xmp/xmporigin.cpp:200
+msgid "Japan"
+msgstr "Japan"
+
+#: iptc/iptcorigin.cpp:210 xmp/xmporigin.cpp:201
+msgid "Jordan"
+msgstr "Jordanië"
+
+#: iptc/iptcorigin.cpp:211 xmp/xmporigin.cpp:202
+msgid "Kazakhstan"
+msgstr "Kazachstan"
+
+#: iptc/iptcorigin.cpp:212 xmp/xmporigin.cpp:203
+msgid "Kenya"
+msgstr "Kenia"
+
+#: iptc/iptcorigin.cpp:213 xmp/xmporigin.cpp:204
+msgid "Kiribati"
+msgstr "Kiribati"
+
+#: iptc/iptcorigin.cpp:214 iptc/iptcorigin.cpp:215 xmp/xmporigin.cpp:205
+#: xmp/xmporigin.cpp:206
+msgid "Korea"
+msgstr "Korea"
+
+#: iptc/iptcorigin.cpp:216 xmp/xmporigin.cpp:207
+msgid "Kuwait"
+msgstr "Koeweit"
+
+#: iptc/iptcorigin.cpp:217 xmp/xmporigin.cpp:208
+msgid "Kyrgyz Republic"
+msgstr "Republiek Kirgizië"
+
+#: iptc/iptcorigin.cpp:218 xmp/xmporigin.cpp:209
+msgid "Lao"
+msgstr "Laotiaans"
+
+#: iptc/iptcorigin.cpp:219 xmp/xmporigin.cpp:210
+msgid "Latvia"
+msgstr "Letland"
+
+#: iptc/iptcorigin.cpp:220 xmp/xmporigin.cpp:211
+msgid "Lebanon"
+msgstr "Libanon"
+
+#: iptc/iptcorigin.cpp:221 xmp/xmporigin.cpp:212
+msgid "Lesotho"
+msgstr "Lesotho"
+
+#: iptc/iptcorigin.cpp:222 xmp/xmporigin.cpp:213
+msgid "Liberia"
+msgstr "Liberia"
+
+#: iptc/iptcorigin.cpp:223 xmp/xmporigin.cpp:214
+msgid "Libyan Arab Jamahiriya"
+msgstr "Libië"
+
+#: iptc/iptcorigin.cpp:224 xmp/xmporigin.cpp:215
+msgid "Liechtenstein"
+msgstr "Liechtenstein"
+
+#: iptc/iptcorigin.cpp:225 xmp/xmporigin.cpp:216
+msgid "Lithuania"
+msgstr "Litouwen"
+
+#: iptc/iptcorigin.cpp:226 xmp/xmporigin.cpp:217
+msgid "Luxembourg"
+msgstr "Luxemburg"
+
+#: iptc/iptcorigin.cpp:227 xmp/xmporigin.cpp:218
+msgid "Macao"
+msgstr "Macao"
+
+#: iptc/iptcorigin.cpp:228 xmp/xmporigin.cpp:219
+msgid "Macedonia"
+msgstr "Macedonië"
+
+#: iptc/iptcorigin.cpp:229 xmp/xmporigin.cpp:220
+msgid "Madagascar"
+msgstr "Madagascar"
+
+#: iptc/iptcorigin.cpp:230 xmp/xmporigin.cpp:221
+msgid "Malawi"
+msgstr "Malawi"
+
+#: iptc/iptcorigin.cpp:231 xmp/xmporigin.cpp:222
+msgid "Malaysia"
+msgstr "Maleisië"
+
+#: iptc/iptcorigin.cpp:232 xmp/xmporigin.cpp:223
+msgid "Maldives"
+msgstr "Malediven"
+
+#: iptc/iptcorigin.cpp:233 xmp/xmporigin.cpp:224
+msgid "Mali"
+msgstr "Mali"
+
+#: iptc/iptcorigin.cpp:234 xmp/xmporigin.cpp:225
+msgid "Malta"
+msgstr "Malta"
+
+#: iptc/iptcorigin.cpp:235 xmp/xmporigin.cpp:226
+msgid "Marshall Islands"
+msgstr "Marshall Eilanden"
+
+#: iptc/iptcorigin.cpp:236 xmp/xmporigin.cpp:227
+msgid "Martinique"
+msgstr "Martinique"
+
+#: iptc/iptcorigin.cpp:237 xmp/xmporigin.cpp:228
+msgid "Mauritania"
+msgstr "Mauritanië"
+
+#: iptc/iptcorigin.cpp:238 xmp/xmporigin.cpp:229
+msgid "Mauritius"
+msgstr "Mauritius"
+
+#: iptc/iptcorigin.cpp:239 xmp/xmporigin.cpp:230
+msgid "Mayotte"
+msgstr "Mayotte"
+
+#: iptc/iptcorigin.cpp:240 xmp/xmporigin.cpp:231
+msgid "Mexico"
+msgstr "Mexico"
+
+#: iptc/iptcorigin.cpp:241 xmp/xmporigin.cpp:232
+msgid "Micronesia"
+msgstr "Micronesië"
+
+#: iptc/iptcorigin.cpp:242 xmp/xmporigin.cpp:233
+msgid "Moldova"
+msgstr "Moldavië"
+
+#: iptc/iptcorigin.cpp:243 xmp/xmporigin.cpp:234
+msgid "Monaco"
+msgstr "Monaco"
+
+#: iptc/iptcorigin.cpp:244 xmp/xmporigin.cpp:235
+msgid "Mongolia"
+msgstr "Mongolië"
+
+#: iptc/iptcorigin.cpp:245 xmp/xmporigin.cpp:236
+msgid "Montserrat"
+msgstr "Montserrat"
+
+#: iptc/iptcorigin.cpp:246 xmp/xmporigin.cpp:237
+msgid "Morocco"
+msgstr "Marokko"
+
+#: iptc/iptcorigin.cpp:247 xmp/xmporigin.cpp:238
+msgid "Mozambique"
+msgstr "Mozambique"
+
+#: iptc/iptcorigin.cpp:248 xmp/xmporigin.cpp:239
+msgid "Myanmar"
+msgstr "Myanmar"
+
+#: iptc/iptcorigin.cpp:249 xmp/xmporigin.cpp:240
+msgid "Namibia"
+msgstr "Namibië"
+
+#: iptc/iptcorigin.cpp:250 xmp/xmporigin.cpp:241
+msgid "Nauru"
+msgstr "Nauru"
+
+#: iptc/iptcorigin.cpp:251 xmp/xmporigin.cpp:242
+msgid "Nepal"
+msgstr "Nepal"
+
+#: iptc/iptcorigin.cpp:252 xmp/xmporigin.cpp:243
+msgid "Netherlands Antilles"
+msgstr "Nederlandse Antillen"
+
+#: iptc/iptcorigin.cpp:253 xmp/xmporigin.cpp:244
+msgid "Netherlands"
+msgstr "Nederland"
+
+#: iptc/iptcorigin.cpp:254 xmp/xmporigin.cpp:245
+msgid "New Caledonia"
+msgstr "Nieuw Caledonië"
+
+#: iptc/iptcorigin.cpp:255 xmp/xmporigin.cpp:246
+msgid "New Zealand"
+msgstr "Nieuw Zeeland"
+
+#: iptc/iptcorigin.cpp:256 xmp/xmporigin.cpp:247
+msgid "Nicaragua"
+msgstr "Nicaragua"
+
+#: iptc/iptcorigin.cpp:257 xmp/xmporigin.cpp:248
+msgid "Niger"
+msgstr "Niger"
+
+#: iptc/iptcorigin.cpp:258 xmp/xmporigin.cpp:249
+msgid "Nigeria"
+msgstr "Nigeria"
+
+#: iptc/iptcorigin.cpp:259 xmp/xmporigin.cpp:250
+msgid "Niue"
+msgstr "Niue"
+
+#: iptc/iptcorigin.cpp:260 xmp/xmporigin.cpp:251
+msgid "Norfolk Island"
+msgstr "Norfolk Eiland"
+
+#: iptc/iptcorigin.cpp:261 xmp/xmporigin.cpp:252
+msgid "Northern Mariana Islands"
+msgstr "Northern Mariana Islands"
+
+#: iptc/iptcorigin.cpp:262 xmp/xmporigin.cpp:253
+msgid "Norway"
+msgstr "Noorwegen"
+
+#: iptc/iptcorigin.cpp:263 xmp/xmporigin.cpp:254
+msgid "Oman"
+msgstr "Oman"
+
+#: iptc/iptcorigin.cpp:264 xmp/xmporigin.cpp:255
+msgid "Pakistan"
+msgstr "Pakistan"
+
+#: iptc/iptcorigin.cpp:265 xmp/xmporigin.cpp:256
+msgid "Palau"
+msgstr "Palau"
+
+#: iptc/iptcorigin.cpp:266 xmp/xmporigin.cpp:257
+msgid "Palestinian Territory"
+msgstr "Palestijns Gebied"
+
+#: iptc/iptcorigin.cpp:267 xmp/xmporigin.cpp:258
+msgid "Panama"
+msgstr "Panama"
+
+#: iptc/iptcorigin.cpp:268 xmp/xmporigin.cpp:259
+msgid "Papua New Guinea"
+msgstr "Papua Nieuw Guinea"
+
+#: iptc/iptcorigin.cpp:269 xmp/xmporigin.cpp:260
+msgid "Paraguay"
+msgstr "Paraguay"
+
+#: iptc/iptcorigin.cpp:270 xmp/xmporigin.cpp:261
+msgid "Peru"
+msgstr "Peru"
+
+#: iptc/iptcorigin.cpp:271 xmp/xmporigin.cpp:262
+msgid "Philippines"
+msgstr "Filippijnen"
+
+#: iptc/iptcorigin.cpp:272 xmp/xmporigin.cpp:263
+msgid "Pitcairn Island"
+msgstr "Pitcaim eiland"
+
+#: iptc/iptcorigin.cpp:273 xmp/xmporigin.cpp:264
+msgid "Poland"
+msgstr "Polen"
+
+#: iptc/iptcorigin.cpp:274 xmp/xmporigin.cpp:265
+msgid "Portugal"
+msgstr "Portugal"
+
+#: iptc/iptcorigin.cpp:275 xmp/xmporigin.cpp:266
+msgid "Puerto Rico"
+msgstr "Puerto Rico"
+
+#: iptc/iptcorigin.cpp:276 xmp/xmporigin.cpp:267
+msgid "Qatar"
+msgstr "Qatar"
+
+#: iptc/iptcorigin.cpp:277 xmp/xmporigin.cpp:268
+msgid "Reunion"
+msgstr "Reunion"
+
+#: iptc/iptcorigin.cpp:278 xmp/xmporigin.cpp:269
+msgid "Romania"
+msgstr "Roemenië"
+
+#: iptc/iptcorigin.cpp:279 xmp/xmporigin.cpp:270
+msgid "Russian Federation"
+msgstr "Russische Federatie"
+
+#: iptc/iptcorigin.cpp:280 xmp/xmporigin.cpp:271
+msgid "Rwanda"
+msgstr "Rwanda"
+
+#: iptc/iptcorigin.cpp:281 xmp/xmporigin.cpp:272
+msgid "St. Helena"
+msgstr "St. Helena"
+
+#: iptc/iptcorigin.cpp:282 xmp/xmporigin.cpp:273
+msgid "St. Kitts and Nevis"
+msgstr "St. Kitts en Nevis"
+
+#: iptc/iptcorigin.cpp:283 xmp/xmporigin.cpp:274
+msgid "St. Lucia"
+msgstr "St. Lucia"
+
+#: iptc/iptcorigin.cpp:284 xmp/xmporigin.cpp:275
+msgid "St. Pierre and Miquelon"
+msgstr "St. Pierre and Miquelon"
+
+#: iptc/iptcorigin.cpp:285 xmp/xmporigin.cpp:276
+msgid "St. Vincent and the Grenadines"
+msgstr "St. Vincent en de Grenadines"
+
+#: iptc/iptcorigin.cpp:286 xmp/xmporigin.cpp:277
+msgid "Samoa"
+msgstr "Samoa"
+
+#: iptc/iptcorigin.cpp:287 xmp/xmporigin.cpp:278
+msgid "San Marino"
+msgstr "San Marino"
+
+#: iptc/iptcorigin.cpp:288 xmp/xmporigin.cpp:279
+msgid "Sao Tome and Principe"
+msgstr "Sao Tome en Principe"
+
+#: iptc/iptcorigin.cpp:289 xmp/xmporigin.cpp:280
+msgid "Saudi Arabia"
+msgstr "Saoedi-Arabië"
+
+#: iptc/iptcorigin.cpp:290 xmp/xmporigin.cpp:281
+msgid "Senegal"
+msgstr "Senegal"
+
+#: iptc/iptcorigin.cpp:291 xmp/xmporigin.cpp:282
+msgid "Serbia and Montenegro"
+msgstr "Servië en Montenegro"
+
+#: iptc/iptcorigin.cpp:292 xmp/xmporigin.cpp:283
+msgid "Seychelles"
+msgstr "Seychellen"
+
+#: iptc/iptcorigin.cpp:293 xmp/xmporigin.cpp:284
+msgid "Sierra Leone"
+msgstr "Sierra Leone"
+
+#: iptc/iptcorigin.cpp:294 xmp/xmporigin.cpp:285
+msgid "Singapore"
+msgstr "Singapore"
+
+#: iptc/iptcorigin.cpp:295 xmp/xmporigin.cpp:286
+msgid "Slovakia"
+msgstr "Slowakije"
+
+#: iptc/iptcorigin.cpp:296 xmp/xmporigin.cpp:287
+msgid "Slovenia"
+msgstr "Slovenië"
+
+#: iptc/iptcorigin.cpp:297 xmp/xmporigin.cpp:288
+msgid "Solomon Islands"
+msgstr "Solomon Eilanden"
+
+#: iptc/iptcorigin.cpp:298 xmp/xmporigin.cpp:289
+msgid "Somalia"
+msgstr "Somalië"
+
+#: iptc/iptcorigin.cpp:299 xmp/xmporigin.cpp:290
+msgid "South Africa"
+msgstr "Zuid-Afrika"
+
+#: iptc/iptcorigin.cpp:300 xmp/xmporigin.cpp:291
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "Zuid Georgia en de Zuid Sandwich Eilanden"
+
+#: iptc/iptcorigin.cpp:301 xmp/xmporigin.cpp:292
+msgid "Spain"
+msgstr "Spanje"
+
+#: iptc/iptcorigin.cpp:302 xmp/xmporigin.cpp:293
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+#: iptc/iptcorigin.cpp:303 xmp/xmporigin.cpp:294
+msgid "Sudan"
+msgstr "Soedan"
+
+#: iptc/iptcorigin.cpp:304 xmp/xmporigin.cpp:295
+msgid "Suriname"
+msgstr "Suriname"
+
+#: iptc/iptcorigin.cpp:305 xmp/xmporigin.cpp:296
+msgid "Svalbard & Jan Mayen Islands"
+msgstr "Svalbard & Jan Mayen eilanden"
+
+#: iptc/iptcorigin.cpp:306 xmp/xmporigin.cpp:297
+msgid "Swaziland"
+msgstr "Swaziland"
+
+#: iptc/iptcorigin.cpp:307 xmp/xmporigin.cpp:298
+msgid "Sweden"
+msgstr "Zweden"
+
+#: iptc/iptcorigin.cpp:308 xmp/xmporigin.cpp:299
+msgid "Switzerland"
+msgstr "Zwitserland"
+
+#: iptc/iptcorigin.cpp:309 xmp/xmporigin.cpp:300
+msgid "Syrian Arab Republic"
+msgstr "Syrië, Arabische Republiek"
+
+#: iptc/iptcorigin.cpp:310 xmp/xmporigin.cpp:301
+msgid "Taiwan"
+msgstr "Taiwan"
+
+#: iptc/iptcorigin.cpp:311 xmp/xmporigin.cpp:302
+msgid "Tajikistan"
+msgstr "Tadzjikistan"
+
+#: iptc/iptcorigin.cpp:312 xmp/xmporigin.cpp:303
+msgid "Tanzania"
+msgstr "Tanzanië"
+
+#: iptc/iptcorigin.cpp:313 xmp/xmporigin.cpp:304
+msgid "Thailand"
+msgstr "Thailand"
+
+#: iptc/iptcorigin.cpp:314 xmp/xmporigin.cpp:305
+msgid "Timor-Leste"
+msgstr "Timor-Leste"
+
+#: iptc/iptcorigin.cpp:315 xmp/xmporigin.cpp:306
+msgid "Togo"
+msgstr "Togo"
+
+#: iptc/iptcorigin.cpp:316 xmp/xmporigin.cpp:307
+msgid "Tokelau Islands"
+msgstr "Tokalau eilanden"
+
+#: iptc/iptcorigin.cpp:317 xmp/xmporigin.cpp:308
+msgid "Tonga"
+msgstr "Tonga"
+
+#: iptc/iptcorigin.cpp:318 xmp/xmporigin.cpp:309
+msgid "Trinidad and Tobago"
+msgstr "Trinidad en Tobago"
+
+#: iptc/iptcorigin.cpp:319 xmp/xmporigin.cpp:310
+msgid "Tunisia"
+msgstr "Tunesië"
+
+#: iptc/iptcorigin.cpp:320 xmp/xmporigin.cpp:311
+msgid "Turkey"
+msgstr "Turkije"
+
+#: iptc/iptcorigin.cpp:321 xmp/xmporigin.cpp:312
+msgid "Turkmenistan"
+msgstr "Turkmenistan"
+
+#: iptc/iptcorigin.cpp:322 xmp/xmporigin.cpp:313
+msgid "Turks and Caicos Islands"
+msgstr "Turks- en Caicoseilanden"
+
+#: iptc/iptcorigin.cpp:323 xmp/xmporigin.cpp:314
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+#: iptc/iptcorigin.cpp:324 xmp/xmporigin.cpp:315
+msgid "US Virgin Islands"
+msgstr "VS Maagdeneilanden"
+
+#: iptc/iptcorigin.cpp:325 xmp/xmporigin.cpp:316
+msgid "Uganda"
+msgstr "Oeganda"
+
+#: iptc/iptcorigin.cpp:326 xmp/xmporigin.cpp:317
+msgid "Ukraine"
+msgstr "Oekraïne"
+
+#: iptc/iptcorigin.cpp:327 xmp/xmporigin.cpp:318
+msgid "United Arab Emirates"
+msgstr "Verenigde Arabische Emiraten"
+
+#: iptc/iptcorigin.cpp:328 xmp/xmporigin.cpp:319
+msgid "United Kingdom"
+msgstr "Verenigd Koninkrijk"
+
+#: iptc/iptcorigin.cpp:329 xmp/xmporigin.cpp:320
+msgid "United States Minor Outlying Islands"
+msgstr "United States Minor Outlying Islands"
+
+#: iptc/iptcorigin.cpp:330 xmp/xmporigin.cpp:321
+msgid "United States of America"
+msgstr "Verenigde Staten van Amerika"
+
+#: iptc/iptcorigin.cpp:331 xmp/xmporigin.cpp:322
+msgid "Uruguay, Eastern Republic of"
+msgstr "Uruguay, Republiek ten oosten van de"
+
+#: iptc/iptcorigin.cpp:332 xmp/xmporigin.cpp:323
+msgid "Uzbekistan"
+msgstr "Oezbekistan"
+
+#: iptc/iptcorigin.cpp:333 xmp/xmporigin.cpp:324
+msgid "Vanuatu"
+msgstr "Vanuatu"
+
+#: iptc/iptcorigin.cpp:334 xmp/xmporigin.cpp:325
+msgid "Venezuela"
+msgstr "Venezuela"
+
+#: iptc/iptcorigin.cpp:335 xmp/xmporigin.cpp:326
+msgid "Viet Nam"
+msgstr "Vietnam"
+
+#: iptc/iptcorigin.cpp:336 xmp/xmporigin.cpp:327
+msgid "Wallis and Futuna Islands "
+msgstr "Wallis en Futuna eilanden"
+
+#: iptc/iptcorigin.cpp:337 xmp/xmporigin.cpp:328
+msgid "Western Sahara"
+msgstr "West-Sahara"
+
+#: iptc/iptcorigin.cpp:338 xmp/xmporigin.cpp:329
+msgid "Yemen"
+msgstr "Jemen"
+
+#: iptc/iptcorigin.cpp:339 xmp/xmporigin.cpp:330
+msgid "Zambia"
+msgstr "Zambia"
+
+#: iptc/iptcorigin.cpp:340 xmp/xmporigin.cpp:331
+msgid "Zimbabwe"
+msgstr "Zimbabwe"
+
+#: iptc/iptcorigin.cpp:344 xmp/xmporigin.cpp:335
+msgid "United Nations"
+msgstr "De Verenigde Naties"
+
+#: iptc/iptcorigin.cpp:345 xmp/xmporigin.cpp:336
+msgid "European Union"
+msgstr "Europese Unie"
+
+#: iptc/iptcorigin.cpp:346 xmp/xmporigin.cpp:337
+msgid "Space"
+msgstr "Ruimte"
+
+#: iptc/iptcorigin.cpp:347 xmp/xmporigin.cpp:338
+msgid "At Sea"
+msgstr "Op zee"
+
+#: iptc/iptcorigin.cpp:348 xmp/xmporigin.cpp:339
+msgid "In Flight"
+msgstr "Tijdens vlucht"
+
+#: iptc/iptcorigin.cpp:349 xmp/xmporigin.cpp:340
+msgid "England"
+msgstr "Engeland"
+
+#: iptc/iptcorigin.cpp:350 xmp/xmporigin.cpp:341
+msgid "Scotland"
+msgstr "Schotland"
+
+#: iptc/iptcorigin.cpp:351 xmp/xmporigin.cpp:342
+msgid "Northern Ireland"
+msgstr "Noord-Ierland"
+
+#: iptc/iptcorigin.cpp:352 xmp/xmporigin.cpp:343
+msgid "Wales"
+msgstr "Wales"
+
+#: iptc/iptcorigin.cpp:353 xmp/xmporigin.cpp:344
+msgid "Palestine"
+msgstr "Palestina"
+
+#: iptc/iptcorigin.cpp:354 xmp/xmporigin.cpp:345
+msgid "Gaza"
+msgstr "Gaza"
+
+#: iptc/iptcorigin.cpp:355 xmp/xmporigin.cpp:346
+msgid "Jericho"
+msgstr "Jericho"
+
+#: iptc/iptcorigin.cpp:403 xmp/xmporigin.cpp:383
+msgid "Digitization date"
+msgstr "Digitalisatie datum"
+
+#: iptc/iptcorigin.cpp:404
+msgid "Digitization time"
+msgstr "Digitalisatie tijd"
+
+#: iptc/iptcorigin.cpp:412 xmp/xmporigin.cpp:390
+msgid "Set here the creation date of digital representation."
+msgstr "Voer de creatiedatum in van de digitale representatie."
+
+#: iptc/iptcorigin.cpp:414
+msgid "Set here the creation time of digital representation."
+msgstr "Voer de creatietijd in van de digitale representatie."
+
+#: iptc/iptcorigin.cpp:421 xmp/xmporigin.cpp:397
+msgid "Creation date"
+msgstr "Aanmaakdatum"
+
+#: iptc/iptcorigin.cpp:422
+msgid "Creation time"
+msgstr "Aanmaaktijd"
+
+#: iptc/iptcorigin.cpp:428 xmp/xmporigin.cpp:402
+msgid "Sync EXIF creation date"
+msgstr "EXIF-aanmaakdatum synchroniseren"
+
+#: iptc/iptcorigin.cpp:434 xmp/xmporigin.cpp:408
+msgid "Set here the creation date of intellectual content."
+msgstr "Voer de creatie-datum in van de intellectuele inhoud."
+
+#: iptc/iptcorigin.cpp:436
+msgid "Set here the creation time of intellectual content."
+msgstr "Voer de creatie-tijd in van de intellectuele inhoud."
+
+#: iptc/iptcorigin.cpp:443
+msgid "Location:"
+msgstr "Locatie:"
+
+#: iptc/iptcorigin.cpp:444
+msgid "Set here the full country name referenced by the content."
+msgstr "Stel de volledige naam van het land in dat hoort bij de inhoud."
+
+#: iptc/iptcorigin.cpp:455 xmp/xmpcredits.cpp:153 xmp/xmporigin.cpp:415
+msgid "City:"
+msgstr "Stad:"
+
+#: iptc/iptcorigin.cpp:460
+msgid ""
+"Set here the city of content origin. This field is limited to 32 ASCII "
+"characters."
+msgstr ""
+"Stel de stad behorende bij de inhoud in. Dit veld is beperkt tot 32 ASCII-"
+"tekens."
+
+#: iptc/iptcorigin.cpp:465 xmp/xmporigin.cpp:422
+msgid "Sublocation:"
+msgstr "Sublocatie:"
+
+#: iptc/iptcorigin.cpp:470
+msgid ""
+"Set here the content location within city. This field is limited to 32 ASCII "
+"characters."
+msgstr ""
+"Stel de locatie binnen de stad in behorende bij de inhoud. Dit veld is "
+"beperkt tot 32 ASCII-tekens."
+
+#: iptc/iptcorigin.cpp:475 xmp/xmporigin.cpp:429
+msgid "State/Province:"
+msgstr "Staat/provincie:"
+
+#: iptc/iptcorigin.cpp:480
+msgid ""
+"Set here the Province or State of content origin. This field is limited to "
+"32 ASCII characters."
+msgstr ""
+"Voeg de provincie of staat in behorende bij de inhoud. Dit veld is beperkt "
+"tot 32 ASCII-tekens."
+
+#: iptc/iptcorigin.cpp:485 xmp/xmpcredits.cpp:158 xmp/xmporigin.cpp:436
+msgid "Country:"
+msgstr "Land:"
+
+#: iptc/iptcorigin.cpp:493
+msgid "Select here country name of content origin."
+msgstr "Selecteer de naam van het land behorende bij de inhoud."
+
+#: iptc/iptcproperties.cpp:135
+msgid "Release date"
+msgstr "Uitgiftedatum"
+
+#: iptc/iptcproperties.cpp:136
+msgid "Release time"
+msgstr "Uitgifte tijd"
+
+#: iptc/iptcproperties.cpp:142
+msgid "Set release date to today"
+msgstr "Stel de vrijgave datum op vandaag"
+
+#: iptc/iptcproperties.cpp:144
+msgid "Set here the earliest intended usable date of intellectual content."
+msgstr ""
+"Voer de datum in van het vroegste moment van bedoeld gebruik van de "
+"intellectuele inhoud."
+
+#: iptc/iptcproperties.cpp:146
+msgid "Set here the earliest intended usable time of intellectual content."
+msgstr ""
+"Voer de tijd in van het vroegste moment van bedoeld gebruik van de "
+"intellectuele inhoud."
+
+#: iptc/iptcproperties.cpp:152
+msgid "Expiration date"
+msgstr "Vervaldatum"
+
+#: iptc/iptcproperties.cpp:153
+msgid "Expiration time"
+msgstr "Verloop tijd"
+
+#: iptc/iptcproperties.cpp:159
+msgid "Set expiration date to today"
+msgstr "Stel de vervaldatum in op vandaag"
+
+#: iptc/iptcproperties.cpp:161
+msgid "Set here the latest intended usable date of intellectual content."
+msgstr ""
+"Voer de datum in van het laatste moment van bedoeld gebruik van de "
+"intellectuele inhoud."
+
+#: iptc/iptcproperties.cpp:163
+msgid "Set here the latest intended usable time of intellectual content."
+msgstr ""
+"Voer de tijd in van het laatste moment van bedoeld gebruik van de "
+"intellectuele inhoud."
+
+#: iptc/iptcproperties.cpp:170 xmp/xmpproperties.cpp:174
+msgid "Language:"
+msgstr "Taal:"
+
+#: iptc/iptcproperties.cpp:182 xmp/xmpproperties.cpp:175
+msgid "Select here the language of content."
+msgstr "Selecteer de taal van de inhoud."
+
+#: iptc/iptcproperties.cpp:188 xmp/xmpproperties.cpp:188
+msgctxt "editorial urgency of content"
+msgid "0: None"
+msgstr "0: Geen"
+
+#: iptc/iptcproperties.cpp:189 xmp/xmpproperties.cpp:189
+msgctxt "editorial urgency of content"
+msgid "1: High"
+msgstr "1: Hoog"
+
+#: iptc/iptcproperties.cpp:193 xmp/xmpproperties.cpp:193
+msgctxt "editorial urgency of content"
+msgid "5: Normal"
+msgstr "5: Normaal"
+
+#: iptc/iptcproperties.cpp:196 xmp/xmpproperties.cpp:196
+msgctxt "editorial urgency of content"
+msgid "8: Low"
+msgstr "8: Laag"
+
+#: iptc/iptcproperties.cpp:197 xmp/xmpproperties.cpp:197
+msgid "Select here the editorial urgency of content."
+msgstr "Selecteer de redactionele urgentie van de inhoud."
+
+#: iptc/iptcproperties.cpp:201
+msgid "Cycle:"
+msgstr "Cyclus:"
+
+#: iptc/iptcproperties.cpp:203
+msgid "Morning"
+msgstr "Ochtend"
+
+#: iptc/iptcproperties.cpp:204
+msgid "Afternoon"
+msgstr "Middag"
+
+#: iptc/iptcproperties.cpp:205
+msgid "Evening"
+msgstr "Avond"
+
+#: iptc/iptcproperties.cpp:206
+msgid "Select here the editorial cycle of content."
+msgstr "Selecteer de redactionele cyclus van de inhoud."
+
+#: iptc/iptcproperties.cpp:210 xmp/xmpproperties.cpp:213
+msgid "Type:"
+msgstr "Type:"
+
+#: iptc/iptcproperties.cpp:216 xmp/xmpproperties.cpp:117
+msgid "News"
+msgstr "Nieuws"
+
+#: iptc/iptcproperties.cpp:217 xmp/xmpproperties.cpp:113
+msgid "Data"
+msgstr "Gegevens"
+
+#: iptc/iptcproperties.cpp:218 xmp/xmpproperties.cpp:110
+msgid "Advisory"
+msgstr "Advies"
+
+#: iptc/iptcproperties.cpp:219
+msgid "Select here the editorial type of content."
+msgstr "Selecteer het redactionele type van de inhoud."
+
+#: iptc/iptcproperties.cpp:220
+msgid ""
+"Set here the editorial type description of content. This field is limited to "
+"64 ASCII characters."
+msgstr ""
+"Voeg het redactionele beschrijvingstype van de inhoud. Dit veld is beperkt "
+"tot 64 ASCII-tekens."
+
+#: iptc/iptcproperties.cpp:229 xmp/xmpproperties.cpp:257
+msgid "Reference:"
+msgstr "Referentie:"
+
+#: iptc/iptcproperties.cpp:234
+msgid ""
+"Set here the original content transmission reference. This field is limited "
+"to 32 ASCII characters."
+msgstr ""
+"Stel hier de referentie in waar vanaf het origineel is verzonden. Dit veld "
+"is beperkt tot 32 ASCII-tekens."
+
+#: iptc/iptcstatus.cpp:91
+msgctxt "image title"
+msgid "Title:"
+msgstr "Titel:"
+
+#: iptc/iptcstatus.cpp:96
+msgid ""
+"Set here the shorthand reference of content. This field is limited to 64 "
+"ASCII characters."
+msgstr ""
+"Stel de korte titel van de inhoud in. Dit veld is beperkt tot 64 ASCII-"
+"tekens."
+
+#: iptc/iptcstatus.cpp:101
+msgid "Edit Status:"
+msgstr "Wijzig status:"
+
+#: iptc/iptcstatus.cpp:106
+msgid ""
+"Set here the title of content status. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"Stel de status van de titel van de inhoud in. Dit veld is beperkt tot 64 "
+"ASCII-tekens."
+
+#: iptc/iptcstatus.cpp:111
+msgid "Job Identifier:"
+msgstr "Taak-identificatie:"
+
+#: iptc/iptcstatus.cpp:116
+msgid ""
+"Set here the string that identifies content that recurs. This field is "
+"limited to 32 ASCII characters."
+msgstr ""
+"Voer een tekst in die de inhoud identificeert. Dit veld mag maximaal 32 "
+"ASCII-tekens bevatten."
+
+#: iptc/iptcstatus.cpp:121 xmp/xmpstatus.cpp:105
+msgid "Special Instructions:"
+msgstr "Speciale instructies"
+
+#: iptc/iptcstatus.cpp:125
+msgid ""
+"Enter the editorial usage instructions. This field is limited to 256 ASCII "
+"characters."
+msgstr ""
+"Voer de redactionele gebruiksinstructies in. Dit veld is beperkt tot 256 "
+"ASCII-tekens."
+
+#: iptc/iptcsubjects.cpp:57
+msgid ""
+"Enter here the Informative Provider Reference. I.P.R is a name registered "
+"with the IPTC/NAA, identifying the provider that provides an indicator of "
+"the content. The default value for the I.P.R is \"IPTC\" if a standard "
+"Reference Code is used. This field is limited to 32 ASCII characters."
+msgstr ""
+"Voer de 'Informative Provider Reference' in. Een I.P.R. is een naam die bij "
+"de IPTC/NAA geregistreerd is en die de leverancier identificeert van een "
+"indicatie van de inhoud. De standaard waarde van de I.P.R. is \"IPTC\" als "
+"een standaard referentiecode wordt gebruikt. Dit veld is beperkt tot 32 "
+"ASCII-tekens."
+
+#: iptc/iptcsubjects.cpp:65
+msgid ""
+"Enter here the Subject Reference Number. Provides a numeric code to indicate "
+"the Subject Name plus optional Subject Matter and Subject Detail Names in "
+"the language of the service. Subject Reference is a number from the range "
+"01000000 to 17999999 and represent a language independent international "
+"reference to a Subject. A Subject is identified by its Reference Number and "
+"corresponding Names taken from a standard lists given by IPTC/NAA. If a "
+"standard reference code is used, these lists are the English language "
+"reference versions. This field is limited to 8 ASCII digit code."
+msgstr ""
+"Voer hier het Onderwerpreferentienummer in. Levert een numerieke code om de "
+"Onderwerpnaam aan te geven plus optioneel het Onderwerp en "
+"Onderwerpdetailnamen in de taal van de service. Onderwerpreferentie is een "
+"nummer in de reeks 01000000 tot 17999999 die een taalonafhankelijke "
+"internationale referentie is voor een Onderwerp. Een onderwerp wordt "
+"geïdentificeerd door zijn Referentienummer en de bijbehorende namen uit de "
+"standaard lijst van de IPTC/NAA. Als een standaard referentiecode wordt "
+"gebruikt dan zijn die lijsten in de referentieversie in de Engelse taal. Dit "
+"veld is beperkt tot 8 ASCII-tekens."
+
+#: iptc/iptcsubjects.cpp:80
+msgid ""
+"Enter here the Subject Name. English language is used if you selected a "
+"standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"Voer hier de naam van het onderwerp in. De Engelse taal wordt gebruikt als u "
+"een standaard IPTC/NAA referentiecode gebruikt. Dit veld is beperkt tot 64 "
+"ASCII-tekens."
+
+#: iptc/iptcsubjects.cpp:87
+msgid ""
+"Enter here the Subject Matter Name. English language is used if you selected "
+"a standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"Voer de korte titel van de inhoud in. Engels wordt gebruikt als u een "
+"standaard IPTC/NAA referentiecode gebruikt. Dit veld is beperkt tot 64 ASCII-"
+"tekens."
+
+#: iptc/iptcsubjects.cpp:94
+msgid ""
+"Enter here the Subject Detail Name. English language is used if you selected "
+"a standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"Voeg de Onderwerpdetailnaam in. De Engelse taal wordt gebruikt als u een "
+"standaard IPTC/NAA referentiecode hebt geselecteerd. Dit veld is beperkt tot "
+"64 ASCII-tekens."
+
+#: iptc/iptceditwidget.cpp:140 xmp/xmpeditwidget.cpp:140
+msgid "Content"
+msgstr "Inhoud"
+
+#: iptc/iptceditwidget.cpp:141 xmp/xmpeditwidget.cpp:141
+msgid ""
+"<qt>Content Information<br/><i>Use this panel to describe the visual content "
+"of the image</i></qt>"
+msgstr ""
+"<qt>Inhoudsinformatie<br/><i>Gebruik dit paneel om de visuele inhoud van de "
+"afbeelding te beschrijven</i></qt>"
+
+#: iptc/iptceditwidget.cpp:146 xmp/xmpeditwidget.cpp:146
+msgid "Origin"
+msgstr "Afkomst"
+
+#: iptc/iptceditwidget.cpp:147 xmp/xmpeditwidget.cpp:147
+msgid ""
+"<qt>Origin Information<br/><i>Use this panel for formal descriptive "
+"information about the image</i></qt>"
+msgstr ""
+"<qt>Oorspronginformatie<br/><i>Gebruik dit paneel voor formele beschrijvende "
+"informatie over de afbeelding</i></qt>"
+
+#: iptc/iptceditwidget.cpp:152 xmp/xmpeditwidget.cpp:152
+msgid "Credits"
+msgstr "Dankbetuigingen"
+
+#: iptc/iptceditwidget.cpp:153 xmp/xmpeditwidget.cpp:153
+msgid ""
+"<qt>Credit Information<br/><i>Use this panel to record copyright information "
+"about the image</i></qt>"
+msgstr ""
+"<qt>Dankbetuiginginformatie<br/><i>Gebruik dit paneel om copyright "
+"informatie over de afbeelding te registreren</i></qt>"
+
+#: iptc/iptceditwidget.cpp:158 xmp/xmpeditwidget.cpp:158
+msgid "Subjects"
+msgstr "Onderwerpen"
+
+#: iptc/iptceditwidget.cpp:159 xmp/xmpeditwidget.cpp:159
+msgid ""
+"<qt>Subject Information<br/><i>Use this panel to record subject information "
+"about the image</i></qt>"
+msgstr ""
+"<qt>Onderwerpinformatie<br/><i>Gebruik dit paneel om onderwerpinformatie te "
+"registreren over de afbeelding</i></qt>"
+
+#: iptc/iptceditwidget.cpp:164 xmp/xmpeditwidget.cpp:164
+msgid "Keywords"
+msgstr "Trefwoorden"
+
+#: iptc/iptceditwidget.cpp:165 xmp/xmpeditwidget.cpp:165
+msgid ""
+"<qt>Keyword Information<br/><i>Use this panel to record keywords relevant to "
+"the image</i></qt>"
+msgstr ""
+"<qt>Sleutelwoordeninformatie<br/><i>Gebruik dit paneel om sleutelwoorden te "
+"registreren over de afbeelding</i></qt>"
+
+#: iptc/iptceditwidget.cpp:170 xmp/xmpeditwidget.cpp:170
+msgid "Categories"
+msgstr "Categorieën"
+
+#: iptc/iptceditwidget.cpp:171 xmp/xmpeditwidget.cpp:171
+msgid ""
+"<qt>Category Information<br/><i>Use this panel to record categories relevant "
+"to the image</i></qt>"
+msgstr ""
+"<qt>Categorieëninformatie<br/><i>Gebruik dit paneel om categorieën over de "
+"afbeelding vast te leggen</i></qt>"
+
+#: iptc/iptceditwidget.cpp:176 xmp/xmpeditwidget.cpp:176
+msgid "Status"
+msgstr "Status"
+
+#: iptc/iptceditwidget.cpp:177 xmp/xmpeditwidget.cpp:177
+msgid ""
+"<qt>Status Information<br/><i>Use this panel to record workflow information</"
+"i></qt>"
+msgstr ""
+"<qt>Statusinformatie<br/><i>Gebruik dit paneel om de workflow-informatie "
+"vast te leggen</i></qt>"
+
+#: iptc/iptceditwidget.cpp:182 xmp/xmpeditwidget.cpp:182
+msgid "Properties"
+msgstr "Eigenschappen"
+
+#: iptc/iptceditwidget.cpp:183 xmp/xmpeditwidget.cpp:183
+msgid ""
+"<qt>Status Properties<br/><i>Use this panel to record workflow properties</"
+"i></qt>"
+msgstr ""
+"<qt>Statuseigeschappen<br/><i>Gebruik dit paneel om workflow-eigenschappen "
+"vast te leggen</i></qt>"
+
+#: iptc/iptceditwidget.cpp:188
+msgid "Envelope"
+msgstr "Envelop"
+
+#: iptc/iptceditwidget.cpp:189
+msgid ""
+"<qt>Envelope Information<br/><i>Use this panel to record editorial details</"
+"i></qt>"
+msgstr ""
+"<qt>Envelopinformatie<br/><i>Gebruik dit paneel om de redactionele details "
+"vast te leggen</i></qt>"
+
+#: xmp/xmpcategories.cpp:90
+msgid ""
+"Set here the category of content. This field is limited to 3 characters."
+msgstr "Stel de categorie van de inhoud in. Dit veld is beperkt tot 3 tekens."
+
+#: xmp/xmpcategories.cpp:97
+msgid "Enter here a new supplemental category of content."
+msgstr "Voer een nieuwe aanvullende categorie in voor de inhoud."
+
+#: xmp/xmpcontent.cpp:95
+msgid "Enter here the content synopsis."
+msgstr "Voer de synopsis van de inhoud in."
+
+#: xmp/xmpcontent.cpp:100
+msgid "Enter the content description."
+msgstr "Voer de inhoudsbeschrijving in."
+
+#: xmp/xmpcontent.cpp:102
+msgid "Default Language Caption Options"
+msgstr "Opties voor de standaard taaltitel"
+
+#: xmp/xmpcontent.cpp:125
+msgid "Enter the necessary copyright notice."
+msgstr "Voer de noodzakelijke copyright notitie in."
+
+#: xmp/xmpcredits.cpp:125
+msgid "Contact"
+msgstr "Contactpersoon"
+
+#: xmp/xmpcredits.cpp:128
+msgctxt "contact email address"
+msgid "E-mail:"
+msgstr "E-mailadres:"
+
+#: xmp/xmpcredits.cpp:131
+msgid "Set here the contact e-mail."
+msgstr "Stel de het e-mailadres van de contactpersoon in."
+
+#: xmp/xmpcredits.cpp:133
+msgid "URL:"
+msgstr "URL-adres:"
+
+#: xmp/xmpcredits.cpp:136
+msgid "Set here the contact URL."
+msgstr "Stel de URL van de contactpersoon in."
+
+#: xmp/xmpcredits.cpp:138
+msgid "Phone:"
+msgstr "Telefoon:"
+
+#: xmp/xmpcredits.cpp:141
+msgid "Set here the contact 'phone number."
+msgstr "Stel het telefoonnummer van de contactpersoon in."
+
+#: xmp/xmpcredits.cpp:143
+msgctxt "Street address"
+msgid "Address:"
+msgstr "Adres:"
+
+#: xmp/xmpcredits.cpp:146
+msgid "Set here the contact address."
+msgstr "Stel het adres van de contactpersoon in."
+
+#: xmp/xmpcredits.cpp:148
+msgid "Postal code:"
+msgstr "Postcode:"
+
+#: xmp/xmpcredits.cpp:151
+msgid "Set here the contact postal code."
+msgstr "Stel de postcode van de contactpersoon in."
+
+#: xmp/xmpcredits.cpp:156
+msgid "Set here the contact city."
+msgstr "Stel de plaats van de contactpersoon in."
+
+#: xmp/xmpcredits.cpp:161
+msgid "Set here the contact country."
+msgstr "Stel het land van de contactpersoon in."
+
+#: xmp/xmpcredits.cpp:186
+msgid "Set here the content provider."
+msgstr "Stel de leverancier van de inhoud in."
+
+#: xmp/xmpcredits.cpp:193
+msgid "Set here the original owner of content."
+msgstr "Stel de oorspronkelijke eigenaar van de inhoud in."
+
+#: xmp/xmpkeywords.cpp:86
+msgid "Enter here a new keyword."
+msgstr "Voer hier een nieuw sleutelwoord in."
+
+#: xmp/xmporigin.cpp:418
+msgid "Set here the content's city of origin."
+msgstr "Stel de plaats in behorende bij de inhoud."
+
+#: xmp/xmporigin.cpp:425
+msgid "Set here the content's location within the city."
+msgstr "Stel de locatie in binnen de plaats behorende bij de inhoud."
+
+#: xmp/xmporigin.cpp:432
+msgid "Set here the content's Province or State of origin."
+msgstr "Stel de provincie of staat in behorende bij de inhoud."
+
+#: xmp/xmporigin.cpp:444
+msgid "Select here the content's country of origin."
+msgstr "Stel het land in behorende bij de inhoud."
+
+#: xmp/xmpproperties.cpp:85
+msgid "Headshot"
+msgstr "Vooraanzichtopname"
+
+#: xmp/xmpproperties.cpp:86
+msgid "Half-length"
+msgstr "Halve lengte"
+
+#: xmp/xmpproperties.cpp:87
+msgid "Full-length"
+msgstr "Volledige lengte"
+
+#: xmp/xmpproperties.cpp:88
+msgctxt "Side view of a person"
+msgid "Profile"
+msgstr "En profil"
+
+#: xmp/xmpproperties.cpp:89
+msgid "Rear view"
+msgstr "Achteraanzicht"
+
+#: xmp/xmpproperties.cpp:90
+msgid "Single"
+msgstr "Enkel"
+
+#: xmp/xmpproperties.cpp:91
+msgid "Couple"
+msgstr "Paar"
+
+#: xmp/xmpproperties.cpp:92
+msgid "Two"
+msgstr "Twee"
+
+#: xmp/xmpproperties.cpp:93
+msgctxt "group of people"
+msgid "Group"
+msgstr "Groep"
+
+#: xmp/xmpproperties.cpp:94
+msgid "General view"
+msgstr "Algemeen aanzicht"
+
+#: xmp/xmpproperties.cpp:95
+msgid "Panoramic view"
+msgstr "Panoramisch aanzicht"
+
+#: xmp/xmpproperties.cpp:96
+msgid "Aerial view"
+msgstr "Bovenaanzicht"
+
+#: xmp/xmpproperties.cpp:97
+msgid "Under-water"
+msgstr "Onderwater"
+
+#: xmp/xmpproperties.cpp:99
+msgid "Satellite"
+msgstr "Satelliet"
+
+#: xmp/xmpproperties.cpp:100
+msgid "Exterior view"
+msgstr "Buitenaanzicht"
+
+#: xmp/xmpproperties.cpp:101
+msgid "Interior view"
+msgstr "Binnenaanzicht"
+
+#: xmp/xmpproperties.cpp:102
+msgid "Close-up"
+msgstr "Close-up"
+
+#: xmp/xmpproperties.cpp:103
+msgid "Action"
+msgstr "Actie"
+
+#: xmp/xmpproperties.cpp:104
+msgid "Performing"
+msgstr "Uitvoeren"
+
+#: xmp/xmpproperties.cpp:105
+msgid "Posing"
+msgstr "Poseren"
+
+#: xmp/xmpproperties.cpp:106
+msgid "Symbolic"
+msgstr "Symbolisch"
+
+#: xmp/xmpproperties.cpp:107
+msgid "Off-beat"
+msgstr "Off-beat"
+
+#: xmp/xmpproperties.cpp:108
+msgid "Movie scene"
+msgstr "Filmscène"
+
+#: xmp/xmpproperties.cpp:111
+msgid "Alert"
+msgstr "Waarschuwing"
+
+#: xmp/xmpproperties.cpp:112
+msgid "Catalog"
+msgstr "Catalogus"
+
+#: xmp/xmpproperties.cpp:114
+msgctxt "type is a document"
+msgid "Document"
+msgstr "Document"
+
+#: xmp/xmpproperties.cpp:115
+msgid "DTD"
+msgstr "DTD"
+
+#: xmp/xmpproperties.cpp:116
+msgid "Maintenance"
+msgstr "Onderhoud"
+
+#: xmp/xmpproperties.cpp:118
+msgid "News Management Mode"
+msgstr "Nieuwsbeheermodus"
+
+#: xmp/xmpproperties.cpp:119
+msgid "Package"
+msgstr "Pakket"
+
+#: xmp/xmpproperties.cpp:120
+msgid "Schema"
+msgstr "Schema"
+
+#: xmp/xmpproperties.cpp:121
+msgid "Topic"
+msgstr "Onderwerp"
+
+#: xmp/xmpproperties.cpp:122
+msgid "Topic Set"
+msgstr "Set onderwerpen"
+
+#: xmp/xmpproperties.cpp:201
+msgid "Scene:"
+msgstr "Scène:"
+
+#: xmp/xmpproperties.cpp:202
+msgid "Select here the scene type of the content."
+msgstr "Selecteer het type scène van de inhoud."
+
+#: xmp/xmpproperties.cpp:214
+msgid "Select here the editorial type of the content."
+msgstr "Selecteer het redactionele type van de inhoud."
+
+#: xmp/xmpproperties.cpp:225 plugin/objectattributesedit.cpp:96
+msgid "Attribute:"
+msgstr "Attribuut:"
+
+#: xmp/xmpproperties.cpp:229
+msgid "Set here the editorial attribute description of the content."
+msgstr "Stel de redactionele beschrijving van het attribuut in van de inhoud."
+
+#: xmp/xmpproperties.cpp:231
+msgid "Select here the editorial attribute of the content."
+msgstr "Selecteer het redactionele attribuut van de inhoud."
+
+#: xmp/xmpproperties.cpp:232
+msgctxt "editorial content attribute"
+msgid "Current"
+msgstr "Huidige"
+
+#: xmp/xmpproperties.cpp:233
+msgctxt "editorial content attribute"
+msgid "Analysis"
+msgstr "Analyse"
+
+#: xmp/xmpproperties.cpp:234
+msgctxt "editorial content attribute"
+msgid "Archive material"
+msgstr "Archiefmateriaal"
+
+#: xmp/xmpproperties.cpp:235
+msgctxt "editorial content attribute"
+msgid "Background"
+msgstr "Achtergrond"
+
+#: xmp/xmpproperties.cpp:236
+msgctxt "editorial content attribute"
+msgid "Feature"
+msgstr "Functie"
+
+#: xmp/xmpproperties.cpp:237
+msgctxt "editorial content attribute"
+msgid "Forecast"
+msgstr "Voorspelling"
+
+#: xmp/xmpproperties.cpp:238
+msgctxt "editorial content attribute"
+msgid "History"
+msgstr "Geschiedenis"
+
+#: xmp/xmpproperties.cpp:239
+msgctxt "editorial content attribute"
+msgid "Obituary"
+msgstr "Overlijdensbericht"
+
+#: xmp/xmpproperties.cpp:240
+msgctxt "editorial content attribute"
+msgid "Opinion"
+msgstr "Opinie"
+
+#: xmp/xmpproperties.cpp:241
+msgctxt "editorial content attribute"
+msgid "Polls & Surveys"
+msgstr "Peilingen & enquêtes"
+
+#: xmp/xmpproperties.cpp:242
+msgctxt "editorial content attribute"
+msgid "Profile"
+msgstr "Profiel"
+
+#: xmp/xmpproperties.cpp:243
+msgctxt "editorial content attribute"
+msgid "Results Listings & Table"
+msgstr "Resultatenlijsten & tabel"
+
+#: xmp/xmpproperties.cpp:244
+msgctxt "editorial content attribute"
+msgid "Side bar & Supporting information"
+msgstr "Zijpaneel en ondersteunende informatie"
+
+#: xmp/xmpproperties.cpp:245
+msgctxt "editorial content attribute"
+msgid "Summary"
+msgstr "Samenvatting"
+
+#: xmp/xmpproperties.cpp:246
+msgctxt "editorial content attribute"
+msgid "Transcript & Verbatim"
+msgstr "Transcriptie & letterlijk"
+
+#: xmp/xmpproperties.cpp:247
+msgctxt "editorial content attribute"
+msgid "Interview"
+msgstr "Gesprek"
+
+#: xmp/xmpproperties.cpp:248
+msgctxt "editorial content attribute"
+msgid "From the Scene"
+msgstr "Van de scène"
+
+#: xmp/xmpproperties.cpp:249
+msgctxt "editorial content attribute"
+msgid "Retrospective"
+msgstr "Retrospectief"
+
+#: xmp/xmpproperties.cpp:250
+msgctxt "editorial content attribute"
+msgid "Statistics"
+msgstr "Statistieken"
+
+#: xmp/xmpproperties.cpp:251
+msgctxt "editorial content attribute"
+msgid "Update"
+msgstr "Bijwerken"
+
+#: xmp/xmpproperties.cpp:252
+msgctxt "editorial content attribute"
+msgid "Wrap-up"
+msgstr "Samenvatting"
+
+#: xmp/xmpproperties.cpp:253
+msgctxt "editorial content attribute"
+msgid "Press Release"
+msgstr "Pers uitgave"
+
+#: xmp/xmpproperties.cpp:260
+msgid "Set here the original content transmission reference."
+msgstr "Stel de referentie in waar vanaf het origineel is verzonden."
+
+#: xmp/xmpstatus.cpp:88
+msgctxt "short title for the content"
+msgid "Title:"
+msgstr "Titel:"
+
+#: xmp/xmpstatus.cpp:89
+msgid "Set here a shorthand reference for the content."
+msgstr "Stel de beknopte referentie in voor de inhoud."
+
+#: xmp/xmpstatus.cpp:93
+msgid "Nickname:"
+msgstr "Bijnaam:"
+
+#: xmp/xmpstatus.cpp:96
+msgid "A short informal name for the resource."
+msgstr "Een korte informele naam voor de hulpbron."
+
+#: xmp/xmpstatus.cpp:100
+msgid "Identifiers:"
+msgstr "Identifiers:"
+
+#: xmp/xmpstatus.cpp:101
+msgid "Set here the strings that identify content that recurs."
+msgstr "Stel een tekst in die de inhoud identificeert."
+
+#: xmp/xmpstatus.cpp:107
+msgid "Enter the editorial usage instructions."
+msgstr "Voer de redactionele gebruiksinstructies in."
+
+#: xmp/xmpsubjects.cpp:55
+msgid ""
+"Enter here the Informative Provider Reference. I.P.R is a name registered "
+"with the XMP/NAA, identifying the provider that provides an indicator of the "
+"content. The default value for the I.P.R is \"XMP\" if a standard Reference "
+"Code is used."
+msgstr ""
+"Voer de 'Informative Provider Reference' in. Een I.P.R. is een naam die bij "
+"de XMP/NAA geregistreerd is en die de leverancier identificeert van een "
+"indicatie van de inhoud. De standaard waarde van de I.P.R. is \"XMP\" als "
+"een standaard referentiecode wordt gebruikt."
+
+#: xmp/xmpsubjects.cpp:61
+msgid ""
+"Enter here the Subject Reference Number. Provides a numeric code to indicate "
+"the Subject Name plus optional Subject Matter and Subject Detail Names in "
+"the language of the service. Subject Reference is a number from the range "
+"01000000 to 17999999 and represent a language independent international "
+"reference to a Subject. A Subject is identified by its Reference Number and "
+"corresponding Names taken from a standard lists given by XMP/NAA. If a "
+"standard reference code is used, these lists are the English language "
+"reference versions. This field is limited to 8 digit code."
+msgstr ""
+"Voer hier het Onderwerpreferentienummer in. Levert een numerieke code om de "
+"Onderwerpnaam aan te geven plus optioneel het Onderwerp en "
+"Onderwerpdetailnamen in de taal van de service. Onderwerpreferentie is een "
+"nummer in de reeks 01000000 tot 17999999 die een taalonafhankelijke "
+"internationale referentie is voor een Onderwerp. Een onderwerp wordt "
+"geïdentificeerd door zijn Referentienummer en de bijbehorende namen uit de "
+"standaard lijst van de XMP/NAA. Als een standaard referentiecode wordt "
+"gebruikt dan zijn die lijsten in de referentieversie in de Engelse taal. Dit "
+"veld is beperkt tot 8 ASCII-tekens."
+
+#: xmp/xmpsubjects.cpp:74
+msgid ""
+"Enter here the Subject Name. English language is used if you selected a "
+"standard XMP/NAA reference code."
+msgstr ""
+"Voer de onderwerpnaam in. Engels wordt gebruikt als u een standaard XMP/NAA "
+"referentiecode gebruikt."
+
+#: xmp/xmpsubjects.cpp:78
+msgid ""
+"Enter here the Subject Matter Name. English language is used if you selected "
+"a standard XMP/NAA reference code."
+msgstr ""
+"Voer de onderwerpmaterie in. Engels wordt gebruikt als u een standaard XMP/"
+"NAA referentiecode gebruikt."
+
+#: xmp/xmpsubjects.cpp:82
+msgid ""
+"Enter here the Subject Detail Name. English language is used if you selected "
+"a standard XMP/NAA reference code."
+msgstr ""
+"Voeg hier de de korte titel van de inhoud in. Dit veld is beperkt tot 64 "
+"ASCII-tekens."
+
+#: plugin/multistringsedit.cpp:90 plugin/multivaluesedit.cpp:94
+#: plugin/objectattributesedit.cpp:104
+msgid "Add a new value to the list"
+msgstr "Voeg een nieuwe waarde toe aan de lijst"
+
+#: plugin/multistringsedit.cpp:91 plugin/multivaluesedit.cpp:95
+#: plugin/objectattributesedit.cpp:105
+msgid "Remove the current selected value from the list"
+msgstr "Verwijder de huidige geselecteerde waarde uit de lijst"
+
+#: plugin/multistringsedit.cpp:92 plugin/multivaluesedit.cpp:96
+#: plugin/objectattributesedit.cpp:106
+msgid "Replace the current selected value from the list"
+msgstr "Vervang de huidige geselecteerde waarde uit de lijst"
+
+#: plugin/multistringsedit.cpp:106 plugin/objectattributesedit.cpp:151
+msgid " This field is limited to:"
+msgstr " Dit veld is beperkt tot:"
+
+#: plugin/multistringsedit.cpp:112 plugin/objectattributesedit.cpp:157
+msgid "<p>Printable ASCII characters.</p>"
+msgstr "<p>Printbare ASCII-tekens.</p>"
+
+#: plugin/multistringsedit.cpp:118 plugin/objectattributesedit.cpp:163
+#, kde-format
+msgid "<p>1 character.</p>"
+msgid_plural "<p>%1 characters.</p>"
+msgstr[0] "<p>1 teken.</p>"
+msgstr[1] "<p>%1 tekens.</p>"
+
+#: plugin/objectattributesedit.cpp:118
+msgid "Select here the editorial attribute of content."
+msgstr "Selecteer het redactionele attribuut van de inhoud."
+
+#: plugin/objectattributesedit.cpp:119
+msgctxt "Content type"
+msgid "Current"
+msgstr "Huidige"
+
+#: plugin/objectattributesedit.cpp:120
+msgctxt "Content type"
+msgid "Analysis"
+msgstr "Analyse"
+
+#: plugin/objectattributesedit.cpp:121
+msgctxt "Content type"
+msgid "Archive material"
+msgstr "Archief materiaal"
+
+#: plugin/objectattributesedit.cpp:122
+msgctxt "Content type"
+msgid "Background"
+msgstr "Achtergrond"
+
+#: plugin/objectattributesedit.cpp:123
+msgctxt "Content type"
+msgid "Feature"
+msgstr "Functie"
+
+#: plugin/objectattributesedit.cpp:124
+msgctxt "Content type"
+msgid "Forecast"
+msgstr "Voorspelling"
+
+#: plugin/objectattributesedit.cpp:125
+msgctxt "Content type"
+msgid "History"
+msgstr "Geschiedenis"
+
+#: plugin/objectattributesedit.cpp:126
+msgctxt "Content type"
+msgid "Obituary"
+msgstr "Overlijdensbericht"
+
+#: plugin/objectattributesedit.cpp:127
+msgctxt "Content type"
+msgid "Opinion"
+msgstr "Opinie"
+
+#: plugin/objectattributesedit.cpp:128
+msgctxt "Content type"
+msgid "Polls & Surveys"
+msgstr "Peilingen & enquêtes"
+
+#: plugin/objectattributesedit.cpp:129
+msgctxt "Content type"
+msgid "Profile"
+msgstr "Profiel"
+
+#: plugin/objectattributesedit.cpp:130
+msgctxt "Content type"
+msgid "Results Listings & Table"
+msgstr "Resultaten lijst & tabel"
+
+#: plugin/objectattributesedit.cpp:131
+msgctxt "Content type"
+msgid "Side bar & Supporting information"
+msgstr "Zijpaneel en ondersteunende informatie"
+
+#: plugin/objectattributesedit.cpp:132
+msgctxt "Content type"
+msgid "Summary"
+msgstr "Samenvatting"
+
+#: plugin/objectattributesedit.cpp:133
+msgctxt "Content type"
+msgid "Transcript & Verbatim"
+msgstr "Transcriptie & letterlijk"
+
+#: plugin/objectattributesedit.cpp:134
+msgctxt "Content type"
+msgid "Interview"
+msgstr "Gesprek"
+
+#: plugin/objectattributesedit.cpp:135
+msgctxt "Content type"
+msgid "From the Scene"
+msgstr "Van de scène"
+
+#: plugin/objectattributesedit.cpp:136
+msgctxt "Content type"
+msgid "Retrospective"
+msgstr "Retrospectief"
+
+#: plugin/objectattributesedit.cpp:137
+msgctxt "Content type"
+msgid "Statistics"
+msgstr "Statistieken"
+
+#: plugin/objectattributesedit.cpp:138
+msgctxt "Content type"
+msgid "Update"
+msgstr "Bijwerken"
+
+#: plugin/objectattributesedit.cpp:139
+msgctxt "Content type"
+msgid "Wrap-up"
+msgstr "Samenvatting"
+
+#: plugin/objectattributesedit.cpp:140
+msgctxt "Content type"
+msgid "Press Release"
+msgstr "Pers uitgave"
+
+#: plugin/objectattributesedit.cpp:146
+msgid ""
+"Set here the editorial attribute description of content. This field is "
+"limited to 64 ASCII characters."
+msgstr ""
+"Stel het redactionele attribuut van de inhoud in. Dit veld is beperkt tot 64 "
+"ASCII-karakters."
+
+#: plugin/plugin_metadataedit.cpp:99
+msgid "Metadata"
+msgstr "Metadata"
+
+#: plugin/plugin_metadataedit.cpp:104
+msgid "Edit &All Metadata..."
+msgstr "&Alle metagegevens wijzigen..."
+
+#: plugin/plugin_metadataedit.cpp:114
+msgid "Import EXIF..."
+msgstr "EXIF importeren..."
+
+#: plugin/plugin_metadataedit.cpp:120
+msgid "Import IPTC..."
+msgstr "IPTC importeren..."
+
+#: plugin/plugin_metadataedit.cpp:126
+msgid "Import XMP..."
+msgstr "XMP importeren..."
+
+#: plugin/plugin_metadataedit.cpp:176
+msgid "Select File to Import EXIF metadata"
+msgstr "Selecteer een bestand om EXIF-metadata te importeren"
+
+#: plugin/plugin_metadataedit.cpp:186 plugin/plugin_metadataedit.cpp:283
+#: plugin/plugin_metadataedit.cpp:375
+#, kde-format
+msgid "Cannot load metadata from \"%1\""
+msgstr "Kan de metadata niet laden van \"%1\""
+
+#: plugin/plugin_metadataedit.cpp:187 plugin/plugin_metadataedit.cpp:201
+#: plugin/plugin_metadataedit.cpp:210 plugin/plugin_metadataedit.cpp:255
+msgid "Import EXIF Metadata"
+msgstr "EXIF-metadata importeren"
+
+#: plugin/plugin_metadataedit.cpp:200
+#, kde-format
+msgid "\"%1\" does not have EXIF metadata."
+msgstr "\"%1\" heeft geen EXIF-metadata"
+
+#: plugin/plugin_metadataedit.cpp:207
+#, kde-format
+msgid ""
+"EXIF metadata from the currently selected pictures will be permanently "
+"replaced by the EXIF content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+"De EXIF-metadata van de nu geselecteerde afbeeldingen zal permanent worden "
+"vervangen door de EXIF-inhoud van \"%1\".\n"
+"Wilt u doorgaan?"
+
+#: plugin/plugin_metadataedit.cpp:253
+msgid "Unable to set EXIF metadata from:"
+msgstr "Kan EXIF-metadata niet instellen van:"
+
+#: plugin/plugin_metadataedit.cpp:273
+msgid "Select File to Import IPTC metadata"
+msgstr "Selecteer een bestand om IPTC-data te importeren"
+
+#: plugin/plugin_metadataedit.cpp:284 plugin/plugin_metadataedit.cpp:293
+#: plugin/plugin_metadataedit.cpp:302 plugin/plugin_metadataedit.cpp:347
+msgid "Import IPTC Metadata"
+msgstr "IPTC-metadata importeren"
+
+#: plugin/plugin_metadataedit.cpp:292
+#, kde-format
+msgid "\"%1\" does not have IPTC metadata."
+msgstr "\"%1\" bevat geen IPTC-metadata"
+
+#: plugin/plugin_metadataedit.cpp:299
+#, kde-format
+msgid ""
+"IPTC metadata from the currently selected pictures will be permanently "
+"replaced by the IPTC content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+"De IPTC-metadata van de nu geselecteerde afbeeldingen zal permanent worden "
+"vervangen door de IPTC-inhoud van \"%1\".\n"
+"Wilt u doorgaan?"
+
+#: plugin/plugin_metadataedit.cpp:345
+msgid "Unable to set IPTC metadata from:"
+msgstr "Kan IPTC-metadata niet instellen van:"
+
+#: plugin/plugin_metadataedit.cpp:365
+msgid "Select File to Import XMP metadata"
+msgstr "Selecteer een bestand om XMP-metadata te importeren"
+
+#: plugin/plugin_metadataedit.cpp:376 plugin/plugin_metadataedit.cpp:385
+#: plugin/plugin_metadataedit.cpp:394 plugin/plugin_metadataedit.cpp:439
+msgid "Import XMP Metadata"
+msgstr "XMP-metadata importeren"
+
+#: plugin/plugin_metadataedit.cpp:384
+#, kde-format
+msgid "\"%1\" does not have XMP metadata."
+msgstr "\"%1\" heeft geen XMP-metadata"
+
+#: plugin/plugin_metadataedit.cpp:391
+#, kde-format
+msgid ""
+"XMP metadata from the currently selected pictures will be permanently "
+"replaced by the XMP content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+"De XMP-metadata van de nu geselecteerde afbeeldingen zal permanent worden "
+"vervangen door de XMP-inhoud van \"%1\".\n"
+"Wilt u doorgaan?"
+
+#: plugin/plugin_metadataedit.cpp:437
+msgid "Unable to set XMP metadata from:"
+msgstr "Kan XMP-metadata niet instellen van:"
+
+#: plugin/metadataedit.cpp:110
+msgid "Metadata edit dialog"
+msgstr "Bewerkingsdialoog van metagegevens"
+
+#: plugin/metadataedit.cpp:115
+msgid "Edit EXIF"
+msgstr "EXIF bewerken"
+
+#: plugin/metadataedit.cpp:116
+msgid "Edit IPTC"
+msgstr "IPTC bewerken"
+
+#: plugin/metadataedit.cpp:117
+msgid "Edit XMP"
+msgstr "XMP bewerken"
+
+#: plugin/metadataedit.cpp:125
+msgid "Next"
+msgstr "Volgende"
+
+#: plugin/metadataedit.cpp:126
+msgid "Previous"
+msgstr "Vorige"
+
+#: plugin/metadataedit.cpp:168
+msgid "Edit Metadata"
+msgstr "Metadata wijzigen"
+
+#: plugin/metadataedit.cpp:171
+msgid "A Plugin to edit pictures' metadata."
+msgstr "Een plugin om de metadata van foto's te bewerken."
+
+#: plugin/metadataedit.cpp:172
+msgid "(c) 2006-2011, Gilles Caulier"
+msgstr "(c) 2006-2011, Gilles Caulier"
+
+#: plugin/metadataedit.cpp:174
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/metadataedit.cpp:174
+msgid "Author and Maintainer"
+msgstr "Auteur en onderhouder"
+
+#: plugin/metadataedit.cpp:177
+msgid "Victor Dodon"
+msgstr "Victor Dodon"
+
+#: plugin/metadataedit.cpp:177
+msgid "Developer"
+msgstr "Ontwikkelaar"
+
+#: plugin/metadataedit.cpp:185
+msgid "Handbook"
+msgstr "Handboek"
+
+#: plugin/metadataedit.cpp:300
+#, kde-format
+msgid "%1 (%2/%3) - Edit Metadata"
+msgstr "%1 (%2/%3) - Metadata bewerken"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Rinse de Vries, Freek de Kruijf"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "rinsedevries@kde.nl,f.de.kruijf@hetnet.nl"
+
+#~ msgid "Edit"
+#~ msgstr "Bewerken"
+
+#~ msgid "Edit Image Caption"
+#~ msgstr "Afbeeldingstitel bewerken"
+
+#~ msgid ""
+#~ "Enter the image caption entered through <b>%1</b>. This field is not "
+#~ "limited (excepted with IPTC). UTF-8 encoding will be used to save text."
+#~ msgstr ""
+#~ "Voer hier de afbeeldingstitels in, ingevoerd door <b>%1</b>. Dit veld is "
+#~ "onbeperkt (behalve met IPTC). UTF8-codering zal worden gebruikt om de "
+#~ "tekst op te slaan."
+
+#~ msgid "Sync XMP Caption"
+#~ msgstr "XMP-titels synchroniseren"
+
+#~ msgid ""
+#~ "<b>Note: captions from currently selected images will be permanently "
+#~ "replaced.</b>"
+#~ msgstr ""
+#~ "<b>Opmerking: de titels uit de geselecteerde afbeeldingen zullen "
+#~ "permanent worden vervangen.</b>"
+
+#~ msgid "Remove Image Caption"
+#~ msgstr "Verwijder afbeeldingstitel"
+
+#~ msgid "Remove caption hosted by %1"
+#~ msgstr "Titel gehost/aangemaakt? door %1 verwijderen"
+
+#~ msgid "Remove JFIF Comment section"
+#~ msgstr "JFIF-commentaarsectie verwijderen"
+
+#~ msgid "Remove EXIF Comment"
+#~ msgstr "EXIF-commentaar verwijderen"
+
+#~ msgid "Remove XMP Caption"
+#~ msgstr "XMP-titel verwijderen"
+
+#~ msgid "Remove IPTC Caption"
+#~ msgstr "IPTC-titel verwijderen"
+
+#~ msgid ""
+#~ "<b>Note: Captions from currently selected images will be permanently "
+#~ "removed.</b>"
+#~ msgstr ""
+#~ "<b>Opmerking: de titels uit de geselecteerde afbeeldingen zullen "
+#~ "permanent worden verwijdered.</b>"
+
+#~ msgid "Default Language"
+#~ msgstr "Standaardtaal"
+
+#~ msgid "Afrikaans (South Africa)"
+#~ msgstr "Afrikaans (Zuid-Afrika)"
+
+#~ msgid "Amharic (Ethiopia)"
+#~ msgstr "Amhaars (Ethiopië)"
+
+#~ msgid "Arabic (UAE)"
+#~ msgstr "Arabisch (VAE)"
+
+#~ msgid "Arabic (Bahrain)"
+#~ msgstr "Arabisch (Bahrein)"
+
+#~ msgid "Arabic (Algeria)"
+#~ msgstr "Arabisch (Algerije)"
+
+#~ msgid "Arabic (Egypt)"
+#~ msgstr "Arabisch (Egypte)"
+
+#~ msgid "Arabic (Iraq)"
+#~ msgstr "Arabisch (Irak)"
+
+#~ msgid "Arabic (Jordan)"
+#~ msgstr "Arabisch (Jordanië)"
+
+#~ msgid "Arabic (Kuwait)"
+#~ msgstr "Arabisch (Koeweit)"
+
+#~ msgid "Arabic (Lebanon)"
+#~ msgstr "Arabisch (Libanon)"
+
+#~ msgid "Arabic (Libya)"
+#~ msgstr "Arabisch (Libië)"
+
+#~ msgid "Arabic (Morocco)"
+#~ msgstr "Arabisch (Marokko)"
+
+#~ msgid "Arabic (Oman)"
+#~ msgstr "Arabisch (Oman)"
+
+#~ msgid "Arabic (Qatar)"
+#~ msgstr "Arabisch (Qatar)"
+
+#~ msgid "Arabic (Saudi Arabia)"
+#~ msgstr "Arabisch (Saoedi-Arabië)"
+
+#~ msgid "Arabic (Syria)"
+#~ msgstr "Arabisch (Syrië)"
+
+#~ msgid "Arabic (Tunisia)"
+#~ msgstr "Arabisch (Tunesië)"
+
+#~ msgid "Arabic (Yemen)"
+#~ msgstr "Arabisch (Jemen)"
+
+#~ msgid "Assamese (India)"
+#~ msgstr "Assamees (India)"
+
+#~ msgid "Bashkir (Russia)"
+#~ msgstr "Basjkiers (Rusland)"
+
+#~ msgid "Belarusian (Belarus)"
+#~ msgstr "Wit-Russisch (Wit-Rusland)"
+
+#~ msgid "Bulgarian (Bulgaria)"
+#~ msgstr "Bulgaarse (Bulgarije)"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "Bengalees (India)"
+
+#~ msgid "Tibetan (Bhutan)"
+#~ msgstr "Tibetaans (Bhutan)"
+
+#~ msgid "Tibetan (PRC)"
+#~ msgstr "Tibetaans (PRC)"
+
+#~ msgid "Breton (France)"
+#~ msgstr "Bretons (Frankrijk)"
+
+#~ msgid "Catalan (Andorra)"
+#~ msgstr "Catalaans (Andorra)"
+
+#~ msgid "Catalan (Spain)"
+#~ msgstr "Catalaans (Spanje)"
+
+#~ msgid "Catalan (France)"
+#~ msgstr "Catalaans (Frankrijk)"
+
+#~ msgid "Corsican (France)"
+#~ msgstr "Corsicaans (Frankrijk)"
+
+#~ msgid "Czech (Czech Republic)"
+#~ msgstr "Tsjechies (Tsjechië)"
+
+#~ msgid "Welsh (United Kingdom)"
+#~ msgstr "Welsh (Verenigd Koninkrijk)"
+
+#~ msgid "Danish (Denmark)"
+#~ msgstr "Deens (Denemarken)"
+
+#~ msgid "German (Austria)"
+#~ msgstr "Duits (Oostenrijk)"
+
+#~ msgid "German (Switzerland)"
+#~ msgstr "Duits (Zwitserland)"
+
+#~ msgid "German (Germany)"
+#~ msgstr "Duits (Duitsland)"
+
+#~ msgid "German (Liechtenstein)"
+#~ msgstr "Duits (Liechtenstein)"
+
+#~ msgid "German (Luxembourg)"
+#~ msgstr "Duits (Luxemburg)"
+
+#~ msgid "Greek (Greece)"
+#~ msgstr "Grieks (Griekenland)"
+
+#~ msgid "English (Australia)"
+#~ msgstr "Engels (Australië)"
+
+#~ msgid "English (Belize)"
+#~ msgstr "Engels (Belize)"
+
+#~ msgid "English (Canada)"
+#~ msgstr "Engels (Canada)"
+
+#~ msgid "English (Caribbean)"
+#~ msgstr "Engels (Carraïben)"
+
+#~ msgid "English (United Kingdom)"
+#~ msgstr "Engels (Verenigd Koninkrijk)"
+
+#~ msgid "English (Ireland)"
+#~ msgstr "Engels (Ierland)"
+
+#~ msgid "English (India)"
+#~ msgstr "Engels (India)"
+
+#~ msgid "English (Jamaica)"
+#~ msgstr "Engels (Jamaica)"
+
+#~ msgid "English (Malaysia)"
+#~ msgstr "Engels (Maleisië)"
+
+#~ msgid "English (New Zealand)"
+#~ msgstr "Engels (Nieuw Zeeland)"
+
+#~ msgid "English (Philippines)"
+#~ msgstr "Engels (Filippijnen)"
+
+#~ msgid "English (Singapore)"
+#~ msgstr "Engels (Singapore)"
+
+#~ msgid "English (Trinidad)"
+#~ msgstr "Engels (Trinidad)"
+
+#~ msgid "English (United States)"
+#~ msgstr "Engels (VS)"
+
+#~ msgid "English (South Africa)"
+#~ msgstr "Engels (Zuid-Afrika)"
+
+#~ msgid "English (Zimbabwe)"
+#~ msgstr "Engels (Zimbabwe)"
+
+#~ msgid "Spanish (Argentina)"
+#~ msgstr "Spaans (Argentinië)"
+
+#~ msgid "Spanish (Bolivia)"
+#~ msgstr "Spaans (Bolivië)"
+
+#~ msgid "Spanish (Chile)"
+#~ msgstr "Spaans (Chili)"
+
+#~ msgid "Spanish (Colombia)"
+#~ msgstr "Spaans (Colombia)"
+
+#~ msgid "Spanish (Costa Rica)"
+#~ msgstr "Spaans (Costa Rica)"
+
+#~ msgid "Spanish (Dominican Republic)"
+#~ msgstr "Spaans (Dominicaanse Republiek)"
+
+#~ msgid "Spanish (Ecuador)"
+#~ msgstr "Spaans (Ecuador)"
+
+#~ msgid "Spanish (Spain)"
+#~ msgstr "Spaans (Spanje)"
+
+#~ msgid "Spanish (Guatemala)"
+#~ msgstr "Spaans (Guatemala)"
+
+#~ msgid "Spanish (Honduras)"
+#~ msgstr "Spaans (Honduras)"
+
+#~ msgid "Spanish (Mexico)"
+#~ msgstr "Spaans (Mexico)"
+
+#~ msgid "Spanish (Nicaragua)"
+#~ msgstr "Spaans (Nicaragua)"
+
+#~ msgid "Spanish (Panama)"
+#~ msgstr "Spaans (Panama)"
+
+#~ msgid "Spanish (Peru)"
+#~ msgstr "Spaans (Peru)"
+
+#~ msgid "Spanish (Puerto Rico)"
+#~ msgstr "Spaans (Puerto Rico)"
+
+#~ msgid "Spanish (Paraguay)"
+#~ msgstr "Spaans (Paraguay)"
+
+#~ msgid "Spanish (El Salvador)"
+#~ msgstr "Spaans (El Salvador)"
+
+#~ msgid "Spanish (Uruguay)"
+#~ msgstr "Spaans (Uruguay)"
+
+#~ msgid "Spanish (United States)"
+#~ msgstr "Spaans (Verenigde Staten)"
+
+#~ msgid "Spanish (Venezuela)"
+#~ msgstr "Spaans (Venezuela)"
+
+#~ msgid "Estonian (Estonia)"
+#~ msgstr "Ests (Estland)"
+
+#~ msgid "Basque (Basque Country)"
+#~ msgstr "Baskisch (Baskenland)"
+
+#~ msgid "Persian (Iran)"
+#~ msgstr "Perzisch (Iran)"
+
+#~ msgid "Finnish (Finland)"
+#~ msgstr "Fins (Finland)"
+
+#~ msgid "Faeroese (Faero Islands)"
+#~ msgstr "Faeröers (Faeröer)"
+
+#~ msgid "French (Belgium)"
+#~ msgstr "Frans (België)"
+
+#~ msgid "French (Canada)"
+#~ msgstr "Frans (Canada)"
+
+#~ msgid "French (Switzerland)"
+#~ msgstr "Frans (Zwitserland)"
+
+#~ msgid "French (France)"
+#~ msgstr "Frans (Frankrijk)"
+
+#~ msgid "French (Luxembourg)"
+#~ msgstr "Frans (Luxemburg)"
+
+#~ msgid "French (Monaco)"
+#~ msgstr "Frans (Monaco)"
+
+#~ msgid "Frisian (Netherlands)"
+#~ msgstr "Fries (Nederland)"
+
+#~ msgid "Irish (Ireland)"
+#~ msgstr "Iers (Ierland)"
+
+#~ msgid "Galician (Galicia)"
+#~ msgstr "Galicisch (Galicië)"
+
+#~ msgid "Gujarati (India)"
+#~ msgstr "Gujarati (India)"
+
+#~ msgid "Hebrew (Israel)"
+#~ msgstr "Hebreeuws (Israël)"
+
+#~ msgid "Hindi (India)"
+#~ msgstr "Hindi (India)"
+
+#~ msgid "Croatian (Bosnia and Herzegovina, Latin)"
+#~ msgstr "Kroatisch (Bosnië-Herzegovina, Latijn)"
+
+#~ msgid "Croatian (Croatia)"
+#~ msgstr "Kroatisch (Kroatië)"
+
+#~ msgid "Hungarian (Hungary)"
+#~ msgstr "Hongaars (Hongarije)"
+
+#~ msgid "Armenian (Armenia)"
+#~ msgstr "Armeens (Armenië)"
+
+#~ msgid "(Indonesian)"
+#~ msgstr "(Indonesisch)"
+
+#~ msgid "Yi (PRC)"
+#~ msgstr "Yi (PRC)"
+
+#~ msgid "Icelandic (Iceland)"
+#~ msgstr "IJslands (IJsland)"
+
+#~ msgid "Italian (Switzerland)"
+#~ msgstr "Italiaans (Zwitserland)"
+
+#~ msgid "Italian (Italy)"
+#~ msgstr "Italiaans (Italië)"
+
+#~ msgid "Japanese (Japan)"
+#~ msgstr "Japans (Japan)"
+
+#~ msgid "Georgian (Georgia)"
+#~ msgstr "Georgisch (Georgië)"
+
+#~ msgid "Kazakh (Kazakhstan)"
+#~ msgstr "Kazachs (Kazachstan)"
+
+#~ msgid "Greenlandic (Greenland)"
+#~ msgstr "Groenlands (Groenland)"
+
+#~ msgid "Khmer (Cambodia)"
+#~ msgstr "Khmer (Cambodja)"
+
+#~ msgid "Kannada (India)"
+#~ msgstr "Kannada (India)"
+
+#~ msgid "Korean (South Korea)"
+#~ msgstr "Koreaans (Zuid-Korea)"
+
+#~ msgid "Kyrgyz (Kyrgyzstan)"
+#~ msgstr "Kirgizisch (Kirgizië)"
+
+#~ msgid "Luxembourgish (Luxembourg)"
+#~ msgstr "Luxemburgs (Luxemburg)"
+
+#~ msgid "Lao (Lao PDR)"
+#~ msgstr "Laotiaans (Laos)"
+
+#~ msgid "Lithuanian (Lithuania)"
+#~ msgstr "Litouws (Litouwen)"
+
+#~ msgid "Latvian (Latvia)"
+#~ msgstr "Lets (Letland)"
+
+#~ msgid "Maori (New Zealand)"
+#~ msgstr "Maori (Nieuw Zeeland)"
+
+#~ msgid "Macedonian (Macedonia)"
+#~ msgstr "Macedonisch (Macedonië)"
+
+#~ msgid "Malayalam (India)"
+#~ msgstr "Malayalam (India)"
+
+#~ msgid "Mongolian (PRC)"
+#~ msgstr "Mongools (PRC)"
+
+#~ msgid "Mongolian (Mongolia)"
+#~ msgstr "Mongools (Mongolië)"
+
+#~ msgid "Marathi (India)"
+#~ msgstr "Marathi (India)"
+
+#~ msgid "Malay (Brunei Darussalam)"
+#~ msgstr "Maleis (Brunei Darussalam)"
+
+#~ msgid "Malay (Malaysia)"
+#~ msgstr "Maleis (Maleisië)"
+
+#~ msgid "Maltese (Malta)"
+#~ msgstr "Maltees (Malta)"
+
+#~ msgid "Norwegian Bokmål (Norway)"
+#~ msgstr "Noors Bokmål (Noorwegen)"
+
+#~ msgid "Nepali (Nepal)"
+#~ msgstr "Nepalees (Nepal)"
+
+#~ msgid "Dutch (Belgium)"
+#~ msgstr "Nederlands (België)"
+
+#~ msgid "Dutch (Netherlands)"
+#~ msgstr "Nederlands (Nederland)"
+
+#~ msgid "Norwegian Nynorsk (Norway)"
+#~ msgstr "Noors Nynorsk (Noorwegen)"
+
+#~ msgid "Sesotho sa Leboa (South Africa)"
+#~ msgstr "Noord-Sotho (Zuid Afrika)"
+
+#~ msgid "Occitan (France)"
+#~ msgstr "Occitaans (Frankrijk)"
+
+#~ msgid "Oriya (India)"
+#~ msgstr "Oriya (India)"
+
+#~ msgid "Punjabi (India)"
+#~ msgstr "Punjabi (India)"
+
+#~ msgid "Polish (Poland)"
+#~ msgstr "Pools (Polen)"
+
+#~ msgid "Pashto (Afghanistan)"
+#~ msgstr "Pashto (Afghanistan)"
+
+#~ msgid "Portuguese (Brazil)"
+#~ msgstr "Portugees (Brazilië)"
+
+#~ msgid "Portuguese (Portugal)"
+#~ msgstr "Portugees (Portugal)"
+
+#~ msgid "Romansh (Switzerland)"
+#~ msgstr "Romaans (Zwitserland)"
+
+#~ msgid "Romanian (Romania)"
+#~ msgstr "Roemeens (Roemenië)"
+
+#~ msgid "Russian (Russia)"
+#~ msgstr "Russisch (Rusland)"
+
+#~ msgid "Kinyarwanda (Rwanda)"
+#~ msgstr "Kinyarwanda (Rwanda)"
+
+#~ msgid "Sanskrit (India)"
+#~ msgstr "Sanskriet (India)"
+
+#~ msgid "Sami (Northern, Finland)"
+#~ msgstr "Saami (Noord, Finland)"
+
+#~ msgid "Sami (Northern, Norway)"
+#~ msgstr "Saami (Noord, Noorwegen)"
+
+#~ msgid "Sami (Northern, Sweden)"
+#~ msgstr "Saami (Noord, Zweden)"
+
+#~ msgid "Sinhala (Sri Lanka)"
+#~ msgstr "Singalees (Sri Lanka)"
+
+#~ msgid "Slovak (Slovakia)"
+#~ msgstr "Slowaaks (Slowakije)"
+
+#~ msgid "Slovenian (Slovenia)"
+#~ msgstr "Sloveens (Slovenië)"
+
+#~ msgid "Albanian (Albania)"
+#~ msgstr "Albanees (Albanië)"
+
+#~ msgid "Swedish (Finland)"
+#~ msgstr "Zweeds (Finland)"
+
+#~ msgid "Swedish (Sweden)"
+#~ msgstr "Zweeds (Zweden)"
+
+#~ msgid "Swahili (Kenya)"
+#~ msgstr "Swahili (Kenia)"
+
+#~ msgid "Tamil (India)"
+#~ msgstr "Tamil (India)"
+
+#~ msgid "Telugu (India)"
+#~ msgstr "Telugu (India)"
+
+#~ msgid "Thai (Thailand)"
+#~ msgstr "Thai (Thailand)"
+
+#~ msgid "Turkmen (Turkmenistan)"
+#~ msgstr "Turkmeens (Turkmenistan)"
+
+#~ msgid "Setswana Tswana (South Africa)"
+#~ msgstr "Tswana (Zuid Afrika)"
+
+#~ msgid "Urdu (India)"
+#~ msgstr "Urdu (India)"
+
+#~ msgid "Turkish (Turkey)"
+#~ msgstr "Turks (Turkije)"
+
+#~ msgid "Tatar (Russia)"
+#~ msgstr "Tataars (Rusland)"
+
+#~ msgid "Uighur (PRC)"
+#~ msgstr "Oeigoers (PRC)"
+
+#~ msgid "Ukrainian (Ukraine)"
+#~ msgstr "Oekraïens (Oekraïne)"
+
+#~ msgid "Urdu (Pakistan)"
+#~ msgstr "Urdu (Pakistan)"
+
+#~ msgid "Vietnamese (Vietnam)"
+#~ msgstr "Vietnamees (Vietnam)"
+
+#~ msgid "Wolof (Senegal)"
+#~ msgstr "Wolof (Senegal)"
+
+#~ msgid "isiXhosa Xhosa (South Africa)"
+#~ msgstr "Xhosa (Zuid Afrika)"
+
+#~ msgid "Yoruba (Nigeria)"
+#~ msgstr "Yoruba (Nigeria)"
+
+#~ msgid "Chinese (PRC)"
+#~ msgstr "Chinees (PRC)"
+
+#~ msgid "Chinese (Hong Kong SAR, PRC)"
+#~ msgstr "Chinees (Hongkong SAR, PRC)"
+
+#~ msgid "Chinese (Macao SAR)"
+#~ msgstr "Chinees (Macao SAR)"
+
+#~ msgid "Chinese (Singapore)"
+#~ msgstr "Chinees (Singapore)"
+
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "Chinees (Taiwan)"
+
+#~ msgid "isiZulu Zulu (South Africa)"
+#~ msgstr "isiZulu Zulu (Zuid-Afrika)"
+
+#~ msgid "Select here language code."
+#~ msgstr "Selecteer hier de taalcode."
+
+#~ msgid "Edit EXIF Metadata"
+#~ msgstr "EXIF-etadata bewerken"
+
+#~ msgid "(read only)"
+#~ msgstr "(alleen lezen)"
+
+#~ msgid "Edit IPTC Metadata"
+#~ msgstr "IPTC-metadata wijzigen"
+
+#~ msgid "Remove EXIF..."
+#~ msgstr "EXIF verwijderen..."
+
+#~ msgid "Remove IPTC..."
+#~ msgstr "IPTC verwijderen..."
+
+#~ msgid "Remove XMP..."
+#~ msgstr "XMP verwijderen..."
+
+#~ msgid "Edit Captions..."
+#~ msgstr "Titels bewerken..."
+
+#~ msgid "Remove Captions..."
+#~ msgstr "Titels verwijderen..."
+
+#~ msgid ""
+#~ "EXIF metadata will be permanently removed from all currently selected "
+#~ "pictures.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "De EXIF-metadata zal permanent worden verwijderd uit alle nu "
+#~ "geselecteerde afbeelingen.\n"
+#~ "Wilt u doorgaan?"
+
+#~ msgid "Remove EXIF Metadata"
+#~ msgstr "EXIF-metadata verwijderen"
+
+#~ msgid "Unable to remove EXIF metadata from:"
+#~ msgstr "Kan EXIF-metadata niet verwijderen uit:"
+
+#~ msgid ""
+#~ "IPTC metadata will be permanently removed from all currently selected "
+#~ "pictures.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "De IPTC-metadata zal permanent worden verwijderd uit alle nu "
+#~ "geselecteerde afbeeldingen.\n"
+#~ "Wilt u doorgaan?"
+
+#~ msgid "Remove IPTC Metadata"
+#~ msgstr "IPTC-metadata verwijderen"
+
+#~ msgid "Unable to remove IPTC metadata from:"
+#~ msgstr "Kan IPTC-metadata niet verwijderen uit:"
+
+#~ msgid ""
+#~ "XMP metadata will be permanently removed from all of the currently "
+#~ "selected pictures.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "De XMP-metadata zal permanent worden verwijderd uit alle nu geselecteerde "
+#~ "afbeeldingen.\n"
+#~ "Wilt u doorgaan?"
+
+#~ msgid "Remove XMP Metadata"
+#~ msgstr "XMP-metadata verwijderen"
+
+#~ msgid "Unable to remove XMP metadata from:"
+#~ msgstr "Kan XMP-metadata niet verwijderen uit:"
+
+#~ msgid "Unable to set captions as image metadata from:"
+#~ msgstr "Kan titels als afbeeldingsmetadata niet instellen van:"
+
+#~ msgid "Unable to remove caption as image metadata from:"
+#~ msgstr "Kan titels als afbeeldingmetadata niet verwijderen uit:"
+
+#~ msgid "(c) 2007-2009, Gilles Caulier"
+#~ msgstr "(c) 2007-2009, Gilles Caulier"
+
+#~ msgid "Edit XMP Metadata"
+#~ msgstr "XMP-metadata wijzigen"
+
+#~ msgid "Use structured definition of the subject matter:"
+#~ msgstr "Gestructureerde definitie van onderwerpmateriaal gebruiken:"
+
+#~ msgid ""
+#~ "Use standard <b><a href='http://www.iptc.org/NewsCodes'>reference code</"
+#~ "a></b>"
+#~ msgstr ""
+#~ "Gebruik de standaard <b><a href='http://www.iptc.org/"
+#~ "NewsCodes'>referentiecode</a></b>"
+
+#~ msgid "Use custom definition"
+#~ msgstr "Gebruik een aangepaste definitie"
+
+#~ msgid "I.P.R:"
+#~ msgstr "I.P.R.:"
+
+#~ msgctxt "name of the subject"
+#~ msgid "Name:"
+#~ msgstr "Naam:"
+
+#~ msgid "Matter:"
+#~ msgstr "Onderwerp:"
+
+#~ msgid "Detail:"
+#~ msgstr "Detail:"

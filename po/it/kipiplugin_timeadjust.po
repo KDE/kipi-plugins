@@ -1,0 +1,358 @@
+# translation of kipiplugin_timeadjust.po to Italian
+# Federico Zenith <federico.zenith@member.fsf.org>, 2004, 2005, 2006, 2007, 2008, 2009.
+# Federico Zenith <zenith@chemeng.ntnu.no>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_timeadjust\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-01-25 03:02+0100\n"
+"PO-Revision-Date: 2009-11-05 09:22+0100\n"
+"Last-Translator: Federico Zenith <federico.zenith@member.fsf.org>\n"
+"Language-Team: Italiano <kde-i18n-it@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: clockphotodialog.cpp:169
+msgid "Determine time difference with clock photo"
+msgstr "Determina la differenza con l'ora della foto"
+
+#: clockphotodialog.cpp:171
+msgid "Load different photo"
+msgstr "Carica altra foto"
+
+#: clockphotodialog.cpp:181
+msgid ""
+"If you have a photo in your set with a clock or another external time source "
+"on it, you can load it here and set the indicator to the (date and) time "
+"displayed. The difference of your internal camera clock will be determined "
+"from this setting."
+msgstr ""
+"Se nella raccolta hai una foto con un orario di qualche tipo, puoi caricarlo "
+"qui e impostare l'indicatore alla data e ora indicate. La differenza "
+"dell'orologio interno della macchina fotografica verrà determinata da questa "
+"impostazione."
+
+#: clockphotodialog.cpp:210
+msgid "Scale:"
+msgstr "Scala:"
+
+#: clockphotodialog.cpp:230
+msgid "The clock date and time:"
+msgstr "La data e ora dell'orologio:"
+
+#: clockphotodialog.cpp:321
+#, kde-format
+msgid ""
+"<font color=\"red\"><b>Could not obtain date and time information from image "
+"%1.</b></font>"
+msgstr ""
+"<font color=\"red\"><b>Impossibile ottenere informazioni sulla data e "
+"sull'ora dall'immagine %1.</b></font>"
+
+#: clockphotodialog.cpp:333
+#, kde-format
+msgid "<font color=\"red\"><b>Could not load image %1.</b></font>"
+msgstr "<font color=\"red\"><b>Impossibile caricare l'immagine %1.</b></font>"
+
+#: plugin_timeadjust.cpp:65
+msgid "Adjust Time && Date..."
+msgstr "Regola data e ora..."
+
+#: timeadjustdialog.cpp:183 timeadjustdialog.cpp:921 timeadjustdialog.cpp:930
+msgid "Adjust Time & Date"
+msgstr "Regola data e ora"
+
+#: timeadjustdialog.cpp:191
+msgid "Time Adjust"
+msgstr "Regolazione dell'ora"
+
+#: timeadjustdialog.cpp:194
+msgid "A Kipi plugin for adjusting the timestamp of picture files"
+msgstr ""
+"Un'estensione di Kipi per regolare le date e le ore dei file delle immagini"
+
+#: timeadjustdialog.cpp:195
+msgid ""
+"(c) 2003-2005, Jesper K. Pedersen\n"
+"(c) 2006-2009, Gilles Caulier"
+msgstr ""
+"© 2003-2005, Jesper K. Pedersen\n"
+"© 2006-2009, Gilles Caulier"
+
+#: timeadjustdialog.cpp:198
+msgid "Jesper K. Pedersen"
+msgstr "Jesper K. Pedersen"
+
+#: timeadjustdialog.cpp:199
+msgid "Author"
+msgstr "Autore"
+
+#: timeadjustdialog.cpp:202
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: timeadjustdialog.cpp:203
+msgid "Developer and maintainer"
+msgstr "Sviluppatore e responsabile"
+
+#: timeadjustdialog.cpp:211
+msgid "Handbook"
+msgstr "Manuale"
+
+#: timeadjustdialog.cpp:219
+msgid "Use Time && Date"
+msgstr "Usa data e ora"
+
+#: timeadjustdialog.cpp:225
+#, kde-format
+msgid "%1 timestamp"
+msgstr "%1 data e ora"
+
+#: timeadjustdialog.cpp:233 timeadjustdialog.cpp:310
+msgid "File last modified"
+msgstr "Ultima modifica del file"
+
+#: timeadjustdialog.cpp:237
+msgid "EXIF/IPTC/XMP"
+msgstr "EXIF/IPTC/XMP"
+
+#: timeadjustdialog.cpp:238 timeadjustdialog.cpp:311
+msgid "EXIF: created"
+msgstr "EXIF: creazione"
+
+#: timeadjustdialog.cpp:239 timeadjustdialog.cpp:312
+msgid "EXIF: original"
+msgstr "EXIF: originale"
+
+#: timeadjustdialog.cpp:240 timeadjustdialog.cpp:313
+msgid "EXIF: digitized"
+msgstr "EXIF: digitalizzazione"
+
+#: timeadjustdialog.cpp:241 timeadjustdialog.cpp:314
+msgid "IPTC: created"
+msgstr "IPTC: creazione"
+
+#: timeadjustdialog.cpp:242
+msgid "XMP: created"
+msgstr "XMP: creazione"
+
+#: timeadjustdialog.cpp:252
+msgid "Reset to current date"
+msgstr "Azzera alla data attuale"
+
+#: timeadjustdialog.cpp:278
+msgid "Adjust"
+msgstr "Regola"
+
+#: timeadjustdialog.cpp:282
+msgid "Copy value"
+msgstr "Copia valore"
+
+#: timeadjustdialog.cpp:283
+msgid "Add"
+msgstr "Aggiungi"
+
+#: timeadjustdialog.cpp:284
+msgid "Subtract"
+msgstr "Sottrai"
+
+#: timeadjustdialog.cpp:288
+msgctxt "time adjust offset, days value label"
+msgid "days"
+msgstr "giorni"
+
+#: timeadjustdialog.cpp:291
+msgid "Determine from clock photo"
+msgstr "Determina dall'ora della foto"
+
+#: timeadjustdialog.cpp:306
+msgid "Update Time && Date"
+msgstr "Aggiorna data e ora"
+
+#: timeadjustdialog.cpp:315
+msgid "XMP"
+msgstr "XMP"
+
+#: timeadjustdialog.cpp:337
+msgid "Example"
+msgstr "Esempio"
+
+#: timeadjustdialog.cpp:515 timeadjustdialog.cpp:546 timeadjustdialog.cpp:572
+#: timeadjustdialog.cpp:632
+#, kde-format
+msgid "1 image will be changed"
+msgid_plural "%1 images will be changed"
+msgstr[0] "sarà cambiata un'immagine"
+msgstr[1] "saranno cambiate %1 immagini"
+
+#: timeadjustdialog.cpp:552 timeadjustdialog.cpp:638
+#, kde-format
+msgid "1 image will be changed; "
+msgid_plural "%1 images will be changed; "
+msgstr[0] "sarà cambiata un'immagine; "
+msgstr[1] "saranno cambiate %1 immagini;"
+
+#: timeadjustdialog.cpp:556
+#, kde-format
+msgid "1 image will be skipped due to an inexact date."
+msgid_plural "%1 images will be skipped due to inexact dates."
+msgstr[0] "Un'immagine sarà saltata a causa di una data inesatta."
+msgstr[1] "%1 immagini saranno saltate a causa di date inesatte."
+
+#: timeadjustdialog.cpp:642
+#, kde-format
+msgid "1 image will be skipped due to a missing source timestamp."
+msgid_plural "%1 images will be skipped due to missing source timestamps."
+msgstr[0] ""
+"Un'immagine sarà saltata a causa di una data e ora sorgente mancante."
+msgstr[1] ""
+"%1 immagini saranno saltate a causa di date e ore sorgenti mancanti."
+
+#: timeadjustdialog.cpp:739
+#, kde-format
+msgid "Custom: <b>%1</b>"
+msgstr "Personalizzato: <b>%1</b>"
+
+#: timeadjustdialog.cpp:755
+msgid "Original: <b>N/A</b><br/>Image will be skipped"
+msgstr "Originale: <b>N/D</b><br/>L'immagine sarà saltata"
+
+#: timeadjustdialog.cpp:764
+#, kde-format
+msgid "Original: <b>%1</b>"
+msgstr "Originale: <b>%1</b>"
+
+#: timeadjustdialog.cpp:771
+#, kde-format
+msgid "Original: <b>%1</b><br/>Adjusted: <b>%2</b>"
+msgstr "Originale: <b>%1</b><br/>Regolata: <b>%2</b>"
+
+#: timeadjustdialog.cpp:919
+msgid "Unable to update metadata in:"
+msgstr "Impossibile aggiornare i dati aggiuntivi in:"
+
+#: timeadjustdialog.cpp:928
+msgid "Unable to update file modification time in:"
+msgstr "Impossibile aggiornare l'ora di modifica del file in:"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Federico Zenith"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "federico.zenith@member.fsf.org"
+
+#~ msgid "Adjustment Type"
+#~ msgstr "Tipo di regolazione"
+
+#~ msgid "Set file date to EXIF/IPTC/XMP creation date"
+#~ msgstr "Imposta la data del file alla data di creazione EXIF/IPTC/XMP"
+
+#~ msgid "Custom date"
+#~ msgstr "Data personalizzata"
+
+#~ msgid "Update EXIF creation date"
+#~ msgstr "Aggiorna la data di creazione EXIF"
+
+#~ msgid "Update IPTC creation date"
+#~ msgstr "Aggiorna la data di creazione IPTC"
+
+#~ msgid "Update XMP creation date"
+#~ msgstr "Aggiorna la data di creazione XMP"
+
+#~ msgid "Adjustments"
+#~ msgstr "Regolazioni"
+
+#~ msgid "Hours:"
+#~ msgstr "Ore:"
+
+#~ msgid "Minutes:"
+#~ msgstr "Minuti:"
+
+#~ msgid "Seconds:"
+#~ msgstr "Secondi:"
+
+#~ msgid "Months:"
+#~ msgstr "Mesi:"
+
+#~ msgid "Years:"
+#~ msgstr "Anni:"
+
+#~ msgid "<b>%1</b><br/>would, for example, change into<br/><b>%2</b>"
+#~ msgstr "<b>%1</b><br/>per esempio, cambierebbe in<br/><b>%2</b>"
+
+#~ msgid "Unable to set date and time like picture metadata from:"
+#~ msgstr ""
+#~ "Impossibile impostare la data e l'ora uguali ai dati aggiuntivi "
+#~ "dell'immagine da:"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Federico Zenith"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "federico.zenith@member.fsf.org"
+
+#~ msgid ""
+#~ "_n: 1 image will be changed; \n"
+#~ "%n images will be changed; "
+#~ msgstr ""
+#~ "1 immagine sarà cambiata; \n"
+#~ "%n immagini saranno cambiate; "
+
+#~ msgid ""
+#~ "_n: 1 image will be changed\n"
+#~ "%n images will be changed"
+#~ msgstr ""
+#~ "1 immagine sarà cambiata\n"
+#~ "%n immagini saranno cambiate"
+
+#~ msgid "Time Adjust Handbook"
+#~ msgstr "Manuale di Regolazione dell'ora"
+
+#~ msgid "Adjust Time Stamp of Picture Files"
+#~ msgstr "Regola data e ora dei file delle immagini"
+
+#~ msgid "Developper"
+#~ msgstr "Sviluppatore"
+
+#~ msgid "Adjust Time & Dates"
+#~ msgstr "Regola data e ora"
+
+#~ msgid "Description"
+#~ msgstr "Descrizione"
+
+#~ msgid ""
+#~ "<qt><p>Sometimes it happens that the time on your digital cameral is set "
+#~ "incorrectly, and the dates of all your images are therefore incorrect.</"
+#~ "p><p>Using this plugin you can adjust the time of several images at once, "
+#~ "i.e. add or substract a certain amount of time (in minutes, hours, or "
+#~ "days) to each image.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>A volte capita che l'ora sulla tua fotocamera digitale sia "
+#~ "impostata male, e le date di tutte le tue immagini sono quindi sbagliate."
+#~ "</p><p>Usando questo plugin puoi regolare l'ora di diverse immagini in "
+#~ "una volta, cioè aggiungere o sottrarre una certa quantità di tempo (in "
+#~ "minuti, ore, o giorni) a ogni immagine.</p></qt>"
+
+#~ msgid "About KIPI Plugin"
+#~ msgstr "Informazioni sul plugin KIPI"
+
+#~ msgid ""
+#~ "<qt><p>A KIPI plugin for adjusting dates and times<br/>Author: Jesper K. "
+#~ "Pedersen<br/>Email: blackie@kde.org</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Un plugin KIPI per regolare date e ore<br/>Autore: Jesper K. "
+#~ "Pedersen<br/>Email: blackie@kde.org</p></qt>"
+
+#~ msgid "Adjust time and date"
+#~ msgstr "Regola data e ora"

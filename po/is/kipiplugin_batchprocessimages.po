@@ -1,0 +1,1935 @@
+# translation of kipiplugin_batchprocessimages.po to Icelandic
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sveinn í Felli <sveinki@nett.is>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_batchprocessimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-04-12 13:17+0000\n"
+"Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
+"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+
+#: common/batchprocessimageslist.cpp:47
+msgid "Source Album"
+msgstr "Upprunaalbúm"
+
+#: common/batchprocessimageslist.cpp:48
+msgid "Source Image"
+msgstr "Upprunaleg mynd"
+
+#: common/batchprocessimageslist.cpp:49
+msgid "Target Image"
+msgstr "Úttaksmynd"
+
+#: common/batchprocessimageslist.cpp:50
+msgid "Result"
+msgstr "Útkoma"
+
+#: common/batchprocessimageslist.cpp:54
+msgid ""
+"<p>You can see here the operations' results during the process. Double-click "
+"on an item for more information once the process has ended.</p><p>You can "
+"use the \"Add\" button or drag-and-drop to add some new items to the list.</"
+"p><p>If the items are taken from different Albums the process' results will "
+"be merged to the target Album.</p>"
+msgstr ""
+"<p>Þú getur séð hér útkomuna á meðan á aðgerðinni stendur. Tvísmelltu á "
+"einhvern hlut til að fá nánari upplýsingar þegar aðgerðinni er lokið. </"
+"p><p>Þú getur notað \"Bæta við\" hnappinn eða Draga/Sleppa til að bæta við "
+"nýjum hlutum á listann. </p><p>Ef hlutirnir koma úr mörgum albúmum munu "
+"úttaksskrárnar allar enda í einu tilgreindu markalbúmi.</p>"
+
+#: common/dialogutils.cpp:42
+msgid "Handbook"
+msgstr "Handbók"
+
+#: common/imagepreview.cpp:50
+#, kde-format
+msgid "Batch Process Preview (%1 - %2)"
+msgstr "Forsýn magnvinnslu (%1 - %2)"
+
+#: common/imagepreview.cpp:56
+msgid "Batch process images"
+msgstr "Vinna margar myndir"
+
+#: common/imagepreview.cpp:59
+msgid ""
+"An interface to preview the \"Batch Process Images\" Kipi plugin.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"Viðmót til að forsýna myndir í \"Magnvinnslu\" með KIPI íforritum.\n"
+"Þetta íforrit notar \"umbreytingaforrit\" úr \"ImageMagick\" pakkanum."
+
+#: common/imagepreview.cpp:63 tools/borderimagesdialog.cpp:69
+#: tools/colorimagesdialog.cpp:68 tools/convertimagesdialog.cpp:76
+#: tools/effectimagesdialog.cpp:67 tools/filterimagesdialog.cpp:67
+#: tools/recompressimagesdialog.cpp:67 tools/renameimagesdialog.cpp:65
+#: tools/resizeimagesdialog.cpp:166
+msgid ""
+"(c) 2003-2009, Gilles Caulier\n"
+"(c) 2007-2009, Aurélien Gateau"
+msgstr ""
+"(c) 2003-2009, Gilles Caulier\n"
+"(c) 2007-2009, Aurélien Gateau"
+
+#: common/imagepreview.cpp:66 tools/borderimagesdialog.cpp:72
+#: tools/colorimagesdialog.cpp:71 tools/convertimagesdialog.cpp:79
+#: tools/effectimagesdialog.cpp:70 tools/filterimagesdialog.cpp:70
+#: tools/recompressimagesdialog.cpp:70 tools/renameimagesdialog.cpp:68
+#: tools/resizeimagesdialog.cpp:169
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: common/imagepreview.cpp:66 tools/borderimagesdialog.cpp:72
+#: tools/colorimagesdialog.cpp:71 tools/convertimagesdialog.cpp:79
+#: tools/effectimagesdialog.cpp:70 tools/filterimagesdialog.cpp:70
+#: tools/recompressimagesdialog.cpp:70 tools/renameimagesdialog.cpp:68
+#: tools/resizeimagesdialog.cpp:169
+msgid "Author"
+msgstr "Höfundur"
+
+#: common/imagepreview.cpp:69 tools/borderimagesdialog.cpp:75
+#: tools/colorimagesdialog.cpp:74 tools/convertimagesdialog.cpp:82
+#: tools/effectimagesdialog.cpp:73 tools/filterimagesdialog.cpp:73
+#: tools/recompressimagesdialog.cpp:73 tools/renameimagesdialog.cpp:71
+#: tools/resizeimagesdialog.cpp:171
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: common/imagepreview.cpp:69 tools/borderimagesdialog.cpp:75
+#: tools/colorimagesdialog.cpp:74 tools/convertimagesdialog.cpp:82
+#: tools/effectimagesdialog.cpp:73 tools/filterimagesdialog.cpp:73
+#: tools/recompressimagesdialog.cpp:73 tools/renameimagesdialog.cpp:71
+#: tools/resizeimagesdialog.cpp:171 tools/resizeimagesdialog.cpp:173
+msgid "Maintainer"
+msgstr "Umsjónarmaður"
+
+#: common/pixmapview.cpp:119
+msgid ""
+"Preview\n"
+"image\n"
+"processing\n"
+"in\n"
+"progress..."
+msgstr ""
+"Forsýna\n"
+"aðgerð á\n"
+"myndinni sem\n"
+"er í vinnslu..."
+
+#: common/pixmapview.cpp:148 common/batchprocessimagesdialog.cpp:523
+#: common/batchprocessimagesdialog.cpp:729
+msgid ""
+"Cannot start 'convert' program from 'ImageMagick' package;\n"
+"please check your installation."
+msgstr ""
+"Get ekki ræst 'umbreytingaforrit' frá 'ImageMagick' pakkanum;\n"
+"athugaðu uppsetninguna þína."
+
+#: common/pixmapview.cpp:189
+msgid ""
+"Cannot\n"
+"process\n"
+"preview\n"
+"image."
+msgstr ""
+"Tókst ekki\n"
+"að gera\n"
+"forsýningu\n"
+"af mynd."
+
+#: common/batchprocessimagesdialog.cpp:106
+#: common/batchprocessimagesdialog.cpp:874 tools/renameimagesdialog.cpp:56
+msgctxt "start batch process images"
+msgid "&Start"
+msgstr "&Byrja"
+
+#: common/batchprocessimagesdialog.cpp:134
+msgid "You can choose here the options to use for the current process."
+msgstr ""
+"Þú getur valið hér þá valmöguleika sem þú vilt nota fyrir þessa meðhöndlun."
+
+#: common/batchprocessimagesdialog.cpp:136
+msgid ""
+"If you enable this option, all preview effects will be calculated on a small "
+"zone of the image (300x300 pixels in the top left corner). Enable this "
+"option if you have a slow computer."
+msgstr ""
+"Ef þú hefur þennan möguleika virkan, verða allar aðgerðir við forsýningar "
+"reiknaðar á hluta myndar (300x300 díla svæði efst til vinstri). Virkjaðu "
+"þetta ef þú ert með hægvirka tölvu."
+
+#: common/batchprocessimagesdialog.cpp:141
+msgid ""
+"This button builds a process preview for the currently selected image on the "
+"list."
+msgstr ""
+"Þessi hnappur útbýr forsýningu á útkomunni fyrir þá mynd sem valin er á "
+"listanum."
+
+#: common/batchprocessimagesdialog.cpp:144
+#: common/batchprocessimagesdialog.cpp:887
+msgid "Ask"
+msgstr "Spyrja"
+
+#: common/batchprocessimagesdialog.cpp:145
+#: common/batchprocessimagesdialog.cpp:896
+msgid "Always Overwrite"
+msgstr "Alltaf yfirskrifa"
+
+#: common/batchprocessimagesdialog.cpp:146
+#: common/batchprocessimagesdialog.cpp:148
+#: common/batchprocessimagesdialog.cpp:890
+msgid "Rename"
+msgstr "Endurnefna"
+
+#: common/batchprocessimagesdialog.cpp:147
+#: common/batchprocessimagesdialog.cpp:893
+msgid "Skip"
+msgstr "Sleppa"
+
+#: common/batchprocessimagesdialog.cpp:149
+msgid ""
+"Select here the overwrite mode used if your target's image files already "
+"exist."
+msgstr "Veldu hér yfirskrifunarham ef úttaksskrárnar eru þegar til staðar."
+
+#: common/batchprocessimagesdialog.cpp:152
+msgid ""
+"If you enable this option, all original image files will be removed after "
+"processing."
+msgstr ""
+"Ef þú hefur þennan möguleika virkan, verða allar upprunalegar skrár "
+"fjarlægðar eftir vinnuferlið."
+
+#: common/batchprocessimagesdialog.cpp:170
+msgid "Here you can select the target folder which will used by the process."
+msgstr "Hér geturðu valið úttaksmöppu sem notuð yrði af verkferlinu."
+
+#: common/batchprocessimagesdialog.cpp:173
+msgid "Add images to the list."
+msgstr "Bæta myndum á listann."
+
+#: common/batchprocessimagesdialog.cpp:174
+msgid "Remove selected image from the list."
+msgstr "Fjarlægja valda mynd af listanum."
+
+#: common/batchprocessimagesdialog.cpp:175
+msgid "The preview of the selected image on the list."
+msgstr "Forsýning valinnar myndar á listanum."
+
+#: common/batchprocessimagesdialog.cpp:327
+msgid ""
+"All original image files will be removed from the source Album.\n"
+"Do you want to continue?"
+msgstr ""
+"Allar upprunalegar myndir verða fjarlægðar úr upphafsalbúmi.\n"
+"Viltu halda áfram?"
+
+#: common/batchprocessimagesdialog.cpp:328
+msgid "Delete Original Image Files"
+msgstr "Eyða upprunalegum myndskrám"
+
+#: common/batchprocessimagesdialog.cpp:339
+#: common/batchprocessimagesdialog.cpp:706
+msgid "&Stop"
+msgstr "&Stöðva"
+
+#: common/batchprocessimagesdialog.cpp:366
+msgid "You must specify a writable path for your output file."
+msgstr "Þú verður að tilgreina skrifanlega slóð fyrir úttaksskrá."
+
+#: common/batchprocessimagesdialog.cpp:404
+#, kde-format
+msgid ""
+"The destination file \"%1\" already exists;\n"
+"do you want overwrite it?"
+msgstr ""
+"Úttaksskráin \"%1\" er þegar til staðar;\n"
+"viltu skrifa yfir hana?"
+
+#: common/batchprocessimagesdialog.cpp:406
+msgid "Overwrite Destination Image File"
+msgstr "Skrifa yfir úttaksmyndskrá"
+
+#: common/batchprocessimagesdialog.cpp:410
+#: common/batchprocessimagesdialog.cpp:475
+#: tools/recompressimagesdialog.cpp:245 tools/resizeimagesdialog.cpp:278
+msgid "Skipped."
+msgstr "Sleppt."
+
+#: common/batchprocessimagesdialog.cpp:411
+msgid "destination image file already exists (skipped by user)."
+msgstr "úttaksskrá er þegar til staðar (sleppt af notanda)."
+
+#: common/batchprocessimagesdialog.cpp:447
+#: common/batchprocessimagesdialog.cpp:564
+#: common/batchprocessimagesdialog.cpp:621
+#: common/batchprocessimagesdialog.cpp:656
+msgctxt "batch process result"
+msgid "Failed."
+msgstr "Mistókst."
+
+#: common/batchprocessimagesdialog.cpp:448
+msgid "destination image file already exists and cannot be renamed."
+msgstr "úttaksskrá er þegar til staðar og er ekki hægt að endurnefna."
+
+#: common/batchprocessimagesdialog.cpp:476
+msgid "destination image file already exists (skipped automatically)."
+msgstr "úttaksskrá er þegar til staðar (sleppt sjálfvirkt)."
+
+#: common/batchprocessimagesdialog.cpp:555
+msgid ""
+"The 'convert' program from 'ImageMagick' package has been stopped abnormally"
+msgstr "'Umbreytingaforritið' úr 'ImageMagick' pakkanum stöðvaðist óeðlilega"
+
+#: common/batchprocessimagesdialog.cpp:556
+msgid "Error running 'convert'"
+msgstr "Villa við keyrslu 'umbreytingaforrits'"
+
+#: common/batchprocessimagesdialog.cpp:565
+msgid ""
+"'convert' program from 'ImageMagick' package has been stopped abnormally."
+msgstr ""
+"'umbreytingaforritið' úr 'ImageMagick' pakkanum stöðvaðist á óeðlilegan hátt."
+
+#: common/batchprocessimagesdialog.cpp:586
+msgid "OK"
+msgstr "Í lagi"
+
+#: common/batchprocessimagesdialog.cpp:587
+msgid "no processing error"
+msgstr "engin villa í aðgerð"
+
+#: common/batchprocessimagesdialog.cpp:610
+#, kde-format
+msgid ""
+"<qt>Error adding image to application; error message was: <b>%1</b></qt>"
+msgstr ""
+"<qt>Villa kom upp þegar mynd var hlaðið í forritið; villuskilaboðin voru: <b>"
+"%1</b></qt>"
+
+#: common/batchprocessimagesdialog.cpp:612
+msgid "Error Adding Image to Application"
+msgstr "Villa þegar mynd var hlaðið í forrit"
+
+#: common/batchprocessimagesdialog.cpp:639
+msgctxt "batch process result"
+msgid "Warning:"
+msgstr "Aðvörun:"
+
+#: common/batchprocessimagesdialog.cpp:640
+msgid "cannot remove original image file."
+msgstr "tókst ekki að fjarlægja upprunalega mynd."
+
+#: common/batchprocessimagesdialog.cpp:657
+msgid "cannot process original image file."
+msgstr "tókst ekki að vinna með upprunalega mynd."
+
+#: common/batchprocessimagesdialog.cpp:678
+msgid "Image processing error"
+msgstr "Villa við aðgerð á mynd"
+
+#: common/batchprocessimagesdialog.cpp:680
+#, kde-format
+msgid ""
+"Image \"%1\": %2\n"
+"\n"
+"The output messages are:\n"
+msgstr ""
+"Mynd \"%1\": %2\n"
+"\n"
+"Úttaksskilaboðin eru:\n"
+
+#: common/batchprocessimagesdialog.cpp:694
+msgid "You must select an item from the list to calculate the preview."
+msgstr "Þú verður að velja hlut af listanum til að geta reiknað forskoðunina."
+
+#: common/batchprocessimagesdialog.cpp:746
+msgid "Cannot run properly 'convert' program from 'ImageMagick' package."
+msgstr "Get ekki ræst 'umbreytingaforrit' frá 'ImageMagick' pakkanum."
+
+#: common/batchprocessimagesdialog.cpp:761
+msgid " - small preview"
+msgstr " - lítil forskoðun"
+
+#: common/batchprocessimagesdialog.cpp:775
+msgid "Preview processing error"
+msgstr "Forsýna aðgerðarvillu"
+
+#: common/batchprocessimagesdialog.cpp:776
+#, kde-format
+msgid ""
+"Cannot process preview for image \"%1\".\n"
+"The output messages are:\n"
+msgstr ""
+"Get ekki búið til forskoðun fyrir mynd \"%1\".\n"
+"Úttaksskilaboðin eru:\n"
+
+#: common/batchprocessimagesdialog.cpp:909
+msgid "Aborted."
+msgstr "Hætt við."
+
+#: common/batchprocessimagesdialog.cpp:910
+msgid "process aborted by user"
+msgstr "aðgerð stöðvuð af notanda"
+
+#: common/batchprocessimagesdialog.cpp:930
+msgid "&Close"
+msgstr "&Loka"
+
+#: plugin/plugin_batchprocessimages.cpp:86
+msgid "Border Images..."
+msgstr "Setja ramma á myndir..."
+
+#: plugin/plugin_batchprocessimages.cpp:90
+msgid "Color Images..."
+msgstr "Lita myndir..."
+
+#: plugin/plugin_batchprocessimages.cpp:94
+msgid "Convert Images..."
+msgstr "Umbreyta myndum..."
+
+#: plugin/plugin_batchprocessimages.cpp:98
+msgid "Image Effects..."
+msgstr "Myndabrellur..."
+
+#: plugin/plugin_batchprocessimages.cpp:102
+msgid "Filter Images..."
+msgstr "Sía myndir..."
+
+#: plugin/plugin_batchprocessimages.cpp:106
+msgid "Rename Images..."
+msgstr "Endurnefna myndir..."
+
+#: plugin/plugin_batchprocessimages.cpp:110
+msgid "Recompress Images..."
+msgstr "Endurþjappa myndir..."
+
+#: plugin/plugin_batchprocessimages.cpp:114
+msgid "Resize Images..."
+msgstr "Breyta stærð mynda..."
+
+#: plugin/plugin_batchprocessimages.cpp:198
+msgid "Please select an album or a selection of images."
+msgstr "Vinsamlegast veldu albúm eða hóp mynda."
+
+#: tools/borderimagesdialog.cpp:60
+msgid "Batch-Bordering Images"
+msgstr "Gera ramma á margar myndir"
+
+#: tools/borderimagesdialog.cpp:64
+msgid "Batch Image-bordering"
+msgstr "Gera ramma á margar myndir"
+
+#: tools/borderimagesdialog.cpp:67
+msgid ""
+"A Kipi plugin for batch bordering images\n"
+"This plugin use the \"convert\" program from \"ImageMagick\" package."
+msgstr ""
+"KIPI íforrit fyrir magnvinnslu ramma utan um myndir\n"
+"Þetta íforrit notar \"umbreytingaforrit\" úr \"ImageMagick\" pakkanum."
+
+#: tools/borderimagesdialog.cpp:86
+msgid "Images Bordering Options"
+msgstr "Valkostir rammagerðar"
+
+#: tools/borderimagesdialog.cpp:88
+msgid "Border:"
+msgstr "Rammi:"
+
+#: tools/borderimagesdialog.cpp:90
+msgctxt "image border type"
+msgid "Solid"
+msgstr "Heill"
+
+#: tools/borderimagesdialog.cpp:95
+msgctxt "image border type"
+msgid "Raise"
+msgstr "Upphækkaður"
+
+#: tools/borderimagesdialog.cpp:96
+msgctxt "image border type"
+msgid "Frame"
+msgstr "Rammi"
+
+#: tools/borderimagesdialog.cpp:99
+msgid ""
+"<p>Select here the border type for your images:</p><p><b>Solid</b>: just "
+"surround the images with a line.<br/><b>Niepce</b>: surround the images with "
+"a fine line and a large border (ideal for black and white pictures).<br/"
+"><b>Raise</b>: creating a 3D effect around the images.<br/><b>Frame</b>: "
+"surround the images with an ornamental border.</p>"
+msgstr ""
+"<p>Velja tegund ramma fyrir myndirnar þínar:</p><p><b> Gegnheilt</b>: setja "
+"heila línu í kringum myndirnar.<br/><b>Niepce</b>: gera fína línu og breiðan "
+"kant í kringum myndir (hentar vel fyrir svarthvítar myndir).<br/><b>Lyfta "
+"upp</b>: gera þrívíddaráhrif í kringum myndir.<br/><b> Rammi</b>: setja "
+"skreyttan ramma í kringum myndir.</p>"
+
+#: tools/borderoptionsdialog.cpp:48
+msgid "Border Options"
+msgstr "Valkostir ramma"
+
+#: tools/borderoptionsdialog.cpp:61 tools/borderoptionsdialog.cpp:95
+#: tools/borderoptionsdialog.cpp:113 tools/borderoptionsdialog.cpp:124
+msgid "Border width:"
+msgstr "Breidd ramma:"
+
+#: tools/borderoptionsdialog.cpp:66 tools/borderoptionsdialog.cpp:100
+#: tools/borderoptionsdialog.cpp:118 tools/borderoptionsdialog.cpp:129
+msgid "Select here the border width in pixels."
+msgstr "Veldu hér breidd jaðarsins í dílum."
+
+#: tools/borderoptionsdialog.cpp:70 tools/borderoptionsdialog.cpp:104
+#: tools/borderoptionsdialog.cpp:143
+msgid "Border color:"
+msgstr "Litur ramma:"
+
+#: tools/borderoptionsdialog.cpp:74 tools/borderoptionsdialog.cpp:108
+#: tools/borderoptionsdialog.cpp:147
+msgid "You can select here the border color."
+msgstr "Veldu hér lit jaðarsins."
+
+#: tools/borderoptionsdialog.cpp:79
+msgid "Line border width:"
+msgstr "Kantbreidd:"
+
+#: tools/borderoptionsdialog.cpp:84
+msgid "Select here the line border width in pixels."
+msgstr "Veldu hér breidd kantsins í dílum."
+
+#: tools/borderoptionsdialog.cpp:88
+msgid "Line border color:"
+msgstr "Litur kants:"
+
+#: tools/borderoptionsdialog.cpp:92
+msgid "You can select here the line border color."
+msgstr "Veldu hér lit kantsins."
+
+#: tools/borderoptionsdialog.cpp:133
+msgid "Bevel width:"
+msgstr "Breidd hornrúnnunar:"
+
+#: tools/borderoptionsdialog.cpp:138
+msgid ""
+"Select here the bevel width in pixels. This value must be &lt;= Border "
+"width / 2"
+msgstr ""
+"Veldu hér breidd hornrúnnunar í dílum (pixels). Þetta gildi verður að vera "
+"&lt;= Rammabreidd / 2"
+
+#: tools/colorimagesdialog.cpp:59
+msgid "Batch Image-Color Processing"
+msgstr "Litunarmeðferð margra mynda"
+
+#: tools/colorimagesdialog.cpp:63
+msgid "Batch image-color enhancement"
+msgstr "Litunarbæting margra mynda"
+
+#: tools/colorimagesdialog.cpp:66
+msgid ""
+"A Kipi plugin for batch image-color enhancement.\n"
+"This plugin use the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"KIPI íforrit fyrir magnbreytingar á lit mynda\n"
+"Þetta íforrit notar \"umbreytingaforrit\" úr \"ImageMagick\" pakkanum."
+
+#: tools/colorimagesdialog.cpp:85
+msgid "Image Coloring Options"
+msgstr "Valkostir myndlitunar"
+
+#: tools/colorimagesdialog.cpp:87 tools/filterimagesdialog.cpp:85
+#: tools/resizeoptionsdialog.cpp:83
+msgid "Filter:"
+msgstr "Sía:"
+
+#: tools/colorimagesdialog.cpp:89
+msgctxt "color image filter"
+msgid "Decrease Contrast"
+msgstr "Minnka birtuskil"
+
+#: tools/colorimagesdialog.cpp:90
+msgctxt "color image filter"
+msgid "Depth"
+msgstr "Litadýpt"
+
+#: tools/colorimagesdialog.cpp:91
+msgctxt "color image filter"
+msgid "Equalize"
+msgstr "Jafna"
+
+#: tools/colorimagesdialog.cpp:92
+msgctxt "color image filter"
+msgid "Fuzz"
+msgstr "Loðið"
+
+#: tools/colorimagesdialog.cpp:93
+msgctxt "color image filter"
+msgid "Gray Scales"
+msgstr "Grástónar"
+
+#: tools/colorimagesdialog.cpp:94
+msgctxt "color image filter"
+msgid "Increase Contrast"
+msgstr "Auka birtuskil"
+
+#: tools/colorimagesdialog.cpp:95
+msgctxt "color image filter"
+msgid "Monochrome"
+msgstr "Einlitað"
+
+#: tools/colorimagesdialog.cpp:96
+msgctxt "color image filter"
+msgid "Negate"
+msgstr "Viðsnúið"
+
+#: tools/colorimagesdialog.cpp:97
+msgctxt "color image filter"
+msgid "Normalize"
+msgstr "Samræma"
+
+#: tools/colorimagesdialog.cpp:98
+msgctxt "color image filter"
+msgid "Segment"
+msgstr "Hluti"
+
+#: tools/colorimagesdialog.cpp:99
+msgctxt "color image filter"
+msgid "Trim"
+msgstr "Skera af"
+
+#: tools/colorimagesdialog.cpp:100
+msgid "Normalize"
+msgstr "Samræma"
+
+#: tools/colorimagesdialog.cpp:102
+msgid ""
+"<p>Select here the color enhancement type for your images:</p><p><b>Decrease "
+"contrast</b>: reduce the image contrast. The algorithm reduces the intensity "
+"difference between the lighter and darker elements of the image.<br/"
+"><b>Depth</b>: change the color depth of the image.<br/><b>Equalize</b>: "
+"perform histogram equalization to the image.<br/><b>Fuzz</b>: merging colors "
+"within a distance, i.e. consider them to be equal.<br/><b>Gray scales</b>: "
+"convert color images to grayscale images.<br/><b>Increase contrast</b>: "
+"enhance the image contrast. The algorithm enhances the intensity differences "
+"between the lighter and darker elements of the image.<br/><b>Monochrome</b>: "
+"transform the image to black and white.<br/><b>Negate</b>: replace every "
+"pixel with its complementary color. The red, green, and blue intensities of "
+"an image are negated. White becomes black, yellow becomes blue, etc.<br/"
+"><b>Normalize</b>: transform image to span the full range of color values. "
+"This is a contrast enhancement technique. The algorithm enhances the "
+"contrast of a colored image by adjusting the pixels color to span the entire "
+"range of colors available.<br/><b>Segment</b>: segment an image by analyzing "
+"the histograms of the color components and identifying units that are "
+"homogeneous with the fuzzy c-means technique.<br/><b>Trim</b>: trim an image "
+"(fuzz reverse technique). The algorithm remove edges that are the background "
+"color from the image.</p>"
+msgstr ""
+"<p>Velja tegund litbætingar fyrir myndirnar þínar:</p><p><b>Minnka "
+"birtuskil</b>Minnka birtuskil í mynd. Reikniritið minnkar muninn á milli "
+"ljósari og dekkri hluta mynda.<br/> <b>Litadýpt</b>: breyta litadýpt "
+"myndarinnar.<br/> <b>Jafna</b>: jafna litatíðnirit myndarinnar.<br/> "
+"<b>Loðið</b>: sameina liti innan ákveðinnar fjarlægðar, þ.e. líta á þá sem "
+"þeir séu eins.<br/> <b>Grátóna</b>: umbreyta litmyndum í grátóna myndir.<br/"
+"> <b>Auka birtuskil</b>: bæta birtuskil mynda. Reikniritið bætir muninn á "
+"milli ljósari og dekkri hluta mynda.<br/> <b>Einlitt</b>: umbreyta myndum í "
+"eintóna myndir (svart+hvítt).<br/> <b>Viðsnúið</b>: skiptir út hverjum "
+"mynddíl fyrir andstæðulit sinn. Rauðu, grænu og bláu litum myndar er snúið "
+"við. Hvítt verður svart, gult verður blátt, o.s.frv..<br/> <b>Samræma</b>: "
+"umbreyta mynd svo að hún spanni fullt svið litagilda. Þetta er tækni til að "
+"bæta birtuskil. Reikniritið breytir birtuskilum litmynda með því að stilla "
+"litgildi mynddíla þannig að litaskalinn nái yfir svið allra tiltækra lita."
+"<br/> <b>Hluti</b>: hlutagreining mynda með því að skoða litatíðnirit "
+"hverrar liteiningar og skilgreina einingar sem samsvara fuzzy c-means "
+"tækninni.<br/> <b>Skera af</b>: skera af mynd (öfugt við loðna tækni). "
+"Reikniritið fjarlægir jaðra sem hafa bakgrunnslit mynda.</p>"
+
+#: tools/coloroptionsdialog.cpp:49
+msgid "Color Options"
+msgstr "Litavalkostir"
+
+#: tools/coloroptionsdialog.cpp:62
+msgid "Depth value:"
+msgstr "Litadýpt:"
+
+#: tools/coloroptionsdialog.cpp:68
+msgid "Select here the image depth in bits."
+msgstr "Veldu hér litadýpt myndar í bitum."
+
+#: tools/coloroptionsdialog.cpp:74
+msgid "Distance:"
+msgstr "Lengd:"
+
+#: tools/coloroptionsdialog.cpp:79
+msgid "Select here the fuzz distance in absolute intensity units."
+msgstr "Velja hér magn óskýrleika í algildum þéttleikaeiningum."
+
+#: tools/coloroptionsdialog.cpp:86
+msgid "Cluster threshold:"
+msgstr "Klasaþröskuldur:"
+
+#: tools/coloroptionsdialog.cpp:91
+msgid ""
+"Select here the value which represents the minimum number of pixels "
+"contained in a hexahedron before it can be considered valid."
+msgstr ""
+"Velja hér gildið sem táknar minnsta fjölda díla sem geti myndað sexflötung "
+"svo hann muni teljast gildur."
+
+#: tools/coloroptionsdialog.cpp:97
+msgid "Smooth threshold:"
+msgstr "Mýkingarþröskuldur:"
+
+#: tools/coloroptionsdialog.cpp:102
+msgid ""
+"Select here the value which eliminates noise in the second derivative of the "
+"histogram. As the value is increased, you can expect a smoother second "
+"derivative."
+msgstr ""
+"Velja hér gildið sem hreinsar truflanir í annari afleiðu af litatíðniritinu. "
+"Sé gildið hækkað, má búast við enn mýkra seinna litatíðniriti."
+
+#: tools/convertimagesdialog.cpp:67
+msgid "Batch Convert Images"
+msgstr "Umbreyta mörgum myndum"
+
+#: tools/convertimagesdialog.cpp:71
+msgid "Batch convert images"
+msgstr "Umbreyta mörgum myndum"
+
+#: tools/convertimagesdialog.cpp:74
+msgid ""
+"A Kipi plugin for batch converting images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"KIPI íforrit fyrir magnumbreytingar á myndum\n"
+"Þetta íforrit notar \"umbreytingaforrit\" úr \"ImageMagick\" pakkanum."
+
+#: tools/convertimagesdialog.cpp:88
+msgid "Image Conversion Options"
+msgstr "Valkostir umbreytinga á myndum"
+
+#: tools/convertimagesdialog.cpp:90
+msgid "Format:"
+msgstr "Skráarsnið:"
+
+#: tools/convertimagesdialog.cpp:100
+msgid "<p>Select here the target image file format.</p>"
+msgstr "<p>Veldu hér skráasnið úttaksmyndar.</p>"
+
+#: tools/convertimagesdialog.cpp:101
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group's file format is a good "
+"Web file format but it uses lossy data compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color "
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: (Joint Photographic Experts Group) er skráarsnið sem virkar "
+"vel á vefnum en það notar þjöppunaraðferð sem tapar gögnum (í hvert skipti "
+"sem mynd er vistuð).</p><p><b>PNG</b>: (Portable Network Graphics) "
+"skráarsniðið er útvíkkanlegt snið fyrir taplausa, yfirfæranlega, vel "
+"þjappanlega geymslu á bitamyndum. PNG býður upp á einkaleyfafrítt snið í "
+"stað GIF og getur í mörgum algengum tilfellum komið í stað TIFF. PNG er "
+"hannað til að virka vel á netinu, þannig að það má streyma að fullu með "
+"möguleika á framvindanlegri birtingu. Einnig má nefna að PNG getur geymt "
+"upplýsingar um litróf og litbrigði til stöðlunar á birtingu í hinum ýmsu og "
+"misjöfnu kerfum.</p>"
+
+#: tools/convertimagesdialog.cpp:110
+msgid ""
+"<p><b>TIFF</b>: the Tag Image File Format is a rather old standard that is "
+"still very popular today. It is a highly flexible and platform-independent "
+"format which is supported by numerous image processing applications and "
+"virtually all prepress software on the market.</p>"
+msgstr ""
+"<p><b>TIFF</b>: (Tag Image File Format) er í dag frekar gamaldags staðall, "
+"en er aftur á móti mjög útbreiddur. Þetta er mjög fjölhæft snið sem er óháð "
+"stýrikerfum og er stutt af miklum fjölda myndvinnsluforrita ásamt næstum því "
+"öllum umbrots og prentunarforritum á markaðnum.</p>"
+
+#: tools/convertimagesdialog.cpp:114
+msgid ""
+"<p><b>PPM</b>: the Portable Pixel Map file format is used as an intermediate "
+"format for storing color bitmap information. PPM files may be either binary "
+"or ASCII and store pixel values up to 24 bits in size. This format generates "
+"the largest-sized text files to encode images without losing quality.</p>"
+msgstr ""
+"<p><b>PPM</b>: (Portable Pixel Map) er notað sem millibilsform fyrir geymslu "
+"á upplýsingum fyrir bitamyndir. PPM skrár eru ýmist tvíundarskrár eða ASCII "
+"og geyma dílagildi upp að 24 bitum. Þetta snið býr til mjög stórar "
+"textaskrár með kóðuðum myndupplýsingum og er algerlega taplaust.</p>"
+
+#: tools/convertimagesdialog.cpp:119
+msgid ""
+"<p><b>BMP</b>: the BitMaP file format is a popular image format from Win32 "
+"environment. It efficiently stores mapped or unmapped RGB graphics data with "
+"pixels 1-, 4-, 8-, or 24-bits in size. Data may be stored raw or compressed "
+"using a 4-bit or 8-bit RLE data compression algorithm. BMP is an excellent "
+"choice for a simple bitmap format which supports a wide range of RGB image "
+"data.</p>"
+msgstr ""
+"<p><b>BMP</b>: (BitMaP) er útbreitt myndsnið upprunnið í Win32 umhverfinu. "
+"Það geymir þýddar eða óþýddar RGB upplýsingar með dílum í 1-, 4-, 8-, eða 24-"
+"bita litadýpt. Gögn geta verið hrá eða þjöppuð með 4-bita eða 8-bita RLE "
+"gagnaþjöppun. BMPer ágætis val fyrir einfaldar bitamyndir og styður nokkuð "
+"vítt svið fyrir RGB myndgögn.</p>"
+
+#: tools/convertimagesdialog.cpp:125
+msgid ""
+"<p><b>TGA</b>: the TarGA image file format is one of the most widely used "
+"bitmap file formats for storage of 24 and 32 bits truecolor images.  TGA "
+"supports colormaps, alpha channel, gamma value, postage stamp image, textual "
+"information, and developer-definable data.</p>"
+msgstr ""
+"<p><b>TGA</b>: (TarGA) myndskráasniðið er eitt útbreiddasta bitamyndaformið "
+"fyrir geymslu á 24 og 32 bita raunlitamyndum (truecolor). TGA styður ýmsar "
+"framþróaðar og forritanlegar myndupplýsingar (colormaps, alfa-gegnsæisrás, "
+"litrófsgildi (gamma value), postage stamp image, textaupplýsingar og "
+"forritunar-skilgreinanleg gögn).</p>"
+
+#: tools/convertimagesdialog.cpp:129
+msgid ""
+"<p><b>EPS</b>: the  Adobe Encapsulated PostScript image file format is a "
+"PostScript language program describing the appearance of a single page. "
+"Usually, the purpose of the EPS file is to be embedded inside another "
+"PostScript language page description.</p>"
+msgstr ""
+"<p><b>EPS</b>: (Adobe Encapsulated PostScript image file format) er "
+"PostScript forritunarmál sem lýsir útliti stakrar blaðsíðu. Venjulega er "
+"hlutverk EPS-skrár það að vera grætt inn í aðra skrá forrits sem styður "
+"lýsingu meðPostScript aðferðinni.</p>"
+
+#: tools/convertimagesdialog.cpp:222 tools/convertimagesdialog.cpp:223
+#: tools/convertimagesdialog.cpp:272 tools/convertimagesdialog.cpp:285
+msgctxt "image compression type"
+msgid "None"
+msgstr "Engin"
+
+#: tools/convertoptionsdialog.cpp:47
+msgid "Image File Format Options"
+msgstr "Valkostir myndskráarsniða"
+
+#: tools/convertoptionsdialog.cpp:60 tools/recompressoptionsdialog.cpp:61
+#: tools/recompressoptionsdialog.cpp:95
+msgid "Image compression level:"
+msgstr "Myndþjöppun:"
+
+#: tools/convertoptionsdialog.cpp:65
+msgid "<p>The compression value for the target images:</p>"
+msgstr "<p>Þjöppunargildi fyrir úttaksmyndir:</p>"
+
+#: tools/convertoptionsdialog.cpp:66 tools/recompressoptionsdialog.cpp:66
+#: tools/recompressoptionsdialog.cpp:100
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: mjög mikil þjöppun<br/><b>25</b>: mikil þjöppun<br/><b>50</b>: "
+"meðalþjöppun<br/><b>75</b>: lítil þjöppun (sjálfgefið)<br/><b>100</b>: engin "
+"þjöppun</p>"
+
+#: tools/convertoptionsdialog.cpp:80 tools/recompressoptionsdialog.cpp:77
+msgid "Use lossless compression"
+msgstr "Nota taplausa þjöppun"
+
+#: tools/convertoptionsdialog.cpp:81 tools/recompressoptionsdialog.cpp:78
+msgid ""
+"If this option is enabled, all JPEG operations will use lossless compression."
+msgstr ""
+"Ef þetta er valið verða allar JPEG aðgerðir framkvæmdar með taplausri "
+"þjöppun."
+
+#: tools/convertoptionsdialog.cpp:92 tools/convertoptionsdialog.cpp:105
+#: tools/recompressoptionsdialog.cpp:121 tools/recompressoptionsdialog.cpp:139
+msgid "Image compression algorithm:"
+msgstr "Reiknirit myndþjöppunar:"
+
+#: tools/convertoptionsdialog.cpp:97
+msgctxt "No TIFF compression"
+msgid "None"
+msgstr "Engin"
+
+#: tools/convertoptionsdialog.cpp:98 tools/convertoptionsdialog.cpp:110
+msgid "Select here the compression algorithm."
+msgstr "Veldu reiknirit (algrími) myndþjöppunar."
+
+#: tools/convertoptionsdialog.cpp:109
+msgctxt "No TGA compression"
+msgid "None"
+msgstr "Ekkert"
+
+#: tools/effectimagesdialog.cpp:58
+msgid "Batch Image Effects"
+msgstr "Magnbreytingar myndáhrifa"
+
+#: tools/effectimagesdialog.cpp:62
+msgid "Batch image effects"
+msgstr "Magnbreytingar myndáhrifa"
+
+#: tools/effectimagesdialog.cpp:65
+msgid ""
+"A Kipi plugin for batch image-effect transformations.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"KIPI íforrit fyrir magnbreytingar á myndáhrifum\n"
+"Þetta íforrit notar \"umbreytingaforrit\" úr \"ImageMagick\" pakkanum."
+
+#: tools/effectimagesdialog.cpp:83
+msgid "Image Effect Options"
+msgstr "Valkostir myndáhrifa"
+
+#: tools/effectimagesdialog.cpp:85
+msgid "Effect:"
+msgstr "Áhrif:"
+
+#: tools/effectimagesdialog.cpp:87
+msgctxt "image effect"
+msgid "Adaptive Threshold"
+msgstr "Aðlaganlegur þröskuldur"
+
+#: tools/effectimagesdialog.cpp:88
+msgctxt "image effect"
+msgid "Charcoal"
+msgstr "Viðarkol"
+
+#: tools/effectimagesdialog.cpp:89
+msgctxt "image effect"
+msgid "Detect Edges"
+msgstr "Finna brúnir"
+
+#: tools/effectimagesdialog.cpp:90 tools/effectimagesdialog.cpp:98
+msgctxt "image effect"
+msgid "Emboss"
+msgstr "Upphleypt"
+
+#: tools/effectimagesdialog.cpp:91
+msgctxt "image effect"
+msgid "Implode"
+msgstr "Fella saman"
+
+#: tools/effectimagesdialog.cpp:92
+msgctxt "image effect"
+msgid "Paint"
+msgstr "Mála"
+
+#: tools/effectimagesdialog.cpp:93
+msgctxt "image effect"
+msgid "Shade Light"
+msgstr "Skyggt ljós"
+
+#: tools/effectimagesdialog.cpp:94
+msgctxt "image effect"
+msgid "Solarize"
+msgstr "Ofurlýsa"
+
+#: tools/effectimagesdialog.cpp:95
+msgctxt "image effect"
+msgid "Spread"
+msgstr "Dreifa"
+
+#: tools/effectimagesdialog.cpp:96
+msgctxt "image effect"
+msgid "Swirl"
+msgstr "Þyrla"
+
+#: tools/effectimagesdialog.cpp:97
+msgctxt "image effect"
+msgid "Wave"
+msgstr "Bylgja"
+
+#: tools/effectimagesdialog.cpp:100
+msgid ""
+"<p>Select here the effect type for your images:</p><p><b>Adaptive threshold</"
+"b>: perform local adaptive thresholding. The algorithm selects an individual "
+"threshold for each pixel based on the range of intensity values in its local "
+"neighborhood. This allows for thresholding of an image whose global "
+"intensity histogram does not contain distinctive peaks.<br/><b>Charcoal</b>: "
+"simulate a charcoal drawing.<br/><b>Detect edges</b>: detect edges within an "
+"image.<br/><b>Emboss</b>: returns a grayscale image with a three-dimensional "
+"effect. The algorithm convolves the image with a Gaussian operator of the "
+"given radius and standard deviation.<br/><b>Implode</b>: implode image "
+"pixels about the center.<br/><b>Paint</b>: applies a special effect filter "
+"that simulates an oil painting.<br/><b>Shade light</b>: shines a distant "
+"light on an image to create a three-dimensional effect.<br/><b>Solarize</b>: "
+"negate all pixels above the threshold level. This algorithm produces a "
+"solarization effect seen when exposing a photographic film to light during "
+"the development process.<br/><b>Spread</b>: this is a special-effect method "
+"that randomly displaces each pixel in a block defined by the radius "
+"parameter.<br/><b>Swirl</b>: swirls the pixels about the center of the "
+"image. <br/><b>Wave</b>: creates a \"ripple\" effect in the image by "
+"shifting the pixels vertically along a sine wave.</p>"
+msgstr ""
+"<p>Velja tegund fyrir myndáhrif: </p><p><b>Aðlaganlegur þröskuldur</b>: "
+"framkvæma staðværan þröskuldsútreikning. Reikniritið velur þroöskuld fyrir "
+"hvern stakan díl, sem byggður er á sviði litstyrks í nálægum dílum.Þetta "
+"gefur sameiginlegt litatíðnirit sem ekki inniheldur áberandi toppa.<br/"
+"><b>Teiknikol</b>: líkja eftir viðarkolateikningu.<br/><b>Finna brúnir</b>: "
+"finnur brúnir/skil í myndum.<br/><b> Upphleypt</b>: gefur gráskala mynd með "
+"þrívíddaráhrifum. Reikniritið umbreytir myndinni samkvæmt Gaussískri aðferð "
+"út frá radíusgildi og staðalfráviki.<br/><b>Fella saman</b>: dregur saman "
+"mynddílana inn í átt að miðju.<br/><b>Mála</b>: beitir sérstakri aðferð við "
+"að líkja eftir olíumálun. <br/><b>Skyggt ljós</b>: Ekki ósvipað "
+"upphleypingu, en meira líkt eftir ljósi úr fjarska á mynd til að gefa "
+"þrívíddaráhrif.<br/><b>Ofurlýsa</b>: allir dílar yfir ákveðnum þröskuldi eru "
+"hunsaðir. Þetta líkir eftir þegar ljós hefur fallið á filmu í "
+"framköllunarferlinu.<br/><b>Dreifa</b>: hér er dílunum tvístrað "
+"tilviljanakennt innan svæðis sem tilgreint er af stærð radíuss.<br/"
+"><b>Þyrla</b>: dílum myndarinnar er snúið um miðju hennar.<br/><b>Bylgja</"
+"b>: myndar \"öldur\" í myndinni með því að hliðra dílum miðað við "
+"sínusbylgju. </p>"
+
+#: tools/effectoptionsdialog.cpp:47
+msgid "Effect Options"
+msgstr "Valkostir myndáhrifa"
+
+#: tools/effectoptionsdialog.cpp:60
+msgid "Width:"
+msgstr "Breidd:"
+
+#: tools/effectoptionsdialog.cpp:65
+msgid ""
+"Select here the value which represents the width of the local neighborhood."
+msgstr "Velja hér breidd mengis nágrannadíla."
+
+#: tools/effectoptionsdialog.cpp:70
+msgid "Height:"
+msgstr "Hæð:"
+
+#: tools/effectoptionsdialog.cpp:75
+msgid ""
+"Select here the value which represents the height of the local neighborhood."
+msgstr "Velja hér hæð mengis nágrannadíla."
+
+#: tools/effectoptionsdialog.cpp:80
+msgid "Offset:"
+msgstr "Hliðrun:"
+
+#: tools/effectoptionsdialog.cpp:85
+msgid "Select here the value which represents the mean offset."
+msgstr "Velja hér gildi meðalhliðrunar."
+
+#: tools/effectoptionsdialog.cpp:92 tools/effectoptionsdialog.cpp:115
+#: tools/effectoptionsdialog.cpp:130 tools/effectoptionsdialog.cpp:168
+#: tools/effectoptionsdialog.cpp:221 tools/filteroptionsdialog.cpp:90
+#: tools/filteroptionsdialog.cpp:105 tools/filteroptionsdialog.cpp:117
+#: tools/filteroptionsdialog.cpp:128 tools/filteroptionsdialog.cpp:146
+msgid "Radius:"
+msgstr "Radíus:"
+
+#: tools/effectoptionsdialog.cpp:97
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood."
+msgstr "Velja hér radíus til ákvörðunar á mengi nágrannadíla."
+
+#: tools/effectoptionsdialog.cpp:102 tools/effectoptionsdialog.cpp:142
+#: tools/filteroptionsdialog.cpp:95 tools/filteroptionsdialog.cpp:134
+#: tools/filteroptionsdialog.cpp:152
+msgid "Deviation:"
+msgstr "Staðalfrávik:"
+
+#: tools/effectoptionsdialog.cpp:107 tools/effectoptionsdialog.cpp:147
+msgid ""
+"Select here the value which represents the standard deviation of the "
+"Gaussian, in pixels."
+msgstr "Velja hér gildi Gaussísks staðalfráviks, í dílum."
+
+#: tools/effectoptionsdialog.cpp:120
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood. "
+"Radius defines the radius of the convolution filter. If you use a radius of "
+"0 the algorithm selects a suitable radius."
+msgstr ""
+"Velja hér radíus til ákvörðunar á mengi nágrannadíla. Radíusinn ákvarðar "
+"svið síunnar. Ef þú velur 0 sem radíus mun ferlið velja sjálfvirkt hentugan "
+"radíus."
+
+#: tools/effectoptionsdialog.cpp:135
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood. "
+"For reasonable results, radius should be larger than deviation. If you use a "
+"radius of 0 the algorithm selects a suitable radius."
+msgstr ""
+"Velja hér radíus til ákvörðunar á mengi nágrannadíla. Fyrir ásættanlega "
+"útkomu þyrfti radíusinn að vera stærri en staðalfrávikið. Ef þú velur 0 sem "
+"radíus mun ferlið velja sjálfvirkt hentugan radíus."
+
+#: tools/effectoptionsdialog.cpp:155 tools/effectoptionsdialog.cpp:208
+msgid "Factor:"
+msgstr "Stuðull:"
+
+#: tools/effectoptionsdialog.cpp:160
+msgid "Select here the value which represents the extent of the implosion."
+msgstr "Velja hér gildi fyrir ytri mörk innfellingarsvæðis."
+
+#: tools/effectoptionsdialog.cpp:173
+msgid ""
+"Select here the value which represents the radius of the circular "
+"neighborhood. Each pixel is replaced by the most frequent color occurring in "
+"a circular region defined by the radius."
+msgstr ""
+"Velja hér radíus hringlaga svæðis nágrannadíla. Hverjum díl er skipt út "
+"fyrir nýjan díl með þeim lit sem algengastur er á þessu grannsvæði."
+
+#: tools/effectoptionsdialog.cpp:183
+msgid "Azimuth:"
+msgstr "Áttarhorn:"
+
+#: tools/effectoptionsdialog.cpp:188
+msgid ""
+"Select here the value which represents the azimuth of the light source "
+"direction. The azimuth is measured in degrees above the x axis."
+msgstr ""
+"Velja gildi áttarhorns sem táknar stefnu er ljósgjafi er í. Hornið er mælt í "
+"gráðum ofan við X-ás."
+
+#: tools/effectoptionsdialog.cpp:194
+msgid "Elevation:"
+msgstr "Hækkun:"
+
+#: tools/effectoptionsdialog.cpp:199
+msgid ""
+"Select here the value which represents the elevation of the light source "
+"direction. The elevation is measured in pixels above the Z axis."
+msgstr ""
+"Velja gildi hæðar sem táknar þá stefnu er ljósgjafi er í. Hornið er mælt í "
+"dílum ofan við Z-ás."
+
+#: tools/effectoptionsdialog.cpp:213
+msgid ""
+"Select here the value which represents the percent-threshold of the solarize "
+"intensity."
+msgstr "Velja hér prósentugildi þröskuldar fyrir styrk ofurlýsingar."
+
+#: tools/effectoptionsdialog.cpp:226
+msgid ""
+"Select here the value which represents the random pixel in a neighborhood of "
+"this extent."
+msgstr ""
+"Velja hér gildi sem táknar tilviljanakenndan díl í nágrenni við þessi ytri "
+"mörk."
+
+#: tools/effectoptionsdialog.cpp:234
+msgid "Degrees:"
+msgstr "Gráður:"
+
+#: tools/effectoptionsdialog.cpp:239
+msgid ""
+"Select here the value which represents the tightness of the swirling effect. "
+"You get a more dramatic effect as the degrees move from 1 to 360."
+msgstr ""
+"Velja hér gildi fyrir þéttleika þeytingaráhrifanna. Þú sérð dramatískari "
+"breytingu eftir því sem gráðurnar fara frá 1 til 360."
+
+#: tools/effectoptionsdialog.cpp:248
+msgid "Amplitude:"
+msgstr "Sveifluvídd:"
+
+#: tools/effectoptionsdialog.cpp:253
+msgid "Select here the value which represents the amplitude of the sine wave."
+msgstr "Velja hér gildi sveifluvíddar sínusbylgju."
+
+#: tools/effectoptionsdialog.cpp:258
+msgid "Length:"
+msgstr "Lengd:"
+
+#: tools/effectoptionsdialog.cpp:263
+msgid ""
+"Select here the value which represents the wave length of the sine wave."
+msgstr "Velja hér gildi sveiflulengdar sínusbylgju."
+
+#: tools/filterimagesdialog.cpp:58
+msgid "Batch Image Filtering"
+msgstr "Magnsíun mynda"
+
+#: tools/filterimagesdialog.cpp:62
+msgid "Batch image filtering"
+msgstr "Magnsíun mynda"
+
+#: tools/filterimagesdialog.cpp:65
+msgid ""
+"A Kipi plugin to batch filter images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"KIPI íforrit fyrir magnsíunar á myndum\n"
+"Þetta íforrit notar \"umbreytingaforrit\" úr \"ImageMagick\" pakkanum."
+
+#: tools/filterimagesdialog.cpp:83
+msgid "Image Filtering Options"
+msgstr "Valkostir myndsía"
+
+#: tools/filterimagesdialog.cpp:87
+msgctxt "image filter"
+msgid "Add Noise"
+msgstr "Bæta við truflunum"
+
+#: tools/filterimagesdialog.cpp:88
+msgctxt "image filter"
+msgid "Antialias"
+msgstr "Afstalla"
+
+#: tools/filterimagesdialog.cpp:89
+msgctxt "image filter"
+msgid "Blur"
+msgstr "Móða"
+
+#: tools/filterimagesdialog.cpp:90
+msgctxt "image filter"
+msgid "Despeckle"
+msgstr "Fjarlægja freknur"
+
+#: tools/filterimagesdialog.cpp:91
+msgctxt "image filter"
+msgid "Enhance"
+msgstr "Bæta"
+
+#: tools/filterimagesdialog.cpp:92
+msgctxt "image filter"
+msgid "Median"
+msgstr "Miðgildi"
+
+#: tools/filterimagesdialog.cpp:93
+msgctxt "image filter"
+msgid "Noise Reduction"
+msgstr "Truflanasía"
+
+#: tools/filterimagesdialog.cpp:94 tools/filterimagesdialog.cpp:96
+msgctxt "image filter"
+msgid "Sharpen"
+msgstr "Skerpa"
+
+#: tools/filterimagesdialog.cpp:95
+msgctxt "image filter"
+msgid "Unsharp"
+msgstr "Afskerpa"
+
+#: tools/filterimagesdialog.cpp:98
+msgid ""
+"<p>Select here the filter type for your images:</p><p><b>Add noise</b>: add "
+"artificial noise to an image.<br/><b>Antialias</b>: remove pixel aliasing."
+"<br/><b>Blur</b>: blur the image with a Gaussian operator.<br/><b>Despeckle</"
+"b>: reduces the speckle noise in an image while preserving the edges of the "
+"original image.<br/><b>Enhance</b>: apply a digital filter to enhance a "
+"noisy image.<br/><b>Median</b>: apply a median filter to an image.<br/"
+"><b>Noise reduction</b>: reduce noise in an image. <br/><b>Sharpen</b>: "
+"sharpen the image with a Gaussian operator.<br/><b>Unsharp</b>: sharpen the "
+"image with an unsharp mask operator.</p>"
+msgstr ""
+"<p>Velja tegund síu fyrir myndirnar þínar:</p><p><b> Bæta við truflunum</b>: "
+"bæta tilbúnum truflunum inn á myndina.<br/><b>Afstöllun</b>: fjarægja "
+"stallaða díla úr mynd.<br/><b> Mýkja</b>: mýkja myndina með Gaussískri "
+"aðgerð.<br/><b>Fjarlægja freknur</b>: fjarlægja bletti og truflanir með því "
+"þó að varðveita brúnir í upprunalegri mynd.<br/><b>Bæta</b>: nota stafræna "
+"síu til að bæta annars móskulega mynd.<br/><b> Miðgildi</b>: beita "
+"miðgildissíu á mynd.<br/><b> Truflanasía</b>: fjarlægja truflanir úr mynd."
+"<br/><b> Skerpa</b>: skerpa myndina með Gaussískri aðgerð.<br/><b>Afskerpa</"
+"b>: skerpa myndina með afskerpingarmaska.</p>"
+
+#: tools/filterimagesdialog.cpp:213 tools/filterimagesdialog.cpp:266
+#: tools/filteroptionsdialog.cpp:73
+msgctxt "image noise type"
+msgid "Gaussian"
+msgstr "Gaussískt"
+
+#: tools/filterimagesdialog.cpp:265 tools/filteroptionsdialog.cpp:72
+msgctxt "image noise type"
+msgid "Uniform"
+msgstr "Einsleitt"
+
+#: tools/filterimagesdialog.cpp:267 tools/filteroptionsdialog.cpp:74
+msgctxt "image noise type"
+msgid "Multiplicative"
+msgstr "Margfaldandi"
+
+#: tools/filterimagesdialog.cpp:268 tools/filteroptionsdialog.cpp:75
+msgctxt "image noise type"
+msgid "Impulse"
+msgstr "Slag"
+
+#: tools/filterimagesdialog.cpp:269 tools/filteroptionsdialog.cpp:76
+msgctxt "image noise type"
+msgid "Laplacian"
+msgstr "Laplasískur"
+
+#: tools/filterimagesdialog.cpp:270 tools/filteroptionsdialog.cpp:77
+msgctxt "image noise type"
+msgid "Poisson"
+msgstr "Poisson"
+
+#: tools/filteroptionsdialog.cpp:58
+msgid "Filter Options"
+msgstr "Valmöguleikar síu"
+
+#: tools/filteroptionsdialog.cpp:78
+msgid ""
+"Select here the algorithm method which will used to add random noise to the "
+"images."
+msgstr ""
+"Veldu hér þá reikniritsaðferð sem verður notuð til að bæta tilviljanakenndum "
+"truflunum við myndirnar."
+
+#: tools/filteroptionsdialog.cpp:80
+msgid "Noise algorithm:"
+msgstr "Truflanareiknirit:"
+
+#: tools/filteroptionsdialog.cpp:85 tools/filteroptionsdialog.cpp:93
+#: tools/filteroptionsdialog.cpp:100 tools/filteroptionsdialog.cpp:110
+#: tools/filteroptionsdialog.cpp:122 tools/filteroptionsdialog.cpp:131
+#: tools/filteroptionsdialog.cpp:139 tools/filteroptionsdialog.cpp:149
+msgid "px"
+msgstr "pt"
+
+#: tools/filteroptionsdialog.cpp:86
+msgid ""
+"Select here the blur radius of the Gaussian, not counting the center pixel. "
+"For reasonable results, the radius should be larger than deviation. If you "
+"use a radius of 0 the blur operation selects a suitable radius."
+msgstr ""
+"Velja hér radíus Gaussískrar mýkingar, í dílum, þó án þess að telja "
+"miðdílinn. Fyrir ásættanlega útkomu þyrfti radíusinn að vera stærri en "
+"staðalfrávikið. Ef þú velur 0 sem radíus mun mýkingarferlið velja sjálfvirkt "
+"hentugan radíus."
+
+#: tools/filteroptionsdialog.cpp:94
+msgid "Select here the standard deviation of the blur Gaussian."
+msgstr "Velja hér Gaussískt staðalfrávik mýkingar, í dílum."
+
+#: tools/filteroptionsdialog.cpp:101
+msgid ""
+"Select here the median radius of the pixel neighborhood. The algorithm "
+"applies a digital filter that improves the quality of noisy images. Each "
+"pixel is replaced by the median in a set of neighboring pixels as defined by "
+"the radius."
+msgstr ""
+"Velja hér miðgildisradíus nágrannadíla. Þessi aðgerð beitir séstakri "
+"stafrænni síun til að bæta gæði truflaðra mynda. Hverjum díl er skipt út "
+"fyrir reiknað miðgildi mengis af nágrannadílum, mengi sem er ákvarðað af "
+"radíusnum."
+
+#: tools/filteroptionsdialog.cpp:111
+msgid ""
+"Select here the noise reduction radius value. The algorithm smooths the "
+"contours of an image while still preserving edge information. The algorithm "
+"works by replacing each pixel with its neighbor closest in value. A neighbor "
+"is defined by the radius. If you use a radius of 0 the algorithm selects a "
+"suitable radius."
+msgstr ""
+"Velja hér gildi fyrir radíus truflanasíunar, í dílum. Útreikningurinn mýkir "
+"útlínur í myndum en leitast um leið við að halda í upplýsingar varðandi "
+"brúnir. Útreikningurinn byggist á því að skipta út dílum með næsta "
+"nágrannadíl sem hefur líkast gildi. Ef þú velur 0 sem radíus mun "
+"síunarferlið velja sjálfvirkt hentugan radíus."
+
+#: tools/filteroptionsdialog.cpp:123
+msgid ""
+"Select here the radius of the sharpen Gaussian, not counting the center "
+"pixel. For reasonable results, the radius should be larger than deviation. "
+"If you use a radius of 0 the sharpen operation selects a suitable radius."
+msgstr ""
+"Velja hér radíus Gaussískrar skerpingar, í dílum, þó án þess að telja "
+"miðdílinn. Fyrir ásættanlega útkomu þyrfti radíusinn að vera stærri en "
+"staðalfrávikið. Ef þú velur 0 sem radíus mun skerpingarferlið velja "
+"sjálfvirkt hentugan radíus."
+
+#: tools/filteroptionsdialog.cpp:132
+msgid "Select here the sharpen deviation value of the Laplacian."
+msgstr "Velja hér gildi Lapasísks staðalfráviks skerpingar, í dílum."
+
+#: tools/filteroptionsdialog.cpp:140
+msgid ""
+"Select here the radius of the unsharpen Gaussian, not counting the center "
+"pixel. The algorithm convolve the image with a Gaussian operator of the "
+"given radius and standard deviation. For reasonable results, radius should "
+"be larger than sigma. If you use a radius of 0 the algorithm selects a "
+"suitable radius."
+msgstr ""
+"Velja hér radíus Gaussískrar afskerpingar, í dílum, þó án þess að telja "
+"miðdílinn. Útreikningurinn byggist á að flækja myndina með Gaussískum reglum "
+"sem taka mið af uppgefnum radíus og staðalfráviki. Fyrir ásættanlega útkomu "
+"þyrfti radíusinn að vera stærri en sigma. Ef þú velur 0 sem radíus mun "
+"skerpingarferlið velja sjálfvirkt hentugan radíus."
+
+#: tools/filteroptionsdialog.cpp:150
+msgid "Select here the unsharpen deviation value of the Gaussian."
+msgstr "Velja hér gildi Gaussísks staðalfráviks afskerpingar, í dílum."
+
+#: tools/filteroptionsdialog.cpp:155 tools/filteroptionsdialog.cpp:161
+msgid "%"
+msgstr "%"
+
+#: tools/filteroptionsdialog.cpp:156
+msgid ""
+"Select here the percentage difference between original and blurred image "
+"which should be added to original."
+msgstr ""
+"Velja prósentuhlutfall þess mismunar á milli upprunalegu og afskerptu "
+"myndarinnar sem svo verður aftur bætt við upprunalegu myndina."
+
+#: tools/filteroptionsdialog.cpp:158
+msgid "Amount:"
+msgstr "Magn:"
+
+#: tools/filteroptionsdialog.cpp:162
+msgid ""
+"Select here the unsharpen threshold value, as a percentage of the maximum "
+"color component value, needed to apply the difference amount."
+msgstr ""
+"Veldu hér það gildi afskerpingarþröskulds sem nauðsynlegt er til að beita "
+"magni mismunar, sem prósentu af hámarkslitgildi."
+
+#: tools/filteroptionsdialog.cpp:165
+msgid "Threshold:"
+msgstr "Þröskuldur:"
+
+#: tools/recompressimagesdialog.cpp:58
+msgid "Batch Recompress Images"
+msgstr "Endurþjappa margar myndir"
+
+#: tools/recompressimagesdialog.cpp:62
+msgid "Batch recompress images"
+msgstr "Endurþjappa margar myndir"
+
+#: tools/recompressimagesdialog.cpp:65
+msgid ""
+"A Kipi plugin to batch recompress images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"KIPI íforrit fyrir magnendurþjöppunar á myndum\n"
+"Þetta íforrit notar \"umbreytingaforrit\" úr \"ImageMagick\" pakkanum."
+
+#: tools/recompressimagesdialog.cpp:83
+msgid "Image Recompression Options"
+msgstr "Valkostir endurþjöppunar mynda"
+
+#: tools/recompressimagesdialog.cpp:146 tools/recompressimagesdialog.cpp:147
+#: tools/recompressimagesdialog.cpp:200 tools/recompressimagesdialog.cpp:214
+#: tools/recompressoptionsdialog.cpp:125 tools/recompressoptionsdialog.cpp:142
+msgctxt "image compression"
+msgid "None"
+msgstr "Engin"
+
+#: tools/recompressimagesdialog.cpp:246 tools/resizeimagesdialog.cpp:279
+msgid "image file format unsupported."
+msgstr "myndskráarsnið ekki stutt."
+
+#: tools/recompressoptionsdialog.cpp:48
+msgid "Recompression Options"
+msgstr "Valkostir endurþjöppunar"
+
+#: tools/recompressoptionsdialog.cpp:65
+msgid "<p>The compression value for JPEG target images:</p>"
+msgstr "<p>Þjöppunargildi fyrir JPEG úttaksmyndir:</p>"
+
+#: tools/recompressoptionsdialog.cpp:84
+msgid "JPEG File Format"
+msgstr "JPEG skráarsnið"
+
+#: tools/recompressoptionsdialog.cpp:99
+msgid "<p>The compression value for PNG target images:</p>"
+msgstr "<p>Þjöppunargildi fyrir PNG úttaksmyndir:</p>"
+
+#: tools/recompressoptionsdialog.cpp:111
+msgid "PNG File Format"
+msgstr "PNG skráarsnið"
+
+#: tools/recompressoptionsdialog.cpp:126
+msgid "Select here the TIFF compression algorithm."
+msgstr "Veldu hér þjöppunaralgrími TIFF mynda."
+
+#: tools/recompressoptionsdialog.cpp:129
+msgid "TIFF File Format"
+msgstr "TIFF skráarsnið"
+
+#: tools/recompressoptionsdialog.cpp:143
+msgid "Select here the TGA compression algorithm."
+msgstr "Veldu hér þjöppunaralgrími TGA mynda."
+
+#: tools/recompressoptionsdialog.cpp:146
+msgid "TGA File Format"
+msgstr "TGA skráarsnið"
+
+#: tools/renameimagesdialog.cpp:53
+msgid "Rename Images"
+msgstr "Endurnefna myndir"
+
+#: tools/renameimagesdialog.cpp:61
+msgid "Batch-rename images"
+msgstr "Endurnefna margar myndir"
+
+#: tools/renameimagesdialog.cpp:64
+msgid "A Kipi plugin to batch-rename images"
+msgstr "KIPI íforrit fyrir magnbreytingar á stærð mynda"
+
+#: tools/renameimageswidget.cpp:87
+msgid "Sort by Name"
+msgstr "Raða eftir nafni"
+
+#: tools/renameimageswidget.cpp:88
+msgid "Sort by Size"
+msgstr "Raða eftir stærð"
+
+#: tools/renameimageswidget.cpp:89
+msgid "Sort by Date"
+msgstr "Raða eftir dagsetningu"
+
+#: tools/renameimageswidget.cpp:532
+msgid "Rename File"
+msgstr "Endurnefna skrá"
+
+#: tools/renameimageswidget.cpp:580
+msgctxt "batch process result"
+msgid "Skipped"
+msgstr "Sleppt"
+
+#: tools/renameimageswidget.cpp:592
+msgctxt "batch process result"
+msgid "OK"
+msgstr "Í lagi"
+
+#: tools/renameimageswidget.cpp:596
+msgctxt "batch process result"
+msgid "Failed"
+msgstr "Mistókst"
+
+#: tools/resizeimagesdialog.cpp:148
+msgid "Batch Resize Images"
+msgstr "Magnbreytingar á stærð mynda"
+
+#: tools/resizeimagesdialog.cpp:155
+msgid "Proportional (1 dim.)"
+msgstr "Hlutfallslegt (1 átt)"
+
+#: tools/resizeimagesdialog.cpp:156
+msgid "Proportional (2 dim.)"
+msgstr "Hlutfallslegt (2 áttir)"
+
+#: tools/resizeimagesdialog.cpp:157
+msgid "Non-Proportional"
+msgstr "Skekkt"
+
+#: tools/resizeimagesdialog.cpp:158
+msgid "Prepare to Print"
+msgstr "Undirbúa fyrir prentun"
+
+#: tools/resizeimagesdialog.cpp:161
+msgid "Batch resize images"
+msgstr "Magnbreytingar á stærð mynda"
+
+#: tools/resizeimagesdialog.cpp:164
+msgid ""
+"A Kipi plugin to batch-resize images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"KIPI íforrit fyrir magnbreytingar á stærð mynda\n"
+"Þetta íforrit notar \"umbreytingaforrit\" úr \"ImageMagick\" pakkanum."
+
+#: tools/resizeimagesdialog.cpp:173
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: tools/resizeimagesdialog.cpp:184
+msgid "Image Resizing Options"
+msgstr "Valkostir stærðabreytinga mynda"
+
+#: tools/resizeimagesdialog.cpp:187
+msgid "Type:"
+msgstr "Gerð:"
+
+#: tools/resizeimagesdialog.cpp:194
+msgid "<p>Select here the image-resize type.</p>"
+msgstr "<p>Veldu hér gerð stærðabreytingar mynda.</p>"
+
+#: tools/resizeoptionsdialog.cpp:53
+msgid "Image-Resize Options"
+msgstr "Möguleikar við að breyta stærð mynda"
+
+#: tools/resizeoptionsdialog.cpp:79
+msgid "Quality Settings"
+msgstr "Gæðastillingar"
+
+#: tools/resizeoptionsdialog.cpp:85
+msgctxt "Filter name"
+msgid "&lt;default&gt;"
+msgstr "&lt;sjálfgefið&gt;"
+
+#: tools/resizeoptionsdialog.cpp:89
+msgid ""
+"Select here the filter name for the resize-image process. This filter will "
+"be used like a kernel convolution process during the increased image size "
+"rendering."
+msgstr ""
+"Velja hér hvaða síu á að nota við endurstækkun myndar. Þessi sía mun verða "
+"notuð til að búa til nýja díla inn í myndina við stækkun hennar. Sjálfgefin "
+"sía er 'Lanczos'."
+
+#: tools/resizeoptionsdialog.cpp:97
+msgid "Image quality (percent):"
+msgstr "Myndgæði (prósent):"
+
+#: tools/resizeoptionsdialog.cpp:98
+msgid "Quality for compressed images."
+msgstr "Gæði þjappaðra mynda."
+
+#: tools/resizeoptionsdialog.cpp:208 tools/resizeoptionsdialog.cpp:293
+#: tools/resizeoptionsdialog.cpp:393
+msgid "Size Settings"
+msgstr "Stærðarstillingar"
+
+#: tools/resizeoptionsdialog.cpp:215
+msgid "New size (pixels):"
+msgstr "Nýtt stærð (dílar):"
+
+#: tools/resizeoptionsdialog.cpp:216
+msgid "The new images' size in pixels."
+msgstr "Stærð nýju myndarinnar í dílum (pixels)."
+
+#: tools/resizeoptionsdialog.cpp:235
+msgid ""
+"<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "
+"The width or the height of the images will be automatically selected, "
+"depending on the images' orientations. The images' aspect ratios are "
+"preserved.</p>"
+msgstr ""
+"<p><b> Hlutfallslegt (1 átt)</b>; stöðluð sjálfvirk stærðarbreyting miðuð "
+"við eina hlið.  Breidd myndar eða hæð er valin sjálfvirkt, eftir því hvernig "
+"myndin snýr. Stærðarhlutföll haldast.</p>"
+
+#: tools/resizeoptionsdialog.cpp:300 tools/resizeoptionsdialog.cpp:400
+msgid "Width (pixels):"
+msgstr "Breidd (dílar):"
+
+#: tools/resizeoptionsdialog.cpp:301 tools/resizeoptionsdialog.cpp:401
+msgid "The new images' width in pixels."
+msgstr "Breidd nýju myndarinnar í dílum (pixels)."
+
+#: tools/resizeoptionsdialog.cpp:306 tools/resizeoptionsdialog.cpp:406
+msgid "Height (pixels):"
+msgstr "Hæð (dílar):"
+
+#: tools/resizeoptionsdialog.cpp:307 tools/resizeoptionsdialog.cpp:407
+msgid "The new images' height in pixels."
+msgstr "Hæð nýju myndarinnar í dílum (pixels)."
+
+#: tools/resizeoptionsdialog.cpp:309
+msgid "Fill image to specified size"
+msgstr "Fylla upp meðfram mynd í tiltekinni stærð"
+
+#: tools/resizeoptionsdialog.cpp:310
+msgid ""
+"If this box is set, the resulting image is filled up with the specified "
+"background color to the desired dimension, otherwise it is only as big as "
+"needed to fit the original image into the specified dimensions."
+msgstr ""
+"Ef hakað er í þennan reit, er fyllt upp meðfram myndinni með tilgreindum "
+"bakgrunnslit þannig að valinni stærð sé náð, annars er upprunalega myndin "
+"höfð nógu stór til að fylla upp í tilgreindar stærðir."
+
+#: tools/resizeoptionsdialog.cpp:315
+msgid "Background color:"
+msgstr "Bakgrunnslitur:"
+
+#: tools/resizeoptionsdialog.cpp:317
+msgid ""
+"You can select here the background color to be used when adapting the "
+"images' sizes."
+msgstr ""
+"Þú getur valið hér bakgrunnslit til að nota þegar stærð mynda er löguð til."
+
+#: tools/resizeoptionsdialog.cpp:345
+msgid ""
+"<p><b>Proportional (2 dim.)</b>: auto-resizing using two dimensions. The "
+"images' aspect ratio are preserved. You can use this, for example, to adapt "
+"your images' sizes to your screen size.</p>"
+msgstr ""
+"<p><b> Hlutfallslegt (2 áttir)</b>; stöðluð sjálfvirk stærðarbreyting miðuð "
+"við tvær hliðar. Stærðarhlutföll haldast. Þetta má nota til dæmis til að "
+"sníða myndir að skjástærð.</p>"
+
+#: tools/resizeoptionsdialog.cpp:428
+msgid ""
+"<p><b>Non proportional</b>: non-proportional resizing using two dimensions. "
+"The images' aspect ratios are not preserved.</p>"
+msgstr ""
+"<p><b>Skekkt</b>: Ekki-hlutfallsleg stærðarbreyting miðuð við tvær hliðar. "
+"Stærðarhlutföll haldast ekki.</p>"
+
+#: tools/resizeoptionsdialog.cpp:490
+msgid "Use custom settings"
+msgstr "Nota sérsniðnar stillingar"
+
+#: tools/resizeoptionsdialog.cpp:491
+msgid "If this option is enabled, all printing settings can be customized."
+msgstr "Ef þetta er virkjað, er hægt að sérsníða allar prentstillingar."
+
+#: tools/resizeoptionsdialog.cpp:498
+msgid "Printing Standard Settings"
+msgstr "Staðlaðar prentstillingar"
+
+#: tools/resizeoptionsdialog.cpp:501
+msgid "Paper size (cm):"
+msgstr "Pappírsstærð (cm):"
+
+#: tools/resizeoptionsdialog.cpp:514
+msgid "The standard photographic paper sizes in centimeters."
+msgstr "Staðlaðar ljósmyndapappírsstærðir, í sentímetrum."
+
+#: tools/resizeoptionsdialog.cpp:517 tools/resizeoptionsdialog.cpp:565
+msgid "Print resolution (dpi):"
+msgstr "Prentupplausn (DPI eða PÁT):"
+
+#: tools/resizeoptionsdialog.cpp:526
+msgid "The standard print resolutions in dots per inch."
+msgstr "Stöðluð prentupplausn, í dílum/punktum á tommu."
+
+#: tools/resizeoptionsdialog.cpp:529
+msgid "Stretch Image"
+msgstr "Teygja mynd"
+
+#: tools/resizeoptionsdialog.cpp:530
+msgid ""
+"If this is selected, the image will be stretched to fit the paper "
+"dimensions. Otherwise it will be centered on the canvas and the borders will "
+"get cropped to achieve the desired paper size."
+msgstr ""
+"Ef þetta er valið verður myndin teygð til að passa á stærð "
+"ljósmyndapappírsins. Annars verður hún miðjuð á pappírinn og sniðið af "
+"jöðrunum til að fá út rétta prentstærð."
+
+#: tools/resizeoptionsdialog.cpp:546
+msgid "Printing Custom Settings"
+msgstr "Sérsniðnar prentstillingar"
+
+#: tools/resizeoptionsdialog.cpp:549
+msgid "Paper width (cm):"
+msgstr "Pappírsbreidd (cm):"
+
+#: tools/resizeoptionsdialog.cpp:553
+msgid "The customized width of the photographic paper size in centimeters."
+msgstr "Sérsniðin breidd ljósmyndapappírs, í sentímetrum."
+
+#: tools/resizeoptionsdialog.cpp:557
+msgid "Paper height (cm):"
+msgstr "Pappírshæð (cm):"
+
+#: tools/resizeoptionsdialog.cpp:561
+msgid "The customized height of the photographic paper size in centimeters."
+msgstr "Sérsniðin hæð ljósmyndapappírs, í sentímetrum."
+
+#: tools/resizeoptionsdialog.cpp:569
+msgid "The customized print resolution in dots per inch."
+msgstr "Sérsniðin prentupplausn, í mynddílum á tommu (PÁT)."
+
+#: tools/resizeoptionsdialog.cpp:629
+msgid ""
+"<p><b>Prepare to print</b>: prepare the image for photographic printing. The "
+"user can set the print resolution and the photographic paper size. The "
+"target images will be adapted to the specified dimensions (included the "
+"background size, margin size, and background color).</p>"
+msgstr ""
+"<p><b>Undirbúa prentun</b>: undirbúningur myndar fyrir ljósmyndaprentun. "
+"Notandinn getur stillt prentupplausn og stærð ljósmyndapappírs. "
+"Úttaksmyndirnar verða aðlagaðar tilgreindum stærðum (þar með talið "
+"bakgrunnsstærð, spássíustærð og bakgrunnslitur).</p>"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sveinn í Felli"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sveinki@nett.is"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, m_optionGroupBox)
+#. i18n: file: ui/batchprocessimagesdialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, m_optionComboBoxLabel)
+#: rc.cpp:5 rc.cpp:8
+msgid "SET_AT_RUNTIME"
+msgstr "STILLA_Í_RÆSINGU"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:51
+#. i18n: ectx: property (text), widget (QPushButton, m_optionsButton)
+#: rc.cpp:11
+msgid "Options..."
+msgstr "Valkostir..."
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:75
+#. i18n: ectx: property (text), widget (QPushButton, m_previewButton)
+#: rc.cpp:14
+msgid "Preview"
+msgstr "Forskoðun"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:82
+#. i18n: ectx: property (text), widget (QCheckBox, m_smallPreview)
+#: rc.cpp:17
+msgid "Small preview"
+msgstr "Lítil forsýning"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:103
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:20
+msgctxt "List of images to process"
+msgid "Source"
+msgstr "Uppruni"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:119
+#. i18n: ectx: property (text), widget (QPushButton, m_addImagesButton)
+#. i18n: file: ui/renameimagesbase.ui:142
+#. i18n: ectx: property (text), widget (QPushButton, m_addButton)
+#: rc.cpp:23 rc.cpp:77
+msgid "Add"
+msgstr "Bæta við"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:126
+#. i18n: ectx: property (text), widget (QPushButton, m_remImagesButton)
+#. i18n: file: ui/renameimagesbase.ui:152
+#. i18n: ectx: property (text), widget (QPushButton, m_removeButton)
+#: rc.cpp:26 rc.cpp:80
+msgid "Remove"
+msgstr "Fjarlægja"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:183
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:29
+msgid "Destination"
+msgstr "Áfangastaður"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:189
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:32
+msgid "Destination folder:"
+msgstr "Móttökumappa:"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:209
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:35
+msgid "Overwrite mode:"
+msgstr "Yfirskrifunarhamur:"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:222
+#. i18n: ectx: property (text), widget (QCheckBox, m_removeOriginal)
+#: rc.cpp:38
+msgid "Remove original"
+msgstr "Fjarlægja frumrit"
+
+#. i18n: file: ui/imagepreview.ui:19
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:41
+msgid "Zoom:"
+msgstr "Aðdráttur:"
+
+#. i18n: file: ui/imagepreview.ui:65
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:44
+msgid "Original Image"
+msgstr "Upprunaleg mynd"
+
+#. i18n: file: ui/imagepreview.ui:71
+#. i18n: ectx: property (whatsThis), widget (KIPIBatchProcessImagesPlugin::PixmapView, m_origView)
+#: rc.cpp:47
+msgid ""
+"This is the original image preview. You can use the mouse wheel to change "
+"the zoom factor. Click in and use the mouse to move the image."
+msgstr ""
+"Þetta er forskoðun á upphaflegu myndinni. Þú getur notað skrunhjólið á "
+"músinni til að breyta aðdrættinum. Smelltu á og notaðu músina til að hreyfa "
+"myndina."
+
+#. i18n: file: ui/imagepreview.ui:93
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:50
+msgid "Destination Image"
+msgstr "Endanleg mynd"
+
+#. i18n: file: ui/imagepreview.ui:99
+#. i18n: ectx: property (whatsThis), widget (KIPIBatchProcessImagesPlugin::PixmapView, m_destView)
+#: rc.cpp:53
+msgid ""
+"This is the destination image preview. You can use the mouse wheel to change "
+"the zoom factor. Click in and use the mouse to move the image."
+msgstr ""
+"Þetta er forskoðun á úttaksmyndinni. Þú getur notað skrunhjólið á músinni "
+"til að breyta aðdrættinum. Smelltu á og notaðu músina til að hreyfa myndina."
+
+#. i18n: file: ui/renameimagesbase.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, m_templateGroupBox)
+#: rc.cpp:56
+msgid "Template for renaming files"
+msgstr "Sniðmát fyrir endurnefningu mynda"
+
+#. i18n: file: ui/renameimagesbase.ui:26
+#. i18n: ectx: property (text), widget (QLabel, m_seqLabel)
+#: rc.cpp:59
+msgid "Sequence number start value:"
+msgstr "Upphafsgildi raðnúmerunar:"
+
+#. i18n: file: ui/renameimagesbase.ui:39
+#. i18n: ectx: property (text), widget (QLabel, m_prefixLabel)
+#: rc.cpp:62
+msgid "Prefix string:"
+msgstr "Forskeyti:"
+
+#. i18n: file: ui/renameimagesbase.ui:49
+#. i18n: ectx: property (text), widget (QCheckBox, m_addFileNameCheck)
+#: rc.cpp:65
+msgid "Add original file name"
+msgstr "Bæta við upprunalegu heiti"
+
+#. i18n: file: ui/renameimagesbase.ui:56
+#. i18n: ectx: property (text), widget (QCheckBox, m_addFileDateCheck)
+#: rc.cpp:68
+msgid "Add file date"
+msgstr "Bæta við dagsetningu skráar"
+
+#. i18n: file: ui/renameimagesbase.ui:63
+#. i18n: ectx: property (text), widget (QCheckBox, m_useExtraSymbolsCheck)
+#: rc.cpp:71
+msgid "Use extra [X*] symbols in date format field"
+msgstr "Nota auka [X*] tákn í reitnum fyrir dagsetningasnið"
+
+#. i18n: file: ui/renameimagesbase.ui:91
+#. i18n: ectx: property (text), widget (QCheckBox, m_formatDateCheck)
+#: rc.cpp:74
+msgid "Date format:"
+msgstr "Snið dagsetninga:"
+
+#. i18n: file: ui/renameimagesbase.ui:175
+#. i18n: ectx: property (text), widget (QPushButton, m_reverseList)
+#: rc.cpp:83
+msgid "Reverse List"
+msgstr "Snúa við lista"
+
+#. i18n: file: ui/renameimagesbase.ui:198
+#. i18n: ectx: property (text), widget (QPushButton, m_sortButton)
+#: rc.cpp:86
+msgid "Sort List"
+msgstr "Raða lista"
+
+#. i18n: file: ui/renameimagesbase.ui:205
+#. i18n: ectx: property (text), widget (QPushButton, m_moveDown)
+#: rc.cpp:89
+msgid "Move &Down"
+msgstr "Færa &niður"
+
+#. i18n: file: ui/renameimagesbase.ui:212
+#. i18n: ectx: property (text), widget (QPushButton, m_moveUp)
+#: rc.cpp:92
+msgid "Move &Up"
+msgstr "Færa &upp"

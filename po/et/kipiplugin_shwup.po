@@ -1,0 +1,247 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marek Laane <bald@smail.ee>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2009-11-11 05:13+0200\n"
+"Last-Translator: Marek Laane <bald@smail.ee>\n"
+"Language-Team: Estonian <kde-et@linux.ee>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: swalbum.cpp:49
+msgid "Shwup New Album"
+msgstr "Shwupi uus Album"
+
+#: swalbum.cpp:62
+msgid "Title of the album that will be created (required)."
+msgstr "Loodava albumi nimi (nõutav)."
+
+#: swalbum.cpp:65
+msgctxt "album edit"
+msgid "Title:"
+msgstr "Nimi:"
+
+#: swlogin.cpp:48
+msgid "Shwup Login"
+msgstr "Shwupi sisselogimine"
+
+#: swlogin.cpp:60
+msgid "Email of shwup account (required)."
+msgstr "Shwupi konto e-posti aadress (nõutav)."
+
+#: swlogin.cpp:64
+msgid "Password of shwup account (required)."
+msgstr "Shwupi konto parool (nõutav)."
+
+#: swlogin.cpp:67
+msgctxt "login settings"
+msgid "Email:"
+msgstr "E-post:"
+
+#: swlogin.cpp:68
+msgctxt "login settings"
+msgid "Password:"
+msgstr "Parool:"
+
+#: swwidget.cpp:71
+msgid "This is the list of images to upload to your Shwup account."
+msgstr "See on piltide nimekiri, mis laaditakse sinu Shwupi kontosse."
+
+#: swwidget.cpp:77
+msgid ""
+"This is a clickable link to open the Shwup.com home page in a web browser."
+msgstr "Klõpsatav link Shwup.com-i kodulehekülje avamiseks veebibrauseris."
+
+#: swwidget.cpp:83
+msgid "Account"
+msgstr "Konto"
+
+#: swwidget.cpp:84
+msgid "This is the Shwup account that is currently logged in."
+msgstr "Shwupi konto, millesse oled praegu sisse loginud."
+
+#: swwidget.cpp:87
+msgctxt "account settings"
+msgid "Name:"
+msgstr "Nimi:"
+
+#: swwidget.cpp:90
+msgid "Change Account"
+msgstr "Muuda kontot"
+
+#: swwidget.cpp:91
+msgid "Change Shwup Account used for transfer"
+msgstr "Muuda edastuseks kasutatavat Shwupi kontot"
+
+#: swwidget.cpp:102 swwidget.cpp:122
+msgid "Destination"
+msgstr "Sihtkoht"
+
+#: swwidget.cpp:103
+msgid "This is the Shwup album to which selected photos will be uploaded."
+msgstr "Shwupi album, kuhu laaditakse valitud fotod."
+
+#: swwidget.cpp:106
+msgid "Album:"
+msgstr "Album:"
+
+#: swwidget.cpp:110
+msgid "New Album"
+msgstr "Uus album"
+
+#: swwidget.cpp:111
+msgid "Create new Shwup album"
+msgstr "Uue Shwupi albumi loomine"
+
+#: swwidget.cpp:112
+msgctxt "album list"
+msgid "Reload"
+msgstr "Laadi uuesti"
+
+#: swwidget.cpp:113
+msgid "Reload album list"
+msgstr "Albumite nimekirja taaslaadimine"
+
+#: swwidget.cpp:123
+msgid "This is the location to which Shwup images will be downloaded."
+msgstr "Asukoht, kuhu laaditakse Shwupi pildid."
+
+#: swwidget.cpp:130
+msgid "Options"
+msgstr "Valikud"
+
+#: swwidget.cpp:131
+msgid "These are options that will be applied to photos before upload."
+msgstr "Fotodele enne üleslaadimist rakendatavad valikud."
+
+#: swwidget.cpp:135
+msgid "Resize photos before uploading"
+msgstr "Fotode suuruse muutmine enne üleslaadimist"
+
+#: swwidget.cpp:145
+msgid "Maximum dimension:"
+msgstr "Maksimummõõtmed:"
+
+#: swwidget.cpp:153
+msgid "JPEG quality:"
+msgstr "JPEG kvaliteet:"
+
+#: swwindow.cpp:93
+msgid "Export to Shwup Web Service"
+msgstr "Eksport Shwupi veebiteenusesse"
+
+#: swwindow.cpp:94
+msgid "Start Upload"
+msgstr "Alusta üleslaadimist"
+
+#: swwindow.cpp:95
+msgid "Start upload to Shwup web service"
+msgstr "Üleslaadimise alustamine Shwupi veebiteenusesse"
+
+#: swwindow.cpp:118
+msgid "Shwup Export"
+msgstr "Shwupi eksport"
+
+#: swwindow.cpp:120
+msgid "A Kipi plugin to export images to Shwup web service."
+msgstr "Kipi plugin piltide eksportimiseks Shwupi veebiteenusesse."
+
+#: swwindow.cpp:122
+msgid "(c) 2009, Timothée Groleau"
+msgstr "(c) 2009: Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Timothée Groleau"
+msgstr "Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Author and maintainer"
+msgstr "Autor ja hooldaja"
+
+#: swwindow.cpp:132
+msgid "Handbook"
+msgstr "Käsiraamat"
+
+#: swwindow.cpp:277
+msgid ""
+"The shwup.com service does not seem to be available at this time, please try "
+"again later."
+msgstr ""
+"Shwup.com-i teenus ei paista olevat praegu kättesaadav, palun proovi hiljem "
+"uuesti."
+
+#: swwindow.cpp:307
+msgid "This application has been blacklisted by the shwup.com service."
+msgstr "Shwup.com-i teenus on lisanud selle rakenduse oma musta nimekirja."
+
+#: swwindow.cpp:319
+#, kde-format
+msgid "Shwup Call Failed: %1\n"
+msgstr "Shwupi väljakutsumine nurjus: %1\n"
+
+#: swwindow.cpp:420
+msgid "Transfer Progress"
+msgstr "Edenemine"
+
+#: swwindow.cpp:425
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: swwindow.cpp:532
+#, kde-format
+msgid ""
+"Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online "
+"and invite people."
+msgstr ""
+"Üleslaadimine on lõpetatud. Külasta lehekülge \"<a href=\"%1\">%2</a>\", et "
+"näha albumit võrgus ja kutsuda inimesi seda vaatama."
+
+#: swwindow.cpp:535
+msgid "Upload complete"
+msgstr "Üleslaadimine on lõpetatud"
+
+#: swwindow.cpp:559 swwindow.cpp:578
+msgid "Cannot open file"
+msgstr "Faili avamine nurjus"
+
+#: swwindow.cpp:582
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Faili %1 üleslaadimine"
+
+#: swwindow.cpp:606
+#, kde-format
+msgid ""
+"Failed to upload photo into Shwup: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Foto laadimine Shwupi teenusesse nurjus: %1\n"
+"Kas soovid jätkata?"
+
+#: swwindow.cpp:630
+#, kde-format
+msgid "Shwup Call Failed: %1"
+msgstr "Shwupi väljakutsumine nurjus: %1"
+
+#: plugin_shwup.cpp:78
+msgid "Export to Shwup..."
+msgstr "Ekspordi Shwupi..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bald@smail.ee"

@@ -1,0 +1,207 @@
+# translation of kipiplugin_jpeglossless.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_jpeglossless\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-06-23 15:22+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: plugin/plugin_jpeglossless.cpp:111
+msgid "Rotate"
+msgstr "បង្វិល"
+
+#: plugin/plugin_jpeglossless.cpp:115
+msgctxt "rotate image left"
+msgid "Left"
+msgstr "ឆ្វេង"
+
+#: plugin/plugin_jpeglossless.cpp:122
+msgctxt "rotate image right"
+msgid "Right"
+msgstr "​ស្តាំ"
+
+#: plugin/plugin_jpeglossless.cpp:132
+msgid "Flip"
+msgstr "ត្រឡប់"
+
+#: plugin/plugin_jpeglossless.cpp:136
+msgid "Horizontally"
+msgstr "ដោយ​​ផ្ដេក"
+
+#: plugin/plugin_jpeglossless.cpp:143
+msgid "Vertically"
+msgstr "ដោយ​បញ្ឈរ"
+
+#: plugin/plugin_jpeglossless.cpp:154
+msgid "Auto Rotate/Flip Using Exif Information"
+msgstr "បង្វិល/ត្រឡប់​ដោយ​ស្វ័យ​ប្រវត្តិ ដោយ​ប្រើ​ព័ត៌មាន Exif"
+
+#: plugin/plugin_jpeglossless.cpp:163
+msgid "Convert to Black && White"
+msgstr "បម្លែង​ទៅ​ជា​ពណ៌​ខ្មៅ និង​ស"
+
+#: plugin/plugin_jpeglossless.cpp:211
+msgid "horizontally"
+msgstr "ផ្ដេក"
+
+#: plugin/plugin_jpeglossless.cpp:216
+msgid "vertically"
+msgstr "បញ្ឈរ"
+
+#: plugin/plugin_jpeglossless.cpp:234
+#, kde-format
+msgid "Flip images %1"
+msgstr "ត្រឡប់​រូបភាព %1"
+
+#: plugin/plugin_jpeglossless.cpp:247
+msgid "right (clockwise)"
+msgstr "ស្ដាំ (ស្រប​ទ្រនិចនាឡិកា)"
+
+#: plugin/plugin_jpeglossless.cpp:252
+msgid "left (counterclockwise)"
+msgstr "ឆ្វេង (ច្រាស​ទ្រនិច​នាឡិកា)"
+
+#: plugin/plugin_jpeglossless.cpp:257
+msgid "using Exif orientation tag"
+msgstr "ដោយ​ប្រើ​ស្លាក​ទិស Exif"
+
+#: plugin/plugin_jpeglossless.cpp:274
+#, kde-format
+msgid "Rotate images %1"
+msgstr "បង្វិល​រូបភាព %1"
+
+#: plugin/plugin_jpeglossless.cpp:290
+msgid ""
+"<p>Are you sure you wish to convert the selected image(s) to black and "
+"white? This operation <b>cannot</b> be undone.</p>"
+msgstr ""
+"<p>តើ​អ្នក​ប្រាកដ​ជា​ចង់​បម្លែង​រូបភាព​ដែល​បាន​ជ្រើស​ទៅ​ពណ៌​ស និង​ខ្មៅ​ឬ ? ប្រតិបត្តិការ​នេះ​ <b>មិន​អាច</"
+"b> ត្រូវ​បាន​ធ្វើ​វិញ​ទេ ។</p>"
+
+#: plugin/plugin_jpeglossless.cpp:304
+msgid "Convert images to black & white"
+msgstr "បម្លែង​រូបភាព​ទៅ​ពណ៌​ខ្មៅ និង​ស"
+
+#: plugin/plugin_jpeglossless.cpp:339
+#, kde-format
+msgid "Rotating Image \"%1\""
+msgstr "បង្វិល​រូបភាព \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:344
+#, kde-format
+msgid "Flipping Image \"%1\""
+msgstr "ត្រឡប់​រូបភាព \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:349
+#, kde-format
+msgid "Converting to Black & White \"%1\""
+msgstr "បម្លែង​ទៅ​ពណ៌ស និង​ខ្មៅ \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:371
+msgid "Rotate image complete"
+msgstr "បង្វិល​រូបភាព​ពេញលេញ"
+
+#: plugin/plugin_jpeglossless.cpp:376
+msgid "Flip image complete"
+msgstr "ត្រឡប់​រូបភាព​ពេញលេញ"
+
+#: plugin/plugin_jpeglossless.cpp:381
+msgid "Convert to Black & White complete"
+msgstr "បម្លែង​ទៅ​ពណ៌ស និង​ខ្មៅ​ពេញលេញ"
+
+#: plugin/plugin_jpeglossless.cpp:406
+msgid "Failed to Rotate image"
+msgstr "បាន​បរាជ័យ​ក្នុង​បង្វិល​រូបភាព"
+
+#: plugin/plugin_jpeglossless.cpp:411
+msgid "Failed to Flip image"
+msgstr "បាន​បរាជ័យ​ក្នុង​ត្រឡប់​រូបភាព"
+
+#: plugin/plugin_jpeglossless.cpp:416
+msgid "Failed to convert image to Black & White"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បម្លែង​រូបភាព​ទៅ​ពណ៌ស និង​ខ្មៅ"
+
+#: plugin/utils.cpp:89
+msgid "unable to open source file"
+msgstr "មិន​អាច​បើក​ឯកសារ​ប្រភព"
+
+#: plugin/utils.cpp:119 plugin/utils.cpp:146
+msgid "unable to open temp file"
+msgstr "មិន​អាច​បើក​ឯកសារ​បណ្ដោះអាសន្ន"
+
+#: plugin/utils.cpp:133
+msgid "Cannot rotate: unable to open temp file"
+msgstr "មិន​អាច​បង្វិល ៖ មិនអាច​បើក​ឯកសារ​បណ្ដោះ​អាសន្ន"
+
+#: plugin/utils.cpp:195
+#, kde-format
+msgid "Cannot update metadata: %1"
+msgstr "មិន​អាច​ធ្វើ​បច្ចុប្បន្នភាព​​ទិន្នន័យ​មេតា​ ៖ %1"
+
+#: transform/convert2grayscale.cpp:96 transform/convert2grayscale.cpp:177
+#: transform/imageflip.cpp:87 transform/imagerotate.cpp:88
+#: transform/jpegtransform.cpp:238 transform/jpegtransform.cpp:340
+msgid "Error in opening input file"
+msgstr "កំហុស​ក្នុង​កា​របើក​ឯកសារ​បញ្ចូល"
+
+#: transform/convert2grayscale.cpp:102 transform/imageflip.cpp:93
+#: transform/imagerotate.cpp:96
+msgid "Error in opening temporary file"
+msgstr "កំហុស​ក្នុង​បើក​ឯកសារ​បណ្ដោះ​អាសន្ន"
+
+#: transform/convert2grayscale.cpp:115
+msgid "Cannot convert to gray scale RAW file"
+msgstr "មិន​អាច​បម្លែង​ទៅ​​មាត្រដ្ឋាន​នៃ​​ឯកសារ​ដើម"
+
+#: transform/convert2grayscale.cpp:139 transform/imageflip.cpp:130
+#: transform/imagerotate.cpp:136
+msgid "Cannot update source image"
+msgstr "មិន​អាច​ធ្វើ​​បច្ចុប្បន្នភាព​​រូបភាព​ធនធាន​​បាន​ទេ"
+
+#: transform/convert2grayscale.cpp:185 transform/jpegtransform.cpp:256
+#: transform/jpegtransform.cpp:349
+msgid "Error in opening output file"
+msgstr "កំហុស​ក្នុង​កា​របើក​ឯកសារ​លទ្ធផល"
+
+#: transform/convert2grayscale.cpp:285
+#, kde-format
+msgid "Cannot convert to gray scale: %1"
+msgstr "មិន​អាច​បម្លែង​ទៅ​មាត្រដ្ឋាន​ប្រផេះ ៖ %1"
+
+#: transform/imageflip.cpp:106 transform/imagerotate.cpp:109
+msgid "Cannot rotate RAW file"
+msgstr "មិន​អាច​បង្វិល​ឯកសារ​ដើម"
+
+#: transform/imageflip.cpp:157 transform/imageflip.cpp:186
+msgid "Nonstandard flip action"
+msgstr "សកម្មភាព​ត្រឡប់​គ្មាន​ស្តង់ដារ"
+
+#: transform/imageflip.cpp:219
+#, kde-format
+msgid "Cannot flip: %1"
+msgstr "មិនអាច​ត្រឡប់ ៖ %1"
+
+#: transform/imagerotate.cpp:173 transform/imagerotate.cpp:213
+msgid "Nonstandard rotation angle"
+msgstr "មុំ​បង្វិល​គ្មាន​ស្តង់ដារ"
+
+#: transform/imagerotate.cpp:246
+#, kde-format
+msgid "Cannot rotate: %1"
+msgstr "មិន​អាច​បង្វិល ៖ %1"
+
+#: transform/jpegtransform.cpp:266 transform/jpegtransform.cpp:275
+#, kde-format
+msgid "The JPEG library reported an error: %1"
+msgstr "បណ្ណាល័យ​ JPEG ​បាន​រាយ​ការណ៍​ថា​មាន​កំហុស​ ៖ %1"

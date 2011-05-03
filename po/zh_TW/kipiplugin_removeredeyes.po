@@ -1,0 +1,377 @@
+# Dongjun Wu <ziyawu@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_removeredeyes\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2009-12-12 12:39+0800\n"
+"Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "斑點額外設定值"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "最小斑點大小(&B)："
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "最小圓度(&R)："
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "分類器設定值"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "使用標準分類器(&S)"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr "如果勾選，標準分類器會裝運隨著 KIPI 外掛程式同時使用。"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "在這裡輸入分類器的位置。"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "鄰近群組(&N)："
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "縮放係數(&S)："
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "進階模式(&A)"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "簡單模式(&S)"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>較慢<br/>(低解析度 / 輕微模糊影像)</b></p><p>使用這個模式會自動偵測並以"
+"最可靠的方式修正紅眼。較高偵測率的缺點是計算過程會慢很多。</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>標準</b></p><p>這種模式對大部分的影像解析度來說已經足夠。一般都會先試試"
+"這種模式。</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>較快<br/>(高解析度影像)</b></p><p>使用這個模式自動偵測會比較快，但可能"
+"發生更多誤判。只有高解析度和銳利的影像才使用這種模式。</p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "移除紅眼(&R)..."
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "自動移除紅眼"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "移除紅眼"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr "自動偵測和移除紅眼效果的外掛程式。"
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "(c) 2008-2009, Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "作者和維護者"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "手冊"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "修正照片(&P)"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "開始修正清單中的影像"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "測試執行(&T)"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr "模擬修正處理程序，不儲存結果。"
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "總數："
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "成功："
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "失敗："
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "檔案清單"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "設定值"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p>您選擇<b>「覆寫」修正模式</b>。<br/>您確定要失去您的原始影像檔？</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "覆寫模式"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>某些影像不能用目前的設定值來分析，或者根本沒有紅眼。</p><p><b>您是否要從清"
+"單中移除這些影像？</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "移除未處理的影像？"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p>您試著加入 <b>RAW 影像</b>到此外掛程式，<br/>但是不支援那些檔案類型。</"
+"p><p><b>那些影像會自動從清單中移除。</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "找到 RAW 影像"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>%1 張影像已處理成功。</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>修正完成</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "修正完成"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr "<h2>沒有載入定位器。<br/>此外掛程式不是可執行檔。</h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "修正的眼睛"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "這是要移除紅眼的影像清單。"
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>這個元件會顯示目前選擇影像的修正預覽。</p><p><ul><li>移動滑鼠到預覽的<b>上"
+"方</b>會顯示原始影像。</li><li>滑鼠移動<b>離開</b>預覽會顯示修正後的影像。</"
+"li><li><b>點擊</b>預覽會顯示修正遮罩。</li></ul></p><p>縮放按鈕和瀏覽元件可讓"
+"您更靠近地檢視影像的某些部位。</p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>正在生成預覽...</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>無法開啟預覽影像<br/>「%1」</p>。"
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "載入預覽檔案時發生錯誤"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "原始影像"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "修正的影像"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "修正遮罩"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "沒有選擇影像"
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "儲存設定值"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>這些設定值控制修正後的影像儲存位置。有三種模式可供選擇。</p><p><ul><li><b>"
+"子資料夾：</b>修正後的影像會儲存在目前相簿路徑下的子資料夾中。</li><li><b>字"
+"首：</b>自訂的字首 (prefix) 會加入到修正後的影像。</li><li><b>字根：</b>自訂"
+"的字根 (suffix) 會加入到修正後的影像。</li><li><b>覆寫：</b>取代全部的原始影"
+"像。</li></ul></p><p>每一種模式都允許您加入選擇性關鍵字到影像的中繼資料。</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "儲存在子資料夾"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "加入 Prefix"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "加入 Suffix"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "覆寫"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr "輸入修正後影像使用的子資料夾名稱、字首 (prefix)、字根 (suffix)。"
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "加入中繼資料關鍵字(&M)"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr "如果勾選，自訂關鍵字會套用到影像中繼資料。"
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "在這裡輸入自訂關鍵字的名稱..."
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "未處理影像的管理"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>這些設定值控制執行測試模式時未處理影像的管理方式。為了加快最終修正，未處理"
+"的影像可以從清單中移除，所以就不會再次分析這些影像。有三種模式可供選擇：</"
+"p><p><ul><li><b>詢問使用者：</b> 彈出視窗詢問下一步動作。</li><li><b>保留在檔"
+"案清單中：</b> 未處理的影像會保留在檔案清單裡。</li><li><b>從檔案清單中移除："
+"</b>測試執行後會從檔案清單中移除所有未處理的影像。</li></ul></p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "詢問使用者(&A)"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr "如果勾選，使用者會被詢問要保留或移除未處理的影像。"
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "保留在檔案清單中(&K)"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr "如果勾選，測試執行後未處理的影像會保留在檔案清單裡。"
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "從檔案清單中移除(&R)"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr "如果勾選，測試執行後未處理的影像會從檔案清單中移除。"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frank Weng (a.k.a. Franklin)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin at goodhorse dot idv dot tw"

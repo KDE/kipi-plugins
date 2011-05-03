@@ -1,0 +1,239 @@
+# translation of kipiplugin_rawconverter.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008, 2010.
+# Auk Piseth <piseth_dv@khmeros.info>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rawconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2010-06-23 15:23+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"\n"
+
+#: dialogs/batchdialog.cpp:148 dialogs/singledialog.cpp:203
+msgid "Exit RAW Converter"
+msgstr "ចេញ​ពី​កម្មវិធី​បម្លែង​ដើម"
+
+#: dialogs/batchdialog.cpp:149
+msgid "RAW Image Batch Converter"
+msgstr "កម្ម​វិធី​បម្លែង​ក្រុម​រូបភាព​ដើម"
+
+#: dialogs/batchdialog.cpp:152
+msgid "&Add"
+msgstr "បន្ថែម"
+
+#: dialogs/batchdialog.cpp:153
+msgid "Add new RAW files to the list"
+msgstr "បន្ថែម​ឯកសារ​ដើម​ថ្មី​​ទៅ​បញ្ជី"
+
+#: dialogs/batchdialog.cpp:155
+msgid "&Remove"
+msgstr "យក​ចេញ​"
+
+#: dialogs/batchdialog.cpp:156
+msgid "Remove selected RAW files from the list"
+msgstr "យក​ឯកសារ​ដើម​ដែល​បាន​ជ្រើស​ចេញ​ពី​បញ្ជី"
+
+#: dialogs/batchdialog.cpp:175
+msgid "Thumbnail"
+msgstr "រូបភាព​តូចៗ"
+
+#: dialogs/batchdialog.cpp:176
+msgid "RAW File"
+msgstr "ឯកសារ​ដើម"
+
+#: dialogs/batchdialog.cpp:177
+msgid "Target File"
+msgstr "ឯកសារ​គោលដៅ"
+
+#: dialogs/batchdialog.cpp:178
+msgid "Camera"
+msgstr "ម៉ាស៊ីន​ថត​រូប"
+
+#: dialogs/batchdialog.cpp:195 dialogs/batchdialog.cpp:199
+#: dialogs/singledialog.cpp:148 dialogs/singledialog.cpp:151
+msgid "Save settings"
+msgstr "រក្សា​ទុក​ការ​កំណត់"
+
+#: dialogs/batchdialog.cpp:220 dialogs/singledialog.cpp:130
+#: dialogs/singledialog.cpp:166
+msgid "RAW Image Converter"
+msgstr "កម្មវិធី​បម្លែង​រូបភាព​ដើម"
+
+#: dialogs/batchdialog.cpp:223
+msgid "A Kipi plugin to batch convert RAW images"
+msgstr "កម្មវិធី​ជំនួយ​ Kipi ​សម្រាប់​បម្លែង​រូបភាព​ដើម​ជា​ក្រុម​"
+
+#: dialogs/batchdialog.cpp:224 dialogs/singledialog.cpp:170
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2010, Gilles Caulier"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+msgstr ""
+"រក្សា​សិទ្ធិ​ ២០០៣-២០០៥ ដោយ​ Renchi Raju\n"
+" រក្សា​សិទ្ធិ​ឆ្នាំ​ ២០០៦-២០១០ ដោយ​ Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:227 dialogs/singledialog.cpp:173
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/batchdialog.cpp:228 dialogs/singledialog.cpp:174
+msgid "Author"
+msgstr "អ្នក​និពន្ធ"
+
+#: dialogs/batchdialog.cpp:231 dialogs/singledialog.cpp:177
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:232 dialogs/singledialog.cpp:178
+msgid "Developer and maintainer"
+msgstr "អ្នក​អភិវឌ្ឍន៍ និង​អ្នក​ថែទាំ"
+
+#: dialogs/batchdialog.cpp:240 dialogs/singledialog.cpp:186
+msgid "Handbook"
+msgstr "សៀវ​ភៅ​ដៃ"
+
+#: dialogs/batchdialog.cpp:388
+msgid "There is no RAW file in the list to process."
+msgstr "មិន​មាន​ឯកសារ​ដើម​ត្រូវ​ដំណើរការ​នៅ​ក្នុង​បញ្ជីទេ ។"
+
+#: dialogs/batchdialog.cpp:579 dialogs/singledialog.cpp:129
+msgid "&Abort"
+msgstr "បោះបង់"
+
+#: dialogs/batchdialog.cpp:580 dialogs/singledialog.cpp:201
+msgid "Abort the current RAW file conversion"
+msgstr "បោះបង់​ការ​បម្លែង​ឯកសារ​ដើម​បច្ចុប្បន្ន"
+
+#: dialogs/batchdialog.cpp:585 dialogs/singledialog.cpp:128
+msgid "Con&vert"
+msgstr "បម្លែង"
+
+#: dialogs/batchdialog.cpp:586
+msgid "Start converting the RAW images using current settings."
+msgstr "ចាប់​ផ្តើម​ការ​បម្លែង​រូបភាព​ដើម​ ដោយ​ប្រើ​ការកំណត់​បច្ចុប្បន្ន ។"
+
+#: dialogs/batchdialog.cpp:636 dialogs/singledialog.cpp:437
+#, kde-format
+msgid "Save RAW image converted from '%1' as"
+msgstr "រក្សាទុក​រូបភាព​ដើម​ដែល​បាន​បម្លែង​ពី '%1' ជា"
+
+#: dialogs/batchdialog.cpp:665 dialogs/singledialog.cpp:464
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​រក្សាទុក​រូបភាព %1"
+
+#: dialogs/singledialog.cpp:127
+msgid "&Preview"
+msgstr "មើល​ជា​មុន"
+
+#: dialogs/singledialog.cpp:169
+msgid "A Kipi plugin to convert RAW images"
+msgstr "កម្មវិធី​ជំនួយ Kipi ដើម្បី​បម្លែង​រូបភាព​ដើម"
+
+#: dialogs/singledialog.cpp:194
+msgid ""
+"Generate a preview using current settings. Uses a simple bilinear "
+"interpolation for quick results."
+msgstr ""
+"បង្កើត​ការ​មើល​ជា​មុន​ដោយ​ប្រើ​​ការ​កំណត់​បច្ចុប្បន្ន ។ ប្រើការ​កែខៃ​លីនេអ៊ែរ​ទ្វេរ​​ធម្មតា​ដើម្បី​ឲ្យ​បាន​ល​ទ្ធផល​"
+"លឿន ។"
+
+#: dialogs/singledialog.cpp:198
+msgid ""
+"Convert the RAW Image using current settings. This uses a high-quality "
+"adaptive algorithm."
+msgstr ""
+"បម្លែង​រូបភាព​ដើម​ដោយ​ប្រើ​ការ​កំណត់​បច្ចុប្បន្ន ។ វា​ប្រើ​ក្បួន​ដោះ​ស្រាយ​គុណភាព​ខ្ពស់​ដែល​អាច​ផ្លាស់ប្ដូរ​បាន ។"
+
+#: dialogs/singledialog.cpp:387
+msgid "Generating Preview..."
+msgstr "កំពុង​បង្កើត​កា​រមើលជា​មុន..."
+
+#: dialogs/singledialog.cpp:398
+msgid "Failed to generate preview"
+msgstr "បាន​បរាជ័យ​ក្នុងកា​របង្កើត​កា​រមើលជា​មុន"
+
+#: dialogs/singledialog.cpp:403
+msgid "Processing Images..."
+msgstr "កំពុង​ដំណើរ​ការ​រូបភាព​..."
+
+#: dialogs/singledialog.cpp:480
+msgid "Failed to convert RAW image"
+msgstr "បាន​បរាជ័យ​ក្នុង​កា​របម្លែង​រូបភាព​ដើម"
+
+#: manager/actionthread.cpp:234
+msgid "Cannot identify RAW image"
+msgstr "មិន​អាច​បញ្ជាក់​រូបភាព​ដើម​បាន​ទេ"
+
+#: manager/actionthread.cpp:241
+#, kde-format
+msgid "<br>Make: %1<br>"
+msgstr "<br>ផលិត​ ៖ %1<br>"
+
+#: manager/actionthread.cpp:242
+#, kde-format
+msgid "Model: %1<br>"
+msgstr "ម៉ូដែល​ ៖ %1<br>"
+
+#: manager/actionthread.cpp:246
+#, kde-format
+msgid "Created: %1<br>"
+msgstr "បាន​បង្កើត​ ៖%1<br>"
+
+#: manager/actionthread.cpp:253
+#, kde-format
+msgid "Aperture: f/%1<br>"
+msgstr "លំហ​ ៖ f/%1<br>"
+
+#: manager/actionthread.cpp:258
+#, kde-format
+msgid "Focal: %1 mm<br>"
+msgstr "ចំណុច​រួម​ ៖ %1 ម.ម<br>"
+
+#: manager/actionthread.cpp:263
+#, kde-format
+msgid "Exposure: 1/%1 s<br>"
+msgstr "បង្ហាញ​ ៖ 1/%1 វិ.<br>"
+
+#: manager/actionthread.cpp:268
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "ប្រែ​ប្រួល​ ៖ %1 ​អាយ​អេស​អូ"
+
+#: plugin/plugin_rawconverter.cpp:81
+msgid "RAW Image Converter..."
+msgstr "កម្មវិធី​បម្លែង​​រូបភាព​ដើម​..."
+
+#: plugin/plugin_rawconverter.cpp:90
+msgid "Batch RAW Converter..."
+msgstr "កម្មវិធី​បម្លែង​រូបភាព​ដើម​ជា​ក្រុម..."
+
+#: plugin/plugin_rawconverter.cpp:154
+#, kde-format
+msgid "\"%1\" is not a RAW file."
+msgstr "\"%1\" មិន​មែន​ជា​ឯកសារ​ដើម ។"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info, \n"
+"evannak@khmeros.info,piseth_dv@khmeros.info"

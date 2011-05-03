@@ -1,0 +1,263 @@
+# Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2009.
+# Dongjun Wu <ziyawu@gmail.com>, 2009.
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rawconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2011-03-18 08:07+0800\n"
+"Last-Translator: Franklin Weng <franklin@goodhorse.idv.tw>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: dialogs/batchdialog.cpp:148 dialogs/singledialog.cpp:203
+msgid "Exit RAW Converter"
+msgstr "離開 RAW 轉換程式"
+
+#: dialogs/batchdialog.cpp:149
+msgid "RAW Image Batch Converter"
+msgstr "RAW 影像批次轉換程式"
+
+#: dialogs/batchdialog.cpp:152
+msgid "&Add"
+msgstr "加入(&A)"
+
+#: dialogs/batchdialog.cpp:153
+msgid "Add new RAW files to the list"
+msgstr "加入新的 RAW 檔到清單"
+
+#: dialogs/batchdialog.cpp:155
+msgid "&Remove"
+msgstr "移除(&R)"
+
+#: dialogs/batchdialog.cpp:156
+msgid "Remove selected RAW files from the list"
+msgstr "從清單中移除選擇的 RAW 檔"
+
+#: dialogs/batchdialog.cpp:175
+msgid "Thumbnail"
+msgstr "縮圖"
+
+#: dialogs/batchdialog.cpp:176
+msgid "RAW File"
+msgstr "RAW 檔"
+
+#: dialogs/batchdialog.cpp:177
+msgid "Target File"
+msgstr "目標檔案"
+
+#: dialogs/batchdialog.cpp:178
+msgid "Camera"
+msgstr "相機"
+
+#: dialogs/batchdialog.cpp:195 dialogs/batchdialog.cpp:199
+#: dialogs/singledialog.cpp:148 dialogs/singledialog.cpp:151
+msgid "Save settings"
+msgstr "儲存設定值"
+
+#: dialogs/batchdialog.cpp:220 dialogs/singledialog.cpp:130
+#: dialogs/singledialog.cpp:166
+msgid "RAW Image Converter"
+msgstr "RAW 影像轉換程式"
+
+#: dialogs/batchdialog.cpp:223
+msgid "A Kipi plugin to batch convert RAW images"
+msgstr "批次轉換 RAW 影像的 Kipi 外掛程式"
+
+#: dialogs/batchdialog.cpp:224 dialogs/singledialog.cpp:170
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:227 dialogs/singledialog.cpp:173
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/batchdialog.cpp:228 dialogs/singledialog.cpp:174
+msgid "Author"
+msgstr "作者"
+
+#: dialogs/batchdialog.cpp:231 dialogs/singledialog.cpp:177
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:232 dialogs/singledialog.cpp:178
+msgid "Developer and maintainer"
+msgstr "開發者和維護者"
+
+#: dialogs/batchdialog.cpp:240 dialogs/singledialog.cpp:186
+msgid "Handbook"
+msgstr "手冊"
+
+#: dialogs/batchdialog.cpp:388
+msgid "There is no RAW file in the list to process."
+msgstr "清單中沒有要處理的 RAW 檔。"
+
+#: dialogs/batchdialog.cpp:579 dialogs/singledialog.cpp:129
+msgid "&Abort"
+msgstr "中止(&A)"
+
+#: dialogs/batchdialog.cpp:580 dialogs/singledialog.cpp:201
+msgid "Abort the current RAW file conversion"
+msgstr "中止目前 RAW 檔轉換"
+
+#: dialogs/batchdialog.cpp:585 dialogs/singledialog.cpp:128
+msgid "Con&vert"
+msgstr "轉換($V)"
+
+#: dialogs/batchdialog.cpp:586
+msgid "Start converting the RAW images using current settings."
+msgstr "使用目前設定值開始轉換 RAW 影像。"
+
+#: dialogs/batchdialog.cpp:636 dialogs/singledialog.cpp:437
+#, kde-format
+msgid "Save RAW image converted from '%1' as"
+msgstr "另存從「%1」轉換成的 RAW 影像"
+
+#: dialogs/batchdialog.cpp:665 dialogs/singledialog.cpp:464
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "儲存影像 %1 失敗"
+
+#: dialogs/singledialog.cpp:127
+msgid "&Preview"
+msgstr "預覽(&P)"
+
+#: dialogs/singledialog.cpp:169
+msgid "A Kipi plugin to convert RAW images"
+msgstr "轉換 RAW 影像的 Kipi 外掛程式"
+
+#: dialogs/singledialog.cpp:194
+msgid ""
+"Generate a preview using current settings. Uses a simple bilinear "
+"interpolation for quick results."
+msgstr "使用目前的設定值生成預覽。使用簡單的雙線性內插法快速產生預覽。"
+
+#: dialogs/singledialog.cpp:198
+msgid ""
+"Convert the RAW Image using current settings. This uses a high-quality "
+"adaptive algorithm."
+msgstr "使用目前設定值轉換 RAW 影像。這會使用高品質的可調整性演算法。"
+
+#: dialogs/singledialog.cpp:387
+msgid "Generating Preview..."
+msgstr "正在生成預覽..."
+
+#: dialogs/singledialog.cpp:398
+msgid "Failed to generate preview"
+msgstr "生成預覽失敗"
+
+#: dialogs/singledialog.cpp:403
+msgid "Processing Images..."
+msgstr "正在處理影像..."
+
+#: dialogs/singledialog.cpp:480
+msgid "Failed to convert RAW image"
+msgstr "轉換 RAW 影像失敗"
+
+#: manager/actionthread.cpp:234
+msgid "Cannot identify RAW image"
+msgstr "無法辨識 RAW 影像"
+
+#: manager/actionthread.cpp:241
+#, kde-format
+msgid "<br>Make: %1<br>"
+msgstr "<br>製造商：%1<br>"
+
+#: manager/actionthread.cpp:242
+#, kde-format
+msgid "Model: %1<br>"
+msgstr "型號：%1<br>"
+
+#: manager/actionthread.cpp:246
+#, kde-format
+msgid "Created: %1<br>"
+msgstr "建立時間：%1<br>"
+
+#: manager/actionthread.cpp:253
+#, kde-format
+msgid "Aperture: f/%1<br>"
+msgstr "光圈：f/%1<br>"
+
+#: manager/actionthread.cpp:258
+#, kde-format
+msgid "Focal: %1 mm<br>"
+msgstr "焦距：%1 mm<br>"
+
+#: manager/actionthread.cpp:263
+#, kde-format
+msgid "Exposure: 1/%1 s<br>"
+msgstr "曝光：1/%1 s<br>"
+
+#: manager/actionthread.cpp:268
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "靈敏度：%1 ISO"
+
+#: plugin/plugin_rawconverter.cpp:81
+msgid "RAW Image Converter..."
+msgstr "RAW 影像轉換程式..."
+
+#: plugin/plugin_rawconverter.cpp:90
+msgid "Batch RAW Converter..."
+msgstr "批次 RAW 影像轉換程式..."
+
+#: plugin/plugin_rawconverter.cpp:154
+#, kde-format
+msgid "\"%1\" is not a RAW file."
+msgstr "「%1」不是 RAW 檔案。"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frank Weng (a.k.a. Franklin)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin at goodhorse dot idv dot tw"
+
+#~ msgid "Failed to load image after processing"
+#~ msgstr "處理後載入影像失敗"
+
+#~ msgid "Output file format:"
+#~ msgstr "輸出檔案格式："
+
+#~ msgid ""
+#~ "<p>Set the output file format to use here:</p><p><b>JPEG</b>: output the "
+#~ "processed image in JPEG format. This format will give smaller-sized "
+#~ "files. Minimum JPEG compression level will be used during RAW conversion."
+#~ "</p><p><b>Warning: Due to the destructive compression algorithm, JPEG is "
+#~ "a lossy quality format.</b></p><p><b>TIFF</b>: output the processed image "
+#~ "in TIFF format. This generates large files, without losing quality. Adobe "
+#~ "Deflate compression will be used during conversion.</p><p><b>PPM</b>: "
+#~ "output the processed image in PPM format. This generates the largest "
+#~ "files, without losing quality.</p><p><b>PNG</b>: output the processed "
+#~ "image in PNG format. This generates large files, without losing quality. "
+#~ "Maximum PNG compression will be used during conversion.</p>"
+#~ msgstr ""
+#~ "<p>在這裡選擇要使用的輸出檔案格式：</p><p><b>JPEG</b>：用 JPEG 格式輸出處"
+#~ "理的影像。這種格式會得到體積較小的檔案。在 RAW 轉換期間會使用最小 JPEG 壓"
+#~ "縮等級</p><p><b>警告：由於破壞型壓縮算法，JPEG 是一種有損品質的格式。</"
+#~ "b></p><p><b>TIFF</b>：用 TIFF 格式輸出處理的影像。這種格式會生成體積較大的"
+#~ "檔案，但不會損失品質。轉換期間會使用 Adobe Deflate 壓縮</p><p><b>PPM</b>："
+#~ "用 PPM 格式輸出處理的影像。這種格式會生成體積較大的檔案，但不會損失品質。"
+#~ "</p><p><b>PNG</b>用 PNG 格式輸出處理的影像。這種格式會生成體積較大的檔案，"
+#~ "但不會損失品質。轉換期間會使用最大 PNG 壓縮比。</p>"
+
+#~ msgid "If Target File Exists:"
+#~ msgstr "如果目標檔案已存在："
+
+#~ msgid "Overwrite automatically"
+#~ msgstr "自動覆寫"
+
+#~ msgid "Open rename-file dialog"
+#~ msgstr "開啟重新命檔案對話框"

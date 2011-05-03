@@ -1,0 +1,5108 @@
+# Irish translation of kipiplugin_metadataedit
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kipiplugin_metadataedit package.
+# Kevin Scannell <kscanne@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-libs/kipiplugin_metadataedit.po\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-12 03:49+0200\n"
+"PO-Revision-Date: 2007-10-09 08:23-0500\n"
+"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
+"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
+"3 : 4\n"
+
+#: exif/exifadjust.cpp:98
+msgid "Brightness (APEX):"
+msgstr "Gile (APEX):"
+
+#: exif/exifadjust.cpp:103
+msgid ""
+"Set here the brightness adjustment value in APEX unit used by camera to take "
+"the picture."
+msgstr ""
+"Anseo, socraigh luach coigeartaithe na gile in aonaid APEX a d'úsáid an "
+"ceamara nuair a glacadh an pictiúr."
+
+#: exif/exifadjust.cpp:108
+msgid "Gain Control:"
+msgstr "Rialú Neartúcháin:"
+
+#: exif/exifadjust.cpp:110
+#, fuzzy
+#| msgid "None"
+msgctxt "gain control"
+msgid "None"
+msgstr "Neamhní"
+
+#: exif/exifadjust.cpp:111
+msgctxt "gain control"
+msgid "Low gain up"
+msgstr ""
+
+#: exif/exifadjust.cpp:112
+msgctxt "gain control"
+msgid "High gain up"
+msgstr ""
+
+#: exif/exifadjust.cpp:113
+msgctxt "gain control"
+msgid "Low gain down"
+msgstr ""
+
+#: exif/exifadjust.cpp:114
+msgctxt "gain control"
+msgid "High gain down"
+msgstr ""
+
+#: exif/exifadjust.cpp:115
+#, fuzzy
+#| msgid ""
+#| "Set here the lens focal length in millimeters used by camera to take the "
+#| "picture."
+msgid ""
+"Set here the degree of overall image gain adjustment used by camera to take "
+"the picture."
+msgstr ""
+"Socraigh anseo fad fócais an liosta a d'úsáid an ceamara chun an grianghraf "
+"a thógáil, i milliméadair."
+
+#: exif/exifadjust.cpp:120
+msgid "Contrast:"
+msgstr "Codarsnacht:"
+
+#: exif/exifadjust.cpp:122
+#, fuzzy
+#| msgid "Normal"
+msgctxt "contrast mode"
+msgid "Normal"
+msgstr "Gnách"
+
+#: exif/exifadjust.cpp:123
+#, fuzzy
+#| msgid "Soft"
+msgctxt "contrast mode"
+msgid "Soft"
+msgstr "Bog"
+
+#: exif/exifadjust.cpp:124
+#, fuzzy
+#| msgid "Hard"
+msgctxt "contrast mode"
+msgid "Hard"
+msgstr "Crua"
+
+#: exif/exifadjust.cpp:125
+#, fuzzy
+#| msgid ""
+#| "Select here the type of scene used by the camera to take the picture."
+msgid ""
+"Set here the direction of contrast processing applied by the camera to take "
+"the picture."
+msgstr ""
+"Roghnaigh anseo cineál an radhairc a d'úsáid an ceamara chun an grianghraf a "
+"thógáil."
+
+#: exif/exifadjust.cpp:130
+msgid "Saturation:"
+msgstr "Sáithiú:"
+
+#: exif/exifadjust.cpp:132
+#, fuzzy
+#| msgid "Normal"
+msgctxt "saturation mode"
+msgid "Normal"
+msgstr "Gnách"
+
+#: exif/exifadjust.cpp:133
+#, fuzzy
+#| msgid "Low"
+msgctxt "saturation mode"
+msgid "Low"
+msgstr "Íseal"
+
+#: exif/exifadjust.cpp:134
+#, fuzzy
+#| msgid "High"
+msgctxt "saturation mode"
+msgid "High"
+msgstr "Ard"
+
+#: exif/exifadjust.cpp:135
+#, fuzzy
+#| msgid ""
+#| "Select here the type of scene used by the camera to take the picture."
+msgid ""
+"Set here the direction of saturation processing applied by the camera to "
+"take the picture."
+msgstr ""
+"Roghnaigh anseo cineál an radhairc a d'úsáid an ceamara chun an grianghraf a "
+"thógáil."
+
+#: exif/exifadjust.cpp:140
+msgid "Sharpness:"
+msgstr "Géire:"
+
+#: exif/exifadjust.cpp:142
+#, fuzzy
+#| msgid "Normal"
+msgctxt "sharpness mode"
+msgid "Normal"
+msgstr "Gnách"
+
+#: exif/exifadjust.cpp:143
+#, fuzzy
+#| msgid "Soft"
+msgctxt "sharpness mode"
+msgid "Soft"
+msgstr "Bog"
+
+#: exif/exifadjust.cpp:144
+#, fuzzy
+#| msgid "Hard"
+msgctxt "sharpness mode"
+msgid "Hard"
+msgstr "Crua"
+
+#: exif/exifadjust.cpp:145
+#, fuzzy
+#| msgid ""
+#| "Select here the type of scene used by the camera to take the picture."
+msgid ""
+"Set here the direction of sharpness processing applied by the camera to take "
+"the picture."
+msgstr ""
+"Roghnaigh anseo cineál an radhairc a d'úsáid an ceamara chun an grianghraf a "
+"thógáil."
+
+#: exif/exifadjust.cpp:150
+#, fuzzy
+#| msgid "Custom process"
+msgid "Custom rendered:"
+msgstr "Próiseas saincheaptha"
+
+#: exif/exifadjust.cpp:152
+msgid "Normal process"
+msgstr "Gnáthphróiseas"
+
+#: exif/exifadjust.cpp:153
+msgid "Custom process"
+msgstr "Próiseas saincheaptha"
+
+#: exif/exifadjust.cpp:154
+msgid ""
+"Set here the use of special processing on image data, such as rendering "
+"geared to output."
+msgstr ""
+
+#: exif/exifcaption.cpp:107
+#, fuzzy
+#| msgid "Name (*):"
+msgctxt "name of the document this image has been scanned from"
+msgid "Name (*):"
+msgstr "Ainm (*):"
+
+#: exif/exifcaption.cpp:111
+#, fuzzy
+#| msgid ""
+#| "Enter the copyright owner of the image. This field is limited to ASCII "
+#| "characters."
+msgid ""
+"Enter the name of the document from which this image was been scanned. This "
+"field is limited to ASCII characters."
+msgstr ""
+"Iontráil úinéir chóipcheart na híomhá. Ní cheadaítear ach carachtair ASCII "
+"sa réimse seo."
+
+#: exif/exifcaption.cpp:117
+#, fuzzy
+#| msgid "Title (*):"
+msgctxt "image title"
+msgid "Title (*):"
+msgstr "Teideal (*):"
+
+#: exif/exifcaption.cpp:121
+msgid "Enter the image title. This field is limited to ASCII characters."
+msgstr ""
+"Iontráil teideal na híomhá. Ní cheadaítear ach carachtair ASCII sa réimse "
+"seo."
+
+#: exif/exifcaption.cpp:126
+msgid "Artist (*):"
+msgstr "Ealaíontóir (*):"
+
+#: exif/exifcaption.cpp:130
+msgid ""
+"Enter the image author's name. This field is limited to ASCII characters."
+msgstr ""
+"Iontráil ainm údar na híomhá. Ní cheadaítear ach carachtair ASCII sa réimse "
+"seo."
+
+#: exif/exifcaption.cpp:135
+msgid "Copyright (*):"
+msgstr "Cóipcheart (*):"
+
+#: exif/exifcaption.cpp:139
+msgid ""
+"Enter the copyright owner of the image. This field is limited to ASCII "
+"characters."
+msgstr ""
+"Iontráil úinéir chóipcheart na híomhá. Ní cheadaítear ach carachtair ASCII "
+"sa réimse seo."
+
+#: exif/exifcaption.cpp:144
+#, fuzzy
+#| msgid "Caption:"
+msgctxt "image cpation"
+msgid "Caption:"
+msgstr "Fotheideal:"
+
+#: exif/exifcaption.cpp:146
+msgid ""
+"Enter the image's caption. This field is not limited. UTF8 encoding will be "
+"used to save the text."
+msgstr ""
+"Iontráil fotheideal na híomhá. Níl aon srian ar an réimse seo. Sábhálfar an "
+"téacs in ionchódú UTF-8."
+
+#: exif/exifcaption.cpp:150
+#, kde-format
+msgid "Sync captions entered through %1"
+msgstr "Sioncrónaigh fotheidil a iontráladh trí %1"
+
+#: exif/exifcaption.cpp:153 iptc/iptccontent.cpp:109 xmp/xmpcontent.cpp:105
+msgid "Sync JFIF Comment section"
+msgstr "Sioncrónaigh Nóta JFIF"
+
+#: exif/exifcaption.cpp:154
+msgid "Sync XMP caption"
+msgstr "Sioncrónaigh fotheideal XMP"
+
+#: exif/exifcaption.cpp:155
+#, fuzzy
+#| msgid ""
+#| "Sync IPTC caption (warning: limited to 2000 printable Ascii characters "
+#| "set)"
+msgid "Sync IPTC caption (warning: limited to 2000 printable Ascii characters)"
+msgstr ""
+"Sioncrónaigh fotheideal IPTC (rabhadh: ní cheadaítear níos mó ná 2000 "
+"carachtar inphriontáilte ASCII)"
+
+#: exif/exifcaption.cpp:163 exif/exifdevice.cpp:316
+msgid ""
+"<b>Note: <b><a href='http://en.wikipedia.org/wiki/EXIF'>EXIF</a></b> text "
+"tags marked by (*) only support printable <b><a href='http://en.wikipedia."
+"org/wiki/Ascii'>ASCII</a></b> characters.</b>"
+msgstr ""
+
+#: exif/exifdatetime.cpp:111
+msgid "Creation date and time"
+msgstr "Dáta agus am a cruthaíodh an íomhá"
+
+#: exif/exifdatetime.cpp:112
+#, fuzzy
+#| msgid "Creation sub-second"
+msgid "Creation second"
+msgstr "Fo-shoicind a cruthaíodh an íomhá"
+
+#: exif/exifdatetime.cpp:115 iptc/iptcorigin.cpp:425 xmp/xmporigin.cpp:399
+#, kde-format
+msgid "Sync creation date hosted by %1"
+msgstr "Sioncrónaigh dáta cruthaithe óstáilte ag %1"
+
+#: exif/exifdatetime.cpp:118
+msgid "Sync XMP creation date"
+msgstr "Sioncrónaigh dáta cruthaithe XMP"
+
+#: exif/exifdatetime.cpp:119
+msgid "Sync IPTC creation date"
+msgstr "Sioncrónaigh dáta cruthaithe IPTC"
+
+#: exif/exifdatetime.cpp:123 iptc/iptcorigin.cpp:432 xmp/xmporigin.cpp:406
+msgid "Set creation date to today"
+msgstr "Socraigh dáta cruthaithe mar inniu"
+
+#: exif/exifdatetime.cpp:128
+msgid ""
+"Set here the date and time of image creation. In this standard it is the "
+"date and time the file was changed."
+msgstr ""
+"Socraigh dáta agus am a cruthaíodh an íomhá anseo. De réir an chaighdeáin "
+"seo, seo é an dáta agus an t-am a athraíodh an comhad."
+
+#: exif/exifdatetime.cpp:130
+#, fuzzy
+#| msgid "Set here the title of content creator."
+msgid ""
+"Set here the fractions of seconds for the date and time of image creation."
+msgstr "Socraigh anseo ainm chruthaitheoir an ábhair."
+
+#: exif/exifdatetime.cpp:137
+msgid "Original date and time"
+msgstr "Dáta agus am bunúsach"
+
+#: exif/exifdatetime.cpp:138
+#, fuzzy
+#| msgid "Original sub-second"
+msgid "Original second"
+msgstr "Fo-shoicind bunúsach"
+
+#: exif/exifdatetime.cpp:144
+msgid "Set original date to today"
+msgstr "Socraigh dáta bunúsach mar inniu"
+
+#: exif/exifdatetime.cpp:146
+msgid ""
+"Set here the date and time when the original image data was generated. For a "
+"digital still camera the date and time the picture was taken are recorded."
+msgstr ""
+"Anseo, socraigh an dáta agus an t-am a cruthaíodh bunsonraí na híomhá. Le "
+"ceamara digiteach, déanfar taifead ar dháta agus am a glacadh an pictiúr."
+
+#: exif/exifdatetime.cpp:149
+msgid ""
+"Set here the fractions of seconds for the date and time when the original "
+"image data was generated."
+msgstr ""
+
+#: exif/exifdatetime.cpp:156
+msgid "Digitization date and time"
+msgstr "Dáta agus am a digitíodh an íomhá"
+
+#: exif/exifdatetime.cpp:157
+#, fuzzy
+#| msgid "Digitization sub-second"
+msgid "Digitization second"
+msgstr "Fo-shoicind a digitíodh an íomhá"
+
+#: exif/exifdatetime.cpp:163 iptc/iptcorigin.cpp:410 xmp/xmporigin.cpp:388
+msgid "Set digitization date to today"
+msgstr "Socraigh dáta a digitíodh mar inniu"
+
+#: exif/exifdatetime.cpp:165
+msgid ""
+"Set here the date and time when the image was stored as digital data. If, "
+"for example, an image was captured by a digital still camera and at the same "
+"time the file was recorded, then Original and Digitization date and time "
+"will have the same contents."
+msgstr ""
+
+#: exif/exifdatetime.cpp:170
+msgid ""
+"Set here the fractions of seconds for the date and time when the image was "
+"stored as digital data."
+msgstr ""
+
+#: exif/exifdevice.cpp:133
+msgid "Device manufacturer (*):"
+msgstr "Déantóir an ghléis (*):"
+
+#: exif/exifdevice.cpp:137
+msgid ""
+"Set here the manufacturer of image input equipment used to take the picture. "
+"This field is limited to ASCII characters."
+msgstr ""
+"Anseo, socraigh an déantóir a dhéanann an gléas ionchurtha íomhánna a "
+"úsáideadh chun an pictiúr a ghlacadh. Ní cheadaitear ach carachtair ASCII sa "
+"réimse seo."
+
+#: exif/exifdevice.cpp:142
+msgid "Device model (*):"
+msgstr "Samhail an ghléis (*):"
+
+#: exif/exifdevice.cpp:146
+msgid ""
+"Set here the model of image input equipment used to take the picture. This "
+"field is limited to ASCII characters."
+msgstr ""
+"Anseo, socraigh samhail an ghléis ionchurtha íomhánna a úsáideadh chun an "
+"pictiúr a ghlacadh. Ní cheadaitear ach carachtair ASCII sa réimse seo."
+
+#: exif/exifdevice.cpp:151
+msgid "Device type:"
+msgstr "Cineál an ghléis:"
+
+#: exif/exifdevice.cpp:153
+msgid "Film scanner"
+msgstr "Scanóir scannáin"
+
+#: exif/exifdevice.cpp:154
+msgid "Reflection print scanner"
+msgstr ""
+
+#: exif/exifdevice.cpp:155
+msgid "Digital still camera"
+msgstr "Ceamara digiteach"
+
+#: exif/exifdevice.cpp:156
+msgid "Select here the image input equipment type used to take the picture."
+msgstr ""
+"Anseo, roghnaigh cineál an ghléis ionchurtha íomhánna a úsáideadh chun an "
+"pictiúr a ghlacadh."
+
+#: exif/exifdevice.cpp:159
+msgid ""
+"<b>Warning: EXIF <b><a href='http://en.wikipedia.org/wiki/"
+"Exchangeable_image_file_format#MakerNote_data'>Makernotes</a></b> can be "
+"unreadable if you set wrong device manufacturer/model description.</b>"
+msgstr ""
+"<b>Rabhadh: Seans nach mbeidh na <b><a href='http://en.wikipedia.org/wiki/"
+"Exchangeable_image_file_format#MakerNote_data'>Makernotes</a></b> EXIF "
+"inléite má shocraíonn tú cur síos mícheart ar déantóir nó samhail an ghléis."
+"</b>"
+
+#: exif/exifdevice.cpp:171
+msgid "Exposure time (seconds):"
+msgstr "Am nochta (soicindí):"
+
+#: exif/exifdevice.cpp:176
+msgid ""
+"Set on this option to set the exposure time of picture, given in seconds."
+msgstr ""
+"Leis an rogha seo is féidir am nochta an phictiúir a shocrú, i soicindí."
+
+#: exif/exifdevice.cpp:181
+msgid "Exposure program:"
+msgstr "Clár nochta:"
+
+#: exif/exifdevice.cpp:183
+#, fuzzy
+#| msgid "Not defined"
+msgctxt "exposure program"
+msgid "Not defined"
+msgstr "Gan sainmhíniú"
+
+#: exif/exifdevice.cpp:184
+#, fuzzy
+#| msgid "Manual"
+msgctxt "exposure program"
+msgid "Manual"
+msgstr "De Láimh"
+
+#: exif/exifdevice.cpp:185
+#, fuzzy
+#| msgid "Auto"
+msgctxt "exposure program"
+msgid "Auto"
+msgstr "Uathoibríoch"
+
+#: exif/exifdevice.cpp:186
+#, fuzzy
+#| msgid "Aperture priority"
+msgctxt "exposure program"
+msgid "Aperture priority"
+msgstr "Tosaíocht an chró"
+
+#: exif/exifdevice.cpp:187
+#, fuzzy
+#| msgid "Shutter priority"
+msgctxt "exposure program"
+msgid "Shutter priority"
+msgstr "Tosaíocht an chomhla"
+
+#: exif/exifdevice.cpp:188
+#, fuzzy
+#| msgid "Creative program"
+msgctxt "exposure program"
+msgid "Creative program"
+msgstr "Clár cruthaitheach"
+
+#: exif/exifdevice.cpp:189
+#, fuzzy
+#| msgid "Action program"
+msgctxt "exposure program"
+msgid "Action program"
+msgstr "Clár gníomhaíochta"
+
+#: exif/exifdevice.cpp:190
+#, fuzzy
+#| msgid "Portrait mode"
+msgctxt "exposure program"
+msgid "Portrait mode"
+msgstr "Mód portráide"
+
+#: exif/exifdevice.cpp:191
+#, fuzzy
+#| msgid "Landscape mode"
+msgctxt "exposure program"
+msgid "Landscape mode"
+msgstr "Mód tírphictiúir"
+
+#: exif/exifdevice.cpp:192
+#, fuzzy
+#| msgid ""
+#| "Select here the program used by the camera to set exposure when the "
+#| "picture have been taken."
+msgid ""
+"Select here the program used by the camera to set exposure when the picture "
+"was taken."
+msgstr ""
+"Anseo, roghnaigh an clár nochta a d'úsáid an ceamara nuair a glacadh an "
+"pictiúr."
+
+#: exif/exifdevice.cpp:197
+msgid "Exposure mode:"
+msgstr "Mód nochta:"
+
+#: exif/exifdevice.cpp:199
+#, fuzzy
+#| msgid "Auto"
+msgctxt "exposure mode"
+msgid "Auto"
+msgstr "Uathoibríoch"
+
+#: exif/exifdevice.cpp:200
+#, fuzzy
+#| msgid "Manual"
+msgctxt "exposure mode"
+msgid "Manual"
+msgstr "De Láimh"
+
+#: exif/exifdevice.cpp:201
+msgctxt "exposure mode"
+msgid "Auto bracket"
+msgstr ""
+
+#: exif/exifdevice.cpp:202
+msgid ""
+"Select here the mode used by the camera to set exposure when the picture was "
+"taken. In auto-bracketing mode, the camera shoots a series of frames of the "
+"same scene at different exposure settings."
+msgstr ""
+
+#: exif/exifdevice.cpp:210
+msgid "Exposure bias (APEX):"
+msgstr "Laofacht nochta (APEX):"
+
+#: exif/exifdevice.cpp:215
+#, fuzzy
+#| msgid ""
+#| "Set here the exposure bias value in APEX unit used by camera to take the "
+#| "picture."
+msgid ""
+"Set here the exposure bias value (in APEX units) used by camera to take the "
+"picture."
+msgstr ""
+"Anseo, socraigh an laofacht nochta in aonaid APEX a d'úsáid an ceamara nuair "
+"a glacadh an pictiúr."
+
+#: exif/exifdevice.cpp:222
+msgid "Metering mode:"
+msgstr "Mód méadraithe:"
+
+#: exif/exifdevice.cpp:224
+#, fuzzy
+#| msgid "Unknown"
+msgctxt "metering mode"
+msgid "Unknown"
+msgstr "Anaithnid"
+
+#: exif/exifdevice.cpp:225
+#, fuzzy
+#| msgid "Average"
+msgctxt "metering mode"
+msgid "Average"
+msgstr "Meán"
+
+#: exif/exifdevice.cpp:226
+#, fuzzy
+#| msgid "Center weighted average"
+msgctxt "metering mode"
+msgid "Center weighted average"
+msgstr "Meán lánualaithe"
+
+#: exif/exifdevice.cpp:227
+#, fuzzy
+#| msgid "Spot"
+msgctxt "metering mode"
+msgid "Spot"
+msgstr "Spota"
+
+#: exif/exifdevice.cpp:228
+#, fuzzy
+#| msgid "Multi-spot"
+msgctxt "metering mode"
+msgid "Multi-spot"
+msgstr "Ilspota"
+
+#: exif/exifdevice.cpp:229
+#, fuzzy
+#| msgid "Multi-segment"
+msgctxt "metering mode"
+msgid "Multi-segment"
+msgstr "Il-deighleán"
+
+#: exif/exifdevice.cpp:230
+#, fuzzy
+#| msgid "Partial"
+msgctxt "metering mode"
+msgid "Partial"
+msgstr "Neamhiomlán"
+
+#: exif/exifdevice.cpp:231
+#, fuzzy
+#| msgid "Other"
+msgctxt "metering mode"
+msgid "Other"
+msgstr "Eile"
+
+#: exif/exifdevice.cpp:232
+#, fuzzy
+#| msgid ""
+#| "Select here the metering mode used by the camera to set exposure when the "
+#| "picture have been shot."
+msgid ""
+"Select here the metering mode used by the camera to set exposure when the "
+"picture was taken."
+msgstr ""
+"Anseo, roghnaigh an mód méadraithe a d'úsáid an ceamara chun an nochtadh a "
+"shocrú nuair a glacadh an pictiúr."
+
+#: exif/exifdevice.cpp:237
+msgid "Sensitivity (ISO):"
+msgstr "Íogaireacht (ISO):"
+
+#: exif/exifdevice.cpp:275
+#, fuzzy
+#| msgid ""
+#| "Select here the ISO Speed of the camera witch have taken the picture."
+msgid "Select here the ISO Speed of the camera which took the picture."
+msgstr "Roghnaigh anseo luas ISO an cheamara a thóg an grianghraf."
+
+#: exif/exifdevice.cpp:280
+msgid "Sensing method:"
+msgstr "Modh braiteachta:"
+
+#: exif/exifdevice.cpp:282
+msgid "Not defined"
+msgstr "Gan sainmhíniú"
+
+#: exif/exifdevice.cpp:283
+msgid "One-chip color area"
+msgstr "Limistéar datha slis-amháin"
+
+#: exif/exifdevice.cpp:284
+msgid "Two-chip color area"
+msgstr "Limistéar datha dhá-shlis"
+
+#: exif/exifdevice.cpp:285
+msgid "Three-chip color area"
+msgstr "Limistéar datha trí-shlis"
+
+#: exif/exifdevice.cpp:286
+msgid "Color sequential area"
+msgstr ""
+
+#: exif/exifdevice.cpp:287
+msgid "Trilinear sensor"
+msgstr "Braiteoir trílíneach"
+
+#: exif/exifdevice.cpp:288
+msgid "Color sequential linear"
+msgstr ""
+
+#: exif/exifdevice.cpp:289
+msgid ""
+"Select here the image sensor type used by the camera to take the picture."
+msgstr ""
+"Roghnaigh anseo cineál an bhraiteora íomhá a d'úsáid an ceamara chun an "
+"grianghraf a thógáil."
+
+#: exif/exifdevice.cpp:294
+msgid "Scene capture type:"
+msgstr "Cineál gabhála an radhairc:"
+
+#: exif/exifdevice.cpp:296
+msgid "Standard"
+msgstr "Caighdeánach"
+
+#: exif/exifdevice.cpp:297
+msgid "Landscape"
+msgstr "Tírdhreach"
+
+#: exif/exifdevice.cpp:298
+msgid "Portrait"
+msgstr "Portráid"
+
+#: exif/exifdevice.cpp:299 xmp/xmpproperties.cpp:98
+msgid "Night scene"
+msgstr "Radharc oíche"
+
+#: exif/exifdevice.cpp:300
+msgid "Select here the type of scene used by the camera to take the picture."
+msgstr ""
+"Roghnaigh anseo cineál an radhairc a d'úsáid an ceamara chun an grianghraf a "
+"thógáil."
+
+#: exif/exifdevice.cpp:305
+msgid "Subject distance type:"
+msgstr "Fad an chuspa:"
+
+#: exif/exifdevice.cpp:307
+msgid "Unknown"
+msgstr "Anaithnid"
+
+#: exif/exifdevice.cpp:308
+msgid "Macro"
+msgstr "Macra"
+
+#: exif/exifdevice.cpp:309
+msgid "Close view"
+msgstr "Gar-amharc"
+
+#: exif/exifdevice.cpp:310
+msgid "Distant view"
+msgstr "Amharc i gcéin"
+
+#: exif/exifdevice.cpp:311
+msgid ""
+"Select here the type of distance between the subject and the image input "
+"equipment."
+msgstr ""
+"Roghnaigh anseo an fad idir an gléas ionchurtha íomhánna agus an cuspa."
+
+#: exif/exiflens.cpp:156
+msgid "Focal length (mm):"
+msgstr "Fad fócasach (mm):"
+
+#: exif/exiflens.cpp:162
+msgid ""
+"Set here the lens focal length in millimeters used by camera to take the "
+"picture."
+msgstr ""
+"Socraigh anseo fad fócais an liosta a d'úsáid an ceamara chun an grianghraf "
+"a thógáil, i milliméadair."
+
+#: exif/exiflens.cpp:167
+msgid "Focal length in 35mm film (mm):"
+msgstr "Fad fócais i scannán 35mm (mm):"
+
+#: exif/exiflens.cpp:169
+msgid ""
+"Set here equivalent focal length assuming a 35mm film camera, in mm. A value "
+"of 0 means the focal length is unknown."
+msgstr ""
+
+#: exif/exiflens.cpp:175
+msgid "Digital zoom ratio:"
+msgstr "Cóimheas súmála digití:"
+
+#: exif/exiflens.cpp:181
+msgid "Set here the digital zoom ratio used by camera to take the picture."
+msgstr ""
+"Socraigh anseo an cóimheas súmála digití a d'úsáid an ceamara chun an "
+"grianghraf a thógáil."
+
+#: exif/exiflens.cpp:186
+msgid "Lens aperture (f-number):"
+msgstr "Cró an lionsa (f-uimhir):"
+
+#: exif/exiflens.cpp:189
+msgid "Select here the lens aperture used by camera to take the picture."
+msgstr ""
+"Roghnaigh anseo cró an lionsa a d'úsáid an ceamara chun an grianghraf a "
+"thógáil."
+
+#: exif/exiflens.cpp:194
+msgid "Max. lens aperture (f-number):"
+msgstr "Cró uasta an lionsa (f-uimhir):"
+
+#: exif/exiflens.cpp:197
+msgid ""
+"Select here the smallest aperture of the lens used by camera to take the "
+"picture."
+msgstr ""
+"Anseo, roghnaigh an cró is lú a d'úsáid an ceamara chun an pictiúr a "
+"ghlacadh."
+
+#: exif/exiflight.cpp:88
+msgid "No flash"
+msgstr "Gan splanc"
+
+#: exif/exiflight.cpp:89
+#, fuzzy
+#| msgid "Zaire"
+msgid "Fired"
+msgstr "Sáír"
+
+#: exif/exiflight.cpp:90
+#, fuzzy
+#| msgid "Yes, auto, return light"
+msgid "Fired, no strobe return light"
+msgstr "Tá, uathoibríoch, solas fillte"
+
+#: exif/exiflight.cpp:91
+#, fuzzy
+#| msgid "Yes, auto, return light"
+msgid "Fired, strobe return light"
+msgstr "Tá, uathoibríoch, solas fillte"
+
+#: exif/exiflight.cpp:92
+msgid "Yes, compulsory"
+msgstr "Tá, éigeantach"
+
+#: exif/exiflight.cpp:93
+msgid "Yes, compulsory, no return light"
+msgstr "Tá, éigeantach, gan solas fillte"
+
+#: exif/exiflight.cpp:94
+msgid "Yes, compulsory, return light"
+msgstr "Tá, éigeantach, solas fillte"
+
+#: exif/exiflight.cpp:95
+msgid "No, compulsory"
+msgstr "Níl, éigeantach"
+
+#: exif/exiflight.cpp:96
+msgid "No, auto"
+msgstr "Níl, uathoibríoch"
+
+#: exif/exiflight.cpp:97
+msgid "Yes, auto"
+msgstr "Tá, uathoibríoch"
+
+#: exif/exiflight.cpp:98
+msgid "Yes, auto, no return light"
+msgstr "Tá, uathoibríoch, gan solas fillte"
+
+#: exif/exiflight.cpp:99
+msgid "Yes, auto, return light"
+msgstr "Tá, uathoibríoch, solas fillte"
+
+#: exif/exiflight.cpp:100
+msgid "No flash function"
+msgstr "Gan splanc"
+
+#: exif/exiflight.cpp:101
+msgid "Yes, red-eye"
+msgstr "Tá, súil dhearg"
+
+#: exif/exiflight.cpp:102
+msgid "Yes, red-eye, no return light"
+msgstr "Tá, súil dhearg, gan solas fillte"
+
+#: exif/exiflight.cpp:103
+msgid "Yes, red-eye, return light"
+msgstr "Tá, súil dhearg, solas fillte"
+
+#: exif/exiflight.cpp:104
+msgid "Yes, compulsory, red-eye"
+msgstr "Tá, éigeantach, súil dhearg"
+
+#: exif/exiflight.cpp:105
+msgid "Yes, compulsory, red-eye, no return light"
+msgstr "Tá, éigeantach, súil dhearg, gan solas fillte"
+
+#: exif/exiflight.cpp:106
+msgid "Yes, compulsory, red-eye, return light"
+msgstr "Tá, éigeantach, súil dhearg, solas fillte"
+
+#: exif/exiflight.cpp:107
+msgid "Yes, auto, red-eye"
+msgstr "Tá, uathoibríoch, súil dhearg"
+
+#: exif/exiflight.cpp:108
+msgid "Yes, auto, red-eye, no return light"
+msgstr "Tá, uathoibríoch, súil dhearg, gan solas fillte"
+
+#: exif/exiflight.cpp:109
+msgid "Yes, auto, red-eye, return light"
+msgstr "Tá, uathoibríoch, súil dhearg, solas fillte"
+
+#: exif/exiflight.cpp:138
+msgid "Light source:"
+msgstr "Foinse solais:"
+
+#: exif/exiflight.cpp:140
+#, fuzzy
+#| msgid "Unknown"
+msgctxt "light source"
+msgid "Unknown"
+msgstr "Anaithnid"
+
+#: exif/exiflight.cpp:141
+#, fuzzy
+#| msgid "Daylight"
+msgctxt "light source"
+msgid "Daylight"
+msgstr "Solas an Lae"
+
+#: exif/exiflight.cpp:142
+#, fuzzy
+#| msgid "Fluorescent"
+msgctxt "light source"
+msgid "Fluorescent"
+msgstr "Fluaraiseach"
+
+#: exif/exiflight.cpp:143
+#, fuzzy
+#| msgid "Tungsten (incandescent light)"
+msgctxt "light source"
+msgid "Tungsten (incandescent light)"
+msgstr "Tungstan (solas gealbhruthach)"
+
+#: exif/exiflight.cpp:144
+#, fuzzy
+#| msgid "Flash"
+msgctxt "light source"
+msgid "Flash"
+msgstr "Splanc"
+
+#: exif/exiflight.cpp:145
+#, fuzzy
+#| msgid "Fine weather"
+msgctxt "light source"
+msgid "Fine weather"
+msgstr "Aimsir bhreá"
+
+#: exif/exiflight.cpp:146
+#, fuzzy
+#| msgid "Cloudy weather"
+msgctxt "light source"
+msgid "Cloudy weather"
+msgstr "Aimsir scamallach"
+
+#: exif/exiflight.cpp:147
+#, fuzzy
+#| msgid "Shade"
+msgctxt "light source"
+msgid "Shade"
+msgstr "Scáthaigh"
+
+#: exif/exiflight.cpp:148
+#, fuzzy
+#| msgid "Daylight fluorescent (D 5700 - 7100K)"
+msgctxt "light source"
+msgid "Daylight fluorescent (D 5700 - 7100K)"
+msgstr "Fluaraiseach: solas an lae (D 5700 - 7100K)"
+
+#: exif/exiflight.cpp:149
+#, fuzzy
+#| msgid "Day white fluorescent (N 4600 - 5400K)"
+msgctxt "light source"
+msgid "Day white fluorescent (N 4600 - 5400K)"
+msgstr "Fluaraiseach bán: solas an lae (N 4600 - 5400K)"
+
+#: exif/exiflight.cpp:150
+#, fuzzy
+#| msgid "Cool white fluorescent (W 3900 - 4500K)"
+msgctxt "light source"
+msgid "Cool white fluorescent (W 3900 - 4500K)"
+msgstr "Fluaraiseach fuarbhán (W 3900 - 4500K)"
+
+#: exif/exiflight.cpp:151
+#, fuzzy
+#| msgid "White fluorescent (WW 3200 - 3700K)"
+msgctxt "light source"
+msgid "White fluorescent (WW 3200 - 3700K)"
+msgstr "Fluaraiseach bán (WW 3200 - 3700K)"
+
+#: exif/exiflight.cpp:152
+#, fuzzy
+#| msgid "Standard light A"
+msgctxt "light source"
+msgid "Standard light A"
+msgstr "Solas caighdeánach A"
+
+#: exif/exiflight.cpp:153
+#, fuzzy
+#| msgid "Standard light B"
+msgctxt "light source"
+msgid "Standard light B"
+msgstr "Solas caighdeánach B"
+
+#: exif/exiflight.cpp:154
+#, fuzzy
+#| msgid "Standard light C"
+msgctxt "light source"
+msgid "Standard light C"
+msgstr "Solas caighdeánach C"
+
+#: exif/exiflight.cpp:155
+#, fuzzy
+#| msgid "D55"
+msgctxt "light source"
+msgid "D55"
+msgstr "D55"
+
+#: exif/exiflight.cpp:156
+#, fuzzy
+#| msgid "D65"
+msgctxt "light source"
+msgid "D65"
+msgstr "D65"
+
+#: exif/exiflight.cpp:157
+#, fuzzy
+#| msgid "D75"
+msgctxt "light source"
+msgid "D75"
+msgstr "D75"
+
+#: exif/exiflight.cpp:158
+#, fuzzy
+#| msgid "D50"
+msgctxt "light source"
+msgid "D50"
+msgstr "D50"
+
+#: exif/exiflight.cpp:159
+#, fuzzy
+#| msgid "ISO studio tungsten"
+msgctxt "light source"
+msgid "ISO studio tungsten"
+msgstr "Tungstan stiúideo ISO"
+
+#: exif/exiflight.cpp:160
+#, fuzzy
+#| msgid "Other light source"
+msgctxt "light source"
+msgid "Other light source"
+msgstr "Foinse solais eile"
+
+#: exif/exiflight.cpp:161
+msgid "Select here the kind of light source used to take the picture."
+msgstr ""
+"Roghnaigh anseo cineál na foinse solais a d'úsáid chun an grianghraf a "
+"thógáil."
+
+#: exif/exiflight.cpp:166
+msgid "Flash mode:"
+msgstr "Mód splaince:"
+
+#: exif/exiflight.cpp:173
+#, fuzzy
+#| msgid ""
+#| "Select here the flash program mode used by camera to take the picture."
+msgid ""
+"Select here the flash program mode used by the camera to take the picture."
+msgstr ""
+"Roghnaigh anseo an mód splaince a d'úsáid an ceamara chun grianghraf a "
+"thógáil."
+
+#: exif/exiflight.cpp:178
+msgid "Flash energy (BCPS):"
+msgstr "Fuinneamh splaince (BCPS):"
+
+#: exif/exiflight.cpp:184
+msgid ""
+"Set here the flash energy used to take the picture in BCPS units.  Beam "
+"Candle Power Seconds is the measure of effective intensity of a light source "
+"when it is focused into a beam by a reflector or lens. This value is the "
+"effective intensity for a period of one second."
+msgstr ""
+
+#: exif/exiflight.cpp:192
+msgid "White balance:"
+msgstr "Cothromaíocht bhán:"
+
+#: exif/exiflight.cpp:194
+msgid "Auto"
+msgstr "Uathoibríoch"
+
+#: exif/exiflight.cpp:195
+msgid "Manual"
+msgstr "De Láimh"
+
+#: exif/exiflight.cpp:196
+#, fuzzy
+#| msgid ""
+#| "Select here the white balance mode set by camera when the picture have "
+#| "been shot."
+msgid ""
+"Select here the white balance mode set by the camera when the picture was "
+"taken."
+msgstr ""
+"Roghnaigh anseo an chothromaíocht bhán a d'úsáid an ceamara nuair a tógadh "
+"an grianghraf."
+
+#: exif/exifeditwidget.cpp:128
+#, fuzzy
+#| msgid "Caption"
+msgctxt "image caption"
+msgid "Caption"
+msgstr "Fotheideal"
+
+#: exif/exifeditwidget.cpp:129
+msgid "Caption Information"
+msgstr "Faisnéis Fhotheidil"
+
+#: exif/exifeditwidget.cpp:133
+msgid "Date & Time"
+msgstr "Dáta agus Am"
+
+#: exif/exifeditwidget.cpp:134
+msgid "Date and Time Information"
+msgstr "Faisnéis Dáta agus Ama"
+
+#: exif/exifeditwidget.cpp:138
+msgid "Lens"
+msgstr "Lionsa"
+
+#: exif/exifeditwidget.cpp:139
+msgid "Lens Settings"
+msgstr "Socruithe Lionsa"
+
+#: exif/exifeditwidget.cpp:143
+msgid "Device"
+msgstr "Gléas"
+
+#: exif/exifeditwidget.cpp:144
+msgid "Capture Device Settings"
+msgstr "Socruithe Gléis Gabhála"
+
+#: exif/exifeditwidget.cpp:148
+msgid "Light"
+msgstr "Solas"
+
+#: exif/exifeditwidget.cpp:149
+msgid "Light Source Information"
+msgstr "Eolas Faoin Fhoinse Solais"
+
+#: exif/exifeditwidget.cpp:153
+msgctxt "Picture adjustments"
+msgid "Adjustments"
+msgstr "Coigeartuithe"
+
+#: exif/exifeditwidget.cpp:154
+msgid "Pictures Adjustments"
+msgstr "Coigeartuithe Pictiúir"
+
+#: iptc/iptccategories.cpp:92 xmp/xmpcategories.cpp:86
+msgid "Identify subject of content (3 chars max):"
+msgstr "Sainaithin catagóir an ábhair (3 charachtar ar a mhéad):"
+
+#: iptc/iptccategories.cpp:97
+msgid ""
+"Set here the category of content. This field is limited to 3 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo catagóir an ábhair. Ní cheadaítear ach trí charachtar ASCII "
+"sa réimse seo."
+
+#: iptc/iptccategories.cpp:100 xmp/xmpcategories.cpp:93
+msgid "Supplemental categories:"
+msgstr "Catagóirí forlíontacha:"
+
+#: iptc/iptccategories.cpp:106
+msgid ""
+"Enter here a new supplemental category of content. This field is limited to "
+"32 ASCII characters."
+msgstr ""
+"Iontráil catagóir nua forlíontach d'ábhar. Ní cheadaítear ach 32 carachtar "
+"ASCII sa réimse seo."
+
+#: iptc/iptccategories.cpp:112 iptc/iptckeywords.cpp:100
+#: xmp/xmpcategories.cpp:102 xmp/xmpkeywords.cpp:91
+msgid "&Add"
+msgstr "C&uir Leis"
+
+#: iptc/iptccategories.cpp:113 iptc/iptckeywords.cpp:101
+#: xmp/xmpcategories.cpp:103 xmp/xmpkeywords.cpp:92
+msgid "&Delete"
+msgstr "&Scrios"
+
+#: iptc/iptccategories.cpp:114 iptc/iptckeywords.cpp:102
+#: xmp/xmpcategories.cpp:104 xmp/xmpkeywords.cpp:93
+msgid "&Replace"
+msgstr "&Ionadaigh"
+
+#: iptc/iptccategories.cpp:123 iptc/iptccontent.cpp:128
+#: iptc/iptccredits.cpp:147 iptc/iptcenvelope.cpp:269
+#: iptc/iptckeywords.cpp:111 iptc/iptcorigin.cpp:497
+#: iptc/iptcproperties.cpp:239 iptc/iptcstatus.cpp:130
+#: iptc/iptcsubjects.cpp:98
+msgid ""
+"<b>Note: <b><a href='http://en.wikipedia.org/wiki/"
+"IPTC_Information_Interchange_Model'>IPTC</a></b> text tags only support the "
+"printable <b><a href='http://en.wikipedia.org/wiki/Ascii'>ASCII</a></b> "
+"characters and limit string sizes. Use contextual help for details.</b>"
+msgstr ""
+
+#: iptc/iptccontent.cpp:97 xmp/xmpcontent.cpp:92
+msgid "Headline:"
+msgstr "Ceannlíne:"
+
+#: iptc/iptccontent.cpp:102
+msgid ""
+"Enter here the content synopsis. This field is limited to 256 ASCII "
+"characters."
+msgstr ""
+"Iontráil anseo achoimre an ábhair. Ní cheadaítear ach 256 carachtar sa "
+"réimse seo."
+
+#: iptc/iptccontent.cpp:107 xmp/xmpcontent.cpp:99
+#, fuzzy
+#| msgid "Caption:"
+msgctxt "content description"
+msgid "Caption:"
+msgstr "Fotheideal:"
+
+#: iptc/iptccontent.cpp:110 xmp/xmpcontent.cpp:106
+#, kde-format
+msgid "Sync caption entered through %1"
+msgstr "Sioncrónaigh fotheideal a iontráladh trí %1"
+
+#: iptc/iptccontent.cpp:113 xmp/xmpcontent.cpp:109
+msgid "Sync EXIF Comment"
+msgstr "Sioncrónaigh Nóta EXIF"
+
+#: iptc/iptccontent.cpp:117
+msgid ""
+"Enter the content description. This field is limited to 2000 ASCII "
+"characters."
+msgstr ""
+"Déan cur síos ar an ábhar. Ní cheadaítear níos mó ná 2000 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptccontent.cpp:122 xmp/xmpcontent.cpp:119
+msgid "Caption Writer:"
+msgstr "Scríbhneoir an Fhotheidil:"
+
+#: iptc/iptccontent.cpp:123 xmp/xmpcontent.cpp:122
+msgid "Enter the name of the caption author."
+msgstr "Iontráil ainm údar an fhotheidil."
+
+#: iptc/iptccredits.cpp:99 xmp/xmpcontent.cpp:124
+msgid "Copyright:"
+msgstr "Cóipcheart:"
+
+#: iptc/iptccredits.cpp:104
+#, fuzzy
+#| msgid ""
+#| "Set here the category of content. This field is limited to 3 ASCII "
+#| "characters."
+msgid ""
+"Set here the necessary copyright notice. This field is limited to 128 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo catagóir an ábhair. Ní cheadaítear ach trí charachtar ASCII "
+"sa réimse seo."
+
+#: iptc/iptccredits.cpp:109 xmp/xmpcredits.cpp:113
+msgid "Byline:"
+msgstr "Ainm an údair:"
+
+#: iptc/iptccredits.cpp:110 xmp/xmpcredits.cpp:114
+msgid "Set here the name of content creator."
+msgstr "Socraigh anseo ainm chruthaitheoir an ábhair."
+
+#: iptc/iptccredits.cpp:115 xmp/xmpcredits.cpp:118
+#, fuzzy
+#| msgid "Byline:"
+msgid "Byline Title:"
+msgstr "Ainm an údair:"
+
+#: iptc/iptccredits.cpp:116 xmp/xmpcredits.cpp:121
+msgid "Set here the title of content creator."
+msgstr "Socraigh anseo ainm chruthaitheoir an ábhair."
+
+#: iptc/iptccredits.cpp:121 xmp/xmpcredits.cpp:183
+msgid "Credit:"
+msgstr "Admhálacha:"
+
+#: iptc/iptccredits.cpp:126
+msgid ""
+"Set here the content provider. This field is limited to 32 ASCII characters."
+msgstr ""
+"Socraigh anseo soláthraí an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptccredits.cpp:131 xmp/xmpcredits.cpp:190
+#, fuzzy
+#| msgid "Source:"
+msgctxt "original owner of content"
+msgid "Source:"
+msgstr "Foinse:"
+
+#: iptc/iptccredits.cpp:136
+msgid ""
+"Set here the original owner of content. This field is limited to 32 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo bunúinéir an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptccredits.cpp:141
+msgid "Contact:"
+msgstr "Teagmháil:"
+
+#: iptc/iptccredits.cpp:142
+#, fuzzy
+#| msgid "Set here the original owner of content."
+msgid "Set here the person or organisation to contact."
+msgstr "Roghnaigh bunúinéir an ábhair anseo."
+
+#: iptc/iptcenvelope.cpp:91
+msgid "No ObjectData"
+msgstr "Gan Sonraí Réada"
+
+#: iptc/iptcenvelope.cpp:92
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 1)"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:93
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 2)"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:94
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 3)"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:95
+msgid "IPTC-NAA Digital Newsphoto Parameter Record (version 4)"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:96
+msgid "IPTC7901 Recommended Message Format"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:97
+msgid "Tagged Image File Format (version 5.0)"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:98
+msgid "Tagged Image File Format (version 6.0)"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:99
+msgid "Illustrator"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:100
+msgid "AppleSingle"
+msgstr "AppleSingle"
+
+#: iptc/iptcenvelope.cpp:101
+msgid "NAA 89-3 (ANPA 1312)"
+msgstr "NAA 89-3 (ANPA 1312)"
+
+#: iptc/iptcenvelope.cpp:102
+msgid "MacBinary II"
+msgstr "MacBinary II"
+
+#: iptc/iptcenvelope.cpp:103
+msgid "IPTC Unstructured Character Oriented File Format"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:104
+msgid "United Press International ANPA 1312 variant"
+msgstr "United Press International ANPA 1312 variant"
+
+#: iptc/iptcenvelope.cpp:105
+#, fuzzy
+#| msgid "United Press International ANPA 1312 variant"
+msgid "United Press International Down-Load Message"
+msgstr "United Press International ANPA 1312 variant"
+
+#: iptc/iptcenvelope.cpp:106
+msgid "JPEG File Interchange"
+msgstr "Idirmhalartú Comhad JPEG"
+
+#: iptc/iptcenvelope.cpp:107
+msgid "Photo-CD Image-Pac"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:108
+msgid "Microsoft Bit Mapped Graphics File [*.BMP]"
+msgstr "Comhad grafach giotánmhapach Microsoft [*.BMP]"
+
+#: iptc/iptcenvelope.cpp:109
+msgid "Digital Audio File [*.WAV]"
+msgstr "Comhad Digiteach Fuaime [*.WAV]"
+
+#: iptc/iptcenvelope.cpp:110
+msgid "Audio plus Moving Video [*.AVI]"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:111
+msgid "PC DOS/Windows Executable Files [*.COM][*.EXE]"
+msgstr "Comhaid Inrite PC DOS/Windows [*.COM][*.EXE]"
+
+#: iptc/iptcenvelope.cpp:112
+msgid "Compressed Binary File [*.ZIP]"
+msgstr "Comhad Comhbhrúite Dénártha [*.ZIP]"
+
+#: iptc/iptcenvelope.cpp:113
+msgid "Audio Interchange File Format AIFF"
+msgstr "Formáid Idirmhalartaithe Fuaime AIFF"
+
+#: iptc/iptcenvelope.cpp:114
+msgid "RIFF Wave (Microsoft Corporation)"
+msgstr "RIFF Wave (Microsoft)"
+
+#: iptc/iptcenvelope.cpp:115
+msgid "Freehand (version 3.1)"
+msgstr "Freehand (leagan 3.1)"
+
+#: iptc/iptcenvelope.cpp:116
+msgid "Freehand (version 4.0)"
+msgstr "Freehand (leagan 4.0)"
+
+#: iptc/iptcenvelope.cpp:117
+msgid "Freehand (version 5.0)"
+msgstr "Freehand (leagan 5.0)"
+
+#: iptc/iptcenvelope.cpp:118
+msgid "Freehand (version 5.5)"
+msgstr "Freehand (leagan 5.5)"
+
+#: iptc/iptcenvelope.cpp:119
+msgid "Hypertext Markup Language \"HTML\""
+msgstr "Hypertext Markup Language \"HTML\""
+
+#: iptc/iptcenvelope.cpp:120
+msgid "MPEG 2 Audio Layer 2 (Musicom), ISO/IEC"
+msgstr "MPEG 2 Sraith Fhuaime 2 (Musicom), ISO/IEC"
+
+#: iptc/iptcenvelope.cpp:121
+msgid "MPEG 2 Audio Layer 3, ISO/IEC"
+msgstr "MPEG 2 Sraith Fhuaime 3, ISO/IEC"
+
+#: iptc/iptcenvelope.cpp:122
+msgid "Portable Document File [*.PDF] Adobe"
+msgstr "Formáid Doiciméad Iniompartha [*.PDF] Adobe"
+
+#: iptc/iptcenvelope.cpp:123
+msgid "News Industry Text Format"
+msgstr ""
+
+#: iptc/iptcenvelope.cpp:124
+msgid "Tape Archive [*.TAR]"
+msgstr "Cartlann Téipe [*.TAR]"
+
+#: iptc/iptcenvelope.cpp:125
+msgid "Tidningarnas Telegrambyra NITF version (TTNITF DTD)"
+msgstr "Tidningarnas Telegrambyra leagan NITF (TTNITF DTD)"
+
+#: iptc/iptcenvelope.cpp:126
+#, fuzzy
+#| msgid "Tidningarnas Telegrambyra NITF version (TTNITF DTD)"
+msgid "Ritzaus Bureau NITF version (RBNITF DTD)"
+msgstr "Tidningarnas Telegrambyra leagan NITF (TTNITF DTD)"
+
+#: iptc/iptcenvelope.cpp:127
+msgid "Corel Draw [*.CDR]"
+msgstr "Corel Draw [*.CDR]"
+
+#: iptc/iptcenvelope.cpp:174
+msgid "Destination:"
+msgstr "Ceann Scríbe:"
+
+#: iptc/iptcenvelope.cpp:178
+msgid ""
+"Enter the envelope destination. This field is limited to 1024 ASCII "
+"characters."
+msgstr ""
+"Iontráil ceann scríbe an chlúdaigh. Ní cheadaítear ach 1024 carachtar ASCII "
+"sa réimse seo."
+
+#: iptc/iptcenvelope.cpp:183
+msgid "U.N.O ID:"
+msgstr "Aitheantas U.N.O:"
+
+#: iptc/iptcenvelope.cpp:188
+#, fuzzy
+#| msgid ""
+#| "Set here the envelope identifier. This field is limited to 8 ASCII "
+#| "characters."
+msgid ""
+"Set here the Unique Name of Object identifier. This field is limited to 80 "
+"ASCII characters."
+msgstr ""
+"Socraigh anseo aitheantas an chlúdaigh. Ní cheadaítear ach 8 gcarachtar "
+"ASCII sa réimse seo."
+
+#: iptc/iptcenvelope.cpp:193
+msgid "Product ID:"
+msgstr "Aitheantas an táirge:"
+
+#: iptc/iptcenvelope.cpp:198
+msgid ""
+"Set here the product identifier. This field is limited to 32 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo aitheantas an táirge. Ní cheadaítear ach 32 carachtar ASCII "
+"sa réimse seo."
+
+#: iptc/iptcenvelope.cpp:203
+msgid "Service ID:"
+msgstr "Aitheantas Seirbhíse:"
+
+#: iptc/iptcenvelope.cpp:208
+msgid ""
+"Set here the service identifier. This field is limited to 10 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo an t-aitheantas seirbhíse. Ní cheadaítear ach 10 gcarachtar "
+"ASCII sa réimse seo."
+
+#: iptc/iptcenvelope.cpp:213
+msgid "Envelope ID:"
+msgstr "Aitheantas an Chlúdaigh:"
+
+#: iptc/iptcenvelope.cpp:218
+msgid ""
+"Set here the envelope identifier. This field is limited to 8 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo aitheantas an chlúdaigh. Ní cheadaítear ach 8 gcarachtar "
+"ASCII sa réimse seo."
+
+#: iptc/iptcenvelope.cpp:223 iptc/iptcproperties.cpp:186
+#: xmp/xmpproperties.cpp:186
+msgid "Priority:"
+msgstr "Tosaíocht:"
+
+#: iptc/iptcenvelope.cpp:225
+#, fuzzy
+#| msgid "0: None"
+msgctxt "priority for the envelope"
+msgid "0: None"
+msgstr "0: Neamhní"
+
+#: iptc/iptcenvelope.cpp:226
+#, fuzzy
+#| msgid "1: High"
+msgctxt "priority for the envelope"
+msgid "1: High"
+msgstr "1: Ard"
+
+#: iptc/iptcenvelope.cpp:230
+#, fuzzy
+#| msgid "5: Normal"
+msgctxt "priority for the envelope"
+msgid "5: Normal"
+msgstr "5: Gnáth"
+
+#: iptc/iptcenvelope.cpp:233
+#, fuzzy
+#| msgid "8: Low"
+msgctxt "priority for the envelope"
+msgid "8: Low"
+msgstr "8: Íseal"
+
+#: iptc/iptcenvelope.cpp:234
+msgid "Select here the envelope priority."
+msgstr "Roghnaigh anseo tosaíocht an chlúdaigh."
+
+#: iptc/iptcenvelope.cpp:238
+msgid "Format:"
+msgstr "Formáid:"
+
+#: iptc/iptcenvelope.cpp:250
+msgid "Select here envelope file format."
+msgstr "Roghnaigh anseo formáid chomhad an chlúdaigh."
+
+#: iptc/iptcenvelope.cpp:254
+msgid "Sent date:"
+msgstr "Dáta a seoladh:"
+
+#: iptc/iptcenvelope.cpp:255
+msgid "Sent time:"
+msgstr "Am a seoladh:"
+
+#: iptc/iptcenvelope.cpp:261
+msgid "Set envelope sent date to today"
+msgstr "Socraigh dáta a seoladh an clúdach mar inniu"
+
+#: iptc/iptcenvelope.cpp:263
+msgid "Set here the date when the service sent the material."
+msgstr "Socraigh anseo an dáta a sheol an tseirbhís an t-ábhar."
+
+#: iptc/iptcenvelope.cpp:264
+msgid "Set here the time when the service sent the material."
+msgstr "Socraigh anseo an t-am a sheol an tseirbhís an t-ábhar."
+
+#: iptc/iptckeywords.cpp:88 xmp/xmpkeywords.cpp:82
+msgid "Use information retrieval words:"
+msgstr ""
+
+#: iptc/iptckeywords.cpp:94
+msgid "Enter here a new keyword. This field is limited to 64 ASCII characters."
+msgstr ""
+"Iontráil anseo lorgfhocal nua. Ní cheadaítear ach 64 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptcorigin.cpp:101 xmp/xmporigin.cpp:92
+msgid "Afghanistan"
+msgstr "An Afganastáin"
+
+#: iptc/iptcorigin.cpp:102 xmp/xmporigin.cpp:93
+msgid "Albania"
+msgstr "An Albáin"
+
+#: iptc/iptcorigin.cpp:103 xmp/xmporigin.cpp:94
+msgid "Algeria"
+msgstr "An Ailgéir"
+
+#: iptc/iptcorigin.cpp:104 xmp/xmporigin.cpp:95
+msgid "American Samoa"
+msgstr "Samó Meiriceánach"
+
+#: iptc/iptcorigin.cpp:105 xmp/xmporigin.cpp:96
+msgid "Andorra"
+msgstr "Andóra"
+
+#: iptc/iptcorigin.cpp:106 iptc/iptcorigin.cpp:108 xmp/xmporigin.cpp:97
+#: xmp/xmporigin.cpp:99
+msgid "Angola"
+msgstr "Angóla"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# not in refs/corpus
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# not in refs/corpus
+#: iptc/iptcorigin.cpp:107 xmp/xmporigin.cpp:98
+msgid "Anguilla"
+msgstr "Anguilla"
+
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# AQ
+#: iptc/iptcorigin.cpp:109 xmp/xmporigin.cpp:100
+msgid "Antarctica"
+msgstr "An tAntartach"
+
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# OLT, as is - KPS
+#: iptc/iptcorigin.cpp:110 xmp/xmporigin.cpp:101
+msgid "Antigua and Barbuda"
+msgstr "Antigua agus Barbúda"
+
+#: iptc/iptcorigin.cpp:111 xmp/xmporigin.cpp:102
+msgid "Argentina"
+msgstr "An Airgintín"
+
+#: iptc/iptcorigin.cpp:112 xmp/xmporigin.cpp:103
+msgid "Armenia"
+msgstr "An Airméin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:113 xmp/xmporigin.cpp:104
+msgid "Aruba"
+msgstr "Aruba"
+
+#: iptc/iptcorigin.cpp:114 xmp/xmporigin.cpp:105
+msgid "Australia"
+msgstr "An Astráil"
+
+#: iptc/iptcorigin.cpp:115 xmp/xmporigin.cpp:106
+msgid "Austria"
+msgstr "An Ostair"
+
+#: iptc/iptcorigin.cpp:116 xmp/xmporigin.cpp:107
+msgid "Azerbaijan"
+msgstr "An Asarbaiseáin"
+
+#: iptc/iptcorigin.cpp:117 xmp/xmporigin.cpp:108
+msgid "Bahamas"
+msgstr "Na Bahámaí"
+
+#: iptc/iptcorigin.cpp:118 xmp/xmporigin.cpp:109
+msgid "Bahrain"
+msgstr "An Bhairéin"
+
+#: iptc/iptcorigin.cpp:119 xmp/xmporigin.cpp:110
+msgid "Bangladesh"
+msgstr "An Bhanglaidéis"
+
+#: iptc/iptcorigin.cpp:120 xmp/xmporigin.cpp:111
+msgid "Barbados"
+msgstr "Barbadós"
+
+#: iptc/iptcorigin.cpp:121 xmp/xmporigin.cpp:112
+msgid "Belarus"
+msgstr "An Bhílearúis"
+
+#: iptc/iptcorigin.cpp:122 xmp/xmporigin.cpp:113
+msgid "Belgium"
+msgstr "An Bheilg"
+
+#: iptc/iptcorigin.cpp:123 xmp/xmporigin.cpp:114
+msgid "Belize"
+msgstr "An Bheilís"
+
+#: iptc/iptcorigin.cpp:124 xmp/xmporigin.cpp:115
+msgid "Benin"
+msgstr "Beinin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# or Na B... 
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# or Na B... 
+#: iptc/iptcorigin.cpp:125 xmp/xmporigin.cpp:116
+msgid "Bermuda"
+msgstr "Beirmiúda"
+
+#: iptc/iptcorigin.cpp:126 xmp/xmporigin.cpp:117
+msgid "Bhutan"
+msgstr "An Bhútáin"
+
+#: iptc/iptcorigin.cpp:127 xmp/xmporigin.cpp:118
+msgid "Bolivia"
+msgstr "An Bholaiv"
+
+#: iptc/iptcorigin.cpp:128 xmp/xmporigin.cpp:119
+msgid "Bosnia and Herzegovina"
+msgstr "Boisnia agus Heirseagaivéin"
+
+#: iptc/iptcorigin.cpp:129 xmp/xmporigin.cpp:120
+msgid "Botswana"
+msgstr "An Bhotsuáin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:130 xmp/xmporigin.cpp:121
+msgid "Bouvet Island"
+msgstr "Oileán Bouvet"
+
+#: iptc/iptcorigin.cpp:131 xmp/xmporigin.cpp:122
+msgid "Brazil"
+msgstr "An Bhrasaíl"
+
+#: iptc/iptcorigin.cpp:132 xmp/xmporigin.cpp:123
+msgid "British Indian Ocean Territory"
+msgstr "Críoch Bhriotanach an Aigéin Indiaigh"
+
+# #-#-#-#-#  kopete.po (kdenetwork/kopete.po)  #-#-#-#-#
+# OLT
+#: iptc/iptcorigin.cpp:133 xmp/xmporigin.cpp:124
+msgid "British Virgin Islands"
+msgstr "Oileáin Bhriotanacha na Maighdean"
+
+#: iptc/iptcorigin.cpp:134 xmp/xmporigin.cpp:125
+msgid "Brunei Darussalam"
+msgstr "Brúiné Dárasalám"
+
+#: iptc/iptcorigin.cpp:135 xmp/xmporigin.cpp:126
+msgid "Bulgaria"
+msgstr "An Bhulgáir"
+
+#: iptc/iptcorigin.cpp:136 xmp/xmporigin.cpp:127
+msgid "Burkina Faso"
+msgstr "Buircíne Fasó"
+
+#: iptc/iptcorigin.cpp:137 xmp/xmporigin.cpp:128
+msgid "Burundi"
+msgstr "An Bhurúin"
+
+#: iptc/iptcorigin.cpp:138 xmp/xmporigin.cpp:129
+msgid "Cambodia"
+msgstr "An Chambóid"
+
+#: iptc/iptcorigin.cpp:139 xmp/xmporigin.cpp:130
+msgid "Cameroon"
+msgstr "Camarún"
+
+#: iptc/iptcorigin.cpp:140 xmp/xmporigin.cpp:131
+msgid "Canada"
+msgstr "Ceanada"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:141 xmp/xmporigin.cpp:132
+msgid "Cape Verde"
+msgstr "Rinn Verde"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# not in refs/corpus -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# not in refs/corpus -- KPS
+#: iptc/iptcorigin.cpp:142 xmp/xmporigin.cpp:133
+msgid "Cayman Islands"
+msgstr "Oileáin Cayman"
+
+#: iptc/iptcorigin.cpp:143 xmp/xmporigin.cpp:134
+msgid "Central African Republic"
+msgstr "Poblacht na hAfraice Láir"
+
+#: iptc/iptcorigin.cpp:144 xmp/xmporigin.cpp:135
+msgid "Chad"
+msgstr "Sead"
+
+#: iptc/iptcorigin.cpp:145 xmp/xmporigin.cpp:136
+msgid "Chile"
+msgstr "An tSile"
+
+#: iptc/iptcorigin.cpp:146 xmp/xmporigin.cpp:137
+msgid "China"
+msgstr "An tSín"
+
+#: iptc/iptcorigin.cpp:147 xmp/xmporigin.cpp:138
+msgid "Christmas Island "
+msgstr "Oileán na Nollag"
+
+#: iptc/iptcorigin.cpp:148 xmp/xmporigin.cpp:139
+msgid "Cocos Islands"
+msgstr "Oileáin na gCócónna"
+
+#: iptc/iptcorigin.cpp:149 xmp/xmporigin.cpp:140
+msgid "Colombia"
+msgstr "An Cholóim"
+
+#: iptc/iptcorigin.cpp:150 xmp/xmporigin.cpp:141
+msgid "Comoros"
+msgstr "Oileáin Chomóra"
+
+#: iptc/iptcorigin.cpp:151 xmp/xmporigin.cpp:142
+msgid "Zaire"
+msgstr "Sáír"
+
+#: iptc/iptcorigin.cpp:152 xmp/xmporigin.cpp:143
+msgid "Congo"
+msgstr "Congó"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:153 xmp/xmporigin.cpp:144
+msgid "Cook Islands"
+msgstr "Oileáin Cook"
+
+#: iptc/iptcorigin.cpp:154 xmp/xmporigin.cpp:145
+msgid "Costa Rica"
+msgstr "Cósta Ríce"
+
+#: iptc/iptcorigin.cpp:155 xmp/xmporigin.cpp:146
+msgid "Ivory Coast"
+msgstr "Cósta Eabhair"
+
+#: iptc/iptcorigin.cpp:156 xmp/xmporigin.cpp:147
+msgid "Cuba"
+msgstr "Cúba"
+
+#: iptc/iptcorigin.cpp:157 xmp/xmporigin.cpp:148
+msgid "Cyprus"
+msgstr "An Chipir"
+
+#: iptc/iptcorigin.cpp:158 xmp/xmporigin.cpp:149
+msgid "Czech Republic"
+msgstr "Poblacht na Seice"
+
+#: iptc/iptcorigin.cpp:159 xmp/xmporigin.cpp:150
+msgid "Denmark"
+msgstr "An Danmhairg"
+
+#: iptc/iptcorigin.cpp:160 xmp/xmporigin.cpp:151
+msgid "Djibouti"
+msgstr "Djibouti"
+
+#: iptc/iptcorigin.cpp:161 xmp/xmporigin.cpp:152
+msgid "Dominica"
+msgstr "Dominice"
+
+#: iptc/iptcorigin.cpp:162 xmp/xmporigin.cpp:153
+msgid "Dominican Republic"
+msgstr "An Phoblacht Dhoiminiceach"
+
+#: iptc/iptcorigin.cpp:163 xmp/xmporigin.cpp:154
+msgid "Ecuador"
+msgstr "Eacuadór"
+
+#: iptc/iptcorigin.cpp:164 xmp/xmporigin.cpp:155
+msgid "Egypt"
+msgstr "An Éigipt"
+
+#: iptc/iptcorigin.cpp:165 xmp/xmporigin.cpp:156
+msgid "El Salvador"
+msgstr "An tSalvadóir"
+
+#: iptc/iptcorigin.cpp:166 xmp/xmporigin.cpp:157
+msgid "Equatorial Guinea"
+msgstr "Guine Mheánchiorclach"
+
+#: iptc/iptcorigin.cpp:167 xmp/xmporigin.cpp:158
+msgid "Eritrea"
+msgstr "An Eiritré"
+
+#: iptc/iptcorigin.cpp:168 xmp/xmporigin.cpp:159
+msgid "Estonia"
+msgstr "An Eastóin"
+
+#: iptc/iptcorigin.cpp:169 xmp/xmporigin.cpp:160
+msgid "Ethiopia"
+msgstr "An Aetóip"
+
+#: iptc/iptcorigin.cpp:170 xmp/xmporigin.cpp:161
+msgid "Faeroe Islands"
+msgstr "Oileáin Fharó"
+
+#: iptc/iptcorigin.cpp:171 xmp/xmporigin.cpp:162
+msgid "Falkland Islands"
+msgstr "Oileáin Fháclainne"
+
+#: iptc/iptcorigin.cpp:172 xmp/xmporigin.cpp:163
+msgid "Fiji Islands"
+msgstr "Oileáin Fhidsí"
+
+#: iptc/iptcorigin.cpp:173 xmp/xmporigin.cpp:164
+msgid "Finland"
+msgstr "An Fhionlainn"
+
+#: iptc/iptcorigin.cpp:174 xmp/xmporigin.cpp:165
+msgid "France"
+msgstr "An Fhrainc"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# by analogy with British ~ -- KPS
+# #-#-#-#-#  kopete.po (kdenetwork/kopete.po)  #-#-#-#-#
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# by analogy with British ~ -- KPS
+#: iptc/iptcorigin.cpp:175 xmp/xmporigin.cpp:166
+msgid "French Guiana"
+msgstr "Guáin na Fraince"
+
+#: iptc/iptcorigin.cpp:176 xmp/xmporigin.cpp:167
+msgid "French Polynesia"
+msgstr "Polainéis na Fraince"
+
+#: iptc/iptcorigin.cpp:177 xmp/xmporigin.cpp:168
+msgid "French Southern Territories"
+msgstr "Críocha Deisceartacha na Fraince"
+
+#: iptc/iptcorigin.cpp:178 xmp/xmporigin.cpp:169
+msgid "Gabon"
+msgstr "Gabúin"
+
+#: iptc/iptcorigin.cpp:179 xmp/xmporigin.cpp:170
+msgid "Gambia"
+msgstr "Gaimbia"
+
+#: iptc/iptcorigin.cpp:180 xmp/xmporigin.cpp:171
+msgid "Georgia"
+msgstr "An tSeoirsia"
+
+#: iptc/iptcorigin.cpp:181 xmp/xmporigin.cpp:172
+msgid "Germany"
+msgstr "An Ghearmáin"
+
+#: iptc/iptcorigin.cpp:182 xmp/xmporigin.cpp:173
+msgid "Ghana"
+msgstr "Gána"
+
+#: iptc/iptcorigin.cpp:183 xmp/xmporigin.cpp:174
+msgid "Gibraltar"
+msgstr "Giobráltar"
+
+#: iptc/iptcorigin.cpp:184 xmp/xmporigin.cpp:175
+msgid "Greece"
+msgstr "An Ghréig"
+
+#: iptc/iptcorigin.cpp:185 xmp/xmporigin.cpp:176
+msgid "Greenland"
+msgstr "An Ghraonlainn"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:186 xmp/xmporigin.cpp:177
+msgid "Grenada"
+msgstr "Grenada"
+
+#: iptc/iptcorigin.cpp:187 xmp/xmporigin.cpp:178
+msgid "Guadaloupe"
+msgstr "Guadalúip"
+
+#: iptc/iptcorigin.cpp:188 xmp/xmporigin.cpp:179
+msgid "Guam"
+msgstr "Guam"
+
+#: iptc/iptcorigin.cpp:189 xmp/xmporigin.cpp:180
+msgid "Guatemala"
+msgstr "Guatamala"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# GN
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# GN
+#: iptc/iptcorigin.cpp:190 xmp/xmporigin.cpp:181
+msgid "Guinea"
+msgstr "An Ghuine"
+
+#: iptc/iptcorigin.cpp:191 xmp/xmporigin.cpp:182
+msgid "Guinea-Bissau"
+msgstr "Guine Bhissau"
+
+#: iptc/iptcorigin.cpp:192 xmp/xmporigin.cpp:183
+msgid "Guyana"
+msgstr "An Ghuáin"
+
+#: iptc/iptcorigin.cpp:193 xmp/xmporigin.cpp:184
+msgid "Haiti"
+msgstr "Háítí"
+
+#: iptc/iptcorigin.cpp:194 xmp/xmporigin.cpp:185
+msgid "Heard and McDonald Islands"
+msgstr "Oileáin Heard agus McDonald"
+
+#: iptc/iptcorigin.cpp:195 xmp/xmporigin.cpp:186
+msgid "Vatican"
+msgstr "An Vatacáin"
+
+#: iptc/iptcorigin.cpp:196 xmp/xmporigin.cpp:187
+msgid "Honduras"
+msgstr "Hondúras"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# in FTP81 -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# in FTP81 -- KPS
+#: iptc/iptcorigin.cpp:197 xmp/xmporigin.cpp:188
+msgid "Hong Kong"
+msgstr "Hong Cong"
+
+#: iptc/iptcorigin.cpp:198 xmp/xmporigin.cpp:189
+msgid "Croatia"
+msgstr "An Chróit"
+
+#: iptc/iptcorigin.cpp:199 xmp/xmporigin.cpp:190
+msgid "Hungary"
+msgstr "An Ungáir"
+
+#: iptc/iptcorigin.cpp:200 xmp/xmporigin.cpp:191
+msgid "Iceland"
+msgstr "An Íoslainn"
+
+#: iptc/iptcorigin.cpp:201 xmp/xmporigin.cpp:192
+msgid "India"
+msgstr "An India"
+
+#: iptc/iptcorigin.cpp:202 xmp/xmporigin.cpp:193
+msgid "Indonesia"
+msgstr "An Indinéis"
+
+#: iptc/iptcorigin.cpp:203 xmp/xmporigin.cpp:194
+msgid "Iran"
+msgstr "An Iaráin"
+
+#: iptc/iptcorigin.cpp:204 xmp/xmporigin.cpp:195
+msgid "Iraq"
+msgstr "An Iaráic"
+
+#: iptc/iptcorigin.cpp:205 xmp/xmporigin.cpp:196
+msgid "Ireland"
+msgstr "Éire"
+
+#: iptc/iptcorigin.cpp:206 xmp/xmporigin.cpp:197
+msgid "Israel"
+msgstr "Iosrael"
+
+#: iptc/iptcorigin.cpp:207 xmp/xmporigin.cpp:198
+msgid "Italy"
+msgstr "An Iodáil"
+
+#: iptc/iptcorigin.cpp:208 xmp/xmporigin.cpp:199
+msgid "Jamaica"
+msgstr "Iamáice"
+
+#: iptc/iptcorigin.cpp:209 xmp/xmporigin.cpp:200
+msgid "Japan"
+msgstr "An tSeapáin"
+
+#: iptc/iptcorigin.cpp:210 xmp/xmporigin.cpp:201
+msgid "Jordan"
+msgstr "An Iordáin"
+
+#: iptc/iptcorigin.cpp:211 xmp/xmporigin.cpp:202
+msgid "Kazakhstan"
+msgstr "An Chasacstáin"
+
+#: iptc/iptcorigin.cpp:212 xmp/xmporigin.cpp:203
+msgid "Kenya"
+msgstr "An Chéinia"
+
+#: iptc/iptcorigin.cpp:213 xmp/xmporigin.cpp:204
+msgid "Kiribati"
+msgstr "Ciribeas"
+
+#: iptc/iptcorigin.cpp:214 iptc/iptcorigin.cpp:215 xmp/xmporigin.cpp:205
+#: xmp/xmporigin.cpp:206
+msgid "Korea"
+msgstr "An Choiré Theas"
+
+#: iptc/iptcorigin.cpp:216 xmp/xmporigin.cpp:207
+msgid "Kuwait"
+msgstr "An Chuáit"
+
+#: iptc/iptcorigin.cpp:217 xmp/xmporigin.cpp:208
+msgid "Kyrgyz Republic"
+msgstr "Poblacht na Cirgise"
+
+#: iptc/iptcorigin.cpp:218 xmp/xmporigin.cpp:209
+msgid "Lao"
+msgstr "Láóis"
+
+#: iptc/iptcorigin.cpp:219 xmp/xmporigin.cpp:210
+msgid "Latvia"
+msgstr "An Laitvia"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# LB
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# LB
+#: iptc/iptcorigin.cpp:220 xmp/xmporigin.cpp:211
+msgid "Lebanon"
+msgstr "An Liobáin"
+
+#: iptc/iptcorigin.cpp:221 xmp/xmporigin.cpp:212
+msgid "Lesotho"
+msgstr "Leosóta"
+
+#: iptc/iptcorigin.cpp:222 xmp/xmporigin.cpp:213
+msgid "Liberia"
+msgstr "An Libéir"
+
+#: iptc/iptcorigin.cpp:223 xmp/xmporigin.cpp:214
+msgid "Libyan Arab Jamahiriya"
+msgstr "Libia"
+
+#: iptc/iptcorigin.cpp:224 xmp/xmporigin.cpp:215
+msgid "Liechtenstein"
+msgstr "Lichtinstéin"
+
+#: iptc/iptcorigin.cpp:225 xmp/xmporigin.cpp:216
+msgid "Lithuania"
+msgstr "An Liotuáin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# LU
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# LU
+#: iptc/iptcorigin.cpp:226 xmp/xmporigin.cpp:217
+msgid "Luxembourg"
+msgstr "Lucsamburg"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OK
+#: iptc/iptcorigin.cpp:227 xmp/xmporigin.cpp:218
+msgid "Macao"
+msgstr "Macao"
+
+#: iptc/iptcorigin.cpp:228 xmp/xmporigin.cpp:219
+msgid "Macedonia"
+msgstr "An Mhacadóin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# MG
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# MG
+#: iptc/iptcorigin.cpp:229 xmp/xmporigin.cpp:220
+msgid "Madagascar"
+msgstr "Madagascar"
+
+#: iptc/iptcorigin.cpp:230 xmp/xmporigin.cpp:221
+msgid "Malawi"
+msgstr "An Mhaláiv"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# MY
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# MY
+#: iptc/iptcorigin.cpp:231 xmp/xmporigin.cpp:222
+msgid "Malaysia"
+msgstr "An Mhalaeisia"
+
+#: iptc/iptcorigin.cpp:232 xmp/xmporigin.cpp:223
+msgid "Maldives"
+msgstr "Oileáin Mhaildíve"
+
+#: iptc/iptcorigin.cpp:233 xmp/xmporigin.cpp:224
+msgid "Mali"
+msgstr "Mailí"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# MT
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# MT
+#: iptc/iptcorigin.cpp:234 xmp/xmporigin.cpp:225
+msgid "Malta"
+msgstr "Málta"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:235 xmp/xmporigin.cpp:226
+msgid "Marshall Islands"
+msgstr "Oileáin Marshall"
+
+#: iptc/iptcorigin.cpp:236 xmp/xmporigin.cpp:227
+msgid "Martinique"
+msgstr "An Mhartainíc"
+
+#: iptc/iptcorigin.cpp:237 xmp/xmporigin.cpp:228
+msgid "Mauritania"
+msgstr "An Mháratáin"
+
+#: iptc/iptcorigin.cpp:238 xmp/xmporigin.cpp:229
+msgid "Mauritius"
+msgstr "Oileán Mhuirís"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT as is -- KPS
+#: iptc/iptcorigin.cpp:239 xmp/xmporigin.cpp:230
+msgid "Mayotte"
+msgstr "Mayotte"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# MX
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# MX
+#: iptc/iptcorigin.cpp:240 xmp/xmporigin.cpp:231
+msgid "Mexico"
+msgstr "Meicsiceo"
+
+#: iptc/iptcorigin.cpp:241 xmp/xmporigin.cpp:232
+msgid "Micronesia"
+msgstr "An Mhicrinéis"
+
+#: iptc/iptcorigin.cpp:242 xmp/xmporigin.cpp:233
+msgid "Moldova"
+msgstr "An Mholdóiv"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# MC
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# MC
+#: iptc/iptcorigin.cpp:243 xmp/xmporigin.cpp:234
+msgid "Monaco"
+msgstr "Monacó"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# MN
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# MN
+#: iptc/iptcorigin.cpp:244 xmp/xmporigin.cpp:235
+msgid "Mongolia"
+msgstr "An Mhongóil"
+
+#: iptc/iptcorigin.cpp:245 xmp/xmporigin.cpp:236
+msgid "Montserrat"
+msgstr "Montsarat"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# MA
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# MA
+#: iptc/iptcorigin.cpp:246 xmp/xmporigin.cpp:237
+msgid "Morocco"
+msgstr "Maracó"
+
+#: iptc/iptcorigin.cpp:247 xmp/xmporigin.cpp:238
+msgid "Mozambique"
+msgstr "Mósaimbíc"
+
+#: iptc/iptcorigin.cpp:248 xmp/xmporigin.cpp:239
+msgid "Myanmar"
+msgstr "Maenmar"
+
+#: iptc/iptcorigin.cpp:249 xmp/xmporigin.cpp:240
+msgid "Namibia"
+msgstr "An Namaib"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  best-comp.po (PACKAGE VERSION)  #-#-#-#-#
+# have Nárú in corpus
+# #-#-#-#-#  tmp.XXXXK5LpVx (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  best-comp.po (PACKAGE VERSION)  #-#-#-#-#
+# have Nárú in corpus
+# #-#-#-#-#  temp2.po (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  iso_639-0.19.ga.po (iso_639 0.19)  #-#-#-#-#
+# have Nárú in corpus
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# have Nárú in corpus
+#: iptc/iptcorigin.cpp:250 xmp/xmporigin.cpp:241
+msgid "Nauru"
+msgstr "Nárúis"
+
+#: iptc/iptcorigin.cpp:251 xmp/xmporigin.cpp:242
+msgid "Nepal"
+msgstr "Neipeal"
+
+#: iptc/iptcorigin.cpp:252 xmp/xmporigin.cpp:243
+msgid "Netherlands Antilles"
+msgstr "Aintillí na hÍsiltíre"
+
+#: iptc/iptcorigin.cpp:253 xmp/xmporigin.cpp:244
+msgid "Netherlands"
+msgstr "An Ísiltír"
+
+#: iptc/iptcorigin.cpp:254 xmp/xmporigin.cpp:245
+msgid "New Caledonia"
+msgstr "An Nua-Chaladóin"
+
+#: iptc/iptcorigin.cpp:255 xmp/xmporigin.cpp:246
+msgid "New Zealand"
+msgstr "An Nua-Shéalainn"
+
+#: iptc/iptcorigin.cpp:256 xmp/xmporigin.cpp:247
+msgid "Nicaragua"
+msgstr "Nicearagua"
+
+#: iptc/iptcorigin.cpp:257 xmp/xmporigin.cpp:248
+msgid "Niger"
+msgstr "An Nígir"
+
+#: iptc/iptcorigin.cpp:258 xmp/xmporigin.cpp:249
+msgid "Nigeria"
+msgstr "An Nigéir"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:259 xmp/xmporigin.cpp:250
+msgid "Niue"
+msgstr "Niue"
+
+#: iptc/iptcorigin.cpp:260 xmp/xmporigin.cpp:251
+msgid "Norfolk Island"
+msgstr "Oileán Norfolc"
+
+#: iptc/iptcorigin.cpp:261 xmp/xmporigin.cpp:252
+msgid "Northern Mariana Islands"
+msgstr "Oileáin Mhariana Thuaidh"
+
+#: iptc/iptcorigin.cpp:262 xmp/xmporigin.cpp:253
+msgid "Norway"
+msgstr "An Iorua"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  firefox-1.0_pre.ga.po (firefox 1.0_pre)  #-#-#-#-#
+# OK
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  firefox-1.0_pre.ga.po (firefox 1.0_pre)  #-#-#-#-#
+# OK
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OK
+#: iptc/iptcorigin.cpp:263 xmp/xmporigin.cpp:254
+msgid "Oman"
+msgstr "Oman"
+
+#: iptc/iptcorigin.cpp:264 xmp/xmporigin.cpp:255
+msgid "Pakistan"
+msgstr "An Phacastáin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:265 xmp/xmporigin.cpp:256
+msgid "Palau"
+msgstr "Palau"
+
+#: iptc/iptcorigin.cpp:266 xmp/xmporigin.cpp:257
+msgid "Palestinian Territory"
+msgstr "Críoch na bPalaistíneach"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  OOo-temp.po (yudit 2.7.6)  #-#-#-#-#
+# OK
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  OOo-temp.po (yudit 2.7.6)  #-#-#-#-#
+# OK
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  firefox-1.0_pre.ga.po (firefox 1.0_pre)  #-#-#-#-#
+# OK
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  firefox-1.0_pre.ga.po (firefox 1.0_pre)  #-#-#-#-#
+# OK
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OK
+#: iptc/iptcorigin.cpp:267 xmp/xmporigin.cpp:258
+msgid "Panama"
+msgstr "Panama"
+
+#: iptc/iptcorigin.cpp:268 xmp/xmporigin.cpp:259
+msgid "Papua New Guinea"
+msgstr "Nua-Ghuine Phapua"
+
+#: iptc/iptcorigin.cpp:269 xmp/xmporigin.cpp:260
+msgid "Paraguay"
+msgstr "Paragua"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# no "An"
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# no "An"
+#: iptc/iptcorigin.cpp:270 xmp/xmporigin.cpp:261
+msgid "Peru"
+msgstr "Peiriú"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# PH FIXME
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# PH FIXME
+# #-#-#-#-#  kipiplugin_metadataedit.po (extragear-libs/kipiplugin_metadataedit.po)  #-#-#-#-#
+# "Na" OK here
+#: iptc/iptcorigin.cpp:271 xmp/xmporigin.cpp:262
+msgid "Philippines"
+msgstr "Na hOileáin Fhilipíneacha"
+
+#: iptc/iptcorigin.cpp:272 xmp/xmporigin.cpp:263
+msgid "Pitcairn Island"
+msgstr "Oileán Pitcairn"
+
+#: iptc/iptcorigin.cpp:273 xmp/xmporigin.cpp:264
+msgid "Poland"
+msgstr "An Pholainn"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# PT
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# PT
+#: iptc/iptcorigin.cpp:274 xmp/xmporigin.cpp:265
+msgid "Portugal"
+msgstr "An Phortaingéil"
+
+#: iptc/iptcorigin.cpp:275 xmp/xmporigin.cpp:266
+msgid "Puerto Rico"
+msgstr "Portó Ríce"
+
+#: iptc/iptcorigin.cpp:276 xmp/xmporigin.cpp:267
+msgid "Qatar"
+msgstr "Catar"
+
+#: iptc/iptcorigin.cpp:277 xmp/xmporigin.cpp:268
+msgid "Reunion"
+msgstr "Réunion"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# RO
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# RO
+#: iptc/iptcorigin.cpp:278 xmp/xmporigin.cpp:269
+msgid "Romania"
+msgstr "An Rómáin"
+
+#: iptc/iptcorigin.cpp:279 xmp/xmporigin.cpp:270
+msgid "Russian Federation"
+msgstr "Cónaidhm na Rúise"
+
+#: iptc/iptcorigin.cpp:280 xmp/xmporigin.cpp:271
+msgid "Rwanda"
+msgstr "Ruanda"
+
+#: iptc/iptcorigin.cpp:281 xmp/xmporigin.cpp:272
+msgid "St. Helena"
+msgstr "St. Helena"
+
+#: iptc/iptcorigin.cpp:282 xmp/xmporigin.cpp:273
+msgid "St. Kitts and Nevis"
+msgstr "San Críostóir Nimheas"
+
+#: iptc/iptcorigin.cpp:283 xmp/xmporigin.cpp:274
+msgid "St. Lucia"
+msgstr "St. Lucia"
+
+#: iptc/iptcorigin.cpp:284 xmp/xmporigin.cpp:275
+msgid "St. Pierre and Miquelon"
+msgstr "Peadar Naofa agus Micilín"
+
+#: iptc/iptcorigin.cpp:285 xmp/xmporigin.cpp:276
+msgid "St. Vincent and the Grenadines"
+msgstr "St. Vincent agus Grenadines"
+
+#: iptc/iptcorigin.cpp:286 xmp/xmporigin.cpp:277
+msgid "Samoa"
+msgstr "Samó"
+
+#: iptc/iptcorigin.cpp:287 xmp/xmporigin.cpp:278
+msgid "San Marino"
+msgstr "San Mairíne"
+
+#: iptc/iptcorigin.cpp:288 xmp/xmporigin.cpp:279
+msgid "Sao Tome and Principe"
+msgstr "São Tomé agus Príncipe"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# SA
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# SA
+#: iptc/iptcorigin.cpp:289 xmp/xmporigin.cpp:280
+msgid "Saudi Arabia"
+msgstr "An Araib Shádach"
+
+#: iptc/iptcorigin.cpp:290 xmp/xmporigin.cpp:281
+msgid "Senegal"
+msgstr "An tSeineagáil"
+
+#: iptc/iptcorigin.cpp:291 xmp/xmporigin.cpp:282
+msgid "Serbia and Montenegro"
+msgstr "Seirbia agus Montainéagró"
+
+#: iptc/iptcorigin.cpp:292 xmp/xmporigin.cpp:283
+msgid "Seychelles"
+msgstr "Na Séiséil"
+
+#: iptc/iptcorigin.cpp:293 xmp/xmporigin.cpp:284
+msgid "Sierra Leone"
+msgstr "Siarra Leon"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# SG
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# SG
+#: iptc/iptcorigin.cpp:294 xmp/xmporigin.cpp:285
+msgid "Singapore"
+msgstr "Singeapór"
+
+#: iptc/iptcorigin.cpp:295 xmp/xmporigin.cpp:286
+msgid "Slovakia"
+msgstr "An tSlóvaic"
+
+#: iptc/iptcorigin.cpp:296 xmp/xmporigin.cpp:287
+msgid "Slovenia"
+msgstr "An tSlóivéin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# not in refs/corpus -- KPS
+#: iptc/iptcorigin.cpp:297 xmp/xmporigin.cpp:288
+msgid "Solomon Islands"
+msgstr "Oileáin Sholamón"
+
+#: iptc/iptcorigin.cpp:298 xmp/xmporigin.cpp:289
+msgid "Somalia"
+msgstr "An tSomáil"
+
+#: iptc/iptcorigin.cpp:299 xmp/xmporigin.cpp:290
+msgid "South Africa"
+msgstr "An Afraic Theas"
+
+#: iptc/iptcorigin.cpp:300 xmp/xmporigin.cpp:291
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "An tSeoirsia Theas agus Oileáin Sandwich Theas"
+
+# #-#-#-#-#  tmp.EGeCHM7235 (qt/kdeqt.po)  #-#-#-#-#
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# ES
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# ES
+# #-#-#-#-#  tmp.lJOCwB7237 (qt/kdeqt.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.EGeCHM7235 (qt/kdeqt.po)  #-#-#-#-#
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# ES
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# ES
+#: iptc/iptcorigin.cpp:301 xmp/xmporigin.cpp:292
+msgid "Spain"
+msgstr "An Spáinn"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# LK
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# LK
+#: iptc/iptcorigin.cpp:302 xmp/xmporigin.cpp:293
+msgid "Sri Lanka"
+msgstr "Srí Lanca"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# SD
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# SD
+#: iptc/iptcorigin.cpp:303 xmp/xmporigin.cpp:294
+msgid "Sudan"
+msgstr "An tSúdáin"
+
+#: iptc/iptcorigin.cpp:304 xmp/xmporigin.cpp:295
+msgid "Suriname"
+msgstr "Suranam"
+
+#: iptc/iptcorigin.cpp:305 xmp/xmporigin.cpp:296
+msgid "Svalbard & Jan Mayen Islands"
+msgstr "Oileáin Svalbard agus Jan Mayen"
+
+#: iptc/iptcorigin.cpp:306 xmp/xmporigin.cpp:297
+msgid "Swaziland"
+msgstr "An tSuasalainn"
+
+#: iptc/iptcorigin.cpp:307 xmp/xmporigin.cpp:298
+msgid "Sweden"
+msgstr "An tSualainn"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# CH
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# CH
+#: iptc/iptcorigin.cpp:308 xmp/xmporigin.cpp:299
+msgid "Switzerland"
+msgstr "An Eilvéis"
+
+#: iptc/iptcorigin.cpp:309 xmp/xmporigin.cpp:300
+msgid "Syrian Arab Republic"
+msgstr "Poblacht Arabach na Siria"
+
+#: iptc/iptcorigin.cpp:310 xmp/xmporigin.cpp:301
+msgid "Taiwan"
+msgstr "An Téaváin"
+
+#: iptc/iptcorigin.cpp:311 xmp/xmporigin.cpp:302
+msgid "Tajikistan"
+msgstr "An Táidsíceastáin"
+
+#: iptc/iptcorigin.cpp:312 xmp/xmporigin.cpp:303
+msgid "Tanzania"
+msgstr "An Tansáin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# TH
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# TH
+#: iptc/iptcorigin.cpp:313 xmp/xmporigin.cpp:304
+msgid "Thailand"
+msgstr "An Téalainn"
+
+#: iptc/iptcorigin.cpp:314 xmp/xmporigin.cpp:305
+msgid "Timor-Leste"
+msgstr "Timor Thoir"
+
+#: iptc/iptcorigin.cpp:315 xmp/xmporigin.cpp:306
+msgid "Togo"
+msgstr "Tógó"
+
+#: iptc/iptcorigin.cpp:316 xmp/xmporigin.cpp:307
+msgid "Tokelau Islands"
+msgstr "Oileáin Tócalá"
+
+#: iptc/iptcorigin.cpp:317 xmp/xmporigin.cpp:308
+msgid "Tonga"
+msgstr "Tonga"
+
+#: iptc/iptcorigin.cpp:318 xmp/xmporigin.cpp:309
+msgid "Trinidad and Tobago"
+msgstr "Oileán na Tríonóide agus Tobága"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# TN
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# TN
+#: iptc/iptcorigin.cpp:319 xmp/xmporigin.cpp:310
+msgid "Tunisia"
+msgstr "An Túinéis"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# TR
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# TR
+#: iptc/iptcorigin.cpp:320 xmp/xmporigin.cpp:311
+msgid "Turkey"
+msgstr "An Tuirc"
+
+#: iptc/iptcorigin.cpp:321 xmp/xmporigin.cpp:312
+msgid "Turkmenistan"
+msgstr "An Tuircméanastáin"
+
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# not in refs/corpus -- KPS
+#: iptc/iptcorigin.cpp:322 xmp/xmporigin.cpp:313
+msgid "Turks and Caicos Islands"
+msgstr "Oileáin Turks agus Caicos"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:323 xmp/xmporigin.cpp:314
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+#: iptc/iptcorigin.cpp:324 xmp/xmporigin.cpp:315
+msgid "US Virgin Islands"
+msgstr "Oileáin na Maighdean S.A.M."
+
+#: iptc/iptcorigin.cpp:325 xmp/xmporigin.cpp:316
+msgid "Uganda"
+msgstr "Uganda"
+
+#: iptc/iptcorigin.cpp:326 xmp/xmporigin.cpp:317
+msgid "Ukraine"
+msgstr "An Úcráin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# AR
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# AR
+#: iptc/iptcorigin.cpp:327 xmp/xmporigin.cpp:318
+msgid "United Arab Emirates"
+msgstr "Aontas na nÉimíríochtaí Arabacha"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXK5LpVx (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  temp2.po (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# UK
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXK5LpVx (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  temp2.po (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# UK
+#: iptc/iptcorigin.cpp:328 xmp/xmporigin.cpp:319
+msgid "United Kingdom"
+msgstr "An Ríocht Aontaithe"
+
+#: iptc/iptcorigin.cpp:329 xmp/xmporigin.cpp:320
+msgid "United States Minor Outlying Islands"
+msgstr "Mion-Oileáin Imeallacha S.A.M."
+
+#: iptc/iptcorigin.cpp:330 xmp/xmporigin.cpp:321
+msgid "United States of America"
+msgstr "Stáit Aontaithe Mheiriceá"
+
+#: iptc/iptcorigin.cpp:331 xmp/xmporigin.cpp:322
+msgid "Uruguay, Eastern Republic of"
+msgstr "Uragua"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# by analogy with google's "Úisbéicis"
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# by analogy with google's "Úisbéicis"
+#: iptc/iptcorigin.cpp:332 xmp/xmporigin.cpp:323
+msgid "Uzbekistan"
+msgstr "Úisbéiceastáin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT, as is -- KPS
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# OLT, as is -- KPS
+#: iptc/iptcorigin.cpp:333 xmp/xmporigin.cpp:324
+msgid "Vanuatu"
+msgstr "Vanuatú"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXMZ2Xhi (yudit 2.7.6)  #-#-#-#-#
+# #-#-#-#-#  temp1.po (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# VE
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# VE
+#: iptc/iptcorigin.cpp:334 xmp/xmporigin.cpp:325
+msgid "Venezuela"
+msgstr "Veiniséala"
+
+#: iptc/iptcorigin.cpp:335 xmp/xmporigin.cpp:326
+msgid "Viet Nam"
+msgstr "Vítneam"
+
+#: iptc/iptcorigin.cpp:336 xmp/xmporigin.cpp:327
+msgid "Wallis and Futuna Islands "
+msgstr "Oileáin Vailís agus Futúna"
+
+#: iptc/iptcorigin.cpp:337 xmp/xmporigin.cpp:328
+msgid "Western Sahara"
+msgstr "An Sahára Thiar"
+
+#: iptc/iptcorigin.cpp:338 xmp/xmporigin.cpp:329
+msgid "Yemen"
+msgstr "An Éimin"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# ZM
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# ZM
+#: iptc/iptcorigin.cpp:339 xmp/xmporigin.cpp:330
+msgid "Zambia"
+msgstr "An tSaimbia"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXPnLGJo (firefox 1.0_pre)  #-#-#-#-#
+# #-#-#-#-#  temp.po (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  tmp.XXXXXKxGod (aspell 0.60.1-b20041017)  #-#-#-#-#
+# #-#-#-#-#  mandrake.ga.po (grpmi)  #-#-#-#-#
+# ZW
+# #-#-#-#-#  kaddressbook.po (kdepim/kaddressbook.po)  #-#-#-#-#
+# ZW
+#: iptc/iptcorigin.cpp:340 xmp/xmporigin.cpp:331
+msgid "Zimbabwe"
+msgstr "An tSiombáib"
+
+#: iptc/iptcorigin.cpp:344 xmp/xmporigin.cpp:335
+msgid "United Nations"
+msgstr "Náisiúin Aontaithe"
+
+#: iptc/iptcorigin.cpp:345 xmp/xmporigin.cpp:336
+msgid "European Union"
+msgstr "An tAontas Eorpach"
+
+#: iptc/iptcorigin.cpp:346 xmp/xmporigin.cpp:337
+msgid "Space"
+msgstr "Spás"
+
+#: iptc/iptcorigin.cpp:347 xmp/xmporigin.cpp:338
+msgid "At Sea"
+msgstr "Ar Farraige"
+
+#: iptc/iptcorigin.cpp:348 xmp/xmporigin.cpp:339
+msgid "In Flight"
+msgstr "Ar Eitilt"
+
+#: iptc/iptcorigin.cpp:349 xmp/xmporigin.cpp:340
+msgid "England"
+msgstr "Sasana"
+
+#: iptc/iptcorigin.cpp:350 xmp/xmporigin.cpp:341
+msgid "Scotland"
+msgstr "An Albain"
+
+#: iptc/iptcorigin.cpp:351 xmp/xmporigin.cpp:342
+msgid "Northern Ireland"
+msgstr "Tuaisceart Éireann"
+
+#: iptc/iptcorigin.cpp:352 xmp/xmporigin.cpp:343
+msgid "Wales"
+msgstr "An Bhreatain Bheag"
+
+#: iptc/iptcorigin.cpp:353 xmp/xmporigin.cpp:344
+msgid "Palestine"
+msgstr "An Phalaistín"
+
+#: iptc/iptcorigin.cpp:354 xmp/xmporigin.cpp:345
+msgid "Gaza"
+msgstr "Gaza"
+
+#: iptc/iptcorigin.cpp:355 xmp/xmporigin.cpp:346
+msgid "Jericho"
+msgstr "Ireachó"
+
+#: iptc/iptcorigin.cpp:403 xmp/xmporigin.cpp:383
+msgid "Digitization date"
+msgstr "Dáta a digitíodh"
+
+#: iptc/iptcorigin.cpp:404
+msgid "Digitization time"
+msgstr "Am a digitíodh"
+
+#: iptc/iptcorigin.cpp:412 xmp/xmporigin.cpp:390
+#, fuzzy
+#| msgid "Set here the title of content creator."
+msgid "Set here the creation date of digital representation."
+msgstr "Socraigh anseo ainm chruthaitheoir an ábhair."
+
+#: iptc/iptcorigin.cpp:414
+#, fuzzy
+#| msgid "Set here the title of content creator."
+msgid "Set here the creation time of digital representation."
+msgstr "Socraigh anseo ainm chruthaitheoir an ábhair."
+
+#: iptc/iptcorigin.cpp:421 xmp/xmporigin.cpp:397
+msgid "Creation date"
+msgstr "Dáta a cruthaíodh"
+
+#: iptc/iptcorigin.cpp:422
+msgid "Creation time"
+msgstr "Am a cruthaíodh"
+
+#: iptc/iptcorigin.cpp:428 xmp/xmporigin.cpp:402
+msgid "Sync EXIF creation date"
+msgstr "Sioncrónaigh dáta cruthaithe EXIF"
+
+#: iptc/iptcorigin.cpp:434 xmp/xmporigin.cpp:408
+#, fuzzy
+#| msgid "Select here the scene type of content."
+msgid "Set here the creation date of intellectual content."
+msgstr "Roghnaigh cineál radhairc an ábhair anseo."
+
+#: iptc/iptcorigin.cpp:436
+#, fuzzy
+#| msgid "Select here the scene type of content."
+msgid "Set here the creation time of intellectual content."
+msgstr "Roghnaigh cineál radhairc an ábhair anseo."
+
+#: iptc/iptcorigin.cpp:443
+msgid "Location:"
+msgstr "Suíomh:"
+
+#: iptc/iptcorigin.cpp:444
+#, fuzzy
+#| msgid "Select here the scene type of content."
+msgid "Set here the full country name referenced by the content."
+msgstr "Roghnaigh cineál radhairc an ábhair anseo."
+
+#: iptc/iptcorigin.cpp:455 xmp/xmpcredits.cpp:153 xmp/xmporigin.cpp:415
+msgid "City:"
+msgstr "Cathair:"
+
+#: iptc/iptcorigin.cpp:460
+#, fuzzy
+#| msgid ""
+#| "Set here the category of content. This field is limited to 3 ASCII "
+#| "characters."
+msgid ""
+"Set here the city of content origin. This field is limited to 32 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo catagóir an ábhair. Ní cheadaítear ach trí charachtar ASCII "
+"sa réimse seo."
+
+#: iptc/iptcorigin.cpp:465 xmp/xmporigin.cpp:422
+msgid "Sublocation:"
+msgstr "Foshuíomh:"
+
+#: iptc/iptcorigin.cpp:470
+#, fuzzy
+#| msgid ""
+#| "Set here the content provider. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Set here the content location within city. This field is limited to 32 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo soláthraí an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptcorigin.cpp:475 xmp/xmporigin.cpp:429
+msgid "State/Province:"
+msgstr "Stát/Cúige:"
+
+#: iptc/iptcorigin.cpp:480
+#, fuzzy
+#| msgid ""
+#| "Set here the original owner of content. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Set here the Province or State of content origin. This field is limited to "
+"32 ASCII characters."
+msgstr ""
+"Socraigh anseo bunúinéir an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptcorigin.cpp:485 xmp/xmpcredits.cpp:158 xmp/xmporigin.cpp:436
+msgid "Country:"
+msgstr "Tír:"
+
+#: iptc/iptcorigin.cpp:493
+#, fuzzy
+#| msgid "Set here the name of content creator."
+msgid "Select here country name of content origin."
+msgstr "Socraigh anseo ainm chruthaitheoir an ábhair."
+
+#: iptc/iptcproperties.cpp:135
+msgid "Release date"
+msgstr "Dáta scaoilte"
+
+#: iptc/iptcproperties.cpp:136
+msgid "Release time"
+msgstr "Am scaoilte"
+
+#: iptc/iptcproperties.cpp:142
+#, fuzzy
+#| msgid "Set creation date to today"
+msgid "Set release date to today"
+msgstr "Socraigh dáta cruthaithe mar inniu"
+
+#: iptc/iptcproperties.cpp:144
+#, fuzzy
+#| msgid "Select here the editorial type of content."
+msgid "Set here the earliest intended usable date of intellectual content."
+msgstr "Roghnaigh cineál eagarthóireachta an ábhair anseo."
+
+#: iptc/iptcproperties.cpp:146
+#, fuzzy
+#| msgid "Select here the editorial type of content."
+msgid "Set here the earliest intended usable time of intellectual content."
+msgstr "Roghnaigh cineál eagarthóireachta an ábhair anseo."
+
+#: iptc/iptcproperties.cpp:152
+msgid "Expiration date"
+msgstr "Dáta éaga"
+
+#: iptc/iptcproperties.cpp:153
+msgid "Expiration time"
+msgstr "Am éaga"
+
+#: iptc/iptcproperties.cpp:159
+#, fuzzy
+#| msgid "Set creation date to today"
+msgid "Set expiration date to today"
+msgstr "Socraigh dáta cruthaithe mar inniu"
+
+#: iptc/iptcproperties.cpp:161
+#, fuzzy
+#| msgid "Select here the scene type of content."
+msgid "Set here the latest intended usable date of intellectual content."
+msgstr "Roghnaigh cineál radhairc an ábhair anseo."
+
+#: iptc/iptcproperties.cpp:163
+#, fuzzy
+#| msgid "Select here the scene type of content."
+msgid "Set here the latest intended usable time of intellectual content."
+msgstr "Roghnaigh cineál radhairc an ábhair anseo."
+
+#: iptc/iptcproperties.cpp:170 xmp/xmpproperties.cpp:174
+msgid "Language:"
+msgstr "Teanga:"
+
+#: iptc/iptcproperties.cpp:182 xmp/xmpproperties.cpp:175
+msgid "Select here the language of content."
+msgstr "Roghnaigh teanga an ábhair anseo."
+
+#: iptc/iptcproperties.cpp:188 xmp/xmpproperties.cpp:188
+#, fuzzy
+#| msgid "0: None"
+msgctxt "editorial urgency of content"
+msgid "0: None"
+msgstr "0: Neamhní"
+
+#: iptc/iptcproperties.cpp:189 xmp/xmpproperties.cpp:189
+#, fuzzy
+#| msgid "1: High"
+msgctxt "editorial urgency of content"
+msgid "1: High"
+msgstr "1: Ard"
+
+#: iptc/iptcproperties.cpp:193 xmp/xmpproperties.cpp:193
+#, fuzzy
+#| msgid "5: Normal"
+msgctxt "editorial urgency of content"
+msgid "5: Normal"
+msgstr "5: Gnáth"
+
+#: iptc/iptcproperties.cpp:196 xmp/xmpproperties.cpp:196
+#, fuzzy
+#| msgid "8: Low"
+msgctxt "editorial urgency of content"
+msgid "8: Low"
+msgstr "8: Íseal"
+
+#: iptc/iptcproperties.cpp:197 xmp/xmpproperties.cpp:197
+msgid "Select here the editorial urgency of content."
+msgstr "Roghnaigh práinn eagarthóireachta an ábhair anseo."
+
+#: iptc/iptcproperties.cpp:201
+msgid "Cycle:"
+msgstr "Ciogal:"
+
+#: iptc/iptcproperties.cpp:203
+msgid "Morning"
+msgstr "Maidin"
+
+#: iptc/iptcproperties.cpp:204
+msgid "Afternoon"
+msgstr "Tráthnóna"
+
+#: iptc/iptcproperties.cpp:205
+msgid "Evening"
+msgstr "Oíche"
+
+#: iptc/iptcproperties.cpp:206
+msgid "Select here the editorial cycle of content."
+msgstr "Roghnaigh saolré eagarthóireachta an ábhair anseo."
+
+#: iptc/iptcproperties.cpp:210 xmp/xmpproperties.cpp:213
+msgid "Type:"
+msgstr "Cineál:"
+
+#: iptc/iptcproperties.cpp:216 xmp/xmpproperties.cpp:117
+msgid "News"
+msgstr "Nuacht"
+
+#: iptc/iptcproperties.cpp:217 xmp/xmpproperties.cpp:113
+msgid "Data"
+msgstr "Sonraí"
+
+#: iptc/iptcproperties.cpp:218 xmp/xmpproperties.cpp:110
+msgid "Advisory"
+msgstr "Comhairleach"
+
+#: iptc/iptcproperties.cpp:219
+msgid "Select here the editorial type of content."
+msgstr "Roghnaigh cineál eagarthóireachta an ábhair anseo."
+
+#: iptc/iptcproperties.cpp:220
+#, fuzzy
+#| msgid ""
+#| "Set here the original owner of content. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Set here the editorial type description of content. This field is limited to "
+"64 ASCII characters."
+msgstr ""
+"Socraigh anseo bunúinéir an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptcproperties.cpp:229 xmp/xmpproperties.cpp:257
+msgid "Reference:"
+msgstr "Tagairt:"
+
+#: iptc/iptcproperties.cpp:234
+#, fuzzy
+#| msgid ""
+#| "Set here the original owner of content. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Set here the original content transmission reference. This field is limited "
+"to 32 ASCII characters."
+msgstr ""
+"Socraigh anseo bunúinéir an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptcstatus.cpp:91
+#, fuzzy
+#| msgid "Title:"
+msgctxt "image title"
+msgid "Title:"
+msgstr "Teideal:"
+
+#: iptc/iptcstatus.cpp:96
+#, fuzzy
+#| msgid ""
+#| "Set here the category of content. This field is limited to 3 ASCII "
+#| "characters."
+msgid ""
+"Set here the shorthand reference of content. This field is limited to 64 "
+"ASCII characters."
+msgstr ""
+"Socraigh anseo catagóir an ábhair. Ní cheadaítear ach trí charachtar ASCII "
+"sa réimse seo."
+
+#: iptc/iptcstatus.cpp:101
+msgid "Edit Status:"
+msgstr "Stádas Eagarthóireachta:"
+
+#: iptc/iptcstatus.cpp:106
+#, fuzzy
+#| msgid ""
+#| "Set here the category of content. This field is limited to 3 ASCII "
+#| "characters."
+msgid ""
+"Set here the title of content status. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo catagóir an ábhair. Ní cheadaítear ach trí charachtar ASCII "
+"sa réimse seo."
+
+#: iptc/iptcstatus.cpp:111
+msgid "Job Identifier:"
+msgstr "Aitheantóir Jab:"
+
+#: iptc/iptcstatus.cpp:116
+#, fuzzy
+#| msgid ""
+#| "Set here the product identifier. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Set here the string that identifies content that recurs. This field is "
+"limited to 32 ASCII characters."
+msgstr ""
+"Socraigh anseo aitheantas an táirge. Ní cheadaítear ach 32 carachtar ASCII "
+"sa réimse seo."
+
+#: iptc/iptcstatus.cpp:121 xmp/xmpstatus.cpp:105
+msgid "Special Instructions:"
+msgstr "Treoracha Speisialta:"
+
+#: iptc/iptcstatus.cpp:125
+#, fuzzy
+#| msgid "Enter the image title. This field is limited to ASCII characters."
+msgid ""
+"Enter the editorial usage instructions. This field is limited to 256 ASCII "
+"characters."
+msgstr ""
+"Iontráil teideal na híomhá. Ní cheadaítear ach carachtair ASCII sa réimse "
+"seo."
+
+#: iptc/iptcsubjects.cpp:57
+msgid ""
+"Enter here the Informative Provider Reference. I.P.R is a name registered "
+"with the IPTC/NAA, identifying the provider that provides an indicator of "
+"the content. The default value for the I.P.R is \"IPTC\" if a standard "
+"Reference Code is used. This field is limited to 32 ASCII characters."
+msgstr ""
+
+#: iptc/iptcsubjects.cpp:65
+msgid ""
+"Enter here the Subject Reference Number. Provides a numeric code to indicate "
+"the Subject Name plus optional Subject Matter and Subject Detail Names in "
+"the language of the service. Subject Reference is a number from the range "
+"01000000 to 17999999 and represent a language independent international "
+"reference to a Subject. A Subject is identified by its Reference Number and "
+"corresponding Names taken from a standard lists given by IPTC/NAA. If a "
+"standard reference code is used, these lists are the English language "
+"reference versions. This field is limited to 8 ASCII digit code."
+msgstr ""
+
+#: iptc/iptcsubjects.cpp:80
+#, fuzzy
+#| msgid ""
+#| "Set here the original owner of content. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Enter here the Subject Name. English language is used if you selected a "
+"standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo bunúinéir an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptcsubjects.cpp:87
+#, fuzzy
+#| msgid ""
+#| "Set here the original owner of content. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Enter here the Subject Matter Name. English language is used if you selected "
+"a standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo bunúinéir an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptcsubjects.cpp:94
+#, fuzzy
+#| msgid ""
+#| "Set here the original owner of content. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Enter here the Subject Detail Name. English language is used if you selected "
+"a standard IPTC/NAA reference code. This field is limited to 64 ASCII "
+"characters."
+msgstr ""
+"Socraigh anseo bunúinéir an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: iptc/iptceditwidget.cpp:140 xmp/xmpeditwidget.cpp:140
+msgid "Content"
+msgstr "Ábhar"
+
+#: iptc/iptceditwidget.cpp:141 xmp/xmpeditwidget.cpp:141
+msgid ""
+"<qt>Content Information<br/><i>Use this panel to describe the visual content "
+"of the image</i></qt>"
+msgstr ""
+
+#: iptc/iptceditwidget.cpp:146 xmp/xmpeditwidget.cpp:146
+msgid "Origin"
+msgstr "Bunphointe"
+
+#: iptc/iptceditwidget.cpp:147 xmp/xmpeditwidget.cpp:147
+msgid ""
+"<qt>Origin Information<br/><i>Use this panel for formal descriptive "
+"information about the image</i></qt>"
+msgstr ""
+
+#: iptc/iptceditwidget.cpp:152 xmp/xmpeditwidget.cpp:152
+msgid "Credits"
+msgstr "Admhálacha"
+
+#: iptc/iptceditwidget.cpp:153 xmp/xmpeditwidget.cpp:153
+msgid ""
+"<qt>Credit Information<br/><i>Use this panel to record copyright information "
+"about the image</i></qt>"
+msgstr ""
+
+#: iptc/iptceditwidget.cpp:158 xmp/xmpeditwidget.cpp:158
+msgid "Subjects"
+msgstr "Ábhair"
+
+#: iptc/iptceditwidget.cpp:159 xmp/xmpeditwidget.cpp:159
+msgid ""
+"<qt>Subject Information<br/><i>Use this panel to record subject information "
+"about the image</i></qt>"
+msgstr ""
+
+#: iptc/iptceditwidget.cpp:164 xmp/xmpeditwidget.cpp:164
+msgid "Keywords"
+msgstr "Lorgfhocail"
+
+#: iptc/iptceditwidget.cpp:165 xmp/xmpeditwidget.cpp:165
+msgid ""
+"<qt>Keyword Information<br/><i>Use this panel to record keywords relevant to "
+"the image</i></qt>"
+msgstr ""
+
+#: iptc/iptceditwidget.cpp:170 xmp/xmpeditwidget.cpp:170
+msgid "Categories"
+msgstr "Catagóirí"
+
+#: iptc/iptceditwidget.cpp:171 xmp/xmpeditwidget.cpp:171
+msgid ""
+"<qt>Category Information<br/><i>Use this panel to record categories relevant "
+"to the image</i></qt>"
+msgstr ""
+
+#: iptc/iptceditwidget.cpp:176 xmp/xmpeditwidget.cpp:176
+msgid "Status"
+msgstr "Stádas"
+
+#: iptc/iptceditwidget.cpp:177 xmp/xmpeditwidget.cpp:177
+msgid ""
+"<qt>Status Information<br/><i>Use this panel to record workflow information</"
+"i></qt>"
+msgstr ""
+
+#: iptc/iptceditwidget.cpp:182 xmp/xmpeditwidget.cpp:182
+msgid "Properties"
+msgstr "Airíonna"
+
+#: iptc/iptceditwidget.cpp:183 xmp/xmpeditwidget.cpp:183
+msgid ""
+"<qt>Status Properties<br/><i>Use this panel to record workflow properties</"
+"i></qt>"
+msgstr ""
+
+#: iptc/iptceditwidget.cpp:188
+msgid "Envelope"
+msgstr "Clúdach"
+
+#: iptc/iptceditwidget.cpp:189
+msgid ""
+"<qt>Envelope Information<br/><i>Use this panel to record editorial details</"
+"i></qt>"
+msgstr ""
+
+#: xmp/xmpcategories.cpp:90
+msgid ""
+"Set here the category of content. This field is limited to 3 characters."
+msgstr ""
+"Socraigh anseo catagóir an ábhair. Ní cheadaítear ach trí charachtar ASCII "
+"sa réimse seo."
+
+#: xmp/xmpcategories.cpp:97
+msgid "Enter here a new supplemental category of content."
+msgstr "Iontráil catagóir nua forlíontach d'ábhar."
+
+#: xmp/xmpcontent.cpp:95
+msgid "Enter here the content synopsis."
+msgstr "Iontráil achoimre an ábhair anseo."
+
+#: xmp/xmpcontent.cpp:100
+msgid "Enter the content description."
+msgstr "Déan cur síos ar an ábhar."
+
+#: xmp/xmpcontent.cpp:102
+#, fuzzy
+#| msgid "Default Language"
+msgid "Default Language Caption Options"
+msgstr "Teanga Réamhshocraithe"
+
+#: xmp/xmpcontent.cpp:125
+msgid "Enter the necessary copyright notice."
+msgstr ""
+
+#: xmp/xmpcredits.cpp:125
+msgid "Contact"
+msgstr "Teagmháil"
+
+#: xmp/xmpcredits.cpp:128
+#, fuzzy
+#| msgid "E-mail:"
+msgctxt "contact email address"
+msgid "E-mail:"
+msgstr "Ríomhphost:"
+
+#: xmp/xmpcredits.cpp:131
+msgid "Set here the contact e-mail."
+msgstr "Socraigh seoladh ríomhphoist na teagmhála anseo."
+
+#: xmp/xmpcredits.cpp:133
+msgid "URL:"
+msgstr "URL:"
+
+#: xmp/xmpcredits.cpp:136
+msgid "Set here the contact URL."
+msgstr "Socraigh URL na teagmhála anseo."
+
+#: xmp/xmpcredits.cpp:138
+msgid "Phone:"
+msgstr "Fón:"
+
+#: xmp/xmpcredits.cpp:141
+#, fuzzy
+#| msgid "Set here the contact phone."
+msgid "Set here the contact 'phone number."
+msgstr "Socraigh uimhir theileafóin na teagmhála anseo."
+
+#: xmp/xmpcredits.cpp:143
+msgctxt "Street address"
+msgid "Address:"
+msgstr "Seoladh:"
+
+#: xmp/xmpcredits.cpp:146
+msgid "Set here the contact address."
+msgstr "Socraigh seoladh na teagmhála anseo."
+
+#: xmp/xmpcredits.cpp:148
+msgid "Postal code:"
+msgstr "Cód poist:"
+
+#: xmp/xmpcredits.cpp:151
+msgid "Set here the contact postal code."
+msgstr "Socraigh cód poist na teagmhála anseo."
+
+#: xmp/xmpcredits.cpp:156
+msgid "Set here the contact city."
+msgstr "Socraigh cathair na teagmhála anseo."
+
+#: xmp/xmpcredits.cpp:161
+msgid "Set here the contact country."
+msgstr "Socraigh tír na teagmhála anseo."
+
+#: xmp/xmpcredits.cpp:186
+msgid "Set here the content provider."
+msgstr "Socraigh soláthraí an ábhair anseo."
+
+#: xmp/xmpcredits.cpp:193
+msgid "Set here the original owner of content."
+msgstr "Roghnaigh bunúinéir an ábhair anseo."
+
+#: xmp/xmpkeywords.cpp:86
+msgid "Enter here a new keyword."
+msgstr "Iontráil lorgfhocal nua anseo."
+
+#: xmp/xmporigin.cpp:418
+#, fuzzy
+#| msgid "Set here the contact city."
+msgid "Set here the content's city of origin."
+msgstr "Socraigh cathair na teagmhála anseo."
+
+#: xmp/xmporigin.cpp:425
+#, fuzzy
+#| msgid "Set here the contact city."
+msgid "Set here the content's location within the city."
+msgstr "Socraigh cathair na teagmhála anseo."
+
+#: xmp/xmporigin.cpp:432
+#, fuzzy
+#| msgid "Set here the content provider."
+msgid "Set here the content's Province or State of origin."
+msgstr "Socraigh soláthraí an ábhair anseo."
+
+#: xmp/xmporigin.cpp:444
+#, fuzzy
+#| msgid "Set here the contact country."
+msgid "Select here the content's country of origin."
+msgstr "Socraigh tír na teagmhála anseo."
+
+#: xmp/xmpproperties.cpp:85
+msgid "Headshot"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:86
+msgid "Half-length"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:87
+msgid "Full-length"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:88
+msgctxt "Side view of a person"
+msgid "Profile"
+msgstr "Leathaghaidh"
+
+#: xmp/xmpproperties.cpp:89
+#, fuzzy
+#| msgid "Aerial view"
+msgid "Rear view"
+msgstr "Aeramharc"
+
+#: xmp/xmpproperties.cpp:90
+msgid "Single"
+msgstr "Duine Aonair"
+
+#: xmp/xmpproperties.cpp:91
+msgid "Couple"
+msgstr "Beirt"
+
+#: xmp/xmpproperties.cpp:92
+msgid "Two"
+msgstr "Dhá cheann"
+
+#: xmp/xmpproperties.cpp:93
+#, fuzzy
+#| msgid "Group"
+msgctxt "group of people"
+msgid "Group"
+msgstr "Grúpa"
+
+#: xmp/xmpproperties.cpp:94
+msgid "General view"
+msgstr "Amharc ginearálta"
+
+#: xmp/xmpproperties.cpp:95
+msgid "Panoramic view"
+msgstr "Amharc lánléargais"
+
+#: xmp/xmpproperties.cpp:96
+msgid "Aerial view"
+msgstr "Aeramharc"
+
+#: xmp/xmpproperties.cpp:97
+msgid "Under-water"
+msgstr "Faoi uisce"
+
+#: xmp/xmpproperties.cpp:99
+msgid "Satellite"
+msgstr "Satailít"
+
+#: xmp/xmpproperties.cpp:100
+#, fuzzy
+#| msgid "Aerial view"
+msgid "Exterior view"
+msgstr "Aeramharc"
+
+#: xmp/xmpproperties.cpp:101
+#, fuzzy
+#| msgid "Interview"
+msgid "Interior view"
+msgstr "Agallamh"
+
+#: xmp/xmpproperties.cpp:102
+msgid "Close-up"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:103
+msgid "Action"
+msgstr "Gníomh"
+
+#: xmp/xmpproperties.cpp:104
+msgid "Performing"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:105
+#, fuzzy
+#| msgid "Morning"
+msgid "Posing"
+msgstr "Maidin"
+
+#: xmp/xmpproperties.cpp:106
+msgid "Symbolic"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:107
+msgid "Off-beat"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:108
+#, fuzzy
+#| msgid "Night scene"
+msgid "Movie scene"
+msgstr "Radharc oíche"
+
+#: xmp/xmpproperties.cpp:111
+msgid "Alert"
+msgstr "Foláireamh"
+
+#: xmp/xmpproperties.cpp:112
+msgid "Catalog"
+msgstr "Catalóg"
+
+#: xmp/xmpproperties.cpp:114
+#, fuzzy
+#| msgid "Document"
+msgctxt "type is a document"
+msgid "Document"
+msgstr "Cáipéis"
+
+#: xmp/xmpproperties.cpp:115
+msgid "DTD"
+msgstr "DTD"
+
+#: xmp/xmpproperties.cpp:116
+msgid "Maintenance"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:118
+msgid "News Management Mode"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:119
+msgid "Package"
+msgstr "Pacáiste"
+
+#: xmp/xmpproperties.cpp:120
+msgid "Schema"
+msgstr "Scéimre"
+
+#: xmp/xmpproperties.cpp:121
+msgid "Topic"
+msgstr "Topaic"
+
+#: xmp/xmpproperties.cpp:122
+#, fuzzy
+#| msgid "Topic"
+msgid "Topic Set"
+msgstr "Topaic"
+
+#: xmp/xmpproperties.cpp:201
+msgid "Scene:"
+msgstr "Radharc:"
+
+#: xmp/xmpproperties.cpp:202
+#, fuzzy
+#| msgid "Select here the scene type of content."
+msgid "Select here the scene type of the content."
+msgstr "Roghnaigh cineál radhairc an ábhair anseo."
+
+#: xmp/xmpproperties.cpp:214
+#, fuzzy
+#| msgid "Select here the editorial type of content."
+msgid "Select here the editorial type of the content."
+msgstr "Roghnaigh cineál eagarthóireachta an ábhair anseo."
+
+#: xmp/xmpproperties.cpp:225 plugin/objectattributesedit.cpp:96
+msgid "Attribute:"
+msgstr "Tréith:"
+
+#: xmp/xmpproperties.cpp:229
+#, fuzzy
+#| msgid "Select here the editorial attribute of content."
+msgid "Set here the editorial attribute description of the content."
+msgstr "Roghnaigh tréith eagarthóireachta an ábhair anseo."
+
+#: xmp/xmpproperties.cpp:231
+#, fuzzy
+#| msgid "Select here the editorial attribute of content."
+msgid "Select here the editorial attribute of the content."
+msgstr "Roghnaigh tréith eagarthóireachta an ábhair anseo."
+
+#: xmp/xmpproperties.cpp:232
+#, fuzzy
+#| msgid "Current"
+msgctxt "editorial content attribute"
+msgid "Current"
+msgstr "Reatha"
+
+#: xmp/xmpproperties.cpp:233
+#, fuzzy
+#| msgid "Analysis"
+msgctxt "editorial content attribute"
+msgid "Analysis"
+msgstr "Anailís"
+
+#: xmp/xmpproperties.cpp:234
+#, fuzzy
+#| msgid "Archive material"
+msgctxt "editorial content attribute"
+msgid "Archive material"
+msgstr "Ábhar ón gcartlann"
+
+#: xmp/xmpproperties.cpp:235
+#, fuzzy
+#| msgid "Background"
+msgctxt "editorial content attribute"
+msgid "Background"
+msgstr "Cúlra"
+
+#: xmp/xmpproperties.cpp:236
+#, fuzzy
+#| msgid "Feature"
+msgctxt "editorial content attribute"
+msgid "Feature"
+msgstr "Gné-Alt"
+
+#: xmp/xmpproperties.cpp:237
+#, fuzzy
+#| msgid "Forecast"
+msgctxt "editorial content attribute"
+msgid "Forecast"
+msgstr "Réamhaisnéis"
+
+#: xmp/xmpproperties.cpp:238
+#, fuzzy
+#| msgid "History"
+msgctxt "editorial content attribute"
+msgid "History"
+msgstr "Stair"
+
+#: xmp/xmpproperties.cpp:239
+#, fuzzy
+#| msgid "Obituary"
+msgctxt "editorial content attribute"
+msgid "Obituary"
+msgstr "Fógra Báis"
+
+#: xmp/xmpproperties.cpp:240
+#, fuzzy
+#| msgid "Opinion"
+msgctxt "editorial content attribute"
+msgid "Opinion"
+msgstr "Barúil"
+
+#: xmp/xmpproperties.cpp:241
+#, fuzzy
+#| msgid "Polls & Surveys"
+msgctxt "editorial content attribute"
+msgid "Polls & Surveys"
+msgstr "Pobalbhreitheanna agus Suirbhéanna"
+
+#: xmp/xmpproperties.cpp:242
+#, fuzzy
+#| msgctxt "Content type"
+#| msgid "Profile"
+msgctxt "editorial content attribute"
+msgid "Profile"
+msgstr "Próifíl"
+
+#: xmp/xmpproperties.cpp:243
+msgctxt "editorial content attribute"
+msgid "Results Listings & Table"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:244
+#, fuzzy
+#| msgid "Caption Information"
+msgctxt "editorial content attribute"
+msgid "Side bar & Supporting information"
+msgstr "Faisnéis Fhotheidil"
+
+#: xmp/xmpproperties.cpp:245
+#, fuzzy
+#| msgid "Summary"
+msgctxt "editorial content attribute"
+msgid "Summary"
+msgstr "Achoimre"
+
+#: xmp/xmpproperties.cpp:246
+#, fuzzy
+#| msgid "Transcript & Verbatim"
+msgctxt "editorial content attribute"
+msgid "Transcript & Verbatim"
+msgstr "Trascríbhinn agus Focal ar Fhocal"
+
+#: xmp/xmpproperties.cpp:247
+#, fuzzy
+#| msgid "Interview"
+msgctxt "editorial content attribute"
+msgid "Interview"
+msgstr "Agallamh"
+
+#: xmp/xmpproperties.cpp:248
+#, fuzzy
+#| msgid "From the Scene"
+msgctxt "editorial content attribute"
+msgid "From the Scene"
+msgstr "Ón Radharc"
+
+#: xmp/xmpproperties.cpp:249
+#, fuzzy
+#| msgid "Retrospective"
+msgctxt "editorial content attribute"
+msgid "Retrospective"
+msgstr "Aisbhreathnaitheach"
+
+#: xmp/xmpproperties.cpp:250
+#, fuzzy
+#| msgid "Statistics"
+msgctxt "editorial content attribute"
+msgid "Statistics"
+msgstr "Staitisticí"
+
+#: xmp/xmpproperties.cpp:251
+#, fuzzy
+#| msgid "Update"
+msgctxt "editorial content attribute"
+msgid "Update"
+msgstr "Nuashonraigh"
+
+#: xmp/xmpproperties.cpp:252
+msgctxt "editorial content attribute"
+msgid "Wrap-up"
+msgstr ""
+
+#: xmp/xmpproperties.cpp:253
+#, fuzzy
+#| msgid "Press Release"
+msgctxt "editorial content attribute"
+msgid "Press Release"
+msgstr "Preaseisiúint"
+
+#: xmp/xmpproperties.cpp:260
+#, fuzzy
+#| msgid "Set here the title of content creator."
+msgid "Set here the original content transmission reference."
+msgstr "Socraigh anseo ainm chruthaitheoir an ábhair."
+
+#: xmp/xmpstatus.cpp:88
+#, fuzzy
+#| msgid "Title:"
+msgctxt "short title for the content"
+msgid "Title:"
+msgstr "Teideal:"
+
+#: xmp/xmpstatus.cpp:89
+#, fuzzy
+#| msgid "Select here the scene type of content."
+msgid "Set here a shorthand reference for the content."
+msgstr "Roghnaigh cineál radhairc an ábhair anseo."
+
+#: xmp/xmpstatus.cpp:93
+msgid "Nickname:"
+msgstr "Leasainm:"
+
+#: xmp/xmpstatus.cpp:96
+msgid "A short informal name for the resource."
+msgstr ""
+
+#: xmp/xmpstatus.cpp:100
+msgid "Identifiers:"
+msgstr "Aitheantóirí:"
+
+#: xmp/xmpstatus.cpp:101
+#, fuzzy
+#| msgid "Set here the title of content creator."
+msgid "Set here the strings that identify content that recurs."
+msgstr "Socraigh anseo ainm chruthaitheoir an ábhair."
+
+#: xmp/xmpstatus.cpp:107
+#, fuzzy
+#| msgid "Select here the editorial urgency of content."
+msgid "Enter the editorial usage instructions."
+msgstr "Roghnaigh práinn eagarthóireachta an ábhair anseo."
+
+#: xmp/xmpsubjects.cpp:55
+msgid ""
+"Enter here the Informative Provider Reference. I.P.R is a name registered "
+"with the XMP/NAA, identifying the provider that provides an indicator of the "
+"content. The default value for the I.P.R is \"XMP\" if a standard Reference "
+"Code is used."
+msgstr ""
+
+#: xmp/xmpsubjects.cpp:61
+msgid ""
+"Enter here the Subject Reference Number. Provides a numeric code to indicate "
+"the Subject Name plus optional Subject Matter and Subject Detail Names in "
+"the language of the service. Subject Reference is a number from the range "
+"01000000 to 17999999 and represent a language independent international "
+"reference to a Subject. A Subject is identified by its Reference Number and "
+"corresponding Names taken from a standard lists given by XMP/NAA. If a "
+"standard reference code is used, these lists are the English language "
+"reference versions. This field is limited to 8 digit code."
+msgstr ""
+
+#: xmp/xmpsubjects.cpp:74
+msgid ""
+"Enter here the Subject Name. English language is used if you selected a "
+"standard XMP/NAA reference code."
+msgstr ""
+
+#: xmp/xmpsubjects.cpp:78
+msgid ""
+"Enter here the Subject Matter Name. English language is used if you selected "
+"a standard XMP/NAA reference code."
+msgstr ""
+
+#: xmp/xmpsubjects.cpp:82
+msgid ""
+"Enter here the Subject Detail Name. English language is used if you selected "
+"a standard XMP/NAA reference code."
+msgstr ""
+
+#: plugin/multistringsedit.cpp:90 plugin/multivaluesedit.cpp:94
+#: plugin/objectattributesedit.cpp:104
+msgid "Add a new value to the list"
+msgstr "Cuir luach nua leis an liosta"
+
+#: plugin/multistringsedit.cpp:91 plugin/multivaluesedit.cpp:95
+#: plugin/objectattributesedit.cpp:105
+msgid "Remove the current selected value from the list"
+msgstr "Bain an luach roghnaithe faoi láthair ón liosta"
+
+#: plugin/multistringsedit.cpp:92 plugin/multivaluesedit.cpp:96
+#: plugin/objectattributesedit.cpp:106
+msgid "Replace the current selected value from the list"
+msgstr "Cuir luach nua in ionad an luach roghnaithe faoi láthair"
+
+#: plugin/multistringsedit.cpp:106 plugin/objectattributesedit.cpp:151
+msgid " This field is limited to:"
+msgstr " Sa réimse seo ní cheadaítear ach:"
+
+#: plugin/multistringsedit.cpp:112 plugin/objectattributesedit.cpp:157
+#, fuzzy
+#| msgid "<p>Size of %1 characters.</p>"
+msgid "<p>Printable ASCII characters.</p>"
+msgstr "<p>%1 carachtar.</p>"
+
+#: plugin/multistringsedit.cpp:118 plugin/objectattributesedit.cpp:163
+#, fuzzy, kde-format
+#| msgid "<p>Size of %1 characters.</p>"
+msgid "<p>1 character.</p>"
+msgid_plural "<p>%1 characters.</p>"
+msgstr[0] "<p>%1 carachtar.</p>"
+msgstr[1] "<p>%1 carachtar.</p>"
+msgstr[2] "<p>%1 carachtar.</p>"
+msgstr[3] "<p>%1 carachtar.</p>"
+msgstr[4] "<p>%1 carachtar.</p>"
+
+#: plugin/objectattributesedit.cpp:118
+msgid "Select here the editorial attribute of content."
+msgstr "Roghnaigh tréith eagarthóireachta an ábhair anseo."
+
+#: plugin/objectattributesedit.cpp:119
+#, fuzzy
+#| msgid "Current"
+msgctxt "Content type"
+msgid "Current"
+msgstr "Reatha"
+
+#: plugin/objectattributesedit.cpp:120
+#, fuzzy
+#| msgid "Analysis"
+msgctxt "Content type"
+msgid "Analysis"
+msgstr "Anailís"
+
+#: plugin/objectattributesedit.cpp:121
+#, fuzzy
+#| msgid "Archive material"
+msgctxt "Content type"
+msgid "Archive material"
+msgstr "Ábhar ón gcartlann"
+
+#: plugin/objectattributesedit.cpp:122
+#, fuzzy
+#| msgid "Background"
+msgctxt "Content type"
+msgid "Background"
+msgstr "Cúlra"
+
+#: plugin/objectattributesedit.cpp:123
+#, fuzzy
+#| msgid "Feature"
+msgctxt "Content type"
+msgid "Feature"
+msgstr "Gné-Alt"
+
+#: plugin/objectattributesedit.cpp:124
+#, fuzzy
+#| msgid "Forecast"
+msgctxt "Content type"
+msgid "Forecast"
+msgstr "Réamhaisnéis"
+
+#: plugin/objectattributesedit.cpp:125
+#, fuzzy
+#| msgid "History"
+msgctxt "Content type"
+msgid "History"
+msgstr "Stair"
+
+#: plugin/objectattributesedit.cpp:126
+#, fuzzy
+#| msgid "Obituary"
+msgctxt "Content type"
+msgid "Obituary"
+msgstr "Fógra Báis"
+
+#: plugin/objectattributesedit.cpp:127
+#, fuzzy
+#| msgid "Opinion"
+msgctxt "Content type"
+msgid "Opinion"
+msgstr "Barúil"
+
+#: plugin/objectattributesedit.cpp:128
+#, fuzzy
+#| msgid "Polls & Surveys"
+msgctxt "Content type"
+msgid "Polls & Surveys"
+msgstr "Pobalbhreitheanna agus Suirbhéanna"
+
+#: plugin/objectattributesedit.cpp:129
+msgctxt "Content type"
+msgid "Profile"
+msgstr "Próifíl"
+
+#: plugin/objectattributesedit.cpp:130
+msgctxt "Content type"
+msgid "Results Listings & Table"
+msgstr ""
+
+#: plugin/objectattributesedit.cpp:131
+#, fuzzy
+#| msgid "Caption Information"
+msgctxt "Content type"
+msgid "Side bar & Supporting information"
+msgstr "Faisnéis Fhotheidil"
+
+#: plugin/objectattributesedit.cpp:132
+#, fuzzy
+#| msgid "Summary"
+msgctxt "Content type"
+msgid "Summary"
+msgstr "Achoimre"
+
+#: plugin/objectattributesedit.cpp:133
+#, fuzzy
+#| msgid "Transcript & Verbatim"
+msgctxt "Content type"
+msgid "Transcript & Verbatim"
+msgstr "Trascríbhinn agus Focal ar Fhocal"
+
+#: plugin/objectattributesedit.cpp:134
+#, fuzzy
+#| msgid "Interview"
+msgctxt "Content type"
+msgid "Interview"
+msgstr "Agallamh"
+
+#: plugin/objectattributesedit.cpp:135
+#, fuzzy
+#| msgid "From the Scene"
+msgctxt "Content type"
+msgid "From the Scene"
+msgstr "Ón Radharc"
+
+#: plugin/objectattributesedit.cpp:136
+#, fuzzy
+#| msgid "Retrospective"
+msgctxt "Content type"
+msgid "Retrospective"
+msgstr "Aisbhreathnaitheach"
+
+#: plugin/objectattributesedit.cpp:137
+#, fuzzy
+#| msgid "Statistics"
+msgctxt "Content type"
+msgid "Statistics"
+msgstr "Staitisticí"
+
+#: plugin/objectattributesedit.cpp:138
+#, fuzzy
+#| msgid "Update"
+msgctxt "Content type"
+msgid "Update"
+msgstr "Nuashonraigh"
+
+#: plugin/objectattributesedit.cpp:139
+msgctxt "Content type"
+msgid "Wrap-up"
+msgstr ""
+
+#: plugin/objectattributesedit.cpp:140
+#, fuzzy
+#| msgid "Press Release"
+msgctxt "Content type"
+msgid "Press Release"
+msgstr "Preaseisiúint"
+
+#: plugin/objectattributesedit.cpp:146
+#, fuzzy
+#| msgid ""
+#| "Set here the original owner of content. This field is limited to 32 ASCII "
+#| "characters."
+msgid ""
+"Set here the editorial attribute description of content. This field is "
+"limited to 64 ASCII characters."
+msgstr ""
+"Socraigh anseo bunúinéir an ábhair. Ní cheadaítear ach 32 carachtar ASCII sa "
+"réimse seo."
+
+#: plugin/plugin_metadataedit.cpp:99
+msgid "Metadata"
+msgstr "Meiteashonraí"
+
+#: plugin/plugin_metadataedit.cpp:104
+#, fuzzy
+#| msgid "Edit Metadata"
+msgid "Edit &All Metadata..."
+msgstr "Cuir Meiteashonraí in Eagar"
+
+#: plugin/plugin_metadataedit.cpp:114
+msgid "Import EXIF..."
+msgstr "Iompórtáil EXIF..."
+
+#: plugin/plugin_metadataedit.cpp:120
+msgid "Import IPTC..."
+msgstr "Iompórtáil IPTC..."
+
+#: plugin/plugin_metadataedit.cpp:126
+msgid "Import XMP..."
+msgstr "Iompórtáil XMP..."
+
+#: plugin/plugin_metadataedit.cpp:176
+msgid "Select File to Import EXIF metadata"
+msgstr ""
+
+#: plugin/plugin_metadataedit.cpp:186 plugin/plugin_metadataedit.cpp:283
+#: plugin/plugin_metadataedit.cpp:375
+#, kde-format
+msgid "Cannot load metadata from \"%1\""
+msgstr "Ní féidir meiteashonraí a luchtú ó \"%1\""
+
+#: plugin/plugin_metadataedit.cpp:187 plugin/plugin_metadataedit.cpp:201
+#: plugin/plugin_metadataedit.cpp:210 plugin/plugin_metadataedit.cpp:255
+msgid "Import EXIF Metadata"
+msgstr "Iompórtáil Meiteashonraí EXIF"
+
+#: plugin/plugin_metadataedit.cpp:200
+#, fuzzy, kde-format
+#| msgid "\"%1\" do not have XMP metadata"
+msgid "\"%1\" does not have EXIF metadata."
+msgstr "Níl meiteashonraí XMP ag \"%1\""
+
+#: plugin/plugin_metadataedit.cpp:207
+#, kde-format
+msgid ""
+"EXIF metadata from the currently selected pictures will be permanently "
+"replaced by the EXIF content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+
+#: plugin/plugin_metadataedit.cpp:253
+msgid "Unable to set EXIF metadata from:"
+msgstr ""
+
+#: plugin/plugin_metadataedit.cpp:273
+msgid "Select File to Import IPTC metadata"
+msgstr ""
+
+#: plugin/plugin_metadataedit.cpp:284 plugin/plugin_metadataedit.cpp:293
+#: plugin/plugin_metadataedit.cpp:302 plugin/plugin_metadataedit.cpp:347
+msgid "Import IPTC Metadata"
+msgstr "Iompórtáil Meiteashonraí IPTC"
+
+#: plugin/plugin_metadataedit.cpp:292
+#, fuzzy, kde-format
+#| msgid "\"%1\" do not have IPTC metadata"
+msgid "\"%1\" does not have IPTC metadata."
+msgstr "Níl meiteashonraí IPTC ag \"%1\""
+
+#: plugin/plugin_metadataedit.cpp:299
+#, kde-format
+msgid ""
+"IPTC metadata from the currently selected pictures will be permanently "
+"replaced by the IPTC content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+
+#: plugin/plugin_metadataedit.cpp:345
+msgid "Unable to set IPTC metadata from:"
+msgstr ""
+
+#: plugin/plugin_metadataedit.cpp:365
+msgid "Select File to Import XMP metadata"
+msgstr ""
+
+#: plugin/plugin_metadataedit.cpp:376 plugin/plugin_metadataedit.cpp:385
+#: plugin/plugin_metadataedit.cpp:394 plugin/plugin_metadataedit.cpp:439
+msgid "Import XMP Metadata"
+msgstr "Iompórtáil Meiteashonraí XMP"
+
+#: plugin/plugin_metadataedit.cpp:384
+#, fuzzy, kde-format
+#| msgid "\"%1\" do not have XMP metadata"
+msgid "\"%1\" does not have XMP metadata."
+msgstr "Níl meiteashonraí XMP ag \"%1\""
+
+#: plugin/plugin_metadataedit.cpp:391
+#, kde-format
+msgid ""
+"XMP metadata from the currently selected pictures will be permanently "
+"replaced by the XMP content of \"%1\".\n"
+"Do you want to continue?"
+msgstr ""
+
+#: plugin/plugin_metadataedit.cpp:437
+msgid "Unable to set XMP metadata from:"
+msgstr ""
+
+#: plugin/metadataedit.cpp:110
+msgid "Metadata edit dialog"
+msgstr ""
+
+#: plugin/metadataedit.cpp:115
+#, fuzzy
+#| msgid "Edit EXIF..."
+msgid "Edit EXIF"
+msgstr "Cuir EXIF in Eagar..."
+
+#: plugin/metadataedit.cpp:116
+#, fuzzy
+#| msgid "Edit IPTC..."
+msgid "Edit IPTC"
+msgstr "Cuir IPTC in Eagar..."
+
+#: plugin/metadataedit.cpp:117
+#, fuzzy
+#| msgid "Edit XMP..."
+msgid "Edit XMP"
+msgstr "Cuir XMP in Eagar..."
+
+#: plugin/metadataedit.cpp:125
+msgid "Next"
+msgstr "Ar Aghaidh"
+
+#: plugin/metadataedit.cpp:126
+msgid "Previous"
+msgstr "Siar"
+
+#: plugin/metadataedit.cpp:168
+msgid "Edit Metadata"
+msgstr "Cuir Meiteashonraí in Eagar"
+
+#: plugin/metadataedit.cpp:171
+#, fuzzy
+#| msgid "A Plugin to edit pictures metadata"
+msgid "A Plugin to edit pictures' metadata."
+msgstr "Breiseán lenar féidir meiteashonraí pictiúr a chur in eagar"
+
+#: plugin/metadataedit.cpp:172
+#, fuzzy
+#| msgid "(c) 2006-2009, Gilles Caulier"
+msgid "(c) 2006-2011, Gilles Caulier"
+msgstr "© 2006-2009, Gilles Caulier"
+
+#: plugin/metadataedit.cpp:174
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/metadataedit.cpp:174
+msgid "Author and Maintainer"
+msgstr "Údar agus Cothaitheoir"
+
+#: plugin/metadataedit.cpp:177
+msgid "Victor Dodon"
+msgstr ""
+
+#: plugin/metadataedit.cpp:177
+#, fuzzy
+#| msgid "Envelope"
+msgid "Developer"
+msgstr "Clúdach"
+
+#: plugin/metadataedit.cpp:185
+msgid "Handbook"
+msgstr "Lámhleabhar"
+
+#: plugin/metadataedit.cpp:300
+#, fuzzy, kde-format
+#| msgid "Edit Metadata"
+msgid "%1 (%2/%3) - Edit Metadata"
+msgstr "Cuir Meiteashonraí in Eagar"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Kevin Scannell"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kscanne at gmail dot com"
+
+#~ msgid "Edit Image Caption"
+#~ msgstr "Cuir Fotheideal na hÍomhá in Eagar"
+
+#~ msgid ""
+#~ "Enter the image caption entered through <b>%1</b>. This field is not "
+#~ "limited (excepted with IPTC). UTF-8 encoding will be used to save text."
+#~ msgstr ""
+#~ "Iontráil fotheideal na híomhá a iontráladh trí <b>%1</b>. Níl aon srian "
+#~ "ar an réimse seo (seachas le IPTC). Sábhálfar an téacs in ionchódú UTF-8."
+
+#~ msgid "Sync XMP Caption"
+#~ msgstr "Sioncrónaigh Fotheideal XMP"
+
+#~ msgid "Remove Image Caption"
+#~ msgstr "Bain Fotheideal na hÍomhá"
+
+#~ msgid "Remove caption hosted by %1"
+#~ msgstr "Bain fotheideal faoi óstaíocht %1"
+
+#~ msgid "Remove JFIF Comment section"
+#~ msgstr "Bain Nóta JFIF"
+
+#~ msgid "Remove EXIF Comment"
+#~ msgstr "Bain Nóta EXIF"
+
+#~ msgid "Remove XMP Caption"
+#~ msgstr "Bain Fotheideal XMP"
+
+#~ msgid "Remove IPTC Caption"
+#~ msgstr "Bain Fotheideal IPTC"
+
+#~ msgid "Default Language"
+#~ msgstr "Teanga Réamhshocraithe"
+
+#~ msgid "Afrikaans (South Africa)"
+#~ msgstr "Afracáinis (An Afraic Theas)"
+
+#~ msgid "Amharic (Ethiopia)"
+#~ msgstr "Amáiris (An Aetóip)"
+
+#~ msgid "Arabic (UAE)"
+#~ msgstr "Araibis (AÉA)"
+
+#~ msgid "Arabic (Bahrain)"
+#~ msgstr "Araibis (An Bhairéin)"
+
+#~ msgid "Arabic (Algeria)"
+#~ msgstr "Araibis (An Ailgéir)"
+
+#~ msgid "Arabic (Egypt)"
+#~ msgstr "Araibis (An Éigipt)"
+
+#~ msgid "Arabic (Iraq)"
+#~ msgstr "Araibis (An Iaráic)"
+
+#~ msgid "Arabic (Jordan)"
+#~ msgstr "Araibis (An Iordáin)"
+
+#~ msgid "Arabic (Kuwait)"
+#~ msgstr "Araibis (Cuáit)"
+
+#~ msgid "Arabic (Lebanon)"
+#~ msgstr "Araibis (An Liobáin)"
+
+#~ msgid "Arabic (Libya)"
+#~ msgstr "Araibis (An Libia)"
+
+#~ msgid "Arabic (Morocco)"
+#~ msgstr "Araibis (Maracó)"
+
+#~ msgid "Arabic (Oman)"
+#~ msgstr "Araibis (Oman)"
+
+#~ msgid "Arabic (Qatar)"
+#~ msgstr "Araibis (Catar)"
+
+#~ msgid "Arabic (Saudi Arabia)"
+#~ msgstr "Araibis (An Araib Shádach)"
+
+#~ msgid "Arabic (Syria)"
+#~ msgstr "Araibis (An tSiria)"
+
+#~ msgid "Arabic (Tunisia)"
+#~ msgstr "Araibis (An Túinéis)"
+
+#~ msgid "Arabic (Yemen)"
+#~ msgstr "Araibis (Éimin)"
+
+#~ msgid "Assamese (India)"
+#~ msgstr "Asaimis (An India)"
+
+#, fuzzy
+#~| msgid "Bashkir(Russia)"
+#~ msgid "Bashkir (Russia)"
+#~ msgstr "Baiscíris (An Rúis)"
+
+#~ msgid "Belarusian (Belarus)"
+#~ msgstr "Bealarúisis (An Bhílearúis)"
+
+#~ msgid "Bulgarian (Bulgaria)"
+#~ msgstr "Bulgáiris (An Bhulgáir)"
+
+#~ msgid "Bengali (India)"
+#~ msgstr "Beangáilis (An India)"
+
+#~ msgid "Tibetan (Bhutan)"
+#~ msgstr "Tibéidis (An Bhútáin)"
+
+#~ msgid "Tibetan (PRC)"
+#~ msgstr "Tibéidis (An tSín)"
+
+#~ msgid "Breton (France)"
+#~ msgstr "Briotáinis (An Fhrainc)"
+
+#~ msgid "Catalan (Andorra)"
+#~ msgstr "Catalóinis (Andóra)"
+
+#~ msgid "Catalan (Spain)"
+#~ msgstr "Catalóinis (An Spáinn)"
+
+#~ msgid "Catalan (France)"
+#~ msgstr "Catalóinis (An Fhrainc)"
+
+#~ msgid "Corsican (France)"
+#~ msgstr "Corsaicis (An Fhrainc)"
+
+#~ msgid "Czech (Czech Republic)"
+#~ msgstr "Seicis (Poblacht na Seice)"
+
+#~ msgid "Welsh (United Kingdom)"
+#~ msgstr "Breatnais (An Ríocht Aontaithe)"
+
+#~ msgid "Danish (Denmark)"
+#~ msgstr "Danmhairgis (An Danmhairg)"
+
+#~ msgid "German (Austria)"
+#~ msgstr "Gearmáinis (An Ostair)"
+
+#~ msgid "German (Switzerland)"
+#~ msgstr "Gearmáinis (An Eilvéis)"
+
+#~ msgid "German (Germany)"
+#~ msgstr "Gearmáinis (An Ghearmáin)"
+
+#~ msgid "German (Liechtenstein)"
+#~ msgstr "Gearmáinis (Lichtinstéin)"
+
+#~ msgid "German (Luxembourg)"
+#~ msgstr "Gearmáinis (Lucsamburg)"
+
+#~ msgid "Greek (Greece)"
+#~ msgstr "Gréigis (An Ghréig)"
+
+#~ msgid "English (Australia)"
+#~ msgstr "Béarla (An Astráil)"
+
+#~ msgid "English (Belize)"
+#~ msgstr "Béarla (An Bheilís)"
+
+#~ msgid "English (Canada)"
+#~ msgstr "Béarla (Ceanada)"
+
+#~ msgid "English (Caribbean)"
+#~ msgstr "Béarla (An Mhuir Chairib)"
+
+#~ msgid "English (United Kingdom)"
+#~ msgstr "Béarla (An Ríocht Aontaithe)"
+
+#~ msgid "English (Ireland)"
+#~ msgstr "Béarla (Éire)"
+
+#~ msgid "English (India)"
+#~ msgstr "Béarla (An India)"
+
+#~ msgid "English (Jamaica)"
+#~ msgstr "Béarla (Iamáice)"
+
+#~ msgid "English (Malaysia)"
+#~ msgstr "Béarla (An Mhalaeisia)"
+
+#~ msgid "English (New Zealand)"
+#~ msgstr "Béarla (An Nua-Shéalainn)"
+
+#~ msgid "English (Philippines)"
+#~ msgstr "Béarla (Na hOileáin Fhilipíneacha)"
+
+#~ msgid "English (Singapore)"
+#~ msgstr "Béarla (Singeapór)"
+
+#~ msgid "English (Trinidad)"
+#~ msgstr "Béarla (Oileán na Tríonóide)"
+
+#~ msgid "English (United States)"
+#~ msgstr "Béarla (Na Stáit Aontaithe)"
+
+#~ msgid "English (South Africa)"
+#~ msgstr "Béarla (An Afraic Theas)"
+
+#~ msgid "English (Zimbabwe)"
+#~ msgstr "Béarla (An tSiombáib)"
+
+#~ msgid "Spanish (Argentina)"
+#~ msgstr "Spáinnis (An Airgintín)"
+
+#~ msgid "Spanish (Bolivia)"
+#~ msgstr "Spáinnis (An Bholaiv)"
+
+#~ msgid "Spanish (Chile)"
+#~ msgstr "Spáinnis (An tSile)"
+
+#~ msgid "Spanish (Colombia)"
+#~ msgstr "Spáinnis (An Cholóim)"
+
+#~ msgid "Spanish (Costa Rica)"
+#~ msgstr "Spáinnis (Cósta Ríce)"
+
+#~ msgid "Spanish (Dominican Republic)"
+#~ msgstr "Spáinnis (An Phoblacht Dhoiminiceach)"
+
+#~ msgid "Spanish (Ecuador)"
+#~ msgstr "Spáinnis (Eacuadór)"
+
+#~ msgid "Spanish (Spain)"
+#~ msgstr "Spáinnis (An Spáinn)"
+
+#~ msgid "Spanish (Guatemala)"
+#~ msgstr "Spáinnis (Guatamala)"
+
+#~ msgid "Spanish (Honduras)"
+#~ msgstr "Spáinnis (Hondúras)"
+
+#~ msgid "Spanish (Mexico)"
+#~ msgstr "Spáinnis (Meicsiceo)"
+
+#~ msgid "Spanish (Nicaragua)"
+#~ msgstr "Spáinnis (Nicearagua)"
+
+#~ msgid "Spanish (Panama)"
+#~ msgstr "Spáinnis (Panama)"
+
+#~ msgid "Spanish (Peru)"
+#~ msgstr "Spáinnis (Peiriú)"
+
+#~ msgid "Spanish (Puerto Rico)"
+#~ msgstr "Spáinnis (Portó Ríce)"
+
+#~ msgid "Spanish (Paraguay)"
+#~ msgstr "Spáinnis (Paragua)"
+
+#~ msgid "Spanish (El Salvador)"
+#~ msgstr "Spáinnis (An tSalvadóir)"
+
+#~ msgid "Spanish (Uruguay)"
+#~ msgstr "Spáinnis (Uragua)"
+
+#~ msgid "Spanish (United States)"
+#~ msgstr "Spáinnis (Stáit Aontaithe Mheiriceá)"
+
+#~ msgid "Spanish (Venezuela)"
+#~ msgstr "Spáinnis (Veiniséala)"
+
+#~ msgid "Estonian (Estonia)"
+#~ msgstr "Eastóinis (An Eastóin)"
+
+#~ msgid "Basque (Basque Country)"
+#~ msgstr "Bascais (Tír na mBascach)"
+
+#~ msgid "Persian (Iran)"
+#~ msgstr "Peirsis (An Iaráin)"
+
+#~ msgid "Finnish (Finland)"
+#~ msgstr "Fionlainnis (An Fhionlainn)"
+
+#~ msgid "Faeroese (Faero Islands)"
+#~ msgstr "Faróis (Oileáin Fharó)"
+
+#~ msgid "French (Belgium)"
+#~ msgstr "Fraincis (An Bheilg)"
+
+#~ msgid "French (Canada)"
+#~ msgstr "Fraincis (Ceanada)"
+
+#~ msgid "French (Switzerland)"
+#~ msgstr "Fraincis (An Eilvéis)"
+
+#~ msgid "French (France)"
+#~ msgstr "Fraincis (An Fhrainc)"
+
+#~ msgid "French (Luxembourg)"
+#~ msgstr "Fraincis (Lucsamburg)"
+
+#~ msgid "French (Monaco)"
+#~ msgstr "Fraincis (Monacó)"
+
+#~ msgid "Frisian (Netherlands)"
+#~ msgstr "Freaslainnis (An Ísiltír)"
+
+#~ msgid "Irish (Ireland)"
+#~ msgstr "Gaeilge (Éire)"
+
+#~ msgid "Galician (Galicia)"
+#~ msgstr "Gailísis (An Ghailís)"
+
+#~ msgid "Gujarati (India)"
+#~ msgstr "Gúisearáitis (An India)"
+
+#~ msgid "Hebrew (Israel)"
+#~ msgstr "Eabhrais (Iosrael)"
+
+#~ msgid "Hindi (India)"
+#~ msgstr "Hiondúis (An India)"
+
+#~ msgid "Croatian (Bosnia and Herzegovina, Latin)"
+#~ msgstr "Cróitis (Boisnia agus Heirseagaivéin, script Laidineach)"
+
+#~ msgid "Croatian (Croatia)"
+#~ msgstr "Cróitis (An Chróit)"
+
+#~ msgid "Hungarian (Hungary)"
+#~ msgstr "Ungáiris (An Ungáir)"
+
+#~ msgid "Armenian (Armenia)"
+#~ msgstr "Airméinis (An Airméin)"
+
+#~ msgid "(Indonesian)"
+#~ msgstr "(Indinéisis)"
+
+#~ msgid "Yi (PRC)"
+#~ msgstr "Yi (An tSín)"
+
+#~ msgid "Icelandic (Iceland)"
+#~ msgstr "Ioslannais (An Íoslainn)"
+
+#~ msgid "Italian (Switzerland)"
+#~ msgstr "Iodáilis (An Eilvéis)"
+
+#~ msgid "Italian (Italy)"
+#~ msgstr "Iodáilis (An Iodáil)"
+
+#~ msgid "Japanese (Japan)"
+#~ msgstr "Seapáinis (An tSeapáin)"
+
+#~ msgid "Georgian (Georgia)"
+#~ msgstr "Seoirsis (An tSeoirsia)"
+
+#~ msgid "Kazakh (Kazakhstan)"
+#~ msgstr "Casaicis (An Chasacstáin)"
+
+#~ msgid "Greenlandic (Greenland)"
+#~ msgstr "Graonlainnis (An Ghraonlainn)"
+
+#~ msgid "Khmer (Cambodia)"
+#~ msgstr "Ciméiris (An Chambóid)"
+
+#~ msgid "Kannada (India)"
+#~ msgstr "Cannadais (An India)"
+
+#, fuzzy
+#~| msgid "Korean (Korea)"
+#~ msgid "Korean (South Korea)"
+#~ msgstr "Cóiréis (An Chóiré)"
+
+#~ msgid "Kyrgyz (Kyrgyzstan)"
+#~ msgstr "Cirgisis (An Chirgeastáin)"
+
+#~ msgid "Luxembourgish (Luxembourg)"
+#~ msgstr "Lucsambuirgis (Lucsamburg)"
+
+#~ msgid "Lao (Lao PDR)"
+#~ msgstr "Láóis (An Daonphoblacht Daonlathach Laoch)"
+
+#~ msgid "Lithuanian (Lithuania)"
+#~ msgstr "Liotuáinis (An Liotuáin)"
+
+#~ msgid "Latvian (Latvia)"
+#~ msgstr "Laitvis (An Laitvia)"
+
+#~ msgid "Maori (New Zealand)"
+#~ msgstr "Maorais (An Nua-Shéalainn)"
+
+#~ msgid "Macedonian (Macedonia)"
+#~ msgstr "Macadóinis (An Mhacadóin)"
+
+#~ msgid "Malayalam (India)"
+#~ msgstr "Mailéalaimis (An India)"
+
+#~ msgid "Mongolian (PRC)"
+#~ msgstr "Mongóilis (An tSín)"
+
+#~ msgid "Mongolian (Mongolia)"
+#~ msgstr "Mongóilis (An Mhongóil)"
+
+#~ msgid "Marathi (India)"
+#~ msgstr "Maraitis (An India)"
+
+#~ msgid "Malay (Brunei Darussalam)"
+#~ msgstr "Malaeis (Brúiné Dárasalám)"
+
+#~ msgid "Malay (Malaysia)"
+#~ msgstr "Malaeis (An Mhalaeisia)"
+
+#~ msgid "Maltese (Malta)"
+#~ msgstr "Máltais (Málta)"
+
+#~ msgid "Norwegian Bokmål (Norway)"
+#~ msgstr "Ioruais Bokmål (An Iorua)"
+
+#~ msgid "Nepali (Nepal)"
+#~ msgstr "Neipeailis (Neipeal)"
+
+#~ msgid "Dutch (Belgium)"
+#~ msgstr "Ollainnis (An Bheilg)"
+
+#~ msgid "Dutch (Netherlands)"
+#~ msgstr "Ollainnis (An Ísiltír)"
+
+#~ msgid "Norwegian Nynorsk (Norway)"
+#~ msgstr "Ioruais Nynorsk (An Iorua)"
+
+#~ msgid "Sesotho sa Leboa (South Africa)"
+#~ msgstr "Sótó Theas (An Afraic Theas)"
+
+#~ msgid "Occitan (France)"
+#~ msgstr "Ocatáinis (An Fhrainc)"
+
+#~ msgid "Oriya (India)"
+#~ msgstr "Oirísis (An India)"
+
+#~ msgid "Punjabi (India)"
+#~ msgstr "Puinseáibis (An India)"
+
+#~ msgid "Polish (Poland)"
+#~ msgstr "Polainnis (An Pholainn)"
+
+#~ msgid "Pashto (Afghanistan)"
+#~ msgstr "Paistis (An Afganastáin)"
+
+#~ msgid "Portuguese (Brazil)"
+#~ msgstr "Portaingéilis (An Bhrasaíl)"
+
+#~ msgid "Portuguese (Portugal)"
+#~ msgstr "Portaingéilis (An Phortaingéil)"
+
+#~ msgid "Romansh (Switzerland)"
+#~ msgstr "Rómainis (An Eilvéis)"
+
+#~ msgid "Romanian (Romania)"
+#~ msgstr "Rómáinis (An Rómáin)"
+
+#~ msgid "Russian (Russia)"
+#~ msgstr "Rúisis (An Rúis)"
+
+#~ msgid "Kinyarwanda (Rwanda)"
+#~ msgstr "Cinearuáindis (Ruanda)"
+
+#~ msgid "Sanskrit (India)"
+#~ msgstr "Sanscrait (An India)"
+
+#~ msgid "Sami (Northern, Finland)"
+#~ msgstr "Sáimis Thuaidh (An Fhionlainn)"
+
+#~ msgid "Sami (Northern, Norway)"
+#~ msgstr "Sáimis Thuaidh (An Iorua)"
+
+#~ msgid "Sami (Northern, Sweden)"
+#~ msgstr "Sáimis Thuaidh (An tSualainn)"
+
+#~ msgid "Sinhala (Sri Lanka)"
+#~ msgstr "Siolóinis (Srí Lanca)"
+
+#~ msgid "Slovak (Slovakia)"
+#~ msgstr "Slóvaicis (An tSlóvaic)"
+
+#~ msgid "Slovenian (Slovenia)"
+#~ msgstr "Slóivéinis (An tSlóivéin)"
+
+#~ msgid "Albanian (Albania)"
+#~ msgstr "Albáinis (An Albáin)"
+
+#~ msgid "Swedish (Finland)"
+#~ msgstr "Sualainnis (An Fhionlainn)"
+
+#~ msgid "Swedish (Sweden)"
+#~ msgstr "Sualainnis (An tSualainn)"
+
+#~ msgid "Swahili (Kenya)"
+#~ msgstr "Svahaílis (An Chéinia)"
+
+#~ msgid "Tamil (India)"
+#~ msgstr "Tamailis (An India)"
+
+#~ msgid "Telugu (India)"
+#~ msgstr "Teileagúis (An India)"
+
+#~ msgid "Thai (Thailand)"
+#~ msgstr "Téalainnis (An Téalainn)"
+
+#~ msgid "Turkmen (Turkmenistan)"
+#~ msgstr "Tuircméinis (An Tuircméanastáin)"
+
+#~ msgid "Setswana Tswana (South Africa)"
+#~ msgstr "Suáinis (An Afraic Theas)"
+
+#~ msgid "Urdu (India)"
+#~ msgstr "Urdais (An India)"
+
+#~ msgid "Turkish (Turkey)"
+#~ msgstr "Tuircis (An Tuirc)"
+
+#~ msgid "Tatar (Russia)"
+#~ msgstr "Tatairis (An Rúis)"
+
+#~ msgid "Uighur (PRC)"
+#~ msgstr "Úígiúiris (An tSín)"
+
+#~ msgid "Ukrainian (Ukraine)"
+#~ msgstr "Úcráinis (An Úcráin)"
+
+#~ msgid "Urdu (Pakistan)"
+#~ msgstr "Urdais (An Phacastáin)"
+
+#~ msgid "Vietnamese (Vietnam)"
+#~ msgstr "Vítneaimis (Vítneam)"
+
+#~ msgid "Wolof (Senegal)"
+#~ msgstr "Volaifis (An tSeineagáil)"
+
+#~ msgid "isiXhosa Xhosa (South Africa)"
+#~ msgstr "Cóisis (An Afraic Theas)"
+
+#~ msgid "Yoruba (Nigeria)"
+#~ msgstr "Iarúibis (An Nigéir)"
+
+#~ msgid "Chinese (PRC)"
+#~ msgstr "Sínis (An tSín)"
+
+#~ msgid "Chinese (Hong Kong SAR, PRC)"
+#~ msgstr "Sínis (Hong Cong, An tSín)"
+
+#~ msgid "Chinese (Macao SAR)"
+#~ msgstr "Sínis (Macao)"
+
+#~ msgid "Chinese (Singapore)"
+#~ msgstr "Sínis (Singeapór)"
+
+#~ msgid "Chinese (Taiwan)"
+#~ msgstr "Sínis (An Téaváin)"
+
+#~ msgid "isiZulu Zulu (South Africa)"
+#~ msgstr "Súlúis (An Afraic Theas)"
+
+#~ msgid "Select here language code."
+#~ msgstr "Roghnaigh cód teanga anseo."
+
+#~ msgid "Edit EXIF Metadata"
+#~ msgstr "Cuir Meiteashonraí EXIF in Eagar"
+
+#~ msgid "(read only)"
+#~ msgstr "(inléite amháin)"
+
+#~ msgid "Edit IPTC Metadata"
+#~ msgstr "Cuir Meiteashonraí IPTC in Eagar"
+
+#~ msgid "Remove EXIF..."
+#~ msgstr "Bain EXIF..."
+
+#~ msgid "Remove IPTC..."
+#~ msgstr "Bain IPTC..."
+
+#~ msgid "Remove XMP..."
+#~ msgstr "Bain XMP..."
+
+#~ msgid "Edit Captions..."
+#~ msgstr "Cuir Fotheidil in Eagar..."
+
+#~ msgid "Remove Captions..."
+#~ msgstr "Bain Fotheidil..."
+
+#~ msgid "Remove EXIF Metadata"
+#~ msgstr "Bain Meiteashonraí EXIF"
+
+#~ msgid "Unable to remove EXIF metadata from:"
+#~ msgstr "Ní féidir meiteashonraí EXIF a bhaint ó:"
+
+#~ msgid "Remove IPTC Metadata"
+#~ msgstr "Bain Meiteashonraí IPTC"
+
+#~ msgid "Remove XMP Metadata"
+#~ msgstr "Bain Meiteashonraí XMP"
+
+#~ msgid "(c) 2007-2009, Gilles Caulier"
+#~ msgstr "© 2007-2009, Gilles Caulier"
+
+#~ msgid "Edit XMP Metadata"
+#~ msgstr "Cuir Meiteashonraí XMP in Eagar"
+
+#~ msgid "Use custom definition"
+#~ msgstr "Úsáid sainmhíniú saincheaptha"
+
+#~ msgid "I.P.R:"
+#~ msgstr "I.P.R:"
+
+#, fuzzy
+#~| msgid "Name:"
+#~ msgctxt "name of the subject"
+#~ msgid "Name:"
+#~ msgstr "Ainm:"
+
+# #-#-#-#-#  kspread.po (koffice/kspread.po)  #-#-#-#-#
+# OLT as is -- KPS
+#~ msgid "Matter:"
+#~ msgstr "Ábhar:"
+
+#~ msgid "Detail:"
+#~ msgstr "Mionsonra:"
+
+#~ msgid "Unknow"
+#~ msgstr "Anaithnid"
+
+#~ msgid "Use standard"
+#~ msgstr "Caighdeánach"
+
+#~ msgid "reference code"
+#~ msgstr "cód tagartha"
+
+#~ msgid "Image description (*):"
+#~ msgstr "Cur síos ar an íomhá (*):"
+
+#~ msgid "Object Type:"
+#~ msgstr "Cineál Réada:"

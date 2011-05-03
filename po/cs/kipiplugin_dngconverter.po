@@ -1,0 +1,239 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Vít Pelčák <vit@pelcak.org>, 2010, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dngconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2011-04-14 17:04+0200\n"
+"Last-Translator: Vít Pelčák <vit@pelcak.org>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.2\n"
+"Language: cs\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr "Obrázek Raw nelze identifikovat"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "Vytvořit: %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "Model: %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "Vytvořeno: %1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "Clona: f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "Ohnisko: %1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "Expozice: 1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Citlivost: %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "Soubor(y) k převodu"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "DNG převaděč..."
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "Zapouzdřit původní soubor"
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "Bezeztrátová komprese"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr "Aktualizovat datum úpravy souboru"
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+"Nastaví datum modifikace souboru na datum vytvoření poskytnuté v metadatech "
+"obrázku."
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "Náhled JPEG:"
+
+#: plugin/settingswidget.cpp:115
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "Žádný"
+
+#: plugin/settingswidget.cpp:116
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "Střední"
+
+#: plugin/settingswidget.cpp:117
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "Plná velikost"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "Pokud soubor již existuje:"
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "Automaticky přepsat"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr "Otevřít dialog pro přejmenování souboru"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr "Převaděč obrázků DNG"
+
+#: plugin/aboutdata.h:52
+#, kde-format
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr ""
+"Nástroj pro dávkový převod obrázků RAW z fotoaparátu do DNG\n"
+"Pomocí sady nástrojů XMP %1\n"
+"Pomocí sady nástrojů DNG 1.3"
+
+#: plugin/aboutdata.h:55
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr "Autor"
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr "Vývojář"
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "Ukončit převaděč DNG"
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr "Dávkový převod obrázků RAW z fotoaparátu do DNG"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "Při&dat"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr "Přidat do seznamu nové soubory Raw"
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "Odst&ranit"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr "Odstranit vybrané soubory RAW ze seznamu"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "Náhled"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "Soubor Raw"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "Cílový soubor"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "Fotoaparát"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr "Příručka"
+
+#: plugin/batchdialog.cpp:332
+msgid "The list does not contain any Raw files to process."
+msgstr "Seznam neobsahuje žádné soubory ke zpracování."
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "Z&rušit"
+
+#: plugin/batchdialog.cpp:474
+msgid "Abort the conversion of Raw files."
+msgstr "Ukončí převod souborů RAW."
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "Pře&vést"
+
+#: plugin/batchdialog.cpp:480
+msgid "Start converting the Raw images using the current settings."
+msgstr "Spustí převod souborů RAW podle aktuálního nastavení."
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "Uloží obrázek RAW převedený z '%1' jako"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "Ukládání obrázku %1 selhalo"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "David Kolibáč,  Vít Pelčák, Zdeněk Pech"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "david@kolibac.cz,vit@pelcak.org,dom.toretto@seznam.cz"

@@ -1,0 +1,405 @@
+# translation of kipiplugin_sendimages.po to Low Saxon
+# Translation of kipiplugin_sendimages.po to Low Saxon
+#
+# Sönke Dibbern <s_dibbern@web.de>, 2007, 2008.
+# Manfred Wiese <m.j.wiese@web.de>, 2008, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2011-04-16 05:37+0200\n"
+"Last-Translator: Manfred Wiese <m.j.wiese@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "Nettpostprogramm:"
+
+#: emailpage.cpp:89
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "Standard"
+
+#: emailpage.cpp:100
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"Hier kannst Du Dien vörtrocken extern Nettpostprogramm utsöken.<b>Standard</"
+"b> is dat aktuelle Nettpostprogramm, dat in de KDE-Instellen fastleggt is."
+
+#: emailpage.cpp:106
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "En Datei mit de Bildegenschappen vun \"%1\" bileggen"
+
+#: emailpage.cpp:109
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Maakst Du dit an, warrt all Bildegenschappen as Datei bileggt, de \"%1\" "
+"fastleggt (a.B. Kommentaren oder Slötelwöör)."
+
+#: emailpage.cpp:118
+msgid "Maximum email size limit:"
+msgstr "Hööchst Nettbreefgrött:"
+
+#: emailpage.cpp:119
+msgid " MB"
+msgstr " MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "Bildegenschappen topassen"
+
+#: emailpage.cpp:125
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Wenn Du dit anmaakst, kannst Du de Grött un Komprimeren vun all Biller "
+"ännern, de Du loosstüern wullt."
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "Bildegenschappen"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "Lierlütt (320 Pixels)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "Lütt (640 Pixels)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "Middelgroot (800 Pixels)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "Groot (1024 Pixels)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "Bannig groot (1280 Pixels)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "Övergroot - Druckgööd (1600 Pixels)"
+
+#: emailpage.cpp:139
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+"<p>Hier kannst Du de Grött fastleggen, mit de de Biller loosstüert warrt.</"
+"p><p><b>%1</b>: Bruuk dit bi bannig langsam Internet-Verbinnen oder wenn dat "
+"Teel-Postfach bannig lütt is.</p><p><b>%2</b>: För langsam Internet-"
+"Verbinnen oder lütt Teel-Postfachen.</p><p><b>%3</b>: De Standard för "
+"normaal Internet-Verbinnen un normaal Teel-Postfachen.</p><p><b>%4</b>: "
+"Bruuk dit bi gaue Internet-Verbinnen un wenn dat Teel-Postfach keen "
+"Gröttgrenz hett.</p><p><b>%5</b>: Bruuk dit, wenn Du Di nich an Gauheit oder "
+"Grött kehren bruukst.</p><p><b>%6</b>: Bruuk dit bloots för't Drucken.</p>"
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "Bildgrött:"
+
+#: emailpage.cpp:168
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr ""
+"<p>Hier kannst Du dat Dateiformaat för de Biller fastleggen, de Du "
+"loosstüern wullt.</p>"
+
+#: emailpage.cpp:169
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: Dat Dateiformaat vun den Gemeen fotograafsch Koppel vun "
+"Experten (engl. \"Joint Photographic Experts' Group\") lett sik goot in't "
+"Nett bruken, man bruukt en Formaat mit Verlusten.</p><p><b>PNG</b>: Dat "
+"Överdreegbor Nettwarkgrafik-Formaat (engl. \"Portable Network Graphics\") is "
+"en Dateiformaat ahn Verlusten, wat sik goot komprimeren, överdregen un ok "
+"verwiedern lett. PNG-Biller brickt keen Patenten un laat sik faken ok dor "
+"bruken, wo Een sünst TIFF-Biller bruken deit. Dat Formaat lett sik mit "
+"Strööm över Nettwarken överdregen un bargt en Optschoon för't Dorstellen "
+"na't Vörankamen; dat is so opbuut, dat Kiekers dat goot in't WWW bruken "
+"köönt. PNG-Biller köönt ok Gamma- un Klöörweerten bargen, se laat sik op "
+"verscheden Reedschappen liek wiesen.</p>"
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "Bilddatei-Formaat:"
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "Bildgööd:"
+
+#: emailpage.cpp:188
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr ""
+"<p>De nieg Komprimerenweert vun de JPEG-Biller, de Du loosstüern wullt:</p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: bannig hooch komprimeert<br/><b>25</b>: hooch komprimeert<br/"
+"><b>50</b>: middelhooch komprimeert<br/><b>75</b>: siet komprimeert "
+"(Standardweert)<br/><b>100</b>: nich komprimeert</p>"
+
+#: imageresize.cpp:191
+msgid "Error opening input file"
+msgstr "Ingaavdatei lett sik nich opmaken."
+
+#: imageresize.cpp:202
+msgid "Error opening temporary folder"
+msgstr "Temporeerorner lett sik nich opmaken."
+
+#: imageresize.cpp:247
+msgid "Cannot resize image. Aborting."
+msgstr "De Bildgrött lett sik nich ännern. Afbraken."
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Bild (JPEG) lett sik na Grött-Ännern nich sekern. Afbrook."
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Bild (PNG) lett sik na Grött-Ännern nich sekern. Afbrook."
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "Biller mit Nettpost loosstüern..."
+
+#: sendimages.cpp:130
+msgid "Email images"
+msgstr "Biller mit Nettpost loosstüern"
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "Akschoon vun Bruker afbraken"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "Grött vun %1 warrt ännert"
+
+#: sendimages.cpp:187
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "Grött vun %1 wöör mit Spood ännert."
+
+#: sendimages.cpp:194
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "Grött vun %1 lett sik nich ännern: %2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "Bildegenschappen-Datei opstellen"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "Keen Titeltext"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "keen Slötelwöör"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"Datei \"%1\":\n"
+"Orginaalbiller: %2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Kommentaren: %1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Steekwöör: %1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Beweerten: %1\n"
+
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "egenschappen.txt"
+
+#: sendimages.cpp:264
+msgid "Image properties file done"
+msgstr "Bildegenschappen-Datei opstellt"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"De Grötten vun de nerrn oplist Biller laat sik nich ännern. Wullt Du se as "
+"Bilagen (in Orginaalgrött) tofögen?"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "Billergrötten laat sik nich ännern"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"De Datei \"%1\" is to groot för't Loosstüern. Bitte maak ehr lütter oder "
+"änner Dien Instellen."
+
+#: sendimages.cpp:391
+msgid "Starting default KDE email program..."
+msgstr "Standard-Nettpostprogramm vun KDE warrt start..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr ""
+"Dat Programm \"%1\" lett sik nich starten.\n"
+"Prööv bitte Dien Installatschoon."
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "Programm \"%1\" warrt start..."
+
+#: sendimages.cpp:568
+msgid "After having sent your images by email..."
+msgstr "Na't Loosstüern vun Dien Biller mit Nettpost..."
+
+#: sendimages.cpp:569
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Klick för't Oprümen vun Temporeerdateien op den Knoop \"Tomaken\"."
+
+#: sendimagesdialog.cpp:90
+msgid "Email Images Options"
+msgstr "Optschonen för't Loosstüern vun Biller"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "Biller"
+
+#: sendimagesdialog.cpp:100
+msgid "Image List"
+msgstr "Bildlist"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "Nettpost"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "Nettpost-Optschonen"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "Biller loosstüern"
+
+#: sendimagesdialog.cpp:115
+msgid "A plugin to email pictures"
+msgstr "En Moduul för't Loosstüern vun Biller mit Nettpost"
+
+#: sendimagesdialog.cpp:116
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "© 2003-2011: Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Autor un Pleger"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "Schriever"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+msgid "Handbook"
+msgstr "Handbook"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sönke Dibbern, Manfred Wiese"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "s_dibbern@web.de, m.j.wiese@web.de"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "bannig lütt (320 Pixels)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "lütt (640 Pixels)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "middelgroot (800 Pixels)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "groot (1024 Pixels)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "bannig groot (1280 Pixels)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "övergroot - Druckgööd (1600 Pixels)"
+
+#~ msgid "This is the list of images to e-mail."
+#~ msgstr "Dit is de List vun Biller, de Du loosstüern wullt."
+
+#~ msgid "&Add"
+#~ msgstr "&Tofögen"
+
+#~ msgid "&Remove"
+#~ msgstr "&Wegmaken"

@@ -1,0 +1,438 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# A S Alam <aalam@users.sf.net>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:23+0100\n"
+"PO-Revision-Date: 2010-11-28 10:57+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: firstrundlg.cpp:77 firstrundlg.cpp:87 simpleviewer.cpp:202 svedialog.cpp:91
+#: svedialog.cpp:120
+msgid "Flash Export"
+msgstr ""
+
+#: firstrundlg.cpp:90 svedialog.cpp:123
+msgid ""
+"A Kipi plugin to export images to Flash using the Simple Viewer component."
+msgstr ""
+
+#: firstrundlg.cpp:91 svedialog.cpp:124
+msgid ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+msgstr ""
+
+#: firstrundlg.cpp:94 svedialog.cpp:127
+msgid "Joern Ahrens"
+msgstr ""
+
+#: firstrundlg.cpp:95 svedialog.cpp:128
+msgid "Author"
+msgstr "ਲੇਖਕ"
+
+#: firstrundlg.cpp:98 svedialog.cpp:131
+msgid "Gilles Caulier"
+msgstr ""
+
+#: firstrundlg.cpp:99 svedialog.cpp:132
+msgid "Developer and maintainer"
+msgstr ""
+
+#: firstrundlg.cpp:102 svedialog.cpp:135
+msgid "Felix Turner"
+msgstr ""
+
+#: firstrundlg.cpp:103 svedialog.cpp:136
+msgid "Author of the Simple Viewer Flash component"
+msgstr ""
+
+#: firstrundlg.cpp:107 svedialog.cpp:140
+msgid "Mikkel B. Stegmann"
+msgstr ""
+
+#: firstrundlg.cpp:108 svedialog.cpp:141
+msgid "Basis for the index.html template"
+msgstr ""
+
+#: firstrundlg.cpp:117 svedialog.cpp:150
+msgid "Handbook"
+msgstr ""
+
+#: firstrundlg.cpp:129
+msgid ""
+"<p>SimpleViewer is a Flash component which is free to use, but uses a "
+"license which comes into conflict with several distributions. Due to the "
+"license it is not possible to ship it with this plugin.</p><p>You can now "
+"download SimpleViewer from its homepage and point this tool to the "
+"downloaded archive. The archive will be stored with the plugin "
+"configuration, so it is available for further use.</p>"
+msgstr ""
+
+#: firstrundlg.cpp:137
+msgid "<p>1.) Download SimpleViewer Version 2.1.x</p>"
+msgstr ""
+
+#: firstrundlg.cpp:147
+msgid "<p>2.) Point this tool to the downloaded archive</p>"
+msgstr ""
+
+#: generalpage.cpp:81
+msgid "Gallery &Title"
+msgstr "ਗੈਲਰੀ ਟਾਈਟਲ(&T)"
+
+#: generalpage.cpp:84
+msgid "Enter here the gallery title"
+msgstr "ਗੈਲਰੀ ਨਾਂ ਇੱਥੇ ਦਿਉ"
+
+#: generalpage.cpp:92
+msgid "Save Gallery To"
+msgstr "ਗੈਲਰੀ ਇੱਥੇ ਸੰਭਾਲੋ"
+
+#: generalpage.cpp:103
+msgid "Image Properties"
+msgstr "ਚਿੱਤਰ ਵਿਸ਼ੇਸ਼ਤਾ"
+
+#: generalpage.cpp:105
+msgid "Resize Target Images"
+msgstr "ਟਾਰਗੇਟ ਚਿੱਤਰ ਮੁੜ-ਆਕਾਰ"
+
+#: generalpage.cpp:107
+msgid "If you enable this option, all target images can be resized."
+msgstr ""
+
+#: generalpage.cpp:111
+msgid "Auto-Rotate/Flip Images"
+msgstr "ਚਿੱਤਰ ਆਟੋਮੈਟਿਕ ਘੁੰਮਾਉ/ਫਲਿੱਪ ਕਰੋ"
+
+#: generalpage.cpp:113
+msgid ""
+"If you enable this option, the images' orientations will be set according to "
+"their Exif information."
+msgstr ""
+
+#: generalpage.cpp:120
+msgid "&Target Images' Size:"
+msgstr ""
+
+#: generalpage.cpp:121
+msgid ""
+"The new size of the exported images, in pixels. SimpleViewer resizes the "
+"images too, but this resizes the images before they are uploaded to your "
+"server."
+msgstr ""
+
+#: generalpage.cpp:134
+msgid "&Displayed Images' Size:"
+msgstr ""
+
+#: generalpage.cpp:135
+msgid ""
+"Scales the displayed images to this size. Normally, use the height or width "
+"of your largest image (in pixels). Images will not be scaled up above this "
+"size, to preserve image quality."
+msgstr ""
+
+#: generalpage.cpp:150
+msgid "Misc"
+msgstr "ਫੁਟਕਲ"
+
+#: generalpage.cpp:153
+msgid "Display Captions"
+msgstr "ਚਿੱਤਰ ਸੁਰਖੀ"
+
+#: generalpage.cpp:155
+msgid "If this option is enabled, the images' captions will be shown."
+msgstr ""
+
+#: generalpage.cpp:158
+msgid "Open Image with Right Click"
+msgstr "ਸੱਜਾ ਕਲਿੱਕ ਕਰਕੇ ਚਿੱਤਰ ਖੋਲ੍ਹੋ"
+
+#: generalpage.cpp:160
+msgid ""
+"If this option is enabled, the user will be able to open the target image in "
+"a separate window using the right mouse button."
+msgstr ""
+
+#: generalpage.cpp:164
+msgid "Open gallery in Konqueror"
+msgstr "ਕੋਨਕਿਊਰੋਰ ਵਿੱਚ ਗੈਲਰੀ ਖੋਲ੍ਹੋ"
+
+#: generalpage.cpp:166
+msgid ""
+"If this option is enabled, the gallery will be opened in Konqueror "
+"automatically."
+msgstr ""
+
+#: lookpage.cpp:80
+msgctxt "Settings for flash export navigation"
+msgid "Navigation"
+msgstr "ਨੇਵੀਗੇਸ਼ਨ"
+
+#: lookpage.cpp:86
+msgid "Thumbnail &Rows:"
+msgstr "ਥੰਮਨੇਲ ਕਤਾਰਾਂ(&R):"
+
+#: lookpage.cpp:87
+msgid "Number of thumbnails rows"
+msgstr ""
+
+#: lookpage.cpp:92
+msgid "Thumbnail &Columns:"
+msgstr ""
+
+#: lookpage.cpp:93
+msgid "Number of thumbnails columns"
+msgstr ""
+
+#: lookpage.cpp:96
+msgid "Thumbnail &Position:"
+msgstr ""
+
+#: lookpage.cpp:98
+msgctxt "thumbnail position: right"
+msgid "Right"
+msgstr "ਸੱਜੇ"
+
+#: lookpage.cpp:99
+msgctxt "thumbnail position: left"
+msgid "Left"
+msgstr "ਖੱਬੇ"
+
+#: lookpage.cpp:100
+msgctxt "thumbnail position: top"
+msgid "Top"
+msgstr "ਉੱਤੇ"
+
+#: lookpage.cpp:101
+msgctxt "thumbnail position: bottom"
+msgid "Bottom"
+msgstr "ਥੱਲੇ"
+
+#: lookpage.cpp:110
+msgid "&Direction of Navigation:"
+msgstr "ਨੇਵੀਗੇਸ਼ਨ ਦੀ ਦਿਸ਼ਾ(&D):"
+
+#: lookpage.cpp:112
+msgid "Left to Right"
+msgstr "ਖੱਬੇ ਤੋਂ ਸੱਜੇ"
+
+#: lookpage.cpp:113
+msgid "Right to Left"
+msgstr "ਸੱਜੇ ਤੋਂ ਖੱਬੇ"
+
+#: lookpage.cpp:126
+msgid "Colors"
+msgstr "ਰੰਗ"
+
+#: lookpage.cpp:130
+msgid "&Text Color:"
+msgstr "ਟੈਕਸਟ ਰੰਗ(&T):"
+
+#: lookpage.cpp:133
+msgid "Color of title and caption text"
+msgstr ""
+
+#: lookpage.cpp:137
+msgid "&Background Color:"
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ(&B):"
+
+#: lookpage.cpp:143
+msgid "&Frame Color:"
+msgstr "ਫਰੇਮ ਰੰਗ(&F):"
+
+#: lookpage.cpp:146
+msgid "Color of image frame, viewed icon, load bars, thumbnail arrows"
+msgstr ""
+
+#: lookpage.cpp:157
+msgid "Style"
+msgstr "ਸਟਾਇਲ"
+
+#: lookpage.cpp:163
+msgid "Frame &Width:"
+msgstr ""
+
+#: lookpage.cpp:164
+msgid "Width of image frame in pixels."
+msgstr ""
+
+#: lookpage.cpp:169
+msgid "Stage &Padding:"
+msgstr ""
+
+#: lookpage.cpp:170
+msgid "Distance between image and thumbnails in pixels."
+msgstr ""
+
+#: plugin_flashexport.cpp:62
+msgid "Export to F&lash..."
+msgstr ""
+
+#: simpleviewer.cpp:140
+msgid "SimpleViewer installation failed"
+msgstr ""
+
+#: simpleviewer.cpp:167
+#, kde-format
+msgid ""
+"Target folder %1 already exists.\n"
+"Do you want to overwrite it?  All data in this folder will be lost."
+msgstr ""
+"ਟਾਰਗੈਟ ਫੋਲਡਰ %1 ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।\n"
+"ਕੀ ਤੁਸੀਂ ਉਸ ਉੱਤੇ ਹੀ ਲਿਖਣਾ ਚਾਹੁੰਦੇ ਹੋ? ਇਸ ਫੋਲਡਰ ਵਿਚਲਾ ਸਭ ਡਾਟਾ ਖਤਮ ਹੋ ਜਾਵੇਗਾ।"
+
+#: simpleviewer.cpp:176
+#, kde-format
+msgid ""
+"Could not delete %1.\n"
+"Please choose another export folder."
+msgstr ""
+
+#: simpleviewer.cpp:211
+msgid "Initialising..."
+msgstr "...ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+
+#: simpleviewer.cpp:232
+msgid "Export canceled"
+msgstr "ਐਕਸਪੋਰਟ ਰੱਦ ਕੀਤਾ"
+
+#: simpleviewer.cpp:243
+msgid "Failed to create export directories"
+msgstr "ਐਕਸਪੋਰਟ ਡਾਇਰੈਕਟਰੀਆਂ ਬਣਾਉਣ ਲਈ ਫੇਲ੍ਹ"
+
+#: simpleviewer.cpp:250
+msgid "Failed to export the images"
+msgstr "ਚਿੱਤਰ ਐਕਸਪੋਰਟ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
+
+#: simpleviewer.cpp:257
+msgid "Failed to create index.html"
+msgstr "index.html ਬਣਾਉਣ ਲਈ ਫੇਲ੍ਹ"
+
+#: simpleviewer.cpp:264
+msgid "Failed to copy SimpleViewer files"
+msgstr ""
+
+#: simpleviewer.cpp:271
+msgid "Failed to upload the gallery"
+msgstr ""
+
+#: simpleviewer.cpp:279
+#, kde-format
+msgid ""
+"Export was canceled.\n"
+"Do you want to delete files in %1 that have already been created?"
+msgstr ""
+
+#: simpleviewer.cpp:289
+msgctxt "Flash export has finished"
+msgid "Finished..."
+msgstr "...ਮੁਕੰਮਲ"
+
+#: simpleviewer.cpp:302
+msgid "Creating directories..."
+msgstr "...ਡਾਇਰੈਕਟਰੀਆਂ ਬਣਾਈਆਂ ਜਾ ਰਹੀਆਂ ਹਨ"
+
+#: simpleviewer.cpp:307 simpleviewer.cpp:316 simpleviewer.cpp:325
+#, kde-format
+msgid "Could not create folder '%1'"
+msgstr "'%1' ਫੋਲਡਰ ਬਣਾਇਆ ਨਹੀਂ ਜਾ ਸਕਿਆ"
+
+#: simpleviewer.cpp:340
+msgid "Creating images and thumbnails..."
+msgstr "...ਚਿੱਤਰ ਅਤੇ ਥੰਮਨੇਲ ਬਣਾਏ ਜਾ ਰਹੇ ਹਨ"
+
+#: simpleviewer.cpp:397
+#, kde-format
+msgid "Processing %1"
+msgstr "%1 ਕਾਰਵਾਈ ਜਾਰੀ"
+
+#: simpleviewer.cpp:408
+#, kde-format
+msgid "Could not open image '%1'"
+msgstr "'%1' ਚਿੱਤਰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ"
+
+#: simpleviewer.cpp:415
+#, kde-format
+msgid "Could not create thumbnail from '%1'"
+msgstr ""
+
+#: simpleviewer.cpp:422
+#, kde-format
+msgid "Could not resize image '%1'"
+msgstr ""
+
+#: simpleviewer.cpp:550
+msgid "Creating index.html..."
+msgstr "...index.html ਬਣਾਇਆ ਜਾ ਰਿਹਾ ਹੈ"
+
+#: simpleviewer.cpp:579
+msgid "index.html created..."
+msgstr "index.html ਬਣਾਇਆ..."
+
+#: simpleviewer.cpp:589
+msgid "Copying flash files..."
+msgstr "...ਫਲੈਸ਼ ਫਾਇਲਾਂ ਕਾਪੀ ਕੀਤੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ"
+
+#: simpleviewer.cpp:622
+msgid "Flash files copied..."
+msgstr ""
+
+#: simpleviewer.cpp:632
+msgid "Uploading gallery..."
+msgstr "...ਗੈਲਰੀ ਅੱਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
+
+#: simpleviewer.cpp:637
+msgid "Gallery uploaded..."
+msgstr ""
+
+#: svedialog.cpp:102
+msgctxt "Settings tab for selections"
+msgid "Selection"
+msgstr ""
+
+#: svedialog.cpp:103
+msgid "Collections List"
+msgstr ""
+
+#: svedialog.cpp:107
+msgctxt "General settings tab"
+msgid "General"
+msgstr "ਆਮ"
+
+#: svedialog.cpp:108
+msgid "General Settings"
+msgstr "ਆਮ ਸੈਟਿੰਗ"
+
+#: svedialog.cpp:113
+msgctxt "Settings tab for the look of the flash export"
+msgid "Look"
+msgstr "ਦਿੱਖ"
+
+#: svedialog.cpp:114
+msgid "Look Settings"
+msgstr "ਦਿੱਖ ਸੈਟਿੰਗ"
+
+#: svedialog.cpp:227
+msgid "You must select at least one collection to export."
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ (A S Alam)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "aalam@users.sf.net"

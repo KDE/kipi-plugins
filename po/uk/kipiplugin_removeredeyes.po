@@ -1,0 +1,428 @@
+# translation of kipiplugin_removeredeyes.po to Ukrainian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_removeredeyes\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2011-02-20 10:42+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: uk\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "Параметри видобування плями"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "Мінімальний розмір пл&ями:"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "Мінімальне &заокруглення:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "Параметри класифікатора"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "Використовувати &стандартний класифікатор"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr ""
+"Якщо буде позначено цей пункт, буде використано стандартний класифікатор, "
+"який постачається разом з цим додатком KIPI."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "Введіть у це поле адресу класифікатора."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "С&усідні групи:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "&Коефіцієнт масштабування:"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "&Розширений режим"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "Пр&остий режим"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>Повільний<br/>(низька роздільність / трохи розмиті зображення)</b></"
+"p><p>У цьому режимі автоматичне виявлення і виправлення ефекту «червоних "
+"очей» працює найкраще. Недоліком високого ймовірності виявлення є значне "
+"сповільнення обробки.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>Стандартний</b></p><p>У цьому режимі програма достатньо добре обробляє "
+"зображення з різною роздільністю. Вам слід розпочинати перевірку саме з "
+"цього режиму.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>Швидкий<br/>(зображення з високою роздільністю)</b></p><p>У цьому "
+"режимі автоматичне виявлення працюватиме швидше, але можливі випадки "
+"помилкового спрацьовування. Цей режим слід використовувати лише для "
+"зображень з високою роздільною здатністю і чітких зображень.</p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "Вилучення наслідків е&фекту «червоних очей»..."
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "Автоматичне вилучення наслідків ефекту «червоних очей»"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "Вилучити «червоні очі»"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr ""
+"Додаток для автоматичного виявлення і вилучення наслідків ефекту «червоних "
+"очей»"
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "© Andi Clemens, 2008-2009"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "Автор і супровідник"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "Підручник"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "Виправити ф&отографії"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "Почати виправлення зображень зі списку"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "&Тестовий запуск"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr "Імітувати процес виправлення без збереження результатів."
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "Всього:"
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "Успішно:"
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "Невдало:"
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "Список файлів"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "Параметри"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p>Ви обрали <b>режим виправлення з перезаписом</b>!<br/>Ви справді бажаєте, "
+"щоб всі дані з початкових зображень було перезаписано?</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "Режим перезапису"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>Певну кількість зображень не може бути проаналізовано за поточних "
+"параметрів або у цих зображеннях зовсім немає «червоних очей».</p><p><b>Чи "
+"бажаєте ви вилучити ці зображення зі списку?</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "Вилучити необроблені зображення?"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p>Ви намагалися додати <b>зображення цифрових негативів</b><br/>до додатку "
+"пакетного вилучення ефекту «червоних очей», але цей додаток не може працювати "
+"з подібними зображеннями.</p><p><b>Ці зображення буде автоматично вилучено "
+"зі списку.</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "Знайдено цифрові негативи"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>Було успішно оброблено %1 зображення.</p>"
+msgstr[1] "<p>Було успішно оброблено %1 зображення.</p>"
+msgstr[2] "<p>Було успішно оброблено %1 зображень.</p>"
+msgstr[3] "<p>Було успішно оброблено %1 зображення.</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>Виправлення завершено</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "Виправлення завершено"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr ""
+"<h2>Не завантажено інструмента виявлення.<br/>Додаток не є виконуваним "
+"файлом.</h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "Виправлені очі"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "Це список зображень, з яких слід вилучити ефект «червоних очей»."
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>У цьому віджеті буде показано попередній перегляд наслідків виправлення "
+"для поточного вибраного зображення.</p><p><ul><li>Наведіть вказівник миші "
+"<b>на</b> область перегляду, щоб побачити початкове зображення.</"
+"li><li>Виведіть вказівник миші <b>за межі</b> області перегляду, щоб "
+"побачити виправлене зображення.</li><li><b>Натисніть</b> область перегляду, "
+"щоб побачити маску виправлення.</li></ul></p><p>За допомогою кнопок "
+"масштабування і панорамування ви можете переглянути частини зображення у "
+"збільшеному масштабі.</p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>створення перегляду...</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>Не вдалося відкрити зображення перегляду<br/>«%1»</p>."
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "Помилка під час завантаження файла перегляду"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "Початкове зображення"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "Виправлене зображення"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "Маска виправлення"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "Не позначено жодного зображення"
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "Параметри зберігання"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>Ці параметри керують зберіганням виправлених зображень. Ви можете вибрати "
+"один з чотирьох режимів:</p><p><ul><li><b>Підтека:</b> всі виправлені "
+"зображення буде збережено до підтеки поточної теки альбому.</"
+"li><li><b>Префікс:</b> до назв виправлених зображень буде додано вказаний "
+"префікс.</li><li><b>Суфікс:</b> до назв виправлених зображень буде додано "
+"вказаний суфікс.</li><li><b>Перезапис:</b> всі початкові зображення буде "
+"замінено.</li></ul></p><p>У кожному з чотирьох режимів ви можете додати "
+"необов’язкове ключове слово до метаданих зображення.</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "Зберігати до підтеки"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "Додати префікс"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "Додати суфікс"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "Перезапис"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr ""
+"Введіть назву підтеки, префікс або суфікс, який буде використано для "
+"створення назв виправлених зображень."
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "Додати ключове слово до &метаданих"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr ""
+"Якщо буде позначено цей пункт, до метаданих зображення буде додано нетипове "
+"ключове слово."
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "Введіть у це поле назву нетипового ключового слова..."
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "Обробка необроблених зображень"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>Ці параметри керують поводженням з необробленими зображеннями після "
+"запуску інструмента у тестовому режимі. Щоб пришвидшити остаточне "
+"виправлення, зображення, які не вдалося обробити, можна вилучити зі списку, "
+"— програма не аналізуватиме їх повторно. Ви можете вибрати один з трьох "
+"варіантів поведінки програми:</p><p><ul><li><b>Запитати у користувача:</b> "
+"програма відкриє вікно, у якому запитає вас про подальші дії.</"
+"li><li><b>Залишати у списку:</b> всі необроблені зображення не "
+"вилучатимуться зі списку.</li><li><b>Вилучати зі списку:</b> після тестового "
+"запуску всі необроблені зображення буде вилучено зі списку.</li></ul></p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "За&питати у користувача"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr ""
+"Якщо буде позначено цей пункт, програма надсилатиме запит користувачеві щодо "
+"зберігання або вилучення необроблених зображень."
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "За&лишати у списку"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr ""
+"Якщо буде позначено цей пункт, файли необроблених зображень залишатимуться у "
+"списку після тестового запуску."
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "Ви&лучати зі списку"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr ""
+"Якщо буде позначено цей пункт, після тестового запуску файли необроблених "
+"зображень буде вилучено зі списку файлів."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#~ msgid "Summary"
+#~ msgstr "Зведення"
+
+#~ msgid "Enter the name of the extra here..."
+#~ msgstr "Введіть у це поле додаток до назви..."

@@ -1,0 +1,404 @@
+# translation of kipiplugin_acquireimages.po to
+# translation of kipiplugin_acquireimages.po to Polish
+# Copyright (C) 2004 THE digikam'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the digikam package.
+#
+# Anna Sawicka <ania@kajak.org.pl>, 2004.
+# Igor Klimer <kigro@op.pl>, 2004.
+# Igor Klimer <kigro@vp.pl>, 2005, 2007.
+# Mikołaj Machowski <mikmach@wp.pl>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2007-09-10 08:25+0200\n"
+"Last-Translator: Mikołaj Machowski <mikmach@wp.pl>\n"
+"Language-Team: Polish <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Zgraj zdjęcia"
+
+#: aboutdata.h:41
+#, fuzzy
+#| msgid "A Kipi plugin to acquire images using a flat scanner"
+msgid "A tool to acquire images using a flat scanner"
+msgstr "Wtyczka Kipi do skanowania zdjęć"
+
+#: aboutdata.h:42
+#, fuzzy
+#| msgid "(c) 2008-2009, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "(c) 2008-2009, Gilles Caulier"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Author"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Programista"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr ""
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Nie można uruchomić skanera."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Skanuj zdjęcie"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Podręcznik"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Nazwa nowego pliku"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "Żądany format pliku \"%1\" nie jest wspierany."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"Nie można zapisać pliku\n"
+"\"%1\" do\n"
+"\"%2\"."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "Plik \"%1\" już istnieje. Na pewno chcesz go nadpisać?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Nadpisać plik?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Mikołaj Machowski"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mikmach@wp.pl"
+
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+
+#~ msgid "Scan Images..."
+#~ msgstr "Skanuj zdjęcia..."
+
+#~ msgid "Cannot acquire image..."
+#~ msgstr "Nie można zeskanować zdjęcia"
+
+#, fuzzy
+#~ msgid "A Kipi plugin to acquire images using a flat bed scanner"
+#~ msgstr "Wtyczka Kipi do zgrywania zdjęć"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Igor Klimer"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "kigro@vp.pl"
+
+#~ msgid "Save Target Image Options"
+#~ msgstr "Ustawienia zapisu zdjęcia docelowego"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Autor i opiekun"
+
+#~ msgid "Acquire Images Handbook"
+#~ msgstr "Podręcznik wtyczki Zgrywanie zdjęć"
+
+#~ msgid "image"
+#~ msgstr "zdjęcie"
+
+#~ msgid "Target Image"
+#~ msgstr "Zdjęcie docelowe"
+
+#~ msgid "Target Image Options"
+#~ msgstr "Ustawienia zdjęcia docelowego"
+
+#, fuzzy
+#~ msgid "File Name && Caption"
+#~ msgstr "Nazwa pliku i komentarze do zdjęcia"
+
+#, fuzzy
+#~ msgid "<p>The target image preview with the file name and caption."
+#~ msgstr "<p>Podgląd zdjęcia docelowego z nazwą pliku i komentarzami."
+
+#~ msgid "File name (without suffix):"
+#~ msgstr "Nazwa pliku (bez rozszerzenia):"
+
+#~ msgid "acquired_image"
+#~ msgstr "zdjecie"
+
+#~ msgid ""
+#~ "<p>Enter here the target image file name without suffix (that will be "
+#~ "automatically added to the file name according to the file-format option.)"
+#~ msgstr ""
+#~ "<p>Wpisz nazwę zdjęcia docelowego bez rozszerzenia (zostanie ono "
+#~ "automatycznie dodane na podstawie wybranego formatu graficznego)."
+
+#, fuzzy
+#~ msgid "<p>Enter here the target image's caption."
+#~ msgstr "<p>Wpisz tutaj komentarze dla zdjęcia docelowego."
+
+#~ msgid "<p>The preview of the target image."
+#~ msgstr "<p>Podgląd zdjęcia docelowego."
+
+#~ msgid "Saving Options"
+#~ msgstr "Opcje zapisu"
+
+#~ msgid "<p>The saving options of the target image."
+#~ msgstr "<p>Opcje zapisu dla zdjęcia docelowego."
+
+#~ msgid "Image compression:"
+#~ msgstr "Kompresja zdjęcia:"
+
+#~ msgid ""
+#~ "<p>The compression value of target image for JPEG and PNG formats:<p>"
+#~ msgstr ""
+#~ "<p>Wartość współczynnika kompresji dla zdjęcia docelowego w formacie JPEG "
+#~ "lub PNG:<p>"
+
+#~ msgid ""
+#~ "<b>1</b>: very high compression<p><b>25</b>: high compression<p><b>50</"
+#~ "b>: medium compression<p><b>75</b>: low compression (default value)"
+#~ "<p><b>100</b>: no compression"
+#~ msgstr ""
+#~ "<b>1</b>: bardzo wyskoka kompresja<p><b>25</b>: wysoka kompresja<p><b>50</"
+#~ "b>: średnia kompresja<p><b>75</b>: niska kompresja (wartość domyślna) "
+#~ "<p><b>100</b>: bez kompresji"
+
+#~ msgid "<p>Select here the target image's file format.<p>"
+#~ msgstr "<p>Wybierz format zapisu zdjęcia docelowego.<p>"
+
+#~ msgid ""
+#~ "<b>JPEG</b>: The Joint Photographic Experts' Group file format is a good "
+#~ "Web file format but it uses lossy data compression.<p><b>PNG</b>: the "
+#~ "Portable Network Graphics format is an extensible file format for the "
+#~ "lossless, portable, well-compressed storage of raster images. PNG "
+#~ "provides a patent-free replacement for GIF and can also replace many "
+#~ "common uses of TIFF. PNG is designed to work well in online viewing "
+#~ "applications, such as the World Wide Web, so it is fully streamable with "
+#~ "a progressive display option. Also, PNG can store gamma and chromaticity "
+#~ "data for improved color matching on heterogeneous platforms."
+#~ msgstr ""
+#~ "<b>JPEG</b>: (Joint Photographic Experts' Group) format ten jest dobry do "
+#~ "zastosowań internetowych, jednak używa kompresji stratnej.<p><b>PNG</b>: "
+#~ "(Portable Network Graphics) format PNG jest formatem grafiki oferującym "
+#~ "bezstratną, przenośnośną, wysoko wydajną kompresję grafiki rastrowej. "
+#~ "PNG, pozostając rozwiązaniem nieopatentowanym, jest dobrym zamiennikiem "
+#~ "formatu PNG, może także zastąpić format TIFF w wielu popularnych "
+#~ "zastosowaniach. PNG został stworzony z myślą o współpracy z rozwiązaniami "
+#~ "do przeglądania grafiki online, takimi jak World Wide Web, tak więc "
+#~ "oferuje opcję przesyłania strumieniowego wraz z wyświetlanie grafiki w "
+#~ "miarę jej ściągania. PNG może także przechowywać informacje o kanale "
+#~ "gamma i barwie w celu lepszego odwzorowania kolorów na niezgodnych "
+#~ "platformach."
+
+#~ msgid ""
+#~ "<p><b>TIFF</b>: the Tagged Image File Format is a rather old standard "
+#~ "that is still very popular today. It is a highly flexible and platform-"
+#~ "independent format which is supported by numerous image processing "
+#~ "applications and by virtually all prepress software on the market."
+#~ msgstr ""
+#~ "<p><b>TIFF</b>: format TIFF (Tag Image File Format) jest dosyć starym "
+#~ "standardem, w dalszym ciągu popularnym. Jest on elastycznym i niezależnym "
+#~ "od platformy formatem, który jest obsługiwany przez przez praktycznie "
+#~ "wszystkie programy graficzne na rynku."
+
+#~ msgid ""
+#~ "<p><b>PPM</b>: the Portable Pixel Map file format is used as an "
+#~ "intermediate format for storing color bitmap information. PPM files may "
+#~ "be either binary or ASCII and store pixel values up to 24 bits in size. "
+#~ "This format generates the biggest-sized text files for encoding images "
+#~ "without losing quality."
+#~ msgstr ""
+#~ "<p><b>PPM</b>: format PPM (Portable Pixel Map) jest używany przejściowy "
+#~ "format do przechowywania bitmap. Pliki zapisane w formacie PPM mogą być "
+#~ "binarne lub tekstowe oraz mogą przechowywać dane do wielkości 24 bitów. "
+#~ "Format ten generuje największe pliki tekstowe, w celu kodowania zdjęć bez "
+#~ "straty jakości."
+
+#~ msgid ""
+#~ "<p><b>BMP</b>: the BitMaP file format is a popular image format from the "
+#~ "Win32 environment. It efficiently stores mapped or unmapped RGB graphics "
+#~ "data with pixels 1-, 4-, 8-, or 24-bits in size. Data may be stored raw "
+#~ "or compressed using a 4-bit or 8-bit RLE data compression algorithm. BMP "
+#~ "is an excellent choice for a simple bitmap format which supports a wide "
+#~ "range of RGB image data."
+#~ msgstr ""
+#~ "<p><b>BMP</b>: format (BitMaP) jest popularnym formatem dla środowiska MS "
+#~ "Windows. W sposób efektywny przechowuje w paletach lub bez palety dane "
+#~ "graficzne w trybie RGB o 1-, 4-, 8-, lub 24 bitowej głębi koloru. Dane "
+#~ "mogą być przechowywane bez kompresji lub skompresowane przy użyciu 4 lub "
+#~ "8-bitowego algorytmu RLE. Format ten jest dobry dla prostych bitmap, "
+#~ "obsługuje on szeroką gamę możliwości trybu RGB."
+
+#~ msgid "Image file format:"
+#~ msgstr "Format zapisu zdjęcia:"
+
+#~ msgid "Selection"
+#~ msgstr "Wybór"
+
+#~ msgid "Album selection"
+#~ msgstr "Wybór albumu"
+
+#~ msgid "Select Folder in Which to Save Target Image"
+#~ msgstr "Wybierz folder, w którym zostanie zapisane zdjęcie"
+
+#~ msgid "&Add New Folder"
+#~ msgstr "&Dodaj nowy folder"
+
+#~ msgid "<p>Add a new folder."
+#~ msgstr "<p>Dodaje nowy folder."
+
+#~ msgid "Album Description"
+#~ msgstr "Opis albumu"
+
+#~ msgid "<p>The description of the current Album in the selection list."
+#~ msgstr "<p>Opis wybranego albumu z listy wyboru."
+
+#, fuzzy
+#~ msgid "Caption: %1"
+#~ msgstr "Kolekcja: %1"
+
+#~ msgid "Collection: %1"
+#~ msgstr "Kolekcja: %1"
+
+#~ msgid "Date: %1"
+#~ msgstr "Data: %1"
+
+#~ msgid "Items: %1"
+#~ msgstr "Elementów: %1"
+
+#~ msgid "You must select a target album for this image."
+#~ msgstr "Musisz wybrać album docelowy dla tego zdjęcia."
+
+#~ msgid "You must provide a file name for this image."
+#~ msgstr "Musisz wybrać nazwę pliku dla tego zdjęcia."
+
+#~ msgid "Cannot write image file \"%1\"."
+#~ msgstr "Nie można zapisać zdjęcia \"%1\"."
+
+#~ msgid "Could not upload image to \"%1\"."
+#~ msgstr "Nie można wysłać zdjęcia do \"%1\"."
+
+#~ msgid ""
+#~ "<qt>Error when informing the application about the new image. The error "
+#~ "was: %1</qt>"
+#~ msgstr ""
+#~ "<qt>Wystąpił błąd podczas informowania programu o nowym zdjęciu. "
+#~ "Zgłoszony błąd: %1</qt>"
+
+#~ msgid "Screenshot..."
+#~ msgstr "Zrzut ekranu..."
+
+#~ msgid "No KDE scan-service available; check your system."
+#~ msgstr ""
+#~ "Nie wykryto usługi skanowania KDE, proszę sprawdzić konfigurację systemu."
+
+#~ msgid "KIPI's 'Scan Images' Plugin"
+#~ msgstr "Wtyczka KIPI do skanowania zdjęć"
+
+#~ msgid "Screenshot"
+#~ msgstr "Zrzut ekranu"
+
+#~ msgid "&New Snapshot"
+#~ msgstr "&Nowy zrzut ekranu"
+
+#~ msgid ""
+#~ "This dialog will grab either your desktop or a single\n"
+#~ "application window. If you grab a single window your mouse\n"
+#~ "cursor will change into crosshairs; then, simply select the\n"
+#~ "window with your mouse."
+#~ msgstr ""
+#~ "To okno umożliwia zapis całego pulpitu lub tylko wybranego\n"
+#~ "okna programu. W przypadku zapisu pojedynczego okna programu,\n"
+#~ "kursor myszy zamieni się w krzyżyk, którym należy\n"
+#~ "wskazać wybrane okno."
+
+#~ msgid "Grab the entire desktop"
+#~ msgstr "Wykonaj zrzut całego pulpitu"
+
+#~ msgid ""
+#~ "<p>If you enable this option, the entire desktop will be grabbed; "
+#~ "otherwise, only the active windows."
+#~ msgstr ""
+#~ "<p>Jeśli ta opcja zostanie włączona, zapisany zostanie cały pulpit. W "
+#~ "przeciwnym wypadku, tylko aktywne okna."
+
+#~ msgid "Hide all host application windows"
+#~ msgstr "Ukryj wszystkie okna głównego programu graficznego"
+
+#~ msgid ""
+#~ "<p>If you enable this option, all host application windows will be hidden "
+#~ "during the grab operation."
+#~ msgstr ""
+#~ "<p>Jeśli ta opcja zostanie włączona, wszystkie okna głównego programu "
+#~ "graficznego zostaną ukryte podczas zrzutu ekranu."
+
+#~ msgid "Delay:"
+#~ msgstr "Opóźnienie:"
+
+#~ msgid "<p>The delay in seconds before the grab operation is started."
+#~ msgstr "<p>Opóźnienie, w sekundach, rozpoczęcia operacji zrzutu ekranu."
+
+#~ msgid "Unable to take snapshot."
+#~ msgstr "Nie można wykonać zrzutu ekranu."
+
+#~ msgid "Screenshot Error"
+#~ msgstr "Błąd podczas zrzutu ekranu"
+
+#~ msgid "Comments:"
+#~ msgstr "Komentarze:"
+
+#~ msgid "Comment: %1"
+#~ msgstr "Komentarz: %1"

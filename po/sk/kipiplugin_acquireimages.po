@@ -1,0 +1,114 @@
+# translation of kipiplugin_acquireimages.po to Slovak
+# Richard Fric <Richard.Fric@kdemail.net>, 2007, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2010-09-25 13:30+0200\n"
+"Last-Translator: Richard Fric <Richard.Fric@kdemail.net>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Získať obrázky"
+
+#: aboutdata.h:41
+msgid "A tool to acquire images using a flat scanner"
+msgstr "Nástroj na získanie obrázkov zo skenera"
+
+#: aboutdata.h:42
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2009, Gilles Caulier\n"
+#| "(c) 2007-2009, Kare Sars"
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr ""
+"(c) 2003-2009, Gilles Caulier\n"
+"(c) 2007-2009, Kare Sars"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Autor"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Vývojár"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr "Importovať zo skenera..."
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Nedá sa otvoriť zariadenie skenera."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Skenovať obrázok"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Príručka"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Meno súboru pre nový obrázok"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "Formát súboru \"%1\" cieľového obrázku nie je podporovaný."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"Zlyhalo uloženie súboru\n"
+"\"%1\" do\n"
+"\"%2\"."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "Súbor s menom \"%1\" už existuje. Ste si istý, že ho chcete prepísať?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Prepísať súbor?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr "Súbor \"%1\" sa nedá uložiť"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Richard Frič"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Richard.Fric@kdemail.net"

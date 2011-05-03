@@ -1,0 +1,292 @@
+# translation of kipiplugin_timeadjust.po to Basque
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_timeadjust\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-01-25 03:02+0100\n"
+"PO-Revision-Date: 2010-06-26 15:29+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: clockphotodialog.cpp:169
+msgid "Determine time difference with clock photo"
+msgstr "Zehaztu orduaren desberdintasuna argazkiarenarekin"
+
+#: clockphotodialog.cpp:171
+msgid "Load different photo"
+msgstr "Kargatu bestelako argazkia"
+
+#: clockphotodialog.cpp:181
+msgid ""
+"If you have a photo in your set with a clock or another external time source "
+"on it, you can load it here and set the indicator to the (date and) time "
+"displayed. The difference of your internal camera clock will be determined "
+"from this setting."
+msgstr ""
+"Multzoan beste argazki bat badago orduarekin edo kanpoko ordu-iturburu "
+"batekin, hemen karga dezakezu eta bistaratutako orduaren (eta dataren) "
+"adierazlea ezartzeko. Kameraren barneko ordua zehaztuko da ezarpen honekin."
+
+#: clockphotodialog.cpp:210
+msgid "Scale:"
+msgstr "Eskala:"
+
+#: clockphotodialog.cpp:230
+msgid "The clock date and time:"
+msgstr "Data eta orduaren ordularia:"
+
+#: clockphotodialog.cpp:321
+#, kde-format
+msgid ""
+"<font color=\"red\"><b>Could not obtain date and time information from image "
+"%1.</b></font>"
+msgstr ""
+"<font color=\"red\"><b>Ezin izan da data eta orduaren informazioa %1 "
+"iruditik eskuratu.</b></font>"
+
+#: clockphotodialog.cpp:333
+#, kde-format
+msgid "<font color=\"red\"><b>Could not load image %1.</b></font>"
+msgstr "<font color=\"red\"><b>Ezin izan da %1 irudia kargatu.</b></font>"
+
+#: plugin_timeadjust.cpp:65
+msgid "Adjust Time && Date..."
+msgstr "Doitu data eta ordua..."
+
+#: timeadjustdialog.cpp:183 timeadjustdialog.cpp:921 timeadjustdialog.cpp:930
+msgid "Adjust Time & Date"
+msgstr "Doitu data eta ordua"
+
+#: timeadjustdialog.cpp:191
+msgid "Time Adjust"
+msgstr "Doitu ordua"
+
+#: timeadjustdialog.cpp:194
+msgid "A Kipi plugin for adjusting the timestamp of picture files"
+msgstr "Kipi-ren plugina argazkien data-zigilua doitzeko"
+
+#: timeadjustdialog.cpp:195
+msgid ""
+"(c) 2003-2005, Jesper K. Pedersen\n"
+"(c) 2006-2009, Gilles Caulier"
+msgstr ""
+"(c) 2003-2005, Jesper K. Pedersen\n"
+"(c) 2006-2009, Gilles Caulier"
+
+#: timeadjustdialog.cpp:198
+msgid "Jesper K. Pedersen"
+msgstr "Jesper K. Pedersen"
+
+#: timeadjustdialog.cpp:199
+msgid "Author"
+msgstr "Egilea"
+
+#: timeadjustdialog.cpp:202
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: timeadjustdialog.cpp:203
+msgid "Developer and maintainer"
+msgstr "Garatzailea eta mantentzailea"
+
+#: timeadjustdialog.cpp:211
+msgid "Handbook"
+msgstr "Eskuliburua"
+
+#: timeadjustdialog.cpp:219
+msgid "Use Time && Date"
+msgstr "Erabili data eta ordua"
+
+#: timeadjustdialog.cpp:225
+#, kde-format
+msgid "%1 timestamp"
+msgstr "%1 data-zigilua"
+
+#: timeadjustdialog.cpp:233 timeadjustdialog.cpp:310
+msgid "File last modified"
+msgstr "Fitxategiaren azken aldaketa"
+
+#: timeadjustdialog.cpp:237
+msgid "EXIF/IPTC/XMP"
+msgstr "EXIF/IPTC/XMP"
+
+#: timeadjustdialog.cpp:238 timeadjustdialog.cpp:311
+msgid "EXIF: created"
+msgstr "EXIF: sortuta"
+
+#: timeadjustdialog.cpp:239 timeadjustdialog.cpp:312
+msgid "EXIF: original"
+msgstr "EXIF: jatorrizkoa"
+
+#: timeadjustdialog.cpp:240 timeadjustdialog.cpp:313
+msgid "EXIF: digitized"
+msgstr "EXIF: digitalizatua"
+
+#: timeadjustdialog.cpp:241 timeadjustdialog.cpp:314
+msgid "IPTC: created"
+msgstr "IPTC: sortuta"
+
+#: timeadjustdialog.cpp:242
+msgid "XMP: created"
+msgstr "XMP: sortuta"
+
+#: timeadjustdialog.cpp:252
+msgid "Reset to current date"
+msgstr "Berrezarri uneko datara"
+
+#: timeadjustdialog.cpp:278
+msgid "Adjust"
+msgstr "Doitu"
+
+#: timeadjustdialog.cpp:282
+msgid "Copy value"
+msgstr "Kopiatu balioa"
+
+#: timeadjustdialog.cpp:283
+msgid "Add"
+msgstr "Gehiketa"
+
+#: timeadjustdialog.cpp:284
+msgid "Subtract"
+msgstr "Kenketa"
+
+#: timeadjustdialog.cpp:288
+msgctxt "time adjust offset, days value label"
+msgid "days"
+msgstr "egun"
+
+#: timeadjustdialog.cpp:291
+msgid "Determine from clock photo"
+msgstr "Zehaztu argazkiaren ordularitik"
+
+#: timeadjustdialog.cpp:306
+msgid "Update Time && Date"
+msgstr "Eguneratu data eta ordua"
+
+#: timeadjustdialog.cpp:315
+msgid "XMP"
+msgstr "XMP"
+
+#: timeadjustdialog.cpp:337
+msgid "Example"
+msgstr "Adibidea"
+
+#: timeadjustdialog.cpp:515 timeadjustdialog.cpp:546 timeadjustdialog.cpp:572
+#: timeadjustdialog.cpp:632
+#, kde-format
+msgid "1 image will be changed"
+msgid_plural "%1 images will be changed"
+msgstr[0] "Irudi 1 aldatuko da"
+msgstr[1] "%1 irudi aldatuko dira"
+
+#: timeadjustdialog.cpp:552 timeadjustdialog.cpp:638
+#, kde-format
+msgid "1 image will be changed; "
+msgid_plural "%1 images will be changed; "
+msgstr[0] "Irudi 1 aldatuko da; "
+msgstr[1] "%1 irudi aldatuko dira"
+
+#: timeadjustdialog.cpp:556
+#, kde-format
+msgid "1 image will be skipped due to an inexact date."
+msgid_plural "%1 images will be skipped due to inexact dates."
+msgstr[0] "Irudi 1 saltatu egingo da zehaztasunik gabeko data duelako."
+msgstr[1] "%1 irudi saltatu egingo dira zehaztasunik gabeko data dutelako."
+
+#: timeadjustdialog.cpp:642
+#, kde-format
+msgid "1 image will be skipped due to a missing source timestamp."
+msgid_plural "%1 images will be skipped due to missing source timestamps."
+msgstr[0] "Irudi 1 saltatu egingo da iturburuko data-zigilua falta zaiolako."
+msgstr[1] ""
+"%1 irudi saltatu egingo dira iturburuko data-zigilua falta zaizkielako."
+
+#: timeadjustdialog.cpp:739
+#, kde-format
+msgid "Custom: <b>%1</b>"
+msgstr "Pertsonalizatua: <b>%1</b>"
+
+#: timeadjustdialog.cpp:755
+msgid "Original: <b>N/A</b><br/>Image will be skipped"
+msgstr "Jatorrizkoa: <b>E/E</b><br/>Irudia saltatu egingo da"
+
+#: timeadjustdialog.cpp:764
+#, kde-format
+msgid "Original: <b>%1</b>"
+msgstr "Jatorrizkoa: <b>%1</b>"
+
+#: timeadjustdialog.cpp:771
+#, kde-format
+msgid "Original: <b>%1</b><br/>Adjusted: <b>%2</b>"
+msgstr "Jatorrizkoa: <b>%1</b><br/>Doituta: <b>%2</b>"
+
+#: timeadjustdialog.cpp:919
+msgid "Unable to update metadata in:"
+msgstr "Ezin da metadaturik hemen eguneratu:"
+
+#: timeadjustdialog.cpp:928
+msgid "Unable to update file modification time in:"
+msgstr "Ezin da fitxategiaren aldaketaren ordua hemen eguneratu: "
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñaki Larrañaga Murgoitio"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "dooteo@euskalgnu.org"
+
+#~ msgid "Adjustment Type"
+#~ msgstr "Type d'ajustage"
+
+#~ msgid "Set file date to EXIF/IPTC/XMP creation date"
+#~ msgstr "Définir la date du fichier pour la date de création EXIF/IPTC/XMP"
+
+#~ msgid "Custom date"
+#~ msgstr "Date personnaliser"
+
+#~ msgid "Update EXIF creation date"
+#~ msgstr "Mise à jour de la date EXIF de création"
+
+#~ msgid "Update IPTC creation date"
+#~ msgstr "Mise à jour de la date IPTC de création"
+
+#~ msgid "Update XMP creation date"
+#~ msgstr "Mise à jour de la date XMP de création"
+
+#~ msgid "Adjustments"
+#~ msgstr "Ajustages"
+
+#~ msgid "Hours:"
+#~ msgstr "Heures : "
+
+#~ msgid "Minutes:"
+#~ msgstr "Minutes : "
+
+#~ msgid "Seconds:"
+#~ msgstr "Secondes : "
+
+#~ msgid "Months:"
+#~ msgstr "Mois : "
+
+#~ msgid "Years:"
+#~ msgstr "Années :"
+
+#~ msgid "<b>%1</b><br/>would, for example, change into<br/><b>%2</b>"
+#~ msgstr "<b>%1</b><br/>sera, par exemple, modifié en<br/><b>%2</b>"
+
+#~ msgid "Unable to set date and time like picture metadata from:"
+#~ msgstr ""
+#~ "Impossible de fixer la date et l'heure comme les méta-données de l'image "
+#~ "de : "

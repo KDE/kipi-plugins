@@ -1,0 +1,147 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2010-03-07 19:59+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "ส่งออกไปยังเครื่องคอมพิวเตอร์ทางไกล"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "เริ่มการส่งออก"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "เริ่มทำการส่งออกไปยังปลายทางที่ระบุไว้"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "ส่งออกไปยังเครื่องคอมพิวเตอร์ทางไกล"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr "ส่วนเสริมของ Kipi เพื่อใช้ส่งออกภาพต่าง ๆ ผ่านเครือข่าย โดยใช้ KIO-Slave"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "สงวนลิขสิทธิ์ (c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "ผู้พัฒนาและผู้ดูแล"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "คู่มือการใช้งาน"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"มีภาพบางภาพที่ยังไม่ถูกถ่ายโอนข้อมูล และยังคงอยู่ในช่องรายการ "
+"คุณสามารถจะลองทำการส่งออกภาพต่าง ๆ เหล่านี้อีกครั้งได้ในตอนนี้"
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "การอัปโหลดไม่สมบูรณ์"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr "นี่เป็นรายการของภาพต่าง ๆ ที่จะทำการนำเข้ามายังอัลบั้มปัจจุบัน"
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "นำเข้าจากเครื่องคอมพิวเตอร์ทางไกล"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "เริ่มการนำเข้า"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr "เริ่มทำการนำเข้ารูปภาพต่าง ๆ ที่ระบุไว้ เข้ามาเก็บไว้ในอัลบั้มที่เลือกไว้ในปัจจุบัน"
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "นำเข้าจากเครื่องคอมพิวเตอร์ทางไกล"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr "ส่วนเสริมของ Kipi เพื่อใช้นำเข้าภาพต่าง ๆ ผ่านเครือข่าย โดยใช้ KIO-Slave"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"มีภาพบางภาพที่ยังไม่ถูกถ่ายโอนข้อมูล และยังคงอยู่ในช่องรายการ "
+"คุณสามารถจะลองทำการนำเข้าภาพต่าง ๆ เหล่านี้อีกครั้งได้ในตอนนี้"
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "การนำเข้ายังไม่สมบูรณ์"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "ส่งออกไปยังเครื่องคอมพิวเตอร์ทางไกล..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "นำเข้าจากเครื่องคอมพิวเตอร์ทางไกล..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "ตำแหน่งปลายทาง: "
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"ตั้งค่าที่อยู่ของปลายทางที่จะใช้ในการอัปโหลดภาพต่าง ๆ ไป ซึ่งมันสามารถเป็นที่อยู่ที่ใช้ได้ใน 'ดอลฟิน' "
+"หรือ 'คอนเควอร์เรอร์' ก็ได้ เช่น ftp://my.server.org/sub/folder"
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "เลือกปลายทาง..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "เลือกตำแหน่งปลายทาง..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr "นี่เป็นรายการของภาพต่าง ๆ ที่จะทำการอัปโหลดไปยังปลายทางที่ระบุ"
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "ยังไม่มีการเลือกใด ๆ"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"

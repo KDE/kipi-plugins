@@ -1,0 +1,75 @@
+# tradução do kipiplugin_wallpaper.po para Brazilian Portuguese
+# Anderson Carlos Daniel Sanches <anderson@ime.usp.br>, 2004.
+# Marcus Gama <marcus_gama@uol.com.br>, 2005.
+# Fernando Boaglio <fernando@boaglio.com>, 2005.
+# doutor.zero <doutor.zero@gmail.com>, 2007.
+# André Marcelo Alvarenga <andrealvarenga@gmx.net>, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2009-04-12 22:45-0300\n"
+"Last-Translator: André Marcelo Alvarenga <andrealvarenga@gmx.net>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_br@mail.kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: BRAZIL\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "&Definir como plano de fundo"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Centralizado"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Ladrilhado centralizado"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Centralizado aspecto maximizado"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Ladrilhado aspecto maximizado"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Escalonado"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Preenchimento centralizado automático"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Escalonar e aparar"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Você selecionou uma imagem remota. Ela precisa ser salva em seu disco "
+"local para ser usada como papel de parede.</p><p>Você será agora perguntado "
+"para onde salvar a imagem.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Alterar o plano de fundo"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "O plano de fundo não pode ser alterado."
+
+#~ msgid "We can not change background."
+#~ msgstr "Nós não podemos alterar o plano de fundo."

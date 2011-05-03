@@ -1,0 +1,241 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marek Laane <bald@smail.ee>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-25 03:14+0100\n"
+"PO-Revision-Date: 2011-02-07 21:00+0200\n"
+"Last-Translator: Marek Laane <bald@smail.ee>\n"
+"Language-Team: Estonian <kde-et@linux.ee>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: piwigoconfig.cpp:76
+msgctxt "piwigo login settings"
+msgid "URL:"
+msgstr "URL:"
+
+#: piwigoconfig.cpp:80
+msgctxt "piwigo login settings"
+msgid "Username:"
+msgstr "Kasutajanimi:"
+
+#: piwigoconfig.cpp:84
+msgctxt "piwigo login settings"
+msgid "Password:"
+msgstr "Parool:"
+
+#: plugin_piwigoexport.cpp:81
+msgid "Export to &Piwigo..."
+msgstr "Ekspordi &Piwigosse..."
+
+#: plugin_piwigoexport.cpp:111 piwigowindow.cpp:429 piwigowindow.cpp:640
+msgid "Edit Piwigo Data"
+msgstr "Piwigo andmete muutmine"
+
+#: piwigowindow.cpp:122
+msgid "Albums"
+msgstr "Albumid"
+
+#: piwigowindow.cpp:131
+msgid "&Add Selected Photos"
+msgstr "Lis&a valitud fotod"
+
+#: piwigowindow.cpp:136
+msgid "Override Default Options"
+msgstr "Vaikevalikute tühistamine"
+
+#: piwigowindow.cpp:140
+msgid "EXIF Comment (instead of file name) sets Title"
+msgstr "EXIF-i kommentaar määrab pealkirja (failinime asemel)"
+
+#: piwigowindow.cpp:143
+msgid "EXIF Comment (instead of file name) sets Comment"
+msgstr "EXIF-i kommentaar määrab kommentaari (failinime asemel)"
+
+#: piwigowindow.cpp:146
+msgid "Resize photos before uploading"
+msgstr "Fotode suuruse muutmine enne üleslaadimist"
+
+#: piwigowindow.cpp:149
+msgid "Maximum dimension:"
+msgstr "Maksimummõõtmed:"
+
+#: piwigowindow.cpp:156
+msgid "Maximum thumbnail dimension:"
+msgstr "Pisipildi maksimummõõtmed:"
+
+#: piwigowindow.cpp:163
+msgid "Also download the full size version"
+msgstr "Ka täissuuruses versiooni allalaadimine"
+
+#: piwigowindow.cpp:227 piwigowindow.cpp:232
+msgid "Piwigo Export"
+msgstr "Piwigo eksport"
+
+#: piwigowindow.cpp:235
+msgid "A Kipi plugin to export image collections to a remote Piwigo server."
+msgstr "Kipi plugin pildikogude eksportimiseks Piwigo serverisse."
+
+#: piwigowindow.cpp:236
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+"(c) 2010, Frédéric Coiffier\n"
+msgstr ""
+"(c) 2003-2005: Renchi Raju\n"
+"(c) 2006-2007: Colin Guthrie\n"
+"(c) 2006-2009: Gilles Caulier\n"
+"(c) 2008: Andrea Diamantini\n"
+"(c) 2010: Frédéric Coiffier\n"
+
+#: piwigowindow.cpp:242
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: piwigowindow.cpp:242
+msgid "Author"
+msgstr "Autor"
+
+#: piwigowindow.cpp:245
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: piwigowindow.cpp:245
+msgid "Maintainer"
+msgstr "Hooldaja"
+
+#: piwigowindow.cpp:248
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: piwigowindow.cpp:248 piwigowindow.cpp:251 piwigowindow.cpp:254
+msgid "Developer"
+msgstr "Arendaja"
+
+#: piwigowindow.cpp:251
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: piwigowindow.cpp:254
+msgid "Frédéric Coiffier"
+msgstr "Frédéric Coiffier"
+
+#: piwigowindow.cpp:264
+msgid "Handbook"
+msgstr "Käsiraamat"
+
+#: piwigowindow.cpp:272
+msgid "Settings"
+msgstr "Seadistused"
+
+#: piwigowindow.cpp:421
+msgid "Failed to login into remote piwigo. "
+msgstr "Sisselogimine Piwigosse nurjus. "
+
+#: piwigowindow.cpp:423
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Kas soovid kontrollida seadistusi ja proovida uuesti?"
+
+#: piwigowindow.cpp:481 piwigowindow.cpp:501
+msgid "Album"
+msgstr "Album"
+
+#: piwigowindow.cpp:519
+msgid "Image"
+msgstr "Pilt"
+
+#: piwigowindow.cpp:542
+msgid "Nothing to upload - please select photos to upload."
+msgstr "Pole midagi üles laadida - palun vali üleslaaditavad pildid."
+
+#: piwigowindow.cpp:584
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Faili %1 üleslaadimine"
+
+#: piwigowindow.cpp:603
+msgid "Failed to upload photo into remote piwigo. "
+msgstr "Foto üleslaadimine Piwigosse nurjus. "
+
+#: piwigowindow.cpp:606
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Kas jätkata?"
+
+#: piwigotalker.cpp:247
+#, kde-format
+msgid "Check if %1 already exists"
+msgstr "Kontroll, kas %1 on juba olemas"
+
+#: piwigotalker.cpp:353
+msgid "Piwigo URL probably incorrect"
+msgstr "Piwigo URL ei ole ilmselt õige"
+
+#: piwigotalker.cpp:358
+msgid "Incorrect username or password specified"
+msgstr "Anti vigane kasutajanimi või parool"
+
+#: piwigotalker.cpp:414 piwigotalker.cpp:452 piwigotalker.cpp:515
+#: piwigotalker.cpp:612 piwigotalker.cpp:729 piwigotalker.cpp:739
+msgid "Invalid response received from remote Piwigo"
+msgstr "Piwigolt saadi vigane vastus"
+
+#: piwigotalker.cpp:419
+msgid "Failed to list albums"
+msgstr "Albumite nimekirja hankimine nurjus"
+
+#: piwigotalker.cpp:457 piwigotalker.cpp:520 piwigotalker.cpp:617
+#: piwigotalker.cpp:734 piwigotalker.cpp:752
+msgid "Failed to upload photo"
+msgstr "Foto üleslaadimine nurjus"
+
+#: piwigotalker.cpp:482
+#, kde-format
+msgid "Upload resized version of %1"
+msgstr "%1 muudetud suurusega versiooni üleslaadimine"
+
+#: piwigotalker.cpp:545
+#, kde-format
+msgid "Upload the thumbnail of %1"
+msgstr "%1 pisipildi üleslaadimine"
+
+#: piwigotalker.cpp:580
+#, kde-format
+msgid "Upload the chunk %1 of %2"
+msgstr "Tüki %1/%2 üleslaadimine"
+
+#: piwigotalker.cpp:654
+msgid "Warning : The full size photo cannot be uploaded."
+msgstr "Hoiatus: täissuuruses fotot ei saa üles laadida."
+
+#: piwigotalker.cpp:697
+#, kde-format
+msgid "Upload the metadata of %1"
+msgstr "%1 metaandmete üleslaadimine"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bald@smail.ee"

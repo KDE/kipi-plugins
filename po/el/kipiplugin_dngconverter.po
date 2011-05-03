@@ -1,0 +1,247 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dngconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2009-04-28 22:24+0300\n"
+"Last-Translator: Toussis Manolis <manolis@koppermind.homelinux.org>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr "Αδυναμία αναγνώρισης της ακατέργαστης Raw εικόνας"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "Κατασκευαστής: %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "Μοντέλο: %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "Δημιουργήθηκε: %1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "Διάφραγμα φακού: f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "Εστίαση: %1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "Έκθεση: 1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Ευαισθησία: %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "Αρχείο(α) για μετατροπή"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "Μετατροπέας DNG..."
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "Ενσωμάτωση αρχικού αρχείου"
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "Μη απωλεστική συμπίεση"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr ""
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "Προεπισκόπηση JPEG:"
+
+#: plugin/settingswidget.cpp:115
+#, fuzzy
+#| msgid "None"
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "Καθόλου"
+
+#: plugin/settingswidget.cpp:116
+#, fuzzy
+#| msgid "Medium"
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "Μεσαίο"
+
+#: plugin/settingswidget.cpp:117
+#, fuzzy
+#| msgid "Full size"
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "Πλήρες μέγεθος"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "Αν το αρχείο προορισμού υπάρχει:"
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "Αυτόματη αντικατάσταση"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr "Άνοιγμα διαλόγου μετονομασίας αρχείων"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr "Μετατροπέας εικόνων DNG"
+
+#: plugin/aboutdata.h:52
+#, fuzzy, kde-format
+#| msgid "A tool to batch convert RAW camera images to DNG"
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr "Ένα εργαλείο για την ομαδική μετατροπή RAW εικόνων φωτογραφικής σε DNG"
+
+#: plugin/aboutdata.h:55
+#, fuzzy
+#| msgid "(c) 2008-2009, Gilles Caulier"
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr "(c) 2008-2009, Gilles Caulier"
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr "Συγγραφέας"
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr ""
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr ""
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "Έξοδος από το μετατροπέα DNG"
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr "Ομαδική μετατροπή RAW εικόνων φωτογραφικής σε DNG"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "&Προσθήκη"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr "Προσθήκη νέων αρχείων Raw στη λίστα"
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "Α&φαίρεση"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr "Αφαίρεση των επιλεγμένων αρχείων Raw από τη λίστα"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "Εικόνα επισκόπησης"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "Αρχείο Raw"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "Αρχείο προορισμού"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "Φωτογραφική"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr "Εγχειρίδιο"
+
+#: plugin/batchdialog.cpp:332
+#, fuzzy
+#| msgid "There is no Raw file to process in the list!"
+msgid "The list does not contain any Raw files to process."
+msgstr "Δεν υπάρχει αρχείο Raw για επεξεργασία στη λίστα!"
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "&Εγκατάλειψη"
+
+#: plugin/batchdialog.cpp:474
+#, fuzzy
+#| msgid "Abort the current Raw files conversion"
+msgid "Abort the conversion of Raw files."
+msgstr "Εγκατάλειψη της τρέχουσας μετατροπής Raw αρχείων"
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "Μ&ετατροπή"
+
+#: plugin/batchdialog.cpp:480
+#, fuzzy
+#| msgid "Start converting the Raw images from current settings"
+msgid "Start converting the Raw images using the current settings."
+msgstr ""
+"Εκκίνηση μετατροπής των ακατέργαστων εικόνων με τις τρέχουσες ρυθμίσεις"
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "Αποθήκευση ακατέργαστης εικόνας από '%1' ως"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "Η αποθήκευση της εικόνας %1 απέτυχε"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Τούσης Μανώλης"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "manolis@koppermind.homelinux.org"

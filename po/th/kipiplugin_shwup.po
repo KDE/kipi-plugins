@@ -1,0 +1,244 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-03-03 23:26+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: swalbum.cpp:49
+msgid "Shwup New Album"
+msgstr "อัลบั้มใหม่ของ Shwup"
+
+#: swalbum.cpp:62
+msgid "Title of the album that will be created (required)."
+msgstr "ชื่อของอัลบั้มที่จะถูกสร้าง (จำเป็นต้องป้อนชื่อ)"
+
+#: swalbum.cpp:65
+msgctxt "album edit"
+msgid "Title:"
+msgstr "ชื่ออัลบั้ม:"
+
+#: swlogin.cpp:48
+msgid "Shwup Login"
+msgstr "ล็อกอินของ Shwup"
+
+#: swlogin.cpp:60
+msgid "Email of shwup account (required)."
+msgstr "อีเมลของบัญชีผู้ใช้ Shwup (จำเป็นต้องใช้)"
+
+#: swlogin.cpp:64
+msgid "Password of shwup account (required)."
+msgstr "รหัสผ่านของบัญชีผู้ใช้ Shwup (จำเป็นต้องใช้)"
+
+#: swlogin.cpp:67
+msgctxt "login settings"
+msgid "Email:"
+msgstr "อีเมล:"
+
+#: swlogin.cpp:68
+msgctxt "login settings"
+msgid "Password:"
+msgstr "รหัสผ่าน:"
+
+#: swwidget.cpp:71
+msgid "This is the list of images to upload to your Shwup account."
+msgstr "นี่เป็นรายการของรูปภาพต่าง ๆ ที่จะถูกอัปโหลดไปยังบัญชีผู้ใช้บริการ Shwup ของคุณ"
+
+#: swwidget.cpp:77
+msgid ""
+"This is a clickable link to open the Shwup.com home page in a web browser."
+msgstr "นี่เป็นส่วนเชื่อมโยงที่สามารถคลิกได้ เพื่อเปิดหน้าหลักของ Shwup.com ในเว็บเบราว์เซอร์"
+
+#: swwidget.cpp:83
+msgid "Account"
+msgstr "บัญชีผู้ใช้"
+
+#: swwidget.cpp:84
+msgid "This is the Shwup account that is currently logged in."
+msgstr "นี่เป็นบัญชีผู้ใช้งานของ Shwup ที่กำลังล็อกอินเข้าใช้งานอยู่ในปัจจุบัน"
+
+#: swwidget.cpp:87
+msgctxt "account settings"
+msgid "Name:"
+msgstr "ชื่อ:"
+
+#: swwidget.cpp:90
+msgid "Change Account"
+msgstr "เปลี่ยนบัญชีผู้ใช้"
+
+#: swwidget.cpp:91
+msgid "Change Shwup Account used for transfer"
+msgstr "ออกจากระบบ Shwup แล้วล็อกอินด้วยบัญชีผู้ใช้อื่นเพื่อทำการถ่ายโอนข้อมูล"
+
+#: swwidget.cpp:102 swwidget.cpp:122
+msgid "Destination"
+msgstr "ปลายทาง"
+
+#: swwidget.cpp:103
+msgid "This is the Shwup album to which selected photos will be uploaded."
+msgstr "นี่เป็นอัลบั้มบน Shwup ที่ภาพถ่ายต่าง ๆ ที่ได้เลือกไว้ จะถูกทำการอัปโหลดไป"
+
+#: swwidget.cpp:106
+msgid "Album:"
+msgstr "อัลบั้ม:"
+
+#: swwidget.cpp:110
+msgid "New Album"
+msgstr "อัลบั้มใหม่"
+
+#: swwidget.cpp:111
+msgid "Create new Shwup album"
+msgstr "สร้างอัลบั้มใหม่ของ Shwup"
+
+#: swwidget.cpp:112
+msgctxt "album list"
+msgid "Reload"
+msgstr "โหลดใหม่อีกครั้ง"
+
+#: swwidget.cpp:113
+msgid "Reload album list"
+msgstr "โหลดรายการอัลบั้มใหม่อีกครั้ง"
+
+#: swwidget.cpp:123
+msgid "This is the location to which Shwup images will be downloaded."
+msgstr "นี่เป็นตำแหน่งที่จะใช้ในการเก็บภาพต่าง ๆ ของ Shwup เมื่อทำการดาวน์โหลด"
+
+#: swwidget.cpp:130
+msgid "Options"
+msgstr "ตัวเลือกต่าง ๆ"
+
+#: swwidget.cpp:131
+msgid "These are options that will be applied to photos before upload."
+msgstr "นี่เป็นตัวเลือกต่าง ๆ ที่จะถูกปรับใช้กับภาพต่าง ๆ ก่อนจะทำการอัปโหลด"
+
+#: swwidget.cpp:135
+msgid "Resize photos before uploading"
+msgstr "ปรับขนาดภาพต่าง ๆ ก่อนทำการอัปโหลด"
+
+#: swwidget.cpp:145
+msgid "Maximum dimension:"
+msgstr "มิติขนาดสูงสุด:"
+
+#: swwidget.cpp:153
+msgid "JPEG quality:"
+msgstr "คุณภาพภาพ JPEG:"
+
+#: swwindow.cpp:93
+msgid "Export to Shwup Web Service"
+msgstr "ส่งออกไปยังบริการ Shwup บนเว็บ"
+
+#: swwindow.cpp:94
+msgid "Start Upload"
+msgstr "เริ่มการอัปโหลด"
+
+#: swwindow.cpp:95
+msgid "Start upload to Shwup web service"
+msgstr "เริ่มการอัปโหลดไปยังเว็บบริการ Shwup"
+
+#: swwindow.cpp:118
+msgid "Shwup Export"
+msgstr "ส่งออกไปยังบริการ Shwup"
+
+#: swwindow.cpp:120
+msgid "A Kipi plugin to export images to Shwup web service."
+msgstr "ส่วนเสริมของ Kipi สำหรับส่งออกชุดภาพสะสมไปยังบริการ Shwup บนเว็บ"
+
+#: swwindow.cpp:122
+msgid "(c) 2009, Timothée Groleau"
+msgstr "สงวนลิขสิทธิ์ (c) 2009, Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Timothée Groleau"
+msgstr "Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Author and maintainer"
+msgstr "ผู้เขียนและผู้ดูแล"
+
+#: swwindow.cpp:132
+msgid "Handbook"
+msgstr "คู่มือการใช้งาน"
+
+#: swwindow.cpp:277
+msgid ""
+"The shwup.com service does not seem to be available at this time, please try "
+"again later."
+msgstr "บริการ shwup.com ดูเหมือนว่าจะยังใช้งานไม่ได้ในตอนนี้ โปรดลองใหม่อีกครั้งในภายหลัง"
+
+#: swwindow.cpp:307
+msgid "This application has been blacklisted by the shwup.com service."
+msgstr "โปรแกรมนี้ถูกขึ้นบัญชีดำโดยบริการ shwup.com"
+
+#: swwindow.cpp:319
+#, kde-format
+msgid "Shwup Call Failed: %1\n"
+msgstr "ล้มเหลวในการเรียกใช้บริการ Shwup: %1\n"
+
+#: swwindow.cpp:420
+msgid "Transfer Progress"
+msgstr "ความคืบหน้าการส่งถ่ายข้อมูล"
+
+#: swwindow.cpp:425
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: swwindow.cpp:532
+#, kde-format
+msgid ""
+"Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online "
+"and invite people."
+msgstr ""
+"อัปโหลดเสร็จสิ้นแล้ว โปรดไปดูที่ \"<a href=\"%1\">%2</a>\" เพื่อดูอัลบั้มแบบออนไลน์ "
+"และเชื้อเชิญคนอื่น ๆ ให้เข้าไปดู"
+
+#: swwindow.cpp:535
+msgid "Upload complete"
+msgstr "อัปโหลดเสร็จสมบูรณ์แล้ว"
+
+#: swwindow.cpp:559 swwindow.cpp:578
+msgid "Cannot open file"
+msgstr "ไม่สามารถเปิดแฟ้มได้"
+
+#: swwindow.cpp:582
+#, kde-format
+msgid "Uploading file %1"
+msgstr "กำลังอัปโหลดแฟ้ม %1"
+
+#: swwindow.cpp:606
+#, kde-format
+msgid ""
+"Failed to upload photo into Shwup: %1\n"
+"Do you want to continue?"
+msgstr ""
+"ล้มเหลวในการอัปโหลดภาพไปยังบริการ Shwup: %1 \n"
+"คุณต้องการจะทำต่อไปหรือไม่ ?"
+
+#: swwindow.cpp:630
+#, kde-format
+msgid "Shwup Call Failed: %1"
+msgstr "ล้มเหลวในการเรียกใช้บริการ Shwup: %1"
+
+#: plugin_shwup.cpp:78
+msgid "Export to Shwup..."
+msgstr "ส่งออกไปยัง Shwup..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"

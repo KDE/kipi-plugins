@@ -1,0 +1,205 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Dmitriy Simbiriatin <slpiv@mail.ru>, 2010.
+# Alexander Potashev <aspotashev@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-13 03:18+0100\n"
+"PO-Revision-Date: 2010-07-22 20:12+0400\n"
+"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin_ipodexport.cpp:71
+msgid "Export to &iPod..."
+msgstr "Экспорт в &iPod..."
+
+#: plugin_ipodexport.cpp:87 IpodExportDialog.cpp:111
+msgid "iPod Export"
+msgstr "Экспорт в iPod"
+
+#: IpodExportDialog.cpp:114
+msgid "A tool to export image to an iPod device"
+msgstr "Инструмент для экспорта изображений на устройства iPod"
+
+#: IpodExportDialog.cpp:115
+msgid ""
+"(c) 2006-2008, Seb Ruiz\n"
+"(c) 2008-2010, Gilles Caulier"
+msgstr ""
+"© Seb Ruiz, 2006-2008\n"
+"© Gilles Caulier, 2008-2010"
+
+#: IpodExportDialog.cpp:118
+msgid "Seb Ruiz"
+msgstr "Seb Ruiz"
+
+#: IpodExportDialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Автор и сопровождающий"
+
+#: IpodExportDialog.cpp:121
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: IpodExportDialog.cpp:121
+msgid "Developer"
+msgstr "Разработчик"
+
+#: IpodExportDialog.cpp:130
+msgid "Plugin Handbook"
+msgstr "Руководство пользователя"
+
+#: IpodExportDialog.cpp:144
+msgid "Hard Disk"
+msgstr "Жёсткий диск"
+
+#: IpodExportDialog.cpp:154
+msgid "&Add..."
+msgstr "&Добавить..."
+
+#: IpodExportDialog.cpp:155
+msgid "Add images to be queued for the iPod."
+msgstr "Добавить изображения для передачи в iPod."
+
+#: IpodExportDialog.cpp:157 IpodExportDialog.cpp:199
+msgid "&Remove"
+msgstr "&Удалить"
+
+#: IpodExportDialog.cpp:158
+msgid "Remove selected image from the list."
+msgstr "Удалить выбранное изображение из списка."
+
+#: IpodExportDialog.cpp:160
+msgid "&Transfer"
+msgstr "&Передать"
+
+#: IpodExportDialog.cpp:161
+msgid "Transfer images to the selected iPod album."
+msgstr "Передать изображения в выбранный альбом в iPod."
+
+#: IpodExportDialog.cpp:167
+msgid "The preview of the selected image in the list."
+msgstr "Предварительный просмотр выбранного в списке изображения."
+
+#: IpodExportDialog.cpp:188
+msgid "iPod"
+msgstr "iPod"
+
+#: IpodExportDialog.cpp:196
+msgid "&New..."
+msgstr "С&оздать альбом..."
+
+#: IpodExportDialog.cpp:197
+msgid "Create a new photo album on the iPod."
+msgstr "Создать новый фотоальбом в iPod."
+
+#: IpodExportDialog.cpp:200
+msgid "R&ename..."
+msgstr "Пере&именовать..."
+
+#: IpodExportDialog.cpp:205
+msgid "Remove the selected photos or albums from the iPod."
+msgstr "Удалить выбранные фотографии или альбомы из iPod."
+
+#: IpodExportDialog.cpp:206
+msgid "Rename the selected photo album on the iPod."
+msgstr "Переименовать выбранный фотоальбом в iPod."
+
+#: IpodExportDialog.cpp:562
+msgid "Image files"
+msgstr "Файлы изображений"
+
+#: IpodExportDialog.cpp:565
+msgid "Add Images"
+msgstr "Добавление изображений"
+
+#: IpodExportDialog.cpp:599
+msgid "New iPod Photo Album"
+msgstr "Создание фотоальбома в iPod"
+
+#: IpodExportDialog.cpp:600
+msgid "Create a new album:"
+msgstr "Название альбома:"
+
+#: IpodExportDialog.cpp:631
+msgid "Rename iPod Photo Album"
+msgstr "Переименование фотоальбома в iPod"
+
+#: IpodExportDialog.cpp:632
+msgid "New album title:"
+msgstr "Новое название альбома:"
+
+#: IpodExportDialog.cpp:819
+#, kde-format
+msgid ""
+"An iPod photo database could not be found on the device mounted at %1. "
+"Initialize the iPod photo database?"
+msgstr ""
+"База данных фотографий не найдена на устройстве, примонтированном к %1. "
+"Инициализировать базу данных iPod?"
+
+#: IpodExportDialog.cpp:823
+msgid "Initialize iPod Photo Database?"
+msgstr "Инициализация базы данных iPod"
+
+#: IpodExportDialog.cpp:824
+msgid "&Initialize"
+msgstr "&Инициализировать"
+
+#: IpodHeader.cpp:94
+msgid "<p align=\"center\"><b>No iPod was detected</b></p>"
+msgstr "<p align=\"center\"><b>Устройств iPod не обнаружено</b></p>"
+
+#: IpodHeader.cpp:101
+msgid "Refresh"
+msgstr "Обновить"
+
+#: IpodHeader.cpp:114
+#, kde-format
+msgid ""
+"<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></"
+"p>"
+msgstr ""
+"<p align=\"center\"><b>Ваш iPod (%1) не поддерживает графические изображения."
+"</b></p>"
+
+#: IpodHeader.cpp:122
+msgid "Set iPod Model"
+msgstr "Указать модель iPod"
+
+#: IpodHeader.cpp:138
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected at: %2</b></p>"
+msgstr "<p align=\"center\"><b>iPod %1 обнаружен на: %2</b></p>"
+
+#: IpodHeader.cpp:143
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected</b></p>"
+msgstr "<p align=\"center\"><b>iPod %1 обнаружен</b></p>"
+
+#: IpodListItem.cpp:40
+msgid "Unnamed"
+msgstr "Безымянный"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Дмитрий Симбирятин"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "slpiv@mail.ru"

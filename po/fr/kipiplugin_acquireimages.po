@@ -1,0 +1,135 @@
+# translation of kipiplugin_acquireimages.po to french
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Bieuzent Cyrille <bieuzent@gmail.com>, 2008.
+# Cyrille Bieuzent <bieuzent@gmail.com>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2010-11-15 16:14+0100\n"
+"Last-Translator: Cyrille Bieuzent <bieuzent@gmail.com>\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Acquisition des images"
+
+#: aboutdata.h:41
+msgid "A tool to acquire images using a flat scanner"
+msgstr "Outil pour acquérir des images avec un scanner à plat"
+
+#: aboutdata.h:42
+#, fuzzy
+#| msgid "(c) 2008-2009, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "(c) 2008-2009, Gilles Caulier"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Auteur"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Développeur"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr "Importer à partir du scanner..."
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Impossible d'accéder au scanner."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Numérisation d'image"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Manuel"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Nouveau nom de fichier image"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "Le format du fichier image « %1 » n'est pas pris en charge."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"L'enregistrement du fichier\n"
+"« %1 » en\n"
+"« %2 » a échoué."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"Un fichier portant le nom « %1 » existe déjà. Voulez-vous vraiment "
+"l'écraser ? "
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Écraser le fichier ?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr "Impossible d'enregistrer le fichier « %1 »"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Cyrille Bieuzent ©2008-2010"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bieuzent@gmail.com"
+
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+
+#~ msgid "Scan Images..."
+#~ msgstr "Numérisation des images..."
+
+#~ msgid "Cannot acquire image..."
+#~ msgstr "Pas d'acquisition d'images"
+
+#~ msgid "Cannot handle parent windows..."
+#~ msgstr "Impossible de manipuler la fenêtre parent..."
+
+#~ msgid "A Kipi plugin to acquire images using a flat bed scanner"
+#~ msgstr "Module externe Kipi pour acquérir des images avec un scanner à plat"

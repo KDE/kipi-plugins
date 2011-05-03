@@ -1,0 +1,461 @@
+# translation of kipiplugin_expoblending.po to Icelandic
+# Copyright (C) 2010 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sveinn í Felli <sveinki@nett.is>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_expoblending\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-01 03:31+0200\n"
+"PO-Revision-Date: 2011-03-22 13:11+0000\n"
+"Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
+"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+
+#: blendingdlg/bracketstack.cpp:140
+msgid "To process"
+msgstr "Í vinnslu"
+
+#: blendingdlg/bracketstack.cpp:141
+msgid "File Name"
+msgstr "Skráarheiti"
+
+#: blendingdlg/bracketstack.cpp:142 importwizard/itemspage.cpp:85
+msgid "Exposure (EV)"
+msgstr "Lýsingartími (EV)"
+
+#: blendingdlg/enfusesettings.cpp:90
+msgctxt "enfuse settings"
+msgid "Auto Levels"
+msgstr "Sjálfvirk litatíðnidreifing"
+
+#: blendingdlg/enfusesettings.cpp:91
+msgid "Set automatic level selection (maximized) for pyramid blending."
+msgstr ""
+"Stilla á sjálfvirkt val litatíðnidreifingar (hámarkað) fyrir pýramíðablöndun "
+"(pyramid blending)."
+
+#: blendingdlg/enfusesettings.cpp:93
+msgctxt "enfuse settings"
+msgid "Levels:"
+msgstr "Litatíðnidreifing:"
+
+#: blendingdlg/enfusesettings.cpp:98
+msgid ""
+"Set the number of levels for pyramid blending. A low number trades off "
+"quality of results for faster execution time and lower memory usage."
+msgstr ""
+"Stillir fjölda litatíðniþrepa fyrir pýramíðablöndun. Lág tala slakar á gæðum "
+"fyrir mun hraðari vinnslu og minni minnisnotkun."
+
+#: blendingdlg/enfusesettings.cpp:102
+msgid "Hard Mask"
+msgstr "Harður maski"
+
+#: blendingdlg/enfusesettings.cpp:103
+msgid ""
+"Force hard blend masks and no averaging on finest scale. This is especially "
+"useful for focus stacks with thin and high contrast features, improves "
+"sharpness at the expense of increased noise."
+msgstr ""
+"Þvinga harðan blöndunarmaska í stað meðaltals í fínni kvarða. Þetta er "
+"sérstaklega nytsamlegt í misfókuseruðum myndröðum með smágerðum mynstrum með "
+"miklum birtuskilum, þetta bætir skerpu á kostnað aukins suðs."
+
+#: blendingdlg/enfusesettings.cpp:108
+msgctxt "enfuse settings"
+msgid "Exposure:"
+msgstr "Lýsing:"
+
+#: blendingdlg/enfusesettings.cpp:113
+msgid ""
+"Set the exposure contribution for the blending process. Higher values will "
+"favor well-exposed pixels."
+msgstr ""
+"Stillir framlag lýsingar (exposure) til myndblöndunarferlisins. Hærri gildi "
+"gefa vel lýstum dílum meira vægi."
+
+#: blendingdlg/enfusesettings.cpp:116
+msgctxt "enfuse settings"
+msgid "Saturation:"
+msgstr "Litmettun:"
+
+#: blendingdlg/enfusesettings.cpp:121
+msgid ""
+"Increasing this value makes pixels with high saturation contribute more to "
+"the final output."
+msgstr ""
+"Aukning á þessu gildi lætur mynddíla með mikilli litmettun hafa meira vægi í "
+"lokaútkomunni."
+
+#: blendingdlg/enfusesettings.cpp:124
+msgctxt "enfuse settings"
+msgid "Contrast:"
+msgstr "Birtuskil:"
+
+#: blendingdlg/enfusesettings.cpp:129
+msgid ""
+"Sets the relative weight of high-contrast pixels. Increasing this weight "
+"makes pixels with neighboring differently colored pixels contribute more to "
+"the final output. Particularly useful for focus stacks."
+msgstr ""
+"Stillir hlutfallslegt vægi há-birtuskilapunkta. Aukning á þessu vægi lætur "
+"nálæga díla með ólíkum litum hafa meira vægi í lokaútkomunni. Þetta er "
+"sérstaklega nytsamlegt í misfókuseruðum myndröðum."
+
+#: blendingdlg/enfusesettings.cpp:133
+msgid "Use Color Appearance Modelling"
+msgstr "Nota CAM-staðalinn"
+
+#: blendingdlg/enfusesettings.cpp:134
+msgid ""
+"Use Color Appearance Modelling (CIECAM02) to render detailed colors. Your "
+"input files should have embedded ICC profiles. If no ICC profile is present, "
+"sRGB color space will be used instead. The difference between using this "
+"option and default color blending algorithm is very slight, and will be most "
+"noticeable when you need to blend areas of different primary colors together."
+msgstr ""
+"Nota Color Appearance Modelling (CIECAM02) til að myndgera nákvæmari liti. "
+"Inntaksskrárnar þínar ættu að innihalda ígrædd ICC litasnið. Ef engin ICC "
+"litasnið finnast, verður stuðst við sRGB litarýmið í staðinn. Mismunurinn "
+"við að nota þessa aðferð og á sjálfgefna litblöndunarútreikningnum er ekki "
+"mikill, mesti munurinn ætti að sjást þegar verið er að blanda saman "
+"(mismunandi) hreinum frumlitum."
+
+#: blendingdlg/enfusesettings.h:68 blendingdlg/enfusesettings.h:70
+msgid "enabled"
+msgstr "virkt"
+
+#: blendingdlg/enfusesettings.h:68 blendingdlg/enfusesettings.h:70
+msgid "disabled"
+msgstr "óvirkt"
+
+#: blendingdlg/enfusesettings.h:68
+#, kde-format
+msgid "Hardmask: %1"
+msgstr "Harður maski: %1"
+
+#: blendingdlg/enfusesettings.h:70
+#, kde-format
+msgid "CIECAM02: %1"
+msgstr "CIECAM02: %1"
+
+#: blendingdlg/enfusesettings.h:72
+msgid "auto"
+msgstr "sjálfvirkt"
+
+#: blendingdlg/enfusesettings.h:72
+#, kde-format
+msgid "Levels: %1"
+msgstr "Litatíðnidreifing: %1"
+
+#: blendingdlg/enfusesettings.h:74
+#, kde-format
+msgid "Exposure: %1"
+msgstr "Lýsing: %1"
+
+#: blendingdlg/enfusesettings.h:76
+#, kde-format
+msgid "Saturation: %1"
+msgstr "Litmettun: %1"
+
+#: blendingdlg/enfusesettings.h:78
+#, kde-format
+msgid "Contrast: %1"
+msgstr "Birtuskil: %1"
+
+#: blendingdlg/enfusestack.cpp:183
+msgid "To Save"
+msgstr "Á að vista"
+
+#: blendingdlg/enfusestack.cpp:184
+msgid "Target"
+msgstr "Útkoma"
+
+#: blendingdlg/enfusestack.cpp:185
+msgid "Inputs"
+msgstr "Frummyndir"
+
+#: blendingdlg/enfusestack.cpp:210
+msgid "Remove item"
+msgstr "Fjarlægja atriði"
+
+#: blendingdlg/enfusestack.cpp:217
+msgid "Clear all"
+msgstr "Hreinsa allt"
+
+#: blendingdlg/expoblendingdlg.cpp:145 plugin/aboutdata.h:39
+msgid "Exposure Blending"
+msgstr "Blöndun lýsingar"
+
+#: blendingdlg/expoblendingdlg.cpp:147
+msgid "&Save"
+msgstr "Vi&sta"
+
+#: blendingdlg/expoblendingdlg.cpp:148
+msgid "Process and save selected processed items."
+msgstr "Vinna með og vista valin atriði."
+
+#: blendingdlg/expoblendingdlg.cpp:151
+msgid "&Preview"
+msgstr "&Forskoða"
+
+#: blendingdlg/expoblendingdlg.cpp:152
+msgid "Process a preview of bracketed images stack with current settings."
+msgstr "Vinna forskoðun á myndaröðinni með núverandi stillingum"
+
+#: blendingdlg/expoblendingdlg.cpp:155
+msgid "&Abort"
+msgstr "&Hætta við"
+
+#: blendingdlg/expoblendingdlg.cpp:156
+msgid "Abort current process"
+msgstr "Hætta við núverandi aðgerð"
+
+#: blendingdlg/expoblendingdlg.cpp:159
+msgid "Exit this tool"
+msgstr "Hætta í þessu áhaldi"
+
+#: blendingdlg/expoblendingdlg.cpp:169 importwizard/preprocessingpage.cpp:110
+msgid "Details..."
+msgstr "Nánar..."
+
+#: blendingdlg/expoblendingdlg.cpp:193
+msgid "File Name Template: "
+msgstr "Forsnið fyrir skráaheiti: "
+
+#: blendingdlg/expoblendingdlg.cpp:198
+msgid "Enfuse Settings"
+msgstr "Stillingar Enfuse"
+
+#: blendingdlg/expoblendingdlg.cpp:199
+msgid "Save Settings"
+msgstr "Vista stillingar"
+
+#: blendingdlg/expoblendingdlg.cpp:220 importwizard/importwizarddlg.cpp:91
+msgid "Handbook"
+msgstr "Handbók"
+
+#: blendingdlg/expoblendingdlg.cpp:305 blendingdlg/expoblendingdlg.cpp:307
+msgid "Enfuse Processing Messages"
+msgstr "Skilaboð frá vinnslu með Enfuse"
+
+#: blendingdlg/expoblendingdlg.cpp:459
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"Skrá með nafninu \"%1\" er þegar til. Ertu viss um að þú viljir skrifa yfir "
+"hana?"
+
+#: blendingdlg/expoblendingdlg.cpp:494
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "Mistókst að vista mynd í %1"
+
+#: blendingdlg/expoblendingdlg.cpp:538
+msgid "Processing preview of bracketed images..."
+msgstr "Bý til forsýn af samanblandaðri myndaröð (bracketed)..."
+
+#: blendingdlg/expoblendingdlg.cpp:544
+msgid "Processing targets of bracketed images..."
+msgstr "Blanda saman mislýstri myndaröð (bracketed)..."
+
+#: blendingdlg/expoblendingdlg.cpp:569
+msgid "Failed to load processed image"
+msgstr "Gat ekki lesið meðhöndlaða mynd"
+
+#: blendingdlg/expoblendingdlg.cpp:578
+msgid "Failed to process preview of bracketed images"
+msgstr "Mistókst að búa til forsýn af samanblandaðri myndaröð"
+
+#: blendingdlg/expoblendingdlg.cpp:588
+msgid "Failed to process targets of bracketed images"
+msgstr "Mistókst að blanda saman myslýstri myndaröð (bracketed)"
+
+#: importwizard/importwizarddlg.cpp:75
+msgid "Exposure Blending Import Wizard"
+msgstr "Hjálparforrit fyrir innflutning í lýsingarblöndun"
+
+#: importwizard/intropage.cpp:40
+msgid "Welcome to Exposure Blending Tool"
+msgstr "Velkomin í lýsingarblöndunarforritið"
+
+#: importwizard/intropage.cpp:46
+msgid ""
+"<qt><p><h1><b>Welcome to Exposure Blending tool</b></h1></p><p>This tool "
+"fuses bracketed images with different exposure to make pseudo <a "
+"href='http://en.wikipedia.org/wiki/High_dynamic_range_imaging'>HDR image</a>."
+"</p><p>It can also be used to merge focus bracketed stack to get a single "
+"image with increased depth of field.</p><p>This assistant will help you to "
+"configure how to import images before merging them to a single one.</"
+"p><p>Bracketed images must be taken with the same camera, in the same "
+"conditions, and if possible using a tripod.</p><p>For more information, "
+"please take a look at <a href='http://en.wikipedia.org/wiki/Bracketing'>this "
+"page</a></p></qt>"
+msgstr ""
+"<qt><p><h1><b>Velkomin í lýsingarblöndunarforritið</b></h1></p><p>Þetta "
+"áhald bræðir saman margar mislýstar myndir í eina nokkurs konar <a "
+"href='http://en.wikipedia.org/wiki/High_dynamic_range_imaging'>HDR mynd</a>."
+"</p><p>Einnig er hægt að nota þetta til að bræða saman misfókuseraða "
+"myndaröð í eina mynd með aukinni dýptarskerpu.</p><p>Þetta hjálparforrit "
+"aðstoðar við að flytja inn myndir áður en þær eru sameinaðar í eina.</p> "
+"<p>Slíkar myndaraðir (bracketed images) verða að vera teknar með sömu "
+"myndavélinni, við sömu skilyrði og ef hægt er með þrífæti.</p><p>Ítarlegri "
+"upplýsingar um slíkt er að finna á <a href='http://en.wikipedia.org/wiki/"
+"Bracketing'>þessari vefsíðu</a></p></qt>"
+
+#: importwizard/itemspage.cpp:70
+msgid "<b>Set Bracketed Images</b>"
+msgstr "<b>Velja mislýstar myndir í myndaröð</b>"
+
+#: importwizard/itemspage.cpp:77
+msgid ""
+"<qt><p>Set here the list of your bracketed images to fuse. Please follow "
+"these conditions:</p><ul><li>At least 2 images from the same subject must be "
+"added to the stack.</li><li>Do not mix images with different color depth.</"
+"li><li>All images must have the same dimensions.</li></ul></qt>"
+msgstr ""
+"<qt><p>Settu hér lista yfir þær mislýstu myndir sem á að vinna með. Virtu "
+"eftirtalin skilyrði:</p><ul><li>Að minnsta kosti 2 myndum með sama myndefni "
+"verður að bæta í myndröðina.</li><li>Ekki blanda saman myndum með ólíkri "
+"litadýpt.</li><li>Allar myndirnar verða að vera í sömu stærð.</li></ul></qt>"
+
+#: importwizard/lastpage.cpp:57
+msgid "Pre-Processing is Complete"
+msgstr "Forvinnslu er lokið"
+
+#: importwizard/lastpage.cpp:65
+#, kde-format
+msgid ""
+"<qt><p><h1><b>Bracketed Images Pre-Processing is Done</b></h1></"
+"p><p>Congratulations. Your images are ready to be fused. </p>To perform this "
+"operation, <b>%1</b> program from <a href='%2'>Enblend</a> project will be "
+"used.</p><p>Press \"Finish\" button to fuse your items and make a pseudo HDR "
+"image.</p></qt>"
+msgstr ""
+"<qt><p><h1><b>Forvinnslu mynda í myndaröð er lokið</b></h1></p><p>Til "
+"hamingju. Myndirnar eru núna tilbúnar til að verða blandað saman. </p>Til að "
+"framkvæma þá aðgerð verður<b>%1</b> forrit frá <a href='%2'>Enblend</a> "
+"verkefninu notað.</p><p>Ýttu á \"Ljúka\" til að bræða saman myndirnar og búa "
+"þannig til einskonar HDR-mynd.</p></qt>"
+
+#: importwizard/preprocessingpage.cpp:93
+msgid "<b>Pre-Processing Bracketed Images</b>"
+msgstr "<b>Forvinnsla mynda í myndaröð</b>"
+
+#: importwizard/preprocessingpage.cpp:102
+msgid "Align bracketed images"
+msgstr "Stilla af myndir í myndaröð (bracketed images)..."
+
+#: importwizard/preprocessingpage.cpp:155
+#, kde-format
+msgid ""
+"<qt><p>Now, we will pre-process bracketed images before fusing them.</"
+"p><p>To perform auto-alignment, the <b>%1</b> program from the <a href='%2'>%"
+"3</a> project will be used. Alignment must be performed if you have not used "
+"a tripod to take bracketed images. Alignment operations can take a while.</"
+"p><p>Pre-processing operations include Raw demosaicing. Raw images will be "
+"converted to 16-bit sRGB images with auto-gamma.<p>Press \"Next\" to start "
+"pre-processing.</p></qt>"
+msgstr ""
+"<qt><pNúna verður myndaröðin forunnin áður en myndirnar verða bræddar saman."
+"</p><p>Til að framkvæma sjálfvirka afstillingu eða jöfnun, <b>%1</b> verður "
+"notað forrit frá <a href='%2'>%3</a> verkefninu. Afstillingu verður að gera "
+"ef þú hefur ekki notað þrífót við að taka myndaröðina. Afstillingaraðgerðin "
+"getur tekið dálítinn tíma.</p><p>Forvinnsluaðgerðirnar eru meðal annars RAW-"
+"aftiglun (demosaicing). RAW-myndum verður umbreytt í 16-bita sRGB myndir með "
+"sjálfvirkri litrófsleiðréttingu (auto-gamma).<p>Ýttu á \"Næsta\" til að "
+"byrja forvinnsluna.</p></qt>"
+
+#: importwizard/preprocessingpage.cpp:174
+msgid ""
+"<qt><p>Pre-processing is under progress, please wait.<p><p>This can take a "
+"while...</p></qt>"
+msgstr ""
+"<qt><p>Forvinnsla er í gangi, bíddu aðeins.<p><p>Þetta getur tekið dálítinn "
+"tíma...</p></qt>"
+
+#: importwizard/preprocessingpage.cpp:216
+#: importwizard/preprocessingpage.cpp:218
+msgid "Pre-Processing Messages"
+msgstr "Skilaboð úr forvinnslu"
+
+#: importwizard/preprocessingpage.cpp:235
+msgid ""
+"<qt><p>Pre-processing has failed.</p><p>Please check your bracketed images "
+"stack...</p><p>Press \"Details\" to show processing messages.</p></qt>"
+msgstr ""
+"<qt><p>Forvinnslan mistókst!</p><p>Athugaðu vel myndaröðina þína...</"
+"p><p>Ýttu á \"Nánar\" til að skoða þau skilaboð sem komu upp í forvinnslunni."
+"</p></qt>"
+
+#: manager/actionthread.cpp:300
+msgid "unknown"
+msgstr "óþekkt"
+
+#: manager/actionthread.cpp:805
+#, kde-format
+msgid ""
+"Cannot run %1:\n"
+"\n"
+" %2"
+msgstr ""
+"Get ekki keyrt %1 :\n"
+"\n"
+" %2"
+
+#: plugin/aboutdata.h:41
+msgid "A tool to blend bracketed images"
+msgstr "Verkfæri til að setja saman mislýstar myndraðir (bracketed)"
+
+#: plugin/aboutdata.h:42
+msgid "(c) 2009-2011, Gilles Caulier"
+msgstr "(c) 2009-2011, Gilles Caulier"
+
+#: plugin/aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:45
+msgid "Author"
+msgstr "Höfundur"
+
+#: plugin/aboutdata.h:48
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: plugin/aboutdata.h:49
+msgid "Developer"
+msgstr "Forritari"
+
+#: plugin/expoblending.cpp:58
+msgid "File(s) to open"
+msgstr "Skrá(r) til að opna"
+
+#: plugin/plugin_expoblending.cpp:76
+msgid "Blend bracketed images..."
+msgstr "Setja saman mislýstar myndraðir (bracketed)..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sveinn í Felli"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sveinki@nett.is"

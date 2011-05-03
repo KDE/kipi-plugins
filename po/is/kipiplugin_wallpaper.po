@@ -1,0 +1,69 @@
+# translation of kipiplugin_wallpaper.po to Icelandic
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sveinn í Felli <sveinki@nett.is>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2009-10-04 19:33+0000\n"
+"Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
+"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
+"\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "&Setja sem bakgrunnsmynd"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Miðjað"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Flísalagt frá miðju"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Miðjað-Mesta stærð"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Flísalagt-Mesta stærð"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Teygt"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Miðjað-Aðlagað"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Teygja && sníða af"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Þú valdir mynd á fjarlægri vél. Það þarf að vista hana á harðan disk í "
+"tölvunni þinni til að hægt sé að nota hana sem bakgrunn.</p><p>Þú verður "
+"núna spurð(ur) hvar þú viljir vista myndina.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Breyta bakgrunni"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "Ekki er hægt að skipta um bakgrunnsmynd."

@@ -1,0 +1,212 @@
+# translation of kipiplugin_jpeglossless.po to Latvian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Viesturs Zarins <viesturs.zarins@mii.lu.lv>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_jpeglossless\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2008-03-16 11:50+0200\n"
+"Last-Translator: Viesturs Zarins <viesturs.zarins@mii.lu.lv>\n"
+"Language-Team: Latvian <locale@laka.lv>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: plugin/plugin_jpeglossless.cpp:111
+msgid "Rotate"
+msgstr "Pagriezt"
+
+#: plugin/plugin_jpeglossless.cpp:115
+#, fuzzy
+#| msgid "Left"
+msgctxt "rotate image left"
+msgid "Left"
+msgstr "Pa kreisi"
+
+#: plugin/plugin_jpeglossless.cpp:122
+#, fuzzy
+#| msgid "Right"
+msgctxt "rotate image right"
+msgid "Right"
+msgstr "Pa labi"
+
+#: plugin/plugin_jpeglossless.cpp:132
+msgid "Flip"
+msgstr "Apmest"
+
+#: plugin/plugin_jpeglossless.cpp:136
+msgid "Horizontally"
+msgstr "Horizontāli"
+
+#: plugin/plugin_jpeglossless.cpp:143
+msgid "Vertically"
+msgstr "Vertikāli"
+
+#: plugin/plugin_jpeglossless.cpp:154
+msgid "Auto Rotate/Flip Using Exif Information"
+msgstr "Automātiska pagriešana un apmešana atbilstoši Exif datiem"
+
+#: plugin/plugin_jpeglossless.cpp:163
+msgid "Convert to Black && White"
+msgstr "Pārveidot uz menbaltu"
+
+#: plugin/plugin_jpeglossless.cpp:211
+msgid "horizontally"
+msgstr "horizontāli"
+
+#: plugin/plugin_jpeglossless.cpp:216
+msgid "vertically"
+msgstr "vertikāli"
+
+#: plugin/plugin_jpeglossless.cpp:234
+#, kde-format
+msgid "Flip images %1"
+msgstr "Apmest attēlus %1"
+
+#: plugin/plugin_jpeglossless.cpp:247
+msgid "right (clockwise)"
+msgstr "pa labi (pulksteņa virz.)"
+
+#: plugin/plugin_jpeglossless.cpp:252
+msgid "left (counterclockwise)"
+msgstr "pa kreisi (pret pulksteni)"
+
+#: plugin/plugin_jpeglossless.cpp:257
+msgid "using Exif orientation tag"
+msgstr "izmantojot Exit orientācijas tagu"
+
+#: plugin/plugin_jpeglossless.cpp:274
+#, kde-format
+msgid "Rotate images %1"
+msgstr "Pagriezt attēlus %1"
+
+#: plugin/plugin_jpeglossless.cpp:290
+msgid ""
+"<p>Are you sure you wish to convert the selected image(s) to black and "
+"white? This operation <b>cannot</b> be undone.</p>"
+msgstr ""
+"<p>Vai esat pārliecināts, ka vēlaties padarīt izvēlētos attēlus melnbaltus? "
+"Šo darbību <b>nav</b> iespējams atjaunot.</p>"
+
+#: plugin/plugin_jpeglossless.cpp:304
+msgid "Convert images to black & white"
+msgstr "Padarīt attēlus melnbaltus"
+
+#: plugin/plugin_jpeglossless.cpp:339
+#, kde-format
+msgid "Rotating Image \"%1\""
+msgstr "Pagriež attēlu \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:344
+#, kde-format
+msgid "Flipping Image \"%1\""
+msgstr "Apmet attēlu \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:349
+#, kde-format
+msgid "Converting to Black & White \"%1\""
+msgstr "Padara melnbaltu attēlu \"%1\""
+
+#: plugin/plugin_jpeglossless.cpp:371
+msgid "Rotate image complete"
+msgstr "Attēla pariešana pabeigta"
+
+#: plugin/plugin_jpeglossless.cpp:376
+msgid "Flip image complete"
+msgstr "Attēla apmešana pabeigta"
+
+#: plugin/plugin_jpeglossless.cpp:381
+msgid "Convert to Black & White complete"
+msgstr "Attēla padarīšana par melnbaltu pabeigta"
+
+#: plugin/plugin_jpeglossless.cpp:406
+msgid "Failed to Rotate image"
+msgstr "Neizdevās pagriezt attēlu"
+
+#: plugin/plugin_jpeglossless.cpp:411
+msgid "Failed to Flip image"
+msgstr "Neizdevās apmest attēlu"
+
+#: plugin/plugin_jpeglossless.cpp:416
+msgid "Failed to convert image to Black & White"
+msgstr "Neizdevās attēlu padarīt melnbaltu"
+
+#: plugin/utils.cpp:89
+msgid "unable to open source file"
+msgstr "neizdevās atvērt avota failu"
+
+#: plugin/utils.cpp:119 plugin/utils.cpp:146
+msgid "unable to open temp file"
+msgstr "neizdevās atvērt pagaidu failu"
+
+#: plugin/utils.cpp:133
+msgid "Cannot rotate: unable to open temp file"
+msgstr "Nevar pagriezt: neizdevās atvērt pagaidu failu"
+
+#: plugin/utils.cpp:195
+#, kde-format
+msgid "Cannot update metadata: %1"
+msgstr "Neizdevās izmainīt metadatus: %1"
+
+#: transform/convert2grayscale.cpp:96 transform/convert2grayscale.cpp:177
+#: transform/imageflip.cpp:87 transform/imagerotate.cpp:88
+#: transform/jpegtransform.cpp:238 transform/jpegtransform.cpp:340
+msgid "Error in opening input file"
+msgstr "Kļūda atverot ievades failu"
+
+#: transform/convert2grayscale.cpp:102 transform/imageflip.cpp:93
+#: transform/imagerotate.cpp:96
+msgid "Error in opening temporary file"
+msgstr "Kļūda atverot pagaidu failu"
+
+#: transform/convert2grayscale.cpp:115
+msgid "Cannot convert to gray scale RAW file"
+msgstr "Neizdevās pārveidot uz pelēktoņu RAW failu"
+
+#: transform/convert2grayscale.cpp:139 transform/imageflip.cpp:130
+#: transform/imagerotate.cpp:136
+msgid "Cannot update source image"
+msgstr "Neizdevās izmainīt avota attēlu"
+
+#: transform/convert2grayscale.cpp:185 transform/jpegtransform.cpp:256
+#: transform/jpegtransform.cpp:349
+msgid "Error in opening output file"
+msgstr "Kļūda atverot izvada failu"
+
+#: transform/convert2grayscale.cpp:285
+#, kde-format
+msgid "Cannot convert to gray scale: %1"
+msgstr "Neizdevās pārveidot uz pelēktoņu: %1"
+
+#: transform/imageflip.cpp:106 transform/imagerotate.cpp:109
+msgid "Cannot rotate RAW file"
+msgstr "Neizdevās pargiezt RAW failu"
+
+#: transform/imageflip.cpp:157 transform/imageflip.cpp:186
+msgid "Nonstandard flip action"
+msgstr "Nestandarta ampešanas darbība"
+
+#: transform/imageflip.cpp:219
+#, kde-format
+msgid "Cannot flip: %1"
+msgstr "Neizdevās apmest: %1"
+
+#: transform/imagerotate.cpp:173 transform/imagerotate.cpp:213
+msgid "Nonstandard rotation angle"
+msgstr "Nestandarta pagriešanas leņķis"
+
+#: transform/imagerotate.cpp:246
+#, kde-format
+msgid "Cannot rotate: %1"
+msgstr "Neizdevās pagriezt: %1"
+
+#: transform/jpegtransform.cpp:266 transform/jpegtransform.cpp:275
+#, kde-format
+msgid "The JPEG library reported an error: %1"
+msgstr ""

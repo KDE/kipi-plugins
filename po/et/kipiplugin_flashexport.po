@@ -1,0 +1,460 @@
+# translation of kipiplugin_simpleviewerexport.po to Estonian
+#
+# Marek Laane <bald@smail.ee>, 2008-2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_simpleviewerexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:23+0100\n"
+"PO-Revision-Date: 2011-03-14 18:35+0200\n"
+"Last-Translator: Marek Laane <bald@smail.ee>\n"
+"Language-Team: Estonian <kde-et@linux.ee>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: firstrundlg.cpp:77 firstrundlg.cpp:87 simpleviewer.cpp:202 svedialog.cpp:91
+#: svedialog.cpp:120
+msgid "Flash Export"
+msgstr "Flashi eksport"
+
+#: firstrundlg.cpp:90 svedialog.cpp:123
+msgid ""
+"A Kipi plugin to export images to Flash using the Simple Viewer component."
+msgstr ""
+"Kipi plugin piltide eksportimiseks Flashi SimpleVieweri komponendi abil."
+
+#: firstrundlg.cpp:91 svedialog.cpp:124
+msgid ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+msgstr ""
+"(c) 2005-2006: Joern Ahrens\n"
+"(c) 2008-2011: Gilles Caulier"
+
+#: firstrundlg.cpp:94 svedialog.cpp:127
+msgid "Joern Ahrens"
+msgstr "Joern Ahrens"
+
+#: firstrundlg.cpp:95 svedialog.cpp:128
+msgid "Author"
+msgstr "Autor"
+
+#: firstrundlg.cpp:98 svedialog.cpp:131
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: firstrundlg.cpp:99 svedialog.cpp:132
+msgid "Developer and maintainer"
+msgstr "Arendaja ja hooldaja"
+
+#: firstrundlg.cpp:102 svedialog.cpp:135
+msgid "Felix Turner"
+msgstr "Felix Turner"
+
+#: firstrundlg.cpp:103 svedialog.cpp:136
+msgid "Author of the Simple Viewer Flash component"
+msgstr "SimpleVieweri Flashi komponendi autor"
+
+#: firstrundlg.cpp:107 svedialog.cpp:140
+msgid "Mikkel B. Stegmann"
+msgstr "Mikkel B. Stegmann"
+
+#: firstrundlg.cpp:108 svedialog.cpp:141
+msgid "Basis for the index.html template"
+msgstr "index.html malli baas"
+
+#: firstrundlg.cpp:117 svedialog.cpp:150
+msgid "Handbook"
+msgstr "Käsiraamat"
+
+#: firstrundlg.cpp:129
+msgid ""
+"<p>SimpleViewer is a Flash component which is free to use, but uses a "
+"license which comes into conflict with several distributions. Due to the "
+"license it is not possible to ship it with this plugin.</p><p>You can now "
+"download SimpleViewer from its homepage and point this tool to the "
+"downloaded archive. The archive will be stored with the plugin "
+"configuration, so it is available for further use.</p>"
+msgstr ""
+"<p>SimpleViewer on Flashi komponent, mille kasutamine on vaba, aga selle "
+"litsents on konfliktis mitme distributsiooni põhimõtetega. Litsentsi tõttu "
+"ei ole võimalik seda pluginaga kaasa panna.</p><p>SimpleVieweri võib tema "
+"koduleheküljelt alla laadida ning anda tööriistale ette allalaaditud arhiivi "
+"asukoht. Arhiiv salvestatakse plugina seadistustees, nii et seda saab ka "
+"edaspidi kasutada.</p>"
+
+#: firstrundlg.cpp:137
+msgid "<p>1.) Download SimpleViewer Version 2.1.x</p>"
+msgstr "<p>1) Laadi alla SimpleVieweri versioon 2.1.x</p>"
+
+#: firstrundlg.cpp:147
+msgid "<p>2.) Point this tool to the downloaded archive</p>"
+msgstr "<p>2) Anna tööriistale teada allalaaditud arhiivi asukoht</p>"
+
+#: generalpage.cpp:81
+msgid "Gallery &Title"
+msgstr "Galerii &pealkiri"
+
+#: generalpage.cpp:84
+msgid "Enter here the gallery title"
+msgstr "Kirjuta siia galerii pealkiri"
+
+#: generalpage.cpp:92
+msgid "Save Gallery To"
+msgstr "Galerii salvestamise asukoht"
+
+#: generalpage.cpp:103
+msgid "Image Properties"
+msgstr "Pildi omadused"
+
+#: generalpage.cpp:105
+msgid "Resize Target Images"
+msgstr "Sihtpiltide suuruse muutmine"
+
+#: generalpage.cpp:107
+msgid "If you enable this option, all target images can be resized."
+msgstr "Sisselülitamisel saab muuta kõigi sihtpiltide suurust."
+
+#: generalpage.cpp:111
+msgid "Auto-Rotate/Flip Images"
+msgstr "Piltide automaatne pööramine/peegeldamine"
+
+#: generalpage.cpp:113
+msgid ""
+"If you enable this option, the images' orientations will be set according to "
+"their Exif information."
+msgstr ""
+"Sisselülitamisel muudetakse pildi orientatsiooni vastavalt EXIF-infole."
+
+#: generalpage.cpp:120
+msgid "&Target Images' Size:"
+msgstr "Sih&tpiltide suurus:"
+
+#: generalpage.cpp:121
+msgid ""
+"The new size of the exported images, in pixels. SimpleViewer resizes the "
+"images too, but this resizes the images before they are uploaded to your "
+"server."
+msgstr ""
+"Eksporditavate piltide uus suurus pikslites. SimpleViewer muudab samuti "
+"suurust, aga see valik muudab piltide suurust juba enne nende laadimist "
+"serverisse."
+
+#: generalpage.cpp:134
+msgid "&Displayed Images' Size:"
+msgstr "Näi&datavate piltide suurus:"
+
+#: generalpage.cpp:135
+msgid ""
+"Scales the displayed images to this size. Normally, use the height or width "
+"of your largest image (in pixels). Images will not be scaled up above this "
+"size, to preserve image quality."
+msgstr ""
+"Skaleerib näidatavad pildid määratud suurusele. Tavaliselt on selleks "
+"suurima pildi suurim laius või kõrgus (pikslites). Parima pildikvaliteedi "
+"tagamiseks ei skaleerita pilte sellest suuremaks."
+
+#: generalpage.cpp:150
+msgid "Misc"
+msgstr "Muud"
+
+#: generalpage.cpp:153
+msgid "Display Captions"
+msgstr "Allkirjade näitamine"
+
+#: generalpage.cpp:155
+msgid "If this option is enabled, the images' captions will be shown."
+msgstr "Sisselülitamisel näidatakse pildiallkirju"
+
+#: generalpage.cpp:158
+msgid "Open Image with Right Click"
+msgstr "Pildi avamine paremklõpsuga"
+
+#: generalpage.cpp:160
+msgid ""
+"If this option is enabled, the user will be able to open the target image in "
+"a separate window using the right mouse button."
+msgstr ""
+"Sisselülitamisel saab kasutaja avada sihtpildi eraldi aknas hiire parema "
+"nupu klõpsuga."
+
+#: generalpage.cpp:164
+msgid "Open gallery in Konqueror"
+msgstr "Galerii avamine Konqueroris"
+
+#: generalpage.cpp:166
+msgid ""
+"If this option is enabled, the gallery will be opened in Konqueror "
+"automatically."
+msgstr "Sisselülitamisel avatakse galerii automaatselt Konqueroris."
+
+#: lookpage.cpp:80
+msgctxt "Settings for flash export navigation"
+msgid "Navigation"
+msgstr "Liikumine"
+
+#: lookpage.cpp:86
+msgid "Thumbnail &Rows:"
+msgstr "Pisipiltide &ridu:"
+
+#: lookpage.cpp:87
+msgid "Number of thumbnails rows"
+msgstr "Pisipildiridade arv"
+
+#: lookpage.cpp:92
+msgid "Thumbnail &Columns:"
+msgstr "Pisipiltide &veerge:"
+
+#: lookpage.cpp:93
+msgid "Number of thumbnails columns"
+msgstr "Pisipildiveergude arv"
+
+#: lookpage.cpp:96
+msgid "Thumbnail &Position:"
+msgstr "&Pisipiltide asukoht:"
+
+#: lookpage.cpp:98
+msgctxt "thumbnail position: right"
+msgid "Right"
+msgstr "Paremal"
+
+#: lookpage.cpp:99
+msgctxt "thumbnail position: left"
+msgid "Left"
+msgstr "Vasakul"
+
+#: lookpage.cpp:100
+msgctxt "thumbnail position: top"
+msgid "Top"
+msgstr "Üleval"
+
+#: lookpage.cpp:101
+msgctxt "thumbnail position: bottom"
+msgid "Bottom"
+msgstr "All"
+
+#: lookpage.cpp:110
+msgid "&Direction of Navigation:"
+msgstr "Liikumise suun&d:"
+
+#: lookpage.cpp:112
+msgid "Left to Right"
+msgstr "Vasakult paremale"
+
+#: lookpage.cpp:113
+msgid "Right to Left"
+msgstr "Paremalt vasakule"
+
+#: lookpage.cpp:126
+msgid "Colors"
+msgstr "Värvid"
+
+#: lookpage.cpp:130
+msgid "&Text Color:"
+msgstr "&Teksti värv:"
+
+#: lookpage.cpp:133
+msgid "Color of title and caption text"
+msgstr "Peal- ja allkirja teksti värv"
+
+#: lookpage.cpp:137
+msgid "&Background Color:"
+msgstr "Ta&usta värv:"
+
+#: lookpage.cpp:143
+msgid "&Frame Color:"
+msgstr "&Raami värv:"
+
+#: lookpage.cpp:146
+msgid "Color of image frame, viewed icon, load bars, thumbnail arrows"
+msgstr "Pildiraami, vaadatud ikooni, laadimisribade, pisipildi noolte värv"
+
+#: lookpage.cpp:157
+msgid "Style"
+msgstr "Stiil"
+
+#: lookpage.cpp:163
+msgid "Frame &Width:"
+msgstr "Raami la&ius:"
+
+#: lookpage.cpp:164
+msgid "Width of image frame in pixels."
+msgstr "Raami laius pikslites."
+
+#: lookpage.cpp:169
+msgid "Stage &Padding:"
+msgstr "&Eraldav vahemik:"
+
+#: lookpage.cpp:170
+msgid "Distance between image and thumbnails in pixels."
+msgstr "Vahe pildi ja pisipildi vahel pikslites."
+
+#: plugin_flashexport.cpp:62
+msgid "Export to F&lash..."
+msgstr "Ekspordi F&lashi..."
+
+#: simpleviewer.cpp:140
+msgid "SimpleViewer installation failed"
+msgstr "SimpleVieweri paigaldamine nurjus"
+
+#: simpleviewer.cpp:167
+#, kde-format
+msgid ""
+"Target folder %1 already exists.\n"
+"Do you want to overwrite it?  All data in this folder will be lost."
+msgstr ""
+"Sihtkataloog %1 on juba olemas.\n"
+"Kas soovid selle üle kirjutada (kõik varasemad andmed lähevad kaotsi)?"
+
+#: simpleviewer.cpp:176
+#, kde-format
+msgid ""
+"Could not delete %1.\n"
+"Please choose another export folder."
+msgstr ""
+"%1 kustutamine nurjus.\n"
+"Palun vali mõni muu ekspordikataloog."
+
+#: simpleviewer.cpp:211
+msgid "Initialising..."
+msgstr "Initsialiseerimine..."
+
+#: simpleviewer.cpp:232
+msgid "Export canceled"
+msgstr "Eksport katkestati"
+
+#: simpleviewer.cpp:243
+msgid "Failed to create export directories"
+msgstr "Ekspordikataloogide loomine nurjus"
+
+#: simpleviewer.cpp:250
+msgid "Failed to export the images"
+msgstr "Piltide eksport nurjus"
+
+#: simpleviewer.cpp:257
+msgid "Failed to create index.html"
+msgstr "index.html loomine nurjus"
+
+#: simpleviewer.cpp:264
+msgid "Failed to copy SimpleViewer files"
+msgstr "SimpleVieweri failide kopeerimine nurjus"
+
+#: simpleviewer.cpp:271
+msgid "Failed to upload the gallery"
+msgstr "Galerii üleslaadimine nurjus"
+
+#: simpleviewer.cpp:279
+#, kde-format
+msgid ""
+"Export was canceled.\n"
+"Do you want to delete files in %1 that have already been created?"
+msgstr ""
+"Eksport katkestati.\n"
+"Kas soovid kustutada juba loodud failid asukohas %1?"
+
+#: simpleviewer.cpp:289
+msgctxt "Flash export has finished"
+msgid "Finished..."
+msgstr "Lõpetatud..."
+
+#: simpleviewer.cpp:302
+msgid "Creating directories..."
+msgstr "Kataloogide loomine..."
+
+#: simpleviewer.cpp:307 simpleviewer.cpp:316 simpleviewer.cpp:325
+#, kde-format
+msgid "Could not create folder '%1'"
+msgstr "Kataloogi '%1' loomine nurjus"
+
+#: simpleviewer.cpp:340
+msgid "Creating images and thumbnails..."
+msgstr "Piltide ja pisipiltide loomine..."
+
+#: simpleviewer.cpp:397
+#, kde-format
+msgid "Processing %1"
+msgstr "%1 töötlemine"
+
+#: simpleviewer.cpp:408
+#, kde-format
+msgid "Could not open image '%1'"
+msgstr "Pildi '%1' avamine nurjus"
+
+#: simpleviewer.cpp:415
+#, kde-format
+msgid "Could not create thumbnail from '%1'"
+msgstr "Pisipildi loomine '%1' põhjal nurjus"
+
+#: simpleviewer.cpp:422
+#, kde-format
+msgid "Could not resize image '%1'"
+msgstr "Pildi '%1' suuruse muutmine nurjus"
+
+#: simpleviewer.cpp:550
+msgid "Creating index.html..."
+msgstr "index.html loomine..."
+
+#: simpleviewer.cpp:579
+msgid "index.html created..."
+msgstr "index.html loodud..."
+
+#: simpleviewer.cpp:589
+msgid "Copying flash files..."
+msgstr "Flashi failide kopeerimine..."
+
+#: simpleviewer.cpp:622
+msgid "Flash files copied..."
+msgstr "Flashi failid kopeeritud..."
+
+#: simpleviewer.cpp:632
+msgid "Uploading gallery..."
+msgstr "Galerii üleslaadimine..."
+
+#: simpleviewer.cpp:637
+msgid "Gallery uploaded..."
+msgstr "Galerii üles laaditud..."
+
+#: svedialog.cpp:102
+msgctxt "Settings tab for selections"
+msgid "Selection"
+msgstr "Valik"
+
+#: svedialog.cpp:103
+msgid "Collections List"
+msgstr "Kogude nimekiri"
+
+#: svedialog.cpp:107
+msgctxt "General settings tab"
+msgid "General"
+msgstr "Üldine"
+
+#: svedialog.cpp:108
+msgid "General Settings"
+msgstr "Üldised seadistused"
+
+#: svedialog.cpp:113
+msgctxt "Settings tab for the look of the flash export"
+msgid "Look"
+msgstr "Välimus"
+
+#: svedialog.cpp:114
+msgid "Look Settings"
+msgstr "Välimuse seadistused"
+
+#: svedialog.cpp:227
+msgid "You must select at least one collection to export."
+msgstr "Ekspordiks tuleb valida vähemalt üks kogu."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bald@smail.ee"

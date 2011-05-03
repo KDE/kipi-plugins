@@ -1,0 +1,289 @@
+# translation of kipiplugin_timeadjust.po to Swedish
+# Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+#
+# Stefan Asserhäll <stefan.asserhall@comhem.se>, 2004, 2005, 2006, 2007, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_timeadjust\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-01-25 03:02+0100\n"
+"PO-Revision-Date: 2009-11-04 19:49+0100\n"
+"Last-Translator: Stefan Asserhäll <stefan.asserhall@comhem.se>\n"
+"Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: clockphotodialog.cpp:169
+msgid "Determine time difference with clock photo"
+msgstr "Avgör tidsskillnad med fotografi av klocka"
+
+#: clockphotodialog.cpp:171
+msgid "Load different photo"
+msgstr "Ladda annat foto"
+
+#: clockphotodialog.cpp:181
+msgid ""
+"If you have a photo in your set with a clock or another external time source "
+"on it, you can load it here and set the indicator to the (date and) time "
+"displayed. The difference of your internal camera clock will be determined "
+"from this setting."
+msgstr ""
+"Om du har ett foto i mängden med en klocka eller annan extern tidskälla, kan "
+"du ladda det här och ställa in indikeringen till (datumet och) tiden som "
+"visas. Skillnaden hos din interna klocka i kameran avgörs från den här "
+"inställningen."
+
+#: clockphotodialog.cpp:210
+msgid "Scale:"
+msgstr "Skala:"
+
+#: clockphotodialog.cpp:230
+msgid "The clock date and time:"
+msgstr "Klockans datum och tid:"
+
+#: clockphotodialog.cpp:321
+#, kde-format
+msgid ""
+"<font color=\"red\"><b>Could not obtain date and time information from image "
+"%1.</b></font>"
+msgstr ""
+"<font color=\"red\"><b>Kunde inte hämta datum- och tidsinformation från "
+"bilden %1.</b></font>"
+
+#: clockphotodialog.cpp:333
+#, kde-format
+msgid "<font color=\"red\"><b>Could not load image %1.</b></font>"
+msgstr "<font color=\"red\"><b>Kunde inte ladda bilden %1.</b></font>"
+
+#: plugin_timeadjust.cpp:65
+msgid "Adjust Time && Date..."
+msgstr "Justera tid och datum..."
+
+#: timeadjustdialog.cpp:183 timeadjustdialog.cpp:921 timeadjustdialog.cpp:930
+msgid "Adjust Time & Date"
+msgstr "Justera tid och datum"
+
+#: timeadjustdialog.cpp:191
+msgid "Time Adjust"
+msgstr "Tidjustering"
+
+#: timeadjustdialog.cpp:194
+msgid "A Kipi plugin for adjusting the timestamp of picture files"
+msgstr "Ett KIPI-insticksprogram för att justera bildfilers tidsstämpel"
+
+#: timeadjustdialog.cpp:195
+msgid ""
+"(c) 2003-2005, Jesper K. Pedersen\n"
+"(c) 2006-2009, Gilles Caulier"
+msgstr ""
+"© 2003-2005, Jesper K. Pedersen\n"
+"© 2006-2009, Gilles Caulier"
+
+#: timeadjustdialog.cpp:198
+msgid "Jesper K. Pedersen"
+msgstr "Jesper K. Pedersen"
+
+#: timeadjustdialog.cpp:199
+msgid "Author"
+msgstr "Upphovsman"
+
+#: timeadjustdialog.cpp:202
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: timeadjustdialog.cpp:203
+msgid "Developer and maintainer"
+msgstr "Utvecklare och underhåll"
+
+#: timeadjustdialog.cpp:211
+msgid "Handbook"
+msgstr "Handbok"
+
+#: timeadjustdialog.cpp:219
+msgid "Use Time && Date"
+msgstr "Använd tid och datum"
+
+#: timeadjustdialog.cpp:225
+#, kde-format
+msgid "%1 timestamp"
+msgstr "%1 tidstämpel"
+
+#: timeadjustdialog.cpp:233 timeadjustdialog.cpp:310
+msgid "File last modified"
+msgstr "Filen senast ändrad"
+
+#: timeadjustdialog.cpp:237
+msgid "EXIF/IPTC/XMP"
+msgstr "EXIF/IPTC/XMP"
+
+#: timeadjustdialog.cpp:238 timeadjustdialog.cpp:311
+msgid "EXIF: created"
+msgstr "EXIF: skapad"
+
+#: timeadjustdialog.cpp:239 timeadjustdialog.cpp:312
+msgid "EXIF: original"
+msgstr "EXIF: original"
+
+#: timeadjustdialog.cpp:240 timeadjustdialog.cpp:313
+msgid "EXIF: digitized"
+msgstr "EXIF: digitaliserad"
+
+#: timeadjustdialog.cpp:241 timeadjustdialog.cpp:314
+msgid "IPTC: created"
+msgstr "IPTC: skapad"
+
+#: timeadjustdialog.cpp:242
+msgid "XMP: created"
+msgstr "XMP: skapad"
+
+#: timeadjustdialog.cpp:252
+msgid "Reset to current date"
+msgstr "Återställ till dagens datum"
+
+#: timeadjustdialog.cpp:278
+msgid "Adjust"
+msgstr "Justera"
+
+#: timeadjustdialog.cpp:282
+msgid "Copy value"
+msgstr "Kopiera värde"
+
+#: timeadjustdialog.cpp:283
+msgid "Add"
+msgstr "Lägg till"
+
+#: timeadjustdialog.cpp:284
+msgid "Subtract"
+msgstr "Subtrahera"
+
+#: timeadjustdialog.cpp:288
+msgctxt "time adjust offset, days value label"
+msgid "days"
+msgstr "dagar"
+
+#: timeadjustdialog.cpp:291
+msgid "Determine from clock photo"
+msgstr "Avgör från foto av klocka"
+
+#: timeadjustdialog.cpp:306
+msgid "Update Time && Date"
+msgstr "Uppdatera tid och datum"
+
+#: timeadjustdialog.cpp:315
+msgid "XMP"
+msgstr "XMP"
+
+#: timeadjustdialog.cpp:337
+msgid "Example"
+msgstr "Exempel"
+
+#: timeadjustdialog.cpp:515 timeadjustdialog.cpp:546 timeadjustdialog.cpp:572
+#: timeadjustdialog.cpp:632
+#, kde-format
+msgid "1 image will be changed"
+msgid_plural "%1 images will be changed"
+msgstr[0] "En bild kommer att ändras"
+msgstr[1] "%1 bilder kommer att ändras"
+
+#: timeadjustdialog.cpp:552 timeadjustdialog.cpp:638
+#, kde-format
+msgid "1 image will be changed; "
+msgid_plural "%1 images will be changed; "
+msgstr[0] "1 bild kommer att ändras. "
+msgstr[1] "%1 bilder kommer att ändras. "
+
+#: timeadjustdialog.cpp:556
+#, kde-format
+msgid "1 image will be skipped due to an inexact date."
+msgid_plural "%1 images will be skipped due to inexact dates."
+msgstr[0] "1 bild hoppas över på grund av ett inexakt datum."
+msgstr[1] "%1 bilder hoppas över på grund av inexakta datum."
+
+#: timeadjustdialog.cpp:642
+#, kde-format
+msgid "1 image will be skipped due to a missing source timestamp."
+msgid_plural "%1 images will be skipped due to missing source timestamps."
+msgstr[0] "1 bild hoppas över på grund av att källan saknar tidsstämpel."
+msgstr[1] "%1 bilder hoppas över på grund av att källan saknar tidsstämpel."
+
+#: timeadjustdialog.cpp:739
+#, kde-format
+msgid "Custom: <b>%1</b>"
+msgstr "Egen: <b>%1</b>"
+
+#: timeadjustdialog.cpp:755
+msgid "Original: <b>N/A</b><br/>Image will be skipped"
+msgstr "Original: <b>Inte tillgänglig</b><br/>Bilden kommer att hoppas över"
+
+#: timeadjustdialog.cpp:764
+#, kde-format
+msgid "Original: <b>%1</b>"
+msgstr "Original: <b>%1</b>"
+
+#: timeadjustdialog.cpp:771
+#, kde-format
+msgid "Original: <b>%1</b><br/>Adjusted: <b>%2</b>"
+msgstr "Original: <b>%1</b><br/>Justerad: <b>%2</b>"
+
+#: timeadjustdialog.cpp:919
+msgid "Unable to update metadata in:"
+msgstr "Kan inte uppdatera metadata i:"
+
+#: timeadjustdialog.cpp:928
+msgid "Unable to update file modification time in:"
+msgstr "Kan inte uppdatera filens ändringstid i:"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Stefan Asserhäll"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "stefan.asserhall@comhem.se"
+
+#~ msgid "Adjustment Type"
+#~ msgstr "Typ av justering"
+
+#~ msgid "Set file date to EXIF/IPTC/XMP creation date"
+#~ msgstr "Ställ in filens datum till EXIF, IPTC eller XMP skapad datum"
+
+#~ msgid "Custom date"
+#~ msgstr "Eget datum"
+
+#~ msgid "Update EXIF creation date"
+#~ msgstr "Uppdatera EXIF skapad datum"
+
+#~ msgid "Update IPTC creation date"
+#~ msgstr "Uppdatera IPTC skapad datum"
+
+#~ msgid "Update XMP creation date"
+#~ msgstr "Uppdatera XMP skapad datum"
+
+#~ msgid "Adjustments"
+#~ msgstr "Justeringar"
+
+#~ msgid "Hours:"
+#~ msgstr "Timmar:"
+
+#~ msgid "Minutes:"
+#~ msgstr "Minuter:"
+
+#~ msgid "Seconds:"
+#~ msgstr "Sekunder:"
+
+#~ msgid "Months:"
+#~ msgstr "Månader:"
+
+#~ msgid "Years:"
+#~ msgstr "År:"
+
+#~ msgid "<b>%1</b><br/>would, for example, change into<br/><b>%2</b>"
+#~ msgstr "<b>%1</b><br/>skulle till exempel ändras till<br/><b>%2</b>"
+
+#~ msgid "Unable to set date and time like picture metadata from:"
+#~ msgstr "Kunde inte ställa in datum och tid i bildmetadata från:"

@@ -1,0 +1,407 @@
+# translation of kipiplugin_htmlexport.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+#  Seng Sutha <Sutha@khmeros.info>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_htmlexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2010-11-16 03:44+0700\n"
+"Last-Translator:  Seng Sutha <Sutha@khmeros.info>\n"
+"Language-Team: Khmer [km] <Support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 beta1\n"
+"X-Language: km_KH\n"
+
+#: generator.cpp:136
+#, fuzzy, kde-format
+msgid "Could not find theme in '%1'"
+msgstr "មិន​អាច​ស្វែងរក​ស្បែក​ក្នុង​​ '%1' បាន​ឡើយ​"
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr "ចម្លង​ស្បែក​"
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr "មិន​អាច​ចម្លង​ស្បែក​បាន​ឡើយ​"
+
+#: generator.cpp:178
+#, fuzzy, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr "ទាញ​យក​ឯកសារ​ពី​ចម្ងាយ​​ សម្រាប់​ \"%1\""
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr "មិន​អាច​បើក​ឯកសារ​បណ្ដោះ​អាសន្ន​បាន​ឡើយ​"
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr "មិន​អាច​ទាញ​យក​​ %1 បាន​ឡើយ​"
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr "មិន​អាច​បង្កើត​ gallery.xml បាន​ឡើយ​"
+
+#: generator.cpp:258
+#, fuzzy, kde-format
+msgid "Generating files for \"%1\""
+msgstr "បង្កើត​ឯកសារ​ សម្រាប់​​ \"%1\""
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr "មុន​"
+
+#: generator.cpp:291
+msgid "Next"
+msgstr "បន្ទាប់​"
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr "បញ្ជី​សម្រាំង​"
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr "រូបភាព​ដើម​"
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr "ឡើង​"
+
+#: generator.cpp:296
+msgid "Make"
+msgstr "បង្កើត​"
+
+#: generator.cpp:297
+msgid "Model"
+msgstr "ម៉ូដែល​"
+
+#: generator.cpp:298
+msgid "Image Orientation"
+msgstr "ទិស​រូបភាព​"
+
+#: generator.cpp:299
+msgid "Image X Resolution"
+msgstr "គុណភាព​បង្ហាញ​រូបភាព​ X ​"
+
+#: generator.cpp:300
+msgid "Image Y Resolution"
+msgstr "គុណភាព​បង្ហាញ​រូបភាព​​ Y "
+
+#: generator.cpp:301
+#, fuzzy
+msgid "Image Resolution Unit"
+msgstr "ឯកតា​គុណភាព​បង្ហាញ​រូបភាព​"
+
+#: generator.cpp:302
+#, fuzzy
+msgid "Image Date Time"
+msgstr "ពេលវេលា​កាលបរិច្ឆេទ​រូបភាព​"
+
+#: generator.cpp:303
+#, fuzzy
+msgid "YCBCR Positioning"
+msgstr "ដាក់​ទីតាំង​ YCBCR "
+
+#: generator.cpp:304
+#, fuzzy
+msgid "Exposure Time"
+msgstr "ពេលវេលា​បង្ហាញ​"
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr "ចំនួន​ F "
+
+#: generator.cpp:306
+#, fuzzy
+msgid "Exposure Index"
+msgstr "លិបិក្រម​បង្ហាញ​"
+
+#: generator.cpp:307
+#, fuzzy
+msgid "ISO Speed Ratings"
+msgstr "ចំណាត់​ថ្នាក់​ល្បឿន​ ISO "
+
+#: generator.cpp:308
+#, fuzzy
+msgid "Shutter Speed Value"
+msgstr "តម្លៃ​ល្បឿន​របស់​កម្ម​វិធី​បិទ​"
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr "តម្លៃ​បើក​"
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr "ប្រវែង​​ដែល​ប្រសព្វ​គ្នា​"
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr "បង្កើត​​ឯកសារ​ HTML "
+
+#: generator.cpp:343
+#, fuzzy, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr "មិន​អាច​ផ្ទុក​ឯកសារ​ XSL បាន​ឡើយ​ '%1'"
+
+#: generator.cpp:349
+#, fuzzy, kde-format
+msgid "Could not load XML file '%1'"
+msgstr "មិន​អាច​ផ្ទុក​ឯកសារ​ XML បាន​ឡើយ​ '%1'"
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr "កំហុស​ដំណើរ​ការ​ឯកសារ​​ XML "
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr "មិន​អាច​បើក​​ '%1' សម្រាប់​សរសេរ​បាន​ឡើយ​"
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr "មិន​អាច​បង្កើត​ថត​​ '%1' ក្នុង​ '%2' បាន​ឡើយ​​"
+
+#: imagegenerationfunctor.cpp:89
+#, fuzzy, kde-format
+msgid "Could not read image '%1'"
+msgstr "មិន​អាច​មើល​រូបភាព​​ '%1' បាន​ទេ​"
+
+#: imagegenerationfunctor.cpp:95
+#, fuzzy, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "មិន​ស្គាល់​​ទ្រង់ទ្រាយ​រូបភាព​ '%1' ឡើយ​"
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "កំហុស​ផ្ទុក​រូបភាព​​ '%1'"
+
+#: imagegenerationfunctor.cpp:140
+#, fuzzy, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "មិន​អាច​រក្សាទុក​រូបភាព​ '%1' ទៅជា​ '%2' បាន​ឡើយ​"
+
+#: imagegenerationfunctor.cpp:161
+#, fuzzy, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr "មិន​អាច​រក្សាទុក​រូបភាព​តូច​ សម្រាប់​រូបភាព​​​ '%1' ទៅជា​ '%2' បាន​ឡើយ​"
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr "ដែល​មិន​អាច​រក​បាន​"
+
+#: imagegenerationfunctor.cpp:338
+#, fuzzy, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr "មិន​អាច​បើក​ឯកសារ​​ '%1' សម្រាប់​សរសេរ​បាន​ឡើយ​"
+
+#: imagegenerationfunctor.cpp:342
+#, fuzzy, kde-format
+msgid "Could not save image to file '%1'"
+msgstr "មិន​អាច​រក្សាទុក​រូបភាព​ទៅកាន់​ឯកសារ​​ '%1' បាន​ឡើយ​"
+
+#: plugin.cpp:72
+#, fuzzy
+msgid "Export to &HTML..."
+msgstr "នាំ​ចេញ​ទៅកាន់​ &HTML..."
+
+#: plugin.cpp:95
+#, fuzzy
+msgid "Generating gallery..."
+msgstr "កំពុង​បង្កើត​វិចិត្រសាល​..."
+
+#: plugin.cpp:105
+#, fuzzy
+msgid "Finished, but some warnings occurred."
+msgstr "បាន​បញ្ចប់​ ប៉ុន្តែ​បាន​កើត​ឡើង​ការ​ព្រមាន​មួយ​ចំនួន ។"
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr "%1 ៖"
+
+#: wizard.cpp:206
+#, fuzzy
+msgid "Export image collections to HTML pages"
+msgstr "នាំ​រូបភាព​​សម្រាំង​ចេញ​ទៅកាន់​ទំព័រ​​ HTML ​"
+
+#: wizard.cpp:212
+#, fuzzy
+msgid "HTML Export"
+msgstr "HTML នាំចេញ​"
+
+#: wizard.cpp:215
+#, fuzzy
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr "កម្មវិធី​ជំនួយ​ KIPI ត្រូវ​នាំ​រូបភាព​សម្រាំង​ចេញ​​ ទៅកាន់​ទំព័រ​ HTML ​"
+
+#: wizard.cpp:216
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៦-២០០៩ ដោយ​ Aurelien Gateau\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០១០ ដោយ Gianluca Urgese"
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr "Gianluca Urgese"
+
+#: wizard.cpp:221
+msgid "Maintainer"
+msgstr "អ្នកថែទាំ​"
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: wizard.cpp:226
+#, fuzzy
+msgid "Former Author and Maintainer"
+msgstr "អ្នក​ថែទាំ និង​អ្នកនិពន្ធ​មុន​"
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ​​"
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr "ជម្រើស​សម្រាំង​ "
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr "ស្បែក​"
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr "ប៉ារ៉ាម៉ែត្រ​ស្បែក​​"
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr "កំណត់​រូបភាព​"
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr "ទិន្នផល​"
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr "អ្នកនិពន្ធ​ ៖​ %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info"
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr "រូបភាព​ពេញ​"
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr "រក្សាទុក​រូបភាព​"
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr "ទ្រង់ទ្រាយ​ ៖​"
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr "JPEG"
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr "PNG"
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr "គុណភាព​ ៖​"
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+#, fuzzy
+msgid "Max size:"
+msgstr "ទំហំ​អតិបរមា​ ៖"
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+#, fuzzy
+msgid "Include full-size original images for download"
+msgstr "រួម​បញ្ចូល​រូបភាព​ដើម​ទំហំ​ពេញ​ សម្រាប់​ទាញ​យក​"
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr "ប្រើ​រូបភាព​ដើម​"
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr "រូបភាព​តូច​"
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr "ទំហំ​ ៖​"
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr "ថត​ទិស​ដៅ​ ៖"
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr "បើក​ក្នុង​កម្មវិធី​រុករក​"
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+#, fuzzy
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""
+"ក្នុង​ទំព័រ​នេះ​​ អ្នក​អាច​ផ្លាស់ប្ដូរ​ប៉ារ៉ាម៉ែត្រ​ស្បែក​​មួយ​ចំនួន​ ។ អាស្រ័យ​លើ​​ស្បែក​​ មាន​​ប៉ារ៉ាម៉ែត្រ​​​ខុស​គ្នា ។​"

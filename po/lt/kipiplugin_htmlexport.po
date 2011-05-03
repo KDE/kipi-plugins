@@ -1,0 +1,384 @@
+# Lithuanian translations for kipiplugins_htmlexport package.
+# Andrius Štikonas <stikonas@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugins_htmlexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2009-01-18 17:35+0200\n"
+"Last-Translator: Andrius Štikonas <stikonas@gmail.com>\n"
+"Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10==1 && n%100!=11 ? 1 : n%"
+"10>=2 && (n%100<10 || n%100>=20) ? 2 : 3);\n"
+
+#: generator.cpp:136
+#, kde-format
+msgid "Could not find theme in '%1'"
+msgstr ""
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr ""
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr ""
+
+#: generator.cpp:178
+#, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr ""
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr ""
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr ""
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr ""
+
+#: generator.cpp:258
+#, kde-format
+msgid "Generating files for \"%1\""
+msgstr ""
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr ""
+
+#: generator.cpp:291
+msgid "Next"
+msgstr ""
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr ""
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr ""
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr ""
+
+#: generator.cpp:296
+msgid "Make"
+msgstr ""
+
+#: generator.cpp:297
+msgid "Model"
+msgstr ""
+
+#: generator.cpp:298
+msgid "Image Orientation"
+msgstr ""
+
+#: generator.cpp:299
+msgid "Image X Resolution"
+msgstr ""
+
+#: generator.cpp:300
+msgid "Image Y Resolution"
+msgstr ""
+
+#: generator.cpp:301
+msgid "Image Resolution Unit"
+msgstr ""
+
+#: generator.cpp:302
+msgid "Image Date Time"
+msgstr ""
+
+#: generator.cpp:303
+msgid "YCBCR Positioning"
+msgstr ""
+
+#: generator.cpp:304
+msgid "Exposure Time"
+msgstr ""
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr ""
+
+#: generator.cpp:306
+msgid "Exposure Index"
+msgstr ""
+
+#: generator.cpp:307
+msgid "ISO Speed Ratings"
+msgstr ""
+
+#: generator.cpp:308
+msgid "Shutter Speed Value"
+msgstr ""
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr ""
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr ""
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr ""
+
+#: generator.cpp:343
+#, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr ""
+
+#: generator.cpp:349
+#, kde-format
+msgid "Could not load XML file '%1'"
+msgstr ""
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr ""
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr ""
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:89
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:95
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:140
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:161
+#, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:338
+#, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:342
+#, kde-format
+msgid "Could not save image to file '%1'"
+msgstr ""
+
+#: plugin.cpp:72
+msgid "Export to &HTML..."
+msgstr ""
+
+#: plugin.cpp:95
+msgid "Generating gallery..."
+msgstr ""
+
+#: plugin.cpp:105
+msgid "Finished, but some warnings occurred."
+msgstr ""
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr ""
+
+#: wizard.cpp:206
+msgid "Export image collections to HTML pages"
+msgstr ""
+
+#: wizard.cpp:212
+msgid "HTML Export"
+msgstr ""
+
+#: wizard.cpp:215
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr ""
+
+#: wizard.cpp:216
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr ""
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr ""
+
+#: wizard.cpp:221
+msgid "Maintainer"
+msgstr ""
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr ""
+
+#: wizard.cpp:226
+msgid "Former Author and Maintainer"
+msgstr ""
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr ""
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr ""
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr ""
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr ""
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr ""
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr ""
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+msgid "Max size:"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+msgid "Include full-size original images for download"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr ""
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr ""
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr ""
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr ""
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""

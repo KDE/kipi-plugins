@@ -1,0 +1,470 @@
+# translation of kipiplugin_simpleviewerexport.po to Thai
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2008, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_simpleviewerexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:23+0100\n"
+"PO-Revision-Date: 2010-03-07 20:23+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: firstrundlg.cpp:77 firstrundlg.cpp:87 simpleviewer.cpp:202 svedialog.cpp:91
+#: svedialog.cpp:120
+msgid "Flash Export"
+msgstr "ส่งออกเป็นแฟ้ม Flash"
+
+#: firstrundlg.cpp:90 svedialog.cpp:123
+msgid ""
+"A Kipi plugin to export images to Flash using the Simple Viewer component."
+msgstr "ส่วนเสริมของ Kipi สำหรับส่งออกภาพเป็นแฟ้ม Flash โดยใช้ส่วนประกอบ Simple Viewer"
+
+#: firstrundlg.cpp:91 svedialog.cpp:124
+#, fuzzy
+#| msgid ""
+#| "(c) 2005-2006, Joern Ahrens\n"
+#| "(c) 2008-2009, Gilles Caulier"
+msgid ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+msgstr ""
+"สงวนลิขสิทธิ์ (c) 2005-2006, Joern Ahrens\n"
+"สงวนลิขสิทธิ์ (c) 2008-2009, Gilles Caulier"
+
+#: firstrundlg.cpp:94 svedialog.cpp:127
+msgid "Joern Ahrens"
+msgstr "Joern Ahrens"
+
+#: firstrundlg.cpp:95 svedialog.cpp:128
+msgid "Author"
+msgstr "ผู้เขียน"
+
+#: firstrundlg.cpp:98 svedialog.cpp:131
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: firstrundlg.cpp:99 svedialog.cpp:132
+msgid "Developer and maintainer"
+msgstr "ผู้พัฒนาและผู้ดูแล"
+
+#: firstrundlg.cpp:102 svedialog.cpp:135
+msgid "Felix Turner"
+msgstr "Felix Turner"
+
+#: firstrundlg.cpp:103 svedialog.cpp:136
+msgid "Author of the Simple Viewer Flash component"
+msgstr "ผู้เขียนคอมโพเน้นต์ Simple Viewer Flash"
+
+#: firstrundlg.cpp:107 svedialog.cpp:140
+msgid "Mikkel B. Stegmann"
+msgstr "Mikkel B. Stegmann"
+
+#: firstrundlg.cpp:108 svedialog.cpp:141
+msgid "Basis for the index.html template"
+msgstr "พื้นฐานของแม่แบบแฟ้ม index.html"
+
+#: firstrundlg.cpp:117 svedialog.cpp:150
+msgid "Handbook"
+msgstr "คู่มือการใช้งาน"
+
+#: firstrundlg.cpp:129
+msgid ""
+"<p>SimpleViewer is a Flash component which is free to use, but uses a "
+"license which comes into conflict with several distributions. Due to the "
+"license it is not possible to ship it with this plugin.</p><p>You can now "
+"download SimpleViewer from its homepage and point this tool to the "
+"downloaded archive. The archive will be stored with the plugin "
+"configuration, so it is available for further use.</p>"
+msgstr ""
+"<p>โปรแกรม SimpleViewer คือส่วนประกอบสำหรับสร้างแฟ้ม Flash ซึ่งฟรีสำหรับการใช้งาน "
+"แต่มีสัญญาอนุญาตที่ขัดกับดิสทริบิวชันทั่ว ๆ ไป ดังนั้นจึงไม่สามารถให้มันมาพร้อมกับส่วนเสริมนี้ได้</"
+"p><p>คุณสามารถดาวน์โหลด SimpleViewer ได้ จากหน้าเว็บหลักของมัน "
+"และชี้เครื่องมือนี้ไปยังแฟ้มจัดเก็บที่ได้ทำการดาวน์โหลดไว้ "
+"แล้วแฟ้มจัดเก็บจะถูกจัดเก็บไว้ด้วยการปรับแต่งค่าของส่วนเสริม "
+"จากนั้นก็จะใช้งานมันต่อไปได้ตลอดไปแล้ว</p>"
+
+#: firstrundlg.cpp:137
+#, fuzzy
+#| msgid "<p>1.) Download SimpleViewer Version 1.9.x</p>"
+msgid "<p>1.) Download SimpleViewer Version 2.1.x</p>"
+msgstr "<p>1.) ทำการดาวน์โหลด SimpleViewer รุ่น 1.9.x</p>"
+
+#: firstrundlg.cpp:147
+msgid "<p>2.) Point this tool to the downloaded archive</p>"
+msgstr "<p>2.) ชี้เครื่องมือนี้ไปยังแฟ้มจัดเก็บที่ได้ทำการดาวน์โหลดมา</p>"
+
+#: generalpage.cpp:81
+msgid "Gallery &Title"
+msgstr "ชื่อแกลเลอรีภาพ"
+
+#: generalpage.cpp:84
+msgid "Enter here the gallery title"
+msgstr "ป้อนชื่อของแกลเลอรีภาพที่นี่"
+
+#: generalpage.cpp:92
+msgid "Save Gallery To"
+msgstr "จัดเก็บแกลเลอรีภาพไปยัง"
+
+#: generalpage.cpp:103
+msgid "Image Properties"
+msgstr "คุณสมบัติต่าง ๆ ของภาพ"
+
+#: generalpage.cpp:105
+msgid "Resize Target Images"
+msgstr "ปรับขนาดภาพเป้าหมาย"
+
+#: generalpage.cpp:107
+msgid "If you enable this option, all target images can be resized."
+msgstr "หากเปิดใช้ตัวเลือกนี้ ภาพเป้าหมายทั้งหมดจะสามารถปรับขนาดได้"
+
+#: generalpage.cpp:111
+msgid "Auto-Rotate/Flip Images"
+msgstr "หมุนภาพ/พลิกภาพอัตโนมัติ"
+
+#: generalpage.cpp:113
+msgid ""
+"If you enable this option, the images' orientations will be set according to "
+"their Exif information."
+msgstr ""
+"หากเปิดใช้ตัวเลือกนี้ แนวทิศทางของภาพจะถูกแก้ไข โดยใช้ข้อมูลกำกับ จากข้อมูล Exif "
+"ที่สัมพันธ์กันของภาพ"
+
+#: generalpage.cpp:120
+msgid "&Target Images' Size:"
+msgstr "ขนาดภาพเ&ป้าหมาย:"
+
+#: generalpage.cpp:121
+msgid ""
+"The new size of the exported images, in pixels. SimpleViewer resizes the "
+"images too, but this resizes the images before they are uploaded to your "
+"server."
+msgstr ""
+"ขนาดใหม่ของภาพที่จะส่งออกโดยมีหน่วยเป็นพิกเซล, โปรแกรม SimpleViewer "
+"เองก็สามารถที่จะปรับขนาดภาพให้ได้เช่นกัน แต่นี่จะเป็นการปรับขนาดภาพต่าง ๆ ของคุณ "
+"ก่อนจะทำการอัปโหลดไปยังแม่ข่ายของคุณ"
+
+#: generalpage.cpp:134
+msgid "&Displayed Images' Size:"
+msgstr "ขนาดภาพที่แ&สดงอยู่:"
+
+#: generalpage.cpp:135
+msgid ""
+"Scales the displayed images to this size. Normally, use the height or width "
+"of your largest image (in pixels). Images will not be scaled up above this "
+"size, to preserve image quality."
+msgstr ""
+"ปรับขนาดภาพที่แสดงอยู่ให้เป็นขนาดนี้ โดยปกติแล้วจะใช้ค่าความสูงมากที่สุด "
+"หรือความกว้างที่สุดของภาพที่ใหญ่ที่สุดของคุณ (หน่วยเป็นพิกเซล) "
+"จากนั้นภาพจะไม่ถูกปรับขนาดให้ใหญ่กว่าขนาดนี้ได้ เพื่อให้แน่ใจว่าจะได้ภาพที่มีคุณภาพดีที่สุด"
+
+#: generalpage.cpp:150
+msgid "Misc"
+msgstr "เบ็ดเตล็ด"
+
+#: generalpage.cpp:153
+msgid "Display Captions"
+msgstr "แสดงคำบรรยายภาพ"
+
+#: generalpage.cpp:155
+msgid "If this option is enabled, the images' captions will be shown."
+msgstr "หากเปิดใช้ตัวเลือกนี้ จะมีการแสดงคำบรรยายภาพด้วย"
+
+#: generalpage.cpp:158
+msgid "Open Image with Right Click"
+msgstr "เปิดภาพด้วยการคลิกเมาส์ปุ่มขวา"
+
+#: generalpage.cpp:160
+msgid ""
+"If this option is enabled, the user will be able to open the target image in "
+"a separate window using the right mouse button."
+msgstr ""
+"หากเปิดใช้ตัวเลือกนี้ ผู้ใช้จะสามารถเปิดภาพเป้าหมายในหน้าต่างแยกต่างหากได้ "
+"ด้วยการคลิกเมาส์ปุ่มขวา"
+
+#: generalpage.cpp:164
+msgid "Open gallery in Konqueror"
+msgstr "เปิดแกลเลอรีในคอนเควอร์เรอร์"
+
+#: generalpage.cpp:166
+msgid ""
+"If this option is enabled, the gallery will be opened in Konqueror "
+"automatically."
+msgstr "หากเปิดใช้ตัวเลือกนี้ แกลเลอรีภาพจะถูกเปิดในคอนเควอร์เรอร์ให้โดยอัตโนมัติ"
+
+#: lookpage.cpp:80
+msgctxt "Settings for flash export navigation"
+msgid "Navigation"
+msgstr "การนำทาง"
+
+#: lookpage.cpp:86
+msgid "Thumbnail &Rows:"
+msgstr "จำนวนแ&ถวของภาพตัวอย่าง:"
+
+#: lookpage.cpp:87
+msgid "Number of thumbnails rows"
+msgstr "จำนวนแถวของภาพตัวอย่าง"
+
+#: lookpage.cpp:92
+msgid "Thumbnail &Columns:"
+msgstr "จำนวน&คอลัมน์ของภาพตัวอย่าง:"
+
+#: lookpage.cpp:93
+msgid "Number of thumbnails columns"
+msgstr "จำนวนคอลัมน์ของภาพตัวอย่าง"
+
+#: lookpage.cpp:96
+msgid "Thumbnail &Position:"
+msgstr "ตำแห&น่งของภาพตัวอย่าง:"
+
+#: lookpage.cpp:98
+msgctxt "thumbnail position: right"
+msgid "Right"
+msgstr "ด้านขวา"
+
+#: lookpage.cpp:99
+msgctxt "thumbnail position: left"
+msgid "Left"
+msgstr "ด้านซ้าย"
+
+#: lookpage.cpp:100
+msgctxt "thumbnail position: top"
+msgid "Top"
+msgstr "ด้านบน"
+
+#: lookpage.cpp:101
+msgctxt "thumbnail position: bottom"
+msgid "Bottom"
+msgstr "ด้านล่าง"
+
+#: lookpage.cpp:110
+msgid "&Direction of Navigation:"
+msgstr "&ทิศทางของการนำทาง:"
+
+#: lookpage.cpp:112
+msgid "Left to Right"
+msgstr "ซ้ายไปขวา"
+
+#: lookpage.cpp:113
+msgid "Right to Left"
+msgstr "ขวาไปซ้าย"
+
+#: lookpage.cpp:126
+msgid "Colors"
+msgstr "สีต่าง ๆ"
+
+#: lookpage.cpp:130
+msgid "&Text Color:"
+msgstr "สี&ข้อความ:"
+
+#: lookpage.cpp:133
+msgid "Color of title and caption text"
+msgstr "สีของข้อความหัวเรื่องและคำบรรยายภาพ"
+
+#: lookpage.cpp:137
+msgid "&Background Color:"
+msgstr "สี&พื้นหลัง:"
+
+#: lookpage.cpp:143
+msgid "&Frame Color:"
+msgstr "สี&กรอบ:"
+
+#: lookpage.cpp:146
+msgid "Color of image frame, viewed icon, load bars, thumbnail arrows"
+msgstr "สีของกรอบภาพ, ไอคอนที่ดู, แถบการโหลด, ลูกศรภาพตัวอย่าง"
+
+#: lookpage.cpp:157
+msgid "Style"
+msgstr "รูปแบบ"
+
+#: lookpage.cpp:163
+msgid "Frame &Width:"
+msgstr "ความก&ว้างของกรอบ:"
+
+#: lookpage.cpp:164
+msgid "Width of image frame in pixels."
+msgstr "ความกว้างของกรอบภาพ หน่วยเป็นพิกเซล"
+
+#: lookpage.cpp:169
+msgid "Stage &Padding:"
+msgstr "ระยะห่า&ง:"
+
+#: lookpage.cpp:170
+msgid "Distance between image and thumbnails in pixels."
+msgstr "ระยะห่างระหว่างภาพและภาพตัวอย่าง หน่วยเป็นพิกเซล"
+
+#: plugin_flashexport.cpp:62
+msgid "Export to F&lash..."
+msgstr "ส่งออกเป็นแฟ้ม F&lash..."
+
+#: simpleviewer.cpp:140
+msgid "SimpleViewer installation failed"
+msgstr "การติดตั้ง SimpleViewer ล้มเหลว"
+
+#: simpleviewer.cpp:167
+#, kde-format
+msgid ""
+"Target folder %1 already exists.\n"
+"Do you want to overwrite it?  All data in this folder will be lost."
+msgstr ""
+"มีโฟลเดอร์เป้าหมาย %1 อยู่ก่อนแล้ว\n"
+"คุณต้องการจะเขียนทับมันหรือไม่ (ข้อมูลทั้งหมดในโฟลเดอร์นี้จะสูญหายไป)"
+
+#: simpleviewer.cpp:176
+#, kde-format
+msgid ""
+"Could not delete %1.\n"
+"Please choose another export folder."
+msgstr ""
+"ไม่สามารถลบ %1 ได้\n"
+"โปรดเลือกโฟลเดอร์ส่งออกตัวอื่น"
+
+#: simpleviewer.cpp:211
+msgid "Initialising..."
+msgstr "กำลังเริ่มการใช้งาน..."
+
+#: simpleviewer.cpp:232
+msgid "Export canceled"
+msgstr "ยกเลิกการส่งออกแล้ว"
+
+#: simpleviewer.cpp:243
+msgid "Failed to create export directories"
+msgstr "ล้มเหลวในการสร้างไดเรกทอรีส่งออก"
+
+#: simpleviewer.cpp:250
+msgid "Failed to export the images"
+msgstr "ล้มเหลวในการส่งออกภาพ"
+
+#: simpleviewer.cpp:257
+msgid "Failed to create index.html"
+msgstr "ล้มเหลวในการสร้าง index.html"
+
+#: simpleviewer.cpp:264
+msgid "Failed to copy SimpleViewer files"
+msgstr "ล้มเหลวในการคัดลอกแฟ้ม SimpleViewe"
+
+#: simpleviewer.cpp:271
+msgid "Failed to upload the gallery"
+msgstr "ล้มเหลวในการอัปโหลดแกลเลอรีภาพ"
+
+#: simpleviewer.cpp:279
+#, kde-format
+msgid ""
+"Export was canceled.\n"
+"Do you want to delete files in %1 that have already been created?"
+msgstr ""
+"การส่งออกถูกยกเลิก\n"
+"คุณต้องการจะลบแฟ้มที่ถูกสร้างไว้แล้วใน %1 หรือไม่ ?"
+
+#: simpleviewer.cpp:289
+msgctxt "Flash export has finished"
+msgid "Finished..."
+msgstr "เสร็จสิ้นแล้ว..."
+
+#: simpleviewer.cpp:302
+msgid "Creating directories..."
+msgstr "กำลังสร้างไดเรกทอรี..."
+
+#: simpleviewer.cpp:307 simpleviewer.cpp:316 simpleviewer.cpp:325
+#, kde-format
+msgid "Could not create folder '%1'"
+msgstr "ไม่สามารถสร้างโฟลเดอร์ '%1' ได้"
+
+#: simpleviewer.cpp:340
+msgid "Creating images and thumbnails..."
+msgstr "กำลังสร้างภาพและภาพตัวอย่าง..."
+
+#: simpleviewer.cpp:397
+#, kde-format
+msgid "Processing %1"
+msgstr "กำลังประมวลผล %1"
+
+#: simpleviewer.cpp:408
+#, kde-format
+msgid "Could not open image '%1'"
+msgstr "ไม่สามารถเปิดภาพ '%1' ได้"
+
+#: simpleviewer.cpp:415
+#, kde-format
+msgid "Could not create thumbnail from '%1'"
+msgstr "ไม่สามารถสร้างภาพตัวอย่างจาก '%1' ได้"
+
+#: simpleviewer.cpp:422
+#, kde-format
+msgid "Could not resize image '%1'"
+msgstr "ไม่สามารถปรับขนาดภาพ '%1' ได้"
+
+#: simpleviewer.cpp:550
+msgid "Creating index.html..."
+msgstr "กำลังสร้างแฟ้ม index.html..."
+
+#: simpleviewer.cpp:579
+msgid "index.html created..."
+msgstr "สร้างแฟ้ม index.html เรียบร้อยแล้ว..."
+
+#: simpleviewer.cpp:589
+msgid "Copying flash files..."
+msgstr "กำลังคัดลอกแฟ้ม flash..."
+
+#: simpleviewer.cpp:622
+msgid "Flash files copied..."
+msgstr "คัดลอกแฟ้ม Flash เรียบร้อยแล้ว..."
+
+#: simpleviewer.cpp:632
+msgid "Uploading gallery..."
+msgstr "กำลังอัปโหลดแกลเลอรีภาพ..."
+
+#: simpleviewer.cpp:637
+msgid "Gallery uploaded..."
+msgstr "อัปโหลดแกลเลอรีภาพเรียบร้อยแล้ว..."
+
+#: svedialog.cpp:102
+msgctxt "Settings tab for selections"
+msgid "Selection"
+msgstr "การเลือก"
+
+#: svedialog.cpp:103
+msgid "Collections List"
+msgstr "รายการชุดสะสม"
+
+#: svedialog.cpp:107
+msgctxt "General settings tab"
+msgid "General"
+msgstr "ค่าทั่วไป"
+
+#: svedialog.cpp:108
+msgid "General Settings"
+msgstr "ตั้งค่าทั่วไปต่าง ๆ"
+
+#: svedialog.cpp:113
+msgctxt "Settings tab for the look of the flash export"
+msgid "Look"
+msgstr "รูปลักษณ์"
+
+#: svedialog.cpp:114
+msgid "Look Settings"
+msgstr "ตั้งค่าต่าง ๆ ของรูปลักษณ์"
+
+#: svedialog.cpp:227
+msgid "You must select at least one collection to export."
+msgstr "คุณต้องเลือกชุดสะสมอย่างน้อยหนึ่งชุดเพื่อใช้ส่งออก"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"
+
+#~ msgid "Flash Export..."
+#~ msgstr "ส่งออกเป็นแฟ้ม Flash..."

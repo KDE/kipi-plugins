@@ -1,0 +1,731 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-03-03 15:39+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: plugin/plugin_printimages.cpp:75 plugin/plugin_printimages.cpp:129
+msgid "Print images"
+msgstr "พิมพ์ภาพต่าง ๆ"
+
+#: plugin/plugin_printimages.cpp:84
+msgid "Print Assistant..."
+msgstr "ผู้ช่วยการพิมพ์..."
+
+#: plugin/plugin_printimages.cpp:128 plugin/plugin_printimages.cpp:149
+msgid "Please select one or more photos to print."
+msgstr "โปรดเลือกภาพเพื่อทำการพิมพ์อย่างน้อยหนึ่งภาพ"
+
+#: plugin/plugin_printimages.cpp:150 wizard/wizard.cpp:159
+#: wizard/wizard.cpp:162
+msgid "Print assistant"
+msgstr "ผู้ช่วยการพิมพ์"
+
+#: tools/utils.cpp:72
+msgid ""
+"Unable to create a temporary folder. Please make sure you have proper "
+"permissions to this folder and try again."
+msgstr ""
+"ไม่สามารถสร้างโฟลเดอร์ใช้งานชั่วคราวได้ โปรดตรวจสอบให้แน่ใจว่า "
+"คุณมีสิทธิ์ในการเขียนไปยังโฟลเดอร์นี้หรือยัง จากนั้นให้ลองใหม่อีกครั้ง"
+
+#: wizard/customdlg.cpp:46 wizard/customdlg.cpp:47
+msgid "Choose your grid size"
+msgstr "เลือกขนาดกริดที่คุณต้องการ"
+
+#: wizard/customdlg.cpp:48
+msgid "Number of rows"
+msgstr "จำนวนแถว"
+
+#: wizard/customdlg.cpp:49
+msgid "Insert number of rows"
+msgstr "แทรกจำนวนของแถว"
+
+#: wizard/customdlg.cpp:50
+msgid "Number of columns"
+msgstr "จำนวนคอลัมน์"
+
+#: wizard/customdlg.cpp:51
+msgid "Insert number of columns"
+msgstr "แทรกจำนวนของคอลัมน์"
+
+#: wizard/customdlg.cpp:53 wizard/customdlg.cpp:54
+msgid "Choose to have a custom photo size album"
+msgstr "เลือกที่จะทำการกำหนดขนาดอัลบั้มรูปภาพเอง"
+
+#: wizard/customdlg.cpp:55
+msgid "Photo height"
+msgstr "ความสูงของรูปภาพ"
+
+#: wizard/customdlg.cpp:56
+msgid "Insert photo height"
+msgstr "แทรกความสูงของรูปภาพ"
+
+#: wizard/customdlg.cpp:57
+msgid "Photo width"
+msgstr "ความกว้างของรูปภาพ"
+
+#: wizard/customdlg.cpp:58
+msgid "Insert photo width"
+msgstr "แทรกความกว้างของรูปภาพ"
+
+#: wizard/customdlg.cpp:60
+msgid "Auto rotate photo"
+msgstr "หมุนภาพโดยอัตโนมัติ"
+
+#: wizard/printhelper.cpp:236
+msgid "Kipi-plugins image printing"
+msgstr "ส่วนเสริมของ Kipi สำหรับการพิมพ์ภาพ"
+
+#: wizard/printoptionspage.cpp:146 wizard/printoptionspage.cpp:147
+#: wizard/printoptionspage.cpp:148
+msgid "disabled"
+msgstr "ปิดการใช้งาน"
+
+#: wizard/wizard.cpp:107
+msgid "Select printing information"
+msgstr "เลือกข้อมูลรายละเอียดของการพิมพ์"
+
+#: wizard/wizard.cpp:108
+msgid "Select page layout"
+msgstr "เลือกการการวางหน้ากระดาษ"
+
+#: wizard/wizard.cpp:109
+msgid "Crop photos"
+msgstr "ครอบตัดภาพ"
+
+#: wizard/wizard.cpp:111
+msgid "Custom"
+msgstr "กำหนดเอง"
+
+#: wizard/wizard.cpp:165
+msgid "A KIPI plugin to print images"
+msgstr "ส่วนเสริมของ KIPI เพื่อใช้ในการพิมพ์ภาพต่าง ๆ"
+
+#: wizard/wizard.cpp:166
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2004, Todd Shoemaker\n"
+#| "(c) 2007-2008, Angelo Naselli"
+msgid ""
+"(c) 2003-2004, Todd Shoemaker\n"
+"(c) 2007-2010, Angelo Naselli"
+msgstr ""
+"สงวนลิขสิทธิ์ (c) 2003-2004, Todd Shoemaker\n"
+"สงวนลิขสิทธิ์ (c) 2007-2008, Angelo Naselli"
+
+#: wizard/wizard.cpp:168
+msgid "Todd Shoemaker"
+msgstr "Todd Shoemaker"
+
+#: wizard/wizard.cpp:168
+msgid "Author"
+msgstr "ผู้เขียน"
+
+#: wizard/wizard.cpp:170
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: wizard/wizard.cpp:170
+msgid "Developer and maintainer"
+msgstr "ผู้พัฒนาและผู้ดูแล"
+
+#: wizard/wizard.cpp:172
+msgid "Andreas Trink"
+msgstr "Andreas Trink"
+
+#: wizard/wizard.cpp:172
+msgid "Contributor"
+msgstr "ผู้มีส่วนร่วม"
+
+#: wizard/wizard.cpp:182
+msgid "Handbook"
+msgstr "คู่มือ"
+
+#: wizard/wizard.cpp:633
+msgid "Unsupported Paper Size"
+msgstr "ขนาดกระดาษที่ยังไม่รองรับ"
+
+#. i18n: file: ui/infopage.ui:328
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: wizard/wizard.cpp:663 wizard/wizard.cpp:1558 rc.cpp:149
+msgid "Free"
+msgstr "อิสระ"
+
+#: wizard/wizard.cpp:1073
+#, kde-format
+msgid "Photo %1 of %2"
+msgstr "ภาพที่ %1 จาก %2 ภาพ"
+
+#: wizard/wizard.cpp:1143
+#, kde-format
+msgid "Page %1 of %2"
+msgstr "หน้าที่ %1 จาก %2 หน้า"
+
+#. i18n: file: ui/infopage.ui:29
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: wizard/wizard.cpp:1462 wizard/wizard.cpp:1946 rc.cpp:86
+msgid "Print to PDF"
+msgstr "พิมพ์ไปยังแฟ้ม (PDF)"
+
+#. i18n: file: ui/infopage.ui:39
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: wizard/wizard.cpp:1463 wizard/wizard.cpp:1906 wizard/wizard.cpp:1976
+#: wizard/wizard.cpp:2175 wizard/wizard.cpp:2223 rc.cpp:92
+msgid "Print to JPG"
+msgstr "พิมพ์ไปยังแฟ้ม (JPG)"
+
+#. i18n: file: ui/infopage.ui:44
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: wizard/wizard.cpp:1464 wizard/wizard.cpp:2176 wizard/wizard.cpp:2200
+#: rc.cpp:95
+msgid "Print to gimp"
+msgstr "พิมพ์ไปยังโปรแกรม gimp"
+
+#. i18n: file: ui/infopage.ui:34
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: wizard/wizard.cpp:1471 rc.cpp:89
+msgid "Print to PS"
+msgstr "พิมพ์ไปยังแฟ้ม (PS)"
+
+#. i18n: file: ui/infopage.ui:308
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: wizard/wizard.cpp:1552 rc.cpp:137
+msgid "No captions"
+msgstr "ไม่มีคำบรรยายภาพ"
+
+#. i18n: file: ui/customlayout.ui:319
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: wizard/wizard.cpp:1708 rc.cpp:77
+msgid "inches"
+msgstr "นิ้ว"
+
+#. i18n: file: ui/customlayout.ui:309
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: wizard/wizard.cpp:1713 rc.cpp:71
+msgid "cm"
+msgstr "ซ.ม."
+
+#: wizard/wizard.cpp:2029 wizard/wizard.cpp:2115
+msgid "Complete. Click Finish to exit the Print Wizard."
+msgstr "เสร็จสมบูรณ์ คลิกที่ เสร็จสิ้น เพื่อออกจากตัวช่วยการพิมพ์"
+
+#: wizard/wizard.cpp:2069
+msgid ""
+"The following file will be overwritten. Are you sure you want to overwrite "
+"it?"
+msgstr "แฟ้มต่อไปนี้จะถูกเขียนทับ คุณต้องการจะเขียนทับแฟ้มนี้หรือไม่ ?"
+
+#: wizard/wizard.cpp:2091
+msgid "Could not save file, please check your output entry."
+msgstr "ไม่สามารถบันทึกแฟ้มได้ โปรดตรวจสอบในรายการผลลัพธ์การทำงาน"
+
+#: wizard/wizard.cpp:2108
+msgid "Printing Canceled."
+msgstr "การพิมพ์ถูกยกเลิก"
+
+#: wizard/wizard.cpp:2129
+msgid "Could not remove the GIMP's temporary files."
+msgstr "ไม่สามารถลบแฟ้มชั่วคราวของ GIMP ได้"
+
+#: wizard/wizard.cpp:2186
+msgid "Print Image"
+msgstr "พิมพ์ภาพ"
+
+#: wizard/wizard.cpp:2218
+msgid ""
+"There was an error launching the GIMP. Please make sure it is properly "
+"installed."
+msgstr ""
+"เกิดข้อผิดพลาดขึ้นระหว่างเรียก GIMP ขึ้นมาทำงาน โปรดแน่ใจว่าคุณได้ติดตั้งมันไว้แล้วอย่างถูกต้อง"
+
+#: wizard/wizard.cpp:2219
+msgid "KIPI"
+msgstr "KIPI"
+
+#: wizard/wizard.cpp:2231
+msgid "Empty output path."
+msgstr "พาธของส่วนส่งออกว่าง"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"
+
+#. i18n: file: ui/croppage.ui:26
+#. i18n: ectx: property (whatsThis), widget (KIPIPrintImagesPlugin::CropFrame, cropFrame)
+#: rc.cpp:5
+msgid ""
+"Move the box in order to crop photos so that they fit inside the photo sizes "
+"you have given.  \n"
+"You can crop each image differently, or just click the 'Next' button to use "
+"the default crop \n"
+"setting for each photo.\n"
+"Enable \"Do not crop\" to avoid cropping all of the photos."
+msgstr ""
+"ย้ายกล่องไปยังส่วนของภาพที่ต้องการทำการครอบตัด\n"
+"คุณสามารถทำการครอบตัดแยกแต่ละรูปภาพได้ หรือจะคลิกที่ปุ่ม \n"
+"\"ถัดไป\" เพื่อใช้การตั้งค่าการครอบตัดปริยายให้กับรูปภาพแต่ละรูป\n"
+"การเปิดใช้ตัวเลือก \"ไม่ต้องครอบตัด\" จะเป็นการยกเลิกการครอบตัดรูปภาพทั้งหมด"
+
+#. i18n: file: ui/croppage.ui:35
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, m_disableCrop)
+#: rc.cpp:11
+msgid "Do not crop photos, just scale them."
+msgstr "ไม่ต้องครอบตัดรูปภาพใด ๆ ทำเพียงการปรับขยายขนาดเท่านั้น"
+
+#. i18n: file: ui/croppage.ui:38
+#. i18n: ectx: property (text), widget (QCheckBox, m_disableCrop)
+#: rc.cpp:14
+msgid "Do not crop"
+msgstr "ไม่ต้องครอบตัด"
+
+#. i18n: file: ui/croppage.ui:58
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotate)
+#. i18n: file: ui/croppage.ui:61
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotate)
+#: rc.cpp:17 rc.cpp:20
+msgid "Rotate photo"
+msgstr "หมุนภาพ"
+
+#. i18n: file: ui/croppage.ui:64
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropRotate)
+#: rc.cpp:23
+msgid "&Rotate"
+msgstr "ห&มุนภาพ"
+
+#. i18n: file: ui/croppage.ui:87
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropPrev)
+#. i18n: file: ui/croppage.ui:90
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropPrev)
+#. i18n: file: ui/infopage.ui:180
+#. i18n: ectx: property (toolTip), widget (QToolButton, m_preview_left)
+#. i18n: file: ui/infopage.ui:183
+#. i18n: ectx: property (whatsThis), widget (QToolButton, m_preview_left)
+#. i18n: file: ui/photopage.ui:60
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPreviewPageDown)
+#. i18n: file: ui/photopage.ui:63
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPreviewPageDown)
+#: rc.cpp:26 rc.cpp:29 rc.cpp:110 rc.cpp:113 rc.cpp:177 rc.cpp:180
+msgid "Previous photo"
+msgstr "ภาพก่อนหน้า"
+
+#. i18n: file: ui/croppage.ui:93
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropPrev)
+#: rc.cpp:32
+msgid "<< Pr&evious"
+msgstr "<<  &ก่อนหน้า"
+
+#. i18n: file: ui/croppage.ui:100
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropNext)
+#. i18n: file: ui/croppage.ui:103
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropNext)
+#. i18n: file: ui/infopage.ui:221
+#. i18n: ectx: property (toolTip), widget (QToolButton, m_preview_right)
+#. i18n: file: ui/infopage.ui:224
+#. i18n: ectx: property (whatsThis), widget (QToolButton, m_preview_right)
+#: rc.cpp:35 rc.cpp:38 rc.cpp:119 rc.cpp:122
+msgid "Next photo"
+msgstr "ภาพถัดไป"
+
+#. i18n: file: ui/croppage.ui:106
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropNext)
+#: rc.cpp:41
+msgid "Ne&xt >>"
+msgstr "&ถัดไป >>"
+
+#. i18n: file: ui/croppage.ui:135
+#. i18n: ectx: property (text), widget (QLabel, LblCropPhoto)
+#: rc.cpp:44
+msgid "Photo 0 of 0"
+msgstr "ภาพที่ 0 จาก 0 ภาพ"
+
+#. i18n: file: ui/customlayout.ui:26
+#. i18n: ectx: property (windowTitle), widget (QDialog, CustomLayout)
+#: rc.cpp:47
+msgid "Custom layout"
+msgstr "กำหนดการจัดวางเอง"
+
+#. i18n: file: ui/customlayout.ui:48
+#. i18n: ectx: property (text), widget (QRadioButton, m_photoGridCheck)
+#: rc.cpp:50
+msgid "Photo grid"
+msgstr "เส้นกริดของรูปภาพ"
+
+#. i18n: file: ui/customlayout.ui:73
+#. i18n: ectx: property (text), widget (QRadioButton, m_fitAsManyCheck)
+#: rc.cpp:53
+msgid "Fit as many as possible"
+msgstr "ปรับให้พอดีเท่าที่จะทำได้"
+
+#. i18n: file: ui/customlayout.ui:95
+#. i18n: ectx: property (text), widget (QRadioButton, m_photosXPageCheck)
+#: rc.cpp:56
+msgid "Photos per page"
+msgstr "จำนวนภาพต่อหนึ่งหน้า"
+
+#. i18n: file: ui/customlayout.ui:122
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:59
+msgid "Rows"
+msgstr "แถว"
+
+#. i18n: file: ui/customlayout.ui:164
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:62
+msgid "Columns"
+msgstr "คอลัมน์"
+
+#. i18n: file: ui/customlayout.ui:227
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:65
+msgid "Photo size"
+msgstr "ขนาดของภาพ"
+
+#. i18n: file: ui/customlayout.ui:267
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#. i18n: file: ui/printoptionspage.ui:439
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:68 rc.cpp:294
+msgid "x"
+msgstr "x"
+
+#. i18n: file: ui/customlayout.ui:314
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: rc.cpp:74
+msgid "mm"
+msgstr "ม.ม."
+
+#. i18n: file: ui/customlayout.ui:433
+#. i18n: ectx: property (text), widget (QCheckBox, m_autorotate)
+#. i18n: file: ui/printoptionspage.ui:73
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintAutoRotate)
+#: rc.cpp:80 rc.cpp:246
+msgid "Auto rotate"
+msgstr "หมุนภาพอัตโนมัติ"
+
+#. i18n: file: ui/customlayout.ui:453
+#. i18n: ectx: property (text), widget (QPushButton, m_doneButton)
+#: rc.cpp:83
+msgid "Done"
+msgstr "เสร็จแล้ว"
+
+#. i18n: file: ui/infopage.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, m_pagesetup)
+#: rc.cpp:98
+msgid "Page settings"
+msgstr "ตั้งค่าหน้ากระดาษ"
+
+#. i18n: file: ui/infopage.ui:90
+#. i18n: ectx: property (text), widget (QLabel, m_preview)
+#: rc.cpp:101
+msgid "1"
+msgstr "1"
+
+#. i18n: file: ui/infopage.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, m_increase_copies)
+#: rc.cpp:104
+msgid "+"
+msgstr "+"
+
+#. i18n: file: ui/infopage.ui:148
+#. i18n: ectx: property (text), widget (QPushButton, m_decrease_copies)
+#: rc.cpp:107
+msgid "-"
+msgstr "-"
+
+#. i18n: file: ui/infopage.ui:186
+#. i18n: ectx: property (text), widget (QToolButton, m_preview_left)
+#. i18n: file: ui/photopage.ui:66
+#. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageDown)
+#. i18n: file: ui/printoptionspage.ui:57
+#. i18n: ectx: property (text), widget (QPushButton, mLeftButton)
+#: rc.cpp:116 rc.cpp:183 rc.cpp:240
+msgid "<"
+msgstr "<"
+
+#. i18n: file: ui/infopage.ui:227
+#. i18n: ectx: property (text), widget (QToolButton, m_preview_right)
+#. i18n: file: ui/photopage.ui:95
+#. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageUp)
+#. i18n: file: ui/printoptionspage.ui:64
+#. i18n: ectx: property (text), widget (QPushButton, mRightButton)
+#: rc.cpp:125 rc.cpp:195 rc.cpp:243
+msgid ">"
+msgstr ">"
+
+#. i18n: file: ui/infopage.ui:273
+#. i18n: ectx: property (text), widget (QTableWidget, m_PictureInfo)
+#: rc.cpp:128
+msgid "Filename"
+msgstr "ชื่อแฟ้ม"
+
+#. i18n: file: ui/infopage.ui:278
+#. i18n: ectx: property (text), widget (QTableWidget, m_PictureInfo)
+#: rc.cpp:131
+msgid "Copies"
+msgstr "จำนวนสำเนา"
+
+#. i18n: file: ui/infopage.ui:297
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:134
+msgid "Captions:"
+msgstr "คำบรรยายภาพ:"
+
+#. i18n: file: ui/infopage.ui:313
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: rc.cpp:140
+msgid "Image file names"
+msgstr "ชื่อของแฟ้มภาพ"
+
+#. i18n: file: ui/infopage.ui:318
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: rc.cpp:143
+msgid "Exif date-time"
+msgstr "วัน-เวลาจาก Exif"
+
+#. i18n: file: ui/infopage.ui:323
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: rc.cpp:146
+msgid "Comments"
+msgstr "ความคิดเห็น"
+
+#. i18n: file: ui/infopage.ui:356
+#. i18n: ectx: property (text), widget (QLabel, m_free_label)
+#: rc.cpp:153
+#, no-c-format
+msgid ""
+"%f  filename, %t exposure time, %c comment, %i ISO, %d date-time, %r "
+"resolution, %a aperture, %l focal length, \\n newline"
+msgstr ""
+"%f  ชื่อแฟ้ม, %t ความเร็วชัตเตอร์, %c คำอธิบาย , %i ค่า ISO, %d วัน-เวลา,  %r "
+"ความละเอียด, %a ค่ารูรับแสง, %l ทางยาวโฟกัส, \\n ขึ้นบรรทัดใหม่"
+
+#. i18n: file: ui/infopage.ui:372
+#. i18n: ectx: property (text), widget (QCheckBox, m_sameCaption)
+#: rc.cpp:156
+msgid "same to all"
+msgstr "เหมือนกันทั้งหมด"
+
+#. i18n: file: ui/infopage.ui:382
+#. i18n: ectx: property (text), widget (QPushButton, m_setDefault)
+#. i18n: file: ui/printoptionspage.ui:348
+#. i18n: ectx: property (text), widget (QPushButton, mSaveSettings)
+#: rc.cpp:159 rc.cpp:285
+msgid "Use as default"
+msgstr "ใช้เป็นค่าปริยาย"
+
+#. i18n: file: ui/infopage.ui:395
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:162
+msgid "Family:"
+msgstr "ตระกูล:"
+
+#. i18n: file: ui/infopage.ui:412
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:165
+msgid "Color:"
+msgstr "สี:"
+
+#. i18n: file: ui/infopage.ui:422
+#. i18n: ectx: property (text), widget (KColorButton, m_font_color)
+#: rc.cpp:168
+msgid "PushButton"
+msgstr "ปุ่มกด"
+
+#. i18n: file: ui/infopage.ui:439
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: rc.cpp:171
+msgid "Size:"
+msgstr "ขนาด:"
+
+#. i18n: file: ui/photopage.ui:17
+#. i18n: ectx: property (text), widget (QLabel, TextLabel2_10)
+#: rc.cpp:174
+msgid "Layouts:"
+msgstr "การจัดวาง:"
+
+#. i18n: file: ui/photopage.ui:76
+#. i18n: ectx: property (text), widget (QLabel, LblPreview)
+#: rc.cpp:186
+msgid "Preview"
+msgstr "แสดงตัวอย่าง"
+
+#. i18n: file: ui/photopage.ui:89
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPreviewPageUp)
+#. i18n: file: ui/photopage.ui:92
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPreviewPageUp)
+#: rc.cpp:189 rc.cpp:192
+msgid "Next page"
+msgstr "หน้าถัดไป"
+
+#. i18n: file: ui/photopage.ui:157
+#. i18n: ectx: property (text), widget (QLabel, TextLabel4_2)
+#: rc.cpp:198
+msgid "Photos:"
+msgstr "จำนวนภาพ:"
+
+#. i18n: file: ui/photopage.ui:164
+#. i18n: ectx: property (text), widget (QLabel, LblPhotoCount)
+#. i18n: file: ui/photopage.ui:194
+#. i18n: ectx: property (text), widget (QLabel, LblSheetsPrinted)
+#. i18n: file: ui/photopage.ui:224
+#. i18n: ectx: property (text), widget (QLabel, LblEmptySlots)
+#: rc.cpp:201 rc.cpp:207 rc.cpp:213
+msgid "<p align=\"right\">0</p>"
+msgstr "<p align=\"right\">0</p>"
+
+#. i18n: file: ui/photopage.ui:187
+#. i18n: ectx: property (text), widget (QLabel, TextLabel4)
+#: rc.cpp:204
+msgid "Sheets:"
+msgstr "จำนวนหน้า:"
+
+#. i18n: file: ui/photopage.ui:217
+#. i18n: ectx: property (text), widget (QLabel, TextLabel6)
+#: rc.cpp:210
+msgid "Empty slots:"
+msgstr "จำนวนช่องว่างที่เหลือ:"
+
+#. i18n: file: ui/photopage.ui:262
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:216
+msgid "Print order:"
+msgstr "ลำดับการพิมพ์:"
+
+#. i18n: file: ui/photopage.ui:312
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPrintOrderUp)
+#. i18n: file: ui/photopage.ui:315
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPrintOrderUp)
+#: rc.cpp:219 rc.cpp:222
+msgid "Move selected photo Up"
+msgstr "ย้ายภาพที่เลือกไว้ขึ้นไปด้านบน"
+
+#. i18n: file: ui/photopage.ui:318
+#. i18n: ectx: property (text), widget (QToolButton, BtnPrintOrderUp)
+#: rc.cpp:225
+msgctxt "Move Up"
+msgid "Up"
+msgstr "ย้ายขึ้น"
+
+#. i18n: file: ui/photopage.ui:331
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPrintOrderDown)
+#. i18n: file: ui/photopage.ui:334
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPrintOrderDown)
+#: rc.cpp:228 rc.cpp:231
+msgid "Move selected photo Down"
+msgstr "ย้ายภาพที่เลือกไว้ลงไปด้านล่าง"
+
+#. i18n: file: ui/photopage.ui:337
+#. i18n: ectx: property (text), widget (QToolButton, BtnPrintOrderDown)
+#: rc.cpp:234
+msgid "Down"
+msgstr "ย้ายลง"
+
+#. i18n: file: ui/printoptionspage.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, PrintOptionsPage)
+#: rc.cpp:237
+msgid "Image Settings"
+msgstr "ตั้งค่าต่าง ๆ ของภาพ"
+
+#. i18n: file: ui/printoptionspage.ui:83
+#. i18n: ectx: property (title), widget (QGroupBox, mGroupImage)
+#: rc.cpp:249
+msgid "Position"
+msgstr "ตำแหน่ง"
+
+#. i18n: file: ui/printoptionspage.ui:108
+#. i18n: ectx: property (title), widget (QGroupBox, mGroupScaling)
+#: rc.cpp:252
+msgid "Scaling"
+msgstr "การปรับขยายขนาด"
+
+#. i18n: file: ui/printoptionspage.ui:114
+#. i18n: ectx: property (text), widget (QRadioButton, mNoScale)
+#: rc.cpp:255
+msgid "&No scaling"
+msgstr "ไ&ม่มีการปรับขยายขนาด"
+
+#. i18n: file: ui/printoptionspage.ui:124
+#. i18n: ectx: property (text), widget (QRadioButton, mScaleToPage)
+#: rc.cpp:258
+msgid "&Fit image to page"
+msgstr "ปรับ&ขยายภาพให้พอดีกับหน้ากระดาษ"
+
+#. i18n: file: ui/printoptionspage.ui:155
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintEnlargeSmallerImages)
+#: rc.cpp:261
+msgid "Enlarge smaller images"
+msgstr "ปรับขยายขนาดภาพที่เล็กกว่าพื้นที่พิมพ์"
+
+#. i18n: file: ui/printoptionspage.ui:180
+#. i18n: ectx: property (text), widget (QRadioButton, mScaleTo)
+#: rc.cpp:264
+msgid "&Scale to:"
+msgstr "ปรับข&ยายเป็น:"
+
+#. i18n: file: ui/printoptionspage.ui:219
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:267
+msgctxt "Dimension separator, as in: '15 x 10 centimeters'"
+msgid "x"
+msgstr "x"
+
+#. i18n: file: ui/printoptionspage.ui:246
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_PrintUnit)
+#: rc.cpp:270
+msgid "Millimeters"
+msgstr "มิลลิเมตร"
+
+#. i18n: file: ui/printoptionspage.ui:251
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_PrintUnit)
+#: rc.cpp:273
+msgid "Centimeters"
+msgstr "เซนติเมตร"
+
+#. i18n: file: ui/printoptionspage.ui:256
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_PrintUnit)
+#: rc.cpp:276
+msgid "Inches"
+msgstr "นิ้ว"
+
+#. i18n: file: ui/printoptionspage.ui:300
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintKeepRatio)
+#: rc.cpp:279
+msgid "Keep ratio"
+msgstr "รักษาสัดส่วนภาพ"
+
+#. i18n: file: ui/printoptionspage.ui:345
+#. i18n: ectx: property (toolTip), widget (QPushButton, mSaveSettings)
+#: rc.cpp:282
+msgid "Use these scaling options as default. "
+msgstr "ใช้คุณสมบัติการปรับขยายภาพต่อไปนี้ให้เป็นค่าปริยาย "
+
+#. i18n: file: ui/printoptionspage.ui:366
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:288
+msgid "Photos per page:"
+msgstr "จำนวนภาพต่อหนึ่งหน้า:"
+
+#. i18n: file: ui/printoptionspage.ui:376
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:291
+msgid "Multiple pages:"
+msgstr "หลายหน้า:"

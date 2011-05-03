@@ -1,0 +1,250 @@
+# Translation of kipiplugin_shwup to Norwegian Bokmål
+#
+# Bjørn Steensrud <bjornst@skogkatt.homelinux.org>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-13 03:18+0100\n"
+"PO-Revision-Date: 2009-12-28 22:12+0100\n"
+"Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
+"Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin_shwup.cpp:74
+msgid "Export to Shwup..."
+msgstr "Eksporter til Shwup …"
+
+#: swalbum.cpp:49
+msgid "Shwup New Album"
+msgstr "Shwup nytt album"
+
+#: swalbum.cpp:62
+msgid "Title of the album that will be created (required)."
+msgstr "Det nye albumets tittel (påkrevet)."
+
+#: swalbum.cpp:65
+msgctxt "album edit"
+msgid "Title:"
+msgstr "Tittel:"
+
+#: swlogin.cpp:48
+msgid "Shwup Login"
+msgstr "Shwup login"
+
+#: swlogin.cpp:60
+msgid "Email of shwup account (required)."
+msgstr "E-post for shwup-kontoen (påkrevet)."
+
+#: swlogin.cpp:64
+msgid "Password of shwup account (required)."
+msgstr "Passord for shwup-konto (påkrevet)."
+
+#: swlogin.cpp:67
+msgctxt "login settings"
+msgid "Email:"
+msgstr "E-post:"
+
+#: swlogin.cpp:68
+msgctxt "login settings"
+msgid "Password:"
+msgstr "Passord:"
+
+#: swwidget.cpp:71
+msgid "This is the list of images to upload to your Shwup account."
+msgstr "Dette er lista over bilder som skal lastes opp til Shwupkontoen din."
+
+#: swwidget.cpp:77
+msgid ""
+"This is a clickable link to open the Shwup.com home page in a web browser."
+msgstr ""
+"Dette er en klikkbar lenke for å åpne nettsida Shwup.com i en nettleser."
+
+#: swwidget.cpp:83
+msgid "Account"
+msgstr "Konto"
+
+#: swwidget.cpp:84
+msgid "This is the Shwup account that is currently logged in."
+msgstr "Dette er Shwup-kontoen som nå er logget inn."
+
+#: swwidget.cpp:87
+msgctxt "account settings"
+msgid "Name:"
+msgstr "Navn:"
+
+#: swwidget.cpp:90
+msgid "Change Account"
+msgstr "Endre konto"
+
+#: swwidget.cpp:91
+msgid "Change Shwup Account used for transfer"
+msgstr "Endre Shwup-konto brukt for overføring"
+
+#: swwidget.cpp:102 swwidget.cpp:122
+msgid "Destination"
+msgstr "Mål"
+
+#: swwidget.cpp:103
+msgid "This is the Shwup album to which selected photos will be uploaded."
+msgstr "Dette er Shwup-albumet som utvalgte bilder blir lastet opp til."
+
+#: swwidget.cpp:106
+msgid "Album:"
+msgstr "Album:"
+
+#: swwidget.cpp:110
+msgid "New Album"
+msgstr "New Album"
+
+#: swwidget.cpp:111
+msgid "Create new Shwup album"
+msgstr "Lag nytt Shwup-album"
+
+#: swwidget.cpp:112
+msgctxt "album list"
+msgid "Reload"
+msgstr "Last inn på nytt"
+
+#: swwidget.cpp:113
+msgid "Reload album list"
+msgstr "Last inn albumliste på nytt"
+
+#: swwidget.cpp:123
+msgid "This is the location to which Shwup images will be downloaded."
+msgstr "Shwup-bilder blir lastet ned hit."
+
+#: swwidget.cpp:130
+msgid "Options"
+msgstr "Valg"
+
+#: swwidget.cpp:131
+msgid "These are options that will be applied to photos before upload."
+msgstr "Disse innstillingene brukes på bildene før opplasting."
+
+#: swwidget.cpp:135
+msgid "Resize photos before uploading"
+msgstr "Endre bildestørrelsen før opplasting"
+
+#: swwidget.cpp:145
+msgid "Maximum dimension:"
+msgstr "Maksimal størrelse:"
+
+#: swwidget.cpp:153
+msgid "JPEG quality:"
+msgstr "JPEG-kvalitet:"
+
+#: swwindow.cpp:93
+msgid "Export to Shwup Web Service"
+msgstr "Eksporter til  Shwup vevtjeneste"
+
+#: swwindow.cpp:94
+msgid "Start Upload"
+msgstr "Begynn opplastingen"
+
+#: swwindow.cpp:95
+msgid "Start upload to Shwup web service"
+msgstr "Start opplasting til Shwup vevtjeneste"
+
+#: swwindow.cpp:118
+msgid "Shwup Export"
+msgstr "Shwup-eksport"
+
+#: swwindow.cpp:120
+msgid "A Kipi plugin to export images to Shwup web service."
+msgstr "Et Kipi programtillegg for å eksportere bilder til Shwup vevtjeneste."
+
+#: swwindow.cpp:122
+msgid "(c) 2009, Timothée Groleau"
+msgstr "© 2009 Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Timothée Groleau"
+msgstr "Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Author and maintainer"
+msgstr "Forfatter og vedlikeholder"
+
+#: swwindow.cpp:132
+msgid "Handbook"
+msgstr "Håndbok"
+
+#: swwindow.cpp:277
+msgid ""
+"The shwup.com service does not seem to be available at this time, please try "
+"again later."
+msgstr ""
+"Det ser ut til at shwup.com-tjenesten ikke er tilgjengelig nå, forsøk igjen "
+"senere."
+
+#: swwindow.cpp:307
+msgid "This application has been blacklisted by the shwup.com service."
+msgstr "Dette programmet er svartelistet av shwup.com-tjenesten."
+
+#: swwindow.cpp:319
+#, kde-format
+msgid "Shwup Call Failed: %1\n"
+msgstr "Shwup-kall mislyktes: %1\n"
+
+#: swwindow.cpp:420
+msgid "Transfer Progress"
+msgstr "Overføringsframdrift"
+
+#: swwindow.cpp:425
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: swwindow.cpp:532
+#, kde-format
+msgid ""
+"Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online "
+"and invite people."
+msgstr ""
+"Opplasting fullført. Besøk \"<a href=\"%1\">%2</a>\" for å se albumet på "
+"nett og invitere folk."
+
+#: swwindow.cpp:535
+msgid "Upload complete"
+msgstr "Opplasting fullført"
+
+#: swwindow.cpp:559 swwindow.cpp:578
+msgid "Cannot open file"
+msgstr "Klarte ikke å åpne fil"
+
+#: swwindow.cpp:582
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Laster opp fil %1"
+
+#: swwindow.cpp:606
+#, kde-format
+msgid ""
+"Failed to upload photo into Shwup: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Klarte ikke å laste opp fotoet til Shwup: %1 \n"
+"Vil du fortsette?"
+
+#: swwindow.cpp:630
+#, kde-format
+msgid "Shwup Call Failed: %1"
+msgstr "Shwup-kall mislyktes: %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Bjørn Steensrud"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bjornst@skogkatt.homelinux.org"

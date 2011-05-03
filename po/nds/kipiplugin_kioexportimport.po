@@ -1,0 +1,155 @@
+# translation of kipiplugin_kioexportimport.po to Low Saxon
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Manfred Wiese <m.j.wiese@web.de>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2009-10-28 07:24+0100\n"
+"Last-Translator: Manfred Wiese <m.j.wiese@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "Na feern Reekner exporteren"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "Exporteren starten"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "Exporteren na de angeven Teeladress starten"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "Na feern Reekner exporteren"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr ""
+"En KIPI-Moduul för't Exporteren vun Biller över't Nettwark mit dat In-/"
+"Utgaavmoduul."
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "© 2009: Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "Autor un Pleger"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "Handbook"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"De List bargt noch en Reeg vun Biller, de nich överdragen wöörn. Du kannst "
+"man nochmaal versöken, wat sik disse Biller nu exporteren laat."
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "Hoochladen nich afslaten"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr ""
+"Dit is de List vun Biller, de Du na dat aktuelle Album importeren wullt."
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "Vun feern Reekner importeren"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "Importeren starten"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr "De utsöchten Biller nu na dat opstunns utsöchte Album importeren."
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "Vun feern Reekner importeren"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr ""
+"En KIPI-Moduul för't Importeren vun Biller över't Nettwark mit dat In-/"
+"Utgaavmoduul."
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"De List bargt noch en Reeg vun Biller, de noch överdragen wöörn. Du kannst "
+"man nochmaal versöken, wat sik disse Biller nu importeren laat."
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "Importeren nich afslaten"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "Na feern Reekner exporteren.."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "Vun feern Reekner importeren..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "Teeladress: "
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Leggt de Teeladress fast, na de de Biller hoochlaadt warrt. Dit kann "
+"jichtenseen Adress wesen, de sik mit Dolphin oder Konqueror bruken lett, a."
+"B. ftp://mien.server.de/uenner/orner."
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "Teel utsöken..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "Teeladress utsöken..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr ""
+"Dit is de List vun Biller, de Du na de angeven Adress hoochladen wullt."
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "Keen utsöcht"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Manfred Wiese"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "m.j.wiese@web.de"

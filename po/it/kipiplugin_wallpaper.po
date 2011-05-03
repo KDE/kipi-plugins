@@ -1,0 +1,72 @@
+# translation of kipiplugin_wallpaper.po to Italian
+# Federico Zenith <federico.zenith@member.fsf.org>, 2004, 2005, 2008, 2009.
+# Federico Zenith <zenith@chemeng.ntnu.no>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2009-04-13 17:46+0200\n"
+"Last-Translator: Federico Zenith <federico.zenith@member.fsf.org>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "Imposta come &sfondo"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Centrata"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Centrata e ripetuta"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Centrata e massimizzata"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Massimizzata e ripetuta"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Riscalata"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Centrata autoadattante"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Riscala e taglia"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Hai selezionato un'immagine remota. Deve essere salvata sul disco locale "
+"per essere usata come sfondo.</p><p>Ti sarà ora chiesto dove salvare "
+"l'immagine.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Cambia sfondo"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "Impossibile cambiare lo sfondo."
+
+#~ msgid "We can not change background."
+#~ msgstr "Non possiamo cambiare lo sfondo."
+
+#~ msgid "Tiled"
+#~ msgstr "Ripetuta"

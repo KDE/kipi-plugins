@@ -1,0 +1,80 @@
+# translation of kipiplugin_wallpaper.po to
+# Igor Klimer <kigro@vp.pl>, 2004, 2005, 2007.
+# Mikołaj Machowski <mikmach@wp.pl>, 2009.
+# translation of kipiplugin_wallpaper.po to Polish
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2007-07-25 23:19+0200\n"
+"Last-Translator: Mikołaj Machowski <mikmach@wp.pl>\n"
+"Language-Team: Polish <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "U&staw jako tło"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Wyśrodkowane"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Wyśrodkowane sąsiadująco"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Wyśrodkowane z zachowaniem proporcji"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Sąsiadująco z zachowaniem proporcji"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Rozciągnij"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Wyśrodkowane i automatycznie dopasowane"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Przeskaluj i obetnij"
+
+#: plugin_wallpaper.cpp:195
+#, fuzzy
+#| msgid ""
+#| "<qt><p>You selected a remote image. It needs to be saved to your local "
+#| "disk to be used as a wallpaper.</p><p>You will now be asked where to save "
+#| "the image.</p></qt>"
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Wybrano plik nie znajdujący się na dysku twardym komputera. Obraz ten "
+"musi zostać zapisany na dysk lokalny komputera, aby można go było użyć jako "
+"tapety.</p><p>Zostanie zaraz wyświetlone okno umożliwiające wybór miejsca "
+"zapisania pliku.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Zmień tło"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr ""
+
+#~ msgid "We can not change background."
+#~ msgstr "Nie można zmienić tła."
+
+#~ msgid "Tiled"
+#~ msgstr "Sąsiadująco"

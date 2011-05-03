@@ -1,0 +1,247 @@
+# translation of kipiplugin_timeadjust.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008, 2009, 2010.
+# Auk Piseth <piseth_dv@khmeros.info>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_timeadjust\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-01-25 03:02+0100\n"
+"PO-Revision-Date: 2010-06-23 16:49+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: clockphotodialog.cpp:169
+msgid "Determine time difference with clock photo"
+msgstr "កំណត់​ពេល​វេលា​ខុស​គ្នា​ជា​មួយ​នឹងរូប​​នាឡិកា​"
+
+#: clockphotodialog.cpp:171
+msgid "Load different photo"
+msgstr "ផ្ទុក​រូប​ថត​ផ្សេង​ៗ​គ្នា"
+
+#: clockphotodialog.cpp:181
+msgid ""
+"If you have a photo in your set with a clock or another external time source "
+"on it, you can load it here and set the indicator to the (date and) time "
+"displayed. The difference of your internal camera clock will be determined "
+"from this setting."
+msgstr ""
+"បើ​អ្នក​មាន​រូប​ថត​នៅ​ក្នុង​សំណុំ​របស់​អ្នក​ដោយ​មាន​នាឡិកា ឬ​ប្រភព​ពេលវេលា​ខាង​ក្រៅ​ផ្សេង​ទៀត​នៅ​លើ​វា​ អ្នក​អាច​"
+"ផ្ទុក​វា​នៅ​ទីនេះ​ និង​​កំណត់​ទ្រនិច​បង្ហាញ​ទៅ​ជា​ពេល​វេលា(និង​ កាលបរិច្ឆេទ​) ​ដែល​ត្រូវ​បង្ហាញ​បាន ។ ភាព​ខុស​គ្នា​"
+"នៃ​នាឡិកា​របស់​ម៉ាស៊ីន​ថត​ខាង​ក្រៅ​នឹង​ត្រូវ​បាន​កំណត់​មក​ពី​ការកំណត់​នេះ ។"
+
+#: clockphotodialog.cpp:210
+msgid "Scale:"
+msgstr "មាត្រដ្ឋាន ៖"
+
+#: clockphotodialog.cpp:230
+msgid "The clock date and time:"
+msgstr "ពេលវេលា និង​កាលបរិច្ឆេទ​របស់​នាឡិកា ៖"
+
+#: clockphotodialog.cpp:321
+#, kde-format
+msgid ""
+"<font color=\"red\"><b>Could not obtain date and time information from image "
+"%1.</b></font>"
+msgstr ""
+"<font color=\"red\"><b>មិន​អាចទទួល​យក​ព័ត៌មាន​ពេល​វេលា​ និង​កាល​បរិច្ឆេទ​ពី​រូបភាព​ %1 បាន​ទេ ។</"
+"b></font>"
+
+#: clockphotodialog.cpp:333
+#, kde-format
+msgid "<font color=\"red\"><b>Could not load image %1.</b></font>"
+msgstr "<font color=\"red\"><b>មិន​អាច​ផ្ទុក​រូបភាព​ %1 ។</b></font>"
+
+#: plugin_timeadjust.cpp:65
+msgid "Adjust Time && Date..."
+msgstr "លៃតម្រូវ​ពេលវេលា និង​កាលបរិច្ឆេទ..."
+
+#: timeadjustdialog.cpp:183 timeadjustdialog.cpp:921 timeadjustdialog.cpp:930
+msgid "Adjust Time & Date"
+msgstr "លៃតម្រូវ​ពេលវេលា និង​កាលបរិច្ឆេទ"
+
+#: timeadjustdialog.cpp:191
+msgid "Time Adjust"
+msgstr "កា​រលៃតម្រូវ​ពេលវេលា"
+
+#: timeadjustdialog.cpp:194
+msgid "A Kipi plugin for adjusting the timestamp of picture files"
+msgstr "កម្មវិធី​ជំនួយ Kipi សម្រាប់​លៃតម្រូវ​ត្រា​ពេលវេលា​របស់​ឯកសារ​​រូបភាព"
+
+#: timeadjustdialog.cpp:195
+msgid ""
+"(c) 2003-2005, Jesper K. Pedersen\n"
+"(c) 2006-2009, Gilles Caulier"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៣-២០០៥ ដោយ Jesper K. Pedersen\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៦-២០០៩ ដោយ Gilles Caulier"
+
+#: timeadjustdialog.cpp:198
+msgid "Jesper K. Pedersen"
+msgstr "Jesper K. Pedersen"
+
+#: timeadjustdialog.cpp:199
+msgid "Author"
+msgstr "អ្នក​និពន្ធ"
+
+#: timeadjustdialog.cpp:202
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: timeadjustdialog.cpp:203
+msgid "Developer and maintainer"
+msgstr "អ្នក​អភិវឌ្ឍ និង​អ្នក​ថែទាំ"
+
+#: timeadjustdialog.cpp:211
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ"
+
+#: timeadjustdialog.cpp:219
+msgid "Use Time && Date"
+msgstr "ប្រើ​ពេលវេលា​ និង​កាល​បរិច្ឆេទ"
+
+#: timeadjustdialog.cpp:225
+#, kde-format
+msgid "%1 timestamp"
+msgstr "ត្រា​ពេលវេលា %1 "
+
+#: timeadjustdialog.cpp:233 timeadjustdialog.cpp:310
+msgid "File last modified"
+msgstr "ឯកសារ​ដែល​បាន​កែ​ប្រែ​​ចុង​ក្រោយ​"
+
+#: timeadjustdialog.cpp:237
+msgid "EXIF/IPTC/XMP"
+msgstr "EXIF/IPTC/XMP"
+
+#: timeadjustdialog.cpp:238 timeadjustdialog.cpp:311
+msgid "EXIF: created"
+msgstr "EXIF ៖​បាន​បង្កើត"
+
+#: timeadjustdialog.cpp:239 timeadjustdialog.cpp:312
+msgid "EXIF: original"
+msgstr "EXIF ៖​ដើម"
+
+#: timeadjustdialog.cpp:240 timeadjustdialog.cpp:313
+msgid "EXIF: digitized"
+msgstr "EXIF ៖​ធ្វើ​ឲ្យ​ទៅ​ជា​ឌីជីថល"
+
+#: timeadjustdialog.cpp:241 timeadjustdialog.cpp:314
+msgid "IPTC: created"
+msgstr "IPTC ៖​បាន​បង្កើត"
+
+#: timeadjustdialog.cpp:242
+msgid "XMP: created"
+msgstr "XMP ៖​បាន​បង្កើត"
+
+#: timeadjustdialog.cpp:252
+msgid "Reset to current date"
+msgstr "កំណត់​​ទៅ​កាលបរិច្ឆេទ​បច្ចុប្បន្ន​ឡើង​វិញ"
+
+#: timeadjustdialog.cpp:278
+msgid "Adjust"
+msgstr "លៃ​តម្រូវ"
+
+#: timeadjustdialog.cpp:282
+msgid "Copy value"
+msgstr "ចម្លង​តម្លៃ"
+
+#: timeadjustdialog.cpp:283
+msgid "Add"
+msgstr "បន្ថែម"
+
+#: timeadjustdialog.cpp:284
+msgid "Subtract"
+msgstr "ដក"
+
+#: timeadjustdialog.cpp:288
+msgctxt "time adjust offset, days value label"
+msgid "days"
+msgstr "ថ្ងៃ ៖"
+
+#: timeadjustdialog.cpp:291
+msgid "Determine from clock photo"
+msgstr "កំណត់​ពី​រូប​នាឡិកា"
+
+#: timeadjustdialog.cpp:306
+msgid "Update Time && Date"
+msgstr "ធ្វើ​បច្ចុប្បន្នភាព​​ពេលវេលា និង​កាល​បរិច្ឆេទ​"
+
+#: timeadjustdialog.cpp:315
+msgid "XMP"
+msgstr "XMP"
+
+#: timeadjustdialog.cpp:337
+msgid "Example"
+msgstr "ឧទាហរណ៍"
+
+#: timeadjustdialog.cpp:515 timeadjustdialog.cpp:546 timeadjustdialog.cpp:572
+#: timeadjustdialog.cpp:632
+#, kde-format
+msgid "1 image will be changed"
+msgid_plural "%1 images will be changed"
+msgstr[0] "រូបភាព %1 នឹង​ត្រូវ​បាន​ផ្លាស់ប្ដូរ"
+
+#: timeadjustdialog.cpp:552 timeadjustdialog.cpp:638
+#, kde-format
+msgid "1 image will be changed; "
+msgid_plural "%1 images will be changed; "
+msgstr[0] "រូបភាព %1 នឹង​ត្រូ​វបាន​ផ្លាស់ប្ដូរ"
+
+#: timeadjustdialog.cpp:556
+#, kde-format
+msgid "1 image will be skipped due to an inexact date."
+msgid_plural "%1 images will be skipped due to inexact dates."
+msgstr[0] "រូបភាព %1 នឹង​ត្រូវ​បាន​រំលង​ដោយ​សារ​តែ​កាលបរិច្ឆេទ​មិន​ច្បាស់លាស់ ។"
+
+#: timeadjustdialog.cpp:642
+#, kde-format
+msgid "1 image will be skipped due to a missing source timestamp."
+msgid_plural "%1 images will be skipped due to missing source timestamps."
+msgstr[0] "រូប​ភាព​ %1 នឹង​ត្រូវ​​រំលង​ ដោយ​សារ​តែ​បាត់​ត្រាពេល​វេលា​របស់​ប្រភព ។"
+
+#: timeadjustdialog.cpp:739
+#, kde-format
+msgid "Custom: <b>%1</b>"
+msgstr "ផ្ទាល់​ខ្លួន ៖ <b>%1</b>"
+
+#: timeadjustdialog.cpp:755
+msgid "Original: <b>N/A</b><br/>Image will be skipped"
+msgstr "ដើម​ ៖ រូបភាព <b>ដែល​​គ្មាន​</b><br/>នឹង​ត្រូវរំលង"
+
+#: timeadjustdialog.cpp:764
+#, kde-format
+msgid "Original: <b>%1</b>"
+msgstr "ដើម ៖ <b>%1</b>"
+
+#: timeadjustdialog.cpp:771
+#, kde-format
+msgid "Original: <b>%1</b><br/>Adjusted: <b>%2</b>"
+msgstr "ដើម ៖ <b>%1</b><br/>​លៃ​តម្រូវ ៖ <b>%2</b>"
+
+#: timeadjustdialog.cpp:919
+msgid "Unable to update metadata in:"
+msgstr "មិន​អាច​ធ្វើ​បច្ចុប្បន្នភាព​​ទិន្នន័យ​មេតា​​​នៅ​ក្នុង​ ៖"
+
+#: timeadjustdialog.cpp:928
+msgid "Unable to update file modification time in:"
+msgstr "មិន​អាច​ធ្វើ​បច្ចុប្បន្នភាព​​ពេល​វេលា​កែប្រែ​ឯកសារ​​នៅ​ក្នុង​ ៖"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info, \n"
+"evannak@khmeros.info,piseth_dv@khmeros.info"

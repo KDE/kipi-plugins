@@ -1,0 +1,155 @@
+# Translation of kipiplugin_kioexportimport.po to Catalan
+# Copyright (C) 2010 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2 or later.
+#
+# Josep Ma. Ferrer <txemaq@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2010-04-02 17:58+0200\n"
+"Last-Translator: Josep Ma. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "Exportació a un ordinador remot"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "Inicia l'exportació"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "Inicia l'exportació al destí especificat"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "Exporta a un ordinador remot"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr ""
+"Un connector Kipi per exportar imatges per xarxa utilitzant l'esclau KIO"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "Desenvolupador i mantenidor"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "Manual"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Algunes de les imatges no s'han transferit i encara són a la llista. Ara "
+"podeu tornar a intentar exportar aquestes imatges."
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "No s'ha completat la pujada"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr "Aquesta és la llista d'imatges a importar a l'àlbum actual."
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "Importa des d'un ordinador remot"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "Inicia la importació"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr ""
+"Inicia la importació de les imatges especificades en al àlbum actualment "
+"seleccionat."
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "Importa des de l'ordinador remot"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr ""
+"Un connector Kipi per importar imatges per xarxa utilitzant l'esclau KIO"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Algunes de les imatges no s'han transferit i encara són a la llista. Ara "
+"podeu tornar a intentar importar aquestes imatges."
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "No s'ha completat la importació"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "Exporta a l'ordinador remot..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "Importa des de l'ordinador remot..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "Ubicació del destí: "
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Indica l'adreça del destí a on pujar les imatges. Pot ser una adreça "
+"utilitzada en el Dolphin o el Konqueror, p.ex. ftp://elmeu.servidor.org/sub/"
+"carpeta."
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "Seleccioneu el destí..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "Seleccioneu la ubicació del destí..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr "Aquesta és la llista d'imatges a pujar al destí especificat."
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "no seleccionat"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Josep Ma. Ferrer"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "txemaq@gmail.com"

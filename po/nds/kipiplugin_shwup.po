@@ -1,0 +1,246 @@
+# translation of kipiplugin_shwup.po to Low Saxon
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Manfred Wiese <m.j.wiese@web.de>, 2009, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_shwup\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-02-08 06:52+0100\n"
+"Last-Translator: Manfred Wiese <m.j.wiese@web.de>\n"
+"Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: swalbum.cpp:49
+msgid "Shwup New Album"
+msgstr "Nieg Shwup-Album"
+
+#: swalbum.cpp:62
+msgid "Title of the album that will be created (required)."
+msgstr "De Titel vun't Album, dat Du opstellen wullt (deit noot)."
+
+#: swalbum.cpp:65
+msgctxt "album edit"
+msgid "Title:"
+msgstr "Titel:"
+
+#: swlogin.cpp:48
+msgid "Shwup Login"
+msgstr "Shwup-Brukernaam"
+
+#: swlogin.cpp:60
+msgid "Email of shwup account (required)."
+msgstr ""
+
+#: swlogin.cpp:64
+msgid "Password of shwup account (required)."
+msgstr ""
+
+#: swlogin.cpp:67
+msgctxt "login settings"
+msgid "Email:"
+msgstr "Nettpostadress:"
+
+#: swlogin.cpp:68
+msgctxt "login settings"
+msgid "Password:"
+msgstr "Passwoort:"
+
+#: swwidget.cpp:71
+msgid "This is the list of images to upload to your Shwup account."
+msgstr "Dit is de List vun Biller, de Du na Dien Shwup-Konto hoochladen wullt."
+
+#: swwidget.cpp:77
+msgid ""
+"This is a clickable link to open the Shwup.com home page in a web browser."
+msgstr ""
+"Mit dissen Link kannst Du de Shwup.com-Tohuussiet mit Dien Nettkieker "
+"opmaken."
+
+#: swwidget.cpp:83
+msgid "Account"
+msgstr "Konto"
+
+#: swwidget.cpp:84
+msgid "This is the Shwup account that is currently logged in."
+msgstr "Dit is dat aktuell anmeldt Shwup-Konto."
+
+#: swwidget.cpp:87
+msgctxt "account settings"
+msgid "Name:"
+msgstr "Naam:"
+
+#: swwidget.cpp:90
+msgid "Change Account"
+msgstr "Konto ännern"
+
+#: swwidget.cpp:91
+msgid "Change Shwup Account used for transfer"
+msgstr "Shwup-Konto för't Överdregen ännern."
+
+#: swwidget.cpp:102 swwidget.cpp:122
+msgid "Destination"
+msgstr "Teel"
+
+#: swwidget.cpp:103
+msgid "This is the Shwup album to which selected photos will be uploaded."
+msgstr "Dit is dat Shwup-Album, na dat utsöchte Fotos hoochlaadt warrt."
+
+#: swwidget.cpp:106
+msgid "Album:"
+msgstr "Album:"
+
+#: swwidget.cpp:110
+msgid "New Album"
+msgstr "Nieg Album"
+
+#: swwidget.cpp:111
+msgid "Create new Shwup album"
+msgstr "Nieg Shwup-Album opstellen"
+
+#: swwidget.cpp:112
+msgctxt "album list"
+msgid "Reload"
+msgstr "Nieg laden"
+
+#: swwidget.cpp:113
+msgid "Reload album list"
+msgstr "Albumlist nieg laden"
+
+#: swwidget.cpp:123
+msgid "This is the location to which Shwup images will be downloaded."
+msgstr "Dit is de Steed, na de Shwup-Biller daallaadt warrt."
+
+#: swwidget.cpp:130
+msgid "Options"
+msgstr "Optschonen"
+
+#: swwidget.cpp:131
+msgid "These are options that will be applied to photos before upload."
+msgstr "Disse Optschonen warrt för de Fotos bruukt, ehr se hoochlaadt warrt."
+
+#: swwidget.cpp:135
+msgid "Resize photos before uploading"
+msgstr "Fotogrött ehr't Hoochladen ännern"
+
+#: swwidget.cpp:145
+msgid "Maximum dimension:"
+msgstr "Hööchstafmeten:"
+
+#: swwidget.cpp:153
+msgid "JPEG quality:"
+msgstr "JPEG-Gööd:"
+
+#: swwindow.cpp:93
+msgid "Export to Shwup Web Service"
+msgstr "Na Shwup-Nettdeenst exporteren"
+
+#: swwindow.cpp:94
+msgid "Start Upload"
+msgstr "Hoochladen starten"
+
+#: swwindow.cpp:95
+msgid "Start upload to Shwup web service"
+msgstr "Hoochladen na Shwup-Nettdeenst starten"
+
+#: swwindow.cpp:118
+msgid "Shwup Export"
+msgstr "Shwup-Exporteren"
+
+#: swwindow.cpp:120
+msgid "A Kipi plugin to export images to Shwup web service."
+msgstr ""
+"En KIPI-Moduul för't Exporteren vun Billersammeln na den Shwup-Nettdeenst."
+
+#: swwindow.cpp:122
+msgid "(c) 2009, Timothée Groleau"
+msgstr "© 2009: Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Timothée Groleau"
+msgstr "Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Author and maintainer"
+msgstr "Autor un Pleger"
+
+#: swwindow.cpp:132
+msgid "Handbook"
+msgstr "Handbook"
+
+#: swwindow.cpp:277
+msgid ""
+"The shwup.com service does not seem to be available at this time, please try "
+"again later."
+msgstr ""
+
+#: swwindow.cpp:307
+msgid "This application has been blacklisted by the shwup.com service."
+msgstr ""
+
+#: swwindow.cpp:319
+#, kde-format
+msgid "Shwup Call Failed: %1\n"
+msgstr "Shwup-Oproop fehlslaan: %1\n"
+
+#: swwindow.cpp:420
+msgid "Transfer Progress"
+msgstr "Vörankamen bi't Överdregen"
+
+#: swwindow.cpp:425
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: swwindow.cpp:532
+#, kde-format
+msgid ""
+"Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online "
+"and invite people."
+msgstr ""
+
+#: swwindow.cpp:535
+msgid "Upload complete"
+msgstr "Hoochladen afslaten"
+
+#: swwindow.cpp:559 swwindow.cpp:578
+msgid "Cannot open file"
+msgstr "Datei lett sik nich opmaken."
+
+#: swwindow.cpp:582
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Datei \"%1\" warrt hoochlaadt."
+
+#: swwindow.cpp:606
+#, kde-format
+msgid ""
+"Failed to upload photo into Shwup: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Foto lett sik nich na Shwup hoochladen: %1\n"
+"Wullt Du wiedermaken?"
+
+#: swwindow.cpp:630
+#, kde-format
+msgid "Shwup Call Failed: %1"
+msgstr "Shwup-Oproop fehlslaan: %1"
+
+#: plugin_shwup.cpp:78
+msgid "Export to Shwup..."
+msgstr "Na Shwup exporteren..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Manfred Wiese"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "m.j.wiese@web.de"

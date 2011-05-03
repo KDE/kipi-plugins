@@ -1,0 +1,211 @@
+# translation of kipiplugin_jpeglossless.po to german
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Oliver Dörr <kde@doerr-privat.de>, 2007.
+# Panagiotis Papadopoulos <pano_90@gmx.net>, 2009, 2010.
+# Frederik Schwarzer <schwarzerf@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_jpeglossless\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-12-15 19:24+0100\n"
+"Last-Translator: Frederik Schwarzer <schwarzerf@gmail.com>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin/plugin_jpeglossless.cpp:111
+msgid "Rotate"
+msgstr "Drehen"
+
+#: plugin/plugin_jpeglossless.cpp:115
+msgctxt "rotate image left"
+msgid "Left"
+msgstr "Links"
+
+#: plugin/plugin_jpeglossless.cpp:122
+msgctxt "rotate image right"
+msgid "Right"
+msgstr "Rechts"
+
+#: plugin/plugin_jpeglossless.cpp:132
+msgid "Flip"
+msgstr "Spiegeln"
+
+#: plugin/plugin_jpeglossless.cpp:136
+msgid "Horizontally"
+msgstr "Waagerecht"
+
+#: plugin/plugin_jpeglossless.cpp:143
+msgid "Vertically"
+msgstr "Senkrecht"
+
+#: plugin/plugin_jpeglossless.cpp:154
+msgid "Auto Rotate/Flip Using Exif Information"
+msgstr "Automatisches Drehen/Spiegeln"
+
+#: plugin/plugin_jpeglossless.cpp:163
+msgid "Convert to Black && White"
+msgstr "Zu Schwarz/Weiß-Bild konvertieren"
+
+#: plugin/plugin_jpeglossless.cpp:211
+msgid "horizontally"
+msgstr "Horizontal"
+
+#: plugin/plugin_jpeglossless.cpp:216
+msgid "vertically"
+msgstr "Vertikal"
+
+#: plugin/plugin_jpeglossless.cpp:234
+#, kde-format
+msgid "Flip images %1"
+msgstr "Bilder spiegeln: %1"
+
+#: plugin/plugin_jpeglossless.cpp:247
+msgid "right (clockwise)"
+msgstr "rechts (im Uhrzeigersinn)"
+
+#: plugin/plugin_jpeglossless.cpp:252
+msgid "left (counterclockwise)"
+msgstr "links (entgegen dem Uhrzeigersinn)"
+
+#: plugin/plugin_jpeglossless.cpp:257
+#, fuzzy
+msgid "using Exif orientation tag"
+msgstr "benutzt die Exif-Ausrichtung"
+
+#: plugin/plugin_jpeglossless.cpp:274
+#, kde-format
+msgid "Rotate images %1"
+msgstr "Bilder drehen %1"
+
+#: plugin/plugin_jpeglossless.cpp:290
+msgid ""
+"<p>Are you sure you wish to convert the selected image(s) to black and "
+"white? This operation <b>cannot</b> be undone.</p>"
+msgstr ""
+"<p>Sind Sie sicher, dass Sie die ausgewählten Bilder zu schwarz/weiß "
+"konvertieren möchten? Diese Aktion kann <b>nicht</b> mehr rückgängig gemacht "
+"werden.</p>"
+
+#: plugin/plugin_jpeglossless.cpp:304
+msgid "Convert images to black & white"
+msgstr "Bilder zu schwarz/weiß konvertieren"
+
+#: plugin/plugin_jpeglossless.cpp:339
+#, kde-format
+msgid "Rotating Image \"%1\""
+msgstr "Bild „%1“ wird gedreht"
+
+#: plugin/plugin_jpeglossless.cpp:344
+#, kde-format
+msgid "Flipping Image \"%1\""
+msgstr "Bild „%1“ wird gespiegelt"
+
+#: plugin/plugin_jpeglossless.cpp:349
+#, kde-format
+msgid "Converting to Black & White \"%1\""
+msgstr "„%1“ wird zu schwarz/weiß konvertiert"
+
+#: plugin/plugin_jpeglossless.cpp:371
+msgid "Rotate image complete"
+msgstr "Bild erfolgreich gedreht"
+
+#: plugin/plugin_jpeglossless.cpp:376
+msgid "Flip image complete"
+msgstr "Bild erfolgreich gespiegelt"
+
+#: plugin/plugin_jpeglossless.cpp:381
+msgid "Convert to Black & White complete"
+msgstr "Bild erfolgreich zu schwarz/weiß konvertiert"
+
+#: plugin/plugin_jpeglossless.cpp:406
+msgid "Failed to Rotate image"
+msgstr "Das Drehen des Bildes ist fehlgeschlagen."
+
+#: plugin/plugin_jpeglossless.cpp:411
+msgid "Failed to Flip image"
+msgstr "Das Spiegeln des Bildes ist fehlgeschlagen."
+
+#: plugin/plugin_jpeglossless.cpp:416
+msgid "Failed to convert image to Black & White"
+msgstr "Die Konvertierung zu schwarz/weiß ist fehlgeschlagen."
+
+#: plugin/utils.cpp:89
+msgid "unable to open source file"
+msgstr "Die Quelldatei kann nicht geöffnet werden"
+
+#: plugin/utils.cpp:119 plugin/utils.cpp:146
+msgid "unable to open temp file"
+msgstr "Die temporäre Datei kann nicht geöffnet werden"
+
+#: plugin/utils.cpp:133
+msgid "Cannot rotate: unable to open temp file"
+msgstr "Drehung nicht möglich: Die temporäre Datei kann nicht geöffnet werden"
+
+#: plugin/utils.cpp:195
+#, kde-format
+msgid "Cannot update metadata: %1"
+msgstr "Die Metadaten können nicht aktualisiert werden: %1"
+
+#: transform/convert2grayscale.cpp:96 transform/convert2grayscale.cpp:177
+#: transform/imageflip.cpp:87 transform/imagerotate.cpp:88
+#: transform/jpegtransform.cpp:238 transform/jpegtransform.cpp:340
+msgid "Error in opening input file"
+msgstr "Fehler beim Öffnen der Quelldatei"
+
+#: transform/convert2grayscale.cpp:102 transform/imageflip.cpp:93
+#: transform/imagerotate.cpp:96
+msgid "Error in opening temporary file"
+msgstr "Fehler beim Öffnen einer temporären Datei"
+
+#: transform/convert2grayscale.cpp:115
+msgid "Cannot convert to gray scale RAW file"
+msgstr "Das Bild kann nicht in eine Graustufen-RAW-Datei umgewandelt werden"
+
+#: transform/convert2grayscale.cpp:139 transform/imageflip.cpp:130
+#: transform/imagerotate.cpp:136
+msgid "Cannot update source image"
+msgstr "Das Quellbild lässt sich nicht aktualisieren"
+
+#: transform/convert2grayscale.cpp:185 transform/jpegtransform.cpp:256
+#: transform/jpegtransform.cpp:349
+msgid "Error in opening output file"
+msgstr "Fehler beim Öffnen der Ausgabedatei"
+
+#: transform/convert2grayscale.cpp:285
+#, kde-format
+msgid "Cannot convert to gray scale: %1"
+msgstr "Das Bild lässt sich nicht in ein Graustufenbild umwandeln: %1"
+
+#: transform/imageflip.cpp:106 transform/imagerotate.cpp:109
+msgid "Cannot rotate RAW file"
+msgstr "Die Rohdatei kann nicht gedreht werden"
+
+#: transform/imageflip.cpp:157 transform/imageflip.cpp:186
+msgid "Nonstandard flip action"
+msgstr "Nicht-Standard-Spiegelung"
+
+#: transform/imageflip.cpp:219
+#, kde-format
+msgid "Cannot flip: %1"
+msgstr "Das Bild lässt sich nicht spiegeln: %1"
+
+#: transform/imagerotate.cpp:173 transform/imagerotate.cpp:213
+msgid "Nonstandard rotation angle"
+msgstr "Nicht-Standard-Drehwinkel"
+
+#: transform/imagerotate.cpp:246
+#, kde-format
+msgid "Cannot rotate: %1"
+msgstr "Das Bild lässt sich nicht drehen: %1"
+
+#: transform/jpegtransform.cpp:266 transform/jpegtransform.cpp:275
+#, kde-format
+msgid "The JPEG library reported an error: %1"
+msgstr "Die JPEG-Bibliothek meldet einen Fehler: %1"

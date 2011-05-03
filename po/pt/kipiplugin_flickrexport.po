@@ -1,0 +1,571 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-12-06 10:36+0000\n"
+"Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
+"Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-POFile-IgnoreConsistency: delete\n"
+"X-POFile-IgnoreConsistency: write\n"
+"X-POFile-SpellExtra: xxx Frob RPC Kipi POST Flickr SOAP FlickrUploadr\n"
+"X-POFile-SpellExtra: photoSets flick Caulier Gilles Vardhman Jain Renko hq\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-POFile-SpellExtra: Luka zooomr Zooomr Photostream\n"
+
+#: comboboxintermediate.h:53
+msgid "Various"
+msgstr "Vários"
+
+#: flickrlist.cpp:390
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Assinalar se a fotografia deverá estar pública ou use a página de Opções de "
+"Envio para indicar isto para todas as imagens"
+
+#: flickrlist.cpp:394
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Assinalar se a fotografia deverá estar visível para a família ou use a "
+"página de Opções de Envio para indicar isto para todas as imagens"
+
+#: flickrlist.cpp:398
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"Assinalar se a fotografia deverá estar visível para os amigos ou use a "
+"página de Opções de Envio para indicar isto para todas as imagens"
+
+#: flickrlist.cpp:402
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Indique o nível de segurança da fotografia ou use a página de Opções de "
+"Envio para indicar isto para todas as imagens"
+
+#: flickrlist.cpp:406
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"Indique o tipo desta imagem ou use a página de Opções de Envio para indicar "
+"isto para todas as imagens"
+
+#: flickrlist.cpp:419
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Adicione as marcas extra por cada imagem  ou use a página de Opções de Envio "
+"para indicar isto para todas as imagens"
+
+#: flickrlist.cpp:431
+msgid "Enter extra tags, separated by commas."
+msgstr "Indique as marcas extra, separadas por vírgulas."
+
+#: flickrtalker.cpp:204
+msgid "Getting the Frob"
+msgstr "Obter o Frob"
+
+#: flickrtalker.cpp:249
+msgid "Checking if previous token is still valid"
+msgstr "Verificar se a última autorização ainda é válida"
+
+#: flickrtalker.cpp:275
+msgid ""
+"Please follow the instructions in the browser window, then return to press "
+"Yes if you are authenticated, or No otherwise."
+msgstr ""
+"Por favor, siga as instruções na janela de navegação e volte atrás para "
+"carregar em Sim, se estiver autenticado, ou carregue em Não no caso "
+"contrário."
+
+#: flickrtalker.cpp:277
+#, kde-format
+msgid "%1 Service Web Authorization"
+msgstr "Autorização Web do Serviço %1"
+
+#: flickrtalker.cpp:282
+msgid "Authenticating the User on web"
+msgstr "Autenticar o Utilizador na Web"
+
+#: flickrtalker.cpp:334
+msgid "Getting the Token from the server"
+msgstr "Obter a autorização do servidor"
+
+#: flickrtalker.cpp:699
+msgid "No photo specified"
+msgstr "Não está nenhuma foto seleccionada"
+
+#: flickrtalker.cpp:702
+msgid "General upload failure"
+msgstr "Erro geral no envio"
+
+#: flickrtalker.cpp:705
+msgid "Filesize was zero"
+msgstr "O tamanho do ficheiro era zero"
+
+#: flickrtalker.cpp:708
+msgid "Filetype was not recognized"
+msgstr "O tipo de ficheiro não foi reconhecido"
+
+#: flickrtalker.cpp:711
+msgid "User exceeded upload limit"
+msgstr "O utilizador ultrapassou o limite de envios"
+
+#: flickrtalker.cpp:714
+msgid "Invalid signature"
+msgstr "A assinatura é inválida"
+
+#: flickrtalker.cpp:717
+msgid "Missing signature"
+msgstr "Falta a assinatura"
+
+#: flickrtalker.cpp:720
+msgid "Login Failed / Invalid auth token"
+msgstr "Erro na Autenticação / Resultado da autenticação inválido"
+
+#: flickrtalker.cpp:723
+msgid "Invalid API Key"
+msgstr "A Chave da API é Inválida"
+
+#: flickrtalker.cpp:726
+msgid "Service currently unavailable"
+msgstr "O serviço está indisponível de momento"
+
+#: flickrtalker.cpp:729
+msgid "Invalid Frob"
+msgstr "O Frob é Inválido"
+
+#: flickrtalker.cpp:732
+msgid "Format \"xxx\" not found"
+msgstr "O formato \"xxx\" não foi encontrado"
+
+#: flickrtalker.cpp:735
+msgid "Method \"xxx\" not found"
+msgstr "O método \"xxx\" não foi encontrado"
+
+#: flickrtalker.cpp:738
+msgid "Invalid SOAP envelope"
+msgstr "O envelope de SOAP é inválido"
+
+#: flickrtalker.cpp:741
+msgid "Invalid XML-RPC Method Call"
+msgstr "A Chamada do Método de XML-RPC é Inválida"
+
+#: flickrtalker.cpp:744
+msgid "The POST method is now required for all setters"
+msgstr "O método POST é agora obrigatório para todos os modificadores"
+
+#: flickrtalker.cpp:747
+msgid "Unknown error"
+msgstr "Erro desconhecido"
+
+#: flickrtalker.cpp:752
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Ocorreu um Erro: %1\n"
+"Não é possível prosseguir a partir daqui."
+
+#: flickrtalker.cpp:899
+msgctxt "As in the permission to"
+msgid "write"
+msgstr "escrever"
+
+#: flickrtalker.cpp:901
+msgctxt "As in the permission to"
+msgid "read"
+msgstr "ler"
+
+#: flickrtalker.cpp:903
+msgctxt "As in the permission to"
+msgid "delete"
+msgstr "apagar"
+
+#: flickrtalker.cpp:933
+msgid "Your token is invalid. Would you like to get a new token to proceed?\n"
+msgstr ""
+"Os seus dados de autenticação são inválidos. Deseja obter novos dados para "
+"prosseguir?\n"
+
+#: flickrtalker.cpp:1075
+msgid "PhotoSet creation failed: "
+msgstr "Falhou a criação do conjunto de fotos: "
+
+#: flickrtalker.cpp:1166
+msgid "Failed to fetch list of photo sets."
+msgstr "Não foi possível obter a lista de conjuntos de fotografias."
+
+#: flickrtalker.cpp:1236
+msgid "Failed to upload photo"
+msgstr "Não foi possível enviar a fotografia"
+
+#: flickrtalker.cpp:1300
+msgid "Failed to query photo information"
+msgstr "Não foi possível obter informações sobre a foto"
+
+#: flickrwidget.cpp:80
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'>Exportar para <font color=\"#7CD164"
+"\">23</font></h2></b>"
+
+#: flickrwidget.cpp:85
+msgid ""
+"<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+"font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.zooomr.com'>Exportar para o <font color=\"#7CD164"
+"\">zooomr</font></a></h2></b>"
+
+#: flickrwidget.cpp:90
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2>Exportação para o <a href='http://www.flickr.com'><font color="
+"\"#0065DE\">flick</font><font color=\"#FF0084\">r</font></a></h2></b>"
+
+#: flickrwidget.cpp:103 flickrwidget.cpp:108
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Pública"
+
+#: flickrwidget.cpp:107
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "Esta é a lista de imagens a enviar para a sua conta do Flickr."
+
+#: flickrwidget.cpp:112
+msgid "Extra tags"
+msgstr "Marcas extra"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:127
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Família"
+
+#: flickrwidget.cpp:121 flickrwidget.cpp:129
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Amigos"
+
+#: flickrwidget.cpp:136
+msgid "Safety level"
+msgstr "Nível de segurança"
+
+#: flickrwidget.cpp:138
+msgid "Content type"
+msgstr "Tipo de conteúdo"
+
+#: flickrwidget.cpp:141
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Segura"
+
+#: flickrwidget.cpp:142
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Moderada"
+
+#: flickrwidget.cpp:143
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Restrita"
+
+#: flickrwidget.cpp:144 flickrwidget.cpp:277
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Fotografia"
+
+#: flickrwidget.cpp:145 flickrwidget.cpp:278
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Imagem"
+
+#: flickrwidget.cpp:146 flickrwidget.cpp:279
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Outra"
+
+#: flickrwidget.cpp:172
+msgid "Account"
+msgstr "Conta"
+
+#: flickrwidget.cpp:175
+msgctxt "account settings"
+msgid "Username: "
+msgstr "Utilizador: "
+
+#: flickrwidget.cpp:178
+msgid "Use a different account"
+msgstr "Usar uma conta diferente"
+
+#: flickrwidget.cpp:181
+msgid "PhotoSet:"
+msgstr "Conjunto de Fotos:"
+
+#: flickrwidget.cpp:184
+msgid "&New PhotoSet"
+msgstr "&Novo Conjunto de Fotos"
+
+#: flickrwidget.cpp:199
+msgid "Tag options"
+msgstr "Opções das marcas"
+
+#: flickrwidget.cpp:203
+msgid "Use Host Application Tags"
+msgstr "Usar as Marcas da Aplicação"
+
+#: flickrwidget.cpp:205 flickrwidget.cpp:577
+msgid "More tag options"
+msgstr "Mais opções das marcas"
+
+#: flickrwidget.cpp:219
+msgid "Added Tags: "
+msgstr "Marcas Adicionadas: "
+
+#: flickrwidget.cpp:222
+msgid "Enter new tags here, separated by commas."
+msgstr "Indique aqui as marcas novas, separadas por vírgulas."
+
+#: flickrwidget.cpp:224
+msgid "Add tags per image"
+msgstr "Adicionar as marcas por imagem"
+
+#: flickrwidget.cpp:225
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"Se estiver assinalada, poderá definir marcas extra por cada imagem, na "
+"página da Lista de Ficheiros"
+
+#: flickrwidget.cpp:229
+msgid "Strip Spaces From Tags"
+msgstr "Retirar os Espaços das Marcas"
+
+#: flickrwidget.cpp:242
+msgid "Publication Options"
+msgstr "Opções de Publicação"
+
+#: flickrwidget.cpp:247
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Público (todos as podem ver)"
+
+#: flickrwidget.cpp:250
+msgid "Visible to Family"
+msgstr "Visível para a Família"
+
+#: flickrwidget.cpp:253
+msgid "Visible to Friends"
+msgstr "Visível para os Amigos"
+
+#: flickrwidget.cpp:256 flickrwidget.cpp:565
+msgid "More publication options"
+msgstr "Mais opções de publicação"
+
+#: flickrwidget.cpp:269
+msgid "Safety level:"
+msgstr "Nível de segurança:"
+
+#: flickrwidget.cpp:271
+msgid "Safe"
+msgstr "Seguro"
+
+#: flickrwidget.cpp:272
+msgid "Moderate"
+msgstr "Moderado"
+
+#: flickrwidget.cpp:273
+msgid "Restricted"
+msgstr "Restrito"
+
+#: flickrwidget.cpp:275
+msgid "Content type:"
+msgstr "Tipo de conteúdo:"
+
+#: flickrwidget.cpp:296
+msgid "Resizing Options"
+msgstr "Opções de Dimensionamento"
+
+#: flickrwidget.cpp:301
+msgid "Resize photos before uploading"
+msgstr "Mudar o tamanho das fotos antes de enviar"
+
+#: flickrwidget.cpp:312
+msgid "Maximum dimension (pixels):"
+msgstr "Dimensão máxima (pixels):"
+
+#: flickrwidget.cpp:322
+msgid "JPEG Image Quality (higher is better):"
+msgstr "Qualidade da Imagem JPEG (quanto maior melhor):"
+
+#: flickrwidget.cpp:350
+msgid "File List"
+msgstr "Lista de Ficheiros"
+
+#: flickrwidget.cpp:351
+msgid "Upload Options"
+msgstr "Opções do Envio"
+
+#: flickrwidget.cpp:561
+msgid "Fewer publication options"
+msgstr "Menos opções de publicação"
+
+#: flickrwidget.cpp:582
+msgid "Fewer tag options"
+msgstr "Menos opções das marcas"
+
+#: flickrwindow.cpp:84
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "Exportar para o Serviço Web %1"
+
+#: flickrwindow.cpp:123
+msgid "Start Uploading"
+msgstr "Iniciar o Envio"
+
+#: flickrwindow.cpp:135
+msgid "Flickr/23/Zooomr Export"
+msgstr "Exportação para o Flickr/23/Zooomr"
+
+#: flickrwindow.cpp:138
+msgid ""
+"A Kipi plugin to export an image collection to a Flickr / 23 / Zooomr web "
+"service."
+msgstr ""
+"Um 'plugin' do Kipi para exportar a colecção de imagens para o serviço Web "
+"Flickr / 23 / Zooomr."
+
+#: flickrwindow.cpp:140
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+
+#: flickrwindow.cpp:144
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:144
+msgid "Author and maintainer"
+msgstr "Autoria e manutenção"
+
+#: flickrwindow.cpp:147
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:147
+msgid "Developer"
+msgstr "Desenvolvimento"
+
+#: flickrwindow.cpp:155
+msgid "Handbook"
+msgstr "Manual"
+
+#: flickrwindow.cpp:492
+msgid "&lt;Photostream Only&gt;"
+msgstr "&lt;Apenas para o Photostream&gt;"
+
+#: flickrwindow.cpp:666
+#, kde-format
+msgid "Uploading file %1"
+msgstr "A enviar o ficheiro %1"
+
+#: flickrwindow.cpp:686
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr ""
+"Não foi possível obter informações sobre o conjunto de fotos do %1. %2\n"
+
+#: flickrwindow.cpp:691
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"Não foi possível enviar a foto para o %1. %2\n"
+"Deseja continuar?"
+
+#: login.cpp:68
+msgctxt "flickr login"
+msgid "Username:"
+msgstr "Utilizador:"
+
+#: login.cpp:71
+msgid "Password:"
+msgstr "Senha:"
+
+#: plugin_flickrexport.cpp:80
+msgid "Export to Flick&r..."
+msgstr "Exportar para o Flick&r..."
+
+#: plugin_flickrexport.cpp:91
+msgid "Export to &23..."
+msgstr "Exportar para o &23..."
+
+#: plugin_flickrexport.cpp:102
+msgid "Export to &Zooomr..."
+msgstr "Exportar para o &Zooomr..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "José Nuno Pires"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "zepires@gmail.com"
+
+#. i18n: file: flickralbumdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, FlickrAlbumDialog)
+#: rc.cpp:5
+msgid "New PhotoSet"
+msgstr "Novo Conjunto de Fotos"
+
+#. i18n: file: flickralbumdialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:8
+msgid "<h3>Create New PhotoSet </h3>"
+msgstr "<h3>Criar um Novo Conjunto de Fotos </h3>"
+
+#. i18n: file: flickralbumdialog.ui:86
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:11
+msgid "&OK"
+msgstr "&OK"
+
+#. i18n: file: flickralbumdialog.ui:102
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:14
+msgid "&Cancel"
+msgstr "&Cancelar"
+
+#. i18n: file: flickralbumdialog.ui:130
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:17
+msgid "Title (required):"
+msgstr "Título (obrigatório):"
+
+#. i18n: file: flickralbumdialog.ui:143
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:20
+msgid "Description (optional)"
+msgstr "Descrição (opcional)"

@@ -1,0 +1,409 @@
+# Translation of kipiplugin_htmlexport into Japanese.
+# This file is distributed under the same license as the kipi-plugins package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2006, 2007, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_htmlexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2008-12-09 22:55+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <Kdeveloper@kde.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: generator.cpp:136
+#, kde-format
+msgid "Could not find theme in '%1'"
+msgstr "<filename>%1</filename> にテーマが見つかりませんでした"
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr "テーマをコピー"
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr "テーマをコピーできませんでした"
+
+#: generator.cpp:178
+#, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr "<resource>%1</resource> のリモートファイルをダウンロード中"
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr "一時ファイルを開けませんでした"
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr "<filename>%1</filename> をダウンロードできませんでした"
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr "gallery.xml を作成できませんでした"
+
+#: generator.cpp:258
+#, kde-format
+msgid "Generating files for \"%1\""
+msgstr "<resource>%1</resource> のファイルを生成"
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr "前へ"
+
+#: generator.cpp:291
+msgid "Next"
+msgstr "次へ"
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr "コレクションのリスト"
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr "オリジナルの画像"
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr "上へ"
+
+#: generator.cpp:296
+msgid "Make"
+msgstr ""
+
+#: generator.cpp:297
+msgid "Model"
+msgstr ""
+
+#: generator.cpp:298
+#, fuzzy
+#| msgid "Image Settings"
+msgid "Image Orientation"
+msgstr "画像の設定"
+
+#: generator.cpp:299
+#, fuzzy
+#| msgid "Image Settings"
+msgid "Image X Resolution"
+msgstr "画像の設定"
+
+#: generator.cpp:300
+#, fuzzy
+#| msgid "Image Settings"
+msgid "Image Y Resolution"
+msgstr "画像の設定"
+
+#: generator.cpp:301
+msgid "Image Resolution Unit"
+msgstr ""
+
+#: generator.cpp:302
+msgid "Image Date Time"
+msgstr ""
+
+#: generator.cpp:303
+msgid "YCBCR Positioning"
+msgstr ""
+
+#: generator.cpp:304
+msgid "Exposure Time"
+msgstr ""
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr ""
+
+#: generator.cpp:306
+msgid "Exposure Index"
+msgstr ""
+
+#: generator.cpp:307
+msgid "ISO Speed Ratings"
+msgstr ""
+
+#: generator.cpp:308
+msgid "Shutter Speed Value"
+msgstr ""
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr ""
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr ""
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr "HTML ファイルを生成"
+
+#: generator.cpp:343
+#, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr "XSL ファイル <filename>%1</filename> を読み込めませんでした"
+
+#: generator.cpp:349
+#, kde-format
+msgid "Could not load XML file '%1'"
+msgstr "XML ファイル <filename>%1</filename> を読み込めませんでした"
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr "XML ファイルの処理エラー"
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr "<filename>%1</filename> を書き込みのために開けませんでした"
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr ""
+"<filename>%2</filename> にフォルダ <filename>%1</filename> を作成できませんで"
+"した"
+
+#: imagegenerationfunctor.cpp:89
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "画像 <filename>%1</filename> を読めませんでした"
+
+#: imagegenerationfunctor.cpp:95
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "画像 <filename>%1</filename> のフォーマットが不明です"
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "画像 <filename>%1</filename> の読み込みエラー"
+
+#: imagegenerationfunctor.cpp:140
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr ""
+"画像 <filename>%1</filename> を <filename>%2</filename> に保存できませんでし"
+"た"
+
+#: imagegenerationfunctor.cpp:161
+#, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr ""
+"画像 <filename>%1</filename> のサムネイルを <filename>%2</filename> に保存で"
+"きませんでした"
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr ""
+
+#: imagegenerationfunctor.cpp:338
+#, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr "ファイル <filename>%1</filename> を書き込みのために開けませんでした"
+
+#: imagegenerationfunctor.cpp:342
+#, kde-format
+msgid "Could not save image to file '%1'"
+msgstr "画像をファイル <filename>%1</filename> に保存できませんでした"
+
+#: plugin.cpp:72
+msgid "Export to &HTML..."
+msgstr ""
+
+#: plugin.cpp:95
+msgid "Generating gallery..."
+msgstr "ギャラリーを生成..."
+
+#: plugin.cpp:105
+#, fuzzy
+#| msgid "Finished, but some warnings have occured"
+msgid "Finished, but some warnings occurred."
+msgstr "完了しましたが警告がいくつか発生しました"
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr "%1:"
+
+#: wizard.cpp:206
+msgid "Export image collections to HTML pages"
+msgstr "画像コレクションを HTML ページにエクスポートします"
+
+#: wizard.cpp:212
+msgid "HTML Export"
+msgstr "HTML エクスポート"
+
+#: wizard.cpp:215
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr "Kipi 画像コレクションを HTML ページにエクスポートするプラグイン"
+
+#: wizard.cpp:216
+#, fuzzy
+#| msgid "(c) 2006-2008, Aurelien Gateau"
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr "(c) 2006-2008, Aurelien Gateau"
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr ""
+
+#: wizard.cpp:221
+#, fuzzy
+#| msgid "Author and Maintainer"
+msgid "Maintainer"
+msgstr "作者およびメンテナ"
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: wizard.cpp:226
+#, fuzzy
+#| msgid "Author and Maintainer"
+msgid "Former Author and Maintainer"
+msgstr "作者およびメンテナ"
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr "ハンドブック"
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr "コレクションの選択"
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr "テーマ"
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr "テーマのパラメータ"
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr "画像の設定"
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr "出力"
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr "作者: %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yukiko Bando"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ybando@k6.dion.ne.jp"
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr "完全な画像"
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr "画像を保存"
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr "フォーマット:"
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr "JPEG"
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr "PNG"
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr "画質:"
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+msgid "Max size:"
+msgstr "最大サイズ:"
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+msgid "Include full-size original images for download"
+msgstr "ダウンロードにフルサイズのオリジナル画像を含める"
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr "オリジナルの画像を使う"
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr "サムネイル"
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr "サイズ:"
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr "行き先フォルダ:"
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr "ブラウザで開く"
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""
+"このページでテーマのいくつかのパラメータを変更することができます。変更できる"
+"パラメータはテーマによって異なります。"

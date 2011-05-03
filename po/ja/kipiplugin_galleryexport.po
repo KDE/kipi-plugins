@@ -1,0 +1,284 @@
+# Translation of kipiplugin_galleryexport into Japanese.
+# This file is distributed under the same license as the kipi-plugins package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2006, 2008, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2009-01-03 22:38+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <Kdeveloper@kde.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: galleryconfig.cpp:77
+#, fuzzy
+#| msgid "Name:"
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "名前:"
+
+#: galleryconfig.cpp:81
+#, fuzzy
+#| msgid "URL:"
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "URL:"
+
+#: galleryconfig.cpp:85
+#, fuzzy
+#| msgid "Username:"
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "ユーザ名:"
+
+#: galleryconfig.cpp:89
+#, fuzzy
+#| msgid "Password:"
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "パスワード:"
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "&Gallery 2 を使う"
+
+#: gallerytalker.cpp:427
+msgid "Gallery URL probably incorrect"
+msgstr "ギャラリーの URL が正しくないようです。"
+
+#: gallerytalker.cpp:433
+msgid "Incorrect username or password specified"
+msgstr "ユーザ名またはパスワードが不正です。"
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+msgid "Invalid response received from remote Gallery"
+msgstr "リモートギャラリーからの応答が無効です。"
+
+#: gallerytalker.cpp:523
+msgid "Failed to list albums"
+msgstr "アルバムリストの作成に失敗"
+
+#: gallerytalker.cpp:598
+msgid "Failed to list photos"
+msgstr "写真リストの作成に失敗"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "新しいアルバムの作成に失敗"
+
+#: gallerytalker.cpp:705
+msgid "Failed to upload photo"
+msgstr "写真のアップロードに失敗"
+
+#: gallerywindow.cpp:118
+#, fuzzy
+#| msgid "albums"
+msgid "Albums"
+msgstr "アルバム"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "新しいアルバム(&N)"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "写真を追加(&A)"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr "カスタムオプション"
+
+#: gallerywindow.cpp:142
+msgid "Comment sets Title"
+msgstr "コメントをタイトルにする"
+
+#: gallerywindow.cpp:145
+msgid "Comment sets Description"
+msgstr "コメントを説明にする"
+
+#: gallerywindow.cpp:148
+msgid "Resize photos before uploading"
+msgstr "アップロード前に写真のサイズを変更する"
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr "最大寸法:"
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+msgid "Gallery Export"
+msgstr "ギャラリーエクスポート"
+
+#: gallerywindow.cpp:217
+#, fuzzy
+#| msgid "A Kipi plugin to export image collection to remote Gallery server."
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr "Kipi プラグイン - 画像コレクションをリモートギャラリーにエクスポート"
+
+#: gallerywindow.cpp:218
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2007, Colin Guthrie\n"
+#| "(c) 2008, Andrea Diamantini\n"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2008, Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "作者"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "メンテナ"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+msgid "Developer"
+msgstr "開発者"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr ""
+
+#: gallerywindow.cpp:242
+msgid "Handbook"
+msgstr "ハンドブック"
+
+#: gallerywindow.cpp:250
+#, fuzzy
+#| msgid "settings"
+msgid "Settings"
+msgstr "設定"
+
+#: gallerywindow.cpp:407
+msgid "Failed to login into remote gallery. "
+msgstr "リモートギャラリーにログインできませんでした。"
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"設定を確認してやり直しますか？"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "ギャラリーのデータを編集"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+#, fuzzy
+#| msgid "albums"
+msgid "Album"
+msgstr "アルバム"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr ""
+
+#: gallerywindow.cpp:675
+#, fuzzy
+#| msgid ""
+#| "Sorry, these characters are not allowed in album name: \\ / * ? \" ' & < "
+#| "> | . + # ( ) or spaces"
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+"これらの文字はアルバム名に使用できません: \\ / * ? \" ' & < > | . + # ( ) ス"
+"ペース"
+
+#: gallerywindow.cpp:752
+#, fuzzy, kde-format
+#| msgid "Uploading file "
+msgid "Uploading file %1"
+msgstr "ファイルをアップロード "
+
+#: gallerywindow.cpp:771
+msgid "Failed to upload photo into remote gallery. "
+msgstr "リモートギャラリーに写真をアップロードできませんでした。"
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"続けますか？"
+
+#: plugin_galleryexport.cpp:80
+msgid "Export to &Gallery..."
+msgstr "ギャラリーにエクスポート(&G)..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yukiko Bando"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ybando@k6.dion.ne.jp"
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>新しいアルバム名を入力</h3>"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "タイトル:"
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "名前 (オプション):"
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "キャプション (オプション):"
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "&OK"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "キャンセル(&C)"

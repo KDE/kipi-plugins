@@ -1,0 +1,991 @@
+# Translation of kipiplugin_gpssync to Norwegian Bokmål
+#
+# Bjørn Kvisli <bjorn.kvisli@gmail.com>, 2008.
+# Bjørn Steensrud <bjornst@skogkatt.homelinux.org>, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_gpssync\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-13 03:18+0100\n"
+"PO-Revision-Date: 2011-03-07 16:26+0100\n"
+"Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
+"Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin_gpssync.cpp:74
+msgid "Geo-location"
+msgstr "Geografisk plassering"
+
+#: searchwidget.cpp:134
+msgctxt "Start the search"
+msgid "Search"
+msgstr "Søk"
+
+#: searchwidget.cpp:141
+msgid "Clear the search results."
+msgstr "Tøm søkeresultater."
+
+#: searchwidget.cpp:148
+msgid "Keep the results of old searches when doing a new search."
+msgstr "Behold resultat av gamle søk når nye søk utføres."
+
+#: searchwidget.cpp:155
+msgid "Toggle the visibility of the search results on the map."
+msgstr "Slå på/av visning av søkeresultater på kartet."
+
+#: searchwidget.cpp:159 gpslistviewcontextmenu.cpp:89
+msgid "Copy coordinates"
+msgstr "Kopier koordinater"
+
+#: searchwidget.cpp:162
+msgid "Move selected images to this position"
+msgstr "Flytt utvalgte bilder til denne posisjonen"
+
+#: searchwidget.cpp:165
+msgid "Select which service you would like to use."
+msgstr "Velg hvilken tjeneste du vil bruke."
+
+#: searchwidget.cpp:185 gpslistviewcontextmenu.cpp:119
+msgid "Bookmarks"
+msgstr "Bokmerker"
+
+#: searchwidget.cpp:235
+#, kde-format
+msgid ""
+"Your search failed:\n"
+"%1"
+msgstr ""
+"Ditt søk lyktes ikke:\n"
+"%1"
+
+#: searchwidget.cpp:235
+msgid "Search failed"
+msgstr "Søket mislyktes"
+
+#: searchwidget.cpp:669 gpsbookmarkowner.cpp:345
+#, kde-format
+msgid "1 image snapped to '%2'"
+msgid_plural "%1 images snapped to '%2'"
+msgstr[0] "1 bilde knipset til «%2»"
+msgstr[1] "%1 bilder knipset til «%2»"
+
+#: searchwidget.cpp:702
+#, kde-format
+msgid "1 image moved to '%2'"
+msgid_plural "%1 images moved to '%2'"
+msgstr[0] "1 bilde flyttet til «%2»"
+msgstr[1] "%1 bilder flyttet til «%2»"
+
+#: gpsreversegeocodingwidget.cpp:230
+msgid "Add country tag"
+msgstr "Legg til tagg for land"
+
+#: gpsreversegeocodingwidget.cpp:232
+msgid "Add state tag"
+msgstr "Legg til tagg for stat"
+
+#: gpsreversegeocodingwidget.cpp:234
+msgid "Add state district tag"
+msgstr "Legg til tagg for statsdistrikt"
+
+#: gpsreversegeocodingwidget.cpp:236
+msgid "Add county tag"
+msgstr "Legg til tagg for kommune"
+
+#: gpsreversegeocodingwidget.cpp:238
+msgid "Add city tag"
+msgstr "Legg til tagg for by"
+
+#: gpsreversegeocodingwidget.cpp:240
+msgid "Add city district tag"
+msgstr "Legg til tagg for bydel"
+
+#: gpsreversegeocodingwidget.cpp:242
+msgid "Add suburb tag"
+msgstr "Legg til tagg for drabantby"
+
+#: gpsreversegeocodingwidget.cpp:244
+msgid "Add town tag"
+msgstr "Legg til tagg for småby"
+
+#: gpsreversegeocodingwidget.cpp:246
+msgid "Add village tag"
+msgstr "Legg til tagg for landsby"
+
+#: gpsreversegeocodingwidget.cpp:248
+msgid "Add hamlet tag"
+msgstr "Legg til tagg for bygdeby"
+
+#: gpsreversegeocodingwidget.cpp:250
+msgid "Add street"
+msgstr "Legg til gate"
+
+#: gpsreversegeocodingwidget.cpp:252
+msgid "Add house number tag"
+msgstr "Legg til husnummertagg"
+
+#: gpsreversegeocodingwidget.cpp:254
+msgid "Add place"
+msgstr "Legg til sted"
+
+#: gpsreversegeocodingwidget.cpp:256
+msgid "Add Local Administrative Area 2"
+msgstr "Legg til lokalt adminstrativt område 2"
+
+#: gpsreversegeocodingwidget.cpp:258
+msgid "Add Local Administrative Area 1"
+msgstr "Legg til lokalt adminstrativt område 1"
+
+#: gpsreversegeocodingwidget.cpp:260
+msgid "Add new tag"
+msgstr "Legg til ny tagg"
+
+#: gpsreversegeocodingwidget.cpp:261
+msgid "Remove selected tag"
+msgstr "Fjern  valgt tagg"
+
+#: gpsreversegeocodingwidget.cpp:262
+msgid "Remove all control tags below this tag"
+msgstr "Fjern alle styringstagger under denne taggen"
+
+#: gpsreversegeocodingwidget.cpp:264
+msgid "Add all address elements"
+msgstr "Legg til alle adresseelementer"
+
+#: gpsreversegeocodingwidget.cpp:268
+msgid "Select language:"
+msgstr "Velg språk:"
+
+#: gpsreversegeocodingwidget.cpp:272
+msgid "English"
+msgstr "Engelsk"
+
+#: gpsreversegeocodingwidget.cpp:273
+msgid "Arabic"
+msgstr "Arabisk"
+
+#: gpsreversegeocodingwidget.cpp:274
+msgid "Assamese"
+msgstr "Assamesisk"
+
+#: gpsreversegeocodingwidget.cpp:275
+msgid "Byelorussian"
+msgstr "Hviterussisk"
+
+#: gpsreversegeocodingwidget.cpp:276
+msgid "Bulgarian"
+msgstr "Bulgarsk"
+
+#: gpsreversegeocodingwidget.cpp:277
+msgid "Bengali"
+msgstr "Bengali"
+
+#: gpsreversegeocodingwidget.cpp:278
+msgid "Chinese"
+msgstr "Kinesisk"
+
+#: gpsreversegeocodingwidget.cpp:279
+msgid "Czech"
+msgstr "Tsjekkisk"
+
+#: gpsreversegeocodingwidget.cpp:280
+msgid "Croatian"
+msgstr "Kroatisk"
+
+#: gpsreversegeocodingwidget.cpp:281
+msgid "Dutch"
+msgstr "Nederlandsk"
+
+#: gpsreversegeocodingwidget.cpp:282
+msgid "German"
+msgstr "Tysk"
+
+#: gpsreversegeocodingwidget.cpp:283
+msgid "Greek"
+msgstr "Gresk"
+
+#: gpsreversegeocodingwidget.cpp:284
+msgid "Estonian"
+msgstr "Estisk"
+
+#: gpsreversegeocodingwidget.cpp:285
+msgid "Finnish"
+msgstr "Finsk"
+
+#: gpsreversegeocodingwidget.cpp:286
+msgid "French"
+msgstr "Fransk"
+
+#: gpsreversegeocodingwidget.cpp:287
+msgid "Georgian"
+msgstr "Georgisk"
+
+#: gpsreversegeocodingwidget.cpp:288
+msgid "Hebrew"
+msgstr "Hebraisk"
+
+#: gpsreversegeocodingwidget.cpp:289
+msgid "Hindi"
+msgstr "Hindi"
+
+#: gpsreversegeocodingwidget.cpp:290
+msgid "Hungarian"
+msgstr "Ungarsk"
+
+#: gpsreversegeocodingwidget.cpp:291
+msgid "Indonesian"
+msgstr "Indonesisk"
+
+#: gpsreversegeocodingwidget.cpp:292
+msgid "Icelandic"
+msgstr "Islandsk"
+
+#: gpsreversegeocodingwidget.cpp:293
+msgid "Italian"
+msgstr "Italiensk"
+
+#: gpsreversegeocodingwidget.cpp:294
+msgid "Japanese"
+msgstr "Japansk"
+
+#: gpsreversegeocodingwidget.cpp:295
+msgid "Korean"
+msgstr "Koreansk"
+
+#: gpsreversegeocodingwidget.cpp:296
+msgid "Lithuanian"
+msgstr "Litauisk"
+
+#: gpsreversegeocodingwidget.cpp:297
+msgid "Macedonian"
+msgstr "Makedonsk"
+
+#: gpsreversegeocodingwidget.cpp:298
+msgid "Mongolian"
+msgstr "Mongolsk"
+
+#: gpsreversegeocodingwidget.cpp:299
+msgid "Moldavian"
+msgstr "Moldavisk"
+
+#: gpsreversegeocodingwidget.cpp:300
+msgid "Nepali"
+msgstr "Nepali"
+
+#: gpsreversegeocodingwidget.cpp:301
+msgid "Polish"
+msgstr "Polsk"
+
+#: gpsreversegeocodingwidget.cpp:302
+msgid "Portuguese"
+msgstr "Portugisisk"
+
+#: gpsreversegeocodingwidget.cpp:303
+msgid "Romanian"
+msgstr "Rumensk"
+
+#: gpsreversegeocodingwidget.cpp:304
+msgid "Russian"
+msgstr "Russisk"
+
+#: gpsreversegeocodingwidget.cpp:305
+msgid "Slovak"
+msgstr "Slovakisk"
+
+#: gpsreversegeocodingwidget.cpp:306
+msgid "Slovenian"
+msgstr "Slovensk"
+
+#: gpsreversegeocodingwidget.cpp:307
+msgid "Samoan"
+msgstr "Samoansk"
+
+#: gpsreversegeocodingwidget.cpp:308
+msgid "Serbian"
+msgstr "Serbisk"
+
+#: gpsreversegeocodingwidget.cpp:309
+msgid "Sudanese"
+msgstr "Sudanesisk"
+
+#: gpsreversegeocodingwidget.cpp:310
+msgid "Spanish"
+msgstr "Spansk"
+
+#: gpsreversegeocodingwidget.cpp:311
+msgid "Swedish"
+msgstr "Svensk"
+
+#: gpsreversegeocodingwidget.cpp:312
+msgid "Thai"
+msgstr "Thai"
+
+#: gpsreversegeocodingwidget.cpp:313
+msgid "Turkish"
+msgstr "Tyrkisk"
+
+#: gpsreversegeocodingwidget.cpp:314
+msgid "Ukrainian"
+msgstr "Ukrainsk"
+
+#: gpsreversegeocodingwidget.cpp:315
+msgid "Vietnamese"
+msgstr "Vietnamesisk"
+
+#: gpsreversegeocodingwidget.cpp:317
+msgid "Select service:"
+msgstr "Velg tjeneste:"
+
+#: gpsreversegeocodingwidget.cpp:320
+msgid "Open Street Map"
+msgstr "Open Street Map"
+
+#: gpsreversegeocodingwidget.cpp:321
+msgid "Geonames.org place name (non-US)"
+msgstr "Geonames.org stedsnavn (ikke-US)"
+
+#: gpsreversegeocodingwidget.cpp:322
+msgid "Geonames.org full address (US only)"
+msgstr "Geonames.org fullstendig adresse (bare US)"
+
+#: gpsreversegeocodingwidget.cpp:337 gpsreversegeocodingwidget.cpp:529
+msgid "Less options"
+msgstr "Færre valg"
+
+#: gpsreversegeocodingwidget.cpp:345
+msgid "Write tags to XMP"
+msgstr "Skriv tagger til XMP"
+
+#: gpsreversegeocodingwidget.cpp:351
+msgid "Apply reverse geocoding"
+msgstr "Bruk omvendt geokoding"
+
+#: gpsreversegeocodingwidget.cpp:475
+msgid "Image tags are changed."
+msgstr "Bildetagger er endret."
+
+#: gpsreversegeocodingwidget.cpp:508
+msgid "Retrieving RG info - %p%"
+msgstr "Henter RG-info – %p%"
+
+#: gpsreversegeocodingwidget.cpp:523
+msgid "More options"
+msgstr "Flere valg"
+
+#: gpsreversegeocodingwidget.cpp:979
+#, kde-format
+msgid ""
+"%1 out of %2 images have been reverse geocoded. Would you like to keep the "
+"tags which were already obtained or discard them?"
+msgstr ""
+"%1 av %2 bilder er blitt omvend geokodet. Vil du beholde taggene som er "
+"oppnådd fra før, eller forkaste dem?"
+
+#: gpsreversegeocodingwidget.cpp:984
+msgid "Abort reverse geocoding?"
+msgstr "Avbryt omvendt geokoding?"
+
+#: gpsreversegeocodingwidget.cpp:985
+msgid "Keep tags"
+msgstr "Behold tagger"
+
+#: gpsreversegeocodingwidget.cpp:986
+msgid "Discard tags"
+msgstr "Slett tagger"
+
+#: gpsreversegeocodingwidget.cpp:987
+msgid "Continue"
+msgstr "Fortsett"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Bjørn Kvisli,Bjørn Steensrud"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bjorn.kvisli@gmail.com,bjornst@skogkatt.homelinux.org"
+
+#: gpsbookmarkowner.cpp:108
+msgid "Bookmark location"
+msgstr "Sett bokmerke for stedet"
+
+#: gpsbookmarkowner.cpp:109
+msgctxt "Title of the new gps location bookmark"
+msgid "Title:"
+msgstr "Tittel:"
+
+#: gpscorrelatorwidget.cpp:164
+msgid "Load GPX files..."
+msgstr "Last inn GPX-filer  …"
+
+#: gpscorrelatorwidget.cpp:169 kipiimageitem.cpp:519
+msgid "Filename"
+msgstr "Filnavn"
+
+#: gpscorrelatorwidget.cpp:169
+msgid "#points"
+msgstr "antall punkter"
+
+#: gpscorrelatorwidget.cpp:174
+msgid "Max. time gap (sec.):"
+msgstr "Største tidsgap (sek.):"
+
+#: gpscorrelatorwidget.cpp:176
+msgid ""
+"Sets the maximum difference in seconds from a GPS track point to the image "
+"time to be matched. If the time difference exceeds this setting, no match "
+"will be attempted."
+msgstr ""
+"Angir største forskjell i sekunder fra et GPS sporepunkt til bildetida som "
+"det søkes etter. Hvis tidsforskjellen er større enn dette vil det ikke bli "
+"forsøkt å treffe tiden."
+
+#: gpscorrelatorwidget.cpp:180
+msgid "Camera time zone:"
+msgstr "Tidssone for kamera:"
+
+#: gpscorrelatorwidget.cpp:181
+msgid "Same as system"
+msgstr "Samme som system"
+
+#: gpscorrelatorwidget.cpp:183
+msgid ""
+"Use this option if the timezone of the camera is the same as the timezone of "
+"this system. The conversion to GMT will be done automatically."
+msgstr ""
+"Bruk dette hvis kameraets tidssone er det samme som for dette systemet. "
+"Konvertering til UTC blir gjort automatisk."
+
+#: gpscorrelatorwidget.cpp:186
+msgctxt "manual time zone selection for gps syncing"
+msgid "Manual:"
+msgstr "Manuelt:"
+
+#: gpscorrelatorwidget.cpp:188
+msgid ""
+"Use this option if the timezone of the camera is different from this system "
+"and you have to specify the difference to GMT manually."
+msgstr ""
+"Bruk dette hvis tidssonen i kameraet er en annen enn i dette systemet og du "
+"må oppgi forskjellen til UTC manuelt."
+
+#: gpscorrelatorwidget.cpp:240
+msgid ""
+"<p>Sets the time zone the camera was set to during photo shooting, so that "
+"the time stamps of the images can be converted to GMT to match the GPS time "
+"reference.</p><p>Note: positive offsets count eastwards from zero longitude "
+"(GMT), they are 'ahead of time'.</p>"
+msgstr ""
+"<p>Angir tidssonen kameraet var innstilt på da bildene ble tatt, slik at "
+"bildenes tidsstempel kan gjøres om til UTC for å passe med GPS "
+"tidsreferansen.</p> <p>Merk: positiv forskyvning telles østover fra "
+"nullmeridianen (UTC), de er «foran».</p>"
+
+#: gpscorrelatorwidget.cpp:247
+msgid "Fine offset (mm:ss):"
+msgstr "Finforskyvning (mm:ss):"
+
+#: gpscorrelatorwidget.cpp:249
+msgid ""
+"Sets an additional offset in minutes and seconds that is used to correlate "
+"the photos to the GPS track. This can be used for fine tuning to adjust a "
+"wrong camera clock."
+msgstr ""
+"Oppgir en ekstra forskyvning i minutter og sekunder som brukes for å "
+"korrelere bildene med GPS-sporet. Dette kan brukes til finjustering for å "
+"korrigere for feilvisning i kameraets klokke."
+
+#: gpscorrelatorwidget.cpp:259
+msgid "Set whether the camera offset is negative or positive."
+msgstr "Velg om kameraforskyvningen er negativ eller positiv."
+
+#: gpscorrelatorwidget.cpp:263
+msgid "Minutes to fine tune camera offset."
+msgstr "Minutter for fininnstilling av kameraforskyvningen."
+
+#: gpscorrelatorwidget.cpp:266
+msgid "Seconds to fine tune camera offset."
+msgstr "Sekunder for fininnstilling av kameraforskyvningen."
+
+#: gpscorrelatorwidget.cpp:276
+msgid "Interpolate"
+msgstr "Interpoler"
+
+#: gpscorrelatorwidget.cpp:277
+msgid ""
+"Set this option to interpolate GPS track points which are not closely "
+"matched to the GPX data file."
+msgstr ""
+"Slå på dette for å interpolere mellom GPS-sporepunkter som ikke ligger nær "
+"data i GPX-fila."
+
+#: gpscorrelatorwidget.cpp:283
+msgid "Difference in min.:"
+msgstr "Forskjell i min.:"
+
+#: gpscorrelatorwidget.cpp:285
+msgid ""
+"Sets the maximum time difference in minutes (240 max.) to interpolate GPX "
+"file points to image time data."
+msgstr ""
+"Angir største tidsforskjell i minutter (høyst 240) for interpolering av "
+"punkter i GPX-fila til bildenes tidsdata."
+
+#: gpscorrelatorwidget.cpp:288
+msgid "Correlate"
+msgstr "Korreler"
+
+#: gpscorrelatorwidget.cpp:346
+#, kde-format
+msgid "%1|GPS Exchange Format"
+msgstr "%1|GPS Exchange Format"
+
+#: gpscorrelatorwidget.cpp:347
+msgid "Select GPX File to Load"
+msgstr "Velg GPX-fil som skal lastes inn"
+
+#: gpscorrelatorwidget.cpp:392
+#, kde-format
+msgid "The following GPX file could not be loaded:"
+msgid_plural "The following %1 GPX files could not be loaded:"
+msgstr[0] "Kunne ikke laste inn følgende GPX-fil:"
+msgstr[1] "Kunne ikke laste inn følgende %1 GPX-filer:"
+
+#: gpscorrelatorwidget.cpp:398
+msgid "Error loading GPX file"
+msgid_plural "Error loading GPX files"
+msgstr[0] "Feil ved innlasting av GPX-fil"
+msgstr[1] "Feil ved innlasting av GPX-filer"
+
+#: gpscorrelatorwidget.cpp:503
+msgid "Correlating images - %p%"
+msgstr "Sammenholder bilder – %p%"
+
+#: gpscorrelatorwidget.cpp:570
+msgid ""
+"Could not correlate any image - please make sure the timezone and gap "
+"settings are correct."
+msgstr ""
+"Klarte ikke korrelere noe bilde – se etter at tidssone og tdsgap-"
+"innstillinger er riktige."
+
+#: gpscorrelatorwidget.cpp:571
+msgid "Correlation failed"
+msgstr "Klarte ikke sammenholde"
+
+#: gpscorrelatorwidget.cpp:576
+msgid ""
+"All images have been correlated. You can now check their position on the map."
+msgstr ""
+"Alle bilder er blitt korrelert. Du kan nå kontrollere bildeplasseringen på "
+"kartet."
+
+#: gpscorrelatorwidget.cpp:577
+msgid "Correlation succeeded"
+msgstr "Sammenholding vellykket."
+
+#: gpscorrelatorwidget.cpp:583
+#, kde-format
+msgid ""
+"%1 out of %2 images have been correlated. Please check the timezone and gap "
+"settings if you think that more images should have been correlated."
+msgstr ""
+"%1 av %2 bilder er blitt korrelert. Kontroller innstillingene for tidssone "
+"og tidsgap hvis du mener at flere bilder burde vært korrelert."
+
+#: gpscorrelatorwidget.cpp:584
+msgid "Correlation finished"
+msgstr "Sammenholding fullført"
+
+#: gpscorrelatorwidget.cpp:593
+#, kde-format
+msgid "1 image correlated"
+msgid_plural "%1 images correlated"
+msgstr[0] "1 bilde korrelert"
+msgstr[1] "%1 bilder korrelert"
+
+#: gpsdataparser.cpp:623
+#, kde-format
+msgid "Could not open: %1"
+msgstr "Klarte ikke å åpne: %1"
+
+#: gpsdataparser.cpp:629
+msgid "File is empty!"
+msgstr "Fila er tom!"
+
+#: gpsdataparser.cpp:645
+#, kde-format
+msgid "Parsing error: %1"
+msgstr "Tolkingsfeil: %1"
+
+#: gpsdataparser.cpp:654
+msgid "No GPX element found - probably not a GPX file!"
+msgstr "Fant ikke noe GPX-element – antakelig ikke en GPX-fil!"
+
+#: gpsdataparser.cpp:658
+msgid "File is a GPX file, but no datapoints were found!"
+msgstr "Fila er en GPX-fil, men ingen datapunkter funnet!"
+
+#: gpsimagedetails.cpp:120
+msgid "Coordinates"
+msgstr "Koordinater"
+
+#: gpsimagedetails.cpp:126 kipiimageitem.cpp:521
+msgid "Latitude"
+msgstr "Bredde"
+
+#: gpsimagedetails.cpp:130 kipiimageitem.cpp:522
+msgid "Longitude"
+msgstr "Lengde"
+
+#: gpsimagedetails.cpp:132 kipiimageitem.cpp:523
+msgid "Altitude"
+msgstr "Høyde over havet"
+
+#: gpsimagedetails.cpp:138 kipiimageitem.cpp:528
+msgid "Speed"
+msgstr "Hastighet"
+
+#: gpsimagedetails.cpp:144 kipiimageitem.cpp:527
+msgid "# satellites"
+msgstr "antall satellitter"
+
+#: gpsimagedetails.cpp:150 kipiimageitem.cpp:526
+msgid "Fix type"
+msgstr "Punkttype"
+
+#: gpsimagedetails.cpp:152
+msgid "2-d"
+msgstr "2-d"
+
+#: gpsimagedetails.cpp:153
+msgid "3-d"
+msgstr "3-d"
+
+#: gpsimagedetails.cpp:156 kipiimageitem.cpp:525
+msgid "DOP"
+msgstr "DOP"
+
+#: gpsimagedetails.cpp:162
+msgid "Apply"
+msgstr "Bruk"
+
+#: gpsimagedetails.cpp:436
+msgid "Details changed"
+msgstr "Detaljer endret"
+
+#: gpslistviewcontextmenu.cpp:91
+msgid "Paste coordinates"
+msgstr "Lim inn koordinater"
+
+#: gpslistviewcontextmenu.cpp:93
+msgid "Remove coordinates"
+msgstr "Fjern koordinater"
+
+#: gpslistviewcontextmenu.cpp:94
+msgid "Remove altitude"
+msgstr "Fjern høyde over havet"
+
+#: gpslistviewcontextmenu.cpp:95
+msgid "Remove uncertainty"
+msgstr "Fjern usikkerhet"
+
+#: gpslistviewcontextmenu.cpp:96 gpslistviewcontextmenu.cpp:557
+msgid "Remove speed"
+msgstr "Fjern hastighet"
+
+#: gpslistviewcontextmenu.cpp:342
+msgid ""
+"Found more than one point on the clipboard - can only assign one point at a "
+"time."
+msgstr ""
+"Fant mer enn ett punkt på uktklippstavla – kaqn bare tilordne ett punkt av "
+"gangen."
+
+#: gpslistviewcontextmenu.cpp:343 gpslistviewcontextmenu.cpp:396
+#: gpssyncdialog.cpp:399
+msgid "GPS Sync"
+msgstr "GPS Synk"
+
+#: gpslistviewcontextmenu.cpp:396
+msgid "Could not find any coordinates on the clipboard."
+msgstr "Kunne ikke finne noen koordinater på utklippstavla."
+
+#: gpslistviewcontextmenu.cpp:400
+msgid "Coordinates pasted"
+msgstr "Koordinater limt inn"
+
+#: gpslistviewcontextmenu.cpp:432
+msgid "Bookmark selected"
+msgstr "Valgt bokmerke"
+
+#: gpslistviewcontextmenu.cpp:534
+msgid "Remove coordinates information"
+msgstr "Fjern koordinatinformasjon"
+
+#: gpslistviewcontextmenu.cpp:539
+msgid "Remove altitude information"
+msgstr "Fjern høydeinformasjon"
+
+#: gpslistviewcontextmenu.cpp:546
+msgid "Remove uncertainty information"
+msgstr "Fjern usikkerhetsinformasjon"
+
+#: rgtagmodel.cpp:93
+msgid "{Country}"
+msgstr "{Land}"
+
+#: rgtagmodel.cpp:94
+msgctxt "Part of a country"
+msgid "{State}"
+msgstr "{Stat}"
+
+#: rgtagmodel.cpp:95
+msgid "{County}"
+msgstr "{Kommune}"
+
+#: rgtagmodel.cpp:96
+msgid "{City}"
+msgstr "{By}"
+
+#: rgtagmodel.cpp:97
+msgid "{Town}"
+msgstr "{Småby}"
+
+#: rgtagmodel.cpp:98
+msgid "{Village}"
+msgstr "{Landsby}"
+
+#: rgtagmodel.cpp:99
+msgid "{Hamlet}"
+msgstr "{Bygdeby}"
+
+#: rgtagmodel.cpp:100
+msgid "{Street}"
+msgstr "{Gate}"
+
+#: searchbackend.cpp:264
+msgid "GeoNames"
+msgstr "GeoNames"
+
+#: searchbackend.cpp:265
+msgid "OSM"
+msgstr "OSM"
+
+#: setup_general.cpp:62
+msgid "One map"
+msgstr "Ett kart"
+
+#: setup_general.cpp:63
+msgid "Two maps - horizontal"
+msgstr "To kart – vannrett"
+
+#: setup_general.cpp:64
+msgid "Two maps - vertical"
+msgstr "To kart – loddrett"
+
+#: setup_general.cpp:66
+msgid "Layout:"
+msgstr "Utforming:"
+
+#: gpssyncdialog.cpp:239
+msgid "Geolocation"
+msgstr "Geografisk plassering"
+
+#: gpssyncdialog.cpp:266
+msgid "Display bookmarked positions on the map."
+msgstr "Vis bokmerkede plasseringer på kartet"
+
+#: gpssyncdialog.cpp:321
+msgid "Sorting"
+msgstr "Sortering"
+
+#: gpssyncdialog.cpp:327
+msgid "Show oldest first"
+msgstr "Vis eldste først"
+
+#: gpssyncdialog.cpp:331
+msgid "Show youngest first"
+msgstr "Vis yngste først"
+
+#: gpssyncdialog.cpp:373
+msgid "Details"
+msgstr "Detaljer"
+
+#: gpssyncdialog.cpp:374
+msgid "GPS Correlator"
+msgstr "GPS-korrelator"
+
+#: gpssyncdialog.cpp:375
+msgid "Undo/Redo"
+msgstr "Angre/gjør om"
+
+#: gpssyncdialog.cpp:376
+msgid "Reverse Geocoding"
+msgstr "Omvendt geokoding"
+
+#: gpssyncdialog.cpp:377
+msgid "Search"
+msgstr "Søk"
+
+#: gpssyncdialog.cpp:402
+msgid "A Plugin to synchronize pictures' metadata with a GPS device"
+msgstr "Et programtillegg som synkroniserer bilders metadata med en GPS-enhet"
+
+#: gpssyncdialog.cpp:403
+msgid "(c) 2006-2010, Gilles Caulier"
+msgstr "© 2006–2010 Gilles Caulier"
+
+#: gpssyncdialog.cpp:405
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gpssyncdialog.cpp:406 gpssyncdialog.cpp:410
+msgid "Developer and maintainer"
+msgstr "Utvikler og vedlikeholder"
+
+#: gpssyncdialog.cpp:409
+msgid "Michael G. Hansen"
+msgstr "Michael G. Hansen"
+
+#: gpssyncdialog.cpp:413
+msgid "Gabriel Voicu"
+msgstr "Gabriel Voicu"
+
+#: gpssyncdialog.cpp:414
+msgid "Developer"
+msgstr "Utvikler"
+
+#: gpssyncdialog.cpp:568
+msgid "Loading metadata - %p%"
+msgstr "Laster metadata – %p%"
+
+#: gpssyncdialog.cpp:743
+#, kde-format
+msgid "You have 1 modified image."
+msgid_plural "You have %1 modified images."
+msgstr[0] "Du har 1  bilde som er endret"
+msgstr[1] "Du har %1  bilder som er endret"
+
+#: gpssyncdialog.cpp:749
+#, kde-format
+msgid "%1 Would you like to save the changes you made to them?"
+msgstr "%1 Vil du lagre endringene du har gjort med dem?"
+
+#: gpssyncdialog.cpp:750
+msgid "Unsaved changes"
+msgstr "Ulagrede endringer"
+
+#: gpssyncdialog.cpp:751
+msgid "Save changes"
+msgstr "Lagre endringer"
+
+#: gpssyncdialog.cpp:752
+msgid "Close and discard changes"
+msgstr "Lukk uten å lagre endringer"
+
+#: gpssyncdialog.cpp:961
+#, kde-format
+msgid "1 image moved"
+msgid_plural "%1 images moved"
+msgstr[0] "1 bilde flyttet"
+msgstr[1] "%1 bilder flyttet"
+
+#: gpssyncdialog.cpp:994
+msgid "Saving changes - %p%"
+msgstr "Lagrer endringer – %p%"
+
+#: gpssyncdialog.cpp:1032
+msgid "Failed to save some information:"
+msgstr "Noe informasjon kunne ikke lagres"
+
+#: gpssyncdialog.cpp:1032
+msgid "Error"
+msgstr "Feil"
+
+#: kipiimageitem.cpp:362
+msgid "Not available"
+msgstr "Ikke tilgjengelig"
+
+#: kipiimageitem.cpp:395
+#, kde-format
+msgid "DOP: %1"
+msgstr "DOP: %1"
+
+#: kipiimageitem.cpp:400
+#, c-format, kde-format
+msgid "Fix: %1d"
+msgstr "Fix: %1d"
+
+#: kipiimageitem.cpp:405
+#, kde-format
+msgid "#Sat: %1"
+msgstr "Ant. Sat: %1"
+
+#: kipiimageitem.cpp:439
+#, c-format, kde-format
+msgid "%1d"
+msgstr "%1d"
+
+#: kipiimageitem.cpp:459
+msgid "Modified"
+msgstr "Endret"
+
+#: kipiimageitem.cpp:518
+msgid "Thumbnail"
+msgstr "Minibilde"
+
+#: kipiimageitem.cpp:520
+msgid "Date and time"
+msgstr "Dato og tidspunkt"
+
+#: kipiimageitem.cpp:524
+msgid "Accuracy"
+msgstr "Nøyaktighet"
+
+#: kipiimageitem.cpp:529
+msgid "Status"
+msgstr "Status"
+
+#: kipiimageitem.cpp:530
+msgid "Tags"
+msgstr "Tagger"
+
+#: kipiimageitem.cpp:719
+msgid "Failed to open file."
+msgstr "Klarte ikke åpne fil."
+
+#: kipiimageitem.cpp:782
+msgid "Failed to add GPS info to image."
+msgstr "Klarte ikke å legge til GPS-informasjon til bildet."
+
+#: kipiimageitem.cpp:791
+msgid "Failed to remove GPS info from image"
+msgstr "Klarte ikke å fjerne GPS-informasjon fra bildet"
+
+#: kipiimageitem.cpp:817 kipiimageitem.cpp:822
+msgid "Failed to save tags to file."
+msgstr "Klarte ikke å lagre tagger til fil."
+
+#: kipiimageitem.cpp:832
+msgid "Unable to save changes to file"
+msgstr "Klarte ikke å lagre endringer til fil"
+
+#: setup.cpp:112
+msgid "Configure"
+msgstr "Sett opp"
+
+#: setup.cpp:118
+msgctxt "General setup"
+msgid "General"
+msgstr "Generelt"

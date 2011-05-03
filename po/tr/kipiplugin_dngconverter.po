@@ -1,0 +1,240 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Serdar Soytetir <tulliana@gmail.com>, 2008, 2009.
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dngconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2011-04-26 09:03+0300\n"
+"Last-Translator: Ozan Çağlayan <ozan@pardus.org.tr>\n"
+"Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: tr\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr "Ham resim tanımlanamadı"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "Yap: %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "Model: %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "Oluşturulma zamanı: %1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "Diyafram Açıklığı: f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "Odaklama: %1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "Pozlandırma: 1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Duyarlılık: %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "Dönüştürülecek dosyalar"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "DNG Dönüştürücü..."
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "Gömülü Özgün Dosya"
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "Kayıpsız Sıkıştırma"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr "Dosya Değiştirilme Tarihini Güncelle"
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+"Dosya düzenlenme tarihini, resim dosyasında belirtilen oluşturulma tarihine "
+"ayarlar."
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "JPEG Önizlemesi:"
+
+#: plugin/settingswidget.cpp:115
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "Hiçbiri"
+
+#: plugin/settingswidget.cpp:116
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "Orta"
+
+#: plugin/settingswidget.cpp:117
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "Tam boyut"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "Eğer Hedef Dosya Varsa:"
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "Otomatik olarak üzerine yaz"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr "Dosya aç-yeniden adlandır penceresi"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr "DNG Resim Dönüştürücü"
+
+#: plugin/aboutdata.h:52
+#, kde-format
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr ""
+"Ham resimleri toplu olarak DNG'ye dönüştürmek için bir araç\n"
+"XMP toolkit %1 kullanır\n"
+"DNG toolkit 1.3 kullanır"
+
+#: plugin/aboutdata.h:55
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr "Yazar"
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr "Geliştirici"
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "DNG Dönüştürücüden Çık"
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr "Ham kamera resimlerini toplu olarak DNGye dönüştür"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "&Ekle"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr "Listeye yeni ham dosyalar ekle"
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "&Kaldır"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr "Seçilen ham dosyaları listeden kaldır"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "Küçük Resim"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "Ham Dosya"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "Hedef Dosya"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "Kamera"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr "El Kitabı"
+
+#: plugin/batchdialog.cpp:332
+msgid "The list does not contain any Raw files to process."
+msgstr "Listede işlenecek ham dosya yok."
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "İ&ptal"
+
+#: plugin/batchdialog.cpp:474
+msgid "Abort the conversion of Raw files."
+msgstr "Ham dosya dönüştürme işlemini iptal et."
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "Dö&nüştür"
+
+#: plugin/batchdialog.cpp:480
+msgid "Start converting the Raw images using the current settings."
+msgstr "Geçerli ayarlarla ham dosyaları dönüştürme işlemini başlat."
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "'%1''den dönüştürülen Ham Resimleri farklı kaydet"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "%1 resmi kaydedilemedi"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Serdar Soytetir, Ozan Çağlayan"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "tulliana@gmail.com, ozan@pardus.org.tr"

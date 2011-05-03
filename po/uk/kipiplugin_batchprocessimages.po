@@ -1,0 +1,2176 @@
+# translation of kipiplugin_batchprocessimages.po to Ukrainian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_batchprocessimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2011-03-06 16:15+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: uk\n"
+
+#: common/batchprocessimageslist.cpp:47
+msgid "Source Album"
+msgstr "Вихідний альбом"
+
+#: common/batchprocessimageslist.cpp:48
+msgid "Source Image"
+msgstr "Вихідне зображення"
+
+#: common/batchprocessimageslist.cpp:49
+msgid "Target Image"
+msgstr "Остаточне зображення"
+
+#: common/batchprocessimageslist.cpp:50
+msgid "Result"
+msgstr "Результат"
+
+#: common/batchprocessimageslist.cpp:54
+msgid ""
+"<p>You can see here the operations' results during the process. Double-click "
+"on an item for more information once the process has ended.</p><p>You can "
+"use the \"Add\" button or drag-and-drop to add some new items to the list.</"
+"p><p>If the items are taken from different Albums the process' results will "
+"be merged to the target Album.</p>"
+msgstr ""
+"<p>Тут ви можете переглядати результати дій під час обробки. Наведіть "
+"вказівник на елемент і двічі клацніть лівою кнопкою миші після завершення "
+"обробки, щоб отримати докладніші відомості.</p> <p>Ви можете скористатися "
+"кнопкою «Додати» або перетягнути і скинути нові елементи до списку.</p> "
+"<p>Якщо елементи взято з різних альбомів, результати обробки буде об’єднано "
+"у альбомі призначення.</p>"
+
+#: common/dialogutils.cpp:42
+msgid "Handbook"
+msgstr "Довідник"
+
+#: common/imagepreview.cpp:50
+#, kde-format
+msgid "Batch Process Preview (%1 - %2)"
+msgstr "Перегляд пакетної обробки (%1 — %2)"
+
+#: common/imagepreview.cpp:56
+msgid "Batch process images"
+msgstr "Пакетна обробка зображень"
+
+#: common/imagepreview.cpp:59
+msgid ""
+"An interface to preview the \"Batch Process Images\" Kipi plugin.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"Інтерфейс для перегляду результатів роботи додатка Kipi «Пакетна обробка "
+"зображень».\n"
+"Цей додаток використовує для роботи програму «convert» з пакунка «ImageMagick»."
+
+#: common/imagepreview.cpp:63 tools/borderimagesdialog.cpp:69
+#: tools/colorimagesdialog.cpp:68 tools/convertimagesdialog.cpp:76
+#: tools/effectimagesdialog.cpp:67 tools/filterimagesdialog.cpp:67
+#: tools/recompressimagesdialog.cpp:67 tools/renameimagesdialog.cpp:65
+#: tools/resizeimagesdialog.cpp:166
+msgid ""
+"(c) 2003-2009, Gilles Caulier\n"
+"(c) 2007-2009, Aurélien Gateau"
+msgstr ""
+"© Gilles Caulier, 2003–2009,\n"
+"© Aurélien Gateau, 2007–2009"
+
+#: common/imagepreview.cpp:66 tools/borderimagesdialog.cpp:72
+#: tools/colorimagesdialog.cpp:71 tools/convertimagesdialog.cpp:79
+#: tools/effectimagesdialog.cpp:70 tools/filterimagesdialog.cpp:70
+#: tools/recompressimagesdialog.cpp:70 tools/renameimagesdialog.cpp:68
+#: tools/resizeimagesdialog.cpp:169
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: common/imagepreview.cpp:66 tools/borderimagesdialog.cpp:72
+#: tools/colorimagesdialog.cpp:71 tools/convertimagesdialog.cpp:79
+#: tools/effectimagesdialog.cpp:70 tools/filterimagesdialog.cpp:70
+#: tools/recompressimagesdialog.cpp:70 tools/renameimagesdialog.cpp:68
+#: tools/resizeimagesdialog.cpp:169
+msgid "Author"
+msgstr "Автор"
+
+#: common/imagepreview.cpp:69 tools/borderimagesdialog.cpp:75
+#: tools/colorimagesdialog.cpp:74 tools/convertimagesdialog.cpp:82
+#: tools/effectimagesdialog.cpp:73 tools/filterimagesdialog.cpp:73
+#: tools/recompressimagesdialog.cpp:73 tools/renameimagesdialog.cpp:71
+#: tools/resizeimagesdialog.cpp:171
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: common/imagepreview.cpp:69 tools/borderimagesdialog.cpp:75
+#: tools/colorimagesdialog.cpp:74 tools/convertimagesdialog.cpp:82
+#: tools/effectimagesdialog.cpp:73 tools/filterimagesdialog.cpp:73
+#: tools/recompressimagesdialog.cpp:73 tools/renameimagesdialog.cpp:71
+#: tools/resizeimagesdialog.cpp:171 tools/resizeimagesdialog.cpp:173
+msgid "Maintainer"
+msgstr "Супровідник"
+
+#: common/pixmapview.cpp:119
+msgid ""
+"Preview\n"
+"image\n"
+"processing\n"
+"in\n"
+"progress..."
+msgstr ""
+"Перегляд\n"
+"поступу\n"
+"обробки\n"
+"зображень..."
+
+#: common/pixmapview.cpp:148 common/batchprocessimagesdialog.cpp:523
+#: common/batchprocessimagesdialog.cpp:729
+msgid ""
+"Cannot start 'convert' program from 'ImageMagick' package;\n"
+"please check your installation."
+msgstr ""
+"Не вдалося запустити програму «convert» з пакунка «ImageMagick»;\n"
+"будь ласка, перевірте чи встановлено цей пакунок."
+
+#: common/pixmapview.cpp:189
+msgid ""
+"Cannot\n"
+"process\n"
+"preview\n"
+"image."
+msgstr ""
+"Не вдалося\n"
+"обробити\n"
+"зображення\n"
+"перегляду."
+
+#: common/batchprocessimagesdialog.cpp:106
+#: common/batchprocessimagesdialog.cpp:874 tools/renameimagesdialog.cpp:56
+msgctxt "start batch process images"
+msgid "&Start"
+msgstr "&Почати"
+
+#: common/batchprocessimagesdialog.cpp:134
+msgid "You can choose here the options to use for the current process."
+msgstr ""
+"Тут ви можете вказати параметри, які буде використано під час поточного "
+"сеансу роботи."
+
+#: common/batchprocessimagesdialog.cpp:136
+msgid ""
+"If you enable this option, all preview effects will be calculated on a small "
+"zone of the image (300x300 pixels in the top left corner). Enable this "
+"option if you have a slow computer."
+msgstr ""
+"Якщо ви позначите цей пункт, всі попередні перегляди наслідків застосування "
+"ефектів буде обчислено у малій області зображення (300x300 пікселів, у "
+"верхньому лівому куті). Позначте цей пункт, якщо ви працюєте за комп’ютером "
+"невеликої потужності."
+
+#: common/batchprocessimagesdialog.cpp:141
+msgid ""
+"This button builds a process preview for the currently selected image on the "
+"list."
+msgstr ""
+"За допомогою натискання цієї кнопки можна побудувати попередній перегляд "
+"поточного вибраного зображення зі списку після обробки."
+
+#: common/batchprocessimagesdialog.cpp:144
+#: common/batchprocessimagesdialog.cpp:887
+msgid "Ask"
+msgstr "Запитати"
+
+#: common/batchprocessimagesdialog.cpp:145
+#: common/batchprocessimagesdialog.cpp:896
+msgid "Always Overwrite"
+msgstr "Завжди перезаписувати"
+
+#: common/batchprocessimagesdialog.cpp:146
+#: common/batchprocessimagesdialog.cpp:148
+#: common/batchprocessimagesdialog.cpp:890
+msgid "Rename"
+msgstr "Перейменувати"
+
+#: common/batchprocessimagesdialog.cpp:147
+#: common/batchprocessimagesdialog.cpp:893
+msgid "Skip"
+msgstr "Пропустити"
+
+#: common/batchprocessimagesdialog.cpp:149
+msgid ""
+"Select here the overwrite mode used if your target's image files already "
+"exist."
+msgstr ""
+"Тут можна вибрати режим перезапису, якщо файли зображень призначення вже "
+"існують."
+
+#: common/batchprocessimagesdialog.cpp:152
+msgid ""
+"If you enable this option, all original image files will be removed after "
+"processing."
+msgstr ""
+"Якщо ви позначите цей пункт, всі початкові файли зображень після обробки "
+"буде вилучено."
+
+#: common/batchprocessimagesdialog.cpp:170
+msgid "Here you can select the target folder which will used by the process."
+msgstr ""
+"Тут ви можете вибрати теку призначення, яку буде використано для збереження "
+"результатів обробки."
+
+#: common/batchprocessimagesdialog.cpp:173
+msgid "Add images to the list."
+msgstr "Додати зображення до списку."
+
+#: common/batchprocessimagesdialog.cpp:174
+msgid "Remove selected image from the list."
+msgstr "Вилучити вибране зображення зі списку."
+
+#: common/batchprocessimagesdialog.cpp:175
+msgid "The preview of the selected image on the list."
+msgstr "Попередній перегляд вибраного зображення зі списку."
+
+#: common/batchprocessimagesdialog.cpp:327
+msgid ""
+"All original image files will be removed from the source Album.\n"
+"Do you want to continue?"
+msgstr ""
+"Всі початкові зображення буде вилучено з вихідного альбому.\n"
+"Бажаєте продовжити обробку?"
+
+#: common/batchprocessimagesdialog.cpp:328
+msgid "Delete Original Image Files"
+msgstr "Вилучити вихідні файли зображень"
+
+#: common/batchprocessimagesdialog.cpp:339
+#: common/batchprocessimagesdialog.cpp:706
+msgid "&Stop"
+msgstr "&Зупинити"
+
+#: common/batchprocessimagesdialog.cpp:366
+msgid "You must specify a writable path for your output file."
+msgstr ""
+"Вам слід вказати для файла виведених даних каталог, правами на запис до "
+"якого ви володієте."
+
+#: common/batchprocessimagesdialog.cpp:404
+#, kde-format
+msgid ""
+"The destination file \"%1\" already exists;\n"
+"do you want overwrite it?"
+msgstr ""
+"Файл призначення «%1» вже існує;\n"
+"бажаєте його перезаписати?"
+
+#: common/batchprocessimagesdialog.cpp:406
+msgid "Overwrite Destination Image File"
+msgstr "Перезаписати файл призначення зображення"
+
+#: common/batchprocessimagesdialog.cpp:410
+#: common/batchprocessimagesdialog.cpp:475
+#: tools/recompressimagesdialog.cpp:245 tools/resizeimagesdialog.cpp:278
+msgid "Skipped."
+msgstr "Пропущено."
+
+#: common/batchprocessimagesdialog.cpp:411
+msgid "destination image file already exists (skipped by user)."
+msgstr "Файл призначення зображення вже існує (пропущено користувачем)."
+
+#: common/batchprocessimagesdialog.cpp:447
+#: common/batchprocessimagesdialog.cpp:564
+#: common/batchprocessimagesdialog.cpp:621
+#: common/batchprocessimagesdialog.cpp:656
+msgctxt "batch process result"
+msgid "Failed."
+msgstr "Невдача."
+
+#: common/batchprocessimagesdialog.cpp:448
+msgid "destination image file already exists and cannot be renamed."
+msgstr "Файл призначення зображення вже існує, його неможливо перейменувати."
+
+#: common/batchprocessimagesdialog.cpp:476
+msgid "destination image file already exists (skipped automatically)."
+msgstr "Файл призначення зображення вже існує (автоматично пропущено)."
+
+#: common/batchprocessimagesdialog.cpp:555
+msgid ""
+"The 'convert' program from 'ImageMagick' package has been stopped abnormally"
+msgstr ""
+"Програма «convert» з пакунка «ImageMagick» завершила роботу у аварійному режимі"
+
+#: common/batchprocessimagesdialog.cpp:556
+msgid "Error running 'convert'"
+msgstr "Помилка під час виконання «convert»"
+
+#: common/batchprocessimagesdialog.cpp:565
+msgid ""
+"'convert' program from 'ImageMagick' package has been stopped abnormally."
+msgstr ""
+"Програму «convert» з пакунка «ImageMagick» було зупинено у аварійний спосіб."
+
+#: common/batchprocessimagesdialog.cpp:586
+msgid "OK"
+msgstr "Гаразд"
+
+#: common/batchprocessimagesdialog.cpp:587
+msgid "no processing error"
+msgstr "під час обробки помилок не виявлено"
+
+#: common/batchprocessimagesdialog.cpp:610
+#, kde-format
+msgid ""
+"<qt>Error adding image to application; error message was: <b>%1</b></qt>"
+msgstr ""
+"<qt>Помилка під час передавання зображення програмі; повідомлення про "
+"помилку: <b>%1</b></qt>"
+
+#: common/batchprocessimagesdialog.cpp:612
+msgid "Error Adding Image to Application"
+msgstr "Помилка під час передавання зображення програмі"
+
+#: common/batchprocessimagesdialog.cpp:639
+msgctxt "batch process result"
+msgid "Warning:"
+msgstr "Попередження:"
+
+#: common/batchprocessimagesdialog.cpp:640
+msgid "cannot remove original image file."
+msgstr "Не вдалося вилучити початковий файл зображення."
+
+#: common/batchprocessimagesdialog.cpp:657
+msgid "cannot process original image file."
+msgstr "Не вдалося обробити початковий файл зображення."
+
+#: common/batchprocessimagesdialog.cpp:678
+msgid "Image processing error"
+msgstr "Помилка під ч ас обробки зображення"
+
+#: common/batchprocessimagesdialog.cpp:680
+#, kde-format
+msgid ""
+"Image \"%1\": %2\n"
+"\n"
+"The output messages are:\n"
+msgstr ""
+"Зображення «%1»: %2\n"
+"\n"
+"Виведено повідомлення:\n"
+
+#: common/batchprocessimagesdialog.cpp:694
+msgid "You must select an item from the list to calculate the preview."
+msgstr ""
+"Для того, щоб програма могла показати перегляд, вам слід вибрати пункт зі "
+"списку."
+
+#: common/batchprocessimagesdialog.cpp:746
+msgid "Cannot run properly 'convert' program from 'ImageMagick' package."
+msgstr ""
+"Не вдалося належним чином запустити програму «convert» з пакунка «ImageMagick»."
+
+#: common/batchprocessimagesdialog.cpp:761
+msgid " - small preview"
+msgstr " — невеличкий перегляд"
+
+#: common/batchprocessimagesdialog.cpp:775
+msgid "Preview processing error"
+msgstr "Помилка під час обробки перегляду"
+
+#: common/batchprocessimagesdialog.cpp:776
+#, kde-format
+msgid ""
+"Cannot process preview for image \"%1\".\n"
+"The output messages are:\n"
+msgstr ""
+"Не вдалося обробити перегляд для зображення «%1».\n"
+"Повідомлення про помилку:\n"
+
+#: common/batchprocessimagesdialog.cpp:909
+msgid "Aborted."
+msgstr "Перервано."
+
+#: common/batchprocessimagesdialog.cpp:910
+msgid "process aborted by user"
+msgstr "Обробку перервано користувачем"
+
+#: common/batchprocessimagesdialog.cpp:930
+msgid "&Close"
+msgstr "&Закрити"
+
+#: plugin/plugin_batchprocessimages.cpp:86
+msgid "Border Images..."
+msgstr "Додавання рамок до зображень..."
+
+#: plugin/plugin_batchprocessimages.cpp:90
+msgid "Color Images..."
+msgstr "Робота з кольорами зображень..."
+
+#: plugin/plugin_batchprocessimages.cpp:94
+msgid "Convert Images..."
+msgstr "Перетворення зображень..."
+
+#: plugin/plugin_batchprocessimages.cpp:98
+msgid "Image Effects..."
+msgstr "Ефекти зображень..."
+
+#: plugin/plugin_batchprocessimages.cpp:102
+msgid "Filter Images..."
+msgstr "Фільтрування зображень..."
+
+#: plugin/plugin_batchprocessimages.cpp:106
+msgid "Rename Images..."
+msgstr "Перейменування зображень..."
+
+#: plugin/plugin_batchprocessimages.cpp:110
+msgid "Recompress Images..."
+msgstr "Перестискання зображень..."
+
+#: plugin/plugin_batchprocessimages.cpp:114
+msgid "Resize Images..."
+msgstr "Зміна розмірів зображень..."
+
+#: plugin/plugin_batchprocessimages.cpp:198
+msgid "Please select an album or a selection of images."
+msgstr "Будь ласка, оберіть альбом або декілька зображень."
+
+#: tools/borderimagesdialog.cpp:60
+msgid "Batch-Bordering Images"
+msgstr "Пакетне додавання рамок до зображень"
+
+#: tools/borderimagesdialog.cpp:64
+msgid "Batch Image-bordering"
+msgstr "Пакетне додавання рамок до зображень"
+
+#: tools/borderimagesdialog.cpp:67
+msgid ""
+"A Kipi plugin for batch bordering images\n"
+"This plugin use the \"convert\" program from \"ImageMagick\" package."
+msgstr ""
+"Додаток Kipi для пакетного додавання рамок до зображень\n"
+"Цей додаток використовує для роботи програму «convert» з пакунка «ImageMagick»."
+
+#: tools/borderimagesdialog.cpp:86
+msgid "Images Bordering Options"
+msgstr "Параметри додавання рамок до зображень"
+
+#: tools/borderimagesdialog.cpp:88
+msgid "Border:"
+msgstr "Обрамлення:"
+
+#: tools/borderimagesdialog.cpp:90
+msgctxt "image border type"
+msgid "Solid"
+msgstr "Суцільна"
+
+#: tools/borderimagesdialog.cpp:95
+msgctxt "image border type"
+msgid "Raise"
+msgstr "Рельєф"
+
+#: tools/borderimagesdialog.cpp:96
+msgctxt "image border type"
+msgid "Frame"
+msgstr "Рамка"
+
+#: tools/borderimagesdialog.cpp:99
+msgid ""
+"<p>Select here the border type for your images:</p><p><b>Solid</b>: just "
+"surround the images with a line.<br/><b>Niepce</b>: surround the images with "
+"a fine line and a large border (ideal for black and white pictures).<br/"
+"><b>Raise</b>: creating a 3D effect around the images.<br/><b>Frame</b>: "
+"surround the images with an ornamental border.</p>"
+msgstr ""
+"<p>Тут ви можете вибрати тип рамки для ваших зображень:</p><p><b>Суцільний</"
+"b>: просто обмежити зображення лінією.<br/><b>Ньєпса</b>: огорнути "
+"зображення лінією і широкою рамкою (ідеальний для чорно-білих зображень).<br/"
+"><b>Рельєф</b>: створення просторового ефекту навколо зображень.<br/"
+"><b>Рамка</b>: огорнути зображення рамкою з орнаментом.</p>"
+
+#: tools/borderoptionsdialog.cpp:48
+msgid "Border Options"
+msgstr "Параметри рамки"
+
+#: tools/borderoptionsdialog.cpp:61 tools/borderoptionsdialog.cpp:95
+#: tools/borderoptionsdialog.cpp:113 tools/borderoptionsdialog.cpp:124
+msgid "Border width:"
+msgstr "Ширина рамки:"
+
+#: tools/borderoptionsdialog.cpp:66 tools/borderoptionsdialog.cpp:100
+#: tools/borderoptionsdialog.cpp:118 tools/borderoptionsdialog.cpp:129
+msgid "Select here the border width in pixels."
+msgstr "Тут ви можете вибрати ширину рамки у пікселях."
+
+#: tools/borderoptionsdialog.cpp:70 tools/borderoptionsdialog.cpp:104
+#: tools/borderoptionsdialog.cpp:143
+msgid "Border color:"
+msgstr "Колір рамки:"
+
+#: tools/borderoptionsdialog.cpp:74 tools/borderoptionsdialog.cpp:108
+#: tools/borderoptionsdialog.cpp:147
+msgid "You can select here the border color."
+msgstr "Тут ви можете вибрати колір рамки."
+
+#: tools/borderoptionsdialog.cpp:79
+msgid "Line border width:"
+msgstr "Товщина лінії рамки:"
+
+#: tools/borderoptionsdialog.cpp:84
+msgid "Select here the line border width in pixels."
+msgstr "Тут ви можете вибрати товщину лінії рамки у пікселях."
+
+#: tools/borderoptionsdialog.cpp:88
+msgid "Line border color:"
+msgstr "Колір лінії рамки:"
+
+#: tools/borderoptionsdialog.cpp:92
+msgid "You can select here the line border color."
+msgstr "Тут ви можете вибрати колір лінії рамки."
+
+#: tools/borderoptionsdialog.cpp:133
+msgid "Bevel width:"
+msgstr "Ширина фаски:"
+
+#: tools/borderoptionsdialog.cpp:138
+msgid ""
+"Select here the bevel width in pixels. This value must be &lt;= Border "
+"width / 2"
+msgstr ""
+"Тут ви можете вибрати ширину фаски у пікселях. Це значення має бути меншим "
+"або рівним за половину ширини рамки"
+
+#: tools/colorimagesdialog.cpp:59
+msgid "Batch Image-Color Processing"
+msgstr "Пакетна обробка кольорів зображень"
+
+#: tools/colorimagesdialog.cpp:63
+msgid "Batch image-color enhancement"
+msgstr "Пакетне покращення кольорів зображень"
+
+#: tools/colorimagesdialog.cpp:66
+msgid ""
+"A Kipi plugin for batch image-color enhancement.\n"
+"This plugin use the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"Додаток Kipi для пакетного покращення кольорів зображення.\n"
+"Цей додаток використовує для роботи програму «convert» з пакунка «ImageMagick»."
+
+#: tools/colorimagesdialog.cpp:85
+msgid "Image Coloring Options"
+msgstr "Параметри кольорів зображень"
+
+#: tools/colorimagesdialog.cpp:87 tools/filterimagesdialog.cpp:85
+#: tools/resizeoptionsdialog.cpp:83
+msgid "Filter:"
+msgstr "Фільтр:"
+
+#: tools/colorimagesdialog.cpp:89
+msgctxt "color image filter"
+msgid "Decrease Contrast"
+msgstr "Зменшити контрастність"
+
+#: tools/colorimagesdialog.cpp:90
+msgctxt "color image filter"
+msgid "Depth"
+msgstr "Глибина"
+
+#: tools/colorimagesdialog.cpp:91
+msgctxt "color image filter"
+msgid "Equalize"
+msgstr "Зрівняти"
+
+#: tools/colorimagesdialog.cpp:92
+msgctxt "color image filter"
+msgid "Fuzz"
+msgstr "Розпушування"
+
+#: tools/colorimagesdialog.cpp:93
+msgctxt "color image filter"
+msgid "Gray Scales"
+msgstr "Відтінки сірого"
+
+#: tools/colorimagesdialog.cpp:94
+msgctxt "color image filter"
+msgid "Increase Contrast"
+msgstr "Збільшити контрастність"
+
+#: tools/colorimagesdialog.cpp:95
+msgctxt "color image filter"
+msgid "Monochrome"
+msgstr "Чорно-біле"
+
+#: tools/colorimagesdialog.cpp:96
+msgctxt "color image filter"
+msgid "Negate"
+msgstr "Негатив"
+
+#: tools/colorimagesdialog.cpp:97
+msgctxt "color image filter"
+msgid "Normalize"
+msgstr "Нормалізувати"
+
+#: tools/colorimagesdialog.cpp:98
+msgctxt "color image filter"
+msgid "Segment"
+msgstr "Сегментація"
+
+#: tools/colorimagesdialog.cpp:99
+msgctxt "color image filter"
+msgid "Trim"
+msgstr "Обрізати"
+
+#: tools/colorimagesdialog.cpp:100
+msgid "Normalize"
+msgstr "Нормалізувати"
+
+#: tools/colorimagesdialog.cpp:102
+msgid ""
+"<p>Select here the color enhancement type for your images:</p><p><b>Decrease "
+"contrast</b>: reduce the image contrast. The algorithm reduces the intensity "
+"difference between the lighter and darker elements of the image.<br/"
+"><b>Depth</b>: change the color depth of the image.<br/><b>Equalize</b>: "
+"perform histogram equalization to the image.<br/><b>Fuzz</b>: merging colors "
+"within a distance, i.e. consider them to be equal.<br/><b>Gray scales</b>: "
+"convert color images to grayscale images.<br/><b>Increase contrast</b>: "
+"enhance the image contrast. The algorithm enhances the intensity differences "
+"between the lighter and darker elements of the image.<br/><b>Monochrome</b>: "
+"transform the image to black and white.<br/><b>Negate</b>: replace every "
+"pixel with its complementary color. The red, green, and blue intensities of "
+"an image are negated. White becomes black, yellow becomes blue, etc.<br/"
+"><b>Normalize</b>: transform image to span the full range of color values. "
+"This is a contrast enhancement technique. The algorithm enhances the "
+"contrast of a colored image by adjusting the pixels color to span the entire "
+"range of colors available.<br/><b>Segment</b>: segment an image by analyzing "
+"the histograms of the color components and identifying units that are "
+"homogeneous with the fuzzy c-means technique.<br/><b>Trim</b>: trim an image "
+"(fuzz reverse technique). The algorithm remove edges that are the background "
+"color from the image.</p>"
+msgstr ""
+"<p>Тут ви можете вибрати тип покращення кольорів ваших зображень:</"
+"p><p><b>Зменшити контрастність</b>: зменшити контрастність зображення. "
+"Використаний алгоритм зменшить різницю у інтенсивності кольорів між "
+"світлішими і темнішими елементами зображення.<br/><b>Глибина</b>: змінити "
+"глибину (розрядність) кольорів зображення.<br/><b>Зрівняти</b>: виконати "
+"вирівнювання за гістограмою кольорів зображення.<br/><b>Розпушування</b>: "
+"об’єднати кольори у певному діапазоні, тобто вважати ці кольори однаковими."
+"<br/><b>Відтінки сірого</b>: перетворити кольорові зображення на зображення "
+"у тонах сірого.<br/><b>Збільшити контрастність</b>: збільшити контрастність "
+"зображень. За використання цього алгоритму буде збільшено різницю у "
+"інтенсивності між світлими і темними елементами зображення.<br/><b>Чорно-"
+"біле</b>: перетворити зображення на чорно-біле.<br/><b>Негатив</b>: замінити "
+"кожен з пікселів на піксель з інвертованим кольором. Інтенсивності "
+"червоного, зеленого і синього пікселів зображення буде замінено на "
+"інтенсивності негатива. Біле стане чорним, жовте — синім тощо.<br/"
+"><b>Нормалізувати</b>: перетворити зображення так, щоб у ньому був повний "
+"діапазон значень кольорів. Це методика покращення контрастності. Алгоритм "
+"покращує контрастність кольорового зображення коригуванням кольорів пікселів "
+"так, щоб у зображення були всі можливі кольори діапазону кольорів.<br/"
+"><b>Сегментація</b>: сегментація зображення шляхом аналізу гістограм "
+"компонентів кольорів і визначення елементів, які є однорідними, за допомогою "
+"методики нечіткого c-середнього.<br/><b>Обрізати</b>: обрізати зображення "
+"(методика нечіткого обернення). За використання цього алгоритму буде "
+"вилучено краї, які мають колір тла зображення.</p>"
+
+#: tools/coloroptionsdialog.cpp:49
+msgid "Color Options"
+msgstr "Параметри кольорів"
+
+#: tools/coloroptionsdialog.cpp:62
+msgid "Depth value:"
+msgstr "Значення глибини:"
+
+#: tools/coloroptionsdialog.cpp:68
+msgid "Select here the image depth in bits."
+msgstr "Тут ви можете вибрати бітову розрядність кольорів зображення."
+
+#: tools/coloroptionsdialog.cpp:74
+msgid "Distance:"
+msgstr "Відстань:"
+
+#: tools/coloroptionsdialog.cpp:79
+msgid "Select here the fuzz distance in absolute intensity units."
+msgstr ""
+"Тут ви можете вибрати відстань розпушування у одиницях абсолютної "
+"інтенсивності."
+
+#: tools/coloroptionsdialog.cpp:86
+msgid "Cluster threshold:"
+msgstr "Поріг кластеризації:"
+
+#: tools/coloroptionsdialog.cpp:91
+msgid ""
+"Select here the value which represents the minimum number of pixels "
+"contained in a hexahedron before it can be considered valid."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає мінімальній кількості "
+"пікселів, які містяться у гексаедрі, перш ніж програма вважатиме його "
+"коректним."
+
+#: tools/coloroptionsdialog.cpp:97
+msgid "Smooth threshold:"
+msgstr "Поріг згладжування:"
+
+#: tools/coloroptionsdialog.cpp:102
+msgid ""
+"Select here the value which eliminates noise in the second derivative of the "
+"histogram. As the value is increased, you can expect a smoother second "
+"derivative."
+msgstr ""
+"Тут ви можете вибрати значення, яке буде використано для вилучення шуму за "
+"другою похідною гістограми. За збільшення цього значення друга похідна "
+"ставатиме гладкішою."
+
+#: tools/convertimagesdialog.cpp:67
+msgid "Batch Convert Images"
+msgstr "Пакетне перетворення зображень"
+
+#: tools/convertimagesdialog.cpp:71
+msgid "Batch convert images"
+msgstr "Пакетне перетворення зображень"
+
+#: tools/convertimagesdialog.cpp:74
+msgid ""
+"A Kipi plugin for batch converting images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"Додаток Kipi для пакетного перетворення зображень.\n"
+"Цей додаток використовує для роботи програму «convert» з пакунка «ImageMagick»."
+
+#: tools/convertimagesdialog.cpp:88
+msgid "Image Conversion Options"
+msgstr "Параметри перетворення зображень"
+
+#: tools/convertimagesdialog.cpp:90
+msgid "Format:"
+msgstr "Формат:"
+
+#: tools/convertimagesdialog.cpp:100
+msgid "<p>Select here the target image file format.</p>"
+msgstr "<p>Тут ви можете вибрати формат файлів зображень призначення.</p>"
+
+#: tools/convertimagesdialog.cpp:101
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group's file format is a good "
+"Web file format but it uses lossy data compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color "
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: Формат файлів Joint Photographic Experts Group є чудовим "
+"форматом для зображень інтернету, але за його використання можлива втрата "
+"частини даних.</p><p><b>PNG</b>: форма файлів Portable Network Graphics є "
+"поширеним форматом файлів для портативного зберігання растрових зображень "
+"без втрат з непоганим рівнем стискання. PNG є вільним від патентних обмежень "
+"замінником GIF, файли у цьому форматі у багатьох випадках можуть замінити "
+"TIFF. PNG розроблено для роботи з програмами для перегляду зображень у "
+"мережі, отже файли у цьому форматі придатні для показу під час звантаження. "
+"Крім того, у PNG можна зберігати гаму і дані хроматичності для коректного "
+"показу на різнорідних платформах.</p>"
+
+#: tools/convertimagesdialog.cpp:110
+msgid ""
+"<p><b>TIFF</b>: the Tag Image File Format is a rather old standard that is "
+"still very popular today. It is a highly flexible and platform-independent "
+"format which is supported by numerous image processing applications and "
+"virtually all prepress software on the market.</p>"
+msgstr ""
+"<p><b>TIFF</b>: формат файлів Tag Image File Format є досить давнім "
+"стандартом, який залишається популярним і зараз. Цей формат є дуже гнучким і "
+"не залежним від платформи, його підтримує значна кількість програм для "
+"роботи з зображеннями і майже всі існуючі програми для приготування для "
+"друку.</p>"
+
+#: tools/convertimagesdialog.cpp:114
+msgid ""
+"<p><b>PPM</b>: the Portable Pixel Map file format is used as an intermediate "
+"format for storing color bitmap information. PPM files may be either binary "
+"or ASCII and store pixel values up to 24 bits in size. This format generates "
+"the largest-sized text files to encode images without losing quality.</p>"
+msgstr ""
+"<p><b>PPM</b>: формат файлів Portable Pixel Map використовується як "
+"проміжний формат для зберігання побітової інформації про колір. Файли PPM "
+"можуть бути двійковими або складатися з символів ASCII і зберігати значення "
+"пікселів з розрядністю до 24 бітів. Цей формат створює текстові файли "
+"найбільшого розміру серед форматі кодування зображень без втрати якості.</p>"
+
+#: tools/convertimagesdialog.cpp:119
+msgid ""
+"<p><b>BMP</b>: the BitMaP file format is a popular image format from Win32 "
+"environment. It efficiently stores mapped or unmapped RGB graphics data with "
+"pixels 1-, 4-, 8-, or 24-bits in size. Data may be stored raw or compressed "
+"using a 4-bit or 8-bit RLE data compression algorithm. BMP is an excellent "
+"choice for a simple bitmap format which supports a wide range of RGB image "
+"data.</p>"
+msgstr ""
+"<p><b>BMP</b>: формат файлів BitMaP є популярним форматом зображень у "
+"середовищі Win32. У ньому можна ефективно зберігати графічні дані RGB з "
+"розрядністю 1-, 4-, 8- або 24 бітів на піксель. Дані може бути збережено у "
+"нестиснутому або стиснутому на основі 4- і 8-бітового алгоритму стискання "
+"RLE. BMP є чудовим простим форматом растрових зображень, який підтримує "
+"широкий діапазон даних зображення RGB.</p>"
+
+#: tools/convertimagesdialog.cpp:125
+msgid ""
+"<p><b>TGA</b>: the TarGA image file format is one of the most widely used "
+"bitmap file formats for storage of 24 and 32 bits truecolor images.  TGA "
+"supports colormaps, alpha channel, gamma value, postage stamp image, textual "
+"information, and developer-definable data.</p>"
+msgstr ""
+"<p><b>TGA</b>: формат файлів TarGA є одним з найпоширеніших форматів файлів "
+"растрових зображень для зберігання кольорових зображень з розрядністю "
+"пікселів 24 і 32 біти. TGA підтримує карти кольорів, альфа-канал, значення "
+"гами, зображення-штемпелі, текстову інформацію і дані розробника.</p>"
+
+#: tools/convertimagesdialog.cpp:129
+msgid ""
+"<p><b>EPS</b>: the  Adobe Encapsulated PostScript image file format is a "
+"PostScript language program describing the appearance of a single page. "
+"Usually, the purpose of the EPS file is to be embedded inside another "
+"PostScript language page description.</p>"
+msgstr ""
+"<p><b>EPS</b>: формат файлів зображень  Adobe Encapsulated PostScript є "
+"програмою мовою PostScript, яка описує вигляд окремою сторінки. Зазвичай, "
+"метою створення файла EPS є вбудовування зображення у інший опис сторінки "
+"мовою PostScript.</p>"
+
+#: tools/convertimagesdialog.cpp:222 tools/convertimagesdialog.cpp:223
+#: tools/convertimagesdialog.cpp:272 tools/convertimagesdialog.cpp:285
+msgctxt "image compression type"
+msgid "None"
+msgstr "Без стискання"
+
+#: tools/convertoptionsdialog.cpp:47
+msgid "Image File Format Options"
+msgstr "Параметри форматів файлів зображення"
+
+#: tools/convertoptionsdialog.cpp:60 tools/recompressoptionsdialog.cpp:61
+#: tools/recompressoptionsdialog.cpp:95
+msgid "Image compression level:"
+msgstr "Рівень стискання зображень:"
+
+#: tools/convertoptionsdialog.cpp:65
+msgid "<p>The compression value for the target images:</p>"
+msgstr "<p>Рівень стискання для зображень призначення:</p>"
+
+#: tools/convertoptionsdialog.cpp:66 tools/recompressoptionsdialog.cpp:66
+#: tools/recompressoptionsdialog.cpp:100
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: дуже високий рівень стискання<br/><b>25</b>: високий рівень "
+"стискання<br/><b>50</b>: середній рівень стискання<br/><b>75</b>: низький "
+"рівень стискання (типове значення)<br/><b>100</b>: без стискання</p>"
+
+#: tools/convertoptionsdialog.cpp:80 tools/recompressoptionsdialog.cpp:77
+msgid "Use lossless compression"
+msgstr "Використовувати стискання без втрат"
+
+#: tools/convertoptionsdialog.cpp:81 tools/recompressoptionsdialog.cpp:78
+msgid ""
+"If this option is enabled, all JPEG operations will use lossless compression."
+msgstr ""
+"Якщо буде позначено цей пункт, для всіх дій з JPEG буде використано "
+"стискання без втрат."
+
+#: tools/convertoptionsdialog.cpp:92 tools/convertoptionsdialog.cpp:105
+#: tools/recompressoptionsdialog.cpp:121 tools/recompressoptionsdialog.cpp:139
+msgid "Image compression algorithm:"
+msgstr "Алгоритм стискання зображень:"
+
+#: tools/convertoptionsdialog.cpp:97
+msgctxt "No TIFF compression"
+msgid "None"
+msgstr "Немає"
+
+#: tools/convertoptionsdialog.cpp:98 tools/convertoptionsdialog.cpp:110
+msgid "Select here the compression algorithm."
+msgstr "Тут ви можете вибрати алгоритм стискання."
+
+#: tools/convertoptionsdialog.cpp:109
+msgctxt "No TGA compression"
+msgid "None"
+msgstr "Немає"
+
+#: tools/effectimagesdialog.cpp:58
+msgid "Batch Image Effects"
+msgstr "Пакетне застосування ефектів"
+
+#: tools/effectimagesdialog.cpp:62
+msgid "Batch image effects"
+msgstr "Пакетне застосування ефектів"
+
+#: tools/effectimagesdialog.cpp:65
+msgid ""
+"A Kipi plugin for batch image-effect transformations.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"Додаток Kipi для пакетного застосування ефектів до зображень.\n"
+"Цей додаток використовує для роботи програму «convert» з пакунка «ImageMagick»."
+
+#: tools/effectimagesdialog.cpp:83
+msgid "Image Effect Options"
+msgstr "Параметри ефектів зображень"
+
+#: tools/effectimagesdialog.cpp:85
+msgid "Effect:"
+msgstr "Ефект:"
+
+#: tools/effectimagesdialog.cpp:87
+msgctxt "image effect"
+msgid "Adaptive Threshold"
+msgstr "Адаптивний поріг"
+
+#: tools/effectimagesdialog.cpp:88
+msgctxt "image effect"
+msgid "Charcoal"
+msgstr "Вугільний олівець"
+
+#: tools/effectimagesdialog.cpp:89
+msgctxt "image effect"
+msgid "Detect Edges"
+msgstr "Виявлення меж"
+
+#: tools/effectimagesdialog.cpp:90 tools/effectimagesdialog.cpp:98
+msgctxt "image effect"
+msgid "Emboss"
+msgstr "Барельєф"
+
+#: tools/effectimagesdialog.cpp:91
+msgctxt "image effect"
+msgid "Implode"
+msgstr "Вибухове стискання"
+
+#: tools/effectimagesdialog.cpp:92
+msgctxt "image effect"
+msgid "Paint"
+msgstr "Малювання пензлем"
+
+#: tools/effectimagesdialog.cpp:93
+msgctxt "image effect"
+msgid "Shade Light"
+msgstr "Тони світла"
+
+#: tools/effectimagesdialog.cpp:94
+msgctxt "image effect"
+msgid "Solarize"
+msgstr "Вигорання"
+
+#: tools/effectimagesdialog.cpp:95
+msgctxt "image effect"
+msgid "Spread"
+msgstr "Випадковий розподіл точок"
+
+#: tools/effectimagesdialog.cpp:96
+msgctxt "image effect"
+msgid "Swirl"
+msgstr "Вихор"
+
+#: tools/effectimagesdialog.cpp:97
+msgctxt "image effect"
+msgid "Wave"
+msgstr "Хвиля"
+
+#: tools/effectimagesdialog.cpp:100
+msgid ""
+"<p>Select here the effect type for your images:</p><p><b>Adaptive threshold</"
+"b>: perform local adaptive thresholding. The algorithm selects an individual "
+"threshold for each pixel based on the range of intensity values in its local "
+"neighborhood. This allows for thresholding of an image whose global "
+"intensity histogram does not contain distinctive peaks.<br/><b>Charcoal</b>: "
+"simulate a charcoal drawing.<br/><b>Detect edges</b>: detect edges within an "
+"image.<br/><b>Emboss</b>: returns a grayscale image with a three-dimensional "
+"effect. The algorithm convolves the image with a Gaussian operator of the "
+"given radius and standard deviation.<br/><b>Implode</b>: implode image "
+"pixels about the center.<br/><b>Paint</b>: applies a special effect filter "
+"that simulates an oil painting.<br/><b>Shade light</b>: shines a distant "
+"light on an image to create a three-dimensional effect.<br/><b>Solarize</b>: "
+"negate all pixels above the threshold level. This algorithm produces a "
+"solarization effect seen when exposing a photographic film to light during "
+"the development process.<br/><b>Spread</b>: this is a special-effect method "
+"that randomly displaces each pixel in a block defined by the radius "
+"parameter.<br/><b>Swirl</b>: swirls the pixels about the center of the "
+"image. <br/><b>Wave</b>: creates a \"ripple\" effect in the image by "
+"shifting the pixels vertically along a sine wave.</p>"
+msgstr ""
+"<p>Тут ви можете вибрати тип ефекту, який буде застосовано до ваших "
+"зображень:</p><p><b>Адаптивний поріг</b>: виконати локальне адаптивне "
+"обрізання. За використання алгоритму буде вибрано окреме порогове значення "
+"для кожного пікселя на основі діапазону значень інтенсивності у його околі. "
+"Таким чином можна обрізати кольори зображення, чия гістограма інтенсивності "
+"не містить чітко виражених піків.<br/><b>Вугільний олівець</b>: імітує "
+"малювання вугільним олівцем.<br/><b>Виявлення меж</b>: посилити різкість на "
+"краях об’єктів зображення.<br/><b>Барельєф</b>: повертає зображення у тонах "
+"сірого з ефектом третього виміру. Алгоритм перетворення виконує згортку "
+"зображення за допомогою Гаусового оператора з вказаним радіусом і "
+"стандартним відхиленням.<br/><b>Вибухове стискання</b>: вибухове стискання "
+"пікселів зображення навколо центра зображення.<br/><b>Малювання пензлем</b>: "
+"застосовує спеціальний фільтр ефекту, який імітує малювання олійними фарбами."
+"<br/><b>Тони світла</b>: висвітлює зображення віддаленим світлом для "
+"створення просторового ефекту.<br/><b>Вигорання</b>: інвертує всі пікселі "
+"понад порогове значення. За використання цього алгоритму програма створює "
+"ефект вигорання, який можна бачити, якщо фотографічну плівку було засвічено "
+"під час роботи з нею.<br/><b>Розповсюдження</b>: за використання цього "
+"ефекту у блоці пікселів буде випадково переставлено пікселі, радіус блоку є "
+"параметром методу.<br/><b>Вихор</b>: закручує пікселі навколо центра "
+"зображення.<br/><b>Хвиля</b>: створює ефект пульсації на зображенні "
+"зсуванням пікселів у вертикальному напрямку за синусоїдою.</p>"
+
+#: tools/effectoptionsdialog.cpp:47
+msgid "Effect Options"
+msgstr "Параметри ефектів"
+
+#: tools/effectoptionsdialog.cpp:60
+msgid "Width:"
+msgstr "Ширина:"
+
+#: tools/effectoptionsdialog.cpp:65
+msgid ""
+"Select here the value which represents the width of the local neighborhood."
+msgstr "Тут ви можете вибрати ширину околу точки."
+
+#: tools/effectoptionsdialog.cpp:70
+msgid "Height:"
+msgstr "Висота:"
+
+#: tools/effectoptionsdialog.cpp:75
+msgid ""
+"Select here the value which represents the height of the local neighborhood."
+msgstr "Тут ви можете вибрати висоту околу точки."
+
+#: tools/effectoptionsdialog.cpp:80
+msgid "Offset:"
+msgstr "Зміщення:"
+
+#: tools/effectoptionsdialog.cpp:85
+msgid "Select here the value which represents the mean offset."
+msgstr "Тут ви можете вибрати значення, яке відповідає середньому відступу."
+
+#: tools/effectoptionsdialog.cpp:92 tools/effectoptionsdialog.cpp:115
+#: tools/effectoptionsdialog.cpp:130 tools/effectoptionsdialog.cpp:168
+#: tools/effectoptionsdialog.cpp:221 tools/filteroptionsdialog.cpp:90
+#: tools/filteroptionsdialog.cpp:105 tools/filteroptionsdialog.cpp:117
+#: tools/filteroptionsdialog.cpp:128 tools/filteroptionsdialog.cpp:146
+msgid "Radius:"
+msgstr "Радіус:"
+
+#: tools/effectoptionsdialog.cpp:97
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood."
+msgstr "Тут ви можете вибрати радіус околу точки."
+
+#: tools/effectoptionsdialog.cpp:102 tools/effectoptionsdialog.cpp:142
+#: tools/filteroptionsdialog.cpp:95 tools/filteroptionsdialog.cpp:134
+#: tools/filteroptionsdialog.cpp:152
+msgid "Deviation:"
+msgstr "Розсіювання:"
+
+#: tools/effectoptionsdialog.cpp:107 tools/effectoptionsdialog.cpp:147
+msgid ""
+"Select here the value which represents the standard deviation of the "
+"Gaussian, in pixels."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає стандартному відхилення "
+"гаусіана, у пікселях."
+
+#: tools/effectoptionsdialog.cpp:120
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood. "
+"Radius defines the radius of the convolution filter. If you use a radius of "
+"0 the algorithm selects a suitable radius."
+msgstr ""
+"Тут ви можете вибрати радіус околу точки. Радіус визначає радіус фільтра "
+"згортки. Якщо ви використаєте радіус рівний 0, алгоритм сам обере належний "
+"радіус."
+
+#: tools/effectoptionsdialog.cpp:135
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood. "
+"For reasonable results, radius should be larger than deviation. If you use a "
+"radius of 0 the algorithm selects a suitable radius."
+msgstr ""
+"Тут ви можете вибрати радіус околу точки. Для належних результатів радіус "
+"має бути більшим за відхилення. Якщо ви використаєте радіус рівний 0, "
+"алгоритм сам обере належний радіус."
+
+#: tools/effectoptionsdialog.cpp:155 tools/effectoptionsdialog.cpp:208
+msgid "Factor:"
+msgstr "Множник:"
+
+#: tools/effectoptionsdialog.cpp:160
+msgid "Select here the value which represents the extent of the implosion."
+msgstr "Тут ви можете вибрати значення, яке відповідає величині стискання."
+
+#: tools/effectoptionsdialog.cpp:173
+msgid ""
+"Select here the value which represents the radius of the circular "
+"neighborhood. Each pixel is replaced by the most frequent color occurring in "
+"a circular region defined by the radius."
+msgstr ""
+"Тут ви можете вибрати радіус кільцевого околу. Кожен з пікселів буде "
+"замінено найпоширеніші кольори у кільцевій області, розмір якої визначається "
+"радіусом."
+
+#: tools/effectoptionsdialog.cpp:183
+msgid "Azimuth:"
+msgstr "Азимут:"
+
+#: tools/effectoptionsdialog.cpp:188
+msgid ""
+"Select here the value which represents the azimuth of the light source "
+"direction. The azimuth is measured in degrees above the x axis."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає азимуту напрямку на джерело "
+"світла. Азимут вимірюється у градусах над віссю x."
+
+#: tools/effectoptionsdialog.cpp:194
+msgid "Elevation:"
+msgstr "Висота:"
+
+#: tools/effectoptionsdialog.cpp:199
+msgid ""
+"Select here the value which represents the elevation of the light source "
+"direction. The elevation is measured in pixels above the Z axis."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає висоті напрямку на джерело "
+"світла. Висота вимірюється у пікселях віссю z."
+
+#: tools/effectoptionsdialog.cpp:213
+msgid ""
+"Select here the value which represents the percent-threshold of the solarize "
+"intensity."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає пороговому значенню у "
+"відсотках інтенсивності вигорання."
+
+#: tools/effectoptionsdialog.cpp:226
+msgid ""
+"Select here the value which represents the random pixel in a neighborhood of "
+"this extent."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає розміру околу випадкових "
+"пікселів."
+
+#: tools/effectoptionsdialog.cpp:234
+msgid "Degrees:"
+msgstr "Градуси:"
+
+#: tools/effectoptionsdialog.cpp:239
+msgid ""
+"Select here the value which represents the tightness of the swirling effect. "
+"You get a more dramatic effect as the degrees move from 1 to 360."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає щільності ефекту вихору. "
+"Щільність збільшується зі зростанням величини у градусах від 1 до 360."
+
+#: tools/effectoptionsdialog.cpp:248
+msgid "Amplitude:"
+msgstr "Амплітуда:"
+
+#: tools/effectoptionsdialog.cpp:253
+msgid "Select here the value which represents the amplitude of the sine wave."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає амплітуді хвилі синусоїди."
+
+#: tools/effectoptionsdialog.cpp:258
+msgid "Length:"
+msgstr "Довжина:"
+
+#: tools/effectoptionsdialog.cpp:263
+msgid ""
+"Select here the value which represents the wave length of the sine wave."
+msgstr ""
+"Тут ви можете вибрати значення, яке відповідає довжині хвилі синусоїди."
+
+#: tools/filterimagesdialog.cpp:58
+msgid "Batch Image Filtering"
+msgstr "Пакетне фільтрування зображень"
+
+#: tools/filterimagesdialog.cpp:62
+msgid "Batch image filtering"
+msgstr "Пакетне фільтрування зображень"
+
+#: tools/filterimagesdialog.cpp:65
+msgid ""
+"A Kipi plugin to batch filter images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"Додаток Kipi для пакетного фільтрування зображень.\n"
+"Цей додаток використовує для роботи програму «convert» з пакунка «ImageMagick»."
+
+#: tools/filterimagesdialog.cpp:83
+msgid "Image Filtering Options"
+msgstr "Параметри фільтрування зображень"
+
+#: tools/filterimagesdialog.cpp:87
+msgctxt "image filter"
+msgid "Add Noise"
+msgstr "Додавання шуму"
+
+#: tools/filterimagesdialog.cpp:88
+msgctxt "image filter"
+msgid "Antialias"
+msgstr "Згладжування"
+
+#: tools/filterimagesdialog.cpp:89
+msgctxt "image filter"
+msgid "Blur"
+msgstr "Розмивання"
+
+#: tools/filterimagesdialog.cpp:90
+msgctxt "image filter"
+msgid "Despeckle"
+msgstr "Очищення від шуму"
+
+#: tools/filterimagesdialog.cpp:91
+msgctxt "image filter"
+msgid "Enhance"
+msgstr "Покращення"
+
+#: tools/filterimagesdialog.cpp:92
+msgctxt "image filter"
+msgid "Median"
+msgstr "Медіана"
+
+#: tools/filterimagesdialog.cpp:93
+msgctxt "image filter"
+msgid "Noise Reduction"
+msgstr "Вилучення шумів"
+
+#: tools/filterimagesdialog.cpp:94 tools/filterimagesdialog.cpp:96
+msgctxt "image filter"
+msgid "Sharpen"
+msgstr "Збільшення різкості"
+
+#: tools/filterimagesdialog.cpp:95
+msgctxt "image filter"
+msgid "Unsharp"
+msgstr "Зменшення різкості"
+
+#: tools/filterimagesdialog.cpp:98
+msgid ""
+"<p>Select here the filter type for your images:</p><p><b>Add noise</b>: add "
+"artificial noise to an image.<br/><b>Antialias</b>: remove pixel aliasing."
+"<br/><b>Blur</b>: blur the image with a Gaussian operator.<br/><b>Despeckle</"
+"b>: reduces the speckle noise in an image while preserving the edges of the "
+"original image.<br/><b>Enhance</b>: apply a digital filter to enhance a "
+"noisy image.<br/><b>Median</b>: apply a median filter to an image.<br/"
+"><b>Noise reduction</b>: reduce noise in an image. <br/><b>Sharpen</b>: "
+"sharpen the image with a Gaussian operator.<br/><b>Unsharp</b>: sharpen the "
+"image with an unsharp mask operator.</p>"
+msgstr ""
+"<p>Тут ви можете вибрати тип фільтра, який буде застосовано до ваших "
+"зображень:</p><p><b>Додати шум</b>: додати штучний шум на ваше зображення."
+"<br/><b>Згладжування</b>: вилучити перепади між пікселями.<br/"
+"><b>Розмивання</b>: розмити зображення за допомогою оператора Гауса.<br/"
+"><b>Очищення від шуму</b>: зменшити точковий шум на зображенні зі "
+"збереженням меж об’єктів початкового зображення.<br/><b>Покращення</b>: "
+"застосувати цифровий фільтр для покращення засміченого зображення.<br/"
+"><b>Медіана</b>: застосувати фільтр медіани до зображення.<br/><b>Вилучення "
+"шумів</b>: зменшити шумність зображення.<br/><b>Збільшення різкості</b>: "
+"збільшити різкість зображення за допомогою оператора Гауса.<br/><b>Зменшення "
+"різкості</b>: зменшити різкість зображення за допомогою оператора маски "
+"зменшення різкості.</p>"
+
+#: tools/filterimagesdialog.cpp:213 tools/filterimagesdialog.cpp:266
+#: tools/filteroptionsdialog.cpp:73
+msgctxt "image noise type"
+msgid "Gaussian"
+msgstr "Гаусів"
+
+#: tools/filterimagesdialog.cpp:265 tools/filteroptionsdialog.cpp:72
+msgctxt "image noise type"
+msgid "Uniform"
+msgstr "Однорідний"
+
+#: tools/filterimagesdialog.cpp:267 tools/filteroptionsdialog.cpp:74
+msgctxt "image noise type"
+msgid "Multiplicative"
+msgstr "Мультиплікативний"
+
+#: tools/filterimagesdialog.cpp:268 tools/filteroptionsdialog.cpp:75
+msgctxt "image noise type"
+msgid "Impulse"
+msgstr "Імпульсний"
+
+#: tools/filterimagesdialog.cpp:269 tools/filteroptionsdialog.cpp:76
+msgctxt "image noise type"
+msgid "Laplacian"
+msgstr "Лапласів"
+
+#: tools/filterimagesdialog.cpp:270 tools/filteroptionsdialog.cpp:77
+msgctxt "image noise type"
+msgid "Poisson"
+msgstr "Пуассонів"
+
+#: tools/filteroptionsdialog.cpp:58
+msgid "Filter Options"
+msgstr "Параметри фільтра"
+
+#: tools/filteroptionsdialog.cpp:78
+msgid ""
+"Select here the algorithm method which will used to add random noise to the "
+"images."
+msgstr ""
+"Тут ви можете вибрати алгоритм, який буде використано для додавання "
+"випадкового шуму до зображень."
+
+#: tools/filteroptionsdialog.cpp:80
+msgid "Noise algorithm:"
+msgstr "Алгоритм шуму:"
+
+#: tools/filteroptionsdialog.cpp:85 tools/filteroptionsdialog.cpp:93
+#: tools/filteroptionsdialog.cpp:100 tools/filteroptionsdialog.cpp:110
+#: tools/filteroptionsdialog.cpp:122 tools/filteroptionsdialog.cpp:131
+#: tools/filteroptionsdialog.cpp:139 tools/filteroptionsdialog.cpp:149
+msgid "px"
+msgstr "пк"
+
+#: tools/filteroptionsdialog.cpp:86
+msgid ""
+"Select here the blur radius of the Gaussian, not counting the center pixel. "
+"For reasonable results, the radius should be larger than deviation. If you "
+"use a radius of 0 the blur operation selects a suitable radius."
+msgstr ""
+"Тут ви можете вибрати радіус розмивання гаусіана, без центрального пікселя. "
+"Для належних результатів радіус має бути більшим за відхилення. Якщо ви "
+"використаєте радіус рівний 0, алгоритм сам обере належний радіус."
+
+#: tools/filteroptionsdialog.cpp:94
+msgid "Select here the standard deviation of the blur Gaussian."
+msgstr ""
+"Тут ви можете вибрати середньоквадратичне відхилення гаусіана розмивання."
+
+#: tools/filteroptionsdialog.cpp:101
+msgid ""
+"Select here the median radius of the pixel neighborhood. The algorithm "
+"applies a digital filter that improves the quality of noisy images. Each "
+"pixel is replaced by the median in a set of neighboring pixels as defined by "
+"the radius."
+msgstr ""
+"Тут ви можете вибрати радіус околу пікселя для фільтра медіани. Алгоритм "
+"застосує цифрове фільтрування, яке покращить якість засмічених зображень. "
+"Кожен з пікселів буде замінено медіаною набору сусідніх пікселів, розмір "
+"області яких визначається радіусом."
+
+#: tools/filteroptionsdialog.cpp:111
+msgid ""
+"Select here the noise reduction radius value. The algorithm smooths the "
+"contours of an image while still preserving edge information. The algorithm "
+"works by replacing each pixel with its neighbor closest in value. A neighbor "
+"is defined by the radius. If you use a radius of 0 the algorithm selects a "
+"suitable radius."
+msgstr ""
+"Тут ви можете вибрати значення радіусу зменшення шумності. Алгоритм згладжує "
+"контури елементів зображення, зберігаючи інформацію про краї. За "
+"використання цього алгоритму заміною кожного з пікселів сусідніми пікселями "
+"з найближчим значенням. Окіл сусідства визначається вказаним радіусом. Якщо "
+"ви вкажете значення 0, алгоритм сам обере належний радіус."
+
+#: tools/filteroptionsdialog.cpp:123
+msgid ""
+"Select here the radius of the sharpen Gaussian, not counting the center "
+"pixel. For reasonable results, the radius should be larger than deviation. "
+"If you use a radius of 0 the sharpen operation selects a suitable radius."
+msgstr ""
+"Тут ви можете вибрати радіус гаусіана різкості без центральної точки. Для "
+"належних результатів радіус має бути більшим за відхилення. Якщо ви "
+"використаєте радіус рівний 0, алгоритм сам обере належний радіус."
+
+#: tools/filteroptionsdialog.cpp:132
+msgid "Select here the sharpen deviation value of the Laplacian."
+msgstr "Тут ви можете вибрати значення відхилення різкості лапласіана."
+
+#: tools/filteroptionsdialog.cpp:140
+msgid ""
+"Select here the radius of the unsharpen Gaussian, not counting the center "
+"pixel. The algorithm convolve the image with a Gaussian operator of the "
+"given radius and standard deviation. For reasonable results, radius should "
+"be larger than sigma. If you use a radius of 0 the algorithm selects a "
+"suitable radius."
+msgstr ""
+"Тут ви можете вибрати радіус гаусіана зменшення різкості без центральної "
+"точки. Алгоритм перетворення виконує згортку зображення за допомогою "
+"Гаусового оператора з вказаним радіусом і стандартним відхиленням. Для "
+"належних результатів радіус має бути більшим за відхилення. Якщо ви "
+"використаєте радіус рівний 0, алгоритм сам обере належний радіус."
+
+#: tools/filteroptionsdialog.cpp:150
+msgid "Select here the unsharpen deviation value of the Gaussian."
+msgstr ""
+"Тут ви можете вибрати значення відхилення різкості гаусіана маски зменшення "
+"різкості."
+
+#: tools/filteroptionsdialog.cpp:155 tools/filteroptionsdialog.cpp:161
+msgid "%"
+msgstr "%"
+
+#: tools/filteroptionsdialog.cpp:156
+msgid ""
+"Select here the percentage difference between original and blurred image "
+"which should be added to original."
+msgstr ""
+"Тут ви можете вибрати різницю у відсотках між початковим і розмитим "
+"зображенням, яку слід додати до початкового зображення."
+
+#: tools/filteroptionsdialog.cpp:158
+msgid "Amount:"
+msgstr "Величина:"
+
+#: tools/filteroptionsdialog.cpp:162
+msgid ""
+"Select here the unsharpen threshold value, as a percentage of the maximum "
+"color component value, needed to apply the difference amount."
+msgstr ""
+"Тут ви можете вибрати порогове значення зменшення різкості (у відсотках від "
+"максимального значення компонента кольору), потрібне для застосування "
+"величини різниці."
+
+#: tools/filteroptionsdialog.cpp:165
+msgid "Threshold:"
+msgstr "Поріг:"
+
+#: tools/recompressimagesdialog.cpp:58
+msgid "Batch Recompress Images"
+msgstr "Пакетне перестискання зображень"
+
+#: tools/recompressimagesdialog.cpp:62
+msgid "Batch recompress images"
+msgstr "Пакетне перестискання зображень"
+
+#: tools/recompressimagesdialog.cpp:65
+msgid ""
+"A Kipi plugin to batch recompress images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"Додаток Kipi для пакетного перестискання зображень\n"
+"Для роботи цей додаток використовує програму «convert» з пакунка «ImageMagick»."
+
+#: tools/recompressimagesdialog.cpp:83
+msgid "Image Recompression Options"
+msgstr "Параметри перестискання зображень"
+
+#: tools/recompressimagesdialog.cpp:146 tools/recompressimagesdialog.cpp:147
+#: tools/recompressimagesdialog.cpp:200 tools/recompressimagesdialog.cpp:214
+#: tools/recompressoptionsdialog.cpp:125 tools/recompressoptionsdialog.cpp:142
+msgctxt "image compression"
+msgid "None"
+msgstr "Без стискання"
+
+#: tools/recompressimagesdialog.cpp:246 tools/resizeimagesdialog.cpp:279
+msgid "image file format unsupported."
+msgstr "Формат файлів зображень не підтримується."
+
+#: tools/recompressoptionsdialog.cpp:48
+msgid "Recompression Options"
+msgstr "Параметри перестискання"
+
+#: tools/recompressoptionsdialog.cpp:65
+msgid "<p>The compression value for JPEG target images:</p>"
+msgstr "<p>Рівень стискання для зображень у форматі JPEG:</p>"
+
+#: tools/recompressoptionsdialog.cpp:84
+msgid "JPEG File Format"
+msgstr "Формат файлів JPEG"
+
+#: tools/recompressoptionsdialog.cpp:99
+msgid "<p>The compression value for PNG target images:</p>"
+msgstr "<p>Рівень стискання зображень у форматі PNG:</p>"
+
+#: tools/recompressoptionsdialog.cpp:111
+msgid "PNG File Format"
+msgstr "Формат файлів PNG"
+
+#: tools/recompressoptionsdialog.cpp:126
+msgid "Select here the TIFF compression algorithm."
+msgstr "Тут ви можете вибрати алгоритм стискання TIFF."
+
+#: tools/recompressoptionsdialog.cpp:129
+msgid "TIFF File Format"
+msgstr "Формат файлів TIFF"
+
+#: tools/recompressoptionsdialog.cpp:143
+msgid "Select here the TGA compression algorithm."
+msgstr "Тут ви можете вибрати алгоритм стискання TGA."
+
+#: tools/recompressoptionsdialog.cpp:146
+msgid "TGA File Format"
+msgstr "Формат файлів TGA"
+
+#: tools/renameimagesdialog.cpp:53
+msgid "Rename Images"
+msgstr "Перейменування зображень"
+
+#: tools/renameimagesdialog.cpp:61
+msgid "Batch-rename images"
+msgstr "Пакетне перейменування зображень"
+
+#: tools/renameimagesdialog.cpp:64
+msgid "A Kipi plugin to batch-rename images"
+msgstr "Додаток Kipi для пакетного перейменування зображень"
+
+#: tools/renameimageswidget.cpp:87
+msgid "Sort by Name"
+msgstr "Впорядкувати за назвою"
+
+#: tools/renameimageswidget.cpp:88
+msgid "Sort by Size"
+msgstr "Впорядкувати за розміром"
+
+#: tools/renameimageswidget.cpp:89
+msgid "Sort by Date"
+msgstr "Впорядкувати за датою створення"
+
+#: tools/renameimageswidget.cpp:532
+msgid "Rename File"
+msgstr "Перейменувати файл"
+
+#: tools/renameimageswidget.cpp:580
+msgctxt "batch process result"
+msgid "Skipped"
+msgstr "Пропущено"
+
+#: tools/renameimageswidget.cpp:592
+msgctxt "batch process result"
+msgid "OK"
+msgstr "Виконано"
+
+#: tools/renameimageswidget.cpp:596
+msgctxt "batch process result"
+msgid "Failed"
+msgstr "Невдача"
+
+#: tools/resizeimagesdialog.cpp:148
+msgid "Batch Resize Images"
+msgstr "Пакетна зміна розмірів зображень"
+
+#: tools/resizeimagesdialog.cpp:155
+msgid "Proportional (1 dim.)"
+msgstr "Пропорційно (1 вимір)"
+
+#: tools/resizeimagesdialog.cpp:156
+msgid "Proportional (2 dim.)"
+msgstr "Пропорційно (2 виміри)"
+
+#: tools/resizeimagesdialog.cpp:157
+msgid "Non-Proportional"
+msgstr "Непропорційно"
+
+#: tools/resizeimagesdialog.cpp:158
+msgid "Prepare to Print"
+msgstr "Підготувати до друку"
+
+#: tools/resizeimagesdialog.cpp:161
+msgid "Batch resize images"
+msgstr "Пакетна зміна розмірів зображень"
+
+#: tools/resizeimagesdialog.cpp:164
+msgid ""
+"A Kipi plugin to batch-resize images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"Додаток Kipi для пакетної зміни розмірів зображень.\n"
+"Цей додаток використовує можливості програми «convert» з пакунка «ImageMagick»."
+
+#: tools/resizeimagesdialog.cpp:173
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: tools/resizeimagesdialog.cpp:184
+msgid "Image Resizing Options"
+msgstr "Параметри зміни розмірів зображень"
+
+#: tools/resizeimagesdialog.cpp:187
+msgid "Type:"
+msgstr "Тип:"
+
+#: tools/resizeimagesdialog.cpp:194
+msgid "<p>Select here the image-resize type.</p>"
+msgstr "<p>Тут ви можете вибрати тип зміни розмірів зображення.</p>"
+
+#: tools/resizeoptionsdialog.cpp:53
+msgid "Image-Resize Options"
+msgstr "Параметри зміни розмірів зображень"
+
+#: tools/resizeoptionsdialog.cpp:79
+msgid "Quality Settings"
+msgstr "Параметри якості"
+
+#: tools/resizeoptionsdialog.cpp:85
+msgctxt "Filter name"
+msgid "&lt;default&gt;"
+msgstr "&lt;типовий&gt;"
+
+#: tools/resizeoptionsdialog.cpp:89
+msgid ""
+"Select here the filter name for the resize-image process. This filter will "
+"be used like a kernel convolution process during the increased image size "
+"rendering."
+msgstr ""
+"Тут ви можете вибрати назву фільтра, який буде використано для зміни "
+"розмірів зображень. Цей фільтр буде використано як основний процес згортки "
+"під час збільшення розмірів зображення."
+
+#: tools/resizeoptionsdialog.cpp:97
+msgid "Image quality (percent):"
+msgstr "Якість зображень (у відсотках):"
+
+#: tools/resizeoptionsdialog.cpp:98
+msgid "Quality for compressed images."
+msgstr "Якість стиснених зображень."
+
+#: tools/resizeoptionsdialog.cpp:208 tools/resizeoptionsdialog.cpp:293
+#: tools/resizeoptionsdialog.cpp:393
+msgid "Size Settings"
+msgstr "Параметри розмірів"
+
+#: tools/resizeoptionsdialog.cpp:215
+msgid "New size (pixels):"
+msgstr "Новий розмір (у пікселях):"
+
+#: tools/resizeoptionsdialog.cpp:216
+msgid "The new images' size in pixels."
+msgstr "Розмір нових зображень у пікселях."
+
+#: tools/resizeoptionsdialog.cpp:235
+msgid ""
+"<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "
+"The width or the height of the images will be automatically selected, "
+"depending on the images' orientations. The images' aspect ratios are "
+"preserved.</p>"
+msgstr ""
+"<p><b>Пропорційно (1 вимір)</b>: стандартне автоматичне виправлення з "
+"використанням одного виміру. Програма автоматично обере ширину або висоту "
+"зображень, залежно від їхньої орієнтації. Співвідношення розмірів зображень "
+"буде збережено.</p>"
+
+#: tools/resizeoptionsdialog.cpp:300 tools/resizeoptionsdialog.cpp:400
+msgid "Width (pixels):"
+msgstr "Ширина (у пікселях):"
+
+#: tools/resizeoptionsdialog.cpp:301 tools/resizeoptionsdialog.cpp:401
+msgid "The new images' width in pixels."
+msgstr "Ширина нових зображень у пікселях."
+
+#: tools/resizeoptionsdialog.cpp:306 tools/resizeoptionsdialog.cpp:406
+msgid "Height (pixels):"
+msgstr "Висота (у пікселях):"
+
+#: tools/resizeoptionsdialog.cpp:307 tools/resizeoptionsdialog.cpp:407
+msgid "The new images' height in pixels."
+msgstr "Висота нових зображень у пікселях."
+
+#: tools/resizeoptionsdialog.cpp:309
+msgid "Fill image to specified size"
+msgstr "Заповнити зображення до вказаного розміру"
+
+#: tools/resizeoptionsdialog.cpp:310
+msgid ""
+"If this box is set, the resulting image is filled up with the specified "
+"background color to the desired dimension, otherwise it is only as big as "
+"needed to fit the original image into the specified dimensions."
+msgstr ""
+"Якщо буде позначено цей пункт, остаточне зображення буде заповнено вказаним "
+"кольором тла до бажаних розмірів. Якщо пункт позначено не буде, заповнення "
+"буде виконано лише до розмірів, що відповідають розмірам зображення."
+
+#: tools/resizeoptionsdialog.cpp:315
+msgid "Background color:"
+msgstr "Колір тла:"
+
+#: tools/resizeoptionsdialog.cpp:317
+msgid ""
+"You can select here the background color to be used when adapting the "
+"images' sizes."
+msgstr ""
+"Тут ви можете вибрати колір тла, який буде використано під час "
+"підлаштовування під розміри зображень."
+
+#: tools/resizeoptionsdialog.cpp:345
+msgid ""
+"<p><b>Proportional (2 dim.)</b>: auto-resizing using two dimensions. The "
+"images' aspect ratio are preserved. You can use this, for example, to adapt "
+"your images' sizes to your screen size.</p>"
+msgstr ""
+"<p><b>Пропорційно (2 виміри)</b>: автоматична зміна розмірів з використанням "
+"обох вимірів. Співвідношення розмірів зображень буде збережено. Ви можете "
+"скористатися цим варіантом, наприклад, для того, щоб адаптувати розміри "
+"ваших зображень до розмірів екрана.</p>"
+
+#: tools/resizeoptionsdialog.cpp:428
+msgid ""
+"<p><b>Non proportional</b>: non-proportional resizing using two dimensions. "
+"The images' aspect ratios are not preserved.</p>"
+msgstr ""
+"<p><b>Непропорційно</b>: змінити розміри зображень у обох вимірах без "
+"збереження пропорційності. Співвідношення розмірів зображень може змінитися."
+"</p>"
+
+#: tools/resizeoptionsdialog.cpp:490
+msgid "Use custom settings"
+msgstr "Використовувати нетипові параметри"
+
+#: tools/resizeoptionsdialog.cpp:491
+msgid "If this option is enabled, all printing settings can be customized."
+msgstr ""
+"Якщо буде позначено цей пункт, всі параметри друку можна буде налаштовувати."
+
+#: tools/resizeoptionsdialog.cpp:498
+msgid "Printing Standard Settings"
+msgstr "Стандартні параметри друку"
+
+#: tools/resizeoptionsdialog.cpp:501
+msgid "Paper size (cm):"
+msgstr "Розмір паперу (у см):"
+
+#: tools/resizeoptionsdialog.cpp:514
+msgid "The standard photographic paper sizes in centimeters."
+msgstr "Розміри стандартного фотографічного паперу (у сантиметрах)."
+
+#: tools/resizeoptionsdialog.cpp:517 tools/resizeoptionsdialog.cpp:565
+msgid "Print resolution (dpi):"
+msgstr "Роздільна здатність друку (т./дюйм):"
+
+#: tools/resizeoptionsdialog.cpp:526
+msgid "The standard print resolutions in dots per inch."
+msgstr "Стандартна роздільна здатність друку у точках на дюйм."
+
+#: tools/resizeoptionsdialog.cpp:529
+msgid "Stretch Image"
+msgstr "Розтягнути зображення"
+
+#: tools/resizeoptionsdialog.cpp:530
+msgid ""
+"If this is selected, the image will be stretched to fit the paper "
+"dimensions. Otherwise it will be centered on the canvas and the borders will "
+"get cropped to achieve the desired paper size."
+msgstr ""
+"Якщо буде позначено цей пункт, зображення буде розтягнуто відповідно до "
+"розмірів паперу. Якщо пункт не буде позначено, зображення буде розташовано у "
+"центрі полотна паперу, краї буде обрізано до відповідності розмірам паперу."
+
+#: tools/resizeoptionsdialog.cpp:546
+msgid "Printing Custom Settings"
+msgstr "Нетипові параметри друку"
+
+#: tools/resizeoptionsdialog.cpp:549
+msgid "Paper width (cm):"
+msgstr "Ширина паперу (см):"
+
+#: tools/resizeoptionsdialog.cpp:553
+msgid "The customized width of the photographic paper size in centimeters."
+msgstr "Ширина фотографічного паперу у сантиметрах."
+
+#: tools/resizeoptionsdialog.cpp:557
+msgid "Paper height (cm):"
+msgstr "Висота паперу (см):"
+
+#: tools/resizeoptionsdialog.cpp:561
+msgid "The customized height of the photographic paper size in centimeters."
+msgstr "Висота фотографічного паперу у сантиметрах."
+
+#: tools/resizeoptionsdialog.cpp:569
+msgid "The customized print resolution in dots per inch."
+msgstr "Роздільна здатність друку у точках на дюйм."
+
+#: tools/resizeoptionsdialog.cpp:629
+msgid ""
+"<p><b>Prepare to print</b>: prepare the image for photographic printing. The "
+"user can set the print resolution and the photographic paper size. The "
+"target images will be adapted to the specified dimensions (included the "
+"background size, margin size, and background color).</p>"
+msgstr ""
+"<p><b>Підготувати до друку</b>: підготувати зображення до друку на "
+"фотографічному папері. Користувач може вказати роздільну здатність друку і "
+"розмір фотографічного паперу. Отримані в результаті обробки зображення буде "
+"адаптовано до вказаних розмірів (зокрема розміру тла, розміру полів і "
+"кольору тла).</p>"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, m_optionGroupBox)
+#. i18n: file: ui/batchprocessimagesdialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, m_optionComboBoxLabel)
+#: rc.cpp:5 rc.cpp:8
+msgid "SET_AT_RUNTIME"
+msgstr "SET_AT_RUNTIME"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:51
+#. i18n: ectx: property (text), widget (QPushButton, m_optionsButton)
+#: rc.cpp:11
+msgid "Options..."
+msgstr "Параметри..."
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:75
+#. i18n: ectx: property (text), widget (QPushButton, m_previewButton)
+#: rc.cpp:14
+msgid "Preview"
+msgstr "Перегляд"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:82
+#. i18n: ectx: property (text), widget (QCheckBox, m_smallPreview)
+#: rc.cpp:17
+msgid "Small preview"
+msgstr "Невеличкий перегляд"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:103
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:20
+msgctxt "List of images to process"
+msgid "Source"
+msgstr "Початкові зображення"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:119
+#. i18n: ectx: property (text), widget (QPushButton, m_addImagesButton)
+#. i18n: file: ui/renameimagesbase.ui:142
+#. i18n: ectx: property (text), widget (QPushButton, m_addButton)
+#: rc.cpp:23 rc.cpp:77
+msgid "Add"
+msgstr "Додати"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:126
+#. i18n: ectx: property (text), widget (QPushButton, m_remImagesButton)
+#. i18n: file: ui/renameimagesbase.ui:152
+#. i18n: ectx: property (text), widget (QPushButton, m_removeButton)
+#: rc.cpp:26 rc.cpp:80
+msgid "Remove"
+msgstr "Вилучити"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:183
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:29
+msgid "Destination"
+msgstr "Призначення"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:189
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:32
+msgid "Destination folder:"
+msgstr "Тека призначення:"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:209
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:35
+msgid "Overwrite mode:"
+msgstr "Режим перезапису:"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:222
+#. i18n: ectx: property (text), widget (QCheckBox, m_removeOriginal)
+#: rc.cpp:38
+msgid "Remove original"
+msgstr "Вилучати початкове"
+
+#. i18n: file: ui/imagepreview.ui:19
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:41
+msgid "Zoom:"
+msgstr "Масштаб:"
+
+#. i18n: file: ui/imagepreview.ui:65
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:44
+msgid "Original Image"
+msgstr "Вихідне зображення"
+
+#. i18n: file: ui/imagepreview.ui:71
+#. i18n: ectx: property (whatsThis), widget (KIPIBatchProcessImagesPlugin::PixmapView, m_origView)
+#: rc.cpp:47
+msgid ""
+"This is the original image preview. You can use the mouse wheel to change "
+"the zoom factor. Click in and use the mouse to move the image."
+msgstr ""
+"Це область перегляду початкового зображення. Ви можете скористатися "
+"коліщатком миші для зміни коефіцієнта масштабування. Клацніть у ньому і "
+"скористайтеся мишею для пересування зображення."
+
+#. i18n: file: ui/imagepreview.ui:93
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:50
+msgid "Destination Image"
+msgstr "Остаточне зображення"
+
+#. i18n: file: ui/imagepreview.ui:99
+#. i18n: ectx: property (whatsThis), widget (KIPIBatchProcessImagesPlugin::PixmapView, m_destView)
+#: rc.cpp:53
+msgid ""
+"This is the destination image preview. You can use the mouse wheel to change "
+"the zoom factor. Click in and use the mouse to move the image."
+msgstr ""
+"Це область перегляду остаточного зображення. Ви можете скористатися "
+"коліщатком миші для зміни коефіцієнта масштабування. Клацніть у ньому і "
+"скористайтеся мишею для пересування зображення."
+
+#. i18n: file: ui/renameimagesbase.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, m_templateGroupBox)
+#: rc.cpp:56
+msgid "Template for renaming files"
+msgstr "Шаблон для перейменування файлів"
+
+#. i18n: file: ui/renameimagesbase.ui:26
+#. i18n: ectx: property (text), widget (QLabel, m_seqLabel)
+#: rc.cpp:59
+msgid "Sequence number start value:"
+msgstr "Початкове значення послідовності номерів:"
+
+#. i18n: file: ui/renameimagesbase.ui:39
+#. i18n: ectx: property (text), widget (QLabel, m_prefixLabel)
+#: rc.cpp:62
+msgid "Prefix string:"
+msgstr "Рядок префікса:"
+
+#. i18n: file: ui/renameimagesbase.ui:49
+#. i18n: ectx: property (text), widget (QCheckBox, m_addFileNameCheck)
+#: rc.cpp:65
+msgid "Add original file name"
+msgstr "Додати початкову назву файла"
+
+#. i18n: file: ui/renameimagesbase.ui:56
+#. i18n: ectx: property (text), widget (QCheckBox, m_addFileDateCheck)
+#: rc.cpp:68
+msgid "Add file date"
+msgstr "Додати дату файла"
+
+#. i18n: file: ui/renameimagesbase.ui:63
+#. i18n: ectx: property (text), widget (QCheckBox, m_useExtraSymbolsCheck)
+#: rc.cpp:71
+msgid "Use extra [X*] symbols in date format field"
+msgstr "Використовувати додаткові символи [X*] у полі формату дат"
+
+#. i18n: file: ui/renameimagesbase.ui:91
+#. i18n: ectx: property (text), widget (QCheckBox, m_formatDateCheck)
+#: rc.cpp:74
+msgid "Date format:"
+msgstr "Формат дати:"
+
+#. i18n: file: ui/renameimagesbase.ui:175
+#. i18n: ectx: property (text), widget (QPushButton, m_reverseList)
+#: rc.cpp:83
+msgid "Reverse List"
+msgstr "Зворотній порядок списку"
+
+#. i18n: file: ui/renameimagesbase.ui:198
+#. i18n: ectx: property (text), widget (QPushButton, m_sortButton)
+#: rc.cpp:86
+msgid "Sort List"
+msgstr "Впорядкувати список"
+
+#. i18n: file: ui/renameimagesbase.ui:205
+#. i18n: ectx: property (text), widget (QPushButton, m_moveDown)
+#: rc.cpp:89
+msgid "Move &Down"
+msgstr "Пересунути в&низ"
+
+#. i18n: file: ui/renameimagesbase.ui:212
+#. i18n: ectx: property (text), widget (QPushButton, m_moveUp)
+#: rc.cpp:92
+msgid "Move &Up"
+msgstr "Пересунути &вгору"
+
+#~ msgid "Copy to Clip&board"
+#~ msgstr "Копіювати до &буфера"
+
+#~ msgid "Batch processes images"
+#~ msgstr "Пакетна обробка зображень"
+
+#~ msgid ""
+#~ "An interface to show the output of the \"Batch Process Images\" Kipi "
+#~ "plugin.\n"
+#~ "This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+#~ msgstr ""
+#~ "Інтерфейс для показу даних, виведених додатком Kipi «Пакетна обробка "
+#~ "зображень».\n"
+#~ "Цей додаток використовує для роботи програму «convert» з пакунка "
+#~ "«ImageMagick»."
+
+#~ msgctxt "Filter name"
+#~ msgid "<default>"
+#~ msgstr "<типовий>"
+
+#~ msgid "Niepce"
+#~ msgstr "Ньєпс"
+
+#~ msgid "Margin size (mm):"
+#~ msgstr "Розмір поля (у мм):"
+
+#~ msgid "The margin around the images in millimeters."
+#~ msgstr "Поле навколо зображень у міліметрах."
+
+#~ msgid "Filter name:"
+#~ msgstr "Назва фільтра:"
+
+#~ msgctxt "Filter name"
+#~ msgid "Bessel"
+#~ msgstr "Бесселя"
+
+#~ msgctxt "Filter name"
+#~ msgid "Blackman"
+#~ msgstr "Блекмена"
+
+#~ msgctxt "Filter name"
+#~ msgid "Box"
+#~ msgstr "Блоковий"
+
+#~ msgctxt "Filter name"
+#~ msgid "Catrom"
+#~ msgstr "Кетрома"
+
+#~ msgctxt "Filter name"
+#~ msgid "Cubic"
+#~ msgstr "Кубічний"
+
+#~ msgctxt "Filter name"
+#~ msgid "Gaussian"
+#~ msgstr "Гаусів"
+
+#~ msgctxt "Filter name"
+#~ msgid "Hermite"
+#~ msgstr "Ермітів"
+
+#~ msgctxt "Filter name"
+#~ msgid "Hanning"
+#~ msgstr "Ганнів"
+
+#~ msgctxt "Filter name"
+#~ msgid "Hamming"
+#~ msgstr "Геммінга"
+
+#~ msgctxt "Filter name"
+#~ msgid "Lanczos"
+#~ msgstr "Ланцоша"
+
+#~ msgctxt "Filter name"
+#~ msgid "Mitchell"
+#~ msgstr "Мітчелла"
+
+#~ msgctxt "Filter name"
+#~ msgid "Point"
+#~ msgstr "Точковий"
+
+#~ msgctxt "Filter name"
+#~ msgid "Quadratic"
+#~ msgstr "Квадратичний"
+
+#~ msgctxt "Filter name"
+#~ msgid "Sinc"
+#~ msgstr "Sinc-функція"
+
+#~ msgctxt "Filter name"
+#~ msgid "Triangle"
+#~ msgstr "Трикутний"
+
+#~ msgid "Resize Options"
+#~ msgstr "Параметри зміни розмірів"
+
+#~ msgid ""
+#~ "Note: the images will be resized to\n"
+#~ "this size. The width or the height of the\n"
+#~ "images will be automatically\n"
+#~ "selected in depending of the images orientation.\n"
+#~ "The images' aspect ratios are preserved."
+#~ msgstr ""
+#~ "Зауваження: розмір зображень буде змінено\n"
+#~ "до вказаного. Програма автоматично обере\n"
+#~ "ширину і висоту зображень, залежно від\n"
+#~ "орієнтації зображень.\n"
+#~ "Співвідношення розмірів буде збережено."
+
+#~ msgid "Border size (pixels):"
+#~ msgstr "Ширина рамки (у пікселях):"
+
+#~ msgid "The border size around the images in pixels."
+#~ msgstr "Розмір рамки навколо зображення у пікселях."
+
+#~ msgid "Render Settings"
+#~ msgstr "Перегляд параметрів"
+
+#~ msgid "New width (pixels):"
+#~ msgstr "Нова ширина (у пікселях):"
+
+#~ msgid "New height (pixels):"
+#~ msgstr "Нова висота (у пікселях):"
+
+#~ msgid ""
+#~ "You must enter a custom height greater than the custom width: the "
+#~ "photographic paper must be vertically orientated."
+#~ msgstr ""
+#~ "Вам слід ввести нетипове значення висоти, яке має бути більшим за "
+#~ "нетипове значення ширини: фотографічний папір повинен мати вертикальну "
+#~ "орієнтацію."
+
+#~ msgid "Percent:"
+#~ msgstr "Частина:"
+
+#~ msgid "Form"
+#~ msgstr "Форма"
+
+#~ msgid ""
+#~ "If this option is enabled, all JPEG operations will use a lossless "
+#~ "compression."
+#~ msgstr ""
+#~ "Якщо позначити цей пункт, для всіх дій з зображеннями JPEG буде "
+#~ "використано стискання без втрат."
+
+#~ msgid "File Operations"
+#~ msgstr "Дії над файлами"
+
+#~ msgid "Target Folder"
+#~ msgstr "Тека призначення"
+
+#~ msgid "&Add..."
+#~ msgstr "&Додати..."
+
+#~ msgid "&Remove"
+#~ msgstr "Ви&лучити"
+
+#~ msgid "This is the current percentage of the task completed."
+#~ msgstr "Це поточна частина (у відсотках) виконання завдання."
+
+#~ msgid "Image Files List"
+#~ msgstr "Список файлів зображень"
+
+#~ msgid "Image File List (1 item)"
+#~ msgid_plural "Image File List (%1 items)"
+#~ msgstr[0] "Список файлів зображень (%1 елемент)"
+#~ msgstr[1] "Список файлів зображень (%1 елементи)"
+#~ msgstr[2] "Список файлів зображень (%1 елементів)"
+#~ msgstr[3] "Список файлів зображень (%1 елемент)"
+
+#~ msgid "Image File List"
+#~ msgstr "Список файлів зображень"
+
+#~ msgid "Image File List (%1 item)"
+#~ msgid_plural "Image File List (%1 items)"
+#~ msgstr[0] "Список файлів зображень (%1 елемент)"
+#~ msgstr[1] "Список файлів зображень (%1 елементи)"
+#~ msgstr[2] "Список файлів зображень (%1 елементів)"
+#~ msgstr[3] "Список файлів зображень (%1 елемент)"
+
+#~ msgid "Album"
+#~ msgstr "Альбом"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Автор та супровідник"
+
+#~ msgid "(c) 2003-2007, Gilles Caulier"
+#~ msgstr "© 2003-2007, Gilles Caulier"
+
+#~ msgid "(c) 2003-2004, Gilles Caulier"
+#~ msgstr "© 2003-2004, Gilles Caulier"

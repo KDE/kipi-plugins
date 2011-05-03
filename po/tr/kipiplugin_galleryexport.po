@@ -1,0 +1,330 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Serdar Soytetir <tulliana@gmail.com>, 2008, 2009.
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2011-04-26 09:07+0300\n"
+"Last-Translator: Ozan Çağlayan <ozan@pardus.org.tr>\n"
+"Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: tr\n"
+
+#: galleryconfig.cpp:77
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "Name:"
+
+#: galleryconfig.cpp:81
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "URL:"
+
+#: galleryconfig.cpp:85
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "Kullanıcı adı:"
+
+#: galleryconfig.cpp:89
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "Parola: "
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "Galeri 2 &Kullan"
+
+#: gallerytalker.cpp:427
+msgid "Gallery URL probably incorrect"
+msgstr "Galeri adresi muhtemelen yanlış"
+
+#: gallerytalker.cpp:433
+msgid "Incorrect username or password specified"
+msgstr "Yanlış kullanıcı adı veya parola girildi"
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+msgid "Invalid response received from remote Gallery"
+msgstr "Uzak Galeriden geçersiz yanıt alındı"
+
+#: gallerytalker.cpp:523
+msgid "Failed to list albums"
+msgstr "Albümleri listeleme işlemi başarısız oldu"
+
+#: gallerytalker.cpp:598
+msgid "Failed to list photos"
+msgstr "Fotoğrafları listeleme işlemi başarısız oldu"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "Yeni albüm oluşturma işlemi başarısız oldu"
+
+#: gallerytalker.cpp:705
+msgid "Failed to upload photo"
+msgstr "Resim yükleme işlemi başarısız oldu"
+
+#: gallerywindow.cpp:118
+msgid "Albums"
+msgstr "Albümler"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "&Yeni Albüm"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "&Fotoğraf Ekle"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr "Öntanımlı Seçeneklerin Üzerine Yaz"
+
+#: gallerywindow.cpp:142
+msgid "Comment sets Title"
+msgstr "Açıklama Başlığı Ayarlasın"
+
+#: gallerywindow.cpp:145
+msgid "Comment sets Description"
+msgstr "Açıklama Tanımlamayı Ayarlasın"
+
+#: gallerywindow.cpp:148
+msgid "Resize photos before uploading"
+msgstr "Resimleri yüklemeden önce boyutlandır"
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr "En büyük boyut:"
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+msgid "Gallery Export"
+msgstr "Gallery Export"
+
+#: gallerywindow.cpp:217
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr ""
+"Resim koleksiyonlarını uzak Gallery sunucusuna aktarmaya yarayan bir Kipi "
+"eklentisi."
+
+#: gallerywindow.cpp:218
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "Yazar"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "Projeyi Yürüten"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+msgid "Developer"
+msgstr "Geliştirici"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gallerywindow.cpp:242
+msgid "Handbook"
+msgstr "El Kitabı"
+
+#: gallerywindow.cpp:250
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: gallerywindow.cpp:407
+msgid "Failed to login into remote gallery. "
+msgstr "Uzak galeriye giriş başarısız oldu."
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Ayarlarınızı kontrol ederek yeniden denemek ister misiniz?"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "Galeri Verilerini Düzenle"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+msgid "Album"
+msgstr "Albüm"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr "Resim"
+
+#: gallerywindow.cpp:675
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+"Albüm adında bu karakterlere izin verilmiyor:\\ / * ? \" ' & &lt; &gt; | . + "
+"# ( ) veya boşluk karakterleri"
+
+#: gallerywindow.cpp:752
+#, kde-format
+msgid "Uploading file %1"
+msgstr "%1 dosyası gönderiliyor"
+
+#: gallerywindow.cpp:771
+msgid "Failed to upload photo into remote gallery. "
+msgstr "Uzak galeriye resim yükleme işlemi başarısız oldu."
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Devam etmek istiyor musunuz?"
+
+#: plugin_galleryexport.cpp:80
+msgid "Export to &Gallery..."
+msgstr "&Galeriye Aktar..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Serdar Soytetir"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "tulliana@gmail.com"
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>Yeni Albüm Adı</h3>"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "Başlık:"
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "İsim (seçimlik):"
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "Başlık (seçimlik):"
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "&Tamam"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "İ&ptal"
+
+#~ msgid "albums"
+#~ msgstr "albümler"
+
+#~ msgid "remote-gallery-sync"
+#~ msgstr "uzak-galeri-eşzamanlama"
+
+#~ msgid "(c) 2003-2005, Renchi Raju"
+#~ msgstr "(c) 2003-2005, Renchi Raju"
+
+#~ msgid "Title (optional):"
+#~ msgstr "Başlık (seçimlik):"
+
+#, fuzzy
+#~| msgid "Gallery Export"
+#~ msgid "Gallery Export..."
+#~ msgstr "Gallery Export"
+
+#, fuzzy
+#~| msgid "Remote Galleries Setting"
+#~ msgid "remote-galleries-setting"
+#~ msgstr "Uzak Galeri Ayarları"
+
+#, fuzzy
+#~| msgid "Remote Gallery Image Settings"
+#~ msgid "Remote Gallery Setting..."
+#~ msgstr "Uzak Galeri Resim Ayarları"
+
+#, fuzzy
+#~| msgid "Failed to create new album"
+#~ msgid "Create New album"
+#~ msgstr "Yeni albüm oluşturma işlemi başarısız oldu"
+
+#, fuzzy
+#~| msgid "<h3>Enter New Album Name</h3>"
+#~ msgid "Insert new album name"
+#~ msgstr "<h3>Yeni Albüm Adı</h3>"
+
+#~ msgid "MyDialog"
+#~ msgstr "BenimDiyaloğum1"
+
+#~ msgid "Gallery Name"
+#~ msgstr "Galeri Adı"
+
+#~ msgid "URL"
+#~ msgstr "Adres"
+
+#~ msgid "User"
+#~ msgstr "Kullanıcı"
+
+#~ msgid "New Remote Gallery"
+#~ msgstr "Yeni Uzak Galeri"
+
+#~ msgid "No gallery selected!"
+#~ msgstr "Hiç galeri seçilmedi!"
+
+#, fuzzy
+#~| msgid "New Remote Gallery"
+#~ msgid "Remove Remote Gallery"
+#~ msgstr "Yeni Uzak Galeri"
+
+#~ msgid "<h2>Gallery Export</h2>"
+#~ msgstr "<h2>Gallery Export</h2>"
+
+#~ msgid "New Gallery"
+#~ msgstr "Yeni Galeri"
+
+#~ msgid "Remote Gallery Collection Settings"
+#~ msgstr "Uzak Galeri Koleksiyon Ayarları"

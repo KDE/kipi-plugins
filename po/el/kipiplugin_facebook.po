@@ -1,0 +1,485 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_fbexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2009-04-03 11:03+0300\n"
+"Last-Translator: Toussis Manolis <manolis@koppermind.homelinux.org>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: facebookjob.cpp:109
+msgid "Photos taken with KDE"
+msgstr ""
+
+#: fbalbum.cpp:48
+msgid "Facebook New Album"
+msgstr "Νέο άλμπουμ Facebook"
+
+#: fbalbum.cpp:61
+msgid "Title of the album that will be created (required)."
+msgstr "Τίτλος του άλμπουμ που θα δημιουργηθεί (απαιτείται)."
+
+#: fbalbum.cpp:65
+msgid "Location of the album that will be created (optional)."
+msgstr "Τοποθεσία του άλμπουμ που θα δημιουργηθεί (προαιρετικό)."
+
+#: fbalbum.cpp:69
+msgid "Description of the album that will be created (optional)."
+msgstr "Περιγραφή του άλμπουμ που θα δημιουργηθεί (προαιρετικό)."
+
+#: fbalbum.cpp:74
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "Ρύθμιση ιδιωτικού απόρρητου του άλμπουμ προς δημιουργία (απαιτείται)."
+
+#: fbalbum.cpp:76
+msgid "Only Friends"
+msgstr "Μόνο οι φίλοι"
+
+#: fbalbum.cpp:78
+msgid "Friends of Friends"
+msgstr "Φίλοι των φίλων"
+
+#: fbalbum.cpp:80
+msgid "My Networks and Friends"
+msgstr "Τα δίκτυά μου και οι φίλοι"
+
+#: fbalbum.cpp:82
+msgid "Everyone"
+msgstr "Οποιοσδήποτε"
+
+#: fbalbum.cpp:85
+#, fuzzy
+#| msgid "Title:"
+msgctxt "new facebook album"
+msgid "Title:"
+msgstr "Τίτλος:"
+
+#: fbalbum.cpp:86
+#, fuzzy
+#| msgid "Location:"
+msgctxt "new facebook album"
+msgid "Location:"
+msgstr "Τοποθεσία:"
+
+#: fbalbum.cpp:87
+#, fuzzy
+#| msgid "Description:"
+msgctxt "new facebook album"
+msgid "Description:"
+msgstr "Περιγραφή:"
+
+#: fbalbum.cpp:88
+#, fuzzy
+#| msgid "Privacy:"
+msgctxt "new facebook album"
+msgid "Privacy:"
+msgstr "Ιδιωτικό απόρρητο:"
+
+#: fbtalker.cpp:178
+msgid "Validate previous session..."
+msgstr "Επαλήθευση προηγούμενης συνεδρίας..."
+
+#: fbtalker.cpp:198
+#, fuzzy
+#| msgid "Logging to Facebook service..."
+msgid "Logging in to Facebook service..."
+msgstr "Σύνδεση με την υπηρεσία Facebook..."
+
+#: fbtalker.cpp:389
+msgid ""
+"Please follow the instructions in the browser window. Press \"OK\" when done."
+msgstr ""
+"Παρακαλώ ακολουθήστε τις οδηγίες στο παράθυρο περιήγησης. Πιέστε \"Εντάξει\" "
+"όταν τελειώσετε."
+
+#: fbtalker.cpp:391
+msgid "Facebook Application Authorization"
+msgstr "Ταυτοποίηση εφαρμογής Facebook"
+
+#: fbtalker.cpp:706
+msgid "The service is not available at this time."
+msgstr "Η υπηρεσία αυτή δεν είναι διαθέσιμη αυτήν τη στιγμή."
+
+#: fbtalker.cpp:709
+#, fuzzy
+#| msgid "The application has reached maximum number of requests allowed."
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Η εφαρμογή έφτασε στο μέγιστο αριθμό επιτρεπόμενων αιτήσεων."
+
+#: fbtalker.cpp:712
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr ""
+"Μη έγκυρο κλειδί συνεδρίας ή λήξη συνεδρίας. Προσπαθήστε να συνδεθείτε ξανά."
+
+#: fbtalker.cpp:715
+msgid "Invalid album ID."
+msgstr "Μη έγκυρο ID άλμπουμ."
+
+#: fbtalker.cpp:718
+msgid "Album is full."
+msgstr "Το άλμπουμ είναι πλήρες."
+
+#: fbtalker.cpp:721
+msgid "Missing or invalid file."
+msgstr "Ελλειπές ή μη έγκυρο αρχείο."
+
+#: fbtalker.cpp:724
+msgid "Too many unapproved photos pending."
+msgstr "Πάρα πολλές μη εγκεκριμένες φωτογραφίες σε αναμονή."
+
+#: fbtalker.cpp:884
+msgid ""
+"Please follow the instructions in the browser window. Press \"Yes\" if you "
+"have authenticated and \"No\" if you failed."
+msgstr ""
+"Παρακαλώ ακολουθήστε τις οδηγίες στο παράθυρο περιήγησης. Πιέστε \"Ναι\" αν "
+"ταυτοποιηθείτε και \"Όχι\" αν αποτύχατε στην ταυτοποίηση."
+
+#: fbtalker.cpp:886
+msgid "Facebook Service Web Authorization"
+msgstr "Ταυτοποίηση υπηρεσίες ιστού Facebook"
+
+#: fbtalker.cpp:895
+msgid "Canceled by user."
+msgstr "Ακύρωση από χρήστη."
+
+#: fbwidget.cpp:72
+#, fuzzy
+#| msgid "This is the list of images to upload on your Facebook account."
+msgid "This is the list of images to upload to your Facebook account."
+msgstr "Αυτή είναι η λίστα εικόνων για αποστολή στο λογαριασμό σας Facebook."
+
+#: fbwidget.cpp:79
+#, fuzzy
+#| msgid "This is a clickable link to open Facebook home page in web browser."
+msgid ""
+"This is a clickable link to open the Facebook home page in a web browser."
+msgstr ""
+"Αυτός είναι ένας ενεργός δεσμός για το άνοιγμα της σελίδας Facebook στον "
+"περιηγητή σας."
+
+#: fbwidget.cpp:85
+msgid "Account"
+msgstr "Λογαριασμός"
+
+#: fbwidget.cpp:87
+msgid "This is the Facebook account that is currently logged in."
+msgstr "Αυτός είναι ο λογαριασμός Facebook που είστε συνδεδεμένοι."
+
+#: fbwidget.cpp:90
+#, fuzzy
+#| msgid "Name:"
+msgctxt "facebook account settings"
+msgid "Name:"
+msgstr "Όνομα:"
+
+#: fbwidget.cpp:92
+msgid "Permission:"
+msgstr "Άδεια:"
+
+#: fbwidget.cpp:94
+msgid ""
+"Permission of KIPI Plugin application to upload photos directly. If not, "
+"user will need to manually approve uploaded photos in Facebook."
+msgstr ""
+"Άδεια στο πρόσθετο KIPI για την άμεση αποστολή φωτογραφιών. Αν δεν είναι "
+"ενεργό, ο χρήστης θα πρέπει να εγκρίνει χειροκίνητα την αποστολή φωτογραφιών "
+"στο Facebook."
+
+#: fbwidget.cpp:97
+msgid "Change Account"
+msgstr "Τροποποίηση λογαριασμού"
+
+#: fbwidget.cpp:98
+msgid "Logout and change Facebook Account used for transfer"
+msgstr "Αποσύνδεση και τροποποίηση λογαριασμού Facebook για τη μεταφορά"
+
+#: fbwidget.cpp:101
+msgid "Change Permission"
+msgstr "Τροποποίηση άδειας"
+
+#: fbwidget.cpp:102
+msgid "Change permission for KIPI application for photo upload"
+msgstr "Τροποποίηση της άδειας του KIPI για την αποστολή φωτογραφιών"
+
+#: fbwidget.cpp:119
+msgid "Download Selection"
+msgstr "Επιλογή λήψης"
+
+#: fbwidget.cpp:121
+msgid "This is the selection of Facebook albums/photos to download."
+msgstr "Αυτή είναι η επιλογή άλμπουμ/φωτογραφιών Facebook που θα ληφθούν."
+
+#: fbwidget.cpp:125 fbwidget.cpp:178
+msgid "Destination"
+msgstr "Προορισμός"
+
+#: fbwidget.cpp:127
+#, fuzzy
+#| msgid "This is the Facebook album where selected photos will be uploaded."
+msgid "This is the Facebook album to which selected photos will be uploaded."
+msgstr ""
+"Αυτό είναι το άλμπουμ Facebook όπου θα αποσταλούν οι επιλεγμένες φωτογραφίες."
+
+#: fbwidget.cpp:131
+msgid "My &Album"
+msgstr "Το ά&λμπουμ μου"
+
+#: fbwidget.cpp:133
+msgid "Download complete album of currently logged in user."
+msgstr "Λήψη πλήρους άλμπουμ του τρέχοντος συνδεδεμένου χρήστη."
+
+#: fbwidget.cpp:134
+msgid "Album &of My Friend"
+msgstr "Άλμπουμ ε&νός φίλου μου"
+
+#: fbwidget.cpp:136
+msgid "Download complete album of selected friend."
+msgstr "Λήψη πλήρους άλμπουμ του επιλεγμένου φίλου."
+
+#: fbwidget.cpp:137
+msgid "Photos of &Me"
+msgstr "Φωτογραφίες &μου"
+
+#: fbwidget.cpp:139
+msgid "Download all photos of currently logged in user."
+msgstr "Λήψη όλων των φωτογραφιών του τρέχοντος συνδεδεμένου χρήστη."
+
+#: fbwidget.cpp:140
+msgid "Photos of My &Friend"
+msgstr "Φωτογραφίες ενός &φίλου μου"
+
+#: fbwidget.cpp:142
+msgid "Download all photos of selected friend."
+msgstr "Λήψη όλων των φωτογραφιών του επιλεγμένου χρήστη."
+
+#: fbwidget.cpp:150
+msgid "Friend:"
+msgstr "Φίλος:"
+
+#: fbwidget.cpp:154
+msgid "Album:"
+msgstr "Άλμπουμ:"
+
+#: fbwidget.cpp:159
+msgid "New Album"
+msgstr "Νέο άλμπουμ"
+
+#: fbwidget.cpp:160
+msgid "Create new Facebook album"
+msgstr "Δημιουργία νέου άλμπουμ Facebook"
+
+#: fbwidget.cpp:162
+#, fuzzy
+#| msgid "Reload"
+msgctxt "facebook album list"
+msgid "Reload"
+msgstr "Επαναφόρτωση"
+
+#: fbwidget.cpp:163
+msgid "Reload album list"
+msgstr "Επαναφόρτωση λίστας άλμπουμ"
+
+#: fbwidget.cpp:180
+#, fuzzy
+#| msgid "This is the location where Facebook images will be downloaded to."
+msgid "This is the location to which Facebook images will be downloaded."
+msgstr "Αυτή είναι η τοποθεσία λήψης των εικόνων Facebook."
+
+#: fbwidget.cpp:187
+msgid "Options"
+msgstr "Επιλογές"
+
+#: fbwidget.cpp:189
+msgid "These are options that will be applied to photos before upload."
+msgstr "Οι επιλογές που θα εφαρμοστούν στις φωτογραφίες πριν την αποστολή."
+
+#: fbwidget.cpp:193
+msgid "Resize photos before uploading"
+msgstr "Κλιμάκωση φωτογραφιών πριν την αποστολή"
+
+#: fbwidget.cpp:203
+msgid "Maximum dimension:"
+msgstr "Μέγιστη διάσταση:"
+
+#: fbwidget.cpp:211
+msgid "JPEG quality:"
+msgstr "Ποιότητα JPEG:"
+
+#: fbwidget.cpp:326
+msgid "Direct upload"
+msgstr "Άμεση αποστολή"
+
+#: fbwidget.cpp:328
+msgid "Uploaded photos will not need manual approval by user."
+msgstr ""
+"Η αποστολή φωτογραφιών δεν απαιτεί τη χειροκίνητη έγκριση από το χρήστη."
+
+#: fbwidget.cpp:332
+msgid "Manual upload approval"
+msgstr "Χειροκίνητη έγκριση αποστολής"
+
+#: fbwidget.cpp:334
+msgid ""
+"Uploaded photos will wait in pending state until manually approved by user."
+msgstr ""
+"Η αποστολή φωτογραφιών θα βρίσκεται σε κατάσταση αναμονής μέχρι την έγκριση "
+"από το χρήστη."
+
+#: fbwindow.cpp:93
+msgid "Import from Facebook Web Service"
+msgstr "Εισαγωγή από υπηρεσία ιστού Facebook"
+
+#: fbwindow.cpp:95
+msgid "Start Download"
+msgstr "Εκκίνηση λήψης"
+
+#: fbwindow.cpp:96
+msgid "Start download from Facebook web service"
+msgstr "Εκκίνηση λήψης από την υπηρεσία ιστού Facebook"
+
+#: fbwindow.cpp:101
+msgid "Export to Facebook Web Service"
+msgstr "Εξαγωγή στην υπηρεσία ιστού Facebook"
+
+#: fbwindow.cpp:103
+msgid "Start Upload"
+msgstr "Εκκίνηση αποστολής"
+
+#: fbwindow.cpp:104
+msgid "Start upload to Facebook web service"
+msgstr "Εκκίνηση αποστολής στην υπηρεσία ιστού Facebook"
+
+#: fbwindow.cpp:130
+msgid "Facebook Import/Export"
+msgstr "Εισαγωγέας/εξαγωγέας Facebook"
+
+#: fbwindow.cpp:132
+msgid ""
+"A Kipi plugin to import/export image collection to/from Facebook web service."
+msgstr ""
+"Ένα πρόσθετο του Kipi για την εισαγωγή/εξαγωγή συλλογής εικόνων από/προς την "
+"υπηρεσία ιστού του Facebook."
+
+#: fbwindow.cpp:134
+#, fuzzy
+#| msgid ""
+#| "(c) 2005-2008, Vardhman Jain\n"
+#| "(c) 2008, Gilles Caulier\n"
+#| "(c) 2008-2009, Luka Renko"
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+
+#: fbwindow.cpp:138
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:138
+msgid "Author and maintainer"
+msgstr "Συγγραφέας και συντηρητής"
+
+#: fbwindow.cpp:146
+msgid "Handbook"
+msgstr "Εγχειρίδιο"
+
+#: fbwindow.cpp:343 fbwindow.cpp:402
+#, fuzzy
+#| msgid "<auto create>"
+msgid "&lt;auto create&gt;"
+msgstr "<αυτόματη δημιουργία>"
+
+#: fbwindow.cpp:358 fbwindow.cpp:371 fbwindow.cpp:388 fbwindow.cpp:436
+#: fbwindow.cpp:463
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Αποτυχία κλήσης Facebook: %1\n"
+
+#: fbwindow.cpp:397
+msgctxt "name of special Facebook album for profile pictures"
+msgid "Profile Pictures"
+msgstr "Εικόνες προφίλ"
+
+#: fbwindow.cpp:560 fbwindow.cpp:581
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:709 fbwindow.cpp:728
+msgid "Cannot open file"
+msgstr "Αδυναμία ανοίγματος του αρχείου"
+
+#: fbwindow.cpp:752
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποστολής φωτογραφίας στο Facebook: %1\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#: fbwindow.cpp:811
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία αποθήκευσης της φωτογραφίας: %1\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#: fbwindow.cpp:824
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Αποτυχία λήψης της φωτογραφίας: %1\n"
+"Επιθυμείτε τη συνέχεια;"
+
+#: fbwindow.cpp:841
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Αποτυχία κλήσης Facebook: %1"
+
+#: plugin_facebook.cpp:78
+msgid "Export to &Facebook..."
+msgstr "Εξαγωγή &στο Facebook..."
+
+#: plugin_facebook.cpp:88
+msgid "Import from &Facebook..."
+msgstr "Εισαγωγή α&πό Facebook..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Τούσης Μανώλης"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "manolis@koppermind.homelinux.org"
+
+#~ msgid "Authentication"
+#~ msgstr "Ταυτοποίηση"
+
+#~ msgid "Transfer Progress"
+#~ msgstr "Πρόοδος μεταφοράς"
+
+#~ msgid "Uploading file %1"
+#~ msgstr "Αποστολή αρχείου %1"
+
+#~ msgid "Downloading file %1"
+#~ msgstr "Λήψη αρχείου %1"

@@ -1,0 +1,166 @@
+# translation of kipiplugin_kioexportimport.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+#  Seng Sutha <Sutha@khmeros.info>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2010-11-16 21:06+0700\n"
+"Last-Translator:  Seng Sutha <Sutha@khmeros.info>\n"
+"Language-Team: Khmer [km] <Support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 beta1\n"
+"X-Language: km_KH\n"
+
+#: KioExportWindow.cpp:70
+#, fuzzy
+msgid "Export to Remote Computer"
+msgstr "នាំចេញ​​ទៅកាន់​កុំព្យូទ័រ​ពី​ចម្ងាយ​"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "ចាប់ផ្ដើម​នាំចេញ"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "ចាប់ផ្ដើម​នាំចេញ​ទៅកាន់​គោលដៅ​ដែល​បាន​បញ្ជាក់​"
+
+#: KioExportWindow.cpp:90
+#, fuzzy
+msgid "Export to remote computer"
+msgstr "នាំចេញ​ទៅកាន់​កុំព្យូទ័រ​ពី​ចម្ងាយ​"
+
+#: KioExportWindow.cpp:93
+#, fuzzy
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr "កម្មវិធី​ជំនួយ​ Kipi ត្រូវ​នាំ​រូបភាព​ចេញ​លើ​បណ្ដាញ​​ដោយ​ប្រើ​ KIO-Slave"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៩ ​ដោយ Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "អ្នក​អភិវឌ្ឍន៍​ និង​អ្នក​ថែទាំ​"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ​"
+
+#: KioExportWindow.cpp:227
+#, fuzzy
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"រូបភាព​មួយ​ចំនួន​មិន​ត្រូវ​បាន​​ផ្ទេរ​ឡើយ​​​ ហើយ​នៅតែ​មាន​ក្នុង​បញ្ជី​ ។ ឥឡូវ​ អ្នក​អាច​ព្យាយាម​ម្ដងទៀត​ ដើម្បី​នាំ​"
+"រូបភាព​ទាំងនេះ​ចេញ​ ។"
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "ផ្ទុក​មិន​ពេញ​លេញ​​"
+
+#: KioImportWidget.cpp:56
+#, fuzzy
+msgid "This is the list of images to import into the current album."
+msgstr "នេះ​ជា​បញ្ជី​រូបភាព​ត្រូវ​នាំចូល​ទៅ​ក្នុង​អាល់ប៊ុម​បច្ចុប្បន្ន​ ។ "
+
+#: KioImportWindow.cpp:68
+#, fuzzy
+msgid "Import from Remote Computer"
+msgstr "នាំចូល​ពី​កុំព្យូទ័រ​ពី​ចម្ងាយ​"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "ចាប់ផ្ដើម​នាំចូល​"
+
+#: KioImportWindow.cpp:76
+#, fuzzy
+msgid "Start importing the specified images into the currently selected album."
+msgstr "ចាប់ផ្ដើម​នាំចូល​រូបភាព​ដែល​បាន​បញ្ជាក់​ក្នុង​អាល់ប៊ុម​ដែល​បាន​ជ្រើស​បច្ចុប្បន្ន​ ។​"
+
+#: KioImportWindow.cpp:92
+#, fuzzy
+msgid "Import from remote computer"
+msgstr "នាំចូល​ពី​កុំព្យូទ័រ​ពី​ចម្ងាយ​"
+
+#: KioImportWindow.cpp:95
+#, fuzzy
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr "កម្មវិធី​ជំនួយ​ Kipi ត្រូវ​នាំចូល​រូបភាព​​លើ​បណ្ដាញ​ ដោយ​ប្រើ​ KIO-Slave"
+
+#: KioImportWindow.cpp:159
+#, fuzzy
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"រូបភាព​មួយ​ចំនួន​​មិន​ត្រូវ​បាន​ផ្ទេរ​ឡើយ​ ហើយ​នៅតែ​មាន​ក្នុង​បញ្ជី​ ។ ឥឡូវ​ អ្នក​អាច​ព្យាយាម​ម្ដងទៀត​ ដើម្បី​នាំចូល​"
+"រូបភាព​ទាំងនេះ​ ។"
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "នាំចូល​​មិន​ពេញ​លេញ​​"
+
+#: plugin_kioexportimport.cpp:73
+#, fuzzy
+msgid "Export to remote computer..."
+msgstr "នាំចេញ​ទៅកាន់​កុំព្យូទ័រ​ពី​ចម្ងាយ​..."
+
+#: plugin_kioexportimport.cpp:84
+#, fuzzy
+msgid "Import from remote computer..."
+msgstr "នាំចូល​ពី​កុំព្យូទ័រ​ពី​ចម្ងាយ​..."
+
+#: KioExportWidget.cpp:57
+#, fuzzy
+msgid "Target location: "
+msgstr "ទីតាំង​គោលដៅ​ ៖​"
+
+#: KioExportWidget.cpp:59
+#, fuzzy
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"កំណត់​អាសយដ្ឋាន​គោលដៅ​​ត្រូវ​ផ្ទុក​រូបភាព​ទៅកាន់​ ។​ វា​អាច​ប្រើ​​អាសយដ្ឋាន​មួយ​ចំនួន​ដូច​ជា​ Dolphin ឬ "
+"Konqueror ឧ.ទា. ftp://my.server.org/sub/folder ។"
+
+#: KioExportWidget.cpp:65
+#, fuzzy
+msgid "Select target..."
+msgstr "ជ្រើស​គោល​ដៅ​​..."
+
+#: KioExportWidget.cpp:68
+#, fuzzy
+msgid "Select target location..."
+msgstr "ជ្រើស​ទីតាំង​គោលដៅ​​..."
+
+#: KioExportWidget.cpp:74
+#, fuzzy
+msgid "This is the list of images to upload to the specified target."
+msgstr "វា​ជា​បញ្ជី​រូបភាព​ត្រូវ​ផ្ទុក​ទៅកាន់​គោលដៅ​ដែល​បាន​បញ្ជាក់​ ។​"
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "មិន​បាន​ជ្រើស​"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info"

@@ -1,0 +1,418 @@
+# Translation of kipiplugin_sendimages into Japanese.
+# This file is distributed under the same license as the kipi-plugins package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2005, 2006, 2007, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2008-12-17 22:14+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <Kdeveloper@kde.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "メールクライアント:"
+
+#: emailpage.cpp:89
+#, fuzzy
+#| msgid "Default"
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "デフォルト"
+
+#: emailpage.cpp:100
+#, fuzzy
+#| msgid ""
+#| "Select here your preferred external e-mail program. <b>Default</b> is the "
+#| "current e-mail program set on KDE Control Panel."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"ここでお好みのメールクライアントを選択します。<interface>デフォルト</"
+"interface>は、現在 KDE のシステム設定でデフォルトとして設定されているメールク"
+"ライアントです。"
+
+#: emailpage.cpp:106
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "%1 の画像のプロパティを添付ファイルにする"
+
+#: emailpage.cpp:109
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"このオプションを有効にすると、%1 でコメント、評価、またはタグとして設定した画"
+"像のプロパティが 1 つの添付ファイルとして追加されます。"
+
+#: emailpage.cpp:118
+#, fuzzy
+#| msgid "Maximum e-mail size limit:"
+msgid "Maximum email size limit:"
+msgstr "メールの最大サイズ:"
+
+#: emailpage.cpp:119
+#, fuzzy
+#| msgid "MB"
+msgid " MB"
+msgstr "MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "画像のプロパティを調整する"
+
+#: emailpage.cpp:125
+#, fuzzy
+#| msgid ""
+#| "If you enable this option, all images to send can be resized and "
+#| "recompressed."
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"このオプションを有効にすると、送信する画像のサイズと圧縮レベルを変更すること"
+"ができます。"
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "画像のプロパティ"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "極小 (320 ピクセル)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "小 (640 ピクセル)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "中 (800 ピクセル)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "大 (1024 ピクセル)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "特大 (1280 ピクセル)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "巨大- 印刷用 (1600 ピクセル)"
+
+#: emailpage.cpp:139
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Select here the images size to send:</p><p><b>%1</b>: use this if you "
+#| "have a very slow internet connection or if the target mailbox size is "
+#| "very limited.</p><p><b>%2</b>: use this if you have a slow internet "
+#| "connection and if the target mailbox size is limited.</p><p><b>%3</b>: "
+#| "this is the default value for a medium internet connection and a target "
+#| "mailbox size.</p><p><b>%4</b>: use this if you have a high-speed internet "
+#| "connection and if the target mailbox size is not limited.</p><p><b>%5</"
+#| "b>: use this if you have no size or speed restrictions.</p><p><b>%6</b>: "
+#| "use this only for printing purpose.</p>"
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+"<p>送信する画像のサイズを選択します。</p><p>%1: インターネット接続の回線速度"
+"が遅く、行き先のメールボックスの容量が非常に限られている場合。</p><p>%2: イン"
+"ターネット接続の回線速度が遅く、行き先のメールボックスの容量が限られている場"
+"合。</p><p>%3: 中くらいの回線速度とメールボックス容量のための標準の値。</"
+"p><p>%4: インターネット接続の回線速度が速く、行き先のメールボックスの容量に制"
+"限がない場合。</p><p>%5: 回線速度やメールボックス容量に一切制限がない場合。</"
+"p><p>%6: これは印刷用にのみ使用してください。</p>"
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "画像のサイズ:"
+
+#: emailpage.cpp:168
+#, fuzzy
+#| msgid "<p>Select here the images files format to send.</p>"
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>送信する画像のファイルフォーマットを選択</p>"
+
+#: emailpage.cpp:169
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "画像のファイルフォーマット:"
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "画像の品質:"
+
+#: emailpage.cpp:188
+#, fuzzy
+#| msgid "<p>The new compression value of JPEG images to send:</p>"
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>送信する JPEG 画像の新しい圧縮レベル:</p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: 超高圧縮<br/><b>25</b>: 高圧縮<br/><b>50</b>: 中圧縮<br/><b>75</"
+"b>: 低圧縮 (標準)<br/><b>100</b>: 圧縮なし</p>"
+
+#: imageresize.cpp:191
+#, fuzzy
+#| msgid "Error in opening input file"
+msgid "Error opening input file"
+msgstr "入力ファイルのオープンエラー"
+
+#: imageresize.cpp:202
+#, fuzzy
+#| msgid "Error in opening temporary folder"
+msgid "Error opening temporary folder"
+msgstr "一時フォルダのオープンエラー"
+
+#: imageresize.cpp:247
+#, fuzzy
+#| msgid "Cannot resizing image. Aborting."
+msgid "Cannot resize image. Aborting."
+msgstr "画像のサイズを変更できません。中止します。"
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "サイズを変更した JPEG 画像を保存できません。中止します。"
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "サイズを変更した PNG 画像を保存できません。中止します。"
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "画像をメールで送る..."
+
+#: sendimages.cpp:130
+#, fuzzy
+#| msgid "E-mail images"
+msgid "Email images"
+msgstr "画像をメールで送る"
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "ユーザによって操作がキャンセルされました"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "%1 のサイズを変更中"
+
+#: sendimages.cpp:187
+#, fuzzy, kde-format
+#| msgid "%1 resized succesfully"
+msgid "%1 resized successfully"
+msgstr "%1 のサイズを変更しました"
+
+#: sendimages.cpp:194
+#, fuzzy, kde-format
+#| msgid "Failed to resize %1 : %2"
+msgid "Failed to resize %1: %2"
+msgstr "%1 のサイズを変更できませんでした: %2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "画像のプロパティファイルを作成"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "キャプションなし"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "キーワードなし"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"ファイル <filename>%1</filename>:\n"
+"元の画像: %2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "コメント %1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "タグ: %1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "評価: %1\n"
+
+# skip-rule: property
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:264
+#, fuzzy
+#| msgid "Images properties file done"
+msgid "Image properties file done"
+msgstr "画像のプロパティファイルの作成完了"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"以下の画像のサイズを変更できません。\n"
+"サイズを変更せずに添付ファイルとして追加しますか？"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "画像のサイズを変更できませんでした"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+
+#: sendimages.cpp:391
+#, fuzzy
+#| msgid "Starting default KDE e-mail program..."
+msgid "Starting default KDE email program..."
+msgstr "デフォルトのメールクライアントを起動中..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr ""
+"プログラム <command>%1</command> を起動できませんでした。システムを確認してく"
+"ださい。"
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "プログラム <command>%1</command> を起動中..."
+
+#: sendimages.cpp:568
+#, fuzzy
+#| msgid "After to have sent your images by e-mail..."
+msgid "After having sent your images by email..."
+msgstr "画像をメールで送信したら..."
+
+#: sendimages.cpp:569
+#, fuzzy
+#| msgid "Press 'Close' button to clean-up temporary files"
+msgid "Press 'Close' button to clean up temporary files"
+msgstr ""
+"<interface>閉じる</interface>ボタンを押して一時ファイルを消去してください"
+
+#: sendimagesdialog.cpp:90
+#, fuzzy
+#| msgid "E-Mail Images Options"
+msgid "Email Images Options"
+msgstr "画像メール送信のオプション"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "画像"
+
+#: sendimagesdialog.cpp:100
+#, fuzzy
+#| msgid "Images List"
+msgid "Image List"
+msgstr "画像リスト"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "メール"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "メールのオプション"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "画像メール送信"
+
+#: sendimagesdialog.cpp:115
+#, fuzzy
+#| msgid "A Plugin to e-mail pictures"
+msgid "A plugin to email pictures"
+msgstr "画像メール送信プラグイン"
+
+#: sendimagesdialog.cpp:116
+#, fuzzy
+#| msgid "(c) 2003-2009, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "(c) 2003-2009, Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "作者およびメンテナ"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "開発者"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+msgid "Handbook"
+msgstr "ハンドブック"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yukiko Bando"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ybando@k6.dion.ne.jp"

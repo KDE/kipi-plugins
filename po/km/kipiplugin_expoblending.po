@@ -1,0 +1,477 @@
+# translation of kipiplugin_expoblending.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_expoblending\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-01 03:31+0200\n"
+"PO-Revision-Date: 2010-11-04 16:34+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Language: km_KH\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: blendingdlg/bracketstack.cpp:140
+msgid "To process"
+msgstr "ដើម្បី​ដំណើរការ​"
+
+#: blendingdlg/bracketstack.cpp:141
+msgid "File Name"
+msgstr "ឈ្មោះ​ឯកសារ​"
+
+#: blendingdlg/bracketstack.cpp:142 importwizard/itemspage.cpp:85
+msgid "Exposure (EV)"
+msgstr "ការបង្ហាញ​​ (EV)"
+
+#: blendingdlg/enfusesettings.cpp:90
+msgctxt "enfuse settings"
+msgid "Auto Levels"
+msgstr "កម្រិត​ស្វ័យប្រវត្តិ​"
+
+#: blendingdlg/enfusesettings.cpp:91
+#, fuzzy
+msgid "Set automatic level selection (maximized) for pyramid blending."
+msgstr "កំណត់​ជម្រើស​កម្រិត​ស្វ័យ​ប្រវត្តិ​ (បាន​ពង្រីក​អតិបរមា​) សម្រាប់  pyramid blending ។"
+
+#: blendingdlg/enfusesettings.cpp:93
+msgctxt "enfuse settings"
+msgid "Levels:"
+msgstr "កម្រិត​ ៖"
+
+#: blendingdlg/enfusesettings.cpp:98
+#, fuzzy
+msgid ""
+"Set the number of levels for pyramid blending. A low number trades off "
+"quality of results for faster execution time and lower memory usage."
+msgstr ""
+"កំណត់​ចំនួន​កម្រិត​ សម្រាប់ pyramid blending ។ ចំនួន​ទាប​ជាង​បាត់បង់​គុណភាព​ដើម្បី​ជា​លទ្ធផល​ សម្រាប់​"
+"ពេលវេលា​ប្រតិបត្តិ​លឿន​ជាង​ និង​ប្រើ​អង្គ​ចងចាំ​យឺត​​ជាង ។"
+
+#: blendingdlg/enfusesettings.cpp:102
+#, fuzzy
+msgid "Hard Mask"
+msgstr "របាំង​រឹង​"
+
+#: blendingdlg/enfusesettings.cpp:103
+#, fuzzy
+msgid ""
+"Force hard blend masks and no averaging on finest scale. This is especially "
+"useful for focus stacks with thin and high contrast features, improves "
+"sharpness at the expense of increased noise."
+msgstr ""
+"បង្ខំ​របាំង​ល្បាយ​រឹង​ និង​​គ្មាន​មាត្រដ្ឋាន​​ល្អ​បំផុត​ឡើយ​ ។ ជាពិសេស​វា​​ជា​ប្រយោជន៍​​សម្រាប់​​ផ្ដោត​ជង់​ស្ដើង​ និង​លក្ខណ​"
+"ពិសេស​​កម្រិត​ពណ៌​ខ្ពស់ ធ្វើ​ឲ្យ​ភាព​ច្បាស់​ប្រសើរ​ឡើង​​ ជា​អ្នក​ចេញ​ថ្លៃ​ឲ្យ​សំឡេង​​​ដែល​បាន​បង្កើន ។"
+
+#: blendingdlg/enfusesettings.cpp:108
+#, fuzzy
+msgctxt "enfuse settings"
+msgid "Exposure:"
+msgstr "ការ​បង្ហាញ​ ៖"
+
+#: blendingdlg/enfusesettings.cpp:113
+#, fuzzy
+msgid ""
+"Set the exposure contribution for the blending process. Higher values will "
+"favor well-exposed pixels."
+msgstr ""
+"កំណត់​ការ​ចែក​ចាយ​​ការ​បង្ហាញ​​ សម្រាប់​ដំណើរការ blending ។ តម្លៃ​ខ្ពស់​ជាង​​នឹង​ភីក​សែល​​ដែល​បាន​បង្ហាញ​"
+"ច្បាស់​ ។"
+
+#: blendingdlg/enfusesettings.cpp:116
+msgctxt "enfuse settings"
+msgid "Saturation:"
+msgstr "តិត្ថិភាព​ ៖"
+
+#: blendingdlg/enfusesettings.cpp:121
+#, fuzzy
+msgid ""
+"Increasing this value makes pixels with high saturation contribute more to "
+"the final output."
+msgstr "ការ​បង្កើន​តម្លៃ​នេះ​​ធ្វើ​ឲ្យ​ភីកសែល​តាម​តិត្ថិភាព​ចែកចាយ​ខ្ពស់​ជាង​ទិន្នផល​ចុង​ក្រោយ​ ។"
+
+#: blendingdlg/enfusesettings.cpp:124
+msgctxt "enfuse settings"
+msgid "Contrast:"
+msgstr "កម្រិត​ពណ៌ ៖"
+
+#: blendingdlg/enfusesettings.cpp:129
+#, fuzzy
+msgid ""
+"Sets the relative weight of high-contrast pixels. Increasing this weight "
+"makes pixels with neighboring differently colored pixels contribute more to "
+"the final output. Particularly useful for focus stacks."
+msgstr ""
+"កំណត់​កម្រាស់​របស់​កម្រិត​ពណ៌​ភីកសែល​ខ្ពស់​​ ។ ការ​បង្កើន​កម្រាស់​នេះ​ធ្វើ​ឲ្យ​ភីកសែល​​ជាមួយ​​​ចែកចាយ​ភីកសែល​ដែល​បាន​"
+"ដាក់​ពណ៌​ខុស​គ្នា​ ទៅកាន់​ទិន្នផល​ចុង​ក្រោយ ។ ជាពិសេស​​ជា​ប្រយោជន៍​ សម្រាប់​ផ្ដោត​​ជង់​ ។"
+
+#: blendingdlg/enfusesettings.cpp:133
+#, fuzzy
+msgid "Use Color Appearance Modelling"
+msgstr "ប្រើ​ពណ៌​ធ្វើ​ជា​គំរូ"
+
+#: blendingdlg/enfusesettings.cpp:134
+#, fuzzy
+msgid ""
+"Use Color Appearance Modelling (CIECAM02) to render detailed colors. Your "
+"input files should have embedded ICC profiles. If no ICC profile is present, "
+"sRGB color space will be used instead. The difference between using this "
+"option and default color blending algorithm is very slight, and will be most "
+"noticeable when you need to blend areas of different primary colors together."
+msgstr ""
+"ប្រើ​ពណ៌​ធ្វើ​ជា​គំរូ​ (CIECAM02) ដើម្បី​បង្ហាញ​ពណ៌​លម្អិត ។​ ​បញ្ចូល​ឯកសារ​របស់​អ្នក​គួរ​តែ​ត្រូវ​បាន​បង្កប់​ទម្រង់​ "
+"ICC ។ បើ​គ្មាន​ទម្រង់​ ICC ត្រូវ​បាន​បង្ហាញ គំរូ​ពណ៌​ sRGB ​​នឹង​ត្រូវ​បាន​ជំនួស​ ។​ ភាព​ខុស​គ្នា​រវាង​ការ​ប្រើ​​"
+"ជម្រើស​នេះ​ និង​ពណ៌​លំនាំ​ដើម​​ blending ក្បួន​ដោះស្រាយ​គឺ​តិច​តួច​បំផុត​​ នឹង​អាច​សម្គាល់​បាន​  នៅ​ពេល​ដែល​អ្នក​ត្រូវ​"
+"ការ​ផ្ទៃ​ល្បាយ​នៃ​ពណ៌​ចម្បង​ខុស​ៗ​គ្នា​ ។"
+
+#: blendingdlg/enfusesettings.h:68 blendingdlg/enfusesettings.h:70
+#, fuzzy
+msgid "enabled"
+msgstr "បើក​"
+
+#: blendingdlg/enfusesettings.h:68 blendingdlg/enfusesettings.h:70
+#, fuzzy
+msgid "disabled"
+msgstr "បិទ​"
+
+#: blendingdlg/enfusesettings.h:68
+#, kde-format
+msgid "Hardmask: %1"
+msgstr "របាំង​រឹង​ ៖ %1"
+
+#: blendingdlg/enfusesettings.h:70
+#, kde-format
+msgid "CIECAM02: %1"
+msgstr "CIECAM02: %1"
+
+#: blendingdlg/enfusesettings.h:72
+msgid "auto"
+msgstr "ស្វ័យ​ប្រវត្តិ​"
+
+#: blendingdlg/enfusesettings.h:72
+#, kde-format
+msgid "Levels: %1"
+msgstr "កម្រិត​ ៖ %1"
+
+#: blendingdlg/enfusesettings.h:74
+#, kde-format
+msgid "Exposure: %1"
+msgstr "ការ​បង្ហាញ​ ៖ %1"
+
+#: blendingdlg/enfusesettings.h:76
+#, kde-format
+msgid "Saturation: %1"
+msgstr "តិត្ថិភាព​ ៖ %1"
+
+#: blendingdlg/enfusesettings.h:78
+#, kde-format
+msgid "Contrast: %1"
+msgstr "កម្រិត​ពណ៌ ៖ %1"
+
+#: blendingdlg/enfusestack.cpp:183
+msgid "To Save"
+msgstr "ដើម្បី​រក្សាទុក​"
+
+#: blendingdlg/enfusestack.cpp:184
+msgid "Target"
+msgstr "គោលដៅ​"
+
+#: blendingdlg/enfusestack.cpp:185
+msgid "Inputs"
+msgstr "បញ្ចូល​"
+
+#: blendingdlg/enfusestack.cpp:210
+msgid "Remove item"
+msgstr "យក​ធាតុ​ចេញ​"
+
+#: blendingdlg/enfusestack.cpp:217
+msgid "Clear all"
+msgstr "ជម្រះ​ទាំងអស់​"
+
+#: blendingdlg/expoblendingdlg.cpp:145 plugin/aboutdata.h:39
+msgid "Exposure Blending"
+msgstr "ការបង្ហាញ​ Blending"
+
+#: blendingdlg/expoblendingdlg.cpp:147
+msgid "&Save"
+msgstr "រក្សាទុក​"
+
+#: blendingdlg/expoblendingdlg.cpp:148
+#, fuzzy
+msgid "Process and save selected processed items."
+msgstr "ដំណើរការ និង​រក្សាទុក​​ធាតុ​ដែល​បាន​ដំណើរការ​ដែល​បាន​ជ្រើស​ ។"
+
+#: blendingdlg/expoblendingdlg.cpp:151
+msgid "&Preview"
+msgstr "មើល​ជាមុន​"
+
+#: blendingdlg/expoblendingdlg.cpp:152
+#, fuzzy
+msgid "Process a preview of bracketed images stack with current settings."
+msgstr "ដំណើរការ​មើល​ជាមុន​នៃ​ជង់​រូបភាព​​តាម​ការ​កំណត់​បច្ចុប្បន្ន ។​"
+
+#: blendingdlg/expoblendingdlg.cpp:155
+msgid "&Abort"
+msgstr "បោះបង់​"
+
+#: blendingdlg/expoblendingdlg.cpp:156
+msgid "Abort current process"
+msgstr "បោះបង់​ដំណើរការ​បច្ចុប្បន្ន​"
+
+#: blendingdlg/expoblendingdlg.cpp:159
+#, fuzzy
+msgid "Exit this tool"
+msgstr "ចេញ​ឧបករណ៍​នេះ​"
+
+#: blendingdlg/expoblendingdlg.cpp:169 importwizard/preprocessingpage.cpp:110
+msgid "Details..."
+msgstr "សេចក្ដី​លម្អិត​..."
+
+#: blendingdlg/expoblendingdlg.cpp:193
+msgid "File Name Template: "
+msgstr "ពុម្ព​ឈ្មោះ​ឯកសារ​ ៖"
+
+#: blendingdlg/expoblendingdlg.cpp:198
+msgid "Enfuse Settings"
+msgstr "ការកំណត់​ Enfuse "
+
+#: blendingdlg/expoblendingdlg.cpp:199
+#, fuzzy
+msgid "Save Settings"
+msgstr "ការកំណត់​រក្សាទុក​"
+
+#: blendingdlg/expoblendingdlg.cpp:220 importwizard/importwizarddlg.cpp:91
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ​"
+
+#: blendingdlg/expoblendingdlg.cpp:305 blendingdlg/expoblendingdlg.cpp:307
+#, fuzzy
+msgid "Enfuse Processing Messages"
+msgstr "ការដំណើរ​ការ​សារ Enfuse "
+
+#: blendingdlg/expoblendingdlg.cpp:459
+#, fuzzy, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "មានឈ្មោះ​ឯកសារ​ \"%1\" ហើយ​ ។ តើ​អ្នក​ចង់​សរសេរ​ជាន់​លើ​វា​ឬ ?"
+
+#: blendingdlg/expoblendingdlg.cpp:494
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "បាន​បរាជ័យ​​រក្សាទុក​រូបភាព​ទៅកាន់​ %1​"
+
+#: blendingdlg/expoblendingdlg.cpp:538
+#, fuzzy
+msgid "Processing preview of bracketed images..."
+msgstr "មើល​មុន​ដំណើរការ​​នៃ​រូបភាព​ក្នុង​​ដង្កៀប​​..."
+
+#: blendingdlg/expoblendingdlg.cpp:544
+#, fuzzy
+msgid "Processing targets of bracketed images..."
+msgstr "គោលដៅ​ដំណើរការ​នៃ​រូបភាព​ក្នុង​ដង្កៀប​..."
+
+#: blendingdlg/expoblendingdlg.cpp:569
+#, fuzzy
+msgid "Failed to load processed image"
+msgstr "បាន​បរាជ័យ​ ដើម្បី​ផ្ទុក​រូប​ភាព​ដែល​បាន​ដំណើរការ"
+
+#: blendingdlg/expoblendingdlg.cpp:578
+#, fuzzy
+msgid "Failed to process preview of bracketed images"
+msgstr "បាន​បរាជ័យ​ ដើម្បី​មើល​ជាមុន​ដំណើរការ​នៃ​រូប​ភាព​ក្នុង​ដង្កៀប"
+
+#: blendingdlg/expoblendingdlg.cpp:588
+#, fuzzy
+msgid "Failed to process targets of bracketed images"
+msgstr "បាន​បរាជ័យ​ ​ទៅកាន់​គោលដៅ​​​​ដំណើរការ​​នៃ​រូប​ភាព​ក្នុង​ដង្កៀប​​"
+
+#: importwizard/importwizarddlg.cpp:75
+#, fuzzy
+msgid "Exposure Blending Import Wizard"
+msgstr "បង្ហាញ​អ្នកជំនួយ​ការ​នាំចូល​ Blending ​"
+
+#: importwizard/intropage.cpp:40
+#, fuzzy
+msgid "Welcome to Exposure Blending Tool"
+msgstr "ស្វាគមន៍​ការ​បង្ហាញ​ឧបករណ៍ Blending "
+
+#: importwizard/intropage.cpp:46
+#, fuzzy
+msgid ""
+"<qt><p><h1><b>Welcome to Exposure Blending tool</b></h1></p><p>This tool "
+"fuses bracketed images with different exposure to make pseudo <a "
+"href='http://en.wikipedia.org/wiki/High_dynamic_range_imaging'>HDR image</a>."
+"</p><p>It can also be used to merge focus bracketed stack to get a single "
+"image with increased depth of field.</p><p>This assistant will help you to "
+"configure how to import images before merging them to a single one.</"
+"p><p>Bracketed images must be taken with the same camera, in the same "
+"conditions, and if possible using a tripod.</p><p>For more information, "
+"please take a look at <a href='http://en.wikipedia.org/wiki/Bracketing'>this "
+"page</a></p></qt>"
+msgstr ""
+"<qt><p><h1><b>ស្វាគមន៍​​ការ​បង្ហាញ​ឧបករណ៍​ Blending ​</b></h1></p><p>រូបភាព​ក្នុង​ដង្កៀប​ឧបករណ៍​"
+"បញ្ចូល​គ្នា​នេះ​ ជាមួយ​ការ​បង្ហាញ​ខុស​គ្នា ដើម្បី​​​បង្កើត​ជា​​ <a href='http://en.wikipedia.org/"
+"wiki/High_dynamic_range_imaging'>រូបភាព​ HDR ​</a>។</p><p>​វា​អាច​​ត្រូវ​បាន​​ប្រើ​ ដើម្បី​ជង់​"
+"ក្នុង​រូប​ភាព​ផ្ដោត​បញ្ចូល​ចូល​គ្នា ដើម្បី​ទទួល​បាន​រូប​ភាព​តែ​មួយ​តាម​​ជម្រៅ​វាល​ដែល​បង្កើន ។</p><p>អ្នក​​ជំនួយ​ការ​​"
+"នេះ​នឹង​ជួយ​​អ្នក​ ដើម្បី​រៀបចំ​កំណត់​រចនាសម្ព័ន្ធ​របៀប​ត្រូវ​នាំ​ចូល​រូបភាព​​ មុន​ពេល​ដាក់​បញ្ចូល​ពួកវា​ចូលគ្នា​តែ​មួយ ។​</"
+"p><p>រូបភាព​ក្នុង​ដង្កៀប​ត្រូវ​​បាន​យល់​ឃើញ​ថា​គួរ​ឲ្យ​ចាប់​អារម្មណ៍​ម៉ាស៊ីន​ថត​រូប​ដូច​គ្នា​​ ក្នុង​​ល​ខណ្ឌ​ដូច​គ្នា​​ ប្រសិន​"
+"បើ​ tripod អាច​ប្រើ​បាន​ ។</p><p>​​ព័ត៌មាន​បន្ថែម​​ សូម​មើល​​ <a href='http://en.wikipedia."
+"org/wiki/Bracketing'>ទំព័រ​នេះ​​</a></p></qt>"
+
+#: importwizard/itemspage.cpp:70
+#, fuzzy
+msgid "<b>Set Bracketed Images</b>"
+msgstr "<b>កំណត់​រូបភាព​ក្នុង​ដង្កៀប​​</b>"
+
+#: importwizard/itemspage.cpp:77
+#, fuzzy
+msgid ""
+"<qt><p>Set here the list of your bracketed images to fuse. Please follow "
+"these conditions:</p><ul><li>At least 2 images from the same subject must be "
+"added to the stack.</li><li>Do not mix images with different color depth.</"
+"li><li>All images must have the same dimensions.</li></ul></qt>"
+msgstr ""
+"<qt><p>កំណត់​បញ្ជី​នៃ​រូបភាព​ក្នុង​ដង្កៀប​របស់​អ្នក​ទីនេះ​ ដើម្បី​ដាក់​បញ្ចូល​គ្នា​ ។ ​សូម​បំពេញ​លក្ខខណ្ឌ​​ទាំង​នេះ​ ៖"
+"</p><ul><li>យ៉ាង​ហោច​ណាស់​មាន​រូបភាព ២​ ចេញ​ពី​ប្រធានបទ​ដូច​គ្នា​ត្រូវ​តែ​បន្ថែម​ទៅកាន់ជង់ ។</li><li>កុំ​"
+"ដាក់​រូប​ភាព​​ជាមួយ​ជម្រៅ​ពណ៌​ខុស​គ្នា​ ។</li><li>គ្រប់​រូប​ភាព​ទាំងអស់​ត្រូវ​តែ​មាន​វិមាត្រ​​ដូច​គ្នា​ ។</li></"
+"ul></qt>"
+
+#: importwizard/lastpage.cpp:57
+msgid "Pre-Processing is Complete"
+msgstr "មុន​ដំណើរការ​កុំព្យូទ័រ​"
+
+#: importwizard/lastpage.cpp:65
+#, fuzzy, kde-format
+msgid ""
+"<qt><p><h1><b>Bracketed Images Pre-Processing is Done</b></h1></"
+"p><p>Congratulations. Your images are ready to be fused. </p>To perform this "
+"operation, <b>%1</b> program from <a href='%2'>Enblend</a> project will be "
+"used.</p><p>Press \"Finish\" button to fuse your items and make a pseudo HDR "
+"image.</p></qt>"
+msgstr ""
+"<qt><p><h1><b>រូបភាព​ក្នុង​ដង្កៀប​​មុន​ដំណើរការ​ត្រូវ​បាន​សម្ដែង​នូវ​សេចក្ដី​សរសើរ​ ​</b></h1></p><p> "
+"។ រូប​ភាព​របស់​អ្នក​ត្រូវ​បាន​ដាក់​បញ្ចូល​គ្នា ។ </p>ដើម្បី​ធ្វើ​ប្រតិបត្តិការ​នេះ​​ <b>%1</b> កម្មវិធី​​ពី​"
+"គម្រោង​ <a href='%2'>​បាន​បើក​​</a> ​នឹង​ត្រូវ​បា​ន​ប្រើ​ ។​</p><p>ចុច​ប៊ូតុង \"បញ្ចប់​​\" ​ដើម្បី​បញ្ចូល​ធាតុ​"
+"របស់​អ្នក​ និង​​ធ្វើ​​​ជា​រូប​ភាព​ HDR ។</p></qt>"
+
+#: importwizard/preprocessingpage.cpp:93
+#, fuzzy
+msgid "<b>Pre-Processing Bracketed Images</b>"
+msgstr "<b>មុន​ដំណើរការ​រូបភាព​ក្នុង​ដង្កៀប​</b>"
+
+#: importwizard/preprocessingpage.cpp:102
+msgid "Align bracketed images"
+msgstr "តម្រឹម​រូប​ភាព​ក្នុង​ដង្កៀប​"
+
+#: importwizard/preprocessingpage.cpp:155
+#, fuzzy, kde-format
+msgid ""
+"<qt><p>Now, we will pre-process bracketed images before fusing them.</"
+"p><p>To perform auto-alignment, the <b>%1</b> program from the <a href='%2'>%"
+"3</a> project will be used. Alignment must be performed if you have not used "
+"a tripod to take bracketed images. Alignment operations can take a while.</"
+"p><p>Pre-processing operations include Raw demosaicing. Raw images will be "
+"converted to 16-bit sRGB images with auto-gamma.<p>Press \"Next\" to start "
+"pre-processing.</p></qt>"
+msgstr ""
+"<qt><p>ឥឡូវ អ្នក​នឹង​ដំណើរ​ការ​មុន​រូប​ភាព​ក្នុង​ដង្កៀប​​ មុន​ពេល​ដាក់​ពួកវា​បញ្ចូល​គ្នា​ ។​</p><p>ដើម្បី​ធ្វើ​ការ​"
+"រៀប​ជាជួរ​ដោយ​ស្វ័យ​ប្រវត្តិ <b>%1</b> កម្មវិធី​ចេញ​ពី​គម្រោង​ <a href='%2'>%3</a> នឹង​ត្រូវ​បាន​ប្រើ​ "
+"។​ កា​រ​រៀប​ជាជួរ​ត្រូវ​តែ​បាន​ធ្វើ​ ប្រសិន​បើ​​អ្នក​មិន​បាន​ប្រើ​ tripod ដើម្បី​ដាក់​រូប​រូប​ភាព​ក្នុង​ដង្កៀប​ ។​ ការ​"
+"របៀប​ជាជួរ​អាច​ចំណាយ​ពេល​មួយ​ភ្លែក ។​</p><p>​​មុន​ដំណើរការ​ប្រតិបត្តិការ​រួម​បញ្ចូល​ demosaicing ដើម​ ។ "
+"រូប​ភាព​ដើម​នឹង​ត្រូវ​បាន​បន្លែង​ទៅ​ជា​រូប​ភាព​​​​ ១៦-​ប៊ីត sRGB ជាមួយ​ហ្គាម៉ា​ស្វ័យ​ប្រវត្តិ ។​<p>ចុច​ប៊ូតុង​​ \"បន្ទាប់​​"
+"\"  ដើម្បី​ចាប់​ផ្ដើម​​មុន​​ចូល​ដំណើរការ​ ។​</p></qt>"
+
+#: importwizard/preprocessingpage.cpp:174
+#, fuzzy
+msgid ""
+"<qt><p>Pre-processing is under progress, please wait.<p><p>This can take a "
+"while...</p></qt>"
+msgstr "<qt><p>សូម​រង់ចាំ​ មុន​ដំណើរការ​វឌ្ឍនភាព​ ៖<p><p>វា​អាច​ចំណាយ​ពេល​​មួយភ្លែត​​...</p></qt>"
+
+#: importwizard/preprocessingpage.cpp:216
+#: importwizard/preprocessingpage.cpp:218
+#, fuzzy
+msgid "Pre-Processing Messages"
+msgstr "មុន​ដំណើរការ​សារ"
+
+#: importwizard/preprocessingpage.cpp:235
+#, fuzzy
+msgid ""
+"<qt><p>Pre-processing has failed.</p><p>Please check your bracketed images "
+"stack...</p><p>Press \"Details\" to show processing messages.</p></qt>"
+msgstr ""
+"<qt><p>មុន​ដំណើរការ​​ត្រូវ​​បាន​បរាជ័យ​​!</p><p>សូម​ពិនិត្យ​មើល​ជង់​រូបភាព​ក្នុង​ដង្កៀប​របស់​អ្នក​​...</p><p>ចុច​"
+"ប៊ូតុង​ \"សេចក្ដី​លម្អិត​​\" ​ដើម្បី​បង្ហាញ​ដំណើរការ​សារ ។​</p></qt>"
+
+#: manager/actionthread.cpp:300
+msgid "unknown"
+msgstr "មិន​ស្គាល់​"
+
+#: manager/actionthread.cpp:805
+#, fuzzy, kde-format
+#| msgid ""
+#| "Cannot run %1 :\n"
+#| "\n"
+#| " %2"
+msgid ""
+"Cannot run %1:\n"
+"\n"
+" %2"
+msgstr ""
+"មិន​អាច​ដំណើរការ​ %1 ៖\n"
+"\n"
+" %2"
+
+#: plugin/aboutdata.h:41
+#, fuzzy
+msgid "A tool to blend bracketed images"
+msgstr "ឧបករណ៍​​ត្រូវ​លាយ​រូបភាព​ក្នុង​ដង្កៀប​"
+
+#: plugin/aboutdata.h:42
+#, fuzzy
+#| msgid "(c) 2009-2010, Gilles Caulier"
+msgid "(c) 2009-2011, Gilles Caulier"
+msgstr "រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៩​-២០១០​ ​ដោយ Gilles Caulier"
+
+#: plugin/aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:45
+msgid "Author"
+msgstr "អ្នក​និពន្ធ​"
+
+#: plugin/aboutdata.h:48
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: plugin/aboutdata.h:49
+#, fuzzy
+msgid "Developer"
+msgstr "អ្នក​អភិវឌ្ឍន៍​"
+
+#: plugin/expoblending.cpp:58
+msgid "File(s) to open"
+msgstr "ឯកសារ​ត្រូវ​បើក​"
+
+#: plugin/plugin_expoblending.cpp:76
+#, fuzzy
+msgid "Blend bracketed images..."
+msgstr "ល្បាយ​រូបភាព​ក្នុង​ដង្កៀប​..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info, \n"
+"evannak@khmeros.info,piseth_dv@khmeros.info"

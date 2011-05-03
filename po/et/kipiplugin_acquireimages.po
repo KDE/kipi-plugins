@@ -1,0 +1,365 @@
+# translation of kipiplugin_acquireimages.po to Estonian
+# Copyright (C) 2004 Free Software Foundation, Inc.
+#
+# Marek Laane <bald@starman.ee>, 2004,2007-2009.
+# Marek Laane <bald@smail.ee>, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2011-03-14 18:35+0200\n"
+"Last-Translator: Marek Laane <bald@smail.ee>\n"
+"Language-Team: Estonian <kde-et@linux.ee>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Pildihõive"
+
+#: aboutdata.h:41
+msgid "A tool to acquire images using a flat scanner"
+msgstr "Tööriist piltide hankimiseks skannerist"
+
+#: aboutdata.h:42
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "(c) 2003-2011: Gilles Caulier\n"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Autor"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Arendaja"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr "Impordi skannerist..."
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Skaneerimisseadme avamine nurjus."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Pildi skaneerimine"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Käsiraamat"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Uue pildifaili nimi"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "Sihtpildi failivorming \"%1\" ei ole toetatud."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"Faili \"%1\"\n"
+"salvestamine asukohta\n"
+"\"%2\" nurjus."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "Fail nimega \"%1\" on juba olemas. Kas tõesti see üle kirjutada?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Kas kirjutada fail üle?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr "Faili \"%1\" salvestamine nurjus"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bald@starman.ee"
+
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr ""
+#~ "(c) 2003-2009: Gilles Caulier\n"
+#~ "(c) 2007-2009: Kare Sars"
+
+#~ msgid "Scan Images..."
+#~ msgstr "Skaneeri pilte..."
+
+#~ msgid "Cannot acquire image..."
+#~ msgstr "Pilti ei saa hankida..."
+
+#~ msgid "Cannot handle parent windows..."
+#~ msgstr "Eellasakende haldamine nurjus..."
+
+#~ msgid "Scanning failed!"
+#~ msgstr "Skaneerimine nurjus!"
+
+#~ msgid "Save Target Image Options"
+#~ msgstr "Sihtpildi salvestamise valikud"
+
+#~ msgid "image"
+#~ msgstr "pilt"
+
+#~ msgid "Target Image"
+#~ msgstr "Sihtpilt"
+
+#~ msgid "Target Image Options"
+#~ msgstr "Sihtpildi valikud"
+
+#~ msgid "File Name && Caption"
+#~ msgstr "Faili nimi ja pealdis"
+
+#~ msgid "<p>The target image preview with the file name and caption."
+#~ msgstr "<p>Sihtpildi eelvaatlus koos faili nime ja pealdisega."
+
+#~ msgid "File name (without suffix):"
+#~ msgstr "Faili nimi (laiendita):"
+
+#~ msgid "acquired_image"
+#~ msgstr "saadud_pilt"
+
+#~ msgid ""
+#~ "<p>Enter here the target image file name without suffix (that will be "
+#~ "automatically added to the file name according to the file-format option.)"
+#~ msgstr ""
+#~ "<p>Kirjuta siia sihtpildi faili nimi ilma laiendita. See lisatakse faili "
+#~ "nimele automaatselt vastavalt failivormingu valikule."
+
+#~ msgid "Caption:"
+#~ msgstr "Pealdis:"
+
+#~ msgid "<p>Enter here the target image's caption."
+#~ msgstr "<p>Kirjuta siia sihtpildi pealdis."
+
+#~ msgid "<p>The preview of the target image."
+#~ msgstr "<p>Sihtpildi eelvaatlus."
+
+#~ msgid "Saving Options"
+#~ msgstr "Salvestamisvalikud"
+
+#~ msgid "<p>The saving options of the target image."
+#~ msgstr "<p>Sihtpildi salvestamise valikud."
+
+#~ msgid "Image compression:"
+#~ msgstr "Pildi tihendus:"
+
+#~ msgid ""
+#~ "<p>The compression value of target image for JPEG and PNG formats:<p>"
+#~ msgstr "<p>Sihtpildi tihenduse tase JPEG ja PNG vormingu puhul:<p>"
+
+#~ msgid ""
+#~ "<b>1</b>: very high compression<p><b>25</b>: high compression<p><b>50</"
+#~ "b>: medium compression<p><b>75</b>: low compression (default value)"
+#~ "<p><b>100</b>: no compression"
+#~ msgstr ""
+#~ "<b>1</b>: väga tugev tihendus<p><b>25</b>: tugev tihendus<p><b>50</b>: "
+#~ "keskmine tihendus<p><b>75</b>: nõrk tihendus (vaikeväärtus)<p><b>100</b>: "
+#~ "tihendus puudub"
+
+#~ msgid "<p>Select here the target image's file format.<p>"
+#~ msgstr "<p>Vali siin sihtpildi failivorming.<p>"
+
+#~ msgid ""
+#~ "<b>JPEG</b>: The Joint Photographic Experts' Group file format is a good "
+#~ "Web file format but it uses lossy data compression.<p><b>PNG</b>: the "
+#~ "Portable Network Graphics format is an extensible file format for the "
+#~ "lossless, portable, well-compressed storage of raster images. PNG "
+#~ "provides a patent-free replacement for GIF and can also replace many "
+#~ "common uses of TIFF. PNG is designed to work well in online viewing "
+#~ "applications, such as the World Wide Web, so it is fully streamable with "
+#~ "a progressive display option. Also, PNG can store gamma and chromaticity "
+#~ "data for improved color matching on heterogeneous platforms."
+#~ msgstr ""
+#~ "<b>JPEG</b>: Joint Photographic Experts Groupi failivorming on korralik "
+#~ "failivorming veebile, kuid kasutab andmetekaoga tihendust.<p><b>PNG</b>: "
+#~ "Portable Network Graphicsi vorming on asjalik kadudeta, porditav ja "
+#~ "korraliku tihendusega rasterpiltide failivorming. PNG pakub patendivaba "
+#~ "asendust GIF-vormingule ning asendab suurel määral ka TIFF-vormingut. PNG "
+#~ "on mõeldud ühtlasi korralikuks esitamiseks veebis, mistõttu seda saab "
+#~ "igati kasutada internetipiltides. Samuti suudab PNG salvestada gamma- ja "
+#~ "värviandmeid paljudel platvormidel korrektsete värvipiltide esitamiseks."
+
+#~ msgid ""
+#~ "<p><b>TIFF</b>: the Tagged Image File Format is a rather old standard "
+#~ "that is still very popular today. It is a highly flexible and platform-"
+#~ "independent format which is supported by numerous image processing "
+#~ "applications and by virtually all prepress software on the market."
+#~ msgstr ""
+#~ "<p><b>TIFF</b>: Tag Image File Format on üsna eakas, kuid veel tänagi "
+#~ "populaarne standard. See on väga paindlik ja platvormist sõltumatu "
+#~ "vorming, mida toetavad arvukad pilditöötlusrakendused ja peaaegu kogu "
+#~ "turul olev küljendustarkvara."
+
+#~ msgid ""
+#~ "<p><b>PPM</b>: the Portable Pixel Map file format is used as an "
+#~ "intermediate format for storing color bitmap information. PPM files may "
+#~ "be either binary or ASCII and store pixel values up to 24 bits in size. "
+#~ "This format generates the biggest-sized text files for encoding images "
+#~ "without losing quality."
+#~ msgstr ""
+#~ "<p><b>PPM</b>: Portable Pixel Map failivormingut kasutatakse värvi "
+#~ "bitikaardi info salvestamise vahevorminguna. PPM failid võivad olla "
+#~ "binaar- või ASCII-failid ning salvestada kuni 24-bitiseid piksliväärtusi. "
+#~ "See vorming tekitab väga suured tekstifailid, kodeerides pildid "
+#~ "kvaliteeti kaotamata."
+
+#~ msgid ""
+#~ "<p><b>BMP</b>: the BitMaP file format is a popular image format from the "
+#~ "Win32 environment. It efficiently stores mapped or unmapped RGB graphics "
+#~ "data with pixels 1-, 4-, 8-, or 24-bits in size. Data may be stored raw "
+#~ "or compressed using a 4-bit or 8-bit RLE data compression algorithm. BMP "
+#~ "is an excellent choice for a simple bitmap format which supports a wide "
+#~ "range of RGB image data."
+#~ msgstr ""
+#~ "<p><b>BMP</b>: BitMaP failivorming on levinud pildivorming Win32 "
+#~ "keskkonnas. See salvestab tõhusalt seostatud või seostamata RGB "
+#~ "graafilised andmed pikslitega 1-, 4-, 8- või 24-bitises suuruses. Andmeid "
+#~ "saab salvestada toorelt või tihendatult 4- või 8-bitise RLE "
+#~ "andmetihendusalgoritmiga. BMP on suurepärane valik lihtsale "
+#~ "bittrastervormingule, mis toetab laia valikut RGB pildiandmeid."
+
+#~ msgid "Image file format:"
+#~ msgstr "Pildifaili vorming:"
+
+#~ msgid "Selection"
+#~ msgstr "Valik"
+
+#~ msgid "Album selection"
+#~ msgstr "Albumi valik"
+
+#~ msgid "Select Folder in Which to Save Target Image"
+#~ msgstr "Kataloogi valik sihtpildi salvestamiseks"
+
+#~ msgid "&Add New Folder"
+#~ msgstr "Lis&a uus kataloog"
+
+#~ msgid "<p>Add a new folder."
+#~ msgstr "<p>Lisa uus kataloog."
+
+#~ msgid "Album Description"
+#~ msgstr "Albumi kirjeldus"
+
+#~ msgid "<p>The description of the current Album in the selection list."
+#~ msgstr "<p>Nimekirjast valitud albumi kirjeldus."
+
+#~ msgid "Caption: %1"
+#~ msgstr "Pealdis: %1"
+
+#~ msgid "Collection: %1"
+#~ msgstr "Kogu: %1"
+
+#~ msgid "Date: %1"
+#~ msgstr "Kuupäev: %1"
+
+#~ msgid "Items: %1"
+#~ msgstr "Elemendid: %1"
+
+#~ msgid "You must select a target album for this image."
+#~ msgstr "Sellele pildile tuleb valida ka sihtalbum."
+
+#~ msgid "You must provide a file name for this image."
+#~ msgstr "Sellele pildile tuleb anda ka failinimi."
+
+#~ msgid "Cannot write image file \"%1\"."
+#~ msgstr "Pildifaili \"%1\" kirjutamine ebaõnnestus."
+
+#~ msgid "Could not upload image to \"%1\"."
+#~ msgstr "Pildi üleslaadimine asukohta \"%1\" ebaõnnestus."
+
+#~ msgid ""
+#~ "<qt>Error when informing the application about the new image. The error "
+#~ "was: %1</qt>"
+#~ msgstr "<qt>Viga rakendusele uuest pildist teatamisel. Viga oli: %1</qt>"
+
+#~ msgid "Screenshot..."
+#~ msgstr "Töölaua pilt..."
+
+#~ msgid "No KDE scan-service available; check your system."
+#~ msgstr "KDE skaneerimisteenus pole saadaval. Kontrolli paigaldust."
+
+#~ msgid "KIPI's 'Scan Images' Plugin"
+#~ msgstr "KIPI piltide skaneerimise plugin"
+
+#~ msgid "Screenshot"
+#~ msgstr "Töölaua pilt"
+
+#~ msgid "&New Snapshot"
+#~ msgstr "&Uus töölaua pilt"
+
+#~ msgid ""
+#~ "This dialog will grab either your desktop or a single\n"
+#~ "application window. If you grab a single window your mouse\n"
+#~ "cursor will change into crosshairs; then, simply select the\n"
+#~ "window with your mouse."
+#~ msgstr ""
+#~ "See dialoog võimaldab haarata terve töölaua või üheainsa rakenduse akna.\n"
+#~ "Kui haarad ühe akna, muutub hiirekursor ristikuks.\n"
+#~ "Vali seejärel lihtsalt hiirega vajalik aken."
+
+#~ msgid "Grab the entire desktop"
+#~ msgstr "Pildile haaratakse terve töölaud"
+
+#~ msgid ""
+#~ "<p>If you enable this option, the entire desktop will be grabbed; "
+#~ "otherwise, only the active windows."
+#~ msgstr ""
+#~ "<p>Sisselülitamisel tehakse pilt kogu töölauast, muidu ainult "
+#~ "aktiivsetest akendest."
+
+#~ msgid "Hide all host application windows"
+#~ msgstr "Peidetakse kõik käesoleva rakenduse aknad"
+
+#~ msgid ""
+#~ "<p>If you enable this option, all host application windows will be hidden "
+#~ "during the grab operation."
+#~ msgstr ""
+#~ "<p>Sisselülitamisel peidetakse pildi tegemise ajaks kõik selle rakenduse "
+#~ "aknad, kus sa pildi tegemise käsu andsid."
+
+#~ msgid "Delay:"
+#~ msgstr "Viivitus:"
+
+#~ msgid "<p>The delay in seconds before the grab operation is started."
+#~ msgstr "<p>Viivitus sekundites enne pildi tegemist."
+
+#~ msgid "Unable to take snapshot."
+#~ msgstr "Töölauda pole võimalik pildistada."
+
+#~ msgid "Screenshot Error"
+#~ msgstr "Töölauapildi viga"

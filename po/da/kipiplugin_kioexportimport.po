@@ -1,0 +1,149 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Martin Schlander <mschlander@opensuse.org>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2009-10-18 17:50+0200\n"
+"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "Eksportér til ekstern computer"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "Start eksport"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "Start eksport til angivet mål"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "Eksportér til ekstern computer"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr "Et KIPI-plugin til at eksportere billeder over netværk med KIO-slave"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "Udvikler og vedligeholder"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "Håndbog"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Nogle af billederne er ikke blevet overført og er stadig på listen. Du kan "
+"prøve at eksportere disse billeder igen nu."
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "Upload ikke gennemført"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr ""
+"Dette er listen over billeder der skal importeres til det aktuelle album."
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "Importér fra ekstern computer"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "Start import"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Start import af de angivne billeder til det aktuelt markerede album."
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "Importér fra ekstern computer"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr "Et KIPI-plugin til at importere billeder over netværk via KIO-slave"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Nogle af billederne er ikke blevet overført og er stadig på listen. Du kan "
+"prøve at importere disse billeder igen nu."
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "Import ikke gennemført"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "Eksportér til ekstern computer..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "Importér fra ekstern computer..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "Målplacering: "
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Sætter måladressen som billederne skal uploades til. Dette kan være enhver "
+"adresse som brugt i Dolphin eller Konqueror, f.eks. ftp://min.server.org/"
+"under/mapper."
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "Vælg mål..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "Vælg målplacering..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr "Dette er listen over billeder der skal uploades til det angivne mål."
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "ikke valgt"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Martin Schlander"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mschlander@opensuse.org"

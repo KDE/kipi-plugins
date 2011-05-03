@@ -1,0 +1,338 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2008, 2009.
+# Glentadakis Dimitrios <dglent@gmail.com>, 2009.
+# Petros <pvidalis@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_calendar\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2009-11-18 14:55+0200\n"
+"Last-Translator: Petros <pvidalis@gmail.com>\n"
+"Language-Team: Ελληνικά <i18ngr@lists.hellug.gr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin/plugin_calendar.cpp:61
+msgid "Create Calendar..."
+msgstr "Δημιουργία ημερολογίου..."
+
+#. i18n: file: ui/caltemplate.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, CalTemplate)
+#: wizard/calwizard.cpp:70 rc.cpp:54
+msgid "Create Template for Calendar"
+msgstr "Δημιουργία προτύπου για το ημερολόγιο"
+
+#: wizard/calwizard.cpp:76
+msgid "Choose events to show on the Calendar"
+msgstr "Επιλέξτε τα γεγονότα που θα εμφανίζονται στο ημερολόγιο"
+
+#: wizard/calwizard.cpp:81
+msgid "Select Year & Images"
+msgstr "Επιλογή έτους & εικόνων"
+
+#: wizard/calwizard.cpp:89
+msgid "Print"
+msgstr "Εκτύπωση"
+
+#. i18n: file: ui/calprogress.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, CalProgress)
+#: wizard/calwizard.cpp:95 rc.cpp:32
+msgid "Printing"
+msgstr "Εκτύπωση"
+
+#: wizard/calwizard.cpp:101
+msgid "Calendar"
+msgstr "Ημερολόγιο"
+
+#: wizard/calwizard.cpp:104
+msgid "A Kipi plugin to create a calendar"
+msgstr "Ένα πρόσθετο του Kipi για τη δημιουργία ενός ημερολογίου"
+
+#: wizard/calwizard.cpp:105
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006 Tom Albers\n"
+"(c) 2007-2008 Orgad Shaneh"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006 Tom Albers\n"
+"(c) 2007-2008 Orgad Shaneh"
+
+#: wizard/calwizard.cpp:109
+msgid "Orgad Shaneh"
+msgstr "Orgad Shaneh"
+
+#: wizard/calwizard.cpp:109
+msgid "Author and maintainer"
+msgstr "Συγγραφέας και συντηρητής"
+
+#: wizard/calwizard.cpp:112
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: wizard/calwizard.cpp:112 wizard/calwizard.cpp:115
+msgid "Former author and maintainer"
+msgstr "Πρώην συγγραφέας και συντηρητής"
+
+#: wizard/calwizard.cpp:115
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: wizard/calwizard.cpp:123
+msgid "Handbook"
+msgstr "Εγχειρίδιο"
+
+#. i18n: file: ui/calselect.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, CalSelect)
+#: wizard/calwizard.cpp:137 rc.cpp:41
+msgid "Create Calendar"
+msgstr "Δημιουργία ημερολογίου"
+
+#: wizard/calwizard.cpp:184
+msgid "No valid images selected for months<br/>Click Back to select images"
+msgstr ""
+"Δεν επιλέχθηκαν έγκυρες εικόνες για τους μήνες<br/>Κάντε κλικ στο "
+"προηγούμενο για να επιλέξετε εικόνες"
+
+#: wizard/calwizard.cpp:196
+msgid ""
+"Please note that you are making a calendar for<br/>the current year or a "
+"year in the past."
+msgstr ""
+"Παρακαλώ σημειώστε ότι δημιουργείτε ένα ημερολόγιο <br/>για το τρέχον έτος ή "
+"κάποιο έτος στο παρελθόν."
+
+#: wizard/calwizard.cpp:204
+#, kde-format
+msgid ""
+"Click Next to start Printing<br/><br/>Following months will be printed for "
+"year %1:<br/>"
+msgstr ""
+"Κάντε κλικ στο Επόμενο για να ξεκινήσετε την εκτύπωση<br/><br/>Θα εκτυπωθούν "
+"οι ακόλουθοι μήνες για το έτος %1:<br/>"
+
+#: wizard/calwizard.cpp:256
+msgid "Printing Cancelled"
+msgstr "Η εκτύπωση ακυρώθηκε"
+
+#: wizard/calwizard.cpp:312
+#, kde-format
+msgid "Printing Calendar Page for %1 of %2"
+msgstr "Εκτύπωση της σελίδας ημερολογίου %1 από %2"
+
+#: wizard/calwizard.cpp:321
+msgid "Printing Complete"
+msgstr "Η εκτύπωση ολοκληρώθηκε"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Τούσης Μανώλης"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "manolis@koppermind.homelinux.org"
+
+#. i18n: file: ui/calevents.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, CalEvents)
+#: rc.cpp:5
+msgid "Calendar events"
+msgstr "Γεγονότα ημερολογίου"
+
+#. i18n: file: ui/calevents.ui:25
+#. i18n: ectx: property (text), widget (QLabel, ohHeaderLabel)
+#: rc.cpp:8
+msgid "Select an optional calendar file with the official holidays"
+msgstr "Επιλέξτε ένα προαιρετικό αρχείο ημερολογίου με τις επίσημες γιορτές"
+
+#. i18n: file: ui/calevents.ui:32
+#. i18n: ectx: property (filter), widget (KUrlRequester, ohUrlRequester)
+#. i18n: file: ui/calevents.ui:88
+#. i18n: ectx: property (filter), widget (KUrlRequester, fhUrlRequester)
+#: rc.cpp:11 rc.cpp:25
+msgid "*.ics"
+msgstr "*.ics"
+
+#. i18n: file: ui/calevents.ui:49
+#. i18n: ectx: property (text), widget (QLabel, ohExplainLabel)
+#: rc.cpp:14
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:italic;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">You can download a "
+"calendar for your country from <a href=\"http://www.icalshare.com\"><span "
+"style=\" text-decoration: underline; color:#0057ae;\">http://www.icalshare."
+"com</span></a> or other sites.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">This is fully optional. "
+"All the events from this calendar will be printed in red.</p></body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:italic;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Μπορείτε να εγκαταστήσετε "
+"ένα ημερολόγιο για τη χώρα σας από το <a href=\"http://www.icalshare.com"
+"\"><span style=\" text-decoration: underline; color:#0057ae;\">http://www."
+"icalshare.com</span></a> ή άλλες τοποθεσίες.</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Αυτό είναι απολύτως "
+"προαιρετικό. Όλα τα γεγονότα του ημερολογίου θα τυπώνονται κόκκινα.</p></"
+"body></html>"
+
+#. i18n: file: ui/calevents.ui:78
+#. i18n: ectx: property (text), widget (QLabel, fhHeaderLabel)
+#: rc.cpp:22
+msgid "Select an optional calendar file with your \"family holidays\""
+msgstr ""
+"Επιλέξτε ένα προαιρετικό αρχείο ημερολογίου για τις \"οικογενειακές γιορτές"
+"\" σας"
+
+#. i18n: file: ui/calevents.ui:101
+#. i18n: ectx: property (text), widget (QLabel, fhExplainLabel)
+#: rc.cpp:28
+msgid ""
+"You can create such a calendar using KOrganizer or any other calendar "
+"program.\n"
+"This is fully optional. All the events from this calendar will be printed in "
+"green."
+msgstr ""
+"Μπορείτε να δημιουργήσετε ένα τέτοιο ημερολόγιο χρησιμοποιώντας το "
+"KOrganizer ή οποιοδήποτε άλλο πρόγραμμα ημερολογίου.\n"
+"Αυτό είναι απολύτως προαιρετικό. Όλα τα γεγονότα του ημερολογίου αυτού θα "
+"τυπωθούν με πράσινο."
+
+#. i18n: file: ui/calprogress.ui:22
+#. i18n: ectx: property (text), widget (QLabel, currentLabel)
+#: rc.cpp:35
+msgid "Current Page"
+msgstr "Τρέχουσα σελίδα"
+
+#. i18n: file: ui/calprogress.ui:32
+#. i18n: ectx: property (text), widget (QLabel, totalLabel)
+#: rc.cpp:38
+msgid "Total Pages"
+msgstr "Σύνολο σελίδων"
+
+#. i18n: file: ui/calselect.ui:19
+#. i18n: ectx: property (title), widget (QGroupBox, yearBox)
+#: rc.cpp:44
+msgid "Select Year"
+msgstr "Επιλέξτε ένα έτος"
+
+#. i18n: file: ui/calselect.ui:44
+#. i18n: ectx: property (title), widget (QGroupBox, monthBox)
+#: rc.cpp:47
+msgid "Select Images"
+msgstr "Επιλέξτε εικόνες"
+
+#. i18n: file: ui/calselect.ui:54
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:50
+msgid ""
+"Left click on Months to Select Images. Right click to Clear Month.\n"
+"You can also drag and drop images onto the Months"
+msgstr ""
+"Κάντε αριστερό κλικ στους μήνες για να επιλέξετε εικόνες. Με δεξί κλικ "
+"μπορείτε να μηδενίσετε τους μήνες.\n"
+"Μπορείτε επίσης να σύρετε και να αποθέσετε εικόνες στους μήνες"
+
+#. i18n: file: ui/caltemplate.ui:25
+#. i18n: ectx: property (title), widget (QGroupBox, previewGroupBox)
+#: rc.cpp:57
+msgid "Preview"
+msgstr "Προεπισκόπηση"
+
+#. i18n: file: ui/caltemplate.ui:40
+#. i18n: ectx: property (title), widget (QGroupBox, settingsGroupBox)
+#: rc.cpp:60
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#. i18n: file: ui/caltemplate.ui:54
+#. i18n: ectx: property (text), widget (QLabel, paperSizeLabel)
+#: rc.cpp:63
+msgid "Paper Size:"
+msgstr "Μέγεθος χαρτιού:"
+
+#. i18n: file: ui/caltemplate.ui:62
+#. i18n: ectx: property (text), item, widget (KComboBox, paperSizeCombo)
+#: rc.cpp:66
+msgid "A4"
+msgstr "A4"
+
+#. i18n: file: ui/caltemplate.ui:67
+#. i18n: ectx: property (text), item, widget (KComboBox, paperSizeCombo)
+#: rc.cpp:69
+msgid "US Letter"
+msgstr "US Letter"
+
+#. i18n: file: ui/caltemplate.ui:77
+#. i18n: ectx: property (title), widget (KButtonGroup, imagePosButtonGroup)
+#: rc.cpp:72
+msgid "Image Position"
+msgstr "Θέση εικόνας"
+
+#. i18n: file: ui/caltemplate.ui:86
+#. i18n: ectx: property (text), widget (QRadioButton, topRadio)
+#: rc.cpp:75
+msgid "&Top"
+msgstr "&Πάνω"
+
+#. i18n: file: ui/caltemplate.ui:93
+#. i18n: ectx: property (text), widget (QRadioButton, leftRadio)
+#: rc.cpp:78
+msgid "&Left"
+msgstr "&Αριστερά"
+
+#. i18n: file: ui/caltemplate.ui:100
+#. i18n: ectx: property (text), widget (QRadioButton, rightRadio)
+#: rc.cpp:81
+msgid "&Right"
+msgstr "&Δεξιά"
+
+#. i18n: file: ui/caltemplate.ui:110
+#. i18n: ectx: property (text), widget (QCheckBox, drawLinesCheckBox)
+#: rc.cpp:84
+msgid "Draw lines on calendar"
+msgstr "Σχεδίαση γραμμών στο ημερολόγιο"
+
+#. i18n: file: ui/caltemplate.ui:122
+#. i18n: ectx: property (text), widget (QLabel, ratioLabel)
+#: rc.cpp:87
+msgid "Image to text ratio:"
+msgstr "Αναλογία εικόνας/κειμένου:"
+
+#. i18n: file: ui/caltemplate.ui:152
+#. i18n: ectx: property (text), widget (QLabel, fontLabel)
+#: rc.cpp:90
+msgid "Font:"
+msgstr "Γραμματοσειρά:"
+
+#~ msgid ""
+#~ "You can download a calendar for your country from http://www.icalshare."
+#~ "com/ or other sites.\n"
+#~ "This is fully optional. All the events from this calendar will be printed "
+#~ "red."
+#~ msgstr ""
+#~ "Μπορείτε να κάνετε λήψη ένα ημερολόγιο για τη χώρα σας από το http://www."
+#~ "icalshare.com/ ή κάποια άλλη τοποθεσία.\n"
+#~ "Αυτό είναι προαιρετικό. Όλα τα γεγονότα του ημερολογίου αυτού θα τυπωθούν "
+#~ "με κόκκινο."

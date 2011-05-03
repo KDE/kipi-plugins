@@ -1,0 +1,417 @@
+# translation of kipiplugin_sendimages.po to Dutch
+# translation of kipiplugin_sendimages.po to
+# vertaling van digikamplugin_sendimages.po naar Nederlands
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+#
+# Jasper van der Marel <jasper.van.der.marel@wanadoo.nl>, 2004.
+# Sander Devrieze <s.devrieze@pandora.be>, 2004.
+# Wilbert Berendsen <wbsoft@xs4all.nl>, 2004.
+# Rinse de Vries <rinsedevries@kde.nl>, 2004, 2005, 2006, 2007, 2008.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2008, 2009, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2011-03-31 17:48+0200\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "E-mailprogramma:"
+
+#: emailpage.cpp:89
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "Standaard"
+
+#: emailpage.cpp:100
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"Selecteer <b>hier</b> het e-mailprogramma dat u wilt gebruiken. "
+"<b>Standaard</b> is het e-mailprogramma dat is ingesteld in KDE's "
+"systeeminstellingen."
+
+#: emailpage.cpp:106
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "Voeg een bestand toe met afbeeldingseigenschappen uit %1"
+
+#: emailpage.cpp:109
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Als u deze optie inschakelt worden alle afbeeldingseigenschappen ingesteld "
+"als in %1 als Commentaar, Waardering of Tags, ingevoegd als een bijgevoegd "
+"bestand."
+
+#: emailpage.cpp:118
+msgid "Maximum email size limit:"
+msgstr "Maximale e-mailgrootte:"
+
+#: emailpage.cpp:119
+msgid " MB"
+msgstr " MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "Afbeeldingseigenschappen aanpassen"
+
+#: emailpage.cpp:125
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Als u deze optie aanzet, kan de grootte van de te verzenden afbeeldingen "
+"worden aangepast en opnieuw gecomprimeerd."
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "Afbeeldingeigenschappen"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "Heel klein (320 pixels)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "Klein (640 pixels)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "Middel (800 pixels)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "Groot (1024 pixels)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "Zeer groot (1280 pixels)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "Enorm - voor afdrukken (1600 pixels)"
+
+#: emailpage.cpp:139
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+"<p>Selecteer de grootte van de te verzenden afbeeldingen:</p><p><b>%1</b>: "
+"gebruik dit als u over een zeer trage internetverbinding beschikt of als het "
+"postvak van de ontvanger zeer beperkt is in grootte.</p><p><b>%2</b>: "
+"gebruik dit als u over een trage internetverbinding beschikt en als het "
+"postvak van de ontvanger beperkt is in grootte.</p><p><b>%3</b>: dit is de "
+"standaardwaarde voor een gemiddelde internetverbinding en een gemiddelde "
+"postvakgrootte van de ontvanger.</p><p><b>%4</b>: gebruik dit als u over een "
+"snelle internetverbinding beschikt en als het postvak van de ontvanger niet "
+"beperkt is in grootte.</p><p><b>%5</b>: gebruik dit als u geen enkele "
+"beperking in grootte of snelheid hebt.</p><p><b>%6</b>: gebruik dit alleen "
+"voor afdrukdoeleinden.</p>"
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "Afbeeldingsgrootte:"
+
+#: emailpage.cpp:168
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr ""
+"<p>Selecteer het bestandsformaat voor de te verzenden afbeeldingen.</p>"
+
+#: emailpage.cpp:169
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: het bestandsformaat van de Joint Photographic Experts Group "
+"is een bestandsformaat dat geschikt is voor web-toepassingen. Het gebruikt "
+"een compressietechniek dat voor kwaliteitsverlies zorgt.</p><p><b>PNG</b>: "
+"het Portable Network Graphics-formaat is een uitbreidbaar bestandsformaat "
+"voor het bewaren van overdraagbare en goed gecomprimeerde bestanden in "
+"rasterformaat. PNG is een patentvrije vervanging voor GIF en kan het TIFF-"
+"formaat vaak ook vervangen . PNG is ontworpen voor gebruik in online-viewing-"
+"toepassingen zoals het World Wide Web. Het is dus volledig streamable met "
+"een 'progressieve display'-optie. Ook kan PNG gamma- en chromaticity-"
+"gegevens bewaren voor verbeterde kleurovereenkomsten op heterogene "
+"platformen.</p>"
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "Afbeeldingsbestandsformaat:"
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "Afbeeldingskwaliteit:"
+
+#: emailpage.cpp:188
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr ""
+"<p>De nieuwe compressiewaarde voor de te verzenden JPEG-afbeeldingen:</p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: zeer hoge compressie<br/><b>25</b>: hoge compressie<br/> <b>50</"
+"b>: gemiddelde compressie<br/><b>75</b>:lage compressie (standaardwaarde)<br/"
+"><b>100</b>:geen compressie</p>"
+
+#: imageresize.cpp:191
+msgid "Error opening input file"
+msgstr "Fout bij openen van invoerbestand"
+
+#: imageresize.cpp:202
+msgid "Error opening temporary folder"
+msgstr "Fout bij openen van tijdelijke map"
+
+#: imageresize.cpp:247
+msgid "Cannot resize image. Aborting."
+msgstr "Kan afbeeldingsgrootte niet wijzigen. Gestopt."
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Kan gewijzigde JPEG-afbeelding niet opslaan. Gestopt."
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Kan gewijzigde PNG-afbeelding niet opslaan. Gestopt"
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "Afbeeldingen e-mailen..."
+
+#: sendimages.cpp:130
+msgid "Email images"
+msgstr "Afbeeldingen e-mailen"
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "Operatie door gebruiker geannuleerd"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "%1 wordt verkleind"
+
+#: sendimages.cpp:187
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "Grootte wijzigen van %1 is voltooid"
+
+#: sendimages.cpp:194
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "Kon grootte van %1 niet wijzigen: %2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "Bestand met afbeeldingseigenschappen aanmaken"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "geen titel"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "geen steekwoorden"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"bestand \"%1\"\n"
+"Oorsproinkelijke afbeeldingen: %2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Commentaar: %1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Tags: %1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Waardering: %1\n"
+
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "eigenschappen.txt"
+
+#: sendimages.cpp:264
+msgid "Image properties file done"
+msgstr "Bestand met afbeeldingseigenschap is aangemaakt"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"Onderstaande afbeeldingen konden niet worden verkleind.\n"
+"Wilt u ze ongewijzig toevoegen als bijlagen?"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "Kon afbeeldingsgrootte niet wijzigen"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"Het bestand \"%1\" is te groot om te worden  verzonden, gaarne zijn grootte "
+"verminderen of uw instellingen wijzigen"
+
+#: sendimages.cpp:391
+msgid "Starting default KDE email program..."
+msgstr "Standaard KDE-e-mailprogramma wordt gestart..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "Kan programma '%1' niet starten. Controleer uw systeem."
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "Programma \"%1\" wordt opgestart..."
+
+#: sendimages.cpp:568
+msgid "After having sent your images by email..."
+msgstr "Nadat uw afbeeldingen per e-mail zijn verzonden..."
+
+#: sendimages.cpp:569
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Klik op de Sluiten-knop om de tijdelijke bestanden op te ruimen"
+
+#: sendimagesdialog.cpp:90
+msgid "Email Images Options"
+msgstr "Opties voor het e-mailen van afbeeldingen"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "Afbeeldingen"
+
+#: sendimagesdialog.cpp:100
+msgid "Image List"
+msgstr "Afbeeldingenlijst"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "E-mail"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "E-mailopties"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "Afbeeldingen verzenden"
+
+#: sendimagesdialog.cpp:115
+msgid "A plugin to email pictures"
+msgstr "Een plugin voor het e-mailen van afbeeldingen"
+
+#: sendimagesdialog.cpp:116
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "(c) 2003-2011, Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Auteur, onderhouder"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "Ontwikkelaar"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+msgid "Handbook"
+msgstr "Handboek"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+"Rinse de Vries - 2004 t/m 2008,Jasper van der Marel - 2004,Sander Devrieze - "
+"2004,Wilbert Berendsen - 2004,Freek de Kruijf - 2008 t/m 2009"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"rinsedevries@kde.nl,jasper.van.der.marel@wanadoo.nl,s.devrieze@pandora.be,"
+"wbsoft@xs4all.nl,freekdekruijf@kde.nl"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "zeer klein (320 pixels)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "klein (640 pixels)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "gemiddeld (800 pixels)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "groot (1024 pixels)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "zeer groot (1280 pixels)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "enorm - voor afdrukken (1600 pixels)"
+
+#~ msgid "This is the list of images to e-mail."
+#~ msgstr "Dit is de lijst met te verzenden afbeeldingen."
+
+#~ msgid "&Add"
+#~ msgstr "&Toevoegen"
+
+#~ msgid "&Remove"
+#~ msgstr "&Verwijderen"

@@ -1,0 +1,376 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2011-03-31 10:24+0100\n"
+"Last-Translator: Pedro Morais <morais@kde.org>\n"
+"Language-Team: pt <kde-i18n-pt@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-POFile-SpellExtra: Evolution txt Group Portable Sylpheed Graphics\n"
+"X-POFile-SpellExtra: Thunderbird Joint Experts KIPI Kmail Photographic\n"
+"X-POFile-SpellExtra: Network GmailAgent Claws Caulier Albers Hoechstetter\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-POFile-SpellExtra: Gilles RAW Wide Agent cromaticidade World KMail gamma\n"
+"X-POFile-SpellExtra: Gmail\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "Programa de e-mail:"
+
+#: emailpage.cpp:89
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "Predefinição"
+
+#: emailpage.cpp:100
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"Seleccione aqui o seu programa de e-mail externo preferido. O "
+"<b>Predefinição</b> é o programa de e-mail actual na Configuração de Sistema "
+"do KDE."
+
+#: emailpage.cpp:106
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "Anexar um ficheiro com as propriedades da imagem %1"
+
+#: emailpage.cpp:109
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Se activar esta opção, todas as propriedades de imagem definidas por %1, "
+"como os Comentários, a Classificação ou as Marcas, serão adicionadas como um "
+"ficheiro em anexo."
+
+#: emailpage.cpp:118
+msgid "Maximum email size limit:"
+msgstr "Tamanho máximo do e-mail:"
+
+#: emailpage.cpp:119
+msgid " MB"
+msgstr " MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "Ajustar as propriedades das imagens"
+
+#: emailpage.cpp:125
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Se activar esta opção, todas as imagens a enviar serão dimensionadas e "
+"comprimidas de novo."
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "Propriedades da Imagem"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "Muito Pequena (320 pixels)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "Pequena (640 pixels)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "Média (800 pixels)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "Grande (1024 pixels)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "Muito Grande (1280 pixels)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "Enorme - para impressão (1600 pixels)"
+
+#: emailpage.cpp:139
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+"<p>Seleccione aqui o tamanho das imagens a enviar:</p><p><b>%1</b>: use isto "
+"se tiver uma ligação à Internet muito lenta ou se o tamanho da caixa de "
+"correio de destino for muito limitado.</p><p><b>%2</b>: use isto se tiver "
+"uma ligação lenta e se a caixa de correio de destino for limitada.</p><p><b>%"
+"3</b>: este é o valor por omissão para uma ligação média à Internet e uma "
+"caixa de correio também média.</p><p><b>%4</b>: use isto se tiver uma "
+"ligação à Internet de alta velocidade e se o tamanho da caixa de correio não "
+"for limitado.</p><p><b>%5</b>: use isto se não tiver quaisquer restrições de "
+"tamanho ou velocidade.</p><p><b>%6</b>: use isto apenas para fins de "
+"impressão.</p>"
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "Tamanho das imagens:"
+
+#: emailpage.cpp:168
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>Seleccione aqui o formato de imagens a enviar.</p>"
+
+#: emailpage.cpp:169
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: O formato Joint Photographic Experts Group é um bom formato "
+"de ficheiros para a Web mas usa uma compressão com perdas.</p><p><b>PNG</b>: "
+"o formato Portable Network Graphics é um formato de ficheiros extensível "
+"para o armazenamento sem perdas, portável e bem-comprimido de imagens "
+"rasterizadas. O PNG oferece um substituto livre de patentes para o GIF e "
+"também poderá substituir bastantes utilizações do TIFF. O PNG está desenhado "
+"para funcionar bem nas aplicações de visualização 'online', como a World "
+"Wide Web, por isso pode ser transmitido com uma opção de visualização "
+"progressiva. Do mesmo modo, o PNG pode guardar os dados do 'gamma' e "
+"cromaticidade para melhorar a correspondência de cores em plataformas "
+"heterogéneas.</p>"
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "Formato do ficheiro de imagens:"
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "Qualidade das imagens:"
+
+#: emailpage.cpp:188
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>O novo valor de compressão das imagens JPEG a enviar:</p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: compressão muito alta<br/><b>25</b>: compressão alta<p><b>50</"
+"b>: compressão média<br/><b>75</b>: compressão baixa (valor por omissão)<br/"
+"><b>100</b>: sem compressão</p>"
+
+#: imageresize.cpp:191
+msgid "Error opening input file"
+msgstr "Erro ao abrir o ficheiro de entrada"
+
+#: imageresize.cpp:202
+msgid "Error opening temporary folder"
+msgstr "Erro ao aceder à pasta temporária"
+
+#: imageresize.cpp:247
+msgid "Cannot resize image. Aborting."
+msgstr "Não é possível mudar o tamanho da imagem. A interromper."
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Não é possível gravar a imagem dimensionada (JPEG). A interromper."
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Não é possível gravar a imagem dimensionada (PNG). A interromper."
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "Enviar Imagens por E-mail..."
+
+#: sendimages.cpp:130
+msgid "Email images"
+msgstr "Enviar as imagens por e-mail"
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "Operação cancelada pelo utilizador"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "A dimensionar o %1"
+
+#: sendimages.cpp:187
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "O %1 foi dimensionado com sucesso"
+
+#: sendimages.cpp:194
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "Não foi possível dimensionar o %1: %2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "Construir o ficheiro de propriedades das imagens"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "sem título"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "sem palavras-chave"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"ficheiro \"%1\":\n"
+"Imagens originais: %2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Comentários: %1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Marcas: %1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Classificação: %1\n"
+
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "propriedades.txt"
+
+#: sendimages.cpp:264
+msgid "Image properties file done"
+msgstr "O ficheiro de propriedades da imagem ficou completo"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"As imagens indicadas em baixo não poderão ser dimensionadas.\n"
+"Deseja adicioná-las como anexos (sem as dimensionar)?"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "Não foi possível dimensionar as imagens"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"O ficheiro \"%1\" é demasiado grande para ser enviado; por favor reduza o "
+"seu tamanho ou mude a sua configuração"
+
+#: sendimages.cpp:391
+msgid "Starting default KDE email program..."
+msgstr "A iniciar o programa de e-mail predefinido do KDE..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "Não foi possível iniciar o programa \"%1\". Verifique o seu sistema."
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "A iniciar o programa \"%1\"..."
+
+#: sendimages.cpp:568
+msgid "After having sent your images by email..."
+msgstr "Depois de ter enviado as suas imagens por e-mail..."
+
+#: sendimages.cpp:569
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Carregue no botão 'Fechar' para limpar os ficheiros temporários"
+
+#: sendimagesdialog.cpp:90
+msgid "Email Images Options"
+msgstr "Opções das Imagens por E-mail"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "Imagens"
+
+#: sendimagesdialog.cpp:100
+msgid "Image List"
+msgstr "Lista de Imagens"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "E-mail"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "Opções do Correio"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "Enviar as Imagens"
+
+#: sendimagesdialog.cpp:115
+msgid "A plugin to email pictures"
+msgstr "Um 'plugin' para enviar imagens por e-mail"
+
+#: sendimagesdialog.cpp:116
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "(c) 2003-2011, Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Autoria e Manutenção"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "Desenvolvimento"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+msgid "Handbook"
+msgstr "Manual"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "José Nuno Pires,Pedro Morais"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "zepires@gmail.com,morais@kde.org"

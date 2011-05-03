@@ -1,0 +1,769 @@
+# translation of kipiplugin_advancedslideshow.po to 简体中文
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ni Hui <shuizhuyuanluo@126.com>, 2007, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_advancedslideshow\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2010-01-05 13:31+0800\n"
+"Last-Translator: Ni Hui <shuizhuyuanluo@126.com>\n"
+"Language-Team: Chinese Simplified <kde-china@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: dialogs/captiondialog.cpp:41
+msgid "This is a comment sample..."
+msgstr ""
+
+#: dialogs/maindialog.cpp:247
+#, kde-format
+msgid "%1 image [%2]"
+msgid_plural "%1 images [%2]"
+msgstr[0] "%1 张图像 [%2]"
+
+#: dialogs/maindialog.cpp:326 dialogs/soundtrackdialog.cpp:551
+#, kde-format
+msgid "Cannot access file %1. Please check the path is correct."
+msgstr "无法访问文件 %1，请检查路径是否正确。"
+
+#: dialogs/maindialog.cpp:362
+#, kde-format
+msgctxt "Image number %1"
+msgid "Image #%1"
+msgstr "图像 #%1"
+
+#: dialogs/maindialog.cpp:393 widgets/slideshowkb.cpp:575
+msgid "Ken Burns"
+msgstr "视界燃烧"
+
+#: dialogs/maindialog.cpp:415
+msgid "Delay between images (ms):"
+msgstr "图像间延迟(毫秒)："
+
+#. i18n: file: ui/maindialog.ui:265
+#. i18n: ectx: property (text), widget (QLabel, m_delayLabel)
+#: dialogs/maindialog.cpp:422 rc.cpp:130
+msgid "Delay between images (s):"
+msgstr "图像间延迟："
+
+#: dialogs/slideshowconfig.cpp:79 dialogs/slideshowconfig.cpp:115
+msgid "Advanced Slideshow"
+msgstr "高级放映"
+
+#: dialogs/slideshowconfig.cpp:87
+msgid "Start Slideshow"
+msgstr "开始放映"
+
+#: dialogs/slideshowconfig.cpp:94
+msgid "Main"
+msgstr "主要"
+
+#: dialogs/slideshowconfig.cpp:95
+msgid "Main Settings"
+msgstr "主设置"
+
+#: dialogs/slideshowconfig.cpp:99 dialogs/slideshowconfig.cpp:100
+msgctxt "captions for the slideshow"
+msgid "Caption"
+msgstr "说明"
+
+#: dialogs/slideshowconfig.cpp:104 dialogs/slideshowconfig.cpp:105
+msgid "Soundtrack"
+msgstr "声音"
+
+#: dialogs/slideshowconfig.cpp:109 dialogs/slideshowconfig.cpp:110
+msgid "Advanced"
+msgstr "高级"
+
+#: dialogs/slideshowconfig.cpp:118
+msgid "A Kipi plugin for image slideshows"
+msgstr "一个图像幻灯片的 Kipi 插件"
+
+#: dialogs/slideshowconfig.cpp:119
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2004, Renchi Raju\n"
+#| "(c) 2006-2008, Valerio Fuoglio"
+msgid ""
+"(c) 2003-2004, Renchi Raju\n"
+"(c) 2006-2009, Valerio Fuoglio"
+msgstr ""
+"(c) 2003-2004，Renchi Raju\n"
+"(c) 2006-2008，Valerio Fuoglio"
+
+#: dialogs/slideshowconfig.cpp:122
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/slideshowconfig.cpp:122
+msgid "Author"
+msgstr "作者"
+
+#: dialogs/slideshowconfig.cpp:124
+msgid "Valerio Fuoglio"
+msgstr "Valerio Fuoglio"
+
+#: dialogs/slideshowconfig.cpp:124
+msgid "Author and maintainer"
+msgstr "作者和维护者"
+
+#: dialogs/slideshowconfig.cpp:131
+msgid "Handbook"
+msgstr "手册"
+
+#: dialogs/soundtrackdialog.cpp:63
+msgid "Soundtrack preview"
+msgstr "音乐预览"
+
+#: dialogs/soundtrackdialog.cpp:90
+msgid ""
+"If set, the soundtrack for the current album will be saved and restored "
+"automatically on the next startup."
+msgstr "如果设定，当前相册的音乐将保存起来并在下次启动时自动还原。"
+
+#: dialogs/soundtrackdialog.cpp:111
+msgid "Move the selected track up in the playlist."
+msgstr "将当前播放列表中的音轨向上移。"
+
+#: dialogs/soundtrackdialog.cpp:112
+msgid "Move the selected track down in the playlist."
+msgstr "将当前播放列表中的音轨向下移。"
+
+#: dialogs/soundtrackdialog.cpp:113
+msgid "Add new tracks to the playlist."
+msgstr "向播放列表添加新音轨。"
+
+#: dialogs/soundtrackdialog.cpp:114
+msgid "Delete the selected track from the playlist."
+msgstr "从播放列表中删除选中的音轨。"
+
+#: dialogs/soundtrackdialog.cpp:115
+msgid "Load playlist from a file."
+msgstr "从文件装入播放列表。"
+
+#: dialogs/soundtrackdialog.cpp:116
+msgid "Save playlist to a file."
+msgstr "将播放列表保存到文件。"
+
+#: dialogs/soundtrackdialog.cpp:117
+msgid "Clear the playlist."
+msgstr "清除播放列表。"
+
+#: dialogs/soundtrackdialog.cpp:243
+#, kde-format
+msgctxt "number of tracks and running time"
+msgid "1 track [%2]"
+msgid_plural "%1 tracks [%2]"
+msgstr[0] "%1 条音轨 [%2]"
+
+#: dialogs/soundtrackdialog.cpp:271
+msgid ""
+"Slide time is greater than soundtrack time. Suggestion: add more sound files."
+msgstr "幻灯片时长超过音乐时长。建议：添加更多的声音文件。"
+
+#: dialogs/soundtrackdialog.cpp:342
+msgid "Select sound files"
+msgstr "选择声音文件"
+
+#: dialogs/soundtrackdialog.cpp:389
+msgid "You can only move image files up one at a time."
+msgstr "您只能一次向上移动一个图像文件。"
+
+#: dialogs/soundtrackdialog.cpp:419
+msgid "You can only move files down one at a time."
+msgstr "您只能一次向下移动一个文件。"
+
+#: dialogs/soundtrackdialog.cpp:442
+msgid "Load playlist"
+msgstr "装入播放列表"
+
+#: dialogs/soundtrackdialog.cpp:497
+msgid "Save playlist"
+msgstr "保存播放列表"
+
+#: dialogs/soundtrackdialog.cpp:561
+msgid "Cannot create a preview of an empty file list."
+msgstr "无法创建空文件列表的预览。"
+
+#: plugin/plugin_advancedslideshow.cpp:87
+msgid "Advanced Slideshow..."
+msgstr "高级放映..."
+
+#: plugin/plugin_advancedslideshow.cpp:195
+msgid "There are no images to show."
+msgstr "没有要放映的图像。"
+
+#: plugin/plugin_advancedslideshow.cpp:251
+msgid "OpenGL support is not available on your system."
+msgstr "抱歉。OpenGL 支持在您系统中不可用。"
+
+#: widgets/listsounditems.cpp:95
+#, kde-format
+msgid "%1 is damaged and may not be playable."
+msgstr "%1 已被破坏并可能无法播放。"
+
+#: widgets/listsounditems.cpp:97
+msgid "Phonon error"
+msgstr "Phonon 错误"
+
+#: widgets/listsounditems.cpp:100
+msgid "This file is damaged and may not be playable."
+msgstr "文件已被破坏并可能无法播放。"
+
+#: widgets/slideshow.cpp:235 widgets/slideshowgl.cpp:389
+msgctxt "Filter Effect: No effect"
+msgid "None"
+msgstr "无"
+
+#: widgets/slideshow.cpp:236
+msgctxt "Filter Effect: Chess Board"
+msgid "Chess Board"
+msgstr "棋盘式"
+
+#: widgets/slideshow.cpp:237
+msgctxt "Filter Effect: Melt Down"
+msgid "Melt Down"
+msgstr "溶解"
+
+#: widgets/slideshow.cpp:238
+msgctxt "Filter Effect: Sweep"
+msgid "Sweep"
+msgstr "擦除"
+
+#: widgets/slideshow.cpp:239
+msgctxt "Filter Effect: Mosaic"
+msgid "Mosaic"
+msgstr "马赛克"
+
+#: widgets/slideshow.cpp:240
+msgctxt "Filter Effect: Cubism"
+msgid "Cubism"
+msgstr "立体派"
+
+#: widgets/slideshow.cpp:241
+msgctxt "Filter Effect: Growing"
+msgid "Growing"
+msgstr "伸展"
+
+#: widgets/slideshow.cpp:242
+msgctxt "Filter Effect: Horizontal Lines"
+msgid "Horizontal Lines"
+msgstr "水平切入"
+
+#: widgets/slideshow.cpp:243
+msgctxt "Filter Effect: Vertical Lines"
+msgid "Vertical Lines"
+msgstr "垂直切入"
+
+#: widgets/slideshow.cpp:244
+msgctxt "Filter Effect: Circle Out"
+msgid "Circle Out"
+msgstr "圆形旋转"
+
+#: widgets/slideshow.cpp:245
+msgctxt "Filter Effect: Multi-Circle Out"
+msgid "Multi-Circle Out"
+msgstr "多边形旋转"
+
+#: widgets/slideshow.cpp:246
+msgctxt "Filter Effect: Spiral In"
+msgid "Spiral In"
+msgstr "螺旋切入"
+
+#: widgets/slideshow.cpp:247
+msgctxt "Filter Effect: Blobs"
+msgid "Blobs"
+msgstr "斑点"
+
+#: widgets/slideshow.cpp:248 widgets/slideshowgl.cpp:398
+msgctxt "Filter Effect: Random effect"
+msgid "Random"
+msgstr "随机"
+
+#: widgets/slideshow.cpp:1329 widgets/slideshowgl.cpp:698
+msgid "Slideshow Completed"
+msgstr "已完成幻灯片放映"
+
+#: widgets/slideshow.cpp:1330 widgets/slideshowgl.cpp:699
+#: widgets/slideshowkb.cpp:517
+msgid "Click to Exit..."
+msgstr "点击以退出..."
+
+#: widgets/slideshowgl.cpp:390
+msgctxt "Filter Effect: Bend"
+msgid "Bend"
+msgstr "弯曲"
+
+#: widgets/slideshowgl.cpp:391
+msgctxt "Filter Effect: Blend"
+msgid "Blend"
+msgstr "混合"
+
+#: widgets/slideshowgl.cpp:392
+msgctxt "Filter Effect: Cube"
+msgid "Cube"
+msgstr "立方体"
+
+#: widgets/slideshowgl.cpp:393
+msgctxt "Filter Effect: Fade"
+msgid "Fade"
+msgstr "淡入淡出"
+
+#: widgets/slideshowgl.cpp:394
+msgctxt "Filter Effect: Flutter"
+msgid "Flutter"
+msgstr "颤动"
+
+#: widgets/slideshowgl.cpp:395
+msgctxt "Filter Effect: In Out"
+msgid "In Out"
+msgstr ""
+
+#: widgets/slideshowgl.cpp:396
+msgctxt "Filter Effect: Rotate"
+msgid "Rotate"
+msgstr "旋转"
+
+#: widgets/slideshowgl.cpp:397
+msgctxt "Filter Effect: Slide"
+msgid "Slide"
+msgstr "滑动"
+
+#: widgets/slideshowkb.cpp:516
+msgid "SlideShow Completed"
+msgstr "已完成幻灯片放映"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ni Hui"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "shuizhuyuanluo@126.com"
+
+#. i18n: file: ui/advanceddialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, AdvancedDialog)
+#: rc.cpp:5
+msgid "advancedDialog"
+msgstr "高级对话框"
+
+#. i18n: file: ui/advanceddialog.ui:27
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:8
+msgid "&Interface"
+msgstr "界面(&I)"
+
+#. i18n: file: ui/advanceddialog.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, m_useMillisecondsCheckBox)
+#: rc.cpp:11
+msgid "Use &milliseconds instead of seconds"
+msgstr "使用毫秒而不是秒(&M)"
+
+#. i18n: file: ui/advanceddialog.ui:55
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:14
+msgid "&Controls"
+msgstr "控制(&C)"
+
+#. i18n: file: ui/advanceddialog.ui:67
+#. i18n: ectx: property (toolTip), widget (QCheckBox, m_enableMouseWheelCheckBox)
+#: rc.cpp:17
+msgid "Enable mouse wheel to move between slides."
+msgstr "启用鼠标滚轮在图像间移动。"
+
+#. i18n: file: ui/advanceddialog.ui:70
+#. i18n: ectx: property (text), widget (QCheckBox, m_enableMouseWheelCheckBox)
+#: rc.cpp:20
+msgid "Enable mouse &wheel "
+msgstr "启用鼠标滚轮(&W)"
+
+#. i18n: file: ui/advanceddialog.ui:88
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:23
+msgid "&Ken Burns effect"
+msgstr "视界燃烧效果(&K)"
+
+#. i18n: file: ui/advanceddialog.ui:100
+#. i18n: ectx: property (text), widget (QCheckBox, m_kbDisableFadeCheckBox)
+#: rc.cpp:26
+msgid "Disable &fade-in / fade-out"
+msgstr "禁用淡入/淡出(&F)"
+
+#. i18n: file: ui/advanceddialog.ui:113
+#. i18n: ectx: property (text), widget (QCheckBox, m_kbDisableCrossfadeCheckBox)
+#: rc.cpp:29
+msgid "Disable &cross-fade"
+msgstr "禁用交叉淡入淡出(&C)"
+
+#. i18n: file: ui/advanceddialog.ui:129
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
+#: rc.cpp:32
+msgid "&Others"
+msgstr "其它(&O)"
+
+#. i18n: file: ui/advanceddialog.ui:143
+#. i18n: ectx: property (text), widget (QCheckBox, m_cacheCheckBox)
+#: rc.cpp:35
+msgid "Enable &Cache"
+msgstr "启用缓存(&C)"
+
+#. i18n: file: ui/advanceddialog.ui:158
+#. i18n: ectx: property (text), widget (QLabel, m_cacheSizeLabel1)
+#: rc.cpp:38
+msgid "Cache size:"
+msgstr "缓存大小："
+
+#. i18n: file: ui/advanceddialog.ui:200
+#. i18n: ectx: property (text), widget (QLabel, m_cacheSizeLabel2)
+#: rc.cpp:41
+msgid "images"
+msgstr "图像"
+
+#. i18n: file: ui/advanceddialog.ui:215
+#. i18n: ectx: property (text), widget (QLabel, m_KBCacheLabel)
+#: rc.cpp:44
+msgid ""
+"<b>Notice</b>:\n"
+"Ken Burns effect does not use this cache mechanism."
+msgstr ""
+"<b>注意</b>：\n"
+"视界燃烧效果不使用此缓存机制。"
+
+#. i18n: file: ui/captiondialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, CaptionDialog)
+#: rc.cpp:48
+msgid "captionDialog"
+msgstr "说明对话框"
+
+#. i18n: file: ui/captiondialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:51
+msgid "Line length (in characters)"
+msgstr "线条长度(字符形式)"
+
+#. i18n: file: ui/captiondialog.ui:80
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:54
+msgid "Colors"
+msgstr "颜色"
+
+#. i18n: file: ui/captiondialog.ui:86
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:57
+msgid "Font color:"
+msgstr "字体颜色："
+
+#. i18n: file: ui/captiondialog.ui:109
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:60
+msgid "Background color:"
+msgstr "背景颜色："
+
+#. i18n: file: ui/captiondialog.ui:170
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:63
+#, fuzzy
+#| msgid "Background color:"
+msgid "Background opacity:"
+msgstr "背景颜色："
+
+#. i18n: file: ui/captiondialog.ui:177
+#. i18n: ectx: property (text), widget (QCheckBox, m_commentsDrawOutlineCheckBox)
+#: rc.cpp:66
+msgid "Outlined Text"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, MainDialog)
+#: rc.cpp:69
+msgid "mainDialog"
+msgstr "主对话框"
+
+#. i18n: file: ui/maindialog.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, m_allFilesButton)
+#: rc.cpp:72
+msgid "Show all images in current al&bum"
+msgstr "在当前相册中显示所有图像(&B)"
+
+#. i18n: file: ui/maindialog.ui:36
+#. i18n: ectx: property (text), widget (QRadioButton, m_selectedFilesButton)
+#: rc.cpp:75
+msgid "Show onl&y selected images"
+msgstr "仅显示选中的图像(&Y)"
+
+#. i18n: file: ui/maindialog.ui:43
+#. i18n: ectx: property (text), widget (QRadioButton, m_customButton)
+#: rc.cpp:78
+msgid "Cu&stom"
+msgstr "自定义(&S)"
+
+#. i18n: file: ui/maindialog.ui:53
+#. i18n: ectx: property (whatsThis), widget (QGroupBox, m_ImagesFilesGroup)
+#: rc.cpp:81
+msgid "Preview the currently selected image."
+msgstr "预览当前选中的图像。"
+
+#. i18n: file: ui/maindialog.ui:56
+#. i18n: ectx: property (title), widget (QGroupBox, m_ImagesFilesGroup)
+#: rc.cpp:84
+msgid "Image Files in Slideshow"
+msgstr "幻灯片中的图像文件"
+
+#. i18n: file: ui/maindialog.ui:123
+#. i18n: ectx: property (whatsThis), widget (QLabel, m_label6)
+#: rc.cpp:88
+msgid "Total number of images in the portfolio and sequence duration."
+msgstr "放映单中的图像总数和顺序播放的持续时间。"
+
+#. i18n: file: ui/maindialog.ui:126
+#. i18n: ectx: property (text), widget (QLabel, m_label6)
+#. i18n: file: ui/maindialog.ui:145
+#. i18n: ectx: property (text), widget (QLabel, m_label7)
+#: rc.cpp:91 rc.cpp:97
+msgid "None"
+msgstr "无"
+
+#. i18n: file: ui/maindialog.ui:142
+#. i18n: ectx: property (whatsThis), widget (QLabel, m_label7)
+#: rc.cpp:94
+msgid "Currently selected image in the portfolio list."
+msgstr "当前放映单列表中选中的图像。"
+
+#. i18n: file: ui/maindialog.ui:160
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:100
+msgid "Content"
+msgstr "内容"
+
+#. i18n: file: ui/maindialog.ui:168
+#. i18n: ectx: property (text), widget (QCheckBox, m_printNameCheckBox)
+#: rc.cpp:103
+msgid "P&rint filename"
+msgstr "印出文件名(&R)"
+
+#. i18n: file: ui/maindialog.ui:175
+#. i18n: ectx: property (text), widget (QCheckBox, m_printProgressCheckBox)
+#: rc.cpp:106
+msgid "Progress indicator"
+msgstr "进度指示"
+
+#. i18n: file: ui/maindialog.ui:184
+#. i18n: ectx: property (text), widget (QCheckBox, m_printCommentsCheckBox)
+#: rc.cpp:109
+msgid "Pr&int captions "
+msgstr "印出标题(&I) "
+
+#. i18n: file: ui/maindialog.ui:207
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:112
+msgid "Video"
+msgstr "视频"
+
+#. i18n: file: ui/maindialog.ui:213
+#. i18n: ectx: property (text), widget (QCheckBox, m_openglCheckBox)
+#: rc.cpp:115
+msgid "Use Open&GL slideshow transitions"
+msgstr "使用 Open&GL 放映切换"
+
+#. i18n: file: ui/maindialog.ui:220
+#. i18n: ectx: property (text), widget (QCheckBox, m_openGlFullScale)
+#: rc.cpp:118
+msgid "Use full screen resolution (slower)"
+msgstr "使用全屏分辨率(慢速)"
+
+#. i18n: file: ui/maindialog.ui:243
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:121
+msgid "Playback"
+msgstr "回放"
+
+#. i18n: file: ui/maindialog.ui:249
+#. i18n: ectx: property (text), widget (QCheckBox, m_loopCheckBox)
+#. i18n: file: ui/soundtrackdialog.ui:331
+#. i18n: ectx: property (text), widget (QCheckBox, m_loopCheckBox)
+#: rc.cpp:124 rc.cpp:212
+msgid "&Loop"
+msgstr "循环(&L)"
+
+#. i18n: file: ui/maindialog.ui:256
+#. i18n: ectx: property (text), widget (QCheckBox, m_shuffleCheckBox)
+#: rc.cpp:127
+msgid "&Shuffle images"
+msgstr "乱序播放(&S)"
+
+#. i18n: file: ui/maindialog.ui:291
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:133
+msgid "Transition effect:"
+msgstr "切换效果："
+
+#. i18n: file: ui/playbackwidget.ui:28
+#. i18n: ectx: property (text), widget (QPushButton, m_playButton)
+#. i18n: file: ui/slideplaybackwidget.ui:31
+#. i18n: ectx: property (text), widget (QPushButton, m_playButton)
+#: rc.cpp:136 rc.cpp:169
+msgid "Play"
+msgstr "播放"
+
+#. i18n: file: ui/playbackwidget.ui:35
+#. i18n: ectx: property (text), widget (QPushButton, m_stopButton)
+#. i18n: file: ui/slideplaybackwidget.ui:38
+#. i18n: ectx: property (text), widget (QPushButton, m_stopButton)
+#: rc.cpp:139 rc.cpp:172
+msgid "Stop"
+msgstr "停止"
+
+#. i18n: file: ui/playbackwidget.ui:42
+#. i18n: ectx: property (text), widget (QPushButton, m_prevButton)
+#. i18n: file: ui/slideplaybackwidget.ui:45
+#. i18n: ectx: property (text), widget (QPushButton, m_prevButton)
+#: rc.cpp:142 rc.cpp:175
+msgid "Prev"
+msgstr "上一张"
+
+#. i18n: file: ui/playbackwidget.ui:49
+#. i18n: ectx: property (text), widget (QPushButton, m_nextButton)
+#. i18n: file: ui/slideplaybackwidget.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, m_nextButton)
+#: rc.cpp:145 rc.cpp:178
+msgid "Next"
+msgstr "下一张"
+
+#. i18n: file: ui/playbackwidget.ui:69
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:148
+msgid "Time"
+msgstr "时间"
+
+#. i18n: file: ui/playbackwidget.ui:78
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:151
+msgid "elapsed:"
+msgstr "用去："
+
+#. i18n: file: ui/playbackwidget.ui:85
+#. i18n: ectx: property (text), widget (QLabel, m_elapsedTimeLabel)
+#. i18n: file: ui/playbackwidget.ui:99
+#. i18n: ectx: property (text), widget (QLabel, m_totalTimeLabel)
+#: rc.cpp:154 rc.cpp:160
+msgid "0:00:00"
+msgstr "0:00:00"
+
+#. i18n: file: ui/playbackwidget.ui:92
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:157
+msgid "total:"
+msgstr "总共："
+
+#. i18n: file: ui/playbackwidget.ui:127
+#. i18n: ectx: property (text), widget (QLabel, m_soundLabel)
+#: rc.cpp:163
+msgid "SoundPixmap"
+msgstr "SoundPixmap"
+
+#. i18n: file: ui/slideplaybackwidget.ui:22
+#. i18n: ectx: property (text), widget (QLabel, m_slideLabel)
+#: rc.cpp:166
+msgid "SlidePixmap"
+msgstr "SlidePixmap"
+
+#. i18n: file: ui/soundtrackdialog.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, m_selectionGroupBox)
+#: rc.cpp:181
+msgid "Select audio files"
+msgstr "选择音频文件"
+
+#. i18n: file: ui/soundtrackdialog.ui:76
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonUp)
+#: rc.cpp:184
+msgid "Move the current image up in the portfolio list."
+msgstr "将当前放映单列表中的图像向上移。"
+
+#. i18n: file: ui/soundtrackdialog.ui:104
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonAdd)
+#: rc.cpp:187
+msgid "Add some image files to the portfolio list."
+msgstr "向放映单列表添加一些图像文件。"
+
+#. i18n: file: ui/soundtrackdialog.ui:132
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonDelete)
+#: rc.cpp:190
+msgid "Remove some image files from the portfolio list."
+msgstr "从放映单列表中删除一些图像文件。"
+
+#. i18n: file: ui/soundtrackdialog.ui:160
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonDown)
+#. i18n: file: ui/soundtrackdialog.ui:191
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonLoad)
+#. i18n: file: ui/soundtrackdialog.ui:219
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonSave)
+#. i18n: file: ui/soundtrackdialog.ui:247
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonReset)
+#: rc.cpp:193 rc.cpp:196 rc.cpp:199 rc.cpp:202
+msgid "Move the current image down in the portfolio list."
+msgstr "将当前放映单列表中的图像向下移。"
+
+#. i18n: file: ui/soundtrackdialog.ui:305
+#. i18n: ectx: property (text), widget (QPushButton, m_previewButton)
+#: rc.cpp:206
+msgid "Preview..."
+msgstr "预览..."
+
+#. i18n: file: ui/soundtrackdialog.ui:325
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:209
+msgid "Options"
+msgstr "选项"
+
+#. i18n: file: ui/soundtrackdialog.ui:338
+#. i18n: ectx: property (text), widget (QCheckBox, m_rememberSoundtrack)
+#: rc.cpp:215
+msgid "Remember soundtrack"
+msgstr "记住声音"
+
+#. i18n: file: ui/soundtrackdialog.ui:361
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:218
+msgid "Time comparison"
+msgstr "时间对比"
+
+#. i18n: file: ui/soundtrackdialog.ui:369
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:221
+msgid "Slide:"
+msgstr "切换："
+
+#. i18n: file: ui/soundtrackdialog.ui:383
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:225
+msgid "Soundtrack:"
+msgstr "音乐："
+
+#~ msgid ""
+#~ "AdvancedSlideshow is part of KIPI-Plugins (http://www.kipi-plugins.org)"
+#~ msgstr "高级幻灯片是 KIPI 插件的一部分(http://www.kipi-plugins.org)"
+
+#~ msgid "Transparent background"
+#~ msgstr "透明背景"
+
+#~ msgid "You can only move image files down one at a time."
+#~ msgstr "您只能一次向下移动一个图像文件。"
+
+#~ msgid ""
+#~ "This is the list of the image files for your portfolio.\n"
+#~ "The portfolio's first image is at the top; the last image is at the "
+#~ "bottom.\n"
+#~ "If you want to add some images, click on the 'Add' button or use drag-and-"
+#~ "drop."
+#~ msgstr ""
+#~ "这是您要放映的图像文件的列表。\n"
+#~ "放映单中的第一张图像位于顶端；最后一张图像位于底端。\n"
+#~ "如果您先要添加一些图像，请点击“添加”按钮或使用拖放。"

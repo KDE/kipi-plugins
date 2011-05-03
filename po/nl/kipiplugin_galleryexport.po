@@ -1,0 +1,267 @@
+# translation of kipiplugin_galleryexport.po to Dutch
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Freek de Kruijf <f.de.kruijf@hetnet.nl>, 2008, 2009.
+# Rinse de Vries <rinsedevries@kde.nl>, 2009.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2009.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2010-12-10 15:31+0100\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: galleryconfig.cpp:77
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "Naam:"
+
+#: galleryconfig.cpp:81
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "URL-adres:"
+
+#: galleryconfig.cpp:85
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "Gebruikersnaam:"
+
+#: galleryconfig.cpp:89
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "Wachtwoord:"
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "&Galerij 2 gebruiken"
+
+#: gallerytalker.cpp:427
+msgid "Gallery URL probably incorrect"
+msgstr "Galerij URL waarschijnlijk onjuist"
+
+#: gallerytalker.cpp:433
+msgid "Incorrect username or password specified"
+msgstr "Onjuiste gebruikersnaam of wachtwoord gespecificeerd"
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+msgid "Invalid response received from remote Gallery"
+msgstr "Ongeldige respons ontvangen van de Galerij op afstand"
+
+#: gallerytalker.cpp:523
+msgid "Failed to list albums"
+msgstr "Een lijst van albums maken is mislukt"
+
+#: gallerytalker.cpp:598
+msgid "Failed to list photos"
+msgstr "Een lijst van foto's maken is mislukt"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "Een nieuw album maken is mislukt"
+
+#: gallerytalker.cpp:705
+msgid "Failed to upload photo"
+msgstr "Foto uploaden mislukt"
+
+#: gallerywindow.cpp:118
+msgid "Albums"
+msgstr "Albums"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "&Nieuw album"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "Foto's &toevoegen"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr "Standaardopties overschrijven"
+
+#: gallerywindow.cpp:142
+msgid "Comment sets Title"
+msgstr "Commentaar stelt de titel in"
+
+#: gallerywindow.cpp:145
+msgid "Comment sets Description"
+msgstr "Commentaar stelt de beschrijving in"
+
+#: gallerywindow.cpp:148
+msgid "Resize photos before uploading"
+msgstr "Grootte van foto's wijzigen vóór het uploaden"
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr "Maximale afmeting:"
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+msgid "Gallery Export"
+msgstr "Export van galerij"
+
+#: gallerywindow.cpp:217
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr ""
+"Een KIPI-plugin voor het exporteren van een afbeeldingsverzameling naar een "
+"galerij-server op afstand."
+
+#: gallerywindow.cpp:218
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "Auteur"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "Onderhouder"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+msgid "Developer"
+msgstr "Ontwikkelaar"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gallerywindow.cpp:242
+msgid "Handbook"
+msgstr "Handboek"
+
+#: gallerywindow.cpp:250
+msgid "Settings"
+msgstr "Instellingen"
+
+#: gallerywindow.cpp:407
+msgid "Failed to login into remote gallery. "
+msgstr "Aanmelden bij de galerij op afstand is mislukt. "
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Wilt u uw instellingen controleren en het opnieuw proberen?"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "Galerijgegevens bewerken"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+msgid "Album"
+msgstr "Album"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr "Afbeelding"
+
+#: gallerywindow.cpp:675
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+"Deze tekens zijn niet toegestaan in een albumnaam: \\ / * ? \" ' & &lt; &gt; "
+"| . + # ( ) of spaties"
+
+#: gallerywindow.cpp:752
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Uploaden van bestand %1"
+
+#: gallerywindow.cpp:771
+msgid "Failed to upload photo into remote gallery. "
+msgstr "Uploaden van een foto naar de galerij op afstand is mislukt. "
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Wilt u doorgaan?"
+
+# consistent met andere plugins
+#: plugin_galleryexport.cpp:80
+msgid "Export to &Gallery..."
+msgstr "Exporteren naar &galerij..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Rinse de Vries"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "rinsedevries@kde.nl"
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>Voer een nieuwe albumnaam in</h3>"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "Titel:"
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "Naam (optioneel): "
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "Titel (optioneel):"
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "&OK"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "&Annuleren"
+
+#~ msgid "albums"
+#~ msgstr "albums"

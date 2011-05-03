@@ -1,0 +1,253 @@
+# translation of kipiplugin_dngconverter.po to galician
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# mvillarino <mvillarino@users.sourceforge.net>, 2008, 2009.
+# marce villarino <mvillarino@users.sourceforge.net>, 2009.
+# Xosé <xosecalvo@gmail.com>, 2009, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dngconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2011-02-03 23:36+0100\n"
+"Last-Translator: Xosé <xosecalvo@gmail.com>\n"
+"Language-Team: Galician <proxecto@trasno.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: gl\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr "Non é posíbel identificar a imaxe Raw"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "Fabricante: %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "Modelo: %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "Creada: %1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "Abertura: f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "Dist. focal: %1mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "Exposición: 1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Sensibilidade: %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "O(s) ficheiro(s) que converter"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "Convertedor de DNG..."
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "Incluír o ficheiro orixinal"
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "Compresión sen perdas"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr "Actualizar a data de modificación do ficheiro"
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+"Pon como data de modificación do ficheiro a data de creación que consta nos "
+"metadatos da imaxe."
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "Vista previa JPEG:"
+
+#: plugin/settingswidget.cpp:115
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "Ningún"
+
+#: plugin/settingswidget.cpp:116
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "Medio"
+
+#: plugin/settingswidget.cpp:117
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "Tamaño completo"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "Se o ficheiro de destino existe:"
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "Substituilo automaticamente"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr "Abrir o diálogo para mudar o nome do ficheiro"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr "Convertedor de imaxes DNG"
+
+#: plugin/aboutdata.h:52
+#, kde-format
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr ""
+"Unha ferramenta para converter lotes de imaxes RAW da cámara a formato DNG\n"
+"Empregando o toolkit %1 de XMP\n"
+"Empregando o toolkit 1.3 de DNG"
+
+#: plugin/aboutdata.h:55
+#, fuzzy
+#| msgid ""
+#| "(c) 2008-2010, Gilles Caulier\n"
+#| "(c) 2010, Jens Mueller"
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+"(c) 2008-2010, Gilles Caulier\n"
+"(c) 2010, Jens Mueller"
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr "Autor"
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr "Desenvolvedor"
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "Saír do convertedor de DNG"
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr "Converte lotes de imaxes RAW da cámara ao formato DNG"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "Eng&adir"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr "Engadir ficheiros Raw novos á lista"
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "Elimina&r"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr "Quitar da lista os ficheiros Raw escollidos"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "Ficheiro Raw"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "Ficheiro de destino"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "Cámara"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr "Manual"
+
+#: plugin/batchdialog.cpp:332
+msgid "The list does not contain any Raw files to process."
+msgstr "A lista non inclúe ningún ficheiro Raw para converter."
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "C&ancelar"
+
+#: plugin/batchdialog.cpp:474
+msgid "Abort the conversion of Raw files."
+msgstr "Cancelar a conversión dos ficheiros Raw."
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "Con&verter"
+
+#: plugin/batchdialog.cpp:480
+msgid "Start converting the Raw images using the current settings."
+msgstr "Comezar a converter as imaxes Raw usando a configuración actual."
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "Gardar a imaxe Raw convertida desde «%1» como"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "Non foi posíbel gardar a imaxe %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+"Marce Villarino\n"
+"Xosé Calvo"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"mvillarino@users.sourceforge.net\n"
+"proxecto@trasno.net"

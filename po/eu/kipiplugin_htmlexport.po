@@ -1,0 +1,400 @@
+# translation of kipiplugin_htmlexport.po to Basque
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+#
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_htmlexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2010-06-26 15:25+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: generator.cpp:136
+#, kde-format
+msgid "Could not find theme in '%1'"
+msgstr "Ezin izan da gaia '%1'(e)n"
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr "Gaia kopiatzen"
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr "Ezin izan da gaia kopiatu"
+
+#: generator.cpp:178
+#, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr "'%1'(r)en urruneko fitxategiak deskargatzen"
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr "Ezin izan da aldi baterako fitxategia ireki"
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr "Ezin izan da %1 deskargatu"
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr "Ezin izan da gallery.xml sortu"
+
+#: generator.cpp:258
+#, kde-format
+msgid "Generating files for \"%1\""
+msgstr "'%1'(r)en fitxategiak sortzen"
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr "Aurrekoa"
+
+#: generator.cpp:291
+msgid "Next"
+msgstr "Hurrengoa"
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr "Bildumen zerrenda"
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr "Jatorrizko irudia"
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr "Joan gora"
+
+#: generator.cpp:296
+msgid "Make"
+msgstr "Fabrikatzailea"
+
+#: generator.cpp:297
+msgid "Model"
+msgstr "Modeloa"
+
+#: generator.cpp:298
+msgid "Image Orientation"
+msgstr "Irudiaren orientazioa"
+
+#: generator.cpp:299
+msgid "Image X Resolution"
+msgstr "Irudiaren X bereizmena"
+
+#: generator.cpp:300
+msgid "Image Y Resolution"
+msgstr "Irudiaren Y bereizmena"
+
+#: generator.cpp:301
+msgid "Image Resolution Unit"
+msgstr "Bereizmenaren unitatea"
+
+#: generator.cpp:302
+msgid "Image Date Time"
+msgstr "Irudiaren data eta ordua"
+
+#: generator.cpp:303
+msgid "YCBCR Positioning"
+msgstr "YCBCR posizionatzea"
+
+#: generator.cpp:304
+msgid "Exposure Time"
+msgstr "Esposizioaren denbora"
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr "F zenbakia"
+
+#: generator.cpp:306
+msgid "Exposure Index"
+msgstr "Esposizioaren indizea"
+
+#: generator.cpp:307
+msgid "ISO Speed Ratings"
+msgstr "ISO abiaduraren puntuazioa"
+
+#: generator.cpp:308
+msgid "Shutter Speed Value"
+msgstr "Obturadore-abiaduraren balioa"
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr "Irekiduraren balioa"
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr "Fokuaren luzera"
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr "HTML fitxategiak sortzen"
+
+#: generator.cpp:343
+#, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr "Ezin izan da '%1' XSL fitxategia kargatu"
+
+#: generator.cpp:349
+#, kde-format
+msgid "Could not load XML file '%1'"
+msgstr "Ezin izan da '%1' XML fitxategia kargatu"
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr "Errorea XML fitxategia prozesatzean"
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr "Ezin izan da '%1' ireki idazteko"
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr "Ezin izan da '%1' karpeta hemen sortu: '%2'"
+
+#: imagegenerationfunctor.cpp:89
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "Ezin izan da '%1' irudia irakurri"
+
+#: imagegenerationfunctor.cpp:95
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "'%1' irudiaren formatua ezezaguna da"
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "Errorea '%1' irudia kargatzean"
+
+#: imagegenerationfunctor.cpp:140
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "Ezin izan da da '%1' irudia hemen gorde: %2"
+
+#: imagegenerationfunctor.cpp:161
+#, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr "Ezin izan da '%1' irudiaren koadro txikia hemen gorde: %2"
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr "ez dago eskuragarri"
+
+#: imagegenerationfunctor.cpp:338
+#, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr "Ezin izan da '%1' fitxategia idazteko ireki"
+
+#: imagegenerationfunctor.cpp:342
+#, kde-format
+msgid "Could not save image to file '%1'"
+msgstr "Ezin izan da argazkia '%1' fitxategian gorde"
+
+#: plugin.cpp:72
+msgid "Export to &HTML..."
+msgstr "Esportatu &HTMLra..."
+
+#: plugin.cpp:95
+msgid "Generating gallery..."
+msgstr "Galeria sortzen..."
+
+#: plugin.cpp:105
+msgid "Finished, but some warnings occurred."
+msgstr "Amaituta, baina abisuak gertatu dira."
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr "%1:"
+
+#: wizard.cpp:206
+msgid "Export image collections to HTML pages"
+msgstr "Esportatu irudien bildumak HTML orrialdeetara"
+
+#: wizard.cpp:212
+msgid "HTML Export"
+msgstr "Esportatu HTMLra"
+
+#: wizard.cpp:215
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr "Kipi-ren plugina HTML orrialdetara irudien bilduma esportatzeko"
+
+#: wizard.cpp:216
+#, fuzzy
+#| msgid "(c) 2006-2008, Aurelien Gateau"
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr "(c) 2006-2008, Aurelien Gateau"
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr ""
+
+#: wizard.cpp:221
+#, fuzzy
+#| msgid "Author and Maintainer"
+msgid "Maintainer"
+msgstr "Egilea eta mantentzailea"
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: wizard.cpp:226
+#, fuzzy
+#| msgid "Author and Maintainer"
+msgid "Former Author and Maintainer"
+msgstr "Egilea eta mantentzailea"
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr "Eskuliburua"
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr "Bildumaren hautapena"
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr "Gaia"
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr "Gaiaren parametroak"
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr "Irudiaren ezarpenak"
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr "Irteera"
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr "Egilea: %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñaki Larrañaga Murgoitio"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "dooteo@euskalgnu.org"
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr "Irudi osoa"
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr "Gorde irudia"
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr "Formatua:"
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr "JPEG"
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr "PNG"
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr "Kalitatea:"
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+msgid "Max size:"
+msgstr "Geh. tamaina:"
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+msgid "Include full-size original images for download"
+msgstr "Sartu jatorrizko irudien tamaina osoa deskargan"
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr "Erabili jatorrizko irudia"
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr "Koadro txikiak"
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr "Tamaina:"
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr "Helburuko karpeta:"
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr "Ireki web arakatzailean"
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""
+"Orrialde honetan, gaiaren parametro batzuk alda ditzakezu. Gaiaren arabera "
+"parametro desberdinak egongo dira erabilgarri."
+
+#, fuzzy
+#~| msgid "HTML Gallery..."
+#~ msgid "&HTML Gallery..."
+#~ msgstr "Galerie HTML"

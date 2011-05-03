@@ -1,0 +1,194 @@
+# Translation of kipiplugin_ipodexport to Norwegian Nynorsk
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: KDE 4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-13 03:18+0100\n"
+"PO-Revision-Date: 2008-11-26 17:46+0100\n"
+"Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
+"Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin_ipodexport.cpp:71
+msgid "Export to &iPod..."
+msgstr ""
+
+#: plugin_ipodexport.cpp:87 IpodExportDialog.cpp:111
+msgid "iPod Export"
+msgstr ""
+
+#: IpodExportDialog.cpp:114
+msgid "A tool to export image to an iPod device"
+msgstr ""
+
+#: IpodExportDialog.cpp:115
+msgid ""
+"(c) 2006-2008, Seb Ruiz\n"
+"(c) 2008-2010, Gilles Caulier"
+msgstr ""
+
+#: IpodExportDialog.cpp:118
+msgid "Seb Ruiz"
+msgstr ""
+
+#: IpodExportDialog.cpp:118
+msgid "Author and Maintainer"
+msgstr ""
+
+#: IpodExportDialog.cpp:121
+msgid "Gilles Caulier"
+msgstr ""
+
+#: IpodExportDialog.cpp:121
+msgid "Developer"
+msgstr ""
+
+#: IpodExportDialog.cpp:130
+msgid "Plugin Handbook"
+msgstr ""
+
+#: IpodExportDialog.cpp:144
+msgid "Hard Disk"
+msgstr ""
+
+#: IpodExportDialog.cpp:154
+msgid "&Add..."
+msgstr ""
+
+#: IpodExportDialog.cpp:155
+msgid "Add images to be queued for the iPod."
+msgstr ""
+
+#: IpodExportDialog.cpp:157 IpodExportDialog.cpp:199
+msgid "&Remove"
+msgstr ""
+
+#: IpodExportDialog.cpp:158
+msgid "Remove selected image from the list."
+msgstr ""
+
+#: IpodExportDialog.cpp:160
+msgid "&Transfer"
+msgstr ""
+
+#: IpodExportDialog.cpp:161
+msgid "Transfer images to the selected iPod album."
+msgstr ""
+
+#: IpodExportDialog.cpp:167
+msgid "The preview of the selected image in the list."
+msgstr ""
+
+#: IpodExportDialog.cpp:188
+msgid "iPod"
+msgstr ""
+
+#: IpodExportDialog.cpp:196
+msgid "&New..."
+msgstr ""
+
+#: IpodExportDialog.cpp:197
+msgid "Create a new photo album on the iPod."
+msgstr ""
+
+#: IpodExportDialog.cpp:200
+msgid "R&ename..."
+msgstr ""
+
+#: IpodExportDialog.cpp:205
+msgid "Remove the selected photos or albums from the iPod."
+msgstr ""
+
+#: IpodExportDialog.cpp:206
+msgid "Rename the selected photo album on the iPod."
+msgstr ""
+
+#: IpodExportDialog.cpp:562
+msgid "Image files"
+msgstr ""
+
+#: IpodExportDialog.cpp:565
+msgid "Add Images"
+msgstr ""
+
+#: IpodExportDialog.cpp:599
+msgid "New iPod Photo Album"
+msgstr ""
+
+#: IpodExportDialog.cpp:600
+msgid "Create a new album:"
+msgstr ""
+
+#: IpodExportDialog.cpp:631
+msgid "Rename iPod Photo Album"
+msgstr ""
+
+#: IpodExportDialog.cpp:632
+msgid "New album title:"
+msgstr ""
+
+#: IpodExportDialog.cpp:819
+#, kde-format
+msgid ""
+"An iPod photo database could not be found on the device mounted at %1. "
+"Initialize the iPod photo database?"
+msgstr ""
+
+#: IpodExportDialog.cpp:823
+msgid "Initialize iPod Photo Database?"
+msgstr ""
+
+#: IpodExportDialog.cpp:824
+msgid "&Initialize"
+msgstr ""
+
+#: IpodHeader.cpp:94
+msgid "<p align=\"center\"><b>No iPod was detected</b></p>"
+msgstr ""
+
+#: IpodHeader.cpp:101
+msgid "Refresh"
+msgstr ""
+
+#: IpodHeader.cpp:114
+#, kde-format
+msgid ""
+"<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></"
+"p>"
+msgstr ""
+
+#: IpodHeader.cpp:122
+msgid "Set iPod Model"
+msgstr ""
+
+#: IpodHeader.cpp:138
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected at: %2</b></p>"
+msgstr ""
+
+#: IpodHeader.cpp:143
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected</b></p>"
+msgstr ""
+
+#: IpodListItem.cpp:40
+msgid "Unnamed"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""

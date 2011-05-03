@@ -1,0 +1,1496 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Vít Pelčák <vit@pelcak.org>, 2010, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_gpssync\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-05-02 03:35+0200\n"
+"PO-Revision-Date: 2011-03-16 16:59+0100\n"
+"Last-Translator: Vít Pelčák <vit@pelcak.org>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.2\n"
+"Language: cs\n"
+
+#: plugin_gpssync.cpp:74
+msgid "Geo-location"
+msgstr "Geolokace"
+
+#: gpsreversegeocodingwidget.cpp:230
+msgid "Add country tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:232
+msgid "Add state tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:234
+msgid "Add state district tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:236
+msgid "Add county tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:238
+msgid "Add city tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:240
+msgid "Add city district tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:242
+msgid "Add suburb tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:244
+msgid "Add town tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:246
+msgid "Add village tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:248
+msgid "Add hamlet tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:250
+msgid "Add street"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:252
+msgid "Add house number tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:254
+msgid "Add place"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:256
+msgid "Add Local Administrative Area 2"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:258
+msgid "Add Local Administrative Area 1"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:260
+msgid "Add new tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:261
+msgid "Remove selected tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:262
+msgid "Remove all control tags below this tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:264
+msgid "Add all address elements"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:268
+msgid "Select language:"
+msgstr "Zvolit jazyk:"
+
+#: gpsreversegeocodingwidget.cpp:272
+msgid "English"
+msgstr "Anglický"
+
+#: gpsreversegeocodingwidget.cpp:273
+msgid "Arabic"
+msgstr "Arabský"
+
+#: gpsreversegeocodingwidget.cpp:274
+msgid "Assamese"
+msgstr "Asamský"
+
+#: gpsreversegeocodingwidget.cpp:275
+msgid "Byelorussian"
+msgstr "Běloruský"
+
+#: gpsreversegeocodingwidget.cpp:276
+msgid "Bulgarian"
+msgstr "Bulharský"
+
+#: gpsreversegeocodingwidget.cpp:277
+msgid "Bengali"
+msgstr "Bengálský"
+
+#: gpsreversegeocodingwidget.cpp:278
+msgid "Chinese"
+msgstr "Čínský"
+
+#: gpsreversegeocodingwidget.cpp:279
+msgid "Czech"
+msgstr "Český"
+
+#: gpsreversegeocodingwidget.cpp:280
+msgid "Croatian"
+msgstr "Chorvatský"
+
+#: gpsreversegeocodingwidget.cpp:281
+msgid "Dutch"
+msgstr "Holandský"
+
+#: gpsreversegeocodingwidget.cpp:282
+msgid "German"
+msgstr "Německý"
+
+#: gpsreversegeocodingwidget.cpp:283
+msgid "Greek"
+msgstr "Řecký"
+
+#: gpsreversegeocodingwidget.cpp:284
+msgid "Estonian"
+msgstr "Estonský"
+
+#: gpsreversegeocodingwidget.cpp:285
+msgid "Finnish"
+msgstr "Finský"
+
+#: gpsreversegeocodingwidget.cpp:286
+msgid "French"
+msgstr "Francouzský"
+
+#: gpsreversegeocodingwidget.cpp:287
+msgid "Georgian"
+msgstr "Gruzínský"
+
+#: gpsreversegeocodingwidget.cpp:288
+msgid "Hebrew"
+msgstr "Hebrejský"
+
+#: gpsreversegeocodingwidget.cpp:289
+msgid "Hindi"
+msgstr "Hindský"
+
+#: gpsreversegeocodingwidget.cpp:290
+msgid "Hungarian"
+msgstr "Maďarský"
+
+#: gpsreversegeocodingwidget.cpp:291
+msgid "Indonesian"
+msgstr "Indonéský"
+
+#: gpsreversegeocodingwidget.cpp:292
+msgid "Icelandic"
+msgstr "Islandský"
+
+#: gpsreversegeocodingwidget.cpp:293
+msgid "Italian"
+msgstr "Italský"
+
+#: gpsreversegeocodingwidget.cpp:294
+msgid "Japanese"
+msgstr "Japonský"
+
+#: gpsreversegeocodingwidget.cpp:295
+msgid "Korean"
+msgstr "Korejský"
+
+#: gpsreversegeocodingwidget.cpp:296
+msgid "Lithuanian"
+msgstr "Litevský"
+
+#: gpsreversegeocodingwidget.cpp:297
+msgid "Macedonian"
+msgstr "Makedonský"
+
+#: gpsreversegeocodingwidget.cpp:298
+msgid "Mongolian"
+msgstr "Mongolský"
+
+#: gpsreversegeocodingwidget.cpp:299
+msgid "Moldavian"
+msgstr "Moldavský"
+
+#: gpsreversegeocodingwidget.cpp:300
+msgid "Nepali"
+msgstr "Nepálský"
+
+#: gpsreversegeocodingwidget.cpp:301
+msgid "Polish"
+msgstr "Polský"
+
+#: gpsreversegeocodingwidget.cpp:302
+msgid "Portuguese"
+msgstr "Portugalský"
+
+#: gpsreversegeocodingwidget.cpp:303
+msgid "Romanian"
+msgstr "Rumunský"
+
+#: gpsreversegeocodingwidget.cpp:304
+msgid "Russian"
+msgstr "Ruský"
+
+#: gpsreversegeocodingwidget.cpp:305
+msgid "Slovak"
+msgstr "Slovenský"
+
+#: gpsreversegeocodingwidget.cpp:306
+msgid "Slovenian"
+msgstr "Slovinský"
+
+#: gpsreversegeocodingwidget.cpp:307
+msgid "Samoan"
+msgstr "Samojský"
+
+#: gpsreversegeocodingwidget.cpp:308
+msgid "Serbian"
+msgstr "Srbský"
+
+#: gpsreversegeocodingwidget.cpp:309
+msgid "Sudanese"
+msgstr "Súdánský"
+
+#: gpsreversegeocodingwidget.cpp:310
+msgid "Spanish"
+msgstr "Španělský"
+
+#: gpsreversegeocodingwidget.cpp:311
+msgid "Swedish"
+msgstr "Švédský"
+
+#: gpsreversegeocodingwidget.cpp:312
+msgid "Thai"
+msgstr "Thajský"
+
+#: gpsreversegeocodingwidget.cpp:313
+msgid "Turkish"
+msgstr "Turecký"
+
+#: gpsreversegeocodingwidget.cpp:314
+msgid "Ukrainian"
+msgstr "Ukrajinský"
+
+#: gpsreversegeocodingwidget.cpp:315
+msgid "Vietnamese"
+msgstr "Vietnamský"
+
+#: gpsreversegeocodingwidget.cpp:317
+msgid "Select service:"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:320
+msgid "Open Street Map"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:321
+msgid "Geonames.org place name (non-US)"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:322
+msgid "Geonames.org full address (US only)"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:337 gpsreversegeocodingwidget.cpp:529
+msgid "Less options"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:345
+msgid "Write tags to XMP"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:351
+msgid "Apply reverse geocoding"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:475
+msgid "Image tags are changed."
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:508
+msgid "Retrieving RG info - %p%"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:523
+msgid "More options"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:979
+#, kde-format
+msgid ""
+"%1 out of %2 images have been reverse geocoded. Would you like to keep the "
+"tags which were already obtained or discard them?"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:984
+msgid "Abort reverse geocoding?"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:985
+msgid "Keep tags"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:986
+msgid "Discard tags"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:987
+msgid "Continue"
+msgstr ""
+
+#: searchbackend.cpp:300
+msgid "GeoNames"
+msgstr ""
+
+#: searchbackend.cpp:301
+msgid "OSM"
+msgstr "OSM"
+
+#: searchwidget.cpp:146
+msgctxt "Start the search"
+msgid "Search"
+msgstr "Hledat"
+
+#: searchwidget.cpp:153
+msgid "Clear the search results."
+msgstr ""
+
+#: searchwidget.cpp:161
+msgid "Keep the results of old searches when doing a new search."
+msgstr ""
+
+#: searchwidget.cpp:168
+msgid "Toggle the visibility of the search results on the map."
+msgstr ""
+
+#: searchwidget.cpp:172 gpslistviewcontextmenu.cpp:102
+msgid "Copy coordinates"
+msgstr "Kopírovat souřadnice"
+
+#: searchwidget.cpp:175
+msgid "Move selected images to this position"
+msgstr ""
+
+#: searchwidget.cpp:177
+msgid "Remove from results list"
+msgstr ""
+
+#: searchwidget.cpp:181
+msgid "Select which service you would like to use."
+msgstr ""
+
+#: searchwidget.cpp:202 gpslistviewcontextmenu.cpp:136
+msgid "Bookmarks"
+msgstr "Záložky"
+
+#: searchwidget.cpp:255
+#, kde-format
+msgid ""
+"Your search failed:\n"
+"%1"
+msgstr ""
+
+#: searchwidget.cpp:255
+msgid "Search failed"
+msgstr ""
+
+#: searchwidget.cpp:744 gpsbookmarkowner.cpp:345
+#, kde-format
+msgid "1 image snapped to '%2'"
+msgid_plural "%1 images snapped to '%2'"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: searchwidget.cpp:779
+#, kde-format
+msgid "1 image moved to '%2'"
+msgid_plural "%1 images moved to '%2'"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Vít Pelčák, Zdeněk Pech"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "vit@pelcak.org, dom.toretto@seznam.cz"
+
+#: gpslistviewcontextmenu.cpp:104
+msgid "Paste coordinates"
+msgstr "Vložit souřadnice"
+
+#: gpslistviewcontextmenu.cpp:106
+#, fuzzy
+#| msgid "Remove Coordinates..."
+msgid "Remove coordinates"
+msgstr "Odebrat souřadnice..."
+
+#: gpslistviewcontextmenu.cpp:107
+#, fuzzy
+#| msgid "Latitude"
+msgid "Remove altitude"
+msgstr "Zem. šířka"
+
+#: gpslistviewcontextmenu.cpp:108
+msgid "Remove uncertainty"
+msgstr ""
+
+#: gpslistviewcontextmenu.cpp:109 gpslistviewcontextmenu.cpp:618
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove speed"
+msgstr "Odstranit"
+
+#: gpslistviewcontextmenu.cpp:110
+msgid "Look up missing altitude values"
+msgstr ""
+
+#: gpslistviewcontextmenu.cpp:398
+msgid ""
+"Found more than one point on the clipboard - can only assign one point at a "
+"time."
+msgstr ""
+"Ve schránce byl nalezen více než jeden bod - najednou lze přiřadit pouze "
+"jeden bod."
+
+#: gpslistviewcontextmenu.cpp:399 gpslistviewcontextmenu.cpp:456
+#: gpssyncdialog.cpp:399
+msgid "GPS Sync"
+msgstr "GPS Sync"
+
+#: gpslistviewcontextmenu.cpp:456
+msgid "Could not find any coordinates on the clipboard."
+msgstr "Ve schránce nelze nalézt žádné souřadnice."
+
+#: gpslistviewcontextmenu.cpp:460
+#, fuzzy
+#| msgid "Copy coordinates"
+msgid "Coordinates pasted"
+msgstr "Kopírovat souřadnice"
+
+#: gpslistviewcontextmenu.cpp:491
+#, fuzzy
+#| msgid "Bookmark location"
+msgid "Bookmark selected"
+msgstr "Přidat umístění do záložek"
+
+#: gpslistviewcontextmenu.cpp:595
+#, fuzzy
+#| msgid "Remove Coordinates..."
+msgid "Remove coordinates information"
+msgstr "Odebrat souřadnice..."
+
+#: gpslistviewcontextmenu.cpp:600
+msgid "Remove altitude information"
+msgstr ""
+
+#: gpslistviewcontextmenu.cpp:607
+msgid "Remove uncertainty information"
+msgstr ""
+
+#: gpslistviewcontextmenu.cpp:667
+#, fuzzy
+#| msgid "Longitude"
+msgid "Looking up altitudes"
+msgstr "Zem. délka"
+
+#: gpslistviewcontextmenu.cpp:706
+#, fuzzy
+#| msgid "Altitude"
+msgid "Altitude looked up"
+msgstr "Nadmořská výška"
+
+#: gpsdataparser.cpp:626
+#, fuzzy, kde-format
+#| msgid "Could not create '%1'"
+msgid "Could not open: %1"
+msgstr "Nelze vytvořit '%1'"
+
+#: gpsdataparser.cpp:632
+msgid "File is empty."
+msgstr ""
+
+#: gpsdataparser.cpp:648
+#, kde-format
+msgid "Parsing error: %1"
+msgstr ""
+
+#: gpsdataparser.cpp:657
+msgid "No GPX element found - probably not a GPX file."
+msgstr ""
+
+#: gpsdataparser.cpp:661
+msgid "File is a GPX file, but no datapoints were found."
+msgstr ""
+
+#: gpsbookmarkowner.cpp:108
+msgid "Bookmark location"
+msgstr "Přidat umístění do záložek"
+
+#: gpsbookmarkowner.cpp:109
+msgctxt "Title of the new gps location bookmark"
+msgid "Title:"
+msgstr "Titulek:"
+
+#: gpscorrelatorwidget.cpp:164
+#, fuzzy
+#| msgid "Load GPX File..."
+msgid "Load GPX files..."
+msgstr "Načíst soubor GPX..."
+
+#: gpscorrelatorwidget.cpp:169 kipiimageitem.cpp:519
+msgid "Filename"
+msgstr "Název souboru"
+
+#: gpscorrelatorwidget.cpp:169
+#, fuzzy
+#| msgid "Points"
+msgid "#points"
+msgstr "Body"
+
+#: gpscorrelatorwidget.cpp:174
+msgid "Max. time gap (sec.):"
+msgstr "Max. časový interval (sek.):"
+
+#: gpscorrelatorwidget.cpp:176
+msgid ""
+"Sets the maximum difference in seconds from a GPS track point to the image "
+"time to be matched. If the time difference exceeds this setting, no match "
+"will be attempted."
+msgstr ""
+"Nastaví maximální rozdíl v sekundách mezi sledovaným bodem GPS a "
+"odpovídajícím časem obrázku. Pokud rozdíl přesáhne tuto hodnotu, nebude "
+"shoda uznána."
+
+#: gpscorrelatorwidget.cpp:180
+msgid "Camera time zone:"
+msgstr "Časové pásmo fotoaparátu:"
+
+#: gpscorrelatorwidget.cpp:181
+msgid "Same as system"
+msgstr "Stejné jako systém"
+
+#: gpscorrelatorwidget.cpp:183
+msgid ""
+"Use this option if the timezone of the camera is the same as the timezone of "
+"this system. The conversion to GMT will be done automatically."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:186
+msgctxt "manual time zone selection for gps syncing"
+msgid "Manual:"
+msgstr "Ručně:"
+
+#: gpscorrelatorwidget.cpp:188
+msgid ""
+"Use this option if the timezone of the camera is different from this system "
+"and you have to specify the difference to GMT manually."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:240
+msgid ""
+"<p>Sets the time zone the camera was set to during photo shooting, so that "
+"the time stamps of the images can be converted to GMT to match the GPS time "
+"reference.</p><p>Note: positive offsets count eastwards from zero longitude "
+"(GMT), they are 'ahead of time'.</p>"
+msgstr ""
+"<p>Nastaví časovou zónu na kterou byl při fotografování nastaven fotoaparát, "
+"takže časové značky obrázků mohou být převedeny na GMT, aby se shodovaly s "
+"časovým posunem GPS.</p><p>Pozn.: kladný posun znamená východně od nulové "
+"zeměpisné délky (GMT), kde jsou 's časem vpředu'.</p>"
+
+#: gpscorrelatorwidget.cpp:247
+msgid "Fine offset (mm:ss):"
+msgstr "Jemný posun (mm:ss):"
+
+#: gpscorrelatorwidget.cpp:249
+msgid ""
+"Sets an additional offset in minutes and seconds that is used to correlate "
+"the photos to the GPS track. This can be used for fine tuning to adjust a "
+"wrong camera clock."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:259
+msgid "Set whether the camera offset is negative or positive."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:263
+msgid "Minutes to fine tune camera offset."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:266
+msgid "Seconds to fine tune camera offset."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:276
+msgid "Interpolate"
+msgstr "Interpolovat"
+
+#: gpscorrelatorwidget.cpp:277
+msgid ""
+"Set this option to interpolate GPS track points which are not closely "
+"matched to the GPX data file."
+msgstr ""
+"Tuto volbu nastavit pro interpolaci mezi sledovanými body GPS, které jsou "
+"nejblíže k datům souboru GPX."
+
+#: gpscorrelatorwidget.cpp:283
+msgid "Difference in min.:"
+msgstr "Rozdíl v min.:"
+
+#: gpscorrelatorwidget.cpp:285
+msgid ""
+"Sets the maximum time difference in minutes (240 max.) to interpolate GPX "
+"file points to image time data."
+msgstr ""
+"Nastaví maximální časový rozdíl v minutách (max. 240) pro interpolaci mezi "
+"body GPX souboru a časovými údaji obrázku."
+
+#: gpscorrelatorwidget.cpp:288
+msgid "Correlate"
+msgstr "Korelovat"
+
+#: gpscorrelatorwidget.cpp:346
+#, kde-format
+msgid "%1|GPS Exchange Format"
+msgstr "%1|Výměnný formát GPS"
+
+#: gpscorrelatorwidget.cpp:347
+msgid "Select GPX File to Load"
+msgstr "Zvolit soubor GPX pro načtení"
+
+#: gpscorrelatorwidget.cpp:392
+#, kde-format
+msgid "The following GPX file could not be loaded:"
+msgid_plural "The following %1 GPX files could not be loaded:"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: gpscorrelatorwidget.cpp:398
+#, fuzzy
+#| msgid "Error loading image '%1'"
+msgid "Error loading GPX file"
+msgid_plural "Error loading GPX files"
+msgstr[0] "Chyba při načítání obrázku '%1'"
+msgstr[1] "Chyba při načítání obrázku '%1'"
+msgstr[2] "Chyba při načítání obrázku '%1'"
+
+#: gpscorrelatorwidget.cpp:503
+#, fuzzy
+#| msgid "Error loading image '%1'"
+msgid "Correlating images - %p%"
+msgstr "Chyba při načítání obrázku '%1'"
+
+#: gpscorrelatorwidget.cpp:570
+msgid ""
+"Could not correlate any image - please make sure the timezone and gap "
+"settings are correct."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:571
+#, fuzzy
+#| msgid "Correlate"
+msgid "Correlation failed"
+msgstr "Korelovat"
+
+#: gpscorrelatorwidget.cpp:576
+msgid ""
+"All images have been correlated. You can now check their position on the map."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:577
+#, fuzzy
+#| msgid "Correlate"
+msgid "Correlation succeeded"
+msgstr "Korelovat"
+
+#: gpscorrelatorwidget.cpp:583
+#, kde-format
+msgid ""
+"%1 out of %2 images have been correlated. Please check the timezone and gap "
+"settings if you think that more images should have been correlated."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:584
+#, fuzzy
+#| msgid "Correlate"
+msgid "Correlation finished"
+msgstr "Korelovat"
+
+#: gpscorrelatorwidget.cpp:593
+#, kde-format
+msgid "1 image correlated"
+msgid_plural "%1 images correlated"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: gpsimagedetails.cpp:120
+#, fuzzy
+#| msgid "Copy coordinates"
+msgid "Coordinates"
+msgstr "Kopírovat souřadnice"
+
+#: gpsimagedetails.cpp:126 kipiimageitem.cpp:521
+msgid "Latitude"
+msgstr "Zem. šířka"
+
+#: gpsimagedetails.cpp:130 kipiimageitem.cpp:522
+msgid "Longitude"
+msgstr "Zem. délka"
+
+#: gpsimagedetails.cpp:132 kipiimageitem.cpp:523
+msgid "Altitude"
+msgstr "Nadmořská výška"
+
+#: gpsimagedetails.cpp:138 kipiimageitem.cpp:528
+msgid "Speed"
+msgstr ""
+
+#: gpsimagedetails.cpp:144 kipiimageitem.cpp:527
+msgid "# satellites"
+msgstr ""
+
+#: gpsimagedetails.cpp:150 kipiimageitem.cpp:526
+msgid "Fix type"
+msgstr ""
+
+#: gpsimagedetails.cpp:152
+msgid "2-d"
+msgstr ""
+
+#: gpsimagedetails.cpp:153
+msgid "3-d"
+msgstr ""
+
+#: gpsimagedetails.cpp:156 kipiimageitem.cpp:525
+msgid "DOP"
+msgstr ""
+
+#: gpsimagedetails.cpp:162
+msgid "Apply"
+msgstr ""
+
+#: gpsimagedetails.cpp:436
+msgid "Details changed"
+msgstr ""
+
+#: rgtagmodel.cpp:93
+msgid "{Country}"
+msgstr "{Země}"
+
+#: rgtagmodel.cpp:94
+msgctxt "Part of a country"
+msgid "{State}"
+msgstr "{Stav}"
+
+#: rgtagmodel.cpp:95
+msgid "{County}"
+msgstr ""
+
+#: rgtagmodel.cpp:96
+msgid "{City}"
+msgstr ""
+
+#: rgtagmodel.cpp:97
+msgid "{Town}"
+msgstr ""
+
+#: rgtagmodel.cpp:98
+msgid "{Village}"
+msgstr ""
+
+#: rgtagmodel.cpp:99
+msgid "{Hamlet}"
+msgstr ""
+
+#: rgtagmodel.cpp:100
+msgid "{Street}"
+msgstr ""
+
+#: setup_general.cpp:62
+msgid "One map"
+msgstr ""
+
+#: setup_general.cpp:63
+msgid "Two maps - horizontal"
+msgstr ""
+
+#: setup_general.cpp:64
+msgid "Two maps - vertical"
+msgstr ""
+
+#: setup_general.cpp:66
+msgid "Layout:"
+msgstr "Rozvržení:"
+
+#: kipiimageitem.cpp:362
+msgid "Not available"
+msgstr "Není k dispozici"
+
+#: kipiimageitem.cpp:395
+#, kde-format
+msgid "DOP: %1"
+msgstr ""
+
+#: kipiimageitem.cpp:400
+#, c-format, kde-format
+msgid "Fix: %1d"
+msgstr ""
+
+#: kipiimageitem.cpp:405
+#, kde-format
+msgid "#Sat: %1"
+msgstr ""
+
+#: kipiimageitem.cpp:439
+#, c-format, kde-format
+msgid "%1d"
+msgstr ""
+
+#: kipiimageitem.cpp:459
+msgid "Modified"
+msgstr "Změněno"
+
+#: kipiimageitem.cpp:518
+msgid "Thumbnail"
+msgstr "Náhled"
+
+#: kipiimageitem.cpp:520
+msgid "Date and time"
+msgstr "Datum a čas"
+
+#: kipiimageitem.cpp:524
+msgid "Accuracy"
+msgstr "Přesnost"
+
+#: kipiimageitem.cpp:529
+msgid "Status"
+msgstr "Stav"
+
+#: kipiimageitem.cpp:530
+msgid "Tags"
+msgstr "Značky"
+
+#: kipiimageitem.cpp:719
+msgid "Failed to open file."
+msgstr ""
+
+#: kipiimageitem.cpp:782
+msgid "Failed to add GPS info to image."
+msgstr ""
+
+#: kipiimageitem.cpp:791
+msgid "Failed to remove GPS info from image"
+msgstr ""
+
+#: kipiimageitem.cpp:817 kipiimageitem.cpp:822
+msgid "Failed to save tags to file."
+msgstr ""
+
+#: kipiimageitem.cpp:832
+msgid "Unable to save changes to file"
+msgstr ""
+
+#: setup.cpp:112
+#, fuzzy
+#| msgid "Configuration"
+msgid "Configure"
+msgstr "Nastavení"
+
+#: setup.cpp:118
+msgctxt "General setup"
+msgid "General"
+msgstr "Obecné"
+
+#: gpssyncdialog.cpp:239
+msgid "Geolocation"
+msgstr "Geolokace"
+
+#: gpssyncdialog.cpp:266
+msgid "Display bookmarked positions on the map."
+msgstr ""
+
+#: gpssyncdialog.cpp:321
+msgid "Sorting"
+msgstr "Řazení"
+
+#: gpssyncdialog.cpp:327
+msgid "Show oldest first"
+msgstr ""
+
+#: gpssyncdialog.cpp:331
+msgid "Show youngest first"
+msgstr ""
+
+#: gpssyncdialog.cpp:373
+msgid "Details"
+msgstr "Podrobnosti"
+
+#: gpssyncdialog.cpp:374
+msgid "GPS Correlator"
+msgstr "Korelátor GPS"
+
+#: gpssyncdialog.cpp:375
+msgid "Undo/Redo"
+msgstr ""
+
+#: gpssyncdialog.cpp:376
+msgid "Reverse Geocoding"
+msgstr ""
+
+#: gpssyncdialog.cpp:377
+msgid "Search"
+msgstr "Hledat"
+
+#: gpssyncdialog.cpp:402
+msgid "A Plugin to synchronize pictures' metadata with a GPS device"
+msgstr "Modul pro synchronizaci metadat obrázku se zařízením GPS"
+
+#: gpssyncdialog.cpp:403
+msgid "(c) 2006-2010, Gilles Caulier"
+msgstr "(c) 2006-2010, Gilles Caulier"
+
+#: gpssyncdialog.cpp:405
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gpssyncdialog.cpp:406 gpssyncdialog.cpp:410
+msgid "Developer and maintainer"
+msgstr "Autor a správce"
+
+#: gpssyncdialog.cpp:409
+msgid "Michael G. Hansen"
+msgstr "Michael G. Hansen"
+
+#: gpssyncdialog.cpp:413
+msgid "Gabriel Voicu"
+msgstr "Gabriel Voicu"
+
+#: gpssyncdialog.cpp:414
+msgid "Developer"
+msgstr "Vývojář"
+
+#: gpssyncdialog.cpp:582
+msgid "Loading metadata - %p%"
+msgstr ""
+
+#: gpssyncdialog.cpp:757
+#, kde-format
+msgid "You have 1 modified image."
+msgid_plural "You have %1 modified images."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: gpssyncdialog.cpp:763
+#, kde-format
+msgid "%1 Would you like to save the changes you made to them?"
+msgstr ""
+
+#: gpssyncdialog.cpp:764
+msgid "Unsaved changes"
+msgstr ""
+
+#: gpssyncdialog.cpp:765
+msgid "Save changes"
+msgstr ""
+
+#: gpssyncdialog.cpp:766
+msgid "Close and discard changes"
+msgstr ""
+
+#: gpssyncdialog.cpp:975
+#, kde-format
+msgid "1 image moved"
+msgid_plural "%1 images moved"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: gpssyncdialog.cpp:1008
+msgid "Saving changes - %p%"
+msgstr ""
+
+#: gpssyncdialog.cpp:1046
+msgid "Failed to save some information:"
+msgstr ""
+
+#: gpssyncdialog.cpp:1046
+msgid "Error"
+msgstr ""
+
+#~ msgid "%1 - Edit Geographical Coordinates"
+#~ msgstr "%1 - Upravit geografické souřadnice"
+
+#~ msgid ""
+#~ "<p>Use the map on the right to select the location where the picture was "
+#~ "taken. Click with left mouse button or move the marker on the map to get "
+#~ "the GPS coordinates.</p>"
+#~ msgstr ""
+#~ "<p>Použijte mapu po pravé straně k výběru místa pořízení snímku. "
+#~ "Souřadnice GPS získáte stisknutím levého tlačítko myši, nebo přesunutím "
+#~ "značky na mapě.</p>"
+
+#~ msgid "Altitude:"
+#~ msgstr "Nadmořská výška:"
+
+#~ msgid "Latitude:"
+#~ msgstr "Zeměpisná šířka:"
+
+#~ msgid "Longitude:"
+#~ msgstr "Zeměpisná délka:"
+
+#~ msgid "Go to Location"
+#~ msgstr "Jít na umístění"
+
+#~ msgid "Recent locations"
+#~ msgstr "Poslední umístění"
+
+#~ msgid "Google Maps API V2"
+#~ msgstr "Google mapy API V2"
+
+#~ msgid "Google Maps API V3"
+#~ msgstr "Google mapy API V3"
+
+#~ msgid "A Plugin to edit geographical coordinates"
+#~ msgstr "Modul pro úpravu geografických souřadnic"
+
+#~ msgid "Handbook"
+#~ msgstr "Příručka"
+
+#~ msgid "Altitude value is invalid."
+#~ msgstr "Neplatná hodnota nadmořské výšky."
+
+#~ msgid "Edit Geographical Coordinates"
+#~ msgstr "Upravit geografické souřadnice"
+
+#~ msgid "Latitude value is invalid."
+#~ msgstr "Neplatná hodnota zeměpisné šířky."
+
+#~ msgid "Longitude value is invalid."
+#~ msgstr "Neplatná hodnota zeměpisné délky."
+
+#~ msgid "Interpolated"
+#~ msgstr "Interpolované"
+
+#~ msgctxt "entry was added manually"
+#~ msgid "Added"
+#~ msgstr "Přidáno"
+
+#~ msgctxt "entry was added automatically"
+#~ msgid "Found"
+#~ msgstr "Nalezeno"
+
+#~ msgid "Deleted"
+#~ msgstr "Smazáno"
+
+#~ msgctxt ""
+#~ "Language code for the embedded Google Maps. Please take a look at http://"
+#~ "spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 for "
+#~ "supported languages. If your language is not on the list, pick 'en'."
+#~ msgid "en"
+#~ msgstr "en"
+
+#~ msgid "Edit..."
+#~ msgstr "Upravit..."
+
+#~ msgid ""
+#~ "Correlate in time and interpolate distance of data from GPX file with all "
+#~ "images on the list."
+#~ msgstr ""
+#~ "Časově korelovat a vzdálenost dat ze souboru GPX interpolovat se všemi "
+#~ "obrázky v seznamu."
+
+#~ msgid "Manually edit GPS coordinates of selected images from the list."
+#~ msgstr "Ručně upravit GPS souřadnice obrázků vybraných ze seznamu."
+
+#~ msgid "Remove GPS coordinates of selected images from the list."
+#~ msgstr "Odstranit GPS souřadnice obrázků vybraných ze seznamu."
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "Current GPX file:"
+#~ msgstr "Aktuální soubor GPX:"
+
+#~ msgid "No GPX file"
+#~ msgstr "Žádný soubor GPX"
+
+#~ msgid "Cannot parse %1 GPX file."
+#~ msgstr "Nelze analyzovat GPX soubor %1."
+
+#~ msgid "The %1 GPX file does not have a date-time track to use."
+#~ msgstr "GPX soubor %1 neobsahuje použitelnou stopu s datem a časem."
+
+#~ msgid "Points parsed: %1"
+#~ msgstr "Analyzované body: %1"
+
+#~ msgid "1 image from the list is not updated."
+#~ msgid_plural "%1 images from the list are not updated."
+#~ msgstr[0] "1 obrázek ze seznamu není aktualizován."
+#~ msgstr[1] "%1 obrázky ze seznamu nejsou aktualizovány."
+#~ msgstr[2] "%1 obrázků ze seznamu není aktualizováno."
+
+#~ msgid ""
+#~ "<p>%1\n"
+#~ "Do you really want to close this window without applying changes?</p>"
+#~ msgstr ""
+#~ "<p>%1\n"
+#~ "Opravdu chcete zavřít toto okno bez uložení změn?</p>"
+
+#~ msgid "Cannot find pictures to correlate with GPX file data."
+#~ msgstr "Nelze nalézt obrázky ke korelaci s daty souboru GPX."
+
+#~ msgid "The GPS data of 1 image have been updated using the GPX data file."
+#~ msgid_plural ""
+#~ "The GPS data of %1 images have been updated using the GPX data file."
+#~ msgstr[0] "GPS data 1 obrázku byla aktualizována použitím dat souboru GPX."
+#~ msgstr[1] "GPS data %1 obrázků byla aktualizována použitím dat souboru GPX."
+#~ msgstr[2] "GPS data %1 obrázků byla aktualizována použitím dat souboru GPX."
+
+#~ msgid "Press the Apply button to update the image's metadata."
+#~ msgid_plural "Press the Apply button to update the images' metadata."
+#~ msgstr[0] "Pro aktualizaci metadat obrázku stiskněte tlačítko Použít."
+#~ msgstr[1] "Pro aktualizaci metadat obrázků stiskněte tlačítko Použít."
+#~ msgstr[2] "Pro aktualizaci metadat obrázků stiskněte tlačítko Použít."
+
+#~ msgid ""
+#~ "Please select at least one image from the list to edit GPS coordinates "
+#~ "manually."
+#~ msgstr ""
+#~ "Zvolte prosím nejméně jeden obrázek ze seznamu pro ruční úpravu souřadnic "
+#~ "GPS."
+
+#~ msgid ""
+#~ "Please select at least one image from which to remove GPS coordinates."
+#~ msgstr ""
+#~ "Zvolte prosím nejméně jeden obrázek, ze kterého mají být odstraněny "
+#~ "souřadnice GPS."
+
+#~ msgid "Edit Track List Geographical Coordinates"
+#~ msgstr "Upravit seznam stop geografických souřadnic"
+
+#~ msgid "Id"
+#~ msgstr "Id"
+
+#~ msgctxt "entry changed"
+#~ msgid "Changed"
+#~ msgstr "Změněno"
+
+#~ msgid "A plugin to edit GPS track lists."
+#~ msgstr "Modul pro úpravu seznamu stop GPS."
+
+#~ msgid "(c) 2008-2009, Gilles Caulier"
+#~ msgstr "(c) 2008-2009, Gilles Caulier"
+
+#~ msgctxt "dirty gps info"
+#~ msgid "Yes"
+#~ msgstr "Ano"
+
+#~ msgctxt "dirty gps info"
+#~ msgid "No"
+#~ msgstr "Ne"
+
+#~ msgid "Generating KML file..."
+#~ msgstr "Vytváření souboru KML..."
+
+#~ msgid "Could not read image '%1'"
+#~ msgstr "Nelze načíst obrázek '%1'"
+
+#~ msgid "Format of image '%1' is unknown"
+#~ msgstr "Neznámý formát obrázku '%1'"
+
+#~ msgid "Could not save image '%1' to '%2'"
+#~ msgstr "Nelze uložit obrázek '%1' do '%2'"
+
+#~ msgid "Creation of placemark '%1'"
+#~ msgstr "Vytváření značky místa '%1'"
+
+#~ msgid "Could not save icon for image '%1' to '%2'"
+#~ msgstr "Nelze vytvořit ikona obrázku '%1' do '%2'"
+
+#~ msgid "No GPX file chosen."
+#~ msgstr "Nebyl vybrán soubor GPX."
+
+#~ msgid "The %1 GPX file do not have a date-time track to use."
+#~ msgstr "GPX soubor %1 neobsahuje použitelnou stopu s datem a časem."
+
+#~ msgid "No position data for '%1'"
+#~ msgstr "Chybí údaje o pozici pro '%1'"
+
+#~ msgid "No position data for 1 picture"
+#~ msgid_plural "No position data for %1 pictures"
+#~ msgstr[0] "Žádné údaje o pozici 1 obrázku"
+#~ msgstr[1] "Žádné údaje o pozici %1 obrázků"
+#~ msgstr[2] "Žádné údaje o pozici %1 obrázků"
+
+#~ msgid "Move to final directory"
+#~ msgstr "Přesunout do finální složky"
+
+#~ msgid "KML Export"
+#~ msgstr "Export KML"
+
+#~ msgid "Target Preferences"
+#~ msgstr "Předvolby cíle"
+
+#~ msgid "Target Type"
+#~ msgstr "Typ cíle"
+
+#~ msgid "&Local or web target used by GoogleEarth"
+#~ msgstr "Místní, nebo webový cí&l použitý pomocí GoogleEarth"
+
+#~ msgid "Web target used by GoogleMap"
+#~ msgstr "Webový cíl použitý pomocí GoogleEarth"
+
+#~ msgid ""
+#~ "When using GoogleMap, all images must have complete URLs, icons are "
+#~ "squared, and when drawing a track, only line track is exported."
+#~ msgstr ""
+#~ "Při použití GoogleMap musí mít všechny obrázky úplné URL, ikony být "
+#~ "čtvercové a při kreslení cesty bude exportována cesta pouze jako čára."
+
+#~ msgid "Picture Altitude:"
+#~ msgstr "Nadmořská výška obrázku:"
+
+#~ msgid "clamp to ground"
+#~ msgstr "vztaženo k zemi"
+
+#~ msgid "relative to ground"
+#~ msgstr "relativně k zemi"
+
+#~ msgid "absolute"
+#~ msgstr "absolutní"
+
+#~ msgid ""
+#~ "<p>Specifies how pictures are displayed<dl><dt>clamp to ground (default)</"
+#~ "dt><dd>Indicates to ignore an altitude specification</dd><dt>relative to "
+#~ "ground</dt><dd>Sets the altitude of the element relative to the actual "
+#~ "ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets "
+#~ "the altitude of the coordinate relative to sea level, regardless of the "
+#~ "actual elevation of the terrain beneath the element.</dd></dl>"
+#~ msgstr ""
+#~ "<p>Určuje, jak budou obrázky zobrazeny<dl><dt>vztaženo k zemi (výchozí)</"
+#~ "dt><dd>Vyjadŕuje ignorování zadání nadmořské výšky</dd><dt>relativně k "
+#~ "zemi</dt><dd>Nastavuje nadmořskou výšku prvku relativně k aktuální "
+#~ "elevaci země příslušného místa.</dd><dt>absolutně</dt><dd>Nastavuje "
+#~ "nadmořskou výšku souřadnic relativně k hladině moře bez ohledu na "
+#~ "aktuální elevaci terénu pod prvkem.</dd></dl>"
+
+#~ msgid "Destination Directory:"
+#~ msgstr "Cílový adresář:"
+
+#~ msgid "Select a directory in which to save the kml file and pictures"
+#~ msgstr "Vybrat adresář pro uložení souboru KML a obrázků"
+
+#~ msgid "Destination URL:"
+#~ msgstr "Cílové URL:"
+
+#~ msgid "Sizes"
+#~ msgstr "Velikosti"
+
+#~ msgid "Icon Size:"
+#~ msgstr "Velikost ikony:"
+
+#~ msgid "Image Size:"
+#~ msgstr "Velikost obrázku:"
+
+#~ msgid "GPX Tracks"
+#~ msgstr "Stopy GPX"
+
+#~ msgid "Draw GPX Track"
+#~ msgstr "Nakreslit stopu GPX"
+
+#~ msgid "GPX file:"
+#~ msgstr "Soubor GPX:"
+
+#~ msgid "Time Zone:"
+#~ msgstr "Časové pásmo:"
+
+#~ msgid "GMT-12:00"
+#~ msgstr "GMT-12:00"
+
+#~ msgid "GMT-11:00"
+#~ msgstr "GMT-11:00"
+
+#~ msgid "GMT-10:00"
+#~ msgstr "GMT-10:00"
+
+#~ msgid "GMT-09:00"
+#~ msgstr "GMT-09:00"
+
+#~ msgid "GMT-08:00"
+#~ msgstr "GMT-08:00"
+
+#~ msgid "GMT-07:00"
+#~ msgstr "GMT-07:00"
+
+#~ msgid "GMT-06:00"
+#~ msgstr "GMT-06:00"
+
+#~ msgid "GMT-05:00"
+#~ msgstr "GMT-05:00"
+
+#~ msgid "GMT-04:00"
+#~ msgstr "GMT-04:00"
+
+#~ msgid "GMT-03:00"
+#~ msgstr "GMT-03:00"
+
+#~ msgid "GMT-02:00"
+#~ msgstr "GMT-02:00"
+
+#~ msgid "GMT-01:00"
+#~ msgstr "GMT-01:00"
+
+#~ msgid "GMT"
+#~ msgstr "GMT"
+
+#~ msgid "GMT+01:00"
+#~ msgstr "GMT+01:00"
+
+#~ msgid "GMT+02:00"
+#~ msgstr "GMT+02:00"
+
+#~ msgid "GMT+03:00"
+#~ msgstr "GMT+03:00"
+
+#~ msgid "GMT+04:00"
+#~ msgstr "GMT+04:00"
+
+#~ msgid "GMT+05:00"
+#~ msgstr "GMT+05:00"
+
+#~ msgid "GMT+06:00"
+#~ msgstr "GMT+06:00"
+
+#~ msgid "GMT+07:00"
+#~ msgstr "GMT+07:00"
+
+#~ msgid "GMT+08:00"
+#~ msgstr "GMT+08:00"
+
+#~ msgid "GMT+09:00"
+#~ msgstr "GMT+09:00"
+
+#~ msgid "GMT+10:00"
+#~ msgstr "GMT+10:00"
+
+#~ msgid "GMT+11:00"
+#~ msgstr "GMT+11:00"
+
+#~ msgid "GMT+12:00"
+#~ msgstr "GMT+12:00"
+
+#~ msgid "GMT+13:00"
+#~ msgstr "GMT+13:00"
+
+#~ msgid "GMT+14:00"
+#~ msgstr "GMT+14:00"
+
+#~ msgid ""
+#~ "Sets the time zone of the camera during picture shooting, so that the "
+#~ "time stamps of the GPS can be converted to match the local time"
+#~ msgstr ""
+#~ "Nastaví časovou zónu fotoaparátu při fotografování, takže časové značky "
+#~ "GPS mohou být převedeny, aby se shodovaly s místním časem"
+
+#~ msgid "Track Width:"
+#~ msgstr "Šířka stopy:"
+
+#~ msgid "Track Color:"
+#~ msgstr "Barva stopy:"
+
+#~ msgid "Opacity:"
+#~ msgstr "Neprůhlednost:"
+
+#~ msgid "Track Altitude:"
+#~ msgstr "Nadmořská výška stopy:"
+
+#~ msgid ""
+#~ "<p>Specifies how the points are displayed<dl><dt>clamp to ground (default)"
+#~ "</dt><dd>Indicates to ignore an altitude specification</dd><dt>relative "
+#~ "to ground</dt><dd>Sets the altitude of the element relative to the actual "
+#~ "ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets "
+#~ "the altitude of the coordinate relative to sea level, regardless of the "
+#~ "actual elevation of the terrain beneath the element.</dd></dl>"
+#~ msgstr ""
+#~ "<p>Určuje, jak budou body zobrazeny<dl><dt>vztaženo k zemi (výchozí)</"
+#~ "dt><dd>Vyjadŕuje ignorování zadání nadmořské výšky</dd><dt>relativně k "
+#~ "zemi</dt><dd>Nastavuje nadmořskou výšku prvku relativně k aktuální "
+#~ "elevaci země příslušného místa.</dd><dt>absolutně</dt><dd>Nastavuje "
+#~ "nadmořskou výšku souřadnic relativně k hladině moře bez ohledu na "
+#~ "aktuální elevaci terénu pod prvkem.</dd></dl>"
+
+#~ msgid "A Kipi plugin for KML exporting"
+#~ msgstr "KIPI modul pro export KML"
+
+#~ msgid "(c) 2006-2007, Stéphane Pontier"
+#~ msgstr "(c) 2006-2007, Stéphane Pontier"
+
+#~ msgid "Stéphane Pontier"
+#~ msgstr "Stéphane Pontier"
+
+#~ msgid "Track"
+#~ msgstr "Stopa"
+
+#~ msgid "Point"
+#~ msgstr "Bod"
+
+#~ msgid "Edit Coordinates..."
+#~ msgstr "Upravit souřadnice..."
+
+#~ msgid "Track List Editor..."
+#~ msgstr "Editor seznamu stop..."
+
+#~ msgid "Export to KML..."
+#~ msgstr "Export do KML..."
+
+#~ msgid ""
+#~ "<p>Unable to find the gpsbabel executable:<br/> This program is required "
+#~ "by this plugin to support GPS data file decoding. Please install gpsbabel "
+#~ "as a package from your distributor or <a href=\"%1\">download the source</"
+#~ "a>.</p><p>Note: at least, gpsbabel version %2 is required by this plugin."
+#~ "</p>"
+#~ msgstr ""
+#~ "<p>Nelze nalézt aplikaci gpsbabel:<br/> Tento program je vyžadován "
+#~ "modulem pro podporu dekódování souboru s GPS daty. Nainstalujte prosím "
+#~ "gpsbabel jako balíček od vašeho distributora, nebo <a href=\"%1\"> "
+#~ "stáhněte zdroje</a>.</p><p>Pozn.: pro tento modul je vyžadována verze "
+#~ "nejméně %2.</p>"
+
+#~ msgid ""
+#~ "<p>gpsbabel executable is not up to date:<br/> The version %1 of gpsbabel "
+#~ "have been found on your computer. This version is too old to run properly "
+#~ "with this plugin. Please update gpsbabel as a package from your "
+#~ "distributor or <a href=\"%2\">download the source</a>.</p><p>Note: at "
+#~ "least, gpsbabel version %3 is required by this plugin</p>"
+#~ msgstr ""
+#~ "<p>Aplikace gpsbabel není aktuální:<br/> Na vašem počítači byla nalezena "
+#~ "verze programu gpsbabel %1. Tato verze je příliš stará pro správnou "
+#~ "činnost s tímto modulem.Aktualizujte prosím gpsbabel jako balíček od "
+#~ "vašeho distributora, nebo <a href=\"%2\"> stáhněte zdroje</a>.</"
+#~ "p><p>Pozn.: pro tento modul je vyžadována verze nejméně %3.</p>"
+
+#~ msgid "No GPS locations have been found in your pictures."
+#~ msgstr "Ve vašich obrázcích nebylo nalezeno žádné umístění GPS."
+
+#~ msgid ""
+#~ "Geographical coordinates will be definitively removed from all selected "
+#~ "images.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "Geografické souřadnice budou definitivně odebrány ze všech vybraných "
+#~ "obrázků.\n"
+#~ "Chcete pokračovat?"
+
+#~ msgid "Remove Geographical Coordinates"
+#~ msgstr "Odebrat geografické souřadnice"

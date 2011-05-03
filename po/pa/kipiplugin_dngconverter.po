@@ -1,0 +1,239 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Amanpreet Singh Alam <aalam@users.sf.net>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dngconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2009-01-02 06:31+0530\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjab-l10n@list.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr ""
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "ਮੇਕ: %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "ਮਾਡਲ: %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "ਬਣਾਇਆ: %1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "ਅਪਰਚਰ: f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "ਫੋਕਲ: %1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "ਐਕਸਪੋਜ਼ਰ: 1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "ਸਿਨਸਵਿਟੀ: %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "ਬਦਲਣ ਲਈ ਫਾਇਲ"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr ""
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr ""
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "ਲੂਜ਼-ਲਿੱਸ ਕੰਪਰੈੱਸ਼ਨ"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr ""
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "JPEG ਝਲਕ:"
+
+#: plugin/settingswidget.cpp:115
+#, fuzzy
+#| msgid "None"
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "ਕੋਈ ਨਹੀਂ"
+
+#: plugin/settingswidget.cpp:116
+#, fuzzy
+#| msgid "Medium"
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "ਮੀਡਿਅਮ"
+
+#: plugin/settingswidget.cpp:117
+#, fuzzy
+#| msgid "Full size"
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "ਪੂਰਾ ਸਾਈਜ਼"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr ""
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "ਆਟੋਮੈਟਿਕ ਹੀ ਉੱਤੇ ਲਿਖੋ"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr ""
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr ""
+
+#: plugin/aboutdata.h:52
+#, kde-format
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr ""
+
+#: plugin/aboutdata.h:55
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr ""
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr ""
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr ""
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr ""
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr ""
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr ""
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "ਸ਼ਾਮਲ(&A)"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr ""
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "ਹਟਾਓ(&R)"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr ""
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "ਥੰਮਨੇਲ"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "Raw ਫਾਇਲ"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "ਟਾਰਗੇਟ ਫਾਇਲ"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "ਕੈਮਰਾ"
+
+#: plugin/batchdialog.cpp:190
+#, fuzzy
+#| msgid "Plugin Handbook"
+msgid "Handbook"
+msgstr "ਪਲੱਗਇਨ ਹੈਡਬੁੱਕ"
+
+#: plugin/batchdialog.cpp:332
+msgid "The list does not contain any Raw files to process."
+msgstr ""
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "ਅਧੂਰਾ ਛੱਡੋ(&A)"
+
+#: plugin/batchdialog.cpp:474
+msgid "Abort the conversion of Raw files."
+msgstr ""
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "ਬਦਲੋ(&v)"
+
+#: plugin/batchdialog.cpp:480
+msgid "Start converting the Raw images using the current settings."
+msgstr ""
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr ""
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "ਚਿੱਤਰ %1 ਸੰਭਾਲਣ ਲਈ ਫੇਲ੍ਹ"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ (A S Alam)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "aalam@users.sf.net"

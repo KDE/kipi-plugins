@@ -1,0 +1,510 @@
+# Translation of kipiplugin_flashexport into Japanese.
+# This file is distributed under the same license as the kipi-plugins package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flashexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:23+0100\n"
+"PO-Revision-Date: 2009-01-21 00:17+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <Kdeveloper@kde.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: firstrundlg.cpp:77 firstrundlg.cpp:87 simpleviewer.cpp:202 svedialog.cpp:91
+#: svedialog.cpp:120
+msgid "Flash Export"
+msgstr "Flash エクスポート"
+
+#: firstrundlg.cpp:90 svedialog.cpp:123
+#, fuzzy
+#| msgid ""
+#| "A Kipi plugin to export images to Flash using Simple Viewer component"
+msgid ""
+"A Kipi plugin to export images to Flash using the Simple Viewer component."
+msgstr ""
+"SimpleViewer コンポーネントを使って画像を Flash にエクスポートする Kipi プラ"
+"グイン"
+
+#: firstrundlg.cpp:91 svedialog.cpp:124
+#, fuzzy
+#| msgid ""
+#| "(c) 2005-2006, Joern Ahrens\n"
+#| "(c) 2008-2009, Gilles Caulier"
+msgid ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+msgstr ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2009, Gilles Caulier"
+
+#: firstrundlg.cpp:94 svedialog.cpp:127
+msgid "Joern Ahrens"
+msgstr "Joern Ahrens"
+
+#: firstrundlg.cpp:95 svedialog.cpp:128
+msgid "Author"
+msgstr "作者"
+
+#: firstrundlg.cpp:98 svedialog.cpp:131
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: firstrundlg.cpp:99 svedialog.cpp:132
+msgid "Developer and maintainer"
+msgstr "開発者およびメンテナ"
+
+#: firstrundlg.cpp:102 svedialog.cpp:135
+msgid "Felix Turner"
+msgstr "Felix Turner"
+
+#: firstrundlg.cpp:103 svedialog.cpp:136
+msgid "Author of the Simple Viewer Flash component"
+msgstr "SimpleViewer Flash コンポーネントの作者"
+
+#: firstrundlg.cpp:107 svedialog.cpp:140
+msgid "Mikkel B. Stegmann"
+msgstr "Mikkel B. Stegmann"
+
+#: firstrundlg.cpp:108 svedialog.cpp:141
+msgid "Basis for the index.html template"
+msgstr "index.html テンプレートの基礎"
+
+#: firstrundlg.cpp:117 svedialog.cpp:150
+msgid "Handbook"
+msgstr "ハンドブック"
+
+#: firstrundlg.cpp:129
+msgid ""
+"<p>SimpleViewer is a Flash component which is free to use, but uses a "
+"license which comes into conflict with several distributions. Due to the "
+"license it is not possible to ship it with this plugin.</p><p>You can now "
+"download SimpleViewer from its homepage and point this tool to the "
+"downloaded archive. The archive will be stored with the plugin "
+"configuration, so it is available for further use.</p>"
+msgstr ""
+"<p>SimpleViewer は自由に使用できる Flash コンポーネントですが、そのライセンス"
+"が一部のディストリビューションで問題となるため、このプラグインといっしょに配"
+"布することができません。</p><p>SimpleViewer のホームページから SimpleViewer "
+"をダウンロードし、このツールにダウンロードしたアーカイブの場所を教えてくださ"
+"い。アーカイブはプラグインの設定とともに保存されるので、次回も使用できます。"
+"</p>"
+
+#: firstrundlg.cpp:137
+#, fuzzy
+#| msgid "<p>1.) Download SimpleViewer Version 1.9.x</p>"
+msgid "<p>1.) Download SimpleViewer Version 2.1.x</p>"
+msgstr "<p>1.) SimpleViewer 1.9.x をダウンロードします。</p>"
+
+#: firstrundlg.cpp:147
+msgid "<p>2.) Point this tool to the downloaded archive</p>"
+msgstr "<p>2.) このツールにダウンロードしたアーカイブの場所を教えます。</p>"
+
+#: generalpage.cpp:81
+msgid "Gallery &Title"
+msgstr "ギャラリーのタイトル(&T)"
+
+#: generalpage.cpp:84
+msgid "Enter here the gallery title"
+msgstr "ここにギャラリーのタイトルを入力します"
+
+#: generalpage.cpp:92
+msgid "Save Gallery To"
+msgstr "ギャラリーの保存先"
+
+#: generalpage.cpp:103
+msgid "Image Properties"
+msgstr "画像のプロパティ"
+
+#: generalpage.cpp:105
+msgid "Resize Target Images"
+msgstr "画像のサイズを変更"
+
+#: generalpage.cpp:107
+msgid "If you enable this option, all target images can be resized."
+msgstr "このオプションを有効にすると、画像のサイズを変更することができます。"
+
+#: generalpage.cpp:111
+msgid "Auto-Rotate/Flip Images"
+msgstr "画像を自動回転/反転"
+
+#: generalpage.cpp:113
+#, fuzzy
+#| msgid ""
+#| "If you enable this option, the images orientation will be fixed "
+#| "accordingly with Exif information"
+msgid ""
+"If you enable this option, the images' orientations will be set according to "
+"their Exif information."
+msgstr ""
+"このオプションを有効にすると、常に Exif 情報に基づいて画像の向きが決定されま"
+"す。"
+
+#: generalpage.cpp:120
+#, fuzzy
+#| msgid "&Target Images Size:"
+msgid "&Target Images' Size:"
+msgstr "エクスポート後の画像のサイズ(&T):"
+
+#: generalpage.cpp:121
+#, fuzzy
+#| msgid ""
+#| "The new size of the exported images in pixels. SimpleViewer resizes the "
+#| "images as well, but this resizes your images before they are uploaded to "
+#| "your server"
+msgid ""
+"The new size of the exported images, in pixels. SimpleViewer resizes the "
+"images too, but this resizes the images before they are uploaded to your "
+"server."
+msgstr ""
+"エクスポートされた画像の新しいサイズをピクセル数で指定します。SimpleViewer も"
+"画像のサイズを変更しますが、これはサーバにアップロードする前に画像のサイズを"
+"変更します。"
+
+#: generalpage.cpp:134
+#, fuzzy
+#| msgid "&Displayed Images Size:"
+msgid "&Displayed Images' Size:"
+msgstr "画像の表示サイズ(&D):"
+
+#: generalpage.cpp:135
+#, fuzzy
+#| msgid ""
+#| "scales the displayed images to this size. Largest height or width of your "
+#| "largest image (in pixels). Images will not be scaled up above this size, "
+#| "to ensure best image quality."
+msgid ""
+"Scales the displayed images to this size. Normally, use the height or width "
+"of your largest image (in pixels). Images will not be scaled up above this "
+"size, to preserve image quality."
+msgstr ""
+"画像をこのサイズに合わせて表示します。最も大きい画像の高さまたは幅をピクセル"
+"数で指定してください。画質が悪くならないように、画像はこのサイズより大きく拡"
+"大されません。"
+
+#: generalpage.cpp:150
+msgid "Misc"
+msgstr "その他"
+
+#: generalpage.cpp:153
+msgid "Display Captions"
+msgstr "キャプションを表示"
+
+#: generalpage.cpp:155
+#, fuzzy
+#| msgid "If you enable this option, the images caption will be shown"
+msgid "If this option is enabled, the images' captions will be shown."
+msgstr "このオプションを有効にすると、画像のキャプションが表示されます。"
+
+#: generalpage.cpp:158
+msgid "Open Image with Right Click"
+msgstr "右クリックで画像を開く"
+
+#: generalpage.cpp:160
+#, fuzzy
+#| msgid ""
+#| "If you enable this option, user will be able to open the target image in "
+#| "a separate window using right mouse button"
+msgid ""
+"If this option is enabled, the user will be able to open the target image in "
+"a separate window using the right mouse button."
+msgstr ""
+"このオプションを有効にすると、マウスの右ボタンを使って画像を別のウィンドウに"
+"開くことができます。"
+
+#: generalpage.cpp:164
+msgid "Open gallery in Konqueror"
+msgstr "ギャラリーを Konqueror で開く"
+
+#: generalpage.cpp:166
+#, fuzzy
+#| msgid ""
+#| "If you enable this option, gallery will be open in Konqueror automatically"
+msgid ""
+"If this option is enabled, the gallery will be opened in Konqueror "
+"automatically."
+msgstr ""
+"このオプションを有効にすると、ギャラリーが自動的に Konqueror に表示されます。"
+
+#: lookpage.cpp:80
+msgctxt "Settings for flash export navigation"
+msgid "Navigation"
+msgstr "ナビゲーション"
+
+#: lookpage.cpp:86
+msgid "Thumbnail &Rows:"
+msgstr "サムネイルの行数(&R):"
+
+#: lookpage.cpp:87
+msgid "Number of thumbnails rows"
+msgstr "サムネイルの行数"
+
+#: lookpage.cpp:92
+msgid "Thumbnail &Columns:"
+msgstr "サムネイルの列数(&C):"
+
+#: lookpage.cpp:93
+msgid "Number of thumbnails columns"
+msgstr "サムネイルの列数"
+
+#: lookpage.cpp:96
+msgid "Thumbnail &Position:"
+msgstr "サムネイルの位置(&P):"
+
+#: lookpage.cpp:98
+msgctxt "thumbnail position: right"
+msgid "Right"
+msgstr "右"
+
+#: lookpage.cpp:99
+msgctxt "thumbnail position: left"
+msgid "Left"
+msgstr "左"
+
+#: lookpage.cpp:100
+msgctxt "thumbnail position: top"
+msgid "Top"
+msgstr "上"
+
+#: lookpage.cpp:101
+msgctxt "thumbnail position: bottom"
+msgid "Bottom"
+msgstr "下"
+
+#: lookpage.cpp:110
+msgid "&Direction of Navigation:"
+msgstr "ナビゲーションの方向(&D):"
+
+#: lookpage.cpp:112
+msgid "Left to Right"
+msgstr "左から右"
+
+#: lookpage.cpp:113
+msgid "Right to Left"
+msgstr "右から左"
+
+#: lookpage.cpp:126
+msgid "Colors"
+msgstr "色"
+
+#: lookpage.cpp:130
+msgid "&Text Color:"
+msgstr "テキスト色(&T):"
+
+#: lookpage.cpp:133
+msgid "Color of title and caption text"
+msgstr "タイトルとキャプションのテキストの色"
+
+#: lookpage.cpp:137
+msgid "&Background Color:"
+msgstr "背景色(&B):"
+
+#: lookpage.cpp:143
+msgid "&Frame Color:"
+msgstr "枠の色(&F):"
+
+#: lookpage.cpp:146
+msgid "Color of image frame, viewed icon, load bars, thumbnail arrows"
+msgstr "画像の枠の色、見たアイコン、読み込みバー、サムネイルの矢印"
+
+#: lookpage.cpp:157
+msgid "Style"
+msgstr "スタイル"
+
+#: lookpage.cpp:163
+msgid "Frame &Width:"
+msgstr "枠の幅(&W):"
+
+#: lookpage.cpp:164
+msgid "Width of image frame in pixels."
+msgstr "画像の周りの枠の幅をピクセル数で指定します。"
+
+#: lookpage.cpp:169
+msgid "Stage &Padding:"
+msgstr "画像とサムネイルの間隔(&P):"
+
+#: lookpage.cpp:170
+msgid "Distance between image and thumbnails in pixels."
+msgstr "画像とサムネイルの間隔をピクセル数で指定します。"
+
+#: plugin_flashexport.cpp:62
+msgid "Export to F&lash..."
+msgstr "Flash にエクスポート(&L)..."
+
+#: simpleviewer.cpp:140
+msgid "SimpleViewer installation failed"
+msgstr "SimpleViewer のインストールに失敗しました"
+
+#: simpleviewer.cpp:167
+#, fuzzy, kde-format
+#| msgid ""
+#| "Target folder %1 already exists.\n"
+#| "Do you want to overwrite it (all data in this folder will be lost)"
+msgid ""
+"Target folder %1 already exists.\n"
+"Do you want to overwrite it?  All data in this folder will be lost."
+msgstr ""
+"フォルダ <filename>%1</filename> は既に存在します。\n"
+"上書きしますか？(このフォルダのすべてのデータが失われます)"
+
+#: simpleviewer.cpp:176
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not delete %1\n"
+#| "Please choose another export folder"
+msgid ""
+"Could not delete %1.\n"
+"Please choose another export folder."
+msgstr ""
+"<filename>%1</filename> を削除できませんでした。\n"
+"他のエクスポートフォルダを選択してください。"
+
+#: simpleviewer.cpp:211
+msgid "Initialising..."
+msgstr "初期化しています..."
+
+#: simpleviewer.cpp:232
+msgid "Export canceled"
+msgstr "エクスポートがキャンセルされました"
+
+#: simpleviewer.cpp:243
+msgid "Failed to create export directories"
+msgstr "エクスポートフォルダを作成できませんでした"
+
+#: simpleviewer.cpp:250
+msgid "Failed to export the images"
+msgstr "画像をエクスポートできませんでした"
+
+#: simpleviewer.cpp:257
+msgid "Failed to create index.html"
+msgstr "index.html を作成できませんでした"
+
+#: simpleviewer.cpp:264
+msgid "Failed to copy SimpleViewer files"
+msgstr "SimpleViewer ファイルをコピーできませんでした"
+
+#: simpleviewer.cpp:271
+msgid "Failed to upload the gallery"
+msgstr "ギャラリーをアップロードできませんでした"
+
+#: simpleviewer.cpp:279
+#, fuzzy, kde-format
+#| msgid ""
+#| "Export was canceled.\n"
+#| "Do you want to delete the yet created files in %1 ?"
+msgid ""
+"Export was canceled.\n"
+"Do you want to delete files in %1 that have already been created?"
+msgstr ""
+"エクスポートがキャンセルされました。\n"
+"<filename>%1</filename> に作成されたファイルを削除しますか？"
+
+#: simpleviewer.cpp:289
+msgctxt "Flash export has finished"
+msgid "Finished..."
+msgstr "完了..."
+
+#: simpleviewer.cpp:302
+msgid "Creating directories..."
+msgstr "フォルダを作成中..."
+
+#: simpleviewer.cpp:307 simpleviewer.cpp:316 simpleviewer.cpp:325
+#, kde-format
+msgid "Could not create folder '%1'"
+msgstr "フォルダ <filename>%1</filename> を作成できませんでした"
+
+#: simpleviewer.cpp:340
+msgid "Creating images and thumbnails..."
+msgstr "画像とサムネイルを作成中..."
+
+#: simpleviewer.cpp:397
+#, kde-format
+msgid "Processing %1"
+msgstr "<filename>%1</filename> を処理中"
+
+#: simpleviewer.cpp:408
+#, kde-format
+msgid "Could not open image '%1'"
+msgstr "画像 <filename>%1</filename> を開けませんでした"
+
+#: simpleviewer.cpp:415
+#, kde-format
+msgid "Could not create thumbnail from '%1'"
+msgstr "<filename>%1</filename> からサムネイルを作成できませんでした"
+
+#: simpleviewer.cpp:422
+#, kde-format
+msgid "Could not resize image '%1'"
+msgstr "画像 <filename>%1</filename> のサイズを変更できませんでした"
+
+#: simpleviewer.cpp:550
+msgid "Creating index.html..."
+msgstr "index.html を作成中..."
+
+#: simpleviewer.cpp:579
+msgid "index.html created..."
+msgstr "index.html を作成しました..."
+
+#: simpleviewer.cpp:589
+msgid "Copying flash files..."
+msgstr "Flash ファイルをコピー中..."
+
+#: simpleviewer.cpp:622
+msgid "Flash files copied..."
+msgstr "Flash ファイルをコピーしました..."
+
+#: simpleviewer.cpp:632
+msgid "Uploading gallery..."
+msgstr "ギャラリーをアップロード中..."
+
+#: simpleviewer.cpp:637
+msgid "Gallery uploaded..."
+msgstr "ギャラリーをアップロードしました..."
+
+#: svedialog.cpp:102
+msgctxt "Settings tab for selections"
+msgid "Selection"
+msgstr "選択"
+
+#: svedialog.cpp:103
+msgid "Collections List"
+msgstr "コレクションの一覧"
+
+#: svedialog.cpp:107
+msgctxt "General settings tab"
+msgid "General"
+msgstr "全般"
+
+#: svedialog.cpp:108
+msgid "General Settings"
+msgstr "全般的な設定"
+
+#: svedialog.cpp:113
+msgctxt "Settings tab for the look of the flash export"
+msgid "Look"
+msgstr "外観"
+
+#: svedialog.cpp:114
+msgid "Look Settings"
+msgstr "外観の設定"
+
+#: svedialog.cpp:227
+msgid "You must select at least one collection to export."
+msgstr "エクスポートするコレクションを少なくとも一つ選択してください。"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yukiko Bando"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ybando@k6.dion.ne.jp"

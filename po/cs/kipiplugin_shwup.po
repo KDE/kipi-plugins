@@ -1,0 +1,247 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2009-11-14 22:20+0100\n"
+"Last-Translator: Zdeněk Pech <dom.toretto@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: swalbum.cpp:49
+msgid "Shwup New Album"
+msgstr "Nové album Shwup"
+
+#: swalbum.cpp:62
+msgid "Title of the album that will be created (required)."
+msgstr "Název vytvářeného alba (povinné)."
+
+#: swalbum.cpp:65
+msgctxt "album edit"
+msgid "Title:"
+msgstr "Název:"
+
+#: swlogin.cpp:48
+msgid "Shwup Login"
+msgstr "Přihlášení Shwup"
+
+#: swlogin.cpp:60
+msgid "Email of shwup account (required)."
+msgstr "Email účtu Shwup (povinné)."
+
+#: swlogin.cpp:64
+msgid "Password of shwup account (required)."
+msgstr "Heslo účtu Shwup (povinné)."
+
+#: swlogin.cpp:67
+msgctxt "login settings"
+msgid "Email:"
+msgstr "Email:"
+
+#: swlogin.cpp:68
+msgctxt "login settings"
+msgid "Password:"
+msgstr "Heslo:"
+
+#: swwidget.cpp:71
+msgid "This is the list of images to upload to your Shwup account."
+msgstr "Toto je seznam obrázků, které budou nahrány na váš účet Shwup."
+
+#: swwidget.cpp:77
+msgid ""
+"This is a clickable link to open the Shwup.com home page in a web browser."
+msgstr ""
+"Kliknutím na tento odkaz otevřete stránku Shwup.com ve webovém prohlížeči."
+
+#: swwidget.cpp:83
+msgid "Account"
+msgstr "Účet"
+
+#: swwidget.cpp:84
+msgid "This is the Shwup account that is currently logged in."
+msgstr "Tento účet Shwup je momentálně přihlášen."
+
+#: swwidget.cpp:87
+msgctxt "account settings"
+msgid "Name:"
+msgstr "Jméno:"
+
+#: swwidget.cpp:90
+msgid "Change Account"
+msgstr "Změnit účet"
+
+#: swwidget.cpp:91
+msgid "Change Shwup Account used for transfer"
+msgstr "Změnit účet Shwup používaný pro přenos"
+
+#: swwidget.cpp:102 swwidget.cpp:122
+msgid "Destination"
+msgstr "Cíl"
+
+#: swwidget.cpp:103
+msgid "This is the Shwup album to which selected photos will be uploaded."
+msgstr "Do tohoto alba Shwup budou vybrané fotografie nahrány."
+
+#: swwidget.cpp:106
+msgid "Album:"
+msgstr "Album:"
+
+#: swwidget.cpp:110
+msgid "New Album"
+msgstr "Nové album"
+
+#: swwidget.cpp:111
+msgid "Create new Shwup album"
+msgstr "Vytvořit nové album Shwup"
+
+#: swwidget.cpp:112
+msgctxt "album list"
+msgid "Reload"
+msgstr "Znovu načíst"
+
+#: swwidget.cpp:113
+msgid "Reload album list"
+msgstr "Obnovit seznam alb"
+
+#: swwidget.cpp:123
+msgid "This is the location to which Shwup images will be downloaded."
+msgstr "Z tohoto umístění budou obrázky Shwup staženy."
+
+#: swwidget.cpp:130
+msgid "Options"
+msgstr "Možnosti"
+
+#: swwidget.cpp:131
+msgid "These are options that will be applied to photos before upload."
+msgstr "Volby, které budou použity pro fotografie před odesláním."
+
+#: swwidget.cpp:135
+msgid "Resize photos before uploading"
+msgstr "Před odesláním změnit velikost fotografií"
+
+#: swwidget.cpp:145
+msgid "Maximum dimension:"
+msgstr "Max. velikost:"
+
+#: swwidget.cpp:153
+msgid "JPEG quality:"
+msgstr "Kvalita JPEG:"
+
+#: swwindow.cpp:93
+msgid "Export to Shwup Web Service"
+msgstr "Export do webové služby Shwup"
+
+#: swwindow.cpp:94
+msgid "Start Upload"
+msgstr "Spustit odesílání"
+
+#: swwindow.cpp:95
+msgid "Start upload to Shwup web service"
+msgstr "Spustit nahrávání do webové služby Shwup"
+
+#: swwindow.cpp:118
+msgid "Shwup Export"
+msgstr "Export Shwup"
+
+#: swwindow.cpp:120
+msgid "A Kipi plugin to export images to Shwup web service."
+msgstr "Modul KIPI pro export obrázků do webové služby Shwup."
+
+#: swwindow.cpp:122
+msgid "(c) 2009, Timothée Groleau"
+msgstr "(c) 2009, Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Timothée Groleau"
+msgstr "Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Author and maintainer"
+msgstr "Autor a správce"
+
+#: swwindow.cpp:132
+msgid "Handbook"
+msgstr "Příručka"
+
+#: swwindow.cpp:277
+msgid ""
+"The shwup.com service does not seem to be available at this time, please try "
+"again later."
+msgstr ""
+"Zdá se, že služba shwup.com není momentálně dostupná. Vyzkoušejte se "
+"připojit později."
+
+#: swwindow.cpp:307
+msgid "This application has been blacklisted by the shwup.com service."
+msgstr "Aplikace byla službou shwup.com přdána na černou listinu."
+
+#: swwindow.cpp:319
+#, kde-format
+msgid "Shwup Call Failed: %1\n"
+msgstr "Volání Shwup selhalo: %1\n"
+
+#: swwindow.cpp:420
+msgid "Transfer Progress"
+msgstr "Průběh přenosu"
+
+#: swwindow.cpp:425
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: swwindow.cpp:532
+#, kde-format
+msgid ""
+"Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online "
+"and invite people."
+msgstr ""
+"Odeslání dokončeno. Navštivte \"<a href=\"%1\">%2</a>\", abyste si mohli "
+"album prohlédnout a pozvat lidi."
+
+#: swwindow.cpp:535
+msgid "Upload complete"
+msgstr "Odeslání dokončeno"
+
+#: swwindow.cpp:559 swwindow.cpp:578
+msgid "Cannot open file"
+msgstr "Nelze otevřít soubor"
+
+#: swwindow.cpp:582
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Odesílání souboru %1"
+
+#: swwindow.cpp:606
+#, kde-format
+msgid ""
+"Failed to upload photo into Shwup: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Selhalo odeslání fotografie do Shwup: %1\n"
+"Chcete pokračovat?"
+
+#: swwindow.cpp:630
+#, kde-format
+msgid "Shwup Call Failed: %1"
+msgstr "Volání Shwup selhalo: %1"
+
+#: plugin_shwup.cpp:78
+msgid "Export to Shwup..."
+msgstr "Export do Shwup..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Vít Pelčák,Zdeněk Pech"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "vit@pelcak.org,dom.toretto@seznam.cz"

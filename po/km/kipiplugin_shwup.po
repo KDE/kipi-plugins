@@ -1,0 +1,241 @@
+# translation of kipiplugin_shwup.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_shwup\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-11-04 16:35+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: swalbum.cpp:49
+msgid "Shwup New Album"
+msgstr " "
+
+#: swalbum.cpp:62
+msgid "Title of the album that will be created (required)."
+msgstr ""
+
+#: swalbum.cpp:65
+msgctxt "album edit"
+msgid "Title:"
+msgstr ""
+
+#: swlogin.cpp:48
+msgid "Shwup Login"
+msgstr ""
+
+#: swlogin.cpp:60
+msgid "Email of shwup account (required)."
+msgstr ""
+
+#: swlogin.cpp:64
+msgid "Password of shwup account (required)."
+msgstr ""
+
+#: swlogin.cpp:67
+msgctxt "login settings"
+msgid "Email:"
+msgstr ""
+
+#: swlogin.cpp:68
+msgctxt "login settings"
+msgid "Password:"
+msgstr ""
+
+#: swwidget.cpp:71
+msgid "This is the list of images to upload to your Shwup account."
+msgstr ""
+
+#: swwidget.cpp:77
+msgid ""
+"This is a clickable link to open the Shwup.com home page in a web browser."
+msgstr ""
+
+#: swwidget.cpp:83
+msgid "Account"
+msgstr ""
+
+#: swwidget.cpp:84
+msgid "This is the Shwup account that is currently logged in."
+msgstr ""
+
+#: swwidget.cpp:87
+msgctxt "account settings"
+msgid "Name:"
+msgstr ""
+
+#: swwidget.cpp:90
+msgid "Change Account"
+msgstr ""
+
+#: swwidget.cpp:91
+msgid "Change Shwup Account used for transfer"
+msgstr ""
+
+#: swwidget.cpp:102 swwidget.cpp:122
+msgid "Destination"
+msgstr ""
+
+#: swwidget.cpp:103
+msgid "This is the Shwup album to which selected photos will be uploaded."
+msgstr ""
+
+#: swwidget.cpp:106
+msgid "Album:"
+msgstr ""
+
+#: swwidget.cpp:110
+msgid "New Album"
+msgstr ""
+
+#: swwidget.cpp:111
+msgid "Create new Shwup album"
+msgstr ""
+
+#: swwidget.cpp:112
+msgctxt "album list"
+msgid "Reload"
+msgstr ""
+
+#: swwidget.cpp:113
+msgid "Reload album list"
+msgstr ""
+
+#: swwidget.cpp:123
+msgid "This is the location to which Shwup images will be downloaded."
+msgstr ""
+
+#: swwidget.cpp:130
+msgid "Options"
+msgstr ""
+
+#: swwidget.cpp:131
+msgid "These are options that will be applied to photos before upload."
+msgstr ""
+
+#: swwidget.cpp:135
+msgid "Resize photos before uploading"
+msgstr ""
+
+#: swwidget.cpp:145
+msgid "Maximum dimension:"
+msgstr ""
+
+#: swwidget.cpp:153
+msgid "JPEG quality:"
+msgstr ""
+
+#: swwindow.cpp:93
+msgid "Export to Shwup Web Service"
+msgstr ""
+
+#: swwindow.cpp:94
+msgid "Start Upload"
+msgstr ""
+
+#: swwindow.cpp:95
+msgid "Start upload to Shwup web service"
+msgstr ""
+
+#: swwindow.cpp:118
+msgid "Shwup Export"
+msgstr ""
+
+#: swwindow.cpp:120
+msgid "A Kipi plugin to export images to Shwup web service."
+msgstr ""
+
+#: swwindow.cpp:122
+msgid "(c) 2009, Timothée Groleau"
+msgstr ""
+
+#: swwindow.cpp:124
+msgid "Timothée Groleau"
+msgstr ""
+
+#: swwindow.cpp:124
+msgid "Author and maintainer"
+msgstr ""
+
+#: swwindow.cpp:132
+msgid "Handbook"
+msgstr ""
+
+#: swwindow.cpp:277
+msgid ""
+"The shwup.com service does not seem to be available at this time, please try "
+"again later."
+msgstr ""
+
+#: swwindow.cpp:307
+msgid "This application has been blacklisted by the shwup.com service."
+msgstr ""
+
+#: swwindow.cpp:319
+#, kde-format
+msgid "Shwup Call Failed: %1\n"
+msgstr ""
+
+#: swwindow.cpp:420
+msgid "Transfer Progress"
+msgstr ""
+
+#: swwindow.cpp:425
+msgid "%v / %m"
+msgstr ""
+
+#: swwindow.cpp:532
+#, kde-format
+msgid ""
+"Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online "
+"and invite people."
+msgstr ""
+
+#: swwindow.cpp:535
+msgid "Upload complete"
+msgstr ""
+
+#: swwindow.cpp:559 swwindow.cpp:578
+msgid "Cannot open file"
+msgstr ""
+
+#: swwindow.cpp:582
+#, kde-format
+msgid "Uploading file %1"
+msgstr ""
+
+#: swwindow.cpp:606
+#, kde-format
+msgid ""
+"Failed to upload photo into Shwup: %1\n"
+"Do you want to continue?"
+msgstr ""
+
+#: swwindow.cpp:630
+#, kde-format
+msgid "Shwup Call Failed: %1"
+msgstr ""
+
+#: plugin_shwup.cpp:78
+msgid "Export to Shwup..."
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""

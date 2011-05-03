@@ -1,0 +1,556 @@
+# Translation of kipiplugin_picasawebexport.po to Catalan
+# Copyright (C) 2008 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2 or later.
+#
+# Josep Ma. Ferrer <txemaq@gmail.com>, 2008, 2009, 2010, 2011.
+# Joan Maspons <joanmaspons@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_picasawebexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2011-02-13 22:26+0100\n"
+"Last-Translator: Josep Ma. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#: picasawebimglist.cpp:101
+#, kde-format
+msgid "%1|All supported files"
+msgstr "%1|Tots els fitxers acceptats"
+
+#: picasawebimglist.cpp:113
+#, kde-format
+msgid "%1|Camera RAW files"
+msgstr "%1|Fitxers RAW de càmera"
+
+#: picasawebimglist.cpp:115
+#, kde-format
+msgid "%1|Video files"
+msgstr "%1|Fitxers de vídeo"
+
+#: picasawebimglist.cpp:127
+msgid "Select Images"
+msgstr "Selecció d'imatges"
+
+#: picasaweblogin.cpp:68
+msgid "Google Login:"
+msgstr "Compte de Google:"
+
+#: picasaweblogin.cpp:72
+msgid "Password:"
+msgstr "Contrasenya:"
+
+#: picasaweblogin.cpp:83
+msgid "&OK"
+msgstr "&Bé"
+
+#: picasaweblogin.cpp:86
+msgid "&Cancel"
+msgstr "&Cancel·la"
+
+#: picasawebreplacedialog.cpp:93
+msgid "&Add As New"
+msgstr "&Afegeix com a nou"
+
+#: picasawebreplacedialog.cpp:94
+msgid "Item will be added alongside the linked version."
+msgstr "L'element s'afegirà conjuntament amb la versió enllaçada."
+
+#: picasawebreplacedialog.cpp:98
+msgid "&Add All"
+msgstr "&Afegeix tot"
+
+#: picasawebreplacedialog.cpp:99
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr ""
+"Els elements s'afegiran conjuntament amb la versió enllaçada. No se us "
+"tornarà a preguntar."
+
+#: picasawebreplacedialog.cpp:103
+msgid "&Replace"
+msgstr "&Substitueix"
+
+#: picasawebreplacedialog.cpp:104
+msgid "Item will be replacing the linked version."
+msgstr "L'element substituirà la versió enllaçada."
+
+#: picasawebreplacedialog.cpp:108
+msgid "&Replace All"
+msgstr "&Substitueix-ho tot"
+
+#: picasawebreplacedialog.cpp:109
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr ""
+"Els elements substituiran la versió enllaçada. No se us tornarà a preguntar."
+
+#: picasawebreplacedialog.cpp:119
+msgid "A linked item already exists."
+msgstr "Ja existeix un element enllaçat."
+
+#: picasawebreplacedialog.cpp:136 picasawebwidget.cpp:131
+msgid "Destination"
+msgstr "Destinació"
+
+#: picasawebreplacedialog.cpp:140
+msgid "Source"
+msgstr "Origen"
+
+#: picasawebtalker.cpp:109
+msgid "Login"
+msgstr "Connexió"
+
+#: picasawebtalker.cpp:578
+msgid "No photo specified"
+msgstr "No s'ha especificat cap foto"
+
+#: picasawebtalker.cpp:580
+msgid "General upload failure"
+msgstr "Error general de pujada"
+
+#: picasawebtalker.cpp:582
+msgid "File-size was zero"
+msgstr "La mida del fitxer és zero"
+
+#: picasawebtalker.cpp:584
+msgid "File-type was not recognized"
+msgstr "No s'ha reconegut el tipus de fitxer"
+
+#: picasawebtalker.cpp:586
+msgid "User exceeded upload limit"
+msgstr "L'usuari ha excedit el límit de càrrega"
+
+#: picasawebtalker.cpp:588
+msgid "Invalid signature"
+msgstr "Signatura no vàlida"
+
+#: picasawebtalker.cpp:590
+msgid "Missing signature"
+msgstr "Manca la signatura"
+
+#: picasawebtalker.cpp:592
+msgid "Login failed / Invalid auth token"
+msgstr "Ha fallat l'entrada / Testimoni d'autorització no vàlid"
+
+#: picasawebtalker.cpp:594
+msgid "Invalid API Key"
+msgstr "Clau de l'API no vàlida"
+
+#: picasawebtalker.cpp:596
+msgid "Service currently unavailable"
+msgstr "Servei actualment no disponible"
+
+#: picasawebtalker.cpp:598
+msgid "Invalid Frob"
+msgstr "«Frob» no vàlid"
+
+#: picasawebtalker.cpp:600
+msgid "Format \"xxx\" not found"
+msgstr "No s'ha trobat el format «xxx»"
+
+#: picasawebtalker.cpp:602
+msgid "Method \"xxx\" not found"
+msgstr "No s'ha trobat el mètode «xxx»"
+
+#: picasawebtalker.cpp:604
+msgid "Invalid SOAP envelope"
+msgstr "Embolcall SOAP no vàlid"
+
+#: picasawebtalker.cpp:606
+msgid "Invalid XML-RPC Method Call"
+msgstr "Crida no vàlida al mètode XML-RPC"
+
+#: picasawebtalker.cpp:608
+msgid "The POST method is now required for all setters."
+msgstr "El mètode POST ara es requereix per a tots els dissenyadors."
+
+#: picasawebtalker.cpp:610
+msgid "Unknown error"
+msgstr "Error desconegut"
+
+#: picasawebtalker.cpp:613
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"S'ha trobat un error: %1\n"
+"No es pot continuar."
+
+#: picasawebtalker.cpp:719 picasawebtalker.cpp:777
+msgid "Failed to fetch photo-set list"
+msgstr "Ha fallat en recuperar la llista de conjunts de fotos"
+
+#: picasawebtalker.cpp:890 picasawebtalker.cpp:920
+msgid "Failed to create album"
+msgstr "Ha fallat en crear l'àlbum"
+
+#: picasawebtalker.cpp:929
+msgid "Failed to upload photo"
+msgstr "Ha fallat en pujar la foto"
+
+#: picasawebalbum.cpp:51
+msgid "Picasaweb New Album"
+msgstr "Àlbum Picasaweb nou"
+
+#: picasawebalbum.cpp:61 picasawebwidget.cpp:110
+msgid "Album"
+msgstr "Àlbum"
+
+#: picasawebalbum.cpp:63
+msgid "These are basic settings for the new Picasaweb album."
+msgstr "Aquest és l'arranjament bàsic del nou àlbum Picasaweb."
+
+#: picasawebalbum.cpp:66
+msgid "Title of the album that will be created (required)."
+msgstr "Títol de l'àlbum que es crearà (requerit)."
+
+#: picasawebalbum.cpp:70
+msgid "Date and Time of the album that will be created (optional)."
+msgstr "Data i hora de l'àlbum que es crearà (opcional)."
+
+#: picasawebalbum.cpp:73
+msgid "Description of the album that will be created (optional)."
+msgstr "Descripció de l'àlbum que es crearà (opcional)."
+
+#: picasawebalbum.cpp:76
+msgid "Location of the album that will be created (optional)."
+msgstr "Ubicació de l'àlbum que es crearà (opcional)."
+
+#: picasawebalbum.cpp:79
+msgctxt "new picasaweb album dialog"
+msgid "Title:"
+msgstr "Títol:"
+
+#: picasawebalbum.cpp:80
+msgctxt "new picasaweb album dialog"
+msgid "Date & Time:"
+msgstr "Data i hora:"
+
+#: picasawebalbum.cpp:81
+msgctxt "new picasaweb album dialog"
+msgid "Description:"
+msgstr "Descripció:"
+
+#: picasawebalbum.cpp:82
+msgctxt "new picasaweb album dialog"
+msgid "Location:"
+msgstr "Localització:"
+
+#: picasawebalbum.cpp:90
+msgid "Access Level"
+msgstr "Nivell d'accés"
+
+#: picasawebalbum.cpp:91
+msgid "These are security and privacy settings for the new Picasaweb album."
+msgstr ""
+"Aquest és l'arranjament de seguretat i privadesa del nou àlbum Picasaweb."
+
+#: picasawebalbum.cpp:93
+msgctxt "picasaweb album privacy"
+msgid "Public"
+msgstr "Públic"
+
+#: picasawebalbum.cpp:95
+msgid "Public album is listed on your public Picasaweb page."
+msgstr "Un àlbum públic es llista a la vostra pàgina pública del Picasaweb."
+
+#: picasawebalbum.cpp:96
+msgctxt "picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "No llistat / Privat"
+
+#: picasawebalbum.cpp:97
+msgid "Unlisted album is only accessible via URL."
+msgstr "Un àlbum no llistat només és accessible via URL."
+
+#: picasawebalbum.cpp:98
+msgctxt "picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "Es requereix iniciar la sessió per a visualitzar"
+
+#: picasawebalbum.cpp:99
+msgid "Unlisted album require Sign-In to View"
+msgstr "Un àlbum no llistat requereix iniciar la sessió per a visualitzar"
+
+#: picasawebalbum.cpp:107
+msgid "Privacy:"
+msgstr "Privadesa:"
+
+#: picasawebwidget.cpp:68
+msgid "This is the list of images to upload to your Picasaweb account."
+msgstr "Aquesta és la llista d'imatges a pujar al vostre compte de Picasaweb."
+
+#: picasawebwidget.cpp:75
+msgid ""
+"This is a clickable link to open the Picasaweb home page in a web browser."
+msgstr ""
+"Això és un enllaç que podeu clicar per obrir la pàgina inicial del Picasaweb "
+"en un navegador web."
+
+#: picasawebwidget.cpp:81
+msgid "Account"
+msgstr "Compte"
+
+#: picasawebwidget.cpp:83
+msgid "This is the Picasaweb account that will be used to authenticate."
+msgstr "Aquest és el compte del Picasaweb que s'utilitzarà per autenticar-se."
+
+#: picasawebwidget.cpp:86
+msgctxt "Picasaweb account login"
+msgid "Anonymous"
+msgstr "Anònim"
+
+#: picasawebwidget.cpp:88
+msgid "Login as anonymous to Picasaweb web service."
+msgstr "Entra com a anònim al servei web Picasaweb."
+
+#: picasawebwidget.cpp:90
+msgid "Picasaweb Account"
+msgstr "Compte de Picasaweb"
+
+#: picasawebwidget.cpp:92
+msgid "Login to Picasaweb web service using username and password."
+msgstr "Entra al servei web Picasaweb utilitzat un nom d'usuari i contrasenya."
+
+#: picasawebwidget.cpp:94
+msgctxt "Picasaweb account settings"
+msgid "Name:"
+msgstr "Nom:"
+
+#: picasawebwidget.cpp:97
+msgid "Change Account"
+msgstr "Canvi de compte"
+
+#: picasawebwidget.cpp:98
+msgid "Change Picasaweb Account used to authenticate"
+msgstr "Canvia el compte del Picasaweb utilitzat per autenticar-se"
+
+#: picasawebwidget.cpp:112
+msgid "This is the Picasaweb album that will be used for transfer."
+msgstr "Aquest és l'àlbum del Picasaweb que s'utilitzarà en la transferència."
+
+#: picasawebwidget.cpp:119
+msgid "New Album"
+msgstr "Àlbum nou"
+
+#: picasawebwidget.cpp:120
+msgid "Create new Picasaweb album"
+msgstr "Crea un àlbum Picasaweb nou"
+
+#: picasawebwidget.cpp:122
+msgctxt "reload album list"
+msgid "Reload"
+msgstr "Actualitza"
+
+#: picasawebwidget.cpp:123
+msgid "Reload album list"
+msgstr "Actualitza la llista d'àlbums"
+
+#: picasawebwidget.cpp:133
+msgid "This is the location where Picasaweb images will be downloaded."
+msgstr "Aquest és el lloc a on es descarregaran les imatges del Picasaweb."
+
+#: picasawebwidget.cpp:140
+msgid "Options"
+msgstr "Opcions"
+
+#: picasawebwidget.cpp:142
+msgid "These are options that will be applied to images before upload."
+msgstr ""
+"Aquestes són les opcions que s'aplicaran a les imatges abans de pujar-les."
+
+#: picasawebwidget.cpp:146
+msgid "Resize photos before uploading"
+msgstr "Redimensiona les fotos abans de pujar-les"
+
+#: picasawebwidget.cpp:156
+msgid "Maximum dimension:"
+msgstr "Dimensió màxima:"
+
+#: picasawebwidget.cpp:164
+msgid "JPEG quality:"
+msgstr "Qualitat JPEG:"
+
+#: picasawebwidget.cpp:167
+msgid "Tag path behavior:"
+msgstr "Comportament del camí d'etiquetes:"
+
+#: picasawebwidget.cpp:169
+msgid "Leaf tags only"
+msgstr "Només les etiquetes finals"
+
+#: picasawebwidget.cpp:171
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr "Exporta només les etiquetes finals de les jerarquies d'etiquetes"
+
+#: picasawebwidget.cpp:172
+msgid "Split tags"
+msgstr "Divisió d'etiquetes"
+
+#: picasawebwidget.cpp:174
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr ""
+"Exporta les etiquetes finals i tots els antecessors com a etiquetes simples."
+
+#: picasawebwidget.cpp:175
+msgid "Combined String"
+msgstr "Cadenes combinades"
+
+#: picasawebwidget.cpp:177
+msgid "Build a combined tag string."
+msgstr "Construeix una cadena d'etiquetes combinades."
+
+#: picasawebwindow.cpp:102
+msgid "Import from Picasa Web Service"
+msgstr "Importa des del servei web del Picasa"
+
+#: picasawebwindow.cpp:104
+msgid "Start Download"
+msgstr "Comença la descarrega"
+
+#: picasawebwindow.cpp:105
+msgid "Start download from Picasaweb service"
+msgstr "Comença la descarrega des del servei web del Picasaweb"
+
+#: picasawebwindow.cpp:110
+msgid "Export to Picasa Web Service"
+msgstr "Exporta al servei web Picasa"
+
+#: picasawebwindow.cpp:112
+msgid "Start Upload"
+msgstr "Comença la pujada"
+
+#: picasawebwindow.cpp:113
+msgid "Start upload to Picasaweb service"
+msgstr "Comença la pujada al servei web del Picasaweb"
+
+#: picasawebwindow.cpp:134
+msgid "PicasaWeb Export"
+msgstr "Exporta a PicasaWeb"
+
+#: picasawebwindow.cpp:137
+msgid "A Kipi plugin to export image collections to PicasaWeb web service."
+msgstr ""
+"Un connector del Kipi per exportar col·leccions d'imatges al servei web "
+"PicasaWeb."
+
+#: picasawebwindow.cpp:139
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2010, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller"
+msgstr ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2010, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller"
+
+#: picasawebwindow.cpp:144
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: picasawebwindow.cpp:144
+msgid "Author and maintainer"
+msgstr "Autor i mantenidor"
+
+#: picasawebwindow.cpp:147
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: picasawebwindow.cpp:147 picasawebwindow.cpp:150 picasawebwindow.cpp:153
+msgid "Developer"
+msgstr "Desenvolupador"
+
+#: picasawebwindow.cpp:150
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: picasawebwindow.cpp:153
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: picasawebwindow.cpp:161
+msgid "Handbook"
+msgstr "Manual"
+
+#: picasawebwindow.cpp:326 picasawebwindow.cpp:335 picasawebwindow.cpp:368
+#: picasawebwindow.cpp:405 picasawebwindow.cpp:988
+#, kde-format
+msgid "Picasaweb Call Failed: %1\n"
+msgstr "La crida al Picasaweb ha fallat: %1\n"
+
+#: picasawebwindow.cpp:388 picasawebwindow.cpp:462
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: picasawebwindow.cpp:629 picasawebwindow.cpp:741
+msgid "Cannot open file"
+msgstr "No s'ha pogut obrir el fitxer"
+
+#: picasawebwindow.cpp:775
+#, kde-format
+msgid ""
+"Failed to upload photo into Picasaweb: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Ha fallat en pujar la foto al Picasaweb: %1\n"
+"Voleu continuar?"
+
+#: picasawebwindow.cpp:856
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Ha fallat en desar la foto: %1\n"
+"Voleu continuar?"
+
+#: picasawebwindow.cpp:868
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Ha fallat en descarregar la foto: %1\n"
+"Voleu continuar?"
+
+#: picasawebwindow.cpp:894
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"Ja existeix un fitxer anomenat «%1». Esteu segur que voleu sobreescriure'l?"
+
+#: picasawebwindow.cpp:955
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "Ha fallat en desar la imatge a %1"
+
+#: plugin_picasawebexport.cpp:78
+msgid "Export to &PicasaWeb..."
+msgstr "Exporta a &PicasaWeb..."
+
+#: plugin_picasawebexport.cpp:88
+msgid "Import from &PicasaWeb..."
+msgstr "Importa des de &PicasaWeb..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Josep Ma. Ferrer, Joan Maspons Ventura"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "txemaq@gmail.com,joanmaspons@gmail.com"

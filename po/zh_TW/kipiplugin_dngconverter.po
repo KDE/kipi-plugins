@@ -1,0 +1,234 @@
+#
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_dngconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2011-03-18 08:07+0800\n"
+"Last-Translator: Franklin Weng <franklin@goodhorse.idv.tw>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr "無法辨識 Raw 影像"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "製造商：%1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "型號：%1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "建立時間：%1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "光圈：f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "焦距：%1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "曝光：1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "靈敏度：%1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "要轉換的檔案"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "DNG 轉換程式..."
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "內嵌原始檔案"
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "無損壓縮"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr "更新檔案修改日期"
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr "設定檔案變更日期為影像中繼資料所提供的建立日期。"
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "JPEG 預覽："
+
+#: plugin/settingswidget.cpp:115
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "無"
+
+#: plugin/settingswidget.cpp:116
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "中"
+
+#: plugin/settingswidget.cpp:117
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "原始大小"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "如果目標檔案已存在："
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "自動覆寫"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr "開啟檔案重新命名對話框"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr "DNG 影像轉換程式"
+
+#: plugin/aboutdata.h:52
+#, kde-format
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr ""
+"將 RAW 相機影像批次轉換成 DNG 的工具\n"
+"使用 XMP toolkit %1\n"
+"以及 DNG toolkit 1.3"
+
+#: plugin/aboutdata.h:55
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr "作者"
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr "開發者"
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "離開 DNG 轉換程式"
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr "將 RAW 相機影像批次轉換成 DNG"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "加入(&A)"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr "將新的 Raw 檔案加入到清單"
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "移除(&R)"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr "從清單中移除選擇的 Raw 檔案"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "縮圖"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "Raw 檔案"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "目標檔案"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "相機"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr "手冊"
+
+#: plugin/batchdialog.cpp:332
+msgid "The list does not contain any Raw files to process."
+msgstr "此清單沒有任何要處理的 Raw 檔案。"
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "中止(&A)"
+
+#: plugin/batchdialog.cpp:474
+msgid "Abort the conversion of Raw files."
+msgstr "中止 Raw 檔案轉換。"
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "轉換(&V)"
+
+#: plugin/batchdialog.cpp:480
+msgid "Start converting the Raw images using the current settings."
+msgstr "使用目前設定值開始轉換 Raw 影像。"
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "儲存從「%1」轉成的 Raw 影像"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "儲存影像 %1 失敗"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frank Weng (a.k.a. Franklin)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin at goodhorse dot idv dot tw"

@@ -1,0 +1,475 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Mateusz Stanisław Włodarski <mateo.max@wp.pl>, 2010.
+# Marta Rybczyńska <kde-i18n@rybczynska.net>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:23+0100\n"
+"PO-Revision-Date: 2010-04-25 12:34+0200\n"
+"Last-Translator: Marta Rybczyńska <kde-i18n@rybczynska.net>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: firstrundlg.cpp:77 firstrundlg.cpp:87 simpleviewer.cpp:202 svedialog.cpp:91
+#: svedialog.cpp:120
+msgid "Flash Export"
+msgstr "Eksport Flash"
+
+#: firstrundlg.cpp:90 svedialog.cpp:123
+msgid ""
+"A Kipi plugin to export images to Flash using the Simple Viewer component."
+msgstr ""
+"Wtyczka dla Kipi do eksportu obrazów do Flash przy użyciu komponentu Simple "
+"Viewer."
+
+#: firstrundlg.cpp:91 svedialog.cpp:124
+#, fuzzy
+#| msgid ""
+#| "(c) 2005-2006, Joern Ahrens\n"
+#| "(c) 2008-2009, Gilles Caulier"
+msgid ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+msgstr ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2009, Gilles Caulier"
+
+#: firstrundlg.cpp:94 svedialog.cpp:127
+msgid "Joern Ahrens"
+msgstr "Joern Ahrens"
+
+#: firstrundlg.cpp:95 svedialog.cpp:128
+msgid "Author"
+msgstr "Autor"
+
+#: firstrundlg.cpp:98 svedialog.cpp:131
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: firstrundlg.cpp:99 svedialog.cpp:132
+msgid "Developer and maintainer"
+msgstr "Programista i opiekun"
+
+#: firstrundlg.cpp:102 svedialog.cpp:135
+msgid "Felix Turner"
+msgstr "Felix Turner"
+
+#: firstrundlg.cpp:103 svedialog.cpp:136
+msgid "Author of the Simple Viewer Flash component"
+msgstr "Autor komponentu Flash Simple Viewer"
+
+#: firstrundlg.cpp:107 svedialog.cpp:140
+msgid "Mikkel B. Stegmann"
+msgstr "Mikkel B. Stegmann"
+
+#: firstrundlg.cpp:108 svedialog.cpp:141
+msgid "Basis for the index.html template"
+msgstr "Podstawowe szablony dla index.html"
+
+#: firstrundlg.cpp:117 svedialog.cpp:150
+msgid "Handbook"
+msgstr "Podręcznik"
+
+#: firstrundlg.cpp:129
+msgid ""
+"<p>SimpleViewer is a Flash component which is free to use, but uses a "
+"license which comes into conflict with several distributions. Due to the "
+"license it is not possible to ship it with this plugin.</p><p>You can now "
+"download SimpleViewer from its homepage and point this tool to the "
+"downloaded archive. The archive will be stored with the plugin "
+"configuration, so it is available for further use.</p>"
+msgstr ""
+"<p>SimpleViewer jest składową Flash do wolnego użytku, ale jest wydana na "
+"licencji, która wchodzi w konflikt z kilkoma dystrybucjami. Ze względu na "
+"licencję nie można dystrybuować programu z tą wtyczką.</p><p>Możesz pobrać "
+"SimpleViewer ze strony domowej projektu oraz archiwum. Archiwum będzie "
+"przechowywane wraz z konfiguracją wtyczki, więc jest możliwość jego "
+"późniejszego wykorzystanie.</p>"
+
+#: firstrundlg.cpp:137
+#, fuzzy
+#| msgid "<p>1.) Download SimpleViewer Version 1.9.x</p>"
+msgid "<p>1.) Download SimpleViewer Version 2.1.x</p>"
+msgstr "<p>1.) Pobierz SimpleViewer w wersji 1.9.x</p>"
+
+#: firstrundlg.cpp:147
+msgid "<p>2.) Point this tool to the downloaded archive</p>"
+msgstr "<p>2.) Wykorzystaj to narzędzie do pobrania archiwum</p>"
+
+#: generalpage.cpp:81
+msgid "Gallery &Title"
+msgstr "Galeria zdjęć i tytuł"
+
+#: generalpage.cpp:84
+msgid "Enter here the gallery title"
+msgstr "Wpisz tutaj tytuł galerii"
+
+#: generalpage.cpp:92
+msgid "Save Gallery To"
+msgstr "Zapisz galerię do"
+
+#: generalpage.cpp:103
+msgid "Image Properties"
+msgstr "Właściwości obrazu"
+
+#: generalpage.cpp:105
+msgid "Resize Target Images"
+msgstr "Zmiana rozmiarów docelowych obrazów"
+
+#: generalpage.cpp:107
+msgid "If you enable this option, all target images can be resized."
+msgstr ""
+"Po włączeniu tej opcji, wszystkie obrazy docelowe mogą zostać zmienione."
+
+#: generalpage.cpp:111
+msgid "Auto-Rotate/Flip Images"
+msgstr "Autorotacja/odbicie obrazów"
+
+#: generalpage.cpp:113
+msgid ""
+"If you enable this option, the images' orientations will be set according to "
+"their Exif information."
+msgstr ""
+"Po włączeniu tej opcji, orientacja obrazu zostanie określona zgodnie z "
+"informacjami  z Exif."
+
+#: generalpage.cpp:120
+msgid "&Target Images' Size:"
+msgstr "Rozmiar &docelowych zdjęć:"
+
+#: generalpage.cpp:121
+msgid ""
+"The new size of the exported images, in pixels. SimpleViewer resizes the "
+"images too, but this resizes the images before they are uploaded to your "
+"server."
+msgstr ""
+"Nowy rozmiar eksportowanych obrazów, w pikselach. SimpleViewer zmienia też  "
+"rozmiar zdjęć, ale ta zmiana następuje przed wysłaniem ich na serwer."
+
+#: generalpage.cpp:134
+msgid "&Displayed Images' Size:"
+msgstr "&Rozmiar wyświetlanych obrazów:"
+
+#: generalpage.cpp:135
+msgid ""
+"Scales the displayed images to this size. Normally, use the height or width "
+"of your largest image (in pixels). Images will not be scaled up above this "
+"size, to preserve image quality."
+msgstr ""
+"Skalowanie wyświetlanych obrazów do zadanego rozmiaru. Zazwyczaj zostanie "
+"użyta wysokość i szerokość największego (w pikselach) obrazu. Obrazy nie "
+"będą skalowane powyżej tego rozmiaru, aby nie tracić na jakości."
+
+#: generalpage.cpp:150
+msgid "Misc"
+msgstr "Różne"
+
+#: generalpage.cpp:153
+msgid "Display Captions"
+msgstr "Wyświetlanie napisów"
+
+#: generalpage.cpp:155
+msgid "If this option is enabled, the images' captions will be shown."
+msgstr ""
+"Jeśli ta opcja jest włączona to wyświetlane będą napisy w podpisanych "
+"obrazach."
+
+#: generalpage.cpp:158
+msgid "Open Image with Right Click"
+msgstr "Otwórz obraz przez kliknięcie prawym przyciskiem myszy"
+
+#: generalpage.cpp:160
+msgid ""
+"If this option is enabled, the user will be able to open the target image in "
+"a separate window using the right mouse button."
+msgstr ""
+"Jeśli ta opcja jest włączona, to użytkownik może otworzyć obraz docelowy w "
+"oddzielnym oknie za pomocą kliknięcia prawym przyciskiem myszy."
+
+#: generalpage.cpp:164
+msgid "Open gallery in Konqueror"
+msgstr "Otwórz galerię w Konquerorze"
+
+#: generalpage.cpp:166
+msgid ""
+"If this option is enabled, the gallery will be opened in Konqueror "
+"automatically."
+msgstr ""
+"Jeśli ta opcja jest włączona to galeria zostanie automatycznie otwarta w "
+"Konquerorze."
+
+#: lookpage.cpp:80
+msgctxt "Settings for flash export navigation"
+msgid "Navigation"
+msgstr "Nawigacja"
+
+#: lookpage.cpp:86
+msgid "Thumbnail &Rows:"
+msgstr "Liczba &wierszy miniatur:"
+
+#: lookpage.cpp:87
+msgid "Number of thumbnails rows"
+msgstr "Liczba wierszy miniatur"
+
+#: lookpage.cpp:92
+msgid "Thumbnail &Columns:"
+msgstr "Liczba &kolumn miniatur:"
+
+#: lookpage.cpp:93
+msgid "Number of thumbnails columns"
+msgstr "Liczba kolumn miniatur"
+
+#: lookpage.cpp:96
+msgid "Thumbnail &Position:"
+msgstr "&Pozycja miniatur:"
+
+#: lookpage.cpp:98
+msgctxt "thumbnail position: right"
+msgid "Right"
+msgstr "Prawo"
+
+#: lookpage.cpp:99
+msgctxt "thumbnail position: left"
+msgid "Left"
+msgstr "Lewo"
+
+#: lookpage.cpp:100
+msgctxt "thumbnail position: top"
+msgid "Top"
+msgstr "Góra"
+
+#: lookpage.cpp:101
+msgctxt "thumbnail position: bottom"
+msgid "Bottom"
+msgstr "Dół"
+
+#: lookpage.cpp:110
+msgid "&Direction of Navigation:"
+msgstr "&Kierunek nawigacji:"
+
+#: lookpage.cpp:112
+msgid "Left to Right"
+msgstr "Z lewej na prawą"
+
+#: lookpage.cpp:113
+msgid "Right to Left"
+msgstr "Z prawej na lewą"
+
+#: lookpage.cpp:126
+msgid "Colors"
+msgstr "Kolory"
+
+#: lookpage.cpp:130
+msgid "&Text Color:"
+msgstr "Kolor &tekstu:"
+
+#: lookpage.cpp:133
+msgid "Color of title and caption text"
+msgstr "Kolor tytułu i treści napisu"
+
+#: lookpage.cpp:137
+msgid "&Background Color:"
+msgstr "K&olor tła:"
+
+#: lookpage.cpp:143
+msgid "&Frame Color:"
+msgstr "Kolor &ramki:"
+
+#: lookpage.cpp:146
+msgid "Color of image frame, viewed icon, load bars, thumbnail arrows"
+msgstr "Kolor ramki obrazów, ikon, paska postępu, strzałek miniatur."
+
+#: lookpage.cpp:157
+msgid "Style"
+msgstr "Styl"
+
+#: lookpage.cpp:163
+msgid "Frame &Width:"
+msgstr "&Szerokość ramki:"
+
+#: lookpage.cpp:164
+msgid "Width of image frame in pixels."
+msgstr "Szerokość ramki obrazu w pikselach."
+
+# ???
+#: lookpage.cpp:169
+msgid "Stage &Padding:"
+msgstr "&Odstęp:"
+
+#: lookpage.cpp:170
+msgid "Distance between image and thumbnails in pixels."
+msgstr "Odległość między obrazami i miniaturkami w pikselach"
+
+#: plugin_flashexport.cpp:62
+msgid "Export to F&lash..."
+msgstr "Eksport do F&lasha..."
+
+#: simpleviewer.cpp:140
+msgid "SimpleViewer installation failed"
+msgstr "instalacja SimpleViewer zakończona niepowodzeniem"
+
+#: simpleviewer.cpp:167
+#, kde-format
+msgid ""
+"Target folder %1 already exists.\n"
+"Do you want to overwrite it?  All data in this folder will be lost."
+msgstr ""
+"Docelowy katalog %1 już istnieje.\n"
+"Czy chcesz go zastąpić? Wszystkie dane w tym katalogu zostaną utracone."
+
+#: simpleviewer.cpp:176
+#, kde-format
+msgid ""
+"Could not delete %1.\n"
+"Please choose another export folder."
+msgstr ""
+"Nie można usunąć %1.\n"
+"Proszę wybrać inny katalog do eksportu."
+
+#: simpleviewer.cpp:211
+msgid "Initialising..."
+msgstr "Rozpoczynanie..."
+
+#: simpleviewer.cpp:232
+msgid "Export canceled"
+msgstr "Eksport anulowany"
+
+#: simpleviewer.cpp:243
+msgid "Failed to create export directories"
+msgstr "Nie można utworzyć katalogów do eksportu"
+
+#: simpleviewer.cpp:250
+msgid "Failed to export the images"
+msgstr "Nie można eksportować obrazu"
+
+#: simpleviewer.cpp:257
+msgid "Failed to create index.html"
+msgstr "Nie można utworzyć index.html"
+
+#: simpleviewer.cpp:264
+msgid "Failed to copy SimpleViewer files"
+msgstr "Nie można skopiować plików SimpleViewer"
+
+#: simpleviewer.cpp:271
+msgid "Failed to upload the gallery"
+msgstr "Nie udało się przesłać galerii"
+
+#: simpleviewer.cpp:279
+#, kde-format
+msgid ""
+"Export was canceled.\n"
+"Do you want to delete files in %1 that have already been created?"
+msgstr ""
+"Eksportowanie zostało anulowane\n"
+"Czy chcesz usunąć pliki w %1, które zostały już utworzone?"
+
+#: simpleviewer.cpp:289
+msgctxt "Flash export has finished"
+msgid "Finished..."
+msgstr "Zakończono..."
+
+#: simpleviewer.cpp:302
+msgid "Creating directories..."
+msgstr "Tworzenie katalogów..."
+
+#: simpleviewer.cpp:307 simpleviewer.cpp:316 simpleviewer.cpp:325
+#, kde-format
+msgid "Could not create folder '%1'"
+msgstr "Nie można utworzyć katalogu '%1'"
+
+#: simpleviewer.cpp:340
+msgid "Creating images and thumbnails..."
+msgstr "Tworzenie obrazów oraz miniaturek..."
+
+#: simpleviewer.cpp:397
+#, kde-format
+msgid "Processing %1"
+msgstr "Przetwarzanie %1"
+
+#: simpleviewer.cpp:408
+#, kde-format
+msgid "Could not open image '%1'"
+msgstr "Nie można otworzyć obrazu '%1'"
+
+#: simpleviewer.cpp:415
+#, kde-format
+msgid "Could not create thumbnail from '%1'"
+msgstr "Nie można utworzyć miniaturki z '%1'"
+
+#: simpleviewer.cpp:422
+#, kde-format
+msgid "Could not resize image '%1'"
+msgstr "Nie można zmienić rozmiaru obrazu '%1'"
+
+#: simpleviewer.cpp:550
+msgid "Creating index.html..."
+msgstr "Tworzenie index.html..."
+
+#: simpleviewer.cpp:579
+msgid "index.html created..."
+msgstr "index.html utworzony..."
+
+#: simpleviewer.cpp:589
+msgid "Copying flash files..."
+msgstr "Kopiowanie plików flash..."
+
+#: simpleviewer.cpp:622
+msgid "Flash files copied..."
+msgstr "Pliki Flash skopiowane..."
+
+#: simpleviewer.cpp:632
+msgid "Uploading gallery..."
+msgstr "Przesyłanie galerii..."
+
+#: simpleviewer.cpp:637
+msgid "Gallery uploaded..."
+msgstr "Galeria przesłana..."
+
+#: svedialog.cpp:102
+msgctxt "Settings tab for selections"
+msgid "Selection"
+msgstr "Wybierz"
+
+#: svedialog.cpp:103
+msgid "Collections List"
+msgstr "Lista kolekcji"
+
+#: svedialog.cpp:107
+msgctxt "General settings tab"
+msgid "General"
+msgstr "Ogólne"
+
+#: svedialog.cpp:108
+msgid "General Settings"
+msgstr "Ustawienia ogólne"
+
+#: svedialog.cpp:113
+msgctxt "Settings tab for the look of the flash export"
+msgid "Look"
+msgstr "Wygląd"
+
+#: svedialog.cpp:114
+msgid "Look Settings"
+msgstr "Ustawienia wyglądu"
+
+#: svedialog.cpp:227
+msgid "You must select at least one collection to export."
+msgstr "Musisz wybrać co najmniej jeden zbiór do eksportu."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Mateusz Włodarski"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mateo.max@wp.pl"

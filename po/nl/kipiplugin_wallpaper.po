@@ -1,0 +1,70 @@
+# translation of kipiplugin_wallpaper.po to Dutch
+# Wilbert Berendsen <wbsoft@xs4all.nl>, 2004.
+# Rinse de Vries <rinsedevries@kde.nl>, 2004, 2005, 2008.
+# Freek de Kruijf <f.de.kruijf@hetnet.nl>, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2009-06-16 10:06+0200\n"
+"Last-Translator: Freek de Kruijf <f.de.kruijf@hetnet.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "In&stellen als achtergrond"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Gecentreerd"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Gecentreerd, tegels"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Gecentreerd, maximaal"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Tegels, maximaal"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Geschaald"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Gecentreerd, autopassend"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Schalen en bijsnijden"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>U hebt een externe afbeelding geselecteerd. Om het als achtergrond te "
+"kunnen gebruiken dient het lokaal op uw computer te worden opgeslagen.</p> "
+"<p>Er zal u nu worden gevraagd waar u de afbeelding wilt opslaan.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Achtergrond wijzigen"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "Achtergrond kan niet gewijzigd worden."
+
+#~ msgid "We can not change background."
+#~ msgstr "De achtergrond kon niet worden gewijzigd."

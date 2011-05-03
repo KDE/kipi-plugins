@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2009-06-14 15:23+0100\n"
+"Last-Translator: Zdeněk Pech <dom.toretto@seznam.cz>\n"
+"Language-Team: Czech <kde-czech-apps@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "Použít jako po&zadí"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Vystředěné"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Vystředěné dlaždice"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Vystředěné a přizpůsobené"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Přizpůsobené dlaždice"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Přizpůsobené"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Vystředěné, automatické přizpůsobení"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Přizpůsobené a oříznuté"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Zvolili jste obrázek na vzdáleném zařízení. Před umístěním na pozadí musí "
+"být uložen na místní disk.</p><p>Nyní budete dotázáni, kam se má obrázek "
+"uložit.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Změnit pozadí"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "Pozadí nelze změnit."

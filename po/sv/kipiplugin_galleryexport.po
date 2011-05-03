@@ -1,0 +1,265 @@
+# translation of kipiplugin_galleryexport.po to Swedish
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Stefan Asserhäll <stefan.asserhall@comhem.se>, 2008, 2009.
+# Stefan Asserhall <stefan.asserhall@comhem.se>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2010-12-10 16:42+0100\n"
+"Last-Translator: Stefan Asserhall <stefan.asserhall@comhem.se>\n"
+"Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: sv\n"
+
+#: galleryconfig.cpp:77
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "Namn:"
+
+#: galleryconfig.cpp:81
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "Webbadress:"
+
+#: galleryconfig.cpp:85
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "Användarnamn:"
+
+#: galleryconfig.cpp:89
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "Lösenord:"
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "Använd &galleri 2"
+
+#: gallerytalker.cpp:427
+msgid "Gallery URL probably incorrect"
+msgstr "Galleriwebbadressen är troligen felaktig"
+
+#: gallerytalker.cpp:433
+msgid "Incorrect username or password specified"
+msgstr "Felaktigt användarnamn eller lösenord angivet"
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+msgid "Invalid response received from remote Gallery"
+msgstr "Ogiltigt svar mottaget från fjärrgalleri"
+
+#: gallerytalker.cpp:523
+msgid "Failed to list albums"
+msgstr "Misslyckades lista album"
+
+#: gallerytalker.cpp:598
+msgid "Failed to list photos"
+msgstr "Misslyckades lista foton"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "Misslyckades skapa nytt album"
+
+#: gallerytalker.cpp:705
+msgid "Failed to upload photo"
+msgstr "Misslyckades ladda upp foto"
+
+#: gallerywindow.cpp:118
+msgid "Albums"
+msgstr "Album"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "&Nytt album"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "&Lägg till foton"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr "Överskrid förvalda alternativ"
+
+#: gallerywindow.cpp:142
+msgid "Comment sets Title"
+msgstr "Kommentar anger titel"
+
+#: gallerywindow.cpp:145
+msgid "Comment sets Description"
+msgstr "Kommentar anger beskrivning"
+
+#: gallerywindow.cpp:148
+msgid "Resize photos before uploading"
+msgstr "Ändra storlek på foton innan uppladdning"
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr "Maximal dimension:"
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+msgid "Gallery Export"
+msgstr "Galleriexport"
+
+#: gallerywindow.cpp:217
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr ""
+"Ett KIPI-insticksprogram för att exportera bildsamlingar till en "
+"galleriserver."
+
+#: gallerywindow.cpp:218
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"© 2003-2005, Renchi Raju\n"
+"© 2006-2007, Colin Guthrie\n"
+"© 2006-2009, Gilles Caulier\n"
+"© 2008, Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "Upphovsman"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "Utvecklare"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+msgid "Developer"
+msgstr "Utvecklare"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gallerywindow.cpp:242
+msgid "Handbook"
+msgstr "Handbok"
+
+#: gallerywindow.cpp:250
+msgid "Settings"
+msgstr "Inställningar"
+
+#: gallerywindow.cpp:407
+msgid "Failed to login into remote gallery. "
+msgstr "Misslyckades logga in på fjärrgalleri"
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Vill du kontrollera inställningarna och försöka igen?"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "Redigera galleridata"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+msgid "Album"
+msgstr "Album"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr "Bild"
+
+#: gallerywindow.cpp:675
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+"Tyvärr är dessa tecken inte tillåtna i albumnamn: \\ / * ? \" ' & &lt; &gt; "
+"| . + # ( ) eller mellanslag"
+
+#: gallerywindow.cpp:752
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Laddar upp filen %1"
+
+#: gallerywindow.cpp:771
+msgid "Failed to upload photo into remote gallery. "
+msgstr "Misslyckades ladda upp foto till fjärrgalleri. "
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Vill du fortsätta?"
+
+#: plugin_galleryexport.cpp:80
+msgid "Export to &Gallery..."
+msgstr "Exportera till &galleri..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Stefan Asserhäll"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "stefan.asserhall@comhem.se"
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>Skriv in nytt albumnamn</h3>"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "Rubrik:"
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "Namn (valfritt):"
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "Rubrik (valfri):"
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "&Ok"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "&Avbryt"
+
+#~ msgid "albums"
+#~ msgstr "album"

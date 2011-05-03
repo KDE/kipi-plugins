@@ -1,0 +1,67 @@
+# translation of kipiplugin_wallpaper.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2010-06-23 16:02+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "កំណត់​ជា​ផ្ទៃ​ខាង​ក្រោយ"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "កណ្តាល"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "ដាក់​កណ្ដាល​"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "ទិដ្ឋភាព​អតិ.​ដាក់​កណ្ដាល"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "ទិដ្ឋភាព​អតិ.​ដែល​បានរៀប​ក្រឡា"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "បាន​ធ្វើ​មាត្រដ្ឋាន"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "ដាក់​ឲ្យ​សម​កណ្ដាល​ឲ្យ​ស្វ័យ​ប្រវត្តិ"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "ធ្វើមាត្រដ្ឋាន និង​ច្រឹប"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>អ្នក​បាន​ជ្រើស​រូបភាព​ពីចម្ងាយ ។ វា​តម្រូវ​ឲ្យ​រក្សាទុក​ទៅ​ថាស​មូលដ្ឋាន​របស់​អ្នក ដើម្បី​ទុក​​ប្រើ​ជា​​ផ្ទាំង​"
+"រូបភាព ។</p><p>ឥឡូវ​អ្នក​​នឹង​ត្រូវ​បាន​សួរ​ពី​កន្លែង​ត្រូវ​រក្សាទុក​រូបភាព ។</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "ផ្លាស់ប្ដូរ​ផ្ទៃ​ខាង​ក្រោយ"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "មិន​អាច​ផ្លាស់ប្ដូរ​ផ្ទៃ​ខាងក្រោយ​បានទេ​ ។"

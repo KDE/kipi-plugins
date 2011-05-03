@@ -1,0 +1,64 @@
+# translation of kipiplugin_wallpaper.po to
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2009-06-27 18:08+0300\n"
+"Last-Translator: Mikael Lammentausta\n"
+"Language-Team:  <fi@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "&Aseta taustakuvaksi"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Keskitetty"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Keskitetty monistus"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Keskitetty, maksimi kuvasuhde"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Monistettu, maksimi kuvasuhde"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Skaalattu"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Keskitetty automaattisovitus"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Skaalaa ja rajaa"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Valitsit etäkohteessa sijaitsevan kuvan, joka täytyy tallentaa "
+"paikalliselle levylle ennen käyttöä.</p><p>Valitse kansio, johon haluat "
+"tallettaa kuvan.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Vaihda taustakuva"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "Taustakuvaa ei voi vaihtaa."

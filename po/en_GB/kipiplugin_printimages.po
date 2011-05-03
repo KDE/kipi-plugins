@@ -1,0 +1,906 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Malcolm Hunter <malcolm.hunter@gmx.co.uk>, 2009.
+# Andrew Coles <andrew_coles@yahoo.co.uk>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_printimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-12-04 11:37+0000\n"
+"Last-Translator: Andrew Coles <andrew_coles@yahoo.co.uk>\n"
+"Language-Team: British English <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: plugin/plugin_printimages.cpp:75 plugin/plugin_printimages.cpp:129
+msgid "Print images"
+msgstr "Print images"
+
+#: plugin/plugin_printimages.cpp:84
+msgid "Print Assistant..."
+msgstr "Print Assistant..."
+
+#: plugin/plugin_printimages.cpp:128 plugin/plugin_printimages.cpp:149
+msgid "Please select one or more photos to print."
+msgstr "Please select one or more photos to print."
+
+#: plugin/plugin_printimages.cpp:150 wizard/wizard.cpp:159
+#: wizard/wizard.cpp:162
+msgid "Print assistant"
+msgstr "Print assistant"
+
+#: tools/utils.cpp:72
+msgid ""
+"Unable to create a temporary folder. Please make sure you have proper "
+"permissions to this folder and try again."
+msgstr ""
+"Unable to create a temporary folder. Please make sure you have proper "
+"permissions to this folder and try again."
+
+#: wizard/customdlg.cpp:46 wizard/customdlg.cpp:47
+msgid "Choose your grid size"
+msgstr "Choose your grid size"
+
+#: wizard/customdlg.cpp:48
+msgid "Number of rows"
+msgstr "Number of rows"
+
+#: wizard/customdlg.cpp:49
+msgid "Insert number of rows"
+msgstr "Insert number of rows"
+
+#: wizard/customdlg.cpp:50
+msgid "Number of columns"
+msgstr "Number of columns"
+
+#: wizard/customdlg.cpp:51
+msgid "Insert number of columns"
+msgstr "Insert number of columns"
+
+#: wizard/customdlg.cpp:53 wizard/customdlg.cpp:54
+msgid "Choose to have a custom photo size album"
+msgstr "Choose to have a custom photo size album"
+
+#: wizard/customdlg.cpp:55
+msgid "Photo height"
+msgstr "Photo height"
+
+#: wizard/customdlg.cpp:56
+msgid "Insert photo height"
+msgstr "Insert photo height"
+
+#: wizard/customdlg.cpp:57
+msgid "Photo width"
+msgstr "Photo width"
+
+#: wizard/customdlg.cpp:58
+msgid "Insert photo width"
+msgstr "Insert photo width"
+
+#: wizard/customdlg.cpp:60
+msgid "Auto rotate photo"
+msgstr "Auto rotate photo"
+
+#: wizard/printhelper.cpp:236
+msgid "Kipi-plugins image printing"
+msgstr "Kipi-plugins image printing"
+
+#: wizard/printoptionspage.cpp:146 wizard/printoptionspage.cpp:147
+#: wizard/printoptionspage.cpp:148
+msgid "disabled"
+msgstr "disabled"
+
+#: wizard/wizard.cpp:107
+msgid "Select printing information"
+msgstr "Select printing information"
+
+#: wizard/wizard.cpp:108
+msgid "Select page layout"
+msgstr "Select page layout"
+
+#: wizard/wizard.cpp:109
+msgid "Crop photos"
+msgstr "Crop photos"
+
+#: wizard/wizard.cpp:111
+msgid "Custom"
+msgstr "Custom"
+
+#: wizard/wizard.cpp:165
+msgid "A KIPI plugin to print images"
+msgstr "A KIPI plugin to print images"
+
+#: wizard/wizard.cpp:166
+msgid ""
+"(c) 2003-2004, Todd Shoemaker\n"
+"(c) 2007-2010, Angelo Naselli"
+msgstr ""
+"(c) 2003-2004, Todd Shoemaker\n"
+"(c) 2007-2010, Angelo Naselli"
+
+#: wizard/wizard.cpp:168
+msgid "Todd Shoemaker"
+msgstr "Todd Shoemaker"
+
+#: wizard/wizard.cpp:168
+msgid "Author"
+msgstr "Author"
+
+#: wizard/wizard.cpp:170
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: wizard/wizard.cpp:170
+msgid "Developer and maintainer"
+msgstr "Developer and maintainer"
+
+#: wizard/wizard.cpp:172
+msgid "Andreas Trink"
+msgstr "Andreas Trink"
+
+#: wizard/wizard.cpp:172
+msgid "Contributor"
+msgstr "Contributor"
+
+#: wizard/wizard.cpp:182
+msgid "Handbook"
+msgstr "Handbook"
+
+#: wizard/wizard.cpp:633
+msgid "Unsupported Paper Size"
+msgstr "Unsupported Paper Size"
+
+#. i18n: file: ui/infopage.ui:328
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: wizard/wizard.cpp:663 wizard/wizard.cpp:1558 rc.cpp:149
+msgid "Free"
+msgstr "Free"
+
+#: wizard/wizard.cpp:1073
+#, kde-format
+msgid "Photo %1 of %2"
+msgstr "Photo %1 of %2"
+
+#: wizard/wizard.cpp:1143
+#, kde-format
+msgid "Page %1 of %2"
+msgstr "Page %1 of %2"
+
+#. i18n: file: ui/infopage.ui:29
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: wizard/wizard.cpp:1462 wizard/wizard.cpp:1946 rc.cpp:86
+msgid "Print to PDF"
+msgstr "Print to PDF"
+
+#. i18n: file: ui/infopage.ui:39
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: wizard/wizard.cpp:1463 wizard/wizard.cpp:1906 wizard/wizard.cpp:1976
+#: wizard/wizard.cpp:2175 wizard/wizard.cpp:2223 rc.cpp:92
+msgid "Print to JPG"
+msgstr "Print to JPG"
+
+#. i18n: file: ui/infopage.ui:44
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: wizard/wizard.cpp:1464 wizard/wizard.cpp:2176 wizard/wizard.cpp:2200
+#: rc.cpp:95
+msgid "Print to gimp"
+msgstr "Print to gimp"
+
+#. i18n: file: ui/infopage.ui:34
+#. i18n: ectx: property (text), item, widget (QComboBox, m_printer_choice)
+#: wizard/wizard.cpp:1471 rc.cpp:89
+msgid "Print to PS"
+msgstr "Print to PS"
+
+#. i18n: file: ui/infopage.ui:308
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: wizard/wizard.cpp:1552 rc.cpp:137
+msgid "No captions"
+msgstr "No captions"
+
+#. i18n: file: ui/customlayout.ui:319
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: wizard/wizard.cpp:1708 rc.cpp:77
+msgid "inches"
+msgstr "inches"
+
+#. i18n: file: ui/customlayout.ui:309
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: wizard/wizard.cpp:1713 rc.cpp:71
+msgid "cm"
+msgstr "cm"
+
+#: wizard/wizard.cpp:2029 wizard/wizard.cpp:2115
+msgid "Complete. Click Finish to exit the Print Wizard."
+msgstr "Complete. Click Finish to exit the Print Wizard."
+
+#: wizard/wizard.cpp:2069
+msgid ""
+"The following file will be overwritten. Are you sure you want to overwrite "
+"it?"
+msgstr ""
+"The following file will be overwritten. Are you sure you want to overwrite "
+"it?"
+
+#: wizard/wizard.cpp:2091
+msgid "Could not save file, please check your output entry."
+msgstr "Could not save file, please check your output entry."
+
+#: wizard/wizard.cpp:2108
+msgid "Printing Canceled."
+msgstr "Printing Cancelled."
+
+#: wizard/wizard.cpp:2129
+msgid "Could not remove the GIMP's temporary files."
+msgstr "Could not remove the GIMP's temporary files."
+
+#: wizard/wizard.cpp:2186
+msgid "Print Image"
+msgstr "Print Image"
+
+#: wizard/wizard.cpp:2218
+msgid ""
+"There was an error launching the GIMP. Please make sure it is properly "
+"installed."
+msgstr ""
+"There was an error launching the GIMP. Please make sure it is properly "
+"installed."
+
+#: wizard/wizard.cpp:2219
+msgid "KIPI"
+msgstr "KIPI"
+
+#: wizard/wizard.cpp:2231
+msgid "Empty output path."
+msgstr "Empty output path."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Malcolm Hunter"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "malcolm.hunter@gmx.co.uk"
+
+#. i18n: file: ui/croppage.ui:26
+#. i18n: ectx: property (whatsThis), widget (KIPIPrintImagesPlugin::CropFrame, cropFrame)
+#: rc.cpp:5
+msgid ""
+"Move the box in order to crop photos so that they fit inside the photo sizes "
+"you have given.  \n"
+"You can crop each image differently, or just click the 'Next' button to use "
+"the default crop \n"
+"setting for each photo.\n"
+"Enable \"Do not crop\" to avoid cropping all of the photos."
+msgstr ""
+"Move the box in order to crop photos so that they fit inside the photo sizes "
+"you have given.  \n"
+"You can crop each image differently, or just click the 'Next' button to use "
+"the default crop \n"
+"setting for each photo.\n"
+"Enable \"Do not crop\" to avoid cropping all of the photos."
+
+#. i18n: file: ui/croppage.ui:35
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, m_disableCrop)
+#: rc.cpp:11
+msgid "Do not crop photos, just scale them."
+msgstr "Do not crop photos, just scale them."
+
+#. i18n: file: ui/croppage.ui:38
+#. i18n: ectx: property (text), widget (QCheckBox, m_disableCrop)
+#: rc.cpp:14
+msgid "Do not crop"
+msgstr "Do not crop"
+
+#. i18n: file: ui/croppage.ui:58
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropRotate)
+#. i18n: file: ui/croppage.ui:61
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropRotate)
+#: rc.cpp:17 rc.cpp:20
+msgid "Rotate photo"
+msgstr "Rotate photo"
+
+#. i18n: file: ui/croppage.ui:64
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropRotate)
+#: rc.cpp:23
+msgid "&Rotate"
+msgstr "&Rotate"
+
+#. i18n: file: ui/croppage.ui:87
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropPrev)
+#. i18n: file: ui/croppage.ui:90
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropPrev)
+#. i18n: file: ui/infopage.ui:180
+#. i18n: ectx: property (toolTip), widget (QToolButton, m_preview_left)
+#. i18n: file: ui/infopage.ui:183
+#. i18n: ectx: property (whatsThis), widget (QToolButton, m_preview_left)
+#. i18n: file: ui/photopage.ui:60
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPreviewPageDown)
+#. i18n: file: ui/photopage.ui:63
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPreviewPageDown)
+#: rc.cpp:26 rc.cpp:29 rc.cpp:110 rc.cpp:113 rc.cpp:177 rc.cpp:180
+msgid "Previous photo"
+msgstr "Previous photo"
+
+#. i18n: file: ui/croppage.ui:93
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropPrev)
+#: rc.cpp:32
+msgid "<< Pr&evious"
+msgstr "<< Pr&evious"
+
+#. i18n: file: ui/croppage.ui:100
+#. i18n: ectx: property (toolTip), widget (QPushButton, BtnCropNext)
+#. i18n: file: ui/croppage.ui:103
+#. i18n: ectx: property (whatsThis), widget (QPushButton, BtnCropNext)
+#. i18n: file: ui/infopage.ui:221
+#. i18n: ectx: property (toolTip), widget (QToolButton, m_preview_right)
+#. i18n: file: ui/infopage.ui:224
+#. i18n: ectx: property (whatsThis), widget (QToolButton, m_preview_right)
+#: rc.cpp:35 rc.cpp:38 rc.cpp:119 rc.cpp:122
+msgid "Next photo"
+msgstr "Next photo"
+
+#. i18n: file: ui/croppage.ui:106
+#. i18n: ectx: property (text), widget (QPushButton, BtnCropNext)
+#: rc.cpp:41
+msgid "Ne&xt >>"
+msgstr "Ne&xt >>"
+
+#. i18n: file: ui/croppage.ui:135
+#. i18n: ectx: property (text), widget (QLabel, LblCropPhoto)
+#: rc.cpp:44
+msgid "Photo 0 of 0"
+msgstr "Photo 0 of 0"
+
+#. i18n: file: ui/customlayout.ui:26
+#. i18n: ectx: property (windowTitle), widget (QDialog, CustomLayout)
+#: rc.cpp:47
+msgid "Custom layout"
+msgstr "Custom layout"
+
+#. i18n: file: ui/customlayout.ui:48
+#. i18n: ectx: property (text), widget (QRadioButton, m_photoGridCheck)
+#: rc.cpp:50
+msgid "Photo grid"
+msgstr "Photo grid"
+
+#. i18n: file: ui/customlayout.ui:73
+#. i18n: ectx: property (text), widget (QRadioButton, m_fitAsManyCheck)
+#: rc.cpp:53
+msgid "Fit as many as possible"
+msgstr "Fit as many as possible"
+
+#. i18n: file: ui/customlayout.ui:95
+#. i18n: ectx: property (text), widget (QRadioButton, m_photosXPageCheck)
+#: rc.cpp:56
+msgid "Photos per page"
+msgstr "Photos per page"
+
+#. i18n: file: ui/customlayout.ui:122
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:59
+msgid "Rows"
+msgstr "Rows"
+
+#. i18n: file: ui/customlayout.ui:164
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:62
+msgid "Columns"
+msgstr "Columns"
+
+#. i18n: file: ui/customlayout.ui:227
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:65
+msgid "Photo size"
+msgstr "Photo size"
+
+#. i18n: file: ui/customlayout.ui:267
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#. i18n: file: ui/printoptionspage.ui:439
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:68 rc.cpp:294
+msgid "x"
+msgstr "x"
+
+#. i18n: file: ui/customlayout.ui:314
+#. i18n: ectx: property (text), item, widget (QComboBox, m_photoUnits)
+#: rc.cpp:74
+msgid "mm"
+msgstr "mm"
+
+#. i18n: file: ui/customlayout.ui:433
+#. i18n: ectx: property (text), widget (QCheckBox, m_autorotate)
+#. i18n: file: ui/printoptionspage.ui:73
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintAutoRotate)
+#: rc.cpp:80 rc.cpp:246
+msgid "Auto rotate"
+msgstr "Auto rotate"
+
+#. i18n: file: ui/customlayout.ui:453
+#. i18n: ectx: property (text), widget (QPushButton, m_doneButton)
+#: rc.cpp:83
+msgid "Done"
+msgstr "Done"
+
+#. i18n: file: ui/infopage.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, m_pagesetup)
+#: rc.cpp:98
+msgid "Page settings"
+msgstr "Page settings"
+
+#. i18n: file: ui/infopage.ui:90
+#. i18n: ectx: property (text), widget (QLabel, m_preview)
+#: rc.cpp:101
+msgid "1"
+msgstr "1"
+
+#. i18n: file: ui/infopage.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, m_increase_copies)
+#: rc.cpp:104
+msgid "+"
+msgstr "+"
+
+#. i18n: file: ui/infopage.ui:148
+#. i18n: ectx: property (text), widget (QPushButton, m_decrease_copies)
+#: rc.cpp:107
+msgid "-"
+msgstr "-"
+
+#. i18n: file: ui/infopage.ui:186
+#. i18n: ectx: property (text), widget (QToolButton, m_preview_left)
+#. i18n: file: ui/photopage.ui:66
+#. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageDown)
+#. i18n: file: ui/printoptionspage.ui:57
+#. i18n: ectx: property (text), widget (QPushButton, mLeftButton)
+#: rc.cpp:116 rc.cpp:183 rc.cpp:240
+msgid "<"
+msgstr "<"
+
+#. i18n: file: ui/infopage.ui:227
+#. i18n: ectx: property (text), widget (QToolButton, m_preview_right)
+#. i18n: file: ui/photopage.ui:95
+#. i18n: ectx: property (text), widget (QToolButton, BtnPreviewPageUp)
+#. i18n: file: ui/printoptionspage.ui:64
+#. i18n: ectx: property (text), widget (QPushButton, mRightButton)
+#: rc.cpp:125 rc.cpp:195 rc.cpp:243
+msgid ">"
+msgstr ">"
+
+#. i18n: file: ui/infopage.ui:273
+#. i18n: ectx: property (text), widget (QTableWidget, m_PictureInfo)
+#: rc.cpp:128
+msgid "Filename"
+msgstr "Filename"
+
+#. i18n: file: ui/infopage.ui:278
+#. i18n: ectx: property (text), widget (QTableWidget, m_PictureInfo)
+#: rc.cpp:131
+msgid "Copies"
+msgstr "Copies"
+
+#. i18n: file: ui/infopage.ui:297
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:134
+msgid "Captions:"
+msgstr "Captions:"
+
+#. i18n: file: ui/infopage.ui:313
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: rc.cpp:140
+msgid "Image file names"
+msgstr "Image file names"
+
+#. i18n: file: ui/infopage.ui:318
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: rc.cpp:143
+msgid "Exif date-time"
+msgstr "Exif date-time"
+
+#. i18n: file: ui/infopage.ui:323
+#. i18n: ectx: property (text), item, widget (QComboBox, m_captions)
+#: rc.cpp:146
+msgid "Comments"
+msgstr "Comments"
+
+#. i18n: file: ui/infopage.ui:356
+#. i18n: ectx: property (text), widget (QLabel, m_free_label)
+#: rc.cpp:153
+#, no-c-format
+msgid ""
+"%f  filename, %t exposure time, %c comment, %i ISO, %d date-time, %r "
+"resolution, %a aperture, %l focal length, \\n newline"
+msgstr ""
+"%f  filename, %t exposure time, %c comment, %i ISO, %d date-time, %r "
+"resolution, %a aperture, %l focal length, \\n newline"
+
+#. i18n: file: ui/infopage.ui:372
+#. i18n: ectx: property (text), widget (QCheckBox, m_sameCaption)
+#: rc.cpp:156
+msgid "same to all"
+msgstr "same to all"
+
+#. i18n: file: ui/infopage.ui:382
+#. i18n: ectx: property (text), widget (QPushButton, m_setDefault)
+#. i18n: file: ui/printoptionspage.ui:348
+#. i18n: ectx: property (text), widget (QPushButton, mSaveSettings)
+#: rc.cpp:159 rc.cpp:285
+msgid "Use as default"
+msgstr "Use as default"
+
+#. i18n: file: ui/infopage.ui:395
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:162
+msgid "Family:"
+msgstr "Family:"
+
+#. i18n: file: ui/infopage.ui:412
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:165
+msgid "Color:"
+msgstr "Colour:"
+
+#. i18n: file: ui/infopage.ui:422
+#. i18n: ectx: property (text), widget (KColorButton, m_font_color)
+#: rc.cpp:168
+msgid "PushButton"
+msgstr "PushButton"
+
+#. i18n: file: ui/infopage.ui:439
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: rc.cpp:171
+msgid "Size:"
+msgstr "Size:"
+
+#. i18n: file: ui/photopage.ui:17
+#. i18n: ectx: property (text), widget (QLabel, TextLabel2_10)
+#: rc.cpp:174
+msgid "Layouts:"
+msgstr "Layouts:"
+
+#. i18n: file: ui/photopage.ui:76
+#. i18n: ectx: property (text), widget (QLabel, LblPreview)
+#: rc.cpp:186
+msgid "Preview"
+msgstr "Preview"
+
+#. i18n: file: ui/photopage.ui:89
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPreviewPageUp)
+#. i18n: file: ui/photopage.ui:92
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPreviewPageUp)
+#: rc.cpp:189 rc.cpp:192
+msgid "Next page"
+msgstr "Next page"
+
+#. i18n: file: ui/photopage.ui:157
+#. i18n: ectx: property (text), widget (QLabel, TextLabel4_2)
+#: rc.cpp:198
+msgid "Photos:"
+msgstr "Photos:"
+
+#. i18n: file: ui/photopage.ui:164
+#. i18n: ectx: property (text), widget (QLabel, LblPhotoCount)
+#. i18n: file: ui/photopage.ui:194
+#. i18n: ectx: property (text), widget (QLabel, LblSheetsPrinted)
+#. i18n: file: ui/photopage.ui:224
+#. i18n: ectx: property (text), widget (QLabel, LblEmptySlots)
+#: rc.cpp:201 rc.cpp:207 rc.cpp:213
+msgid "<p align=\"right\">0</p>"
+msgstr "<p align=\"right\">0</p>"
+
+#. i18n: file: ui/photopage.ui:187
+#. i18n: ectx: property (text), widget (QLabel, TextLabel4)
+#: rc.cpp:204
+msgid "Sheets:"
+msgstr "Sheets:"
+
+#. i18n: file: ui/photopage.ui:217
+#. i18n: ectx: property (text), widget (QLabel, TextLabel6)
+#: rc.cpp:210
+msgid "Empty slots:"
+msgstr "Empty slots:"
+
+#. i18n: file: ui/photopage.ui:262
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:216
+msgid "Print order:"
+msgstr "Print order:"
+
+#. i18n: file: ui/photopage.ui:312
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPrintOrderUp)
+#. i18n: file: ui/photopage.ui:315
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPrintOrderUp)
+#: rc.cpp:219 rc.cpp:222
+msgid "Move selected photo Up"
+msgstr "Move selected photo Up"
+
+#. i18n: file: ui/photopage.ui:318
+#. i18n: ectx: property (text), widget (QToolButton, BtnPrintOrderUp)
+#: rc.cpp:225
+msgctxt "Move Up"
+msgid "Up"
+msgstr "Up"
+
+#. i18n: file: ui/photopage.ui:331
+#. i18n: ectx: property (toolTip), widget (QToolButton, BtnPrintOrderDown)
+#. i18n: file: ui/photopage.ui:334
+#. i18n: ectx: property (whatsThis), widget (QToolButton, BtnPrintOrderDown)
+#: rc.cpp:228 rc.cpp:231
+msgid "Move selected photo Down"
+msgstr "Move selected photo Down"
+
+#. i18n: file: ui/photopage.ui:337
+#. i18n: ectx: property (text), widget (QToolButton, BtnPrintOrderDown)
+#: rc.cpp:234
+msgid "Down"
+msgstr "Down"
+
+#. i18n: file: ui/printoptionspage.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, PrintOptionsPage)
+#: rc.cpp:237
+msgid "Image Settings"
+msgstr "Image Settings"
+
+#. i18n: file: ui/printoptionspage.ui:83
+#. i18n: ectx: property (title), widget (QGroupBox, mGroupImage)
+#: rc.cpp:249
+msgid "Position"
+msgstr "Position"
+
+#. i18n: file: ui/printoptionspage.ui:108
+#. i18n: ectx: property (title), widget (QGroupBox, mGroupScaling)
+#: rc.cpp:252
+msgid "Scaling"
+msgstr "Scaling"
+
+#. i18n: file: ui/printoptionspage.ui:114
+#. i18n: ectx: property (text), widget (QRadioButton, mNoScale)
+#: rc.cpp:255
+msgid "&No scaling"
+msgstr "&No scaling"
+
+#. i18n: file: ui/printoptionspage.ui:124
+#. i18n: ectx: property (text), widget (QRadioButton, mScaleToPage)
+#: rc.cpp:258
+msgid "&Fit image to page"
+msgstr "&Fit image to page"
+
+#. i18n: file: ui/printoptionspage.ui:155
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintEnlargeSmallerImages)
+#: rc.cpp:261
+msgid "Enlarge smaller images"
+msgstr "Enlarge smaller images"
+
+#. i18n: file: ui/printoptionspage.ui:180
+#. i18n: ectx: property (text), widget (QRadioButton, mScaleTo)
+#: rc.cpp:264
+msgid "&Scale to:"
+msgstr "&Scale to:"
+
+#. i18n: file: ui/printoptionspage.ui:219
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:267
+msgctxt "Dimension separator, as in: '15 x 10 centimeters'"
+msgid "x"
+msgstr "x"
+
+#. i18n: file: ui/printoptionspage.ui:246
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_PrintUnit)
+#: rc.cpp:270
+msgid "Millimeters"
+msgstr "Millimetres"
+
+#. i18n: file: ui/printoptionspage.ui:251
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_PrintUnit)
+#: rc.cpp:273
+msgid "Centimeters"
+msgstr "Centimetres"
+
+#. i18n: file: ui/printoptionspage.ui:256
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_PrintUnit)
+#: rc.cpp:276
+msgid "Inches"
+msgstr "Inches"
+
+#. i18n: file: ui/printoptionspage.ui:300
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrintKeepRatio)
+#: rc.cpp:279
+msgid "Keep ratio"
+msgstr "Keep ratio"
+
+#. i18n: file: ui/printoptionspage.ui:345
+#. i18n: ectx: property (toolTip), widget (QPushButton, mSaveSettings)
+#: rc.cpp:282
+msgid "Use these scaling options as default. "
+msgstr "Use these scaling options as default. "
+
+#. i18n: file: ui/printoptionspage.ui:366
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:288
+msgid "Photos per page:"
+msgstr "Photos per page:"
+
+#. i18n: file: ui/printoptionspage.ui:376
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:291
+msgid "Multiple pages:"
+msgstr "Multiple pages:"
+
+#~ msgid "Paper size:"
+#~ msgstr "Paper size:"
+
+#~ msgid "A4"
+#~ msgstr "A4"
+
+#~ msgid "Letter"
+#~ msgstr "Letter"
+
+#~ msgid "A6"
+#~ msgstr "A6"
+
+#~ msgid "10x15cm"
+#~ msgstr "10x15cm"
+
+#~ msgid "13x17cm"
+#~ msgstr "13x17cm"
+
+#~ msgid "no margins"
+#~ msgstr "no margins"
+
+#~ msgid "Output Settings"
+#~ msgstr "Output Settings"
+
+#~ msgid "Open image using GIMP"
+#~ msgstr "Open image using GIMP"
+
+#~ msgid "Output to printer"
+#~ msgstr "Output to printer"
+
+#~ msgid "Output to image file"
+#~ msgstr "Output to image file"
+
+#~ msgid "Browse..."
+#~ msgstr "Browse..."
+
+#~ msgid ""
+#~ "Each page is named kipi_printassistant_N.jpeg (N is 1, 2, etc.) and saved "
+#~ "to this folder."
+#~ msgstr ""
+#~ "Each page is named kipi_printassistant_N.jpeg (N is 1, 2, etc.) and saved "
+#~ "to this folder."
+
+#~ msgid "Print Assistant"
+#~ msgstr "Print Assistant"
+
+#~ msgid ""
+#~ "Welcome to the Print Assistant.\n"
+#~ "\n"
+#~ "This assistant will help you with the printing of your photos.\n"
+#~ "\n"
+#~ "Click the 'Next' button to begin."
+#~ msgstr ""
+#~ "Welcome to the Print Assistant.\n"
+#~ "\n"
+#~ "This assistant will help you with the printing of your photos.\n"
+#~ "\n"
+#~ "Click the 'Next' button to begin."
+
+#~ msgid "Do not show this any more"
+#~ msgstr "Do not show this any more"
+
+#~ msgid "Number of times to print this photo:"
+#~ msgstr "Number of times to print this photo:"
+
+#~ msgid "Number of copies of selected photo"
+#~ msgstr "Number of copies of selected photo"
+
+#~ msgid "Valerio Fuoglio"
+#~ msgstr "Valerio Fuoglio"
+
+#~ msgid "Select Output Folder"
+#~ msgstr "Select Output Folder"
+
+#~ msgid ""
+#~ "Do not forget to set the correct page size according to your printer "
+#~ "settings."
+#~ msgstr ""
+#~ "Do not forget to set the correct page size according to your printer "
+#~ "settings."
+
+#~ msgid "Page size settings"
+#~ msgstr "Page size settings"
+
+#~ msgid "3.5 x 5\""
+#~ msgstr "3.5 x 5\""
+
+#~ msgid "4 x 6\""
+#~ msgstr "4 x 6\""
+
+#~ msgid "4 x 6\" Album"
+#~ msgstr "4 x 6\" Album"
+
+#~ msgid "5 x 7\""
+#~ msgstr "5 x 7\""
+
+#~ msgid "8 x 10\""
+#~ msgstr "8 x 10\""
+
+#~ msgid "Thumbnails"
+#~ msgstr "Thumbnails"
+
+#~ msgid "Small Thumbnails"
+#~ msgstr "Small Thumbnails"
+
+#~ msgid "Album Collage 1 (9 photos)"
+#~ msgstr "Album Collage 1 (9 photos)"
+
+#~ msgid "Album Collage 2 (6 photos)"
+#~ msgstr "Album Collage 2 (6 photos)"
+
+#~ msgid "21 x 29.7cm"
+#~ msgstr "21 x 29.7cm"
+
+#~ msgid "6 x 9cm (8 photos)"
+#~ msgstr "6 x 9cm (8 photos)"
+
+#~ msgid "9 x 13cm"
+#~ msgstr "9 x 13cm"
+
+#~ msgid "10 x 13.33cm"
+#~ msgstr "10 x 13.33cm"
+
+#~ msgid "10 x 15cm"
+#~ msgstr "10 x 15cm"
+
+#~ msgid "10 x 15cm Album"
+#~ msgstr "10 x 15cm Album"
+
+#~ msgid "11.5 x 15cm Album"
+#~ msgstr "11.5 x 15cm Album"
+
+#~ msgid "13 x 18cm"
+#~ msgstr "13 x 18cm"
+
+#~ msgid "20 x 25cm"
+#~ msgstr "20 x 25cm"
+
+#~ msgid "10.5 x 14.8cm"
+#~ msgstr "10.5 x 14.8cm"
+
+#~ msgid "Save settings"
+#~ msgstr "Save settings"
+
+#~ msgid "Image Captions"
+#~ msgstr "Image Captions"
+
+#~ msgid "Caption font"
+#~ msgstr "Caption font"
+
+#~ msgid "Select the photo size to print"
+#~ msgstr "Select the photo size to print"
+
+#~ msgid "Print summary"
+#~ msgstr "Print summary"
+
+#~ msgid "Page "
+#~ msgstr "Page "
+
+#~ msgid " of "
+#~ msgstr " of "
+
+#~ msgid "Atkins page layout (photos per page)"
+#~ msgstr "Atkins page layout (photos per page)"
+
+#, fuzzy
+#~ msgid "Complete.  Click Finish to exit the Print Wizard."
+#~ msgstr "Complete.  Click Finish to exit the Print Wizard."
+
+#, fuzzy
+#~ msgid "Move Down selected photo"
+#~ msgstr "Move Down selected photo"

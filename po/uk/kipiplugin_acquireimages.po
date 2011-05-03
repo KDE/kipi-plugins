@@ -1,0 +1,129 @@
+# translation of kipiplugin_acquireimages.po to Ukrainian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2011-03-11 08:58+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: uk\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Отримати зображення"
+
+#: aboutdata.h:41
+msgid "A tool to acquire images using a flat scanner"
+msgstr "Інструмент для отримання зображень з планшетних сканерів"
+
+#: aboutdata.h:42
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "© 2003-2011, Gilles Caulier\n"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Автор"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Розробник"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr "Імпортувати зі сканера..."
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Не вдалося відкрити пристрою для сканування."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Сканувати зображення"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Підручник"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Назва файла нового зображення"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "Формат вихідного файла зображення «%1» не підтримується."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"Не вдалося зберегти файл\n"
+"«%1» у\n"
+"«%2»."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "Файл з назвою «%1» вже існує. Ви справді бажаєте перезаписати його?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Перезаписати файл?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr "Не вдалося зберегти файл «%1»"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "о.Іван Петрущак,Юрій Чорноіван"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ivanpetrouchtchak@yahoo.com,yurchor@ukr.net"
+
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr ""
+#~ "© 2003-2009, Gilles Caulier\n"
+#~ "© 2007-2009, Kare Sars"
+
+#~ msgid "Scan Images..."
+#~ msgstr "Сканувати зображення..."
+
+#~ msgid "Cannot acquire image..."
+#~ msgstr "Не вдалося отримати зображення..."
+
+#~ msgid "Cannot handle parent windows..."
+#~ msgstr "Невдала спроба керування батьківськими вікнами..."

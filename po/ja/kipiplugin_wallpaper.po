@@ -1,0 +1,68 @@
+# Translation of kipiplugin_wallpaper into Japanese.
+# This file is distributed under the same license as the kipi-plugins package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2007, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2008-10-30 23:59+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <Kdeveloper@kde.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "壁紙にする(&S)"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "中央に表示"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "中央からタイル状に表示"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "最大化して中央に表示"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "最大化してタイル状に表示"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "拡大/縮小"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "中央に自動配置"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "拡大/縮小と切り取り"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>リモートの画像を選択しました。これを壁紙にするには、先にローカルのディスク"
+"に保存する必要があります。</p><p>画像を保存する場所を指定してください。</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "背景の変更"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr ""

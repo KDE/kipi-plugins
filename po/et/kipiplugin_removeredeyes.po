@@ -1,0 +1,413 @@
+# translation of kipiplugin_removeredeyes.po to Estonian
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marek Laane <bald@smail.ee>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_removeredeyes\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2009-05-20 22:26+0300\n"
+"Last-Translator: Marek Laane <bald@smail.ee>\n"
+"Language-Team: Estonian <kde-et@linux.ee>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 0.3\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "Laigu tuvastamise seadistused"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "Lai&gu miinimumsuurus:"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "Minimaalne üma&rus:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "Klassifikaatori seadistused"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "&Standardse klassifikaatori kasutamine"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr ""
+"Märkimise korral kasutatakse standardset klassifikaatorit, mis on KIPI "
+"pluginasse sisse ehitatud."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "Siin saab määrata klassifikaatori asukoha."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "&Naaberrühmad:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "&Skaleerimistegur:"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "&Põhjalikum režiim"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "Li&htne režiim"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>Aeglasem<br/>(madal eraldusvõime / veidi hägused pildid)</b></"
+"p><p>Selles režiimis on punasilmsuse tuvastamine ja parandamine kõige "
+"usaldusväärsem. Parema tuvastamise miinuseks on märksa aeglasem töötlus.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>Standardne</b></p><p>See on enamiku piltide eraldusvõime puhul kõige "
+"sobivam. Seda tasuks alati kõigepealt proovida.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>Kiirem<br/>(kõrge eraldusvõime)</b></p><p>Selles režiimis on "
+"automaatne tuvastamine kiirem, kuid võib esineda rohkem vigu. Seda režiimi "
+"on mõtet kasutada ainult väga kõrge eraldusvõimega ja teravate piltide puhul."
+"</p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "&Punasilmsuse eemaldamine..."
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "Automaatne punasilmsuse eemaldamine"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "Punaste silmade eemaldamine"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr "Plugin punasilmsuse tuvastamiseks ja automaatseks eemaldamiseks."
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "(c) 2008-2009: Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "Autor ja hooldaja"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "Käsiraamat"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "&Paranda fotod"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "Nimekirjas olevate piltide parandamise alustamine"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "&Test"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr "Parandamise simuleerimine ilma tulemusi salvestamata."
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "Kokku:"
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "Õnnestunud:"
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "Nurjunud:"
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "Failide nimekiri"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "Seadistused"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p>Valisid <b>parandamise ülekirjutamisrežiimis</b>!<br/>Kas soovid tõesti "
+"ilma jääda algsetest pildifailidest?</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "Ülekirjutamisrežiim"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>Mõnda pilti ei saa analüüsida praeguste seadistustega või ei sisalda nad "
+"üldse punaseid silmi.</p><p><b>Kas eemaldada sellised pildid nimekirjast?</"
+"b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "Kas eemaldada töötlemata pildid?"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p>Proovisid lisada pluginale <b>toorfaile (RAW)</b>,<br/>aga need "
+"failitüübid ei ole toetatud.</p><p><b>Need eemaldatakse automaatselt "
+"nimekirjast.</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "Leiti toorpildid"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>Töödeldi edukalt 1 pilt.</p>"
+msgstr[1] "<p>Töödeldi edukalt %1 pilti.</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>Parandused valmis</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "Parandused valmis"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr "<h2>Lokaatorit pole laaditud.<br/>Plugin ei ole käivitatav.</h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "Parandatud silmad"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "Piltide nimekiri, millelt eemaldatakse punasilmsus."
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>See vidin näitab parandatud pildi eelvaatlust.</p><p><ul><li>Vii hiir "
+"eelvaatluse <b>kohale</b>, et näha originaalpilti.</li><li>Vii hiir "
+"eelvaatluse <b>kohalt ära</b>, et näha parandatud pildi eelvaatlust.</"
+"li><li><b>Klõpsa</b> eelvaatlusel, et näha parandamismaski.</li></ul></"
+"p><p>Suurendus- ja liigutamisnupud võimaldavad vajalikke pildiosi lähemalt "
+"uurida.</p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>eelvaatluse loomine...</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>Ei õnnestu laadida eelvaatluse pilti<br/>'%1'</p>."
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "Viga eelvaatluse faili laadimisel"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "Originaalpilt"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "Parandatud pilt"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "Parandamismask"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "Pilti pole valitud"
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "Salvestamise seadistused"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>Siinsed seadistused määravad parandatud piltide salvestamise. Valida saab "
+"kolme režiimi vahel:</p><p><ul><li><b>Alamkataloog:</b> parandatud pildid "
+"salvestatakse aktiivse albumi asukohta omaette alamkataloogi.</"
+"li><li><b>Prefiks:</b> parandatud pildile lisatakse määratud prefiks.</"
+"li><li><b>Sufiks:</b> parandatud pildile lisatakse määratud sufiks.</"
+"li><li><b>Ülekirjutamine:</b> kõik originaalpildid asendatakse.</li></ul></"
+"p><p>Kõigi kolme režiimi puhul võib pildi metaandmetele lisada täiendava "
+"võtmesõna.</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "Salvestamine alamkataloogi"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "Prefiksi lisamine"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "Sufiksi lisamine"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "Ülekirjutamine"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr ""
+"Sisesta parandatud piltide puhul kasutatav alamkataloog ning prefiks või "
+"sufiks."
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "&Metaandmete võtmesõna lisamine"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr "Märkimise korral lisatakse pildi metaandmetele määratud võtmesõna."
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "Kirjuta siia vajalik võtmesõna..."
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "Töötlemata piltide käsitlemine"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>Need seadistused määravad, kuidas käsitletakse testrežiimis töötlemata "
+"pilte. Lõpliku viimistlemise kiirendamiseks võib töötlemata pildid "
+"nimekirjast eemaldada, et neid rohkem ei analüüsitaks. Valida saab kolme "
+"režiimi vahel:</p><p><ul><li><b>Küsitakse kasutajjalt:</b> ilmub dialoog, "
+"kus päritakse kasutajalt, mida ette võtta.</li><li><b>Hoitakse "
+"failinimekirjas:</b> kõik töötlemata pildid jäetakse nimekirja alles.</"
+"li><li><b>Eemaldatakse failinimekirjast:</b> kõik töötlemata pildid "
+"eemaldatakse pärast testimisetapi läbimist.</li></ul></p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "Küsit&akse kasutajalt"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr ""
+"Märkimise korral küsitakse kasutajalt, kas töötlemata pildid alles hoida või "
+"eemaldada."
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "Hoita&kse failinimekirjas"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr ""
+"Märkimise korral jäetakse töötlemata pildid failinimekirja ka pärast "
+"testimisetapi läbimist."
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "Eemaldatakse &failinimekirjast"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr ""
+"Märkimise korral eemaldatakse töötlemata pildid failinimekirjast pärast "
+"testimisetapi läbimist."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bald@smail.ee"
+
+#~ msgid "Summary"
+#~ msgstr "Kokkuvõte"
+
+#~ msgid "Enter the name of the extra here..."
+#~ msgstr "Kirjuta siia nimi..."

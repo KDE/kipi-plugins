@@ -1,0 +1,142 @@
+# Lithuanian translations for kipiplugin_kioexportimport package.
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kipiplugin_kioexportimport package.
+# Andrius Štikonas <stikonas@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_kioexportimport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2009-10-06 13:12+0100\n"
+"Last-Translator: Andrius Štikonas <stikonas@gmail.com>\n"
+"Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10==1 && n%100!=11 ? 1 : n%"
+"10>=2 && (n%100<10 || n%100>=20) ? 2 : 3);\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr ""
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr ""
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr ""
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr ""
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr ""
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr ""
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr ""
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr ""
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr ""
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr ""
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr ""
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr ""
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr ""
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr ""
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr ""
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr ""
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr ""
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr ""
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr ""
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr ""
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr ""
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr ""
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr ""
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""

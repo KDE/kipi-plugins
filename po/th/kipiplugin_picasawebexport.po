@@ -1,0 +1,632 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_picasawebexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-03-03 20:35+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: picasawebimglist.cpp:101
+#, kde-format
+msgid "%1|All supported files"
+msgstr ""
+
+#: picasawebimglist.cpp:113
+#, kde-format
+msgid "%1|Camera RAW files"
+msgstr ""
+
+#: picasawebimglist.cpp:115
+#, kde-format
+msgid "%1|Video files"
+msgstr ""
+
+#: picasawebimglist.cpp:127
+#, fuzzy
+#| msgid "Select Images for Upload"
+msgid "Select Images"
+msgstr "เลือกรูปภาพต่าง ๆ ที่จะทำการอัปโหลด"
+
+#: picasaweblogin.cpp:68
+msgid "Google Login:"
+msgstr "ล็อกอินของกูเกิล:"
+
+#: picasaweblogin.cpp:72
+msgid "Password:"
+msgstr "รหัสผ่าน:"
+
+#: picasaweblogin.cpp:83
+msgid "&OK"
+msgstr "&ตกลง"
+
+#: picasaweblogin.cpp:86
+msgid "&Cancel"
+msgstr "&ยกเลิก"
+
+#: picasawebreplacedialog.cpp:93
+msgid "&Add As New"
+msgstr "เ&พิ่มเป็นตัวใหม่"
+
+#: picasawebreplacedialog.cpp:94
+msgid "Item will be added alongside the linked version."
+msgstr "รายการจะถูกเพิ่มเข้าไปในรุ่นที่เป็นส่วนเชื่อมโยง"
+
+#: picasawebreplacedialog.cpp:98
+msgid "&Add All"
+msgstr "เพิ่ม&ทั้งหมด"
+
+#: picasawebreplacedialog.cpp:99
+msgid ""
+"Items will be added alongside the linked version. You will not be prompted "
+"again."
+msgstr "รายการจะถูกเพิ่มเข้าไปในรุ่นที่เป็นส่วนเชื่อมโยง คุณจะไม่พบการถามอีก"
+
+#: picasawebreplacedialog.cpp:103
+msgid "&Replace"
+msgstr "แ&ทนที่"
+
+#: picasawebreplacedialog.cpp:104
+msgid "Item will be replacing the linked version."
+msgstr "รายการจะทำการแทนที่รุ่นที่เป็นส่วนเชื่อมโยง"
+
+#: picasawebreplacedialog.cpp:108
+msgid "&Replace All"
+msgstr "แ&ทนที่ทั้งหมด"
+
+#: picasawebreplacedialog.cpp:109
+#, fuzzy
+#| msgid ""
+#| "Items will be replacing the linked version. You will be prompted again."
+msgid ""
+"Items will be replacing the linked version. You will not be prompted again."
+msgstr "รายการจะทำการแทนที่รุ่นที่เป็นส่วนเชื่อมโยง คุณจะได้รับการถามอีก"
+
+#: picasawebreplacedialog.cpp:119
+msgid "A linked item already exists."
+msgstr "มีรายการที่เชื่อมโยงอยู่ก่อนแล้ว"
+
+#: picasawebreplacedialog.cpp:136 picasawebwidget.cpp:131
+msgid "Destination"
+msgstr "ปลายทาง"
+
+#: picasawebreplacedialog.cpp:140
+msgid "Source"
+msgstr "ต้นทาง"
+
+#: picasawebtalker.cpp:109
+msgid "Login"
+msgstr "ล็อกอิน"
+
+#: picasawebtalker.cpp:578
+msgid "No photo specified"
+msgstr "ยังไม่มีการระบุภาพใด ๆ"
+
+#: picasawebtalker.cpp:580
+msgid "General upload failure"
+msgstr "การอัปโหลดทั่วไปทำงานล้มเหลว"
+
+#: picasawebtalker.cpp:582
+msgid "File-size was zero"
+msgstr "ขนาดแฟ้มมีค่าเป็นศูนย์"
+
+#: picasawebtalker.cpp:584
+msgid "File-type was not recognized"
+msgstr "ไม่สามารถจัดการแฟ้มประเภทนี้ได้"
+
+#: picasawebtalker.cpp:586
+msgid "User exceeded upload limit"
+msgstr "การอัปโหลดของผู้ใช้เกินค่าที่จำกัดแล้ว"
+
+#: picasawebtalker.cpp:588
+msgid "Invalid signature"
+msgstr "ลายเซ็นใช้ไม่ได้หรือไม่ถูกต้อง"
+
+#: picasawebtalker.cpp:590
+msgid "Missing signature"
+msgstr "ลายเซ็นหายไป"
+
+#: picasawebtalker.cpp:592
+msgid "Login failed / Invalid auth token"
+msgstr "การล็อกอินล้มเหลว / ตั๋วตรวจสอบสิทธิ์ใช้ไม่ได้"
+
+#: picasawebtalker.cpp:594
+msgid "Invalid API Key"
+msgstr "กุญแจ API ใช้ไม่ได้หรือไม่ถูกต้อง"
+
+#: picasawebtalker.cpp:596
+msgid "Service currently unavailable"
+msgstr "ยังไม่สามารถใช้บริการได้ในตอนนี้"
+
+#: picasawebtalker.cpp:598
+msgid "Invalid Frob"
+msgstr "Frob ใช้ไม่ได้หรือไม่ถูกต้อง"
+
+#: picasawebtalker.cpp:600
+msgid "Format \"xxx\" not found"
+msgstr "ไม่พบรูปแบบ \"xxx\""
+
+#: picasawebtalker.cpp:602
+msgid "Method \"xxx\" not found"
+msgstr "ไม่พบวิธีการ \"xxx\""
+
+#: picasawebtalker.cpp:604
+msgid "Invalid SOAP envelope"
+msgstr "SOAP envelope ใช้ไม่ได้หรือไม่ถูกต้อง"
+
+#: picasawebtalker.cpp:606
+msgid "Invalid XML-RPC Method Call"
+msgstr "การเรียกใช้วิธีการ XML-RPC ใช้ไม่ได้หรือไม่ถูกต้อง"
+
+#: picasawebtalker.cpp:608
+msgid "The POST method is now required for all setters."
+msgstr "ในตอนนี้จำเป็นต้องใช้วิธีการแบบ POST กับตัวตั้งค่า (setters) ทั้งหมด"
+
+#: picasawebtalker.cpp:610
+msgid "Unknown error"
+msgstr "ไม่ทราบข้อผิดพลาด"
+
+#: picasawebtalker.cpp:613
+#, kde-format
+msgid ""
+"Error occurred: %1\n"
+"Unable to proceed further."
+msgstr ""
+"เกิดข้อผิดพลาดขึ้น: %1\n"
+" ไม่สามารถดำเนินการต่อไปได้"
+
+#: picasawebtalker.cpp:719 picasawebtalker.cpp:777
+msgid "Failed to fetch photo-set list"
+msgstr "ล้มเหลวในการดึงรายการชุดภาพ"
+
+#: picasawebtalker.cpp:890 picasawebtalker.cpp:920
+msgid "Failed to create album"
+msgstr "ล้มเหลวในการสร้างอัลบั้มใหม่"
+
+#: picasawebtalker.cpp:929
+msgid "Failed to upload photo"
+msgstr "ล้มเหลวในการอัปโหลดรูปภาพ"
+
+#: picasawebalbum.cpp:51
+msgid "Picasaweb New Album"
+msgstr "อัลบั้มใหม่ของ Picasaweb"
+
+#: picasawebalbum.cpp:61 picasawebwidget.cpp:110
+msgid "Album"
+msgstr "อัลบั้ม"
+
+#: picasawebalbum.cpp:63
+msgid "These are basic settings for the new Picasaweb album."
+msgstr "นี่เป็นการตั้งค่าพื้นฐานต่าง ๆ สำหรับอัลบั้มใหม่ของ Picasaweb"
+
+#: picasawebalbum.cpp:66
+msgid "Title of the album that will be created (required)."
+msgstr "ชื่อของอัลบั้มที่จะถูกสร้าง (จำเป็นต้องป้อนชื่อ)"
+
+#: picasawebalbum.cpp:70
+msgid "Date and Time of the album that will be created (optional)."
+msgstr "วันและเวลาของอัลบั้มที่จะถูกสร้าง (ตัวเลือกเพิ่มเติม)"
+
+#: picasawebalbum.cpp:73
+msgid "Description of the album that will be created (optional)."
+msgstr "คำอธิบายของอัลบั้มที่จะถูกสร้าง (ตัวเลือกเพิ่มเติม)"
+
+#: picasawebalbum.cpp:76
+msgid "Location of the album that will be created (optional)."
+msgstr "ตำแหน่งของอัลบั้มที่จะถูกสร้าง (ตัวเลือกเพิ่มเติม)"
+
+#: picasawebalbum.cpp:79
+msgctxt "new picasaweb album dialog"
+msgid "Title:"
+msgstr "ชื่ออัลบั้ม:"
+
+#: picasawebalbum.cpp:80
+msgctxt "new picasaweb album dialog"
+msgid "Date & Time:"
+msgstr "วันและเวลา:"
+
+#: picasawebalbum.cpp:81
+msgctxt "new picasaweb album dialog"
+msgid "Description:"
+msgstr "คำอธิบาย:"
+
+#: picasawebalbum.cpp:82
+msgctxt "new picasaweb album dialog"
+msgid "Location:"
+msgstr "ตำแหน่ง:"
+
+#: picasawebalbum.cpp:90
+msgid "Access Level"
+msgstr "ระดับการเข้าใช้งาน"
+
+#: picasawebalbum.cpp:91
+msgid "These are security and privacy settings for the new Picasaweb album."
+msgstr "นี่เป็นส่วนตั้งค่าค่าความปลอดภัยและความเป็นส่วนตัวสำหรับใช้กับอัลบั้มใหม่ของ Picasaweb"
+
+#: picasawebalbum.cpp:93
+msgctxt "picasaweb album privacy"
+msgid "Public"
+msgstr "สาธารณะ"
+
+#: picasawebalbum.cpp:95
+msgid "Public album is listed on your public Picasaweb page."
+msgstr "อัลบั้มแบบสาธารณะจะถูกแสดงรายการในหน้าเว็บสาธารณะบน Picasaweb ของคุณ"
+
+#: picasawebalbum.cpp:96
+msgctxt "picasaweb album privacy"
+msgid "Unlisted / Private"
+msgstr "ไม่แสดงรายการ / เป็นส่วนตัว"
+
+#: picasawebalbum.cpp:97
+msgid "Unlisted album is only accessible via URL."
+msgstr "ไม่แสดงอัลบั้มในรายการ ซึ่งสามารถจะเข้าใช้งานผ่านทางที่อยู่ URL เท่านั้น"
+
+#: picasawebalbum.cpp:98
+msgctxt "picasaweb album privacy"
+msgid "Sign-In Required to View"
+msgstr "ต้องการการลงชื่อเข้าใช้งานก่อน จึงจะดูภาพได้"
+
+#: picasawebalbum.cpp:99
+msgid "Unlisted album require Sign-In to View"
+msgstr "อัลบั้มแบบไม่แสดงในรายการ ต้องการการลงชื่อเข้าใช้งานก่อน จึงจะสามารถดูภาพได้"
+
+#: picasawebalbum.cpp:107
+msgid "Privacy:"
+msgstr "ความเป็นส่วนตัว:"
+
+#: picasawebwidget.cpp:68
+msgid "This is the list of images to upload to your Picasaweb account."
+msgstr "นี่เป็นรายการของภาพต่าง ๆ ที่จะทำการอัปโหลดไปยังบัญชีผู้ใช้งาน Picasaweb ของคุณ"
+
+#: picasawebwidget.cpp:75
+msgid ""
+"This is a clickable link to open the Picasaweb home page in a web browser."
+msgstr "นี่เป็นส่วนเชื่อมโยงที่สามารถคลิกได้ เพื่อเปิดหน้าหลักของ Picasaweb ในเว็บเบราว์เซอร์"
+
+#: picasawebwidget.cpp:81
+msgid "Account"
+msgstr "บัญชีผู้ใช้"
+
+#: picasawebwidget.cpp:83
+msgid "This is the Picasaweb account that will be used to authenticate."
+msgstr "นี่เป็นบัญชีผู้ใช้งาน Picasaweb ที่จะถูกทำการตรวจสอบสิทธิ์"
+
+#: picasawebwidget.cpp:86
+msgctxt "Picasaweb account login"
+msgid "Anonymous"
+msgstr "ผู้ใช้นิรนาม"
+
+#: picasawebwidget.cpp:88
+msgid "Login as anonymous to Picasaweb web service."
+msgstr "ล็อกอินเป็นผู้ใช้นิรนามไปยังเว็บให้บริการ Picasaweb"
+
+#: picasawebwidget.cpp:90
+msgid "Picasaweb Account"
+msgstr "บัญชีผู้ใช้งานของ Picasaweb"
+
+#: picasawebwidget.cpp:92
+msgid "Login to Picasaweb web service using username and password."
+msgstr "ล็อกอินไปยังเว็บบริการ Picasaweb โดยใช้ชื่อผู้ใช้งานและรหัสผ่าน"
+
+#: picasawebwidget.cpp:94
+msgctxt "Picasaweb account settings"
+msgid "Name:"
+msgstr "ชื่อ:"
+
+#: picasawebwidget.cpp:97
+msgid "Change Account"
+msgstr "เปลี่ยนบัญชีผู้ใช้"
+
+#: picasawebwidget.cpp:98
+msgid "Change Picasaweb Account used to authenticate"
+msgstr "เปลี่ยนบัญชีผู้ใช้ของ Picasaweb เพื่อใช้ในการตรวจสอบสิทธิ์"
+
+#: picasawebwidget.cpp:112
+msgid "This is the Picasaweb album that will be used for transfer."
+msgstr "นี่เป็นอัลบั้มของ Picasaweb ที่จะถูกทำการถ่ายโอนข้อมูล"
+
+#: picasawebwidget.cpp:119
+msgid "New Album"
+msgstr "อัลบั้มใหม่"
+
+#: picasawebwidget.cpp:120
+msgid "Create new Picasaweb album"
+msgstr "สร้างอัลบั้มใหม่ของ Picasaweb"
+
+#: picasawebwidget.cpp:122
+msgctxt "reload album list"
+msgid "Reload"
+msgstr "โหลดใหม่อีกครั้ง"
+
+#: picasawebwidget.cpp:123
+msgid "Reload album list"
+msgstr "โหลดรายการอัลบั้มใหม่อีกครั้ง"
+
+#: picasawebwidget.cpp:133
+msgid "This is the location where Picasaweb images will be downloaded."
+msgstr "นี่เป็นตำแหน่งที่จะใช้ในการเก็บภาพต่าง ๆ ของ Picasaweb เมื่อทำการดาวน์โหลด"
+
+#: picasawebwidget.cpp:140
+msgid "Options"
+msgstr "ตัวเลือกต่าง ๆ"
+
+#: picasawebwidget.cpp:142
+msgid "These are options that will be applied to images before upload."
+msgstr "นี่เป็นตัวเลือกต่าง ๆ ที่จะถูกปรับใช้กับภาพต่าง ๆ ก่อนจะทำการอัปโหลด"
+
+#: picasawebwidget.cpp:146
+msgid "Resize photos before uploading"
+msgstr "ปรับขนาดภาพต่าง ๆ ก่อนทำการอัปโหลด"
+
+#: picasawebwidget.cpp:156
+msgid "Maximum dimension:"
+msgstr "มิติขนาดสูงสุด:"
+
+#: picasawebwidget.cpp:164
+msgid "JPEG quality:"
+msgstr "คุณภาพภาพ JPEG:"
+
+#: picasawebwidget.cpp:167
+msgid "Tag path behavior:"
+msgstr ""
+
+#: picasawebwidget.cpp:169
+msgid "Leaf tags only"
+msgstr ""
+
+#: picasawebwidget.cpp:171
+msgid "Export only the leaf tags of tag hierarchies"
+msgstr ""
+
+#: picasawebwidget.cpp:172
+#, fuzzy
+#| msgid "Select Images for Upload"
+msgid "Split tags"
+msgstr "เลือกรูปภาพต่าง ๆ ที่จะทำการอัปโหลด"
+
+#: picasawebwidget.cpp:174
+msgid "Export the leaf tag and all ancestors as single tags."
+msgstr ""
+
+#: picasawebwidget.cpp:175
+msgid "Combined String"
+msgstr ""
+
+#: picasawebwidget.cpp:177
+msgid "Build a combined tag string."
+msgstr ""
+
+#: picasawebwindow.cpp:102
+msgid "Import from Picasa Web Service"
+msgstr "นำเข้าจากเว็บบริการ Picasa"
+
+#: picasawebwindow.cpp:104
+msgid "Start Download"
+msgstr "เริ่มการดาวน์โหลด"
+
+#: picasawebwindow.cpp:105
+msgid "Start download from Picasaweb service"
+msgstr "เริ่มการดาวน์โหลดจากเว็บบริการ Picasaweb"
+
+#: picasawebwindow.cpp:110
+msgid "Export to Picasa Web Service"
+msgstr "ส่งออกไปยังเว็บบริการ Picasa"
+
+#: picasawebwindow.cpp:112
+msgid "Start Upload"
+msgstr "เริ่มการอัปโหลด"
+
+#: picasawebwindow.cpp:113
+msgid "Start upload to Picasaweb service"
+msgstr "เริ่มการอัปโหลดไปยังเว็บบริการ Picasaweb"
+
+#: picasawebwindow.cpp:134
+msgid "PicasaWeb Export"
+msgstr "ส่งออกไปยัง PicasaWeb"
+
+#: picasawebwindow.cpp:137
+msgid "A Kipi plugin to export image collections to PicasaWeb web service."
+msgstr "ส่วนเสริมของ Kipi สำหรับส่งออกชุดภาพสะสมไปยังเว็บบริการ PicasaWeb"
+
+#: picasawebwindow.cpp:139
+#, fuzzy
+#| msgid ""
+#| "(c) 2007-2009, Vardhman Jain\n"
+#| "(c) 2008-2009, Gilles Caulier\n"
+#| "(c) 2009, Luka Renko\n"
+#| "(c) 2010, Jens Mueller"
+msgid ""
+"(c) 2007-2009, Vardhman Jain\n"
+"(c) 2008-2010, Gilles Caulier\n"
+"(c) 2009, Luka Renko\n"
+"(c) 2010, Jens Mueller"
+msgstr ""
+"สงวนลิขสิทธิ์ (c) 2007-2009, Vardhman Jain\n"
+"สงวนลิขสิทธิ์ (c) 2008-2009, Gilles Caulier\n"
+"สงวนลิขสิทธิ์ (c) 2009, Luka Renko\n"
+"สงวนลิขสิทธิ์ (c) 2010, Jens Mueller"
+
+#: picasawebwindow.cpp:144
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: picasawebwindow.cpp:144
+msgid "Author and maintainer"
+msgstr "ผู้เขียนและผู้ดูแล"
+
+#: picasawebwindow.cpp:147
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: picasawebwindow.cpp:147 picasawebwindow.cpp:150 picasawebwindow.cpp:153
+msgid "Developer"
+msgstr "ผู้พัฒนา"
+
+#: picasawebwindow.cpp:150
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: picasawebwindow.cpp:153
+msgid "Jens Mueller"
+msgstr "Jens Mueller"
+
+#: picasawebwindow.cpp:161
+msgid "Handbook"
+msgstr "คู่มือการใช้งาน"
+
+#: picasawebwindow.cpp:326 picasawebwindow.cpp:335 picasawebwindow.cpp:368
+#: picasawebwindow.cpp:405 picasawebwindow.cpp:988
+#, kde-format
+msgid "Picasaweb Call Failed: %1\n"
+msgstr "ล้มเหลวในการเรียกใช้ Picasaweb: %1\n"
+
+#: picasawebwindow.cpp:388 picasawebwindow.cpp:462
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: picasawebwindow.cpp:629 picasawebwindow.cpp:741
+msgid "Cannot open file"
+msgstr "ไม่สามารถเปิดแฟ้มได้"
+
+#: picasawebwindow.cpp:775
+#, kde-format
+msgid ""
+"Failed to upload photo into Picasaweb: %1\n"
+"Do you want to continue?"
+msgstr ""
+"ล้มเหลวในการอัปโหลดไปยังบริการ Picasaweb: %1\n"
+"คุณต้องการจะทำต่อไปหรือไม่ ?"
+
+#: picasawebwindow.cpp:856
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"ล้มเหลวในบันทึกภาพถ่าย: %1\n"
+"คุณต้องการจะทำต่อไปหรือไม่ ?"
+
+#: picasawebwindow.cpp:868
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"ล้มเหลวในการดาวน์โหลดภาพถ่าย: %1\n"
+"คุณต้องการจะทำต่อไปหรือไม่ ?"
+
+#: picasawebwindow.cpp:894
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "มีแฟ้มชื่อ \"%1\" อยู่ก่อนแล้ว คุณต้องการที่จะเขียนทับมันหรือไม่ ?"
+
+#: picasawebwindow.cpp:955
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "ล้มเหลวในการบันทึกภาพเป็น %1"
+
+#: plugin_picasawebexport.cpp:78
+msgid "Export to &PicasaWeb..."
+msgstr "ส่งออกไปยัง &PicasaWeb..."
+
+#: plugin_picasawebexport.cpp:88
+msgid "Import from &PicasaWeb..."
+msgstr "นำเข้าจาก &PicasaWeb..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"
+
+#, fuzzy
+#~| msgid "Failed to fetch photoSets List"
+#~ msgid "Failed to fetch photo list"
+#~ msgstr "ล้มเหลวในการดึงรายการข้อมูล photoSets"
+
+#, fuzzy
+#~| msgid "Password:"
+#~ msgid "Site Password:"
+#~ msgstr "รหัสผ่าน:"
+
+#, fuzzy
+#~| msgid "Password:"
+#~ msgid "Album Password:"
+#~ msgstr "รหัสผ่าน:"
+
+#~ msgid "Getting the token"
+#~ msgstr "กำลังรับตั๋วเข้าใช้งาน"
+
+#~ msgid "Checking if previous token is still valid"
+#~ msgstr "กำลังตรวจสอบว่าตั๋วตัวก่อนนี้ยังคงใช้ได้อยู่หรือไม่"
+
+#~ msgid "Failed to query photo information"
+#~ msgstr "ล้มเหลวในการสืบค้นข้อมูลของรูปภาพ"
+
+#~ msgid "Uploading file %1 "
+#~ msgstr "กำลังอัปโหลดแฟ้ม %1"
+
+#~ msgid "New Album Dialog"
+#~ msgstr "กล่องสร้างอัลบั้มใหม่"
+
+#~ msgid "Place Taken"
+#~ msgstr "ได้มาจากสถานที่"
+
+#~ msgid "Create"
+#~ msgstr "สร้าง"
+
+#~ msgid "Cancel"
+#~ msgstr "ยกเลิก"
+
+#~ msgid "Date"
+#~ msgstr "วันที่"
+
+#~ msgid "PicasaWeb Exporter Upload"
+#~ msgstr "อัปโหลดตัวส่งออกไปยัง PicasaWeb"
+
+#~ msgid "PicasaWeb Uploader"
+#~ msgstr "ตัวอัปโหลดไปยัง PicasaWeb"
+
+#~ msgid "Tags:<p align=\"center\"></p>"
+#~ msgstr "ป้ายกำกับต่าง ๆ :<p align=\"center\"></p>"
+
+#~ msgid "E&xport Application Tags"
+#~ msgstr "ส่&งออกป้ายกำกับต่าง ๆ ของโปรแกรม"
+
+#~ msgid "Resi&ze"
+#~ msgstr "ปรับ&ขนาด"
+
+#~ msgid "Size (pixels):"
+#~ msgstr "ขนาด (หน่วยเป็นพิกเซล):"
+
+#~ msgid "Compression:"
+#~ msgstr "การบีบอัดข้อมูล: "
+
+#~ msgid "Images to upload"
+#~ msgstr "รูปภาพต่าง ๆ ที่จะอัปโหลด"
+
+#~ msgid "Currentl&y Selected Images"
+#~ msgstr "รูปภาพต่าง ๆ ที่เลือกไว้ในปั&จจุบัน"
+
+#~ msgid "Select Photos"
+#~ msgstr "เลือกภาพถ่ายต่าง ๆ"
+
+#~ msgid "Username:"
+#~ msgstr "ชื่อผู้ใช้:"
+
+#~ msgid "Change User"
+#~ msgstr "เปลี่ยนผู้ใช้"

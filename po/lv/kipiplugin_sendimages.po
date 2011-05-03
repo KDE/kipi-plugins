@@ -1,0 +1,469 @@
+# translation of kipiplugin_sendimages.po to Latvian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Viesturs Zarins <viesturs.zarins@mii.lu.lv>, 2008.
+# Maris Nartiss <maris.kde@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2008-11-13 13:23+0200\n"
+"Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
+"Language-Team: Latvian <locale@laka.lv>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "E-pasta programma:"
+
+#: emailpage.cpp:89
+#, fuzzy
+#| msgid "Default"
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "Noklusētā"
+
+#: emailpage.cpp:100
+#, fuzzy
+#| msgid ""
+#| "Select here your preferred external e-mail program. <b>Default</b> is the "
+#| "current e-mail program set on KDE Control Panel."
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"Šeit izvēlieties jūsu iecienīto e-pasta programmu. <b>Noklusētā</b> ir tā, "
+"kas norādīta KDE vadības centrā."
+
+#: emailpage.cpp:106
+#, fuzzy, kde-format
+#| msgid "Attach a file with caption and tags"
+msgid "Attach a file with image properties from %1"
+msgstr "Pievienot failu ar aprakstu un tagiem"
+
+#: emailpage.cpp:109
+#, fuzzy, kde-format
+#| msgid ""
+#| "If you enable this option, all image captions and tags will be added as "
+#| "an attached file."
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Ieslēdzot šo iespēju, attēlu apraksti un tagi tiks pievienoti atsevišķā "
+"failā."
+
+#: emailpage.cpp:118
+#, fuzzy
+#| msgid "Maximum e-mail size limit:"
+msgid "Maximum email size limit:"
+msgstr "Maksimālais e-pasta izmērs:"
+
+#: emailpage.cpp:119
+#, fuzzy
+#| msgid "MB"
+msgid " MB"
+msgstr "MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "Pielāgot attēlu izmēru"
+
+#: emailpage.cpp:125
+#, fuzzy
+#| msgid ""
+#| "If you enable this option, all images to send can be resized and "
+#| "recompressed."
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Ieslēdzot šo iespēju, visi nosūtītos attēlus varēs samazināt un saspiest."
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "Attēlu izmērs"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "Ļoti mazs (320 pikseļi)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "Mazs (640 pikseļi)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "Vidējs (800 pikseļi)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "Liels (1024 pikseļi)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "Ļoti liels (1280 pikseļi)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "Milzīgs - drukāšanai (1600 pikseļi)"
+
+#: emailpage.cpp:139
+#, fuzzy, kde-format
+#| msgid ""
+#| "<p>Select here the images size to send:</p><p><b>%1</b>: use this if you "
+#| "have a very slow internet connection or if the target mailbox size is "
+#| "very limited.</p><p><b>%2</b>: use this if you have a slow internet "
+#| "connection and if the target mailbox size is limited.</p><p><b>%3</b>: "
+#| "this is the default value for a medium internet connection and a target "
+#| "mailbox size.</p><p><b>%4</b>: use this if you have a high-speed internet "
+#| "connection and if the target mailbox size is not limited.</p><p><b>%5</"
+#| "b>: use this if you have no size or speed restrictions.</p><p><b>%6</b>: "
+#| "use this only for printing purpose.</p>"
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+"<p>Šeit izvēlieties nosūtāmo attēlu izmēru:</p><p><b>%1</b>: izmantojiet šo, "
+"ja jūsu Interneta pieslēgums ir ļoti lēns, vai saņēmēja e-pasta kastītes "
+"izmērs ir ļoti ierobežots.</p><p><b>%2</b>: lietojiet šo, la jums ir lēns "
+"Interneta pieslēgums, vai izrobežots e-pasta kastītes izmērs.</p><p><b>%3</"
+"b>: šī ir noklusētā vērtība vidējam Interneta pieslēgumam un e-pasta "
+"kastītes izmēram.</p><p><b>%4</b>: šo izmantojiet, ja jums ir ātrgaidas "
+"Interneta pieslēgums un saņēmēja e-pasta kastītei nav ziņojuma izmēra "
+"ierobežojumu.</p><p><b>%5</b>: lietojiet šo, ja jums nav ne ātruma ne izmēra "
+"ierobežojumu.</p><p><b>%6</b>: šis noderēs tikai attēlu drukāšanai.</p>"
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "Attēla izmērs:"
+
+#: emailpage.cpp:168
+#, fuzzy
+#| msgid "<p>Select here the images files format to send.</p>"
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>Izvēlieties attēlus, ko vēlaties nosūtīt.</p>"
+
+#: emailpage.cpp:169
+#, fuzzy
+#| msgid ""
+#| "<p><b>JPEG</b>: The Joint Photographic Experts Group's file format is a "
+#| "good Web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+#| "Portable Network Graphics format is an extensible file format for the "
+#| "lossless, portable, well-compressed storage of raster images. PNG "
+#| "provides a patent-free replacement for GIF and can also replace many "
+#| "common uses of TIFF. PNG is designed to work well in online viewing "
+#| "applications, such as the World Wide Web, so it is fully streamable with "
+#| "a progressive display option. Also, PNG can store gamma and chromaticity "
+#| "data for improved color matching on heterogeneous platforms.</p>"
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: Tas ir Joint Photographic Experts Group izveidots failu  formāts, kas ir labs attēlu publicēšanai tīmeklī, bet lieto zudumradošu "
+"saspiešanu.</p><p><b>PNG</b>: ir Portable Network Graphics formāts, tas ir "
+"daudzpusīgs failu formāts savietojamai bezzudumu rastra attēlu glabāšanai. "
+"PNG ir patentu brīvz GIF aizstājējs, tas der arī vairumā TIFF lietošanas "
+"gadījumu. PNG ir veidots lai labi strādātu ar tiešsaistes aplūkošanas "
+"programmām, piemēram, tīmekļa pārlūkiem, tas ir pilnībā straumējams ar "
+"pakāpeniskas parādīšanas iespēju. PNG spēj saglabāt arī gammas un "
+"krāsainības datus uzlabotas krāsu atbilstības nodrošināšanai starp dažādām "
+"platformām.</p>"
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "Attēla faila formāts:"
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "Attēla kvalitāte:"
+
+#: emailpage.cpp:188
+#, fuzzy
+#| msgid "<p>The new compression value of JPEG images to send:</p>"
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>Jaunā JPEG saspiešanas vērtība nosūtāmajiem attēlim:</p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: ļoti augsta saspiešana<br/><b>25</b>: augsta saspiešana<br/"
+"><b>50</b>:  vidēja saspiešana<br/><b>75</b>: zema saspiešana (noklusētā vērtība)<br/"
+"><b>100</b>: bez saspiešanas</p>"
+
+#: imageresize.cpp:191
+#, fuzzy
+#| msgid "Error in opening input file"
+msgid "Error opening input file"
+msgstr "Kļūda atverot ievada failu"
+
+#: imageresize.cpp:202
+#, fuzzy
+#| msgid "Error in opening temporary folder"
+msgid "Error opening temporary folder"
+msgstr "Kļūda izveidojot pagaidu mapi"
+
+#: imageresize.cpp:247
+#, fuzzy
+#| msgid "Cannot resizing image. Aborting."
+msgid "Cannot resize image. Aborting."
+msgstr "Neizdevās mainīt attēla izmēru. Pārtrauc."
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Neizdevās saglabāt mainīto attēlu (JPEG). Pārtrauc."
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Neizdevās saglabāt mainīto attēlu (PNG). Pārtrauc."
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "Nosūtīt attēlus..."
+
+#: sendimages.cpp:130
+#, fuzzy
+#| msgid "E-mail images"
+msgid "Email images"
+msgstr "Nosūtīt attēlus"
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "Lietotājs atcēla darbību"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "Maina %1 izmēru"
+
+#: sendimages.cpp:187
+#, fuzzy, kde-format
+#| msgid "%1 resized succesfully"
+msgid "%1 resized successfully"
+msgstr "%1 veiksmīgi samazināts"
+
+#: sendimages.cpp:194
+#, fuzzy, kde-format
+#| msgid "Failed to resize %1 : %2"
+msgid "Failed to resize %1: %2"
+msgstr "Neizdevās mainīt izmēru %1 : %2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "Izveidot attēlu īpašību failu"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "nav apraksta"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "nav tagu"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"fails \"%1\":\n"
+"Orģinālie attēli: %2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Komentāri: %1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Tagi: %1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Vērtējums: %1\n"
+
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:264
+#, fuzzy
+#| msgid "Images properties file done"
+msgid "Image properties file done"
+msgstr "Attēlu īpašību fails izveidots"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"Zemāk redzamos attēlus nevar samazināt.\n"
+"Vai vēlaties tos pievienot e-pastam (bez samazināšanas)?"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "Neizdevās samazināt attēlus"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+
+#: sendimages.cpp:391
+#, fuzzy
+#| msgid "Starting default KDE e-mail program..."
+msgid "Starting default KDE email program..."
+msgstr "Palaiž noklusēto KDE e-pasta programmu..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "Neizdevās palist programmu \"%1\". Pārbaudiet jūsu sistēmu."
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "Palaiž programmu \"%1\"..."
+
+#: sendimages.cpp:568
+#, fuzzy
+#| msgid "After to have sent your images by e-mail..."
+msgid "After having sent your images by email..."
+msgstr "Kad būsit nosūtījis e-pastu ar attēliem..."
+
+#: sendimages.cpp:569
+#, fuzzy
+#| msgid "Press 'Close' button to clean-up temporary files"
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Nospiediet pogu 'Aizvērt', lai satīrītu pagaidu failus"
+
+#: sendimagesdialog.cpp:90
+#, fuzzy
+#| msgid "E-Mail Images Options"
+msgid "Email Images Options"
+msgstr "Attēlu nosūtīšanas opcijas"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "Attēli"
+
+#: sendimagesdialog.cpp:100
+#, fuzzy
+#| msgid "Images List"
+msgid "Image List"
+msgstr "Attēlu saraksts"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "Pasts"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "E-pasta iestatījumi"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "Nosūtīt attēlus"
+
+#: sendimagesdialog.cpp:115
+#, fuzzy
+#| msgid "A Plugin to e-mail pictures"
+msgid "A plugin to email pictures"
+msgstr "Spraudnis attēlu nosūtīšanai pa e-pastu"
+
+#: sendimagesdialog.cpp:116
+#, fuzzy
+#| msgid "(c) 2003-2008, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "(c) 2003-2008, Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Autors un uzturētājs"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Reiher"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "Izstrādātājs"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+#, fuzzy
+#| msgid "Plugin Handbook"
+msgid "Handbook"
+msgstr "Spraudņa rokasgrāmata"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Viesturs Zariņš"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "viesturs.zarins@mi.lu.lv"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "ļoti mazs (320 pikseļi)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "mazs (640 pikseļi)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "vidējs (800 pikseļi)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "liels (1024 pikseļi)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "ļoti liels (1280 pikseļi)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "milzīgs - drukāšanai (1600 pikseļi)"
+
+#~ msgid "This is the list of images to e-mail."
+#~ msgstr "Šis ir attēlu saraksts, ko nosūtīt uz e-pastu."
+
+#~ msgid "&Add"
+#~ msgstr "&Pievienot"
+
+#~ msgid "&Remove"
+#~ msgstr "&Noņemt"

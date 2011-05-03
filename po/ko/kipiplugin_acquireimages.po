@@ -1,0 +1,136 @@
+# Translation of kipiplugin_acquireimages to Korean.
+# Copyright (C) 2007 This_file_is_part_of_KDE
+# This file is distributed under the same license as the extragear-base package.
+# Park Shinjo <kde@peremen.name>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-libs\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2007-12-27 11:17+0900\n"
+"Last-Translator: Park Shinjo <kde@peremen.name>\n"
+"Language-Team: Korean <cho.sungjae@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "그림 가져오기"
+
+#: aboutdata.h:41
+#, fuzzy
+#| msgid "A Kipi plugin to acquire images using a flat bed scanner"
+msgid "A tool to acquire images using a flat scanner"
+msgstr "플랫베드 스캐너를 사용하여 그림을 가져오는 Kipi 플러그인"
+
+#: aboutdata.h:42
+#, fuzzy
+#| msgid "(c) 2003-2007, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "(c) 2003-2007, Gilles Caulier"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "작성자"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+#, fuzzy
+#| msgid "Developper"
+msgid "Developer"
+msgstr "개발자"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr ""
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "스캐너 장치를 열 수 없습니다."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "그림 스캔하기"
+
+#: scandialog.cpp:106
+#, fuzzy
+#| msgid "Plugin Handbook"
+msgid "Handbook"
+msgstr "플러그인 도움말"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "새 그림 파일 이름"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "대상 그림 파일 형식 \"%1\"은(는) 지원되지 않습니다."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"파일 \"%1\"을(를)\n"
+"\"%2\"(으)로\n"
+"저장하는 데 실패했습니다."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "이름이 \"%1\"인 파일이 이미 존재합니다. 덮어쓰시겠습니까?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "파일을 덮어쓰시겠습니까?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Park Shinjo"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
+
+#, fuzzy
+#~| msgid "(c) 2003-2007, Gilles Caulier"
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr "(c) 2003-2007, Gilles Caulier"
+
+#~ msgid "Scan Images..."
+#~ msgstr "그림 스캔..."
+
+#, fuzzy
+#~| msgid "Acquire images"
+#~ msgid "Cannot acquire image..."
+#~ msgstr "그림 가져오기"
+
+#~ msgid "A Kipi plugin to acquire images using a flat bed scanner"
+#~ msgstr "플랫베드 스캐너를 사용하여 그림을 가져오는 Kipi 플러그인"

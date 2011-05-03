@@ -1,0 +1,458 @@
+# translation of kipiplugin_expoblending.po to Dutch
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2009, 2010.
+# Freek de Kruijf <freekdekruijf@kde.nl>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_expoblending\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-01 03:31+0200\n"
+"PO-Revision-Date: 2011-03-11 15:33-0400\n"
+"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: blendingdlg/bracketstack.cpp:140
+msgid "To process"
+msgstr "Te verwerken"
+
+#: blendingdlg/bracketstack.cpp:141
+msgid "File Name"
+msgstr "Bestandsnaam"
+
+#: blendingdlg/bracketstack.cpp:142 importwizard/itemspage.cpp:85
+msgid "Exposure (EV)"
+msgstr "Belichting (EV)"
+
+#: blendingdlg/enfusesettings.cpp:90
+msgctxt "enfuse settings"
+msgid "Auto Levels"
+msgstr "Autoniveaus"
+
+#: blendingdlg/enfusesettings.cpp:91
+msgid "Set automatic level selection (maximized) for pyramid blending."
+msgstr ""
+"Automatische niveau-instelling (gemaximaliseerd) voor piramidevormig mengen."
+
+#: blendingdlg/enfusesettings.cpp:93
+msgctxt "enfuse settings"
+msgid "Levels:"
+msgstr "Niveaus:"
+
+#: blendingdlg/enfusesettings.cpp:98
+msgid ""
+"Set the number of levels for pyramid blending. A low number trades off "
+"quality of results for faster execution time and lower memory usage."
+msgstr ""
+"Het aantal niveaus voor piramidevormige menging instellen. Een laag getal "
+"ruilt kwaliteit in voor snelle uitvoering en laag geheugengebruik."
+
+#: blendingdlg/enfusesettings.cpp:102
+msgid "Hard Mask"
+msgstr "Hard masker"
+
+#: blendingdlg/enfusesettings.cpp:103
+msgid ""
+"Force hard blend masks and no averaging on finest scale. This is especially "
+"useful for focus stacks with thin and high contrast features, improves "
+"sharpness at the expense of increased noise."
+msgstr ""
+"Harde mengmaskers forceren en geen middeling op de fijnste schaal. Dit is "
+"speciaal bruikbaar focusstapels met dunne en hoog contrast eigenschappen. "
+"Het verbetert de scherpte ten koste van verhoogde ruis."
+
+#: blendingdlg/enfusesettings.cpp:108
+msgctxt "enfuse settings"
+msgid "Exposure:"
+msgstr "Belichting:"
+
+#: blendingdlg/enfusesettings.cpp:113
+msgid ""
+"Set the exposure contribution for the blending process. Higher values will "
+"favor well-exposed pixels."
+msgstr ""
+"De belichtingsbijdrage voor het mengproces instellen. Hoge waarden geven "
+"voorkeur aan goed belichte pixels."
+
+#: blendingdlg/enfusesettings.cpp:116
+msgctxt "enfuse settings"
+msgid "Saturation:"
+msgstr "Verzadiging:"
+
+#: blendingdlg/enfusesettings.cpp:121
+msgid ""
+"Increasing this value makes pixels with high saturation contribute more to "
+"the final output."
+msgstr ""
+"Deze waarde vergroten maakt dat pixels met hoge verzadiging meer bijdragen "
+"aan de uiteindelijke uitvoer."
+
+#: blendingdlg/enfusesettings.cpp:124
+msgctxt "enfuse settings"
+msgid "Contrast:"
+msgstr "Contrast:"
+
+#: blendingdlg/enfusesettings.cpp:129
+msgid ""
+"Sets the relative weight of high-contrast pixels. Increasing this weight "
+"makes pixels with neighboring differently colored pixels contribute more to "
+"the final output. Particularly useful for focus stacks."
+msgstr ""
+"Stelt het relatieve gewicht in van hoog-contrast pixels. Dit gewicht "
+"vergroten maakt dat pixels die buren hebben met verschillend gekleurde "
+"pixels meer bijdragen aan de uiteindelijke uitvoer. Speciaal bruikbaar voor "
+"focusstapels."
+
+#: blendingdlg/enfusesettings.cpp:133
+msgid "Use Color Appearance Modelling"
+msgstr "Modellering gebruiken van de kleur zoals deze lijkt te zijn"
+
+#: blendingdlg/enfusesettings.cpp:134
+msgid ""
+"Use Color Appearance Modelling (CIECAM02) to render detailed colors. Your "
+"input files should have embedded ICC profiles. If no ICC profile is present, "
+"sRGB color space will be used instead. The difference between using this "
+"option and default color blending algorithm is very slight, and will be most "
+"noticeable when you need to blend areas of different primary colors together."
+msgstr ""
+"Modellering gebruiken van de kleur zoals deze lijkt te zijn (CIECAM02) om "
+"gedetailleerd kleuren weer te geven. Uw invoerbestanden moeten ingebedde ICC-"
+"profielen hebben. Als geen ICC-profiel aanwezig is, dan zal in plaats "
+"daarvan de sRGB-kleurruimte worden gebruikt. Het verschil tussen deze optie "
+"gebruiken en het standaard kleurmengalgoritme is erg klein en zal het meest "
+"zichtbaar zijn wanneer u gebieden mengt met verschillende primaire kleuren."
+
+#: blendingdlg/enfusesettings.h:68 blendingdlg/enfusesettings.h:70
+msgid "enabled"
+msgstr "ingeschakeld"
+
+#: blendingdlg/enfusesettings.h:68 blendingdlg/enfusesettings.h:70
+msgid "disabled"
+msgstr "uitgeschakeld"
+
+#: blendingdlg/enfusesettings.h:68
+#, kde-format
+msgid "Hardmask: %1"
+msgstr "Hard masker: %1"
+
+#: blendingdlg/enfusesettings.h:70
+#, kde-format
+msgid "CIECAM02: %1"
+msgstr "CIECAM02: %1"
+
+#: blendingdlg/enfusesettings.h:72
+msgid "auto"
+msgstr "auto"
+
+#: blendingdlg/enfusesettings.h:72
+#, kde-format
+msgid "Levels: %1"
+msgstr "Niveaus: %1"
+
+#: blendingdlg/enfusesettings.h:74
+#, kde-format
+msgid "Exposure: %1"
+msgstr "Belichting: %1"
+
+#: blendingdlg/enfusesettings.h:76
+#, kde-format
+msgid "Saturation: %1"
+msgstr "Verzadiging: %1"
+
+#: blendingdlg/enfusesettings.h:78
+#, kde-format
+msgid "Contrast: %1"
+msgstr "Contrast: %1"
+
+#: blendingdlg/enfusestack.cpp:183
+msgid "To Save"
+msgstr "Om op te slaan"
+
+#: blendingdlg/enfusestack.cpp:184
+msgid "Target"
+msgstr "Doel"
+
+#: blendingdlg/enfusestack.cpp:185
+msgid "Inputs"
+msgstr "Invoer"
+
+#: blendingdlg/enfusestack.cpp:210
+msgid "Remove item"
+msgstr "Item verwijderen"
+
+#: blendingdlg/enfusestack.cpp:217
+msgid "Clear all"
+msgstr "Alles wissen"
+
+#: blendingdlg/expoblendingdlg.cpp:145 plugin/aboutdata.h:39
+msgid "Exposure Blending"
+msgstr "Mengen van belichting"
+
+#: blendingdlg/expoblendingdlg.cpp:147
+msgid "&Save"
+msgstr "Op&slaan"
+
+#: blendingdlg/expoblendingdlg.cpp:148
+msgid "Process and save selected processed items."
+msgstr "Geselecteerde verwerkte items bewerken en opslaan."
+
+#: blendingdlg/expoblendingdlg.cpp:151
+msgid "&Preview"
+msgstr "&Voorbeeld"
+
+#: blendingdlg/expoblendingdlg.cpp:152
+msgid "Process a preview of bracketed images stack with current settings."
+msgstr ""
+"Een voorbeeld van afbeeldingen tussen haakjes op een stapel bewerken met de "
+"huidige instellingen."
+
+#: blendingdlg/expoblendingdlg.cpp:155
+msgid "&Abort"
+msgstr "&Afbreken"
+
+#: blendingdlg/expoblendingdlg.cpp:156
+msgid "Abort current process"
+msgstr "Huidige bewerking afbreken"
+
+#: blendingdlg/expoblendingdlg.cpp:159
+msgid "Exit this tool"
+msgstr "Dit hulpmiddel afsluiten"
+
+#: blendingdlg/expoblendingdlg.cpp:169 importwizard/preprocessingpage.cpp:110
+msgid "Details..."
+msgstr "Details..."
+
+#: blendingdlg/expoblendingdlg.cpp:193
+msgid "File Name Template: "
+msgstr "Bestandsnaam van sjabloon: "
+
+#: blendingdlg/expoblendingdlg.cpp:198
+msgid "Enfuse Settings"
+msgstr "Instellingen voor samensmelten"
+
+#: blendingdlg/expoblendingdlg.cpp:199
+msgid "Save Settings"
+msgstr "Instellingen opslaan"
+
+#: blendingdlg/expoblendingdlg.cpp:220 importwizard/importwizarddlg.cpp:91
+msgid "Handbook"
+msgstr "Handboek"
+
+#: blendingdlg/expoblendingdlg.cpp:305 blendingdlg/expoblendingdlg.cpp:307
+msgid "Enfuse Processing Messages"
+msgstr "Bewerkingsberichten laten samensmelten"
+
+#: blendingdlg/expoblendingdlg.cpp:459
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"Een bestand met de naam \"%1\" bestaat reeds. Wilt u het overschrijven?"
+
+#: blendingdlg/expoblendingdlg.cpp:494
+#, kde-format
+msgid "Failed to save image to %1"
+msgstr "Afbeelding opslaan naar %1 is mislukt"
+
+#: blendingdlg/expoblendingdlg.cpp:538
+msgid "Processing preview of bracketed images..."
+msgstr "Voorbeeld van afbeeldingen tussen haakjes bewerken..."
+
+#: blendingdlg/expoblendingdlg.cpp:544
+msgid "Processing targets of bracketed images..."
+msgstr "Doel van afbeeldingen tussen haakjes bewerken..."
+
+#: blendingdlg/expoblendingdlg.cpp:569
+msgid "Failed to load processed image"
+msgstr "Bewerkte afbeelding laden is mislukt"
+
+#: blendingdlg/expoblendingdlg.cpp:578
+msgid "Failed to process preview of bracketed images"
+msgstr "Verwerken van voorbeeld van afbeeldingen tussen haakjes is mislukt"
+
+#: blendingdlg/expoblendingdlg.cpp:588
+msgid "Failed to process targets of bracketed images"
+msgstr "Verwerken van doelen van afbeeldingen tussen haakjes is mislukt"
+
+#: importwizard/importwizarddlg.cpp:75
+msgid "Exposure Blending Import Wizard"
+msgstr "Importassistent voor belichtingmengen"
+
+#: importwizard/intropage.cpp:40
+msgid "Welcome to Exposure Blending Tool"
+msgstr "Welkom bij het hulpmiddel voor belichtingmengen"
+
+#: importwizard/intropage.cpp:46
+msgid ""
+"<qt><p><h1><b>Welcome to Exposure Blending tool</b></h1></p><p>This tool "
+"fuses bracketed images with different exposure to make pseudo <a "
+"href='http://en.wikipedia.org/wiki/High_dynamic_range_imaging'>HDR image</a>."
+"</p><p>It can also be used to merge focus bracketed stack to get a single "
+"image with increased depth of field.</p><p>This assistant will help you to "
+"configure how to import images before merging them to a single one.</"
+"p><p>Bracketed images must be taken with the same camera, in the same "
+"conditions, and if possible using a tripod.</p><p>For more information, "
+"please take a look at <a href='http://en.wikipedia.org/wiki/Bracketing'>this "
+"page</a></p></qt>"
+msgstr ""
+"<qt><p><h1><b>Welkom in het hulpmiddel voor belichtingmengen</b></h1></"
+"p><p>Dit hulpmiddel plakt afbeeldingen tussen haakjes met verschillende "
+"belichting aan elkaar om een pseudo-<a href='http://en.wikipedia.org/wiki/"
+"High_dynamic_range_imaging'>HDR afbeelding</a> te maken.</p><p>Het kan ook "
+"worden gebruikt om uit een stapel afbeeldingen met verschillende focus een "
+"enkele afbeelding met verhoogde velddiepte te maken.</p><p>Deze assistent "
+"zal u helpen om afbeeldingen te importeren alvorens ze te mengen tot één "
+"exemplaar.</p><p>Afbeeldingen tussen haakjes moeten met dezelfde camera zijn "
+"genomen, onder dezelfde omstandigheden en, indien mogelijk met een driepoot."
+"</p><p>Voor meer informatie, kijk op <a href='http://en.wikipedia.org/wiki/"
+"Bracketing'>deze pagina</a></p></qt>"
+
+#: importwizard/itemspage.cpp:70
+msgid "<b>Set Bracketed Images</b>"
+msgstr "<b>Afbeeldingen tussen haakjes instellen</b>"
+
+#: importwizard/itemspage.cpp:77
+msgid ""
+"<qt><p>Set here the list of your bracketed images to fuse. Please follow "
+"these conditions:</p><ul><li>At least 2 images from the same subject must be "
+"added to the stack.</li><li>Do not mix images with different color depth.</"
+"li><li>All images must have the same dimensions.</li></ul></qt>"
+msgstr ""
+"<qt><p>Stel hier de lijst afbeeldingen tussen haakjes om aan elkaar te "
+"plakken. Volg deze voorwaarden:</p><ul><li>minstens 2 afbeeldingen van "
+"hetzelfde onderwerp moeten aan de stapel worden toegevoegd.</li><li>Meng "
+"geen afbeeldingen met verschillende kleurdiepte.</li><li>Alle afbeeldingen "
+"moeten dezelfde afmetingen hebben.</li></ul></qt>"
+
+#: importwizard/lastpage.cpp:57
+msgid "Pre-Processing is Complete"
+msgstr "Voorbewerken is gereed"
+
+#: importwizard/lastpage.cpp:65
+#, kde-format
+msgid ""
+"<qt><p><h1><b>Bracketed Images Pre-Processing is Done</b></h1></"
+"p><p>Congratulations. Your images are ready to be fused. </p>To perform this "
+"operation, <b>%1</b> program from <a href='%2'>Enblend</a> project will be "
+"used.</p><p>Press \"Finish\" button to fuse your items and make a pseudo HDR "
+"image.</p></qt>"
+msgstr ""
+"<qt><p><h1><b>Voorbewerking van afbeeldingen tussen kaakjes is gereed</b></"
+"h1></p><p>Gefeliciteerd. Uw afbeeldingen zijn klaar om aan elkaar te worden "
+"geplakt.</p>Om deze bewerking te doen, zal het programma <b>%1</b> uit het "
+"project <a href='%2'>Enblend</a> worden gebruikt.</p><p>Druk op de knop "
+"\"Doen\" om uw items aan elkaar te plakken en een pseudo-HDR-afbeelding te "
+"maken.</p></qt>"
+
+#: importwizard/preprocessingpage.cpp:93
+msgid "<b>Pre-Processing Bracketed Images</b>"
+msgstr "<b>Voorbewerking van afbeeldingen tussen haakjes</b>"
+
+#: importwizard/preprocessingpage.cpp:102
+msgid "Align bracketed images"
+msgstr "Afbeeldingen tussen haakjes in lijn brengen..."
+
+#: importwizard/preprocessingpage.cpp:155
+#, kde-format
+msgid ""
+"<qt><p>Now, we will pre-process bracketed images before fusing them.</"
+"p><p>To perform auto-alignment, the <b>%1</b> program from the <a href='%2'>%"
+"3</a> project will be used. Alignment must be performed if you have not used "
+"a tripod to take bracketed images. Alignment operations can take a while.</"
+"p><p>Pre-processing operations include Raw demosaicing. Raw images will be "
+"converted to 16-bit sRGB images with auto-gamma.<p>Press \"Next\" to start "
+"pre-processing.</p></qt>"
+msgstr ""
+"<qt><p>De afbeeldingen tussen haakjes zullen nu worden voorbewerkt alvorens "
+"ze aan elkaar te plakken.</p><p>Om auto-uitlijnen te doen zal het programma "
+"<b>%1</b> uit het project <a href='%2'>%3</a> worden gebruikt. Uitlijnen "
+"moet worden gedaan als u geen statief hebt gebruikt on de afbeeldingen "
+"tussen haakjes te maken. De uitlijnbewerking kan even duren.</p><p>De "
+"voorbewerking houdt in \"Raw demosaicing\". Ruwe afbeeldingen zullen worden "
+"geconverteerd naar 16-bit sRGB afbeeldingen met auto-gamma.<p>Druk op "
+"\"Volgende\" om het voorbewerken te starten.</p></qt>"
+
+#: importwizard/preprocessingpage.cpp:174
+msgid ""
+"<qt><p>Pre-processing is under progress, please wait.<p><p>This can take a "
+"while...</p></qt>"
+msgstr ""
+"<qt><p>Voorbewerking is bezig, even geduld.<p><p>Dit kan even duren...</p></"
+"qt>"
+
+#: importwizard/preprocessingpage.cpp:216
+#: importwizard/preprocessingpage.cpp:218
+msgid "Pre-Processing Messages"
+msgstr "Voorbewerkingsberichten"
+
+#: importwizard/preprocessingpage.cpp:235
+msgid ""
+"<qt><p>Pre-processing has failed.</p><p>Please check your bracketed images "
+"stack...</p><p>Press \"Details\" to show processing messages.</p></qt>"
+msgstr ""
+"<qt><p>Voorbewerking is mislukt.</p><p>Controleer uw stapel afbeeldingen "
+"tussen haakjes...</p><p>Druk op \"Details\" om bewerkingsberichten te tonen."
+"</p></qt>"
+
+#: manager/actionthread.cpp:300
+msgid "unknown"
+msgstr "onbekend"
+
+#: manager/actionthread.cpp:805
+#, kde-format
+msgid ""
+"Cannot run %1:\n"
+"\n"
+" %2"
+msgstr ""
+"Kan %1 niet uitvoeren:\n"
+"\n"
+" %2"
+
+#: plugin/aboutdata.h:41
+msgid "A tool to blend bracketed images"
+msgstr "Een hulpmiddel om afbeeldingen tussen haakjes te mengen"
+
+#: plugin/aboutdata.h:42
+msgid "(c) 2009-2011, Gilles Caulier"
+msgstr "(c) 2009-2011, Gilles Caulier"
+
+#: plugin/aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:45
+msgid "Author"
+msgstr "Auteur"
+
+#: plugin/aboutdata.h:48
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: plugin/aboutdata.h:49
+msgid "Developer"
+msgstr "Ontwikkelaar"
+
+#: plugin/expoblending.cpp:58
+msgid "File(s) to open"
+msgstr "Bestand(en) om te openen"
+
+#: plugin/plugin_expoblending.cpp:76
+msgid "Blend bracketed images..."
+msgstr "Meng afbeeldingen tussen haakjes..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Freek de Kruijf"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "freekdekruijf@kde.nl"

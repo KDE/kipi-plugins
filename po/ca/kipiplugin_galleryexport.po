@@ -1,0 +1,263 @@
+# Translation of kipiplugin_galleryexport.po to Catalan
+# Copyright (C) 2008 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2 or later.
+#
+# Josep Ma. Ferrer <txemaq@gmail.com>, 2008, 2009, 2010.
+# Joan Maspons <joanmaspons@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2010-12-10 16:48+0100\n"
+"Last-Translator: Josep Ma. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#: galleryconfig.cpp:77
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "Nom:"
+
+#: galleryconfig.cpp:81
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "URL:"
+
+#: galleryconfig.cpp:85
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "Nom d'usuari:"
+
+#: galleryconfig.cpp:89
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "Contrasenya:"
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "Usa &Gallery 2"
+
+#: gallerytalker.cpp:427
+msgid "Gallery URL probably incorrect"
+msgstr "L'URL de la galeria probablement és incorrecte"
+
+#: gallerytalker.cpp:433
+msgid "Incorrect username or password specified"
+msgstr "Nom d'usuari o contrasenya incorrectes"
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+msgid "Invalid response received from remote Gallery"
+msgstr "S'ha rebut una resposta no vàlida de la galeria remota"
+
+#: gallerytalker.cpp:523
+msgid "Failed to list albums"
+msgstr "Ha fallat en llistar els àlbums"
+
+#: gallerytalker.cpp:598
+msgid "Failed to list photos"
+msgstr "Ha fallat en llistar les fotos"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "Ha fallat en crear un àlbum nou"
+
+#: gallerytalker.cpp:705
+msgid "Failed to upload photo"
+msgstr "Ha fallat en pujar la foto"
+
+#: gallerywindow.cpp:118
+msgid "Albums"
+msgstr "Àlbums"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "Àlbum &nou"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "&Afegeix fotos"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr "Substitueix les opcions per defecte"
+
+#: gallerywindow.cpp:142
+msgid "Comment sets Title"
+msgstr "El comentari estableix el títol"
+
+#: gallerywindow.cpp:145
+msgid "Comment sets Description"
+msgstr "El comentari estableix la descripció"
+
+#: gallerywindow.cpp:148
+msgid "Resize photos before uploading"
+msgstr "Redimensiona les fotos abans de pujar-les"
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr "Dimensió màxima:"
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+msgid "Gallery Export"
+msgstr "Exporta la galeria"
+
+#: gallerywindow.cpp:217
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr ""
+"Un connector del Kipi per exportar col·leccions d'imatges a un servidor "
+"Gallery remot."
+
+#: gallerywindow.cpp:218
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "Autor"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "Mantenidor"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+msgid "Developer"
+msgstr "Desenvolupador"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gallerywindow.cpp:242
+msgid "Handbook"
+msgstr "Manual"
+
+#: gallerywindow.cpp:250
+msgid "Settings"
+msgstr "Arranjament"
+
+#: gallerywindow.cpp:407
+msgid "Failed to login into remote gallery. "
+msgstr "Ha fallat en connectar a la galeria remota. "
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Voleu comprovar l'arranjament i tornar a intentar-ho?"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "Edita les dades de Gallery"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+msgid "Album"
+msgstr "Àlbum"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr "Imatge"
+
+#: gallerywindow.cpp:675
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+"No es permeten aquests caràcters en el nom de l'àlbum: «\\» «/» «*» «?» «\"» «'» "
+"«&» «&lt;» «&gt;» «|» «.» «+» «#» «(» «)» o espais"
+
+#: gallerywindow.cpp:752
+#, kde-format
+msgid "Uploading file %1"
+msgstr "S'està pujant el fitxer %1"
+
+#: gallerywindow.cpp:771
+msgid "Failed to upload photo into remote gallery. "
+msgstr "Ha fallat en pujar la foto a la galeria remota. "
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Voleu continuar?"
+
+#: plugin_galleryexport.cpp:80
+msgid "Export to &Gallery..."
+msgstr "Exporta a &Gallery..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Josep Ma. Ferrer, Joan Maspons Ventura"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "txemaq@gmail.com,joanmaspons@gmail.com"
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>Introduïu el nom de l'àlbum nou</h3>"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "Títol:"
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "Nom (opcional):"
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "Peu de foto (opcional):"
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "&Bé"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "&Cancel·la"

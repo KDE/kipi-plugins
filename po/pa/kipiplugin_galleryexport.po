@@ -1,0 +1,281 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Amanpreet Singh Alam <aalam@users.sf.net>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2009-01-02 06:38+0530\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjab-l10n@list.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: galleryconfig.cpp:77
+#, fuzzy
+#| msgid "Name:"
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "ਨਾਂ:"
+
+#: galleryconfig.cpp:81
+#, fuzzy
+#| msgid "URL:"
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "URL:"
+
+#: galleryconfig.cpp:85
+#, fuzzy
+#| msgid "Username:"
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "ਯੂਜ਼ਰ-ਨਾਂ:"
+
+#: galleryconfig.cpp:89
+#, fuzzy
+#| msgid "Password:"
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "ਪਾਸਵਰਡ:"
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "ਗੈਲਰੀ 2 ਵਰਤੋਂ(&G)"
+
+#: gallerytalker.cpp:427
+msgid "Gallery URL probably incorrect"
+msgstr ""
+
+#: gallerytalker.cpp:433
+msgid "Incorrect username or password specified"
+msgstr ""
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+msgid "Invalid response received from remote Gallery"
+msgstr ""
+
+#: gallerytalker.cpp:523
+msgid "Failed to list albums"
+msgstr "ਐਲਬਮ ਵੇਖਾਉਣ ਲਈ ਫੇਲ੍ਹ"
+
+#: gallerytalker.cpp:598
+msgid "Failed to list photos"
+msgstr "ਫੋਟੋ ਵੇਖਾਉਣ ਲਈ ਫੇਲ੍ਹ"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "ਨਵੀਂ ਐਲਬਮ ਬਣਾਉਣ ਲਈ ਫੇਲ੍ਹ"
+
+#: gallerytalker.cpp:705
+msgid "Failed to upload photo"
+msgstr "ਫੋਟੋ ਅੱਪਲੋਡ ਕਰਨ ਲਈ ਫੇਲ੍ਹ"
+
+#: gallerywindow.cpp:118
+#, fuzzy
+#| msgid "albums"
+msgid "Albums"
+msgstr "ਐਲਬਮ"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "ਨਵੀਂ ਐਲਬਮ(&N)"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "ਫੋਟੋ ਸ਼ਾਮਲ(&A)"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr ""
+
+#: gallerywindow.cpp:142
+msgid "Comment sets Title"
+msgstr ""
+
+#: gallerywindow.cpp:145
+msgid "Comment sets Description"
+msgstr ""
+
+#: gallerywindow.cpp:148
+msgid "Resize photos before uploading"
+msgstr ""
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr ""
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+msgid "Gallery Export"
+msgstr "ਗੈਲਰੀ ਐਕਸਪੋਰਟ"
+
+#: gallerywindow.cpp:217
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr ""
+
+#: gallerywindow.cpp:218
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2007, Colin Guthrie\n"
+#| "(c) 2008, Andrea Diamantini\n"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2008, Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr ""
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "ਲੇਖਕ"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr ""
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "ਪਰਬੰਧਕ"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr ""
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+msgid "Developer"
+msgstr "ਡਿਵੈਲਪਰ"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr ""
+
+#: gallerywindow.cpp:242
+#, fuzzy
+#| msgid "Plugin Handbook"
+msgid "Handbook"
+msgstr "ਪਲੱਗਇਨ ਹੈਡਬੁੱਕ"
+
+#: gallerywindow.cpp:250
+#, fuzzy
+#| msgid "settings"
+msgid "Settings"
+msgstr "ਸੈਟਿੰਗ"
+
+#: gallerywindow.cpp:407
+msgid "Failed to login into remote gallery. "
+msgstr ""
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"ਕੀ ਤੁਸੀਂ ਆਪਣੀ ਸੈਟਿੰਗ ਚੈੱਕ ਕਰਕੇ ਮੁੜ-ਟਰਾਈ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "ਗੈਲਰੀ ਡਾਟਾ ਸੋਧ"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+#, fuzzy
+#| msgid "albums"
+msgid "Album"
+msgstr "ਐਲਬਮ"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr ""
+
+#: gallerywindow.cpp:675
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+
+#: gallerywindow.cpp:752
+#, fuzzy, kde-format
+#| msgid "Uploading file "
+msgid "Uploading file %1"
+msgstr "ਫਾਇਲ ਅੱਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
+
+#: gallerywindow.cpp:771
+msgid "Failed to upload photo into remote gallery. "
+msgstr ""
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"ਕੀ ਤੁਸੀਂ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+
+#: plugin_galleryexport.cpp:80
+#, fuzzy
+#| msgid "Export to Gallery..."
+msgid "Export to &Gallery..."
+msgstr "ਗੈਲਰੀ ਲਈ ਐਕਸਪੋਰਟ..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ (A S Alam)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "aalam@users.sf.net"
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>ਨਵਾਂ ਐਲਬਮ ਨਾਂ ਦਿਓ</h3>"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "ਟਾਈਟਲ:"
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "ਨਾਂ (ਚੋਣਵਾਂ):"
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "ਸੁਰਖੀ (ਚੋਣਵਾਂ):"
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "ਠੀਕ ਹੈ(&O)"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "ਰੱਦ ਕਰੋ(&C)"
+
+#~ msgid "albums"
+#~ msgstr "ਐਲਬਮ"

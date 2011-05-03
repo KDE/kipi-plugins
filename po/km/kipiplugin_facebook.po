@@ -1,0 +1,461 @@
+# translation of kipiplugin_facebook.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_facebook\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-11-04 16:34+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: facebookjob.cpp:109
+#, fuzzy
+msgid "Photos taken with KDE"
+msgstr "រូបថត​យក​តាម​វិបខេម​"
+
+#: fbalbum.cpp:48
+#, fuzzy
+msgid "Facebook New Album"
+msgstr "អាល់ប៊ុម​​ថ្មី​​របស់​ Facebook ​"
+
+#: fbalbum.cpp:61
+#, fuzzy
+msgid "Title of the album that will be created (required)."
+msgstr "ចំណង​ជើង​អាល់ប៊ុម​ដែល​នឹង​ត្រូវ​បាន​បង្កើត​​ (​បាន​ទាមទារ​) ។"
+
+#: fbalbum.cpp:65
+#, fuzzy
+msgid "Location of the album that will be created (optional)."
+msgstr "ទីតាំង​អាល់ប៊ុម​ដែល​នឹង​ត្រូវ​បាន​បង្កើត​​ (​ជា​ជម្រើស​) ។"
+
+#: fbalbum.cpp:69
+#, fuzzy
+msgid "Description of the album that will be created (optional)."
+msgstr "សេចក្ដី​ពិពណ៌នា​នៃ​អាល់ប៊ុម​ដែល​នឹង​ត្រូវ​បាន​បង្កើត​​ (​ជា​ជម្រើស​​) ។"
+
+#: fbalbum.cpp:74
+#, fuzzy
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "ការ​កំណត់​អាល់ប៊ុម​​ឯកជន​ដែល​នឹង​ត្រូវ​បាន​បង្កើត​ (បាន​ទាមទារ​) ។"
+
+#: fbalbum.cpp:76
+msgid "Only Friends"
+msgstr "មិត្តភ័ក្ដិ​តែ​ប៉ុណ្ណោះ​"
+
+#: fbalbum.cpp:78
+#, fuzzy
+msgid "Friends of Friends"
+msgstr "មិត្តភ័ក្ដិ​ក្នុង​ចំណោម​មិត្តភ័ក្ដិ​"
+
+#: fbalbum.cpp:80
+msgid "My Networks and Friends"
+msgstr "បណ្ដាញ​ និង​មិត្តភ័ក្ដិ​របស់​ខ្ញុំ"
+
+#: fbalbum.cpp:82
+msgid "Everyone"
+msgstr "រាល់​គ្នា​"
+
+#: fbalbum.cpp:85
+msgctxt "new facebook album"
+msgid "Title:"
+msgstr "ចំណងជើង​ ៖​"
+
+#: fbalbum.cpp:86
+msgctxt "new facebook album"
+msgid "Location:"
+msgstr "ទីតាំង​ ៖"
+
+#: fbalbum.cpp:87
+msgctxt "new facebook album"
+msgid "Description:"
+msgstr "សេចក្ដី​ពិពណ៌នា​ ៖​"
+
+#: fbalbum.cpp:88
+msgctxt "new facebook album"
+msgid "Privacy:"
+msgstr "ភាព​ឯកជន​ ៖"
+
+#: fbtalker.cpp:178
+#, fuzzy
+msgid "Validate previous session..."
+msgstr "​ធ្វើ​ឲ្យ​សម័យ​មុន​មាន​សុពលភាព​​...​"
+
+#: fbtalker.cpp:198
+msgid "Logging in to Facebook service..."
+msgstr "កំពុង​ចូល​ទៅកាន់​សេវា​របស់​ Facebook ​..."
+
+#: fbtalker.cpp:389
+msgid ""
+"Please follow the instructions in the browser window. Press \"OK\" when done."
+msgstr "សូម​បំពេញ​តាម​សេចក្ដី​ណែនាំ​ក្នុង​បង្អួច​កម្ម​វិធី​រុករក​ ។ ចុច​ \"យល់​ព្រម​​\" នៅ​ពេល​ធ្វើ​រួច​ ។"
+
+#: fbtalker.cpp:391
+msgid "Facebook Application Authorization"
+msgstr "សេចក្ដី​អនុញ្ញាត​កម្មវិធី​របស់​ Facebook ​"
+
+#: fbtalker.cpp:706
+msgid "The service is not available at this time."
+msgstr "នៅ​ពេល​នេះ​មិន​មាន​សេវា​ឡើយ​ ។"
+
+#: fbtalker.cpp:709
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "កម្មវិធី​ដែល​ត្រូវ​បាន​ដល់​ចំនួន​អតិបរមា​​នៃ​សំណើ​ដែល​បាន​អនុញ្ញាត​ ។"
+
+#: fbtalker.cpp:712
+#, fuzzy
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr "សោ​សម័យ​មិន​ត្រឹមត្រូវ​ ឬ​សម័យ​ដែល​ផុត​កំណត់​ ។​ សាកល្បង​ចូល​ម្ដងទៀត​ ។"
+
+#: fbtalker.cpp:715
+#, fuzzy
+msgid "Invalid album ID."
+msgstr "លេខ​សម្គាល់​អាល់ប៊ុម​មិន​ត្រឹមត្រូវ​ឡើយ​ ។"
+
+#: fbtalker.cpp:718
+msgid "Album is full."
+msgstr "អាល់ប៊ុម​​ពេញ​"
+
+#: fbtalker.cpp:721
+msgid "Missing or invalid file."
+msgstr "បាត់​ ឬ​ឯកសារ​មិន​ត្រឹមត្រូវ​ ។"
+
+#: fbtalker.cpp:724
+#, fuzzy
+msgid "Too many unapproved photos pending."
+msgstr "ចំនួន​មិន​យល់​ព្រម​រូបថត​មិនទាន់​សម្រេច​ច្រើន​ពេក​"
+
+#: fbtalker.cpp:884
+#, fuzzy
+msgid ""
+"Please follow the instructions in the browser window. Press \"Yes\" if you "
+"have authenticated and \"No\" if you failed."
+msgstr ""
+"សូម​បំពេញ​សេចក្ដី​ណែ​នាំ​ក្នុង​បង្អួច​កម្មវិធី​រុករក​ ។ ចុច​ \"បាទ/ចាស​​\" បើ​អ្នក​បាន​ផ្ទៀងផ្ទាត់​ភាព​ត្រឹមត្រូវ "
+"ហើយ​ចុច​ \"ទេ​​\" បើ​អ្នក​បរាជ័យ​ ។"
+
+#: fbtalker.cpp:886
+#, fuzzy
+msgid "Facebook Service Web Authorization"
+msgstr "សេចក្ដី​អនុញ្ញាត​បណ្ដាញ​សេវា​របស់​ Facebook ​"
+
+#: fbtalker.cpp:895
+msgid "Canceled by user."
+msgstr "បាន​បោះបង់​ដោយ​​អ្នក​ប្រើ​ ។"
+
+#: fbwidget.cpp:72
+msgid "This is the list of images to upload to your Facebook account."
+msgstr "នេះ​ជា​បញ្ជី​រូបភាព​ត្រូវ​ផ្ទុក​ឡើង​ ដើម្បី​គណនី Facebook របស់​អ្នក​ ។"
+
+#: fbwidget.cpp:79
+msgid ""
+"This is a clickable link to open the Facebook home page in a web browser."
+msgstr "នេះ​ជា​តំណ​ដែល​អាច​ចុច​ ដើម្បី​បើក​គេ​ហ​ទំព័រ​​​ Facebook ក្នុង​កម្មវិធី​រុករក​បណ្ដាញ​ ។"
+
+#: fbwidget.cpp:85
+msgid "Account"
+msgstr "គណនី​"
+
+#: fbwidget.cpp:87
+#, fuzzy
+msgid "This is the Facebook account that is currently logged in."
+msgstr "នេះ​ជា​គណនី​​ Facebook ដែល​ត្រូវ​បាន​ចូល​បច្ចុប្បន្ន​ ។"
+
+#: fbwidget.cpp:90
+msgctxt "facebook account settings"
+msgid "Name:"
+msgstr "ឈ្មោះ​ ៖​"
+
+#: fbwidget.cpp:92
+msgid "Permission:"
+msgstr "សិទ្ធិ​ ៖"
+
+#: fbwidget.cpp:94
+msgid ""
+"Permission of KIPI Plugin application to upload photos directly. If not, "
+"user will need to manually approve uploaded photos in Facebook."
+msgstr ""
+"សិទ្ធិ​របស់​​កម្មវិធី​ជំនួយ​ KIPI ​ត្រូវ​ផ្ទុក​រូបថត​ឡើង​ដោយ​ផ្ទាល់​ ។​ បើ​មិន​អញ្ចឹង​ទេ​​​ ​អ្នក​ប្រើ​នឹង​ត្រូវ​ការ​ផ្ទុក​រូប​ថត​​នៅ​"
+"ក្នុង​​ Facebook ។"
+
+#: fbwidget.cpp:97
+msgid "Change Account"
+msgstr "ប្ដូរ​គណនី​"
+
+#: fbwidget.cpp:98
+#, fuzzy
+msgid "Logout and change Facebook Account used for transfer"
+msgstr "ចាក់​ចេញ​ ហើយ​ប្ដូរ​គណនី​ Facebook ដែល​បាន​​ប្រើ​សម្រាប់​ផ្ទេរ​"
+
+#: fbwidget.cpp:101
+msgid "Change Permission"
+msgstr "ប្ដូរ​សិទ្ធិ​"
+
+#: fbwidget.cpp:102
+#, fuzzy
+msgid "Change permission for KIPI application for photo upload"
+msgstr "ប្ដូរ​សិទ្ធិ​ ​ចំពោះ​កម្មវិធី​ KIPI ​សម្រាប់​​​រូប​ថត​ផ្ទុក​ឡើង​"
+
+#: fbwidget.cpp:119
+#, fuzzy
+msgid "Download Selection"
+msgstr "ជម្រើស​ទាញ​យក​"
+
+#: fbwidget.cpp:121
+msgid "This is the selection of Facebook albums/photos to download."
+msgstr "នេះ​ជា​ជម្រើស​របស់​ អាល់ប៊ុម​/​រូបថត​ Facebook ​ត្រូវ​ទាញ​យក​ ។"
+
+#: fbwidget.cpp:125 fbwidget.cpp:178
+msgid "Destination"
+msgstr "ទិសដៅ​"
+
+#: fbwidget.cpp:127
+#, fuzzy
+msgid "This is the Facebook album to which selected photos will be uploaded."
+msgstr "នេះ​ជា​អាល់ប៊ុម​របស់​​ Facebook រូប​ថត​ដែល​បាន​ជ្រើស​នឹង​ត្រូវ​បាន​ផ្ទុក​ឡើង​ ។​"
+
+#: fbwidget.cpp:131
+msgid "My &Album"
+msgstr "អាល់ប៊ុម​របស់​ខ្ញុំ"
+
+#: fbwidget.cpp:133
+#, fuzzy
+msgid "Download complete album of currently logged in user."
+msgstr "ទាញ​យក​អាល់ប៊ុម​​ពេញ​​នៃ​អ្នក​ប្រើ​ដែល​បាន​ចូល​បច្ចុប្បន្ន​ ។"
+
+#: fbwidget.cpp:134
+msgid "Album &of My Friend"
+msgstr "អាល់ប៊ុម​របស់​មិត្តភ័ក្ដិ​​ខ្ញុំ"
+
+#: fbwidget.cpp:136
+#, fuzzy
+msgid "Download complete album of selected friend."
+msgstr "ទាញ​យក​អាល់ប៊ុម​ពេញ​​នៃ​មិត្តភ័ក្ដិ​ដែល​បាន​ជ្រើស​ ។"
+
+#: fbwidget.cpp:137
+msgid "Photos of &Me"
+msgstr "រូប​ថត​របស់​ខ្ញុំ"
+
+#: fbwidget.cpp:139
+#, fuzzy
+msgid "Download all photos of currently logged in user."
+msgstr "ទាញ​យក​រូបថត​ទាំងអស់​​របស់​អ្នក​ប្រើ​ដែល​បាន​ចូល​បច្ចុប្បន្ន ។​"
+
+#: fbwidget.cpp:140
+#, fuzzy
+msgid "Photos of My &Friend"
+msgstr "រូបថត​របស់​មិត្តភ័ក្ដិ​​ខ្ញុំ"
+
+#: fbwidget.cpp:142
+#, fuzzy
+msgid "Download all photos of selected friend."
+msgstr "ទាញ​យក​រូបថត​ទាំង​​អស់​នៃ​មិត្តភ័ក្ដិ​ដែល​បាន​ជ្រើស​ ។"
+
+#: fbwidget.cpp:150
+msgid "Friend:"
+msgstr "មិត្តភ័ក្ដិ​ ៖​"
+
+#: fbwidget.cpp:154
+msgid "Album:"
+msgstr "អាល់ប៊ុម​ ៖​"
+
+#: fbwidget.cpp:159
+msgid "New Album"
+msgstr "អាល់ប៊ុម​ថ្មី​"
+
+#: fbwidget.cpp:160
+msgid "Create new Facebook album"
+msgstr "បង្កើត​អាល់ប៊ុម​​ Facebook ថ្មី​"
+
+#: fbwidget.cpp:162
+msgctxt "facebook album list"
+msgid "Reload"
+msgstr "ផ្ទុក​​ឡើង​វិញ​"
+
+#: fbwidget.cpp:163
+msgid "Reload album list"
+msgstr "ផ្ទុក​បញ្ជី​អាល់ប៊ុម​ឡើង​វិញ​​"
+
+#: fbwidget.cpp:180
+#, fuzzy
+msgid "This is the location to which Facebook images will be downloaded."
+msgstr "នេះ​ជា​ទីតាំង​​ដែល​រូប​ថត​​ Facebook នឹង​ត្រូវ​បាន​ផ្ទុក​ឡើង​ ។"
+
+#: fbwidget.cpp:187
+msgid "Options"
+msgstr "ជម្រើស​"
+
+#: fbwidget.cpp:189
+#, fuzzy
+msgid "These are options that will be applied to photos before upload."
+msgstr "ជម្រើស​ទាំងនេះ​ដែល​នឹង​ត្រូវ​បាន​អនុវត្ត ដើម្បី​រូបថត​មុន​ពេល​ផ្ទុក​ឡើង​ ។​"
+
+#: fbwidget.cpp:193
+#, fuzzy
+msgid "Resize photos before uploading"
+msgstr "ប្ដូរ​ទំហំ​រូបថត​មុន​ពេល​ការ​ផ្ទុក​ឡើង​"
+
+#: fbwidget.cpp:203
+msgid "Maximum dimension:"
+msgstr "វិមាត្រ​អតិបរមា​ ៖​"
+
+#: fbwidget.cpp:211
+msgid "JPEG quality:"
+msgstr "គុណភាព​របស់​ JPEG ៖​"
+
+#: fbwidget.cpp:326
+msgid "Direct upload"
+msgstr "ផ្ទុក​ឡើង​ផ្ទាល់​"
+
+#: fbwidget.cpp:328
+#, fuzzy
+msgid "Uploaded photos will not need manual approval by user."
+msgstr "ផ្ទុក​រូប​ថត​ឡើង​នឹង​មិន​ចាំបាច់​ការ​យល់​ព្រម​​ពី​អ្នក​​ប្រើ​ឡើយ ។"
+
+#: fbwidget.cpp:332
+msgid "Manual upload approval"
+msgstr "យល់​ព្រម​ផ្ទុក​ឡើង​សៀវភៅ​ដៃ​"
+
+#: fbwidget.cpp:334
+msgid ""
+"Uploaded photos will wait in pending state until manually approved by user."
+msgstr "ផ្ទុក​រូបថត​ឡើង​នឹង​រង់ចាំ​ភាព​មិនទាន់​សម្រេច​រហូត​ដល់​បាន​យល់​ព្រម​ពី​អ្នក​ប្រើ​សិន ។​"
+
+#: fbwindow.cpp:93
+#, fuzzy
+msgid "Import from Facebook Web Service"
+msgstr "នាំចូល​ពី​សេវា​បណ្ដាញ​របស់​ Facebook "
+
+#: fbwindow.cpp:95
+msgid "Start Download"
+msgstr "ចាប់​ផ្ដើម​ទាញ​យក​"
+
+#: fbwindow.cpp:96
+#, fuzzy
+msgid "Start download from Facebook web service"
+msgstr "ចាប់​ផ្ដើម​ទាញ​យក​ពី​សេវា​បណ្ដាញ​របស់​ Facebook ​"
+
+#: fbwindow.cpp:101
+#, fuzzy
+msgid "Export to Facebook Web Service"
+msgstr "នាំចេញ​ទៅកាន់​សេវា​បណ្ដាញ​របស់​​ Facebook ​"
+
+#: fbwindow.cpp:103
+msgid "Start Upload"
+msgstr "ចាប់​ផ្ដើម​ផ្ទុក​ឡើង​"
+
+#: fbwindow.cpp:104
+#, fuzzy
+msgid "Start upload to Facebook web service"
+msgstr "ចាប់​ផ្ដើម​ផ្ទុក​ឡើង​ទៅ​កាន់​សេវា​បណ្ដាញ​របស់​​ Facebook ​"
+
+#: fbwindow.cpp:130
+msgid "Facebook Import/Export"
+msgstr "នាំចេញ​/​នាំចូល​ Facebook ​"
+
+#: fbwindow.cpp:132
+msgid ""
+"A Kipi plugin to import/export image collection to/from Facebook web service."
+msgstr "កម្មវិធី​ជំនួយ​ Kipi ​ដើម្បី​នាំចូល​​/​នាំចេញ​រូបភាព​សម្រាំង​​ ទៅ/​ពី​ សេវា​បណ្ដាញ​របស់​ Facebook ។"
+
+#: fbwindow.cpp:134
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៥​​-២០០៨ ដោយ​ Vardhman Jain\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៨​-២០០៩ ដោយ Gilles Caulier\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៨​-២០០៩ ដោយ Luka Renko"
+
+#: fbwindow.cpp:138
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:138
+msgid "Author and maintainer"
+msgstr "អ្នក​និពន្ធ​ និង​អ្នក​ថែទាំ​"
+
+#: fbwindow.cpp:146
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ"
+
+#: fbwindow.cpp:343 fbwindow.cpp:402
+msgid "&lt;auto create&gt;"
+msgstr "&lt;បង្កើត​ស្វ័យ​ប្រវត្តិ​​&gt;"
+
+#: fbwindow.cpp:358 fbwindow.cpp:371 fbwindow.cpp:388 fbwindow.cpp:436
+#: fbwindow.cpp:463
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "បាន​បរាជ័យ​​ក្នុង​ការ​ហៅ​ Facebook ៖ %1\n"
+
+#: fbwindow.cpp:397
+msgctxt "name of special Facebook album for profile pictures"
+msgid "Profile Pictures"
+msgstr "ទម្រង់​រូបភាព​"
+
+#: fbwindow.cpp:560 fbwindow.cpp:581
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:709 fbwindow.cpp:728
+msgid "Cannot open file"
+msgstr "មិន​អាច​បើក​ឯកសារ​បាន​ឡើយ​"
+
+#: fbwindow.cpp:752
+#, fuzzy, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ទាញ​យក​រូប​ថត​ក្នុង​​​ Facebook ៖​ %1\n"
+"តើ​អ្នក​ចង់​បន្ត​ឬ ?"
+
+#: fbwindow.cpp:811
+#, fuzzy, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​រក្សាទុក​រូបថត​ ៖​​ %1\n"
+"​តើ​អ្នក​ចង់​បន្ត​ឬ​ ?"
+
+#: fbwindow.cpp:824
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ទាញ​យក​រូបថត​ ៖​​ %1\n"
+"តើ​អ្នក​ចង់​បន្ត​ឬ​ ?"
+
+#: fbwindow.cpp:841
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​​ហៅ​ Facebook ៖​ %1"
+
+#: plugin_facebook.cpp:78
+msgid "Export to &Facebook..."
+msgstr "នាំ​ចេញ​ទៅ​កាន់​ Facebook..."
+
+#: plugin_facebook.cpp:88
+msgid "Import from &Facebook..."
+msgstr "នាំចេញ​ពី​ Facebook..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""

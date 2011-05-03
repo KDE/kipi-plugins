@@ -1,0 +1,197 @@
+# translation of kipiplugin_ipodexport.po to 简体中文
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ni Hui <shuizhuyuanluo@126.com>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_ipodexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-13 03:18+0100\n"
+"PO-Revision-Date: 2010-11-16 10:25+0800\n"
+"Last-Translator: Ni Hui <shuizhuyuanluo@126.com>\n"
+"Language-Team: Chinese Simplified <kde-china@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: plugin_ipodexport.cpp:71
+msgid "Export to &iPod..."
+msgstr "导出至 &iPod..."
+
+#: plugin_ipodexport.cpp:87 IpodExportDialog.cpp:111
+msgid "iPod Export"
+msgstr "iPod 导出"
+
+#: IpodExportDialog.cpp:114
+msgid "A tool to export image to an iPod device"
+msgstr "一个将图像导出到 iPod 设备的工具"
+
+#: IpodExportDialog.cpp:115
+msgid ""
+"(c) 2006-2008, Seb Ruiz\n"
+"(c) 2008-2010, Gilles Caulier"
+msgstr ""
+"(c) 2006-2008，Seb Ruiz\n"
+"(c) 2008-2010，Gilles Caulier"
+
+#: IpodExportDialog.cpp:118
+msgid "Seb Ruiz"
+msgstr "Seb Ruiz"
+
+#: IpodExportDialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "作者和维护者"
+
+#: IpodExportDialog.cpp:121
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: IpodExportDialog.cpp:121
+msgid "Developer"
+msgstr "开发者"
+
+#: IpodExportDialog.cpp:130
+msgid "Plugin Handbook"
+msgstr "插件作者"
+
+#: IpodExportDialog.cpp:144
+msgid "Hard Disk"
+msgstr "硬盘"
+
+#: IpodExportDialog.cpp:154
+msgid "&Add..."
+msgstr "添加(&A)..."
+
+#: IpodExportDialog.cpp:155
+msgid "Add images to be queued for the iPod."
+msgstr "添加要在 iPod 查询的图像。"
+
+#: IpodExportDialog.cpp:157 IpodExportDialog.cpp:199
+msgid "&Remove"
+msgstr "删除(&R)"
+
+#: IpodExportDialog.cpp:158
+msgid "Remove selected image from the list."
+msgstr "从列表中删除所选图像。"
+
+#: IpodExportDialog.cpp:160
+msgid "&Transfer"
+msgstr "传输(&T)"
+
+#: IpodExportDialog.cpp:161
+msgid "Transfer images to the selected iPod album."
+msgstr "将图像传输到所选 iPod 相册。"
+
+#: IpodExportDialog.cpp:167
+msgid "The preview of the selected image in the list."
+msgstr "列表中所选图像的预览。"
+
+#: IpodExportDialog.cpp:188
+msgid "iPod"
+msgstr "iPod"
+
+#: IpodExportDialog.cpp:196
+msgid "&New..."
+msgstr "新建(&N)..."
+
+#: IpodExportDialog.cpp:197
+msgid "Create a new photo album on the iPod."
+msgstr "在 iPod 上创建新相册。"
+
+#: IpodExportDialog.cpp:200
+msgid "R&ename..."
+msgstr "重命名(&E)..."
+
+#: IpodExportDialog.cpp:205
+msgid "Remove the selected photos or albums from the iPod."
+msgstr "从 iPod 删除所选照片或相册。"
+
+#: IpodExportDialog.cpp:206
+msgid "Rename the selected photo album on the iPod."
+msgstr "重命名 iPod 上的所选相册。"
+
+#: IpodExportDialog.cpp:562
+msgid "Image files"
+msgstr "图像文件"
+
+#: IpodExportDialog.cpp:565
+msgid "Add Images"
+msgstr "添加图像"
+
+#: IpodExportDialog.cpp:599
+msgid "New iPod Photo Album"
+msgstr "新建 iPod 相册"
+
+#: IpodExportDialog.cpp:600
+msgid "Create a new album:"
+msgstr "创建新相册："
+
+#: IpodExportDialog.cpp:631
+msgid "Rename iPod Photo Album"
+msgstr "删除 iPod 相册"
+
+#: IpodExportDialog.cpp:632
+msgid "New album title:"
+msgstr "新相册标题："
+
+#: IpodExportDialog.cpp:819
+#, kde-format
+msgid ""
+"An iPod photo database could not be found on the device mounted at %1. "
+"Initialize the iPod photo database?"
+msgstr ""
+"挂载于 %1 的设备上没有找到 iPod 照片数据库。要初始化 iPod 照片数据库吗？"
+
+#: IpodExportDialog.cpp:823
+msgid "Initialize iPod Photo Database?"
+msgstr "初始化 iPod 照片数据库？"
+
+#: IpodExportDialog.cpp:824
+msgid "&Initialize"
+msgstr "初始化(&I)"
+
+#: IpodHeader.cpp:94
+msgid "<p align=\"center\"><b>No iPod was detected</b></p>"
+msgstr "<p align=\"center\"><b>没有探测到 iPod</b></p>"
+
+#: IpodHeader.cpp:101
+msgid "Refresh"
+msgstr "刷新"
+
+#: IpodHeader.cpp:114
+#, kde-format
+msgid ""
+"<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></"
+"p>"
+msgstr "<p align=\"center\"><b>您的 iPod (%1) 似乎不支持美术作品。</b></p>"
+
+#: IpodHeader.cpp:122
+msgid "Set iPod Model"
+msgstr "设定 iPod 型号"
+
+#: IpodHeader.cpp:138
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected at: %2</b></p>"
+msgstr "<p align=\"center\"><b>探测到 iPod %1 于：%2</b></p>"
+
+#: IpodHeader.cpp:143
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected</b></p>"
+msgstr "<p align=\"center\"><b>探测到 iPod %1</b></p>"
+
+#: IpodListItem.cpp:40
+msgid "Unnamed"
+msgstr "未命名"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ni Hui"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "shuizhuyuanluo@126.com"

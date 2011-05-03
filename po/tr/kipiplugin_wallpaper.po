@@ -1,0 +1,72 @@
+# translation of kipiplugin_wallpaper.po to Turkish
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Serdar Soytetir <tulliana@gmail.com>, 2008, 2009.
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2010-06-14 13:57+0300\n"
+"Last-Translator: Ozan Çağlayan <ozan@pardus.org.tr>\n"
+"Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "&Arkaplan olarak Ayarla"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Ortalanmış"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Ortalı Döşenmiş"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Maksimum Oranda Ortalanmış"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Maksimum Oranda Döşenmiş"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Ölçeklenmiş"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Ortalanmış (Otomatik Sığdır)"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Ölçekle && Kırp"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Bir uzak görüntü seçtiniz. Görüntünün arkaplan yapılabilmesi için yerel "
+"diskinize kaydedilmesi gerekiyor.</p><p>Şimdi dosyanın nereye kaydedileceği "
+"sorulacak.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Arkaplanı Değiştir"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "Arkaplan değiştirilemez."
+
+#~ msgid "We can not change background."
+#~ msgstr "Arkaplanı değiştiremedik."

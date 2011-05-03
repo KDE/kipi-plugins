@@ -1,0 +1,513 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_removeredeyes\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2009-04-29 15:57+0300\n"
+"Last-Translator: Toussis Manolis <manolis@koppermind.homelinux.org>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "Ρυθμίσεις εξαγωγής σφαίρας"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "Ελάχιστο μέγεθος &σφαίρας:"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "Ελάχιστη &καμπυλότητα:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "Ρυθμίσεις κατηγοριοποιητή"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "Χρήση &τυπικού κατηγοριοποιητή"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr ""
+"Αν ενεργοποιηθεί, θα χρησιμοποιηθεί ο τυπικός κατηγοριοποιητής που έρχεται "
+"με αυτό το πρόσθετο KIPI."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "Εισάγετε εδώ την τοποθεσία του κατηγοριοποιητή."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "&Γειτονικές ομάδες:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "&Συντελεστής κλιμάκωσης:"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "&Προχωρημένη λειτουργία"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "&Απλή λειτουργία"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>Αργή<br/>(χαμηλής ανάλυσης / ελαφρά θολές εικόνες)</b></p><p>Σε αυτήν "
+"τη λειτουργία η αυτόματη ανίχνευση και διόρθωση των κόκκινων ματιών είναι η "
+"πιο αξιόπιστη. Το μειονέκτημα της υψηλής πιστότητας ανίχνευσης είναι ο πιο "
+"αργός υπολογισμός.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>Τυπική</b></p><p>Αυτή η λειτουργία είναι η πιο κατάλληλη για τις "
+"περισσότερες αναλύσεις εικόνων.  Δοκιμάστε πάντα πρώτα αυτή τη λείτουργία.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>Γρήγορη<br/>(υψηλής ανάλυσης εικόνες)</b></p><p>Σε αυτήν τη λειτουργία "
+"η αυτόματη ανίχνευση θα είναι γρηγορότερη, αλλά μπορεί να εντοπίσεις "
+"λανθασμένες περιοχές για την αφαίρεση. Χρησιμοποιήστε αυτή τη λειτουργία "
+"μόνο σε πολύ υψηλής ανάλυσης οξείες εικόνες.</p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "&Αφαίρεση κόκκινων ματιών..."
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "Αυτόματη αφαίρεση κόκκινων ματιών"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "Αφαίρεση κόκκινων ματιών"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr "Ένα πρόσθετο αυτόματης ανίχνευσης και αφαίρεσης των κόκκινων ματιών."
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "(c) 2008-2009, Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "Συγγραφέας και συντηρητής"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "Εγχειρίδιο"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "&Διόρθωση φωτογραφιών"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "Εκκίνηση διόρθωσης των εικόνων"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "Δοκιμαστική ε&κτέλεση"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr ""
+"Εξομοίωση της διεργασίας διόρθωσης, χωρίς αποθήκευση των αποτελεσμάτων."
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "Σύνολο:"
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "Επιτυχίες:"
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "Αποτυχίες:"
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "Λίστα αρχείων"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p>Επιλέξατε τη <b>λειτουργία διόρθωσης 'αντικατάσταση'</b>.<br/>Επιθυμείτε "
+"σίγουρα την αντικατάσταση των αρχικών αρχείων εικόνων σας;</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "Λειτουργία αντικατάστασης"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>Κάποιες από τις εικόνες δεν μπορούν να αναλυθούν με τις τρέχουσες "
+"ρυθμίσεις ή δεν περιέχουν καθόλου κόκκινα μάτια.</p><p><b>Επιθυμείτε την "
+"αφαίρεση αυτών των εικόνων από τη λίστα;</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "Αφαίρεση με επεξεργασμένων εικόνων;"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p>Προσπαθήσατε να προσθέσετε <b>ακατέργαστες εικόνες RAW</b> στο πρόσθετο,"
+"αλλά αυτοί οι τύποι αρχείων δεν υποστηρίζονται.</p><p><b>Θα αφαιρεθούν "
+"αυτόματα από τη λίστα.</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "Βρέθηκαν εικόνες RAW"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>Έγινε επεξεργασία %1 εικόνας με επιτυχία.</p>"
+msgstr[1] "<p>Έγινε επεξεργασία %1 εικόνων με επιτυχία.</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>Η διόρθωση ολοκληρώθηκε</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "Η διόρθωση ολοκληρώθηκε"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr ""
+"<h2>Δε φορτώθηκε κανένας εντοπιστής.<br/>Το πρόσθετο δεν είναι εκτελέσιμο.</"
+"h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "Διορθωμένα μάτια"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "Αυτή είναι η λίστα εικόνων για την αφαίρεση κόκκινων ματιών από αυτές."
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>Αυτό το συστατικό εμφανίζει μια προεπισκόπηση της διόρθωσης της τρέχουσας "
+"επιλεγμένης εικόνας.</p><p><ul><li>Μετακινήστε το ποντίκι <b>πάνω</b> στην "
+"προεπισκόπηση για την εμφάνιση της αρχικής εικόνας.</li><li>Μετακινήστε το "
+"ποντίκι <b>εκτός</b> της προεπισκόπησης για την εμφάνιση της διορθωμένης "
+"εικόνας.</li><li>Κάντε <b>κλικ</b> στην προεπισκόπηση για την εμφάνιση της "
+"μάσκας διόρθωσης</li></ul></p><p>Τα κουμπιά εστίασης και το συστατικό "
+"πανοραμικής κίνησης σας επιτρέπουν την προβολή συγκεκριμένων τμημάτων της "
+"εικόνας.</p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>δημιουργία προεπισκόπησης...</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>Αδυναμία ανοίγματος της εικόνας προεπισκόπησης <br/>'%1'</p>."
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "Σφαλμα φόρτωσης αρχείου προεπισκόπησης"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "Αρχική εικόνα"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "Διορθωμένη εικόνα"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "Μάσκα διόρθωσης"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "Δεν επιλέχθηκε εικόνα."
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "Ρυθμίσεις αποθήκευσης"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>Οι ρυθμίσεις αυτές ελέγχουν την αποθήκευση των διορθωμένων εικόνων. "
+"Υπάρχουν τρεις λειτουργίες που μπορείτε να επιλέξετε:</"
+"p><p><ul><li><b>Υποφάκελος:</b> Οι διορθωμένες εικόνες αποθηκεύονται σε έναν "
+"υποφάκελο κάτω από τη διαδρομή του τρέχοντος άλμπουμ. </li><li><b>Πρόθεμα:</"
+"b>Προσθήκη ενός προσαρμοσμένου προθέματος στη διορθωμένη εικόνα. </"
+"li><li><b>Επίθεμα:</b> Προσθήκη ενός προσαρμοσμένου επιθέματος στη "
+"διορθωμένη εικόνα. </li><li><b>Αντικατάσταση:</b> Αντικατάσταση όλων των "
+"αρχικών εικόνων.</li></ul></p> <p>Κάθε μία από τις τέσσερις λειτουργίες σας "
+"επιτρέπει την προσθήκη μιας προαιρετικές λέξης κλειδί στα μεταδεδομένα της "
+"εικόνας.</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "Αποθήκευση σε υποφάκελο"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "Προσθήκη προθέματος"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "Προσθήκη επιθέματος"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "Αντικατάσταση"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr ""
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "Προσθήκη &λέξης κλεδιού μεταδεδομένων"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr ""
+"Αν ενεργοποιηθεί, θα γίνει προσθήκη μιας προσαρμοσμένης λέξης κλειδί στα "
+"μεταδεδομένα της εικόνας."
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "Εισάγετε εδώ το όνομα της προσαρμοσμένη λέξης κλειδιού..."
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "Χειρισμός μη επεξεργασμένων εικόνων"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>Οι ρυθμίσεις αυτές ελέγχουν το χειρισμό των μη επεξεργασμένων εικόνων "
+"όταν εκτελείται δοκιμαστική λειτουργία. Για την επιτάχυνση της τελικής "
+"διόρθωσης, οι μη επεξεργασμένες εικόνες μπορούν να αφαιρεθούν από τη λίστα "
+"έτσι ώστε να μην αναλυθούν ξανά. Υπάρχουν τρεις λειτουργίες που μπορείτε να "
+"επιλέξετε:</p><p><ul><li><b>Ερώτηση του χρήστη:</b> Εμφάνιση ενός "
+"αναδυόμενου παραθύρου που θα ζητά τις ενέργειές σας.</li><li><b>Διατήρηση "
+"στη λίστα:</b> Όλες οι μη επεξεργασμένες εικόνες θα διατηρηθούν στη λίστα.</"
+"li><li><b>Αφαίρεση από τη λίστα:</b> Όλες οι μη επεξεργασμένες εικόνες θα "
+"αφαιρεθούν από τη λίστα μετά τη δοκιμαστική εκτέλεση.</li></ul></p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "&Ερώτηση χρήστη"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr ""
+"Αν ενεργοποιηθεί, θα γίνει ερώτηση στο χρήστη για τη διατήρηση ή την "
+"αφαίρεση των μη επεξεργασμένων εικόνων."
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "&Διατήρηση στη λίστα"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr ""
+"Αν ενεργοποιηθεί, οι μη επεξεργασμένες εικόνες θα διατηρηθούν στη λίστα μετά "
+"τη δοκιμαστική εκτέλεση."
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "&Αφαίρεση από τη λίστα"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr ""
+"Αν ενεργοποιηθεί, οι μη επεξεργασμένες εικόνες θα αφαιρεθούν από τη λίστα "
+"μετά τη δοκιμαστική εκτέλεση."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Τούσης Μανώλης"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "manolis@koppermind.homelinux.org"
+
+#~ msgid "Summary"
+#~ msgstr "Περίληψη"
+
+#~ msgid "Enter the name of the extra here..."
+#~ msgstr "Εισάγετε εδώ το όνομα της προσθήκης..."
+
+#~ msgid "Preview"
+#~ msgstr "Προεπισκόπηση"
+
+#~ msgid "Remove Red-Eyes..."
+#~ msgstr "Αφαίρεση κόκκινων ματιών..."
+
+#~ msgid "Automatically remove red-eyes"
+#~ msgstr "Αυτόματη αφαίρεση των κόκκινων ματιών"
+
+#~ msgid ""
+#~ "If checked, the corrected files will be saved in a subfolder under the "
+#~ "current image album path."
+#~ msgstr ""
+#~ "Αν ενεργοποιηθεί, τα διορθωμένα αρχεία θα αποθηκευτούν σε έναν υποφάκελο "
+#~ "της  τρέχουσας διαδρομής του άλμπουμ εικόνων."
+
+#~ msgid "Add suffix to filename"
+#~ msgstr "Προσθήκη επιθέματος στο όνομα αρχείου"
+
+#~ msgid "Overwrite original files"
+#~ msgstr "Αντικατάσταση αρχικών αρχείων"
+
+#~ msgid "If checked, all original images will be replaced."
+#~ msgstr "Αν ενεργοποιηθεί, όλες οι αρχικές εικόνες θα αντικατασταθούν."
+
+#~ msgid ""
+#~ "<p><i>Note: At the moment this plugin will not keep any metadata (EXIF, "
+#~ "IPTC).<br/>To prevent data loss, overwrite mode has been diabled for now."
+#~ "</i></p>"
+#~ msgstr ""
+#~ "<p><i>Σημείωση: για την ώρα αυτό το πρόσθετο δε θα διατηρήσει όλα τα "
+#~ "μεταδεδομένα (EXIF, IPTC).<br/>Για την αποτροπή απώλειας δεδομένων, η "
+#~ "λειτουργία αντικατάστασης έχει απενεργοποιηθεί αυτήν τη στιγμή.</i></p>"
+
+#~ msgid "Keep"
+#~ msgstr "Διατήρηση"
+
+#~ msgid "Remove"
+#~ msgstr "Αφαίρεση"
+
+#~ msgid "Exit"
+#~ msgstr "Έξοδος"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Εικόνα επισκόπησης"
+
+#~ msgid "File Name"
+#~ msgstr "Όνομα αρχείου"
+
+#~ msgid "&Add"
+#~ msgstr "&Προσθήκη"
+
+#~ msgid "Append string to files"
+#~ msgstr "Προσθήκη συμβολοσειράς στα αρχεία"
+
+#~ msgid "Your images were saved "
+#~ msgstr "Οι εικόνες σας αποθηκεύτηκαν"
+
+#~ msgid ""
+#~ "in the subfolder <span style='color: red; font-weight:bold;'>%1</span>."
+#~ msgstr ""
+#~ "στον υποφάκελο <span style='color: red; font-weight:bold;'>%1</span>."
+
+#~ msgid ""
+#~ "by adding <span style='color: red; font-weight:bold;'>%1</span> as a "
+#~ "prefix."
+#~ msgstr ""
+#~ "με προσθήκη <span style='color: red; font-weight:bold;'>%1</span> ως "
+#~ "πρόθεμα."
+
+#~ msgid "by overwriting the original files."
+#~ msgstr "με αντικατάσταση των αρχικών αρχείων."
+
+#~ msgid ""
+#~ "<p>%4</p><p><table><tr><td><b>Total images:\t\t\t</b></td><td>%1</td></"
+#~ "tr><tr><td><b>Processed:</b></td><td>%2</td></tr><tr><td><b>Failed:</b></"
+#~ "td><td>%3</td></tr></table></p><p style='text-align:"
+#~ "center;'><b>Correction complete!</b></p>"
+#~ msgstr ""
+#~ "<p>%4</p><p><table><tr><td><b>Σύνολο εικόνων:\t\t\t</b></td><td>%1</td></"
+#~ "tr><tr><td><b>Επεξεργάστηκαν:</b></td><td>%2</td></"
+#~ "tr><tr><td><b>Αποτυχίες:</b></td><td>%3</td></tr></table></p><p "
+#~ "style='text-align:center;'><b>Η διόρθωση ολοκληρώθηκε!</b></p>"
+
+#~ msgid "Remove Red-Eyes From Your Photos"
+#~ msgstr "Αφαίρεση κόκκινων ματιών από τις φωτογραφίες σας"
+
+#~ msgid "Cancel"
+#~ msgstr "Ακύρωση"
+
+#~ msgid "Close"
+#~ msgstr "Κλείσιμο"

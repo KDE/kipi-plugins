@@ -1,0 +1,275 @@
+# translation of kipiplugin_galleryexport.po to Khmer
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+#  Seng Sutha <Sutha@khmeros.info>, 2010.
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2010-11-15 17:31+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Language: km_KH\n"
+
+#: galleryconfig.cpp:77
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "ឈ្មោះ​ ៖​"
+
+#: galleryconfig.cpp:81
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "URL ៖"
+
+#: galleryconfig.cpp:85
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "ឈ្មោះ​អ្នកប្រើ​ ៖​"
+
+#: galleryconfig.cpp:89
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "ពាក្យ​សម្ងាត់​ ៖​"
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "ប្រើ​វិចិត្រសាល​ ២"
+
+#: gallerytalker.cpp:427
+#, fuzzy
+msgid "Gallery URL probably incorrect"
+msgstr "URL វិចិត្រសាល​​ប្រហែល​ជា​មិន​ត្រឹមត្រូវ​"
+
+#: gallerytalker.cpp:433
+#, fuzzy
+msgid "Incorrect username or password specified"
+msgstr "បាន​បញ្ជាក់​ពាក្យ​សម្ងាត់​ ឬ​ឈ្មោះ​អ្នក​ប្រើ​មិន​ត្រឹមត្រូវ​"
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+#, fuzzy
+msgid "Invalid response received from remote Gallery"
+msgstr "បាន​ទទួល​ចម្លើយ​តប​មិន​ត្រឹមត្រូវ​ ពី​វិចិត្រសាល​ពី​ចម្ងាយ​"
+
+#: gallerytalker.cpp:523
+#, fuzzy
+msgid "Failed to list albums"
+msgstr "បាន​បរាជ័យ​​ដើម្បី​រាយ​អាល់ប៊ុម"
+
+#: gallerytalker.cpp:598
+#, fuzzy
+msgid "Failed to list photos"
+msgstr "បាន​បរាជ័យ​ដើម្បី​រាយ​រូបថត​"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "បាន​បរាជ័យ​ដើម្បី​បង្កើត​អាល់ប៊ុម​ថ្មី ​"
+
+#: gallerytalker.cpp:705
+#, fuzzy
+msgid "Failed to upload photo"
+msgstr "បាន​បរាជ័យ​ដើម្បី​ផ្ទុក​រូបថត​ឡើង​"
+
+#: gallerywindow.cpp:118
+msgid "Albums"
+msgstr "អាល់ប៊ុម​"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "អាល់ប៊ុម​ថ្មី​"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "បន្ថែម​រូបថត​"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr "បដិសេធ​ជម្រើស​លំនាំ​ដើម​"
+
+#: gallerywindow.cpp:142
+#, fuzzy
+msgid "Comment sets Title"
+msgstr "ចំណង​ជើង​សំណុំ​មតិ​យោបល់​"
+
+#: gallerywindow.cpp:145
+#, fuzzy
+msgid "Comment sets Description"
+msgstr "សេចក្ដី​ពិពណ៌នា​សំណុំ​មតិ​យោបល់​"
+
+#: gallerywindow.cpp:148
+#, fuzzy
+msgid "Resize photos before uploading"
+msgstr "ប្ដូរ​ទំហំ​រូបថត​មុន​ពេល​ការ​ផ្ទុក​ឡើង​"
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr "វិមាត្រ​អតិបរមា ៖​"
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+#, fuzzy
+msgid "Gallery Export"
+msgstr "នាំ​ចេញ​វិចិត្រសាល​"
+
+#: gallerywindow.cpp:217
+#, fuzzy
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr "កម្មវិធី​ជំនួយ​ Kipi ​ត្រូវ​នាំចេញ​រូបភាព​សម្រាំង​ទៅកាន់​​​​ម៉ាស៊ីន​បម្រើ​វិចិត្រសាល​​ពី​​ចម្ងាយ​ ។"
+
+#: gallerywindow.cpp:218
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៣-២០០៥ ដោយ Renchi Raju\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៦-២០០៧ ដោយ Colin Guthrie\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ ២០០៦-២០០៩ ដោយ Gilles Caulier\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៨ ដោយ ​Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "អ្នក​និពន្ធ​"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "អ្នក​ថែទាំ​"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+#, fuzzy
+msgid "Developer"
+msgstr "អ្នក​អភិវឌ្ឍន៍​"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gallerywindow.cpp:242
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ​"
+
+#: gallerywindow.cpp:250
+msgid "Settings"
+msgstr "កំណត់​"
+
+#: gallerywindow.cpp:407
+#, fuzzy
+msgid "Failed to login into remote gallery. "
+msgstr "បាន​បរាជ័យ​ដើម្បី​ចូល​ទៅកាន់​វិចិត្រសាល​ពី​ចម្ងាយ​"
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"តើ​អ្នក​ចង់​ពិនិត្យមើល​ការកំណត់​របស់​អ្នក​ ហើយ​សាកល្បង​ម្ដងទៀត​ឬ​ ?​"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "កែសម្រួល​ទិន្នន័យ​វិចិត្រសាល​​"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+msgid "Album"
+msgstr "អាល់ប៊ុម​"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr "រូបភាព​"
+
+#: gallerywindow.cpp:675
+#, fuzzy
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+"សូមទោស​ តួ​អក្សរ​ទាំងនេះ​​មិន​ត្រូវ​បាន​អនុញ្ញាត​​​ជា​ឈ្មោះ​អាល់ប៊ុម​ ៖​​ \\ / * ? \" ' & &lt; &gt; | . + "
+"# ( ) ឬ​​​គម្លា"
+
+#: gallerywindow.cpp:752
+#, fuzzy, kde-format
+msgid "Uploading file %1"
+msgstr "ផ្ទុក​ឯកសារ​ឡើង​"
+
+#: gallerywindow.cpp:771
+#, fuzzy
+msgid "Failed to upload photo into remote gallery. "
+msgstr "បាន​បរាជ័យ​ ដើម្បី​ផ្ទុក​រូបថត​ទៅកាន់​វិចិត្រសាល​ពី​ចម្ងាយ​ ។"
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"តើ​អ្នក​ចង់​បន្ត​ដែរ​ឬ​ទេ​ ?"
+
+#: plugin_galleryexport.cpp:80
+#, fuzzy
+msgid "Export to &Gallery..."
+msgstr "នាំ​ចេញ​ទៅកាន់​វិចិត្រសាល​..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info, ..."
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>បញ្ចូល​ឈ្មោះ​អាល់ប៊ុម​ថ្មី​​</h3>​"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "ចំណងជើង​ ៖​"
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "ឈ្មោះ​ (ជា​ជម្រើស​) ៖​"
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "ចំណងជើង​ (ជា​ជម្រើស​) ៖​​"
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "យល់​ព្រម​"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "បោះបង់​"

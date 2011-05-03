@@ -1,0 +1,413 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_removeredeyes\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2010-06-26 15:28+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "Tantaren erauzketaren ezarpenak"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "&Tantaren gutxieneko tamaina:"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "Gutxieneko &biribilketa:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "Sailkatzailearen ezarpenak"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "Erabili &sailkatzaile estandarra"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr ""
+"Aktibatzen bada, Kipi-ren pluginean datorren sailkatzaile estandarra "
+"erabiliko da."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "Sartu sailkatzailearen kokalekua."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "&Auzoko taldeak:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "&Eskalatzeko faktorea:"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "Modu &aurreratua"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "Modu &bakuna"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>Motelagoa<br/>(bereizmen baxua / irudiak piska bat lausotuta)</b></p> "
+"<p>Modu honetan begi gorrien detekzioa eta zuzenketa fidagarriagoa da. "
+"Detekzio altuaren alde txarra ordenagailua asko moteltzea da.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>Arrunta</b></p><p>Modu hau egokia da irudien bereizmen gehienentzako. "
+"Aurrenik aukera honekin saiatu beti.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>Azkarragoa<br/>(bereizmen altuko irudiak)</b></p> <p>Modu honetan "
+"detekzio automatikoa azkarragoa izango da, baina positibo faltsuak gerta "
+"daitezke. Erabili mode hau oso bereizmen altuko eta enfokatutako irudietan.</"
+"p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "&Begi gorriak kentzea..."
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "Begi gorriak automatikoki kentzea"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "Kendu begi gorriak"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr "Plugin bat begi gorrien efektua automatikoki detektatu eta kentzeko."
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "(c) 2008-2009, Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "Egilea eta mantentzailea"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "Eskuliburua"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "Zuzendu &argazkiak"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "Hasi zerrendatutako irudiak zuzentzen"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "&Probako exekuzioa"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr "Simulatu zuzenketaren prozesua, emaitzak gorde gabe."
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "Guztira:"
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "Ongi burututa:"
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "Huts eginda:"
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "Fitxategien zerrenda"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "Ezarpenak"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p><b>'Gainidatzi' zuzenketa modua</b> aukeratu duzu.<br/> Ziur zaude "
+"jatorrizko fitxategiak galtzea nahi dituzula?</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "Gainidazteko modua"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>Irudi batzuk ezin izan dira analizatu uneko ezarpenekin, edo ez daukate "
+"begi gorririk.</p><p><b>Nahi duzu irudi horiek zerrendatik kentzea?</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "Kendu prozesatu gabeko irudiak?"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p><b>RAW irudiak</b> pluginari gehitzen saiatu zara,<br/>baina fitxategi "
+"mota horiek ez daude onartuta.</p><p><b>Automatikoki kenduko dira "
+"zerrendatik.</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "RAW irudiak aurkitu dira"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>Irudi %1 ongi prozesatu da.</p>"
+msgstr[1] "<p>%1 irudi ongi prozesatu dira.</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>Zuzenketa burututa</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "Zuzenketa burututa"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr "<h2>Ez da kokatzailerik kargatu.<br/>Plugina ez da exekutagarria.</h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "Zuzendutako begiak"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "Begi gorriak kendu zaizkien irudien zerrenda da."
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>Trepeta honek unean hautatutako irudiaren zuzenketaren aurrebista "
+"bistaratuko du.</p><p><ul><li>Mugitu sagua aurrebistaren <b>gainean</b> "
+"jatorrizko irudia bistaratzeko.</li><li>Mugitu sagua aurrebistatik <b>kanpo</"
+"b> zuzendutako irudia bistaratzeko.</li><li><b>Egin klik</b> aurrebistan "
+"zuzenketako maskara bistaratzeko.</li></ul></p><p>Zoomaren botoiak eta "
+"panoramikoaren trepetak irudiko zati batzuk gertuago ikustea baimenduko "
+"dizute.</p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>aurrebista sortzen...</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>Ezin da irudiaren aurrebista ireki<br/>'%1'</p>."
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "Errorea aurrebistaren fitxategia kargatzean"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "Jatorrizko irudia"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "Zuzendutako irudia"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "Zuzenketaren maskara"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "Ez da irudirik hautatu"
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "Biltegiaren ezarpenak"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>Ezarpen hauek zuzendutako irudien biltegia kontrolatzen dute. Honako "
+"ereduetariko bat aukera daiteke:</p><p><ul><li><b>Azpikarpeta:</b> "
+"zuzendutako irudiak uneko karpetaren azpikarpeta batean gordetzen dira.</"
+"li><li><b>Aurrizkia:</b> aurrizki pertsonalizatu bat gehituko zaio "
+"zuzendutako irudiari.</li><li><b>Atzizkia:</b> atzizki pertsonalizatu bat "
+"gehituko zaio zuzendutako irudiari.</li><li><b>Gainidatzi:</b> jatorrizko "
+"irudi guztiak ordeztuko dira.</li></ul></p><p>Eredu hauetariko bakoitzak "
+"aukerako gako-hitz bat irudiaren metadatuei gehitzea baimentzen dizu.</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "Gorde azpikarpetan"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "Gehitu aurrizkia"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "Gehitu atzizkia"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "Gainidatzi"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr ""
+"Sartu azpikarpetaren izena, aurrizkia edo atzizkia zuzendutako irudietan "
+"erabiltzeko."
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "Gehitu &metadatuen gako-hitza"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr ""
+"Aktibatzen bada, gako-hitz pertsonalizatu bat aplikatuko zaio irudiaren "
+"metadatuei."
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "Sartu gako-hitz pertsonalizatuaren izena..."
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "Prozesatu gabeko irudien kudeaketa"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>Ezarpen hauek prozesatu gabeko irudien kudeaketa kontrolatzen dute "
+"probako moduan exekutatzean. Helburuko zuzenketa azkartzeko, prozesatu "
+"gabeko zerrendatik ken daitezkeenez, ez dira berriro analizatuko. Honako "
+"aukeretatik bat erabil daiteke:</p><p><ul><li><b>Galdetu erabiltzaileari:</"
+"b> laster-leiho bat agertuko da ekintza gehiago buruz galdetuz.</"
+"li><li><b>mantendu zerrendan:</b> prozesatu gabeko irudi guztiak zerrendan "
+"mantenduko dira.</li><li><b>Kendu zerrendatik:</b> prozesatu gabeko irudi "
+"guztiak probako exekuzioaren ondoren zerrendatik kenduko dira.</li></ul></p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "&Galdetu erabiltzaileari"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr ""
+"Aktibatzen bada, erabiltzaileari galdetuko zaio prozesatu gabeko irudiak "
+"mantendu edo kentzea nahi dituen."
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "&Mantendu zerrendan"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr ""
+"Aktibatzen bada, prozesatu gabeko irudiak fitxategien zerrendan mantenduko "
+"dira probako exekuzioa amaitutakoan."
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "&Kendu zerrendatik"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr ""
+"Aktibatzen bada, prozesatu gabeko irudiak fitxategien zerrendatik kenduko "
+"dira probako exekuzioa amaitutakoan."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñaki Larrañaga Murgoitio"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "dooteo@euskalgnu.org"
+
+#~ msgid "Summary"
+#~ msgstr "Résumé"
+
+#~ msgid "Enter the name of the extra here..."
+#~ msgstr "Saisir le nom de l'extra ici..."

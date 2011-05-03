@@ -1,0 +1,399 @@
+# translation of kipiplugin_htmlexport.po to Thai
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_htmlexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2010-03-03 19:53+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: generator.cpp:136
+#, kde-format
+msgid "Could not find theme in '%1'"
+msgstr "ไม่สามารถพบชุดตกแต่งใน '%1'"
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr "ทำการคัดลอกชุดตกแต่ง"
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr "ไม่สามารถคัดลอกชุดตกแต่งได้"
+
+#: generator.cpp:178
+#, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr "ทำการดาวน์โหลดแฟ้มต่าง ๆ จากทางไกล สำหรับ \"%1\""
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr "ไม่สามารถเปิดแฟ้มชั่วคราวได้"
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr "ไม่สามารถดาวน์โหลด %1 ได้"
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr "ไม่สามารถสร้างแฟ้ม gallery.xml ได้"
+
+#: generator.cpp:258
+#, kde-format
+msgid "Generating files for \"%1\""
+msgstr "ทำการสร้างแฟ้มต่าง ๆ สำหรับ \"%1\""
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr "ก่อนหน้า"
+
+#: generator.cpp:291
+msgid "Next"
+msgstr "ถัดไป"
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr "รายการคลังภาพ"
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr "ภาพต้นฉบับ"
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr "ไปด้านบน"
+
+#: generator.cpp:296
+msgid "Make"
+msgstr "สร้างจาก"
+
+#: generator.cpp:297
+msgid "Model"
+msgstr "รุ่น"
+
+#: generator.cpp:298
+msgid "Image Orientation"
+msgstr "ทิศทางของภาพ"
+
+#: generator.cpp:299
+msgid "Image X Resolution"
+msgstr "ความละเอียดทางแกน X"
+
+#: generator.cpp:300
+msgid "Image Y Resolution"
+msgstr "ความละเอียดทางแกน Y"
+
+#: generator.cpp:301
+msgid "Image Resolution Unit"
+msgstr "หน่วยของความละเอียด"
+
+#: generator.cpp:302
+msgid "Image Date Time"
+msgstr "วันและเวลาของภาพ"
+
+#: generator.cpp:303
+msgid "YCBCR Positioning"
+msgstr ""
+
+#: generator.cpp:304
+msgid "Exposure Time"
+msgstr "ความไวชัตเตอร์"
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr "ค่ารูรับแสงเลนส์ (F-number)"
+
+#: generator.cpp:306
+msgid "Exposure Index"
+msgstr ""
+
+#: generator.cpp:307
+msgid "ISO Speed Ratings"
+msgstr "ค่า ISO ความไวแสง"
+
+#: generator.cpp:308
+msgid "Shutter Speed Value"
+msgstr ""
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr ""
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr "ทางยาวโฟกัส"
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr "กำลังสร้างแฟ้มต่าง ๆ ในแบบ HTML"
+
+#: generator.cpp:343
+#, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr "ไม่สามารถโหลดแฟ้ม XSL '%1' ได้"
+
+#: generator.cpp:349
+#, kde-format
+msgid "Could not load XML file '%1'"
+msgstr "ไม่สามารถโหลดแฟ้ม XML '%1' ได้"
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr "เกิดข้อผิดพลาดระหว่างประมวลผลแฟ้ม XML"
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr "ไม่สามารถเปิด '%1' เพื่อทำการเขียนได้"
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr "ไม่สามารถสร้างโฟลเดอร์ '%1' ไว้ใน '%2' ได้"
+
+#: imagegenerationfunctor.cpp:89
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "ไม่สามารถอ่านข้อมูลภาพ '%1' ได้"
+
+#: imagegenerationfunctor.cpp:95
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "ไม่รู้จักรูปแบบของภาพ '%1'"
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "เกิดข้อผิดพลาดในการโหลดภาพ '%1'"
+
+#: imagegenerationfunctor.cpp:140
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "ไม่สามารถจัดเก็บภาพ '%1' เป็นแฟ้ม '%2' ได้"
+
+#: imagegenerationfunctor.cpp:161
+#, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr "ไม่สามารถจัดเก็บภาพตัวอย่างของภาพ '%1' เป็นแฟ้ม '%2' ได้"
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr "ไม่มีข้อมูล"
+
+#: imagegenerationfunctor.cpp:338
+#, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr "ไม่สามารถเปิดแฟ้ม '%1' เพื่อทำการเขียนได้"
+
+#: imagegenerationfunctor.cpp:342
+#, kde-format
+msgid "Could not save image to file '%1'"
+msgstr "ไม่สามารถจัดเก็บภาพไปเป็นแฟ้ม '%1' ได้"
+
+#: plugin.cpp:72
+msgid "Export to &HTML..."
+msgstr "ส่ง&ออกเป็นแฟ้ม HTML..."
+
+#: plugin.cpp:95
+msgid "Generating gallery..."
+msgstr "กำลังสร้างแกลเลอรี..."
+
+#: plugin.cpp:105
+msgid "Finished, but some warnings occurred."
+msgstr "เสร็จสิ้นแล้ว แต่มีรายการแจ้งเตือนบางอย่างด้วย"
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr "%1:"
+
+#: wizard.cpp:206
+msgid "Export image collections to HTML pages"
+msgstr "ส่งออกคลังภาพไปเป็นหน้าเว็บแบบ HTML"
+
+#: wizard.cpp:212
+msgid "HTML Export"
+msgstr "ส่งออกเป็น HTML"
+
+#: wizard.cpp:215
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr "ส่วนเสริมของ KIPI สำหรับส่งออกคลังภาพไปเป็นหน้าเว็บแบบ HTML"
+
+#: wizard.cpp:216
+#, fuzzy
+#| msgid "(c) 2006-2008, Aurelien Gateau"
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr "(c) 2006-2008, Aurelien Gateau"
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr ""
+
+#: wizard.cpp:221
+#, fuzzy
+#| msgid "Author and Maintainer"
+msgid "Maintainer"
+msgstr "ผู้เขียนและผู้ดูแล"
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: wizard.cpp:226
+#, fuzzy
+#| msgid "Author and Maintainer"
+msgid "Former Author and Maintainer"
+msgstr "ผู้เขียนและผู้ดูแล"
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr "คู่มือการใช้งาน"
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr "การเลือกคลังภาพ"
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr "ชุดตกแต่ง"
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr "พารามิเตอร์ต่าง ๆ ของชุดตกแต่ง"
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr "ตั้งค่าต่าง ๆ ของภาพ"
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr "ผลส่งออก"
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr "ผู้เขียน: %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr "ภาพเต็มขนาด"
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr "จัดเก็บภาพ"
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr "รูปแบบ:"
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr "ภาพประเภท JPEG"
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr "ภาพประเภท PNG"
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr "คุณภาพ:"
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+msgid "Max size:"
+msgstr "ขนาดสูงสุด:"
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+msgid "Include full-size original images for download"
+msgstr "รวมภาพต้นฉบับเต็มขนาดสำหรับการดาวน์โหลดด้วย"
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr "ใช้ภาพต้นฉบับ"
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr "ภาพตัวอย่าง"
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr "ขนาด:"
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr "โฟลเดอร์เป้าหมาย:"
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr "เปิดในเบราว์เซอร์"
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""
+"คุณสามารถเปลี่ยนค่าพารามิเตอร์ต่าง ๆ ได้ในหน้านี้ โดยพารามิเตอร์ต่าง ๆ จะแตกต่างกันออกไป "
+"ขึ้นอยู่กับชุดตกแต่ง"
+
+#, fuzzy
+#~| msgid "HTML Gallery..."
+#~ msgid "&HTML Gallery..."
+#~ msgstr "แกลเลอรีภาพแบบ HTML..."

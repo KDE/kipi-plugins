@@ -1,0 +1,116 @@
+# Translation of kipiplugin_acquireimages to Norwegian Bokmål
+#
+# Nils Kristian Tomren <slx@nilsk.net>, 2005.
+# Bjørn Kvisli <bjorn.kvisli@gmail.com>, 2008.
+# Bjørn Steensrud <bjornst@skogkatt.homelinux.org>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2010-07-15 20:48+0200\n"
+"Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
+"Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Hent bilder"
+
+#: aboutdata.h:41
+msgid "A tool to acquire images using a flat scanner"
+msgstr "Et verktøy for å hente bilder ved hjelp av skanner"
+
+#: aboutdata.h:42
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr ""
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Forfatter"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Utvikler"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr "Importer fra skanner …"
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Kan ikke åpne skannerenheten."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Skann bilde"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Håndbok"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Filbavn for ny bildefil"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr " Filformatet til målfilen «%1» støttes ikke."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"Kunne ikke lagre fila\n"
+"«%1» til\n"
+"«%2»."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"Det finnes allerede en fil med navnet «%1». Vil du virkelig overskrive den?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Skrive over fila?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr "Kan ikke lagre fila «%1»"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Bjørn Kvisli"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bjorn.kvisli@gmail.com"

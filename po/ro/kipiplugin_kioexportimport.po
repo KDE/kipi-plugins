@@ -1,0 +1,149 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sergiu Bivol <sergiu.bivol@jurnaltv.md>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2010-01-17 12:00+0200\n"
+"Last-Translator: Sergiu Bivol <sergiu.bivol@jurnaltv.md>\n"
+"Language-Team: Română <kde-i18n-ro@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "Exportă în calculator distant"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "Pornește exportul"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "Pornește exportul la ținta specificată"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "Exportă în calculator distant"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr "Modul Kipi de exportat imagini prin rețea utilizînd KIO-Slave"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "(c) 2009, Johannes Wienke"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "Dezvoltator și responsabil"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "Manualul"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Unele imagini nu au fost transferate și sînt încă în listă. Puteți reîncerca "
+"să re exportați acum."
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "Încărcare incompletă"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr "Aceasta este lista de imagini de importat în albumul curent."
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "Importă din calculator distant"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "Pornește importul"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Începe importul imaginilor specificate în albumul curent."
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "Importă din calculator distant"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr "Modul Kipi de importat imagini prin rețea utilizînd KIO-Slave"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Unele imagini nu au fost transferate și sînt încă în listă. Puteți reîncerca "
+"să re importați acum."
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "Import incomplet"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "Export în calculator distant..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "Import din calculator distant..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "Locația-țintă: "
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Stabilește adresa la care să fie încărcate imaginile. Aceasta poate fi orice "
+"adresă așa cum este utilizată în Dolphin sau Konqueror, de ex. ftp://"
+"serverul.meu.org/sub/dosar."
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "Alegere țintă..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "Alegere locație-țintă..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr "Aceasta este lista imaginilor de încărcat la ținta specificată."
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "nealese"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Sergiu Bivol"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sergiu@ase.md"

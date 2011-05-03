@@ -1,0 +1,238 @@
+# translation of kipiplugin_jpeglossless.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Youssef Chahibi <chahibi@gmail.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_jpeglossless\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2007-10-14 15:25+0000\n"
+"Last-Translator: Youssef Chahibi <chahibi@gmail.com>\n"
+"Language-Team:  <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: plugin/plugin_jpeglossless.cpp:111
+#, fuzzy
+msgid "Rotate"
+msgstr "تدوير"
+
+#: plugin/plugin_jpeglossless.cpp:115
+#, fuzzy
+msgctxt "rotate image left"
+msgid "Left"
+msgstr "يسار"
+
+#: plugin/plugin_jpeglossless.cpp:122
+#, fuzzy
+msgctxt "rotate image right"
+msgid "Right"
+msgstr "يمين"
+
+#: plugin/plugin_jpeglossless.cpp:132
+#, fuzzy
+msgid "Flip"
+msgstr "قلب"
+
+#: plugin/plugin_jpeglossless.cpp:136
+#, fuzzy
+msgid "Horizontally"
+msgstr "أفقيا"
+
+#: plugin/plugin_jpeglossless.cpp:143
+#, fuzzy
+msgid "Vertically"
+msgstr "بشكل عمودي"
+
+#: plugin/plugin_jpeglossless.cpp:154
+#, fuzzy
+msgid "Auto Rotate/Flip Using Exif Information"
+msgstr "تلقائي تدوير قلب الإستعمال معلومات"
+
+#: plugin/plugin_jpeglossless.cpp:163
+#, fuzzy
+msgid "Convert to Black && White"
+msgstr "حوّل إلى أسود أبيض"
+
+#: plugin/plugin_jpeglossless.cpp:211
+#, fuzzy
+msgid "horizontally"
+msgstr "أفقياً"
+
+#: plugin/plugin_jpeglossless.cpp:216
+#, fuzzy
+msgid "vertically"
+msgstr "عاموديا"
+
+#: plugin/plugin_jpeglossless.cpp:234
+#, fuzzy, kde-format
+msgid "Flip images %1"
+msgstr "قلب 1"
+
+#: plugin/plugin_jpeglossless.cpp:247
+#, fuzzy
+msgid "right (clockwise)"
+msgstr "يمين"
+
+#: plugin/plugin_jpeglossless.cpp:252
+#, fuzzy
+msgid "left (counterclockwise)"
+msgstr "يسار"
+
+#: plugin/plugin_jpeglossless.cpp:257
+#, fuzzy
+msgid "using Exif orientation tag"
+msgstr "توجيه :: توجه بطاقة"
+
+#: plugin/plugin_jpeglossless.cpp:274
+#, fuzzy, kde-format
+msgid "Rotate images %1"
+msgstr "تدوير 1"
+
+#: plugin/plugin_jpeglossless.cpp:290
+#, fuzzy
+msgid ""
+"<p>Are you sure you wish to convert the selected image(s) to black and "
+"white? This operation <b>cannot</b> be undone.</p>"
+msgstr "<p> هل إلى تحويل مُنتقى صورة s إلى أسود و أبيض هذا عملية<b></b></p>"
+
+#: plugin/plugin_jpeglossless.cpp:304
+#, fuzzy
+msgid "Convert images to black & white"
+msgstr "حول الصور الى ابيض و اسود"
+
+#: plugin/plugin_jpeglossless.cpp:339
+#, fuzzy, kde-format
+msgid "Rotating Image \"%1\""
+msgstr "الدوران صورة"
+
+#: plugin/plugin_jpeglossless.cpp:344
+#, fuzzy, kde-format
+msgid "Flipping Image \"%1\""
+msgstr "التقليب صورة"
+
+#: plugin/plugin_jpeglossless.cpp:349
+#, fuzzy, kde-format
+msgid "Converting to Black & White \"%1\""
+msgstr "تحويل إلى أسود أبيض"
+
+#: plugin/plugin_jpeglossless.cpp:371
+#, fuzzy
+msgid "Rotate image complete"
+msgstr "تدوير صورة كامل"
+
+#: plugin/plugin_jpeglossless.cpp:376
+#, fuzzy
+msgid "Flip image complete"
+msgstr "قلب صورة كامل"
+
+#: plugin/plugin_jpeglossless.cpp:381
+#, fuzzy
+msgid "Convert to Black & White complete"
+msgstr "تم تحويل الى ابيض و اسود"
+
+#: plugin/plugin_jpeglossless.cpp:406
+#, fuzzy
+msgid "Failed to Rotate image"
+msgstr "فشل إلى تدوير صورة"
+
+#: plugin/plugin_jpeglossless.cpp:411
+#, fuzzy
+msgid "Failed to Flip image"
+msgstr "فشل إلى قلب صورة"
+
+#: plugin/plugin_jpeglossless.cpp:416
+#, fuzzy
+msgid "Failed to convert image to Black & White"
+msgstr "فشل تحويل الصورة الى ابيض و اسود"
+
+#: plugin/utils.cpp:89
+#, fuzzy
+msgid "unable to open source file"
+msgstr "إلى فتح مصدر ملفّ"
+
+#: plugin/utils.cpp:119 plugin/utils.cpp:146
+#, fuzzy
+msgid "unable to open temp file"
+msgstr "إلى فتح مؤقت ملفّ"
+
+#: plugin/utils.cpp:133
+#, fuzzy
+msgid "Cannot rotate: unable to open temp file"
+msgstr "لا يستطيع تدوير إلى فتح مؤقت ملفّ"
+
+#: plugin/utils.cpp:195
+#, fuzzy, kde-format
+msgid "Cannot update metadata: %1"
+msgstr "لا يستطيع تحديث بيانات أعلى 1"
+
+#: transform/convert2grayscale.cpp:96 transform/convert2grayscale.cpp:177
+#: transform/imageflip.cpp:87 transform/imagerotate.cpp:88
+#: transform/jpegtransform.cpp:238 transform/jpegtransform.cpp:340
+#, fuzzy
+msgid "Error in opening input file"
+msgstr "خطأ بوصة دَخْل ملفّ"
+
+#: transform/convert2grayscale.cpp:102 transform/imageflip.cpp:93
+#: transform/imagerotate.cpp:96
+#, fuzzy
+msgid "Error in opening temporary file"
+msgstr "خطأ بوصة مؤقت ملفّ"
+
+#: transform/convert2grayscale.cpp:115
+#, fuzzy
+msgid "Cannot convert to gray scale RAW file"
+msgstr "لا يستطيع تحويل إلى رمادي مقياس خام ملفّ"
+
+#: transform/convert2grayscale.cpp:139 transform/imageflip.cpp:130
+#: transform/imagerotate.cpp:136
+#, fuzzy
+msgid "Cannot update source image"
+msgstr "لا يستطيع تحديث مصدر صورة"
+
+#: transform/convert2grayscale.cpp:185 transform/jpegtransform.cpp:256
+#: transform/jpegtransform.cpp:349
+#, fuzzy
+msgid "Error in opening output file"
+msgstr "خطأ بوصة مخرجات ملفّ"
+
+#: transform/convert2grayscale.cpp:285
+#, fuzzy, kde-format
+msgid "Cannot convert to gray scale: %1"
+msgstr "لا يستطيع تحويل إلى رمادي مقياس 1"
+
+#: transform/imageflip.cpp:106 transform/imagerotate.cpp:109
+#, fuzzy
+msgid "Cannot rotate RAW file"
+msgstr "لا يستطيع تدوير خام ملفّ"
+
+#: transform/imageflip.cpp:157 transform/imageflip.cpp:186
+#, fuzzy
+msgid "Nonstandard flip action"
+msgstr "غير قياسي الأفعال"
+
+#: transform/imageflip.cpp:219
+#, fuzzy, kde-format
+msgid "Cannot flip: %1"
+msgstr "لا يستطيع 1"
+
+#: transform/imagerotate.cpp:173 transform/imagerotate.cpp:213
+#, fuzzy
+msgid "Nonstandard rotation angle"
+msgstr "غير قياسي زاوية"
+
+#: transform/imagerotate.cpp:246
+#, fuzzy, kde-format
+msgid "Cannot rotate: %1"
+msgstr "لا يستطيع تدوير 1"
+
+#: transform/jpegtransform.cpp:266 transform/jpegtransform.cpp:275
+#, kde-format
+msgid "The JPEG library reported an error: %1"
+msgstr ""

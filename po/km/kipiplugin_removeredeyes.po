@@ -1,0 +1,394 @@
+# translation of kipiplugin_removeredeyes.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_removeredeyes\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2010-06-23 15:58+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "កំណត់​ការ​ស្រង់​ស្នាម​ប្រឡាក់​ពណ៌​ចេញ"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "ទំហំ​នៃ​ស្នាម​ប្រឡាក់​ពណ៌​អប្បបរមា ៖"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "រង្វង់​មូល​អប្បបរមា ៖"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "ការកំណត់​កម្មវិធី​ចាត់​ចំណាត់​ថ្នាក់"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "ប្រើ​កម្មវិធី​ចាត់​ចំណាត់​ថ្នាក់​ស្តង់ដារ"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr ""
+"បើបាន​ធីក កម្មវិធី​ចាត់​ចំណាត់​ថ្នាក់​ស្តង់ដារ​នឹង​ត្រូវ​ភ្ជាប់​​ជាមួយ​នឹង​កម្មវិធី​ជំនួយ​របស់​ KIPI ​ដែល​នឹង​ត្រូវ​ប្រើ ។"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "បញ្ចូល​ទីតាំង​របស់​កម្មវិធី​ចាត់​ចំណាត់​ថ្នាក់​នៅ​ទីនេះ ។"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "ក្រុម​ជិត​ខាង ៖"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "កត្តា​ដែល​បាន​ធ្វើ​មាត្រដ្ឋាន ៖"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "របៀប​កម្រិត​ខ្ពស់"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "របៀប​សាមញ្ញ"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>​យឺត​<br/>(រូបភាព​ដែល​ព្រិល​បន្តិច​ / ​ទាប​​)</b></p><p>​នៅ​ក្នុង​របៀប​ ការ​កែខៃ​ និង​ការរក​ស្វ័យ​"
+"ប្រវត្តិ​របស់​ភ្នែក​ក្រហម​អាច​ទុក​ចិត្ត​បាន ។ កំហុស​នៃ​អត្រា​រក​ឃើញ​ដែល​ខ្ពស់​ធ្វើ​ឲ្យ​ការគណនា​កាន់​តែ​យឺត​ខ្លាំង ។</"
+"p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>​ស្តង់ដារ​</b></p><p>របៀប​នេះ​សម​ស្រប​​សម្រាប់​គុណភាព​បង្ហាញ​រូបភាព​ភាគ​ច្រើ​ន ។ ​ជានិច្ច​កាល​ សូម​"
+"សាក​ល្បង​របៀប​នេះ​ជា​មុន​សិន​ ។</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>លឿន​<br/>(រូបភាព​ខ្ពស់​​​)</b></p><p>​​នៅ​ក្នុង​របៀប​នេះ​ ការ​រក​ឃើញ​ស្វ័យ​ប្រវត្តិ​នឹង​ធ្វើ​ឲ្យ​មាន​"
+"ដំណើរ​ការលឿន ប៉ុន្តែ​កំហុស​វិជ្ជមាន​ជា​ច្រើន​អាច​នឹង​កើត​ឡើង ។ ប្រើ​របៀប​នេះ សម្រាប់​តែ​រូប​ភាព​ដែល​មាន​"
+"គុណភាព​បង្ហាញ​ខ្ពស់​បំផុត និង​ច្បាស់​បំផុត​ ។</p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "ការ​យក​ភ្នែក​ក្រហម​ចេញ..."
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "យក​ភ្នែក​ក្រហម​ចេញ​ដោយ​ស្វ័យ​ប្រវត្តិ"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "យក​ភ្នែក​ក្រហមចេញ"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr "កម្មវិធី​ជំនួយ​សម្រាប់​រក និង​យក​បែបផែន​ភ្នែក​ក្រហម​ចេញ​ដោយ​ស្វ័យ​ប្រវត្តិ​ ។"
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "រក្សា​សិទ្ធិ​ឆ្នាំ ២០០៨-២០០៩ ដោយ​ Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "អ្នក​និពន្ធ និង​អ្នក​ថែទាំ"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "សៀវ​ភៅ​ដៃ"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "កែរូបថត"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "ចាប់ផ្ដើមកែ​រូបភាព​ដែល​បាន​រាយ"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "ដំណើរ​ការ​សាក​ល្បង"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr "ធ្វើ​ត្រាប់​តាម​​ដំណើរការ​កែ ដោយ​មិនរក្សាទុក​លទ្ធផល ។"
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "សរុប​ ៖"
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "ជោគ​ជ័យ ៖"
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "បាន​បរាជ័យ ៖"
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "បញ្ជី​ឯកសារ"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "ការ​កំណត់"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p>អ្នកជ្រើសរបៀប​កែ <b>'សរសេរជាន់លើ' </b>!<br/>តើ​អ្នក​ប្រាកដ​ជា​ចង់​បាត់​បង់​​ឯកសារ​រូបភាព​ដើម​"
+"របស់​អ្នក​ឬ ?</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "របៀប​សរសេរ​ជាន់លើ"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>រូបភាព​មួយ​ចំនួន​មិនអាច​ត្រូវ​បាន​វិភាគ​ជា​មួយ​នឹង​ការ​កំណត់​បច្ចុប្បន្នបានទេ ឬ​ពួកវា​មិនមាន​ភ្នែក​ក្រហម​ទាល់​តែ​"
+"សោះ ។</p><p><b>តើ​អ្នកចង់​យក​រូបភាព​ទាំង​នេះ​ចេញ​ពី​បញ្ជី​ដែរឬទេ ?</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "យក​រូបភាព​ដែល​មិន​ដំណើរការ​ចេញ ?"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p>អ្នកបាន​ព្យាយាម​បន្ថែម <b>រូប​ភាព​ដើម</b> ទៅកម្មវិធី​ជំនួយ<br/>ប៉ុន្តែ​ប្រភេទ​ឯកសារ​ទាំង​នោះ​"
+"មិនបានគាំទ្រទេ ។</p><p><b>ពួក​វា​ត្រូវ​បាន​យក​ចេញ​ពី​បញ្ជី​ដោយ​ស្វ័យ​ប្រវត្តិ ។</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "រកឃើញ​រូបភាព​ដើម"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>រូបភាព %1 ត្រូវ​បាន​ដំណើរការ​ដោយ​ជោគជ័យ ។</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>ការ​កែ​បាន​បញ្ចប់ !</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "ការ​កែ​បានបញ្ចប់"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr "<h2>មិន​បាន​ផ្ទុក​កម្មវិធី​រក​ទីតាំង​ទេ​ ។<br/>មិន​អាច​ប្រតិបត្តិកម្មវិធី​ជំនួយ​បាន​ទេ ។</h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "ភ្នែក​ដែល​បាន​កែខៃ"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "នេះ​ជា​បញ្ជី​រូបភាព​ដែល​​ត្រូវ​យក​ភ្នែក​ក្រហម​ចេញ ។"
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>​ធាតុ​ក្រាហ្វិក​នេះ​នឹង​បង្ហាញ​នូវ​ការមើល​ជា​មុន​ដែល​​ត្រឹម​ត្រូវ​ សម្រាប់​រូបភាព​ដែល​បាន​ជ្រើស​បច្ចុប្បន្ន​ ។</"
+"p><p><ul><li>ផ្លាស់​ទី​កណ្តុរ​ <b>​ពីលើ​</b> ​ការ​មើល​ជា​មុន ដើម្បី​បង្ហាញ​រូបភាព​ដើម ។</li><li>ផ្លាស់​"
+"ទី​កណ្តុរ​ <b>​ចេញ​ពី​</b> ​ការ​មើល​ជា​មុន ដើម្បី​បង្ហាញ​រូប​ភាព​ដែល​បាន​កែ​ខៃ​ ។</li><li><b>​ចុច​លើ​</b> ​"
+"ការមើល​ជា​មុន ដើម្បី​បង្ហាញ​របាំង​កែខៃ​ ។</li></ul></p><p>ប៊ូតុង​ពង្រីក និង​ធាតុក្រាហ្វិក​​ផ្លាស់​ទី​យឺត​ៗ​"
+"អនុញ្ញាត​ឲ្យ​អ្នក​មើល​ផ្នែក​មួយ​ចំនួន​នៃ​រូបភាព​ឲ្យ​បាន​កាន់​​តែ​ជិត​ឡើង ។</p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>កំពុង​បង្កើត​ការ​មើល​ជា​មុន...</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>មិន​អាច​បើក​រូបភាព​មើល​ជា​មុន​<br/>'%1'</p> ។"
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "កំហុស​ក្នុង​ពេល​ផ្ទុក​ឯកសារ​មើល​ជា​មុន"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "រូបភាព​ដើម"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "រូបភាព​ដែល​បានកែខៃ"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "របាំង​កែខៃ"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "គ្មាន​រូបភាព​ដែល​បានជ្រើស"
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "ការកំណត់​ឧបករណ៍​ផ្ទុក"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>​ការកំណត់​ទាំង​នេះ​ត្រួត​ពិនិត្យ​ឧបករណ៍​ផ្ទុក​របស់​រូបភាព​ដែល​បាន​កែ ។ មាន​បី​របៀប​ដែល​ត្រូវ​ជ្រើស​ពី​ ៖</"
+"p><p><ul><li><b>​ថត​រង​ ៖</b> រូបភាព​ដែល​បាន​កែ​នឹង​ត្រូវ​រក្សា​ទុក​នៅ​ក្នុង​ថត​រង​ខាង​ក្រោម​​ផ្លូវ​អាល់ប៊ុម​"
+"បច្ចុប្បន្ន​ ។</li><li><b>បុព្វ​បទ​ ៖</b> ​បុព្វបទ​ផ្ទាល់​ខ្លួន​នឹង​ត្រូវ​បាន​បន្ថែម​ទៅ​រូប​ភាព​ដែល​បាន​កែ​ ។</"
+"li><li><b>បច្ច័យ​ ៖</b> បច្ច័យ​ផ្ទាល់​ខ្លួន​នឹង​ត្រូវ​បាន​បន្ថែម​ទៅ​រូបភាព​ដែល​បាន​កែ​ ។</li><li><b>​"
+"សរសេរ​ជាន់​លើ​ ៖</b> គ្រប់​រូបភាព​ដើម​ទាំង​អស់​នឹង​ត្រូវ​បាន​ជំនួស ។</li></ul></p><p>របៀប​នីមួយ​ៗ​ក្នុង​"
+"ចំណោម​របៀប​ទាំង​បី​អនុញ្ញាត​ឲ្យ​អ្នក​បន្ថែម​ពាក្យ​គន្លឹះ​ជា​ជម្រើស​ទៅ​កាន់​ទិន្នន័យ​មេតា​រូបភាព ។</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "រក្សា​ទុក​នៅ​ក្នុង​ថត​រង"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "បន្ថែម​បុព្វបទ"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "បន្ថែម​បច្ច័យ"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "សរសេរ​ជាន់​លើ​"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr "បញ្ចូល​ឈ្មោះ​ថត​រង​ បុព្វបទ ឬ​បច្ច័យ​ត្រូវ​ប្រើ​សម្រាប់​រូបភាព​ដែល​បាន​កែ​ខៃ​ ។"
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "បន្ថែម​ពាក្យ​គន្លឹះ​ទិន្នន័យ​មេតា"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr "បើ​បាន​ធីក ពាក្យ​គន្លឹះ​នឹង​ត្រូវ​បាន​អនុវត្ត​ជា​មួយ​នឹង​ទិន្នន័យ​មេតា​រូបភាព ។"
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "បញ្ចូល​ឈ្មោះ​ពាក្យ​គន្លឹះ​ផ្ទាល់​ខ្លួន​ នៅ​ទី​នេះ..."
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "ការ​គ្រប់​គ្រង​រូបភាព​ដែល​មិន​ដំណើរ​ការ"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>ការកំណត់​ទាំង​នេះ​ត្រួត​ពិនិត្យ​ការគ្រប់​គ្រង​រូបភាព​ដែល​មិន​ដំណើរ​ការ​ នៅ​ពេល​ដំណើរ​ការ​របៀប​សាក​ល្បង​ ។ "
+"ដើម្បី​បង្កើន​ល្បឿន​ការ​កែ​ខៃ​ចុង​ក្រោយ រូបភាព​ដែល​មិន​ដំណើរ​ការ​អាច​នឹង​ត្រូវ​បាន​យក​ចេញ​ពី​​បញ្ជី​ ដូច្នេះ​ពួក​វា​នឹង​"
+"មិន​ត្រូវ​បាន​ធ្វើ​វិភាគ​​ម្តង​ទៀត​ទេ ។ មាន​បី​របៀប​ដែល​ត្រូវ​ជ្រើស​ពី ៖</p><p><ul><li><b>សួរ​អ្នក​ប្រើ​ ៖</"
+"b> បង្អួច​លេច​ឡើង​នឹង​បង្ហាញ​ឡើង​ ដើម្បី​សួរ​រក​សកម្មភាព​បន្ថែម ។</li><li><b>រក្សា​ទុក​ក្នុង​បញ្ជី​ឯកសារ ៖"
+"</b> ​គ្រប់​រូប​ភាព​ទាំង​អស់​ដែល​មិន​ដំណើរការ​នឹង​ត្រូវ​បាន​រក្សា​ទុក​ក្នុង​បញ្ជី​ ។</li><li><b>យក​ចេញ​ពី​បញ្ជី ៖</"
+"b> គ្រប់​រូបភាព​ដែល​មិន​ដំណើរ​ការ​ទាំង​អស់​នឹង​ត្រូវ​បាន​យក​ចេញ​បន្ទាប់​ពី​ដំណើរ​ការ​សាកល្បង​ហើយ​ ។</li></ul></"
+"p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "សួរ​អ្នក​ប្រើ"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr "បើសិន​បាន​ធីក អ្នក​ប្រើ​នឹង​ត្រូវ​បាន​សួរ​​ឲ្យ​រក្សាទុក ឬ​យក​រូបភាព​ដែល​មិន​ដំណើរ​ការ​ចេញ​ ។"
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "រក្សា​ទុក​នៅ​ក្នុង​បញ្ជី"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr ""
+"បើ​សិន​បាន​ធីក រូបភាព​ដែល​មិន​ដំណើរ​ការ​នឹង​ត្រូវ​បាន​រក្សា​ទុក​នៅ​ក្នុង​បញ្ជី​ឯកសារ​ បន្ទាប់​ពី​ដំណើរ​សាក​ល្បង​ហើយ​ ។"
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "យក​ចេញ​ពី​បញ្ជី​ឯកសារ​"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr ""
+"បើ​បាន​ធីក​ រូបភាព​ដែល​មិន​ដំណើរ​ការ​នឹង​ត្រូវ​បាន​យក​ចេញ​ពី​បញ្ជី​ឯកសារ​ បន្ទាប់​ពី​បាន​ដំណើរ​ការ​សាក​ល្បង​ហើយ ។"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម,ម៉ន ម៉េត, សេង សុត្ថា, ​អេង វណ្ណៈ, អោក ពិសិដ្ឋ​"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info, \n"
+"evannak@khmeros.info,piseth_dv@khmeros.info"

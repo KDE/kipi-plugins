@@ -1,0 +1,72 @@
+# translation of kipiplugin_wallpaper.po to french
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Bieuzent Cyrille <bieuzent@gmail.com>, 2008.
+# Cyrille Bieuzent <bieuzent@gmail.com>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2010-06-17 13:42+0200\n"
+"Last-Translator: Cyrille Bieuzent <bieuzent@gmail.com>\n"
+"Language-Team: Français <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "&Mettre en arrière-plan"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Centrer"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Centrer Juxtaposer"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Centrer taille réelle"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Juxtaposé taille réelle"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Redimensionner"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Centrer ajustement automatique"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Redimensionner et rogner"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Vous avez choisi une image distante. Elle doit être enregistrer sur le "
+"disque local afin d'être utilisée comme papier peint </p><p>Où voulez-vous "
+"enregistrer cette image ? </p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Changer la papier peint"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "L'arrière-plan ne peut-être modifié."
+
+#~ msgid "We can not change background."
+#~ msgstr "Impossible de changer le papier peint"

@@ -1,0 +1,404 @@
+# Irish translation of kipiplugin_htmlexport
+# Copyright (C) 2009 This_file_is_part_of_KDE
+# This file is distributed under the same license as the kipiplugin_htmlexport package.
+# Kevin Scannell <kscanne@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: extragear-libs/kipiplugin_htmlexport.po\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2008-05-16 20:07-0500\n"
+"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
+"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
+"3 : 4\n"
+
+#: generator.cpp:136
+#, kde-format
+msgid "Could not find theme in '%1'"
+msgstr "Níorbh fhéidir an téama a aimsiú i '%1'"
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr "Téama á chóipeáil"
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr "Níorbh fhéidir an téama a chóipeáil"
+
+#: generator.cpp:178
+#, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr "Cianchomhaid á n-íosluchtú le haghaidh \"%1\""
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr "Níorbh fhéidir comhad sealadach a oscailt"
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr "Níorbh fhéidir %1 a íosluchtú"
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr "Níorbh fhéidir gallery.xml a chruthú"
+
+#: generator.cpp:258
+#, kde-format
+msgid "Generating files for \"%1\""
+msgstr "Comhaid á nginiúint le haghaidh \"%1\""
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr "Roimhe Seo"
+
+#: generator.cpp:291
+msgid "Next"
+msgstr "Ar Aghaidh"
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr "Liosta Bailiúchán"
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr "Buníomhá"
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr "Téigh Suas"
+
+#: generator.cpp:296
+msgid "Make"
+msgstr "Déanamh"
+
+#: generator.cpp:297
+msgid "Model"
+msgstr "Samhail"
+
+#: generator.cpp:298
+#, fuzzy
+#| msgid "Image Settings"
+msgid "Image Orientation"
+msgstr "Socruithe Íomhá"
+
+#: generator.cpp:299
+#, fuzzy
+#| msgid "Image Settings"
+msgid "Image X Resolution"
+msgstr "Socruithe Íomhá"
+
+#: generator.cpp:300
+#, fuzzy
+#| msgid "Image Settings"
+msgid "Image Y Resolution"
+msgstr "Socruithe Íomhá"
+
+#: generator.cpp:301
+msgid "Image Resolution Unit"
+msgstr ""
+
+#: generator.cpp:302
+msgid "Image Date Time"
+msgstr ""
+
+#: generator.cpp:303
+msgid "YCBCR Positioning"
+msgstr ""
+
+#: generator.cpp:304
+msgid "Exposure Time"
+msgstr "Am Nochta"
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr "F-Uimhir"
+
+#: generator.cpp:306
+msgid "Exposure Index"
+msgstr ""
+
+#: generator.cpp:307
+msgid "ISO Speed Ratings"
+msgstr ""
+
+#: generator.cpp:308
+msgid "Shutter Speed Value"
+msgstr ""
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr "Luach Cró"
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr "Fad Fócasach"
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr "Comhaid HTML á nginiúint"
+
+#: generator.cpp:343
+#, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr "Níorbh fhéidir comhad XSL '%1' a luchtú"
+
+#: generator.cpp:349
+#, kde-format
+msgid "Could not load XML file '%1'"
+msgstr "Níorbh fhéidir comhad XML '%1' a luchtú"
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr "Earráid agus comhad XML á phróiseáil"
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr "Níorbh fhéidir '%1' a oscailt chun é a scríobh"
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr "Níorbh fhéidir fillteán '%1' a chruthú i '%2'"
+
+#: imagegenerationfunctor.cpp:89
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "Níorbh fhéidir íomhá '%1' a léamh"
+
+#: imagegenerationfunctor.cpp:95
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "Ní aithnítear formáid íomhá '%1'"
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "Earráid agus íomhá '%1' á luchtú"
+
+#: imagegenerationfunctor.cpp:140
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "Níorbh fhéidir íomhá '%1' a shábháil i '%2'"
+
+#: imagegenerationfunctor.cpp:161
+#, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr "Níorbh fhéidir mionsamhail d'íomhá '%1' a shábháil i '%2'"
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr "níl ar fáil"
+
+#: imagegenerationfunctor.cpp:338
+#, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr "Níorbh fhéidir comhad '%1' a oscailt chun scríobh ann"
+
+#: imagegenerationfunctor.cpp:342
+#, kde-format
+msgid "Could not save image to file '%1'"
+msgstr "Níorbh fhéidir an íomhá a shábháil i gcomhad '%1'"
+
+#: plugin.cpp:72
+msgid "Export to &HTML..."
+msgstr ""
+
+#: plugin.cpp:95
+msgid "Generating gallery..."
+msgstr "Gailearaí á ghiniúint..."
+
+#: plugin.cpp:105
+#, fuzzy
+#| msgid "Finished, but some warnings have occured"
+msgid "Finished, but some warnings occurred."
+msgstr "Críochnaithe, ach tharla rabhaidh"
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr "%1:"
+
+#: wizard.cpp:206
+msgid "Export image collections to HTML pages"
+msgstr "Easpórtáil bailiúcháin íomhánna go leathanaigh HTML"
+
+#: wizard.cpp:212
+msgid "HTML Export"
+msgstr "Easpórtáil HTML"
+
+#: wizard.cpp:215
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr "Breiseán KIPI a easpórtálann bailiúcháin íomhánna go leathanaigh HTML"
+
+#: wizard.cpp:216
+#, fuzzy
+#| msgid "(c) 2006-2008, Aurelien Gateau"
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr "© 2006-2008, Aurelien Gateau"
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr ""
+
+#: wizard.cpp:221
+#, fuzzy
+#| msgid "Author and Maintainer"
+msgid "Maintainer"
+msgstr "Údar agus Cothaitheoir"
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: wizard.cpp:226
+#, fuzzy
+#| msgid "Author and Maintainer"
+msgid "Former Author and Maintainer"
+msgstr "Údar agus Cothaitheoir"
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr "Lámhleabhar"
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr "Roghnú Bailiúchán"
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr "Téama"
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr "Paraiméadair Théama"
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr "Socruithe Íomhá"
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr "Aschur"
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr "Údar: %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Kevin Scannell"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kscanne at gmail dot com"
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr "Íomhá Iomlán"
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr "Sábháil íomhá"
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr "Formáid:"
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr "JPEG"
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr "PNG"
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr "Cáilíocht:"
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+msgid "Max size:"
+msgstr "Uasmhéid:"
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+msgid "Include full-size original images for download"
+msgstr "Cuir buníomhánna lánmhéide san áireamh le haghaidh íosluchtaithe"
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr "Úsáid an bhuníomhá"
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr "Mionsamhail"
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr "Méid:"
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr "Spriocfhillteán:"
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr "Oscail i mbrabhsálaí"
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""
+"Ar an leathanach seo, is féidir leat roinnt paraiméadar téama a athrú. Beidh "
+"paraiméadair dhifriúla ar fáil, ag brath ar an téama."
+
+#~ msgid "&HTML Gallery..."
+#~ msgstr "Gailearaí &HTML..."

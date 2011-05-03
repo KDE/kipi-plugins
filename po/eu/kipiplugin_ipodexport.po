@@ -1,0 +1,199 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-13 03:18+0100\n"
+"PO-Revision-Date: 2010-06-25 13:43+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: plugin_ipodexport.cpp:71
+msgid "Export to &iPod..."
+msgstr "Esportatu &iPod-era..."
+
+#: plugin_ipodexport.cpp:87 IpodExportDialog.cpp:111
+msgid "iPod Export"
+msgstr "Esportatu iPod-era"
+
+#: IpodExportDialog.cpp:114
+msgid "A tool to export image to an iPod device"
+msgstr "iPod gailu batera irudiak esportatzeko tresna"
+
+#: IpodExportDialog.cpp:115
+msgid ""
+"(c) 2006-2008, Seb Ruiz\n"
+"(c) 2008-2010, Gilles Caulier"
+msgstr ""
+"(c) 2006-2008, Seb Ruiz\n"
+"(c) 2008-2010, Gilles Caulier"
+
+#: IpodExportDialog.cpp:118
+msgid "Seb Ruiz"
+msgstr "Seb Ruiz"
+
+#: IpodExportDialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Egilea eta mantentzailea"
+
+#: IpodExportDialog.cpp:121
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: IpodExportDialog.cpp:121
+msgid "Developer"
+msgstr "Garatzailea"
+
+#: IpodExportDialog.cpp:130
+msgid "Plugin Handbook"
+msgstr "Pluginaren eskuliburua"
+
+#: IpodExportDialog.cpp:144
+msgid "Hard Disk"
+msgstr "Disko gogorra"
+
+#: IpodExportDialog.cpp:154
+msgid "&Add..."
+msgstr "&Gehitu..."
+
+#: IpodExportDialog.cpp:155
+msgid "Add images to be queued for the iPod."
+msgstr "Gehitu irudiak iPod-en ilaratzeko."
+
+#: IpodExportDialog.cpp:157 IpodExportDialog.cpp:199
+msgid "&Remove"
+msgstr "&Kendu"
+
+#: IpodExportDialog.cpp:158
+msgid "Remove selected image from the list."
+msgstr "Kendu hautatutako irudia zerrendatik."
+
+#: IpodExportDialog.cpp:160
+msgid "&Transfer"
+msgstr "&Transferitu"
+
+#: IpodExportDialog.cpp:161
+msgid "Transfer images to the selected iPod album."
+msgstr "Transferitu irudiak iPod-eko hautatutako albumera."
+
+#: IpodExportDialog.cpp:167
+msgid "The preview of the selected image in the list."
+msgstr "Zerrendan hautatutako irudiaren aurrebista."
+
+#: IpodExportDialog.cpp:188
+msgid "iPod"
+msgstr "iPod"
+
+#: IpodExportDialog.cpp:196
+msgid "&New..."
+msgstr "&Berria..."
+
+#: IpodExportDialog.cpp:197
+msgid "Create a new photo album on the iPod."
+msgstr "Sortu album berria iPod-en."
+
+#: IpodExportDialog.cpp:200
+msgid "R&ename..."
+msgstr "&Aldatu izena..."
+
+#: IpodExportDialog.cpp:205
+msgid "Remove the selected photos or albums from the iPod."
+msgstr "Kendu hautatutako argazki edo albumak iPod-etik."
+
+#: IpodExportDialog.cpp:206
+msgid "Rename the selected photo album on the iPod."
+msgstr "Aldatu hautatutako argazkien albumaren izena iPod-en."
+
+#: IpodExportDialog.cpp:562
+msgid "Image files"
+msgstr "Irudi-fitxategiak"
+
+#: IpodExportDialog.cpp:565
+msgid "Add Images"
+msgstr "Gehitu irudiak"
+
+#: IpodExportDialog.cpp:599
+msgid "New iPod Photo Album"
+msgstr "iPod-eko argazkien album berria"
+
+#: IpodExportDialog.cpp:600
+msgid "Create a new album:"
+msgstr "Sortu album berria:"
+
+#: IpodExportDialog.cpp:631
+msgid "Rename iPod Photo Album"
+msgstr "Aldatu iPod-eko argazkien albumaren izena"
+
+#: IpodExportDialog.cpp:632
+msgid "New album title:"
+msgstr "Albumaren titulu berria:"
+
+#: IpodExportDialog.cpp:819
+#, kde-format
+msgid ""
+"An iPod photo database could not be found on the device mounted at %1. "
+"Initialize the iPod photo database?"
+msgstr ""
+"Ezin izan da iPOd-eko argazkien datu-basea  aurkitu %1 lekuan muntatutako "
+"gailuan. iPOd-eko argazkien datu-basea hasieratu?"
+
+#: IpodExportDialog.cpp:823
+msgid "Initialize iPod Photo Database?"
+msgstr "iPOd-eko argazkien datu-basea hasieratu?"
+
+#: IpodExportDialog.cpp:824
+msgid "&Initialize"
+msgstr "&Hasieratu"
+
+#: IpodHeader.cpp:94
+msgid "<p align=\"center\"><b>No iPod was detected</b></p>"
+msgstr "<p align=\"center\"><b>Ez da iPod-ik detektatu</b></p>"
+
+#: IpodHeader.cpp:101
+msgid "Refresh"
+msgstr "Freskatu"
+
+#: IpodHeader.cpp:114
+#, kde-format
+msgid ""
+"<p align=\"center\"><b>Your iPod (%1) does not seem to support artwork.</b></"
+"p>"
+msgstr ""
+"<p align=\"center\"><b>Badirudi iPod honek (%1) ez dituela artelanik "
+"onartzen.</b></p>"
+
+#: IpodHeader.cpp:122
+msgid "Set iPod Model"
+msgstr "Ezarri iPod-aren modeloa"
+
+#: IpodHeader.cpp:138
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected at: %2</b></p>"
+msgstr "<p align=\"center\"><b>%1 iPod-a hemen detektatuta: %2</b></p>"
+
+#: IpodHeader.cpp:143
+#, kde-format
+msgid "<p align=\"center\"><b>iPod %1 detected</b></p>"
+msgstr "<p align=\"center\"><b>%1 iPod-a detektatuta</b></p>"
+
+#: IpodListItem.cpp:40
+msgid "Unnamed"
+msgstr "Izengabea"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñaki Larrañaga Murgoitio"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "dooteo@euskalgnu.org"

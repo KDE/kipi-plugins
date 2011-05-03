@@ -1,0 +1,396 @@
+# translation of kipiplugin_sendimages.po to Basque
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2010-06-26 15:28+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "Posta bidaltzeko programa:"
+
+#: emailpage.cpp:89
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "Lehenetsia"
+
+#: emailpage.cpp:100
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"Hautatu posta elektronikoaren kanpoko programa hobetsia. <b>Lehenetsia</b> "
+"KDE sistemako ezarpenetan ezarrita dagoen postaren uneko programa da."
+
+#: emailpage.cpp:106
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "Erantsi fitxategi bat irudiaren propietateekin %1(e)ndik"
+
+#: emailpage.cpp:109
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Aukera hau gaitzen bada, %1(e)k ezarritako irudiaren propietate guztiak, "
+"iruzkinak, puntuazioa edo etiketak bezalakoak, erantsitako fitxategiari "
+"gehituko zaio."
+
+#: emailpage.cpp:118
+msgid "Maximum email size limit:"
+msgstr "Mezuaren gehienezko tamaina:"
+
+#: emailpage.cpp:119
+#, fuzzy
+#| msgid "MB"
+msgid " MB"
+msgstr "MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "Doitu irudiaren propietateak"
+
+#: emailpage.cpp:125
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Aukera hau gaitzean, bidaliko diren irudi guztiak tamainaz aldatu eta "
+"birkonprimitudaitezke."
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "Irudiaren propietateak"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "Oso txikia (320 pixel)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "Txikia (640 pixel)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "Ertaina (800 pixel)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "Handia (1024 pixel)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "Oso handia (1280 pixel)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "Ikaragarria - inprimatzeko (1600 pixel)"
+
+#: emailpage.cpp:139
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+"<p>Hautatu bidaliko diren irudien tamaina:</p><p><b>%1</b>: erabili hau "
+"interneteko konexioa oso motela izanez gero, edo helburuko postontziaren "
+"tamaina oso mugatua bada.</p><p><b>%2</b>: erabili hau interneteko konexioa "
+"motela izanez gero, edo helburuko postontziaren tamaina mugatua bada.</"
+"p><p><b>%3</b>: interneteko konexioa eta helburuko postontziaren tamaina "
+"arrunta bada hau da balio lehenetsia.</p><p><b>%4</b>: erabili hau "
+"interneteko konexioa azkarra baduzu eta helburuko postontziaren tamaina ez "
+"badago mugatuta.</p><p><b>%5</b>: erabili hau tamainaren edo abiaduraren "
+"murriztapenik ez baduzu.</p><p><b>%6</b>: erabili hau xedea inprimatzea bada."
+"</p>"
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "Irudiaren tamaina:"
+
+#: emailpage.cpp:168
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>Hautatu bidaliko diren irudien fitxategi-formatua.</p>"
+
+#: emailpage.cpp:169
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: formatu hau ona da web orrialdeentzako, baina galera duen "
+"konpresio-formatua erabiltzen du.</p><p><b>PNG</b>: galerarik ez duen "
+"formatu honen datuak ongi konprimitzeaz gain, patentetatik aske dago, eta "
+"hasiera batean Gif formatuaren ordezkoa izateko diseinatua egon, TIFF "
+"formatuaren erabilera askotan ere ordezko bihurtu da. Lineako ikustaileen "
+"aplikazioekin ongi funtzionatzeko diseinatuta dagoenez PNG, korrontean "
+"igortzeko eta progresiboki bistaratzeko aukera du. Gainera, PNG formatuak "
+"gamma eta  kromatizitatearen datuak gordetzen ditu plataforma "
+"heterogeneoetako hobetutako koloreekin bat etortzeko.</p>"
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "Irudiaren fitxategi-formatua:"
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "Irudiaren kalitatea:"
+
+#: emailpage.cpp:188
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>Bidaliko diren JPEG irudien konpresio-balio berria:</p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: konpresio oso altua<br/><b>25</b>: konpresio altua<br/><b>50</"
+"b>: tarteko konpresioa<br/><b>75</b>: konpresio baxua (balio lehenetsia)<br/"
+"><b>100</b>: konpresiorik ez</p>"
+
+#: imageresize.cpp:191
+msgid "Error opening input file"
+msgstr "Errorea sarrerako fitxategia irekitzean"
+
+#: imageresize.cpp:202
+msgid "Error opening temporary folder"
+msgstr "Errorea aldi baterako karpeta irekitzean"
+
+#: imageresize.cpp:247
+msgid "Cannot resize image. Aborting."
+msgstr "Ezin da irudiaren tamaina aldatu. Abortatzen."
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Ezin da tamaina aldatutako irudia (JPEG) gorde. Abortatzen."
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Ezin da tamaina aldatutako irudia (PNG) gorde. Abortatzen."
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "Bidali irudiak postaz..."
+
+#: sendimages.cpp:130
+msgid "Email images"
+msgstr "Bidali irudiak postaz"
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "Erabiltzaileak eragiketa bertan behera utzi du"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "%1 tamainaz aldatzen"
+
+#: sendimages.cpp:187
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "%1(r)en tamaina ongi aldatuta"
+
+#: sendimages.cpp:194
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "Huts egin du %1 tamainaz aldatzean: %2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "Eraiki irudien propietateen fitxategia"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "epigraferik ez"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "gako-hitzik ez"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"\"%1\" fitxategia:\n"
+"Jatorrizko irudiak: %2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Iruzkinak: %1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Etiketak: %1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Puntuazioa: %1\n"
+
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "propietateak.txt"
+
+#: sendimages.cpp:264
+msgid "Image properties file done"
+msgstr "Irudien propietateen fitxategia sortuta"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"Azpian zerrendatutako irudiak ezin dira tamainaz aldatu.\n"
+"Nahi duzu hauek eranstea (tamaina aldatu gabe)?"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "Huts egin du tamaina aldatzean"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"\"%1\" fitxategia handiegia da bidaltzeko. Txikiagotu horren tamaina, edo "
+"aldatu zure ezarpenak"
+
+#: sendimages.cpp:391
+msgid "Starting default KDE email program..."
+msgstr "KDEko postaren programa lehenetsia abiarazten..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr "Huts egin du \"%1\" programa abiaraztean. Egiaztatu sistema."
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "\"%1\" programa abiarazten..."
+
+#: sendimages.cpp:568
+msgid "After having sent your images by email..."
+msgstr "Irudiak postaz bidali ondoren..."
+
+#: sendimages.cpp:569
+msgid "Press 'Close' button to clean up temporary files"
+msgstr "Egin klik 'Itxi' botoian aldi baterako fitxategiak garbitzeko"
+
+#: sendimagesdialog.cpp:90
+msgid "Email Images Options"
+msgstr "Irudiak bidaltzeko aukerak"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "Irudiak"
+
+#: sendimagesdialog.cpp:100
+msgid "Image List"
+msgstr "Irudien zerrenda"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "Posta"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "Postaren aukerak"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "Bidali irudiak"
+
+#: sendimagesdialog.cpp:115
+msgid "A plugin to email pictures"
+msgstr "Plugin bat argazkiak bidaltzeko"
+
+#: sendimagesdialog.cpp:116
+#, fuzzy
+#| msgid "(c) 2003-2009, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "(c) 2003-2009, Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Egilea eta mantentzailea"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "Garatzailea"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+msgid "Handbook"
+msgstr "Eskuliburua"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñaki Larrañaga Murgoitio"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "dooteo@euskalgnu.org"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "très petit (320 pixels)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "petit (640 pixels)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "moyen (800 pixels)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "grand (1024 pixels)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "très grand (1280 pixels)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "volumineux - pour impression (1600 pixels)"

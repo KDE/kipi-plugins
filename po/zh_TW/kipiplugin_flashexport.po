@@ -1,0 +1,450 @@
+# Dongjun Wu <ziyawu@gmail.com>, 2009.
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flashexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:23+0100\n"
+"PO-Revision-Date: 2011-03-15 12:28+0800\n"
+"Last-Translator: Franklin Weng <franklin@goodhorse.idv.tw>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: firstrundlg.cpp:77 firstrundlg.cpp:87 simpleviewer.cpp:202 svedialog.cpp:91
+#: svedialog.cpp:120
+msgid "Flash Export"
+msgstr "Flash 匯出"
+
+#: firstrundlg.cpp:90 svedialog.cpp:123
+msgid ""
+"A Kipi plugin to export images to Flash using the Simple Viewer component."
+msgstr "使用 Simple Viewer 元件匯出影像到 Flash 的 Kipi 外掛程式。"
+
+#: firstrundlg.cpp:91 svedialog.cpp:124
+msgid ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+msgstr ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+
+#: firstrundlg.cpp:94 svedialog.cpp:127
+msgid "Joern Ahrens"
+msgstr "Joern Ahrens"
+
+#: firstrundlg.cpp:95 svedialog.cpp:128
+msgid "Author"
+msgstr "作者"
+
+#: firstrundlg.cpp:98 svedialog.cpp:131
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: firstrundlg.cpp:99 svedialog.cpp:132
+msgid "Developer and maintainer"
+msgstr "開發者和維護者"
+
+#: firstrundlg.cpp:102 svedialog.cpp:135
+msgid "Felix Turner"
+msgstr "Felix Turner"
+
+#: firstrundlg.cpp:103 svedialog.cpp:136
+msgid "Author of the Simple Viewer Flash component"
+msgstr "Simple Viewer Flash 元件的作者"
+
+#: firstrundlg.cpp:107 svedialog.cpp:140
+msgid "Mikkel B. Stegmann"
+msgstr "Mikkel B. Stegmann"
+
+#: firstrundlg.cpp:108 svedialog.cpp:141
+msgid "Basis for the index.html template"
+msgstr "根據 index.html 範本"
+
+#: firstrundlg.cpp:117 svedialog.cpp:150
+msgid "Handbook"
+msgstr "手冊"
+
+#: firstrundlg.cpp:129
+msgid ""
+"<p>SimpleViewer is a Flash component which is free to use, but uses a "
+"license which comes into conflict with several distributions. Due to the "
+"license it is not possible to ship it with this plugin.</p><p>You can now "
+"download SimpleViewer from its homepage and point this tool to the "
+"downloaded archive. The archive will be stored with the plugin "
+"configuration, so it is available for further use.</p>"
+msgstr ""
+"<p>SimpleViewer 是一款免費使用的 Flash 元件，但所用的授權與一些發行版衝突。由"
+"於此種授權不可將這個外掛程式重新包裝。</p><p>您可以從 SimpleViewer 的首頁下載"
+"並將這項工具指向已下載的壓縮檔。此壓縮檔會用外掛程式設定檔的方式儲存，所以可"
+"進一步使用。</p>"
+
+#: firstrundlg.cpp:137
+msgid "<p>1.) Download SimpleViewer Version 2.1.x</p>"
+msgstr "<p>1.) 下載 SimpleViewer 版本 2.1.x</p>"
+
+#: firstrundlg.cpp:147
+msgid "<p>2.) Point this tool to the downloaded archive</p>"
+msgstr "<p>2.) 將這項工具指向已下載的壓縮檔</p>"
+
+#: generalpage.cpp:81
+msgid "Gallery &Title"
+msgstr "藝廊標題(&T)"
+
+#: generalpage.cpp:84
+msgid "Enter here the gallery title"
+msgstr "在這裡輸入藝廊標題"
+
+#: generalpage.cpp:92
+msgid "Save Gallery To"
+msgstr "儲存藝廊到"
+
+#: generalpage.cpp:103
+msgid "Image Properties"
+msgstr "影像屬性"
+
+#: generalpage.cpp:105
+msgid "Resize Target Images"
+msgstr "調整目標影像大小"
+
+#: generalpage.cpp:107
+msgid "If you enable this option, all target images can be resized."
+msgstr "如果您啟用這個選項，所有目標影像都會調整大小。"
+
+#: generalpage.cpp:111
+msgid "Auto-Rotate/Flip Images"
+msgstr "自動旋轉/翻轉影像"
+
+#: generalpage.cpp:113
+msgid ""
+"If you enable this option, the images' orientations will be set according to "
+"their Exif information."
+msgstr "如果啟用這個選項，會根據 Exif 資訊設定影像的方向。"
+
+#: generalpage.cpp:120
+msgid "&Target Images' Size:"
+msgstr "目標影像的大小(&T)："
+
+#: generalpage.cpp:121
+msgid ""
+"The new size of the exported images, in pixels. SimpleViewer resizes the "
+"images too, but this resizes the images before they are uploaded to your "
+"server."
+msgstr ""
+"匯出影像的新大小，單位為像素。SimpleViewer 也會調整大小，但是在上傳到您的伺服"
+"器前調整影像大小。"
+
+#: generalpage.cpp:134
+msgid "&Displayed Images' Size:"
+msgstr "顯示的影像大小(&D)："
+
+#: generalpage.cpp:135
+msgid ""
+"Scales the displayed images to this size. Normally, use the height or width "
+"of your largest image (in pixels). Images will not be scaled up above this "
+"size, to preserve image quality."
+msgstr ""
+"選擇顯示影像的大小。一般使用您的最大影像高度或寬度 (單位為像素)。影像縮放不會"
+"超過這個大小以維持影像品質。"
+
+#: generalpage.cpp:150
+msgid "Misc"
+msgstr "其他"
+
+#: generalpage.cpp:153
+msgid "Display Captions"
+msgstr "顯示標題"
+
+#: generalpage.cpp:155
+msgid "If this option is enabled, the images' captions will be shown."
+msgstr "如果啟用這個選項，會顯示影像的說明文字。"
+
+#: generalpage.cpp:158
+msgid "Open Image with Right Click"
+msgstr "用滑鼠右鍵開啟影像"
+
+#: generalpage.cpp:160
+msgid ""
+"If this option is enabled, the user will be able to open the target image in "
+"a separate window using the right mouse button."
+msgstr "如果啟用這個選項，使用這可以用滑鼠右鍵在分離視窗中開啟目標影像。"
+
+#: generalpage.cpp:164
+msgid "Open gallery in Konqueror"
+msgstr "用 Konqueror 開啟藝廊"
+
+#: generalpage.cpp:166
+msgid ""
+"If this option is enabled, the gallery will be opened in Konqueror "
+"automatically."
+msgstr "如果啟用這個選項，藝廊會自動用 Konqueror 開啟。"
+
+#: lookpage.cpp:80
+msgctxt "Settings for flash export navigation"
+msgid "Navigation"
+msgstr "瀏覽"
+
+#: lookpage.cpp:86
+msgid "Thumbnail &Rows:"
+msgstr "縮圖列數："
+
+#: lookpage.cpp:87
+msgid "Number of thumbnails rows"
+msgstr "縮圖的列數"
+
+#: lookpage.cpp:92
+msgid "Thumbnail &Columns:"
+msgstr "縮圖欄數："
+
+#: lookpage.cpp:93
+msgid "Number of thumbnails columns"
+msgstr "縮圖的欄數"
+
+#: lookpage.cpp:96
+msgid "Thumbnail &Position:"
+msgstr "縮圖位置(&P)："
+
+#: lookpage.cpp:98
+msgctxt "thumbnail position: right"
+msgid "Right"
+msgstr "右"
+
+#: lookpage.cpp:99
+msgctxt "thumbnail position: left"
+msgid "Left"
+msgstr "左"
+
+#: lookpage.cpp:100
+msgctxt "thumbnail position: top"
+msgid "Top"
+msgstr "頂端"
+
+#: lookpage.cpp:101
+msgctxt "thumbnail position: bottom"
+msgid "Bottom"
+msgstr "底端"
+
+#: lookpage.cpp:110
+msgid "&Direction of Navigation:"
+msgstr "瀏覽方向(&D)："
+
+#: lookpage.cpp:112
+msgid "Left to Right"
+msgstr "由左至右"
+
+#: lookpage.cpp:113
+msgid "Right to Left"
+msgstr "由右至左"
+
+#: lookpage.cpp:126
+msgid "Colors"
+msgstr "顏色"
+
+#: lookpage.cpp:130
+msgid "&Text Color:"
+msgstr "文字顏色(&T)："
+
+#: lookpage.cpp:133
+msgid "Color of title and caption text"
+msgstr "標題和說明文字的顏色"
+
+#: lookpage.cpp:137
+msgid "&Background Color:"
+msgstr "背景顏色(&B)："
+
+#: lookpage.cpp:143
+msgid "&Frame Color:"
+msgstr "外框顏色(&F)："
+
+#: lookpage.cpp:146
+msgid "Color of image frame, viewed icon, load bars, thumbnail arrows"
+msgstr "影像外框的顏色、檢視圖示、載入進度、縮圖箭頭"
+
+#: lookpage.cpp:157
+msgid "Style"
+msgstr "樣式"
+
+#: lookpage.cpp:163
+msgid "Frame &Width:"
+msgstr "外框寬度(%W)："
+
+#: lookpage.cpp:164
+msgid "Width of image frame in pixels."
+msgstr "影像外框的寬度，單位為像素。"
+
+#: lookpage.cpp:169
+msgid "Stage &Padding:"
+msgstr "畫面邊距(&P)："
+
+#: lookpage.cpp:170
+msgid "Distance between image and thumbnails in pixels."
+msgstr "影像和縮圖之間的距離，單位為像素。"
+
+#: plugin_flashexport.cpp:62
+msgid "Export to F&lash..."
+msgstr "匯出到 F&lash..."
+
+#: simpleviewer.cpp:140
+msgid "SimpleViewer installation failed"
+msgstr "SimpleViewer 安裝失敗"
+
+#: simpleviewer.cpp:167
+#, kde-format
+msgid ""
+"Target folder %1 already exists.\n"
+"Do you want to overwrite it?  All data in this folder will be lost."
+msgstr ""
+"目標資料夾 %1 已經存在。\n"
+"您是否要覆寫它？在這個資料夾裡的所有資料都會遺失。"
+
+#: simpleviewer.cpp:176
+#, kde-format
+msgid ""
+"Could not delete %1.\n"
+"Please choose another export folder."
+msgstr ""
+"無法刪除 %1。\n"
+"請選擇其他匯出資料夾。"
+
+#: simpleviewer.cpp:211
+msgid "Initialising..."
+msgstr "正在初始化..."
+
+#: simpleviewer.cpp:232
+msgid "Export canceled"
+msgstr "已取消匯出"
+
+#: simpleviewer.cpp:243
+msgid "Failed to create export directories"
+msgstr "建立匯出目錄失敗"
+
+#: simpleviewer.cpp:250
+msgid "Failed to export the images"
+msgstr "匯出影像失敗"
+
+#: simpleviewer.cpp:257
+msgid "Failed to create index.html"
+msgstr "建立 index.html 失敗"
+
+#: simpleviewer.cpp:264
+msgid "Failed to copy SimpleViewer files"
+msgstr "複製 SimpleViewer 檔案失敗"
+
+#: simpleviewer.cpp:271
+msgid "Failed to upload the gallery"
+msgstr "上傳藝廊失敗"
+
+#: simpleviewer.cpp:279
+#, kde-format
+msgid ""
+"Export was canceled.\n"
+"Do you want to delete files in %1 that have already been created?"
+msgstr ""
+"已取消匯出。\n"
+"您是否要刪除在 %1 中已建立的檔案？"
+
+#: simpleviewer.cpp:289
+msgctxt "Flash export has finished"
+msgid "Finished..."
+msgstr "已結束..."
+
+#: simpleviewer.cpp:302
+msgid "Creating directories..."
+msgstr "正在建立目錄..."
+
+#: simpleviewer.cpp:307 simpleviewer.cpp:316 simpleviewer.cpp:325
+#, kde-format
+msgid "Could not create folder '%1'"
+msgstr "無法建立資料夾「%1」"
+
+#: simpleviewer.cpp:340
+msgid "Creating images and thumbnails..."
+msgstr "正在建立影像和縮圖..."
+
+#: simpleviewer.cpp:397
+#, kde-format
+msgid "Processing %1"
+msgstr "正在處理 %1"
+
+#: simpleviewer.cpp:408
+#, kde-format
+msgid "Could not open image '%1'"
+msgstr "無法開啟影像「%1」"
+
+#: simpleviewer.cpp:415
+#, kde-format
+msgid "Could not create thumbnail from '%1'"
+msgstr "無法建立「%1」的縮圖"
+
+#: simpleviewer.cpp:422
+#, kde-format
+msgid "Could not resize image '%1'"
+msgstr "無法調整影像大小「%1」"
+
+#: simpleviewer.cpp:550
+msgid "Creating index.html..."
+msgstr "正在建立 index.html..."
+
+#: simpleviewer.cpp:579
+msgid "index.html created..."
+msgstr "index.html 已建立..."
+
+#: simpleviewer.cpp:589
+msgid "Copying flash files..."
+msgstr "正在複製 flash 檔..."
+
+#: simpleviewer.cpp:622
+msgid "Flash files copied..."
+msgstr "Flash 檔已複製..."
+
+#: simpleviewer.cpp:632
+msgid "Uploading gallery..."
+msgstr "正在上傳藝廊..."
+
+#: simpleviewer.cpp:637
+msgid "Gallery uploaded..."
+msgstr "藝廊已上傳..."
+
+#: svedialog.cpp:102
+msgctxt "Settings tab for selections"
+msgid "Selection"
+msgstr "選擇"
+
+#: svedialog.cpp:103
+msgid "Collections List"
+msgstr "收藏清單"
+
+#: svedialog.cpp:107
+msgctxt "General settings tab"
+msgid "General"
+msgstr "一般"
+
+#: svedialog.cpp:108
+msgid "General Settings"
+msgstr "一般設定值"
+
+#: svedialog.cpp:113
+msgctxt "Settings tab for the look of the flash export"
+msgid "Look"
+msgstr "外觀"
+
+#: svedialog.cpp:114
+msgid "Look Settings"
+msgstr "外觀設定值"
+
+#: svedialog.cpp:227
+msgid "You must select at least one collection to export."
+msgstr "您必須至少選擇一個收藏以進行匯出。"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Frank Weng (a.k.a. Franklin)"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin at goodhorse dot idv dot tw"

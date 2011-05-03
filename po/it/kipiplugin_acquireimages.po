@@ -1,0 +1,465 @@
+# translation of kipiplugin_acquireimages.po to Italian
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+#
+# Stefano Rivoir <s.rivoir@gts.it>, 2003, 2004.
+# Federico Zenith <federico.zenith@member.fsf.org>, 2004, 2005, 2007, 2008, 2009, 2010, 2011.
+# Federico Zenith <zenith@chemeng.ntnu.no>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2011-03-18 08:10+0100\n"
+"Last-Translator: Federico Zenith <federico.zenith@member.fsf.org>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: it\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "Acquisizione di immagini"
+
+#: aboutdata.h:41
+msgid "A tool to acquire images using a flat scanner"
+msgstr "Uno strumento per acquisire immagini con uno scanner piatto"
+
+#: aboutdata.h:42
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "© 2008-2011, Gilles Caulier\n"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "Autore"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "Sviluppatore"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr "Importa da scanner..."
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "Impossibile aprire dispositivo di scansione."
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "Scansiona immagine"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "Manuale"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "Nome del file della nuova immagine"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "Il formato di file immagine «%1» non è supportato."
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"Salvataggio del file\n"
+"«%1» su\n"
+"«%2» non riuscito."
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "Un file dal nome «%1» esiste già. Sei sicuro di volerlo sovrascrivere?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "Sovrascrivere il file?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr "Impossibile salvare il file «%1»"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Federico Zenith"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "federico.zenith@member.fsf.org"
+
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr ""
+#~ "© 2003-2009, Gilles Caulier\n"
+#~ "© 2007-2009, Kare Sars"
+
+#~ msgid "Scan Images..."
+#~ msgstr "Scansione immagini..."
+
+#~ msgid "Cannot acquire image..."
+#~ msgstr "Impossibile acquisire l'immagine."
+
+#~ msgid "Cannot handle parent windows..."
+#~ msgstr "Impossibile gestire le finestre madri."
+
+#~ msgid "A Kipi plugin to acquire images using a flat bed scanner"
+#~ msgstr ""
+#~ "Un'estensione di Kipi per l'acquisizione di immagini usando uno scanner "
+#~ "piatto"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Federico Zenith"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "federico.zenith@member.fsf.org"
+
+#~ msgid "Save Target Image Options"
+#~ msgstr "Opzioni di salvataggio immagini destinazione"
+
+#~ msgid "Author and maintainer"
+#~ msgstr "Autore e responsabile"
+
+#~ msgid "image"
+#~ msgstr "immagine"
+
+#~ msgid "Target Image"
+#~ msgstr "Immagine destinazione"
+
+#~ msgid "Target Image Options"
+#~ msgstr "Opzioni dell'immagine di destinazione"
+
+#~ msgid "File Name && Caption"
+#~ msgstr "Nome del file e didascalia"
+
+#~ msgid "<p>The target image preview with the file name and caption."
+#~ msgstr "<p>L'anteprima dell'immagine con il nome e la didascalia."
+
+#~ msgid "File name (without suffix):"
+#~ msgstr "Nome del file (senza suffisso):"
+
+#~ msgid "acquired_image"
+#~ msgstr "immagine_acquisita"
+
+#~ msgid ""
+#~ "<p>Enter here the target image file name without suffix (that will be "
+#~ "automatically added to the file name according to the file-format option.)"
+#~ msgstr ""
+#~ "<p>Inserisci qui il nome del file di destinazione senza suffisso (sarà "
+#~ "automaticamente aggiunto al nome del file a seconda dell'opzione del "
+#~ "formato file)."
+
+#~ msgid "Caption:"
+#~ msgstr "Didascalia:"
+
+#~ msgid "<p>Enter here the target image's caption."
+#~ msgstr "<p>Inserisci qui la didascalia dell'immagine di destinazione."
+
+#~ msgid "<p>The preview of the target image."
+#~ msgstr "<p>Anteprima dell'immagine di destinazione."
+
+#~ msgid "Saving Options"
+#~ msgstr "Opzioni di salvataggio"
+
+#~ msgid "<p>The saving options of the target image."
+#~ msgstr "<p>Opzioni di salvataggio dell'immagine destinazione."
+
+#~ msgid "Image compression:"
+#~ msgstr "Compressione dell'immagine:"
+
+#~ msgid ""
+#~ "<p>The compression value of target image for JPEG and PNG formats:<p>"
+#~ msgstr ""
+#~ "<p>Il valore di compressione dell'immagine per formati JPEG e PNG:<p>"
+
+#~ msgid ""
+#~ "<b>1</b>: very high compression<p><b>25</b>: high compression<p><b>50</"
+#~ "b>: medium compression<p><b>75</b>: low compression (default value)"
+#~ "<p><b>100</b>: no compression"
+#~ msgstr ""
+#~ "<b>1</b>: compressione molto alta<p><b>25</b>: compressione alta<p><b>50</"
+#~ "b>: compressione media<p><b>75</b>: compressione bassa (valore "
+#~ "predefinito)<p><b>100</b>: nessuna compressione"
+
+#~ msgid "<p>Select here the target image's file format.<p>"
+#~ msgstr "<p>Selezionare il formato del file di destinazione.<p>"
+
+#~ msgid ""
+#~ "<b>JPEG</b>: The Joint Photographic Experts' Group file format is a good "
+#~ "Web file format but it uses lossy data compression.<p><b>PNG</b>: the "
+#~ "Portable Network Graphics format is an extensible file format for the "
+#~ "lossless, portable, well-compressed storage of raster images. PNG "
+#~ "provides a patent-free replacement for GIF and can also replace many "
+#~ "common uses of TIFF. PNG is designed to work well in online viewing "
+#~ "applications, such as the World Wide Web, so it is fully streamable with "
+#~ "a progressive display option. Also, PNG can store gamma and chromaticity "
+#~ "data for improved color matching on heterogeneous platforms."
+#~ msgstr ""
+#~ "<b>JPEG</b>: Il formato Joint Photographic Experts Group è un buon "
+#~ "formato per il Web ma usa una compressione con perdita di dati.<p><b>PNG</"
+#~ "b>: il Portable Network Graphics è un formato estensibile senza perdite "
+#~ "di dati, portabile e ben compresso per le immagini. PNG è un buon "
+#~ "sostituto del GIF, libero da brevetti, e può sostituire TIFF in molti usi "
+#~ "comuni. PNG è studiato per lavorare bene con applicazioni online, come il "
+#~ "World Wide Web, ed è utilizzabile per una visualizzazione progressiva. In "
+#~ "più, PNG può memorizzare informazioni sul gamma e sui colori per una "
+#~ "visualizzazione corretta su piattaforme eterogenee."
+
+#~ msgid ""
+#~ "<p><b>TIFF</b>: the Tagged Image File Format is a rather old standard "
+#~ "that is still very popular today. It is a highly flexible and platform-"
+#~ "independent format which is supported by numerous image processing "
+#~ "applications and by virtually all prepress software on the market."
+#~ msgstr ""
+#~ "<p><b>TIFF</b>: il formato Tag Image File è uno standard piuttosto "
+#~ "vecchio che è ancora oggi molto diffuso. È un formato molto flessibile e "
+#~ "indipendente dalla piattaforma supportato da numerose applicazioni di "
+#~ "manipolazione immagini e praticamente da tutto il software di prestampa "
+#~ "sul mercato."
+
+#~ msgid ""
+#~ "<p><b>PPM</b>: the Portable Pixel Map file format is used as an "
+#~ "intermediate format for storing color bitmap information. PPM files may "
+#~ "be either binary or ASCII and store pixel values up to 24 bits in size. "
+#~ "This format generates the biggest-sized text files for encoding images "
+#~ "without losing quality."
+#~ msgstr ""
+#~ "<p><b>PPM</b>: il Portable Pixel Map è un formato intermedio per "
+#~ "memorizzare informazioni su bitmap a colori. I file PPM possono essere "
+#~ "sia ASCII che binari, e memorizzare valori di pixel fino a 24 bit. Questo "
+#~ "formato genera file di dimensioni molto grandi per codificare le immagini "
+#~ "senza perdita di qualità."
+
+#~ msgid ""
+#~ "<p><b>BMP</b>: the BitMaP file format is a popular image format from the "
+#~ "Win32 environment. It efficiently stores mapped or unmapped RGB graphics "
+#~ "data with pixels 1-, 4-, 8-, or 24-bits in size. Data may be stored raw "
+#~ "or compressed using a 4-bit or 8-bit RLE data compression algorithm. BMP "
+#~ "is an excellent choice for a simple bitmap format which supports a wide "
+#~ "range of RGB image data."
+#~ msgstr ""
+#~ "<p><b>BMP</b>: il formato BitMaP è un formato molto diffuso proveniente "
+#~ "dall'ambiente Win32. Memorizza in modo efficiente grafica RGB mappata o "
+#~ "non con pixel di 1, 4, 8 o 24 bit. I dati possono essere memorizzati "
+#~ "grezzi o compressi utilizzando un algoritmo RLE a 4 o 8 bit. Il BMP è un "
+#~ "formato eccellente per una semplice bitmap che usa una vasta gamma di "
+#~ "valori RGB."
+
+#~ msgid "Image file format:"
+#~ msgstr "Formato del file di destinazione:"
+
+#~ msgid "Selection"
+#~ msgstr "Selezione"
+
+#~ msgid "Album selection"
+#~ msgstr "Selezione album"
+
+#~ msgid "Select Folder in Which to Save Target Image"
+#~ msgstr "Seleziona la cartella in cui salvare l'immagine destinazione"
+
+#~ msgid "&Add New Folder"
+#~ msgstr "&Aggiungi una nuova cartella"
+
+#~ msgid "<p>Add a new folder."
+#~ msgstr "<p>Aggiungi una nuova cartella."
+
+#~ msgid "Album Description"
+#~ msgstr "Descrizione dell'album"
+
+#~ msgid "<p>The description of the current Album in the selection list."
+#~ msgstr "<p>La descrizione dell'album attuale nell'elenco di selezione."
+
+#~ msgid "Caption: %1"
+#~ msgstr "Didascalia: %1"
+
+#~ msgid "Collection: %1"
+#~ msgstr "Raccolta: %1"
+
+#~ msgid "Date: %1"
+#~ msgstr "Data: %1"
+
+#~ msgid "Items: %1"
+#~ msgstr "Elementi: %1"
+
+#~ msgid "You must select a target album for this image."
+#~ msgstr "Devi selezionare un album di destinazione per questa immagine."
+
+#~ msgid "You must provide a file name for this image."
+#~ msgstr "Devi indicare un nome file per questa immagine."
+
+#~ msgid "Cannot write image file \"%1\"."
+#~ msgstr "Impossibile scrivere il file immagine «%1»."
+
+#~ msgid "Could not upload image to \"%1\"."
+#~ msgstr "Impossibile caricare l'immagine a «%1»."
+
+#~ msgid ""
+#~ "<qt>Error when informing the application about the new image. The error "
+#~ "was: %1</qt>"
+#~ msgstr ""
+#~ "<qt>Errore mentre si informava l'applicazione della nuova immagine. "
+#~ "L'errore è stato: %1</qt>"
+
+#~ msgid "Screenshot..."
+#~ msgstr "Istantanea..."
+
+#~ msgid "No KDE scan-service available; check your system."
+#~ msgstr ""
+#~ "Non è disponibile nessun servizio di scansione in KDE; controlla il tuo "
+#~ "sistema."
+
+#~ msgid "KIPI's 'Scan Images' Plugin"
+#~ msgstr "Plugin «Scansione immagini» per KIPI"
+
+#~ msgid "Screenshot"
+#~ msgstr "Istantanea"
+
+#~ msgid "&New Snapshot"
+#~ msgstr "&Nuova istantanea"
+
+#~ msgid ""
+#~ "This dialog will grab either your desktop or a single\n"
+#~ "application window. If you grab a single window your mouse\n"
+#~ "cursor will change into crosshairs; then, simply select the\n"
+#~ "window with your mouse."
+#~ msgstr ""
+#~ "Questa finestra catturerà o l'intero desktop o una sola\n"
+#~ "finestra di applicazione. Se catturi una singola finestra, \n"
+#~ "il cursore del mouse diventerà un mirino; basterà allora\n"
+#~ "selezionare la finestra col mouse."
+
+#~ msgid "Grab the entire desktop"
+#~ msgstr "Cattura l'intero desktop"
+
+#~ msgid ""
+#~ "<p>If you enable this option, the entire desktop will be grabbed; "
+#~ "otherwise, only the active windows."
+#~ msgstr ""
+#~ "<p>Se abiliti questa opzione, verrà catturato l'intero desktop; "
+#~ "altrimenti, solo le finestre attive."
+
+#~ msgid "Hide all host application windows"
+#~ msgstr "Nascondi tutte le finestre dell'applicazione madre"
+
+#~ msgid ""
+#~ "<p>If you enable this option, all host application windows will be hidden "
+#~ "during the grab operation."
+#~ msgstr ""
+#~ "<p>Abilitando questa opzione, tutte le finestre dell'applicazione madre "
+#~ "verranno nascoste durante l'operazione di cattura."
+
+#~ msgid "Delay:"
+#~ msgstr "Ritardo:"
+
+#~ msgid "<p>The delay in seconds before the grab operation is started."
+#~ msgstr "<p>Il ritardo in secondi prima di iniziare la cattura."
+
+#~ msgid "Unable to take snapshot."
+#~ msgstr "Impossibile fare un'istantanea."
+
+#~ msgid "Screenshot Error"
+#~ msgstr "Errore di istantanea"
+
+#~ msgid "Acquire Images Handbook"
+#~ msgstr "Manuale di Acquisizione di immagini"
+
+#~ msgid "Comments:"
+#~ msgstr "Commenti:"
+
+#~ msgid "Comment: %1"
+#~ msgstr "Commento: %1"
+
+#~ msgid "KIPI's 'Screenshot Images' Plugin"
+#~ msgstr "Plugin 'Creazione istantanee' per KIPI"
+
+#~ msgid "About KIPI's 'Acquire Images' plugin"
+#~ msgstr "Informazioni su 'Acquisizione immagini' KIPI"
+
+#~ msgid ""
+#~ "A KIPI plugin to acquire images\n"
+#~ "\n"
+#~ "Author: Gilles Caulier\n"
+#~ "\n"
+#~ "Email: caulier dot gilles at free.fr\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Un plugin per l'acquisizione di immagini per KIPI\n"
+#~ "\n"
+#~ "Autore: Gilles Caulier\n"
+#~ "\n"
+#~ "Email: caulier dot gilles at free.fr\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "A KIPI plugin to grab images from screen\n"
+#~ "\n"
+#~ "Author: Gilles Caulier\n"
+#~ "\n"
+#~ "Email: caulier dot gilles at free.fr\n"
+#~ "\n"
+#~ "Based on Ksnapshot implementation from KDE project"
+#~ msgstr ""
+#~ "Un plugin per la cattura immagini dallo schermo per KIPI\n"
+#~ "\n"
+#~ "Autore: Gilles Caulier\n"
+#~ "\n"
+#~ "Email: caulier dot gilles at free.fr\n"
+#~ "\n"
+#~ "Basato sull'implementazione di Ksnapshot del progetto KDE"
+
+#~ msgid "About KIPI's 'Screenshot' plugin"
+#~ msgstr "Informazioni sul plugin 'Schermata' di KIPI"
+
+#~ msgid "<p>Preview of the first image in the current selected Album."
+#~ msgstr ""
+#~ "<p>Anteprima della prima immagine nell'album attualmente selezionato."
+
+#~ msgid "<p>Add a new Album in the Digikam Albums library."
+#~ msgstr "<p>Aggiungi un nuovo album alla libreria degli album di Digikam."
+
+#~ msgid ""
+#~ "Album Library has not been set correctly\n"
+#~ "Please run Setup"
+#~ msgstr ""
+#~ "La libreria degli album non è stata impostata correttamente\n"
+#~ "Per piacere avvia la configurazione"
+
+#~ msgid "Enter New Album Name: "
+#~ msgstr "Inserisci il nome del nuovo album: "
+
+#~ msgid ""
+#~ "<p>This is the Digikam Albums list. Select one target Album for the "
+#~ "target image."
+#~ msgstr ""
+#~ "<p>Questa è la lista degli album di Digikam. Selezionare un album di "
+#~ "destinazione per le nuove immagini scannerizzate."

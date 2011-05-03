@@ -1,0 +1,157 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Dmitriy Simbiriatin <slpiv@mail.ru>, 2010.
+# Alexander Potashev <aspotashev@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-17 04:51+0100\n"
+"PO-Revision-Date: 2010-07-22 18:55+0400\n"
+"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: KioExportWindow.cpp:70
+msgid "Export to Remote Computer"
+msgstr "Экспорт на удалённый компьютер"
+
+#: KioExportWindow.cpp:76
+msgid "Start export"
+msgstr "Начать экспорт"
+
+#: KioExportWindow.cpp:77
+msgid "Start export to the specified target"
+msgstr "Начать экспорт в указанный каталог"
+
+#: KioExportWindow.cpp:90
+msgid "Export to remote computer"
+msgstr "Экспорт на удалённый компьютер"
+
+#: KioExportWindow.cpp:93
+msgid "A Kipi plugin to export images over network using KIO-Slave"
+msgstr ""
+"Модуль расширения KIPI для экспорта изображений по сети с использованием KIO-"
+"Slave"
+
+#: KioExportWindow.cpp:94 KioImportWindow.cpp:96
+msgid "(c) 2009, Johannes Wienke"
+msgstr "© Johannes Wienke, 2009"
+
+#: KioExportWindow.cpp:96 KioImportWindow.cpp:98
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: KioExportWindow.cpp:97 KioImportWindow.cpp:99
+msgid "Developer and maintainer"
+msgstr "Разработчик и сопровождающий"
+
+#: KioExportWindow.cpp:105 KioImportWindow.cpp:107
+msgid "Handbook"
+msgstr "Руководство"
+
+#: KioExportWindow.cpp:227
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to export these images now."
+msgstr ""
+"Некоторые изображения не были переданы и всё ещё находятся в списке. Вы "
+"можете повторить попытку экспорта этих изображений."
+
+#: KioExportWindow.cpp:230
+msgid "Upload not completed"
+msgstr "Загрузка не завершена"
+
+#: KioImportWidget.cpp:56
+msgid "This is the list of images to import into the current album."
+msgstr "Список изображений для импорта в текущий альбом."
+
+#: KioImportWindow.cpp:68
+msgid "Import from Remote Computer"
+msgstr "Импорт с удалённого компьютера"
+
+#: KioImportWindow.cpp:75
+msgid "Start import"
+msgstr "Начать импорт"
+
+#: KioImportWindow.cpp:76
+msgid "Start importing the specified images into the currently selected album."
+msgstr "Начать импорт указанных изображений в выбранный альбом."
+
+#: KioImportWindow.cpp:92
+msgid "Import from remote computer"
+msgstr "Импорт с удалённого компьютера"
+
+#: KioImportWindow.cpp:95
+msgid "A Kipi plugin to import images over network using KIO-Slave"
+msgstr ""
+"Модуль расширения KIPI для импорта изображений по сети с использованием KIO-"
+"Slave"
+
+#: KioImportWindow.cpp:159
+msgid ""
+"Some of the images have not been transferred and are still in the list. You "
+"can retry to import these images now."
+msgstr ""
+"Некоторые изображения не были переданы и всё ещё находятся в списке. Вы "
+"можете повторить попытку импорта этих изображений."
+
+#: KioImportWindow.cpp:162
+msgid "Import not completed"
+msgstr "Импорт не завершён"
+
+#: plugin_kioexportimport.cpp:73
+msgid "Export to remote computer..."
+msgstr "Экспорт на удалённый компьютер..."
+
+#: plugin_kioexportimport.cpp:84
+msgid "Import from remote computer..."
+msgstr "Импорт с удалённого компьютера..."
+
+#: KioExportWidget.cpp:57
+msgid "Target location: "
+msgstr "Каталог назначения: "
+
+#: KioExportWidget.cpp:59
+msgid ""
+"Sets the target address to upload the images to. This can be any address as "
+"used in Dolphin or Konqueror, e.g. ftp://my.server.org/sub/folder."
+msgstr ""
+"Целевой адрес для загрузки изображений. Это может быть любой адрес, который "
+"используют Dolphin и Konqueror, например, ftp://my.server.org/sub/folder."
+
+#: KioExportWidget.cpp:65
+msgid "Select target..."
+msgstr "Выбрать каталог..."
+
+#: KioExportWidget.cpp:68
+msgid "Select target location..."
+msgstr "Выбрать каталог назначения..."
+
+#: KioExportWidget.cpp:74
+msgid "This is the list of images to upload to the specified target."
+msgstr "Список изображений, которые будут загружены в указанный каталог."
+
+#: KioExportWidget.cpp:143
+msgid "not selected"
+msgstr "не выбран"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Симбирятин Дмитрий"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "slpiv@mail.ru"

@@ -1,0 +1,235 @@
+# Translation of kipiplugin_dngconverter to Norwegian Nynorsk
+#
+# Karl Ove Hufthammer <karl@huftis.org>, 2008.
+# Eirik U. Birkeland <eirbir@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: KDE 4\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2009-01-12 23:47+0100\n"
+"Last-Translator: Eirik U. Birkeland <eirbir@gmail.com>\n"
+"Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 0.3\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr "Klarte ikkje identifisera råbilete"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "Merke: %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "Modell: %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "Dato: %1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "Blendaropning: f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "Fokallengd: %1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "Eksponeringstid: 1/%1 s\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Følsemd: %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "Filer å forma om"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "DNG-omformar …"
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "Innebygg den opphavlege fila"
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "Tapsfri komprimering"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr ""
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "JPEG-førehandsvising:"
+
+#: plugin/settingswidget.cpp:115
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr ""
+
+#: plugin/settingswidget.cpp:116
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr ""
+
+#: plugin/settingswidget.cpp:117
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr ""
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "Viss målfila alt finst:"
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "Skriv automatisk over"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr "Opna vindauge for filnamnbyte"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr ""
+
+#: plugin/aboutdata.h:52
+#, kde-format
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr ""
+
+#: plugin/aboutdata.h:55
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr ""
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr ""
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr "Mathias Mueller"
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr "Utviklar"
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "Avslutt DNG-omformar"
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr "Form om fleire råbiletfiler til DNG samtidig"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "&Legg til"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr "Legg nye råfiler til lista"
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "&Fjern"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr "Fjern valde råfiler frå lista"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "Miniatyrbilete"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "Råfil"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "Målfil"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "Kamera"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr ""
+
+#: plugin/batchdialog.cpp:332
+msgid "The list does not contain any Raw files to process."
+msgstr ""
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "&Avbryt"
+
+#: plugin/batchdialog.cpp:474
+msgid "Abort the conversion of Raw files."
+msgstr ""
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "&Form om"
+
+#: plugin/batchdialog.cpp:480
+msgid "Start converting the Raw images using the current settings."
+msgstr ""
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "Lagra råbilete gjort om frå «%1» som"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "Klarte ikkje lagra biletet %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Karl Ove Hufthammer"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "karl@huftis.org"

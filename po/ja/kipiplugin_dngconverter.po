@@ -1,0 +1,246 @@
+# Translation of kipiplugin_rawconverter into Japanese.
+# This file is distributed under the same license as the kipi-plugins package.
+# Yukiko Bando <ybando@k6.dion.ne.jp>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rawconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-17 03:25+0100\n"
+"PO-Revision-Date: 2008-10-30 23:59+0900\n"
+"Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
+"Language-Team: Japanese <Kdeveloper@kde.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: plugin/actionthread.cpp:228
+msgid "Cannot identify Raw image"
+msgstr "RAW 画像を識別できません"
+
+#: plugin/actionthread.cpp:235
+#, kde-format
+msgid "Make: %1\n"
+msgstr "メーカー: %1\n"
+
+#: plugin/actionthread.cpp:236
+#, kde-format
+msgid "Model: %1\n"
+msgstr "モデル: %1\n"
+
+#: plugin/actionthread.cpp:240
+#, kde-format
+msgid "Created: %1\n"
+msgstr "作成日: %1\n"
+
+#: plugin/actionthread.cpp:247
+#, kde-format
+msgid "Aperture: f/%1\n"
+msgstr "絞り: f/%1\n"
+
+#: plugin/actionthread.cpp:252
+#, kde-format
+msgid "Focal: %1 mm\n"
+msgstr "焦点距離: %1 mm\n"
+
+#: plugin/actionthread.cpp:257
+#, kde-format
+msgid "Exposure: 1/%1 s\n"
+msgstr "露出: 1/%1 秒\n"
+
+#: plugin/actionthread.cpp:262
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "感度: %1 ISO"
+
+#: plugin/dngconverter.cpp:57
+msgid "File(s) to convert"
+msgstr "変換するファイル"
+
+#: plugin/plugin_dngconverter.cpp:65
+msgid "DNG Converter..."
+msgstr "DNG コンバータ..."
+
+#: plugin/settingswidget.cpp:105
+msgid "Embed Original File"
+msgstr "オリジナルのファイルを埋め込む"
+
+#: plugin/settingswidget.cpp:107
+msgid "Lossless Compression"
+msgstr "可逆圧縮"
+
+#: plugin/settingswidget.cpp:109
+msgid "Update File Modification Date"
+msgstr ""
+
+#: plugin/settingswidget.cpp:110
+msgid ""
+"Sets the file modification date to the creation date provided in the image "
+"metadata."
+msgstr ""
+
+#: plugin/settingswidget.cpp:113
+msgid "JPEG Preview:"
+msgstr "JPEG プレビュー:"
+
+#: plugin/settingswidget.cpp:115
+#, fuzzy
+#| msgid "None"
+msgctxt "embedded preview type in dng file"
+msgid "None"
+msgstr "なし"
+
+#: plugin/settingswidget.cpp:116
+#, fuzzy
+#| msgid "Medium"
+msgctxt "embedded preview type in dng file"
+msgid "Medium"
+msgstr "中サイズ"
+
+#: plugin/settingswidget.cpp:117
+#, fuzzy
+#| msgid "Full size"
+msgctxt "embedded preview type in dng file"
+msgid "Full size"
+msgstr "フルサイズ"
+
+#: plugin/settingswidget.cpp:123
+msgid "If Target File Exists:"
+msgstr "同名のファイルが存在する場合:"
+
+#: plugin/settingswidget.cpp:127
+msgid "Overwrite automatically"
+msgstr "自動的に上書き"
+
+#: plugin/settingswidget.cpp:128
+msgid "Open rename-file dialog"
+msgstr "ファイル名変更ダイアログを開く"
+
+#: plugin/aboutdata.h:49
+msgid "DNG Image Converter"
+msgstr "DNG 画像コンバータ"
+
+#: plugin/aboutdata.h:52
+#, fuzzy, kde-format
+#| msgid "A tool to batch convert RAW camera images to DNG"
+msgid ""
+"A tool to batch convert RAW camera images to DNG\n"
+"Using XMP toolkit %1\n"
+"Using DNG toolkit 1.3"
+msgstr "カメラの RAW 画像を DNG に一括変換するツール"
+
+#: plugin/aboutdata.h:55
+msgid ""
+"(c) 2008-2011, Gilles Caulier\n"
+"(c) 2010-2011, Jens Mueller"
+msgstr ""
+
+#: plugin/aboutdata.h:58
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: plugin/aboutdata.h:59
+msgid "Author"
+msgstr "作者"
+
+#: plugin/aboutdata.h:62
+msgid "Jens Mueller"
+msgstr ""
+
+#: plugin/aboutdata.h:63
+msgid "Developer"
+msgstr ""
+
+#: plugin/batchdialog.cpp:129
+msgid "Exit DNG Converter"
+msgstr "DNG コンバータを終了します"
+
+#: plugin/batchdialog.cpp:130
+msgid "Batch convert RAW camera images to DNG"
+msgstr "カメラの RAW 画像を DNG に一括変換します"
+
+#: plugin/batchdialog.cpp:133
+msgid "&Add"
+msgstr "追加(&A)"
+
+#: plugin/batchdialog.cpp:134
+msgid "Add new Raw files to the list"
+msgstr "リストに新しい RAW ファイルを追加します"
+
+#: plugin/batchdialog.cpp:136
+msgid "&Remove"
+msgstr "削除(&R)"
+
+#: plugin/batchdialog.cpp:137
+msgid "Remove selected Raw files from the list"
+msgstr "選択した RAW ファイルをリストから削除します"
+
+#: plugin/batchdialog.cpp:156
+msgid "Thumbnail"
+msgstr "サムネイル"
+
+#: plugin/batchdialog.cpp:157
+msgid "Raw File"
+msgstr "RAW ファイル"
+
+#: plugin/batchdialog.cpp:158
+msgid "Target File"
+msgstr "変換後のファイル"
+
+#: plugin/batchdialog.cpp:159
+msgid "Camera"
+msgstr "カメラ"
+
+#: plugin/batchdialog.cpp:190
+msgid "Handbook"
+msgstr "ハンドブック"
+
+#: plugin/batchdialog.cpp:332
+#, fuzzy
+#| msgid "There is no Raw file to process in the list!"
+msgid "The list does not contain any Raw files to process."
+msgstr "リストに処理する RAW ファイルがありません。"
+
+#: plugin/batchdialog.cpp:473
+msgid "&Abort"
+msgstr "中止(&A)"
+
+#: plugin/batchdialog.cpp:474
+#, fuzzy
+#| msgid "Abort the current Raw files conversion"
+msgid "Abort the conversion of Raw files."
+msgstr "現在の RAW ファイル変換を中止します"
+
+#: plugin/batchdialog.cpp:479
+msgid "Con&vert"
+msgstr "変換(&V)"
+
+#: plugin/batchdialog.cpp:480
+#, fuzzy
+#| msgid "Start converting the Raw images from current settings"
+msgid "Start converting the Raw images using the current settings."
+msgstr "現在の設定で RAW 画像の変換を開始します"
+
+#: plugin/batchdialog.cpp:529
+#, kde-format
+msgid "Save Raw Image converted from '%1' as"
+msgstr "<filename>%1</filename> から変換した RAW 画像に名前を付けて保存"
+
+#: plugin/batchdialog.cpp:558
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "画像 <filename>%1</filename> の保存に失敗しました"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Yukiko Bando"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ybando@k6.dion.ne.jp"

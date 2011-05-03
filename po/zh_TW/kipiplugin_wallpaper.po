@@ -1,0 +1,62 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2009-12-12 12:39+0800\n"
+"Last-Translator: Dong-Jun Wu <ziyawu@gmail.com>\n"
+"Language-Team: Chinese Traditional <zh-l10n@linux.org.tw>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "設定為背景(&S)"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "置中"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "置中鋪排"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "置中的最大外觀"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "鋪排的最大外觀"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "縮放"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "置中並自動填滿"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "縮放並裁剪"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>您選擇了一張遠端影像。用來作為桌布需要儲存至您的本機磁碟。</p><p>將會詢問"
+"您影像的儲存位置。</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "變更背景"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "背景無法變更。"

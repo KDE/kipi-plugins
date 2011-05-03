@@ -1,0 +1,249 @@
+# tradução do kipiplugin_shwup.po para Brazilian Portuguese
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# André Marcelo Alvarenga <andrealvarenga@gmx.net>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_shwup\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2009-11-04 02:16-0200\n"
+"Last-Translator: André Marcelo Alvarenga <andrealvarenga@gmx.net>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_br@mail.kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: swalbum.cpp:49
+msgid "Shwup New Album"
+msgstr "Novo álbum do Shwup"
+
+#: swalbum.cpp:62
+msgid "Title of the album that will be created (required)."
+msgstr "Título do álbum que será criado (obrigatório)."
+
+#: swalbum.cpp:65
+msgctxt "album edit"
+msgid "Title:"
+msgstr "Título:"
+
+#: swlogin.cpp:48
+msgid "Shwup Login"
+msgstr "Login do Shwup"
+
+#: swlogin.cpp:60
+msgid "Email of shwup account (required)."
+msgstr "E-mail da conta do Shwup (obrigatório)."
+
+#: swlogin.cpp:64
+msgid "Password of shwup account (required)."
+msgstr "Senha da conta do Shwup (obrigatório)."
+
+#: swlogin.cpp:67
+msgctxt "login settings"
+msgid "Email:"
+msgstr "E-mail:"
+
+#: swlogin.cpp:68
+msgctxt "login settings"
+msgid "Password:"
+msgstr "Senha:"
+
+#: swwidget.cpp:71
+msgid "This is the list of images to upload to your Shwup account."
+msgstr "Esta é a lista de imagens a serem enviadas para a sua conta do Shwup."
+
+#: swwidget.cpp:77
+msgid ""
+"This is a clickable link to open the Shwup.com home page in a web browser."
+msgstr "Este é um link que pode abrir a página Web do Shwup.com num navegador."
+
+#: swwidget.cpp:83
+msgid "Account"
+msgstr "Conta"
+
+#: swwidget.cpp:84
+msgid "This is the Shwup account that is currently logged in."
+msgstr "Esta é a conta do Shwup autenticada neste momento."
+
+#: swwidget.cpp:87
+msgctxt "account settings"
+msgid "Name:"
+msgstr "Nome:"
+
+#: swwidget.cpp:90
+msgid "Change Account"
+msgstr "Alterar conta"
+
+#: swwidget.cpp:91
+msgid "Change Shwup Account used for transfer"
+msgstr "Alterar a conta do Shwup usada para transferência"
+
+#: swwidget.cpp:102 swwidget.cpp:122
+msgid "Destination"
+msgstr "Destino"
+
+#: swwidget.cpp:103
+msgid "This is the Shwup album to which selected photos will be uploaded."
+msgstr ""
+"Este é o álbum do Shwup para onde serão enviadas as fotos selecionadas."
+
+#: swwidget.cpp:106
+msgid "Album:"
+msgstr "Álbum:"
+
+#: swwidget.cpp:110
+msgid "New Album"
+msgstr "Novo álbum"
+
+#: swwidget.cpp:111
+msgid "Create new Shwup album"
+msgstr "Cria um novo álbum do Facebook"
+
+#: swwidget.cpp:112
+msgctxt "album list"
+msgid "Reload"
+msgstr "Recarregar"
+
+#: swwidget.cpp:113
+msgid "Reload album list"
+msgstr "Recarrega a lista de álbuns"
+
+#: swwidget.cpp:123
+msgid "This is the location to which Shwup images will be downloaded."
+msgstr "Esta é a localização de onde as imagens do Shwup serão baixadas."
+
+#: swwidget.cpp:130
+msgid "Options"
+msgstr "Opções"
+
+#: swwidget.cpp:131
+msgid "These are options that will be applied to photos before upload."
+msgstr "Estas são as opções que serão aplicadas às fotos antes do envio."
+
+#: swwidget.cpp:135
+msgid "Resize photos before uploading"
+msgstr "Redimensionar as fotos antes de enviar"
+
+#: swwidget.cpp:145
+msgid "Maximum dimension:"
+msgstr "Dimensão máxima:"
+
+#: swwidget.cpp:153
+msgid "JPEG quality:"
+msgstr "Qualidade JPEG:"
+
+#: swwindow.cpp:93
+msgid "Export to Shwup Web Service"
+msgstr "Exportar para o serviço da Internet Shwup"
+
+#: swwindow.cpp:94
+msgid "Start Upload"
+msgstr "Iniciar envio"
+
+#: swwindow.cpp:95
+msgid "Start upload to Shwup web service"
+msgstr "Inicia o envio para o serviço da Internet Shwup"
+
+#: swwindow.cpp:118
+msgid "Shwup Export"
+msgstr "Exportar para o Shwup"
+
+#: swwindow.cpp:120
+msgid "A Kipi plugin to export images to Shwup web service."
+msgstr ""
+"Um plug-in do Kipi para exportar imagens para o serviço da Internet Shwup."
+
+#: swwindow.cpp:122
+msgid "(c) 2009, Timothée Groleau"
+msgstr "(c) 2009, Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Timothée Groleau"
+msgstr "Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Author and maintainer"
+msgstr "Autor e mantenedor"
+
+#: swwindow.cpp:132
+msgid "Handbook"
+msgstr "Manual"
+
+#: swwindow.cpp:277
+msgid ""
+"The shwup.com service does not seem to be available at this time, please try "
+"again later."
+msgstr ""
+"Infelizmente, o serviço shwup.com parece estar indisponível neste momento. "
+"Tente novamente mais tarde."
+
+#: swwindow.cpp:307
+msgid "This application has been blacklisted by the shwup.com service."
+msgstr "Este aplicativo foi bloqueado pelo serviço shwup.com."
+
+#: swwindow.cpp:319
+#, kde-format
+msgid "Shwup Call Failed: %1\n"
+msgstr "Falha na chamada do Shwup: %1\n"
+
+#: swwindow.cpp:420
+msgid "Transfer Progress"
+msgstr "Progresso da transferência"
+
+#: swwindow.cpp:425
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: swwindow.cpp:532
+#, kde-format
+msgid ""
+"Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online "
+"and invite people."
+msgstr ""
+"O envio foi concluído. Visite \"<a href=\"%1\">%2</a>\" para ver o álbum on-"
+"line e convidar as pessoas."
+
+#: swwindow.cpp:535
+msgid "Upload complete"
+msgstr "Envio concluído"
+
+#: swwindow.cpp:559 swwindow.cpp:578
+msgid "Cannot open file"
+msgstr "Não foi possível abrir o arquivo"
+
+#: swwindow.cpp:582
+#, kde-format
+msgid "Uploading file %1"
+msgstr "Enviando o arquivo %1"
+
+#: swwindow.cpp:606
+#, kde-format
+msgid ""
+"Failed to upload photo into Shwup: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Não foi possível enviar a foto para o Shwup: %1\n"
+"Deseja continuar?"
+
+#: swwindow.cpp:630
+#, kde-format
+msgid "Shwup Call Failed: %1"
+msgstr "Falha na chamada ao Shwup: %1"
+
+#: plugin_shwup.cpp:78
+msgid "Export to Shwup..."
+msgstr "Exportar para o Shwup..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "André Marcelo Alvarenga"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "andrealvarenga@gmx.net"

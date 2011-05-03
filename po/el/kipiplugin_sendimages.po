@@ -1,0 +1,414 @@
+# translation of kipiplugin_sendimages.po to greek
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2007, 2008, 2009.
+# Spiros Georgaras <sng@hellug.gr>, 2007.
+# Dimitrios Glentadakis <dglent@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_sendimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-31 03:19+0200\n"
+"PO-Revision-Date: 2010-12-26 15:27+0100\n"
+"Last-Translator: Dimitrios Glentadakis <dglent@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: emailpage.cpp:86
+msgid "Mail program:"
+msgstr "Εφαρμογή αλληλογραφίας:"
+
+#: emailpage.cpp:89
+msgctxt "default mail agent"
+msgid "Default"
+msgstr "Προκαθορισμένο"
+
+#: emailpage.cpp:100
+msgid ""
+"Select your preferred external email program here. <b>Default</b> is the "
+"current email program set in KDE System Settings."
+msgstr ""
+"Επιλέξτε εδώ την προτιμώμενη εφαρμογή αλληλογραφίας. Το <b>Προκαθορισμένη</"
+"b> είναι η τρέχουσα επιλεγμένη εφαρμογή στις ρυθμίσεις του KDE."
+
+#: emailpage.cpp:106
+#, kde-format
+msgid "Attach a file with image properties from %1"
+msgstr "Επισύναψη αρχείου με ιδιότητες από %1"
+
+#: emailpage.cpp:109
+#, kde-format
+msgid ""
+"If you enable this option, all image properties set by %1 as Comments, "
+"Rating, or Tags, will be added as an attached file."
+msgstr ""
+"Αν ενεργοποιήσετε αυτή την επιλογή, όλες οι ιδιότητες τις εικόνας που "
+"ορίστηκαν από %1 ως σχόλια, αξιολόγηση, ή ετικέτες θα προστεθούν σαν "
+"επισυναπτόμενο αρχείο."
+
+#: emailpage.cpp:118
+msgid "Maximum email size limit:"
+msgstr "Μέγιστο όριο μεγέθους αλληλογραφίας:"
+
+#: emailpage.cpp:119
+#, fuzzy
+#| msgid "MB"
+msgid " MB"
+msgstr "MB"
+
+#: emailpage.cpp:123
+msgid "Adjust image properties"
+msgstr "Ρύθμιση ιδιοτήτων εικόνων"
+
+#: emailpage.cpp:125
+msgid ""
+"If you enable this option, all images to be sent can be resized and "
+"recompressed."
+msgstr ""
+"Αν ενεργοποιήσετε αυτή την επιλογή, θα αλλαχτεί το μέγεθος και η συμπίεση "
+"όλων των προς αποστολή εικόνων."
+
+#: emailpage.cpp:128
+msgid "Image Properties"
+msgstr "Ιδιότητες εικόνας"
+
+#: emailpage.cpp:132 emailpage.cpp:150
+msgid "Very Small (320 pixels)"
+msgstr "Πολύ μικρή (320 εικονοστοιχεία)"
+
+#: emailpage.cpp:133 emailpage.cpp:151
+msgid "Small (640 pixels)"
+msgstr "Μικρή (640 εικονοστοιχεία)"
+
+#: emailpage.cpp:134 emailpage.cpp:152
+msgid "Medium (800 pixels)"
+msgstr "Μεσαία (800 εικονοστοιχεία)"
+
+#: emailpage.cpp:135 emailpage.cpp:153
+msgid "Big (1024 pixels)"
+msgstr "Μεγάλη (1024 εικονοστοιχεία)"
+
+#: emailpage.cpp:136 emailpage.cpp:154
+msgid "Very Big (1280 pixels)"
+msgstr "Πολύ μεγάλη (1280 εικονοστοιχεία)"
+
+#: emailpage.cpp:137 emailpage.cpp:155
+msgid "Huge - for printing (1600 pixels)"
+msgstr "Τεράστια - για εκτύπωση (1600 εικονοστοιχεία)"
+
+#: emailpage.cpp:139
+#, kde-format
+msgid ""
+"<p>Select the size of the images that are to be sent:</p><p><b>%1</b>: use "
+"this if you have a very slow Internet connection or the target mailbox size "
+"is very limited.</p><p><b>%2</b>: use this if you have a slow Internet "
+"connection and the target mailbox size is limited.</p><p><b>%3</b>: this is "
+"the default value for medium Internet connection speed and target mailbox "
+"size.</p><p><b>%4</b>: use this if you have a high-speed Internet connection "
+"and the target mailbox size is not limited.</p><p><b>%5</b>: use this if you "
+"have no size or speed restrictions.</p><p><b>%6</b>: use this only for "
+"printing purposes.</p>"
+msgstr ""
+"<p>Επιλέξτε εδώ το μέγεθος των εικόνων που θα αποσταλούν:</p><p><b>%1</b>: "
+"χρησιμοποιήστε αυτό αν έχετε μία πολύ αργή σύνδεση ή αν το μέγεθος της "
+"θυρίδας αλληλογραφίας προορισμού είναι πολύ περιορισμένο.</p><p><b>%2</b>: "
+"χρησιμοποιήστε αυτό αν έχετε μία αργή σύνδεση ή αν το μέγεθος της θυρίδας "
+"αλληλογραφίας προορισμού είναι περιορισμένο.</p><p><b>%3</b>: αυτή είναι η "
+"προεπιλεγμένη τιμή για μια σύνδεση μεσαίας ταχύτητας και μεγέθους θυρίδας "
+"αλληλογραφίας προορισμού.</p><p><b>%4</b>: χρησιμοποιήστε αυτό αν έχετε μία "
+"σύνδεση υψηλής ταχύτητας και αν το μέγεθος της θυρίδας αλληλογραφίας "
+"προορισμού δεν είναι περιορισμένο.</p><p><b>%5</b>: χρησιμοποιήστε αυτό αν "
+"δεν έχετε περιορισμούς μεγέθους ή ταχύτητας.</p><p><b>%6</b>: χρησιμοποιήστε "
+"αυτό μόνο για εκτύπωση.</p>"
+
+#: emailpage.cpp:159
+msgid "Image size:"
+msgstr "Μέγεθος εικόνας:"
+
+#: emailpage.cpp:168
+msgid "<p>Select the file format of the image files to be sent.</p>"
+msgstr "<p>Επιλέξτε εδώ τη μορφή των εικόνων που θα αποσταλούν.</p>"
+
+#: emailpage.cpp:169
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group file format is a good "
+"web file format but it uses lossy compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color-"
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b>: Η μορφή αρχείου του Joint Photographic Experts Group είναι "
+"μια καλή μορφή του διαδικτύου αλλά χρησιμοποιεί συμπίεση με απώλεια "
+"πληροφορίας.</p><p><b>PNG</b>: Η μορφή αρχείου Portable Network Graphics "
+"είναι μία επεκτάσιμη μορφή αρχείου για αποθήκευση εικόνων ράστερ χωρίς "
+"απώλεια πληροφορίας, φορητή και με υψηλή συμπίεση. Το PNG παρέχει μια "
+"εναλλακτική λύση για το GIF, χωρίς προβλήματα πατεντών, ενώ μπορεί επίσης να "
+"αντικαταστήσει και τα TIFF σε πολλές τυπικές εφαρμογές τους. Το PNG έχει "
+"σχεδιαστεί ώστε να λειτουργεί καλά σε εφαρμογές απομακρυσμένης προβολής, "
+"όπως γίνεται στο World Wide Web, και έτσι είναι ιδανικό για προβολή σαν ροή "
+"με επιλογή προοδευτικής απεικόνισης. Επίσης, το PNG έχει τη δυνατότητα να "
+"αποθηκεύσει χρωματικές πληροφορίες και δεδομένα γάμμα για βελτιωμένο "
+"ταίριασμα χρώματος σε ανομοιογενείς πλατφόρμες.</p>"
+
+#: emailpage.cpp:179
+msgid "Image file format:"
+msgstr "Μορφή αρχείου εικόνας:"
+
+#: emailpage.cpp:187
+msgid "Image quality:"
+msgstr "Ποιότητα εικόνας:"
+
+#: emailpage.cpp:188
+msgid "<p>The new compression value of JPEG images to be sent:</p>"
+msgstr "<p>Η νέα τιμή συμπίεσης των προς αποστολή εικόνων JPEG:</p>"
+
+#: emailpage.cpp:189
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b>: πολύ υψηλή συμπίεση<br/><b>25</b>: υψηλή συμπίεση<br/><b>50</"
+"b>: μεσαία συμπίεση<br/><b>75</b>: χαμηλή συμπίεση (προκαθορισμένη τιμή)<br/"
+"><b>100</b>: χωρίς συμπίεση</p>"
+
+#: imageresize.cpp:191
+msgid "Error opening input file"
+msgstr "Σφάλμα ανοίγματος του αρχείου εισόδου"
+
+#: imageresize.cpp:202
+msgid "Error opening temporary folder"
+msgstr "Σφάλμα ανοίγματος του προσωρινού φακέλου"
+
+#: imageresize.cpp:247
+msgid "Cannot resize image. Aborting."
+msgstr "Αδύνατη η κλιμάκωση της εικόνας. Εγκατάλειψη."
+
+#: imageresize.cpp:266
+msgid "Cannot save resized image (JPEG). Aborting."
+msgstr "Αδύνατη η αποθήκευση της τροποποιημένης εικόνας (JPEG). Εγκατάλειψη."
+
+#: imageresize.cpp:281
+msgid "Cannot save resized image (PNG). Aborting."
+msgstr "Αδύνατη η αποθήκευση της τροποποιημένης εικόνας (PNG). Εγκατάλειψη."
+
+#: plugin_sendimages.cpp:86
+msgid "Email Images..."
+msgstr "Αποστολή εικόνων με ηλ. ταχυδρομείο  ..."
+
+#: sendimages.cpp:130
+msgid "Email images"
+msgstr "Αποστολή εικόνων με ηλ. ταχυδρομείο  "
+
+#: sendimages.cpp:164
+msgid "Operation canceled by user"
+msgstr "Η λειτουργία ακυρώθηκε από το χρήστη"
+
+#: sendimages.cpp:176
+#, kde-format
+msgid "Resizing %1"
+msgstr "Αλλαγή μεγέθους του %1"
+
+#: sendimages.cpp:187
+#, kde-format
+msgid "%1 resized successfully"
+msgstr "Η κλιμάκωση της εικόνας %1 ολοκληρώθηκε επιτυχώς"
+
+#: sendimages.cpp:194
+#, kde-format
+msgid "Failed to resize %1: %2"
+msgstr "Αποτυχία κλιμάκωσης της %1 : %2"
+
+#: sendimages.cpp:223
+msgid "Build images properties file"
+msgstr "Δημιουργία αρχείου ιδιοτήτων εικόνων"
+
+#: sendimages.cpp:236
+msgid "no caption"
+msgstr "χωρίς τίτλο"
+
+#: sendimages.cpp:239
+msgid "no keywords"
+msgstr "χωρίς λέξεις κλειδιά"
+
+#: sendimages.cpp:241
+#, kde-format
+msgid ""
+"file \"%1\":\n"
+"Original images: %2\n"
+msgstr ""
+"αρχείο \"%1\":\n"
+"Αρχικές εικόνες: %2\n"
+
+#: sendimages.cpp:244
+#, kde-format
+msgid "Comments: %1\n"
+msgstr "Σχόλια: %1\n"
+
+#: sendimages.cpp:247
+#, kde-format
+msgid "Tags: %1\n"
+msgstr "Ετικέτες: %1\n"
+
+#: sendimages.cpp:250
+#, kde-format
+msgid "Rating: %1\n"
+msgstr "Βαθμολογία: %1\n"
+
+#: sendimages.cpp:255
+msgid "properties.txt"
+msgstr "properties.txt"
+
+#: sendimages.cpp:264
+msgid "Image properties file done"
+msgstr "Το αρχείο ιδιοτήτων εικόνων ολοκληρώθηκε"
+
+#: sendimages.cpp:281
+msgid ""
+"The images listed below cannot be resized.\n"
+"Do you want them to be added as attachments (without resizing)?"
+msgstr ""
+"Δεν είναι δυνατή η αλλαγή μεγέθους των εικόνων που φαίνονται παρακάτω.\n"
+"Επιθυμείτε την προσθήκη τους σαν συνημμένα (χωρίς αλλαγή μεγέθους);"
+
+#: sendimages.cpp:285
+msgid "Failed to resize images"
+msgstr "Η αλλαγή μεγέθους των εικόνων απέτυχε"
+
+#: sendimages.cpp:347
+#, kde-format
+msgid ""
+"The file \"%1\" is too big to be sent, please reduce its size or change your "
+"settings"
+msgstr ""
+"Το αρχείο « %1 » είναι πολύ μεγάλο για να σταλεί, παρακαλώ μειώστε το μέγεθός "
+"του ή αλλάξτε τις ρυθμίσεις σας"
+
+#: sendimages.cpp:391
+msgid "Starting default KDE email program..."
+msgstr "Εκκίνηση του προκαθορισμένου προγράμματος αλληλογραφίας του KDE..."
+
+#: sendimages.cpp:545
+#, kde-format
+msgid "Failed to start \"%1\" program. Check your system."
+msgstr ""
+"Αδύνατη η εκκίνηση της εφαρμογής \"%1\". Παρακαλώ ελέγξτε την εγκατάστασή "
+"σας."
+
+#: sendimages.cpp:558
+#, kde-format
+msgid "Starting \"%1\" program..."
+msgstr "Εκκίνηση του προγράμματος \"%1\"..."
+
+#: sendimages.cpp:568
+msgid "After having sent your images by email..."
+msgstr "Μετά την αποστολή των εικόνων μέσω ηλ. ταχυδρομείου ..."
+
+#: sendimages.cpp:569
+msgid "Press 'Close' button to clean up temporary files"
+msgstr ""
+"Πιέστε το κουμπί 'Κλείσιμο' για να γίνει καθαρισμός των προσωρινών αρχείων"
+
+#: sendimagesdialog.cpp:90
+msgid "Email Images Options"
+msgstr "Επιλογές αποστολής εικόνων με ηλ. ταχυδρομείο"
+
+#: sendimagesdialog.cpp:99
+msgid "Images"
+msgstr "Εικόνες"
+
+#: sendimagesdialog.cpp:100
+msgid "Image List"
+msgstr "Λίστα εικόνων"
+
+#: sendimagesdialog.cpp:105
+msgid "Mail"
+msgstr "Αλληλογραφία"
+
+#: sendimagesdialog.cpp:106
+msgid "Mail Options"
+msgstr "Επιλογές αλληλογραφίας"
+
+#: sendimagesdialog.cpp:112
+msgid "Send Images"
+msgstr "Αποστολή εικόνων"
+
+#: sendimagesdialog.cpp:115
+msgid "A plugin to email pictures"
+msgstr "Ένα πρόσθετο για την αποστολή εικόνων μέσω ηλ. ταχυδρομείου"
+
+#: sendimagesdialog.cpp:116
+#, fuzzy
+#| msgid "(c) 2003-2009, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier"
+msgstr "(c) 2003-2009, Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: sendimagesdialog.cpp:118
+msgid "Author and Maintainer"
+msgstr "Συγγραφέας και Συντηρητής"
+
+#: sendimagesdialog.cpp:121
+msgid "Michael Hoechstetter"
+msgstr "Michael Hoechstetter"
+
+#: sendimagesdialog.cpp:121 sendimagesdialog.cpp:124
+msgid "Developer"
+msgstr "Προγραμματιστής"
+
+#: sendimagesdialog.cpp:124
+msgid "Tom Albers"
+msgstr "Tom Albers"
+
+#: sendimagesdialog.cpp:132
+msgid "Handbook"
+msgstr "Εγχειρίδιο"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Τούσης Μανώλης"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "manolis@koppermind.homelinux.org"
+
+#~ msgid "very small (320 pixels)"
+#~ msgstr "πολύ μικρή (320 εικονοστοιχεία)"
+
+#~ msgid "small (640 pixels)"
+#~ msgstr "μικρή (640 εικονοστοιχεία)"
+
+#~ msgid "medium (800 pixels)"
+#~ msgstr "μεσαία (800 εικονοστοιχεία)"
+
+#~ msgid "big (1024 pixels)"
+#~ msgstr "μεγάλη (1024 εικονοστοιχεία)"
+
+#~ msgid "very big (1280 pixels)"
+#~ msgstr "πολύ μεγάλη (1280 εικονοστοιχεία)"
+
+#~ msgid "huge - for printing (1600 pixels)"
+#~ msgstr "τεράστια - για εκτύπωση (1600 εικονοστοιχεία)"
+
+#~ msgid "This is the list of images to e-mail."
+#~ msgstr "Αυτή είναι ή λίστα των εικόνων που θα αποσταλούν."
+
+#~ msgid "&Add"
+#~ msgstr "&Προσθήκη"
+
+#~ msgid "&Remove"
+#~ msgstr "&Αφαίρεση"

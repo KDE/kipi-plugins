@@ -1,0 +1,242 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ni Hui <shuizhuyuanluo@126.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-11-16 12:48+0800\n"
+"Last-Translator: Ni Hui <shuizhuyuanluo@126.com>\n"
+"Language-Team: Chinese Simplified <kde-china@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: swalbum.cpp:49
+msgid "Shwup New Album"
+msgstr "Shwup 新相册"
+
+#: swalbum.cpp:62
+msgid "Title of the album that will be created (required)."
+msgstr "要创建的相册标题(必需)。"
+
+#: swalbum.cpp:65
+msgctxt "album edit"
+msgid "Title:"
+msgstr "标题："
+
+#: swlogin.cpp:48
+msgid "Shwup Login"
+msgstr "Shwup 登录"
+
+#: swlogin.cpp:60
+msgid "Email of shwup account (required)."
+msgstr "Shwup 账户的电子邮件地址(必需)。"
+
+#: swlogin.cpp:64
+msgid "Password of shwup account (required)."
+msgstr "Shwup 账户的密码(必需)。"
+
+#: swlogin.cpp:67
+msgctxt "login settings"
+msgid "Email:"
+msgstr "电子邮件："
+
+#: swlogin.cpp:68
+msgctxt "login settings"
+msgid "Password:"
+msgstr "密码："
+
+#: swwidget.cpp:71
+msgid "This is the list of images to upload to your Shwup account."
+msgstr "这是要上传到您的 Shwup 账户的图像列表。"
+
+#: swwidget.cpp:77
+msgid ""
+"This is a clickable link to open the Shwup.com home page in a web browser."
+msgstr "这是在网络浏览器中打开 Shwup.com 主页的链接地址。"
+
+#: swwidget.cpp:83
+msgid "Account"
+msgstr "账户"
+
+#: swwidget.cpp:84
+msgid "This is the Shwup account that is currently logged in."
+msgstr "这是当前登录的 Shwup 账户。"
+
+#: swwidget.cpp:87
+msgctxt "account settings"
+msgid "Name:"
+msgstr "用户名："
+
+#: swwidget.cpp:90
+msgid "Change Account"
+msgstr "更改账户"
+
+#: swwidget.cpp:91
+msgid "Change Shwup Account used for transfer"
+msgstr "更改用于传输的 Shwup 账户"
+
+#: swwidget.cpp:102 swwidget.cpp:122
+msgid "Destination"
+msgstr "目标"
+
+#: swwidget.cpp:103
+msgid "This is the Shwup album to which selected photos will be uploaded."
+msgstr "这是所选照片将要上传到的 Shwup 相册。"
+
+#: swwidget.cpp:106
+msgid "Album:"
+msgstr "相册："
+
+#: swwidget.cpp:110
+msgid "New Album"
+msgstr "新建相册"
+
+#: swwidget.cpp:111
+msgid "Create new Shwup album"
+msgstr "创建新 Shwup 相册"
+
+#: swwidget.cpp:112
+msgctxt "album list"
+msgid "Reload"
+msgstr "重新装入"
+
+#: swwidget.cpp:113
+msgid "Reload album list"
+msgstr "重新装入相册列表"
+
+#: swwidget.cpp:123
+msgid "This is the location to which Shwup images will be downloaded."
+msgstr "这是 Shwup 图像将要下载到的位置。"
+
+#: swwidget.cpp:130
+msgid "Options"
+msgstr "选项"
+
+#: swwidget.cpp:131
+msgid "These are options that will be applied to photos before upload."
+msgstr "这些是照片在上传前所应用的选项。"
+
+#: swwidget.cpp:135
+msgid "Resize photos before uploading"
+msgstr "上传前调整照片大小"
+
+#: swwidget.cpp:145
+msgid "Maximum dimension:"
+msgstr "最大尺寸："
+
+#: swwidget.cpp:153
+msgid "JPEG quality:"
+msgstr "JPEG 质量："
+
+#: swwindow.cpp:93
+msgid "Export to Shwup Web Service"
+msgstr "导出至 Shwup 网络服务"
+
+#: swwindow.cpp:94
+msgid "Start Upload"
+msgstr "开始上传"
+
+#: swwindow.cpp:95
+msgid "Start upload to Shwup web service"
+msgstr "开始上传到 Shwup 网络服务"
+
+#: swwindow.cpp:118
+msgid "Shwup Export"
+msgstr "Shwup 导出"
+
+#: swwindow.cpp:120
+msgid "A Kipi plugin to export images to Shwup web service."
+msgstr "一个将图像导出至 Shwup 网络服务的 Kipi 插件。"
+
+#: swwindow.cpp:122
+msgid "(c) 2009, Timothée Groleau"
+msgstr "(c) 2009，Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Timothée Groleau"
+msgstr "Timothée Groleau"
+
+#: swwindow.cpp:124
+msgid "Author and maintainer"
+msgstr "作者和维护者"
+
+#: swwindow.cpp:132
+msgid "Handbook"
+msgstr "手册"
+
+#: swwindow.cpp:277
+msgid ""
+"The shwup.com service does not seem to be available at this time, please try "
+"again later."
+msgstr "shwup.com 服务目前似乎不可用，请稍后重试。"
+
+#: swwindow.cpp:307
+msgid "This application has been blacklisted by the shwup.com service."
+msgstr "此应用程序已被 shwup.com 服务列入黑名单。"
+
+#: swwindow.cpp:319
+#, kde-format
+msgid "Shwup Call Failed: %1\n"
+msgstr "Shwup 调用失败：%1\n"
+
+#: swwindow.cpp:420
+msgid "Transfer Progress"
+msgstr "传输进度"
+
+#: swwindow.cpp:425
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: swwindow.cpp:532
+#, kde-format
+msgid ""
+"Upload complete. Visit \"<a href=\"%1\">%2</a>\" to view the album online "
+"and invite people."
+msgstr "上传完成。访问“<a href=\"%1\">%2</a>”来在线查看相册并邀请朋友。"
+
+#: swwindow.cpp:535
+msgid "Upload complete"
+msgstr "上传完成"
+
+#: swwindow.cpp:559 swwindow.cpp:578
+msgid "Cannot open file"
+msgstr "无法打开文件"
+
+#: swwindow.cpp:582
+#, kde-format
+msgid "Uploading file %1"
+msgstr "正在上传文件 %1"
+
+#: swwindow.cpp:606
+#, kde-format
+msgid ""
+"Failed to upload photo into Shwup: %1\n"
+"Do you want to continue?"
+msgstr ""
+"上传照片至 Shwup 失败：%1\n"
+"您想要继续吗？"
+
+#: swwindow.cpp:630
+#, kde-format
+msgid "Shwup Call Failed: %1"
+msgstr "Shwup 调用失败：%1"
+
+#: plugin_shwup.cpp:78
+msgid "Export to Shwup..."
+msgstr "导出至 Shwup..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Ni Hui"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "shuizhuyuanluo@126.com"

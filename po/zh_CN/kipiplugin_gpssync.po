@@ -1,0 +1,1450 @@
+# translation of kipiplugin_gpssync.po to 简体中文
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ni Hui <shuizhuyuanluo@126.com>, 2008, 2009, 2010.
+# Feng Chao <rainofchaos@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_gpssync\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-05-02 03:35+0200\n"
+"PO-Revision-Date: 2011-03-23 21:52+0800\n"
+"Last-Translator: Feng Chao <rainofchaos@gmail.com>\n"
+"Language-Team: Chinese Simplified <kde-china@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 1.2\n"
+"Language: zh_CN\n"
+
+#: plugin_gpssync.cpp:74
+msgid "Geo-location"
+msgstr "地理位置"
+
+#: gpsreversegeocodingwidget.cpp:230
+msgid "Add country tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:232
+msgid "Add state tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:234
+msgid "Add state district tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:236
+msgid "Add county tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:238
+msgid "Add city tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:240
+msgid "Add city district tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:242
+msgid "Add suburb tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:244
+msgid "Add town tag"
+msgstr "添加城镇标签"
+
+#: gpsreversegeocodingwidget.cpp:246
+msgid "Add village tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:248
+msgid "Add hamlet tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:250
+msgid "Add street"
+msgstr "添加街道"
+
+#: gpsreversegeocodingwidget.cpp:252
+msgid "Add house number tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:254
+msgid "Add place"
+msgstr "添加位置"
+
+#: gpsreversegeocodingwidget.cpp:256
+msgid "Add Local Administrative Area 2"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:258
+msgid "Add Local Administrative Area 1"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:260
+msgid "Add new tag"
+msgstr "新加标签"
+
+#: gpsreversegeocodingwidget.cpp:261
+msgid "Remove selected tag"
+msgstr "删除选中标签"
+
+#: gpsreversegeocodingwidget.cpp:262
+msgid "Remove all control tags below this tag"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:264
+msgid "Add all address elements"
+msgstr "添加全部地址元素"
+
+#: gpsreversegeocodingwidget.cpp:268
+msgid "Select language:"
+msgstr "选择语言："
+
+#: gpsreversegeocodingwidget.cpp:272
+msgid "English"
+msgstr "英语"
+
+#: gpsreversegeocodingwidget.cpp:273
+msgid "Arabic"
+msgstr "阿拉伯语"
+
+#: gpsreversegeocodingwidget.cpp:274
+msgid "Assamese"
+msgstr "阿萨姆语"
+
+#: gpsreversegeocodingwidget.cpp:275
+msgid "Byelorussian"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:276
+msgid "Bulgarian"
+msgstr "保加利亚语"
+
+#: gpsreversegeocodingwidget.cpp:277
+msgid "Bengali"
+msgstr "孟加拉语"
+
+#: gpsreversegeocodingwidget.cpp:278
+msgid "Chinese"
+msgstr "中文"
+
+#: gpsreversegeocodingwidget.cpp:279
+msgid "Czech"
+msgstr "捷克语"
+
+#: gpsreversegeocodingwidget.cpp:280
+msgid "Croatian"
+msgstr "克罗地亚语"
+
+#: gpsreversegeocodingwidget.cpp:281
+msgid "Dutch"
+msgstr "荷兰语"
+
+#: gpsreversegeocodingwidget.cpp:282
+msgid "German"
+msgstr "德语"
+
+#: gpsreversegeocodingwidget.cpp:283
+msgid "Greek"
+msgstr "希腊语"
+
+#: gpsreversegeocodingwidget.cpp:284
+msgid "Estonian"
+msgstr "爱沙尼亚语"
+
+#: gpsreversegeocodingwidget.cpp:285
+msgid "Finnish"
+msgstr "芬兰语"
+
+#: gpsreversegeocodingwidget.cpp:286
+msgid "French"
+msgstr "法语"
+
+#: gpsreversegeocodingwidget.cpp:287
+msgid "Georgian"
+msgstr "格鲁吉亚文"
+
+#: gpsreversegeocodingwidget.cpp:288
+msgid "Hebrew"
+msgstr "希伯来语"
+
+#: gpsreversegeocodingwidget.cpp:289
+msgid "Hindi"
+msgstr "北印度语"
+
+#: gpsreversegeocodingwidget.cpp:290
+msgid "Hungarian"
+msgstr "匈牙利语"
+
+#: gpsreversegeocodingwidget.cpp:291
+msgid "Indonesian"
+msgstr "印度尼西亚语"
+
+#: gpsreversegeocodingwidget.cpp:292
+msgid "Icelandic"
+msgstr "冰岛语"
+
+#: gpsreversegeocodingwidget.cpp:293
+msgid "Italian"
+msgstr "意大利语"
+
+#: gpsreversegeocodingwidget.cpp:294
+msgid "Japanese"
+msgstr "日语"
+
+#: gpsreversegeocodingwidget.cpp:295
+msgid "Korean"
+msgstr "韩语"
+
+#: gpsreversegeocodingwidget.cpp:296
+msgid "Lithuanian"
+msgstr "立陶宛语"
+
+#: gpsreversegeocodingwidget.cpp:297
+msgid "Macedonian"
+msgstr "马其顿语"
+
+#: gpsreversegeocodingwidget.cpp:298
+msgid "Mongolian"
+msgstr "蒙古语"
+
+#: gpsreversegeocodingwidget.cpp:299
+msgid "Moldavian"
+msgstr "摩尔多瓦语"
+
+#: gpsreversegeocodingwidget.cpp:300
+msgid "Nepali"
+msgstr "尼泊尔语"
+
+#: gpsreversegeocodingwidget.cpp:301
+msgid "Polish"
+msgstr "波兰语"
+
+#: gpsreversegeocodingwidget.cpp:302
+msgid "Portuguese"
+msgstr "葡萄牙语"
+
+#: gpsreversegeocodingwidget.cpp:303
+msgid "Romanian"
+msgstr "罗马尼亚语"
+
+#: gpsreversegeocodingwidget.cpp:304
+msgid "Russian"
+msgstr "俄语"
+
+#: gpsreversegeocodingwidget.cpp:305
+msgid "Slovak"
+msgstr "斯洛伐克语"
+
+#: gpsreversegeocodingwidget.cpp:306
+msgid "Slovenian"
+msgstr "斯洛文尼亚语"
+
+#: gpsreversegeocodingwidget.cpp:307
+msgid "Samoan"
+msgstr "萨摩亚语"
+
+#: gpsreversegeocodingwidget.cpp:308
+msgid "Serbian"
+msgstr "塞尔维亚语"
+
+#: gpsreversegeocodingwidget.cpp:309
+msgid "Sudanese"
+msgstr "苏丹语"
+
+#: gpsreversegeocodingwidget.cpp:310
+msgid "Spanish"
+msgstr "西班牙语"
+
+#: gpsreversegeocodingwidget.cpp:311
+msgid "Swedish"
+msgstr "瑞典语"
+
+#: gpsreversegeocodingwidget.cpp:312
+msgid "Thai"
+msgstr "泰国文"
+
+#: gpsreversegeocodingwidget.cpp:313
+msgid "Turkish"
+msgstr "土耳其语"
+
+#: gpsreversegeocodingwidget.cpp:314
+msgid "Ukrainian"
+msgstr "乌克兰语"
+
+#: gpsreversegeocodingwidget.cpp:315
+msgid "Vietnamese"
+msgstr "越南语"
+
+#: gpsreversegeocodingwidget.cpp:317
+msgid "Select service:"
+msgstr "选择服务："
+
+#: gpsreversegeocodingwidget.cpp:320
+msgid "Open Street Map"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:321
+msgid "Geonames.org place name (non-US)"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:322
+msgid "Geonames.org full address (US only)"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:337 gpsreversegeocodingwidget.cpp:529
+msgid "Less options"
+msgstr "更少选项"
+
+#: gpsreversegeocodingwidget.cpp:345
+msgid "Write tags to XMP"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:351
+msgid "Apply reverse geocoding"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:475
+msgid "Image tags are changed."
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:508
+msgid "Retrieving RG info - %p%"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:523
+#, fuzzy
+msgid "More options"
+msgstr "更多选项"
+
+#: gpsreversegeocodingwidget.cpp:979
+#, kde-format
+msgid ""
+"%1 out of %2 images have been reverse geocoded. Would you like to keep the "
+"tags which were already obtained or discard them?"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:984
+msgid "Abort reverse geocoding?"
+msgstr ""
+
+#: gpsreversegeocodingwidget.cpp:985
+msgid "Keep tags"
+msgstr "保留标签"
+
+#: gpsreversegeocodingwidget.cpp:986
+msgid "Discard tags"
+msgstr "丢弃"
+
+#: gpsreversegeocodingwidget.cpp:987
+msgid "Continue"
+msgstr "继续"
+
+#: searchbackend.cpp:300
+msgid "GeoNames"
+msgstr ""
+
+#: searchbackend.cpp:301
+msgid "OSM"
+msgstr "OSM"
+
+#: searchwidget.cpp:146
+msgctxt "Start the search"
+msgid "Search"
+msgstr "搜索"
+
+#: searchwidget.cpp:153
+msgid "Clear the search results."
+msgstr "清除搜索结果。"
+
+#: searchwidget.cpp:161
+msgid "Keep the results of old searches when doing a new search."
+msgstr ""
+
+#: searchwidget.cpp:168
+msgid "Toggle the visibility of the search results on the map."
+msgstr ""
+
+#: searchwidget.cpp:172 gpslistviewcontextmenu.cpp:102
+msgid "Copy coordinates"
+msgstr "复制坐标"
+
+#: searchwidget.cpp:175
+msgid "Move selected images to this position"
+msgstr "将所选图像移动到这个位置"
+
+#: searchwidget.cpp:177
+msgid "Remove from results list"
+msgstr ""
+
+#: searchwidget.cpp:181
+msgid "Select which service you would like to use."
+msgstr "选择您想要使用的服务。"
+
+#: searchwidget.cpp:202 gpslistviewcontextmenu.cpp:136
+msgid "Bookmarks"
+msgstr "书签"
+
+#: searchwidget.cpp:255
+#, kde-format
+msgid ""
+"Your search failed:\n"
+"%1"
+msgstr ""
+"您的搜索失败：\n"
+"%1"
+
+#: searchwidget.cpp:255
+msgid "Search failed"
+msgstr "搜索失败"
+
+#: searchwidget.cpp:744 gpsbookmarkowner.cpp:345
+#, kde-format
+msgid "1 image snapped to '%2'"
+msgid_plural "%1 images snapped to '%2'"
+msgstr[0] ""
+
+#: searchwidget.cpp:779
+#, kde-format
+msgid "1 image moved to '%2'"
+msgid_plural "%1 images moved to '%2'"
+msgstr[0] ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE 中国"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-china@kde.org"
+
+#: gpslistviewcontextmenu.cpp:104
+msgid "Paste coordinates"
+msgstr "粘贴坐标"
+
+#: gpslistviewcontextmenu.cpp:106
+msgid "Remove coordinates"
+msgstr "删除坐标"
+
+#: gpslistviewcontextmenu.cpp:107
+msgid "Remove altitude"
+msgstr "删除海拔"
+
+#: gpslistviewcontextmenu.cpp:108
+msgid "Remove uncertainty"
+msgstr "删除不确定的信息"
+
+#: gpslistviewcontextmenu.cpp:109 gpslistviewcontextmenu.cpp:618
+msgid "Remove speed"
+msgstr "删除速度"
+
+#: gpslistviewcontextmenu.cpp:110
+msgid "Look up missing altitude values"
+msgstr ""
+
+#: gpslistviewcontextmenu.cpp:398
+msgid ""
+"Found more than one point on the clipboard - can only assign one point at a "
+"time."
+msgstr "在剪贴板中找到多个点 - 一次只能指派一点。"
+
+#: gpslistviewcontextmenu.cpp:399 gpslistviewcontextmenu.cpp:456
+#: gpssyncdialog.cpp:399
+msgid "GPS Sync"
+msgstr "GPS 同步"
+
+#: gpslistviewcontextmenu.cpp:456
+msgid "Could not find any coordinates on the clipboard."
+msgstr "未在剪贴板中找到任何坐标。"
+
+#: gpslistviewcontextmenu.cpp:460
+msgid "Coordinates pasted"
+msgstr "复制的坐标"
+
+#: gpslistviewcontextmenu.cpp:491
+msgid "Bookmark selected"
+msgstr "选择的书签"
+
+#: gpslistviewcontextmenu.cpp:595
+msgid "Remove coordinates information"
+msgstr "删除坐标信息"
+
+#: gpslistviewcontextmenu.cpp:600
+msgid "Remove altitude information"
+msgstr "删除海拔信息"
+
+#: gpslistviewcontextmenu.cpp:607
+msgid "Remove uncertainty information"
+msgstr "删除不确定的信息"
+
+#: gpslistviewcontextmenu.cpp:667
+#, fuzzy
+#| msgid "Longitude"
+msgid "Looking up altitudes"
+msgstr "经度"
+
+#: gpslistviewcontextmenu.cpp:706
+#, fuzzy
+#| msgid "No altitude lookup"
+msgid "Altitude looked up"
+msgstr "不查询海拔"
+
+#: gpsdataparser.cpp:626
+#, kde-format
+msgid "Could not open: %1"
+msgstr "无法打开：%1"
+
+#: gpsdataparser.cpp:632
+#, fuzzy
+#| msgid "File is empty!"
+msgid "File is empty."
+msgstr "文件为空！"
+
+#: gpsdataparser.cpp:648
+#, kde-format
+msgid "Parsing error: %1"
+msgstr "解析错误：%1"
+
+#: gpsdataparser.cpp:657
+msgid "No GPX element found - probably not a GPX file."
+msgstr ""
+
+#: gpsdataparser.cpp:661
+msgid "File is a GPX file, but no datapoints were found."
+msgstr ""
+
+#: gpsbookmarkowner.cpp:108
+msgid "Bookmark location"
+msgstr "书签位置"
+
+#: gpsbookmarkowner.cpp:109
+msgctxt "Title of the new gps location bookmark"
+msgid "Title:"
+msgstr "标题："
+
+#: gpscorrelatorwidget.cpp:164
+msgid "Load GPX files..."
+msgstr "装入 GPX 文件..."
+
+#: gpscorrelatorwidget.cpp:169 kipiimageitem.cpp:519
+msgid "Filename"
+msgstr "文件名"
+
+#: gpscorrelatorwidget.cpp:169
+#, fuzzy
+#| msgid "Points"
+msgid "#points"
+msgstr "点"
+
+#: gpscorrelatorwidget.cpp:174
+msgid "Max. time gap (sec.):"
+msgstr "最大时间间隔(秒)："
+
+#: gpscorrelatorwidget.cpp:176
+msgid ""
+"Sets the maximum difference in seconds from a GPS track point to the image "
+"time to be matched. If the time difference exceeds this setting, no match "
+"will be attempted."
+msgstr ""
+"设定从 GPS 跟踪点到要匹配的图像时间的最大差距秒数。如果时间差超过此设定，则不"
+"匹配任何图像。"
+
+#: gpscorrelatorwidget.cpp:180
+msgid "Camera time zone:"
+msgstr "相机时区："
+
+#: gpscorrelatorwidget.cpp:181
+msgid "Same as system"
+msgstr "与系统相同"
+
+#: gpscorrelatorwidget.cpp:183
+msgid ""
+"Use this option if the timezone of the camera is the same as the timezone of "
+"this system. The conversion to GMT will be done automatically."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:186
+msgctxt "manual time zone selection for gps syncing"
+msgid "Manual:"
+msgstr "手动："
+
+#: gpscorrelatorwidget.cpp:188
+msgid ""
+"Use this option if the timezone of the camera is different from this system "
+"and you have to specify the difference to GMT manually."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:240
+msgid ""
+"<p>Sets the time zone the camera was set to during photo shooting, so that "
+"the time stamps of the images can be converted to GMT to match the GPS time "
+"reference.</p><p>Note: positive offsets count eastwards from zero longitude "
+"(GMT), they are 'ahead of time'.</p>"
+msgstr ""
+"<p>设定相机在照片拍摄时所设的时区，以便图像的时间戳可以转换成匹配 GPS 时间索"
+"引的格林威治标准时间。</p><p>注意：从本初子午线向东的格林威治标准时间偏移处"
+"在“时间的前面”。</p>"
+
+#: gpscorrelatorwidget.cpp:247
+msgid "Fine offset (mm:ss):"
+msgstr "优化偏移(mm:ss)："
+
+#: gpscorrelatorwidget.cpp:249
+msgid ""
+"Sets an additional offset in minutes and seconds that is used to correlate "
+"the photos to the GPS track. This can be used for fine tuning to adjust a "
+"wrong camera clock."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:259
+msgid "Set whether the camera offset is negative or positive."
+msgstr "设定相机偏移为正或负"
+
+#: gpscorrelatorwidget.cpp:263
+msgid "Minutes to fine tune camera offset."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:266
+msgid "Seconds to fine tune camera offset."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:276
+msgid "Interpolate"
+msgstr "插值"
+
+#: gpscorrelatorwidget.cpp:277
+msgid ""
+"Set this option to interpolate GPS track points which are not closely "
+"matched to the GPX data file."
+msgstr "设定此选项以对没有精确匹配 GPX 数据文件的 GPS 跟踪点进行拟合。"
+
+#: gpscorrelatorwidget.cpp:283
+msgid "Difference in min.:"
+msgstr "差异分钟数："
+
+#: gpscorrelatorwidget.cpp:285
+msgid ""
+"Sets the maximum time difference in minutes (240 max.) to interpolate GPX "
+"file points to image time data."
+msgstr "设定最大的时间差分钟数(最大 240)以将 GPX 文件点拟合到图像时间数据中。"
+
+#: gpscorrelatorwidget.cpp:288
+msgid "Correlate"
+msgstr "关联"
+
+#: gpscorrelatorwidget.cpp:346
+#, kde-format
+msgid "%1|GPS Exchange Format"
+msgstr "%1|GPS 交换格式"
+
+#: gpscorrelatorwidget.cpp:347
+msgid "Select GPX File to Load"
+msgstr "选择要装入的 GPX 文件"
+
+#: gpscorrelatorwidget.cpp:392
+#, kde-format
+msgid "The following GPX file could not be loaded:"
+msgid_plural "The following %1 GPX files could not be loaded:"
+msgstr[0] ""
+
+#: gpscorrelatorwidget.cpp:398
+#, fuzzy
+#| msgid "Error loading image '%1'"
+msgid "Error loading GPX file"
+msgid_plural "Error loading GPX files"
+msgstr[0] "装入图像“%1”时出错"
+
+#: gpscorrelatorwidget.cpp:503
+#, fuzzy
+#| msgid "Error loading image '%1'"
+msgid "Correlating images - %p%"
+msgstr "装入图像“%1”时出错"
+
+#: gpscorrelatorwidget.cpp:570
+msgid ""
+"Could not correlate any image - please make sure the timezone and gap "
+"settings are correct."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:571
+#, fuzzy
+#| msgid "Correlate"
+msgid "Correlation failed"
+msgstr "关联"
+
+#: gpscorrelatorwidget.cpp:576
+msgid ""
+"All images have been correlated. You can now check their position on the map."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:577
+#, fuzzy
+#| msgid "Correlate"
+msgid "Correlation succeeded"
+msgstr "关联"
+
+#: gpscorrelatorwidget.cpp:583
+#, kde-format
+msgid ""
+"%1 out of %2 images have been correlated. Please check the timezone and gap "
+"settings if you think that more images should have been correlated."
+msgstr ""
+
+#: gpscorrelatorwidget.cpp:584
+msgid "Correlation finished"
+msgstr "关联完成"
+
+#: gpscorrelatorwidget.cpp:593
+#, kde-format
+msgid "1 image correlated"
+msgid_plural "%1 images correlated"
+msgstr[0] ""
+
+#: gpsimagedetails.cpp:120
+msgid "Coordinates"
+msgstr "坐标"
+
+#: gpsimagedetails.cpp:126 kipiimageitem.cpp:521
+msgid "Latitude"
+msgstr "纬度"
+
+#: gpsimagedetails.cpp:130 kipiimageitem.cpp:522
+msgid "Longitude"
+msgstr "经度"
+
+#: gpsimagedetails.cpp:132 kipiimageitem.cpp:523
+msgid "Altitude"
+msgstr "海拔"
+
+#: gpsimagedetails.cpp:138 kipiimageitem.cpp:528
+msgid "Speed"
+msgstr "速度"
+
+#: gpsimagedetails.cpp:144 kipiimageitem.cpp:527
+#, fuzzy
+msgid "# satellites"
+msgstr "人造卫星"
+
+#: gpsimagedetails.cpp:150 kipiimageitem.cpp:526
+msgid "Fix type"
+msgstr ""
+
+#: gpsimagedetails.cpp:152
+msgid "2-d"
+msgstr "2D"
+
+#: gpsimagedetails.cpp:153
+msgid "3-d"
+msgstr "3D"
+
+#: gpsimagedetails.cpp:156 kipiimageitem.cpp:525
+msgid "DOP"
+msgstr "DOP"
+
+#: gpsimagedetails.cpp:162
+msgid "Apply"
+msgstr "应用"
+
+#: gpsimagedetails.cpp:436
+msgid "Details changed"
+msgstr "详情已更改"
+
+#: rgtagmodel.cpp:93
+msgid "{Country}"
+msgstr "{国家}"
+
+#: rgtagmodel.cpp:94
+msgctxt "Part of a country"
+msgid "{State}"
+msgstr "{州}"
+
+#: rgtagmodel.cpp:95
+msgid "{County}"
+msgstr ""
+
+#: rgtagmodel.cpp:96
+msgid "{City}"
+msgstr "{城市}"
+
+#: rgtagmodel.cpp:97
+msgid "{Town}"
+msgstr "{城镇}"
+
+#: rgtagmodel.cpp:98
+#, fuzzy
+msgid "{Village}"
+msgstr "乡村"
+
+#: rgtagmodel.cpp:99
+msgid "{Hamlet}"
+msgstr ""
+
+#: rgtagmodel.cpp:100
+msgid "{Street}"
+msgstr "{街道}"
+
+#: setup_general.cpp:62
+msgid "One map"
+msgstr ""
+
+#: setup_general.cpp:63
+msgid "Two maps - horizontal"
+msgstr ""
+
+#: setup_general.cpp:64
+msgid "Two maps - vertical"
+msgstr ""
+
+#: setup_general.cpp:66
+msgid "Layout:"
+msgstr "布局:"
+
+#: kipiimageitem.cpp:362
+msgid "Not available"
+msgstr "不可用"
+
+#: kipiimageitem.cpp:395
+#, kde-format
+msgid "DOP: %1"
+msgstr "DOP: %1"
+
+#: kipiimageitem.cpp:400
+#, c-format, kde-format
+msgid "Fix: %1d"
+msgstr ""
+
+#: kipiimageitem.cpp:405
+#, fuzzy, kde-format
+msgid "#Sat: %1"
+msgstr "周六"
+
+#: kipiimageitem.cpp:439
+#, fuzzy, c-format, kde-format
+msgid "%1d"
+msgstr "%1天"
+
+#: kipiimageitem.cpp:459
+msgid "Modified"
+msgstr "修改时间"
+
+#: kipiimageitem.cpp:518
+msgid "Thumbnail"
+msgstr "缩略图"
+
+#: kipiimageitem.cpp:520
+msgid "Date and time"
+msgstr "日期和时间"
+
+#: kipiimageitem.cpp:524
+msgid "Accuracy"
+msgstr "精确度"
+
+#: kipiimageitem.cpp:529
+msgid "Status"
+msgstr "状态"
+
+#: kipiimageitem.cpp:530
+msgid "Tags"
+msgstr "标签"
+
+#: kipiimageitem.cpp:719
+msgid "Failed to open file."
+msgstr "打开文件失败。"
+
+#: kipiimageitem.cpp:782
+msgid "Failed to add GPS info to image."
+msgstr ""
+
+#: kipiimageitem.cpp:791
+msgid "Failed to remove GPS info from image"
+msgstr ""
+
+#: kipiimageitem.cpp:817 kipiimageitem.cpp:822
+msgid "Failed to save tags to file."
+msgstr ""
+
+#: kipiimageitem.cpp:832
+msgid "Unable to save changes to file"
+msgstr ""
+
+#: setup.cpp:112
+msgid "Configure"
+msgstr "配置"
+
+#: setup.cpp:118
+msgctxt "General setup"
+msgid "General"
+msgstr "常规"
+
+#: gpssyncdialog.cpp:239
+msgid "Geolocation"
+msgstr "地理位置"
+
+#: gpssyncdialog.cpp:266
+msgid "Display bookmarked positions on the map."
+msgstr ""
+
+#: gpssyncdialog.cpp:321
+msgid "Sorting"
+msgstr "排序"
+
+#: gpssyncdialog.cpp:327
+msgid "Show oldest first"
+msgstr "先显示最旧的"
+
+#: gpssyncdialog.cpp:331
+msgid "Show youngest first"
+msgstr "先显示最新的"
+
+#: gpssyncdialog.cpp:373
+msgid "Details"
+msgstr "详细信息"
+
+#: gpssyncdialog.cpp:374
+#, fuzzy
+#| msgid "Correlator"
+msgid "GPS Correlator"
+msgstr "相关器"
+
+#: gpssyncdialog.cpp:375
+msgid "Undo/Redo"
+msgstr "撤消/重做"
+
+#: gpssyncdialog.cpp:376
+msgid "Reverse Geocoding"
+msgstr ""
+
+#: gpssyncdialog.cpp:377
+msgid "Search"
+msgstr "搜索"
+
+#: gpssyncdialog.cpp:402
+msgid "A Plugin to synchronize pictures' metadata with a GPS device"
+msgstr "一个用于和 GPS 设备同步图片元数据的插件"
+
+#: gpssyncdialog.cpp:403
+msgid "(c) 2006-2010, Gilles Caulier"
+msgstr "(c) 2006-2010，Gilles Caulier"
+
+#: gpssyncdialog.cpp:405
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: gpssyncdialog.cpp:406 gpssyncdialog.cpp:410
+msgid "Developer and maintainer"
+msgstr "开发者和维护者"
+
+#: gpssyncdialog.cpp:409
+msgid "Michael G. Hansen"
+msgstr "Michael G. Hansen"
+
+#: gpssyncdialog.cpp:413
+msgid "Gabriel Voicu"
+msgstr "Gabriel Voicu"
+
+#: gpssyncdialog.cpp:414
+msgid "Developer"
+msgstr "开发者"
+
+#: gpssyncdialog.cpp:582
+msgid "Loading metadata - %p%"
+msgstr ""
+
+#: gpssyncdialog.cpp:757
+#, kde-format
+msgid "You have 1 modified image."
+msgid_plural "You have %1 modified images."
+msgstr[0] ""
+
+#: gpssyncdialog.cpp:763
+#, kde-format
+msgid "%1 Would you like to save the changes you made to them?"
+msgstr ""
+
+#: gpssyncdialog.cpp:764
+msgid "Unsaved changes"
+msgstr "未保存的更改"
+
+#: gpssyncdialog.cpp:765
+msgid "Save changes"
+msgstr "保存更改"
+
+#: gpssyncdialog.cpp:766
+msgid "Close and discard changes"
+msgstr ""
+
+#: gpssyncdialog.cpp:975
+#, kde-format
+msgid "1 image moved"
+msgid_plural "%1 images moved"
+msgstr[0] ""
+
+#: gpssyncdialog.cpp:1008
+msgid "Saving changes - %p%"
+msgstr ""
+
+#: gpssyncdialog.cpp:1046
+msgid "Failed to save some information:"
+msgstr ""
+
+#: gpssyncdialog.cpp:1046
+msgid "Error"
+msgstr "错误"
+
+#~ msgid "%1 - Edit Geographical Coordinates"
+#~ msgstr "%1 - 编辑地理坐标"
+
+#~ msgid ""
+#~ "<p>Use the map on the right to select the location where the picture was "
+#~ "taken. Click with left mouse button or move the marker on the map to get "
+#~ "the GPS coordinates.</p>"
+#~ msgstr ""
+#~ "<p>使用右边的地图来选择照片拍摄的位置。鼠标左键点击或移动地图上的标记来获"
+#~ "取 GPS 坐标。</p>"
+
+#~ msgid "Altitude:"
+#~ msgstr "海拔："
+
+#~ msgid "Latitude:"
+#~ msgstr "纬度："
+
+#~ msgid "Longitude:"
+#~ msgstr "经度："
+
+#~ msgid "Go to Location"
+#~ msgstr "转到位置"
+
+#~ msgid "Recent locations"
+#~ msgstr "最近使用的位置"
+
+#~ msgid "Google Maps API V2"
+#~ msgstr "Google 地图 API V2"
+
+#~ msgid "Google Maps API V3"
+#~ msgstr "Google 地图 API V3"
+
+#~ msgid "Use geonames.org for altitude lookup"
+#~ msgstr "用 geonames.org 查询海拔"
+
+#~ msgid "Use topocoding for altitude lookup"
+#~ msgstr "用 topocoding 查询海拔"
+
+#~ msgid "A Plugin to edit geographical coordinates"
+#~ msgstr "一个用于编辑地理坐标的插件"
+
+#~ msgid "Handbook"
+#~ msgstr "手册"
+
+#~ msgid "Altitude value is invalid."
+#~ msgstr "海拔值无效。"
+
+#~ msgid "Edit Geographical Coordinates"
+#~ msgstr "编辑地理坐标"
+
+#~ msgid "Latitude value is invalid."
+#~ msgstr "纬度值无效。"
+
+#~ msgid "Longitude value is invalid."
+#~ msgstr "经度值无效。"
+
+#~ msgid "Interpolated"
+#~ msgstr "已拟合"
+
+#~ msgctxt "entry was added manually"
+#~ msgid "Added"
+#~ msgstr "已添加"
+
+#~ msgctxt "entry was added automatically"
+#~ msgid "Found"
+#~ msgstr "已找到"
+
+#~ msgid "Deleted"
+#~ msgstr "已删除"
+
+#~ msgctxt ""
+#~ "Language code for the embedded Google Maps. Please take a look at http://"
+#~ "spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1 for "
+#~ "supported languages. If your language is not on the list, pick 'en'."
+#~ msgid "en"
+#~ msgstr "en"
+
+#~ msgid "Edit..."
+#~ msgstr "编辑..."
+
+#~ msgid ""
+#~ "Correlate in time and interpolate distance of data from GPX file with all "
+#~ "images on the list."
+#~ msgstr "将列表中的所有图像与时间相互关联并与 GPX 文件的距离数据拟合。"
+
+#~ msgid "Manually edit GPS coordinates of selected images from the list."
+#~ msgstr "手动编辑列表中所选图像的 GPS 坐标。"
+
+#~ msgid "Remove GPS coordinates of selected images from the list."
+#~ msgstr "从列表中删除所选图像的 GPS 坐标。"
+
+#~ msgid "Date"
+#~ msgstr "日期"
+
+#~ msgid "Current GPX file:"
+#~ msgstr "当前 GPX 文件："
+
+#~ msgid "No GPX file"
+#~ msgstr "没有 GPX 文件"
+
+#~ msgid "Cannot parse %1 GPX file."
+#~ msgstr "无法解析 %1 GPX 文件。"
+
+#~ msgid "The %1 GPX file does not have a date-time track to use."
+#~ msgstr "%1 GPX 文件没有可用的日期-时间记录。"
+
+#~ msgid "Points parsed: %1"
+#~ msgstr "已解析的点：%1"
+
+#~ msgid "1 image from the list is not updated."
+#~ msgid_plural "%1 images from the list are not updated."
+#~ msgstr[0] "列表中的 %1 张图像没有更新。"
+
+#~ msgid ""
+#~ "<p>%1\n"
+#~ "Do you really want to close this window without applying changes?</p>"
+#~ msgstr ""
+#~ "<p>%1\n"
+#~ "您真的想要不应用更改而关闭此窗口吗？</p>"
+
+#~ msgid "Cannot find pictures to correlate with GPX file data."
+#~ msgstr "无法找到可与 GPX 文件数据关联的图片。"
+
+#~ msgid "The GPS data of 1 image have been updated using the GPX data file."
+#~ msgid_plural ""
+#~ "The GPS data of %1 images have been updated using the GPX data file."
+#~ msgstr[0] "%1 张图像的 GPS 数据已引用 GPX 数据文件更新完成。"
+
+#~ msgid "Press the Apply button to update the image's metadata."
+#~ msgid_plural "Press the Apply button to update the images' metadata."
+#~ msgstr[0] "按下应用按钮以更新图像元数据。"
+
+#~ msgid ""
+#~ "Please select at least one image from the list to edit GPS coordinates "
+#~ "manually."
+#~ msgstr "请至少从列表中选择一张图像以手动编辑 GPS 坐标。"
+
+#~ msgid ""
+#~ "Please select at least one image from which to remove GPS coordinates."
+#~ msgstr "请至少从列表中选择一张图像以删除 GPS 坐标。"
+
+#~ msgid "Edit Track List Geographical Coordinates"
+#~ msgstr "编辑跟踪列表地理坐标"
+
+#~ msgid "Id"
+#~ msgstr "ID"
+
+#~ msgctxt "entry changed"
+#~ msgid "Changed"
+#~ msgstr "已更改"
+
+#~ msgid "A plugin to edit GPS track lists."
+#~ msgstr "一个用于编辑 GPS 记录列表的插件。"
+
+#~ msgid "(c) 2008-2009, Gilles Caulier"
+#~ msgstr "(c) 2008-2009，Gilles Caulier"
+
+#~ msgctxt "dirty gps info"
+#~ msgid "Yes"
+#~ msgstr "是"
+
+#~ msgctxt "dirty gps info"
+#~ msgid "No"
+#~ msgstr "否"
+
+#~ msgid "Generating KML file..."
+#~ msgstr "正在生成 KML 文件..."
+
+#~ msgid "Could not read image '%1'"
+#~ msgstr "无法读取图像“%1”"
+
+#~ msgid "Format of image '%1' is unknown"
+#~ msgstr "图像“%1”的格式未知"
+
+#~ msgid "Could not save image '%1' to '%2'"
+#~ msgstr "无法将图像“%1”保存至“%2”"
+
+#~ msgid "Creation of placemark '%1'"
+#~ msgstr "位置标记“%1”的创建时间"
+
+#~ msgid "Could not save icon for image '%1' to '%2'"
+#~ msgstr "无法保存图像“%1”的图标至“%2”"
+
+#~ msgid "No GPX file chosen."
+#~ msgstr "没有选中的 GPX 文件。"
+
+#~ msgid "The %1 GPX file do not have a date-time track to use."
+#~ msgstr "%1 GPX 文件没有可用的日期-时间记录。"
+
+#~ msgid "No position data for '%1'"
+#~ msgstr "没有“%1”的位置数据"
+
+#~ msgid "No position data for 1 picture"
+#~ msgid_plural "No position data for %1 pictures"
+#~ msgstr[0] "%1 张图片没有位置数据"
+
+#~ msgid "Move to final directory"
+#~ msgstr "移动到最后的目录"
+
+#~ msgid "KML Export"
+#~ msgstr "KML 导出"
+
+#~ msgid "Target Preferences"
+#~ msgstr "目标首选项"
+
+#~ msgid "Target Type"
+#~ msgstr "目标类型"
+
+#~ msgid "&Local or web target used by GoogleEarth"
+#~ msgstr "用于 GoogleEarth 的本地或网络目标(&L)"
+
+#~ msgid "Web target used by GoogleMap"
+#~ msgstr "用于 GoogleMap 的网络目标"
+
+#~ msgid ""
+#~ "When using GoogleMap, all images must have complete URLs, icons are "
+#~ "squared, and when drawing a track, only line track is exported."
+#~ msgstr ""
+#~ "当使用 GoogleMap 时，所有的图像都必须拥有完整的 Url，图标则坐标化，而当绘"
+#~ "制一段轨迹时，只会导出线形轨迹。"
+
+#~ msgid "Picture Altitude:"
+#~ msgstr "图片高度："
+
+#~ msgid "clamp to ground"
+#~ msgstr "贴着地面"
+
+#~ msgid "relative to ground"
+#~ msgstr "相对于地面"
+
+#~ msgid "absolute"
+#~ msgstr "绝对"
+
+#~ msgid ""
+#~ "<p>Specifies how pictures are displayed<dl><dt>clamp to ground (default)</"
+#~ "dt><dd>Indicates to ignore an altitude specification</dd><dt>relative to "
+#~ "ground</dt><dd>Sets the altitude of the element relative to the actual "
+#~ "ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets "
+#~ "the altitude of the coordinate relative to sea level, regardless of the "
+#~ "actual elevation of the terrain beneath the element.</dd></dl>"
+#~ msgstr ""
+#~ "<p>指定图片如何显示<dl><dt>贴着地面(默认)</dt><dd>表示忽略海拔说明</"
+#~ "dd><dt>相对于地面</dt><dd>设定海拔为此元素相对于一个特定位置真实地面的高"
+#~ "度。</dd><dt>绝对</dt><dd>设定海拔为坐标点相对于海平面的高度，不关心元素下"
+#~ "方的地域所处的真实高度。</dd></dl>"
+
+#~ msgid "Destination Directory:"
+#~ msgstr "目标目录："
+
+#~ msgid "Select a directory in which to save the kml file and pictures"
+#~ msgstr "选择一个用来保存 kml 文件和图片的目录"
+
+#~ msgid "Destination URL:"
+#~ msgstr "目标 URL："
+
+#~ msgid "Sizes"
+#~ msgstr "大小"
+
+#~ msgid "Icon Size:"
+#~ msgstr "图标尺寸："
+
+#~ msgid "Image Size:"
+#~ msgstr "图像尺寸："
+
+#~ msgid "GPX Tracks"
+#~ msgstr "GPX 跟踪轨迹"
+
+#~ msgid "Draw GPX Track"
+#~ msgstr "绘制 GPX 跟踪轨迹"
+
+#~ msgid "GPX file:"
+#~ msgstr "GPX 文件："
+
+#~ msgid "Time Zone:"
+#~ msgstr "时区："
+
+#~ msgid "GMT-12:00"
+#~ msgstr "GMT-12:00"
+
+#~ msgid "GMT-11:00"
+#~ msgstr "GMT-11:00"
+
+#~ msgid "GMT-10:00"
+#~ msgstr "GMT-10:00"
+
+#~ msgid "GMT-09:00"
+#~ msgstr "GMT-09:00"
+
+#~ msgid "GMT-08:00"
+#~ msgstr "GMT-08:00"
+
+#~ msgid "GMT-07:00"
+#~ msgstr "GMT-07:00"
+
+#~ msgid "GMT-06:00"
+#~ msgstr "GMT-06:00"
+
+#~ msgid "GMT-05:00"
+#~ msgstr "GMT-05:00"
+
+#~ msgid "GMT-04:00"
+#~ msgstr "GMT-04:00"
+
+#~ msgid "GMT-03:00"
+#~ msgstr "GMT-03:00"
+
+#~ msgid "GMT-02:00"
+#~ msgstr "GMT-02:00"
+
+#~ msgid "GMT-01:00"
+#~ msgstr "GMT-01:00"
+
+#~ msgid "GMT"
+#~ msgstr "GMT"
+
+#~ msgid "GMT+01:00"
+#~ msgstr "GMT+01:00"
+
+#~ msgid "GMT+02:00"
+#~ msgstr "GMT+02:00"
+
+#~ msgid "GMT+03:00"
+#~ msgstr "GMT+03:00"
+
+#~ msgid "GMT+04:00"
+#~ msgstr "GMT+04:00"
+
+#~ msgid "GMT+05:00"
+#~ msgstr "GMT+05:00"
+
+#~ msgid "GMT+06:00"
+#~ msgstr "GMT+06:00"
+
+#~ msgid "GMT+07:00"
+#~ msgstr "GMT+07:00"
+
+#~ msgid "GMT+08:00"
+#~ msgstr "GMT+08:00"
+
+#~ msgid "GMT+09:00"
+#~ msgstr "GMT+09:00"
+
+#~ msgid "GMT+10:00"
+#~ msgstr "GMT+10:00"
+
+#~ msgid "GMT+11:00"
+#~ msgstr "GMT+11:00"
+
+#~ msgid "GMT+12:00"
+#~ msgstr "GMT+12:00"
+
+#~ msgid "GMT+13:00"
+#~ msgstr "GMT+13:00"
+
+#~ msgid "GMT+14:00"
+#~ msgstr "GMT+14:00"
+
+#~ msgid ""
+#~ "Sets the time zone of the camera during picture shooting, so that the "
+#~ "time stamps of the GPS can be converted to match the local time"
+#~ msgstr "设定在照片拍摄时相机的时区，以便能转换 GPS 时间戳以匹配当地时间"
+
+#~ msgid "Track Width:"
+#~ msgstr "跟踪轨迹宽度："
+
+#~ msgid "Track Color:"
+#~ msgstr "跟踪轨迹颜色："
+
+#~ msgid "Opacity:"
+#~ msgstr "透明度："
+
+#~ msgid "Track Altitude:"
+#~ msgstr "跟踪轨迹高度："
+
+#~ msgid ""
+#~ "<p>Specifies how the points are displayed<dl><dt>clamp to ground (default)"
+#~ "</dt><dd>Indicates to ignore an altitude specification</dd><dt>relative "
+#~ "to ground</dt><dd>Sets the altitude of the element relative to the actual "
+#~ "ground elevation of a particular location.</dd><dt>absolute</dt><dd>Sets "
+#~ "the altitude of the coordinate relative to sea level, regardless of the "
+#~ "actual elevation of the terrain beneath the element.</dd></dl>"
+#~ msgstr ""
+#~ "<p>指定点如何显示<dl><dt>贴着地面(默认)</dt><dd>表示忽略海拔说明</dd><dt>"
+#~ "相对于地面</dt><dd>设定海拔为此元素相对于一个特定位置真实地面的高度。</"
+#~ "dd><dt>绝对</dt><dd>设定海拔为坐标点相对于海平面的高度，不关心元素下方的地"
+#~ "域所处的真实高度。</dd></dl>"
+
+#~ msgid "A Kipi plugin for KML exporting"
+#~ msgstr "一个用于 KML 导出的 Kipi 插件"
+
+#~ msgid "(c) 2006-2007, Stéphane Pontier"
+#~ msgstr "(c) 2006-2007，Stéphane Pontier"
+
+#~ msgid "Stéphane Pontier"
+#~ msgstr "Stéphane Pontier"
+
+#~ msgid "Track"
+#~ msgstr "跟踪"
+
+#~ msgid "Point"
+#~ msgstr "点"
+
+#~ msgid "Edit Coordinates..."
+#~ msgstr "编辑坐标..."
+
+#~ msgid "Track List Editor..."
+#~ msgstr "跟踪列表编辑器..."
+
+#~ msgid "Export to KML..."
+#~ msgstr "导出至 KML..."
+
+#~ msgid ""
+#~ "<p>Unable to find the gpsbabel executable:<br/> This program is required "
+#~ "by this plugin to support GPS data file decoding. Please install gpsbabel "
+#~ "as a package from your distributor or <a href=\"%1\">download the source</"
+#~ "a>.</p><p>Note: at least, gpsbabel version %2 is required by this plugin."
+#~ "</p>"
+#~ msgstr ""
+#~ "<p>无法找到 gpsbabel 可执行文件：<br/>本插件需要此程序来支持 GPS 数据文件"
+#~ "解码。请安装您的发行版所提供的 gpsbabel 软件包或者<a href=\"%1\">下载源代"
+#~ "码</a>安装。</p><p>注意：本插件所需的 gpsbabel 版本至少为 %2。</p>"
+
+#~ msgid ""
+#~ "<p>gpsbabel executable is not up to date:<br/> The version %1 of gpsbabel "
+#~ "have been found on your computer. This version is too old to run properly "
+#~ "with this plugin. Please update gpsbabel as a package from your "
+#~ "distributor or <a href=\"%2\">download the source</a>.</p><p>Note: at "
+#~ "least, gpsbabel version %3 is required by this plugin</p>"
+#~ msgstr ""
+#~ "<p>gpsbabel 可执行文件不够新：<br/>在您的计算机上找到了 gpsbabel 版本 %1。"
+#~ "此版本对于本插件的正常运行而言过于陈旧。请安装您的发行版所提供的 gpsbabel "
+#~ "软件包或者<a href=\"%2\">下载源代码</a>安装。</p><p>注意：本插件所需的 "
+#~ "gpsbabel 版本至少为 %3</p>"
+
+#~ msgid "No GPS locations have been found in your pictures."
+#~ msgstr "在您的图片中未找到 GPS 位置。"
+
+#, fuzzy
+#~| msgid ""
+#~| "Geographical coordinates will be definitively removed from all selected "
+#~| "images.\n"
+#~| "Do you want to continue ?"
+#~ msgid ""
+#~ "Geographical coordinates will be definitively removed from all selected "
+#~ "images.\n"
+#~ "Do you want to continue?"
+#~ msgstr ""
+#~ "将从所有选中的图像中永久删除地理坐标。\n"
+#~ "您想要继续吗？"
+
+#~ msgid "Remove Geographical Coordinates"
+#~ msgstr "删除地理坐标"

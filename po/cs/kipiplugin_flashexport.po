@@ -1,0 +1,464 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Vít Pelčák <vit@pelcak.org>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flashexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:23+0100\n"
+"PO-Revision-Date: 2011-03-16 16:55+0100\n"
+"Last-Translator: Vít Pelčák <vit@pelcak.org>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.2\n"
+
+#: firstrundlg.cpp:77 firstrundlg.cpp:87 simpleviewer.cpp:202 svedialog.cpp:91
+#: svedialog.cpp:120
+msgid "Flash Export"
+msgstr "Flash Export"
+
+#: firstrundlg.cpp:90 svedialog.cpp:123
+msgid ""
+"A Kipi plugin to export images to Flash using the Simple Viewer component."
+msgstr ""
+"Kipi modul pro export obrázků do Flashe pomocí komponenty Simple Viewer."
+
+#: firstrundlg.cpp:91 svedialog.cpp:124
+msgid ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+msgstr ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+
+#: firstrundlg.cpp:94 svedialog.cpp:127
+msgid "Joern Ahrens"
+msgstr "Joern Ahrens"
+
+#: firstrundlg.cpp:95 svedialog.cpp:128
+msgid "Author"
+msgstr "Autor"
+
+#: firstrundlg.cpp:98 svedialog.cpp:131
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: firstrundlg.cpp:99 svedialog.cpp:132
+msgid "Developer and maintainer"
+msgstr "Vývojář a správce"
+
+#: firstrundlg.cpp:102 svedialog.cpp:135
+msgid "Felix Turner"
+msgstr "Felix Turner"
+
+#: firstrundlg.cpp:103 svedialog.cpp:136
+msgid "Author of the Simple Viewer Flash component"
+msgstr "Autor komponenty Simple Viewer Flash"
+
+#: firstrundlg.cpp:107 svedialog.cpp:140
+msgid "Mikkel B. Stegmann"
+msgstr "Mikkel B. Stegmann"
+
+#: firstrundlg.cpp:108 svedialog.cpp:141
+msgid "Basis for the index.html template"
+msgstr "Základ šablony index.html"
+
+#: firstrundlg.cpp:117 svedialog.cpp:150
+msgid "Handbook"
+msgstr "Příručka"
+
+#: firstrundlg.cpp:129
+msgid ""
+"<p>SimpleViewer is a Flash component which is free to use, but uses a "
+"license which comes into conflict with several distributions. Due to the "
+"license it is not possible to ship it with this plugin.</p><p>You can now "
+"download SimpleViewer from its homepage and point this tool to the "
+"downloaded archive. The archive will be stored with the plugin "
+"configuration, so it is available for further use.</p>"
+msgstr ""
+"<p>Simple Viewer je Flash komponenta, kterou lze volně používat, ale sama "
+"používá licence, které mohou přijít do konfliktu s několika distribucemi. "
+"Kvůli licenci není možno modul dodávat s programem.</p><p> Simple Viewer si "
+"můžete nyní stáhnout z jeho domovské stránky a připojit tento nástroj ke "
+"staženému archivu. Archiv bude uložen s nastavením modulu, takže bude "
+"dostupný pro další použití.</p>"
+
+#: firstrundlg.cpp:137
+msgid "<p>1.) Download SimpleViewer Version 2.1.x</p>"
+msgstr "<p>1.) Stáhnout SimpleViewer verze 2.1.x</p>"
+
+#: firstrundlg.cpp:147
+msgid "<p>2.) Point this tool to the downloaded archive</p>"
+msgstr "<p>2.) Připojit tento nástroj ke staženému archivu</p>"
+
+#: generalpage.cpp:81
+msgid "Gallery &Title"
+msgstr "&Název galerie"
+
+#: generalpage.cpp:84
+msgid "Enter here the gallery title"
+msgstr "Zadejte název galerie"
+
+#: generalpage.cpp:92
+msgid "Save Gallery To"
+msgstr "Uložit galerii do"
+
+#: generalpage.cpp:103
+msgid "Image Properties"
+msgstr "Vlastnosti obrázku"
+
+#: generalpage.cpp:105
+msgid "Resize Target Images"
+msgstr "Změnit velikost obrázků"
+
+#: generalpage.cpp:107
+msgid "If you enable this option, all target images can be resized."
+msgstr "Pokud tuto volbu povolíte, dojde ke změně velikosti všech obrázků."
+
+#: generalpage.cpp:111
+msgid "Auto-Rotate/Flip Images"
+msgstr "Automaticky otočit/převrátit obrázky"
+
+#: generalpage.cpp:113
+msgid ""
+"If you enable this option, the images' orientations will be set according to "
+"their Exif information."
+msgstr ""
+"Pokud tuto volbu povolíte, bude orientace obrázků nastavena podle jejich "
+"informací Exif."
+
+#: generalpage.cpp:120
+msgid "&Target Images' Size:"
+msgstr "Velikos&t cílových obrázků:"
+
+#: generalpage.cpp:121
+msgid ""
+"The new size of the exported images, in pixels. SimpleViewer resizes the "
+"images too, but this resizes the images before they are uploaded to your "
+"server."
+msgstr ""
+"Nová velikost exportovaných obrázků v pixelech. SimpleViewer mění velikost "
+"obrázků také, ale takto bude změněna velikost ještě před odesláním obrázků "
+"na váš server."
+
+#: generalpage.cpp:134
+msgid "&Displayed Images' Size:"
+msgstr "Zobrazovaná velikos&t obrázků:"
+
+#: generalpage.cpp:135
+msgid ""
+"Scales the displayed images to this size. Normally, use the height or width "
+"of your largest image (in pixels). Images will not be scaled up above this "
+"size, to preserve image quality."
+msgstr ""
+"Upraví velikost zobrazovaných obrázků na tuto velikost. Běžně se používá "
+"výška nebo šířka vašeho největšího obrázku (v pixelech). Obrázky nebudou "
+"zvětšeny více než na tuto velikost kvůli zachování jejich kvality."
+
+#: generalpage.cpp:150
+msgid "Misc"
+msgstr "Různé"
+
+#: generalpage.cpp:153
+msgid "Display Captions"
+msgstr "Zobrazit popisky"
+
+#: generalpage.cpp:155
+msgid "If this option is enabled, the images' captions will be shown."
+msgstr "Pokud tuto volbu povolíte, budou zobrazeny popisky obrázků."
+
+#: generalpage.cpp:158
+msgid "Open Image with Right Click"
+msgstr "Otevřít obrázek pravým tlačítkem"
+
+#: generalpage.cpp:160
+msgid ""
+"If this option is enabled, the user will be able to open the target image in "
+"a separate window using the right mouse button."
+msgstr ""
+"Pokud tuto volbu povolíte, budete moci otevřít cílový obrázek v novém okně "
+"pomocí pravého tlačítka myši."
+
+#: generalpage.cpp:164
+msgid "Open gallery in Konqueror"
+msgstr "Otevřít galerii v Konqueroru"
+
+#: generalpage.cpp:166
+msgid ""
+"If this option is enabled, the gallery will be opened in Konqueror "
+"automatically."
+msgstr ""
+"Pokud tuto volbu povolíte, bude galerie automaticky otevřena v Konqueroru."
+
+#: lookpage.cpp:80
+msgctxt "Settings for flash export navigation"
+msgid "Navigation"
+msgstr "Navigace"
+
+#: lookpage.cpp:86
+msgid "Thumbnail &Rows:"
+msgstr "Řádky &náhledů:"
+
+#: lookpage.cpp:87
+msgid "Number of thumbnails rows"
+msgstr "Počet řádků s náhledy"
+
+#: lookpage.cpp:92
+msgid "Thumbnail &Columns:"
+msgstr "&Sloupce náhledů:"
+
+#: lookpage.cpp:93
+msgid "Number of thumbnails columns"
+msgstr "Počet sloupců s náhledy"
+
+#: lookpage.cpp:96
+msgid "Thumbnail &Position:"
+msgstr "&Umístění náhledů:"
+
+#: lookpage.cpp:98
+msgctxt "thumbnail position: right"
+msgid "Right"
+msgstr "Vpravo"
+
+#: lookpage.cpp:99
+msgctxt "thumbnail position: left"
+msgid "Left"
+msgstr "Vlevo"
+
+#: lookpage.cpp:100
+msgctxt "thumbnail position: top"
+msgid "Top"
+msgstr "Nahoře"
+
+#: lookpage.cpp:101
+msgctxt "thumbnail position: bottom"
+msgid "Bottom"
+msgstr "Dole"
+
+#: lookpage.cpp:110
+msgid "&Direction of Navigation:"
+msgstr "&Směr navigace:"
+
+#: lookpage.cpp:112
+msgid "Left to Right"
+msgstr "Zleva doprava"
+
+#: lookpage.cpp:113
+msgid "Right to Left"
+msgstr "Zprava doleva"
+
+#: lookpage.cpp:126
+msgid "Colors"
+msgstr "Barvy"
+
+#: lookpage.cpp:130
+msgid "&Text Color:"
+msgstr "Barva &textu:"
+
+#: lookpage.cpp:133
+msgid "Color of title and caption text"
+msgstr "Barva textu názvu a popisku"
+
+#: lookpage.cpp:137
+msgid "&Background Color:"
+msgstr "&Barva pozadí:"
+
+#: lookpage.cpp:143
+msgid "&Frame Color:"
+msgstr "Barva &rámečku:"
+
+#: lookpage.cpp:146
+msgid "Color of image frame, viewed icon, load bars, thumbnail arrows"
+msgstr ""
+"Barva rámečku obrázku, prohlížené ikony, načtených panelů, šipek náhledů"
+
+#: lookpage.cpp:157
+msgid "Style"
+msgstr "Styl"
+
+#: lookpage.cpp:163
+msgid "Frame &Width:"
+msgstr "Šíř&ka rámečku:"
+
+#: lookpage.cpp:164
+msgid "Width of image frame in pixels."
+msgstr "Šířka rámečku obrázku v pixelech."
+
+#: lookpage.cpp:169
+msgid "Stage &Padding:"
+msgstr "Šířka &výplně:"
+
+#: lookpage.cpp:170
+msgid "Distance between image and thumbnails in pixels."
+msgstr "Vzdálenost mezi obrázkem a rámečkem v pixelech."
+
+#: plugin_flashexport.cpp:62
+msgid "Export to F&lash..."
+msgstr "Export do F&lashe..."
+
+#: simpleviewer.cpp:140
+msgid "SimpleViewer installation failed"
+msgstr "Instalace SimpleVieweru selhala"
+
+#: simpleviewer.cpp:167
+#, kde-format
+msgid ""
+"Target folder %1 already exists.\n"
+"Do you want to overwrite it?  All data in this folder will be lost."
+msgstr ""
+"Cílová složka %1 již existuje.\n"
+"Chcete ji přepsat? Všechna data v této složce budou ztracena."
+
+#: simpleviewer.cpp:176
+#, kde-format
+msgid ""
+"Could not delete %1.\n"
+"Please choose another export folder."
+msgstr ""
+"Nelze smazat %1.\n"
+"Zvolte prosím pro export jinou složku."
+
+#: simpleviewer.cpp:211
+msgid "Initialising..."
+msgstr "Inicializace..."
+
+#: simpleviewer.cpp:232
+msgid "Export canceled"
+msgstr "Export zrušen"
+
+#: simpleviewer.cpp:243
+msgid "Failed to create export directories"
+msgstr "Vytvoření složek pro export se nezdařilo"
+
+#: simpleviewer.cpp:250
+msgid "Failed to export the images"
+msgstr "Export obrázků se nezdařil"
+
+#: simpleviewer.cpp:257
+msgid "Failed to create index.html"
+msgstr "Vytvoření index.html se nezdařilo"
+
+#: simpleviewer.cpp:264
+msgid "Failed to copy SimpleViewer files"
+msgstr "Kopírování souborů SimpleViewer se nezdařilo"
+
+#: simpleviewer.cpp:271
+msgid "Failed to upload the gallery"
+msgstr "Odesílání do galerie se nezdařilo"
+
+#: simpleviewer.cpp:279
+#, kde-format
+msgid ""
+"Export was canceled.\n"
+"Do you want to delete files in %1 that have already been created?"
+msgstr ""
+"Export byl zrušen.\n"
+"Chcete odstranit soubory v %1, které již byly vytvořeny?"
+
+#: simpleviewer.cpp:289
+msgctxt "Flash export has finished"
+msgid "Finished..."
+msgstr "Dokončeno..."
+
+#: simpleviewer.cpp:302
+msgid "Creating directories..."
+msgstr "Vytváření složek..."
+
+#: simpleviewer.cpp:307 simpleviewer.cpp:316 simpleviewer.cpp:325
+#, kde-format
+msgid "Could not create folder '%1'"
+msgstr "Nelze vytvořit složku '%1'"
+
+#: simpleviewer.cpp:340
+msgid "Creating images and thumbnails..."
+msgstr "Vytváření obrázků a náhledů..."
+
+#: simpleviewer.cpp:397
+#, kde-format
+msgid "Processing %1"
+msgstr "Zpracování %1"
+
+#: simpleviewer.cpp:408
+#, kde-format
+msgid "Could not open image '%1'"
+msgstr "Nelze otevřít obrázek '%1'"
+
+#: simpleviewer.cpp:415
+#, kde-format
+msgid "Could not create thumbnail from '%1'"
+msgstr "Nelze vytvořit náhled z '%1'"
+
+#: simpleviewer.cpp:422
+#, kde-format
+msgid "Could not resize image '%1'"
+msgstr "Nelze změnit velikost obrázku '%1'"
+
+#: simpleviewer.cpp:550
+msgid "Creating index.html..."
+msgstr "Vytváření index.html..."
+
+#: simpleviewer.cpp:579
+msgid "index.html created..."
+msgstr "index.html vytvořen..."
+
+#: simpleviewer.cpp:589
+msgid "Copying flash files..."
+msgstr "Kopírování souborů Flash..."
+
+#: simpleviewer.cpp:622
+msgid "Flash files copied..."
+msgstr "Soubory Flash zkopírovány..."
+
+#: simpleviewer.cpp:632
+msgid "Uploading gallery..."
+msgstr "Odesílání galerie..."
+
+#: simpleviewer.cpp:637
+msgid "Gallery uploaded..."
+msgstr "Galerie odeslána..."
+
+#: svedialog.cpp:102
+msgctxt "Settings tab for selections"
+msgid "Selection"
+msgstr "Výběr"
+
+#: svedialog.cpp:103
+msgid "Collections List"
+msgstr "Seznam kolekcí"
+
+#: svedialog.cpp:107
+msgctxt "General settings tab"
+msgid "General"
+msgstr "Obecné"
+
+#: svedialog.cpp:108
+msgid "General Settings"
+msgstr "Obecná nastavení"
+
+#: svedialog.cpp:113
+msgctxt "Settings tab for the look of the flash export"
+msgid "Look"
+msgstr "Vzhled"
+
+#: svedialog.cpp:114
+msgid "Look Settings"
+msgstr "Nastavení vzhledu"
+
+#: svedialog.cpp:227
+msgid "You must select at least one collection to export."
+msgstr "Pro export musíte vybrat nejméně jednu kolekci."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "David Kolibáč, Zdeněk Pech"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "david@kolibac.cz, dom.toretto@seznam.cz"

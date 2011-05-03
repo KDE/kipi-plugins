@@ -1,0 +1,365 @@
+# translation of kipiplugin_galleryexport2.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Cezary Szafron <cszafron@gmail.com>, 2008.
+# Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008.
+# Mikołaj Machowski <mikmach@wp.pl>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_galleryexport2\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2008-08-08 21:52+0200\n"
+"Last-Translator: Mikołaj Machowski <mikmach@wp.pl>\n"
+"Language-Team:  <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: galleryconfig.cpp:77
+#, fuzzy
+#| msgid "Name:"
+msgctxt "gallery login settings"
+msgid "Name:"
+msgstr "Nazwa:"
+
+#: galleryconfig.cpp:81
+#, fuzzy
+#| msgid "URL:"
+msgctxt "gallery login settings"
+msgid "URL:"
+msgstr "Adres:"
+
+#: galleryconfig.cpp:85
+#, fuzzy
+#| msgid "Username:"
+msgctxt "gallery login settings"
+msgid "Username:"
+msgstr "Nazwa użytkownika:"
+
+#: galleryconfig.cpp:89
+#, fuzzy
+#| msgid "Password:"
+msgctxt "gallery login settings"
+msgid "Password:"
+msgstr "Hasło:"
+
+#: galleryconfig.cpp:94
+msgid "Use &Gallery 2"
+msgstr "Użyj &Galeria 2"
+
+#: gallerytalker.cpp:427
+msgid "Gallery URL probably incorrect"
+msgstr "Adres galerii prawdopodobnie jest niewłaściwy"
+
+#: gallerytalker.cpp:433
+msgid "Incorrect username or password specified"
+msgstr "Podano nieprawidłową nazwę użytkownika lub hasło"
+
+#: gallerytalker.cpp:517 gallerytalker.cpp:592 gallerytalker.cpp:643
+#: gallerytalker.cpp:699
+msgid "Invalid response received from remote Gallery"
+msgstr "Otrzymano niewłaściwą odpowiedź od zdalnej galerii"
+
+#: gallerytalker.cpp:523
+msgid "Failed to list albums"
+msgstr "Wypisanie albumów nie powiodło się"
+
+#: gallerytalker.cpp:598
+msgid "Failed to list photos"
+msgstr "Wypisanie zdjęć nie powiodło się"
+
+#: gallerytalker.cpp:649
+msgid "Failed to create new album"
+msgstr "Utworzenie albumu nie powiodło się"
+
+#: gallerytalker.cpp:705
+msgid "Failed to upload photo"
+msgstr "Wysłanie zdjęcia nie powidło się"
+
+#: gallerywindow.cpp:118
+#, fuzzy
+#| msgid "albums"
+msgid "Albums"
+msgstr "albumy"
+
+#: gallerywindow.cpp:127
+msgid "&New Album"
+msgstr "&Nowy album"
+
+#: gallerywindow.cpp:133
+msgid "&Add Photos"
+msgstr "&Dodaj zdjęcia"
+
+#: gallerywindow.cpp:138
+msgid "Override Default Options"
+msgstr "Nadpisz ustawienia domyślne"
+
+#: gallerywindow.cpp:142
+msgid "Comment sets Title"
+msgstr "Komentarz ustawia tytuł"
+
+#: gallerywindow.cpp:145
+msgid "Comment sets Description"
+msgstr "Komentarz ustawia opis"
+
+#: gallerywindow.cpp:148
+msgid "Resize photos before uploading"
+msgstr "Zmień rozmiar zdjęcia przed wysłaniem"
+
+#: gallerywindow.cpp:151
+msgid "Maximum dimension:"
+msgstr "Maksymalny wymiar:"
+
+#: gallerywindow.cpp:209 gallerywindow.cpp:214
+msgid "Gallery Export"
+msgstr "Eksport galerii"
+
+#: gallerywindow.cpp:217
+#, fuzzy
+#| msgid "A Kipi plugin to export image collection to remote Gallery server."
+msgid "A Kipi plugin to export image collections to a remote Gallery server."
+msgstr ""
+"Wtyczka Kipi do eksportowania kolekcji obrazów na zdalny serwer galerii."
+
+#: gallerywindow.cpp:218
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2007, Colin Guthrie\n"
+#| "(c) 2008, Andrea Diamantini\n"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2006-2009, Gilles Caulier\n"
+"(c) 2008, Andrea Diamantini\n"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2007, Colin Guthrie\n"
+"(c) 2008, Andrea Diamantini\n"
+
+#: gallerywindow.cpp:223
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: gallerywindow.cpp:223
+msgid "Author"
+msgstr "Autor"
+
+#: gallerywindow.cpp:226
+msgid "Colin Guthrie"
+msgstr "Colin Guthrie"
+
+#: gallerywindow.cpp:226
+msgid "Maintainer"
+msgstr "Opiekun"
+
+#: gallerywindow.cpp:229
+msgid "Andrea Diamantini"
+msgstr "Andrea Diamantini"
+
+#: gallerywindow.cpp:229 gallerywindow.cpp:232
+msgid "Developer"
+msgstr "Programista"
+
+#: gallerywindow.cpp:232
+msgid "Gilles Caulier"
+msgstr ""
+
+#: gallerywindow.cpp:242
+msgid "Handbook"
+msgstr "Podręcznik"
+
+#: gallerywindow.cpp:250
+#, fuzzy
+#| msgid "settings"
+msgid "Settings"
+msgstr "ustawienia"
+
+#: gallerywindow.cpp:407
+msgid "Failed to login into remote gallery. "
+msgstr "Nieudane logowanie do zdalnej galerii."
+
+#: gallerywindow.cpp:409
+msgid ""
+"\n"
+"Do you want to check your settings and try again?"
+msgstr ""
+"\n"
+"Chcesz sprawdzić ustawienia i spróbować ponownie?"
+
+#: gallerywindow.cpp:416 gallerywindow.cpp:812 plugin_galleryexport.cpp:113
+msgid "Edit Gallery Data"
+msgstr "Edytuj dane galerii"
+
+#: gallerywindow.cpp:473 gallerywindow.cpp:494
+#, fuzzy
+#| msgid "albums"
+msgid "Album"
+msgstr "albumy"
+
+#: gallerywindow.cpp:525 gallerywindow.cpp:538
+msgid "Image"
+msgstr ""
+
+#: gallerywindow.cpp:675
+#, fuzzy
+#| msgid ""
+#| "Sorry, these characters are not allowed in album name: \\ / * ? \" ' & < "
+#| "> | . + # ( ) or spaces"
+msgid ""
+"Sorry, these characters are not allowed in album name: \\ / * ? \" ' & &lt; "
+"&gt; | . + # ( ) or spaces"
+msgstr ""
+"Niestety te znaki są niedozwolone w nazwie albumu: \\ / * ? \" ' & < > | . + "
+"# ( ) lub białe znaki"
+
+#: gallerywindow.cpp:752
+#, fuzzy, kde-format
+#| msgid "Uploading file "
+msgid "Uploading file %1"
+msgstr "Wysyłanie pliku "
+
+#: gallerywindow.cpp:771
+msgid "Failed to upload photo into remote gallery. "
+msgstr "Nieudane wysyłanie zdjęcia do zdalnej galerii. "
+
+#: gallerywindow.cpp:774
+msgid ""
+"\n"
+"Do you want to continue?"
+msgstr ""
+"\n"
+"Kontynuować?"
+
+#: plugin_galleryexport.cpp:80
+#, fuzzy
+#| msgid "Export to Gallery..."
+msgid "Export to &Gallery..."
+msgstr "Eksport do galerii..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Cezary Szafron"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "cszafron@gmail.com"
+
+#. i18n: file: galleryalbumwidget.ui:16
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:5
+msgid "<h3>Enter New Album Name</h3>"
+msgstr "<h3>Enter New Album Name</h3>"
+
+#. i18n: file: galleryalbumwidget.ui:38
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:8
+msgid "Title:"
+msgstr "Tytuł:"
+
+#. i18n: file: galleryalbumwidget.ui:48
+#. i18n: ectx: property (text), widget (QLabel, nameLabel)
+#: rc.cpp:11
+msgid "Name (optional):"
+msgstr "Nazwa (opcjonalnie):"
+
+#. i18n: file: galleryalbumwidget.ui:58
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:14
+msgid "Caption (optional):"
+msgstr "Nagłówek (opcjonalnie):"
+
+#. i18n: file: galleryalbumwidget.ui:113
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:17
+msgid "&OK"
+msgstr "&OK"
+
+#. i18n: file: galleryalbumwidget.ui:129
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:20
+msgid "&Cancel"
+msgstr "&Anuluj"
+
+#~ msgid "albums"
+#~ msgstr "albumy"
+
+#~ msgid "remote-gallery-sync"
+#~ msgstr "synchronizacja-zdalnej-galerii"
+
+#~ msgid "(c) 2003-2005, Renchi Raju"
+#~ msgstr "(c) 2003-2005, Renchi Raju"
+
+#~ msgid "Title (optional):"
+#~ msgstr "Tytuł (opcjonalnie):"
+
+#~ msgid "Gallery Export..."
+#~ msgstr "Eksport galerii..."
+
+#~ msgid "remote-galleries-setting"
+#~ msgstr "ustawienia-zdalnej-galerii"
+
+#, fuzzy
+#~| msgid "remote-galleries-setting"
+#~ msgid "Remote Gallery Setting..."
+#~ msgstr "ustawienia-zdalnej-galerii"
+
+#, fuzzy
+#~| msgid "Failed to create new album"
+#~ msgid "Create New album"
+#~ msgstr "Utworzenie albumu nie powiodło się"
+
+#, fuzzy
+#~| msgid "<h3>Enter New Album Name</h3>"
+#~ msgid "Insert new album name"
+#~ msgstr "<h3>Enter New Album Name</h3>"
+
+#~ msgid "MyDialog"
+#~ msgstr "MojeOkno"
+
+#~ msgid "Gallery Name"
+#~ msgstr "Nazwa galerii"
+
+#~ msgid "URL"
+#~ msgstr "Adres"
+
+#~ msgid "User"
+#~ msgstr "Użytkownik"
+
+#~ msgid "Remove"
+#~ msgstr "Usuń"
+
+#~ msgid "Edit"
+#~ msgstr "Edytuj"
+
+#~ msgid "Add"
+#~ msgstr "Dodaj"
+
+#~ msgid "New Remote Gallery"
+#~ msgstr "Nowa zdalna galeria"
+
+#~ msgid "No gallery selected!"
+#~ msgstr "Nie zaznaczono żadnej galerii!"
+
+#~ msgid ""
+#~ "Are you sure you want to remove this gallery? All synchronisaton settings "
+#~ "will be lost. You cannot undo this action."
+#~ msgstr ""
+#~ "Czy na pewno chcesz usunąć tą galerię? Wszystkie ustawienia "
+#~ "synchronizacyjne zostaną utracone. Nie można cofnąć tej operacji."
+
+#~ msgid "Remove Remote Gallery"
+#~ msgstr "Usuń zdalną galerię"
+
+#~ msgid "<h2>Gallery Export</h2>"
+#~ msgstr "<h2>Eksport galerii</h2>"
+
+#~ msgid "New Gallery"
+#~ msgstr "Nowa galeria"

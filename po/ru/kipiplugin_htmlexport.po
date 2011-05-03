@@ -1,0 +1,403 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Шмелёв Артемий Геннадьевич <sgartjom@mail.ru>, 2008.
+# Nick Shaforostoff <shaforostoff@kde.ru>, 2008.
+# Alexander Potashev <aspotashev@gmail.com>, 2010.
+# Yuri Efremov <yur.arh@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_htmlexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2010-10-23 01:01+0400\n"
+"Last-Translator: Yuri Efremov <yur.arh@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: generator.cpp:136
+#, kde-format
+msgid "Could not find theme in '%1'"
+msgstr "Не удалось найти тему в «%1»"
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr "Копирование темы"
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr "Не удалось скопировать тему"
+
+#: generator.cpp:178
+#, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr "Загрузка удалённых файлов для «%1»"
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr "Не удалось открыть временный файл"
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr "Не удалось загрузить %1"
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr "Не удалось создать файл gallery.xml"
+
+#: generator.cpp:258
+#, kde-format
+msgid "Generating files for \"%1\""
+msgstr "Создание файлов для «%1»"
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr "Предыдущий"
+
+#: generator.cpp:291
+msgid "Next"
+msgstr "Следующий"
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr "Список коллекции"
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr "Исходное изображение"
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr "Вверх"
+
+#: generator.cpp:296
+msgid "Make"
+msgstr "Производитель"
+
+#: generator.cpp:297
+msgid "Model"
+msgstr "Модель"
+
+#: generator.cpp:298
+msgid "Image Orientation"
+msgstr "Ориентация изображения"
+
+#: generator.cpp:299
+msgid "Image X Resolution"
+msgstr "Разрешение по X"
+
+#: generator.cpp:300
+msgid "Image Y Resolution"
+msgstr "Разрешение по Y"
+
+#: generator.cpp:301
+msgid "Image Resolution Unit"
+msgstr "Единица разрешения"
+
+#: generator.cpp:302
+msgid "Image Date Time"
+msgstr "Дата и время создания"
+
+#: generator.cpp:303
+msgid "YCBCR Positioning"
+msgstr "Позиционирование YCBCR"
+
+#: generator.cpp:304
+msgid "Exposure Time"
+msgstr "Время выдержки"
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr "Диафрагменное число"
+
+#: generator.cpp:306
+msgid "Exposure Index"
+msgstr "Индекс экспозиции"
+
+#: generator.cpp:307
+msgid "ISO Speed Ratings"
+msgstr "Чувствительность (ISO)"
+
+#: generator.cpp:308
+msgid "Shutter Speed Value"
+msgstr "Значение выдержки затвора"
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr "Значение диафрагмы"
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr "Фокусное расстояние"
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr "Создание HTML-файлов"
+
+#: generator.cpp:343
+#, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr "Не удалось загрузить XSL файл «%1»"
+
+#: generator.cpp:349
+#, kde-format
+msgid "Could not load XML file '%1'"
+msgstr "Не удалось загрузить XSL файл «%1»"
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr "Ошибка обработки XML файла"
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr "Не удалось открыть «%1» для записи"
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr "Не удалось создать каталог «%1» в «%2»"
+
+#: imagegenerationfunctor.cpp:89
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "Не удалось прочитать изображение «%1»"
+
+#: imagegenerationfunctor.cpp:95
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "Формат изображения «%1» неизвестен"
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "Ошибка загрузки изображения «%1»"
+
+#: imagegenerationfunctor.cpp:140
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "Не удалось сохранить изображение «%1» в «%2»"
+
+#: imagegenerationfunctor.cpp:161
+#, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr "Не удалось сохранить миниатюру изображения «%1» в «%2»"
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr "недоступно"
+
+#: imagegenerationfunctor.cpp:338
+#, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr "Не удалось открыть файл «%1» для записи"
+
+#: imagegenerationfunctor.cpp:342
+#, kde-format
+msgid "Could not save image to file '%1'"
+msgstr "Не удалось сохранить изображение в файл «%1»"
+
+#: plugin.cpp:72
+msgid "Export to &HTML..."
+msgstr "Экспорт в &HTML..."
+
+#: plugin.cpp:95
+msgid "Generating gallery..."
+msgstr "Создание галереи..."
+
+#: plugin.cpp:105
+msgid "Finished, but some warnings occurred."
+msgstr "Завершено, но имеются некоторые предупреждения."
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr "%1:"
+
+#: wizard.cpp:206
+msgid "Export image collections to HTML pages"
+msgstr "Экспорт коллекций изображений в страницы HTML"
+
+#: wizard.cpp:212
+msgid "HTML Export"
+msgstr "Экспорт в HTML"
+
+#: wizard.cpp:215
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr ""
+"Модуль расширения Kipi для экспорта коллекций изображений в страницы HTML"
+
+#: wizard.cpp:216
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr ""
+"© Aurelien Gateau, 2006–2009\n"
+"© Gianluca Urgese, 2010"
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr "Gianluca Urgese"
+
+#: wizard.cpp:221
+msgid "Maintainer"
+msgstr "Сопровождающий"
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: wizard.cpp:226
+msgid "Former Author and Maintainer"
+msgstr "Бывший автор и сопровождающий"
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr "Руководство"
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr "Выбор коллекции"
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr "Тема"
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr "Параметры темы"
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr "Параметры изображения"
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr "Вывод"
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr "Автор: %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Шмелев Артемий,Юрий Ефремов"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sgartjom@mail.ru,yur.arh@gmail.com"
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr "Полноразмерное изображение"
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr "Сохранить изображение"
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr "Формат:"
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr "JPEG"
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr "PNG"
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr "Качество:"
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+msgid "Max size:"
+msgstr "Максимальный размер:"
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+msgid "Include full-size original images for download"
+msgstr "Включить полноразмерные исходные изображения для загрузки"
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr "Использовать исходное изображение"
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr "Миниатюра"
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr "Размер:"
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr "Каталог назначения:"
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr "Открыть в браузере"
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""
+"На этой странице вы можете изменить некоторые параметры темы. В зависимости "
+"от темы, доступны различные параметры."
+
+#, fuzzy
+#~| msgid "HTML Gallery..."
+#~ msgid "&HTML Gallery..."
+#~ msgstr "HTML галерея..."

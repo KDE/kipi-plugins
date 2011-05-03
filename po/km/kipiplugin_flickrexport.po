@@ -1,0 +1,604 @@
+# translation of kipiplugin_flickrexport.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-11-05 16:29+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Language: km_KH\n"
+
+#: comboboxintermediate.h:53
+msgid "Various"
+msgstr "ផ្សេងៗ​"
+
+#: flickrlist.cpp:390
+#, fuzzy
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"ធីក​ បើ​រូបថត​គួរតែ​អាច​មើល​ឃើញ​​ជា​សាធារណៈ​ ឬ​ប្រើ​ផ្ទាំង​​ជម្រើស​​ផ្ទុក​ឡើង​​ ​ដើម្បី​បញ្ជាក់​​​វា​ សម្រាប់​រូប​ភាព​ទាំង​"
+"អស់​​"
+
+#: flickrlist.cpp:394
+#, fuzzy
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"ធីក​ បើ​រូប​ថត​គួរ​តែ​មើល​ឃើញ​ទៅកាន់​គ្រួសារ​ ឬ​ប្រើ​ផ្ទាំង​ជម្រើស​​ផ្ទុក​ឡើង​ ដើម្បី​បញ្ជាក់​វា​ សម្រាប់​​រូបភាព​ទាំង​អស់​​​"
+
+#: flickrlist.cpp:398
+#, fuzzy
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+"ធីក​ បើ​រូបថត​​គួរ​តែ​​មិត្តភ័ក្ដិ​អាច​​​​មើល​ឃើញ​​​ ​ឬ​ប្រើ​ផ្ទាំង​​ជម្រើស​​ផ្ទុក​ឡើង​​ ដើម្បី​បញ្ជាក់​វា សម្រាប់​​រូបភាព​ទាំងអស់"
+
+#: flickrlist.cpp:402
+#, fuzzy
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+"បង្ហាញ​​កម្រិត​សុវត្ថិភាព​ សម្រាប់​រូបថត​ ឬ​​ប្រើ​​​​ផ្ទាំង​ជម្រើស​ផ្ទុក​ឡើង​ ដើម្បី​បញ្ជាក់​វា​ សម្រាប់​រូបភាព​ទាំង​អស់​"
+
+#: flickrlist.cpp:406
+#, fuzzy
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr "បង្ហាញ​ប្រភេទ​រូប​ភាព​អ្វី​ ឬ​ប្រើ​ផ្ទាំង​ជម្រើស​ផ្ទុក​ឡើង​ ដើម្បី​បញ្ជាក់​វា​ សម្រាប់​រូបភាព​ទាំងអស់​"
+
+#: flickrlist.cpp:419
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr "បន្ថែម​ស្លាក​ខាងក្រៅ​ចំ​ពោះ​រូប​ថត​ ឬ​ប្រើ​ផ្ទាំង​ជម្រើស​ផ្ទុក​ឡើង​ សម្រាប់​រូបភាព​ទាំងអស់​​"
+
+#: flickrlist.cpp:431
+#, fuzzy
+msgid "Enter extra tags, separated by commas."
+msgstr "បញ្ចូល​ស្លាក់​បន្ថែម​​ ដោយ​សញ្ញា​ក្បៀស​ដែល​​បំបែក​ដោយ​ឡែក​ ។"
+
+#: flickrtalker.cpp:204
+#, fuzzy
+msgid "Getting the Frob"
+msgstr "បាន​យក​​ Frob"
+
+#: flickrtalker.cpp:249
+#, fuzzy
+msgid "Checking if previous token is still valid"
+msgstr "ធីក​ បើ​ថូខឹន​មុន​នៅ​តែ​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:275
+#, fuzzy
+msgid ""
+"Please follow the instructions in the browser window, then return to press "
+"Yes if you are authenticated, or No otherwise."
+msgstr ""
+"សូម​បំពេញ​​សេចក្ដី​ណែនាំ​ក្នុង​បង្អួច​​កម្មវិធី​រុករក​ បន្ទាប់​មក​ត្រឡប់​ទៅ​ចុច ​បាទ/ចាស ​បើ​អ្នក​ត្រូវ​បាន​ផ្ទៀង​ផ្ទាត់​"
+"ភាព​ត្រឹមត្រូវ​​ ​ដូច្នោះ​​ ។"
+
+#: flickrtalker.cpp:277
+#, fuzzy, kde-format
+msgid "%1 Service Web Authorization"
+msgstr "សេចក្ដី​អនុញ្ញាត​បណ្ដាញ​សេវា​ %1 ​"
+
+#: flickrtalker.cpp:282
+#, fuzzy
+msgid "Authenticating the User on web"
+msgstr "ផ្ទៀង​ផ្ទាត់​ភាព​ត្រឹមត្រូវ​អ្នកប្រើ​លើ​បណ្ដាញ​"
+
+#: flickrtalker.cpp:334
+#, fuzzy
+msgid "Getting the Token from the server"
+msgstr "ទទួល​យក​ថូខឹន​ពី​ម៉ាស៊ីន​បម្រើ​"
+
+#: flickrtalker.cpp:699
+#, fuzzy
+msgid "No photo specified"
+msgstr "គ្មាន​រូបថត​ដែល​បាន​បញ្ជាក់​"
+
+#: flickrtalker.cpp:702
+#, fuzzy
+msgid "General upload failure"
+msgstr "ភាព​បរាជ័យ​ផ្ទុក​ឡើង​ទូទៅ​"
+
+#: flickrtalker.cpp:705
+msgid "Filesize was zero"
+msgstr "ទំហំ​ឯកសារ​សូន្យ​"
+
+#: flickrtalker.cpp:708
+#, fuzzy
+msgid "Filetype was not recognized"
+msgstr "ប្រភេទ​ឯកសារ​មិន​ត្រូវ​បាន​ទទួល​ស្គាល់​​"
+
+#: flickrtalker.cpp:711
+#, fuzzy
+msgid "User exceeded upload limit"
+msgstr "ព្រំដែន​ផ្ទុក​ឡើង​លើស​អ្នក​ប្រើ"
+
+#: flickrtalker.cpp:714
+msgid "Invalid signature"
+msgstr "ហត្ថលេខា​មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:717
+msgid "Missing signature"
+msgstr "បាត់​ហត្ថលេខា​"
+
+#: flickrtalker.cpp:720
+msgid "Login Failed / Invalid auth token"
+msgstr "ចូល​បាន​បរាជ័យ​​ / ផ្ទៀង​ផ្ទាត់​​ថូខឹន​មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:723
+msgid "Invalid API Key"
+msgstr "សោ​​ API ​មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:726
+#, fuzzy
+msgid "Service currently unavailable"
+msgstr "គ្មាន​សេវា​ពេល​បច្ចុប្បន្ន​"
+
+#: flickrtalker.cpp:729
+msgid "Invalid Frob"
+msgstr "Frob មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:732
+msgid "Format \"xxx\" not found"
+msgstr "រក​មិន​ឃើញ​​ទ្រង់ទ្រាយ​​ \"xxx\" ​"
+
+#: flickrtalker.cpp:735
+#, fuzzy
+msgid "Method \"xxx\" not found"
+msgstr "រក​មិន​ឃើញ​​វិធីសាស្ត្រ​ \"xxx\""
+
+#: flickrtalker.cpp:738
+msgid "Invalid SOAP envelope"
+msgstr "​SOAP envelope មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:741
+msgid "Invalid XML-RPC Method Call"
+msgstr "ហៅ​វិធីសាស្ត្រ​ XML-RPC មិន​ត្រឹមត្រូវ​"
+
+#: flickrtalker.cpp:744
+#, fuzzy
+msgid "The POST method is now required for all setters"
+msgstr "ឥឡូវ​ វិធីសាស្ត្រ​ POST ត្រូវ​បាន​ទាមទារ​ សម្រាប់ setters ទាំងអស់​"
+
+#: flickrtalker.cpp:747
+msgid "Unknown error"
+msgstr "មិន​ស្គាល់​កំហុស​"
+
+#: flickrtalker.cpp:752
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"កំហុស​បាន​កើត​ឡើង​ ៖​​ %1\n"
+"មិន​អាច​ធ្វើ​បន្ត​ទៀត​ឡើយ​ ។"
+
+#: flickrtalker.cpp:899
+msgctxt "As in the permission to"
+msgid "write"
+msgstr "សរសេរ​"
+
+#: flickrtalker.cpp:901
+msgctxt "As in the permission to"
+msgid "read"
+msgstr "អាន​"
+
+#: flickrtalker.cpp:903
+msgctxt "As in the permission to"
+msgid "delete"
+msgstr "លុប​"
+
+#: flickrtalker.cpp:933
+#, fuzzy
+msgid "Your token is invalid. Would you like to get a new token to proceed?\n"
+msgstr "ថូខឹន​របស់​អ្នក​មិន​ត្រឹមត្រូវ​ ។​ តើ​​អ្នក​ចង់​យក​ថូខឹន​ថ្មី​ ដើម្បី​បន្ត​ឬ ?\n"
+
+#: flickrtalker.cpp:1075
+msgid "PhotoSet creation failed: "
+msgstr "បាន​បរាជ័យ​​ការ​បង្កើត​ PhotoSet ៖"
+
+#: flickrtalker.cpp:1166
+#, fuzzy
+msgid "Failed to fetch list of photo sets."
+msgstr "បាន​បរាជ័យ​ ដើម្បី​ប្រ​មូល​យក​​បញ្ជី​សំណុំ​រូប​ថត​ ។"
+
+#: flickrtalker.cpp:1236
+#, fuzzy
+msgid "Failed to upload photo"
+msgstr "បាន​បរាជ័យ​ ដើម្បី​ផ្ទុក​រូបថត​ឡើង​"
+
+#: flickrtalker.cpp:1300
+msgid "Failed to query photo information"
+msgstr "បាន​បរាជ័យ​ ដើម្បី​សួរ​ព័ត៌មាន​រូបថត​"
+
+#: flickrwidget.cpp:80
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">២៣</font></a> "
+"នាំចេញ​</h2></b>"
+
+#: flickrwidget.cpp:85
+msgid ""
+"<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+"font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+"font></a> នាំចេញ​</h2></b>"
+
+#: flickrwidget.cpp:90
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> នាំចេញ​</h2></b>"
+
+#: flickrwidget.cpp:103 flickrwidget.cpp:108
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "សាធារណៈ"
+
+#: flickrwidget.cpp:107
+#, fuzzy
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "នេះ​ជា​បញ្ជី​រូបថត​ត្រូវ​ផ្ទុក​ឡើង​ ទៅកាន់​គណនី Flickr របស់​អ្នក​ ។"
+
+#: flickrwidget.cpp:112
+msgid "Extra tags"
+msgstr "ស្លាក់​បន្ថែម"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:127
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "គ្រួសារ​"
+
+#: flickrwidget.cpp:121 flickrwidget.cpp:129
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "មិត្តភ័ក្ដិ​"
+
+#: flickrwidget.cpp:136
+msgid "Safety level"
+msgstr "កម្រិត​សុវត្ថិភាព​"
+
+#: flickrwidget.cpp:138
+msgid "Content type"
+msgstr "ប្រភេទ​មាតិកា​"
+
+#: flickrwidget.cpp:141
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "សុវត្ថិភាព​"
+
+#: flickrwidget.cpp:142
+#, fuzzy
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "ល្មម​"
+
+#: flickrwidget.cpp:143
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "ដែល​ត្រូវ​បាន​កម្រិត​"
+
+#: flickrwidget.cpp:144 flickrwidget.cpp:277
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "រូបថត​"
+
+#: flickrwidget.cpp:145 flickrwidget.cpp:278
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "រូបថត​អេក្រង់​"
+
+#: flickrwidget.cpp:146 flickrwidget.cpp:279
+msgctxt "photo content type"
+msgid "Other"
+msgstr "ផ្សេងទៀត​"
+
+#: flickrwidget.cpp:172
+msgid "Account"
+msgstr "គណនី​"
+
+#: flickrwidget.cpp:175
+msgctxt "account settings"
+msgid "Username: "
+msgstr "ឈ្មោះ​អ្នក​ប្រើ​ ៖​"
+
+#: flickrwidget.cpp:178
+msgid "Use a different account"
+msgstr "ប្រើ​គណនី​ខុស​គ្នា​"
+
+#: flickrwidget.cpp:181
+msgid "PhotoSet:"
+msgstr "PhotoSet:"
+
+#: flickrwidget.cpp:184
+msgid "&New PhotoSet"
+msgstr "PhotoSet ថ្មី​"
+
+#: flickrwidget.cpp:199
+msgid "Tag options"
+msgstr "ជម្រើស​ស្លាក​"
+
+#: flickrwidget.cpp:203
+msgid "Use Host Application Tags"
+msgstr "ប្រើ​ស្លាក​កម្មវិធី​ម៉ាស៊ីន​"
+
+#: flickrwidget.cpp:205 flickrwidget.cpp:577
+msgid "More tag options"
+msgstr "ជម្រើស​ស្លាក​បន្ថែម​"
+
+#: flickrwidget.cpp:219
+msgid "Added Tags: "
+msgstr "ស្លាក​ដែល​បាន​បន្ថែម​ ៖"
+
+#: flickrwidget.cpp:222
+#, fuzzy
+msgid "Enter new tags here, separated by commas."
+msgstr "បញ្ចូល​ស្លាក​​ថ្មី​ទីនេះ​ បំបែក​ដោយ​​សញ្ញា​ក្បៀស​ ។"
+
+#: flickrwidget.cpp:224
+msgid "Add tags per image"
+msgstr "បន្ថែម​ស្លាក​​លើ​រូប​ភាព​"
+
+#: flickrwidget.cpp:225
+#, fuzzy
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr "ប្រ​សិន​បើ​ធីក ​អ្នក​អាច​កំណត់​ស្លា​បន្ថែម​ ​សម្រាប់​រូបភាព​នីមួយៗ​​ក្នុង​ផ្ទាំង​បញ្ជី​ឯកសារ​"
+
+#: flickrwidget.cpp:229
+#, fuzzy
+msgid "Strip Spaces From Tags"
+msgstr "ទំហំ​ឆ្នូត​ពី​ស្លា"
+
+#: flickrwidget.cpp:242
+msgid "Publication Options"
+msgstr "ជម្រើស​ការ​បោះពុម្ពផ្សាយ​"
+
+#: flickrwidget.cpp:247
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "សាធារណៈ​​ (អ្នករាល់គ្នា​អាច​មើល​វា​​ឃើញ​)"
+
+#: flickrwidget.cpp:250
+#, fuzzy
+msgid "Visible to Family"
+msgstr "គ្រួសារ​អាច​មើល​ឃើញ​"
+
+#: flickrwidget.cpp:253
+#, fuzzy
+msgid "Visible to Friends"
+msgstr "មិត្តភ័ក្ដិ​អាច​មើល​ឃើញ​"
+
+#: flickrwidget.cpp:256 flickrwidget.cpp:565
+msgid "More publication options"
+msgstr "ជម្រើស​ការ​បោះពុម្ពផ្សាយ​បន្ថែម​"
+
+#: flickrwidget.cpp:269
+msgid "Safety level:"
+msgstr "កម្រិត​សុវត្ថិភាព​ ៖​"
+
+#: flickrwidget.cpp:271
+msgid "Safe"
+msgstr "សុវត្ថិភាព​"
+
+#: flickrwidget.cpp:272
+#, fuzzy
+msgid "Moderate"
+msgstr "ល្មម​"
+
+#: flickrwidget.cpp:273
+msgid "Restricted"
+msgstr "ដែល​ត្រូវ​បាន​កម្រិត​"
+
+#: flickrwidget.cpp:275
+msgid "Content type:"
+msgstr "ប្រភេទ​មាតិកា ៖"
+
+#: flickrwidget.cpp:296
+msgid "Resizing Options"
+msgstr "ជម្រើស​ប្ដូរ​ទំហំ​"
+
+#: flickrwidget.cpp:301
+#, fuzzy
+msgid "Resize photos before uploading"
+msgstr "ប្ដូរ​ទំហំ​រូបថត​ មុន​ពេល​ការ​ផ្ទុក​ឡើង​"
+
+#: flickrwidget.cpp:312
+msgid "Maximum dimension (pixels):"
+msgstr "វិមាត្រ​អតិបរមា​ (ភីកសែល​​) ៖"
+
+#: flickrwidget.cpp:322
+#, fuzzy
+msgid "JPEG Image Quality (higher is better):"
+msgstr "គុណភាព​រូបភាព​របស់​ JPEG ​(ល្អ​ប្រសើរ​ជាង​) ៖"
+
+#: flickrwidget.cpp:350
+msgid "File List"
+msgstr "បញ្ជី​ឯកសារ​"
+
+#: flickrwidget.cpp:351
+msgid "Upload Options"
+msgstr "ជម្រើស​ផ្ទុក​ឡើង​"
+
+#: flickrwidget.cpp:561
+#, fuzzy
+#| msgid "More publication options"
+msgid "Fewer publication options"
+msgstr "ជម្រើស​ការ​បោះពុម្ពផ្សាយ​បន្ថែម​"
+
+#: flickrwidget.cpp:582
+#, fuzzy
+#| msgid "More tag options"
+msgid "Fewer tag options"
+msgstr "ជម្រើស​ស្លាក​បន្ថែម​"
+
+#: flickrwindow.cpp:84
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "នាំចេញ​ទៅ​ជា​សេវា​បណ្ដាញ %1"
+
+#: flickrwindow.cpp:123
+msgid "Start Uploading"
+msgstr "ចាប់​ផ្ដើម​ការ​ផ្ទុក​ឡើង​"
+
+#: flickrwindow.cpp:135
+msgid "Flickr/23/Zooomr Export"
+msgstr "នាំចេញ​ Flickr/23/Zooomr ​"
+
+#: flickrwindow.cpp:138
+#, fuzzy
+msgid ""
+"A Kipi plugin to export an image collection to a Flickr / 23 / Zooomr web "
+"service."
+msgstr "កម្មវិធី​ជំនួយ​ Kipi ត្រូវ​នាំចេញ​រូបភាព​សម្រាំង​​ ទៅកាន់​សេវា​បណ្ដាញ​ Flickr / 23 / Zooomr ។"
+
+#: flickrwindow.cpp:140
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+msgstr ""
+"រក្សា​សិទ្ធិ​​ឆ្នាំ​ ២០០៥​-២០០៨ ដោយ​ Vardhman Jain\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៨​-២០០៩​​ ដោយ Gilles Caulier\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៩ ដោយ​ Luka Renko"
+
+#: flickrwindow.cpp:144
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:144
+#, fuzzy
+msgid "Author and maintainer"
+msgstr "អ្នក​និពន្ធ​ និង​អ្នក​ថែទាំ​"
+
+#: flickrwindow.cpp:147
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:147
+#, fuzzy
+msgid "Developer"
+msgstr "អ្នក​អភិវឌ្ឍន៍​​"
+
+#: flickrwindow.cpp:155
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ​"
+
+#: flickrwindow.cpp:492
+#, fuzzy
+msgid "&lt;Photostream Only&gt;"
+msgstr "&lt;ស្ទ្រីម​រូប​ថត​តែ​ប៉ុណ្ណោះ​​&gt;"
+
+#: flickrwindow.cpp:666
+#, kde-format
+msgid "Uploading file %1"
+msgstr "ការ​ផ្ទុក​ឯកសារ​​ %1"
+
+#: flickrwindow.cpp:686
+#, fuzzy, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "បាន​បរាជ័យ​ ដើម្បី​ប្រមូល​យក​ព័ត៌មាន​សំណុំ​រូប​ថត​ពី​​ %1 ។ %2\n"
+
+#: flickrwindow.cpp:691
+#, fuzzy, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"បាន​បរាជ័យ​ ដើម្បី​ផ្ទុក​រូប​ថត​ក្នុង​ %1 ។​ %2\n"
+"តើ​អ្នក​ចង់​បន្ត​ឬ​ ?"
+
+#: login.cpp:68
+msgctxt "flickr login"
+msgid "Username:"
+msgstr "ឈ្មោះ​អ្នក​ប្រើ​ ៖​"
+
+#: login.cpp:71
+msgid "Password:"
+msgstr "ពាក្យ​សម្ងាត់​ ៖​"
+
+#: plugin_flickrexport.cpp:80
+msgid "Export to Flick&r..."
+msgstr "នាំចេញ​ទៅកាន់​​ Flick&r..."
+
+#: plugin_flickrexport.cpp:91
+msgid "Export to &23..."
+msgstr "នាំចេញ​ទៅកាន់​ &23..."
+
+#: plugin_flickrexport.cpp:102
+msgid "Export to &Zooomr..."
+msgstr "នាំចេញ​ទៅកាន់​​ &Zooomr..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info, ..."
+
+#. i18n: file: flickralbumdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, FlickrAlbumDialog)
+#: rc.cpp:5
+msgid "New PhotoSet"
+msgstr "PhotoSet ថ្មី​"
+
+#. i18n: file: flickralbumdialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:8
+msgid "<h3>Create New PhotoSet </h3>"
+msgstr "<h3>បង្កើត​ PhotoSet ថ្មី​ </h3>"
+
+#. i18n: file: flickralbumdialog.ui:86
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:11
+msgid "&OK"
+msgstr "យល់​ព្រម​"
+
+#. i18n: file: flickralbumdialog.ui:102
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:14
+msgid "&Cancel"
+msgstr "បោះបង់​"
+
+#. i18n: file: flickralbumdialog.ui:130
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:17
+msgid "Title (required):"
+msgstr "ចំណងជើង​​ (បាន​ទាមទារ​​) ៖​"
+
+#. i18n: file: flickralbumdialog.ui:143
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:20
+msgid "Description (optional)"
+msgstr "សេចក្ដី​ពិពណ៌នា​​ (ជា​ជម្រើស​)​"
+
+#, fuzzy
+#~ msgid "Less tag options"
+#~ msgstr "ជម្រើស​​ស្លាក​តិច​"
+
+#, fuzzy
+#~ msgid "Less publication options"
+#~ msgstr "ជម្រើស​ការ​បោះពុម្ពផ្សាយ​តិច​"

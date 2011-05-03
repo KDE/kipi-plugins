@@ -1,0 +1,524 @@
+# translation of kipiplugin_simpleviewerexport.po to Greek
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Spiros Georgaras <sng@hellug.gr>, 2008.
+# Σπύρος Γεωργαράς <sng@hellug.gr>, 2008.
+# Toussis Manolis <manolis@koppermind.homelinux.org>, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_simpleviewerexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:23+0100\n"
+"PO-Revision-Date: 2009-02-27 10:13+0200\n"
+"Last-Translator: Toussis Manolis <manolis@koppermind.homelinux.org>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: firstrundlg.cpp:77 firstrundlg.cpp:87 simpleviewer.cpp:202 svedialog.cpp:91
+#: svedialog.cpp:120
+msgid "Flash Export"
+msgstr "Εξαγωγή Flash"
+
+#: firstrundlg.cpp:90 svedialog.cpp:123
+#, fuzzy
+#| msgid ""
+#| "A Kipi plugin to export images to Flash using Simple Viewer component"
+msgid ""
+"A Kipi plugin to export images to Flash using the Simple Viewer component."
+msgstr ""
+"Ένα πρόσθετο Kipi για την εξαγωγή εικόνων σε Flash με χρήση του συστατικού "
+"απλού προβολέα"
+
+#: firstrundlg.cpp:91 svedialog.cpp:124
+#, fuzzy
+#| msgid ""
+#| "(c) 2005-2006, Joern Ahrens\n"
+#| "(c) 2008-2009, Gilles Caulier"
+msgid ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2011, Gilles Caulier"
+msgstr ""
+"(c) 2005-2006, Joern Ahrens\n"
+"(c) 2008-2009, Gilles Caulier"
+
+#: firstrundlg.cpp:94 svedialog.cpp:127
+msgid "Joern Ahrens"
+msgstr "Joern Ahrens"
+
+#: firstrundlg.cpp:95 svedialog.cpp:128
+msgid "Author"
+msgstr "Συγγραφέας"
+
+#: firstrundlg.cpp:98 svedialog.cpp:131
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: firstrundlg.cpp:99 svedialog.cpp:132
+msgid "Developer and maintainer"
+msgstr "Προγραμματιστής και συντηρητής"
+
+#: firstrundlg.cpp:102 svedialog.cpp:135
+msgid "Felix Turner"
+msgstr "Felix Turner"
+
+#: firstrundlg.cpp:103 svedialog.cpp:136
+msgid "Author of the Simple Viewer Flash component"
+msgstr "Συγγραφέας του συστατικού απλού προβολέα Flash"
+
+#: firstrundlg.cpp:107 svedialog.cpp:140
+msgid "Mikkel B. Stegmann"
+msgstr "Mikkel B. Stegmann"
+
+#: firstrundlg.cpp:108 svedialog.cpp:141
+msgid "Basis for the index.html template"
+msgstr "Η βάση για το πρότυπο του index.html"
+
+#: firstrundlg.cpp:117 svedialog.cpp:150
+msgid "Handbook"
+msgstr "Εγχειρίδιο"
+
+#: firstrundlg.cpp:129
+msgid ""
+"<p>SimpleViewer is a Flash component which is free to use, but uses a "
+"license which comes into conflict with several distributions. Due to the "
+"license it is not possible to ship it with this plugin.</p><p>You can now "
+"download SimpleViewer from its homepage and point this tool to the "
+"downloaded archive. The archive will be stored with the plugin "
+"configuration, so it is available for further use.</p>"
+msgstr ""
+"<p>Ο SimpleViewer είναι ένα συστατικό Flash το οποίο είναι ελεύθερο προς "
+"χρήση, αλλά χρησιμοποιεί μια άδεια η οποία έρχεται σε σύγκρουση με αρκετές "
+"διανομές. Εξαιτίας αυτής της άδειας είναι αδύνατη η ενσωμάτωσή του με αυτό "
+"το πρόσθετο.</p><p>Μπορείτε να κάνετε λήψη το SimpleViewer από την "
+"ιστοσελίδα του και να ορίσετε τη διαδρομή στην αρχειοθήκη που έχετε κάνει "
+"λήψη. Η αρχειοθήκη θα αποθηκευτεί με τις ρυθμίσεις του πρόσθετου, έτσι ώστε "
+"να είναι δυνατή η χρήση του από εδώ και στο εξής.</p>"
+
+#: firstrundlg.cpp:137
+#, fuzzy
+#| msgid "<p>1.) Download SimpleViewer Version 1.9.x</p>"
+msgid "<p>1.) Download SimpleViewer Version 2.1.x</p>"
+msgstr "<p>1.) Λήψη SimpleViewer έκδοση 1.9.x</p>"
+
+#: firstrundlg.cpp:147
+msgid "<p>2.) Point this tool to the downloaded archive</p>"
+msgstr "<p>2.) Ορισμός τοποθεσίας της αρχειοθήκης που λήφθηκε</p>"
+
+#: generalpage.cpp:81
+msgid "Gallery &Title"
+msgstr "&Τίτλος συλλογής"
+
+#: generalpage.cpp:84
+msgid "Enter here the gallery title"
+msgstr "Εισάγετε εδώ τον τίτλο της συλλογής"
+
+#: generalpage.cpp:92
+msgid "Save Gallery To"
+msgstr "Αποθήκευση συλλογής σε"
+
+#: generalpage.cpp:103
+msgid "Image Properties"
+msgstr "Ιδιότητες εικόνας"
+
+#: generalpage.cpp:105
+msgid "Resize Target Images"
+msgstr "Αλλαγή μεγέθους εικόνων προορισμού"
+
+#: generalpage.cpp:107
+msgid "If you enable this option, all target images can be resized."
+msgstr ""
+"Αν ενεργοποιήσετε αυτή την επιλογή, όλες οι εικόνες προορισμού μπορούν να "
+"αλλάξουν μέγεθος."
+
+#: generalpage.cpp:111
+msgid "Auto-Rotate/Flip Images"
+msgstr "Αυτόματη περιστροφή/αναστροφή εικόνων"
+
+#: generalpage.cpp:113
+#, fuzzy
+#| msgid ""
+#| "If you enable this option, the images orientation will be fixed "
+#| "accordingly with Exif information"
+msgid ""
+"If you enable this option, the images' orientations will be set according to "
+"their Exif information."
+msgstr ""
+"Αν ενεργοποιήσετε αυτή την επιλογή, ο προσανατολισμός των εικόνων θα "
+"διορθωθεί με βάση τις πληροφορίες Exif"
+
+#: generalpage.cpp:120
+#, fuzzy
+#| msgid "&Target Images Size:"
+msgid "&Target Images' Size:"
+msgstr "Μέγεθος εικόνων &προορισμού:"
+
+#: generalpage.cpp:121
+#, fuzzy
+#| msgid ""
+#| "The new size of the exported images in pixels. SimpleViewer resizes the "
+#| "images as well, but this resizes your images before they are uploaded to "
+#| "your server"
+msgid ""
+"The new size of the exported images, in pixels. SimpleViewer resizes the "
+"images too, but this resizes the images before they are uploaded to your "
+"server."
+msgstr ""
+"Το νέο μέγεθος των εξαγομένων εικόνων σε εικονοστοιχεία. Το SimpleViewer "
+"επίσης αλλάζει το μέγεθος των εικόνων σας, αλλά αυτό τροποποιεί το μέγεθος "
+"των εικόνων σας πριν την αποστολή στον εξυπηρετητή"
+
+#: generalpage.cpp:134
+#, fuzzy
+#| msgid "&Displayed Images Size:"
+msgid "&Displayed Images' Size:"
+msgstr "&Μέγεθος εμφανιζόμενων εικόνων:"
+
+#: generalpage.cpp:135
+#, fuzzy
+#| msgid ""
+#| "scales the displayed images to this size. Largest height or width of your "
+#| "largest image (in pixels). Images will not be scaled up above this size, "
+#| "to ensure best image quality."
+msgid ""
+"Scales the displayed images to this size. Normally, use the height or width "
+"of your largest image (in pixels). Images will not be scaled up above this "
+"size, to preserve image quality."
+msgstr ""
+"Κλιμάκωση των εμφανιζόμενων εικόνων σε αυτό το μέγεθος. Το μεγαλύτερο ύψος ή "
+"πλάτος της μεγαλύτερής σας εικόνας (σε εικονοστοιχεία). Οι εικόνες δε θα "
+"κλιμακώνονται περισσότερο από αυτό το μέγεθος, για τη διατήρηση της "
+"βέλτιστης ποιότητας εικόνας."
+
+#: generalpage.cpp:150
+msgid "Misc"
+msgstr "Διάφορα"
+
+#: generalpage.cpp:153
+msgid "Display Captions"
+msgstr "Εμφάνιση ετικετών"
+
+#: generalpage.cpp:155
+#, fuzzy
+#| msgid "If you enable this option, the images caption will be shown"
+msgid "If this option is enabled, the images' captions will be shown."
+msgstr ""
+"Αν ενεργοποιήσετε αυτήν την επιλογή, θα εμφανίζονται οι ετικέτες των εικόνων"
+
+#: generalpage.cpp:158
+msgid "Open Image with Right Click"
+msgstr "Άνοιγμα εικόνας με δεξί κλικ"
+
+#: generalpage.cpp:160
+#, fuzzy
+#| msgid ""
+#| "If you enable this option, user will be able to open the target image in "
+#| "a separate window using right mouse button"
+msgid ""
+"If this option is enabled, the user will be able to open the target image in "
+"a separate window using the right mouse button."
+msgstr ""
+"Αν ενεργοποιήσετε αυτήν την επιλογή, ο χρήστης θα έχει τη δυνατότητα να "
+"ανοίξει την εικόνα προορισμού σε ξεχωριστό παράθυρο με το δεξί κουμπί του "
+"ποντικιού"
+
+#: generalpage.cpp:164
+msgid "Open gallery in Konqueror"
+msgstr "Άνοιγμα συλλογής στον Konqueror"
+
+#: generalpage.cpp:166
+#, fuzzy
+#| msgid ""
+#| "If you enable this option, gallery will be open in Konqueror automatically"
+msgid ""
+"If this option is enabled, the gallery will be opened in Konqueror "
+"automatically."
+msgstr ""
+"Αν ενεργοποιήσετε αυτή την επιλογή, η συλλογή θα ανοίγει στον Konqueror "
+"αυτόματα"
+
+#: lookpage.cpp:80
+msgctxt "Settings for flash export navigation"
+msgid "Navigation"
+msgstr "Πλοήγηση"
+
+#: lookpage.cpp:86
+msgid "Thumbnail &Rows:"
+msgstr "&Γραμμές εικόνων επισκόπησης:"
+
+#: lookpage.cpp:87
+msgid "Number of thumbnails rows"
+msgstr "Αριθμός γραμμών των εικόνων επισκόπησης"
+
+#: lookpage.cpp:92
+msgid "Thumbnail &Columns:"
+msgstr "&Στήλες εικόνων επισκόπησης:"
+
+#: lookpage.cpp:93
+msgid "Number of thumbnails columns"
+msgstr "Αριθμός στηλών των εικόνων επισκόπησης"
+
+#: lookpage.cpp:96
+msgid "Thumbnail &Position:"
+msgstr "&Θέση εικόνων επισκόπησης:"
+
+#: lookpage.cpp:98
+msgctxt "thumbnail position: right"
+msgid "Right"
+msgstr "Δεξιά"
+
+#: lookpage.cpp:99
+msgctxt "thumbnail position: left"
+msgid "Left"
+msgstr "Αριστερά"
+
+#: lookpage.cpp:100
+msgctxt "thumbnail position: top"
+msgid "Top"
+msgstr "Πάνω"
+
+#: lookpage.cpp:101
+msgctxt "thumbnail position: bottom"
+msgid "Bottom"
+msgstr "Κάτω"
+
+#: lookpage.cpp:110
+msgid "&Direction of Navigation:"
+msgstr "&Κατεύθυνση πλοήγησης:"
+
+#: lookpage.cpp:112
+msgid "Left to Right"
+msgstr "Αριστερά προς τα δεξιά"
+
+#: lookpage.cpp:113
+msgid "Right to Left"
+msgstr "Δεξιά προς αριστερά"
+
+#: lookpage.cpp:126
+msgid "Colors"
+msgstr "Χρώματα"
+
+#: lookpage.cpp:130
+msgid "&Text Color:"
+msgstr "Χρώμα &κειμένου:"
+
+#: lookpage.cpp:133
+msgid "Color of title and caption text"
+msgstr "Το χρώμα του τίτλου και τις ετικέτας"
+
+#: lookpage.cpp:137
+msgid "&Background Color:"
+msgstr "Χρώμα &φόντου:"
+
+#: lookpage.cpp:143
+msgid "&Frame Color:"
+msgstr "Χρώμα &πλαισίου:"
+
+#: lookpage.cpp:146
+msgid "Color of image frame, viewed icon, load bars, thumbnail arrows"
+msgstr ""
+"Το χρώμα του πλαισίου εικόνας, του εικονιδίου, των γραμμών φόρτωσης, και των "
+"βελών της εικόνας επισκόπησης"
+
+#: lookpage.cpp:157
+msgid "Style"
+msgstr "Στυλ"
+
+#: lookpage.cpp:163
+msgid "Frame &Width:"
+msgstr "&Πλάτος πλαισίου:"
+
+#: lookpage.cpp:164
+msgid "Width of image frame in pixels."
+msgstr "Πλάτος του πλαισίου εικόνας σε εικονοστοιχεία."
+
+#: lookpage.cpp:169
+msgid "Stage &Padding:"
+msgstr "Απόσταση &επιπέδων:"
+
+#: lookpage.cpp:170
+msgid "Distance between image and thumbnails in pixels."
+msgstr ""
+"Απόσταση μεταξύ της εικόνας και των εικόνων επισκόπησης σε εικονοστοιχεία."
+
+#: plugin_flashexport.cpp:62
+msgid "Export to F&lash..."
+msgstr "Εξαγωγή σε F&lash..."
+
+#: simpleviewer.cpp:140
+msgid "SimpleViewer installation failed"
+msgstr "Αποτυχία εγκατάστασης του SimpleViewer"
+
+#: simpleviewer.cpp:167
+#, fuzzy, kde-format
+#| msgid ""
+#| "Target folder %1 already exists.\n"
+#| "Do you want to overwrite it (all data in this folder will be lost)"
+msgid ""
+"Target folder %1 already exists.\n"
+"Do you want to overwrite it?  All data in this folder will be lost."
+msgstr ""
+"Ο φάκελος προορισμού %1 υπάρχει ήδη.\n"
+"Επιθυμείτε την αντικατάστασή του (όλα τα δεδομένα του φακέλου θα χαθούν);"
+
+#: simpleviewer.cpp:176
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not delete %1\n"
+#| "Please choose another export folder"
+msgid ""
+"Could not delete %1.\n"
+"Please choose another export folder."
+msgstr ""
+"Αδυναμία διαγραφής %1\n"
+"Παρακαλώ επιλέξτε έναν άλλο φάκελο εξαγωγής"
+
+#: simpleviewer.cpp:211
+msgid "Initialising..."
+msgstr "Αρχικοποίηση..."
+
+#: simpleviewer.cpp:232
+msgid "Export canceled"
+msgstr "Η εξαγωγή ακυρώθηκε"
+
+#: simpleviewer.cpp:243
+msgid "Failed to create export directories"
+msgstr "Αποτυχία δημιουργίας των καταλόγων εξαγωγής"
+
+#: simpleviewer.cpp:250
+msgid "Failed to export the images"
+msgstr "Αποτυχία εξαγωγής των εικόνων"
+
+#: simpleviewer.cpp:257
+msgid "Failed to create index.html"
+msgstr "Αποτυχία δημιουργίας index.html"
+
+#: simpleviewer.cpp:264
+msgid "Failed to copy SimpleViewer files"
+msgstr "Αποτυχία αντιγραφής των αρχείου SimpleViewer"
+
+#: simpleviewer.cpp:271
+msgid "Failed to upload the gallery"
+msgstr "Αποτυχία αποστολής της συλλογής"
+
+#: simpleviewer.cpp:279
+#, fuzzy, kde-format
+#| msgid ""
+#| "Export was canceled.\n"
+#| "Do you want to delete the yet created files in %1 ?"
+msgid ""
+"Export was canceled.\n"
+"Do you want to delete files in %1 that have already been created?"
+msgstr ""
+"Η εξαγωγή ακυρώθηκε.\n"
+"Επιθυμείτε τη διαγραφή των δημιουργημένων αρχείων στο %1 ;"
+
+#: simpleviewer.cpp:289
+msgctxt "Flash export has finished"
+msgid "Finished..."
+msgstr "Ολοκληρώθηκε..."
+
+#: simpleviewer.cpp:302
+msgid "Creating directories..."
+msgstr "Δημιουργία καταλόγων..."
+
+#: simpleviewer.cpp:307 simpleviewer.cpp:316 simpleviewer.cpp:325
+#, kde-format
+msgid "Could not create folder '%1'"
+msgstr "Αδύνατη η δημιουργία του φακέλου '%1'"
+
+#: simpleviewer.cpp:340
+msgid "Creating images and thumbnails..."
+msgstr "Δημιουργία εικόνων και επισκοπήσεων..."
+
+#: simpleviewer.cpp:397
+#, kde-format
+msgid "Processing %1"
+msgstr "Γίνεται επεξεργασία του %1"
+
+#: simpleviewer.cpp:408
+#, kde-format
+msgid "Could not open image '%1'"
+msgstr "Αδύνατο το άνοιγμα της εικόνας '%1'"
+
+#: simpleviewer.cpp:415
+#, kde-format
+msgid "Could not create thumbnail from '%1'"
+msgstr "Αδύνατη η δημιουργία επισκόπησης από την εικόνα '%1'"
+
+#: simpleviewer.cpp:422
+#, kde-format
+msgid "Could not resize image '%1'"
+msgstr "Αδύνατη η αλλαγή μεγέθους της εικόνας '%1'"
+
+#: simpleviewer.cpp:550
+msgid "Creating index.html..."
+msgstr "Δημιουργία index.html..."
+
+#: simpleviewer.cpp:579
+msgid "index.html created..."
+msgstr "το index.html δημιουργήθηκε..."
+
+#: simpleviewer.cpp:589
+msgid "Copying flash files..."
+msgstr "Αντιγραφή αρχείων flash..."
+
+#: simpleviewer.cpp:622
+msgid "Flash files copied..."
+msgstr "Η αντιγραφή αρχείων flash ολοκληρώθηκε..."
+
+#: simpleviewer.cpp:632
+msgid "Uploading gallery..."
+msgstr "Αποστολή συλλογής..."
+
+#: simpleviewer.cpp:637
+msgid "Gallery uploaded..."
+msgstr "Η συλλογή έχει αποσταλεί..."
+
+#: svedialog.cpp:102
+msgctxt "Settings tab for selections"
+msgid "Selection"
+msgstr "Επιλογή"
+
+#: svedialog.cpp:103
+msgid "Collections List"
+msgstr "Λίστα συλλογών"
+
+#: svedialog.cpp:107
+msgctxt "General settings tab"
+msgid "General"
+msgstr "Γενικά"
+
+#: svedialog.cpp:108
+msgid "General Settings"
+msgstr "Γενικές ρυθμίσεις"
+
+#: svedialog.cpp:113
+msgctxt "Settings tab for the look of the flash export"
+msgid "Look"
+msgstr "Εμφάνιση"
+
+#: svedialog.cpp:114
+msgid "Look Settings"
+msgstr "Ρυθμίσεις εμφάνισης"
+
+#: svedialog.cpp:227
+msgid "You must select at least one collection to export."
+msgstr "Πρέπει να επιλέξετε τουλάχιστον μια συλλογή για εξαγωγή."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Σπύρος Γεωργαράς, Τούσης Μανώλης"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sng@hellug.gr, manolis@koppermind.homelinux.org"
+
+#~ msgid "Flash Export..."
+#~ msgstr "Εξαγωγή Flash..."

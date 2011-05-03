@@ -1,0 +1,300 @@
+# translation of kipiplugin_timeadjust.po to Ukrainian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_timeadjust\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-01-25 03:02+0100\n"
+"PO-Revision-Date: 2010-07-30 19:23+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <translation@linux.org.ua>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: clockphotodialog.cpp:169
+msgid "Determine time difference with clock photo"
+msgstr "Визначити відхилення часу за фото з годинником"
+
+#: clockphotodialog.cpp:171
+msgid "Load different photo"
+msgstr "Завантажити іншу фотографію"
+
+#: clockphotodialog.cpp:181
+msgid ""
+"If you have a photo in your set with a clock or another external time source "
+"on it, you can load it here and set the indicator to the (date and) time "
+"displayed. The difference of your internal camera clock will be determined "
+"from this setting."
+msgstr ""
+"Якщо у вас є фотографія з годинником або іншим зовнішнім джерелом часу на "
+"ній, ви можете завантажити її сюди і встановити (дату і) час на цій "
+"фотографії. За вказаними даними програма визначить відхилення годинника "
+"фотоапарата."
+
+#: clockphotodialog.cpp:210
+msgid "Scale:"
+msgstr "Масштаб:"
+
+#: clockphotodialog.cpp:230
+msgid "The clock date and time:"
+msgstr "Дата і час на годиннику:"
+
+#: clockphotodialog.cpp:321
+#, kde-format
+msgid ""
+"<font color=\"red\"><b>Could not obtain date and time information from image "
+"%1.</b></font>"
+msgstr ""
+"<font color=\"red\"><b>Не вдалося отримати даних щодо дати і часу з "
+"зображення %1.</b></font>"
+
+#: clockphotodialog.cpp:333
+#, kde-format
+msgid "<font color=\"red\"><b>Could not load image %1.</b></font>"
+msgstr ""
+"<font color=\"red\"><b>Не вдалося завантажити зображення %1.</b></font>"
+
+#: plugin_timeadjust.cpp:65
+msgid "Adjust Time && Date..."
+msgstr "Налаштувати час і дату..."
+
+#: timeadjustdialog.cpp:183 timeadjustdialog.cpp:921 timeadjustdialog.cpp:930
+msgid "Adjust Time & Date"
+msgstr "Налаштувати час і дату"
+
+#: timeadjustdialog.cpp:191
+msgid "Time Adjust"
+msgstr "Налаштування часу"
+
+#: timeadjustdialog.cpp:194
+msgid "A Kipi plugin for adjusting the timestamp of picture files"
+msgstr "Додаток Kipi для налаштування часових штампів файлів знімків"
+
+#: timeadjustdialog.cpp:195
+msgid ""
+"(c) 2003-2005, Jesper K. Pedersen\n"
+"(c) 2006-2009, Gilles Caulier"
+msgstr ""
+"© Jesper K. Pedersen, 2003-2005,\n"
+"© Gilles Caulier, 2006-2009"
+
+#: timeadjustdialog.cpp:198
+msgid "Jesper K. Pedersen"
+msgstr "Jesper K. Pedersen"
+
+#: timeadjustdialog.cpp:199
+msgid "Author"
+msgstr "Автор"
+
+#: timeadjustdialog.cpp:202
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: timeadjustdialog.cpp:203
+msgid "Developer and maintainer"
+msgstr "Розробник і супровідник"
+
+#: timeadjustdialog.cpp:211
+msgid "Handbook"
+msgstr "Підручник"
+
+#: timeadjustdialog.cpp:219
+msgid "Use Time && Date"
+msgstr "Використовувати час і дату"
+
+#: timeadjustdialog.cpp:225
+#, kde-format
+msgid "%1 timestamp"
+msgstr "Часова мітка %1"
+
+#: timeadjustdialog.cpp:233 timeadjustdialog.cpp:310
+msgid "File last modified"
+msgstr "Останні зміни у файлі"
+
+#: timeadjustdialog.cpp:237
+msgid "EXIF/IPTC/XMP"
+msgstr "EXIF/IPTC/XMP"
+
+#: timeadjustdialog.cpp:238 timeadjustdialog.cpp:311
+msgid "EXIF: created"
+msgstr "EXIF: створено"
+
+#: timeadjustdialog.cpp:239 timeadjustdialog.cpp:312
+msgid "EXIF: original"
+msgstr "EXIF: початковий"
+
+#: timeadjustdialog.cpp:240 timeadjustdialog.cpp:313
+msgid "EXIF: digitized"
+msgstr "EXIF: оцифровано"
+
+#: timeadjustdialog.cpp:241 timeadjustdialog.cpp:314
+msgid "IPTC: created"
+msgstr "IPTC: створено"
+
+#: timeadjustdialog.cpp:242
+msgid "XMP: created"
+msgstr "XMP: створено"
+
+#: timeadjustdialog.cpp:252
+msgid "Reset to current date"
+msgstr "Встановити поточну дату"
+
+#: timeadjustdialog.cpp:278
+msgid "Adjust"
+msgstr "Скоригувати"
+
+#: timeadjustdialog.cpp:282
+msgid "Copy value"
+msgstr "Копіювати значення"
+
+#: timeadjustdialog.cpp:283
+msgid "Add"
+msgstr "Додати"
+
+#: timeadjustdialog.cpp:284
+msgid "Subtract"
+msgstr "Відняти"
+
+#: timeadjustdialog.cpp:288
+msgctxt "time adjust offset, days value label"
+msgid "days"
+msgstr "днів"
+
+#: timeadjustdialog.cpp:291
+msgid "Determine from clock photo"
+msgstr "Визначити за фото з годинником"
+
+#: timeadjustdialog.cpp:306
+msgid "Update Time && Date"
+msgstr "Оновити час і дату"
+
+#: timeadjustdialog.cpp:315
+msgid "XMP"
+msgstr "XMP"
+
+#: timeadjustdialog.cpp:337
+msgid "Example"
+msgstr "Приклад"
+
+#: timeadjustdialog.cpp:515 timeadjustdialog.cpp:546 timeadjustdialog.cpp:572
+#: timeadjustdialog.cpp:632
+#, kde-format
+msgid "1 image will be changed"
+msgid_plural "%1 images will be changed"
+msgstr[0] "%1 зображення буде змінено"
+msgstr[1] "%1 зображень буде змінено"
+msgstr[2] "%1 зображень буде змінено"
+msgstr[3] "Одне зображення буде змінено"
+
+#: timeadjustdialog.cpp:552 timeadjustdialog.cpp:638
+#, kde-format
+msgid "1 image will be changed; "
+msgid_plural "%1 images will be changed; "
+msgstr[0] "Буде змінено %1 зображення; "
+msgstr[1] "Буде змінено %1 зображень; "
+msgstr[2] "Буде змінено %1 зображень; "
+msgstr[3] "Буде змінено одне зображення; "
+
+#: timeadjustdialog.cpp:556
+#, kde-format
+msgid "1 image will be skipped due to an inexact date."
+msgid_plural "%1 images will be skipped due to inexact dates."
+msgstr[0] "%1 зображення буде пропущено через неточну дату."
+msgstr[1] "%1 зображень буде пропущено через неточну дату."
+msgstr[2] "%1 зображень буде пропущено через неточну дату."
+msgstr[3] "Одне зображення буде пропущено через неточну дату."
+
+#: timeadjustdialog.cpp:642
+#, kde-format
+msgid "1 image will be skipped due to a missing source timestamp."
+msgid_plural "%1 images will be skipped due to missing source timestamps."
+msgstr[0] "%1 зображення буде пропущено через відсутність часової мітки."
+msgstr[1] "%1 зображення буде пропущено через відсутність часової мітки."
+msgstr[2] "%1 зображень буде пропущено через відсутність часової мітки."
+msgstr[3] "%1 зображення буде пропущено через відсутність часової мітки."
+
+#: timeadjustdialog.cpp:739
+#, kde-format
+msgid "Custom: <b>%1</b>"
+msgstr "Нетиповий: <b>%1</b>"
+
+#: timeadjustdialog.cpp:755
+msgid "Original: <b>N/A</b><br/>Image will be skipped"
+msgstr "Початковий: <b>не вказано</b><br/>Зображення буде пропущено"
+
+#: timeadjustdialog.cpp:764
+#, kde-format
+msgid "Original: <b>%1</b>"
+msgstr "Початковий: <b>%1</b>"
+
+#: timeadjustdialog.cpp:771
+#, kde-format
+msgid "Original: <b>%1</b><br/>Adjusted: <b>%2</b>"
+msgstr "Початковий: <b>%1</b><br/>Скоригований: <b>%2</b>"
+
+#: timeadjustdialog.cpp:919
+msgid "Unable to update metadata in:"
+msgstr "Не вдалося оновити метадані у:"
+
+#: timeadjustdialog.cpp:928
+msgid "Unable to update file modification time in:"
+msgstr "Не вдалося оновити час зміни файла у:"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#~ msgid "Adjustment Type"
+#~ msgstr "Тип налаштування"
+
+#~ msgid "Set file date to EXIF/IPTC/XMP creation date"
+#~ msgstr "Встановити дату файла у дату створення EXIF/IPTC/XMP"
+
+#~ msgid "Custom date"
+#~ msgstr "Нетипова дата"
+
+#~ msgid "Update EXIF creation date"
+#~ msgstr "Оновити поле дати створення EXIF"
+
+#~ msgid "Update IPTC creation date"
+#~ msgstr "Оновити поле дати створення IPTC"
+
+#~ msgid "Update XMP creation date"
+#~ msgstr "Оновити поле дати створення XMP"
+
+#~ msgid "Adjustments"
+#~ msgstr "Налаштування"
+
+#~ msgid "Hours:"
+#~ msgstr "Годин:"
+
+#~ msgid "Minutes:"
+#~ msgstr "Хвилин:"
+
+#~ msgid "Seconds:"
+#~ msgstr "Секунд:"
+
+#~ msgid "Months:"
+#~ msgstr "Місяців:"
+
+#~ msgid "Years:"
+#~ msgstr "Років:"
+
+#~ msgid "<b>%1</b><br/>would, for example, change into<br/><b>%2</b>"
+#~ msgstr "<b>%1</b><br/>буде, наприклад, змінено на<br/><b>%2</b>"
+
+#~ msgid "Unable to set date and time like picture metadata from:"
+#~ msgstr "Не вдалося встановити дату і час, як метадані знімку, з:"

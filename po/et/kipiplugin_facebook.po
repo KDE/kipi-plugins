@@ -1,0 +1,448 @@
+# translation of kipiplugin_fb.po to Estonian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marek Laane <bald@smail.ee>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_fb\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-11-15 19:05+0200\n"
+"Last-Translator: Marek Laane <bald@smail.ee>\n"
+"Language-Team: Estonian <kde-et@linux.ee>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: facebookjob.cpp:109
+msgid "Photos taken with KDE"
+msgstr "KDE pildid"
+
+#: fbalbum.cpp:48
+msgid "Facebook New Album"
+msgstr "Facebooki uus album"
+
+#: fbalbum.cpp:61
+msgid "Title of the album that will be created (required)."
+msgstr "Loodava albumi nimi (nõutav)."
+
+#: fbalbum.cpp:65
+msgid "Location of the album that will be created (optional)."
+msgstr "Loodava albumi asukoht (pole kohustuslik)."
+
+#: fbalbum.cpp:69
+msgid "Description of the album that will be created (optional)."
+msgstr "Loodava albumi kirjeldus (pole kohustuslik)."
+
+#: fbalbum.cpp:74
+msgid "Privacy setting of the album that will be created (required)."
+msgstr "Loodava albumi privaatsusseadistused (nõutav)."
+
+#: fbalbum.cpp:76
+msgid "Only Friends"
+msgstr "Ainult Sõbrad"
+
+#: fbalbum.cpp:78
+msgid "Friends of Friends"
+msgstr "Sõprade sõbrad"
+
+#: fbalbum.cpp:80
+msgid "My Networks and Friends"
+msgstr "Minu võrgud ja sõbrad"
+
+#: fbalbum.cpp:82
+msgid "Everyone"
+msgstr "Kõik"
+
+#: fbalbum.cpp:85
+msgctxt "new facebook album"
+msgid "Title:"
+msgstr "Nimi:"
+
+#: fbalbum.cpp:86
+msgctxt "new facebook album"
+msgid "Location:"
+msgstr "Asukoht:"
+
+#: fbalbum.cpp:87
+msgctxt "new facebook album"
+msgid "Description:"
+msgstr "Kirjeldus:"
+
+#: fbalbum.cpp:88
+msgctxt "new facebook album"
+msgid "Privacy:"
+msgstr "Privaatsus:"
+
+#: fbtalker.cpp:178
+msgid "Validate previous session..."
+msgstr "Eelmise seansi valideerimine..."
+
+#: fbtalker.cpp:198
+msgid "Logging in to Facebook service..."
+msgstr "Facebooki teenusele sisselogimine..."
+
+#: fbtalker.cpp:389
+msgid ""
+"Please follow the instructions in the browser window. Press \"OK\" when done."
+msgstr ""
+"Palun järgi brauseris ilmuvaid juhiseid. Kui oled valmis, klõpsa \"OK\"."
+
+#: fbtalker.cpp:391
+msgid "Facebook Application Authorization"
+msgstr "Facebooki rakenduse autentimine"
+
+#: fbtalker.cpp:706
+msgid "The service is not available at this time."
+msgstr "Teenus ei ole praegu kättesaadav."
+
+#: fbtalker.cpp:709
+msgid "The application has reached the maximum number of requests allowed."
+msgstr "Rakendusele esitatavate päringute lubatud arv on täis."
+
+#: fbtalker.cpp:712
+msgid "Invalid session key or session expired. Try to log in again."
+msgstr "Vigane seansovõti või on seanss aegunud. Proovi uuesti sisse logida."
+
+#: fbtalker.cpp:715
+msgid "Invalid album ID."
+msgstr "Vigane albumi ID."
+
+#: fbtalker.cpp:718
+msgid "Album is full."
+msgstr "Album on täis."
+
+#: fbtalker.cpp:721
+msgid "Missing or invalid file."
+msgstr "Puuduv või vigane fail."
+
+#: fbtalker.cpp:724
+msgid "Too many unapproved photos pending."
+msgstr "Liiga palju heaks kiitmata fotosid ootel."
+
+#: fbtalker.cpp:884
+msgid ""
+"Please follow the instructions in the browser window. Press \"Yes\" if you "
+"have authenticated and \"No\" if you failed."
+msgstr ""
+"Palun järgi brauseris ilmuvaid juhiseid. Klõpsa \"Jah\", kui oled end "
+"autentinud, või \"Ei\", kui see nurjub."
+
+#: fbtalker.cpp:886
+msgid "Facebook Service Web Authorization"
+msgstr "Facebooki teenuse veebiautentimine"
+
+#: fbtalker.cpp:895
+msgid "Canceled by user."
+msgstr "Kasutaja katkestas."
+
+#: fbwidget.cpp:72
+msgid "This is the list of images to upload to your Facebook account."
+msgstr "Sinu Facebooki kontosse üles laaditavate piltide nimekiri."
+
+#: fbwidget.cpp:79
+msgid ""
+"This is a clickable link to open the Facebook home page in a web browser."
+msgstr "Klõpsatav link Facebooki kodulehekülje avamiseks veebibrauseris."
+
+#: fbwidget.cpp:85
+msgid "Account"
+msgstr "Konto"
+
+#: fbwidget.cpp:87
+msgid "This is the Facebook account that is currently logged in."
+msgstr "Facebooki konto, millesse oled praegu sisse loginud."
+
+#: fbwidget.cpp:90
+msgctxt "facebook account settings"
+msgid "Name:"
+msgstr "Nimi:"
+
+#: fbwidget.cpp:92
+msgid "Permission:"
+msgstr "Õigused:"
+
+#: fbwidget.cpp:94
+msgid ""
+"Permission of KIPI Plugin application to upload photos directly. If not, "
+"user will need to manually approve uploaded photos in Facebook."
+msgstr ""
+"KIPI plugina rakenduse õigus fotode otseüleslaadimiseks. Kui see puudub, "
+"peab kasutaja Facebooki laaditud pildid käsitsi heaks kiitma."
+
+#: fbwidget.cpp:97
+msgid "Change Account"
+msgstr "Muuda kontot"
+
+#: fbwidget.cpp:98
+msgid "Logout and change Facebook Account used for transfer"
+msgstr "Logi välja ja muuda edastuseks kasutatavat Facebooki kontot"
+
+#: fbwidget.cpp:101
+msgid "Change Permission"
+msgstr "Muuda õigusi"
+
+#: fbwidget.cpp:102
+msgid "Change permission for KIPI application for photo upload"
+msgstr "KIPI rakenduse õiguste muutmine fotode üleslaadimiseks"
+
+#: fbwidget.cpp:119
+msgid "Download Selection"
+msgstr "Laadi valik alla"
+
+#: fbwidget.cpp:121
+msgid "This is the selection of Facebook albums/photos to download."
+msgstr "Facebooki allalaaditavate albumite/fotode valik."
+
+#: fbwidget.cpp:125 fbwidget.cpp:178
+msgid "Destination"
+msgstr "Sihtkoht"
+
+#: fbwidget.cpp:127
+msgid "This is the Facebook album to which selected photos will be uploaded."
+msgstr "Facebooki album, kuhu laaditakse valitud fotod."
+
+#: fbwidget.cpp:131
+msgid "My &Album"
+msgstr "Minu &album"
+
+#: fbwidget.cpp:133
+msgid "Download complete album of currently logged in user."
+msgstr "Kogu sisselogitud kasutaja albumi allalaadimine."
+
+#: fbwidget.cpp:134
+msgid "Album &of My Friend"
+msgstr "Minu sõ&bra album"
+
+#: fbwidget.cpp:136
+msgid "Download complete album of selected friend."
+msgstr "Kogu valitud sõbra albumi allalaadimine."
+
+#: fbwidget.cpp:137
+msgid "Photos of &Me"
+msgstr "&Minu fotod"
+
+#: fbwidget.cpp:139
+msgid "Download all photos of currently logged in user."
+msgstr "Kõigi sisselogitud kasutaja fotode allalaadimine."
+
+#: fbwidget.cpp:140
+msgid "Photos of My &Friend"
+msgstr "Minu sõ&bra fotod"
+
+#: fbwidget.cpp:142
+msgid "Download all photos of selected friend."
+msgstr "Kõigi valitud sõbra fotode allalaadimine."
+
+#: fbwidget.cpp:150
+msgid "Friend:"
+msgstr "Sõber:"
+
+#: fbwidget.cpp:154
+msgid "Album:"
+msgstr "Album:"
+
+#: fbwidget.cpp:159
+msgid "New Album"
+msgstr "Uus Album"
+
+#: fbwidget.cpp:160
+msgid "Create new Facebook album"
+msgstr "Uue Facebooki albumi loomine"
+
+#: fbwidget.cpp:162
+msgctxt "facebook album list"
+msgid "Reload"
+msgstr "Laadi uuesti"
+
+#: fbwidget.cpp:163
+msgid "Reload album list"
+msgstr "Albumite nimekirja taaslaadimine"
+
+#: fbwidget.cpp:180
+msgid "This is the location to which Facebook images will be downloaded."
+msgstr "Asukoht, kuhu laaditakse Facebooki pildid."
+
+#: fbwidget.cpp:187
+msgid "Options"
+msgstr "Valikud"
+
+#: fbwidget.cpp:189
+msgid "These are options that will be applied to photos before upload."
+msgstr "Fotodele enne üleslaadimist rakendatavad valikud."
+
+#: fbwidget.cpp:193
+msgid "Resize photos before uploading"
+msgstr "Fotode suuruse muutmine enne üleslaadimist"
+
+#: fbwidget.cpp:203
+msgid "Maximum dimension:"
+msgstr "Maksimummõõtmed:"
+
+#: fbwidget.cpp:211
+msgid "JPEG quality:"
+msgstr "JPEG kvaliteet:"
+
+#: fbwidget.cpp:326
+msgid "Direct upload"
+msgstr "Otseüleslaadimine"
+
+#: fbwidget.cpp:328
+msgid "Uploaded photos will not need manual approval by user."
+msgstr "Üleslaaditud fotod ei vaja kasutaja käsitsi antud heakskiitu."
+
+#: fbwidget.cpp:332
+msgid "Manual upload approval"
+msgstr "Käsitsi üleslaadimise heakskiitmine"
+
+#: fbwidget.cpp:334
+msgid ""
+"Uploaded photos will wait in pending state until manually approved by user."
+msgstr ""
+"Üleslaaditud pildid jäävad ootele, kuni kasutaja annab käsitsi heakskiidu."
+
+#: fbwindow.cpp:93
+msgid "Import from Facebook Web Service"
+msgstr "Import Facebooki veebiteenusest"
+
+#: fbwindow.cpp:95
+msgid "Start Download"
+msgstr "Alusta allalaadimist"
+
+#: fbwindow.cpp:96
+msgid "Start download from Facebook web service"
+msgstr "Allalaadimise alustamine Facebooki veebiteenusest"
+
+#: fbwindow.cpp:101
+msgid "Export to Facebook Web Service"
+msgstr "Eksport Facebooki veebiteenusesse"
+
+#: fbwindow.cpp:103
+msgid "Start Upload"
+msgstr "Alusta üleslaadimist"
+
+#: fbwindow.cpp:104
+msgid "Start upload to Facebook web service"
+msgstr "Üleslaadimise alustamine Facebooki veebiteenusesse"
+
+#: fbwindow.cpp:130
+msgid "Facebook Import/Export"
+msgstr "Facebooki import/eksport"
+
+#: fbwindow.cpp:132
+msgid ""
+"A Kipi plugin to import/export image collection to/from Facebook web service."
+msgstr ""
+"Kipi plugin pildikogu importimiseks/eksportimiseks Facebooki veebiteenusesse)"
+"veebiteenusest."
+
+#: fbwindow.cpp:134
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2008-2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008: Vardhman Jain\n"
+"(c) 2008-2009: Gilles Caulier\n"
+"(c) 2008-2009: Luka Renko"
+
+#: fbwindow.cpp:138
+msgid "Luka Renko"
+msgstr "Luka Renko"
+
+#: fbwindow.cpp:138
+msgid "Author and maintainer"
+msgstr "Autor ja hooldaja"
+
+#: fbwindow.cpp:146
+msgid "Handbook"
+msgstr "Käsiraamat"
+
+#: fbwindow.cpp:343 fbwindow.cpp:402
+msgid "&lt;auto create&gt;"
+msgstr "&lt;automaatloomine&gt;"
+
+#: fbwindow.cpp:358 fbwindow.cpp:371 fbwindow.cpp:388 fbwindow.cpp:436
+#: fbwindow.cpp:463
+#, kde-format
+msgid "Facebook Call Failed: %1\n"
+msgstr "Facebooki väljakutse nurjus: %1\n"
+
+#: fbwindow.cpp:397
+msgctxt "name of special Facebook album for profile pictures"
+msgid "Profile Pictures"
+msgstr "Profiilipildid"
+
+#: fbwindow.cpp:560 fbwindow.cpp:581
+msgid "%v / %m"
+msgstr "%v / %m"
+
+#: fbwindow.cpp:709 fbwindow.cpp:728
+msgid "Cannot open file"
+msgstr "Faili avamine nurjus"
+
+#: fbwindow.cpp:752
+#, kde-format
+msgid ""
+"Failed to upload photo into Facebook: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Foto üleslaadimine Facebooki nurjus: %1\n"
+"Kas jätkata?"
+
+#: fbwindow.cpp:811
+#, kde-format
+msgid ""
+"Failed to save photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Foto salvestamine nurjus: %1\n"
+"Kas jätkata?"
+
+#: fbwindow.cpp:824
+#, kde-format
+msgid ""
+"Failed to download photo: %1\n"
+"Do you want to continue?"
+msgstr ""
+"Foto allalaadimine nurjus: %1\n"
+"Kas jätkata?"
+
+#: fbwindow.cpp:841
+#, kde-format
+msgid "Facebook Call Failed: %1"
+msgstr "Facebooki väljakutse nurjus: %1"
+
+#: plugin_facebook.cpp:78
+msgid "Export to &Facebook..."
+msgstr "Ekspordi &Facebooki..."
+
+#: plugin_facebook.cpp:88
+msgid "Import from &Facebook..."
+msgstr "Impordi &Facebookist..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "bald@smail.ee"
+
+#~ msgid "Authentication"
+#~ msgstr "Autentimine"
+
+#~ msgid "Transfer Progress"
+#~ msgstr "Edenemine"
+
+#~ msgid "Uploading file %1"
+#~ msgstr "Faili %1 üleslaadimine"
+
+#~ msgid "Downloading file %1"
+#~ msgstr "Faili %1 allalaadimine"

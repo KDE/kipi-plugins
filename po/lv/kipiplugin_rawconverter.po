@@ -1,0 +1,309 @@
+# translation of kipiplugin_rawconverter.po to Latvian
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Viesturs Zarins <viesturs.zarins@mii.lu.lv>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rawconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2008-11-09 21:26+0200\n"
+"Last-Translator: Viesturs Zarins <viesturs.zarins@mii.lu.lv>\n"
+"Language-Team: Latvian <locale@laka.lv>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.2\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: dialogs/batchdialog.cpp:148 dialogs/singledialog.cpp:203
+#, fuzzy
+#| msgid "Exit Raw Converter"
+msgid "Exit RAW Converter"
+msgstr "Iziet no Raw pārveidotāja"
+
+#: dialogs/batchdialog.cpp:149
+#, fuzzy
+#| msgid "Raw Images Batch Converter"
+msgid "RAW Image Batch Converter"
+msgstr "Raw attēlu masveida pārveidotājs"
+
+#: dialogs/batchdialog.cpp:152
+msgid "&Add"
+msgstr "&Pievienot"
+
+#: dialogs/batchdialog.cpp:153
+#, fuzzy
+#| msgid "Add new Raw files to the list"
+msgid "Add new RAW files to the list"
+msgstr "Pievienot sarakstam Raw failus"
+
+#: dialogs/batchdialog.cpp:155
+msgid "&Remove"
+msgstr "&Izņemt"
+
+#: dialogs/batchdialog.cpp:156
+#, fuzzy
+#| msgid "Remove selected Raw files from the list"
+msgid "Remove selected RAW files from the list"
+msgstr "Izņemt izvēlētos Raw failus no saraksta"
+
+#: dialogs/batchdialog.cpp:175
+msgid "Thumbnail"
+msgstr "Sīktēls"
+
+#: dialogs/batchdialog.cpp:176
+#, fuzzy
+#| msgid "Raw File"
+msgid "RAW File"
+msgstr "RAW fails"
+
+#: dialogs/batchdialog.cpp:177
+msgid "Target File"
+msgstr "Mērķa fails"
+
+#: dialogs/batchdialog.cpp:178
+msgid "Camera"
+msgstr "Fotoaparāts"
+
+#: dialogs/batchdialog.cpp:195 dialogs/batchdialog.cpp:199
+#: dialogs/singledialog.cpp:148 dialogs/singledialog.cpp:151
+msgid "Save settings"
+msgstr "Saglabāt iestatījumus"
+
+#: dialogs/batchdialog.cpp:220 dialogs/singledialog.cpp:130
+#: dialogs/singledialog.cpp:166
+msgid "RAW Image Converter"
+msgstr "RAW attēlu pārveidotājs"
+
+#: dialogs/batchdialog.cpp:223
+#, fuzzy
+#| msgid "A Kipi plugin to batch convert Raw images"
+msgid "A Kipi plugin to batch convert RAW images"
+msgstr "Kipi spraudnis Raw attēlu masveida pārveidošanai"
+
+#: dialogs/batchdialog.cpp:224 dialogs/singledialog.cpp:170
+#, fuzzy
+#| msgid ""
+#| "(c) 2003-2005, Renchi Raju\n"
+#| "(c) 2006-2008, Gilles Caulier"
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2008, Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:227 dialogs/singledialog.cpp:173
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/batchdialog.cpp:228 dialogs/singledialog.cpp:174
+msgid "Author"
+msgstr "Autors"
+
+#: dialogs/batchdialog.cpp:231 dialogs/singledialog.cpp:177
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:232 dialogs/singledialog.cpp:178
+msgid "Developer and maintainer"
+msgstr "Izstrādātājs un uzturētājs"
+
+#: dialogs/batchdialog.cpp:240 dialogs/singledialog.cpp:186
+#, fuzzy
+#| msgid "Plugin Handbook"
+msgid "Handbook"
+msgstr "Spraudņa rokasgrāmata"
+
+#: dialogs/batchdialog.cpp:388
+#, fuzzy
+#| msgid "There is no Raw file to process in the list!"
+msgid "There is no RAW file in the list to process."
+msgstr "Sarakstā nav neviena Raw faila ko apstrādāt!"
+
+#: dialogs/batchdialog.cpp:579 dialogs/singledialog.cpp:129
+msgid "&Abort"
+msgstr "&Pārtraukt"
+
+#: dialogs/batchdialog.cpp:580 dialogs/singledialog.cpp:201
+#, fuzzy
+#| msgid "Abort the current Raw file conversion"
+msgid "Abort the current RAW file conversion"
+msgstr "Pārtraukt aktīvo Raw failu pārveidošanu"
+
+#: dialogs/batchdialog.cpp:585 dialogs/singledialog.cpp:128
+msgid "Con&vert"
+msgstr "Pār&veidot"
+
+#: dialogs/batchdialog.cpp:586
+#, fuzzy
+#| msgid "Start converting the Raw images from current settings"
+msgid "Start converting the RAW images using current settings."
+msgstr "Sākt Raw attēlu pārveidošanu, izmantojot aktīvos iestatījumus"
+
+#: dialogs/batchdialog.cpp:636 dialogs/singledialog.cpp:437
+#, fuzzy, kde-format
+#| msgid "Save Raw Image converted from '%1' as"
+msgid "Save RAW image converted from '%1' as"
+msgstr "Saglabāt Raw attēlu no '%1' kā"
+
+#: dialogs/batchdialog.cpp:665 dialogs/singledialog.cpp:464
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "Neizdevās saglabāt attēlu %1"
+
+#: dialogs/singledialog.cpp:127
+msgid "&Preview"
+msgstr "&Priekšskatījums"
+
+#: dialogs/singledialog.cpp:169
+#, fuzzy
+#| msgid "A Kipi plugin to convert a Raw image"
+msgid "A Kipi plugin to convert RAW images"
+msgstr "Kipi spraudnis Raw attēlu pārveidošanai"
+
+#: dialogs/singledialog.cpp:194
+#, fuzzy
+#| msgid ""
+#| "Generate a Preview from current settings. Uses a simple bilinear "
+#| "interpolation for quick results."
+msgid ""
+"Generate a preview using current settings. Uses a simple bilinear "
+"interpolation for quick results."
+msgstr ""
+"Izveido priekšskatījumu, izmantojot aktīvos iestatījumus. Izmanto vienkāršu "
+"bilineāru interpolāciju ātrai rezultātu iegūšanai."
+
+#: dialogs/singledialog.cpp:198
+#, fuzzy
+#| msgid ""
+#| "Convert the Raw Image from current settings. This uses a high-quality "
+#| "adaptive algorithm."
+msgid ""
+"Convert the RAW Image using current settings. This uses a high-quality "
+"adaptive algorithm."
+msgstr ""
+"Pārviedo Raw attēlu, izmantojot aktīvos iestatījumus. Šis izmanto augstas "
+"kvalitātes algoritmu."
+
+#: dialogs/singledialog.cpp:387
+msgid "Generating Preview..."
+msgstr "Ģenerē priekšapskati..."
+
+#: dialogs/singledialog.cpp:398
+msgid "Failed to generate preview"
+msgstr "Neizdevās izveidot priekšapskati"
+
+#: dialogs/singledialog.cpp:403
+#, fuzzy
+#| msgid "Converting Raw Image..."
+msgid "Processing Images..."
+msgstr "Pārveido Raw attēlu..."
+
+#: dialogs/singledialog.cpp:480
+#, fuzzy
+#| msgid "Failed to convert Raw image"
+msgid "Failed to convert RAW image"
+msgstr "Neizdevās pārveidot Raw attēlu"
+
+#: manager/actionthread.cpp:234
+#, fuzzy
+#| msgid "Cannot identify Raw image"
+msgid "Cannot identify RAW image"
+msgstr "Nespēj identificēt Raw attēlu"
+
+#: manager/actionthread.cpp:241
+#, fuzzy, kde-format
+#| msgid "Make: %1\n"
+msgid "<br>Make: %1<br>"
+msgstr "Ražotājs: %1\n"
+
+#: manager/actionthread.cpp:242
+#, fuzzy, kde-format
+#| msgid "Model: %1\n"
+msgid "Model: %1<br>"
+msgstr "Modelis: %1\n"
+
+#: manager/actionthread.cpp:246
+#, fuzzy, kde-format
+#| msgid "Created: %1\n"
+msgid "Created: %1<br>"
+msgstr "Izveidojis: %1\n"
+
+#: manager/actionthread.cpp:253
+#, fuzzy, kde-format
+#| msgid "Aperture: f/%1\n"
+msgid "Aperture: f/%1<br>"
+msgstr "Atvērtums: f/%1\n"
+
+#: manager/actionthread.cpp:258
+#, fuzzy, kde-format
+#| msgid "Focal: %1 mm\n"
+msgid "Focal: %1 mm<br>"
+msgstr "Fokuss: %1 mm\n"
+
+#: manager/actionthread.cpp:263
+#, fuzzy, kde-format
+#| msgid "Exposure: 1/%1 s\n"
+msgid "Exposure: 1/%1 s<br>"
+msgstr "Ekspozīcija: 1/%1 s\n"
+
+#: manager/actionthread.cpp:268
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Jutība: %1 ISO"
+
+#: plugin/plugin_rawconverter.cpp:81
+#, fuzzy
+#| msgid "RAW Image Converter"
+msgid "RAW Image Converter..."
+msgstr "RAW attēlu pārveidotājs"
+
+#: plugin/plugin_rawconverter.cpp:90
+#, fuzzy
+#| msgid "Batch Raw Converter..."
+msgid "Batch RAW Converter..."
+msgstr "Masveida Raw pārveidotājs..."
+
+#: plugin/plugin_rawconverter.cpp:154
+#, fuzzy, kde-format
+#| msgid "\"%1\" is not a Raw file."
+msgid "\"%1\" is not a RAW file."
+msgstr "\"%1\" nav Raw fails."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Viesturs Zariņš"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "viesturs.zarins@mi.lu.lv"
+
+#~ msgid "Failed to load image after processing"
+#~ msgstr "Neizdevās ielādēs attēlu pēc apstrādes"
+
+#~ msgid "Output file format:"
+#~ msgstr "Izvada faila formāts:"
+
+#~ msgid "If Target File Exists:"
+#~ msgstr "Ja mērķa fails pastāv:"
+
+#~ msgid "Overwrite automatically"
+#~ msgstr "Automātiski pārrakstīt"
+
+#~ msgid "Open rename-file dialog"
+#~ msgstr "Atvērt faila pārdēvēšanas logu"
+
+#~ msgid "Abort the current Raw files conversion"
+#~ msgstr "Pārtraukt aktīvo Raw failu pārveidošanu"
+
+#~ msgid "Raw Image Converter..."
+#~ msgstr "RAW attēlu pārveidotājs..."
+
+#~ msgid "Raw Image Converter"
+#~ msgstr "RAW attēlu pārveidotājs"

@@ -1,0 +1,138 @@
+# translation of kipiplugin_acquireimages.po to Thai
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Thanomsub Noppaburana <donga.nb@gmail.com>, 2008, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_acquireimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-11 03:22+0100\n"
+"PO-Revision-Date: 2010-03-03 20:49+0700\n"
+"Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
+"Language-Team: Thai <thai-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: aboutdata.h:39
+msgid "Acquire images"
+msgstr "นำเข้าภาพ"
+
+#: aboutdata.h:41
+#, fuzzy
+#| msgid "A Kipi plugin to acquire images using a flat scanner"
+msgid "A tool to acquire images using a flat scanner"
+msgstr "เครื่องมือนำเข้ารูปภาพโดยใช้เครื่องสแกนภาพแบบตั้งโต๊ะ"
+
+#: aboutdata.h:42
+#, fuzzy
+#| msgid "(c) 2008, Gilles Caulier"
+msgid "(c) 2003-2011, Gilles Caulier\n"
+msgstr "(c) 2008, Gilles Caulier"
+
+#: aboutdata.h:44
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: aboutdata.h:45
+msgid "Author"
+msgstr "ผู้เขียน"
+
+#: aboutdata.h:48
+msgid "Kare Sars"
+msgstr "Kare Sars"
+
+#: aboutdata.h:49 aboutdata.h:53
+msgid "Developer"
+msgstr "ผู้พัฒนา"
+
+#: aboutdata.h:52
+msgid "Angelo Naselli"
+msgstr "Angelo Naselli"
+
+#: plugin_acquireimages.cpp:75
+msgid "Import from Scanner..."
+msgstr "นำเข้าภาพจากเครื่องสแกนภาพ..."
+
+#: plugin_acquireimages.cpp:109 scangui.cpp:76
+msgid "Cannot open scanner device."
+msgstr "ไม่สามารถเปิดใช้อุปกรณ์สแกนภาพได้"
+
+#: scandialog.cpp:97
+msgid "Scan Image"
+msgstr "สแกนภาพ"
+
+#: scandialog.cpp:106
+msgid "Handbook"
+msgstr "คู่มือการใช้งาน"
+
+#: scandialog.cpp:185
+msgid "New Image File Name"
+msgstr "ชื่อแฟ้มของภาพใหม่"
+
+#: scandialog.cpp:220
+#, kde-format
+msgid "The target image file format \"%1\" is unsupported."
+msgstr "ไม่รองรับประเภทแฟ้ม \"%1\" ของแฟ้มเป้าหมาย"
+
+#: scandialog.cpp:229
+#, kde-format
+msgid ""
+"Failed to save file\n"
+"\"%1\" to\n"
+"\"%2\"."
+msgstr ""
+"ล้มเหลวในการบันทึกแฟ้ม\n"
+"\"%1\" ไปเป็น\n"
+"\"%2\""
+
+#: scandialog.cpp:241
+#, kde-format
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "มีแฟ้มที่ชื่อ \"%1\" อยู่ก่อนแล้ว คุณแน่ใจหรือไม่ว่า ต้องการจะเขียนทับมัน ?"
+
+#: scandialog.cpp:245
+msgid "Overwrite File?"
+msgstr "เขียนทับแฟ้มหรือไม่ ?"
+
+#: scandialog.cpp:273
+#, kde-format
+msgid "Cannot save \"%1\" file"
+msgstr "ไม่สามารถบันทึกแฟ้ม \"%1\" ได้"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ถนอมทรัพย์ นพบูรณ์"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "donga.nb@gmail.com"
+
+#, fuzzy
+#~| msgid ""
+#~| "(c) 2003-2008, Gilles Caulier\n"
+#~| "(c) 2007-2008, Kare Sars"
+#~ msgid ""
+#~ "(c) 2003-2009, Gilles Caulier\n"
+#~ "(c) 2007-2009, Kare Sars"
+#~ msgstr ""
+#~ "(c) 2003-2008, Gilles Caulier\n"
+#~ "(c) 2007-2008, Kare Sars"
+
+#~ msgid "Scan Images..."
+#~ msgstr "สแกนภาพ..."
+
+#~ msgid "Cannot acquire image..."
+#~ msgstr "ไม่สามารถนำเข้าภาพได้..."
+
+#~ msgid "Cannot handle parent windows..."
+#~ msgstr "ไม่สามารถจัดการกับหน้าต่างแม่ได้..."
+
+#~ msgid "A Kipi plugin to acquire images using a flat bed scanner"
+#~ msgstr "ปลั๊กอิน Kipi สำหรับนำเข้าภาพโดยใช้เครื่องสแกนภาพ"

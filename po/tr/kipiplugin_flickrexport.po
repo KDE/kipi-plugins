@@ -1,0 +1,607 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Serdar Soytetir <tulliana@gmail.com>, 2008, 2009.
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_flickrexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2011-04-26 09:06+0300\n"
+"Last-Translator: Ozan Çağlayan <ozan@pardus.org.tr>\n"
+"Language-Team: Turkish <yerellestirme@kde.org.tr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: tr\n"
+
+#: comboboxintermediate.h:53
+msgid "Various"
+msgstr "Çeşitli"
+
+#: flickrlist.cpp:390
+msgid ""
+"Check if photo should be publicly visible or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+
+#: flickrlist.cpp:394
+msgid ""
+"Check if photo should be visible to family or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+
+#: flickrlist.cpp:398
+msgid ""
+"Check if photo should be visible to friends or use Upload Options tab to "
+"specify this for all images"
+msgstr ""
+
+#: flickrlist.cpp:402
+msgid ""
+"Indicate the safety level for the photo or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+
+#: flickrlist.cpp:406
+msgid ""
+"Indicate what kind of image this is or use Upload Options tab to specify "
+"this for all images"
+msgstr ""
+
+#: flickrlist.cpp:419
+msgid ""
+"Add extra tags per image or use Upload Options tab to add tags for all images"
+msgstr ""
+"Resim başına ekstra etiketler ekleyin veya Gönderim Seçenekleri sekmesini "
+"kullanın"
+
+#: flickrlist.cpp:431
+msgid "Enter extra tags, separated by commas."
+msgstr "Boşluk ile ayrılmış ek etiketleri girin."
+
+#: flickrtalker.cpp:204
+msgid "Getting the Frob"
+msgstr "Frob Alınıyor"
+
+#: flickrtalker.cpp:249
+msgid "Checking if previous token is still valid"
+msgstr "Önceki jetonun hala geçerli olup olmadığı kontrol ediliyor"
+
+#: flickrtalker.cpp:275
+msgid ""
+"Please follow the instructions in the browser window, then return to press "
+"Yes if you are authenticated, or No otherwise."
+msgstr ""
+"Lütfen tarayıcı penceresindeki talimatları takip edin ve kimlik doğrulamanız "
+"yapıldıysa Evete basın veya Hayır'a basmak için geri dönün."
+
+#: flickrtalker.cpp:277
+#, kde-format
+msgid "%1 Service Web Authorization"
+msgstr "%1 Servisi Web Kimlik Doğrulaması"
+
+#: flickrtalker.cpp:282
+msgid "Authenticating the User on web"
+msgstr "Kullanıcı için Web üzerinden kimlik doğrulaması yapılıyor"
+
+#: flickrtalker.cpp:334
+msgid "Getting the Token from the server"
+msgstr "Sunucudan jeton alınıyor"
+
+#: flickrtalker.cpp:699
+msgid "No photo specified"
+msgstr "Hiç fotoğraf belirtilmedi"
+
+#: flickrtalker.cpp:702
+msgid "General upload failure"
+msgstr "Genel gönderim hatası"
+
+#: flickrtalker.cpp:705
+msgid "Filesize was zero"
+msgstr "Dosya boyutu sıfır"
+
+#: flickrtalker.cpp:708
+msgid "Filetype was not recognized"
+msgstr "Dosya tipi belirlenemedi"
+
+#: flickrtalker.cpp:711
+msgid "User exceeded upload limit"
+msgstr "Kullanıcı gönderim sınırını aştı"
+
+#: flickrtalker.cpp:714
+msgid "Invalid signature"
+msgstr "Geçersiz imza"
+
+#: flickrtalker.cpp:717
+msgid "Missing signature"
+msgstr "İmza yok"
+
+#: flickrtalker.cpp:720
+msgid "Login Failed / Invalid auth token"
+msgstr "Giriş başarısız oldu / Geçersiz kimlik doğrulama ifadesi"
+
+#: flickrtalker.cpp:723
+msgid "Invalid API Key"
+msgstr "Geçersiz API Anahtarı"
+
+#: flickrtalker.cpp:726
+msgid "Service currently unavailable"
+msgstr "Servis şu anda kullanılabilir değil"
+
+#: flickrtalker.cpp:729
+msgid "Invalid Frob"
+msgstr "Geçersiz Frob"
+
+#: flickrtalker.cpp:732
+msgid "Format \"xxx\" not found"
+msgstr "Biçim \"xxx\" bulunamadı"
+
+#: flickrtalker.cpp:735
+msgid "Method \"xxx\" not found"
+msgstr "Yöntem \"xxx\" bulunamadı"
+
+#: flickrtalker.cpp:738
+msgid "Invalid SOAP envelope"
+msgstr "Geçersiz SOAP zarfı"
+
+#: flickrtalker.cpp:741
+msgid "Invalid XML-RPC Method Call"
+msgstr "Geçersiz XML-RPC Yöntemi Çağrısı"
+
+#: flickrtalker.cpp:744
+msgid "The POST method is now required for all setters"
+msgstr "POSTALAMA yöntemi artık tüm dizgiciler için gerekli"
+
+#: flickrtalker.cpp:747
+msgid "Unknown error"
+msgstr "Bilinmeyen hata"
+
+#: flickrtalker.cpp:752
+#, kde-format
+msgid ""
+"Error Occurred: %1\n"
+"Cannot proceed any further."
+msgstr ""
+"Hata Oluştu: %1\n"
+"Daha ileri devam edemiyoruz."
+
+#: flickrtalker.cpp:899
+msgctxt "As in the permission to"
+msgid "write"
+msgstr "yaz"
+
+#: flickrtalker.cpp:901
+msgctxt "As in the permission to"
+msgid "read"
+msgstr "oku"
+
+#: flickrtalker.cpp:903
+msgctxt "As in the permission to"
+msgid "delete"
+msgstr "sil"
+
+#: flickrtalker.cpp:933
+msgid "Your token is invalid. Would you like to get a new token to proceed?\n"
+msgstr ""
+"Jetonunuz geçersiz. Devam etmek için yeni bir jeton almak ister misiniz?\n"
+
+#: flickrtalker.cpp:1075
+msgid "PhotoSet creation failed: "
+msgstr "Fotoğraf dizisi oluşturma işlemi başarısız oldu: "
+
+#: flickrtalker.cpp:1166
+msgid "Failed to fetch list of photo sets."
+msgstr "Fotoğraf dizilerinin listesi alınamadı."
+
+#: flickrtalker.cpp:1236
+msgid "Failed to upload photo"
+msgstr "Fotoğraf gönderilemedi"
+
+#: flickrtalker.cpp:1300
+msgid "Failed to query photo information"
+msgstr "Fotoğraf bilgileri sorgulanamadı"
+
+#: flickrwidget.cpp:80
+msgid ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">23</font></a> "
+"Dışarıya Aktar</h2></b>"
+
+#: flickrwidget.cpp:85
+msgid ""
+"<b><h2><a href='http://www.zooomr.com'><font color=\"#7CD164\">zooomr</"
+"font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.23hq.com'><font color=\"#7CD164\">zooomr'a</"
+"font></a>Aktar</h2></b>"
+
+#: flickrwidget.cpp:90
+msgid ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Export</h2></b>"
+msgstr ""
+"<b><h2><a href='http://www.flickr.com'><font color=\"#0065DE\">flick</"
+"font><font color=\"#FF0084\">r</font></a> Dışa Aktar</h2></b>"
+
+#: flickrwidget.cpp:103 flickrwidget.cpp:108
+msgctxt "photo permissions"
+msgid "Public"
+msgstr "Açık"
+
+#: flickrwidget.cpp:107
+msgid "This is the list of images to upload to your Flickr account."
+msgstr "Bu, Flickr hesabınıza yükleyeceğiniz resimlerin listesidir."
+
+#: flickrwidget.cpp:112
+msgid "Extra tags"
+msgstr "Ek etiketler"
+
+#: flickrwidget.cpp:117 flickrwidget.cpp:127
+msgctxt "photo permissions"
+msgid "Family"
+msgstr "Aile"
+
+#: flickrwidget.cpp:121 flickrwidget.cpp:129
+msgctxt "photo permissions"
+msgid "Friends"
+msgstr "Arkadaşlar"
+
+#: flickrwidget.cpp:136
+msgid "Safety level"
+msgstr "Güvenlik düzeyi"
+
+#: flickrwidget.cpp:138
+msgid "Content type"
+msgstr "İçerik tipi"
+
+#: flickrwidget.cpp:141
+msgctxt "photo safety level"
+msgid "Safe"
+msgstr "Güvenli"
+
+#: flickrwidget.cpp:142
+msgctxt "photo safety level"
+msgid "Moderate"
+msgstr "Orta"
+
+#: flickrwidget.cpp:143
+msgctxt "photo safety level"
+msgid "Restricted"
+msgstr "Kısıtlı"
+
+#: flickrwidget.cpp:144 flickrwidget.cpp:277
+msgctxt "photo content type"
+msgid "Photo"
+msgstr "Fotoğraf"
+
+#: flickrwidget.cpp:145 flickrwidget.cpp:278
+msgctxt "photo content type"
+msgid "Screenshot"
+msgstr "Ekran Görüntüsü"
+
+#: flickrwidget.cpp:146 flickrwidget.cpp:279
+msgctxt "photo content type"
+msgid "Other"
+msgstr "Diğer"
+
+#: flickrwidget.cpp:172
+msgid "Account"
+msgstr "Hesap"
+
+#: flickrwidget.cpp:175
+msgctxt "account settings"
+msgid "Username: "
+msgstr "Kullanıcı adı: "
+
+#: flickrwidget.cpp:178
+msgid "Use a different account"
+msgstr "Başka bir hesap kullan"
+
+#: flickrwidget.cpp:181
+msgid "PhotoSet:"
+msgstr "Fotoğraf Dizisi:"
+
+#: flickrwidget.cpp:184
+msgid "&New PhotoSet"
+msgstr "&Yeni Fotoğraf Dizisi"
+
+#: flickrwidget.cpp:199
+msgid "Tag options"
+msgstr "Etiket seçenekleri"
+
+#: flickrwidget.cpp:203
+msgid "Use Host Application Tags"
+msgstr "Konakçı Uygulama Etiketleri Kullan"
+
+#: flickrwidget.cpp:205 flickrwidget.cpp:577
+msgid "More tag options"
+msgstr "Daha fazla etiket seçeneği"
+
+#: flickrwidget.cpp:219
+msgid "Added Tags: "
+msgstr "Eklenen Etiketler:"
+
+#: flickrwidget.cpp:222
+msgid "Enter new tags here, separated by commas."
+msgstr "Boşluk ile ayrılmış yeni etiketleri buraya girin."
+
+#: flickrwidget.cpp:224
+msgid "Add tags per image"
+msgstr "Her resime etiket ekle"
+
+#: flickrwidget.cpp:225
+msgid "If checked, you can set extra tags for each image in the File List tab"
+msgstr ""
+"İşaretliyse, Dosya Listesi sekmesindeki her resim için ekstra etiketler "
+"belirleyebilirsiniz"
+
+#: flickrwidget.cpp:229
+msgid "Strip Spaces From Tags"
+msgstr "Etiketlerinden Boşlukları Çıkar"
+
+#: flickrwidget.cpp:242
+msgid "Publication Options"
+msgstr "Yayınlama Seçenekleri"
+
+#: flickrwidget.cpp:247
+msgctxt "As in accessible for people"
+msgid "Public (anyone can see them)"
+msgstr "Genel (herkes görebilir)"
+
+#: flickrwidget.cpp:250
+msgid "Visible to Family"
+msgstr "Aileye Görünür"
+
+#: flickrwidget.cpp:253
+msgid "Visible to Friends"
+msgstr "Arkadaşlara Görünür"
+
+#: flickrwidget.cpp:256 flickrwidget.cpp:565
+msgid "More publication options"
+msgstr "Daha fazla yayınlama seçeneği"
+
+#: flickrwidget.cpp:269
+msgid "Safety level:"
+msgstr "Güvenlik düzeyi:"
+
+#: flickrwidget.cpp:271
+msgid "Safe"
+msgstr "Güvenli"
+
+#: flickrwidget.cpp:272
+msgid "Moderate"
+msgstr "Orta"
+
+#: flickrwidget.cpp:273
+msgid "Restricted"
+msgstr "Kısıtlı"
+
+#: flickrwidget.cpp:275
+msgid "Content type:"
+msgstr "İçerik tipi:"
+
+#: flickrwidget.cpp:296
+msgid "Resizing Options"
+msgstr "Yendien Boyutlandırma Seçenekleri"
+
+#: flickrwidget.cpp:301
+msgid "Resize photos before uploading"
+msgstr "Fotoğrafları göndermeden yeniden boyutlandır"
+
+#: flickrwidget.cpp:312
+msgid "Maximum dimension (pixels):"
+msgstr "En büyük boyut (piksel olarak):"
+
+#: flickrwidget.cpp:322
+msgid "JPEG Image Quality (higher is better):"
+msgstr "JPEG Resim Kalitesi (daha yüksek daha iyi):"
+
+#: flickrwidget.cpp:350
+msgid "File List"
+msgstr "Dosya Listesi"
+
+#: flickrwidget.cpp:351
+msgid "Upload Options"
+msgstr "Gönderim Seçenekleri"
+
+#: flickrwidget.cpp:561
+msgid "Fewer publication options"
+msgstr "Daha az yayınlama seçeneği"
+
+#: flickrwidget.cpp:582
+msgid "Fewer tag options"
+msgstr "Daha az etiket seçeneği"
+
+#: flickrwindow.cpp:84
+#, kde-format
+msgid "Export to %1 Web Service"
+msgstr "%1 Web Servisine Aktar"
+
+#: flickrwindow.cpp:123
+msgid "Start Uploading"
+msgstr "Gönderimi Başlat"
+
+#: flickrwindow.cpp:135
+msgid "Flickr/23/Zooomr Export"
+msgstr "Flickr/23/Zooomr'a Aktar"
+
+#: flickrwindow.cpp:138
+msgid ""
+"A Kipi plugin to export an image collection to a Flickr / 23 / Zooomr web "
+"service."
+msgstr ""
+"Flickr / 23 / Zooomr web hizmetine, resim koleksiyonlarını aktarmaya yarayan "
+"bir Kipi eklentisi."
+
+#: flickrwindow.cpp:140
+msgid ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+msgstr ""
+"(c) 2005-2008, Vardhman Jain\n"
+"(c) 2008-2009, Gilles Caulier\n"
+"(c) 2009, Luka Renko"
+
+#: flickrwindow.cpp:144
+msgid "Vardhman Jain"
+msgstr "Vardhman Jain"
+
+#: flickrwindow.cpp:144
+msgid "Author and maintainer"
+msgstr "Yazar ve projeyi yürüten"
+
+#: flickrwindow.cpp:147
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: flickrwindow.cpp:147
+msgid "Developer"
+msgstr "Geliştirici"
+
+#: flickrwindow.cpp:155
+msgid "Handbook"
+msgstr "El Kitabı"
+
+#: flickrwindow.cpp:492
+msgid "&lt;Photostream Only&gt;"
+msgstr ""
+
+#: flickrwindow.cpp:666
+#, kde-format
+msgid "Uploading file %1"
+msgstr "%1 dosyası yükleniyor"
+
+#: flickrwindow.cpp:686
+#, kde-format
+msgid "Failed to Fetch Photoset information from %1. %2\n"
+msgstr "%1 konumundan Fotoğraf Dizisi bilgileri alınamadı. %2\n"
+
+#: flickrwindow.cpp:691
+#, kde-format
+msgid ""
+"Failed to upload photo into %1. %2\n"
+"Do you want to continue?"
+msgstr ""
+"%1 servisine fotoğraf yükleme işlemi başarısız oldu. %2\n"
+"Devam etmek istiyor musunuz?"
+
+#: login.cpp:68
+#, fuzzy
+#| msgid "Username:"
+msgctxt "flickr login"
+msgid "Username:"
+msgstr "Kullanıcı adı:"
+
+#: login.cpp:71
+msgid "Password:"
+msgstr "Parola:"
+
+#: plugin_flickrexport.cpp:80
+msgid "Export to Flick&r..."
+msgstr "Flick&r Servisine Aktar..."
+
+#: plugin_flickrexport.cpp:91
+msgid "Export to &23..."
+msgstr "&23 Servisine Aktar..."
+
+#: plugin_flickrexport.cpp:102
+msgid "Export to &Zooomr..."
+msgstr "&Zooomr Servisine Aktar..."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Serdar Soytetir"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "tulliana@gmail.com"
+
+#. i18n: file: flickralbumdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, FlickrAlbumDialog)
+#: rc.cpp:5
+msgid "New PhotoSet"
+msgstr "Yeni Fotoğraf Dizisi"
+
+#. i18n: file: flickralbumdialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:8
+msgid "<h3>Create New PhotoSet </h3>"
+msgstr "<h3>Yeni Fotoğraf Dizisi Oluştur </h3>"
+
+#. i18n: file: flickralbumdialog.ui:86
+#. i18n: ectx: property (text), widget (QPushButton, buttonOk)
+#: rc.cpp:11
+msgid "&OK"
+msgstr "&Tamam"
+
+#. i18n: file: flickralbumdialog.ui:102
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:14
+msgid "&Cancel"
+msgstr "İ&ptal"
+
+#. i18n: file: flickralbumdialog.ui:130
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:17
+msgid "Title (required):"
+msgstr "Başlık (gerekli):"
+
+#. i18n: file: flickralbumdialog.ui:143
+#. i18n: ectx: property (text), widget (QLabel, captionLabel)
+#: rc.cpp:20
+#, fuzzy
+#| msgid "Description(optional)"
+msgid "Description (optional)"
+msgstr "Tanım(isteğe bağlı)"
+
+#, fuzzy
+#~| msgid "More tag options"
+#~ msgid "Less tag options"
+#~ msgstr "Daha fazla etiket seçeneği"
+
+#, fuzzy
+#~| msgid "More publications options"
+#~ msgid "Less publication options"
+#~ msgstr "Daha fazla yayınlama seçeneği"
+
+#~ msgid "Override Default Options"
+#~ msgstr "Öntanımlı Seçeneklerin Üzerine Yaz"
+
+#~ msgid "Extended options"
+#~ msgstr "Gelişmiş seçenekler"
+
+#~ msgid "PhotoSet created successfully"
+#~ msgstr "Fotoğraf dizisi başarıyla yaratıldı"
+
+#~ msgid "Name (optional):"
+#~ msgstr "İsim (seçimlik):"
+
+#~ msgid "Primary Photo Id"
+#~ msgstr "Birincil Fotoğraf Kimliği"
+
+#~ msgid "User Name: "
+#~ msgstr "Kullanıcı Adı:"
+
+#~ msgid "Title (optional):"
+#~ msgstr "Başlık (seçimlik):"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Küçük Resim"
+
+#~ msgid "File Name"
+#~ msgstr "Dosya Adı"
+
+#~ msgid "&Add"
+#~ msgstr "&Ekle"
+
+#~ msgid "&Remove"
+#~ msgstr "&Kaldır"

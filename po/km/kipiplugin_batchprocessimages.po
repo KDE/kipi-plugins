@@ -1,0 +1,2047 @@
+#
+#  Seng Sutha <Sutha@khmeros.info>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_batchprocessimages\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-04-05 03:36+0200\n"
+"PO-Revision-Date: 2010-11-10 21:06+0700\n"
+"Last-Translator: Seng Sutha <Sutha@khmeros.info>\n"
+"Language-Team: Khmer [km] <Support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 beta1\n"
+"X-Language: km_KH\n"
+
+#: common/batchprocessimageslist.cpp:47
+#, fuzzy
+msgid "Source Album"
+msgstr "អាល់ប៊ុម​ប្រភព​"
+
+#: common/batchprocessimageslist.cpp:48
+msgid "Source Image"
+msgstr "រូបភាព​ប្រភព​"
+
+#: common/batchprocessimageslist.cpp:49
+#, fuzzy
+msgid "Target Image"
+msgstr "រូបភាព​គោលដៅ​"
+
+#: common/batchprocessimageslist.cpp:50
+msgid "Result"
+msgstr "លទ្ធផល​"
+
+#: common/batchprocessimageslist.cpp:54
+#, fuzzy
+msgid ""
+"<p>You can see here the operations' results during the process. Double-click "
+"on an item for more information once the process has ended.</p><p>You can "
+"use the \"Add\" button or drag-and-drop to add some new items to the list.</"
+"p><p>If the items are taken from different Albums the process' results will "
+"be merged to the target Album.</p>"
+msgstr ""
+"<p>អ្នក​អាច​មើល​​លទ្ធផល​ប្រតិបត្តិការ​នៅ​ទី​នេះ​​​​ ។​ ចុច​ទ្វេដង​លើ​ធាតុ​​ សម្រាប់​ព័ត៌មាន​បន្ថែម​ ​នៅ​ពេល​ដំណើរការ​"
+"ត្រូវ​បាន​បញ្ចប់​ ។​</p><p>អ្នក​អាច​ប្រើ​ប៊ូតុង​​​ \"បន្ថែម​\" ​ឬ​អូស​ទម្លាក់​​ ដើម្បី​បន្ថែម​ធាតុ​ថ្មី​​ៗ​ទៅកាន់​បញ្ជី​ ។​"
+"</p><p>ប្រសិនបើ​ ធាតុ​ត្រូវ​បាន​យក​ចេញ​ពី​​លទ្ធផល​របស់​អាល់ប៊ុម​ខុស​ៗ​គ្នា​​ នឹង​ត្រូវ​បាន​បញ្ចូល​ចូល​គ្នា​ ជា​អាល់ប៊ុម​"
+"គោលដៅ​ ។​</p>"
+
+#: common/dialogutils.cpp:42
+msgid "Handbook"
+msgstr "សៀវភៅ​ដៃ​"
+
+#: common/imagepreview.cpp:50
+#, fuzzy, kde-format
+msgid "Batch Process Preview (%1 - %2)"
+msgstr "ដំណើរ​ការ​មើល​ជាមុន​ជា​ក្រុម​​ (%1 - %2)"
+
+#: common/imagepreview.cpp:56
+#, fuzzy
+msgid "Batch process images"
+msgstr "រូបភាព​ដំណើរ​ការ​ជា​ក្រុម​"
+
+#: common/imagepreview.cpp:59
+#, fuzzy
+msgid ""
+"An interface to preview the \"Batch Process Images\" Kipi plugin.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"ចំណុច​ប្រទាក់​ត្រូវ​មើល​កម្មវិធី​ជំនួយ​ ​​Kipi ជាមុន​​ \"រូបភាព​ដំណើរ​ការ​ជា​ក្រុម\" ។​\n"
+"កម្មវិធី​ជំនួយ​នេះ​ប្រើ​កម្មវិធី​​ \"បម្លែង​​\" ពី​​កញ្ចប់​​ \"ImageMagick\" ។"
+
+#: common/imagepreview.cpp:63 tools/borderimagesdialog.cpp:69
+#: tools/colorimagesdialog.cpp:68 tools/convertimagesdialog.cpp:76
+#: tools/effectimagesdialog.cpp:67 tools/filterimagesdialog.cpp:67
+#: tools/recompressimagesdialog.cpp:67 tools/renameimagesdialog.cpp:65
+#: tools/resizeimagesdialog.cpp:166
+msgid ""
+"(c) 2003-2009, Gilles Caulier\n"
+"(c) 2007-2009, Aurélien Gateau"
+msgstr ""
+"រក្សាសិទ្ធិ​ឆ្នាំ​ ២០០៣-២០០៩ ដោយ​ Gilles Caulier\n"
+"រក្សាសិទ្ធិ​ឆ្នាំ​​ ២០០៧-២០០៩ ដោយ​ Aurélien Gateau"
+
+#: common/imagepreview.cpp:66 tools/borderimagesdialog.cpp:72
+#: tools/colorimagesdialog.cpp:71 tools/convertimagesdialog.cpp:79
+#: tools/effectimagesdialog.cpp:70 tools/filterimagesdialog.cpp:70
+#: tools/recompressimagesdialog.cpp:70 tools/renameimagesdialog.cpp:68
+#: tools/resizeimagesdialog.cpp:169
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: common/imagepreview.cpp:66 tools/borderimagesdialog.cpp:72
+#: tools/colorimagesdialog.cpp:71 tools/convertimagesdialog.cpp:79
+#: tools/effectimagesdialog.cpp:70 tools/filterimagesdialog.cpp:70
+#: tools/recompressimagesdialog.cpp:70 tools/renameimagesdialog.cpp:68
+#: tools/resizeimagesdialog.cpp:169
+msgid "Author"
+msgstr "អ្នក​និពន្ធ​"
+
+#: common/imagepreview.cpp:69 tools/borderimagesdialog.cpp:75
+#: tools/colorimagesdialog.cpp:74 tools/convertimagesdialog.cpp:82
+#: tools/effectimagesdialog.cpp:73 tools/filterimagesdialog.cpp:73
+#: tools/recompressimagesdialog.cpp:73 tools/renameimagesdialog.cpp:71
+#: tools/resizeimagesdialog.cpp:171
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: common/imagepreview.cpp:69 tools/borderimagesdialog.cpp:75
+#: tools/colorimagesdialog.cpp:74 tools/convertimagesdialog.cpp:82
+#: tools/effectimagesdialog.cpp:73 tools/filterimagesdialog.cpp:73
+#: tools/recompressimagesdialog.cpp:73 tools/renameimagesdialog.cpp:71
+#: tools/resizeimagesdialog.cpp:171 tools/resizeimagesdialog.cpp:173
+msgid "Maintainer"
+msgstr "អ្នកថែទាំ​"
+
+#: common/pixmapview.cpp:119
+#, fuzzy
+msgid ""
+"Preview\n"
+"image\n"
+"processing\n"
+"in\n"
+"progress..."
+msgstr ""
+"មើល​ជាមុន​​\n"
+"រូបភាព​​\n"
+"ដំណើរការ​​\n"
+"in\n"
+"វឌ្ឍនភាព​​..."
+
+#: common/pixmapview.cpp:148 common/batchprocessimagesdialog.cpp:523
+#: common/batchprocessimagesdialog.cpp:729
+msgid ""
+"Cannot start 'convert' program from 'ImageMagick' package;\n"
+"please check your installation."
+msgstr ""
+"មិន​អាច​ចាប់ផ្ដើម​កម្មវិធី​ 'បម្លែង​' ពី​​កញ្ចប់​ 'ImageMagick' \n"
+"សូម​​ពិនិត្យមើល​ការដំឡើង​របស់​អ្នក​ ។​​"
+
+#: common/pixmapview.cpp:189
+msgid ""
+"Cannot\n"
+"process\n"
+"preview\n"
+"image."
+msgstr ""
+"មិន​អាច​​\n"
+"​មើល​​​\n"
+"រូបភាព​\n"
+"ជាមុន​ ។"
+
+#: common/batchprocessimagesdialog.cpp:106
+#: common/batchprocessimagesdialog.cpp:874 tools/renameimagesdialog.cpp:56
+msgctxt "start batch process images"
+msgid "&Start"
+msgstr "ចាប់​ផ្ដើម​"
+
+#: common/batchprocessimagesdialog.cpp:134
+#, fuzzy
+msgid "You can choose here the options to use for the current process."
+msgstr "អ្នក​អាច​ជ្រើស​ជម្រើស​​ត្រូវ​ប្រើ​នៅ​ទី​នេះ​​ សម្រាប់​ដំណើរការ​បច្ចុប្បន្ន ។"
+
+#: common/batchprocessimagesdialog.cpp:136
+#, fuzzy
+msgid ""
+"If you enable this option, all preview effects will be calculated on a small "
+"zone of the image (300x300 pixels in the top left corner). Enable this "
+"option if you have a slow computer."
+msgstr ""
+"ប្រសិន​បើ​ អ្នក​បើក​​ជម្រើស​នេះ​​ គ្រប់​បែប​ផែន​មើល​ជាមុន​ទាំងអស់​​នឹង​ត្រូវ​បាន​គណនា​​ លើ​តំបន់​រូបភាព​តូច​​ "
+"(300x300 ភីកសែល​នៅ​ជ្រុង​ខាង​ឆ្វេង​ផ្នែក​ខាងលើ​​) ។​ បើក​ជម្រើស​នេះ​​ ប្រសិន​បើ​ កុំព្យូទ័រ​​អ្នក​ដំណើរការ​យឺត​ ។"
+
+#: common/batchprocessimagesdialog.cpp:141
+#, fuzzy
+msgid ""
+"This button builds a process preview for the currently selected image on the "
+"list."
+msgstr "ចុច​ប៊ូតុង​នេះ​ដំណើរការ​មើល​ជាមុន​ សម្រាប់​រូបភាព​ដែល​បាន​ជ្រើស​លើ​បញ្ជី​បច្ចុប្បន្ន​ ។"
+
+#: common/batchprocessimagesdialog.cpp:144
+#: common/batchprocessimagesdialog.cpp:887
+msgid "Ask"
+msgstr "សួរ​"
+
+#: common/batchprocessimagesdialog.cpp:145
+#: common/batchprocessimagesdialog.cpp:896
+msgid "Always Overwrite"
+msgstr "សរសេរ​ជាន់​លើ​ជានិច្ច​"
+
+#: common/batchprocessimagesdialog.cpp:146
+#: common/batchprocessimagesdialog.cpp:148
+#: common/batchprocessimagesdialog.cpp:890
+msgid "Rename"
+msgstr "ប្ដូរ​ឈ្មោះ​"
+
+#: common/batchprocessimagesdialog.cpp:147
+#: common/batchprocessimagesdialog.cpp:893
+msgid "Skip"
+msgstr "រំលង​"
+
+#: common/batchprocessimagesdialog.cpp:149
+#, fuzzy
+msgid ""
+"Select here the overwrite mode used if your target's image files already "
+"exist."
+msgstr "ជ្រើស​របៀប​សរសេរ​ជាន់​លើ​​ដែល​​បាន​ប្រើ​​នៅ​ទី​នេះ​ ប្រសិន​បើ​​ឯកសារ​រូបភាព​គោលដៅ​មាន​រួច​ហើយ​ ។"
+
+#: common/batchprocessimagesdialog.cpp:152
+#, fuzzy
+msgid ""
+"If you enable this option, all original image files will be removed after "
+"processing."
+msgstr "ប្រសិន​បើ ​បើក​ជម្រើស​នេះ​​ គ្រប់​ឯកសារ​រូបភាព​ដើម​ទាំងអស់​​នឹង​ត្រូវ​បាន​យក​ចេញ​ ក្រោយ​ពេល​​ដំណើរការ​ ។"
+
+#: common/batchprocessimagesdialog.cpp:170
+#, fuzzy
+msgid "Here you can select the target folder which will used by the process."
+msgstr "អ្នក​អាច​ជ្រើស​ថត​គោលដៅ​នៅ​ទី​នេះ​ ដែល​នឹង​ប្រើ​តាម​ដំណើរការ​ ។"
+
+#: common/batchprocessimagesdialog.cpp:173
+#, fuzzy
+msgid "Add images to the list."
+msgstr "បន្ថែម​រូបភាព​ទៅកាន់​បញ្ជី​ ។"
+
+#: common/batchprocessimagesdialog.cpp:174
+msgid "Remove selected image from the list."
+msgstr "យក​រូបភាព​ដែល​បាន​ជ្រើស​ចេញ​ពី​បញ្ជី​ ។​"
+
+#: common/batchprocessimagesdialog.cpp:175
+#, fuzzy
+msgid "The preview of the selected image on the list."
+msgstr "មើល​រូបភាព​ដែល​បាន​ជ្រើស​ជាមុន​លើ​បញ្ជី ។​"
+
+#: common/batchprocessimagesdialog.cpp:327
+#, fuzzy
+msgid ""
+"All original image files will be removed from the source Album.\n"
+"Do you want to continue?"
+msgstr ""
+"គ្រប់​ឯកសារ​រូបភាព​ដើម​ទាំង​អស់​​​នឹង​ត្រូវ​បាន​យក​ចេញ​​ ពី​អាល់ប៊ុម​ប្រភព​ ។​\n"
+"​តើ​អ្នក​ចង់​បន្ត​ឬ ?"
+
+#: common/batchprocessimagesdialog.cpp:328
+msgid "Delete Original Image Files"
+msgstr "លុប​ឯកសារ​រូបភាព​ដើម​"
+
+#: common/batchprocessimagesdialog.cpp:339
+#: common/batchprocessimagesdialog.cpp:706
+msgid "&Stop"
+msgstr "បញ្ឈប់​"
+
+#: common/batchprocessimagesdialog.cpp:366
+#, fuzzy
+msgid "You must specify a writable path for your output file."
+msgstr "អ្នក​ត្រូវ​តែ​បញ្ជាក់​ផ្លូវ​ដែល​អាច​សរសេរ​បាន​​ សម្រាប់​ឯកសារ​ទិន្នផល​របស់​​ ។"
+
+#: common/batchprocessimagesdialog.cpp:404
+#, fuzzy, kde-format
+msgid ""
+"The destination file \"%1\" already exists;\n"
+"do you want overwrite it?"
+msgstr ""
+"មាន​ឯកសារ​ទិសដៅ​ \"%1\" ហើយ​\n"
+"​តើ​អ្នក​ចង់​សរសេរ​ជាន់​លើ​វា​ឬ​ ?"
+
+#: common/batchprocessimagesdialog.cpp:406
+#, fuzzy
+msgid "Overwrite Destination Image File"
+msgstr "សរសេរ​ជាន់​លើ​ឯកសារ​រូប​ភាព​ទិសដៅ​"
+
+#: common/batchprocessimagesdialog.cpp:410
+#: common/batchprocessimagesdialog.cpp:475
+#: tools/recompressimagesdialog.cpp:245 tools/resizeimagesdialog.cpp:278
+msgid "Skipped."
+msgstr "បាន​រំលង​ ។"
+
+#: common/batchprocessimagesdialog.cpp:411
+#, fuzzy
+msgid "destination image file already exists (skipped by user)."
+msgstr "ឯកសារ​រូបភាព​ទិស​ដៅ​មាន​​រួច​ហើយ​​ (បាន​រំលង​ដោយ​អ្នក​ប្រើ​​) ។"
+
+#: common/batchprocessimagesdialog.cpp:447
+#: common/batchprocessimagesdialog.cpp:564
+#: common/batchprocessimagesdialog.cpp:621
+#: common/batchprocessimagesdialog.cpp:656
+msgctxt "batch process result"
+msgid "Failed."
+msgstr "បាន​បរាជ័យ​ ។"
+
+#: common/batchprocessimagesdialog.cpp:448
+#, fuzzy
+msgid "destination image file already exists and cannot be renamed."
+msgstr "ឯកសារ​រូបភាព​ទិសដៅ​មាន​រួច​ហើយ​ មិន​អាច​ប្ដូរ​ឈ្មោះ​បាន​ឡើយ​ ។"
+
+#: common/batchprocessimagesdialog.cpp:476
+#, fuzzy
+msgid "destination image file already exists (skipped automatically)."
+msgstr "ឯកសារ​រូបភាព​ទិស​ដៅ​មាន​រួច​ហើយ​​ (​បាន​រំលង​ដោយ​ស្វ័យ​ប្រវត្តិ​​) ។"
+
+#: common/batchprocessimagesdialog.cpp:555
+#, fuzzy
+msgid ""
+"The 'convert' program from 'ImageMagick' package has been stopped abnormally"
+msgstr "កម្មវិធី​ 'បម្លែង​​' ​ពី​កញ្ចប់​ 'ImageMagick' ​ត្រូវ​បាន​បញ្ឈប់​​ដោយ​ស្វ័យ​ប្រវត្តិ​"
+
+#: common/batchprocessimagesdialog.cpp:556
+msgid "Error running 'convert'"
+msgstr "កំហុស​ដំណើរ​​ 'បម្លែង​​'"
+
+#: common/batchprocessimagesdialog.cpp:565
+#, fuzzy
+msgid ""
+"'convert' program from 'ImageMagick' package has been stopped abnormally."
+msgstr "កម្មវិធី​ 'បម្លែង​​' ​ពី​កញ្ចប់​ 'ImageMagick' ​ត្រូវ​បាន​បញ្ឈប់​​ដោយ​ស្វ័យ​​ប្រវត្តិ​ ។"
+
+#: common/batchprocessimagesdialog.cpp:586
+msgid "OK"
+msgstr "យល់​ព្រម​"
+
+#: common/batchprocessimagesdialog.cpp:587
+msgid "no processing error"
+msgstr "គ្មាន​កំហុស​ពេល​ដំណើរការ​​"
+
+#: common/batchprocessimagesdialog.cpp:610
+#, kde-format
+msgid ""
+"<qt>Error adding image to application; error message was: <b>%1</b></qt>"
+msgstr "<qt>កំហុស​រូបភាព​បន្ថែម​ទៅកាន់​កម្មវិធី​ ​កំហុស​សារ​ ៖ <b>%1</b></qt>"
+
+#: common/batchprocessimagesdialog.cpp:612
+msgid "Error Adding Image to Application"
+msgstr "កំហុស​រូបភាព​បន្ថែម​ទៅកាន់​កម្ម​​វិធី \t​"
+
+#: common/batchprocessimagesdialog.cpp:639
+msgctxt "batch process result"
+msgid "Warning:"
+msgstr "ការព្រមាន​ ៖"
+
+#: common/batchprocessimagesdialog.cpp:640
+msgid "cannot remove original image file."
+msgstr "មិន​អាច​យក​ឯកសារ​រូបភាព​ដើម​ចេញ​បាន​ឡើយ​ ។​"
+
+#: common/batchprocessimagesdialog.cpp:657
+#, fuzzy
+msgid "cannot process original image file."
+msgstr "មិន​អាច​ដំណើរការ​ឯកសារ​រូបភាព​ដើម​បាន​ឡើង​ ។"
+
+#: common/batchprocessimagesdialog.cpp:678
+#, fuzzy
+msgid "Image processing error"
+msgstr "កំហុស​ដំណើរការ​រូបភាព​"
+
+#: common/batchprocessimagesdialog.cpp:680
+#, fuzzy, kde-format
+msgid ""
+"Image \"%1\": %2\n"
+"\n"
+"The output messages are:\n"
+msgstr ""
+"រូបភាព​ \"%1\" ៖​ %2\n"
+"\n"
+"ទិន្នផល​សារ​គឺ ៖​​\n"
+
+#: common/batchprocessimagesdialog.cpp:694
+#, fuzzy
+msgid "You must select an item from the list to calculate the preview."
+msgstr "អ្នក​ត្រូវ​តែ​ជ្រើស​ធាតុ​ពី​បញ្ជី​ ដើម្បី​គណនា​ជាមុន​ ។"
+
+#: common/batchprocessimagesdialog.cpp:746
+#, fuzzy
+msgid "Cannot run properly 'convert' program from 'ImageMagick' package."
+msgstr "មិន​អាច​ដំណើរ​ការ​កម្មវិធី 'បម្លែង​' ដោយ​ត្រឹមត្រូវ​ពី​កញ្ចប់​ 'ImageMagick' បាន​ឡើយ​ ។"
+
+#: common/batchprocessimagesdialog.cpp:761
+#, fuzzy
+msgid " - small preview"
+msgstr " - មើល​ជាមុន​បន្តិច​"
+
+#: common/batchprocessimagesdialog.cpp:775
+#, fuzzy
+msgid "Preview processing error"
+msgstr "មើល​កំហុស​មុន​ដំណើរការ​"
+
+#: common/batchprocessimagesdialog.cpp:776
+#, fuzzy, kde-format
+msgid ""
+"Cannot process preview for image \"%1\".\n"
+"The output messages are:\n"
+msgstr ""
+"មិន​អាច​ដំណើរការ​មើល​រូបភាព​ជាមុន​​ \"%1\" ។\n"
+"ទិន្នផល​សារ​គឺ​ ៖​\n"
+
+#: common/batchprocessimagesdialog.cpp:909
+msgid "Aborted."
+msgstr "បាន​បោះបង់​ ។"
+
+#: common/batchprocessimagesdialog.cpp:910
+msgid "process aborted by user"
+msgstr "បាន​បោះបង់​ដំណើរការ​ដោយ​អ្នក​ប្រើ​"
+
+#: common/batchprocessimagesdialog.cpp:930
+msgid "&Close"
+msgstr "បិទ​"
+
+#: plugin/plugin_batchprocessimages.cpp:86
+#, fuzzy
+msgid "Border Images..."
+msgstr "ស៊ុម​រូបភាព​​..."
+
+#: plugin/plugin_batchprocessimages.cpp:90
+#, fuzzy
+msgid "Color Images..."
+msgstr "ពណ៌​រូបភាព​​..."
+
+#: plugin/plugin_batchprocessimages.cpp:94
+msgid "Convert Images..."
+msgstr "បម្លែង​រូបភាព​​..."
+
+#: plugin/plugin_batchprocessimages.cpp:98
+msgid "Image Effects..."
+msgstr "បែប​ផែន​រូបភាព​​..."
+
+#: plugin/plugin_batchprocessimages.cpp:102
+#, fuzzy
+msgid "Filter Images..."
+msgstr "ត្រង់​រូបភាព​​..."
+
+#: plugin/plugin_batchprocessimages.cpp:106
+msgid "Rename Images..."
+msgstr "ប្ដូរ​ឈ្មោះ​រូបភាព​​..."
+
+#: plugin/plugin_batchprocessimages.cpp:110
+msgid "Recompress Images..."
+msgstr "បង្ហាប់​រូបភាព​ឡើងវិញ​​..."
+
+#: plugin/plugin_batchprocessimages.cpp:114
+msgid "Resize Images..."
+msgstr "ប្ដូរ​ទំហំ​រូបភាព​​..."
+
+#: plugin/plugin_batchprocessimages.cpp:198
+#, fuzzy
+msgid "Please select an album or a selection of images."
+msgstr "សូម​ជ្រើស​អាល់ប៊ុម​ ឬ​ជម្រើស​រូបភាព​ ។"
+
+#: tools/borderimagesdialog.cpp:60
+#, fuzzy
+msgid "Batch-Bordering Images"
+msgstr "ដាក់​ស៊ុម​រូប​ភាព​ជា​ក្រុម​"
+
+#: tools/borderimagesdialog.cpp:64
+#, fuzzy
+msgid "Batch Image-bordering"
+msgstr "ដាក់​ស៊ុម​រូប​ភាព​ជា​ក្រុម​"
+
+#: tools/borderimagesdialog.cpp:67
+#, fuzzy
+msgid ""
+"A Kipi plugin for batch bordering images\n"
+"This plugin use the \"convert\" program from \"ImageMagick\" package."
+msgstr ""
+"កម្មវិធី​ជំនួយ​ Kipi សម្រាប់​​​ដាក់​ស៊ុម​រូបភាព​ជា​ក្រុម​\n"
+"កម្មវិធី​ជំនួយ​នេះ​ប្រើ​​កម្មវិធី​ \"បម្លែង​​\" ​ពី​កញ្ចប់​\"ImageMagick\" ។"
+
+#: tools/borderimagesdialog.cpp:86
+msgid "Images Bordering Options"
+msgstr "ជម្រើស​ដាក់​ស៊ុម​រូបភាព​"
+
+#: tools/borderimagesdialog.cpp:88
+msgid "Border:"
+msgstr "ស៊ុម​ ៖"
+
+#: tools/borderimagesdialog.cpp:90
+msgctxt "image border type"
+msgid "Solid"
+msgstr "តាន់​"
+
+#: tools/borderimagesdialog.cpp:95
+msgctxt "image border type"
+msgid "Raise"
+msgstr "លើកឡើង​លើ​"
+
+#: tools/borderimagesdialog.cpp:96
+msgctxt "image border type"
+msgid "Frame"
+msgstr "ស៊ុម​"
+
+#: tools/borderimagesdialog.cpp:99
+#, fuzzy
+msgid ""
+"<p>Select here the border type for your images:</p><p><b>Solid</b>: just "
+"surround the images with a line.<br/><b>Niepce</b>: surround the images with "
+"a fine line and a large border (ideal for black and white pictures).<br/"
+"><b>Raise</b>: creating a 3D effect around the images.<br/><b>Frame</b>: "
+"surround the images with an ornamental border.</p>"
+msgstr ""
+"<p>ជ្រើស​ប្រភេទ​ស៊ុម​នេះ​ សម្រាប់​រូបភាព​របស់​អ្នក​ ៖​​</p><p><b>តាន់​</b> ៖​ គ្រាន់តែ​គូស​បន្ទាត់​ព័ទ្ធជុំវិញ​"
+"រូបភាព​ ។​<br/><b>Niepce</b> ៖​ គូស​​បន្ទាត់​ល្មម​ព័ទ្ធជុំវិញ​រូបភាព​ និង​​ស៊ុម​ធំ​ (គំនូរ​រូបភាព​ខ្មៅ និង​ស) ។"
+"<br/><b>លើក​ឡើង​លើ​</b> ៖​ ការ​បង្កើត​បែបផែន​​ត្រីមាត្រ​ជុំ​វិញ​រូបភាព​​​ ។<br/><b>ស៊ុម​</b> ៖​ ព័ទ្ធ​ស៊ុម​"
+"ជុំវិញ​រូប​ភាព​​​ សម្រាប់​តុបតែង​ ។</p>​"
+
+#: tools/borderoptionsdialog.cpp:48
+msgid "Border Options"
+msgstr "ជម្រើស​ស៊ុម​"
+
+#: tools/borderoptionsdialog.cpp:61 tools/borderoptionsdialog.cpp:95
+#: tools/borderoptionsdialog.cpp:113 tools/borderoptionsdialog.cpp:124
+msgid "Border width:"
+msgstr "ទទឹង​ស៊ុម​ ៖​"
+
+#: tools/borderoptionsdialog.cpp:66 tools/borderoptionsdialog.cpp:100
+#: tools/borderoptionsdialog.cpp:118 tools/borderoptionsdialog.cpp:129
+#, fuzzy
+msgid "Select here the border width in pixels."
+msgstr "ជ្រើស​ទទឹង​ស៊ុម​គិត​ជា​ភីកសែល​​​នៅ​ទី​នេះ​ ។\t"
+
+#: tools/borderoptionsdialog.cpp:70 tools/borderoptionsdialog.cpp:104
+#: tools/borderoptionsdialog.cpp:143
+#, fuzzy
+msgid "Border color:"
+msgstr "ពណ៌​របស់​ស៊ុម​ ៖​"
+
+#: tools/borderoptionsdialog.cpp:74 tools/borderoptionsdialog.cpp:108
+#: tools/borderoptionsdialog.cpp:147
+#, fuzzy
+msgid "You can select here the border color."
+msgstr "អ្នក​អាច​ជ្រើស​ពណ៌​របស់​ស៊ុម​នៅ​ទៅ​នេះ​ ។"
+
+#: tools/borderoptionsdialog.cpp:79
+#, fuzzy
+msgid "Line border width:"
+msgstr "បន្ទាត់​ទទឹង​ស៊ុម​ ៖"
+
+#: tools/borderoptionsdialog.cpp:84
+#, fuzzy
+msgid "Select here the line border width in pixels."
+msgstr "ជ្រើស​បន្ទាត់​ទទឹង​ស៊ុម​គិត​ជា​ភីកសែល​នៅ​ទី​នេះ​ ។"
+
+#: tools/borderoptionsdialog.cpp:88
+#, fuzzy
+msgid "Line border color:"
+msgstr "បន្ទាត់​ពណ៌​របស់​ស៊ុម​ ៖​"
+
+#: tools/borderoptionsdialog.cpp:92
+#, fuzzy
+msgid "You can select here the line border color."
+msgstr "អ្នក​អាច​ជ្រើស​បន្ទាត់​ពណ៌​របស់​ស៊ុម​នៅ​ទី​នេះ​ ។"
+
+#: tools/borderoptionsdialog.cpp:133
+#, fuzzy
+msgid "Bevel width:"
+msgstr "ទទឹង​ជ្រុង​ ៖​"
+
+#: tools/borderoptionsdialog.cpp:138
+#, fuzzy
+msgid ""
+"Select here the bevel width in pixels. This value must be &lt;= Border "
+"width / 2"
+msgstr "ជ្រើស​ទទឹង​ជ្រុង​គិត​ជា​ភីកសែល​នៅ​ទី​នេះ​ ។​ តម្លៃ​នេះ​ត្រូវ​តែ​​ &lt;= ទទឹង​ស៊ុម​​ / 2"
+
+#: tools/colorimagesdialog.cpp:59
+#, fuzzy
+msgid "Batch Image-Color Processing"
+msgstr "ប្រើ​ពណ៌​រូបភាព​ជា​ក្រុម​"
+
+#: tools/colorimagesdialog.cpp:63
+#, fuzzy
+msgid "Batch image-color enhancement"
+msgstr "ការ​បញ្ចូល​​ពណ៌​រូបភាព​ជា​ក្រុម​"
+
+#: tools/colorimagesdialog.cpp:66
+#, fuzzy
+msgid ""
+"A Kipi plugin for batch image-color enhancement.\n"
+"This plugin use the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"កម្មវិធី​ជំនួយ Kipi សម្រាប់​ការ​​បញ្ចូល​ពណ៌​រូបភាព​ជា​ក្រុម​ ។​\n"
+"កម្មវិធី​ជំនួយ​នេះ​ប្រើ​កម្មវិធី​​ \"​បម្លែង​​\" ​ពី​កញ្ចប់​ \"ImageMagick\" ។"
+
+#: tools/colorimagesdialog.cpp:85
+#, fuzzy
+msgid "Image Coloring Options"
+msgstr "ជម្រើស​ដាក់​ពណ៌​រូបភាព​"
+
+#: tools/colorimagesdialog.cpp:87 tools/filterimagesdialog.cpp:85
+#: tools/resizeoptionsdialog.cpp:83
+msgid "Filter:"
+msgstr "តម្រង ៖​"
+
+#: tools/colorimagesdialog.cpp:89
+msgctxt "color image filter"
+msgid "Decrease Contrast"
+msgstr "បន្ថយ​កម្រិត​ពណ៌​​​"
+
+#: tools/colorimagesdialog.cpp:90
+msgctxt "color image filter"
+msgid "Depth"
+msgstr "ជម្រៅ​"
+
+#: tools/colorimagesdialog.cpp:91
+#, fuzzy
+msgctxt "color image filter"
+msgid "Equalize"
+msgstr "ធ្វើ​ឲ្យ​ស្មើ​គ្នា​"
+
+#: tools/colorimagesdialog.cpp:92
+msgctxt "color image filter"
+msgid "Fuzz"
+msgstr "Fuzz"
+
+#: tools/colorimagesdialog.cpp:93
+#, fuzzy
+msgctxt "color image filter"
+msgid "Gray Scales"
+msgstr "កម្រិត​ស្រអាប់​"
+
+#: tools/colorimagesdialog.cpp:94
+msgctxt "color image filter"
+msgid "Increase Contrast"
+msgstr "បង្កើន​កម្រិត​ពណ៌"
+
+#: tools/colorimagesdialog.cpp:95
+msgctxt "color image filter"
+msgid "Monochrome"
+msgstr "តែមួយ​ពណ៌"
+
+#: tools/colorimagesdialog.cpp:96
+msgctxt "color image filter"
+msgid "Negate"
+msgstr "បដិសេធ​"
+
+#: tools/colorimagesdialog.cpp:97
+msgctxt "color image filter"
+msgid "Normalize"
+msgstr "ធ្វើ​ឲ្យ​សាមញ្ញ​"
+
+#: tools/colorimagesdialog.cpp:98
+msgctxt "color image filter"
+msgid "Segment"
+msgstr "ចម្រៀក​"
+
+#: tools/colorimagesdialog.cpp:99
+msgctxt "color image filter"
+msgid "Trim"
+msgstr "កាត់តម្រឹម​"
+
+#: tools/colorimagesdialog.cpp:100
+msgid "Normalize"
+msgstr "ធ្វើ​ឲ្យ​សាមញ្ញ​"
+
+#: tools/colorimagesdialog.cpp:102
+msgid ""
+"<p>Select here the color enhancement type for your images:</p><p><b>Decrease "
+"contrast</b>: reduce the image contrast. The algorithm reduces the intensity "
+"difference between the lighter and darker elements of the image.<br/"
+"><b>Depth</b>: change the color depth of the image.<br/><b>Equalize</b>: "
+"perform histogram equalization to the image.<br/><b>Fuzz</b>: merging colors "
+"within a distance, i.e. consider them to be equal.<br/><b>Gray scales</b>: "
+"convert color images to grayscale images.<br/><b>Increase contrast</b>: "
+"enhance the image contrast. The algorithm enhances the intensity differences "
+"between the lighter and darker elements of the image.<br/><b>Monochrome</b>: "
+"transform the image to black and white.<br/><b>Negate</b>: replace every "
+"pixel with its complementary color. The red, green, and blue intensities of "
+"an image are negated. White becomes black, yellow becomes blue, etc.<br/"
+"><b>Normalize</b>: transform image to span the full range of color values. "
+"This is a contrast enhancement technique. The algorithm enhances the "
+"contrast of a colored image by adjusting the pixels color to span the entire "
+"range of colors available.<br/><b>Segment</b>: segment an image by analyzing "
+"the histograms of the color components and identifying units that are "
+"homogeneous with the fuzzy c-means technique.<br/><b>Trim</b>: trim an image "
+"(fuzz reverse technique). The algorithm remove edges that are the background "
+"color from the image.</p>"
+msgstr ""
+"<p>ជ្រើស​ប្រភេទ​​​ការ​បង្កើន​ពណ៌​​នៅ​ទី​នេះ​ សម្រាប់​រូបភាព​របស់​អ្នក​ ៖​​</p><p><b>បន្ថយ​កម្រិត​ពណ៌​​</b> ៖​ កាត់​"
+"បន្ថយ​កម្រិត​ពណ៌​រូបភាព​ ។​ក្បួន​ដោះស្រាយ​​កាត់បន្ថយ​អាំងតង់ស៊ីតេ​​ ខុស​គ្នា​រវាង​ធាតុ​នៃ​រូបភាព​ដែល​​ភ្លឺ​ និង​ងងឹត​ ។​"
+"<br/><b>ជម្រៅ​​</b> ៖​ ប្ដូរ​ជម្រៅ​ពណ៌​​របស់​រូបភាព​ ។​<br/><b>ធ្វើ​ឲ្យ​ស្មើ​គ្នា​</b> ៖​ បង្កើត​ក្រាហ្វ​ស្មើ​"
+"គ្នា​​ចំពោះ​រូបភាព​ ។​<br/><b>ស្រពិច​ស្រពិល</b> ៖​ ពណ៌​បញ្ចូល​គ្នា​​ពី​ចម្ងាយ​ ឧ.ទា. គិត​ថា​ពួក​វា​ស្មើ​គ្នា​ ។"
+"<br/><b>Gray scales</b>: បម្លែង​ពណ៌រូបភាព​ ទៅជា​​រូបភាព​មាត្រដ្ឋាន​ប្រផេះ​ ។<br/><b>បង្កើន​"
+"កម្រិត​ពណ៌​​</b> ៖​ បង្កើន​កម្រិត​ពណ៌​រូបភាព​ ។​ ក្បូន​ដោះស្រាយ​បង្កើន​អាំងតង់​ស៊ីតេ​​​ខុស​គ្នា​រវាង​ ធាតុ​​នៃ​រូបភាព​​​"
+"ភ្លឺ​ និង​ងងឹត ។​<br/><b>តែ​មួយ​ពណ៌​</b> ៖​ ប្លែង​រូបភាព​​ទៅ​ខ្មៅ និង​ស ។​<br/><b>បដិសេធ​</b> ៖ ជំនួស​គ្រប់​"
+"ភីកសែល​តា​ម​ពណ៌​ដែល​បន្ថែម​របស់​វា ។​ ក្រហម​ បៃតង​ និង​ខៀវ​ អាំងតង់ស៊ីតេ​នៃ​រូបភាព​ត្រូវ​បាន​បដិសេធ​ ។​ ពណ៌​ស​"
+"ក្លាយ​ជា​ពណ៌​ខ្មៅ​​ ពណ៌​លឿង​ក្លាយ​ជា​ខៀវ​ ។ល។<br/><b>ធ្វើ​ឲ្យ​ធម្មតា​</b> ៖​ ប្លែង​រូបភាព​​​​ជា​វិសាល​ភាព​តម្លៃ​"
+"ពណ៌​ពេញ​លេញ​ ។​ វា​ជា​របៀប​​​បង្កើន​កម្រិត​ពណ៌ ។​ ក្បួន​ដោះស្រាយ​បង្កើន​​កម្រិត​ពណ៌​​​នៃ​រូបភាព​ដែល​បាន​ដាក់​ពណ៌ ​​ដោយ​"
+"ប្ដូរ​ពណ៌​​ភីកសែល​​​​ ដើម្បី​វិសាលភាព​ពណ៌​ដែល​មាន​ទាំងអស់​ ។<br/><b>ចម្រៀក​</b> ៖​ ចម្រៀក​រូបភាព​​តាម​ការវិភាគ​​"
+"តាម​ក្រាហ្វ​​​របស់​សមាសភាគ​ពណ៌​នីមួយ​​ៗ ​ហើយ​ធ្វើ​ការ​កំណត់​ឯកតា​​ ដែល​ស្មើ​គ្នា​តាមរបៀប c-means ​ស្រពិច​ស្រពិល​ ។​"
+"<br/><b>កាត់​តម្រឹម​</b> ៖​ កាត់​តម្រឹម​រូបភាព​ (របៀប​បញ្ច្រាស​ស្រពិចស្រពិល​​) ។ ក្បួន​​ដោះស្រាយ​​យក​គែម​ចេញ​ ​"
+"ដែល​ជា​ពណ៌​ផ្ទៃ​ខាង​ក្រោយ​ចេញ​ពី​រូបភាព​ ។</p>"
+
+#
+#  Seng Sutha <Sutha@khmeros.info>, 2010.
+#
+#  Seng Sutha <Sutha@khmeros.info>, 2010.
+# translation of kipiplugin_batchprocessimages.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2010.
+#: tools/coloroptionsdialog.cpp:49
+msgid "Color Options"
+msgstr "ជម្រើស​ពណ៌​"
+
+#: tools/coloroptionsdialog.cpp:62
+msgid "Depth value:"
+msgstr "តម្លៃ​ជម្រៅ​ ៖"
+
+#: tools/coloroptionsdialog.cpp:68
+#, fuzzy
+msgid "Select here the image depth in bits."
+msgstr "ជ្រើស​​ជម្រៅ​រូបភាព​នៅ​ទី​​នេះ​​គិត​ជា​ប៊ីត​ ។"
+
+#: tools/coloroptionsdialog.cpp:74
+msgid "Distance:"
+msgstr "ចម្ងាយ ៖​"
+
+#: tools/coloroptionsdialog.cpp:79
+#, fuzzy
+msgid "Select here the fuzz distance in absolute intensity units."
+msgstr "ជ្រើស​ចម្ងាយ​ fuzz នៅ​ទី​នេះ​​ គិត​ជា​ឯកតា​អាំងតង់ស៊ីតេ​ដាច់​ខាត ។"
+
+#: tools/coloroptionsdialog.cpp:86
+#, fuzzy
+msgid "Cluster threshold:"
+msgstr "កម្រិត​ពន្លឺ​ក្រុម​"
+
+#: tools/coloroptionsdialog.cpp:91
+#, fuzzy
+msgid ""
+"Select here the value which represents the minimum number of pixels "
+"contained in a hexahedron before it can be considered valid."
+msgstr ""
+"ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​ចំនួន​ភីកសែល​អប្បបរមា​ដែល​មាន​នេះ​ជា​ប្រាំមួយ​ផ្នែក​ មុន​ពេល​​វា​ត្រូវ​បាន​គិត​ថា​ត្រឹមត្រូវ​ ។"
+
+#: tools/coloroptionsdialog.cpp:97
+#, fuzzy
+msgid "Smooth threshold:"
+msgstr "កម្រិត​ពន្លឺ​រលូន​ ៖​"
+
+#: tools/coloroptionsdialog.cpp:102
+#, fuzzy
+msgid ""
+"Select here the value which eliminates noise in the second derivative of the "
+"histogram. As the value is increased, you can expect a smoother second "
+"derivative."
+msgstr ""
+"ជ្រើស​តម្លៃ​ដែល​ទម្លាក់​ជ្រៀត​ជ្រែក​ក្នុង​​គម្លាត់​ទីពីរ​​​របស់​​ក្រាហ្វ​ ។​ ​​ជា​តម្លៃ​ត្រូវ​បាន​បង្កើន​​ ​អ្នក​អាច​សង្ឃឹម​"
+"គម្លាត​ទីពីរ​របស់​ម៉ាស៊ីន​ខាត់​ ។"
+
+#: tools/convertimagesdialog.cpp:67
+msgid "Batch Convert Images"
+msgstr "បម្លែង​រូប​ភាព​ជា​ក្រុម​"
+
+#: tools/convertimagesdialog.cpp:71
+msgid "Batch convert images"
+msgstr "បម្លែង​រូបភាព​ជា​ក្រុម​"
+
+#: tools/convertimagesdialog.cpp:74
+#, fuzzy
+msgid ""
+"A Kipi plugin for batch converting images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"កម្មវិធី​ជំនួយ​​ Kipi ​សម្រាប់​ការ​បម្លែង​រូបភាព​ជា​ក្រុម​ ។​\n"
+"កម្មវិធី​ជំនួយ​នេះ​ប្រើ​កម្មវិធី​ \"បម្លែង​\" ​ពី​កញ្ចប់​ \"ImageMagick\" ។"
+
+#: tools/convertimagesdialog.cpp:88
+msgid "Image Conversion Options"
+msgstr "ជម្រើស​ការ​បម្លែង​រូបភាព​"
+
+#: tools/convertimagesdialog.cpp:90
+msgid "Format:"
+msgstr "ទ្រង់ទ្រាយ​ ៖​"
+
+#: tools/convertimagesdialog.cpp:100
+#, fuzzy
+msgid "<p>Select here the target image file format.</p>"
+msgstr "<p>ជ្រើស​ទ្រង់ទ្រាយ​ឯកសារ​រូបភាព​គោលដៅ​នេះ​ ។​</p>"
+
+#: tools/convertimagesdialog.cpp:101
+#, fuzzy
+msgid ""
+"<p><b>JPEG</b>: The Joint Photographic Experts Group's file format is a good "
+"Web file format but it uses lossy data compression.</p><p><b>PNG</b>: the "
+"Portable Network Graphics format is an extensible file format for the "
+"lossless, portable, well-compressed storage of raster images. PNG provides a "
+"patent-free replacement for GIF and can also replace many common uses of "
+"TIFF. PNG is designed to work well in online viewing applications, such as "
+"the World Wide Web, so it is fully streamable with a progressive display "
+"option. Also, PNG can store gamma and chromaticity data for improved color "
+"matching on heterogeneous platforms.</p>"
+msgstr ""
+"<p><b>JPEG</b> ៖ ទ្រង់ទ្រាយ​ឯកសារ​របស់​ក្រុម​អ្នក​ជំនាញ​នៃ​រូបថត​រួម ​ជា​ទ្រង់ទ្រាយ​ឯកសារ​​បណ្ដាញ​ល្អ​ ​ប៉ុន្តែ​"
+"វា​ប្រើ​ការ​បង្ហាប់​​ទិន្នន័យ​​មិន​បាត់បង់​ ។​</p><p><b>PNG</b> ៖​ ទ្រង់ទ្រាយ​ក្រាហ្វិក​បណ្ដាញ​ចល័ត​​ជា​ទ្រង់ទ្រាយ​​"
+"ឯកសារ​ដែល​អាច​បន្ត​ មិន​បាត់​បង់​ ចល័ត​​ ផ្ទុក​រូបភាព​ raster ​ដែល​បង្ហាប់​បាន​ល្អ​ ។​ PNG ផ្ដល់​ការ​ជំនួស​ឥត​គិត​"
+"ថ្លៃ​ជាក់​ស្ដែង​ សម្រាប់​ GIF និង​ជំនួស​ប្រើ​ TIFF ទូទៅ​ជា​ច្រើន​ផង​ដែរ​ ។ PNG ត្រូវ​បាន​រចនា​ ដើម្បី​ធ្វើ​ឲ្យ​"
+"ល្អ​ប្រសើរ​ក្នុង​​កម្មវិធី​មើល​លើង​បណ្ដាញ​​ ​ដូច​ជា​បណ្ដាញ​ធំ​ទូលាយ​ ​ដូច្នេះ​វា​អាច​ស្ទ្រីម​ពេញ​លេញ​បាន​​តាម​ជម្រើស​"
+"បង្ហាញ​មាន​ប្រសិទ្ធិភាព​ ។ ម្យ៉ាង​ទៀត​ PNG អាច​ទុក​ហ្គាម៉ា និង​ទិន្នន័យ chromaticity ​សម្រាប់​ការ​ផ្គូផ្គង​"
+"ពណ៌​ដែល​ធ្វើ​ឲ្យ​ល្អ​ប្រសើរ​​លើ​វេទិកា​ ។</p>"
+
+#: tools/convertimagesdialog.cpp:110
+#, fuzzy
+msgid ""
+"<p><b>TIFF</b>: the Tag Image File Format is a rather old standard that is "
+"still very popular today. It is a highly flexible and platform-independent "
+"format which is supported by numerous image processing applications and "
+"virtually all prepress software on the market.</p>"
+msgstr ""
+"<p><b>TIFF</b> ៖​ ទ្រង់ទ្រាយ​ឯកសារ​រូបភាព​ស្លាក​ស្តង់ដារ​ជាង​ ដែល​នៅតែ​មាន​ប្រជាប្រិយភាព​បច្ចុប្បន្ន​"
+"នេះ​ ។ ​វា​អាច​ផ្លាស់ប្ដូរ​ ហើយ​ទ្រង់ទ្រាយ​​វេទិកា​​ឯករាជ​ដែល​ត្រូវ​បាន​គាំ​ដោយ​កម្មវិធី​ដំណើរ​មើល​រូបភាព​ជា​​ច្រើន "
+"និង​គ្រប់​កម្មវិធី​ដំណើរការ​លើ​ទី​ផ្សា​ជាក់ស្ដែង​ ។</p>"
+
+#: tools/convertimagesdialog.cpp:114
+#, fuzzy
+msgid ""
+"<p><b>PPM</b>: the Portable Pixel Map file format is used as an intermediate "
+"format for storing color bitmap information. PPM files may be either binary "
+"or ASCII and store pixel values up to 24 bits in size. This format generates "
+"the largest-sized text files to encode images without losing quality.</p>"
+msgstr ""
+"<p><b>PPM</b> ៖​ ទ្រង់ទ្រាយ​ឯកសារ​ផ្គូផ្គង​ភីកសែល​ចល័ត​ត្រូវ​បាន​ប្រើ​​ជា​ទ្រង់ទ្រាយ​មធ្យម​ ​សម្រាប់​ព័ត៌មាន​"
+"រូបភាព​ពណ៌​ដែល​រក្សាទុក​​ ។​ ឯក​សារ PPM​ អាច​ទ្វេភាគ​ ឬ ASCII ហើយ​ទុក​តម្លៃ​ភីកសែល​ទំហំ​​​លើ​ពី ២៤ ប៊ីត ។​ "
+"ធ្វើឲ្យ​មាន​ទ្រង់ទ្រាយ​នេះ ឯកសារ​អត្ថបទ​ដាក់​ទំហំ​ធំ​បំផុត ​ដើម្បី​អ៊ិនកូដ​ដោយ​មិន​ចាំបាច់​បាត់បង់​គុណភាព​ ។</p>"
+
+#: tools/convertimagesdialog.cpp:119
+#, fuzzy
+msgid ""
+"<p><b>BMP</b>: the BitMaP file format is a popular image format from Win32 "
+"environment. It efficiently stores mapped or unmapped RGB graphics data with "
+"pixels 1-, 4-, 8-, or 24-bits in size. Data may be stored raw or compressed "
+"using a 4-bit or 8-bit RLE data compression algorithm. BMP is an excellent "
+"choice for a simple bitmap format which supports a wide range of RGB image "
+"data.</p>"
+msgstr ""
+"<p><b>BMP</b> ៖ ទ្រង់ទ្រាយ​ឯកសារ​ BitMaP ​ជា​ទ្រង់ទ្រាយ​ឯកសារ​មាន​ប្រជាប្រិយ​ភាព​ពី​បរិស្ថាន​ "
+"Win32  ។ វា​រក្សាទុក​ផែន​ទី​ដែល​បាន​គូរ​ ឬ​ទិន្នន័យ​ក្រាហ្វិក​ RGB ដែល​មិន​បាន​គូរ​ផែន​ទី​​តាម​ភីកសែល​ក្នុង​ទំហំ​ "
+"១-,៤-, ៨-, ឬ ២៤-ប៊ីត ។ ​ទិន្នន័យ​អាច​ត្រូវ​បាន​រក្សាទុក​​ដើម​ ឬ​បាន​បង្ហាប់​ដោយ​ប្រើ​ ៤-ប៊ីត ឬ ៨-ប៊ីត ក្បួន​"
+"ដោះស្រាយ​បង្ហាប់​ទិន្នន័យ​ RLE ។​ BMP ជា​​ជម្រើស​ល្អ​ប្រសើរ​ សម្រាប់​ទ្រង់ទ្រាយ​រូបភាព​សាមញ្ញ​​ ដែល​គាំ​ទ្រ​​ជួរ​ធំ​"
+"ទូលាយ​របស់​​​ទិន្នន័យ​រូបភាព​ RGB ។</p>​"
+
+#: tools/convertimagesdialog.cpp:125
+#, fuzzy
+msgid ""
+"<p><b>TGA</b>: the TarGA image file format is one of the most widely used "
+"bitmap file formats for storage of 24 and 32 bits truecolor images.  TGA "
+"supports colormaps, alpha channel, gamma value, postage stamp image, textual "
+"information, and developer-definable data.</p>"
+msgstr ""
+"<p><b>TGA</b> ៖​ ទ្រង់ទ្រាយ​ឯកសារ​រូបភាព​ TarGA ​មួយ​ក្នុង​ចំណោម​​ជាច្រើន​បាន​ប្រើ​ទ្រង់ទ្រាយ​ឯកសារ​"
+"រូបភាព​​ សម្រាប់​ផ្ទុក​រូបភាព​​ truecolor ២៤ និង​ ៣២ ប៊ីត ។  TGA គាំទ្រ​ colormaps ឆានែល ​alpha "
+"តម្លៃ​ហ្គាម៉ា​ រូបភាព​តែម​​ប្រៃសណីយ៍​ ព័ត៌មាន​ត្រឹមត្រូវ​តាម​អត្ថបទ​​ និង​ទិន្នន័យ​អ្នក​បង្កើត​ដែល​អាច​កំណត់​បាន​ ។​</"
+"p>"
+
+#: tools/convertimagesdialog.cpp:129
+#, fuzzy
+msgid ""
+"<p><b>EPS</b>: the  Adobe Encapsulated PostScript image file format is a "
+"PostScript language program describing the appearance of a single page. "
+"Usually, the purpose of the EPS file is to be embedded inside another "
+"PostScript language page description.</p>"
+msgstr ""
+"<p><b>EPS</b> ៖​ ទ្រង់ទ្រាយ​ឯកសារ​រូបភាព PostScript ​ Adobe Encapsulated ជា​ការ​ពណ៌នា​អំពី​"
+"កម្មវិធី​ភាសា​ PostScript លក្ខណៈ​​នៃ​ទំព័រ​តែមួយ​ ។​ តាម​ធម្មតា គោល​បំណង​នៃ​ឯកសារ​ EPS ត្រូវ​បាន​បង្កប់​​ "
+"ក្នុង​សេចក្ដី​ពិពណ៌នា​ទំព័រ​ភាសា​ PostScript ផ្សេង​ទៀត​ ។</p>"
+
+#: tools/convertimagesdialog.cpp:222 tools/convertimagesdialog.cpp:223
+#: tools/convertimagesdialog.cpp:272 tools/convertimagesdialog.cpp:285
+msgctxt "image compression type"
+msgid "None"
+msgstr "គ្មាន​"
+
+#: tools/convertoptionsdialog.cpp:47
+#, fuzzy
+msgid "Image File Format Options"
+msgstr "ជម្រើស​ទ្រង់ទ្រាយ​ឯកសារ​រូបភាព​"
+
+#: tools/convertoptionsdialog.cpp:60 tools/recompressoptionsdialog.cpp:61
+#: tools/recompressoptionsdialog.cpp:95
+msgid "Image compression level:"
+msgstr "កម្រិត​ការ​បង្ហាប់​រូប​ភាព​ ៖​"
+
+#: tools/convertoptionsdialog.cpp:65
+#, fuzzy
+msgid "<p>The compression value for the target images:</p>"
+msgstr "<p>តម្លៃ​បង្ហាប់​ សម្រាប់​រូបភាព​គោលដៅ​ ៖​​</p>"
+
+#: tools/convertoptionsdialog.cpp:66 tools/recompressoptionsdialog.cpp:66
+#: tools/recompressoptionsdialog.cpp:100
+msgid ""
+"<p><b>1</b>: very high compression<br/><b>25</b>: high compression<br/"
+"><b>50</b>: medium compression<br/><b>75</b>: low compression (default value)"
+"<br/><b>100</b>: no compression</p>"
+msgstr ""
+"<p><b>1</b> ៖​ ការ​បង្ហាប់​ខ្ពស់​ណាស់​​​<br/><b>២៥</b> ៖​ ការ​បង្ហាញ​​ខ្ពស់​<br/><b>៥០</b> ៖​ ការ​"
+"បង្ហាប់​មធ្យម​<br/><b>៧៥</b> ៖​ ការ​បង្ហាប់​ទាប​ (តម្លៃ​លំនាំដើម​​)<br/><b>១០០</b> ៖​ គ្មាន​ការ​"
+"បង្ហាប់​​</p>"
+
+#: tools/convertoptionsdialog.cpp:80 tools/recompressoptionsdialog.cpp:77
+#, fuzzy
+msgid "Use lossless compression"
+msgstr "ប្រើ​ការ​បង្ហាប់​ដែល​មិន​បាត់បង់​​"
+
+#: tools/convertoptionsdialog.cpp:81 tools/recompressoptionsdialog.cpp:78
+#, fuzzy
+msgid ""
+"If this option is enabled, all JPEG operations will use lossless compression."
+msgstr ""
+"បើ​ជម្រើស​នេះ​ត្រូវ​បាន​អនុញ្ញាត​ គ្រប់​ការ​ប្រតិបត្តិការ​ JPEG ទាំងអស់​នឹង​ប្រើ​​ការ​បង្ហាប់​ដែល​មិន​បាត់​បង់​ ។"
+
+#: tools/convertoptionsdialog.cpp:92 tools/convertoptionsdialog.cpp:105
+#: tools/recompressoptionsdialog.cpp:121 tools/recompressoptionsdialog.cpp:139
+msgid "Image compression algorithm:"
+msgstr "ក្បួន​ដោះស្រាយ​ការ​បង្ហាប់​រូបភាព​ ៖​"
+
+#: tools/convertoptionsdialog.cpp:97
+msgctxt "No TIFF compression"
+msgid "None"
+msgstr "គ្មាន​"
+
+#: tools/convertoptionsdialog.cpp:98 tools/convertoptionsdialog.cpp:110
+#, fuzzy
+msgid "Select here the compression algorithm."
+msgstr "ជ្រើស​ក្បួន​ដោះស្រាយ​ការ​បង្ហាប់​នៅ​ទៅ​​នេះ​ ៖​"
+
+#: tools/convertoptionsdialog.cpp:109
+msgctxt "No TGA compression"
+msgid "None"
+msgstr "គ្មាន​"
+
+#: tools/effectimagesdialog.cpp:58
+msgid "Batch Image Effects"
+msgstr "បែបផែន​រូបភាព​ជា​ក្រុម​"
+
+#: tools/effectimagesdialog.cpp:62
+msgid "Batch image effects"
+msgstr "បែបផែន​រូបភាព​ជា​ក្រុម​"
+
+#: tools/effectimagesdialog.cpp:65
+#, fuzzy
+msgid ""
+"A Kipi plugin for batch image-effect transformations.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"កម្មវិធី​ជំនួយ​ Kipi ​សម្រាប់​ការ​ប្លែង​ភាព​​​បែបផែន​រូបភាព​ជា​ក្រុម ។ \n"
+"​កម្មវិធី​ជំនួយ​នេះ​​ប្រើ​​កម្មវិធី​ \"បម្លែង​\" ​ពី​កញ្ចប់​​ \"ImageMagick\" ។"
+
+#: tools/effectimagesdialog.cpp:83
+msgid "Image Effect Options"
+msgstr "ជម្រើស​បែបផែន​រូបភាព​​"
+
+#: tools/effectimagesdialog.cpp:85
+msgid "Effect:"
+msgstr "បែបផែន​ ៖"
+
+#: tools/effectimagesdialog.cpp:87
+msgctxt "image effect"
+msgid "Adaptive Threshold"
+msgstr "កម្រិត​ពន្លឺ​អាច​ប្រែប្រួល​"
+
+#: tools/effectimagesdialog.cpp:88
+#, fuzzy
+msgctxt "image effect"
+msgid "Charcoal"
+msgstr "គូរ​នឹង​ធ្យូង​"
+
+#: tools/effectimagesdialog.cpp:89
+msgctxt "image effect"
+msgid "Detect Edges"
+msgstr "រក​ឃើញ​គែម"
+
+#: tools/effectimagesdialog.cpp:90 tools/effectimagesdialog.cpp:98
+#, fuzzy
+msgctxt "image effect"
+msgid "Emboss"
+msgstr "ច្បាស់​"
+
+#: tools/effectimagesdialog.cpp:91
+#, fuzzy
+msgctxt "image effect"
+msgid "Implode"
+msgstr "វាយ​បញ្ចូល​"
+
+#: tools/effectimagesdialog.cpp:92
+msgctxt "image effect"
+msgid "Paint"
+msgstr "គូរ​"
+
+#: tools/effectimagesdialog.cpp:93
+msgctxt "image effect"
+msgid "Shade Light"
+msgstr "ដាក់​ស្រមោល​ស្រាល​"
+
+#: tools/effectimagesdialog.cpp:94
+#, fuzzy
+msgctxt "image effect"
+msgid "Solarize"
+msgstr "ប្រើ​ពន្លឺ​ព្រះ​អាទិត្យ​"
+
+#: tools/effectimagesdialog.cpp:95
+#, fuzzy
+msgctxt "image effect"
+msgid "Spread"
+msgstr "បាចសាច​"
+
+#: tools/effectimagesdialog.cpp:96
+#, fuzzy
+msgctxt "image effect"
+msgid "Swirl"
+msgstr "កួច​"
+
+#: tools/effectimagesdialog.cpp:97
+#, fuzzy
+msgctxt "image effect"
+msgid "Wave"
+msgstr "រលក​"
+
+#: tools/effectimagesdialog.cpp:100
+msgid ""
+"<p>Select here the effect type for your images:</p><p><b>Adaptive threshold</"
+"b>: perform local adaptive thresholding. The algorithm selects an individual "
+"threshold for each pixel based on the range of intensity values in its local "
+"neighborhood. This allows for thresholding of an image whose global "
+"intensity histogram does not contain distinctive peaks.<br/><b>Charcoal</b>: "
+"simulate a charcoal drawing.<br/><b>Detect edges</b>: detect edges within an "
+"image.<br/><b>Emboss</b>: returns a grayscale image with a three-dimensional "
+"effect. The algorithm convolves the image with a Gaussian operator of the "
+"given radius and standard deviation.<br/><b>Implode</b>: implode image "
+"pixels about the center.<br/><b>Paint</b>: applies a special effect filter "
+"that simulates an oil painting.<br/><b>Shade light</b>: shines a distant "
+"light on an image to create a three-dimensional effect.<br/><b>Solarize</b>: "
+"negate all pixels above the threshold level. This algorithm produces a "
+"solarization effect seen when exposing a photographic film to light during "
+"the development process.<br/><b>Spread</b>: this is a special-effect method "
+"that randomly displaces each pixel in a block defined by the radius "
+"parameter.<br/><b>Swirl</b>: swirls the pixels about the center of the "
+"image. <br/><b>Wave</b>: creates a \"ripple\" effect in the image by "
+"shifting the pixels vertically along a sine wave.</p>"
+msgstr ""
+"<p>ជ្រើស​ប្រភេទ​បែបផែន​ សម្រាប់​រូបភាព​របស់​អ្នក​នៅ​ទៅ​នេះ​ ៖​</p><p><b>កម្រិត​ពន្លឺ​អាច​ប្រែប្រួល​</b> ៖​ "
+"ដាក់​កម្រិត​ពន្លឺ​​ជា​មូល​ដ្ឋាន​អាច​ប្រែប្រួល​បាន​ ។​ ក្បូន​ដោះស្រាយ​ជ្រើស​​កម្រិត​ពន្លឺ​នីមួយៗ​ ​សម្រាប់​​ភីកសែល​នីមួយ​ៗ​ផ្អែក​"
+"លើ​ជួរ​​នៃ​តម្លៃ​អាំងតង់ស៊ីតេ​ជា​បណ្ដុំ​មូលដ្ឋាន​ ។ វា​អនុញ្ញាត​ឲ្យ​​ដាក់​កម្រិត​ពន្លឺ​នៃ​រូបភាព​ដែល​មានកម្រិត​ខ្ពស់​បំផុត ។​"
+"<br/><b>គូរ​នឹង​ធ្យូង​</b> ៖​ គំនូរ​គូរ​នឹង​ធ្យូង ។<br/><b>រក​ឃើញ​គែម​</b> ៖​ រក​ឃើញ​គែម​នៅ​ក្នុង​រូបភាព​ ។​"
+"<br/><b>Emboss</b> ៖ ត្រឡប់​រូបភាព​មាត្រដ្ឋាន​ប្រផេះ​តាម​បែបផែន​ខ្នាត​ទំហំ​បី​ ។ មាត្រដ្ឋាន​ប្រផេះ​"
+"រមូល​រូបភាព​​តាម​ការី​​ Gaussian ដែល​បាន​ផ្ដល់កាំ និង​គម្លាត​គំរូ ។<br/><b>ដាក់​បញ្ចូល​</b> ៖​ ដាក់​បញ្ចូល​"
+"រូបភាព​ភីកសែល​​កណ្ដាល​ ។<br/><b>គូរ</b> ៖​ អនុវត្ត​តម្រង​​បែប​ផែន​ពិសេស ​ដែល​​គូរ​ ។<br/><b>ដាក់​ស្រមោល​​"
+"ស្រាល​</b> ៖​ លើ​រូបភាព​ស្រាល​​ត្រូវ​បង្កើត​​បែប​ផែន​ខ្នាត​ទំហំ​បី​ ។​<br/><b>ប្រើ​ពន្លឺ​ព្រះអាទិត្យ​</b> ៖​ "
+"បដិសេធ​គ្រប់​ភីកសែល​កម្រិត​ពន្លឺ​ខាង​លើ​ទាំងអស់​ ។​ ក្បួន​ដោះស្រាយ​នេះ​បង្កើត​បែប​ផែន​ពន្លឺ​ព្រះ​អាទិត្យ​ដែល​អាច​មើល​"
+"ឃើញ​ ​នៅ​ពេល​​ បង្ហាញ​រូបថត​​ ស្រាល​ខណៈ​ពេល​ធ្វើ​ការ​អភិវឌ្ឍន៍ ។<br/><b>Spread</b> ៖ នេះ​ជា​វិធីសាស្ត្រ​"
+"បែបផែន​ពិសេស​ ដែល​ភីកសែល​នីមួយ​​ៗ​​ ប្ដូរ​ប្លុក​ដែល​បាន​កំណត់​ ដោយ​ប៉ារ៉ាម៉ែត្រ radius ។<br/><b>កួច</b> ៖ "
+"កួច​ភីកសែល​ប្រហែល​ជា​ពាក់កណ្ដាល​រូបភាព​ ។ <br/><b>រលក​</b> ៖​ បង្កើត​បែបផែន​ \"អង្កាញ់\" ​ក្នុង​"
+"រូបភាព​ ​ដោយ​ប្ដូរ​​ភីកសែល​ដោយ​បញ្ឈរ​តាម​រលក​សញ្ញា​</p>"
+
+#: tools/effectoptionsdialog.cpp:47
+#, fuzzy
+msgid "Effect Options"
+msgstr "ជម្រើស​បែបផែន​"
+
+#: tools/effectoptionsdialog.cpp:60
+msgid "Width:"
+msgstr "ទទឹង​ ៖​"
+
+#: tools/effectoptionsdialog.cpp:65
+#, fuzzy
+msgid ""
+"Select here the value which represents the width of the local neighborhood."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​ទទឹង​នៃ​បណ្ដុំ​មូលដ្ឋាន​​នៅ​ទី​នេះ​​ ។"
+
+#: tools/effectoptionsdialog.cpp:70
+msgid "Height:"
+msgstr "កម្ពស់​ ៖​"
+
+#: tools/effectoptionsdialog.cpp:75
+#, fuzzy
+msgid ""
+"Select here the value which represents the height of the local neighborhood."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​កម្ពស់​នៃ​បណ្ដុំ​មូលដ្ឋាន​នៅ​ទី​នេះ​​ ។"
+
+#: tools/effectoptionsdialog.cpp:80
+msgid "Offset:"
+msgstr "អុហ្វសិត ៖​"
+
+#: tools/effectoptionsdialog.cpp:85
+#, fuzzy
+msgid "Select here the value which represents the mean offset."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​អុហ្វសិត​មធ្យម​នៅ​ទី​នេះ​ ។"
+
+#: tools/effectoptionsdialog.cpp:92 tools/effectoptionsdialog.cpp:115
+#: tools/effectoptionsdialog.cpp:130 tools/effectoptionsdialog.cpp:168
+#: tools/effectoptionsdialog.cpp:221 tools/filteroptionsdialog.cpp:90
+#: tools/filteroptionsdialog.cpp:105 tools/filteroptionsdialog.cpp:117
+#: tools/filteroptionsdialog.cpp:128 tools/filteroptionsdialog.cpp:146
+#, fuzzy
+msgid "Radius:"
+msgstr "កាំ​ ៖​"
+
+#: tools/effectoptionsdialog.cpp:97
+#, fuzzy
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​កាំ​របស់​បណ្ដុំ​​​ភីកសែល​នៅ​ទី​នេះ​ ។"
+
+#: tools/effectoptionsdialog.cpp:102 tools/effectoptionsdialog.cpp:142
+#: tools/filteroptionsdialog.cpp:95 tools/filteroptionsdialog.cpp:134
+#: tools/filteroptionsdialog.cpp:152
+msgid "Deviation:"
+msgstr "គម្លាត​ ៖"
+
+#: tools/effectoptionsdialog.cpp:107 tools/effectoptionsdialog.cpp:147
+#, fuzzy
+msgid ""
+"Select here the value which represents the standard deviation of the "
+"Gaussian, in pixels."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​គម្លាត​​គំរូ​របស់​​ Gaussian នៅ​ទី​នេះ​ គិត​ជា​ភីកសែល ។"
+
+#: tools/effectoptionsdialog.cpp:120
+#, fuzzy
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood. "
+"Radius defines the radius of the convolution filter. If you use a radius of "
+"0 the algorithm selects a suitable radius."
+msgstr ""
+"ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​កាំ​របស់​បណ្ដុំ​ភីកសែល​នៅ​ទី​នេះ ។ ​កាំ​កំណត់​កាំ​នៃ​តម្រង ។​ ប្រសិន​បើ​ អ្នក​ប្រើ​កាំ​ ០ ក្បួន​"
+"ដោះស្រាយ​ជ្រើស​កាំ​នឹង​សមរម្យ​ ។"
+
+#: tools/effectoptionsdialog.cpp:135
+#, fuzzy
+msgid ""
+"Select here the value which represents the radius of the pixel neighborhood. "
+"For reasonable results, radius should be larger than deviation. If you use a "
+"radius of 0 the algorithm selects a suitable radius."
+msgstr ""
+"ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​កាំ​​របស់​បណ្ដុំ​ភីកសែល​នៅ​ទី​នេះ​​ ។ លទ្ធផល​សមរម្យ​ កាំ​គួរតែ​ធំ​ជាង​គម្លាត ។ ប្រសិនបើ​ អ្នក​​"
+"ប្រើ​កាំ ០ ក្បួន​ដោះស្រាយ​ជ្រើស​កាំ​នឹង​សមរម្យ​ ។"
+
+#: tools/effectoptionsdialog.cpp:155 tools/effectoptionsdialog.cpp:208
+msgid "Factor:"
+msgstr "កត្តា​ ៖​"
+
+#: tools/effectoptionsdialog.cpp:160
+#, fuzzy
+msgid "Select here the value which represents the extent of the implosion."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​កម្រិត​​​ធ្លាក់​ចុះ​​នៅ​ទី​នេះ​ ។"
+
+#: tools/effectoptionsdialog.cpp:173
+#, fuzzy
+msgid ""
+"Select here the value which represents the radius of the circular "
+"neighborhood. Each pixel is replaced by the most frequent color occurring in "
+"a circular region defined by the radius."
+msgstr ""
+"ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​​កាំ​របស់​បណ្ដុំ​រួម​នៅ​ទី​នេះ​ ។​ ភីកសែល​នីមួយ​ៗ​ត្រូវ​បាន​ជំនួស​ដោយ​​ពណ៌​ដដែល​​​ៗ​ ក្នុង​ផ្ទៃ​ជាក់លាក់​"
+"ដែល​បាន​កំណត់​ដោយ​កាំ​ ។"
+
+#: tools/effectoptionsdialog.cpp:183
+msgid "Azimuth:"
+msgstr "Azimuth:"
+
+#: tools/effectoptionsdialog.cpp:188
+#, fuzzy
+msgid ""
+"Select here the value which represents the azimuth of the light source "
+"direction. The azimuth is measured in degrees above the x axis."
+msgstr ""
+"ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​ azimuth នៃ​ទិស​ប្រភព​ស្រាល​នៅ​ទី​នេះ​​ ។​ azimuth ត្រូវ​បាន​វាស់​នៅ​កម្រិត អ័ក្ស x ​"
+"ខាងលើ​ ។"
+
+#: tools/effectoptionsdialog.cpp:194
+msgid "Elevation:"
+msgstr "កម្ពស់​ ៖​"
+
+#: tools/effectoptionsdialog.cpp:199
+#, fuzzy
+msgid ""
+"Select here the value which represents the elevation of the light source "
+"direction. The elevation is measured in pixels above the Z axis."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​​កម្ពស់​នៃ​ទិស​ប្រភព​ស្រាល​នៅ​ទី​នេះ​​ ។​ កម្ពស់​ត្រូវ​បា​ន​វាស់​ជា​ អ័ក្ស Z ​ខាង​លើ​ ។"
+
+#: tools/effectoptionsdialog.cpp:213
+#, fuzzy
+msgid ""
+"Select here the value which represents the percent-threshold of the solarize "
+"intensity."
+msgstr "ជ្រើស​តម្លៃ​​ដែល​បង្ហាញ​កម្រិត​ពន្លឺ​​ជា​ភាគរយ​នៃ​អាំងតង់ស៊ីតេ​ប្រើ​ពន្លឺ​ព្រះ​អាទិត្យ​នៅ​ទី​នេះ​​ ។"
+
+#: tools/effectoptionsdialog.cpp:226
+msgid ""
+"Select here the value which represents the random pixel in a neighborhood of "
+"this extent."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​ភីកសែល​ចៃដន្យ​ក្នុង​បណ្ដុំ​នៃ​កម្រិត​នេះ​​នៅ​ទៅ​នេះ​ ។"
+
+#: tools/effectoptionsdialog.cpp:234
+msgid "Degrees:"
+msgstr "កម្រិត​ ៖​"
+
+#: tools/effectoptionsdialog.cpp:239
+#, fuzzy
+msgid ""
+"Select here the value which represents the tightness of the swirling effect. "
+"You get a more dramatic effect as the degrees move from 1 to 360."
+msgstr ""
+"ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​ការ​ប្រមូល​ផ្ដុំ​បែបផែន ។ អ្នក​ទទួល​បាន​បែបផែន​​ដ៏​អស្ចារ្យ​ជា​ច្រើន​ ដូច​ជា​កម្រិត​ផ្លាស់​ទី​ "
+"១ ទៅ ៣៦០ ។"
+
+#: tools/effectoptionsdialog.cpp:248
+#, fuzzy
+msgid "Amplitude:"
+msgstr "ទំហំ​ពេញ​លេញ​ ៖​"
+
+#: tools/effectoptionsdialog.cpp:253
+#, fuzzy
+msgid "Select here the value which represents the amplitude of the sine wave."
+msgstr "ជ្រើស​តម្លៃ​ដែល​បង្ហាញ​​​ទំហំ​ពេញ​លេញ​​​សញ្ញា​រលក​ស៊ីនុស​នៅ​ទៅ​នេះ​ ។​​​"
+
+#: tools/effectoptionsdialog.cpp:258
+msgid "Length:"
+msgstr "ប្រវែង​ ៖​"
+
+#: tools/effectoptionsdialog.cpp:263
+#, fuzzy
+msgid ""
+"Select here the value which represents the wave length of the sine wave."
+msgstr "ជ្រើស​តម្លៃ​បង្ហាញ​ប្រវែង​​រលក​របស់​រលក​ស៊ីនុស​នៅ​ទី​នេះ​ ។"
+
+#: tools/filterimagesdialog.cpp:58
+#, fuzzy
+msgid "Batch Image Filtering"
+msgstr "ត្រង​រូបភាព​ជា​ក្រុម "
+
+#: tools/filterimagesdialog.cpp:62
+#, fuzzy
+msgid "Batch image filtering"
+msgstr "ត្រង​រូបភាព​ជា​ក្រុម​"
+
+#: tools/filterimagesdialog.cpp:65
+#, fuzzy
+msgid ""
+"A Kipi plugin to batch filter images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"កម្មវិធី​ជំនួយ​ Kipi ​ត្រូវ​ត្រង​រូបភាព​ជា​ក្រុម ។​\n"
+"កម្មវិធី​ជំនួយ​នេះ​​ប្រើ​កម្មវិធី​ \"​បម្លែង​​\" ពី​កញ្ចប់​ \"ImageMagick\" ។"
+
+#: tools/filterimagesdialog.cpp:83
+msgid "Image Filtering Options"
+msgstr "ជម្រើស​ត្រង​រូបភាព​"
+
+#: tools/filterimagesdialog.cpp:87
+#, fuzzy
+msgctxt "image filter"
+msgid "Add Noise"
+msgstr "ជ្រៀត​ជ្រែក​បន្ថែម​"
+
+#: tools/filterimagesdialog.cpp:88
+msgctxt "image filter"
+msgid "Antialias"
+msgstr "Antialias"
+
+#: tools/filterimagesdialog.cpp:89
+msgctxt "image filter"
+msgid "Blur"
+msgstr "ព្រិល​"
+
+#: tools/filterimagesdialog.cpp:90
+msgctxt "image filter"
+msgid "Despeckle"
+msgstr "Despeckle"
+
+#: tools/filterimagesdialog.cpp:91
+#, fuzzy
+msgctxt "image filter"
+msgid "Enhance"
+msgstr "បង្កើន​"
+
+#: tools/filterimagesdialog.cpp:92
+msgctxt "image filter"
+msgid "Median"
+msgstr "មេឌៀ"
+
+#: tools/filterimagesdialog.cpp:93
+msgctxt "image filter"
+msgid "Noise Reduction"
+msgstr "ការ​កាត់បន្ថយ​ជ្រៀតជ្រែក​"
+
+#: tools/filterimagesdialog.cpp:94 tools/filterimagesdialog.cpp:96
+msgctxt "image filter"
+msgid "Sharpen"
+msgstr "ច្បាស់​"
+
+#: tools/filterimagesdialog.cpp:95
+#, fuzzy
+msgctxt "image filter"
+msgid "Unsharp"
+msgstr "មិន​ច្បាស់​"
+
+#: tools/filterimagesdialog.cpp:98
+msgid ""
+"<p>Select here the filter type for your images:</p><p><b>Add noise</b>: add "
+"artificial noise to an image.<br/><b>Antialias</b>: remove pixel aliasing."
+"<br/><b>Blur</b>: blur the image with a Gaussian operator.<br/><b>Despeckle</"
+"b>: reduces the speckle noise in an image while preserving the edges of the "
+"original image.<br/><b>Enhance</b>: apply a digital filter to enhance a "
+"noisy image.<br/><b>Median</b>: apply a median filter to an image.<br/"
+"><b>Noise reduction</b>: reduce noise in an image. <br/><b>Sharpen</b>: "
+"sharpen the image with a Gaussian operator.<br/><b>Unsharp</b>: sharpen the "
+"image with an unsharp mask operator.</p>"
+msgstr ""
+"<p>ជ្រើស​ប្រភេទ​តម្រង​ សម្រាប់​រូបភាព​​របស់​អ្នក​នៅ​ទី​នេះ ៖</p><p><b>ជ្រៀត​ជ្រែក​បន្ថែម​​</b> ​ បន្ថែម​"
+"ជ្រៀត​ជ្រែក​មិន​ពិត​ទៅ​កាន់​រូប​ភាព​ ។<br/><b>Antialias</b> ៖​ យក​រឆេតរឆូត​ចេញ​ ។<br/><b>ព្រិល</"
+"b> ៖ រូបភាព​ព្រិល​តាម​ការី​ Gaussian ។<br/><b>Despeckle</b> ៖ កាត់​បន្ថយ​ជ្រៀតជ្រែក​ចំណុច​តូច​ៗ "
+"ក្នុង​រូបភាព​​ ខណៈ​ពេល​ការពារ​គែម​នៃ​រូបភាព​ដើម​ ។​<br/><b>បង្កើន​</b> ៖​ អនុវត្ត​តម្រង​ឌីជីថល​​ ដើម្បី​"
+"បង្កើន​​រូបភាព​ជ្រៀតជ្រែក​ ។<br/>​<b>មេឌៀ​</b> អនុវត្ត​តម្រង​មេឌៀ ទៅកាន់​រូបភាព​ ។<br/><b>ការ​កាត់​"
+"បន្ថយ​ជ្រៀតជ្រែក​</b> ៖​ កាត់​បន្ថយ​រូបភាព​នៅ​ក្នុង​រូបភាព​ ។ <br/><b>ច្បាស់​</b> ៖​ រូបភាព​ច្បាស់​​ជាមួយ​"
+"កា​រី​ Gaussian  ។<br/><b>មិន​ច្បាស់</b> ៖ រូបភាព​ច្បាស់​ជាមួយ​ការី​របាំង​មិន​ច្បាស់​  ។</p>"
+
+#: tools/filterimagesdialog.cpp:213 tools/filterimagesdialog.cpp:266
+#: tools/filteroptionsdialog.cpp:73
+msgctxt "image noise type"
+msgid "Gaussian"
+msgstr "Gaussian"
+
+#: tools/filterimagesdialog.cpp:265 tools/filteroptionsdialog.cpp:72
+#, fuzzy
+msgctxt "image noise type"
+msgid "Uniform"
+msgstr "ឯកសណ្ឋាន​"
+
+#: tools/filterimagesdialog.cpp:267 tools/filteroptionsdialog.cpp:74
+#, fuzzy
+msgctxt "image noise type"
+msgid "Multiplicative"
+msgstr "ដែល​បន្ថែម​ឡើង​"
+
+#: tools/filterimagesdialog.cpp:268 tools/filteroptionsdialog.cpp:75
+#, fuzzy
+msgctxt "image noise type"
+msgid "Impulse"
+msgstr "សន្ទុះ"
+
+#: tools/filterimagesdialog.cpp:269 tools/filteroptionsdialog.cpp:76
+msgctxt "image noise type"
+msgid "Laplacian"
+msgstr "Laplacian"
+
+#: tools/filterimagesdialog.cpp:270 tools/filteroptionsdialog.cpp:77
+msgctxt "image noise type"
+msgid "Poisson"
+msgstr "Poisson"
+
+#: tools/filteroptionsdialog.cpp:58
+msgid "Filter Options"
+msgstr "ជម្រើស​តម្រង​"
+
+#: tools/filteroptionsdialog.cpp:78
+#, fuzzy
+msgid ""
+"Select here the algorithm method which will used to add random noise to the "
+"images."
+msgstr ""
+"ជ្រើស​វិធីសាស្ត្រ​ក្បូន​ដោះស្រាយ​ដែល​នឹង​ប្រើ​នៅ​ទី​នេះ​​ ដើម្បី​បន្ថែម​ជ្រៀតជ្រែក​ចៃដន្យ​ ទៅកាន់​រូបភាព​ ។"
+
+#: tools/filteroptionsdialog.cpp:80
+#, fuzzy
+msgid "Noise algorithm:"
+msgstr "ក្បួន​ដោះ​ស្រាយ​ជ្រៀត​ជ្រែក​ ៖​"
+
+#: tools/filteroptionsdialog.cpp:85 tools/filteroptionsdialog.cpp:93
+#: tools/filteroptionsdialog.cpp:100 tools/filteroptionsdialog.cpp:110
+#: tools/filteroptionsdialog.cpp:122 tools/filteroptionsdialog.cpp:131
+#: tools/filteroptionsdialog.cpp:139 tools/filteroptionsdialog.cpp:149
+msgid "px"
+msgstr "px"
+
+#: tools/filteroptionsdialog.cpp:86
+#, fuzzy
+msgid ""
+"Select here the blur radius of the Gaussian, not counting the center pixel. "
+"For reasonable results, the radius should be larger than deviation. If you "
+"use a radius of 0 the blur operation selects a suitable radius."
+msgstr ""
+"ជ្រើស​កាំ​ព្រិល​​របស់​​ Gaussian មិន​អាច​រាប់​ភីកសែល​កណ្ដាល​បាន​ឡើយ​ ។ ជា​លទ្ធផល​សមរម្យ​​ កាំ​គួរតែ​ធំ​ជាង​"
+"គម្លាត​ ។​ បើ​អ្នកប្រើ​កាំ​ ០​ ប្រតិបត្តិ​ការ​ជ្រើស​កាំ​នឹង​សមរម្យ​ ។"
+
+#: tools/filteroptionsdialog.cpp:94
+#, fuzzy
+msgid "Select here the standard deviation of the blur Gaussian."
+msgstr "ជ្រើស​គម្លាត​​គំរូ​របស់ Gaussian ព្រិល​នៅ​ទី​នេះ​ ។"
+
+#: tools/filteroptionsdialog.cpp:101
+#, fuzzy
+msgid ""
+"Select here the median radius of the pixel neighborhood. The algorithm "
+"applies a digital filter that improves the quality of noisy images. Each "
+"pixel is replaced by the median in a set of neighboring pixels as defined by "
+"the radius."
+msgstr ""
+"ជ្រើស​កាំ​មេឌៀ​នៃ​បណ្ដុំ​ភីកសែល​នៅ​ទី​នេះ​​ ។​ ក្បូន​ដោះស្រាយ​អនុវត្ត​តម្រង​ឌីជីថល​ ដែល​​ធ្វើ​ឲ្យ​គុណភាព​របស់​រូបភាព​"
+"ជ្រៀត​ជ្រែក​ល្អ​ប្រសើរ​ឡើង​ ។​ ភីកសែល​នីមួយ​ៗ​ត្រូវ​បាន​ជំនួស​​ដោយ​មេឌៀ​​ក្នុង​សំណុំ​របស់​បណ្ដុំ​​ភីកសែល​ដូច​ដែល​បាន​កំណត់​ដោយ​"
+"កាំ​ ។"
+
+#: tools/filteroptionsdialog.cpp:111
+#, fuzzy
+msgid ""
+"Select here the noise reduction radius value. The algorithm smooths the "
+"contours of an image while still preserving edge information. The algorithm "
+"works by replacing each pixel with its neighbor closest in value. A neighbor "
+"is defined by the radius. If you use a radius of 0 the algorithm selects a "
+"suitable radius."
+msgstr ""
+"ជ្រើស​តម្លៃ​កាំ​​កាត់​បន្ថយ​ជ្រៀត​ជ្រែក​នៅ​ទី​នេះ ។ ក្បូន​ដោះស្រាយ​រូបរាង​របស់​រូបភាព​ ខណៈ​ដែល​​វា​នៅ​តែ​ការពារ​"
+"ព័ត៌មាន​​គែម​ ។​ ក្បួន​ដោះស្រាយ​​ដំណើរការ​ដោយ​ប្ដូរ​ភីកសែល​នីមួយ​ៗ​តាម​តម្លៃ​បណ្ដុំ​ជិត​បំផុត​​ ។ បណ្ដុំ​ត្រូវ​បាន​កំណត់​ដោយ​​"
+"កាំ​ ។​ ប្រសិន​បើ​ អ្នក​ប្រើ​កាំ​ ០​​ ក្បួន​ដោះ​ស្រាយ​ជ្រើស​​​​កាំ​នឹង​សមរម្យ​ ។ "
+
+#: tools/filteroptionsdialog.cpp:123
+#, fuzzy
+msgid ""
+"Select here the radius of the sharpen Gaussian, not counting the center "
+"pixel. For reasonable results, the radius should be larger than deviation. "
+"If you use a radius of 0 the sharpen operation selects a suitable radius."
+msgstr ""
+"ជ្រើស​កាំ​របស់​ Gaussian ច្បាស់​​នៅ​ទី​នេះ ។​ ជា​លទ្ធផល​សមរម្យ​​ កាំ​គួរ​តែ​ធំ​ជាង​កម្លាត​ ។ ប្រសិន​បើ​ អ្នក​ប្រើ​"
+"កាំ​ ០ ប្រតិបត្តិការ​ច្បាស់​ជ្រើស​កាំ​នឹង​សមរម្យ​ ។"
+
+#: tools/filteroptionsdialog.cpp:132
+#, fuzzy
+msgid "Select here the sharpen deviation value of the Laplacian."
+msgstr "ជ្រើស​តម្លៃ​គម្លាត​ច្បាស់​របស់ Laplacian នៅ​ទី​នេះ​ ។"
+
+#: tools/filteroptionsdialog.cpp:140
+#, fuzzy
+msgid ""
+"Select here the radius of the unsharpen Gaussian, not counting the center "
+"pixel. The algorithm convolve the image with a Gaussian operator of the "
+"given radius and standard deviation. For reasonable results, radius should "
+"be larger than sigma. If you use a radius of 0 the algorithm selects a "
+"suitable radius."
+msgstr ""
+"ជ្រើស​កាំ​នៃ​​ Gaussian មិន​ច្បាស់​​នៅ​ទី​នេះ​ ។​ មិន​រាប់​ភីកសែល​កណ្ដាល​ ។ ក្បូន​ដោះ​ស្រាយ​រមូល​រូបភាព​​តាម​ការី​ "
+"Gaussian ​នៃ​កាំ​ដែល​បាន​ផ្ដល់​​ និង​គម្លាត​ស្ដង់ដារ​ ។​ ជា​លទ្ធផល​សមរម្យ​ កាំ​គួរតែ​ធំ​ជាង​ស៊ិគម៉ា ។ ប្រសិនបើ​ "
+"អ្នក​ប្រើ​កាំ ០ ក្បូន​ដោះស្រាយ​ជ្រើស​កាំ​នឹង​សមរម្យ​ ។"
+
+#: tools/filteroptionsdialog.cpp:150
+#, fuzzy
+msgid "Select here the unsharpen deviation value of the Gaussian."
+msgstr "ជ្រើស​​តម្លៃ​គម្លាត​​​មិន​ច្បាស់​​របស់​​ Gaussian នៅ​ទី​នេះ ។"
+
+#: tools/filteroptionsdialog.cpp:155 tools/filteroptionsdialog.cpp:161
+msgid "%"
+msgstr "%"
+
+#: tools/filteroptionsdialog.cpp:156
+#, fuzzy
+msgid ""
+"Select here the percentage difference between original and blurred image "
+"which should be added to original."
+msgstr ""
+"ជ្រើស​ភាគ​រយ​ខុសគ្នា​រវាង​រូបភាព​ដែល​ធ្វើ​ឲ្យ​ព្រិល​ និង​រូបភាព​ដើម​​នៅ​ទៅ​នេះ​ ដែល​គួរ​តែ​ត្រូវ​បាន​បន្ថែម​ទៅកាន់​"
+"ដើម​ ។"
+
+#: tools/filteroptionsdialog.cpp:158
+msgid "Amount:"
+msgstr "ចំនួន​ ៖"
+
+#: tools/filteroptionsdialog.cpp:162
+#, fuzzy
+msgid ""
+"Select here the unsharpen threshold value, as a percentage of the maximum "
+"color component value, needed to apply the difference amount."
+msgstr ""
+"ជ្រើស​តម្លៃ​កម្រិត​ពន្លឺ​មិន​ច្បាស់​នៅ​ទី​នេះ​​ ជា​ភាគរយ​នៃ​តម្លៃ​សមាសភាគ​ពណ៌​​អតិបរមា ដែល​ចាំបាច់​ត្រូវ​អនុញ្ញាត​ចំនួន​"
+"ខុស​គ្នា​ ។"
+
+#: tools/filteroptionsdialog.cpp:165
+msgid "Threshold:"
+msgstr "កម្រិត​ពន្លឺ​ ៖​"
+
+#: tools/recompressimagesdialog.cpp:58
+msgid "Batch Recompress Images"
+msgstr "បង្ហាប់​រូបភាព​ឡើងវិញ​ជា​ក្រុម​​"
+
+#: tools/recompressimagesdialog.cpp:62
+msgid "Batch recompress images"
+msgstr "បង្ហាប់​រូបភាព​ឡើង​វិញ​ជា​ក្រុម​"
+
+#: tools/recompressimagesdialog.cpp:65
+#, fuzzy
+msgid ""
+"A Kipi plugin to batch recompress images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"កម្មវិធី​ជំនួយ​​ Kipi ​ត្រូវ​បង្ហាប់​រូបភាព​ឡើង​វិញ​ជា​ក្រុម ។​\n"
+"កម្មវិធី​ជំនួយ​នេះ​ប្រើ​​កម្មវិធី​​ \"បម្លែង​​\" ​ពី​កញ្ចប់​ \"ImageMagick\" ។"
+
+#: tools/recompressimagesdialog.cpp:83
+#, fuzzy
+msgid "Image Recompression Options"
+msgstr "ជម្រើស​ការ​បង្ហាប់​រូបភាព​ឡើង​វិញ​"
+
+#: tools/recompressimagesdialog.cpp:146 tools/recompressimagesdialog.cpp:147
+#: tools/recompressimagesdialog.cpp:200 tools/recompressimagesdialog.cpp:214
+#: tools/recompressoptionsdialog.cpp:125 tools/recompressoptionsdialog.cpp:142
+msgctxt "image compression"
+msgid "None"
+msgstr "គ្មាន​"
+
+#: tools/recompressimagesdialog.cpp:246 tools/resizeimagesdialog.cpp:279
+#, fuzzy
+msgid "image file format unsupported."
+msgstr "មិន​បាន​គាំ​ទ្រ​ទ្រង់ទ្រាយ​ឯកសារ​រូបភាព​ឡើយ​ ។"
+
+#: tools/recompressoptionsdialog.cpp:48
+msgid "Recompression Options"
+msgstr "ជម្រើស​ការ​​បង្ហាប់​ឡើង​វិញ​"
+
+#: tools/recompressoptionsdialog.cpp:65
+#, fuzzy
+msgid "<p>The compression value for JPEG target images:</p>"
+msgstr "<p>តម្លៃ​ការ​បង្ហាប់​ សម្រាប់​រូបភាព​​គោលដៅ​របស់​ JPEG ៖</p>"
+
+#: tools/recompressoptionsdialog.cpp:84
+msgid "JPEG File Format"
+msgstr "ទ្រង់ទ្រាយ​ឯកសារ​របស់​ JPEG ​​"
+
+#: tools/recompressoptionsdialog.cpp:99
+#, fuzzy
+msgid "<p>The compression value for PNG target images:</p>"
+msgstr "<p>តម្លៃ​ការ​បង្ហាប់​ សម្រាប់​រូបភាព​គោលដៅ​របស់​ PNG ៖​​</p>"
+
+#: tools/recompressoptionsdialog.cpp:111
+msgid "PNG File Format"
+msgstr "ទ្រង់ទ្រាយ​ឯកសារ​របស់​ PNG "
+
+#: tools/recompressoptionsdialog.cpp:126
+#, fuzzy
+msgid "Select here the TIFF compression algorithm."
+msgstr "ជ្រើស​ក្បួន​ដោះស្រាយ​ការ​បង្ហាប់​របស់​​ TIFF នៅ​ទី​នេះ​ ។"
+
+#: tools/recompressoptionsdialog.cpp:129
+msgid "TIFF File Format"
+msgstr "ទ្រង់ទ្រាយ​ឯកសារ​​របស់​ TIFF​"
+
+#: tools/recompressoptionsdialog.cpp:143
+#, fuzzy
+msgid "Select here the TGA compression algorithm."
+msgstr "ជ្រើស​​ក្បួន​ដោះស្រាយ​ការ​បង្ហាប់​របស់​ TGA នៅ​ទី​នេះ​ ។"
+
+#: tools/recompressoptionsdialog.cpp:146
+msgid "TGA File Format"
+msgstr "ទ្រង់ទ្រាយ​ឯកសារ​របស់​ TGA "
+
+#: tools/renameimagesdialog.cpp:53
+msgid "Rename Images"
+msgstr "ប្ដូរ​ឈ្មោះ​រូបថត​"
+
+#: tools/renameimagesdialog.cpp:61
+#, fuzzy
+msgid "Batch-rename images"
+msgstr "ប្ដូរ​ឈ្មោះ​រូបភាព​ជា​ក្រុម"
+
+#: tools/renameimagesdialog.cpp:64
+#, fuzzy
+msgid "A Kipi plugin to batch-rename images"
+msgstr "កម្មវិធី​ជំនួយ​ Kipi ត្រូវ​ប្ដូរ​ឈ្មោះ​រូបភាព​ជា​ក្រុម​"
+
+#: tools/renameimageswidget.cpp:87
+msgid "Sort by Name"
+msgstr "តម្រៀប​តាម​ឈ្មោះ​"
+
+#: tools/renameimageswidget.cpp:88
+msgid "Sort by Size"
+msgstr "តម្រៀប​តាម​ទំហំ​"
+
+#: tools/renameimageswidget.cpp:89
+msgid "Sort by Date"
+msgstr "តម្រៀប​តាម​កាលបរិច្ឆេទ​"
+
+#: tools/renameimageswidget.cpp:532
+msgid "Rename File"
+msgstr "ប្ដូរ​ឈ្មោះ​ឯកសារ​"
+
+#: tools/renameimageswidget.cpp:580
+msgctxt "batch process result"
+msgid "Skipped"
+msgstr "បាន​រំលង​"
+
+#: tools/renameimageswidget.cpp:592
+msgctxt "batch process result"
+msgid "OK"
+msgstr "យល់ព្រម​"
+
+#: tools/renameimageswidget.cpp:596
+msgctxt "batch process result"
+msgid "Failed"
+msgstr "បាន​បរាជ័យ​"
+
+#: tools/resizeimagesdialog.cpp:148
+#, fuzzy
+msgid "Batch Resize Images"
+msgstr "ប្ដូរ​ទំហំ​រូបភាព​ជា​ក្រុម​"
+
+#: tools/resizeimagesdialog.cpp:155
+#, fuzzy
+msgid "Proportional (1 dim.)"
+msgstr "មាមាត្រ​​ (​វិមាត្រ​ 1​)"
+
+#: tools/resizeimagesdialog.cpp:156
+#, fuzzy
+msgid "Proportional (2 dim.)"
+msgstr "​សមាមាត្រ​ (​វិមាត្រ​​ ២)"
+
+#: tools/resizeimagesdialog.cpp:157
+#, fuzzy
+msgid "Non-Proportional"
+msgstr "គ្មាន​សមាមាត្រ​"
+
+#: tools/resizeimagesdialog.cpp:158
+msgid "Prepare to Print"
+msgstr "រៀបចំ​បោះពុម្ព​"
+
+#: tools/resizeimagesdialog.cpp:161
+#, fuzzy
+msgid "Batch resize images"
+msgstr "ប្ដូរ​ឈ្មោះ​រូបភាព​ជា​ក្រុម​​"
+
+#: tools/resizeimagesdialog.cpp:164
+#, fuzzy
+msgid ""
+"A Kipi plugin to batch-resize images.\n"
+"This plugin uses the \"convert\" program from the \"ImageMagick\" package."
+msgstr ""
+"កម្មវិធី​ជំនួយ​ Kipi ត្រូវ​ប្ដូរ​ឈ្មោះ​រូបភាព​ជា​ក្រុម​ ។​\n"
+"កម្មវិធី​ជំនួយ​នេះ​​ប្រើ​កម្មវិធី​​ \"បម្លែង​​\" ពី​កញ្ចប់​ \"ImageMagick\" ។"
+
+#: tools/resizeimagesdialog.cpp:173
+msgid "Johannes Wienke"
+msgstr "Johannes Wienke"
+
+#: tools/resizeimagesdialog.cpp:184
+#, fuzzy
+msgid "Image Resizing Options"
+msgstr "ជម្រើស​ប្ដូរ​ទំហំ​រូបភាព​"
+
+#: tools/resizeimagesdialog.cpp:187
+msgid "Type:"
+msgstr "ប្រភេទ​ ៖​"
+
+#: tools/resizeimagesdialog.cpp:194
+#, fuzzy
+msgid "<p>Select here the image-resize type.</p>"
+msgstr "<p>ជ្រើស​ប្រភេទ​ប្ដូរ​ទំហំ​រូបភាព​នៅ​ទៅ​នេះ​ ។​</p>"
+
+#: tools/resizeoptionsdialog.cpp:53
+msgid "Image-Resize Options"
+msgstr "ជម្រើស​ប្ដូរ​ទំហំ​រូបភាព​"
+
+#: tools/resizeoptionsdialog.cpp:79
+msgid "Quality Settings"
+msgstr "ការ​កំណត់​គុណភាព​"
+
+#: tools/resizeoptionsdialog.cpp:85
+msgctxt "Filter name"
+msgid "&lt;default&gt;"
+msgstr "&lt;លំនាំដើម​&gt;"
+
+#: tools/resizeoptionsdialog.cpp:89
+#, fuzzy
+msgid ""
+"Select here the filter name for the resize-image process. This filter will "
+"be used like a kernel convolution process during the increased image size "
+"rendering."
+msgstr ""
+"ជ្រើស​ឈ្មោះ​តម្រង​​នៅ​ទី​នេះ​ សម្រាប់​ដំណើរការ​ប្ដូរ​​ទំហំ​រូបភាព​ ។​ តម្រង​នេះ​នឹង​ត្រូវ​បាន​ប្រើ​ដូច​​ជា​ដំណើរ​ការ​​"
+"ខឺណែល ខណៈ​ពេល​​ប្ដូរ​ទំហំ​រូបភាព​ដែល​បាន​បង្កើន​ត្រឡប់​វិញ ។"
+
+#: tools/resizeoptionsdialog.cpp:97
+msgid "Image quality (percent):"
+msgstr "គុណភាព​រូបភាព​​ (​ភាគរយ​) ៖​"
+
+#: tools/resizeoptionsdialog.cpp:98
+#, fuzzy
+msgid "Quality for compressed images."
+msgstr "គុណភាព​រូបភាព​ដែល​បាន​បង្ហាប់​ ។"
+
+#: tools/resizeoptionsdialog.cpp:208 tools/resizeoptionsdialog.cpp:293
+#: tools/resizeoptionsdialog.cpp:393
+msgid "Size Settings"
+msgstr "ការ​កំណត់​ទំហំ​"
+
+#: tools/resizeoptionsdialog.cpp:215
+msgid "New size (pixels):"
+msgstr "ទំហំ​ថ្មី​​ (ភីកសែល​) ៖"
+
+#: tools/resizeoptionsdialog.cpp:216
+#, fuzzy
+msgid "The new images' size in pixels."
+msgstr "ទំហំ​រូបភាព​ថ្មី​គិតជា​ភីកសែល​ ។"
+
+#: tools/resizeoptionsdialog.cpp:235
+#, fuzzy
+msgid ""
+"<p><b>Proportional (1 dim.)</b>: standard auto-resizing using one dimension. "
+"The width or the height of the images will be automatically selected, "
+"depending on the images' orientations. The images' aspect ratios are "
+"preserved.</p>"
+msgstr ""
+"<p><b>សមាមាត្រ​ (វិមាត្រ ១ )</b> ៖ ដោយ​ប្រើ​ការ​ប្ដូរ​ទំហំ​​​ស្វ័យ​ប្រវត្តិ​វិមាត្រ​ស្តង់ដារ​មួយ ។​ ទទឹង​ ឬ​"
+"កម្ពស់​របស់​រូបភាព​នឹង​ត្រូវ​បាន​ជ្រើស​ដោយ​ស្វ័យ​ប្រវត្តិ​ អាស្រ័យ​លើង​ទិស​រូបភាព ។​ សមាមាត្រ​រូបភាព​ត្រូវ​បាន​​​"
+"រក្សាទុក​ ។</p>"
+
+#: tools/resizeoptionsdialog.cpp:300 tools/resizeoptionsdialog.cpp:400
+msgid "Width (pixels):"
+msgstr "ទទឹង​ (ភីកសែល) ៖"
+
+#: tools/resizeoptionsdialog.cpp:301 tools/resizeoptionsdialog.cpp:401
+#, fuzzy
+msgid "The new images' width in pixels."
+msgstr "ទទឹង​រូបភាព​ថ្មី​គិត​ជា​ភីកសែល​ ។"
+
+#: tools/resizeoptionsdialog.cpp:306 tools/resizeoptionsdialog.cpp:406
+msgid "Height (pixels):"
+msgstr "កម្ពស់​ (ភីកសែល​) ៖"
+
+#: tools/resizeoptionsdialog.cpp:307 tools/resizeoptionsdialog.cpp:407
+#, fuzzy
+msgid "The new images' height in pixels."
+msgstr "កម្ពស់​រូបភាព​ថ្មី​គិត​ជា​ភីកសែល​ ។"
+
+#: tools/resizeoptionsdialog.cpp:309
+#, fuzzy
+msgid "Fill image to specified size"
+msgstr "បំពេញ​រូបភាព​ចំពោះ​ទំហំ​ដែល​បាន​បញ្ជាក់​"
+
+#: tools/resizeoptionsdialog.cpp:310
+#, fuzzy
+msgid ""
+"If this box is set, the resulting image is filled up with the specified "
+"background color to the desired dimension, otherwise it is only as big as "
+"needed to fit the original image into the specified dimensions."
+msgstr ""
+"ប្រសិន​បើ​ ប្រអប់​នេះ​ត្រូវ​បាន​កំណត់​​ ​ជា​លទ្ធផល​រូបភាព​​ត្រូវ​បាន​បំពេញ​តាម​ពណ៌​ផ្ទៃ​ខាង​ក្រោយ​ដែល​បាន​បញ្ជាក់​ "
+"ទៅកាន់​វិមាត្រ​ដែល​ចង់​បាន​​ ម្យ៉ាង​វិញទៀត វា​ជា​វិមាត្រ​ធំ​ដូច​ដែល​ត្រូវ​ការ​​ សម​នឹង​រូបភាព​ដើម​ក្នុង​វិមាត្រ​ដែល​បាន​"
+"បញ្ជាក់​ ។"
+
+#: tools/resizeoptionsdialog.cpp:315
+msgid "Background color:"
+msgstr "ពណ៌​ផ្ទៃ​ខាង​ក្រោយ​ ៖​"
+
+#: tools/resizeoptionsdialog.cpp:317
+#, fuzzy
+msgid ""
+"You can select here the background color to be used when adapting the "
+"images' sizes."
+msgstr "អ្នក​អាច​ជ្រើស​ពណ៌​ផ្ទៃ​ខាងក្រោយ​នៅ​ទី​នេះ ដើម្បី​ប្រើ​ នៅ​ពេល​សម្រួល​ទំហំ​រូបភាព​ ។"
+
+#: tools/resizeoptionsdialog.cpp:345
+#, fuzzy
+msgid ""
+"<p><b>Proportional (2 dim.)</b>: auto-resizing using two dimensions. The "
+"images' aspect ratio are preserved. You can use this, for example, to adapt "
+"your images' sizes to your screen size.</p>"
+msgstr ""
+"<p><b>ដែល​ជា​សមាមាត្រ​ (វិមាត្រ ២)</b> ៖​ ដោយ​ប្រើ​​​​ការ​ប្ដូរ​ទំហំ​ស្វ័យ​ប្រវត្តិ​វិមាត្រ​ពីរ​ ។​ សមាមាត្រ​"
+"រូបភាព​​ត្រូវ​បាន​រក្សាទុក​ ។​ ​អ្នក​អាច​ប្រើ​វា​បាន​ ឧទាហរណ៍​ សម្រួល​ទំហំ​រូបភាព​របស់​អ្នក​ទៅកាន់​ទំហំ​អេក្រង់​របស់​"
+"អ្នក​ ។​</p>"
+
+#: tools/resizeoptionsdialog.cpp:428
+msgid ""
+"<p><b>Non proportional</b>: non-proportional resizing using two dimensions. "
+"The images' aspect ratios are not preserved.</p>"
+msgstr ""
+"<p><b>គ្មាន​សមាមាត្រ​​</b> ៖​ ដោយ​ប្រើ​ការ​​ប្ដូរ​ទំហំ​គ្មាន​​សមាមាត្រ​​វិមាត្រ​ពីរ​ ។​ សមាមាត្រ​រូបភាព​​មិន​ត្រូវ​"
+"បាន​រក្សាទុក​ឡើយ​ ។​</p>"
+
+#: tools/resizeoptionsdialog.cpp:490
+msgid "Use custom settings"
+msgstr "ប្រើ​ការ​កំណត់​ផ្ទាល់​ខ្លួន​"
+
+#: tools/resizeoptionsdialog.cpp:491
+#, fuzzy
+msgid "If this option is enabled, all printing settings can be customized."
+msgstr "ប្រសិន​បើ​ ជម្រើស​នេះ​ត្រូវ​បាន​បើក​ គ្រប់​ការ​កំណត់​ការ​បោះពុម្ព​ទាំងអស់​អាច​ត្រូវ​បាន​ប្ដូរ​តាម​បំណង​ ។"
+
+#: tools/resizeoptionsdialog.cpp:498
+msgid "Printing Standard Settings"
+msgstr "ការ​កំណត់​ស្តង់ដារ​បោះពុម្ព​"
+
+#: tools/resizeoptionsdialog.cpp:501
+msgid "Paper size (cm):"
+msgstr "ទំហំ​ក្រដាស​​ (សង់ទីម៉ែត្រ​) ៖"
+
+#: tools/resizeoptionsdialog.cpp:514
+#, fuzzy
+msgid "The standard photographic paper sizes in centimeters."
+msgstr "ទំហំ​ក្រដាស​​នៃ​​រូបថត​ស្តង់ដារ​គិត​ជា​សង់ទីម៉ែត្រ​ ។"
+
+#: tools/resizeoptionsdialog.cpp:517 tools/resizeoptionsdialog.cpp:565
+msgid "Print resolution (dpi):"
+msgstr "គុណភាព​បង្ហាញ​បោះពុម្ព​​ (dpi) ៖"
+
+#: tools/resizeoptionsdialog.cpp:526
+msgid "The standard print resolutions in dots per inch."
+msgstr "គុណ​ភាព​បង្ហាញ​បោះពុម្ព​ស្តង់ដារ​ចំណុច​ក្នុង​មួយ​អ៊ិន្ឈ៍​ ។"
+
+#: tools/resizeoptionsdialog.cpp:529
+msgid "Stretch Image"
+msgstr "ទាញ​រូបភាព​ឲ្យ​វែង​"
+
+#: tools/resizeoptionsdialog.cpp:530
+#, fuzzy
+msgid ""
+"If this is selected, the image will be stretched to fit the paper "
+"dimensions. Otherwise it will be centered on the canvas and the borders will "
+"get cropped to achieve the desired paper size."
+msgstr ""
+"ប្រសិនបើ​ វា​​ត្រូវ​បាន​ជ្រើស​​ រូបភាព​​នឹង​ត្រូវ​បាន​ទាញ​ឲ្យ​វែង​​ ដើម្បី​ឲ្យ​សម​នឹង​វិមាត្រ​ក្រដាស ។​ ម្យ៉ាង​វិញទៀត​​ វា​"
+"នឹង​ត្រូវ​បាន​ដាក់​​ចំ​​​កណ្ដាល លើ​ផ្ទាំង​ក្រដាស និង​ស៊ុម នឹង​ត្រូវ​បា​ច្រឹប​តាម​ទំហំ​ក្រដាស​ដែល​ត្រូវ​ការ​ ។"
+
+#: tools/resizeoptionsdialog.cpp:546
+msgid "Printing Custom Settings"
+msgstr "ការ​កំណត់​ការ​បោះពុម្ព​ផ្ទាល់ខ្លួន​"
+
+#: tools/resizeoptionsdialog.cpp:549
+msgid "Paper width (cm):"
+msgstr "ទទឹង​ក្រដាស​​ (សង់ទីម៉ែត្រ) ៖"
+
+#: tools/resizeoptionsdialog.cpp:553
+#, fuzzy
+msgid "The customized width of the photographic paper size in centimeters."
+msgstr "បាន​ប្ដូរ​ទទឹង​ទំហំ​ក្រដាស​នៃ​រូបថត​តាម​បំណង​គិតជា​សង់ទីម៉ែត្រ​ ។​"
+
+#: tools/resizeoptionsdialog.cpp:557
+msgid "Paper height (cm):"
+msgstr "កម្ពស់​ក្រដាស​​ (សង់ទីម៉ែត្រ​) ៖"
+
+#: tools/resizeoptionsdialog.cpp:561
+#, fuzzy
+msgid "The customized height of the photographic paper size in centimeters."
+msgstr "បាន​​ប្ដូរ​កម្ពស់​ទំហំ​ក្រដាស​នៃ​​រូបថត​​តាម​បំណង​គិត​ជា​សង់ទីម៉ែត្រ​ ។"
+
+#: tools/resizeoptionsdialog.cpp:569
+#, fuzzy
+msgid "The customized print resolution in dots per inch."
+msgstr "បាន​ប្ដូរ​គុណភាព​បង្ហាញ​បោះពុម្ព​តាម​បំណង​ចំណុច​ក្នុង​មួយ​អ៊ិន្ឈ៍ ។"
+
+#: tools/resizeoptionsdialog.cpp:629
+#, fuzzy
+msgid ""
+"<p><b>Prepare to print</b>: prepare the image for photographic printing. The "
+"user can set the print resolution and the photographic paper size. The "
+"target images will be adapted to the specified dimensions (included the "
+"background size, margin size, and background color).</p>"
+msgstr ""
+"<p><b>រៀបចំ​​បោះពុម្ព​​</b> ៖​ រៀបចំ​រូបភាព​ សម្រាប់​ការ​បោះពុម្ព​រូបថត​ ។​ ​អ្នក​ប្រើ​អាច​កំណត់​គុណភាព​បង្ហាញ​"
+"បោះពុម្ព​​ និង​ទំហំ​ក្រដាស​នៃ​រូបថត​ ។​ រូបភាព​គោលដៅ​នឹង​ត្រូវ​បាន​សម្រួល​ទៅកាន់​វិមាត្រ​ដែល​បាន​បញ្ជាក់​​ (រួច​មាន​"
+"ទំហំផ្ទៃ​ខាងក្រោយ ទំហំ​រឹម​ នឹង​ពណ៌​ផ្ទៃ​ខាង​ក្រោយ​​) ។</p>"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "ខឹម សុខែម, ម៉ន ម៉េត, សេង សុត្ថា, អេង វណ្ណៈ, អោក ពិសិដ្ឋ"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "khoemsokhem@khmeros.info,​​mornmet@khmeros.info,sutha@khmeros.info, ..."
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, m_optionGroupBox)
+#. i18n: file: ui/batchprocessimagesdialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, m_optionComboBoxLabel)
+#: rc.cpp:5 rc.cpp:8
+msgid "SET_AT_RUNTIME"
+msgstr "SET_AT_RUNTIME"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:51
+#. i18n: ectx: property (text), widget (QPushButton, m_optionsButton)
+#: rc.cpp:11
+msgid "Options..."
+msgstr "ជម្រើស​..."
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:75
+#. i18n: ectx: property (text), widget (QPushButton, m_previewButton)
+#: rc.cpp:14
+msgid "Preview"
+msgstr "មើល​ជាមុន​"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:82
+#. i18n: ectx: property (text), widget (QCheckBox, m_smallPreview)
+#: rc.cpp:17
+#, fuzzy
+msgid "Small preview"
+msgstr "មើល​ជា​មុន​បន្តិច​"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:103
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:20
+msgctxt "List of images to process"
+msgid "Source"
+msgstr "ប្រភព​"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:119
+#. i18n: ectx: property (text), widget (QPushButton, m_addImagesButton)
+#. i18n: file: ui/renameimagesbase.ui:142
+#. i18n: ectx: property (text), widget (QPushButton, m_addButton)
+#: rc.cpp:23 rc.cpp:77
+msgid "Add"
+msgstr "បន្ថែម​"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:126
+#. i18n: ectx: property (text), widget (QPushButton, m_remImagesButton)
+#. i18n: file: ui/renameimagesbase.ui:152
+#. i18n: ectx: property (text), widget (QPushButton, m_removeButton)
+#: rc.cpp:26 rc.cpp:80
+msgid "Remove"
+msgstr "យកចេញ​"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:183
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:29
+msgid "Destination"
+msgstr "ទិសដៅ​"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:189
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:32
+msgid "Destination folder:"
+msgstr "ថត​ទិសដៅ​ ៖​"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:209
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:35
+msgid "Overwrite mode:"
+msgstr "របៀប​សរសេរ​ជាន់​លើ​ ៖​"
+
+#. i18n: file: ui/batchprocessimagesdialog.ui:222
+#. i18n: ectx: property (text), widget (QCheckBox, m_removeOriginal)
+#: rc.cpp:38
+msgid "Remove original"
+msgstr "Remove original"
+
+#. i18n: file: ui/imagepreview.ui:19
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:41
+msgid "Zoom:"
+msgstr "ពង្រីក​ ៖​"
+
+#. i18n: file: ui/imagepreview.ui:65
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:44
+msgid "Original Image"
+msgstr "រូបភាព​ដើម​​​"
+
+#. i18n: file: ui/imagepreview.ui:71
+#. i18n: ectx: property (whatsThis), widget (KIPIBatchProcessImagesPlugin::PixmapView, m_origView)
+#: rc.cpp:47
+#, fuzzy
+msgid ""
+"This is the original image preview. You can use the mouse wheel to change "
+"the zoom factor. Click in and use the mouse to move the image."
+msgstr ""
+"នេះ​ជា​រូបភាព​ដើម​មើល​ជាមុន​ ។​ អ្នក​អាច​ប្រើ​កង់​​កណ្ដុរ ដើម្បី​ប្ដូរ​កត្តា​ពង្រីក​ ។​ ចុច​កណ្ដុរ​ ដើម្បី​ផ្លាស់ទី​​"
+"រូបភាព​ ។​"
+
+#. i18n: file: ui/imagepreview.ui:93
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:50
+#, fuzzy
+msgid "Destination Image"
+msgstr "រូបភាព​ទិស​ដៅ​"
+
+#. i18n: file: ui/imagepreview.ui:99
+#. i18n: ectx: property (whatsThis), widget (KIPIBatchProcessImagesPlugin::PixmapView, m_destView)
+#: rc.cpp:53
+#, fuzzy
+msgid ""
+"This is the destination image preview. You can use the mouse wheel to change "
+"the zoom factor. Click in and use the mouse to move the image."
+msgstr ""
+"នេះ​ជា​រូបភាព​ទិស​ដៅ​​ត្រូវ​​មើល​ជាមុន​ ។​ អ្នក​អាច​ប្រើ​កង់​កណ្ដុរ​ ដើម្បី​ប្ដូរ​កត្តា​ពង្រីក​ ។ ចុច​កណ្ដុរ​ ដើម្បី​ផ្លាស់ទី​​"
+"រូបភាព​ ។"
+
+#. i18n: file: ui/renameimagesbase.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, m_templateGroupBox)
+#: rc.cpp:56
+#, fuzzy
+msgid "Template for renaming files"
+msgstr "ពុម្ព​ សម្រាប់​ប្ដូរ​ឈ្មោះ​ឯកសារ​"
+
+#. i18n: file: ui/renameimagesbase.ui:26
+#. i18n: ectx: property (text), widget (QLabel, m_seqLabel)
+#: rc.cpp:59
+#, fuzzy
+msgid "Sequence number start value:"
+msgstr "តម្លៃ​ចាប់​ផ្ដើម​ចំនួន​​តាម​លំដាប់​ ៖​"
+
+#. i18n: file: ui/renameimagesbase.ui:39
+#. i18n: ectx: property (text), widget (QLabel, m_prefixLabel)
+#: rc.cpp:62
+#, fuzzy
+msgid "Prefix string:"
+msgstr "បុព្វបទ​ខ្សែ​អក្សរ ៖​"
+
+#. i18n: file: ui/renameimagesbase.ui:49
+#. i18n: ectx: property (text), widget (QCheckBox, m_addFileNameCheck)
+#: rc.cpp:65
+msgid "Add original file name"
+msgstr "បន្ថែម​ឈ្មោះ​ឯកសារ​ដើម​"
+
+#. i18n: file: ui/renameimagesbase.ui:56
+#. i18n: ectx: property (text), widget (QCheckBox, m_addFileDateCheck)
+#: rc.cpp:68
+msgid "Add file date"
+msgstr "បន្ថែម​កាលបរិច្ឆេទ​ឯកសារ​"
+
+#. i18n: file: ui/renameimagesbase.ui:63
+#. i18n: ectx: property (text), widget (QCheckBox, m_useExtraSymbolsCheck)
+#: rc.cpp:71
+#, fuzzy
+msgid "Use extra [X*] symbols in date format field"
+msgstr "ប្រើ​​​និមិត្ត​សញ្ញា​ [X*] បន្ថែម​​ក្នុង​វាល​ទ្រង់ទ្រាយ​កាលបរិច្ឆេទ​"
+
+#. i18n: file: ui/renameimagesbase.ui:91
+#. i18n: ectx: property (text), widget (QCheckBox, m_formatDateCheck)
+#: rc.cpp:74
+msgid "Date format:"
+msgstr "ទ្រង់ទ្រាយ​កាលបរិច្ឆេទ​ ៖​"
+
+#. i18n: file: ui/renameimagesbase.ui:175
+#. i18n: ectx: property (text), widget (QPushButton, m_reverseList)
+#: rc.cpp:83
+#, fuzzy
+msgid "Reverse List"
+msgstr "ដាក់​បញ្ជី​បញ្ច្រាស​"
+
+#. i18n: file: ui/renameimagesbase.ui:198
+#. i18n: ectx: property (text), widget (QPushButton, m_sortButton)
+#: rc.cpp:86
+msgid "Sort List"
+msgstr "តម្រៀប​បញ្ជី"
+
+#. i18n: file: ui/renameimagesbase.ui:205
+#. i18n: ectx: property (text), widget (QPushButton, m_moveDown)
+#: rc.cpp:89
+msgid "Move &Down"
+msgstr "ផ្លាស់ទី​ចុះ​ក្រោម​"
+
+#. i18n: file: ui/renameimagesbase.ui:212
+#. i18n: ectx: property (text), widget (QPushButton, m_moveUp)
+#: rc.cpp:92
+msgid "Move &Up"
+msgstr "ផ្លាស់ទី​ឡើង​លើ​"

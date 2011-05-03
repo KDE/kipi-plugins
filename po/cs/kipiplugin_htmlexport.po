@@ -1,0 +1,390 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Vít Pelčák <vit@pelcak.org>, 2010.
+# Lukáš Tinkl <ltinkl@redhat.com>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_htmlexport\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-02-07 02:39+0100\n"
+"PO-Revision-Date: 2010-09-21 16:04+0200\n"
+"Last-Translator: Vít Pelčák <vit@pelcak.org>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: generator.cpp:136
+#, kde-format
+msgid "Could not find theme in '%1'"
+msgstr "Nelze najít téma v '%1'"
+
+#: generator.cpp:143
+msgid "Copying theme"
+msgstr "Kopírování téma"
+
+#: generator.cpp:155
+msgid "Could not copy theme"
+msgstr "Téma nelze kopírovat"
+
+#: generator.cpp:178
+#, kde-format
+msgid "Downloading remote files for \"%1\""
+msgstr "Stahování vzdálených souborů pro \"%1\""
+
+#: generator.cpp:193
+msgid "Could not open temporary file"
+msgstr "Nelze otevřít dočasný soubor"
+
+#: generator.cpp:201
+#, kde-format
+msgid "Could not download %1"
+msgstr "Nelze stáhnout %1"
+
+#: generator.cpp:219
+msgid "Could not create gallery.xml"
+msgstr "Nelze vytvořit gallery.xml"
+
+#: generator.cpp:258
+#, kde-format
+msgid "Generating files for \"%1\""
+msgstr "Vytváří se soubory pro \"%1\""
+
+#: generator.cpp:290
+msgid "Previous"
+msgstr "Předchozí"
+
+#: generator.cpp:291
+msgid "Next"
+msgstr "Další"
+
+#: generator.cpp:292
+msgid "Collection List"
+msgstr "Seznam kolekcí"
+
+#: generator.cpp:293
+msgid "Original Image"
+msgstr "Původní obrázek"
+
+#: generator.cpp:294
+msgid "Go Up"
+msgstr "Přejít nahoru"
+
+#: generator.cpp:296
+msgid "Make"
+msgstr "Výrobek"
+
+#: generator.cpp:297
+msgid "Model"
+msgstr "Model"
+
+#: generator.cpp:298
+msgid "Image Orientation"
+msgstr "Natočení obrázku"
+
+#: generator.cpp:299
+msgid "Image X Resolution"
+msgstr "Rozlišení obrázku X"
+
+#: generator.cpp:300
+msgid "Image Y Resolution"
+msgstr "Rozlišení obrázku Y"
+
+#: generator.cpp:301
+msgid "Image Resolution Unit"
+msgstr "Jednotka rozlišení obrázku"
+
+#: generator.cpp:302
+msgid "Image Date Time"
+msgstr "Datum/čas obrázku"
+
+#: generator.cpp:303
+msgid "YCBCR Positioning"
+msgstr "YCBCR umístění"
+
+#: generator.cpp:304
+msgid "Exposure Time"
+msgstr "Doba expozice"
+
+#: generator.cpp:305
+msgid "F Number"
+msgstr "F číslo"
+
+#: generator.cpp:306
+msgid "Exposure Index"
+msgstr "Index expozice"
+
+#: generator.cpp:307
+msgid "ISO Speed Ratings"
+msgstr "ISO rychlost"
+
+#: generator.cpp:308
+msgid "Shutter Speed Value"
+msgstr "Rychlost závěrky"
+
+#: generator.cpp:309
+msgid "Aperture Value"
+msgstr "Hodnota clony"
+
+#: generator.cpp:310
+msgid "Focal Length"
+msgstr "Ohnisková vzdálenost"
+
+#: generator.cpp:337
+msgid "Generating HTML files"
+msgstr "Vytváří se HTML soubory"
+
+#: generator.cpp:343
+#, kde-format
+msgid "Could not load XSL file '%1'"
+msgstr "Nelze načíst XSL soubor '%1'"
+
+#: generator.cpp:349
+#, kde-format
+msgid "Could not load XML file '%1'"
+msgstr "Nelze načíst XML soubor '%1'"
+
+#: generator.cpp:381
+msgid "Error processing XML file"
+msgstr "Chyba při zpracování XML souboru"
+
+#: generator.cpp:388 generator.cpp:394
+#, kde-format
+msgid "Could not open '%1' for writing"
+msgstr "Nelze otevřít '%1' pro zápis"
+
+#: generator.cpp:410
+#, kde-format
+msgid "Could not create folder '%1' in '%2'"
+msgstr "Nelze vytvořit složka '%1' do '%2'"
+
+#: imagegenerationfunctor.cpp:89
+#, kde-format
+msgid "Could not read image '%1'"
+msgstr "Nelze načíst obrázek '%1'"
+
+#: imagegenerationfunctor.cpp:95
+#, kde-format
+msgid "Format of image '%1' is unknown"
+msgstr "Neznámý formát obrázku '%1'"
+
+#: imagegenerationfunctor.cpp:104
+#, kde-format
+msgid "Error loading image '%1'"
+msgstr "Nelze načíst obrázek '%1'"
+
+#: imagegenerationfunctor.cpp:140
+#, kde-format
+msgid "Could not save image '%1' to '%2'"
+msgstr "Nelze uložit obrázek '%1' do '%2'"
+
+#: imagegenerationfunctor.cpp:161
+#, kde-format
+msgid "Could not save thumbnail for image '%1' to '%2'"
+msgstr "Nelze uložit náhled obrázku '%1' do '%2'"
+
+#: imagegenerationfunctor.cpp:170
+msgid "unavailable"
+msgstr "nedostupné"
+
+#: imagegenerationfunctor.cpp:338
+#, kde-format
+msgid "Could not open file '%1' for writing"
+msgstr "Nelze otevřít soubor '%1' pro zápis"
+
+#: imagegenerationfunctor.cpp:342
+#, kde-format
+msgid "Could not save image to file '%1'"
+msgstr "Nelze uložit obrázek do souboru '%1'"
+
+#: plugin.cpp:72
+msgid "Export to &HTML..."
+msgstr "Exportovat do &HTML..."
+
+#: plugin.cpp:95
+msgid "Generating gallery..."
+msgstr "Vytváří se galerie..."
+
+#: plugin.cpp:105
+msgid "Finished, but some warnings occurred."
+msgstr "Dokončeno s varováním."
+
+#: wizard.cpp:170
+#, kde-format
+msgctxt "'%1' is a label for a theme parameter"
+msgid "%1:"
+msgstr "%1:"
+
+#: wizard.cpp:206
+msgid "Export image collections to HTML pages"
+msgstr "Export kolekcí obrázků na stránky HTML"
+
+#: wizard.cpp:212
+msgid "HTML Export"
+msgstr "Export HTML"
+
+#: wizard.cpp:215
+msgid "A KIPI plugin to export image collections to HTML pages"
+msgstr "KIPI modul pro export kolekcí obrázků na stránky HTML"
+
+#: wizard.cpp:216
+msgid ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+msgstr ""
+"(c) 2006-2009, Aurelien Gateau\n"
+"(c) 2010, Gianluca Urgese"
+
+#: wizard.cpp:220
+msgid "Gianluca Urgese"
+msgstr "Gianluca Urgese"
+
+#: wizard.cpp:221
+msgid "Maintainer"
+msgstr "Správce"
+
+#: wizard.cpp:225
+msgid "Aurelien Gateau"
+msgstr "Aurelien Gateau"
+
+#: wizard.cpp:226
+msgid "Former Author and Maintainer"
+msgstr "Bývalý autor a správce"
+
+#: wizard.cpp:234
+msgid "Handbook"
+msgstr "Příručka"
+
+#: wizard.cpp:243
+msgid "Collection Selection"
+msgstr "Výběr sbírky"
+
+#: wizard.cpp:248
+msgid "Theme"
+msgstr "Téma"
+
+#: wizard.cpp:253
+msgid "Theme Parameters"
+msgstr "Parametry téma"
+
+#: wizard.cpp:255
+msgid "Image Settings"
+msgstr "Nastavení obrázku"
+
+#: wizard.cpp:257
+msgid "Output"
+msgstr "Výstup"
+
+#: wizard.cpp:313
+#, kde-format
+msgid "Author: %1"
+msgstr "Autor: %1"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Klára Cihlářová,Jakub Friedl,Zdeněk Pech"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "koty@seznam.cz,jfriedl@suse.cz,dom.toretto@seznam.cz"
+
+#. i18n: file: imagesettingspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:5
+msgid "Full Image"
+msgstr "Celý obrázek"
+
+#. i18n: file: imagesettingspage.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, mSaveImageButton)
+#: rc.cpp:8
+msgid "Save image"
+msgstr "Uložit obrázek"
+
+#. i18n: file: imagesettingspage.ui:39
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2_2)
+#. i18n: file: imagesettingspage.ui:232
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:11 rc.cpp:35
+msgid "Format:"
+msgstr "Formát:"
+
+#. i18n: file: imagesettingspage.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:249
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:14 rc.cpp:38
+msgid "JPEG"
+msgstr "JPEG"
+
+#. i18n: file: imagesettingspage.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_fullFormat)
+#. i18n: file: imagesettingspage.ui:254
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_thumbnailFormat)
+#: rc.cpp:17 rc.cpp:41
+msgid "PNG"
+msgstr "PNG"
+
+#. i18n: file: imagesettingspage.ui:85
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: imagesettingspage.ui:278
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:20 rc.cpp:44
+msgid "Quality:"
+msgstr "Kvalita:"
+
+#. i18n: file: imagesettingspage.ui:130
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_fullResize)
+#: rc.cpp:23
+msgid "Max size:"
+msgstr "Max velikost:"
+
+#. i18n: file: imagesettingspage.ui:171
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copyOriginalImage)
+#: rc.cpp:26
+msgid "Include full-size original images for download"
+msgstr "Včetně plné velikosti původních obrázků pro stahování"
+
+#. i18n: file: imagesettingspage.ui:196
+#. i18n: ectx: property (text), widget (QRadioButton, mUseOriginalImageButton)
+#: rc.cpp:29
+msgid "Use original image"
+msgstr "Použít původní obrázek"
+
+#. i18n: file: imagesettingspage.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:32
+msgid "Thumbnail"
+msgstr "Náhled"
+
+#. i18n: file: imagesettingspage.ui:314
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:47
+msgid "Size:"
+msgstr "Velikost:"
+
+#. i18n: file: outputpage.ui:21
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:50
+msgid "Destination folder:"
+msgstr "Cílová složka:"
+
+#. i18n: file: outputpage.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_openInBrowser)
+#: rc.cpp:53
+msgid "Open in browser"
+msgstr "Otevřít v prohlížeči"
+
+#. i18n: file: themeparameterspage.ui:22
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:56
+msgid ""
+"In this page, you can change some theme parameters. Depending on the theme, "
+"different parameters are available."
+msgstr ""
+"Na této stránce můžete změnit některá nastavení témat. Dostupné jsou různé "
+"parametry v závislosti na tématu."

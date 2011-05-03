@@ -1,0 +1,406 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_removeredeyes\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-18 03:17+0100\n"
+"PO-Revision-Date: 2009-11-18 09:58+0100\n"
+"Last-Translator: Vít Pelčák <vit@pelcak.org>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:54
+msgid "Blob Extraction Settings"
+msgstr "Nastavení extrakce objektu Blob"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:57
+msgid "Minimum &blob size:"
+msgstr "Minimální velikost &Blob:"
+
+#: detection/locators/haarclassifier/widgets/blobsettingsbox.cpp:62
+msgid "Minimum &roundness:"
+msgstr "Minimální &zaoblení:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:61
+msgid "Classifier Settings"
+msgstr "Nastavení klasifikátoru"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:63
+msgid "Use &standard classifier"
+msgstr "Použít &standardní klasifikátor"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:66
+msgid ""
+"If checked, the standard classifier shipped with this KIPI plugin is used."
+msgstr ""
+"Pokud je volba povolena, bude použit standardní klasifikátor tohoto modulu "
+"KIPI."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:68
+msgid "Enter the location of the classifier here."
+msgstr "Zadejte umístění klasifikátoru."
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:71
+msgid "&Neighbor groups:"
+msgstr "Sousední skupi&ny:"
+
+#: detection/locators/haarclassifier/widgets/classifiersettingsbox.cpp:76
+msgid "&Scaling factor:"
+msgstr "&Měřítko:"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:128
+msgid "&Advanced Mode"
+msgstr "&Pokročilý režim"
+
+#: detection/locators/haarclassifier/widgets/haarsettingswidget.cpp:134
+msgid "&Simple Mode"
+msgstr "&Základní režim"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:88
+msgid ""
+"<p><b>Slower<br/>(low-res / slightly blurred images)</b></p><p>In this mode "
+"the automatic detection and correction of red-eye is the most reliable. The "
+"drawback of the higher detection rate is a much slower computation.</p>"
+msgstr ""
+"<p><b>Pomalu<br/>(malé rozlišení / mírně rozmazané obrázky)</b></p><p>V "
+"tomto režimu je automatická detekce a detekce červených očí "
+"nejspolehlivější. Nevýhodou je, že přepočet je nejpomalejší.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:93
+msgid ""
+"<p><b>Standard</b></p><p>This mode is adequate for most image resolutions. "
+"Always try this mode first.</p>"
+msgstr ""
+"<p><b>Standardně</b></p><p>Tento režim vyhovuje většině rozlišení obrázků. "
+"Vždy vyzkoušejte nejdříve tento režim.</p>"
+
+#: detection/locators/haarclassifier/widgets/simplesettings.cpp:97
+msgid ""
+"<p><b>Faster<br/>(high-res images)</b></p><p>In this mode the automatic "
+"detection will be faster, but more false positives may occur. Use this mode "
+"only for very high-resolution and sharp images.</p>"
+msgstr ""
+"<p><b>Rychle<br/>(obrázky s vysokým rozlišením)</b></p><p>V tomto režimu je "
+"automatická detekce nejrychlejší, může ale dojít k více pozitivním chybám. "
+"Tento režim používejte pro ostré obrázky s vysokým rozlišením.</p>"
+
+#: plugin/plugin_removeredeyes.cpp:62
+msgid "&Red-Eye Removal..."
+msgstr "Odstranění če&rvených očí..."
+
+#: plugin/removeredeyeswindow.cpp:164
+msgid "Automatic Red-Eye Removal"
+msgstr "Automatické odstranění červených očí"
+
+#: plugin/removeredeyeswindow.cpp:190
+msgid "Remove Red-Eye"
+msgstr "Odstranit červené oči"
+
+#: plugin/removeredeyeswindow.cpp:193
+msgid "A plugin to automatically detect and remove red-eye effect."
+msgstr "Modul automaticky rozezná odstraní efekt červených očí."
+
+#: plugin/removeredeyeswindow.cpp:195
+msgid "(c) 2008-2009, Andi Clemens"
+msgstr "(c) 2008-2009, Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Andi Clemens"
+msgstr "Andi Clemens"
+
+#: plugin/removeredeyeswindow.cpp:197
+msgid "Author and Maintainer"
+msgstr "Autor a správce"
+
+#: plugin/removeredeyeswindow.cpp:202
+msgid "Handbook"
+msgstr "Příručka"
+
+#: plugin/removeredeyeswindow.cpp:210
+msgid "Correct &Photos"
+msgstr "Opravit &fotografie"
+
+#: plugin/removeredeyeswindow.cpp:211
+msgid "Start correcting the listed images"
+msgstr "Spustit opravu obrázků ze seznamu"
+
+#: plugin/removeredeyeswindow.cpp:215
+msgid "&Test-Run"
+msgstr "Spustit &test"
+
+#: plugin/removeredeyeswindow.cpp:216
+msgid "Simulate the correction process, without saving the results."
+msgstr "Vyzkoušet proces opravy bez uložení výsledku."
+
+#: plugin/removeredeyeswindow.cpp:247
+msgctxt "The total number of images in the list"
+msgid "Total:"
+msgstr "Celkem:"
+
+#: plugin/removeredeyeswindow.cpp:249
+msgctxt "number of images successfully processed"
+msgid "Success:"
+msgstr "Úspěšných:"
+
+#: plugin/removeredeyeswindow.cpp:251
+msgctxt "number of images failed to process"
+msgid "Failed:"
+msgstr "Selhalo:"
+
+#: plugin/removeredeyeswindow.cpp:284
+msgid "File List"
+msgstr "Seznam souborů"
+
+#: plugin/removeredeyeswindow.cpp:285
+msgid "Settings"
+msgstr "Nastavení"
+
+#: plugin/removeredeyeswindow.cpp:426
+msgid ""
+"<p>You chose the <b>'overwrite' correction mode</b>.<br/>Are you sure you "
+"want to lose your original image files?</p>"
+msgstr ""
+"<p>Zvolili jste <b>režim 'přepisování' opravou</b>.<br/>Opravdu chcete "
+"přijít o původní soubor obrázku?</p>"
+
+#: plugin/removeredeyeswindow.cpp:429
+msgid "Overwrite mode"
+msgstr "Režim přepisování"
+
+#: plugin/removeredeyeswindow.cpp:642
+msgid ""
+"<p>Some of the images could not be analyzed with the current settings, or "
+"they do not contain any red-eye at all.</p><p><b>Would you like to remove "
+"these images from the list?</b></p>"
+msgstr ""
+"<p>Některé obrázky nelze s aktuálním nastavením analyzovat, nebo neobsahují "
+"žádné červené oči.</p><p><b>Chcete tyto obrázky odstranit ze seznamu?</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:648
+msgid "Remove unprocessed images?"
+msgstr "Odstranit nezpracovatelné obrázky?"
+
+#: plugin/removeredeyeswindow.cpp:683
+msgid ""
+"<p>You tried to add <b>RAW images</b> to the plugin,<br/>but those file-"
+"types are not supported.</p><p><b>They were automatically removed from the "
+"list.</b></p>"
+msgstr ""
+"<p>Pokusili jste se přidat <b>obrázek RAW</b> do modulu,<br/>avšak tento typ "
+"souboru není podporován.</p><p><b>Soubor bude automaticky odstraněn ze "
+"seznamu.</b></p>"
+
+#: plugin/removeredeyeswindow.cpp:687
+msgid "RAW images found"
+msgstr "Nalezeny obrázky RAW"
+
+#: plugin/removeredeyeswindow.cpp:768
+#, kde-format
+msgid "<p>%1 image has been successfully processed.</p>"
+msgid_plural "<p>%1 images have been successfully processed.</p>"
+msgstr[0] "<p>%1 obrázek byl úspěšně zpracován.</p>"
+msgstr[1] "<p>%1 obrázky byly úspěšně zpracovány.</p>"
+msgstr[2] "<p>%1 obrázků bylo úspěšně zpracováno.</p>"
+
+#: plugin/removeredeyeswindow.cpp:771
+msgid "<h2>Correction Complete</h2>"
+msgstr "<h2>Oprava dokončena</h2>"
+
+#: plugin/removeredeyeswindow.cpp:773
+msgid "Correction Complete"
+msgstr "Oprava dokončena"
+
+#: plugin/removeredeyeswindow.cpp:810
+msgid "<h2>No locator has been loaded.<br/>The plugin is not executable.</h2>"
+msgstr "<h2>Lokátor nebyl načten.<br/>Modul nelze spustit.</h2>"
+
+#: widgets/myimageslist.cpp:73
+msgid "Corrected Eyes"
+msgstr "Opravené oči"
+
+#: widgets/myimageslist.cpp:75
+msgid "This is the list of images from which to remove red-eye."
+msgstr "Seznam obrázků ze kterých byly odstraněny červené oči."
+
+#: widgets/previewwidget.cpp:81
+msgid ""
+"<p>This widget will display a correction preview for the currently selected "
+"image.</p><p><ul><li>Move the mouse <b>over</b> the preview to display the "
+"original image.</li><li>Move the mouse <b>out of</b> the preview to display "
+"the corrected image.</li><li><b>Click on</b> the preview to display the "
+"correction mask.</li></ul></p><p>The zoom buttons and panning widget allow "
+"you to view certain parts of the image more closely.</p>"
+msgstr ""
+"<p>Tento widget zobrazuje a opravuje náhled vybraného obrázku.</"
+"p><p><ul><li>Přesunutím kurzoru myši <b>na</b> náhled zobrazíte původní "
+"obrázek.</li><li>Přesunutím kurzoru myši <b>mimo</b> náhled bude zobrazen "
+"původní obrázek.</li><li><b>Kliknutím</b> na náhled zobrazíte masku opravy.</"
+"li></ul></p><p>Tlačítko pro zvětšení a widget pro posun vám umožňují "
+"zobrazit podrobnosti určité části obrázku.</p>"
+
+#: widgets/previewwidget.cpp:115
+msgid "<h2>generating preview...</h2>"
+msgstr "<h2>vytváření náhledu...</h2>"
+
+#: widgets/previewwidget.cpp:216
+#, kde-format
+msgid "<p>Can not open preview image<br/>'%1'</p>."
+msgstr "<p>Nelze otevřít náhled obrázku<br/>'%1'</p>."
+
+#: widgets/previewwidget.cpp:218
+msgid "Error loading preview file"
+msgstr "Načítání souboru náhledu se nazdařilo"
+
+#: widgets/previewwidget.cpp:278
+msgid "Original Image"
+msgstr "Původní obrázek"
+
+#: widgets/previewwidget.cpp:284
+msgid "Corrected Image"
+msgstr "Opravený obrázek"
+
+#: widgets/previewwidget.cpp:290
+msgid "Correction Mask"
+msgstr "Maska pro opravu"
+
+#: widgets/previewwidget.cpp:296
+msgid "No image selected"
+msgstr "Nebyl vybrán žádný obrázek"
+
+#: widgets/storagesettingsbox.cpp:65
+msgid "Storage Settings"
+msgstr "Nastavení úložiště"
+
+#: widgets/storagesettingsbox.cpp:67
+msgid ""
+"<p>These settings control the storage of the corrected images. There are "
+"three modes to choose from:</p><p><ul><li><b>Subfolder:</b> The corrected "
+"images will be saved in a subfolder under the current album path.</"
+"li><li><b>Prefix:</b> A custom prefix will be added to the corrected image.</"
+"li><li><b>Suffix:</b> A custom suffix will be added to the corrected image.</"
+"li><li><b>Overwrite:</b> All original images will be replaced.</li></ul></"
+"p><p>Each of the three modes allows you to add an optional keyword to the "
+"image metadata.</p>"
+msgstr ""
+"<p>Zde se nastavuje správa úložiště opravených obrázků. Můžete si vybrat ze "
+"tří režimů:</p><p><ul><li><b>Podsložka:</b> Opravené obrázky budou uloženy "
+"do podsložce ve stejném umístění jako aktuální album.</li><li><b>Předpona:</"
+"b> K opravenému obrázku bude přidána zvolená předpona.</li><li><b>Přípona:</"
+"b> K opravenému obrázku bude přidána zvolená přípona.</li><li><b>Přepsat:</"
+"b> Původní obrázky budou nahrazeny opravenými.</li></ul></p><p>Každý ze tří "
+"režimů vám umožňuje přidat do metadat obrázku nepovinné klíčové slovo.</p>"
+
+#: widgets/storagesettingsbox.cpp:83
+msgid "Save in Subfolder"
+msgstr "Uložit do podsložky"
+
+#: widgets/storagesettingsbox.cpp:84
+msgid "Add Prefix"
+msgstr "Přidat prefix"
+
+#: widgets/storagesettingsbox.cpp:85
+msgid "Add Suffix"
+msgstr "Přidat suffix"
+
+#: widgets/storagesettingsbox.cpp:86
+msgid "Overwrite"
+msgstr "Přepsat"
+
+#: widgets/storagesettingsbox.cpp:89
+msgid ""
+"Enter the name of the subfolder, prefix or suffix to use for the corrected "
+"images."
+msgstr ""
+"Zadejte název podsložky, prefix nebo suffix, které budou použity pro opravy "
+"obrázků."
+
+#: widgets/storagesettingsbox.cpp:91
+msgid "Add &metadata keyword"
+msgstr "Přidat klíčové slovo &metadat"
+
+#: widgets/storagesettingsbox.cpp:93
+msgid "If checked, a custom keyword will be applied to the image metadata."
+msgstr ""
+"Pokud je volba povolena, bude použito zvolené klíčové slovo pro metadata "
+"obrázků."
+
+#: widgets/storagesettingsbox.cpp:96
+msgid "Enter the name of the custom keyword here..."
+msgstr "Zadejte název zvoleného klíčového slova..."
+
+#: widgets/unprocessedsettingsbox.cpp:57
+msgid "Unprocessed Image Handling"
+msgstr "Manipulace s nezpracovatelným obrázkem"
+
+#: widgets/unprocessedsettingsbox.cpp:59
+msgid ""
+"<p>These settings control the handling of unprocessed images when running in "
+"test-mode. To speed up the final correction, unprocessed images can be "
+"removed from the list, so that they are not analyzed again. There are three "
+"modes to choose from:</p><p><ul><li><b>Ask the user:</b> A popup window will "
+"appear to ask for further actions.</li><li><b>Keep in file list:</b> All "
+"unprocessed images will be kept in the list.</li><li><b>Remove from file "
+"list:</b> All unprocessed images are removed after the test run.</li></ul></"
+"p>"
+msgstr ""
+"<p>Tato volba ovládá manipulaci s nezpracovatelnými obrázky v testovacím "
+"režimu. K urychlení opravy mohou být nezpracovatelné obrázky odstraněny ze "
+"seznamu, takže nebudou znovu analyzovýny.  Na výběr jsou tři možnosti:</"
+"p><p><ul><li><b>Zeptat se uživatele:</b> Zobrazí se okno s dotazem na další "
+"úkol.</li><li><b>Zachovat v seznamu souborů:</b> Všechny nezpracovatelné "
+"obrázky budou v seznamu zachovány.</li><li><b>Odstranit ze seznamu souborů:</"
+"b> Po ukončení testovacího režimu budou všechny nezpracovatelné obrázky "
+"odstraněny ze seznamu.</li></ul></p>"
+
+#: widgets/unprocessedsettingsbox.cpp:77
+msgid "&Ask the user"
+msgstr "Zept&at se uživatele"
+
+#: widgets/unprocessedsettingsbox.cpp:78
+msgid ""
+"If checked, the user will be asked to keep or remove unprocessed images."
+msgstr ""
+"Pokud je volba vybrána, bude uživatel dotázán, zda mají být nezpracovatelné "
+"obrázky smazány nebo zachovány."
+
+#: widgets/unprocessedsettingsbox.cpp:82
+msgid "&Keep in file list"
+msgstr "&Zachovat v seznamu souborů"
+
+#: widgets/unprocessedsettingsbox.cpp:83
+msgid ""
+"If checked, unprocessed images will be kept in the file list after the test-"
+"run."
+msgstr ""
+"Pokud je volba vybrána, nezpracovatelné obrázky po zkoušce v seznamu souborů "
+"zůstanou."
+
+#: widgets/unprocessedsettingsbox.cpp:87
+msgid "&Remove from file list"
+msgstr "Odst&ranit ze seznamu souborů"
+
+#: widgets/unprocessedsettingsbox.cpp:88
+msgid ""
+"If checked, unprocessed images will be removed from the file list after the "
+"test-run."
+msgstr ""
+"Pokud je volba vybrána, nezpracovatelné obrázky budou po zkoušce ze seznamu "
+"souborů odstraněny."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "David Kolibáč,Vít Pelčák,Zdeněk Pech"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "david@kolibac.cz,vit@gmail.com,dom.toretto@seznam.cz"

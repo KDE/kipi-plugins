@@ -1,0 +1,922 @@
+# translation of kipiplugin_slideshow.po to Hindi
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Ravishankar Shrivastava <raviratlami@yahoo.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_slideshow\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2008-03-30 16:06+0530\n"
+"Last-Translator: Ravishankar Shrivastava <raviratlami@yahoo.com>\n"
+"Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: dialogs/captiondialog.cpp:41
+msgid "This is a comment sample..."
+msgstr ""
+
+#: dialogs/maindialog.cpp:247
+#, fuzzy, kde-format
+#| msgid "%1 image [%2]"
+msgid "%1 image [%2]"
+msgid_plural "%1 images [%2]"
+msgstr[0] "%1 छवि [%2]"
+msgstr[1] "%1 छवि [%2]"
+
+#: dialogs/maindialog.cpp:326 dialogs/soundtrackdialog.cpp:551
+#, kde-format
+msgid "Cannot access file %1. Please check the path is correct."
+msgstr ""
+
+#: dialogs/maindialog.cpp:362
+#, fuzzy, kde-format
+#| msgid "Image no. %1"
+msgctxt "Image number %1"
+msgid "Image #%1"
+msgstr "छवि संख्या %1"
+
+#: dialogs/maindialog.cpp:393 widgets/slideshowkb.cpp:575
+msgid "Ken Burns"
+msgstr ""
+
+#: dialogs/maindialog.cpp:415
+msgid "Delay between images (ms):"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:265
+#. i18n: ectx: property (text), widget (QLabel, m_delayLabel)
+#: dialogs/maindialog.cpp:422 rc.cpp:130
+msgid "Delay between images (s):"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:79 dialogs/slideshowconfig.cpp:115
+#, fuzzy
+#| msgid "Slideshow"
+msgid "Advanced Slideshow"
+msgstr "स्लाइड-शो"
+
+#: dialogs/slideshowconfig.cpp:87
+#, fuzzy
+#| msgid "Slide Show"
+msgid "Start Slideshow"
+msgstr "स्लाइड शो"
+
+#: dialogs/slideshowconfig.cpp:94
+msgid "Main"
+msgstr "मुख्य"
+
+#: dialogs/slideshowconfig.cpp:95
+msgid "Main Settings"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:99 dialogs/slideshowconfig.cpp:100
+msgctxt "captions for the slideshow"
+msgid "Caption"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:104 dialogs/slideshowconfig.cpp:105
+msgid "Soundtrack"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:109 dialogs/slideshowconfig.cpp:110
+msgid "Advanced"
+msgstr "विस्तृत"
+
+#: dialogs/slideshowconfig.cpp:118
+msgid "A Kipi plugin for image slideshows"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:119
+msgid ""
+"(c) 2003-2004, Renchi Raju\n"
+"(c) 2006-2009, Valerio Fuoglio"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:122
+msgid "Renchi Raju"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:122
+msgid "Author"
+msgstr "लेखक"
+
+#: dialogs/slideshowconfig.cpp:124
+msgid "Valerio Fuoglio"
+msgstr ""
+
+#: dialogs/slideshowconfig.cpp:124
+msgid "Author and maintainer"
+msgstr "लेखक तथा मेंटेनर"
+
+#: dialogs/slideshowconfig.cpp:131
+#, fuzzy
+#| msgid "SlideShow Handbook"
+msgid "Handbook"
+msgstr "स्लाइड-शो हैण्डबुक"
+
+#: dialogs/soundtrackdialog.cpp:63
+msgid "Soundtrack preview"
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:90
+msgid ""
+"If set, the soundtrack for the current album will be saved and restored "
+"automatically on the next startup."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:111
+#, fuzzy
+#| msgid "Moving the current image up on the portfolio list."
+msgid "Move the selected track up in the playlist."
+msgstr "मौजूदा छवि को पोर्टफ़ोलियो सूची में ऊपर खिस्काया जा रहा है."
+
+#: dialogs/soundtrackdialog.cpp:112
+#, fuzzy
+#| msgid "Moving the current image down on the portfolio list."
+msgid "Move the selected track down in the playlist."
+msgstr "मौजूदा छवि को पोर्टफ़ोलियो सूची में नीचे खिस्काया जा रहा है."
+
+#: dialogs/soundtrackdialog.cpp:113
+#, fuzzy
+#| msgid "Add some image files to the portfolio list."
+msgid "Add new tracks to the playlist."
+msgstr "पोर्टफ़ोलियो सूची में कुछ छवि फ़ाइलें जोड़ें."
+
+#: dialogs/soundtrackdialog.cpp:114
+msgid "Delete the selected track from the playlist."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:115
+msgid "Load playlist from a file."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:116
+msgid "Save playlist to a file."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:117
+msgid "Clear the playlist."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:243
+#, fuzzy, kde-format
+#| msgid "%1 image [%2]"
+msgctxt "number of tracks and running time"
+msgid "1 track [%2]"
+msgid_plural "%1 tracks [%2]"
+msgstr[0] "%1 छवि [%2]"
+msgstr[1] "%1 छवि [%2]"
+
+#: dialogs/soundtrackdialog.cpp:271
+msgid ""
+"Slide time is greater than soundtrack time. Suggestion: add more sound files."
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:342
+msgid "Select sound files"
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:389
+#, fuzzy
+#| msgid "You can only move up one image file at once."
+msgid "You can only move image files up one at a time."
+msgstr "आप एक बार में सिर्फ एक छवि फ़ाइल को ऊपर खिसका सकते हैं."
+
+#: dialogs/soundtrackdialog.cpp:419
+#, fuzzy
+#| msgid "You can only move down one image file at once."
+msgid "You can only move files down one at a time."
+msgstr "आप एक बार में सिर्फ एक छवि फ़ाइल को नीचे खिसका सकते हैं."
+
+#: dialogs/soundtrackdialog.cpp:442
+msgid "Load playlist"
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:497
+msgid "Save playlist"
+msgstr ""
+
+#: dialogs/soundtrackdialog.cpp:561
+msgid "Cannot create a preview of an empty file list."
+msgstr ""
+
+#: plugin/plugin_advancedslideshow.cpp:87
+#, fuzzy
+#| msgid "Slideshow"
+msgid "Advanced Slideshow..."
+msgstr "स्लाइड-शो"
+
+#: plugin/plugin_advancedslideshow.cpp:195
+msgid "There are no images to show."
+msgstr "दिखाने के लिए यहाँ कोई छवियाँ नहीं हैं."
+
+#: plugin/plugin_advancedslideshow.cpp:251
+#, fuzzy
+#| msgid "Sorry. OpenGL support not available on your system"
+msgid "OpenGL support is not available on your system."
+msgstr "खेद है, आपके तंत्र पर ओपन-जीएल समर्थन उपलब्ध नहीं है"
+
+#: widgets/listsounditems.cpp:95
+#, kde-format
+msgid "%1 is damaged and may not be playable."
+msgstr ""
+
+#: widgets/listsounditems.cpp:97
+msgid "Phonon error"
+msgstr ""
+
+#: widgets/listsounditems.cpp:100
+msgid "This file is damaged and may not be playable."
+msgstr ""
+
+#: widgets/slideshow.cpp:235 widgets/slideshowgl.cpp:389
+#, fuzzy
+#| msgid "None"
+msgctxt "Filter Effect: No effect"
+msgid "None"
+msgstr "कुछ नहीं"
+
+#: widgets/slideshow.cpp:236
+#, fuzzy
+#| msgid "Chess Board"
+msgctxt "Filter Effect: Chess Board"
+msgid "Chess Board"
+msgstr "शतरंज की बिसात"
+
+#: widgets/slideshow.cpp:237
+#, fuzzy
+#| msgid "Melt Down"
+msgctxt "Filter Effect: Melt Down"
+msgid "Melt Down"
+msgstr "नीचे पिघलें"
+
+#: widgets/slideshow.cpp:238
+#, fuzzy
+#| msgid "Sweep"
+msgctxt "Filter Effect: Sweep"
+msgid "Sweep"
+msgstr "स्वीप"
+
+#: widgets/slideshow.cpp:239
+#, fuzzy
+#| msgid "Main"
+msgctxt "Filter Effect: Mosaic"
+msgid "Mosaic"
+msgstr "मुख्य"
+
+#: widgets/slideshow.cpp:240
+#, fuzzy
+#| msgid "Custom"
+msgctxt "Filter Effect: Cubism"
+msgid "Cubism"
+msgstr "मनपसंद"
+
+#: widgets/slideshow.cpp:241
+#, fuzzy
+#| msgid "Growing"
+msgctxt "Filter Effect: Growing"
+msgid "Growing"
+msgstr "ग्रोइंग"
+
+#: widgets/slideshow.cpp:242
+#, fuzzy
+#| msgid "Horizontal Lines"
+msgctxt "Filter Effect: Horizontal Lines"
+msgid "Horizontal Lines"
+msgstr "क्षैतिज रेखाएँ"
+
+#: widgets/slideshow.cpp:243
+#, fuzzy
+#| msgid "Vertical Lines"
+msgctxt "Filter Effect: Vertical Lines"
+msgid "Vertical Lines"
+msgstr "ऊर्ध्वाधर रेखाएँ"
+
+#: widgets/slideshow.cpp:244
+#, fuzzy
+#| msgid "Circle Out"
+msgctxt "Filter Effect: Circle Out"
+msgid "Circle Out"
+msgstr "सर्किल आउट"
+
+#: widgets/slideshow.cpp:245
+#, fuzzy
+#| msgid "MultiCircle Out"
+msgctxt "Filter Effect: Multi-Circle Out"
+msgid "Multi-Circle Out"
+msgstr "मल्टी-सर्किल आउट"
+
+#: widgets/slideshow.cpp:246
+#, fuzzy
+#| msgid "Spiral In"
+msgctxt "Filter Effect: Spiral In"
+msgid "Spiral In"
+msgstr "स्पाइरल इन"
+
+#: widgets/slideshow.cpp:247
+#, fuzzy
+#| msgid "Blobs"
+msgctxt "Filter Effect: Blobs"
+msgid "Blobs"
+msgstr "ब्लॉब्स"
+
+#: widgets/slideshow.cpp:248 widgets/slideshowgl.cpp:398
+#, fuzzy
+#| msgid "Random"
+msgctxt "Filter Effect: Random effect"
+msgid "Random"
+msgstr "बेतरतीब"
+
+#: widgets/slideshow.cpp:1329 widgets/slideshowgl.cpp:698
+#, fuzzy
+#| msgid "SlideShow Completed."
+msgid "Slideshow Completed"
+msgstr "स्लाइडशो सम्पन्न."
+
+#: widgets/slideshow.cpp:1330 widgets/slideshowgl.cpp:699
+#: widgets/slideshowkb.cpp:517
+#, fuzzy
+#| msgid "Click To Exit..."
+msgid "Click to Exit..."
+msgstr "बाहर होने के लिए क्लिक करें..."
+
+#: widgets/slideshowgl.cpp:390
+#, fuzzy
+#| msgid "Bend"
+msgctxt "Filter Effect: Bend"
+msgid "Bend"
+msgstr "बेंड"
+
+#: widgets/slideshowgl.cpp:391
+#, fuzzy
+#| msgid "Blend"
+msgctxt "Filter Effect: Blend"
+msgid "Blend"
+msgstr "ब्लेंड"
+
+#: widgets/slideshowgl.cpp:392
+#, fuzzy
+#| msgid "Cube"
+msgctxt "Filter Effect: Cube"
+msgid "Cube"
+msgstr "घन"
+
+#: widgets/slideshowgl.cpp:393
+#, fuzzy
+#| msgid "Fade"
+msgctxt "Filter Effect: Fade"
+msgid "Fade"
+msgstr "फीका"
+
+#: widgets/slideshowgl.cpp:394
+#, fuzzy
+#| msgid "Flutter"
+msgctxt "Filter Effect: Flutter"
+msgid "Flutter"
+msgstr "फ्लटर"
+
+#: widgets/slideshowgl.cpp:395
+#, fuzzy
+#| msgid "In Out"
+msgctxt "Filter Effect: In Out"
+msgid "In Out"
+msgstr "इन आउट"
+
+#: widgets/slideshowgl.cpp:396
+#, fuzzy
+#| msgid "Rotate"
+msgctxt "Filter Effect: Rotate"
+msgid "Rotate"
+msgstr "घुमाएँ"
+
+#: widgets/slideshowgl.cpp:397
+#, fuzzy
+#| msgid "Slide"
+msgctxt "Filter Effect: Slide"
+msgid "Slide"
+msgstr "स्लाइड"
+
+#: widgets/slideshowkb.cpp:516
+#, fuzzy
+#| msgid "SlideShow Completed."
+msgid "SlideShow Completed"
+msgstr "स्लाइडशो सम्पन्न."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "रविशंकर श्रीवास्तव, जी. करूणाकर"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "raviratlami@aol.in"
+
+#. i18n: file: ui/advanceddialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, AdvancedDialog)
+#: rc.cpp:5
+#, fuzzy
+#| msgid "Advanced"
+msgid "advancedDialog"
+msgstr "विस्तृत"
+
+#. i18n: file: ui/advanceddialog.ui:27
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:8
+#, fuzzy
+#| msgid "Interface"
+msgid "&Interface"
+msgstr "इंटरफेस"
+
+#. i18n: file: ui/advanceddialog.ui:39
+#. i18n: ectx: property (text), widget (QCheckBox, m_useMillisecondsCheckBox)
+#: rc.cpp:11
+msgid "Use &milliseconds instead of seconds"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:55
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:14
+#, fuzzy
+#| msgid "Controls"
+msgid "&Controls"
+msgstr "नियंत्रक"
+
+#. i18n: file: ui/advanceddialog.ui:67
+#. i18n: ectx: property (toolTip), widget (QCheckBox, m_enableMouseWheelCheckBox)
+#: rc.cpp:17
+msgid "Enable mouse wheel to move between slides."
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:70
+#. i18n: ectx: property (text), widget (QCheckBox, m_enableMouseWheelCheckBox)
+#: rc.cpp:20
+msgid "Enable mouse &wheel "
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:88
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:23
+msgid "&Ken Burns effect"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:100
+#. i18n: ectx: property (text), widget (QCheckBox, m_kbDisableFadeCheckBox)
+#: rc.cpp:26
+msgid "Disable &fade-in / fade-out"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:113
+#. i18n: ectx: property (text), widget (QCheckBox, m_kbDisableCrossfadeCheckBox)
+#: rc.cpp:29
+msgid "Disable &cross-fade"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:129
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
+#: rc.cpp:32
+#, fuzzy
+#| msgid "Others"
+msgid "&Others"
+msgstr "अन्य"
+
+#. i18n: file: ui/advanceddialog.ui:143
+#. i18n: ectx: property (text), widget (QCheckBox, m_cacheCheckBox)
+#: rc.cpp:35
+msgid "Enable &Cache"
+msgstr ""
+
+#. i18n: file: ui/advanceddialog.ui:158
+#. i18n: ectx: property (text), widget (QLabel, m_cacheSizeLabel1)
+#: rc.cpp:38
+msgid "Cache size:"
+msgstr "कैश आकार:"
+
+#. i18n: file: ui/advanceddialog.ui:200
+#. i18n: ectx: property (text), widget (QLabel, m_cacheSizeLabel2)
+#: rc.cpp:41
+msgid "images"
+msgstr "छवियाँ"
+
+#. i18n: file: ui/advanceddialog.ui:215
+#. i18n: ectx: property (text), widget (QLabel, m_KBCacheLabel)
+#: rc.cpp:44
+msgid ""
+"<b>Notice</b>:\n"
+"Ken Burns effect does not use this cache mechanism."
+msgstr ""
+
+#. i18n: file: ui/captiondialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, CaptionDialog)
+#: rc.cpp:48
+msgid "captionDialog"
+msgstr ""
+
+#. i18n: file: ui/captiondialog.ui:29
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:51
+msgid "Line length (in characters)"
+msgstr ""
+
+#. i18n: file: ui/captiondialog.ui:80
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:54
+msgid "Colors"
+msgstr "रंग"
+
+#. i18n: file: ui/captiondialog.ui:86
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:57
+#, fuzzy
+#| msgid "Background color:"
+msgid "Font color:"
+msgstr "पृष्ठभूमि का रंगः"
+
+#. i18n: file: ui/captiondialog.ui:109
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:60
+msgid "Background color:"
+msgstr "पृष्ठभूमि का रंगः"
+
+#. i18n: file: ui/captiondialog.ui:170
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:63
+#, fuzzy
+#| msgid "Background color:"
+msgid "Background opacity:"
+msgstr "पृष्ठभूमि का रंगः"
+
+#. i18n: file: ui/captiondialog.ui:177
+#. i18n: ectx: property (text), widget (QCheckBox, m_commentsDrawOutlineCheckBox)
+#: rc.cpp:66
+msgid "Outlined Text"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, MainDialog)
+#: rc.cpp:69
+msgid "mainDialog"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, m_allFilesButton)
+#: rc.cpp:72
+msgid "Show all images in current al&bum"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:36
+#. i18n: ectx: property (text), widget (QRadioButton, m_selectedFilesButton)
+#: rc.cpp:75
+msgid "Show onl&y selected images"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:43
+#. i18n: ectx: property (text), widget (QRadioButton, m_customButton)
+#: rc.cpp:78
+#, fuzzy
+#| msgid "Custom"
+msgid "Cu&stom"
+msgstr "मनपसंद"
+
+#. i18n: file: ui/maindialog.ui:53
+#. i18n: ectx: property (whatsThis), widget (QGroupBox, m_ImagesFilesGroup)
+#: rc.cpp:81
+msgid "Preview the currently selected image."
+msgstr "मौजूदा चयनित छवि का पूर्वावलोकन."
+
+#. i18n: file: ui/maindialog.ui:56
+#. i18n: ectx: property (title), widget (QGroupBox, m_ImagesFilesGroup)
+#: rc.cpp:84
+msgid "Image Files in Slideshow"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:123
+#. i18n: ectx: property (whatsThis), widget (QLabel, m_label6)
+#: rc.cpp:88
+msgid "Total number of images in the portfolio and sequence duration."
+msgstr "पोर्टफ़ोलियो में छवियों की कुल संख्या तथा अनुक्रम अवधि."
+
+#. i18n: file: ui/maindialog.ui:126
+#. i18n: ectx: property (text), widget (QLabel, m_label6)
+#. i18n: file: ui/maindialog.ui:145
+#. i18n: ectx: property (text), widget (QLabel, m_label7)
+#: rc.cpp:91 rc.cpp:97
+msgid "None"
+msgstr "कुछ नहीं"
+
+#. i18n: file: ui/maindialog.ui:142
+#. i18n: ectx: property (whatsThis), widget (QLabel, m_label7)
+#: rc.cpp:94
+msgid "Currently selected image in the portfolio list."
+msgstr "पोर्टफ़ोलियो सूची में मौजूदा चयनित छवि."
+
+#. i18n: file: ui/maindialog.ui:160
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:100
+#, fuzzy
+#| msgid "Comments"
+msgid "Content"
+msgstr "टिप्पणियाँ"
+
+#. i18n: file: ui/maindialog.ui:168
+#. i18n: ectx: property (text), widget (QCheckBox, m_printNameCheckBox)
+#: rc.cpp:103
+msgid "P&rint filename"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:175
+#. i18n: ectx: property (text), widget (QCheckBox, m_printProgressCheckBox)
+#: rc.cpp:106
+msgid "Progress indicator"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:184
+#. i18n: ectx: property (text), widget (QCheckBox, m_printCommentsCheckBox)
+#: rc.cpp:109
+msgid "Pr&int captions "
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:207
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:112
+#, fuzzy
+#| msgid "Slide"
+msgid "Video"
+msgstr "स्लाइड"
+
+#. i18n: file: ui/maindialog.ui:213
+#. i18n: ectx: property (text), widget (QCheckBox, m_openglCheckBox)
+#: rc.cpp:115
+msgid "Use Open&GL slideshow transitions"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:220
+#. i18n: ectx: property (text), widget (QCheckBox, m_openGlFullScale)
+#: rc.cpp:118
+msgid "Use full screen resolution (slower)"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:243
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:121
+msgid "Playback"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:249
+#. i18n: ectx: property (text), widget (QCheckBox, m_loopCheckBox)
+#. i18n: file: ui/soundtrackdialog.ui:331
+#. i18n: ectx: property (text), widget (QCheckBox, m_loopCheckBox)
+#: rc.cpp:124 rc.cpp:212
+msgid "&Loop"
+msgstr "लूप (&L)"
+
+#. i18n: file: ui/maindialog.ui:256
+#. i18n: ectx: property (text), widget (QCheckBox, m_shuffleCheckBox)
+#: rc.cpp:127
+msgid "&Shuffle images"
+msgstr ""
+
+#. i18n: file: ui/maindialog.ui:291
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:133
+msgid "Transition effect:"
+msgstr "ट्रांज़ीशन प्रभाव:"
+
+#. i18n: file: ui/playbackwidget.ui:28
+#. i18n: ectx: property (text), widget (QPushButton, m_playButton)
+#. i18n: file: ui/slideplaybackwidget.ui:31
+#. i18n: ectx: property (text), widget (QPushButton, m_playButton)
+#: rc.cpp:136 rc.cpp:169
+msgid "Play"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:35
+#. i18n: ectx: property (text), widget (QPushButton, m_stopButton)
+#. i18n: file: ui/slideplaybackwidget.ui:38
+#. i18n: ectx: property (text), widget (QPushButton, m_stopButton)
+#: rc.cpp:139 rc.cpp:172
+msgid "Stop"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:42
+#. i18n: ectx: property (text), widget (QPushButton, m_prevButton)
+#. i18n: file: ui/slideplaybackwidget.ui:45
+#. i18n: ectx: property (text), widget (QPushButton, m_prevButton)
+#: rc.cpp:142 rc.cpp:175
+msgid "Prev"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:49
+#. i18n: ectx: property (text), widget (QPushButton, m_nextButton)
+#. i18n: file: ui/slideplaybackwidget.ui:52
+#. i18n: ectx: property (text), widget (QPushButton, m_nextButton)
+#: rc.cpp:145 rc.cpp:178
+msgid "Next"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:69
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:148
+#, fuzzy
+#| msgid "images"
+msgid "Time"
+msgstr "छवियाँ"
+
+#. i18n: file: ui/playbackwidget.ui:78
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:151
+msgid "elapsed:"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:85
+#. i18n: ectx: property (text), widget (QLabel, m_elapsedTimeLabel)
+#. i18n: file: ui/playbackwidget.ui:99
+#. i18n: ectx: property (text), widget (QLabel, m_totalTimeLabel)
+#: rc.cpp:154 rc.cpp:160
+msgid "0:00:00"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:92
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:157
+msgid "total:"
+msgstr ""
+
+#. i18n: file: ui/playbackwidget.ui:127
+#. i18n: ectx: property (text), widget (QLabel, m_soundLabel)
+#: rc.cpp:163
+msgid "SoundPixmap"
+msgstr ""
+
+#. i18n: file: ui/slideplaybackwidget.ui:22
+#. i18n: ectx: property (text), widget (QLabel, m_slideLabel)
+#: rc.cpp:166
+#, fuzzy
+#| msgid "Slide"
+msgid "SlidePixmap"
+msgstr "स्लाइड"
+
+#. i18n: file: ui/soundtrackdialog.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, m_selectionGroupBox)
+#: rc.cpp:181
+msgid "Select audio files"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:76
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonUp)
+#: rc.cpp:184
+#, fuzzy
+#| msgid "Moving the current image up on the portfolio list."
+msgid "Move the current image up in the portfolio list."
+msgstr "मौजूदा छवि को पोर्टफ़ोलियो सूची में ऊपर खिस्काया जा रहा है."
+
+#. i18n: file: ui/soundtrackdialog.ui:104
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonAdd)
+#: rc.cpp:187
+msgid "Add some image files to the portfolio list."
+msgstr "पोर्टफ़ोलियो सूची में कुछ छवि फ़ाइलें जोड़ें."
+
+#. i18n: file: ui/soundtrackdialog.ui:132
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonDelete)
+#: rc.cpp:190
+msgid "Remove some image files from the portfolio list."
+msgstr "पोर्टफ़ोलियो सूची में से कुछ छवि फ़ाइलें मिटाएँ."
+
+#. i18n: file: ui/soundtrackdialog.ui:160
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonDown)
+#. i18n: file: ui/soundtrackdialog.ui:191
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonLoad)
+#. i18n: file: ui/soundtrackdialog.ui:219
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonSave)
+#. i18n: file: ui/soundtrackdialog.ui:247
+#. i18n: ectx: property (whatsThis), widget (QPushButton, m_SoundFilesButtonReset)
+#: rc.cpp:193 rc.cpp:196 rc.cpp:199 rc.cpp:202
+#, fuzzy
+#| msgid "Moving the current image down on the portfolio list."
+msgid "Move the current image down in the portfolio list."
+msgstr "मौजूदा छवि को पोर्टफ़ोलियो सूची में नीचे खिस्काया जा रहा है."
+
+#. i18n: file: ui/soundtrackdialog.ui:305
+#. i18n: ectx: property (text), widget (QPushButton, m_previewButton)
+#: rc.cpp:206
+msgid "Preview..."
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:325
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:209
+msgid "Options"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:338
+#. i18n: ectx: property (text), widget (QCheckBox, m_rememberSoundtrack)
+#: rc.cpp:215
+msgid "Remember soundtrack"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:361
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:218
+msgid "Time comparison"
+msgstr ""
+
+#. i18n: file: ui/soundtrackdialog.ui:369
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:221
+#, fuzzy
+#| msgid "Slide"
+msgid "Slide:"
+msgstr "स्लाइड"
+
+#. i18n: file: ui/soundtrackdialog.ui:383
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:225
+msgid "Soundtrack:"
+msgstr ""
+
+#, fuzzy
+#~| msgid "You can only move up one image file at once."
+#~ msgid "You can only move image files down one at a time."
+#~ msgstr "आप एक बार में सिर्फ एक छवि फ़ाइल को ऊपर खिसका सकते हैं."
+
+#, fuzzy
+#~| msgid "%1 images [%2]"
+#~ msgid "%1 tracks [%2]"
+#~ msgstr "%1 छवियाँ [%2]"
+
+#~ msgid "%1 images [%2]"
+#~ msgstr "%1 छवियाँ [%2]"
+
+#~ msgid "You can only move down one image file at once."
+#~ msgstr "आप एक बार में सिर्फ एक छवि फ़ाइल को नीचे खिसका सकते हैं."
+
+#, fuzzy
+#~| msgid "Slide Show"
+#~ msgid "SlideShow"
+#~ msgstr "स्लाइड शो"
+
+#~ msgid "Noise"
+#~ msgstr "नॉइज़"
+
+#~ msgid "&Add..."
+#~ msgstr "जोड़ें...(&A)"
+
+#~ msgid "&Delete"
+#~ msgstr "मिटाएँ (&D)"
+
+#~ msgid "Image &Up"
+#~ msgstr "छवि ऊपर (&U)"
+
+#~ msgid "Image D&own"
+#~ msgstr "छवि नीचे (&o)"
+
+#~ msgid "&Help"
+#~ msgstr "मदद (&H)"
+
+#~ msgid "F1"
+#~ msgstr "F1"
+
+#~ msgid "&Exit"
+#~ msgstr "बाहर (&E)"
+
+#~ msgid "Slide Show"
+#~ msgstr "स्लाइड शो"
+
+#~ msgid "Alt+B"
+#~ msgstr "ऑल्ट+B"
+
+#~ msgid "Alt+A"
+#~ msgstr "ऑल्ट+A"
+
+#~ msgid "Alt+D"
+#~ msgstr "ऑल्ट+D"
+
+#~ msgid "Alt+U"
+#~ msgstr "ऑल्ट+U"
+
+#~ msgid "Alt+O"
+#~ msgstr "आल्ट+O"
+
+#~ msgid "Alt+G"
+#~ msgstr "ऑल्ट+G"
+
+#~ msgid "Alt+R"
+#~ msgstr "ऑल्ट+R"
+
+#~ msgid "Alt+I"
+#~ msgstr "ऑल्ट+I"
+
+#~ msgid "Alt+L"
+#~ msgstr "ऑल्ट+L"
+
+#~ msgid "Alt+S"
+#~ msgstr "ऑल्ट+S"
+
+#~ msgid "Alt+E"
+#~ msgstr "आल्ट+E"

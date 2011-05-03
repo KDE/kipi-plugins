@@ -1,0 +1,272 @@
+# translation of kipiplugin_rawconverter.po to Swedish
+# Stefan Asserhäll <stefan.asserhall@comhem.se>, 2004, 2006, 2007, 2008, 2009, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rawconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2011-03-31 18:33+0200\n"
+"Last-Translator: Stefan Asserhall <stefan.asserhall@comhem.se>\n"
+"Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: sv\n"
+
+#: dialogs/batchdialog.cpp:148 dialogs/singledialog.cpp:203
+msgid "Exit RAW Converter"
+msgstr "Avsluta konvertering av obehandlade bilder"
+
+#: dialogs/batchdialog.cpp:149
+msgid "RAW Image Batch Converter"
+msgstr "Konvertering av obehandlade bilder i bakgrunden"
+
+#: dialogs/batchdialog.cpp:152
+msgid "&Add"
+msgstr "&Lägg till"
+
+#: dialogs/batchdialog.cpp:153
+msgid "Add new RAW files to the list"
+msgstr "Lägg till nya obehandlade filer i listan"
+
+#: dialogs/batchdialog.cpp:155
+msgid "&Remove"
+msgstr "&Ta bort"
+
+#: dialogs/batchdialog.cpp:156
+msgid "Remove selected RAW files from the list"
+msgstr "Ta bort markerade obehandlade filer från listan"
+
+#: dialogs/batchdialog.cpp:175
+msgid "Thumbnail"
+msgstr "Miniatyrbild"
+
+#: dialogs/batchdialog.cpp:176
+msgid "RAW File"
+msgstr "Obehandlad fil"
+
+#: dialogs/batchdialog.cpp:177
+msgid "Target File"
+msgstr "Resultatfil"
+
+#: dialogs/batchdialog.cpp:178
+msgid "Camera"
+msgstr "Kamera"
+
+#: dialogs/batchdialog.cpp:195 dialogs/batchdialog.cpp:199
+#: dialogs/singledialog.cpp:148 dialogs/singledialog.cpp:151
+msgid "Save settings"
+msgstr "Spara inställningar"
+
+#: dialogs/batchdialog.cpp:220 dialogs/singledialog.cpp:130
+#: dialogs/singledialog.cpp:166
+msgid "RAW Image Converter"
+msgstr "Konvertering av obehandlade bilder"
+
+#: dialogs/batchdialog.cpp:223
+msgid "A Kipi plugin to batch convert RAW images"
+msgstr ""
+"Ett KIPI-insticksprogram för att konvertera obehandlade bilder i bakgrunden"
+
+#: dialogs/batchdialog.cpp:224 dialogs/singledialog.cpp:170
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+msgstr ""
+"© 2003-2005, Renchi Raju\n"
+"© 2006-2011, Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:227 dialogs/singledialog.cpp:173
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/batchdialog.cpp:228 dialogs/singledialog.cpp:174
+msgid "Author"
+msgstr "Upphovsman"
+
+#: dialogs/batchdialog.cpp:231 dialogs/singledialog.cpp:177
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:232 dialogs/singledialog.cpp:178
+msgid "Developer and maintainer"
+msgstr "Utvecklare och underhåll"
+
+#: dialogs/batchdialog.cpp:240 dialogs/singledialog.cpp:186
+msgid "Handbook"
+msgstr "Handbok"
+
+#: dialogs/batchdialog.cpp:388
+msgid "There is no RAW file in the list to process."
+msgstr "Det finns ingen obehandlad fil att behandla i listan."
+
+#: dialogs/batchdialog.cpp:579 dialogs/singledialog.cpp:129
+msgid "&Abort"
+msgstr "&Avbryt"
+
+#: dialogs/batchdialog.cpp:580 dialogs/singledialog.cpp:201
+msgid "Abort the current RAW file conversion"
+msgstr "Avbryt nuvarande konvertering av obehandlade filer"
+
+#: dialogs/batchdialog.cpp:585 dialogs/singledialog.cpp:128
+msgid "Con&vert"
+msgstr "Kon&vertera"
+
+#: dialogs/batchdialog.cpp:586
+msgid "Start converting the RAW images using current settings."
+msgstr "Börja konvertera obehandlade bilder med nuvarande inställningar."
+
+#: dialogs/batchdialog.cpp:636 dialogs/singledialog.cpp:437
+#, kde-format
+msgid "Save RAW image converted from '%1' as"
+msgstr "Spara obehandlad bild konverterad från '%1' som"
+
+#: dialogs/batchdialog.cpp:665 dialogs/singledialog.cpp:464
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "Misslyckades med att spara bilden %1"
+
+#: dialogs/singledialog.cpp:127
+msgid "&Preview"
+msgstr "&Förhandsgranskning"
+
+#: dialogs/singledialog.cpp:169
+msgid "A Kipi plugin to convert RAW images"
+msgstr "Ett KIPI-insticksprogram för att konvertera obehandlade bilder"
+
+#: dialogs/singledialog.cpp:194
+msgid ""
+"Generate a preview using current settings. Uses a simple bilinear "
+"interpolation for quick results."
+msgstr ""
+"Skapa en förhandsgranskning med nuvarande inställningar. En enkelt bilinjär "
+"interpolering används för att snabbt få ett resultat."
+
+#: dialogs/singledialog.cpp:198
+msgid ""
+"Convert the RAW Image using current settings. This uses a high-quality "
+"adaptive algorithm."
+msgstr ""
+"Konvertera obehandlad bild med nuvarande inställningar. En adaptiv algoritm "
+"med hög kvalitet används."
+
+#: dialogs/singledialog.cpp:387
+msgid "Generating Preview..."
+msgstr "Skapar förhandsgranskning..."
+
+#: dialogs/singledialog.cpp:398
+msgid "Failed to generate preview"
+msgstr "Misslyckades med att skapa förhandsgranskning"
+
+#: dialogs/singledialog.cpp:403
+msgid "Processing Images..."
+msgstr "Behandlar bilder..."
+
+#: dialogs/singledialog.cpp:480
+msgid "Failed to convert RAW image"
+msgstr "Misslyckades konvertera obehandlad bild"
+
+#: manager/actionthread.cpp:234
+msgid "Cannot identify RAW image"
+msgstr "Kan inte identifiera obehandlad bild"
+
+#: manager/actionthread.cpp:241
+#, kde-format
+msgid "<br>Make: %1<br>"
+msgstr "<br>Märke: %1<br>"
+
+#: manager/actionthread.cpp:242
+#, kde-format
+msgid "Model: %1<br>"
+msgstr "Modell: %1<br>"
+
+#: manager/actionthread.cpp:246
+#, kde-format
+msgid "Created: %1<br>"
+msgstr "Skapad: %1<br>"
+
+#: manager/actionthread.cpp:253
+#, kde-format
+msgid "Aperture: f/%1<br>"
+msgstr "Bländare: f/%1<br>"
+
+#: manager/actionthread.cpp:258
+#, kde-format
+msgid "Focal: %1 mm<br>"
+msgstr "Fokallängd: %1 mm<br>"
+
+#: manager/actionthread.cpp:263
+#, kde-format
+msgid "Exposure: 1/%1 s<br>"
+msgstr "Exponeringstid: 1/%1 s<br>"
+
+#: manager/actionthread.cpp:268
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Känslighet: %1 ISO"
+
+#: plugin/plugin_rawconverter.cpp:81
+msgid "RAW Image Converter..."
+msgstr "Konvertering av obehandlade bilder..."
+
+#: plugin/plugin_rawconverter.cpp:90
+msgid "Batch RAW Converter..."
+msgstr "Konvertering av obehandlade bilder i bakgrunden..."
+
+#: plugin/plugin_rawconverter.cpp:154
+#, kde-format
+msgid "\"%1\" is not a RAW file."
+msgstr "\"%1\" är inte en obehandlad fil."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Stefan Asserhäll"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "stefan.asserhall@comhem.se"
+
+#~ msgid "Failed to load image after processing"
+#~ msgstr "Misslyckades med att ladda bild efter behandling"
+
+#~ msgid "Output file format:"
+#~ msgstr "Resultatbildformat:"
+
+#~ msgid ""
+#~ "<p>Set the output file format to use here:</p><p><b>JPEG</b>: output the "
+#~ "processed image in JPEG format. This format will give smaller-sized "
+#~ "files. Minimum JPEG compression level will be used during RAW conversion."
+#~ "</p><p><b>Warning: Due to the destructive compression algorithm, JPEG is "
+#~ "a lossy quality format.</b></p><p><b>TIFF</b>: output the processed image "
+#~ "in TIFF format. This generates large files, without losing quality. Adobe "
+#~ "Deflate compression will be used during conversion.</p><p><b>PPM</b>: "
+#~ "output the processed image in PPM format. This generates the largest "
+#~ "files, without losing quality.</p><p><b>PNG</b>: output the processed "
+#~ "image in PNG format. This generates large files, without losing quality. "
+#~ "Maximum PNG compression will be used during conversion.</p>"
+#~ msgstr ""
+#~ "<p>Ställ in resultatfilformat att använda här:</p><p><b>JPEG</b>: Spara "
+#~ "den behandlade bilden med JPEG-format. Formatet ger filer med mindre "
+#~ "storlek. Minimal JPEG-komprimeringsnivå används under konvertering av "
+#~ "obehandlad data.</p><p><b>Varning! På grund av den destruktiva "
+#~ "komprimeringsalgoritmen, är JPEG ett format med kvalitetsförlust.</b></"
+#~ "p><p><b>TIFF</b>: Spara den behandlade bilden med TIFF-format. Det skapar "
+#~ "större filer, utan att förlora kvalitet. Adobe Deflate-komprimering "
+#~ "används under konverteringen.</p><p><b>PPM</b>: Spara den behandlade "
+#~ "bilden med PPM-format. Det skapar störst filer, utan att förlora kvalitet."
+#~ "</p><p><b>PNG</b>: Spara den behandlade bilden med PNG-format. Det skapar "
+#~ "större filer, utan att förlora kvalitet. Maximal PNG-komprimering används "
+#~ "under konverteringen.</p>"
+
+#~ msgid "If Target File Exists:"
+#~ msgstr "Om målfilen finns:"
+
+#~ msgid "Overwrite automatically"
+#~ msgstr "Skriv över automatiskt"
+
+#~ msgid "Open rename-file dialog"
+#~ msgstr "Öppna fildialogruta för att byta namn"

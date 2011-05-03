@@ -1,0 +1,284 @@
+# translation of kipiplugin_rawconverter.po to Turkish
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Serdar Soytetir <tulliana@gmail.com>, 2008, 2009.
+# Ozan Çağlayan <ozan@pardus.org.tr>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rawconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2011-04-26 09:07+0300\n"
+"Last-Translator: Ozan Çağlayan <ozan@pardus.org.tr>\n"
+"Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: tr\n"
+
+#: dialogs/batchdialog.cpp:148 dialogs/singledialog.cpp:203
+msgid "Exit RAW Converter"
+msgstr "Ham Dönüştürücüden Çık"
+
+#: dialogs/batchdialog.cpp:149
+msgid "RAW Image Batch Converter"
+msgstr "Toplu Ham Resim Dönüştürücü"
+
+#: dialogs/batchdialog.cpp:152
+msgid "&Add"
+msgstr "&Ekle"
+
+#: dialogs/batchdialog.cpp:153
+msgid "Add new RAW files to the list"
+msgstr "Listeye yeni Ham dosyalar ekle"
+
+#: dialogs/batchdialog.cpp:155
+msgid "&Remove"
+msgstr "&Sil"
+
+#: dialogs/batchdialog.cpp:156
+msgid "Remove selected RAW files from the list"
+msgstr "Seçilen ham dosyaları listeden kaldır."
+
+#: dialogs/batchdialog.cpp:175
+msgid "Thumbnail"
+msgstr "Küçük Resim"
+
+#: dialogs/batchdialog.cpp:176
+msgid "RAW File"
+msgstr "Ham Dosya"
+
+#: dialogs/batchdialog.cpp:177
+msgid "Target File"
+msgstr "Hedef Dosya"
+
+#: dialogs/batchdialog.cpp:178
+msgid "Camera"
+msgstr "Fotoğraf Makinesi"
+
+#: dialogs/batchdialog.cpp:195 dialogs/batchdialog.cpp:199
+#: dialogs/singledialog.cpp:148 dialogs/singledialog.cpp:151
+msgid "Save settings"
+msgstr "Ayarları kaydet"
+
+#: dialogs/batchdialog.cpp:220 dialogs/singledialog.cpp:130
+#: dialogs/singledialog.cpp:166
+msgid "RAW Image Converter"
+msgstr "Ham Resim Dönüştürücü"
+
+#: dialogs/batchdialog.cpp:223
+msgid "A Kipi plugin to batch convert RAW images"
+msgstr "Ham resimleri dönüştürmek için bir Kipi eklentisi."
+
+#: dialogs/batchdialog.cpp:224 dialogs/singledialog.cpp:170
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+msgstr ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:227 dialogs/singledialog.cpp:173
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/batchdialog.cpp:228 dialogs/singledialog.cpp:174
+msgid "Author"
+msgstr "Yazar"
+
+#: dialogs/batchdialog.cpp:231 dialogs/singledialog.cpp:177
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:232 dialogs/singledialog.cpp:178
+msgid "Developer and maintainer"
+msgstr "Geliştirici ve projeyi yürüten"
+
+#: dialogs/batchdialog.cpp:240 dialogs/singledialog.cpp:186
+msgid "Handbook"
+msgstr "El Kitabı"
+
+#: dialogs/batchdialog.cpp:388
+msgid "There is no RAW file in the list to process."
+msgstr "Listede işlenecek ham dosya yok."
+
+#: dialogs/batchdialog.cpp:579 dialogs/singledialog.cpp:129
+msgid "&Abort"
+msgstr "&İptal"
+
+#: dialogs/batchdialog.cpp:580 dialogs/singledialog.cpp:201
+msgid "Abort the current RAW file conversion"
+msgstr "Geçerli ham dosya dönüşümünü iptal et."
+
+#: dialogs/batchdialog.cpp:585 dialogs/singledialog.cpp:128
+msgid "Con&vert"
+msgstr "Dö&nüştür"
+
+#: dialogs/batchdialog.cpp:586
+msgid "Start converting the RAW images using current settings."
+msgstr "Geçerli ayarlarla ham dosyaları dönüştürmeye başla."
+
+#: dialogs/batchdialog.cpp:636 dialogs/singledialog.cpp:437
+#, kde-format
+msgid "Save RAW image converted from '%1' as"
+msgstr "'%1''den dönüştürülen Ham Resimleri farklı kaydet"
+
+#: dialogs/batchdialog.cpp:665 dialogs/singledialog.cpp:464
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "%1 resmi kaydedilemedi"
+
+#: dialogs/singledialog.cpp:127
+msgid "&Preview"
+msgstr "&Önizleme"
+
+#: dialogs/singledialog.cpp:169
+msgid "A Kipi plugin to convert RAW images"
+msgstr "Ham resimleri dönüştürmek için bir Kipi Eklentisi"
+
+#: dialogs/singledialog.cpp:194
+msgid ""
+"Generate a preview using current settings. Uses a simple bilinear "
+"interpolation for quick results."
+msgstr ""
+"Geçerli ayarları kullanarak bir önizleme oluştur. Hızlı sonuç için iki "
+"çizgili ara değerleme kullanılır."
+
+#: dialogs/singledialog.cpp:198
+msgid ""
+"Convert the RAW Image using current settings. This uses a high-quality "
+"adaptive algorithm."
+msgstr ""
+"HAM resmi geçerli ayarları kullanarak dönüştür. Bu, yüksek kaliteli "
+"adaptifbir algoritma kullanır."
+
+#: dialogs/singledialog.cpp:387
+msgid "Generating Preview..."
+msgstr "Önizleme Oluşturuluyor..."
+
+#: dialogs/singledialog.cpp:398
+msgid "Failed to generate preview"
+msgstr "Önizleme oluşturulamadı"
+
+#: dialogs/singledialog.cpp:403
+msgid "Processing Images..."
+msgstr "Resimler İşleniyor..."
+
+#: dialogs/singledialog.cpp:480
+msgid "Failed to convert RAW image"
+msgstr "Ham resim dönüştürülemedi"
+
+#: manager/actionthread.cpp:234
+msgid "Cannot identify RAW image"
+msgstr "Ham resim tanımlanamadı"
+
+#: manager/actionthread.cpp:241
+#, kde-format
+msgid "<br>Make: %1<br>"
+msgstr "<br>Marka: %1<br>"
+
+#: manager/actionthread.cpp:242
+#, kde-format
+msgid "Model: %1<br>"
+msgstr "Model: %1<br>"
+
+#: manager/actionthread.cpp:246
+#, kde-format
+msgid "Created: %1<br>"
+msgstr "Oluşturulma zamanı: %1<br>"
+
+#: manager/actionthread.cpp:253
+#, kde-format
+msgid "Aperture: f/%1<br>"
+msgstr "Açıklık: f/%1<br>"
+
+#: manager/actionthread.cpp:258
+#, kde-format
+msgid "Focal: %1 mm<br>"
+msgstr "Odak: %1 mm<br>"
+
+#: manager/actionthread.cpp:263
+#, kde-format
+msgid "Exposure: 1/%1 s<br>"
+msgstr "Pozlama: 1/%1 s<br>"
+
+#: manager/actionthread.cpp:268
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Duyarlılık: %1 ISO"
+
+#: plugin/plugin_rawconverter.cpp:81
+msgid "RAW Image Converter..."
+msgstr "HAM Resim Dönüştürücü..."
+
+#: plugin/plugin_rawconverter.cpp:90
+msgid "Batch RAW Converter..."
+msgstr "Toplu HAM Resim Dönüştürücü..."
+
+#: plugin/plugin_rawconverter.cpp:154
+#, kde-format
+msgid "\"%1\" is not a RAW file."
+msgstr "\"%1\" bir HAM dosya değil."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Serdar Soytetir, Ozan Çağlayan"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "tulliana@gmail.com, ozan@pardus.org.tr"
+
+#~ msgid "Failed to load image after processing"
+#~ msgstr "İşlemden sonra resmi yükleme başarısız"
+
+#~ msgid "Output file format:"
+#~ msgstr "Çıktı dosyası biçimi"
+
+#~ msgid ""
+#~ "<p>Set the output file format to use here:</p><p><b>JPEG</b>: output the "
+#~ "processed image in JPEG format. This format will give smaller-sized "
+#~ "files. Minimum JPEG compression level will be used during RAW conversion."
+#~ "</p><p><b>Warning: Due to the destructive compression algorithm, JPEG is "
+#~ "a lossy quality format.</b></p><p><b>TIFF</b>: output the processed image "
+#~ "in TIFF format. This generates large files, without losing quality. Adobe "
+#~ "Deflate compression will be used during conversion.</p><p><b>PPM</b>: "
+#~ "output the processed image in PPM format. This generates the largest "
+#~ "files, without losing quality.</p><p><b>PNG</b>: output the processed "
+#~ "image in PNG format. This generates large files, without losing quality. "
+#~ "Maximum PNG compression will be used during conversion.</p>"
+#~ msgstr ""
+#~ "<p>Kullanılacak çıktı dosyası biçimini buradan belirle:</p><p><b>JPEG</"
+#~ "b>: İşlenmiş resmi JPEG biçiminde çıkarır. Bu biçim daha küçük boyutlu "
+#~ "dosyalar verecektir. Ham dönüştürme sırasında Asgari JPEG sıkıştırma "
+#~ "seviyesi kullanılacaktır.</p><p><b>Uyarı: Yıkıcı sıkıştırma algoritması "
+#~ "sırasında, JPEG kayıplı bir kalite biçimidir.</b></p><p><b>TIFF</b>: "
+#~ "İşlenmiş resmi TIFF biçiminde çıkarır. Kaliteyi kaybetmeden büyük boyutlu "
+#~ "dosyalar oluşturur. Bu dönüştürme sırasında Adobe Deflate sıkıştırması "
+#~ "kullanılacaktır.</p><p><b>PPM</b>: İşlenmiş resmi PPM biçiminde çıkarır. "
+#~ "Kaliteyi kaybetmeden en büyük boyutlu dosyaları oluşturur.</p><p><b>PNG</"
+#~ "b>: İşlenmiş resmi PNG biçiminde çıkarır. Kaliteyi kaybetmeden en büyük "
+#~ "boyutlu dosyaları oluşturur. Dönüştürme sırasında en yüksek PNG "
+#~ "sıkıştırması kullanılacaktır.</p>"
+
+#~ msgid "If Target File Exists:"
+#~ msgstr "Eğer Hedef Dosya Varsa:"
+
+#~ msgid "Overwrite automatically"
+#~ msgstr "Otomatik olarak üzerine yaz"
+
+#~ msgid "Open rename-file dialog"
+#~ msgstr "Dosya aç-yeniden adlandır penceresi"
+
+#~ msgid "Abort the current Raw files conversion"
+#~ msgstr "Geçerli ham dosya dönüşümünü iptal et"
+
+#~ msgid "Raw Image Converter..."
+#~ msgstr "Ham Resim Dönüştürücü..."
+
+#~ msgid "Raw Image Converter"
+#~ msgstr "Ham Resim Dönüştürücü"

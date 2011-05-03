@@ -1,0 +1,303 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Nick Shaforostoff <shafff@ukr.net>, 2007.
+# Nick Shaforostoff <shaforostoff@kde.ru>, 2008.
+# Alexander Potashev <aspotashev@gmail.com>, 2010, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_rawconverter\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-03-22 03:34+0100\n"
+"PO-Revision-Date: 2011-03-29 01:40+0400\n"
+"Last-Translator: Alexander Potashev <aspotashev@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%"
+"10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: dialogs/batchdialog.cpp:148 dialogs/singledialog.cpp:203
+msgid "Exit RAW Converter"
+msgstr "Выйти из обработчика изображений RAW"
+
+#: dialogs/batchdialog.cpp:149
+msgid "RAW Image Batch Converter"
+msgstr "Пакетное преобразование цифровых негативов (RAW)"
+
+#: dialogs/batchdialog.cpp:152
+msgid "&Add"
+msgstr "&Добавить"
+
+#: dialogs/batchdialog.cpp:153
+msgid "Add new RAW files to the list"
+msgstr "Добавить новый цифровой негатив в список"
+
+#: dialogs/batchdialog.cpp:155
+msgid "&Remove"
+msgstr "&Удалить"
+
+#: dialogs/batchdialog.cpp:156
+msgid "Remove selected RAW files from the list"
+msgstr "Удалить выбранные цифровые негативы (RAW) из списка"
+
+#: dialogs/batchdialog.cpp:175
+msgid "Thumbnail"
+msgstr "Миниатюра"
+
+#: dialogs/batchdialog.cpp:176
+msgid "RAW File"
+msgstr "Цифровой негатив"
+
+#: dialogs/batchdialog.cpp:177
+msgid "Target File"
+msgstr "Целевой файл"
+
+#: dialogs/batchdialog.cpp:178
+msgid "Camera"
+msgstr "Камера"
+
+#: dialogs/batchdialog.cpp:195 dialogs/batchdialog.cpp:199
+#: dialogs/singledialog.cpp:148 dialogs/singledialog.cpp:151
+msgid "Save settings"
+msgstr "Параметры сохранения"
+
+#: dialogs/batchdialog.cpp:220 dialogs/singledialog.cpp:130
+#: dialogs/singledialog.cpp:166
+msgid "RAW Image Converter"
+msgstr "Преобразование цифровых негативов"
+
+#: dialogs/batchdialog.cpp:223
+msgid "A Kipi plugin to batch convert RAW images"
+msgstr "Модуль KIPI для пакетной обработки изображений RAW"
+
+#: dialogs/batchdialog.cpp:224 dialogs/singledialog.cpp:170
+msgid ""
+"(c) 2003-2005, Renchi Raju\n"
+"(c) 2006-2011, Gilles Caulier"
+msgstr ""
+"© Renchi Raju, 2003-2005\n"
+"© Gilles Caulier, 2006-2011"
+
+#: dialogs/batchdialog.cpp:227 dialogs/singledialog.cpp:173
+msgid "Renchi Raju"
+msgstr "Renchi Raju"
+
+#: dialogs/batchdialog.cpp:228 dialogs/singledialog.cpp:174
+msgid "Author"
+msgstr "Автор"
+
+#: dialogs/batchdialog.cpp:231 dialogs/singledialog.cpp:177
+msgid "Gilles Caulier"
+msgstr "Gilles Caulier"
+
+#: dialogs/batchdialog.cpp:232 dialogs/singledialog.cpp:178
+msgid "Developer and maintainer"
+msgstr "Разработчик и сопровождающий"
+
+#: dialogs/batchdialog.cpp:240 dialogs/singledialog.cpp:186
+msgid "Handbook"
+msgstr "Руководство пользователя"
+
+#: dialogs/batchdialog.cpp:388
+msgid "There is no RAW file in the list to process."
+msgstr "В списке нет необработанных цифровых негативов (RAW)."
+
+#: dialogs/batchdialog.cpp:579 dialogs/singledialog.cpp:129
+msgid "&Abort"
+msgstr "&Остановить"
+
+#: dialogs/batchdialog.cpp:580 dialogs/singledialog.cpp:201
+msgid "Abort the current RAW file conversion"
+msgstr "Прервать преобразование текущего файла RAW"
+
+#: dialogs/batchdialog.cpp:585 dialogs/singledialog.cpp:128
+msgid "Con&vert"
+msgstr "Прео&бразовать"
+
+#: dialogs/batchdialog.cpp:586
+msgid "Start converting the RAW images using current settings."
+msgstr "Начать преобразование цифровых негативов с текущими параметрами."
+
+#: dialogs/batchdialog.cpp:636 dialogs/singledialog.cpp:437
+#, kde-format
+msgid "Save RAW image converted from '%1' as"
+msgstr "Сохранить цифровые негативы (RAW) после преобразования из «%1» как"
+
+#: dialogs/batchdialog.cpp:665 dialogs/singledialog.cpp:464
+#, kde-format
+msgid "Failed to save image %1"
+msgstr "Невозможно сохранить изображения %1"
+
+#: dialogs/singledialog.cpp:127
+msgid "&Preview"
+msgstr "П&редварительный просмотр"
+
+#: dialogs/singledialog.cpp:169
+msgid "A Kipi plugin to convert RAW images"
+msgstr "Модуль расширения KIPI для преобразования цифровых негативов (RAW)"
+
+#: dialogs/singledialog.cpp:194
+msgid ""
+"Generate a preview using current settings. Uses a simple bilinear "
+"interpolation for quick results."
+msgstr ""
+"Создать предпросмотр с текущими параметрами. Используется простая билинейная "
+"интерполяция для быстрого создания."
+
+#: dialogs/singledialog.cpp:198
+msgid ""
+"Convert the RAW Image using current settings. This uses a high-quality "
+"adaptive algorithm."
+msgstr ""
+"Преобразовать цифровые негативы (RAW) с текущими параметрами. Используется "
+"адаптивный алгоритм высокого качества."
+
+#: dialogs/singledialog.cpp:387
+msgid "Generating Preview..."
+msgstr "Создание миниатюры..."
+
+#: dialogs/singledialog.cpp:398
+msgid "Failed to generate preview"
+msgstr "Невозможно создать предпросмотр"
+
+#: dialogs/singledialog.cpp:403
+msgid "Processing Images..."
+msgstr "Преобразование изображений..."
+
+#: dialogs/singledialog.cpp:480
+msgid "Failed to convert RAW image"
+msgstr "Не удалось преобразовать цифровой негатив (изображение RAW)"
+
+#: manager/actionthread.cpp:234
+msgid "Cannot identify RAW image"
+msgstr "Невозможно определить изображения RAW"
+
+#: manager/actionthread.cpp:241
+#, kde-format
+msgid "<br>Make: %1<br>"
+msgstr "<br>Производитель: %1<br>"
+
+#: manager/actionthread.cpp:242
+#, kde-format
+msgid "Model: %1<br>"
+msgstr "Модель: %1<br>"
+
+#: manager/actionthread.cpp:246
+#, kde-format
+msgid "Created: %1<br>"
+msgstr "Создано: %1<br>"
+
+#: manager/actionthread.cpp:253
+#, kde-format
+msgid "Aperture: f/%1<br>"
+msgstr "Диафрагма: f/%1<br>"
+
+#: manager/actionthread.cpp:258
+#, kde-format
+msgid "Focal: %1 mm<br>"
+msgstr "Фокусное расстояние: %1 мм<br>"
+
+#: manager/actionthread.cpp:263
+#, kde-format
+msgid "Exposure: 1/%1 s<br>"
+msgstr "Выдержка: 1/%1 с<br>"
+
+#: manager/actionthread.cpp:268
+#, kde-format
+msgid "Sensitivity: %1 ISO"
+msgstr "Чувствительность: %1 (ISO)"
+
+#: plugin/plugin_rawconverter.cpp:81
+msgid "RAW Image Converter..."
+msgstr "Преобразовать цифровые негативы (RAW)..."
+
+#: plugin/plugin_rawconverter.cpp:90
+msgid "Batch RAW Converter..."
+msgstr "Пакетный обработчик изображений RAW..."
+
+#: plugin/plugin_rawconverter.cpp:154
+#, kde-format
+msgid "\"%1\" is not a RAW file."
+msgstr "«%1» не является файлом RAW."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Николай Шафоростов, Артемий Шмелёв"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "shafff@ukr.net, sgartjom@mail.ru"
+
+#~ msgid "Failed to load image after processing"
+#~ msgstr "Невозможно загрузить изображение после обработки"
+
+#~ msgid "Output file format:"
+#~ msgstr "Выходные форматы файлов:"
+
+#, fuzzy
+#~| msgid ""
+#~| "<p>Set here the output file format to use:<p><b>JPEG</b>: output the "
+#~| "processed image in JPEG Format. this format will give smaller-sized "
+#~| "files. Minimum JPEG compression level will be used during Raw conversion."
+#~| "<p><b>Warning!!! duing of destructive compression algorithm, JPEG is a "
+#~| "lossy quality format.</b><p><b>TIFF</b>: output the processed image in "
+#~| "TIFF Format. This generates larges, without losing quality. Adobe "
+#~| "Deflate compression will be used during conversion.<p><b>PPM</b>: output "
+#~| "the processed image in PPM Format. This generates the largest files, "
+#~| "without losing quality.<p><b>PNG</b>: output the processed image in PNG "
+#~| "Format. This generates larges, without losing quality. Maximum PNG "
+#~| "compression will be used during conversion."
+#~ msgid ""
+#~ "<p>Set the output file format to use here:</p><p><b>JPEG</b>: output the "
+#~ "processed image in JPEG format. This format will give smaller-sized "
+#~ "files. Minimum JPEG compression level will be used during RAW conversion."
+#~ "</p><p><b>Warning: Due to the destructive compression algorithm, JPEG is "
+#~ "a lossy quality format.</b></p><p><b>TIFF</b>: output the processed image "
+#~ "in TIFF format. This generates large files, without losing quality. Adobe "
+#~ "Deflate compression will be used during conversion.</p><p><b>PPM</b>: "
+#~ "output the processed image in PPM format. This generates the largest "
+#~ "files, without losing quality.</p><p><b>PNG</b>: output the processed "
+#~ "image in PNG format. This generates large files, without losing quality. "
+#~ "Maximum PNG compression will be used during conversion.</p>"
+#~ msgstr ""
+#~ "<p>Укажите выходной формат файлов:<p><b>JPEG</b>: RAW-файлы после "
+#~ "обработки будут сохранены в формате JPEG. Этот формат позволяет хорошо "
+#~ "сжимать файлы. При преобразовании будет использоваться минимальное "
+#~ "сжатие. <p><b>Внимание!!! JPEG — формат сжатия с потерями.</b><p><b>TIFF</"
+#~ "b>: после обработки, сохранять изображения в формате TIFF. В результате "
+#~ "получаются довольно большие файлы, но сжатие происходит без потери "
+#~ "качества. Для сжатия используется алгоритм Adobe Deflate. <p><b>PPM</b>: "
+#~ "после обработки сохранять изображения в формате PPM. В результате "
+#~ "получаются очень большие файлы, но без потерь качества. <p><b>PNG</b>: "
+#~ "после обработки сохранять изображения в формате PNG. В результате "
+#~ "получаются большие файлы, без потери качества. В процессе преобразования "
+#~ "будет использоваться максимальное сжатие."
+
+#~ msgid "If Target File Exists:"
+#~ msgstr "Если целевой файл уже существует:"
+
+#~ msgid "Overwrite automatically"
+#~ msgstr "Заменить автоматически"
+
+#~ msgid "Open rename-file dialog"
+#~ msgstr "Открыть диалог переименования файла"
+
+#, fuzzy
+#~| msgid "<p>Abort the current Raw files conversion"
+#~ msgid "Abort the current Raw files conversion"
+#~ msgstr "<p>Остановить текущее преобразование"
+
+#~ msgid "Raw Image Converter..."
+#~ msgstr "Обработчик RAW-изображений..."
+
+#~ msgid "Raw Image Converter"
+#~ msgstr "Обработчик RAW-файлов"

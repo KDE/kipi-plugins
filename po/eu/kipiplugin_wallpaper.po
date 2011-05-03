@@ -1,0 +1,71 @@
+# translation of kipiplugin_wallpaper.po to Basque
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: kipiplugin_wallpaper\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2010-05-03 05:00+0200\n"
+"PO-Revision-Date: 2010-06-15 12:46+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: plugin_wallpaper.cpp:63
+msgid "&Set as Background"
+msgstr "&Ezarri atzeko plano gisa"
+
+#: plugin_wallpaper.cpp:68
+msgid "Centered"
+msgstr "Zentratua"
+
+#: plugin_wallpaper.cpp:74
+msgid "Centered Tiled"
+msgstr "Zentratuta lauza moduan"
+
+#: plugin_wallpaper.cpp:80
+msgid "Centered Max-Aspect"
+msgstr "Zentratua gehienezko aspektu-erlazioarekin"
+
+#: plugin_wallpaper.cpp:86
+msgid "Tiled Max-Aspect"
+msgstr "Lauza moduan gehienezko aspektu-erlazioarekin"
+
+#: plugin_wallpaper.cpp:92
+msgid "Scaled"
+msgstr "Eskalatua"
+
+#: plugin_wallpaper.cpp:98
+msgid "Centered Auto Fit"
+msgstr "Zentratua doitze-automatikoarekin"
+
+#: plugin_wallpaper.cpp:104
+msgid "Scale && Crop"
+msgstr "Eskalatu eta moztu"
+
+#: plugin_wallpaper.cpp:195
+msgid ""
+"<p>You selected a remote image. It needs to be saved to your local disk to "
+"be used as a wallpaper.</p><p>You will now be asked where to save the image."
+"</p>"
+msgstr ""
+"<p>Urruneko irudi bat hautatu duzu. Lokaleko disko gogorrean gorde behar "
+"duzu horma-paper gisa erabili ahal izateko.</p><p>Orain, irudia non "
+"gordetzea nahi duzun galdetuko zaizu.</p>"
+
+#: plugin_wallpaper.cpp:206
+msgid "Change Background"
+msgstr "Aldatu atzeko planoa"
+
+#: plugin_wallpaper.cpp:206
+msgid "Background cannot be changed."
+msgstr "Atzeko planoa ezin da aldatu."
+
+#~ msgid "We can not change background."
+#~ msgstr "Impossible de changer le papier peint"
