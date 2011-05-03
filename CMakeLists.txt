@@ -450,3 +450,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ENDIF(NOT WIN32)
 
 ENDIF(KIPIPLUGINS_CAN_BE_COMPILED)
+
+find_package(Msgfmt REQUIRED)
+find_package(Gettext REQUIRED)
+add_subdirectory( po )
+
