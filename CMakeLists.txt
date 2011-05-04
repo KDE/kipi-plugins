@@ -21,7 +21,7 @@ SET (KIPIPLUGINS_RELEASE_DATE "2011-05-29")
 # "-beta3" : beta3 release.
 # "-rc"    : release candidate.
 # ""       : final relase. Can be used in production.
-SET(KIPIPLUGINS_SUFFIX_VERSION "-rc")
+SET(KIPIPLUGINS_SUFFIX_VERSION "-beta6")
 
 # =======================================================
 # Set env. variables accordinly.
