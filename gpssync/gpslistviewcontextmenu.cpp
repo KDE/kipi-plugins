@@ -31,6 +31,7 @@
 #include <QClipboard>
 #include <QApplication>
 #include <QDomDocument>
+#include <QPointer>
 
 // KDE includes.
 
@@ -41,7 +42,7 @@
 
 // libkmap includes
 
-#include <libkmap/backend_helper.h>
+#include <libkmap/lookup_factory.h>
 
 // LibKIPI includes.
 
@@ -68,7 +69,6 @@ public:
         actionCopy     = 0;
         actionPaste    = 0;
         actionBookmark = 0;
-        altitudeBackend = 0;
         altitudeUndoCommand = 0;
     }
 
@@ -88,7 +88,7 @@ public:
     KipiImageList    *imagesList;
 
     // Altitude lookup
-    KMap::AltitudeBackend *altitudeBackend;
+    QPointer<KMap::LookupAltitude> altitudeLookup;
     GPSUndoCommand        *altitudeUndoCommand;
     int                    altitudeRequestedCount;
     int                    altitudeReceivedCount;
@@ -626,7 +626,7 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
 //     const int nSelected = selectedIndices.size();
 
     // find the indices which have coordinates but no altitude
-    KMap::AltitudeBackend::LookupRequest::List altitudeQueries;
+    KMap::LookupAltitude::Request::List altitudeQueries;
     Q_FOREACH (const QModelIndex& currentIndex, selectedIndices)
     {
         KipiImageItem* const gpsItem = imageModel->itemFromIndex(currentIndex);
@@ -643,7 +643,7 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
         }
 
         // the item has coordinates but no altitude, create a query
-        KMap::AltitudeBackend::LookupRequest myLookup;
+        KMap::LookupAltitude::Request myLookup;
         myLookup.coordinates = coordinates;
         myLookup.data = QVariant::fromValue(QPersistentModelIndex(currentIndex));
 
@@ -655,27 +655,29 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
         return;
     }
 
-    if (!d->altitudeBackend)
-    {
-        d->altitudeBackend = KMap::BackendHelper::getAltitudeBackend("geonames", this);
+    d->altitudeLookup = KMap::LookupFactory::getAltitudeLookup("geonames", this);
 
-        connect(d->altitudeBackend, SIGNAL(signalAltitudes(const KMap::AltitudeBackend::LookupRequest::List&)),
-            this, SLOT(slotAltitudeLookupReady(const KMap::AltitudeBackend::LookupRequest::List&)));
-    }
+    connect(d->altitudeLookup, SIGNAL(signalRequestsReady(const QList<int>&)),
+            this, SLOT(slotAltitudeLookupReady(const QList<int>&)));
 
-    emit(signalSetUIEnabled(false));
+    connect(d->altitudeLookup, SIGNAL(signalDone()),
+            this, SLOT(slotAltitudeLookupDone()));
+
+    emit(signalSetUIEnabled(false, this, SLOT(slotAltitudeLookupCancel())));
     emit(signalProgressSetup(altitudeQueries.count(), i18n("Looking up altitudes")));
     d->altitudeUndoCommand = new GPSUndoCommand();
     d->altitudeRequestedCount = altitudeQueries.count();
     d->altitudeReceivedCount = 0;
-    d->altitudeBackend->queryAltitudes(altitudeQueries);
+    d->altitudeLookup->addRequests(altitudeQueries);
+    d->altitudeLookup->startLookup();
 }
 
-void GPSListViewContextMenu::slotAltitudeLookupReady(const KMap::AltitudeBackend::LookupRequest::List& altitudes)
+void GPSListViewContextMenu::slotAltitudeLookupReady(const QList<int>& readyRequests)
 {
     KipiImageModel* const imageModel = d->imagesList->getModel();
-    Q_FOREACH(const KMap::AltitudeBackend::LookupRequest& myLookup, altitudes)
+    Q_FOREACH(const int requestIndex, readyRequests)
     {
+        const KMap::LookupAltitude::Request myLookup = d->altitudeLookup->getRequest(requestIndex);
         const QPersistentModelIndex markerIndex = myLookup.data.value<QPersistentModelIndex>();
         if (!markerIndex.isValid())
         {
@@ -700,19 +702,41 @@ void GPSListViewContextMenu::slotAltitudeLookupReady(const KMap::AltitudeBackend
         d->altitudeReceivedCount++;
     }
 
-    if (d->altitudeReceivedCount==d->altitudeRequestedCount)
+    signalProgressChanged(d->altitudeReceivedCount);
+}
+
+void GPSListViewContextMenu::slotAltitudeLookupDone()
+{
+    KMap::LookupAltitude::Status requestStatus = d->altitudeLookup->getStatus();
+    if (requestStatus==KMap::LookupAltitude::StatusError)
     {
-        // all queries have been returned, send out the undo command
+        const QString errorMessage = i18n("Altitude lookup failed:\n%1", d->altitudeLookup->errorMessage());
+        KMessageBox::sorry(d->imagesList,
+                           errorMessage,
+                           i18n("GPS Sync"));
+    }
+
+    if (d->altitudeReceivedCount>0)
+    {
+        // at least some queries returned a result, save the undo command
         d->altitudeUndoCommand->setText(i18n("Altitude looked up"));
         emit(signalUndoCommand(d->altitudeUndoCommand));
-
-        d->altitudeUndoCommand = 0;
-
-        emit(signalSetUIEnabled(true));
     }
     else
     {
-        signalProgressChanged(d->altitudeReceivedCount);
+        delete d->altitudeUndoCommand;
+    }
+    d->altitudeUndoCommand = 0;
+    d->altitudeLookup->deleteLater();
+
+    emit(signalSetUIEnabled(true));
+}
+
+void GPSListViewContextMenu::slotAltitudeLookupCancel()
+{
+    if (d->altitudeLookup)
+    {
+        d->altitudeLookup->cancel();
     }
 }
 

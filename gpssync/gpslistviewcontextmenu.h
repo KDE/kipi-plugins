@@ -31,7 +31,7 @@
 
 // libkmap includes
 
-#include <libkmap/backend_altitude.h>
+#include <libkmap/lookup_altitude.h>
 
 // local includes:
 
@@ -78,7 +78,9 @@ private Q_SLOTS:
     void slotRemoveUncertainty();
     void slotRemoveSpeed();
     void slotLookupMissingAltitudes();
-    void slotAltitudeLookupReady(const KMap::AltitudeBackend::LookupRequest::List& altitudes);
+    void slotAltitudeLookupReady(const QList<int>& readyRequests);
+    void slotAltitudeLookupDone();
+    void slotAltitudeLookupCancel();
 
 Q_SIGNALS:
 
