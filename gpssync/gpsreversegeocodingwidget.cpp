@@ -705,6 +705,7 @@ bool GPSReverseGeocodingWidget::eventFilter(QObject* watched, QEvent* event)
 
             menu->addAction(d->actionRemoveAllSpacers);
             menu->exec(e->globalPos());
+	    delete menu;
         }
     }
     return QObject::eventFilter(watched, event);
