@@ -145,11 +145,7 @@ GPSListViewContextMenu::GPSListViewContextMenu(KipiImageList *imagesList, GPSBoo
 
 GPSListViewContextMenu::~GPSListViewContextMenu()
 {
-    if (d->altitudeUndoCommand)
-    {
-        delete d->altitudeUndoCommand;
-    }
-
+    delete d->altitudeUndoCommand;
     delete d;
 }
 
