@@ -229,6 +229,7 @@ bool GPSListViewContextMenu::eventFilter(QObject *watched, QEvent *event)
         QContextMenuEvent * const e = static_cast<QContextMenuEvent*>(event);
         menu->exec(e->globalPos());
 
+	delete menu;
         return true;
     }
     else
