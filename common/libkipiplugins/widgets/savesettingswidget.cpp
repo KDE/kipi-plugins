@@ -109,8 +109,8 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget* parent)
 
     d->grid->addWidget(d->formatLabel,    0, 0, 1, 1);
     d->grid->addWidget(d->formatComboBox, 0, 1, 1, 1);
-    d->grid->addWidget(d->conflictLabel,  1, 0, 1, 1);
-    d->grid->addWidget(conflictBox,       2, 0, 1, 1);
+    d->grid->addWidget(d->conflictLabel,  1, 0, 1, 2);
+    d->grid->addWidget(conflictBox,       2, 0, 1, 2);
     d->grid->setRowStretch(4, 10);
     d->grid->setMargin(KDialog::spacingHint());
     d->grid->setSpacing(KDialog::spacingHint());
