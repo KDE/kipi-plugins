@@ -58,9 +58,9 @@ class WikiMediaJob : public KJob
 public:
 
     WikiMediaJob(KIPI::Interface* interface ,mediawiki::MediaWiki* mediawiki, QObject* parent=0);
-    QString buildWikiText(QMap<QString, QString> info);
+    QString buildWikiText(const QMap<QString, QString>& info);
 
-    void setImageMap(QList<QMap<QString, QString> > imageDesc);
+    void setImageMap(const QList<QMap<QString, QString> >& imageDesc);
     void start();
 
 Q_SIGNALS:

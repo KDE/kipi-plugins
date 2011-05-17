@@ -59,7 +59,7 @@ void WikiMediaJob::begin()
     start();
 }
 
-void WikiMediaJob::setImageMap(QList<QMap<QString, QString> > imageDesc)
+void WikiMediaJob::setImageMap(const QList<QMap<QString, QString> >& imageDesc)
 {
     m_imageDesc = imageDesc;
 }
@@ -133,7 +133,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
     }
 }
 
-QString WikiMediaJob::buildWikiText(QMap<QString, QString> info)
+QString WikiMediaJob::buildWikiText(const QMap<QString, QString>& info)
 {
     QString text;
     text.append(" == {{int:filedesc}} ==");
