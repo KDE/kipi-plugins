@@ -187,8 +187,8 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
         else
         {
             QDate qFirst, qLast;
-            KGlobal::locale()->calendar()->setYMD(qFirst, params.year, 1, 1);
-            KGlobal::locale()->calendar()->setYMD(qLast, params.year + 1, 1, 1);
+            KGlobal::locale()->calendar()->setDate(qFirst, params.year, 1, 1);
+            KGlobal::locale()->calendar()->setDate(qLast, params.year + 1, 1, 1);
             qLast = qLast.addDays(-1);
             KDateTime dtFirst(qFirst);
             KDateTime dtLast(qLast);
@@ -223,7 +223,7 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
 
 bool CalSettings::isPrayDay(const QDate& date) const
 {
-    return (date.dayOfWeek() == KGlobal::locale()->calendar()->weekDayOfPray());
+    return (date.dayOfWeek() == KGlobal::locale()->weekDayOfPray());
 }
 
 /*!
@@ -232,7 +232,7 @@ bool CalSettings::isPrayDay(const QDate& date) const
 bool CalSettings::isSpecial(int month, int day) const
 {
     QDate dt;
-    KGlobal::locale()->calendar()->setYMD(dt, params.year, month, day);
+    KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
 
     return (isPrayDay(dt) || special.contains(dt));
 }
@@ -243,7 +243,7 @@ bool CalSettings::isSpecial(int month, int day) const
 QColor CalSettings::getDayColor(int month, int day) const
 {
     QDate dt;
-    KGlobal::locale()->calendar()->setYMD(dt, params.year, month, day);
+    KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
 
     if (isPrayDay(dt))
         return Qt::red;
@@ -261,7 +261,7 @@ QColor CalSettings::getDayColor(int month, int day) const
 QString CalSettings::getDayDescr(int month, int day) const
 {
     QDate dt;
-    KGlobal::locale()->calendar()->setYMD(dt, params.year, month, day);
+    KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
 
     return special[dt].second;
     QString ret;
