@@ -244,7 +244,7 @@ void SwConnector::listAlbums()
     QString length( "0" );
 
     m_resultHandler = &SwConnector::listAlbumsResultHandler;
-    KIO::TransferJob* job = KIO::get(m_apiDomainURL + m_apiRestPath + requestPath, KIO::Reload, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::get(QString(m_apiDomainURL + m_apiRestPath + requestPath), KIO::Reload, KIO::HideProgressInfo);
     setupRequest(job, m_apiRestPath + requestPath, method, md5, type, length);
 
     m_job   = job;
@@ -267,7 +267,7 @@ void SwConnector::createAlbum(const SwAlbum& album)
     QString length( "0" );
 
     m_resultHandler = &SwConnector::createAlbumResultHandler;
-    KIO::TransferJob* job = KIO::http_post(m_apiDomainURL + m_apiRestPath + requestPath, QByteArray(), KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(QString(m_apiDomainURL + m_apiRestPath + requestPath), QByteArray(), KIO::HideProgressInfo);
     setupRequest(job, m_apiRestPath + requestPath, method, md5, type, length);
 
     m_job   = job;
@@ -302,7 +302,7 @@ bool SwConnector::addPhoto(const QString& imgPath,
     QString length = file_size;
 
     m_resultHandler = &SwConnector::addPhotoResultHandler;
-    KIO::TransferJob* job = KIO::http_post(m_apiDomainURL + m_apiRestPath + requestPath, imageData, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(QString(m_apiDomainURL + m_apiRestPath + requestPath), imageData, KIO::HideProgressInfo);
     setupRequest(job, m_apiRestPath + requestPath, method, md5, type, length);
 
     m_job   = job;

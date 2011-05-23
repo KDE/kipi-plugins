@@ -424,7 +424,7 @@ void kmlExport::addTrack(QDomElement& kmlAlbum)
 void kmlExport::generate()
 {
     //! @todo perform a test here before continuing.
-    createDir(m_tempDestDir + m_imageDir);
+    createDir(QString(m_tempDestDir + m_imageDir));
 
     m_progressDialog->show();
     KIPI::ImageCollection selection = m_interface->currentSelection();

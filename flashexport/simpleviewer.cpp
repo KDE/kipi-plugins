@@ -614,7 +614,7 @@ bool SimpleViewer::copySimpleViewer()
     entries = dir.entryList(QDir::Files);
     for(QStringList::ConstIterator it = entries.constBegin(); it != entries.constEnd(); ++it)
     {
-        files.append(dir.absolutePath() + '/' + *it);
+        files.append(QString(dir.absolutePath() + QLatin1Char('/') + *it));
     }
     // TODO: catch errors
     /*KIO::CopyJob *copyJob = */KIO::copy(files, d->configDlg->settings().exportUrl, KIO::HideProgressInfo);

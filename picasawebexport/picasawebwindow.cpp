@@ -805,7 +805,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                                   const QByteArray& photoData)
 {
     PicasaWebPhoto item = m_transferQueue.first().second;
-    KUrl tmpUrl = m_tmpDir + item.title;
+    KUrl tmpUrl = QString(m_tmpDir + item.title);
     if (item.mimeType == "video/mpeg4")
     {
         tmpUrl.setFileName(item.title + ".mp4");
@@ -874,7 +874,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         }
     }
 
-    KUrl newUrl = m_widget->getDestinationPath() + tmpUrl.fileName();
+    KUrl newUrl = QString(m_widget->getDestinationPath() + tmpUrl.fileName());
     bool bSkip = false;
 
     QFileInfo targetInfo(newUrl.toLocalFile());

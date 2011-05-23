@@ -241,9 +241,9 @@ void RajceWidget::update()
     m_userName->setText(QString("<b>%2</b> <small>%1</small>").arg(username, nickname));
 
     QString link = loggedIn
-        ? "<b><h2><a href='http://" + m_session->state().nickname() + ".rajce.net'>"
+        ? QString("<b><h2><a href='http://" + m_session->state().nickname() + ".rajce.net'>"
         "<font color=\"#9ACD32\">Rajce.net</font>"
-        "</a></h2></b>"
+        "</a></h2></b>")
         : "<b><h2><a href='http://www.rajce.net'>"
         "<font color=\"#9ACD32\">Rajce.net</font>"
         "</a></h2></b>";
