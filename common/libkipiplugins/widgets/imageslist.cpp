@@ -6,7 +6,7 @@
  * Date        : 2008-05-21
  * Description : widget to display an imagelist
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2010 by Andi Clemens <andi dot clemens at gmx dot net>
  * Copyright (C) 2009-2010 by Luka Renko <lure at kubuntu dot org>
  *
@@ -197,7 +197,7 @@ void ImagesListViewItem::setThumb(const QPixmap& pix)
     pixmap.fill(Qt::transparent);
     QPainter p(&pixmap);
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
-    d->thumb = pixmap;
+    d->thumb     = pixmap;
     setPixmap(d->thumb);
 }
 
@@ -946,7 +946,7 @@ KIPI::Interface* ImagesList::iface() const
     return d->iface;
 }
 
-bool ImagesList::isRAWFile(const QString& filePath)
+bool ImagesList::isRAWFile(const QString& filePath) const
 {
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 

@@ -6,7 +6,7 @@
  * Date        : 2008-05-21
  * Description : widget to display an imagelist
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2010 by Andi Clemens <andi dot clemens at gmx dot net>
  * Copyright (C) 2009-2010 by Luka Renko <lure at kubuntu dot org>
  *
@@ -71,6 +71,8 @@ public:
         Success,
         Failed
     };
+
+public:
 
     explicit ImagesListViewItem(ImagesListView* view, const KUrl& url);
     ~ImagesListViewItem();
@@ -212,6 +214,8 @@ public:
     };
     Q_DECLARE_FLAGS(ControlButtons, ControlButton)
 
+public:
+
     explicit ImagesList(Interface* iface, QWidget* parent = 0, int iconSize = -1);
     virtual ~ImagesList();
 
@@ -223,9 +227,6 @@ public:
     ImagesListView*    listView()  const;
     KIPI::Interface*   iface()     const;
 
-    virtual KUrl::List imageUrls(bool onlyUnprocessed = false) const;
-    virtual void       removeItemByUrl(const KUrl& url);
-
     void               processing(const KUrl& url);
     void               processed(bool success);
     void               clearProcessedStatus();
@@ -234,6 +235,9 @@ public:
     void               setControlButtonsPlacement(ControlButtonPlacement placement);
     void               enableControlButtons(bool enable = true);
     void               enableDragAndDrop(const bool enable = true);
+
+    virtual KUrl::List imageUrls(bool onlyUnprocessed = false) const;
+    virtual void       removeItemByUrl(const KUrl& url);
 
 Q_SIGNALS:
 
@@ -246,8 +250,9 @@ public Q_SLOTS:
 
     virtual void slotAddImages(const KUrl::List& list);
 
-
 protected Q_SLOTS:
+
+    void slotProgressTimerDone();
 
     virtual void slotAddItems();
     virtual void slotRemoveItems();
@@ -256,8 +261,6 @@ protected Q_SLOTS:
     virtual void slotClearItems();
     virtual void slotLoadItems(){};
     virtual void slotSaveItems(){};
-
-    void slotProgressTimerDone();
     virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
     virtual void slotImageListChanged();
 
@@ -269,7 +272,7 @@ private Q_SLOTS:
 
 private:
 
-    bool isRAWFile(const QString& filePath);
+    bool isRAWFile(const QString& filePath) const;
     void setIconSize(int size);
 
 private:
