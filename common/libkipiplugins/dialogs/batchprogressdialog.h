@@ -6,7 +6,7 @@
  * Date        : 2004-05-04
  * Description : Batch progress dialog
  *
- * Copyright (C) 2004-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,7 +51,7 @@ class KIPIPLUGINS_EXPORT BatchProgressDialog : public KDialog
 
 public:
 
-    explicit BatchProgressDialog(QWidget* parent=0, const QString &caption=QString());
+    explicit BatchProgressDialog(QWidget* parent=0, const QString& caption=QString());
     ~BatchProgressDialog();
 
     void addedAction(const QString& text, int type);
@@ -62,6 +62,7 @@ public:
     int total() const;
 
 public Q_SLOTS:
+
     void setProgress(int);
     void setTotal(int total);
 
