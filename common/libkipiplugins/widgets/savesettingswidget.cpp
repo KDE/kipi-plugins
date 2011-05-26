@@ -6,7 +6,7 @@
  * Date        : 2006-09-13
  * Description : a widget to provide options to save image.
  *
- * Copyright (C) 2006-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -135,7 +135,7 @@ void SaveSettingsWidget::resetToDefault()
     setConflictRule(OVERWRITE);
 }
 
-SaveSettingsWidget::OutputFormat SaveSettingsWidget::fileFormat()
+SaveSettingsWidget::OutputFormat SaveSettingsWidget::fileFormat() const
 {
     return(OutputFormat)(d->formatComboBox->currentIndex());
 }
@@ -145,7 +145,7 @@ void SaveSettingsWidget::setFileFormat(OutputFormat f)
     d->formatComboBox->setCurrentIndex((int)f);
 }
 
-SaveSettingsWidget::ConflictRule SaveSettingsWidget::conflictRule()
+SaveSettingsWidget::ConflictRule SaveSettingsWidget::conflictRule() const
 {
     return((ConflictRule)(d->conflictButtonGroup->checkedId()));
 }
@@ -182,12 +182,12 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
     emit signalSaveFormatChanged();
 }
 
-QString SaveSettingsWidget::extension()
+QString SaveSettingsWidget::extension() const
 {
     return extensionForFormat(fileFormat());
 }
 
-QString SaveSettingsWidget::typeMime()
+QString SaveSettingsWidget::typeMime() const
 {
     QString mime;
 
