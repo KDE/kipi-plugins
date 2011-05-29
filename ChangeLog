@@ -1,3 +1,325 @@
+2.0.0-beta6 2011-05-29
+
+2011-05-29  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-05-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* README: update
+
+2011-05-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/dialogs/batchprogressdialog.cpp,
+	common/libkipiplugins/dialogs/batchprogressdialog.h: polish
+
+2011-05-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/savesettingswidget.cpp,
+	common/libkipiplugins/widgets/savesettingswidget.h: constify
+
+2011-05-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/previewimage.cpp,
+	common/libkipiplugins/widgets/previewimage.h: constify
+
+2011-05-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	common/libkipiplugins/widgets/imageslist.h: constify
+
+2011-05-23  Montel Laurent <montel@kde.org>
+
+	* CMakeLists.txt, flashexport/generalpage.cpp,
+	flashexport/simpleviewer.cpp, kmlexport/kmlexport.cpp,
+	picasawebexport/picasawebwindow.cpp, rajceexport/rajcewidget.cpp,
+	shwup/swconnector.cpp: Fix compile with "-DQT_USE_FAST_CONCATENATION
+	-DQT_USE_FAST_OPERATOR_PLUS"
+
+2011-05-23  John Layt <john@layt.net>
+
+	* calendar/print/calsettings.cpp: Change calls to deprecated
+	calendar functions Stop using KCalendarSystem setYMD and dayOfPray which are
+	deprecated.
+
+2011-05-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/savesettingswidget.cpp: improve
+	settings layout CCBUGS: 266264
+
+2011-05-17  Montel Laurent <montel@kde.org>
+
+	* mediawiki/wikimediajob.cpp, mediawiki/wikimediajob.h: const'ref
+
+2011-05-16  Montel Laurent <montel@kde.org>
+
+	* gpssync/gpsreversegeocodingwidget.cpp, gpssync/searchwidget.cpp: 
+	Fix mem leak
+
+2011-05-16  Montel Laurent <montel@kde.org>
+
+	* gpssync/gpslistviewcontextmenu.cpp: Fix mem leak
+
+2011-05-16  Montel Laurent <montel@kde.org>
+
+	* gpssync/gpslistviewcontextmenu.cpp: Don't check pointer before to
+	delete it
+
+2011-05-11  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photoframeseditor/photoframeseditor.pro.user: Photo Frame Layout -
+	clean up Remove trash files.
+
+2011-05-11  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photoframeseditor/photoframeseditor.pro.user: Photo Frame Layout -
+	new tool directory Directory of new tool and git test ;) CCMAIL: lukasz.spas@gmail.com
+
+2011-05-11  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-05-10  Script Kiddy <scripty@kde.org>
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	acquireimages/scangui.desktop,
+	advancedslideshow/plugin/kipiplugin_advancedslideshow.desktop,
+	batchprocessimages/plugin/kipiplugin_batchprocessimages.desktop,
+	calendar/plugin/kipiplugin_calendar.desktop,
+	common/libkipiplugins/kipiplugins.desktop,
+	dngconverter/plugin/dngconverter.desktop,
+	dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	gpssync/kipiplugin_gpssync.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	htmlexport/themes/classic/classic.desktop,
+	htmlexport/themes/cleanframes/cleanframes.desktop,
+	htmlexport/themes/dateframes/dateframes.desktop,
+	htmlexport/themes/frames/frames.desktop,
+	htmlexport/themes/matrix/matrix.desktop,
+	htmlexport/themes/s0/s0.desktop,
+	htmlexport/themes/simple/simple.desktop,
+	htmlexport/themes/snow/snow.desktop,
+	imageviewer/kipiplugin_imageviewer.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	jpeglossless/plugin/kipiplugin_jpeglossless.desktop,
+	metadataedit/plugin/kipiplugin_metadataedit.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	printimages/templates/4x6Album.desktop,
+	printimages/templates/8_photos_6x9cm.desktop,
+	printimages/templates/Album-Collage.desktop,
+	printimages/templates/Album-Collage1.desktop,
+	printimages/templates/Album_10x15cm.desktop,
+	printimages/templates/Album_11.5x15cm.desktop,
+	printimages/templates/Photoframe.desktop,
+	rawconverter/plugin/kipiplugin_rawconverter.desktop,
+	removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	sendimages/kipiplugin_sendimages.desktop,
+	smug/kipiplugin_smug.desktop,
+	timeadjust/kipiplugin_timeadjust.desktop,
+	wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-05-09  Script Kiddy <scripty@kde.org>
+
+	* calendar/plugin/kipiplugin_calendar.desktop,
+	htmlexport/themes/classic/classic.desktop,
+	htmlexport/themes/cleanframes/cleanframes.desktop,
+	htmlexport/themes/details/details.desktop,
+	htmlexport/themes/frames/frames.desktop,
+	htmlexport/themes/matrix/matrix.desktop,
+	htmlexport/themes/simple/simple.desktop,
+	htmlexport/themes/snow/snow.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	printimages/templates/FullPage.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-05-08  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpslistviewcontextmenu.h: Adapt to libkmap altitude lookup
+	API changes from libkmap commit
+	ece5343d2905e0e2460236053ebddb78000324e8.
+	http://commits.kde.org/libkmap/ece5343d2905e0e2460236053ebddb78000324e8
+
+2011-05-08  Script Kiddy <scripty@kde.org>
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	acquireimages/scangui.desktop,
+	advancedslideshow/plugin/kipiplugin_advancedslideshow.desktop,
+	batchprocessimages/plugin/kipiplugin_batchprocessimages.desktop,
+	calendar/plugin/kipiplugin_calendar.desktop,
+	common/libkipiplugins/kipiplugins.desktop,
+	debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	dngconverter/plugin/dngconverter.desktop,
+	dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	expoblending/plugin/expoblending.desktop,
+	expoblending/plugin/kipiplugin_expoblending.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	gpssync/kipiplugin_gpssync.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	htmlexport/themes/classic/classic.desktop,
+	htmlexport/themes/cleanframes/cleanframes.desktop,
+	htmlexport/themes/dateframes/dateframes.desktop,
+	htmlexport/themes/details/details.desktop,
+	htmlexport/themes/floating_cards/floating_cards.desktop,
+	htmlexport/themes/frames/frames.desktop,
+	htmlexport/themes/matrix/matrix.desktop,
+	htmlexport/themes/s0/s0.desktop,
+	htmlexport/themes/simple/simple.desktop,
+	htmlexport/themes/snow/snow.desktop,
+	imageviewer/kipiplugin_imageviewer.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	jpeglossless/plugin/kipiplugin_jpeglossless.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	metadataedit/plugin/kipiplugin_metadataedit.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	printimages/templates/1_photo_10.5x14.8cm.desktop,
+	printimages/templates/1_photo_10x15cm.desktop,
+	printimages/templates/1_photo_20x25cm.desktop,
+	printimages/templates/1_photo_8x10.desktop,
+	printimages/templates/1_photo_9x13cm.desktop,
+	printimages/templates/2_photos_13x18cm.desktop,
+	printimages/templates/2_photos_5x7.desktop,
+	printimages/templates/3_photos_10x15cm.desktop,
+	printimages/templates/3_photos_4x6.desktop,
+	printimages/templates/4_photos_10x13.33cm.desktop,
+	printimages/templates/4_photos_3.5x5.desktop,
+	printimages/templates/4_photos_4.5x5cm.desktop,
+	printimages/templates/4_photos_9x13cm.desktop,
+	printimages/templates/4x6Album.desktop,
+	printimages/templates/6_photos_3.5x4cm.desktop,
+	printimages/templates/8_photos_6x9cm.desktop,
+	printimages/templates/Album-Collage.desktop,
+	printimages/templates/Album-Collage1.desktop,
+	printimages/templates/Album_10x15cm.desktop,
+	printimages/templates/Album_11.5x15cm.desktop,
+	printimages/templates/FullPage.desktop,
+	printimages/templates/Photoframe.desktop,
+	printimages/templates/Thumbnails_5x4.desktop,
+	printimages/templates/Thumbnails_6x5.desktop,
+	rawconverter/plugin/kipiplugin_rawconverter.desktop,
+	removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	sendimages/kipiplugin_sendimages.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	timeadjust/kipiplugin_timeadjust.desktop,
+	wallpaper/kipiplugin_wallpaper.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-05-06  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-05-05  Script Kiddy <scripty@kde.org>
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	acquireimages/scangui.desktop,
+	advancedslideshow/plugin/kipiplugin_advancedslideshow.desktop,
+	calendar/plugin/kipiplugin_calendar.desktop,
+	debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	dngconverter/plugin/dngconverter.desktop,
+	dngconverter/plugin/kipiplugin_dngconverter.desktop,
+	expoblending/plugin/expoblending.desktop,
+	expoblending/plugin/kipiplugin_expoblending.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	htmlexport/themes/classic/classic.desktop,
+	htmlexport/themes/cleanframes/cleanframes.desktop,
+	htmlexport/themes/dateframes/dateframes.desktop,
+	htmlexport/themes/details/details.desktop,
+	htmlexport/themes/floating_cards/floating_cards.desktop,
+	htmlexport/themes/matrix/matrix.desktop,
+	htmlexport/themes/s0/s0.desktop,
+	htmlexport/themes/simple/simple.desktop,
+	imageviewer/kipiplugin_imageviewer.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	jpeglossless/plugin/kipiplugin_jpeglossless.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	metadataedit/plugin/kipiplugin_metadataedit.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	printimages/templates/Album-Collage.desktop,
+	printimages/templates/Album-Collage1.desktop,
+	printimages/templates/FullPage.desktop,
+	printimages/templates/Photoframe.desktop,
+	printimages/templates/Thumbnails_5x4.desktop,
+	printimages/templates/Thumbnails_6x5.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	rawconverter/plugin/kipiplugin_rawconverter.desktop,
+	removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	sendimages/kipiplugin_sendimages.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	timeadjust/kipiplugin_timeadjust.desktop,
+	wallpaper/kipiplugin_wallpaper.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-05-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, NEWS, project/NEWS.2.0.0-beta5: beta6
+
+2011-05-03  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* project/release/fetch_l10n.rb: Remove debug
+
+2011-05-03  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* project/release/README, project/release/kipi-plugins.rb,
+	project/release/lib/config.rb, project/release/lib/core.rb,
+	project/release/lib/doc.rb, project/release/lib/kdialog.rb,
+	project/release/lib/l10n.rb, project/release/lib/l10ncore.rb,
+	project/release/lib/l10nstat.rb, project/release/lib/optparse.rb,
+	project/release/lib/query.rb, project/release/lib/release.rb,
+	project/release/lib/releasedigikamkipi.rb,
+	project/release/lib/starter.rb, project/release/lib/tag.rb,
+	project/release/lib/vcs-git.rb, project/release/lib/vcs-svn.rb: 
+	Remove unused files now.
+
+2011-05-03  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* project/release/fetch_l10n.rb, project/release/subdirs: Start to
+	generate po files.
+
+2011-05-02  Montel Laurent <montel@kde.org>
+
+	* kmlexport/Messages.sh: Clean up
+
+2011-05-02  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* CMakeLists.txt, NEWS: Open for Rc
+
+2011-05-02  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.0.0-beta5: Prepare for beta5
+
 2.0.0-beta5 2011-05-02
 
 2011-05-02  Script Kiddy <scripty@kde.org>
