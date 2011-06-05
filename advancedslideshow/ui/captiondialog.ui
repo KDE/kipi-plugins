@@ -10,9 +10,6 @@
     <height>679</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>captionDialog</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="KFontChooser" name="m_commentsFontChooser"/>

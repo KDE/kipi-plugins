@@ -19,7 +19,6 @@
    <item>
     <widget class="QLabel" name="m_slideLabel" >
      <property name="text" >
-      <string>SlidePixmap</string>
      </property>
     </widget>
    </item>

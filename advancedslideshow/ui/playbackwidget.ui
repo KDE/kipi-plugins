@@ -124,7 +124,6 @@
    <item>
     <widget class="QLabel" name="m_soundLabel" >
      <property name="text" >
-      <string>SoundPixmap</string>
      </property>
     </widget>
    </item>
