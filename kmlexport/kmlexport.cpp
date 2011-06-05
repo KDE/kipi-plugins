@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -236,9 +236,9 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     {
         //logInfo(i18n("Creation of picture '%1'").arg(fullFileName));
 
-        double alt, lat, lng;
+        double                  alt, lat, lng;
         QMap<QString, QVariant> attributes;
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KExiv2Iface::KExiv2     exiv2Iface;
         KIPI::ImageInfo info = m_interface->info(imageURL);
         attributes           = info.attributes();
 
@@ -341,7 +341,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
             //logInfo(i18n("Creation of icon '%1'").arg(iconFileName));
             // style et icon
             QDomElement kmlStyle     = addKmlElement(kmlPlacemark, "Style");
-            QDomElement kmlIconStyle = addKmlElement(kmlStyle, "IconStyle");
+            QDomElement kmlIconStyle = addKmlElement(kmlStyle,     "IconStyle");
             QDomElement kmlIcon      = addKmlElement(kmlIconStyle, "Icon");
             if (m_optimize_googlemap)
             {
@@ -431,17 +431,17 @@ void kmlExport::generate()
     KIPI::ImageCollection album     = m_interface->currentAlbum();
 
     // create the document, and it's root
-    m_kmlDocument = new QDomDocument("");
+    m_kmlDocument                   = new QDomDocument("");
     QDomImplementation impl;
-    QDomProcessingInstruction instr = m_kmlDocument->createProcessingInstruction("xml","version=\"1.0\" encoding=\"UTF-8\"");
+    QDomProcessingInstruction instr = m_kmlDocument->createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
     m_kmlDocument->appendChild(instr);
-    QDomElement kmlRoot             = m_kmlDocument->createElementNS( "http://earth.google.com/kml/2.1","kml");
+    QDomElement kmlRoot             = m_kmlDocument->createElementNS("http://earth.google.com/kml/2.1","kml");
     m_kmlDocument->appendChild( kmlRoot );
 
-    QDomElement kmlAlbum       = addKmlElement( kmlRoot, "Document");
-    QDomElement kmlName        = addKmlTextElement( kmlAlbum, "name", album.name());
-    QDomElement kmlDescription = addKmlHtmlElement( kmlAlbum, "description",
-                                                    "Created with kmlexport <a href=\"http://www.kipi-plugins.org/\">kipi-plugin</a>");
+    QDomElement kmlAlbum            = addKmlElement(kmlRoot, "Document");
+    QDomElement kmlName             = addKmlTextElement(kmlAlbum, "name", album.name());
+    QDomElement kmlDescription      = addKmlHtmlElement(kmlAlbum, "description",
+                                                        "Created with kmlexport <a href=\"http://www.kipi-plugins.org/\">kipi-plugin</a>");
 
     if (m_GPXtracks)
     {
@@ -491,7 +491,7 @@ void kmlExport::generate()
             defectImage++;
         }
         m_progressDialog->setProgress(pos, count);
-        qApp->processEvents();
+        kapp->processEvents();
     }
 
     if (defectImage)
@@ -513,7 +513,7 @@ void kmlExport::generate()
     delete m_kmlDocument;
     m_kmlDocument = 0;
 
-    KIO::moveAs(m_tempDestDir, m_baseDestDir, KIO::HideProgressInfo);
+    KIO::moveAs(m_tempDestDir, m_baseDestDir, KIO::HideProgressInfo & KIO::Overwrite);
     logInfo(i18n("Move to final directory"));
     m_progressDialog->close();
 }
