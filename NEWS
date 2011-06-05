@@ -46,5 +46,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 033 ==> 270649 : Bad use of arguments for translation.
 034 ==> 270624 : No display on googlemap.
 035 ==> 266906 : A few widget titles should not be translatable.
-036 ==> 
-
+036 ==> 171727 : KML export asks for overwriting tempfile.
+037 ==> 
