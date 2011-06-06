@@ -513,7 +513,7 @@ void kmlExport::generate()
     delete m_kmlDocument;
     m_kmlDocument = 0;
 
-    KIO::moveAs(m_tempDestDir, m_baseDestDir, KIO::HideProgressInfo & KIO::Overwrite);
+    KIO::moveAs(m_tempDestDir, m_baseDestDir, KIO::HideProgressInfo | KIO::Overwrite);
     logInfo(i18n("Move to final directory"));
     m_progressDialog->close();
 }
