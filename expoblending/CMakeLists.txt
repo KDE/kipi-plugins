@@ -6,14 +6,15 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
+# NOTE: OpenMP under MacOSX do not support multithreading.
 IF(OPENMP_FOUND AND NOT APPLE)
     ADD_DEFINITIONS(${OpenMP_CXX_FLAGS})
-    IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
+    IF("${OpenMP_CXX_FLAGS}" STREQUAL "-fopenmp" )
         SET(OPENMP_LDFLAGS "-lgomp")
-    ENDIF("${CMAKE_CXX_COMPILER_ID}" STREQUAL GNU )
-    IF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
+    ENDIF("${OpenMP_CXX_FLAGS}" STREQUAL "-fopenmp" )
+    IF("${OpenMP_CXX_FLAGS}" STREQUAL "-xopenmp" )
         SET(OPENMP_LDFLAGS "-xopenmp")
-    ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
+    ENDIF("${OpenMP_CXX_FLAGS}" STREQUAL "-xopenmp" )
 ENDIF(OPENMP_FOUND AND NOT APPLE)
 
 INSTALL(DIRECTORY pics
