@@ -22,11 +22,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // Qt
 #include <QFile>
+#include <QFileInfo>
 #include <QImage>
 #include <QImageReader>
 
 // KDE
 #include <klocale.h>
+#include <kdebug.h>
 
 // KIPI
 #include <libkipi/interface.h>
@@ -59,19 +61,19 @@ namespace KIPIHTMLExport {
  * Genearate a square thumbnail from @fullImage of @size x @size pixels
  */
 static QImage generateSquareThumbnail(const QImage& fullImage, int size) {
-	QImage image = fullImage.scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    QImage image = fullImage.scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 
-	if (image.width() != size || image.height() != size) {
-		int sx=0, sy=0;
-		if (image.width() > size) {
-			sx=(image.width() - size) / 2;
-		} else {
-			sy=(image.height() - size) / 2;
-		}
-		image = image.copy(sx, sy, size, size);
-	}
+    if (image.width() != size || image.height() != size) {
+        int sx=0, sy=0;
+        if (image.width() > size) {
+            sx=(image.width() - size) / 2;
+        } else {
+            sy=(image.height() - size) / 2;
+        }
+        image = image.copy(sx, sy, size, size);
+    }
 
-	return image;
+    return image;
 }
 
 
@@ -81,90 +83,107 @@ ImageGenerationFunctor::ImageGenerationFunctor(Generator* generator, GalleryInfo
 , mDestDir(destDir)
 {}
 
-void ImageGenerationFunctor::operator()(ImageElement& element) {
-	// Load image
-	QString path = element.mPath;
-	QFile imageFile(path);
-	if (!imageFile.open(QIODevice::ReadOnly)) {
-		emitWarning(i18n("Could not read image '%1'", path));
-		return;
-	}
+void ImageGenerationFunctor::operator()(ImageElement& element)
+{
+    // Load image
+    QString path = element.mPath;
+    QFile imageFile(path);
+    if (!imageFile.open(QIODevice::ReadOnly)) {
+        emitWarning(i18n("Could not read image '%1'", path));
+        return;
+    }
 
-	QString imageFormat = QImageReader::imageFormat(&imageFile);
-	if (imageFormat.isEmpty()) {
-		emitWarning(i18n("Format of image '%1' is unknown", path));
-		return;
-	}
-	imageFile.close();
-	imageFile.open(QIODevice::ReadOnly);
+    QImage originalImage;
 
-	QByteArray imageData = imageFile.readAll();
-	QImage originalImage;
-	if (!originalImage.loadFromData(imageData) ) {
-		emitWarning(i18n("Error loading image '%1'", path));
-		return;
-	}
+    // Check if RAW file.
+    QFileInfo fi(path);
+    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QString imageFormat;
+    QByteArray imageData;
 
-	// Process images
-	QImage fullImage = originalImage;
-	if (!mInfo->useOriginalImageAsFullImage()) {
-		if (mInfo->fullResize()) {
-			int size = mInfo->fullSize();
-			fullImage = fullImage.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-		}
-		if (element.mAngle != 0) {
-			QMatrix matrix;
-			matrix.rotate(element.mAngle);
-			fullImage = fullImage.transformed(matrix);
-		}
-	}
+    if (rawFilesExt.toUpper().contains(fi.suffix().toUpper()) && !mInfo->useOriginalImageAsFullImage()) {
+        if (!KDcrawIface::KDcraw::loadDcrawPreview(originalImage, path)) {
+            emitWarning(i18n("Error loading RAW image '%1'", path));
+            return;
+        }
+    }
+    else {
+        imageFormat = QImageReader::imageFormat(&imageFile);
+        if (imageFormat.isEmpty()) {
+            emitWarning(i18n("Format of image '%1' is unknown", path));
+            return;
+        }
+        imageFile.close();
+        imageFile.open(QIODevice::ReadOnly);
 
-	QImage thumbnail = generateSquareThumbnail(fullImage, mInfo->thumbnailSize());
+        imageData = imageFile.readAll();
 
-	// Save images
-	QString baseFileName = Generator::webifyFileName(element.mTitle);
-	baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
+        if (!originalImage.loadFromData(imageData) ) {
+            emitWarning(i18n("Error loading image '%1'", path));
+            return;
+        }
+    }
 
-	// Save full
-	QString fullFileName;
-	if (mInfo->useOriginalImageAsFullImage()) {
-		fullFileName = baseFileName + '.' + imageFormat.toLower();
-		if (!writeDataToFile(imageData, mDestDir + '/' + fullFileName)) {
-			return;
-		}
+    // Process images
+    QImage fullImage = originalImage;
+    if (!mInfo->useOriginalImageAsFullImage()) {
+        if (mInfo->fullResize()) {
+            int size = mInfo->fullSize();
+            fullImage = fullImage.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        }
+        if (element.mAngle != 0) {
+            QMatrix matrix;
+            matrix.rotate(element.mAngle);
+            fullImage = fullImage.transformed(matrix);
+        }
+    }
 
-	} else {
-		fullFileName = baseFileName + '.' + mInfo->fullFormatString().toLower();
-		QString destPath = mDestDir + '/' + fullFileName;
-		if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
-			emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
-			return;
-		}
-	}
-	element.mFullFileName = fullFileName;
-	element.mFullSize = fullImage.size();
+    QImage thumbnail = generateSquareThumbnail(fullImage, mInfo->thumbnailSize());
 
-	// Save original
-	if (mInfo->copyOriginalImage()) {
-		QString originalFileName = "original_" + fullFileName;
-		if (!writeDataToFile(imageData, mDestDir + '/' + originalFileName)) {
-			return;
-		}
-		element.mOriginalFileName = originalFileName;
-		element.mOriginalSize = originalImage.size();
-	}
+    // Save images
+    QString baseFileName = Generator::webifyFileName(element.mTitle);
+    baseFileName = mUniqueNameHelper.makeNameUnique(baseFileName);
 
-	// Save thumbnail
-	QString thumbnailFileName = "thumb_" + baseFileName + '.' + mInfo->thumbnailFormatString().toLower();
-	QString destPath = mDestDir + '/' + thumbnailFileName;
-	if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
-		mGenerator->logWarningRequested(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
-		return;
-	}
-	element.mThumbnailFileName = thumbnailFileName;
-	element.mThumbnailSize = thumbnail.size();
+    // Save full
+    QString fullFileName;
+    if (mInfo->useOriginalImageAsFullImage()) {
+        fullFileName = baseFileName + '.' + imageFormat.toLower();
+        if (!writeDataToFile(imageData, mDestDir + '/' + fullFileName)) {
+            return;
+        }
 
-	element.mValid = true;
+    } else {
+        fullFileName = baseFileName + '.' + mInfo->fullFormatString().toLower();
+        QString destPath = mDestDir + '/' + fullFileName;
+        if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
+            emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
+            return;
+        }
+    }
+    element.mFullFileName = fullFileName;
+    element.mFullSize = fullImage.size();
+
+    // Save original
+    if (mInfo->copyOriginalImage()) {
+        QString originalFileName = "original_" + fullFileName;
+        if (!writeDataToFile(imageData, mDestDir + '/' + originalFileName)) {
+            return;
+        }
+        element.mOriginalFileName = originalFileName;
+        element.mOriginalSize = originalImage.size();
+    }
+
+    // Save thumbnail
+    QString thumbnailFileName = "thumb_" + baseFileName + '.' + mInfo->thumbnailFormatString().toLower();
+    QString destPath = mDestDir + '/' + thumbnailFileName;
+    if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
+        mGenerator->logWarningRequested(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
+        return;
+    }
+    element.mThumbnailFileName = thumbnailFileName;
+    element.mThumbnailSize = thumbnail.size();
+
+    element.mValid = true;
 
         // Read Exif Metadata
         QString unavailable(i18n("unavailable"));
@@ -333,21 +352,21 @@ void ImageGenerationFunctor::operator()(ImageElement& element) {
 
 
 bool ImageGenerationFunctor::writeDataToFile(const QByteArray& data, const QString& destPath) {
-	QFile destFile(destPath);
-	if (!destFile.open(QIODevice::WriteOnly)) {
-		emitWarning(i18n("Could not open file '%1' for writing", destPath));
-		return false;
-	}
-	if (destFile.write(data) != data.size()) {
-		emitWarning(i18n("Could not save image to file '%1'", destPath));
-		return false;
-	}
-	return true;
+    QFile destFile(destPath);
+    if (!destFile.open(QIODevice::WriteOnly)) {
+        emitWarning(i18n("Could not open file '%1' for writing", destPath));
+        return false;
+    }
+    if (destFile.write(data) != data.size()) {
+        emitWarning(i18n("Could not save image to file '%1'", destPath));
+        return false;
+    }
+    return true;
 }
 
 
 void ImageGenerationFunctor::emitWarning(const QString& message) {
-	emit mGenerator->logWarningRequested(message);
+    emit mGenerator->logWarningRequested(message);
 }
 
 } // namespace

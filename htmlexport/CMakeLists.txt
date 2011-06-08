@@ -28,7 +28,7 @@ KDE4_ADD_PLUGIN(kipiplugin_htmlexport ${kipiplugin_htmlexport_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_htmlexport
                       ${KIPI_LIBRARIES}
-		      ${KEXIV2_LIBRARIES}
+                      ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${LIBEXSLT_LIBRARIES}
                       ${LIBXSLT_LIBRARIES}
