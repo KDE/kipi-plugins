@@ -47,4 +47,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 034 ==> 270624 : No display on googlemap.
 035 ==> 266906 : A few widget titles should not be translatable.
 036 ==> 171727 : KML export asks for overwriting tempfile.
-037 ==> 
+037 ==> 271735 : HTML export of RAW images fails.
+038 ==> 
+
