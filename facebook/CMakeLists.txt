@@ -19,6 +19,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_facebook
                       ${KDCRAW_LIBRARIES}
                       ${KDE4_KIO_LIBS}
                       ${KDE4_KDEUI_LIBS}
+                      ${QJSON_LIBRARIES}
                      )
 
 INSTALL(TARGETS kipiplugin_facebook DESTINATION ${PLUGIN_INSTALL_DIR})
