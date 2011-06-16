@@ -386,16 +386,14 @@ void RajceWidget::progressStarted(unsigned commandType)
 
     switch(commandType)
     {
-        case Login:       text = i18n("Logging in");     break;
-        case Logout:      text = i18n("Logging out");    break;
-        case ListAlbums:  text = i18n("Loading albums"); break;
-        case CreateAlbum: text = i18n("Creating album"); break;
-        case OpenAlbum:   text = i18n("Opening album");  break;
-        case CloseAlbum:  text = i18n("Closing album");  break;
-        case AddPhoto:    text = i18n("Adding photos");  break;
+        case Login:       text = i18n("Logging in %v%");     break;
+        case Logout:      text = i18n("Logging out %v%");    break;
+        case ListAlbums:  text = i18n("Loading albums %v%"); break;
+        case CreateAlbum: text = i18n("Creating album %v%"); break;
+        case OpenAlbum:   text = i18n("Opening album %v%");  break;
+        case CloseAlbum:  text = i18n("Closing album %v%");  break;
+        case AddPhoto:    text = i18n("Adding photos %v%");  break;
     }
-
-    text += " %v%";
 
     if (!m_uploadingPhotos)
     {
