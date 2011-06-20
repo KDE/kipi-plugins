@@ -37,6 +37,7 @@ KDE4_ADD_EXECUTABLE(gpssync_test_kipiimageitem
                     test_kipiimageitem.cpp
                     ../kipiimageitem.cpp
                     ../kipiimagemodel.cpp
+                    ${borrowed_future_SRCS}
                    )
 
 TARGET_LINK_LIBRARIES(gpssync_test_kipiimageitem
