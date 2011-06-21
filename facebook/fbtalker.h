@@ -112,16 +112,16 @@ private:
     QString getCallString(const QMap<QString, QString>& args);
     void    authenticationDone(int errCode, const QString& errMsg);
     void    doOAuth();
-    void    createToken();
-    void    getSession();
+    //void    createToken();
+    //void    getSession();
     void    getLoggedInUser();
     void    getUserInfo(const QString& userIDs = "");
     void    getUploadPermission();
 
     QString errorToText(int errCode, const QString& errMsg);
     int parseErrorResponse(const QDomElement& e, QString& errMsg);
-    void parseResponseCreateToken(const QByteArray& data);
-    void parseResponseGetSession(const QByteArray& data);
+    //void parseResponseCreateToken(const QByteArray& data);
+    //void parseResponseGetSession(const QByteArray& data);
     void parseExchangeSession(const QByteArray& data);
     void parseResponseGetLoggedInUser(const QByteArray& data);
     void parseResponseGetUserInfo(const QByteArray& data);
