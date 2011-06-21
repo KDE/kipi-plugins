@@ -769,16 +769,6 @@ void FbTalker::slotResult(KJob *kjob)
 
     switch(m_state)
     {
-/*
-        case(FB_CREATETOKEN):
-            parseResponseCreateToken(m_buffer);
-            break;
-*/
-/*
-        case(FB_GETSESSION):
-            parseResponseGetSession(m_buffer);
-            break;
-*/
 	case(FB_EXCHANGESESSION):
 	    parseExchangeSession(m_buffer);
 	    break;
