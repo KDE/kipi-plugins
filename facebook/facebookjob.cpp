@@ -52,12 +52,11 @@ void FacebookJob::start()
 {
     KConfig cfg(KGlobal::mainComponent());
     KConfigGroup cfgGroup = cfg.group("Facebook");
-    QString sessionKey    = cfgGroup.readEntry("Key", QString());
-    QString sessionSecret = cfgGroup.readEntry("Secret", QString());
+    QString accessToken   = cfgGroup.readEntry("Access Token", QString());
     uint sessionExpires   = cfgGroup.readEntry("Expires", 0);
 
     setPercent(20);
-    talk.authenticate(sessionKey, sessionSecret, sessionExpires);
+    talk.authenticate(accessToken, sessionExpires);
 }
 
 void FacebookJob::loginDone(int errCode, const QString& error)
@@ -70,11 +69,14 @@ void FacebookJob::loginDone(int errCode, const QString& error)
         return;
     }
     
+/* 
+ * TODO: These config variables never got written for me (Dirk). 
+ * So I have my doubts that this part of the plugin is actually active. 
+ */
     KConfig cfg(KGlobal::mainComponent());
     KConfigGroup cfgGroup = cfg.group("Facebook");
-    cfgGroup.writeEntry("Key",     talk.getSessionKey());
-    cfgGroup.writeEntry("Secret",  talk.getSessionSecret());
-    cfgGroup.writeEntry("Expires", talk.getSessionExpires());
+    cfgGroup.writeEntry("AccessToken",  talk.getAccessToken());
+    cfgGroup.writeEntry("Expires",      talk.getSessionExpires());
     cfgGroup.sync();
     
     kDebug() << "logged in" << talk.getSessionExpires();

@@ -136,9 +136,11 @@ private:
 
     QString                   m_profileAID;
     QString                   m_currentAlbumID;
-    QString                   m_sessionKey;
-    QString                   m_sessionSecret;
+    // the next two entries are only used to upgrade to the new authentication scheme
+    QString                   m_sessionKey;             // old world session key
+    QString                   m_sessionSecret;          // old world session secret
     unsigned int              m_sessionExpires;
+    QString		      m_accessToken;            // OAuth access token
 
     KUrl::List                m_transferQueue;
 

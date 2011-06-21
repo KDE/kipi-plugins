@@ -252,9 +252,12 @@ void FbWindow::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Facebook Settings");
-    m_sessionKey     = grp.readEntry("Session Key");
-    m_sessionSecret  = grp.readEntry("Session Secret");
-    m_sessionExpires = grp.readEntry("Session Expires", 0);
+    m_accessToken    = grp.readEntry("Access Token");
+    if(m_accessToken.isEmpty()) {
+	m_sessionKey     = grp.readEntry("Session Key");
+	m_sessionSecret  = grp.readEntry("Session Secret");
+	m_sessionExpires = grp.readEntry("Session Expires", 0);
+    }
     m_currentAlbumID = grp.readEntry("Current Album", QString());
 
     if (grp.readEntry("Resize", false))
@@ -288,8 +291,21 @@ void FbWindow::writeSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Facebook Settings");
-    grp.writeEntry("Session Key",     m_sessionKey);
-    grp.writeEntry("Session Secret",  m_sessionSecret);
+    grp.writeEntry("Access Token",    m_accessToken);
+    /* If we have both access token and session key, then we have just converted one into the other. */
+    if( ! m_accessToken.isEmpty() ) {
+        if( ! m_sessionKey.isEmpty() ) 
+            grp.deleteEntry("Session Key");
+        if( ! m_sessionSecret.isEmpty() )
+            grp.deleteEntry("Session Secret");
+    }
+    // If the access token has not been obtained, leave the values as they are.
+    /*
+    else {
+        grp.writeEntry("Session Key",     m_sessionKey);
+        grp.writeEntry("Session Secret",  m_sessionSecret);
+    }
+    */
     grp.writeEntry("Session Expires", m_sessionExpires);
     grp.writeEntry("Current Album",   m_currentAlbumID);
     grp.writeEntry("Resize",          m_widget->m_resizeChB->isChecked());
@@ -312,9 +328,16 @@ void FbWindow::authenticate()
 {
     m_widget->progressBar()->show();
     m_widget->progressBar()->setFormat("");
-
-    kDebug() << "Calling Login method";
-    m_talker->authenticate(m_sessionKey, m_sessionSecret, m_sessionExpires);
+    
+    // Converting old world session keys into OAuth2 tokens
+    if( ! m_sessionKey.isEmpty() && m_accessToken.isEmpty() ) {
+        kDebug() << "Exchanging session tokens to OAuth";
+        m_talker->exchangeSession(m_sessionKey);
+    }
+    else {
+        kDebug() << "Calling Login method";
+        m_talker->authenticate(m_accessToken, m_sessionExpires);
+    }
 }
 
 void FbWindow::slotLoginProgress(int step, int maxStep, const QString& label)
@@ -342,8 +365,7 @@ void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
     if (!m_import)
         m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), QString());
 
-    m_sessionKey     = m_talker->getSessionKey();
-    m_sessionSecret  = m_talker->getSessionSecret();
+    m_accessToken    = m_talker->getAccessToken();
     m_sessionExpires = m_talker->getSessionExpires();
 
     if (errCode == 0 && m_talker->loggedIn())
@@ -506,8 +528,7 @@ void FbWindow::slotUserChangeRequest()
     if (m_talker->loggedIn())
     {
         m_talker->logout();
-        m_sessionKey.clear();
-        m_sessionSecret.clear();
+        m_accessToken.clear();
         m_sessionExpires = 0;
     }
 

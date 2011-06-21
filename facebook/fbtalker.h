@@ -48,17 +48,17 @@ public:
     FbTalker(QWidget* parent);
     ~FbTalker();
 
-    QString         getSessionKey() const;
-    QString         getSessionSecret() const;
+    QString         getAccessToken() const;
     unsigned int    getSessionExpires() const;
 
     FbUser  getUser() const;
 
     bool    loggedIn() const;
     void    cancel();
-    void    authenticate(const QString& sessionKey, 
-                         const QString& sessionSecret,
+    void    authenticate(const QString& accessToken, 
                          unsigned int sessionExpires);
+    //void    authenticate(const QString& accessToken);
+    void    exchangeSession(const QString& sessionKey);
     void    changePerm();
     void    logout();
 
@@ -94,9 +94,7 @@ Q_SIGNALS:
 private:
     enum State
     {
-        FB_CREATETOKEN = 0,
-        FB_GETSESSION,
-        FB_GETLOGGEDINUSER,
+        FB_GETLOGGEDINUSER = 0,
         FB_GETUSERINFO,
         FB_GETUSERINFO_FRIENDS,
         FB_GETUPLOADPERM,
@@ -106,12 +104,14 @@ private:
         FB_LISTPHOTOS,
         FB_CREATEALBUM,
         FB_ADDPHOTO,
-        FB_GETPHOTO
+        FB_GETPHOTO,
+	FB_EXCHANGESESSION
     };
 
     QString getApiSig(const QMap<QString, QString>& args);
     QString getCallString(const QMap<QString, QString>& args);
     void    authenticationDone(int errCode, const QString& errMsg);
+    void    doOAuth();
     void    createToken();
     void    getSession();
     void    getLoggedInUser();
@@ -122,6 +122,7 @@ private:
     int parseErrorResponse(const QDomElement& e, QString& errMsg);
     void parseResponseCreateToken(const QByteArray& data);
     void parseResponseGetSession(const QByteArray& data);
+    void parseExchangeSession(const QByteArray& data);
     void parseResponseGetLoggedInUser(const QByteArray& data);
     void parseResponseGetUserInfo(const QByteArray& data);
     void parseResponseGetUploadPermission(const QByteArray& data);
@@ -142,15 +143,13 @@ private:
     QByteArray      m_buffer;
 
     QString         m_userAgent;
-    QString         m_apiURL;
+    KUrl            m_apiURL;
     QString         m_apiVersion;
-    QString         m_apiKey;
     QString         m_secretKey;
+    QString         m_appID;
 
     bool            m_loginInProgress;
-    QString         m_authToken;
-    QString         m_sessionKey;
-    QString         m_sessionSecret;
+    QString         m_accessToken;
     unsigned int    m_sessionExpires;
     QTime           m_callID;
 

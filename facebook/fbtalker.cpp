@@ -31,6 +31,11 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QtAlgorithms>
+#include <QVBoxLayout>
+#include <QLineEdit>
+#include <QPlainTextEdit>
+#include <QList>
+#include <qjson/parser.h>
 
 // KDE includes
 #include <kcodecs.h>
@@ -66,9 +71,9 @@ FbTalker::FbTalker(QWidget* parent)
 
     m_userAgent  = QString("KIPI-Plugin-Fb/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
     m_apiVersion = "1.0";
-    m_apiURL     = "https://api.facebook.com/restserver.php";
-    m_apiKey     = "bf430ad869b88aba5c0c17ea6707022b";
+    m_apiURL     = KUrl("https://api.facebook.com/method/");
     m_secretKey  = "0434307e70dd12c414cc6d0928f132d8";
+    m_appID      = "107648075065";
 }
 
 FbTalker::~FbTalker()
@@ -81,17 +86,12 @@ FbTalker::~FbTalker()
 
 bool FbTalker::loggedIn() const
 {
-    return !m_sessionKey.isEmpty();
+    return !m_accessToken.isEmpty();
 }
 
-QString FbTalker::getSessionKey() const
+QString FbTalker::getAccessToken() const
 {
-    return m_sessionKey;
-}
-
-QString FbTalker::getSessionSecret() const
-{
-    return m_sessionSecret;
+    return m_accessToken;
 }
 
 unsigned int FbTalker::getSessionExpires() const
@@ -117,7 +117,10 @@ void FbTalker::cancel()
 
 /** Compute MD5 signature using url queries keys and values:
     http://wiki.developers.facebook.com/index.php/How_Facebook_Authenticates_Your_Application
+    This method was used for the legacy authentication scheme and has been obsoleted with OAuth2 authentication.
 */
+
+/*
 QString FbTalker::getApiSig(const QMap<QString, QString>& args)
 {
     QString concat;
@@ -138,6 +141,7 @@ QString FbTalker::getApiSig(const QMap<QString, QString>& args)
     KMD5 md5(concat.toUtf8());
     return md5.hexDigest().data();
 }
+*/
 
 QString FbTalker::getCallString(const QMap<QString, QString>& args)
 {
@@ -159,23 +163,20 @@ QString FbTalker::getCallString(const QMap<QString, QString>& args)
     return concat;
 }
 
-void FbTalker::authenticate(const QString &sessionKey,
-                            const QString &sessionSecret,
+void FbTalker::authenticate(const QString &accessToken,
                             unsigned int sessionExpires)
 {
     m_loginInProgress = true;
 
-    if (!sessionKey.isEmpty()
-        && !sessionSecret.isEmpty()
+    if (!accessToken.isEmpty()
         && sessionExpires > (unsigned int)(time(0) + 900))
     {
         // sessionKey seems to be still valid for at least 15 minutes
         // - check if it still works
-        m_sessionKey     = sessionKey;
-        m_sessionSecret  = sessionSecret;
-        m_sessionExpires = sessionExpires;
+        m_accessToken      = accessToken;
+        m_sessionExpires   = sessionExpires;
 
-        emit signalLoginProgress(1, 8, i18n("Validate previous session..."));
+        emit signalLoginProgress(2, 9, i18n("Validate previous session..."));
 
         // get logged in user - this will check if session is still valid
         getLoggedInUser();
@@ -183,11 +184,18 @@ void FbTalker::authenticate(const QString &sessionKey,
     else
     {
         // session expired -> get new authorization token and session
-        createToken();
+        doOAuth();
     }
 }
 
-void FbTalker::createToken()
+/**
+ * upgrade session key to OAuth
+ * 
+ * This method (or step) can be removed after June 2012 (a year after its 
+ * implementation), since it is only a convenience method for those people 
+ * who just upgraded and have an active session using the old authentication.
+ */
+void FbTalker::exchangeSession(const QString& sessionKey) 
 {
     if (m_job)
     {
@@ -195,16 +203,15 @@ void FbTalker::createToken()
         m_job = 0;
     }
     emit signalBusy(true);
-    emit signalLoginProgress(1, 8, i18n("Logging in to Facebook service..."));
+    emit signalLoginProgress(1, 9, i18n("Upgrading to OAuth..."));
 
     QMap<QString, QString> args;
-    args["method"]  = "facebook.auth.createToken";
-    args["api_key"] = m_apiKey;
-    args["v"]       = m_apiVersion;
-    args["sig"]     = getApiSig(args);
-
+    args["client_id"] 		= m_appID;
+    args["client_secret"] 	= m_secretKey;
+    args["sessions"]		= sessionKey;
+    
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl("https://graph.facebook.com/oauth/exchange_sessions"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -215,43 +222,80 @@ void FbTalker::createToken()
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
-    m_state = FB_CREATETOKEN;
+    m_state = FB_EXCHANGESESSION;
     m_job   = job;
     m_buffer.resize(0);
 }
 
-void FbTalker::getSession()
-{
-    if (m_job)
-    {
-        m_job->kill();
-        m_job = 0;
-    }
+/**
+ * Authenticate using OAuth
+ * 
+ * TODO (Dirk): There's some GUI code slipped in here, 
+ * that really doesn't feel like it's belonging here.
+ */
+void FbTalker::doOAuth() {
+    m_loginInProgress = true; // just in case
+
     emit signalBusy(true);
-    emit signalLoginProgress(3);
 
-    QMap<QString, QString> args;
-    args["method"]      = "facebook.auth.getSession";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["auth_token"]  = m_authToken;
-    args["sig"]         = getApiSig(args);
+    KUrl url("https://www.facebook.com/dialog/oauth");
+    url.addQueryItem("client_id", m_appID);
+    url.addQueryItem("redirect_uri", "https://www.facebook.com/connect/login_success.html");
+    // TODO (Dirk): Check which of these permissions can be optional.
+    url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags");
+    url.addQueryItem("response_type", "token");
+    kDebug() << "OAuth URL: " << url;
+    KToolInvocation::invokeBrowser(url.url());
 
-    QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
-    job->addMetaData("UserAgent", m_userAgent);
-    job->addMetaData("content-type",
-                     "Content-Type: application/x-www-form-urlencoded");
+    emit signalBusy(false);
+    /*
+    KMessageBox::information(kapp->activeWindow(),
+                  i18n("Please follow the instructions in the browser window. "
+                       "Press \"OK\" when done."),
+                  i18n("Facebook Application Authorization"));
+    */
+    KDialog *window = new KDialog(kapp->activeWindow(), 0);
+    window->setModal(true);
+    window->setWindowTitle( i18n("Facebook Application Authorization") );
+    window->setButtons(KDialog::Ok | KDialog::Cancel);
+    QWidget *main = new QWidget(window, 0);
+    QLineEdit *textbox = new QLineEdit( );
+    QPlainTextEdit *infobox = new QPlainTextEdit( i18n(
+        "Please follow the instructions in the browser window. "
+        "When done, copy the Internet address from your browser into the textbox below and press \"OK\"."
+    ) );
+    infobox->setReadOnly(true);
+    //QPushButton okButton = new QPushButton();
+    //QPushButton cancelButton = new QPushButton();
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(infobox);
+    layout->addWidget(textbox);
+    main->setLayout(layout);
+    window->setMainWidget(main);
+    if( window->exec()  == QDialog::Accepted ) {
+        url = KUrl( textbox->text() );
+        QString fragment = url.fragment();
+        kDebug() << "Split out the fragment from the URL: " << fragment;
+        QStringList params = fragment.split("&");
+        QList<QString>::iterator i = params.begin();
+        while( i != params.end() ) {
+            QStringList keyvalue = (*i).split("=");
+            if( keyvalue.size() == 2 ) {
+                if( ! keyvalue[0].compare( "access_token" ) )
+                    m_accessToken = keyvalue[1];
+                if( ! keyvalue[0].compare( "expires_in" ) )
+                    m_sessionExpires = QDateTime::currentMSecsSinceEpoch() / 1000 + keyvalue[1].toUInt();
+            }
+            i++;
+        }
+        getUserInfo();
+    }
+    else {
+        authenticationDone(-1, i18n("Canceled by user."));
+    }
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
-
-    connect(job, SIGNAL(result(KJob*)),
-            this, SLOT(slotResult(KJob*)));
-
-    m_state = FB_GETSESSION;
-    m_job   = job;
-    m_buffer.resize(0);
+    // TODO (Dirk): Correct?
+    emit signalBusy(false);
 }
 
 void FbTalker::getLoggedInUser()
@@ -262,18 +306,13 @@ void FbTalker::getLoggedInUser()
         m_job = 0;
     }
     emit signalBusy(true);
-    emit signalLoginProgress(2);
+    emit signalLoginProgress(3);
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.users.getLoggedInUser";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["call_id"]     = QString::number(m_callID.elapsed());
-    args["session_key"] = m_sessionKey;
-    args["sig"]         = getApiSig(args);
+    args["access_token"]	= m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"users.getLoggedInUser"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -298,24 +337,19 @@ void FbTalker::getUserInfo(const QString& userIDs)
     }
     if (userIDs.isEmpty()) {
         emit signalBusy(true);
-        emit signalLoginProgress(5);
+        emit signalLoginProgress(6);
     }
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.users.getInfo";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["call_id"]     = QString::number(m_callID.elapsed());
-    args["session_key"] = m_sessionKey;
+    args["access_token"]= m_accessToken;
     if (userIDs.isEmpty())
         args["uids"]    = QString::number(m_user.id);
     else
         args["uids"]    = userIDs;
     args["fields"]      = "name,profile_url";
-    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"users.getInfo"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -334,6 +368,11 @@ void FbTalker::getUserInfo(const QString& userIDs)
     m_buffer.resize(0);
 }
 
+/**
+ * Request upload permission using OAuth
+ * 
+ * TODO (Dirk) maybe this can go or be merged with a re-authentication function.
+ */
 void FbTalker::getUploadPermission()
 {
     if (m_job)
@@ -343,19 +382,14 @@ void FbTalker::getUploadPermission()
     }
     emit signalBusy(true);
     if (m_loginInProgress)
-        emit signalLoginProgress(7);
+        emit signalLoginProgress(8);
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.users.hasAppPermission";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["call_id"]     = QString::number(m_callID.elapsed());
-    args["session_key"] = m_sessionKey;
+    args["access_token"]= m_accessToken;
     args["ext_perm"]    = "photo_upload";
-    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"users.hasAppPermission"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -378,7 +412,7 @@ void FbTalker::changePerm()
     emit signalBusy(true);
 
     KUrl url("https://graph.facebook.com/oauth/authorize");
-    url.addQueryItem("client_id", m_apiKey);
+    url.addQueryItem("client_id", m_appID);
     url.addQueryItem("redirect_uri", "http://www.facebook.com/apps/application.php?id=107648075065");
     url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags");
     kDebug() << "Change Perm URL: " << url;
@@ -404,14 +438,10 @@ void FbTalker::logout()
     emit signalBusy(true);
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.auth.expireSession";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["session_key"] = m_sessionKey;
-    args["sig"]         = getApiSig(args);
+    args["access_token"] = m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"auth.expireSession"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -438,15 +468,10 @@ void FbTalker::listFriends()
     emit signalBusy(true);
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.friends.get";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["session_key"] = m_sessionKey;
-    args["call_id"]     = QString::number(m_callID.elapsed());
-    args["sig"]         = getApiSig(args);
+    args["access_token"]= m_accessToken;
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"friends.get"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -475,19 +500,14 @@ void FbTalker::listAlbums(long long userID)
     emit signalBusy(true);
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.photos.getAlbums";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["session_key"] = m_sessionKey;
-    args["call_id"]     = QString::number(m_callID.elapsed());
+    args["access_token"]= m_accessToken;
     if (userID != 0)
         args["uid"]     = QString::number(userID);
     else
         args["uid"]     = QString::number(m_user.id);
-    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"photos.getAlbums"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -514,21 +534,16 @@ void FbTalker::listPhotos(long long userID, const QString &albumID)
     emit signalBusy(true);
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.photos.get";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["session_key"] = m_sessionKey;
-    args["call_id"]     = QString::number(m_callID.elapsed());
+    args["access_token"]= m_accessToken;
     if (!albumID.isEmpty())
         args["aid"]     = albumID;
     else if (userID != 0)
         args["subj_id"] = QString::number(userID);
     else
         args["subj_id"] = QString::number(m_user.id);
-    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"photos.get"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -554,15 +569,13 @@ void FbTalker::createAlbum(const FbAlbum& album)
     emit signalBusy(true);
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.photos.createAlbum";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["session_key"] = m_sessionKey;
+    args["access_token"] = m_accessToken;
     args["name"]        = album.title;
     if (!album.location.isEmpty())
         args["location"] = album.location;
     if (!album.description.isEmpty())
         args["description"] = album.description;
+    // TODO (Dirk): Wasn't that a requested feature in Bugzilla?
     switch (album.privacy)
     {
         case FB_FRIENDS:
@@ -578,10 +591,9 @@ void FbTalker::createAlbum(const FbAlbum& album)
             args["visible"] = "everyone";
             break;
     }
-    args["sig"]         = getApiSig(args);
 
     QByteArray tmp(getCallString(args).toUtf8());
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, tmp, KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"photos.createAlbum"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type",
                      "Content-Type: application/x-www-form-urlencoded");
@@ -613,17 +625,12 @@ bool FbTalker::addPhoto(const QString& imgPath,
     emit signalBusy(true);
 
     QMap<QString, QString> args;
-    args["method"]      = "facebook.photos.upload";
-    args["api_key"]     = m_apiKey;
-    args["v"]           = m_apiVersion;
-    args["call_id"]     = QString::number(m_callID.elapsed());
-    args["session_key"] = m_sessionKey;
+    args["access_token"]= m_accessToken;
     args["name"]        = KUrl(imgPath).fileName();
     if (!albumID.isEmpty())
         args["aid"]     = albumID;
     if (!caption.isEmpty())
         args["caption"] = caption;
-    args["sig"]         = getApiSig(args);
 
     MPForm  form;
     for (QMap<QString, QString>::const_iterator it = args.constBegin();
@@ -643,7 +650,7 @@ bool FbTalker::addPhoto(const QString& imgPath,
 
     kDebug() << "FORM: " << endl << form.formData();
 
-    KIO::TransferJob* job = KIO::http_post(m_apiURL, form.formData(), KIO::HideProgressInfo);
+    KIO::TransferJob* job = KIO::http_post(KUrl(m_apiURL,"photos.upload"), form.formData(), KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type", form.contentType());
 
@@ -762,12 +769,19 @@ void FbTalker::slotResult(KJob *kjob)
 
     switch(m_state)
     {
+/*
         case(FB_CREATETOKEN):
             parseResponseCreateToken(m_buffer);
             break;
+*/
+/*
         case(FB_GETSESSION):
             parseResponseGetSession(m_buffer);
             break;
+*/
+	case(FB_EXCHANGESESSION):
+	    parseExchangeSession(m_buffer);
+	    break;
         case(FB_GETLOGGEDINUSER):
             parseResponseGetLoggedInUser(m_buffer);
             break;
@@ -808,10 +822,7 @@ void FbTalker::authenticationDone(int errCode, const QString &errMsg)
 {
     if (errCode != 0)
     {
-        m_authToken.clear();
-        m_sessionKey.clear();
-        m_sessionSecret.clear();
-        m_sessionExpires = 0;
+        m_accessToken.clear();
         m_user.clear();
     }
 
@@ -844,6 +855,7 @@ int FbTalker::parseErrorResponse(const QDomElement& e, QString& errMsg)
     return errCode;
 }
 
+/*
 void FbTalker::parseResponseCreateToken(const QByteArray& data)
 {
     int errCode = -1;
@@ -853,7 +865,7 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    emit signalLoginProgress(2);
+    emit signalLoginProgress(3);
 
     kDebug() << "Parse CreateToken response:" << endl << data;
 
@@ -895,7 +907,9 @@ void FbTalker::parseResponseCreateToken(const QByteArray& data)
         authenticationDone(-1, i18n("Canceled by user."));
     }
 }
+*/
 
+/*
 void FbTalker::parseResponseGetSession(const QByteArray& data)
 {
     int errCode = -1;
@@ -905,7 +919,7 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    emit signalLoginProgress(4);
+    emit signalLoginProgress(5);
 
     kDebug() << "Parse GetSession response:" << endl << data;
 
@@ -943,6 +957,34 @@ void FbTalker::parseResponseGetSession(const QByteArray& data)
 
     getUserInfo();
 }
+*/
+
+void FbTalker::parseExchangeSession(const QByteArray& data)
+{
+    int errCode = -1;
+    QString errMsg;
+    bool ok;
+    QJson::Parser parser;
+    
+    kDebug() << "Parse exchange_session response:" << endl << data;
+    
+    QVariantList result = parser.parse (data, &ok).toList();
+
+    if(ok) {
+	QVariantMap session = result[0].toMap();
+	m_accessToken    = session["access_token"].toString();
+	m_sessionExpires = session["expires"].toUInt();
+        if( m_accessToken.isEmpty() )
+            // Session did not convert. Reauthenticate.
+            doOAuth();
+        else
+            // Session converted to OAuth. Proceed normally.
+            getLoggedInUser();
+    }
+    else {
+	authenticationDone(errCode, errorToText(errCode, errMsg));
+    }
+}
 
 void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
 {
@@ -953,7 +995,7 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
     if (!doc.setContent(data))
         return;
 
-    emit signalLoginProgress(3);
+    emit signalLoginProgress(4);
 
     kDebug() << "Parse GetLoggedInUser response:" << endl << data;
 
@@ -974,13 +1016,11 @@ void FbTalker::parseResponseGetLoggedInUser(const QByteArray& data)
     else
     {
         // it seems that session expired -> create new token and session
-        m_authToken.clear();
-        m_sessionKey.clear();
-        m_sessionSecret.clear();
+        m_accessToken.clear();
         m_sessionExpires = 0;
         m_user.clear();
 
-        createToken();
+        doOAuth();
     }
 }
 
@@ -993,7 +1033,7 @@ void FbTalker::parseResponseGetUserInfo(const QByteArray& data)
         return;
 
     if (m_state == FB_GETUSERINFO) // during login
-        emit signalLoginProgress(6);
+        emit signalLoginProgress(7);
 
     kDebug() << "Parse GetUserInfo response:" << endl << data;
 
@@ -1067,7 +1107,7 @@ void FbTalker::parseResponseGetUploadPermission(const QByteArray& data)
         return;
 
     if (m_loginInProgress)
-        emit signalLoginProgress(8);
+        emit signalLoginProgress(9);
 
     kDebug() << "Parse HasAppPermission response:" << endl << data;
 
@@ -1109,8 +1149,7 @@ void FbTalker::parseResponseLogout(const QByteArray& data)
         errCode = parseErrorResponse(docElem, errMsg);
 
     // consider we are logged out in any case
-    m_sessionKey.clear();
-    m_sessionSecret.clear();
+    m_accessToken.clear();
     m_sessionExpires = 0;
     m_user.clear();
 
