@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "fbwindow.h"
 #include "fbwindow.moc"
 
 // Qt includes

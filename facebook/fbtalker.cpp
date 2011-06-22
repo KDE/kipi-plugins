@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "fbtalker.h"
 #include "fbtalker.moc"
 
 // C++ includes

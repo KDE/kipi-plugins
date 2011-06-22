@@ -32,26 +32,29 @@ namespace KIPIFacebookPlugin
 class FbUser
 {
 public:
+
     FbUser()
     {
-        id = 0;
+        id         = 0;
         uploadPerm = false;
     }
 
     void clear()
     {
-        id = 0;
+        id         = 0;
         name.clear();
         profileURL.clear();
         uploadPerm = false;
     }
 
-    long long   id;
+    long long id;
 
-    QString     name;
-    QString     profileURL;
-    bool        uploadPerm;
+    QString   name;
+    QString   profileURL;
+    bool      uploadPerm;
 };
+
+// ---------------------------------------------------------------
 
 enum FbPrivacy
 {
@@ -61,35 +64,41 @@ enum FbPrivacy
     FB_EVERYONE
 };
 
+// ---------------------------------------------------------------
+
 class FbAlbum
 {
 public:
+
     FbAlbum()
     {
         privacy = FB_FRIENDS;
     }
 
-    QString     id;
+    QString   id;
 
-    QString     title;
-    QString     description;
-    QString     location;
-    FbPrivacy   privacy;
-    QString     url;
+    QString   title;
+    QString   description;
+    QString   location;
+    FbPrivacy privacy;
+    QString   url;
 };
+
+// ---------------------------------------------------------------
 
 class FbPhoto
 {
 public:
+
     FbPhoto()
     {
     }
 
-    QString   id;
+    QString id;
 
-    QString     caption;
-    QString     thumbURL;
-    QString     originalURL;
+    QString caption;
+    QString thumbURL;
+    QString originalURL;
 };
 
 } // namespace KIPIFacebookPlugin

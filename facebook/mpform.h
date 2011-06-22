@@ -26,6 +26,7 @@
 #define MPFORM_H
 
 // Qt includes
+
 #include <QByteArray>
 #include <QString>
 
@@ -51,6 +52,7 @@ public:
     QString    boundary()    const;
 
 private:
+
     QByteArray m_buffer;
     QByteArray m_boundary;
 };

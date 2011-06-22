@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "fbwidget.h"
 #include "fbwidget.moc"
 
 // Qt includes

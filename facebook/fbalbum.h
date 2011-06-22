@@ -41,16 +41,18 @@ class FbNewAlbum : public KDialog
     Q_OBJECT
 
 public:
+
     FbNewAlbum(QWidget* parent);
     ~FbNewAlbum();
 
     void getAlbumProperties(FbAlbum &album);
 
 private:
-    KLineEdit       *m_titleEdt;
-    KLineEdit       *m_locEdt;
-    KTextEdit       *m_descEdt;
-    KComboBox       *m_privacyCoB;
+
+    KLineEdit* m_titleEdt;
+    KLineEdit* m_locEdt;
+    KTextEdit* m_descEdt;
+    KComboBox* m_privacyCoB;
 
     friend class FbWindow;
 };

@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "fbalbum.h"
 #include "fbalbum.moc"
 
 // Qt includes
@@ -43,7 +42,7 @@ namespace KIPIFacebookPlugin
 {
 
 FbNewAlbum::FbNewAlbum(QWidget* parent)
-           : KDialog(parent)
+    : KDialog(parent)
 {
     QString header(i18n("Facebook New Album"));
     setWindowTitle(header);
@@ -70,8 +69,7 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
 
     m_privacyCoB        = new KComboBox;
     m_privacyCoB->setEditable(false);
-    m_privacyCoB->setWhatsThis(
-        i18n("Privacy setting of the album that will be created (required)."));
+    m_privacyCoB->setWhatsThis(i18n("Privacy setting of the album that will be created (required)."));
     m_privacyCoB->addItem(KIcon("user-identity"), 
                           i18n("Only Friends"), FB_FRIENDS);
     m_privacyCoB->addItem(KIcon("system-users"), 
@@ -90,8 +88,6 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
     mainWidget->setLayout(albumBoxLayout);
-
-    // ------------------------------------------------------------------------
 }
 
 FbNewAlbum::~FbNewAlbum()
@@ -100,10 +96,10 @@ FbNewAlbum::~FbNewAlbum()
 
 void FbNewAlbum::getAlbumProperties(FbAlbum &album)
 {
-    album.title = m_titleEdt->text();
-    album.location = m_locEdt->text();
+    album.title       = m_titleEdt->text();
+    album.location    = m_locEdt->text();
     album.description = m_descEdt->toPlainText();
-    album.privacy = static_cast<KIPIFacebookPlugin::FbPrivacy>(m_privacyCoB->itemData(m_privacyCoB->currentIndex()).toInt());
+    album.privacy     = static_cast<KIPIFacebookPlugin::FbPrivacy>(m_privacyCoB->itemData(m_privacyCoB->currentIndex()).toInt());
 }
 
 } // namespace KIPIFacebookPlugin
