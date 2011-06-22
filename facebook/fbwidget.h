@@ -24,6 +24,7 @@
 #define FBWIDGET_H
 
 // Qt includes
+
 #include <QWidget>
 
 class QLabel;
@@ -67,7 +68,7 @@ public:
 
     QString getDestinationPath() const;
 
-    void updateLabels(const QString& name = "", const QString& url = "", bool uplPerm = false);
+    void updateLabels(const QString& name = QString(), const QString& url = QString(), bool uplPerm = false);
 
     long long getFriendID() const;
     QString getAlbumID() const;

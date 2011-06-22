@@ -24,15 +24,18 @@
 #define FBTALKER_H
 
 // Qt includes
+
 #include <QList>
 #include <QString>
 #include <QTime>
 #include <QObject>
 
 // KDE includes
+
 #include <kio/job.h>
 
 // local includes
+
 #include "fbitem.h"
 
 class QDomElement;
@@ -48,14 +51,14 @@ public:
     FbTalker(QWidget* parent);
     ~FbTalker();
 
-    QString         getAccessToken() const;
-    unsigned int    getSessionExpires() const;
+    QString      getAccessToken() const;
+    unsigned int getSessionExpires() const;
 
     FbUser  getUser() const;
 
     bool    loggedIn() const;
     void    cancel();
-    void    authenticate(const QString& accessToken, 
+    void    authenticate(const QString& accessToken,
                          unsigned int sessionExpires);
     //void    authenticate(const QString& accessToken);
     void    exchangeSession(const QString& sessionKey);
@@ -74,8 +77,9 @@ public:
     void    getPhoto(const QString& imgPath);
 
 Q_SIGNALS:
+
     void signalBusy(bool val);
-    void signalLoginProgress(int step, int maxStep = 0, 
+    void signalLoginProgress(int step, int maxStep = 0,
                              const QString& label = "");
     void signalLoginDone(int errCode, const QString& errMsg);
     void signalChangePermDone(int errCode, const QString& errMsg);
@@ -92,6 +96,7 @@ Q_SIGNALS:
                                const QList <FbUser>& friendsList);
 
 private:
+
     enum State
     {
         FB_GETLOGGEDINUSER = 0,
@@ -105,8 +110,10 @@ private:
         FB_CREATEALBUM,
         FB_ADDPHOTO,
         FB_GETPHOTO,
-	FB_EXCHANGESESSION
+        FB_EXCHANGESESSION
     };
+
+private:
 
     QString getApiSig(const QMap<QString, QString>& args);
     QString getCallString(const QMap<QString, QString>& args);
@@ -134,30 +141,32 @@ private:
     void parseResponseListFriends(const QByteArray& data);
 
 private Q_SLOTS:
-    void data(KIO::Job *job, const QByteArray& data);
-    void slotResult(KJob *job);
+
+    void data(KIO::Job* job, const QByteArray& data);
+    void slotResult(KJob* job);
 
 private:
-    QWidget*        m_parent;
 
-    QByteArray      m_buffer;
+    QWidget*     m_parent;
 
-    QString         m_userAgent;
-    KUrl            m_apiURL;
-    QString         m_apiVersion;
-    QString         m_secretKey;
-    QString         m_appID;
+    QByteArray   m_buffer;
 
-    bool            m_loginInProgress;
-    QString         m_accessToken;
-    unsigned int    m_sessionExpires;
-    QTime           m_callID;
+    QString      m_userAgent;
+    KUrl         m_apiURL;
+    QString      m_apiVersion;
+    QString      m_secretKey;
+    QString      m_appID;
 
-    FbUser          m_user;
+    bool         m_loginInProgress;
+    QString      m_accessToken;
+    unsigned int m_sessionExpires;
+    QTime        m_callID;
 
-    KIO::Job*       m_job;
+    FbUser       m_user;
 
-    State           m_state;
+    KIO::Job*    m_job;
+
+    State        m_state;
 };
 
 } // namespace KIPIFacebookPlugin

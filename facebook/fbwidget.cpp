@@ -55,7 +55,7 @@ namespace KIPIFacebookPlugin
 {
 
 FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
-        : QWidget(parent)
+    : QWidget(parent)
 {
     setObjectName("FbWidget");
 
@@ -67,38 +67,33 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(
-        i18n("This is the list of images to upload to your Facebook account."));
+    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Facebook account."));
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(
-        i18n("This is a clickable link to open the Facebook home page in a web browser."));
+    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Facebook home page in a web browser."));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     // ------------------------------------------------------------------------
 
     QGroupBox* accountBox         = new QGroupBox(i18n("Account"), settingsBox);
-    accountBox->setWhatsThis(
-        i18n("This is the Facebook account that is currently logged in."));
+    accountBox->setWhatsThis(i18n("This is the Facebook account that is currently logged in."));
     QGridLayout* accountBoxLayout = new QGridLayout(accountBox);
 
-    QLabel *userNameLbl     = new QLabel(i18nc("facebook account settings", "Name:"), accountBox);
+    QLabel* userNameLbl     = new QLabel(i18nc("facebook account settings", "Name:"), accountBox);
     m_userNameDisplayLbl    = new QLabel(accountBox);
-    QLabel *permissionLbl   = new QLabel(i18n("Permission:"), accountBox);
-    permissionLbl->setWhatsThis(
-        i18n("Permission of KIPI Plugin application to upload photos directly. If not, user will need to manually approve uploaded photos in Facebook."));
+    QLabel* permissionLbl   = new QLabel(i18n("Permission:"), accountBox);
+    permissionLbl->setWhatsThis(i18n("Permission of KIPI Plugin application to upload photos directly. "
+                                     "If not, user will need to manually approve uploaded photos in Facebook."));
     m_permissionLbl         = new QLabel(accountBox);
-    m_changeUserBtn         = new KPushButton(
-        KGuiItem(i18n("Change Account"), "system-switch-user",
-                 i18n("Logout and change Facebook Account used for transfer")),
+    m_changeUserBtn         = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
+                                              i18n("Logout and change Facebook Account used for transfer")),
         accountBox);
-    m_changePermBtn         = new KPushButton(
-        KGuiItem(i18n("Change Permission"), "security-high",
-                 i18n("Change permission for KIPI application for photo upload")),
+    m_changePermBtn         = new KPushButton(KGuiItem(i18n("Change Permission"), "security-high",
+                                              i18n("Change permission for KIPI application for photo upload")),
         accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
@@ -116,29 +111,23 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     if (import)
     {
         albBox->setTitle(i18n("Download Selection"));
-        albBox->setWhatsThis(
-            i18n("This is the selection of Facebook albums/photos to download."));
+        albBox->setWhatsThis(i18n("This is the selection of Facebook albums/photos to download."));
     }
     else
     {
         albBox->setTitle(i18n("Destination"));
-        albBox->setWhatsThis(
-            i18n("This is the Facebook album to which selected photos will be uploaded."));
+        albBox->setWhatsThis(i18n("This is the Facebook album to which selected photos will be uploaded."));
     }
     QGridLayout* albumsBoxLayout  = new QGridLayout(albBox);
 
     QRadioButton* albMeRBtn = new QRadioButton(i18n("My &Album"), albBox);
-    albMeRBtn->setWhatsThis(
-        i18n("Download complete album of currently logged in user."));
+    albMeRBtn->setWhatsThis(i18n("Download complete album of currently logged in user."));
     QRadioButton* albFrRBtn = new QRadioButton(i18n("Album &of My Friend"), albBox);
-    albFrRBtn->setWhatsThis(
-        i18n("Download complete album of selected friend."));
+    albFrRBtn->setWhatsThis(i18n("Download complete album of selected friend."));
     QRadioButton* phMeRBtn  = new QRadioButton(i18n("Photos of &Me"), albBox);
-    phMeRBtn->setWhatsThis(
-        i18n("Download all photos of currently logged in user."));
+    phMeRBtn->setWhatsThis(i18n("Download all photos of currently logged in user."));
     QRadioButton* phFrRBtn  = new QRadioButton(i18n("Photos of My &Friend"), albBox);
-    phFrRBtn->setWhatsThis(
-        i18n("Download all photos of selected friend."));
+    phFrRBtn->setWhatsThis(i18n("Download all photos of selected friend."));
 
     m_dlGrp = new QButtonGroup(albBox);
     m_dlGrp->addButton(albMeRBtn, FbMyAlbum);
@@ -154,12 +143,10 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_albumsCoB     = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
-    m_newAlbumBtn       = new KPushButton(
-            KGuiItem(i18n("New Album"), "list-add",
-                     i18n("Create new Facebook album")), accountBox);
-    m_reloadAlbumsBtn   = new KPushButton(
-            KGuiItem(i18nc("facebook album list", "Reload"), "view-refresh",
-                     i18n("Reload album list")), accountBox);
+    m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
+                                        i18n("Create new Facebook album")), accountBox);
+    m_reloadAlbumsBtn = new KPushButton(KGuiItem(i18nc("facebook album list", "Reload"),
+                                        "view-refresh", i18n("Reload album list")), accountBox);
 
     albumsBoxLayout->addWidget(albMeRBtn,           0, 0, 1, 2);
     albumsBoxLayout->addWidget(albFrRBtn,           1, 0, 1, 2);
@@ -174,9 +161,8 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(
-        i18n("This is the location to which Facebook images will be downloaded."));
+    QGroupBox* uploadBox = new QGroupBox(i18n("Destination"), settingsBox);
+    uploadBox->setWhatsThis(i18n("This is the location to which Facebook images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
@@ -184,8 +170,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     // ------------------------------------------------------------------------
 
     QGroupBox* optionsBox         = new QGroupBox(i18n("Options"), settingsBox);
-    optionsBox->setWhatsThis(
-        i18n("These are options that will be applied to photos before upload."));
+    optionsBox->setWhatsThis(i18n("These are options that will be applied to photos before upload."));
     QGridLayout* optionsBoxLayout = new QGridLayout(optionsBox);
 
     m_resizeChB     = new QCheckBox(optionsBox);
@@ -299,7 +284,7 @@ QProgressBar* FbWidget::progressBar() const
     return m_progressBar;
 }
 
-QString FbWidget::getDestinationPath() const 
+QString FbWidget::getDestinationPath() const
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().toLocalFile();
 }
@@ -309,6 +294,7 @@ void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPer
     QString web("http://www.facebook.com");
     if (!url.isEmpty())
         web = url;
+
     m_headerLbl->setText(QString("<b><h2><a href='%1'>"
                                  "<font color=\"#3B5998\">facebook</font>"
                                  "</a></h2></b>").arg(web));
@@ -392,8 +378,7 @@ long long FbWidget::getFriendID() const
 
 QString FbWidget::getAlbumID() const
 {
-    if (m_dlGrp->checkedId() == FbMyAlbum
-        || m_dlGrp->checkedId() == FbFriendAlbum)
+    if (m_dlGrp->checkedId() == FbMyAlbum || m_dlGrp->checkedId() == FbFriendAlbum)
         return m_albumsCoB->itemData(m_albumsCoB->currentIndex()).toString();
 
     return QString();
