@@ -72,16 +72,19 @@ public:
 
     ImagesListViewItemPriv()
     {
-        rating = -1;
-        view   = 0;
-        state  = Waiting;
+        rating  = -1;
+        view    = 0;
+        state   = Waiting;
+        asThumb = false;
     }
+
+    bool            asThumb;
 
     int             rating;         // Image Rating from Kipi host.
     QString         comments;       // Image comments from Kipi host.
     QStringList     tags;           // List of keywords from Kipi host.
     KUrl            url;            // Image url provided by Kipi host.
-    QPixmap         thumb;          // Image thumbnail
+    QPixmap         thumb;          // Image thumbnail.
     ImagesListView* view;
     State           state;
 };
@@ -93,7 +96,7 @@ ImagesListViewItem::ImagesListViewItem(ImagesListView* view, const KUrl& url)
              << " for list view " << view;
     d->view      = view;
     int iconSize = d->view->iconSize().width();
-    setThumb(SmallIcon("image-x-generic", iconSize, KIconLoader::DisabledState));
+    setThumb(SmallIcon("image-x-generic", iconSize, KIconLoader::DisabledState), false);
     setUrl(url);
     setRating(-1);
     setFlags(Qt::ItemIsEnabled|Qt::ItemIsDragEnabled|Qt::ItemIsSelectable);
@@ -102,6 +105,11 @@ ImagesListViewItem::ImagesListViewItem(ImagesListView* view, const KUrl& url)
 ImagesListViewItem::~ImagesListViewItem()
 {
     delete d;
+}
+
+bool ImagesListViewItem::asValidThumbnail() const
+{
+    return d->asThumb;
 }
 
 void ImagesListViewItem::updateInformation()
@@ -181,7 +189,7 @@ void ImagesListViewItem::setPixmap(const QPixmap& pix)
     setIcon(ImagesListView::Thumbnail, icon);
 }
 
-void ImagesListViewItem::setThumb(const QPixmap& pix)
+void ImagesListViewItem::setThumb(const QPixmap& pix, bool asThumb)
 {
     kDebug() << "Received new thumbnail for url " << d->url
              << ". My view is " << d->view;
@@ -199,6 +207,8 @@ void ImagesListViewItem::setThumb(const QPixmap& pix)
     p.drawPixmap((pixmap.width()/2) - (pix.width()/2), (pixmap.height()/2) - (pix.height()/2), pix);
     d->thumb     = pixmap;
     setPixmap(d->thumb);
+
+    d->asThumb   = asThumb;
 }
 
 void ImagesListViewItem::setProgressAnimation(const QPixmap& pix)
@@ -300,6 +310,17 @@ void ImagesListView::enableDragAndDrop(const bool enable)
     setDragDropMode(enable ? QAbstractItemView::InternalMove : QAbstractItemView::NoDragDrop);
     setDragDropOverwriteMode(enable);
     setDropIndicatorShown(enable);
+}
+
+void ImagesListView::drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const
+{
+    ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(itemFromIndex(index));
+    if (item && !item->asValidThumbnail())
+    {
+        ImagesList* view = dynamic_cast<ImagesList*>(parent());
+        if (view) view->updateThumbnail(item->url());
+    }
+    QTreeWidget::drawRow(p, opt, index);
 }
 
 void ImagesListView::slotItemClicked(QTreeWidgetItem* item, int column)
@@ -714,60 +735,9 @@ void ImagesList::slotAddImages(const KUrl::List& list)
         }
     }
 
-    if (d->iface)
-    {
-        d->iface->thumbnails(urls, DEFAULTSIZE);
-    }
-    else
-    {
-        KIO::PreviewJob* job = KIO::filePreview(urls, DEFAULTSIZE);
-
-        connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-                this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
-
-        connect(job, SIGNAL(failed(const KFileItem&)),
-                this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
-    }
-
     emit signalAddItems(urls);
     emit signalImageListChanged();
     emit signalFoundRAWImages(raw);
-}
-
-// Used only if Kipi interface is null.
-void ImagesList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
-{
-    if (!pix.isNull())
-        slotThumbnail(item.url(), pix);
-}
-
-void ImagesList::slotKDEPreviewFailed(const KFileItem& item)
-{
-    d->loadRawThumb->getRawThumb(item.url());
-}
-
-void ImagesList::slotRawThumb(const KUrl& url, const QImage& img)
-{
-    slotThumbnail(url, QPixmap::fromImage(img));
-}
-
-void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
-{
-    QTreeWidgetItemIterator it(d->listView);
-    while (*it)
-    {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
-        if (item && item->url() == url)
-        {
-            if (pix.isNull())
-                item->setThumb(SmallIcon("image-x-generic", d->iconSize, KIconLoader::DisabledState));
-            else
-                item->setThumb(pix.scaled(d->iconSize, d->iconSize, Qt::KeepAspectRatio));
-
-            return;
-        }
-        ++it;
-    }
 }
 
 void ImagesList::slotAddItems()
@@ -976,6 +946,58 @@ void ImagesList::slotImageListChanged()
     // TODO: load and save are not yet implemented, when should they be enabled/disabled?
     d->loadButton->setEnabled(d->controlButtonsEnabled);
     d->saveButton->setEnabled(d->controlButtonsEnabled);
+}
+
+void ImagesList::updateThumbnail(const KUrl& url)
+{
+    if (d->iface)
+    {
+        d->iface->thumbnails(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
+    }
+    else
+    {
+        KIO::PreviewJob* job = KIO::filePreview(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
+
+        connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
+                this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+
+        connect(job, SIGNAL(failed(const KFileItem&)),
+                this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
+    }
+}
+
+// Used only if Kipi interface is null.
+void ImagesList::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
+{
+    if (!pix.isNull())
+        slotThumbnail(item.url(), pix);
+}
+
+void ImagesList::slotKDEPreviewFailed(const KFileItem& item)
+{
+    d->loadRawThumb->getRawThumb(item.url());
+}
+
+void ImagesList::slotRawThumb(const KUrl& url, const QImage& img)
+{
+    slotThumbnail(url, QPixmap::fromImage(img));
+}
+
+void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{
+    QTreeWidgetItemIterator it(d->listView);
+    while (*it)
+    {
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        if (item && item->url() == url)
+        {
+            if (!pix.isNull())
+                item->setThumb(pix.scaled(d->iconSize, d->iconSize, Qt::KeepAspectRatio));
+
+            return;
+        }
+        ++it;
+    }
 }
 
 }  // namespace KIPIPlugins

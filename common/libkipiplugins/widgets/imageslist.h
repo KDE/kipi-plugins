@@ -77,6 +77,8 @@ public:
     explicit ImagesListViewItem(ImagesListView* view, const KUrl& url);
     ~ImagesListViewItem();
 
+    bool asValidThumbnail() const;
+
     void setUrl(const KUrl& url);
     KUrl url() const;
 
@@ -89,7 +91,7 @@ public:
     void setRating(int rating);
     int rating() const;
 
-    void setThumb(const QPixmap& pix);
+    void setThumb(const QPixmap& pix, bool asThumb=true);
     void setProgressAnimation(const QPixmap& pix);
 
     void setProcessedIcon(const QIcon& icon);
@@ -168,6 +170,8 @@ private:
 
     void setup(int iconSize);
 
+    void drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const;
+
 private:
 
     int m_iconSize;
@@ -235,6 +239,8 @@ public:
     void               setControlButtonsPlacement(ControlButtonPlacement placement);
     void               enableControlButtons(bool enable = true);
     void               enableDragAndDrop(const bool enable = true);
+
+    void               updateThumbnail(const KUrl& url);
 
     virtual KUrl::List imageUrls(bool onlyUnprocessed = false) const;
     virtual void       removeItemByUrl(const KUrl& url);
