@@ -105,6 +105,7 @@ Calendar           : libkcal (kdepimlibs).
 Shwup              : libqca.
 YandexFotki        : libqca.
 DebianScreenshots  : libqjson.
+FaceBook           : libqjson.
 ExpoBlending       : align_image_stack from Hugin project and enfuse from Enblend project (runtime dependency), libgomp.
 GPSSync            : libkmap.
 Mediawiki          : libmediawiki.
