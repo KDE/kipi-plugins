@@ -979,7 +979,11 @@ void FbTalker::parseExchangeSession(const QByteArray& data)
     {
         QVariantMap session = result[0].toMap();
         m_accessToken       = session["access_token"].toString();
-        m_sessionExpires    = session["expires"].toUInt();
+#if QT_VERSION >= 0x40700
+        m_sessionExpires    = QDateTime::currentMSecsSinceEpoch() / 1000 + session["expires"].toUInt();
+#else
+        m_sessionExpires    = QDateTime::currentDateTime().toTime_t() + session["expires"].toUInt();
+#endif
         if( m_accessToken.isEmpty() )
             // Session did not convert. Reauthenticate.
             doOAuth();
