@@ -41,33 +41,33 @@ namespace KIPIFacebookPlugin
 
 class FacebookJob : public KJob
 {
-    Q_OBJECT
+Q_OBJECT
 
-    public:
+public:
 
-        FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent=0);
+    FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent=0);
 
-        virtual void start();
-        virtual QList< KUrl > urls() const;
-        virtual KIcon icon() const;
+    virtual void start();
+    virtual QList< KUrl > urls() const;
+    virtual KIcon icon() const;
 
-    private slots:
+private slots:
 
-        void albumList(int, const QString&, const QList<FbAlbum>&);
-        void loginDone(int, const QString&);
-        void albumCreated(int, const QString&, const QString &albumId);
-        void addPhoto(int code, const QString& message);
+    void albumList(int, const QString&, const QList<FbAlbum>&);
+    void loginDone(int, const QString&);
+    void albumCreated(int, const QString&, const QString &albumId);
+    void addPhoto(int code, const QString& message);
 
-    private:
+private:
 
-        void sendPhoto(const QString &album);
+    void sendPhoto(const QString &album);
 
-    private:
+private:
 
-        KUrl::List m_urls;
-        FbTalker   talk;
-        QString    m_albumName;
-        QString    m_albumId;
+    KUrl::List m_urls;
+    FbTalker   talk;
+    QString    m_albumName;
+    QString    m_albumId;
 };
 
 } // namespace KIPIFacebookPlugin

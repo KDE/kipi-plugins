@@ -32,18 +32,18 @@ namespace KIPIFacebookPlugin
 {
 
 FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent)
-           : KJob(parent), m_urls(url), talk(0), m_albumName(albumName)
+    : KJob(parent), m_urls(url), talk(0), m_albumName(albumName)
 {
     setObjectName("FacebookJob");
     connect(&talk, SIGNAL(signalLoginDone(int, QString)),
             this, SLOT(loginDone(int, QString)));
-            
+
     connect(&talk, SIGNAL(signalListAlbumsDone(int, QString, QList<FbAlbum>)),
             this, SLOT(albumList(int, QString, QList<FbAlbum>)));
 
     connect(&talk, SIGNAL(signalCreateAlbumDone(int,QString, QString)),
             this, SLOT(albumCreated(int, QString, QString)));
-    
+
     connect(&talk, SIGNAL(signalAddPhotoDone(int,QString)),
             this, SLOT(addPhoto(int,QString)));
 }
@@ -68,17 +68,17 @@ void FacebookJob::loginDone(int errCode, const QString& error)
         emitResult();
         return;
     }
-    
-/* 
- * TODO: These config variables never got written for me (Dirk). 
- * So I have my doubts that this part of the plugin is actually active. 
- */
+
+    /*
+     * TODO: These config variables never got written for me (Dirk)
+     * So I have my doubts that this part of the plugin is actually active.
+     */
     KConfig cfg(KGlobal::mainComponent());
     KConfigGroup cfgGroup = cfg.group("Facebook");
-    cfgGroup.writeEntry("AccessToken",  talk.getAccessToken());
-    cfgGroup.writeEntry("Expires",      talk.getSessionExpires());
+    cfgGroup.writeEntry("AccessToken", talk.getAccessToken());
+    cfgGroup.writeEntry("Expires",     talk.getSessionExpires());
     cfgGroup.sync();
-    
+
     kDebug() << "logged in" << talk.getSessionExpires();
     talk.listAlbums();
 }
@@ -92,7 +92,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
         emitResult();
         return;
     }
-    
+
     setPercent(25);
     QString id = QString();
     foreach(const FbAlbum& album, albums)
@@ -103,13 +103,13 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
             break;
         }
     }
-    
+
     if(id.isEmpty())
     {
         FbAlbum album;
-        album.title=m_albumName;
-        album.description=i18n("Photos taken with KDE");
-        
+        album.title       = m_albumName;
+        album.description = i18n("Photos taken with KDE");
+
         talk.createAlbum(album);
     }
     else
@@ -117,7 +117,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
         m_albumId = id;
         addPhoto(0, QString());
     }
-    
+
     kDebug() << "listed" << id;
 }
 
@@ -139,15 +139,19 @@ void FacebookJob::albumCreated(int errCode, const QString& error, const QString 
 
 void FacebookJob::addPhoto(int code, const QString& message)
 {
-    if(code==0 && !m_urls.isEmpty()) {
+    if(code == 0 && !m_urls.isEmpty())
+    {
         int count = percent()+(100-percent())/m_urls.size();
-        KUrl url = m_urls.takeLast();
-        bool c = talk.addPhoto(url.toLocalFile(), m_albumId, url.fileName());
+        KUrl url  = m_urls.takeLast();
+        bool c    = talk.addPhoto(url.toLocalFile(), m_albumId, url.fileName());
         Q_ASSERT(c && "could not add the photo to the album");             //FIXME: Report error
-        
+
         setPercent(count);
-    } else {
-        if(code!=0) {
+    }
+    else
+    {
+        if(code!=0)
+        {
             setError(code);
             setErrorText(message);
         }
