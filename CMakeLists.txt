@@ -152,7 +152,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
 MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup and YandexFotki.
 MACRO_OPTIONAL_FIND_PACKAGE(KSane)      # For AcquireImages.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(QJSON)      # For Debian Screenshots.
+MACRO_OPTIONAL_FIND_PACKAGE(QJSON)      # For Debian Screenshots and Facebook.
 MACRO_OPTIONAL_FIND_PACKAGE(Kmap)       # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)  # For Mediawiki.
 
@@ -433,7 +433,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ENDIF(KMAP_FOUND)
 
     IF(MEDIAWIKI_FOUND)
-#        Disabled for the moment due to problem with libmediawiki api  
+#        Disabled for the moment due to problem with libmediawiki api
 #        ADD_SUBDIRECTORY(mediawiki)
     ENDIF(MEDIAWIKI_FOUND)
 
