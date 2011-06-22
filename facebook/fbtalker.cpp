@@ -238,10 +238,12 @@ void FbTalker::exchangeSession(const QString& sessionKey)
  */
 void FbTalker::doOAuth()
 {
-    m_loginInProgress = true; // just in case
+     // just in case
+    m_loginInProgress = true;
 
+    // TODO (Dirk): 
+    // Find out whether this signalBusy is used here appropriately.
     emit signalBusy(true);
-
     KUrl url("https://www.facebook.com/dialog/oauth");
     url.addQueryItem("client_id", m_appID);
     url.addQueryItem("redirect_uri", "https://www.facebook.com/connect/login_success.html");
@@ -250,14 +252,7 @@ void FbTalker::doOAuth()
     url.addQueryItem("response_type", "token");
     kDebug() << "OAuth URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
-
     emit signalBusy(false);
-    /*
-    KMessageBox::information(kapp->activeWindow(),
-                  i18n("Please follow the instructions in the browser window. "
-                       "Press \"OK\" when done."),
-                  i18n("Facebook Application Authorization"));
-    */
     KDialog* window         = new KDialog(kapp->activeWindow(), 0);
     window->setModal(true);
     window->setWindowTitle( i18n("Facebook Application Authorization") );
@@ -269,8 +264,6 @@ void FbTalker::doOAuth()
         "When done, copy the Internet address from your browser into the textbox below and press \"OK\"."
     ) );
     infobox->setReadOnly(true);
-    //QPushButton okButton = new QPushButton();
-    //QPushButton cancelButton = new QPushButton();
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(infobox);
     layout->addWidget(textbox);
@@ -278,6 +271,10 @@ void FbTalker::doOAuth()
     window->setMainWidget(main);
     if( window->exec()  == QDialog::Accepted )
     {
+        // Error code and reason from the Facebook service
+        QString errorReason;
+        QString errorCode;
+    
         url = KUrl( textbox->text() );
         QString fragment = url.fragment();
         kDebug() << "Split out the fragment from the URL: " << fragment;
@@ -289,8 +286,10 @@ void FbTalker::doOAuth()
             if( keyvalue.size() == 2 )
             {
                 if( ! keyvalue[0].compare( "access_token" ) )
+                {
                     m_accessToken = keyvalue[1];
-                if( ! keyvalue[0].compare( "expires_in" ) )
+                }
+                else if( ! keyvalue[0].compare( "expires_in" ) )
                 {
 #if QT_VERSION >= 0x40700
                     m_sessionExpires = QDateTime::currentMSecsSinceEpoch() / 1000 + keyvalue[1].toUInt();
@@ -298,15 +297,24 @@ void FbTalker::doOAuth()
                     m_sessionExpires = QDateTime::currentDateTime().toTime_t() + keyvalue[1].toUInt();
 #endif
                 }
+                else if( ! keyvalue[0].compare( "error_reason" ) )
+                {
+                    errorReason = keyvalue[1];
+                }
+                else if( ! keyvalue[0].compare( "error" ) )
+                {
+                    errorCode = keyvalue[1];
+                }
             }
             i++;
         }
-        getUserInfo();
+        if( !m_accessToken.isEmpty() && errorCode.isEmpty() && errorReason.isEmpty() )
+        {
+            return getUserInfo();
+        }
     }
-    else
-    {
-        authenticationDone(-1, i18n("Canceled by user."));
-    }
+    
+    authenticationDone(-1, i18n("Canceled by user."));
 
     // TODO (Dirk): Correct?
     emit signalBusy(false);
