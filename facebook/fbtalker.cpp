@@ -190,12 +190,12 @@ void FbTalker::authenticate(const QString &accessToken,
 
 /**
  * upgrade session key to OAuth
- * 
- * This method (or step) can be removed after June 2012 (a year after its 
- * implementation), since it is only a convenience method for those people 
+ *
+ * This method (or step) can be removed after June 2012 (a year after its
+ * implementation), since it is only a convenience method for those people
  * who just upgraded and have an active session using the old authentication.
  */
-void FbTalker::exchangeSession(const QString& sessionKey) 
+void FbTalker::exchangeSession(const QString& sessionKey)
 {
     if (m_job)
     {
@@ -209,7 +209,7 @@ void FbTalker::exchangeSession(const QString& sessionKey)
     args["client_id"] 		= m_appID;
     args["client_secret"] 	= m_secretKey;
     args["sessions"]		= sessionKey;
-    
+
     QByteArray tmp(getCallString(args).toUtf8());
     KIO::TransferJob* job = KIO::http_post(KUrl("https://graph.facebook.com/oauth/exchange_sessions"), tmp, KIO::HideProgressInfo);
     job->addMetaData("UserAgent", m_userAgent);
@@ -229,8 +229,8 @@ void FbTalker::exchangeSession(const QString& sessionKey)
 
 /**
  * Authenticate using OAuth
- * 
- * TODO (Dirk): There's some GUI code slipped in here, 
+ *
+ * TODO (Dirk): There's some GUI code slipped in here,
  * that really doesn't feel like it's belonging here.
  */
 void FbTalker::doOAuth() {
@@ -284,7 +284,13 @@ void FbTalker::doOAuth() {
                 if( ! keyvalue[0].compare( "access_token" ) )
                     m_accessToken = keyvalue[1];
                 if( ! keyvalue[0].compare( "expires_in" ) )
+                {
+#if QT_VERSION >= 0x40700
                     m_sessionExpires = QDateTime::currentMSecsSinceEpoch() / 1000 + keyvalue[1].toUInt();
+#else
+                    m_sessionExpires = QDateTime::currentDateTime().toTime_t() + keyvalue[1].toUInt();
+#endif
+                }
             }
             i++;
         }
@@ -370,7 +376,7 @@ void FbTalker::getUserInfo(const QString& userIDs)
 
 /**
  * Request upload permission using OAuth
- * 
+ *
  * TODO (Dirk) maybe this can go or be merged with a re-authentication function.
  */
 void FbTalker::getUploadPermission()
@@ -955,9 +961,9 @@ void FbTalker::parseExchangeSession(const QByteArray& data)
     QString errMsg;
     bool ok;
     QJson::Parser parser;
-    
+
     kDebug() << "Parse exchange_session response:" << endl << data;
-    
+
     QVariantList result = parser.parse (data, &ok).toList();
 
     if(ok) {
