@@ -350,9 +350,6 @@ void FlickrList::slotAddImages(const KUrl::List& list)
         }
     }
 
-    // Generate thumbnails.
-    iface()->thumbnails(added_urls, 64);
-
     // Duplicate the signalImageListChanged of the ImageWindow, to enable the
     // upload button again.
     emit signalImageListChanged();
