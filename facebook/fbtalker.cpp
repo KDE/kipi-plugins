@@ -7,6 +7,7 @@
  * Description : a kipi plugin to import/export images to Facebook web service
  *
  * Copyright (C) 2008-2010 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (c) 2011      by Dirk Tilger <dirk.kde@miriup.de>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
