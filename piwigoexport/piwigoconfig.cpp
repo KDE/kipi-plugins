@@ -24,7 +24,6 @@
  *
  * ============================================================ */
 
-#include "piwigoconfig.h"
 #include "piwigoconfig.moc"
 
 // Qt includes
@@ -57,7 +56,7 @@ PiwigoEdit::PiwigoEdit(QWidget* pParent, Piwigo* pPiwigo, const QString& title)
 
     setCaption(title);
 
-    QFrame *page = new QFrame(this);
+    QFrame* page              = new QFrame(this);
     QGridLayout* centerLayout = new QGridLayout();
     page->setMinimumSize(500, 128);
     setMainWidget(page);

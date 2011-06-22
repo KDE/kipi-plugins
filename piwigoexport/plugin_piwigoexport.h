@@ -48,7 +48,7 @@ class Plugin_PiwigoExport : public KIPI::Plugin
 
 public:
 
-    Plugin_PiwigoExport(QObject *parent, const QVariantList &args);
+    Plugin_PiwigoExport(QObject* parent, const QVariantList& args);
     ~Plugin_PiwigoExport();
 
     virtual KIPI::Category category(KAction* action) const;
@@ -60,9 +60,9 @@ public Q_SLOTS:
 
 private:
 
-    KAction                          *m_action;
+    KAction*                        m_action;
 
-    KIPIPiwigoExportPlugin::Piwigo *mpPiwigo;
+    KIPIPiwigoExportPlugin::Piwigo* mpPiwigo;
 };
 
 #endif /* PLUGIN_PIWIGOEXPORT_H */

@@ -47,9 +47,9 @@ public:
     Piwigo();
     ~Piwigo();
 
-    QString url()            const;
-    QString username()       const;
-    QString password()       const;
+    QString url()      const;
+    QString username() const;
+    QString password() const;
 
     void setUrl(const QString& url);
     void setUsername(const QString& username);

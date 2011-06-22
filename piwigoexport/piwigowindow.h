@@ -63,7 +63,7 @@ class PiwigoWindow : public KDialog
 
 public:
 
-    PiwigoWindow(KIPI::Interface *interface, QWidget *parent, Piwigo* pPiwigo);
+    PiwigoWindow(KIPI::Interface* interface, QWidget* parent, Piwigo* pPiwigo);
     ~PiwigoWindow();
 
 private:
@@ -95,8 +95,8 @@ private:
 
     KIPI::Interface*          m_interface;
     KIPIPlugins::KPAboutData* m_about;
-    PiwigoTalker*            m_talker;
-    Piwigo*                  mpPiwigo;
+    PiwigoTalker*             m_talker;
+    Piwigo*                   mpPiwigo;
 
     QProgressDialog*          m_progressDlg;
     unsigned int              m_uploadCount;

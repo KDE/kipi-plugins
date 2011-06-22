@@ -61,7 +61,8 @@ class PiwigoTalker : public QObject
 
 public:
 
-    enum State {
+    enum State
+    {
         GE_LOGIN = 0,
         GE_LISTALBUMS,
         GE_CHECKPHOTOEXIST,
@@ -71,16 +72,18 @@ public:
         GE_ADDPHOTOSUMMARY
     };
 
-    enum {
+    enum
+    {
         CHUNK_MAX_SIZE = 500000
     };
-    
+
 public:
 
     PiwigoTalker(QWidget* parent);
     ~PiwigoTalker();
 
-    static QString getAuthToken() {
+    static QString getAuthToken()
+    {
         return s_authToken;
     };
 
@@ -99,7 +102,7 @@ public:
                   const QString& photoPath,
                   const QString& caption = QString(),
                   bool  captionIsTitle = true, bool captionIsDescription = false,
-                  bool rescale = false, bool downloadHQ = false, int maxDim = 600, int thumbDim = 128);
+                  bool  rescale = false, bool downloadHQ = false, int maxDim = 600, int thumbDim = 128);
 
     void cancel();
 
@@ -125,12 +128,12 @@ private:
     void addPhotoSummary();
     void parseResponseAddPhotoSummary(const QByteArray& data);
 
-    QByteArray computeMD5Sum(const QString &filepath);
+    QByteArray computeMD5Sum(const QString& filepath);
 
 private Q_SLOTS:
 
-    void slotTalkerData(KIO::Job *job, const QByteArray& data);
-    void slotResult(KJob *job);
+    void slotTalkerData(KIO::Job* job, const QByteArray& data);
+    void slotResult(KJob* job);
 
 private:
 

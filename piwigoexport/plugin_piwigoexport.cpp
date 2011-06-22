@@ -24,7 +24,6 @@
  *
  * ============================================================ */
 
-#include "plugin_piwigoexport.h"
 #include "plugin_piwigoexport.moc"
 
 // Qt includes
@@ -57,8 +56,8 @@ K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_PiwigoExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_piwigoexport"))
 
 Plugin_PiwigoExport::Plugin_PiwigoExport(QObject *parent, const QVariantList&)
-        : KIPI::Plugin(Factory::componentData(), parent, "PiwigoExport"),
-        m_action(0), mpPiwigo(0)
+    : KIPI::Plugin(Factory::componentData(), parent, "PiwigoExport"),
+      m_action(0), mpPiwigo(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_PiwigoExport plugin loaded";
 }
@@ -72,7 +71,8 @@ void Plugin_PiwigoExport::setup(QWidget* widget)
     KIPI::Plugin::setup(widget);
 
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    if (!interface) {
+    if (!interface)
+    {
         kError() << "Kipi interface is null!";
         return;
     }
@@ -97,7 +97,8 @@ Plugin_PiwigoExport::~Plugin_PiwigoExport()
 void Plugin_PiwigoExport::slotSync()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    if (!interface) {
+    if (!interface)
+    {
         kError() << "Kipi interface is null!";
         return;
     }
@@ -106,9 +107,10 @@ void Plugin_PiwigoExport::slotSync()
     QPointer<KIPIPiwigoExportPlugin::PiwigoWindow> dlg;
 
     KConfig config("kipirc");
-    if (!config.hasGroup("Piwigo Settings") ) {
+    if (!config.hasGroup("Piwigo Settings") )
+    {
         configDlg = new KIPIPiwigoExportPlugin::PiwigoEdit(kapp->activeWindow(),
-                mpPiwigo, i18n("Edit Piwigo Data") );
+                        mpPiwigo, i18n("Edit Piwigo Data") );
         configDlg->exec();
     }
 

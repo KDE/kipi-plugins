@@ -63,7 +63,7 @@ private:
     KLineEdit* mpUsernameEdit;
     KLineEdit* mpPasswordEdit;
 
-    Piwigo*   mpPiwigo;
+    Piwigo*    mpPiwigo;
 };
 
 } // namespace KIPIPiwigoExportPlugin

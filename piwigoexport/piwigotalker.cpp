@@ -24,7 +24,6 @@
 *
 * ============================================================ */
 
-#include "piwigotalker.h"
 #include "piwigotalker.moc"
 
 // Qt includes
@@ -64,7 +63,7 @@ namespace KIPIPiwigoExportPlugin
 QString PiwigoTalker::s_authToken   = "";
 
 PiwigoTalker::PiwigoTalker(QWidget* parent)
-        : m_parent(parent),  m_job(0),  m_loggedIn(false)
+    : m_parent(parent),  m_job(0),  m_loggedIn(false)
 {
 }
 
@@ -74,7 +73,7 @@ PiwigoTalker::~PiwigoTalker()
         m_job->kill();
 }
 
-QByteArray PiwigoTalker::computeMD5Sum(const QString &filepath)
+QByteArray PiwigoTalker::computeMD5Sum(const QString& filepath)
 {
     QFile file(filepath);
 
@@ -97,11 +96,12 @@ void PiwigoTalker::login(const KUrl& url, const QString& name, const QString& pa
     m_state = GE_LOGIN;
     m_talker_buffer.resize(0);
 
-	// Add the page to the URL
-	if (!m_url.url().endsWith(QLatin1String(".php"))) {
+    // Add the page to the URL
+    if (!m_url.url().endsWith(QLatin1String(".php")))
+    {
         m_url.addPath("/ws.php");
     }
-	
+
     QString auth = name + QString(":") + passwd;
     s_authToken = "Basic " + auth.toUtf8().toBase64();
 
@@ -151,7 +151,7 @@ void PiwigoTalker::listAlbums()
     emit signalBusy(true);
 }
 
-bool PiwigoTalker::addPhoto(int albumId,
+bool PiwigoTalker::addPhoto(int   albumId,
                             const QString& photoPath,
                             const QString& caption,
                             bool  captionIsTitle,
@@ -165,14 +165,17 @@ bool PiwigoTalker::addPhoto(int albumId,
     m_state      = GE_CHECKPHOTOEXIST;
     m_talker_buffer.resize(0);
 
-    m_path = photoPath;
+    m_path    = photoPath;
     m_albumId = albumId;
-    m_md5sum = computeMD5Sum(photoPath);
+    m_md5sum  = computeMD5Sum(photoPath);
 
-    if (downloadHQ) {
+    if (downloadHQ)
+    {
         m_hqpath = photoPath;
         kDebug() << "Download HQ version: " << m_hqpath;
-    } else {
+    }
+    else
+    {
         m_hqpath = "";
     }
 
@@ -189,15 +192,17 @@ bool PiwigoTalker::addPhoto(int albumId,
     else
         image.load(photoPath);
 
-    if (!image.isNull()) {
+    if (!image.isNull())
+    {
         QImage thumbnail = image.scaled(thumbDim, thumbDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        m_thumbpath = KStandardDirs::locateLocal("tmp", "thumb-" + KUrl(photoPath).fileName());
+        m_thumbpath      = KStandardDirs::locateLocal("tmp", "thumb-" + KUrl(photoPath).fileName());
         thumbnail.save(m_thumbpath, "JPEG", 95);
         kDebug() << "Thumbnail to temp file: " << m_thumbpath ;
 
 
         // image file - see if we need to rescale it
-        if (rescale && (image.width() > maxDim || image.height() > maxDim)) {
+        if (rescale && (image.width() > maxDim || image.height() > maxDim))
+        {
             image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
@@ -207,28 +212,36 @@ bool PiwigoTalker::addPhoto(int albumId,
 
         // Complete name and comment for summary sending
         m_comment = m_name = caption;
-        m_date = fi.created();
+        m_date    = fi.created();
 
         // Restore all metadata.
         KExiv2Iface::KExiv2 exiv2Iface;
 
-        if (exiv2Iface.load(photoPath)) {
+        if (exiv2Iface.load(photoPath))
+        {
             exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
             exiv2Iface.setImageDimensions(image.size());
             exiv2Iface.save(m_path);
             kDebug() << "Comment : " << exiv2Iface.getExifComment();
-            if (exiv2Iface.getExifComment().length()) {
+            if (exiv2Iface.getExifComment().length())
+            {
                 if (captionIsTitle) m_name = exiv2Iface.getExifComment();
                 if (captionIsDescription) m_comment = exiv2Iface.getExifComment();
             }
-            if (!exiv2Iface.getImageDateTime().isNull()) {
-				m_date = exiv2Iface.getImageDateTime();
-			}
-        } else {
+
+            if (!exiv2Iface.getImageDateTime().isNull())
+            {
+                m_date = exiv2Iface.getImageDateTime();
+            }
+        }
+        else
+        {
             kWarning() << "Image " << photoPath << " has no exif data";
         }
 
-    } else {
+    }
+    else
+    {
         // Invalid image
         return false;
     }
@@ -245,7 +258,7 @@ bool PiwigoTalker::addPhoto(int albumId,
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
     emit signalProgressInfo( i18n("Check if %1 already exists", KUrl(m_path).fileName()) );
-    
+
     connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
 
@@ -259,7 +272,8 @@ bool PiwigoTalker::addPhoto(int albumId,
 
 void PiwigoTalker::cancel()
 {
-    if (m_job) {
+    if (m_job)
+    {
         m_job->kill();
         m_job = 0;
     }
@@ -275,18 +289,26 @@ void PiwigoTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
     memcpy(m_talker_buffer.data() + oldSize, data.data(), data.size());
 }
 
-void PiwigoTalker::slotResult(KJob *job)
+void PiwigoTalker::slotResult(KJob* job)
 {
-    KIO::Job *tempjob = static_cast<KIO::Job*>(job);
+    KIO::Job* tempjob = static_cast<KIO::Job*>(job);
 
-    if (tempjob->error()) {
-        if (m_state == GE_LOGIN) {
+    if (tempjob->error())
+    {
+        if (m_state == GE_LOGIN)
+        {
             emit signalLoginFailed(tempjob->errorString());
             kDebug() << tempjob->errorString();
-        } else {
-            if (m_state == GE_CHECKPHOTOEXIST || m_state == GE_ADDPHOTO || m_state == GE_ADDTHUMB || m_state == GE_ADDHQ || m_state == GE_ADDPHOTOSUMMARY) {
+        }
+        else
+        {
+            if (m_state == GE_CHECKPHOTOEXIST || m_state == GE_ADDPHOTO || m_state == GE_ADDTHUMB || 
+                m_state == GE_ADDHQ           || m_state == GE_ADDPHOTOSUMMARY)
+            {
                 emit signalAddPhotoFailed(tempjob->errorString());
-            } else {
+            }
+            else
+            {
                 tempjob->ui()->setWindow(m_parent);
                 tempjob->ui()->showErrorMessage();
             }
@@ -295,7 +317,8 @@ void PiwigoTalker::slotResult(KJob *job)
         return;
     }
 
-    switch (m_state) {
+    switch (m_state)
+    {
     case(GE_LOGIN):
         parseResponseLogin(m_talker_buffer);
         break;
@@ -322,14 +345,14 @@ void PiwigoTalker::slotResult(KJob *job)
     tempjob->kill();
     m_job = 0;
 
-    if (m_state == GE_LOGIN && m_loggedIn) {
+    if (m_state == GE_LOGIN && m_loggedIn)
+    {
         listAlbums();
     }
     emit signalBusy(false);
 }
 
-
-void PiwigoTalker::parseResponseLogin(const QByteArray &data)
+void PiwigoTalker::parseResponseLogin(const QByteArray& data)
 {
     QXmlStreamReader ts(data);
     QString line;
@@ -338,30 +361,35 @@ void PiwigoTalker::parseResponseLogin(const QByteArray &data)
 
     kDebug() << "parseResponseLogin: " << QString(data);
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         ts.readNext();
 
-        if (ts.isStartElement()) {
+        if (ts.isStartElement())
+        {
             foundResponse = true;
-            if (ts.name() == "rsp" && ts.attributes().value("stat") == "ok") {
+            if (ts.name() == "rsp" && ts.attributes().value("stat") == "ok")
+            {
                 m_loggedIn = true;
             }
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalLoginFailed(i18n("Piwigo URL probably incorrect"));
         return;
     }
 
-    if (!m_loggedIn) {
+    if (!m_loggedIn)
+    {
         emit signalLoginFailed(i18n("Incorrect username or password specified"));
     }
 }
 
 void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
+    QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
     bool foundResponse = false;
@@ -373,20 +401,25 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
     kDebug() << "parseResponseListAlbums: " << QString(data);
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         ts.readNext();
 
         if (ts.isEndElement() && ts.name() == "categories")
             break;
 
-        if (ts.isStartElement()) {
-            if (ts.name() == "rsp" && ts.attributes().value("stat") == "ok") {
+        if (ts.isStartElement())
+        {
+            if (ts.name() == "rsp" && ts.attributes().value("stat") == "ok")
+            {
                 foundResponse = true;
             }
-            if (ts.name() == "categories") {
+            if (ts.name() == "categories")
+            {
                 success = true;
             }
-            if (ts.name() == "category") {
+            if (ts.name() == "category")
+            {
                 GAlbum album;
                 album.ref_num = ts.attributes().value("id").toString().toInt();
                 album.parent_ref_num = -1;
@@ -395,14 +428,17 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
                 iter = albumList.insert(iter, album);
             }
-            if (ts.name() == "name") {
+            if (ts.name() == "name")
+            {
                 (*iter).name = ts.readElementText();
                 kDebug() << (*iter).name << "\n";
             }
-            if (ts.name() == "uppercats") {
+            if (ts.name() == "uppercats")
+            {
                 QString uppercats = ts.readElementText();
                 QStringList catlist = uppercats.split(',');
-                if (catlist.size() > 1 && catlist.at(catlist.size() - 2).toInt() != (*iter).ref_num) {
+                if (catlist.size() > 1 && catlist.at(catlist.size() - 2).toInt() != (*iter).ref_num)
+                {
                     (*iter).parent_ref_num = catlist.at(catlist.size() - 2).toInt();
                     kDebug() << (*iter).parent_ref_num << "\n";
                 }
@@ -410,12 +446,14 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalError(i18n("Invalid response received from remote Piwigo"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalError(i18n("Failed to list albums"));
         return;
     }
@@ -428,7 +466,7 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
 
 void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
+    QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
     bool foundResponse = false;
@@ -436,11 +474,14 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
     kDebug() << "parseResponseDoesPhotoExist: " << QString(data);
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         ts.readNext();
 
-        if (ts.isStartElement()) {
-            if (ts.name() == "rsp") {
+        if (ts.isStartElement())
+        {
+            if (ts.name() == "rsp")
+            {
                 foundResponse = true;
                 if (ts.attributes().value("stat") == "ok") success = true;
                 break;
@@ -448,12 +489,14 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalAddPhotoFailed(i18n("Failed to upload photo"));
         return;
     }
@@ -488,7 +531,6 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
             this, SLOT(slotResult(KJob *)));
 }
 
-
 void PiwigoTalker::parseResponseAddPhoto(const QByteArray& data)
 {
     QString str = QString::fromUtf8(data);
@@ -499,11 +541,14 @@ void PiwigoTalker::parseResponseAddPhoto(const QByteArray& data)
 
     kDebug() << "parseResponseAddPhoto: " << QString(data);
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         ts.readNext();
 
-        if (ts.isStartElement()) {
-            if (ts.name() == "rsp") {
+        if (ts.isStartElement())
+        {
+            if (ts.name() == "rsp")
+            {
                 foundResponse = true;
                 if (ts.attributes().value("stat") == "ok") success = true;
                 break;
@@ -511,12 +556,14 @@ void PiwigoTalker::parseResponseAddPhoto(const QByteArray& data)
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalAddPhotoFailed(i18n("Failed to upload photo"));
         return;
     }
@@ -549,18 +596,17 @@ void PiwigoTalker::parseResponseAddPhoto(const QByteArray& data)
 
     connect(m_job, SIGNAL(result(KJob *)),
             this, SLOT(slotResult(KJob *)));
-
 }
 
 void PiwigoTalker::addHQNextChunk()
 {
     QFile imagefile(m_hqpath);
     imagefile.open(QIODevice::ReadOnly);
-    
+
     m_chunkId++; // We start with chunk 1
-    
+
     imagefile.seek((m_chunkId - 1) * CHUNK_MAX_SIZE);
-    
+
     QStringList qsl;
     qsl.append("method=pwg.images.addChunk");
     qsl.append("original_sum=" + m_md5sum.toHex());
@@ -570,25 +616,25 @@ void PiwigoTalker::addHQNextChunk()
     QString dataParameters = qsl.join("&");
     QByteArray buffer;
     buffer.append(dataParameters.toUtf8());
-    
+
     imagefile.close();
-    
+
     m_job = KIO::http_post(m_url, buffer, KIO::HideProgressInfo);
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
-    
+
     emit signalProgressInfo( i18n("Upload the chunk %1 of %2", m_chunkId, KUrl(m_path).fileName()) );
 
     connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
-    
+
     connect(m_job, SIGNAL(result(KJob *)),
             this, SLOT(slotResult(KJob *)));
 }
 
 void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
+    QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
     bool foundResponse = false;
@@ -596,11 +642,14 @@ void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
 
     kDebug() << "parseResponseAddThumbnail: " << QString(data);
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         ts.readNext();
 
-        if (ts.isStartElement()) {
-            if (ts.name() == "rsp") {
+        if (ts.isStartElement())
+        {
+            if (ts.name() == "rsp")
+            {
                 foundResponse = true;
                 if (ts.attributes().value("stat") == "ok") success = true;
                 break;
@@ -608,19 +657,24 @@ void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalAddPhotoFailed(i18n("Failed to upload photo"));
         return;
     }
 
-    if (m_hqpath.isNull() || m_hqpath.isEmpty()) {
+    if (m_hqpath.isNull() || m_hqpath.isEmpty())
+    {
         addPhotoSummary();
-    } else {
+    }
+    else
+    {
         m_state = GE_ADDHQ;
         m_chunkId = 0;
 
@@ -630,7 +684,7 @@ void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
 
 void PiwigoTalker::parseResponseAddHQPhoto(const QByteArray& data)
 {
-    QString str = QString::fromUtf8(data);
+    QString str        = QString::fromUtf8(data);
     QXmlStreamReader ts(data);
     QString line;
     bool foundResponse = false;
@@ -638,11 +692,14 @@ void PiwigoTalker::parseResponseAddHQPhoto(const QByteArray& data)
 
     kDebug() << "parseResponseAddHQPhoto: " << QString(data);
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         ts.readNext();
 
-        if (ts.isStartElement()) {
-            if (ts.name() == "rsp") {
+        if (ts.isStartElement())
+        {
+            if (ts.name() == "rsp")
+            {
                 foundResponse = true;
                 if (ts.attributes().value("stat") == "ok") success = true;
                 break;
@@ -650,15 +707,19 @@ void PiwigoTalker::parseResponseAddHQPhoto(const QByteArray& data)
         }
     }
 
-    if (!foundResponse || !success) {
+    if (!foundResponse || !success)
+    {
         emit signalProgressInfo(i18n("Warning : The full size photo cannot be uploaded."));
     }
 
     // If the HQ photo wasn't completely sent, send the next chunk
     QFileInfo fi(m_hqpath);
-    if (m_chunkId * CHUNK_MAX_SIZE < fi.size()) {
+    if (m_chunkId * CHUNK_MAX_SIZE < fi.size())
+    {
         addHQNextChunk();
-    } else {
+    }
+    else
+    {
         addPhotoSummary();
     }
 }
@@ -678,7 +739,8 @@ void PiwigoTalker::addPhotoSummary()
     qsl.append("categories=" + QString::number(m_albumId));
     qsl.append("file_sum=" + computeMD5Sum(m_path).toHex());
     qsl.append("thumbnail_sum=" + computeMD5Sum(m_thumbpath).toHex());
-    if (!m_hqpath.isNull() && !m_hqpath.isEmpty()) {
+    if (!m_hqpath.isNull() && !m_hqpath.isEmpty())
+    {
         qsl.append("high_sum=" + m_md5sum.toHex());
     }
     qsl.append("date_creation=" + m_date.toString("yyyy-MM-dd").toUtf8().toPercentEncoding());
@@ -713,11 +775,14 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 
     kDebug() << "parseResponseAddPhotoSummary: " << QString(data);
 
-    while (!ts.atEnd()) {
+    while (!ts.atEnd())
+    {
         ts.readNext();
 
-        if (ts.isStartElement()) {
-            if (ts.name() == "rsp") {
+        if (ts.isStartElement())
+        {
+            if (ts.name() == "rsp")
+            {
                 foundResponse = true;
                 if (ts.attributes().value("stat") == "ok") success = true;
                 break;
@@ -725,17 +790,20 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
         }
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
         return;
     }
 
-    if (!success) {
+    if (!success)
+    {
         emit signalAddPhotoFailed(i18n("Failed to upload photo"));
         return;
     }
 
-    if (!foundResponse) {
+    if (!foundResponse)
+    {
         emit signalAddPhotoFailed(i18n("Invalid response received from remote Piwigo"));
         return;
     }
@@ -745,13 +813,17 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
     if (m_thumbpath.size())
         QFile(m_thumbpath).remove();
 
-    m_path = "";
+    m_path      = "";
     m_thumbpath = "";
 
-    if (!success) {
+    if (!success)
+    {
         emit signalAddPhotoFailed(i18n("Failed to upload photo"));
-    } else {
+    }
+    else
+    {
         emit signalAddPhotoSucceeded();
     }
 }
+
 } // namespace KIPIPiwigoExportPlugin

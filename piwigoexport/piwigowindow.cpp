@@ -24,7 +24,6 @@
  *
  * ============================================================ */
 
-#include "piwigowindow.h"
 #include "piwigowindow.moc"
 
 // Qt includes
@@ -219,10 +218,10 @@ PiwigoWindow::Private::Private(PiwigoWindow* parent)
 // --------------------------------------------------------------------------------------------------------------
 
 PiwigoWindow::PiwigoWindow(KIPI::Interface* interface, QWidget *parent, Piwigo* pPiwigo)
-        : KDialog(parent),
-        m_interface(interface),
-        mpPiwigo(pPiwigo),
-        d(new Private(this))
+    : KDialog(parent),
+      m_interface(interface),
+      mpPiwigo(pPiwigo),
+      d(new Private(this))
 {
     setWindowTitle( i18n("Piwigo Export") );
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
@@ -366,11 +365,14 @@ void PiwigoWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("PiwigoSync Galleries");
 
-    if (group.readEntry("Resize", false)) {
+    if (group.readEntry("Resize", false))
+    {
         d->resizeCheckBox->setChecked(true);
         d->dimensionSpinBox->setEnabled(true);
         d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 600));
-    } else {
+    }
+    else
+    {
         d->resizeCheckBox->setChecked(false);
         d->dimensionSpinBox->setEnabled(false);
     }
@@ -401,13 +403,15 @@ void PiwigoWindow::slotHelp()
 void PiwigoWindow::slotDoLogin()
 {
     KUrl url(mpPiwigo->url());
-    if (url.protocol().isEmpty()) {
+    if (url.protocol().isEmpty())
+    {
         url.setProtocol("http");
         url.setHost(mpPiwigo->url());
     }
 
     // If we've done something clever, save it back to the piwigo.
-    if (mpPiwigo->url() != url.url()) {
+    if (mpPiwigo->url() != url.url())
+    {
         mpPiwigo->setUrl(url.url());
         mpPiwigo->save();
     }
@@ -421,13 +425,15 @@ void PiwigoWindow::slotLoginFailed(const QString& msg)
                                   i18n("Failed to login into remote piwigo. ")
                                   + msg
                                   + i18n("\nDo you want to check your settings and try again?"))
-            != KMessageBox::Yes) {
+            != KMessageBox::Yes)
+    {
         close();
         return;
     }
 
     QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), mpPiwigo, i18n("Edit Piwigo Data") );
-    if ( configDlg->exec() != QDialog::Accepted ) {
+    if ( configDlg->exec() != QDialog::Accepted )
+    {
         delete configDlg;
         return;
     }
@@ -437,10 +443,13 @@ void PiwigoWindow::slotLoginFailed(const QString& msg)
 
 void PiwigoWindow::slotBusy(bool val)
 {
-    if (val) {
+    if (val)
+    {
         setCursor(Qt::WaitCursor);
         d->addPhotoBtn->setEnabled(false);
-    } else {
+    }
+    else
+    {
         setCursor(Qt::ArrowCursor);
         bool loggedIn = m_talker->loggedIn();
         d->addPhotoBtn->setEnabled(loggedIn && d->albumView->currentItem());
@@ -468,12 +477,14 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
     QList<QTreeWidgetItem *> parentItemList;
 
     // fill QTreeWidget
-    while ( !workList.isEmpty() ) {
+    while ( !workList.isEmpty() )
+    {
         // the album to work on
         GAlbum album = workList.takeFirst();
 
         int parentRefNum = album.parent_ref_num;
-        if ( parentRefNum == -1 ) {
+        if ( parentRefNum == -1 )
+        {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, cleanName(album.name) );
             item->setIcon(0, KIcon("inode-directory") );
@@ -485,15 +496,19 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
             d->albumView->addTopLevelItem(item);
             d->albumDict.insert(album.name, album);
             parentItemList << item;
-        } else {
+        }
+        else
+        {
             QTreeWidgetItem *parentItem = 0;
             bool found                  = false;
             int i                       = 0;
 
-            while ( !found && i < parentItemList.size() ) {
+            while ( !found && i < parentItemList.size() )
+            {
                 parentItem = parentItemList.at(i);
 
-                if (parentItem && (parentItem->data(1, Qt::UserRole).toInt() == parentRefNum)) {
+                if (parentItem && (parentItem->data(1, Qt::UserRole).toInt() == parentRefNum))
+                {
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.name) );
                     item->setIcon(0, KIcon("inode-directory") );
@@ -519,16 +534,22 @@ void PiwigoWindow::slotAlbumSelected()
     if ( item->text(2) == i18n("Image") )
         return;
 
-    if (!item) {
+    if (!item)
+    {
         d->addPhotoBtn->setEnabled(false);
-    } else {
+    }
+    else
+    {
         kDebug() << "Album selected\n";
 
         int albumId = item->data(1, Qt::UserRole).toInt();
         kDebug() << albumId << "\n";
-        if (m_talker->loggedIn() && albumId ) {
+        if (m_talker->loggedIn() && albumId )
+        {
             d->addPhotoBtn->setEnabled(true);
-        } else {
+        }
+        else
+        {
             d->addPhotoBtn->setEnabled(false);
         }
     }
@@ -538,12 +559,14 @@ void PiwigoWindow::slotAddPhoto()
 {
     const KUrl::List urls(m_interface->currentSelection().images());
 
-    if ( urls.isEmpty()) {
+    if ( urls.isEmpty())
+    {
         KMessageBox::error(this, i18n("Nothing to upload - please select photos to upload."));
         return;
     }
 
-    for (KUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it) {
+    for (KUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
+    {
         mpUploadList->append( (*it).path() );
     }
 
@@ -556,7 +579,8 @@ void PiwigoWindow::slotAddPhoto()
 
 void PiwigoWindow::slotAddPhotoNext()
 {
-    if ( mpUploadList->isEmpty() ) {
+    if ( mpUploadList->isEmpty() )
+    {
         m_progressDlg->reset();
         m_progressDlg->hide();
         return;
@@ -576,7 +600,8 @@ void PiwigoWindow::slotAddPhotoNext()
                             d->dimensionSpinBox->value(),
                             d->thumbDimensionSpinBox->value() );
 
-    if (!res) {
+    if (!res)
+    {
         slotAddPhotoFailed( "" );
         return;
     }
@@ -604,8 +629,12 @@ void PiwigoWindow::slotAddPhotoFailed(const QString& msg)
                                                 "remote piwigo. ")
                                            + msg
                                            + i18n("\nDo you want to continue?"))
-            != KMessageBox::Continue) {
-    } else {
+            != KMessageBox::Continue)
+    {
+        return;
+    }
+    else
+    {
         slotAddPhotoNext();
     }
 }
@@ -620,7 +649,8 @@ void PiwigoWindow::slotAddPhotoCancel()
 void PiwigoWindow::slotEnableSpinBox(int n)
 {
     bool b;
-    switch (n) {
+    switch (n)
+    {
     case 0:
         b = false;
         break;
@@ -638,7 +668,8 @@ void PiwigoWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
     QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), mpPiwigo, i18n("Edit Piwigo Data") );
-    if ( dlg->exec() == QDialog::Accepted ) {
+    if ( dlg->exec() == QDialog::Accepted )
+    {
         slotDoLogin();
     }
     delete dlg;

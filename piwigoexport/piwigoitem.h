@@ -38,22 +38,27 @@ class GAlbum
 {
 public:
 
-    GAlbum() {
+    GAlbum()
+    {
         ref_num        = -1;
         parent_ref_num = -1;
     }
 
-    bool operator<(const GAlbum& rhs) const {
-        if (parent_ref_num == rhs.parent_ref_num) {
+    bool operator<(const GAlbum& rhs) const
+    {
+        if (parent_ref_num == rhs.parent_ref_num)
+        {
             return ref_num < rhs.ref_num;
         }
         return parent_ref_num < rhs.parent_ref_num;
     }
 
-    int                ref_num;         // album reference number
-    int                parent_ref_num;  // parent's album reference number
+public:
 
-    QString            name;            // Album name
+    int     ref_num;         // album reference number
+    int     parent_ref_num;  // parent's album reference number
+
+    QString name;            // Album name
 };
 
 } // namespace KIPIPiwigoExportPlugin
