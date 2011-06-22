@@ -8,7 +8,6 @@ Facebook import/export plugin
 Mid term:
 - switch to new Graph API?
   http://developers.facebook.com/docs/guides/upgrade
-- OAuth 2.0: http://developers.facebook.com/docs/guides/upgrade#oauth
   Photo: http://developers.facebook.com/docs/reference/api/photo
 - embeded WebKit?
 
