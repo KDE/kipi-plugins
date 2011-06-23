@@ -160,6 +160,7 @@ private Q_SLOTS:
     void slotItemClicked(QTreeWidgetItem* item, int column);
 
 public:
+
     void enableDragAndDrop(const bool enable = true);
 
 private:
