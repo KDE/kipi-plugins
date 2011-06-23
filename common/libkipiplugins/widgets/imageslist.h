@@ -91,7 +91,7 @@ public:
     void setRating(int rating);
     int rating() const;
 
-    void setThumb(const QPixmap& pix, bool asThumb=true);
+    void setThumb(const QPixmap& pix, bool hasThumb=true);
     void setProgressAnimation(const QPixmap& pix);
 
     void setProcessedIcon(const QIcon& icon);

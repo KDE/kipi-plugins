@@ -72,13 +72,13 @@ public:
 
     ImagesListViewItemPriv()
     {
-        rating  = -1;
-        view    = 0;
-        state   = Waiting;
-        asThumb = false;
+        rating   = -1;
+        view     = 0;
+        state    = Waiting;
+        hasThumb = false;
     }
 
-    bool            asThumb;
+    bool            hasThumb;
 
     int             rating;         // Image Rating from Kipi host.
     QString         comments;       // Image comments from Kipi host.
@@ -109,7 +109,7 @@ ImagesListViewItem::~ImagesListViewItem()
 
 bool ImagesListViewItem::hasValidThumbnail() const
 {
-    return d->asThumb;
+    return d->hasThumb;
 }
 
 void ImagesListViewItem::updateInformation()
@@ -189,7 +189,7 @@ void ImagesListViewItem::setPixmap(const QPixmap& pix)
     setIcon(ImagesListView::Thumbnail, icon);
 }
 
-void ImagesListViewItem::setThumb(const QPixmap& pix, bool asThumb)
+void ImagesListViewItem::setThumb(const QPixmap& pix, bool hasThumb)
 {
     kDebug() << "Received new thumbnail for url " << d->url
              << ". My view is " << d->view;
@@ -208,7 +208,7 @@ void ImagesListViewItem::setThumb(const QPixmap& pix, bool asThumb)
     d->thumb     = pixmap;
     setPixmap(d->thumb);
 
-    d->asThumb   = asThumb;
+    d->hasThumb  = hasThumb;
 }
 
 void ImagesListViewItem::setProgressAnimation(const QPixmap& pix)
