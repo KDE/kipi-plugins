@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : a class to manage plugin actions using threads
  *
- * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,11 +54,8 @@ public:
     void setUpdateFileDate(bool b);
     void setPreviewMode(int mode);
 
-    void identifyRawFile(const KUrl& url, bool full=false);
-    void identifyRawFiles(const KUrl::List& urlList, bool full=false);
-
-    void thumbRawFile(const KUrl& url);
-    void thumbRawFiles(const KUrl::List& urlList);
+    void identifyRawFile(const KUrl& url);
+    void identifyRawFiles(const KUrl::List& urlList);
 
     void processRawFile(const KUrl& url);
     void processRawFiles(const KUrl::List& urlList);

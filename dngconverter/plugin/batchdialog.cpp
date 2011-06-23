@@ -29,7 +29,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QGridLayout>
-#include <QHeaderView>
 #include <QPixmap>
 #include <QProgressBar>
 #include <QPushButton>
@@ -62,7 +61,7 @@
 #include "aboutdata.h"
 #include "actions.h"
 #include "actionthread.h"
-#include "clistviewitem.h"
+#include "myimagelist.h"
 #include "dngwriter.h"
 #include "imagedialog.h"
 #include "pluginsversion.h"
@@ -81,12 +80,9 @@ public:
     BatchDialogPriv()
     {
         busy               = false;
-        convertBlink       = false;
-        blinkConvertTimer  = 0;
         page               = 0;
         progressBar        = 0;
         listView           = 0;
-        currentConvertItem = 0;
         thread             = 0;
         settingsBox        = 0;
         iface              = 0;
@@ -94,9 +90,6 @@ public:
     }
 
     bool                   busy;
-    bool                   convertBlink;
-
-    QTimer*                blinkConvertTimer;
 
     QWidget*               page;
 
@@ -104,9 +97,7 @@ public:
 
     QProgressBar*          progressBar;
 
-    QTreeWidget*           listView;
-
-    CListViewItem*         currentConvertItem;
+    MyImageList*           listView;
 
     ActionThread*          thread;
 
@@ -138,30 +129,11 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
 
     d->page = new QWidget( this );
     setMainWidget( d->page );
-    QGridLayout *mainLayout = new QGridLayout(d->page);
+    QGridLayout* mainLayout = new QGridLayout(d->page);
 
     //---------------------------------------------
 
-    d->listView = new QTreeWidget(d->page);
-    d->listView->setColumnCount(3);
-    d->listView->setIconSize(QSize(64, 64));
-    d->listView->setRootIsDecorated(false);
-    d->listView->setSortingEnabled(false);
-    d->listView->setSelectionMode(QAbstractItemView::MultiSelection);
-    d->listView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    d->listView->setAllColumnsShowFocus(true);
-    d->listView->setMinimumWidth(450);
-
-    QStringList labels;
-    labels.append( i18n("Thumbnail") );
-    labels.append( i18n("Raw File") );
-    labels.append( i18n("Target File") );
-    labels.append( i18n("Camera") );
-    d->listView->setHeaderLabels(labels);
-    d->listView->header()->setResizeMode(0, QHeaderView::ResizeToContents);
-    d->listView->header()->setResizeMode(1, QHeaderView::Stretch);
-    d->listView->header()->setResizeMode(2, QHeaderView::Stretch);
-    d->listView->header()->setResizeMode(3, QHeaderView::Stretch);
+    d->listView = new MyImageList(d->iface, d->page);
 
     // ---------------------------------------------------------------
 
@@ -187,7 +159,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -195,13 +167,9 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
 
     // ---------------------------------------------------------------
 
-    d->blinkConvertTimer = new QTimer(this);
     d->thread            = new ActionThread(this);
 
     // ---------------------------------------------------------------
-
-    connect(d->blinkConvertTimer, SIGNAL(timeout()),
-            this, SLOT(slotConvertBlinkTimerDone()));
 
     connect(this, SIGNAL(closeClicked()),
             this, SLOT(slotClose()));
@@ -223,12 +191,6 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
 
     connect(d->thread, SIGNAL(finished(const KIPIDNGConverterPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIDNGConverterPlugin::ActionData&)));
-
-    if (d->iface)
-    {
-        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
-    }
 
     // ---------------------------------------------------------------
 
@@ -254,7 +216,7 @@ void BatchDialog::closeEvent(QCloseEvent* e)
     // Stop current conversion if necessary
     if (d->busy) slotStartStop();
     saveSettings();
-    d->listView->clear();
+    d->listView->listView()->clear();
     e->accept();
 }
 
@@ -263,7 +225,7 @@ void BatchDialog::slotClose()
     // Stop current conversion if necessary
     if (d->busy) slotStartStop();
     saveSettings();
-    d->listView->clear();
+    d->listView->listView()->clear();
     done(Close);
 }
 
@@ -311,16 +273,16 @@ void BatchDialog::slotStartStop()
     {
         d->fileList.clear();
 
-        QTreeWidgetItemIterator it(d->listView);
+        QTreeWidgetItemIterator it(d->listView->listView());
         while (*it)
         {
-            CListViewItem* lvItem = dynamic_cast<CListViewItem*>(*it);
+            MyImageListViewItem* lvItem = dynamic_cast<MyImageListViewItem*>(*it);
             if (lvItem)
             {
-                if (lvItem->isEnabled() && (lvItem->state() != CListViewItem::Success))
+                if (!lvItem->isDisabled() && (lvItem->state() != MyImageListViewItem::Success))
                 {
                     lvItem->setIcon(1, QIcon());
-                    lvItem->setState(CListViewItem::Waiting);
+                    lvItem->setState(MyImageListViewItem::Waiting);
                     d->fileList.append(lvItem->url().path());
                 }
             }
@@ -343,13 +305,11 @@ void BatchDialog::slotStartStop()
     }
     else
     {
-        d->blinkConvertTimer->stop();
         d->fileList.clear();
         d->thread->cancel();
         busy(false);
 
-        if (d->currentConvertItem)
-            d->currentConvertItem->setIcon(1, SmallIcon("dialog-cancel"));
+        d->listView->processed(false);
 
         QTimer::singleShot(500, this, SLOT(slotAborted()));
     }
@@ -371,10 +331,10 @@ void BatchDialog::slotRemoveItems()
     do
     {
         find = false;
-        QTreeWidgetItemIterator it(d->listView);
+        QTreeWidgetItemIterator it(d->listView->listView());
         while (*it)
         {
-            CListViewItem* item = dynamic_cast<CListViewItem*>(*it);
+            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(*it);
             if (item->isSelected())
             {
                 delete item;
@@ -395,46 +355,24 @@ void BatchDialog::slotAborted()
 
 void BatchDialog::addItems(const KUrl::List& itemList)
 {
-    KUrl::List urlList;
+    d->listView->slotAddImages(itemList);
+    KUrl::List urlList = d->listView->imageUrls(true);
+    kDebug() << urlList;
 
-    QPixmap pix(SmallIcon("image-x-generic", KIconLoader::SizeLarge, KIconLoader::DisabledState));
-
-    for (KUrl::List::const_iterator  it = itemList.constBegin();
-         it != itemList.constEnd(); ++it)
+    for (KUrl::List::const_iterator  it = urlList.constBegin();
+         it != urlList.constEnd(); ++it)
     {
-        KUrl url = *it;
-        QFileInfo fi(url.path());
-        if (fi.exists() && !findItem(url))
-        {
-            QString dest = fi.completeBaseName() + QString(".dng");
-            new CListViewItem(d->listView, pix, url, dest);
-            urlList.append(url);
-        }
+        QFileInfo fi((*it).path());
+        QString dest              = fi.completeBaseName() + QString(".dng");
+        MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(*it));
+        if (item) item->setDestFileName(dest);
     }
 
     if (!urlList.empty())
     {
-        if (!d->iface || !d->iface->hasFeature(KIPI::HostSupportsThumbnails))
-            d->thread->thumbRawFiles(urlList);
-        else
-            d->iface->thumbnails(urlList, 256);
-
         d->thread->identifyRawFiles(urlList);
         if (!d->thread->isRunning())
             d->thread->start();
-    }
-}
-
-void BatchDialog::slotThumbnail(const KUrl& url, const QPixmap& pix)
-{
-    CListViewItem* item = findItem(url);
-    if (item)
-    {
-        if (!pix.isNull())
-        {
-            QPixmap pixmap = pix.scaled(64, 64, Qt::KeepAspectRatio);
-            item->setThumbnail(pixmap);
-        }
     }
 }
 
@@ -481,45 +419,16 @@ void BatchDialog::busy(bool busy)
     }
 
     d->settingsBox->setEnabled(!d->busy);
-    d->listView->viewport()->setEnabled(!d->busy);
+    d->listView->listView()->viewport()->setEnabled(!d->busy);
 
     d->busy ? d->page->setCursor(Qt::WaitCursor) : d->page->unsetCursor();
 }
 
-void BatchDialog::slotConvertBlinkTimerDone()
-{
-    if(d->convertBlink)
-    {
-        if (d->currentConvertItem)
-            d->currentConvertItem->setProgressIcon(SmallIcon("arrow-right"));
-    }
-    else
-    {
-        if (d->currentConvertItem)
-            d->currentConvertItem->setProgressIcon(SmallIcon("arrow-right-double"));
-    }
-
-    d->convertBlink = !d->convertBlink;
-    d->blinkConvertTimer->start(500);
-}
-
-void BatchDialog::processing(const KUrl& url)
-{
-    d->currentConvertItem = findItem(url);
-    if (d->currentConvertItem)
-    {
-        d->listView->setCurrentItem(d->currentConvertItem, true);
-        d->listView->scrollToItem(d->currentConvertItem);
-    }
-
-    d->convertBlink = false;
-    d->blinkConvertTimer->start(500);
-}
-
 void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 {
-    d->blinkConvertTimer->stop();
-    QString destFile(d->currentConvertItem->destPath());
+    MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(url));
+    if (!item) return;
+    QString destFile(item->destPath());
 
     if (d->settingsBox->conflictRule() != SettingsWidget::OVERWRITE)
     {
@@ -527,7 +436,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)
         {
             KIO::RenameDialog dlg(this, i18n("Save Raw Image converted from '%1' as",
-                                  d->currentConvertItem->url().fileName()),
+                                  url.fileName()),
                                   tmpFile, destFile,
                                   KIO::RenameDialog_Mode(KIO::M_SINGLE | KIO::M_OVERWRITE | KIO::M_SKIP));
 
@@ -537,7 +446,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
                 case KIO::R_SKIP:
                 {
                     destFile.clear();
-                    d->currentConvertItem->setProgressIcon(SmallIcon("dialog-cancel"));
+                    d->listView->processed(false);
                     break;
                 }
                 case KIO::R_RENAME:
@@ -556,14 +465,12 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
-            d->currentConvertItem->setProgressIcon(SmallIcon("dialog-error"));
-            d->currentConvertItem->setState(CListViewItem::Failed);
+            d->listView->processed(false);
         }
         else
         {
-            d->currentConvertItem->setDestFileName(QFileInfo(destFile).fileName());
-            d->currentConvertItem->setProgressIcon(SmallIcon("dialog-ok"));
-            d->currentConvertItem->setState(CListViewItem::Success);
+            item->setDestFileName(QFileInfo(destFile).fileName());
+            d->listView->processed(true);
 
             if (d->iface)
             {
@@ -577,14 +484,12 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
     }
 
     d->progressBar->setValue(d->progressBar->value()+1);
-    d->currentConvertItem = 0;
 }
 
 void BatchDialog::processingFailed(const KUrl& /*url*/)
 {
-    d->currentConvertItem->setProgressIcon(SmallIcon("dialog-cancel"));
+    d->listView->processed(false);
     d->progressBar->setValue(d->progressBar->value()+1);
-    d->currentConvertItem = 0;
 }
 
 void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
@@ -596,12 +501,11 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
         switch (ad.action)
         {
             case(IDENTIFY):
-            case(THUMBNAIL):
                 break;
             case(PROCESS):
             {
                 busy(true);
-                processing(ad.fileUrl);
+                d->listView->processing(ad.fileUrl);
                 break;
             }
             default:
@@ -618,7 +522,6 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
             switch (ad.action)
             {
                 case(IDENTIFY):
-                case(THUMBNAIL):
                     break;
                 case(PROCESS):
                 {
@@ -639,23 +542,10 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
             {
                 case(IDENTIFY):
                 {
-                    CListViewItem* item = findItem(ad.fileUrl);
+                    MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(d->listView->listView()->findItem(ad.fileUrl));
                     if (item)
                     {
                         item->setIdentity(ad.message);
-                    }
-                    break;
-                }
-                case(THUMBNAIL):
-                {
-                    CListViewItem* item = findItem(ad.fileUrl);
-                    if (item)
-                    {
-                        if (!ad.image.isNull())
-                        {
-                            QPixmap pix = QPixmap::fromImage(ad.image.scaled(64, 64, Qt::KeepAspectRatio));
-                            item->setThumbnail(pix);
-                        }
                     }
                     break;
                 }
@@ -673,25 +563,6 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
             }
         }
     }
-}
-
-CListViewItem* BatchDialog::findItem(const KUrl& url)
-{
-    QTreeWidgetItemIterator it(d->listView);
-    while (*it)
-    {
-        CListViewItem* lvItem = dynamic_cast<CListViewItem*>(*it);
-        if (lvItem)
-        {
-            if (lvItem->url() == url)
-            {
-                return lvItem;
-            }
-        }
-        ++it;
-    }
-
-    return 0;
 }
 
 } // namespace KIPIDNGConverterPlugin
