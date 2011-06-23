@@ -77,7 +77,7 @@ public:
     explicit ImagesListViewItem(ImagesListView* view, const KUrl& url);
     ~ImagesListViewItem();
 
-    bool asValidThumbnail() const;
+    bool hasValidThumbnail() const;
 
     void setUrl(const KUrl& url);
     KUrl url() const;

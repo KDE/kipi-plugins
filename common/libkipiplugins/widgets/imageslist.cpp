@@ -107,7 +107,7 @@ ImagesListViewItem::~ImagesListViewItem()
     delete d;
 }
 
-bool ImagesListViewItem::asValidThumbnail() const
+bool ImagesListViewItem::hasValidThumbnail() const
 {
     return d->asThumb;
 }
@@ -315,7 +315,7 @@ void ImagesListView::enableDragAndDrop(const bool enable)
 void ImagesListView::drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const
 {
     ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(itemFromIndex(index));
-    if (item && !item->asValidThumbnail())
+    if (item && !item->hasValidThumbnail())
     {
         ImagesList* view = dynamic_cast<ImagesList*>(parent());
         if (view) view->updateThumbnail(item->url());
