@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-09-24
- * Description : DNG Converter file list view and items.
+ * Description : file list view and items.
  *
  * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *

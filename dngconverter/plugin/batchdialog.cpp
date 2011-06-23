@@ -357,7 +357,6 @@ void BatchDialog::addItems(const KUrl::List& itemList)
 {
     d->listView->slotAddImages(itemList);
     KUrl::List urlList = d->listView->imageUrls(true);
-    kDebug() << urlList;
 
     for (KUrl::List::const_iterator  it = urlList.constBegin();
          it != urlList.constEnd(); ++it)
