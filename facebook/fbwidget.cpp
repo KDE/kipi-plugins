@@ -63,7 +63,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::ImagesList(iface, this);
+    m_imgList = new KIPIPlugins::ImagesList(iface, this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
@@ -91,10 +91,10 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_permissionLbl         = new QLabel(accountBox);
     m_changeUserBtn         = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
                                               i18n("Logout and change Facebook Account used for transfer")),
-        accountBox);
+                                              accountBox);
     m_changePermBtn         = new KPushButton(KGuiItem(i18n("Change Permission"), "security-high",
                                               i18n("Change permission for KIPI application for photo upload")),
-        accountBox);
+                                              accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
@@ -135,12 +135,12 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_dlGrp->addButton(phMeRBtn, FbPhotosMe);
     m_dlGrp->addButton(phFrRBtn, FbPhotosFriend);
 
-    QLabel* frLbl   = new QLabel(i18n("Friend:"), albBox);
-    m_friendsCoB    = new KComboBox(albBox);
+    QLabel* frLbl  = new QLabel(i18n("Friend:"), albBox);
+    m_friendsCoB   = new KComboBox(albBox);
     m_friendsCoB->setEditable(false);
 
-    QLabel* albLbl  = new QLabel(i18n("Album:"), albBox);
-    m_albumsCoB     = new KComboBox(albBox);
+    QLabel* albLbl = new QLabel(i18n("Album:"), albBox);
+    m_albumsCoB    = new KComboBox(albBox);
     m_albumsCoB->setEditable(false);
 
     m_newAlbumBtn     = new KPushButton(KGuiItem(i18n("New Album"), "list-add",
@@ -164,7 +164,7 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     QGroupBox* uploadBox = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location to which Facebook images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget = iface->uploadWidget(uploadBox);
+    m_uploadWidget               = iface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
@@ -324,7 +324,7 @@ void FbWidget::updateLabels(const QString& name, const QString& url, bool uplPer
 void FbWidget::slotDownloadTypeChanged(int dlType)
 {
     m_friendsCoB->setEnabled(dlType == FbPhotosFriend || dlType == FbFriendAlbum);
-    m_albumsCoB->setEnabled(dlType == FbMyAlbum || dlType == FbFriendAlbum);
+    m_albumsCoB->setEnabled( dlType == FbMyAlbum      || dlType == FbFriendAlbum);
 
     if (dlType == FbPhotosMe)
     {
@@ -339,8 +339,7 @@ void FbWidget::slotDownloadTypeChanged(int dlType)
     }
 
     if (dlType == FbFriendAlbum)
-        emit reloadAlbums(m_friendsCoB->itemData(
-                                      m_friendsCoB->currentIndex()).toLongLong());
+        emit reloadAlbums(m_friendsCoB->itemData(m_friendsCoB->currentIndex()).toLongLong());
 }
 
 void FbWidget::slotFriendsIndexChanged(int index)

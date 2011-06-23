@@ -71,8 +71,8 @@ class FbWindow : public KDialog
 
 public:
 
-    FbWindow(KIPI::Interface *interface, const QString& tmpFolder,
-             bool import, QWidget *parent);
+    FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
+             bool import, QWidget* parent);
     ~FbWindow();
 
     /**
@@ -93,11 +93,11 @@ private Q_SLOTS:
     void slotCreateAlbumDone(int errCode, const QString& errMsg,
                              const QString &newAlbumID);
     void slotListAlbumsDone(int errCode, const QString& errMsg,
-                            const QList <FbAlbum>& albumsList);
+                            const QList<FbAlbum>& albumsList);
     void slotListPhotosDone(int errCode, const QString& errMsg,
-                            const QList <FbPhoto>& photosList);
+                            const QList<FbPhoto>& photosList);
     void slotListFriendsDone(int errCode, const QString& errMsg,
-                             const QList <FbUser>& friendsList);
+                             const QList<FbUser>& friendsList);
 
     void slotUserChangeRequest();
     void slotPermChangeRequest();
@@ -140,17 +140,17 @@ private:
     QString                   m_sessionKey;             // old world session key
     QString                   m_sessionSecret;          // old world session secret
     unsigned int              m_sessionExpires;
-    QString		      m_accessToken;            // OAuth access token
+    QString                   m_accessToken;            // OAuth access token
 
     KUrl::List                m_transferQueue;
 
-    FbTalker                 *m_talker;
-    FbWidget                 *m_widget;
-    FbNewAlbum               *m_albumDlg;
+    FbTalker*                 m_talker;
+    FbWidget*                 m_widget;
+    FbNewAlbum*               m_albumDlg;
 
-    KIPI::Interface          *m_interface;
+    KIPI::Interface*          m_interface;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData* m_about;
 };
 
 } // namespace KIPIFacebookPlugin
