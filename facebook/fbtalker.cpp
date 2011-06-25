@@ -238,7 +238,7 @@ void FbTalker::exchangeSession(const QString& sessionKey)
  */
 void FbTalker::doOAuth()
 {
-     // just in case
+    // just in case
     m_loginInProgress = true;
 
     // TODO (Dirk): 
