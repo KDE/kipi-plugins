@@ -51,4 +51,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 038 ==> 275857 : Word puzzle in progressbar in rajceexport.
 039 ==> 215777 : Configuration to use HTTP instead of HTTPS.
 040 ==> 252437 : Empty album list fixed by switching to OAuth2 authentication
-041 ==> 
+041 ==> 226114 : Facebook Call Failed: Incorrect Signature.
+042 ==> 
+
