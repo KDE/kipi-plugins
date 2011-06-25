@@ -44,7 +44,6 @@ namespace KIPIRawConverterPlugin
 {
 
 class ActionData;
-class CListViewItem;
 
 class BatchDialog : public KDialog
 {
@@ -70,11 +69,8 @@ private:
     void busy(bool busy);
 
     void processOne();
-    void processing(const KUrl& url);
     void processed(const KUrl& url, const QString& tmpFile);
     void processingFailed(const KUrl& url);
-
-    CListViewItem* findItem(const KUrl& url);
 
 private Q_SLOTS:
 
@@ -87,11 +83,8 @@ private Q_SLOTS:
     void slotAborted();
 
     void slotSaveFormatChanged();
-    void slotConvertBlinkTimerDone();
 
     void slotAction(const KIPIRawConverterPlugin::ActionData&);
-
-    void slotThumbnail(const KUrl&, const QPixmap&);
 
     void slotSixteenBitsImageToggled(bool);
 

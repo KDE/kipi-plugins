@@ -72,13 +72,13 @@ public:
 
     ImagesListViewItemPriv()
     {
-        rating  = -1;
-        view    = 0;
-        state   = Waiting;
-        asThumb = false;
+        rating   = -1;
+        view     = 0;
+        state    = Waiting;
+        hasThumb = false;
     }
 
-    bool            asThumb;
+    bool            hasThumb;
 
     int             rating;         // Image Rating from Kipi host.
     QString         comments;       // Image comments from Kipi host.
@@ -107,9 +107,9 @@ ImagesListViewItem::~ImagesListViewItem()
     delete d;
 }
 
-bool ImagesListViewItem::asValidThumbnail() const
+bool ImagesListViewItem::hasValidThumbnail() const
 {
-    return d->asThumb;
+    return d->hasThumb;
 }
 
 void ImagesListViewItem::updateInformation()
@@ -189,7 +189,7 @@ void ImagesListViewItem::setPixmap(const QPixmap& pix)
     setIcon(ImagesListView::Thumbnail, icon);
 }
 
-void ImagesListViewItem::setThumb(const QPixmap& pix, bool asThumb)
+void ImagesListViewItem::setThumb(const QPixmap& pix, bool hasThumb)
 {
     kDebug() << "Received new thumbnail for url " << d->url
              << ". My view is " << d->view;
@@ -208,7 +208,7 @@ void ImagesListViewItem::setThumb(const QPixmap& pix, bool asThumb)
     d->thumb     = pixmap;
     setPixmap(d->thumb);
 
-    d->asThumb   = asThumb;
+    d->hasThumb  = hasThumb;
 }
 
 void ImagesListViewItem::setProgressAnimation(const QPixmap& pix)
@@ -315,7 +315,7 @@ void ImagesListView::enableDragAndDrop(const bool enable)
 void ImagesListView::drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const
 {
     ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(itemFromIndex(index));
-    if (item && !item->asValidThumbnail())
+    if (item && !item->hasValidThumbnail())
     {
         ImagesList* view = dynamic_cast<ImagesList*>(parent());
         if (view) view->updateThumbnail(item->url());

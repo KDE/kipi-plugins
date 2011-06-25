@@ -13,6 +13,7 @@ SET(kipiplugin_rawconverter_PART_SRCS plugin/plugin_rawconverter.cpp
                                       manager/actionthread.cpp
                                       dialogs/batchdialog.cpp
                                       dialogs/singledialog.cpp
+                                      dialogs/myimagelist.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_rawconverter ${kipiplugin_rawconverter_PART_SRCS})

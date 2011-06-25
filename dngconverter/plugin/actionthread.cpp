@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : a class to manage plugin actions using threads
  *
- * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -132,43 +132,21 @@ void ActionThread::processRawFile(const KUrl& url)
     processRawFiles(oneFile);
 }
 
-void ActionThread::identifyRawFile(const KUrl& url, bool full)
+void ActionThread::identifyRawFile(const KUrl& url)
 {
     KUrl::List oneFile;
     oneFile.append(url);
-    identifyRawFiles(oneFile, full);
+    identifyRawFiles(oneFile);
 }
 
-void ActionThread::identifyRawFiles(const KUrl::List& urlList, bool full)
+void ActionThread::identifyRawFiles(const KUrl::List& urlList)
 {
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
         ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->fileUrl                = *it;
-        t->action                 = full ? IDENTIFY_FULL : IDENTIFY;
-
-        QMutexLocker lock(&d->mutex);
-        d->todo << t;
-        d->condVar.wakeAll();
-    }
-}
-
-void ActionThread::thumbRawFile(const KUrl& url)
-{
-    KUrl::List oneFile;
-    oneFile.append(url);
-    thumbRawFiles(oneFile);
-}
-
-void ActionThread::thumbRawFiles(const KUrl::List& urlList)
-{
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-         it != urlList.constEnd(); ++it )
-    {
-        ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
-        t->fileUrl                = *it;
-        t->action                 = THUMBNAIL;
+        t->action                 = IDENTIFY;
 
         QMutexLocker lock(&d->mutex);
         d->todo << t;
@@ -219,7 +197,6 @@ void ActionThread::run()
             switch (t->action)
             {
                 case IDENTIFY:
-                case IDENTIFY_FULL:
                 {
                     // Identify Camera model.
                     DcrawInfoContainer info;
@@ -228,61 +205,13 @@ void ActionThread::run()
                     QString identify = i18n("Cannot identify Raw image");
                     if (info.isDecodable)
                     {
-                        if (t->action == IDENTIFY)
-                            identify = info.make + QString("-") + info.model;
-                        else
-                        {
-                            identify = i18n("Make: %1\n", info.make);
-                            identify.append(i18n("Model: %1\n", info.model));
-
-                            if (info.dateTime.isValid())
-                            {
-                                identify.append(i18n("Created: %1\n",
-                                         KGlobal::locale()->formatDateTime(info.dateTime,
-                                                                           KLocale::ShortDate, true)));
-                            }
-
-                            if (info.aperture != -1.0)
-                            {
-                                identify.append(i18n("Aperture: f/%1\n", QString::number(info.aperture)));
-                            }
-
-                            if (info.focalLength != -1.0)
-                            {
-                                identify.append(i18n("Focal: %1 mm\n", info.focalLength));
-                            }
-
-                            if (info.exposureTime != -1.0)
-                            {
-                                identify.append(i18n("Exposure: 1/%1 s\n", info.exposureTime));
-                            }
-
-                            if (info.sensitivity != -1)
-                            {
-                                identify.append(i18n("Sensitivity: %1 ISO", info.sensitivity));
-                            }
-                        }
+                        identify = info.make + QString("-") + info.model;
                     }
 
                     ActionData ad;
                     ad.action  = t->action;
                     ad.fileUrl = t->fileUrl;
                     ad.message = identify;
-                    ad.success = true;
-                    emit finished(ad);
-                    break;
-                }
-
-                case THUMBNAIL:
-                {
-                    // Get embedded RAW file thumbnail.
-                    QImage image;
-                    KDcraw::loadDcrawPreview(image, t->fileUrl.path());
-
-                    ActionData ad;
-                    ad.action  = t->action;
-                    ad.fileUrl = t->fileUrl;
-                    ad.image   = image;
                     ad.success = true;
                     emit finished(ad);
                     break;

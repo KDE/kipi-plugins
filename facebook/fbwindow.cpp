@@ -55,12 +55,12 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include "imageslist.h"
-#include "kpaboutdata.h"
-#include "pluginsversion.h"
 
 // Local includes
 
+#include "imageslist.h"
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 #include "fbitem.h"
 #include "fbtalker.h"
 #include "fbwidget.h"
@@ -69,7 +69,7 @@
 namespace KIPIFacebookPlugin
 {
 
-FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
+FbWindow::FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
                    bool import, QWidget* /*parent*/)
         : KDialog(0)
 {
@@ -150,7 +150,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
 
     // ------------------------------------------------------------------------
 
-    m_albumDlg  = new FbNewAlbum(this);
+    m_albumDlg = new FbNewAlbum(this);
 
     // ------------------------------------------------------------------------
 
@@ -177,14 +177,14 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString &tmpFolder,
     connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, const QString&) ),
             this, SLOT( slotCreateAlbumDone(int, const QString&, const QString&) ));
 
-    connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <FbAlbum>&) ),
-            this, SLOT( slotListAlbumsDone(int, const QString&, const QList <FbAlbum>&) ));
+    connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList<FbAlbum>&) ),
+            this, SLOT( slotListAlbumsDone(int, const QString&, const QList<FbAlbum>&) ));
 
-    connect(m_talker, SIGNAL( signalListPhotosDone(int, const QString&, const QList <FbPhoto>&) ),
-            this, SLOT( slotListPhotosDone(int, const QString&, const QList <FbPhoto>&) ));
+    connect(m_talker, SIGNAL( signalListPhotosDone(int, const QString&, const QList<FbPhoto>&) ),
+            this, SLOT( slotListPhotosDone(int, const QString&, const QList<FbPhoto>&) ));
 
-    connect(m_talker, SIGNAL( signalListFriendsDone(int, const QString&, const QList <FbUser>&) ),
-            this, SLOT( slotListFriendsDone(int, const QString&, const QList <FbUser>&) ));
+    connect(m_talker, SIGNAL( signalListFriendsDone(int, const QString&, const QList<FbUser>&) ),
+            this, SLOT( slotListFriendsDone(int, const QString&, const QList<FbUser>&) ));
 
     // ------------------------------------------------------------------------
 
@@ -252,10 +252,11 @@ void FbWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Facebook Settings");
     m_accessToken    = grp.readEntry("Access Token");
-    if(m_accessToken.isEmpty()) {
-	m_sessionKey     = grp.readEntry("Session Key");
-	m_sessionSecret  = grp.readEntry("Session Secret");
-	m_sessionExpires = grp.readEntry("Session Expires", 0);
+    if(m_accessToken.isEmpty())
+    {
+        m_sessionKey     = grp.readEntry("Session Key");
+        m_sessionSecret  = grp.readEntry("Session Secret");
+        m_sessionExpires = grp.readEntry("Session Expires", 0);
     }
     m_currentAlbumID = grp.readEntry("Current Album", QString());
 
@@ -292,15 +293,17 @@ void FbWindow::writeSettings()
     KConfigGroup grp = config.group("Facebook Settings");
     grp.writeEntry("Access Token",    m_accessToken);
     /* If we have both access token and session key, then we have just converted one into the other. */
-    if( ! m_accessToken.isEmpty() ) {
-        if( ! m_sessionKey.isEmpty() ) 
+    if( ! m_accessToken.isEmpty() )
+    {
+        if( ! m_sessionKey.isEmpty() )
             grp.deleteEntry("Session Key");
         if( ! m_sessionSecret.isEmpty() )
             grp.deleteEntry("Session Secret");
     }
     // If the access token has not been obtained, leave the values as they are.
     /*
-    else {
+    else
+    {
         grp.writeEntry("Session Key",     m_sessionKey);
         grp.writeEntry("Session Secret",  m_sessionSecret);
     }
@@ -327,13 +330,15 @@ void FbWindow::authenticate()
 {
     m_widget->progressBar()->show();
     m_widget->progressBar()->setFormat("");
-    
+
     // Converting old world session keys into OAuth2 tokens
-    if( ! m_sessionKey.isEmpty() && m_accessToken.isEmpty() ) {
+    if( ! m_sessionKey.isEmpty() && m_accessToken.isEmpty() )
+    {
         kDebug() << "Exchanging session tokens to OAuth";
         m_talker->exchangeSession(m_sessionKey);
     }
-    else {
+    else
+    {
         kDebug() << "Calling Login method";
         m_talker->authenticate(m_accessToken, m_sessionExpires);
     }
@@ -361,6 +366,7 @@ void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
     setProfileAID(user.id);
     m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
     m_widget->m_albumsCoB->clear();
+
     if (!m_import)
         m_widget->m_albumsCoB->addItem(i18n("&lt;auto create&gt;"), QString());
 
@@ -393,7 +399,7 @@ void FbWindow::slotChangePermDone(int errCode, const QString& errMsg)
     }
 }
 
-void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QList <FbAlbum>& albumsList)
+void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QList<FbAlbum>& albumsList)
 {
 
     QString albumDebug = "";
@@ -401,8 +407,9 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
     {
         albumDebug.append(album.id + ": " + album.title + '\n');
     }
+
     kDebug() << "Received albums (errCode = " << errCode << ", errMsg = "
-                  << errMsg << "): " << albumDebug;
+             << errMsg << "): " << albumDebug;
 
     if (errCode != 0)
     {
@@ -450,7 +457,7 @@ void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QLis
     }
 }
 
-void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg, const QList <FbPhoto>& photosList)
+void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg, const QList<FbPhoto>& photosList)
 {
     if (errCode != 0)
     {
@@ -477,7 +484,7 @@ void FbWindow::slotListPhotosDone(int errCode, const QString& errMsg, const QLis
     downloadNextPhoto();
 }
 
-void FbWindow::slotListFriendsDone(int errCode, const QString& errMsg, const QList <FbUser>& friendsList)
+void FbWindow::slotListFriendsDone(int errCode, const QString& errMsg, const QList<FbUser>& friendsList)
 {
     if (errCode != 0)
     {
@@ -587,16 +594,15 @@ void FbWindow::slotStartTransfer()
     else
     {
         m_widget->m_imgList->clearProcessedStatus();
-        m_transferQueue = m_widget->m_imgList->imageUrls();
+        m_transferQueue  = m_widget->m_imgList->imageUrls();
 
         if (m_transferQueue.isEmpty())
             return;
 
-        m_currentAlbumID = m_widget->m_albumsCoB->itemData(
-                                   m_widget->m_albumsCoB->currentIndex()).toString();
+        m_currentAlbumID = m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString();
         kDebug() << "upload request got album id from widget: " << m_currentAlbumID;
-        m_imagesTotal = m_transferQueue.count();
-        m_imagesCount = 0;
+        m_imagesTotal    = m_transferQueue.count();
+        m_imagesCount    = 0;
 
         m_widget->progressBar()->setFormat(i18n("%v / %m"));
         m_widget->progressBar()->setMaximum(m_imagesTotal);
@@ -611,10 +617,11 @@ void FbWindow::setProfileAID(long long userID)
 {
     // store AID of Profile Photos album
     // http://wiki.developers.facebook.com/index.php/Profile_archive_album
-    m_profileAID = QString::number((userID << 32) 
+    m_profileAID = QString::number((userID << 32)
                                    + (-3 & 0xFFFFFFFF));
 }
 
+// TODO : This method can be replaced by a call to Kipiinterface if it's called outside a separated thread.
 QString FbWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
 {
     QString caption = ev.getCommentsDecoded();
@@ -641,7 +648,7 @@ QString FbWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
         caption = ev.getXmpTagStringLangAlt("Xmp.tiff.ImageDescription", QString(), false);
         if (!caption.isEmpty())
             return caption;
-}
+    }
 
     if (ev.hasIptc())
     {

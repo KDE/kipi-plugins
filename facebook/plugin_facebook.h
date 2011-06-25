@@ -63,7 +63,7 @@ Q_INTERFACES( KIPI::ExportInterface )
 
 public:
 
-    Plugin_Facebook(QObject *parent, const QVariantList &args);
+    Plugin_Facebook(QObject* parent, const QVariantList& args);
     ~Plugin_Facebook();
 
     KIPI::Category category(KAction* action) const;
@@ -77,11 +77,11 @@ public Q_SLOTS:
 
 private:
 
-    KAction                      *m_actionImport;
-    KAction                      *m_actionExport;
+    KAction*                      m_actionImport;
+    KAction*                      m_actionExport;
 
-    KIPIFacebookPlugin::FbWindow *m_dlgImport;
-    KIPIFacebookPlugin::FbWindow *m_dlgExport;
+    KIPIFacebookPlugin::FbWindow* m_dlgImport;
+    KIPIFacebookPlugin::FbWindow* m_dlgExport;
 };
 
 #endif // PLUGIN_FACEBOOK_H
