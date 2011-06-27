@@ -63,6 +63,6 @@ private:
     AdvancedSettingsPriv* const d;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* ADVANCEDSETTINGS_H */

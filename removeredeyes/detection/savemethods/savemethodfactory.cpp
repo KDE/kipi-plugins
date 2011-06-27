@@ -53,4 +53,4 @@ SaveMethod* SaveMethodFactory::create(int type)
     return saveMethod;
 }
 
-}
+} // namespace KIPIRemoveRedEyesPlugin

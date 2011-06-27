@@ -71,6 +71,8 @@ public:
         kDebug() << "classifierFile        = " << classifierFile;
     };
 
+public:
+
     bool    useStandardClassifier;
     bool    useSimpleMode;
     bool    addKeyword;

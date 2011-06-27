@@ -59,6 +59,6 @@ private:
     BlobSettingsBoxPriv* const d;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* BLOBSETTINGSBOX_H */

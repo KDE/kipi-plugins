@@ -67,6 +67,6 @@ private:
     SettingsTabPriv* const d;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif // HAARSETTINGSWIDGET_H

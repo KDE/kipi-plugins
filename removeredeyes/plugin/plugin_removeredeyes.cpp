@@ -22,7 +22,6 @@
  *
  * ============================================================ */
 
-#include "plugin_removeredeyes.h"
 #include "plugin_removeredeyes.moc"
 
 // KDE includes

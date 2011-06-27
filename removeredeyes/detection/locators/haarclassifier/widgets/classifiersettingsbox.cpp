@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "classifiersettingsbox.h"
 #include "classifiersettingsbox.moc"
 
 // Qt includes
@@ -147,4 +146,4 @@ void ClassifierSettingsBox::setClassifierUrl(const QString& url)
     d->classifierUrlRequester->setUrl(url);
 }
 
-}
+} // namespace KIPIRemoveRedEyesPlugin

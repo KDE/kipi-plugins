@@ -44,6 +44,6 @@ private:
     virtual ~LocatorFactory() {};
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* LOCATORFACTORY_H */

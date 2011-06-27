@@ -69,6 +69,6 @@ private:
     SimpleSettingsPriv* const d;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* SIMPLESETTINGS_H */

@@ -85,6 +85,6 @@ private:
     HaarClassifierLocatorPriv* const d;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* HAARCLASSIFIERLOCATOR_H */

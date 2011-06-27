@@ -35,7 +35,14 @@ class CommonSettings
 {
 public:
 
-    CommonSettings() : addKeyword(true), storageMode(0), unprocessedMode(0) {};
+    CommonSettings()
+        : addKeyword(true), 
+          storageMode(0), 
+          unprocessedMode(0)
+    {
+    };
+
+public:
 
     bool    addKeyword;
     int     storageMode;
@@ -44,6 +51,6 @@ public:
     QString keywordName;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* COMMONSETTINGS_H */

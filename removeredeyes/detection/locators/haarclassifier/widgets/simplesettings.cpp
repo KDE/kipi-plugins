@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "simplesettings.h"
 #include "simplesettings.moc"
 
 // Qt includes

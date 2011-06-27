@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "haarsettingswidget.h"
 #include "haarsettingswidget.moc"
 
 // Qt includes

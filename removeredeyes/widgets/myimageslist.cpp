@@ -22,7 +22,6 @@
 
 #define ICONSIZE 64
 
-#include "myimageslist.h"
 #include "myimageslist.moc"
 
 // Qt includes

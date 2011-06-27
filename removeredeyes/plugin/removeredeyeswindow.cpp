@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "removeredeyeswindow.h"
 #include "removeredeyeswindow.moc"
 
 // Qt includes
@@ -898,6 +897,5 @@ void RemoveRedEyesWindow::updateSummary()
     d->processedLabel->setText(QString("%1").arg(d->processed));
     d->failedLabel->setText(QString("%1").arg(d->failed));
 }
-
 
 } // namespace KIPIRemoveRedEyesPlugin

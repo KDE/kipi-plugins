@@ -69,6 +69,6 @@ private:
     ClassifierSettingsBoxPriv* const d;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* CLASSIFIERSETTINGSBOX_H */

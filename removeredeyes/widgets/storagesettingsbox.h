@@ -47,6 +47,8 @@ public:
         Overwrite
     };
 
+public:
+
     StorageSettingsBox(QWidget* parent = 0);
     ~StorageSettingsBox();
 
@@ -75,6 +77,6 @@ private:
     StorageSettingsBoxPriv* const d;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* STORAGESETTINGSBOX_H */

@@ -44,9 +44,8 @@ private:
 
     SaveMethodFactory() {};
     virtual ~SaveMethodFactory() {};
-
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* SAVEMETHODFACTORY_H */

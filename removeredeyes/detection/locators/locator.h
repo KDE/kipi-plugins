@@ -35,6 +35,7 @@ namespace KIPIRemoveRedEyesPlugin
 
 class Locator: public QObject
 {
+
 public:
 
     enum SaveResult
@@ -59,6 +60,6 @@ public:
     virtual void writeSettings() = 0;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* LOCATOR_H */

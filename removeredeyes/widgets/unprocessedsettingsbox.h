@@ -46,6 +46,8 @@ public:
         Remove
     };
 
+public:
+
     UnprocessedSettingsBox(QWidget* parent = 0);
     ~UnprocessedSettingsBox();
 
@@ -61,6 +63,6 @@ private:
     UnprocessedSettingsBoxPriv* const d;
 };
 
-}
+} // namespace KIPIRemoveRedEyesPlugin
 
 #endif /* UNPROCESSEDSETTINGSBOX_H */

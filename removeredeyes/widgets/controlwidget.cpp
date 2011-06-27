@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "controlwidget.h"
 #include "controlwidget.moc"
 
 // Qt includes
