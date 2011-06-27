@@ -238,7 +238,7 @@ void FbWindow::reactivate()
     show();
 }
 
-void FbWindow::closeEvent(QCloseEvent *e)
+void FbWindow::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
 
@@ -861,7 +861,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
     downloadNextPhoto();
 }
 
-void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const QString &newAlbumID)
+void FbWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const QString& newAlbumID)
 {
     if (errCode != 0)
     {
