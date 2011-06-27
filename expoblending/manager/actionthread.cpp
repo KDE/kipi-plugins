@@ -467,7 +467,6 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     volatile bool error = false;
 
 #pragma omp parallel for
-
     for (int i = 0; i < inUrls.size(); ++i)
     {
 
@@ -495,12 +494,13 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
             }
 
 #pragma omp critical (listAppend)
-
             {
                 mixedUrls.append(preprocessedUrl);
                 // In case of alignment is not performed.
                 preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(preprocessedUrl, previewUrl));
             }
+// End of omp critical
+
         }
         else
         {
@@ -513,15 +513,17 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
             }
 
 #pragma omp critical (listAppend)
-
             {
                 mixedUrls.append(url);
                 // In case of alignment is not performed.
                 preProcessedUrlsMap.insert(url, ItemPreprocessedUrls(url, previewUrl));
             }
+// End of omp critical
+
         }
 
-    } // End of OpenMP parallel for
+    }
+// End of OpenMP parallel for
 
     if (error)
     {
