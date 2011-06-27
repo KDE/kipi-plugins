@@ -465,7 +465,9 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     KUrl::List mixedUrls;     // Original non-RAW + Raw converted urls to align.
 
     volatile bool error = false;
-    #pragma omp parallel for
+
+#pragma omp parallel for
+
     for (int i = 0; i < inUrls.size(); ++i)
     {
 
@@ -492,8 +494,8 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
                 continue;
             }
 
+#pragma omp critical (listAppend)
 
-            #pragma omp critical (listAppend)
             {
                 mixedUrls.append(preprocessedUrl);
                 // In case of alignment is not performed.
@@ -510,7 +512,8 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
                 continue;
             }
 
-            #pragma omp critical (listAppend)
+#pragma omp critical (listAppend)
+
             {
                 mixedUrls.append(url);
                 // In case of alignment is not performed.
