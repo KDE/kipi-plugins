@@ -50,40 +50,33 @@ FbNewAlbum::FbNewAlbum(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(false);
 
-    QWidget *mainWidget = new QWidget(this);
+    QWidget* mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 300);
 
     // ------------------------------------------------------------------------
     m_titleEdt          = new KLineEdit;
-    m_titleEdt->setWhatsThis(
-        i18n("Title of the album that will be created (required)."));
+    m_titleEdt->setWhatsThis(i18n("Title of the album that will be created (required)."));
 
     m_locEdt            = new KLineEdit;
-    m_locEdt->setWhatsThis(
-        i18n("Location of the album that will be created (optional)."));
+    m_locEdt->setWhatsThis(i18n("Location of the album that will be created (optional)."));
 
     m_descEdt           = new KTextEdit;
-    m_descEdt->setWhatsThis(
-        i18n("Description of the album that will be created (optional)."));
+    m_descEdt->setWhatsThis(i18n("Description of the album that will be created (optional)."));
 
     m_privacyCoB        = new KComboBox;
     m_privacyCoB->setEditable(false);
     m_privacyCoB->setWhatsThis(i18n("Privacy setting of the album that will be created (required)."));
-    m_privacyCoB->addItem(KIcon("user-identity"), 
-                          i18n("Only Friends"), FB_FRIENDS);
-    m_privacyCoB->addItem(KIcon("system-users"), 
-                          i18n("Friends of Friends"), FB_FRIENDS_OF_FRIENDS);
-    m_privacyCoB->addItem(KIcon("network-workgroup"),
-                          i18n("My Networks and Friends"), FB_NETWORKS);
-    m_privacyCoB->addItem(KIcon("applications-internet"),
-                          i18n("Everyone"), FB_EVERYONE);
+    m_privacyCoB->addItem(KIcon("user-identity"),         i18n("Only Friends"),            FB_FRIENDS);
+    m_privacyCoB->addItem(KIcon("system-users"),          i18n("Friends of Friends"),      FB_FRIENDS_OF_FRIENDS);
+    m_privacyCoB->addItem(KIcon("network-workgroup"),     i18n("My Networks and Friends"), FB_NETWORKS);
+    m_privacyCoB->addItem(KIcon("applications-internet"), i18n("Everyone"),                FB_EVERYONE);
 
     QFormLayout* albumBoxLayout = new QFormLayout;
-    albumBoxLayout->addRow(i18nc("new facebook album", "Title:"), m_titleEdt);
-    albumBoxLayout->addRow(i18nc("new facebook album", "Location:"), m_locEdt);
+    albumBoxLayout->addRow(i18nc("new facebook album", "Title:"),       m_titleEdt);
+    albumBoxLayout->addRow(i18nc("new facebook album", "Location:"),    m_locEdt);
     albumBoxLayout->addRow(i18nc("new facebook album", "Description:"), m_descEdt);
-    albumBoxLayout->addRow(i18nc("new facebook album", "Privacy:"), m_privacyCoB);
+    albumBoxLayout->addRow(i18nc("new facebook album", "Privacy:"),     m_privacyCoB);
     albumBoxLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     albumBoxLayout->setSpacing(KDialog::spacingHint());
     albumBoxLayout->setMargin(KDialog::spacingHint());
