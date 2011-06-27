@@ -460,7 +460,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
     d->preprocessingTmpDir = new KTempDir(prefix);
 
-    // Pre-process RAW files if necessary. Parelelized with OpemMP if available.
+    // Pre-process RAW files if necessary. Parallelized with OpemMP if available.
 
     KUrl::List mixedUrls;     // Original non-RAW + Raw converted urls to align.
 
