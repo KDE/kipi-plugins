@@ -1,3 +1,327 @@
+2.0.0-rc 2011-06-28
+
+2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/manager/actionthread.cpp: typo
+
+2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/manager/actionthread.cpp: polish
+
+2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* batchprocessimages/TODO, ipodexport/TODO: update
+
+2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	*
+	removeredeyes/detection/locators/haarclassifier/haarclassifierlocat
+	or.cpp,
+	removeredeyes/detection/locators/haarclassifier/haarclassifierlocat
+	or.h,
+	removeredeyes/detection/locators/haarclassifier/haarsettings.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/advancedset
+	tings.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/advancedset
+	tings.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/blobsetting
+	sbox.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/blobsetting
+	sbox.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/classifiers
+	ettingsbox.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/classifiers
+	ettingsbox.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/haarsetting
+	swidget.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/haarsetting
+	swidget.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/simplesetti
+	ngs.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/simplesetti
+	ngs.h, removeredeyes/detection/locators/locator.h,
+	removeredeyes/detection/locators/locatorfactory.h,
+	removeredeyes/detection/savemethods/savemethodfactory.cpp,
+	removeredeyes/detection/savemethods/savemethodfactory.h,
+	removeredeyes/plugin/commonsettings.h,
+	removeredeyes/plugin/plugin_removeredeyes.cpp,
+	removeredeyes/plugin/removeredeyeswindow.cpp,
+	removeredeyes/plugin/workerthread.cpp,
+	removeredeyes/widgets/controlwidget.cpp,
+	removeredeyes/widgets/infomessagewidget.cpp,
+	removeredeyes/widgets/myimageslist.cpp,
+	removeredeyes/widgets/previewwidget.cpp,
+	removeredeyes/widgets/storagesettingsbox.cpp,
+	removeredeyes/widgets/storagesettingsbox.h,
+	removeredeyes/widgets/unprocessedsettingsbox.cpp,
+	removeredeyes/widgets/unprocessedsettingsbox.h: no need header is
+	moc file exist (speed up compilation) code clean-up
+
+2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/fbwindow.cpp: polish
+
+2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/fbalbum.cpp: polish
+
+2011-06-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-06-25  Dirk Tilger <dirk.kde@miriup.de>
+
+	* NEWS, facebook/fbtalker.cpp: Updated NEWS file for #252437 ... and also corrected malformed identing.  BUG: 252437 FIXED-IN: 2.0.0 Tested against gwenview-4.6.80, libkipi-4.6.80,
+	kipi-plugins-2.0.0_beta6, but using the facebook plugin from the
+	trunk.
+
+2011-06-25  Dirk Tilger <dirk.kde@miriup.de>
+
+	* : commit 194e170f122b132f58e6cd6392ccb0c026fcbb8e Author: Gilles
+	Caulier <caulier.gilles@gmail.com> Date:   Thu Jun 23 16:53:23 2011
+	+0200
+
+2011-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/plugin/batchdialog.cpp,
+	dngconverter/plugin/myimagelist.cpp,
+	dngconverter/plugin/myimagelist.h: polish
+
+2011-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/plugin/myimagelist.cpp,
+	dngconverter/plugin/myimagelist.h: files missing
+
+2011-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/CMakeLists.txt, dngconverter/plugin/actions.h,
+	dngconverter/plugin/actionthread.cpp,
+	dngconverter/plugin/actionthread.h,
+	dngconverter/plugin/batchdialog.cpp,
+	dngconverter/plugin/batchdialog.h,
+	dngconverter/plugin/clistviewitem.h: Factoring : port DNGConvert
+	image view to common image list used by all kipi-plugins
+
+2011-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.h: polish
+
+2011-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/fbwidget.cpp, facebook/fbwidget.h,
+	facebook/fbwindow.cpp, facebook/fbwindow.h,
+	facebook/plugin_facebook.h: polish
+
+2011-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	common/libkipiplugins/widgets/imageslist.h: as -> has
+
+2011-06-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	common/libkipiplugins/widgets/imageslist.h: as -> has
+
+2011-06-23  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbtalker.cpp: Display a proper message if the user
+	cancelled.
+
+2011-06-23  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbtalker.cpp: Fixed a bug in authentication key
+	conversion The Facebook service returns to us the time TO expiry, but we
+	actually need the time OF expiry.  CCBUGS: 252437
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/fbtalker.cpp, facebook/fbtalker.h,
+	facebook/fbwidget.cpp, facebook/fbwidget.h: polish fix indent fix
+	coding style CCBUGS: 252437
+
+2011-06-22  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbtalker.cpp: Updated copyright as suggested by Gilles
+	Caulier.  CCBUGS: 252437
+
+2011-06-22  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/TODO: This just has been implemented.  Nice TODO. I think there's some interesting coding coming up for me.
+	:) CCBUGS: 252437
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/fbalbum.cpp, facebook/fbalbum.h, facebook/fbitem.h,
+	facebook/fbtalker.cpp, facebook/fbwidget.cpp,
+	facebook/fbwindow.cpp, facebook/mpform.cpp, facebook/mpform.h: speed
+	up compilation : no need header file if moc file exist code clean up
+	CCBUGS: 252437
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/facebookjob.cpp, facebook/facebookjob.h: fix coding style
+	remove orphelan white space use same bracket rules everywhere.  Dirk
+	: please take a look in HACKING file for details about coding styles
+	CCBUGS: 252437
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/fbtalker.cpp: compile with Qt < 4.7.0 CCBUGS: 252437
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: add comment
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* README: update dependency
+
+2011-06-21  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbtalker.h: Removed declaration of removed methods
+
+2011-06-21  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbtalker.cpp: Removed leftovers from the old
+	authentication method.
+
+2011-06-21  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/facebookjob.cpp, facebook/fbtalker.cpp,
+	facebook/fbtalker.h, facebook/fbwindow.cpp, facebook/fbwindow.h: 
+	Converted old world authentication to OAuth2 KDE Bug ID: https://bugs.kde.org/show_bug.cgi?id=252437 Other resources: http://developers.facebook.com/docs/authentication/
+	http://developers.facebook.com/docs/guides/upgrade/
+
+2011-06-15  Dirk Tilger <dirk@miriup.de>
+
+	* CMakeLists.txt, facebook/CMakeLists.txt: The Facebook plugin
+	becomes dependent on QJSON.
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* piwigoexport/piwigoconfig.cpp, piwigoexport/piwigoconfig.h,
+	piwigoexport/piwigoitem.h, piwigoexport/piwigos.h,
+	piwigoexport/piwigotalker.cpp, piwigoexport/piwigotalker.h,
+	piwigoexport/piwigowindow.cpp, piwigoexport/piwigowindow.h,
+	piwigoexport/plugin_piwigoexport.cpp,
+	piwigoexport/plugin_piwigoexport.h: fix coding style remove headers
+	if moc files are present polish
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flickrexport/flickrlist.cpp: do not force to load thumbs. Let's do
+	it on demand
+
+2011-06-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	common/libkipiplugins/widgets/imageslist.h: as with digiKam BQM
+	queue list, set a mechanism to load thumbs when it's necessary
+
+2011-06-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/CMakeLists.txt, gpssync/tests/CMakeLists.txt: fix
+	compilation and linking of tests if KDE < 4.5.x
+
+2011-06-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-06-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rajceexport/rajcewidget.cpp: fix i18n puzzle BUGS: 275857
+
+2011-06-15  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-06-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-06-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* htmlexport/CMakeLists.txt, htmlexport/imagegenerationfunctor.cpp: 
+	support RAW image for HTML export BUGS: 271735
+
+2011-06-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/CMakeLists.txt: as with libkdcraw, manage openmp link
+	properly
+
+2011-06-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* kmlexport/kmlexport.cpp: use OR operator here, not AND
+
+2011-06-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-06-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* kmlexport/kmlexport.cpp, kmlexport/kmlexport.h: don't prompt to
+	move temp files BUGS: 171727
+
+2011-06-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS, project/NEWS.2.0.0-beta6: restore NEWS file with full story
+
+2011-06-05  Montel Laurent <montel@kde.org>
+
+	* advancedslideshow/ui/advanceddialog.ui,
+	advancedslideshow/ui/captiondialog.ui,
+	advancedslideshow/ui/maindialog.ui,
+	advancedslideshow/ui/playbackwidget.ui,
+	advancedslideshow/ui/slideplaybackwidget.ui: Fix bug #266906  "a few
+	widget titles should not be translatable" CCBUG: 266906
+
+2011-06-05  Script Kiddy <scripty@kde.org>
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	facebook/kipiplugin_facebook.desktop,
+	flashexport/kipiplugin_flashexport.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-06-04  Script Kiddy <scripty@kde.org>
+
+	* htmlexport/themes/details/details.desktop: SVN_SILENT made
+	messages (.desktop file)
+
+2011-05-29  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* CMakeLists.txt, NEWS: Open for rc
+
+2011-05-29  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.0.0-beta6: Update changelog for beta6
+
+
 2.0.0-beta6 2011-05-29
 
 2011-05-29  Script Kiddy <scripty@kde.org>
