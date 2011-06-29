@@ -46,8 +46,6 @@ class QString;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct HaarClassifierLocatorPriv;
-
 class HaarClassifierLocator : public Locator
 {
     Q_OBJECT
@@ -82,6 +80,7 @@ private:
 
 private:
 
+    struct HaarClassifierLocatorPriv;
     HaarClassifierLocatorPriv* const d;
 };
 

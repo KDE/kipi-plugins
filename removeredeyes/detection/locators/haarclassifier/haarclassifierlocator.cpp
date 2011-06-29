@@ -46,7 +46,8 @@
 
 namespace KIPIRemoveRedEyesPlugin
 {
-struct HaarClassifierLocatorPriv
+
+struct HaarClassifierLocator::HaarClassifierLocatorPriv
 {
     HaarClassifierLocatorPriv() :
         aChannel(0),
@@ -80,23 +81,23 @@ struct HaarClassifierLocatorPriv
     HaarSettingsWidget*   settingsWidget;
     HaarSettings          settings;
 };
-const QString HaarClassifierLocatorPriv::configGroupName("RemoveRedEyes %1 Settings");
-const QString HaarClassifierLocatorPriv::configSimpleModeEntry("Simple Mode");
-const QString HaarClassifierLocatorPriv::configMinimumBlobSizeEntry("Minimum Blob Size");
-const QString HaarClassifierLocatorPriv::configMinimumRoundnessEntry("Minimum Roundness");
-const QString HaarClassifierLocatorPriv::configNeighborGroupsEntry("Neighbor Groups");
-const QString HaarClassifierLocatorPriv::configScalingFactorEntry("Scaling Factor");
-const QString HaarClassifierLocatorPriv::configUseStandardClassifierEntry("Use Standard Classifier");
-const QString HaarClassifierLocatorPriv::configClassifierEntry("Classifier");
+const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configGroupName("RemoveRedEyes %1 Settings");
+const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configSimpleModeEntry("Simple Mode");
+const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configMinimumBlobSizeEntry("Minimum Blob Size");
+const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configMinimumRoundnessEntry("Minimum Roundness");
+const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configNeighborGroupsEntry("Neighbor Groups");
+const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configScalingFactorEntry("Scaling Factor");
+const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configUseStandardClassifierEntry("Use Standard Classifier");
+const QString HaarClassifierLocator::HaarClassifierLocatorPriv::configClassifierEntry("Classifier");
 
 // --------------------------------------------------------
 
 int HaarClassifierLocator::findPossibleEyes(double csf, int ngf, const char* classifierFile)
 {
     // eyes sequence will reside in the storage
-    CvMemStorage* storage=cvCreateMemStorage(0);
-    CvSeq* eyes;
-    int numEyes = 0;
+    CvMemStorage* storage = cvCreateMemStorage(0);
+    CvSeq* eyes           = 0;
+    int numEyes           = 0;
 
     // load classifier cascade from XML file
     CvHaarClassifierCascade* cascade = (CvHaarClassifierCascade*)cvLoad(classifierFile);
@@ -139,7 +140,7 @@ void HaarClassifierLocator::removeRedEyes()
     cvCopy(d->original, removed_redchannel);
 
     // number of channels
-    int nc = removed_redchannel->nChannels;
+    int nc     = removed_redchannel->nChannels;
     uchar* ptr = 0;
 
     for (int y = 0; y < removed_redchannel->height; ++y)
