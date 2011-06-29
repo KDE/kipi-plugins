@@ -37,8 +37,6 @@ class QString;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct WorkerThreadPriv;
-
 class CommonSettings;
 class Locator;
 class SaveMethod;
@@ -46,7 +44,6 @@ class WorkerThreadData;
 
 class WorkerThread : public QThread
 {
-
     Q_OBJECT
 
 public:
@@ -89,6 +86,7 @@ public:
 
 private:
 
+    struct WorkerThreadPriv;
     WorkerThreadPriv* const d;
 };
 } // namespace KIPIRemoveRedEyesPlugin

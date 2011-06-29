@@ -44,7 +44,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct SettingsTabPriv
+struct HaarSettingsWidget::SettingsTabPriv
 {
     SettingsTabPriv() :
         simpleCorrectionMode(true),
@@ -76,7 +76,7 @@ HaarSettingsWidget::HaarSettingsWidget(QWidget* parent)
     d->simpleSettings   = new SimpleSettings;
     d->advancedSettings = new AdvancedSettings;
 
-    d->settingsStack = new QStackedWidget;
+    d->settingsStack    = new QStackedWidget;
     d->settingsStack->insertWidget(Simple,   d->simpleSettings);
     d->settingsStack->insertWidget(Advanced, d->advancedSettings);
     d->settingsStack->setCurrentIndex(Simple);
@@ -114,7 +114,7 @@ HaarSettings HaarSettingsWidget::readSettings()
 
 HaarSettings HaarSettingsWidget::readSettingsForSave()
 {
-    d->settings = d->advancedSettings->readSettings();
+    d->settings            = d->advancedSettings->readSettings();
     d->settings.simpleMode = d->simpleSettings->simpleMode();
     return d->settings;
 }

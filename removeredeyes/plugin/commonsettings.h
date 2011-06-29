@@ -36,8 +36,8 @@ class CommonSettings
 public:
 
     CommonSettings()
-        : addKeyword(true), 
-          storageMode(0), 
+        : addKeyword(true),
+          storageMode(0),
           unprocessedMode(0)
     {
     };

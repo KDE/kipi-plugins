@@ -31,7 +31,6 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct SimpleSettingsPriv;
 class HaarSettings;
 
 class SimpleSettings : public QWidget
@@ -46,6 +45,8 @@ public:
         Standard,
         Slow
     };
+
+public:
 
     SimpleSettings(QWidget* parent = 0);
     ~SimpleSettings();
@@ -66,6 +67,7 @@ private Q_SLOTS:
 
 private:
 
+    struct SimpleSettingsPriv;
     SimpleSettingsPriv* const d;
 };
 

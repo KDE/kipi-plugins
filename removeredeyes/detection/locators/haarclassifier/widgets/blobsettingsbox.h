@@ -33,8 +33,6 @@ class QWidget;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct BlobSettingsBoxPriv;
-
 class BlobSettingsBox : public QGroupBox
 {
     Q_OBJECT
@@ -56,6 +54,7 @@ Q_SIGNALS:
 
 private:
 
+    struct BlobSettingsBoxPriv;
     BlobSettingsBoxPriv* const d;
 };
 

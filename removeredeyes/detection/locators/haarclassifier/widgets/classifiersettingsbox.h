@@ -33,8 +33,6 @@ class QWidget;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct ClassifierSettingsBoxPriv;
-
 class ClassifierSettingsBox : public QGroupBox
 {
     Q_OBJECT
@@ -66,6 +64,7 @@ public Q_SLOTS:
 
 private:
 
+    struct ClassifierSettingsBoxPriv;
     ClassifierSettingsBoxPriv* const d;
 };
 

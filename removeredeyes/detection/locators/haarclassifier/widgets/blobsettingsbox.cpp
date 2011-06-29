@@ -35,7 +35,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct BlobSettingsBoxPriv
+struct BlobSettingsBox::BlobSettingsBoxPriv
 {
     BlobSettingsBoxPriv()
     {
@@ -43,8 +43,8 @@ struct BlobSettingsBoxPriv
         minRoundnessNumInput = 0;
     }
 
-    KIntNumInput*       minBlobSizeNumInput;
-    KIntNumInput*       minRoundnessNumInput;
+    KIntNumInput* minBlobSizeNumInput;
+    KIntNumInput* minRoundnessNumInput;
 };
 
 BlobSettingsBox::BlobSettingsBox(QWidget* parent)

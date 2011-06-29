@@ -42,7 +42,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct SimpleSettingsPriv
+struct SimpleSettings::SimpleSettingsPriv
 {
     SimpleSettingsPriv()
     {

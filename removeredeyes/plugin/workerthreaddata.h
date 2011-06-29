@@ -34,8 +34,10 @@ class WorkerThreadData
 
 public:
 
-    explicit WorkerThreadData(const KUrl& url, int current = 0, int eyes = 0);
+    explicit WorkerThreadData(const KUrl& url, int current=0, int eyes=0);
     ~WorkerThreadData();
+
+public:
 
     int         current;
     int         eyes;

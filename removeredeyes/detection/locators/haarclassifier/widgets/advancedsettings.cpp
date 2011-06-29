@@ -36,7 +36,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct AdvancedSettingsPriv
+struct AdvancedSettings::AdvancedSettingsPriv
 {
     AdvancedSettingsPriv()
     {

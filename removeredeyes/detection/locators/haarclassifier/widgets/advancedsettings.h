@@ -31,7 +31,6 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct AdvancedSettingsPriv;
 class HaarSettings;
 
 class AdvancedSettings : public QWidget
@@ -60,6 +59,7 @@ private:
 
 private:
 
+    struct AdvancedSettingsPriv;
     AdvancedSettingsPriv* const d;
 };
 

@@ -50,7 +50,7 @@
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct WorkerThreadPriv
+struct WorkerThread::WorkerThreadPriv
 {
     WorkerThreadPriv()
     {
@@ -61,18 +61,18 @@ struct WorkerThreadPriv
         locator             = 0;
     }
 
-    bool                updateFileTimeStamp;
-    bool                cancel;
-    int                 runtype;
+    bool           updateFileTimeStamp;
+    bool           cancel;
+    int            runtype;
 
-    CommonSettings      settings;
-    SaveMethod*         saveMethod;
-    Locator*            locator;
+    CommonSettings settings;
+    SaveMethod*    saveMethod;
+    Locator*       locator;
 
-    KUrl::List          urls;
-    QString             maskPreviewFile;
-    QString             correctedPreviewFile;
-    QString             originalPreviewFile;
+    KUrl::List     urls;
+    QString        maskPreviewFile;
+    QString        correctedPreviewFile;
+    QString        originalPreviewFile;
 };
 
 WorkerThread::WorkerThread(QObject* parent, bool updateFileTimeStamp)
