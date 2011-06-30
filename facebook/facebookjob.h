@@ -48,7 +48,7 @@ public:
     FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent=0);
 
     virtual void start();
-    virtual QList< KUrl > urls() const;
+    virtual QList<KUrl> urls() const;
     virtual KIcon icon() const;
 
 private slots:
@@ -65,7 +65,7 @@ private:
 private:
 
     KUrl::List m_urls;
-    FbTalker   talk;
+    FbTalker   m_talk;
     QString    m_albumName;
     QString    m_albumId;
 };

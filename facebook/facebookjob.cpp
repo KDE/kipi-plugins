@@ -32,19 +32,20 @@ namespace KIPIFacebookPlugin
 {
 
 FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent)
-    : KJob(parent), m_urls(url), talk(0), m_albumName(albumName)
+    : KJob(parent), m_urls(url), m_talk(0), m_albumName(albumName)
 {
     setObjectName("FacebookJob");
-    connect(&talk, SIGNAL(signalLoginDone(int, QString)),
+
+    connect(&m_talk, SIGNAL(signalLoginDone(int, QString)),
             this, SLOT(loginDone(int, QString)));
 
-    connect(&talk, SIGNAL(signalListAlbumsDone(int, QString, QList<FbAlbum>)),
+    connect(&m_talk, SIGNAL(signalListAlbumsDone(int, QString, QList<FbAlbum>)),
             this, SLOT(albumList(int, QString, QList<FbAlbum>)));
 
-    connect(&talk, SIGNAL(signalCreateAlbumDone(int,QString, QString)),
+    connect(&m_talk, SIGNAL(signalCreateAlbumDone(int,QString, QString)),
             this, SLOT(albumCreated(int, QString, QString)));
 
-    connect(&talk, SIGNAL(signalAddPhotoDone(int,QString)),
+    connect(&m_talk, SIGNAL(signalAddPhotoDone(int,QString)),
             this, SLOT(addPhoto(int,QString)));
 }
 
@@ -56,7 +57,7 @@ void FacebookJob::start()
     uint sessionExpires   = cfgGroup.readEntry("Expires", 0);
 
     setPercent(20);
-    talk.authenticate(accessToken, sessionExpires);
+    m_talk.authenticate(accessToken, sessionExpires);
 }
 
 void FacebookJob::loginDone(int errCode, const QString& error)
@@ -75,12 +76,12 @@ void FacebookJob::loginDone(int errCode, const QString& error)
      */
     KConfig cfg(KGlobal::mainComponent());
     KConfigGroup cfgGroup = cfg.group("Facebook");
-    cfgGroup.writeEntry("AccessToken", talk.getAccessToken());
-    cfgGroup.writeEntry("Expires",     talk.getSessionExpires());
+    cfgGroup.writeEntry("AccessToken", m_talk.getAccessToken());
+    cfgGroup.writeEntry("Expires",     m_talk.getSessionExpires());
     cfgGroup.sync();
 
-    kDebug() << "logged in" << talk.getSessionExpires();
-    talk.listAlbums();
+    kDebug() << "logged in" << m_talk.getSessionExpires();
+    m_talk.listAlbums();
 }
 
 void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAlbum>& albums)
@@ -95,6 +96,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
 
     setPercent(25);
     QString id = QString();
+
     foreach(const FbAlbum& album, albums)
     {
         if(album.title==m_albumName)
@@ -110,7 +112,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
         album.title       = m_albumName;
         album.description = i18n("Photos taken with KDE");
 
-        talk.createAlbum(album);
+        m_talk.createAlbum(album);
     }
     else
     {
@@ -131,6 +133,7 @@ void FacebookJob::albumCreated(int errCode, const QString& error, const QString 
         emitResult();
         return;
     }
+
     setPercent(30);
     m_albumId = albumId;
     addPhoto(0, QString());
@@ -143,7 +146,7 @@ void FacebookJob::addPhoto(int code, const QString& message)
     {
         int count = percent()+(100-percent())/m_urls.size();
         KUrl url  = m_urls.takeLast();
-        bool c    = talk.addPhoto(url.toLocalFile(), m_albumId, url.fileName());
+        bool c    = m_talk.addPhoto(url.toLocalFile(), m_albumId, url.fileName());
         Q_ASSERT(c && "could not add the photo to the album");             //FIXME: Report error
 
         setPercent(count);

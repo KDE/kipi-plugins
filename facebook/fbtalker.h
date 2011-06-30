@@ -48,6 +48,7 @@ class FbTalker : public QObject
     Q_OBJECT
 
 public:
+
     FbTalker(QWidget* parent);
     ~FbTalker();
 
@@ -58,8 +59,7 @@ public:
 
     bool    loggedIn() const;
     void    cancel();
-    void    authenticate(const QString& accessToken,
-                         unsigned int sessionExpires);
+    void    authenticate(const QString& accessToken,  unsigned int sessionExpires);
     //void    authenticate(const QString& accessToken);
     void    exchangeSession(const QString& sessionKey);
     void    changePerm();
