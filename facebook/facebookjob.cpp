@@ -42,11 +42,11 @@ FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObjec
     connect(&m_talk, SIGNAL(signalListAlbumsDone(int, QString, QList<FbAlbum>)),
             this, SLOT(albumList(int, QString, QList<FbAlbum>)));
 
-    connect(&m_talk, SIGNAL(signalCreateAlbumDone(int,QString, QString)),
+    connect(&m_talk, SIGNAL(signalCreateAlbumDone(int, QString, QString)),
             this, SLOT(albumCreated(int, QString, QString)));
 
-    connect(&m_talk, SIGNAL(signalAddPhotoDone(int,QString)),
-            this, SLOT(addPhoto(int,QString)));
+    connect(&m_talk, SIGNAL(signalAddPhotoDone(int, QString)),
+            this, SLOT(addPhoto(int, QString)));
 }
 
 void FacebookJob::start()
@@ -99,7 +99,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
 
     foreach(const FbAlbum& album, albums)
     {
-        if(album.title==m_albumName)
+        if(album.title == m_albumName)
         {
             id = album.id;
             break;
@@ -167,7 +167,7 @@ KIcon FacebookJob::icon() const
     return KIcon("facebook");
 }
 
-QList<KUrl> FacebookJob::urls() const
+KUrl::List FacebookJob::urls() const
 {
     return m_urls;
 }

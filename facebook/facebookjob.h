@@ -48,14 +48,14 @@ public:
     FacebookJob(const QString& albumName, const KUrl::List& url, QObject* parent=0);
 
     virtual void start();
-    virtual QList<KUrl> urls() const;
+    virtual KUrl::List urls() const;
     virtual KIcon icon() const;
 
 private slots:
 
     void albumList(int, const QString&, const QList<FbAlbum>&);
     void loginDone(int, const QString&);
-    void albumCreated(int, const QString&, const QString &albumId);
+    void albumCreated(int, const QString&, const QString& albumId);
     void addPhoto(int code, const QString& message);
 
 private:
