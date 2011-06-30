@@ -68,32 +68,26 @@ public:
     void    listFriends();
 
     void    listAlbums(long long userID = 0);
-    void    listPhotos(long long userID, const QString &albumID);
+    void    listPhotos(long long userID, const QString& albumID);
 
     void    createAlbum(const FbAlbum& album);
 
-    bool    addPhoto(const QString& imgPath, const QString &albumID,
+    bool    addPhoto(const QString& imgPath, const QString& albumID,
                      const QString& caption);
     void    getPhoto(const QString& imgPath);
 
 Q_SIGNALS:
 
     void signalBusy(bool val);
-    void signalLoginProgress(int step, int maxStep = 0,
-                             const QString& label = "");
+    void signalLoginProgress(int step, int maxStep = 0, const QString& label = QString());
     void signalLoginDone(int errCode, const QString& errMsg);
     void signalChangePermDone(int errCode, const QString& errMsg);
     void signalAddPhotoDone(int errCode, const QString& errMsg);
-    void signalGetPhotoDone(int errCode, const QString& errMsg,
-                            const QByteArray& photoData);
-    void signalCreateAlbumDone(int errCode, const QString& errMsg,
-                               const QString &newAlbumID);
-    void signalListAlbumsDone(int errCode, const QString& errMsg,
-                              const QList <FbAlbum>& albumsList);
-    void signalListPhotosDone(int errCode, const QString& errMsg,
-                              const QList <FbPhoto>& photosList);
-    void signalListFriendsDone(int errCode, const QString& errMsg,
-                               const QList <FbUser>& friendsList);
+    void signalGetPhotoDone(int errCode, const QString& errMsg, const QByteArray& photoData);
+    void signalCreateAlbumDone(int errCode, const QString& errMsg, const QString &newAlbumID);
+    void signalListAlbumsDone(int errCode, const QString& errMsg, const QList <FbAlbum>& albumsList);
+    void signalListPhotosDone(int errCode, const QString& errMsg, const QList <FbPhoto>& photosList);
+    void signalListFriendsDone(int errCode, const QString& errMsg, const QList <FbUser>& friendsList);
 
 private:
 
@@ -115,14 +109,14 @@ private:
 
 private:
 
-    QString getApiSig(const QMap<QString, QString>& args);
+    //QString getApiSig(const QMap<QString, QString>& args);
     QString getCallString(const QMap<QString, QString>& args);
     void    authenticationDone(int errCode, const QString& errMsg);
     void    doOAuth();
     //void    createToken();
     //void    getSession();
     void    getLoggedInUser();
-    void    getUserInfo(const QString& userIDs = "");
+    void    getUserInfo(const QString& userIDs = QString());
     void    getUploadPermission();
 
     QString errorToText(int errCode, const QString& errMsg);

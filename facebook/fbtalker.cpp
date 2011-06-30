@@ -269,12 +269,13 @@ void FbTalker::doOAuth()
     layout->addWidget(textbox);
     main->setLayout(layout);
     window->setMainWidget(main);
+
     if( window->exec()  == QDialog::Accepted )
     {
         // Error code and reason from the Facebook service
         QString errorReason;
         QString errorCode;
-    
+
         url = KUrl( textbox->text() );
         QString fragment = url.fragment();
         kDebug() << "Split out the fragment from the URL: " << fragment;
@@ -313,7 +314,7 @@ void FbTalker::doOAuth()
             return getUserInfo();
         }
     }
-    
+
     authenticationDone(-1, i18n("Canceled by user."));
 
     // TODO (Dirk): Correct?
