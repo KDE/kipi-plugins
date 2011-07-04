@@ -23,7 +23,6 @@
 
 // Local includes
 
-#include "plugin_kioexportimport.h"
 #include "plugin_kioexportimport.moc"
 
 // KDE includes

@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "KioImportWindow.h"
 #include "KioImportWindow.moc"
 
 // Qt includes

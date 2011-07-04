@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "KioExportWidget.h"
 #include "KioExportWidget.moc"
 
 // Qt includes
