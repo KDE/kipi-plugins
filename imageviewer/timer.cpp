@@ -27,7 +27,8 @@
 
 #include <kdebug.h>
 
-using namespace KIPIviewer;
+namespace KIPIviewer
+{
 
 Timer::Timer()
 {
@@ -36,15 +37,17 @@ Timer::Timer()
 void Timer::start()
 {
     timer.start();
-    meantime=0;
+    meantime = 0;
 }
 
 void Timer::at(const QString& s)
 {
-    meantime=timer.elapsed()-meantime;
-    kDebug() << "stopwatch:"<< s << ": " << meantime << " ms    overall: " << timer.elapsed() << " ms";
+    meantime = timer.elapsed()-meantime;
+    kDebug() << "stopwatch:" << s << ": " << meantime << " ms    overall: " << timer.elapsed() << " ms";
 }
 
 Timer::~Timer()
 {
 }
+
+} // namespace KIPIviewer

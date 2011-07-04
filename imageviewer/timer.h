@@ -50,9 +50,9 @@ public:
 protected:
 
     QTime timer;
-    int meantime;
+    int   meantime;
 };
 
-} //namespace KIPIviewer
+} // namespace KIPIviewer
 
 #endif // TIMER_H

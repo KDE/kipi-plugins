@@ -52,20 +52,22 @@ public:
     Texture(KIPI::Interface *);
     ~Texture();
 
-    int height() const;
-    int width() const ;
+    int  height() const;
+    int  width() const ;
     bool load(const QString& fn, const QSize& size, GLuint tn);
     bool load(const QImage& im, const QSize& size, GLuint tn);
-    GLvoid * data();
+
+    GLvoid* data();
     GLuint texnr();
     GLfloat vertex_bottom();
     GLfloat vertex_top();
     GLfloat vertex_left();
     GLfloat vertex_right();
+
     void setViewport(int w, int h);
-    void zoom(float delta, QPoint mousepos);
+    void zoom(float delta, const QPoint& mousepos);
     void reset();
-    void move(QPoint diff);
+    void move(const QPoint& diff);
     bool setSize(QSize size);
     void rotate();
     void zoomToOriginal();
@@ -75,17 +77,19 @@ protected:
     bool _load();
     void calcVertex();
 
-    int display_x, display_y;
-    GLuint _texnr;
-    QSize initial_size;
-    QString filename;
-    QImage qimage, glimage;
-    float rdx,rdy,z,ux,uy,rtx,rty;
-    float vtop, vbottom, vleft, vright;
-    int rotate_list[4], rotate_idx;
-    KIPI::Interface * kipiInterface;
+protected:
+
+    int              display_x, display_y;
+    GLuint           _texnr;
+    QSize            initial_size;
+    QString          filename;
+    QImage           qimage, glimage;
+    float            rdx, rdy, z, ux, uy, rtx, rty;
+    float            vtop, vbottom, vleft, vright;
+    int              rotate_list[4], rotate_idx;
+    KIPI::Interface* kipiInterface;
 };
 
-} //namespace KIPIviewer
+} // namespace KIPIviewer
 
 #endif // TEXTURE_H

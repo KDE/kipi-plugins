@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using 
+ * Description : a kipi plugin to show image using
  *               an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
@@ -45,9 +45,9 @@ class Plugin_viewer :public KIPI::Plugin
 
 public:
 
-    Plugin_viewer( QObject *parent, const QVariantList &  );
-    virtual void setup( QWidget* widget );
-    virtual KIPI::Category category( KAction* action ) const;
+    Plugin_viewer(QObject* parent, const QVariantList&);
+    virtual void setup(QWidget* widget);
+    virtual KIPI::Category category(KAction* action) const;
 
 public Q_SLOTS:
 

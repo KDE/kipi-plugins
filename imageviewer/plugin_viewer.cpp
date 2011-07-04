@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "plugin_viewer.h"
 #include "plugin_viewer.moc"
 
 // Qt includes
@@ -47,18 +46,18 @@
 
 #include "viewerwidget.h"
 
-K_PLUGIN_FACTORY( viewerFactory, registerPlugin<Plugin_viewer>(); )
-K_EXPORT_PLUGIN( viewerFactory("kipiplugin_imageviewer") )
+K_PLUGIN_FACTORY(viewerFactory, registerPlugin<Plugin_viewer>();)
+K_EXPORT_PLUGIN(viewerFactory("kipiplugin_imageviewer"))
 
-Plugin_viewer::Plugin_viewer( QObject *parent, const QVariantList & )
-             : KIPI::Plugin( viewerFactory::componentData(), parent, "kipiplugin_imageviewer" )
+Plugin_viewer::Plugin_viewer(QObject* parent, const QVariantList&)
+     : KIPI::Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer")
 {
     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
 }
 
-void Plugin_viewer::setup( QWidget* widget )
+void Plugin_viewer::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup( widget );
+    KIPI::Plugin::setup(widget);
 
     KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
 
@@ -76,8 +75,6 @@ void Plugin_viewer::setup( QWidget* widget )
             this, SLOT(slotActivate()));
 
     addAction(actionViewer);
-
-    widget=0;
 }
 
 /*!
@@ -108,17 +105,17 @@ void  Plugin_viewer::slotActivate()
         case KIPIviewer::oglNoRectangularTexture:
             kError() << "GL_ARB_texture_rectangle not supported";
             delete widget;
-            QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("GL_ARB_texture_rectangle not supported"));
+            QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
         case KIPIviewer::oglNoContext:
             kError() << "no OpenGL context found";
             delete widget;
-            QMessageBox::critical(new QWidget(),i18n("OpenGL error"),i18n("no OpenGL context found"));
+            QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("no OpenGL context found"));
     }
 }
 
-KIPI::Category Plugin_viewer::category( KAction* action ) const
+KIPI::Category Plugin_viewer::category(KAction* action) const
 {
     if ( action == actionViewer )
     {
