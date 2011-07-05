@@ -175,14 +175,14 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
 
-
     connect(d->thread, SIGNAL(starting(const KIPIDNGConverterPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIDNGConverterPlugin::ActionData&)));
 
     connect(d->thread, SIGNAL(finished(const KIPIDNGConverterPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIDNGConverterPlugin::ActionData&)));
 
-    connect(d->listView,SIGNAL(signalImageListChanged()),this, SLOT(slotIdentify()));
+    connect(d->listView, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotIdentify()));
 
     // ---------------------------------------------------------------
 
