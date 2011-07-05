@@ -78,10 +78,8 @@ private Q_SLOTS:
     void slotClose();
     void slotHelp();
     void slotStartStop();
-    void slotAddItems();
-    void slotRemoveItems();
     void slotAborted();
-
+    void slotIdentify();
     void slotSaveFormatChanged();
 
     void slotAction(const KIPIRawConverterPlugin::ActionData&);

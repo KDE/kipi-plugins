@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -134,17 +135,11 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 {
     d->iface = iface;
 
-    setButtons(Help | Default | Apply | Close | User1 | User2);
+    setButtons(Help | Default | Apply | Close );
     setDefaultButton(Close);
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
     setCaption(i18n("RAW Image Batch Converter"));
     setModal(false);
-    setButtonIcon(User1,    KIcon("list-add"));
-    setButtonText(User1,    i18n("&Add"));
-    setButtonToolTip(User1, i18n("Add new RAW files to the list"));
-    setButtonIcon(User2,    KIcon("list-remove"));
-    setButtonText(User2,    i18n("&Remove"));
-    setButtonToolTip(User2, i18n("Remove selected RAW files from the list"));
 
     d->page = new QWidget( this );
     setMainWidget( d->page );
@@ -217,7 +212,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
 
-    d->thread            = new ActionThread(this, d->iface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+    d->thread = new ActionThread(this, d->iface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
 
     // ---------------------------------------------------------------
 
@@ -239,12 +234,6 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotAddItems()));
-
-    connect(this, SIGNAL(user2Clicked()),
-            this, SLOT(slotRemoveItems()));
-
     connect(d->thread, SIGNAL(starting(const KIPIRawConverterPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
 
@@ -253,6 +242,8 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
             this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+
+    connect(d->listView,SIGNAL(signalImageListChanged()),this, SLOT(slotIdentify()));
 
     // ---------------------------------------------------------------
 
@@ -278,7 +269,7 @@ void BatchDialog::slotSixteenBitsImageToggled(bool)
     d->decodingSettingsBox->setEnabledBrightnessSettings(true);
 }
 
-void BatchDialog::closeEvent(QCloseEvent *e)
+void BatchDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
 
@@ -307,7 +298,7 @@ void BatchDialog::slotDefault()
 void BatchDialog::readSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("RawConverter Settings"));
+    KConfigGroup group  = config.group(QString("RawConverter Settings"));
 
     d->decodingSettingsBox->readSettings(group);
     d->saveSettingsBox->readSettings(group);
@@ -320,7 +311,7 @@ void BatchDialog::readSettings()
 void BatchDialog::saveSettings()
 {
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("RawConverter Settings"));
+    KConfigGroup group  = config.group(QString("RawConverter Settings"));
 
     d->decodingSettingsBox->writeSettings(group);
     d->saveSettingsBox->writeSettings(group);
@@ -379,65 +370,35 @@ void BatchDialog::slotStartStop()
     }
 }
 
-void BatchDialog::slotAddItems()
-{
-    KIPIPlugins::ImageDialog dlg(this, d->iface, false, true);
-    KUrl::List urls = dlg.urls();
-    if (!urls.isEmpty())
-    {
-        addItems(urls);
-    }
-}
-
-void BatchDialog::slotRemoveItems()
-{
-    bool find;
-    do
-    {
-        find = false;
-        QTreeWidgetItemIterator it(d->listView->listView());
-        while (*it)
-        {
-            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(*it);
-            if (item->isSelected())
-            {
-                delete item;
-                find = true;
-                break;
-            }
-        ++it;
-        }
-    }
-    while(find);
-}
-
 void BatchDialog::slotAborted()
 {
     d->progressBar->setValue(0);
     d->progressBar->hide();
 }
-
 void BatchDialog::addItems(const KUrl::List& itemList)
+{
+    d->listView->slotAddImages(itemList);
+}
+
+void BatchDialog::slotIdentify() // Set Identity and Target file
 {
     QString ext;
 
     switch(d->saveSettingsBox->fileFormat())
     {
         case SaveSettingsWidget::OUTPUT_JPEG:
-            ext = "jpg";
+            ext = ".jpg";
             break;
         case SaveSettingsWidget::OUTPUT_TIFF:
-            ext = "tif";
+            ext = ".tif";
             break;
         case SaveSettingsWidget::OUTPUT_PPM:
-            ext = "ppm";
+            ext = ".ppm";
             break;
         case SaveSettingsWidget::OUTPUT_PNG:
-            ext = "png";
+            ext = ".png";
             break;
     }
-
-    d->listView->slotAddImages(itemList);
     KUrl::List urlList = d->listView->imageUrls(true);
 
     for (KUrl::List::const_iterator  it = urlList.constBegin();
@@ -456,7 +417,6 @@ void BatchDialog::addItems(const KUrl::List& itemList)
             d->thread->start();
     }
 }
-
 void BatchDialog::slotSaveFormatChanged()
 {
     QString ext;
