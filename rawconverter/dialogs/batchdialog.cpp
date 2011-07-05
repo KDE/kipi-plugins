@@ -240,10 +240,8 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     connect(d->thread, SIGNAL(finished(const KIPIRawConverterPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
 
-    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
-
-    connect(d->listView,SIGNAL(signalImageListChanged()),this, SLOT(slotIdentify()));
+    connect(d->listView, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotIdentify()));
 
     // ---------------------------------------------------------------
 
