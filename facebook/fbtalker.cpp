@@ -248,7 +248,7 @@ void FbTalker::doOAuth()
     url.addQueryItem("client_id", m_appID);
     url.addQueryItem("redirect_uri", "https://www.facebook.com/connect/login_success.html");
     // TODO (Dirk): Check which of these permissions can be optional.
-    url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags");
+    url.addQueryItem("scope", "photo_upload,user_photos,friends_photos,user_photo_video_tags,friends_photo_video_tags,offline_access");
     url.addQueryItem("response_type", "token");
     kDebug() << "OAuth URL: " << url;
     KToolInvocation::invokeBrowser(url.url());
