@@ -53,6 +53,10 @@ public:
 public Q_SLOTS:
 
     virtual void slotAddImages(const KUrl::List& list);
+
+protected Q_SLOTS:
+
+    virtual void slotRemoveItems();
 };
 
 // -------------------------------------------------------------------------

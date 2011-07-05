@@ -51,7 +51,7 @@ public:
     BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about);
     ~BatchDialog();
 
-    void addItems(const KUrl::List& itemList);
+   void addItems(const KUrl::List& itemList);
 
 protected:
 
@@ -74,10 +74,8 @@ private Q_SLOTS:
     void slotClose();
     void slotHelp();
     void slotStartStop();
-    void slotAddItems();
-    void slotRemoveItems();
     void slotAborted();
-
+    void slotIdentify();
     void slotAction(const KIPIDNGConverterPlugin::ActionData&);
 
 private:

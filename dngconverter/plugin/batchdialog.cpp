@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2011 by Jens Mueller <tschenser at gmx dot de>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -115,17 +116,11 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
     d->about = about;
 
     setWindowIcon(KIcon("dngconverter"));
-    setButtons(Help | Default | Apply | Close | User1 | User2);
+    setButtons(Help | Default | Apply | Close);
     setDefaultButton(KDialog::Close);
     setButtonToolTip(Close, i18n("Exit DNG Converter"));
     setCaption(i18n("Batch convert RAW camera images to DNG"));
     setModal(false);
-    setButtonIcon(User1, KIcon("list-add"));
-    setButtonText(User1, i18n("&Add"));
-    setButtonToolTip(User1, i18n("Add new Raw files to the list"));
-    setButtonIcon(User2, KIcon("list-remove"));
-    setButtonText(User2, i18n("&Remove"));
-    setButtonToolTip(User2, i18n("Remove selected Raw files from the list"));
 
     d->page = new QWidget( this );
     setMainWidget( d->page );
@@ -167,7 +162,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
 
     // ---------------------------------------------------------------
 
-    d->thread            = new ActionThread(this);
+    d->thread = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
@@ -180,17 +175,14 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
 
-    connect(this, SIGNAL(user1Clicked()),
-            this, SLOT(slotAddItems()));
-
-    connect(this, SIGNAL(user2Clicked()),
-            this, SLOT(slotRemoveItems()));
 
     connect(d->thread, SIGNAL(starting(const KIPIDNGConverterPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIDNGConverterPlugin::ActionData&)));
 
     connect(d->thread, SIGNAL(finished(const KIPIDNGConverterPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIDNGConverterPlugin::ActionData&)));
+
+    connect(d->listView,SIGNAL(signalImageListChanged()),this, SLOT(slotIdentify()));
 
     // ---------------------------------------------------------------
 
@@ -315,36 +307,9 @@ void BatchDialog::slotStartStop()
     }
 }
 
-void BatchDialog::slotAddItems()
+void BatchDialog::addItems(const KUrl::List& itemList)
 {
-    KIPIPlugins::ImageDialog dlg(this, d->iface, false, true);
-    KUrl::List urls = dlg.urls();
-    if (!urls.isEmpty())
-    {
-        addItems(urls);
-    }
-}
-
-void BatchDialog::slotRemoveItems()
-{
-    bool find;
-    do
-    {
-        find = false;
-        QTreeWidgetItemIterator it(d->listView->listView());
-        while (*it)
-        {
-            MyImageListViewItem* item = dynamic_cast<MyImageListViewItem*>(*it);
-            if (item->isSelected())
-            {
-                delete item;
-                find = true;
-                break;
-            }
-        ++it;
-        }
-    }
-    while(find);
+    d->listView->slotAddImages(itemList);
 }
 
 void BatchDialog::slotAborted()
@@ -353,9 +318,9 @@ void BatchDialog::slotAborted()
     d->progressBar->hide();
 }
 
-void BatchDialog::addItems(const KUrl::List& itemList)
+/// Set Identity and Target file
+void BatchDialog::slotIdentify()
 {
-    d->listView->slotAddImages(itemList);
     KUrl::List urlList = d->listView->imageUrls(true);
 
     for (KUrl::List::const_iterator  it = urlList.constBegin();
