@@ -68,10 +68,12 @@ bool operator< (const FbAlbum& first, const FbAlbum& second)
     return first.title < second.title;
 }
 
+// -----------------------------------------------------------------------------
+
 FbTalker::FbTalker(QWidget* parent)
 {
-    m_parent = parent;
-    m_job    = 0;
+    m_parent     = parent;
+    m_job        = 0;
 
     m_userAgent  = QString("KIPI-Plugin-Fb/%1 (lure@kubuntu.org)").arg(kipiplugins_version);
     m_apiVersion = "1.0";
