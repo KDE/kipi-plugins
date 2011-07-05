@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "swwidget.h"
 #include "swwidget.moc"
 
 // Qt includes
@@ -55,8 +54,8 @@
 namespace KIPIShwupPlugin
 {
 
-SwWidget::SwWidget(QWidget* parent, KIPI::Interface *iface)
-        : QWidget(parent)
+SwWidget::SwWidget(QWidget* parent, KIPI::Interface* iface)
+    : QWidget(parent)
 {
     setObjectName("SwWidget");
 

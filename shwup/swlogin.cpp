@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "swlogin.h"
 #include "swlogin.moc"
 
 // Qt includes
@@ -43,7 +42,7 @@ namespace KIPIShwupPlugin
 {
 
 SwLogin::SwLogin(QWidget* parent)
-       : KDialog(parent)
+    : KDialog(parent)
 {
     QString header(i18n("Shwup Login"));
     setWindowTitle(header);
@@ -51,7 +50,7 @@ SwLogin::SwLogin(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(true);
 
-    QWidget *mainWidget = new QWidget(this);
+    QWidget* mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(300, 0);
 

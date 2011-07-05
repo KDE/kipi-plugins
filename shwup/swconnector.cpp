@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "swconnector.h"
 #include "swconnector.moc"
 
 // C++ includes
@@ -70,8 +69,8 @@ bool operator< (const SwAlbum& first, const SwAlbum& second)
 
 SwConnector::SwConnector(QWidget* parent)
 {
-    m_parent = parent;
-    m_job    = 0;
+    m_parent        = parent;
+    m_job           = 0;
 
     m_userAgent     = QString("KIPI-Plugin-Shwup/%1 (kde@timotheegroleau.com)").arg(kipiplugins_version);
     m_apiVersion    = "1.0";
@@ -127,7 +126,8 @@ void SwConnector::logout()
     m_user.clear();
 }
 
-void SwConnector::setupRequest(KIO::TransferJob* job, const QString& requestPath, const QString& method, const QString& md5, const QString& type, const QString& length, bool needsPassword = true)
+void SwConnector::setupRequest(KIO::TransferJob* job, const QString& requestPath, const QString& method, const QString& md5, const QString& type, 
+                               const QString& length, bool needsPassword = true)
 {
     QCA::Initializer init;
 
@@ -189,10 +189,10 @@ void SwConnector::getRestServiceURL()
     if (m_job)
     {
         m_job->kill();
-        m_job = 0;
+        m_job           = 0;
         m_resultHandler = 0;
     }
-    
+
     emit signalBusy(true);
 
     QString method( "GET" );
@@ -230,7 +230,7 @@ void SwConnector::listAlbums()
     if (m_job)
     {
         m_job->kill();
-        m_job = 0;
+        m_job           = 0;
         m_resultHandler = 0;
     }
     emit signalBusy(true);
@@ -243,11 +243,11 @@ void SwConnector::listAlbums()
     QString type(   "text/plain" );
     QString length( "0" );
 
-    m_resultHandler = &SwConnector::listAlbumsResultHandler;
+    m_resultHandler       = &SwConnector::listAlbumsResultHandler;
     KIO::TransferJob* job = KIO::get(QString(m_apiDomainURL + m_apiRestPath + requestPath), KIO::Reload, KIO::HideProgressInfo);
     setupRequest(job, m_apiRestPath + requestPath, method, md5, type, length);
 
-    m_job   = job;
+    m_job = job;
     m_buffer.resize(0);
 }
 
@@ -292,20 +292,20 @@ bool SwConnector::addPhoto(const QString& imgPath,
         return false;
 
     QByteArray imageData = imageFile.readAll();
-    QString file_size = QString::number(imageFile.size());
+    QString file_size    = QString::number(imageFile.size());
     imageFile.close();
 
     QCA::Initializer init;
     QString method( "POST" );
-    QString md5 = QCA::Hash( "md5" ).hashToString( imageData );
-    QString type = KMimeType::findByUrl(imgPath)->name();
+    QString md5    = QCA::Hash( "md5" ).hashToString( imageData );
+    QString type   = KMimeType::findByUrl(imgPath)->name();
     QString length = file_size;
 
-    m_resultHandler = &SwConnector::addPhotoResultHandler;
+    m_resultHandler       = &SwConnector::addPhotoResultHandler;
     KIO::TransferJob* job = KIO::http_post(QString(m_apiDomainURL + m_apiRestPath + requestPath), imageData, KIO::HideProgressInfo);
     setupRequest(job, m_apiRestPath + requestPath, method, md5, type, length);
 
-    m_job   = job;
+    m_job = job;
     m_buffer.resize(0);
 
     return true;
@@ -323,7 +323,7 @@ void SwConnector::data(KIO::Job*, const QByteArray& data)
 
 void SwConnector::slotResult(KJob *kjob)
 {
-    m_job = 0;
+    m_job         = 0;
     KIO::Job *job = static_cast<KIO::Job*>(kjob);
     (this->*m_resultHandler)( job, m_buffer );
 }
@@ -401,7 +401,7 @@ QDomElement SwConnector::getResponseDoc(KIO::Job* job, const QByteArray& data) c
 void SwConnector::requestRestURLResultHandler(KIO::Job* job, const QByteArray& data)
 {
     kDebug() << "requestRestURLResultHandler: " << endl;
-    
+
     QDomElement docElem = getResponseDoc(job, data);
     if (docElem.tagName() == "failure")
     {

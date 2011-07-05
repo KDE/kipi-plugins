@@ -47,7 +47,7 @@ class Plugin_Shwup : public KIPI::Plugin
 
 public:
 
-    Plugin_Shwup(QObject *parent, const QVariantList& args);
+    Plugin_Shwup(QObject* parent, const QVariantList& args);
     ~Plugin_Shwup();
 
     virtual KIPI::Category category(KAction* action) const;
@@ -59,8 +59,8 @@ public Q_SLOTS:
 
 private:
 
-    KAction                   *m_actionExport;
-    KIPIShwupPlugin::SwWindow *m_dlgExport;
+    KAction*                   m_actionExport;
+    KIPIShwupPlugin::SwWindow* m_dlgExport;
 };
 
 #endif // PLUGIN_SHWUP_H

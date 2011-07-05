@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "swwindow.h"
 #include "swwindow.moc"
 
 // Qt includes
@@ -75,7 +74,7 @@ namespace KIPIShwupPlugin
 {
 
 SwWindow::SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent)
-        : KDialog(parent)
+    : KDialog(parent)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -129,7 +128,7 @@ SwWindow::SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -281,12 +280,12 @@ void SwWindow::slotRequestRestURLDone(int errCode, const QString& /*errMessage*/
 void SwWindow::authenticate()
 {
     buttonStateChange(false);
-    
+
     SwUser user = m_connector->getUser();
-    
+
     m_loginDlg->m_emailEdt->setText(user.email);
     m_loginDlg->m_passwordEdt->setText(user.password);
-    
+
     if (m_loginDlg->exec() == QDialog::Accepted)
     {
         m_connector->logout();
@@ -469,7 +468,7 @@ QString SwWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
 }
 
 bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
-                                     QString &caption)
+                                     QString& caption)
 {
     QImage image;
     if (isRAW)

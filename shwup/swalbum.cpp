@@ -21,7 +21,6 @@
  *
  * ============================================================ */
 
-#include "swalbum.h"
 #include "swalbum.moc"
 
 // Qt includes
@@ -44,7 +43,7 @@ namespace KIPIShwupPlugin
 {
 
 SwNewAlbum::SwNewAlbum(QWidget* parent)
-          : KDialog(parent)
+    : KDialog(parent)
 {
     QString header(i18n("Shwup New Album"));
     setWindowTitle(header);
@@ -52,7 +51,7 @@ SwNewAlbum::SwNewAlbum(QWidget* parent)
     setDefaultButton(Cancel);
     setModal(false);
 
-    QWidget *mainWidget = new QWidget(this);
+    QWidget* mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(300, 0);
 

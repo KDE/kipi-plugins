@@ -73,7 +73,7 @@ class SwWindow : public KDialog
 
 public:
 
-    SwWindow(KIPI::Interface *interface, const QString& tmpFolder, QWidget *parent);
+    SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
     ~SwWindow();
 
     /**
@@ -132,18 +132,18 @@ private:
     QString                   m_userEmail;
     QString                   m_userPassword;
 
-    KProgressDialog          *m_progressDlg;
-    SwLogin                  *m_loginDlg;
+    KProgressDialog*          m_progressDlg;
+    SwLogin*                  m_loginDlg;
 
     KUrl::List                m_transferQueue;
 
-    SwConnector              *m_connector;
-    SwWidget                 *m_widget;
-    SwNewAlbum               *m_albumDlg;
+    SwConnector*              m_connector;
+    SwWidget*                 m_widget;
+    SwNewAlbum*               m_albumDlg;
 
-    KIPI::Interface          *m_interface;
+    KIPI::Interface*          m_interface;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KIPIPlugins::KPAboutData* m_about;
 };
 
 } // namespace KIPIShwupPlugin

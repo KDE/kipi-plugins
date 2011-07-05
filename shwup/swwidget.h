@@ -55,7 +55,7 @@ class SwWidget : public QWidget
 
 public:
 
-    SwWidget(QWidget* parent, KIPI::Interface *iface);
+    SwWidget(QWidget* parent, KIPI::Interface* iface);
     ~SwWidget();
 
     QString getDestinationPath() const;
