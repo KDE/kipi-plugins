@@ -44,9 +44,16 @@
 namespace KIPIPanoramaPlugin
 {
 
-struct Manager::ManagerPriv
+class Manager::ManagerPriv
 {
-    ManagerPriv() : iface(0), about(0), thread(0), wizard(0)/*, dlg(0)*/ {};
+    ManagerPriv() 
+        : iface(0), 
+          about(0), 
+          thread(0), 
+          wizard(0)
+//          , dlg(0)
+    {
+    };
 
     KUrl::List              inputUrls;
 
