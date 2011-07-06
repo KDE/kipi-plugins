@@ -35,7 +35,7 @@ namespace KIPIPanoramaPlugin
 {
 
 AutoOptimiserBinary::AutoOptimiserBinary()
-           : BinaryIface()
+    : BinaryIface()
 {
     checkSystem();
 }
@@ -48,7 +48,7 @@ void AutoOptimiserBinary::checkSystem()
 {
     QProcess process;
     process.start(path());
-    m_available = process.waitForFinished();
+    m_available       = process.waitForFinished();
 
     QString headerStarts("autooptimiser version ");
 

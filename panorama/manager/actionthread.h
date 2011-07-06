@@ -80,7 +80,7 @@ public:
 Q_SIGNALS:
 
     void starting(const KIPIPanoramaPlugin::ActionData& ad);
-    void stepFinished(void);
+    void stepFinished();
     void finished(const KIPIPanoramaPlugin::ActionData& ad);
 
 private:
@@ -94,7 +94,7 @@ private:
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
     bool    isRawFile(const KUrl& url);
-    bool    createPTO(const KUrl::List urlList, KUrl& ptoUrl);
+    bool    createPTO(const KUrl::List& urlList, KUrl& ptoUrl);
 
     QString getProcessError(KProcess* proc) const;
 

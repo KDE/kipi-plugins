@@ -35,7 +35,7 @@ namespace KIPIPanoramaPlugin
 {
 
 VigOptimiserBinary::VigOptimiserBinary()
-           : BinaryIface()
+    : BinaryIface()
 {
     checkSystem();
 }
@@ -48,7 +48,7 @@ void VigOptimiserBinary::checkSystem()
 {
     QProcess process;
     process.start(path(), QStringList() << "-h");
-    m_available = process.waitForFinished();
+    m_available       = process.waitForFinished();
 
     QString headerStarts("vig_optimize version ");
 

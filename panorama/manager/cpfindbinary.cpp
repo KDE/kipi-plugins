@@ -48,7 +48,7 @@ void CPFindBinary::checkSystem()
 {
     QProcess process;
     process.start(path(), QStringList() << "-h");
-    m_available = process.waitForFinished();
+    m_available       = process.waitForFinished();
 
     QString headerStarts("Hugins cpfind ");
 

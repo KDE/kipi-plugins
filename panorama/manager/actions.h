@@ -48,8 +48,10 @@ enum Action
     OPTIMIZE
 };
 
-struct ItemPreprocessedUrls
+class ItemPreprocessedUrls
 {
+public:
+
     ItemPreprocessedUrls() {}
 
     ItemPreprocessedUrls(const KUrl& preprocessed, const KUrl& preview)
@@ -57,16 +59,24 @@ struct ItemPreprocessedUrls
 
     virtual ~ItemPreprocessedUrls() {}
 
+public:
+
     KUrl preprocessedUrl;              // Can be an original file or an aligned version, depending of user choice.
     KUrl previewUrl;                   // The JPEG preview version, accordingly of preprocessedUrl constent.
 };
 
 typedef QMap<KUrl, ItemPreprocessedUrls> ItemUrlsMap;   // Map between original Url and processed temp Urls.
 
-struct ActionData
+// ----------------------------------------------------------------------------------------------------------
+
+class ActionData
 {
+public:
+
     ActionData()
         : starting(false), success(false) {}
+
+public:
 
     bool           starting;
     bool           success;

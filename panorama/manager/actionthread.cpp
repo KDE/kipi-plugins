@@ -25,6 +25,8 @@
 
 #include "actionthread.moc"
 
+// C++ includes
+
 #include <iostream>
 
 // Qt includes
@@ -131,7 +133,7 @@ ActionThread::~ActionThread()
 
 void ActionThread::setPreProcessingSettings(bool celeste, const KDcrawIface::RawDecodingSettings& settings)
 {
-    d->celeste = celeste;
+    d->celeste             = celeste;
     d->rawDecodingSettings = settings;
 }
 
@@ -238,9 +240,9 @@ void ActionThread::run()
                     bool result  = startPreProcessing(errors);
 
                     ActionData ad2;
-                    ad2.action              = OPTIMIZE;
-                    ad2.success             = result;
-                    ad2.message             = errors;
+                    ad2.action   = OPTIMIZE;
+                    ad2.success  = result;
+                    ad2.message  = errors;
                     emit finished(ad2);
                     break;
                 }
@@ -272,7 +274,8 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     KUrl::List mixedUrls;     // Original non-RAW + Raw converted urls to align.
 
     volatile bool error = false;
-    #pragma omp parallel for
+
+#pragma omp parallel for
     for (int i = 0; i < inUrls.size(); ++i)
     {
 
@@ -301,7 +304,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
             emit stepFinished();
 
-            #pragma omp critical (listAppend)
+#pragma omp critical (listAppend)
             {
                 mixedUrls.append(preprocessedUrl);
                 // In case of alignment is not performed.
@@ -320,7 +323,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
             emit stepFinished();
 
-            #pragma omp critical (listAppend)
+#pragma omp critical (listAppend)
             {
                 mixedUrls.append(url);
                 // In case of alignment is not performed.
@@ -381,7 +384,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
 bool ActionThread::startOptimization(QString& errors)
 {
-    KUrl ptoInUrl = d->preprocessingTmpDir->name();
+    KUrl ptoInUrl   = d->preprocessingTmpDir->name();
     ptoInUrl.setFileName(QString("cp_pano.pto"));
     KUrl ptoOut1Url = d->preprocessingTmpDir->name();
     ptoOut1Url.setFileName(QString("auto_op_pano.pto"));
@@ -522,7 +525,7 @@ bool ActionThread::isRawFile(const KUrl& url)
     return false;
 }
 
-bool ActionThread::createPTO(const KUrl::List urlList, KUrl &ptoUrl)
+bool ActionThread::createPTO(const KUrl::List& urlList, KUrl& ptoUrl)
 {
     ptoUrl = d->preprocessingTmpDir->name();
     ptoUrl.setFileName(QString("pano_base.pto"));
@@ -532,6 +535,7 @@ bool ActionThread::createPTO(const KUrl::List urlList, KUrl &ptoUrl)
         return false;
     if (!pto.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
         return false;
+
     QTextStream pto_stream(&pto);
 
     foreach (KUrl url, urlList)
