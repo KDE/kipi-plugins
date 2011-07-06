@@ -44,7 +44,7 @@
 namespace KIPIPanoramaPlugin
 {
 
-class Manager::ManagerPriv
+struct Manager::ManagerPriv
 {
     ManagerPriv() 
         : iface(0), 

@@ -56,7 +56,7 @@ class ActionThread;
 class PanoramaAboutData;
 class CPFindBinary;
 class AutoOptimiserBinary;
-class ManagerPriv;
+struct ManagerPriv;
 
 class Manager : public QObject
 {
@@ -105,7 +105,7 @@ private:
 
 private:
 
-    class ManagerPriv;
+    struct ManagerPriv;
     ManagerPriv* const d;
 };
 

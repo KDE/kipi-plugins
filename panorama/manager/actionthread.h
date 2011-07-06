@@ -55,7 +55,7 @@ using namespace KDcrawIface;
 namespace KIPIPanoramaPlugin
 {
 
-class ActionData;
+struct ActionData;
 
 class ActionThread : public QThread
 {
