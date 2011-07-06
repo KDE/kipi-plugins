@@ -235,9 +235,10 @@ void ActionThread::run()
                     ad1.starting = true;
                     emit starting(ad1);
 
-                    QString     errors;
+                    QString errors;
+                    bool    result = false;
 
-                    bool result  = startPreProcessing(errors);
+// TODO             result  = startPreProcessing(errors);
 
                     ActionData ad2;
                     ad2.action   = OPTIMIZE;
