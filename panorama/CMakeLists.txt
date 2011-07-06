@@ -1,9 +1,9 @@
 #SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
-	#${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg
-	${CMAKE_CURRENT_SOURCE_DIR}/manager
-	${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                    #${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg
+                    ${CMAKE_CURRENT_SOURCE_DIR}/manager
+                    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
 
 IF(OPENMP_FOUND AND NOT APPLE)
@@ -16,9 +16,7 @@ IF(OPENMP_FOUND AND NOT APPLE)
     ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
 ENDIF(OPENMP_FOUND AND NOT APPLE)
 
-INSTALL(DIRECTORY pics
-	DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_panorama
-       )
+INSTALL(DIRECTORY pics DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_panorama)
 
 # =======================================================
 # Common source code
@@ -58,8 +56,7 @@ TARGET_LINK_LIBRARIES(libpanorama
 # =======================================================
 # Panorama plugin
 
-SET(kipiplugin_panorama_PART_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_panorama.cpp)
+SET(kipiplugin_panorama_PART_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/plugin_panorama.cpp)
 
 KDE4_ADD_PLUGIN(kipiplugin_panorama ${kipiplugin_panorama_PART_SRCS})
 
@@ -80,4 +77,4 @@ KDE4_ADD_EXECUTABLE(panoramagui ${panorama_SRCS})
 TARGET_LINK_LIBRARIES(panoramagui libpanorama)
 
 INSTALL(TARGETS panoramagui ${INSTALL_TARGETS_DEFAULT_ARGS})
-INSTALL(PROGRAMS plugin/panoramagui.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+INSTALL(PROGRAMS plugin/panoramagui.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
