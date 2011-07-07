@@ -54,4 +54,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 041 ==> 226114 : Facebook Call Failed: Incorrect Signature.
 042 ==> 276609 : KIPI facebook application is deleted. can't upload and previously uploaded pictures disappear.
 043 ==> 271838 : Segfault when trying to open Geo-Location.
-044 ==> 
+044 ==> 273781 : digiKam crashes when correlating images with GPX file created by Garmin GPS.
+045 ==> 
+
