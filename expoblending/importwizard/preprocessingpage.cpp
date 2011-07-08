@@ -159,7 +159,7 @@ void PreProcessingPage::resetTitle()
                            "Alignment must be performed if you have not used a tripod to take bracketed images. "
                            "Alignment operations can take a while.</p>"
                            "<p>Pre-processing operations include Raw demosaicing. Raw images will be converted "
-                           "to 16-bit sRGB images with auto-gamma."
+                           "to 16-bit sRGB images with auto-gamma.</p>"
                            "<p>Press \"Next\" to start pre-processing.</p>"
                            "</qt>",
                            QString(d->mngr->alignBinary().path()),
