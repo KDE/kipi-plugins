@@ -1,14 +1,12 @@
 /* ============================================================
- * 
+ *
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
- * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,54 +20,38 @@
  *
  * ============================================================ */
 
-#ifndef ITEMS_PAGE_H
-#define ITEMS_PAGE_H
+#ifndef OPTIMIZE_PAGE_H
+#define OPTIMIZE_PAGE_H
 
 // Local includes
 
 #include "wizardpage.h"
 
-// KDE includes
-
-#include <kurl.h>
-
 // Local includes
 
 #include "actions.h"
 
-using namespace KIPIPlugins;
-
 namespace KIPIPanoramaPlugin
 {
 
-    class Manager;
+class Manager;
+struct OptimizePagePriv;
 
-    class ItemsPage : public WizardPage
-    {
-        Q_OBJECT
+class OptimizePage : public KIPIPlugins::WizardPage
+{
+    Q_OBJECT
 
-    public:
+public:
 
-        ItemsPage(Manager* mngr, KAssistantDialog* dlg);
-        ~ItemsPage();
+    OptimizePage(Manager* mngr, KAssistantDialog* dlg);
+    ~OptimizePage();
 
-        KUrl::List itemUrls() const;
+private:
 
-    Q_SIGNALS:
-
-        void signalItemsPageIsValid(bool);
-
-    private Q_SLOTS:
-
-        void slotSetupList();
-        void slotImageListChanged();
-
-    private:
-
-        struct ItemsPagePriv;
-        ItemsPagePriv* const d;
-    };
+    struct OptimizePagePriv;
+    OptimizePagePriv* const d;
+};
 
 }   // namespace KIPIPanoramaPlugin
 
-#endif /* ITEMS_PAGE_H */
+#endif /* OPTIMIZE_PAGE_H */

@@ -1,7 +1,6 @@
 #SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
-                    #${CMAKE_CURRENT_SOURCE_DIR}/blendingdlg
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                    )
@@ -27,11 +26,11 @@ SET(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpfindbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/vigoptimizebinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
-#    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/importwizarddlg.cpp
-#    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/intropage.cpp
-#    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/itemspage.cpp
-#    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
-#    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/imagescpcheckpage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/importwizarddlg.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/intropage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/itemspage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/optimizepage.cpp
    )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)

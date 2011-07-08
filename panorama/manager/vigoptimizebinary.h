@@ -32,13 +32,13 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-class VigOptimiserBinary : public BinaryIface
+class VigOptimizeBinary : public BinaryIface
 {
 
 public:
 
-    VigOptimiserBinary();
-    ~VigOptimiserBinary();
+    VigOptimizeBinary();
+    ~VigOptimizeBinary();
 
     QString path()           const;
     QString minimalVersion() const;

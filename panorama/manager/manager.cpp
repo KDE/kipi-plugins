@@ -39,6 +39,7 @@
 
 #include "actionthread.h"
 #include "cpfindbinary.h"
+#include "vigoptimizebinary.h"
 #include "autooptimiserbinary.h"
 
 namespace KIPIPanoramaPlugin
@@ -51,9 +52,7 @@ struct Manager::ManagerPriv
           about(0), 
           thread(0), 
           wizard(0)
-//          , dlg(0)
-    {
-    };
+    {};
 
     KUrl::List              inputUrls;
 
@@ -67,8 +66,9 @@ struct Manager::ManagerPriv
 
     ActionThread*           thread;
 
-    AutoOptimiserBinary     autoOptimiserBinary;
     CPFindBinary            cpFindBinary;
+    VigOptimizeBinary       vigOptimizeBinary;
+    AutoOptimiserBinary     autoOptimiserBinary;
 
     ImportWizardDlg*        wizard;
     //PanoramaDlg*            dlg;
@@ -112,14 +112,19 @@ PanoramaAboutData* Manager::about() const
     return d->about;
 }
 
-AutoOptimiserBinary& Manager::autoOptimiserBinary() const
-{
-    return d->autoOptimiserBinary;
-}
-
 CPFindBinary& Manager::cpFindBinary() const
 {
     return d->cpFindBinary;
+}
+
+VigOptimizeBinary& Manager::vigOptimizeBinary() const
+{
+    return d->vigOptimizeBinary;
+}
+
+AutoOptimiserBinary& Manager::autoOptimiserBinary() const
+{
+    return d->autoOptimiserBinary;
 }
 
 void Manager::setIface(Interface* iface)

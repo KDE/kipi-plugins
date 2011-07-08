@@ -34,17 +34,17 @@
 namespace KIPIPanoramaPlugin
 {
 
-VigOptimiserBinary::VigOptimiserBinary()
+VigOptimizeBinary::VigOptimizeBinary()
     : BinaryIface()
 {
     checkSystem();
 }
 
-VigOptimiserBinary::~VigOptimiserBinary()
+VigOptimizeBinary::~VigOptimizeBinary()
 {
 }
 
-void VigOptimiserBinary::checkSystem()
+void VigOptimizeBinary::checkSystem()
 {
     QProcess process;
     process.start(path(), QStringList() << "-h");
@@ -66,22 +66,22 @@ void VigOptimiserBinary::checkSystem()
     }
 }
 
-KUrl VigOptimiserBinary::url() const
+KUrl VigOptimizeBinary::url() const
 {
     return KUrl("http://hugin.sourceforge.net");
 }
 
-QString VigOptimiserBinary::projectName() const
+QString VigOptimizeBinary::projectName() const
 {
     return QString("Hugin");
 }
 
-QString VigOptimiserBinary::path() const
+QString VigOptimizeBinary::path() const
 {
     return QString("vig_optimize");
 }
 
-QString VigOptimiserBinary::minimalVersion() const
+QString VigOptimizeBinary::minimalVersion() const
 {
     return QString("2011.0");
 }

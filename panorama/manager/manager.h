@@ -55,6 +55,7 @@ namespace KIPIPanoramaPlugin
 class ActionThread;
 class PanoramaAboutData;
 class CPFindBinary;
+class VigOptimizeBinary;
 class AutoOptimiserBinary;
 struct ManagerPriv;
 
@@ -84,9 +85,10 @@ public:
     void setPreProcessedMap(const ItemUrlsMap& urls);
     ItemUrlsMap preProcessedMap() const;
 
-    ActionThread*        thread() const;
-    CPFindBinary&        cpFindBinary() const;
-    AutoOptimiserBinary& autoOptimiserBinary() const;
+    ActionThread*           thread() const;
+    CPFindBinary&           cpFindBinary() const;
+    VigOptimizeBinary&      vigOptimizeBinary() const;
+    AutoOptimiserBinary&    autoOptimiserBinary() const;
 
     void run();
 

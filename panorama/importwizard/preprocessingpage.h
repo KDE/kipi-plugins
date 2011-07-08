@@ -1,5 +1,5 @@
 /* ============================================================
- * 
+ *
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef ITEMS_PAGE_H
-#define ITEMS_PAGE_H
+#ifndef PREPROCESSING_PAGE_H
+#define PREPROCESSING_PAGE_H
 
 // Local includes
 
@@ -42,34 +42,40 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-    class Manager;
+class Manager;
 
-    class ItemsPage : public WizardPage
-    {
-        Q_OBJECT
+class PreProcessingPage : public WizardPage
+{
+    Q_OBJECT
 
-    public:
+public:
 
-        ItemsPage(Manager* mngr, KAssistantDialog* dlg);
-        ~ItemsPage();
+    PreProcessingPage(Manager* mngr, KAssistantDialog* dlg);
+    ~PreProcessingPage();
 
-        KUrl::List itemUrls() const;
+    void process();
+    void cancel();
 
-    Q_SIGNALS:
+Q_SIGNALS:
 
-        void signalItemsPageIsValid(bool);
+    void signalPreProcessed(const ItemUrlsMap&);
 
-    private Q_SLOTS:
+private Q_SLOTS:
 
-        void slotSetupList();
-        void slotImageListChanged();
+    void slotProgressTimerDone();
+    void slotAction(const KIPIPanoramaPlugin::ActionData&);
+    void slotShowDetails();
 
-    private:
+private:
 
-        struct ItemsPagePriv;
-        ItemsPagePriv* const d;
-    };
+    void resetTitle();
+
+private:
+
+    struct PreProcessingPagePriv;
+    PreProcessingPagePriv* const d;
+};
 
 }   // namespace KIPIPanoramaPlugin
 
-#endif /* ITEMS_PAGE_H */
+#endif /* PREPROCESSING_PAGE_H */
