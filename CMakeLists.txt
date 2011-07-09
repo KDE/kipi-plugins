@@ -361,7 +361,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     # kipi host test program to check plugins
 
-    ADD_SUBDIRECTORY(test)
+    ADD_SUBDIRECTORY(tests)
 
     # Plugins which will be always compiled
 
@@ -384,6 +384,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(batchprocessimages)
     ADD_SUBDIRECTORY(rajceexport)
     ADD_SUBDIRECTORY(kmlexport)
+#    ADD_SUBDIRECTORY(panorama)
 
     # Plugins which are optional depencies.
 
