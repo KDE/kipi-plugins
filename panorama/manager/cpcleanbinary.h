@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2011-05-23
- * Description : Autodetect vig_optimize binary program and version
+ * Description : Autodetects cpclean binary program and version
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef VIGOPTIMISERBINARY_H
-#define VIGOPTIMISERBINARY_H
+#ifndef CPCLEANBINARY_H
+#define CPCLEANBINARY_H
 
 // Local includes
 
@@ -32,13 +32,13 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-class VigOptimizeBinary : public BinaryIface
+class CPCleanBinary : public BinaryIface
 {
 
 public:
 
-    VigOptimizeBinary();
-    ~VigOptimizeBinary();
+    CPCleanBinary();
+    ~CPCleanBinary();
 
     QString path()           const;
     QString minimalVersion() const;
@@ -50,4 +50,4 @@ public:
 
 } // namespace KIPIPanoramaPlugin
 
-#endif  // VIGOPTIMISERBINARY_H
+#endif  // CPCLEANBINARY_H

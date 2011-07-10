@@ -67,7 +67,6 @@ public:
     ~ActionThread();
 
     void setPreProcessingSettings(bool celeste, const KDcrawIface::RawDecodingSettings& settings);
-    void convertRawFiles(const KUrl::List& urlList);
     void preProcessFiles(const KUrl::List& urlList);
     void optimizeProject(const KUrl& ptoUrl);
     void cancel();
@@ -90,6 +89,7 @@ private:
     bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
                                const RawDecodingSettings& settings);
     bool    startCPFind(KUrl& ptoUrl, ItemUrlsMap& preProcessedUrlsMap, bool celeste, QString& errors);
+    bool    startCPClean(KUrl& ptoUrl, QString& errors);
     bool    startOptimization(KUrl& ptoUrl, QString& errors);
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);

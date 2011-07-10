@@ -62,7 +62,7 @@ struct ActionThread::ActionThreadPriv
 {
     ActionThreadPriv()
         : cancel(false), celeste(false), savePTO(false),
-          CPFindProcess(0), autoOptimiseProcess(0), preprocessingTmpDir(0) {}
+          CPFindProcess(0), CPCleanProcess(0), autoOptimiseProcess(0), preprocessingTmpDir(0) {}
 
     struct Task
     {
@@ -84,6 +84,7 @@ struct ActionThread::ActionThreadPriv
     QMutex                          todo_mutex;
 
     KProcess*                       CPFindProcess;
+    KProcess*                       CPCleanProcess;
     KProcess*                       autoOptimiseProcess;
 
     /**
@@ -169,11 +170,14 @@ void ActionThread::cancel()
     d->todo.clear();
     d->cancel = true;
 
-    if (d->autoOptimiseProcess)
-        d->autoOptimiseProcess->kill();
-
     if (d->CPFindProcess)
         d->CPFindProcess->kill();
+
+    if (d->CPCleanProcess)
+        d->CPCleanProcess->kill();
+
+    if (d->autoOptimiseProcess)
+        d->autoOptimiseProcess->kill();
 
     foreach (QPointer<KDcraw> rawProcess, d->rawProcesses)
     {
@@ -224,6 +228,10 @@ void ActionThread::run()
                     if (result_success)
                     {
                         result_success = startCPFind(t->ptoUrl, preProcessedUrlsMap, t->celeste, errors);
+                        if (result_success)
+                        {
+                            result_success = startCPClean(t->ptoUrl, errors);
+                        }
                     }
 
                     ActionData ad2;
@@ -385,12 +393,53 @@ bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, ItemUrlsMap& preProcessedUrls
     {
         errors = getProcessError(d->CPFindProcess);
         delete d->CPFindProcess;
+        d->CPFindProcess = 0;
         return false;
     }
 
     emit stepFinished();
 
     delete d->CPFindProcess;
+    d->CPFindProcess = 0;
+    return true;
+}
+
+bool ActionThread::startCPClean(KUrl& ptoUrl, QString& errors)
+{
+    KUrl ptoInUrl = ptoUrl;
+    ptoUrl = d->preprocessingTmpDir->name();
+    ptoUrl.setFileName(QString("cp_pano_clean.pto"));
+
+    d->CPCleanProcess = new KProcess();
+    d->CPCleanProcess->clearProgram();
+    d->CPCleanProcess->clearEnvironment();
+    d->CPCleanProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
+    d->CPCleanProcess->setOutputChannelMode(KProcess::MergedChannels);
+
+    QStringList args;
+    args << "cpclean";
+    args << "-o";
+    args << ptoUrl.toLocalFile();
+    args << ptoInUrl.toLocalFile();
+
+    d->CPCleanProcess->setProgram(args);
+
+    kDebug() << "CPClean command line: " << d->CPCleanProcess->program();
+
+    d->CPCleanProcess->start();
+
+    if (!d->CPCleanProcess->waitForFinished(-1) || d->CPCleanProcess->exitCode() != 0)
+    {
+        errors = getProcessError(d->CPCleanProcess);
+        delete d->CPCleanProcess;
+        d->CPCleanProcess = 0;
+        return false;
+    }
+
+    emit stepFinished();
+
+    delete d->CPCleanProcess;
+    d->CPCleanProcess = 0;
     return true;
 }
 
@@ -424,6 +473,7 @@ bool ActionThread::startOptimization(KUrl& ptoUrl, QString& errors)
     {
         errors = getProcessError(d->autoOptimiseProcess);
         delete d->autoOptimiseProcess;
+        d->autoOptimiseProcess = 0;
         return false;
     }
 
@@ -432,6 +482,7 @@ bool ActionThread::startOptimization(KUrl& ptoUrl, QString& errors)
     emit stepFinished();
 
     delete d->autoOptimiseProcess;
+    d->autoOptimiseProcess = 0;
 
     return true;
 }
@@ -552,13 +603,73 @@ bool ActionThread::createPTO(const ItemUrlsMap& urlList, KUrl& ptoUrl)
 
     QTextStream pto_stream(&pto);
 
+    // The pto is created following the file format described here:
+    // http://hugin.sourceforge.net/docs/nona/nona.txt
+
+    // 1. Project parameters
+    pto_stream << "p";
+    pto_stream << " f0";                    // Rectilinear projection
+    pto_stream << " \"TIFF_m c:NONE\"";     // TIFF_m output
+    pto_stream << " R1";                    // HDR output
+    pto_stream << " T\"FLOAT\"";            // 32bits color depth
+    //pto_stream << " S," << X_left << "," << X_right << "," << X_top << "," << X_bottom;   // Crop values
+    pto_stream << " k0";                    // Reference image
+    pto_stream << endl;
+
+    // 2. Images
+    pto_stream << endl;
+    int i = 0;
     foreach (ItemPreprocessedUrls url, urlList)
     {
         KExiv2 meta;
         meta.load(url.preprocessedUrl.toLocalFile());
         QSize size = meta.getImageDimensions();
 
-        pto_stream << "i w" << size.width() << " h" << size.height() << " n" << url.preprocessedUrl.toLocalFile() << endl;
+        pto_stream << "i";
+        pto_stream << " f0";                    // Lens projection type (rectilinear)
+        pto_stream << " w" << size.width();     // Image width
+        pto_stream << " h" << size.height();    // Image height
+        if (i > 0)
+        {
+            // We suppose that the pictures are all taken with the same camera and lens
+            pto_stream << " a=0 b=0 c=0 d=0 e=0 v=0 g=0 t=0";           // Geometry
+            pto_stream << " Va=0 Vb=0 Vc=0 Vd=0 Vx=0 Vy=0";             // Vignetting
+        }
+        pto_stream << " n" << url.preprocessedUrl.toLocalFile();
+        pto_stream << endl;
+
+        i++;
+    }
+
+    // 3. Variables to optimize
+    pto_stream << endl;
+    // Geometry optimization
+    pto_stream << "v a0" << endl;
+    pto_stream << "v b0" << endl;
+    pto_stream << "v c0" << endl;
+    pto_stream << "v d0" << endl;
+    pto_stream << "v e0" << endl;
+    pto_stream << "v Va0" << endl;
+    pto_stream << "v Vb0" << endl;
+    pto_stream << "v Vc0" << endl;
+    pto_stream << "v Vd0" << endl;
+    pto_stream << "v Vx0" << endl;
+    pto_stream << "v Vy0" << endl;
+    for (int j = 0; j < i; j++)
+    {
+        // Colors optimization
+        pto_stream << "v Ra" << j << endl;
+        pto_stream << "v Rb" << j << endl;
+        pto_stream << "v Rc" << j << endl;
+        pto_stream << "v Rd" << j << endl;
+        pto_stream << "v Re" << j << endl;
+        pto_stream << "v Eev" << j << endl;
+        pto_stream << "v Erv" << j << endl;
+        pto_stream << "v Ebv" << j << endl;
+        // Position optimization
+        pto_stream << "v y" << j << endl;
+        pto_stream << "v p" << j << endl;
+        pto_stream << "v r" << j << endl;
     }
 
     pto.close();

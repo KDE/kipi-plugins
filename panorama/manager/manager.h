@@ -55,6 +55,7 @@ namespace KIPIPanoramaPlugin
 class ActionThread;
 class PanoramaAboutData;
 class CPFindBinary;
+class CPCleanBinary;
 class AutoOptimiserBinary;
 struct ManagerPriv;
 
@@ -92,6 +93,7 @@ public:
 
     ActionThread*           thread() const;
     CPFindBinary&           cpFindBinary() const;
+    CPCleanBinary&          cpCleanBinary() const;
     AutoOptimiserBinary&    autoOptimiserBinary() const;
 
     void run();

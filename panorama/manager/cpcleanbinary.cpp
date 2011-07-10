@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2011-05-23
- * Description : Autodetect vig_optimize binary program and version
+ * Description : Autodetects cpclean binary program and version
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "vigoptimizebinary.h"
+#include "cpcleanbinary.h"
 
 // Qt includes
 
@@ -34,25 +34,25 @@
 namespace KIPIPanoramaPlugin
 {
 
-VigOptimizeBinary::VigOptimizeBinary()
+CPCleanBinary::CPCleanBinary()
     : BinaryIface()
 {
     checkSystem();
 }
 
-VigOptimizeBinary::~VigOptimizeBinary()
+CPCleanBinary::~CPCleanBinary()
 {
 }
 
-void VigOptimizeBinary::checkSystem()
+void CPCleanBinary::checkSystem()
 {
     QProcess process;
     process.start(path(), QStringList() << "-h");
     m_available       = process.waitForFinished();
 
-    QString headerStarts("vig_optimize version ");
+    QString headerStarts("cpclean version ");
 
-    QString stdOut(process.readAllStandardError());
+    QString stdOut(process.readAllStandardOutput());
     QString firstLine = stdOut.section('\n', 1, 1);
 
     kDebug() << path() << " help header line: \n" << firstLine;
@@ -66,22 +66,22 @@ void VigOptimizeBinary::checkSystem()
     }
 }
 
-KUrl VigOptimizeBinary::url() const
+KUrl CPCleanBinary::url() const
 {
     return KUrl("http://hugin.sourceforge.net");
 }
 
-QString VigOptimizeBinary::projectName() const
+QString CPCleanBinary::projectName() const
 {
     return QString("Hugin");
 }
 
-QString VigOptimizeBinary::path() const
+QString CPCleanBinary::path() const
 {
-    return QString("vig_optimize");
+    return QString("cpclean");
 }
 
-QString VigOptimizeBinary::minimalVersion() const
+QString CPCleanBinary::minimalVersion() const
 {
     return QString("2011.0");
 }

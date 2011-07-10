@@ -73,6 +73,7 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
                          "<p>Set here the list of your images to blend into a panorama. "
                          "Please follow these conditions:</p>"
                          "<ul><li>Images are taken from the same point of view.</li>"
+                         "<li>Images are taken with the same camera (and lens).</li>"
                          "<li>Do not mix images with different color depth.</li></ul>"
                          "</qt>"));
 

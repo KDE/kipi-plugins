@@ -39,6 +39,7 @@
 
 #include "actionthread.h"
 #include "cpfindbinary.h"
+#include "cpcleanbinary.h"
 #include "autooptimiserbinary.h"
 
 namespace KIPIPanoramaPlugin
@@ -68,6 +69,7 @@ struct Manager::ManagerPriv
     ActionThread*           thread;
 
     CPFindBinary            cpFindBinary;
+    CPCleanBinary           cpCleanBinary;
     AutoOptimiserBinary     autoOptimiserBinary;
 
     ImportWizardDlg*        wizard;
@@ -94,6 +96,9 @@ bool Manager::checkBinaries()
     if (!d->cpFindBinary.showResults())
         return false;
 
+    if (!d->cpCleanBinary.showResults())
+        return false;
+
     if (!d->autoOptimiserBinary.showResults())
         return false;
 
@@ -113,6 +118,11 @@ PanoramaAboutData* Manager::about() const
 CPFindBinary& Manager::cpFindBinary() const
 {
     return d->cpFindBinary;
+}
+
+CPCleanBinary& Manager::cpCleanBinary() const
+{
+    return d->cpCleanBinary;
 }
 
 AutoOptimiserBinary& Manager::autoOptimiserBinary() const

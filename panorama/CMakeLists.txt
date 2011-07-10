@@ -24,7 +24,7 @@ SET(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/actionthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/autooptimiserbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpfindbinary.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/manager/vigoptimizebinary.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpcleanbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/importwizarddlg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/intropage.cpp
