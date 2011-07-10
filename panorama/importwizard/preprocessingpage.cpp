@@ -167,7 +167,7 @@ void PreProcessingPage::resetTitle()
 void PreProcessingPage::process()
 {
     d->title->setText(i18n("<qt>"
-                           "<p>Pre-processing is under progress, please wait.<p>"
+                           "<p>Pre-processing is under progress, please wait.</p>"
                            "<p>This can take a while...</p>"
                            "</qt>"));
 
@@ -254,6 +254,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 {
                     d->progressTimer->stop();
                     d->progressLabel->clear();
+                    d->mngr->setCPFindUrl(ad.ptoUrl);
                     emit signalPreProcessed(ad.preProcessedUrlsMap);
                     break;
                 }

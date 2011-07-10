@@ -55,7 +55,6 @@ namespace KIPIPanoramaPlugin
 class ActionThread;
 class PanoramaAboutData;
 class CPFindBinary;
-class VigOptimizeBinary;
 class AutoOptimiserBinary;
 struct ManagerPriv;
 
@@ -79,6 +78,12 @@ public:
     void setItemsList(const KUrl::List& urls);
     KUrl::List itemsList() const;
 
+    void setCPFindUrl(const KUrl& url);
+    KUrl cpFindUrl() const;
+
+    void setAutoOptimiseUrl(const KUrl& url);
+    KUrl autoOptimiseUrl() const;
+
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings rawDecodingSettings() const;
 
@@ -87,7 +92,6 @@ public:
 
     ActionThread*           thread() const;
     CPFindBinary&           cpFindBinary() const;
-    VigOptimizeBinary&      vigOptimizeBinary() const;
     AutoOptimiserBinary&    autoOptimiserBinary() const;
 
     void run();
@@ -96,10 +100,6 @@ public:
      * Clean up all temporary files produced so far.
      */
     void cleanUp();
-
-private Q_SLOTS:
-
-    void slotStartDialog();
 
 private:
 

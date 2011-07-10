@@ -57,7 +57,7 @@ struct ItemPreprocessedUrls
 
     virtual ~ItemPreprocessedUrls() {}
 
-    KUrl preprocessedUrl;              // Can be an original file or an aligned version, depending of user choice.
+    KUrl preprocessedUrl;              // Can be an original file or a converted version, depending on the original file type
     KUrl previewUrl;                   // The JPEG preview version, accordingly of preprocessedUrl constent.
 };
 
@@ -70,19 +70,20 @@ struct ActionData
     ActionData()
         : starting(false), success(false) {}
 
-    bool           starting;
-    bool           success;
+    bool            starting;
+    bool            success;
 
-    QString        message;
+    QString         message;
 
-    QImage         image;
+    QImage          image;
 
-    KUrl::List     inUrls;
-    KUrl::List     outUrls;
+    KUrl::List      inUrls;
+    KUrl::List      outUrls;
+    KUrl            ptoUrl;
 
-    ItemUrlsMap    preProcessedUrlsMap;
+    ItemUrlsMap     preProcessedUrlsMap;
 
-    Action         action;
+    Action          action;
 };
 
 }  // namespace KIPIExpoBlendingPlugin

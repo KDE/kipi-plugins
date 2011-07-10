@@ -45,13 +45,14 @@
 #include "itemspage.h"
 #include "preprocessingpage.h"
 #include "optimizepage.h"
+#include "lastpage.h"
 
 namespace KIPIPanoramaPlugin
 {
 
     struct ImportWizardDlg::ImportWizardDlgPriv
     {
-        ImportWizardDlgPriv() : mngr(0), introPage(0), itemsPage(0), preProcessingPage(0), optimizePage(0) {}
+        ImportWizardDlgPriv() : mngr(0), introPage(0), itemsPage(0), preProcessingPage(0), optimizePage(0), lastPage(0) {}
 
         Manager*            mngr;
 
@@ -59,6 +60,7 @@ namespace KIPIPanoramaPlugin
         ItemsPage*          itemsPage;
         PreProcessingPage*  preProcessingPage;
         OptimizePage*       optimizePage;
+        LastPage*           lastPage;
     };
 
     ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
@@ -72,6 +74,7 @@ namespace KIPIPanoramaPlugin
         d->itemsPage         = new ItemsPage(d->mngr, this);
         d->preProcessingPage = new PreProcessingPage(d->mngr, this);
         d->optimizePage      = new OptimizePage(d->mngr, this);
+        d->lastPage          = new LastPage(d->mngr, this);
 
         // ---------------------------------------------------------------
         // About data and help button.
@@ -96,6 +99,9 @@ namespace KIPIPanoramaPlugin
 
         connect(d->preProcessingPage, SIGNAL(signalPreProcessed(const ItemUrlsMap&)),
                 this, SLOT(slotPreProcessed(const ItemUrlsMap&)));
+
+        connect(d->optimizePage, SIGNAL(signalOptimized(const KUrl&)),
+                this, SLOT(slotOptimized(const KUrl&)));
     }
 
     ImportWizardDlg::~ImportWizardDlg()
@@ -126,9 +132,17 @@ namespace KIPIPanoramaPlugin
         }
         else if (currentPage() == d->preProcessingPage->page())
         {
-            // Do not give acces to Next button during alignment process.
+            // Do not give acces to Next button during pre-processing.
             setValid(d->preProcessingPage->page(), false);
             d->preProcessingPage->process();
+            // Next is handled with signals/slots
+            return;
+        }
+        else if (currentPage() == d->optimizePage->page())
+        {
+            // Do not give acces to Next button during optimization.
+            setValid(d->optimizePage->page(), false);
+            d->optimizePage->process();
             // Next is handled with signals/slots
             return;
         }
@@ -143,6 +157,13 @@ namespace KIPIPanoramaPlugin
             d->preProcessingPage->cancel();
             KAssistantDialog::back();
             setValid(d->preProcessingPage->page(), true);
+            return;
+        }
+        else if (currentPage() == d->optimizePage->page())
+        {
+            d->optimizePage->cancel();
+            KAssistantDialog::back();
+            setValid(d->optimizePage->page(), true);
             return;
         }
 
@@ -160,6 +181,20 @@ namespace KIPIPanoramaPlugin
         {
             // pre-processing Done.
             d->mngr->setPreProcessedMap(map);
+            KAssistantDialog::next();
+        }
+    }
+
+    void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
+    {
+        if (ptoUrl.isEmpty())
+        {
+            // Optimization failed.
+            setValid(d->optimizePage->page(), false);
+        }
+        else
+        {
+            // Optimization finished.
             KAssistantDialog::next();
         }
     }

@@ -50,36 +50,38 @@ using namespace KIPI;
 
 namespace KIPIPanoramaPlugin
 {
-    class Manager;
-    class PanoramaAboutData;
+
+class Manager;
+class PanoramaAboutData;
+struct ImportWizardDlgPriv;
+
+class ImportWizardDlg : public KAssistantDialog
+{
+    Q_OBJECT
+
+public:
+    ImportWizardDlg(Manager* mngr, QWidget* parent=0);
+    ~ImportWizardDlg();
+
+    KUrl::List itemUrls() const;
+
+    Manager* manager() const;
+
+private Q_SLOTS:
+
+    void next();
+    void back();
+
+    void slotItemsPageIsValid(bool);
+    void slotPreProcessed(const ItemUrlsMap&);
+    void slotOptimized(const KUrl&);
+    void slotHelp();
+
+private:
+
     struct ImportWizardDlgPriv;
-
-    class ImportWizardDlg : public KAssistantDialog
-    {
-        Q_OBJECT
-
-    public:
-        ImportWizardDlg(Manager* mngr, QWidget* parent=0);
-        ~ImportWizardDlg();
-
-        KUrl::List itemUrls() const;
-
-        Manager* manager() const;
-
-    private Q_SLOTS:
-
-        void next();
-        void back();
-
-        void slotItemsPageIsValid(bool);
-        void slotPreProcessed(const ItemUrlsMap&);
-        void slotHelp();
-
-    private:
-
-        struct ImportWizardDlgPriv;
-        ImportWizardDlgPriv* const d;
-    };
+    ImportWizardDlgPriv* const d;
+};
 
 }   // namespace KIPIPanoramaPlugin
 

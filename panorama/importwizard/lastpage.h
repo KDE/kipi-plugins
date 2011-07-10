@@ -5,8 +5,10 @@
  *
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
+ * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,55 +22,31 @@
  *
  * ============================================================ */
 
-#ifndef OPTIMIZE_PAGE_H
-#define OPTIMIZE_PAGE_H
+#ifndef LAST_PAGE_H
+#define LAST_PAGE_H
 
 // Local includes
 
 #include "wizardpage.h"
 
-// Local includes
-
-#include "actions.h"
-
 namespace KIPIPanoramaPlugin
 {
 
 class Manager;
-struct OptimizePagePriv;
 
-class OptimizePage : public KIPIPlugins::WizardPage
+class LastPage : public KIPIPlugins::WizardPage
 {
-    Q_OBJECT
-
 public:
 
-    OptimizePage(Manager* mngr, KAssistantDialog* dlg);
-    ~OptimizePage();
-
-    void process();
-    void cancel();
-
-Q_SIGNALS:
-
-    void signalOptimized(const KUrl&);
-
-private Q_SLOTS:
-
-    void slotProgressTimerDone();
-    void slotAction(const KIPIPanoramaPlugin::ActionData&);
-    void slotShowDetails();
+    LastPage(Manager* mngr, KAssistantDialog* dlg);
+    ~LastPage();
 
 private:
 
-    void resetTitle();
-
-private:
-
-    struct OptimizePagePriv;
-    OptimizePagePriv* const d;
+    struct LastPagePriv;
+    LastPagePriv* const d;
 };
 
 }   // namespace KIPIPanoramaPlugin
 
-#endif /* OPTIMIZE_PAGE_H */
+#endif /* LAST_PAGE_H */

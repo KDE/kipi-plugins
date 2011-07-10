@@ -61,12 +61,14 @@ namespace KIPIPanoramaPlugin
 struct ActionThread::ActionThreadPriv
 {
     ActionThreadPriv()
-        : cancel(false), celeste(false), savePTO(false), autoOptimiseProcess(0), CPFindProcess(0), preprocessingTmpDir(0) {}
+        : cancel(false), celeste(false), savePTO(false),
+          CPFindProcess(0), autoOptimiseProcess(0), preprocessingTmpDir(0) {}
 
     struct Task
     {
         bool                celeste;
         KUrl::List          urls;
+        KUrl                ptoUrl;
         KUrl                outputUrl;
         Action              action;
         RawDecodingSettings rawDecodingSettings;
@@ -81,8 +83,8 @@ struct ActionThread::ActionThreadPriv
     QList<Task*>                    todo;
     QMutex                          todo_mutex;
 
-    KProcess*                       autoOptimiseProcess;
     KProcess*                       CPFindProcess;
+    KProcess*                       autoOptimiseProcess;
 
     /**
      * A list of all running raw instances. Only access this variable via
@@ -150,10 +152,11 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList)
     d->condVar.wakeAll();
 }
 
-void ActionThread::optimizeProject()
+void ActionThread::optimizeProject(const KUrl& ptoUrl)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = OPTIMIZE;
+    t->ptoUrl                   = ptoUrl;
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
@@ -208,21 +211,27 @@ void ActionThread::run()
                 case PREPROCESS:
                 {
                     ActionData ad1;
-                    ad1.action   = PREPROCESS;
-                    ad1.inUrls   = t->urls;
-                    ad1.starting = true;
+                    ad1.action      = PREPROCESS;
+                    ad1.inUrls      = t->urls;
+                    ad1.starting    = true;
                     emit starting(ad1);
 
                     ItemUrlsMap preProcessedUrlsMap;
                     QString     errors;
 
-                    bool result  = startPreProcessing(t->urls, preProcessedUrlsMap, t->celeste, t->rawDecodingSettings, errors);
+                    bool result_success  = startPreProcessing(t->urls, preProcessedUrlsMap, t->rawDecodingSettings);
+                    kDebug() << "Preprocess status: " << result_success;
+                    if (result_success)
+                    {
+                        result_success = startCPFind(t->ptoUrl, preProcessedUrlsMap, t->celeste, errors);
+                    }
 
                     ActionData ad2;
                     ad2.action              = PREPROCESS;
                     ad2.inUrls              = t->urls;
+                    ad2.ptoUrl              = t->ptoUrl;
                     ad2.preProcessedUrlsMap = preProcessedUrlsMap;
-                    ad2.success             = result;
+                    ad2.success             = result_success;
                     ad2.message             = errors;
                     emit finished(ad2);
                     break;
@@ -231,19 +240,21 @@ void ActionThread::run()
                 case OPTIMIZE:
                 {
                     ActionData ad1;
-                    ad1.action   = OPTIMIZE;
-                    ad1.starting = true;
+                    ad1.action      = OPTIMIZE;
+                    ad1.starting    = true;
+                    ad1.ptoUrl      = t->ptoUrl;
                     emit starting(ad1);
 
                     QString errors;
                     bool    result = false;
 
-// TODO             result  = startPreProcessing(errors);
+                    result  = startOptimization(t->ptoUrl, errors);
 
                     ActionData ad2;
-                    ad2.action   = OPTIMIZE;
-                    ad2.success  = result;
-                    ad2.message  = errors;
+                    ad2.action      = OPTIMIZE;
+                    ad2.success     = result;
+                    ad2.message     = errors;
+                    ad2.ptoUrl      = t->ptoUrl;
                     emit finished(ad2);
                     break;
                 }
@@ -260,8 +271,7 @@ void ActionThread::run()
 }
 
 bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
-                                      bool celeste, const RawDecodingSettings& settings,
-                                      QString& errors)
+                                      const RawDecodingSettings& settings)
 {
     QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-panorama-preprocessing-tmp-") +
                                                        QString::number(QDateTime::currentDateTime().toTime_t()));
@@ -338,11 +348,18 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
         return false;
     }
 
+    return true;
+}
+
+bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, ItemUrlsMap& preProcessedUrlsMap, bool celeste, QString& errors)
+{
     // Run CPFind to get control points and order the images
 
-    KUrl ptoUrl;
-    if (!createPTO(mixedUrls, ptoUrl))
+    KUrl ptoInUrl;
+    if (!createPTO(preProcessedUrlsMap, ptoInUrl))
         return false;
+    cpFindPtoUrl = d->preprocessingTmpDir->name();
+    cpFindPtoUrl.setFileName(QString("cp_pano.pto"));
 
     d->CPFindProcess = new KProcess();
     d->CPFindProcess->clearProgram();
@@ -355,8 +372,8 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     if (celeste)
         args << "--celeste";
     args << "-o";
-    args << "cp_pano.pto";
-    args << ptoUrl.toLocalFile();
+    args << cpFindPtoUrl.toLocalFile();
+    args << ptoInUrl.toLocalFile();
 
     d->CPFindProcess->setProgram(args);
 
@@ -371,26 +388,18 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
         return false;
     }
 
-    // Copy the file for future use
-    if (d->savePTO)
-    {
-        // TODO
-    }
-
     emit stepFinished();
 
     delete d->CPFindProcess;
     return true;
 }
 
-bool ActionThread::startOptimization(QString& errors)
+bool ActionThread::startOptimization(KUrl& ptoUrl, QString& errors)
 {
-    KUrl ptoInUrl   = d->preprocessingTmpDir->name();
-    ptoInUrl.setFileName(QString("cp_pano.pto"));
-    KUrl ptoOut1Url = d->preprocessingTmpDir->name();
-    ptoOut1Url.setFileName(QString("auto_op_pano.pto"));
-    KUrl ptoOut2Url = d->preprocessingTmpDir->name();
-    ptoOut2Url.setFileName(QString("vig_op_pano.pto"));
+    KUrl ptoAOUrl = d->preprocessingTmpDir->name();
+    ptoAOUrl.setFileName(QString("auto_op_pano.pto"));
+    KUrl ptoVOUrl = d->preprocessingTmpDir->name();
+    ptoVOUrl.setFileName(QString("vig_op_pano.pto"));
 
     d->autoOptimiseProcess = new KProcess();
     d->autoOptimiseProcess->clearProgram();
@@ -398,13 +407,14 @@ bool ActionThread::startOptimization(QString& errors)
     d->autoOptimiseProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->autoOptimiseProcess->setOutputChannelMode(KProcess::MergedChannels);
 
-    QStringList args;
-    args << "autooptimiser";
-    args << "-o";
-    args << ptoInUrl.toLocalFile();
-    args << ptoOut1Url.toLocalFile();
+    QStringList argsAO;
+    argsAO << "autooptimiser";
+    argsAO << "-alsm";
+    argsAO << "-o";
+    argsAO << ptoAOUrl.toLocalFile();
+    argsAO << ptoUrl.toLocalFile();
 
-    d->autoOptimiseProcess->setProgram(args);
+    d->autoOptimiseProcess->setProgram(argsAO);
 
     kDebug() << "autooptimiser command line: " << d->autoOptimiseProcess->program();
 
@@ -417,9 +427,12 @@ bool ActionThread::startOptimization(QString& errors)
         return false;
     }
 
+    ptoUrl = ptoAOUrl;
+
     emit stepFinished();
 
     delete d->autoOptimiseProcess;
+
     return true;
 }
 
@@ -526,7 +539,7 @@ bool ActionThread::isRawFile(const KUrl& url)
     return false;
 }
 
-bool ActionThread::createPTO(const KUrl::List& urlList, KUrl& ptoUrl)
+bool ActionThread::createPTO(const ItemUrlsMap& urlList, KUrl& ptoUrl)
 {
     ptoUrl = d->preprocessingTmpDir->name();
     ptoUrl.setFileName(QString("pano_base.pto"));
@@ -539,13 +552,13 @@ bool ActionThread::createPTO(const KUrl::List& urlList, KUrl& ptoUrl)
 
     QTextStream pto_stream(&pto);
 
-    foreach (KUrl url, urlList)
+    foreach (ItemPreprocessedUrls url, urlList)
     {
         KExiv2 meta;
-        meta.load(url.toLocalFile());
+        meta.load(url.preprocessedUrl.toLocalFile());
         QSize size = meta.getImageDimensions();
 
-        pto_stream << "i w" << size.width() << " h" << size.height() << " n" << url.toLocalFile() << endl;
+        pto_stream << "i w" << size.width() << " h" << size.height() << " n" << url.preprocessedUrl.toLocalFile() << endl;
     }
 
     pto.close();

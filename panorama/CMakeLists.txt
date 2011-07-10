@@ -31,6 +31,7 @@ SET(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/itemspage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/optimizepage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/lastpage.cpp
    )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)

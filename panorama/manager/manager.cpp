@@ -39,7 +39,6 @@
 
 #include "actionthread.h"
 #include "cpfindbinary.h"
-#include "vigoptimizebinary.h"
 #include "autooptimiserbinary.h"
 
 namespace KIPIPanoramaPlugin
@@ -55,6 +54,8 @@ struct Manager::ManagerPriv
     {};
 
     KUrl::List              inputUrls;
+    KUrl                    cpFindUrl;
+    KUrl                    autoOptimiseUrl;
 
     ItemUrlsMap             preProcessedUrlsMap;
 
@@ -67,11 +68,9 @@ struct Manager::ManagerPriv
     ActionThread*           thread;
 
     CPFindBinary            cpFindBinary;
-    VigOptimizeBinary       vigOptimizeBinary;
     AutoOptimiserBinary     autoOptimiserBinary;
 
     ImportWizardDlg*        wizard;
-    //PanoramaDlg*            dlg;
 };
 
 Manager::Manager(QObject* parent)
@@ -87,16 +86,15 @@ Manager::~Manager()
         delete d->about;
     delete d->thread;
     delete d->wizard;
-    //delete d->dlg;
     delete d;
 }
 
 bool Manager::checkBinaries()
 {
-    if (!d->autoOptimiserBinary.showResults())
+    if (!d->cpFindBinary.showResults())
         return false;
 
-    if (!d->cpFindBinary.showResults())
+    if (!d->autoOptimiserBinary.showResults())
         return false;
 
     return true;
@@ -115,11 +113,6 @@ PanoramaAboutData* Manager::about() const
 CPFindBinary& Manager::cpFindBinary() const
 {
     return d->cpFindBinary;
-}
-
-VigOptimizeBinary& Manager::vigOptimizeBinary() const
-{
-    return d->vigOptimizeBinary;
 }
 
 AutoOptimiserBinary& Manager::autoOptimiserBinary() const
@@ -145,6 +138,26 @@ void Manager::setItemsList(const KUrl::List& urls)
 KUrl::List Manager::itemsList() const
 {
     return d->inputUrls;
+}
+
+void Manager::setCPFindUrl(const KUrl& url)
+{
+    d->cpFindUrl = url;
+}
+
+KUrl Manager::cpFindUrl() const
+{
+    return d->cpFindUrl;
+}
+
+void Manager::setAutoOptimiseUrl(const KUrl& url)
+{
+    d->autoOptimiseUrl = url;
+}
+
+KUrl Manager::autoOptimiseUrl() const
+{
+    return d->autoOptimiseUrl;
 }
 
 void Manager::setRawDecodingSettings(const RawDecodingSettings& settings)
@@ -186,17 +199,7 @@ void Manager::startWizard()
 {
     d->wizard = new ImportWizardDlg(this);
 
-    connect(d->wizard, SIGNAL(accepted()),
-            this, SLOT(slotStartDialog()));
-
     d->wizard->show();
-}
-
-void Manager::slotStartDialog()
-{
-    d->inputUrls = d->wizard->itemUrls();
-    //d->dlg = new PanoramaDlg(this);
-    //d->dlg->show();
 }
 
 } // namespace KIPIPanoramaPlugin

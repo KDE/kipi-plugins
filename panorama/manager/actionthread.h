@@ -69,7 +69,7 @@ public:
     void setPreProcessingSettings(bool celeste, const KDcrawIface::RawDecodingSettings& settings);
     void convertRawFiles(const KUrl::List& urlList);
     void preProcessFiles(const KUrl::List& urlList);
-    void optimizeProject();
+    void optimizeProject(const KUrl& ptoUrl);
     void cancel();
 
     /**
@@ -88,13 +88,13 @@ private:
     void    run();
 
     bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
-                               bool celeste, const RawDecodingSettings& settings,
-                               QString& errors);
-    bool    startOptimization(QString& errors);
+                               const RawDecodingSettings& settings);
+    bool    startCPFind(KUrl& ptoUrl, ItemUrlsMap& preProcessedUrlsMap, bool celeste, QString& errors);
+    bool    startOptimization(KUrl& ptoUrl, QString& errors);
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
     bool    isRawFile(const KUrl& url);
-    bool    createPTO(const KUrl::List& urlList, KUrl& ptoUrl);
+    bool    createPTO(const KIPIPanoramaPlugin::ItemUrlsMap& urlList, KUrl& ptoUrl);
 
     QString getProcessError(KProcess* proc) const;
 
