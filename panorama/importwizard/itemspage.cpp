@@ -55,7 +55,11 @@ namespace KIPIPanoramaPlugin
 
 struct ItemsPage::ItemsPagePriv
 {
-    ItemsPagePriv() : list(0),mngr(0) {}
+    ItemsPagePriv()
+      : list(0),
+        mngr(0)
+    {
+    }
 
     ImagesList* list;
 
@@ -66,8 +70,8 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
     : WizardPage(dlg, i18n("<b>Set Panorama Images</b>")),d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
-    KVBox *vbox    = new KVBox(this);
-    QLabel *label1 = new QLabel(vbox);
+    KVBox* vbox    = new KVBox(this);
+    QLabel* label1 = new QLabel(vbox);
     label1->setWordWrap(true);
     label1->setText(i18n("<qt>"
                          "<p>Set here the list of your images to blend into a panorama. "

@@ -1,5 +1,5 @@
 /* ============================================================
- * 
+ *
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
@@ -42,33 +42,33 @@ using namespace KIPIPlugins;
 namespace KIPIPanoramaPlugin
 {
 
-    class Manager;
+class Manager;
 
-    class ItemsPage : public WizardPage
-    {
-        Q_OBJECT
+class ItemsPage : public WizardPage
+{
+    Q_OBJECT
 
-    public:
+public:
 
-        ItemsPage(Manager* mngr, KAssistantDialog* dlg);
-        ~ItemsPage();
+    ItemsPage(Manager* mngr, KAssistantDialog* dlg);
+    ~ItemsPage();
 
-        KUrl::List itemUrls() const;
+    KUrl::List itemUrls() const;
 
-    Q_SIGNALS:
+Q_SIGNALS:
 
-        void signalItemsPageIsValid(bool);
+    void signalItemsPageIsValid(bool);
 
-    private Q_SLOTS:
+private Q_SLOTS:
 
-        void slotSetupList();
-        void slotImageListChanged();
+    void slotSetupList();
+    void slotImageListChanged();
 
-    private:
+private:
 
-        struct ItemsPagePriv;
-        ItemsPagePriv* const d;
-    };
+    struct ItemsPagePriv;
+    ItemsPagePriv* const d;
+};
 
 }   // namespace KIPIPanoramaPlugin
 
