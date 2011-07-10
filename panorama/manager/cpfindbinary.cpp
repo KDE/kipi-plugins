@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2011-05-23
- * Description : Autodetect autopano-sift-c binary program and version
+ * Description : Autodetects cpfind binary program and version
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
