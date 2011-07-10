@@ -67,17 +67,17 @@ struct OptimizePage::OptimizePagePriv
 
     QPushButton* detailsBtn;
 
-    Manager* mngr;
+    Manager*     mngr;
 };
 
 OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
-        : KIPIPlugins::WizardPage(dlg, i18n("Optimization")),
-          d(new OptimizePagePriv)
+    : KIPIPlugins::WizardPage(dlg, i18n("Optimization")),
+      d(new OptimizePagePriv)
 {
-    d->mngr       = mngr;
-    KVBox *vbox   = new KVBox(this);
+    d->mngr          = mngr;
+    KVBox *vbox      = new KVBox(this);
     d->progressTimer = new QTimer(this);
-    d->title = new QLabel(vbox);
+    d->title         = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
