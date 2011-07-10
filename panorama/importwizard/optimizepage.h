@@ -35,7 +35,6 @@ namespace KIPIPanoramaPlugin
 {
 
 class Manager;
-struct OptimizePagePriv;
 
 class OptimizePage : public KIPIPlugins::WizardPage
 {
