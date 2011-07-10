@@ -47,10 +47,10 @@ namespace KIPIPanoramaPlugin
 
 struct Manager::ManagerPriv
 {
-    ManagerPriv() 
-        : iface(0), 
-          about(0), 
-          thread(0), 
+    ManagerPriv()
+        : iface(0),
+          about(0),
+          thread(0),
           wizard(0)
     {};
 

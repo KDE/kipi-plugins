@@ -57,7 +57,6 @@ class PanoramaAboutData;
 class CPFindBinary;
 class CPCleanBinary;
 class AutoOptimiserBinary;
-struct ManagerPriv;
 
 class Manager : public QObject
 {
@@ -91,10 +90,10 @@ public:
     void setPreProcessedMap(const ItemUrlsMap& urls);
     ItemUrlsMap preProcessedMap() const;
 
-    ActionThread*           thread() const;
-    CPFindBinary&           cpFindBinary() const;
-    CPCleanBinary&          cpCleanBinary() const;
-    AutoOptimiserBinary&    autoOptimiserBinary() const;
+    ActionThread*        thread() const;
+    CPFindBinary&        cpFindBinary() const;
+    CPCleanBinary&       cpCleanBinary() const;
+    AutoOptimiserBinary& autoOptimiserBinary() const;
 
     void run();
 
