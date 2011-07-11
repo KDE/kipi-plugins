@@ -32,13 +32,13 @@
 namespace KIPIPanoramaPlugin
 {
 
-    class IntroPage : public KIPIPlugins::WizardPage
-    {
-    public:
+class IntroPage : public KIPIPlugins::WizardPage
+{
+public:
 
-        IntroPage(KAssistantDialog* dlg);
-        ~IntroPage();
-    };
+    IntroPage(KAssistantDialog* dlg);
+    ~IntroPage();
+};
 
 }   // namespace KIPIPanoramaPlugin
 

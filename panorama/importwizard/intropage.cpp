@@ -38,32 +38,32 @@
 namespace KIPIPanoramaPlugin
 {
 
-    IntroPage::IntroPage(KAssistantDialog* dlg)
+IntroPage::IntroPage(KAssistantDialog* dlg)
     : KIPIPlugins::WizardPage(dlg, i18n("Welcome to Panorama Tool"))
-    {
-        KVBox *vbox   = new KVBox(this);
-        QLabel *title = new QLabel(vbox);
-        title->setWordWrap(true);
-        title->setOpenExternalLinks(true);
-        title->setText(i18n("<qt>"
-                            "<p><h1><b>Welcome to Panorama tool</b></h1></p>"
-                            "<p>This tool stich several images together to create a panorama, making the"
-                            "seam between images not visible.</p>"
-                            "<p>This assistant will help you to configure how to import images before "
-                            "stiching them into a panorama.</p>"
-                            "<p>Images must be taken from the same point of view.</p>"
-                            "<p>For more information, please take a look at "
-                            "<a href='http://hugin.sourceforge.net/tutorials/overview/en.shtml'>this page</a></p>"
-                            "</qt>"));
+{
+    KVBox* vbox   = new KVBox(this);
+    QLabel* title = new QLabel(vbox);
+    title->setWordWrap(true);
+    title->setOpenExternalLinks(true);
+    title->setText(i18n("<qt>"
+                        "<p><h1><b>Welcome to Panorama tool</b></h1></p>"
+                        "<p>This tool stich several images together to create a panorama, making the"
+                        "seam between images not visible.</p>"
+                        "<p>This assistant will help you to configure how to import images before "
+                        "stiching them into a panorama.</p>"
+                        "<p>Images must be taken from the same point of view.</p>"
+                        "<p>For more information, please take a look at "
+                        "<a href='http://hugin.sourceforge.net/tutorials/overview/en.shtml'>this page</a></p>"
+                        "</qt>"));
 
-        setPageWidget(vbox);
+    setPageWidget(vbox);
 
-        //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
-        //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
-    }
+    //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
+    //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
+}
 
-    IntroPage::~IntroPage()
-    {
-    }
+IntroPage::~IntroPage()
+{
+}
 
 }   // namespace KIPIPanoramaPlugin
