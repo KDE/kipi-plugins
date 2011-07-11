@@ -53,7 +53,6 @@ namespace KIPIPanoramaPlugin
 
 class Manager;
 class PanoramaAboutData;
-struct ImportWizardDlgPriv;
 
 class ImportWizardDlg : public KAssistantDialog
 {

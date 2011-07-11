@@ -50,158 +50,166 @@
 namespace KIPIPanoramaPlugin
 {
 
-    struct ImportWizardDlg::ImportWizardDlgPriv
+struct ImportWizardDlg::ImportWizardDlgPriv
+{
+    ImportWizardDlgPriv()
+      : mngr(0),
+        introPage(0),
+        itemsPage(0),
+        preProcessingPage(0),
+        optimizePage(0),
+        lastPage(0)
     {
-        ImportWizardDlgPriv() : mngr(0), introPage(0), itemsPage(0), preProcessingPage(0), optimizePage(0), lastPage(0) {}
+    }
 
-        Manager*            mngr;
+    Manager*            mngr;
 
-        IntroPage*          introPage;
-        ItemsPage*          itemsPage;
-        PreProcessingPage*  preProcessingPage;
-        OptimizePage*       optimizePage;
-        LastPage*           lastPage;
-    };
+    IntroPage*          introPage;
+    ItemsPage*          itemsPage;
+    PreProcessingPage*  preProcessingPage;
+    OptimizePage*       optimizePage;
+    LastPage*           lastPage;
+};
 
-    ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
+ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
-    {
-        setModal(false);
-        setWindowTitle(i18n("Panorama Creator Wizard"));
+{
+    setModal(false);
+    setWindowTitle(i18n("Panorama Creator Wizard"));
 
-        d->mngr              = mngr;
-        d->introPage         = new IntroPage(this);
-        d->itemsPage         = new ItemsPage(d->mngr, this);
-        d->preProcessingPage = new PreProcessingPage(d->mngr, this);
-        d->optimizePage      = new OptimizePage(d->mngr, this);
-        d->lastPage          = new LastPage(d->mngr, this);
+    d->mngr              = mngr;
+    d->introPage         = new IntroPage(this);
+    d->itemsPage         = new ItemsPage(d->mngr, this);
+    d->preProcessingPage = new PreProcessingPage(d->mngr, this);
+    d->optimizePage      = new OptimizePage(d->mngr, this);
+    d->lastPage          = new LastPage(d->mngr, this);
 
-        // ---------------------------------------------------------------
-        // About data and help button.
+    // ---------------------------------------------------------------
+    // About data and help button.
 
-        disconnect(this, SIGNAL(helpClicked()),
-                   this, SLOT(slotHelp()));
-
-        KHelpMenu* helpMenu = new KHelpMenu(this, d->mngr->about(), false);
-        helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-        QAction *handbook   = new QAction(i18n("Handbook"), this);
-        connect(handbook, SIGNAL(triggered(bool)),
+    disconnect(this, SIGNAL(helpClicked()),
                 this, SLOT(slotHelp()));
-        helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-        button(Help)->setMenu(helpMenu->menu());
 
-        // ---------------------------------------------------------------
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->mngr->about(), false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    button(Help)->setMenu(helpMenu->menu());
 
-        resize(600, 500);
+    // ---------------------------------------------------------------
 
-        connect(d->itemsPage, SIGNAL(signalItemsPageIsValid(bool)),
-                this, SLOT(slotItemsPageIsValid(bool)));
+    resize(600, 500);
 
-        connect(d->preProcessingPage, SIGNAL(signalPreProcessed(const ItemUrlsMap&)),
-                this, SLOT(slotPreProcessed(const ItemUrlsMap&)));
+    connect(d->itemsPage, SIGNAL(signalItemsPageIsValid(bool)),
+            this, SLOT(slotItemsPageIsValid(bool)));
 
-        connect(d->optimizePage, SIGNAL(signalOptimized(const KUrl&)),
-                this, SLOT(slotOptimized(const KUrl&)));
+    connect(d->preProcessingPage, SIGNAL(signalPreProcessed(const ItemUrlsMap&)),
+            this, SLOT(slotPreProcessed(const ItemUrlsMap&)));
+
+    connect(d->optimizePage, SIGNAL(signalOptimized(const KUrl&)),
+            this, SLOT(slotOptimized(const KUrl&)));
+}
+
+ImportWizardDlg::~ImportWizardDlg()
+{
+    delete d;
+}
+
+void ImportWizardDlg::slotHelp()
+{
+    KToolInvocation::invokeHelp("panorama", "kipi-plugins");
+}
+
+Manager* ImportWizardDlg::manager() const
+{
+    return d->mngr;
+}
+
+KUrl::List ImportWizardDlg::itemUrls() const
+{
+    return d->itemsPage->itemUrls();
+}
+
+void ImportWizardDlg::next()
+{
+    if (currentPage() == d->itemsPage->page())
+    {
+        d->mngr->setItemsList(d->itemsPage->itemUrls());
+    }
+    else if (currentPage() == d->preProcessingPage->page())
+    {
+        // Do not give acces to Next button during pre-processing.
+        setValid(d->preProcessingPage->page(), false);
+        d->preProcessingPage->process();
+        // Next is handled with signals/slots
+        return;
+    }
+    else if (currentPage() == d->optimizePage->page())
+    {
+        // Do not give acces to Next button during optimization.
+        setValid(d->optimizePage->page(), false);
+        d->optimizePage->process();
+        // Next is handled with signals/slots
+        return;
     }
 
-    ImportWizardDlg::~ImportWizardDlg()
+    KAssistantDialog::next();
+}
+
+void ImportWizardDlg::back()
+{
+    if (currentPage() == d->preProcessingPage->page())
     {
-        delete d;
+        d->preProcessingPage->cancel();
+        KAssistantDialog::back();
+        setValid(d->preProcessingPage->page(), true);
+        return;
+    }
+    else if (currentPage() == d->optimizePage->page())
+    {
+        d->optimizePage->cancel();
+        KAssistantDialog::back();
+        setValid(d->optimizePage->page(), true);
+        return;
     }
 
-    void ImportWizardDlg::slotHelp()
+    KAssistantDialog::back();
+}
+
+void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
+{
+    if (map.isEmpty())
     {
-        KToolInvocation::invokeHelp("panorama", "kipi-plugins");
+        // pre-processing failed.
+        setValid(d->preProcessingPage->page(), false);
     }
-
-    Manager* ImportWizardDlg::manager() const
+    else
     {
-        return d->mngr;
-    }
-
-    KUrl::List ImportWizardDlg::itemUrls() const
-    {
-        return d->itemsPage->itemUrls();
-    }
-
-    void ImportWizardDlg::next()
-    {
-        if (currentPage() == d->itemsPage->page())
-        {
-            d->mngr->setItemsList(d->itemsPage->itemUrls());
-        }
-        else if (currentPage() == d->preProcessingPage->page())
-        {
-            // Do not give acces to Next button during pre-processing.
-            setValid(d->preProcessingPage->page(), false);
-            d->preProcessingPage->process();
-            // Next is handled with signals/slots
-            return;
-        }
-        else if (currentPage() == d->optimizePage->page())
-        {
-            // Do not give acces to Next button during optimization.
-            setValid(d->optimizePage->page(), false);
-            d->optimizePage->process();
-            // Next is handled with signals/slots
-            return;
-        }
-
+        // pre-processing Done.
+        d->mngr->setPreProcessedMap(map);
         KAssistantDialog::next();
     }
+}
 
-    void ImportWizardDlg::back()
+void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
+{
+    if (ptoUrl.isEmpty())
     {
-        if (currentPage() == d->preProcessingPage->page())
-        {
-            d->preProcessingPage->cancel();
-            KAssistantDialog::back();
-            setValid(d->preProcessingPage->page(), true);
-            return;
-        }
-        else if (currentPage() == d->optimizePage->page())
-        {
-            d->optimizePage->cancel();
-            KAssistantDialog::back();
-            setValid(d->optimizePage->page(), true);
-            return;
-        }
-
-        KAssistantDialog::back();
+        // Optimization failed.
+        setValid(d->optimizePage->page(), false);
     }
-
-    void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
+    else
     {
-        if (map.isEmpty())
-        {
-            // pre-processing failed.
-            setValid(d->preProcessingPage->page(), false);
-        }
-        else
-        {
-            // pre-processing Done.
-            d->mngr->setPreProcessedMap(map);
-            KAssistantDialog::next();
-        }
+        // Optimization finished.
+        KAssistantDialog::next();
     }
+}
 
-    void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
-    {
-        if (ptoUrl.isEmpty())
-        {
-            // Optimization failed.
-            setValid(d->optimizePage->page(), false);
-        }
-        else
-        {
-            // Optimization finished.
-            KAssistantDialog::next();
-        }
-    }
-
-    void ImportWizardDlg::slotItemsPageIsValid(bool valid)
-    {
-        setValid(d->itemsPage->page(), valid);
-    }
+void ImportWizardDlg::slotItemsPageIsValid(bool valid)
+{
+    setValid(d->itemsPage->page(), valid);
+}
 
 } // namespace KIPIPanoramaPlugin
