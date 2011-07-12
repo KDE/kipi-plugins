@@ -3,7 +3,7 @@
 Categories=Qt;KDE;Graphics;
 Comment=A tool to assemble images as a panorama
 Comment[x-test]=xxA tool to assemble images as a panoramaxx
-Exec=panorama %i -caption "%c" %U
+Exec=panoramagui %i -caption "%c" %U
 GenericName=Panorama
 GenericName[x-test]=xxPanoramaxx
 Icon=panorama
