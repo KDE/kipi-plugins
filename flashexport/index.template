@@ -60,7 +60,7 @@
 	                                      <param name="quality" value="high">
 	                                      <param name="scale" value="noscale">
 	                                      <param name="bgcolor" value="{BGCOLOR}">
-	                                      <embed src="viewer.swf" width="100%" height="100%" align="middle" quality="high" scale="noscale"  bgcolor="{BGCOLOR}" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">
+	                                      <embed src="simpleviewer.swf" width="100%" height="100%" align="middle" quality="high" scale="noscale"  bgcolor="{BGCOLOR}" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">
 	                                </object>
 	                            </td>
 	                            <td>
