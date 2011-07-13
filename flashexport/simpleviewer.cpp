@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
  * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -127,71 +128,6 @@ SimpleViewer::~SimpleViewer()
 {
     delete d->tempDir;
     delete d;
-}
-
-void SimpleViewer::run(KIPI::Interface* interface, QObject* parent)
-{
-    SimpleViewer plugin(interface, parent);
-
-    if(!plugin.checkSimpleViewer())
-    {
-        if(!plugin.installSimpleViewer())
-        {
-            KMessageBox::error(kapp->activeWindow(), i18n("SimpleViewer installation failed"));
-            return;
-        }
-    }
-
-    if(plugin.configure())
-        plugin.startExport();
-}
-
-bool SimpleViewer::configure()
-{
-    d->canceled = false;
-
-    if(!d->configDlg)
-        d->configDlg = new SVEDialog(d->interface, kapp->activeWindow());
-
-    bool configured = false;
-    while(!configured)
-    {
-        if(d->configDlg->exec() == QDialog::Rejected)
-            return false;
-
-        configured = true;
-
-        if(KIO::NetAccess::exists(d->configDlg->settings().exportUrl, KIO::NetAccess::DestinationSide, kapp->activeWindow()))
-        {
-            int ret = KMessageBox::warningYesNoCancel(kapp->activeWindow(),
-                                                      i18n("Target folder %1 already exists.\n"
-                                                           "Do you want to overwrite it?  All data in this folder will be lost.",
-                                                           d->configDlg->settings().exportUrl.path()));
-
-            switch(ret)
-            {
-                case KMessageBox::Yes:
-                    if(!KIO::NetAccess::del(d->configDlg->settings().exportUrl, kapp->activeWindow()))
-                    {
-                        KMessageBox::error(kapp->activeWindow(), i18n("Could not delete %1.\n"
-                                           "Please choose another export folder.",
-                                           d->configDlg->settings().exportUrl.path()));
-                        configured = false;
-                    }
-                    break;
-
-                case KMessageBox::No:
-                    configured = false;
-                    break;
-
-                case KMessageBox::Cancel:
-                    return false;
-                    break;
-            };
-        }
-    }
-
-    return true;
 }
 
 void SimpleViewer::startExport()
@@ -349,7 +285,7 @@ bool SimpleViewer::exportImages()
     xmlFile.addPath("/gallery.xml");
     QFile file(xmlFile.path());
     file.open(QIODevice::WriteOnly);
-
+// header of gallery.xml
     QDomDocument xmlDoc;
     xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QString::fromLatin1("xml"),
                        QString::fromLatin1("version=\"1.0\" encoding=\"UTF-8\"") ) );
@@ -368,8 +304,8 @@ bool SimpleViewer::exportImages()
     galleryElem.setAttribute(QString::fromLatin1("navPosition"),          d->configDlg->settings().thumbPosition());
     galleryElem.setAttribute(QString::fromLatin1("navDirection"),         d->configDlg->settings().navDir());
     galleryElem.setAttribute(QString::fromLatin1("title"),                d->configDlg->settings().title);
-    galleryElem.setAttribute(QString::fromLatin1("imagePath"),            QString());
-    galleryElem.setAttribute(QString::fromLatin1("thumbPath"),            QString());
+    galleryElem.setAttribute(QString::fromLatin1("imagePath"),            QString("images/"));
+    galleryElem.setAttribute(QString::fromLatin1("thumbPath"),            QString("thumbs/"));
 
     KExiv2Iface::KExiv2 meta;
     QImage              image;
@@ -530,11 +466,10 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
     QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
     galleryElem.appendChild(img);
-
-    QDomElement name = xmlDoc.createElement(QString::fromLatin1("name"));
-    img.appendChild(name);
-    QDomText nametxt = xmlDoc.createTextNode(newName);
-    name.appendChild(nametxt);
+    img.setAttribute(QString::fromLatin1("imageURL"),QString("images/")+newName);  
+    img.setAttribute(QString::fromLatin1("thumbURL"),QString("thumbs/")+newName); 
+    img.setAttribute(QString::fromLatin1("linkURL"),QString());
+    img.setAttribute(QString::fromLatin1("targetURL"),QString());
 
     QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption"));
     img.appendChild(caption);
@@ -639,6 +574,54 @@ bool SimpleViewer::upload()
     return true;
 }
 
+bool SimpleViewer::configure()
+{
+    d->canceled = false;
+
+    if(!d->configDlg)
+        d->configDlg = new SVEDialog(d->interface, kapp->activeWindow());
+
+    bool configured = false;
+    while(!configured)
+    {
+        if(d->configDlg->exec() == QDialog::Rejected)
+            return false;
+
+        configured = true;
+
+        if(KIO::NetAccess::exists(d->configDlg->settings().exportUrl, KIO::NetAccess::DestinationSide, kapp->activeWindow()))
+        {
+            int ret = KMessageBox::warningYesNoCancel(kapp->activeWindow(),
+                                                      i18n("Target folder %1 already exists.\n"
+                                                           "Do you want to overwrite it?  All data in this folder will be lost.",
+                                                           d->configDlg->settings().exportUrl.path()));
+
+            switch(ret)
+            {
+                case KMessageBox::Yes:
+                    if(!KIO::NetAccess::del(d->configDlg->settings().exportUrl, kapp->activeWindow()))
+                    {
+                        KMessageBox::error(kapp->activeWindow(), i18n("Could not delete %1.\n"
+                                           "Please choose another export folder.",
+                                           d->configDlg->settings().exportUrl.path()));
+                        configured = false;
+                    }
+                    break;
+
+                case KMessageBox::No:
+                    configured = false;
+                    break;
+
+                case KMessageBox::Cancel:
+                    return false;
+                    break;
+            };
+        }
+    }
+
+    return true;
+}
+
 bool SimpleViewer::checkSimpleViewer() const
 {
     return ! KStandardDirs::locate("data", "kipiplugin_flashexport/simpleviewer/" + d->viewer).isEmpty();
@@ -653,7 +636,7 @@ bool SimpleViewer::installSimpleViewer()
 
         if(unzip(url.path()))
         {
-	    delete firstRunDlg;
+            delete firstRunDlg;
             return true;
         }
         else
@@ -661,7 +644,15 @@ bool SimpleViewer::installSimpleViewer()
             kDebug() << "Archive extraction failed\n";
         }
     }
+    else
+    {
+        // User press Cancel. No messageBox
+        delete firstRunDlg;
+        return false;
+    }
+
     delete firstRunDlg;
+    KMessageBox::error(kapp->activeWindow(), i18n("SimpleViewer installation failed"));
 
     return false;
 }
@@ -742,6 +733,23 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry)
     }
 
     return false;
+}
+
+/// Static method.
+void SimpleViewer::run(KIPI::Interface* interface, QObject* parent)
+{
+    SimpleViewer plugin(interface, parent);
+
+    if(!plugin.checkSimpleViewer())
+    {
+        if(!plugin.installSimpleViewer())
+        {
+            return;
+        }
+    }
+
+    if(plugin.configure())
+        plugin.startExport();
 }
 
 } // namespace KIPIFlashExportPlugin
