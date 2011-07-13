@@ -1,9 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Panorama
-Name[x-test]=xxPanoramaxx
 Comment=A tool to assemble images as a panorama
-Comment[x-test]=xxA tool to assemble images as a panoramaxx
 Icon=panorama
 ServiceTypes=KIPI/Plugin
 Type=Service

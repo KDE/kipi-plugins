@@ -2,13 +2,10 @@
 [Desktop Entry]
 Categories=Qt;KDE;Graphics;
 Comment=A tool to assemble images as a panorama
-Comment[x-test]=xxA tool to assemble images as a panoramaxx
 Exec=panoramagui %i -caption "%c" %U
 GenericName=Panorama
-GenericName[x-test]=xxPanoramaxx
 Icon=panorama
 Name=Panorama
-Name[x-test]=xxPanoramaxx
 StartupNotify=true
 Terminal=false
 Type=Application
