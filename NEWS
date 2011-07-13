@@ -56,5 +56,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 043 ==> 271838 : Segfault when trying to open Geo-Location.
 044 ==> 273781 : digiKam crashes when correlating images with GPX file created by Garmin GPS.
 045 ==> 277480 : Export Flash dose not work.
-046 ==> 
+046 ==> 226296 : FlashExport, unable to install simple viewer.
+047 ==> 
 
