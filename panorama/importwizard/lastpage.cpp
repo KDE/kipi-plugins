@@ -59,7 +59,7 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
     title->setOpenExternalLinks(true);
     title->setWordWrap(true);
     title->setText(i18n("<qt>"
-                        "<p><h1><b>Panorama Stiching is Done</b></h1></p>"
+                        "<p><h1><b>Panorama Stitching is Done</b></h1></p>"
                         "<p>Congratulations. Your images are stitched into a panorama.</p>"
                         "<p>Your panorama has been created with the filename %1.</p>"
                         "</qt>",

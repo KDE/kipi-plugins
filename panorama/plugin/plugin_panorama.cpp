@@ -75,7 +75,7 @@ void Plugin_Panorama::setup(QWidget* widget)
     KIPI::Plugin::setup(m_parentWidget);
 
     m_action = actionCollection()->addAction("panorama");
-    m_action->setText(i18n("Stich images into a panorama..."));
+    m_action->setText(i18n("Stitch images into a panorama..."));
     m_action->setIcon(KIcon("panorama"));
 
     connect(m_action, SIGNAL(triggered(bool)),
