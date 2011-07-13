@@ -45,7 +45,7 @@ class SimpleViewerSettingsContainer
 
 public:
 
-    enum ThumbPosition 
+    enum ThumbPosition
     {
         RIGHT = 0,
         LEFT,
@@ -53,7 +53,7 @@ public:
         BOTTOM
     };
 
-    enum NavDir 
+    enum NavDir
     {
         LEFT2RIGHT = 0,
         RIGHT2LEFT

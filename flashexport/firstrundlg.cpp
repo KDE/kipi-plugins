@@ -69,7 +69,7 @@ public:
 };
 
 FirstRunDlg::FirstRunDlg(QWidget* parent)
-           : KDialog(parent), d(new FirstRunDlgPriv)
+    : KDialog(parent), d(new FirstRunDlgPriv)
 {
     setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);

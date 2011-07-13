@@ -61,7 +61,7 @@ private:
     explicit SimpleViewer(KIPI::Interface* interface, QObject* parent=0);
     ~SimpleViewer();
 
-    bool configure();
+    bool configure() const;
     void startExport();
 
     /**
@@ -69,14 +69,14 @@ private:
      *
      * @return true=ok
      */
-    bool createExportDirectories();
+    bool createExportDirectories() const;
 
     /**
      * Creates the images and thumbnails
      *
      * @return true=ok
      */
-    bool exportImages();
+    bool exportImages() const;
 
     /**
      * Creates a simpleviewer thumbnail from images
@@ -86,7 +86,7 @@ private:
      *
      * @return true=ok
      */
-    bool createThumbnail(const QImage& image, QImage& thumbnail);
+    bool createThumbnail(const QImage& image, QImage& thumbnail) const;
 
     /**
      * Resizes the image for the gallery
@@ -96,7 +96,7 @@ private:
      *
      * @return true=ok
      */
-    bool resizeImage(const QImage& image, int maxSize, QImage& resized);
+    bool resizeImage(const QImage& image, int maxSize, QImage& resized) const;
 
     /**
      * Adds an image to the simpleviewer config file
@@ -107,17 +107,17 @@ private:
      * @param newName new image file name used by gallery
      */
     void cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
-                     const KUrl& url, const QString& newName);
+                     const KUrl& url, const QString& newName) const;
 
     /**
      * Creates the index.html file
      */
-    bool createIndex();
+    bool createIndex() const;
 
     /**
      * Copies simpleviewers files into the export directory
      */
-    bool copySimpleViewer();
+    bool copySimpleViewer() const;
 
     /**
      * Is the SimpleViewer flash installed?
@@ -128,17 +128,17 @@ private:
      * Installs the SimpleViewer files for the later export
      * on the users machine
      */
-    bool installSimpleViewer();
+    bool installSimpleViewer() const;
 
-    bool upload();
+    bool upload() const;
 
-    bool unzip(const QString& url);
+    bool unzip(const QString& url) const;
 
-    bool openArchive(KZip& zip);
+    bool openArchive(KZip& zip) const;
 
-    bool extractArchive(KZip& zip);
+    bool extractArchive(KZip& zip) const;
 
-    bool extractFile(const KArchiveEntry* entry);
+    bool extractFile(const KArchiveEntry* entry) const;
 
 public Q_SLOTS:
 

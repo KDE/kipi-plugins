@@ -72,7 +72,7 @@ public:
 };
 
 GeneralPage::GeneralPage(QWidget* parent)
-           : QWidget(parent), d(new GeneralPagePriv)
+    : QWidget(parent), d(new GeneralPagePriv)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 

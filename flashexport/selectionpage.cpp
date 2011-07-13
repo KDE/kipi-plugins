@@ -51,7 +51,7 @@ public:
 };
 
 SelectionPage::SelectionPage(KIPI::Interface* interface, QWidget* parent)
-             : QWidget(parent), d(new SelectionPagePriv)
+    : QWidget(parent), d(new SelectionPagePriv)
 {
     QVBoxLayout* layout        = new QVBoxLayout(this);
     d->imageCollectionSelector = interface->imageCollectionSelector(this);

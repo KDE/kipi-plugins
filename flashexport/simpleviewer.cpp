@@ -108,7 +108,7 @@ public:
 };
 
 SimpleViewer::SimpleViewer(KIPI::Interface* interface, QObject* parent)
-            : QObject(parent), d(new SimpleViewerPriv)
+    : QObject(parent), d(new SimpleViewerPriv)
 {
     d->interface = interface;
 
@@ -229,7 +229,7 @@ void SimpleViewer::slotProcess()
         KToolInvocation::invokeBrowser(d->configDlg->settings().exportUrl.path());
 }
 
-bool SimpleViewer::createExportDirectories()
+bool SimpleViewer::createExportDirectories() const
 {
     delete d->tempDir;
     d->tempDir = new KTempDir(KStandardDirs::locateLocal("tmp", "flashexport"));
@@ -241,7 +241,7 @@ bool SimpleViewer::createExportDirectories()
     if(!KIO::NetAccess::mkdir(root, kapp->activeWindow()))
     {
         d->progressDlg->addedAction(i18n("Could not create folder '%1'", root.url()),
-                                   KIPIPlugins::ErrorMessage);
+                                    KIPIPlugins::ErrorMessage);
         return(false);
     }
 
@@ -259,7 +259,7 @@ bool SimpleViewer::createExportDirectories()
     if(!KIO::NetAccess::mkdir(imagesDir, kapp->activeWindow()))
     {
         d->progressDlg->addedAction(i18n("Could not create folder '%1'", imagesDir.url()),
-                                   KIPIPlugins::ErrorMessage);
+                                    KIPIPlugins::ErrorMessage);
         return(false);
     }
 
@@ -268,7 +268,7 @@ bool SimpleViewer::createExportDirectories()
     return true;
 }
 
-bool SimpleViewer::exportImages()
+bool SimpleViewer::exportImages() const
 {
     if(d->canceled)
         return false;
@@ -285,7 +285,8 @@ bool SimpleViewer::exportImages()
     xmlFile.addPath("/gallery.xml");
     QFile file(xmlFile.path());
     file.open(QIODevice::WriteOnly);
-// header of gallery.xml
+
+    // header of gallery.xml
     QDomDocument xmlDoc;
     xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QString::fromLatin1("xml"),
                        QString::fromLatin1("version=\"1.0\" encoding=\"UTF-8\"") ) );
@@ -396,7 +397,7 @@ bool SimpleViewer::exportImages()
     return true;
 }
 
-bool SimpleViewer::createThumbnail(const QImage& image, QImage& thumbnail)
+bool SimpleViewer::createThumbnail(const QImage& image, QImage& thumbnail) const
 {
     int w = image.width();
     int h = image.height();
@@ -420,7 +421,7 @@ bool SimpleViewer::createThumbnail(const QImage& image, QImage& thumbnail)
     return resizeImage(image, maxSize, thumbnail);
 }
 
-bool SimpleViewer::resizeImage(const QImage& image, int maxSize, QImage& resizedImage)
+bool SimpleViewer::resizeImage(const QImage& image, int maxSize, QImage& resizedImage) const
 {
     int w = image.width();
     int h = image.height();
@@ -447,7 +448,7 @@ bool SimpleViewer::resizeImage(const QImage& image, int maxSize, QImage& resized
 }
 
 void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
-                                     const KUrl& url, const QString& newName)
+                               const KUrl& url, const QString& newName) const
 {
     if(d->canceled)
         return;
@@ -477,7 +478,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     caption.appendChild(captiontxt);
 }
 
-bool SimpleViewer::createIndex()
+bool SimpleViewer::createIndex() const
 {
     if(d->canceled)
         return false;
@@ -516,7 +517,7 @@ bool SimpleViewer::createIndex()
     return true;
 }
 
-bool SimpleViewer::copySimpleViewer()
+bool SimpleViewer::copySimpleViewer() const
 {
     if(d->canceled)
         return false;
@@ -559,7 +560,7 @@ bool SimpleViewer::copySimpleViewer()
     return true;
 }
 
-bool SimpleViewer::upload()
+bool SimpleViewer::upload() const
 {
     if(d->canceled)
         return false;
@@ -574,7 +575,7 @@ bool SimpleViewer::upload()
     return true;
 }
 
-bool SimpleViewer::configure()
+bool SimpleViewer::configure() const
 {
     d->canceled = false;
 
@@ -627,7 +628,7 @@ bool SimpleViewer::checkSimpleViewer() const
     return ! KStandardDirs::locate("data", "kipiplugin_flashexport/simpleviewer/" + d->viewer).isEmpty();
 }
 
-bool SimpleViewer::installSimpleViewer()
+bool SimpleViewer::installSimpleViewer() const
 {
     QPointer<FirstRunDlg> firstRunDlg = new FirstRunDlg(kapp->activeWindow());
     if(firstRunDlg->exec() == QDialog::Accepted)
@@ -657,7 +658,7 @@ bool SimpleViewer::installSimpleViewer()
     return false;
 }
 
-bool SimpleViewer::unzip(const QString& url)
+bool SimpleViewer::unzip(const QString& url) const
 {
     KZip zip(url);
 
@@ -669,7 +670,7 @@ bool SimpleViewer::unzip(const QString& url)
     return extractArchive(zip);
 }
 
-bool SimpleViewer::openArchive(KZip& zip)
+bool SimpleViewer::openArchive(KZip& zip) const
 {
     if(!zip.open(QIODevice::ReadOnly))
     {
@@ -679,7 +680,7 @@ bool SimpleViewer::openArchive(KZip& zip)
     return true;
 }
 
-bool SimpleViewer::extractArchive(KZip& zip)
+bool SimpleViewer::extractArchive(KZip& zip) const
 {
     // read root directory content
     QStringList names = zip.directory()->entries();
@@ -716,7 +717,7 @@ bool SimpleViewer::extractArchive(KZip& zip)
     return true;
 }
 
-bool SimpleViewer::extractFile(const KArchiveEntry* entry)
+bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
 {
     if( !entry || !entry->isFile() )
         return false;

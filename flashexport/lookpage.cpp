@@ -71,9 +71,9 @@ public:
 };
 
 LookPage::LookPage(QWidget* parent)
-        : QWidget(parent), d(new LookPagePriv)
+    : QWidget(parent), d(new LookPagePriv)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
     // ------------------------------------------------------------------------
 

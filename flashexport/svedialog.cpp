@@ -69,22 +69,22 @@ public:
         interface      = 0;
     }
 
-    KPageWidgetItem*               page_selection;
-    KPageWidgetItem*               page_general;
-    KPageWidgetItem*               page_look;
+    KPageWidgetItem*              page_selection;
+    KPageWidgetItem*              page_general;
+    KPageWidgetItem*              page_look;
 
-    SelectionPage*                 selectionPage;
-    GeneralPage*                   generalPage;
-    LookPage*                      lookPage;
-    SimpleViewerSettingsContainer  settings;
+    SelectionPage*                selectionPage;
+    GeneralPage*                  generalPage;
+    LookPage*                     lookPage;
+    SimpleViewerSettingsContainer settings;
 
-    KIPIPlugins::KPAboutData*      about;
+    KIPIPlugins::KPAboutData*     about;
 
-    KIPI::Interface*               interface;
+    KIPI::Interface*              interface;
 };
 
 SVEDialog::SVEDialog(KIPI::Interface* interface, QWidget* parent)
-         : KPageDialog(parent), d(new SVEDialogPriv)
+    : KPageDialog(parent), d(new SVEDialogPriv)
 {
     d->interface = interface;
 
@@ -193,7 +193,7 @@ void SVEDialog::showPage(int page)
 
 int SVEDialog::activePageIndex()
 {
-    KPageWidgetItem *cur = currentPage();
+    KPageWidgetItem* cur = currentPage();
 
     if (cur == d->page_selection) return 0;
     if (cur == d->page_general)   return 1;

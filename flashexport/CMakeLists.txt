@@ -27,5 +27,5 @@ INSTALL(TARGETS kipiplugin_flashexport DESTINATION ${PLUGIN_INSTALL_DIR})
 
 INSTALL(FILES kipiplugin_flashexport.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
-INSTALL(FILES space.png      DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport/simpleviewer_html)
-INSTALL(FILES index.template DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport)
+INSTALL(FILES data/space.png      DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport/simpleviewer_html)
+INSTALL(FILES data/index.template DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_flashexport)

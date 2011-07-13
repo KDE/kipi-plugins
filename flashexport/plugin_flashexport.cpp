@@ -47,7 +47,7 @@ K_PLUGIN_FACTORY( FlashExportFactory, registerPlugin<Plugin_FlashExport>(); )
 K_EXPORT_PLUGIN ( FlashExportFactory("kipiplugin_flashexport") )
 
 Plugin_FlashExport::Plugin_FlashExport(QObject* parent, const QVariantList&)
-                  : KIPI::Plugin(FlashExportFactory::componentData(), parent, "FlashExport")
+    : KIPI::Plugin(FlashExportFactory::componentData(), parent, "FlashExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_FlashExport plugin loaded" ;
 }
@@ -76,15 +76,6 @@ void Plugin_FlashExport::setup(QWidget* widget)
     }
 }
 
-KIPI::Category Plugin_FlashExport::category( KAction* action ) const
-{
-    if ( action == m_actionFlashExport )
-       return KIPI::ExportPlugin;
-
-    kWarning() << "Unrecognized action for plugin category identification" ;
-    return KIPI::ExportPlugin; // no warning from compiler, please
-}
-
 void Plugin_FlashExport::slotActivate()
 {
     if ( !m_interface )
@@ -94,4 +85,13 @@ void Plugin_FlashExport::slotActivate()
     }
 
     KIPIFlashExportPlugin::SimpleViewer::run(m_interface, this);
+}
+
+KIPI::Category Plugin_FlashExport::category( KAction* action ) const
+{
+    if ( action == m_actionFlashExport )
+       return KIPI::ExportPlugin;
+
+    kWarning() << "Unrecognized action for plugin category identification" ;
+    return KIPI::ExportPlugin; // no warning from compiler, please
 }
