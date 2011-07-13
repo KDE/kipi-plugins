@@ -12,7 +12,7 @@ SET(KIPIPLUGINS_MINOR_VERSION "0")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2011-07-24")
+SET (KIPIPLUGINS_RELEASE_DATE "2011-07-27")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -384,6 +384,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(batchprocessimages)
     ADD_SUBDIRECTORY(rajceexport)
     ADD_SUBDIRECTORY(kmlexport)
+
+# GsOC 2011 : under devel.
 #    ADD_SUBDIRECTORY(panorama)
 
     # Plugins which are optional depencies.
