@@ -119,8 +119,8 @@ private:
 } /* KIPIGPSSyncPlugin */
 
 // TODO: ugly way to prevent double declaration of the metatype
-#ifndef KMAP_PRIMITIVES_H
+#ifndef KGEOMAP_PRIMITIVES_H
 Q_DECLARE_METATYPE(QPersistentModelIndex);
-#endif /* KMAP_PRIMITIVES_H */
+#endif /* KGEOMAP_PRIMITIVES_H */
 
 #endif /* KIPIIMAGEMODEL_H */

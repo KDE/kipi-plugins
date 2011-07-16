@@ -191,7 +191,7 @@ void TestGPXParsing::testFileLoading()
 
     KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
-    QCOMPARE(myCorrelatedItems.first().coordinates, KMap::GeoCoordinates::fromGeoUrl("geo:18,7,0"));
+    QCOMPARE(myCorrelatedItems.first().coordinates, KGeoMap::GeoCoordinates::fromGeoUrl("geo:18,7,0"));
     QCOMPARE(myCorrelatedItems.first().nSatellites, 3);
     QCOMPARE(myCorrelatedItems.first().hDop, 2.5);
     QCOMPARE(myCorrelatedItems.first().speed, 3.14);
@@ -254,7 +254,7 @@ void TestGPXParsing::testInterpolation()
 
     KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
-    QCOMPARE(myCorrelatedItems.first().coordinates, KMap::GeoCoordinates::fromGeoUrl("geo:17.5,0.5,3"));
+    QCOMPARE(myCorrelatedItems.first().coordinates, KGeoMap::GeoCoordinates::fromGeoUrl("geo:17.5,0.5,3"));
     QCOMPARE(myCorrelatedItems.first().nSatellites, -1);
     QCOMPARE(myCorrelatedItems.first().hDop, -1.0);
 }

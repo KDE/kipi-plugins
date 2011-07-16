@@ -30,9 +30,9 @@
 #include <QAbstractItemModel>
 #include <QWidget>
 
-// libkmap includes
+// libkgeomap includes
 
-#include <libkmap/modelhelper.h>
+#include <libkgeomap/modelhelper.h>
 
 // local includes
 
@@ -42,9 +42,9 @@ class QEvent;
 class QItemSelection;
 class KConfigGroup;
 
-namespace KMap
+namespace KGeoMap
 {
-    class KMapWidget;
+    class KGeoMapWidget;
 }
 
 namespace KIPIGPSSyncPlugin
@@ -92,7 +92,7 @@ private:
 };
 
 class SearchResultModelHelperPrivate;
-class SearchResultModelHelper : public KMap::ModelHelper
+class SearchResultModelHelper : public KGeoMap::ModelHelper
 {
 Q_OBJECT
 public:
@@ -104,7 +104,7 @@ public:
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
-    virtual bool itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const;
+    virtual bool itemCoordinates(const QModelIndex& index, KGeoMap::GeoCoordinates* const coordinates) const;
     virtual bool itemIcon(const QModelIndex& index, QPoint* const offset, QSize* const size, QPixmap* const pixmap, KUrl* const url) const;
     virtual Flags modelFlags() const;
     virtual Flags itemFlags(const QModelIndex& index) const;
@@ -128,11 +128,11 @@ public:
     SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner, KipiImageModel* const kipiImageModel, QItemSelectionModel* const kipiImageSelectionModel, QWidget* parent = 0);
     ~SearchWidget();
 
-    KMap::ModelHelper* getModelHelper();
+    KGeoMap::ModelHelper* getModelHelper();
     void saveSettingsToGroup(KConfigGroup* const group);
     void readSettingsFromGroup(const KConfigGroup* const group);
 
-    void setPrimaryMapWidget(KMap::KMapWidget* const mapWidget);
+    void setPrimaryMapWidget(KGeoMap::KGeoMapWidget* const mapWidget);
 
 private Q_SLOTS:
     void slotSearchCompleted();

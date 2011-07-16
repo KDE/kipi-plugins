@@ -35,9 +35,9 @@
 
 #include <QWidget>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
+#include <libkgeomap/kgeomap_primitives.h>
 
 // libkipi includes
 

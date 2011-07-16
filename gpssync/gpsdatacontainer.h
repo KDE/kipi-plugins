@@ -25,9 +25,9 @@
 #ifndef GPSDATACONTAINER_H
 #define GPSDATACONTAINER_H
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
+#include <libkgeomap/kgeomap_primitives.h>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -60,7 +60,7 @@ public:
 private:
 
     HasFlags m_hasFlags;
-    KMap::GeoCoordinates m_coordinates;
+    KGeoMap::GeoCoordinates m_coordinates;
     int m_nSatellites;
     qreal m_dop;
     int m_fixType;
@@ -126,12 +126,12 @@ public:
 
     /* coordinates */
 
-    inline KMap::GeoCoordinates getCoordinates() const
+    inline KGeoMap::GeoCoordinates getCoordinates() const
     {
         return m_coordinates;
     }
 
-    inline void setCoordinates(const KMap::GeoCoordinates& coordinates)
+    inline void setCoordinates(const KGeoMap::GeoCoordinates& coordinates)
     {
         m_coordinates = coordinates;
         if (coordinates.hasCoordinates())

@@ -7,7 +7,7 @@ TARGET_LINK_LIBRARIES(gpssync_test_gpxparsing
                         ${KDE4_KDECORE_LIBS}
                         ${QT_QTTEST_LIBRARY}
                         ${QT_QTGUI_LIBRARY}
-                        ${KMAP_LIBRARIES}
+                        ${KGEOMAP_LIBRARIES}
                      )
 
 KDE4_ADD_EXECUTABLE(gpssync_test_rgparsing
@@ -45,7 +45,7 @@ TARGET_LINK_LIBRARIES(gpssync_test_kipiimageitem
                       ${QT_QTTEST_LIBRARY}
                       ${QT_QTGUI_LIBRARY}
                       ${KEXIV2_LIBRARIES}
-                      ${KMAP_LIBRARIES}
+                      ${KGEOMAP_LIBRARIES}
                       ${KIPI_LIBRARIES}
                      )
 

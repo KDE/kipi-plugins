@@ -236,7 +236,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
             bool haveCoordinates = exiv2Iface->getGPSLatitudeNumber(&lat) && exiv2Iface->getGPSLongitudeNumber(&lng);
             if (haveCoordinates)
             {
-                KMap::GeoCoordinates coordinates(lat, lng);
+                KGeoMap::GeoCoordinates coordinates(lat, lng);
                 double alt;
                 if (exiv2Iface->getGPSAltitude(&alt))
                 {
@@ -492,7 +492,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
     return QVariant();
 }
 
-void KipiImageItem::setCoordinates(const KMap::GeoCoordinates& newCoordinates)
+void KipiImageItem::setCoordinates(const KGeoMap::GeoCoordinates& newCoordinates)
 {
     m_gpsData.setCoordinates(newCoordinates);
     m_dirty = true;

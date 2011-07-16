@@ -38,9 +38,9 @@
 
 #include <libkipi/interface.h>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
+#include <libkgeomap/kgeomap_primitives.h>
 
 // local includes
 
@@ -83,7 +83,7 @@ class RGInfo
     /**
      * The coordinates of current image.
      */ 
-    KMap::GeoCoordinates coordinates;
+    KGeoMap::GeoCoordinates coordinates;
 
     /**
      * The address elements and their names.
@@ -153,8 +153,8 @@ public:
 
     /// @name GPS related functions
     //@{
-    void setCoordinates(const KMap::GeoCoordinates& newCoordinates);
-    inline KMap::GeoCoordinates coordinates() const { return m_gpsData.getCoordinates(); }
+    void setCoordinates(const KGeoMap::GeoCoordinates& newCoordinates);
+    inline KGeoMap::GeoCoordinates coordinates() const { return m_gpsData.getCoordinates(); }
     inline GPSDataContainer gpsData() const { return m_gpsData; }
     inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
     void restoreGPSData(const GPSDataContainer& container);

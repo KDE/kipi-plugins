@@ -36,9 +36,9 @@
 
 #include <kurl.h>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
+#include <libkgeomap/kgeomap_primitives.h>
 
 namespace KIPIGPSSyncPlugin
 {
@@ -55,7 +55,7 @@ inline QString getKipiUserAgentName()
     return "KIPI-Plugins GPSSync - kde-imaging@kde.org";
 }
 
-inline void CoordinatesToClipboard(const KMap::GeoCoordinates& coordinates, const KUrl& url, const QString& title)
+inline void CoordinatesToClipboard(const KGeoMap::GeoCoordinates& coordinates, const KUrl& url, const QString& title)
 {
     const QString lat = coordinates.latString();
     const QString lon = coordinates.lonString();
