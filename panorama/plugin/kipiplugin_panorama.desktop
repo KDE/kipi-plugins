@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Panorama
 Name[da]=Panorama
+Name[is]=Panorama
 Name[nl]=Panorama
 Name[pt]=Panorama
 Name[pt_BR]=Panorama
@@ -10,6 +11,7 @@ Name[uk]=Панорама
 Name[x-test]=xxPanoramaxx
 Comment=A tool to assemble images as a panorama
 Comment[da]=Et værktøj til at samle billeder som et panorama
+Comment[is]=Verkfæri til að sauma margar myndir saman í eina víðmynd
 Comment[nl]=Een hulpmiddel om afbeeldingen samen te voegen tot een panorama
 Comment[pt]=Uma ferramenta para juntar imagens como um panorama
 Comment[pt_BR]=Uma ferramenta para montar imagens panorâmicas
