@@ -36,9 +36,9 @@
 
 #include <kurl.h>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
+#include <libkgeomap/kgeomap_primitives.h>
 
 class TestGPXParsing;
 
@@ -74,7 +74,7 @@ public:
         }
 
         QDateTime dateTime;
-        KMap::GeoCoordinates coordinates;
+        KGeoMap::GeoCoordinates coordinates;
         int nSatellites;
         qreal hDop;
         qreal pDop;
@@ -112,7 +112,7 @@ public:
         int fixType;
         qreal speed;
         GPXFlags flags;
-        KMap::GeoCoordinates coordinates;
+        KGeoMap::GeoCoordinates coordinates;
     };
 
     class GPXCorrelationOptions

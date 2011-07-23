@@ -79,10 +79,10 @@
 #include <kundostack.h>
 #include <kvbox.h>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_widget.h>
-#include <libkmap/itemmarkertiler.h>
+#include <libkgeomap/kgeomap_widget.h>
+#include <libkgeomap/itemmarkertiler.h>
 
 // Local includes
 
@@ -214,13 +214,13 @@ public:
     // map: UI
     MapLayout                                mapLayout;
     QSplitter                               *mapSplitter;
-    KMap::KMapWidget                        *mapWidget;
-    KMap::KMapWidget                        *mapWidget2;
+    KGeoMap::KGeoMapWidget                        *mapWidget;
+    KGeoMap::KGeoMapWidget                        *mapWidget2;
 
     // map: helpers
     MapDragDropHandler                      *mapDragDropHandler;
-    GPSSyncKMapModelHelper                  *mapModelHelper;
-    KMap::ItemMarkerTiler                   *kmapMarkerModel;
+    GPSSyncKGeoMapModelHelper                  *mapModelHelper;
+    KGeoMap::ItemMarkerTiler                   *kgeomapMarkerModel;
 
     // map: actions
     QAction                                 *sortActionOldestFirst;
@@ -255,11 +255,11 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->imageModel->setKipiInterface(d->interface);
     KipiImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
-    d->mapModelHelper = new GPSSyncKMapModelHelper(d->imageModel, d->selectionModel, this);
+    d->mapModelHelper = new GPSSyncKGeoMapModelHelper(d->imageModel, d->selectionModel, this);
     d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
     d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
-    d->kmapMarkerModel = new KMap::ItemMarkerTiler(d->mapModelHelper, this);
+    d->kgeomapMarkerModel = new KGeoMap::ItemMarkerTiler(d->mapModelHelper, this);
 
     d->actionBookmarkVisibility = new KAction(this);
     d->actionBookmarkVisibility->setIcon(KIcon("user-trash"));
@@ -799,7 +799,7 @@ void GPSSyncDialog::slotImageActivated(const QModelIndex& index)
     if (!item)
         return;
 
-    const KMap::GeoCoordinates imageCoordinates = item->coordinates();
+    const KGeoMap::GeoCoordinates imageCoordinates = item->coordinates();
     if (imageCoordinates.hasCoordinates())
     {
         d->mapWidget->setCenter(imageCoordinates);
@@ -833,20 +833,20 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
     slotSetUIEnabled(enabledState, 0, QString());
 }
 
-class GPSSyncKMapModelHelperPrivate
+class GPSSyncKGeoMapModelHelperPrivate
 {
 public:
-    GPSSyncKMapModelHelperPrivate()
+    GPSSyncKGeoMapModelHelperPrivate()
     {
     }
 
     KipiImageModel* model;
     QItemSelectionModel* selectionModel;
-    QList<KMap::ModelHelper*> ungroupedModelHelpers;
+    QList<KGeoMap::ModelHelper*> ungroupedModelHelpers;
 };
 
-GPSSyncKMapModelHelper::GPSSyncKMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent)
-: KMap::ModelHelper(parent), d(new GPSSyncKMapModelHelperPrivate())
+GPSSyncKGeoMapModelHelper::GPSSyncKGeoMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent)
+: KGeoMap::ModelHelper(parent), d(new GPSSyncKGeoMapModelHelperPrivate())
 {
     d->model = model;
     d->selectionModel = selectionModel;
@@ -858,17 +858,17 @@ GPSSyncKMapModelHelper::GPSSyncKMapModelHelper(KipiImageModel* const model, QIte
             this, SIGNAL(signalModelChangedDrastically()));
 }
 
-QAbstractItemModel* GPSSyncKMapModelHelper::model() const
+QAbstractItemModel* GPSSyncKGeoMapModelHelper::model() const
 {
     return d->model;
 }
 
-QItemSelectionModel* GPSSyncKMapModelHelper::selectionModel() const
+QItemSelectionModel* GPSSyncKGeoMapModelHelper::selectionModel() const
 {
     return d->selectionModel;
 }
 
-bool GPSSyncKMapModelHelper::itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const
+bool GPSSyncKGeoMapModelHelper::itemCoordinates(const QModelIndex& index, KGeoMap::GeoCoordinates* const coordinates) const
 {
     KipiImageItem* const item = d->model->itemFromIndex(index);
     if (!item)
@@ -883,16 +883,16 @@ bool GPSSyncKMapModelHelper::itemCoordinates(const QModelIndex& index, KMap::Geo
     return true;
 }
 
-GPSSyncKMapModelHelper::~GPSSyncKMapModelHelper()
+GPSSyncKGeoMapModelHelper::~GPSSyncKGeoMapModelHelper()
 {
 }
 
-QPixmap GPSSyncKMapModelHelper::pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size)
+QPixmap GPSSyncKGeoMapModelHelper::pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size)
 {
     return d->model->getPixmapForIndex(index, qMax(size.width(), size.height()));
 }
 
-QPersistentModelIndex GPSSyncKMapModelHelper::bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey)
+QPersistentModelIndex GPSSyncKGeoMapModelHelper::bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey)
 {
     const bool oldestFirst = sortKey & 1;
 
@@ -926,19 +926,19 @@ QPersistentModelIndex GPSSyncKMapModelHelper::bestRepresentativeIndexFromList(co
     return bestIndex;
 }
 
-void GPSSyncKMapModelHelper::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
+void GPSSyncKGeoMapModelHelper::slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap)
 {
     emit(signalThumbnailAvailableForIndex(index, pixmap));
 }
 
-void GPSSyncKMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex)
+void GPSSyncKGeoMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KGeoMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex)
 {
     if (targetSnapIndex.isValid())
     {
         const QAbstractItemModel* const targetModel = targetSnapIndex.model();
         for (int i=0; i<d->ungroupedModelHelpers.count(); ++i)
         {
-            KMap::ModelHelper* const ungroupedHelper = d->ungroupedModelHelpers.at(i);
+            KGeoMap::ModelHelper* const ungroupedHelper = d->ungroupedModelHelpers.at(i);
             if (ungroupedHelper->model()==targetModel)
             {
                 QList<QModelIndex> iMovedMarkers;
@@ -1103,7 +1103,7 @@ void GPSSyncDialog::slotBookmarkVisibilityToggled()
     d->bookmarkOwner->bookmarkModelHelper()->setVisible(d->actionBookmarkVisibility->isChecked());
 }
 
-void GPSSyncKMapModelHelper::addUngroupedModelHelper(KMap::ModelHelper* const newModelHelper)
+void GPSSyncKGeoMapModelHelper::addUngroupedModelHelper(KGeoMap::ModelHelper* const newModelHelper)
 {
     d->ungroupedModelHelpers << newModelHelper;
 }
@@ -1123,16 +1123,16 @@ void GPSSyncDialog::slotSetupChanged()
     adjustMapLayout(true);
 }
 
-KMap::KMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
+KGeoMap::KGeoMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
 {
     QWidget* const dummyWidget = new QWidget(this);
     QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
 
-    KMap::KMapWidget* const mapWidget = new KMap::KMapWidget(dummyWidget);
-    mapWidget->setAvailableMouseModes(KMap::MouseModePan|KMap::MouseModeZoomIntoGroup|KMap::MouseModeSelectThumbnail);
-    mapWidget->setVisibleMouseModes(KMap::MouseModePan|KMap::MouseModeZoomIntoGroup|KMap::MouseModeSelectThumbnail);
-    mapWidget->setMouseMode(KMap::MouseModeSelectThumbnail);
-    mapWidget->setGroupedModel(d->kmapMarkerModel);
+    KGeoMap::KGeoMapWidget* const mapWidget = new KGeoMap::KGeoMapWidget(dummyWidget);
+    mapWidget->setAvailableMouseModes(KGeoMap::MouseModePan|KGeoMap::MouseModeZoomIntoGroup|KGeoMap::MouseModeSelectThumbnail);
+    mapWidget->setVisibleMouseModes(KGeoMap::MouseModePan|KGeoMap::MouseModeZoomIntoGroup|KGeoMap::MouseModeSelectThumbnail);
+    mapWidget->setMouseMode(KGeoMap::MouseModeSelectThumbnail);
+    mapWidget->setGroupedModel(d->kgeomapMarkerModel);
     mapWidget->setDragDropHandler(d->mapDragDropHandler);
     mapWidget->addUngroupedModel(d->bookmarkOwner->bookmarkModelHelper());
     mapWidget->addUngroupedModel(d->searchWidget->getModelHelper());
@@ -1191,7 +1191,7 @@ void GPSSyncDialog::adjustMapLayout(const bool syncSettings)
     }
 }
 
-KMap::ModelHelper::Flags GPSSyncKMapModelHelper::modelFlags() const
+KGeoMap::ModelHelper::Flags GPSSyncKGeoMapModelHelper::modelFlags() const
 {
     return FlagMovable;
 }

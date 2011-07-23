@@ -55,9 +55,9 @@
 #include <kurl.h>
 #include <kvbox.h>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
+#include <libkgeomap/kgeomap_primitives.h>
 
 // local includes
 
@@ -493,7 +493,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
         RGInfo photoObj;
         photoObj.id = itemIndex;
-        photoObj.coordinates = KMap::GeoCoordinates(latitude, longitude);
+        photoObj.coordinates = KGeoMap::GeoCoordinates(latitude, longitude);
 
         photoList << photoObj;
 

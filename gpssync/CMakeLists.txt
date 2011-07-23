@@ -1,7 +1,7 @@
 SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(BEFORE "${CMAKE_CURRENT_SOURCE_DIR}/../")
-INCLUDE_DIRECTORIES(${KMAP_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${KGEOMAP_INCLUDE_DIR})
 
 SET(kipiplugin_gpssync_PART_SRCS
     gpssyncdialog.cpp
@@ -57,13 +57,13 @@ ENDIF (NOT ${KDE_VERSION} VERSION_GREATER "4.4.81")
 
 KDE4_ADD_PLUGIN(kipiplugin_gpssync ${kipiplugin_gpssync_PART_SRCS})
 
-# TODO: verify that the libkmap library is installed!
+# TODO: verify that the libkgeomap library is installed!
 TARGET_LINK_LIBRARIES(kipiplugin_gpssync
                       ${KDE4_KPARTS_LIBS}
                       ${KDE4_KHTML_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
-                      ${KMAP_LIBRARIES}
+                      ${KGEOMAP_LIBRARIES}
                       kipiplugins
                      )
 

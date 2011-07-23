@@ -5,7 +5,7 @@
  * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
  * @date   2010-03-22
- * @brief  Drag-and-drop handler for KMap integration.
+ * @brief  Drag-and-drop handler for KGeoMap integration.
  *
  * @author Copyright (C) 2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -35,8 +35,8 @@
 namespace KIPIGPSSyncPlugin
 {
 
-MapDragDropHandler::MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKMapModelHelper* const parent)
- : DragDropHandler(parent), model(pModel), gpsSyncKMapModelHelper(parent)
+MapDragDropHandler::MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKGeoMapModelHelper* const parent)
+ : DragDropHandler(parent), model(pModel), gpsSyncKGeoMapModelHelper(parent)
 {
 }
 
@@ -49,7 +49,7 @@ Qt::DropAction MapDragDropHandler::accepts(const QDropEvent* /*e*/)
     return Qt::CopyAction;
 }
 
-bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KMap::GeoCoordinates& dropCoordinates)
+bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KGeoMap::GeoCoordinates& dropCoordinates)
 {
     const MapDragData* const mimeData = qobject_cast<const MapDragData*>(e->mimeData());
     if (!mimeData)
@@ -65,7 +65,7 @@ bool MapDragDropHandler::dropEvent(const QDropEvent* e, const KMap::GeoCoordinat
             droppedIndices << itemIndex;
         }
     }
-    gpsSyncKMapModelHelper->onIndicesMoved(droppedIndices, dropCoordinates, QPersistentModelIndex());
+    gpsSyncKGeoMapModelHelper->onIndicesMoved(droppedIndices, dropCoordinates, QPersistentModelIndex());
 
     return true;
 }

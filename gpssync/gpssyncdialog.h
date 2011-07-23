@@ -39,18 +39,18 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
-#include <libkmap/modelhelper.h>
+#include <libkgeomap/kgeomap_primitives.h>
+#include <libkgeomap/modelhelper.h>
 
 // LibKIPI includes
 
 #include <libkipi/interface.h>
 
-namespace KMap
+namespace KGeoMap
 {
-    class KMapWidget;
+    class KGeoMapWidget;
 }
 
 namespace KIPIGPSSyncPlugin
@@ -61,28 +61,28 @@ class GPSUndoCommand;
 
 class GPSSyncDialogPriv;
 
-class GPSSyncKMapModelHelperPrivate;
+class GPSSyncKGeoMapModelHelperPrivate;
 
-class GPSSyncKMapModelHelper : public KMap::ModelHelper
+class GPSSyncKGeoMapModelHelper : public KGeoMap::ModelHelper
 {
 Q_OBJECT
 
 public:
 
-    GPSSyncKMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent = 0);
-    virtual ~GPSSyncKMapModelHelper();
+    GPSSyncKGeoMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent = 0);
+    virtual ~GPSSyncKGeoMapModelHelper();
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
-    virtual bool itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const;
+    virtual bool itemCoordinates(const QModelIndex& index, KGeoMap::GeoCoordinates* const coordinates) const;
     virtual Flags modelFlags() const;
 
     virtual QPixmap pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size);
     virtual QPersistentModelIndex bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey);
 
-    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
+    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KGeoMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
 
-    void addUngroupedModelHelper(KMap::ModelHelper* const newModelHelper);
+    void addUngroupedModelHelper(KGeoMap::ModelHelper* const newModelHelper);
 
 private Q_SLOTS:
 
@@ -93,7 +93,7 @@ Q_SIGNALS:
 
 private:
 
-    GPSSyncKMapModelHelperPrivate* const d;
+    GPSSyncKGeoMapModelHelperPrivate* const d;
 };
 
 // ------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ private:
     void readSettings();
     void saveSettings();
     void saveChanges(const bool closeAfterwards);
-    KMap::KMapWidget* makeMapWidget(QWidget** const pvbox);
+    KGeoMap::KGeoMapWidget* makeMapWidget(QWidget** const pvbox);
     void adjustMapLayout(const bool syncSettings);
 
 private Q_SLOTS:
