@@ -174,6 +174,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void slotGPXFilesReadyAt(int beginIndex, int endIndex);
+    void slotGPXFilesFinished();
     void slotThreadItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List& correlatedItems);
     void slotThreadFinished();
 

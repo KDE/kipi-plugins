@@ -90,6 +90,9 @@ void GPSDataParser::loadGPXFiles(const KUrl::List& urls)
 
     connect(d->gpxLoadFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
             this, SLOT(slotGPXFilesReadyAt(int, int)));
+    
+    connect(d->gpxLoadFutureWatcher, SIGNAL(finished()),
+            this, SLOT(slotGPXFilesFinished()));
 
     d->gpxLoadFuture = QtConcurrent::mapped(urls, GPXFileReader::loadGPXFile);
     d->gpxLoadFutureWatcher->setFuture(d->gpxLoadFuture);
@@ -117,14 +120,13 @@ void GPSDataParser::slotGPXFilesReadyAt(int beginIndex, int endIndex)
 
     // note that endIndex is exclusive!
     emit(signalGPXFilesReadyAt(nFilesBefore, d->gpxFileDataList.count()));
+}
 
-    // are all files done?
-    if (d->gpxLoadFuture.isFinished())
-    {
-        d->gpxLoadFutureWatcher->deleteLater();
+void GPSDataParser::slotGPXFilesFinished()
+{
+    d->gpxLoadFutureWatcher->deleteLater();
 
-        emit(signalAllGPXFilesReady());
-    }
+    emit(signalAllGPXFilesReady());
 }
 
 QDateTime GPXFileReader::ParseTime(QString timeString)
