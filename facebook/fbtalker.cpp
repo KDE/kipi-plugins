@@ -320,7 +320,7 @@ void FbTalker::doOAuth()
         }
         if( !m_accessToken.isEmpty() && errorCode.isEmpty() && errorReason.isEmpty() )
         {
-            return getUserInfo();
+            return getLoggedInUser();
         }
     }
 
