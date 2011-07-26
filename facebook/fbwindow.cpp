@@ -246,11 +246,11 @@ void FbWindow::readSettings()
     KConfig config("kipirc");
     KConfigGroup grp = config.group("Facebook Settings");
     m_accessToken    = grp.readEntry("Access Token");
+    m_sessionExpires = grp.readEntry("Session Expires", 0);
     if(m_accessToken.isEmpty())
     {
         m_sessionKey     = grp.readEntry("Session Key");
         m_sessionSecret  = grp.readEntry("Session Secret");
-        m_sessionExpires = grp.readEntry("Session Expires", 0);
     }
     m_currentAlbumID = grp.readEntry("Current Album", QString());
 

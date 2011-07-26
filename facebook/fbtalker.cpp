@@ -174,7 +174,11 @@ void FbTalker::authenticate(const QString &accessToken,
     m_loginInProgress = true;
 
     if (!accessToken.isEmpty()
-        && sessionExpires > (unsigned int)(time(0) + 900))
+        && (
+            sessionExpires == 0 ||
+            sessionExpires > (unsigned int)(time(0) + 900)
+           )
+       )
     {
         // sessionKey seems to be still valid for at least 15 minutes
         // - check if it still works
@@ -294,11 +298,14 @@ void FbTalker::doOAuth()
                 }
                 else if( ! keyvalue[0].compare( "expires_in" ) )
                 {
+                    m_sessionExpires = keyvalue[1].toUInt();
+                    if( m_sessionExpires != 0 ) {
 #if QT_VERSION >= 0x40700
-                    m_sessionExpires = QDateTime::currentMSecsSinceEpoch() / 1000 + keyvalue[1].toUInt();
+                        m_sessionExpires += QDateTime::currentMSecsSinceEpoch() / 1000;
 #else
-                    m_sessionExpires = QDateTime::currentDateTime().toTime_t() + keyvalue[1].toUInt();
+                        m_sessionExpires += QDateTime::currentDateTime().toTime_t();
 #endif
+                    }
                 }
                 else if( ! keyvalue[0].compare( "error_reason" ) )
                 {
@@ -990,11 +997,14 @@ void FbTalker::parseExchangeSession(const QByteArray& data)
     {
         QVariantMap session = result[0].toMap();
         m_accessToken       = session["access_token"].toString();
+        m_sessionExpires    = session["expires"].toUInt();
+        if( m_sessionExpires != 0 ) {
 #if QT_VERSION >= 0x40700
-        m_sessionExpires    = QDateTime::currentMSecsSinceEpoch() / 1000 + session["expires"].toUInt();
+            m_sessionExpires += QDateTime::currentMSecsSinceEpoch() / 1000;
 #else
-        m_sessionExpires    = QDateTime::currentDateTime().toTime_t() + session["expires"].toUInt();
+            m_sessionExpires += QDateTime::currentDateTime().toTime_t();
 #endif
+        }
         if( m_accessToken.isEmpty() )
             // Session did not convert. Reauthenticate.
             doOAuth();
