@@ -96,7 +96,6 @@ private:
     QLabel*                  m_userNameDisplayLbl;
     QLabel*                  m_permissionLbl;
     KPushButton*             m_changeUserBtn;
-    KPushButton*             m_changePermBtn;
 
     QButtonGroup*            m_dlGrp;
     KComboBox*               m_friendsCoB;

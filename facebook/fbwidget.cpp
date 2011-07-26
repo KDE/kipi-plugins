@@ -92,16 +92,12 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
     m_changeUserBtn         = new KPushButton(KGuiItem(i18n("Change Account"), "system-switch-user",
                                               i18n("Logout and change Facebook Account used for transfer")),
                                               accountBox);
-    m_changePermBtn         = new KPushButton(KGuiItem(i18n("Change Permission"), "security-high",
-                                              i18n("Change permission for KIPI application for photo upload")),
-                                              accountBox);
 
     accountBoxLayout->addWidget(userNameLbl,            0, 0, 1, 2);
     accountBoxLayout->addWidget(m_userNameDisplayLbl,   0, 2, 1, 2);
     accountBoxLayout->addWidget(permissionLbl,          1, 0, 1, 2);
     accountBoxLayout->addWidget(m_permissionLbl,        1, 2, 1, 2);
     accountBoxLayout->addWidget(m_changeUserBtn,        2, 0, 1, 2);
-    accountBoxLayout->addWidget(m_changePermBtn,        2, 2, 1, 2);
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
@@ -249,7 +245,6 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
         permissionLbl->hide();
         m_permissionLbl->hide();
-        m_changePermBtn->hide();
         m_newAlbumBtn->hide();
 
         optionsBox->hide();

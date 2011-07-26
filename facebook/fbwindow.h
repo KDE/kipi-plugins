@@ -86,7 +86,6 @@ private Q_SLOTS:
     void slotBusy(bool val);
     void slotLoginProgress(int step, int maxStep, const QString& label);
     void slotLoginDone(int errCode, const QString& errMsg);
-    void slotChangePermDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone(int errCode, const QString& errMsg);
     void slotGetPhotoDone(int errCode, const QString& errMsg,
                           const QByteArray& photoData);
@@ -100,7 +99,6 @@ private Q_SLOTS:
                              const QList<FbUser>& friendsList);
 
     void slotUserChangeRequest();
-    void slotPermChangeRequest();
     void slotReloadAlbumsRequest(long long userID);
     void slotNewAlbumRequest();
     void slotHelp();

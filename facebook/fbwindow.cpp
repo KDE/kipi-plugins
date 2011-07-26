@@ -112,9 +112,6 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
     connect(m_widget->m_changeUserBtn, SIGNAL( clicked() ),
             this, SLOT( slotUserChangeRequest()) );
 
-    connect(m_widget->m_changePermBtn, SIGNAL( clicked() ),
-            this, SLOT( slotPermChangeRequest()) );
-
     connect(m_widget->m_newAlbumBtn, SIGNAL( clicked() ),
             this, SLOT( slotNewAlbumRequest()) );
 
@@ -164,9 +161,6 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     connect(m_talker, SIGNAL( signalLoginDone(int, const QString&) ),
             this, SLOT( slotLoginDone(int, const QString&) ));
-
-    connect(m_talker, SIGNAL( signalChangePermDone(int, const QString&) ),
-            this, SLOT( slotChangePermDone(int, const QString&) ));
 
     connect(m_talker, SIGNAL( signalAddPhotoDone(int, const QString&) ),
             this, SLOT( slotAddPhotoDone(int, const QString&) ));
@@ -386,19 +380,6 @@ void FbWindow::slotLoginDone(int errCode, const QString& errMsg)
     }
 }
 
-void FbWindow::slotChangePermDone(int errCode, const QString& errMsg)
-{
-    if (errCode == 0)
-    {
-        FbUser user = m_talker->getUser();
-        m_widget->updateLabels(user.name, user.profileURL, user.uploadPerm);
-    }
-    else
-    {
-        KMessageBox::error(this, i18n("Facebook Call Failed: %1\n", errMsg));
-    }
-}
-
 void FbWindow::slotListAlbumsDone(int errCode, const QString& errMsg, const QList<FbAlbum>& albumsList)
 {
 
@@ -505,7 +486,6 @@ void FbWindow::slotListFriendsDone(int errCode, const QString& errMsg, const QLi
 
 void FbWindow::buttonStateChange(bool state)
 {
-    m_widget->m_changePermBtn->setEnabled(state);
     m_widget->m_newAlbumBtn->setEnabled(state);
     m_widget->m_reloadAlbumsBtn->setEnabled(state);
     enableButton(User1, state);
@@ -539,14 +519,6 @@ void FbWindow::slotUserChangeRequest()
     }
 
     authenticate();
-}
-
-void FbWindow::slotPermChangeRequest()
-{
-    kDebug() << "Slot Change Permission Request";
-
-    kDebug() << "Calling Login method";
-    m_talker->changePerm();
 }
 
 void FbWindow::slotReloadAlbumsRequest(long long userID)
