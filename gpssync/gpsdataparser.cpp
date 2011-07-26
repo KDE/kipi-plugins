@@ -322,7 +322,18 @@ void GPSDataParserThread::run()
                     break;
                 }
             }
-            currentIndices[f] = index;
+            
+            // Remember the last index which we searched in this file
+            // to save time when looking for matching times for the next
+            // item.
+            // However, we have to decrease the index by one:
+            // The current index should correspond to a time after the item,
+            // and index-1 should correspond to a time before the item. The next
+            // item may be before the time of the current index, and by decreasing
+            // the stored index by 1 we ensure that we start our search at an index
+            // corresponding to a time before the next item. Remember that the
+            // items are sorted by time!
+            currentIndices[f] = (index>1)?(index-1):0;
         }
 
         GPSDataParser::GPXCorrelation correlatedData = *it;
