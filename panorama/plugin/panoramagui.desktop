@@ -2,6 +2,7 @@
 [Desktop Entry]
 Categories=Qt;KDE;Graphics;
 Comment=A tool to assemble images as a panorama
+Comment[bg]=Инструмент за свързване на снимки в панорама
 Comment[da]=Et værktøj til at samle billeder som et panorama
 Comment[et]=Tööriist piltide koondamiseks panoraamina
 Comment[is]=Verkfæri til að sauma margar myndir saman í eina víðmynd
@@ -14,6 +15,7 @@ Comment[uk]=Інструмент для створення панорамних 
 Comment[x-test]=xxA tool to assemble images as a panoramaxx
 Exec=panoramagui %i -caption "%c" %U
 GenericName=Panorama
+GenericName[bg]=Панорама
 GenericName[da]=Panorama
 GenericName[et]=Panoraam
 GenericName[is]=Myndasamsetning
@@ -26,6 +28,7 @@ GenericName[uk]=Панорама
 GenericName[x-test]=xxPanoramaxx
 Icon=panorama
 Name=Panorama
+Name[bg]=Панорама
 Name[da]=Panorama
 Name[et]=Panoraam
 Name[is]=Panorama

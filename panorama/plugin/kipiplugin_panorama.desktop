@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Panorama
+Name[bg]=Панорама
 Name[da]=Panorama
 Name[et]=Panoraam
 Name[is]=Panorama
@@ -12,6 +13,7 @@ Name[sv]=Panorama
 Name[uk]=Панорама
 Name[x-test]=xxPanoramaxx
 Comment=A tool to assemble images as a panorama
+Comment[bg]=Инструмент за свързване на снимки в панорама
 Comment[da]=Et værktøj til at samle billeder som et panorama
 Comment[et]=Tööriist piltide koondamiseks panoraamina
 Comment[is]=Verkfæri til að sauma margar myndir saman í eina víðmynd

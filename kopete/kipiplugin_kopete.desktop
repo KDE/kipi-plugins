@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Instant Messaging Export
+Name[bg]=Изнасяне в моментни съобщения
 Name[bs]=Izvoz za instant poruke
 Name[ca]=Exportació a missatgeria instantània
 Name[ca@valencia]=Exportació a missatgeria instantània
@@ -24,6 +25,7 @@ Name[uk]=Експорт до мережі обміну повідомлення�
 Name[x-test]=xxInstant Messaging Exportxx
 Name[zh_TW]=即時訊息匯出
 Comment=A tool to export images to an instant messaging contact
+Comment[bg]=Инструмент за изнасяне на изображения към контакт в моментни съобщения
 Comment[bs]=Alat za izvoz slika za kontakte za instant poruke
 Comment[ca]=Una eina per exportar imatges a un contacte de missatgeria instantània
 Comment[ca@valencia]=Una eina per exportar imatges a un contacte de missatgeria instantània
