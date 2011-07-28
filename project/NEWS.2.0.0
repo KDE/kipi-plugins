@@ -1,4 +1,4 @@
-Kipi-plugins 2.0.0-rc - Release date: 2011/06/27
+Kipi-plugins 2.0.0 - Release date: 2011/07/24
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -59,5 +59,3 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 046 ==> 226296 : FlashExport, unable to install simple viewer.
 047 ==> 277661 : KIPI facebook exporter incompatible with Firefox 4 (solution: use .html extension not .php).
 048 ==> 278290 : GPS Correlator is disabled (grayed) after loading gpx files.
-049 ==> 
-
