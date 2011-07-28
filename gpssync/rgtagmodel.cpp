@@ -99,22 +99,22 @@ RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* cons
     i18n("{Hamlet}");
     i18n("{Street}");
 
-    connect(d->tagModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
-            this, SLOT(slotSourceDataChanged(const QModelIndex&, const QModelIndex&)));
+    connect(d->tagModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            this, SLOT(slotSourceDataChanged(QModelIndex,QModelIndex)));
 
-    connect(d->tagModel, SIGNAL(headerDataChanged(Qt::Orientation, int, int)),
-            this, SLOT(slotSourceHeaderDataChanged(Qt::Orientation, int, int)));
-    connect(d->tagModel, SIGNAL(columnsAboutToBeInserted(const QModelIndex&, int, int)),
-            this, SLOT(slotColumnsAboutToBeInserted(const QModelIndex&, int, int)));
-    connect(d->tagModel, SIGNAL(columnsAboutToBeMoved(const QModelIndex&, int,int,const QModelIndex&, int)),
-            this, SLOT(slotColumnsAboutToBeMoved(const QModelIndex&,int,int,const QModelIndex&, int)));
-    connect(d->tagModel, SIGNAL(columnsAboutToBeRemoved(const QModelIndex&, int, int)),
-            this, SLOT(slotColumnsAboutToBeRemoved(const QModelIndex&, int, int)));
-    connect(d->tagModel, SIGNAL(columnsInserted(const QModelIndex&, int, int)),
+    connect(d->tagModel, SIGNAL(headerDataChanged(Qt::Orientation,int,int)),
+            this, SLOT(slotSourceHeaderDataChanged(Qt::Orientation,int,int)));
+    connect(d->tagModel, SIGNAL(columnsAboutToBeInserted(QModelIndex,int,int)),
+            this, SLOT(slotColumnsAboutToBeInserted(QModelIndex,int,int)));
+    connect(d->tagModel, SIGNAL(columnsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)),
+            this, SLOT(slotColumnsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)));
+    connect(d->tagModel, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)),
+            this, SLOT(slotColumnsAboutToBeRemoved(QModelIndex,int,int)));
+    connect(d->tagModel, SIGNAL(columnsInserted(QModelIndex,int,int)),
             this, SLOT(slotColumnsInserted()));
-    connect(d->tagModel, SIGNAL(columnsMoved(const QModelIndex &, int, int, const QModelIndex &, int)),
+    connect(d->tagModel, SIGNAL(columnsMoved(QModelIndex,int,int,QModelIndex,int)),
             this, SLOT(slotColumnsMoved()));
-    connect(d->tagModel, SIGNAL(columnsRemoved(const QModelIndex &, int, int)),
+    connect(d->tagModel, SIGNAL(columnsRemoved(QModelIndex,int,int)),
             this, SLOT(slotColumnsRemoved()));
     connect(d->tagModel, SIGNAL(layoutAboutToBeChanged()),
             this, SLOT(slotLayoutAboutToBeChanged()));
@@ -122,18 +122,18 @@ RGTagModel::RGTagModel(QAbstractItemModel* const externalTagModel, QObject* cons
             this, SLOT(slotLayoutChanged()));
     connect(d->tagModel, SIGNAL(modelAboutToBeReset()),
             this, SLOT(slotModelAboutToBeReset()));
-    connect(d->tagModel, SIGNAL(rowsAboutToBeInserted(const QModelIndex&, int, int)),
-            this, SLOT(slotRowsAboutToBeInserted(const QModelIndex&, int, int)));
+    connect(d->tagModel, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)),
+            this, SLOT(slotRowsAboutToBeInserted(QModelIndex,int,int)));
 
-    connect(d->tagModel, SIGNAL(rowsAboutToBeMoved(const QModelIndex&, int,int,const QModelIndex&, int)),
-            this, SLOT(slotRowsAboutToBeMoved(const QModelIndex&,int,int,const QModelIndex&, int)));
-    connect(d->tagModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex&, int, int)),
-            this, SLOT(slotRowsAboutToBeRemoved(const QModelIndex&, int, int)));
-    connect(d->tagModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)),
+    connect(d->tagModel, SIGNAL(rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)),
+            this, SLOT(slotRowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)));
+    connect(d->tagModel, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
+            this, SLOT(slotRowsAboutToBeRemoved(QModelIndex,int,int)));
+    connect(d->tagModel, SIGNAL(rowsInserted(QModelIndex,int,int)),
             this, SLOT(slotRowsInserted()));
-    connect(d->tagModel, SIGNAL(rowsMoved(const QModelIndex &, int, int, const QModelIndex &, int)),
+    connect(d->tagModel, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
             this, SLOT(slotRowsMoved()));
-    connect(d->tagModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)),
+    connect(d->tagModel, SIGNAL(rowsRemoved(QModelIndex,int,int)),
             this, SLOT(slotRowsRemoved()));
 }
 

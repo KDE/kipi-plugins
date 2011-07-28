@@ -77,8 +77,8 @@ InputBoxNoCancel::InputBoxNoCancel(const QString& title, const QString& label, Q
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOkClicked()));
 
-    connect(d->stringEdit, SIGNAL(textChanged(const QString&)),
-            this, SLOT(slotTextChanged(const QString&)));
+    connect(d->stringEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(slotTextChanged(QString)));
 }
 
 InputBoxNoCancel::~InputBoxNoCancel()

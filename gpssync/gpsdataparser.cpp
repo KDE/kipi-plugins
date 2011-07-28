@@ -88,8 +88,8 @@ void GPSDataParser::loadGPXFiles(const KUrl::List& urls)
 {
     d->gpxLoadFutureWatcher = new QFutureWatcher<GPXFileData>(this);
 
-    connect(d->gpxLoadFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
-            this, SLOT(slotGPXFilesReadyAt(int, int)));
+    connect(d->gpxLoadFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
+            this, SLOT(slotGPXFilesReadyAt(int,int)));
     
     connect(d->gpxLoadFutureWatcher, SIGNAL(finished()),
             this, SLOT(slotGPXFilesFinished()));
@@ -186,8 +186,8 @@ void GPSDataParser::correlate(const GPXCorrelation::List& itemsToCorrelate, cons
     d->thread->fileList = d->gpxFileDataList;
     d->thread->itemsToCorrelate = itemsToCorrelate;
 
-    connect(d->thread, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)),
-            this, SLOT(slotThreadItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)), Qt::QueuedConnection);
+    connect(d->thread, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)),
+            this, SLOT(slotThreadItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)), Qt::QueuedConnection);
 
     connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()), Qt::QueuedConnection);

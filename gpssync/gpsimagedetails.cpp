@@ -192,8 +192,8 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
     connect(d->cbDop, SIGNAL(stateChanged(int)),
             this, SLOT(updateUIState()));
 
-    connect(d->imageModel, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
-            this, SLOT(slotModelDataChanged(const QModelIndex&, const QModelIndex&)));
+    connect(d->imageModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            this, SLOT(slotModelDataChanged(QModelIndex,QModelIndex)));
 
     connect(d->pbApply, SIGNAL(clicked()),
             this, SLOT(slotApply()));

@@ -214,11 +214,11 @@ SearchWidget::SearchWidget(GPSBookmarkOwner* const gpsBookmarkOwner,
     connect(d->searchTermLineEdit, SIGNAL(returnPressed()),
             this, SLOT(slotTriggerSearch()));
 
-    connect(d->searchTermLineEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->searchTermLineEdit, SIGNAL(textChanged(QString)),
             this, SLOT(slotUpdateActionAvailability()));
 
-    connect(d->searchResultsSelectionModel, SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-            this, SLOT(slotCurrentlySelectedResultChanged(const QModelIndex&, const QModelIndex&)));
+    connect(d->searchResultsSelectionModel, SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            this, SLOT(slotCurrentlySelectedResultChanged(QModelIndex,QModelIndex)));
 
     connect(d->actionClearResultsList, SIGNAL(triggered(bool)),
             this, SLOT(slotClearSearchResults()));

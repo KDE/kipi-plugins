@@ -654,8 +654,8 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
 
     d->altitudeLookup = KGeoMap::LookupFactory::getAltitudeLookup("geonames", this);
 
-    connect(d->altitudeLookup, SIGNAL(signalRequestsReady(const QList<int>&)),
-            this, SLOT(slotAltitudeLookupReady(const QList<int>&)));
+    connect(d->altitudeLookup, SIGNAL(signalRequestsReady(QList<int>)),
+            this, SLOT(slotAltitudeLookupReady(QList<int>)));
 
     connect(d->altitudeLookup, SIGNAL(signalDone()),
             this, SLOT(slotAltitudeLookupDone()));

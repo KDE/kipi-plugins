@@ -148,7 +148,7 @@ void TestGPXParsing::testFileLoading()
 
     GPSDataParser myParser;
 
-    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int, int)));
+    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int,int)));
     QSignalSpy spyAllDone(&myParser, SIGNAL(signalAllGPXFilesReady()));
     
     myParser.loadGPXFiles(fileList);
@@ -175,7 +175,7 @@ void TestGPXParsing::testFileLoading()
 
     QSignalSpy spyItemsFinished(&myParser, SIGNAL(signalAllItemsCorrelated()));
     QVERIFY(spyItemsFinished.isValid());
-    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)));
+    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)));
     QVERIFY(spyItemsCorrelated.isValid());
 
     GPSDataParser::GPXCorrelationOptions correlationOptions;
@@ -209,7 +209,7 @@ void TestGPXParsing::testInterpolation()
 
     GPSDataParser myParser;
 
-    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int, int)));
+    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int,int)));
     QSignalSpy spyAllDone(&myParser, SIGNAL(signalAllGPXFilesReady()));
 
     myParser.loadGPXFiles(fileList);
@@ -236,7 +236,7 @@ void TestGPXParsing::testInterpolation()
 
     QSignalSpy spyItemsFinished(&myParser, SIGNAL(signalAllItemsCorrelated()));
     QVERIFY(spyItemsFinished.isValid());
-    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)));
+    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)));
     QVERIFY(spyItemsCorrelated.isValid());
 
     GPSDataParser::GPXCorrelationOptions correlationOptions;

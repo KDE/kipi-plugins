@@ -128,8 +128,8 @@ void BackendOsmRG::nextPhoto()
     d->jobs.first().kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
     d->jobs.first().kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
-    connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
-            this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
+    connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*,QByteArray)), 
+            this, SLOT(dataIsHere(KIO::Job*,QByteArray)));
     connect(d->jobs.first().kioJob, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));    
 }

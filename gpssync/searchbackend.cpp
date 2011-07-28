@@ -86,8 +86,8 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
         d->kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
-        connect(d->kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)),
-                this, SLOT(slotData(KIO::Job*, const QByteArray&)));
+        connect(d->kioJob, SIGNAL(data(KIO::Job*,QByteArray)),
+                this, SLOT(slotData(KIO::Job*,QByteArray)));
 
         connect(d->kioJob, SIGNAL(result(KJob*)),
                 this, SLOT(slotResult(KJob*)));
@@ -108,8 +108,8 @@ bool SearchBackend::search(const QString& backendName, const QString& searchTerm
         d->kioJob = KIO::get(jobUrl, KIO::NoReload, KIO::HideProgressInfo);
         d->kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
-        connect(d->kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)),
-                this, SLOT(slotData(KIO::Job*, const QByteArray&)));
+        connect(d->kioJob, SIGNAL(data(KIO::Job*,QByteArray)),
+                this, SLOT(slotData(KIO::Job*,QByteArray)));
 
         connect(d->kioJob, SIGNAL(result(KJob*)),
                 this, SLOT(slotResult(KJob*)));

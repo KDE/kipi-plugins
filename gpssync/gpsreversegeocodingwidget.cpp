@@ -365,7 +365,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->buttonHideOptions, SIGNAL(clicked()),
             this, SLOT(slotHideOptions()));
 
-    connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
+    connect(d->selectionModel, SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             this, SLOT(updateUIState()));
 
     connect(d->actionAddCountry, SIGNAL(triggered(bool)),
@@ -419,7 +419,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->actionAddAllAddressElementsToTag, SIGNAL(triggered(bool)),
             this, SLOT(slotAddAllAddressElementsToTag()));
 
-    connect(d->imageModel, SIGNAL(dataChanged(QModelIndex, QModelIndex)),
+    connect(d->imageModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this, SLOT(slotRegenerateNewTags()));
 
     connect(d->actionRemoveTag, SIGNAL(triggered(bool)),
@@ -430,7 +430,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
-        connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
+        connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo>&)),
                 this, SLOT(slotRGReady(QList<RGInfo>&)));
     }
 

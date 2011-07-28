@@ -414,20 +414,20 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                         ki18n("Developer"),
                               "ping dot gabi at gmail dot com");
 
-    connect(d->treeView, SIGNAL(signalImageActivated(const QModelIndex&)),
-            this, SLOT(slotImageActivated(const QModelIndex&)));
+    connect(d->treeView, SIGNAL(signalImageActivated(QModelIndex)),
+            this, SLOT(slotImageActivated(QModelIndex)));
 
-    connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool)),
-            this, SLOT(slotSetUIEnabled(const bool)));
+    connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(bool)),
+            this, SLOT(slotSetUIEnabled(bool)));
 
-    connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(const bool, QObject* const, const QString&)),
-            this, SLOT(slotSetUIEnabled(const bool, QObject* const, const QString&)));
+    connect(d->correlatorWidget, SIGNAL(signalSetUIEnabled(bool,QObject*const,QString)),
+            this, SLOT(slotSetUIEnabled(bool,QObject*const,QString)));
 
-    connect(d->correlatorWidget, SIGNAL(signalProgressSetup(const int, const QString&)),
-            this, SLOT(slotProgressSetup(const int, const QString&)));
+    connect(d->correlatorWidget, SIGNAL(signalProgressSetup(int,QString)),
+            this, SLOT(slotProgressSetup(int,QString)));
 
-    connect(d->correlatorWidget, SIGNAL(signalProgressChanged(const int)),
-            this, SLOT(slotProgressChanged(const int)));
+    connect(d->correlatorWidget, SIGNAL(signalProgressChanged(int)),
+            this, SLOT(slotProgressChanged(int)));
 
     connect(d->correlatorWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
@@ -435,17 +435,17 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->mapModelHelper, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
-    connect(d->rgWidget, SIGNAL(signalSetUIEnabled(const bool)),
-            this, SLOT(slotSetUIEnabled(const bool)));
+    connect(d->rgWidget, SIGNAL(signalSetUIEnabled(bool)),
+            this, SLOT(slotSetUIEnabled(bool)));
 
-    connect(d->rgWidget, SIGNAL(signalSetUIEnabled(const bool, QObject* const, const QString&)),
-            this, SLOT(slotSetUIEnabled(const bool, QObject* const, const QString&)));
+    connect(d->rgWidget, SIGNAL(signalSetUIEnabled(bool,QObject*const,QString)),
+            this, SLOT(slotSetUIEnabled(bool,QObject*const,QString)));
 
-    connect(d->rgWidget, SIGNAL(signalProgressSetup(const int, const QString&)),
-            this, SLOT(slotProgressSetup(const int, const QString&)));
+    connect(d->rgWidget, SIGNAL(signalProgressSetup(int,QString)),
+            this, SLOT(slotProgressSetup(int,QString)));
 
-    connect(d->rgWidget, SIGNAL(signalProgressChanged(const int)),
-            this, SLOT(slotProgressChanged(const int)));
+    connect(d->rgWidget, SIGNAL(signalProgressChanged(int)),
+            this, SLOT(slotProgressChanged(int)));
 
     connect(d->rgWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
@@ -453,17 +453,17 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->searchWidget, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
 
-    connect(d->listViewContextMenu, SIGNAL(signalSetUIEnabled(const bool)),
-            this, SLOT(slotSetUIEnabled(const bool)));
+    connect(d->listViewContextMenu, SIGNAL(signalSetUIEnabled(bool)),
+            this, SLOT(slotSetUIEnabled(bool)));
 
-    connect(d->listViewContextMenu, SIGNAL(signalSetUIEnabled(const bool, QObject* const, const QString&)),
-            this, SLOT(slotSetUIEnabled(const bool, QObject* const, const QString&)));
+    connect(d->listViewContextMenu, SIGNAL(signalSetUIEnabled(bool,QObject*const,QString)),
+            this, SLOT(slotSetUIEnabled(bool,QObject*const,QString)));
 
-    connect(d->listViewContextMenu, SIGNAL(signalProgressSetup(const int, const QString&)),
-            this, SLOT(slotProgressSetup(const int, const QString&)));
+    connect(d->listViewContextMenu, SIGNAL(signalProgressSetup(int,QString)),
+            this, SLOT(slotProgressSetup(int,QString)));
 
-    connect(d->listViewContextMenu, SIGNAL(signalProgressChanged(const int)),
-            this, SLOT(slotProgressChanged(const int)));
+    connect(d->listViewContextMenu, SIGNAL(signalProgressChanged(int)),
+            this, SLOT(slotProgressChanged(int)));
 
     connect(d->listViewContextMenu, SIGNAL(signalUndoCommand(GPSUndoCommand*)),
             this, SLOT(slotGPSUndoCommand(GPSUndoCommand*)));
@@ -585,8 +585,8 @@ void GPSSyncDialog::setImages(const KUrl::List& images)
     d->fileIOCountDone = 0;
     d->fileIOCountTotal = imagesToLoad.count();
     d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
-    connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
-            this, SLOT(slotFileMetadataLoaded(int, int)));
+    connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
+            this, SLOT(slotFileMetadataLoaded(int,int)));
 
     d->fileIOFuture = QtConcurrent::mapped(imagesToLoad, LoadFileMetadataHelper(d->imageModel));
     d->fileIOFutureWatcher->setFuture(d->fileIOFuture);
@@ -851,10 +851,10 @@ GPSSyncKGeoMapModelHelper::GPSSyncKGeoMapModelHelper(KipiImageModel* const model
     d->model = model;
     d->selectionModel = selectionModel;
 
-    connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(const QPersistentModelIndex&, const QPixmap&)),
-            this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
+    connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(QPersistentModelIndex,QPixmap)),
+            this, SLOT(slotThumbnailFromModel(QPersistentModelIndex,QPixmap)));
 
-    connect(d->model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
+    connect(d->model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this, SIGNAL(signalModelChangedDrastically()));
 }
 
@@ -1012,8 +1012,8 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
     d->fileIOCountTotal = dirtyImages.count();
     d->fileIOCloseAfterSaving = closeAfterwards;
     d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
-    connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
-            this, SLOT(slotFileChangesSaved(int, int)));
+    connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
+            this, SLOT(slotFileChangesSaved(int,int)));
 
     d->fileIOFuture = QtConcurrent::mapped(dirtyImages, SaveChangedImagesHelper(d->imageModel));
     d->fileIOFutureWatcher->setFuture(d->fileIOFuture);

@@ -195,7 +195,7 @@ GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkM
     connect(d->bookmarkManager, SIGNAL(bookmarksChanged(QString)),
             this, SLOT(slotUpdateBookmarksModel()));
 
-    connect(d->bookmarkManager, SIGNAL(changed(const QString&, const QString&)),
+    connect(d->bookmarkManager, SIGNAL(changed(QString,QString)),
             this, SLOT(slotUpdateBookmarksModel()));
 
     slotUpdateBookmarksModel();

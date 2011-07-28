@@ -262,11 +262,11 @@ QPixmap KipiImageModel::getPixmapForIndex(const QPersistentModelIndex& itemIndex
     {
 //         KIO::PreviewJob *job = KIO::filePreview(urls, DEFAULTSIZE);
 //
-//         connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-//                 this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+//         connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
+//                 this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
 //
-//         connect(job, SIGNAL(failed(const KFileItem&)),
-//                 this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
+//         connect(job, SIGNAL(failed(KFileItem)),
+//                 this, SLOT(slotKDEPreviewFailed(KFileItem)));
     }
 
     return QPixmap();
@@ -340,8 +340,8 @@ void KipiImageModel::setKipiInterface(KIPI::Interface* const interface)
 {
     d->interface = interface;
 
-    connect(d->interface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
-            this, SLOT(slotThumbnailFromInterface(const KUrl&, const QPixmap&)));
+    connect(d->interface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+            this, SLOT(slotThumbnailFromInterface(KUrl,QPixmap)));
 }
 
 class KipiImageSortProxyModelPrivate
