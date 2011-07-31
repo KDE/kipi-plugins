@@ -240,22 +240,22 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     connect(this, SIGNAL(user3Clicked()),
             this, SLOT(slotAbort()));
 
-    connect(d->mngr->thread(), SIGNAL(starting(const KIPIExpoBlendingPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(starting(KIPIExpoBlendingPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->bracketStack, SIGNAL(signalAddItems(const KUrl::List&)),
-            this, SLOT(slotAddItems(const KUrl::List&)));
+    connect(d->bracketStack, SIGNAL(signalAddItems(KUrl::List)),
+            this, SLOT(slotAddItems(KUrl::List)));
 
     connect(d->previewWidget, SIGNAL(signalButtonClicked()),
             this, SLOT(slotPreviewButtonClicked()));
 
-    connect(d->enfuseStack, SIGNAL(signalItemClicked(const KUrl&)),
-            this, SLOT(slotLoadProcessed(const KUrl&)));
+    connect(d->enfuseStack, SIGNAL(signalItemClicked(KUrl)),
+            this, SLOT(slotLoadProcessed(KUrl)));
 
-    connect(d->templateFileName, SIGNAL(textChanged(const QString&)),
+    connect(d->templateFileName, SIGNAL(textChanged(QString)),
             this, SLOT(slotFileFormatChanged()));
 
     connect(d->saveSettingsBox, SIGNAL(signalSaveFormatChanged()),

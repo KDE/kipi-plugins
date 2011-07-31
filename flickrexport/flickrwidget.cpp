@@ -355,8 +355,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     connect(m_resizeCheckBox, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
 
-    connect(m_imglst, SIGNAL(signalPermissionChanged(FlickrList::FieldType, Qt::CheckState)),
-            this, SLOT(slotPermissionChanged(FlickrList::FieldType, Qt::CheckState)));
+    connect(m_imglst, SIGNAL(signalPermissionChanged(FlickrList::FieldType,Qt::CheckState)),
+            this, SLOT(slotPermissionChanged(FlickrList::FieldType,Qt::CheckState)));
 
     connect(m_publicCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotMainPublicToggled(int)));

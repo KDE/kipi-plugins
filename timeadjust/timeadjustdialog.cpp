@@ -369,10 +369,10 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->useMetaDateTypeChooser, SIGNAL(currentIndexChanged(int)),
             this, SLOT(slotSrcTimestampChanged()));
 
-    connect(d->useCustDateInput, SIGNAL(dateChanged(const QDate&)),
+    connect(d->useCustDateInput, SIGNAL(dateChanged(QDate)),
             this, SLOT(slotUpdateExample()));
 
-    connect(d->useCustTimeInput, SIGNAL(timeChanged (const QTime&)),
+    connect(d->useCustTimeInput, SIGNAL(timeChanged(QTime)),
             this, SLOT(slotUpdateExample()));
 
     connect(d->adjTypeChooser, SIGNAL(currentIndexChanged(int)),
@@ -381,7 +381,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->adjDaysInput, SIGNAL(valueChanged(int)),
             this, SLOT(slotUpdateExample()));
 
-    connect(d->adjTimeInput, SIGNAL(timeChanged(const QTime&)),
+    connect(d->adjTimeInput, SIGNAL(timeChanged(QTime)),
             this, SLOT(slotUpdateExample()));
 
     connect(d->useCustomDateTodayBtn, SIGNAL(clicked()),

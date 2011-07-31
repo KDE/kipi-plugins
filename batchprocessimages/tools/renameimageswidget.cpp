@@ -105,13 +105,13 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
                   "[B:4..-2] - base name (big one - all before last ',', from 4-th to one before last characters)\n"
                   "[b-:-3..] - base name (small one - all before first '.', last 3 characters)");
 
-    connect(ui->m_listView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
+    connect(ui->m_listView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
             this, SLOT(slotListViewDoubleClicked(QTreeWidgetItem*)));
 
-    connect(ui->m_listView, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
+    connect(ui->m_listView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
             this, SLOT(slotImageSelected(QTreeWidgetItem*)));
 
-    connect(ui->m_prefixEdit, SIGNAL(textChanged(const QString&)),
+    connect(ui->m_prefixEdit, SIGNAL(textChanged(QString)),
             this, SLOT(slotOptionsChanged()));
 
     connect(ui->m_seqSpin, SIGNAL(valueChanged(int)),
@@ -129,7 +129,7 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
     connect(ui->m_formatDateCheck, SIGNAL(toggled(bool)),
             this, SLOT(slotOptionsChanged()));
 
-    connect(ui->m_formatDateEdit, SIGNAL(textChanged(const QString&)),
+    connect(ui->m_formatDateEdit, SIGNAL(textChanged(QString)),
             this, SLOT(slotOptionsChanged()));
 
     connect(ui->m_addButton, SIGNAL(clicked()),
@@ -155,8 +155,8 @@ RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interfa
     connect(m_timer, SIGNAL(timeout()),
             this, SLOT(slotNext()));
 
-    connect(m_interface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
-            this, SLOT(slotGotPreview(const KUrl&, const QPixmap&)));
+    connect(m_interface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+            this, SLOT(slotGotPreview(KUrl,QPixmap)));
 
     kDebug() << m_urlList;
     for (KUrl::List::iterator it = m_urlList.begin();

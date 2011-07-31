@@ -92,14 +92,14 @@ DsWindow::DsWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
 
     // ------------------------------------------------------------------------
 
-    connect(m_widget->m_imgList, SIGNAL( signalImageListChanged()),
-            this, SLOT( slotMaybeEnableUser1()) );
+    connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotMaybeEnableUser1()) );
 
     connect(m_widget, SIGNAL(requiredPackageInfoAvailable(bool)),
             this, SLOT(slotRequiredPackageInfoAvailableReceived(bool)));
 
-    connect(this, SIGNAL( user1Clicked() ),
-            this, SLOT( slotStartTransfer()) );
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotStartTransfer()) );
 
     // ------------------------------------------------------------------------
 
@@ -112,8 +112,8 @@ DsWindow::DsWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget
     m_about->addAuthor(ki18n("Pau Garcia i Quiles"), ki18n("Author and maintainer"),
                        "pgquiles at elpauer dot org");
 
-    disconnect(this, SIGNAL( helpClicked() ),
-               this, SLOT( slotHelp()) );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()) );
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());

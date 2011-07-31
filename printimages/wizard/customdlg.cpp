@@ -40,8 +40,8 @@ CustomLayoutDlg::CustomLayoutDlg ( QWidget* parent )
 {
     setupUi ( this );
 
-    connect ( m_doneButton, SIGNAL ( clicked() ),
-              this, SLOT ( accept() ) );
+    connect ( m_doneButton, SIGNAL (clicked()),
+              this, SLOT (accept()) );
 
     m_photoGridCheck->setToolTip(i18n("Choose your grid size"));
     m_photoGridCheck->setWhatsThis(i18n("Choose your grid size"));

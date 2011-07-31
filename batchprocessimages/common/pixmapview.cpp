@@ -135,7 +135,7 @@ void PixmapView::PreviewCal(const QString& ImagePath, const QString& /*tmpPath*/
     *m_PreviewProc << m_previewFileName;
     m_previewOutput.append(" -verbose " + ImagePath + ' ' + m_previewFileName + "\n\n");
 
-    connect(m_PreviewProc, SIGNAL(finished(int, QProcess::ExitStatus)),
+    connect(m_PreviewProc, SIGNAL(finished(int,QProcess::ExitStatus)),
             this, SLOT(slotPreviewProcessFinished()));
 
     connect(m_PreviewProc, SIGNAL(readyRead()),

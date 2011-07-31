@@ -276,34 +276,34 @@ XMPCredits::XMPCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->bylineTitleEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->bylineTitleEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->emailEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->emailEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->urlEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->urlEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->phoneEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->phoneEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->addressEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->addressEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->postalCodeEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->postalCodeEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->cityEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->cityEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->countryEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->countryEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->creditEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->creditEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->sourceEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->sourceEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

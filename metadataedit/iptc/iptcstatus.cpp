@@ -183,13 +183,13 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->objectNameEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->objectNameEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->statusEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->statusEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->JobIDEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->JobIDEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
     connect(d->specialInstructionEdit, SIGNAL(textChanged()),

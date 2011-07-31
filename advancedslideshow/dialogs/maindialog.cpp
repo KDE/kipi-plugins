@@ -350,8 +350,8 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
     KUrl url;
     url.setPath(pitem->url().path());
 
-    connect(m_sharedData->iface(), SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
-            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+    connect(m_sharedData->iface(), SIGNAL(gotThumbnail(KUrl,QPixmap)),
+            this, SLOT(slotThumbnail(KUrl,QPixmap)));
 
     m_sharedData->iface()->thumbnail(url, ICONSIZE);
 
@@ -517,11 +517,11 @@ void MainDialog::setupConnections()
     connect(m_effectsComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEffectChanged()));
 
-    connect(m_ImagesFilesListBox, SIGNAL( signalImageListChanged() ),
-            this, SLOT( slotImageListChanged() ));
+    connect(m_ImagesFilesListBox, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()));
 
-    connect(m_ImagesFilesListBox, SIGNAL( signalItemClicked(QTreeWidgetItem*) ),
-            this, SLOT( slotImagesFilesSelected(QTreeWidgetItem*) ));
+    connect(m_ImagesFilesListBox, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
+            this, SLOT(slotImagesFilesSelected(QTreeWidgetItem*)));
 
     if (m_sharedData->showSelectedFilesOnly)
     {

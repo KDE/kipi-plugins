@@ -86,8 +86,8 @@ namespace KIPIPicasawebExportPlugin
 PicasawebTalker::PicasawebTalker( QWidget* parent )
                : m_parent( parent ),  m_job( 0 )
     {
-        connect(this, SIGNAL(signalError(const QString&)),
-                this, SLOT(slotError(const QString&)));
+        connect(this, SIGNAL(signalError(QString)),
+                this, SLOT(slotError(QString)));
     }
 
 PicasawebTalker::~PicasawebTalker()
@@ -142,11 +142,11 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     m_state = FE_GETTOKEN;
     emit signalLoginProgress(1, 2, "Getting the token");
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_job = job;
     m_buffer.resize(0);
@@ -187,11 +187,11 @@ void PicasawebTalker::checkToken(const QString& token)
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_CHECKTOKEN;
     emit signalLoginProgress(1, 2, "Checking if previous token is still valid");
@@ -226,11 +226,11 @@ void PicasawebTalker::listAlbums(const QString& username)
         job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
     }
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_LISTALBUMS;
     m_job   = job;
@@ -259,11 +259,11 @@ void PicasawebTalker::listPhotos(const QString& username,
         job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
     }
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_LISTPHOTOS;
     m_job   = job;
@@ -334,11 +334,11 @@ void PicasawebTalker::createAlbum(const PicasaWebAlbum& album)
     job->addMetaData("content-length", QString("Content-Length: %1").arg(buffer.length()));
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string ); 
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_CREATEALBUM;
     m_job   = job;
@@ -412,11 +412,11 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
     job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
     job->addMetaData("customHTTPHeader", "Authorization: " + auth_string + "\nMIME-version: 1.0" );
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_ADDPHOTO;
     m_job   = job;
@@ -489,11 +489,11 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info
 
     m_jobData.insert(job, form.formData());
 
-    connect(job, SIGNAL(dataReq(KIO::Job*, QByteArray&)),
-            this, SLOT(dataReq(KIO::Job*, QByteArray&)));
+    connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
+            this, SLOT(dataReq(KIO::Job*,QByteArray&)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_UPDATEPHOTO;
     m_job   = job;
@@ -514,8 +514,8 @@ void PicasawebTalker::getPhoto(const QString& imgPath)
     KIO::TransferJob* job = KIO::get(imgPath, KIO::Reload, KIO::HideProgressInfo);
     //job->addMetaData("customHTTPHeader", "Authorization: " + auth_string );
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));

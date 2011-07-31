@@ -205,13 +205,13 @@ IPTCCredits::IPTCCredits(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->copyrightEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->copyrightEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->creditEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->creditEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->sourceEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->sourceEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

@@ -104,8 +104,8 @@ void Plugin_AdvancedSlideshow::setup(QWidget* widget)
 
     m_urlList = KUrl::List();
 
-    connect(m_interface, SIGNAL( currentAlbumChanged( bool )),
-            this, SLOT( slotAlbumChanged( bool )));
+    connect(m_interface, SIGNAL(currentAlbumChanged(bool)),
+            this, SLOT(slotAlbumChanged(bool)));
 
     if (m_interface->currentAlbum().isValid())
     {

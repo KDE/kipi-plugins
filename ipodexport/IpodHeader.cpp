@@ -103,8 +103,8 @@ void IpodHeader::setNoIpod()
 
     m_button->disconnect();
 
-    connect(m_button, SIGNAL( clicked() ),
-            this, SIGNAL( refreshDevices() ));
+    connect(m_button, SIGNAL(clicked()),
+            this, SIGNAL(refreshDevices()));
 }
 
 void IpodHeader::setIncompatibleIpod()
@@ -124,8 +124,8 @@ void IpodHeader::setIncompatibleIpod()
 
     m_button->disconnect();
 
-    connect(m_button, SIGNAL( clicked() ),
-            this, SIGNAL( updateSysInfo() ));
+    connect(m_button, SIGNAL(clicked()),
+            this, SIGNAL(updateSysInfo()));
 }
 
 void IpodHeader::setValidIpod()

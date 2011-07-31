@@ -136,8 +136,8 @@ QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
 
     // To keep track of the item being edited, the m_rowEdited parameter should
     // be reset when the editor is destroyed.
-    connect(cb, SIGNAL(destroyed(QObject *)),
-            this, SLOT(slotResetEditedState(QObject *)));
+    connect(cb, SIGNAL(destroyed(QObject*)),
+            this, SLOT(slotResetEditedState(QObject*)));
 
     return cb;
 }

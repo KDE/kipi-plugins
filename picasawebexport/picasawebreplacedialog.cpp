@@ -177,8 +177,8 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _
     // get source thumbnail
     if (d->iface && d->src.isValid())
     {
-        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+                this, SLOT(slotThumbnail(KUrl,QPixmap)));
 
         d->iface->thumbnail(d->src, KIconLoader::SizeLarge);
     }
@@ -191,11 +191,11 @@ PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _
         KIO::TransferJob* job = KIO::get(d->dest, KIO::NoReload, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
 
-        connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-                this, SLOT(slotData(KIO::Job*, const QByteArray&)));
+        connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+                this, SLOT(slotData(KIO::Job*,QByteArray)));
 
-        connect(job, SIGNAL(result(KJob *)),
-                this, SLOT(slotResult(KJob *)));
+        connect(job, SIGNAL(result(KJob*)),
+                this, SLOT(slotResult(KJob*)));
     }
 
     resize(sizeHint());

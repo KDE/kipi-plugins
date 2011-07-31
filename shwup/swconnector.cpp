@@ -175,8 +175,8 @@ void SwConnector::setupRequest(KIO::TransferJob* job, const QString& requestPath
 
     job->addMetaData("customHTTPHeader", customHeader);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -204,8 +204,8 @@ void SwConnector::getRestServiceURL()
     KIO::TransferJob* job = KIO::get(m_apiStartURL, KIO::Reload, KIO::HideProgressInfo);
     setupRequest(job, KUrl(m_apiStartURL).path(), method, md5, type, length, false); // initial request will NOT send password
 
-    connect(job, SIGNAL(redirection(KIO::Job*,  const KUrl&)),
-            this, SLOT(slotRequestRestURLRedirection(KIO::Job*, const KUrl&)));
+    connect(job, SIGNAL(redirection(KIO::Job*,KUrl)),
+            this, SLOT(slotRequestRestURLRedirection(KIO::Job*,KUrl)));
 
     m_job   = job;
     m_buffer.resize(0);

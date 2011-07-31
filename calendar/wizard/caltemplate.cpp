@@ -46,8 +46,8 @@ CalTemplate::CalTemplate(QWidget* parent)
 
     ui.calendarWidget->recreate();
 
-    connect(ui.paperSizeCombo, SIGNAL(currentIndexChanged(const QString&)),
-            settings, SLOT(setPaperSize(const QString&)));
+    connect(ui.paperSizeCombo, SIGNAL(currentIndexChanged(QString)),
+            settings, SLOT(setPaperSize(QString)));
 
     connect(ui.imagePosButtonGroup, SIGNAL(changed(int)),
             settings, SLOT(setImagePos(int)));
@@ -58,8 +58,8 @@ CalTemplate::CalTemplate(QWidget* parent)
     connect(ui.ratioSlider, SIGNAL(valueChanged(int)),
             settings, SLOT(setRatio(int)));
 
-    connect(ui.fontCombo, SIGNAL(currentIndexChanged(const QString&)),
-            settings, SLOT(setFont(const QString&)));
+    connect(ui.fontCombo, SIGNAL(currentIndexChanged(QString)),
+            settings, SLOT(setFont(QString)));
 
     connect(settings, SIGNAL(settingsChanged()),
             ui.calendarWidget, SLOT(recreate()));

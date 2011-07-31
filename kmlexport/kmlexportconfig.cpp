@@ -267,11 +267,11 @@ KMLExportConfig::KMLExportConfig(QWidget* parent)
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
 
-    connect( GoogleMapTargetRadioButton_, SIGNAL( toggled(bool) ),
-             this, SLOT( GoogleMapTargetRadioButton__toggled(bool) ) );
+    connect( GoogleMapTargetRadioButton_, SIGNAL(toggled(bool)),
+             this, SLOT(GoogleMapTargetRadioButton__toggled(bool)) );
 
-    connect( GPXTracksCheckBox_, SIGNAL( toggled(bool) ),
-             this, SLOT( KMLTracksCheckButton__toggled(bool) ) );
+    connect( GPXTracksCheckBox_, SIGNAL(toggled(bool)),
+             this, SLOT(KMLTracksCheckButton__toggled(bool)) );
 
     // --------------------------------------------------------------
     // About data and help button.

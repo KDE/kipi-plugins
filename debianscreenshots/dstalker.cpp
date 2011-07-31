@@ -94,11 +94,11 @@ bool DsTalker::addScreenshot(const QString& imgPath, const QString& packageName,
     job->addMetaData("UserAgent", m_userAgent);
     job->addMetaData("content-type", form.contentType());
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_job   = job;
     m_buffer.resize(0);

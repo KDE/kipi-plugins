@@ -113,8 +113,8 @@ void Plugin_YandexFotki::slotExport()
                 false, kapp->activeWindow());
 
         // clean it up in finish signal
-        connect(m_dlgExport, SIGNAL( finished(int) ),
-            this, SLOT( slotDialogFinished(int) ));
+        connect(m_dlgExport, SIGNAL(finished(int)),
+            this, SLOT(slotDialogFinished(int)));
     }
     else
     {

@@ -111,8 +111,8 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
     //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-optimization.png");
     //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->mngr->thread(), SIGNAL(starting(const KIPIPanoramaPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIPanoramaPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressTimerDone()));
@@ -150,8 +150,8 @@ void OptimizePage::process()
 
     d->progressTimer->start(300);
 
-    connect(d->mngr->thread(), SIGNAL(finished(const KIPIPanoramaPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIPanoramaPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     d->mngr->thread()->optimizeProject(d->mngr->cpFindUrl());
     if (!d->mngr->thread()->isRunning())
@@ -160,8 +160,8 @@ void OptimizePage::process()
 
 void OptimizePage::cancel()
 {
-    disconnect(d->mngr->thread(), SIGNAL(finished(const KIPIPanoramaPlugin::ActionData&)),
-               this, SLOT(slotAction(const KIPIPanoramaPlugin::ActionData&)));
+    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     d->mngr->thread()->cancel();
     d->progressTimer->stop();

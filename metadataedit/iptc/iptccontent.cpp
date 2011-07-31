@@ -185,7 +185,7 @@ IPTCContent::IPTCContent(QWidget* parent)
     connect(d->captionEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
 
-    connect(d->headlineEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->headlineEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

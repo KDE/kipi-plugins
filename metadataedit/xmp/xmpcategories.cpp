@@ -195,7 +195,7 @@ XMPCategories::XMPCategories(QWidget* parent)
     connect(d->repSubCategoryButton, SIGNAL(clicked()),
             this, SIGNAL(signalModified()));
 
-    connect(d->categoryEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->categoryEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

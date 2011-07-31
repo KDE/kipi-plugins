@@ -106,20 +106,20 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     // ------------------------------------------------------------------------
 
-    connect(m_widget->m_imgList, SIGNAL( signalImageListChanged()),
-            this, SLOT( slotImageListChanged()) );
+    connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()) );
 
-    connect(m_widget->m_changeUserBtn, SIGNAL( clicked() ),
-            this, SLOT( slotUserChangeRequest()) );
+    connect(m_widget->m_changeUserBtn, SIGNAL(clicked()),
+            this, SLOT(slotUserChangeRequest()) );
 
-    connect(m_widget->m_newAlbumBtn, SIGNAL( clicked() ),
-            this, SLOT( slotNewAlbumRequest()) );
+    connect(m_widget->m_newAlbumBtn, SIGNAL(clicked()),
+            this, SLOT(slotNewAlbumRequest()) );
 
-    connect(m_widget, SIGNAL( reloadAlbums(long long) ),
-            this, SLOT( slotReloadAlbumsRequest(long long)) );
+    connect(m_widget, SIGNAL(reloadAlbums(long long)),
+            this, SLOT(slotReloadAlbumsRequest(long long)) );
 
-    connect(this, SIGNAL( user1Clicked() ),
-            this, SLOT( slotStartTransfer()) );
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotStartTransfer()) );
 
     // ------------------------------------------------------------------------
 
@@ -134,8 +134,8 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
                        "lure at kubuntu dot org");
 
-    disconnect(this, SIGNAL( helpClicked() ),
-               this, SLOT( slotHelp()) );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()) );
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
@@ -153,32 +153,32 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     m_talker = new FbTalker(this);
 
-    connect(m_talker, SIGNAL( signalBusy(bool) ),
-            this, SLOT( slotBusy(bool) ));
+    connect(m_talker, SIGNAL(signalBusy(bool)),
+            this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL( signalLoginProgress(int, int, const QString&) ),
-            this, SLOT( slotLoginProgress(int, int, const QString&) ));
+    connect(m_talker, SIGNAL(signalLoginProgress(int,int,QString)),
+            this, SLOT(slotLoginProgress(int,int,QString)));
 
-    connect(m_talker, SIGNAL( signalLoginDone(int, const QString&) ),
-            this, SLOT( slotLoginDone(int, const QString&) ));
+    connect(m_talker, SIGNAL(signalLoginDone(int,QString)),
+            this, SLOT(slotLoginDone(int,QString)));
 
-    connect(m_talker, SIGNAL( signalAddPhotoDone(int, const QString&) ),
-            this, SLOT( slotAddPhotoDone(int, const QString&) ));
+    connect(m_talker, SIGNAL(signalAddPhotoDone(int,QString)),
+            this, SLOT(slotAddPhotoDone(int,QString)));
 
-    connect(m_talker, SIGNAL( signalGetPhotoDone(int, const QString&, const QByteArray&) ),
-            this, SLOT( slotGetPhotoDone(int, const QString&, const QByteArray&) ));
+    connect(m_talker, SIGNAL(signalGetPhotoDone(int,QString,QByteArray)),
+            this, SLOT(slotGetPhotoDone(int,QString,QByteArray)));
 
-    connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, const QString&) ),
-            this, SLOT( slotCreateAlbumDone(int, const QString&, const QString&) ));
+    connect(m_talker, SIGNAL(signalCreateAlbumDone(int,QString,QString)),
+            this, SLOT(slotCreateAlbumDone(int,QString,QString)));
 
-    connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList<FbAlbum>&) ),
-            this, SLOT( slotListAlbumsDone(int, const QString&, const QList<FbAlbum>&) ));
+    connect(m_talker, SIGNAL(signalListAlbumsDone(int,QString,QList<FbAlbum>)),
+            this, SLOT(slotListAlbumsDone(int,QString,QList<FbAlbum>)));
 
-    connect(m_talker, SIGNAL( signalListPhotosDone(int, const QString&, const QList<FbPhoto>&) ),
-            this, SLOT( slotListPhotosDone(int, const QString&, const QList<FbPhoto>&) ));
+    connect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<FbPhoto>)),
+            this, SLOT(slotListPhotosDone(int,QString,QList<FbPhoto>)));
 
-    connect(m_talker, SIGNAL( signalListFriendsDone(int, const QString&, const QList<FbUser>&) ),
-            this, SLOT( slotListFriendsDone(int, const QString&, const QList<FbUser>&) ));
+    connect(m_talker, SIGNAL(signalListFriendsDone(int,QString,QList<FbUser>)),
+            this, SLOT(slotListFriendsDone(int,QString,QList<FbUser>)));
 
     // ------------------------------------------------------------------------
 

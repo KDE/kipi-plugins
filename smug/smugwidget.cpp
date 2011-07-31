@@ -225,8 +225,8 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface* iface, bool import)
     connect(m_resizeChB, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
 
-    connect(m_anonymousRBtn, SIGNAL( toggled(bool) ),
-            this, SLOT( slotAnonymousToggled(bool)) );
+    connect(m_anonymousRBtn, SIGNAL(toggled(bool)),
+            this, SLOT(slotAnonymousToggled(bool)) );
 
     // ------------------------------------------------------------------------
 

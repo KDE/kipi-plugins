@@ -131,8 +131,8 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget* parent )
     printThread_ = 0;
     printer_     = 0;
 
-    connect(this, SIGNAL(currentPageChanged(KPageWidgetItem *, KPageWidgetItem *)),
-            this, SLOT(slotPageSelected(KPageWidgetItem *, KPageWidgetItem *)));
+    connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
+            this, SLOT(slotPageSelected(KPageWidgetItem*,KPageWidgetItem*)));
 
     setCaption(i18n("Create Calendar"));
 }

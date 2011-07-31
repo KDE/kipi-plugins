@@ -225,17 +225,17 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // ------------------------------------------------------------------------
 
-    connect(m_dlGrp, SIGNAL( buttonClicked(int) ),
-            this, SLOT( slotDownloadTypeChanged(int) ));
+    connect(m_dlGrp, SIGNAL(buttonClicked(int)),
+            this, SLOT(slotDownloadTypeChanged(int)));
 
-    connect(m_reloadAlbumsBtn, SIGNAL( clicked() ),
-            this, SLOT( slotReloadAlbumsRequest() ));
+    connect(m_reloadAlbumsBtn, SIGNAL(clicked()),
+            this, SLOT(slotReloadAlbumsRequest()));
 
-    connect(m_friendsCoB, SIGNAL( currentIndexChanged(int) ),
-            this, SLOT( slotFriendsIndexChanged(int) ));
+    connect(m_friendsCoB, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(slotFriendsIndexChanged(int)));
 
-    connect(m_resizeChB, SIGNAL( clicked() ),
-            this, SLOT( slotResizeChecked() ));
+    connect(m_resizeChB, SIGNAL(clicked()),
+            this, SLOT(slotResizeChecked()));
 
     // ------------------------------------------------------------------------
 

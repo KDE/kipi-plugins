@@ -71,10 +71,10 @@ void WikiMediaJob::uploadHandle(KJob* j)
         kDebug() << "Upload" << (int)j->error();
         emit uploadProgress(100);
 
-        disconnect(j, SIGNAL(result(KJob* )), 
+        disconnect(j, SIGNAL(result(KJob*)), 
                    this, SLOT(uploadHandle(KJob*)));
 
-        disconnect(j, SIGNAL(percent(KJob *, unsigned long)),
+        disconnect(j, SIGNAL(percent(KJob*,ulong)),
                    this, SLOT(slotUploadProgress(KJob*,ulong)));
 
         //error from previous upload
@@ -109,11 +109,11 @@ void WikiMediaJob::uploadHandle(KJob* j)
         e1->setFilename(file->fileName());
         e1->setText(buildWikiText(info));
 
-        connect(e1, SIGNAL(result(KJob* )),
+        connect(e1, SIGNAL(result(KJob*)),
                 this, SLOT(uploadHandle(KJob*)));
 
-        connect(e1, SIGNAL(percent(KJob *, unsigned long)),
-                this, SLOT(slotUploadProgress(KJob*, ulong)));
+        connect(e1, SIGNAL(percent(KJob*,ulong)),
+                this, SLOT(slotUploadProgress(KJob*,ulong)));
 
         emit uploadProgress(0);
         e1->start();

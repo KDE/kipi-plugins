@@ -204,95 +204,95 @@ Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
 
     // connections
     // help
-    connect ( handbook, SIGNAL ( triggered ( bool ) ),
-              this, SLOT ( slotHelp() ) );
+    connect ( handbook, SIGNAL (triggered(bool)),
+              this, SLOT (slotHelp()) );
 
     // selected page
-    connect ( this, SIGNAL ( currentPageChanged ( KPageWidgetItem *, KPageWidgetItem * ) ),
-              this, SLOT ( pageChanged ( KPageWidgetItem *, KPageWidgetItem * ) ) );
+    connect ( this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
+              this, SLOT (pageChanged(KPageWidgetItem*,KPageWidgetItem*)) );
 
     // cancel button
-    connect ( this, SIGNAL ( cancelClicked() ),
-              this, SLOT ( reject() ) );
+    connect ( this, SIGNAL (cancelClicked()),
+              this, SLOT (reject()) );
 
     // caption information
-    connect ( d->mInfoPage->m_captions, SIGNAL ( activated ( const QString & ) ),
-              this, SLOT ( captionChanged ( const QString & ) ) );
-    connect ( d->mInfoPage->m_FreeCaptionFormat , SIGNAL ( editingFinished () ),
-              this, SLOT ( infopage_updateCaptions ( ) ) );
-    connect ( d->mInfoPage->m_sameCaption , SIGNAL ( stateChanged (int) ),
-              this, SLOT ( infopage_updateCaptions ( ) ) );
-    connect ( d->mInfoPage->m_font_name , SIGNAL (  currentFontChanged ( const QFont & ) ),
-              this, SLOT ( infopage_updateCaptions ( ) ) );
-    connect ( d->mInfoPage->m_font_size , SIGNAL ( valueChanged(int) ),
-              this, SLOT ( infopage_updateCaptions ( ) ) );
-    connect ( d->mInfoPage->m_font_color , SIGNAL ( changed (const QColor &) ),
-              this, SLOT ( infopage_updateCaptions ( ) ) );
+    connect ( d->mInfoPage->m_captions, SIGNAL (activated(QString)),
+              this, SLOT (captionChanged(QString)) );
+    connect ( d->mInfoPage->m_FreeCaptionFormat , SIGNAL (editingFinished()),
+              this, SLOT (infopage_updateCaptions()) );
+    connect ( d->mInfoPage->m_sameCaption , SIGNAL (stateChanged(int)),
+              this, SLOT (infopage_updateCaptions()) );
+    connect ( d->mInfoPage->m_font_name , SIGNAL (currentFontChanged(QFont)),
+              this, SLOT (infopage_updateCaptions()) );
+    connect ( d->mInfoPage->m_font_size , SIGNAL (valueChanged(int)),
+              this, SLOT (infopage_updateCaptions()) );
+    connect ( d->mInfoPage->m_font_color , SIGNAL (changed(QColor)),
+              this, SLOT (infopage_updateCaptions()) );
 
-    connect ( d->mInfoPage->m_setDefault , SIGNAL ( clicked () ),
-              this, SLOT ( saveCaptionSettings ( ) ) );
+    connect ( d->mInfoPage->m_setDefault , SIGNAL (clicked()),
+              this, SLOT (saveCaptionSettings()) );
 
     // printer
-    connect (d->mInfoPage->m_printer_choice, SIGNAL (activated ( const QString & ) ),
-              this, SLOT ( outputChanged ( const QString & ) ) );
+    connect (d->mInfoPage->m_printer_choice, SIGNAL (activated(QString)),
+              this, SLOT (outputChanged(QString)) );
 
-    connect ( d->mInfoPage->m_preview_right, SIGNAL ( clicked() ),
-              this, SLOT ( infopage_selectNext()) );
+    connect ( d->mInfoPage->m_preview_right, SIGNAL (clicked()),
+              this, SLOT (infopage_selectNext()) );
 
-    connect ( d->mInfoPage->m_preview_left, SIGNAL ( clicked() ),
-              this, SLOT ( infopage_selectPrev()) );
+    connect ( d->mInfoPage->m_preview_left, SIGNAL (clicked()),
+              this, SLOT (infopage_selectPrev()) );
 
-    connect ( d->mInfoPage->m_increase_copies, SIGNAL ( clicked() ),
-              this, SLOT ( infopage_increaseCopies() ) );
+    connect ( d->mInfoPage->m_increase_copies, SIGNAL (clicked()),
+              this, SLOT (infopage_increaseCopies()) );
 
-    connect ( d->mInfoPage->m_decrease_copies, SIGNAL ( clicked() ),
-              this, SLOT ( infopage_decreaseCopies() ) );
+    connect ( d->mInfoPage->m_decrease_copies, SIGNAL (clicked()),
+              this, SLOT (infopage_decreaseCopies()) );
 
-    connect ( d->mInfoPage->m_PictureInfo, SIGNAL ( itemSelectionChanged() ),
-              this, SLOT ( infopage_imageSelected() ) );
+    connect ( d->mInfoPage->m_PictureInfo, SIGNAL (itemSelectionChanged()),
+              this, SLOT (infopage_imageSelected()) );
 
     // Print order (down)
-    connect ( d->mPhotoPage->BtnPrintOrderDown, SIGNAL ( clicked ( void ) ),
-              this, SLOT ( BtnPrintOrderDown_clicked ( void ) ) );
+    connect ( d->mPhotoPage->BtnPrintOrderDown, SIGNAL (clicked()),
+              this, SLOT (BtnPrintOrderDown_clicked()) );
 
     // Print order (up)
-    connect ( d->mPhotoPage->BtnPrintOrderUp, SIGNAL ( clicked ( void ) ),
-              this, SLOT ( BtnPrintOrderUp_clicked ( void ) ) );
+    connect ( d->mPhotoPage->BtnPrintOrderUp, SIGNAL (clicked()),
+              this, SLOT (BtnPrintOrderUp_clicked()) );
 
-    connect ( d->mPhotoPage->BtnPreviewPageUp, SIGNAL ( clicked ( void ) ),
-              this, SLOT ( BtnPreviewPageUp_clicked ( void ) ) );
+    connect ( d->mPhotoPage->BtnPreviewPageUp, SIGNAL (clicked()),
+              this, SLOT (BtnPreviewPageUp_clicked()) );
 
-    connect ( d->mPhotoPage->BtnPreviewPageDown, SIGNAL ( clicked ( void ) ),
-              this, SLOT ( BtnPreviewPageDown_clicked ( void ) ) );
+    connect ( d->mPhotoPage->BtnPreviewPageDown, SIGNAL (clicked()),
+              this, SLOT (BtnPreviewPageDown_clicked()) );
 
-    connect ( d->mCropPage->BtnCropPrev, SIGNAL ( clicked() ),
-              this, SLOT ( BtnCropPrev_clicked() ) );
+    connect ( d->mCropPage->BtnCropPrev, SIGNAL (clicked()),
+              this, SLOT (BtnCropPrev_clicked()) );
 
-    connect ( d->mCropPage->BtnCropNext, SIGNAL ( clicked() ),
-              this, SLOT ( BtnCropNext_clicked() ) );
+    connect ( d->mCropPage->BtnCropNext, SIGNAL (clicked()),
+              this, SLOT (BtnCropNext_clicked()) );
 
-    connect ( d->mCropPage->BtnCropRotate, SIGNAL ( clicked() ),
-              this, SLOT ( BtnCropRotate_clicked() ) );
+    connect ( d->mCropPage->BtnCropRotate, SIGNAL (clicked()),
+              this, SLOT (BtnCropRotate_clicked()) );
 
-    connect ( d->mPhotoPage->ListPrintOrder, SIGNAL ( itemSelectionChanged() ),
-              this, SLOT ( ListPrintOrder_selected() ) );
+    connect ( d->mPhotoPage->ListPrintOrder, SIGNAL (itemSelectionChanged()),
+              this, SLOT (ListPrintOrder_selected()) );
 
-    connect ( d->mPhotoPage->ListPrintOrder, SIGNAL ( itemEntered ( QListWidgetItem * ) ),
-              this, SLOT ( ListPrintOrder_selected() ) );
+    connect ( d->mPhotoPage->ListPrintOrder, SIGNAL (itemEntered(QListWidgetItem*)),
+              this, SLOT (ListPrintOrder_selected()) );
 
-    connect ( d->mPhotoPage->ListPhotoSizes, SIGNAL ( currentRowChanged ( int ) ),
-              this, SLOT ( ListPhotoSizes_selected() ) );
+    connect ( d->mPhotoPage->ListPhotoSizes, SIGNAL (currentRowChanged(int)),
+              this, SLOT (ListPhotoSizes_selected()) );
 
     // don't crop
-    connect ( d->mCropPage->m_disableCrop, SIGNAL ( stateChanged ( int ) ),
-              this, SLOT ( crop_selection ( int ) ) );
+    connect ( d->mCropPage->m_disableCrop, SIGNAL (stateChanged(int)),
+              this, SLOT (crop_selection(int)) );
 
     // remove a page
-    connect ( this, SIGNAL ( pageRemoved ( KPageWidgetItem * ) ),
-              this, SLOT ( PageRemoved ( KPageWidgetItem * ) ) );
+    connect ( this, SIGNAL (pageRemoved(KPageWidgetItem*)),
+              this, SLOT (PageRemoved(KPageWidgetItem*)) );
 
-    connect ( d->mInfoPage->m_pagesetup, SIGNAL ( clicked () ),
-              this, SLOT ( pagesetupclicked () ) );
+    connect ( d->mInfoPage->m_pagesetup, SIGNAL (clicked()),
+              this, SLOT (pagesetupclicked()) );
 
     d->m_currentPreviewPage = 0;
     d->m_currentCropPhoto   = 0;

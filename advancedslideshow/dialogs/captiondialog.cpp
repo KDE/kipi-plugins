@@ -47,10 +47,10 @@ CaptionDialog::~CaptionDialog()
 
 void CaptionDialog::readSettings()
 {
-    connect(m_commentsFontColor, SIGNAL(changed(const QColor&)), 
+    connect(m_commentsFontColor, SIGNAL(changed(QColor)), 
             this, SLOT(slotCommentsFontColorChanged()));
 
-    connect(m_commentsBgColor, SIGNAL(changed(const QColor&)), 
+    connect(m_commentsBgColor, SIGNAL(changed(QColor)), 
             this, SLOT(slotCommentsBgColorChanged()));
 
     m_commentsLinesLengthSpinBox->setValue(m_sharedData->commentsLinesLength);

@@ -441,8 +441,8 @@ Generator::Generator(KIPI::Interface* interface, GalleryInfo* info, KIPIPlugins:
     d->mProgressDialog=progressDialog;
     d->mWarnings=false;
 
-    connect(this, SIGNAL(logWarningRequested(const QString&)),
-        SLOT(logWarning(const QString&)), Qt::QueuedConnection);
+    connect(this, SIGNAL(logWarningRequested(QString)),
+        SLOT(logWarning(QString)), Qt::QueuedConnection);
 }
 
 

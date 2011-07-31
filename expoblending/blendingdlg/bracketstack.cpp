@@ -144,14 +144,14 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
-                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+                this, SLOT(slotThumbnail(KUrl,QPixmap)));
     }
 
     d->loadRawThumb = new LoadRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
-            this, SLOT(slotRawThumb(const KUrl&, const QImage&)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
+            this, SLOT(slotRawThumb(KUrl,QImage)));
 
     sortItems(2, Qt::DescendingOrder);
 }
@@ -235,11 +235,11 @@ void BracketStackList::addItems(const KUrl::List& list)
     {
         KIO::PreviewJob *job = KIO::filePreview(urls, iconSize().width());
 
-        connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-                this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
+                this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
 
-        connect(job, SIGNAL(failed(const KFileItem&)),
-                this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
+        connect(job, SIGNAL(failed(KFileItem)),
+                this, SLOT(slotKDEPreviewFailed(KFileItem)));
     }
 
     emit signalAddItems(urls);

@@ -97,20 +97,20 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     m_playbackWidget->hide();
     m_playbackWidget->move(m_deskX, m_deskY);
 
-    connect(m_slidePlaybackWidget, SIGNAL( signalPause() ),
-            this, SLOT( slotPause() ));
+    connect(m_slidePlaybackWidget, SIGNAL(signalPause()),
+            this, SLOT(slotPause()));
 
-    connect(m_slidePlaybackWidget, SIGNAL( signalPlay() ),
-            this, SLOT( slotPlay() ));
+    connect(m_slidePlaybackWidget, SIGNAL(signalPlay()),
+            this, SLOT(slotPlay()));
 
-    connect(m_slidePlaybackWidget, SIGNAL( signalNext() ),
-            this, SLOT( slotNext() ));
+    connect(m_slidePlaybackWidget, SIGNAL(signalNext()),
+            this, SLOT(slotNext()));
 
-    connect(m_slidePlaybackWidget, SIGNAL( signalPrev() ),
-            this, SLOT( slotPrev() ));
+    connect(m_slidePlaybackWidget, SIGNAL(signalPrev()),
+            this, SLOT(slotPrev()));
 
-    connect(m_slidePlaybackWidget, SIGNAL( signalClose() ),
-            this, SLOT( slotClose() ));
+    connect(m_slidePlaybackWidget, SIGNAL(signalClose()),
+            this, SLOT(slotClose()));
 
     // ---------------------------------------------------------------
 
@@ -164,8 +164,8 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     // -- hide cursor when not moved --------------------
 
     m_mouseMoveTimer = new QTimer;
-    connect( m_mouseMoveTimer, SIGNAL( timeout() ),
-             SLOT( slotMouseMoveTimeOut() ) );
+    connect( m_mouseMoveTimer, SIGNAL(timeout()),
+             SLOT(slotMouseMoveTimeOut()) );
 
     setMouseTracking( true );
     slotMouseMoveTimeOut();

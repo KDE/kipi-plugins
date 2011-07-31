@@ -146,7 +146,7 @@ XMPStatus::XMPStatus(QWidget* parent)
     connect(d->objectNameEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
-    connect(d->nicknameEdit, SIGNAL(textChanged(const QString &)),
+    connect(d->nicknameEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
     connect(d->specialInstructionEdit, SIGNAL(textChanged()),

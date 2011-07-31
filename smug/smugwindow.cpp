@@ -111,20 +111,20 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
     }
 
 
-    connect(m_widget, SIGNAL( signalUserChangeRequest(bool) ),
-            this, SLOT( slotUserChangeRequest(bool)) );
+    connect(m_widget, SIGNAL(signalUserChangeRequest(bool)),
+            this, SLOT(slotUserChangeRequest(bool)) );
 
-    connect(m_widget->m_imgList, SIGNAL( signalImageListChanged() ),
-            this, SLOT( slotImageListChanged()) );
+    connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()) );
 
-    connect(m_widget->m_reloadAlbumsBtn, SIGNAL( clicked() ),
-            this, SLOT( slotReloadAlbumsRequest()) );
+    connect(m_widget->m_reloadAlbumsBtn, SIGNAL(clicked()),
+            this, SLOT(slotReloadAlbumsRequest()) );
 
-    connect(m_widget->m_newAlbumBtn, SIGNAL( clicked() ),
-            this, SLOT( slotNewAlbumRequest()) );
+    connect(m_widget->m_newAlbumBtn, SIGNAL(clicked()),
+            this, SLOT(slotNewAlbumRequest()) );
 
-    connect(this, SIGNAL( user1Clicked() ),
-            this, SLOT( slotStartTransfer()) );
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotStartTransfer()) );
 
     // ------------------------------------------------------------------------
 
@@ -139,8 +139,8 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
                        "lure at kubuntu dot org");
 
-    disconnect(this, SIGNAL( helpClicked() ),
-               this, SLOT( slotHelp()) );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()) );
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
@@ -160,47 +160,47 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     m_albumDlg  = new SmugNewAlbum(this);
 
-    connect(m_albumDlg->m_categCoB, SIGNAL( currentIndexChanged(int) ),
-            this, SLOT( slotCategorySelectionChanged(int)) );
+    connect(m_albumDlg->m_categCoB, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(slotCategorySelectionChanged(int)) );
 
-    connect(m_albumDlg->m_templateCoB, SIGNAL( currentIndexChanged(int) ),
-            this, SLOT( slotTemplateSelectionChanged(int)) );
+    connect(m_albumDlg->m_templateCoB, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(slotTemplateSelectionChanged(int)) );
 
     // ------------------------------------------------------------------------
 
     m_talker = new SmugTalker(this);
 
-    connect(m_talker, SIGNAL( signalBusy(bool) ),
-            this, SLOT( slotBusy(bool) ));
+    connect(m_talker, SIGNAL(signalBusy(bool)),
+            this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL( signalLoginProgress(int, int, const QString&) ),
-            this, SLOT( slotLoginProgress(int, int, const QString&) ));
+    connect(m_talker, SIGNAL(signalLoginProgress(int,int,QString)),
+            this, SLOT(slotLoginProgress(int,int,QString)));
 
-    connect(m_talker, SIGNAL( signalLoginDone(int, const QString&) ),
-            this, SLOT( slotLoginDone(int, const QString&) ));
+    connect(m_talker, SIGNAL(signalLoginDone(int,QString)),
+            this, SLOT(slotLoginDone(int,QString)));
 
-    connect(m_talker, SIGNAL( signalAddPhotoDone(int, const QString&) ),
-            this, SLOT( slotAddPhotoDone(int, const QString&) ));
+    connect(m_talker, SIGNAL(signalAddPhotoDone(int,QString)),
+            this, SLOT(slotAddPhotoDone(int,QString)));
 
-    connect(m_talker, SIGNAL( signalGetPhotoDone(int, const QString&, const QByteArray&) ),
-            this, SLOT( slotGetPhotoDone(int, const QString&, const QByteArray&) ));
+    connect(m_talker, SIGNAL(signalGetPhotoDone(int,QString,QByteArray)),
+            this, SLOT(slotGetPhotoDone(int,QString,QByteArray)));
 
-    connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, int) ),
-            this, SLOT( slotCreateAlbumDone(int, const QString&, int) ));
+    connect(m_talker, SIGNAL(signalCreateAlbumDone(int,QString,int)),
+            this, SLOT(slotCreateAlbumDone(int,QString,int)));
 
-    connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <SmugAlbum>&) ),
-            this, SLOT( slotListAlbumsDone(int, const QString&, const QList <SmugAlbum>&) ));
+    connect(m_talker, SIGNAL(signalListAlbumsDone(int,QString,QList<SmugAlbum>)),
+            this, SLOT(slotListAlbumsDone(int,QString,QList<SmugAlbum>)));
 
-    connect(m_talker, SIGNAL( signalListPhotosDone(int, const QString&, const QList <SmugPhoto>&) ),
-            this, SLOT( slotListPhotosDone(int, const QString&, const QList <SmugPhoto>&) ));
-    connect(m_talker, SIGNAL( signalListAlbumTmplDone(int, const QString&, const QList <SmugAlbumTmpl>&) ),
-            this, SLOT( slotListAlbumTmplDone(int, const QString&, const QList <SmugAlbumTmpl>&) ));
+    connect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<SmugPhoto>)),
+            this, SLOT(slotListPhotosDone(int,QString,QList<SmugPhoto>)));
+    connect(m_talker, SIGNAL(signalListAlbumTmplDone(int,QString,QList<SmugAlbumTmpl>)),
+            this, SLOT(slotListAlbumTmplDone(int,QString,QList<SmugAlbumTmpl>)));
 
-    connect(m_talker, SIGNAL( signalListCategoriesDone(int, const QString&, const QList <SmugCategory>&) ),
-            this, SLOT( slotListCategoriesDone(int, const QString&, const QList <SmugCategory>&) ));
+    connect(m_talker, SIGNAL(signalListCategoriesDone(int,QString,QList<SmugCategory>)),
+            this, SLOT(slotListCategoriesDone(int,QString,QList<SmugCategory>)));
 
-    connect(m_talker, SIGNAL( signalListSubCategoriesDone(int, const QString&, const QList <SmugCategory>&) ),
-            this, SLOT( slotListSubCategoriesDone(int, const QString&, const QList <SmugCategory>&) ));
+    connect(m_talker, SIGNAL(signalListSubCategoriesDone(int,QString,QList<SmugCategory>)),
+            this, SLOT(slotListSubCategoriesDone(int,QString,QList<SmugCategory>)));
 
     // ------------------------------------------------------------------------
 

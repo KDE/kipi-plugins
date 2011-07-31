@@ -94,8 +94,8 @@ PiwigoEdit::PiwigoEdit(QWidget* pParent, Piwigo* pPiwigo, const QString& title)
     mpUsernameEdit->setText(pPiwigo->username());
     mpPasswordEdit->setText(pPiwigo->password());
 
-    connect(this, SIGNAL( okClicked() ),
-            this, SLOT( slotOk() ));
+    connect(this, SIGNAL(okClicked()),
+            this, SLOT(slotOk()));
 }
 
 PiwigoEdit::~PiwigoEdit()

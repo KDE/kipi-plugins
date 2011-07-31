@@ -162,35 +162,35 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     m_talker = new FlickrTalker(this, serviceName);
 
-    connect(m_talker, SIGNAL( signalError( const QString& ) ),
-            m_talker, SLOT( slotError( const QString& ) ));
+    connect(m_talker, SIGNAL(signalError(QString)),
+            m_talker, SLOT(slotError(QString)));
 
-    connect(m_talker, SIGNAL( signalBusy( bool ) ),
-            this, SLOT( slotBusy( bool ) ));
+    connect(m_talker, SIGNAL(signalBusy(bool)),
+            this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL( signalAddPhotoSucceeded() ),
-            this, SLOT( slotAddPhotoSucceeded() ));
+    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
+            this, SLOT(slotAddPhotoSucceeded()));
 
-    connect(m_talker, SIGNAL( signalAddPhotoFailed( const QString& ) ),
-            this, SLOT( slotAddPhotoFailed( const QString& ) ));
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(QString)),
+            this, SLOT(slotAddPhotoFailed(QString)));
 
-    connect(m_talker, SIGNAL( signalAddPhotoSetSucceeded() ),
-            this, SLOT( slotAddPhotoSetSucceeded() ));
+    connect(m_talker, SIGNAL(signalAddPhotoSetSucceeded()),
+            this, SLOT(slotAddPhotoSetSucceeded()));
 
-    connect(m_talker, SIGNAL( signalListPhotoSetsSucceeded() ),
-            this, SLOT( slotPopulatePhotoSetComboBox() ));
+    connect(m_talker, SIGNAL(signalListPhotoSetsSucceeded()),
+            this, SLOT(slotPopulatePhotoSetComboBox()));
 
-    connect(m_talker, SIGNAL( signalListPhotoSetsFailed(const QString&) ),
-            this, SLOT( slotListPhotoSetsFailed(const QString&) ));
+    connect(m_talker, SIGNAL(signalListPhotoSetsFailed(QString)),
+            this, SLOT(slotListPhotoSetsFailed(QString)));
 
-    connect(m_talker, SIGNAL( signalTokenObtained(const QString&) ),
-            this, SLOT( slotTokenObtained(const QString&) ));
+    connect(m_talker, SIGNAL(signalTokenObtained(QString)),
+            this, SLOT(slotTokenObtained(QString)));
 
-    //connect( m_talker, SIGNAL( signalAlbums( const QValueList<GAlbum>& ) ),
-    //         SLOT( slotAlbums( const QValueList<GAlbum>& ) ) );
+    //connect( m_talker, SIGNAL(signalAlbums(QValueList<GAlbum>)),
+    //         SLOT(slotAlbums(QValueList<GAlbum>)) );
 
-    //connect( m_talker, SIGNAL( signalPhotos( const QValueList<GPhoto>& ) ),
-    //         SLOT( slotPhotos( const QValueList<GPhoto>& ) ) );
+    //connect( m_talker, SIGNAL(signalPhotos(QValueList<GPhoto>)),
+    //         SLOT(slotPhotos(QValueList<GPhoto>)) );
 
     // --------------------------------------------------------------------------
 
@@ -199,21 +199,21 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_progressDlg->setAutoReset(true);
     m_progressDlg->setAutoClose(true);
 
-    connect(m_progressDlg, SIGNAL( canceled() ),
-            this, SLOT( slotAddPhotoCancel() ));
+    connect(m_progressDlg, SIGNAL(canceled()),
+            this, SLOT(slotAddPhotoCancel()));
 
-    connect(m_changeUserButton, SIGNAL( clicked() ),
-            this, SLOT( slotUserChangeRequest() ));
+    connect(m_changeUserButton, SIGNAL(clicked()),
+            this, SLOT(slotUserChangeRequest()));
 
-    connect(m_newAlbumBtn, SIGNAL( clicked() ),
-            this, SLOT( slotCreateNewPhotoSet() ));
+    connect(m_newAlbumBtn, SIGNAL(clicked()),
+            this, SLOT(slotCreateNewPhotoSet()));
 
 
-    //connect( m_tagView, SIGNAL( selectionChanged() ),
-    //         SLOT( slotTagSelected() ) );
+    //connect( m_tagView, SIGNAL(selectionChanged()),
+    //         SLOT(slotTagSelected()) );
 
-    //connect( m_photoView->browserExtension(), SIGNAL( openURLRequest( const KUrl&, const KParts::URLArgs& ) ),
-    //         SLOT( slotOpenPhoto( const KUrl& ) ) );
+    //connect( m_photoView->browserExtension(), SIGNAL(openURLRequest(KUrl,KParts::URLArgs)),
+    //         SLOT(slotOpenPhoto(KUrl)) );
 
     // --------------------------------------------------------------------------
 
@@ -224,8 +224,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_authProgressDlg->setAutoReset(true);
     m_authProgressDlg->setAutoClose(true);
 
-    connect(m_authProgressDlg, SIGNAL( canceled() ),
-            this, SLOT( slotAuthCancel() ));
+    connect(m_authProgressDlg, SIGNAL(canceled()),
+            this, SLOT(slotAuthCancel()));
 
     m_talker->m_authProgressDlg = m_authProgressDlg;
 

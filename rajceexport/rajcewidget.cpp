@@ -195,14 +195,14 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
 
     // ------------------------------------------------------------------------
 
-    connect(m_session, SIGNAL(busyStarted(unsigned)),
-            this, SLOT(progressStarted(unsigned)));
+    connect(m_session, SIGNAL(busyStarted(uint)),
+            this, SLOT(progressStarted(uint)));
 
-    connect(m_session, SIGNAL(busyFinished(unsigned)),
-            this, SLOT(progressFinished(unsigned)));
+    connect(m_session, SIGNAL(busyFinished(uint)),
+            this, SLOT(progressFinished(uint)));
 
-    connect(m_session, SIGNAL(busyProgress(unsigned, unsigned)),
-            this, SLOT(progressChange(unsigned, unsigned)));
+    connect(m_session, SIGNAL(busyProgress(uint,uint)),
+            this, SLOT(progressChange(uint,uint)));
 
     connect(m_changeUserBtn, SIGNAL(clicked()),
             this, SLOT(changeUserClicked()));
@@ -412,7 +412,7 @@ void RajceWidget::changeUserClicked()
     if (dlg->exec() == QDialog::Accepted)
     {
         m_session->clearLastError();
-        connect(m_session, SIGNAL(busyFinished(unsigned)),
+        connect(m_session, SIGNAL(busyFinished(uint)),
                 this, SLOT(loadAlbums()));
         m_session->login(dlg->username(), dlg->password());
     }
@@ -422,7 +422,7 @@ void RajceWidget::changeUserClicked()
 
 void RajceWidget::loadAlbums()
 {
-    disconnect(m_session, SIGNAL(busyFinished(unsigned)),
+    disconnect(m_session, SIGNAL(busyFinished(uint)),
                this, SLOT(loadAlbums()));
 
     m_session->loadAlbums();
@@ -435,7 +435,7 @@ void RajceWidget::createAlbum()
     if (dlg->exec() == QDialog::Accepted)
     {
         m_session->clearLastError();
-        connect(m_session, SIGNAL(busyFinished(unsigned)),
+        connect(m_session, SIGNAL(busyFinished(uint)),
                 this, SLOT(loadAlbums()));
         m_session->createAlbum(dlg->albumName(), dlg->albumDescription(), dlg->albumVisible());
     }
@@ -455,7 +455,7 @@ void RajceWidget::startUpload()
         m_uploadQueue.append(imagePath);
     }
 
-    connect(m_session, SIGNAL(busyFinished(unsigned)),
+    connect(m_session, SIGNAL(busyFinished(uint)),
             this, SLOT(startUploadAfterAlbumOpened()));
 
     QString albumName = m_albumsCoB->currentText();
@@ -477,10 +477,10 @@ void RajceWidget::startUpload()
 
 void RajceWidget::startUploadAfterAlbumOpened()
 {
-    disconnect(m_session, SIGNAL(busyFinished(unsigned)),
+    disconnect(m_session, SIGNAL(busyFinished(uint)),
                this, SLOT(startUploadAfterAlbumOpened()));
 
-    connect(m_session, SIGNAL(busyFinished(unsigned)),
+    connect(m_session, SIGNAL(busyFinished(uint)),
             this, SLOT(uploadNext()));
 
     m_uploadingPhotos    = true;
@@ -494,7 +494,7 @@ void RajceWidget::closeAlbum()
 {
     _setEnabled(true);
 
-    disconnect(m_session, SIGNAL(busyFinished(unsigned)),
+    disconnect(m_session, SIGNAL(busyFinished(uint)),
                this, SLOT(closeAlbum()));
 
     m_uploadQueue.clear();
@@ -534,10 +534,10 @@ void RajceWidget::cancelUpload()
         m_imgList->processed(false);
     }
 
-    disconnect(m_session, SIGNAL(busyFinished(unsigned)),
+    disconnect(m_session, SIGNAL(busyFinished(uint)),
                this, SLOT(uploadNext()));
 
-    connect(m_session, SIGNAL(busyFinished(unsigned)),
+    connect(m_session, SIGNAL(busyFinished(uint)),
             this, SLOT(closeAlbum()));
 
     m_session->cancelCurrentCommand();

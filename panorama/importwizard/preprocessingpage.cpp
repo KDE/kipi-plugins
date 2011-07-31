@@ -126,8 +126,8 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-preprocessing.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->mngr->thread(), SIGNAL(starting(const KIPIPanoramaPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIPanoramaPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressTimerDone()));
@@ -174,8 +174,8 @@ void PreProcessingPage::process()
     d->celesteCheckBox->hide();
     d->progressTimer->start(300);
 
-    connect(d->mngr->thread(), SIGNAL(finished(const KIPIPanoramaPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIPanoramaPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     d->mngr->thread()->setPreProcessingSettings(d->celesteCheckBox->isChecked(), d->mngr->rawDecodingSettings());
     d->mngr->thread()->preProcessFiles(d->mngr->itemsList());
@@ -185,8 +185,8 @@ void PreProcessingPage::process()
 
 void PreProcessingPage::cancel()
 {
-    disconnect(d->mngr->thread(), SIGNAL(finished(const KIPIPanoramaPlugin::ActionData&)),
-               this, SLOT(slotAction(const KIPIPanoramaPlugin::ActionData&)));
+    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     d->mngr->thread()->cancel();
     d->progressTimer->stop();

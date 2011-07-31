@@ -597,16 +597,16 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->dateCreatedSel, SIGNAL(changed(const QDate&)),
+    connect(d->dateCreatedSel, SIGNAL(changed(QDate)),
             this, SIGNAL(signalModified()));
 
-    connect(d->dateDigitalizedSel, SIGNAL(changed(const QDate&)),
+    connect(d->dateDigitalizedSel, SIGNAL(changed(QDate)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeCreatedSel, SIGNAL(timeChanged(const QTime&)),
+    connect(d->timeCreatedSel, SIGNAL(timeChanged(QTime)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeDigitalizedSel, SIGNAL(timeChanged(const QTime&)),
+    connect(d->timeDigitalizedSel, SIGNAL(timeChanged(QTime)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -622,13 +622,13 @@ IPTCOrigin::IPTCOrigin(QWidget* parent)
     connect(d->countryCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->cityEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->cityEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->sublocationEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->sublocationEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->provinceEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->provinceEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

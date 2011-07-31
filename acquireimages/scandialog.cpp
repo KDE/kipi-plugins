@@ -115,11 +115,11 @@ ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* san
 
     // ------------------------------------------------------------------------
 
-    connect(d->saneWidget, SIGNAL(imageReady(QByteArray&, int, int, int, int)),
-            this, SLOT(slotSaveImage(QByteArray&, int, int, int, int)));
+    connect(d->saneWidget, SIGNAL(imageReady(QByteArray&,int,int,int,int)),
+            this, SLOT(slotSaveImage(QByteArray&,int,int,int,int)));
 
-    connect(d->saveThread, SIGNAL(signalComplete(const KUrl&, bool)),
-            this, SLOT(slotThreadDone(const KUrl&, bool)));
+    connect(d->saveThread, SIGNAL(signalComplete(KUrl,bool)),
+            this, SLOT(slotThreadDone(KUrl,bool)));
 }
 
 ScanDialog::~ScanDialog()

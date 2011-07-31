@@ -123,13 +123,13 @@ UploadDialog::UploadDialog
 
     // ------------------------------------------------------------
 
-    disconnect(this, SIGNAL( helpClicked() ),
-               this, SLOT( slotHelp() ) );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()) );
 
     KHelpMenu* helpMenu = new KHelpMenu( this, m_about, false );
     QAction* handbook   = new QAction( i18n("Plugin Handbook"), this );
-    connect(handbook, SIGNAL( triggered(bool) ),
-            this, SLOT( slotHelp() ) );
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()) );
 
     helpMenu->menu()->removeAction( helpMenu->menu()->actions().first() );
     helpMenu->menu()->insertAction( helpMenu->menu()->actions().first(), handbook );
@@ -243,32 +243,32 @@ UploadDialog::UploadDialog
 
     /// connect the signals & slots
 
-    connect(m_createAlbumButton, SIGNAL( clicked() ),
-            this, SLOT( createIpodAlbum() ) );
+    connect(m_createAlbumButton, SIGNAL(clicked()),
+            this, SLOT(createIpodAlbum()) );
 
-    connect(m_removeAlbumButton, SIGNAL( clicked() ),
-            this, SLOT( deleteIpodAlbum() ) );
+    connect(m_removeAlbumButton, SIGNAL(clicked()),
+            this, SLOT(deleteIpodAlbum()) );
 
-    connect(m_renameAlbumButton, SIGNAL( clicked() ),
-            this, SLOT( renameIpodAlbum() ) );
+    connect(m_renameAlbumButton, SIGNAL(clicked()),
+            this, SLOT(renameIpodAlbum()) );
 
-    connect(m_addImagesButton, SIGNAL( clicked() ),
-            this, SLOT( imagesFilesButtonAdd() ) );
+    connect(m_addImagesButton, SIGNAL(clicked()),
+            this, SLOT(imagesFilesButtonAdd()) );
 
-    connect(m_remImagesButton, SIGNAL( clicked() ),
-            this, SLOT( imagesFilesButtonRem() ) );
+    connect(m_remImagesButton, SIGNAL(clicked()),
+            this, SLOT(imagesFilesButtonRem()) );
 
-    connect(m_transferImagesButton, SIGNAL( clicked() ),
-            this, SLOT( startTransfer() ) );
+    connect(m_transferImagesButton, SIGNAL(clicked()),
+            this, SLOT(startTransfer()) );
 
-    connect(m_uploadList, SIGNAL( signalAddedDropItems(const QStringList&) ),
-            this, SLOT( addDropItems(const QStringList&) ) );
+    connect(m_uploadList, SIGNAL(signalAddedDropItems(QStringList)),
+            this, SLOT(addDropItems(QStringList)) );
 
-    connect(m_uploadList, SIGNAL( currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*) ),
-            this, SLOT( imageSelected(QTreeWidgetItem*) ));
+    connect(m_uploadList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+            this, SLOT(imageSelected(QTreeWidgetItem*)));
 
-    connect(m_ipodAlbumList, SIGNAL( currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*) ),
-            this, SLOT( ipodItemSelected(QTreeWidgetItem*) ));
+    connect(m_ipodAlbumList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+            this, SLOT(ipodItemSelected(QTreeWidgetItem*)));
 }
 
 UploadDialog::~UploadDialog()
@@ -523,8 +523,8 @@ void UploadDialog::imageSelected( QTreeWidgetItem* item )
 
     KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imagePreview->height() );
 
-    connect(m_thumbJob, SIGNAL( gotPreview(const KFileItem*, const QPixmap&) ),
-            this,   SLOT( gotImagePreview(const KFileItem*, const QPixmap&) ) );
+    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*,QPixmap)),
+            this,   SLOT(gotImagePreview(const KFileItem*,QPixmap)) );
 }
 
 void UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap& pixmap )
@@ -883,8 +883,8 @@ void UploadDialog::refreshDevices()
     {
         m_ipodHeader->setViewType( IpodHeader::NoIpod );
 
-        connect(m_ipodHeader, SIGNAL( refreshDevices() ),
-                this, SLOT( refreshDevices() ));
+        connect(m_ipodHeader, SIGNAL(refreshDevices()),
+                this, SLOT(refreshDevices()));
     }
     else //device opened! hooray!
     {
@@ -896,8 +896,8 @@ void UploadDialog::refreshDevices()
             kDebug() << "the ipod model must be set before photos can be added" ;
             m_ipodHeader->setViewType( IpodHeader::IncompatibleIpod );
 
-            connect(m_ipodHeader, SIGNAL( updateSysInfo() ),
-                    this, SLOT( updateSysInfo() ) );
+            connect(m_ipodHeader, SIGNAL(updateSysInfo()),
+                    this, SLOT(updateSysInfo()) );
 
             return;
         }

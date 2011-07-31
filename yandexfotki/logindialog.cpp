@@ -85,8 +85,8 @@ LoginDialog::LoginDialog(QWidget* parent,
     KUrlLabel *forgotLabel = new KUrlLabel(this);
     forgotLabel->setText(i18n("Forgot your password?"));
     forgotLabel->setUrl("http://passport.yandex.ru/passport?mode=restore");
-    connect(forgotLabel, SIGNAL(leftClickedUrl(const QString&)),
-            this, SLOT(slotProcessUrl(const QString&)));
+    connect(forgotLabel, SIGNAL(leftClickedUrl(QString)),
+            this, SLOT(slotProcessUrl(QString)));
 
     centerLayout->addWidget(m_loginEdit,   0, 1);
     centerLayout->addWidget(m_passwordEdit, 1, 1);
@@ -113,8 +113,8 @@ LoginDialog::LoginDialog(QWidget* parent,
     KUrlLabel *licenseLabel = new KUrlLabel(this);
     licenseLabel->setText(i18n("Yandex User Agreement"));
     licenseLabel->setUrl("http://fotki.yandex.ru/agreement.xml");
-    connect(licenseLabel, SIGNAL(leftClickedUrl(const QString&)),
-            this, SLOT(slotProcessUrl(const QString&)));
+    connect(licenseLabel, SIGNAL(leftClickedUrl(QString)),
+            this, SLOT(slotProcessUrl(QString)));
 
     footerLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     footerLayout->addWidget(licenseLabel);

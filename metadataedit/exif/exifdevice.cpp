@@ -465,10 +465,10 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     connect(d->subjectDistanceTypeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->makeEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->makeEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->modelEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->modelEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
     connect(d->exposureTimeNumEdit, SIGNAL(valueChanged(int)),

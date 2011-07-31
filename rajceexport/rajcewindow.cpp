@@ -81,8 +81,8 @@ RajceWindow::RajceWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_about->addAuthor(ki18n( "Lukas Krejci" ), ki18n("Author and maintainer"),
                        "metlosh at gmail dot com");
 
-    disconnect(this, SIGNAL( helpClicked() ),
-               this, SLOT( showHelp()) );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(showHelp()) );
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());

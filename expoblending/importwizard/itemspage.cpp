@@ -90,14 +90,14 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-stack.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->mngr->thread(), SIGNAL(starting(const KIPIExpoBlendingPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(starting(KIPIExpoBlendingPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
-    connect(d->list, SIGNAL(signalAddItems(const KUrl::List&)),
-            this, SLOT(slotAddItems(const KUrl::List&)));
+    connect(d->list, SIGNAL(signalAddItems(KUrl::List)),
+            this, SLOT(slotAddItems(KUrl::List)));
 
     connect(d->list, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));

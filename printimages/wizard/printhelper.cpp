@@ -73,8 +73,8 @@ private:
 PrintHelperDialog::PrintHelperDialog ( QPrinter* printer, PrintOptionsPage* optionsPage, QWidget* parent )
     : QPrintDialog ( printer, parent ), pOptionsPage ( optionsPage )
 {
-    connect ( this, SIGNAL ( accepted ( QPrinter* ) ),/* this,*/
-              pOptionsPage, SLOT ( manageQPrintDialogChanges ( QPrinter * ) ) );
+    connect ( this, SIGNAL (accepted(QPrinter*)),/* this,*/
+              pOptionsPage, SLOT (manageQPrintDialogChanges(QPrinter*)) );
 }
 
 void PrintHelperDialog::manageQPrintDialogChanges ( QPrinter* /*printer*/ )
@@ -224,7 +224,7 @@ void PrintHelper::print ( const KUrl::List& fileList )
 
 #if 0
   connect(dialog, SIGNAL(accepted(QPrinter*)),
-          optionsPage, SLOT(ogChanges(QPrinter *)));
+          optionsPage, SLOT(ogChanges(QPrinter*)));
 
   std::auto_ptr<QPrintDialog> dialog(
     KdePrint::createPrintDialog(&printer,

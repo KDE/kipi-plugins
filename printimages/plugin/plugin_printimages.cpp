@@ -75,8 +75,8 @@ void Plugin_PrintImages::setup( QWidget* widget )
     m_printImagesAction->setText ( i18n ( "Print images" ) );
     m_printImagesAction->setIcon ( KIcon ( "document-print" ) );
 
-    connect ( m_printImagesAction, SIGNAL ( triggered ( bool ) ),
-              this, SLOT ( slotPrintImagesActivate() ) );
+    connect ( m_printImagesAction, SIGNAL (triggered(bool)),
+              this, SLOT (slotPrintImagesActivate()) );
 
     addAction ( m_printImagesAction );
 
@@ -85,8 +85,8 @@ void Plugin_PrintImages::setup( QWidget* widget )
     m_printAssistantAction->setIcon ( KIcon ( "document-print" ) );
     addAction ( m_printAssistantAction );
 
-    connect ( m_printAssistantAction, SIGNAL ( triggered ( bool ) ),
-              this, SLOT ( slotPrintAssistantActivate() ) );
+    connect ( m_printAssistantAction, SIGNAL (triggered(bool)),
+              this, SLOT (slotPrintAssistantActivate()) );
 
     m_interface = dynamic_cast< KIPI::Interface* > ( parent() );
 
@@ -103,11 +103,11 @@ void Plugin_PrintImages::setup( QWidget* widget )
     m_printAssistantAction->setEnabled ( selection.isValid() &&
                                         !selection.images().isEmpty() );
 
-    connect ( m_interface, SIGNAL ( selectionChanged ( bool ) ),
-              m_printImagesAction, SLOT ( setEnabled ( bool ) ) );
+    connect ( m_interface, SIGNAL (selectionChanged(bool)),
+              m_printImagesAction, SLOT (setEnabled(bool)) );
 
-    connect ( m_interface, SIGNAL ( selectionChanged ( bool ) ),
-              m_printAssistantAction, SLOT ( setEnabled ( bool ) ) );
+    connect ( m_interface, SIGNAL (selectionChanged(bool)),
+              m_printAssistantAction, SLOT (setEnabled(bool)) );
 }
 
 Plugin_PrintImages::~Plugin_PrintImages()

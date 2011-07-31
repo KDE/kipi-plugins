@@ -80,8 +80,8 @@ void Plugin_Smug::setup(QWidget* widget)
     m_actionExport->setIcon(KIcon("smugmug"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_S));
 
-    connect(m_actionExport, SIGNAL( triggered(bool) ),
-            this, SLOT( slotExport()) );
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()) );
 
     addAction(m_actionExport);
 
@@ -90,8 +90,8 @@ void Plugin_Smug::setup(QWidget* widget)
     m_actionImport->setIcon(KIcon("smugmug"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_S));
 
-    connect(m_actionImport, SIGNAL( triggered(bool) ),
-            this, SLOT( slotImport()) );
+    connect(m_actionImport, SIGNAL(triggered(bool)),
+            this, SLOT(slotImport()) );
 
     addAction(m_actionImport);
 

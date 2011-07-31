@@ -114,8 +114,8 @@ WMWindow::WMWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
     connect(m_widget, SIGNAL(signalChangeUserRequest()),
             this, SLOT(slotChangeUserClicked()));
 
-    connect(m_widget, SIGNAL(signalLoginRequest(const QString&, const QString&, const QUrl&)),
-            this, SLOT(slotDoLogin(const QString&, const QString&, const QUrl&)));
+    connect(m_widget, SIGNAL(signalLoginRequest(QString,QString,QUrl)),
+            this, SLOT(slotDoLogin(QString,QString,QUrl)));
 
     readSettings();
     reactivate();
