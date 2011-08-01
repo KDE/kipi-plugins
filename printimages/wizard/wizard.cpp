@@ -309,7 +309,7 @@ Wizard::~Wizard()
     delete d->m_pDlg;
     delete d->m_printer;
 
-    for ( int i=0; i < d->m_photos.count(); i++ )
+    for ( int i=0; i < d->m_photos.count(); ++i )
          delete d->m_photos.at ( i );
 
     d->m_photos.clear();
@@ -340,13 +340,13 @@ void createPhotoGrid ( TPhotoSize* p, int pageWidth, int pageHeight, int rows, i
 
 void Wizard::print ( const KUrl::List& fileList, const QString& tempPath )
 {
-    for ( int i=0; i < d->m_photos.count(); i++ )
+    for ( int i=0; i < d->m_photos.count(); ++i )
          delete d->m_photos.at ( i );
 
     d->m_photos.clear();
     d->mPhotoPage->ListPrintOrder->clear();
     d->mInfoPage->m_PictureInfo->setRowCount(fileList.count());
-    for ( int i=0; i < fileList.count(); i++ )
+    for ( int i=0; i < fileList.count(); ++i )
     {
         TPhoto* photo   = new TPhoto ( 150 );
         photo->filename = fileList[i];
@@ -605,7 +605,7 @@ void Wizard::initPhotoSizes ( const QSizeF& pageSize )
     d->m_pageSize = pageSize;
 
     // cleaning m_pageSize memory before invoking clear()
-    for ( int i=0; i < d->m_photoSizes.count(); i++ )
+    for ( int i=0; i < d->m_photoSizes.count(); ++i )
         delete d->m_photoSizes.at ( i );
     d->m_photoSizes.clear();
 
@@ -680,7 +680,7 @@ double getMaxDPI ( const QList<TPhoto*>& photos, const QList<QRect*>& layouts, /
 
     double maxDPI = 0.0;
 
-    for ( ; current < photos.count(); current++ )
+    for ( ; current < photos.count(); ++current )
     {
         TPhoto *photo = photos.at ( current );
         double dpi    = ( ( double ) photo->cropRegion.width() + ( double ) photo->cropRegion.height() ) /
@@ -914,7 +914,7 @@ bool Wizard::paintOnePage( QPainter& p, const QList<TPhoto*>& photos, const QLis
                   NINT ( ( double ) srcPage->width() * xRatio ),
                   NINT ( ( double ) srcPage->height() * yRatio ) );
 
-    for ( ; current < photos.count(); current++ )
+    for ( ; current < photos.count(); ++current )
     {
         TPhoto *photo = photos.at ( current );
         // crop
@@ -1370,7 +1370,7 @@ void  Wizard::pageChanged ( KPageWidgetItem* current, KPageWidgetItem* before )
 
         QList<TPhoto*> photoList;
         kDebug() << "(1) n. photos: " << d->m_photos.count();
-        for ( int i=0; i < d->m_photos.count(); i++)
+        for ( int i=0; i < d->m_photos.count(); ++i)
         {
             TPhoto *pCurrentPhoto = d->m_photos.at ( i );
             kDebug() << "current photo " << pCurrentPhoto->filename.fileName();

@@ -177,7 +177,7 @@ void WMWindow::slotStartTransfer()
     QString licence     = m_widget->licence();
     QString description = m_widget->description();
 
-    for (int i = 0; i < urls.size(); i++)
+    for (int i = 0; i < urls.size(); ++i)
     {
         KIPI::ImageInfo info = m_interface->info(urls.at(i));
 

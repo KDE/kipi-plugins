@@ -147,7 +147,7 @@ void BackendGeonamesRG::callRGBackend(const QList<RGInfo>& rgList, const QString
     for ( int i = 0; i < rgList.count(); ++i)
     {
             bool foundIt = false;
-            for ( int j=0; j < d->jobs.count(); j++)
+            for ( int j=0; j < d->jobs.count(); ++j)
             {
                 if (d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
                 {

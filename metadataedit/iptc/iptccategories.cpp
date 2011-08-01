@@ -269,7 +269,7 @@ void IPTCCategories::slotAddCategory()
     if (newCategory.isEmpty()) return;
 
     bool found = false;
-    for (int i = 0 ; i < d->subCategoriesBox->count(); i++)
+    for (int i = 0 ; i < d->subCategoriesBox->count(); ++i)
     {
         QListWidgetItem *item = d->subCategoriesBox->item(i);
         if (newCategory == item->text())
@@ -335,7 +335,7 @@ void IPTCCategories::applyMetadata(QByteArray& iptcData)
     else
         exiv2Iface.removeIptcTag("Iptc.Application2.Category");
 
-    for (int i = 0 ; i < d->subCategoriesBox->count(); i++)
+    for (int i = 0 ; i < d->subCategoriesBox->count(); ++i)
     {
         QListWidgetItem *item = d->subCategoriesBox->item(i);
         newCategories.append(item->text());

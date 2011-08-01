@@ -372,7 +372,7 @@ void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &
     typedef QPair<KUrl,PicasaWebPhoto> Pair;
     m_transferQueue.clear();
     QList<PicasaWebPhoto>::const_iterator itPWP;
-    for (itPWP = photosList.begin(); itPWP != photosList.end(); itPWP++)
+    for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
     {
         m_transferQueue.push_back(Pair((*itPWP).originalURL, (*itPWP)));
     }
@@ -431,7 +431,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
             localId = exiv2Iface.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
         }
         QList<PicasaWebPhoto>::const_iterator itPWP;
-        for (itPWP = photosList.begin(); itPWP != photosList.end(); itPWP++)
+        for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
         {
             if ((*itPWP).id == localId)
             {
@@ -677,7 +677,7 @@ void PicasawebWindow::uploadNextPhoto()
         {
             QStringList newTags;
             QStringList::const_iterator itT;
-            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); itT++)
+            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
             {
                 QString strTmp = *itT;
                 int idx = strTmp.lastIndexOf("/");
@@ -694,11 +694,11 @@ void PicasawebWindow::uploadNextPhoto()
         {
             QSet<QString> newTagsSet;
             QStringList::const_iterator itT;
-            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); itT++)
+            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
             {
                 QStringList strListTmp = itT->split("/");
                 QStringList::const_iterator itT2;
-                for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); itT2++)
+                for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
                 {
                     if (!newTagsSet.contains(*itT2))
                     {
@@ -708,7 +708,7 @@ void PicasawebWindow::uploadNextPhoto()
             }
             info.tags.clear();
             QSet<QString>::const_iterator itT3;
-            for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); itT3++)
+            for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
             {
                 info.tags.append(*itT3);
             }

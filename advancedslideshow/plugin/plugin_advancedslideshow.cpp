@@ -224,7 +224,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         QStringList::iterator itcom = commentsList.begin();
         QStringList::iterator itcom1;
 
-        for (uint i = 0; i < (uint) fileList.size(); i++)
+        for (uint i = 0; i < (uint) fileList.size(); ++i)
         {
             int inc = (int) (float(fileList.count()) * rand() / (RAND_MAX + 1.0));
 

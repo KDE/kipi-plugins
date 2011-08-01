@@ -833,7 +833,7 @@ void vlong_pair_2_str (char *me_str,vlong &m,vlong &e)
         tmp_str[i++] = hex_str[x];
     }
 
-    for (j=0; j < i; j++)
+    for (j=0; j < i; ++j)
         me_str[me_len++] = tmp_str[i-1-j];
 
     me_str[me_len++] = '#';
@@ -846,7 +846,7 @@ void vlong_pair_2_str (char *me_str,vlong &m,vlong &e)
         tmp_str[i++] = hex_str[x];
     }
 
-    for (j=0; j < i; j++)
+    for (j=0; j < i; ++j)
         me_str[me_len++] = tmp_str[i-1-j];
 
     me_str[me_len] = 0;
@@ -875,7 +875,7 @@ void str_2_vlong_pair (const char* me_str,vlong& m,vlong& e)
     }
 
 
-    for (i = 0; i<dash_pos; i++)
+    for (i = 0; i<dash_pos; ++i)
     {
         m = m * (vlong)16;
 
@@ -889,7 +889,7 @@ void str_2_vlong_pair (const char* me_str,vlong& m,vlong& e)
         }
     }
 
-    for (i = dash_pos+1; i<me_len; i++)
+    for (i = dash_pos+1; i<me_len; ++i)
     {
         e = e * (vlong)16;
 
@@ -1058,14 +1058,14 @@ void CCryptoProviderRSA::Encrypt(const char* inbuf, size_t in_size,char* outbuf,
         size_t uportion_len = (portion_len < 0) ? 0 : (std::size_t) (portion_len);
         size_t cur_size = in_size > uportion_len ? uportion_len : in_size;
 
-        for (i=0; i<cur_size; i++)
+        for (i=0; i<cur_size; ++i)
         {
             portbuf[i] = inp[i] ^ prev_crypted[i];
         }
 
         EncryptPortion(portbuf, cur_size, cpbuf, cp_size);
 
-        for (i=0; i< uportion_len; i++)
+        for (i=0; i< uportion_len; ++i)
         {
             prev_crypted[i] = i < cp_size ? cpbuf[i] : 0;
         }
@@ -1123,10 +1123,10 @@ void CCryptoProviderRSA::Decrypt(const char *inbuf, size_t in_size,char *outbuf,
         if (lmi>pt_size)
             lmi=(unsigned short)pt_size;
 
-        for (i=0; i<lmi; i++)
+        for (i=0; i<lmi; ++i)
             portbuf[i] ^= prev_crypted[i];
 
-        for (i=0; i< portion_len; i++)
+        for (i=0; i< portion_len; ++i)
             prev_crypted[i] = i < cp_size ? cpbuf[i] : 0;
 
         memcpy (outbuf+out_size,portbuf,lmi);

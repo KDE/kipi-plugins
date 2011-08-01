@@ -341,7 +341,7 @@ QPersistentModelIndex RGTagModel::addNewTag(const QModelIndex& parent, const QSt
 QList<TagData> RGTagModel::getTagAddress()
 {
     QList<TagData> tagAddress;
-    for (int i=0; i<d->auxTagList.count(); i++)
+    for (int i=0; i<d->auxTagList.count(); ++i)
     {
         TagData tagData;
         tagData.tagName = d->auxTagList[i];
@@ -1051,7 +1051,7 @@ QList<TagData> RGTagModel::getSpacerAddress(TreeBranch* currentBranch)
  */ 
 void RGTagModel::climbTreeAndGetSpacers(const TreeBranch* currentBranch)
 {
-    for (int i=0; i<currentBranch->spacerChildren.count(); i++)
+    for (int i=0; i<currentBranch->spacerChildren.count(); ++i)
     {
         QList<TagData> currentSpacerAddress;
         currentSpacerAddress = getSpacerAddress(currentBranch->spacerChildren[i]);
@@ -1059,12 +1059,12 @@ void RGTagModel::climbTreeAndGetSpacers(const TreeBranch* currentBranch)
         climbTreeAndGetSpacers(currentBranch->spacerChildren[i]);
     }
 
-    for (int i=0; i<currentBranch->newChildren.count(); i++)
+    for (int i=0; i<currentBranch->newChildren.count(); ++i)
     {
         climbTreeAndGetSpacers(currentBranch->newChildren[i]);
     }
 
-    for (int i=0; i<currentBranch->oldChildren.count(); i++)
+    for (int i=0; i<currentBranch->oldChildren.count(); ++i)
     {
         climbTreeAndGetSpacers(currentBranch->oldChildren[i]);
     }

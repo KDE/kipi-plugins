@@ -369,7 +369,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
             QRegExp rxI("\\[i(:(\\d+))?\\]");
             QRegExp rxN("\\[([anbBeEp])([-+]?)(:(\\d*|-\\d+)\\.\\.(\\d*|-\\d+))?\\]");
 
-            for (int watchDog = 0; watchDog < 100; watchDog++)
+            for (int watchDog = 0; watchDog < 100; ++watchDog)
             {
                 QString to;
                 int j, i = rxI.indexIn(format);

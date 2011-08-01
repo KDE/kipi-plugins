@@ -848,7 +848,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                         }
 
                         QDomNodeList contentsList = detailsElem.elementsByTagName("media:content");
-                        for(int i = 0; i < contentsList.size(); i++)
+                        for(int i = 0; i < contentsList.size(); ++i)
                         {
                             QDomElement contentElem = contentsList.at(i).toElement();
                             if (!contentElem.isNull())

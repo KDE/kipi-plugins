@@ -245,7 +245,7 @@ void XMPCategories::slotAddCategory()
     if (newCategory.isEmpty()) return;
 
     bool found = false;
-    for (int i = 0 ; i < d->subCategoriesBox->count(); i++)
+    for (int i = 0 ; i < d->subCategoriesBox->count(); ++i)
     {
         QListWidgetItem *item = d->subCategoriesBox->item(i);
         if (newCategory == item->text())
@@ -311,7 +311,7 @@ void XMPCategories::applyMetadata(QByteArray& xmpData)
     else
         exiv2Iface.removeXmpTag("Xmp.photoshop.Category");
 
-    for (int i = 0 ; i < d->subCategoriesBox->count(); i++)
+    for (int i = 0 ; i < d->subCategoriesBox->count(); ++i)
     {
         QListWidgetItem *item = d->subCategoriesBox->item(i);
         newCategories.append(item->text());

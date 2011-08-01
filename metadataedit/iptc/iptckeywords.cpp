@@ -226,7 +226,7 @@ void IPTCKeywords::slotAddKeyword()
     if (newKeyword.isEmpty()) return;
 
     bool found = false;
-    for (int i = 0 ; i < d->keywordsBox->count(); i++)
+    for (int i = 0 ; i < d->keywordsBox->count(); ++i)
     {
         QListWidgetItem* item = d->keywordsBox->item(i);
         if (newKeyword == item->text())
@@ -271,7 +271,7 @@ void IPTCKeywords::applyMetadata(QByteArray& iptcData)
     exiv2Iface.setIptc(iptcData);
     QStringList newKeywords;
 
-    for (int i = 0 ; i < d->keywordsBox->count(); i++)
+    for (int i = 0 ; i < d->keywordsBox->count(); ++i)
     {
         QListWidgetItem* item = d->keywordsBox->item(i);
         newKeywords.append(item->text());

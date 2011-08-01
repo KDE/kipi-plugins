@@ -194,7 +194,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     {
         uchar* srcPtr = (uchar*)d->data.data();
 
-        for (uint j=0; j < d->height; j++)
+        for (uint j=0; j < d->height; ++j)
         {
             if (cancel())
             {
@@ -206,7 +206,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
             dstPtr = line;
 
-            for (uint i = 0; i < d->width; i++)
+            for (uint i = 0; i < d->width; ++i)
             {
                 dstPtr[2] = srcPtr[0];  // Blue
                 dstPtr[1] = srcPtr[1];  // Green
@@ -223,7 +223,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
     {
         unsigned short* srcPtr = (unsigned short*)d->data.data();
 
-        for (uint j=0; j < d->height; j++)
+        for (uint j=0; j < d->height; ++j)
         {
             if (cancel())
             {
@@ -235,7 +235,7 @@ bool KPWriteImage::write2JPEG(const QString& destPath)
 
             dstPtr = line;
 
-            for (uint i = 0; i < d->width; i++)
+            for (uint i = 0; i < d->width; ++i)
             {
                 dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
                 dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;    // Green
@@ -279,7 +279,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     {
         uchar* srcPtr = (uchar*)d->data.data();
 
-        for (uint j=0; j < d->height; j++)
+        for (uint j=0; j < d->height; ++j)
         {
             if (cancel())
             {
@@ -290,7 +290,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
 
             dstPtr = line;
 
-            for (uint i = 0; i < d->width; i++)
+            for (uint i = 0; i < d->width; ++i)
             {
                 dstPtr[2] = srcPtr[0];  // Blue
                 dstPtr[1] = srcPtr[1];  // Green
@@ -307,7 +307,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     {
         unsigned short* srcPtr = (unsigned short*)d->data.data();
 
-        for (uint j=0; j < d->height; j++)
+        for (uint j=0; j < d->height; ++j)
         {
             if (cancel())
             {
@@ -318,7 +318,7 @@ bool KPWriteImage::write2PPM(const QString& destPath)
 
             dstPtr = line;
 
-            for (uint i = 0; i < d->width; i++)
+            for (uint i = 0; i < d->width; ++i)
             {
                 dstPtr[2] = (srcPtr[0] * 255UL)/65535UL;    // Blue
                 dstPtr[1] = (srcPtr[1] * 255UL)/65535UL;    // Green

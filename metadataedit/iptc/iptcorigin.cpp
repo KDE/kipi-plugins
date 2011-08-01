@@ -801,7 +801,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     if (!data.isNull())
     {
         int item = -1;
-        for (int i = 0 ; i < d->countryCB->count() ; i++)
+        for (int i = 0 ; i < d->countryCB->count() ; ++i)
             if (d->countryCB->item(i).left(3) == data)
                 item = i;
 

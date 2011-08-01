@@ -405,7 +405,7 @@ void SlideShow::printFilename()
 
     p.setPen( Qt::black );
 
-    for ( int x = 9; x <= 11; x++ )
+    for ( int x = 9; x <= 11; ++x )
         for ( int y = 31; y >= 29; y-- )
             p.drawText( x, height() - y, m_imageLoader->currFileName() );
 
@@ -484,13 +484,13 @@ void SlideShow::printComments()
     p.begin(&m_currImage);
     p.setFont(*m_sharedData->captionFont);
 
-    for (int lineNumber = 0; lineNumber < (int) commentsByLines.count(); lineNumber++)
+    for (int lineNumber = 0; lineNumber < (int) commentsByLines.count(); ++lineNumber)
     {
         p.setPen(QColor(m_sharedData->commentsBgColor));
 
         // coefficient 1.5 is used to maintain distance between different lines
 
-        for (int x = 9; x <= 11; x++)
+        for (int x = 9; x <= 11; ++x)
         {
             for (int y = (int) (yPos + lineNumber * 1.5 * m_sharedData->captionFont->pointSize() + 1);
                  y >= (int) (yPos + lineNumber * 1.5 * m_sharedData->captionFont->pointSize() - 1); y--)
@@ -519,7 +519,7 @@ void SlideShow::printProgress()
 
     p.setPen( QColor( Qt::black ) );
 
-    for ( int x = 9; x <= 11; x++ )
+    for ( int x = 9; x <= 11; ++x )
         for ( int y = 21; y >= 19; y-- )
             p.drawText( width() - stringLength - x, y, progress );
 
@@ -740,7 +740,7 @@ int SlideShow::effectMeltdown( bool aInit )
     int y, x;
     QPainter bufferPainter( &m_buffer );
 
-    for ( i = 0, x = 0; i < m_ix; i++, x += m_dx )
+    for ( i = 0, x = 0; i < m_ix; ++i, x += m_dx )
     {
         y = m_intArray[i];
 
@@ -855,11 +855,11 @@ int SlideShow::effectMosaic( bool aInit )
         m_i = 30; // giri totali
         m_pixelMatrix = new bool*[width()];
 
-        for ( int x=0; x<width(); x++ )
+        for ( int x=0; x<width(); ++x )
         {
             m_pixelMatrix[x] = new bool[height()];
 
-            for ( int y=0; y<height(); y++ )
+            for ( int y=0; y<height(); ++y )
             {
                 m_pixelMatrix[x][y] = false;
             }
@@ -891,8 +891,8 @@ int SlideShow::effectMosaic( bool aInit )
 
             bufferPainter.fillRect( x, y, dim, dim, QBrush( m_currImage ) );
 
-            for ( int i=0; i<dim && ( x+i )<w; i++ )
-                for ( int j=0; j<dim && ( y+j )<h; j++ )
+            for ( int i=0; i<dim && ( x+i )<w; ++i )
+                for ( int j=0; j<dim && ( y+j )<h; ++j )
                     m_pixelMatrix[x+i][y+j] = true;
         }
     }

@@ -727,7 +727,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
     const int spacerCount = currentSpacerList.count();
     group->writeEntry("Spacers count", spacerCount);
 
-    for (int i=0; i<currentSpacerList.count(); i++)
+    for (int i=0; i<currentSpacerList.count(); ++i)
     {
         QString spacerName;
         spacerName.append(QString("Spacerlistname %1").arg(i));  
@@ -736,7 +736,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
       
         QStringList spacerTagNames;
         QStringList spacerTypes;
-        for (int j=0; j<currentSpacerList[i].count(); j++)
+        for (int j=0; j<currentSpacerList[i].count(); ++j)
         {   
             spacerTagNames.append(currentSpacerList[i].at(j).tagName);
             if (currentSpacerList[i].at(j).tagType == TypeSpacer)
@@ -766,7 +766,7 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
     const int spacerCount = group->readEntry("Spacers count", 0);
     QList<QList<TagData> > spacersList;
 
-    for (int i=0; i<spacerCount; i++)
+    for (int i=0; i<spacerCount; ++i)
     {
         QStringList spacerTagNames  = group->readEntry(QString("Spacerlistname %1").arg(i), QStringList());
         QStringList spacerTypes = group->readEntry(QString("Spacerlisttype %1").arg(i), QStringList());

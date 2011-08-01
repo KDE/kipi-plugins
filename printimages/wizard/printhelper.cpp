@@ -199,14 +199,14 @@ PrintHelper::~PrintHelper()
 void PrintHelper::print ( const KUrl::List& fileList )
 {
   QPrinter printer;
-  for (int i = 0; i < d->m_photos.count(); i++)
+  for (int i = 0; i < d->m_photos.count(); ++i)
   {
     delete d->m_photos.at(i);
     KApplication::kApplication()->processEvents();
   }
   d->m_photos.clear();
 
-  for (int i = 0; i < fileList.count(); i++)
+  for (int i = 0; i < fileList.count(); ++i)
   {
     TPhoto *photo   = new TPhoto(150);
     photo->filename = fileList[i];
@@ -314,9 +314,9 @@ void PrintHelper::print ( const KUrl::List& fileList )
 //         kDebug() << "Img coords (" << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ")";
         QRect destRec = QRect(QPoint(0, 0), QPoint(x2 / horPages, y2 / vertPages));
 
-        for (int px = 1; px <= horPages; px++)
+        for (int px = 1; px <= horPages; ++px)
         {
-          for (int py = 1; py <= vertPages; py++)
+          for (int py = 1; py <= vertPages; ++py)
           {
             int sx = ((px - 1) * x2 / horPages);
             int sy = ((py - 1) * y2 / vertPages);

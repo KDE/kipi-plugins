@@ -216,9 +216,9 @@ int LayoutTree::addImage(double aspectRatio, double relativeArea)
     LayoutNode* bestTree = 0;
     double highScore     = 0;
 
-    for (int i=0; i< m_count; i++)
+    for (int i=0; i< m_count; ++i)
     {
-        for (int horizontal=0; horizontal<2; horizontal++)
+        for (int horizontal=0; horizontal<2; ++horizontal)
         {
             // create temporary tree
             LayoutNode *candidateTree = new LayoutNode(*m_root);
@@ -273,7 +273,7 @@ double LayoutTree::score(LayoutNode* root, int nodeCount)
         return 0;
 
     double areaSum = 0;
-    for (int i = 0; i<nodeCount; i++)
+    for (int i = 0; i<nodeCount; ++i)
     {
         LayoutNode* node = root->nodeForIndex(i);
         if (node->type() == LayoutNode::TerminalNode)
@@ -329,7 +329,7 @@ QRectF LayoutTree::drawingArea(int index, const QRectF& absoluteRectPage)
 
     // go along the line of ancestry and narrow down the bounding rectangle,
     // as described in section 2.2.2
-    for (int i=0; i<treePath.count() - 1; i++)
+    for (int i=0; i<treePath.count() - 1; ++i)
     {
         LayoutNode *parent = treePath[i];
         LayoutNode *child  = treePath[i+1]; // only iterating to count-1

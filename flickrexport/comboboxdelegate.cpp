@@ -147,7 +147,7 @@ void ComboBoxDelegate::setEditorData(QWidget* editor,
 {
     // Scroll the combobox to the current selected state on initialization.
     QComboBox* cb = qobject_cast<QComboBox*>(editor);
-    for (int i = 0; i < cb->count(); i++)
+    for (int i = 0; i < cb->count(); ++i)
     {
         if (cb->itemData(i).toInt() == index.data().toInt())
             cb->setCurrentIndex(i);

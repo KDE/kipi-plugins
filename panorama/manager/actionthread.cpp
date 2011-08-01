@@ -538,7 +538,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         unsigned short tmp16[3];
 
         // Set RGB color components.
-        for (int i = 0 ; !d->cancel && (i < width * height) ; i++)
+        for (int i = 0 ; !d->cancel && (i < width * height) ; ++i)
         {
             // Swap Red and Blue and re-ajust color component values
             tmp16[0] = (unsigned short)((sptr[5]*256 + sptr[4]) * factor);      // Blue
@@ -655,7 +655,7 @@ bool ActionThread::createPTO(const ItemUrlsMap& urlList, KUrl& ptoUrl)
     pto_stream << "v Vd0" << endl;
     pto_stream << "v Vx0" << endl;
     pto_stream << "v Vy0" << endl;
-    for (int j = 0; j < i; j++)
+    for (int j = 0; j < i; ++j)
     {
         // Colors optimization
         pto_stream << "v Ra" << j << endl;

@@ -357,7 +357,7 @@ void PrintOptionsPage::selectPrev()
 
 void PrintOptionsPage::setAdditionalInfo()
 {
-    for ( int i=0; i < d->m_photos->count(); i++ )
+    for ( int i=0; i < d->m_photos->count(); ++i )
     {
         TPhoto* pPhoto = d->m_photos->at ( i );
         if ( pPhoto )

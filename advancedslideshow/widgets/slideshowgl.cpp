@@ -666,7 +666,7 @@ void SlideShowGL::printComments(QImage& layer)
     bool   drawTextOutline = m_sharedData->commentsDrawOutline;
     int    opacity = m_sharedData->bgOpacity;
 
-    for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); lineNumber++ )
+    for ( int lineNumber = 0; lineNumber < (int)commentsByLines.count(); ++lineNumber )
     {
         QPixmap pix = generateCustomOutlinedTextPixmap(commentsByLines[lineNumber],
                                                        font, fgColor, bgColor, opacity, drawTextOutline);
@@ -1261,9 +1261,9 @@ void SlideShowGL::effectFlutter()
 
     if (m_i == 0)
     {
-        for (int x = 0; x < 40; x++)
+        for (int x = 0; x < 40; ++x)
         {
-            for (int y = 0; y < 40; y++)
+            for (int y = 0; y < 40; ++y)
             {
                 m_points[x][y][0] = (float) (x / 20.0f - 1.0f);
                 m_points[x][y][1] = (float) (y / 20.0f - 1.0f);

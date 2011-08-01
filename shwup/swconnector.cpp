@@ -468,7 +468,7 @@ void SwConnector::listAlbumsResultHandler(KIO::Job* job, const QByteArray& data)
     m_loggedIn = true;
 
     QDomNodeList albumNodes = docElem.elementsByTagName("album");
-    for (uint idx=0; idx < albumNodes.length(); idx++)
+    for (uint idx=0; idx < albumNodes.length(); ++idx)
     {
         QDomNode albumNode = albumNodes.at(idx);
 

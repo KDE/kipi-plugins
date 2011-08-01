@@ -263,7 +263,7 @@ void MainDialog::loadEffectNames()
 
     m_effectsComboBox->insertItems(0, effects);
 
-    for (int i = 0; i < m_effectsComboBox->count(); i++)
+    for (int i = 0; i < m_effectsComboBox->count(); ++i)
     {
         if (effectNames[m_sharedData->effectName] == m_effectsComboBox->itemText(i))
         {
