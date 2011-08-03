@@ -1049,7 +1049,7 @@ void CCryptoProviderRSA::Encrypt(const char* inbuf, size_t in_size,char* outbuf,
     // hence -1
     int portion_len = (prkface.m.bits() - 1)  / 8;
     char* prev_crypted = new char[portion_len];
-    memset(&prev_crypted, 0, portion_len);
+    memset(prev_crypted, 0, portion_len);
 
     out_size = 0;
 
