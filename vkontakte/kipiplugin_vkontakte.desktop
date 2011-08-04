@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=VKontakte.ru Exporter
+Comment=A tool to export images to the VKontakte.ru social network
+Type=Service
+Icon=
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_vkontakte
+author=Alexander Potashev, aspotashev@gmail.com
