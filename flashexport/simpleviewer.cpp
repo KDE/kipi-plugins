@@ -268,6 +268,29 @@ bool SimpleViewer::createExportDirectories() const
     return true;
 }
 
+bool SimpleViewer::cmpUrl(const KUrl &url1, const KUrl &url2)
+{
+
+    KExiv2Iface::KExiv2 meta1;
+    meta1.load(url1.path());
+    QDateTime clock1              = meta1.getImageDateTime();
+    
+    KExiv2Iface::KExiv2 meta2;
+    meta2.load(url2.path());
+    QDateTime clock2             = meta2.getImageDateTime();
+
+    if(clock1.isValid() || clock2.isValid())
+    	return clock1 < clock2;
+    else
+    {
+    	QString name1 = url1.fileName();
+    	QString name2 = url2.fileName();
+    	
+    	return name1 < name2;
+    }
+    	
+}
+
 bool SimpleViewer::exportImages() const
 {
     if(d->canceled)
@@ -322,8 +345,10 @@ bool SimpleViewer::exportImages() const
     for( QList<KIPI::ImageCollection>::ConstIterator it = d->collectionsList.constBegin() ;
          !d->canceled && (it != d->collectionsList.constEnd()) ; ++it )
     {
-        const KUrl::List images = (*it).images();
-
+         KUrl::List images = (*it).images();
+        
+         qSort(images.begin(),images.end(),cmpUrl);
+        
         for(KUrl::List::ConstIterator it = images.constBegin();
             !d->canceled && (it != images.constEnd()) ; ++it)
         {
