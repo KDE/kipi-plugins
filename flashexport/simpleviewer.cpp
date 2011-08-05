@@ -479,6 +479,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         return;
 
     QString comment;
+    QString keywords;
 
     if(d->configDlg->settings().showComments)
     {
@@ -489,7 +490,18 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     {
         comment.clear();
     }
-
+    if(d->configDlg->settings().showKeywords && d->interface->hasFeature(KIPI::HostSupportsTags))
+    {
+        KIPI::ImageInfo info =d->interface->info(url);
+        QMap<QString, QVariant> attribs = info.attributes();
+        QStringList tagList = attribs["tags"].toStringList();
+        if(tagList.join(" ")!="")
+            keywords = QString("\nTags: ")+tagList.join(", ");
+    }
+    else
+    {
+        keywords.clear();
+    }
     QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
     galleryElem.appendChild(img);
     img.setAttribute(QString::fromLatin1("imageURL"),QString("images/")+newName);  
@@ -499,7 +511,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
     QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption"));
     img.appendChild(caption);
-    QDomText captiontxt = xmlDoc.createTextNode(comment);
+    QDomText captiontxt = xmlDoc.createTextNode(comment+keywords);
     caption.appendChild(captiontxt);
 }
 

@@ -7,6 +7,7 @@
  * Description : general settings page.
  *
  * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici@gmail.com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -55,6 +56,7 @@ public:
         rightClick         = 0;
         fixOrientation     = 0;
         openInKonqueror    = 0;
+        showKeywords       = 0;
     }
 
     KLineEdit*     title;
@@ -64,6 +66,7 @@ public:
     QCheckBox*     rightClick;
     QCheckBox*     fixOrientation;
     QCheckBox*     openInKonqueror;
+    QCheckBox*     showKeywords;
 
     KIntNumInput*  imagesExportSize;
     KIntNumInput*  maxImageDimension;
@@ -154,6 +157,10 @@ GeneralPage::GeneralPage(QWidget* parent)
     d->showComments->setChecked(true);
     d->showComments->setWhatsThis(i18n("If this option is enabled, "
                                        "the images' captions will be shown."));
+    d->showKeywords = new QCheckBox(i18n("Display Keywords"), this);
+    d->showKeywords->setChecked(false);
+    d->showKeywords->setWhatsThis(i18n("If this option is enabled, "
+                                       "the images' keywords will be shown."));
 
     d->rightClick = new QCheckBox(i18n("Open Image with Right Click"), this);
     d->rightClick->setChecked(false);
@@ -161,7 +168,7 @@ GeneralPage::GeneralPage(QWidget* parent)
                                      "the user will be able to open the target image in a separate window "
                                      "using the right mouse button."));
 
-    d->openInKonqueror = new QCheckBox(i18n("Open gallery in Konqueror"), this);
+    d->openInKonqueror = new QCheckBox(i18n("Open gallery in Browser"), this);
     d->openInKonqueror->setChecked(true);
     d->openInKonqueror->setWhatsThis(i18n("If this option is enabled, the "
                                           "gallery will be opened in Konqueror automatically."));
@@ -172,6 +179,7 @@ GeneralPage::GeneralPage(QWidget* parent)
     vlay4->addWidget(d->showComments);
     vlay4->addWidget(d->rightClick);
     vlay4->addWidget(d->openInKonqueror);
+    vlay4->addWidget(d->showKeywords);
 
     // ------------------------------------------------------------------------
 
@@ -200,6 +208,7 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer& settings)
     d->rightClick->setChecked(settings.enableRightClickOpen);
     d->fixOrientation->setChecked(settings.fixOrientation);
     d->openInKonqueror->setChecked(settings.openInKonqueror);
+    d->showKeywords->setChecked(settings.showKeywords);
 }
 
 void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
@@ -213,6 +222,7 @@ void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
     settings.enableRightClickOpen = d->rightClick->isChecked();
     settings.fixOrientation       = d->fixOrientation->isChecked();
     settings.openInKonqueror      = d->openInKonqueror->isChecked();
+    settings.showKeywords         = d->showKeywords->isChecked();
 }
 
 }  // namespace KIPIFlashExportPlugin
