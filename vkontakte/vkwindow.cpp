@@ -74,6 +74,7 @@
 #include <libkvkontakte/albumlistjob.h>
 #include <libkvkontakte/createalbumjob.h>
 #include <libkvkontakte/uploadphotosjob.h>
+#include <libkvkontakte/getvariablejob.h>
 
 // LibKExiv2 includes
 
@@ -276,6 +277,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
 
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startAlbumsUpdate()));
+    connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startGetFullName()));
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(updateLabels()));
 
     // for startReactivation()
@@ -347,7 +349,7 @@ void VkontakteWindow::updateLabels()
 
     if (isAuthenticated())
     {
-        loginText = "???login???"; //m_talker.login();
+        loginText = m_userFullName;
         urlText = "???login-url???"; //YandexFotkiTalker::USERPAGE_URL.arg(m_talker.login());
         m_albumsBox->setEnabled(true);
     }
@@ -454,6 +456,7 @@ void VkontakteWindow::slotHelp()
 
 void VkontakteWindow::startAuthentication(bool forceAuthWindow)
 {
+    m_userFullName = QString();
     if (forceAuthWindow)
         m_accessToken = QString();
 
@@ -538,6 +541,31 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
     }
     m_albumsCombo->setEnabled(true);
     updateControls(true);
+}
+
+//------------------------------
+
+void VkontakteWindow::startGetFullName()
+{
+    GetVariableJob *job = new GetVariableJob(m_accessToken, 1281);
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotGetFullNameDone(KJob*)));
+    m_jobs.append(job);
+    job->start();
+}
+
+void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
+{
+    GetVariableJob *job = dynamic_cast<GetVariableJob *>(kjob);
+    Q_ASSERT(job);
+    m_jobs.removeAll(job);
+    if (job->error())
+    {
+        handleVkError(job);
+        return;
+    }
+
+    m_userFullName = job->variable().toString();
+    updateLabels();
 }
 
 //------------------------------

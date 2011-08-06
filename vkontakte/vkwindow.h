@@ -101,8 +101,10 @@ protected Q_SLOTS:
 
     // requesting album information
     void startAlbumsUpdate();
+    void startGetFullName();
     void startAlbumCreation(AlbumInfoPtr album);
     void slotAlbumsUpdateDone(KJob *);
+    void slotGetFullNameDone(KJob *);
     void slotAlbumCreationDone(KJob *);
 
     // requesting photo information
@@ -168,6 +170,7 @@ protected:
     bool m_authenticated;
     QString m_accessToken;
     QList<AlbumInfoPtr> m_albums;
+    QString m_userFullName;
 };
 
 } // namespace KIPIVkontaktePlugin
