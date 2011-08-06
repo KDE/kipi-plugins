@@ -472,7 +472,7 @@ void VkontakteWindow::startAuthentication(bool forceAuthWindow)
         QStringList permissions;
         permissions << "photos" << "offline";
         AuthenticationDialog *authDialog = new AuthenticationDialog(this);
-        authDialog->setAppId(/*Settings::self()->appID()*/ QString("2383230"));
+        authDialog->setAppId(/*Settings::self()->appID()*/ QString("2383230")); // TODO: this was for Akonadi app, create a new app for KIPI-Plugins
         authDialog->setPermissions(permissions);
         connect(authDialog, SIGNAL(authenticated(QString)),
                 this, SLOT(slotAuthenticationDialogDone(QString)));
