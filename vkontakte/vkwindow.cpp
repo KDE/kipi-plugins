@@ -215,7 +215,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
 //     m_checkKeepOriginal = new QCheckBox(i18n("Save in high resolution"), settingsBox); // store state in kipirc
 
-    QVBoxLayout *optionsBoxLayout = new QVBoxLayout(optionsBox);
+//     QVBoxLayout *optionsBoxLayout = new QVBoxLayout(optionsBox);
 //     optionsBoxLayout->addWidget(m_checkKeepOriginal);
 
     m_progressBar = new QProgressBar(settingsBox);
