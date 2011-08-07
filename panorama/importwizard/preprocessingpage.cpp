@@ -69,35 +69,37 @@ struct PreProcessingPage::PreProcessingPagePriv
         progressPix = SmallIcon("process-working", 22);
     }
 
-    int          progressCount;
-    QLabel*      progressLabel;
-    QPixmap      progressPix;
-    QTimer*      progressTimer;
+    int             progressCount;
+    QLabel*         progressLabel;
+    QPixmap         progressPix;
+    QTimer*         progressTimer;
 
-    QLabel*      title;
+    QLabel*         title;
 
-    QCheckBox*   celesteCheckBox;
+    QCheckBox*      celesteCheckBox;
 
-    QString      output;
+    QString         output;
 
-    QPushButton* detailsBtn;
+    QPushButton*    detailsBtn;
 
-    Manager*     mngr;
+    Manager*        mngr;
 };
 
 PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
                  : WizardPage(dlg, i18n("<b>Pre-Processing Images</b>")),
                    d(new PreProcessingPagePriv)
 {
-    d->mngr          = mngr;
-    d->progressTimer = new QTimer(this);
-    KVBox *vbox      = new KVBox(this);
-    d->title         = new QLabel(vbox);
+    d->mngr             = mngr;
+    d->progressTimer    = new QTimer(this);
+    KVBox *vbox         = new KVBox(this);
+    d->title            = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);
-    d->celesteCheckBox = new QCheckBox(i18n("Detect Moving Skies"), vbox);
+
     KConfig config("kipirc");
-    KConfigGroup group = config.group(QString("Panorama Settings"));
+    KConfigGroup group  = config.group(QString("Panorama Settings"));
+
+    d->celesteCheckBox  = new QCheckBox(i18n("Detect Moving Skies"), vbox);
     d->celesteCheckBox->setChecked(group.readEntry("Celeste", false));
 
     QLabel* space1   = new QLabel(vbox);
@@ -155,6 +157,7 @@ void PreProcessingPage::resetTitle()
                            "<p>Pre-processing also include a calculation of some control points to match "
                            "overlaps between images. For that purpose, the <b>%1</b> program from the "
                            "<a href='%2'>%3</a> project will be used.</p>"
+                           "<p>Output panorama file type is selected here.</p>"
                            "<p>Press \"Next\" to start pre-processing.</p>"
                            "</qt>",
                            QString(d->mngr->cpFindBinary().path()),
@@ -177,7 +180,10 @@ void PreProcessingPage::process()
     connect(d->mngr->thread(), SIGNAL(finished(const KIPIPanoramaPlugin::ActionData&)),
             this, SLOT(slotAction(const KIPIPanoramaPlugin::ActionData&)));
 
-    d->mngr->thread()->setPreProcessingSettings(d->celesteCheckBox->isChecked(), d->mngr->rawDecodingSettings());
+    d->mngr->thread()->setPreProcessingSettings(d->celesteCheckBox->isChecked(),
+                                                d->mngr->hdr(),
+                                                d->mngr->format(),
+                                                d->mngr->rawDecodingSettings());
     d->mngr->thread()->preProcessFiles(d->mngr->itemsList());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
@@ -196,7 +202,7 @@ void PreProcessingPage::cancel()
 
 void PreProcessingPage::slotProgressTimerDone()
 {
-    d->progressLabel->setPixmap(QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22)));
+    //d->progressLabel->setPixmap(QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22)));
 
     d->progressCount++;
     if (d->progressCount == 8)

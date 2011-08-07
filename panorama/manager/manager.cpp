@@ -48,15 +48,31 @@ namespace KIPIPanoramaPlugin
 struct Manager::ManagerPriv
 {
     ManagerPriv()
-        : iface(0),
-          about(0),
-          thread(0),
-          wizard(0)
-    {};
+    : iface(0),
+      about(0),
+      thread(0),
+      wizard(0),
+      config("kipirc"),
+      group(config.group(QString("Panorama Settings")))
+    {
+        hdr = group.readEntry("HDR", false);
+        fileType = (ActionThread::PanoramaFileType) group.readEntry("File Type", (int) ActionThread::JPEG);
+    }
+
+
+    ~ManagerPriv()
+    {
+        group.writeEntry("HDR", hdr);
+        config.sync();
+    }
 
     KUrl::List              inputUrls;
     KUrl                    cpFindUrl;
     KUrl                    autoOptimiseUrl;
+
+    bool                    hdr;
+
+    ActionThread::PanoramaFileType   fileType;
 
     ItemUrlsMap             preProcessedUrlsMap;
 
@@ -73,6 +89,10 @@ struct Manager::ManagerPriv
     AutoOptimiserBinary     autoOptimiserBinary;
 
     ImportWizardDlg*        wizard;
+
+private:
+    KConfig config;
+    KConfigGroup group;
 };
 
 Manager::Manager(QObject* parent)
@@ -103,6 +123,31 @@ bool Manager::checkBinaries()
         return false;
 
     return true;
+}
+
+void Manager::setHDR(bool hdr)
+{
+    d->hdr = hdr;
+}
+
+bool Manager::hdr() const
+{
+    return d->hdr;
+}
+
+void Manager::setFileFormatJPEG()
+{
+    d->fileType = ActionThread::JPEG;
+}
+
+void Manager::setFileFormatTIFF()
+{
+    d->fileType = ActionThread::TIFF;
+}
+
+ActionThread::PanoramaFileType Manager::format() const
+{
+    return d->fileType;
 }
 
 void Manager::setAbout(PanoramaAboutData* about)

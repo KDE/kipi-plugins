@@ -25,19 +25,38 @@
 #ifndef INTRO_PAGE_H
 #define INTRO_PAGE_H
 
+// Qt includes
+
+#include <QAbstractButton>
+
 // Local includes
 
 #include "wizardpage.h"
+#include "manager.h"
 
 namespace KIPIPanoramaPlugin
 {
 
+class Manager;
+
 class IntroPage : public KIPIPlugins::WizardPage
 {
+    Q_OBJECT
+
 public:
 
-    IntroPage(KAssistantDialog* dlg);
+    IntroPage(Manager* mngr, KAssistantDialog* dlg);
     ~IntroPage();
+
+private Q_SLOTS:
+
+    void slotShowFileFormat(int state);
+    void slotChangeFileFormat(QAbstractButton* button);
+
+private:
+
+    struct IntroPagePriv;
+    IntroPagePriv* const d;
 };
 
 }   // namespace KIPIPanoramaPlugin

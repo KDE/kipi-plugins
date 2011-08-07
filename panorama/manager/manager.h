@@ -40,6 +40,7 @@
 // Local includes
 
 #include "actions.h"
+#include "actionthread.h"
 
 namespace KIPI
 {
@@ -68,6 +69,13 @@ public:
     ~Manager();
 
     bool checkBinaries();
+
+    void setHDR(bool hdr);
+    bool hdr() const;
+
+    void setFileFormatJPEG();
+    void setFileFormatTIFF();
+    ActionThread::PanoramaFileType format() const;
 
     void setAbout(PanoramaAboutData* about);
     PanoramaAboutData* about() const;

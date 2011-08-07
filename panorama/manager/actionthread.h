@@ -62,11 +62,15 @@ class ActionThread : public QThread
     Q_OBJECT
 
 public:
+    typedef enum {JPEG, TIFF} PanoramaFileType;
+
+public:
 
     explicit ActionThread(QObject* parent);
     ~ActionThread();
 
-    void setPreProcessingSettings(bool celeste, const KDcrawIface::RawDecodingSettings& settings);
+    void setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType filetype,
+                                  const KDcrawIface::RawDecodingSettings& settings);
     void preProcessFiles(const KUrl::List& urlList);
     void optimizeProject(const KUrl& ptoUrl);
     void cancel();
@@ -88,13 +92,13 @@ private:
 
     bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
                                const RawDecodingSettings& settings);
-    bool    startCPFind(KUrl& ptoUrl, ItemUrlsMap& preProcessedUrlsMap, bool celeste, QString& errors);
+    bool    startCPFind(KUrl& ptoUrl, bool celeste, QString& errors);
     bool    startCPClean(KUrl& ptoUrl, QString& errors);
     bool    startOptimization(KUrl& ptoUrl, QString& errors);
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
     bool    isRawFile(const KUrl& url);
-    bool    createPTO(const KIPIPanoramaPlugin::ItemUrlsMap& urlList, KUrl& ptoUrl);
+    bool    createPTO(bool hdr, PanoramaFileType fileType, const KIPIPanoramaPlugin::ItemUrlsMap& urlList, KUrl& ptoUrl);
 
     QString getProcessError(KProcess* proc) const;
 

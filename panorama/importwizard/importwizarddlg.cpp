@@ -78,7 +78,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     setWindowTitle(i18n("Panorama Creator Wizard"));
 
     d->mngr              = mngr;
-    d->introPage         = new IntroPage(this);
+    d->introPage         = new IntroPage(d->mngr, this);
     d->itemsPage         = new ItemsPage(d->mngr, this);
     d->preProcessingPage = new PreProcessingPage(d->mngr, this);
     d->optimizePage      = new OptimizePage(d->mngr, this);

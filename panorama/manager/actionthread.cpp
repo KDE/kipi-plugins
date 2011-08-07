@@ -61,12 +61,15 @@ namespace KIPIPanoramaPlugin
 struct ActionThread::ActionThreadPriv
 {
     ActionThreadPriv()
-        : cancel(false), celeste(false), savePTO(false),
+        : cancel(false), celeste(false), hdr(false), savePTO(false),
           CPFindProcess(0), CPCleanProcess(0), autoOptimiseProcess(0), preprocessingTmpDir(0) {}
 
     struct Task
     {
         bool                celeste;
+        bool                hdr;
+        PanoramaFileType    fileType;
+        bool                tiffOutput;
         KUrl::List          urls;
         KUrl                ptoUrl;
         KUrl                outputUrl;
@@ -76,6 +79,8 @@ struct ActionThread::ActionThreadPriv
 
     bool                            cancel;
     bool                            celeste;
+    bool                            hdr;
+    PanoramaFileType                fileType;
     bool                            savePTO;
 
     QWaitCondition                  condVar;
@@ -134,10 +139,13 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setPreProcessingSettings(bool celeste, const KDcrawIface::RawDecodingSettings& settings)
+void ActionThread::setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType fileType,
+                                            const KDcrawIface::RawDecodingSettings& settings)
 {
-    d->celeste             = celeste;
-    d->rawDecodingSettings = settings;
+    d->celeste              = celeste;
+    d->hdr                  = hdr;
+    d->fileType             = fileType;
+    d->rawDecodingSettings  = settings;
 }
 
 void ActionThread::preProcessFiles(const KUrl::List& urlList)
@@ -147,6 +155,8 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList)
     t->urls                     = urlList;
     t->rawDecodingSettings      = d->rawDecodingSettings;
     t->celeste                  = d->celeste;
+    t->hdr                      = d->hdr;
+    t->fileType                 = d->fileType;
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
@@ -227,10 +237,14 @@ void ActionThread::run()
                     kDebug() << "Preprocess status: " << result_success;
                     if (result_success)
                     {
-                        result_success = startCPFind(t->ptoUrl, preProcessedUrlsMap, t->celeste, errors);
+                        result_success = createPTO(t->hdr, t->fileType, preProcessedUrlsMap, t->ptoUrl);
                         if (result_success)
                         {
-                            result_success = startCPClean(t->ptoUrl, errors);
+                            result_success = startCPFind(t->ptoUrl, t->celeste, errors);
+                            if (result_success)
+                            {
+                                result_success = startCPClean(t->ptoUrl, errors);
+                            }
                         }
                     }
 
@@ -359,13 +373,11 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     return true;
 }
 
-bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, ItemUrlsMap& preProcessedUrlsMap, bool celeste, QString& errors)
+bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, bool celeste, QString& errors)
 {
     // Run CPFind to get control points and order the images
 
-    KUrl ptoInUrl;
-    if (!createPTO(preProcessedUrlsMap, ptoInUrl))
-        return false;
+    KUrl ptoInUrl(cpFindPtoUrl);
     cpFindPtoUrl = d->preprocessingTmpDir->name();
     cpFindPtoUrl.setFileName(QString("cp_pano.pto"));
 
@@ -568,6 +580,8 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
             return false;
+        else
+            meta.save(outUrl.toLocalFile());
     }
     else
     {
@@ -590,7 +604,7 @@ bool ActionThread::isRawFile(const KUrl& url)
     return false;
 }
 
-bool ActionThread::createPTO(const ItemUrlsMap& urlList, KUrl& ptoUrl)
+bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const ItemUrlsMap& urlList, KUrl& ptoUrl)
 {
     ptoUrl = d->preprocessingTmpDir->name();
     ptoUrl.setFileName(QString("pano_base.pto"));
@@ -609,9 +623,17 @@ bool ActionThread::createPTO(const ItemUrlsMap& urlList, KUrl& ptoUrl)
     // 1. Project parameters
     pto_stream << "p";
     pto_stream << " f0";                    // Rectilinear projection
-    pto_stream << " \"TIFF_m c:NONE\"";     // TIFF_m output
-    pto_stream << " R1";                    // HDR output
-    pto_stream << " T\"FLOAT\"";            // 32bits color depth
+    switch (fileType)
+    {
+        case TIFF:
+            pto_stream << " n\"TIFF_m c:NONE\"";     // TIFF_m output
+            break;
+        case JPEG:
+            pto_stream << " n\"JPEG q95\"";         // JPEG output, compression 95%
+            break;
+    }
+    pto_stream << " R" << (hdr ? '1' : '0');// HDR output
+    //pto_stream << " T\"FLOAT\"";            // 32bits color depth
     //pto_stream << " S," << X_left << "," << X_right << "," << X_top << "," << X_bottom;   // Crop values
     pto_stream << " k0";                    // Reference image
     pto_stream << endl;
@@ -635,7 +657,7 @@ bool ActionThread::createPTO(const ItemUrlsMap& urlList, KUrl& ptoUrl)
             pto_stream << " a=0 b=0 c=0 d=0 e=0 v=0 g=0 t=0";           // Geometry
             pto_stream << " Va=0 Vb=0 Vc=0 Vd=0 Vx=0 Vy=0";             // Vignetting
         }
-        pto_stream << " n" << url.preprocessedUrl.toLocalFile();
+        pto_stream << " n\"" << url.preprocessedUrl.toLocalFile() << '"';
         pto_stream << endl;
 
         i++;

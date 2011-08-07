@@ -16,9 +16,10 @@ The panorama workflow is the following:
  1) RAW images are converted to TIFF images
  2) A pto file (hugin project file) is generated with parameters to be optimized
  3) Control points are calculated to match overlaps between images (using cpfind from the hugin project)
- 4) Optimization of positions and photometric parameters are performed (using autooptimise from the hugin project)
- 5) A Makefile which will perform the stitching is generated (using pto2mk from the hugin project)
- 6) The Makefile is run (uses nona from the hugin project, and enblend)
+ 4) Then C.P. that are clearly wrong matches are deleted (using cpclean from the hugin project)
+ 5) Optimization of positions and photometric parameters are performed (using autooptimise from the hugin project)
+ 6) A Makefile which will perform the stitching is generated (using pto2mk from the hugin project)
+ 7) The Makefile is run (uses nona from the hugin project, and enblend)
 
 -- Preview --
 
