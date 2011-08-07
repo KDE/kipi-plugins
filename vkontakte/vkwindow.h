@@ -45,6 +45,7 @@ class QGroupBox;
 class QButtonGroup;
 class QCloseEvent;
 class QProgressBar;
+class QToolButton;
 
 class KUrl;
 class KProgressDialog;
@@ -104,10 +105,12 @@ protected Q_SLOTS:
     void startGetFullName();
     void startGetUserId();
     void startAlbumCreation(AlbumInfoPtr album);
+    void startAlbumEditing(AlbumInfoPtr album);
     void slotAlbumsUpdateDone(KJob *);
     void slotGetFullNameDone(KJob *);
     void slotGetUserIdDone(KJob *);
     void slotAlbumCreationDone(KJob *);
+    void slotAlbumEditingDone(KJob *);
 
     // requesting photo information
     void slotPhotoUploadDone(KJob *);
@@ -115,6 +118,7 @@ protected Q_SLOTS:
     void updateLabels();
 
     void slotNewAlbumRequest();
+    void slotEditAlbumRequest();
     void slotReloadAlbumsRequest();
 
     void slotStartTransfer();
@@ -161,6 +165,7 @@ protected:
     KPushButton*             m_newAlbumButton;
     KPushButton*             m_reloadAlbumsButton;
     KComboBox*               m_albumsCombo;
+    QToolButton *m_editAlbumButton;
 
     KIPIPlugins::ImagesList* m_imgList;
     KIPI::UploadWidget*      m_uploadWidget;

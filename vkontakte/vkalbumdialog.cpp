@@ -49,10 +49,12 @@
 namespace KIPIVkontaktePlugin
 {
 
-VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, AlbumInfoPtr album)
+VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, AlbumInfoPtr album, bool editing)
     : KDialog(parent), m_album(album)
 {
-    setWindowTitle(i18n("New album"));
+    setWindowTitle(editing ?
+        i18nc("@title:window", "Edit album") :
+        i18nc("@title:window", "New album"));
     setButtons(KDialog::Ok | KDialog::Cancel);
     setDefaultButton(KDialog::Cancel);
 
@@ -102,6 +104,14 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, AlbumInfoPtr album)
     mainLayout->addWidget(privacyBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainWidget->setLayout(mainLayout);
+
+    if (editing)
+    {
+        m_titleEdit->setText(album->title());
+        m_summaryEdit->setText(album->description());
+        m_albumPrivacyCombo->setCurrentIndex(m_albumPrivacyCombo->findData(album->privacy()));
+        m_commentsPrivacyCombo->setCurrentIndex(m_commentsPrivacyCombo->findData(album->commentPrivacy()));
+    }
 }
 
 VkontakteAlbumDialog::~VkontakteAlbumDialog()

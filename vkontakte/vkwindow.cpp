@@ -46,6 +46,7 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QToolButton>
 
 // KDE includes
 
@@ -73,6 +74,7 @@
 #include <libkvkontakte/authenticationdialog.h>
 #include <libkvkontakte/albumlistjob.h>
 #include <libkvkontakte/createalbumjob.h>
+#include <libkvkontakte/editalbumjob.h>
 #include <libkvkontakte/uploadphotosjob.h>
 #include <libkvkontakte/getvariablejob.h>
 
@@ -161,7 +163,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     m_albumsBox = new QGroupBox(i18n("Album"), settingsBox);
     m_albumsBox->setWhatsThis(
         i18n("This is the VKontakte album that will be used for the transfer."));
-    QGridLayout* albumsBoxLayout  = new QGridLayout(m_albumsBox);
+    QVBoxLayout *albumsBoxLayout = new QVBoxLayout(m_albumsBox);
 
     m_albumsCombo = new KComboBox(m_albumsBox);
     m_albumsCombo->setEditable(false);
@@ -173,16 +175,28 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
         KGuiItem(i18nc("reload albums list", "Reload"), "view-refresh",
                  i18n("Reload albums list")), m_albumsBox);
 
-    albumsBoxLayout->addWidget(m_albumsCombo, 0, 0, 1, 5);
-    albumsBoxLayout->addWidget(m_newAlbumButton, 1, 3, 1, 1);
-    albumsBoxLayout->addWidget(m_reloadAlbumsButton, 1, 4, 1, 1);
+    m_editAlbumButton = new QToolButton(m_albumsBox);
+    m_editAlbumButton->setToolTip(i18n("Edit selected album"));
+    m_editAlbumButton->setEnabled(false);
+    m_editAlbumButton->setIcon(KIcon("document-edit"));
 
-    connect(m_newAlbumButton, SIGNAL(clicked()),
-            this, SLOT(slotNewAlbumRequest()));
+    QWidget *currentAlbumWidget = new QWidget(m_albumsBox);
+    QHBoxLayout *currentAlbumWidgetLayout = new QHBoxLayout(currentAlbumWidget);
+    currentAlbumWidgetLayout->addWidget(m_albumsCombo);
+    currentAlbumWidgetLayout->addWidget(m_editAlbumButton);
 
+    QWidget *albumButtons = new QWidget(m_albumsBox);
+    QHBoxLayout *albumButtonsLayout = new QHBoxLayout(albumButtons);
+    albumButtonsLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    albumButtonsLayout->addWidget(m_newAlbumButton);
+    albumButtonsLayout->addWidget(m_reloadAlbumsButton);
 
-    connect(m_reloadAlbumsButton, SIGNAL(clicked()),
-            this, SLOT(slotReloadAlbumsRequest()));
+    albumsBoxLayout->addWidget(currentAlbumWidget);
+    albumsBoxLayout->addWidget(albumButtons);
+
+    connect(m_editAlbumButton, SIGNAL(clicked()), this, SLOT(slotEditAlbumRequest()));
+    connect(m_newAlbumButton, SIGNAL(clicked()), this, SLOT(slotNewAlbumRequest()));
+    connect(m_reloadAlbumsButton, SIGNAL(clicked()), this, SLOT(slotReloadAlbumsRequest()));
 
     // ------------------------------------------------------------------------
 
@@ -462,6 +476,7 @@ void VkontakteWindow::startAuthentication(bool forceAuthWindow)
 {
     m_userFullName = QString();
     m_userId = -1;
+    m_editAlbumButton->setEnabled(false);
 
     if (forceAuthWindow)
         m_accessToken = QString();
@@ -546,6 +561,10 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
         m_albumsCombo->addItem(KIcon("folder-image"), album->title());
     }
     m_albumsCombo->setEnabled(true);
+
+    if (!m_albums.empty())
+        m_editAlbumButton->setEnabled(true);
+
     updateControls(true);
 }
 
@@ -627,8 +646,43 @@ void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
 
     startAlbumsUpdate();
     m_albumsCombo->setEnabled(false);
+    m_editAlbumButton->setEnabled(false);
     updateControls(false);
 }
+
+//------------------------------
+
+void VkontakteWindow::startAlbumEditing(AlbumInfoPtr album)
+{
+    EditAlbumJob *job = new EditAlbumJob(
+        m_accessToken,
+        album->aid(), album->title(), album->description(),
+        album->privacy(), album->commentPrivacy());
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumEditingDone(KJob*)));
+    m_jobs.append(job);
+    job->start();
+}
+
+void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
+{
+    EditAlbumJob *job = dynamic_cast<EditAlbumJob *>(kjob);
+    Q_ASSERT(job);
+    m_jobs.removeAll(job);
+    if (job->error())
+    {
+        handleVkError(job);
+        return;
+    }
+
+    // TODO: automatically select the same album again
+
+    startAlbumsUpdate();
+    m_albumsCombo->setEnabled(false);
+    m_editAlbumButton->setEnabled(false);
+    updateControls(false);
+}
+
+//------------------------------
 
 void VkontakteWindow::slotNewAlbumRequest()
 {
@@ -639,6 +693,18 @@ void VkontakteWindow::slotNewAlbumRequest()
     {
         updateControls(false);
         startAlbumCreation(album);
+    }
+}
+
+void VkontakteWindow::slotEditAlbumRequest()
+{
+    AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
+    VkontakteAlbumDialog dlg(this, album, true);
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        updateControls(false);
+        startAlbumEditing(album);
     }
 }
 

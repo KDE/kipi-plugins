@@ -44,7 +44,7 @@ class VkontakteAlbumDialog : public KDialog
     Q_OBJECT
 
 public:
-    VkontakteAlbumDialog(QWidget *parent, AlbumInfoPtr album);
+    VkontakteAlbumDialog(QWidget *parent, AlbumInfoPtr album, bool editing = false);
     ~VkontakteAlbumDialog();
 
     AlbumInfoPtr album() const;
