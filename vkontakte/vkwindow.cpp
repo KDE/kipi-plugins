@@ -209,9 +209,14 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* optionsBox = new QGroupBox(i18n("Options"), settingsBox);
+    QGroupBox *optionsBox = new QGroupBox(i18n("Options"), settingsBox);
     optionsBox->setWhatsThis(
         i18n("These are options that will be applied to images before upload."));
+
+//     m_checkKeepOriginal = new QCheckBox(i18n("Save in high resolution"), settingsBox); // store state in kipirc
+
+    QVBoxLayout *optionsBoxLayout = new QVBoxLayout(optionsBox);
+//     optionsBoxLayout->addWidget(m_checkKeepOriginal);
 
     m_progressBar = new QProgressBar(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -734,7 +739,7 @@ void VkontakteWindow::slotStartTransfer()
         foreach (const KUrl &url, m_imgList->imageUrls(true))
             files.append(url.toLocalFile());
 
-        Vkontakte::UploadPhotosJob *job = new Vkontakte::UploadPhotosJob(m_accessToken, files, album->aid());
+        Vkontakte::UploadPhotosJob *job = new Vkontakte::UploadPhotosJob(m_accessToken, files, false /*m_checkKeepOriginal->isChecked()*/, album->aid());
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotPhotoUploadDone(KJob*)));
         connect(job, SIGNAL(progress(int)), m_progressBar, SLOT(setValue(int)));
         m_jobs.append(job);

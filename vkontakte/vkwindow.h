@@ -160,6 +160,9 @@ protected:
     KComboBox *m_albumsCombo;
     QToolButton *m_editAlbumButton;
 
+    // options
+//     QCheckBox *m_checkKeepOriginal;
+
     KIPIPlugins::ImagesList *m_imgList;
     KIPI::UploadWidget *m_uploadWidget;
 
