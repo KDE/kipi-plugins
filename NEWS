@@ -3,13 +3,14 @@ Kipi-plugins 2.1.0 - Release date: 2011/09/04
 
 NEW FEATURES:
 
-001 ==> 171794 - display keywords by flash export
+New plugin to export collection to VKontakte web service (http://wwww.vkontakte.ru).
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 270419 - digiKam's plugin Kipi can't import my photo from facebook.
 002 ==> 279078 - kipi plugin Yandex.Fotki causes digikam crash.
 003 ==> 141389 - Unpredictable image ordering in gallery.xml
-004 ==> 
+004 ==> 171794 - Display keywords by flash export.
+005 ==> 
 
 

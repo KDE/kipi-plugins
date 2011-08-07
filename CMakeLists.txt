@@ -139,22 +139,22 @@ ENDIF (KDCRAW_VERSION)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
-MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)      # For DNGConverter: XMP SDK need Expat library to compile.
-MACRO_OPTIONAL_FIND_PACKAGE(Threads)    # For DNGConverter: DNG SDK need native threads support.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)    # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)    # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)     # For AdvancedSlideshow and ImageViewer.
-MACRO_OPTIONAL_FIND_PACKAGE(Ipod)       # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(Gdk)        # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)      # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GObject)    # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
-MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup and YandexFotki.
-MACRO_OPTIONAL_FIND_PACKAGE(KSane)      # For AcquireImages.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(QJSON)      # For Debian Screenshots, Facebook and VKontakte.
-MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)    # For GPSSync.
-MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)  # For Mediawiki.
+MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)         # For DNGConverter: XMP SDK need Expat library to compile.
+MACRO_OPTIONAL_FIND_PACKAGE(Threads)       # For DNGConverter: DNG SDK need native threads support.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)       # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)       # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)        # For AdvancedSlideshow and ImageViewer.
+MACRO_OPTIONAL_FIND_PACKAGE(Ipod)          # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(Gdk)           # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)         # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GObject)       # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)    # For Calendar (libkcal).
+MACRO_OPTIONAL_FIND_PACKAGE(QCA2)          # For Shwup and YandexFotki.
+MACRO_OPTIONAL_FIND_PACKAGE(KSane)         # For AcquireImages.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)        # For RemoveRedEyes.
+MACRO_OPTIONAL_FIND_PACKAGE(QJSON)         # For Debian Screenshots, Facebook and VKontakte.
+MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)       # For GPSSync.
+MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)     # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte) # For VKontakte.
 
 # check the libkgeomap version
