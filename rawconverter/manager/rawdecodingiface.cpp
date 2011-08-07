@@ -112,7 +112,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     unsigned short tmp16[3];
 
     // Set RGB color components.
-    for (int i = 0 ; i < width * height ; i++)
+    for (int i = 0 ; i < width * height ; ++i)
     {
         if (!sixteenBits)   // 8 bits color depth image.
         {
@@ -146,7 +146,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     uchar* sptr8           = (uchar*)imageData.data();
     unsigned short* sptr16 = (unsigned short*)imageData.data();
 
-    for (int i = 0 ; i < width * height ; i++)
+    for (int i = 0 ; i < width * height ; ++i)
     {
         if (!sixteenBits)   // 8 bits color depth image.
         {

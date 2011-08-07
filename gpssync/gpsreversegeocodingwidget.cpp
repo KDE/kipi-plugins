@@ -55,9 +55,9 @@
 #include <kurl.h>
 #include <kvbox.h>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
+#include <libkgeomap/kgeomap_primitives.h>
 
 // local includes
 
@@ -365,7 +365,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->buttonHideOptions, SIGNAL(clicked()),
             this, SLOT(slotHideOptions()));
 
-    connect(d->selectionModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection)),
+    connect(d->selectionModel, SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             this, SLOT(updateUIState()));
 
     connect(d->actionAddCountry, SIGNAL(triggered(bool)),
@@ -419,7 +419,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
     connect(d->actionAddAllAddressElementsToTag, SIGNAL(triggered(bool)),
             this, SLOT(slotAddAllAddressElementsToTag()));
 
-    connect(d->imageModel, SIGNAL(dataChanged(QModelIndex, QModelIndex)),
+    connect(d->imageModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
             this, SLOT(slotRegenerateNewTags()));
 
     connect(d->actionRemoveTag, SIGNAL(triggered(bool)),
@@ -430,7 +430,7 @@ GPSReverseGeocodingWidget::GPSReverseGeocodingWidget(KIPI::Interface* interface,
 
     for (int i=0; i<d->backendRGList.count(); ++i)
     {
-        connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo> &)),
+        connect(d->backendRGList[i], SIGNAL(signalRGReady(QList<RGInfo>&)),
                 this, SLOT(slotRGReady(QList<RGInfo>&)));
     }
 
@@ -493,7 +493,7 @@ void GPSReverseGeocodingWidget::slotButtonRGSelected()
 
         RGInfo photoObj;
         photoObj.id = itemIndex;
-        photoObj.coordinates = KMap::GeoCoordinates(latitude, longitude);
+        photoObj.coordinates = KGeoMap::GeoCoordinates(latitude, longitude);
 
         photoList << photoObj;
 
@@ -727,7 +727,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
     const int spacerCount = currentSpacerList.count();
     group->writeEntry("Spacers count", spacerCount);
 
-    for (int i=0; i<currentSpacerList.count(); i++)
+    for (int i=0; i<currentSpacerList.count(); ++i)
     {
         QString spacerName;
         spacerName.append(QString("Spacerlistname %1").arg(i));  
@@ -736,7 +736,7 @@ void GPSReverseGeocodingWidget::saveSettingsToGroup(KConfigGroup* const group)
       
         QStringList spacerTagNames;
         QStringList spacerTypes;
-        for (int j=0; j<currentSpacerList[i].count(); j++)
+        for (int j=0; j<currentSpacerList[i].count(); ++j)
         {   
             spacerTagNames.append(currentSpacerList[i].at(j).tagName);
             if (currentSpacerList[i].at(j).tagType == TypeSpacer)
@@ -766,7 +766,7 @@ void GPSReverseGeocodingWidget::readSettingsFromGroup(const KConfigGroup* const 
     const int spacerCount = group->readEntry("Spacers count", 0);
     QList<QList<TagData> > spacersList;
 
-    for (int i=0; i<spacerCount; i++)
+    for (int i=0; i<spacerCount; ++i)
     {
         QStringList spacerTagNames  = group->readEntry(QString("Spacerlistname %1").arg(i), QStringList());
         QStringList spacerTypes = group->readEntry(QString("Spacerlisttype %1").arg(i), QStringList());

@@ -194,8 +194,8 @@ void FlickrTalker::getFrob()
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
     }
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -239,8 +239,8 @@ void FlickrTalker::checkToken(const QString& token)
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
     }
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -321,8 +321,8 @@ void FlickrTalker::getToken()
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
     }
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -360,11 +360,11 @@ void FlickrTalker::listPhotoSets()
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
     }
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_LISTPHOTOSETS;
     m_job   = job;
@@ -408,11 +408,11 @@ void FlickrTalker::getPhotoProperty(const QString& method, const QStringList& ar
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
     }
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_GETPHOTOPROPERTY;
     m_job   = job;
@@ -464,11 +464,11 @@ void FlickrTalker::createPhotoSet(const QString& /*albumName*/, const QString& a
     }
 
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_CREATEPHOTOSET;
     m_job   = job;
@@ -516,11 +516,11 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
         KIO::TransferJob* job = KIO::http_post(url, tmp, KIO::HideProgressInfo);
         job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 
-        connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-                this, SLOT(data(KIO::Job*, const QByteArray&)));
+        connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+                this, SLOT(data(KIO::Job*,QByteArray)));
 
-        connect(job, SIGNAL(result(KJob *)),
-                this, SLOT(slotResult(KJob *)));
+        connect(job, SIGNAL(result(KJob*)),
+                this, SLOT(slotResult(KJob*)));
 
         m_state = FE_ADDPHOTOTOPHOTOSET;
         m_job   = job;
@@ -643,11 +643,11 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(data(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = FE_ADDPHOTO;
     m_job   = job;

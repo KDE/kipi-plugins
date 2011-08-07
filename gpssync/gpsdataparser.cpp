@@ -88,8 +88,11 @@ void GPSDataParser::loadGPXFiles(const KUrl::List& urls)
 {
     d->gpxLoadFutureWatcher = new QFutureWatcher<GPXFileData>(this);
 
-    connect(d->gpxLoadFutureWatcher, SIGNAL(resultsReadyAt(int, int)),
-            this, SLOT(slotGPXFilesReadyAt(int, int)));
+    connect(d->gpxLoadFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
+            this, SLOT(slotGPXFilesReadyAt(int,int)));
+    
+    connect(d->gpxLoadFutureWatcher, SIGNAL(finished()),
+            this, SLOT(slotGPXFilesFinished()));
 
     d->gpxLoadFuture = QtConcurrent::mapped(urls, GPXFileReader::loadGPXFile);
     d->gpxLoadFutureWatcher->setFuture(d->gpxLoadFuture);
@@ -117,14 +120,13 @@ void GPSDataParser::slotGPXFilesReadyAt(int beginIndex, int endIndex)
 
     // note that endIndex is exclusive!
     emit(signalGPXFilesReadyAt(nFilesBefore, d->gpxFileDataList.count()));
+}
 
-    // are all files done?
-    if (d->gpxLoadFuture.isFinished())
-    {
-        d->gpxLoadFutureWatcher->deleteLater();
+void GPSDataParser::slotGPXFilesFinished()
+{
+    d->gpxLoadFutureWatcher->deleteLater();
 
-        emit(signalAllGPXFilesReady());
-    }
+    emit(signalAllGPXFilesReady());
 }
 
 QDateTime GPXFileReader::ParseTime(QString timeString)
@@ -184,8 +186,8 @@ void GPSDataParser::correlate(const GPXCorrelation::List& itemsToCorrelate, cons
     d->thread->fileList = d->gpxFileDataList;
     d->thread->itemsToCorrelate = itemsToCorrelate;
 
-    connect(d->thread, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)),
-            this, SLOT(slotThreadItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)), Qt::QueuedConnection);
+    connect(d->thread, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)),
+            this, SLOT(slotThreadItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)), Qt::QueuedConnection);
 
     connect(d->thread, SIGNAL(finished()),
             this, SLOT(slotThreadFinished()), Qt::QueuedConnection);
@@ -320,7 +322,18 @@ void GPSDataParserThread::run()
                     break;
                 }
             }
-            currentIndices[f] = index;
+            
+            // Remember the last index which we searched in this file
+            // to save time when looking for matching times for the next
+            // item.
+            // However, we have to decrease the index by one:
+            // The current index should correspond to a time after the item,
+            // and index-1 should correspond to a time before the item. The next
+            // item may be before the time of the current index, and by decreasing
+            // the stored index by 1 we ensure that we start our search at an index
+            // corresponding to a time before the next item. Remember that the
+            // items are sorted by time!
+            currentIndices[f] = (index>1)?(index-1):0;
         }
 
         GPSDataParser::GPXCorrelation correlatedData = *it;
@@ -391,7 +404,7 @@ void GPSDataParserThread::run()
                 const uint tCor = itemDateTime.toTime_t();
                 if (tCor-tBefore!=0)
                 {
-                    KMap::GeoCoordinates resultCoordinates;
+                    KGeoMap::GeoCoordinates resultCoordinates;
                     const double latBefore = dataPointBefore.coordinates.lat();
                     const double lonBefore = dataPointBefore.coordinates.lon();
                     const double latAfter = dataPointAfter.coordinates.lat();

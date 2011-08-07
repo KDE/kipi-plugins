@@ -257,7 +257,7 @@ Wizard::Wizard(QWidget* parent, GalleryInfo* info, KIPI::Interface* interface)
     d->mOutputPage=new OutputPage(this, i18n("Output"));
     d->mOutputPage->kcfg_destUrl->setMode(KFile::Directory);
 
-    connect(d->mOutputPage->kcfg_destUrl, SIGNAL(textChanged(const QString&)),
+    connect(d->mOutputPage->kcfg_destUrl, SIGNAL(textChanged(QString)),
         this, SLOT(updateFinishPageValidity()) );
 
     d->mConfigManager=new KConfigDialogManager(this, d->mInfo);

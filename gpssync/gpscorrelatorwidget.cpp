@@ -139,14 +139,14 @@ GPSCorrelatorWidget::GPSCorrelatorWidget(QWidget* const parent, KipiImageModel* 
     d->imageModel = imageModel;
     d->gpsDataParser = new GPSDataParser(this);
 
-    connect(d->gpsDataParser, SIGNAL(signalGPXFilesReadyAt(int, int)),
-            this, SLOT(slotGPXFilesReadyAt(int, int)));
+    connect(d->gpsDataParser, SIGNAL(signalGPXFilesReadyAt(int,int)),
+            this, SLOT(slotGPXFilesReadyAt(int,int)));
 
     connect(d->gpsDataParser, SIGNAL(signalAllGPXFilesReady()),
             this, SLOT(slotAllGPXFilesReady()));
 
-    connect(d->gpsDataParser, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)),
-            this, SLOT(slotItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)));
+    connect(d->gpsDataParser, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)),
+            this, SLOT(slotItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)));
 
     connect(d->gpsDataParser, SIGNAL(signalAllItemsCorrelated()),
             this, SLOT(slotAllItemsCorrelated()));

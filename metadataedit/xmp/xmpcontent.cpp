@@ -172,10 +172,10 @@ XMPContent::XMPContent(QWidget* parent)
     connect(d->copyrightEdit, SIGNAL(signalModified()),
             this, SIGNAL(signalModified()));
 
-    connect(d->headlineEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->headlineEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->writerEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->writerEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

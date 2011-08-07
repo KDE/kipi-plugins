@@ -209,7 +209,7 @@ void MultiValuesEdit::slotAddValue()
     if (newValue.isEmpty()) return;
 
     bool found = false;
-    for (int i = 0 ; i < d->valueBox->count(); i++)
+    for (int i = 0 ; i < d->valueBox->count(); ++i)
     {
         QListWidgetItem* item = d->valueBox->item(i);
         if (newValue == item->text())
@@ -233,7 +233,7 @@ void MultiValuesEdit::setData(const QStringList& data)
 QStringList MultiValuesEdit::getData() const
 {
     QStringList data;
-    for (int i = 0 ; i < d->dataList->count(); i++)
+    for (int i = 0 ; i < d->dataList->count(); ++i)
     {
         data.append(d->dataList->item(i));
     }
@@ -265,7 +265,7 @@ bool MultiValuesEdit::getValues(QStringList& oldValues, QStringList& newValues)
     oldValues = d->oldValues;
 
     newValues.clear();
-    for (int i = 0 ; i < d->valueBox->count(); i++)
+    for (int i = 0 ; i < d->valueBox->count(); ++i)
     {
         QListWidgetItem* item = d->valueBox->item(i);
         newValues.append(item->text());

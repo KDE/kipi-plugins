@@ -82,8 +82,8 @@ void YandexFotkiTalker::getService()
     KIO::TransferJob* job = KIO::get(SERVICE_URL.arg(m_login),
                                      KIO::NoReload, KIO::HideProgressInfo);
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(handleJobData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseGetService(KJob*)));
@@ -104,11 +104,11 @@ void YandexFotkiTalker::checkToken()
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_CHECKTOKEN;
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(handleJobData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(parseResponseCheckToken(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(parseResponseCheckToken(KJob*)));
 
     m_job = job;
     m_buffer.resize(0);
@@ -127,8 +127,8 @@ void YandexFotkiTalker::getSession()
     //job->ui()->setWindow(m_parent);
 
     m_state = STATE_GETSESSION;
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(handleJobData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseGetSession(KJob*)));
 
@@ -162,8 +162,8 @@ void YandexFotkiTalker::getToken()
 
     m_state = STATE_GETTOKEN;
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(handleJobData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseGetToken(KJob*)));
@@ -197,8 +197,8 @@ void YandexFotkiTalker::listAlbumsNext()
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_LISTALBUMS;
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(handleJobData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseListAlbums(KJob*)));
@@ -233,8 +233,8 @@ void YandexFotkiTalker::listPhotosNext()
                      .arg(AUTH_REALM).arg(m_token));
 
     m_state = STATE_LISTPHOTOS;
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(handleJobData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseListPhotos(KJob*)));
@@ -299,8 +299,8 @@ void YandexFotkiTalker::updatePhotoFile(YandexFotkiPhoto& photo)
     m_state = STATE_UPDATEPHOTO_FILE;
     m_lastPhoto = &photo;
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(handleJobData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseUpdatePhotoFile(KJob*)));
@@ -385,8 +385,8 @@ void YandexFotkiTalker::updatePhotoInfo(YandexFotkiPhoto& photo)
                      .arg(m_buffer.size()));
 
     // no result data in this method, but reading from m_buffer
-    connect(job, SIGNAL(dataReq(KIO::Job*,  QByteArray&)),
-            this, SLOT(handleJobReq(KIO::Job*, QByteArray&)));
+    connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
+            this, SLOT(handleJobReq(KIO::Job*,QByteArray&)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseUpdatePhotoInfo(KJob*)));
@@ -449,8 +449,8 @@ void YandexFotkiTalker::updateAlbumCreate(YandexFotkiAlbum& album)
 
     m_state = STATE_UPDATEALBUM;
 
-    connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(handleJobData(KIO::Job*, const QByteArray&)));
+    connect(job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(handleJobData(KIO::Job*,QByteArray)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(parseResponseUpdateAlbum(KJob*)));

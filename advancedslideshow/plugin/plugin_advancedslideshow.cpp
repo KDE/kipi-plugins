@@ -104,8 +104,8 @@ void Plugin_AdvancedSlideshow::setup(QWidget* widget)
 
     m_urlList = KUrl::List();
 
-    connect(m_interface, SIGNAL( currentAlbumChanged( bool )),
-            this, SLOT( slotAlbumChanged( bool )));
+    connect(m_interface, SIGNAL(currentAlbumChanged(bool)),
+            this, SLOT(slotAlbumChanged(bool)));
 
     if (m_interface->currentAlbum().isValid())
     {
@@ -224,7 +224,7 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
         QStringList::iterator itcom = commentsList.begin();
         QStringList::iterator itcom1;
 
-        for (uint i = 0; i < (uint) fileList.size(); i++)
+        for (uint i = 0; i < (uint) fileList.size(); ++i)
         {
             int inc = (int) (float(fileList.count()) * rand() / (RAND_MAX + 1.0));
 

@@ -40,9 +40,9 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-// libkmap includes
+// libkgeomap includes
 
-#include <libkmap/lookup_factory.h>
+#include <libkgeomap/lookup_factory.h>
 
 // LibKIPI includes.
 
@@ -88,7 +88,7 @@ public:
     KipiImageList    *imagesList;
 
     // Altitude lookup
-    QPointer<KMap::LookupAltitude> altitudeLookup;
+    QPointer<KGeoMap::LookupAltitude> altitudeLookup;
     GPSUndoCommand        *altitudeUndoCommand;
     int                    altitudeRequestedCount;
     int                    altitudeReceivedCount;
@@ -379,7 +379,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
                     }
 
                     foundData = true;
-                    KMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
+                    KGeoMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
                     if (haveAltitude)
                     {
                         coordinates.setAlt(ptAltitude);
@@ -402,7 +402,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
         const QString textdata  = mimedata->text();
 
         bool foundGeoUrl = false;
-        KMap::GeoCoordinates testCoordinates = KMap::GeoCoordinates::fromGeoUrl(textdata, &foundGeoUrl);
+        KGeoMap::GeoCoordinates testCoordinates = KGeoMap::GeoCoordinates::fromGeoUrl(textdata, &foundGeoUrl);
         if (foundGeoUrl)
         {
             gpsData.setCoordinates(testCoordinates);
@@ -436,7 +436,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
                 foundData = okay;
                 if (okay)
                 {
-                    KMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
+                    KGeoMap::GeoCoordinates coordinates(ptLatitude, ptLongitude);
                     if (haveAltitude)
                     {
                         coordinates.setAlt(ptAltitude);
@@ -623,7 +623,7 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
 //     const int nSelected = selectedIndices.size();
 
     // find the indices which have coordinates but no altitude
-    KMap::LookupAltitude::Request::List altitudeQueries;
+    KGeoMap::LookupAltitude::Request::List altitudeQueries;
     Q_FOREACH (const QModelIndex& currentIndex, selectedIndices)
     {
         KipiImageItem* const gpsItem = imageModel->itemFromIndex(currentIndex);
@@ -633,14 +633,14 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
         }
 
         const GPSDataContainer gpsData = gpsItem->gpsData();
-        const KMap::GeoCoordinates coordinates = gpsData.getCoordinates();
+        const KGeoMap::GeoCoordinates coordinates = gpsData.getCoordinates();
         if ((!coordinates.hasCoordinates()) || coordinates.hasAltitude())
         {
             continue;
         }
 
         // the item has coordinates but no altitude, create a query
-        KMap::LookupAltitude::Request myLookup;
+        KGeoMap::LookupAltitude::Request myLookup;
         myLookup.coordinates = coordinates;
         myLookup.data = QVariant::fromValue(QPersistentModelIndex(currentIndex));
 
@@ -652,10 +652,10 @@ void GPSListViewContextMenu::slotLookupMissingAltitudes()
         return;
     }
 
-    d->altitudeLookup = KMap::LookupFactory::getAltitudeLookup("geonames", this);
+    d->altitudeLookup = KGeoMap::LookupFactory::getAltitudeLookup("geonames", this);
 
-    connect(d->altitudeLookup, SIGNAL(signalRequestsReady(const QList<int>&)),
-            this, SLOT(slotAltitudeLookupReady(const QList<int>&)));
+    connect(d->altitudeLookup, SIGNAL(signalRequestsReady(QList<int>)),
+            this, SLOT(slotAltitudeLookupReady(QList<int>)));
 
     connect(d->altitudeLookup, SIGNAL(signalDone()),
             this, SLOT(slotAltitudeLookupDone()));
@@ -674,7 +674,7 @@ void GPSListViewContextMenu::slotAltitudeLookupReady(const QList<int>& readyRequ
     KipiImageModel* const imageModel = d->imagesList->getModel();
     Q_FOREACH(const int requestIndex, readyRequests)
     {
-        const KMap::LookupAltitude::Request myLookup = d->altitudeLookup->getRequest(requestIndex);
+        const KGeoMap::LookupAltitude::Request myLookup = d->altitudeLookup->getRequest(requestIndex);
         const QPersistentModelIndex markerIndex = myLookup.data.value<QPersistentModelIndex>();
         if (!markerIndex.isValid())
         {
@@ -704,8 +704,8 @@ void GPSListViewContextMenu::slotAltitudeLookupReady(const QList<int>& readyRequ
 
 void GPSListViewContextMenu::slotAltitudeLookupDone()
 {
-    KMap::LookupAltitude::Status requestStatus = d->altitudeLookup->getStatus();
-    if (requestStatus==KMap::LookupAltitude::StatusError)
+    KGeoMap::LookupAltitude::Status requestStatus = d->altitudeLookup->getStatus();
+    if (requestStatus==KGeoMap::LookupAltitude::StatusError)
     {
         const QString errorMessage = i18n("Altitude lookup failed:\n%1", d->altitudeLookup->errorMessage());
         KMessageBox::sorry(d->imagesList,

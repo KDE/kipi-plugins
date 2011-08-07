@@ -251,8 +251,8 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
 
     // ------------------------------------------------------------------------
 
-    connect(m_resizeChB, SIGNAL( clicked() ),
-            this, SLOT( slotResizeChecked() ));
+    connect(m_resizeChB, SIGNAL(clicked()),
+            this, SLOT(slotResizeChecked()));
 
     connect(m_changeUserBtn, SIGNAL(clicked()),
             this, SLOT(slotChangeUserClicked()));

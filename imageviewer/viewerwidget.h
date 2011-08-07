@@ -84,7 +84,7 @@ public:
     ~ViewerWidget()
     {
         glDeleteTextures(1,tex);
-        for(int i=0;i<CACHESIZE;i++)
+        for(int i=0;i<CACHESIZE;++i)
         {
             cache[i].file_index=EMPTY;
             delete cache[i].texture;

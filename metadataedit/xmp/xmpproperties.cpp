@@ -321,10 +321,10 @@ XMPProperties::XMPProperties(QWidget* parent)
     connect(d->objectAttributeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->objectAttributeEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->objectAttributeEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->originalTransEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->originalTransEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

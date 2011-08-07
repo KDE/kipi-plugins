@@ -76,8 +76,8 @@ void Plugin_WikiMedia::setup(QWidget* widget)
     m_actionExport->setText(i18n("Export to &WikiMedia Commons..."));
     m_actionExport->setIcon(KIcon("wikimedia"));
 
-    connect(m_actionExport, SIGNAL( triggered(bool) ),
-            this, SLOT( slotExport()) );
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()) );
 
     addAction(m_actionExport);
 

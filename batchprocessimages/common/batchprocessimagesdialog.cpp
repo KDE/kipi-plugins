@@ -183,8 +183,8 @@ void BatchProcessImagesDialog::setupUi()
     m_optionsButton = m_ui->m_optionsButton;
     m_listFiles     = m_ui->m_listView;
 
-    connect(m_listFiles, SIGNAL(itemDoubleClicked(QTreeWidgetItem *, int)),
-            this, SLOT(slotListDoubleClicked(QTreeWidgetItem *)));
+    connect(m_listFiles, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+            this, SLOT(slotListDoubleClicked(QTreeWidgetItem*)));
 
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotProcessStart()));
@@ -201,8 +201,8 @@ void BatchProcessImagesDialog::setupUi()
     connect(m_listFiles, SIGNAL(addedDropItems(QStringList)),
             this, SLOT(slotAddDropItems(QStringList)));
 
-    connect(m_listFiles, SIGNAL(currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *)),
-            this, SLOT(slotImageSelected(QTreeWidgetItem *)));
+    connect(m_listFiles, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+            this, SLOT(slotImageSelected(QTreeWidgetItem*)));
 
     connect(m_ui->m_addImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonAdd()));
@@ -264,8 +264,8 @@ void BatchProcessImagesDialog::slotImageSelected(QTreeWidgetItem * item)
 
     KIO::PreviewJob* m_thumbJob = KIO::filePreview(url, m_ui->m_imageLabel->height());
 
-    connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-            this, SLOT(slotGotPreview(const KFileItem&, const QPixmap&)));
+    connect(m_thumbJob, SIGNAL(gotPreview(KFileItem,QPixmap)),
+            this, SLOT(slotGotPreview(KFileItem,QPixmap)));
 }
 
 void BatchProcessImagesDialog::slotGotPreview(const KFileItem& item, const QPixmap& pixmap)
@@ -511,7 +511,7 @@ bool BatchProcessImagesDialog::startProcess()
 
     item->changeOutputMess(m_commandLine + "\n\n");
 
-    connect(m_ProcessusProc, SIGNAL(finished(int, QProcess::ExitStatus)),
+    connect(m_ProcessusProc, SIGNAL(finished(int,QProcess::ExitStatus)),
             this, SLOT(slotFinished()));
 
     connect(m_ProcessusProc, SIGNAL(readyRead()),
@@ -717,7 +717,7 @@ void BatchProcessImagesDialog::slotPreview(void)
     *m_PreviewProc << m_tmpFolder + '/' + QString::number(getpid()) + "preview.PNG";
     m_previewOutput.append(' '  + m_tmpFolder + '/' + QString::number(getpid()) + "preview.PNG\n\n");
 
-    connect(m_PreviewProc, SIGNAL(finished(int, QProcess::ExitStatus)),
+    connect(m_PreviewProc, SIGNAL(finished(int,QProcess::ExitStatus)),
             this, SLOT(slotPreviewFinished()));
 
     connect(m_PreviewProc, SIGNAL(readyRead()),

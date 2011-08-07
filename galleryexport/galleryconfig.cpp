@@ -107,8 +107,8 @@ GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& tit
     mpUsernameEdit->setText(pGallery->username());
     mpPasswordEdit->setText(pGallery->password());
 
-    connect(this, SIGNAL( okClicked() ), 
-            this, SLOT( slotOk() ));
+    connect(this, SIGNAL(okClicked()), 
+            this, SLOT(slotOk()));
 }
 
 GalleryEdit::~GalleryEdit()

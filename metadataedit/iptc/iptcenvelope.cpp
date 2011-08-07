@@ -363,19 +363,19 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->envelopeIDEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->envelopeIDEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
     connect(d->destinationEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
 
-    connect(d->serviceIDEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->serviceIDEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->productIDEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->productIDEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->unoIDEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->unoIDEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
@@ -384,10 +384,10 @@ IPTCEnvelope::IPTCEnvelope(QWidget* parent)
     connect(d->formatCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->dateSentSel, SIGNAL(changed(const QDate&)),
+    connect(d->dateSentSel, SIGNAL(changed(QDate)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeSentSel, SIGNAL(timeChanged(const QTime&)),
+    connect(d->timeSentSel, SIGNAL(timeChanged(QTime)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------

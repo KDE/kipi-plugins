@@ -275,7 +275,7 @@ int DNGWriter::convert()
         kDebug() << "--- CAM->XYZ:" ;
 
         QString matrixVal;
-        for(int i=0; i<4; i++)
+        for(int i=0; i<4; ++i)
         {
             kDebug() << "                   "
                      << QString().sprintf("%03.4f  %03.4f  %03.4f", identify.cameraXYZMatrix[i][0],
@@ -340,7 +340,7 @@ int DNGWriter::convert()
                 kDebug() << "DNGWriter: Bayer mosaic not supported. Aborted..." ;
                 return -1;
             }
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 16; ++i)
             {
                 filter = filter >> 2;
                 if (identify.filterPattern[i] == 'G')
@@ -487,7 +487,7 @@ int DNGWriter::convert()
         negative->SetColorChannels(identify.rawColors);
 
         ColorKeyCode colorCodes[4] = {colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum, colorKeyMaxEnum};
-        for(int i = 0; i < qMax(4, identify.colorKeys.length()); i++)
+        for(int i = 0; i < qMax(4, identify.colorKeys.length()); ++i)
         {
             if (identify.colorKeys[i] == 'R')
             {
@@ -654,7 +654,7 @@ int DNGWriter::convert()
         negative->AddProfile(prof);
 
         dng_vector camNeutral(identify.rawColors);
-        for (int i = 0; i < identify.rawColors; i++)
+        for (int i = 0; i < identify.rawColors; ++i)
         {
             camNeutral[i] = 1.0/identify.cameraMult[i];
         }
@@ -1102,7 +1102,7 @@ int DNGWriter::convert()
             }
             QDataStream compressedDataStream(&compressedFile);
 
-            for (quint32 block = 0; block < forkBlocks; block++)
+            for (quint32 block = 0; block < forkBlocks; ++block)
             {
                 int originalBlockLength = originalDataStream.readRawData(originalDataBlock.data(), CHUNK);
 
@@ -1120,7 +1120,7 @@ int DNGWriter::convert()
             dng_memory_stream tempDataStream(memalloc);
             tempDataStream.SetBigEndian(true);
             tempDataStream.Put_uint32(forkLength);
-            for (qint32 idx = 0; idx < offsets.size(); idx++)
+            for (qint32 idx = 0; idx < offsets.size(); ++idx)
             {
                 tempDataStream.Put_uint32(offsets[idx]);
             }
@@ -1331,9 +1331,9 @@ bool DNGWriter::fujiRotate(QByteArray& rawData, KDcrawIface::DcrawInfoContainer&
     unsigned short* tmp    = (unsigned short*)tmpData.data();
     unsigned short* output = (unsigned short*)rawData.data();
 
-    for (int row=0; row < height; row++)
+    for (int row=0; row < height; ++row)
     {
-        for (int col=0; col < width; col++)
+        for (int col=0; col < width; ++col)
         {
             output[col * height + row] = tmp[row * width + col];
         }

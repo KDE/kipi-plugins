@@ -72,8 +72,8 @@ MonthWidget::MonthWidget( KIPI::Interface* interface, QWidget* parent, int month
                      KIconLoader::SizeMedium,
                      KIconLoader::DisabledState)));
 
-    connect(interface_, SIGNAL(gotThumbnail(const KUrl&, const QPixmap&)),
-            this, SLOT(gotThumbnail(const KUrl&, const QPixmap&)));
+    connect(interface_, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+            this, SLOT(gotThumbnail(KUrl,QPixmap)));
 }
 
 MonthWidget::~MonthWidget()

@@ -36,17 +36,17 @@ FacebookJob::FacebookJob(const QString& albumName, const KUrl::List& url, QObjec
 {
     setObjectName("FacebookJob");
 
-    connect(&m_talk, SIGNAL(signalLoginDone(int, QString)),
-            this, SLOT(loginDone(int, QString)));
+    connect(&m_talk, SIGNAL(signalLoginDone(int,QString)),
+            this, SLOT(loginDone(int,QString)));
 
-    connect(&m_talk, SIGNAL(signalListAlbumsDone(int, QString, QList<FbAlbum>)),
-            this, SLOT(albumList(int, QString, QList<FbAlbum>)));
+    connect(&m_talk, SIGNAL(signalListAlbumsDone(int,QString,QList<FbAlbum>)),
+            this, SLOT(albumList(int,QString,QList<FbAlbum>)));
 
-    connect(&m_talk, SIGNAL(signalCreateAlbumDone(int, QString, QString)),
-            this, SLOT(albumCreated(int, QString, QString)));
+    connect(&m_talk, SIGNAL(signalCreateAlbumDone(int,QString,QString)),
+            this, SLOT(albumCreated(int,QString,QString)));
 
-    connect(&m_talk, SIGNAL(signalAddPhotoDone(int, QString)),
-            this, SLOT(addPhoto(int, QString)));
+    connect(&m_talk, SIGNAL(signalAddPhotoDone(int,QString)),
+            this, SLOT(addPhoto(int,QString)));
 }
 
 void FacebookJob::start()

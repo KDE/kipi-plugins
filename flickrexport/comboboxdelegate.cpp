@@ -136,8 +136,8 @@ QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
 
     // To keep track of the item being edited, the m_rowEdited parameter should
     // be reset when the editor is destroyed.
-    connect(cb, SIGNAL(destroyed(QObject *)),
-            this, SLOT(slotResetEditedState(QObject *)));
+    connect(cb, SIGNAL(destroyed(QObject*)),
+            this, SLOT(slotResetEditedState(QObject*)));
 
     return cb;
 }
@@ -147,7 +147,7 @@ void ComboBoxDelegate::setEditorData(QWidget* editor,
 {
     // Scroll the combobox to the current selected state on initialization.
     QComboBox* cb = qobject_cast<QComboBox*>(editor);
-    for (int i = 0; i < cb->count(); i++)
+    for (int i = 0; i < cb->count(); ++i)
     {
         if (cb->itemData(i).toInt() == index.data().toInt())
             cb->setCurrentIndex(i);

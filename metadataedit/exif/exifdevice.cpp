@@ -465,10 +465,10 @@ EXIFDevice::EXIFDevice(QWidget* parent)
     connect(d->subjectDistanceTypeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->makeEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->makeEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->modelEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->modelEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
     connect(d->exposureTimeNumEdit, SIGNAL(valueChanged(int)),
@@ -609,7 +609,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     if (exiv2Iface.getExifTagLong("Exif.Photo.ISOSpeedRatings", val))
     {
         int item = -1;
-        for (int i = 0 ; i < d->ISOSpeedCB->count() ; i++)
+        for (int i = 0 ; i < d->ISOSpeedCB->count() ; ++i)
             if (d->ISOSpeedCB->itemText(i) == QString::number(val))
                 item = i;
 
@@ -625,7 +625,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     {
         val = num / den;
         int item = -1;
-        for (int i = 0 ; i < d->ISOSpeedCB->count() ; i++)
+        for (int i = 0 ; i < d->ISOSpeedCB->count() ; ++i)
             if (d->ISOSpeedCB->itemText(i) == QString::number(val))
                 item = i;
 

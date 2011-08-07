@@ -130,8 +130,8 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-preprocessing.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->mngr->thread(), SIGNAL(starting(const KIPIExpoBlendingPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(starting(KIPIExpoBlendingPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressTimerDone()));
@@ -179,8 +179,8 @@ void PreProcessingPage::process()
     d->alignCheckBox->hide();
     d->progressTimer->start(300);
 
-    connect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
+    connect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
     d->mngr->thread()->setPreProcessingSettings(d->alignCheckBox->isChecked(), d->mngr->rawDecodingSettings());
     d->mngr->thread()->preProcessFiles(d->mngr->itemsList());
@@ -190,8 +190,8 @@ void PreProcessingPage::process()
 
 void PreProcessingPage::cancel()
 {
-    disconnect(d->mngr->thread(), SIGNAL(finished(const KIPIExpoBlendingPlugin::ActionData&)),
-               this, SLOT(slotAction(const KIPIExpoBlendingPlugin::ActionData&)));
+    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIExpoBlendingPlugin::ActionData)),
+               this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
     d->mngr->thread()->cancel();
     d->progressTimer->stop();

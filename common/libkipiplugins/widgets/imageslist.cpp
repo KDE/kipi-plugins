@@ -299,8 +299,8 @@ void ImagesListView::setup(int iconSize)
     header()->setResizeMode(User5, QHeaderView::Stretch);
     header()->setResizeMode(User6, QHeaderView::Stretch);
 
-    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
-            this, SLOT(slotItemClicked(QTreeWidgetItem*, int)));
+    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
+            this, SLOT(slotItemClicked(QTreeWidgetItem*,int)));
 }
 
 void ImagesListView::enableDragAndDrop(const bool enable)
@@ -512,19 +512,19 @@ ImagesList::ImagesList(Interface* iface, QWidget* parent, int iconSize)
 
     // --------------------------------------------------------
 
-    connect(d->listView, SIGNAL(addedDropedItems(const KUrl::List&)),
-            this, SLOT(slotAddImages(const KUrl::List&)));
+    connect(d->listView, SIGNAL(addedDropedItems(KUrl::List)),
+            this, SLOT(slotAddImages(KUrl::List)));
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+                this, SLOT(slotThumbnail(KUrl,QPixmap)));
     }
 
     d->loadRawThumb = new LoadRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(const KUrl&, const QImage&)),
-            this, SLOT(slotRawThumb(const KUrl&, const QImage&)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
+            this, SLOT(slotRawThumb(KUrl,QImage)));
 
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
@@ -958,11 +958,11 @@ void ImagesList::updateThumbnail(const KUrl& url)
     {
         KIO::PreviewJob* job = KIO::filePreview(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
 
-        connect(job, SIGNAL(gotPreview(const KFileItem&, const QPixmap&)),
-                this, SLOT(slotKDEPreview(const KFileItem&, const QPixmap&)));
+        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
+                this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
 
-        connect(job, SIGNAL(failed(const KFileItem&)),
-                this, SLOT(slotKDEPreviewFailed(const KFileItem&)));
+        connect(job, SIGNAL(failed(KFileItem)),
+                this, SLOT(slotKDEPreviewFailed(KFileItem)));
     }
 }
 

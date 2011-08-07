@@ -155,32 +155,32 @@ PrintOptionsPage::PrintOptionsPage ( QWidget *parent, QList<TPhoto*> *photoList 
     enableButtons();
     QApplication::restoreOverrideCursor();
 
-    connect ( d->kcfg_PrintWidth, SIGNAL ( valueChanged ( double ) ),
-              SLOT ( adjustHeightToRatio() ) );
+    connect ( d->kcfg_PrintWidth, SIGNAL (valueChanged(double)),
+              SLOT (adjustHeightToRatio()) );
 
-    connect ( d->kcfg_PrintHeight, SIGNAL ( valueChanged ( double ) ),
-              SLOT ( adjustWidthToRatio() ) );
+    connect ( d->kcfg_PrintHeight, SIGNAL (valueChanged(double)),
+              SLOT (adjustWidthToRatio()) );
 
-    connect ( d->kcfg_PrintKeepRatio, SIGNAL ( toggled ( bool ) ),
-              SLOT ( adjustHeightToRatio() ) );
+    connect ( d->kcfg_PrintKeepRatio, SIGNAL (toggled(bool)),
+              SLOT (adjustHeightToRatio()) );
 
-    connect ( d->mPhotoXPage, SIGNAL ( valueChanged ( int ) ), SLOT ( photoXpageChanged ( int ) ) );
-    connect ( d->mPX, SIGNAL ( valueChanged ( int ) ), SLOT ( horizontalPagesChanged ( int ) ) );
-    connect ( d->mPY, SIGNAL ( valueChanged ( int ) ), SLOT ( verticalPagesChanged ( int ) ) );
+    connect ( d->mPhotoXPage, SIGNAL (valueChanged(int)), SLOT (photoXpageChanged(int)) );
+    connect ( d->mPX, SIGNAL (valueChanged(int)), SLOT (horizontalPagesChanged(int)) );
+    connect ( d->mPY, SIGNAL (valueChanged(int)), SLOT (verticalPagesChanged(int)) );
 
-    connect ( d->mRightButton, SIGNAL ( clicked() ),
-              this, SLOT ( selectNext() ) );
+    connect ( d->mRightButton, SIGNAL (clicked()),
+              this, SLOT (selectNext()) );
 
-    connect ( d->mLeftButton, SIGNAL ( clicked() ),
-              this, SLOT ( selectPrev() ) );
-    connect ( d->mSaveSettings, SIGNAL ( clicked() ),
-              this, SLOT ( saveConfig() ) );
+    connect ( d->mLeftButton, SIGNAL (clicked()),
+              this, SLOT (selectPrev()) );
+    connect ( d->mSaveSettings, SIGNAL (clicked()),
+              this, SLOT (saveConfig()) );
 
-    connect ( d->mNoScale, SIGNAL ( clicked ( bool ) ), SLOT ( scaleOption() ) );
-    connect ( d->mScaleToPage, SIGNAL ( clicked ( bool ) ), SLOT ( scaleOption() ) );
-    connect ( d->mScaleTo, SIGNAL ( clicked ( bool ) ), SLOT ( scaleOption() ) );
-    connect ( d->kcfg_PrintAutoRotate, SIGNAL ( toggled ( bool ) ), SLOT ( autoRotate ( bool ) ) );
-    connect ( &d->mPositionGroup, SIGNAL (buttonClicked(int )), SLOT ( positionChosen(int)));
+    connect ( d->mNoScale, SIGNAL (clicked(bool)), SLOT (scaleOption()) );
+    connect ( d->mScaleToPage, SIGNAL (clicked(bool)), SLOT (scaleOption()) );
+    connect ( d->mScaleTo, SIGNAL (clicked(bool)), SLOT (scaleOption()) );
+    connect ( d->kcfg_PrintAutoRotate, SIGNAL (toggled(bool)), SLOT (autoRotate(bool)) );
+    connect ( &d->mPositionGroup, SIGNAL (buttonClicked(int)), SLOT (positionChosen(int)));
     layout()->setMargin ( 0 );
 }
 
@@ -357,7 +357,7 @@ void PrintOptionsPage::selectPrev()
 
 void PrintOptionsPage::setAdditionalInfo()
 {
-    for ( int i=0; i < d->m_photos->count(); i++ )
+    for ( int i=0; i < d->m_photos->count(); ++i )
     {
         TPhoto* pPhoto = d->m_photos->at ( i );
         if ( pPhoto )

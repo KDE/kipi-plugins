@@ -29,9 +29,9 @@
 
 #include <QObject>
 
-// libkmap includes
+// libkgeomap includes
 
-#include <libkmap/lookup_altitude.h>
+#include <libkgeomap/lookup_altitude.h>
 
 // local includes:
 

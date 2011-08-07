@@ -101,8 +101,8 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     connect(d->itemsPage, SIGNAL(signalItemsPageIsValid(bool)),
             this, SLOT(slotItemsPageIsValid(bool)));
 
-    connect(d->preProcessingPage, SIGNAL(signalPreProcessed(const ItemUrlsMap&)),
-            this, SLOT(slotPreProcessed(const ItemUrlsMap&)));
+    connect(d->preProcessingPage, SIGNAL(signalPreProcessed(ItemUrlsMap)),
+            this, SLOT(slotPreProcessed(ItemUrlsMap)));
 }
 
 ImportWizardDlg::~ImportWizardDlg()

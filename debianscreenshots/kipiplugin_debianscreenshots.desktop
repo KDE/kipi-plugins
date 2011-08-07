@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Debian Screenshots Export
+Name[bg]=Изнасяне на снимки на екрана от Debian
 Name[bs]=Izvoz Debian slika ekrana
 Name[ca]=Exportació a Debian Screenshots
 Name[ca@valencia]=Exportació a Debian Screenshots
@@ -24,6 +25,7 @@ Name[uk]=Експортування до знімків Debian
 Name[x-test]=xxDebian Screenshots Exportxx
 Name[zh_TW]=Debian Screenshots 匯出
 Comment=A tool to export images to the Debian Screenshots site
+Comment[bg]=Инструмент за изнасяне на изображения към сайт със снимки на екрана от Debian
 Comment[bs]=Alat za izvoz slika ekrana na Debian sajt s slikama
 Comment[ca]=Una eina per exportar imatges al lloc web de Debian Screenshots
 Comment[ca@valencia]=Una eina per exportar imatges al lloc web de Debian Screenshots

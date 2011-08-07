@@ -153,7 +153,11 @@ private:
 
     bool         m_loginInProgress;
     QString      m_accessToken;
-    unsigned int m_sessionExpires;
+
+    /* Session expiration
+     * 0 = doesn't expire or has been invalidated; rest = time of expiry
+     */
+    unsigned int m_sessionExpires;      
     QTime        m_callID;
 
     FbUser       m_user;

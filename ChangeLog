@@ -1,3 +1,491 @@
+2.0.0 2011-07-27
+
+2011-07-27  Script Kiddy <scripty@kde.org>
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-27  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbtalker.cpp: Fixed bug in the state machine Without this fix the name of the user as which you're uploading will
+	not be displayed, when you just logged in.  CCBUGS: 252437
+
+2011-07-27  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbtalker.cpp, facebook/fbtalker.h, facebook/fbwindow.cpp: 
+	Treat expiration time of 0 (infinity) properly Bug introduced with the implementation for
+	http://www.digikam.org/drupal/node/610#comment-19928 (see also commit bf8d149a7148a787775b9052904eb51af34071e0) I did not find a way to test without the offline_access (without
+	actually removing this flag from the code). I believe in the current
+	setup we'll always get infinite tokens. It'd be good to find a way
+	to make this optional, I've seen this in the past, but have
+	currently no idea how the requests would need to look like.
+
+2011-07-26  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbwidget.cpp, facebook/fbwidget.h,
+	facebook/fbwindow.cpp, facebook/fbwindow.h: Permissions button has
+	not function anymore.  CCBUGS: 252437
+
+2011-07-26  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-26  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsdataparser.cpp: Fix the search for matching timestamps
+	in the GPS correlator. Timestamps before an item were not found if
+	two or more items were between two GPS timestamps, leading to only
+	the first item being correlated, both in interpolation mode and in
+	normal mode.  This should also be the cause for bug 273520, please check whether
+	it is now fixed as well.  CCBUG: 273520 CCMAIL: photonoxx@free.fr
+
+2011-07-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* NEWS, gpssync/gpsdataparser.cpp, gpssync/gpsdataparser.h: Properly
+	detect when the QFutureWatcher reports that loading of the GPX files
+	has been completed.  BUG: 278290
+
+2011-07-24  Script Kiddy <scripty@kde.org>
+
+	* htmlexport/themes/frames/frames.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-24  Michael Georg Hansen <mike@mghansen.de>
+
+	* : commit 40d6ae32279574f12f8a6d4efe4df4d3fc5ec468 Author: Script
+	Kiddy <scripty@kde.org> Date:   Thu Jul 21 09:14:11 2011 +0200
+
+2011-07-19  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-07-16  Michael Georg Hansen <mike@mghansen.de>
+
+	* CMakeLists.txt, gpssync/CMakeLists.txt,
+	gpssync/gpsbookmarkowner.cpp, gpssync/gpsbookmarkowner.h,
+	gpssync/gpsdatacontainer.h, gpssync/gpsdataparser.cpp,
+	gpssync/gpsdataparser.h, gpssync/gpsimagedetails.cpp,
+	gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpslistviewcontextmenu.h,
+	gpssync/gpsreversegeocodingwidget.cpp,
+	gpssync/gpsreversegeocodingwidget.h, gpssync/gpssync_common.h,
+	gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h,
+	gpssync/kipiimageitem.cpp, gpssync/kipiimageitem.h,
+	gpssync/kipiimagemodel.h, gpssync/mapdragdrophandler.cpp,
+	gpssync/mapdragdrophandler.h, gpssync/searchbackend.cpp,
+	gpssync/searchbackend.h, gpssync/searchwidget.cpp,
+	gpssync/searchwidget.h, gpssync/tests/CMakeLists.txt,
+	gpssync/tests/test_gpxparsing.cpp: kmap2kgeomap: Search and replace.
+
+2011-07-15  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-14  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, NEWS: fix release date
+
+2011-07-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* AUTHORS: polish
+
+2011-07-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flashexport/CMakeLists.txt, flashexport/data/index.template,
+	flashexport/firstrundlg.cpp, flashexport/generalpage.cpp,
+	flashexport/index.template, flashexport/lookpage.cpp,
+	flashexport/plugin_flashexport.cpp, flashexport/selectionpage.cpp,
+	flashexport/simpleviewer.cpp, flashexport/simpleviewer.h,
+	flashexport/simpleviewersettingscontainer.h,
+	flashexport/svedialog.cpp: constify polish implementation move data
+	file to a dedicated sub-folder
+
+2011-07-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-07-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-07-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flashexport/index.template: apply patch #61834 from Munteanu
+	Veaceslav BUGS: 277480
+
+2011-07-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit 4707f48b35bf66543a4aa3b41ca632203c7a11cc Author: Gilles
+	Caulier <caulier.gilles@gmail.com> Date:   Wed Jul 13 12:02:52 2011
+	+0200
+
+2011-07-13  Yuri Chornoivan <yurchor@ukr.net>
+
+	* panorama/importwizard/intropage.cpp,
+	panorama/importwizard/lastpage.cpp,
+	panorama/plugin/plugin_panorama.cpp: fix typos, add space
+
+2011-07-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flashexport/simpleviewer.cpp: Apply patch from Munteanu Veaceslav
+	to fix SimpleViewer XML file syntax, to be compatible with current
+	version available.  Fix a litle bug if user press cancel on first
+	run dialog. No need a warning message box in this case.  It still a problem to open generated target index.html : Flash
+	component is not visible on the page.  If simpleviewer.swf is open
+	instead, all work fine as espected. I suspect something wrong in
+	index.html page generated by the plugin.  CCBUGS: 277480
+
+2011-07-13  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/plugin/panorama.cpp, panorama/plugin/panoramagui.cpp: 
+	typo
+
+2011-07-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/plugin/panorama.cpp, panorama/plugin/panorama.desktop,
+	panorama/plugin/panoramagui.cpp,
+	panorama/plugin/panoramagui.desktop: typo
+
+2011-07-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panorama.desktop: file missing
+
+2011-07-12  Script Kiddy <scripty@kde.org>
+
+	* mediawiki/kipiplugin_wikimedia.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/importwizarddlg.cpp,
+	panorama/importwizard/importwizarddlg.h: this struct is already in
+	private area fix indent
+
+2011-07-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/intropage.cpp,
+	panorama/importwizard/intropage.h: fix indent
+
+2011-07-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/CMakeLists.txt, panorama/icons/CMakeLists.txt: fix
+	install
+
+2011-07-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/icons/CMakeLists.txt: commented for the moment. there i s
+	nothing to install
+
+2011-07-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/manager/manager.cpp, panorama/manager/manager.h: this
+	container is already declared as private
+
+2011-07-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/itemspage.cpp,
+	panorama/importwizard/itemspage.h: polish
+
+2011-07-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/optimizepage.cpp: polish
+
+2011-07-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/optimizepage.h: this class is declared as
+	private container. No need to declare it outside the class
+
+2011-07-10  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/CMakeLists.txt, panorama/importwizard/itemspage.cpp,
+	panorama/manager/actionthread.cpp, panorama/manager/actionthread.h,
+	panorama/manager/cpcleanbinary.cpp,
+	panorama/manager/cpcleanbinary.h, panorama/manager/manager.cpp,
+	panorama/manager/manager.h, panorama/manager/vigoptimizebinary.cpp,
+	panorama/manager/vigoptimizebinary.h: Work on Panorama's
+	optimization  * Added variable to optimize  * Cleaned set of control points with cpclean  * removed vig_optimize call (work done with autooptimise)
+
+2011-07-10  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/cpfindbinary.cpp: Header bugfix
+
+2011-07-10  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/README: Informations about the plugin  * Workflow  * Dependencies  * Input data  * Parameters
+
+2011-07-10  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/CMakeLists.txt,
+	panorama/importwizard/importwizarddlg.cpp,
+	panorama/importwizard/importwizarddlg.h,
+	panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/lastpage.h,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/optimizepage.h,
+	panorama/importwizard/preprocessingpage.cpp,
+	panorama/manager/actions.h, panorama/manager/actionthread.cpp,
+	panorama/manager/actionthread.h, panorama/manager/manager.cpp,
+	panorama/manager/manager.h: Work on Panorama Optimization First PTO generation needs to be changed to generate correct
+	parameters for optimization. The call to autooptimise works though.
+
+2011-07-09  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit cbf1839dd7f98527c580d791ee8f2e1b21f96f80 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Sat Jul 9 10:00:28 2011
+	+0200
+
+2011-07-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, test/CMakeLists.txt, test/README,
+	test/kipiimagecollectionselector.cpp,
+	test/kipiimagecollectionselector.h,
+	test/kipiimagecollectionshared.cpp,
+	test/kipiimagecollectionshared.h, test/kipiimageinfoshared.cpp,
+	test/kipiimageinfoshared.h, test/kipiinterface.cpp,
+	test/kipiinterface.h, test/kipitest-debug.cpp,
+	test/kipitest-debug.h, test/kipiuploadwidget.cpp,
+	test/kipiuploadwidget.h, test/main.cpp, tests/CMakeLists.txt,
+	tests/README, tests/kipiimagecollectionselector.cpp,
+	tests/kipiimagecollectionselector.h,
+	tests/kipiimagecollectionshared.cpp,
+	tests/kipiimagecollectionshared.h, tests/kipiimageinfoshared.cpp,
+	tests/kipiimageinfoshared.h, tests/kipiinterface.cpp,
+	tests/kipiinterface.h, tests/kipitest-debug.cpp,
+	tests/kipitest-debug.h, tests/kipiuploadwidget.cpp,
+	tests/kipiuploadwidget.h, tests/main.cpp: test => tests
+
+2011-07-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/importwizard/preprocessingpage.cpp: missing close
+	string syntax
+
+2011-07-08  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit 6f2575411b2018bcaad34f0ac3f16fd1ed251098 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Fri Jul 8 22:28:01 2011
+	+0200
+
+2011-07-08  Script Kiddy <scripty@kde.org>
+
+	* kmlexport/kipiplugin_kmlexport.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-07-06  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/actions.h, panorama/manager/actionthread.h,
+	panorama/manager/manager.cpp, panorama/manager/manager.h: 
+	Modification of some classes to structs Makes more sense
+
+2011-07-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit 36071a461afc1e66814d6d8db196e89e0ac33870 Author: Gilles
+	Caulier <caulier.gilles@gmail.com> Date:   Wed Jul 6 10:36:12 2011
+	+0200
+
+2011-07-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/manager/manager.cpp, panorama/manager/manager.h: polish
+
+2011-07-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/manager/actions.h, panorama/manager/actionthread.cpp,
+	panorama/manager/actionthread.h,
+	panorama/manager/autooptimiserbinary.cpp,
+	panorama/manager/cpfindbinary.cpp,
+	panorama/manager/vigoptimizebinary.cpp: always use const ref as
+	method argument if possible, to optimize memory allocation fix
+	coding style.  CCMAIL: benjamin.girault@gmail.com
+
+2011-07-06  Script Kiddy <scripty@kde.org>
+
+	* htmlexport/themes/details/details.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/CMakeLists.txt: never use tabs in source code.  polish
+	CCMAIL: benjamin.girault@gmail.com
+
+2011-07-05  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit 5db7f9cf985b561b2a7ce5b98af19440f6a3b4e6 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Tue Jul 5 19:54:20 2011
+	+0200
+
+2011-07-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/fbtalker.cpp: polish
+
+2011-07-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* shwup/plugin_shwup.cpp, shwup/plugin_shwup.h, shwup/swalbum.cpp,
+	shwup/swconnector.cpp, shwup/swlogin.cpp, shwup/swwidget.cpp,
+	shwup/swwidget.h, shwup/swwindow.cpp, shwup/swwindow.h: no need
+	header if moc exist polish
+
+2011-07-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/plugin/batchdialog.cpp: polish
+
+2011-07-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rawconverter/dialogs/batchdialog.cpp: this slot do not exist
+	anymore
+
+2011-07-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* rawconverter/dialogs/batchdialog.cpp,
+	rawconverter/dialogs/batchdialog.h,
+	rawconverter/dialogs/myimagelist.cpp,
+	rawconverter/dialogs/myimagelist.h: apply patch from Munteanu
+	Veaceslav to use standard button from kipi-plugins ImageList in RAW
+	converter CCMAIL: slavuttici@gmail.com
+
+2011-07-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/plugin/batchdialog.cpp,
+	dngconverter/plugin/batchdialog.h,
+	dngconverter/plugin/myimagelist.cpp,
+	dngconverter/plugin/myimagelist.h: apply patch from Munteanu
+	Veaceslav to use standard button from kipi-plugins ImageList in DNG
+	converter CCMAIL: slavuttici@gmail.com
+
+2011-07-05  Dirk Tilger <dirk.kde@miriup.de>
+
+	* facebook/fbtalker.cpp: Adding offline_access to get a long-lived
+	session Reason: http://www.digikam.org/drupal/node/610#comment-19928 From FB docs: offline_access...  Enables your app to perform
+	authorized requests on behalf of the user at any time. By default,
+	most access tokens expire after a short time period to ensure
+	applications only make requests on behalf of the user when the are
+	actively using the application. This permission makes the access
+	token returned by our OAuth endpoint long-lived.
+
+2011-07-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* kioexportimport/KioExportWidget.cpp,
+	kioexportimport/KioExportWindow.cpp,
+	kioexportimport/KioImportWidget.cpp,
+	kioexportimport/KioImportWindow.cpp,
+	kioexportimport/plugin_kioexportimport.cpp: no need header if moc
+	files exist
+
+2011-07-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* imageviewer/CMakeLists.txt, imageviewer/plugin_viewer.cpp,
+	imageviewer/plugin_viewer.h, imageviewer/texture.cpp,
+	imageviewer/texture.h, imageviewer/timer.cpp, imageviewer/timer.h,
+	imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h: remove
+	header is moc file exist fix coding style
+
+2011-07-02  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-07-01  Rex Dieter <rdieter@fedoraproject.org>
+
+	* dngconverter/dngwriter/extra/dng_sdk/dng_flags.h: mark s390
+	bigendian too
+
+2011-06-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/fbtalker.cpp, facebook/fbtalker.h: polish
+
+2011-06-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/facebookjob.cpp, facebook/facebookjob.h: KUrl::List is
+	already a QList<KUrl>.
+
+2011-06-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* facebook/facebookjob.cpp, facebook/facebookjob.h,
+	facebook/fbtalker.h: polish
+
+2011-06-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-06-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	*
+	removeredeyes/detection/locators/haarclassifier/widgets/advancedset
+	tings.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/advancedset
+	tings.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/blobsetting
+	sbox.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/blobsetting
+	sbox.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/classifiers
+	ettingsbox.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/classifiers
+	ettingsbox.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/haarsetting
+	swidget.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/haarsetting
+	swidget.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/simplesetti
+	ngs.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/simplesetti
+	ngs.h, removeredeyes/plugin/commonsettings.h,
+	removeredeyes/plugin/removeredeyeswindow.cpp,
+	removeredeyes/plugin/removeredeyeswindow.h,
+	removeredeyes/plugin/workerthread.cpp,
+	removeredeyes/plugin/workerthread.h,
+	removeredeyes/plugin/workerthreaddata.cpp,
+	removeredeyes/plugin/workerthreaddata.h: more privvate internal
+	container
+
+2011-06-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	*
+	removeredeyes/detection/locators/haarclassifier/haarclassifierlocat
+	or.cpp,
+	removeredeyes/detection/locators/haarclassifier/haarclassifierlocat
+	or.h: more private internal container
+
+2011-06-28  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* CMakeLists.txt: Open for final 2.0.0
+
+2011-06-28  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog: Update Changelog
+
 2.0.0-rc 2011-06-28
 
 2011-06-27  Gilles Caulier <caulier.gilles@gmail.com>

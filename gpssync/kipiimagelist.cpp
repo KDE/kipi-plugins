@@ -137,11 +137,11 @@ void KipiImageList::setModelAndSelectionModel(KipiImageModel* const model, QItem
     d->imageSortProxyModel = new KipiImageSortProxyModel(d->model, d->selectionModel);
     setModel(d->imageSortProxyModel);
 
-    connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(const QPersistentModelIndex&, const QPixmap&)),
-            this, SLOT(slotThumbnailFromModel(const QPersistentModelIndex&, const QPixmap&)));
+    connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(QPersistentModelIndex,QPixmap)),
+            this, SLOT(slotThumbnailFromModel(QPersistentModelIndex,QPixmap)));
 
-    connect(this, SIGNAL(activated(const QModelIndex&)),
-            this, SLOT(slotInternalTreeViewImageActivated(const QModelIndex&)));
+    connect(this, SIGNAL(activated(QModelIndex)),
+            this, SLOT(slotInternalTreeViewImageActivated(QModelIndex)));
 
     if (d->imageSortProxyModel->mappedSelectionModel())
         setSelectionModel(d->imageSortProxyModel->mappedSelectionModel());

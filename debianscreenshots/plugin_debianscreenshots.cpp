@@ -75,8 +75,8 @@ void Plugin_DebianScreenshots::setup(QWidget* widget)
     m_actionExport->setIcon(KIcon("debianscreenshots"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_D));
 
-    connect(m_actionExport, SIGNAL( triggered(bool) ),
-            this, SLOT( slotExport()) );
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()) );
 
     addAction(m_actionExport);
 

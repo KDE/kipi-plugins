@@ -64,7 +64,7 @@ public:
     KMenu               *bookmarkMenu;
     bool                addBookmarkEnabled;
     GPSBookmarkModelHelper *bookmarkModelHelper;
-    KMap::GeoCoordinates lastCoordinates;
+    KGeoMap::GeoCoordinates lastCoordinates;
     QString             lastTitle;
 };
 
@@ -138,7 +138,7 @@ void GPSBookmarkOwner::openBookmark(const KBookmark& bookmark, Qt::MouseButtons,
     const QString url = bookmark.url().url().toLower();
 
     bool okay;
-    const KMap::GeoCoordinates coordinate = KMap::GeoCoordinates::fromGeoUrl(url, &okay);
+    const KGeoMap::GeoCoordinates coordinate = KGeoMap::GeoCoordinates::fromGeoUrl(url, &okay);
 
     if (okay)
     {
@@ -195,7 +195,7 @@ GPSBookmarkModelHelper::GPSBookmarkModelHelper(KBookmarkManager* const bookmarkM
     connect(d->bookmarkManager, SIGNAL(bookmarksChanged(QString)),
             this, SLOT(slotUpdateBookmarksModel()));
 
-    connect(d->bookmarkManager, SIGNAL(changed(const QString&, const QString&)),
+    connect(d->bookmarkManager, SIGNAL(changed(QString,QString)),
             this, SLOT(slotUpdateBookmarksModel()));
 
     slotUpdateBookmarksModel();
@@ -216,9 +216,9 @@ QItemSelectionModel* GPSBookmarkModelHelper::selectionModel() const
     return 0;
 }
 
-bool GPSBookmarkModelHelper::itemCoordinates(const QModelIndex& index, KMap::GeoCoordinates* const coordinates) const
+bool GPSBookmarkModelHelper::itemCoordinates(const QModelIndex& index, KGeoMap::GeoCoordinates* const coordinates) const
 {
-    const KMap::GeoCoordinates itemCoordinates = index.data(CoordinatesRole).value<KMap::GeoCoordinates>();
+    const KGeoMap::GeoCoordinates itemCoordinates = index.data(CoordinatesRole).value<KGeoMap::GeoCoordinates>();
 
     if (coordinates)
     {
@@ -266,7 +266,7 @@ void GPSBookmarkModelHelperPrivate::addBookmarkGroupToModel(const KBookmarkGroup
         else
         {
             bool okay = false;
-            const KMap::GeoCoordinates coordinates = KMap::GeoCoordinates::fromGeoUrl(currentBookmark.url().url(), &okay);
+            const KGeoMap::GeoCoordinates coordinates = KGeoMap::GeoCoordinates::fromGeoUrl(currentBookmark.url().url(), &okay);
             if (okay)
             {
                 QStandardItem* const item = new QStandardItem();
@@ -300,18 +300,18 @@ void GPSBookmarkModelHelper::setVisible(const bool state)
     emit(signalVisibilityChanged());
 }
 
-void GPSBookmarkOwner::setPositionAndTitle(const KMap::GeoCoordinates& coordinates, const QString& title)
+void GPSBookmarkOwner::setPositionAndTitle(const KGeoMap::GeoCoordinates& coordinates, const QString& title)
 {
     d->lastCoordinates = coordinates;
     d->lastTitle = title;
 }
 
-KMap::ModelHelper::Flags GPSBookmarkModelHelper::modelFlags() const
+KGeoMap::ModelHelper::Flags GPSBookmarkModelHelper::modelFlags() const
 {
     return FlagSnaps|(d->visible?FlagVisible:FlagNull);
 }
 
-KMap::ModelHelper::Flags GPSBookmarkModelHelper::itemFlags(const QModelIndex& /*index*/) const
+KGeoMap::ModelHelper::Flags GPSBookmarkModelHelper::itemFlags(const QModelIndex& /*index*/) const
 {
     return FlagVisible|FlagSnaps;
 }
@@ -320,7 +320,7 @@ void GPSBookmarkModelHelper::snapItemsTo(const QModelIndex& targetIndex, const Q
 {
     GPSUndoCommand* const undoCommand = new GPSUndoCommand();
 
-    KMap::GeoCoordinates targetCoordinates;
+    KGeoMap::GeoCoordinates targetCoordinates;
     if (!itemCoordinates(targetIndex, &targetCoordinates))
         return;
 

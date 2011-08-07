@@ -181,11 +181,11 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface* iface)
 
     // ------------------------------------------------------------------------
 
-    connect(m_reloadAlbumsBtn, SIGNAL( clicked() ),
-            this, SLOT( slotReloadAlbumsRequest() ));
+    connect(m_reloadAlbumsBtn, SIGNAL(clicked()),
+            this, SLOT(slotReloadAlbumsRequest()));
 
-    connect(m_resizeChB, SIGNAL( clicked() ),
-            this, SLOT( slotResizeChecked() ));
+    connect(m_resizeChB, SIGNAL(clicked()),
+            this, SLOT(slotResizeChecked()));
 
     uploadBox->hide();
 }

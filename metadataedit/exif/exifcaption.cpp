@@ -242,16 +242,16 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     connect(d->userCommentEdit, SIGNAL(textChanged()),
             this, SIGNAL(signalModified()));
 
-    connect(d->documentNameEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->documentNameEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->imageDescEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->imageDescEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->artistEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->artistEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->copyrightEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->copyrightEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

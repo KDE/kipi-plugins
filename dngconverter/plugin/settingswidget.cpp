@@ -149,8 +149,8 @@ SettingsWidget::SettingsWidget(QWidget *parent)
     settingsBoxLayout->setMargin(KDialog::spacingHint());
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
 
-    connect(dngLogoLabel, SIGNAL(leftClickedUrl(const QString&)),
-            this, SLOT(processUrl(const QString&)));
+    connect(dngLogoLabel, SIGNAL(leftClickedUrl(QString)),
+            this, SLOT(processUrl(QString)));
 }
 
 SettingsWidget::~SettingsWidget()

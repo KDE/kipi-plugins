@@ -79,8 +79,8 @@ void Plugin_Shwup::setup(QWidget* widget)
     m_actionExport->setIcon(KIcon("shwup"));
     m_actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_W));
 
-    connect(m_actionExport, SIGNAL( triggered(bool) ),
-            this, SLOT( slotExport()) );
+    connect(m_actionExport, SIGNAL(triggered(bool)),
+            this, SLOT(slotExport()) );
 
     addAction(m_actionExport);
 

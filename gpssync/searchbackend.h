@@ -29,9 +29,9 @@
 
 #include <QObject>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/kmap_primitives.h>
+#include <libkgeomap/kgeomap_primitives.h>
 
 // local includes
 
@@ -60,9 +60,9 @@ public:
 
         typedef QList<SearchResult> List;
 
-        KMap::GeoCoordinates coordinates;
+        KGeoMap::GeoCoordinates coordinates;
         QString name;
-        KMap::GeoCoordinates::Pair boundingBox;
+        KGeoMap::GeoCoordinates::Pair boundingBox;
         QString internalId;
     };
 

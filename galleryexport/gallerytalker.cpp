@@ -101,11 +101,11 @@ void GalleryTalker::login(const KUrl& url, const QString& name, const QString& p
     m_job->addMetaData("content-type", form.contentType());
     m_job->addMetaData("cookies", "manual");
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 }
@@ -129,11 +129,11 @@ void GalleryTalker::listAlbums()
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 }
@@ -155,11 +155,11 @@ void GalleryTalker::listPhotos(const QString& albumName)
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 }
@@ -194,8 +194,8 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
     connect(m_job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -280,11 +280,11 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     m_job->addMetaData("cookies", "manual");
     m_job->addMetaData("setcookies", m_cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 

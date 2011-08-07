@@ -250,7 +250,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     confButton->setText( i18n("Settings") );
     confButton->setIcon( KIcon("configure") );
     connect(confButton, SIGNAL(clicked()),
-            this, SLOT(slotSettings() ) );
+            this, SLOT(slotSettings()) );
 
     // we need to let m_talker work..
     m_talker = new GalleryTalker(d->widget);
@@ -293,7 +293,7 @@ GalleryWindow::~GalleryWindow()
 void GalleryWindow::connectSignals()
 {
     connect(d->albumView, SIGNAL(itemSelectionChanged()),
-            this , SLOT( slotAlbumSelected() ) );
+            this , SLOT(slotAlbumSelected()) );
 
     connect(d->newAlbumBtn, SIGNAL(clicked()),
             this, SLOT(slotNewAlbum()));
@@ -304,32 +304,32 @@ void GalleryWindow::connectSignals()
     connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotEnableSpinBox(int)));
 
-    connect(d->logo, SIGNAL(leftClickedUrl(const QString&)),
-            this, SLOT(slotProcessUrl(const QString&)));
+    connect(d->logo, SIGNAL(leftClickedUrl(QString)),
+            this, SLOT(slotProcessUrl(QString)));
 
-    connect(m_progressDlg, SIGNAL( canceled() ),
-            this, SLOT( slotAddPhotoCancel() ));
+    connect(m_progressDlg, SIGNAL(canceled()),
+            this, SLOT(slotAddPhotoCancel()));
 
-    connect(m_talker, SIGNAL(signalError(const QString&)),
-            this, SLOT(slotError(const QString&)));
+    connect(m_talker, SIGNAL(signalError(QString)),
+            this, SLOT(slotError(QString)));
 
     connect(m_talker, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL(signalLoginFailed(const QString&)),
-            this, SLOT(slotLoginFailed(const QString&)));
+    connect(m_talker, SIGNAL(signalLoginFailed(QString)),
+            this, SLOT(slotLoginFailed(QString)));
 
-    connect(m_talker, SIGNAL(signalAlbums(const QList<GAlbum>&)),
-            this, SLOT(slotAlbums(const QList<GAlbum>&)));
+    connect(m_talker, SIGNAL(signalAlbums(QList<GAlbum>)),
+            this, SLOT(slotAlbums(QList<GAlbum>)));
 
-    connect(m_talker, SIGNAL(signalPhotos(const QList<GPhoto>&)),
-            this, SLOT(slotPhotos(const QList<GPhoto>&)));
+    connect(m_talker, SIGNAL(signalPhotos(QList<GPhoto>)),
+            this, SLOT(slotPhotos(QList<GPhoto>)));
 
     connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
             this, SLOT(slotAddPhotoSucceeded()));
 
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(const QString&)),
-            this, SLOT(slotAddPhotoFailed(const QString&)));
+    connect(m_talker, SIGNAL(signalAddPhotoFailed(QString)),
+            this, SLOT(slotAddPhotoFailed(QString)));
 }
 
 void GalleryWindow::slotProcessUrl(const QString& url)

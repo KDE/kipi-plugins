@@ -89,8 +89,8 @@ void Plugin_PicasawebExport::setup(QWidget* widget)
     m_actionImport->setIcon(KIcon("picasa"));
     m_actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_P));
 
-    connect(m_actionImport, SIGNAL( triggered(bool) ),
-            this, SLOT( slotImport()) );
+    connect(m_actionImport, SIGNAL(triggered(bool)),
+            this, SLOT(slotImport()) );
 
     addAction(m_actionImport);
 

@@ -118,38 +118,38 @@ SoundtrackDialog::SoundtrackDialog(QWidget* parent, SharedContainer* sharedData)
 
     // --------------------------------------------------------
 
-    connect( m_SoundFilesListBox, SIGNAL( currentRowChanged( int ) ),
-             this, SLOT( slotSoundFilesSelected( int ) ) );
+    connect( m_SoundFilesListBox, SIGNAL(currentRowChanged(int)),
+             this, SLOT(slotSoundFilesSelected(int)) );
 
-    connect( m_SoundFilesListBox, SIGNAL( signalAddedDropItems(const KUrl::List&) ),
-             this, SLOT( slotAddDropItems(const KUrl::List&)));
+    connect( m_SoundFilesListBox, SIGNAL(signalAddedDropItems(KUrl::List)),
+             this, SLOT(slotAddDropItems(KUrl::List)));
 
-    connect( m_SoundFilesButtonAdd, SIGNAL( clicked() ),
-             this, SLOT( slotSoundFilesButtonAdd() ) );
+    connect( m_SoundFilesButtonAdd, SIGNAL(clicked()),
+             this, SLOT(slotSoundFilesButtonAdd()) );
 
-    connect( m_SoundFilesButtonDelete, SIGNAL( clicked() ),
-             this, SLOT( slotSoundFilesButtonDelete() ) );
+    connect( m_SoundFilesButtonDelete, SIGNAL(clicked()),
+             this, SLOT(slotSoundFilesButtonDelete()) );
 
-    connect( m_SoundFilesButtonUp, SIGNAL( clicked() ),
-             this, SLOT( slotSoundFilesButtonUp() ) );
+    connect( m_SoundFilesButtonUp, SIGNAL(clicked()),
+             this, SLOT(slotSoundFilesButtonUp()) );
 
-    connect( m_SoundFilesButtonDown, SIGNAL( clicked() ),
-             this, SLOT( slotSoundFilesButtonDown() ) );
+    connect( m_SoundFilesButtonDown, SIGNAL(clicked()),
+             this, SLOT(slotSoundFilesButtonDown()) );
 
-    connect( m_SoundFilesButtonLoad, SIGNAL( clicked() ),
-             this, SLOT( slotSoundFilesButtonLoad() ) );
+    connect( m_SoundFilesButtonLoad, SIGNAL(clicked()),
+             this, SLOT(slotSoundFilesButtonLoad()) );
 
-    connect( m_SoundFilesButtonSave, SIGNAL( clicked() ),
-             this, SLOT( slotSoundFilesButtonSave() ) );
+    connect( m_SoundFilesButtonSave, SIGNAL(clicked()),
+             this, SLOT(slotSoundFilesButtonSave()) );
 
-    connect( m_SoundFilesButtonReset, SIGNAL( clicked() ),
-             this, SLOT( slotSoundFilesButtonReset() ) );
+    connect( m_SoundFilesButtonReset, SIGNAL(clicked()),
+             this, SLOT(slotSoundFilesButtonReset()) );
 
-    connect( m_previewButton, SIGNAL( clicked() ),
-             this, SLOT( slotPreviewButtonClicked() ));
+    connect( m_previewButton, SIGNAL(clicked()),
+             this, SLOT(slotPreviewButtonClicked()));
 
-    connect( m_sharedData->mainPage, SIGNAL(signalTotalTimeChanged(const QTime&)),
-             this, SLOT( slotImageTotalTimeChanged(const QTime&)));
+    connect( m_sharedData->mainPage, SIGNAL(signalTotalTimeChanged(QTime)),
+             this, SLOT(slotImageTotalTimeChanged(QTime)));
 }
 
 SoundtrackDialog::~SoundtrackDialog()
@@ -165,8 +165,8 @@ void SoundtrackDialog::readSettings()
     m_rememberSoundtrack->setChecked(m_sharedData->soundtrackRememberPlaylist);
     m_loopCheckBox->setChecked(m_sharedData->soundtrackLoop);
 
-    connect( m_sharedData->mainPage, SIGNAL(signalTotalTimeChanged(const QTime&)),
-             this, SLOT(slotImageTotalTimeChanged(const QTime&) ) );
+    connect( m_sharedData->mainPage, SIGNAL(signalTotalTimeChanged(QTime)),
+             this, SLOT(slotImageTotalTimeChanged(QTime)) );
 
     // if tracks are already set in m_sharedData, add them now
     if (!m_sharedData->soundtrackUrls.isEmpty())
@@ -201,8 +201,8 @@ void SoundtrackDialog::addItems(const KUrl::List& fileList)
 
         m_soundItems->insert(path, item);
 
-        connect(m_soundItems->value(path), SIGNAL(signalTotalTimeReady(const KUrl&, const QTime&)),
-                this, SLOT(slotAddNewTime(const KUrl&, const QTime&)));
+        connect(m_soundItems->value(path), SIGNAL(signalTotalTimeReady(KUrl,QTime)),
+                this, SLOT(slotAddNewTime(KUrl,QTime)));
 
         m_urlList.append(path);
     }

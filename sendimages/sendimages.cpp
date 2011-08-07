@@ -88,14 +88,14 @@ SendImages::SendImages(const EmailSettingsContainer& settings, QObject* parent, 
     d->iface           = iface;
     d->threadImgResize = new KIPISendimagesPlugin::ImageResize(this);
 
-    connect(d->threadImgResize, SIGNAL(startingResize(const KUrl&)),
-            this, SLOT(slotStartingResize(const KUrl&)));
+    connect(d->threadImgResize, SIGNAL(startingResize(KUrl)),
+            this, SLOT(slotStartingResize(KUrl)));
 
-    connect(d->threadImgResize, SIGNAL(finishedResize(const KUrl&, const KUrl&, int)),
-            this, SLOT(slotFinishedResize(const KUrl&, const KUrl&, int)));
+    connect(d->threadImgResize, SIGNAL(finishedResize(KUrl,KUrl,int)),
+            this, SLOT(slotFinishedResize(KUrl,KUrl,int)));
 
-    connect(d->threadImgResize, SIGNAL(failedResize(const KUrl&, const QString&, int)),
-            this, SLOT(slotFailedResize(const KUrl&, const QString&, int)));
+    connect(d->threadImgResize, SIGNAL(failedResize(KUrl,QString,int)),
+            this, SLOT(slotFailedResize(KUrl,QString,int)));
 
     connect(d->threadImgResize, SIGNAL(completeResize()),
             this, SLOT(slotCompleteResize()));

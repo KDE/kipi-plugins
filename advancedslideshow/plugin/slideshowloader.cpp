@@ -119,7 +119,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     KUrl filePath;
     int  angle = 0;
 
-    for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); i++)
+    for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); ++i)
     {
         filePath = KUrl(m_pathList[i].first);
         angle    = m_sharedData->iface()->info(filePath).angle();
@@ -132,7 +132,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
         m_threadLock->unlock();
     }
 
-    for (uint i = 0; i < (m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); i++)
+    for (uint i = 0; i < (m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); ++i)
     {
         int toLoad = (m_currIndex - i) % m_pathList.count();
         filePath   = KUrl(m_pathList[toLoad].first);

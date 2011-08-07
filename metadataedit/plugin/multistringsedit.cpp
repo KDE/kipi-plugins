@@ -227,7 +227,7 @@ void MultiStringsEdit::slotAddValue()
     if (newValue.isEmpty()) return;
 
     bool found = false;
-    for (int i = 0 ; i < d->valueBox->count(); i++)
+    for (int i = 0 ; i < d->valueBox->count(); ++i)
     {
         QListWidgetItem* item = d->valueBox->item(i);
         if (newValue == item->text())
@@ -269,7 +269,7 @@ bool MultiStringsEdit::getValues(QStringList& oldValues, QStringList& newValues)
     oldValues = d->oldValues;
 
     newValues.clear();
-    for (int i = 0 ; i < d->valueBox->count(); i++)
+    for (int i = 0 ; i < d->valueBox->count(); ++i)
     {
         QListWidgetItem* item = d->valueBox->item(i);
         newValues.append(item->text());

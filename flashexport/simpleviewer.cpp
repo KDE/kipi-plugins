@@ -268,6 +268,29 @@ bool SimpleViewer::createExportDirectories() const
     return true;
 }
 
+bool SimpleViewer::cmpUrl(const KUrl &url1, const KUrl &url2)
+{
+
+    KExiv2Iface::KExiv2 meta1;
+    meta1.load(url1.path());
+    QDateTime clock1              = meta1.getImageDateTime();
+    
+    KExiv2Iface::KExiv2 meta2;
+    meta2.load(url2.path());
+    QDateTime clock2             = meta2.getImageDateTime();
+
+    if(clock1.isValid() || clock2.isValid())
+    	return clock1 < clock2;
+    else
+    {
+    	QString name1 = url1.fileName();
+    	QString name2 = url2.fileName();
+    	
+    	return name1 < name2;
+    }
+    	
+}
+
 bool SimpleViewer::exportImages() const
 {
     if(d->canceled)
@@ -322,8 +345,10 @@ bool SimpleViewer::exportImages() const
     for( QList<KIPI::ImageCollection>::ConstIterator it = d->collectionsList.constBegin() ;
          !d->canceled && (it != d->collectionsList.constEnd()) ; ++it )
     {
-        const KUrl::List images = (*it).images();
-
+         KUrl::List images = (*it).images();
+        
+         qSort(images.begin(),images.end(),cmpUrl);
+        
         for(KUrl::List::ConstIterator it = images.constBegin();
             !d->canceled && (it != images.constEnd()) ; ++it)
         {
@@ -454,6 +479,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         return;
 
     QString comment;
+    QString keywords;
 
     if(d->configDlg->settings().showComments)
     {
@@ -464,7 +490,18 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     {
         comment.clear();
     }
-
+    if(d->configDlg->settings().showKeywords && d->interface->hasFeature(KIPI::HostSupportsTags))
+    {
+        KIPI::ImageInfo info =d->interface->info(url);
+        QMap<QString, QVariant> attribs = info.attributes();
+        QStringList tagList = attribs["tags"].toStringList();
+        if(tagList.join(" ")!="")
+            keywords = QString("\nTags: ")+tagList.join(", ");
+    }
+    else
+    {
+        keywords.clear();
+    }
     QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
     galleryElem.appendChild(img);
     img.setAttribute(QString::fromLatin1("imageURL"),QString("images/")+newName);  
@@ -474,7 +511,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
     QDomElement caption = xmlDoc.createElement(QString::fromLatin1("caption"));
     img.appendChild(caption);
-    QDomText captiontxt = xmlDoc.createTextNode(comment);
+    QDomText captiontxt = xmlDoc.createTextNode(comment+keywords);
     caption.appendChild(captiontxt);
 }
 

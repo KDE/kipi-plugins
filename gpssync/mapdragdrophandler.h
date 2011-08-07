@@ -5,7 +5,7 @@
  * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
  *
  * @date   2010-03-22
- * @brief  Drag-and-drop handler for KMap integration.
+ * @brief  Drag-and-drop handler for KGeoMap integration.
  *
  * @author Copyright (C) 2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -30,14 +30,14 @@
 #include <QAbstractItemModel>
 #include <QMimeData>
 
-// Libkmap includes
+// Libkgeomap includes
 
-#include <libkmap/dragdrophandler.h>
+#include <libkgeomap/dragdrophandler.h>
 
 namespace KIPIGPSSyncPlugin
 {
 
-class GPSSyncKMapModelHelper;
+class GPSSyncKGeoMapModelHelper;
 
 class MapDragData : public QMimeData
 {
@@ -53,21 +53,21 @@ public:
     QList<QPersistentModelIndex> draggedIndices;
 };
 
-class MapDragDropHandler : public KMap::DragDropHandler
+class MapDragDropHandler : public KGeoMap::DragDropHandler
 {
 Q_OBJECT
 
 public:
-    MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKMapModelHelper* const parent);
+    MapDragDropHandler(QAbstractItemModel* const pModel, GPSSyncKGeoMapModelHelper* const parent);
     virtual ~MapDragDropHandler();
 
     virtual Qt::DropAction accepts(const QDropEvent* e);
-    virtual bool dropEvent(const QDropEvent* e, const KMap::GeoCoordinates& dropCoordinates);
+    virtual bool dropEvent(const QDropEvent* e, const KGeoMap::GeoCoordinates& dropCoordinates);
     virtual QMimeData* createMimeData(const QList<QPersistentModelIndex>& modelIndices);
 
 private:
     QAbstractItemModel* const model;
-    GPSSyncKMapModelHelper* const gpsSyncKMapModelHelper;
+    GPSSyncKGeoMapModelHelper* const gpsSyncKGeoMapModelHelper;
 };
 
 } /* KIPIGPSSyncPlugin */

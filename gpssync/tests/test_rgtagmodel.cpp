@@ -267,7 +267,7 @@ void TestRGTagModel::testModelSpacerTags()
     tagModel->addSpacerTag(QModelIndex(), "{Country}");
     tagModel->addNewTag(QModelIndex(), "New Tag");
 
-    kDebug()<<"Addeded the spacers.";
+    kDebug()<<"Added the spacers.";
  
     const QModelIndex index11 = tagModel->index(0,0);  
     const QModelIndex index12 = tagModel->index(1,0);

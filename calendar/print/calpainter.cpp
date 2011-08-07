@@ -83,7 +83,7 @@ void CalPainter::paint(int month)
     int days[42];
     int startDayOffset = KGlobal::locale()->weekStartDay();
 
-    for (int i=0; i<42; i++)
+    for (int i=0; i<42; ++i)
         days[i] = -1;
 
     QDate d;
@@ -93,7 +93,7 @@ void CalPainter::paint(int month)
     if (s+7-startDayOffset >= 7)
             s=s-7;
 
-    for (int i=s; i<(s+KGlobal::locale()->calendar()->daysInMonth(d)); i++)
+    for (int i=s; i<(s+KGlobal::locale()->calendar()->daysInMonth(d)); ++i)
     {
         days[i + (7-startDayOffset)] = i-s+1;
     }
@@ -212,7 +212,7 @@ void CalPainter::paint(int month)
 
     setPen(Qt::red);
     sy = rCal.top();
-    for (int i=0; i<7; i++)
+    for (int i=0; i<7; ++i)
     {
         int dayname = i + startDayOffset;
         if (dayname > 7)
@@ -230,10 +230,10 @@ void CalPainter::paint(int month)
 
     restore();
 
-    for (int j=0; j<6; j++)
+    for (int j=0; j<6; ++j)
     {
         sy = cellSizeY * (j + 1) + rCal.top();
-        for (int i=0; i<7; i++)
+        for (int i=0; i<7; ++i)
         {
             sx     = cellSizeX * i + rCal.left();
             r.moveTopLeft(QPoint(sx,sy));
@@ -278,14 +278,14 @@ void CalPainter::paint(int month)
     if (params.drawLines)
     {
         sx = rCal.left();
-        for (int j=0; j<8; j++)
+        for (int j=0; j<8; ++j)
         {
             sy = cellSizeY * j + rCal.top();
             drawLine(sx,sy,rCal.right(),sy);
         }
 
         sy = rCal.top();
-        for (int i=0; i<8; i++)
+        for (int i=0; i<8; ++i)
         {
             sx = cellSizeX * i + rCal.left();
             drawLine(sx,sy,sx,rCal.bottom());

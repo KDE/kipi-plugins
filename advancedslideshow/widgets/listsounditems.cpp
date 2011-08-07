@@ -54,8 +54,8 @@ SoundItem::SoundItem(QListWidget* parent, const KUrl& url)
     m_mediaObject = new Phonon::MediaObject();
     m_mediaObject->setCurrentSource(url);
 
-    connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
-            this, SLOT(slotMediaStateChanged(Phonon::State, Phonon::State)));
+    connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
+            this, SLOT(slotMediaStateChanged(Phonon::State,Phonon::State)));
 }
 
 SoundItem::~SoundItem()

@@ -345,16 +345,16 @@ IPTCProperties::IPTCProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->dateReleasedSel, SIGNAL(changed(const QDate&)),
+    connect(d->dateReleasedSel, SIGNAL(changed(QDate)),
             this, SIGNAL(signalModified()));
 
-    connect(d->dateExpiredSel, SIGNAL(changed(const QDate&)),
+    connect(d->dateExpiredSel, SIGNAL(changed(QDate)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeReleasedSel, SIGNAL(timeChanged(const QTime&)),
+    connect(d->timeReleasedSel, SIGNAL(timeChanged(QTime)),
             this, SIGNAL(signalModified()));
 
-    connect(d->timeExpiredSel, SIGNAL(timeChanged(const QTime&)),
+    connect(d->timeExpiredSel, SIGNAL(timeChanged(QTime)),
             this, SIGNAL(signalModified()));
 
     // --------------------------------------------------------
@@ -367,7 +367,7 @@ IPTCProperties::IPTCProperties(QWidget* parent)
 
     // --------------------------------------------------------
 
-    connect(d->languageBtn, SIGNAL(activated(const QString&)),
+    connect(d->languageBtn, SIGNAL(activated(QString)),
             this, SIGNAL(signalModified()));
 
     connect(d->priorityCB, SIGNAL(activated(int)),
@@ -379,10 +379,10 @@ IPTCProperties::IPTCProperties(QWidget* parent)
     connect(d->objectTypeCB, SIGNAL(activated(int)),
             this, SIGNAL(signalModified()));
 
-    connect(d->objectTypeDescEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->objectTypeDescEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->originalTransEdit, SIGNAL(textChanged(const QString&)),
+    connect(d->originalTransEdit, SIGNAL(textChanged(QString)),
             this, SIGNAL(signalModified()));
 }
 

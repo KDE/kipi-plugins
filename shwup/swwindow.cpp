@@ -94,23 +94,23 @@ SwWindow::SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
                             i18n("Start upload to Shwup web service")));
      m_widget->setMinimumSize(700, 500);
 
-    connect(m_widget->m_imgList, SIGNAL( signalImageListChanged()),
-            this, SLOT( slotImageListChanged()) );
+    connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()) );
 
-    connect(m_widget->m_changeUserBtn, SIGNAL( clicked() ),
-            this, SLOT( slotUserChangeRequest()) );
+    connect(m_widget->m_changeUserBtn, SIGNAL(clicked()),
+            this, SLOT(slotUserChangeRequest()) );
 
-    connect(m_widget->m_newAlbumBtn, SIGNAL( clicked() ),
-            this, SLOT( slotNewAlbumRequest()) );
+    connect(m_widget->m_newAlbumBtn, SIGNAL(clicked()),
+            this, SLOT(slotNewAlbumRequest()) );
 
-    connect(m_widget, SIGNAL( reloadAlbums() ),
-            this, SLOT( slotReloadAlbumsRequest()) );
+    connect(m_widget, SIGNAL(reloadAlbums()),
+            this, SLOT(slotReloadAlbumsRequest()) );
 
-    connect(this, SIGNAL( closeClicked() ),
-            this, SLOT( slotClose()) );
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()) );
 
-    connect(this, SIGNAL( user1Clicked() ),
-            this, SLOT( slotStartTransfer()) );
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotStartTransfer()) );
 
     // ------------------------------------------------------------------------
 
@@ -123,8 +123,8 @@ SwWindow::SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
     m_about->addAuthor(ki18n("Timothée Groleau"), ki18n("Author and maintainer"),
                        "kde at timotheegroleau dot com");
 
-    disconnect(this, SIGNAL( helpClicked() ),
-               this, SLOT( slotHelp()) );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()) );
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
@@ -143,33 +143,33 @@ SwWindow::SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
 
     m_connector = new SwConnector(this);
 
-    connect(m_connector, SIGNAL( signalShwupKipiBlackListed() ),
-            this, SLOT( slotShwupKipiBlackListed() ),
+    connect(m_connector, SIGNAL(signalShwupKipiBlackListed()),
+            this, SLOT(slotShwupKipiBlackListed()),
             Qt::QueuedConnection);
 
     //FIXME: this slot doesn't exist
-    connect(m_connector, SIGNAL( signalShwupSignatureError() ),
-            this, SLOT( slotShwupSignatureError() ),
+    connect(m_connector, SIGNAL(signalShwupSignatureError()),
+            this, SLOT(slotShwupSignatureError()),
             Qt::QueuedConnection);
 
-    connect(m_connector, SIGNAL( signalShwupInvalidCredentials() ),
-            this, SLOT( slotShwupInvalidCredentials() ),
+    connect(m_connector, SIGNAL(signalShwupInvalidCredentials()),
+            this, SLOT(slotShwupInvalidCredentials()),
             Qt::QueuedConnection);
 
-    connect(m_connector, SIGNAL( signalBusy(bool) ),
-            this, SLOT( slotBusy(bool) ));
+    connect(m_connector, SIGNAL(signalBusy(bool)),
+            this, SLOT(slotBusy(bool)));
 
-    connect(m_connector, SIGNAL( signalRequestRestURLDone(int, const QString&) ),
-            this, SLOT( slotRequestRestURLDone(int, const QString&) ));
+    connect(m_connector, SIGNAL(signalRequestRestURLDone(int,QString)),
+            this, SLOT(slotRequestRestURLDone(int,QString)));
 
-    connect(m_connector, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <SwAlbum>&) ),
-            this, SLOT( slotListAlbumsDone(int, const QString&, const QList <SwAlbum>&) ));
+    connect(m_connector, SIGNAL(signalListAlbumsDone(int,QString,QList<SwAlbum>)),
+            this, SLOT(slotListAlbumsDone(int,QString,QList<SwAlbum>)));
 
-    connect(m_connector, SIGNAL( signalCreateAlbumDone(int, const QString&, const SwAlbum&) ),
-            this, SLOT( slotCreateAlbumDone(int, const QString&, const SwAlbum&) ));
+    connect(m_connector, SIGNAL(signalCreateAlbumDone(int,QString,SwAlbum)),
+            this, SLOT(slotCreateAlbumDone(int,QString,SwAlbum)));
 
-    connect(m_connector, SIGNAL( signalAddPhotoDone(int, const QString&) ),
-            this, SLOT( slotAddPhotoDone(int, const QString&) ));
+    connect(m_connector, SIGNAL(signalAddPhotoDone(int,QString)),
+            this, SLOT(slotAddPhotoDone(int,QString)));
 
     // ------------------------------------------------------------------------
 
@@ -423,8 +423,8 @@ void SwWindow::slotStartTransfer()
     m_progressDlg->setAutoClose(true);
     m_progressDlg->progressBar()->setFormat(i18n("%v / %m"));
 
-    connect(m_progressDlg, SIGNAL( cancelClicked() ),
-            this, SLOT( slotTransferCancel() ));
+    connect(m_progressDlg, SIGNAL(cancelClicked()),
+            this, SLOT(slotTransferCancel()));
 
     uploadNextPhoto();
 }

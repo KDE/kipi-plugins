@@ -234,11 +234,11 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStartStop()));
 
-    connect(d->thread, SIGNAL(starting(const KIPIRawConverterPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
+    connect(d->thread, SIGNAL(starting(KIPIRawConverterPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIRawConverterPlugin::ActionData)));
 
-    connect(d->thread, SIGNAL(finished(const KIPIRawConverterPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
+    connect(d->thread, SIGNAL(finished(KIPIRawConverterPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIRawConverterPlugin::ActionData)));
 
     connect(d->listView, SIGNAL(signalImageListChanged()),
             this, SLOT(slotIdentify()));

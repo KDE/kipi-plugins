@@ -189,12 +189,12 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
     albumsBoxLayout->addWidget(m_newAlbumButton, 1, 3, 1, 1);
     albumsBoxLayout->addWidget(m_reloadAlbumsButton, 1, 4, 1, 1);
 
-    connect(m_newAlbumButton, SIGNAL( clicked() ),
-            this, SLOT( slotNewAlbumRequest()) );
+    connect(m_newAlbumButton, SIGNAL(clicked()),
+            this, SLOT(slotNewAlbumRequest()) );
 
 
-    connect(m_reloadAlbumsButton, SIGNAL( clicked() ),
-            this, SLOT( slotReloadAlbumsRequest()) );
+    connect(m_reloadAlbumsButton, SIGNAL(clicked()),
+            this, SLOT(slotReloadAlbumsRequest()) );
 
     // ------------------------------------------------------------------------
 
@@ -357,8 +357,8 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
     about->addAuthor(ki18n( "Roman Tsisyk" ), ki18n("Author"),
                      "roman at tsisyk dot com");
 
-    disconnect(this, SIGNAL( helpClicked() ),
-               this, SLOT( slotHelp()) );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()) );
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
@@ -372,29 +372,29 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
      * UI slots
      */
 
-    connect(this, SIGNAL( user1Clicked() ),
-            this, SLOT( slotStartTransfer()) );
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotStartTransfer()) );
 
     /*
      * Talker slots
      */
-    connect(&m_talker, SIGNAL( signalError() ),
-            this, SLOT( slotError()));
+    connect(&m_talker, SIGNAL(signalError()),
+            this, SLOT(slotError()));
 
-    connect(&m_talker, SIGNAL( signalGetSessionDone() ),
-            this, SLOT( slotGetSessionDone()));
+    connect(&m_talker, SIGNAL(signalGetSessionDone()),
+            this, SLOT(slotGetSessionDone()));
 
-    connect(&m_talker, SIGNAL( signalGetTokenDone() ),
-            this, SLOT( slotGetTokenDone()));
+    connect(&m_talker, SIGNAL(signalGetTokenDone()),
+            this, SLOT(slotGetTokenDone()));
 
-    connect(&m_talker, SIGNAL( signalGetServiceDone() ),
-            this, SLOT( slotGetServiceDone()));
+    connect(&m_talker, SIGNAL(signalGetServiceDone()),
+            this, SLOT(slotGetServiceDone()));
 
-    connect(&m_talker, SIGNAL( signalListAlbumsDone(const QList<YandexFotkiAlbum>&) ),
-            this, SLOT( slotListAlbumsDone(const QList<YandexFotkiAlbum>&) ));
+    connect(&m_talker, SIGNAL(signalListAlbumsDone(QList<YandexFotkiAlbum>)),
+            this, SLOT(slotListAlbumsDone(QList<YandexFotkiAlbum>)));
 
-    connect(&m_talker, SIGNAL(signalListPhotosDone(const QList <YandexFotkiPhoto>&)),
-            this, SLOT(slotListPhotosDone(const QList <YandexFotkiPhoto>&)));
+    connect(&m_talker, SIGNAL(signalListPhotosDone(QList<YandexFotkiPhoto>)),
+            this, SLOT(slotListPhotosDone(QList<YandexFotkiPhoto>)));
 
     connect(&m_talker, SIGNAL(signalUpdatePhotoDone(YandexFotkiPhoto&)),
             this, SLOT(slotUpdatePhotoDone(YandexFotkiPhoto&)));

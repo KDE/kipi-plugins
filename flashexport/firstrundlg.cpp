@@ -140,15 +140,15 @@ FirstRunDlg::FirstRunDlg(QWidget* parent)
     link->setText("http://www.simpleviewer.net");
     link->setUrl("http://www.simpleviewer.net");
 
-    connect(link, SIGNAL(leftClickedUrl(const QString&)),
-            this, SLOT(slotDownload(const QString&)));
+    connect(link, SIGNAL(leftClickedUrl(QString)),
+            this, SLOT(slotDownload(QString)));
 
     QLabel* info3 = new QLabel(page);
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
 
     d->urlRequester = new KUrlRequester(page);
-    connect(d->urlRequester, SIGNAL(urlSelected(const KUrl&)),
-            this, SLOT(slotUrlSelected(const KUrl&)));
+    connect(d->urlRequester, SIGNAL(urlSelected(KUrl)),
+            this, SLOT(slotUrlSelected(KUrl)));
 
     topLayout->setMargin(0);
     topLayout->setSpacing(spacingHint());

@@ -129,8 +129,8 @@ void BackendGeonamesRG::nextPhoto()
 
     d->jobs.first().kioJob->addMetaData("User-Agent", getKipiUserAgentName());
 
-    connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*, const QByteArray&)), 
-            this, SLOT(dataIsHere(KIO::Job*,const QByteArray &)));
+    connect(d->jobs.first().kioJob, SIGNAL(data(KIO::Job*,QByteArray)), 
+            this, SLOT(dataIsHere(KIO::Job*,QByteArray)));
     connect(d->jobs.first().kioJob, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 }
@@ -147,7 +147,7 @@ void BackendGeonamesRG::callRGBackend(const QList<RGInfo>& rgList, const QString
     for ( int i = 0; i < rgList.count(); ++i)
     {
             bool foundIt = false;
-            for ( int j=0; j < d->jobs.count(); j++)
+            for ( int j=0; j < d->jobs.count(); ++j)
             {
                 if (d->jobs[j].request.first().coordinates.sameLonLatAs(rgList[i].coordinates))
                 {

@@ -139,6 +139,8 @@ private:
     bool extractArchive(KZip& zip) const;
 
     bool extractFile(const KArchiveEntry* entry) const;
+    
+static bool cmpUrl(const KUrl &url1, const KUrl &url2);
 
 public Q_SLOTS:
 

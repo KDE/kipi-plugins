@@ -91,8 +91,8 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     connect(m_targetSearchButton, SIGNAL(clicked(bool)),
             this, SLOT(slotShowTargetDialogClicked(bool)));
 
-    connect(m_targetLabel, SIGNAL(leftClickedUrl(const QString&)),
-            this, SLOT(slotProcessUrl(const QString&)));
+    connect(m_targetLabel, SIGNAL(leftClickedUrl(QString)),
+            this, SLOT(slotProcessUrl(QString)));
 
     // ------------------------------------------------------------------------
 

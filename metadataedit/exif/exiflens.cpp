@@ -311,7 +311,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
         QString fnumber = QString::number((double)(num)/(double)(den), 'f', 1);
 
         int item = -1;
-        for (int i = 0 ; i < d->apertureCB->count() ; i++)
+        for (int i = 0 ; i < d->apertureCB->count() ; ++i)
         {
             if (d->apertureCB->itemText(i).remove(0, 2) == fnumber)
                 item = i;
@@ -330,7 +330,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
         QString fnumber = QString::number(aperture, 'f', 1);
 
         int item = -1;
-        for (int i = 0 ; i < d->apertureCB->count() ; i++)
+        for (int i = 0 ; i < d->apertureCB->count() ; ++i)
         {
             if (d->apertureCB->itemText(i).remove(0, 2) == fnumber)
                 item = i;
@@ -355,7 +355,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
         QString fnumber = QString::number(maxAperture, 'f', 1);
 
         int item = -1;
-        for (int i = 0 ; i < d->apertureCB->count() ; i++)
+        for (int i = 0 ; i < d->apertureCB->count() ; ++i)
         {
             if (d->maxApertureCB->itemText(i).remove(0, 2) == fnumber)
                 item = i;

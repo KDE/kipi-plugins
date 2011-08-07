@@ -8,11 +8,11 @@ MESSAGE(STATUS "Starting CMake configuration for: kipi-plugins")
 
 # kipi-plugins version
 SET(KIPIPLUGINS_MAJOR_VERSION "2")
-SET(KIPIPLUGINS_MINOR_VERSION "0")
+SET(KIPIPLUGINS_MINOR_VERSION "1")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2011-07-27")
+SET (KIPIPLUGINS_RELEASE_DATE "2011-09-04")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -139,30 +139,31 @@ ENDIF (KDCRAW_VERSION)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
-MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)      # For DNGConverter: XMP SDK need Expat library to compile.
-MACRO_OPTIONAL_FIND_PACKAGE(Threads)    # For DNGConverter: DNG SDK need native threads support.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)    # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)    # For Htmlexport.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)     # For AdvancedSlideshow and ImageViewer.
-MACRO_OPTIONAL_FIND_PACKAGE(Ipod)       # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(Gdk)        # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)      # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(GObject)    # For ipodexport.
-MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs) # For Calendar (libkcal).
-MACRO_OPTIONAL_FIND_PACKAGE(QCA2)       # For Shwup and YandexFotki.
-MACRO_OPTIONAL_FIND_PACKAGE(KSane)      # For AcquireImages.
-MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)     # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(QJSON)      # For Debian Screenshots and Facebook.
-MACRO_OPTIONAL_FIND_PACKAGE(Kmap)       # For GPSSync.
-MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)  # For Mediawiki.
+MACRO_OPTIONAL_FIND_PACKAGE(EXPAT)         # For DNGConverter: XMP SDK need Expat library to compile.
+MACRO_OPTIONAL_FIND_PACKAGE(Threads)       # For DNGConverter: DNG SDK need native threads support.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXml2)       # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(LibXslt)       # For Htmlexport.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenGL)        # For AdvancedSlideshow and ImageViewer.
+MACRO_OPTIONAL_FIND_PACKAGE(Ipod)          # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(Gdk)           # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GLIB2)         # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(GObject)       # For ipodexport.
+MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)    # For Calendar (libkcal).
+MACRO_OPTIONAL_FIND_PACKAGE(QCA2)          # For Shwup and YandexFotki.
+MACRO_OPTIONAL_FIND_PACKAGE(KSane)         # For AcquireImages.
+MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)        # For RemoveRedEyes.
+MACRO_OPTIONAL_FIND_PACKAGE(QJSON)         # For Debian Screenshots and Facebook.
+MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)       # For GPSSync.
+MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)     # For Mediawiki.
+MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte) # For VKontakte.
 
-# check the libkmap version
+# check the libkgeomap version
 # note that old versions don't specify version information, so for now
 # just inform the user if version information was found
-IF (KMAP_VERSION)
-  MESSAGE(STATUS "libkmap: Found version ${KMAP_VERSION}")
+IF (KGEOMAP_VERSION)
+  MESSAGE(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION}")
   # TODO: fail if the version is too low
-ENDIF (KMAP_VERSION)
+ENDIF (KGEOMAP_VERSION)
 
 # X11 check, LINUX Only.
 IF(NOT WIN32 AND NOT APPLE)
@@ -234,8 +235,9 @@ PRINT_OPTIONAL_LIBRARY_STATUS("libgpod" IPOD_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("Gdk" GDK_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkdepim" KDEPIMLIBS_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("qca2" QCA2_FOUND)
-PRINT_OPTIONAL_LIBRARY_STATUS("libkmap" KMAP_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap" KGEOMAP_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki" MEDIAWIKI_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte" LIBKVKONTAKTE_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -289,9 +291,10 @@ PRINT_PLUGIN_COMPILE_STATUS("DNGConverter" EXPAT_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes" OpenCV_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Debian Screenshots" QJSON_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Facebook" QJSON_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("VKontakte" LIBKVKONTAKTE_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("IpodExport" IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_FOUND AND GDK_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
-PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KMAP_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KGEOMAP_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Mediawiki" MEDIAWIKI_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
@@ -412,6 +415,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(facebook)
     ENDIF(QJSON_FOUND)
 
+    IF(LIBKVKONTAKTE_FOUND)
+        ADD_SUBDIRECTORY(vkontakte)
+    ENDIF(LIBKVKONTAKTE_FOUND)
+
     IF(LIBXML2_FOUND AND LIBXSLT_FOUND)
         ADD_SUBDIRECTORY(htmlexport)
     ENDIF(LIBXML2_FOUND AND LIBXSLT_FOUND)
@@ -431,9 +438,9 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ENDIF(CMAKE_USE_PTHREADS_INIT OR CMAKE_USE_WIN32_THREADS_INIT)
     ENDIF(EXPAT_FOUND)
 
-    IF(KMAP_FOUND)
+    IF(KGEOMAP_FOUND)
         ADD_SUBDIRECTORY(gpssync)
-    ENDIF(KMAP_FOUND)
+    ENDIF(KGEOMAP_FOUND)
 
     IF(MEDIAWIKI_FOUND)
 #        Disabled for the moment due to problem with libmediawiki api

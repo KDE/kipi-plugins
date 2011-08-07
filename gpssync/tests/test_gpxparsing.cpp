@@ -148,7 +148,7 @@ void TestGPXParsing::testFileLoading()
 
     GPSDataParser myParser;
 
-    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int, int)));
+    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int,int)));
     QSignalSpy spyAllDone(&myParser, SIGNAL(signalAllGPXFilesReady()));
     
     myParser.loadGPXFiles(fileList);
@@ -175,7 +175,7 @@ void TestGPXParsing::testFileLoading()
 
     QSignalSpy spyItemsFinished(&myParser, SIGNAL(signalAllItemsCorrelated()));
     QVERIFY(spyItemsFinished.isValid());
-    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)));
+    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)));
     QVERIFY(spyItemsCorrelated.isValid());
 
     GPSDataParser::GPXCorrelationOptions correlationOptions;
@@ -191,7 +191,7 @@ void TestGPXParsing::testFileLoading()
 
     KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
-    QCOMPARE(myCorrelatedItems.first().coordinates, KMap::GeoCoordinates::fromGeoUrl("geo:18,7,0"));
+    QCOMPARE(myCorrelatedItems.first().coordinates, KGeoMap::GeoCoordinates::fromGeoUrl("geo:18,7,0"));
     QCOMPARE(myCorrelatedItems.first().nSatellites, 3);
     QCOMPARE(myCorrelatedItems.first().hDop, 2.5);
     QCOMPARE(myCorrelatedItems.first().speed, 3.14);
@@ -209,7 +209,7 @@ void TestGPXParsing::testInterpolation()
 
     GPSDataParser myParser;
 
-    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int, int)));
+    QSignalSpy spyGPXFiles(&myParser, SIGNAL(signalGPXFilesReadyAt(int,int)));
     QSignalSpy spyAllDone(&myParser, SIGNAL(signalAllGPXFilesReady()));
 
     myParser.loadGPXFiles(fileList);
@@ -236,7 +236,7 @@ void TestGPXParsing::testInterpolation()
 
     QSignalSpy spyItemsFinished(&myParser, SIGNAL(signalAllItemsCorrelated()));
     QVERIFY(spyItemsFinished.isValid());
-    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(const KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List&)));
+    QSignalSpy spyItemsCorrelated(&myParser, SIGNAL(signalItemsCorrelated(KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List)));
     QVERIFY(spyItemsCorrelated.isValid());
 
     GPSDataParser::GPXCorrelationOptions correlationOptions;
@@ -254,7 +254,7 @@ void TestGPXParsing::testInterpolation()
 
     KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List myCorrelatedItems = spyItemsCorrelated.first().first().value<KIPIGPSSyncPlugin::GPSDataParser::GPXCorrelation::List>();
     QCOMPARE(myCorrelatedItems.count(), 1);
-    QCOMPARE(myCorrelatedItems.first().coordinates, KMap::GeoCoordinates::fromGeoUrl("geo:17.5,0.5,3"));
+    QCOMPARE(myCorrelatedItems.first().coordinates, KGeoMap::GeoCoordinates::fromGeoUrl("geo:17.5,0.5,3"));
     QCOMPARE(myCorrelatedItems.first().nSatellites, -1);
     QCOMPARE(myCorrelatedItems.first().hDop, -1.0);
 }

@@ -94,17 +94,17 @@ AltLangStringsEdit::AltLangStringsEdit(QWidget* parent, const QString& title, co
 
     // --------------------------------------------------------
 
-    connect(d->editor, SIGNAL(signalModified(const QString&, const QString&)),
+    connect(d->editor, SIGNAL(signalModified(QString,QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->editor, SIGNAL(signalValueAdded(const QString&, const QString&)),
+    connect(d->editor, SIGNAL(signalValueAdded(QString,QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->editor, SIGNAL(signalValueDeleted(const QString&)),
+    connect(d->editor, SIGNAL(signalValueDeleted(QString)),
             this, SIGNAL(signalModified()));
 
-    connect(d->editor, SIGNAL(signalSelectionChanged(const QString&)),
-            this, SLOT(slotSelectionChanged(const QString&)));
+    connect(d->editor, SIGNAL(signalSelectionChanged(QString)),
+            this, SLOT(slotSelectionChanged(QString)));
 }
 
 AltLangStringsEdit::~AltLangStringsEdit()

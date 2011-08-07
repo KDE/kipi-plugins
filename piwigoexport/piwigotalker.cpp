@@ -116,11 +116,11 @@ void PiwigoTalker::login(const KUrl& url, const QString& name, const QString& pa
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 }
@@ -142,11 +142,11 @@ void PiwigoTalker::listAlbums()
     m_job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
     m_job->addMetaData("customHTTPHeader", "Authorization: " + s_authToken );
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 }
@@ -259,11 +259,11 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
     emit signalProgressInfo( i18n("Check if %1 already exists", KUrl(m_path).fileName()) );
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
 
@@ -524,11 +524,11 @@ void PiwigoTalker::parseResponseDoesPhotoExist(const QByteArray& data)
 
     emit signalProgressInfo( i18n("Upload resized version of %1", KUrl(m_path).fileName()) );
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 }
 
 void PiwigoTalker::parseResponseAddPhoto(const QByteArray& data)
@@ -591,11 +591,11 @@ void PiwigoTalker::parseResponseAddPhoto(const QByteArray& data)
 
     emit signalProgressInfo( i18n("Upload the thumbnail of %1", KUrl(m_path).fileName()) );
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 }
 
 void PiwigoTalker::addHQNextChunk()
@@ -625,11 +625,11 @@ void PiwigoTalker::addHQNextChunk()
 
     emit signalProgressInfo( i18n("Upload the chunk %1 of %2", m_chunkId, KUrl(m_path).fileName()) );
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 }
 
 void PiwigoTalker::parseResponseAddThumbnail(const QByteArray& data)
@@ -758,11 +758,11 @@ void PiwigoTalker::addPhotoSummary()
 
     emit signalProgressInfo( i18n("Upload the metadata of %1", KUrl(m_path).fileName()) );
 
-    connect(m_job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(slotTalkerData(KIO::Job*, const QByteArray&)));
+    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+            this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(m_job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 }
 
 void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)

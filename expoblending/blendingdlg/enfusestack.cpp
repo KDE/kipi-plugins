@@ -185,11 +185,11 @@ EnfuseStackList::EnfuseStackList(QWidget* parent)
     labels.append( i18n("Inputs") );
     setHeaderLabels(labels);
 
-    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+    connect(this, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
             this, SLOT(slotItemClicked(QTreeWidgetItem*)));
 
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint&)),
-            this, SLOT(slotContextMenu(const QPoint&)));
+    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(slotContextMenu(QPoint)));
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressTimerDone()));
@@ -208,14 +208,14 @@ void EnfuseStackList::slotContextMenu(const QPoint& p)
     if (item)
     {
         KAction* rmItem = new KAction(KIcon("dialog-close"), i18n("Remove item"), this);
-        connect(rmItem, SIGNAL(triggered(bool) ),
+        connect(rmItem, SIGNAL(triggered(bool)),
                 this, SLOT(slotRemoveItem()));
         popmenu.addAction(rmItem);
         popmenu.addSeparator();
     }
 
     KAction* rmAll = new KAction(KIcon("edit-delete-shred"), i18n("Clear all"), this);
-    connect(rmAll, SIGNAL(triggered(bool) ),
+    connect(rmAll, SIGNAL(triggered(bool)),
             this, SLOT(clear()));
 
     popmenu.addAction(rmAll);

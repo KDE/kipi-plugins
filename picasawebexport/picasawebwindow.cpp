@@ -114,20 +114,20 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
         m_widget->setMinimumSize(700, 500);
     }
 
-    connect(m_widget, SIGNAL( signalUserChangeRequest(bool) ),
-            this, SLOT( slotUserChangeRequest(bool)) );
+    connect(m_widget, SIGNAL(signalUserChangeRequest(bool)),
+            this, SLOT(slotUserChangeRequest(bool)) );
 
-    connect(m_widget->m_imgList, SIGNAL( signalImageListChanged() ),
-            this, SLOT( slotImageListChanged()) );
+    connect(m_widget->m_imgList, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()) );
 
-    connect(m_widget->m_reloadAlbumsBtn, SIGNAL( clicked() ),
-            this, SLOT( slotReloadAlbumsRequest()) );
+    connect(m_widget->m_reloadAlbumsBtn, SIGNAL(clicked()),
+            this, SLOT(slotReloadAlbumsRequest()) );
 
-    connect(m_widget->m_newAlbumBtn, SIGNAL( clicked() ),
-            this, SLOT( slotNewAlbumRequest()) );
+    connect(m_widget->m_newAlbumBtn, SIGNAL(clicked()),
+            this, SLOT(slotNewAlbumRequest()) );
 
-    connect(this, SIGNAL( user1Clicked() ),
-            this, SLOT( slotStartTransfer()) );
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotStartTransfer()) );
 
     // ------------------------------------------------------------------------
 
@@ -153,8 +153,8 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
     m_about->addAuthor(ki18n( "Jens Mueller" ), ki18n("Developer"),
                        "tschenser at gmx dot de");
 
-    disconnect(this, SIGNAL( helpClicked() ),
-               this, SLOT( slotHelp()) );
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()) );
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
@@ -168,26 +168,26 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
 
     m_talker = new PicasawebTalker(this);
 
-    connect(m_talker, SIGNAL( signalBusy(bool) ),
-            this, SLOT( slotBusy(bool) ));
+    connect(m_talker, SIGNAL(signalBusy(bool)),
+            this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL( signalLoginProgress(int, int, const QString&) ),
-            this, SLOT( slotLoginProgress(int, int, const QString&) ));
+    connect(m_talker, SIGNAL(signalLoginProgress(int,int,QString)),
+            this, SLOT(slotLoginProgress(int,int,QString)));
 
-    connect(m_talker, SIGNAL( signalLoginDone(int, const QString&) ),
-            this, SLOT( slotLoginDone(int, const QString&) ));
+    connect(m_talker, SIGNAL(signalLoginDone(int,QString)),
+            this, SLOT(slotLoginDone(int,QString)));
 
-    connect(m_talker, SIGNAL( signalAddPhotoDone(int, const QString&, const QString&) ),
-            this, SLOT( slotAddPhotoDone(int, const QString&, const QString&) ));
+    connect(m_talker, SIGNAL(signalAddPhotoDone(int,QString,QString)),
+            this, SLOT(slotAddPhotoDone(int,QString,QString)));
 
-    connect(m_talker, SIGNAL( signalCreateAlbumDone(int, const QString&, const QString&) ),
-            this, SLOT( slotCreateAlbumDone(int, const QString&, const QString&) ));
+    connect(m_talker, SIGNAL(signalCreateAlbumDone(int,QString,QString)),
+            this, SLOT(slotCreateAlbumDone(int,QString,QString)));
 
-    connect(m_talker, SIGNAL( signalListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&) ),
-            this, SLOT( slotListAlbumsDone(int, const QString&, const QList <PicasaWebAlbum>&) ));
+    connect(m_talker, SIGNAL(signalListAlbumsDone(int,QString,QList<PicasaWebAlbum>)),
+            this, SLOT(slotListAlbumsDone(int,QString,QList<PicasaWebAlbum>)));
 
-    connect(m_talker, SIGNAL( signalGetPhotoDone(int, const QString&, const QByteArray&) ),
-            this, SLOT( slotGetPhotoDone(int, const QString&, const QByteArray&) ));
+    connect(m_talker, SIGNAL(signalGetPhotoDone(int,QString,QByteArray)),
+            this, SLOT(slotGetPhotoDone(int,QString,QByteArray)));
     // ------------------------------------------------------------------------
 
     readSettings();
@@ -360,8 +360,8 @@ void PicasawebWindow::slotListAlbumsDone(int errCode, const QString &errMsg,
 void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &errMsg,
                                                     const QList <PicasaWebPhoto>& photosList)
 {
-    disconnect(m_talker, SIGNAL(signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&)),
-               this, SLOT(slotListPhotosDoneForDownload(int, const QString&, const QList <PicasaWebPhoto>&)));
+    disconnect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<PicasaWebPhoto>)),
+               this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<PicasaWebPhoto>)));
 
     if (errCode != 0)
     {
@@ -372,7 +372,7 @@ void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &
     typedef QPair<KUrl,PicasaWebPhoto> Pair;
     m_transferQueue.clear();
     QList<PicasaWebPhoto>::const_iterator itPWP;
-    for (itPWP = photosList.begin(); itPWP != photosList.end(); itPWP++)
+    for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
     {
         m_transferQueue.push_back(Pair((*itPWP).originalURL, (*itPWP)));
     }
@@ -397,8 +397,8 @@ void PicasawebWindow::slotListPhotosDoneForDownload(int errCode, const QString &
 void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &errMsg,
                                                   const QList <PicasaWebPhoto>& photosList)
 {
-    disconnect(m_talker, SIGNAL(signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&)),
-               this, SLOT(slotListPhotosDoneForUpload(int, const QString&, const QList <PicasaWebPhoto>&)));
+    disconnect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<PicasaWebPhoto>)),
+               this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<PicasaWebPhoto>)));
 
     if (errCode != 0)
     {
@@ -431,7 +431,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
             localId = exiv2Iface.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
         }
         QList<PicasaWebPhoto>::const_iterator itPWP;
-        for (itPWP = photosList.begin(); itPWP != photosList.end(); itPWP++)
+        for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
         {
             if ((*itPWP).id == localId)
             {
@@ -520,8 +520,8 @@ void PicasawebWindow::slotStartTransfer()
     if (m_import)
     {
         // list photos of the album, then start download
-        connect(m_talker, SIGNAL(signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&)),
-                this, SLOT(slotListPhotosDoneForDownload(int, const QString&, const QList <PicasaWebPhoto>&)));
+        connect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<PicasaWebPhoto>)),
+                this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<PicasaWebPhoto>)));
 
         m_talker->listPhotos(m_username,
                              m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
@@ -530,8 +530,8 @@ void PicasawebWindow::slotStartTransfer()
     else
     {
         // list photos of the album, then start upload with add/update items
-        connect(m_talker, SIGNAL(signalListPhotosDone(int, const QString&, const QList <PicasaWebPhoto>&)),
-                this, SLOT(slotListPhotosDoneForUpload(int, const QString&, const QList <PicasaWebPhoto>&)));
+        connect(m_talker, SIGNAL(signalListPhotosDone(int,QString,QList<PicasaWebPhoto>)),
+                this, SLOT(slotListPhotosDoneForUpload(int,QString,QList<PicasaWebPhoto>)));
 
         m_talker->listPhotos(m_username,
                              m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
@@ -677,7 +677,7 @@ void PicasawebWindow::uploadNextPhoto()
         {
             QStringList newTags;
             QStringList::const_iterator itT;
-            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); itT++)
+            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
             {
                 QString strTmp = *itT;
                 int idx = strTmp.lastIndexOf("/");
@@ -694,11 +694,11 @@ void PicasawebWindow::uploadNextPhoto()
         {
             QSet<QString> newTagsSet;
             QStringList::const_iterator itT;
-            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); itT++)
+            for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
             {
                 QStringList strListTmp = itT->split("/");
                 QStringList::const_iterator itT2;
-                for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); itT2++)
+                for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
                 {
                     if (!newTagsSet.contains(*itT2))
                     {
@@ -708,7 +708,7 @@ void PicasawebWindow::uploadNextPhoto()
             }
             info.tags.clear();
             QSet<QString>::const_iterator itT3;
-            for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); itT3++)
+            for(itT3 = newTagsSet.begin(); itT3 != newTagsSet.end(); ++itT3)
             {
                 info.tags.append(*itT3);
             }

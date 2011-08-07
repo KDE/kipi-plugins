@@ -227,11 +227,11 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     connect(this, SIGNAL(user3Clicked()),
             this, SLOT(slotUser3()));
 
-    connect(d->thread, SIGNAL(starting(const KIPIRawConverterPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
+    connect(d->thread, SIGNAL(starting(KIPIRawConverterPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIRawConverterPlugin::ActionData)));
 
-    connect(d->thread, SIGNAL(finished(const KIPIRawConverterPlugin::ActionData&)),
-            this, SLOT(slotAction(const KIPIRawConverterPlugin::ActionData&)));
+    connect(d->thread, SIGNAL(finished(KIPIRawConverterPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIRawConverterPlugin::ActionData)));
 
     // ---------------------------------------------------------------
 
@@ -251,7 +251,7 @@ void SingleDialog::setFile(const QString& file)
 {
     d->inputFile     = file;
     d->inputFileName = QFileInfo(file).fileName();
-    QTimer::singleShot(0, this, SLOT( slotIdentify() ));
+    QTimer::singleShot(0, this, SLOT(slotIdentify()));
 }
 
 void SingleDialog::slotHelp()
@@ -345,8 +345,8 @@ void SingleDialog::slotIdentify()
     }
     else
     {
-        connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
-                this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+                this, SLOT(slotThumbnail(KUrl,QPixmap)));
 
         d->iface->thumbnail(KUrl(d->inputFile), 256);
     }

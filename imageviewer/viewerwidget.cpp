@@ -124,7 +124,7 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i)
     kDebug() << files.count() << "images loaded" ;
 
     // initialize cache
-    for(int i = 0 ; i < CACHESIZE ; i++)
+    for(int i = 0 ; i < CACHESIZE ; ++i)
     {
         cache[i].file_index = EMPTY;
         cache[i].texture    = new Texture(kipiInterface);

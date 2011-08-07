@@ -278,7 +278,7 @@ void ObjectAttributesEdit::slotAddValue()
     newValue.append(QString(":%1").arg(d->valueEdit->text()));
 
     bool found = false;
-    for (int i = 0 ; i < d->valueBox->count(); i++)
+    for (int i = 0 ; i < d->valueBox->count(); ++i)
     {
         QListWidgetItem* item = d->valueBox->item(i);
         if (newValue == item->text())
@@ -317,7 +317,7 @@ bool ObjectAttributesEdit::getValues(QStringList& oldValues, QStringList& newVal
     oldValues = d->oldValues;
 
     newValues.clear();
-    for (int i = 0 ; i < d->valueBox->count(); i++)
+    for (int i = 0 ; i < d->valueBox->count(); ++i)
     {
         QListWidgetItem* item = d->valueBox->item(i);
         newValues.append(item->text());

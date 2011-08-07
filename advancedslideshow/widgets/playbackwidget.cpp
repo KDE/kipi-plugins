@@ -93,8 +93,8 @@ PlaybackWidget::PlaybackWidget(QWidget* parent, KUrl::List &urls, SharedContaine
 
     m_mediaObject->setTickInterval(500);
 
-    connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
-            this, SLOT(slotMediaStateChanged(Phonon::State, Phonon::State)));
+    connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
+            this, SLOT(slotMediaStateChanged(Phonon::State,Phonon::State)));
 
     connect(m_mediaObject, SIGNAL(finished()),
             this, SLOT(slotSongFinished()));
