@@ -49,7 +49,7 @@
 namespace KIPIVkontaktePlugin
 {
 
-VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, AlbumInfoPtr album, bool editing)
+VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, Vkontakte::AlbumInfoPtr album, bool editing)
     : KDialog(parent), m_album(album)
 {
     setWindowTitle(editing ?
@@ -82,18 +82,18 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, AlbumInfoPtr album, 
     QGridLayout *privacyBoxLayout = new QGridLayout;
 
     m_albumPrivacyCombo = new KComboBox(privacyBox);
-    m_albumPrivacyCombo->addItem(i18n("Only me"), QVariant(AlbumInfo::PRIVACY_PRIVATE));
-    m_albumPrivacyCombo->addItem(i18n("My friends"), QVariant(AlbumInfo::PRIVACY_FRIENDS));
-    m_albumPrivacyCombo->addItem(i18n("Friends of my friends"), QVariant(AlbumInfo::PRIVACY_FRIENDS_OF_FRIENDS));
-    m_albumPrivacyCombo->addItem(i18n("Everyone"), QVariant(AlbumInfo::PRIVACY_PUBLIC));
+    m_albumPrivacyCombo->addItem(i18n("Only me"), QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
+    m_albumPrivacyCombo->addItem(i18n("My friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS));
+    m_albumPrivacyCombo->addItem(i18n("Friends of my friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS_OF_FRIENDS));
+    m_albumPrivacyCombo->addItem(i18n("Everyone"), QVariant(Vkontakte::AlbumInfo::PRIVACY_PUBLIC));
     privacyBoxLayout->addWidget(new QLabel(i18n("Album available to:")), 0, 0);
     privacyBoxLayout->addWidget(m_albumPrivacyCombo, 0, 1);
 
     m_commentsPrivacyCombo = new KComboBox(privacyBox);
-    m_commentsPrivacyCombo->addItem(i18n("Only me"), QVariant(AlbumInfo::PRIVACY_PRIVATE));
-    m_commentsPrivacyCombo->addItem(i18n("My friends"), QVariant(AlbumInfo::PRIVACY_FRIENDS));
-    m_commentsPrivacyCombo->addItem(i18n("Friends of my friends"), QVariant(AlbumInfo::PRIVACY_FRIENDS_OF_FRIENDS));
-    m_commentsPrivacyCombo->addItem(i18n("Everyone"), QVariant(AlbumInfo::PRIVACY_PUBLIC));
+    m_commentsPrivacyCombo->addItem(i18n("Only me"), QVariant(Vkontakte::AlbumInfo::PRIVACY_PRIVATE));
+    m_commentsPrivacyCombo->addItem(i18n("My friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS));
+    m_commentsPrivacyCombo->addItem(i18n("Friends of my friends"), QVariant(Vkontakte::AlbumInfo::PRIVACY_FRIENDS_OF_FRIENDS));
+    m_commentsPrivacyCombo->addItem(i18n("Everyone"), QVariant(Vkontakte::AlbumInfo::PRIVACY_PUBLIC));
     privacyBoxLayout->addWidget(new QLabel(i18n("Comments available to:")), 1, 0);
     privacyBoxLayout->addWidget(m_commentsPrivacyCombo, 1, 1);
 

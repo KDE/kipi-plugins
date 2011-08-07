@@ -104,8 +104,8 @@ protected Q_SLOTS:
     void startAlbumsUpdate();
     void startGetFullName();
     void startGetUserId();
-    void startAlbumCreation(AlbumInfoPtr album);
-    void startAlbumEditing(AlbumInfoPtr album);
+    void startAlbumCreation(Vkontakte::AlbumInfoPtr album);
+    void startAlbumEditing(Vkontakte::AlbumInfoPtr album);
     void slotAlbumsUpdateDone(KJob *);
     void slotGetFullNameDone(KJob *);
     void slotGetUserIdDone(KJob *);
@@ -170,7 +170,7 @@ protected:
     QList<KJob *> m_jobs; /** Pointers to running jobs */
     bool m_authenticated;
     QString m_accessToken;
-    QList<AlbumInfoPtr> m_albums;
+    QList<Vkontakte::AlbumInfoPtr> m_albums;
 
     QString m_userFullName;
     int m_userId;

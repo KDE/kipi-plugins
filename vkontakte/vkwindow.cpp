@@ -483,7 +483,7 @@ void VkontakteWindow::startAuthentication(bool forceAuthWindow)
 
     if (!m_accessToken.isEmpty())
     {
-        GetApplicationPermissionsJob *job = new GetApplicationPermissionsJob(m_accessToken);
+        Vkontakte::GetApplicationPermissionsJob *job = new Vkontakte::GetApplicationPermissionsJob(m_accessToken);
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotApplicationPermissionCheckDone(KJob*)));
         m_jobs.append(job);
         job->start();
@@ -492,7 +492,7 @@ void VkontakteWindow::startAuthentication(bool forceAuthWindow)
     {
         QStringList permissions;
         permissions << "photos" << "offline";
-        AuthenticationDialog *authDialog = new AuthenticationDialog(this);
+        Vkontakte::AuthenticationDialog *authDialog = new Vkontakte::AuthenticationDialog(this);
         authDialog->setAppId(/*Settings::self()->appID()*/ QString("2383230")); // TODO: this was for Akonadi app, create a new app for KIPI-Plugins
         authDialog->setPermissions(permissions);
         connect(authDialog, SIGNAL(authenticated(QString)),
@@ -505,7 +505,7 @@ void VkontakteWindow::startAuthentication(bool forceAuthWindow)
 
 void VkontakteWindow::slotApplicationPermissionCheckDone(KJob *kjob)
 {
-    GetApplicationPermissionsJob *job = dynamic_cast<GetApplicationPermissionsJob *>(kjob);
+    Vkontakte::GetApplicationPermissionsJob *job = dynamic_cast<Vkontakte::GetApplicationPermissionsJob *>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
     if (job->error() || (job->permissions() & 4) != 4)
@@ -537,7 +537,7 @@ void VkontakteWindow::handleVkError(KJob *kjob)
 
 void VkontakteWindow::startAlbumsUpdate()
 {
-    AlbumListJob *job = new AlbumListJob(m_accessToken);
+    Vkontakte::AlbumListJob *job = new Vkontakte::AlbumListJob(m_accessToken);
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumsUpdateDone(KJob*)));
     m_jobs.append(job);
     job->start();
@@ -545,7 +545,7 @@ void VkontakteWindow::startAlbumsUpdate()
 
 void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
 {
-    AlbumListJob *job = dynamic_cast<AlbumListJob *>(kjob);
+    Vkontakte::AlbumListJob *job = dynamic_cast<Vkontakte::AlbumListJob *>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
     if (job->error())
@@ -556,7 +556,7 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
 
     m_albumsCombo->clear();
     m_albums = job->list();
-    foreach (const AlbumInfoPtr &album, m_albums)
+    foreach (const Vkontakte::AlbumInfoPtr &album, m_albums)
     {
         m_albumsCombo->addItem(KIcon("folder-image"), album->title());
     }
@@ -572,7 +572,7 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
 
 void VkontakteWindow::startGetFullName()
 {
-    GetVariableJob *job = new GetVariableJob(m_accessToken, 1281);
+    Vkontakte::GetVariableJob *job = new Vkontakte::GetVariableJob(m_accessToken, 1281);
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotGetFullNameDone(KJob*)));
     m_jobs.append(job);
     job->start();
@@ -580,7 +580,7 @@ void VkontakteWindow::startGetFullName()
 
 void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
 {
-    GetVariableJob *job = dynamic_cast<GetVariableJob *>(kjob);
+    Vkontakte::GetVariableJob *job = dynamic_cast<Vkontakte::GetVariableJob *>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
     if (job->error())
@@ -597,7 +597,7 @@ void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
 
 void VkontakteWindow::startGetUserId()
 {
-    GetVariableJob *job = new GetVariableJob(m_accessToken, 1280);
+    Vkontakte::GetVariableJob *job = new Vkontakte::GetVariableJob(m_accessToken, 1280);
     connect(job, SIGNAL(result(KJob*)), this, SLOT(slotGetUserIdDone(KJob*)));
     m_jobs.append(job);
     job->start();
@@ -605,7 +605,7 @@ void VkontakteWindow::startGetUserId()
 
 void VkontakteWindow::slotGetUserIdDone(KJob *kjob)
 {
-    GetVariableJob *job = dynamic_cast<GetVariableJob *>(kjob);
+    Vkontakte::GetVariableJob *job = dynamic_cast<Vkontakte::GetVariableJob *>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
     if (job->error())
@@ -620,9 +620,9 @@ void VkontakteWindow::slotGetUserIdDone(KJob *kjob)
 
 //------------------------------
 
-void VkontakteWindow::startAlbumCreation(AlbumInfoPtr album)
+void VkontakteWindow::startAlbumCreation(Vkontakte::AlbumInfoPtr album)
 {
-    CreateAlbumJob *job = new CreateAlbumJob(
+    Vkontakte::CreateAlbumJob *job = new Vkontakte::CreateAlbumJob(
         m_accessToken,
         album->title(), album->description(),
         album->privacy(), album->commentPrivacy());
@@ -633,7 +633,7 @@ void VkontakteWindow::startAlbumCreation(AlbumInfoPtr album)
 
 void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
 {
-    CreateAlbumJob *job = dynamic_cast<CreateAlbumJob *>(kjob);
+    Vkontakte::CreateAlbumJob *job = dynamic_cast<Vkontakte::CreateAlbumJob *>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
     if (job->error())
@@ -652,9 +652,9 @@ void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
 
 //------------------------------
 
-void VkontakteWindow::startAlbumEditing(AlbumInfoPtr album)
+void VkontakteWindow::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
 {
-    EditAlbumJob *job = new EditAlbumJob(
+    Vkontakte::EditAlbumJob *job = new Vkontakte::EditAlbumJob(
         m_accessToken,
         album->aid(), album->title(), album->description(),
         album->privacy(), album->commentPrivacy());
@@ -665,7 +665,7 @@ void VkontakteWindow::startAlbumEditing(AlbumInfoPtr album)
 
 void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
 {
-    EditAlbumJob *job = dynamic_cast<EditAlbumJob *>(kjob);
+    Vkontakte::EditAlbumJob *job = dynamic_cast<Vkontakte::EditAlbumJob *>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
     if (job->error())
@@ -686,7 +686,7 @@ void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
 
 void VkontakteWindow::slotNewAlbumRequest()
 {
-    AlbumInfoPtr album(new AlbumInfo());
+    Vkontakte::AlbumInfoPtr album(new Vkontakte::AlbumInfo());
     VkontakteAlbumDialog dlg(this, album);
 
     if (dlg.exec() == QDialog::Accepted)
@@ -698,7 +698,7 @@ void VkontakteWindow::slotNewAlbumRequest()
 
 void VkontakteWindow::slotEditAlbumRequest()
 {
-    AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
+    Vkontakte::AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
     VkontakteAlbumDialog dlg(this, album, true);
 
     if (dlg.exec() == QDialog::Accepted)
@@ -726,7 +726,7 @@ void VkontakteWindow::slotStartTransfer()
     if (!m_import)
     {
         // list photos of the album, then start upload
-        AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
+        Vkontakte::AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
 
         updateControls(false);
 
@@ -734,7 +734,7 @@ void VkontakteWindow::slotStartTransfer()
         foreach (const KUrl &url, m_imgList->imageUrls(true))
             files.append(url.toLocalFile());
 
-        UploadPhotosJob *job = new UploadPhotosJob(m_accessToken, files, album->aid());
+        Vkontakte::UploadPhotosJob *job = new Vkontakte::UploadPhotosJob(m_accessToken, files, album->aid());
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotPhotoUploadDone(KJob*)));
         m_jobs.append(job);
         job->start();
@@ -743,7 +743,7 @@ void VkontakteWindow::slotStartTransfer()
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
 {
-    UploadPhotosJob *job = dynamic_cast<UploadPhotosJob *>(kjob);
+    Vkontakte::UploadPhotosJob *job = dynamic_cast<Vkontakte::UploadPhotosJob *>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
     if (job->error())
