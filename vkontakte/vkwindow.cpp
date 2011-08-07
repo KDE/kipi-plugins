@@ -736,9 +736,12 @@ void VkontakteWindow::slotStartTransfer()
 
         Vkontakte::UploadPhotosJob *job = new Vkontakte::UploadPhotosJob(m_accessToken, files, album->aid());
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotPhotoUploadDone(KJob*)));
+        connect(job, SIGNAL(progress(int)), m_progressBar, SLOT(setValue(int)));
         m_jobs.append(job);
         job->start();
     }
+
+    m_progressBar->show();
 }
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
@@ -752,6 +755,7 @@ void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
         return;
     }
 
+    m_progressBar->hide();
     updateControls(true);
 }
 

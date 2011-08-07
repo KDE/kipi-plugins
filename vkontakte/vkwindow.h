@@ -48,7 +48,6 @@ class QProgressBar;
 class QToolButton;
 
 class KUrl;
-class KProgressDialog;
 class KPasswordDialog;
 class KComboBox;
 class KPushButton;
