@@ -278,6 +278,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startAlbumsUpdate()));
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startGetFullName()));
+    connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startGetUserId()));
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(updateLabels()));
 
     // for startReactivation()
@@ -350,15 +351,18 @@ void VkontakteWindow::updateLabels()
     if (isAuthenticated())
     {
         loginText = m_userFullName;
-        urlText = "???login-url???"; //YandexFotkiTalker::USERPAGE_URL.arg(m_talker.login());
         m_albumsBox->setEnabled(true);
     }
     else
     {
         loginText = i18n("Unauthorized");
-        urlText = "http://vkontakte.ru/";
         m_albumsCombo->clear();
     }
+
+    if (isAuthenticated() && m_userId != -1)
+        urlText = QString("http://vkontakte.ru/albums%1").arg(m_userId);
+    else
+        urlText = "http://vkontakte.ru/";
 
     m_loginLabel->setText(QString("<b>%1</b>").arg(loginText));
     m_headerLabel->setText(
@@ -457,6 +461,8 @@ void VkontakteWindow::slotHelp()
 void VkontakteWindow::startAuthentication(bool forceAuthWindow)
 {
     m_userFullName = QString();
+    m_userId = -1;
+
     if (forceAuthWindow)
         m_accessToken = QString();
 
@@ -565,6 +571,31 @@ void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
     }
 
     m_userFullName = job->variable().toString();
+    updateLabels();
+}
+
+//------------------------------
+
+void VkontakteWindow::startGetUserId()
+{
+    GetVariableJob *job = new GetVariableJob(m_accessToken, 1280);
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotGetUserIdDone(KJob*)));
+    m_jobs.append(job);
+    job->start();
+}
+
+void VkontakteWindow::slotGetUserIdDone(KJob *kjob)
+{
+    GetVariableJob *job = dynamic_cast<GetVariableJob *>(kjob);
+    Q_ASSERT(job);
+    m_jobs.removeAll(job);
+    if (job->error())
+    {
+        handleVkError(job);
+        return;
+    }
+
+    m_userId = job->variable().toInt();
     updateLabels();
 }
 
