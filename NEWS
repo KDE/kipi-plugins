@@ -3,7 +3,7 @@ Kipi-plugins 2.1.0 - Release date: 2011/09/04
 
 NEW FEATURES:
 
-New plugin to export collection to VKontakte web service (http://wwww.vkontakte.ru).
+New tool to export collection to VKontakte web service (http://wwww.vkontakte.ru).
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
