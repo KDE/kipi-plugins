@@ -133,8 +133,15 @@ void VkontakteAlbumDialog::slotButtonClicked(int button)
         m_album->setTitle(m_titleEdit->text());
         m_album->setDescription(m_summaryEdit->toPlainText());
 
-        m_album->setPrivacy(m_albumPrivacyCombo->itemData(m_albumPrivacyCombo->currentIndex()).toInt());
-        m_album->setCommentPrivacy(m_commentsPrivacyCombo->itemData(m_commentsPrivacyCombo->currentIndex()).toInt());
+        if (m_albumPrivacyCombo->currentIndex() != -1)
+            m_album->setPrivacy(m_albumPrivacyCombo->itemData(m_albumPrivacyCombo->currentIndex()).toInt());
+        else // for safety, see info about VK API bug below
+            m_album->setPrivacy(Vkontakte::AlbumInfo::PRIVACY_PRIVATE);
+
+        if (m_commentsPrivacyCombo->currentIndex() != -1)
+            m_album->setCommentPrivacy(m_commentsPrivacyCombo->itemData(m_commentsPrivacyCombo->currentIndex()).toInt());
+        else // VK API has a bug: if "comment_privacy" is not set, it will be set to PRIVACY_PUBLIC
+            m_album->setCommentPrivacy(Vkontakte::AlbumInfo::PRIVACY_PRIVATE);
     }
 
     return KDialog::slotButtonClicked(button);
