@@ -142,35 +142,29 @@ protected:
 
 protected:
 
-    /*
-     * Plugin
-     */
+    // Plugin
+    bool m_import;
+    KIPI::Interface *m_interface;
 
-    bool                     m_import;
-    KIPI::Interface*         m_interface;
-
-    /*
-     * User interface
-     */
-
-    QWidget*                 m_mainWidget;
+    // User interface
+    QWidget *m_mainWidget;
     // accounts
-    QGroupBox*               m_accountBox;
-    QLabel*                  m_loginLabel;
-    QLabel*                  m_headerLabel;
-    KPushButton*             m_changeUserButton;
+    QGroupBox *m_accountBox;
+    QLabel *m_loginLabel;
+    QLabel *m_headerLabel;
+    KPushButton *m_changeUserButton;
 
     // albums
-    QGroupBox*               m_albumsBox;
-    KPushButton*             m_newAlbumButton;
-    KPushButton*             m_reloadAlbumsButton;
-    KComboBox*               m_albumsCombo;
+    QGroupBox *m_albumsBox;
+    KPushButton *m_newAlbumButton;
+    KPushButton *m_reloadAlbumsButton;
+    KComboBox *m_albumsCombo;
     QToolButton *m_editAlbumButton;
 
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
+    KIPIPlugins::ImagesList *m_imgList;
+    KIPI::UploadWidget *m_uploadWidget;
 
-    QProgressBar*            m_progressBar;
+    QProgressBar *m_progressBar;
 
 
     QList<KJob *> m_jobs; /** Pointers to running jobs */
