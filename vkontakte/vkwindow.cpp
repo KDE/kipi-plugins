@@ -100,6 +100,16 @@
 #include "vkalbumdialog.h"
 #include "vkwindow.h"
 
+#define SLOT_JOB_DONE_INIT(JobClass) \
+    JobClass *job = dynamic_cast<JobClass *>(kjob); \
+    Q_ASSERT(job);          \
+    m_jobs.removeAll(job);  \
+    if (job->error())       \
+    {                       \
+        handleVkError(job); \
+        return;             \
+    }
+
 namespace KIPIVkontaktePlugin
 {
 
@@ -562,14 +572,7 @@ void VkontakteWindow::startAlbumsUpdate()
 
 void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
 {
-    Vkontakte::AlbumListJob *job = dynamic_cast<Vkontakte::AlbumListJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::AlbumListJob)
 
     m_albumsCombo->clear();
     m_albums = job->list();
@@ -602,14 +605,7 @@ void VkontakteWindow::startGetFullName()
 
 void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
 {
-    Vkontakte::GetVariableJob *job = dynamic_cast<Vkontakte::GetVariableJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
 
     m_userFullName = job->variable().toString();
     updateLabels();
@@ -627,14 +623,7 @@ void VkontakteWindow::startGetUserId()
 
 void VkontakteWindow::slotGetUserIdDone(KJob *kjob)
 {
-    Vkontakte::GetVariableJob *job = dynamic_cast<Vkontakte::GetVariableJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
 
     m_userId = job->variable().toInt();
     updateLabels();
@@ -655,14 +644,7 @@ void VkontakteWindow::startAlbumCreation(Vkontakte::AlbumInfoPtr album)
 
 void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
 {
-    Vkontakte::CreateAlbumJob *job = dynamic_cast<Vkontakte::CreateAlbumJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::CreateAlbumJob)
 
     // Select the newly created album in the combobox later (in "slotAlbumsUpdateDone()")
     m_albumToSelect = job->album()->aid();
@@ -691,14 +673,7 @@ void VkontakteWindow::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
 
 void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
 {
-    Vkontakte::EditAlbumJob *job = dynamic_cast<Vkontakte::EditAlbumJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::EditAlbumJob)
 
     startAlbumsUpdate();
     m_albumsCombo->setEnabled(false);
@@ -773,14 +748,7 @@ void VkontakteWindow::slotStartTransfer()
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
 {
-    Vkontakte::UploadPhotosJob *job = dynamic_cast<Vkontakte::UploadPhotosJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::UploadPhotosJob)
 
     m_progressBar->hide();
     updateControls(true);
