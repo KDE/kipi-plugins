@@ -108,6 +108,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     : KDialog(parent)
 {
     m_authenticated = false;
+    m_albumToSelect = -1;
 
     m_interface = interface;
     m_import = import;
@@ -387,6 +388,17 @@ void VkontakteWindow::updateLabels()
             .arg(urlText).arg(i18n("VKontakte")));
 }
 
+void VkontakteWindow::selectAlbum(int aid)
+{
+    for (int i = 0; i < m_albums.size(); i ++)
+        if (m_albums.at(i)->aid() == aid)
+        {
+            m_albumsCombo->setCurrentIndex(i);
+            break;
+        }
+}
+
+
 // void VkontakteWindow::readSettings()
 // {
 //     KConfig config("kipirc");
@@ -562,10 +574,15 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
     m_albumsCombo->clear();
     m_albums = job->list();
     foreach (const Vkontakte::AlbumInfoPtr &album, m_albums)
-    {
         m_albumsCombo->addItem(KIcon("folder-image"), album->title());
+
+    if (m_albumToSelect != -1)
+    {
+        selectAlbum(m_albumToSelect);
+        m_albumToSelect = -1;
     }
     m_albumsCombo->setEnabled(true);
+
 
     if (!m_albums.empty())
         m_editAlbumButton->setEnabled(true);
@@ -647,7 +664,8 @@ void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
         return;
     }
 
-    // TODO: automatically select the newly created album in the combobox
+    // Select the newly created album in the combobox later (in "slotAlbumsUpdateDone()")
+    m_albumToSelect = job->album()->aid();
 
     startAlbumsUpdate();
     m_albumsCombo->setEnabled(false);
@@ -659,6 +677,9 @@ void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
 
 void VkontakteWindow::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
 {
+    // Select the same album again in the combobox later (in "slotAlbumsUpdateDone()")
+    m_albumToSelect = album->aid();
+
     Vkontakte::EditAlbumJob *job = new Vkontakte::EditAlbumJob(
         m_accessToken,
         album->aid(), album->title(), album->description(),
@@ -678,8 +699,6 @@ void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
         handleVkError(job);
         return;
     }
-
-    // TODO: automatically select the same album again
 
     startAlbumsUpdate();
     m_albumsCombo->setEnabled(false);
@@ -716,6 +735,9 @@ void VkontakteWindow::slotEditAlbumRequest()
 void VkontakteWindow::slotReloadAlbumsRequest()
 {
     updateControls(false);
+
+    if (m_albumsCombo->currentIndex() != -1)
+        m_albumToSelect = m_albums.at(m_albumsCombo->currentIndex())->aid();
     startAlbumsUpdate();
 }
 

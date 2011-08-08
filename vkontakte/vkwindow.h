@@ -139,6 +139,8 @@ protected:
     bool isAuthenticated();
     void startAuthentication(bool forceAuthWindow);
 
+    void selectAlbum(int aid);
+
 protected:
 
     // Plugin
@@ -176,6 +178,8 @@ protected:
 
     QString m_userFullName;
     int m_userId;
+
+    int m_albumToSelect; // album with this "aid" will be selected in slotAlbumsUpdateDone()
 };
 
 } // namespace KIPIVkontaktePlugin
