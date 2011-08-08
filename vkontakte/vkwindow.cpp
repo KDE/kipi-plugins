@@ -109,11 +109,11 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 {
     m_authenticated = false;
 
-    m_interface   = interface;
-    m_import      = import;
+    m_interface = interface;
+    m_import = import;
 
     m_mainWidget = new QWidget(this);
-    QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
+    QHBoxLayout *mainLayout = new QHBoxLayout(m_mainWidget);
 
     m_imgList  = new KIPIPlugins::ImagesList(interface, this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
@@ -122,8 +122,8 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     m_imgList->listView()->setWhatsThis(
         i18n("This is the list of images to upload to your VKontakte album."));
 
-    QWidget* settingsBox           = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    QWidget *settingsBox = new QWidget(this);
+    QVBoxLayout *settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLabel = new QLabel(settingsBox);
     m_headerLabel->setWhatsThis(i18n("This is a clickable link to open the "
@@ -154,8 +154,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
-    connect(m_changeUserButton, SIGNAL(clicked()),
-            this, SLOT(slotChangeUserClicked()));
+    connect(m_changeUserButton, SIGNAL(clicked()), this, SLOT(slotChangeUserClicked()));
 
     /*
      * Album box
@@ -242,7 +241,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     setMainWidget(m_mainWidget);
     setWindowIcon(KIcon("vkontakte"));
-    setButtons(KDialog::Help|KDialog::User1|KDialog::Close);
+    setButtons(KDialog::Help | KDialog::User1 | KDialog::Close);
     setDefaultButton(Close);
     setModal(false);
 
@@ -270,15 +269,14 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
         KAboutData::License_GPL,
         ki18n("A Kipi plugin to export image collections to "
               "VKontakte web service."),
-        ki18n( "(c) 2007-2009, Vardhman Jain\n"
-               "(c) 2008-2010, Gilles Caulier\n"
-               "(c) 2009, Luka Renko\n"
-               "(c) 2010, Roman Tsisyk\n"
-               "(c) 2011, Alexander Potashev" )
+        ki18n("(c) 2007-2009, Vardhman Jain\n"
+              "(c) 2008-2010, Gilles Caulier\n"
+              "(c) 2009, Luka Renko\n"
+              "(c) 2010, Roman Tsisyk\n"
+              "(c) 2011, Alexander Potashev")
     );
 
-    about->addAuthor(ki18n( "Alexander Potashev" ), ki18n("Author"),
-                     "aspotashev@gmail.com");
+    about->addAuthor(ki18n("Alexander Potashev"), ki18n("Author"), "aspotashev@gmail.com");
 
     disconnect(this, SIGNAL(helpClicked()), this, SLOT(slotHelp()));
 
@@ -385,7 +383,7 @@ void VkontakteWindow::updateLabels()
 
     m_loginLabel->setText(QString("<b>%1</b>").arg(loginText));
     m_headerLabel->setText(
-        QString("<b><h2><a href=\"%1\"> <font color=\"black\">%2</font> </a></h2></b>")
+        QString("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
             .arg(urlText).arg(i18n("VKontakte")));
 }
 
@@ -539,6 +537,8 @@ void VkontakteWindow::handleVkError(KJob *kjob)
 {
     KMessageBox::error(this, kjob->errorText(), i18n("Request to VKontakte failed"));
 }
+
+//------------------------------
 
 void VkontakteWindow::startAlbumsUpdate()
 {
