@@ -109,9 +109,9 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     // --------------------------------------------------------
 
     d->dateCreatedCheck       = new QCheckBox(i18n("Creation date and time"), this);
-    d->dateCreatedSubSecCheck = new QCheckBox(i18n("Creation second"), this);
+    d->dateCreatedSubSecCheck = new QCheckBox(i18n("Creation sub-second"), this);
     d->dateCreatedSel         = new KDateTimeWidget(this);
-    d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 59, 1, 0, this);
+    d->dateCreatedSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
     d->syncHOSTDateCheck      = new QCheckBox(i18n("Sync creation date hosted by %1",
                                               KGlobal::mainComponent().aboutData()->programName()),
                                               this);
@@ -135,9 +135,9 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     // --------------------------------------------------------
 
     d->dateOriginalCheck       = new QCheckBox(i18n("Original date and time"), this);
-    d->dateOriginalSubSecCheck = new QCheckBox(i18n("Original second"), this);
+    d->dateOriginalSubSecCheck = new QCheckBox(i18n("Original sub-second"), this);
     d->dateOriginalSel         = new KDateTimeWidget(this);
-    d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 59, 1, 0, this);
+    d->dateOriginalSubSecEdit  = new KIntSpinBox(0, 999, 1, 0, this);
 
     d->setTodayOriginalBtn      = new QPushButton();
     d->setTodayOriginalBtn->setIcon(SmallIcon("go-jump-today"));
@@ -154,9 +154,9 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     // --------------------------------------------------------
 
     d->dateDigitalizedCheck       = new QCheckBox(i18n("Digitization date and time"), this);
-    d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization second"), this);
+    d->dateDigitalizedSubSecCheck = new QCheckBox(i18n("Digitization sub-second"), this);
     d->dateDigitalizedSel         = new KDateTimeWidget(this);
-    d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 59, 1, 0, this);
+    d->dateDigitalizedSubSecEdit  = new KIntSpinBox(0, 9999, 1, 0, this);
 
     d->setTodayDigitalizedBtn     = new QPushButton();
     d->setTodayDigitalizedBtn->setIcon(SmallIcon("go-jump-today"));
