@@ -41,6 +41,8 @@
 #include "cpfindbinary.h"
 #include "cpcleanbinary.h"
 #include "autooptimiserbinary.h"
+#include "pto2mkbinary.h"
+#include "makebinary.h"
 
 namespace KIPIPanoramaPlugin
 {
@@ -69,6 +71,7 @@ struct Manager::ManagerPriv
     KUrl::List              inputUrls;
     KUrl                    cpFindUrl;
     KUrl                    autoOptimiseUrl;
+    KUrl                    previewUrl;
 
     bool                    hdr;
 
@@ -87,6 +90,8 @@ struct Manager::ManagerPriv
     CPFindBinary            cpFindBinary;
     CPCleanBinary           cpCleanBinary;
     AutoOptimiserBinary     autoOptimiserBinary;
+    Pto2MkBinary            pto2MkBinary;
+    MakeBinary              makeBinary;
 
     ImportWizardDlg*        wizard;
 
@@ -120,6 +125,12 @@ bool Manager::checkBinaries()
         return false;
 
     if (!d->autoOptimiserBinary.showResults())
+        return false;
+
+    if (!d->pto2MkBinary.showResults())
+        return false;
+
+    if (!d->makeBinary.showResults())
         return false;
 
     return true;
@@ -173,6 +184,16 @@ CPCleanBinary& Manager::cpCleanBinary() const
 AutoOptimiserBinary& Manager::autoOptimiserBinary() const
 {
     return d->autoOptimiserBinary;
+}
+
+void Manager::setPreviewUrl(const KUrl& url)
+{
+    d->previewUrl = url;
+}
+
+KUrl Manager::previewUrl() const
+{
+    return d->previewUrl;
 }
 
 void Manager::setIface(Interface* iface)

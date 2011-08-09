@@ -69,10 +69,11 @@ public:
     explicit ActionThread(QObject* parent);
     ~ActionThread();
 
-    void setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType filetype,
+    void setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType fileType,
                                   const KDcrawIface::RawDecodingSettings& settings);
     void preProcessFiles(const KUrl::List& urlList);
     void optimizeProject(const KUrl& ptoUrl);
+    void generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap);
     void cancel();
 
     /**
@@ -95,10 +96,13 @@ private:
     bool    startCPFind(KUrl& ptoUrl, bool celeste, QString& errors);
     bool    startCPClean(KUrl& ptoUrl, QString& errors);
     bool    startOptimization(KUrl& ptoUrl, QString& errors);
+    bool    computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const ItemUrlsMap& preProcessedUrlsMap, QString& errors);
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
     bool    isRawFile(const KUrl& url);
     bool    createPTO(bool hdr, PanoramaFileType fileType, const KIPIPanoramaPlugin::ItemUrlsMap& urlList, KUrl& ptoUrl);
+    bool    createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFileType fileType, QString& errors);
+    bool    compileMK(KUrl& mkUrl, QString& errors);
 
     QString getProcessError(KProcess* proc) const;
 

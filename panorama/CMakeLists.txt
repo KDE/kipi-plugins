@@ -23,15 +23,18 @@ ENDIF(OPENMP_FOUND AND NOT APPLE)
 SET(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/actionthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/autooptimiserbinary.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpfindbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpcleanbinary.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpfindbinary.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/manager/makebinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/manager/pto2mkbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/importwizarddlg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/intropage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/itemspage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/optimizepage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/lastpage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/optimizepage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/previewpage.cpp
    )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)

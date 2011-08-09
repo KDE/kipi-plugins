@@ -92,6 +92,9 @@ public:
     void setAutoOptimiseUrl(const KUrl& url);
     KUrl autoOptimiseUrl() const;
 
+    void setPreviewUrl(const KUrl& url);
+    KUrl previewUrl() const;
+
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings rawDecodingSettings() const;
 

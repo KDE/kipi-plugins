@@ -45,7 +45,8 @@ enum Action
 {
     NONE = 0,
     PREPROCESS,
-    OPTIMIZE
+    OPTIMIZE,
+    PREVIEW
 };
 
 struct ItemPreprocessedUrls
@@ -70,20 +71,20 @@ struct ActionData
     ActionData()
         : starting(false), success(false) {}
 
-    bool            starting;
-    bool            success;
+    bool                starting;
+    bool                success;
 
-    QString         message;
+    QString             message;
 
-    QImage          image;
+    QImage              image;
 
-    KUrl::List      inUrls;
-    KUrl::List      outUrls;
-    KUrl            ptoUrl;
+    KUrl::List          inUrls;
+    KUrl                outUrl;
+    KUrl                ptoUrl;
 
-    ItemUrlsMap     preProcessedUrlsMap;
+    ItemUrlsMap         preProcessedUrlsMap;
 
-    Action          action;
+    Action              action;
 };
 
 }  // namespace KIPIExpoBlendingPlugin

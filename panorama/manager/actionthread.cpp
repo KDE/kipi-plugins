@@ -62,7 +62,8 @@ struct ActionThread::ActionThreadPriv
 {
     ActionThreadPriv()
         : cancel(false), celeste(false), hdr(false), savePTO(false),
-          CPFindProcess(0), CPCleanProcess(0), autoOptimiseProcess(0), preprocessingTmpDir(0) {}
+          CPFindProcess(0), CPCleanProcess(0), autoOptimiseProcess(0), pto2MkProcess(0),
+          preprocessingTmpDir(0) {}
 
     struct Task
     {
@@ -71,6 +72,7 @@ struct ActionThread::ActionThreadPriv
         PanoramaFileType    fileType;
         bool                tiffOutput;
         KUrl::List          urls;
+        ItemUrlsMap         preProcessedUrlsMap;
         KUrl                ptoUrl;
         KUrl                outputUrl;
         Action              action;
@@ -91,6 +93,8 @@ struct ActionThread::ActionThreadPriv
     KProcess*                       CPFindProcess;
     KProcess*                       CPCleanProcess;
     KProcess*                       autoOptimiseProcess;
+    KProcess*                       pto2MkProcess;
+    KProcess*                       makeProcess;
 
     /**
      * A list of all running raw instances. Only access this variable via
@@ -167,6 +171,18 @@ void ActionThread::optimizeProject(const KUrl& ptoUrl)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = OPTIMIZE;
+    t->ptoUrl                   = ptoUrl;
+
+    QMutexLocker lock(&d->todo_mutex);
+    d->todo << t;
+    d->condVar.wakeAll();
+}
+
+void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap)
+{
+    ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
+    t->action                   = PREVIEW;
+    t->preProcessedUrlsMap      = preProcessedUrlsMap;
     t->ptoUrl                   = ptoUrl;
 
     QMutexLocker lock(&d->todo_mutex);
@@ -277,6 +293,30 @@ void ActionThread::run()
                     ad2.success     = result;
                     ad2.message     = errors;
                     ad2.ptoUrl      = t->ptoUrl;
+                    emit finished(ad2);
+                    break;
+                }
+
+                case PREVIEW:
+                {
+                    ActionData ad1;
+                    ad1.action                  = PREVIEW;
+                    ad1.starting                = true;
+                    ad1.ptoUrl                  = t->ptoUrl;
+                    ad1.preProcessedUrlsMap     = t->preProcessedUrlsMap;
+                    emit starting(ad1);
+
+                    QString errors;
+                    bool    result = false;
+
+                    KUrl previewUrl;
+                    result = computePanoramaPreview(ad1.ptoUrl, previewUrl, ad1.preProcessedUrlsMap, errors);
+
+                    ActionData ad2;
+                    ad2.action                  = PREVIEW;
+                    ad2.success                 = result;
+                    ad2.message                 = errors;
+                    ad2.outUrl                  = previewUrl;
                     emit finished(ad2);
                     break;
                 }
@@ -499,6 +539,142 @@ bool ActionThread::startOptimization(KUrl& ptoUrl, QString& errors)
     return true;
 }
 
+bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const ItemUrlsMap& preProcessedUrlsMap, QString& errors)
+{
+    kDebug() << "Preview Generation (" << ptoUrl.toLocalFile() << ")";
+    QFile input(ptoUrl.toLocalFile());
+    QStringList pto;
+    if (!input.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        kDebug() << "Can't read PTO File!";
+        return false;
+    }
+    else
+    {
+        QTextStream in(&input);
+        while (!in.atEnd())
+        {
+            pto.append(in.readLine());
+        }
+        input.close();
+    }
+
+    ptoUrl.setFileName("preview.pto");
+    input.setFileName(ptoUrl.toLocalFile());
+    if (!input.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+    {
+        kDebug() << "Can't create a new PTO File!";
+        return false;
+    }
+
+    QTextStream previewPtoStream(&input);
+
+    KExiv2 metaOrig(preProcessedUrlsMap.begin().value().preprocessedUrl.toLocalFile());
+    KExiv2 metaPreview(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
+    double scalingFactor = ((double) metaPreview.getImageDimensions().width()) / ((double) metaOrig.getImageDimensions().width());
+
+    foreach (QString line, pto)
+    {
+        QString tmp;
+        QStringList parameters = line.split(' ', QString::SkipEmptyParts);
+        if (line[0] == 'p')
+        {
+            tmp = "";
+            foreach (QString p, parameters)
+            {
+                if (p[0] == 'w' || p[0] == 'h')
+                {
+                    int size = ((double) (p.right(p.size() - 1)).toInt()) * scalingFactor;
+                    tmp.append(p[0]);
+                    tmp.append(QString::number(size));
+                }
+                else if (p[0] == 'n')
+                {
+                    tmp.append("n\"JPEG q90\"");
+                    break;          // n should be the last parameter (and the space before qXX introduce another parameter)
+                }
+                else
+                {
+                    tmp.append(p);
+                }
+                tmp.append(" ");
+            }
+        }
+        else if (line[0] == 'm')
+        {
+            tmp = line;
+        }
+        else if (line[0] == 'i')
+        {
+            tmp = "";
+            foreach (QString p, parameters)
+            {
+                if (p[0] == 'w')
+                {
+                    tmp.append("w");
+                    tmp.append(QString::number(metaPreview.getImageDimensions().width()));
+                }
+                else if (p[0] == 'h')
+                {
+                    tmp.append("h");
+                    tmp.append(QString::number(metaPreview.getImageDimensions().height()));
+                }
+                else if (p[0] == 'n')
+                {
+                    QString imgFileName = p.mid(2, p.size() - 3);
+                    KUrl imgUrl(KUrl(d->preprocessingTmpDir->name()), imgFileName);
+                    ItemUrlsMap::iterator it;
+                    for (it = (ItemUrlsMap::iterator) preProcessedUrlsMap.begin(); it != preProcessedUrlsMap.end() && it.value().preprocessedUrl != imgUrl; ++it);
+                    if (it == preProcessedUrlsMap.end())
+                    {
+                        input.close();
+                        kDebug() << "Unknown input File in the PTO: " << imgFileName;
+                        kDebug() << "IMG: " << imgUrl.toLocalFile();
+                        return false;
+                    }
+                    tmp.append("n\"");
+                    tmp.append(it.value().previewUrl.fileName());
+                    tmp.append("\"");
+                    break;
+                }
+                else
+                {
+                    tmp.append(p);
+                }
+                tmp.append(" ");
+            }
+        }
+        else
+        {
+            continue;
+        }
+        previewPtoStream << tmp << endl;
+    }
+
+    // Add two commented line for a JPEG output
+    previewPtoStream << "#hugin_outputImageType jpg" << endl;
+    previewPtoStream << "#hugin_outputJPEGQuality 90" << endl;
+
+    input.close();
+
+    kDebug() << "Preview PTO File created: " << ptoUrl.fileName();
+
+    KUrl mkUrl;
+    if (!createMK(ptoUrl, mkUrl, previewUrl, JPEG, errors))
+    {
+        kDebug() << "Makefile creation failed!";
+        return false;
+    }
+
+    if (!compileMK(mkUrl, errors))
+    {
+        kDebug() << "Makefile execution failed!";
+        return false;
+    }
+
+    return true;
+}
+
 bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
 {
     outUrl = d->preprocessingTmpDir->name();
@@ -516,6 +692,7 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
             KExiv2 metai(inUrl.toLocalFile());
             KExiv2 metao(outUrl.toLocalFile());
             metao.setImageOrientation(metai.getImageOrientation());
+            metao.setImageDimensions(QSize(preview.width(), preview.height()));
             metao.applyChanges();
         }
         kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
@@ -623,15 +800,7 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const ItemUrls
     // 1. Project parameters
     pto_stream << "p";
     pto_stream << " f0";                    // Rectilinear projection
-    switch (fileType)
-    {
-        case TIFF:
-            pto_stream << " n\"TIFF_m c:NONE\"";     // TIFF_m output
-            break;
-        case JPEG:
-            pto_stream << " n\"JPEG q95\"";         // JPEG output, compression 95%
-            break;
-    }
+    pto_stream << " n\"TIFF_m c:LZW\"";
     pto_stream << " R" << (hdr ? '1' : '0');// HDR output
     //pto_stream << " T\"FLOAT\"";            // 32bits color depth
     //pto_stream << " S," << X_left << "," << X_right << "," << X_top << "," << X_bottom;   // Crop values
@@ -694,7 +863,103 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const ItemUrls
         pto_stream << "v r" << j << endl;
     }
 
+    switch (fileType)
+    {
+        case TIFF:
+            pto_stream << "#hugin_outputImageType tif" << endl;
+            pto_stream << "#hugin_outputImageTypeCompression LZW" << endl;
+            break;
+        case JPEG:
+            pto_stream << "#hugin_outputImageType jpg" << endl;
+            pto_stream << "#hugin_outputJPEGQuality 95" << endl;
+            break;
+    }
+
     pto.close();
+
+    return true;
+}
+
+bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFileType fileType, QString& errors)
+{
+    QFileInfo fi(ptoUrl.toLocalFile());
+    mkUrl = d->preprocessingTmpDir->name();
+    mkUrl.setFileName(fi.completeBaseName() + QString(".mk"));
+
+    panoUrl = d->preprocessingTmpDir->name();
+    switch (fileType)
+    {
+        case JPEG:
+            panoUrl.setFileName(fi.completeBaseName() + QString(".jpg"));
+            break;
+        case TIFF:
+            panoUrl.setFileName(fi.completeBaseName() + QString(".tif"));
+            break;
+    }
+
+    d->pto2MkProcess = new KProcess();
+    d->pto2MkProcess->clearProgram();
+    d->pto2MkProcess->clearEnvironment();
+    d->pto2MkProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
+    d->pto2MkProcess->setOutputChannelMode(KProcess::MergedChannels);
+
+    QStringList args;
+    args << "pto2mk";
+    args << "-o";
+    args << mkUrl.toLocalFile();
+    args << "-p";
+    args << fi.completeBaseName();
+    args << ptoUrl.toLocalFile();
+
+    d->pto2MkProcess->setProgram(args);
+
+    kDebug() << "pto2mk command line: " << d->pto2MkProcess->program();
+
+    d->pto2MkProcess->start();
+
+    if (!d->pto2MkProcess->waitForFinished(-1) || d->pto2MkProcess->exitCode() != 0)
+    {
+        errors = getProcessError(d->pto2MkProcess);
+        delete d->pto2MkProcess;
+        d->pto2MkProcess = 0;
+        return false;
+    }
+
+    delete d->pto2MkProcess;
+    d->pto2MkProcess = 0;
+
+    return true;
+}
+
+bool ActionThread::compileMK(KUrl& mkUrl, QString& errors)
+{
+    d->makeProcess = new KProcess();
+    d->makeProcess->clearProgram();
+    d->makeProcess->clearEnvironment();
+    d->makeProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
+    d->makeProcess->setOutputChannelMode(KProcess::MergedChannels);
+
+    QStringList args;
+    args << "make";
+    args << "-f";
+    args << mkUrl.toLocalFile();
+
+    d->makeProcess->setProgram(args);
+
+    kDebug() << "make command line: " << d->makeProcess->program();
+
+    d->makeProcess->start();
+
+    if (!d->makeProcess->waitForFinished(-1) || d->makeProcess->exitCode() != 0)
+    {
+        errors = getProcessError(d->makeProcess);
+        delete d->makeProcess;
+        d->makeProcess = 0;
+        return false;
+    }
+
+    delete d->makeProcess;
+    d->makeProcess = 0;
 
     return true;
 }

@@ -45,6 +45,7 @@
 #include "itemspage.h"
 #include "preprocessingpage.h"
 #include "optimizepage.h"
+#include "previewpage.h"
 #include "lastpage.h"
 
 namespace KIPIPanoramaPlugin
@@ -58,6 +59,7 @@ struct ImportWizardDlg::ImportWizardDlgPriv
         itemsPage(0),
         preProcessingPage(0),
         optimizePage(0),
+        previewPage(0),
         lastPage(0)
     {
     }
@@ -68,6 +70,7 @@ struct ImportWizardDlg::ImportWizardDlgPriv
     ItemsPage*          itemsPage;
     PreProcessingPage*  preProcessingPage;
     OptimizePage*       optimizePage;
+    PreviewPage*        previewPage;
     LastPage*           lastPage;
 };
 
@@ -82,6 +85,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     d->itemsPage         = new ItemsPage(d->mngr, this);
     d->preProcessingPage = new PreProcessingPage(d->mngr, this);
     d->optimizePage      = new OptimizePage(d->mngr, this);
+    d->previewPage       = new PreviewPage(d->mngr, this);
     d->lastPage          = new LastPage(d->mngr, this);
 
     // ---------------------------------------------------------------
@@ -110,6 +114,12 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 
     connect(d->optimizePage, SIGNAL(signalOptimized(KUrl)),
             this, SLOT(slotOptimized(KUrl)));
+
+    connect(d->previewPage, SIGNAL(signalPreviewGenerated(KUrl)),
+            this, SLOT(slotPreviewProcessed(KUrl)));
+
+    connect(d->previewPage, SIGNAL(signalPreviewGenerating()),
+            this, SLOT(slotPreviewProcessing()));
 }
 
 ImportWizardDlg::~ImportWizardDlg()
@@ -140,7 +150,7 @@ void ImportWizardDlg::next()
     }
     else if (currentPage() == d->preProcessingPage->page())
     {
-        // Do not give acces to Next button during pre-processing.
+        // Do not give access to Next button during pre-processing.
         setValid(d->preProcessingPage->page(), false);
         d->preProcessingPage->process();
         // Next is handled with signals/slots
@@ -148,7 +158,7 @@ void ImportWizardDlg::next()
     }
     else if (currentPage() == d->optimizePage->page())
     {
-        // Do not give acces to Next button during optimization.
+        // Do not give access to Next button during optimization.
         setValid(d->optimizePage->page(), false);
         d->optimizePage->process();
         // Next is handled with signals/slots
@@ -202,9 +212,24 @@ void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
     }
     else
     {
+        d->mngr->setAutoOptimiseUrl(ptoUrl);
+
         // Optimization finished.
         KAssistantDialog::next();
+
+        // Start the Preview generation
+        d->previewPage->computePreview();
     }
+}
+
+void ImportWizardDlg::slotPreviewProcessed(const KUrl& url)
+{
+    setValid(d->previewPage->page(), !url.equals(KUrl()));
+}
+
+void ImportWizardDlg::slotPreviewProcessing()
+{
+    setValid(d->previewPage->page(), false);
 }
 
 void ImportWizardDlg::slotItemsPageIsValid(bool valid)
