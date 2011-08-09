@@ -100,6 +100,16 @@
 #include "vkalbumdialog.h"
 #include "vkwindow.h"
 
+#define SLOT_JOB_DONE_INIT(JobClass) \
+    JobClass *job = dynamic_cast<JobClass *>(kjob); \
+    Q_ASSERT(job);          \
+    m_jobs.removeAll(job);  \
+    if (job->error())       \
+    {                       \
+        handleVkError(job); \
+        return;             \
+    }
+
 namespace KIPIVkontaktePlugin
 {
 
@@ -108,12 +118,13 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     : KDialog(parent)
 {
     m_authenticated = false;
+    m_albumToSelect = -1;
 
-    m_interface   = interface;
-    m_import      = import;
+    m_interface = interface;
+    m_import = import;
 
     m_mainWidget = new QWidget(this);
-    QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
+    QHBoxLayout *mainLayout = new QHBoxLayout(m_mainWidget);
 
     m_imgList  = new KIPIPlugins::ImagesList(interface, this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
@@ -122,8 +133,8 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     m_imgList->listView()->setWhatsThis(
         i18n("This is the list of images to upload to your VKontakte album."));
 
-    QWidget* settingsBox           = new QWidget(this);
-    QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
+    QWidget *settingsBox = new QWidget(this);
+    QVBoxLayout *settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLabel = new QLabel(settingsBox);
     m_headerLabel->setWhatsThis(i18n("This is a clickable link to open the "
@@ -154,8 +165,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
-    connect(m_changeUserButton, SIGNAL(clicked()),
-            this, SLOT(slotChangeUserClicked()));
+    connect(m_changeUserButton, SIGNAL(clicked()), this, SLOT(slotChangeUserClicked()));
 
     /*
      * Album box
@@ -215,7 +225,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
 //     m_checkKeepOriginal = new QCheckBox(i18n("Save in high resolution"), settingsBox); // store state in kipirc
 
-    QVBoxLayout *optionsBoxLayout = new QVBoxLayout(optionsBox);
+//     QVBoxLayout *optionsBoxLayout = new QVBoxLayout(optionsBox);
 //     optionsBoxLayout->addWidget(m_checkKeepOriginal);
 
     m_progressBar = new QProgressBar(settingsBox);
@@ -242,7 +252,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     setMainWidget(m_mainWidget);
     setWindowIcon(KIcon("vkontakte"));
-    setButtons(KDialog::Help|KDialog::User1|KDialog::Close);
+    setButtons(KDialog::Help | KDialog::User1 | KDialog::Close);
     setDefaultButton(Close);
     setModal(false);
 
@@ -270,15 +280,14 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
         KAboutData::License_GPL,
         ki18n("A Kipi plugin to export image collections to "
               "VKontakte web service."),
-        ki18n( "(c) 2007-2009, Vardhman Jain\n"
-               "(c) 2008-2010, Gilles Caulier\n"
-               "(c) 2009, Luka Renko\n"
-               "(c) 2010, Roman Tsisyk\n"
-               "(c) 2011, Alexander Potashev" )
+        ki18n("(c) 2007-2009, Vardhman Jain\n"
+              "(c) 2008-2010, Gilles Caulier\n"
+              "(c) 2009, Luka Renko\n"
+              "(c) 2010, Roman Tsisyk\n"
+              "(c) 2011, Alexander Potashev")
     );
 
-    about->addAuthor(ki18n( "Alexander Potashev" ), ki18n("Author"),
-                     "aspotashev@gmail.com");
+    about->addAuthor(ki18n("Alexander Potashev"), ki18n("Author"), "aspotashev@gmail.com");
 
     disconnect(this, SIGNAL(helpClicked()), this, SLOT(slotHelp()));
 
@@ -385,9 +394,20 @@ void VkontakteWindow::updateLabels()
 
     m_loginLabel->setText(QString("<b>%1</b>").arg(loginText));
     m_headerLabel->setText(
-        QString("<b><h2><a href=\"%1\"> <font color=\"black\">%2</font> </a></h2></b>")
+        QString("<b><h2><a href=\"%1\"><font color=\"black\">%2</font></a></h2></b>")
             .arg(urlText).arg(i18n("VKontakte")));
 }
+
+void VkontakteWindow::selectAlbum(int aid)
+{
+    for (int i = 0; i < m_albums.size(); i ++)
+        if (m_albums.at(i)->aid() == aid)
+        {
+            m_albumsCombo->setCurrentIndex(i);
+            break;
+        }
+}
+
 
 // void VkontakteWindow::readSettings()
 // {
@@ -540,6 +560,8 @@ void VkontakteWindow::handleVkError(KJob *kjob)
     KMessageBox::error(this, kjob->errorText(), i18n("Request to VKontakte failed"));
 }
 
+//------------------------------
+
 void VkontakteWindow::startAlbumsUpdate()
 {
     Vkontakte::AlbumListJob *job = new Vkontakte::AlbumListJob(m_accessToken);
@@ -550,22 +572,20 @@ void VkontakteWindow::startAlbumsUpdate()
 
 void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
 {
-    Vkontakte::AlbumListJob *job = dynamic_cast<Vkontakte::AlbumListJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::AlbumListJob)
 
     m_albumsCombo->clear();
     m_albums = job->list();
     foreach (const Vkontakte::AlbumInfoPtr &album, m_albums)
-    {
         m_albumsCombo->addItem(KIcon("folder-image"), album->title());
+
+    if (m_albumToSelect != -1)
+    {
+        selectAlbum(m_albumToSelect);
+        m_albumToSelect = -1;
     }
     m_albumsCombo->setEnabled(true);
+
 
     if (!m_albums.empty())
         m_editAlbumButton->setEnabled(true);
@@ -585,14 +605,7 @@ void VkontakteWindow::startGetFullName()
 
 void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
 {
-    Vkontakte::GetVariableJob *job = dynamic_cast<Vkontakte::GetVariableJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
 
     m_userFullName = job->variable().toString();
     updateLabels();
@@ -610,14 +623,7 @@ void VkontakteWindow::startGetUserId()
 
 void VkontakteWindow::slotGetUserIdDone(KJob *kjob)
 {
-    Vkontakte::GetVariableJob *job = dynamic_cast<Vkontakte::GetVariableJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::GetVariableJob)
 
     m_userId = job->variable().toInt();
     updateLabels();
@@ -638,16 +644,10 @@ void VkontakteWindow::startAlbumCreation(Vkontakte::AlbumInfoPtr album)
 
 void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
 {
-    Vkontakte::CreateAlbumJob *job = dynamic_cast<Vkontakte::CreateAlbumJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::CreateAlbumJob)
 
-    // TODO: automatically select the newly created album in the combobox
+    // Select the newly created album in the combobox later (in "slotAlbumsUpdateDone()")
+    m_albumToSelect = job->album()->aid();
 
     startAlbumsUpdate();
     m_albumsCombo->setEnabled(false);
@@ -659,6 +659,9 @@ void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
 
 void VkontakteWindow::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
 {
+    // Select the same album again in the combobox later (in "slotAlbumsUpdateDone()")
+    m_albumToSelect = album->aid();
+
     Vkontakte::EditAlbumJob *job = new Vkontakte::EditAlbumJob(
         m_accessToken,
         album->aid(), album->title(), album->description(),
@@ -670,16 +673,7 @@ void VkontakteWindow::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
 
 void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
 {
-    Vkontakte::EditAlbumJob *job = dynamic_cast<Vkontakte::EditAlbumJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
-
-    // TODO: automatically select the same album again
+    SLOT_JOB_DONE_INIT(Vkontakte::EditAlbumJob)
 
     startAlbumsUpdate();
     m_albumsCombo->setEnabled(false);
@@ -716,6 +710,9 @@ void VkontakteWindow::slotEditAlbumRequest()
 void VkontakteWindow::slotReloadAlbumsRequest()
 {
     updateControls(false);
+
+    if (m_albumsCombo->currentIndex() != -1)
+        m_albumToSelect = m_albums.at(m_albumsCombo->currentIndex())->aid();
     startAlbumsUpdate();
 }
 
@@ -751,14 +748,7 @@ void VkontakteWindow::slotStartTransfer()
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
 {
-    Vkontakte::UploadPhotosJob *job = dynamic_cast<Vkontakte::UploadPhotosJob *>(kjob);
-    Q_ASSERT(job);
-    m_jobs.removeAll(job);
-    if (job->error())
-    {
-        handleVkError(job);
-        return;
-    }
+    SLOT_JOB_DONE_INIT(Vkontakte::UploadPhotosJob)
 
     m_progressBar->hide();
     updateControls(true);

@@ -1,7 +1,19 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=VKontakte.ru Exporter
+Name[it]=Esportatore a VKontakte.ru
+Name[pt]=Exportação para o VKontakte.ru
+Name[pt_BR]=Exportação para o VKontakte.ru
+Name[sv]=Export till VKontakte.ru
+Name[uk]=Експорт до VKontakte.ru
+Name[x-test]=xxVKontakte.ru Exporterxx
 Comment=A tool to export images to the VKontakte.ru social network
+Comment[it]=Uno strumento per esportare immagini alla rete sociale VKontakte.ru
+Comment[pt]=Uma ferramenta para exportar imagens para a rede social VKontakte.ru
+Comment[pt_BR]=Uma ferramenta para exportar imagens para a rede social VKontakte.ru
+Comment[sv]=Ett verktyg för att exportera bilder till sociala nätverket VKontakte.ru
+Comment[uk]=Інструмент для експорту зображень до соціальної мережі VKontakte.ru
+Comment[x-test]=xxA tool to export images to the VKontakte.ru social networkxx
 Type=Service
 Icon=
 ServiceTypes=KIPI/Plugin
