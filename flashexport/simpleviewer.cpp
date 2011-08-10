@@ -71,7 +71,7 @@ class SimpleViewer::SimpleViewerPriv
 {
 public:
 
-    SimpleViewerPriv() : maxThumbSize(45), viewer("web/svcore/swf/simpleviewer.swf")
+    SimpleViewerPriv() : maxThumbSize(45), viewer("simpleviewer.swf")
     {
         configDlg    = 0;
         totalActions = 0;
@@ -112,7 +112,7 @@ SimpleViewer::SimpleViewer(KIPI::Interface* interface, QObject* parent)
 {
     d->interface = interface;
 
-    d->simpleViewerFiles.append(d->viewer);
+    d->simpleViewerFiles.append("web/svcore/swf/simpleviewer.swf");
     d->simpleViewerFiles.append("web/svcore/js/swfobject.js");
     d->hostName = KGlobal::mainComponent().aboutData()->programName();
     d->hostUrl  = KGlobal::mainComponent().aboutData()->homepage();
