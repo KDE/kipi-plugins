@@ -12,6 +12,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 141389 : Unpredictable image ordering in gallery.xml
 004 ==> 171794 : Display keywords by flash export.
 005 ==> 279515 : FlashExport's FirstRunDialog doesn't install simpleviewer's archive.
-006 ==> 
+006 ==> 279445 : Change the way progress is reported in the Geolocation Correlator.
+007 ==> 
+
 
 
