@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=VKontakte.ru Exporter
 Name[it]=Esportatore a VKontakte.ru
+Name[nl]=Exportprogramma van VKontakte.ru
 Name[pt]=Exportação para o VKontakte.ru
 Name[pt_BR]=Exportação para o VKontakte.ru
 Name[sv]=Export till VKontakte.ru
@@ -9,6 +10,7 @@ Name[uk]=Експорт до VKontakte.ru
 Name[x-test]=xxVKontakte.ru Exporterxx
 Comment=A tool to export images to the VKontakte.ru social network
 Comment[it]=Uno strumento per esportare immagini alla rete sociale VKontakte.ru
+Comment[nl]=Een hulpmiddel om afbeeldingen te exporteren naar het VKontakte.ru sociale netwerk
 Comment[pt]=Uma ferramenta para exportar imagens para a rede social VKontakte.ru
 Comment[pt_BR]=Uma ferramenta para exportar imagens para a rede social VKontakte.ru
 Comment[sv]=Ett verktyg för att exportera bilder till sociala nätverket VKontakte.ru
