@@ -64,7 +64,12 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
           d(new PreviewPagePriv(mngr))
 {
     KVBox *vbox   = new KVBox(this);
-    d->title = new QLabel(i18n("<qt><p>Panorama Preview</p></qt>"), vbox);
+    d->title = new QLabel(i18n("<qt>"
+                               "<p><h1>Panorama Preview</h1></p>"
+                               "<p>Pressing the <i>Next</i> button launches the final "
+                               "stitching process.</p>"
+                               "</qt>"),
+                          vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
@@ -101,7 +106,6 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             {
                 case(PREVIEW):
                 {
-                    d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
                     d->output = ad.message;
                     emit signalPreviewGenerated(KUrl());
                     break;
@@ -121,11 +125,8 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 {
                     d->previewUrl = ad.outUrl;
                     d->mngr->setPreviewUrl(ad.outUrl);
+                    d->previewWidget->load(ad.outUrl.toLocalFile(), true);
                     qDebug() << "Preview URL: " << ad.outUrl.toLocalFile();
-
-                    QImage image(ad.outUrl.toLocalFile());
-                    d->previewWidget->setBusy(false);
-                    d->previewWidget->setImage(image, true);
 
                     emit signalPreviewGenerated(ad.outUrl);
                     break;
@@ -142,6 +143,8 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
 void PreviewPage::computePreview()
 {
+    d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
+
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
