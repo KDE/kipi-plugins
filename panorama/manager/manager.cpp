@@ -38,11 +38,14 @@
 #include "importwizarddlg.h"
 
 #include "actionthread.h"
-#include "cpfindbinary.h"
-#include "cpcleanbinary.h"
+
 #include "autooptimiserbinary.h"
-#include "pto2mkbinary.h"
+#include "cpcleanbinary.h"
+#include "cpfindbinary.h"
+#include "enblendbinary.h"
 #include "makebinary.h"
+#include "nonabinary.h"
+#include "pto2mkbinary.h"
 
 namespace KIPIPanoramaPlugin
 {
@@ -87,11 +90,13 @@ struct Manager::ManagerPriv
 
     ActionThread*           thread;
 
-    CPFindBinary            cpFindBinary;
-    CPCleanBinary           cpCleanBinary;
     AutoOptimiserBinary     autoOptimiserBinary;
-    Pto2MkBinary            pto2MkBinary;
+    CPCleanBinary           cpCleanBinary;
+    CPFindBinary            cpFindBinary;
+    EnblendBinary           enblendBinary;
     MakeBinary              makeBinary;
+    NonaBinary              nonaBinary;
+    Pto2MkBinary            pto2MkBinary;
 
     ImportWizardDlg*        wizard;
 
@@ -118,19 +123,25 @@ Manager::~Manager()
 
 bool Manager::checkBinaries()
 {
-    if (!d->cpFindBinary.showResults())
+    if (!d->autoOptimiserBinary.showResults())
         return false;
 
     if (!d->cpCleanBinary.showResults())
         return false;
 
-    if (!d->autoOptimiserBinary.showResults())
+    if (!d->cpFindBinary.showResults())
         return false;
 
-    if (!d->pto2MkBinary.showResults())
+    if (!d->enblendBinary.showResults())
         return false;
 
     if (!d->makeBinary.showResults())
+        return false;
+
+    if (!d->nonaBinary.showResults())
+        return false;
+
+    if (!d->pto2MkBinary.showResults())
         return false;
 
     return true;

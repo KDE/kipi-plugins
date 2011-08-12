@@ -27,6 +27,8 @@ SET(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpfindbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/makebinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/manager/nonabinary.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/manager/enblendbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/pto2mkbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/importwizarddlg.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/intropage.cpp
