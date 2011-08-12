@@ -571,7 +571,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
 
     KExiv2 metaOrig(preProcessedUrlsMap.begin().value().preprocessedUrl.toLocalFile());
     KExiv2 metaPreview(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
-    double scalingFactor = ((double) metaPreview.getImageDimensions().width()) / ((double) metaOrig.getImageDimensions().width());
+    double scalingFactor = ((double) metaPreview.getPixelSize().width()) / ((double) metaOrig.getPixelSize().width());
 
     foreach (QString line, pto)
     {
@@ -612,12 +612,12 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
                 if (p[0] == 'w')
                 {
                     tmp.append("w");
-                    tmp.append(QString::number(metaPreview.getImageDimensions().width()));
+                    tmp.append(QString::number(metaPreview.getPixelSize().width()));
                 }
                 else if (p[0] == 'h')
                 {
                     tmp.append("h");
-                    tmp.append(QString::number(metaPreview.getImageDimensions().height()));
+                    tmp.append(QString::number(metaPreview.getPixelSize().height()));
                 }
                 else if (p[0] == 'n')
                 {
@@ -814,7 +814,7 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const ItemUrls
     {
         KExiv2 meta;
         meta.load(url.preprocessedUrl.toLocalFile());
-        QSize size = meta.getImageDimensions();
+        QSize size = meta.getPixelSize();
 
         pto_stream << "i";
         pto_stream << " f0";                    // Lens projection type (rectilinear)
