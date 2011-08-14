@@ -76,6 +76,7 @@ private Q_SLOTS:
     void slotOptimized(const KUrl&);
     void slotPreviewProcessing();
     void slotPreviewProcessed(const KUrl&);
+    void slotStitchingFinished();
     void slotHelp();
 
 private:

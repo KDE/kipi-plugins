@@ -125,8 +125,8 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
 
     resetTitle();
 
-    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-preprocessing.png");
-    setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
+    //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-preprocessing.png");
+    //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
@@ -146,25 +146,6 @@ PreProcessingPage::~PreProcessingPage()
     config.sync();
 
     delete d;
-}
-
-void PreProcessingPage::resetTitle()
-{
-    d->title->setText(i18n("<qt>"
-                           "<p>Now, we will pre-process images before stitching them.</p>"
-                           "<p>Pre-processing operations include Raw demosaicing. Raw images will be converted "
-                           "to 16-bit sRGB images with auto-gamma.</p>"
-                           "<p>Pre-processing also include a calculation of some control points to match "
-                           "overlaps between images. For that purpose, the <b>%1</b> program from the "
-                           "<a href='%2'>%3</a> project will be used.</p>"
-                           "<p>Output panorama file type is selected here.</p>"
-                           "<p>Press \"Next\" to start pre-processing.</p>"
-                           "</qt>",
-                           QString(d->mngr->cpFindBinary().path()),
-                           d->mngr->cpFindBinary().url().url(),
-                           d->mngr->cpFindBinary().projectName()));
-    d->detailsBtn->hide();
-    d->celesteCheckBox->show();
 }
 
 void PreProcessingPage::process()
@@ -200,9 +181,14 @@ void PreProcessingPage::cancel()
     resetTitle();
 }
 
+void PreProcessingPage::resetPage()
+{
+    resetTitle();
+}
+
 void PreProcessingPage::slotProgressTimerDone()
 {
-    //d->progressLabel->setPixmap(QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22)));
+    d->progressLabel->setPixmap(QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22)));
 
     d->progressCount++;
     if (d->progressCount == 8)
@@ -272,6 +258,25 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
         }
     }
+}
+
+void PreProcessingPage::resetTitle()
+{
+    d->title->setText(i18n("<qt>"
+                           "<p>Now, we will pre-process images before stitching them.</p>"
+                           "<p>Pre-processing operations include Raw demosaicing. Raw images will be converted "
+                           "to 16-bit sRGB images with auto-gamma.</p>"
+                           "<p>Pre-processing also include a calculation of some control points to match "
+                           "overlaps between images. For that purpose, the <b>%1</b> program from the "
+                           "<a href='%2'>%3</a> project will be used.</p>"
+                           "<p>Output panorama file type is selected here.</p>"
+                           "<p>Press \"Next\" to start pre-processing.</p>"
+                           "</qt>",
+                           QString(d->mngr->cpFindBinary().path()),
+                           d->mngr->cpFindBinary().url().url(),
+                           d->mngr->cpFindBinary().projectName()));
+    d->detailsBtn->hide();
+    d->celesteCheckBox->show();
 }
 
 }   // namespace KIPIPanoramaPlugin

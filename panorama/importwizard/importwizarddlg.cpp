@@ -41,6 +41,7 @@
 #include "manager.h"
 #include "actionthread.h"
 #include "aboutdata.h"
+
 #include "intropage.h"
 #include "itemspage.h"
 #include "preprocessingpage.h"
@@ -120,16 +121,14 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 
     connect(d->previewPage, SIGNAL(signalPreviewGenerating()),
             this, SLOT(slotPreviewProcessing()));
+
+    connect(d->previewPage, SIGNAL(signalStitchingFinished()),
+            this, SLOT(slotStitchingFinished()));
 }
 
 ImportWizardDlg::~ImportWizardDlg()
 {
     delete d;
-}
-
-void ImportWizardDlg::slotHelp()
-{
-    KToolInvocation::invokeHelp("panorama", "kipi-plugins");
 }
 
 Manager* ImportWizardDlg::manager() const
@@ -164,6 +163,12 @@ void ImportWizardDlg::next()
         // Next is handled with signals/slots
         return;
     }
+    else if (currentPage() == d->previewPage->page())
+    {
+        setValid(d->previewPage->page(), false);
+        d->previewPage->startStitching();
+        return;
+    }
 
     KAssistantDialog::next();
 }
@@ -173,19 +178,33 @@ void ImportWizardDlg::back()
     if (currentPage() == d->preProcessingPage->page())
     {
         d->preProcessingPage->cancel();
-        KAssistantDialog::back();
         setValid(d->preProcessingPage->page(), true);
-        return;
     }
     else if (currentPage() == d->optimizePage->page())
     {
         d->optimizePage->cancel();
-        KAssistantDialog::back();
         setValid(d->optimizePage->page(), true);
-        return;
+
+        d->preProcessingPage->resetPage();
+    }
+    else if (currentPage() == d->previewPage->page())
+    {
+        d->previewPage->cancel();
+        setValid(d->previewPage->page(), true);
+
+        d->optimizePage->resetPage();
+    }
+    else if (currentPage() == d->lastPage->page())
+    {
+        d->previewPage->resetPage();
     }
 
     KAssistantDialog::back();
+}
+
+void ImportWizardDlg::slotItemsPageIsValid(bool valid)
+{
+    setValid(d->itemsPage->page(), valid);
 }
 
 void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
@@ -199,6 +218,7 @@ void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
     {
         // pre-processing Done.
         d->mngr->setPreProcessedMap(map);
+        setValid(d->preProcessingPage->page(), true);
         KAssistantDialog::next();
     }
 }
@@ -215,6 +235,7 @@ void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
         d->mngr->setAutoOptimiseUrl(ptoUrl);
 
         // Optimization finished.
+        setValid(d->optimizePage->page(), true);
         KAssistantDialog::next();
 
         // Start the Preview generation
@@ -222,19 +243,25 @@ void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
     }
 }
 
-void ImportWizardDlg::slotPreviewProcessed(const KUrl& url)
-{
-    setValid(d->previewPage->page(), !url.equals(KUrl()));
-}
-
 void ImportWizardDlg::slotPreviewProcessing()
 {
     setValid(d->previewPage->page(), false);
 }
 
-void ImportWizardDlg::slotItemsPageIsValid(bool valid)
+void ImportWizardDlg::slotPreviewProcessed(const KUrl& url)
 {
-    setValid(d->itemsPage->page(), valid);
+    setValid(d->previewPage->page(), !url.equals(KUrl()));
+}
+
+void ImportWizardDlg::slotStitchingFinished()
+{
+    setValid(d->previewPage->page(), true);
+    KAssistantDialog::next();
+}
+
+void ImportWizardDlg::slotHelp()
+{
+    KToolInvocation::invokeHelp("panorama", "kipi-plugins");
 }
 
 } // namespace KIPIPanoramaPlugin

@@ -46,7 +46,9 @@ enum Action
     NONE = 0,
     PREPROCESS,
     OPTIMIZE,
-    PREVIEW
+    PREVIEW,
+    STITCH,
+    NONAFILE
 };
 
 struct ItemPreprocessedUrls
@@ -81,6 +83,8 @@ struct ActionData
     KUrl::List          inUrls;
     KUrl                outUrl;
     KUrl                ptoUrl;
+
+    int                 id;
 
     ItemUrlsMap         preProcessedUrlsMap;
 

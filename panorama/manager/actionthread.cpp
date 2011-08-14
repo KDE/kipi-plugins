@@ -69,11 +69,14 @@ struct ActionThread::ActionThreadPriv
     {
         bool                celeste;
         bool                hdr;
+        bool                horizon;
+        bool                projectionAndSize;
         PanoramaFileType    fileType;
         bool                tiffOutput;
         KUrl::List          urls;
         ItemUrlsMap         preProcessedUrlsMap;
         KUrl                ptoUrl;
+        KUrl                mkUrl;
         KUrl                outputUrl;
         Action              action;
         RawDecodingSettings rawDecodingSettings;
@@ -167,11 +170,13 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList)
     d->condVar.wakeAll();
 }
 
-void ActionThread::optimizeProject(const KUrl& ptoUrl)
+void ActionThread::optimizeProject(const KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = OPTIMIZE;
     t->ptoUrl                   = ptoUrl;
+    t->horizon                  = levelHorizon;
+    t->projectionAndSize        = optimizeProjectionAndSize;
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
@@ -184,6 +189,30 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap
     t->action                   = PREVIEW;
     t->preProcessedUrlsMap      = preProcessedUrlsMap;
     t->ptoUrl                   = ptoUrl;
+
+    QMutexLocker lock(&d->todo_mutex);
+    d->todo << t;
+    d->condVar.wakeAll();
+}
+
+void ActionThread::compileProject(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
+                                  PanoramaFileType fileType, QString fileTemplate)
+{
+    ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
+    t->action                   = STITCH;
+    t->preProcessedUrlsMap      = preProcessedUrlsMap;
+    t->ptoUrl                   = ptoUrl;
+    t->fileType                 = fileType;
+    t->outputUrl                = KUrl(d->preprocessingTmpDir->name());
+    switch (fileType)
+    {
+        case JPEG:
+            t->outputUrl.setFileName(fileTemplate + ".jpg");
+            break;
+        case TIFF:
+            t->outputUrl.setFileName(fileTemplate + ".tif");
+            break;
+    }
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
@@ -286,7 +315,7 @@ void ActionThread::run()
                     QString errors;
                     bool    result = false;
 
-                    result  = startOptimization(t->ptoUrl, errors);
+                    result  = startOptimization(t->ptoUrl, t->horizon, t->projectionAndSize, errors);
 
                     ActionData ad2;
                     ad2.action      = OPTIMIZE;
@@ -317,6 +346,38 @@ void ActionThread::run()
                     ad2.success                 = result;
                     ad2.message                 = errors;
                     ad2.outUrl                  = previewUrl;
+                    emit finished(ad2);
+                    break;
+                }
+
+                case STITCH:
+                {
+                    ActionData ad1;
+                    ad1.action                  = STITCH;
+                    ad1.starting                = true;
+                    ad1.ptoUrl                  = t->ptoUrl;
+
+                    emit starting(ad1);
+
+                    QString errors;
+                    bool result = false;
+
+                    KUrl mkUrl, panoUrl;
+                    result = createMK(t->ptoUrl, mkUrl, panoUrl, t->fileType, errors);
+                    if (result)
+                    {
+                        result = compileMKStepByStep(mkUrl, t->preProcessedUrlsMap, errors);
+                        if (result)
+                        {
+                            // TODO: Copy the file to the right location
+                        }
+                    }
+
+                    ActionData ad2;
+                    ad2.action                  = STITCH;
+                    ad2.success                 = result;
+                    ad2.message                 = errors;
+                    ad2.outUrl                  = panoUrl;
                     emit finished(ad2);
                     break;
                 }
@@ -495,7 +556,7 @@ bool ActionThread::startCPClean(KUrl& ptoUrl, QString& errors)
     return true;
 }
 
-bool ActionThread::startOptimization(KUrl& ptoUrl, QString& errors)
+bool ActionThread::startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize, QString& errors)
 {
     KUrl ptoAOUrl = d->preprocessingTmpDir->name();
     ptoAOUrl.setFileName(QString("auto_op_pano.pto"));
@@ -510,7 +571,15 @@ bool ActionThread::startOptimization(KUrl& ptoUrl, QString& errors)
 
     QStringList argsAO;
     argsAO << "autooptimiser";
-    argsAO << "-alsm";
+    argsAO << "-am";
+    if (levelHorizon)
+    {
+        argsAO << "-l";
+    }
+    if (optimizeProjectionAndSize)
+    {
+        argsAO << "-s";
+    }
     argsAO << "-o";
     argsAO << ptoAOUrl.toLocalFile();
     argsAO << ptoUrl.toLocalFile();
@@ -962,6 +1031,82 @@ bool ActionThread::compileMK(KUrl& mkUrl, QString& errors)
     d->makeProcess = 0;
 
     return true;
+}
+
+bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, QString& errors)
+{
+    QFileInfo fi(mkUrl.toLocalFile());
+
+    volatile bool error = false;
+
+#pragma omp parallel for ordered
+    for (int i = 0; i < urlList.size(); ++i)
+    {
+        if (error)
+        {
+            continue;
+        }
+
+        KProcess makeProcess;
+        makeProcess.clearProgram();
+        makeProcess.clearEnvironment();
+        makeProcess.setWorkingDirectory(d->preprocessingTmpDir->name());
+        makeProcess.setOutputChannelMode(KProcess::MergedChannels);
+
+        QString mkFile = fi.completeBaseName() + (i >= 10 ? (i >= 100 ? "0" : "00") : "000") + QString::number(i) + ".tif";
+        QStringList args;
+        args << "make";
+        args << "-f";
+        args << mkUrl.toLocalFile();
+        args << mkFile;
+
+        makeProcess.setProgram(args);
+        kDebug() << "make command line: " << makeProcess.program();
+
+        ActionData ad1;
+        ad1.starting    = true;
+        ad1.action      = NONAFILE;
+        ad1.id          = i;
+#pragma omp critical
+        {
+            emit starting(ad1);
+        }
+
+        makeProcess.start();
+
+        if (!makeProcess.waitForFinished(-1) || makeProcess.exitCode() != 0)
+        {
+            error = true;
+            ActionData ad2;
+            ad2.action      = NONAFILE;
+            ad2.success     = false;
+            ad2.id          = i;
+#pragma omp critical
+            {
+                errors = getProcessError(&makeProcess);
+                ad2.message = errors;
+                emit finished(ad2);
+            }
+            continue;
+        }
+
+        ActionData ad2;
+        ad2.action          = NONAFILE;
+        ad2.success         = true;
+        ad2.id              = i;
+        ad2.outUrl          = KUrl(d->preprocessingTmpDir->name());
+        ad2.outUrl.setFileName(mkFile);
+        #pragma omp critical
+        {
+            qWarning() << "essai";
+            emit finished(ad2);
+        }
+    }
+
+    if (error)
+        return false;
+
+    return compileMK(mkUrl, errors);
 }
 
 QString ActionThread::getProcessError(KProcess* proc) const

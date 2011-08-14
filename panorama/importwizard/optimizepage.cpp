@@ -28,6 +28,7 @@
 #include <QPixmap>
 #include <QPushButton>
 #include <QTimer>
+#include <QCheckBox>
 
 // KDE includes
 
@@ -63,6 +64,9 @@ struct OptimizePage::OptimizePagePriv
 
     QLabel*      title;
 
+    QCheckBox*   horizonCheckbox;
+    QCheckBox*   projectionAndSizeCheckbox;
+
     QString      output;
 
     QPushButton* detailsBtn;
@@ -74,31 +78,39 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
     : KIPIPlugins::WizardPage(dlg, i18n("Optimization")),
       d(new OptimizePagePriv)
 {
-    d->mngr          = mngr;
-    KVBox *vbox      = new KVBox(this);
-    d->progressTimer = new QTimer(this);
-    d->title         = new QLabel(vbox);
+    d->mngr                         = mngr;
+    KVBox *vbox                     = new KVBox(this);
+    d->progressTimer                = new QTimer(this);
+    d->title                        = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
-    QLabel* space1   = new QLabel(vbox);
+    KConfig config("kipirc");
+    KConfigGroup group              = config.group(QString("Panorama Settings"));
+
+    d->horizonCheckbox              = new QCheckBox(i18n("Level Horizon"), vbox);
+    d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
+    d->projectionAndSizeCheckbox    = new QCheckBox(i18n("Automatically select the output projection and size"), vbox);
+    d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
+
+    QLabel* space1                  = new QLabel(vbox);
     vbox->setStretchFactor(space1, 2);
 
-    KHBox* hbox      = new KHBox(vbox);
-    d->detailsBtn    = new QPushButton(hbox);
+    KHBox* hbox                     = new KHBox(vbox);
+    d->detailsBtn                   = new QPushButton(hbox);
     d->detailsBtn->setText(i18n("Details..."));
     d->detailsBtn->hide();
 
-    QLabel* space2   = new QLabel(hbox);
+    QLabel* space2                  = new QLabel(hbox);
     hbox->setStretchFactor(space2, 10);
 
-    QLabel* space3   = new QLabel(vbox);
+    QLabel* space3                  = new QLabel(vbox);
     vbox->setStretchFactor(space3, 2);
 
-    d->progressLabel = new QLabel(vbox);
+    d->progressLabel                = new QLabel(vbox);
     d->progressLabel->setAlignment(Qt::AlignCenter);
 
-    QLabel* space4   = new QLabel(vbox);
+    QLabel* space4                  = new QLabel(vbox);
     vbox->setStretchFactor(space4, 10);
 
     vbox->setSpacing(KDialog::spacingHint());
@@ -123,22 +135,13 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
 
 OptimizePage::~OptimizePage()
 {
-    delete d;
-}
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("Panorama Settings"));
+    group.writeEntry("Horizon", d->horizonCheckbox->isChecked());
+    group.writeEntry("Output Projection And Size", d->projectionAndSizeCheckbox->isChecked());
+    config.sync();
 
-void OptimizePage::resetTitle()
-{
-    d->title->setText(i18n("<qt>"
-    "<p><h1><b>Images Pre-Processing is Done</b></h1></p>"
-    "<p>The optimization step according to your will is ready to be performed.</p>"
-    "<p>To perform this operation, the <b>%1</b> program from the "
-    "<a href='%2'>%3</a> project will be used.</p>"
-    "<p>Press the \"Next\" button to run the optimization.</p>"
-    "</qt>",
-    QString(d->mngr->autoOptimiserBinary().path()),
-            d->mngr->autoOptimiserBinary().url().url(),
-            d->mngr->autoOptimiserBinary().projectName()));
-    d->detailsBtn->hide();
+    delete d;
 }
 
 void OptimizePage::process()
@@ -147,13 +150,16 @@ void OptimizePage::process()
     "<p>Optimization is under progress, please wait.</p>"
     "<p>This can take a while...</p>"
     "</qt>"));
-
+    d->horizonCheckbox->hide();
+    d->projectionAndSizeCheckbox->hide();
     d->progressTimer->start(300);
 
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-    d->mngr->thread()->optimizeProject(d->mngr->cpFindUrl());
+    d->mngr->thread()->optimizeProject(d->mngr->cpFindUrl(),
+                                       d->horizonCheckbox->isChecked(),
+                                       d->projectionAndSizeCheckbox->isChecked());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
@@ -166,6 +172,11 @@ void OptimizePage::cancel()
     d->mngr->thread()->cancel();
     d->progressTimer->stop();
     d->progressLabel->clear();
+    resetTitle();
+}
+
+void OptimizePage::resetPage()
+{
     resetTitle();
 }
 
@@ -197,6 +208,8 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     "<p>Press \"Details\" to show processing messages.</p>"
                     "</qt>"));
                     d->progressTimer->stop();
+                    d->horizonCheckbox->hide();
+                    d->projectionAndSizeCheckbox->hide();
                     d->detailsBtn->show();
                     d->progressLabel->clear();
                     d->output = ad.message;
@@ -239,6 +252,25 @@ void OptimizePage::slotShowDetails()
     i18n("Pre-Processing Messages"),
          dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("panorama"));
     dlg.exec();
+}
+
+void OptimizePage::resetTitle()
+{
+    d->title->setText(i18n("<qt>"
+                           "<p><h1><b>Images Pre-Processing is Done</b></h1></p>"
+                           "<p>The optimization step according to your will is ready to be performed.</p>"
+                           "<p>This step can include an automatic leveling of the horizon, and also "
+                           "an automatic projection selection and size</p>"
+                           "<p>To perform this operation, the <b>%1</b> program from the "
+                           "<a href='%2'>%3</a> project will be used.</p>"
+                           "<p>Press the \"Next\" button to run the optimization.</p>"
+                           "</qt>",
+                           QString(d->mngr->autoOptimiserBinary().path()),
+                           d->mngr->autoOptimiserBinary().url().url(),
+                           d->mngr->autoOptimiserBinary().projectName()));
+    d->detailsBtn->hide();
+    d->horizonCheckbox->show();
+    d->projectionAndSizeCheckbox->show();
 }
 
 }   // namespace KIPIPanoramaPlugin

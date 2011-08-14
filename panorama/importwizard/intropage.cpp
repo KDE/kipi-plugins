@@ -77,7 +77,7 @@ IntroPage::IntroPage(Manager *mngr, KAssistantDialog* dlg)
 
     QLabel* options = new QLabel(vbox);
     options->setWordWrap(true);
-    options->setText(i18n("<qt><p>Panorama Options: </p></qt>"));
+    options->setText(i18n("<qt><p>Panorama Settings: </p></qt>"));
 
     d->hdrCheckBox      = new QCheckBox(i18n("HDR Output"), vbox);
 

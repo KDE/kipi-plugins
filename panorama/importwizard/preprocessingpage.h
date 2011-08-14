@@ -55,6 +55,7 @@ public:
 
     void process();
     void cancel();
+    void resetPage();
 
 Q_SIGNALS:
 

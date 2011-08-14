@@ -48,7 +48,6 @@ void MakeBinary::checkSystem()
     QProcess process;
     process.start(path(), QStringList() << "-v");
     m_available       = process.waitForFinished();
-    qDebug() << "Available: " << m_available;
 
     QString headerStarts("GNU Make ");
 

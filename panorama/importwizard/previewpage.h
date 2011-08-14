@@ -41,12 +41,17 @@ public:
 
     PreviewPage(Manager* mngr, KAssistantDialog* dlg);
     ~PreviewPage();
+
+    void cancel();
     void computePreview();
+    void startStitching();
+    void resetPage();
 
 Q_SIGNALS:
 
     void signalPreviewGenerating();
     void signalPreviewGenerated(const KUrl&);
+    void signalStitchingFinished();
 
 private Q_SLOTS:
 
