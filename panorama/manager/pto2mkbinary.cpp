@@ -83,7 +83,7 @@ QString Pto2MkBinary::path() const
 
 QString Pto2MkBinary::minimalVersion() const
 {
-    return QString("2011.0");
+    return QString("2010.4");
 }
 
 }  // namespace KIPIPanoramaPlugin

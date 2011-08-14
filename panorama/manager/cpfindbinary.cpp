@@ -83,7 +83,7 @@ QString CPFindBinary::path() const
 
 QString CPFindBinary::minimalVersion() const
 {
-    return QString("2011.0");
+    return QString("2010.4");
 }
 
 }  // namespace KIPIPanoramaPlugin
