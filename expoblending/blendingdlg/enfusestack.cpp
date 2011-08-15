@@ -39,6 +39,7 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kio/previewjob.h>
+#include <kpixmapsequence.h>
 
 // LibKIPI includes
 
@@ -146,7 +147,7 @@ public:
 
     EnfuseStackListPriv()
     {
-        progressPix   = SmallIcon("process-working", 22);
+        progressPix(KPixmapSequence("process-working", KIconLoader::SizeSmallMedium));
         progressCount = 0;
         progressTimer = 0;
         processItem   = 0;
@@ -157,8 +158,8 @@ public:
     QString                          templateFileName;
 
     int                              progressCount;
-    QPixmap                          progressPix;
     QTimer*                          progressTimer;
+    KPixmapSequence                  progressPix;
     EnfuseStackItem*                 processItem;
 };
 
@@ -317,9 +318,7 @@ void EnfuseStackList::slotItemClicked(QTreeWidgetItem* item)
 
 void EnfuseStackList::slotProgressTimerDone()
 {
-    QPixmap pix(d->progressPix.copy(0, d->progressCount*22, 22, 22));
-    d->processItem->setProgressAnimation(pix);
-
+    d->processItem->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
     d->progressCount++;
     if (d->progressCount == 8)
         d->progressCount = 0;

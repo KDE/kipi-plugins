@@ -41,6 +41,7 @@
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kconfig.h>
+#include <kpixmapsequence.h>
 
 // LibKIPI includes
 
@@ -64,7 +65,7 @@ public:
 
     PreProcessingPagePriv()
     {
-        progressPix   = SmallIcon("process-working", 22);
+        progressPix(KPixmapSequence("process-working", KIconLoader::SizeSmallMedium));
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0,
@@ -73,20 +74,21 @@ public:
         detailsBtn    = 0;
     }
 
-    int          progressCount;
-    QLabel*      progressLabel;
-    QPixmap      progressPix;
-    QTimer*      progressTimer;
+    int             progressCount;
+    QLabel*         progressLabel;
+    QTimer*         progressTimer;
 
-    QLabel*      title;
+    QLabel*         title;
 
-    QCheckBox*   alignCheckBox;
+    QCheckBox*      alignCheckBox;
 
-    QString      output;
+    QString         output;
 
-    QPushButton* detailsBtn;
+    QPushButton*    detailsBtn;
 
-    Manager*     mngr;
+    KPixmapSequence progressPix;
+
+    Manager*        mngr;
 };
 
 PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
@@ -201,7 +203,7 @@ void PreProcessingPage::cancel()
 
 void PreProcessingPage::slotProgressTimerDone()
 {
-    d->progressLabel->setPixmap(QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22)));
+    d->progressLabel->setPixmap(d->progressPix.frameAt(d->progressCount));
 
     d->progressCount++;
     if (d->progressCount == 8)
