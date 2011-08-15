@@ -73,6 +73,7 @@ struct ActionThread::ActionThreadPriv
         bool                projectionAndSize;
         PanoramaFileType    fileType;
         bool                tiffOutput;
+        bool                savePTO;
         KUrl::List          urls;
         ItemUrlsMap         preProcessedUrlsMap;
         KUrl                ptoUrl;
@@ -196,14 +197,15 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap
 }
 
 void ActionThread::compileProject(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
-                                  PanoramaFileType fileType, QString fileTemplate)
+                                  PanoramaFileType fileType, QString fileTemplate, bool savePTO)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = STITCH;
     t->preProcessedUrlsMap      = preProcessedUrlsMap;
     t->ptoUrl                   = ptoUrl;
+    t->savePTO                  = savePTO;
     t->fileType                 = fileType;
-    t->outputUrl                = KUrl(d->preprocessingTmpDir->name());
+    t->outputUrl                = KUrl(preProcessedUrlsMap.begin().key());
     switch (fileType)
     {
         case JPEG:
@@ -369,7 +371,7 @@ void ActionThread::run()
                         result = compileMKStepByStep(mkUrl, t->preProcessedUrlsMap, errors);
                         if (result)
                         {
-                            // TODO: Copy the file to the right location
+                            result = copyFiles(panoUrl, t->outputUrl, t->ptoUrl, t->savePTO, errors);
                         }
                     }
 
@@ -868,7 +870,7 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const ItemUrls
 
     // 1. Project parameters
     pto_stream << "p";
-    pto_stream << " f0";                    // Rectilinear projection
+    pto_stream << " f1";                    // Cylindrical projection
     pto_stream << " n\"TIFF_m c:LZW\"";
     pto_stream << " R" << (hdr ? '1' : '0');// HDR output
     //pto_stream << " T\"FLOAT\"";            // 32bits color depth
@@ -1107,6 +1109,63 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
         return false;
 
     return compileMK(mkUrl, errors);
+}
+
+bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, const KUrl& ptoUrl, bool savePTO, QString& errors)
+{
+    QFile panoFile(panoUrl.toLocalFile());
+    QFile finalPanoFile(finalPanoUrl.toLocalFile());
+
+    QFileInfo fi(finalPanoUrl.toLocalFile());
+    KUrl finalPTOUrl(finalPanoUrl);
+    finalPTOUrl.setFileName(fi.completeBaseName() + ".pto");
+    QFile ptoFile(ptoUrl.toLocalFile());
+    QFile finalPTOFile(finalPTOUrl.toLocalFile());
+
+    if (!panoFile.exists())
+    {
+        errors = i18n("Temporary panorama file does not exists!!");
+        kDebug() << "Temporary panorama file does not exists: " + panoUrl.toLocalFile();
+        return false;
+    }
+    if (finalPanoFile.exists())
+    {
+        errors = i18n("A file named ") + QString(finalPanoUrl.fileName()) + i18n(" already exists!!");
+        kDebug() << "Final panorama file already exists: " + finalPanoUrl.toLocalFile();
+        return false;
+    }
+    if (savePTO && !ptoFile.exists())
+    {
+        errors = i18n("Temporary project file does not exists!!");
+        kDebug() << "Temporary project file does not exists: " + ptoUrl.toLocalFile();
+        return false;
+    }
+    if (savePTO && finalPTOFile.exists())
+    {
+        errors = i18n("A file named ") + finalPTOUrl.fileName() + i18n(" already exists!!");
+        kDebug() << "Final project file already exists: " + finalPTOUrl.toLocalFile();
+        return false;
+    }
+
+    kDebug() << "Copying panorama file...";
+    if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
+    {
+        errors = i18n("Cannot move panorama from ") + panoUrl.toLocalFile() + i18n(" to ") + finalPanoUrl.toLocalFile() + i18n("!!");
+        kDebug() << "Cannot move panorama: QFile errror = " + panoFile.error();
+        return false;
+    }
+
+    if (savePTO)
+    {
+        kDebug() << "Copying project file...";
+        if (!ptoFile.copy(finalPTOUrl.toLocalFile()))
+        {
+            errors = i18n("Cannot move project file from ") + panoUrl.toLocalFile() + i18n(" to ") + finalPanoUrl.toLocalFile() + i18n("!!");
+            return false;
+        }
+    }
+
+    return true;
 }
 
 QString ActionThread::getProcessError(KProcess* proc) const

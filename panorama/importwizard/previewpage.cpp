@@ -27,6 +27,7 @@
 #include <QLabel>
 #include <QGroupBox>
 #include <QVBoxLayout>
+#include <QCheckBox>
 
 // KDE includes
 
@@ -52,7 +53,8 @@ namespace KIPIPanoramaPlugin
 struct PreviewPage::PreviewPagePriv
 {
     PreviewPagePriv(Manager *m)
-        : title(0), previewWidget(0), progressDlg(0), saveSettingsGroupBox(0), fileTemplateKLineEdit(0), mngr(m)
+        : title(0), previewWidget(0), progressDlg(0), saveSettingsGroupBox(0),
+          fileTemplateKLineEdit(0), savePtoCheckBox(0), mngr(m)
     {}
 
     QLabel*                 title;
@@ -62,6 +64,7 @@ struct PreviewPage::PreviewPagePriv
     int                     curProgress, totalProgress;
     QGroupBox*              saveSettingsGroupBox;
     KLineEdit*              fileTemplateKLineEdit;
+    QCheckBox*              savePtoCheckBox;
 
     QString                 output;
 
@@ -72,31 +75,37 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
         : KIPIPlugins::WizardPage(dlg, i18n("Preview")),
           d(new PreviewPagePriv(mngr))
 {
-    KVBox *vbox             = new KVBox(this);
-    d->title                = new QLabel(i18n("<qt>"
-                                              "<p><h1>Panorama Preview</h1></p>"
-                                              "<p>Pressing the <i>Next</i> button launches the final "
-                                              "stitching process.</p>"
-                                              "</qt>"),
-                                         vbox);
+    KConfig config("kipirc");
+    KConfigGroup group              = config.group(QString("Panorama Settings"));
+
+    KVBox *vbox                 = new KVBox(this);
+    d->title                    = new QLabel(i18n("<qt>"
+                                                  "<p><h1>Panorama Preview</h1></p>"
+                                                  "<p>Pressing the <i>Next</i> button launches the final "
+                                                  "stitching process.</p>"
+                                                  "</qt>"),
+                                             vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
-    d->previewWidget        = new PreviewManager(vbox);
+    d->previewWidget            = new PreviewManager(vbox);
     d->previewWidget->setButtonText(i18n("Details..."));
     d->previewWidget->show();
 
-    QLabel* space           = new QLabel(vbox);
+    QLabel* space               = new QLabel(vbox);
 
-    QVBoxLayout *formatVBox = new QVBoxLayout();
-    d->saveSettingsGroupBox = new QGroupBox(i18n("Save Settings"), vbox);
+    QVBoxLayout *formatVBox     = new QVBoxLayout();
+    d->saveSettingsGroupBox     = new QGroupBox(i18n("Save Settings"), vbox);
     d->saveSettingsGroupBox->setLayout(formatVBox);
     formatVBox->addStretch(1);
 
-    QLabel *fileTemplateLabel = new QLabel(i18n("File Name Template: "), d->saveSettingsGroupBox);
+    QLabel *fileTemplateLabel   = new QLabel(i18n("File Name Template: "), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
-    d->fileTemplateKLineEdit = new KLineEdit(d->saveSettingsGroupBox);
+    d->fileTemplateKLineEdit    = new KLineEdit(d->saveSettingsGroupBox);
     formatVBox->addWidget(d->fileTemplateKLineEdit);
+    d->savePtoCheckBox          = new QCheckBox(i18n("Save Project File"), d->saveSettingsGroupBox);
+    d->savePtoCheckBox->setChecked(group.readEntry("Save PTO", false));
+    formatVBox->addWidget(d->savePtoCheckBox);
 
     vbox->setStretchFactor(space, 2);
     vbox->setSpacing(KDialog::spacingHint());
@@ -113,6 +122,11 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
 
 PreviewPage::~PreviewPage()
 {
+    KConfig config("kipirc");
+    KConfigGroup group = config.group(QString("Panorama Settings"));
+    group.writeEntry("Save PTO", d->savePtoCheckBox->isChecked());
+    config.sync();
+
     if (d->progressDlg)
         delete d->progressDlg;
     delete d;
@@ -152,7 +166,8 @@ void PreviewPage::startStitching()
     d->mngr->thread()->compileProject(d->mngr->autoOptimiseUrl(),
                                       d->mngr->preProcessedMap(),
                                       d->mngr->format(),
-                                      d->fileTemplateKLineEdit->text());
+                                      d->fileTemplateKLineEdit->text(),
+                                      d->savePtoCheckBox->isChecked());
 }
 
 void PreviewPage::resetPage()

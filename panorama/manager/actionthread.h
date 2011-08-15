@@ -75,7 +75,7 @@ public:
     void optimizeProject(const KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize);
     void generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap);
     void compileProject(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
-                        PanoramaFileType fileType, QString fileTemplate);
+                        PanoramaFileType fileType, QString fileTemplate, bool savePTO);
     void cancel();
 
     /**
@@ -106,6 +106,7 @@ private:
     bool    createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFileType fileType, QString& errors);
     bool    compileMK(KUrl& mkUrl, QString& errors);
     bool    compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, QString& errors);
+    bool    copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, const KUrl& ptoUrl, bool savePTO, QString& errors);
 
     QString getProcessError(KProcess* proc) const;
 

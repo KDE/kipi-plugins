@@ -196,7 +196,9 @@ void ImportWizardDlg::back()
     }
     else if (currentPage() == d->lastPage->page())
     {
+        KAssistantDialog::back();
         d->previewPage->resetPage();
+        return;
     }
 
     KAssistantDialog::back();
