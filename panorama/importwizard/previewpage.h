@@ -51,7 +51,7 @@ Q_SIGNALS:
 
     void signalPreviewGenerating();
     void signalPreviewGenerated(const KUrl&);
-    void signalStitchingFinished();
+    void signalStitchingFinished(const KUrl&);
 
 private Q_SLOTS:
 

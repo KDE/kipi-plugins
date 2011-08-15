@@ -48,7 +48,8 @@ enum Action
     OPTIMIZE,
     PREVIEW,
     STITCH,
-    NONAFILE
+    NONAFILE,
+    COPY
 };
 
 struct ItemPreprocessedUrls

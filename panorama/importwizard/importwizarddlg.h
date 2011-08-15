@@ -70,13 +70,15 @@ private Q_SLOTS:
 
     void next();
     void back();
+    void accept();
 
     void slotItemsPageIsValid(bool);
     void slotPreProcessed(const ItemUrlsMap&);
     void slotOptimized(const KUrl&);
     void slotPreviewProcessing();
     void slotPreviewProcessed(const KUrl&);
-    void slotStitchingFinished();
+    void slotStitchingFinished(const KUrl&);
+    void slotCopyFinished();
     void slotHelp();
 
 private:

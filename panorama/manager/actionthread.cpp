@@ -197,24 +197,29 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap
 }
 
 void ActionThread::compileProject(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
-                                  PanoramaFileType fileType, QString fileTemplate, bool savePTO)
+                                  PanoramaFileType fileType)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = STITCH;
     t->preProcessedUrlsMap      = preProcessedUrlsMap;
     t->ptoUrl                   = ptoUrl;
-    t->savePTO                  = savePTO;
     t->fileType                 = fileType;
-    t->outputUrl                = KUrl(preProcessedUrlsMap.begin().key());
-    switch (fileType)
-    {
-        case JPEG:
-            t->outputUrl.setFileName(fileTemplate + ".jpg");
-            break;
-        case TIFF:
-            t->outputUrl.setFileName(fileTemplate + ".tif");
-            break;
-    }
+
+    QMutexLocker lock(&d->todo_mutex);
+    d->todo << t;
+    d->condVar.wakeAll();
+}
+
+void ActionThread::copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
+                             const ItemUrlsMap& preProcessedUrlsMap, bool savePTO)
+{
+    ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
+    t->action                   = COPY;
+    t->ptoUrl                   = ptoUrl;
+    t->urls.append(panoUrl);
+    t->preProcessedUrlsMap      = preProcessedUrlsMap;
+    t->outputUrl                = finalPanoUrl;
+    t->savePTO                  = savePTO;
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
@@ -369,10 +374,6 @@ void ActionThread::run()
                     if (result)
                     {
                         result = compileMKStepByStep(mkUrl, t->preProcessedUrlsMap, errors);
-                        if (result)
-                        {
-                            result = copyFiles(panoUrl, t->outputUrl, t->ptoUrl, t->savePTO, errors);
-                        }
                     }
 
                     ActionData ad2;
@@ -384,6 +385,35 @@ void ActionThread::run()
                     break;
                 }
 
+                case COPY:
+                {
+                    ActionData ad1;
+                    ad1.action                  = COPY;
+                    ad1.starting                = true;
+                    ad1.ptoUrl                  = t->ptoUrl;
+                    ad1.inUrls                  = t->urls;
+                    ad1.outUrl                  = t->outputUrl;
+
+                    emit starting(ad1);
+
+                    QString errors;
+                    bool result = copyFiles(t->urls[0],
+                                            t->outputUrl,
+                                            t->ptoUrl,
+                                            t->preProcessedUrlsMap,
+                                            t->savePTO,
+                                            errors);
+
+                    ActionData ad2;
+                    ad2.action                  = COPY;
+                    ad2.success                 = result;
+                    ad2.message                 = errors;
+                    ad2.ptoUrl                  = t->ptoUrl;
+                    ad2.inUrls                  = t->urls;
+                    ad2.outUrl                  = t->outputUrl;
+                    emit finished(ad2);
+                    break;
+                }
                 default:
                 {
                     qCritical() << "Unknown action specified" << endl;
@@ -824,7 +854,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
         outUrl = d->preprocessingTmpDir->name();
         QFileInfo fi(inUrl.toLocalFile());
-        outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString(".tif"));
+        outUrl.setFileName(fi.completeBaseName().replace(".", "_") + QString(".tif"));
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
             return false;
@@ -1111,7 +1141,8 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
     return compileMK(mkUrl, errors);
 }
 
-bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, const KUrl& ptoUrl, bool savePTO, QString& errors)
+bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, const KUrl& ptoUrl,
+                             const ItemUrlsMap& urlList, bool savePTO, QString& errors)
 {
     QFile panoFile(panoUrl.toLocalFile());
     QFile finalPanoFile(finalPanoUrl.toLocalFile());
@@ -1130,7 +1161,7 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
     }
     if (finalPanoFile.exists())
     {
-        errors = i18n("A file named ") + QString(finalPanoUrl.fileName()) + i18n(" already exists!!");
+        errors = i18n("A file named %1 already exists!!", finalPanoUrl.fileName());
         kDebug() << "Final panorama file already exists: " + finalPanoUrl.toLocalFile();
         return false;
     }
@@ -1142,7 +1173,7 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
     }
     if (savePTO && finalPTOFile.exists())
     {
-        errors = i18n("A file named ") + finalPTOUrl.fileName() + i18n(" already exists!!");
+        errors = i18n("A file named %1 already exists!!", finalPTOUrl.fileName());
         kDebug() << "Final project file already exists: " + finalPTOUrl.toLocalFile();
         return false;
     }
@@ -1150,7 +1181,9 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
     kDebug() << "Copying panorama file...";
     if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
     {
-        errors = i18n("Cannot move panorama from ") + panoUrl.toLocalFile() + i18n(" to ") + finalPanoUrl.toLocalFile() + i18n("!!");
+        errors = i18n("Cannot move panorama from %1 to %2!!",
+                      panoUrl.toLocalFile(),
+                      finalPanoUrl.toLocalFile());
         kDebug() << "Cannot move panorama: QFile errror = " + panoFile.error();
         return false;
     }
@@ -1160,8 +1193,28 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
         kDebug() << "Copying project file...";
         if (!ptoFile.copy(finalPTOUrl.toLocalFile()))
         {
-            errors = i18n("Cannot move project file from ") + panoUrl.toLocalFile() + i18n(" to ") + finalPanoUrl.toLocalFile() + i18n("!!");
+            errors = i18n("Cannot move project file from %1 to %2!!",
+                          panoUrl.toLocalFile(),
+                          finalPanoUrl.toLocalFile());
             return false;
+        }
+
+        kDebug() << "Copying converted RAW files...";
+        for (ItemUrlsMap::iterator i = (ItemUrlsMap::iterator) urlList.begin(); i != urlList.end(); ++i)
+        {
+            if (isRawFile(i.key()))
+            {
+                KUrl finalImgUrl(finalPanoUrl);
+                finalImgUrl.setFileName(i->preprocessedUrl.fileName());
+                QFile imgFile(i->preprocessedUrl.toLocalFile());
+                if (!imgFile.copy(finalImgUrl.toLocalFile()))
+                {
+                    errors = i18n("Cannot copy converted image file from %1 to %2!!",
+                                  i->preprocessedUrl.toLocalFile(),
+                                  finalImgUrl.toLocalFile());
+                    return false;
+                }
+            }
         }
     }
 

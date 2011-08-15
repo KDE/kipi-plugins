@@ -95,6 +95,9 @@ public:
     void setPreviewUrl(const KUrl& url);
     KUrl previewUrl() const;
 
+    void setPanoUrl(const KUrl& url);
+    KUrl panoUrl() const;
+
     void setRawDecodingSettings(const RawDecodingSettings& settings);
     RawDecodingSettings rawDecodingSettings() const;
 
