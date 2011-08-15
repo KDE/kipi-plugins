@@ -708,7 +708,28 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
         else if (line[0] == 'i')
         {
             tmp = "";
+            QStringList realParameters;
+            bool nRead = false;
             foreach (QString p, parameters)
+            {
+                if (p[0] != 'n')
+                {
+                    if (nRead)
+                    {
+                        realParameters[realParameters.size() - 1] += " " + p;
+                    }
+                    else
+                    {
+                        realParameters << p;
+                    }
+                }
+                else
+                {
+                    nRead = true;
+                    realParameters << p;
+                }
+            }
+            foreach (QString p, realParameters)
             {
                 if (p[0] == 'w')
                 {
