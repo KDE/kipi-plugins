@@ -39,6 +39,7 @@
 #include <kdialog.h>
 #include <kdebug.h>
 #include <kapplication.h>
+#include <kpixmapsequence.h>
 
 // Local includes
 
@@ -54,24 +55,25 @@ struct OptimizePage::OptimizePagePriv
 {
     OptimizePagePriv() : progressLabel(0), progressTimer(0), title(0), detailsBtn(0), mngr(0)
     {
-        progressPix = SmallIcon("process-working", 22);
+        progressPix(KPixmapSequence("process-working", KIconLoader::SizeSmallMedium));
     }
 
-    int          progressCount;
-    QLabel*      progressLabel;
-    QPixmap      progressPix;
-    QTimer*      progressTimer;
+    int             progressCount;
+    QLabel*         progressLabel;
+    QTimer*         progressTimer;
 
-    QLabel*      title;
+    QLabel*         title;
 
-    QCheckBox*   horizonCheckbox;
-    QCheckBox*   projectionAndSizeCheckbox;
+    QCheckBox*      horizonCheckbox;
+    QCheckBox*      projectionAndSizeCheckbox;
 
-    QString      output;
+    QString         output;
 
-    QPushButton* detailsBtn;
+    QPushButton*    detailsBtn;
 
-    Manager*     mngr;
+    KPixmapSequence progressPix;
+
+    Manager*        mngr;
 };
 
 OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
@@ -182,7 +184,7 @@ void OptimizePage::resetPage()
 
 void OptimizePage::slotProgressTimerDone()
 {
-    d->progressLabel->setPixmap(QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22)));
+    d->progressLabel->setPixmap(d->progressPix.frameAt(d->progressCount));
 
     d->progressCount++;
     if (d->progressCount == 8)
