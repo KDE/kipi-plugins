@@ -83,7 +83,7 @@ QString NonaBinary::path() const
 
 QString NonaBinary::minimalVersion() const
 {
-    return QString("2011.0");
+    return QString("2010.4");
 }
 
 }  // namespace KIPIPanoramaPlugin
