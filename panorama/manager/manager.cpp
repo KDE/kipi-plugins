@@ -75,6 +75,7 @@ struct Manager::ManagerPriv
     KUrl                    cpFindUrl;
     KUrl                    autoOptimiseUrl;
     KUrl                    previewUrl;
+    KUrl                    panoUrl;
 
     bool                    hdr;
 
@@ -205,6 +206,16 @@ void Manager::setPreviewUrl(const KUrl& url)
 KUrl Manager::previewUrl() const
 {
     return d->previewUrl;
+}
+
+void Manager::setPanoUrl(const KUrl& url)
+{
+    d->panoUrl = url;
+}
+
+KUrl Manager::panoUrl() const
+{
+    return d->panoUrl;
 }
 
 void Manager::setIface(Interface* iface)

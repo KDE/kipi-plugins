@@ -122,8 +122,11 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     connect(d->previewPage, SIGNAL(signalPreviewGenerating()),
             this, SLOT(slotPreviewProcessing()));
 
-    connect(d->previewPage, SIGNAL(signalStitchingFinished()),
-            this, SLOT(slotStitchingFinished()));
+    connect(d->previewPage, SIGNAL(signalStitchingFinished(KUrl)),
+            this, SLOT(slotStitchingFinished(KUrl)));
+
+    connect(d->lastPage, SIGNAL(signalCopyFinished()),
+            this, SLOT(slotCopyFinished()));
 }
 
 ImportWizardDlg::~ImportWizardDlg()
@@ -169,6 +172,12 @@ void ImportWizardDlg::next()
         d->previewPage->startStitching();
         return;
     }
+    else if (currentPage() == d->lastPage->page())
+    {
+       setValid(d->lastPage->page(), false);
+       d->lastPage->copyFiles();
+        return;
+    }
 
     KAssistantDialog::next();
 }
@@ -202,6 +211,12 @@ void ImportWizardDlg::back()
     }
 
     KAssistantDialog::back();
+}
+
+void ImportWizardDlg::accept()
+{
+    setValid(d->lastPage->page(), false);
+    d->lastPage->copyFiles();
 }
 
 void ImportWizardDlg::slotItemsPageIsValid(bool valid)
@@ -255,10 +270,20 @@ void ImportWizardDlg::slotPreviewProcessed(const KUrl& url)
     setValid(d->previewPage->page(), !url.equals(KUrl()));
 }
 
-void ImportWizardDlg::slotStitchingFinished()
+void ImportWizardDlg::slotStitchingFinished(const KUrl& url)
 {
+    if (url != KUrl())
+    {
+        d->mngr->setPanoUrl(url);
+    }
     setValid(d->previewPage->page(), true);
     KAssistantDialog::next();
+    d->lastPage->resetTitle();
+}
+
+void ImportWizardDlg::slotCopyFinished()
+{
+    QDialog::accept();
 }
 
 void ImportWizardDlg::slotHelp()

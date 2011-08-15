@@ -28,6 +28,7 @@
 // Local includes
 
 #include "wizardpage.h"
+#include "actions.h"
 
 namespace KIPIPanoramaPlugin
 {
@@ -36,10 +37,28 @@ class Manager;
 
 class LastPage : public KIPIPlugins::WizardPage
 {
+    Q_OBJECT
+
 public:
 
     LastPage(Manager* mngr, KAssistantDialog* dlg);
     ~LastPage();
+
+    void resetTitle();
+    void copyFiles();
+
+Q_SIGNALS:
+
+    void signalCopyFinished();
+
+private Q_SLOTS:
+
+    void slotAction(const KIPIPanoramaPlugin::ActionData&);
+    void slotTemplateChanged(const QString&);
+
+private:
+
+    QString panoFileName(const QString& fileTemplate);
 
 private:
 
