@@ -387,8 +387,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(batchprocessimages)
     ADD_SUBDIRECTORY(rajceexport)
     ADD_SUBDIRECTORY(kmlexport)
-
-# GsOC 2011 : under devel.
     ADD_SUBDIRECTORY(panorama)
 
     # Plugins which are optional depencies.
