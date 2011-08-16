@@ -55,7 +55,7 @@ struct OptimizePage::OptimizePagePriv
 {
     OptimizePagePriv() : progressLabel(0), progressTimer(0), title(0), detailsBtn(0), mngr(0)
     {
-        progressPix(KPixmapSequence("process-working", KIconLoader::SizeSmallMedium));
+        progressPix = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
     }
 
     int             progressCount;

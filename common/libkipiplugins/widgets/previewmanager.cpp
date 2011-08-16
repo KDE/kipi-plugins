@@ -39,6 +39,7 @@
 #include <kiconloader.h>
 #include <kvbox.h>
 #include <khbox.h>
+#include <kpixmapsequence.h>
 
 // Local includes
 
@@ -53,7 +54,7 @@ public:
 
     PreviewManagerPriv()
     {
-        progressPix   = SmallIcon("process-working", 22);
+        progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0;
@@ -64,19 +65,19 @@ public:
         button        = 0;
     }
 
-    bool         busy;
+    bool            busy;
 
-    QLabel*      textLabel;
-    QLabel*      thumbLabel;
+    QLabel*         textLabel;
+    QLabel*         thumbLabel;
 
-    QPushButton* button;
+    QPushButton*    button;
 
-    int          progressCount;
-    QPixmap      progressPix;
-    QTimer*      progressTimer;
-    QLabel*      progressLabel;
+    int             progressCount;
+    KPixmapSequence progressPix;
+    QTimer*         progressTimer;
+    QLabel*         progressLabel;
 
-    PreviewImage* preview;
+    PreviewImage*   preview;
 };
 
 PreviewManager::PreviewManager(QWidget* parent)
@@ -219,7 +220,7 @@ void PreviewManager::setBusy(bool b, const QString& text)
 
 void PreviewManager::slotProgressTimerDone()
 {
-    d->progressLabel->setPixmap(QPixmap(d->progressPix.copy(0, d->progressCount*22, 22, 22)));
+    d->progressLabel->setPixmap(d->progressPix.frameAt(d->progressCount));
     d->progressCount++;
     if (d->progressCount == 8)
         d->progressCount = 0;

@@ -35,6 +35,7 @@
 #include <klocale.h>
 #include <kseparator.h>
 #include <ksqueezedtextlabel.h>
+#include <kpixmapsequence.h>
 
 namespace KIPIPicasawebExportPlugin
 {
@@ -45,6 +46,7 @@ public:
 
     PicasawebReplaceDialogPrivate()
     {
+        progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         bCancel       = 0;
         bAdd          = 0;
         bAddAll       = 0;
@@ -53,25 +55,25 @@ public:
         iface         = 0;
         lbSrc         = 0;
         lbDest        = 0;
-        progressPix   = SmallIcon("process-working", 22);
         progressCount = 0;
         progressTimer = 0;
     }
-    KPushButton* bCancel;
-    KPushButton* bAdd;
-    KPushButton* bAddAll;
-    KPushButton* bReplace;
-    KPushButton* bReplaceAll;
-    KUrl         src;
-    KUrl         dest;
-    Interface*   iface;
-    QLabel*      lbSrc;
-    QLabel*      lbDest;
-    QByteArray   buffer;
-    QPixmap      mimePix;
-    QPixmap      progressPix;
-    int          progressCount;
-    QTimer*      progressTimer;
+
+    KPushButton*    bCancel;
+    KPushButton*    bAdd;
+    KPushButton*    bAddAll;
+    KPushButton*    bReplace;
+    KPushButton*    bReplaceAll;
+    KUrl            src;
+    KUrl            dest;
+    Interface*      iface;
+    QLabel*         lbSrc;
+    QLabel*         lbDest;
+    QByteArray      buffer;
+    QPixmap         mimePix;
+    KPixmapSequence progressPix;
+    int             progressCount;
+    QTimer*         progressTimer;
 };
 
 PicasawebReplaceDialog::PicasawebReplaceDialog(QWidget* parent, const QString& _caption,
@@ -277,8 +279,7 @@ QPixmap PicasawebReplaceDialog::setProgressAnimation(const QPixmap& thumb, const
 
 void PicasawebReplaceDialog::slotProgressTimerDone()
 {
-    QPixmap pix(d->progressPix.copy(0, d->progressCount*22, 22, 22));
-    d->lbDest->setPixmap(setProgressAnimation(d->mimePix, pix));
+    d->lbDest->setPixmap(setProgressAnimation(d->mimePix, d->progressPix.frameAt(d->progressCount)));
 
     d->progressCount++;
     if (d->progressCount == 8)

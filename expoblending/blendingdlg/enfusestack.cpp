@@ -147,7 +147,7 @@ public:
 
     EnfuseStackListPriv()
     {
-        progressPix(KPixmapSequence("process-working", KIconLoader::SizeSmallMedium));
+        progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
         progressTimer = 0;
         processItem   = 0;

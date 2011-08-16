@@ -45,6 +45,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <kio/previewjob.h>
+#include <kpixmapsequence.h>
 
 // LibKIPI includes
 
@@ -443,10 +444,10 @@ public:
         allowRAW              = true;
         controlButtonsEnabled = true;
         processItem           = 0;
-        progressPix           = SmallIcon("process-working", 22);
         progressCount         = 0;
         progressTimer         = 0;
         loadRawThumb          = 0;
+        progressPix           = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
     }
 
     bool                allowRAW;
@@ -462,7 +463,7 @@ public:
     CtrlButton*         saveButton;
 
     ImagesListViewItem* processItem;
-    QPixmap             progressPix;
+    KPixmapSequence     progressPix;
     int                 progressCount;
     QTimer*             progressTimer;
 
@@ -858,8 +859,7 @@ void ImagesList::slotProgressTimerDone()
 {
     if (d->processItem)
     {
-        QPixmap pix(d->progressPix.copy(0, d->progressCount*22, 22, 22));
-        d->processItem->setProgressAnimation(pix);
+        d->processItem->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
 
         d->progressCount++;
         if (d->progressCount == 8)

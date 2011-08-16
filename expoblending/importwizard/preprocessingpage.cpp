@@ -65,7 +65,7 @@ public:
 
     PreProcessingPagePriv()
     {
-        progressPix(KPixmapSequence("process-working", KIconLoader::SizeSmallMedium));
+        progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
         progressTimer = 0;
         progressLabel = 0,
