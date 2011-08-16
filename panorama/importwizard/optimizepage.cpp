@@ -53,9 +53,17 @@ namespace KIPIPanoramaPlugin
 
 struct OptimizePage::OptimizePagePriv
 {
-    OptimizePagePriv() : progressLabel(0), progressTimer(0), title(0), detailsBtn(0), mngr(0)
+    OptimizePagePriv()
     {
-        progressPix = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressLabel             = 0;
+        progressTimer             = 0;
+        title                     = 0;
+        detailsBtn                = 0;
+        mngr                      = 0;
+        progressCount             = 0;
+        horizonCheckbox           = 0;
+        projectionAndSizeCheckbox = 0;
+        progressPix               = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
     }
 
     int             progressCount;
