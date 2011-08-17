@@ -93,7 +93,7 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
 {
     d->mngr             = mngr;
     d->progressTimer    = new QTimer(this);
-    KVBox *vbox         = new KVBox(this);
+    KVBox* vbox         = new KVBox(this);
     d->title            = new QLabel(vbox);
     d->title->setWordWrap(true);
     d->title->setOpenExternalLinks(true);

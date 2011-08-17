@@ -58,7 +58,7 @@ struct OptimizePage::OptimizePagePriv
           horizonCheckbox(0), projectionAndSizeCheckbox(0), detailsBtn(0),
           mngr(0)
     {
-        progressPix               = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+        progressPix = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
     }
 
     int             progressCount;
@@ -84,7 +84,7 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
       d(new OptimizePagePriv)
 {
     d->mngr                         = mngr;
-    KVBox *vbox                     = new KVBox(this);
+    KVBox* vbox                     = new KVBox(this);
     d->progressTimer                = new QTimer(this);
     d->title                        = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
@@ -270,7 +270,7 @@ void OptimizePage::resetTitle()
 {
     d->title->setText(i18n("<qt>"
                            "<p><h1><b>Images Pre-Processing is Done</b></h1></p>"
-                           "<p>The optimization step according to your will is ready to be performed.</p>"
+                           "<p>The optimization step according to your settings is ready to be performed.</p>"
                            "<p>This step can include an automatic leveling of the horizon, and also "
                            "an automatic projection selection and size</p>"
                            "<p>To perform this operation, the <b>%1</b> program from the "
