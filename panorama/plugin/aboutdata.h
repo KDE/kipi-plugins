@@ -44,6 +44,10 @@ public:
          addAuthor(ki18n("Benjamin Girault"),
                    ki18n("Author"),
                    "benjamin dot girault at gmail dot com");
+
+         addAuthor(ki18n("Gilles Caulier"),
+                   ki18n("Developer"),
+                   "caulier dot gilles at gmail dot com");
     }
 
     ~PanoramaAboutData(){}

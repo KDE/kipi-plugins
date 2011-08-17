@@ -1,5 +1,5 @@
 /* ============================================================
- * 
+ *
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
@@ -113,8 +113,8 @@ IntroPage::IntroPage(Manager *mngr, KAssistantDialog* dlg)
 
     setPageWidget(vbox);
 
-    //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
-    //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
+    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-tripod.png");
+    setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->hdrCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotShowFileFormat(int)));
