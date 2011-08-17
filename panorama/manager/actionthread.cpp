@@ -1144,7 +1144,6 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
         ad2.outUrl.setFileName(mkFile);
         #pragma omp critical
         {
-            qWarning() << "essai";
             emit finished(ad2);
         }
     }
