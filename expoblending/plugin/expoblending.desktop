@@ -92,6 +92,7 @@ Name[x-test]=xxExpoBlendingxx
 Name[zh_CN]=曝光混合
 Name[zh_TW]=曝光混合
 StartupNotify=true
+Icon=expoblending
 Terminal=false
 Type=Application
 X-DBUS-ServiceName=
