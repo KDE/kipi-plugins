@@ -81,6 +81,8 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
     d->previewWidget->setButtonText(i18n("Details..."));
     d->previewWidget->show();
 
+    d->progressDlg = new BatchProgressDialog(this, QString("Stitching is under progress..."));
+
     vbox->setSpacing(KDialog::spacingHint());
     vbox->setMargin(KDialog::spacingHint());
 
@@ -122,7 +124,6 @@ void PreviewPage::computePreview()
 
 void PreviewPage::startStitching()
 {
-    d->progressDlg = new BatchProgressDialog(this, QString("Stitching is under progress..."));
     d->curProgress = 0;
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
     d->progressDlg->setTotal(d->totalProgress);

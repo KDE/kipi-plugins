@@ -359,13 +359,6 @@ void ActionThread::run()
 
                 case STITCH:
                 {
-                    ActionData ad1;
-                    ad1.action                  = STITCH;
-                    ad1.starting                = true;
-                    ad1.ptoUrl                  = t->ptoUrl;
-
-                    emit starting(ad1);
-
                     QString errors;
                     bool result = false;
 
@@ -1158,6 +1151,13 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
 
     if (error)
         return false;
+
+    ActionData ad1;
+    ad1.action                  = STITCH;
+    ad1.starting                = true;
+    ad1.ptoUrl                  = mkUrl;
+
+    emit starting(ad1);
 
     return compileMK(mkUrl, errors);
 }
