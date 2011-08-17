@@ -151,7 +151,7 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -167,7 +167,7 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
