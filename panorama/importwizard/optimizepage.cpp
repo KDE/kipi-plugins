@@ -128,8 +128,8 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
 
     resetTitle();
 
-    //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-optimization.png");
-    //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
+    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-hugin.png");
+    setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
