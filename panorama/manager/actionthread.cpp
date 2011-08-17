@@ -104,11 +104,12 @@ struct ActionThread::ActionThreadPriv
      * A list of all running raw instances. Only access this variable via
      * <code>mutex</code>.
      */
-    QList<QPointer<KDcraw> >         rawProcesses;
+    QList<QPointer<KDcraw> >        rawProcesses;
+    QList<QPointer<KProcess> >      makeProcesses;
 
-    KTempDir*                        preprocessingTmpDir;
+    KTempDir*                       preprocessingTmpDir;
 
-    RawDecodingSettings              rawDecodingSettings;
+    RawDecodingSettings             rawDecodingSettings;
 
     void cleanPreprocessingTmpDir()
     {
@@ -241,11 +242,25 @@ void ActionThread::cancel()
     if (d->autoOptimiseProcess)
         d->autoOptimiseProcess->kill();
 
+    if (d->pto2MkProcess)
+        d->pto2MkProcess->kill();
+
+    if (d->makeProcess)
+        d->makeProcess->kill();
+
     foreach (QPointer<KDcraw> rawProcess, d->rawProcesses)
     {
         if (rawProcess)
         {
             rawProcess->cancel();
+        }
+    }
+
+    foreach (KProcess* makeProcess, d->makeProcesses)
+    {
+        if (makeProcess)
+        {
+            makeProcess->kill();
         }
     }
 
@@ -438,7 +453,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     for (int i = 0; i < inUrls.size(); ++i)
     {
 
-        if (error)
+        if (d->cancel || error)
         {
             continue;
         }
@@ -1088,16 +1103,21 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
 #pragma omp parallel for ordered
     for (int i = 0; i < urlList.size(); ++i)
     {
-        if (error)
+        if (d->cancel || error)
         {
             continue;
         }
 
-        KProcess makeProcess;
-        makeProcess.clearProgram();
-        makeProcess.clearEnvironment();
-        makeProcess.setWorkingDirectory(d->preprocessingTmpDir->name());
-        makeProcess.setOutputChannelMode(KProcess::MergedChannels);
+        QPointer<KProcess> makeProcess = new KProcess;
+        makeProcess->clearProgram();
+        makeProcess->clearEnvironment();
+        makeProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
+        makeProcess->setOutputChannelMode(KProcess::MergedChannels);
+
+        {
+            QMutexLocker lock(&d->todo_mutex);
+            d->makeProcesses << makeProcess;
+        }
 
         QString mkFile = fi.completeBaseName() + (i >= 10 ? (i >= 100 ? "0" : "00") : "000") + QString::number(i) + ".tif";
         QStringList args;
@@ -1106,8 +1126,8 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
         args << mkUrl.toLocalFile();
         args << mkFile;
 
-        makeProcess.setProgram(args);
-        kDebug() << "make command line: " << makeProcess.program();
+        makeProcess->setProgram(args);
+        kDebug() << "make command line: " << makeProcess->program();
 
         ActionData ad1;
         ad1.starting    = true;
@@ -1118,10 +1138,15 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
             emit starting(ad1);
         }
 
-        makeProcess.start();
+        makeProcess->start();
 
-        if (!makeProcess.waitForFinished(-1) || makeProcess.exitCode() != 0)
+        if (!makeProcess->waitForFinished(-1) || makeProcess->exitCode() != 0)
         {
+            {
+                QMutexLocker lock(&d->todo_mutex);
+                d->makeProcesses.removeAll(makeProcess);
+            }
+
             error = true;
             ActionData ad2;
             ad2.action      = NONAFILE;
@@ -1129,11 +1154,16 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
             ad2.id          = i;
 #pragma omp critical
             {
-                errors = getProcessError(&makeProcess);
+                errors = getProcessError(makeProcess);
                 ad2.message = errors;
                 emit finished(ad2);
             }
             continue;
+        }
+
+        {
+            QMutexLocker lock(&d->todo_mutex);
+            d->makeProcesses.removeAll(makeProcess);
         }
 
         ActionData ad2;

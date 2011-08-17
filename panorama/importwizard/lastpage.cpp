@@ -130,6 +130,8 @@ void LastPage::copyFiles()
                                  d->mngr->preProcessedMap(),
                                  d->savePtoCheckBox->isChecked()
                                 );
+    if (!d->mngr->thread()->isRunning())
+        d->mngr->thread()->start();
 }
 
 void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)

@@ -49,12 +49,13 @@ namespace KIPIPanoramaPlugin
 struct PreviewPage::PreviewPagePriv
 {
     PreviewPagePriv(Manager *m)
-        : title(0), previewWidget(0), progressDlg(0), mngr(m)
+        : title(0), previewWidget(0), previewBusy(false), progressDlg(0), mngr(m)
     {}
 
     QLabel*                 title;
     QUrl                    previewUrl;
     PreviewManager*         previewWidget;
+    bool                    previewBusy;
     BatchProgressDialog*    progressDlg;
     int                     curProgress, totalProgress;
 
@@ -108,18 +109,26 @@ void PreviewPage::cancel()
                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     d->mngr->thread()->cancel();
-    d->previewWidget->setBusy(false);
+
+    if (d->previewBusy)
+    {
+        d->previewWidget->setBusy(false);
+        d->previewWidget->setText(i18n("Preview Processing Cancelled."));
+    }
 }
 
 void PreviewPage::computePreview()
 {
     d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
+    d->previewBusy = true;
 
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     emit signalPreviewGenerating();
     d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimiseUrl(), d->mngr->preProcessedMap());
+    if (!d->mngr->thread()->isRunning())
+        d->mngr->thread()->start();
 }
 
 void PreviewPage::startStitching()
@@ -135,6 +144,8 @@ void PreviewPage::startStitching()
     d->mngr->thread()->compileProject(d->mngr->autoOptimiseUrl(),
                                       d->mngr->preProcessedMap(),
                                       d->mngr->format());
+    if (!d->mngr->thread()->isRunning())
+        d->mngr->thread()->start();
 }
 
 void PreviewPage::resetPage()
@@ -159,6 +170,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
                     d->output = ad.message;
                     d->previewWidget->setBusy(false);
+                    d->previewBusy = false;
                     kDebug() << "Preview compilation failed: " << ad.message;
                     QString errorString("<qt><h2><b>Error</b></h2><p>" + ad.message + "</p></qt>");
                     errorString.replace("\n", "</p><p>");

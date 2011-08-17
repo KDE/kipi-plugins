@@ -168,8 +168,14 @@ void ImportWizardDlg::next()
     }
     else if (currentPage() == d->previewPage->page())
     {
+        // Cancel any preview being processed
+        d->previewPage->cancel();
+
+        // And start the final stitching process
         setValid(d->previewPage->page(), false);
         d->previewPage->startStitching();
+
+        // Next will be handled using signals/slots
         return;
     }
     else if (currentPage() == d->lastPage->page())
@@ -262,12 +268,12 @@ void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
 
 void ImportWizardDlg::slotPreviewProcessing()
 {
-    setValid(d->previewPage->page(), false);
+    //setValid(d->previewPage->page(), false);
 }
 
 void ImportWizardDlg::slotPreviewProcessed(const KUrl& url)
 {
-    setValid(d->previewPage->page(), !url.equals(KUrl()));
+    //setValid(d->previewPage->page(), !url.equals(KUrl()));
 }
 
 void ImportWizardDlg::slotStitchingFinished(const KUrl& url)
