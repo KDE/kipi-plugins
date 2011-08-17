@@ -82,6 +82,10 @@ IntroPage::IntroPage(Manager *mngr, KAssistantDialog* dlg)
     d->hdrCheckBox      = new QCheckBox(i18n("HDR Output"), vbox);
     d->hdrCheckBox->setToolTip(i18n("When checked, the panorama will be stitched into an High Dynamic Range (HDR) "
                                     "image, that can be processed further with a dedicated software."));
+    d->hdrCheckBox->setWhatsThis(i18n("<b>HDR Output</b>: Output in High Dynamic Range, meaning that every piece of "
+                                      "information contained in the original photos are preserved. Note that you "
+                                      "need another software to process the resulting panorama, like "
+                                      "<a href=\"http://qtpfsgui.sourceforge.net/\">Luminance HDR</a>"));
 
     QVBoxLayout *formatVBox = new QVBoxLayout();
     d->formatGroupBox   = new QGroupBox(i18n("File Format"), vbox);
@@ -92,11 +96,16 @@ IntroPage::IntroPage(Manager *mngr, KAssistantDialog* dlg)
     d->jpegRadioButton  = new QRadioButton(i18n("JPEG Output"), d->formatGroupBox);
     d->jpegRadioButton->setToolTip(i18n("Selects a JPEG output with 90% compression rate "
                                         "(lossy compression, smaller size)."));
+    d->jpegRadioButton->setWhatsThis(i18n("<b>JPEG Output</b>: Using JPEG output, the panorama file will be smaller "
+                                          "at the cost of information loss during compression. This is the easiest "
+                                          "way to share the result, or print it online or in a shop."));
     formatVBox->addWidget(d->jpegRadioButton);
     group->addButton(d->jpegRadioButton);
     d->tiffRadioButton  = new QRadioButton(i18n("TIFF Output"), d->formatGroupBox);
     d->tiffRadioButton->setToolTip(i18n("Selects a TIFF output compressed using the LZW algorithm "
                                         "(lossless compression, bigger size)."));
+    d->jpegRadioButton->setWhatsThis(i18n("<b>TIFF Output</b>: Using TIFF output, you get the same color depth than "
+                                          "your original photos using RAW images at the cost of a bigger panorama file."));
     formatVBox->addWidget(d->tiffRadioButton);
     group->addButton(d->tiffRadioButton);
     switch (d->mngr->format())
