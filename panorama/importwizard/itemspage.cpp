@@ -86,8 +86,8 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
 
     setPageWidget(vbox);
 
-    //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-stack.png");
-    //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
+    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-stack.png");
+    setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->list, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
