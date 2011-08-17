@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     KExiv2::initializeExiv2();
 
     KApplication app;
-    //aboutData->setProgramLogo(KIcon("panorama"));
+    aboutData->setProgramLogo(KIcon("panorama"));
 
     KUrl::List urlList;
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
@@ -76,6 +76,7 @@ int main(int argc, char* argv[])
     Manager mngr;
     if (!mngr.checkBinaries())
         return -1;
+
     mngr.setItemsList(urlList);
     mngr.setAbout(aboutData);
     mngr.setIface(0);
