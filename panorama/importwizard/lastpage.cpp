@@ -85,9 +85,11 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
     formatVBox->addWidget(fileTemplateLabel);
     // TODO: change the default name to something similar to what is done within hugin
     d->fileTemplateKLineEdit    = new KLineEdit("panorama", d->saveSettingsGroupBox);
+    d->fileTemplateKLineEdit->setToolTip(i18n("Name of the panorama file (without its extension)."));
     formatVBox->addWidget(d->fileTemplateKLineEdit);
     d->savePtoCheckBox          = new QCheckBox(i18n("Save Project File"), d->saveSettingsGroupBox);
     d->savePtoCheckBox->setChecked(group.readEntry("Save PTO", false));
+    d->savePtoCheckBox->setToolTip(i18n("Save the project file for further processing within Hugin GUI."));
     formatVBox->addWidget(d->savePtoCheckBox);
     vbox->setStretchFactor(space, 2);
 

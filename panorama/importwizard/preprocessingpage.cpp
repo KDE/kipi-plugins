@@ -103,6 +103,9 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
 
     d->celesteCheckBox  = new QCheckBox(i18n("Detect Moving Skies"), vbox);
     d->celesteCheckBox->setChecked(group.readEntry("Celeste", false));
+    d->celesteCheckBox->setToolTip(i18n("When checked, an automatic detection of clouds is performed to "
+                                        "prevent wrong keypoints matching between images due to "
+                                        "moving clouds."));
 
     QLabel* space1   = new QLabel(vbox);
     KHBox* hbox      = new KHBox(vbox);
@@ -271,7 +274,6 @@ void PreProcessingPage::resetTitle()
                            "<p>Pre-processing also include a calculation of some control points to match "
                            "overlaps between images. For that purpose, the <b>%1</b> program from the "
                            "<a href='%2'>%3</a> project will be used.</p>"
-                           "<p>Output panorama file type is selected here.</p>"
                            "<p>Press \"Next\" to start pre-processing.</p>"
                            "</qt>",
                            QString(d->mngr->cpFindBinary().path()),

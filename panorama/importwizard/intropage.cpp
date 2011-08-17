@@ -80,6 +80,8 @@ IntroPage::IntroPage(Manager *mngr, KAssistantDialog* dlg)
     options->setText(i18n("<qt><p>Panorama Settings: </p></qt>"));
 
     d->hdrCheckBox      = new QCheckBox(i18n("HDR Output"), vbox);
+    d->hdrCheckBox->setToolTip(i18n("When checked, the panorama will be stitched into an High Dynamic Range (HDR) "
+                                    "image, that can be processed further with a dedicated software."));
 
     QVBoxLayout *formatVBox = new QVBoxLayout();
     d->formatGroupBox   = new QGroupBox(i18n("File Format"), vbox);
@@ -88,9 +90,13 @@ IntroPage::IntroPage(Manager *mngr, KAssistantDialog* dlg)
     formatVBox->addStretch(1);
 
     d->jpegRadioButton  = new QRadioButton(i18n("JPEG Output"), d->formatGroupBox);
+    d->jpegRadioButton->setToolTip(i18n("Selects a JPEG output with 90% compression rate "
+                                        "(lossy compression, smaller size)."));
     formatVBox->addWidget(d->jpegRadioButton);
     group->addButton(d->jpegRadioButton);
     d->tiffRadioButton  = new QRadioButton(i18n("TIFF Output"), d->formatGroupBox);
+    d->tiffRadioButton->setToolTip(i18n("Selects a TIFF output compressed using the LZW algorithm "
+                                        "(lossless compression, bigger size)."));
     formatVBox->addWidget(d->tiffRadioButton);
     group->addButton(d->tiffRadioButton);
     switch (d->mngr->format())

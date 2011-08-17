@@ -54,15 +54,10 @@ namespace KIPIPanoramaPlugin
 struct OptimizePage::OptimizePagePriv
 {
     OptimizePagePriv()
+        : progressCount(0), progressLabel(0), progressTimer(0), title(0),
+          horizonCheckbox(0), projectionAndSizeCheckbox(0), detailsBtn(0),
+          mngr(0)
     {
-        progressLabel             = 0;
-        progressTimer             = 0;
-        title                     = 0;
-        detailsBtn                = 0;
-        mngr                      = 0;
-        progressCount             = 0;
-        horizonCheckbox           = 0;
-        projectionAndSizeCheckbox = 0;
         progressPix               = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
     }
 
@@ -100,8 +95,11 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
 
     d->horizonCheckbox              = new QCheckBox(i18n("Level Horizon"), vbox);
     d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
+    d->horizonCheckbox->setToolTip(i18n("Detect the horizon and adapt the project to make it horizontal."));
     d->projectionAndSizeCheckbox    = new QCheckBox(i18n("Automatically select the output projection and size"), vbox);
     d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
+    d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the panorama crop and the output projection to get the every "
+                                                 "photos into the panorama."));
 
     QLabel* space1                  = new QLabel(vbox);
     vbox->setStretchFactor(space1, 2);
