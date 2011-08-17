@@ -128,11 +128,11 @@ void IntroPage::slotShowFileFormat(int state)
     d->mngr->setHDR(state);
     if (state)
     {
-        d->formatGroupBox->hide();
+        d->formatGroupBox->setEnabled(false);
     }
     else
     {
-        d->formatGroupBox->show();
+        d->formatGroupBox->setEnabled(true);
     }
 }
 
