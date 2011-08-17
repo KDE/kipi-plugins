@@ -52,13 +52,13 @@ struct LastPage::LastPagePriv
 {
     LastPagePriv() : title(0), saveSettingsGroupBox(0), fileTemplateKLineEdit(0), savePtoCheckBox(0), mngr(0) {}
 
-    QLabel*     title;
+    QLabel*    title;
 
-    QGroupBox*  saveSettingsGroupBox;
-    KLineEdit*  fileTemplateKLineEdit;
-    QCheckBox*  savePtoCheckBox;
+    QGroupBox* saveSettingsGroupBox;
+    KLineEdit* fileTemplateKLineEdit;
+    QCheckBox* savePtoCheckBox;
 
-    Manager* mngr;
+    Manager*   mngr;
 };
 
 LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
@@ -66,25 +66,25 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
           d(new LastPagePriv)
 {
     KConfig config("kipirc");
-    KConfigGroup group              = config.group(QString("Panorama Settings"));
+    KConfigGroup group        = config.group(QString("Panorama Settings"));
 
-    d->mngr       = mngr;
-    KVBox *vbox   = new KVBox(this);
-    d->title = new QLabel(vbox);
+    d->mngr                   = mngr;
+    KVBox *vbox               = new KVBox(this);
+    d->title                  = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
-    QLabel* space               = new QLabel(vbox);
+    QLabel* space             = new QLabel(vbox);
 
-    QVBoxLayout *formatVBox     = new QVBoxLayout();
-    d->saveSettingsGroupBox     = new QGroupBox(i18n("Save Settings"), vbox);
+    QVBoxLayout *formatVBox   = new QVBoxLayout();
+    d->saveSettingsGroupBox   = new QGroupBox(i18n("Save Settings"), vbox);
     d->saveSettingsGroupBox->setLayout(formatVBox);
     formatVBox->addStretch(1);
 
-    QLabel *fileTemplateLabel   = new QLabel(i18n("File Name Template: "), d->saveSettingsGroupBox);
+    QLabel *fileTemplateLabel = new QLabel(i18n("File Name Template: "), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
     // TODO: change the default name to something similar to what is done within hugin
-    d->fileTemplateKLineEdit    = new KLineEdit("panorama", d->saveSettingsGroupBox);
+    d->fileTemplateKLineEdit  = new KLineEdit("panorama", d->saveSettingsGroupBox);
     d->fileTemplateKLineEdit->setToolTip(i18n("Name of the panorama file (without its extension)."));
     d->fileTemplateKLineEdit->setWhatsThis(i18n("<b>File Name Template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama<i> and if "
@@ -92,7 +92,7 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
                                                 "name <i>panorama.jpg</i>. If you choose to save also the project file, "
                                                 "it will have the name <i>panorama.pto</i>."));
     formatVBox->addWidget(d->fileTemplateKLineEdit);
-    d->savePtoCheckBox          = new QCheckBox(i18n("Save Project File"), d->saveSettingsGroupBox);
+    d->savePtoCheckBox        = new QCheckBox(i18n("Save Project File"), d->saveSettingsGroupBox);
     d->savePtoCheckBox->setChecked(group.readEntry("Save PTO", false));
     d->savePtoCheckBox->setToolTip(i18n("Save the project file for further processing within Hugin GUI."));
     d->savePtoCheckBox->setWhatsThis(i18n("<b>Save Project File</b>: You can keep the project file generated to stitch "
@@ -110,6 +110,7 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
 
     connect(d->fileTemplateKLineEdit, SIGNAL(textChanged(QString)),
             this, SLOT(slotTemplateChanged(QString)));
+
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 }
@@ -204,7 +205,7 @@ void LastPage::slotTemplateChanged(const QString& fileTemplate)
                           ));
 }
 
-QString LastPage::panoFileName(const QString& fileTemplate)
+QString LastPage::panoFileName(const QString& fileTemplate) const
 {
     switch (d->mngr->format())
     {
