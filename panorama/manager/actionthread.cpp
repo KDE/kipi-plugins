@@ -809,7 +809,7 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
 {
     outUrl = d->preprocessingTmpDir->name();
     QFileInfo fi(inUrl.toLocalFile());
-    outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString("-preview.jpg"));
+    outUrl.setFileName(fi.completeBaseName().replace(".", "_") + QString("-preview.jpg"));
 
     QImage img;
     if (img.load(inUrl.toLocalFile()))
