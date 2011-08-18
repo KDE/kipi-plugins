@@ -26,16 +26,15 @@
 
 #include <QBrush>
 #include <QWidget>
-#include <QListWidget>
 #include <QProgressBar>
 #include <QLayout>
+#include <QListWidget>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
-#include <kvbox.h>
 
 namespace KIPIPlugins
 {
@@ -81,11 +80,11 @@ BatchProgressItem(QListWidget* parent, const QString& message, int messageType)
 
 // ----------------------------------------------------------------------
 
-class BatchProgressDialog::BatchProgressDialogPriv
+class BatchProgressWidget::BatchProgressWidgetPriv
 {
 public:
 
-    BatchProgressDialogPriv()
+    BatchProgressWidgetPriv()
     {
         progress    = 0;
         actionsList = 0;
@@ -96,6 +95,90 @@ public:
     QListWidget*  actionsList;
 };
 
+BatchProgressWidget::BatchProgressWidget(QWidget* parent)
+   : KVBox(parent), d(new BatchProgressWidgetPriv)
+{
+    layout()->setSpacing(KDialog::spacingHint());
+
+    d->actionsList = new QListWidget(this);
+    d->actionsList->setSortingEnabled(false);
+    d->actionsList->setWhatsThis(i18n("<p>This is the current processing status.</p>"));
+
+    //---------------------------------------------
+
+    d->progress = new QProgressBar(this);
+    d->progress->setRange(0, 100);
+    d->progress->setValue(0);
+    d->progress->setWhatsThis(i18n("<p>This is the batch job progress as a percentage.</p>"));
+};
+
+BatchProgressWidget::~BatchProgressWidget()
+{
+    delete d;
+}
+
+QListWidget* BatchProgressWidget::listView() const
+{
+    return d->actionsList;
+}
+
+QProgressBar* BatchProgressWidget::progressBar() const
+{
+    return d->progress;
+}
+
+void BatchProgressWidget::addedAction(const QString& text, int type)
+{
+    BatchProgressItem* item = new BatchProgressItem(d->actionsList, text, type);
+    d->actionsList->setCurrentItem(item);
+}
+
+void BatchProgressWidget::reset()
+{
+    d->actionsList->clear();
+    d->progress->setValue(0);
+}
+
+void BatchProgressWidget::setProgress(int current, int total)
+{
+    d->progress->setMaximum(total);
+    d->progress->setValue(current);
+}
+
+int BatchProgressWidget::progress() const
+{
+    return d->progress->value();
+}
+
+int BatchProgressWidget::total() const
+{
+    return d->progress->maximum();
+}
+
+void BatchProgressWidget::setTotal(int total)
+{
+    d->progress->setMaximum(total);
+}
+
+void BatchProgressWidget::setProgress(int current)
+{
+    d->progress->setValue(current);
+}
+
+// ---------------------------------------------------------------------------------
+
+class BatchProgressDialog::BatchProgressDialogPriv
+{
+public:
+
+    BatchProgressDialogPriv()
+    {
+        box = 0;
+    }
+
+    BatchProgressWidget* box;
+};
+
 BatchProgressDialog::BatchProgressDialog(QWidget* parent, const QString& caption)
    : KDialog(parent), d(new BatchProgressDialogPriv)
 {
@@ -104,22 +187,8 @@ BatchProgressDialog::BatchProgressDialog(QWidget* parent, const QString& caption
     setDefaultButton(Cancel);
     setModal(true);
 
-    KVBox* box = new KVBox(this);
-    box->layout()->setSpacing(KDialog::spacingHint());
-    setMainWidget(box);
-
-    //---------------------------------------------
-
-    d->actionsList = new QListWidget(box);
-    d->actionsList->setSortingEnabled(false);
-    d->actionsList->setWhatsThis(i18n("<p>This is the current processing status.</p>"));
-
-    //---------------------------------------------
-
-    d->progress = new QProgressBar(box);
-    d->progress->setRange(0, 100);
-    d->progress->setValue(0);
-    d->progress->setWhatsThis(i18n("<p>This is the batch job progress as a percentage.</p>"));
+    d->box = new BatchProgressWidget(this);
+    setMainWidget(d->box);
     resize(600, 400);
 }
 
@@ -130,40 +199,37 @@ BatchProgressDialog::~BatchProgressDialog()
 
 void BatchProgressDialog::addedAction(const QString& text, int type)
 {
-    BatchProgressItem* item = new BatchProgressItem(d->actionsList, text, type);
-    d->actionsList->setCurrentItem(item);
+    d->box->addedAction(text, type);
 }
 
 void BatchProgressDialog::reset()
 {
-    d->actionsList->clear();
-    d->progress->setValue(0);
+    d->box->reset();
 }
 
 void BatchProgressDialog::setProgress(int current, int total)
 {
-    d->progress->setMaximum(total);
-    d->progress->setValue(current);
+    d->box->setProgress(current, total);
 }
 
 int BatchProgressDialog::progress() const
 {
-    return d->progress->value();
+    return d->box->progress();
 }
 
 int BatchProgressDialog::total() const
 {
-    return d->progress->maximum();
+    return d->box->total();
 }
 
 void BatchProgressDialog::setTotal(int total)
 {
-    d->progress->setMaximum(total);
+    d->box->setTotal(total);
 }
 
 void BatchProgressDialog::setProgress(int current)
 {
-    d->progress->setValue(current);
+    d->box->setProgress(current);
 }
 
 }  // namespace KIPIPlugins

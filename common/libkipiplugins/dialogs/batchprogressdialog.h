@@ -28,10 +28,14 @@
 // KDE includes
 
 #include <kdialog.h>
+#include <kvbox.h>
 
 // Local includes
 
 #include "kipiplugins_export.h"
+
+class QListWidget;
+class QProgressBar;
 
 namespace KIPIPlugins
 {
@@ -44,6 +48,40 @@ enum ActionMessageType
     ErrorMessage,
     ProgressMessage
 };
+
+// --------------------------------------------------------------------------------------
+
+class KIPIPLUGINS_EXPORT BatchProgressWidget : public KVBox
+{
+    Q_OBJECT
+
+public:
+
+    explicit BatchProgressWidget(QWidget* parent=0);
+    ~BatchProgressWidget();
+
+    QListWidget*  listView() const;
+    QProgressBar* progressBar() const;
+
+    void addedAction(const QString& text, int type);
+    void reset();
+    void setProgress(int current, int total);
+
+    int progress() const;
+    int total() const;
+
+public Q_SLOTS:
+
+    void setProgress(int);
+    void setTotal(int total);
+
+private:
+
+    class BatchProgressWidgetPriv;
+    BatchProgressWidgetPriv* const d;
+};
+
+// --------------------------------------------------------------------------------------
 
 class KIPIPLUGINS_EXPORT BatchProgressDialog : public KDialog
 {
