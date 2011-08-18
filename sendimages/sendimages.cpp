@@ -133,7 +133,7 @@ void SendImages::sendImages()
             this, SLOT(slotCancel()));
 
     d->progressDlg->show();
-    d->progressDlg->setProgress(0, 100);
+    d->progressDlg->progressWidget()->setProgress(0, 100);
     d->attachementFiles.clear();
     d->failedResizedImages.clear();
 
@@ -154,15 +154,15 @@ void SendImages::sendImages()
             d->attachementFiles.append(item.orgUrl);
             d->settings.setEmailUrl(item.orgUrl, item.orgUrl);
         }
-        d->progressDlg->setProgress(50, 100);
+        d->progressDlg->progressWidget()->setProgress(50, 100);
         secondStage();
     }
 }
 
 void SendImages::slotCancel()
 {
-    d->progressDlg->addedAction(i18n("Operation canceled by user"), KIPIPlugins::WarningMessage);
-    d->progressDlg->setProgress(0, 100);
+    d->progressDlg->progressWidget()->addedAction(i18n("Operation canceled by user"), KIPIPlugins::WarningMessage);
+    d->progressDlg->progressWidget()->setProgress(0, 100);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
 
     disconnect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -174,25 +174,25 @@ void SendImages::slotCancel()
 void SendImages::slotStartingResize(const KUrl& orgUrl)
 {
     QString text = i18n("Resizing %1", orgUrl.fileName());
-    d->progressDlg->addedAction(text, KIPIPlugins::StartingMessage);
+    d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::StartingMessage);
 }
 
 void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent)
 {
-    d->progressDlg->setProgress((int)(80.0*(percent/100.0)), 100);
+    d->progressDlg->progressWidget()->setProgress((int)(80.0*(percent/100.0)), 100);
     kDebug() << emailUrl;
     d->attachementFiles.append(emailUrl);
     d->settings.setEmailUrl(orgUrl, emailUrl);
 
     QString text = i18n("%1 resized successfully", orgUrl.fileName());
-    d->progressDlg->addedAction(text, KIPIPlugins::SuccessMessage);
+    d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::SuccessMessage);
 }
 
 void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int percent)
 {
-    d->progressDlg->setProgress((int)(80.0*(percent/100.0)), 100);
+    d->progressDlg->progressWidget()->setProgress((int)(80.0*(percent/100.0)), 100);
     QString text = i18n("Failed to resize %1: %2", orgUrl.fileName(), error);
-    d->progressDlg->addedAction(text, KIPIPlugins::ErrorMessage);
+    d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::ErrorMessage);
 
     d->failedResizedImages.append(orgUrl);
 }
@@ -210,9 +210,9 @@ void SendImages::slotCompleteResize()
 void SendImages::secondStage()
 {
     buildPropertiesFile();
-    d->progressDlg->setProgress(90, 100);
+    d->progressDlg->progressWidget()->setProgress(90, 100);
     invokeMailAgent();
-    d->progressDlg->setProgress(100, 100);
+    d->progressDlg->progressWidget()->setProgress(100, 100);
 }
 
 /** Creates a text file with all images Comments, Tags, and Rating. */
@@ -220,7 +220,7 @@ void SendImages::buildPropertiesFile()
 {
     if (d->settings.addCommentsAndTags)
     {
-        d->progressDlg->addedAction(i18n("Build images properties file"), KIPIPlugins::StartingMessage);
+        d->progressDlg->progressWidget()->addedAction(i18n("Build images properties file"), KIPIPlugins::StartingMessage);
 
         QString propertiesText;
 
@@ -261,7 +261,7 @@ void SendImages::buildPropertiesFile()
         propertiesFile.close();
         d->attachementFiles.append(propertiesFile.fileName());
 
-        d->progressDlg->addedAction(i18n("Image properties file done"), KIPIPlugins::SuccessMessage);
+        d->progressDlg->progressWidget()->addedAction(i18n("Image properties file done"), KIPIPlugins::SuccessMessage);
     }
 }
 
@@ -341,14 +341,16 @@ KUrl::List SendImages::divideEmails()
         }
         else
         {
-        if ((file.size()) >= d->settings.attachementLimitInBytes())
-        {
-            kDebug() << "File \"" << file.fileName() << "\" is out of attachment limit!";
-            QString text = i18n("The file \"%1\" is too big to be sent, please reduce its size or change your settings" , file.fileName());
-            d->progressDlg->addedAction(text, KIPIPlugins::WarningMessage);
-        }
-        else
-            todoAttachement.append(*it);
+            if ((file.size()) >= d->settings.attachementLimitInBytes())
+            {
+                kDebug() << "File \"" << file.fileName() << "\" is out of attachment limit!";
+                QString text = i18n("The file \"%1\" is too big to be sent, please reduce its size or change your settings" , file.fileName());
+                d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::WarningMessage);
+            }
+            else
+            {
+                todoAttachement.append(*it);
+            }
         }
     }
 
@@ -388,7 +390,7 @@ bool SendImages::invokeMailAgent()
                         QString(),                     // Message Body File.
                         stringFileList);          // Images attachments (+ image properties file).
 
-                    d->progressDlg->addedAction(i18n("Starting default KDE email program..."), KIPIPlugins::StartingMessage);
+                    d->progressDlg->progressWidget()->addedAction(i18n("Starting default KDE email program..."), KIPIPlugins::StartingMessage);
 
                     agentInvoked = true;
                     break;
@@ -543,7 +545,7 @@ void SendImages::invokeMailAgentError(const QString& prog, const QStringList& ar
 {
     kDebug() << "Command Line: " << prog << args;
     QString text = i18n("Failed to start \"%1\" program. Check your system.", prog);
-    d->progressDlg->addedAction(text, KIPIPlugins::ErrorMessage);
+    d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::ErrorMessage);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
 
     disconnect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -556,7 +558,7 @@ void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& arg
 {
     kDebug() << "Command Line: " << prog << args;
     QString text = i18n("Starting \"%1\" program...", prog);
-    d->progressDlg->addedAction(text, KIPIPlugins::StartingMessage);
+    d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::StartingMessage);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
 
     disconnect(d->progressDlg, SIGNAL(cancelClicked()),
@@ -565,8 +567,8 @@ void SendImages::invokeMailAgentDone(const QString& prog, const QStringList& arg
     connect(d->progressDlg, SIGNAL(cancelClicked()),
             this, SLOT(slotCleanUp()));
 
-    d->progressDlg->addedAction(i18n("After having sent your images by email..."), KIPIPlugins::WarningMessage);
-    d->progressDlg->addedAction(i18n("Press 'Close' button to clean up temporary files"), KIPIPlugins::WarningMessage);
+    d->progressDlg->progressWidget()->addedAction(i18n("After having sent your images by email..."), KIPIPlugins::WarningMessage);
+    d->progressDlg->progressWidget()->addedAction(i18n("Press 'Close' button to clean up temporary files"), KIPIPlugins::WarningMessage);
 }
 
 void SendImages::slotCleanUp()

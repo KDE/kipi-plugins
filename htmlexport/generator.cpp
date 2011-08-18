@@ -140,7 +140,7 @@ struct Generator::Private {
     }
 
     bool copyTheme() {
-        mProgressDialog->addedAction(i18n("Copying theme"), KIPIPlugins::ProgressMessage);
+        mProgressDialog->progressWidget()->addedAction(i18n("Copying theme"), KIPIPlugins::ProgressMessage);
 
         KUrl srcUrl=KUrl(mTheme->directory());
 
@@ -177,7 +177,7 @@ struct Generator::Private {
 
         logInfo( i18n("Downloading remote files for \"%1\"", collectionName) );
 
-        mProgressDialog->setTotal(list.count());
+        mProgressDialog->progressWidget()->setTotal(list.count());
         int count = 0;
         Q_FOREACH(const KUrl& url, list) {
             if (mProgressDialog->isHidden()) {
@@ -203,7 +203,7 @@ struct Generator::Private {
             }
 
             ++count;
-            mProgressDialog->setProgress(count);
+            mProgressDialog->progressWidget()->setProgress(count);
         }
 
         return true;
@@ -263,7 +263,7 @@ struct Generator::Private {
             connect(&watcher, SIGNAL(progressValueChanged(int)),
                 mProgressDialog, SLOT(setProgress(int)));
 
-            mProgressDialog->setTotal(imageElementList.count());
+            mProgressDialog->progressWidget()->setTotal(imageElementList.count());
             while (!future.isFinished()) {
                 qApp->processEvents();
                 if (mProgressDialog->isHidden()) {
@@ -418,15 +418,15 @@ struct Generator::Private {
 
 
     void logInfo(const QString& msg) {
-        mProgressDialog->addedAction(msg, KIPIPlugins::ProgressMessage);
+        mProgressDialog->progressWidget()->addedAction(msg, KIPIPlugins::ProgressMessage);
     }
 
     void logError(const QString& msg) {
-        mProgressDialog->addedAction(msg, KIPIPlugins::ErrorMessage);
+        mProgressDialog->progressWidget()->addedAction(msg, KIPIPlugins::ErrorMessage);
     }
 
     void logWarning(const QString& msg) {
-        mProgressDialog->addedAction(msg, KIPIPlugins::WarningMessage);
+        mProgressDialog->progressWidget()->addedAction(msg, KIPIPlugins::WarningMessage);
         mWarnings=true;
     }
 };

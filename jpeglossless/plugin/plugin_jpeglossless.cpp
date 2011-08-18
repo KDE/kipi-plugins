@@ -92,7 +92,7 @@ public:
 };
 
 Plugin_JPEGLossless::Plugin_JPEGLossless(QObject* parent, const QVariantList&)
-                   : KIPI::Plugin(JPEGLosslessFactory::componentData(), parent, "JPEGLossless"), 
+                   : KIPI::Plugin(JPEGLosslessFactory::componentData(), parent, "JPEGLossless"),
                      d(new Plugin_JPEGLosslessPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_JPEGLossless plugin loaded";
@@ -355,7 +355,7 @@ void Plugin_JPEGLossless::slotStarting(const QString& filePath, int action)
         }
     }
 
-    d->progressDlg->addedAction(text, KIPIPlugins::StartingMessage);
+    d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::StartingMessage);
 }
 
 void Plugin_JPEGLossless::slotFinished(const QString& filePath, int action)
@@ -387,7 +387,7 @@ void Plugin_JPEGLossless::slotFinished(const QString& filePath, int action)
         }
     }
 
-    d->progressDlg->addedAction(text, KIPIPlugins::SuccessMessage);
+    d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::SuccessMessage);
 
     oneTaskCompleted();
 }
@@ -422,10 +422,10 @@ void Plugin_JPEGLossless::slotFailed(const QString& filePath, int action, const 
         }
     }
 
-    d->progressDlg->addedAction(text, KIPIPlugins::WarningMessage);
+    d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::WarningMessage);
 
     if (!errString.isEmpty())
-        d->progressDlg->addedAction(errString, KIPIPlugins::WarningMessage);
+        d->progressDlg->progressWidget()->addedAction(errString, KIPIPlugins::WarningMessage);
 
     oneTaskCompleted();
 }
@@ -433,7 +433,7 @@ void Plugin_JPEGLossless::slotFailed(const QString& filePath, int action, const 
 void Plugin_JPEGLossless::oneTaskCompleted()
 {
     d->current++;
-    d->progressDlg->setProgress(d->current, d->total);
+    d->progressDlg->progressWidget()->setProgress(d->current, d->total);
 
     if (d->current >= d->total)
     {

@@ -197,39 +197,9 @@ BatchProgressDialog::~BatchProgressDialog()
     delete d;
 }
 
-void BatchProgressDialog::addedAction(const QString& text, int type)
+BatchProgressWidget* BatchProgressDialog::progressWidget() const
 {
-    d->box->addedAction(text, type);
-}
-
-void BatchProgressDialog::reset()
-{
-    d->box->reset();
-}
-
-void BatchProgressDialog::setProgress(int current, int total)
-{
-    d->box->setProgress(current, total);
-}
-
-int BatchProgressDialog::progress() const
-{
-    return d->box->progress();
-}
-
-int BatchProgressDialog::total() const
-{
-    return d->box->total();
-}
-
-void BatchProgressDialog::setTotal(int total)
-{
-    d->box->setTotal(total);
-}
-
-void BatchProgressDialog::setProgress(int current)
-{
-    d->box->setProgress(current);
+    return d->box;
 }
 
 }  // namespace KIPIPlugins

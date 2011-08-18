@@ -490,7 +490,7 @@ void kmlExport::generate()
             logWarning(i18n("No position data for '%1'", info.title()));
             defectImage++;
         }
-        m_progressDialog->setProgress(pos, count);
+        m_progressDialog->progressWidget()->setProgress(pos, count);
         kapp->processEvents();
     }
 
@@ -555,17 +555,17 @@ int kmlExport::getConfig()
 
 void kmlExport::logInfo(const QString& msg)
 {
-    m_progressDialog->addedAction(msg, KIPIPlugins::ProgressMessage);
+    m_progressDialog->progressWidget()->addedAction(msg, KIPIPlugins::ProgressMessage);
 }
 
 void kmlExport::logError(const QString& msg)
 {
-    m_progressDialog->addedAction(msg, KIPIPlugins::ErrorMessage);
+    m_progressDialog->progressWidget()->addedAction(msg, KIPIPlugins::ErrorMessage);
 }
 
 void kmlExport::logWarning(const QString& msg)
 {
-    m_progressDialog->addedAction(msg, KIPIPlugins::WarningMessage);
+    m_progressDialog->progressWidget()->addedAction(msg, KIPIPlugins::WarningMessage);
     // mWarnings=true;
 }
 

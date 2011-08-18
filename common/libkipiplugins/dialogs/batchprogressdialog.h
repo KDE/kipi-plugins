@@ -92,17 +92,7 @@ public:
     explicit BatchProgressDialog(QWidget* parent=0, const QString& caption=QString());
     ~BatchProgressDialog();
 
-    void addedAction(const QString& text, int type);
-    void reset();
-    void setProgress(int current, int total);
-
-    int progress() const;
-    int total() const;
-
-public Q_SLOTS:
-
-    void setProgress(int);
-    void setTotal(int total);
+    BatchProgressWidget* progressWidget() const;
 
 private:
 

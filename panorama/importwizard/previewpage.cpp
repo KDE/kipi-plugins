@@ -135,7 +135,7 @@ void PreviewPage::startStitching()
 {
     d->curProgress = 0;
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
-    d->progressDlg->setTotal(d->totalProgress);
+    d->progressDlg->progressWidget()->setTotal(d->totalProgress);
     d->progressDlg->show();
 
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
@@ -183,7 +183,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-                    d->progressDlg->addedAction(QString("Panorama compilation: ") + ad.message, ErrorMessage);
+                    d->progressDlg->progressWidget()->addedAction(QString("Panorama compilation: ") + ad.message, ErrorMessage);
                     kDebug() << "Enblend call failed";
                     break;
                 }
@@ -197,7 +197,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     message << ": ";
                     message << ad.message;
                     kDebug() << "Nona call failed for file #" << ad.id;
-                    d->progressDlg->addedAction(message.join(""), ErrorMessage);
+                    d->progressDlg->progressWidget()->addedAction(message.join(""), ErrorMessage);
                     break;
                 }
                 default:
@@ -229,9 +229,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-                    d->progressDlg->addedAction(QString("Panorama compilation"), SuccessMessage);
+                    d->progressDlg->progressWidget()->addedAction(QString("Panorama compilation"), SuccessMessage);
                     d->curProgress++;
-                    d->progressDlg->setProgress(d->curProgress, d->totalProgress);
+                    d->progressDlg->progressWidget()->setProgress(d->curProgress, d->totalProgress);
                     d->progressDlg->hide();
                     kDebug() << "Panorama URL: " << ad.outUrl.toLocalFile();
                     emit signalStitchingFinished(ad.outUrl);
@@ -244,9 +244,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     message << QString::number(ad.id + 1);
                     message << " / ";
                     message << QString::number(d->totalProgress - 1);
-                    d->progressDlg->addedAction(message.join(""), SuccessMessage);
+                    d->progressDlg->progressWidget()->addedAction(message.join(""), SuccessMessage);
                     d->curProgress++;
-                    d->progressDlg->setProgress(d->curProgress, d->totalProgress);
+                    d->progressDlg->progressWidget()->setProgress(d->curProgress, d->totalProgress);
                     kDebug() << "Nona URL #" << ad.id << " URL: " << ad.outUrl.toLocalFile();
                     break;
                 }
@@ -264,7 +264,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
         {
             case STITCH:
             {
-                d->progressDlg->addedAction(QString("Panorama compilation"), StartingMessage);
+                d->progressDlg->progressWidget()->addedAction(QString("Panorama compilation"), StartingMessage);
                 break;
             }
             case NONAFILE:
@@ -274,7 +274,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 message << QString::number(ad.id + 1);
                 message << " / ";
                 message << QString::number(d->totalProgress - 1);
-                d->progressDlg->addedAction(message.join(""), StartingMessage);
+                d->progressDlg->progressWidget()->addedAction(message.join(""), StartingMessage);
                 break;
             }
             default:
