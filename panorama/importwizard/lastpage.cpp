@@ -210,11 +210,11 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
 {
     switch (d->mngr->format())
     {
+        default:
         case ActionThread::JPEG:
             return fileTemplate + ".jpg";
         case ActionThread::TIFF:
             return fileTemplate + ".tif";
-        // FIXME: this doesn't compile with GCC 4.6.1 (-Werror=return-type)
     }
 }
 
