@@ -79,6 +79,9 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
                          "<ul><li>Images are taken from the same point of view.</li>"
                          "<li>Images are taken with the same camera (and lens).</li>"
                          "<li>Do not mix images with different color depth.</li></ul>"
+                         "<p>Note that, in the case of a 360° panorama, the first image "
+                         "in the list will be the image that will be in the center of "
+                         "the panorama.</p>"
                          "</qt>"));
 
     d->list = new ImagesList(d->mngr->iface(), vbox);

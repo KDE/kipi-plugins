@@ -304,7 +304,7 @@ void ActionThread::run()
                     kDebug() << "Preprocess status: " << result_success;
                     if (result_success)
                     {
-                        result_success = createPTO(t->hdr, t->fileType, preProcessedUrlsMap, t->ptoUrl);
+                        result_success = createPTO(t->hdr, t->fileType, t->urls, preProcessedUrlsMap, t->ptoUrl);
                         if (result_success)
                         {
                             result_success = startCPFind(t->ptoUrl, t->celeste, errors);
@@ -911,7 +911,8 @@ bool ActionThread::isRawFile(const KUrl& url)
     return false;
 }
 
-bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const ItemUrlsMap& urlList, KUrl& ptoUrl)
+bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const KUrl::List& inUrls,
+                             const ItemUrlsMap& urlList, KUrl& ptoUrl)
 {
     ptoUrl = d->preprocessingTmpDir->name();
     ptoUrl.setFileName(QString("pano_base.pto"));
@@ -940,10 +941,11 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const ItemUrls
     // 2. Images
     pto_stream << endl;
     int i = 0;
-    foreach (ItemPreprocessedUrls url, urlList)
+    for (int i = 0; i < inUrls.size(); ++i)
     {
+        KUrl preprocessedUrl(urlList[inUrls.at(i)].preprocessedUrl);
         KExiv2 meta;
-        meta.load(url.preprocessedUrl.toLocalFile());
+        meta.load(preprocessedUrl.toLocalFile());
         QSize size = meta.getPixelSize();
 
         pto_stream << "i";
@@ -956,10 +958,8 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const ItemUrls
             pto_stream << " a=0 b=0 c=0 d=0 e=0 v=0 g=0 t=0";           // Geometry
             pto_stream << " Va=0 Vb=0 Vc=0 Vd=0 Vx=0 Vy=0";             // Vignetting
         }
-        pto_stream << " n\"" << url.preprocessedUrl.toLocalFile() << '"';
+        pto_stream << " n\"" << preprocessedUrl.toLocalFile() << '"';
         pto_stream << endl;
-
-        i++;
     }
 
     // 3. Variables to optimize

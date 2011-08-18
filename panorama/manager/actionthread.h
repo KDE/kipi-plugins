@@ -106,7 +106,7 @@ private:
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
     bool    isRawFile(const KUrl& url);
-    bool    createPTO(bool hdr, PanoramaFileType fileType,
+    bool    createPTO(bool hdr, PanoramaFileType fileType, const KUrl::List& inUrls,
                       const KIPIPanoramaPlugin::ItemUrlsMap& urlList, KUrl& ptoUrl);
     bool    createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFileType fileType,
                      QString& errors);
