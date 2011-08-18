@@ -89,8 +89,8 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
 
     setPageWidget(vbox);
 
-    //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-xxx.png");
-    //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
+    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-hugin.png");
+    setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
@@ -202,7 +202,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -252,7 +252,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }

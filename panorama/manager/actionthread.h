@@ -62,7 +62,13 @@ class ActionThread : public QThread
     Q_OBJECT
 
 public:
-    typedef enum {JPEG, TIFF} PanoramaFileType;
+
+    typedef enum
+    {
+        JPEG,
+        TIFF
+    }
+    PanoramaFileType;
 
 public:
 

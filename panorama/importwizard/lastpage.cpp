@@ -52,13 +52,13 @@ struct LastPage::LastPagePriv
 {
     LastPagePriv() : title(0), saveSettingsGroupBox(0), fileTemplateKLineEdit(0), savePtoCheckBox(0), mngr(0) {}
 
-    QLabel*     title;
+    QLabel*    title;
 
-    QGroupBox*  saveSettingsGroupBox;
-    KLineEdit*  fileTemplateKLineEdit;
-    QCheckBox*  savePtoCheckBox;
+    QGroupBox* saveSettingsGroupBox;
+    KLineEdit* fileTemplateKLineEdit;
+    QCheckBox* savePtoCheckBox;
 
-    Manager* mngr;
+    Manager*   mngr;
 };
 
 LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
@@ -66,25 +66,25 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
           d(new LastPagePriv)
 {
     KConfig config("kipirc");
-    KConfigGroup group              = config.group(QString("Panorama Settings"));
+    KConfigGroup group        = config.group(QString("Panorama Settings"));
 
-    d->mngr       = mngr;
-    KVBox *vbox   = new KVBox(this);
-    d->title = new QLabel(vbox);
+    d->mngr                   = mngr;
+    KVBox *vbox               = new KVBox(this);
+    d->title                  = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
-    QLabel* space               = new QLabel(vbox);
+    QLabel* space             = new QLabel(vbox);
 
-    QVBoxLayout *formatVBox     = new QVBoxLayout();
-    d->saveSettingsGroupBox     = new QGroupBox(i18n("Save Settings"), vbox);
+    QVBoxLayout *formatVBox   = new QVBoxLayout();
+    d->saveSettingsGroupBox   = new QGroupBox(i18n("Save Settings"), vbox);
     d->saveSettingsGroupBox->setLayout(formatVBox);
     formatVBox->addStretch(1);
 
-    QLabel *fileTemplateLabel   = new QLabel(i18n("File Name Template: "), d->saveSettingsGroupBox);
+    QLabel *fileTemplateLabel = new QLabel(i18n("File Name Template: "), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
     // TODO: change the default name to something similar to what is done within hugin
-    d->fileTemplateKLineEdit    = new KLineEdit("panorama", d->saveSettingsGroupBox);
+    d->fileTemplateKLineEdit  = new KLineEdit("panorama", d->saveSettingsGroupBox);
     d->fileTemplateKLineEdit->setToolTip(i18n("Name of the panorama file (without its extension)."));
     d->fileTemplateKLineEdit->setWhatsThis(i18n("<b>File Name Template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama</i> and if "
@@ -92,7 +92,7 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
                                                 "name <i>panorama.jpg</i>. If you choose to save also the project file, "
                                                 "it will have the name <i>panorama.pto</i>."));
     formatVBox->addWidget(d->fileTemplateKLineEdit);
-    d->savePtoCheckBox          = new QCheckBox(i18n("Save Project File"), d->saveSettingsGroupBox);
+    d->savePtoCheckBox        = new QCheckBox(i18n("Save Project File"), d->saveSettingsGroupBox);
     d->savePtoCheckBox->setChecked(group.readEntry("Save PTO", false));
     d->savePtoCheckBox->setToolTip(i18n("Save the project file for further processing within Hugin GUI."));
     d->savePtoCheckBox->setWhatsThis(i18n("<b>Save Project File</b>: You can keep the project file generated to stitch "
@@ -105,11 +105,12 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
 
     setPageWidget(vbox);
 
-    //QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-xxx.png");
-    //setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
+    QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-hugin.png");
+    setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
     connect(d->fileTemplateKLineEdit, SIGNAL(textChanged(QString)),
             this, SLOT(slotTemplateChanged(QString)));
+
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 }
@@ -161,7 +162,7 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -177,7 +178,7 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 }
                 default:
                 {
-                    kWarning() << "Unknown action";
+                    kWarning() << "Unknown action " << ad.action;
                     break;
                 }
             }
@@ -191,9 +192,10 @@ void LastPage::slotTemplateChanged(const QString& fileTemplate)
     d->title->setText(i18n("<qt>"
                            "<p><h1><b>Panorama Stitching is Done</b></h1></p>"
                            "<p>Congratulations. Your images are stitched into a panorama.</p>"
-                           "<p>Your panorama will be moved to the directory %1 once you press "
-                           "the <i>Finish</i> button, with the name %2</p>"
-                           "<p>If you choose to save the project file (with the name %3), and "
+                           "<p>Your panorama will be created to the directory</p>"
+                           "<p><b>%1</b></p>"
+                           "<p>once you press the <i>Finish</i> button, with the name set below.</p>"
+                           "<p>If you choose to save the project file, and "
                            "if your images were raw images then the converted images used during "
                            "the stitching process will be copied at the same time (those are "
                            "TIFF files that can be big).</p>"
@@ -204,7 +206,7 @@ void LastPage::slotTemplateChanged(const QString& fileTemplate)
                           ));
 }
 
-QString LastPage::panoFileName(const QString& fileTemplate)
+QString LastPage::panoFileName(const QString& fileTemplate) const
 {
     switch (d->mngr->format())
     {

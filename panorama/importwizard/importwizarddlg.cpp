@@ -271,7 +271,7 @@ void ImportWizardDlg::slotPreviewProcessing()
     //setValid(d->previewPage->page(), false);
 }
 
-void ImportWizardDlg::slotPreviewProcessed(const KUrl& url)
+void ImportWizardDlg::slotPreviewProcessed(const KUrl& /*url*/)
 {
     //setValid(d->previewPage->page(), !url.equals(KUrl()));
 }

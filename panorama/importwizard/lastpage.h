@@ -58,7 +58,7 @@ private Q_SLOTS:
 
 private:
 
-    QString panoFileName(const QString& fileTemplate);
+    QString panoFileName(const QString& fileTemplate) const;
 
 private:
 

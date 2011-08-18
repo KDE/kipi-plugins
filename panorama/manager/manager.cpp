@@ -60,7 +60,7 @@ struct Manager::ManagerPriv
       config("kipirc"),
       group(config.group(QString("Panorama Settings")))
     {
-        hdr = group.readEntry("HDR", false);
+        hdr      = group.readEntry("HDR", false);
         fileType = (ActionThread::PanoramaFileType) group.readEntry("File Type", (int) ActionThread::JPEG);
     }
 
@@ -71,38 +71,39 @@ struct Manager::ManagerPriv
         config.sync();
     }
 
-    KUrl::List              inputUrls;
-    KUrl                    cpFindUrl;
-    KUrl                    autoOptimiseUrl;
-    KUrl                    previewUrl;
-    KUrl                    panoUrl;
+    KUrl::List                     inputUrls;
+    KUrl                           cpFindUrl;
+    KUrl                           autoOptimiseUrl;
+    KUrl                           previewUrl;
+    KUrl                           panoUrl;
 
-    bool                    hdr;
+    bool                           hdr;
 
-    ActionThread::PanoramaFileType   fileType;
+    ActionThread::PanoramaFileType fileType;
 
-    ItemUrlsMap             preProcessedUrlsMap;
+    ItemUrlsMap                    preProcessedUrlsMap;
 
-    RawDecodingSettings     rawDecodingSettings;
+    RawDecodingSettings            rawDecodingSettings;
 
-    Interface*              iface;
+    Interface*                     iface;
 
-    PanoramaAboutData*      about;
+    PanoramaAboutData*             about;
 
-    ActionThread*           thread;
+    ActionThread*                  thread;
 
-    AutoOptimiserBinary     autoOptimiserBinary;
-    CPCleanBinary           cpCleanBinary;
-    CPFindBinary            cpFindBinary;
-    EnblendBinary           enblendBinary;
-    MakeBinary              makeBinary;
-    NonaBinary              nonaBinary;
-    Pto2MkBinary            pto2MkBinary;
+    AutoOptimiserBinary            autoOptimiserBinary;
+    CPCleanBinary                  cpCleanBinary;
+    CPFindBinary                   cpFindBinary;
+    EnblendBinary                  enblendBinary;
+    MakeBinary                     makeBinary;
+    NonaBinary                     nonaBinary;
+    Pto2MkBinary                   pto2MkBinary;
 
-    ImportWizardDlg*        wizard;
+    ImportWizardDlg*               wizard;
 
 private:
-    KConfig config;
+
+    KConfig      config;
     KConfigGroup group;
 };
 
@@ -122,7 +123,7 @@ Manager::~Manager()
     delete d;
 }
 
-bool Manager::checkBinaries()
+bool Manager::checkBinaries() const
 {
     if (!d->autoOptimiserBinary.showResults())
         return false;

@@ -1,4 +1,4 @@
-#SUBDIRS(icons)
+SUBDIRS(icons)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
@@ -15,7 +15,8 @@ IF(OPENMP_FOUND AND NOT APPLE)
     ENDIF("${CMAKE_C_COMPILER_ID}" STREQUAL SunPro )
 ENDIF(OPENMP_FOUND AND NOT APPLE)
 
-#INSTALL(DIRECTORY pics DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_panorama)
+INSTALL(DIRECTORY pics
+        DESTINATION ${DATA_INSTALL_DIR}/kipiplugin_panorama)
 
 # =======================================================
 # Common source code

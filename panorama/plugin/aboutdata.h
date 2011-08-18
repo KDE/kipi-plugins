@@ -38,12 +38,16 @@ public:
     PanoramaAboutData()
         : KPAboutData(ki18n("Panorama Stitching"), 0,
                       KAboutData::License_GPL,
-                      ki18n("A tool to automatically stitch images into panoramas"),
+                      ki18n("A tool to automatically stitch images into panorama"),
                       ki18n("(c) 2011, Benjamin Girault"))
     {
          addAuthor(ki18n("Benjamin Girault"),
                    ki18n("Author"),
                    "benjamin dot girault at gmail dot com");
+
+         addAuthor(ki18n("Gilles Caulier"),
+                   ki18n("Developer"),
+                   "caulier dot gilles at gmail dot com");
     }
 
     ~PanoramaAboutData(){}
