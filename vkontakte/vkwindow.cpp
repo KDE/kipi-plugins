@@ -494,12 +494,12 @@ void VkontakteWindow::slotHelp()
 
 void VkontakteWindow::startAuthentication(bool forceAuthWindow)
 {
-    m_userFullName = QString();
+    m_userFullName.clear();
     m_userId = -1;
     m_editAlbumButton->setEnabled(false);
 
     if (forceAuthWindow)
-        m_accessToken = QString();
+        m_accessToken.clear();
 
     if (!m_accessToken.isEmpty())
     {
