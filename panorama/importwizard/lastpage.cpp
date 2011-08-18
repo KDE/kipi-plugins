@@ -214,7 +214,7 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
             return fileTemplate + ".jpg";
         case ActionThread::TIFF:
             return fileTemplate + ".tif";
-        default: // FIXME: this doesn't compile with GCC 4.6.1 (-Werror=return-type)A
+        // FIXME: this doesn't compile with GCC 4.6.1 (-Werror=return-type)
     }
 }
 
