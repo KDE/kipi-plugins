@@ -110,7 +110,7 @@ BatchProgressWidget::BatchProgressWidget(QWidget* parent)
     d->progress->setRange(0, 100);
     d->progress->setValue(0);
     d->progress->setWhatsThis(i18n("<p>This is the batch job progress as a percentage.</p>"));
-};
+}
 
 BatchProgressWidget::~BatchProgressWidget()
 {
