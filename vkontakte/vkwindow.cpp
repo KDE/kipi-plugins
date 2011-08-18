@@ -31,16 +31,12 @@
 // Qt includes
 
 #include <QtCore/QFileInfo>
-#include <QtGui/QSpinBox>
 #include <QtGui/QCheckBox>
 #include <QtGui/QGroupBox>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QLabel>
 #include <QtGui/QSpinBox>
-#include <QtGui/QCheckBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QButtonGroup>
 #include <QtGui/QRadioButton>
 #include <QtGui/QProgressBar>
 #include <QtGui/QGridLayout>
@@ -98,7 +94,6 @@
 
 #include "imageslist.h"
 #include "vkalbumdialog.h"
-#include "vkwindow.h"
 
 #define SLOT_JOB_DONE_INIT(JobClass) \
     JobClass *job = dynamic_cast<JobClass *>(kjob); \
@@ -686,25 +681,27 @@ void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
 void VkontakteWindow::slotNewAlbumRequest()
 {
     Vkontakte::AlbumInfoPtr album(new Vkontakte::AlbumInfo());
-    VkontakteAlbumDialog dlg(this, album);
-
-    if (dlg.exec() == QDialog::Accepted)
+    QPointer<VkontakteAlbumDialog> dlg = new VkontakteAlbumDialog(this, album);
+    if (dlg->exec() == QDialog::Accepted)
     {
         updateControls(false);
         startAlbumCreation(album);
     }
+
+    delete dlg;
 }
 
 void VkontakteWindow::slotEditAlbumRequest()
 {
     Vkontakte::AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
-    VkontakteAlbumDialog dlg(this, album, true);
-
-    if (dlg.exec() == QDialog::Accepted)
+    QPointer<VkontakteAlbumDialog> dlg = new VkontakteAlbumDialog(this, album, true);
+    if (dlg->exec() == QDialog::Accepted)
     {
         updateControls(false);
         startAlbumEditing(album);
     }
+
+    delete dlg;
 }
 
 void VkontakteWindow::slotReloadAlbumsRequest()

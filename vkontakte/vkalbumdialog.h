@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef VKONTAKTE_ALBUMDIALOG_H
-#define VKONTAKTE_ALBUMDIALOG_H
+#ifndef VKALBUMDIALOG_H
+#define VKALBUMDIALOG_H
 
 // KDE includes
 
@@ -63,4 +63,4 @@ protected:
 
 } // namespace KIPIVkontaktePlugin
 
-#endif // VKONTAKTE_ALBUMDIALOG_H
+#endif // VKALBUMDIALOG_H

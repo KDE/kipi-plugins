@@ -26,8 +26,8 @@
  *
  * ============================================================ */
 
-#ifndef VKONTAKTE_WINDOW_H
-#define VKONTAKTE_WINDOW_H
+#ifndef VKWINDOW_H
+#define VKWINDOW_H
 
 // KDE includes
 
@@ -184,4 +184,4 @@ protected:
 
 } // namespace KIPIVkontaktePlugin
 
-#endif // VKONTAKTE_WINDOW_H
+#endif // VKWINDOW_H

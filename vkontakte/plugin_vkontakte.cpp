@@ -21,6 +21,8 @@
  *
  * ============================================================ */
 
+#include "plugin_vkontakte.h"
+
 // KDE includes
 
 #include <klocale.h>
@@ -40,7 +42,6 @@
 // Local includes
 
 #include "vkwindow.h"
-#include "plugin_vkontakte.h"
 
 K_PLUGIN_FACTORY( Factory, registerPlugin<Plugin_Vkontakte>(); )
 K_EXPORT_PLUGIN ( Factory("kipiplugin_vkontakte") )
