@@ -95,7 +95,7 @@ protected Q_SLOTS:
     void slotChangeUserClicked();
 
     // authentication
-    void slotApplicationPermissionCheckDone(KJob *);
+    void slotApplicationPermissionCheckDone(KJob *kjob);
     void slotAuthenticationDialogDone(const QString &accessToken);
     void slotAuthenticationDialogCanceled();
 
@@ -105,14 +105,14 @@ protected Q_SLOTS:
     void startGetUserId();
     void startAlbumCreation(Vkontakte::AlbumInfoPtr album);
     void startAlbumEditing(Vkontakte::AlbumInfoPtr album);
-    void slotAlbumsUpdateDone(KJob *);
-    void slotGetFullNameDone(KJob *);
-    void slotGetUserIdDone(KJob *);
-    void slotAlbumCreationDone(KJob *);
-    void slotAlbumEditingDone(KJob *);
+    void slotAlbumsUpdateDone(KJob *kjob);
+    void slotGetFullNameDone(KJob *kjob);
+    void slotGetUserIdDone(KJob *kjob);
+    void slotAlbumCreationDone(KJob *kjob);
+    void slotAlbumEditingDone(KJob *kjob);
 
     // requesting photo information
-    void slotPhotoUploadDone(KJob *);
+    void slotPhotoUploadDone(KJob *kjob);
 
     void updateLabels();
 
@@ -133,7 +133,7 @@ protected:
     void reset();
     void updateControls(bool val);
 
-    void handleVkError(KJob *job);
+    void handleVkError(KJob *kjob);
 
     // authentication
     bool isAuthenticated();
