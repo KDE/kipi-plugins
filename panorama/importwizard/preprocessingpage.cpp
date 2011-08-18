@@ -105,7 +105,7 @@ PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
     d->celesteCheckBox->setChecked(group.readEntry("Celeste", false));
     d->celesteCheckBox->setToolTip(i18n("Automatic detection of clouds to prevent wrong keypoints matching "
                                         "between images due to moving clouds."));
-    d->celesteCheckBox->setWhatsThis(i18n("<b>Detect Moving Skies<b>: During the control points selection and matching, "
+    d->celesteCheckBox->setWhatsThis(i18n("<b>Detect Moving Skies</b>: During the control points selection and matching, "
                                           "this option discards any points that are associated to a possible cloud. This "
                                           "is useful to prevent moving clouds from altering the control points matching "
                                           "process."));
