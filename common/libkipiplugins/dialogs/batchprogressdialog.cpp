@@ -121,7 +121,7 @@ BatchProgressWidget::BatchProgressWidget(QWidget* parent)
 
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(slotContextMenu()));
-};
+}
 
 BatchProgressWidget::~BatchProgressWidget()
 {

@@ -184,7 +184,6 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
         }
     }
-
 }
 
 void LastPage::slotTemplateChanged(const QString& fileTemplate)
@@ -210,6 +209,7 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
 {
     switch (d->mngr->format())
     {
+        default:
         case ActionThread::JPEG:
             return fileTemplate + ".jpg";
         case ActionThread::TIFF:
