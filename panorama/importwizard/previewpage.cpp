@@ -7,6 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,14 +50,14 @@ namespace KIPIPanoramaPlugin
 struct PreviewPage::PreviewPagePriv
 {
     PreviewPagePriv(Manager *m)
-        : title(0), previewWidget(0), previewBusy(false), progressDlg(0), mngr(m)
+        : title(0), previewWidget(0), previewBusy(false), postProcessing(0), mngr(m)
     {}
 
     QLabel*                 title;
     QUrl                    previewUrl;
     PreviewManager*         previewWidget;
     bool                    previewBusy;
-    BatchProgressDialog*    progressDlg;
+    BatchProgressWidget*    postProcessing;
     int                     curProgress, totalProgress;
 
     QString                 output;
@@ -68,21 +69,22 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
         : KIPIPlugins::WizardPage(dlg, i18n("Preview")),
           d(new PreviewPagePriv(mngr))
 {
-    KVBox *vbox                 = new KVBox(this);
-    d->title                    = new QLabel(i18n("<qt>"
-                                                  "<p><h1>Panorama Preview</h1></p>"
-                                                  "<p>Pressing the <i>Next</i> button launches the final "
-                                                  "stitching process.</p>"
-                                                  "</qt>"),
-                                             vbox);
+    KVBox* vbox       = new KVBox(this);
+    d->title          = new QLabel(i18n("<qt>"
+                                        "<p><h1>Panorama Preview</h1></p>"
+                                        "<p>Pressing the <i>Next</i> button launches the final "
+                                        "stitching process.</p>"
+                                        "</qt>"),
+                                        vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
-    d->previewWidget            = new PreviewManager(vbox);
+    d->previewWidget  = new PreviewManager(vbox);
     d->previewWidget->setButtonText(i18n("Details..."));
     d->previewWidget->show();
 
-    d->progressDlg = new BatchProgressDialog(this, QString("Stitching is under progress..."));
+    d->postProcessing = new BatchProgressWidget(vbox);
+    d->postProcessing->hide();
 
     vbox->setSpacing(KDialog::spacingHint());
     vbox->setMargin(KDialog::spacingHint());
@@ -98,8 +100,6 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
 
 PreviewPage::~PreviewPage()
 {
-    if (d->progressDlg)
-        delete d->progressDlg;
     delete d;
 }
 
@@ -133,10 +133,11 @@ void PreviewPage::computePreview()
 
 void PreviewPage::startStitching()
 {
-    d->curProgress = 0;
+    d->curProgress   = 0;
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
-    d->progressDlg->progressWidget()->setTotal(d->totalProgress);
-    d->progressDlg->show();
+    d->previewWidget->hide();
+    d->postProcessing->setTotal(d->totalProgress);
+    d->postProcessing->show();
 
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
@@ -183,7 +184,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-                    d->progressDlg->progressWidget()->addedAction(QString("Panorama compilation: ") + ad.message, ErrorMessage);
+                    d->postProcessing->addedAction(QString("Panorama compilation: ") + ad.message, ErrorMessage);
                     kDebug() << "Enblend call failed";
                     break;
                 }
@@ -197,7 +198,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     message << ": ";
                     message << ad.message;
                     kDebug() << "Nona call failed for file #" << ad.id;
-                    d->progressDlg->progressWidget()->addedAction(message.join(""), ErrorMessage);
+                    d->postProcessing->addedAction(message.join(""), ErrorMessage);
                     break;
                 }
                 default:
@@ -229,10 +230,10 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
-                    d->progressDlg->progressWidget()->addedAction(QString("Panorama compilation"), SuccessMessage);
+                    d->postProcessing->addedAction(QString("Panorama compilation"), SuccessMessage);
                     d->curProgress++;
-                    d->progressDlg->progressWidget()->setProgress(d->curProgress, d->totalProgress);
-                    d->progressDlg->hide();
+                    d->postProcessing->setProgress(d->curProgress, d->totalProgress);
+                    d->postProcessing->hide();
                     kDebug() << "Panorama URL: " << ad.outUrl.toLocalFile();
                     emit signalStitchingFinished(ad.outUrl);
                     break;
@@ -244,9 +245,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     message << QString::number(ad.id + 1);
                     message << " / ";
                     message << QString::number(d->totalProgress - 1);
-                    d->progressDlg->progressWidget()->addedAction(message.join(""), SuccessMessage);
+                    d->postProcessing->addedAction(message.join(""), SuccessMessage);
                     d->curProgress++;
-                    d->progressDlg->progressWidget()->setProgress(d->curProgress, d->totalProgress);
+                    d->postProcessing->setProgress(d->curProgress, d->totalProgress);
                     kDebug() << "Nona URL #" << ad.id << " URL: " << ad.outUrl.toLocalFile();
                     break;
                 }
@@ -264,7 +265,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
         {
             case STITCH:
             {
-                d->progressDlg->progressWidget()->addedAction(QString("Panorama compilation"), StartingMessage);
+                d->postProcessing->addedAction(QString("Panorama compilation"), StartingMessage);
                 break;
             }
             case NONAFILE:
@@ -274,7 +275,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                 message << QString::number(ad.id + 1);
                 message << " / ";
                 message << QString::number(d->totalProgress - 1);
-                d->progressDlg->progressWidget()->addedAction(message.join(""), StartingMessage);
+                d->postProcessing->addedAction(message.join(""), StartingMessage);
                 break;
             }
             default:
