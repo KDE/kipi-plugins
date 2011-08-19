@@ -62,8 +62,8 @@ struct LastPage::LastPagePriv
 };
 
 LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
-        : KIPIPlugins::WizardPage(dlg, i18n("Panorama Stitched")),
-          d(new LastPagePriv)
+     : KIPIPlugins::WizardPage(dlg, i18n("<b>Panorama Stitched</b>")),
+       d(new LastPagePriv)
 {
     KConfig config("kipirc");
     KConfigGroup group        = config.group(QString("Panorama Settings"));

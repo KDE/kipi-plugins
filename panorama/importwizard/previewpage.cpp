@@ -53,20 +53,20 @@ struct PreviewPage::PreviewPagePriv
         : title(0), previewWidget(0), previewBusy(false), postProcessing(0), mngr(m)
     {}
 
-    QLabel*                 title;
-    QUrl                    previewUrl;
-    PreviewManager*         previewWidget;
-    bool                    previewBusy;
-    BatchProgressWidget*    postProcessing;
-    int                     curProgress, totalProgress;
+    QLabel*              title;
+    QUrl                 previewUrl;
+    PreviewManager*      previewWidget;
+    bool                 previewBusy;
+    BatchProgressWidget* postProcessing;
+    int                  curProgress, totalProgress;
 
-    QString                 output;
+    QString              output;
 
-    Manager*                mngr;
+    Manager*             mngr;
 };
 
 PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
-        : KIPIPlugins::WizardPage(dlg, i18n("Preview")),
+        : KIPIPlugins::WizardPage(dlg, i18n("<b>Preview and Post-Processing</b>")),
           d(new PreviewPagePriv(mngr))
 {
     KVBox* vbox       = new KVBox(this);

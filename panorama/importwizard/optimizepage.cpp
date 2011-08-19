@@ -80,7 +80,7 @@ struct OptimizePage::OptimizePagePriv
 };
 
 OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("Optimization")),
+    : KIPIPlugins::WizardPage(dlg, i18n("<b>Optimization</b>")),
       d(new OptimizePagePriv)
 {
     d->mngr                         = mngr;
