@@ -75,6 +75,11 @@ public Q_SLOTS:
     void setProgress(int);
     void setTotal(int total);
 
+private Q_SLOTS:
+
+    void slotContextMenu();
+    void slotCopy2ClipBoard();
+
 private:
 
     class BatchProgressWidgetPriv;

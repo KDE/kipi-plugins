@@ -279,7 +279,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
             default:
             {
-                kWarning() << "Unknown starting action";
+                kWarning() << "Unknown starting action " << ad.action;
                 break;
             }
         }

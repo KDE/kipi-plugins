@@ -29,9 +29,14 @@
 #include <QProgressBar>
 #include <QLayout>
 #include <QListWidget>
+#include <QMimeData>
+#include <QClipboard>
+#include <QApplication>
 
 // KDE includes
 
+#include <kmenu.h>
+#include <kaction.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
@@ -98,6 +103,7 @@ public:
 BatchProgressWidget::BatchProgressWidget(QWidget* parent)
    : KVBox(parent), d(new BatchProgressWidgetPriv)
 {
+    setContextMenuPolicy(Qt::CustomContextMenu);
     layout()->setSpacing(KDialog::spacingHint());
 
     d->actionsList = new QListWidget(this);
@@ -110,6 +116,11 @@ BatchProgressWidget::BatchProgressWidget(QWidget* parent)
     d->progress->setRange(0, 100);
     d->progress->setValue(0);
     d->progress->setWhatsThis(i18n("<p>This is the batch job progress as a percentage.</p>"));
+
+    //---------------------------------------------
+
+    connect(this, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(slotContextMenu()));
 };
 
 BatchProgressWidget::~BatchProgressWidget()
@@ -163,6 +174,32 @@ void BatchProgressWidget::setTotal(int total)
 void BatchProgressWidget::setProgress(int current)
 {
     d->progress->setValue(current);
+}
+
+void BatchProgressWidget::slotContextMenu()
+{
+    KMenu popmenu(this);
+    KAction* action = new KAction(KIcon("edit-copy"), i18n("Copy to Clipboard"), this);
+    connect(action, SIGNAL(triggered(bool)),
+            this, SLOT(slotCopy2ClipBoard()));
+
+    popmenu.addAction(action);
+    popmenu.exec(QCursor::pos());
+}
+
+void BatchProgressWidget::slotCopy2ClipBoard()
+{
+    QString textInfo;
+
+    for (int i=0 ; i < d->actionsList->count() ; ++i)
+    {
+        textInfo.append(d->actionsList->item(i)->text());
+        textInfo.append("\n");
+    }
+
+    QMimeData* mimeData = new QMimeData();
+    mimeData->setText(textInfo);
+    QApplication::clipboard()->setMimeData(mimeData, QClipboard::Clipboard);
 }
 
 // ---------------------------------------------------------------------------------
