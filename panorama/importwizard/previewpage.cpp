@@ -70,12 +70,7 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
           d(new PreviewPagePriv(mngr))
 {
     KVBox* vbox       = new KVBox(this);
-    d->title          = new QLabel(i18n("<qt>"
-                                        "<p><h1>Panorama Preview</h1></p>"
-                                        "<p>Pressing the <i>Next</i> button launches the final "
-                                        "stitching process.</p>"
-                                        "</qt>"),
-                                        vbox);
+    d->title          = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
@@ -136,6 +131,10 @@ void PreviewPage::startStitching()
     d->curProgress   = 0;
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
     d->previewWidget->hide();
+    d->title->setText(i18n("<qt>"
+                           "<p><h1>Panorama Post-Processing</h1></p>"
+                           "</qt>"));
+
     d->postProcessing->setTotal(d->totalProgress);
     d->postProcessing->show();
 
@@ -151,6 +150,13 @@ void PreviewPage::startStitching()
 
 void PreviewPage::resetPage()
 {
+    d->title->setText(i18n("<qt>"
+                           "<p><h1>Panorama Preview</h1></p>"
+                           "<p>Pressing the <i>Next</i> button launches the final "
+                           "stitching process.</p>"
+                           "</qt>"));
+    d->postProcessing->hide();
+    d->previewWidget->show();
     computePreview();
 }
 
