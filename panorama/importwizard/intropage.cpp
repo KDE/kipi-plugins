@@ -64,7 +64,7 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
     title->setOpenExternalLinks(true);
     title->setText(i18n("<qt>"
                         "<p><h1><b>Welcome to Panorama tool</b></h1></p>"
-                        "<p>This tool stitch several images together to create a panorama, making the "
+                        "<p>This tool stitches several images together to create a panorama, making the "
                         "seam between images not visible.</p>"
                         "<p>This assistant will help you to configure how to import images before "
                         "stitching them into a panorama.</p>"
@@ -77,12 +77,12 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
 
     QLabel* options = new QLabel(vbox);
     options->setWordWrap(true);
-    options->setText(i18n("<qt><p>Panorama Settings: </p></qt>"));
+    options->setText(i18n("Panorama Settings:"));
 
-    d->hdrCheckBox  = new QCheckBox(i18n("HDR Output"), vbox);
+    d->hdrCheckBox  = new QCheckBox(i18n("HDR output"), vbox);
     d->hdrCheckBox->setToolTip(i18n("When checked, the panorama will be stitched into an High Dynamic Range (HDR) "
                                     "image, that can be processed further with a dedicated software."));
-    d->hdrCheckBox->setWhatsThis(i18n("<b>HDR Output</b>: Output in High Dynamic Range, meaning that every piece of "
+    d->hdrCheckBox->setWhatsThis(i18n("<b>HDR output</b>: Output in High Dynamic Range, meaning that every piece of "
                                       "information contained in the original photos are preserved. Note that you "
                                       "need another software to process the resulting panorama, like "
                                       "<a href=\"http://qtpfsgui.sourceforge.net/\">Luminance HDR</a>"));
@@ -93,18 +93,18 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
     QButtonGroup* group     = new QButtonGroup();
     formatVBox->addStretch(1);
 
-    d->jpegRadioButton      = new QRadioButton(i18n("JPEG Output"), d->formatGroupBox);
+    d->jpegRadioButton      = new QRadioButton(i18n("JPEG output"), d->formatGroupBox);
     d->jpegRadioButton->setToolTip(i18n("Selects a JPEG output with 90% compression rate "
                                         "(lossy compression, smaller size)."));
-    d->jpegRadioButton->setWhatsThis(i18n("<b>JPEG Output</b>: Using JPEG output, the panorama file will be smaller "
+    d->jpegRadioButton->setWhatsThis(i18n("<b>JPEG output</b>: Using JPEG output, the panorama file will be smaller "
                                           "at the cost of information loss during compression. This is the easiest "
                                           "way to share the result, or print it online or in a shop."));
     formatVBox->addWidget(d->jpegRadioButton);
     group->addButton(d->jpegRadioButton);
-    d->tiffRadioButton      = new QRadioButton(i18n("TIFF Output"), d->formatGroupBox);
+    d->tiffRadioButton      = new QRadioButton(i18n("TIFF output"), d->formatGroupBox);
     d->tiffRadioButton->setToolTip(i18n("Selects a TIFF output compressed using the LZW algorithm "
                                         "(lossless compression, bigger size)."));
-    d->jpegRadioButton->setWhatsThis(i18n("<b>TIFF Output</b>: Using TIFF output, you get the same color depth than "
+    d->jpegRadioButton->setWhatsThis(i18n("<b>TIFF output</b>: Using TIFF output, you get the same color depth than "
                                           "your original photos using RAW images at the cost of a bigger panorama file."));
     formatVBox->addWidget(d->tiffRadioButton);
     group->addButton(d->tiffRadioButton);

@@ -93,16 +93,16 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
     KConfig config("kipirc");
     KConfigGroup group              = config.group(QString("Panorama Settings"));
 
-    d->horizonCheckbox              = new QCheckBox(i18n("Level Horizon"), vbox);
+    d->horizonCheckbox              = new QCheckBox(i18n("Level horizon"), vbox);
     d->horizonCheckbox->setChecked(group.readEntry("Horizon", true));
     d->horizonCheckbox->setToolTip(i18n("Detect the horizon and adapt the project to make it horizontal."));
-    d->horizonCheckbox->setWhatsThis(i18n("<b>Level Horizon</b>: Detect the horizon and adapt the projection so that "
+    d->horizonCheckbox->setWhatsThis(i18n("<b>Level horizon</b>: Detect the horizon and adapt the projection so that "
                                           "the detected horizon is an horizontal line in the final panorama"));
-    d->projectionAndSizeCheckbox    = new QCheckBox(i18n("Automatic Projection and Crop"), vbox);
+    d->projectionAndSizeCheckbox    = new QCheckBox(i18n("Automatic projection and crop"), vbox);
     d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
     d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the panorama crop and the output projection to get the every "
                                                  "photos into the panorama."));
-    d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic Projection and Crop</b>: Automatically adapt the projection "
+    d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic projection and crop</b>: Automatically adapt the projection "
                                                     "and the crop of the panorama to get every photos into the panorama."));
 
     QLabel* space1                  = new QLabel(vbox);

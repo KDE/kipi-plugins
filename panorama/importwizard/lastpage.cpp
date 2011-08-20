@@ -81,21 +81,21 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
     d->saveSettingsGroupBox->setLayout(formatVBox);
     formatVBox->addStretch(1);
 
-    QLabel *fileTemplateLabel = new QLabel(i18n("File Name Template: "), d->saveSettingsGroupBox);
+    QLabel *fileTemplateLabel = new QLabel(i18n("File name template:"), d->saveSettingsGroupBox);
     formatVBox->addWidget(fileTemplateLabel);
     // TODO: change the default name to something similar to what is done within hugin
     d->fileTemplateKLineEdit  = new KLineEdit("panorama", d->saveSettingsGroupBox);
     d->fileTemplateKLineEdit->setToolTip(i18n("Name of the panorama file (without its extension)."));
-    d->fileTemplateKLineEdit->setWhatsThis(i18n("<b>File Name Template</b>: Set here the base name of the files that "
+    d->fileTemplateKLineEdit->setWhatsThis(i18n("<b>File name template</b>: Set here the base name of the files that "
                                                 "will be saved. For example, if your template is <i>panorama</i> and if "
                                                 "you chose a JPEG output, then your panorama will be saved with the "
                                                 "name <i>panorama.jpg</i>. If you choose to save also the project file, "
                                                 "it will have the name <i>panorama.pto</i>."));
     formatVBox->addWidget(d->fileTemplateKLineEdit);
-    d->savePtoCheckBox        = new QCheckBox(i18n("Save Project File"), d->saveSettingsGroupBox);
+    d->savePtoCheckBox        = new QCheckBox(i18n("Save project file"), d->saveSettingsGroupBox);
     d->savePtoCheckBox->setChecked(group.readEntry("Save PTO", false));
     d->savePtoCheckBox->setToolTip(i18n("Save the project file for further processing within Hugin GUI."));
-    d->savePtoCheckBox->setWhatsThis(i18n("<b>Save Project File</b>: You can keep the project file generated to stitch "
+    d->savePtoCheckBox->setWhatsThis(i18n("<b>Save project file</b>: You can keep the project file generated to stitch "
                                           "your panorama for further tweaking within "
                                           "<a href=\"http://hugin.sourceforge.net/\">Hugin</a> by checking this. "
                                           "This is useful if you want a different projection, modify the horizon or "
