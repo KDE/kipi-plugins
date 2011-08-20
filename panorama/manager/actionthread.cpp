@@ -1205,25 +1205,25 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
 
     if (!panoFile.exists())
     {
-        errors = i18n("Temporary panorama file does not exists!!");
+        errors = i18n("Temporary panorama file does not exists.");
         kDebug() << "Temporary panorama file does not exists: " + panoUrl.toLocalFile();
         return false;
     }
     if (finalPanoFile.exists())
     {
-        errors = i18n("A file named %1 already exists!!", finalPanoUrl.fileName());
+        errors = i18n("A file named %1 already exists.", finalPanoUrl.fileName());
         kDebug() << "Final panorama file already exists: " + finalPanoUrl.toLocalFile();
         return false;
     }
     if (savePTO && !ptoFile.exists())
     {
-        errors = i18n("Temporary project file does not exists!!");
+        errors = i18n("Temporary project file does not exist.");
         kDebug() << "Temporary project file does not exists: " + ptoUrl.toLocalFile();
         return false;
     }
     if (savePTO && finalPTOFile.exists())
     {
-        errors = i18n("A file named %1 already exists!!", finalPTOUrl.fileName());
+        errors = i18n("A file named %1 already exists.", finalPTOUrl.fileName());
         kDebug() << "Final project file already exists: " + finalPTOUrl.toLocalFile();
         return false;
     }
@@ -1231,7 +1231,7 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
     kDebug() << "Copying panorama file...";
     if (!panoFile.copy(finalPanoUrl.toLocalFile()) || !panoFile.remove())
     {
-        errors = i18n("Cannot move panorama from %1 to %2!!",
+        errors = i18n("Cannot move panorama from %1 to %2.",
                       panoUrl.toLocalFile(),
                       finalPanoUrl.toLocalFile());
         kDebug() << "Cannot move panorama: QFile errror = " + panoFile.error();
@@ -1243,7 +1243,7 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
         kDebug() << "Copying project file...";
         if (!ptoFile.copy(finalPTOUrl.toLocalFile()))
         {
-            errors = i18n("Cannot move project file from %1 to %2!!",
+            errors = i18n("Cannot move project file from %1 to %2.",
                           panoUrl.toLocalFile(),
                           finalPanoUrl.toLocalFile());
             return false;
@@ -1259,7 +1259,7 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
                 QFile imgFile(i->preprocessedUrl.toLocalFile());
                 if (!imgFile.copy(finalImgUrl.toLocalFile()))
                 {
-                    errors = i18n("Cannot copy converted image file from %1 to %2!!",
+                    errors = i18n("Cannot copy converted image file from %1 to %2.",
                                   i->preprocessedUrl.toLocalFile(),
                                   finalImgUrl.toLocalFile());
                     return false;
