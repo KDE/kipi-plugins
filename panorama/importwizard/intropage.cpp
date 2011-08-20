@@ -94,6 +94,7 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
     formatVBox->addStretch(1);
 
     d->jpegRadioButton      = new QRadioButton(i18n("JPEG output"), d->formatGroupBox);
+    // xgettext: no-c-format
     d->jpegRadioButton->setToolTip(i18n("Selects a JPEG output with 90% compression rate "
                                         "(lossy compression, smaller size)."));
     d->jpegRadioButton->setWhatsThis(i18n("<b>JPEG output</b>: Using JPEG output, the panorama file will be smaller "
