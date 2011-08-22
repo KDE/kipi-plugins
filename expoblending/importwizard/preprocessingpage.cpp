@@ -174,7 +174,7 @@ void PreProcessingPage::resetTitle()
 void PreProcessingPage::process()
 {
     d->title->setText(i18n("<qt>"
-                           "<p>Pre-processing is under progress, please wait.<p>"
+                           "<p>Pre-processing is under progress, please wait.</p>"
                            "<p>This can take a while...</p>"
                            "</qt>"));
 
