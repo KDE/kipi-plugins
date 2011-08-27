@@ -207,7 +207,7 @@ ENDFOREACH(_currentfile ${libdng_SRCS})
 
 KDE4_ADD_LIBRARY(libdng STATIC ${libdng_SRCS})
 
-TARGET_LINK_LIBRARIES(libdng libxmp)
+TARGET_LINK_LIBRARIES(libdng libxmp pthread)
 
 # =======================================================
 # DNGWritter interface
