@@ -16,6 +16,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> 279445 : Change the way progress is reported in the Geolocation Correlator.
 007 ==> 098693 : Easy stitcher and panorama tool.
 008 ==> 235766 : Panorama Tool as hugin, gimp-pandora.
-009 ==> 
+009 ==> 280860 : Compile fails due to DSO error with pthread.
+010 ==> 
 
 
