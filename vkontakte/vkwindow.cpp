@@ -152,6 +152,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     m_changeUserButton = new KPushButton(
         KGuiItem(i18n("Change Account"), "system-switch-user",
                  i18n("Change VKontakte account used to authenticate")), m_accountBox);
+    m_changeUserButton->setEnabled(false); // changing account does not work anyway
 
     accountBoxLayout->addWidget(loginDescLabel, 0, 0);
     accountBoxLayout->addWidget(m_loginLabel, 0, 1);
@@ -346,7 +347,7 @@ void VkontakteWindow::updateControls(bool val)
             enableButton(User1, false);
         }
 
-        m_changeUserButton->setEnabled(true);
+        //m_changeUserButton->setEnabled(true); // does not work anyway
         setCursor(Qt::ArrowCursor);
 
         setButtonGuiItem(KDialog::Close,
@@ -357,7 +358,7 @@ void VkontakteWindow::updateControls(bool val)
     {
         setCursor(Qt::WaitCursor);
         m_albumsBox->setEnabled(false);
-        m_changeUserButton->setEnabled(false);
+        //m_changeUserButton->setEnabled(false); // does not work anyway
         enableButton(User1, false);
 
         setButtonGuiItem(KDialog::Close,
