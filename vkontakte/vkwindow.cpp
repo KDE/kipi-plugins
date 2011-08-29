@@ -492,13 +492,13 @@ void VkontakteWindow::slotHelp()
     KToolInvocation::invokeHelp("VKontakte", "kipi-plugins");
 }
 
-void VkontakteWindow::startAuthentication(bool forceAuthWindow)
+void VkontakteWindow::startAuthentication(bool forceLogout)
 {
     m_userFullName.clear();
     m_userId = -1;
     m_editAlbumButton->setEnabled(false);
 
-    if (forceAuthWindow)
+    if (forceLogout)
         m_accessToken.clear();
 
     if (!m_accessToken.isEmpty())

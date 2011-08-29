@@ -137,7 +137,7 @@ protected:
 
     // authentication
     bool isAuthenticated();
-    void startAuthentication(bool forceAuthWindow);
+    void startAuthentication(bool forceLogout);
 
     void selectAlbum(int aid);
 
