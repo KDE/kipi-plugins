@@ -105,11 +105,13 @@ protected Q_SLOTS:
     void startGetUserId();
     void startAlbumCreation(Vkontakte::AlbumInfoPtr album);
     void startAlbumEditing(Vkontakte::AlbumInfoPtr album);
+    void startAlbumDeletion(Vkontakte::AlbumInfoPtr album);
     void slotAlbumsUpdateDone(KJob *kjob);
     void slotGetFullNameDone(KJob *kjob);
     void slotGetUserIdDone(KJob *kjob);
     void slotAlbumCreationDone(KJob *kjob);
     void slotAlbumEditingDone(KJob *kjob);
+    void slotAlbumDeletionDone(KJob *kjob);
 
     // requesting photo information
     void slotPhotoUploadDone(KJob *kjob);
@@ -118,6 +120,7 @@ protected Q_SLOTS:
 
     void slotNewAlbumRequest();
     void slotEditAlbumRequest();
+    void slotDeleteAlbumRequest();
     void slotReloadAlbumsRequest();
 
     void slotStartTransfer();
@@ -161,6 +164,7 @@ protected:
     KPushButton *m_reloadAlbumsButton;
     KComboBox *m_albumsCombo;
     QToolButton *m_editAlbumButton;
+    QToolButton *m_deleteAlbumButton;
 
     // options
 //     QCheckBox *m_checkKeepOriginal;

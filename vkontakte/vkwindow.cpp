@@ -71,6 +71,7 @@
 #include <libkvkontakte/albumlistjob.h>
 #include <libkvkontakte/createalbumjob.h>
 #include <libkvkontakte/editalbumjob.h>
+#include <libkvkontakte/deletealbumjob.h>
 #include <libkvkontakte/uploadphotosjob.h>
 #include <libkvkontakte/getvariablejob.h>
 
@@ -186,10 +187,16 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     m_editAlbumButton->setEnabled(false);
     m_editAlbumButton->setIcon(KIcon("document-edit"));
 
+    m_deleteAlbumButton = new QToolButton(m_albumsBox);
+    m_deleteAlbumButton->setToolTip(i18n("Delete selected album"));
+    m_deleteAlbumButton->setEnabled(false);
+    m_deleteAlbumButton->setIcon(KIcon("edit-delete"));
+
     QWidget *currentAlbumWidget = new QWidget(m_albumsBox);
     QHBoxLayout *currentAlbumWidgetLayout = new QHBoxLayout(currentAlbumWidget);
     currentAlbumWidgetLayout->addWidget(m_albumsCombo);
     currentAlbumWidgetLayout->addWidget(m_editAlbumButton);
+    currentAlbumWidgetLayout->addWidget(m_deleteAlbumButton);
 
     QWidget *albumButtons = new QWidget(m_albumsBox);
     QHBoxLayout *albumButtonsLayout = new QHBoxLayout(albumButtons);
@@ -201,6 +208,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     albumsBoxLayout->addWidget(albumButtons);
 
     connect(m_editAlbumButton, SIGNAL(clicked()), this, SLOT(slotEditAlbumRequest()));
+    connect(m_deleteAlbumButton, SIGNAL(clicked()), this, SLOT(slotDeleteAlbumRequest()));
     connect(m_newAlbumButton, SIGNAL(clicked()), this, SLOT(slotNewAlbumRequest()));
     connect(m_reloadAlbumsButton, SIGNAL(clicked()), this, SLOT(slotReloadAlbumsRequest()));
 
@@ -498,6 +506,7 @@ void VkontakteWindow::startAuthentication(bool forceLogout)
     m_userFullName.clear();
     m_userId = -1;
     m_editAlbumButton->setEnabled(false);
+    m_deleteAlbumButton->setEnabled(false);
 
     if (forceLogout)
         m_accessToken.clear();
@@ -584,7 +593,10 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
 
 
     if (!m_albums.empty())
+    {
         m_editAlbumButton->setEnabled(true);
+        m_deleteAlbumButton->setEnabled(true);
+    }
 
     updateControls(true);
 }
@@ -648,6 +660,7 @@ void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
     startAlbumsUpdate();
     m_albumsCombo->setEnabled(false);
     m_editAlbumButton->setEnabled(false);
+    m_deleteAlbumButton->setEnabled(false);
     updateControls(false);
 }
 
@@ -674,6 +687,29 @@ void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
     startAlbumsUpdate();
     m_albumsCombo->setEnabled(false);
     m_editAlbumButton->setEnabled(false);
+    m_deleteAlbumButton->setEnabled(false);
+    updateControls(false);
+}
+
+//------------------------------
+
+void VkontakteWindow::startAlbumDeletion(Vkontakte::AlbumInfoPtr album)
+{
+    Vkontakte::DeleteAlbumJob *job = new Vkontakte::DeleteAlbumJob(
+        m_accessToken, album->aid());
+    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumDeletionDone(KJob*)));
+    m_jobs.append(job);
+    job->start();
+}
+
+void VkontakteWindow::slotAlbumDeletionDone(KJob *kjob)
+{
+    SLOT_JOB_DONE_INIT(Vkontakte::DeleteAlbumJob)
+
+    startAlbumsUpdate();
+    m_albumsCombo->setEnabled(false);
+    m_editAlbumButton->setEnabled(false);
+    m_deleteAlbumButton->setEnabled(false);
     updateControls(false);
 }
 
@@ -703,6 +739,24 @@ void VkontakteWindow::slotEditAlbumRequest()
     }
 
     delete dlg;
+}
+
+void VkontakteWindow::slotDeleteAlbumRequest()
+{
+    Vkontakte::AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
+
+    if (KMessageBox::warningContinueCancel(
+        this,
+        i18n("<qt>Are you sure you want to remove the album <b>%1</b>?</qt>", album->title()),
+        i18nc("@title:window", "Confirm Album Deletion"),
+        KStandardGuiItem::del(),
+        KStandardGuiItem::cancel(),
+        QString("kipi_vkontakte_delete_album_with_photos")) != KMessageBox::Continue)
+    {
+        return;
+    }
+
+    startAlbumDeletion(album);
 }
 
 void VkontakteWindow::slotReloadAlbumsRequest()
