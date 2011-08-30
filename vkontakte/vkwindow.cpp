@@ -247,6 +247,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     settingsBoxLayout->addWidget(m_albumsBox);
     settingsBoxLayout->addWidget(uploadBox);
 //     settingsBoxLayout->addWidget(optionsBox);
+    settingsBoxLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
