@@ -62,7 +62,7 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, Vkontakte::AlbumInfo
     setMainWidget(mainWidget);
     mainWidget->setMinimumSize(400, 300);
 
-    QGroupBox *albumBox = new QGroupBox(i18n("Album"), mainWidget);
+    QGroupBox *albumBox = new QGroupBox(i18nc("@title:group Header above Title and Summary fields", "Album"), mainWidget);
     albumBox->setWhatsThis(
         i18n("These are basic settings for the new VKontakte album."));
 

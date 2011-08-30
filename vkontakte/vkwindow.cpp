@@ -167,7 +167,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     /*
      * Album box
      */
-    m_albumsBox = new QGroupBox(i18n("Album"), settingsBox);
+    m_albumsBox = new QGroupBox(i18nc("@title:group Header above controls for managing albums", "Album"), settingsBox);
     m_albumsBox->setWhatsThis(
         i18n("This is the VKontakte album that will be used for the transfer."));
     QVBoxLayout *albumsBoxLayout = new QVBoxLayout(m_albumsBox);
@@ -223,9 +223,11 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     // ------------------------------------------------------------------------
 
+#if 0
     QGroupBox *optionsBox = new QGroupBox(i18n("Options"), settingsBox);
     optionsBox->setWhatsThis(
         i18n("These are options that will be applied to images before upload."));
+#endif
 
 //     m_checkKeepOriginal = new QCheckBox(i18n("Save in high resolution"), settingsBox); // store state in kipirc
 
@@ -244,7 +246,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     settingsBoxLayout->addWidget(m_accountBox);
     settingsBoxLayout->addWidget(m_albumsBox);
     settingsBoxLayout->addWidget(uploadBox);
-    settingsBoxLayout->addWidget(optionsBox);
+//     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
@@ -263,7 +265,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     if (!m_import)
     {
-        setWindowTitle(i18n("Export to VKontakte Web Service"));
+        setWindowTitle(i18nc("@title:window", "Export to VKontakte Web Service"));
         setButtonGuiItem(KDialog::User1,
                          KGuiItem(i18n("Start Upload"), "network-workgroup",
                                   i18n("Start upload to VKontakte service")));
@@ -275,7 +277,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
         // TODO: import support
         m_imgList->hide();
         m_newAlbumButton->hide();
-        optionsBox->hide();
+//         optionsBox->hide();
     }
 
     KIPIPlugins::KPAboutData* about = new KIPIPlugins::KPAboutData(
@@ -297,7 +299,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)), this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
