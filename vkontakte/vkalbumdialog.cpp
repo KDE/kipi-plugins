@@ -56,7 +56,7 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, Vkontakte::AlbumInfo
         i18nc("@title:window", "Edit album") :
         i18nc("@title:window", "New album"));
     setButtons(KDialog::Ok | KDialog::Cancel);
-    setDefaultButton(KDialog::Cancel);
+    setDefaultButton(KDialog::Ok);
 
     QWidget *mainWidget = new QWidget(this);
     setMainWidget(mainWidget);
@@ -112,6 +112,8 @@ VkontakteAlbumDialog::VkontakteAlbumDialog(QWidget *parent, Vkontakte::AlbumInfo
         m_albumPrivacyCombo->setCurrentIndex(m_albumPrivacyCombo->findData(album->privacy()));
         m_commentsPrivacyCombo->setCurrentIndex(m_commentsPrivacyCombo->findData(album->commentPrivacy()));
     }
+
+    m_titleEdit->setFocus();
 }
 
 VkontakteAlbumDialog::~VkontakteAlbumDialog()
