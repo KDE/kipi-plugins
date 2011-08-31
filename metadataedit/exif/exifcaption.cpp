@@ -114,11 +114,11 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->imageDescCheck = new QCheckBox(i18nc("image title", "Title (*):"), this);
+    d->imageDescCheck = new QCheckBox(i18nc("image description", "Description (*):"), this);
     d->imageDescEdit  = new KLineEdit(this);
     d->imageDescEdit->setClearButtonShown(true);
     d->imageDescEdit->setValidator(asciiValidator);
-    d->imageDescEdit->setWhatsThis(i18n("Enter the image title. This field is limited "
+    d->imageDescEdit->setWhatsThis(i18n("Enter the image description. This field is limited "
                                         "to ASCII characters."));
 
     // --------------------------------------------------------
@@ -141,7 +141,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
 
     // --------------------------------------------------------
 
-    d->userCommentCheck = new QCheckBox(i18nc("image cpation", "Caption:"), this);
+    d->userCommentCheck = new QCheckBox(i18nc("image caption", "Caption:"), this);
     d->userCommentEdit  = new KTextEdit(this);
     d->userCommentEdit->setWhatsThis(i18n("Enter the image's caption. "
                                           "This field is not limited. UTF8 encoding "
