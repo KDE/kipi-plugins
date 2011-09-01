@@ -114,7 +114,10 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     : KDialog(parent)
 {
     m_authenticated = false;
-    m_albumToSelect = -1;
+
+    // read settings from file
+    readSettings();
+    connect(this, SIGNAL(finished()), this, SLOT(slotFinished()));
 
     m_interface = interface;
     m_import = import;
@@ -318,9 +321,6 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     // for startReactivation()
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(show()));
-
-    // read settings from file
-    //readSettings();
 }
 
 VkontakteWindow::~VkontakteWindow()
@@ -415,51 +415,36 @@ void VkontakteWindow::selectAlbum(int aid)
         }
 }
 
+//------------------------------
 
-// void VkontakteWindow::readSettings()
-// {
-//     KConfig config("kipirc");
-//     KConfigGroup grp = config.group( "YandexFotki Settings");
-//
-//     // TODO: use kwallet ??
-//     m_talker.setLogin(grp.readEntry("login", ""));
-//     // don't store tokens in plaintext
-//     //m_talker.setToken(grp.readEntry("token", ""));
-//
-//     if (grp.readEntry("Resize", false))
-//     {
-//         m_resizeCheck->setChecked(true);
-//         m_dimensionSpin->setEnabled(true);
-//         m_imageQualitySpin->setEnabled(true);
-//     }
-//     else
-//     {
-//         m_resizeCheck->setChecked(false);
-//         m_dimensionSpin->setEnabled(false);
-//         m_imageQualitySpin->setEnabled(false);
-//     }
-//
-//     m_dimensionSpin->setValue(grp.readEntry("Maximum Width", 1600));
-//     m_imageQualitySpin->setValue(grp.readEntry("Image Quality", 85));
-//     m_policyGroup->button(grp.readEntry("Sync policy", 0))->setChecked(true);
-// }
+void VkontakteWindow::readSettings()
+{
+    KConfig config("kipirc");
+    KConfigGroup grp = config.group("VKontakte Settings");
 
-// void VkontakteWindow::writeSettings()
-// {
-//     KConfig config("kipirc");
-//     KConfigGroup grp = config.group("VKontakte Settings");
-//
-//     // TODO: user kwallet ??
-//     grp.writeEntry("token", m_talker.token());
-//     // don't store tokens in plaintext
-//     //grp.writeEntry("login", m_talker.login());
-//
-//     grp.writeEntry("Resize", m_resizeCheck->isChecked());
-//     grp.writeEntry("Maximum Width", m_dimensionSpin->value());
-//     grp.writeEntry("Image Quality", m_imageQualitySpin->value());
-//     grp.writeEntry("Sync policy", m_policyGroup->checkedId());
-// }
+    m_appId = grp.readEntry("VkAppId", "2446321");
+    m_accessToken = grp.readEntry("AccessToken", "");
+    m_albumToSelect = grp.readEntry("SelectedAlbumId", -1);
+}
 
+void VkontakteWindow::writeSettings()
+{
+    KConfig config("kipirc");
+    KConfigGroup grp = config.group("VKontakte Settings");
+
+    grp.writeEntry("VkAppId", m_appId);
+
+    if (!m_accessToken.isEmpty())
+        grp.writeEntry("AccessToken", m_accessToken);
+
+    int currentAlbumIndex = m_albumsCombo->currentIndex();
+    if (currentAlbumIndex >= 0)
+        grp.writeEntry("SelectedAlbumId", m_albums.at(currentAlbumIndex)->aid());
+    else
+        grp.deleteEntry("SelectedAlbumId");
+}
+
+//------------------------------
 
 QString VkontakteWindow::getDestinationPath() const
 {
@@ -472,12 +457,10 @@ void VkontakteWindow::slotChangeUserClicked()
     startAuthentication(true);
 }
 
-void VkontakteWindow::slotCloseEvent(QCloseEvent* event)
+void VkontakteWindow::slotFinished()
 {
-    kDebug() << "closeEvent";
-    //writeSettings();
+    writeSettings();
     reset();
-    event->accept();
 }
 
 void VkontakteWindow::slotButtonClicked(int button)
@@ -526,7 +509,7 @@ void VkontakteWindow::startAuthentication(bool forceLogout)
         QStringList permissions;
         permissions << "photos" << "offline";
         Vkontakte::AuthenticationDialog *authDialog = new Vkontakte::AuthenticationDialog(this);
-        authDialog->setAppId(/*Settings::self()->appID()*/ QString("2446321"));
+        authDialog->setAppId(m_appId);
         authDialog->setPermissions(permissions);
         connect(authDialog, SIGNAL(authenticated(QString)),
                 this, SLOT(slotAuthenticationDialogDone(QString)));

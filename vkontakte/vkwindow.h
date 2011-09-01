@@ -91,7 +91,6 @@ Q_SIGNALS:
 
 protected Q_SLOTS:
     // ui slots
-    void slotCloseEvent(QCloseEvent *event);
     void slotChangeUserClicked();
 
     // authentication
@@ -128,10 +127,11 @@ protected Q_SLOTS:
     void slotHelp();
     void slotButtonClicked(int button);
 
-protected:
+    void slotFinished();
 
-//     void readSettings();
-//     void writeSettings();
+protected:
+    void readSettings();
+    void writeSettings();
 
     void reset();
     void updateControls(bool val);
@@ -184,6 +184,8 @@ protected:
     int m_userId;
 
     int m_albumToSelect; // album with this "aid" will be selected in slotAlbumsUpdateDone()
+
+    QString m_appId;
 };
 
 } // namespace KIPIVkontaktePlugin
