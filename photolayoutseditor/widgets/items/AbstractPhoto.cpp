@@ -167,7 +167,7 @@ QString AbstractPhoto::uniqueName(const QString & name)
         while (myItem->name() == result)
         {
             nameNumber += 1;
-            result = temp + (nameNumber > 1 ? " " + QString::number(nameNumber) : "");
+            result = temp + ((nameNumber > 1) ? (QString(" ").append(QString::number(nameNumber))) : QString(" "));
         }
     }
     return result;
