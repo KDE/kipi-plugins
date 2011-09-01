@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=ColorizePhotoEffectFactory
+Name[pl]=ColorizePhotoEffectFactory
+Type=Service
+ServiceTypes=PhotoLayoutsEditor/EffectPlugin
+Encoding=UTF-8
+Comment=Colorize effect for Photo Layouts Editor
+Comment[pl]=Efekt pokolorowania dla programu Photo Layouts Editor
+
+X-KDE-Library=photolayoutseditoreffectplugin_colorize
+author=Łukasz Spas, lukasz dot spas at gmail dot com

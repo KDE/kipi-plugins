@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=BlurPhotoEffectFactory
+Name[pl]=BlurPhotoEffectFactory
+Type=Service
+ServiceTypes=PhotoLayoutsEditor/EffectPlugin
+Encoding=UTF-8
+Comment=Gausian blur effect for Photo Layouts Editor
+Comment[pl]=Efekt rozmycia gaussowskiego dla programu Photo Layouts Editor
+
+X-KDE-Library=photolayoutseditoreffectplugin_blur
+author=Łukasz Spas, lukasz dot spas at gmail dot com

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=ServiceType
+X-KDE-ServiceType=PhotoLayoutsEditor/BorderPlugin
+X-KDE-DerivedName=PhotoLayoutsEditor BorderPlugin
+Comment=A PhotoLayoutsEditor Border Plugin

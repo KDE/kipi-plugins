@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=SepiaPhotoEffectFactory
+Name[pl]=SepiaPhotoEffectFactory
+Type=Service
+ServiceTypes=PhotoLayoutsEditor/EffectPlugin
+Encoding=UTF-8
+Comment=Sepia effect for Photo Layouts Editor
+Comment[pl]=Efekt sepii dla programu Photo Layouts Editor
+
+X-KDE-Library=photolayoutseditoreffectplugin_sepia
+author=Łukasz Spas, lukasz dot spas at gmail dot com

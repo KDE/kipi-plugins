@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Photo Layouts Editor
+Name[pl]=Photo Layouts Editor
+Comment=Photo layouts management tool
+Comment[pl]=Narzędzie do zarządzania układami zdjęć
+Icon=photolayoutseditor
+ServiceTypes=KIPI/Plugin
+Type=Service
+X-KDE-Library=kipiplugin_photolayoutseditor
+author=Łukasz Spas, lukasz dot spas at gmail dot com

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=SolidBorderDrawerFactory
+Name[pl]=SolidBorderDrawerFactory
+Type=Service
+ServiceTypes=PhotoLayoutsEditor/BorderPlugin
+Encoding=UTF-8
+Comment=Solid border drawer for Photo Layouts Editor
+Comment[pl]=Wtyczka rysująca ciągłe obramowania dla programu Photo Layouts Editor
+
+X-KDE-Library=photolayoutseditorborderplugin_solid
+author=Łukasz Spas, lukasz dot spas at gmail dot com

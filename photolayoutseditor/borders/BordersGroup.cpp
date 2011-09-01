@@ -1,0 +1,287 @@
+#include "BordersGroup.h"
+#include "BorderDrawerInterface.h"
+#include "AbstractPhoto.h"
+#include "BorderDrawersLoader.h"
+
+#include <QGraphicsScene>
+#include <QUndoCommand>
+
+using namespace KIPIPhotoLayoutsEditor;
+
+class KIPIPhotoLayoutsEditor::BordersGroupPrivate
+{
+    BordersGroupPrivate(BordersGroup * group) :
+        group(group),
+        photo(0)
+    {}
+
+    BordersGroup * group;
+    AbstractPhoto * photo;
+    QList<BorderDrawerInterface*> borders;
+    QPainterPath shape;
+
+    friend class BordersGroup;
+};
+
+BordersGroup::BordersGroup(AbstractPhoto * photo) :
+    AbstractMovableModel(photo),
+    d(new BordersGroupPrivate(this))
+{
+    d->photo = photo;
+}
+
+QPainterPath BordersGroup::shape()
+{
+    if (!graphicsItem())
+        return QPainterPath();
+    if (d->shape.isEmpty() && d->borders.count())
+        calculateShape();
+    return d->shape;
+}
+
+void BordersGroup::calculateShape()
+{
+    QPainterPath photoShape = graphicsItem()->itemOpaqueArea();
+    d->shape = QPainterPath();
+    foreach (BorderDrawerInterface * drawer, d->borders)
+    {
+        if (drawer)
+            d->shape = d->shape.united( drawer->path(photoShape) );
+    }
+}
+
+AbstractPhoto * BordersGroup::graphicsItem() const
+{
+    return d->photo;
+}
+
+void BordersGroup::paint(QPainter * painter, const QStyleOptionGraphicsItem * option)
+{
+    if (!graphicsItem())
+        return;
+    for (int i = d->borders.count()-1; i >= 0; --i)
+    {
+        BorderDrawerInterface * border = d->borders.at(i);
+        if (border)
+            border->paint(painter, option);
+    }
+}
+
+void BordersGroup::refresh()
+{
+    if (!graphicsItem())
+        return;
+
+    QRectF updateRect = graphicsItem()->boundingRect();
+
+    this->calculateShape();
+    updateRect = updateRect.united(graphicsItem()->boundingRect());
+
+    if (graphicsItem()->scene())
+        graphicsItem()->scene()->update(graphicsItem()->mapRectToScene(updateRect));
+    else
+        graphicsItem()->update(updateRect);
+
+    dataChanged(QModelIndex(), QModelIndex());
+}
+
+bool BordersGroup::prependDrawer(BorderDrawerInterface * drawer)
+{
+    return insertDrawer(drawer, 0);
+}
+
+bool BordersGroup::insertDrawer(BorderDrawerInterface * drawer, int position)
+{
+    if (!drawer || position < 0 || position > rowCount() || !insertRow(position))
+        return false;
+    d->borders.takeAt(position);
+    d->borders.insert(position, drawer);
+    return true;
+}
+
+bool BordersGroup::appendDrawer(BorderDrawerInterface * drawer)
+{
+    return insertDrawer(drawer, this->rowCount());
+}
+
+BorderDrawerInterface * BordersGroup::removeDrawer(int position)
+{
+    if (position < 0 || position >= rowCount())
+        return 0;
+    BorderDrawerInterface * result = d->borders.at(position);
+    removeRow(position);
+    return result;
+}
+
+bool BordersGroup::moveDrawer(int sourcePosition, int destinationPosition)
+{
+    return moveRows(sourcePosition, 1, destinationPosition);
+}
+
+QDomElement BordersGroup::toSvg(QDomDocument & document)
+{
+    QDomElement result = document.createElement("g");
+    result.setAttribute("class", "borders");
+    for (int i = d->borders.count()-1; i >= 0; --i)
+    {
+        BorderDrawerInterface * drawer = d->borders[i];
+        QDomElement temp = BorderDrawersLoader::drawerToSvg(drawer, document);
+        if (temp.isNull())
+            continue;
+        result.appendChild(temp);
+    }
+    return result;
+}
+
+BordersGroup * BordersGroup::fromSvg(QDomElement & element, AbstractPhoto * graphicsItem)
+{
+    // Find borders specific element
+    QDomElement bordersElement;
+    QDomNodeList children = element.childNodes();
+    for (int i = children.count()-1; i >= 0; --i)
+    {
+        if (!children.at(i).isElement())
+            continue;
+        bordersElement = children.at(i).toElement();
+        if (bordersElement.tagName() != "g" || bordersElement.attribute("class") != "borders")
+        {
+            bordersElement = QDomElement();
+            continue;
+        }
+        break;
+    }
+
+    // If not found return 0 == Corrupted or invalid file
+    if (bordersElement.isNull())
+        return 0;
+
+    // Load drawers in loop
+    BordersGroup * result = new BordersGroup(0);
+    children = bordersElement.childNodes();
+    for (int i = children.count()-1; i >= 0; --i)
+    {
+        QDomNode child = children.at(i);
+        QDomElement childElement;
+        if (!child.isElement() || (childElement = child.toElement()).isNull())
+            continue;
+
+        // Create drawer from DOM element
+        BorderDrawerInterface * drawer = BorderDrawersLoader::getDrawerFromSvg(childElement);
+
+        if (!drawer)
+            continue;
+
+        // Insert it into model
+        result->d->borders.push_back(drawer);
+        drawer->setGroup(result);
+    }
+
+    result->d->photo = graphicsItem;
+    graphicsItem->m_borders_group = result;
+    result->refresh();
+    return result;
+}
+
+QObject * BordersGroup::item(const QModelIndex & index) const
+{
+    if (index.isValid() && index.row() < d->borders.count())
+        return d->borders.at(index.row());
+    return 0;
+}
+
+void BordersGroup::setItem(QObject * item, const QModelIndex & index)
+{
+    BorderDrawerInterface * drawer = dynamic_cast<BorderDrawerInterface*>(item);
+    if (!drawer || !index.isValid())
+        return;
+    int row = index.row();
+    if (row < 0 || row >= rowCount())
+        return;
+    if (drawer == d->borders.at(row))
+        return;
+    d->borders.removeAt(row);
+    d->borders.insert(row, drawer);
+    drawer->setGroup(this);
+    this->refresh();
+}
+
+int BordersGroup::columnCount(const QModelIndex & parent) const
+{
+    if (parent.isValid())
+        return 0;
+    return 1;
+}
+
+QVariant BordersGroup::data(const QModelIndex & index, int role) const
+{
+    if (role == Qt::DisplayRole && hasIndex(index.row(), index.column(), index.parent()))
+    {
+        BorderDrawerInterface * border = d->borders.at(index.row());
+        if (border)
+            return border->toString();
+    }
+    return QVariant();
+}
+
+QModelIndex BordersGroup::index(int row, int column, const QModelIndex & parent) const
+{
+    if (row >= rowCount(parent) || column >= columnCount(parent))
+        return QModelIndex();
+    return createIndex(row, column, d->borders.at(row));
+}
+
+bool BordersGroup::insertRows(int row, int count, const QModelIndex & parent)
+{
+
+    if (row > rowCount(parent) || count < 0)
+        return false;
+    beginInsertRows(parent, row, row+count-1);
+    while (count--)
+        d->borders.insert(row, 0);
+    endInsertRows();
+    emit layoutChanged();
+    return true;
+}
+
+QModelIndex BordersGroup::parent(const QModelIndex & /*child*/) const
+{
+    return QModelIndex();
+}
+
+bool BordersGroup::removeRows(int row, int count, const QModelIndex & parent)
+{
+    if (row >= rowCount(parent) || count < 0 || row+count > rowCount(parent))
+        return false;
+    beginRemoveRows(QModelIndex(), row, row+count-1);
+    while (count--)
+        d->borders.removeAt(row);
+    endRemoveRows();
+    this->refresh();
+    emit layoutChanged();
+    return true;
+}
+
+int BordersGroup::rowCount(const QModelIndex & parent) const
+{
+    if (parent.isValid())
+        return 0;
+    return d->borders.count();
+}
+
+bool BordersGroup::moveRows(int sourcePosition, int sourceCount, int destPosition)
+{
+    if (sourcePosition <= destPosition && sourcePosition+sourceCount >= destPosition)
+        return false;
+    beginMoveRows(QModelIndex(), sourcePosition, sourcePosition+sourceCount-1, QModelIndex(), destPosition);
+    QList<BorderDrawerInterface*> movingItems;
+    if (destPosition > sourcePosition)
+        destPosition -= sourceCount;
+    while(sourceCount--)
+        movingItems.push_back(d->borders.takeAt(sourcePosition));
+    for ( ; movingItems.count() ; movingItems.pop_back())
+        d->borders.insert(destPosition, movingItems.last());
+    endMoveRows();
+    this->refresh();
+    emit layoutChanged();
+    return true;
+}
