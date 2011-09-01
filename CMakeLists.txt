@@ -388,6 +388,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(rajceexport)
     ADD_SUBDIRECTORY(kmlexport)
     ADD_SUBDIRECTORY(panorama)
+    ADD_SUBDIRECTORY(photolayoutseditor)
 
     # Plugins which are optional depencies.
 
