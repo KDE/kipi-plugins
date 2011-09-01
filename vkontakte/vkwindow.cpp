@@ -565,7 +565,7 @@ void VkontakteWindow::slotAuthenticationDialogDone(const QString &accessToken)
 
 void VkontakteWindow::handleVkError(KJob *kjob)
 {
-    KMessageBox::error(this, kjob->errorText(), i18n("Request to VKontakte failed"));
+    KMessageBox::error(this, kjob->errorText(), i18nc("@title:window", "Request to VKontakte failed"));
 }
 
 //------------------------------
