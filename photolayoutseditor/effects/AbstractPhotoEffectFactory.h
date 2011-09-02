@@ -33,7 +33,7 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class KDE_EXPORT AbstractPhotoEffectFactory : public QObject
+    class AbstractPhotoEffectFactory : public QObject
     {
         public:
 

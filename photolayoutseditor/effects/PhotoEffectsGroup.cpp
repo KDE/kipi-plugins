@@ -202,6 +202,7 @@ void PhotoEffectsGroup::push_back(AbstractPhotoEffectInterface * effect)
 {
     m_effects_list.push_back(effect);
     effect->setParent(this);
+    effect->setGroup(this);
     emitEffectsChanged(effect);
     emit layoutChanged();
 }
@@ -210,6 +211,7 @@ void PhotoEffectsGroup::push_front(AbstractPhotoEffectInterface * effect)
 {
     m_effects_list.push_back(effect);
     effect->setParent(this);
+    effect->setGroup(this);
     emitEffectsChanged(effect);
     emit layoutChanged();
 }
@@ -463,6 +465,7 @@ void PhotoEffectsGroup::setEffectPointer(int row, AbstractPhotoEffectInterface *
         delete temp;
     m_effects_list[effectiveRow] = effect;
     effect->setParent(this);
+    effect->setGroup(this);
     emitEffectsChanged(effect);
     emit dataChanged(index(row,0),index(row,0));
 }

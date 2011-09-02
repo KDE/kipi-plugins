@@ -34,8 +34,6 @@
 #include <QUndoCommand>
 #include <QDebug>
 
-#include "PhotoEffectsGroup.h"
-
 #include <klocalizedstring.h>
 
 #define STRENGTH_PROPERTY "Strength"
@@ -59,18 +57,21 @@ namespace KIPIPhotoLayoutsEditor
         QMap<AttributeTypes,QVariant> data;
     };
 
+    class PhotoEffectsGroup;
     class AbstractPhotoEffectFactory;
     class AbstractPhotoEffectInterface : public QObject
     {
             class AbstractPhotoEffectInterfaceCommand;
 
             AbstractPhotoEffectFactory * m_factory;
+            PhotoEffectsGroup * m_group;
 
         public:
 
             explicit AbstractPhotoEffectInterface(AbstractPhotoEffectFactory * factory, QObject * parent = 0) :
                 QObject(parent),
-                m_factory(factory)
+                m_factory(factory),
+                m_group(0)
             {
 #ifdef QT_DEBUG
                 if (!m_factory)
@@ -109,7 +110,7 @@ namespace KIPIPhotoLayoutsEditor
 
             QUndoCommand * createChangeCommand(const QList<AbstractPhotoEffectProperty*> & properties)
             {
-                if (properties.count() && group() && group()->photo())
+                if (properties.count() && group())
                     return new AbstractPhotoEffectInterfaceCommand(this,properties);
                 else
                     return 0;
@@ -130,9 +131,15 @@ namespace KIPIPhotoLayoutsEditor
                 return 0;
             }
 
+            void setGroup(PhotoEffectsGroup * group)
+            {
+                if (group)
+                    m_group = group;
+            }
+
             PhotoEffectsGroup * group() const
             {
-                return qobject_cast<PhotoEffectsGroup*>(this->parent());
+                return m_group;
             }
 
             AbstractPhotoEffectFactory * factory() const
@@ -241,7 +248,7 @@ namespace KIPIPhotoLayoutsEditor
                             }
                         }
                         m_properties = tempProperties;
-                        m_effect->group()->emitEffectsChanged(m_effect);
+                        //m_effect->group()->emitEffectsChanged(m_effect);
                     }
             };
 

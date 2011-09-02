@@ -34,7 +34,7 @@ using namespace KIPIPhotoLayoutsEditor;
 class GrayscalePhotoEffectFactory;
 class GrayscalePhotoEffect : public AbstractPhotoEffectInterface
 {
-        Q_INTERFACES(AbstractPhotoEffectInterface)
+        Q_INTERFACES(KIPIPhotoLayoutsEditor::AbstractPhotoEffectInterface)
 
     public:
 

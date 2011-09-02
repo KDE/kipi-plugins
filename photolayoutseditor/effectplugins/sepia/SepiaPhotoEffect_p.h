@@ -34,7 +34,7 @@ using namespace KIPIPhotoLayoutsEditor;
 class SepiaPhotoEffectFactory;
 class SepiaPhotoEffect : public AbstractPhotoEffectInterface
 {
-        Q_INTERFACES(AbstractPhotoEffectInterface)
+        Q_INTERFACES(KIPIPhotoLayoutsEditor::AbstractPhotoEffectInterface)
 
     public:
 

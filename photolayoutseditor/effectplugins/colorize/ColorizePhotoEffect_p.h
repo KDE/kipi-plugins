@@ -36,7 +36,7 @@ using namespace KIPIPhotoLayoutsEditor;
 class ColorizePhotoEffectFactory;
 class ColorizePhotoEffect : public AbstractPhotoEffectInterface
 {
-        Q_INTERFACES(AbstractPhotoEffectInterface)
+        Q_INTERFACES(KIPIPhotoLayoutsEditor::AbstractPhotoEffectInterface)
 
         static QColor m_last_color;
 

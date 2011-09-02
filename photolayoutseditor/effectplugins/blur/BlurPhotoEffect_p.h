@@ -38,7 +38,8 @@ using namespace KIPIPhotoLayoutsEditor;
 class BlurPhotoEffectFactory;
 class BlurPhotoEffect : public AbstractPhotoEffectInterface
 {
-        Q_INTERFACES(AbstractPhotoEffectInterface)
+        Q_OBJECT
+        Q_INTERFACES(KIPIPhotoLayoutsEditor::AbstractPhotoEffectInterface)
 
     public:
 
