@@ -23,7 +23,8 @@
  *
  * ============================================================ */
 
-#include "Canvas.h"
+#include "Canvas.moc"
+
 #include "Scene.h"
 #include "LayersModel.h"
 #include "LayersModelItem.h"
