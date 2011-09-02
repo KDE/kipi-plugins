@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BlurPhotoEffect_p.h"
+#include "BlurPhotoEffect_p.moc"
 #include "BlurPhotoEffect.h"
 
 #include <klocalizedstring.h>
