@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BlurPhotoEffect.h"
+#include "BlurPhotoEffect.moc"
 #include "BlurPhotoEffect_p.h"
 
 #include <kpluginfactory.h>
