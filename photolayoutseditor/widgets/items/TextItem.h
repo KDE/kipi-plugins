@@ -4,7 +4,6 @@
 #include "AbstractPhoto.h"
 
 #include <QObject>
-#include <QtColorPropertyManager>
 
 namespace KIPIPhotoLayoutsEditor
 {

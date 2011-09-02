@@ -38,7 +38,6 @@
       events/UndoCommandEventFilter.cpp
       effects/PhotoEffectsLoader.cpp
       utils/global.cpp
-      utils/SavingThread.cpp
       widgets/items/TextItem.cpp
       widgets/dialogs/ImageFileDialog.cpp
       settings/PLEConfigDialog.cpp
@@ -51,7 +50,6 @@
       borders/BorderDrawersLoader.cpp
       borders/BorderChangeListener.cpp
       widgets/dialogs/GridSetupDialog.cpp
-      widgets/dialogs/SavingProgressDialog.cpp
       widgets/canvas/SceneBackground.cpp
       widgets/tools/CanvasEditTool.cpp
       widgets/tools/AbstractTool.cpp
@@ -69,7 +67,7 @@
       resources/icons.qrc
   )
 
-  QT4_ADD_RESOURCES( PhotoLayoutsEditor_RC_SRCS ${PhotoLayoutsEditor_RCS} )
+  QT4_ADD_RESOURCES( PhotoLayoutsEditor_SRCS ${PhotoLayoutsEditor_RCS} )
 
   SET( INCLUDE_DIRS
       plugin
@@ -109,11 +107,17 @@
       ENDIF(NOT MSVC)
   ENDFOREACH(_currentfile ${PhotoLayoutsEditor_SRCS})
 
-  KDE4_ADD_LIBRARY( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} ${PhotoLayoutsEditor_RC_SRCS} )
+  KDE4_ADD_LIBRARY( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} )
 
   SET_TARGET_PROPERTIES(libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC")
 
-  TARGET_LINK_LIBRARIES( libphotolayoutseditor ${QT_LIBRARIES} ${KDE4_KDEUI_LIBS} ${KDE4_KPARTS_LIBS} ${KIPI_LIBRARIES} PropertyBrowser )
+  TARGET_LINK_LIBRARIES( libphotolayoutseditor 
+                                         PropertyBrowser
+                                         ${QT_LIBRARIES}
+                                         ${KDE4_KDEUI_LIBS}
+                                         ${KDE4_KPARTS_LIBS}
+                                         ${KIPI_LIBRARIES}
+                                         kipiplugins )
 
 # =======================================================
 # PhotoLayoutsEditor plugin
@@ -122,7 +126,7 @@
 
   KDE4_ADD_PLUGIN(kipiplugin_photolayoutseditor ${kipiplugin_PhotoLayoutsEditor_PART_SRCS})
 
-  TARGET_LINK_LIBRARIES(kipiplugin_photolayoutseditor libphotolayoutseditor ${KIPI_LIBRARIES})
+  TARGET_LINK_LIBRARIES(kipiplugin_photolayoutseditor libphotolayoutseditor)
 
   INSTALL(TARGETS kipiplugin_photolayoutseditor DESTINATION ${PLUGIN_INSTALL_DIR})
   INSTALL(FILES plugin/kipiplugin_photolayoutseditor.desktop DESTINATION ${SERVICES_INSTALL_DIR})

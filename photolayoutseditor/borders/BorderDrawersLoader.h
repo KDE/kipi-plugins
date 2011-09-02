@@ -3,10 +3,11 @@
 
 #include <QMap>
 #include <QObject>
-#include <QtProperty>
 #include <QDomDocument>
 
 #include "BorderDrawerFactoryInterface.h"
+
+class QtProperty;
 
 namespace KIPIPhotoLayoutsEditor
 {

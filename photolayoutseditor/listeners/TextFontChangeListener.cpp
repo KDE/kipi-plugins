@@ -1,6 +1,8 @@
 #include "TextFontChangeListener.h"
 #include "TextItem.h"
 
+#include <QtFontPropertyManager>
+
 using namespace KIPIPhotoLayoutsEditor;
 
 TextFontChangeListener::TextFontChangeListener(TextItem * item, QObject * parent) :

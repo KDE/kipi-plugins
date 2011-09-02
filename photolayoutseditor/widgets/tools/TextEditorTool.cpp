@@ -3,6 +3,7 @@
 #include "ToolsDockWidget.h"
 
 #include <QVBoxLayout>
+#include <QtAbstractPropertyBrowser>
 
 using namespace KIPIPhotoLayoutsEditor;
 

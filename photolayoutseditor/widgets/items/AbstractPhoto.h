@@ -9,11 +9,12 @@
 #include <QGraphicsSceneDragDropEvent>
 #include <QIcon>
 #include <QDomNode>
-#include <QtAbstractPropertyBrowser>
 
 // Local
 #include "AbstractItemInterface.h"
 #include "BordersGroup.h"
+
+class QtAbstractPropertyBrowser;
 
 namespace KIPIPhotoLayoutsEditor
 {

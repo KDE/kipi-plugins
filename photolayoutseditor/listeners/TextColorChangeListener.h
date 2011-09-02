@@ -2,7 +2,8 @@
 #define TEXTCOLORCHANGELISTENER_H
 
 #include <QObject>
-#include <QtColorPropertyManager>
+
+class QtProperty;
 
 namespace KIPIPhotoLayoutsEditor
 {

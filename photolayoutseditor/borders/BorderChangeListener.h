@@ -2,8 +2,9 @@
 #define BORDERCHANGELISTENERS_H
 
 #include <QObject>
-#include <QtProperty>
 #include "BorderDrawerInterface.h"
+
+class QtProperty;
 
 namespace KIPIPhotoLayoutsEditor
 {

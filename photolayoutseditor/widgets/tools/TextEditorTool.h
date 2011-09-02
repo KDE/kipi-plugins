@@ -3,7 +3,7 @@
 
 #include "AbstractItemsTool.h"
 
-#include <QtAbstractPropertyBrowser>
+class QtAbstractPropertyBrowser;
 
 namespace KIPIPhotoLayoutsEditor
 {

@@ -1,6 +1,7 @@
 #include "TextColorChangeListener.h"
-
 #include "TextItem.h"
+
+#include <QtColorPropertyManager>
 
 using namespace KIPIPhotoLayoutsEditor;
 
