@@ -15,52 +15,61 @@
   SET( QT_USE_QTXML TRUE )
 
   SET( PhotoLayoutsEditor_SRCS
-      plugin/photolayoutseditor.cpp
-      widgets/dialogs/CanvasSizeDialog.cpp
-      models/LayersModel.cpp
-      models/LayersModelItem.cpp
-      models/LayersSelectionModel.cpp
-      models/AbstractMovableModel.cpp
       widgets/canvas/Scene.cpp
       widgets/canvas/Canvas.cpp
-      widgets/layers/LayersTree.cpp
-      widgets/layers/LayersTreeDelegate.cpp
-      widgets/menus/LayersTreeMenu.cpp
-      undo/UndoMoveRowsCommand.cpp
-      widgets/tools/ToolsDockWidget.cpp
-      widgets/tools/BorderEditTool.cpp
-      widgets/items/AbstractPhoto.cpp
-      widgets/items/PhotoItem.cpp
-      widgets/tools/EffectsEditorTool.cpp
-      effects/PhotoEffectsGroup.cpp
-      utils/KEditFactory.cpp
-      events/UndoCommandEvent.cpp
-      events/UndoCommandEventFilter.cpp
-      effects/PhotoEffectsLoader.cpp
-      utils/global.cpp
-      widgets/items/TextItem.cpp
-      widgets/dialogs/ImageFileDialog.cpp
-      settings/PLEConfigDialog.cpp
-      settings/PLEConfigViewWidget.cpp
-      widgets/tools/TextEditorTool.cpp
-      listeners/TextColorChangeListener.cpp
-      listeners/TextFontChangeListener.cpp
-      widgets/items/AbstractItemInterface.cpp
-      borders/BordersGroup.cpp
-      borders/BorderDrawersLoader.cpp
-      borders/BorderChangeListener.cpp
-      widgets/dialogs/GridSetupDialog.cpp
-      widgets/canvas/SceneBackground.cpp
-      widgets/tools/CanvasEditTool.cpp
-      widgets/tools/AbstractTool.cpp
-      widgets/tools/AbstractItemsTool.cpp
-      widgets/tools/AbstractItemsListViewTool.cpp
-      widgets/extra/PatternsComboBox.cpp
       widgets/canvas/RotationWidgetItem.cpp
       widgets/canvas/ScalingWidgetItem.cpp
       widgets/canvas/CropWidgetItem.cpp
       widgets/canvas/MousePressListener.cpp
       widgets/canvas/CanvasSize.cpp
+      widgets/canvas/SceneBackground.cpp
+      widgets/tools/EffectsEditorTool.cpp
+      widgets/tools/ToolsDockWidget.cpp
+      widgets/tools/BorderEditTool.cpp
+      widgets/tools/TextEditorTool.cpp
+      widgets/tools/CanvasEditTool.cpp
+      widgets/tools/AbstractTool.cpp
+      widgets/tools/AbstractItemsTool.cpp
+      widgets/tools/AbstractItemsListViewTool.cpp
+      widgets/items/AbstractPhoto.cpp
+      widgets/items/AbstractItemInterface.cpp
+      widgets/items/PhotoItem.cpp
+      widgets/items/TextItem.cpp
+      widgets/dialogs/ImageFileDialog.cpp
+      widgets/dialogs/CanvasSizeDialog.cpp
+      widgets/dialogs/GridSetupDialog.cpp
+      widgets/layers/LayersTree.cpp
+      widgets/layers/LayersTreeDelegate.cpp
+      widgets/menus/LayersTreeMenu.cpp
+      widgets/extra/PatternsComboBox.cpp
+
+      models/LayersModel.cpp
+      models/LayersModelItem.cpp
+      models/LayersSelectionModel.cpp
+      models/AbstractMovableModel.cpp
+
+      undo/UndoMoveRowsCommand.cpp
+
+      plugin/photolayoutseditor.cpp
+
+      utils/KEditFactory.cpp
+      utils/global.cpp
+
+      events/UndoCommandEvent.cpp
+      events/UndoCommandEventFilter.cpp
+
+      settings/PLEConfigDialog.cpp
+      settings/PLEConfigViewWidget.cpp
+
+      listeners/TextColorChangeListener.cpp
+      listeners/TextFontChangeListener.cpp
+
+      effects/PhotoEffectsLoader.cpp
+      effects/PhotoEffectsGroup.cpp
+
+      borders/BordersGroup.cpp
+      borders/BorderDrawersLoader.cpp
+      borders/BorderChangeListener.cpp
   )
 
   SET(PhotoLayoutsEditor_RCS
