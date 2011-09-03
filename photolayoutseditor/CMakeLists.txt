@@ -64,12 +64,12 @@
       listeners/TextColorChangeListener.cpp
       listeners/TextFontChangeListener.cpp
 
-      effects/PhotoEffectsLoader.cpp
-      effects/PhotoEffectsGroup.cpp
-
       borders/BordersGroup.cpp
       borders/BorderDrawersLoader.cpp
       borders/BorderChangeListener.cpp
+
+      effects/PhotoEffectsLoader.cpp
+      effects/PhotoEffectsGroup.cpp
   )
 
   SET(PhotoLayoutsEditor_RCS
