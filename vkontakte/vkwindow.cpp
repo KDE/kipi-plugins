@@ -758,7 +758,7 @@ void VkontakteWindow::slotStartTransfer()
 {
     if (m_albumsCombo->currentIndex() == -1 || m_albumsCombo->count() == 0)
     {
-        KMessageBox::information(this, i18n("Please select album first"));
+        KMessageBox::information(this, i18n("Please select album first."));
         return;
     }
 
