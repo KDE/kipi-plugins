@@ -405,6 +405,15 @@ void VkontakteWindow::updateLabels()
             .arg(urlText).arg(i18n("VKontakte")));
 }
 
+Vkontakte::AlbumInfoPtr VkontakteWindow::currentAlbum()
+{
+    int index = m_albumsCombo->currentIndex();
+    if (index >= 0)
+        return m_albums.at(index);
+    else
+        return Vkontakte::AlbumInfoPtr();
+}
+
 void VkontakteWindow::selectAlbum(int aid)
 {
     for (int i = 0; i < m_albums.size(); i ++)
@@ -437,11 +446,11 @@ void VkontakteWindow::writeSettings()
     if (!m_accessToken.isEmpty())
         grp.writeEntry("AccessToken", m_accessToken);
 
-    int currentAlbumIndex = m_albumsCombo->currentIndex();
-    if (currentAlbumIndex >= 0)
-        grp.writeEntry("SelectedAlbumId", m_albums.at(currentAlbumIndex)->aid());
-    else
+    Vkontakte::AlbumInfoPtr album = currentAlbum();
+    if (album.isNull())
         grp.deleteEntry("SelectedAlbumId");
+    else
+        grp.writeEntry("SelectedAlbumId", album->aid());
 }
 
 //------------------------------
@@ -716,7 +725,10 @@ void VkontakteWindow::slotNewAlbumRequest()
 
 void VkontakteWindow::slotEditAlbumRequest()
 {
-    Vkontakte::AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
+    Vkontakte::AlbumInfoPtr album = currentAlbum();
+    if (album.isNull())
+        return;
+
     QPointer<VkontakteAlbumDialog> dlg = new VkontakteAlbumDialog(this, album, true);
     if (dlg->exec() == QDialog::Accepted)
     {
@@ -729,7 +741,9 @@ void VkontakteWindow::slotEditAlbumRequest()
 
 void VkontakteWindow::slotDeleteAlbumRequest()
 {
-    Vkontakte::AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
+    Vkontakte::AlbumInfoPtr album = currentAlbum();
+    if (album.isNull())
+        return;
 
     if (KMessageBox::warningContinueCancel(
         this,
@@ -749,15 +763,19 @@ void VkontakteWindow::slotReloadAlbumsRequest()
 {
     updateControls(false);
 
-    if (m_albumsCombo->currentIndex() != -1)
-        m_albumToSelect = m_albums.at(m_albumsCombo->currentIndex())->aid();
+    Vkontakte::AlbumInfoPtr album = currentAlbum();
+    if (!album.isNull())
+        m_albumToSelect = album->aid();
+
     startAlbumsUpdate();
 }
 
 void VkontakteWindow::slotStartTransfer()
 {
-    if (m_albumsCombo->currentIndex() == -1 || m_albumsCombo->count() == 0)
+    Vkontakte::AlbumInfoPtr album = currentAlbum();
+    if (album.isNull() || m_albumsCombo->count() == 0)
     {
+        // TODO: offer the user to create an album if there are no albums yet
         KMessageBox::information(this, i18n("Please select album first."));
         return;
     }
@@ -765,16 +783,14 @@ void VkontakteWindow::slotStartTransfer()
     // TODO: import support
     if (!m_import)
     {
-        // list photos of the album, then start upload
-        Vkontakte::AlbumInfoPtr album = m_albums.at(m_albumsCombo->currentIndex());
-
         updateControls(false);
 
         QStringList files;
         foreach (const KUrl &url, m_imgList->imageUrls(true))
             files.append(url.toLocalFile());
 
-        Vkontakte::UploadPhotosJob *job = new Vkontakte::UploadPhotosJob(m_accessToken, files, false /*m_checkKeepOriginal->isChecked()*/, album->aid());
+        Vkontakte::UploadPhotosJob *job = new Vkontakte::UploadPhotosJob(
+            m_accessToken, files, false /*m_checkKeepOriginal->isChecked()*/, album->aid());
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotPhotoUploadDone(KJob*)));
         connect(job, SIGNAL(progress(int)), m_progressBar, SLOT(setValue(int)));
         m_jobs.append(job);
