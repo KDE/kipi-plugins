@@ -156,7 +156,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     m_changeUserButton = new KPushButton(
         KGuiItem(i18n("Change Account"), "system-switch-user",
                  i18n("Change VKontakte account used to authenticate")), m_accountBox);
-    m_changeUserButton->setEnabled(false); // changing account does not work anyway
+    m_changeUserButton->hide(); // changing account does not work anyway
 
     accountBoxLayout->addWidget(loginDescLabel, 0, 0);
     accountBoxLayout->addWidget(m_loginLabel, 0, 1);
