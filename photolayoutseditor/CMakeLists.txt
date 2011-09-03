@@ -156,5 +156,8 @@
   INSTALL(FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
   INSTALL(FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
-  ADD_SUBDIRECTORY( ./effectplugins )
+# =======================================================
+# Build plugins
+
   ADD_SUBDIRECTORY( ./borderplugins )
+  ADD_SUBDIRECTORY( ./effectplugins )
