@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "Canvas.moc"
+#include "Canvas.h"
 
 #include "Scene.h"
 #include "LayersModel.h"
@@ -38,6 +38,8 @@
 #include <QPrinter>
 #include <QPaintDevice>
 #include <QPaintEngine>
+#include <QProgressBar>
+#include <QVBoxLayout>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -51,6 +53,8 @@ using namespace KIPIPhotoLayoutsEditor;
 class KIPIPhotoLayoutsEditor::CanvasPrivate
 {
     CanvasSize m_size;
+
+    QProgressBar * m_progress;
 
     friend class Canvas;
 };
@@ -114,6 +118,13 @@ void Canvas::setupGUI()
     viewportPalette.setBrush(QPalette::Background, QBrush(pixmap));
     this->viewport()->setPalette(viewportPalette);
     this->viewport()->setBackgroundRole(QPalette::Background);
+
+    QVBoxLayout * layout = new QVBoxLayout();
+    this->setLayout(layout);
+    d->m_progress = new QProgressBar(this);
+    layout->addWidget(this->viewport());
+    layout->addWidget(d->m_progress);
+    d->m_progress->hide();
 
     this->setScene(m_scene);
 }
@@ -248,6 +259,9 @@ void Canvas::addImage(const QImage & image)
 
     // Add item to scene & model
     m_scene->addItem(it);
+
+    // Fits item to the scenes rect
+    it->fitToRect(m_scene->sceneRect().toRect());
 }
 
 /** ###########################################################################################################################
@@ -643,6 +657,33 @@ void Canvas::refreshWidgetConnections(bool isVisible)
 void Canvas::newUndoCommand(QUndoCommand * command)
 {
     m_undo_stack->push(command);
+}
+
+/** ###########################################################################################################################
+ * Shows progress bar
+ #############################################################################################################################*/
+void Canvas::initProgress(int limit)
+{
+    if (limit < 1)
+        return;
+    d->m_progress->setMaximum(limit);
+    d->m_progress->show();
+}
+
+/** ###########################################################################################################################
+ * Hides progress bar
+ #############################################################################################################################*/
+void Canvas::finishProgress()
+{
+    d->m_progress->hide();
+}
+
+/** ###########################################################################################################################
+ * Sets progress value
+ #############################################################################################################################*/
+void Canvas::updateProgress(int value)
+{
+    d->m_progress->setValue(value);
 }
 
 /** ###########################################################################################################################

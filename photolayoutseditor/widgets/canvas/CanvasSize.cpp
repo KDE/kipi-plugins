@@ -118,11 +118,13 @@ QString CanvasSize::resolutionUnitName(qreal factor)
 
 CanvasSize::ResolutionUnits CanvasSize::resolutionUnit(qreal factor)
 {
+    prepare_maps();
     return resolution_factors.key(factor, UnknownResolutionUnit);
 }
 
 CanvasSize::ResolutionUnits CanvasSize::resolutionUnit(QString name)
 {
+    prepare_maps();
     return resolution_names.key(name, UnknownResolutionUnit);
 }
 
@@ -181,11 +183,13 @@ QString CanvasSize::sizeUnitName(qreal factor)
 
 CanvasSize::SizeUnits CanvasSize::sizeUnit(qreal factor)
 {
+    prepare_maps();
     return size_factors.key(factor, UnknownSizeUnit);
 }
 
 CanvasSize::SizeUnits CanvasSize::sizeUnit(QString name)
 {
+    prepare_maps();
     return size_names.key(name, UnknownSizeUnit);
 }
 
@@ -218,6 +222,7 @@ qreal CanvasSize::fromPixels(int pixels, qreal resolution, SizeUnits sUnit, Reso
 
 CanvasSize::CanvasSize()
 {
+    prepare_maps();
     m_size = QSizeF();
     m_size_unit = UnknownSizeUnit;
     m_resolution = QSizeF();
@@ -226,6 +231,7 @@ CanvasSize::CanvasSize()
 
 CanvasSize::CanvasSize(const QSizeF & size, SizeUnits sUnit, const QSizeF & resolution, ResolutionUnits rUnit)
 {
+    prepare_maps();
     m_size = size;
     m_size_unit = sUnit;
     m_resolution = resolution;

@@ -37,6 +37,8 @@
 #include "GridSetupDialog.h"
 #include "PLEConfigDialog.h"
 #include "PLEConfigSkeleton.h"
+#include "PLEAboutData.h"
+#include "StarndardEffectsFactory.h"
 #include "global.h"
 
 #include "BorderDrawerInterface.h"
@@ -59,6 +61,7 @@
 #include <QFile>
 #include <QPrintPreviewDialog>
 #include <QImageWriter>
+#include <QImageReader>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QDesktopWidget>
@@ -116,6 +119,8 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
 {
     Q_INIT_RESOURCE(icons);
 
+    this->componentData().setAboutData( PLEAboutData() );
+
     setXMLFile("photolayoutseditorui.rc");
 
     setCaption("Photo Layouts Editor");
@@ -129,7 +134,7 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
     refreshActions();
 
     this->setAcceptDrops(true);
-    int height = QApplication::desktop()->height()-500;
+    int height = QApplication::desktop()->height()*0.8;
     this->resize(qRound(height*16.0/9.0),height);
     QDesktopWidget * d = KApplication::kApplication()->desktop();
     this->move(d->rect().center() - this->frameGeometry().center());
@@ -163,6 +168,7 @@ void PhotoLayoutsEditor::addUndoCommand(QUndoCommand * command)
 {
     if (command)
     {
+            qDebug() << command->text();
         if (m_canvas)
             m_canvas->undoStack()->push(command);
         else
@@ -258,6 +264,10 @@ void PhotoLayoutsEditor::setupActions()
     d->settingsAction = KStandardAction::preferences(this, SLOT(settings()), actionCollection());
     actionCollection()->addAction("settings", d->settingsAction);
     //------------------------------------------------------------------------
+    d->addImageAction = new KAction(i18nc("Adds new image from file", "Add image..."), actionCollection());
+    connect(d->addImageAction, SIGNAL(triggered()), this, SLOT(loadNewImage()));
+    actionCollection()->addAction("new_image", d->addImageAction);
+    //------------------------------------------------------------------------
     d->showGridToggleAction = new KToggleAction(i18nc("View grid lines", "Show"), actionCollection());
     d->showGridToggleAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_G));
     connect(d->showGridToggleAction, SIGNAL(triggered(bool)), this, SLOT(setGridVisible(bool)));
@@ -289,6 +299,7 @@ void PhotoLayoutsEditor::refreshActions()
     d->printPreviewAction->setEnabled(isEnabledForCanvas);
     d->printAction->setEnabled(isEnabledForCanvas);
     d->closeAction->setEnabled(isEnabledForCanvas);
+    d->addImageAction->setEnabled(isEnabledForCanvas);
     d->showGridToggleAction->setEnabled(isEnabledForCanvas);
     d->gridConfigAction->setEnabled(isEnabledForCanvas);
     d->changeCanvasSizeAction->setEnabled(isEnabledForCanvas);
@@ -345,7 +356,7 @@ void PhotoLayoutsEditor::createWidgets()
     d->centralWidget->layout()->setMargin(0);
     this->setCentralWidget(d->centralWidget);
 
-//    this->open(KUrl("/home/coder89/Desktop/first.pfe"));   /// TODO : Uncomment and set correct path when delevoping
+    this->open(KUrl("/home/coder89/Desktop/second.pfe"));   /// TODO : Uncomment and set correct path when delevoping
 }
 
 void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)
@@ -376,7 +387,9 @@ void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl)
         m_canvas->setFile(fileUrl);
         m_canvas->setParent(d->centralWidget);
         this->prepareSignalsConnections();
-        m_canvas->undoStack()->clear(); /// TODO : prevent pushing to undo stack when reading from file!!!!
+
+        // Adds recent open file
+        this->addRecentFile(m_canvas->file());
     }
     else
     {
@@ -426,17 +439,17 @@ void PhotoLayoutsEditor::prepareSignalsConnections()
 
 void PhotoLayoutsEditor::open()
 {
-    closeDocument();
-
     CanvasSizeDialog * canvasSizeDialog = new CanvasSizeDialog(this);
     canvasSizeDialog->setModal(true);
     int result = canvasSizeDialog->exec();
 
     CanvasSize size = canvasSizeDialog->canvasSize();
     if (result == KDialog::Accepted && size.isValid())
+    {
+        closeDocument();
         createCanvas(size);
-
-    refreshActions();
+        refreshActions();
+    }
 }
 
 void PhotoLayoutsEditor::openDialog()
@@ -461,9 +474,6 @@ void PhotoLayoutsEditor::open(const KUrl & fileUrl)
         closeDocument();
         createCanvas(fileUrl);
         refreshActions();
-
-        // Adds recent open file
-        this->addRecentFile(m_canvas->file());
     }
 }
 
@@ -608,6 +618,24 @@ void PhotoLayoutsEditor::settings()
     dialog->show();
 }
 
+void PhotoLayoutsEditor::loadNewImage()
+{
+    if (!m_canvas)
+        return;
+
+    ImageFileDialog d(KUrl(), this);
+    d.setMode(KFile::File);
+    d.setOperationMode(KFileDialog::Opening);
+    d.setKeepLocation(true);
+    if (d.exec() == ImageFileDialog::Accepted)
+    {
+        QImageReader ir(d.selectedFile());
+        QImage img = ir.read();
+        if (!img.isNull())
+            m_canvas->addImage(img);
+    }
+}
+
 void PhotoLayoutsEditor::setGridVisible(bool isVisible)
 {
     d->showGridToggleAction->setChecked(isVisible);
@@ -654,6 +682,9 @@ void PhotoLayoutsEditor::changeCanvasSize()
 
 void PhotoLayoutsEditor::loadEffects()
 {
+    StarndardEffectsFactory * stdEffects = new StarndardEffectsFactory( PhotoEffectsLoader::instance() );
+    PhotoEffectsLoader::registerEffect( stdEffects );
+
     const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsEditor/EffectPlugin");
     foreach (const KService::Ptr& service, offers)
     {
@@ -671,7 +702,7 @@ void PhotoLayoutsEditor::loadEffects()
         else
         {
             QString error;
-            plugin = service->createInstance<AbstractPhotoEffectFactory>(this, QVariantList(), &error);
+            plugin = service->createInstance<AbstractPhotoEffectFactory>( PhotoEffectsLoader::instance(), QVariantList(), &error);
             if (plugin)
             {
                 d->effectsMap[name] = plugin;

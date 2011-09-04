@@ -92,6 +92,10 @@ namespace KIPIPhotoLayoutsEditor
             void setImageBackground();
             void setPatternBackground();
             void setupGUI();
+
+        private slots:
+
+            void updateWidgets();
     };
 }
 

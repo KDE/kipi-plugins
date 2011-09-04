@@ -32,61 +32,42 @@
 #include <QImage>
 #include <QPainter>
 #include <QUndoCommand>
+#include <QMetaProperty>
 #include <QDebug>
 
+#include <kdemacros.h>
 #include <klocalizedstring.h>
 
-#define STRENGTH_PROPERTY "Strength"
+#define STRENGTH_PROPERTY QString("Strength")
 
 namespace KIPIPhotoLayoutsEditor
 {
-    struct AbstractPhotoEffectProperty
-    {
-        enum AttributeTypes
-        {
-            Maximum,
-            Minimum,
-            AllowedList,
-        };
-
-        AbstractPhotoEffectProperty(const QString & _id) :
-            id(_id)
-        {}
-        const QString id;
-        QVariant value;
-        QMap<AttributeTypes,QVariant> data;
-    };
-
     class PhotoEffectsGroup;
     class AbstractPhotoEffectFactory;
     class AbstractPhotoEffectInterface : public QObject
     {
-            class AbstractPhotoEffectInterfaceCommand;
+            Q_OBJECT
 
             AbstractPhotoEffectFactory * m_factory;
             PhotoEffectsGroup * m_group;
+            int m_strength;
 
         public:
 
             explicit AbstractPhotoEffectInterface(AbstractPhotoEffectFactory * factory, QObject * parent = 0) :
                 QObject(parent),
                 m_factory(factory),
-                m_group(0)
+                m_group(0),
+                m_strength(100)
             {
 #ifdef QT_DEBUG
                 if (!m_factory)
-                    qDebug() << "No factory object for effect" << this->effectName() << "from:" << __FILE__ << __LINE__;
+                    qDebug() << "No factory object for effect" << this << "from:" << __FILE__ << __LINE__;
 #endif
-                AbstractPhotoEffectProperty * strength = new AbstractPhotoEffectProperty(STRENGTH_PROPERTY);
-                strength->value = QVariant(100);
-                strength->data.insert(AbstractPhotoEffectProperty::Minimum,0);
-                strength->data.insert(AbstractPhotoEffectProperty::Maximum,100);
-                m_properties.push_back(strength);
             }
 
             virtual ~AbstractPhotoEffectInterface()
             {
-                qDeleteAll(m_properties);
             }
 
             virtual QImage apply(const QImage & image) const
@@ -104,37 +85,17 @@ namespace KIPIPhotoLayoutsEditor
                 return image;
             }
 
-            virtual QString effectName() const = 0;
             virtual QString toString() const = 0;
             virtual operator QString() const = 0;
-
-            QUndoCommand * createChangeCommand(const QList<AbstractPhotoEffectProperty*> & properties)
-            {
-                if (properties.count() && group())
-                    return new AbstractPhotoEffectInterfaceCommand(this,properties);
-                else
-                    return 0;
-            }
-
-            QList<AbstractPhotoEffectProperty*> effectProperties()
-            {
-                return m_properties;
-            }
-
-            AbstractPhotoEffectProperty * getProperty(const QString & id)
-            {
-                foreach (AbstractPhotoEffectProperty * currentProperty, m_properties)
-                {
-                    if (currentProperty->id == id)
-                        return currentProperty;
-                }
-                return 0;
-            }
 
             void setGroup(PhotoEffectsGroup * group)
             {
                 if (group)
+                {
                     m_group = group;
+                    disconnect(this, SIGNAL(changed()), 0, 0);
+                    connect(this, SIGNAL(changed()), (QObject*)group, SLOT(emitEffectsChanged()));
+                }
             }
 
             PhotoEffectsGroup * group() const
@@ -147,117 +108,70 @@ namespace KIPIPhotoLayoutsEditor
                 return m_factory;
             }
 
+            virtual QString propertyName(const QMetaProperty & property) const
+            {
+                if (!QString("strength").compare(property.name()))
+                    return STRENGTH_PROPERTY;
+                return QString();
+            }
+            virtual QVariant propertyValue(const QString & propertyName) const
+            {
+                if (propertyName == STRENGTH_PROPERTY)
+                    return m_strength;
+                return QVariant();
+            }
+            virtual void setPropertyValue(const QString & propertyName, const QVariant & value)
+            {
+                if (STRENGTH_PROPERTY == propertyName)
+                    this->setStrength(value.toInt());
+            }
+            virtual QVariant stringNames(const QMetaProperty & /*property*/) { return QVariant(); }
+            virtual QVariant minimumValue(const QMetaProperty & property)
+            {
+                if (!QString("strength").compare(property.name()))
+                    return QVariant(0);
+                return QVariant();
+            }
+            virtual QVariant maximumValue(const QMetaProperty & property)
+            {
+                if (!QString("strength").compare(property.name()))
+                    return QVariant(100);
+                return QVariant();
+            }
+            virtual QVariant stepValue(const QMetaProperty & property)
+            {
+                if (!QString("strength").compare(property.name()))
+                    return 1;
+                return QVariant();
+            }
+
+            Q_PROPERTY(int strength READ strength WRITE setStrength)
             int strength() const
             {
-                foreach (AbstractPhotoEffectProperty * property, m_properties)
-                    if (property->id == STRENGTH_PROPERTY)
-                        return property->value.toInt();
-                return 100;
+                return m_strength;
+            }
+            void setStrength(int strength)
+            {
+                qDebug() << strength;
+                if (strength < 0 || strength > 100)
+                    return;
+                m_strength = strength;
+                propertiesChanged();
             }
 
-            AbstractPhotoEffectProperty * getPropertyByName(const QString & name) const
-            {
-                foreach (AbstractPhotoEffectProperty * property, m_properties)
-                    if (property->id == name)
-                        return property;
-                return 0;
-            }
+        signals:
 
-            QVariant::Type getPropertyTypeByName(const QString & name) const
-            {
-                foreach (AbstractPhotoEffectProperty * property, m_properties)
-                    if (property->id == name)
-                        return property->value.type();
-                return QVariant::Invalid;
-            }
+            void changed();
 
         protected:
 
-            QList<AbstractPhotoEffectProperty*> m_properties;
-
-        private:
-
-            QList<AbstractPhotoEffectProperty*> setEffectProperties(const QList<AbstractPhotoEffectProperty*> & properties)
+            void propertiesChanged()
             {
-                QList<AbstractPhotoEffectProperty*> oldProperties;
-                foreach (AbstractPhotoEffectProperty * newProperty, properties)
-                {
-                    for (QList<AbstractPhotoEffectProperty*>::iterator it = m_properties.begin(); it != m_properties.end(); ++it)
-                    {
-                        if ((*it) != newProperty && (*it)->id == newProperty->id && newProperty->value.type() == (*it)->value.type())
-                        {
-                            oldProperties.append(*it);
-                            *it = newProperty;
-                        }
-                    }
-                }
-                return oldProperties;
+                emit changed();
             }
 
-            void setStrength(int strength)
-            {
-                foreach (AbstractPhotoEffectProperty * property, m_properties)
-                    if (property->id == STRENGTH_PROPERTY)
-                        property->value = strength;
-            }
-
-            class AbstractPhotoEffectInterfaceCommand : public QUndoCommand
-            {
-                    AbstractPhotoEffectInterface * m_effect;
-                    QList<AbstractPhotoEffectProperty*> m_properties;
-                public:
-                    AbstractPhotoEffectInterfaceCommand(AbstractPhotoEffectInterface * effect, const QList<AbstractPhotoEffectProperty*> & properties, QUndoCommand * parent = 0) :
-                        QUndoCommand(parent),
-                        m_effect(effect),
-                        m_properties(properties)
-                    {
-                        this->setText(m_effect->effectName() + i18n(" change"));
-                    }
-                    ~AbstractPhotoEffectInterfaceCommand()
-                    {
-                        qDeleteAll(m_properties);
-                        m_properties.clear();
-                    }
-                    virtual void redo()
-                    {
-                        runCommand();
-                    }
-                    virtual void undo()
-                    {
-                        runCommand();
-                    }
-                private:
-                    void runCommand()
-                    {
-                        QList<AbstractPhotoEffectProperty*> tempProperties = m_effect->setEffectProperties(m_properties);
-                        if (tempProperties.count() != m_properties.count())
-                        {
-                            for (int i = m_properties.count()-1; i >= 0; --i)
-                            {
-                                bool found = false;
-                                foreach (AbstractPhotoEffectProperty * oldProperty, tempProperties)
-                                {
-                                    if (m_properties[i]->id == oldProperty->id)
-                                    {
-                                        found = true;
-                                        break;
-                                    }
-                                }
-                                if (!found)
-                                    m_properties.removeAt(i);
-                            }
-                        }
-                        m_properties = tempProperties;
-                        //m_effect->group()->emitEffectsChanged(m_effect);
-                    }
-            };
-
-        friend class AbstractPhotoEffectInterfaceCommand;
         friend class AbstractPhotoEffectFactory;
-        friend class PhotoEffectsLoader;
     };
 }
-
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::AbstractPhotoEffectInterface, "pl.coder89.pfe.AbstractPhotoEffectInterface")
 
 #endif // ABSTRACTPROTOEFFECTINTERFACE_H

@@ -52,6 +52,7 @@ public:
         QUndoCommand(i18n("Background changed"), parent),
         m_image(image),
         m_alignment(alignment),
+        m_aspect_ratio(Qt::IgnoreAspectRatio),
         m_size(size),
         m_repeat(repeat),
         m_backgropund_item(backgroundItem)
@@ -63,16 +64,19 @@ public:
         m_image(image),
         m_alignment(alignment),
         m_aspect_ratio(aspectRatio),
+        m_size(image.size()),
         m_repeat(repeat),
         m_backgropund_item(backgroundItem)
     {
     }
     virtual void redo()
     {
+        qDebug() << "BackgroundImageChangedCommand redo";
         run();
     }
     virtual void undo()
     {
+        qDebug() << "BackgroundImageChangedCommand undo";
         run();
     }
     void run()
@@ -95,7 +99,7 @@ public:
         m_repeat = temp4;
 
         QSize temp5 = m_backgropund_item->m_image_size;
-        m_backgropund_item->m_image_size = m_size.isValid() ? m_size : m_image.size();
+        m_backgropund_item->m_image_size = m_size;
         m_size = temp5;
 
         m_backgropund_item->render();
@@ -114,10 +118,12 @@ public:
     {}
     virtual void redo()
     {
+        qDebug() << "BackgroundFirstBrushChangeCommand redo";
         this->run();
     }
     virtual void undo()
     {
+        qDebug() << "BackgroundFirstBrushChangeCommand undo";
         this->run();
     }
     void run()
@@ -142,10 +148,12 @@ public:
     {}
     virtual void redo()
     {
+        qDebug() << "BackgroundSecondBrushChangeCommand redo";
         this->run();
     }
     virtual void undo()
     {
+        qDebug() << "BackgroundSecondBrushChangeCommand undo";
         this->run();
     }
     void run()
@@ -467,12 +475,12 @@ bool SceneBackground::fromSvg(QDomElement & element)
 
         QDomElement c1e = defs.firstChildElement("color1");
         if (c1e.isNull()) return false;
-        QColor color1 = c1e.text();
+        QColor color1(c1e.text());
         color1.setAlphaF(c1e.attribute("opacity").toInt());
 
         QDomElement c2e = defs.firstChildElement("color2");
         if (c2e.isNull()) return false;
-        QColor color2 = c2e.text();
+        QColor color2(c2e.text());
         color2.setAlphaF(c2e.attribute("opacity").toInt());
 
         if (!color1.isValid() || !color2.isValid() || !ok || bs <= Qt::SolidPattern || bs >= Qt::LinearGradientPattern)
@@ -501,7 +509,7 @@ bool SceneBackground::fromSvg(QDomElement & element)
 
         QDomElement bColor = defs.firstChildElement("background_color");
         QColor backgroundColor(bColor.text());
-        backgroundColor.setAlphaF(bColor.attribute("opacity").toDouble());
+        backgroundColor.setAlphaF(bColor.attribute("opacity", "1.0").toDouble());
         m_second_brush.setColor(backgroundColor);
     }
     else if (type == "gradient")
@@ -584,6 +592,8 @@ void SceneBackground::render()
     this->m_pixmap.fill(Qt::transparent);
     QPainter p(&this->m_pixmap);
     this->render(&p, this->m_pixmap.rect());
+    p.end();
+    emit changed();
 }
 
 void SceneBackground::render(QPainter * painter, const QRect & rect)
@@ -591,7 +601,6 @@ void SceneBackground::render(QPainter * painter, const QRect & rect)
     if (!rect.isValid())
         return;
     QRect r = rect;
-    painter->save();
     painter->fillRect(r, m_second_brush);
     if (this->isImage())
     {
@@ -617,7 +626,6 @@ void SceneBackground::render(QPainter * painter, const QRect & rect)
             r = m_first_brush.transform().mapRect(QRect(0, 0, m_image_size.width(), m_image_size.height()));
     }
     painter->fillRect(r, m_first_brush);
-    painter->restore();
 }
 
 void SceneBackground::sceneChanged()

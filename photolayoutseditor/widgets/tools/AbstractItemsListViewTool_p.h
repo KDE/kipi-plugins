@@ -39,7 +39,7 @@ namespace KIPIPhotoLayoutsEditor
             KPushButton * m_acceptButton;
             Q_OBJECT
         public:
-            AbstractListToolViewDelegate(QWidget * parent = 0);
+            AbstractListToolViewDelegate(AbstractItemsListViewTool * parent = 0);
         signals:
             void editorClosed();
             void editorAccepted();

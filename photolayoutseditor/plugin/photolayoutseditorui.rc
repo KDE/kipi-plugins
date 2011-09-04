@@ -31,6 +31,8 @@
 
         <Menu name="Canvas" >
          <text>&amp;Canvas</text>
+           <Action name="new_image" />
+         <Separator/>
            <Menu name="grid_lines">
              <text>&amp;Grid lines</text>
              <Action name="grid_toggle" />

@@ -73,6 +73,7 @@ namespace KIPIPhotoLayoutsEditor
             void printPreview();
             void print();
             bool closeDocument();
+            void loadNewImage();
             void setGridVisible(bool isVisible);
             void createCanvas(const CanvasSize & size);
             void createCanvas(const KUrl & fileUrl);

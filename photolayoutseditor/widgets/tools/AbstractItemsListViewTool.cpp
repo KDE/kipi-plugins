@@ -140,6 +140,10 @@ public:
         int temp = sourceStart;
         sourceStart = destinationRow;
         destinationRow = temp;
+        if (destinationRow > sourceStart)
+            destinationRow += count;
+        else
+            sourceStart -= count;
     }
 };
 
@@ -288,7 +292,7 @@ void AbstractItemsListViewTool::createChooser()
         model->insertRow(row);
 
         // Create chooser
-        AbstractListToolViewDelegate * w = new AbstractListToolViewDelegate(d->m_list_widget);
+        AbstractListToolViewDelegate * w = new AbstractListToolViewDelegate(this);
         d->m_opened_editor.first = w;
         d->m_opened_editor.second = QPersistentModelIndex(model->index(row,0));
         d->m_list_widget->setIndexWidget(model->index(row,0),w);
@@ -391,7 +395,7 @@ void AbstractItemsListViewTool::moveSelectedUp()
             PLE_PostUndoCommand(command);
         }
         else
-            model->moveRows(index.row(),1,index.row()+2);
+            model->moveRows(index.row(),1,index.row()-1);
     }
     d->setButtonsEnabled(true);
 }
@@ -417,14 +421,14 @@ void AbstractItemsListViewTool::addItemCommand(QObject * item, int row)
     PLE_PostUndoCommand(command);
 }
 
-AbstractListToolViewDelegate::AbstractListToolViewDelegate(QWidget * parent) :
+AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractItemsListViewTool * parent) :
     QWidget(parent)
 {
     QHBoxLayout * layout = new QHBoxLayout();
     layout->setSpacing(0);
     layout->setMargin(0);
     this->setLayout(layout);
-    QStringList registeredDrawers = BorderDrawersLoader::registeredDrawers();
+    QStringList registeredDrawers = parent->options();
     KComboBox * comboBox = new KComboBox(this);
     comboBox->addItems(registeredDrawers);
     comboBox->setCurrentIndex(-1);

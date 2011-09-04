@@ -276,8 +276,7 @@ class KIPIPhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
             if (done)
                 return;
             foreach (AbstractPhoto * item, items)
-                if (!item->scene())
-                    item->deleteLater();
+                item->deleteLater();
             items.clear();
         }
         virtual void redo()

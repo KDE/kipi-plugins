@@ -69,6 +69,7 @@ namespace KIPIPhotoLayoutsEditor
                 undoAction(0),
                 redoAction(0),
                 settingsAction(0),
+                addImageAction(0),
                 showGridToggleAction(0),
                 gridConfigAction(0),
                 changeCanvasSizeAction(0),
@@ -103,6 +104,7 @@ namespace KIPIPhotoLayoutsEditor
                 Q_DELETE(settingsAction)
 
                 // View menu
+                Q_DELETE(addImageAction)
                 Q_DELETE(showGridToggleAction)
                 Q_DELETE(gridConfigAction)
                 Q_DELETE(changeCanvasSizeAction)
@@ -139,6 +141,7 @@ namespace KIPIPhotoLayoutsEditor
             KAction *   settingsAction;
 
             // Canvas menu
+            KAction *   addImageAction;
             KToggleAction * showGridToggleAction;
             KAction *   gridConfigAction;
             KAction *   changeCanvasSizeAction;

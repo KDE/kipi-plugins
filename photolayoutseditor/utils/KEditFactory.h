@@ -26,10 +26,6 @@
 #ifndef QTSLIDEREDITFACTORY_H
 #define QTSLIDEREDITFACTORY_H
 
-#if QT_VERSION >= 0x040400
-QT_BEGIN_NAMESPACE
-#endif
-
 #include <qteditorfactory.h>
 #include <qtvariantproperty.h>
 #include <QMap>

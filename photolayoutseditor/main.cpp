@@ -1,4 +1,5 @@
 #include "photolayoutseditor.h"
+#include "PLEAboutData.h"
 
 #include <QDesktopWidget>
 #include <QResource>
@@ -16,15 +17,7 @@ using namespace KIPIPhotoLayoutsEditor;
 int main(int argc, char *argv[])
 {
 
-    KAboutData aboutData("photolayoutseditor",
-                         0,
-                         ki18n("Photo Layouts Editor"),
-                         QString("").toUtf8(),
-                         ki18n(""),
-                         KAboutData::License_GPL,
-                         ki18n(""),
-                         ki18n(""),
-                         QString("").toUtf8());
+    PLEAboutData aboutData;
 
     KCmdLineArgs::init(argc,argv,&aboutData);
 
@@ -32,10 +25,6 @@ int main(int argc, char *argv[])
 
     PhotoLayoutsEditor * w = PhotoLayoutsEditor::instance(0);
     w->setAttribute(Qt::WA_DeleteOnClose, true);
-    int height = QApplication::desktop()->height()-500;
-    w->resize(round(height*16.0/9.0),height);
-    QDesktopWidget * d = a.desktop();
-    w->move(d->rect().center()-w->frameGeometry().center());
     w->show();
 
     int result = a.exec();

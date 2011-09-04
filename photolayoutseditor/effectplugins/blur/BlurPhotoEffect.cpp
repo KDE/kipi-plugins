@@ -24,40 +24,36 @@
  * ============================================================ */
 
 #include "BlurPhotoEffect.h"
-#include "BlurPhotoEffect_p.h"
+#include "StarndardEffectsFactory.h"
 
-#include <kpluginfactory.h>
 #include <klocalizedstring.h>
 
-K_PLUGIN_FACTORY( BlurPhotoEffectFactoryLoader, registerPlugin<BlurPhotoEffectFactory>(); )
-K_EXPORT_PLUGIN ( BlurPhotoEffectFactoryLoader("photolayoutseditoreffectplugin_blur") )
+using namespace KIPIPhotoLayoutsEditor;
 
-BlurPhotoEffectFactory::BlurPhotoEffectFactory(QObject * parent, const QVariantList&) :
-    AbstractPhotoEffectFactory(parent)
+BlurPhotoEffect::BlurPhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
+    AbstractPhotoEffectInterface(factory, parent),
+    m_radius(10)
 {
 }
 
-AbstractPhotoEffectInterface * BlurPhotoEffectFactory::getEffectInstance()
+QImage BlurPhotoEffect::apply(const QImage & image) const
 {
-    return new BlurPhotoEffect(this, this);
+    int tempRadius = radius();
+    if (!tempRadius)
+        return image;
+    QImage result = image;
+    QPainter p(&result);
+    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(blurred(image, image.rect(), tempRadius)));
+    return result;
 }
 
-QString BlurPhotoEffectFactory::effectName() const
+QString BlurPhotoEffect::toString() const
 {
-    return i18n("Blur effect");
+    return i18n("Blur effect") + " [" + QString::number(this->radius()) + "]";
 }
 
-void BlurPhotoEffectFactory::writeToSvg(AbstractPhotoEffectInterface * effect, QDomElement & effectElement)
+BlurPhotoEffect::operator QString() const
 {
-    BlurPhotoEffect * blurEffect = dynamic_cast<BlurPhotoEffect*>(effect);
-    if (blurEffect)
-        effectElement.setAttribute(RADIUS_PROPERTY, blurEffect->radius());
+    return toString();
 }
-
-AbstractPhotoEffectInterface * BlurPhotoEffectFactory::readFromSvg(QDomElement & element)
-{
-    BlurPhotoEffect * effect = (BlurPhotoEffect*) this->getEffectInstance();
-    effect->setRadius( element.attribute(RADIUS_PROPERTY).toInt() );
-    return effect;
-}
-

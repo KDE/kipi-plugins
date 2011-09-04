@@ -23,47 +23,44 @@
  *
  * ============================================================ */
 
-#include "BorderChangeListener.h"
-#include "BordersGroup.h"
+#include "PhotoEffectChangeListener.h"
+#include "PhotoEffectsGroup.h"
+#include "AbstractPhoto.h"
 #include "global.h"
 
 #include <QtProperty>
-#include <KEditFactory.h>
+#include <QtIntPropertyManager>
+#include <QtDoublePropertyManager>
 #include <QtVariantPropertyManager>
-
-#include <QUndoCommand>
-#include <QMetaProperty>
 
 using namespace KIPIPhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
+class KIPIPhotoLayoutsEditor::PhotoEffectChangeCommand : public QUndoCommand
 {
-        BorderDrawerInterface * drawer;
+        AbstractPhotoEffectInterface * effect;
         QString propertyName;
         QVariant value;
     public:
-        BorderChangeCommand(BorderDrawerInterface * drawer, QUndoCommand * parent = 0) :
+        PhotoEffectChangeCommand(AbstractPhotoEffectInterface * effect, QUndoCommand * parent = 0) :
             QUndoCommand(parent),
-            drawer(drawer)
+            effect(effect)
         {
         }
         virtual void redo()
         {
-            qDebug() << "BorderChangeCommand redo";
-            QVariant temp = drawer->propertyValue(propertyName);
-            drawer->setPropertyValue(propertyName, value);
+            QVariant temp = effect->propertyValue(propertyName);
+            effect->setPropertyValue(propertyName, value);
             value = temp;
-            if (drawer->group())
-                drawer->group()->refresh();
+            if (effect->group() && effect->group()->photo())
+                effect->group()->photo()->refresh();
         }
         virtual void undo()
         {
-            qDebug() << "BorderChangeCommand undo";
-            QVariant temp = drawer->propertyValue(propertyName);
-            drawer->setPropertyValue(propertyName, value);
+            QVariant temp = effect->propertyValue(propertyName);
+            effect->setPropertyValue(propertyName, value);
             value = temp;
-            if (drawer->group())
-                drawer->group()->refresh();
+            if (effect->group() && effect->group()->photo())
+                effect->group()->photo()->refresh();
         }
         void setPropertyValue(const QString & propertyName, const QVariant & value)
         {
@@ -72,21 +69,21 @@ class KIPIPhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
         }
 };
 
-BorderChangeListener::BorderChangeListener(BorderDrawerInterface * drawer, QObject * parent, bool createCommands) :
+PhotoEffectChangeListener::PhotoEffectChangeListener(AbstractPhotoEffectInterface * effect, QObject * parent, bool createCommands) :
     QObject(parent),
-    drawer(drawer),
+    effect(effect),
     command(0),
     createCommands(createCommands)
 {
 }
 
-void BorderChangeListener::propertyChanged(QtProperty * property)
+void PhotoEffectChangeListener::propertyChanged(QtProperty * property)
 {
-    if (!drawer)
+    if (!effect)
         return;
 
     if (!command)
-        command = new BorderChangeCommand(drawer);
+        command = new PhotoEffectChangeCommand(effect);
 
     QtIntPropertyManager * integerManager = qobject_cast<QtIntPropertyManager*>(property->propertyManager());
     if (integerManager)
@@ -100,6 +97,12 @@ void BorderChangeListener::propertyChanged(QtProperty * property)
         command->setPropertyValue(property->propertyName(), doubleManager->value(property));
         return;
     }
+    QtColorPropertyManager * colorManager = qobject_cast<QtColorPropertyManager*>(property->propertyManager());
+    if (colorManager)
+    {
+        command->setPropertyValue(property->propertyName(), colorManager->value(property));
+        return;
+    }
     QtVariantPropertyManager * variantManager = qobject_cast<QtVariantPropertyManager*>(property->propertyManager());
     if (variantManager)
     {
@@ -108,7 +111,7 @@ void BorderChangeListener::propertyChanged(QtProperty * property)
     }
 }
 
-void BorderChangeListener::editingFinished()
+void PhotoEffectChangeListener::editingFinished()
 {
     if (command)
     {

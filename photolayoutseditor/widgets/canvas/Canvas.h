@@ -216,6 +216,15 @@ namespace KIPIPhotoLayoutsEditor
             /// Appends new undo command
             void newUndoCommand(QUndoCommand * command);
 
+            /// Shows progress bar
+            void initProgress(int limit);
+
+            /// Hides progress bar
+            void finishProgress();
+
+            /// Sets progress value
+            void updateProgress(int value);
+
         signals:
 
             void hasSelectionChanged(bool hasSelection);

@@ -42,7 +42,6 @@ namespace KIPIPhotoLayoutsEditor
     class AbstractPhoto;
     class PhotoEffectsGroup;
     class AbstractPhotoEffectFactory;
-    class AbstractPhotoEffectProperty;
     class AbstractPhotoEffectInterface;
 
     class PhotoEffectsLoader : public QObject
@@ -53,9 +52,6 @@ namespace KIPIPhotoLayoutsEditor
 
             static QString m_effect_name;
             QString m_name;
-
-            // Semafore (for multi-thread safety)
-            QSemaphore sem;
 
             static QMap<QString, AbstractPhotoEffectFactory*> registeredEffects;
 
@@ -103,51 +99,13 @@ namespace KIPIPhotoLayoutsEditor
 
           /** Returns property browser for effect.
             * \arg effect is the object of \class AbstractPhotoEffectInterface base type which represents effect with set of properties to configure.
+            * \arg does browser should create undo commands or just set properties values.
             */
-            static QtAbstractPropertyBrowser * propertyBrowser(AbstractPhotoEffectInterface * effect);
+            static QtAbstractPropertyBrowser * propertyBrowser(AbstractPhotoEffectInterface * effect, bool createCommands);
 
         protected:
 
             AbstractPhotoEffectInterface * m_effect;
-            QList<AbstractPhotoEffectProperty*> m_effect_edited_properties;
-
-          /// Use this function before/after modifying or creating new QUndoCommand for your effect
-            void beginUndoCommandChange()
-            {
-                sem.acquire();
-            }
-            void endUndoCommandChange()
-            {
-                sem.release();
-            }
-
-        protected slots:
-
-          /** This function if called when any QtProperty has changed.
-            * If you are reimplementing this function remember to call yours parent's version to process it's
-            * properties if \arg property is not your own.
-            * \note Remember to create/modify your version of QUndoCommand here.
-            * \warning Also remember to connect this function to all of your QtPropertyManager's to
-            * recieve all property change events.
-            */
-            void propertyChanged(QtProperty * property);
-
-          /** Call this slot to post your QUndoCommand.
-            * \note It is good to connect this slot to \fn editingFinished() signal of your QtEditorFacroty objects.
-            */
-            void postEffectChangedEvent();
-
-        signals:
-
-          /** Effect changed signal.
-            * Emit this signal to notify all listeners that your effects state has changed
-            * (i.e. opacity has changed and repaint is needed)
-            */
-            void effectChanged(PhotoEffectsLoader * effect);
-
-        private:
-
-            void setEffectPropertyValue(AbstractPhotoEffectProperty * effectProperty, QtProperty * property);
 
         friend class AbstractPhotoEffectFactory;
     };

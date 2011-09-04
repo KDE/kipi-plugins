@@ -30,18 +30,20 @@
 #include <kicon.h>
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <kaboutdata.h>
 
 #include <libkipi/interface.h>
 
 #include "photolayoutseditor.h"
+#include "PLEAboutData.h"
 
 using namespace KIPIPhotoLayoutsEditor;
 
 K_PLUGIN_FACTORY ( PhotoFrmesEditorFactory, registerPlugin<Plugin_PhotoLayoutsEditor>(); )
-K_EXPORT_PLUGIN  ( PhotoFrmesEditorFactory("kipiplugin_photolayoutseditor") )
+K_EXPORT_PLUGIN( PhotoFrmesEditorFactory( PLEAboutData() ))
 
-Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject * parent, const QVariantList & args) :
-    KIPI::Plugin( PhotoFrmesEditorFactory::componentData(), parent, "Photo Frames Editor" )
+Plugin_PhotoLayoutsEditor::Plugin_PhotoLayoutsEditor(QObject * parent, const QVariantList &) :
+    KIPI::Plugin( PhotoFrmesEditorFactory::componentData(), parent, "photolayoutseditor" )
 {
     m_interface    = 0;
     m_action       = 0;

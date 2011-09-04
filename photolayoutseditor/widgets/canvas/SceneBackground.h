@@ -85,9 +85,7 @@ namespace KIPIPhotoLayoutsEditor
 
         signals:
 
-            void firstColorChanged(QColor);
-            void secondColorChanged(QColor);
-            void patternChanged(Qt::BrushStyle);
+            void changed();
 
         protected:
 
@@ -95,19 +93,6 @@ namespace KIPIPhotoLayoutsEditor
             void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
             void render();
             void render(QPainter * painter, const QRect & rect);
-
-            void emitFirstColorChanged()
-            {
-                emit firstColorChanged(m_first_brush.color());
-            }
-            void emitSecondColorChanged()
-            {
-                emit secondColorChanged(m_second_brush.color());
-            }
-            void emitPatternChanged()
-            {
-                emit patternChanged(m_first_brush.style());
-            }
 
         private:
 

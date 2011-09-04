@@ -201,18 +201,18 @@ PhotoEffectsGroup * PhotoEffectsGroup::fromSvg(const QDomElement & element, Abst
 void PhotoEffectsGroup::push_back(AbstractPhotoEffectInterface * effect)
 {
     m_effects_list.push_back(effect);
+    connect(effect, SIGNAL(changed()), this, SLOT(emitEffectsChanged()));
     effect->setParent(this);
     effect->setGroup(this);
-    emitEffectsChanged(effect);
     emit layoutChanged();
 }
 
 void PhotoEffectsGroup::push_front(AbstractPhotoEffectInterface * effect)
 {
     m_effects_list.push_back(effect);
+    connect(effect, SIGNAL(changed()), this, SLOT(emitEffectsChanged()));
     effect->setParent(this);
     effect->setGroup(this);
-    emitEffectsChanged(effect);
     emit layoutChanged();
 }
 
@@ -247,6 +247,9 @@ void PhotoEffectsGroup::setItem(QObject * item, const QModelIndex & index)
         return;
     m_effects_list.removeAt(row);
     m_effects_list.insert(row, effect);
+    effect->setParent(this);
+    effect->setGroup(this);
+    emitEffectsChanged(effect);
 }
 
 AbstractPhotoEffectInterface * PhotoEffectsGroup::graphicsItem(const QModelIndex & index) const
@@ -357,16 +360,12 @@ bool PhotoEffectsGroup::removeRows(int row, int count, const QModelIndex & paren
 {
     if (!count || parent.isValid() || row < 0 || row >= rowCount() || row+count-1 >= rowCount())
         return false;
-    for (int i = row+count-1; i >= row; --i)
-    {
-        if (m_effects_list.at(rowCount()-i-1))
-            goto create_command;
-    }
-    removeRowsInModel(row,count);
-    return true;
-create_command:
-    QUndoCommand * command = new RemoveItemsUndoCommand(row, count, this);
-    PLE_PostUndoCommand(command);
+    beginRemoveRows(QModelIndex(), row, row+count-1);
+    while (count--)
+        m_effects_list.removeAt(row);
+    endRemoveRows();
+    this->emitEffectsChanged();
+    emit layoutChanged();
     return true;
 }
 
@@ -423,6 +422,8 @@ QList<AbstractPhotoEffectInterface*> PhotoEffectsGroup::removeRowsInModel(int st
         {
             ++removedCount;
             removedItems.push_back(temp);
+            temp->setParent(0);
+            temp->setGroup(0);
         }
     }
 
@@ -448,6 +449,8 @@ void PhotoEffectsGroup::insertRemovedRowsInModel(const QList<AbstractPhotoEffect
     {
         m_effects_list.insert(startingPosition, effect);
         ++startingPosition;
+        effect->setParent(this);
+        effect->setGroup(this);
     }
 
     endInsertRows();
