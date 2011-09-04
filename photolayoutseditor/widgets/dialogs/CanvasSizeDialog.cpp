@@ -307,10 +307,14 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
 {
     this->setCaption(i18n("Canvas size"));
 
-    if (sizeUnits.isEmpty())
-        sizeUnits = CanvasSize::sizeUnitName(CanvasSize::Pixels);;
-    if (resolutionUnits.isEmpty())
-        resolutionUnits = CanvasSize::resolutionUnitName(CanvasSize::PixelsPerInch);;
+    QString tempSizeUnits = sizeUnits;
+    QString tempResolutionUnits = resolutionUnits;
+    if (tempSizeUnits.isEmpty() ||
+            CanvasSize::sizeUnit(tempSizeUnits) == CanvasSize::UnknownSizeUnit)
+        tempSizeUnits = CanvasSize::sizeUnitName(CanvasSize::Pixels);;
+    if (tempResolutionUnits.isEmpty() ||
+            CanvasSize::resolutionUnit(tempResolutionUnits) == CanvasSize::UnknownResolutionUnit)
+        tempResolutionUnits = CanvasSize::resolutionUnitName(CanvasSize::PixelsPerInch);;
 
     QWidget * main = new QWidget(this);
     setMainWidget(main);
@@ -343,8 +347,8 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     d->xSize->setValue(size.width());
     d->WIDTH = CanvasSize::toPixels(size.width(),
                                     resolution.width(),
-                                    CanvasSize::sizeUnit(sizeUnits),
-                                    CanvasSize::resolutionUnit(resolutionUnits));
+                                    CanvasSize::sizeUnit(tempSizeUnits),
+                                    CanvasSize::resolutionUnit(tempResolutionUnits));
     gridLayout->addWidget(new QLabel("Width:", d->sizeWidget),0,0);
     gridLayout->addWidget(d->xSize,0,1);
 
@@ -355,16 +359,16 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     d->ySize->setValue(size.height());
     d->HEIGHT = CanvasSize::toPixels(size.height(),
                                      resolution.height(),
-                                     CanvasSize::sizeUnit(sizeUnits),
-                                     CanvasSize::resolutionUnit(resolutionUnits));
+                                     CanvasSize::sizeUnit(tempSizeUnits),
+                                     CanvasSize::resolutionUnit(tempResolutionUnits));
     gridLayout->addWidget(new QLabel("Height:", d->sizeWidget),1,0);
     gridLayout->addWidget(d->ySize,1,1);
 
     // Unit widget
     d->sizeUnitsWidget = new KComboBox(d->sizeWidget);
     d->sizeUnitsWidget->addItems(CanvasSize::sizeUnitsNames());
-    d->sizeUnitsWidget->setCurrentItem(sizeUnits);
-    d->currentSizeUnit = sizeUnits;
+    d->sizeUnitsWidget->setCurrentItem(tempSizeUnits);
+    d->currentSizeUnit = tempSizeUnits;
     gridLayout->addWidget(d->sizeUnitsWidget,1,2);
 
     // Orientation buttons
@@ -396,7 +400,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     d->xResolution->setMaximum(999999);
     d->xResolution->setValue(resolution.width());
     d->xResolution->setDecimals(3);
-    d->WIDTH_RES = resolution.width() * CanvasSize::resolutionUnitFactor(resolutionUnits);
+    d->WIDTH_RES = resolution.width() * CanvasSize::resolutionUnitFactor(tempResolutionUnits);
     gridLayout->addWidget(new QLabel("Resolution X:", d->advancedWidget),0,0);
     gridLayout->addWidget(d->xResolution,0,1);
 
@@ -406,15 +410,15 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     d->yResolution->setMaximum(999999);
     d->yResolution->setValue(resolution.height());
     d->yResolution->setDecimals(3);
-    d->HEIGHT_RES = resolution.height() * CanvasSize::resolutionUnitFactor(resolutionUnits);
+    d->HEIGHT_RES = resolution.height() * CanvasSize::resolutionUnitFactor(tempResolutionUnits);
     gridLayout->addWidget(new QLabel("Resolution Y:", d->advancedWidget),1,0);
     gridLayout->addWidget(d->yResolution,1,1);
 
     // Unit widget
     d->resolutionUnitsWidget = new KComboBox(d->sizeWidget);
     d->resolutionUnitsWidget->addItems(CanvasSize::resolutionUnitsNames());
-    d->resolutionUnitsWidget->setCurrentItem(resolutionUnits);
-    d->currentResolutionUnit = resolutionUnits;
+    d->resolutionUnitsWidget->setCurrentItem(tempResolutionUnits);
+    d->currentResolutionUnit = tempResolutionUnits;
     gridLayout->addWidget(d->resolutionUnitsWidget,1,2);
 
     this->prepareSignalsConnections();
