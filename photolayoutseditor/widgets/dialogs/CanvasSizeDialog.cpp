@@ -580,3 +580,4 @@ void CanvasSizeDialog::yResolutionChanged(double yResolution)
     d->HEIGHT_RES = yResolution * resolutionFactor;
     d->updateSizeLabel();
 }
+
