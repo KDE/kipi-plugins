@@ -116,10 +116,10 @@ class KIPIPhotoLayoutsEditor::CanvasSizeDialogPrivate
 
 int CanvasSizeDialogPrivate::WIDTH = 800;
 int CanvasSizeDialogPrivate::HEIGHT = 800;
-QString CanvasSizeDialogPrivate::currentSizeUnit = CanvasSize::sizeUnitName(CanvasSize::Pixels);
+QString CanvasSizeDialogPrivate::currentSizeUnit = "";
 qreal CanvasSizeDialogPrivate::WIDTH_RES = 72;
 qreal CanvasSizeDialogPrivate::HEIGHT_RES = 72;
-QString CanvasSizeDialogPrivate::currentResolutionUnit = CanvasSize::resolutionUnitName(CanvasSize::PixelsPerInch);
+QString CanvasSizeDialogPrivate::currentResolutionUnit = "";
 
 void CanvasSizeDialogPrivate::swapSizes()
 {
@@ -306,6 +306,11 @@ CanvasSizeDialog::~CanvasSizeDialog()
 void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnits, const QSizeF & resolution, const QString & resolutionUnits)
 {
     this->setCaption(i18n("Canvas size"));
+
+    if (sizeUnits.isEmpty())
+        sizeUnits = CanvasSize::sizeUnitName(CanvasSize::Pixels);;
+    if (resolutionUnits.isEmpty())
+        resolutionUnits = CanvasSize::resolutionUnitName(CanvasSize::PixelsPerInch);;
 
     QWidget * main = new QWidget(this);
     setMainWidget(main);
@@ -571,3 +576,4 @@ void CanvasSizeDialog::yResolutionChanged(double yResolution)
     d->HEIGHT_RES = yResolution * resolutionFactor;
     d->updateSizeLabel();
 }
+
