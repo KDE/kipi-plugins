@@ -14,8 +14,6 @@
   SET( CMAKE_PACKAGE_QTGUI TRUE )
   SET( QT_USE_QTXML TRUE )
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   SET( PLE_Common_SRCS
       plugin/photolayoutseditor.cpp
       settings/PLEConfigDialog.cpp
@@ -44,39 +42,9 @@
       widgets/extra/PatternsComboBox.cpp
       widgets/layers/LayersTree.cpp
       widgets/layers/LayersTreeDelegate.cpp
-=======
-  SET( PhotoLayoutsEditor_SRCS
-      widgets/canvas/Scene.cpp
-      widgets/canvas/Canvas.cpp
-=======
-  SET( PhotoLayoutsEditor_SRCS
-      widgets/canvas/Scene.cpp
-      widgets/canvas/Canvas.cpp
->>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
-      widgets/canvas/RotationWidgetItem.cpp
-      widgets/canvas/ScalingWidgetItem.cpp
-      widgets/canvas/CropWidgetItem.cpp
-      widgets/canvas/MousePressListener.cpp
-      widgets/canvas/CanvasSize.cpp
-      widgets/canvas/SceneBackground.cpp
-      widgets/tools/EffectsEditorTool.cpp
-      widgets/tools/ToolsDockWidget.cpp
-      widgets/tools/BorderEditTool.cpp
-      widgets/tools/TextEditorTool.cpp
-      widgets/tools/CanvasEditTool.cpp
-      widgets/tools/AbstractTool.cpp
-      widgets/tools/AbstractItemsTool.cpp
-      widgets/tools/AbstractItemsListViewTool.cpp
-<<<<<<< HEAD
->>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
-=======
->>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
       widgets/items/AbstractPhoto.cpp
-      widgets/items/AbstractItemInterface.cpp
       widgets/items/PhotoItem.cpp
       widgets/items/TextItem.cpp
-<<<<<<< HEAD
-<<<<<<< HEAD
       widgets/menus/LayersTreeMenu.cpp
       widgets/items/AbstractItemInterface.cpp
       widgets/tools/AbstractItemsListViewTool.cpp
@@ -88,46 +56,6 @@
       widgets/tools/TextEditorTool.cpp
       widgets/tools/ToolsDockWidget.cpp
 )
-=======
-=======
->>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
-      widgets/dialogs/ImageFileDialog.cpp
-      widgets/dialogs/CanvasSizeDialog.cpp
-      widgets/dialogs/GridSetupDialog.cpp
-      widgets/layers/LayersTree.cpp
-      widgets/layers/LayersTreeDelegate.cpp
-      widgets/menus/LayersTreeMenu.cpp
-      widgets/extra/PatternsComboBox.cpp
-
-      models/LayersModel.cpp
-      models/LayersModelItem.cpp
-      models/LayersSelectionModel.cpp
-      models/AbstractMovableModel.cpp
-
-      undo/UndoMoveRowsCommand.cpp
-
-      plugin/photolayoutseditor.cpp
-
-      utils/KEditFactory.cpp
-      utils/global.cpp
-
-      events/UndoCommandEvent.cpp
-      events/UndoCommandEventFilter.cpp
-
-      settings/PLEConfigDialog.cpp
-      settings/PLEConfigViewWidget.cpp
-
-      listeners/TextColorChangeListener.cpp
-      listeners/TextFontChangeListener.cpp
-
-      borders/BordersGroup.cpp
-      borders/BorderDrawersLoader.cpp
-      borders/BorderChangeListener.cpp
-
-      effects/PhotoEffectsLoader.cpp
-      effects/PhotoEffectsGroup.cpp
-  )
->>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
 
   SET( PLE_Models_SRCS
       models/AbstractMovableModel.cpp
@@ -251,21 +179,5 @@
   INSTALL( FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
   INSTALL( FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
-<<<<<<< HEAD
   ADD_SUBDIRECTORY( ./borderplugins )
 
-=======
-# =======================================================
-# Build plugins
-
-<<<<<<< HEAD
-  ADD_SUBDIRECTORY( ./borderplugins )
-  ADD_SUBDIRECTORY( ./effectplugins )
->>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
-=======
-# =======================================================
-# Build plugins
-
-  ADD_SUBDIRECTORY( ./borderplugins )
-  ADD_SUBDIRECTORY( ./effectplugins )
->>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
