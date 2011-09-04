@@ -1,0 +1,23 @@
+Kipi-plugins 2.1.0 - Release date: 2011/09/04
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+New tool to export collection to VKontakte web service (http://www.vkontakte.ru).
+New tool to stitch photos as panorama.
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 270419 : digiKam's plugin Kipi can't import my photo from facebook.
+002 ==> 279078 : kipi plugin Yandex.Fotki causes digikam crash.
+003 ==> 141389 : Unpredictable image ordering in gallery.xml
+004 ==> 171794 : Display keywords by flash export.
+005 ==> 279515 : FlashExport's FirstRunDialog doesn't install simpleviewer's archive.
+006 ==> 279445 : Change the way progress is reported in the Geolocation Correlator.
+007 ==> 098693 : Easy stitcher and panorama tool.
+008 ==> 235766 : Panorama Tool as hugin, gimp-pandora.
+009 ==> 280860 : Compile fails due to DSO error with pthread.
+010 ==> 280736 : Wrong check for cpfind when using panorama tool.
+011 ==> 
+
+
