@@ -15,6 +15,7 @@
   SET( QT_USE_QTXML TRUE )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   SET( PLE_Common_SRCS
       plugin/photolayoutseditor.cpp
       settings/PLEConfigDialog.cpp
@@ -47,6 +48,11 @@
   SET( PhotoLayoutsEditor_SRCS
       widgets/canvas/Scene.cpp
       widgets/canvas/Canvas.cpp
+=======
+  SET( PhotoLayoutsEditor_SRCS
+      widgets/canvas/Scene.cpp
+      widgets/canvas/Canvas.cpp
+>>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
       widgets/canvas/RotationWidgetItem.cpp
       widgets/canvas/ScalingWidgetItem.cpp
       widgets/canvas/CropWidgetItem.cpp
@@ -61,11 +67,15 @@
       widgets/tools/AbstractTool.cpp
       widgets/tools/AbstractItemsTool.cpp
       widgets/tools/AbstractItemsListViewTool.cpp
+<<<<<<< HEAD
+>>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
+=======
 >>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
       widgets/items/AbstractPhoto.cpp
       widgets/items/AbstractItemInterface.cpp
       widgets/items/PhotoItem.cpp
       widgets/items/TextItem.cpp
+<<<<<<< HEAD
 <<<<<<< HEAD
       widgets/menus/LayersTreeMenu.cpp
       widgets/items/AbstractItemInterface.cpp
@@ -79,6 +89,8 @@
       widgets/tools/ToolsDockWidget.cpp
 )
 =======
+=======
+>>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
       widgets/dialogs/ImageFileDialog.cpp
       widgets/dialogs/CanvasSizeDialog.cpp
       widgets/dialogs/GridSetupDialog.cpp
@@ -242,6 +254,14 @@
 <<<<<<< HEAD
   ADD_SUBDIRECTORY( ./borderplugins )
 
+=======
+# =======================================================
+# Build plugins
+
+<<<<<<< HEAD
+  ADD_SUBDIRECTORY( ./borderplugins )
+  ADD_SUBDIRECTORY( ./effectplugins )
+>>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
 =======
 # =======================================================
 # Build plugins
