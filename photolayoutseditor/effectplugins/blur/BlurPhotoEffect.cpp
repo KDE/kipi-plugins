@@ -23,13 +23,8 @@
  *
  * ============================================================ */
 
-<<<<<<< HEAD
 #include "BlurPhotoEffect.h"
 #include "StarndardEffectsFactory.h"
-=======
-#include "BlurPhotoEffect.moc"
-#include "BlurPhotoEffect_p.h"
->>>>>>> a0bb2ddc52164d737c5d7ba1aa49cd3a08a36cb9
 
 #include <klocalizedstring.h>
 
