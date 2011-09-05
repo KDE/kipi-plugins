@@ -18,6 +18,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> 235766 : Panorama Tool as hugin, gimp-pandora.
 009 ==> 280860 : Compile fails due to DSO error with pthread.
 010 ==> 280736 : Wrong check for cpfind when using panorama tool.
-011 ==> 
 
 
