@@ -271,7 +271,7 @@ void PhotoLayoutsEditor::setupActions()
     d->settingsAction = KStandardAction::preferences(this, SLOT(settings()), actionCollection());
     actionCollection()->addAction("settings", d->settingsAction);
     //------------------------------------------------------------------------
-    d->addImageAction = new KAction(i18nc("Adds new image from file", "Add image..."), actionCollection());
+    d->addImageAction = new KAction(i18nc("Adds new image(s) from file", "Add image(s)..."), actionCollection());
     connect(d->addImageAction, SIGNAL(triggered()), this, SLOT(loadNewImage()));
     actionCollection()->addAction("new_image", d->addImageAction);
     //------------------------------------------------------------------------
@@ -631,11 +631,11 @@ void PhotoLayoutsEditor::loadNewImage()
         return;
 
     ImageFileDialog d(KUrl(), this);
-    d.setMode(KFile::File);
+    d.setMode(KFile::Files);
     d.setOperationMode(KFileDialog::Opening);
     d.setKeepLocation(true);
     if (d.exec() == ImageFileDialog::Accepted)
-        m_canvas->addImage( KUrl(d.selectedFile()) );
+        m_canvas->addImages( d.selectedUrls() );
 }
 
 void PhotoLayoutsEditor::setGridVisible(bool isVisible)

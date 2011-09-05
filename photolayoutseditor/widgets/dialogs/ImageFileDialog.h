@@ -28,20 +28,22 @@
 
 #include <kfiledialog.h>
 
+namespace KIPI
+{
+    class Interface;
+}
+
 namespace KIPIPhotoLayoutsEditor
 {
     class ImageFileDialog : public KFileDialog
     {
             Q_OBJECT
 
-            static QString FILTER;
-            const char * m_format;
+            QString m_format;
 
         public:
 
             ImageFileDialog(const KUrl & startDir, QWidget * parent = 0, QWidget * widget = 0);
-            virtual int exec();
-            const char * format();
 
         private:
 
