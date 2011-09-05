@@ -39,11 +39,14 @@ namespace KIPIPhotoLayoutsEditor
     {
             Q_OBJECT
 
-            QString m_format;
+            static QString FILTER;
+            const char * m_format;
 
         public:
 
             ImageFileDialog(const KUrl & startDir, QWidget * parent = 0, QWidget * widget = 0);
+            virtual int exec();
+            const char * format();
 
         private:
 
