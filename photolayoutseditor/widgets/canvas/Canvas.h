@@ -135,6 +135,8 @@ namespace KIPIPhotoLayoutsEditor
         public slots:
 
             void addImage(const QImage & image);
+            void addImage(const KUrl & imageUrl);
+            void addImages(const KUrl::List & images);
             void addText(const QString & text);
 
             /// Creates move rows command and pushes it onto the stack

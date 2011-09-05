@@ -61,7 +61,6 @@
 #include <QFile>
 #include <QPrintPreviewDialog>
 #include <QImageWriter>
-#include <QImageReader>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QDesktopWidget>
@@ -205,6 +204,14 @@ bool PhotoLayoutsEditor::hasInterface() const
 KIPI::Interface * PhotoLayoutsEditor::interface() const
 {
     return this->m_interface;
+}
+
+void PhotoLayoutsEditor::setItemsList(const KUrl::List & images)
+{
+    if (!m_canvas)
+        return;
+
+    m_canvas->addImages(images);
 }
 
 void PhotoLayoutsEditor::setupActions()
@@ -628,12 +635,7 @@ void PhotoLayoutsEditor::loadNewImage()
     d.setOperationMode(KFileDialog::Opening);
     d.setKeepLocation(true);
     if (d.exec() == ImageFileDialog::Accepted)
-    {
-        QImageReader ir(d.selectedFile());
-        QImage img = ir.read();
-        if (!img.isNull())
-            m_canvas->addImage(img);
-    }
+        m_canvas->addImage( KUrl(d.selectedFile()) );
 }
 
 void PhotoLayoutsEditor::setGridVisible(bool isVisible)

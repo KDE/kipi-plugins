@@ -95,7 +95,12 @@ void Plugin_PhotoLayoutsEditor::slotActivate()
         return;
     }
 
+    KIPI::ImageCollection images = m_interface->currentSelection();
+
     m_manager = PhotoLayoutsEditor::instance(m_parentWidget);
+    m_manager->open();
+    if (images.isValid() || !images.images().isEmpty())
+        m_manager->setItemsList(images.images());
     m_manager->setInterface(m_interface);
     m_manager->show();
 }

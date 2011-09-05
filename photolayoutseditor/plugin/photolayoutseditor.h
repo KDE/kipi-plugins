@@ -59,6 +59,7 @@ namespace KIPIPhotoLayoutsEditor
             void endUndoCommandGroup();
             void setInterface(KIPI::Interface * interface);
             bool hasInterface() const;
+            void setItemsList(const KUrl::List & images);
             KIPI::Interface * interface() const;
 
         public Q_SLOTS:

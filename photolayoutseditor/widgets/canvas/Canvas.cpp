@@ -40,6 +40,7 @@
 #include <QPaintEngine>
 #include <QProgressBar>
 #include <QVBoxLayout>
+#include <QImageReader>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -262,6 +263,32 @@ void Canvas::addImage(const QImage & image)
 
     // Fits item to the scenes rect
     it->fitToRect(m_scene->sceneRect().toRect());
+}
+
+/** ###########################################################################################################################
+ * Add new image from the specified url
+ #############################################################################################################################*/
+void Canvas::addImage(const KUrl & imageUrl)
+{
+    QImageReader ir( imageUrl.path() );
+    QImage img = ir.read();
+    if (!img.isNull())
+        this->addImage(img);
+}
+
+/** ###########################################################################################################################
+ * Add images from the specified url's list
+ #############################################################################################################################*/
+void Canvas::addImages(const KUrl::List & images)
+{
+    QImageReader ir;
+    foreach (KUrl url, images)
+    {
+        ir.setFileName( url.path() );
+        QImage img = ir.read();
+        if (!img.isNull())
+            this->addImage(img);
+    }
 }
 
 /** ###########################################################################################################################

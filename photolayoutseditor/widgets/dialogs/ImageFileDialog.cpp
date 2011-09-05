@@ -28,6 +28,8 @@
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 
+#include "imagedialog.h"
+
 using namespace KIPIPhotoLayoutsEditor;
 
 QString ImageFileDialog::FILTER =   "*.bpm|(*.bmp) Windows Bitmap\n"
