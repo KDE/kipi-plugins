@@ -23,29 +23,45 @@
  *
  * ============================================================ */
 
-#ifndef SEPIAPHOTOEFFECT_H
-#define SEPIAPHOTOEFFECT_H
+#ifndef SEPIAPHOTOEFFECT_P_H
+#define SEPIAPHOTOEFFECT_P_H
 
-#include "SepiaPhotoEffect_global.h"
-#include "AbstractPhotoEffectFactory.h"
+#include "AbstractPhotoEffectInterface.h"
 
-using namespace KIPIPhotoLayoutsEditor;
-
-class SEPIAPHOTOEFFECTSHARED_EXPORT SepiaPhotoEffectFactory : public AbstractPhotoEffectFactory
+namespace KIPIPhotoLayoutsEditor
 {
-        Q_OBJECT
-        Q_INTERFACES(KIPIPhotoLayoutsEditor::AbstractPhotoEffectFactory)
+    class StarndardEffectsFactory;
+    class SepiaPhotoEffect : public AbstractPhotoEffectInterface
+    {
+            Q_OBJECT
 
-    public:
+        public:
 
-        SepiaPhotoEffectFactory(QObject * parent, const QVariantList&);
-        virtual AbstractPhotoEffectInterface * getEffectInstance();
-        virtual QString effectName() const;
+            explicit SepiaPhotoEffect(StarndardEffectsFactory * factory, QObject * parent = 0);
+            virtual QImage apply(const QImage & image) const;
+            virtual QString toString() const;
+            virtual operator QString() const;
 
-    protected:
+        private:
 
-        virtual void writeToSvg(AbstractPhotoEffectInterface * effect, QDomElement & effectElement);
-        virtual AbstractPhotoEffectInterface * readFromSvg(QDomElement & element);
-};
+            static inline QImage sepia_converted(const QImage & image)
+            {
+                QImage result = image;
+                unsigned int pixels = result.width() * result.height();
+                unsigned int * data = (unsigned int *) result.bits();
+                for (unsigned int i = 0; i < pixels; ++i)
+                {
+                    int gr = qGray(data[i]);
+                    int r = gr+40.0;
+                    int g = gr+20.0;
+                    int b = gr-20.0;
+                    data[i] = qRgb((r>255?255:r),(g>255?255:g),(b<0?0:b));
+                }
+                return result;
+            }
 
-#endif // SEPIAPHOTOEFFECT_H
+        friend class StarndardEffectsFactory;
+    };
+}
+
+#endif // SEPIAPHOTOEFFECT_P_H

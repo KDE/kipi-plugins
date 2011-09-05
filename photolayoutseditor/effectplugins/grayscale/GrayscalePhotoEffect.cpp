@@ -24,34 +24,34 @@
  * ============================================================ */
 
 #include "GrayscalePhotoEffect.h"
-#include "GrayscalePhotoEffect_p.h"
+#include "StarndardEffectsFactory.h"
 
-#include <kpluginfactory.h>
 #include <klocalizedstring.h>
 
-K_PLUGIN_FACTORY( GrayscalePhotoEffectFactoryLoader, registerPlugin<GrayscalePhotoEffectFactory>(); )
-K_EXPORT_PLUGIN ( GrayscalePhotoEffectFactoryLoader("photolayoutseditoreffectplugin_grayscale") )
+using namespace KIPIPhotoLayoutsEditor;
 
-GrayscalePhotoEffectFactory::GrayscalePhotoEffectFactory(QObject * parent, const QVariantList&) :
-    AbstractPhotoEffectFactory(parent)
+GrayscalePhotoEffect::GrayscalePhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
+    AbstractPhotoEffectInterface(factory, parent)
 {
 }
 
-AbstractPhotoEffectInterface * GrayscalePhotoEffectFactory::getEffectInstance()
+QImage GrayscalePhotoEffect::apply(const QImage & image) const
 {
-    return new GrayscalePhotoEffect(this, this);
+    if (!strength())
+        return image;
+    QImage result = image;
+    QPainter p(&result);
+    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(greyscaled(image)));
+    return result;
 }
 
-QString GrayscalePhotoEffectFactory::effectName() const
+QString GrayscalePhotoEffect::toString() const
 {
     return i18n("Grayscale effect");
 }
 
-void GrayscalePhotoEffectFactory::writeToSvg(AbstractPhotoEffectInterface * /*effect*/, QDomElement & /*effectElement*/)
-{}
-
-AbstractPhotoEffectInterface * GrayscalePhotoEffectFactory::readFromSvg(QDomElement & /*element*/)
+GrayscalePhotoEffect::operator QString() const
 {
-    GrayscalePhotoEffect * effect = (GrayscalePhotoEffect*) this->getEffectInstance();
-    return effect;
+    return toString();
 }

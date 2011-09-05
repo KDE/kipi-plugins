@@ -24,41 +24,37 @@
  * ============================================================ */
 
 #include "ColorizePhotoEffect.h"
-#include "ColorizePhotoEffect_p.h"
+#include "StarndardEffectsFactory.h"
 
-#include <kpluginfactory.h>
 #include <klocalizedstring.h>
 
-K_PLUGIN_FACTORY( ColorizePhotoEffectFactoryLoader, registerPlugin<ColorizePhotoEffectFactory>(); )
-K_EXPORT_PLUGIN ( ColorizePhotoEffectFactoryLoader("photolayoutseditoreffectplugin_colorize") )
+using namespace KIPIPhotoLayoutsEditor;
 
-ColorizePhotoEffectFactory::ColorizePhotoEffectFactory(QObject * parent, const QVariantList&) :
-    AbstractPhotoEffectFactory(parent)
+QColor ColorizePhotoEffect::m_last_color = QColor(255,255,255,0);
+
+ColorizePhotoEffect::ColorizePhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
+    AbstractPhotoEffectInterface(factory, parent)
 {
 }
 
-AbstractPhotoEffectInterface * ColorizePhotoEffectFactory::getEffectInstance()
+QImage ColorizePhotoEffect::apply(const QImage & image) const
 {
-    return new ColorizePhotoEffect(this, this);
+    QColor tempColor = color();
+    if (!strength() || !tempColor.alpha())
+        return image;
+    QImage result = image;
+    QPainter p(&result);
+    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(colorized(image, tempColor)));
+    return result;
 }
 
-QString ColorizePhotoEffectFactory::effectName() const
+QString ColorizePhotoEffect::toString() const
 {
-    return i18n("Colorize effect");
+    return i18n("Colorize effect") + " [" + color().name() + "]";
 }
 
-
-void ColorizePhotoEffectFactory::writeToSvg(AbstractPhotoEffectInterface * effect, QDomElement & effectElement)
+ColorizePhotoEffect::operator QString() const
 {
-    ColorizePhotoEffect * colorizeEffect = dynamic_cast<ColorizePhotoEffect*>(effect);
-    if (colorizeEffect)
-        effectElement.setAttribute(COLOR_PROPERTY, colorizeEffect->color().name());
+    return toString();
 }
-
-AbstractPhotoEffectInterface * ColorizePhotoEffectFactory::readFromSvg(QDomElement & element)
-{
-    ColorizePhotoEffect * effect = (ColorizePhotoEffect*) this->getEffectInstance();
-    effect->setColor( QColor(element.attribute(COLOR_PROPERTY)) );
-    return effect;
-}
-

@@ -73,6 +73,9 @@
   SET( PLE_Effects_SRCS
       effectplugins/StarndardEffectsFactory.cpp
       effectplugins/blur/BlurPhotoEffect.cpp
+      effectplugins/colorize/ColorizePhotoEffect.cpp
+      effectplugins/grayscale/GrayscalePhotoEffect.cpp
+      effectplugins/sepia/SepiaPhotoEffect.cpp
       effects/AbstractPhotoEffectInterface.cpp
       effects/PhotoEffectChangeListener.cpp
       effects/PhotoEffectsGroup.cpp
@@ -180,4 +183,3 @@
   INSTALL( FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
   ADD_SUBDIRECTORY( ./borderplugins )
-

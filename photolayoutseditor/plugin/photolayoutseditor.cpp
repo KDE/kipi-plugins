@@ -363,7 +363,7 @@ void PhotoLayoutsEditor::createWidgets()
     d->centralWidget->layout()->setMargin(0);
     this->setCentralWidget(d->centralWidget);
 
-    this->open(KUrl("/home/coder89/Desktop/second.pfe"));   /// TODO : Uncomment and set correct path when delevoping
+    //this->open(KUrl("/home/coder89/Desktop/second.pfe"));   /// TODO : Uncomment and set correct path when delevoping
 }
 
 void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)

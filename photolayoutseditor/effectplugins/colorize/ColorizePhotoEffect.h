@@ -26,26 +26,82 @@
 #ifndef COLORIZEPHOTOEFFECT_H
 #define COLORIZEPHOTOEFFECT_H
 
-#include "ColorizePhotoEffect_global.h"
-#include "AbstractPhotoEffectFactory.h"
+#include "AbstractPhotoEffectInterface.h"
 
-using namespace KIPIPhotoLayoutsEditor;
+#define COLOR_PROPERTY "Color"
 
-class COLORIZEPHOTOEFFECTSHARED_EXPORT ColorizePhotoEffectFactory : public AbstractPhotoEffectFactory
+namespace KIPIPhotoLayoutsEditor
 {
-        Q_OBJECT
-        Q_INTERFACES(KIPIPhotoLayoutsEditor::AbstractPhotoEffectFactory)
+    class StarndardEffectsFactory;
+    class ColorizePhotoEffect : public AbstractPhotoEffectInterface
+    {
+            Q_OBJECT
 
-    public:
+            static QColor m_last_color;
+            QColor m_color;
 
-        ColorizePhotoEffectFactory(QObject * parent, const QVariantList& args);
-        virtual AbstractPhotoEffectInterface * getEffectInstance();
-        virtual QString effectName() const;
+        public:
 
-    protected:
+            explicit ColorizePhotoEffect(StarndardEffectsFactory * factory, QObject * parent = 0);
+            virtual QImage apply(const QImage & image) const;
+            virtual QString toString() const;
+            virtual operator QString() const;
 
-        virtual void writeToSvg(AbstractPhotoEffectInterface * effect, QDomElement & effectElement);
-        virtual AbstractPhotoEffectInterface * readFromSvg(QDomElement & element);
-};
+            virtual QString propertyName(const QMetaProperty & property) const
+            {
+                if (!QString("color").compare(property.name()))
+                    return COLOR_PROPERTY;
+                return AbstractPhotoEffectInterface::propertyName(property);
+            }
+            virtual QVariant propertyValue(const QString & propertyName) const
+            {
+                if (propertyName == COLOR_PROPERTY)
+                    return m_color;
+                return AbstractPhotoEffectInterface::propertyValue(propertyName);
+            }
+            virtual void setPropertyValue(const QString & propertyName, const QVariant & value)
+            {
+                if (COLOR_PROPERTY == propertyName)
+                    this->setColor(value.value<QColor>());
+                else
+                    AbstractPhotoEffectInterface::setPropertyValue(propertyName, value);
+            }
+
+            Q_PROPERTY(QColor color READ color WRITE setColor)
+            QColor color() const
+            {
+                return m_color;
+            }
+            void setColor(QColor color)
+            {
+                if (color.isValid())
+                    return;
+                m_color = color;
+                m_last_color = color;
+                this->propertiesChanged();
+            }
+
+        private:
+
+            static inline QImage colorized(const QImage & image, const QColor & color)
+            {
+                QImage result = image;
+                unsigned int pixels = result.width() * result.height();
+                unsigned int * data = (unsigned int *) result.bits();
+                for (unsigned int i = 0; i < pixels; ++i)
+                {
+                    int val = qGray(data[i]);
+                    data[i] = qRgb(val,val,val);
+                }
+                QPainter p(&result);
+                p.setCompositionMode(QPainter::CompositionMode_Overlay);
+                p.fillRect(result.rect(),color);
+                p.end();
+                return result;
+            }
+
+        friend class StarndardEffectsFactory;
+    };
+}
 
 #endif // COLORIZEPHOTOEFFECT_H

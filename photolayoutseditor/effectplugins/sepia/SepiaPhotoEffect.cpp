@@ -24,36 +24,34 @@
  * ============================================================ */
 
 #include "SepiaPhotoEffect.h"
-#include "SepiaPhotoEffect_p.h"
+#include "StarndardEffectsFactory.h"
 
-#include <kpluginfactory.h>
 #include <klocalizedstring.h>
 
-K_PLUGIN_FACTORY( SepiaPhotoEffectFactoryLoader, registerPlugin<SepiaPhotoEffectFactory>(); )
-K_EXPORT_PLUGIN ( SepiaPhotoEffectFactoryLoader("photolayoutseditoreffectplugin_sepia") )
+using namespace KIPIPhotoLayoutsEditor;
 
-SepiaPhotoEffectFactory::SepiaPhotoEffectFactory(QObject * parent, const QVariantList&) :
-    AbstractPhotoEffectFactory(parent)
+SepiaPhotoEffect::SepiaPhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
+    AbstractPhotoEffectInterface(factory, parent)
 {
 }
 
-AbstractPhotoEffectInterface * SepiaPhotoEffectFactory::getEffectInstance()
+QImage SepiaPhotoEffect::apply(const QImage & image) const
 {
-    return new SepiaPhotoEffect(this, this);
+    if (!strength())
+        return image;
+    QImage result = image;
+    QPainter p(&result);
+    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(sepia_converted(image)));
+    return result;
 }
 
-QString SepiaPhotoEffectFactory::effectName() const
+QString SepiaPhotoEffect::toString() const
 {
     return i18n("Sepia effect");
 }
 
-void SepiaPhotoEffectFactory::writeToSvg(AbstractPhotoEffectInterface * /*effect*/, QDomElement & /*effectElement*/)
+SepiaPhotoEffect::operator QString() const
 {
+    return toString();
 }
-
-AbstractPhotoEffectInterface * SepiaPhotoEffectFactory::readFromSvg(QDomElement & /*element*/)
-{
-    SepiaPhotoEffect * effect = (SepiaPhotoEffect*) this->getEffectInstance();
-    return effect;
-}
-
