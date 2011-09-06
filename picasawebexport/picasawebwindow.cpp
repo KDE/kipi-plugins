@@ -64,6 +64,7 @@
 // LibKIPI includes
 
 #include <libkipi/uploadwidget.h>
+#include <libkipi/version.h>
 
 // Local includes
 
@@ -418,10 +419,18 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
     for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
         KIPI::ImageInfo info = m_interface->info(*it);
+        QMap <QString, QVariant> attribs = info.attributes();
         PicasaWebPhoto temp;
-
+#if KIPI_VERSION >= 0x010300
+        temp.title = info.name();
+#else
         temp.title = info.title();
-        temp.description = info.description();
+#endif
+
+        // Picasa doesn't support image titles. Include it in descriptions if needed.
+        QStringList descriptions = QStringList() << attribs["title"].toString() << info.description();
+        descriptions.removeAll("");
+        temp.description = descriptions.join("\n\n");
 
         // check for existing items
         QString localId;
@@ -443,7 +452,6 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
         }
 
         //Tags from the database
-        QMap <QString, QVariant> attribs = info.attributes();
         temp.gpsLat = attribs["latitude"].toString();
         temp.gpsLon = attribs["longitude"].toString();
 
@@ -958,7 +966,11 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         {
             QMap<QString, QVariant> attributes;
             KIPI::ImageInfo info = m_interface->info(newUrl);
+#if KIPI_VERSION >= 0x010300
+            info.setName(item.description);
+#else
             info.setTitle(item.description);
+#endif
             attributes.insert("tagspath", item.tags);
             if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
             {

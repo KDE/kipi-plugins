@@ -55,6 +55,7 @@ extern "C"
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
+#include <libkipi/version.h>
 
 // Local includes
 
@@ -221,7 +222,11 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         * it's appear with digikam but not with gwenview
         * which already seems to strip the extension
         */
+#if KIPI_VERSION >= 0x010300
+    QString baseFileName = webifyFileName(info.name());
+#else
     QString baseFileName = webifyFileName(info.title());
+#endif
     //baseFileName       = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
     fullFileName         = baseFileName + '.' + imageFormat.toLower();
@@ -487,7 +492,11 @@ void kmlExport::generate()
         }
         else
         {
+#if KIPI_VERSION >= 0x010300
+            logWarning(i18n("No position data for '%1'", info.name()));
+#else
             logWarning(i18n("No position data for '%1'", info.title()));
+#endif
             defectImage++;
         }
         m_progressDialog->progressWidget()->setProgress(pos, count);

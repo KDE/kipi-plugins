@@ -593,43 +593,14 @@ void FbWindow::setProfileAID(long long userID)
                                    + (-3 & 0xFFFFFFFF));
 }
 
-// TODO : This method can be replaced by a call to Kipiinterface if it's called outside a separated thread.
-QString FbWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
+QString FbWindow::getImageCaption(const QString& fileName)
 {
-    QString caption = ev.getCommentsDecoded();
-    if (!caption.isEmpty())
-        return caption;
-
-    if (ev.hasExif())
-    {
-        caption = ev.getExifComment();
-        if (!caption.isEmpty())
-            return caption;
-    }
-
-    if (ev.hasXmp())
-    {
-        caption = ev.getXmpTagStringLangAlt("Xmp.dc.description", QString(), false);
-        if (!caption.isEmpty())
-            return caption;
-
-        caption = ev.getXmpTagStringLangAlt("Xmp.exif.UserComment", QString(), false);
-        if (!caption.isEmpty())
-            return caption;
-
-        caption = ev.getXmpTagStringLangAlt("Xmp.tiff.ImageDescription", QString(), false);
-        if (!caption.isEmpty())
-            return caption;
-    }
-
-    if (ev.hasIptc())
-    {
-        caption = ev.getIptcTagString("Iptc.Application2.Caption", false);
-        if (!caption.isEmpty() && !caption.trimmed().isEmpty())
-            return caption;
-    }
-
-    return caption;
+    KIPI::ImageInfo info = m_interface->info(fileName);
+    QMap <QString, QVariant> attribs = info.attributes();
+    // Facebook doesn't support image titles. Include it in descriptions if needed.
+    QStringList descriptions = QStringList() << attribs["title"].toString() << info.description();
+    descriptions.removeAll("");
+    return descriptions.join("\n\n");
 }
 
 bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption)
@@ -668,7 +639,7 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
     KExiv2Iface::KExiv2 exiv2Iface;
     if (exiv2Iface.load(imgPath))
     {
-        caption = getImageCaption(exiv2Iface);
+        caption = getImageCaption(imgPath);
         exiv2Iface.setImageDimensions(image.size());
         exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
         exiv2Iface.save(m_tmpPath);
@@ -712,13 +683,7 @@ void FbWindow::uploadNextPhoto()
     }
     else
     {
-        KExiv2Iface::KExiv2 exiv2Iface;
-
-        if (exiv2Iface.load(imgPath))
-            caption = getImageCaption(exiv2Iface);
-        else
-            caption.clear();
-
+        caption = getImageCaption(imgPath);
         m_tmpPath.clear();
         res = m_talker->addPhoto(imgPath, m_currentAlbumID, caption);
     }

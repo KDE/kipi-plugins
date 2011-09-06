@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // KIPI
 #include <libkipi/imageinfo.h>
+#include <libkipi/version.h>
 
 // Local
 #include "xmlutils.h"
@@ -45,7 +46,11 @@ class ImageElement {
 public:
 	ImageElement(const KIPI::ImageInfo& info)
 	: mValid(false)
-	, mTitle(info.title())
+#if KIPI_VERSION >= 0x010300
+  , mTitle(info.name())
+#else
+  , mTitle(info.title())
+#endif
 	, mDescription(info.description())
 	, mAngle(info.angle())
 	, mTime(info.time())

@@ -205,9 +205,8 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
 
 bool GalleryTalker::addPhoto(const QString& albumName,
                              const QString& photoPath,
-                             const QString& caption,
-                             bool  captionIsTitle,
-                             bool  captionIsDescription,
+                             const QString& title,
+                             const QString& description,
                              bool  rescale,
                              int   maxDim)
 {
@@ -262,16 +261,13 @@ bool GalleryTalker::addPhoto(const QString& albumName,
     // The filename bit can perhaps be calculated in addFile()
     // but not sure of the temporary filename that could be
     // used for resizing... so I've added it explicitly for now.
-    if (!form.addFile(path, caption))
+    if (!form.addFile(path, title))
         return false;
 
-    if (!caption.isEmpty())
-    {
-        if (captionIsTitle)
-            form.addPair("caption", caption);
-        if (captionIsDescription)
-            form.addPair("extrafield.Description", caption);
-    }
+    if (!title.isEmpty())
+        form.addPair("caption", title);
+    if (!description.isEmpty())
+        form.addPair("extrafield.Description", description);
 
     form.finish();
 

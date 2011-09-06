@@ -536,7 +536,7 @@ void FlickrWindow::slotUser1()
         kDebug() << "Adding images to the list";
         FPhotoInfo temp;
 
-        temp.title                 = info.title();
+        temp.title                 = info.attributes()["title"].toString();
         temp.description           = info.description();
         temp.is_public             = lvItem->isPublic()  ? 1 : 0;
         temp.is_family             = lvItem->isFamily()  ? 1 : 0;
