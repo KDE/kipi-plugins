@@ -25,6 +25,7 @@
 
 #include "UndoCommandEventFilter.h"
 #include "UndoCommandEvent.h"
+#include "ProgressEvent.h"
 #include "global.h"
 #include "photolayoutseditor.h"
 #include <QtGlobal>
@@ -37,13 +38,18 @@ bool UndoCommandEventFilter::eventFilter(QObject * watched, QEvent * event)
     if (event->type() == UndoCommandEvent::registeredEventType())
     {
         PhotoLayoutsEditor * editor = qobject_cast<PhotoLayoutsEditor*>(watched);
-        if (editor)
-        {
-            //editor->undoCommandEvent(dynamic_cast<UndoCommandEvent*>(event));
-            return true;
-        }
-        else
+        if (!editor)
             return false;
+        //editor->undoCommandEvent(dynamic_cast<UndoCommandEvent*>(event));
+        return true;
+    }
+    if (event->type() == ProgressEvent::registeredEventType())
+    {
+        PhotoLayoutsEditor * editor = qobject_cast<PhotoLayoutsEditor*>(watched);
+        if (!editor)
+            return false;
+        editor->progressEvent(dynamic_cast<ProgressEvent*>(event));
+        return true;
     }
     return QObject::eventFilter(watched, event);
 }

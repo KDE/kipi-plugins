@@ -53,6 +53,7 @@ namespace KIPIPhotoLayoutsEditor
     class LayersSelectionModel;
     class AbstractPhoto;
     class CanvasPrivate;
+    class ProgressEvent;
 
     class Canvas : public QGraphicsView
     {
@@ -133,6 +134,9 @@ namespace KIPIPhotoLayoutsEditor
             }
 
         public slots:
+
+            /// Progress state update event
+            void progressEvent(ProgressEvent * event);
 
             void addImage(const QImage & image);
             void addImage(const KUrl & imageUrl);

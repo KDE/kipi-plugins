@@ -137,9 +137,12 @@ QString AbstractPhotoPrivate::name()
 }
 
 AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
-    AbstractItemInterface(0, scene),
+    AbstractItemInterface(0, 0),
     d(new AbstractPhotoPrivate(this))
 {
+    if (scene)
+        scene->addItem(this);
+
     this->setupItem();
 
     // Item's name

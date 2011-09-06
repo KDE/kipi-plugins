@@ -20,10 +20,12 @@
       settings/PLEConfigViewWidget.cpp
       utils/global.cpp
       utils/KEditFactory.cpp
+      events/ProgressEvent.cpp
       events/UndoCommandEvent.cpp
       events/UndoCommandEventFilter.cpp
       listeners/TextColorChangeListener.cpp
       listeners/TextFontChangeListener.cpp
+      threads/ImageLoadingThread.cpp
       undo/UndoMoveRowsCommand.cpp
 )
 
@@ -112,6 +114,7 @@
       models
       plugin
       settings
+      threads
       undo
       utils
       utils/qtpropertybrowser/src

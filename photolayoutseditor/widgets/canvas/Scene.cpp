@@ -33,6 +33,7 @@
 #include "ToolsDockWidget.h"
 #include "photolayoutseditor.h"
 #include "PLEConfigSkeleton.h"
+#include "ImageLoadingThread.h"
 
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -228,6 +229,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     bool m_selected_items_all_movable;
     bool m_selection_visible;
     QList<const char *> m_selection_filters;
+    QPointF paste_scene_pos;
 
     // Used for rotating items
     RotationWidgetItem * m_rot_item;
@@ -962,7 +964,8 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
         return;
     }
 
-    QImage img;
+    d->paste_scene_pos = event->scenePos();
+
     QList<AbstractPhoto*> newItems;
     const QMimeData * mimeData = event->mimeData();
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
@@ -972,22 +975,23 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
         QByteArray ba = mimeData->data("digikam/item-ids");
         QDataStream ds(&ba, QIODevice::ReadOnly);
         ds >> urls;
-        foreach (KUrl u, urls)
-        {
-            PhotoItem * temp = PhotoItem::fromUrl(u, this);
-            if (temp)
-                newItems.append(temp);
-        }
+
+        ImageLoadingThread * ilt = new ImageLoadingThread(this);
+        ilt->slotReadImages(urls);
+        connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+        ilt->start();
     }
     else if (mimeData->hasFormat("text/uri-list"))
     {
         QList<QUrl> urls = mimeData->urls();
+        KUrl::List list;
         foreach (QUrl url, urls)
-        {
-            PhotoItem * temp = PhotoItem::fromUrl(url, this);
-            if (temp)
-                newItems.append(temp);
-        }
+            list << KUrl(url);
+
+        ImageLoadingThread * ilt = new ImageLoadingThread(this);
+        ilt->slotReadImages(list);
+        connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+        ilt->start();
     }
 
     QPointF scenePos = event->scenePos();
@@ -1002,8 +1006,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
         }
     }
 
-    this->addItems(newItems);
-    event->setAccepted( (newItems.count() > 0) );
+    event->setAccepted( true );
 }
 
 //#####################################################################################################
@@ -1401,6 +1404,24 @@ void Scene::updateSelection()
     this->setRotationWidgetVisible(m_interaction_mode & Rotating);
     this->setScalingWidgetVisible(m_interaction_mode & Scaling);
     this->setCropWidgetVisible(m_interaction_mode & Cropping);
+}
+
+//#####################################################################################################
+void Scene::imageLoaded(const KUrl & url, const QImage & image)
+{
+    if (image.isNull())
+        return;
+    PhotoItem * photo = new PhotoItem(image, url.fileName(), this);
+    photo->setPos(d->paste_scene_pos);
+
+    d->paste_scene_pos += QPointF (20, 20);
+    if (d->paste_scene_pos.x() >= this->sceneRect().bottomRight().x() ||
+        d->paste_scene_pos.y() >= this->sceneRect().bottomRight().y() )
+    {
+        d->paste_scene_pos = this->sceneRect().topLeft();
+    }
+
+    this->addItem(photo);
 }
 
 //#####################################################################################################

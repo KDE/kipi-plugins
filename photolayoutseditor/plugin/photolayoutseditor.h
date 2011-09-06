@@ -38,13 +38,14 @@
 #include <libkipi/interface.h>
 
 // Local
-#include "UndoCommandEvent.h"
 #include "CanvasSize.h"
 
 namespace KIPIPhotoLayoutsEditor
 {
     class Canvas;
     class CanvasSizeChangeCommand;
+    class ProgressEvent;
+    class UndoCommandEventFilter;
 
     class PhotoLayoutsEditor : public KXmlGuiWindow
     {
@@ -82,6 +83,10 @@ namespace KIPIPhotoLayoutsEditor
             void setupGrid();
             void changeCanvasSize();
 
+        protected:
+
+            void progressEvent(ProgressEvent * event);
+
         protected Q_SLOTS:
 
             bool queryClose();
@@ -105,6 +110,8 @@ namespace KIPIPhotoLayoutsEditor
 
             class PhotoLayoutsEditorPriv;
             PhotoLayoutsEditorPriv * const d;
+
+            friend class UndoCommandEventFilter;
     };
 
 }

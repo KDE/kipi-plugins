@@ -2,6 +2,9 @@
 #define IMAGELOADINGTHREAD_H
 
 #include <QThread>
+#include <QImage>
+
+#include <kurl.h>
 
 namespace KIPIPhotoLayoutsEditor
 {
@@ -12,20 +15,27 @@ namespace KIPIPhotoLayoutsEditor
         public:
 
             explicit ImageLoadingThread(QObject * parent = 0);
+            ~ImageLoadingThread();
             virtual void run();
 
         signals:
 
-            void loadingStarted(int bytesCount);
-            void byteLoaded(int byte);
+            void loadingStarted(int length);
+            void loadingProgress(int step);
             void loadingFinished();
+            void imageLoaded(const KUrl & url, const QImage & image);
 
         public slots:
 
-            void emitLoadingStarted();
-            void emitByteLoaded(int byte);
-            void emitLoadingFinished();
+            void slotReadImage(const KUrl & url);
+            void slotReadImages(const KUrl::List & urls);
+            void loaded() {}
 
+        private:
+
+            class ImageLoadingThreadPrivate;
+            friend class ImageLoadingThreadPrivate;
+            ImageLoadingThreadPrivate * d;
     };
 }
 

@@ -40,6 +40,7 @@
 #include "PLEAboutData.h"
 #include "StarndardEffectsFactory.h"
 #include "global.h"
+#include "ProgressEvent.h"
 
 #include "BorderDrawerInterface.h"
 #include "BorderDrawersLoader.h"
@@ -157,8 +158,8 @@ PhotoLayoutsEditor * PhotoLayoutsEditor::instance(QWidget * parent)
         return m_instance;
     else
     {
-//        KApplication * app = KApplication::kApplication();
-//        app->installEventFilter(new UndoCommandEventFilter(app));
+        KApplication * app = KApplication::kApplication();
+        app->installEventFilter(new UndoCommandEventFilter(app));
         return (m_instance = new PhotoLayoutsEditor(parent));
     }
 }
@@ -606,6 +607,12 @@ bool PhotoLayoutsEditor::closeDocument()
     }
     refreshActions();
     return true;
+}
+
+void PhotoLayoutsEditor::progressEvent(ProgressEvent * event)
+{
+    if (m_canvas)
+        m_canvas->progressEvent(event);
 }
 
 bool PhotoLayoutsEditor::queryClose()

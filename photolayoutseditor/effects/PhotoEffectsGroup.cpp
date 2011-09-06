@@ -216,13 +216,13 @@ void PhotoEffectsGroup::push_front(AbstractPhotoEffectInterface * effect)
     emit layoutChanged();
 }
 
-QPixmap PhotoEffectsGroup::apply(const QPixmap & pixmap)
+QImage PhotoEffectsGroup::apply(const QImage & image)
 {
-    QImage image = pixmap.toImage();
+    QImage temp = image;
     foreach (AbstractPhotoEffectInterface * effect, m_effects_list)
         if (effect)
-            image = effect->apply(image);
-    return QPixmap::fromImage(image);
+            temp = effect->apply(temp);
+    return temp;
 }
 
 AbstractPhoto * PhotoEffectsGroup::photo() const

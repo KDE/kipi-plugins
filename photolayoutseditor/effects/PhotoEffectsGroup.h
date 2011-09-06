@@ -80,7 +80,7 @@ namespace KIPIPhotoLayoutsEditor
             void push_back(AbstractPhotoEffectInterface * effect);
             void push_front(AbstractPhotoEffectInterface * effect);
             void emitEffectsChanged(AbstractPhotoEffectInterface * effect = 0);
-            QPixmap apply(const QPixmap & pixmap);
+            QImage apply(const QImage & image);
 
         private:
 

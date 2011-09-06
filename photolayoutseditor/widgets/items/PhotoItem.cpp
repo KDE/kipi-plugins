@@ -31,6 +31,7 @@
 #include "global.h"
 #include "PLEConfigSkeleton.h"
 #include "photolayoutseditor.h"
+#include "ImageLoadingThread.h"
 
 #include <QBuffer>
 #include <QStyleOptionGraphicsItem>
@@ -57,9 +58,9 @@ class KIPIPhotoLayoutsEditor::PhotoItemPrivate
     PhotoItem * m_item;
 
     // Pixmap
-    void setPixmap(const QPixmap & pixmap);
-    inline QPixmap & pixmap();
-    QPixmap m_pixmap_original;
+    void setImage(const QImage & image);
+    inline QImage & image();
+    QImage m_image;
 
     // Pixmap's url
     void setFileUrl(const KUrl & url);
@@ -73,30 +74,30 @@ class KIPIPhotoLayoutsEditor::PhotoItemPrivate
 
 class KIPIPhotoLayoutsEditor::PhotoItemPixmapChangeCommand : public QUndoCommand
 {
-    QPixmap m_pixmap;
+    QImage m_image;
     PhotoItem * m_item;
 public:
     PhotoItemPixmapChangeCommand(const QImage & image, PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image change"), parent),
-        m_pixmap(QPixmap::fromImage(image)),
+        m_image(image),
         m_item(item)
     {}
     PhotoItemPixmapChangeCommand(const QPixmap & pixmap, PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image change"), parent),
-        m_pixmap(pixmap),
+        m_image(pixmap.toImage()),
         m_item(item)
     {}
     virtual void redo()
     {
-        QPixmap temp = m_item->pixmap();
-        m_item->d->setPixmap(m_pixmap);
-        m_pixmap = temp;
+        QImage temp = m_item->image();
+        m_item->d->setImage(m_image);
+        m_image = temp;
     }
     virtual void undo()
     {
-        QPixmap temp = m_item->pixmap();
-        m_item->d->setPixmap(m_pixmap);
-        m_pixmap = temp;
+        QImage temp = m_item->image();
+        m_item->d->setImage(m_image);
+        m_image = temp;
         m_item->update();
     }
 };
@@ -179,16 +180,16 @@ QString PhotoItemPrivate::locateFile(const QString & filePath)
     }
     return resultPath;
 }
-void PhotoItemPrivate::setPixmap(const QPixmap & pixmap)
+void PhotoItemPrivate::setImage(const QImage & image)
 {
-    if (pixmap.isNull() || &pixmap == &m_pixmap_original)
+    if (image.isNull() || image == m_image)
         return;
-    m_pixmap_original = pixmap;
+    m_image = image;
     m_item->refresh();
 }
-QPixmap & PhotoItemPrivate::pixmap()
+QImage & PhotoItemPrivate::image()
 {
-    return m_pixmap_original;
+    return m_image;
 }
 void PhotoItemPrivate::setFileUrl(const KUrl & url)
 {
@@ -204,7 +205,7 @@ PhotoItem::PhotoItem(const QImage & photo, const QString & name, Scene * scene) 
     d(new PhotoItemPrivate(this))
 {
     this->setHighlightItem(false);
-    this->setupItem(QPixmap::fromImage(photo));
+    this->setupItem(photo);
 }
 
 PhotoItem * PhotoItem::fromUrl(const KUrl & imageUrl, Scene * scene)
@@ -237,7 +238,7 @@ PhotoItem::PhotoItem(const QString & name, Scene * scene) :
     d(new PhotoItemPrivate(this))
 {
     this->setHighlightItem(false);
-    this->setupItem(QPixmap());
+    this->setupItem(QImage());
 }
 
 PhotoItem::~PhotoItem()
@@ -286,11 +287,11 @@ QDomElement PhotoItem::toSvg(QDomDocument & document) const
             PLEConfigSkeleton::setEmbedImagesData(true);
     }
 
-    if ( (PLEConfigSkeleton::embedImagesData() && !d->pixmap().isNull()) || !d->fileUrl().isValid())
+    if ( (PLEConfigSkeleton::embedImagesData() && !d->image().isNull()) || !d->fileUrl().isValid())
     {
         QByteArray byteArray;
         QBuffer buffer(&byteArray);
-        d->pixmap().save(&buffer, "PNG");
+        d->image().save(&buffer, "PNG");
         image.appendChild( document.createTextNode( QString(byteArray.toBase64()) ) );
     }
 
@@ -350,7 +351,7 @@ PhotoItem * PhotoItem::fromSvg(QDomElement & element)
         {
             goto _delete;
         }
-        item->d->setPixmap(QPixmap::fromImage(img));
+        item->d->setImage(img);
 
         return item;
     }
@@ -458,64 +459,88 @@ void PhotoItem::dropEvent(QGraphicsSceneDragDropEvent * event)
     event->setAccepted( !img.isNull() );
 }
 
-QPixmap & PhotoItem::pixmap()
+QImage & PhotoItem::image()
 {
-    return d->m_pixmap_original;
+    return d->m_image;
 }
 
-const QPixmap & PhotoItem::pixmap() const
+const QImage & PhotoItem::image() const
 {
-    return d->m_pixmap_original;
+    return d->m_image;
 }
 
-void PhotoItem::setPixmap(const QPixmap & pixmap)
+void PhotoItem::setImage(const QImage & image)
 {
-    if (pixmap.isNull())
+    if (image.isNull())
         return;
     PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
-    PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(pixmap, this));
+    PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
     if (this->cropShape().isEmpty())
         this->setCropShape( m_image_path );
     PLE_PostUndoCommand(new PhotoItemImagePathChangeCommand(this));
     PhotoLayoutsEditor::instance()->endUndoCommandGroup();
 }
 
+void PhotoItem::imageLoaded(const KUrl & url, const QImage & image)
+{
+    if (image.isNull())
+        return;
+    PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
+    PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
+    if (this->cropShape().isEmpty())
+        this->setCropShape( m_image_path );
+    PLE_PostUndoCommand(new PhotoItemImagePathChangeCommand(this));
+    PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(url, this));
+    PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+}
+
 void PhotoItem::setImageUrl(const KUrl & url)
 {
-    QImage img;
-    if (PhotoLayoutsEditor::instance()->hasInterface())
-    {
-        KIPI::ImageInfo info = PhotoLayoutsEditor::instance()->interface()->info(url);
-        QImageReader ir (info.path().toLocalFile());
-        if (ir.read(&img))
-        {
-            PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
-            this->setPixmap( QPixmap::fromImage(img) );
-            PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(info.path(), this));
-            PhotoLayoutsEditor::instance()->endUndoCommandGroup();
-        }
-    }
-    else if (url.isValid())
-    {
-        QImageReader ir (url.toLocalFile());
-        if (ir.read(&img))
-        {
-            PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
-            this->setPixmap( QPixmap::fromImage(img) );
-            PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(url, this));
-            PhotoLayoutsEditor::instance()->endUndoCommandGroup();
-        }
-    }
+    ImageLoadingThread * ilt = new ImageLoadingThread(this);
+    ilt->slotReadImages(url);
+    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+    ilt->start();
+
+//    QImage img;
+//    if (PhotoLayoutsEditor::instance()->hasInterface())
+//    {
+//        KIPI::ImageInfo info = PhotoLayoutsEditor::instance()->interface()->info(url);
+//        QImageReader ir (info.path().toLocalFile());
+//        if (ir.read(&img))
+//        {
+//            PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
+//            this->setPixmap( QPixmap::fromImage(img) );
+//            PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(info.path(), this));
+//            PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+//        }
+//    }
+//    else if (url.isValid())
+//    {
+//        QImageReader ir (url.toLocalFile());
+//        if (ir.read(&img))
+//        {
+//            PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
+//            this->setPixmap( QPixmap::fromImage(img) );
+//            PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(url, this));
+//            PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+//        }
+//    }
 }
 
 void PhotoItem::updateIcon()
 {
     QPixmap temp(m_pixmap.size());
+    if (m_pixmap.isNull())
+        temp = QPixmap(48,48);
     temp.fill(Qt::transparent);
+
     QPainter p(&temp);
-    p.fillPath(itemOpaqueArea(), QBrush(this->m_pixmap));
-    p.end();
-    temp = temp.scaled(48,48,Qt::KeepAspectRatio);
+    if (!m_pixmap.isNull())
+    {
+        p.fillPath(itemOpaqueArea(), QBrush(this->m_pixmap));
+        p.end();
+        temp = temp.scaled(48,48,Qt::KeepAspectRatio);
+    }
     p.begin(&temp);
     QPen pen(Qt::gray,1);
     pen.setCosmetic(true);
@@ -528,8 +553,8 @@ void PhotoItem::updateIcon()
 void PhotoItem::fitToRect(const QRect & rect)
 {
     // Scaling if to big
-    QSize s = d->pixmap().size();
-    QRect r = d->pixmap().rect();
+    QSize s = d->image().size();
+    QRect r = d->image().rect();
     if (rect.isValid() && (rect.width()<s.width() || rect.height()<s.height()))
     {
         s.scale(rect.size()*0.8, Qt::KeepAspectRatio);
@@ -566,11 +591,12 @@ void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 
 void PhotoItem::refreshItem()
 {
-    if (d->pixmap().isNull())
+    if (d->image().isNull())
         return;
-    this->m_pixmap = effectsGroup()->apply( d->pixmap().scaled(this->m_image_path.boundingRect().size().toSize(),
+    this->m_pixmap = QPixmap::fromImage(effectsGroup()->apply( d->image().scaled(this->m_image_path.boundingRect().size().toSize(),
                                                                      Qt::KeepAspectRatioByExpanding,
-                                                                     Qt::SmoothTransformation));
+                                                                     Qt::SmoothTransformation))
+                                        );
 
     this->updateIcon();
     this->recalcShape();
@@ -582,18 +608,18 @@ QtAbstractPropertyBrowser * PhotoItem::propertyBrowser()
     return 0; /// TODO
 }
 
-void PhotoItem::setupItem(const QPixmap & photo)
+void PhotoItem::setupItem(const QImage & image)
 {
-    if (photo.isNull())
+    if (image.isNull())
         return;
 
-    d->setPixmap(photo);
+    d->setImage(image);
 
     // Scaling if to big
     if (scene())
         fitToRect(scene()->sceneRect().toRect());
     else
-        fitToRect(photo.rect());
+        fitToRect(image.rect());
 
     // Create effective pixmap
     this->refresh();

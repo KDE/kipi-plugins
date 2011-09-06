@@ -156,6 +156,7 @@ namespace KIPIPhotoLayoutsEditor
 
         private Q_SLOTS:
 
+            void imageLoaded(const KUrl & url, const QImage & image);
             void calcSelectionBoundingRect();
 
         private:

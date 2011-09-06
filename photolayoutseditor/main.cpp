@@ -29,9 +29,12 @@ int main(int argc, char *argv[])
     w->setAttribute(Qt::WA_DeleteOnClose, true);
 
     KCmdLineArgs * args = KCmdLineArgs::parsedArgs();
-    KUrl url = args->url(0);
-    if (url.isValid())
-        w->open(url);
+    if (args->count())
+    {
+        KUrl url = args->url(0);
+        if (url.isValid())
+            w->open(url);
+    }
 
     w->show();
 

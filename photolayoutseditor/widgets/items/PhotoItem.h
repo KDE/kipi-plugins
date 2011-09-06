@@ -54,10 +54,10 @@ namespace KIPIPhotoLayoutsEditor
             static PhotoItem * fromSvg(QDomElement & element);
 
             /// Pixmap data
-            Q_PROPERTY(QPixmap m_pixmap_original READ pixmap WRITE setPixmap)
-            QPixmap & pixmap();
-            const QPixmap & pixmap() const;
-            void setPixmap(const QPixmap & pixmap);
+            Q_PROPERTY(QImage m_image READ image WRITE setImage)
+            QImage & image();
+            const QImage & image() const;
+            void setImage(const QImage & image);
 
             /// Pixmap and pixmap's url
             void setImageUrl(const KUrl & url);
@@ -116,13 +116,17 @@ namespace KIPIPhotoLayoutsEditor
             /// Reimplemented from AbstractPhoto
             void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
+        private slots:
+
+            void imageLoaded(const KUrl & url, const QImage & image);
+
         private:
 
             // Refreshes items data
             virtual void refreshItem();
 
             // Setups items
-            void setupItem(const QPixmap & photo);
+            void setupItem(const QImage & image);
 
             // Recalculates item shape
             void recalcShape();

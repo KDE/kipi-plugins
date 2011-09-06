@@ -33,7 +33,9 @@
 #include "UndoBorderChangeCommand.h"
 #include "SavingProgressDialog.h"
 #include "PLEConfigSkeleton.h"
+#include "ImageLoadingThread.h"
 #include "global.h"
+#include "ProgressEvent.h"
 
 #include <QPrinter>
 #include <QPaintDevice>
@@ -691,6 +693,7 @@ void Canvas::newUndoCommand(QUndoCommand * command)
  #############################################################################################################################*/
 void Canvas::initProgress(int limit)
 {
+    qDebug() << "initProgress();" << limit;
     if (limit < 1)
         return;
     d->m_progress->setMaximum(limit);
@@ -702,6 +705,7 @@ void Canvas::initProgress(int limit)
  #############################################################################################################################*/
 void Canvas::finishProgress()
 {
+    qDebug() << "finishProgress();";
     d->m_progress->hide();
 }
 
@@ -711,6 +715,31 @@ void Canvas::finishProgress()
 void Canvas::updateProgress(int value)
 {
     d->m_progress->setValue(value);
+}
+
+/** ###########################################################################################################################
+ * Progress event type
+ #############################################################################################################################*/
+void Canvas::progressEvent(ProgressEvent * event)
+{
+    switch (event->type())
+    {
+        case ProgressEvent::Init:
+            this->initProgress( event->data().toInt() );
+            event->setAccepted(true);
+            break;
+        case ProgressEvent::Update:
+            this->updateProgress( event->data().toInt() );
+            event->setAccepted(true);
+            break;
+        case ProgressEvent::Finish:
+            this->finishProgress();
+            event->setAccepted(true);
+            break;
+        default:
+            event->setAccepted(false);
+            break;
+    }
 }
 
 /** ###########################################################################################################################
