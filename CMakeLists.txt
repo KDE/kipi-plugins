@@ -157,7 +157,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)        # For RemoveRedEyes.
 MACRO_OPTIONAL_FIND_PACKAGE(QJSON)         # For Debian Screenshots and Facebook.
 MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)       # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)     # For Mediawiki.
-MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte 1.0.0) # For VKontakte.
+MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte) # For VKontakte.
 
 # check the libkgeomap version
 # note that old versions don't specify version information, so for now
