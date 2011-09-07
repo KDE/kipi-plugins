@@ -175,6 +175,12 @@ void CalSettings::addSpecial(const QDate& date, const Day& info)
 
 void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
 {
+    /* TODO: KCal classes are deprecated now.
+             KCal::CalendarLocal ==> KCalCore::FileStorage
+             KCal::Event         ==> KCalCore::Event
+             KCal::Recurrence    ==> KCalCore::Recurrence
+    */
+
     KCal::CalendarLocal calendar("UTC");
 
     if (!(url.isEmpty()))
@@ -194,12 +200,14 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
             KDateTime dtLast(qLast);
             KDateTime dtCurrent;
 
-            int counter = 0;
+            int counter            = 0;
             KCal::Event::List list = calendar.rawEvents(qFirst, qLast);
-            foreach ( KCal::Event *event, list )
+
+            foreach(KCal::Event* event, list)
             {
                 kDebug() << event->summary() << endl << "--------";
                 counter++;
+
                 if (event->recurs())
                 {
                     KCal::Recurrence *recur = event->recurrence();
@@ -215,6 +223,7 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
                     addSpecial(event->dtStart().date(), Day(color, event->summary()));
                 }
             }
+
             kDebug() << "Loaded " << counter << " events";
             calendar.close();
         }
