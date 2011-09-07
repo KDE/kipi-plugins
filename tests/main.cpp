@@ -177,7 +177,7 @@ bool LoadPlugins(const QString& libraryName = "")
             }
 
             foundPlugin = true;
-            kipiPluginLoader->loadPlugin(*it);
+            (*it)->shouldLoad();
 
             if ( !(*it)->plugin() )
             {
