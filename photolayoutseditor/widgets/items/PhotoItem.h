@@ -44,7 +44,6 @@ namespace KIPIPhotoLayoutsEditor
         public:
 
             PhotoItem(const QImage & photo, const QString & name = QString(), Scene * scene = 0);
-            static PhotoItem * fromUrl(const KUrl & imageUrl, Scene * scene = 0);
             virtual ~PhotoItem();
 
             /// Convert photo item to SVG format

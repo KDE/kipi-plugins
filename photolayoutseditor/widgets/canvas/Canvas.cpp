@@ -36,13 +36,13 @@
 #include "ImageLoadingThread.h"
 #include "global.h"
 #include "ProgressEvent.h"
+#include "photolayoutseditor.h"
 
 #include <QPrinter>
 #include <QPaintDevice>
 #include <QPaintEngine>
 #include <QProgressBar>
 #include <QVBoxLayout>
-#include <QImageReader>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -106,21 +106,21 @@ void Canvas::setupGUI()
     this->setAcceptDrops(true);
     this->setAutoFillBackground(true);
     this->viewport()->setAutoFillBackground(true);
-    this->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    this->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
     this->setCacheMode(QGraphicsView::CacheNone);
     this->setAntialiasing( PLEConfigSkeleton::antialiasing() );
     connect(PLEConfigSkeleton::self(), SIGNAL(antialiasingChanged(bool)), this, SLOT(setAntialiasing(bool)));
 
     // Transparent scene background
-    QPixmap pixmap(20,20);
-    QPainter p(&pixmap);
-    p.fillRect(0,0,20,20,Qt::lightGray);
-    p.fillRect(0,10,10,10,Qt::darkGray);
-    p.fillRect(10,0,10,10,Qt::darkGray);
-    QPalette viewportPalette = this->viewport()->palette();
-    viewportPalette.setBrush(QPalette::Background, QBrush(pixmap));
-    this->viewport()->setPalette(viewportPalette);
-    this->viewport()->setBackgroundRole(QPalette::Background);
+//    QPixmap pixmap(20,20);
+//    QPainter p(&pixmap);
+//    p.fillRect(0,0,20,20,Qt::lightGray);
+//    p.fillRect(0,10,10,10,Qt::darkGray);
+//    p.fillRect(10,0,10,10,Qt::darkGray);
+//    QPalette viewportPalette = this->viewport()->palette();
+//    viewportPalette.setBrush(QPalette::Background, QBrush(pixmap));
+//    this->viewport()->setPalette(viewportPalette);
+//    this->viewport()->setBackgroundRole(QPalette::Background);
 
     QVBoxLayout * layout = new QVBoxLayout();
     this->setLayout(layout);
@@ -272,10 +272,11 @@ void Canvas::addImage(const QImage & image)
  #############################################################################################################################*/
 void Canvas::addImage(const KUrl & imageUrl)
 {
-    QImageReader ir( imageUrl.path() );
-    QImage img = ir.read();
-    if (!img.isNull())
-        this->addImage(img);
+    ImageLoadingThread * ilt = new ImageLoadingThread(this);
+    ilt->setImageUrl(imageUrl);
+    ilt->setMaximumProgress(90);
+    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+    ilt->start();
 }
 
 /** ###########################################################################################################################
@@ -283,14 +284,11 @@ void Canvas::addImage(const KUrl & imageUrl)
  #############################################################################################################################*/
 void Canvas::addImages(const KUrl::List & images)
 {
-    QImageReader ir;
-    foreach (KUrl url, images)
-    {
-        ir.setFileName( url.path() );
-        QImage img = ir.read();
-        if (!img.isNull())
-            this->addImage(img);
-    }
+    ImageLoadingThread * ilt = new ImageLoadingThread(this);
+    ilt->setImagesUrls(images);
+    ilt->setMaximumProgress(90);
+    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
+    ilt->start();
 }
 
 /** ###########################################################################################################################
@@ -330,6 +328,30 @@ void Canvas::setAntialiasing(bool antialiasing)
     this->setRenderHint(QPainter::Antialiasing, antialiasing);                            /// It causes worst quality!
     this->setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing, antialiasing);    /// It causes worst quality!
     this->update();
+}
+
+/** ###########################################################################################################################
+ * Makes use of loaded image
+ #############################################################################################################################*/
+void Canvas::imageLoaded(const KUrl & url, const QImage & image)
+{
+    ProgressEvent * actionEvent = new ProgressEvent();
+    actionEvent->setData(ProgressEvent::ActionUpdate, i18n("Creating item"));
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionEvent);
+    QCoreApplication::processEvents();
+
+    if (!image.isNull())
+    {
+        // Create & setup item
+        PhotoItem * it = new PhotoItem(image, url.fileName(), m_scene);
+        // Add item to scene & model
+        m_scene->addItem(it);
+    }
+
+    ProgressEvent * finishEvent = new ProgressEvent();
+    finishEvent->setData(ProgressEvent::Finish, 0);
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
+    QCoreApplication::processEvents();
 }
 
 /** ##########################################################################################################################
@@ -725,14 +747,19 @@ void Canvas::progressEvent(ProgressEvent * event)
     switch (event->type())
     {
         case ProgressEvent::Init:
-            this->initProgress( event->data().toInt() );
+            this->initProgress( (event->data().toInt() ? event->data().toInt() : 100) );
             event->setAccepted(true);
             break;
-        case ProgressEvent::Update:
-            this->updateProgress( event->data().toInt() );
+        case ProgressEvent::ProgressUpdate:
+            this->updateProgress( event->data().toDouble() );
+            event->setAccepted(true);
+            break;
+        case ProgressEvent::ActionUpdate:
+            d->m_progress->setFormat(event->data().toString() + " [%p%]");
             event->setAccepted(true);
             break;
         case ProgressEvent::Finish:
+            this->updateProgress( d->m_progress->maximum() );
             this->finishProgress();
             event->setAccepted(true);
             break;

@@ -14,7 +14,8 @@ namespace KIPIPhotoLayoutsEditor
             {
                 Unknown,
                 Init,
-                Update,
+                ProgressUpdate,
+                ActionUpdate,
                 Finish,
             };
 

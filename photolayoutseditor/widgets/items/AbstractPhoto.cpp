@@ -153,7 +153,6 @@ AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
 
     // Effects group
     m_borders_group = new BordersGroup(this);
-    connect(this, SIGNAL(changed()), m_borders_group, SLOT(refresh()));
 }
 
 AbstractPhoto::~AbstractPhoto()

@@ -42,6 +42,7 @@ class PLEAboutData : public KIPIPlugins::KPAboutData
                        ki18n("A tool to create photo layouts by fusion of several images"),
                        ki18n("(c) 2011, Lukasz Spas"))
         {
+            this->setAppName("photolayoutseditor");
             addAuthor(ki18n("Lukasz Spas"),
                       ki18n("Author and Developer"),
                       "lukasz dot spas at gmail dot com");

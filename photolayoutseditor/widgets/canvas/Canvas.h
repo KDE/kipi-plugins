@@ -243,6 +243,7 @@ namespace KIPIPhotoLayoutsEditor
             /// Used when new item has been created and needs to be added to the scene and to the model
             void addNewItem(AbstractPhoto * item);
             void setAntialiasing(bool antialiasing);
+            void imageLoaded(const KUrl & url, const QImage & image);
 
         private:
 

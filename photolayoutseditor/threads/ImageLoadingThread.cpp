@@ -3,7 +3,6 @@
 #include "photolayoutseditor.h"
 
 #include <QCoreApplication>
-#include <QImageReader>
 #include <QSemaphore>
 #include <QFile>
 #include <QByteArray>
@@ -11,19 +10,23 @@
 #include <QBuffer>
 #include <QDebug>
 
+#include <klocalizedstring.h>
+
 using namespace KIPIPhotoLayoutsEditor;
 
 class ImageLoadingThread::ImageLoadingThreadPrivate
 {
     ImageLoadingThreadPrivate() :
         m_sem(1),
-        m_size(0)
+        m_size(0),
+        m_max_progress(100)
     {}
 
     KUrl::List m_urls;
     QSemaphore m_sem;
     qint64 m_size;
     qint64 m_loaded_bytes;
+    double m_max_progress;
 
     friend class ImageLoadingThread;
 };
@@ -37,7 +40,6 @@ ImageLoadingThread::ImageLoadingThread(QObject * parent) :
 ImageLoadingThread::~ImageLoadingThread()
 {
     delete d;
-    qDebug() << "Thread destroyed";
 }
 
 void ImageLoadingThread::run()
@@ -59,17 +61,22 @@ void ImageLoadingThread::run()
         f.close();
     }
 
-    ProgressEvent * startEvent = new ProgressEvent();
-    startEvent->setData(ProgressEvent::Init, 1000);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), startEvent);
-    QCoreApplication::processEvents();
-
     if (!d->m_size)
-        goto finish;
+        goto finish_thread;
 
     // Reading
     foreach (KUrl url, urls)
     {
+        ProgressEvent * startEvent = new ProgressEvent();
+        startEvent->setData(ProgressEvent::Init, 0);
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), startEvent);
+        QCoreApplication::processEvents();
+
+        ProgressEvent * loadingImageActionEvent = new ProgressEvent();
+        loadingImageActionEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Loading ").append(url.fileName()) ));
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), loadingImageActionEvent);
+        QCoreApplication::processEvents();
+
         QFile f(url.path());
         f.open(QIODevice::ReadOnly);
         QByteArray ba;
@@ -85,28 +92,41 @@ void ImageLoadingThread::run()
             bf.write(temp.data(), temp.size());
             this->yieldCurrentThread();
             ProgressEvent * event = new ProgressEvent();
-            event->setData(ProgressEvent::Update, (int)(d->m_loaded_bytes * 1000 / d->m_size));
+            event->setData(ProgressEvent::ProgressUpdate, (d->m_loaded_bytes * d->m_max_progress) / (d->m_size * 1.4));
             QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
             QCoreApplication::processEvents();
         }
         while (temp.size() == s);
         f.close();
         bf.close();
+
+        ProgressEvent * buildImageEvent = new ProgressEvent();
+        buildImageEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Building image") ));
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), buildImageEvent);
+        QCoreApplication::processEvents();
+
         QImage img = QImage::fromData(ba);
         emit imageLoaded(url, img);
+
+        ProgressEvent * event = new ProgressEvent();
+        event->setData(ProgressEvent::ProgressUpdate, (d->m_loaded_bytes * d->m_max_progress) / d->m_size);
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
+        QCoreApplication::processEvents();
     }
 
-finish:
-    ProgressEvent * finishEvent = new ProgressEvent();
-    finishEvent->setData(ProgressEvent::Finish, 0);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
-    QCoreApplication::processEvents();
-
+finish_thread:
     this->exit(0);
     this->deleteLater();
 }
 
-void ImageLoadingThread::slotReadImage(const KUrl & url)
+void ImageLoadingThread::setMaximumProgress(double limit)
+{
+    if (limit > 100)
+        limit = 100;
+    d->m_max_progress = limit;
+}
+
+void ImageLoadingThread::setImageUrl(const KUrl & url)
 {
     d->m_sem.acquire();
     d->m_urls.clear();
@@ -114,7 +134,7 @@ void ImageLoadingThread::slotReadImage(const KUrl & url)
     d->m_sem.release();
 }
 
-void ImageLoadingThread::slotReadImages(const KUrl::List & urls)
+void ImageLoadingThread::setImagesUrls(const KUrl::List & urls)
 {
     d->m_sem.acquire();
     d->m_urls = urls;

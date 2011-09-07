@@ -20,16 +20,13 @@ namespace KIPIPhotoLayoutsEditor
 
         signals:
 
-            void loadingStarted(int length);
-            void loadingProgress(int step);
-            void loadingFinished();
             void imageLoaded(const KUrl & url, const QImage & image);
 
         public slots:
 
-            void slotReadImage(const KUrl & url);
-            void slotReadImages(const KUrl::List & urls);
-            void loaded() {}
+            void setMaximumProgress(double limit);
+            void setImageUrl(const KUrl & url);
+            void setImagesUrls(const KUrl::List & urls);
 
         private:
 

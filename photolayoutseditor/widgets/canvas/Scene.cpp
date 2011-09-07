@@ -34,6 +34,7 @@
 #include "photolayoutseditor.h"
 #include "PLEConfigSkeleton.h"
 #include "ImageLoadingThread.h"
+#include "ProgressEvent.h"
 
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -804,7 +805,7 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
                 difference = distance - difference;
                 d->m_selected_items_path.translate(difference);
                 foreach (AbstractItemInterface * item, d->m_selected_items.keys())
-                    item->setPos(item->pos() + difference);
+                    item->moveBy(difference.x(), difference.y());
             }
         }
     }
@@ -864,14 +865,28 @@ void Scene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
 //#####################################################################################################
 void Scene::drawBackground(QPainter * painter, const QRectF & rect)
 {
-    QGraphicsScene::drawBackground(painter, rect.intersect(this->sceneRect()));
+    // Transparent scene background
+    if (isSelectionVisible())
+    {
+        QTransform tr = painter->transform().inverted();
+        QPixmap pixmap(20,20);
+        QPainter p(&pixmap);
+        p.fillRect(0,0,20,20,Qt::lightGray);
+        p.fillRect(0,10,10,10,Qt::darkGray);
+        p.fillRect(10,0,10,10,Qt::darkGray);
+        QBrush b(pixmap);
+        b.setTransform(tr);
+        painter->fillRect(rect, b);
+    }
 
     // Fill scene outside sceneRect with semi-transparent window color
-    QPainterPath p;
-    p.addRect(rect);
-    QPainterPath s;
-    s.addRect(this->sceneRect());
-    painter->fillPath(p.subtracted(s), OUTSIDE_SCENE_COLOR);
+    {
+        QPainterPath p;
+        p.addRect(rect);
+        QPainterPath s;
+        s.addRect(this->sceneRect());
+        painter->fillPath(p.subtracted(s), OUTSIDE_SCENE_COLOR);
+    }
 }
 
 //#####################################################################################################
@@ -966,7 +981,6 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
 
     d->paste_scene_pos = event->scenePos();
 
-    QList<AbstractPhoto*> newItems;
     const QMimeData * mimeData = event->mimeData();
     if ( PhotoLayoutsEditor::instance()->hasInterface() &&
             mimeData->hasFormat("digikam/item-ids"))
@@ -977,7 +991,8 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
         ds >> urls;
 
         ImageLoadingThread * ilt = new ImageLoadingThread(this);
-        ilt->slotReadImages(urls);
+        ilt->setImagesUrls(urls);
+        ilt->setMaximumProgress(90);
         connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
         ilt->start();
     }
@@ -989,21 +1004,10 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
             list << KUrl(url);
 
         ImageLoadingThread * ilt = new ImageLoadingThread(this);
-        ilt->slotReadImages(list);
+        ilt->setImagesUrls(list);
+        ilt->setMaximumProgress(90);
         connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
         ilt->start();
-    }
-
-    QPointF scenePos = event->scenePos();
-    foreach (AbstractPhoto * item, newItems)
-    {
-        item->setPos(scenePos);
-        scenePos += QPointF (20, 20);
-        if (scenePos.x() >= this->sceneRect().bottomRight().x() ||
-               scenePos.y() >= this->sceneRect().bottomRight().y() )
-        {
-            scenePos = this->sceneRect().topLeft();
-        }
     }
 
     event->setAccepted( true );
@@ -1409,19 +1413,30 @@ void Scene::updateSelection()
 //#####################################################################################################
 void Scene::imageLoaded(const KUrl & url, const QImage & image)
 {
-    if (image.isNull())
-        return;
-    PhotoItem * photo = new PhotoItem(image, url.fileName(), this);
-    photo->setPos(d->paste_scene_pos);
+    ProgressEvent * actionEvent = new ProgressEvent();
+    actionEvent->setData(ProgressEvent::ActionUpdate, i18n("Creating item"));
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionEvent);
+    QCoreApplication::processEvents();
 
-    d->paste_scene_pos += QPointF (20, 20);
-    if (d->paste_scene_pos.x() >= this->sceneRect().bottomRight().x() ||
-        d->paste_scene_pos.y() >= this->sceneRect().bottomRight().y() )
+    if (!image.isNull())
     {
-        d->paste_scene_pos = this->sceneRect().topLeft();
+        PhotoItem * photo = new PhotoItem(image, url.fileName(), this);
+        photo->setPos(d->paste_scene_pos);
+
+        d->paste_scene_pos += QPointF (20, 20);
+        if (d->paste_scene_pos.x() >= this->sceneRect().bottomRight().x() ||
+            d->paste_scene_pos.y() >= this->sceneRect().bottomRight().y() )
+        {
+            d->paste_scene_pos = this->sceneRect().topLeft();
+        }
+
+        this->addItem(photo);
     }
 
-    this->addItem(photo);
+    ProgressEvent * finishEvent = new ProgressEvent();
+    finishEvent->setData(ProgressEvent::Finish, 0);
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
+    QCoreApplication::processEvents();
 }
 
 //#####################################################################################################

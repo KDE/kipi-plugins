@@ -168,7 +168,9 @@ void PhotoLayoutsEditor::addUndoCommand(QUndoCommand * command)
 {
     if (command)
     {
-            qDebug() << command->text();
+#ifdef QT_DEBUG
+        qDebug() << command->text();
+#endif
         if (m_canvas)
             m_canvas->undoStack()->push(command);
         else

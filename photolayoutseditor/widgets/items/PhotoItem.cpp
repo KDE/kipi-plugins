@@ -32,6 +32,7 @@
 #include "PLEConfigSkeleton.h"
 #include "photolayoutseditor.h"
 #include "ImageLoadingThread.h"
+#include "ProgressEvent.h"
 
 #include <QBuffer>
 #include <QStyleOptionGraphicsItem>
@@ -206,31 +207,6 @@ PhotoItem::PhotoItem(const QImage & photo, const QString & name, Scene * scene) 
 {
     this->setHighlightItem(false);
     this->setupItem(photo);
-}
-
-PhotoItem * PhotoItem::fromUrl(const KUrl & imageUrl, Scene * scene)
-{
-    QImage img;
-    if (PhotoLayoutsEditor::instance()->hasInterface())
-    {
-        KIPI::ImageInfo info = PhotoLayoutsEditor::instance()->interface()->info(imageUrl);
-        QImageReader ir (info.path().toLocalFile());
-        if (!ir.read(&img))
-            return 0;
-    }
-    else if (imageUrl.isValid())
-    {
-        QImageReader ir (imageUrl.toLocalFile());
-        if (!ir.read(&img))
-            return 0;
-    }
-
-    if (img.isNull())
-        return 0;
-
-    PhotoItem * result = new PhotoItem(img, imageUrl.fileName(), scene);
-    result->d->setFileUrl(imageUrl);
-    return result;
 }
 
 PhotoItem::PhotoItem(const QString & name, Scene * scene) :
@@ -471,6 +447,7 @@ const QImage & PhotoItem::image() const
 
 void PhotoItem::setImage(const QImage & image)
 {
+    qDebug() << "setImage();";
     if (image.isNull())
         return;
     PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
@@ -485,6 +462,12 @@ void PhotoItem::imageLoaded(const KUrl & url, const QImage & image)
 {
     if (image.isNull())
         return;
+
+    ProgressEvent * actionEvent = new ProgressEvent();
+    actionEvent->setData(ProgressEvent::ActionUpdate, i18n("Updating items image"));
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionEvent);
+    QCoreApplication::processEvents();
+
     PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
     PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
     if (this->cropShape().isEmpty())
@@ -492,43 +475,24 @@ void PhotoItem::imageLoaded(const KUrl & url, const QImage & image)
     PLE_PostUndoCommand(new PhotoItemImagePathChangeCommand(this));
     PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(url, this));
     PhotoLayoutsEditor::instance()->endUndoCommandGroup();
+
+    ProgressEvent * finishEvent = new ProgressEvent();
+    finishEvent->setData(ProgressEvent::Finish, 0);
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
+    QCoreApplication::processEvents();
 }
 
 void PhotoItem::setImageUrl(const KUrl & url)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
-    ilt->slotReadImages(url);
+    ilt->setImagesUrls(url);
     connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
     ilt->start();
-
-//    QImage img;
-//    if (PhotoLayoutsEditor::instance()->hasInterface())
-//    {
-//        KIPI::ImageInfo info = PhotoLayoutsEditor::instance()->interface()->info(url);
-//        QImageReader ir (info.path().toLocalFile());
-//        if (ir.read(&img))
-//        {
-//            PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
-//            this->setPixmap( QPixmap::fromImage(img) );
-//            PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(info.path(), this));
-//            PhotoLayoutsEditor::instance()->endUndoCommandGroup();
-//        }
-//    }
-//    else if (url.isValid())
-//    {
-//        QImageReader ir (url.toLocalFile());
-//        if (ir.read(&img))
-//        {
-//            PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
-//            this->setPixmap( QPixmap::fromImage(img) );
-//            PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(url, this));
-//            PhotoLayoutsEditor::instance()->endUndoCommandGroup();
-//        }
-//    }
 }
 
 void PhotoItem::updateIcon()
 {
+    qDebug() << "updateIcon();";
     QPixmap temp(m_pixmap.size());
     if (m_pixmap.isNull())
         temp = QPixmap(48,48);
@@ -552,6 +516,7 @@ void PhotoItem::updateIcon()
 
 void PhotoItem::fitToRect(const QRect & rect)
 {
+    qDebug() << "fitToRect();";
     // Scaling if to big
     QSize s = d->image().size();
     QRect r = d->image().rect();
@@ -573,6 +538,7 @@ void PhotoItem::fitToRect(const QRect & rect)
 
 void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
+    qDebug() << "paint();" << this->name() << option->exposedRect;
     if (!m_pixmap.isNull())
     {
         painter->save();
