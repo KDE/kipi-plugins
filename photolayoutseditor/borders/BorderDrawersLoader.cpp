@@ -54,6 +54,7 @@ BorderDrawersLoader::BorderDrawersLoader(QObject * parent) :
 
 BorderDrawersLoader::~BorderDrawersLoader()
 {
+    m_instance = 0;
     delete d;
 }
 

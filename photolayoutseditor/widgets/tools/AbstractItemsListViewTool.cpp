@@ -246,7 +246,7 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
     connect(d->m_list_widget,SIGNAL(selectedIndex(QModelIndex)),this,SLOT(viewCurrentEditor(QModelIndex)));
 
     this->setLayout(layout);
-    this->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
+    this->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::MinimumExpanding);
     layout->setRowStretch(2,1);
     d->setButtonsEnabled(false);
 }

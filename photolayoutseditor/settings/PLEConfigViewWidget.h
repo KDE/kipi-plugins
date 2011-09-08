@@ -30,14 +30,8 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class PLEConfigViewWidgetPrivate;
-
     class PLEConfigViewWidget : public QWidget
     {
-            Q_OBJECT
-
-            PLEConfigViewWidgetPrivate * d;
-
         public:
 
             explicit PLEConfigViewWidget(QWidget * parent = 0, const QString & caption = QString());
@@ -49,8 +43,10 @@ namespace KIPIPhotoLayoutsEditor
 
             void setupGUI();
 
-
-        friend class PLEConfigViewWidgetPrivate;
+        private:
+            class PLEConfigViewWidgetPrivate;
+            PLEConfigViewWidgetPrivate * d;
+            friend class PLEConfigViewWidgetPrivate;
     };
 }
 

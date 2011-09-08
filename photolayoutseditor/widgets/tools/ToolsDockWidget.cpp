@@ -28,6 +28,7 @@
 #include "EffectsEditorTool.h"
 #include "TextEditorTool.h"
 #include "BorderEditTool.h"
+#include "ZoomTool.h"
 
 #include <QDebug>
 #include <QButtonGroup>
@@ -40,6 +41,12 @@
 #include <klocalizedstring.h>
 
 using namespace KIPIPhotoLayoutsEditor;
+
+class ToolsDockWidget::ToolsDockWidgetPrivate
+{
+    QGridLayout * formLayout;
+    friend class ToolsDockWidget;
+};
 
 ToolsDockWidget * ToolsDockWidget::m_instance = 0;
 
@@ -73,37 +80,35 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     QDockWidget("Tools",parent),
     m_has_selection(false),
     m_currentPhoto(0),
-    m_scene(0)
+    m_scene(0),
+    d(new ToolsDockWidgetPrivate)
 {
     this->setFeatures(QDockWidget::DockWidgetMovable);
     this->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     QWidget * widget = new QWidget(this);
     QVBoxLayout * layout = new QVBoxLayout(widget);
-    layout->setSizeConstraint(QLayout::SetMinimumSize);
+    //layout->setSizeConstraint(QLayout::SetMinimumSize);
 
     // tools buttons layout
-    QGridLayout * formLayout = new QGridLayout();
-    formLayout->setSizeConstraint(QLayout::SetMinimumSize);
-    layout->addLayout(formLayout);
+    d->formLayout = new QGridLayout();
+    //formLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    layout->addLayout(d->formLayout);
 
     // stacked widget (with tools widgets)
     QScrollArea * sa = new QScrollArea(widget);
-    sa->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    //sa->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     sa->setFrameShape(QFrame::NoFrame);
     sa->setWidgetResizable(true);
     QWidget * wsa = new QWidget(sa);
     m_tool_widget_layout = new MyStackedLayout();
     QWidget * emptyWidget = new QWidget(wsa);
-    emptyWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    //emptyWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     m_tool_widget_layout->addWidget(emptyWidget);
     wsa->setLayout(m_tool_widget_layout);
     sa->setWidget(wsa);
     layout->addWidget(sa,1);
 
-    formLayout->addItem(new QSpacerItem(24,24,QSizePolicy::Expanding),0,0);
-    formLayout->addItem(new QSpacerItem(24,24,QSizePolicy::Expanding),1,0);
     QButtonGroup * group = new QButtonGroup(widget);
 
     // Selection tool
@@ -116,7 +121,6 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     m_tool_pointer->setCheckable(true);
     m_tool_pointer->setFlat(true);
     group->addButton(m_tool_pointer);
-    formLayout->addWidget(m_tool_pointer, 0,1, Qt::AlignCenter);
     connect(m_tool_pointer,SIGNAL(toggled(bool)),this,SLOT(emitPointerToolSelected(bool)));
 
     // View tool
@@ -128,8 +132,20 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     m_tool_hand->setCheckable(true);
     m_tool_hand->setFlat(true);
     group->addButton(m_tool_hand);
-    formLayout->addWidget(m_tool_hand, 0,2, Qt::AlignCenter);
     connect(m_tool_hand,SIGNAL(toggled(bool)),this,SLOT(emitHandToolSelected(bool)));
+
+    // Zoom tool
+    m_tool_zoom = new KPushButton(KGuiItem("",":/zoom.png",
+                                           i18n("Zooming tool"),
+                                           i18n("This tool allows to zoom canvas to fit it to the application window or users preferences.")), widget);
+    m_tool_zoom->setIconSize(QSize(24,24));
+    m_tool_zoom->setFixedSize(32,32);
+    m_tool_zoom->setCheckable(true);
+    m_tool_zoom->setFlat(true);
+    group->addButton(m_tool_zoom);
+    m_zoom_widget = new ZoomTool(0, wsa);
+    m_tool_widget_layout->addWidget(m_zoom_widget);
+    connect(m_tool_zoom,SIGNAL(toggled(bool)),this,SLOT(setZoomWidgetVisible(bool)));
 
     // Canvas edit tool
     m_canvas_button = new KPushButton(KGuiItem("", ":/tool_canvas.png",
@@ -140,7 +156,6 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     m_canvas_button->setCheckable(true);
     m_canvas_button->setFlat(true);
     group->addButton(m_canvas_button);
-    formLayout->addWidget(m_canvas_button, 0,3, Qt::AlignCenter);
     m_canvas_widget = new CanvasEditTool(0, wsa);
     m_tool_widget_layout->addWidget(m_canvas_widget);
     connect(m_canvas_button,SIGNAL(toggled(bool)),this,SLOT(setCanvasWidgetVisible(bool)));
@@ -155,7 +170,6 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     m_text_button->setCheckable(true);
     m_text_button->setFlat(true);
     group->addButton(m_text_button);
-    formLayout->addWidget(m_text_button, 0,4, Qt::AlignCenter);
     m_text_widget = new TextEditorTool(0, wsa);
     m_tool_widget_layout->addWidget(m_text_widget);
     connect(m_text_button,SIGNAL(toggled(bool)),this,SLOT(setTextWidgetVisible(bool)));
@@ -170,7 +184,6 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     m_rotate_button->setCheckable(true);
     m_rotate_button->setFlat(true);
     group->addButton(m_rotate_button);
-    formLayout->addWidget(m_rotate_button, 0,5, Qt::AlignCenter);
     connect(m_rotate_button,SIGNAL(toggled(bool)),this,SLOT(setRotateWidgetVisible(bool)));
 
     // Scale tool
@@ -182,7 +195,6 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     m_scale_button->setCheckable(true);
     m_scale_button->setFlat(true);
     group->addButton(m_scale_button);
-    formLayout->addWidget(m_scale_button, 0,6, Qt::AlignCenter);
     connect(m_scale_button,SIGNAL(toggled(bool)),this,SLOT(setScaleWidgetVisible(bool)));
 
     // Crop tool
@@ -194,20 +206,17 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     m_crop_button->setCheckable(true);
     m_crop_button->setFlat(true);
     group->addButton(m_crop_button);
-    formLayout->addWidget(m_crop_button, 1,1, Qt::AlignCenter);
     connect(m_crop_button,SIGNAL(toggled(bool)),this,SLOT(setCropWidgetVisible(bool)));
 
     // Photo effects tool
     m_effects_button = new KPushButton(KGuiItem("", ":/tool_effects.png",
                                               i18n("Image effects editor"),
                                               i18n("This tool allows you to edit existing effects of your photo layers and add some new once.")), widget);
-    qDebug() << "icon" << QIcon(":tool_effects.png").isNull() << m_effects_button->icon().actualSize(QSize(24,24));
     m_effects_button->setIconSize(QSize(24,24));
     m_effects_button->setFixedSize(32,32);
     m_effects_button->setCheckable(true);
     m_effects_button->setFlat(true);
     group->addButton(m_effects_button);
-    formLayout->addWidget(m_effects_button, 1,2, Qt::AlignCenter);
     m_effects_widget = new EffectsEditorTool(0, wsa);
     m_tool_widget_layout->addWidget(m_effects_widget);
     connect(m_effects_button,SIGNAL(toggled(bool)),this,SLOT(setEffectsWidgetVisible(bool)));
@@ -219,24 +228,20 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     m_tool_border->setCheckable(true);
     m_tool_border->setFlat(true);
     group->addButton(m_tool_border);
-    formLayout->addWidget(m_tool_border, 1,3, Qt::AlignCenter);
     m_border_widget = new BorderEditTool(0, wsa);
     m_tool_widget_layout->addWidget(m_border_widget);
     connect(m_tool_border,SIGNAL(toggled(bool)),this,SLOT(setBordersWidgetVisible(bool)));
 
     // Spacer
-    formLayout->addItem(new QSpacerItem(24,24,QSizePolicy::Expanding),0,7);
-    formLayout->addItem(new QSpacerItem(24,24,QSizePolicy::Expanding),1,7);
-    formLayout->setColumnStretch(7,1);
-    formLayout->setSpacing(0);
-    formLayout->setMargin(0);
+    d->formLayout->setSpacing(0);
+    d->formLayout->setMargin(0);
 
     layout->setSpacing(0);
     layout->setMargin(0);
     widget->setLayout(layout);
-    widget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    //widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     this->setWidget(widget);
-    this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
+    //this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 
     setDefaultTool();
 }
@@ -244,6 +249,7 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
 ToolsDockWidget::~ToolsDockWidget()
 {
     m_instance = 0;
+    delete d;
 }
 
 void ToolsDockWidget::setDefaultTool()
@@ -288,6 +294,20 @@ void ToolsDockWidget::emitNewItemCreated(AbstractPhoto * item)
     emit newItemCreated(item);
 }
 
+void ToolsDockWidget::setZoomWidgetVisible(bool isVisible)
+{
+    emit zoomToolSelectionChanged(isVisible);
+    if (isVisible)
+    {
+        m_tool_widget_layout->setCurrentWidget(m_zoom_widget);
+        m_zoom_widget->setScene( m_scene );
+        emit requireSingleSelection();
+        emit zoomToolSelected();
+    }
+    else
+        m_zoom_widget->setScene(0);
+}
+
 void ToolsDockWidget::setCanvasWidgetVisible(bool isVisible)
 {
     m_canvas_button->setChecked(isVisible);
@@ -297,7 +317,6 @@ void ToolsDockWidget::setCanvasWidgetVisible(bool isVisible)
         m_tool_widget_layout->setCurrentWidget(m_canvas_widget);
         emit requireMultiSelection();
         emit canvasToolSelected();
-        this->adjustSize();
     }
 }
 
@@ -310,7 +329,6 @@ void ToolsDockWidget::setEffectsWidgetVisible(bool isVisible)
         m_tool_widget_layout->setCurrentWidget(m_effects_widget);
         emit requireSingleSelection();
         emit effectsToolSelected();
-        this->adjustSize();
     }
 }
 
@@ -323,7 +341,6 @@ void ToolsDockWidget::setTextWidgetVisible(bool isVisible)
         m_tool_widget_layout->setCurrentWidget(m_text_widget);
         emit requireSingleSelection();
         emit textToolSelected();
-        this->adjustSize();
     }
 }
 
@@ -335,7 +352,6 @@ void ToolsDockWidget::setRotateWidgetVisible(bool isVisible)
         m_tool_widget_layout->setCurrentIndex(0);
         emit requireSingleSelection();
         emit rotateToolSelected();
-        this->adjustSize();
     }
 }
 
@@ -347,7 +363,6 @@ void ToolsDockWidget::setScaleWidgetVisible(bool isVisible)
         m_tool_widget_layout->setCurrentIndex(0);
         emit requireSingleSelection();
         emit scaleToolSelected();
-        this->adjustSize();
     }
 }
 
@@ -359,7 +374,6 @@ void ToolsDockWidget::setCropWidgetVisible(bool isVisible)
         m_tool_widget_layout->setCurrentIndex(0);
         emit requireSingleSelection();
         emit cropToolSelected();
-        this->adjustSize();
     }
 }
 
@@ -372,6 +386,42 @@ void ToolsDockWidget::setBordersWidgetVisible(bool isVisible)
         m_tool_widget_layout->setCurrentWidget(m_border_widget);
         emit requireSingleSelection();
         emit borderToolSelected();
-        this->adjustSize();
     }
+}
+
+void ToolsDockWidget::resizeEvent(QResizeEvent * event)
+{
+    QList<QWidget*> l;
+    l << m_tool_pointer
+      << m_tool_hand
+      << m_tool_zoom
+      << m_canvas_button
+      << m_text_button
+      << m_rotate_button
+      << m_scale_button
+      << m_crop_button
+      << m_effects_button
+      << m_tool_border;
+
+    foreach (QWidget * w, l)
+        d->formLayout->removeWidget(w);
+
+    int width = 0;
+    int col = 0, row = 0;
+    foreach (QWidget * w, l)
+    {
+        width += w->size().width();
+        if (row < (int)(width / event->size().width()) )
+        {
+            d->formLayout->setColumnStretch(col, 1);
+            row += 1;
+            col = 0;
+            width = row * event->size().width() + w->size().width();
+        }
+        d->formLayout->setColumnStretch(col, 0);
+        d->formLayout->addWidget(w, row, col++, Qt::AlignCenter);
+        d->formLayout->setRowStretch(row, 0);
+    }
+    if (!row)
+        d->formLayout->setColumnStretch(col, 1);
 }

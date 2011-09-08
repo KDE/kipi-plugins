@@ -35,16 +35,39 @@ namespace KIPIPhotoLayoutsEditor
     {
             Q_OBJECT
 
+            QPointF press;
+            QPointF release;
+
+        public:
+
+            bool wasDragged()
+            {
+                return press != release && !press.isNull();
+            }
+            QPointF mousePressPosition() const
+            {
+                return press;
+            }
+            QPointF mouseReleasePosition() const
+            {
+                return release;
+            }
+
         public slots:
 
             void mousePress(const QPointF & scenePos)
             {
-                emit mousePressed(scenePos);
+                emit mousePressed((press = scenePos));
+            }
+            void mouseRelease(const QPointF & scenePos)
+            {
+                emit mouseReleased((release = scenePos));
             }
 
         signals:
 
             void mousePressed(const QPointF & scenePos);
+            void mouseReleased(const QPointF & scenePos);
     };
 }
 

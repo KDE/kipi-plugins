@@ -200,6 +200,8 @@ void ImageLoadingThread::loadRaw(const KUrl & url)
             *dptr++ = qRgba(sptr[2], sptr[1], sptr[0], sptr[3]);
             sptr += 4;
         }
+
+        delete[] image;
     }
     else
         qDebug() << "Failed to allocate memory for loading raw file";

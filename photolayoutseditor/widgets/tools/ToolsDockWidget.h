@@ -33,11 +33,10 @@
 
 #include <kpushbutton.h>
 
-#include "AbstractTool.h"
-
 namespace KIPIPhotoLayoutsEditor
 {
     class Scene;
+    class AbstractTool;
     class AbstractPhoto;
     class AbstractItemsTool;
     class CanvasEditTool;
@@ -48,6 +47,7 @@ namespace KIPIPhotoLayoutsEditor
 
             KPushButton * m_tool_pointer;
             KPushButton * m_tool_hand;
+            KPushButton * m_tool_zoom;
             KPushButton * m_canvas_button;
             KPushButton * m_effects_button;
             KPushButton * m_text_button;
@@ -60,6 +60,7 @@ namespace KIPIPhotoLayoutsEditor
             bool m_has_selection;
 
             QStackedLayout * m_tool_widget_layout;
+            AbstractTool   * m_zoom_widget;
             CanvasEditTool * m_canvas_widget;
             AbstractItemsTool * m_effects_widget;
             AbstractItemsTool * m_text_widget;
@@ -87,6 +88,9 @@ namespace KIPIPhotoLayoutsEditor
 
             void pointerToolSelected();
             void handToolSelected();
+            // Zoom tool selection signals
+            void zoomToolSelectionChanged(bool);
+            void zoomToolSelected();
             // Effects tool selection signals
             void canvasToolSelectionChanged(bool);
             void canvasToolSelected();
@@ -122,6 +126,7 @@ namespace KIPIPhotoLayoutsEditor
                 m_has_selection = hasSelection;
             }
 
+            void setZoomWidgetVisible(bool isSelected = true);
             void setCanvasWidgetVisible(bool isVisible = true);
             void setEffectsWidgetVisible(bool isVisible = true);
             void setTextWidgetVisible(bool isVisible = true);
@@ -152,9 +157,17 @@ namespace KIPIPhotoLayoutsEditor
                 }
             }
 
+        protected:
+
+            virtual void resizeEvent(QResizeEvent * event);
+
         private:
 
             explicit ToolsDockWidget(QWidget * parent = 0);
+
+            class ToolsDockWidgetPrivate;
+            ToolsDockWidgetPrivate * d;
+            friend class ToolsDockWidgetPrivate;
     };
 }
 

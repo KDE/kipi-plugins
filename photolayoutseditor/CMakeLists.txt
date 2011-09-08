@@ -57,6 +57,7 @@
       widgets/tools/EffectsEditorTool.cpp
       widgets/tools/TextEditorTool.cpp
       widgets/tools/ToolsDockWidget.cpp
+      widgets/tools/ZoomTool.cpp
 )
 
   SET( PLE_Models_SRCS

@@ -20,5 +20,7 @@
         <file>tool_scale4.png</file>
         <file>tool_cropt.png</file>
         <file>view.png</file>
+        <file>zoom.png</file>
+        <file>zoom_cursor.png</file>
     </qresource>
 </RCC>

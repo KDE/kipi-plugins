@@ -83,6 +83,11 @@ Canvas::Canvas(Scene * scene, QWidget * parent) :
     this->init();
 }
 
+Canvas::~Canvas()
+{
+    delete d;
+}
+
 /** ###########################################################################################################################
 * Initialize Canvas object
 #############################################################################################################################*/
@@ -154,6 +159,13 @@ void Canvas::setSelectionMode(SelectionMode mode)
     {
         this->setInteractive(true);
         this->setDragMode(QGraphicsView::ScrollHandDrag);
+        m_scene->setSelectionMode(Scene::NoSelection);
+        goto save;
+    }
+    else if (mode & Zooming)
+    {
+        this->setInteractive(true);
+        this->setDragMode(QGraphicsView::NoDrag);
         m_scene->setSelectionMode(Scene::NoSelection);
         goto save;
     }
@@ -601,6 +613,16 @@ void Canvas::enableViewingMode()
 }
 
 /** ###########################################################################################################################
+ * Sets zooming mode
+ #############################################################################################################################*/
+void Canvas::enableZoomingMode()
+{
+    setSelectionMode(Zooming);
+    this->setCursor(QCursor(QPixmap(":/zoom_cursor.png").scaled(QSize(24,24))));
+    m_scene->clearSelectingFilters();
+}
+
+/** ###########################################################################################################################
  * Sets canvas editing mode
  #############################################################################################################################*/
 void Canvas::enableCanvasEditingMode()
@@ -879,7 +901,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
 void Canvas::scale(qreal factor, const QPoint & center)
 {
     // Scaling limitation
-    if (factor <= 0 || !scene() || (m_scale_factor*factor <= 0.1 && factor < 1))
+    if (factor <= 0 || !scene() || (m_scale_factor*factor <= 0.1 && factor < 1 && m_scale_factor*factor > 7))
         return;
 
     QGraphicsView::scale(factor, factor);
@@ -896,19 +918,24 @@ void Canvas::scale(qreal factor, const QPoint & center)
  * Scales canvas view to fit in rect
  #############################################################################################################################*/
 void Canvas::scale(const QRect & rect)
-{
-    QSize viewSize = rect.size();
+{   
+    QRectF r(this->mapToScene(rect.topLeft()),
+             this->mapToScene(rect.bottomRight()));
+    QSizeF viewSize = r.size();
+    viewSize.setWidth(  qAbs(viewSize.width())  );
+    viewSize.setHeight( qAbs(viewSize.height()) );
     QSizeF sceneSize = m_scene->sceneRect().size();
-    qreal xFactor = viewSize.width() / sceneSize.width();
-    qreal yFactor = viewSize.height() / sceneSize.height();
+    qreal xFactor = sceneSize.width() / viewSize.width();
+    qreal yFactor = sceneSize.height() / viewSize.height();
     qreal newFactor;
     if (xFactor > 1 && yFactor > 1)
         newFactor = xFactor > yFactor ? xFactor : yFactor;
     else
         newFactor = xFactor < yFactor ? xFactor : yFactor;
 
-    this->scale(newFactor);
-    qDebug() << "scaled" << newFactor;
+    if (m_scale_factor*newFactor > 7)
+        newFactor = 7 / m_scale_factor;
+    this->scale(newFactor, rect.center());
 }
 
 /** ###########################################################################################################################
@@ -1032,6 +1059,23 @@ void Canvas::renderCanvas(QPrinter * device)
 {
     renderCanvas(static_cast<QPaintDevice*>(device));
 }
+
+/** ###########################################################################################################################
+ * Groups operations into one undo operation
+ #############################################################################################################################*/
+void Canvas::beginRowsRemoving()
+{
+    m_undo_stack->beginMacro(i18n("Remove items"));
+}
+
+/** ###########################################################################################################################
+ * Finish group of undo operations
+ #############################################################################################################################*/
+void Canvas::endRowsRemoving()
+{
+    m_undo_stack->endMacro();
+}
+
 
 #undef MAX_SCALE_LIMIT
 #undef MIN_SCALE_LIMIT

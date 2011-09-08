@@ -34,8 +34,6 @@ namespace KIPIPhotoLayoutsEditor
 
     class PLEConfigDialog : public KConfigDialog
     {
-            Q_OBJECT
-
             PLEConfigDialogPrivate * d;
 
         public:

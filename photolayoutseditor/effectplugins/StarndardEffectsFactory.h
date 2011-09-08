@@ -7,8 +7,6 @@ namespace KIPIPhotoLayoutsEditor
 {
     class StarndardEffectsFactory : public AbstractPhotoEffectFactory
     {
-            Q_OBJECT
-
         public:
 
             explicit StarndardEffectsFactory(QObject * parent = 0);

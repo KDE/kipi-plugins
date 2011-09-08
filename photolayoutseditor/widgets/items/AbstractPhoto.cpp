@@ -158,6 +158,7 @@ AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
 AbstractPhoto::~AbstractPhoto()
 {
     m_effects_group->deleteLater();
+    delete d;
 }
 
 void AbstractPhoto::setupItem()

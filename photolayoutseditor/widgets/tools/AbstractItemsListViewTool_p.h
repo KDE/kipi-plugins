@@ -68,6 +68,7 @@ namespace KIPIPhotoLayoutsEditor
                 QListView(parent)
             {
                 this->setSelectionMode(QAbstractItemView::SingleSelection);
+                this->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
             }
             QModelIndex selectedIndex() const
             {

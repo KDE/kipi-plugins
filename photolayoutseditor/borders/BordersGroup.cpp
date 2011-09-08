@@ -55,6 +55,11 @@ BordersGroup::BordersGroup(AbstractPhoto * photo) :
     d->photo = photo;
 }
 
+BordersGroup::~BordersGroup()
+{
+    delete d;
+}
+
 QPainterPath BordersGroup::shape()
 {
     if (!graphicsItem())
@@ -202,6 +207,8 @@ BordersGroup * BordersGroup::fromSvg(QDomElement & element, AbstractPhoto * grap
     }
 
     result->d->photo = graphicsItem;
+    if (graphicsItem->m_borders_group)
+        delete graphicsItem->m_borders_group;
     graphicsItem->m_borders_group = result;
     result->refresh();
     return result;

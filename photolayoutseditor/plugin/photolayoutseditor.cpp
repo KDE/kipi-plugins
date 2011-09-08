@@ -434,6 +434,7 @@ void PhotoLayoutsEditor::prepareSignalsConnections()
     connect(d->toolsWidget, SIGNAL(undoCommandCreated(QUndoCommand*)),  m_canvas,   SLOT(newUndoCommand(QUndoCommand*)));
     connect(d->toolsWidget, SIGNAL(pointerToolSelected()),              m_canvas,   SLOT(enableDefaultSelectionMode()));
     connect(d->toolsWidget, SIGNAL(handToolSelected()),                 m_canvas,   SLOT(enableViewingMode()));
+    connect(d->toolsWidget, SIGNAL(zoomToolSelected()),                 m_canvas,   SLOT(enableZoomingMode()));
     connect(d->toolsWidget, SIGNAL(canvasToolSelected()),               m_canvas,   SLOT(enableCanvasEditingMode()));
     connect(d->toolsWidget, SIGNAL(effectsToolSelected()),              m_canvas,   SLOT(enableEffectsEditingMode()));
     connect(d->toolsWidget, SIGNAL(textToolSelected()),                 m_canvas,   SLOT(enableTextEditingMode()));
@@ -460,6 +461,7 @@ void PhotoLayoutsEditor::open()
         createCanvas(size);
         refreshActions();
     }
+    delete canvasSizeDialog;
 }
 
 void PhotoLayoutsEditor::openDialog()
@@ -533,18 +535,18 @@ void PhotoLayoutsEditor::exportFile()
 {
     if (!m_canvas)
         return;
-    ImageFileDialog imageDialog(KUrl(), this);
-    imageDialog.setOperationMode(KFileDialog::Saving);
-    int result = imageDialog.exec();
+    ImageFileDialog * imageDialog = new ImageFileDialog(KUrl(), this);
+    imageDialog->setOperationMode(KFileDialog::Saving);
+    int result = imageDialog->exec();
     if (result == KFileDialog::Accepted)
     {
-        const char * format = imageDialog.format();
+        const char * format = imageDialog->format();
         if (format)
         {
             QPixmap image(m_canvas->sceneRect().size().toSize());
             image.fill(Qt::transparent);
             m_canvas->renderCanvas(&image);
-            QImageWriter writer(imageDialog.selectedFile());
+            QImageWriter writer(imageDialog->selectedFile());
             writer.setFormat(format);
             if (!writer.canWrite())
             {
@@ -559,27 +561,32 @@ void PhotoLayoutsEditor::exportFile()
             }
         }
     }
+    delete imageDialog;
 }
 
 void PhotoLayoutsEditor::printPreview()
 {
     if (m_canvas && m_canvas->scene())
     {
-        QPrinter printer;
-        m_canvas->preparePrinter(&printer);
-        QPrintPreviewDialog dialog(&printer, this);
-        connect(&dialog, SIGNAL(paintRequested(QPrinter*)), m_canvas, SLOT(renderCanvas(QPrinter*)));
-        dialog.exec();
+        QPrinter * printer = new QPrinter();
+        m_canvas->preparePrinter(printer);
+        QPrintPreviewDialog * dialog = new QPrintPreviewDialog(printer, this);
+        connect(dialog, SIGNAL(paintRequested(QPrinter*)), m_canvas, SLOT(renderCanvas(QPrinter*)));
+        dialog->exec();
+        delete dialog;
+        delete printer;
     }
 }
 
 void PhotoLayoutsEditor::print()
 {
-    QPrinter printer;
-    m_canvas->preparePrinter(&printer);
-    QPrintDialog dialog(&printer, this);
-    connect(&dialog, SIGNAL(accepted(QPrinter*)), m_canvas, SLOT(renderCanvas(QPrinter*)));
-    dialog.exec();
+    QPrinter * printer = new QPrinter();
+    m_canvas->preparePrinter(printer);
+    QPrintDialog * dialog = new QPrintDialog(printer, this);
+    connect(dialog, SIGNAL(accepted(QPrinter*)), m_canvas, SLOT(renderCanvas(QPrinter*)));
+    dialog->exec();
+    delete dialog;
+    delete printer;
 }
 
 bool PhotoLayoutsEditor::closeDocument()
@@ -639,12 +646,13 @@ void PhotoLayoutsEditor::loadNewImage()
     if (!m_canvas)
         return;
 
-    ImageFileDialog d(KUrl(), this);
-    d.setMode(KFile::Files);
-    d.setOperationMode(KFileDialog::Opening);
-    d.setKeepLocation(true);
-    if (d.exec() == ImageFileDialog::Accepted)
-        m_canvas->addImages( d.selectedUrls() );
+    ImageFileDialog * d = new ImageFileDialog(KUrl(), this);
+    d->setMode(KFile::Files);
+    d->setOperationMode(KFileDialog::Opening);
+    d->setKeepLocation(true);
+    if (d->exec() == ImageFileDialog::Accepted)
+        m_canvas->addImages( d->selectedUrls() );
+    delete d;
 }
 
 void PhotoLayoutsEditor::setGridVisible(bool isVisible)
@@ -660,12 +668,13 @@ void PhotoLayoutsEditor::setupGrid()
 {
     if (m_canvas && m_canvas->scene())
     {
-        GridSetupDialog dialog(this);
-        dialog.setHorizontalDistance( m_canvas->scene()->gridHorizontalDistance() );
-        dialog.setVerticalDistance( m_canvas->scene()->gridVerticalDistance() );
-        dialog.exec();
-        m_canvas->scene()->setGrid(dialog.horizontalDistance(),
-                                   dialog.verticalDistance());
+        GridSetupDialog * dialog = new GridSetupDialog(this);
+        dialog->setHorizontalDistance( m_canvas->scene()->gridHorizontalDistance() );
+        dialog->setVerticalDistance( m_canvas->scene()->gridVerticalDistance() );
+        dialog->exec();
+        m_canvas->scene()->setGrid(dialog->horizontalDistance(),
+                                   dialog->verticalDistance());
+        delete dialog;
     }
 }
 
@@ -673,9 +682,9 @@ void PhotoLayoutsEditor::changeCanvasSize()
 {
     if (!m_canvas)
         return;
-    CanvasSizeDialog ccd(m_canvas->canvasSize(), this);
-    int result = ccd.exec();
-    CanvasSize size = ccd.canvasSize();
+    CanvasSizeDialog * ccd = new CanvasSizeDialog(m_canvas->canvasSize(), this);
+    int result = ccd->exec();
+    CanvasSize size = ccd->canvasSize();
     if (result == KDialog::Accepted)
     {
         if (size.isValid())
@@ -689,6 +698,7 @@ void PhotoLayoutsEditor::changeCanvasSize()
         else
             KMessageBox::error(this, i18n("Invalid image size!"));
     }
+    delete ccd;
 }
 
 void PhotoLayoutsEditor::loadEffects()

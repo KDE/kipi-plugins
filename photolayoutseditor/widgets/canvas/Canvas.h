@@ -66,11 +66,13 @@ namespace KIPIPhotoLayoutsEditor
             enum SelectionMode
             {
                 Viewing = 1,
-                MultiSelecting = 2,
-                SingleSelcting = 4,
+                Zooming = 2,
+                MultiSelecting = 4,
+                SingleSelcting = 8,
             };
 
             explicit Canvas(const CanvasSize & size, QWidget * parent = 0);
+            ~Canvas();
 
             virtual void wheelEvent(QWheelEvent *event);
 
@@ -178,22 +180,19 @@ namespace KIPIPhotoLayoutsEditor
             void renderCanvas(QPrinter * device);
 
             /// Groups operations into one undo operation
-            void beginRowsRemoving()
-            {
-                m_undo_stack->beginMacro(i18n("Remove items"));
-            }
+            void beginRowsRemoving();
 
             /// Finish group of undo operations
-            void endRowsRemoving()
-            {
-                m_undo_stack->endMacro();
-            }
+            void endRowsRemoving();
 
             /// Sets selecting mode
             void enableDefaultSelectionMode();
 
             /// Sets viewing mode
             void enableViewingMode();
+
+            /// Sets zooming mode
+            void enableZoomingMode();
 
             /// Sets canvas editing mode
             void enableCanvasEditingMode();

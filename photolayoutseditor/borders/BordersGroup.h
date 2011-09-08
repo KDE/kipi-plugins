@@ -49,6 +49,7 @@ namespace KIPIPhotoLayoutsEditor
         public:
 
             BordersGroup(AbstractPhoto * graphicsItem);
+            ~BordersGroup();
             QPainterPath shape();
             AbstractPhoto * graphicsItem() const;
             void paint(QPainter * painter, const QStyleOptionGraphicsItem * option);

@@ -44,8 +44,6 @@ namespace KIPIPhotoLayoutsEditor
 
     class TextItem : public AbstractPhoto
     {
-            Q_OBJECT
-
             static QColor DEFAULT_COLOR;
             static QFont DEFAULT_FONT;
 

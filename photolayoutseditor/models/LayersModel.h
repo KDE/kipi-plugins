@@ -84,8 +84,6 @@ namespace KIPIPhotoLayoutsEditor
 
             void rowsInserted(const QModelIndex & parent, int first, int last);
 
-        public slots:
-
         private:
 
             LayersModelItem * root;

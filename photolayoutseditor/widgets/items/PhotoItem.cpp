@@ -203,17 +203,17 @@ KUrl & PhotoItemPrivate::fileUrl()
 
 PhotoItem::PhotoItem(const QImage & photo, const QString & name, Scene * scene) :
     AbstractPhoto((name.isEmpty() ? i18n("New image") : name), scene),
+    m_highlight(false),
     d(new PhotoItemPrivate(this))
 {
-    this->setHighlightItem(false);
     this->setupItem(photo);
 }
 
 PhotoItem::PhotoItem(const QString & name, Scene * scene) :
     AbstractPhoto((name.isEmpty() ? i18n("New image") : name), scene),
+    m_highlight(false),
     d(new PhotoItemPrivate(this))
 {
-    this->setHighlightItem(false);
     this->setupItem(QImage());
 }
 

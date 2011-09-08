@@ -37,7 +37,7 @@
 
 using namespace KIPIPhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::PLEConfigViewWidgetPrivate
+class KIPIPhotoLayoutsEditor::PLEConfigViewWidget::PLEConfigViewWidgetPrivate
 {
     QCheckBox      * antialiasing;
     QDoubleSpinBox * xGrid;

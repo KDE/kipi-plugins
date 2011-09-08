@@ -76,6 +76,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         m_scene(scene),
         model(new LayersModel(scene)),
         selection_model(new LayersSelectionModel(model, scene)),
+        m_pressed_object(0),
         m_pressed_item(0),
         m_selected_items_all_movable(true),
         m_selection_visible(true),
@@ -481,7 +482,6 @@ Scene::Scene(const QRectF & dimension, QObject * parent) :
     d(new ScenePrivate(this)),
     x_grid(0),
     y_grid(0),
-    grid_visible(false),
     grid_item(0),
     grid_changed(true)
 {   
@@ -499,6 +499,7 @@ Scene::Scene(const QRectF & dimension, QObject * parent) :
 
     // Create default grid
     setGrid(PLEConfigSkeleton::self()->horizontalGrid(), PLEConfigSkeleton::self()->verticalGrid());
+    grid_visible != PLEConfigSkeleton::self()->showGrid();
     setGridVisible(PLEConfigSkeleton::self()->showGrid());
 
     // Indexing method
@@ -692,6 +693,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent * event)
         if (d->m_readSceneMousePress_enabled)
         {
             d->m_readSceneMousePress_listener->mousePress(event->scenePos());
+            event->setAccepted(true);
             return;
         }
 
@@ -818,8 +820,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
     {
         if (d->m_readSceneMousePress_enabled)
         {
-            d->m_readSceneMousePress_enabled = false;
-            this->views().at(0)->unsetCursor();
+            d->m_readSceneMousePress_listener->mouseRelease(event->scenePos());
+            event->setAccepted(true);
             return;
         }
 
@@ -1020,71 +1022,66 @@ void Scene::setGrid(double x, double y)
     if (x == 0 || y == 0)
         return;
 
-    // Prevent recreation of unchanged grid
-    if (x != this->x_grid || y != this->y_grid)
-        grid_changed = true;
+    this->x_grid = x;
+    this->y_grid = y;
+
+    if (!grid_visible)
+        return;
 
     if (!grid_item)
     {
         grid_item = new QGraphicsItemGroup(0,this);
         grid_item->setZValue(0);
-        grid_item->setVisible(false);
+        grid_item->setVisible(true);
         QGraphicsOpacityEffect * effect = new QGraphicsOpacityEffect(this);
         effect->setOpacity(0.5);
         grid_item->setGraphicsEffect(effect);
     }
 
-    this->x_grid = x;
-    this->y_grid = y;
+    qreal width = sceneRect().width();
+    qreal height = sceneRect().height();
+    QList<QGraphicsItem*> children = grid_item->childItems();
+    QList<QGraphicsItem*>::iterator it = children.begin();
+    QGraphicsLineItem * temp;
 
-    // Repaint only when x or y has changed
-    if (grid_changed)
+    for (qreal i = x; i < width; i+=x)
     {
-        qreal width = sceneRect().width();
-        qreal height = sceneRect().height();
-        QList<QGraphicsItem*> children = grid_item->childItems();
-        QList<QGraphicsItem*>::iterator it = children.begin();
-        QGraphicsLineItem * temp;
-
-        for (qreal i = x; i < width; i+=x)
+        if (it != children.end())
         {
-            if (it != children.end())
-            {
-                temp = static_cast<QGraphicsLineItem*>(*it);
-                temp->setLine(i,0,i,height);
-                ++it;
-            }
-            else
-            {
-                temp = new QGraphicsLineItem(i,0,i,height, 0, this);
-                grid_item->addToGroup(temp);
-            }
+            temp = static_cast<QGraphicsLineItem*>(*it);
+            temp->setLine(i,0,i,height);
+            ++it;
         }
-
-        for (qreal i = y; i < height; i+=y)
+        else
         {
-            if (it != children.end())
-            {
-                temp = static_cast<QGraphicsLineItem*>(*it);
-                temp->setLine(0,i,width,i);
-                ++it;
-            }
-            else
-            {
-                temp = new QGraphicsLineItem(0,i,width,i, 0, this);
-                grid_item->addToGroup(temp);
-            }
+            temp = new QGraphicsLineItem(i,0,i,height, 0, this);
+            grid_item->addToGroup(temp);
         }
+    }
 
-        QList<QGraphicsItem*> toRemove;
-        while (it != children.end())
-            toRemove.append(*(it++));
-        while (toRemove.count())
+    for (qreal i = y; i < height; i+=y)
+    {
+        if (it != children.end())
         {
-            QGraphicsItem * temp = toRemove.takeAt(0);
-            grid_item->removeFromGroup(temp);
-            delete temp;
+            temp = static_cast<QGraphicsLineItem*>(*it);
+            temp->setLine(0,i,width,i);
+            ++it;
         }
+        else
+        {
+            temp = new QGraphicsLineItem(0,i,width,i, 0, this);
+            grid_item->addToGroup(temp);
+        }
+    }
+
+    QList<QGraphicsItem*> toRemove;
+    while (it != children.end())
+        toRemove.append(*(it++));
+    while (toRemove.count())
+    {
+        QGraphicsItem * temp = toRemove.takeAt(0);
+        grid_item->removeFromGroup(temp);
+        delete temp;
     }
 }
 
@@ -1105,7 +1102,14 @@ void Scene::setGridVisible(bool visible)
 {
     if (grid_visible == visible)
         return;
-    grid_item->setVisible((grid_visible = visible));
+
+    if (visible)
+        this->setGrid(x_grid, y_grid);
+    else
+    {
+        delete grid_item;
+        grid_item = 0;
+    }
 }
 
 //#####################################################################################################
@@ -1365,9 +1369,9 @@ void Scene::readSceneMousePress(MousePressListener * mouseListsner)
 {
     d->m_readSceneMousePress_listener = mouseListsner;
     if (mouseListsner)
-    {
         d->m_readSceneMousePress_enabled = true;
-    }
+    else
+        d->m_readSceneMousePress_enabled = false;
 }
 
 //#####################################################################################################

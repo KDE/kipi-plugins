@@ -36,15 +36,9 @@ namespace KIPIPhotoLayoutsEditor
 
     class LayersSelectionModel : public QItemSelectionModel
     {
-            Q_OBJECT
-
         public:
 
             explicit LayersSelectionModel(LayersModel * model, QObject *parent = 0);
-
-        signals:
-
-        public slots:
 
     };
 }
