@@ -76,7 +76,7 @@ void Plugin_Panorama::setup(QWidget* widget)
 
     m_action = actionCollection()->addAction("panorama");
     m_action->setText(i18n("Stitch images into a panorama..."));
-    m_action->setIcon(KIcon("panorama"));
+    m_action->setIcon(KIcon("layer-visible-on"));
 
     connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
