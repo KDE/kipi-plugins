@@ -992,7 +992,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
 
         ImageLoadingThread * ilt = new ImageLoadingThread(this);
         ilt->setImagesUrls(urls);
-        ilt->setMaximumProgress(90);
+        ilt->setMaximumProgress(0.9);
         connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
         ilt->start();
     }
@@ -1005,7 +1005,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
 
         ImageLoadingThread * ilt = new ImageLoadingThread(this);
         ilt->setImagesUrls(list);
-        ilt->setMaximumProgress(90);
+        ilt->setMaximumProgress(0.9);
         connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
         ilt->start();
     }
@@ -1413,11 +1413,6 @@ void Scene::updateSelection()
 //#####################################################################################################
 void Scene::imageLoaded(const KUrl & url, const QImage & image)
 {
-    ProgressEvent * actionEvent = new ProgressEvent();
-    actionEvent->setData(ProgressEvent::ActionUpdate, i18n("Creating item"));
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionEvent);
-    QCoreApplication::processEvents();
-
     if (!image.isNull())
     {
         PhotoItem * photo = new PhotoItem(image, url.fileName(), this);
@@ -1432,11 +1427,6 @@ void Scene::imageLoaded(const KUrl & url, const QImage & image)
 
         this->addItem(photo);
     }
-
-    ProgressEvent * finishEvent = new ProgressEvent();
-    finishEvent->setData(ProgressEvent::Finish, 0);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
-    QCoreApplication::processEvents();
 }
 
 //#####################################################################################################

@@ -30,6 +30,9 @@ namespace KIPIPhotoLayoutsEditor
 
         private:
 
+            void loadRaw(const KUrl & url);
+            void loadImage(const KUrl & url);
+
             class ImageLoadingThreadPrivate;
             friend class ImageLoadingThreadPrivate;
             ImageLoadingThreadPrivate * d;

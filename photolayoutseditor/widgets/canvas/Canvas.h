@@ -223,13 +223,13 @@ namespace KIPIPhotoLayoutsEditor
             void newUndoCommand(QUndoCommand * command);
 
             /// Shows progress bar
-            void initProgress(int limit);
+            void initProgress();
 
             /// Hides progress bar
             void finishProgress();
 
             /// Sets progress value
-            void updateProgress(int value);
+            void updateProgress(double value);
 
         signals:
 

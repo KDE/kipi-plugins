@@ -274,7 +274,7 @@ void Canvas::addImage(const KUrl & imageUrl)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
     ilt->setImageUrl(imageUrl);
-    ilt->setMaximumProgress(90);
+    ilt->setMaximumProgress(0.9);
     connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
     ilt->start();
 }
@@ -286,7 +286,7 @@ void Canvas::addImages(const KUrl::List & images)
 {
     ImageLoadingThread * ilt = new ImageLoadingThread(this);
     ilt->setImagesUrls(images);
-    ilt->setMaximumProgress(90);
+    ilt->setMaximumProgress(0.9);
     connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), this, SLOT(imageLoaded(KUrl,QImage)));
     ilt->start();
 }
@@ -335,11 +335,6 @@ void Canvas::setAntialiasing(bool antialiasing)
  #############################################################################################################################*/
 void Canvas::imageLoaded(const KUrl & url, const QImage & image)
 {
-    ProgressEvent * actionEvent = new ProgressEvent();
-    actionEvent->setData(ProgressEvent::ActionUpdate, i18n("Creating item"));
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionEvent);
-    QCoreApplication::processEvents();
-
     if (!image.isNull())
     {
         // Create & setup item
@@ -347,11 +342,6 @@ void Canvas::imageLoaded(const KUrl & url, const QImage & image)
         // Add item to scene & model
         m_scene->addItem(it);
     }
-
-    ProgressEvent * finishEvent = new ProgressEvent();
-    finishEvent->setData(ProgressEvent::Finish, 0);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
-    QCoreApplication::processEvents();
 }
 
 /** ##########################################################################################################################
@@ -713,12 +703,9 @@ void Canvas::newUndoCommand(QUndoCommand * command)
 /** ###########################################################################################################################
  * Shows progress bar
  #############################################################################################################################*/
-void Canvas::initProgress(int limit)
+void Canvas::initProgress()
 {
-    qDebug() << "initProgress();" << limit;
-    if (limit < 1)
-        return;
-    d->m_progress->setMaximum(limit);
+    d->m_progress->setMaximum(1000);
     d->m_progress->show();
 }
 
@@ -734,9 +721,9 @@ void Canvas::finishProgress()
 /** ###########################################################################################################################
  * Sets progress value
  #############################################################################################################################*/
-void Canvas::updateProgress(int value)
+void Canvas::updateProgress(double value)
 {
-    d->m_progress->setValue(value);
+    d->m_progress->setValue(value * 1000);
 }
 
 /** ###########################################################################################################################
@@ -747,7 +734,7 @@ void Canvas::progressEvent(ProgressEvent * event)
     switch (event->type())
     {
         case ProgressEvent::Init:
-            this->initProgress( (event->data().toInt() ? event->data().toInt() : 100) );
+            this->initProgress();
             event->setAccepted(true);
             break;
         case ProgressEvent::ProgressUpdate:
@@ -756,12 +743,14 @@ void Canvas::progressEvent(ProgressEvent * event)
             break;
         case ProgressEvent::ActionUpdate:
             d->m_progress->setFormat(event->data().toString() + " [%p%]");
+            qDebug() << d->m_progress->format();
             event->setAccepted(true);
             break;
         case ProgressEvent::Finish:
             this->updateProgress( d->m_progress->maximum() );
             this->finishProgress();
             event->setAccepted(true);
+            qDebug() << "----------------";
             break;
         default:
             event->setAccepted(false);

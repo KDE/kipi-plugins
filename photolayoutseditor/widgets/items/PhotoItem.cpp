@@ -463,11 +463,6 @@ void PhotoItem::imageLoaded(const KUrl & url, const QImage & image)
     if (image.isNull())
         return;
 
-    ProgressEvent * actionEvent = new ProgressEvent();
-    actionEvent->setData(ProgressEvent::ActionUpdate, i18n("Updating items image"));
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionEvent);
-    QCoreApplication::processEvents();
-
     PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
     PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
     if (this->cropShape().isEmpty())
@@ -475,11 +470,6 @@ void PhotoItem::imageLoaded(const KUrl & url, const QImage & image)
     PLE_PostUndoCommand(new PhotoItemImagePathChangeCommand(this));
     PLE_PostUndoCommand(new PhotoItemUrlChangeCommand(url, this));
     PhotoLayoutsEditor::instance()->endUndoCommandGroup();
-
-    ProgressEvent * finishEvent = new ProgressEvent();
-    finishEvent->setData(ProgressEvent::Finish, 0);
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
-    QCoreApplication::processEvents();
 }
 
 void PhotoItem::setImageUrl(const KUrl & url)
@@ -492,7 +482,6 @@ void PhotoItem::setImageUrl(const KUrl & url)
 
 void PhotoItem::updateIcon()
 {
-    qDebug() << "updateIcon();";
     QPixmap temp(m_pixmap.size());
     if (m_pixmap.isNull())
         temp = QPixmap(48,48);
@@ -504,8 +493,8 @@ void PhotoItem::updateIcon()
         p.fillPath(itemOpaqueArea(), QBrush(this->m_pixmap));
         p.end();
         temp = temp.scaled(48,48,Qt::KeepAspectRatio);
+        p.begin(&temp);
     }
-    p.begin(&temp);
     QPen pen(Qt::gray,1);
     pen.setCosmetic(true);
     p.setPen(pen);
@@ -516,7 +505,6 @@ void PhotoItem::updateIcon()
 
 void PhotoItem::fitToRect(const QRect & rect)
 {
-    qDebug() << "fitToRect();";
     // Scaling if to big
     QSize s = d->image().size();
     QRect r = d->image().rect();
@@ -538,7 +526,6 @@ void PhotoItem::fitToRect(const QRect & rect)
 
 void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
-    qDebug() << "paint();" << this->name() << option->exposedRect;
     if (!m_pixmap.isNull())
     {
         painter->save();

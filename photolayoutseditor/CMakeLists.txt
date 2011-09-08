@@ -155,6 +155,7 @@
                                          ${KDE4_KDEUI_LIBS}
                                          ${KDE4_KPARTS_LIBS}
                                          ${KIPI_LIBRARIES}
+                                         ${KDCRAW_LIBRARIES}
                                          kipiplugins )
 
 # =======================================================
