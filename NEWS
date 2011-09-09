@@ -11,4 +11,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 001 ==> 199317 : Support title/description as Facebook Photo Caption [patch].
 002 ==> 221195 : Comment sets Title does not set photo title in gallery export.
 003 ==> 155373 : Add different image titles when exporting to Flickr.
-004 ==> 
+004 ==> 261451 : Wish: vkontakte.ru (vk.com) export plugin.
+005 ==> 
