@@ -12,4 +12,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 002 ==> 221195 : Comment sets Title does not set photo title in gallery export.
 003 ==> 155373 : Add different image titles when exporting to Flickr.
 004 ==> 261451 : Wish: vkontakte.ru (vk.com) export plugin.
-005 ==> 
+005 ==> 281439 : libkvkontakte addition break parallel builds.
+006 ==> 
