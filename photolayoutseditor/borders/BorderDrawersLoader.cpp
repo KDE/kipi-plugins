@@ -69,6 +69,7 @@ BorderDrawersLoader * BorderDrawersLoader::instance(QObject * parent)
 
 void BorderDrawersLoader::registerDrawer(BorderDrawerFactoryInterface * factory)
 {
+    factory->setParent(instance());
     instance()->d->factories.insert(factory->drawerName(), factory);
 }
 
@@ -172,6 +173,10 @@ QWidget * BorderDrawersLoader::createEditor(BorderDrawerInterface * drawer, bool
     QtDoublePropertyManager * doubleManager = 0;
     KDoubleSpinBoxFactory * doubleFactory = 0;
 
+    // Enum type of property
+    QtEnumPropertyManager * enumManager = 0;
+    KEnumEditorFactory * enumFactory = 0;
+
     const QMetaObject * meta = drawer->metaObject();
     int propertiesCount = meta->propertyCount();
     for (int i = 0; i < propertiesCount; ++i)
@@ -211,6 +216,23 @@ QWidget * BorderDrawersLoader::createEditor(BorderDrawerInterface * drawer, bool
                     doubleManager->setMaximum(property, drawer->maximumValue(metaProperty).toDouble());
                 }
                 break;
+            case QVariant::String:
+                {
+                    QStringList l = drawer->stringNames(metaProperty).toStringList();
+                    if (l.count())
+                    {
+                        if (!enumManager || !enumFactory)
+                        {
+                            enumManager = new QtEnumPropertyManager(browser);
+                            enumFactory = new KEnumEditorFactory(browser);
+                            browser->setFactoryForManager(enumManager, enumFactory);
+                        }
+                        property = enumManager->addProperty(propertyName);
+                        enumManager->setEnumNames(property, l);
+                        enumManager->setValue(property, l.indexOf( metaProperty.read(drawer).toString() ));
+                        break;
+                    }
+                }
             default:
                 {
                     if (!variantManager || !variantFactory)
@@ -235,6 +257,11 @@ QWidget * BorderDrawersLoader::createEditor(BorderDrawerInterface * drawer, bool
     {
         connect(doubleFactory, SIGNAL(editingFinished()), listener, SLOT(editingFinished()));
         connect(doubleManager, SIGNAL(propertyChanged(QtProperty*)), listener, SLOT(propertyChanged(QtProperty*)));
+    }
+    if (enumManager)
+    {
+        connect(enumFactory, SIGNAL(editingFinished()), listener, SLOT(editingFinished()));
+        connect(enumManager, SIGNAL(propertyChanged(QtProperty*)), listener, SLOT(propertyChanged(QtProperty*)));
     }
     if (variantManager)
     {

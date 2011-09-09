@@ -47,6 +47,8 @@ class KSliderFactory : public QtSliderFactory
     Q_OBJECT
 public:
     KSliderFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtIntPropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KScrollBarFactory : public QtScrollBarFactory
@@ -54,6 +56,8 @@ class KScrollBarFactory : public QtScrollBarFactory
     Q_OBJECT
 public:
     KScrollBarFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtIntPropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KCheckBoxFactory : public QtCheckBoxFactory
@@ -61,6 +65,8 @@ class KCheckBoxFactory : public QtCheckBoxFactory
     Q_OBJECT
 public:
     KCheckBoxFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtBoolPropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KDoubleSpinBoxFactory : public QtDoubleSpinBoxFactory
@@ -68,6 +74,8 @@ class KDoubleSpinBoxFactory : public QtDoubleSpinBoxFactory
     Q_OBJECT
 public:
     KDoubleSpinBoxFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtDoublePropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KLineEditFactory : public QtLineEditFactory
@@ -75,6 +83,8 @@ class KLineEditFactory : public QtLineEditFactory
     Q_OBJECT
 public:
     KLineEditFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtStringPropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KDateEditFactory : public QtDateEditFactory
@@ -82,6 +92,8 @@ class KDateEditFactory : public QtDateEditFactory
     Q_OBJECT
 public:
     KDateEditFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtDatePropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KTimeEditFactory : public QtTimeEditFactory
@@ -89,6 +101,8 @@ class KTimeEditFactory : public QtTimeEditFactory
     Q_OBJECT
 public:
     KTimeEditFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtTimePropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KDateTimeEditFactory : public QtDateTimeEditFactory
@@ -96,6 +110,8 @@ class KDateTimeEditFactory : public QtDateTimeEditFactory
     Q_OBJECT
 public:
     KDateTimeEditFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtDateTimePropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KKeySequenceEditorFactory : public QtKeySequenceEditorFactory
@@ -103,6 +119,8 @@ class KKeySequenceEditorFactory : public QtKeySequenceEditorFactory
     Q_OBJECT
 public:
     KKeySequenceEditorFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtKeySequencePropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KCharEditorFactory : public QtCharEditorFactory
@@ -110,6 +128,8 @@ class KCharEditorFactory : public QtCharEditorFactory
     Q_OBJECT
 public:
     KCharEditorFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtCharPropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KEnumEditorFactory : public QtEnumEditorFactory
@@ -117,6 +137,8 @@ class KEnumEditorFactory : public QtEnumEditorFactory
     Q_OBJECT
 public:
     KEnumEditorFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtEnumPropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KCursorEditorFactory : public QtCursorEditorFactory
@@ -124,6 +146,8 @@ class KCursorEditorFactory : public QtCursorEditorFactory
     Q_OBJECT
 public:
     KCursorEditorFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtCursorPropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KColorEditorFactory : public QtColorEditorFactory
@@ -140,6 +164,8 @@ class KFontEditorFactory : public QtFontEditorFactory
     Q_OBJECT
 public:
     KFontEditorFactory(QObject *parent = 0);
+protected:
+    QWidget * createEditor(QtFontPropertyManager * manager, QtProperty * property, QWidget * parent);
 };
 
 class KVariantEditorFactory : public QtVariantEditorFactory

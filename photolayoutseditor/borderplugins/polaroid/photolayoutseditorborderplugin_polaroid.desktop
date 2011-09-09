@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=PolaroidBorderDrawerFactory
+Name[pl]=PolaroidBorderDrawerFactory
+Type=Service
+ServiceTypes=PhotoLayoutsEditor/BorderPlugin
+Encoding=UTF-8
+Comment=Polaroid border drawer for Photo Layouts Editor
+Comment[pl]=Wtyczka rysująca obramowanie w kształcie zdjęcia z aparatu Polaroid dla programu Photo Layouts Editor
+
+X-KDE-Library=photolayoutseditorborderplugin_polaroid
+author=Łukasz Spas, lukasz dot spas at gmail dot com

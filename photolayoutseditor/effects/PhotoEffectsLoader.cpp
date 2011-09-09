@@ -84,6 +84,7 @@ bool PhotoEffectsLoader::registerEffect(AbstractPhotoEffectFactory * effectFacto
     bool result = true;
     foreach (QString name, names)
         result &= (registeredEffects.insert(name, effectFactory) != registeredEffects.end());
+    effectFactory->setParent(instance());
     return result;
 }
 

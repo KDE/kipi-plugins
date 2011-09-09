@@ -31,7 +31,6 @@
 #include "LayersSelectionModel.h"
 #include "UndoMoveRowsCommand.h"
 #include "UndoBorderChangeCommand.h"
-#include "SavingProgressDialog.h"
 #include "PLEConfigSkeleton.h"
 #include "ImageLoadingThread.h"
 #include "global.h"
@@ -595,9 +594,9 @@ void Canvas::selectionChanged(const QItemSelection & newSelection, const QItemSe
  #############################################################################################################################*/
 void Canvas::enableDefaultSelectionMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::Selecting | Scene::Moving);
     setSelectionMode(MultiSelecting);
-    this->unsetCursor();
     m_scene->clearSelectingFilters();
 }
 
@@ -606,9 +605,9 @@ void Canvas::enableDefaultSelectionMode()
  #############################################################################################################################*/
 void Canvas::enableViewingMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::View);
     setSelectionMode(Viewing);
-    this->unsetCursor();
     m_scene->clearSelectingFilters();
 }
 
@@ -617,6 +616,7 @@ void Canvas::enableViewingMode()
  #############################################################################################################################*/
 void Canvas::enableZoomingMode()
 {
+    this->unsetCursor();
     setSelectionMode(Zooming);
     this->setCursor(QCursor(QPixmap(":/zoom_cursor.png").scaled(QSize(24,24))));
     m_scene->clearSelectingFilters();
@@ -627,6 +627,7 @@ void Canvas::enableZoomingMode()
  #############################################################################################################################*/
 void Canvas::enableCanvasEditingMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::NoSelection);
     setSelectionMode(Viewing);
     this->setCursor(QCursor(Qt::ArrowCursor));
@@ -638,6 +639,7 @@ void Canvas::enableCanvasEditingMode()
  #############################################################################################################################*/
 void Canvas::enableEffectsEditingMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::Selecting);
     setSelectionMode(SingleSelcting);
     this->setCursor(QCursor(Qt::ArrowCursor));
@@ -650,6 +652,7 @@ void Canvas::enableEffectsEditingMode()
  #############################################################################################################################*/
 void Canvas::enableTextEditingMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::Selecting | Scene::MouseTracking | Scene::OneclickFocusItems);
     setSelectionMode(SingleSelcting);
     m_scene->clearSelectingFilters();
@@ -661,6 +664,7 @@ void Canvas::enableTextEditingMode()
  #############################################################################################################################*/
 void Canvas::enableRotateEditingMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::Selecting | Scene::Rotating);
     setSelectionMode(SingleSelcting);
     this->setCursor(Qt::ArrowCursor);
@@ -672,6 +676,7 @@ void Canvas::enableRotateEditingMode()
  #############################################################################################################################*/
 void Canvas::enableScaleEditingMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::Selecting | Scene::Scaling);
     setSelectionMode(SingleSelcting);
     this->setCursor(Qt::ArrowCursor);
@@ -683,6 +688,7 @@ void Canvas::enableScaleEditingMode()
  #############################################################################################################################*/
 void Canvas::enableCropEditingMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::Selecting | Scene::Cropping);
     setSelectionMode(SingleSelcting);
     this->setCursor(Qt::ArrowCursor);
@@ -694,6 +700,7 @@ void Canvas::enableCropEditingMode()
  #############################################################################################################################*/
 void Canvas::enableBordersEditingMode()
 {
+    this->unsetCursor();
     m_scene->setInteractionMode(Scene::Selecting);
     setSelectionMode(SingleSelcting);
     this->setCursor(Qt::ArrowCursor);

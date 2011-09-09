@@ -37,11 +37,6 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
-    enum
-    {
-        Enum = QVariant::UserType
-    };
-
     class BordersGroup;
     class BorderDrawerInterface : public QObject
     {
@@ -49,6 +44,11 @@ namespace KIPIPhotoLayoutsEditor
             BorderDrawerFactoryInterface * m_factory;
 
         public:
+
+            enum
+            {
+                Enum = QVariant::UserType
+            };
 
             explicit BorderDrawerInterface(BorderDrawerFactoryInterface * factory, QObject * parent = 0) :
                 QObject(parent),

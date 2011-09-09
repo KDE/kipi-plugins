@@ -8,6 +8,12 @@ using namespace KIPIPhotoLayoutsEditor;
 
 class ZoomTool::ZoomToolPrivate
 {
+    ZoomToolPrivate() :
+        out(0),
+        in(0),
+        listener(0)
+    {}
+
     QRadioButton * out;
     QRadioButton * in;
     MousePressListener * listener;
@@ -32,7 +38,7 @@ ZoomTool::ZoomTool(Scene * scene, QWidget * parent) :
     layout->addSpacerItem(new QSpacerItem(10,10));
     layout->setStretch(2,1);
 
-    d->listener = new MousePressListener();
+    d->listener = new MousePressListener(this);
     connect(d->listener, SIGNAL(mouseReleased(QPointF)), this, SLOT(zoom(QPointF)));
 
     d->in->setChecked(true);
@@ -40,6 +46,10 @@ ZoomTool::ZoomTool(Scene * scene, QWidget * parent) :
 
 ZoomTool::~ZoomTool()
 {
+    Scene * scene = this->scene();
+    if (!scene)
+        return;
+    scene->readSceneMousePress( 0 );
     delete d;
 }
 
@@ -72,8 +82,14 @@ void ZoomTool::zoom(const QPointF & point)
         if (!canvas)
             continue;
         if (d->listener->wasDragged())
-            canvas->scale(QRect(canvas->mapFromScene(d->listener->mousePressPosition()),
-                                canvas->mapFromScene(point)));
+        {
+            QRect r(canvas->mapFromScene(d->listener->mousePressPosition()),
+                                              canvas->mapFromScene(point));
+            if (r.width() > 20 && r.height() > 20)
+                canvas->scale(r);
+            else
+                canvas->scale(factor, canvas->mapFromScene(point));
+        }
         else
             canvas->scale(factor, canvas->mapFromScene(point));
     }

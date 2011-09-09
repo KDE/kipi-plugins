@@ -136,6 +136,8 @@
 
   ADD_SUBDIRECTORY( ./resources/app )
 
+  ADD_DEFINITIONS( -Wall )
+
   KDE4_ADD_KCFG_FILES( PhotoLayoutsEditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc )
   INSTALL( FILES ./settings/PLEConfigSkeleton.kcfgc DESTINATION ${KCFG_INSTALL_DIR} )
 
@@ -148,7 +150,8 @@
 
   KDE4_ADD_LIBRARY( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} )
 
-  SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC" )
+  SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC -fdata-sections -ffunction-sections" )
+  SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
 
   TARGET_LINK_LIBRARIES( libphotolayoutseditor 
                                          PropertyBrowser

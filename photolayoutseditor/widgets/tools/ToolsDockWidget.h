@@ -66,7 +66,7 @@ namespace KIPIPhotoLayoutsEditor
             AbstractItemsTool * m_text_widget;
             AbstractItemsTool * m_border_widget;
 
-            AbstractPhoto * m_currentPhoto;
+            AbstractPhoto * m_current_item;
 
             Scene * m_scene;
 
@@ -119,13 +119,8 @@ namespace KIPIPhotoLayoutsEditor
             void itemSelected(AbstractPhoto * photo);
             void mousePositionChoosen(const QPointF & position);
             void emitNewItemCreated(AbstractPhoto * item);
-
-            void selectionChanged(bool hasSelection)
-            {
-                m_tool_widget_layout->setEnabled(hasSelection);
-                m_has_selection = hasSelection;
-            }
-
+            void setPointerToolVisible(bool isSelected = true);
+            void setHandToolVisible(bool isSelected = true);
             void setZoomWidgetVisible(bool isSelected = true);
             void setCanvasWidgetVisible(bool isVisible = true);
             void setEffectsWidgetVisible(bool isVisible = true);
@@ -134,28 +129,6 @@ namespace KIPIPhotoLayoutsEditor
             void setScaleWidgetVisible(bool isVisible = true);
             void setCropWidgetVisible(bool isVisible = true);
             void setBordersWidgetVisible(bool isVisible = true);
-
-            void emitPointerToolSelected(bool isSelected = true)
-            {
-                if (isSelected)
-                {
-                    m_tool_widget_layout->setCurrentIndex(0);
-                    this->unsetCursor();
-                    emit requireMultiSelection();
-                    emit pointerToolSelected();
-                }
-            }
-
-            void emitHandToolSelected(bool isSelected = true)
-            {
-                if (isSelected)
-                {
-                    m_tool_widget_layout->setCurrentIndex(0);
-                    this->unsetCursor();
-                    emit requireMultiSelection();
-                    emit handToolSelected();
-                }
-            }
 
         protected:
 

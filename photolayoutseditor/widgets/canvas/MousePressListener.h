@@ -40,6 +40,10 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
+            MousePressListener(QObject * parent = 0) :
+                QObject(parent)
+            {}
+
             bool wasDragged()
             {
                 return press != release && !press.isNull();

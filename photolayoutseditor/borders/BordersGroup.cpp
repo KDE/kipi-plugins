@@ -53,6 +53,7 @@ BordersGroup::BordersGroup(AbstractPhoto * photo) :
     d(new BordersGroupPrivate(this))
 {
     d->photo = photo;
+    connect(d->photo, SIGNAL(changed()), this, SLOT(refresh()));
 }
 
 BordersGroup::~BordersGroup()
@@ -71,13 +72,14 @@ QPainterPath BordersGroup::shape()
 
 void BordersGroup::calculateShape()
 {
-    QPainterPath photoShape = graphicsItem()->itemOpaqueArea();
+    QPainterPath photoShape = graphicsItem()->itemOpaqueArea();//graphicsItem()->transform().map(graphicsItem()->itemOpaqueArea());
     d->shape = QPainterPath();
     foreach (BorderDrawerInterface * drawer, d->borders)
     {
         if (drawer)
             d->shape = d->shape.united( drawer->path(photoShape) );
     }
+    //d->shape = graphicsItem()->transform().inverted().map(d->shape);
 }
 
 AbstractPhoto * BordersGroup::graphicsItem() const
@@ -87,6 +89,8 @@ AbstractPhoto * BordersGroup::graphicsItem() const
 
 void BordersGroup::paint(QPainter * painter, const QStyleOptionGraphicsItem * option)
 {
+    painter->save();
+    //painter->setTransform( graphicsItem()->transform().inverted() * painter->transform() );
     if (!graphicsItem())
         return;
     for (int i = d->borders.count()-1; i >= 0; --i)
@@ -95,6 +99,7 @@ void BordersGroup::paint(QPainter * painter, const QStyleOptionGraphicsItem * op
         if (border)
             border->paint(painter, option);
     }
+    painter->restore();
 }
 
 void BordersGroup::refresh()

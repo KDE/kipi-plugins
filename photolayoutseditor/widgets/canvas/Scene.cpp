@@ -499,7 +499,7 @@ Scene::Scene(const QRectF & dimension, QObject * parent) :
 
     // Create default grid
     setGrid(PLEConfigSkeleton::self()->horizontalGrid(), PLEConfigSkeleton::self()->verticalGrid());
-    grid_visible != PLEConfigSkeleton::self()->showGrid();
+    grid_visible = !PLEConfigSkeleton::self()->showGrid();
     setGridVisible(PLEConfigSkeleton::self()->showGrid());
 
     // Indexing method
@@ -1103,6 +1103,7 @@ void Scene::setGridVisible(bool visible)
     if (grid_visible == visible)
         return;
 
+    grid_visible = visible;
     if (visible)
         this->setGrid(x_grid, y_grid);
     else

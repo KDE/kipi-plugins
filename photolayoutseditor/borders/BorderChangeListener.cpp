@@ -100,6 +100,12 @@ void BorderChangeListener::propertyChanged(QtProperty * property)
         command->setPropertyValue(property->propertyName(), doubleManager->value(property));
         return;
     }
+    QtEnumPropertyManager * enumManager = qobject_cast<QtEnumPropertyManager*>(property->propertyManager());
+    if (enumManager)
+    {
+        command->setPropertyValue(property->propertyName(), enumManager->enumNames(property).at(enumManager->value(property)));
+        return;
+    }
     QtVariantPropertyManager * variantManager = qobject_cast<QtVariantPropertyManager*>(property->propertyManager());
     if (variantManager)
     {

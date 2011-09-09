@@ -1,1 +1,2 @@
 ADD_SUBDIRECTORY( solid )
+ADD_SUBDIRECTORY( polaroid )

@@ -23,44 +23,28 @@
  *
  * ============================================================ */
 
-#include "SavingProgressDialog.h"
-#include "SavingThread.h"
-#include "Canvas.h"
+#ifndef POLAROIDBORDERDRAWER_H
+#define POLAROIDBORDERDRAWER_H
 
-#include <QThread>
+#include "PolaroidBorderDrawer_global.h"
+#include "BorderDrawerFactoryInterface.h"
+
+#include <QVariantList>
 
 using namespace KIPIPhotoLayoutsEditor;
 
-SavingProgressDialog::SavingProgressDialog(Canvas * canvas, const KUrl & url, QString * errorString) :
-    KDialog(canvas),
-    canvas(canvas),
-    url(url),
-    errorString(errorString)
+class POLAROIDBORDERDRAWERSHARED_EXPORT PolaroidBorderDrawerFactory : public BorderDrawerFactoryInterface
 {
-    this->setModal(true);
-    this->setButtons( Cancel );
-}
+        Q_OBJECT
+        Q_INTERFACES(KIPIPhotoLayoutsEditor::BorderDrawerFactoryInterface)
 
-int SavingProgressDialog::exec()
-{
-    SavingThread thread(canvas, url, this);
-    if (errorString)
-        connect(&thread, SIGNAL(savingError(QString)), this, SLOT(savingErrorSlot(QString)));
-    connect(&thread, SIGNAL(finished()), this, SLOT(accept()));
-    thread.start();
-    int result = KDialog::exec();
-    if (result == KDialog::Cancel ||
-            result == KDialog::Close)
-    {
-        if (thread.isRunning())
-            thread.terminate();
-        thread.wait();
-    }
-    return result;
-}
+    public:
 
-void SavingProgressDialog::savingErrorSlot(const QString & error)
-{
-    if (errorString)
-        *errorString = error;
-}
+        PolaroidBorderDrawerFactory(QObject * parent, const QVariantList&);
+
+        virtual QString drawerName() const;
+
+        virtual BorderDrawerInterface * getDrawerInstance(QObject * parent = 0);
+};
+
+#endif // POLAROIDBORDERDRAWER_H

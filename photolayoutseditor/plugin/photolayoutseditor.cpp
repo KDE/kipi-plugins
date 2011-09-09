@@ -142,6 +142,8 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
 
 PhotoLayoutsEditor::~PhotoLayoutsEditor()
 {
+    PLEConfigSkeleton::self()->writeConfig();
+
     if (m_canvas)
         delete m_canvas;
     if (d)
@@ -280,6 +282,7 @@ void PhotoLayoutsEditor::setupActions()
     //------------------------------------------------------------------------
     d->showGridToggleAction = new KToggleAction(i18nc("View grid lines", "Show"), actionCollection());
     d->showGridToggleAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_G));
+    d->showGridToggleAction->setChecked( PLEConfigSkeleton::self()->showGrid() );
     connect(d->showGridToggleAction, SIGNAL(triggered(bool)), this, SLOT(setGridVisible(bool)));
     actionCollection()->addAction("grid_toggle", d->showGridToggleAction);
     //------------------------------------------------------------------------
@@ -323,13 +326,14 @@ void PhotoLayoutsEditor::addRecentFile(const KUrl & url)
     {
         KUrl::List tempList = PLEConfigSkeleton::recentFiles();
         tempList.removeAll(url);
-        tempList.push_front(url);
+        tempList.push_back(url);
         unsigned maxCount = PLEConfigSkeleton::recentFilesCount();
         while ( ((unsigned)tempList.count()) > maxCount)
-            tempList.removeAt(maxCount);
+            tempList.removeAt(0);
         PLEConfigSkeleton::setRecentFiles(tempList);
         if ( !d->openRecentFilesMenu->urls().contains( url ) )
             d->openRecentFilesMenu->addUrl( url );
+        PLEConfigSkeleton::self()->writeConfig();
     }
 }
 

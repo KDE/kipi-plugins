@@ -23,32 +23,15 @@
  *
  * ============================================================ */
 
-#ifndef SAVINGPROGRESSDIALOG_H
-#define SAVINGPROGRESSDIALOG_H
+#ifndef POLAROIDBORDERDRAWER_GLOBAL_H
+#define POLAROIDBORDERDRAWER_GLOBAL_H
 
-#include <kdialog.h>
+#include <QtCore/qglobal.h>
 
-namespace KIPIPhotoLayoutsEditor
-{
-    class Canvas;
+#if defined(POLAROIDBORDERDRAWER_LIBRARY)
+#  define POLAROIDBORDERDRAWERSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define POLAROIDBORDERDRAWERSHARED_EXPORT Q_DECL_IMPORT
+#endif
 
-    class SavingProgressDialog : public KDialog
-    {
-            Q_OBJECT
-
-            Canvas * canvas;
-            KUrl url;
-            QString * errorString;
-
-        public:
-
-            explicit SavingProgressDialog(Canvas * canvas, const KUrl & url, QString * errorString = 0);
-            virtual int exec();
-
-        protected slots:
-
-            void savingErrorSlot(const QString & error);
-    };
-}
-
-#endif // SAVINGPROGRESSDIALOG_H
+#endif // POLAROIDBORDERDRAWER_GLOBAL_H

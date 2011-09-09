@@ -196,7 +196,12 @@ QVariant SolidBorderDrawer::maximumValue(const QMetaProperty & property)
     return QVariant();
 }
 
-QVariant SolidBorderDrawer::stepValue(const QMetaProperty & /*property*/)
+QVariant SolidBorderDrawer::stepValue(const QMetaProperty & property)
 {
+    const char * name = property.name();
+    if (!QString("width").compare(name))
+        return 1;
+    if (!QString("spacing").compare(name))
+        return 1;
     return QVariant();
 }
