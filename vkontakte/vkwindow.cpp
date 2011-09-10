@@ -317,7 +317,6 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startAlbumsUpdate()));
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startGetFullName()));
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startGetUserId()));
-    connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(updateLabels()));
 
     // for startReactivation()
     connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(show()));

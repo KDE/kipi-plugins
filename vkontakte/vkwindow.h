@@ -115,8 +115,6 @@ protected Q_SLOTS:
     // requesting photo information
     void slotPhotoUploadDone(KJob *kjob);
 
-    void updateLabels();
-
     void slotNewAlbumRequest();
     void slotEditAlbumRequest();
     void slotDeleteAlbumRequest();
@@ -135,6 +133,7 @@ protected:
 
     void reset();
     void updateControls(bool val);
+    void updateLabels();
 
     void handleVkError(KJob *kjob);
 
