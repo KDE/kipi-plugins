@@ -19,9 +19,10 @@ namespace KIPIPhotoLayoutsEditor
                 Finish,
             };
 
-            explicit ProgressEvent() :
+            explicit ProgressEvent(QObject * sender) :
                 QEvent(ProgressEvent::registeredEventType()),
-                m_type(Unknown)
+                m_type(Unknown),
+                m_sender(sender)
             {
             }
 
@@ -41,6 +42,11 @@ namespace KIPIPhotoLayoutsEditor
                 return this->m_data;
             }
 
+            QObject * sender() const
+            {
+                return m_sender;
+            }
+
             static QEvent::Type registeredEventType()
             {
                 static QEvent::Type myType = static_cast<QEvent::Type>(QEvent::registerEventType());
@@ -51,6 +57,7 @@ namespace KIPIPhotoLayoutsEditor
 
             ProgressEvent::Type m_type;
             QVariant m_data;
+            QObject * m_sender;
 
             Q_DISABLE_COPY(ProgressEvent)
     };

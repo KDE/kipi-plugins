@@ -36,6 +36,7 @@
 #include "global.h"
 #include "ProgressEvent.h"
 #include "photolayoutseditor.h"
+#include "CanvasLoadingThread.h"
 
 #include <QPrinter>
 #include <QPaintDevice>
@@ -57,6 +58,7 @@ class KIPIPhotoLayoutsEditor::CanvasPrivate
     CanvasSize m_size;
 
     QProgressBar * m_progress;
+    QMap<QObject*,QProgressBar*> progressMap;
 
     friend class Canvas;
 };
@@ -128,10 +130,7 @@ void Canvas::setupGUI()
 
     QVBoxLayout * layout = new QVBoxLayout();
     this->setLayout(layout);
-    d->m_progress = new QProgressBar(this);
     layout->addWidget(this->viewport());
-    layout->addWidget(d->m_progress);
-    d->m_progress->hide();
 
     this->setScene(m_scene);
 }
@@ -730,61 +729,41 @@ void Canvas::newUndoCommand(QUndoCommand * command)
 }
 
 /** ###########################################################################################################################
- * Shows progress bar
- #############################################################################################################################*/
-void Canvas::initProgress()
-{
-    d->m_progress->setMaximum(1000);
-    d->m_progress->show();
-}
-
-/** ###########################################################################################################################
- * Hides progress bar
- #############################################################################################################################*/
-void Canvas::finishProgress()
-{
-    qDebug() << "finishProgress();";
-    d->m_progress->hide();
-}
-
-/** ###########################################################################################################################
- * Sets progress value
- #############################################################################################################################*/
-void Canvas::updateProgress(double value)
-{
-    d->m_progress->setValue(value * 1000);
-}
-
-/** ###########################################################################################################################
  * Progress event type
  #############################################################################################################################*/
 void Canvas::progressEvent(ProgressEvent * event)
 {
+    QProgressBar * temp = d->progressMap[event->sender()];
     switch (event->type())
     {
         case ProgressEvent::Init:
-            this->initProgress();
-            event->setAccepted(true);
+            if (!temp)
+                this->layout()->addWidget( temp = d->progressMap[event->sender()] = new QProgressBar(this) );
+            temp->setMaximum(1000);
+            temp->setValue(0);
+            this->setEnabled(false);
             break;
         case ProgressEvent::ProgressUpdate:
-            this->updateProgress( event->data().toDouble() );
-            event->setAccepted(true);
+            if (temp)
+                temp->setValue(event->data().toDouble() * 1000);
             break;
         case ProgressEvent::ActionUpdate:
-            d->m_progress->setFormat(event->data().toString() + " [%p%]");
-            qDebug() << d->m_progress->format();
-            event->setAccepted(true);
+            if (temp)
+                temp->setFormat(event->data().toString() + " [%p%]");
             break;
         case ProgressEvent::Finish:
-            this->updateProgress( d->m_progress->maximum() );
-            this->finishProgress();
-            event->setAccepted(true);
-            qDebug() << "----------------";
+            if (temp)
+            {
+                temp->setValue( temp->maximum() );
+                d->progressMap.take(event->sender())->deleteLater();
+            }
+            this->setEnabled(true);
             break;
         default:
-            event->setAccepted(false);
+            temp = 0;
             break;
     }
+    event->setAccepted(temp);
 }
 
 /** ###########################################################################################################################
@@ -891,6 +870,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
                     if (scene)
                     {
                         result = new Canvas(scene);
+                        result->setEnabled(false);
                         result->d->m_size = size;
                     }
                 }

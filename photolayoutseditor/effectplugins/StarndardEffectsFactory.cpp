@@ -14,13 +14,13 @@ StarndardEffectsFactory::StarndardEffectsFactory(QObject * parent) :
 AbstractPhotoEffectInterface * StarndardEffectsFactory::getEffectInstance(const QString & name)
 {
     if (name == i18n("Blur effect"))
-        return new BlurPhotoEffect(this, this);
+        return new BlurPhotoEffect(this);
     if (name == i18n("Colorize effect"))
-        return new ColorizePhotoEffect(this, this);
+        return new ColorizePhotoEffect(this);
     if (name == i18n("Grayscale effect"))
-        return new GrayscalePhotoEffect(this, this);
+        return new GrayscalePhotoEffect(this);
     if (name == i18n("Sepia effect"))
-        return new SepiaPhotoEffect(this, this);
+        return new SepiaPhotoEffect(this);
     return 0;
 }
 

@@ -220,3 +220,47 @@ QtAbstractPropertyBrowser * PhotoEffectsLoader::propertyBrowser(AbstractPhotoEff
 
     return browser;
 }
+
+QDomElement PhotoEffectsLoader::effectToSvg(AbstractPhotoEffectInterface * effect, QDomDocument & document)
+{
+    QDomElement element = document.createElement("effect");
+    element.setAttribute("name", effect->name());
+    const QMetaObject * meta = effect->metaObject();
+    int count = meta->propertyCount();
+    for (int i = 0; i < count; ++i)
+    {
+        QMetaProperty p = meta->property(i);
+        element.setAttribute( p.name(), QString(p.read(effect).toByteArray().toBase64()) );
+    }
+    return element;
+}
+
+AbstractPhotoEffectInterface * PhotoEffectsLoader::getEffectFromSvg(QDomElement & element)
+{
+    if ( element.tagName() != "effect" )
+        return 0;
+    QMap<QString,QString> properties;
+    QDomNamedNodeMap attributes = element.attributes();
+    for (int j = attributes.count()-1; j >= 0; --j)
+    {
+        QDomAttr attr = attributes.item(j).toAttr();
+        if (attr.isNull())
+            continue;
+        properties.insert(attr.name(), attr.value());
+    }
+    QString effectName = properties.take("name");
+    if ( !instance()->registeredEffectsNames().contains( effectName ) )
+        return 0;
+    AbstractPhotoEffectInterface * result = instance()->getEffectByName( effectName );
+    const QMetaObject * meta = result->metaObject();
+    int count = meta->propertyCount();
+    for (int i = 0; i < count; ++i)
+    {
+        QMetaProperty p = meta->property(i);
+        QString value = properties.take(p.name());
+        if (value.isEmpty())
+            continue;
+        p.write(result, QVariant(QByteArray::fromBase64(value.toAscii())));
+    }
+    return result;
+}

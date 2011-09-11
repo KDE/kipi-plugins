@@ -85,6 +85,7 @@ namespace KIPIPhotoLayoutsEditor
                 return image;
             }
 
+            virtual QString name() const = 0;
             virtual QString toString() const = 0;
             virtual operator QString() const = 0;
 

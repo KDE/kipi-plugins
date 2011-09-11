@@ -29,10 +29,11 @@
 #include "AbstractPhoto.h"
 
 #include <QObject>
+#include <QUndoCommand>
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class TextItemPrivate;
+    class TextItemLoader;
 
     class TextChangeUndoCommand;
     class TextColorUndoCommand;
@@ -46,15 +47,6 @@ namespace KIPIPhotoLayoutsEditor
     {
             static QColor DEFAULT_COLOR;
             static QFont DEFAULT_FONT;
-
-            TextItemPrivate * d;
-
-            QColor m_color;
-            QFont m_font;
-
-            QPainterPath m_complete_path;
-            QPainterPath m_text_path;
-            QFontMetrics m_metrics;
 
         public:
 
@@ -100,7 +92,64 @@ namespace KIPIPhotoLayoutsEditor
             void updateIcon();
 
 
-        friend class TextItemPrivate;
+            class TextItemPrivate
+            {
+                TextItemPrivate(TextItem * item) :
+                    m_item(item),
+                    m_cursorIsVisible(false),
+                    m_cursor_row(0),
+                    m_cursor_character(0),
+                    command(0)
+                {
+                }
+
+                void moveCursorLeft();
+                void moveCursorRight();
+                void moveCursorUp();
+                void moveCursorDown();
+                void moveCursorEnd();
+                void moveCursorHome();
+                void removeTextAfter();
+                void removeTextBefore();
+                void addNewLine();
+                void addText(const QString & text);
+                void addText(int row, int at, const QString & text);
+                void removeText(int row, int at, int length);
+                void closeEditor();
+
+                TextItem * m_item;
+
+                QStringList m_string_list;
+
+                QPointF m_cursor_point;
+                bool m_cursorIsVisible;
+                int m_cursor_row;
+                int m_cursor_character;
+
+                QUndoCommand * command;
+
+                friend class TextItem;
+                friend class TextItemLoader;
+
+                friend class TextChangeUndoCommand;
+                friend class TextColorUndoCommand;
+                friend class TextFontUndoCommand;
+                friend class AddTextUndoCommand;
+                friend class RemoveTextUndoCommand;
+                friend class AddLineUndoCommand;
+                friend class MergeLineUndoCommand;
+            };
+            TextItemPrivate * d;
+            friend class TextItemPrivate;
+
+            QColor m_color;
+            QFont m_font;
+
+            QPainterPath m_complete_path;
+            QPainterPath m_text_path;
+            QFontMetrics m_metrics;
+
+        friend class TextItemLoader;
 
         friend class TextChangeUndoCommand;
         friend class TextColorUndoCommand;

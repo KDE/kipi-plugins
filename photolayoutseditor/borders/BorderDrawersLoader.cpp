@@ -88,7 +88,7 @@ BorderDrawerInterface * BorderDrawersLoader::getDrawerByName(const QString & nam
     BorderDrawerFactoryInterface * factory = getFactoryByName(name);
     if (factory)
     {
-        BorderDrawerInterface * drawer = factory->getDrawerInstance(factory);
+        BorderDrawerInterface * drawer = factory->getDrawerInstance();
         if (!drawer)
             return 0;
         const QMetaObject * meta = drawer->metaObject();

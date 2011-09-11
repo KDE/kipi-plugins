@@ -137,6 +137,11 @@ namespace KIPIPhotoLayoutsEditor
 
         public slots:
 
+            void enable()
+            {
+                this->setEnabled(true);
+            }
+
             /// Progress state update event
             void progressEvent(ProgressEvent * event);
 
@@ -220,15 +225,6 @@ namespace KIPIPhotoLayoutsEditor
 
             /// Appends new undo command
             void newUndoCommand(QUndoCommand * command);
-
-            /// Shows progress bar
-            void initProgress();
-
-            /// Hides progress bar
-            void finishProgress();
-
-            /// Sets progress value
-            void updateProgress(double value);
 
         signals:
 

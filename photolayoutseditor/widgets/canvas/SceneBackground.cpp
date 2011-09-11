@@ -71,12 +71,10 @@ public:
     }
     virtual void redo()
     {
-        qDebug() << "BackgroundImageChangedCommand redo";
         run();
     }
     virtual void undo()
     {
-        qDebug() << "BackgroundImageChangedCommand undo";
         run();
     }
     void run()
@@ -118,12 +116,10 @@ public:
     {}
     virtual void redo()
     {
-        qDebug() << "BackgroundFirstBrushChangeCommand redo";
         this->run();
     }
     virtual void undo()
     {
-        qDebug() << "BackgroundFirstBrushChangeCommand undo";
         this->run();
     }
     void run()
@@ -148,12 +144,10 @@ public:
     {}
     virtual void redo()
     {
-        qDebug() << "BackgroundSecondBrushChangeCommand redo";
         this->run();
     }
     virtual void undo()
     {
-        qDebug() << "BackgroundSecondBrushChangeCommand undo";
         this->run();
     }
     void run()
@@ -335,13 +329,13 @@ QDomElement SceneBackground::toSvg(QDomDocument & document) const
     else if (this->isPattern())
     {
         QDomElement pattern = document.createElement("image");
-        pattern.setAttribute("width",  m_pixmap.rect().width());
-        pattern.setAttribute("height", m_pixmap.rect().height());
+        pattern.setAttribute("width",  m_image.rect().width());
+        pattern.setAttribute("height", m_image.rect().height());
         pattern.setAttribute("x", 0);
         pattern.setAttribute("y", 0);
         QByteArray byteArray;
         QBuffer buffer(&byteArray);
-        m_pixmap.save(&buffer, "PNG");
+        m_temp_image.save(&buffer, "PNG");
         pattern.setAttribute("xlink:href", QString("data:image/png;base64,") + byteArray.toBase64());
         result.appendChild(pattern);
 
@@ -401,8 +395,8 @@ QDomElement SceneBackground::toSvg(QDomDocument & document) const
         QDomElement bckColor = document.createElement("rect");
         bckColor.setAttribute("x", 0);
         bckColor.setAttribute("y", 0);
-        bckColor.setAttribute("width", m_pixmap.width());
-        bckColor.setAttribute("height",m_pixmap.height());
+        bckColor.setAttribute("width", m_image.width());
+        bckColor.setAttribute("height",m_image.height());
         bckColor.setAttribute("fill", m_second_brush.color().name());
         bckColor.setAttribute("opacity", QString::number(m_second_brush.color().alphaF()));
         result.appendChild(bckColor);
@@ -412,8 +406,8 @@ QDomElement SceneBackground::toSvg(QDomDocument & document) const
         {
             bckg.setAttribute("x", 0);
             bckg.setAttribute("y", 0);
-            bckg.setAttribute("width", m_pixmap.width());
-            bckg.setAttribute("height",m_pixmap.height());
+            bckg.setAttribute("width", m_image.width());
+            bckg.setAttribute("height",m_image.height());
         }
         else
         {
@@ -584,16 +578,7 @@ void SceneBackground::paint(QPainter * painter, const QStyleOptionGraphicsItem *
     if (!m_rect.isValid())
         return;
     painter->setRenderHint(QPainter::SmoothPixmapTransform);
-    painter->drawPixmap(QPoint(0,0), m_pixmap, option->exposedRect);
-}
-
-void SceneBackground::render()
-{
-    this->m_pixmap.fill(Qt::transparent);
-    QPainter p(&this->m_pixmap);
-    this->render(&p, this->m_pixmap.rect());
-    p.end();
-    emit changed();
+    painter->drawImage(QPoint(0,0), m_temp_image, option->exposedRect);
 }
 
 void SceneBackground::render(QPainter * painter, const QRect & rect)
@@ -628,6 +613,15 @@ void SceneBackground::render(QPainter * painter, const QRect & rect)
     painter->fillRect(r, m_first_brush);
 }
 
+void SceneBackground::render()
+{
+    this->m_temp_image.fill(Qt::transparent);
+    QPainter p(&this->m_temp_image);
+    this->render(&p, this->m_temp_image.rect());
+    p.end();
+    emit changed();
+}
+
 void SceneBackground::sceneChanged()
 {
     if (scene())
@@ -644,9 +638,9 @@ void SceneBackground::sceneRectChanged(const QRectF & sceneRect)
     if (sceneRect.isValid())
     {
         m_rect = sceneRect;
-        m_pixmap = QPixmap(m_rect.size().toSize());
-        m_pixmap.fill(Qt::transparent);
-        QPainter p(&m_pixmap);
+        m_temp_image = QImage(m_rect.size().toSize(), QImage::Format_ARGB32);
+        m_temp_image.fill(Qt::transparent);
+        QPainter p(&m_temp_image);
         render(&p, m_rect.toRect());
     }
     else

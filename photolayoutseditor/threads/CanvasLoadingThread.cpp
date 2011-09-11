@@ -1,9 +1,54 @@
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2011-09-01
+ * Description : a plugin to create photo layouts by fusion of several images.
+ * Acknowledge : based on the expoblending plugin
+ *
+ * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
 #include "CanvasLoadingThread.h"
+#include "ProgressEvent.h"
+#include "AbstractPhotoItemLoader.h"
+#include "PhotoItemLoader.h"
+#include "TextItemLoader.h"
+#include "SceneBackgroundLoader.h"
+#include "AbstractPhoto.h"
+#include "PhotoItem.h"
+#include "TextItem.h"
+#include "SceneBackground.h"
+#include "photolayoutseditor.h"
+
+#include <QCoreApplication>
+
+#include <klocalizedstring.h>
 
 using namespace KIPIPhotoLayoutsEditor;
 
 class CanvasLoadingThread::CanvasLoadingThreadPrivate
 {
+    int i;
+    int count;
+    QMap<AbstractPhoto*,QDomElement> data;
+    QPair<SceneBackground*,QDomElement> background;
+
+    friend class CanvasLoadingThread;
 };
 
 CanvasLoadingThread::CanvasLoadingThread(QObject *parent) :
@@ -12,6 +57,96 @@ CanvasLoadingThread::CanvasLoadingThread(QObject *parent) :
 {
 }
 
+CanvasLoadingThread::~CanvasLoadingThread()
+{
+    delete d;
+}
+
+void CanvasLoadingThread::progresChanged(double progress)
+{
+    ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
+    progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, ((double)d->i+1)/((double)d->data.count()+1) + (progress / (double)d->data.count()+1) );
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
+    QCoreApplication::processEvents();
+}
+
+void CanvasLoadingThread::progresName(const QString & name)
+{
+    ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
+    actionUpdateEvent->setData(ProgressEvent::ActionUpdate, name);
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
+    QCoreApplication::processEvents();
+}
+
+void CanvasLoadingThread::addItem(AbstractPhoto * item, QDomElement & element)
+{
+    if (!item || element.isNull())
+        return;
+    d->data.insert(item, element);
+}
+
+void CanvasLoadingThread::addBackground(SceneBackground * background, QDomElement & element)
+{
+    if (element.attribute("class") != "background" || !background)
+        return;
+    d->background.first = background;
+    d->background.second = element;
+}
+
 void CanvasLoadingThread::run()
 {
+    ProgressEvent * startEvent = new ProgressEvent(this);
+    startEvent->setData(ProgressEvent::Init, 0);
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), startEvent);
+    QCoreApplication::processEvents();
+
+    ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
+    actionUpdateEvent->setData(ProgressEvent::ActionUpdate, i18n("Loading background...") );
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
+    QCoreApplication::processEvents();
+
+    SceneBackgroundLoader * loader = new SceneBackgroundLoader(d->background.first, d->background.second);
+    loader->start();
+    loader->wait();
+
+    ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
+    progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, 1/((double)d->data.count()+1) );
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
+    QCoreApplication::processEvents();
+
+    int count = d->data.count();
+    d->i = 0;
+    for (QMap<AbstractPhoto*,QDomElement>::iterator it = d->data.begin(); it != d->data.end(); ++it, ++(d->i))
+    {
+        ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
+        actionUpdateEvent->setData(ProgressEvent::ActionUpdate, i18n("Loading item no. %1...", QString::number(d->i)) );
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
+        QCoreApplication::processEvents();
+
+        QDomElement e = it.value();
+        if (e.attribute("class") == "PhotoItem")
+        {
+            PhotoItemLoader * loader = new PhotoItemLoader(dynamic_cast<PhotoItem*>(it.key()), it.value());
+            loader->setObserver(this);
+            loader->start();
+            loader->wait();
+        }
+        else if (e.attribute("class") == "TextItem")
+        {
+            TextItemLoader * loader = new TextItemLoader(dynamic_cast<TextItem*>(it.key()), it.value());
+            loader->setObserver(this);
+            loader->start();
+            loader->wait();
+        }
+
+        ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
+        progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, ((double)d->i+1)/((double)count+1) );
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
+        QCoreApplication::processEvents();
+    }
+
+    ProgressEvent * finishEvent = new ProgressEvent(this);
+    finishEvent->setData(ProgressEvent::Finish, 0);
+    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
+    QCoreApplication::processEvents();
 }

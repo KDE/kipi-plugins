@@ -23,40 +23,22 @@
  *
  * ============================================================ */
 
-#include "SepiaPhotoEffect.h"
-#include "StarndardEffectsFactory.h"
+#ifndef PROGRESSOBSERVER_H
+#define PROGRESSOBSERVER_H
 
-#include <klocalizedstring.h>
+#include <QString>
 
-using namespace KIPIPhotoLayoutsEditor;
-
-SepiaPhotoEffect::SepiaPhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
-    AbstractPhotoEffectInterface(factory, parent)
+namespace KIPIPhotoLayoutsEditor
 {
+    class ProgressObserver
+    {
+        public:
+
+            ProgressObserver() {}
+            virtual ~ProgressObserver() {}
+            virtual void progresChanged(double progress) = 0;
+            virtual void progresName(const QString & name) = 0;
+    };
 }
 
-QImage SepiaPhotoEffect::apply(const QImage & image) const
-{
-    if (!strength())
-        return image;
-    QImage result = image;
-    QPainter p(&result);
-    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(sepia_converted(image)));
-    return result;
-}
-
-QString SepiaPhotoEffect::name() const
-{
-    return i18n("Sepia effect");
-}
-
-QString SepiaPhotoEffect::toString() const
-{
-    return i18n("Sepia effect");
-}
-
-SepiaPhotoEffect::operator QString() const
-{
-    return toString();
-}
+#endif // PROGRESSOBSERVER_H

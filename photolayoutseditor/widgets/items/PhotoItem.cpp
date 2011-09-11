@@ -48,31 +48,6 @@
 
 using namespace KIPIPhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::PhotoItemPrivate
-{
-    PhotoItemPrivate(PhotoItem * item) :
-        m_item(item)
-    {}
-
-    static QString locateFile(const QString & filePath);
-
-    PhotoItem * m_item;
-
-    // Pixmap
-    void setImage(const QImage & image);
-    inline QImage & image();
-    QImage m_image;
-
-    // Pixmap's url
-    void setFileUrl(const KUrl & url);
-    inline KUrl & fileUrl();
-    KUrl m_file_path;
-
-    friend class PhotoItem;
-    friend class PhotoItemPixmapChangeCommand;
-    friend class PhotoItemUrlChangeCommand;
-};
-
 class KIPIPhotoLayoutsEditor::PhotoItemPixmapChangeCommand : public QUndoCommand
 {
     QImage m_image;
@@ -153,7 +128,7 @@ public:
     }
 };
 
-QString PhotoItemPrivate::locateFile(const QString & filePath)
+QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
 {
     QString resultPath = filePath;
     if (!resultPath.isEmpty())
@@ -181,22 +156,22 @@ QString PhotoItemPrivate::locateFile(const QString & filePath)
     }
     return resultPath;
 }
-void PhotoItemPrivate::setImage(const QImage & image)
+void PhotoItem::PhotoItemPrivate::setImage(const QImage & image)
 {
     if (image.isNull() || image == m_image)
         return;
     m_image = image;
     m_item->refresh();
 }
-QImage & PhotoItemPrivate::image()
+QImage & PhotoItem::PhotoItemPrivate::image()
 {
     return m_image;
 }
-void PhotoItemPrivate::setFileUrl(const KUrl & url)
+void PhotoItem::PhotoItemPrivate::setFileUrl(const KUrl & url)
 {
     this->m_file_path = url;
 }
-KUrl & PhotoItemPrivate::fileUrl()
+KUrl & PhotoItem::PhotoItemPrivate::fileUrl()
 {
     return this->m_file_path;
 }
@@ -269,6 +244,8 @@ QDomElement PhotoItem::toSvg(QDomDocument & document) const
         QBuffer buffer(&byteArray);
         d->image().save(&buffer, "PNG");
         image.appendChild( document.createTextNode( QString(byteArray.toBase64()) ) );
+        image.setAttribute("width",QString::number(d->image().width()));
+        image.setAttribute("height",QString::number(d->image().height()));
     }
 
     // Saving image path

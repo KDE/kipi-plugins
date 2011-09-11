@@ -35,6 +35,7 @@
 #include "PLEConfigSkeleton.h"
 #include "ImageLoadingThread.h"
 #include "ProgressEvent.h"
+#include "CanvasLoadingThread.h"
 
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -1301,6 +1302,9 @@ Scene * Scene::fromSvg(QDomElement & svgImage)
     QRectF dimension(xSceneRect,ySceneRect,widthSceneRect,heightSceneRect);
     Scene * result = new Scene(dimension);
 
+    // Loading thread
+    CanvasLoadingThread * thread = new CanvasLoadingThread(result);
+
     // Create elements
     int errorsCount = 0;
     QDomNodeList children = svgImage.childNodes();
@@ -1312,19 +1316,24 @@ Scene * Scene::fromSvg(QDomElement & svgImage)
         QString itemClass = element.attribute("class");
         AbstractPhoto * item;
         if (itemClass == "PhotoItem")
-            item = PhotoItem::fromSvg(element);
+        {
+            item = new PhotoItem();
+            thread->addItem(item, element);
+        }
         else if (itemClass == "TextItem")
-            item = TextItem::fromSvg(element);
+        {
+            item = new TextItem();
+            thread->addItem(item, element);
+        }
         else if (itemClass == "background")
         {
-            if (!result->d->m_background->fromSvg(element))
-                KMessageBox::error(0,
-                                   i18n("Unable to read image background!"));
+            thread->addBackground(result->d->m_background, element);
             continue;
         }
         else
             continue;
 
+        // If created add item to scene
         if (item)
         {
             result->QGraphicsScene::addItem(item);
@@ -1335,11 +1344,13 @@ Scene * Scene::fromSvg(QDomElement & svgImage)
             ++errorsCount;
     }
 
+    thread->start();
+
     // Show error message
     if (errorsCount)
     {
         KMessageBox::error(0,
-                           i18n("Unable to read %1 element%2!",
+                           i18n("Unable to create %1 element%2!",
                                 QString::number(errorsCount).toAscii().constData(),
                                 (errorsCount > 1 ? "s" : "")));
     }

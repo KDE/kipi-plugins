@@ -23,43 +23,30 @@
  *
  * ============================================================ */
 
-#ifndef GRAYSCALEPHOTOEFFECT_P_H
-#define GRAYSCALEPHOTOEFFECT_P_H
+#ifndef SCENEBACKGROUNDLOADER_H
+#define SCENEBACKGROUNDLOADER_H
 
-#include "AbstractPhotoEffectInterface.h"
+#include <QThread>
+#include <QDomDocument>
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class StarndardEffectsFactory;
-    class GrayscalePhotoEffect : public AbstractPhotoEffectInterface
+    class SceneBackground;
+    class SceneBackgroundLoader : public QThread
     {
-            Q_OBJECT
-
         public:
 
-            explicit GrayscalePhotoEffect(StarndardEffectsFactory * factory, QObject * parent = 0);
-            virtual QImage apply(const QImage & image) const;
-            virtual QString name() const;
-            virtual QString toString() const;
-            virtual operator QString() const;
+            explicit SceneBackgroundLoader(SceneBackground * background, QDomElement & element, QObject * parent = 0);
+
+        protected:
+
+            virtual void run();
 
         private:
 
-            static inline QImage greyscaled(const QImage & image)
-            {
-                QImage result = image;
-                unsigned int pixels = result.width() * result.height();
-                unsigned int * data = (unsigned int *) result.bits();
-                for (unsigned int i = 0; i < pixels; ++i)
-                {
-                    int val = qGray(data[i]);
-                    data[i] = qRgb(val,val,val);
-                }
-                return result;
-            }
-
-        friend class StarndardEffectsFactory;
+            SceneBackground * m_background;
+            QDomElement & m_element;
     };
 }
 
-#endif // GRAYSCALEPHOTOEFFECT_P_H
+#endif // SCENEBACKGROUNDLOADER_H

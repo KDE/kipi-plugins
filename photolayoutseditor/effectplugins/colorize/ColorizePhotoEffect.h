@@ -44,6 +44,7 @@ namespace KIPIPhotoLayoutsEditor
 
             explicit ColorizePhotoEffect(StarndardEffectsFactory * factory, QObject * parent = 0);
             virtual QImage apply(const QImage & image) const;
+            virtual QString name() const;
             virtual QString toString() const;
             virtual operator QString() const;
 

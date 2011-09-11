@@ -43,28 +43,6 @@
 
 using namespace KIPIPhotoLayoutsEditor;
 
-class KIPIPhotoLayoutsEditor::AbstractPhotoPrivate
-{
-    AbstractPhoto * m_item;
-
-    AbstractPhotoPrivate(AbstractPhoto * item) :
-        m_item(item)
-    {}
-
-    // Crop shape
-    void setCropShape(const QPainterPath & cropShape);
-    QPainterPath & cropShape();
-    QPainterPath m_crop_shape;
-
-    void setName(const QString & name);
-    QString name();
-    QString m_name;
-
-    friend class AbstractPhoto;
-    friend class CropShapeChangeCommand;
-    friend class ItemNameChangeCommand;
-};
-
 class KIPIPhotoLayoutsEditor::CropShapeChangeCommand : public QUndoCommand
 {
     QPainterPath m_crop_shape;
@@ -116,22 +94,22 @@ public:
     }
 };
 
-void AbstractPhotoPrivate::setCropShape(const QPainterPath & cropShape)
+void AbstractPhoto::AbstractPhotoPrivate::setCropShape(const QPainterPath & cropShape)
 {
     m_crop_shape = cropShape;
     m_item->refresh();
 }
-QPainterPath & AbstractPhotoPrivate::cropShape()
+QPainterPath & AbstractPhoto::AbstractPhotoPrivate::cropShape()
 {
     return m_crop_shape;
 }
-void AbstractPhotoPrivate::setName(const QString & name)
+void AbstractPhoto::AbstractPhotoPrivate::setName(const QString & name)
 {
     if (name.isEmpty())
         return;
     this->m_name = name;
 }
-QString AbstractPhotoPrivate::name()
+QString AbstractPhoto::AbstractPhotoPrivate::name()
 {
     return this->m_name;
 }
@@ -158,6 +136,7 @@ AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
 AbstractPhoto::~AbstractPhoto()
 {
     m_effects_group->deleteLater();
+    m_borders_group->deleteLater();
     delete d;
 }
 
@@ -204,7 +183,6 @@ QString AbstractPhoto::uniqueName(const QString & name)
 QDomElement AbstractPhoto::toSvg(QDomDocument & document) const
 {
     QTransform transform = this->transform();
-    qDebug() << transform;
     QString translate = "translate("+
                         QString::number(this->pos().x())+
                         ","+
@@ -425,15 +403,23 @@ QVariant AbstractPhoto::itemChange(GraphicsItemChange change, const QVariant & v
 {
     switch (change)
     {
+        case ItemVisibleHasChanged:
+            d->m_visible = value.toBool();
+            break;
         case ItemScaleHasChanged:
         case ItemRotationHasChanged:
         case ItemTransformHasChanged:
+            d->m_transform = this->transform();
+            emit changed();
+            break;
         case ItemPositionChange:
         case ItemScenePositionHasChanged:
+            d->m_pos = value.toPointF();
             emit changed();
-        default:
-            return AbstractItemInterface::itemChange(change, value);
+            break;
+        default:;
     }
+    return AbstractItemInterface::itemChange(change, value);
 }
 
 void AbstractPhoto::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
@@ -490,6 +476,16 @@ QString AbstractPhoto::id() const
     if (m_id.isEmpty())
         m_id = QString::number((long long)this, 16);
     return m_id;
+}
+
+void AbstractPhoto::refresh()
+{
+    this->setVisible(d->m_visible);
+    this->setPos(d->m_pos);
+    this->setTransform(d->m_transform);
+    this->refreshItem();
+    this->m_borders_group->refresh();
+    emit changed();
 }
 
 void AbstractPhoto::setCropShape(const QPainterPath & cropShape)

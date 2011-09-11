@@ -1,3 +1,28 @@
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2011-09-01
+ * Description : a plugin to create photo layouts by fusion of several images.
+ * Acknowledge : based on the expoblending plugin
+ *
+ * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
 #include "ImageLoadingThread.h"
 #include "ProgressEvent.h"
 #include "photolayoutseditor.h"
@@ -37,9 +62,11 @@ class ImageLoadingThread::ImageLoadingThreadPrivate
 class RAWLoader : public KDcrawIface::KDcraw
 {
         double m_max_progress;
+        ImageLoadingThread * m_thread;
     public:
-        RAWLoader() :
-            m_max_progress(100)
+        RAWLoader(ImageLoadingThread * thread) :
+            m_max_progress(100),
+            m_thread(thread)
         {}
         void setMaxDataProgress(double value)
         {
@@ -48,7 +75,7 @@ class RAWLoader : public KDcrawIface::KDcraw
     protected:
         virtual void setWaitingDataProgress(double value)
         {
-            ProgressEvent * event = new ProgressEvent();
+            ProgressEvent * event = new ProgressEvent(m_thread);
             event->setData(ProgressEvent::ProgressUpdate, value * m_max_progress / 0.4);
             QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
             QCoreApplication::processEvents();
@@ -91,7 +118,7 @@ void ImageLoadingThread::run()
     // Reading
     foreach (KUrl url, urls)
     {
-        ProgressEvent * startEvent = new ProgressEvent();
+        ProgressEvent * startEvent = new ProgressEvent(this);
         startEvent->setData(ProgressEvent::Init, 0);
         QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), startEvent);
         QCoreApplication::processEvents();
@@ -105,7 +132,7 @@ void ImageLoadingThread::run()
         else
             loadImage(url);
 
-        ProgressEvent * finishEvent = new ProgressEvent();
+        ProgressEvent * finishEvent = new ProgressEvent(this);
         finishEvent->setData(ProgressEvent::Finish, 1);
         QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
         QCoreApplication::processEvents();
@@ -140,21 +167,21 @@ void ImageLoadingThread::setImagesUrls(const KUrl::List & urls)
 
 void ImageLoadingThread::loadRaw(const KUrl & url)
 {
-    ProgressEvent * loadingImageActionEvent = new ProgressEvent();
+    ProgressEvent * loadingImageActionEvent = new ProgressEvent(this);
     loadingImageActionEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Loading ").append(url.fileName()) ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), loadingImageActionEvent);
     QCoreApplication::processEvents();
 
-    RAWLoader loader;
-    loader.setMaxDataProgress(d->m_max_progress * 0.7);
+    RAWLoader * loader = new RAWLoader(this);
+    loader->setMaxDataProgress(d->m_max_progress * 0.7);
     KDcrawIface::RawDecodingSettings settings;
     QByteArray ba;
     int width;
     int height;
     int rgbamax;
-    loader.decodeRAWImage(url.path(), settings, ba, width, height, rgbamax);
+    loader->decodeRAWImage(url.path(), settings, ba, width, height, rgbamax);
 
-    ProgressEvent * buildImageEvent = new ProgressEvent();
+    ProgressEvent * buildImageEvent = new ProgressEvent(this);
     buildImageEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Decoding image") ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), buildImageEvent);
     QCoreApplication::processEvents();
@@ -168,7 +195,7 @@ void ImageLoadingThread::loadRaw(const KUrl & url)
 
         for (int h = 0; h < height; ++h)
         {
-            ProgressEvent * event = new ProgressEvent();
+            ProgressEvent * event = new ProgressEvent(this);
             event->setData(ProgressEvent::ProgressUpdate, d->m_max_progress * (0.7 + 0.3 * (((float)h)/((float)height))) );
             QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
             QCoreApplication::processEvents();
@@ -200,23 +227,23 @@ void ImageLoadingThread::loadRaw(const KUrl & url)
             *dptr++ = qRgba(sptr[2], sptr[1], sptr[0], sptr[3]);
             sptr += 4;
         }
-
-        delete[] image;
     }
     else
         qDebug() << "Failed to allocate memory for loading raw file";
 
-    ProgressEvent * emitEvent = new ProgressEvent();
+    ProgressEvent * emitEvent = new ProgressEvent(this);
     emitEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Finishing...") ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), emitEvent);
     QCoreApplication::processEvents();
 
     emit imageLoaded(url, img);
+    delete[] image;
+    delete loader;
 }
 
 void ImageLoadingThread::loadImage(const KUrl & url)
 {
-    ProgressEvent * loadingImageActionEvent = new ProgressEvent();
+    ProgressEvent * loadingImageActionEvent = new ProgressEvent(this);
     loadingImageActionEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Loading ").append(url.fileName()) ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), loadingImageActionEvent);
     QCoreApplication::processEvents();
@@ -235,7 +262,7 @@ void ImageLoadingThread::loadImage(const KUrl & url)
         d->m_loaded_bytes += temp.size();
         bf.write(temp.data(), temp.size());
         this->yieldCurrentThread();
-        ProgressEvent * event = new ProgressEvent();
+        ProgressEvent * event = new ProgressEvent(this);
         event->setData(ProgressEvent::ProgressUpdate, (d->m_loaded_bytes * d->m_max_progress) / (d->m_size * 1.4));
         QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
         QCoreApplication::processEvents();
@@ -244,14 +271,14 @@ void ImageLoadingThread::loadImage(const KUrl & url)
     f.close();
     bf.close();
 
-    ProgressEvent * buildImageEvent = new ProgressEvent();
+    ProgressEvent * buildImageEvent = new ProgressEvent(this);
     buildImageEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Decoding image") ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), buildImageEvent);
     QCoreApplication::processEvents();
 
     QImage img = QImage::fromData(ba);
 
-    ProgressEvent * emitEvent = new ProgressEvent();
+    ProgressEvent * emitEvent = new ProgressEvent(this);
     emitEvent->setData(ProgressEvent::ActionUpdate, QVariant( i18n("Finishing...") ));
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), emitEvent);
     QCoreApplication::processEvents();

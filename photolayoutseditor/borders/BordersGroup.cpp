@@ -53,7 +53,6 @@ BordersGroup::BordersGroup(AbstractPhoto * photo) :
     d(new BordersGroupPrivate(this))
 {
     d->photo = photo;
-    connect(d->photo, SIGNAL(changed()), this, SLOT(refresh()));
 }
 
 BordersGroup::~BordersGroup()
@@ -209,13 +208,13 @@ BordersGroup * BordersGroup::fromSvg(QDomElement & element, AbstractPhoto * grap
         // Insert it into model
         result->d->borders.push_back(drawer);
         drawer->setGroup(result);
+        drawer->setParent(result);
     }
 
     result->d->photo = graphicsItem;
     if (graphicsItem->m_borders_group)
-        delete graphicsItem->m_borders_group;
+        graphicsItem->m_borders_group->deleteLater();
     graphicsItem->m_borders_group = result;
-    result->refresh();
     return result;
 }
 

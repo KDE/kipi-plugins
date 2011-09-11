@@ -23,43 +23,39 @@
  *
  * ============================================================ */
 
-#ifndef GRAYSCALEPHOTOEFFECT_P_H
-#define GRAYSCALEPHOTOEFFECT_P_H
+#ifndef ABSTRACTPHOTOITEMLOADER_H
+#define ABSTRACTPHOTOITEMLOADER_H
 
-#include "AbstractPhotoEffectInterface.h"
+#include <QThread>
+#include <QDomDocument>
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class StarndardEffectsFactory;
-    class GrayscalePhotoEffect : public AbstractPhotoEffectInterface
+    class AbstractPhoto;
+    class CanvasLoadingThread;
+    class ProgressObserver;
+    class AbstractPhotoItemLoader : public QThread
     {
             Q_OBJECT
 
+            AbstractPhoto * m_item;
+            QDomElement m_element;
+            ProgressObserver * m_observer;
+
         public:
 
-            explicit GrayscalePhotoEffect(StarndardEffectsFactory * factory, QObject * parent = 0);
-            virtual QImage apply(const QImage & image) const;
-            virtual QString name() const;
-            virtual QString toString() const;
-            virtual operator QString() const;
+            explicit AbstractPhotoItemLoader(AbstractPhoto * item, QDomElement & element, QObject * parent = 0);
+            AbstractPhoto * item() const;
+            QDomElement element() const;
+            void setObserver(ProgressObserver * observer);
+            ProgressObserver * observer() const;
 
-        private:
+        protected:
 
-            static inline QImage greyscaled(const QImage & image)
-            {
-                QImage result = image;
-                unsigned int pixels = result.width() * result.height();
-                unsigned int * data = (unsigned int *) result.bits();
-                for (unsigned int i = 0; i < pixels; ++i)
-                {
-                    int val = qGray(data[i]);
-                    data[i] = qRgb(val,val,val);
-                }
-                return result;
-            }
+            virtual void run();
 
-        friend class StarndardEffectsFactory;
+        friend class CanvasLoadingThread;
     };
 }
 
-#endif // GRAYSCALEPHOTOEFFECT_P_H
+#endif // ABSTRACTPHOTOITEMLOADER_H

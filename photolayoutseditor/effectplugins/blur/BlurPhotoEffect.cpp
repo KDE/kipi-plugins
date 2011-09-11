@@ -48,6 +48,11 @@ QImage BlurPhotoEffect::apply(const QImage & image) const
     return result;
 }
 
+QString BlurPhotoEffect::name() const
+{
+    return i18n("Blur effect");
+}
+
 QString BlurPhotoEffect::toString() const
 {
     return i18n("Blur effect") + " [" + QString::number(this->radius()) + "]";

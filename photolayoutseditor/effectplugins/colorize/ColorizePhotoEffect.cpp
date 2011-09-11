@@ -49,6 +49,11 @@ QImage ColorizePhotoEffect::apply(const QImage & image) const
     return result;
 }
 
+QString ColorizePhotoEffect::name() const
+{
+    return i18n("Colorize effect");
+}
+
 QString ColorizePhotoEffect::toString() const
 {
     return i18n("Colorize effect") + " [" + color().name() + "]";

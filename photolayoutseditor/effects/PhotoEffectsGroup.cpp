@@ -161,14 +161,10 @@ QDomElement PhotoEffectsGroup::toSvg(QDomDocument & document) const
     QDomElement effectsGroup = document.createElement("effects");
     foreach (AbstractPhotoEffectInterface * effect, m_effects_list)
     {
-        AbstractPhotoEffectFactory * factory = PhotoEffectsLoader::getFactoryByName(effect->factory()->effectName());
-        if (factory)
-        {
-            QDomElement effectSvg = factory->toSvg(effect, document);
-            if (!effectSvg.isNull())
-                effectsGroup.appendChild(effectSvg);
-        }
-        /// TODO: what if there is no given effect plugin?
+        QDomElement e = PhotoEffectsLoader::effectToSvg(effect, document);
+        if (e.isNull())
+            continue;
+        effectsGroup.appendChild(e);
     }
     return effectsGroup;
 }
@@ -187,14 +183,12 @@ PhotoEffectsGroup * PhotoEffectsGroup::fromSvg(const QDomElement & element, Abst
         QDomElement effect = effectsList.at(i).toElement();
         if (effect.isNull())
             continue;
-        AbstractPhotoEffectFactory * factory = PhotoEffectsLoader::getFactoryByName( effect.attribute("name") );
-        if (!factory)
-            continue;
-        AbstractPhotoEffectInterface * interface = factory->fromSvg(effect);
+        AbstractPhotoEffectInterface * interface = PhotoEffectsLoader::getEffectFromSvg(effect);
         if (interface)
             group->push_back(interface);
     }
     group->m_photo = graphicsItem;
+    graphicsItem->m_effects_group = group;
     return group;
 }
 

@@ -32,10 +32,10 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class PhotoItemPrivate;
     class PhotoItemPixmapChangeCommand;
     class PhotoItemUrlChangeCommand;
     class PhotoItemImagePathChangeCommand;
+    class PhotoItemLoader;
 
     class PhotoItem : public AbstractPhoto
     {
@@ -136,7 +136,34 @@ namespace KIPIPhotoLayoutsEditor
             void setHighlightItem(bool isHighlighted);
             bool m_highlight;
 
+
+            class PhotoItemPrivate
+            {
+                PhotoItemPrivate(PhotoItem * item) :
+                    m_item(item)
+                {}
+
+                static QString locateFile(const QString & filePath);
+
+                PhotoItem * m_item;
+
+                // Pixmap
+                void setImage(const QImage & image);
+                inline QImage & image();
+                QImage m_image;
+
+                // Pixmap's url
+                void setFileUrl(const KUrl & url);
+                inline KUrl & fileUrl();
+                KUrl m_file_path;
+
+                friend class PhotoItem;
+                friend class PhotoItemLoader;
+                friend class PhotoItemPixmapChangeCommand;
+                friend class PhotoItemUrlChangeCommand;
+            };
             PhotoItemPrivate * d;
+            friend class PhotoItemPrivate;
 
             QPixmap m_pixmap;
 
@@ -145,10 +172,10 @@ namespace KIPIPhotoLayoutsEditor
             QPainterPath m_image_path;
 
         friend class Scene;
-        friend class PhotoItemPrivate;
         friend class PhotoItemPixmapChangeCommand;
         friend class PhotoItemUrlChangeCommand;
         friend class PhotoItemImagePathChangeCommand;
+        friend class PhotoItemLoader;
     };
 }
 

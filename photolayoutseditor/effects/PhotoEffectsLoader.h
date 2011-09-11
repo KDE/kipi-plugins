@@ -33,6 +33,7 @@
 #include <QSemaphore>
 #include <QMap>
 #include <QList>
+#include <QDomDocument>
 
 class QtProperty;
 class QtAbstractPropertyBrowser;
@@ -102,6 +103,14 @@ namespace KIPIPhotoLayoutsEditor
             * \arg does browser should create undo commands or just set properties values.
             */
             static QtAbstractPropertyBrowser * propertyBrowser(AbstractPhotoEffectInterface * effect, bool createCommands);
+
+          /** Returns DOM node which contains effects attributes
+            */
+            static QDomElement effectToSvg(AbstractPhotoEffectInterface * effect, QDomDocument & document);
+
+          /** Reads node attributes from DOM node and returns ready effect object.
+            */
+            static AbstractPhotoEffectInterface * getEffectFromSvg(QDomElement & element);
 
         protected:
 

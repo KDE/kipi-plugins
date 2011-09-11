@@ -32,6 +32,7 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
+    class SceneBackgroundLoader;
     class SceneBackground : public QObject, public QGraphicsItem
     {
             Q_OBJECT
@@ -49,7 +50,7 @@ namespace KIPIPhotoLayoutsEditor
             bool m_image_repeat;
 
             // For painting/rendering purpose
-            QPixmap m_pixmap;
+            QImage m_temp_image;
 
             class BackgroundImageChangedCommand;
             class BackgroundFirstBrushChangeCommand;
@@ -91,8 +92,11 @@ namespace KIPIPhotoLayoutsEditor
 
             QVariant itemChange(GraphicsItemChange change, const QVariant & value);
             void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
-            void render();
             void render(QPainter * painter, const QRect & rect);
+
+        protected slots:
+
+            void render();
 
         private:
 
@@ -102,6 +106,7 @@ namespace KIPIPhotoLayoutsEditor
 
             void sceneRectChanged(const QRectF & sceneRect);
 
+        friend class SceneBackgroundLoader;
         friend class BackgroundImageChangedCommand;
         friend class BackgroundFirstBrushChangeCommand;
         friend class BackgroundSecondBrushChangeCommand;

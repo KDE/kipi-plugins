@@ -25,7 +25,6 @@
       events/UndoCommandEventFilter.cpp
       listeners/TextColorChangeListener.cpp
       listeners/TextFontChangeListener.cpp
-      threads/ImageLoadingThread.cpp
       undo/UndoMoveRowsCommand.cpp
 )
 
@@ -85,6 +84,15 @@
       effects/PhotoEffectsLoader.cpp
 )
 
+  SET( PLE_Threads_SRCS
+      threads/AbstractPhotoItemLoader.cpp
+      threads/CanvasLoadingThread.cpp
+      threads/ImageLoadingThread.cpp
+      threads/PhotoItemLoader.cpp
+      threads/SceneBackgroundLoader.cpp
+      threads/TextItemLoader.cpp
+)
+
   ADD_SUBDIRECTORY( effectplugins )
 
   SET( PhotoLayoutsEditor_SRCS
@@ -93,6 +101,7 @@
       ${PLE_Models_SRCS}
       ${PLE_Borders_SRCS}
       ${PLE_Effects_SRCS}
+      ${PLE_Threads_SRCS}
 )
 
   SET( PhotoLayoutsEditor_RCS

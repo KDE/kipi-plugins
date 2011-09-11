@@ -23,40 +23,25 @@
  *
  * ============================================================ */
 
-#include "SepiaPhotoEffect.h"
-#include "StarndardEffectsFactory.h"
+#ifndef TEXTITEMLOADER_H
+#define TEXTITEMLOADER_H
 
-#include <klocalizedstring.h>
+#include "AbstractPhotoItemLoader.h"
 
-using namespace KIPIPhotoLayoutsEditor;
-
-SepiaPhotoEffect::SepiaPhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
-    AbstractPhotoEffectInterface(factory, parent)
+namespace KIPIPhotoLayoutsEditor
 {
+    class TextItem;
+    class TextItemLoader : public AbstractPhotoItemLoader
+    {
+        public:
+
+            TextItemLoader(TextItem * item, QDomElement & element, QObject * parent = 0);
+
+        protected:
+
+            virtual void run();
+
+    };
 }
 
-QImage SepiaPhotoEffect::apply(const QImage & image) const
-{
-    if (!strength())
-        return image;
-    QImage result = image;
-    QPainter p(&result);
-    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(sepia_converted(image)));
-    return result;
-}
-
-QString SepiaPhotoEffect::name() const
-{
-    return i18n("Sepia effect");
-}
-
-QString SepiaPhotoEffect::toString() const
-{
-    return i18n("Sepia effect");
-}
-
-SepiaPhotoEffect::operator QString() const
-{
-    return toString();
-}
+#endif // TEXTITEMLOADER_H

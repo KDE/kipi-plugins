@@ -38,6 +38,7 @@
 // Local
 #include "AbstractItemInterface.h"
 #include "BordersGroup.h"
+#include "PhotoEffectsGroup.h"
 
 class QtAbstractPropertyBrowser;
 
@@ -45,20 +46,15 @@ namespace KIPIPhotoLayoutsEditor
 {
     class Scene;
     class LayersModelItem;
-    class PhotoEffectsGroup;
     class AbstractPhotoEffectInterface;
 
-    class AbstractPhotoPrivate;
     class CropShapeChangeCommand;
     class ItemNameChangeCommand;
+    class AbstractPhotoItemLoader;
 
     class AbstractPhoto : public AbstractItemInterface
     {
             Q_OBJECT
-
-            AbstractPhotoPrivate * d;
-
-            mutable QString m_id;
 
         public:
 
@@ -153,14 +149,6 @@ namespace KIPIPhotoLayoutsEditor
             Q_PROPERTY(QString m_id READ id)
             QString id() const;
 
-            /// Refreshes item
-            void refresh()
-            {
-                this->refreshItem();
-                this->m_borders_group->refresh();
-                emit changed();
-            }
-
             /// Crops item to shape passed in method's argument
             Q_PROPERTY(QPainterPath m_crop_shape READ cropShape WRITE setCropShape)
             void setCropShape(const QPainterPath & cropShape);
@@ -168,6 +156,11 @@ namespace KIPIPhotoLayoutsEditor
 
             /// Returns item's property browser
             virtual QtAbstractPropertyBrowser * propertyBrowser() = 0;
+
+        public slots:
+
+            /// Refreshes item
+            void refresh();
 
         signals:
 
@@ -233,6 +226,38 @@ namespace KIPIPhotoLayoutsEditor
 
             void setupItem();
 
+            class AbstractPhotoPrivate
+            {
+                AbstractPhoto * m_item;
+
+                AbstractPhotoPrivate(AbstractPhoto * item) :
+                    m_item(item),
+                    m_visible(true)
+                {}
+
+                // Crop shape
+                void setCropShape(const QPainterPath & cropShape);
+                QPainterPath & cropShape();
+                QPainterPath m_crop_shape;
+
+                void setName(const QString & name);
+                QString name();
+                QString m_name;
+
+                // For loading purpose only
+                bool m_visible;
+                QPointF m_pos;
+                QTransform m_transform;
+
+                friend class AbstractPhoto;
+                friend class AbstractPhotoItemLoader;
+                friend class CropShapeChangeCommand;
+                friend class ItemNameChangeCommand;
+            };
+            AbstractPhotoPrivate * d;
+            friend class AbstractPhotoPrivate;
+
+            mutable QString m_id;
             PhotoEffectsGroup * m_effects_group;
             BordersGroup * m_borders_group;
 
@@ -243,9 +268,9 @@ namespace KIPIPhotoLayoutsEditor
             friend class PhotoEffectsGroup;
             friend class BordersGroup;
 
-            friend class AbstractPhotoPrivate;
             friend class CropShapeChangeCommand;
             friend class ItemNameChangeCommand;
+            friend class AbstractPhotoItemLoader;
     };
 }
 
