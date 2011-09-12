@@ -283,6 +283,22 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
                 element.mExifPhotoExposureProgram = exiv2Iface.getXmpTagString("Xmp.exif.ExposureIndex");
             }
 
+            // Get GPS values
+            double gpsvalue;
+            if (exiv2Iface.getGPSAltitude(&gpsvalue))
+            {
+                element.mExifGPSAltitude = QString::number(gpsvalue,'f',3);
+            }
+
+            if (exiv2Iface.getGPSLatitudeNumber(&gpsvalue))
+            {
+                element.mExifGPSLatitude = QString::number(gpsvalue,'f',6);
+            }
+
+            if (exiv2Iface.getGPSLongitudeNumber(&gpsvalue))
+            {
+                element.mExifGPSLongitude = QString::number(gpsvalue,'f',6);
+            }
         }
         else
         {
@@ -346,8 +362,12 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
            if (element.mExifPhotoISOSpeedRatings.isEmpty()) element.mExifPhotoISOSpeedRatings   = unavailable;
 
            if (element.mExifPhotoExposureProgram.isEmpty()) element.mExifPhotoExposureProgram   = unavailable;
-
-
+   
+           if (element.mExifGPSAltitude.isEmpty()) element.mExifGPSAltitude = unavailable;
+   
+           if (element.mExifGPSLatitude.isEmpty()) element.mExifGPSLatitude = unavailable;
+   
+           if (element.mExifGPSLongitude.isEmpty()) element.mExifGPSLongitude = unavailable;
 }
 
 
