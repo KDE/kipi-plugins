@@ -71,10 +71,13 @@ public:
 
     FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QString& serviceName);
     ~FlickrWidget();
+protected:
+    virtual void showEvent(QShowEvent* event);
 
 private Q_SLOTS:
 
     void slotResizeChecked();
+    void slotOriginalChecked();
     void slotPermissionChanged(FlickrList::FieldType, Qt::CheckState);
     void slotSafetyLevelChanged(FlickrList::SafetyLevel);
     void slotContentTypeChanged(FlickrList::ContentType);
@@ -113,9 +116,11 @@ private: // Data
     QCheckBox*                          m_friendsCheckBox;
     QCheckBox*                          m_publicCheckBox;
     QCheckBox*                          m_resizeCheckBox;
+    QCheckBox*                          m_sendOriginalCheckBox;
 
     QGroupBox*                          m_extendedTagsBox;
     QGroupBox*                          m_extendedPublicationBox;
+    QGroupBox*                          m_resizingBox;
 
     KLineEdit*                          m_tagsLineEdit;
 

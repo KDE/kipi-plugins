@@ -530,7 +530,7 @@ void FlickrTalker::addPhotoToPhotoSet(const QString& photoId,
 }
 
 bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
-                            bool rescale, int maxDim, int imageQuality)
+                            bool sendOriginal, bool rescale, int maxDim, int imageQuality)
 {
     if (m_job)
     {
@@ -606,12 +606,18 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
     {
         path = KStandardDirs::locateLocal("tmp", QFileInfo(photoPath).baseName().trimmed() + ".jpg");
 
-        if (rescale && (image.width() > maxDim || image.height() > maxDim))
-            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
+        if (sendOriginal)
+        {
+            QFile imgFile(photoPath);
+            imgFile.copy(path);
+        }
+        else
+        {
+            if (rescale && (image.width() > maxDim || image.height() > maxDim))
+                image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio,
                                                  Qt::SmoothTransformation);
-
-        image.save(path, "JPEG", imageQuality);
-
+            image.save(path, "JPEG", imageQuality);
+        }
         // Restore all metadata.
 
         KExiv2Iface::KExiv2 exiv2Iface;

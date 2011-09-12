@@ -293,15 +293,20 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     // -- Layout for the resizing options -------------------------------------
 
-    QGroupBox*   resizingBox       = new QGroupBox(i18n("Resizing Options"), settingsBox);
+    m_resizingBox  = new QGroupBox(i18n("Resizing Options"), settingsBox);
     QGridLayout *resizingBoxLayout = new QGridLayout;
-    resizingBox->setLayout(resizingBoxLayout);
+    m_resizingBox->setLayout(resizingBoxLayout);
 
-    m_resizeCheckBox   = new QCheckBox(resizingBox);
+    m_sendOriginalCheckBox = new QCheckBox(m_resizingBox);
+    m_sendOriginalCheckBox->setText(i18n("Send original file (no resizing)"));
+    m_sendOriginalCheckBox->setChecked(false);
+
+    m_resizeCheckBox   = new QCheckBox(m_resizingBox);
     m_resizeCheckBox->setText(i18n("Resize photos before uploading"));
     m_resizeCheckBox->setChecked(false);
 
-    m_dimensionSpinBox = new QSpinBox(resizingBox);
+
+    m_dimensionSpinBox = new QSpinBox(m_resizingBox);
     m_dimensionSpinBox->setMinimum(0);
     m_dimensionSpinBox->setMaximum(5000);
     m_dimensionSpinBox->setSingleStep(10);
@@ -309,9 +314,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_dimensionSpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpinBox->setEnabled(false);
 
-    QLabel* resizeLabel   = new QLabel(i18n("Maximum dimension (pixels):"), resizingBox);
+    QLabel* resizeLabel   = new QLabel(i18n("Maximum dimension (pixels):"), m_resizingBox);
 
-    m_imageQualitySpinBox = new QSpinBox(resizingBox);
+    m_imageQualitySpinBox = new QSpinBox(m_resizingBox);
     m_imageQualitySpinBox->setMinimum(0);
     m_imageQualitySpinBox->setMaximum(100);
     m_imageQualitySpinBox->setSingleStep(1);
@@ -319,7 +324,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imageQualitySpinBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     // NOTE: The term Compression factor may be to technical to write in the label
-    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), resizingBox);
+    QLabel* imageQualityLabel = new QLabel(i18n("JPEG Image Quality (higher is better):"), m_resizingBox);
 
     resizingBoxLayout->addWidget(imageQualityLabel,     0, 0, 1, 3);
     resizingBoxLayout->addWidget(m_imageQualitySpinBox, 0, 3, 1, 1);
@@ -336,7 +341,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     settingsBoxLayout->addWidget(accountBox);
     settingsBoxLayout->addWidget(tagsBox);
     settingsBoxLayout->addWidget(publicationBox);
-    settingsBoxLayout->addWidget(resizingBox);
+    settingsBoxLayout->addWidget(m_sendOriginalCheckBox);
+    settingsBoxLayout->addWidget(m_resizingBox);
     settingsBoxLayout->addStretch(10);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
@@ -351,6 +357,8 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_tab->insertTab(UPLOAD,   settingsScrollArea, i18n("Upload Options"));
 
     // ------------------------------------------------------------------------
+    connect(m_sendOriginalCheckBox, SIGNAL(clicked()),
+            this, SLOT(slotOriginalChecked()));
 
     connect(m_resizeCheckBox, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
@@ -422,6 +430,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
 FlickrWidget::~FlickrWidget()
 {
+}
+
+void FlickrWidget::slotOriginalChecked()
+{
+    m_resizingBox->setVisible(!m_sendOriginalCheckBox->isChecked());
 }
 
 void FlickrWidget::slotResizeChecked()
@@ -589,6 +602,11 @@ void FlickrWidget::slotAddExtraTagsToggled(bool status)
     {
         m_imglst->listView()->setColumnHidden(FlickrList::TAGS, !status);
     }
+}
+
+void FlickrWidget::showEvent(QShowEvent* event)
+{
+    slotOriginalChecked();
 }
 
 } // namespace KIPIFlickrExportPlugin
