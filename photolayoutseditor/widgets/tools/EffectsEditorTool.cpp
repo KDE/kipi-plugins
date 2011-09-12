@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "EffectsEditorTool.h"
+#include "EffectsEditorTool.moc"
 #include "AbstractPhoto.h"
 #include "PhotoEffectsLoader.h"
 #include "PhotoEffectsGroup.h"

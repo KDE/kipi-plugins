@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "LayersTreeDelegate.h"
+#include "LayersTreeDelegate.moc"
 #include "LayersModelItem.h"
 #include "AbstractPhoto.h"
 

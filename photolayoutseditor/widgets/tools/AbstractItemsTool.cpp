@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "AbstractItemsTool.h"
+#include "AbstractItemsTool.moc"
 #include "AbstractPhoto.h"
 #include "ToolsDockWidget.h"
 

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "CanvasSizeDialog.h"
+#include "CanvasSizeDialog.moc"
 #include "CanvasSize.h"
 #include "global.h"
 
