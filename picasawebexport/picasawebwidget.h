@@ -103,6 +103,7 @@ private:
     QSpinBox*     m_imageQualitySpB;
 
     KComboBox*    m_albumsCoB;
+    KComboBox*    m_dlDimensionCoB;
     QButtonGroup* m_tagsBGrp;
 
     KPushButton*  m_newAlbumBtn;

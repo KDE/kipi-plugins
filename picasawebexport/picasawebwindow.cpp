@@ -532,7 +532,8 @@ void PicasawebWindow::slotStartTransfer()
                 this, SLOT(slotListPhotosDoneForDownload(int,QString,QList<PicasaWebPhoto>)));
 
         m_talker->listPhotos(m_username,
-                             m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString());
+                             m_widget->m_albumsCoB->itemData(m_widget->m_albumsCoB->currentIndex()).toString(),
+                             m_widget->m_dlDimensionCoB->itemData(m_widget->m_dlDimensionCoB->currentIndex()).toString());
 
     }
     else

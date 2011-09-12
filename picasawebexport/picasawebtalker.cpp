@@ -239,7 +239,8 @@ void PicasawebTalker::listAlbums(const QString& username)
 }
 
 void PicasawebTalker::listPhotos(const QString& username,
-                                 const QString& albumId)
+                                 const QString& albumId,
+                                 const QString& imgmax)
 {
     if (m_job)
     {
@@ -250,6 +251,8 @@ void PicasawebTalker::listPhotos(const QString& username,
     url.addPath("/user/" + username);
     url.addPath("/albumid/" + albumId);
     url.addQueryItem("thumbsize", "200");
+    if (!imgmax.isNull())
+        url.addQueryItem("imgmax", imgmax);
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
     job->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded" );
