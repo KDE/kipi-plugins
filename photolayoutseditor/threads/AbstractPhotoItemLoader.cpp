@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "AbstractPhotoItemLoader.h"
+#include "AbstractPhotoItemLoader.moc"
 #include "AbstractPhoto.h"
 #include "ProgressObserver.h"
 #include "global.h"

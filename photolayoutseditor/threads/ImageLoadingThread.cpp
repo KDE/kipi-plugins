@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "ImageLoadingThread.h"
+#include "ImageLoadingThread.moc"
 #include "ProgressEvent.h"
 #include "photolayoutseditor.h"
 

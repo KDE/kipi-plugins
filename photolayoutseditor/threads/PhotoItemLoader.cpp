@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoItemLoader.h"
+#include "PhotoItemLoader.moc"
 #include "PhotoItem.h"
 #include "ImageLoadingThread.h"
 #include "ProgressObserver.h"
