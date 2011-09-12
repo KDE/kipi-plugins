@@ -186,7 +186,7 @@
 # =======================================================
 # Stand-alone version of PhotoLayoutsEditor
 
-  SET( PhotoLayoutsEditor_SRCS main.cpp )
+  SET( PhotoLayoutsEditor_SRCS plugin/main.cpp )
 
   KDE4_ADD_APP_ICON( PhotoLayoutsEditor_SRCS "photolayoutseditor" )
 
