@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "SceneBackground.h"
+#include "SceneBackground.moc"
 #include "global.h"
 
 #include <QPainter>

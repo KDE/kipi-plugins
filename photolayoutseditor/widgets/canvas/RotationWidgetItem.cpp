@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "RotationWidgetItem.h"
+#include "RotationWidgetItem.moc"
 #include "photolayoutseditor.h"
 #include "global.h"
 
