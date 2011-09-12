@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "TextFontChangeListener.h"
+#include "TextFontChangeListener.moc"
 #include "TextItem.h"
 
 #include <QtFontPropertyManager>

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "SepiaPhotoEffect.h"
+#include "SepiaPhotoEffect.moc"
 #include "StarndardEffectsFactory.h"
 
 #include <klocalizedstring.h>

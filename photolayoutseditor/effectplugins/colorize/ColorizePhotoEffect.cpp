@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "ColorizePhotoEffect.h"
+#include "ColorizePhotoEffect.moc"
 #include "StarndardEffectsFactory.h"
 
 #include <klocalizedstring.h>

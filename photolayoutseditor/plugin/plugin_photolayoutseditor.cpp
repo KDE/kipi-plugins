@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "plugin_photolayoutseditor.h"
+#include "plugin_photolayoutseditor.moc"
 
 #include <kdebug.h>
 #include <kgenericfactory.h>

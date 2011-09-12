@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BorderDrawersLoader.h"
+#include "BorderDrawersLoader.moc"
 #include "BorderDrawerInterface.h"
 #include "BorderDrawerFactoryInterface.h"
 #include "BorderChangeListener.h"

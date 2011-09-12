@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "GrayscalePhotoEffect.h"
+#include "GrayscalePhotoEffect.moc"
 #include "StarndardEffectsFactory.h"
 
 #include <klocalizedstring.h>

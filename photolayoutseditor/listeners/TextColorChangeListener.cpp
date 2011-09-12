@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "TextColorChangeListener.h"
+#include "TextColorChangeListener.moc"
 #include "TextItem.h"
 
 #include <QtColorPropertyManager>

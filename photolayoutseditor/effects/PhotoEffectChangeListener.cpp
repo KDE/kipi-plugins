@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoEffectChangeListener.h"
+#include "PhotoEffectChangeListener.moc"
 #include "PhotoEffectsGroup.h"
 #include "AbstractPhoto.h"
 #include "global.h"
