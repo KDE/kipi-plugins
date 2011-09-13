@@ -52,6 +52,7 @@ namespace KIPIPhotoLayoutsEditor
     class ItemNameChangeCommand;
     class AbstractPhotoItemLoader;
 
+    class AbstractPhotoPrivate;
     class AbstractPhoto : public AbstractItemInterface
     {
             Q_OBJECT
@@ -123,28 +124,21 @@ namespace KIPIPhotoLayoutsEditor
 
             /// Icon of the item [50px x 50px]
             Q_PROPERTY(QIcon m_icon READ icon)
-            QIcon & icon()
-            {
-                return m_icon;
-            }
-            const QIcon & icon() const
-            {
-                return m_icon;
-            }
+            QIcon & icon();
+            const QIcon & icon() const;
+        protected:
+            // Sets icon for item
+            void setIcon(const QIcon & icon);
+
+        public:
 
             /// Effects group property
             Q_PROPERTY(PhotoEffectsGroup * m_effects_group READ effectsGroup)
-            PhotoEffectsGroup * effectsGroup() const
-            {
-                return m_effects_group;
-            }
+            PhotoEffectsGroup * effectsGroup() const;
 
             /// Borders group property
             Q_PROPERTY(BordersGroup * m_borders_group READ bordersGroup)
-            BordersGroup * bordersGroup() const
-            {
-                return m_borders_group;
-            }
+            BordersGroup * bordersGroup() const;
 
             Q_PROPERTY(QString m_id READ id)
             QString id() const;
@@ -203,15 +197,6 @@ namespace KIPIPhotoLayoutsEditor
             virtual void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
             virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
 
-            // Sets icon for item
-            void setIcon(const QIcon & icon)
-            {
-                if (icon.isNull())
-                    return;
-                m_icon = icon;
-                emit changed();
-            }
-
             // Creates unique name (on whole scene)
             QString uniqueName(const QString & name);
 
@@ -226,43 +211,8 @@ namespace KIPIPhotoLayoutsEditor
 
             void setupItem();
 
-            class AbstractPhotoPrivate
-            {
-                AbstractPhoto * m_item;
-
-                AbstractPhotoPrivate(AbstractPhoto * item) :
-                    m_item(item),
-                    m_visible(true)
-                {}
-
-                // Crop shape
-                void setCropShape(const QPainterPath & cropShape);
-                QPainterPath & cropShape();
-                QPainterPath m_crop_shape;
-
-                void setName(const QString & name);
-                QString name();
-                QString m_name;
-
-                // For loading purpose only
-                bool m_visible;
-                QPointF m_pos;
-                QTransform m_transform;
-
-                friend class AbstractPhoto;
-                friend class AbstractPhotoItemLoader;
-                friend class CropShapeChangeCommand;
-                friend class ItemNameChangeCommand;
-            };
             AbstractPhotoPrivate * d;
             friend class AbstractPhotoPrivate;
-
-            mutable QString m_id;
-            PhotoEffectsGroup * m_effects_group;
-            BordersGroup * m_borders_group;
-
-            // Icon object
-            QIcon m_icon;
 
             friend class Scene;
             friend class PhotoEffectsGroup;

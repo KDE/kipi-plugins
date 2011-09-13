@@ -44,6 +44,7 @@
       widgets/layers/LayersTree.cpp
       widgets/layers/LayersTreeDelegate.cpp
       widgets/items/AbstractPhoto.cpp
+      widgets/items/AbstractPhoto_p.cpp
       widgets/items/PhotoItem.cpp
       widgets/items/TextItem.cpp
       widgets/menus/LayersTreeMenu.cpp

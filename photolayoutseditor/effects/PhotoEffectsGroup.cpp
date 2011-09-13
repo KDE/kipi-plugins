@@ -188,7 +188,6 @@ PhotoEffectsGroup * PhotoEffectsGroup::fromSvg(const QDomElement & element, Abst
             group->push_back(interface);
     }
     group->m_photo = graphicsItem;
-    graphicsItem->m_effects_group = group;
     return group;
 }
 

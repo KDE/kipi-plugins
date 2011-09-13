@@ -25,6 +25,7 @@
 
 #include "AbstractPhotoItemLoader.h"
 #include "AbstractPhoto.h"
+#include "AbstractPhoto_p.h"
 #include "ProgressObserver.h"
 #include "global.h"
 
@@ -113,7 +114,7 @@ void AbstractPhotoItemLoader::run()
     }
 
     // ID & name
-    m_item->m_id = m_element.attribute("id");
+    m_item->d->m_id = m_element.attribute("id");
     m_item->d->m_name = m_element.attribute("name");
 
     // Validation purpose
@@ -135,13 +136,13 @@ void AbstractPhotoItemLoader::run()
         observer->progresName(i18n("Reading borders"));
     }
     // Borders
-    if (m_item->m_borders_group)
+    if (m_item->d->m_borders_group)
     {
-        m_item->m_borders_group->deleteLater();
-        m_item->m_borders_group = 0;
+        m_item->d->m_borders_group->deleteLater();
+        m_item->d->m_borders_group = 0;
     }
-    m_item->m_borders_group = BordersGroup::fromSvg(itemDataElement, m_item);
-    if (!m_item->m_borders_group)
+    m_item->d->m_borders_group = BordersGroup::fromSvg(itemDataElement, m_item);
+    if (!m_item->d->m_borders_group)
         this->exit(1);
 
     QDomElement clipPath = defs.firstChildElement("clipPath");
@@ -159,13 +160,13 @@ void AbstractPhotoItemLoader::run()
         observer->progresName(i18n("Reading effects"));
     }
     // Effects
-    if (m_item->m_effects_group)
+    if (m_item->d->m_effects_group)
     {
-        m_item->m_effects_group->deleteLater();
-        m_item->m_effects_group = 0;
+        m_item->d->m_effects_group->deleteLater();
+        m_item->d->m_effects_group = 0;
     }
-    m_item->m_effects_group = PhotoEffectsGroup::fromSvg(appNS, m_item);
-    if (!m_item->m_effects_group)
+    m_item->d->m_effects_group = PhotoEffectsGroup::fromSvg(appNS, m_item);
+    if (!m_item->d->m_effects_group)
         this->exit(1);
 
     if (observer)

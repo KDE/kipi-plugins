@@ -24,6 +24,7 @@
  * ============================================================ */
 
 #include "AbstractPhoto.h"
+#include "AbstractPhoto_p.h"
 #include "Scene.h"
 #include "PhotoEffectsGroup.h"
 #include "BordersGroup.h"
@@ -94,26 +95,6 @@ public:
     }
 };
 
-void AbstractPhoto::AbstractPhotoPrivate::setCropShape(const QPainterPath & cropShape)
-{
-    m_crop_shape = cropShape;
-    m_item->refresh();
-}
-QPainterPath & AbstractPhoto::AbstractPhotoPrivate::cropShape()
-{
-    return m_crop_shape;
-}
-void AbstractPhoto::AbstractPhotoPrivate::setName(const QString & name)
-{
-    if (name.isEmpty())
-        return;
-    this->m_name = name;
-}
-QString AbstractPhoto::AbstractPhotoPrivate::name()
-{
-    return this->m_name;
-}
-
 AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
     AbstractItemInterface(0, 0),
     d(new AbstractPhotoPrivate(this))
@@ -127,16 +108,16 @@ AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
     this->d->setName( this->uniqueName( name.isEmpty() ? i18n("New layer") : name ) );
 
     // Effects group
-    m_effects_group = new PhotoEffectsGroup(this);
+    d->m_effects_group = new PhotoEffectsGroup(this);
 
     // Effects group
-    m_borders_group = new BordersGroup(this);
+    d->m_borders_group = new BordersGroup(this);
 }
 
 AbstractPhoto::~AbstractPhoto()
 {
-    m_effects_group->deleteLater();
-    m_borders_group->deleteLater();
+    d->m_effects_group->deleteLater();
+    d->m_borders_group->deleteLater();
     delete d;
 }
 
@@ -222,7 +203,7 @@ QDomElement AbstractPhoto::toSvg(QDomDocument & document) const
     QDomElement appNSData = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
     appNSData.setPrefix(KIPIPhotoLayoutsEditor::name());
     defs.appendChild(appNSData);
-    appNSData.appendChild(m_effects_group->toSvg(document));
+    appNSData.appendChild(d->m_effects_group->toSvg(document));
 
     // 'defs'->'pfe:data'->'crop_path'
     QDomElement cropPath = document.createElement("crop_path");
@@ -242,7 +223,7 @@ QDomElement AbstractPhoto::toSvg(QDomDocument & document) const
     visibleData.setAttribute("id", "vis_data_" + this->id());
     defs.appendChild(visibleData);
     visibleData.appendChild(this->svgVisibleArea(document));
-    visibleData.appendChild(this->m_borders_group->toSvg(document));
+    visibleData.appendChild(d->m_borders_group->toSvg(document));
 
     // 'use'
     QDomElement use = document.createElement("use");
@@ -330,12 +311,12 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
     }
 
     // ID & name
-    m_id = element.attribute("id");
+    d->m_id = element.attribute("id");
     d->setName(element.attribute("name"));
 
     // Validation purpose
     QDomElement defs = element.firstChildElement("defs");
-    while (!defs.isNull() && defs.attribute("id") != "data_"+m_id)
+    while (!defs.isNull() && defs.attribute("id") != "data_"+d->m_id)
         defs = defs.nextSiblingElement("defs");
     if (defs.isNull())
         return false;
@@ -347,13 +328,13 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         return false;
 
     // Borders
-    if (m_borders_group)
+    if (d->m_borders_group)
     {
-        m_borders_group->deleteLater();
-        m_borders_group = 0;
+        d->m_borders_group->deleteLater();
+        d->m_borders_group = 0;
     }
-    m_borders_group = BordersGroup::fromSvg(itemDataElement, this);
-    if (!m_borders_group)
+    d->m_borders_group = BordersGroup::fromSvg(itemDataElement, this);
+    if (!d->m_borders_group)
         return false;
 
     QDomElement clipPath = defs.firstChildElement("clipPath");
@@ -366,10 +347,10 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         return false;
 
     // Effects
-    if (m_effects_group)
-        delete m_effects_group;
-    m_effects_group = PhotoEffectsGroup::fromSvg(appNS, this);
-    if (!m_effects_group)
+    if (d->m_effects_group)
+        delete d->m_effects_group;
+    d->m_effects_group = PhotoEffectsGroup::fromSvg(appNS, this);
+    if (!d->m_effects_group)
         return false;
 
     // Crop path
@@ -471,11 +452,39 @@ void AbstractPhoto::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
     this->unsetCursor();
 }
 
+QIcon & AbstractPhoto::icon()
+{
+    return d->m_icon;
+}
+
+const QIcon & AbstractPhoto::icon() const
+{
+    return d->m_icon;
+}
+
+void AbstractPhoto::setIcon(const QIcon & icon)
+{
+    if (icon.isNull())
+        return;
+    d->m_icon = icon;
+    emit changed();
+}
+
+PhotoEffectsGroup * AbstractPhoto::effectsGroup() const
+{
+    return d->m_effects_group;
+}
+
+BordersGroup * AbstractPhoto::bordersGroup() const
+{
+    return d->m_borders_group;
+}
+
 QString AbstractPhoto::id() const
 {
-    if (m_id.isEmpty())
-        m_id = QString::number((long long)this, 16);
-    return m_id;
+    if (d->m_id.isEmpty())
+        d->m_id = QString::number((long long)this, 16);
+    return d->m_id;
 }
 
 void AbstractPhoto::refresh()
@@ -484,7 +493,7 @@ void AbstractPhoto::refresh()
     this->setPos(d->m_pos);
     this->setTransform(d->m_transform);
     this->refreshItem();
-    this->m_borders_group->refresh();
+    d->m_borders_group->refresh();
     emit changed();
 }
 

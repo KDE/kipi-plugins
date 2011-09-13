@@ -26,6 +26,7 @@
 #include "BordersGroup.h"
 #include "BorderDrawerInterface.h"
 #include "AbstractPhoto.h"
+#include "AbstractPhoto_p.h"
 #include "BorderDrawersLoader.h"
 
 #include <QGraphicsScene>
@@ -212,9 +213,6 @@ BordersGroup * BordersGroup::fromSvg(QDomElement & element, AbstractPhoto * grap
     }
 
     result->d->photo = graphicsItem;
-    if (graphicsItem->m_borders_group)
-        graphicsItem->m_borders_group->deleteLater();
-    graphicsItem->m_borders_group = result;
     return result;
 }
 
