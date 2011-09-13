@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BordersGroup.h"
+#include "BordersGroup.moc"
 #include "BorderDrawerInterface.h"
 #include "AbstractPhoto.h"
 #include "AbstractPhoto_p.h"

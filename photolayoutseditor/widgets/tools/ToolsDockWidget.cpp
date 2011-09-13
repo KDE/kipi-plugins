@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "ToolsDockWidget.h"
+#include "ToolsDockWidget.moc"
 #include "CanvasEditTool.h"
 #include "EffectsEditorTool.h"
 #include "TextEditorTool.h"

@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#include "AbstractItemsListViewTool.h"
-#include "AbstractItemsListViewTool_p.h"
+#include "AbstractItemsListViewTool.moc"
+#include "AbstractItemsListViewTool_p.moc"
 #include "AbstractPhoto.h"
 #include "ToolsDockWidget.h"
 #include "BorderDrawersLoader.h"

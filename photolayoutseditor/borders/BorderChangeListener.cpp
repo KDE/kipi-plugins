@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BorderChangeListener.h"
+#include "BorderChangeListener.moc"
 #include "BordersGroup.h"
 #include "global.h"
 

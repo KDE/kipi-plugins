@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "LayersModel.h"
+#include "LayersModel.moc"
 
 // KDE
 #include <kicon.h>

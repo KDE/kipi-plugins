@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "TextEditorTool.h"
+#include "TextEditorTool.moc"
 #include "TextItem.h"
 #include "ToolsDockWidget.h"
 

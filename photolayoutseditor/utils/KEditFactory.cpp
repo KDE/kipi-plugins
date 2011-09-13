@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "KEditFactory.h"
+#include "KEditFactory.moc"
 
 #include <QHBoxLayout>
 #include <QSpinBox>

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "UndoCommandEventFilter.h"
+#include "UndoCommandEventFilter.moc"
 #include "UndoCommandEvent.h"
 #include "ProgressEvent.h"
 #include "global.h"

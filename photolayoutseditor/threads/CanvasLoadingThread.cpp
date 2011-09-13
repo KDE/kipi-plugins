@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "CanvasLoadingThread.h"
+#include "CanvasLoadingThread.moc"
 #include "ProgressEvent.h"
 #include "AbstractPhotoItemLoader.h"
 #include "PhotoItemLoader.h"

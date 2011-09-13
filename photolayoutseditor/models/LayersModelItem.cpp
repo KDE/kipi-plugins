@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "LayersModelItem.h"
+#include "LayersModelItem.moc"
 #include "LayersModel.h"
 #include "AbstractPhoto.h"
 

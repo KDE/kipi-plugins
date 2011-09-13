@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "ImageFileDialog.h"
+#include "ImageFileDialog.moc"
 
 #include <kmessagebox.h>
 #include <klocalizedstring.h>

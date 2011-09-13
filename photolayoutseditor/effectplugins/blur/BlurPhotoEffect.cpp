@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BlurPhotoEffect.h"
+#include "BlurPhotoEffect.moc"
 #include "StarndardEffectsFactory.h"
 
 #include <klocalizedstring.h>

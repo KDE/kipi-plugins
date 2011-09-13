@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoEffectsLoader.h"
+#include "PhotoEffectsLoader.moc"
 #include "PhotoEffectsGroup.h"
 #include "AbstractPhoto.h"
 #include "UndoCommandEvent.h"

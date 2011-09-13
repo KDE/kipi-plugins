@@ -23,29 +23,11 @@
  *
  * ============================================================ */
 
-// Local
-#include "photolayoutseditor.h"
+#include "photolayoutseditor.moc"
 #include "photolayoutseditor_p.h"
-#include "CanvasSizeDialog.h"
-#include "Canvas.h"
-#include "Scene.h"
-#include "LayersSelectionModel.h"
-#include "UndoCommandEventFilter.h"
-#include "PhotoEffectsLoader.h"
-#include "AbstractPhotoEffectFactory.h"
-#include "ImageFileDialog.h"
-#include "GridSetupDialog.h"
-#include "PLEConfigDialog.h"
-#include "PLEConfigSkeleton.h"
-#include "PLEAboutData.h"
-#include "StarndardEffectsFactory.h"
-#include "global.h"
-#include "ProgressEvent.h"
 
-#include "BorderDrawerInterface.h"
-#include "BorderDrawersLoader.h"
+// Qt includes
 
-// Qt
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QDebug>
@@ -66,7 +48,8 @@
 #include <QPrintDialog>
 #include <QDesktopWidget>
 
-// KDE
+// KDE includes
+
 #include <kmenubar.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
@@ -80,6 +63,27 @@
 #include <kservice.h>
 #include <kservicetypetrader.h>
 #include <kdebug.h>
+
+// Local includes
+
+#include "imagedialog.h"
+#include "CanvasSizeDialog.h"
+#include "Canvas.h"
+#include "Scene.h"
+#include "LayersSelectionModel.h"
+#include "UndoCommandEventFilter.h"
+#include "PhotoEffectsLoader.h"
+#include "AbstractPhotoEffectFactory.h"
+#include "ImageFileDialog.h"
+#include "GridSetupDialog.h"
+#include "PLEConfigDialog.h"
+#include "PLEConfigSkeleton.h"
+#include "PLEAboutData.h"
+#include "StarndardEffectsFactory.h"
+#include "global.h"
+#include "ProgressEvent.h"
+#include "BorderDrawerInterface.h"
+#include "BorderDrawersLoader.h"
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -650,13 +654,9 @@ void PhotoLayoutsEditor::loadNewImage()
     if (!m_canvas)
         return;
 
-    ImageFileDialog * d = new ImageFileDialog(KUrl(), this);
-    d->setMode(KFile::Files);
-    d->setOperationMode(KFileDialog::Opening);
-    d->setKeepLocation(true);
-    if (d->exec() == ImageFileDialog::Accepted)
-        m_canvas->addImages( d->selectedUrls() );
-    delete d;
+    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
+    if (!urls.isEmpty())
+        m_canvas->addImages(urls);
 }
 
 void PhotoLayoutsEditor::setGridVisible(bool isVisible)

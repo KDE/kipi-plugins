@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "GridSetupDialog.h"
+#include "GridSetupDialog.moc"
 #include "PLEConfigSkeleton.h"
 
 #include <QFormLayout>

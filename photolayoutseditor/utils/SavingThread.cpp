@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "SavingThread.h"
+#include "SavingThread.moc"
 #include "Canvas.h"
 
 #include <QFile>

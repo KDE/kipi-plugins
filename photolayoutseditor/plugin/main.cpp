@@ -23,42 +23,49 @@
  *
  * ============================================================ */
 
-#include "AbstractItemsTool.moc"
-#include "AbstractPhoto.h"
-#include "ToolsDockWidget.h"
+#include "photolayoutseditor.h"
+#include "PLEAboutData.h"
+
+#include <QDesktopWidget>
+#include <QResource>
+#include <QString>
+
+#include <klocalizedstring.h>
+#include <kapplication.h>
+#include <kcmdlineargs.h>
+#include <kaboutdata.h>
+#include <kicon.h>
 
 using namespace KIPIPhotoLayoutsEditor;
 
-AbstractItemsTool::AbstractItemsTool(Scene * scene, Canvas::SelectionMode selectionMode, QWidget * parent) :
-    AbstractTool(scene, selectionMode, parent)
+int main(int argc, char* argv[])
 {
-}
+    PLEAboutData aboutData;
+    aboutData.setAppName("photolayoutseditor");
+    aboutData.setCatalogName("kipiplugin_photolayoutseditor");
 
-AbstractPhoto * AbstractItemsTool::currentItem()
-{
-    return m_photo;
-}
+    KCmdLineArgs::init(argc,argv,&aboutData);
+    KCmdLineOptions options;
+    options.add("+file", ki18n("Input file"));
+    KCmdLineArgs::addCmdLineOptions(options);
 
-void AbstractItemsTool::setCurrentItem(AbstractPhoto * photo)
-{
-    if (m_photo == photo)
-        return;
-    currentItemAboutToBeChanged();
-    m_photo = photo;
-    setEnabled((bool)m_photo);
-    currentItemChanged();
-}
+    KApplication app;
+    aboutData.setProgramLogo(KIcon("photolayoutseditor"));
 
-QPointF AbstractItemsTool::mousePosition()
-{
-    return m_point;
-}
+    PhotoLayoutsEditor* w = PhotoLayoutsEditor::instance(0);
+    w->setAttribute(Qt::WA_DeleteOnClose, true);
 
-void AbstractItemsTool::setMousePosition(const QPointF & position)
-{
-    if (m_point == position)
-        return;
-    positionAboutToBeChanged();
-    m_point = position;
-    positionChanged();
+    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    if (args->count())
+    {
+        KUrl url = args->url(0);
+        if (url.isValid())
+            w->open(url);
+    }
+
+    w->show();
+
+    int result = app.exec();
+
+    return result;
 }

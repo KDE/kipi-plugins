@@ -33,7 +33,7 @@
   *
   */
 
-#include "CanvasEditTool.h"
+#include "CanvasEditTool.moc"
 
 #include <QFormLayout>
 #include <QGroupBox>

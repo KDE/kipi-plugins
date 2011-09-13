@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "CropWidgetItem.h"
+#include "CropWidgetItem.moc"
 #include "AbstractPhoto.h"
 #include "photolayoutseditor.h"
 

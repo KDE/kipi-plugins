@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "BorderEditTool.h"
+#include "BorderEditTool.moc"
 #include "ToolsDockWidget.h"
 #include "AbstractPhoto.h"
 
