@@ -604,7 +604,7 @@ void FlickrWidget::slotAddExtraTagsToggled(bool status)
     }
 }
 
-void FlickrWidget::showEvent(QShowEvent* event)
+void FlickrWidget::showEvent(QShowEvent*)
 {
     slotOriginalChecked();
 }
