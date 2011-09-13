@@ -90,6 +90,11 @@ public:
         QString mExifPhotoApertureValue;
         QString mExifPhotoFocalLength;
 
+        // GPS Metadata
+        QString mExifGPSLatitude;
+        QString mExifGPSLongitude;
+        QString mExifGPSAltitude;
+
 	void appendToXML(XMLWriter& xmlWriter, bool copyOriginalImage) const {
 		if (!mValid) {
 			return;
@@ -121,8 +126,10 @@ public:
                 xmlWriter.writeElement("exifphotoshutterspeedvalue", mExifPhotoShutterSpeedValue);
                 xmlWriter.writeElement("exifphotoaperturevalue", mExifPhotoApertureValue);
                 xmlWriter.writeElement("exifphotofocallength", mExifPhotoFocalLength);
-
-
+                // GPS
+                xmlWriter.writeElement("exifgpslatitude", mExifGPSLatitude);
+                xmlWriter.writeElement("exifgpslongitude", mExifGPSLongitude);
+                xmlWriter.writeElement("exifgpsaltitude", mExifGPSAltitude);
 	}
 
 	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QSize& size) const {

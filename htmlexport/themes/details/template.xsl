@@ -88,6 +88,9 @@
 	    <br /><b><xsl:value-of select="$i18nexifphotoshutterspeedvalue"/>:</b> <xsl:value-of select="exif/exifphotoshutterspeedvalue"/>
 	    <br /><b><xsl:value-of select="$i18nexifphotoaperturevalue"/>:</b> <xsl:value-of select="exif/exifphotoaperturevalue"/>
 	    <br /><b><xsl:value-of select="$i18nexifphotofocallength"/>:</b> <xsl:value-of select="exif/exifphotofocallength"/>
+	    <br /><b><xsl:value-of select="$i18nexifgpsaltitude"/>:</b> <xsl:value-of select="exif/exifgpsaltitude"/>
+	    <br /><b><xsl:value-of select="$i18nexifgpslatitude"/>:</b> <xsl:value-of select="exif/exifgpslatitude"/>
+	    <br /><b><xsl:value-of select="$i18nexifgpslongitude"/>:</b> <xsl:value-of select="exif/exifgpslongitude"/>
 	</div>
     </div>
     <div id="navigation">
