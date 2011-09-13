@@ -13,4 +13,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 155373 : Add different image titles when exporting to Flickr.
 004 ==> 261451 : Wish: vkontakte.ru (vk.com) export plugin.
 005 ==> 281439 : libkvkontakte addition break parallel builds.
-006 ==> 
+006 ==> 279545 : Picasa import fetches scaled-down photos [patch].
+007 ==> 281316 : Add GPS info to gallery.xml in htmlexport plugin [patch].
+008 ==> 212106 : Unable to export original file to Flickr [patch].
+009 ==> 
