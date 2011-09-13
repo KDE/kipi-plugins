@@ -24,12 +24,8 @@
  * ============================================================ */
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 #include "AbstractPhoto.h"
 #include "AbstractPhoto_p.h"
-=======
-#include "AbstractPhoto.moc"
->>>>>>> 4f45eaa32ecd97f39df5c57cd3a9c43d353f687a
 =======
 #include "AbstractPhoto.moc"
 >>>>>>> 4f45eaa32ecd97f39df5c57cd3a9c43d353f687a
