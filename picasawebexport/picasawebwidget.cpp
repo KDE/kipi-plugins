@@ -128,6 +128,24 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
 
     // ------------------------------------------------------------------------
 
+    QGroupBox* sizeBox      = new QGroupBox(i18n("Max Dimension"), settingsBox);
+    sizeBox->setWhatsThis(
+        i18n("This is the maximum dimension of the images. Images larger than this will be scaled down."));
+
+    QVBoxLayout* sizeBoxLayout = new QVBoxLayout(sizeBox);
+
+    m_dlDimensionCoB          = new KComboBox(sizeBox);
+    m_dlDimensionCoB->addItem("Original Size", "d");
+    m_dlDimensionCoB->addItem("1600 px", "1600");
+    m_dlDimensionCoB->addItem("1440 px", "1440");
+    m_dlDimensionCoB->addItem("1280 px", "1280");
+    m_dlDimensionCoB->addItem("1152 px", "1152");
+    m_dlDimensionCoB->addItem("1024 px", "1024");
+    m_dlDimensionCoB->setCurrentIndex(0);
+    sizeBoxLayout->addWidget(m_dlDimensionCoB);
+
+    // ------------------------------------------------------------------------
+
     QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(
         i18n("This is the location where Picasaweb images will be downloaded."));
@@ -204,6 +222,7 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
     settingsBoxLayout->addWidget(m_headerLbl);
     settingsBoxLayout->addWidget(accountBox);
     settingsBoxLayout->addWidget(albumsBox);
+    settingsBoxLayout->addWidget(sizeBox);
     settingsBoxLayout->addWidget(uploadBox);
     settingsBoxLayout->addWidget(optionsBox);
     settingsBoxLayout->addWidget(m_progressBar);
@@ -247,6 +266,7 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
         m_accountRBtn->hide();
 
         uploadBox->hide();
+        sizeBox->hide();
     }
 }
 

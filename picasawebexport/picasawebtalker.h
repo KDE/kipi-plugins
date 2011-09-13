@@ -78,7 +78,8 @@ public:
     void checkToken(const QString& token) ;
     void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
     void listAlbums(const QString& username);
-    void listPhotos(const QString& username, const QString& albumId);
+    void listPhotos(const QString& username, const QString& albumId,
+                    const QString& imgmax=NULL);
     void createAlbum(const PicasaWebAlbum& newAlbum);
     bool addPhoto(const QString& photoPath, PicasaWebPhoto& info, const QString& albumId);
     bool updatePhoto(const QString& photoPath, PicasaWebPhoto& info);
