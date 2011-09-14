@@ -66,9 +66,9 @@ libkde          >= 4.0.x                        http://www.kde.org
 libtiff         >= 3.6.x (>=3.8.2 recommended)  http://www.remotesensing.org/libtiff
 libjpeg         >= 6b                           http://www.ijg.org
 libpng          >= 1.2.x                        http://www.libpng.org/pub/png/libpng.html
-libkipi         >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
-libkexiv2       >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
-libkdcraw       >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
+libkipi         >= 2.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi
+libkexiv2       >= 2.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
+libkdcraw       >= 2.0.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw
 ImageMagick     >= 5.5.4 (runtime dependency)   http://www.imagemagick.org
 Hugin           >= 0.8.0 (runtime dependency)   http://hugin.sourceforge.net
 Enblend         >= 3.0.0 (runtime dependency)   http://enblend.sourceforge.net
@@ -77,7 +77,7 @@ Optional:
 
 libxslt         >= 1.1                          http://xmlsoft.org/XSLT
 libxml2         >= 2.7.x                        http://xmlsoft.org
-libX11          >= 1.1.5                        http://www.x11.org                         Linux Only.
+libX11          >= 1.1.5                        http://www.x11.org
 libexpat        >= 2.0.1                        http://expat.sourceforge.net
 libqtopengl     >= 4.3.x                        http://www.trolltech.com
 Mesa3D          >= 7.0.4                        http://mesa3d.sourceforge.net
@@ -87,10 +87,10 @@ libgdk          >= 2.0.0                        http://library.gnome.org/devel/g
 libqca          >= 2.0.0                        http://delta.affinix.com/qca
 libqjson        >= 0.6.0                        http://qjson.sourceforge.net
 libgomp         >= 4.3.x                        http://gcc.gnu.org/projects/gomp
-libksane        >= 0.3.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
-libkmap         >= 2.0.0                        http://www.digikam.org/sharedlibs          Version from master KDE git repository.
-libmediawiki    >= 1.0.0                        http://www.digikam.org/sharedlibs
-libkvkontakte   >= 0.1.0                        http://www.digikam.org/sharedlibs
+libksane        >= 0.3.0                        https://projects.kde.org/projects/kde/kdegraphics/libs/libksane
+libkgeomap      >= 2.0.0                        https://projects.kde.org/projects/extragear/libs/libkgeomap
+libmediawiki    >= 1.0.0                        https://projects.kde.org/projects/extragear/libs/libmediawiki
+libkvkontakte   >= 0.1.0                        https://projects.kde.org/projects/extragear/libs/libkvkontakte
 
 Plugin Specific Dependencies (for compiling and for running) :
 
