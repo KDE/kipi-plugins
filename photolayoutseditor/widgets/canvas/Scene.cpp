@@ -92,7 +92,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
         m_background = new SceneBackground(m_scene);
     }
 
-    QList<QGraphicsItem*> itemAtPosition(const QPointF & scenePos, QWidget * widget)
+    QList<QGraphicsItem*> itemsAtPosition(const QPointF & scenePos, QWidget * widget)
     {
         QGraphicsView * view = widget ? qobject_cast<QGraphicsView*>(widget->parentWidget()) : 0;
         if (!view)
@@ -105,8 +105,20 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     }
     AbstractItemInterface * itemAt(const QPointF & scenePos, QWidget * widget)
     {
-        QList<QGraphicsItem*> items = itemAtPosition(scenePos, widget);
+        QList<QGraphicsItem*> items = itemsAtPosition(scenePos, widget);
         return items.count() ? dynamic_cast<AbstractItemInterface*>(items.first()) : 0;
+    }
+    QList<AbstractItemInterface*> itemsAt(const QPointF & scenePos, QWidget * widget)
+    {
+        QList<QGraphicsItem*> items = itemsAtPosition(scenePos, widget);
+        QList<AbstractItemInterface*> r;
+        foreach (QGraphicsItem * i, items)
+        {
+            AbstractItemInterface * iface = dynamic_cast<AbstractItemInterface*>(i);
+            if (iface)
+                r.push_back(iface);
+        }
+        return r;
     }
     void sendPressEventToItem(AbstractItemInterface * item, QGraphicsSceneMouseEvent * event)
     {
@@ -710,30 +722,42 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent * event)
             if (selectionMode & SingleSelection)
                 event->setModifiers(event->modifiers() & !Qt::ControlModifier);
 
-            // Get pressed item
-            d->m_pressed_object = d->itemAt(event->scenePos(), event->widget());
-            // Test if this is a photo/text item
-            d->m_pressed_item = dynamic_cast<AbstractPhoto*>(d->m_pressed_object);
+            // Get items under mouse
+            d->m_pressed_object = d->m_pressed_item = 0;
+            QList<AbstractItemInterface*> itemsList = d->itemsAt(event->scenePos(), event->widget());
 
-            // If it is rotation widget
-            if ((m_interaction_mode & Rotating) && d->m_pressed_object == d->m_rot_item)
+            foreach (AbstractItemInterface * i, itemsList)
             {
-                d->sendPressEventToItem(d->m_pressed_object, event);
-                return;
-            }
+                // Get pressed item
+                d->m_pressed_object = i;
+                // Test if this is a photo/text item
+                d->m_pressed_item = dynamic_cast<AbstractPhoto*>(d->m_pressed_object);
 
-            // If it is scaling widget
-            if ((m_interaction_mode & Scaling) && d->m_pressed_object == d->m_scale_item)
-            {
-                d->sendPressEventToItem(d->m_pressed_object, event);
-                return;
-            }
-
-            // If it is cropping widget
-            if ((m_interaction_mode & Cropping) && d->m_pressed_object == d->m_crop_item)
-            {
-                d->sendPressEventToItem(d->m_pressed_object, event);
-                return;
+                // If it is rotation widget
+                if ((m_interaction_mode & Rotating) && d->m_pressed_object == d->m_rot_item)
+                {
+                    d->sendPressEventToItem(d->m_pressed_object, event);
+                    if (event->isAccepted())
+                        return;
+                }
+                // If it is scaling widget
+                else if ((m_interaction_mode & Scaling) && d->m_pressed_object == d->m_scale_item)
+                {
+                    d->sendPressEventToItem(d->m_pressed_object, event);
+                    if (event->isAccepted())
+                        return;
+                }
+                // If it is cropping widget
+                else if ((m_interaction_mode & Cropping) && d->m_pressed_object == d->m_crop_item)
+                {
+                    d->sendPressEventToItem(d->m_pressed_object, event);
+                    if (event->isAccepted())
+                        return;
+                }
+                else
+                {
+                    break;
+                }
             }
 
             // If event pos is not in current selection shape...
@@ -1220,7 +1244,6 @@ void Scene::setCropWidgetVisible(bool isVisible)
         if (!d->m_crop_item)
         {
             d->m_crop_item = new CropWidgetItem();
-            connect(d->m_crop_item, SIGNAL(cropShapeSelected(QPainterPath)), this, SLOT(cropSelectedItems(QPainterPath)));
             connect(d->m_crop_item, SIGNAL(cancelCrop()), this, SLOT(closeCropWidget()));
         }
         d->m_crop_item->setZValue(1.0/0.0);

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "ScalingWidgetItem.moc"
+#include "ScalingWidgetItem.h"
 #include "AbstractPhoto.h"
 #include "photolayoutseditor.h"
 #include "global.h"
@@ -528,7 +528,13 @@ void ScalingWidgetItem::updateShapes()
 
     d->m_rect = d->m_crop_shape.boundingRect();
 
+    QPainterPath updatePath;
+    updatePath.setFillRule(Qt::WindingFill);
+    updatePath.addRect(d->m_rect);
+    updatePath = updatePath.united(d->m_handlers_path);
     d->calculateHandlers();
+    updatePath = updatePath.united(d->m_handlers_path);
 
-    this->update();
+    if (this->scene())
+        this->scene()->update( this->mapRectToScene(updatePath.boundingRect()) );
 }

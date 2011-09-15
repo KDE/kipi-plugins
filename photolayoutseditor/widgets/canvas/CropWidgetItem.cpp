@@ -39,6 +39,7 @@ using namespace KIPIPhotoLayoutsEditor;
 
 class KIPIPhotoLayoutsEditor::CropWidgetItemPrivate
 {
+    CropWidgetItemPrivate (CropWidgetItem * item) : m_item(item) {}
     enum
     {
         Top,
@@ -69,6 +70,8 @@ class KIPIPhotoLayoutsEditor::CropWidgetItemPrivate
         m_elipse.addEllipse(QPointF(0,0), 10, 10);
     }
 
+    CropWidgetItem * m_item;
+
     QTransform currentViewTransform;
     void transformDrawings(const QTransform & viewTransform);
     void calculateDrawings();
@@ -77,6 +80,7 @@ class KIPIPhotoLayoutsEditor::CropWidgetItemPrivate
     QPainterPath m_crop_shape;
     QPainterPath m_shape;
     QPainterPath m_handlers_path;
+    QPainterPath m_item_shape;
     QRectF m_rect;
     QRectF m_begin_rect;
     QRectF m_handlers[Bottom+1][Right+1];
@@ -155,11 +159,17 @@ void CropWidgetItemPrivate::calculateDrawings()
         for (int j = Left; j <= Right; ++j)
             m_handlers_path.addRect(m_handlers[i][j]);
     m_handlers_path += m_elipse;
+
+    m_item_shape = QPainterPath();
+    m_item_shape.setFillRule(Qt::WindingFill);
+    if (m_item->scene())
+        m_item_shape.addRect( m_item->mapRectFromScene(m_item->scene()->sceneRect()) );
+    m_item_shape = m_item_shape.united(m_handlers_path);
 }
 
 CropWidgetItem::CropWidgetItem(QGraphicsItem * parent, QGraphicsScene * scene) :
     AbstractItemInterface(parent, scene),
-    d(new CropWidgetItemPrivate)
+    d(new CropWidgetItemPrivate(this))
 {
     this->setAcceptHoverEvents(true);
     this->setFlag(QGraphicsItem::ItemIsSelectable, false);
@@ -174,17 +184,17 @@ CropWidgetItem::~CropWidgetItem()
 
 QRectF CropWidgetItem::boundingRect() const
 {
-    return (d->m_crop_shape + d->m_shape).boundingRect();
+    return d->m_item_shape.boundingRect();
 }
 
 QPainterPath CropWidgetItem::opaqueArea() const
 {
-    return d->m_crop_shape + d->m_shape;
+    return d->m_item_shape;
 }
 
 QPainterPath CropWidgetItem::shape() const
 {
-    return d->m_crop_shape + d->m_shape;
+    return d->m_item_shape;
 }
 
 void CropWidgetItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * widget)
@@ -291,6 +301,8 @@ void CropWidgetItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
             d->pressedHHandler = CropWidgetItemPrivate::HCenter;
             event->setAccepted(true);
         }
+        else if (d->m_shape.contains(handledPoint))
+            event->setAccepted(true);
         return;
         found:
             d->handlerOffset = d->m_handlers[d->pressedVHandler][d->pressedHHandler].center() - handledPoint;
@@ -401,11 +413,20 @@ void CropWidgetItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 
     }
 
+    QPainterPath updatePath;
+    updatePath.setFillRule(Qt::WindingFill);
+    updatePath.addRect(d->m_rect);
+    updatePath = updatePath.united(d->m_handlers_path);
+
     d->m_rect = temp;
+
+    updatePath.addRect(d->m_rect);
 
     event->setAccepted(true);
     d->calculateDrawings();
-    this->update();
+    updatePath = updatePath.united(d->m_handlers_path);
+
+    this->update(updatePath.boundingRect());
 }
 
 void CropWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)

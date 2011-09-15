@@ -415,9 +415,9 @@ QVariant AbstractPhoto::itemChange(GraphicsItemChange change, const QVariant & v
             d->m_transform = this->transform();
             emit changed();
             break;
-        case ItemPositionChange:
+        case ItemPositionHasChanged:
         case ItemScenePositionHasChanged:
-            d->m_pos = value.toPointF();
+            d->m_pos = this->pos();
             emit changed();
             break;
         default:;
