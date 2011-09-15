@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "AbstractPhoto.h"
+#include "AbstractPhoto.moc"
 #include "AbstractPhoto_p.h"
 #include "Scene.h"
 #include "PhotoEffectsGroup.h"
