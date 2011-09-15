@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "ScalingWidgetItem.h"
+#include "ScalingWidgetItem.moc"
 #include "AbstractPhoto.h"
 #include "photolayoutseditor.h"
 #include "global.h"
