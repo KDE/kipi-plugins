@@ -48,11 +48,13 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
+    class CanvasPrivate;
+    class CanvasSavingThread;
+
     class Scene;
     class LayersModel;
     class LayersSelectionModel;
     class AbstractPhoto;
-    class CanvasPrivate;
     class ProgressEvent;
 
     class Canvas : public QGraphicsView
@@ -88,7 +90,7 @@ namespace KIPIPhotoLayoutsEditor
             void setFile(const KUrl & file);
 
             /// Saves canvas state to SVG format file
-            QString save(const KUrl & file, bool setAsDefault = true);
+            void save(const KUrl & file, bool setAsDefault = true);
 
             /// Check if canvas is saved
             bool isSaved();
@@ -240,6 +242,10 @@ namespace KIPIPhotoLayoutsEditor
             void setAntialiasing(bool antialiasing);
             void imageLoaded(const KUrl & url, const QImage & image);
 
+        private slots:
+
+            void savingFinished();
+
         private:
 
             explicit Canvas(Scene * scene, QWidget * parent = 0);
@@ -259,6 +265,7 @@ namespace KIPIPhotoLayoutsEditor
             SelectionMode m_selection_mode;
 
         friend class CanvasPrivate;
+        friend class CanvasSavingThread;
     };
 }
 

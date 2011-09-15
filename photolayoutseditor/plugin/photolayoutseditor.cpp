@@ -47,6 +47,7 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QDesktopWidget>
+#include <QStatusBar>
 
 // KDE includes
 
@@ -374,7 +375,10 @@ void PhotoLayoutsEditor::createWidgets()
     d->centralWidget->layout()->setMargin(0);
     this->setCentralWidget(d->centralWidget);
 
-    //this->open(KUrl("/home/coder89/Desktop/second.pfe"));   /// TODO : Uncomment and set correct path when delevoping
+    d->statusBar = new PLEStatusBar(this);
+    this->setStatusBar(d->statusBar);
+
+    //this->open(KUrl("/home/coder89/Desktop/second.ple"));   /// TODO : Uncomment and set correct path when delevoping
 }
 
 void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)
@@ -475,7 +479,7 @@ void PhotoLayoutsEditor::open()
 void PhotoLayoutsEditor::openDialog()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(KUrl(), "*.pfe|Photo Frames Editor files", this);
+        d->fileDialog = new KFileDialog(KUrl(), "*.ple|Photo Layouts Editor files", this);
     d->fileDialog->setOperationMode(KFileDialog::Opening);
     d->fileDialog->setMode(KFile::File);
     d->fileDialog->setKeepLocation(true);
@@ -510,7 +514,7 @@ void PhotoLayoutsEditor::save()
 void PhotoLayoutsEditor::saveAs()
 {
     if (!d->fileDialog)
-        d->fileDialog = new KFileDialog(KUrl(), "*.pfe|Photo Frames Editor files", this);
+        d->fileDialog = new KFileDialog(KUrl(), "*.ple|Photo Layouts Editor files", this);
     d->fileDialog->setOperationMode(KFileDialog::Saving);
     d->fileDialog->setMode(KFile::File);
     d->fileDialog->setKeepLocation(true);
@@ -525,15 +529,7 @@ void PhotoLayoutsEditor::saveAs()
 void PhotoLayoutsEditor::saveFile(const KUrl & fileUrl, bool setFileAsDefault)
 {
     if (m_canvas)
-    {
-        QString error = m_canvas->save(fileUrl, setFileAsDefault);
-        if (!error.isEmpty())
-        {
-            KMessageBox::detailedError(this,
-                                       i18n("Can't save canvas to file!"),
-                                       error);
-        }
-    }
+        m_canvas->save(fileUrl, setFileAsDefault);
     else
         KMessageBox::error(this,
                            i18n("There is nothing to save!"));

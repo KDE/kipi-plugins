@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "Scene.moc"
+#include "Scene.h"
 #include "global.h"
 #include "RotationWidgetItem.h"
 #include "ScalingWidgetItem.h"
@@ -1255,50 +1255,55 @@ qreal Scene::gridVerticalDistance() const
 }
 
 //#####################################################################################################
-QDomElement Scene::toSvg(QDomDocument & document)
+QDomDocument Scene::toSvg(ProgressObserver * observer)
 {
-    QDomElement result = document.createElement("svg");
-    result.setAttribute("xmlns","http://www.w3.org/2000/svg");
-    result.setAttribute("width",QString::number(this->width()));
-    result.setAttribute("height",QString::number(this->height()));
-    QRectF sceneRect = this->sceneRect().toRect();
-    result.setAttribute("viewBox", QString::number(sceneRect.x()) + " " +
-                                   QString::number(sceneRect.y()) + " " +
-                                   QString::number(sceneRect.width()) + " " +
-                                   QString::number(sceneRect.height()));
-    result.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-    result.setAttribute("version", "1.2");
-    result.setAttribute("baseProfile", "tiny");
+    QDomDocument document;
+
+    QDomElement sceneElement = document.createElement("g");
+    sceneElement.setAttribute("id", "Scene");
+    sceneElement.setAttribute("width", QString::number(this->width()));
+    sceneElement.setAttribute("height", QString::number(this->height()));
+    document.appendChild(sceneElement);
+
+    QList<QGraphicsItem*> itemsList = this->items(Qt::AscendingOrder);
+    observer->progresChanged(0);
+    //--------------------------------------------------------
+
+    if (observer) observer->progresName( i18n("Saving background") );
     QDomElement background = document.createElement("g");
     background.setAttribute("class", "background");
     background.appendChild(d->m_background->toSvg(document));
-    result.appendChild(background);
-    QList<QGraphicsItem*> itemsList = this->items(Qt::AscendingOrder);
+    sceneElement.appendChild(background);
+    if (observer) observer->progresChanged(1.0 / (double)(itemsList.count()+1.0));
+
+    //--------------------------------------------------------
+
+    int i = 1;
     foreach (QGraphicsItem * item, itemsList)
     {
         AbstractPhoto * photo = dynamic_cast<AbstractPhoto*>(item);
         if (photo)
-            result.appendChild(photo->toSvg(document));
+        {
+            if (observer) observer->progresName( i18n("Saving %1", photo->name()) );
+            QDomDocument photoItemDocument = photo->toSvg();
+            sceneElement.appendChild( photoItemDocument.documentElement() );
+        }
+        if (observer) observer->progresChanged((double)i++ / (double)(itemsList.count()+1.0));
     }
-    return result;
+    return document;
 }
 
 //#####################################################################################################
-Scene * Scene::fromSvg(QDomElement & svgImage)
+Scene * Scene::fromSvg(QDomElement & sceneElement)
 {
-    if (svgImage.tagName() != "svg")
+    if (sceneElement.isNull() || sceneElement.tagName() != "g" || sceneElement.attribute("id") != "Scene")
         return 0;
 
     // Scene dimension
-    QString viewBox = svgImage.attribute("viewBox");
-    QRegExp vbr("[0-9.]+ [0-9.]+ [0-9.]+ [0-9.]+");
-    if (!vbr.exactMatch(viewBox))
-        return 0;
-    QStringList rectList = viewBox.split(" ");
-    qreal xSceneRect = rectList.at(0).toDouble();
-    qreal ySceneRect = rectList.at(1).toDouble();
-    qreal widthSceneRect = rectList.at(2).toDouble();
-    qreal heightSceneRect = rectList.at(3).toDouble();
+    qreal xSceneRect = 0;
+    qreal ySceneRect = 0;
+    qreal widthSceneRect = sceneElement.attribute("width").toDouble();
+    qreal heightSceneRect = sceneElement.attribute("height").toDouble();
     QRectF dimension(xSceneRect,ySceneRect,widthSceneRect,heightSceneRect);
     Scene * result = new Scene(dimension);
 
@@ -1307,7 +1312,7 @@ Scene * Scene::fromSvg(QDomElement & svgImage)
 
     // Create elements
     int errorsCount = 0;
-    QDomNodeList children = svgImage.childNodes();
+    QDomNodeList children = sceneElement.childNodes();
     for (int i = 0; i < children.count(); ++i)
     {
         QDomElement element = children.at(i).toElement();

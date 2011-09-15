@@ -65,28 +65,17 @@ namespace KIPIPhotoLayoutsEditor
               * \note This methods shouldn't be reimplemented because it's taking into account borders shape.
               * Reimplement \fn itemShape() and \fn itemOpaqueArea() methods instead.
               */
-            virtual QRectF boundingRect() const
-            {
-                return shape().boundingRect();
-            }
+            virtual QRectF boundingRect() const;
             /** Returns item's shape.
               * \note This methods shouldn't be reimplemented because it's taking into account borders shape.
               * Reimplement \fn itemShape() and \fn itemOpaqueArea() methods instead.
               */
-            virtual QPainterPath shape() const
-            {
-                QPainterPath result = this->itemShape();
-                return result.united(bordersGroup()->shape());
-            }
+            virtual QPainterPath shape() const;
             /** Returns item's opaque area.
               * \note This methods shouldn't be reimplemented because it's taking into account borders shape.
               * Reimplement \fn itemShape() and \fn itemOpaqueArea() methods instead.
               */
-            virtual QPainterPath opaqueArea() const
-            {
-                QPainterPath result = this->itemOpaqueArea();
-                return result.united(bordersGroup()->shape());
-            }
+            virtual QPainterPath opaqueArea() const;
 
             /** Returns item shape
               * Implement this method to return shape of the item.
@@ -112,7 +101,7 @@ namespace KIPIPhotoLayoutsEditor
               * \note In your implementation you have to call this method to save presentation data in correct format,
               * independendly to your class.
               */
-            virtual QDomElement toSvg(QDomDocument & document) const;
+            virtual QDomDocument toSvg() const;
 
             /// Reads item data from SVG structure
             bool fromSvg(QDomElement & element);
@@ -177,7 +166,7 @@ namespace KIPIPhotoLayoutsEditor
               * This data also should include applied all effects because this data will be directly presented to the user.
               * Data will be also cutted to fit their visual shape.
               */
-            virtual QDomElement svgVisibleArea(QDomDocument & document) const = 0;
+            virtual QDomDocument svgVisibleArea() const = 0;
 
             // Draws abstract item presentation
             virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);

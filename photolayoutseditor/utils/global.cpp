@@ -34,12 +34,12 @@
 
 QString KIPIPhotoLayoutsEditor::name()
 {
-    return QString("pfe");
+    return QString("ple");
 }
 
 QString KIPIPhotoLayoutsEditor::uri()
 {
-    return QString("http://coder89.pl/pfe");
+    return QString("http://coder89.pl/ple");
 }
 
 void KIPIPhotoLayoutsEditor::PLE_PostUndoCommand(QUndoCommand * command)
@@ -47,11 +47,13 @@ void KIPIPhotoLayoutsEditor::PLE_PostUndoCommand(QUndoCommand * command)
     PhotoLayoutsEditor::instance()->addUndoCommand(command);
 }
 
-QDomElement KIPIPhotoLayoutsEditor::pathToSvg(const QPainterPath & path, QDomDocument & document)
+QDomDocument KIPIPhotoLayoutsEditor::pathToSvg(const QPainterPath & path)
 {
+    QDomDocument document;
+
     // If path is empty
     if (path.isEmpty())
-        return QDomElement();
+        return document;
 
     // Conversion loop
     QString str_path_d;
@@ -84,12 +86,13 @@ QDomElement KIPIPhotoLayoutsEditor::pathToSvg(const QPainterPath & path, QDomDoc
 
     // If path length is empty
     if (str_path_d.isEmpty())
-        return QDomElement();
+        return document;
 
     // Create QDomElement
     QDomElement element = document.createElement("path");
     element.setAttribute("d", str_path_d);
-    return element;
+    document.appendChild(element);
+    return document;
 }
 
 QPainterPath KIPIPhotoLayoutsEditor::pathFromSvg(const QDomElement & element)

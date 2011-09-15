@@ -55,6 +55,8 @@ namespace KIPIPhotoLayoutsEditor
     class RotateItemCommand;
     class CropItemsCommand;
 
+    class ProgressObserver;
+
     class Scene : public QGraphicsScene
     {
             Q_OBJECT
@@ -98,7 +100,7 @@ namespace KIPIPhotoLayoutsEditor
             void setInteractionMode(int mode);
             void setSelectionMode(SelectionMode selectionMode);
             bool isSelectionVisible();
-            QDomElement toSvg(QDomDocument & document);
+            QDomDocument toSvg(ProgressObserver * observer);
             static Scene * fromSvg(QDomElement & svgImage);
             void addSelectingFilter(const QMetaObject & classMeta);
             void clearSelectingFilters();

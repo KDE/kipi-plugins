@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef ABSTRACTBORDERINTERFACE_H
-#define ABSTRACTBORDERINTERFACE_H
+#ifndef BORDERDRAWERINTERFACE_H
+#define BORDERDRAWERINTERFACE_H
 
 #include <QObject>
 #include <QDomDocument>
@@ -44,11 +44,6 @@ namespace KIPIPhotoLayoutsEditor
             BorderDrawerFactoryInterface * m_factory;
 
         public:
-
-            enum
-            {
-                Enum = QVariant::UserType
-            };
 
             explicit BorderDrawerInterface(BorderDrawerFactoryInterface * factory, QObject * parent = 0) :
                 QObject(parent),
@@ -97,6 +92,6 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerInterface, "pl.coder89.pfe.BorderDrawerInterface/1.0")
+Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerInterface, "pl.coder89.ple.BorderDrawerInterface/1.0")
 
-#endif // ABSTRACTBORDERINTERFACE_H
+#endif // BORDERDRAWERINTERFACE_H

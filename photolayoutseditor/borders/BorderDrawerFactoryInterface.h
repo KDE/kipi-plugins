@@ -47,6 +47,6 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerFactoryInterface,"pl.coder89.pfe.BorderDrawerFactoryInterface/1.0")
+Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerFactoryInterface,"pl.coder89.ple.BorderDrawerFactoryInterface/1.0")
 
 #endif // BORDERDRAWERFACTORY_H

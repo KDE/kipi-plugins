@@ -624,9 +624,10 @@ void TextItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option
     AbstractPhoto::paint(painter, option, widget);
 }
 
-QDomElement TextItem::toSvg(QDomDocument & document) const
+QDomDocument TextItem::toSvg() const
 {
-    QDomElement result = AbstractPhoto::toSvg(document);
+    QDomDocument document = AbstractPhoto::toSvg();
+    QDomElement result = document.firstChildElement();
     result.setAttribute("class", "TextItem");
 
     // 'defs' tag
@@ -634,37 +635,37 @@ QDomElement TextItem::toSvg(QDomDocument & document) const
     defs.setAttribute("class", "data");
     result.appendChild(defs);
 
-    // 'defs'-> pfe:'data'
+    // 'defs'-> ple:'data'
     QDomElement appNS = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
     appNS.setPrefix(KIPIPhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
-    // 'defs'-> pfe:'data' -> 'text'
+    // 'defs'-> ple:'data' -> 'text'
     QDomElement text = document.createElement("text");
     text.appendChild(document.createTextNode(d->m_string_list.join("\n").toUtf8()));
     text.setPrefix(KIPIPhotoLayoutsEditor::name());
     appNS.appendChild(text);
 
-    // 'defs'-> pfe:'data' -> 'color'
+    // 'defs'-> ple:'data' -> 'color'
     QDomElement color = document.createElement("color");
     color.setPrefix(KIPIPhotoLayoutsEditor::name());
     color.setAttribute("name", m_color.name());
     appNS.appendChild(color);
 
-    // 'defs'-> pfe:'data' -> 'font'
+    // 'defs'-> ple:'data' -> 'font'
     QDomElement font = document.createElement("font");
     font.setPrefix(KIPIPhotoLayoutsEditor::name());
     font.setAttribute("data", m_font.toString());
     appNS.appendChild(font);
 
-    return result;
+    return document;
 }
 
-QDomElement TextItem::svgVisibleArea(QDomDocument & document) const
+QDomDocument TextItem::svgVisibleArea() const
 {
-    QDomElement element = KIPIPhotoLayoutsEditor::pathToSvg(m_text_path, document);
-    element.setAttribute("fill", m_color.name());
-    return element;
+    QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_text_path);
+    document.firstChildElement("path").setAttribute("fill", m_color.name());
+    return document;
 }
 
 TextItem * TextItem::fromSvg(QDomElement & element)

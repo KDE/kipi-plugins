@@ -58,6 +58,6 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::AbstractPhotoEffectFactory,"pl.coder89.pfe.AbstractPhotoEffectFactory/1.0")
+Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::AbstractPhotoEffectFactory,"pl.coder89.ple.AbstractPhotoEffectFactory/1.0")
 
 #endif // ABSTRACTPHOTOEFFECTFACTORY_H

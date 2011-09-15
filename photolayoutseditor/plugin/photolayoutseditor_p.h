@@ -46,11 +46,13 @@
 #include "EffectsEditorTool.h"
 #include "BorderEditTool.h"
 #include "AbstractPhotoEffectFactory.h"
+#include "PLEStatusBar.h"
 #include "global.h"
 #include "photolayoutseditor.h"
 
 namespace KIPIPhotoLayoutsEditor
 {
+    class PLEStatusBar;
     class PhotoLayoutsEditor::PhotoLayoutsEditorPriv
     {
         public:
@@ -79,7 +81,8 @@ namespace KIPIPhotoLayoutsEditor
                 treeTitle(0),
                 toolsWidget(0),
                 toolEffects(0),
-                toolBorders(0)
+                toolBorders(0),
+                statusBar(0)
             {}
 
             ~PhotoLayoutsEditorPriv()
@@ -164,9 +167,9 @@ namespace KIPIPhotoLayoutsEditor
             QMap<QString, KService::Ptr> bordersServiceMap;
             QMap<QString, AbstractPhotoEffectFactory*> effectsMap;
             QMap<QString, BorderDrawerFactoryInterface*> bordersMap;
+
+            PLEStatusBar * statusBar;
     };
 }
-
-#undef Q_DELETE
 
 #endif // PHOTOLAYOUTSEDITOR_P_H

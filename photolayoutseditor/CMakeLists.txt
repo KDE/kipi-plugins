@@ -1,7 +1,5 @@
   PROJECT( photolayoutseditor )
 
-  #SET(CMAKE_INSTALL_PREFIX /usr/)
-
   CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
   ADD_SUBDIRECTORY( ./utils/qtpropertybrowser )
@@ -41,6 +39,7 @@
       widgets/dialogs/GridSetupDialog.cpp
       widgets/dialogs/ImageFileDialog.cpp
       widgets/extra/PatternsComboBox.cpp
+      widgets/extra/PLEStatusBar.cpp
       widgets/layers/LayersTree.cpp
       widgets/layers/LayersTreeDelegate.cpp
       widgets/items/AbstractPhoto.cpp
@@ -88,6 +87,7 @@
   SET( PLE_Threads_SRCS
       threads/AbstractPhotoItemLoader.cpp
       threads/CanvasLoadingThread.cpp
+      threads/CanvasSavingThread.cpp
       threads/ImageLoadingThread.cpp
       threads/PhotoItemLoader.cpp
       threads/SceneBackgroundLoader.cpp

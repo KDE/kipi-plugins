@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoItem.moc"
+#include "PhotoItem.h"
 #include "PhotoEffectsGroup.h"
 #include "PhotoEffectsLoader.h"
 #include "ImageFileDialog.h"
@@ -116,7 +116,7 @@ public:
     virtual void redo()
     {
         m_item->m_image_path = QPainterPath();
-        m_item->m_image_path.addRect(m_item->m_pixmap.rect());
+        m_item->m_image_path.addRect(m_item->m_temp_image.rect());
         m_item->recalcShape();
         m_item->update();
     }
@@ -197,28 +197,30 @@ PhotoItem::~PhotoItem()
     delete d;
 }
 
-QDomElement PhotoItem::toSvg(QDomDocument & document) const
+QDomDocument PhotoItem::toSvg() const
 {
-    QDomElement result = AbstractPhoto::toSvg(document);
-    result.setAttribute("class", "PhotoItem");
+    QDomDocument document = AbstractPhoto::toSvg();
+    QDomElement itemElement = document.firstChildElement();
+    itemElement.setAttribute("class", "PhotoItem");
 
     // 'defs' tag
     QDomElement defs = document.createElement("defs");
     defs.setAttribute("class", "data");
-    result.appendChild(defs);
+    itemElement.appendChild(defs);
 
-    // 'defs'-> pfe:'data'
+    // 'defs'-> ple:'data'
     QDomElement appNS = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
     appNS.setPrefix(KIPIPhotoLayoutsEditor::name());
     defs.appendChild(appNS);
 
     if (!m_image_path.isEmpty())
     {
-        // 'defs'-> pfe:'data' ->'path'
-        QDomElement path = KIPIPhotoLayoutsEditor::pathToSvg(m_image_path, document);
+        // 'defs'-> ple:'data' ->'path'
+        QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_image_path);
+        QDomElement path = document.firstChildElement("path");
         path.setAttribute("class", "m_image_path");
         path.setPrefix(KIPIPhotoLayoutsEditor::name());
-        appNS.appendChild(path);
+        appNS.appendChild(document.documentElement());
     }
 
     QDomElement image = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "image");
@@ -252,7 +254,7 @@ QDomElement PhotoItem::toSvg(QDomDocument & document) const
     if (d->fileUrl().isValid())
         image.setAttribute("src", d->fileUrl().url());
 
-    return result;
+    return document;
 }
 
 PhotoItem * PhotoItem::fromSvg(QDomElement & element)
@@ -313,17 +315,19 @@ _delete:
     return 0;
 }
 
-QDomElement PhotoItem::svgVisibleArea(QDomDocument & document) const
+QDomDocument PhotoItem::svgVisibleArea() const
 {
+    QDomDocument document;
     // 'defs'->'image'
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
-    m_pixmap.save(&buffer, "PNG");
+    m_temp_image.save(&buffer, "PNG");
     QDomElement img = document.createElement("image");
-    img.setAttribute("width",m_pixmap.width());
-    img.setAttribute("height",m_pixmap.height());
+    img.setAttribute("width",m_temp_image.width());
+    img.setAttribute("height",m_temp_image.height());
     img.setAttribute("xlink:href",QString("data:image/png;base64,")+byteArray.toBase64());
-    return img;
+    document.appendChild(img);
+    return document;
 }
 
 void PhotoItem::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
@@ -459,15 +463,15 @@ void PhotoItem::setImageUrl(const KUrl & url)
 
 void PhotoItem::updateIcon()
 {
-    QPixmap temp(m_pixmap.size());
-    if (m_pixmap.isNull())
+    QPixmap temp(m_temp_image.size());
+    if (m_temp_image.isNull())
         temp = QPixmap(48,48);
     temp.fill(Qt::transparent);
 
     QPainter p(&temp);
-    if (!m_pixmap.isNull())
+    if (!m_temp_image.isNull())
     {
-        p.fillPath(itemOpaqueArea(), QBrush(this->m_pixmap));
+        p.fillPath(itemOpaqueArea(), QBrush(this->m_temp_image));
         p.end();
         temp = temp.scaled(48,48,Qt::KeepAspectRatio);
         p.begin(&temp);
@@ -503,10 +507,10 @@ void PhotoItem::fitToRect(const QRect & rect)
 
 void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
-    if (!m_pixmap.isNull())
+    if (!m_temp_image.isNull())
     {
         painter->save();
-        QBrush b(this->m_pixmap);
+        QBrush b(this->m_temp_image);
         painter->fillPath(itemOpaqueArea(), b);
         painter->restore();
     }
@@ -523,10 +527,9 @@ void PhotoItem::refreshItem()
 {
     if (d->image().isNull())
         return;
-    this->m_pixmap = QPixmap::fromImage(effectsGroup()->apply( d->image().scaled(this->m_image_path.boundingRect().size().toSize(),
-                                                                     Qt::KeepAspectRatioByExpanding,
-                                                                     Qt::SmoothTransformation))
-                                        );
+    this->m_temp_image = effectsGroup()->apply( d->image().scaled(this->m_image_path.boundingRect().size().toSize(),
+                                                              Qt::KeepAspectRatioByExpanding,
+                                                              Qt::SmoothTransformation));
 
     this->updateIcon();
     this->recalcShape();

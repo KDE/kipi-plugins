@@ -253,6 +253,7 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
 
 AbstractItemsListViewTool::~AbstractItemsListViewTool()
 {
+    this->chooserCancelled();
     delete d;
 }
 

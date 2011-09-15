@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#include "Canvas.moc"
-
+#include "Canvas.h"
+#include "Canvas_p.h"
 #include "Scene.h"
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -37,11 +37,12 @@
 #include "ProgressEvent.h"
 #include "photolayoutseditor.h"
 #include "CanvasLoadingThread.h"
+#include "CanvasSavingThread.h"
+#include "PLEStatusBar.h"
 
 #include <QPrinter>
 #include <QPaintDevice>
 #include <QPaintEngine>
-#include <QProgressBar>
 #include <QVBoxLayout>
 
 #include <kapplication.h>
@@ -52,16 +53,6 @@
 #define MIN_SCALE_LIMIT 0.5
 
 using namespace KIPIPhotoLayoutsEditor;
-
-class KIPIPhotoLayoutsEditor::CanvasPrivate
-{
-    CanvasSize m_size;
-
-    QProgressBar * m_progress;
-    QMap<QObject*,QProgressBar*> progressMap;
-
-    friend class Canvas;
-};
 
 Canvas::Canvas(const CanvasSize & size, QWidget * parent) :
     QGraphicsView(parent),
@@ -742,6 +733,11 @@ void Canvas::progressEvent(ProgressEvent * event)
             temp->setMaximum(1000);
             temp->setValue(0);
             this->setEnabled(false);
+            {
+                PLEStatusBar * sb = dynamic_cast<PLEStatusBar*>(PhotoLayoutsEditor::instance()->statusBar());
+                if (sb)
+                    sb->runBusyIndicator();
+            }
             break;
         case ProgressEvent::ProgressUpdate:
             if (temp)
@@ -758,6 +754,11 @@ void Canvas::progressEvent(ProgressEvent * event)
                 d->progressMap.take(event->sender())->deleteLater();
             }
             this->setEnabled(true);
+            {
+                PLEStatusBar * sb = dynamic_cast<PLEStatusBar*>(PhotoLayoutsEditor::instance()->statusBar());
+                if (sb)
+                    sb->stopBusyIndicator();
+            }
             break;
         default:
             temp = 0;
@@ -783,7 +784,7 @@ void Canvas::wheelEvent(QWheelEvent * event)
 QDomDocument Canvas::toSvg() const
 {
     QDomDocument result(" svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\"");
-    QDomElement svg = m_scene->toSvg(result);
+    QDomElement svg;// = ;//m_scene->toSvg(result);
     result.appendChild(svg);
     svg.setAttribute("width", QString::number(d->m_size.size().width()));
     svg.setAttribute("height", QString::number(d->m_size.size().height()));
@@ -866,7 +867,10 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
                 size.setResolution(resolution);
                 if (dimension.isValid())
                 {
-                    Scene * scene = Scene::fromSvg(element);
+                    QDomElement sceneElement = element.firstChildElement("g");
+                    while (!sceneElement.isNull() && sceneElement.attribute("id") != "Scene")
+                        sceneElement = sceneElement.nextSiblingElement("g");
+                    Scene * scene = Scene::fromSvg(sceneElement);
                     if (scene)
                     {
                         result = new Canvas(scene);
@@ -945,41 +949,27 @@ void Canvas::setFile(const KUrl & file)
 /** ###########################################################################################################################
  * Sets the file connected with canvas
  #############################################################################################################################*/
-QString Canvas::save(const KUrl & fileUrl, bool setAsDefault)
+void Canvas::save(const KUrl & fileUrl, bool setAsDefault)
 {
     KUrl tempFile = fileUrl;
     if (fileUrl.isEmpty() || !fileUrl.isValid())
     {
         if (m_file.isEmpty() || !m_file.isValid())
-            return i18n("Invalid file path.");
+        {
+            KMessageBox::detailedError(0,
+                                       i18n("Can't save canvas!"),
+                                       i18n("Invalid file path."));
+            return;
+        }
         tempFile = m_file;
     }
 
-//    QString errorString;
-//    SavingProgressDialog dialog(this, tempFile, &errorString);
-//    int result = dialog.exec();
-//    if (result == KDialog::Accepted)
-//    {
-//        if (setAsDefault)
-//            m_file = tempFile;
-//        m_is_saved = true;
-//        m_saved_on_index = m_undo_stack->index();
-//    }
+    if (setAsDefault)
+       m_file = tempFile;
 
-    QFile file(tempFile.path());
-    if (file.open(QFile::WriteOnly | QFile::Text))
-    {
-        file.write(this->toSvg().toString().toAscii());
-        file.close();
-        if (setAsDefault)
-            m_file = tempFile;
-        m_is_saved = true;
-        m_saved_on_index = m_undo_stack->index();
-        emit savedStateChanged();
-        return QString();
-    }
-    else
-        return file.errorString();
+    CanvasSavingThread * thread = new CanvasSavingThread(this);
+    connect(thread, SIGNAL(saved()), this, SLOT(savingFinished()));
+    thread->save(this, m_file);
 }
 
 /** ###########################################################################################################################
@@ -993,21 +983,31 @@ bool Canvas::isSaved()
 /** ###########################################################################################################################
  * Controls changes on cavnas (based on QUndoStack state)
  #############################################################################################################################*/
-void Canvas::isSavedChanged(int currentCommandIndex)
+void Canvas::isSavedChanged(int /*currentCommandIndex*/)
 {
-    m_is_saved = (m_saved_on_index == currentCommandIndex);
+    m_is_saved = (m_saved_on_index == m_undo_stack->index());
     emit savedStateChanged();
 }
 
 /** ###########################################################################################################################
  * Controls changes on cavnas (based on QUndoStack state)
  #############################################################################################################################*/
-void Canvas::isSavedChanged(bool isStackClean)
+void Canvas::isSavedChanged(bool /*isStackClean*/)
 {
-    if (isStackClean)
-        m_is_saved |= isStackClean;
+    if (m_undo_stack->isClean())
+        m_is_saved = m_undo_stack->isClean();
     else
         m_is_saved = (m_saved_on_index == m_undo_stack->index());
+    emit savedStateChanged();
+}
+
+/** ###########################################################################################################################
+ * Saving finished slot
+ #############################################################################################################################*/
+void Canvas::savingFinished()
+{
+    m_is_saved = true;
+    m_saved_on_index = m_undo_stack->index();
     emit savedStateChanged();
 }
 

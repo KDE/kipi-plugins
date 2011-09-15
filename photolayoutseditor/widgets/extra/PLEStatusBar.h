@@ -23,24 +23,25 @@
  *
  * ============================================================ */
 
-#ifndef PROGRESSOBSERVER_H
-#define PROGRESSOBSERVER_H
+#ifndef PLESTATUSBAR_H
+#define PLESTATUSBAR_H
 
-#include <QString>
+#include <QProgressBar>
+
+#include <kstatusbar.h>
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class ProgressObserver
+    class PLEStatusBar : public KStatusBar
     {
-            ProgressObserver * parent;
-
+            QProgressBar * m_pb;
         public:
 
-            ProgressObserver(ProgressObserver * parent = 0) : parent(parent) {}
-            virtual ~ProgressObserver() {}
-            virtual void progresChanged(double progress) { if (parent) parent->progresChanged(progress); }
-            virtual void progresName(const QString & name) { if (parent) parent->progresName(name); }
+            explicit PLEStatusBar(QWidget * parent = 0);
+            void runBusyIndicator();
+            void stopBusyIndicator();
+
     };
 }
 
-#endif // PROGRESSOBSERVER_H
+#endif // PLESTATUSBAR_H

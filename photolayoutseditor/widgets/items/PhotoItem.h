@@ -47,7 +47,7 @@ namespace KIPIPhotoLayoutsEditor
             virtual ~PhotoItem();
 
             /// Convert photo item to SVG format
-            virtual QDomElement toSvg(QDomDocument & document) const;
+            virtual QDomDocument toSvg() const;
 
             /// Create Photo item from SVG format code
             static PhotoItem * fromSvg(QDomElement & element);
@@ -102,7 +102,7 @@ namespace KIPIPhotoLayoutsEditor
             PhotoItem(const QString & name = QString(), Scene * scene = 0);
 
             /// Converts item data to SVG format
-            virtual QDomElement svgVisibleArea(QDomDocument & document) const;
+            virtual QDomDocument svgVisibleArea() const;
 
             virtual void dragEnterEvent(QGraphicsSceneDragDropEvent * event);
             virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
@@ -165,7 +165,7 @@ namespace KIPIPhotoLayoutsEditor
             PhotoItemPrivate * d;
             friend class PhotoItemPrivate;
 
-            QPixmap m_pixmap;
+            QImage m_temp_image;
 
             // Widget path
             QPainterPath m_complete_path;

@@ -40,7 +40,7 @@ namespace KIPIPhotoLayoutsEditor
     extern QString name();
     extern QString uri();
     extern void PLE_PostUndoCommand(QUndoCommand * command);
-    extern QDomElement pathToSvg(const QPainterPath & path, QDomDocument & document);
+    extern QDomDocument pathToSvg(const QPainterPath & path);
     extern QPainterPath pathFromSvg(const QDomElement & element);
 }
 

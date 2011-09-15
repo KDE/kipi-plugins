@@ -77,8 +77,8 @@ namespace KIPIPhotoLayoutsEditor
 
             virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-            virtual QDomElement toSvg(QDomDocument & document) const;
-            virtual QDomElement svgVisibleArea(QDomDocument &document) const;
+            virtual QDomDocument toSvg() const;
+            virtual QDomDocument svgVisibleArea() const;
             static TextItem * fromSvg(QDomElement & element);
 
             /// Returns item's property browser
