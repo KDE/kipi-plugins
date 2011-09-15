@@ -161,30 +161,8 @@ QString AbstractPhoto::uniqueName(const QString & name)
     return result;
 }
 
-QRectF AbstractPhoto::boundingRect() const
+QDomElement AbstractPhoto::toSvg(QDomDocument & document) const
 {
-    return shape().boundingRect();
-}
-
-QPainterPath AbstractPhoto::shape() const
-{
-    QPainterPath result = this->itemShape();
-    if (d->m_borders_group)
-        result = result.united(bordersGroup()->shape());
-    return result;
-}
-
-QPainterPath AbstractPhoto::opaqueArea() const
-{
-    QPainterPath result = this->itemOpaqueArea();
-    if (d->m_borders_group)
-        result = result.united(bordersGroup()->shape());
-    return result;
-}
-
-QDomDocument AbstractPhoto::toSvg() const
-{
-    QDomDocument document;
     QTransform transform = this->transform();
     QString translate = "translate("+
                         QString::number(this->pos().x())+
@@ -205,7 +183,6 @@ QDomDocument AbstractPhoto::toSvg() const
                      QString::number(transform.m32())+
                      ")";
     QDomElement itemSVG = document.createElement("g");
-    document.appendChild(itemSVG);
     itemSVG.setAttribute("transform", translate + " " + matrix);
     itemSVG.setAttribute("id", this->id());
     itemSVG.setAttribute("name", QString(this->name().toUtf8()));
@@ -222,15 +199,15 @@ QDomDocument AbstractPhoto::toSvg() const
     clipPath.setAttribute("id", "clipPath_"+this->id());
     defs.appendChild(clipPath);
 
-    // 'defs'->'ple:data'
+    // 'defs'->'pfe:data'
     QDomElement appNSData = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
     appNSData.setPrefix(KIPIPhotoLayoutsEditor::name());
     defs.appendChild(appNSData);
     appNSData.appendChild(d->m_effects_group->toSvg(document));
 
-    // 'defs'->'ple:data'->'crop_path'
+    // 'defs'->'pfe:data'->'crop_path'
     QDomElement cropPath = document.createElement("crop_path");
-    cropPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(this->cropShape()).documentElement() );
+    cropPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(this->cropShape(), document) );
     appNSData.appendChild(cropPath);
 
     // Convert visible area to SVG path's 'd' attribute
@@ -238,13 +215,14 @@ QDomDocument AbstractPhoto::toSvg() const
     if (!visibleArea.isEmpty())
     {
         // 'defs'->'clipPath'->'path'
-        clipPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(visibleArea).documentElement() );
+        QDomElement path = KIPIPhotoLayoutsEditor::pathToSvg(visibleArea, document);
+        clipPath.appendChild(path);
     }
 
     QDomElement visibleData = document.createElement("g");
     visibleData.setAttribute("id", "vis_data_" + this->id());
     defs.appendChild(visibleData);
-    visibleData.appendChild(this->svgVisibleArea());
+    visibleData.appendChild(this->svgVisibleArea(document));
     visibleData.appendChild(d->m_borders_group->toSvg(document));
 
     // 'use'
@@ -272,11 +250,11 @@ QDomDocument AbstractPhoto::toSvg() const
       *             .........     // Children data
       *             .........     // Borders applied to the item
       *         </g>
-      *         <ple:data>
+      *         <pfe:data>
       *             .........     // Effects applied to the item
       *             .........     // Crop path
       *             .........     // Other data from the AbstractPhoto class.
-      *         </ple:data>
+      *         </pfe:data>
       *     </defs>
       *     <use />             // Cuts image
       *     <g>
@@ -285,7 +263,7 @@ QDomDocument AbstractPhoto::toSvg() const
       * </g>
       */
 
-    return document;
+    return itemSVG;
 }
 
 bool AbstractPhoto::fromSvg(QDomElement & element)
