@@ -3,8 +3,8 @@ Kipi-plugins 2.2.0 - Release date: 2011/10/02
 
 NEW FEATURES:
 
-General : Add image title support metadata provided by kipi host application.
-
+Add image title support metadata provided by kipi host application.
+Add a new tool to assemble images together.
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
