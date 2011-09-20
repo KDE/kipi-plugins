@@ -308,6 +308,9 @@ struct Generator::Private {
         map["i18nexifphotoshutterspeedvalue"] = makeXsltParam(i18n("Shutter Speed Value"));
         map["i18nexifphotoaperturevalue"] = makeXsltParam(i18n("Aperture Value"));
         map["i18nexifphotofocallength"] = makeXsltParam(i18n("Focal Length"));
+        map["i18nexifgpsaltitude"] = makeXsltParam(i18n("GPS Altitude"));
+        map["i18nexifgpslatitude"] = makeXsltParam(i18n("GPS Latitude"));
+        map["i18nexifgpslongitude"] = makeXsltParam(i18n("GPS Longitude"));
     }
 
 

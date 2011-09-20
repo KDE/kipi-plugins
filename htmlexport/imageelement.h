@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // KIPI
 #include <libkipi/imageinfo.h>
+#include <libkipi/version.h>
 
 // Local
 #include "xmlutils.h"
@@ -45,7 +46,11 @@ class ImageElement {
 public:
 	ImageElement(const KIPI::ImageInfo& info)
 	: mValid(false)
-	, mTitle(info.title())
+#if KIPI_VERSION >= 0x010300
+  , mTitle(info.name())
+#else
+  , mTitle(info.title())
+#endif
 	, mDescription(info.description())
 	, mAngle(info.angle())
 	, mTime(info.time())
@@ -85,6 +90,11 @@ public:
         QString mExifPhotoApertureValue;
         QString mExifPhotoFocalLength;
 
+        // GPS Metadata
+        QString mExifGPSLatitude;
+        QString mExifGPSLongitude;
+        QString mExifGPSAltitude;
+
 	void appendToXML(XMLWriter& xmlWriter, bool copyOriginalImage) const {
 		if (!mValid) {
 			return;
@@ -116,8 +126,10 @@ public:
                 xmlWriter.writeElement("exifphotoshutterspeedvalue", mExifPhotoShutterSpeedValue);
                 xmlWriter.writeElement("exifphotoaperturevalue", mExifPhotoApertureValue);
                 xmlWriter.writeElement("exifphotofocallength", mExifPhotoFocalLength);
-
-
+                // GPS
+                xmlWriter.writeElement("exifgpslatitude", mExifGPSLatitude);
+                xmlWriter.writeElement("exifgpslongitude", mExifGPSLongitude);
+                xmlWriter.writeElement("exifgpsaltitude", mExifGPSAltitude);
 	}
 
 	void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName, const QString& fileName, const QSize& size) const {

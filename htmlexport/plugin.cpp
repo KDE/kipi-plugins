@@ -70,7 +70,7 @@ void Plugin::setup( QWidget* widget ) {
     KIPI::Plugin::setup( widget );
     d->mAction = actionCollection()->addAction("htmlexport");
     d->mAction->setText(i18n("Export to &HTML..."));
-    d->mAction->setIcon(KIcon("applications-internet"));
+    d->mAction->setIcon(KIcon("text-html"));
     d->mAction->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
     connect(d->mAction, SIGNAL(triggered()),
         SLOT(slotActivate()) );

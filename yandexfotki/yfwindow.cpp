@@ -93,6 +93,7 @@ extern "C"
 #include <kpaboutdata.h>
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
+#include <libkipi/version.h>
 #include "pluginsversion.h"
 
 // Local includes
@@ -743,7 +744,11 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         YandexFotkiPhoto& photo = m_transferQueue.top();
         // TODO: updateFile is not used
         photo.setOriginalUrl(imgPath);
+#if KIPI_VERSION >= 0x010300
+        photo.setTitle(info.name());
+#else
         photo.setTitle(info.title());
+#endif
         photo.setSummary(info.description());
         photo.setAccess(access);
         photo.setHideOriginal(m_hideOriginalCheck->isChecked());

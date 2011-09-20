@@ -142,6 +142,7 @@ protected:
     bool isAuthenticated();
     void startAuthentication(bool forceLogout);
 
+    Vkontakte::AlbumInfoPtr currentAlbum();
     void selectAlbum(int aid);
 
 protected:

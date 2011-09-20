@@ -8,11 +8,11 @@ MESSAGE(STATUS "Starting CMake configuration for: kipi-plugins")
 
 # kipi-plugins version
 SET(KIPIPLUGINS_MAJOR_VERSION "2")
-SET(KIPIPLUGINS_MINOR_VERSION "1")
+SET(KIPIPLUGINS_MINOR_VERSION "2")
 SET(KIPIPLUGINS_PATCH_VERSION "0")
 
 # kipi-plugins release date
-SET (KIPIPLUGINS_RELEASE_DATE "2011-09-04")
+SET (KIPIPLUGINS_RELEASE_DATE "2011-10-02")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -108,6 +108,8 @@ ENDMACRO(PRINT_OPTIONAL_QTMODULE_STATUS)
 # =======================================================
 
 FIND_PACKAGE(KDE4 REQUIRED)
+
+ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 
 INCLUDE(MacroOptionalFindPackage)
 INCLUDE(FindPackageHandleStandardArgs)

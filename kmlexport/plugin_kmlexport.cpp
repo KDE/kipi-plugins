@@ -74,7 +74,7 @@ void Plugin_KMLExport::setup( QWidget* widget )
 
     m_actionKMLExport = actionCollection()->addAction("kmlexport");
     m_actionKMLExport->setText(i18n("Export to KML..."));
-    m_actionKMLExport->setIcon(KIcon("applications-internet"));
+    m_actionKMLExport->setIcon(KIcon("applications-development-web"));
 
     connect(m_actionKMLExport, SIGNAL(triggered(bool)),
             this, SLOT(slotKMLExport()));

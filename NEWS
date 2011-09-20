@@ -1,23 +1,20 @@
-Kipi-plugins 2.1.0 - Release date: 2011/09/04
+Kipi-plugins 2.2.0 - Release date: 2011/10/02
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-New tool to export collection to VKontakte web service (http://www.vkontakte.ru).
-New tool to stitch photos as panorama.
+General : Add image title support metadata provided by kipi host application.
+
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 270419 : digiKam's plugin Kipi can't import my photo from facebook.
-002 ==> 279078 : kipi plugin Yandex.Fotki causes digikam crash.
-003 ==> 141389 : Unpredictable image ordering in gallery.xml
-004 ==> 171794 : Display keywords by flash export.
-005 ==> 279515 : FlashExport's FirstRunDialog doesn't install simpleviewer's archive.
-006 ==> 279445 : Change the way progress is reported in the Geolocation Correlator.
-007 ==> 098693 : Easy stitcher and panorama tool.
-008 ==> 235766 : Panorama Tool as hugin, gimp-pandora.
-009 ==> 280860 : Compile fails due to DSO error with pthread.
-010 ==> 280736 : Wrong check for cpfind when using panorama tool.
-011 ==> 
-
-
+001 ==> 199317 : Support title/description as Facebook Photo Caption [patch].
+002 ==> 221195 : Comment sets Title does not set photo title in gallery export.
+003 ==> 155373 : Add different image titles when exporting to Flickr.
+004 ==> 261451 : Wish: vkontakte.ru (vk.com) export plugin.
+005 ==> 281439 : libkvkontakte addition break parallel builds.
+006 ==> 279545 : Picasa import fetches scaled-down photos [patch].
+007 ==> 281316 : Add GPS info to gallery.xml in htmlexport plugin [patch].
+008 ==> 212106 : Unable to export original file to Flickr [patch].
+009 ==> 282101 : Converting Canon CR2 images result in empty images.
+010 ==> 

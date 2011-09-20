@@ -37,6 +37,8 @@
 #include "kpaboutdata.h"
 #include "XMP_Version.h"
 
+using namespace KDcrawIface;
+
 namespace KIPIDNGConverterPlugin
 {
 
@@ -50,8 +52,13 @@ public:
                       0,
                       KAboutData::License_GPL,
                       ki18n("A tool to batch convert RAW camera images to DNG\n"
-                            "Using XMP toolkit %1\n"
-                            "Using DNG toolkit 1.3").subs(QString(XMP_API_VERSION_STRING)),
+                            "Using LibRaw %1\n"
+                            "Using LibKdcraw %2\n"
+                            "Using XMP toolkit %3\n"
+                            "Using DNG toolkit 1.3")
+                            .subs(KDcraw::librawVersion())
+                            .subs(KDcraw::version())
+                            .subs(QString(XMP_API_VERSION_STRING)),
                       ki18n("(c) 2008-2011, Gilles Caulier\n"
                             "(c) 2010-2011, Jens Mueller"))
     {

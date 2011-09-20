@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     KExiv2::initializeExiv2();
 
     KApplication app;
-    aboutData->setProgramLogo(KIcon("panorama"));
+    aboutData->setProgramLogo(KIcon("layer-visible-on"));
 
     KUrl::List urlList;
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();

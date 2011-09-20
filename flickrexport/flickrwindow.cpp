@@ -102,6 +102,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
     m_photoView                 = m_widget->m_photoView;
     m_albumsListComboBox        = m_widget->m_albumsListComboBox;
     m_newAlbumBtn               = m_widget->m_newAlbumBtn;
+    m_sendOriginalCheckBox      = m_widget->m_sendOriginalCheckBox;
     m_resizeCheckBox            = m_widget->m_resizeCheckBox;
     m_publicCheckBox            = m_widget->m_publicCheckBox;
     m_familyCheckBox            = m_widget->m_familyCheckBox;
@@ -325,6 +326,7 @@ void FlickrWindow::readSettings()
         m_resizeCheckBox->setChecked(false);
         m_dimensionSpinBox->setEnabled(false);
     }
+    m_sendOriginalCheckBox->setChecked(grp.readEntry("Send original", false));
 
     m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width", 1600));
     m_imageQualitySpinBox->setValue(grp.readEntry("Image Quality", 85));
@@ -351,6 +353,7 @@ void FlickrWindow::writeSettings()
     int contentType = m_contentTypeComboBox->itemData(m_contentTypeComboBox->currentIndex()).toInt();
     grp.writeEntry("Content Type",                      contentType);
     grp.writeEntry("Resize",                            m_resizeCheckBox->isChecked());
+    grp.writeEntry("Send original",                     m_sendOriginalCheckBox->isChecked());
     grp.writeEntry("Maximum Width",                     m_dimensionSpinBox->value());
     grp.writeEntry("Image Quality",                     m_imageQualitySpinBox->value());
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
@@ -536,7 +539,7 @@ void FlickrWindow::slotUser1()
         kDebug() << "Adding images to the list";
         FPhotoInfo temp;
 
-        temp.title                 = info.title();
+        temp.title                 = info.attributes()["title"].toString();
         temp.description           = info.description();
         temp.is_public             = lvItem->isPublic()  ? 1 : 0;
         temp.is_family             = lvItem->isFamily()  ? 1 : 0;
@@ -653,6 +656,7 @@ void FlickrWindow::slotAddPhotoNext()
 
     bool res = m_talker->addPhoto(pathComments.first.toLocalFile(), //the file path
                                   info,
+                                  m_sendOriginalCheckBox->isChecked(),
                                   m_resizeCheckBox->isChecked(),
                                   m_dimensionSpinBox->value(),
                                   m_imageQualitySpinBox->value());

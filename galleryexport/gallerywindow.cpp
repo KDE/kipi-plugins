@@ -36,6 +36,7 @@
 #include <Qt>
 #include <QTreeWidgetItem>
 #include <QPointer>
+#include <QSpacerItem>
 
 // KDE includes
 
@@ -84,8 +85,6 @@ public:
     QPushButton*           newAlbumBtn;
     QPushButton*           addPhotoBtn;
 
-    QCheckBox*             captTitleCheckBox;
-    QCheckBox*             captDescrCheckBox;
     QCheckBox*             resizeCheckBox;
 
     QSpinBox*              dimensionSpinBox;
@@ -138,12 +137,6 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     QGroupBox *optionsBox = new QGroupBox(i18n("Override Default Options"));
     QVBoxLayout *vlay2    = new QVBoxLayout();
 
-    captTitleCheckBox     = new QCheckBox(optionsBox);
-    captTitleCheckBox->setText(i18n("Comment sets Title"));
-
-    captDescrCheckBox     = new QCheckBox(optionsBox);
-    captDescrCheckBox->setText(i18n("Comment sets Description"));
-
     resizeCheckBox        = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
 
@@ -154,8 +147,6 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
     dimensionSpinBox->setRange(1,1600);
     dimensionSpinBox->setValue(600);
 
-    captTitleCheckBox->setChecked(true);
-    captDescrCheckBox->setChecked(false);
     resizeCheckBox->setChecked(false);
     dimensionSpinBox->setEnabled(false);
 
@@ -168,10 +159,9 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 
     // ---------------------------------------------------------------------------
 
-    vlay2->addWidget(captTitleCheckBox);
-    vlay2->addWidget(captDescrCheckBox);
     vlay2->addWidget(resizeCheckBox);
     vlay2->addLayout(hlay2);
+    vlay2->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding));
     vlay2->setSpacing(KDialog::spacingHint());
     vlay2->setMargin(KDialog::spacingHint());
 
@@ -280,8 +270,6 @@ GalleryWindow::~GalleryWindow()
     KConfigGroup group = config.group("GallerySync Galleries");
 
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
-    group.writeEntry("Set title",       d->captTitleCheckBox->isChecked());
-    group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
     group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
 
     delete mpUploadList;
@@ -354,17 +342,6 @@ void GalleryWindow::readSettings()
         d->resizeCheckBox->setChecked(false);
         d->dimensionSpinBox->setEnabled(false);
     }
-
-    if (group.readEntry("Set title", true))
-        d->captTitleCheckBox->setChecked(true);
-    else
-        d->captTitleCheckBox->setChecked(false);
-
-    if (group.readEntry("Set description", false))
-        d->captDescrCheckBox->setChecked(true);
-    else
-        d->captDescrCheckBox->setChecked(false);
-
 }
 
 void GalleryWindow::slotHelp()
@@ -736,10 +713,11 @@ void GalleryWindow::slotAddPhotoNext()
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
     QString photoPath     = mpUploadList->takeFirst();
-    QString photoName     = QFileInfo(photoPath).baseName();
-    bool res              = m_talker->addPhoto(album.name, photoPath, photoName,
-                                               d->captTitleCheckBox->isChecked(),
-                                               d->captDescrCheckBox->isChecked(),
+    KIPI::ImageInfo info  = m_interface->info(photoPath);
+    QMap <QString, QVariant> attribs = info.attributes();
+    QString title         = attribs["title"].toString();
+    QString description   = info.description();
+    bool res              = m_talker->addPhoto(album.name, photoPath, title, description,
                                                d->resizeCheckBox->isChecked(),
                                                d->dimensionSpinBox->value() );
 

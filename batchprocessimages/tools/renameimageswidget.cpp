@@ -60,6 +60,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
+#include <libkipi/version.h>
 
 // LibKIPI includes
 
@@ -587,7 +588,11 @@ void RenameImagesWidget::slotNext()
         if (KDE_rename(QFile::encodeName(src.path()),
                      QFile::encodeName(dst.path())) == 0)
         {
+#if KIPI_VERSION >= 0x010300
+            srcInfo.setName(dst.fileName());
+#else
             srcInfo.setTitle(dst.fileName());
+#endif
 
             item->changeResult(i18nc("batch process result", "OK"));
         }

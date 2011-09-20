@@ -1,3 +1,805 @@
+2.1.0 2011-09-04
+
+2011-09-04  Alexander Potashev <aspotashev@gmail.com>
+
+	* CMakeLists.txt: At least libkvkontakte-1.0.0 is required
+
+2011-09-03  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Hide unused button
+
+2011-09-03  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: 
+	VkontakteWindow::currentAlbum
+
+2011-09-03  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Add fullstop at the end of messagebox text
+
+2011-09-03  Script Kiddy <scripty@kde.org>
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	htmlexport/themes/details/details.desktop,
+	kopete/kipiplugin_kopete.desktop,
+	panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-09-01  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Save settings to
+	configuration file: VkAppId, AccessToken, SelectedAlbumId
+
+2011-09-01  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Add context "@title:window"
+
+2011-08-31  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifcaption.cpp: typo
+
+2011-08-30  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Add spacer under options panel
+
+2011-08-30  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkalbumdialog.cpp, vkontakte/vkwindow.cpp: Add contexts
+	to strings
+
+2011-08-30  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkalbumdialog.cpp: Usability of album creation/editing
+	dialog
+
+2011-08-30  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: More verbose confirmation question
+
+2011-08-29  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Album deletion
+	(including all photos in the album)
+
+2011-08-29  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Disable "Change Account" button, because
+	it does not work
+
+2011-08-29  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: rename function
+	argument
+
+2011-08-19  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Create new vkontakte.ru application "KDE
+	KIPI Import/Export Plugin"
+
+2011-08-19  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.h: sync function argument names
+
+2011-08-29  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-28  Script Kiddy <scripty@kde.org>
+
+	* vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-08-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-08-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/CMakeLists.txt: apply patch #63166 BUGS: 280860
+
+2011-08-25  Script Kiddy <scripty@kde.org>
+
+	* piwigoexport/kipiplugin_piwigoexport.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-25  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/plugin/expoblending.desktop: polish
+
+2011-08-24  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-22  Albert Astals Cid <tsdgeos@terra.es>
+
+	* expoblending/importwizard/preprocessingpage.cpp: Fix typo reported
+	by Freek de Kruijf
+
+2011-08-20  Yuri Chornoivan <yurchor@ukr.net>
+
+	* panorama/importwizard/intropage.cpp: Remove c-format from the
+	message (untranslatable without this change).
+
+2011-08-20  Pino Toscano <pino@kde.org>
+
+	* panorama/importwizard/intropage.cpp,
+	panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp: i18n fixes - adapt to style for checkbox labels - remove extra spaces - remove extra HTML-like markup
+
+2011-08-20  Yuri Chornoivan <yurchor@ukr.net>
+
+	* panorama/manager/actionthread.cpp: It was decided not to use
+	exclamation signs outside the games + fix typo
+
+2011-08-19  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/Messages.sh, panorama/importwizard/intropage.cpp,
+	panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/previewpage.cpp: actived i18n for translators
+	polish
+
+2011-08-19  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/previewpage.cpp: polish
+
+2011-08-19  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/previewpage.cpp: no need a new assistant
+	page to host post processing batch widget
+
+2011-08-19  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit c45cd16ed5a350f2a8ca5bbb5cf533fa18951092 Author: Gilles
+	Caulier <caulier.gilles@gmail.com> Date:   Fri Aug 19 09:36:49 2011
+	+0200
+
+2011-08-18  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/lastpage.cpp: Panorama: Bugfix for gcc 4.6.1
+
+2011-08-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/dialogs/batchprogressdialog.cpp,
+	common/libkipiplugins/dialogs/batchprogressdialog.h,
+	flashexport/simpleviewer.cpp, htmlexport/generator.cpp,
+	htmlexport/plugin.cpp, jpeglossless/plugin/plugin_jpeglossless.cpp,
+	kmlexport/kmlexport.cpp, panorama/importwizard/previewpage.cpp,
+	sendimages/sendimages.cpp: simplify API adapt code to new API
+
+2011-08-18  Andi Clemens <andi.clemens@googlemail.com>
+
+	* panorama/importwizard/lastpage.cpp: update
+
+2011-08-18  Andi Clemens <andi.clemens@googlemail.com>
+
+	* panorama/importwizard/lastpage.cpp: this doesn't compile, please
+	return a default value CCMAIL:kde-imaging@kde.org
+
+2011-08-18  Andi Clemens <andi.clemens@googlemail.com>
+
+	* common/libkipiplugins/dialogs/batchprogressdialog.cpp: fix warning
+
+2011-08-19  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Do not use null strings
+
+2011-08-18  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/plugin_vkontakte.cpp, vkontakte/vkalbumdialog.h,
+	vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Fix Krazy errors
+
+2011-08-18  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/dialogs/batchprogressdialog.cpp,
+	common/libkipiplugins/dialogs/batchprogressdialog.h: export batch
+	process dialog widget to be used embeded in a dedicated dialog.
+	CCMAIL: benjamin.girault@gmail.com
+
+2011-08-18  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit 0d66f54c9d646a647055ec13dc0478cac49c3c4f Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Thu Aug 18 12:25:39
+	2011 +0200
+
+2011-08-18  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp: Panorama What's This
+	Bugfix
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp: polish
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/lastpage.cpp: polish
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/plugin/panorama.cpp: set icon
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/manager/actionthread.h, panorama/manager/manager.cpp,
+	panorama/manager/manager.h: polish constify
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/lastpage.h: polish constify
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : polish
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit 6ef8f500ae53e591a2c4c92200b01eb064a71a5d Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Wed Aug 17 21:41:22
+	2011 +0200
+
+2011-08-17  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/intropage.cpp,
+	panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp: Panorama "What's This?" Messages added
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/plugin/panoramagui.desktop: polish
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/plugin/expoblending.desktop: missing icon
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp,
+	panorama/importwizard/previewpage.cpp: add debug statements
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/plugin/aboutdata.h: typo
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/previewpage.cpp: image for all other assistant
+	left sidebar pages
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/preprocessingpage.cpp: Assistant page 3 left
+	sidebar image
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/itemspage.cpp: Assistant second page left
+	sidebar image
+
+2011-08-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/CMakeLists.txt,
+	panorama/importwizard/importwizarddlg.cpp,
+	panorama/importwizard/intropage.cpp, panorama/plugin/aboutdata.h: 
+	add panorama and first page assistant left sidebar image.
+
+2011-08-17  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/intropage.cpp,
+	panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp: Panorama GUI
+	Improvements Adding tooltips to RadioButtons, CheckBoxes and KLineEdits Structure
+	initialization made similar to others (in optimizepage)
+
+2011-08-17  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/actionthread.cpp: Panorama bugfix Missing initializations
+
+2011-08-17  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/importwizarddlg.cpp,
+	panorama/importwizard/lastpage.cpp,
+	panorama/importwizard/previewpage.cpp,
+	panorama/manager/actionthread.cpp: Panorama Preview cancellation Preview can be skipped to directly stitch the project
+
+2011-08-17  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/actionthread.cpp: Cleanup Panorama Removing a useless debug message
+
+2011-08-17  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/intropage.cpp: Panorama File Types Radios Radio buttons greyd out instead of removed for a HDR output
+
+2011-08-17  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/previewpage.cpp,
+	panorama/manager/actionthread.cpp: Panorama Stitching Progress
+	Dialog Better handling of the beginning of the blending process Better
+	initilisation of progressDlg
+
+2011-08-17  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit 71e1151b72e8c2124eda663c2de818363a96b6e9 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Wed Aug 17 12:16:39
+	2011 +0200
+
+2011-08-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/optimizepage.cpp: always init all member to
+	zero, especially all pointers
+
+2011-08-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	common/libkipiplugins/widgets/previewmanager.cpp,
+	expoblending/blendingdlg/enfusestack.cpp,
+	expoblending/importwizard/preprocessingpage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp,
+	picasawebexport/picasawebreplacedialog.cpp: use KPixmapSequence
+
+2011-08-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* expoblending/blendingdlg/enfusestack.cpp,
+	expoblending/importwizard/preprocessingpage.cpp: use KPixmapSequence
+
+2011-08-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp: use KPixmapSequence
+
+2011-08-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit 24b803be71b2bb770c6992ab01df0bf8cf7229d8 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Mon Aug 15 20:10:42
+	2011 +0200
+
+2011-08-15  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit a643de19dd9ba6f700bfadaf06e8b4ef8bf4aba4 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Mon Aug 15 19:53:58
+	2011 +0200
+
+2011-08-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-08-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: New Panorama kipi-plugin is now ready to use for
+	next release 2.1.0 BUGS: 98693 BUGS: 235766
+
+2011-08-15  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit 66df494608192c54138078bb43edaabec405ee18 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Mon Aug 15 17:24:59
+	2011 +0200
+
+2011-08-15  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, panorama/manager/nonabinary.cpp: 2010.4 can be
+	used here...
+
+2011-08-15  Script Kiddy <scripty@kde.org>
+
+	* vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-15  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/importwizarddlg.cpp,
+	panorama/importwizard/importwizarddlg.h,
+	panorama/importwizard/intropage.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/optimizepage.h,
+	panorama/importwizard/preprocessingpage.cpp,
+	panorama/importwizard/preprocessingpage.h,
+	panorama/importwizard/previewpage.cpp,
+	panorama/importwizard/previewpage.h, panorama/manager/actions.h,
+	panorama/manager/actionthread.cpp, panorama/manager/actionthread.h,
+	panorama/manager/makebinary.cpp: Panorama: Work in progress Various modifications, including:  - Final stitching  - Optimisation parameters
+
+2011-08-15  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit 7fd54f198687101f57f93fbbe473c496b7f12b25 Author: Script
+	Kiddy <scripty@kde.org> Date:   Sun Aug 14 08:57:07 2011 +0200
+
+2011-08-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/manager/autooptimiserbinary.cpp,
+	panorama/manager/cpcleanbinary.cpp,
+	panorama/manager/cpfindbinary.cpp,
+	panorama/manager/pto2mkbinary.cpp: hugin 2010.4 work fine.
+
+2011-08-12  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/CMakeLists.txt, panorama/manager/enblendbinary.cpp,
+	panorama/manager/enblendbinary.h, panorama/manager/manager.cpp,
+	panorama/manager/nonabinary.cpp, panorama/manager/nonabinary.h: 
+	Panorama: More Runtime Dependencies Checks Enblend and Nona checking during runtime
+
+2011-08-12  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/previewpage.cpp: GUI improvements in
+	Panorama Tool Within the preview page
+
+2011-08-12  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/actionthread.cpp: Bugfix Panorama Resolves a bug happening when no exif data were present in the files
+
+2011-08-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-08-11  Script Kiddy <scripty@kde.org>
+
+	* vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-08-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/exif/exifdatetime.cpp: bug fix : this info are
+	sub-second time stamp, not second as well (as 0.123 seconds for ex.)
+
+2011-08-10  Veaceslav Munteanu <slavuttici@gmail.com>
+
+	* flashexport/simpleviewer.cpp: Fix Bug 279515 - FlashExport's
+	FirstRunDialog doesn't install simpleviewer's archive
+
+2011-08-10  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit 304425348e1e60cb3a8e9278315cf3ba314ca9c9 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Wed Aug 10 00:00:03
+	2011 +0200
+
+2011-08-09  Script Kiddy <scripty@kde.org>
+
+	* vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-08  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Macro "SLOT_JOB_DONE_INIT(JobClass)"
+
+2011-08-08  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Keep currently
+	selected album after user operations; select newly created album
+
+2011-08-08  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: cleanup
+
+2011-08-08  Script Kiddy <scripty@kde.org>
+
+	* vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: Disable unused layout
+
+2011-08-07  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* : commit fe35b53a8cc49704056601a9301fa1dc99dc6dc1 Author: Benjamin
+	Girault <benjamin.girault@gmail.com> Date:   Sun Aug 7 12:58:51 2011
+	+0200
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* CMakeLists.txt: VKontakte plugin: no need for check for QJSON
+	since libkvkontakte already depends on it
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* NEWS, README: fix typos
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: "Save in high
+	resolution" upload option
+
+2011-08-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-08-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* AUTHORS, CMakeLists.txt, NEWS, README: add info about vkontakte
+	tool
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Upload progressbar
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkalbumdialog.cpp: Be more careful with album privacy
+	settings (they were accidentally becoming public)
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkalbumdialog.cpp, vkontakte/vkalbumdialog.h,
+	vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: namespace Vkontakte
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.h: formatting
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkalbumdialog.cpp, vkontakte/vkalbumdialog.h,
+	vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Implement album
+	editing
+
+2011-08-07  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Link to current
+	user's albums
+
+2011-08-06  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp: todo
+
+2011-08-06  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Show current user's
+	full name
+
+2011-08-05  Alexander Potashev <aspotashev@gmail.com>
+
+	* CMakeLists.txt, vkontakte/CMakeLists.txt, vkontakte/Messages.sh,
+	vkontakte/icons/CMakeLists.txt,
+	vkontakte/kipiplugin_vkontakte.desktop,
+	vkontakte/plugin_vkontakte.cpp, vkontakte/plugin_vkontakte.h,
+	vkontakte/vkalbumdialog.cpp, vkontakte/vkalbumdialog.h,
+	vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: Add first version of
+	KIPI export plugin for VKontakte
+
+2011-08-05  Veaceslav Munteanu <slavuttici@gmail.com>
+
+	* flashexport/generalpage.cpp, flashexport/simpleviewer.cpp,
+	flashexport/simpleviewersettingscontainer.h,
+	flashexport/svedialog.cpp: Fix accidentaly changed mode for few
+	files in commit 09cdf3362448cd932dd3aadc914deac4f5443981
+
+2011-08-05  Veaceslav Munteanu <slavuttici@gmail.com>
+
+	* NEWS, flashexport/generalpage.cpp, flashexport/simpleviewer.cpp,
+	flashexport/simpleviewersettingscontainer.h,
+	flashexport/svedialog.cpp: Fixed Bug 171794 - display keywords by
+	flash export
+
+2011-08-05  Veaceslav Munteanu <slavuttici@gmail.com>
+
+	* NEWS, flashexport/simpleviewer.cpp, flashexport/simpleviewer.h: 
+	Fix bug 141389, added sorting by EXIF date
+
+2011-08-04  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-08-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-08-03  Alexander Potashev <aspotashev@gmail.com>
+
+	* yandexfotki/yandexrsa.cpp: Fix memory corruption introduced in
+	cf1cc0b5bb356d7ce6a864237852cd4191ba833d BUG:279078
+
+2011-08-02  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-08-01  Andi Clemens <andi.clemens@googlemail.com>
+
+	* advancedslideshow/dialogs/maindialog.cpp,
+	advancedslideshow/plugin/plugin_advancedslideshow.cpp,
+	advancedslideshow/plugin/slideshowloader.cpp,
+	advancedslideshow/widgets/slideshow.cpp,
+	advancedslideshow/widgets/slideshowgl.cpp,
+	batchprocessimages/tools/renameimageswidget.cpp,
+	calendar/print/calpainter.cpp, calendar/wizard/calwizard.cpp,
+	common/libkipiplugins/tools/kpwriteimage.cpp,
+	dngconverter/dnginfo/dnginfo.cpp,
+	dngconverter/dngwriter/dngwriter.cpp,
+	dngconverter/plugin/dngconverter.cpp,
+	expoblending/manager/actionthread.cpp,
+	flickrexport/comboboxdelegate.cpp, gpssync/backend-geonames-rg.cpp,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-osm-rg.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/rgtagmodel.cpp,
+	imageviewer/viewerwidget.cpp, imageviewer/viewerwidget.h,
+	mediawiki/wmwindow.cpp, metadataedit/exif/exifdevice.cpp,
+	metadataedit/exif/exiflens.cpp,
+	metadataedit/iptc/iptccategories.cpp,
+	metadataedit/iptc/iptckeywords.cpp,
+	metadataedit/iptc/iptcorigin.cpp,
+	metadataedit/plugin/multistringsedit.cpp,
+	metadataedit/plugin/multivaluesedit.cpp,
+	metadataedit/plugin/objectattributesedit.cpp,
+	metadataedit/xmp/xmpcategories.cpp,
+	metadataedit/xmp/xmpkeywords.cpp, metadataedit/xmp/xmporigin.cpp,
+	panorama/manager/actionthread.cpp,
+	picasawebexport/picasawebtalker.cpp,
+	picasawebexport/picasawebwindow.cpp,
+	printimages/tools/layouttree.cpp,
+	printimages/wizard/printhelper.cpp,
+	printimages/wizard/printoptionspage.cpp,
+	printimages/wizard/wizard.cpp,
+	rawconverter/manager/rawdecodingiface.cpp, shwup/swconnector.cpp,
+	yandexfotki/yandexrsa.cpp: avoid premature pessimisation (use prefix
+	operator)
+
+2011-07-31  Montel Laurent <montel@kde.org>
+
+	* acquireimages/scandialog.cpp,
+	advancedslideshow/dialogs/captiondialog.cpp,
+	advancedslideshow/dialogs/maindialog.cpp,
+	advancedslideshow/dialogs/soundtrackdialog.cpp,
+	advancedslideshow/plugin/plugin_advancedslideshow.cpp,
+	advancedslideshow/widgets/listsounditems.cpp,
+	advancedslideshow/widgets/playbackwidget.cpp,
+	advancedslideshow/widgets/slideshow.cpp,
+	batchprocessimages/common/batchprocessimagesdialog.cpp,
+	batchprocessimages/common/pixmapview.cpp,
+	batchprocessimages/tools/renameimageswidget.cpp,
+	calendar/wizard/caltemplate.cpp, calendar/wizard/calwizard.cpp,
+	calendar/wizard/monthwidget.cpp,
+	common/libkipiplugins/dialogs/imagedialog.cpp,
+	common/libkipiplugins/widgets/imageslist.cpp,
+	debianscreenshots/dsjob.cpp, debianscreenshots/dstalker.cpp,
+	debianscreenshots/dswindow.cpp,
+	debianscreenshots/plugin_debianscreenshots.cpp,
+	dngconverter/plugin/batchdialog.cpp,
+	dngconverter/plugin/settingswidget.cpp,
+	expoblending/blendingdlg/bracketstack.cpp,
+	expoblending/blendingdlg/enfusestack.cpp,
+	expoblending/blendingdlg/expoblendingdlg.cpp,
+	expoblending/importwizard/importwizarddlg.cpp,
+	expoblending/importwizard/itemspage.cpp,
+	expoblending/importwizard/preprocessingpage.cpp,
+	facebook/facebookjob.cpp, facebook/fbtalker.cpp,
+	facebook/fbwidget.cpp, facebook/fbwindow.cpp,
+	facebook/plugin_facebook.cpp, flashexport/firstrundlg.cpp,
+	flickrexport/comboboxdelegate.cpp, flickrexport/flickrlist.cpp,
+	flickrexport/flickrtalker.cpp, flickrexport/flickrwidget.cpp,
+	flickrexport/flickrwindow.cpp, galleryexport/galleryconfig.cpp,
+	galleryexport/gallerytalker.cpp, galleryexport/gallerywindow.cpp,
+	htmlexport/generator.cpp, htmlexport/wizard.cpp,
+	ipodexport/IpodExportDialog.cpp, ipodexport/IpodHeader.cpp,
+	jpeglossless/plugin/plugin_jpeglossless.cpp,
+	kioexportimport/KioExportWidget.cpp,
+	kioexportimport/KioExportWindow.cpp,
+	kioexportimport/KioImportWindow.cpp, kmlexport/kmlexportconfig.cpp,
+	mediawiki/plugin_wikimedia.cpp, mediawiki/wikimediajob.cpp,
+	mediawiki/wmwidget.cpp, mediawiki/wmwindow.cpp,
+	metadataedit/exif/exifcaption.cpp,
+	metadataedit/exif/exifdatetime.cpp,
+	metadataedit/exif/exifdevice.cpp,
+	metadataedit/iptc/iptccategories.cpp,
+	metadataedit/iptc/iptccontent.cpp,
+	metadataedit/iptc/iptccredits.cpp,
+	metadataedit/iptc/iptcenvelope.cpp,
+	metadataedit/iptc/iptcorigin.cpp,
+	metadataedit/iptc/iptcproperties.cpp,
+	metadataedit/iptc/iptcstatus.cpp,
+	metadataedit/plugin/altlangstringedit.cpp,
+	metadataedit/xmp/xmpcategories.cpp,
+	metadataedit/xmp/xmpcontent.cpp, metadataedit/xmp/xmpcredits.cpp,
+	metadataedit/xmp/xmporigin.cpp, metadataedit/xmp/xmpproperties.cpp,
+	metadataedit/xmp/xmpstatus.cpp,
+	panorama/importwizard/importwizarddlg.cpp,
+	panorama/importwizard/optimizepage.cpp,
+	panorama/importwizard/preprocessingpage.cpp,
+	picasawebexport/picasawebreplacedialog.cpp,
+	picasawebexport/picasawebtalker.cpp,
+	picasawebexport/picasawebwidget.cpp,
+	picasawebexport/picasawebwindow.cpp,
+	picasawebexport/plugin_picasawebexport.cpp,
+	piwigoexport/piwigoconfig.cpp, piwigoexport/piwigotalker.cpp,
+	piwigoexport/piwigowindow.cpp,
+	printimages/plugin/plugin_printimages.cpp,
+	printimages/wizard/customdlg.cpp,
+	printimages/wizard/printhelper.cpp,
+	printimages/wizard/printoptionspage.cpp,
+	printimages/wizard/wizard.cpp, rajceexport/rajcewidget.cpp,
+	rajceexport/rajcewindow.cpp, rawconverter/dialogs/batchdialog.cpp,
+	rawconverter/dialogs/singledialog.cpp, sendimages/sendimages.cpp,
+	shwup/plugin_shwup.cpp, shwup/swconnector.cpp, shwup/swwidget.cpp,
+	shwup/swwindow.cpp, smug/plugin_smug.cpp, smug/smugtalker.cpp,
+	smug/smugwidget.cpp, smug/smugwindow.cpp,
+	timeadjust/timeadjustdialog.cpp, yandexfotki/logindialog.cpp,
+	yandexfotki/plugin_yandexfotki.cpp, yandexfotki/yftalker.cpp,
+	yandexfotki/yfwindow.cpp: normalize signals/slots
+
+2011-07-31  Andi Clemens <andi.clemens@googlemail.com>
+
+	* gpssync/borrowed/modeltest.cpp: fix compile warning: unused
+	parameter
+
+2011-07-29  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/tests/test_rgtagmodel.cpp: Fix typo.
+
+2011-07-28  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/backend-geonames-rg.cpp,
+	gpssync/backend-geonamesUS-rg.cpp, gpssync/backend-osm-rg.cpp,
+	gpssync/borrowed-future/klinkitemselectionmodel.cpp,
+	gpssync/borrowed/modeltest.cpp, gpssync/gpsbookmarkowner.cpp,
+	gpssync/gpscorrelatorwidget.cpp, gpssync/gpsdataparser.cpp,
+	gpssync/gpsimagedetails.cpp, gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpssyncdialog.cpp,
+	gpssync/inputboxnocancel.cpp, gpssync/kipiimagelist.cpp,
+	gpssync/kipiimagemodel.cpp, gpssync/rgtagmodel.cpp,
+	gpssync/searchbackend.cpp, gpssync/searchwidget.cpp,
+	gpssync/tests/test_gpxparsing.cpp: Normalize function signatures in
+	SIGNAL/SLOT macros.  As described in [1], writing the function signatures in the SIGNAL
+	and SLOT macros in the normalized form can speed up
+	connect/disconnect statements. This normalization was done using the
+	normalize tool from Qt.  [1]
+
+	http://marcmutz.wordpress.com/effective-qt/prefer-to-use-normalised-signalslot-signatures/
+
+2011-07-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: 2.1.0
+
+2011-07-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: 2.1.0
+
+2011-07-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/NEWS.2.0.0: polish
+
+2011-07-28  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-07-27  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.0.0: Update Changelog and NEWS
+
 2.0.0 2011-07-27
 
 2011-07-27  Script Kiddy <scripty@kde.org>
