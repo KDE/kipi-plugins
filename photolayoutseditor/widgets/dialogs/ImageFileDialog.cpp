@@ -71,7 +71,7 @@ int ImageFileDialog::exec()
     {
         m_format = 0;
         KMessageBox::error(this,
-                           i18n("Currently this file type (%1) is unsupported.\nPleas notify the author and ask for it in the next versions of the application.", filter.toAscii().constData()),
+                           i18n("Currently this file type (%1) is unsupported.\nPlease notify the author and ask for it in the next versions of the application.", filter.toAscii().constData()),
                            i18n("The image can't be saved!"));
         return KFileDialog::Rejected;
     }

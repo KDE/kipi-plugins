@@ -472,7 +472,7 @@ void CanvasEditTool::setupGUI()
         d->background_image_scalling = new KComboBox(d->background_image_widget);
         d->background_image_scalling->addItems(d->background_image_scalling_map.values());
         d->background_image_scalling->setEnabled(false);
-        d->backgroundImageFormLayout->addRow(i18n("Scalling"), d->background_image_scalling);
+        d->backgroundImageFormLayout->addRow(i18n("Scaling"), d->background_image_scalling);
         d->background_image_scalling->setCurrentIndex(-1);
 
         d->background_image_tiled = new QCheckBox(d->background_image_widget);
