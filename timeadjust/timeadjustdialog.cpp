@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -193,7 +193,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
                    ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
-                         "(c) 2006-2009, Gilles Caulier"));
+                         "(c) 2006-2011, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Jesper K. Pedersen"),
                         ki18n("Author"),
@@ -280,8 +280,8 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->adjTypeChooser = new QComboBox(d->adjustGroupBox);
     d->adjTypeChooser->addItem(i18n("Copy value"));
-    d->adjTypeChooser->addItem(i18n("Add"));
-    d->adjTypeChooser->addItem(i18n("Subtract"));
+    d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date", "Add"));
+    d->adjTypeChooser->addItem(i18nc("substract a fixed time stamp to date", "Subtract"));
     d->adjDaysInput = new QSpinBox(d->adjustGroupBox);
     d->adjDaysInput->setRange(0, 9999);
     d->adjDaysInput->setSingleStep(1);
