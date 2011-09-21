@@ -64,14 +64,14 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
         ColorFill,
         PatternFill,
         GradientFill,
-        ImageFill,
+        ImageFill
     };
 
     enum ScallingType
     {
         Expanded = 1,
         Scaled = 2,
-        Manual = 4,
+        Manual = 4
     };
 
     CanvasEditToolPrivate(CanvasEditTool * parent) :

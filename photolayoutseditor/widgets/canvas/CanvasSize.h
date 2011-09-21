@@ -45,7 +45,7 @@ namespace KIPIPhotoLayoutsEditor
                 PixelsPerCentimeter,
                 PixelsPerInch,
                 PixelsPerPoint,
-                PixelsPerPicas,
+                PixelsPerPicas
             };
 
             enum SizeUnits
@@ -56,7 +56,7 @@ namespace KIPIPhotoLayoutsEditor
                 Centimeters,
                 Inches,
                 Points,
-                Picas,
+                Picas
             };
 
             static QList<qreal> resolutionUnitsFactors();

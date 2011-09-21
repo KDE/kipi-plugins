@@ -43,6 +43,6 @@ namespace KIPIPhotoLayoutsEditor
             virtual void setItem(QObject * graphicsItem, const QModelIndex & index) = 0;
             virtual QObject * item(const QModelIndex & index) const = 0;
     };
-};
+}
 
 #endif // ABSTRACTMOVABLEMODEL_H

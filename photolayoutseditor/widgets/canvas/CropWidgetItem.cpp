@@ -51,7 +51,7 @@ class KIPIPhotoLayoutsEditor::CropWidgetItemPrivate
     {
         Left,
         HCenter,
-        Right,
+        Right
     };
 
     CropWidgetItemPrivate() :

@@ -44,6 +44,6 @@ namespace KIPIPhotoLayoutsEditor
         friend class Canvas;
         friend class CanvasSavingThread;
     };
-};
+}
 
 #endif // CANVAS_P_H

@@ -70,7 +70,7 @@ namespace KIPIPhotoLayoutsEditor
                 Viewing = 1,
                 Zooming = 2,
                 MultiSelecting = 4,
-                SingleSelcting = 8,
+                SingleSelcting = 8
             };
 
             explicit Canvas(const CanvasSize & size, QWidget * parent = 0);
