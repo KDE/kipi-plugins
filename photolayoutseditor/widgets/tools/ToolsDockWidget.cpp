@@ -199,7 +199,7 @@ ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
     // Photo effects tool
     m_effects_button = new KPushButton(KGuiItem("", ":/tool_effects.png",
                                               i18n("Image effects editor"),
-                                              i18n("This tool allows you to edit existing effects of your photo layers and add some new once.")), widget);
+                                              i18n("This tool allows you to edit existing effects of your photo layers and add some new one.")), widget);
     m_effects_button->setIconSize(QSize(24,24));
     m_effects_button->setFixedSize(32,32);
     m_effects_button->setCheckable(true);
