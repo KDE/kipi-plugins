@@ -1,11 +1,19 @@
 [Desktop Entry]
 Name=PolaroidBorderDrawerFactory
-Name[pl]=PolaroidBorderDrawerFactory
+Name[nl]=PolaroidRandenAanbrenger
+Name[pt]=PolaroidBorderDrawerFactory
+Name[sv]=Skapa uppritare av polaroidkant
+Name[uk]=Малювання поляризованої рамки
+Name[x-test]=xxPolaroidBorderDrawerFactoryxx
 Type=Service
 ServiceTypes=PhotoLayoutsEditor/BorderPlugin
 Encoding=UTF-8
 Comment=Polaroid border drawer for Photo Layouts Editor
-Comment[pl]=Wtyczka rysująca obramowanie w kształcie zdjęcia z aparatu Polaroid dla programu Photo Layouts Editor
+Comment[nl]=Polaroid-randen aanbrenger voor Foto-indelingbewerker
+Comment[pt]=Moldura de Polaroid para o Editor de Formatos de Fotografias
+Comment[sv]=Uppritning av polaroidkanter för fotolayouteditor
+Comment[uk]=Інструмент малювання рамки Поляроїд для редактора компонуванння фотографії
+Comment[x-test]=xxPolaroid border drawer for Photo Layouts Editorxx
 
 X-KDE-Library=photolayoutseditorborderplugin_polaroid
 author=Łukasz Spas, lukasz dot spas at gmail dot com

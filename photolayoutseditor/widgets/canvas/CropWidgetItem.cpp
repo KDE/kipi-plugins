@@ -51,7 +51,7 @@ class KIPIPhotoLayoutsEditor::CropWidgetItemPrivate
     {
         Left,
         HCenter,
-        Right,
+        Right
     };
 
     CropWidgetItemPrivate() :
@@ -256,7 +256,17 @@ void CropWidgetItem::keyPressEvent(QKeyEvent * event)
         else
         {
             KMessageBox::error(0,
+<<<<<<< HEAD
                                i18n("Bounding rectangle of the crop shape has less size than 1px x 1px.")
+=======
+            // We need this hint to xgettext otherwise it thinks that %1p is the printf %p with a 1 modifier
+            // xgettext: no-c-format
+                               i18n("Bounding rectangle of the crop shape has size [%1px x %2px] "
+                                    "and it's less than 1px x 1px",
+                                    QString::number(qRound(d->m_rect.width())),
+                                    QString::number(qRound(d->m_rect.height()))
+                                    )
+>>>>>>> 63a2687c09effdf927eebe384a4255b6793aa619
                                );
         }
         event->setAccepted(true);

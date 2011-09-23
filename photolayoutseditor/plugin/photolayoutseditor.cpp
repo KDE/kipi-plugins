@@ -86,6 +86,10 @@
 #include "BorderDrawerInterface.h"
 #include "BorderDrawersLoader.h"
 
+// Q_*_RESOURCE cannot be used in a namespace
+inline void initIconsResource() { Q_INIT_RESOURCE(icons); }
+inline void cleanupIconsResource() { Q_CLEANUP_RESOURCE(icons); }
+
 using namespace KIPIPhotoLayoutsEditor;
 
 class KIPIPhotoLayoutsEditor::CanvasSizeChangeCommand : public QUndoCommand
@@ -132,7 +136,11 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
     m_interface(0),
     d(new PhotoLayoutsEditorPriv)
 {
+<<<<<<< HEAD
     initResources();
+=======
+    initIconsResource();
+>>>>>>> 63a2687c09effdf927eebe384a4255b6793aa619
 
     this->componentData().setAboutData( PLEAboutData() );
 
@@ -166,7 +174,11 @@ PhotoLayoutsEditor::~PhotoLayoutsEditor()
 
     m_instance = 0;
 
+<<<<<<< HEAD
     cleanupResources();
+=======
+    cleanupIconsResource();
+>>>>>>> 63a2687c09effdf927eebe384a4255b6793aa619
 }
 
 PhotoLayoutsEditor * PhotoLayoutsEditor::instance(QWidget * parent)

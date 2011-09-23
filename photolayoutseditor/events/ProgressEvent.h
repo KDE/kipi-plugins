@@ -41,7 +41,7 @@ namespace KIPIPhotoLayoutsEditor
                 Init,
                 ProgressUpdate,
                 ActionUpdate,
-                Finish,
+                Finish
             };
 
             explicit ProgressEvent(QObject * sender) :

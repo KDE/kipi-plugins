@@ -135,7 +135,7 @@ class KIPIPhotoLayoutsEditor::ScalingWidgetItemPrivate
     {
         Left,
         HCenter,
-        Right,
+        Right
     };
 
     ScalingWidgetItemPrivate() :

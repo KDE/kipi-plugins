@@ -72,14 +72,14 @@ namespace KIPIPhotoLayoutsEditor
                 OneclickFocusItems = 8,
                 Rotating = 16,
                 Scaling = 32,
-                Cropping = 64,
+                Cropping = 64
             };
 
             enum SelectionMode
             {
                 NoSelection = 0,
                 SingleSelection = 1,
-                MultiSelection = 2,
+                MultiSelection = 2
             };
 
         public:
