@@ -118,16 +118,6 @@ public:
     }
 };
 
-void initResources()
-{
-    Q_INIT_RESOURCE(icons);
-}
-
-void cleanupResources()
-{
-    Q_CLEANUP_RESOURCE(icons);
-}
-
 PhotoLayoutsEditor * PhotoLayoutsEditor::m_instance = 0;
 
 PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
@@ -136,11 +126,7 @@ PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
     m_interface(0),
     d(new PhotoLayoutsEditorPriv)
 {
-<<<<<<< HEAD
-    initResources();
-=======
     initIconsResource();
->>>>>>> 63a2687c09effdf927eebe384a4255b6793aa619
 
     this->componentData().setAboutData( PLEAboutData() );
 
@@ -174,11 +160,7 @@ PhotoLayoutsEditor::~PhotoLayoutsEditor()
 
     m_instance = 0;
 
-<<<<<<< HEAD
-    cleanupResources();
-=======
     cleanupIconsResource();
->>>>>>> 63a2687c09effdf927eebe384a4255b6793aa619
 }
 
 PhotoLayoutsEditor * PhotoLayoutsEditor::instance(QWidget * parent)
