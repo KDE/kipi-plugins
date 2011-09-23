@@ -256,11 +256,7 @@ void CropWidgetItem::keyPressEvent(QKeyEvent * event)
         else
         {
             KMessageBox::error(0,
-                               i18n("Bounding rectangle of the crop shape has size [%1px x %2px] "
-                                    "and it's less than 1px x 1px",
-                                    QString::number(qRound(d->m_rect.width())),
-                                    QString::number(qRound(d->m_rect.height()))
-                                    )
+                               i18n("Bounding rectangle of the crop shape has less size than 1px x 1px.")
                                );
         }
         event->setAccepted(true);
