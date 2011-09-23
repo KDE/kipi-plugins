@@ -1,11 +1,13 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Photo Layouts Editor
+Name[nl]=Foto-indelingbewerker
 Name[pt]=Editor de Formatos de Fotografias
 Name[sv]=Fotolayouteditor
 Name[uk]=Редактор компонування фотографій
 Name[x-test]=xxPhoto Layouts Editorxx
 Comment=Photo layouts management tool
+Comment[nl]=Foto-indelingenbeheerder
 Comment[pt]=Ferramenta de gestão de formatos de fotografias
 Comment[sv]=Hanteringsverktyg för fotolayout
 Comment[uk]=Інструмент керування фотокомпозиціями
