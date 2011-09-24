@@ -85,6 +85,7 @@ void CanvasSavingThread::run()
         default:
             j = "px";
             qDebug() << "Unhandled size unit at:" << __FILE__ << ":" << __LINE__;
+            break;
     }
     svg.setAttribute("width", QString::number(m_canvas->d->m_size.size().width()) + j);
     svg.setAttribute("height", QString::number(m_canvas->d->m_size.size().height()) + j);
