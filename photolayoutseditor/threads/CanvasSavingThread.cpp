@@ -101,7 +101,10 @@ void CanvasSavingThread::run()
 
     Scene * scene = dynamic_cast<Scene*>(m_canvas->scene());
     if (!scene)
+    {
         this->exit(1);
+        return;
+    }
     QDomDocument sceneDocument = scene->toSvg(this);
     QDomElement sceneElement = sceneDocument.documentElement();
     if (sceneElement.isNull())
