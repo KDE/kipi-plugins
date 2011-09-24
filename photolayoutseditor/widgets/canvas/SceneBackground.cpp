@@ -568,7 +568,7 @@ QVariant SceneBackground::itemChange(GraphicsItemChange change, const QVariant &
         case QGraphicsItem::ItemSceneHasChanged:
             sceneChanged();
             break;
-        default:;
+        default: break;
     }
     return QGraphicsItem::itemChange(change, value);
 }
