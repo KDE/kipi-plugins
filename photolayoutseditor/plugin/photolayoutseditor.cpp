@@ -314,8 +314,8 @@ void PhotoLayoutsEditor::refreshActions()
         isEnabledForCanvas = true;
         d->undoAction->setEnabled(m_canvas->undoStack()->canUndo());
         d->redoAction->setEnabled(m_canvas->undoStack()->canRedo());
+        d->saveAction->setEnabled(isEnabledForCanvas && !m_canvas->isSaved());
     }
-    d->saveAction->setEnabled(isEnabledForCanvas && !m_canvas->isSaved());
     d->saveAsAction->setEnabled(isEnabledForCanvas);
     d->exportFileAction->setEnabled(isEnabledForCanvas);
     d->printPreviewAction->setEnabled(isEnabledForCanvas);
