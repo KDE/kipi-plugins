@@ -231,11 +231,11 @@ void PhotoLayoutsEditor::setItemsList(const KUrl::List & images)
 void PhotoLayoutsEditor::setupActions()
 {
     d->openNewFileAction = KStandardAction::openNew(this, SLOT(open()), actionCollection());
-    d->openNewFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_N));
+//    d->openNewFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_N));
     actionCollection()->addAction("open_new", d->openNewFileAction);
     //------------------------------------------------------------------------
     d->openFileAction = KStandardAction::open(this, SLOT(openDialog()), actionCollection());
-    d->openFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_O));
+//    d->openFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_O));
     actionCollection()->addAction("open", d->openFileAction);
     //------------------------------------------------------------------------
     d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(const KUrl &)), actionCollection());
@@ -246,7 +246,7 @@ void PhotoLayoutsEditor::setupActions()
     actionCollection()->addAction("open_recent", d->openRecentFilesMenu);
     //------------------------------------------------------------------------
     d->saveAction = KStandardAction::save(this, SLOT(save()), actionCollection());
-    d->saveAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_S));
+//    d->saveAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_S));
     actionCollection()->addAction("save", d->saveAction);
     //------------------------------------------------------------------------
     d->saveAsAction = KStandardAction::saveAs(this, SLOT(saveAs()), actionCollection());
@@ -263,23 +263,23 @@ void PhotoLayoutsEditor::setupActions()
     actionCollection()->addAction("print_preview", d->printPreviewAction);
     //------------------------------------------------------------------------
     d->printAction = KStandardAction::print(this, SLOT(print()), actionCollection());
-    d->printAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
+//    d->printAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_P));
     actionCollection()->addAction("print", d->printAction);
     //------------------------------------------------------------------------
     d->closeAction = KStandardAction::close(this, SLOT(closeDocument()), actionCollection());
-    d->closeAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Q));
+//    d->closeAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Q));
     actionCollection()->addAction("close", d->closeAction);
     //------------------------------------------------------------------------
     d->quitAction = KStandardAction::quit(this, SLOT(close()), actionCollection());
-    d->quitAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Q));
+//    d->quitAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Q));
     actionCollection()->addAction("quit", d->quitAction);
     //------------------------------------------------------------------------
     d->undoAction = KStandardAction::undo(0, 0, actionCollection());
-    d->undoAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Z));
+//    d->undoAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_Z));
     actionCollection()->addAction("undo", d->undoAction);
     //------------------------------------------------------------------------
     d->redoAction = KStandardAction::redo(0, 0, actionCollection());
-    d->redoAction->setShortcut(KShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Z));
+//    d->redoAction->setShortcut(KShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Z));
     actionCollection()->addAction("redo", d->redoAction);
     //------------------------------------------------------------------------
     d->settingsAction = KStandardAction::preferences(this, SLOT(settings()), actionCollection());
