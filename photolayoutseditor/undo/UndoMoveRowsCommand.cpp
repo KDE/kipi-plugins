@@ -77,8 +77,11 @@ void UndoMoveRowsCommand::redo()
         qDebug() << "\tStarting Row =" << m_starting_row;
         qDebug() << "\tRows count =" << m_rows_count;
         qDebug() << "\tDestination Row =" << m_destination_row;
-        qDebug() << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
-        qDebug() << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
+        if (m_model)
+        {
+            qDebug() << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
+            qDebug() << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
+        }
     }
 #endif
 }
@@ -97,8 +100,11 @@ void UndoMoveRowsCommand::undo()
         qDebug() << "\tStarting Row =" << m_starting_row;
         qDebug() << "\tRows count =" << m_rows_count;
         qDebug() << "\tDestination Row =" << m_destination_row;
-        qDebug() << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
-        qDebug() << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
+        if (m_model)
+        {
+            qDebug() << "\tSource Parent =" << m_model->findIndex(m_src_parent_row);
+            qDebug() << "\tDestination Parent =" << m_model->findIndex(m_dest_parent_row);
+        }
     }
 #endif
 }
