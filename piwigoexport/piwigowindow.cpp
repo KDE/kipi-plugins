@@ -529,6 +529,10 @@ void PiwigoWindow::slotAlbums(const QList<GAlbum>& albumList)
 void PiwigoWindow::slotAlbumSelected()
 {
     QTreeWidgetItem* item = d->albumView->currentItem();
+    if (!item)
+    {
+        return;
+    }
 
     // stop loading if user clicked an image
     if ( item->text(2) == i18n("Image") )
