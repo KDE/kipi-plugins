@@ -664,6 +664,7 @@ void PiwigoWindow::slotEnableSpinBox(int n)
         break;
     default:
         b = false;
+        break;
     }
     d->dimensionSpinBox->setEnabled(b);
 }
