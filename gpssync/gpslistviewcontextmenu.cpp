@@ -457,7 +457,7 @@ void GPSListViewContextMenu::pasteActionTriggered()
     setGPSDataForSelectedItems(gpsData, i18n("Coordinates pasted"));
 }
 
-void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer gpsData, const QString& undoDescription)
+void GPSListViewContextMenu::setGPSDataForSelectedItems(const GPSDataContainer& gpsData, const QString& undoDescription)
 {
     KipiImageModel* const imageModel = d->imagesList->getModel();
     QItemSelectionModel* const selectionModel = d->imagesList->getSelectionModel();

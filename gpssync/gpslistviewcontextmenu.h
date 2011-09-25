@@ -63,7 +63,7 @@ public:
 protected:
 
     virtual bool eventFilter(QObject *watched, QEvent *event);
-    void setGPSDataForSelectedItems(const GPSDataContainer gpsData, const QString& undoDescription);
+    void setGPSDataForSelectedItems(const GPSDataContainer& gpsData, const QString& undoDescription);
     static bool getCurrentPosition(GPSDataContainer* position, void* mydata);
     bool getCurrentItemPositionAndUrl(GPSDataContainer* const gpsInfo, KUrl* const itemUrl);
     void removeInformationFromSelectedImages(const GPSDataContainer::HasFlags flagsToClear, const QString& undoDescription);
