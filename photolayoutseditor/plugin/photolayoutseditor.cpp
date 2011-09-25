@@ -238,7 +238,7 @@ void PhotoLayoutsEditor::setupActions()
 //    d->openFileAction->setShortcut(KShortcut(Qt::CTRL + Qt::Key_O));
     actionCollection()->addAction("open", d->openFileAction);
     //------------------------------------------------------------------------
-    d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(const KUrl &)), actionCollection());
+    d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(KUrl)), actionCollection());
     KUrl::List urls = PLEConfigSkeleton::recentFiles();
     foreach (KUrl url, urls)
         d->openRecentFilesMenu->addUrl(url);
