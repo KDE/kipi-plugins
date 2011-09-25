@@ -80,7 +80,7 @@ AbstractPhoto * PhotoEffectsLoader::photo() const
 bool PhotoEffectsLoader::registerEffect(AbstractPhotoEffectFactory * effectFactory)
 {
     QString effectName = effectFactory->effectName();
-    QStringList names = effectName.split(";", QString::SkipEmptyParts);
+    QStringList names = effectName.split(';', QString::SkipEmptyParts);
     bool result = true;
     foreach (QString name, names)
         result &= (registeredEffects.insert(name, effectFactory) != registeredEffects.end());

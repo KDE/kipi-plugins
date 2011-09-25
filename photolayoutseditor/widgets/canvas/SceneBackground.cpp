@@ -416,7 +416,7 @@ QDomElement SceneBackground::toSvg(QDomDocument & document) const
             bckg.setAttribute("width", pattern.attribute("width"));
             bckg.setAttribute("height",pattern.attribute("height"));
         }
-        bckg.setAttribute("fill", "url(#"+pattern.attribute("id")+")");
+        bckg.setAttribute("fill", "url(#"+pattern.attribute("id")+')');
         result.appendChild(bckg);
     }
     else if (this->isGradient())

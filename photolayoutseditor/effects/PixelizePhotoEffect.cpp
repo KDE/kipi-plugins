@@ -120,7 +120,7 @@ QtAbstractPropertyBrowser * PixelizePhotoEffect::propertyBrowser() const
 
 QString PixelizePhotoEffect::toString() const
 {
-    return i18n("Pixelize [") + PIXEL_SIZE_STRING + "=" + QString::number(m_pixelSize) + "]";
+    return i18n("Pixelize [") + PIXEL_SIZE_STRING + '=' + QString::number(m_pixelSize) + ']';
 }
 
 void PixelizePhotoEffect::propertyChanged(QtProperty * property)

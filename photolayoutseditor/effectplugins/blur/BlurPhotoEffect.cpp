@@ -55,7 +55,7 @@ QString BlurPhotoEffect::name() const
 
 QString BlurPhotoEffect::toString() const
 {
-    return i18n("Blur effect") + " [" + QString::number(this->radius()) + "]";
+    return i18n("Blur effect") + " [" + QString::number(this->radius()) + ']';
 }
 
 BlurPhotoEffect::operator QString() const

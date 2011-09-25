@@ -188,25 +188,25 @@ QDomDocument AbstractPhoto::toSvg() const
     QTransform transform = this->transform();
     QString translate = "translate("+
                         QString::number(this->pos().x())+
-                        ","+
+                        ','+
                         QString::number(this->pos().y())+
-                        ")";
+                        ')';
     QString matrix = "matrix("+
                      QString::number(transform.m11())+
-                     ","+
+                     ','+
                      QString::number(transform.m12())+
-                     ","+
+                     ','+
                      QString::number(transform.m21())+
-                     ","+
+                     ','+
                      QString::number(transform.m22())+
-                     ","+
+                     ','+
                      QString::number(transform.m31())+
-                     ","+
+                     ','+
                      QString::number(transform.m32())+
-                     ")";
+                     ')';
     QDomElement itemSVG = document.createElement("g");
     document.appendChild(itemSVG);
-    itemSVG.setAttribute("transform", translate + " " + matrix);
+    itemSVG.setAttribute("transform", translate + ' ' + matrix);
     itemSVG.setAttribute("id", this->id());
     itemSVG.setAttribute("name", QString(this->name().toUtf8()));
     if (!this->isVisible())
@@ -249,7 +249,7 @@ QDomDocument AbstractPhoto::toSvg() const
 
     // 'use'
     QDomElement use = document.createElement("use");
-    use.setAttribute("xlink:href","#"+visibleData.attribute("id"));
+    use.setAttribute("xlink:href",'#'+visibleData.attribute("id"));
     use.setAttribute("style","clip-path: url(#" + clipPath.attribute("id") + ");");
     itemSVG.appendChild(use);
 
@@ -259,7 +259,7 @@ QDomDocument AbstractPhoto::toSvg() const
 
     // 'g'->'use'
     QDomElement use3 = document.createElement("use");
-    use3.setAttribute("xlink:href","#" + clipPath.attribute("id"));
+    use3.setAttribute("xlink:href",'#' + clipPath.attribute("id"));
     g2.appendChild(use3);
 
      /*

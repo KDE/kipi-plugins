@@ -54,9 +54,9 @@ void CanvasSavingThread::run()
     document.appendChild(svg);
 
     svg.setAttribute("xmlns","http://www.w3.org/2000/svg");
-    svg.setAttribute("viewBox", QString::number(sceneRect.x()) + " " +
-                                QString::number(sceneRect.y()) + " " +
-                                QString::number(sceneRect.width()) + " " +
+    svg.setAttribute("viewBox", QString::number(sceneRect.x()) + ' ' +
+                                QString::number(sceneRect.y()) + ' ' +
+                                QString::number(sceneRect.width()) + ' ' +
                                 QString::number(sceneRect.height()));
     svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
     svg.setAttribute("version", "1.2");

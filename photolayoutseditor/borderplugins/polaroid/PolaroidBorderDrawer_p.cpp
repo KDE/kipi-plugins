@@ -191,16 +191,16 @@ QString PolaroidBorderDrawer::pathToSvg(const QPainterPath & path) const
         switch (e.type)
         {
         case QPainterPath::LineToElement:
-            str_path_d.append("L " + QString::number(e.x) + " " + QString::number(e.y) + " ");
+            str_path_d.append("L " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
             break;
         case QPainterPath::MoveToElement:
-            str_path_d.append("M " + QString::number(e.x) + " " + QString::number(e.y) + " ");
+            str_path_d.append("M " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
             break;
         case QPainterPath::CurveToElement:
-            str_path_d.append("C " + QString::number(e.x) + " " + QString::number(e.y) + " ");
+            str_path_d.append("C " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
             break;
         case QPainterPath::CurveToDataElement:
-            str_path_d.append(QString::number(e.x) + " " + QString::number(e.y) + " ");
+            str_path_d.append(QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
             break;
         }
     }

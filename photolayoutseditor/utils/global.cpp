@@ -64,16 +64,16 @@ QDomDocument KIPIPhotoLayoutsEditor::pathToSvg(const QPainterPath & path)
         switch (e.type)
         {
             case QPainterPath::LineToElement:
-                str_path_d.append("L " + QString::number(e.x) + " " + QString::number(e.y) + " ");
+                str_path_d.append("L " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
                 break;
             case QPainterPath::MoveToElement:
-                str_path_d.append("M " + QString::number(e.x) + " " + QString::number(e.y) + " ");
+                str_path_d.append("M " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
                 break;
             case QPainterPath::CurveToElement:
-                str_path_d.append("C " + QString::number(e.x) + " " + QString::number(e.y) + " ");
+                str_path_d.append("C " + QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
                 break;
             case QPainterPath::CurveToDataElement:
-                str_path_d.append(QString::number(e.x) + " " + QString::number(e.y) + " ");
+                str_path_d.append(QString::number(e.x) + ' ' + QString::number(e.y) + ' ');
                 break;
             default:
                 Q_ASSERT(e.type == QPainterPath::CurveToDataElement ||
@@ -101,7 +101,7 @@ QPainterPath KIPIPhotoLayoutsEditor::pathFromSvg(const QDomElement & element)
     if (element.tagName() != "path")
         return result;
     QString d = element.attribute("d");
-    QStringList list = d.split(" ", QString::SkipEmptyParts);
+    QStringList list = d.split(' ', QString::SkipEmptyParts);
     QStringList::const_iterator it = list.begin();
     QQueue<qreal> coordinates;
     QQueue<char> operations;
