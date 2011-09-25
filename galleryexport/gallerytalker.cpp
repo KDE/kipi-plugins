@@ -538,7 +538,8 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
     GPhotoList photoList;
     GPhotoList::iterator iter = photoList.begin();
 
-    QString albumURL;
+    /// @todo Unused variable albumURL - Michael Hansen
+//     QString albumURL;
 
     while (!ts.atEnd())
     {
@@ -575,10 +576,12 @@ void GalleryTalker::parseResponseListPhotos(const QByteArray &data)
                 {
                         (*iter).thumbName = value;
                 }
-                else if (key.startsWith(QLatin1String(("baseurl"))))
-                {
-                        albumURL = value.replace("\\", "");     // doesn't compile fixing EBN Krazy issue!!
-                }
+                /// @todo Unused variable albumURL - Michael Hansen
+//                 else if (key.startsWith(QLatin1String(("baseurl"))))
+//                 {
+//                         /// @todo I would recommend to use QString::remove('\\') instead - Michael Hansen
+//                         albumURL = value.replace("\\", "");     // doesn't compile fixing EBN Krazy issue!!
+//                 }
             }
         }
     }
