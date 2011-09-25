@@ -705,7 +705,7 @@ void PicasawebWindow::uploadNextPhoto()
             QStringList::const_iterator itT;
             for(itT = info.tags.constBegin(); itT != info.tags.constEnd(); ++itT)
             {
-                QStringList strListTmp = itT->split("/");
+                QStringList strListTmp = itT->split('/');
                 QStringList::const_iterator itT2;
                 for(itT2 = strListTmp.constBegin(); itT2 != strListTmp.constEnd(); ++itT2)
                 {

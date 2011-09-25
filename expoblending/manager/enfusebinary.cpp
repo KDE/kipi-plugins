@@ -65,13 +65,13 @@ void EnfuseBinary::checkSystem()
         headerStarts = QString("enfuse ");
         firstLine = findHeader(stdOut.split('\n', QString::SkipEmptyParts), headerStarts);
         kDebug() << path() << " help header line: \n" << firstLine;
-        m_version = firstLine.remove(0, headerStarts.length()).section("-", 0, 0);
+        m_version = firstLine.remove(0, headerStarts.length()).section('-', 0, 0);
         kDebug() << "Found " << path() << " version: " << version();
     }
     else
     {
         kDebug() << path() << " help header line: \n" << firstLine;
-        m_version = firstLine.remove(0, headerStarts.length()).section(" ", 0, 0);
+        m_version = firstLine.remove(0, headerStarts.length()).section(' ', 0, 0);
         kDebug() << "Found " << path() << " version: " << version();
     }
 }

@@ -285,11 +285,11 @@ void FbTalker::doOAuth()
         url = KUrl( textbox->text() );
         QString fragment = url.fragment();
         kDebug() << "Split out the fragment from the URL: " << fragment;
-        QStringList params = fragment.split("&");
+        QStringList params = fragment.split('&');
         QList<QString>::iterator i = params.begin();
         while( i != params.end() )
         {
-            QStringList keyvalue = (*i).split("=");
+            QStringList keyvalue = (*i).split('=');
             if( keyvalue.size() == 2 )
             {
                 if( ! keyvalue[0].compare( "access_token" ) )

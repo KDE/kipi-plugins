@@ -398,7 +398,7 @@ bool PicasawebTalker::addPhoto(const QString& photoPath, PicasaWebPhoto& info,
         whereElem.appendChild(pointElem);
         QDomElement gpsElem = docMeta.createElementNS("http://www.opengis.net/gml", "gml:pos");
         pointElem.appendChild(gpsElem);
-        QDomText gpsVal = docMeta.createTextNode(info.gpsLat + " " + info.gpsLon);
+        QDomText gpsVal = docMeta.createTextNode(info.gpsLat + ' ' + info.gpsLon);
         gpsElem.appendChild(gpsVal);
     }
 
@@ -472,7 +472,7 @@ bool PicasawebTalker::updatePhoto(const QString& photoPath, PicasaWebPhoto& info
         whereElem.appendChild(pointElem);
         QDomElement gpsElem = docMeta.createElementNS("http://www.opengis.net/gml", "gml:pos");
         pointElem.appendChild(gpsElem);
-        QDomText gpsVal = docMeta.createTextNode(info.gpsLat + " " + info.gpsLon);
+        QDomText gpsVal = docMeta.createTextNode(info.gpsLat + ' ' + info.gpsLon);
         gpsElem.appendChild(gpsVal);
     }
 
@@ -827,7 +827,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                             QDomNode geoPosNode = geoPointNode.toElement().namedItem("gml:pos");
                             if (!geoPosNode.isNull() && geoPosNode.isElement())
                             {
-                                QStringList value = geoPosNode.toElement().text().split(" ");
+                                QStringList value = geoPosNode.toElement().text().split(' ');
                                 if (value.size() == 2)
                                 {
                                     fps.gpsLat = value[0];
@@ -847,7 +847,7 @@ void PicasawebTalker::parseResponseListPhotos(const QByteArray& data)
                         QDomNode keywordNode = detailsElem.namedItem("media:keywords");
                         if (!keywordNode.isNull() && keywordNode.isElement())
                         {
-                            fps.tags = keywordNode.toElement().text().split(",");
+                            fps.tags = keywordNode.toElement().text().split(',');
                         }
 
                         QDomNodeList contentsList = detailsElem.elementsByTagName("media:content");

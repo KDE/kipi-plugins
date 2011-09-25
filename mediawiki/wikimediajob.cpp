@@ -105,7 +105,7 @@ void WikiMediaJob::uploadHandle(KJob* j)
 
         e1->setFile(file);
         m_currentFile=file->fileName();
-        kDebug() << "image name : " << file->fileName().split("/").last();
+        kDebug() << "image name : " << file->fileName().split('/').last();
         e1->setFilename(file->fileName());
         e1->setText(buildWikiText(info));
 

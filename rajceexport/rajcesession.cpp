@@ -611,7 +611,7 @@ QString AddPhotoCommand::additionalXml() const
     metadata["PerceivedType"] = "image"; //what are the other values here? video?
     metadata["OriginalWidth"] = QString::number(m_image.width());
     metadata["OriginalHeight"] = QString::number(m_image.height());
-    metadata["LengthMS"] = "0";
+    metadata["LengthMS"] = '0';
     metadata["FileSize"] = QString::number(f.size());
 
     //TODO extract these from exif

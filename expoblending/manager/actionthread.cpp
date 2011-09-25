@@ -413,7 +413,7 @@ void ActionThread::run()
                     KExiv2 meta;
                     meta.load(t->urls[0].toLocalFile());
                     meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
-                    meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace("\n", " ; "), false);
+                    meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace('\n', " ; "), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
                     if (t->enfuseSettings.outputFormat != SaveSettingsWidget::OUTPUT_JPEG)
                     {
@@ -616,7 +616,7 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
 {
     outUrl = d->preprocessingTmpDir->name();
     QFileInfo fi(inUrl.toLocalFile());
-    outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString("-preview.jpg"));
+    outUrl.setFileName(QString(".") + fi.completeBaseName().replace('.', '_') + QString("-preview.jpg"));
 
     QImage img;
     if (img.load(inUrl.toLocalFile()))
@@ -689,7 +689,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
         outUrl = d->preprocessingTmpDir->name();
         QFileInfo fi(inUrl.toLocalFile());
-        outUrl.setFileName(QString(".") + fi.completeBaseName().replace(".", "_") + QString(".tif"));
+        outUrl.setFileName(QString(".") + fi.completeBaseName().replace('.', '_') + QString(".tif"));
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
             return false;
