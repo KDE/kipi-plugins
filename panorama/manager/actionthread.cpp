@@ -867,8 +867,15 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
             sptr += 6;
         }
 
-        KExiv2 meta;
-        meta.load(inUrl.toLocalFile());
+        KExiv2 meta, meta_orig;
+        meta_orig.load(inUrl.toLocalFile());
+        KExiv2::MetaDataMap m = meta_orig.getExifTagsDataList(QStringList("Photo"), true);
+        KExiv2::MetaDataMap::iterator it;
+        for (it = m.begin(); it != m.end(); ++it)
+        {
+            meta_orig.removeExifTag(it.key().toAscii().data(), false);
+        }
+        meta.setData(meta_orig.data());
         meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
         meta.setImageDimensions(QSize(width, height));
         meta.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
@@ -1172,7 +1179,7 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
         ad2.id              = i;
         ad2.outUrl          = KUrl(d->preprocessingTmpDir->name());
         ad2.outUrl.setFileName(mkFile);
-        #pragma omp critical
+#pragma omp critical
         {
             emit finished(ad2);
         }
