@@ -468,7 +468,7 @@ void YandexFotkiTalker::reset()
         m_job = 0;
     }
 
-    m_token = QString();
+    m_token.clear();
     m_state = STATE_UNAUTHENTICATED;
 }
 
@@ -486,7 +486,7 @@ void YandexFotkiTalker::cancel()
     }
     else
     {
-        m_token = QString();
+        m_token.clear();
         m_state = STATE_UNAUTHENTICATED;
     }
 }
@@ -757,7 +757,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
     const QDomElement rootElem = doc.documentElement();
 
     // find next page link
-    m_albumsNextUrl = QString();
+    m_albumsNextUrl.clear();
     QDomElement linkElem = rootElem.firstChildElement("link");
 
     for ( ; !linkElem.isNull();
@@ -991,7 +991,7 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
     const QDomElement rootElem = doc.documentElement();
 
     // find next page link
-    m_photosNextUrl = QString();
+    m_photosNextUrl.clear();
     QDomElement linkElem = rootElem.firstChildElement("link");
 
     for ( ; !linkElem.isNull();

@@ -95,7 +95,7 @@ void FacebookJob::albumList(int errCode, const QString& errMsg, const QList<FbAl
     }
 
     setPercent(25);
-    QString id = QString();
+    QString id;
 
     foreach(const FbAlbum& album, albums)
     {

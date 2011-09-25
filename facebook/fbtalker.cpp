@@ -1238,7 +1238,7 @@ void FbTalker::parseResponseCreateAlbum(const QByteArray& data)
 
     kDebug() << "Parse Create Album response:" << endl << data;
 
-    QString newAlbumID  = QString();
+    QString newAlbumID;
     QDomElement docElem = doc.documentElement();
     if (docElem.tagName() == "photos_createAlbum_response")
     {

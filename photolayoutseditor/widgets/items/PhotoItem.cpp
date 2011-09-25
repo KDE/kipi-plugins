@@ -142,7 +142,7 @@ QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
                                                          "If not this image will be removed from the composition.").append(resultPath.toAscii()),
                                                     i18n("File reading error"));
             if (result != KMessageBox::Yes)
-                resultPath = QString();
+                resultPath.clear();
             else
             {
                 KUrl fileUrl(filePath);
@@ -150,7 +150,7 @@ QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
                 result = dialog.exec();
                 resultPath = dialog.selectedFile();
                 if (result != ImageFileDialog::Accepted || !QFile::exists(resultPath))
-                    resultPath = QString();
+                    resultPath.clear();
             }
         }
     }
