@@ -100,8 +100,8 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
                                           "the detected horizon is an horizontal line in the final panorama"));
     d->projectionAndSizeCheckbox    = new QCheckBox(i18n("Automatic projection and crop"), vbox);
     d->projectionAndSizeCheckbox->setChecked(group.readEntry("Output Projection And Size", true));
-    d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the panorama crop and the output projection to get the every "
-                                                 "photos into the panorama."));
+    d->projectionAndSizeCheckbox->setToolTip(i18n("Adapt the projection of the panorama and the cropping on the resulting "
+                                                  "projection so that every photo fits in the resulting panorama."));
     d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic projection and crop</b>: Automatically adapt the projection "
                                                     "and the crop of the panorama to get every photos into the panorama."));
 
