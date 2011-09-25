@@ -114,7 +114,7 @@ QtAbstractPropertyBrowser * BlurPhotoEffect::propertyBrowser() const
 
 QString BlurPhotoEffect::toString() const
 {
-    return this->name() + " [" + RADIUS_STRING + "=" + QString::number(m_radius) + "]" ;
+    return this->name() + " [" + RADIUS_STRING + '=' + QString::number(m_radius) + ']' ;
 }
 
 QString BlurPhotoEffect::effectName() const
