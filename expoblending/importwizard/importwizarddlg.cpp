@@ -133,7 +133,7 @@ void ImportWizardDlg::next()
     }
     else if (currentPage() == d->preProcessingPage->page())
     {
-        // Do not give acces to Next button during alignment process.
+        // Do not give access to Next button during alignment process.
         setValid(d->preProcessingPage->page(), false);
         d->preProcessingPage->process();
         // Next is handled with signals/slots

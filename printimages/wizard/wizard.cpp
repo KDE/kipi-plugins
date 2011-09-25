@@ -519,7 +519,7 @@ void Wizard::parseTemplateFile( const QString& fn, const QSizeF& pageSize )
                             else
                             {
                                 p->label = ep.attribute("name","XXX");
-                                kWarning() << "missed template tranlation " << desktopFileName;
+                                kWarning() << "missed template translation " << desktopFileName;
                             }
                             p->dpi = ep.attribute("dpi","0").toInt();
                             p->autoRotate = (ep.attribute("autorotate","false") == "true") ? true : false;

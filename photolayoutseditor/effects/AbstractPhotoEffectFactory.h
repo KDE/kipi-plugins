@@ -45,7 +45,7 @@ namespace KIPIPhotoLayoutsEditor
             {}
 
             /** Returns effects instance.
-            * \arg browser - as this argument you can set \class QtAbstractPropertyBrowser recieved from virtual
+            * \arg browser - as this argument you can set \class QtAbstractPropertyBrowser received from virtual
             * \fn propertyBrowser() method of this object.
             */
             virtual AbstractPhotoEffectInterface * getEffectInstance(const QString & name = QString()) = 0;

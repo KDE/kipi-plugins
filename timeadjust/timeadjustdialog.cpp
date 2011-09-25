@@ -281,7 +281,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     d->adjTypeChooser = new QComboBox(d->adjustGroupBox);
     d->adjTypeChooser->addItem(i18n("Copy value"));
     d->adjTypeChooser->addItem(i18nc("add a fixed time stamp to date", "Add"));
-    d->adjTypeChooser->addItem(i18nc("substract a fixed time stamp to date", "Subtract"));
+    d->adjTypeChooser->addItem(i18nc("subtract a fixed time stamp to date", "Subtract"));
     d->adjDaysInput = new QSpinBox(d->adjustGroupBox);
     d->adjDaysInput->setRange(0, 9999);
     d->adjDaysInput->setSingleStep(1);

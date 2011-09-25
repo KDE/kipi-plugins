@@ -843,7 +843,7 @@ void YandexFotkiTalker::parseResponseListAlbums(KJob* job)
     // if an error has occurred and we didn't find anything => notify user
     if (errorOccurred && m_albums.empty())
     {
-        kDebug() << "No result and errors have occured";
+        kDebug() << "No result and errors have occurred";
         return setErrorState(STATE_LISTALBUMS_ERROR);
     }
 
@@ -1026,7 +1026,7 @@ void YandexFotkiTalker::parseResponseListPhotos(KJob* job)
     // if an error has occurred and we didn't find anything => notify user
     if (errorOccurred && initialSize == m_photos.size())
     {
-        kError() << "No photos found, some XML errors have occured";
+        kError() << "No photos found, some XML errors have occurred";
         return setErrorState(STATE_LISTPHOTOS_ERROR);
     }
 

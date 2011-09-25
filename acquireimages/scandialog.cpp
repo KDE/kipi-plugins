@@ -267,9 +267,9 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
     d->saveThread->start();
 }
 
-void ScanDialog::slotThreadDone(const KUrl& url, bool sucess)
+void ScanDialog::slotThreadDone(const KUrl& url, bool success)
 {
-    if (!sucess)
+    if (!success)
         KMessageBox::error(0, i18n("Cannot save \"%1\" file", url.fileName()));
 
     if (d->interface)

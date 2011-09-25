@@ -833,8 +833,8 @@ QDomDocument Canvas::toSvg() const
 Canvas * Canvas::fromSvg(QDomDocument & document)
 {
     Canvas * result = 0;
-    QDomNodeList childs = document.childNodes();
-    if (childs.count())
+    QDomNodeList children = document.childNodes();
+    if (children.count())
     {
         QDomElement element = document.firstChildElement("svg");
         if (!element.isNull())

@@ -280,7 +280,7 @@ QDomDocument AbstractPhoto::toSvg() const
       *     </defs>
       *     <use />             // Cuts image
       *     <g>
-      *         <use />         // Print cutted image
+      *         <use />         // Print cut image
       *     </g>
       * </g>
       */

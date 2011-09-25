@@ -1241,7 +1241,7 @@ bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, cons
         errors = i18n("Cannot move panorama from %1 to %2.",
                       panoUrl.toLocalFile(),
                       finalPanoUrl.toLocalFile());
-        kDebug() << "Cannot move panorama: QFile errror = " + panoFile.error();
+        kDebug() << "Cannot move panorama: QFile error = " + panoFile.error();
         return false;
     }
 

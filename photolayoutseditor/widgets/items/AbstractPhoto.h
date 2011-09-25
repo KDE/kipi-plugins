@@ -79,14 +79,14 @@ namespace KIPIPhotoLayoutsEditor
 
             /** Returns item shape
               * Implement this method to return shape of the item.
-              * You should take into account only your item's implementation shape, not whith borders or effects shapes.
-              * This is done automaticaly by AbstractPhoto class.
+              * You should take into account only your item's implementation shape, not with borders or effects shapes.
+              * This is done automatically by AbstractPhoto class.
               */
             virtual QPainterPath itemShape() const = 0;
             /** Returns item opaque area
               * Implement this method to return opaque area of the item.
-              * You should take into account only your item's implementation opaque area, not whith borders or effects opaque areas.
-              * This is done automaticaly by AbstractPhoto class.
+              * You should take into account only your item's implementation opaque area, not with borders or effects opaque areas.
+              * This is done automatically by AbstractPhoto class.
               */
             virtual QPainterPath itemOpaqueArea() const = 0;
             /** Returns item's draw area.
@@ -147,7 +147,7 @@ namespace KIPIPhotoLayoutsEditor
 
         signals:
 
-          /** This signal is emited when item was changed and has been updated.
+          /** This signal is emitted when item was changed and has been updated.
             * It is used by listeners to update their views and be up to date.
             */
             void changed();
@@ -164,7 +164,7 @@ namespace KIPIPhotoLayoutsEditor
               * with visible data. For example it could be <image> tag if the item describes QGraphicsItem with image
               * or <text> tag if the item is the QGraphicsItem drawing text.
               * This data also should include applied all effects because this data will be directly presented to the user.
-              * Data will be also cutted to fit their visual shape.
+              * Data will be also cut to fit their visual shape.
               */
             virtual QDomDocument svgVisibleArea() const = 0;
 
