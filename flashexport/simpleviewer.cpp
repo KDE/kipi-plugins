@@ -495,7 +495,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         KIPI::ImageInfo info =d->interface->info(url);
         QMap<QString, QVariant> attribs = info.attributes();
         QStringList tagList = attribs["tags"].toStringList();
-        if(tagList.join(" ")!="")
+        if(!tagList.join(" ").isEmpty())
             keywords = QString("\nTags: ")+tagList.join(", ");
     }
     else
