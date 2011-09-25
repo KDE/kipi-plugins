@@ -2,6 +2,7 @@
 Name=SolidBorderDrawerFactory
 Name[nl]=VasteRandAanbrenger
 Name[pt]=SolidBorderDrawerFactory
+Name[pt_BR]=SolidBorderDrawerFactory
 Name[sv]=Skapa uppritare av ifylld kant
 Name[uk]=Малювання суцільної рамки
 Name[x-test]=xxSolidBorderDrawerFactoryxx
@@ -11,6 +12,7 @@ Encoding=UTF-8
 Comment=Solid border drawer for Photo Layouts Editor
 Comment[nl]=Aanbrenger van vaste rand voor Foto-indelingbewerker
 Comment[pt]=Moldura sólida para o Editor de Formatos de Fotografias
+Comment[pt_BR]=Moldura sólida para o editor de formatos de fotos
 Comment[sv]=Uppritning av ifyllda kanter för fotolayouteditor
 Comment[uk]=Інструмент малювання суцільної рамки для редактора компонуванння фотографії
 Comment[x-test]=xxSolid border drawer for Photo Layouts Editorxx
