@@ -1373,9 +1373,10 @@ void  Wizard::pageChanged ( KPageWidgetItem* current, KPageWidgetItem* before )
         for ( int i=0; i < d->m_photos.count(); ++i)
         {
             TPhoto *pCurrentPhoto = d->m_photos.at ( i );
-            kDebug() << "current photo " << pCurrentPhoto->filename.fileName();
             if (pCurrentPhoto)
             {
+                kDebug() << "current photo " << pCurrentPhoto->filename.fileName();
+
                 if (pCurrentPhoto->first)
                 {
                     //add back
