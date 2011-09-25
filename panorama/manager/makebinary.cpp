@@ -58,7 +58,7 @@ void MakeBinary::checkSystem()
 
     if (firstLine.startsWith(headerStarts))
     {
-        m_version = firstLine.remove(0, headerStarts.length()).section(".", 0, 1);
+        m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
 
         kDebug() << "Found " << path() << " version: " << version() ;
     }

@@ -724,7 +724,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
                 {
                     if (nRead)
                     {
-                        realParameters[realParameters.size() - 1] += " " + p;
+                        realParameters[realParameters.size() - 1] += ' ' + p;
                     }
                     else
                     {
@@ -809,7 +809,7 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
 {
     outUrl = d->preprocessingTmpDir->name();
     QFileInfo fi(inUrl.toLocalFile());
-    outUrl.setFileName(fi.completeBaseName().replace(".", "_") + QString("-preview.jpg"));
+    outUrl.setFileName(fi.completeBaseName().replace('.', '_') + QString("-preview.jpg"));
 
     QImage img;
     if (img.load(inUrl.toLocalFile()))
@@ -890,7 +890,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
         outUrl = d->preprocessingTmpDir->name();
         QFileInfo fi(inUrl.toLocalFile());
-        outUrl.setFileName(fi.completeBaseName().replace(".", "_") + QString(".tif"));
+        outUrl.setFileName(fi.completeBaseName().replace('.', '_') + QString(".tif"));
 
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
             return false;

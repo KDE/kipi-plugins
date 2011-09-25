@@ -180,7 +180,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewBusy = false;
                     kDebug() << "Preview compilation failed: " << ad.message;
                     QString errorString("<qt><h2><b>Error</b></h2><p>" + ad.message + "</p></qt>");
-                    errorString.replace("\n", "</p><p>");
+                    errorString.replace('\n', "</p><p>");
                     d->previewWidget->setText(errorString);
                     emit signalPreviewGenerated(KUrl());
                     break;

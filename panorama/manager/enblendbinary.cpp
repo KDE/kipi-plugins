@@ -59,7 +59,7 @@ void EnblendBinary::checkSystem()
 
     if (firstLine.startsWith(headerStarts))
     {
-        m_version = firstLine.remove(0, headerStarts.length()).section("-", 0, 0);
+        m_version = firstLine.remove(0, headerStarts.length()).section('-', 0, 0);
 
         kDebug() << "Found " << path() << " version: " << version() ;
     }

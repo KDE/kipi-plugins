@@ -140,7 +140,7 @@ QString MyImageListViewItem::identity() const
 
 QString MyImageListViewItem::destPath() const
 {
-    QString path = url().directory() + "/" + destFileName();
+    QString path = url().directory() + '/' + destFileName();
     return path;
 }
 

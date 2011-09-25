@@ -120,7 +120,7 @@ int main(int argc, char **argv)
                     offsets.push_back(offset);
                 }
 
-                QFile originalFile(dngFileInfo.absolutePath() + "/" + originalFileName);
+                QFile originalFile(dngFileInfo.absolutePath() + '/' + originalFileName);
                 qDebug() << "extracting embedded original to " << dngFileInfo.fileName();
                 originalFile.open(QIODevice::WriteOnly);
                 QDataStream originalDataStream(&originalFile);
