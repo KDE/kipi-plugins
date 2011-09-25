@@ -1080,7 +1080,7 @@ double CBlobGetXYInside::operator()(const CBlob& blob) const
         }
     }
 
-    if ( vectorEdges.size() == 0 )
+    if ( vectorEdges.empty() )
     {
         return 0.0;
     }
