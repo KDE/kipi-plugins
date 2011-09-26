@@ -862,7 +862,7 @@ void str_2_vlong_pair (const char* me_str,vlong& m,vlong& e)
 
     int me_len = (int)strlen (me_str);
 
-    for (i = me_len-1; i>0; i--)
+    for (i = me_len-1; i>0; --i)
         if (me_str[i] == '#')
         {
             dash_pos = i;

@@ -96,7 +96,7 @@ void KMLGPSDataParser::CreateTrackPoints(QDomElement& parent, QDomDocument& root
     GPSDataMap::ConstIterator end (m_GPSDataMap.constEnd());
 
     for (GPSDataMap::ConstIterator it = m_GPSDataMap.constBegin();
-         it != end; ++it, i++)
+         it != end; ++it, ++i)
     {
         QDomElement kmlPointPlacemark = addKmlElement(kmlPointsFolder, "Placemark");
         addKmlTextElement(kmlPointPlacemark, "name", QString("%1 %2 ").arg(i18n("Point")).arg(i));
