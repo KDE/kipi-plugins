@@ -194,8 +194,7 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
         return;
     }
 
-    KUrl imgUrl;
-    foreach(imgUrl, imgList)
+    foreach(const KUrl& imgUrl, imgList)
     {
         kDebug() << "Sending file " << imgUrl.toLocalFile();
         m_kopeteDBus.call("sendFile", QVariant::fromValue(contactId), QVariant::fromValue(imgUrl.toLocalFile()));

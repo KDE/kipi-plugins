@@ -682,14 +682,14 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
     KExiv2 metaPreview(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
     double scalingFactor = ((double) metaPreview.getPixelSize().width()) / ((double) metaOrig.getPixelSize().width());
 
-    foreach (QString line, pto)
+    foreach (const QString& line, pto)
     {
         QString tmp;
         QStringList parameters = line.split(' ', QString::SkipEmptyParts);
         if (line[0] == 'p')
         {
-            tmp = "";
-            foreach (QString p, parameters)
+            tmp.clear();
+            foreach (const QString& p, parameters)
             {
                 if (p[0] == 'w' || p[0] == 'h')
                 {
@@ -715,10 +715,10 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
         }
         else if (line[0] == 'i')
         {
-            tmp = "";
+            tmp.clear();
             QStringList realParameters;
             bool nRead = false;
-            foreach (QString p, parameters)
+            foreach (const QString& p, parameters)
             {
                 if (p[0] != 'n')
                 {
@@ -737,7 +737,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
                     realParameters << p;
                 }
             }
-            foreach (QString p, realParameters)
+            foreach (const QString& p, realParameters)
             {
                 if (p[0] == 'w')
                 {
