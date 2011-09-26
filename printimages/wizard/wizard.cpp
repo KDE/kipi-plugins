@@ -973,8 +973,10 @@ bool Wizard::paintOnePage( QPainter& p, const QList<TPhoto*>& photos, const QLis
         if ( cropDisabled) //->mCropPage->m_disableCrop->isChecked() )
         {
             imageSize.scale ( newRectViewPort.size(), Qt::KeepAspectRatio );
-            p.setViewport ( newRectViewPort.x(), newRectViewPort.y(), imageSize.width(), imageSize.height() );
-            point = QPoint ( newRectViewPort.x() +imageSize.width(), newRectViewPort.y() +imageSize.height() );
+            int spaceLeft = ( newRectViewPort.width() - imageSize.width() ) / 2;
+            int spaceTop = ( newRectViewPort.height() - imageSize.height() ) / 2;
+            p.setViewport ( spaceLeft + newRectViewPort.x(), spaceTop + newRectViewPort.y(), imageSize.width(), imageSize.height() );
+            point = QPoint ( newRectViewPort.x() + spaceLeft + imageSize.width(), newRectViewPort.y() + spaceTop + imageSize.height() );
         }
         else
         {
