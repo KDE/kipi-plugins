@@ -10,6 +10,7 @@ Type=Service
 ServiceTypes=PhotoLayoutsEditor/BorderPlugin
 Encoding=UTF-8
 Comment=Polaroid border drawer for Photo Layouts Editor
+Comment[it]=Disegnatore di bordi Polaroid per l'editor di impaginazioni di foto
 Comment[nl]=Polaroid-randen aanbrenger voor Foto-indelingbewerker
 Comment[pt]=Moldura de Polaroid para o Editor de Formatos de Fotografias
 Comment[pt_BR]=Moldura de Polaroid para o editor de formatos de fotos

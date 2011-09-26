@@ -4,6 +4,7 @@ Type=ServiceType
 X-KDE-ServiceType=PhotoLayoutsEditor/EffectPlugin
 X-KDE-DerivedName=PhotoLayoutsEditor EffectPlugin
 Comment=A PhotoLayoutsEditor Effect Plugin
+Comment[it]=Un'estensione di effetti per l'editor di impaginazioni di foto
 Comment[nl]=Een plug-in voor effecten van Foto-indelingbewerker
 Comment[pt]=Um 'Plugin' de Efeitos do Editor de Formatos de Fotografias
 Comment[pt_BR]=Um plug-in de efeitos do editor de formatos de fotos
