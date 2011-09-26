@@ -18,4 +18,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 008 ==> 212106 : Unable to export original file to Flickr [patch].
 009 ==> 282101 : Converting Canon CR2 images result in empty images.
 010 ==> 267309 : Translation of Add in kipiplugin_timeadjust does not come from kipiplugin_timeadjust.mo.
-011 ==> 
+011 ==> 282588 : Center portrait images [patch].
+012 ==> 
