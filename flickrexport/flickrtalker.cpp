@@ -54,6 +54,7 @@
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
+#include <kguiitem.h>
 
 // LibKExiv2 includes
 
@@ -272,9 +273,11 @@ void FlickrTalker::slotAuthenticate()
 
     KToolInvocation::invokeBrowser(url.url());
     int valueOk = KMessageBox::questionYesNo(kapp->activeWindow(),
-                  i18n("Please follow the instructions in the browser window, then "
-                       "return to press Yes if you are authenticated, or No otherwise."),
-                  i18n("%1 Service Web Authorization", m_serviceName));
+                    i18n("Please follow the instructions in the browser window, then "
+                         "return to press corresponding button."),
+                    i18n("%1 Service Web Authorization", m_serviceName),
+                    KGuiItem(i18n("I am authenticated"), "dialog-ok"),
+                    KGuiItem(i18n("I am not authenticated"), "dialog-cancel"));
 
     if( valueOk == KMessageBox::Yes)
     {
