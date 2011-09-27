@@ -32,7 +32,7 @@
 
 /*
  * Define libjpeg_EXPORTS: kde-win emerged jpeg lib uses this define to 
- * decide wether to make dllimport (by default) or dllexport. We need to 
+ * decide whether to make dllimport (by default) or dllexport. We need to 
  * export. 
  */
 

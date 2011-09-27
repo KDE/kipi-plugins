@@ -127,7 +127,7 @@ void PicasawebTalker::getToken(const QString& username, const QString& password 
     QString accountType = "GOOGLE";
 
     QStringList qsl;
-    // do not encode username to support email adress
+    // do not encode username to support email address
     qsl.append("Email="+username_edit);
     qsl.append("Passwd="+QUrl::toPercentEncoding(password_edit));
     qsl.append("accountType="+accountType);
@@ -215,7 +215,7 @@ void PicasawebTalker::listAlbums(const QString& username)
         m_job = 0;
     }
     KUrl url("http://picasaweb.google.com/data/feed/api");
-    // do not encode username to support email adress
+    // do not encode username to support email address
     url.addPath("/user/" + username);
     KIO::TransferJob* job = KIO::get(url, KIO::NoReload, KIO::HideProgressInfo);
     job->ui()->setWindow(m_parent);
