@@ -29,14 +29,12 @@
  * All unneeded parts was commented out and can be removed
  * ============================================================ */
 
+#include "yandexrsa.h"
+
 // C++ includes
 
 #include <cstdlib> // std::size_t
 #include <cstring>
-
-// Local includes
-
-#include "yandexrsa.h"
 
 namespace YandexAuth
 {

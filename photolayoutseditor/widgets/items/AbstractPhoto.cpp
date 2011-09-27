@@ -23,8 +23,9 @@
  *
  * ============================================================ */
 
-#include "AbstractPhoto.moc"
 #include "AbstractPhoto_p.h"
+#include "AbstractPhoto.moc"
+
 #include "Scene.h"
 #include "PhotoEffectsGroup.h"
 #include "BordersGroup.h"

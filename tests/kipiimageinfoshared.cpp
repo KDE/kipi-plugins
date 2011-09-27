@@ -22,6 +22,8 @@
  *
  * ============================================================ */
 
+#include "kipiimageinfoshared.h"
+
 // LibKExiv2 includes
 
 #include <libkexiv2/version.h>
@@ -30,7 +32,6 @@
 // local includes:
 
 #include "kipitest-debug.h"
-#include "kipiimageinfoshared.h"
 
 class KipiImageInfoShared::KipiImageInfoSharedPrivate
 {

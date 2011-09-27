@@ -43,16 +43,13 @@ extern "C"
 // Qt includes
 
 #include <QFileInfo>
-#include <QSpinBox>
 #include <QCheckBox>
-#include <QGroupBox>
 #include <QCloseEvent>
 #include <QButtonGroup>
 #include <QLabel>
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QGroupBox>
-#include <QButtonGroup>
 #include <QRadioButton>
 #include <QProgressBar>
 #include <QGridLayout>

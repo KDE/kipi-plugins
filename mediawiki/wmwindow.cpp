@@ -42,7 +42,6 @@
 #include <KPushButton>
 #include <KMessageBox>
 #include <KToolInvocation>
-#include <KMessageBox>
 
 // Mediawiki includes
 

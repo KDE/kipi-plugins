@@ -28,6 +28,8 @@
 #ifndef GPSDATAPARSER_P_H
 #define GPSDATAPARSER_P_H
 
+#include "gpsdataparser.h"
+
 // Qt includes
 
 #include <QXmlDefaultHandler>

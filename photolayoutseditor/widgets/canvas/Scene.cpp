@@ -43,7 +43,6 @@
 
 // Qt
 #include <QGraphicsTextItem>
-#include <QGraphicsRectItem>
 #include <QGraphicsDropShadowEffect>
 #include <QDebug>
 #include <QGraphicsView>

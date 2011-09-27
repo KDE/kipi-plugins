@@ -33,7 +33,6 @@
 #include <QPushButton>
 
 // KDE includes
-#include <klineedit.h>
 #include <kurllabel.h>
 #include <ktoolinvocation.h> // for URLs
 #include <kmessagebox.h>

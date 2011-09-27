@@ -23,14 +23,13 @@
  *
  * ============================================================ */
 
-#include "photolayoutseditor.moc"
 #include "photolayoutseditor_p.h"
+#include "photolayoutseditor.moc"
 
 // Qt includes
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QDebug>
 #include <QTreeView>
 #include <QStandardItemModel>
 #include <QAbstractItemModel>

@@ -24,8 +24,8 @@
  *
  * ============================================================ */
 
-#include "gpsdataparser.moc"
 #include "gpsdataparser_p.h"
+#include "gpsdataparser.moc"
 
 // Qt includes
 
