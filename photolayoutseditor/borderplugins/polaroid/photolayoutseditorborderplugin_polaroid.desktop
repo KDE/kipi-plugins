@@ -6,6 +6,7 @@ Name[pt_BR]=PolaroidBorderDrawerFactory
 Name[sv]=Skapa uppritare av polaroidkant
 Name[uk]=Малювання поляризованої рамки
 Name[x-test]=xxPolaroidBorderDrawerFactoryxx
+Name[zh_TW]=PolaroidBorderDrawerFactory
 Type=Service
 ServiceTypes=PhotoLayoutsEditor/BorderPlugin
 Encoding=UTF-8
@@ -17,6 +18,7 @@ Comment[pt_BR]=Moldura de Polaroid para o editor de formatos de fotos
 Comment[sv]=Uppritning av polaroidkanter för fotolayouteditor
 Comment[uk]=Інструмент малювання рамки Поляроїд для редактора компонуванння фотографії
 Comment[x-test]=xxPolaroid border drawer for Photo Layouts Editorxx
+Comment[zh_TW]=相片佈局編輯器裡的拍立得邊框繪製器
 
 X-KDE-Library=photolayoutseditorborderplugin_polaroid
 author=Łukasz Spas, lukasz dot spas at gmail dot com

@@ -6,6 +6,7 @@ Name[pt_BR]=SolidBorderDrawerFactory
 Name[sv]=Skapa uppritare av ifylld kant
 Name[uk]=Малювання суцільної рамки
 Name[x-test]=xxSolidBorderDrawerFactoryxx
+Name[zh_TW]=SolidBorderDrawerFactory
 Type=Service
 ServiceTypes=PhotoLayoutsEditor/BorderPlugin
 Encoding=UTF-8
@@ -17,6 +18,7 @@ Comment[pt_BR]=Moldura sólida para o editor de formatos de fotos
 Comment[sv]=Uppritning av ifyllda kanter för fotolayouteditor
 Comment[uk]=Інструмент малювання суцільної рамки для редактора компонуванння фотографії
 Comment[x-test]=xxSolid border drawer for Photo Layouts Editorxx
+Comment[zh_TW]=相片佈局編輯器裡的實心邊框繪製器
 
 X-KDE-Library=photolayoutseditorborderplugin_solid
 author=Łukasz Spas, lukasz dot spas at gmail dot com
