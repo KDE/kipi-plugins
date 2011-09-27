@@ -31,7 +31,6 @@
 #include <QCheckBox>
 #include <QContextMenuEvent>
 #include <QHBoxLayout>
-#include <QInputDialog>
 #include <QLabel>
 #include <QLineEdit>
 #include <QList>
@@ -47,6 +46,7 @@
 #include <kcombobox.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <kinputdialog.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
@@ -839,11 +839,12 @@ void GPSReverseGeocodingWidget::slotAddCustomizedSpacer()
     bool ok;
     QString textString;
 
-    textString = QInputDialog::getText(
-            this,
-            QString("%1").arg("Add new tag:"),
-            QString("%1").arg("Select a name for the new tag:"),
-            QLineEdit::Normal, QString(), &ok
+    textString = KInputDialog::getText(
+            QString("%1").arg("Add new tag:") /* caption */,
+            QString("%1").arg("Select a name for the new tag:") /* label */,
+            QString() /* value */,
+            &ok /* ok */,
+            this /* parent */
         );
     if ( ok && !textString.isEmpty() )
     {

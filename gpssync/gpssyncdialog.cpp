@@ -74,6 +74,7 @@
 #include <kseparator.h>
 #include <ksqueezedtextlabel.h>
 #include <kstandarddirs.h>
+#include <ktabbar.h>
 #include <ktabwidget.h>
 #include <ktoolinvocation.h>
 #include <kundostack.h>
@@ -365,8 +366,8 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     vboxTabBar->layout()->setSpacing(0);
     vboxTabBar->layout()->setMargin(0);
 
-    d->tabBar = new QTabBar(vboxTabBar);
-    d->tabBar->setShape(QTabBar::RoundedEast);
+    d->tabBar = new KTabBar(vboxTabBar);
+    d->tabBar->setShape(KTabBar::RoundedEast);
 
     dynamic_cast<QVBoxLayout*>(vboxTabBar->layout())->addStretch(200);
 
