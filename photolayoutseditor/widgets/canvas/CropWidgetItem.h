@@ -41,7 +41,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            CropWidgetItem(QGraphicsItem * parent = 0, QGraphicsScene * scene = 0);
+            explicit CropWidgetItem(QGraphicsItem * parent = 0, QGraphicsScene * scene = 0);
             virtual ~CropWidgetItem();
 
             virtual QRectF boundingRect() const;

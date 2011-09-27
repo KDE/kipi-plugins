@@ -60,7 +60,7 @@ class ExpoBlendingDlg : public KDialog
 
 public:
 
-    ExpoBlendingDlg(Manager* mngr, QWidget* parent=0);
+    explicit ExpoBlendingDlg(Manager* mngr, QWidget* parent=0);
     ~ExpoBlendingDlg();
 
     void loadItems(const KUrl::List& urls);

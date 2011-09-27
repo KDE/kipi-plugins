@@ -38,7 +38,7 @@ namespace KIPIPhotoLayoutsEditor
     {
         public:
 
-            AbstractItemInterface(QGraphicsItem * parent = 0, QGraphicsScene * scene = 0);
+            explicit AbstractItemInterface(QGraphicsItem * parent = 0, QGraphicsScene * scene = 0);
 
         protected:
 

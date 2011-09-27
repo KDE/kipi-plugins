@@ -49,7 +49,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            RotationWidgetItem(const QList<AbstractPhoto*> & items, QGraphicsItem * parent = 0);
+            explicit RotationWidgetItem(const QList<AbstractPhoto*> & items, QGraphicsItem * parent = 0);
             virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
             virtual QPainterPath shape() const;
             virtual QPainterPath opaqueArea() const;

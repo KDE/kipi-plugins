@@ -44,7 +44,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            ImageFileDialog(const KUrl & startDir, QWidget * parent = 0, QWidget * widget = 0);
+            explicit ImageFileDialog(const KUrl & startDir, QWidget * parent = 0, QWidget * widget = 0);
             virtual int exec();
             const char * format();
 

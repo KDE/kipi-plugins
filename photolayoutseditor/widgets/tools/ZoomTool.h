@@ -36,7 +36,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            ZoomTool(Scene * scene, QWidget * parent = 0);
+            explicit ZoomTool(Scene * scene, QWidget * parent = 0);
             ~ZoomTool();
 
         public slots:
