@@ -20,4 +20,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> 267309 : Translation of Add in kipiplugin_timeadjust does not come from kipiplugin_timeadjust.mo.
 011 ==> 282588 : Center portrait images [patch].
 012 ==> 240916 : Question for web authentification: Better button names [patch].
-013 ==> 
+013 ==> 282829 : Gettext should use standard plurals coding for strings 95 & 96.
+014 ==> 
