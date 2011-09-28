@@ -1377,9 +1377,8 @@ Scene * Scene::fromSvg(QDomElement & sceneElement)
     if (errorsCount)
     {
         KMessageBox::error(0,
-                           i18n("Unable to create %1 element%2!",
-                                QString::number(errorsCount).toAscii().constData(),
-                                (errorsCount > 1 ? "s" : "")));
+                           i18n("Unable to create %1 element(s)!",
+                                QString::number(errorsCount).toAscii().constData()));
     }
 
     return result;
