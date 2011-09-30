@@ -53,7 +53,7 @@ namespace KIPIPhotoLayoutsEditor
             static void registerDrawer(BorderDrawerFactoryInterface * factory);
             static QStringList registeredDrawers();
             static BorderDrawerFactoryInterface * getFactoryByName(const QString & name);
-            static BorderDrawerInterface * getDrawerByName(const QString & name, const QMap<QString,QString> & properties = QMap<QString,QString>());
+            static BorderDrawerInterface * getDrawerByName(const QString & name/*, const QMap<QString,QString> & properties = QMap<QString,QString>()*/);
             static BorderDrawerInterface * getDrawerFromSvg(QDomElement & drawerElement);
             static QDomElement drawerToSvg(BorderDrawerInterface * drawer, QDomDocument & document);
             static QWidget * createEditor(BorderDrawerInterface * drawer, bool createCommands);
