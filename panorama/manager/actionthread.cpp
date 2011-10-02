@@ -655,6 +655,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
     QStringList pto;
     if (!input.open(QIODevice::ReadOnly | QIODevice::Text))
     {
+        errors = i18n("Cannot read project file");
         kDebug() << "Can't read PTO File!";
         return false;
     }
@@ -667,11 +668,18 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
         }
         input.close();
     }
+    if (pto.count() == 0)
+    {
+        errors = i18n("Empty project file.");
+        kDebug() << "Pto file empty!!";
+        return false;
+    }
 
     ptoUrl.setFileName("preview.pto");
     input.setFileName(ptoUrl.toLocalFile());
     if (!input.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
     {
+        errors = i18n("Preview project file cannot be created.");
         kDebug() << "Can't create a new PTO File!";
         return false;
     }
@@ -758,6 +766,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
                     if (it == preProcessedUrlsMap.end())
                     {
                         input.close();
+                        errors = i18n("Unknown input file in the project file: %1", imgFileName);
                         kDebug() << "Unknown input File in the PTO: " << imgFileName;
                         kDebug() << "IMG: " << imgUrl.toLocalFile();
                         return false;
@@ -792,12 +801,14 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
     KUrl mkUrl;
     if (!createMK(ptoUrl, mkUrl, previewUrl, JPEG, errors))
     {
+        errors = i18n("Cannot create Makefile.");
         kDebug() << "Makefile creation failed!";
         return false;
     }
 
     if (!compileMK(mkUrl, errors))
     {
+        errors = i18n("Preview cannot be processed.");
         kDebug() << "Makefile execution failed!";
         return false;
     }
