@@ -1,0 +1,24 @@
+Kipi-plugins 2.2.0 - Release date: 2011/10/02
+------------------------------------------------------------------------
+
+NEW FEATURES:
+
+Add image title support metadata provided by kipi host application.
+Add a new tool to assemble images together.
+
+BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
+
+001 ==> 199317 : Support title/description as Facebook Photo Caption [patch].
+002 ==> 221195 : Comment sets Title does not set photo title in gallery export.
+003 ==> 155373 : Add different image titles when exporting to Flickr.
+004 ==> 261451 : Wish: vkontakte.ru (vk.com) export plugin.
+005 ==> 281439 : libkvkontakte addition break parallel builds.
+006 ==> 279545 : Picasa import fetches scaled-down photos [patch].
+007 ==> 281316 : Add GPS info to gallery.xml in htmlexport plugin [patch].
+008 ==> 212106 : Unable to export original file to Flickr [patch].
+009 ==> 282101 : Converting Canon CR2 images result in empty images.
+010 ==> 267309 : Translation of Add in kipiplugin_timeadjust does not come from kipiplugin_timeadjust.mo.
+011 ==> 282588 : Center portrait images [patch].
+012 ==> 240916 : Question for web authentification: Better button names [patch].
+013 ==> 282829 : Gettext should use standard plurals coding for strings 95 & 96.
+014 ==> 

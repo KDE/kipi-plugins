@@ -1,3 +1,1050 @@
+2.2.0 2011-10-03
+
+2011-10-03  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-10-02  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/actionthread.cpp: Panorama: More error messages
+
+2011-10-01  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-09-30  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/borders/BorderDrawersLoader.cpp,
+	photolayoutseditor/borders/BorderDrawersLoader.h: macports fix
+
+2011-09-30  Script Kiddy <scripty@kde.org>
+
+	* sendimages/kipiplugin_sendimages.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-09-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-28  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/canvas/Scene.cpp: fix: 282829
+
+2011-09-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsimagedetails.cpp,
+	gpssync/gpsreversegeocodingwidget.cpp, gpssync/gpssyncdialog.cpp,
+	gpssync/setup_general.cpp: Fix krazy2 issues: Check for Qt classes
+	that should not be used [qclasses]
+
+2011-09-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* jpeglossless/transform/convert2grayscale.cpp,
+	jpeglossless/transform/imageflip.cpp,
+	jpeglossless/transform/imagerotate.cpp,
+	jpeglossless/transform/jpegtransform.cpp,
+	picasawebexport/picasawebtalker.cpp: Fix krazy2 issues: Check for
+	spelling errors [spelling]
+
+2011-09-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/gpsdataparser.cpp, gpssync/gpsdataparser_p.h,
+	mediawiki/wmwindow.cpp,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	tests/kipiimageinfoshared.cpp, yandexfotki/logindialog.cpp,
+	yandexfotki/yandexrsa.cpp, yandexfotki/yfphoto.cpp,
+	yandexfotki/yfwindow.cpp: Fix krazy2 issues: Check for proper
+	include directives [includes]
+
+2011-09-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* expoblending/blendingdlg/expoblendingdlg.h,
+	expoblending/importwizard/importwizarddlg.h,
+	gpssync/borrowed/modeltest.h,
+	panorama/importwizard/importwizarddlg.h,
+	photolayoutseditor/effects/PixelizePhotoEffect.h,
+	photolayoutseditor/listeners/TextColorChangeListener.h,
+	photolayoutseditor/listeners/TextFontChangeListener.h,
+	photolayoutseditor/widgets/canvas/CropWidgetItem.h,
+	photolayoutseditor/widgets/canvas/RotationWidgetItem.h,
+	photolayoutseditor/widgets/canvas/ScalingWidgetItem.h,
+	photolayoutseditor/widgets/dialogs/ImageFileDialog.h,
+	photolayoutseditor/widgets/items/AbstractItemInterface.h,
+	photolayoutseditor/widgets/items/PhotoItem.h,
+	photolayoutseditor/widgets/items/TextItem.h,
+	photolayoutseditor/widgets/tools/ZoomTool.h,
+	rajceexport/rajcelogindialog.h: Fix krazy2 issues: Check for C++
+	ctors that should be declared 'explicit' [explicit]
+
+2011-09-27  Script Kiddy <scripty@kde.org>
+
+	* panorama/plugin/panoramagui.desktop,
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-09-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-27  Petri Damstén <petri.damsten@kdemail.net>
+
+	* flickrexport/flickrtalker.cpp: Question for web authentification:
+	Better button names BUG:240916
+
+2011-09-26  Michael Georg Hansen <mike@mghansen.de>
+
+	* kmlexport/kmlgpsdataparser.cpp, yandexfotki/yandexrsa.cpp: Fix
+	krazy2 issues: Check for postfix usage of ++ and -- [postfixop]
+
+2011-09-26  Michael Georg Hansen <mike@mghansen.de>
+
+	* kopete/plugin_kopete.cpp, panorama/manager/actionthread.cpp: Fix
+	krazy2 issues: Check for foreach loop issues [foreach]
+
+2011-09-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-26  Petri Damstén <petri.damsten@kdemail.net>
+
+	* : commit ae73c98202ae7f37b987756ffa892315ee6b7f00 Author: Petri
+	Damstén <petri.damsten@kdemail.net> Date:   Mon Sep 26 11:24:00
+	2011 +0300
+
+2011-09-26  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-09-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* gpssync/gpslistviewcontextmenu.cpp,
+	gpssync/gpslistviewcontextmenu.h: gpsData should be passed by
+	reference
+
+2011-09-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* printimages/tools/layouttree.cpp: add comment about possible
+	memory leak
+
+2011-09-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* galleryexport/gallerywindow.cpp, piwigoexport/piwigowindow.cpp: 
+	fix compile warnings
+
+2011-09-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* printimages/wizard/wizard.cpp: move this line down into the
+	if-clause, otherwise the debug statement might crash if the pointer
+	is null
+
+2011-09-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* piwigoexport/piwigowindow.cpp: Better check if the item could be
+	retrieved, otherwise the next lines will crash
+
+2011-09-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* removeredeyes/libcvblobs/Blob.cpp: use empty(), which is more
+	efficient (constant-time operation)
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* facebook/facebookjob.cpp, facebook/fbtalker.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.cpp,
+	yandexfotki/yftalker.cpp: Fix krazy2 issues: use QString::clear
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* acquireimages/scandialog.cpp,
+	expoblending/importwizard/importwizarddlg.cpp,
+	panorama/manager/actionthread.cpp,
+	photolayoutseditor/effects/AbstractPhotoEffectFactory.h,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.h,
+	printimages/wizard/wizard.cpp, timeadjust/timeadjustdialog.cpp,
+	yandexfotki/yftalker.cpp: Fix krazy2 warnings: spelling errors
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* flashexport/simpleviewer.cpp: Fix krazy issue: compare to ""
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* photolayoutseditor/effects/temp/BlurPhotoEffect.cpp: Fix krazy2
+	issues: single-char QString.
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* expoblending/manager/actionthread.cpp,
+	expoblending/manager/alignbinary.cpp,
+	expoblending/manager/enfusebinary.cpp, facebook/fbtalker.cpp,
+	mediawiki/wikimediajob.cpp, picasawebexport/picasawebtalker.cpp,
+	picasawebexport/picasawebwindow.cpp, rajceexport/rajcesession.cpp,
+	rawconverter/dialogs/myimagelist.cpp: Fix krazy2 issues: single-char
+	QString.
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer_p.cp
+	p, photolayoutseditor/borderplugins/solid/SolidBorderDrawer_p.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.cpp,
+	photolayoutseditor/effects/PhotoEffectsLoader.cpp,
+	photolayoutseditor/effects/PixelizePhotoEffect.cpp,
+	photolayoutseditor/threads/CanvasSavingThread.cpp,
+	photolayoutseditor/utils/global.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp: Fix krazy2
+	issues: single-char QString.
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* galleryexport/gallerytalker.cpp: Comment out code for unused
+	variable albumURL.
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* dngconverter/dnginfo/dnginfo.cpp,
+	dngconverter/plugin/myimagelist.cpp,
+	panorama/importwizard/previewpage.cpp,
+	panorama/manager/actionthread.cpp,
+	panorama/manager/autooptimiserbinary.cpp,
+	panorama/manager/cpcleanbinary.cpp,
+	panorama/manager/cpfindbinary.cpp,
+	panorama/manager/enblendbinary.cpp,
+	panorama/manager/makebinary.cpp, panorama/manager/nonabinary.cpp,
+	panorama/manager/pto2mkbinary.cpp: Fix krazy2 issues: single-char
+	QStrings.
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* .krazy: Update krazy2 rules for jpeglossless.
+
+2011-09-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/utils/qtpropertybrowser/src/qteditorfactory.cpp,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertybrowser.cp
+	p,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtpropertymanager.cp
+	p,
+	photolayoutseditor/utils/qtpropertybrowser/src/qttreepropertybrowse
+	r.cpp,
+	photolayoutseditor/utils/qtpropertybrowser/src/qtvariantproperty.cp
+	p, photolayoutseditor/widgets/dialogs/CanvasSizeDialog.cpp: 
+	Normalize signals/slots.
+
+2011-09-25  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/optimizepage.cpp: Panorama: String
+	modification
+
+2011-09-25  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/actionthread.cpp: Panorama: exif tags bugfix Changes in the way the exif tags are copied from a RAW file to a
+	TIFF.  Now only the Exif.Photo.* tags are copied.
+
+2011-09-25  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-09-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* photolayoutseditor/threads/CanvasSavingThread.cpp: fix compile
+	warning
+
+2011-09-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* photolayoutseditor/undo/UndoMoveRowsCommand.cpp: this code might
+	crash if m_model is not initialized. We check in the if-clause for
+	its existence, but not in the else-clause where it might be
+	uninitialized, too, due to the if statement in the beginning.
+
+2011-09-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* photolayoutseditor/threads/CanvasSavingThread.cpp: Is this
+	guaranteed to exit immediately? If not, the next line might crash.
+	Adding a return should fix this possible crash.
+
+2011-09-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp: fix possible
+	crash: i m_canvas is not initialized, accessing isSaved() will crash
+	here
+
+2011-09-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp: It is better to
+	use the standard shortcuts for KStandardAction. In this special
+	case, Close and Quit collided and where not triggered when executing
+	the shortcut. Also the user will find a common interface for
+	accessing actions in all KDE applications.
+
+2011-09-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* photolayoutseditor/widgets/canvas/SceneBackground.cpp: fix compile
+	warning
+
+2011-09-23  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/widgets/canvas/CropWidgetItem.cpp: fix
+
+2011-09-23  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* : fix
+
+2011-09-23  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-09-22  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-09-22  Albert Astals Cid <tsdgeos@terra.es>
+
+	* photolayoutseditor/widgets/canvas/CropWidgetItem.cpp: Add
+	no-c-format as hinted by Yuri
+
+2011-09-21  Andre Woebbeking <Woebbeking@kde.org>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp: workaround
+	"error: undefined reference to
+	'KIPIPhotoLayoutsEditor::q*Resources_icons()'"
+
+2011-09-21  Andre Woebbeking <Woebbeking@kde.org>
+
+	* photolayoutseditor/events/ProgressEvent.h,
+	photolayoutseditor/models/AbstractMovableModel.h,
+	photolayoutseditor/widgets/canvas/Canvas.h,
+	photolayoutseditor/widgets/canvas/CanvasSize.h,
+	photolayoutseditor/widgets/canvas/Canvas_p.h,
+	photolayoutseditor/widgets/canvas/CropWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/ScalingWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/Scene.h,
+	photolayoutseditor/widgets/tools/CanvasEditTool.cpp: -pedantic
+
+2011-09-21  Yuri Chornoivan <yurchor@ukr.net>
+
+	* photolayoutseditor/widgets/dialogs/ImageFileDialog.cpp,
+	photolayoutseditor/widgets/tools/CanvasEditTool.cpp: fix typos:
+	Pleas -> Please, Scalling -> Scaling
+
+2011-09-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* timeadjust/timeadjustdialog.cpp: add contect info for tanslators
+	BUGS: 267309
+
+2011-09-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit b99515816a137cd31e751726426e7888f69fba47 Author: Gilles
+	Caulier <caulier.gilles@gmail.com> Date:   Wed Sep 21 09:39:46 2011
+	+0200
+
+2011-09-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* AUTHORS, README: update
+
+2011-09-21  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-09-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-14  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* README: update
+
+2011-09-20  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* CMakeLists.txt: Move PhotoLayoutsEditor to the master branch
+
+2011-09-20  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* : commit 6dc1299e09d94071c4362ca3c3b7bbd06b430f49 Merge: b64a242
+	ef726b8 Author: Łukasz Spas <lukasz.spas@gmail.com> Date:   Tue Sep
+	20 10:02:46 2011 +0200
+
+2011-09-19  Script Kiddy <scripty@kde.org>
+
+	* vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-09-17  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/plugin/aboutdata.h: add libkdcraw version in info
+	dialog
+
+2011-09-16  Christoph Feck <christoph@maxiom.de>
+
+	* gpssync/tests/CMakeLists.txt: SVN_SILENT Fix linking of tests with
+	gold
+
+2011-09-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-16  Script Kiddy <scripty@kde.org>
+
+	* vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-09-15  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/canvas/Canvas_p.h: licenses
+
+2011-09-15  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/canvas/ScalingWidgetItem.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto_p.cpp: licenses
+
+2011-09-15  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/canvas/CropWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/ScalingWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/extra/PLEStatusBar.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp: Tools update
+	fixup => PLUGIN IS NOW READY :-)
+
+2011-09-15  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/items/AbstractPhoto.cpp: merge fix
+
+2011-09-15  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/threads/CanvasSavingThread.cpp,
+	photolayoutseditor/threads/CanvasSavingThread.h,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto_p.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto_p.h: Saving progress
+	bar, busy indicator + status bar
+
+2011-09-15  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* : commit 4221ee5aabd5e1189ab0970e6eeaf9f4b59802d2 Author: Łukasz
+	Spas <lukasz.spas@gmail.com> Date:   Thu Sep 15 16:03:39 2011 +0200
+
+2011-09-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/widgets/items/AbstractPhoto.cpp: use moc file
+
+2011-09-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/threads/CanvasSavingThread.cpp,
+	photolayoutseditor/threads/CanvasSavingThread.h,
+	photolayoutseditor/widgets/items/AbstractPhoto_p.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto_p.h: missing license
+
+2011-09-13  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/items/AbstractPhoto.cpp: merge fix
+
+2011-09-13  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/items/AbstractPhoto.cpp: merge
+
+2011-09-13  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* : commit 58fbb1d6ec0fbac43a51f5baac8f7b5062f7a63f Author: Łukasz
+	Spas <lukasz.spas@gmail.com> Date:   Tue Sep 13 12:30:41 2011 +0200
+
+2011-09-13  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/borders/BordersGroup.cpp,
+	photolayoutseditor/effects/PhotoEffectsGroup.cpp,
+	photolayoutseditor/threads/AbstractPhotoItemLoader.cpp,
+	photolayoutseditor/threads/CanvasSavingThread.cpp,
+	photolayoutseditor/threads/CanvasSavingThread.h,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.h,
+	photolayoutseditor/widgets/items/AbstractPhoto_p.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto_p.h: Polishing
+
+2011-09-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flickrexport/flickrwidget.cpp: fix warning
+
+2011-09-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-13  Petri Damstén <petri.damsten@kdemail.net>
+
+	* : commit 2abd34f15d763625dc64c1a3037ef0656f1e9696 Merge: 3a7c878
+	912a66f Author: Petri Damstén <petri.damsten@kdemail.net> Date:
+	Tue Sep 13 10:27:39 2011 +0300
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/Messages.sh, photolayoutseditor/main.cpp,
+	photolayoutseditor/plugin/main.cpp: move stand alone implementation
+	into plugin dir, as other kipi tools prepare for i18n strings
+	extraction
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/main.cpp: set aboutdata properties.
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/events/ProgressEvent.h: missing license
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/effects/PhotoEffectChangeListener.h,
+	photolayoutseditor/effects/temp/BlurPhotoEffect.cpp,
+	photolayoutseditor/effects/temp/BlurPhotoEffect.h,
+	photolayoutseditor/events/ProgressEvent.cpp: missing licence
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/borders/BorderChangeListener.cpp,
+	photolayoutseditor/borders/BorderDrawersLoader.cpp,
+	photolayoutseditor/borders/BordersGroup.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.cpp,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect.cpp
+	, photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect.cpp,
+	photolayoutseditor/effects/AbstractPhotoEffectInterface.cpp,
+	photolayoutseditor/effects/PhotoEffectChangeListener.cpp,
+	photolayoutseditor/effects/PhotoEffectsGroup.cpp,
+	photolayoutseditor/effects/PhotoEffectsLoader.cpp,
+	photolayoutseditor/events/UndoCommandEventFilter.cpp,
+	photolayoutseditor/listeners/TextColorChangeListener.cpp,
+	photolayoutseditor/listeners/TextFontChangeListener.cpp,
+	photolayoutseditor/plugin/plugin_photolayoutseditor.cpp: use moc
+	files
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/models/LayersModel.cpp,
+	photolayoutseditor/models/LayersModelItem.cpp,
+	photolayoutseditor/threads/AbstractPhotoItemLoader.cpp,
+	photolayoutseditor/threads/CanvasLoadingThread.cpp,
+	photolayoutseditor/threads/ImageLoadingThread.cpp,
+	photolayoutseditor/threads/PhotoItemLoader.cpp,
+	photolayoutseditor/utils/KEditFactory.cpp,
+	photolayoutseditor/utils/SavingThread.cpp: use moc files
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/widgets/dialogs/CanvasSizeDialog.cpp,
+	photolayoutseditor/widgets/dialogs/GridSetupDialog.cpp,
+	photolayoutseditor/widgets/dialogs/ImageFileDialog.cpp,
+	photolayoutseditor/widgets/extra/PatternsComboBox.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.cpp,
+	photolayoutseditor/widgets/layers/LayersTree.cpp,
+	photolayoutseditor/widgets/layers/LayersTreeDelegate.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsTool.cpp,
+	photolayoutseditor/widgets/tools/AbstractTool.cpp,
+	photolayoutseditor/widgets/tools/BorderEditTool.cpp,
+	photolayoutseditor/widgets/tools/CanvasEditTool.cpp,
+	photolayoutseditor/widgets/tools/EffectsEditorTool.cpp,
+	photolayoutseditor/widgets/tools/TextEditorTool.cpp,
+	photolayoutseditor/widgets/tools/ToolsDockWidget.cpp,
+	photolayoutseditor/widgets/tools/ZoomTool.cpp,
+	photolayoutseditor/widgets/tools/ZoomTool.h: use moc files
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/CropWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/MousePressListener.cpp,
+	photolayoutseditor/widgets/canvas/RotationWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/ScalingWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.cpp: use moc files
+
+2011-09-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp: use
+	KIPIPlugins::ImageDialog to handle image to load in canvas. This
+	support better thumbnail than KDE dialog, especially with RAW files.
+	Also thumbnails are cached in kipi host applications, and will be
+	displayed imediatly, and not computed by a kioslave (it's a libkipi
+	feature) Use moc file here to speedup compilation.  CCMAIL:
+	lukasz.spas@gmail.com
+
+2011-09-12  Petri Damstén <petri.damsten@kdemail.net>
+
+	* htmlexport/generator.cpp, htmlexport/imageelement.h,
+	htmlexport/imagegenerationfunctor.cpp,
+	htmlexport/themes/details/template.xsl: add GPS info to gallery.xml
+	in htmlexport plugin BUG: 281316
+
+2011-09-12  Petri Damstén <petri.damsten@kdemail.net>
+
+	* picasawebexport/picasawebtalker.cpp,
+	picasawebexport/picasawebtalker.h,
+	picasawebexport/picasawebwidget.cpp,
+	picasawebexport/picasawebwidget.h,
+	picasawebexport/picasawebwindow.cpp: Picasa import fetches
+	scaled-down photos BUG: 279545
+
+2011-09-12  Petri Damstén <petri.damsten@kdemail.net>
+
+	* flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h,
+	flickrexport/flickrwidget.cpp, flickrexport/flickrwidget.h,
+	flickrexport/flickrwindow.cpp, flickrexport/flickrwindow.h: Unable
+	to export original file to Flickr BUG: 212106
+
+2011-09-11  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/borders/BorderDrawersLoader.cpp,
+	photolayoutseditor/borders/BordersGroup.cpp,
+	photolayoutseditor/effectplugins/StarndardEffectsFactory.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.h,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.cpp,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.h,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect.cpp
+	,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect.h,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect.h,
+	photolayoutseditor/effects/AbstractPhotoEffectFactory.h,
+	photolayoutseditor/effects/AbstractPhotoEffectInterface.h,
+	photolayoutseditor/effects/PhotoEffectsGroup.cpp,
+	photolayoutseditor/effects/PhotoEffectsLoader.cpp,
+	photolayoutseditor/effects/PhotoEffectsLoader.h,
+	photolayoutseditor/events/ProgressEvent.h,
+	photolayoutseditor/threads/AbstractPhotoItemLoader.cpp,
+	photolayoutseditor/threads/AbstractPhotoItemLoader.h,
+	photolayoutseditor/threads/CanvasLoadingThread.cpp,
+	photolayoutseditor/threads/CanvasLoadingThread.h,
+	photolayoutseditor/threads/ImageLoadingThread.cpp,
+	photolayoutseditor/threads/ImageLoadingThread.h,
+	photolayoutseditor/threads/PhotoItemLoader.cpp,
+	photolayoutseditor/threads/PhotoItemLoader.h,
+	photolayoutseditor/threads/ProgressObserver.h,
+	photolayoutseditor/threads/SceneBackgroundLoader.cpp,
+	photolayoutseditor/threads/SceneBackgroundLoader.h,
+	photolayoutseditor/threads/TextItemLoader.cpp,
+	photolayoutseditor/threads/TextItemLoader.h,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.h,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.h,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.h,
+	photolayoutseditor/widgets/items/PhotoItem.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.h,
+	photolayoutseditor/widgets/items/TextItem.cpp,
+	photolayoutseditor/widgets/items/TextItem.h: Loading canvas progress
+	bar + loading threads.
+
+2011-09-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panorama.cpp, panorama/plugin/panoramagui.desktop: 
+	fix icon
+
+2011-09-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-09  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/borderplugins/CMakeLists.txt,
+	photolayoutseditor/borderplugins/polaroid/CMakeLists.txt,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer.cpp,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer.h,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer_glob
+	al.h,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer_p.cp
+	p,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer_p.h,
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/SolidBorderDrawer_p.cpp,
+	photolayoutseditor/borderplugins/solid/SolidBorderDrawer_p.h,
+	photolayoutseditor/borders/BorderChangeListener.cpp,
+	photolayoutseditor/borders/BorderDrawerInterface.h,
+	photolayoutseditor/borders/BorderDrawersLoader.cpp,
+	photolayoutseditor/borders/BordersGroup.cpp,
+	photolayoutseditor/effects/PhotoEffectsLoader.cpp,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/threads/CanvasLoadingThread.cpp,
+	photolayoutseditor/threads/CanvasLoadingThread.h,
+	photolayoutseditor/utils/KEditFactory.cpp,
+	photolayoutseditor/utils/KEditFactory.h,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/MousePressListener.h,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/dialogs/SavingProgressDialog.cpp,
+	photolayoutseditor/widgets/dialogs/SavingProgressDialog.h,
+	photolayoutseditor/widgets/tools/ToolsDockWidget.cpp,
+	photolayoutseditor/widgets/tools/ToolsDockWidget.h,
+	photolayoutseditor/widgets/tools/ZoomTool.cpp: Add Polaroid-style
+	border, grid fix-up, recent-files menu fix-up, memory leak fix-up
+
+2011-09-08  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/borders/BorderDrawersLoader.cpp,
+	photolayoutseditor/borders/BordersGroup.cpp,
+	photolayoutseditor/borders/BordersGroup.h,
+	photolayoutseditor/effectplugins/StarndardEffectsFactory.h,
+	photolayoutseditor/models/LayersModel.h,
+	photolayoutseditor/models/LayersSelectionModel.h,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/resources/icons.qrc,
+	photolayoutseditor/settings/PLEConfigDialog.h,
+	photolayoutseditor/settings/PLEConfigViewWidget.cpp,
+	photolayoutseditor/settings/PLEConfigViewWidget.h,
+	photolayoutseditor/threads/ImageLoadingThread.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.h,
+	photolayoutseditor/widgets/canvas/MousePressListener.h,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.cpp,
+	photolayoutseditor/widgets/items/TextItem.h,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool_p.h,
+	photolayoutseditor/widgets/tools/ToolsDockWidget.cpp,
+	photolayoutseditor/widgets/tools/ToolsDockWidget.h,
+	photolayoutseditor/widgets/tools/ZoomTool.cpp,
+	photolayoutseditor/widgets/tools/ZoomTool.h: Adds zooming tool,
+	memory allocation fix-up
+
+2011-09-08  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/threads/ImageLoadingThread.cpp,
+	photolayoutseditor/threads/ImageLoadingThread.h,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.h,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.cpp: RAW support, Loading
+	progress fix-up,
+
+2011-09-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/plugin_panorama.cpp: fix icon
+
+2011-09-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* vkontakte/plugin_vkontakte.cpp: fix icon
+
+2011-09-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* kmlexport/plugin_kmlexport.cpp: fix icon
+
+2011-09-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* htmlexport/plugin.cpp: fix icon
+
+2011-09-08  Script Kiddy <scripty@kde.org>
+
+	* vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-09-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* calendar/print/calsettings.cpp: set comment about used deprecated
+	classes from KCalc to fix in the future
+
+2011-09-07  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* CMakeLists.txt, photolayoutseditor/events/ProgressEvent.h,
+	photolayoutseditor/plugin/PLEAboutData.h,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/threads/ImageLoadingThread.cpp,
+	photolayoutseditor/threads/ImageLoadingThread.h,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.h,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.h: Image loading progress
+	bar update, fixed scene's updating performance
+
+2011-09-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/main.cpp: fix deprecated method
+
+2011-09-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt: no need to check version here. it's done in find
+	cmake script
+
+2011-09-06  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* : commit f05d07d1883e574604dae96c4645b7743c18b7b3 Author: Łukasz
+	Spas <lukasz.spas@gmail.com> Date:   Tue Sep 6 22:26:30 2011 +0200
+
+2011-09-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-09-06  Petri Damstén <petri.damsten@kdemail.net>
+
+	* CMakeLists.txt, batchprocessimages/CMakeLists.txt,
+	batchprocessimages/tools/renameimageswidget.cpp,
+	facebook/fbwindow.cpp, facebook/fbwindow.h,
+	flickrexport/flickrwindow.cpp, galleryexport/gallerytalker.cpp,
+	galleryexport/gallerytalker.h, galleryexport/gallerywindow.cpp,
+	htmlexport/imageelement.h, kmlexport/kmlexport.cpp,
+	picasawebexport/picasawebwindow.cpp, yandexfotki/yfwindow.cpp: - Image title support for flickr, picasa, facebook and gallery
+	export.  - libkipi api changes CCBUG: 155374 BUGS: 221195, 199317
+
+2011-09-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* CMakeLists.txt, NEWS: 2.2.0 is now open for commits
+
+2011-09-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/plugin/PLEAboutData.cpp,
+	photolayoutseditor/plugin/PLEAboutData.h: use KPAboutData class as
+	other plugins.  missing (c) header polish
+
+2011-09-05  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/effectplugins/CMakeLists.txt,
+	photolayoutseditor/effectplugins/StarndardEffectsFactory.cpp,
+	photolayoutseditor/effectplugins/blur/photolayoutseditoreffectplugi
+	n_blur.desktop,
+	photolayoutseditor/effectplugins/colorize/CMakeLists.txt,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.cpp,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.h,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect_globa
+	l.h,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect_p.cpp
+	,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect_p.h,
+	photolayoutseditor/effectplugins/colorize/photolayoutseditoreffectp
+	lugin_colorize.desktop,
+	photolayoutseditor/effectplugins/grayscale/CMakeLists.txt,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect.cpp
+	,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect.h,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect_glo
+	bal.h,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect_p.c
+	pp,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect_p.h
+	,
+	photolayoutseditor/effectplugins/grayscale/photolayoutseditoreffect
+	plugin_grayscale.desktop,
+	photolayoutseditor/effectplugins/sepia/CMakeLists.txt,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect.h,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect_global.h,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect_p.cpp,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect_p.h,
+	photolayoutseditor/effectplugins/sepia/photolayoutseditoreffectplug
+	in_sepia.desktop, photolayoutseditor/main.cpp,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/threads/ImageLoadingThread.cpp,
+	photolayoutseditor/threads/ImageLoadingThread.h: Add standard
+	effects, command line argument, remove image loading at at startup
+
+2011-09-05  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/dialogs/ImageFileDialog.h: image dialog
+
+2011-09-05  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/widgets/dialogs/ImageFileDialog.cpp,
+	photolayoutseditor/widgets/dialogs/ImageFileDialog.h: image dialog
+	repair
+
+2011-09-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/NEWS.2.1.0: polish
+
+2011-09-05  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/plugin/photolayoutseditor.h,
+	photolayoutseditor/plugin/plugin_photolayoutseditor.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.h,
+	photolayoutseditor/widgets/dialogs/ImageFileDialog.cpp: digikam
+	interface images loading
+
+2011-09-05  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp: blur
+	effect
+
+2011-09-05  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.1.0: Update Changelog/NEWS for
+	kipi-plugins 2.1.0
+
+2011-09-04  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/effectplugins/blur/BlurPhotoEffect_p.cpp: blur
+	effect 2
+
+2011-09-04  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp: blur
+	effect
+
+2011-09-04  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt: cmake
+
+2011-09-04  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* : commit 11f19ac4199c2c4f1caf06b289093bf830438e3f Author: Łukasz
+	Spas <lukasz.spas@gmail.com> Date:   Sun Sep 4 23:29:57 2011 +0200
+
+2011-09-04  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.h,
+	photolayoutseditor/effectplugins/blur/CMakeLists.txt,
+	photolayoutseditor/widgets/dialogs/CanvasSizeDialog.cpp: merge
+
+2011-09-04  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/borders/BorderChangeListener.cpp,
+	photolayoutseditor/borders/BordersGroup.cpp,
+	photolayoutseditor/effectplugins/CMakeLists.txt,
+	photolayoutseditor/effectplugins/StarndardEffectsFactory.cpp,
+	photolayoutseditor/effectplugins/StarndardEffectsFactory.h,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.h,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect_global.h,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect_p.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect_p.h,
+	photolayoutseditor/effectplugins/blur/CMakeLists.txt,
+	photolayoutseditor/effects/AbstractPhotoEffectFactory.h,
+	photolayoutseditor/effects/AbstractPhotoEffectInterface.cpp,
+	photolayoutseditor/effects/AbstractPhotoEffectInterface.h,
+	photolayoutseditor/effects/PhotoEffectChangeListener.cpp,
+	photolayoutseditor/effects/PhotoEffectChangeListener.h,
+	photolayoutseditor/effects/PhotoEffectsGroup.cpp,
+	photolayoutseditor/effects/PhotoEffectsLoader.cpp,
+	photolayoutseditor/effects/PhotoEffectsLoader.h,
+	photolayoutseditor/main.cpp,
+	photolayoutseditor/plugin/PLEAboutData.cpp,
+	photolayoutseditor/plugin/PLEAboutData.h,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/plugin/photolayoutseditor.h,
+	photolayoutseditor/plugin/photolayoutseditor_p.h,
+	photolayoutseditor/plugin/photolayoutseditorui.rc,
+	photolayoutseditor/plugin/plugin_photolayoutseditor.cpp,
+	photolayoutseditor/utils/KEditFactory.h,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.h,
+	photolayoutseditor/widgets/canvas/CanvasSize.cpp,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.h,
+	photolayoutseditor/widgets/dialogs/CanvasSizeDialog.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool_p.h,
+	photolayoutseditor/widgets/tools/CanvasEditTool.cpp,
+	photolayoutseditor/widgets/tools/CanvasEditTool.h,
+	photolayoutseditor/widgets/tools/EffectsEditorTool.cpp,
+	photolayoutseditor/widgets/tools/EffectsEditorTool.h: Improvement of
+	blur effect, KIPI::Plugin, cmake, fixing bugs.
+
 2.1.0 2011-09-04
 
 2011-09-04  Alexander Potashev <aspotashev@gmail.com>
