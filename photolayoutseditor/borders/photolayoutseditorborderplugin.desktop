@@ -4,6 +4,7 @@ Type=ServiceType
 X-KDE-ServiceType=PhotoLayoutsEditor/BorderPlugin
 X-KDE-DerivedName=PhotoLayoutsEditor BorderPlugin
 Comment=A PhotoLayoutsEditor Border Plugin
+Comment[ca]=Un connector de motllures de l'editor de formats de foto
 Comment[it]=Un'estensione di bordi per l'editor di impaginazioni di foto
 Comment[nb]=Et kant-programtillegg for fotoutleggsredigerer
 Comment[nl]=Een plug-in voor randen van Foto-indelingbewerker

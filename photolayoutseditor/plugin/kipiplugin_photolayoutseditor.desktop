@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Photo Layouts Editor
+Name[ca]=Editor de formats de foto
 Name[it]=Editor di impaginazioni di foto
 Name[nb]=Fotoutleggsredigerer
 Name[nl]=Foto-indelingbewerker
@@ -11,6 +12,7 @@ Name[uk]=Редактор компонування фотографій
 Name[x-test]=xxPhoto Layouts Editorxx
 Name[zh_TW]=相片佈局編輯器
 Comment=Photo layouts management tool
+Comment[ca]=Eina de gestió de formats de foto
 Comment[it]=Strumento di impaginazione di foto
 Comment[nb]=Verktøy for å behandle foto-utforminger
 Comment[nl]=Foto-indelingenbeheerder
