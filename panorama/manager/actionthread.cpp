@@ -690,14 +690,15 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
     KExiv2 metaPreview(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
     double scalingFactor = ((double) metaPreview.getPixelSize().width()) / ((double) metaOrig.getPixelSize().width());
 
-    kDebug() << pto;
-
     foreach (const QString& line, pto)
     {
+        if (line.isEmpty())
+        {
+            continue;
+        }
+
         QString tmp;
         QStringList parameters = line.split(' ', QString::SkipEmptyParts);
-
-        kDebug() << line;
 
         if (line[0] == 'p')
         {
