@@ -274,6 +274,7 @@ ScalingWidgetItem::ScalingWidgetItem(const QList<AbstractPhoto*> & items, QGraph
 {
     this->setAcceptHoverEvents(true);
     this->setFlag(QGraphicsItem::ItemIsSelectable, false);
+    this->setZValue(std::numeric_limits<double>::infinity());
     this->setScaleItems(items);
 }
 

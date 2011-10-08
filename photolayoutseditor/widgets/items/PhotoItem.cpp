@@ -509,10 +509,8 @@ void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 {
     if (!m_temp_image.isNull())
     {
-        painter->save();
         QBrush b(this->m_temp_image);
         painter->fillPath(itemOpaqueArea(), b);
-        painter->restore();
     }
     AbstractPhoto::paint(painter, option, widget);
 

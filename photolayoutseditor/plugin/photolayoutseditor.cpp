@@ -704,6 +704,13 @@ void PhotoLayoutsEditor::changeCanvasSize()
     delete ccd;
 }
 
+void PhotoLayoutsEditor::setTemplateEditMode(bool isEnabled)
+{
+    d->toolsWidget->setTemplateEditMode(isEnabled);
+    d->treeWidget->setTemplateEditMode(isEnabled);
+    m_canvas->setTemplateEditMode(isEnabled);
+}
+
 void PhotoLayoutsEditor::loadEffects()
 {
     StarndardEffectsFactory * stdEffects = new StarndardEffectsFactory( PhotoEffectsLoader::instance() );

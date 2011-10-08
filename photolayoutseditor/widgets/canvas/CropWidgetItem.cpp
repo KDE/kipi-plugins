@@ -26,6 +26,7 @@
 #include "CropWidgetItem.moc"
 #include "AbstractPhoto.h"
 #include "photolayoutseditor.h"
+#include <limits>
 
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsView>
@@ -174,7 +175,7 @@ CropWidgetItem::CropWidgetItem(QGraphicsItem * parent, QGraphicsScene * scene) :
     this->setAcceptHoverEvents(true);
     this->setFlag(QGraphicsItem::ItemIsSelectable, false);
     this->setFlag(QGraphicsItem::ItemIsFocusable, true);
-    this->setZValue(1.0 / 1.0);
+    this->setZValue(std::numeric_limits<double>::infinity());
 }
 
 CropWidgetItem::~CropWidgetItem()

@@ -166,6 +166,7 @@ RotationWidgetItem::RotationWidgetItem(const QList<AbstractPhoto*> & items, QGra
     this->setAcceptHoverEvents(true);
     this->setFlag(QGraphicsItem::ItemIsMovable);
     this->setFlag(QGraphicsItem::ItemIsSelectable, false);
+    this->setZValue(std::numeric_limits<double>::infinity());
     reset();
     this->setItems(items);
 }

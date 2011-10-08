@@ -82,6 +82,7 @@ namespace KIPIPhotoLayoutsEditor
             void settings();
             void setupGrid();
             void changeCanvasSize();
+            void setTemplateEditMode(bool isEnabled);
 
         protected:
 
