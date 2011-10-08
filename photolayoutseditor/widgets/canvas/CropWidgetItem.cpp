@@ -174,7 +174,7 @@ CropWidgetItem::CropWidgetItem(QGraphicsItem * parent, QGraphicsScene * scene) :
     this->setAcceptHoverEvents(true);
     this->setFlag(QGraphicsItem::ItemIsSelectable, false);
     this->setFlag(QGraphicsItem::ItemIsFocusable, true);
-    this->setZValue(1.0 / 0.0);
+    this->setZValue(1.0 / 1.0);
 }
 
 CropWidgetItem::~CropWidgetItem()
