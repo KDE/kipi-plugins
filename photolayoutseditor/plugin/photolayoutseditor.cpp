@@ -706,9 +706,9 @@ void PhotoLayoutsEditor::changeCanvasSize()
 
 void PhotoLayoutsEditor::setTemplateEditMode(bool isEnabled)
 {
-    d->toolsWidget->setTemplateEditMode(isEnabled);
-    d->treeWidget->setTemplateEditMode(isEnabled);
-    m_canvas->setTemplateEditMode(isEnabled);
+    //d->toolsWidget->setTemplateEditMode(isEnabled);
+    //d->treeWidget->setTemplateEditMode(isEnabled);
+    //m_canvas->setTemplateEditMode(isEnabled);
 }
 
 void PhotoLayoutsEditor::loadEffects()

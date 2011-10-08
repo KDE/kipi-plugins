@@ -27,6 +27,7 @@
 #include "AbstractPhoto.h"
 #include "photolayoutseditor.h"
 #include "global.h"
+#include <limits>
 
 #include <QPainter>
 #include <QGraphicsScene>

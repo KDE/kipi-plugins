@@ -26,6 +26,7 @@
 #include "RotationWidgetItem.moc"
 #include "photolayoutseditor.h"
 #include "global.h"
+#include <limits>
 
 #include <QUndoCommand>
 
