@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=PolaroidBorderDrawerFactory
 Name[ca]=PolaroidBorderDrawerFactory
+Name[el]=PolaroidBorderDrawerFactory
 Name[nb]=PolaroidBorderDrawerFactory
 Name[nl]=PolaroidRandenAanbrenger
 Name[pt]=PolaroidBorderDrawerFactory
@@ -14,6 +15,7 @@ ServiceTypes=PhotoLayoutsEditor/BorderPlugin
 Encoding=UTF-8
 Comment=Polaroid border drawer for Photo Layouts Editor
 Comment[ca]=Motllura de Polaroid per l'editor de formats de foto
+Comment[el]=Polaroid σχεδιαστής περιγράμματος για τον επεξεργαστή διατάξεων φωτογραφιών
 Comment[it]=Disegnatore di bordi Polaroid per l'editor di impaginazioni di foto
 Comment[nb]=Polaroid kanttegner for fotoutleggsredigering
 Comment[nl]=Polaroid-randen aanbrenger voor Foto-indelingbewerker

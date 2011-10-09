@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=SolidBorderDrawerFactory
 Name[ca]=SolidBorderDrawerFactory
+Name[el]=SolidBorderDrawerFactory
 Name[nb]=SolidBorderDrawerFactory
 Name[nl]=VasteRandAanbrenger
 Name[pt]=SolidBorderDrawerFactory
@@ -14,6 +15,7 @@ ServiceTypes=PhotoLayoutsEditor/BorderPlugin
 Encoding=UTF-8
 Comment=Solid border drawer for Photo Layouts Editor
 Comment[ca]=Motllura sòlida per l'editor de formats de foto
+Comment[el]=Solid σχεδιαστής περιγράμματος για τον επεξεργαστή διατάξεων φωτογραφιών
 Comment[it]=Disegnatore di bordi solidi per l'editor di impaginazioni di foto
 Comment[nb]=Heltrukken kanttegner for fotoutleggsredigering
 Comment[nl]=Aanbrenger van vaste rand voor Foto-indelingbewerker
