@@ -26,7 +26,6 @@ SET(kipiplugin_gpssync_PART_SRCS
     searchwidget.cpp
     setup.cpp
     setup_general.cpp
-    borrowed/modeltest.cpp
     backend-geonamesUS-rg.cpp
     rgtagmodel.cpp
     tests/simpletreemodel/simpletreemodel.cpp
@@ -66,6 +65,11 @@ TARGET_LINK_LIBRARIES(kipiplugin_gpssync
                       ${KGEOMAP_LIBRARIES}
                       kipiplugins
                      )
+
+IF(KDE4_BUILD_TESTS)
+    # needed by modeltest
+    TARGET_LINK_LIBRARIES(kipiplugin_gpssync ${QT_QTTEST_LIBRARY})
+ENDIF(KDE4_BUILD_TESTS)
 
 INSTALL(TARGETS kipiplugin_gpssync DESTINATION ${PLUGIN_INSTALL_DIR})
 
