@@ -166,7 +166,7 @@ SceneBackground::SceneBackground(QGraphicsScene * scene) :
     m_first_brush(Qt::transparent),
     m_second_brush(Qt::transparent)
 {
-    this->setZValue(-1.0/0.0);
+    this->setZValue(-std::numeric_limits<double>::infinity());
     this->setFlags(0);
     this->sceneChanged();
 }

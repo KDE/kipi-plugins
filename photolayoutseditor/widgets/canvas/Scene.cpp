@@ -1199,7 +1199,7 @@ void Scene::setRotationWidgetVisible(bool isVisible)
     {
         if (!d->m_rot_item)
             d->m_rot_item = new RotationWidgetItem(d->m_selected_items.keys());
-        d->m_rot_item->setZValue(1.0/0.0);
+        d->m_rot_item->setZValue(std::numeric_limits<double>::infinity());
         this->QGraphicsScene::addItem(d->m_rot_item);
     }
 }
@@ -1220,7 +1220,7 @@ void Scene::setScalingWidgetVisible(bool isVisible)
     {
         if (!d->m_scale_item)
             d->m_scale_item = new ScalingWidgetItem(d->m_selected_items.keys());
-        d->m_scale_item->setZValue(1.0/0.0);
+        d->m_scale_item->setZValue(std::numeric_limits<double>::infinity());
         this->QGraphicsScene::addItem(d->m_scale_item);
         this->update(d->m_scale_item->boundingRect());
     }
@@ -1245,7 +1245,7 @@ void Scene::setCropWidgetVisible(bool isVisible)
             d->m_crop_item = new CropWidgetItem();
             connect(d->m_crop_item, SIGNAL(cancelCrop()), this, SLOT(closeCropWidget()));
         }
-        d->m_crop_item->setZValue(1.0/0.0);
+        d->m_crop_item->setZValue(std::numeric_limits<double>::infinity());
         this->QGraphicsScene::addItem(d->m_crop_item);
         if (d->m_selected_items.count() == 1)
         {
