@@ -26,6 +26,12 @@
 #include "SceneBackground.moc"
 #include "global.h"
 
+// C++ std includes
+
+#include <limits>
+
+// Qt includes
+
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QUndoCommand>

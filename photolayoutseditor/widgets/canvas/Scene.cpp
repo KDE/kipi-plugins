@@ -41,6 +41,10 @@
 #include "LayersModelItem.h"
 #include "LayersSelectionModel.h"
 
+// C++ std includes
+
+#include <limits>
+
 // Qt
 #include <QGraphicsTextItem>
 #include <QGraphicsDropShadowEffect>
