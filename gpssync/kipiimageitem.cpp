@@ -678,7 +678,6 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
     // determine what is to be done first
     bool shouldRemoveCoordinates = false;
-    bool shouldRemoveAltitude    = false;
     bool shouldWriteCoordinates  = false;
     bool shouldWriteAltitude     = false;
     qreal altitude  = 0;
@@ -697,15 +696,10 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
             shouldWriteAltitude = true;
             altitude = m_gpsData.getCoordinates().alt();
         }
-        else
-        {
-            shouldRemoveAltitude = true;
-        }
     }
     else
     {
         shouldRemoveCoordinates = true;
-        shouldRemoveAltitude = true;
     }
 
     QString returnString;
