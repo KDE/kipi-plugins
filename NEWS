@@ -7,4 +7,5 @@ NEW FEATURES:
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 283509 : Crash on final step of stiching large panorama.
-002 ==> 
+002 ==> 283321 : Photolayoutseditor crashes on exit.
+003 ==> 
