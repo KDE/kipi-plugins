@@ -41,9 +41,9 @@ namespace KIPIPhotoLayoutsEditor
             virtual ~BorderDrawerFactoryInterface()
             {}
 
-            virtual QString drawerName() const = 0;
+            virtual QString drawersNames() const = 0;
 
-            virtual BorderDrawerInterface * getDrawerInstance(QObject * parent = 0) = 0;
+            virtual BorderDrawerInterface * getDrawerInstance(const QString & name) = 0;
     };
 }
 

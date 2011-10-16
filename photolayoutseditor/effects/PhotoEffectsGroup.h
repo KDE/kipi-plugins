@@ -44,13 +44,10 @@ namespace KIPIPhotoLayoutsEditor
             AbstractPhoto * m_photo;
             QList<AbstractPhotoEffectInterface*> m_effects_list;
 
-            class MoveItemsUndoCommand;
-            class RemoveItemsUndoCommand;
-            class InsertItemUndoCommand;
-
         public:
 
             explicit PhotoEffectsGroup(AbstractPhoto * photo, QObject * parent = 0);
+            ~PhotoEffectsGroup();
             QDomElement toSvg(QDomDocument & document) const;
             static PhotoEffectsGroup * fromSvg(const QDomElement & element, AbstractPhoto * graphicsItem);
             AbstractPhoto * photo() const;
@@ -82,17 +79,7 @@ namespace KIPIPhotoLayoutsEditor
             void emitEffectsChanged(AbstractPhotoEffectInterface * effect = 0);
             QImage apply(const QImage & image);
 
-        private:
-
-            void moveRowsInModel(int sourcePosition, int sourceCount, int destPosition);
-            QList<AbstractPhotoEffectInterface*> removeRowsInModel(int startingPosition, int count);
-            void insertRemovedRowsInModel(const QList<AbstractPhotoEffectInterface*> & itemList, int startingPosition);
-            void setEffectPointer(int row, AbstractPhotoEffectInterface * effect);
-
         friend class AbstractPhoto;
-        friend class MoveItemsUndoCommand;
-        friend class RemoveItemsUndoCommand;
-        friend class InsertItemUndoCommand;
     };
 }
 

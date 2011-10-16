@@ -144,6 +144,8 @@ void AbstractPhotoItemLoader::run()
     m_item->d->m_borders_group = BordersGroup::fromSvg(itemDataElement, m_item);
     if (!m_item->d->m_borders_group)
         this->exit(1);
+    else
+        connect(m_item->d->m_borders_group, SIGNAL(drawersChanged()), m_item, SLOT(refresh()));
 
     QDomElement clipPath = defs.firstChildElement("clipPath");
     if (clipPath.isNull() || clipPath.attribute("id") != "clipPath_"+m_item->id())
@@ -168,6 +170,8 @@ void AbstractPhotoItemLoader::run()
     m_item->d->m_effects_group = PhotoEffectsGroup::fromSvg(appNS, m_item);
     if (!m_item->d->m_effects_group)
         this->exit(1);
+    else
+        connect(m_item->d->m_effects_group, SIGNAL(effectsChanged()), m_item, SLOT(refresh()));
 
     if (observer)
     {

@@ -51,16 +51,12 @@ class KIPIPhotoLayoutsEditor::PhotoEffectChangeCommand : public QUndoCommand
             QVariant temp = effect->propertyValue(propertyName);
             effect->setPropertyValue(propertyName, value);
             value = temp;
-            if (effect->group() && effect->group()->photo())
-                effect->group()->photo()->refresh();
         }
         virtual void undo()
         {
             QVariant temp = effect->propertyValue(propertyName);
             effect->setPropertyValue(propertyName, value);
             value = temp;
-            if (effect->group() && effect->group()->photo())
-                effect->group()->photo()->refresh();
         }
         void setPropertyValue(const QString & propertyName, const QVariant & value)
         {

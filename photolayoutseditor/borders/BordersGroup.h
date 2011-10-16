@@ -64,6 +64,14 @@ namespace KIPIPhotoLayoutsEditor
             QDomElement toSvg(QDomDocument & document);
             static BordersGroup * fromSvg(QDomElement & element, AbstractPhoto * graphicsItem);
 
+        signals:
+
+            void drawersChanged();
+
+        public slots:
+
+            void refresh();
+
         protected:
 
             virtual QObject * item(const QModelIndex & index) const;
@@ -77,9 +85,12 @@ namespace KIPIPhotoLayoutsEditor
             virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
             virtual bool moveRows(int sourcePosition, int sourceCount, int destPosition);
 
-        public slots:
+        protected slots:
 
-            void refresh();
+            void emitBordersChanged()
+            {
+                emit drawersChanged();
+            }
 
         private:
 

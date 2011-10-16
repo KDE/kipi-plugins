@@ -123,10 +123,6 @@ QtAbstractPropertyBrowser * PhotoEffectsLoader::propertyBrowser(AbstractPhotoEff
     QtDoublePropertyManager * doubleManager = 0;
     KDoubleSpinBoxFactory * doubleFactory = 0;
 
-    // QVariant::Color
-    QtColorPropertyManager * colorManager = 0;
-    KColorEditorFactory * colorFactory = 0;
-
     // QVariant others....
     QtVariantPropertyManager * variantManager = 0;
     KVariantEditorFactory * variantFactory = 0;
@@ -172,19 +168,6 @@ QtAbstractPropertyBrowser * PhotoEffectsLoader::propertyBrowser(AbstractPhotoEff
                     integerManager->setSingleStep(property, effect->maximumValue(metaProperty).toDouble());
                 }
                 break;
-            case QVariant::Color:
-                {
-                    if (!colorManager || !colorFactory)
-                    {
-                        colorManager = new QtColorPropertyManager(browser);
-                        colorFactory = new KColorEditorFactory(browser);
-                        browser->setFactoryForManager(colorManager,colorFactory);
-                    }
-                    property = colorManager->addProperty(propertyName);
-                    colorManager->setValue(property, metaProperty.read(effect).value<QColor>());
-                    browser->addProperty(property);
-                }
-                break;
             default:
                 {
                     if (!variantManager || !variantFactory)
@@ -195,6 +178,8 @@ QtAbstractPropertyBrowser * PhotoEffectsLoader::propertyBrowser(AbstractPhotoEff
                     }
                     property = variantManager->addProperty(metaProperty.type(), propertyName);
                     variantManager->setValue(property, metaProperty.read(effect));
+                    foreach (QtProperty * p, property->subProperties())
+                        p->setEnabled(false);
                 }
         }
         if (property)
@@ -206,11 +191,6 @@ QtAbstractPropertyBrowser * PhotoEffectsLoader::propertyBrowser(AbstractPhotoEff
     {
         connect(doubleManager,SIGNAL(propertyChanged(QtProperty*)),listener,SLOT(propertyChanged(QtProperty*)));
         connect(doubleFactory,SIGNAL(editingFinished()),listener,SLOT(editingFinished()));
-    }
-    if (colorManager && colorFactory)
-    {
-        connect(colorManager,SIGNAL(propertyChanged(QtProperty*)),listener,SLOT(propertyChanged(QtProperty*)));
-        connect(colorFactory,SIGNAL(editingFinished()),listener,SLOT(editingFinished()));
     }
     if (variantManager && variantFactory)
     {

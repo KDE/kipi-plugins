@@ -60,7 +60,7 @@ AbstractMovableModel * EffectsEditorTool::model()
 
 QObject * EffectsEditorTool::createItem(const QString & name)
 {
-    return PhotoEffectsLoader::getEffectByName(name);\
+    return PhotoEffectsLoader::getEffectByName(name);
 }
 
 QWidget * EffectsEditorTool::createEditor(QObject * item, bool createCommands)

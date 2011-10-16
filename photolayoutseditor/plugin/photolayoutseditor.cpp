@@ -80,6 +80,7 @@
 #include "PLEConfigSkeleton.h"
 #include "PLEAboutData.h"
 #include "StarndardEffectsFactory.h"
+#include "StandardBordersFactory.h"
 #include "global.h"
 #include "ProgressEvent.h"
 #include "BorderDrawerInterface.h"
@@ -153,7 +154,7 @@ PhotoLayoutsEditor::~PhotoLayoutsEditor()
     PLEConfigSkeleton::self()->writeConfig();
 
     if (m_canvas)
-        delete m_canvas;
+        m_canvas->deleteLater();
     if (d)
         delete d;
 
@@ -754,6 +755,9 @@ void PhotoLayoutsEditor::loadEffects()
 
 void PhotoLayoutsEditor::loadBorders()
 {
+    StandardBordersFactory * stdBorders = new StandardBordersFactory( BorderDrawersLoader::instance() );
+    BorderDrawersLoader::registerDrawer( stdBorders );
+
     const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsEditor/BorderPlugin");
     foreach (const KService::Ptr& service, offers)
     {

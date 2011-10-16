@@ -266,6 +266,7 @@ void ToolsDockWidget::itemSelected(AbstractPhoto * photo)
     AbstractItemsTool * tool =qobject_cast<AbstractItemsTool*>(w);
     if (tool)
         tool->setCurrentItem(photo);
+    qDebug() << tool;
 }
 
 void ToolsDockWidget::mousePositionChoosen(const QPointF & position)

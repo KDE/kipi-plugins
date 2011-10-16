@@ -26,25 +26,111 @@
 #ifndef POLAROIDBORDERDRAWER_H
 #define POLAROIDBORDERDRAWER_H
 
-#include "PolaroidBorderDrawer_global.h"
-#include "BorderDrawerFactoryInterface.h"
+#include "BorderDrawerInterface.h"
 
-#include <QVariantList>
+#include <QColor>
 
-using namespace KIPIPhotoLayoutsEditor;
-
-class POLAROIDBORDERDRAWERSHARED_EXPORT PolaroidBorderDrawerFactory : public BorderDrawerFactoryInterface
+namespace KIPIPhotoLayoutsEditor
 {
-        Q_OBJECT
-        Q_INTERFACES(KIPIPhotoLayoutsEditor::BorderDrawerFactoryInterface)
+    class StandardBordersFactory;
 
-    public:
+    class PolaroidBorderDrawer : public BorderDrawerInterface
+    {
+            Q_OBJECT
 
-        PolaroidBorderDrawerFactory(QObject * parent, const QVariantList&);
+            int m_width;
+            QString m_text;
+            QColor m_color;
+            QFont m_font;
+            QPainterPath m_path;
+            QRectF m_text_rect;
 
-        virtual QString drawerName() const;
+            static QMap<const char *,QString> m_properties;
+            static int m_default_width;
+            static QString m_default_text;
+            static QColor m_default_color;
+            static QFont m_default_font;
 
-        virtual BorderDrawerInterface * getDrawerInstance(QObject * parent = 0);
-};
+        public:
+
+            explicit PolaroidBorderDrawer(StandardBordersFactory * factory, QObject * parent = 0);
+
+            virtual QPainterPath path(const QPainterPath & path);
+
+            virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option);
+
+            virtual QString propertyName(const QMetaProperty & property) const;
+
+            virtual QVariant propertyValue(const QString & propertyName) const;
+
+            virtual void setPropertyValue(const QString & propertyName, const QVariant & value);
+
+            virtual QDomElement toSvg(QDomDocument & document) const;
+
+            virtual QString name() const;
+
+            virtual QString toString() const;
+
+            virtual operator QString() const;
+
+            Q_PROPERTY(int width READ width WRITE setWidth)
+            int width() const
+            {
+                return m_width;
+            }
+            void setWidth(int width)
+            {
+                if (width > 0)
+                {
+                    m_default_width = m_width = width;
+                    this->propertiesChanged();
+                }
+            }
+
+            Q_PROPERTY(QString text READ text WRITE setText)
+            QString text() const
+            {
+                return m_text;
+            }
+            void setText(const QString & text)
+            {
+                m_text = text;
+                this->propertiesChanged();
+            }
+
+            Q_PROPERTY(QColor color READ color WRITE setColor)
+            QColor color() const
+            {
+                return m_color;
+            }
+            void setColor(const QColor & color)
+            {
+                if (color.isValid())
+                {
+                    m_default_color = m_color = color;
+                    this->propertiesChanged();
+                }
+            }
+
+            Q_PROPERTY(QFont font READ font WRITE setFont)
+            QFont font() const
+            {
+                return m_font;
+            }
+            void setFont(const QFont & font)
+            {
+                m_default_font = m_font = font;
+                this->propertiesChanged();
+            }
+
+            virtual QVariant minimumValue(const QMetaProperty & property);
+            virtual QVariant maximumValue(const QMetaProperty & property);
+            virtual QVariant stepValue(const QMetaProperty & property);
+
+        private:
+
+            QString pathToSvg(const QPainterPath & path) const;
+    };
+}
 
 #endif // POLAROIDBORDERDRAWER_H

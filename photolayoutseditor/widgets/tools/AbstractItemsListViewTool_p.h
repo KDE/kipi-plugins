@@ -33,31 +33,29 @@
 namespace KIPIPhotoLayoutsEditor
 {
     class AbstractItemsListViewTool;
+    class AbstractMovableModel;
 
     class AbstractListToolViewDelegate : public QWidget
     {
-            KPushButton * m_acceptButton;
             Q_OBJECT
+
+            KPushButton * m_acceptButton;
+            AbstractItemsListViewTool * m_parent;
+            AbstractMovableModel * m_model;
+            QModelIndex m_index;
+            QObject * m_object;
+
         public:
-            AbstractListToolViewDelegate(AbstractItemsListViewTool * parent = 0);
+            AbstractListToolViewDelegate(AbstractMovableModel * model, QModelIndex index, AbstractItemsListViewTool * parent);
         signals:
             void editorClosed();
-            void editorAccepted();
-            void itemSelected(const QString & selectedItem);
+            void showEditor(QObject * object);
         protected slots:
-            void emitEditorClosed()
-            {
-                emit editorClosed();
-            }
-            void emitEditorAccepted()
-            {
-                emit editorAccepted();
-            }
-            void emitItemSelected(const QString & selectedItem)
-            {
-                m_acceptButton->setEnabled(!selectedItem.isEmpty());
-                emit itemSelected(selectedItem);
-            }
+            void editorAccepted();
+            void editorCancelled();
+            void itemSelected(const QString & selectedItem);
+
+        friend class AbstractItemsListViewTool;
     };
 
     class AbstractListToolView : public QListView

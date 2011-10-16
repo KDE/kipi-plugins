@@ -23,15 +23,4 @@
  *
  * ============================================================ */
 
-#ifndef SOLIDBORDERDRAWER_GLOBAL_H
-#define SOLIDBORDERDRAWER_GLOBAL_H
-
-#include <QtCore/qglobal.h>
-
-#if defined(SOLIDBORDERDRAWER_LIBRARY)
-#  define SOLIDBORDERDRAWERSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define SOLIDBORDERDRAWERSHARED_EXPORT Q_DECL_IMPORT
-#endif
-
-#endif // SOLIDBORDERDRAWER_GLOBAL_H
+#include "BorderDrawerInterface.moc"

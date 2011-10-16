@@ -75,7 +75,7 @@ namespace KIPIPhotoLayoutsEditor
             }
             void setColor(QColor color)
             {
-                if (color.isValid())
+                if (!color.isValid())
                     return;
                 m_color = color;
                 m_last_color = color;

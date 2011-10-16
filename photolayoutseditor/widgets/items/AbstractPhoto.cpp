@@ -117,6 +117,7 @@ AbstractPhoto::AbstractPhoto(const QString & name, Scene * scene) :
 
 AbstractPhoto::~AbstractPhoto()
 {
+    qDebug() << "Abstractphoto delete";
     d->m_effects_group->deleteLater();
     d->m_borders_group->deleteLater();
     delete d;

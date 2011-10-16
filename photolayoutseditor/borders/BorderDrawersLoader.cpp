@@ -70,7 +70,9 @@ BorderDrawersLoader * BorderDrawersLoader::instance(QObject * parent)
 void BorderDrawersLoader::registerDrawer(BorderDrawerFactoryInterface * factory)
 {
     factory->setParent(instance());
-    instance()->d->factories.insert(factory->drawerName(), factory);
+    QStringList names = factory->drawersNames().split(';', QString::SkipEmptyParts);
+    foreach (QString name, names)
+        instance()->d->factories.insert(name, factory);
 }
 
 QStringList BorderDrawersLoader::registeredDrawers()
@@ -83,23 +85,14 @@ BorderDrawerFactoryInterface * BorderDrawersLoader::getFactoryByName(const QStri
     return instance()->d->factories.value(name, 0);
 }
 
-BorderDrawerInterface * BorderDrawersLoader::getDrawerByName(const QString & name/*, const QMap<QString,QString> & properties*/)
+BorderDrawerInterface * BorderDrawersLoader::getDrawerByName(const QString & name)
 {
     BorderDrawerFactoryInterface * factory = getFactoryByName(name);
     if (factory)
     {
-        BorderDrawerInterface * drawer = factory->getDrawerInstance();
+        BorderDrawerInterface * drawer = factory->getDrawerInstance(name);
         if (!drawer)
             return 0;
-//        const QMetaObject * meta = drawer->metaObject();
-//        for (int i = meta->propertyCount()-1; i >= 0; --i)
-//        {
-//            QMetaProperty prop = meta->property(i);
-//            QString value = properties.value(QString(prop.name()));
-//            if (value.isEmpty())
-//                continue;
-//            prop.write(drawer, QVariant(value.toAscii()));
-//        }
         return drawer;
     }
     return 0;
@@ -138,7 +131,7 @@ QDomElement BorderDrawersLoader::drawerToSvg(BorderDrawerInterface * drawer, QDo
     if (!drawer)
         return QDomElement();
     QDomElement result = document.createElement("g");
-    result.setAttribute("name", drawer->factory()->drawerName());
+    result.setAttribute("name", drawer->name());
 
     result.appendChild( drawer->toSvg(document) );
 
@@ -243,6 +236,8 @@ QWidget * BorderDrawersLoader::createEditor(BorderDrawerInterface * drawer, bool
                     }
                     property = variantManager->addProperty(metaProperty.type(), propertyName);
                     variantManager->setValue(property, metaProperty.read(drawer));
+                    foreach (QtProperty * p, property->subProperties())
+                        p->setEnabled(false);
                 }
         }
         browser->addProperty(property);

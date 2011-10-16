@@ -54,10 +54,12 @@ BordersGroup::BordersGroup(AbstractPhoto * photo) :
     d(new BordersGroupPrivate(this))
 {
     d->photo = photo;
+    connect(this, SIGNAL(drawersChanged()), photo, SLOT(refresh()));
 }
 
 BordersGroup::~BordersGroup()
 {
+    qDebug() << "PhotoEffectsGroup delete";
     delete d;
 }
 
@@ -131,6 +133,7 @@ bool BordersGroup::insertDrawer(BorderDrawerInterface * drawer, int position)
         return false;
     d->borders.takeAt(position);
     d->borders.insert(position, drawer);
+    connect(drawer, SIGNAL(changed()), this, SLOT(emitBordersChanged()));
     return true;
 }
 
@@ -233,8 +236,11 @@ void BordersGroup::setItem(QObject * item, const QModelIndex & index)
         return;
     if (drawer == d->borders.at(row))
         return;
-    d->borders.removeAt(row);
+    BorderDrawerInterface * temp = d->borders.takeAt(row);
+    if (temp)
+        temp->disconnect(this);
     d->borders.insert(row, drawer);
+    connect(drawer, SIGNAL(changed()), this, SLOT(emitBordersChanged()));
     drawer->setGroup(this);
     this->refresh();
 }
@@ -284,7 +290,7 @@ QModelIndex BordersGroup::parent(const QModelIndex & /*child*/) const
 
 bool BordersGroup::removeRows(int row, int count, const QModelIndex & parent)
 {
-    if (row >= rowCount(parent) || count < 0 || row+count > rowCount(parent))
+    if (row >= rowCount(parent) || count <= 0 || row+count > rowCount(parent))
         return false;
     beginRemoveRows(QModelIndex(), row, row+count-1);
     while (count--)

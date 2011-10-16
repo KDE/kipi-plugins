@@ -264,6 +264,7 @@ void RotationWidgetItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
     else
         d->elipse_pressed = false;
     this->setCursor(QCursor(Qt::ClosedHandCursor));
+    event->setAccepted(true);
 }
 
 void RotationWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)

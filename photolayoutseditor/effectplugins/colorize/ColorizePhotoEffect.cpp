@@ -33,7 +33,8 @@ using namespace KIPIPhotoLayoutsEditor;
 QColor ColorizePhotoEffect::m_last_color = QColor(255,255,255,0);
 
 ColorizePhotoEffect::ColorizePhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
-    AbstractPhotoEffectInterface(factory, parent)
+    AbstractPhotoEffectInterface(factory, parent),
+    m_color(m_last_color)
 {
 }
 

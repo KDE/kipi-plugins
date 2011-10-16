@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#include "AbstractItemsListViewTool.moc"
-#include "AbstractItemsListViewTool_p.moc"
+#include "AbstractItemsListViewTool.h"
+#include "AbstractItemsListViewTool_p.h"
 #include "AbstractPhoto.h"
 #include "ToolsDockWidget.h"
 #include "BorderDrawersLoader.h"
@@ -155,7 +155,7 @@ class KIPIPhotoLayoutsEditor::AbstractItemsListViewToolPrivate
         m_remove_button(0),
         m_down_button(0),
         m_up_button(0),
-        m_opened_editor(0,QModelIndex()),
+        m_delegate(0),
         m_editors_object(0)
     {}
     AbstractListToolView * m_list_widget;
@@ -163,25 +163,14 @@ class KIPIPhotoLayoutsEditor::AbstractItemsListViewToolPrivate
     KPushButton * m_remove_button;
     KPushButton * m_down_button;
     KPushButton * m_up_button;
-    QPair<AbstractListToolViewDelegate*,QPersistentModelIndex> m_opened_editor;
+    AbstractListToolViewDelegate * m_delegate;
     QObject * m_editors_object;
 
     void closeChooser()
     {
-        if (m_opened_editor.first)
-            m_opened_editor.first->deleteLater();
-        m_opened_editor.first = 0;
-        m_opened_editor.second = QPersistentModelIndex();
-        m_editors_object = 0;
-    }
-
-    void removeChoosed()
-    {
-        if (m_opened_editor.second.isValid() && !m_opened_editor.second.internalPointer())
-            const_cast<QAbstractItemModel*>(m_opened_editor.second.model())->removeRow(m_opened_editor.second.row());
-        if (m_editors_object)
-            m_editors_object->deleteLater();
-        m_editors_object = 0;
+        if (m_delegate)
+            m_delegate->deleteLater();
+        m_delegate = 0;
     }
 
     void setButtonsEnabled(bool isEnabled)
@@ -253,13 +242,15 @@ AbstractItemsListViewTool::AbstractItemsListViewTool(const QString & toolName, S
 
 AbstractItemsListViewTool::~AbstractItemsListViewTool()
 {
-    this->chooserCancelled();
+    if (d->m_delegate)
+        d->m_delegate->editorAccepted();
     delete d;
 }
 
 void AbstractItemsListViewTool::currentItemAboutToBeChanged()
 {
-    this->chooserCancelled();
+    if (d->m_delegate)
+        d->m_delegate->editorAccepted();
 }
 
 void AbstractItemsListViewTool::currentItemChanged()
@@ -272,7 +263,19 @@ void AbstractItemsListViewTool::viewCurrentEditor(const QModelIndex & index)
 {
     closeEditor();
     d->setButtonsEnabled(true);
-    QWidget * editor = createEditor(static_cast<QObject*>(index.internalPointer()), (static_cast<QObject*>(index.internalPointer()) != d->m_editors_object));
+    QWidget * editor = createEditor(static_cast<QObject*>(index.internalPointer()), true);
+    if (editor)
+    {
+        static_cast<QGridLayout*>(layout())->addWidget(editor,2,0,1,-1);
+        editor->show();
+    }
+}
+
+void AbstractItemsListViewTool::viewCurrentEditor(QObject * object)
+{
+    closeEditor();
+    d->setButtonsEnabled(true);
+    QWidget * editor = createEditor(object, false);
     if (editor)
     {
         static_cast<QGridLayout*>(layout())->addWidget(editor,2,0,1,-1);
@@ -293,53 +296,20 @@ void AbstractItemsListViewTool::createChooser()
         model->insertRow(row);
 
         // Create chooser
-        AbstractListToolViewDelegate * w = new AbstractListToolViewDelegate(this);
-        d->m_opened_editor.first = w;
-        d->m_opened_editor.second = QPersistentModelIndex(model->index(row,0));
-        d->m_list_widget->setIndexWidget(model->index(row,0),w);
-
+        d->m_delegate = new AbstractListToolViewDelegate(model, model->index(row,0), this);
+        d->m_list_widget->setIndexWidget(model->index(row,0),d->m_delegate);
 
         d->m_list_widget->setSelectionMode(QAbstractItemView::NoSelection);
-        connect(w,SIGNAL(editorAccepted()),this,SLOT(chooserAccepted()));
-        connect(w,SIGNAL(editorClosed()),this,SLOT(chooserCancelled()));
-        connect(w,SIGNAL(itemSelected(QString)),this,SLOT(itemSelected(QString)));
+        connect(d->m_delegate,SIGNAL(editorClosed()),this,SLOT(closeChooser()));
+        connect(d->m_delegate,SIGNAL(showEditor(QObject*)),this,SLOT(viewCurrentEditor(QObject*)));
         d->setButtonsEnabled(false);
         d->m_list_widget->setSelection(QRect(),QItemSelectionModel::Clear);
     }
 }
 
-void AbstractItemsListViewTool::itemSelected(const QString & name)
-{
-    AbstractListToolViewDelegate * w = d->m_opened_editor.first;
-    AbstractMovableModel * model = this->model();
-    if (model && w)
-    {
-        if ((d->m_editors_object = createItem(name)))
-        {
-            model->setItem(d->m_editors_object, d->m_opened_editor.second);
-            QWidget * editor = createEditor(d->m_editors_object, false);
-            if (editor)
-            {
-                static_cast<QGridLayout*>(layout())->addWidget(editor,2,0,1,-1);
-                editor->show();
-            }
-        }
-    }
-}
-
-void AbstractItemsListViewTool::chooserAccepted()
-{
-    addItemCommand(d->m_editors_object, d->m_opened_editor.second.row());
-    closeEditor();
-    d->closeChooser();
-    d->m_list_widget->setSelectionMode(QAbstractItemView::SingleSelection);
-    d->setButtonsEnabled(true);
-}
-
-void AbstractItemsListViewTool::chooserCancelled()
+void AbstractItemsListViewTool::closeChooser()
 {
     closeEditor();
-    d->removeChoosed();
     d->closeChooser();
     d->m_list_widget->setSelectionMode(QAbstractItemView::SingleSelection);
     d->setButtonsEnabled(true);
@@ -413,18 +383,14 @@ void AbstractItemsListViewTool::closeEditor()
     browser->deleteLater();
 }
 
-void AbstractItemsListViewTool::addItemCommand(QObject * item, int row)
+AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractMovableModel * model, QModelIndex index, AbstractItemsListViewTool * parent) :
+    QWidget(parent),
+    m_parent(parent),
+    m_model(model),
+    m_index(index),
+    m_object(0)
 {
-    AbstractMovableModel * model = this->model();
-    if (!item || !model)
-        return;
-    ItemCreatedCommand * command = new ItemCreatedCommand(item, row, model);
-    PLE_PostUndoCommand(command);
-}
-
-AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractItemsListViewTool * parent) :
-    QWidget(parent)
-{
+    // GUI setup
     QHBoxLayout * layout = new QHBoxLayout();
     layout->setSpacing(0);
     layout->setMargin(0);
@@ -433,15 +399,50 @@ AbstractListToolViewDelegate::AbstractListToolViewDelegate(AbstractItemsListView
     KComboBox * comboBox = new KComboBox(this);
     comboBox->addItems(registeredDrawers);
     comboBox->setCurrentIndex(-1);
-    connect(comboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(emitItemSelected(QString)));
+    connect(comboBox,SIGNAL(currentIndexChanged(QString)),this,SLOT(itemSelected(QString)));
     layout->addWidget(comboBox,1);
     m_acceptButton = new KPushButton(KIcon(":action_check.png"), "", this);
     m_acceptButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
     m_acceptButton->setEnabled(false);
-    connect(m_acceptButton,SIGNAL(clicked()),this,SLOT(emitEditorAccepted()));
+    connect(m_acceptButton,SIGNAL(clicked()),this,SLOT(editorAccepted()));
     layout->addWidget(m_acceptButton);
     KPushButton * cancelButton = new KPushButton(KIcon(":action_delete.png"), "", this);
     cancelButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
-    connect(cancelButton,SIGNAL(clicked()),this,SLOT(emitEditorClosed()));
+    connect(cancelButton,SIGNAL(clicked()),this,SLOT(editorCancelled()));
     layout->addWidget(cancelButton);
+}
+
+void AbstractListToolViewDelegate::editorCancelled()
+{
+    if (m_index.isValid() && !m_index.internalPointer())
+        m_model->removeRow(m_index.row());
+    if (m_object)
+        m_object->deleteLater();
+    m_object = 0;
+    emit editorClosed();
+}
+
+void AbstractListToolViewDelegate::editorAccepted()
+{
+    qDebug() << "isAccepted sent" << m_object << m_model;
+    if (!m_object || !m_model)
+        return;
+    qDebug() << "isAccepted sent";
+    ItemCreatedCommand * command = new ItemCreatedCommand(m_object, m_index.row(), m_model);
+    PLE_PostUndoCommand(command);
+    emit editorClosed();
+}
+
+void AbstractListToolViewDelegate::itemSelected(const QString & selectedItem)
+{
+    if (m_model)
+    {
+        if ((m_object =  m_parent->createItem(selectedItem)))
+        {
+            m_model->setItem(m_object, m_index);
+            emit showEditor(m_object);
+        }
+    }
+
+    m_acceptButton->setEnabled(!selectedItem.isEmpty());
 }

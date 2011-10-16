@@ -67,7 +67,11 @@
 )
 
   SET( PLE_Borders_SRCS
+      borderplugins/StandardBordersFactory.cpp
+      borderplugins/polaroid/PolaroidBorderDrawer.cpp
+      borderplugins/solid/SolidBorderDrawer.cpp
       borders/BorderChangeListener.cpp
+      borders/BorderDrawerInterface.cpp
       borders/BorderDrawersLoader.cpp
       borders/BordersGroup.cpp
 )
@@ -95,6 +99,7 @@
 )
 
   ADD_SUBDIRECTORY( effectplugins )
+  ADD_SUBDIRECTORY( borderplugins )
 
   SET( PhotoLayoutsEditor_SRCS
       ${PLE_Common_SRCS}
@@ -114,6 +119,8 @@
   SET( INCLUDE_DIRS
       borders
       borderplugins
+      borderplugins/polaroid
+      borderplugins/solid
       effects
       effectplugins
       effectplugins/blur
@@ -199,5 +206,3 @@
   INSTALL( FILES plugin/photolayoutseditorui.rc DESTINATION ${DATA_INSTALL_DIR}/photolayoutseditor )
   INSTALL( FILES effects/photolayoutseditoreffectplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
   INSTALL( FILES borders/photolayoutseditorborderplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
-
-  ADD_SUBDIRECTORY( ./borderplugins )

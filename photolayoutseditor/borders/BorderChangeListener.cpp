@@ -53,8 +53,6 @@ class KIPIPhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
             QVariant temp = drawer->propertyValue(propertyName);
             drawer->setPropertyValue(propertyName, value);
             value = temp;
-            if (drawer->group())
-                drawer->group()->refresh();
         }
         virtual void undo()
         {
@@ -62,8 +60,6 @@ class KIPIPhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
             QVariant temp = drawer->propertyValue(propertyName);
             drawer->setPropertyValue(propertyName, value);
             value = temp;
-            if (drawer->group())
-                drawer->group()->refresh();
         }
         void setPropertyValue(const QString & propertyName, const QVariant & value)
         {

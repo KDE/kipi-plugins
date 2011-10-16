@@ -42,7 +42,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
             explicit AbstractItemsListViewTool(const QString & toolsName, Scene * scene, Canvas::SelectionMode selectionMode, QWidget * parent = 0);
-            ~AbstractItemsListViewTool();
+            virtual ~AbstractItemsListViewTool();
             virtual void currentItemAboutToBeChanged();
             virtual void currentItemChanged();
             virtual void positionAboutToBeChanged(){} // Unused
@@ -54,12 +54,10 @@ namespace KIPIPhotoLayoutsEditor
 
             virtual AbstractMovableModel * model() = 0;
             void viewCurrentEditor(const QModelIndex & index);
+            void viewCurrentEditor(QObject * object);
             virtual QWidget * createEditor(QObject * item, bool createCommands = true) = 0;
             void createChooser();
-            void itemSelected(const QString & selectedItem);
-            virtual void addItemCommand(QObject * item, int row);
-            void chooserAccepted();
-            void chooserCancelled();
+            void closeChooser();
             void removeSelected();
             void moveSelectedDown();
             void moveSelectedUp();

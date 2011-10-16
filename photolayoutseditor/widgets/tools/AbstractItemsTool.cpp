@@ -30,7 +30,8 @@
 using namespace KIPIPhotoLayoutsEditor;
 
 AbstractItemsTool::AbstractItemsTool(Scene * scene, Canvas::SelectionMode selectionMode, QWidget * parent) :
-    AbstractTool(scene, selectionMode, parent)
+    AbstractTool(scene, selectionMode, parent),
+    m_photo(0)
 {
 }
 

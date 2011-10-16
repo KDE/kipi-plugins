@@ -758,6 +758,8 @@ QtAbstractPropertyBrowser * TextItem::propertyBrowser()
     TextColorChangeListener * colorListener = new TextColorChangeListener(this);
     colorListener->connect(browser, SIGNAL(destroyed()), SLOT(deleteLater()));
     colorListener->connect(colorManager, SIGNAL(propertyChanged(QtProperty*)), SLOT(propertyChanged(QtProperty*)));
+    foreach (QtProperty * p, colorProperty->subProperties())
+        p->setEnabled(false);
 
     // Font
     QtFontPropertyManager * fontManager = new QtFontPropertyManager(browser);
@@ -769,6 +771,8 @@ QtAbstractPropertyBrowser * TextItem::propertyBrowser()
     TextFontChangeListener * fontListener = new TextFontChangeListener(this);
     fontListener->connect(browser, SIGNAL(destroyed()), SLOT(deleteLater()));
     fontListener->connect(fontManager, SIGNAL(propertyChanged(QtProperty*)), SLOT(propertyChanged(QtProperty*)));
+    foreach (QtProperty * p, fontProperty->subProperties())
+        p->setEnabled(false);
 
     return browser;
 }

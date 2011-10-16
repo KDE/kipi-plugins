@@ -33,13 +33,14 @@
 #include <QDebug>
 #include <QCoreApplication>
 
-#include "BorderDrawerFactoryInterface.h"
-
 namespace KIPIPhotoLayoutsEditor
 {
     class BordersGroup;
+    class BorderDrawerFactoryInterface;
     class BorderDrawerInterface : public QObject
     {
+            Q_OBJECT
+
             BordersGroup * m_group;
             BorderDrawerFactoryInterface * m_factory;
 
@@ -76,6 +77,7 @@ namespace KIPIPhotoLayoutsEditor
             virtual QVariant stepValue(const QMetaProperty & /*property*/){ return QVariant(); }
 
             virtual QDomElement toSvg(QDomDocument & document) const = 0;
+            virtual QString name() const = 0;
             virtual QString toString() const = 0;
             virtual operator QString() const = 0;
 
@@ -91,7 +93,5 @@ namespace KIPIPhotoLayoutsEditor
             }
     };
 }
-
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerInterface, "pl.coder89.ple.BorderDrawerInterface/1.0")
 
 #endif // BORDERDRAWERINTERFACE_H
