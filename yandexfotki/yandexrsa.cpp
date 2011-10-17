@@ -493,7 +493,7 @@ void vlong::docopy()
     }
 }
 
-int vlong::cf( const vlong x ) const
+int vlong::cf( const vlong& x ) const
 {
     int neg = negative && !value->is_zero();
     //int neg2 = x.negative && !x.value->is_zero();

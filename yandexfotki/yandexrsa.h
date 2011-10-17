@@ -96,7 +96,7 @@ private:
 
     class vlong_value* value;
     int   negative;
-    int   cf( const vlong x ) const;
+    int   cf( const vlong& x ) const;
     void  docopy();
 
     friend class monty;
