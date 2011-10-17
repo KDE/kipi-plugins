@@ -931,6 +931,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
                     default:    // Overwrite.
                         break;
                 }
+                break;
             }
         }
     }
