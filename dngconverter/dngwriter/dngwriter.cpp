@@ -183,6 +183,7 @@ QString DNGWriter::outputFile() const
     return d->outputFile;
 }
 
+// FIXME: Wow, this is a LOOOOOOOONG method... We should try to refactor it.
 int DNGWriter::convert()
 {
     d->cancel = false;
