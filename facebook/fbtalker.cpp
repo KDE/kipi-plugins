@@ -316,7 +316,7 @@ void FbTalker::doOAuth()
                     errorCode = keyvalue[1];
                 }
             }
-            i++;
+            ++i;
         }
         if( !m_accessToken.isEmpty() && errorCode.isEmpty() && errorReason.isEmpty() )
         {

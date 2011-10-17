@@ -1065,7 +1065,7 @@ void FlickrTalker::parseResponseCreatePhotoSet(const QByteArray& data)
                     it->id = new_id;
                     break;
                 }
-                it++;
+                ++it;
             }
             // Set the new id in the selected photo set.
             m_selectedPhotoSet.id = new_id;

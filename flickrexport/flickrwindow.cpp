@@ -508,7 +508,7 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
                 curr_index = index;
 
             m_albumsListComboBox->insertItem(index++, name, id);
-            it++;
+            ++it;
         }
 
         m_albumsListComboBox->setCurrentIndex(curr_index);
@@ -649,7 +649,7 @@ void FlickrWindow::slotAddPhotoNext()
                     m_talker->m_selectedPhotoSet = *it;
                     break;
                 }
-                it++;
+                ++it;
             }
         }
     }
