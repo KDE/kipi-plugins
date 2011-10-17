@@ -1390,22 +1390,22 @@ void SlideShowGL::effectCube()
 
     glLoadIdentity();
 
-    float PI    = 4.0 * atan(1.0);
+//    float PI    = 4.0 * atan(1.0);
     float znear = 3.0;
-    float theta = 2.0 * atan2((float)2.0 / (float)2.0, (float)znear);
-    theta       = theta * 180.0 / PI;
+//    float theta = 2.0 * atan2((float)2.0 / (float)2.0, (float)znear);
+//    theta       = theta * 180.0 / PI;
 
     glFrustum(-1.0, 1.0, -1.0, 1.0, znear - 0.01, 10.0);
 
     static float xrot;
     static float yrot;
-    static float zrot;
+//    static float zrot;
 
     if (m_i == 0)
     {
         xrot = 0.0;
         yrot = 0.0;
-        zrot = 0.0;
+//        zrot = 0.0;
     }
 
     glMatrixMode( GL_MODELVIEW );
