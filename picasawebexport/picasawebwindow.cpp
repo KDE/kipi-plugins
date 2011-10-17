@@ -892,44 +892,44 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
     {
         switch (m_renamingOpt)
         {
-        case KIO::R_AUTO_SKIP:
-            bSkip = true;
-            break;
+            case KIO::R_AUTO_SKIP:
+                bSkip = true;
+                break;
 
-        case KIO::R_OVERWRITE_ALL:
-            break;
+            case KIO::R_OVERWRITE_ALL:
+                break;
 
-        default:
+            default:
             {
                 KIO::RenameDialog dlg(this, i18n("A file named \"%1\" already "
-                                                 "exists. Are you sure you want "
-                                                 "to overwrite it?",
-                                                 newUrl.fileName()),
-                                      tmpUrl, newUrl,
-                                      KIO::RenameDialog_Mode(KIO::M_MULTI | KIO::M_OVERWRITE | KIO::M_SKIP));
+                        "exists. Are you sure you want "
+                        "to overwrite it?",
+                        newUrl.fileName()),
+                        tmpUrl, newUrl,
+                        KIO::RenameDialog_Mode(KIO::M_MULTI | KIO::M_OVERWRITE | KIO::M_SKIP));
 
                 switch (dlg.exec())
                 {
-                case KIO::R_CANCEL:
-                    m_transferQueue.clear();
-                    bSkip = true;
-                    break;
+                    case KIO::R_CANCEL:
+                        m_transferQueue.clear();
+                        bSkip = true;
+                        break;
 
-                case KIO::R_AUTO_SKIP:
-                    m_renamingOpt = KIO::R_AUTO_SKIP;
-                case KIO::R_SKIP:
-                    bSkip = true;
-                    break;
+                    case KIO::R_AUTO_SKIP:
+                        m_renamingOpt = KIO::R_AUTO_SKIP;
+                    case KIO::R_SKIP:
+                        bSkip = true;
+                        break;
 
-                case KIO::R_RENAME:
-                    newUrl = dlg.newDestUrl();
-                    break;
+                    case KIO::R_RENAME:
+                        newUrl = dlg.newDestUrl();
+                        break;
 
-                case KIO::R_OVERWRITE_ALL:
-                    m_renamingOpt = KIO::R_OVERWRITE_ALL;
-                case KIO::R_OVERWRITE:
-                default:    // Overwrite.
-                    break;
+                    case KIO::R_OVERWRITE_ALL:
+                        m_renamingOpt = KIO::R_OVERWRITE_ALL;
+                    case KIO::R_OVERWRITE:
+                    default:    // Overwrite.
+                        break;
                 }
             }
         }
