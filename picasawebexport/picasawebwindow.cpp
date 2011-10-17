@@ -232,6 +232,7 @@ void PicasawebWindow::slotButtonClicked(int button)
             break;
         default:
              KDialog::slotButtonClicked(button);
+             break;
     }
 }
 
