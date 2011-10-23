@@ -95,7 +95,7 @@ void CalPainter::paint(int month)
 
     for (int i=s; i<(s+KGlobal::locale()->calendar()->daysInMonth(d)); ++i)
     {
-        days[i + (7-startDayOffset)] = i-s+1;
+        days[i + (7 - startDayOffset)] = i - s + 1;
     }
 
     // -----------------------------------------------
