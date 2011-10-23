@@ -66,7 +66,7 @@ void CalSelect::setupView( KIPI::Interface* interface )
         urlList = images.images();
 
     QDate d;
-    cal->setYMD(d, currentYear, 1, 1);
+    cal->setDate(d, currentYear, 1, 1);
     int months     = cal->monthsInYear(d);
     // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
     int inRow      = (months / 2) + ((months % 2) != 0);
@@ -95,8 +95,8 @@ void CalSelect::yearChanged(int year)
     int i, months;
     QDate d, oldD;
     const KCalendarSystem* cal = KGlobal::locale()->calendar();
-    cal->setYMD(d, year, 1, 1);
-    cal->setYMD(oldD, CalSettings::instance()->year(), 1, 1);
+    cal->setDate(d, year, 1, 1);
+    cal->setDate(oldD, CalSettings::instance()->year(), 1, 1);
     months = cal->monthsInYear(d);
 
     if ((cal->monthsInYear(oldD) != months) && !mwVector_.isEmpty())

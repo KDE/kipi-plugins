@@ -87,7 +87,7 @@ void CalPainter::paint(int month)
         days[i] = -1;
 
     QDate d;
-    KGlobal::locale()->calendar()->setYMD(d, params.year, month, 1);
+    KGlobal::locale()->calendar()->setDate(d, params.year, month, 1);
     int s = d.dayOfWeek();
 
     if (s+7-startDayOffset >= 7)
