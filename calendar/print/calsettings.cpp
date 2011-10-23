@@ -128,6 +128,7 @@ void CalSettings::setImagePos(int pos)
             params.height = (int)(params.paperWidth   * zoom);
 
             params.imgPos = CalParams::Right;
+            break;
         }
     }
     emit settingsChanged();
