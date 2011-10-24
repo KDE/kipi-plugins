@@ -194,7 +194,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* interface)
                                             ki18n("(c) 2008-2009, Andi Clemens"));
 
     d->about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
-                        "andi dot clemens at gmx dot net");
+                        "andi dot clemens at googlemail dot com");
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
