@@ -7,7 +7,7 @@
  * Description : a widget to display an info message
  *
  * Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>
- * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

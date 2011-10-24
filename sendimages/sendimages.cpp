@@ -7,7 +7,7 @@
  * Description : a kipi plugin to e-mailing images
  *
  * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2010 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2010 by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2006 by Tom Albers <tomalbers at kde dot nl>
  * Copyright (C) 2006 by Michael Hoechstetter <michael dot hoechstetter at gmx dot de>
  *

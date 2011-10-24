@@ -6,7 +6,7 @@
  * Date        : 2008-11-29
  * Description : a preview widget to display correction results
  *
- * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2008-2009 by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

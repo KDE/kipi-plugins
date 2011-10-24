@@ -7,7 +7,7 @@
  * Description : a kipi plugin to slide images.
  *
  * Copyright (C) 2006-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
- * Copyright (C) 2009      by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009      by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  *
  * This program is free software; you can redistribute it

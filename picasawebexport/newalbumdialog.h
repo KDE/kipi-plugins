@@ -6,7 +6,7 @@
  * Date        : 2008-10-27
  * Description : a kipi plugin to export images to Picasa web service
  *
- * Copyright (C) 2008 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2008 by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
  *
  * This program is free software; you can redistribute it
