@@ -63,7 +63,7 @@ CalWizard::CalWizard( KIPI::Interface* interface, QWidget* parent )
       interface_( interface )
 {
     setMaximumSize( 800, 600 );
-    cSettings_   = CalSettings::instance();
+    cSettings_   = CalSettings::instance(this);
 
     // ---------------------------------------------------------------
 

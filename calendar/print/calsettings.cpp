@@ -42,7 +42,8 @@ namespace KIPICalendarPlugin
 
 QPointer<CalSettings> CalSettings::instance_;
 
-CalSettings::CalSettings()
+CalSettings::CalSettings(QObject* parent)
+    : QObject(parent)
 {
     params.year = KGlobal::locale()->calendar()->earliestValidDate().year() + 1;
     setPaperSize("A4");
@@ -53,11 +54,11 @@ CalSettings::~CalSettings()
 {
 }
 
-CalSettings* CalSettings::instance()
+CalSettings* CalSettings::instance(QObject* parent)
 {
     if (instance_.isNull())
     {
-        instance_ = new CalSettings();
+        instance_ = new CalSettings(parent);
     }
 
     return instance_;

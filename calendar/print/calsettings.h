@@ -88,7 +88,7 @@ public:
     QColor getDayColor(int month, int day) const;
     QString getDayDescr(int month, int day) const;
 
-    static CalSettings* instance();
+    static CalSettings* instance(QObject* parent = 0);
 
     ~CalSettings();
 
@@ -114,7 +114,7 @@ protected:
 
 private:
 
-    CalSettings();
+    CalSettings(QObject* parent);
     CalSettings(CalSettings const&);
     CalSettings& operator=(CalSettings const&);
 
