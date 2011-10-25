@@ -301,6 +301,7 @@ void CalWizard::print()
 void CalWizard::updatePage(int page)
 {
     const int year = cSettings_->year();
+    QDate date(year, 1, 1);
 
     if (page >= months_.count())
     {
@@ -311,7 +312,7 @@ void CalWizard::updatePage(int page)
 
     calProgressUI.finishLabel->setText(i18n("Printing calendar page for %1 of %2",
                                        KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName),
-                                       year));
+                                       KGlobal::locale()->calendar()->formatDate(date, "%Y")));
 }
 
 void CalWizard::printComplete()
