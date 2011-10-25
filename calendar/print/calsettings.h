@@ -115,8 +115,8 @@ protected:
 private:
 
     CalSettings();
-    CalSettings(CalSettings const &);
-    CalSettings &operator=(CalSettings const &);
+    CalSettings(CalSettings const&);
+    CalSettings& operator=(CalSettings const&);
 
 private:
 

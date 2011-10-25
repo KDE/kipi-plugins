@@ -59,8 +59,8 @@ namespace KIPICalendarPlugin
 {
 
 CalWizard::CalWizard( KIPI::Interface* interface, QWidget* parent )
-         : KAssistantDialog(parent),
-           interface_( interface )
+    : KAssistantDialog(parent),
+      interface_( interface )
 {
     setMaximumSize( 800, 600 );
     cSettings_   = CalSettings::instance();
@@ -169,10 +169,12 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         QStringList printList;
         QDate d;
         KGlobal::locale()->calendar()->setDate(d, cSettings_->year(), 1, 1);
+
         for (int i=1; i<=KGlobal::locale()->calendar()->monthsInYear(d); ++i)
         {
             month = KGlobal::locale()->calendar()->monthName(i, cSettings_->year(), KCalendarSystem::LongName);
             image = cSettings_->image(i);
+
             if (!image.isEmpty())
             {
                 months_.insert(i, image);
@@ -183,7 +185,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         if (months_.empty())
         {
             wPrintLabel_->setText("<qt>" +i18n("No valid images selected for months<br/>"
-                    "Click Back to select images")+"</qt>");
+                                               "Click Back to select images")+"</qt>");
             setValid(wFinishPage_, false);
         }
         else
@@ -191,20 +193,21 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
             int year = cSettings_->year();
 
             QString extra;
+
             if ((KGlobal::locale()->calendar()->month(QDate::currentDate()) >= 6 &&
                  KGlobal::locale()->calendar()->year(QDate::currentDate()) == year) ||
-                 KGlobal::locale()->calendar()->year(QDate::currentDate()) > year)
+                KGlobal::locale()->calendar()->year(QDate::currentDate()) > year)
                 extra = "<br/><br/><b>"+i18n("Please note that you are making a "
-                        "calendar for<br/>the current year or a year in the "
-                        "past.")+"</b>";
+                                             "calendar for<br/>the current year or a year in the "
+                                             "past.")+"</b>";
 
-	    KLocale tmpLocale(*KGlobal::locale());
-	    tmpLocale.setDateFormat("%Y");
-	    QString year_locale = tmpLocale.formatDate(d);
+            KLocale tmpLocale(*KGlobal::locale());
+            tmpLocale.setDateFormat("%Y");
+            QString year_locale = tmpLocale.formatDate(d);
 
             wPrintLabel_->setText(i18n("Click Next to start Printing<br/><br/>"
-                    "Following months will be printed for year %1:<br/>", year_locale)
-                    + printList.join(" - ") + extra);
+                                       "Following months will be printed for year %1:<br/>", year_locale)
+                                  + printList.join(" - ") + extra);
             wPrintLabel_->setTextFormat(Qt::RichText);
 
             setValid(wFinishPage_, true);
@@ -223,7 +226,9 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         // Set printer settings ---------------------------------------
 
         if (!printer_)
+        {
             printer_ = new QPrinter( QPrinter::HighResolution );
+        }
 
         // TODO: Let user choose resolutions
 
@@ -232,9 +237,10 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         // Orientation
         switch (params.imgPos)
         {
-            case(CalParams::Top):
+            case (CalParams::Top):
                 printer_->setOrientation(QPrinter::Portrait);
                 break;
+
             default:
                 printer_->setOrientation(QPrinter::Landscape);
                 break;
@@ -243,7 +249,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         kDebug() << "printing...";
         // PageSize
         printer_->setPageSize(params.pageSize);
-        QPrintDialog *printDialog = KdePrint::createPrintDialog( printer_, this );
+        QPrintDialog* printDialog = KdePrint::createPrintDialog( printer_, this );
 
         if ( printDialog->exec() == QDialog::Accepted )
         {
@@ -254,6 +260,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
             calProgressUI.finishLabel->setText(i18n( "Printing Cancelled" ));
             enableButton(KDialog::User3, true); // enable 'Back' button
         }
+
         delete printDialog;
 
     }
@@ -306,11 +313,12 @@ void CalWizard::updatePage(int page)
         printComplete();
         return;
     }
+
     int month = months_.keys().at( page );
 
     calProgressUI.finishLabel->setText(i18n("Printing calendar page for %1 of %2",
-                                       KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName),
-                                       KGlobal::locale()->calendar()->formatDate(date, "%Y")));
+                                            KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName),
+                                            KGlobal::locale()->calendar()->formatDate(date, "%Y")));
 }
 
 void CalWizard::printComplete()

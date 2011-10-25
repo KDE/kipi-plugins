@@ -43,12 +43,12 @@ class QPrinter;
 
 namespace KIPI
 {
-    class Interface;
+class Interface;
 }
 
 namespace KIPIPlugins
 {
-    class KPAboutData;
+class KPAboutData;
 }
 
 namespace KIPICalendarPlugin

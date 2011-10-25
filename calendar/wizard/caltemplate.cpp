@@ -31,7 +31,7 @@ namespace KIPICalendarPlugin
 {
 
 CalTemplate::CalTemplate(QWidget* parent)
-           : QWidget(parent)
+    : QWidget(parent)
 {
     ui.setupUi( this );
 

@@ -42,7 +42,7 @@ class QPaintEvent;
 
 namespace KIPI
 {
-    class Interface;
+class Interface;
 }
 
 namespace KIPICalendarPlugin
@@ -69,7 +69,7 @@ protected:
 
 private Q_SLOTS:
 
-   void gotThumbnail( const KUrl& url, const QPixmap& pix );
+    void gotThumbnail( const KUrl& url, const QPixmap& pix );
 
 private:
 

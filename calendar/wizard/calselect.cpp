@@ -41,7 +41,7 @@ namespace KIPICalendarPlugin
 {
 
 CalSelect::CalSelect( KIPI::Interface* interface, QWidget* parent )
-         : QWidget(parent), mwVector_(MAX_MONTHS)
+    : QWidget(parent), mwVector_(MAX_MONTHS)
 {
     setupView( interface );
 }
@@ -62,8 +62,11 @@ void CalSelect::setupView( KIPI::Interface* interface )
 
     KUrl::List urlList;
     KIPI::ImageCollection images = interface->currentSelection();
+
     if ( images.isValid() && !images.images().isEmpty())
+    {
         urlList = images.images();
+    }
 
     QDate d;
     cal->setDate(d, currentYear, 1, 1);
@@ -77,14 +80,22 @@ void CalSelect::setupView( KIPI::Interface* interface )
         w = new MonthWidget( interface, ui.monthBox, i+1 );
 
         if (i < urlList.count())
+        {
             w->setImage( urlList[i] );
+        }
+
         if (i<months)
+        {
             ui.monthBoxLayout->addWidget( w, i / inRow, i % inRow );
+        }
         else
+        {
             w->hide();
+        }
 
         mwVector_.insert(i, w);
     }
+
     ui.yearSpin->setRange(cal->year(cal->earliestValidDate()) + 1,
                           cal->year(cal->latestValidDate()) - 1);
     ui.yearSpin->setValue(currentYear);
@@ -103,23 +114,32 @@ void CalSelect::yearChanged(int year)
     {
         // hide the last months that are not present on the current year
         for (i=months; (i<cal->monthsInYear(oldD)) && (i<mwVector_.count()); ++i)
+        {
             mwVector_.at(i)->hide();
+        }
 
         // span the monthWidgets over 2 rows. inRow should usually be 6 or 7 (for 12 or 13 months)
         int inRow = (months / 2) + ((months % 2) != 0);
+
         // remove all the monthWidgets, then readd the needed ones
         for (i=0; i<cal->monthsInYear(oldD); ++i)
         {
             ui.monthBoxLayout->removeWidget(mwVector_.at(i));
         }
+
         for (i=0; (i<months) && (i<mwVector_.count()); ++i)
         {
             ui.monthBoxLayout->addWidget(mwVector_.at(i), i / inRow, i % inRow);
+
             if (mwVector_.at(i)->isHidden())
+            {
                 mwVector_.at(i)->show();
+            }
+
             mwVector_.at(i)->update();
         }
     }
+
     CalSettings::instance()->setYear(year);
 }
 

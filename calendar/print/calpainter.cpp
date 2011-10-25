@@ -52,7 +52,7 @@ namespace KIPICalendarPlugin
 {
 
 CalPainter::CalPainter(QPaintDevice* pd)
-          : QPainter(pd)
+    : QPainter(pd)
 {
     angle_     = 0;
     cancelled_ = false;
@@ -70,7 +70,10 @@ void CalPainter::setImage(const KUrl& imagePath, int angle)
 
 void CalPainter::paint(int month)
 {
-    if (!device()) return;
+    if (!device())
+    {
+        return;
+    }
 
     int width  = device()->width();
     int height = device()->height();
@@ -84,14 +87,18 @@ void CalPainter::paint(int month)
     int startDayOffset = KGlobal::locale()->weekStartDay();
 
     for (int i=0; i<42; ++i)
+    {
         days[i] = -1;
+    }
 
     QDate d;
     KGlobal::locale()->calendar()->setDate(d, params.year, month, 1);
     int s = d.dayOfWeek();
 
     if (s+7-startDayOffset >= 7)
-            s=s-7;
+    {
+        s=s-7;
+    }
 
     for (int i=s; i<(s+KGlobal::locale()->calendar()->daysInMonth(d)); ++i)
     {
@@ -110,7 +117,7 @@ void CalPainter::paint(int month)
 
     switch (params.imgPos)
     {
-        case(CalParams::Top):
+        case (CalParams::Top):
         {
             rImage.setWidth(width);
             rImage.setHeight((int)(height * params.ratio / (params.ratio + 100)));
@@ -132,7 +139,7 @@ void CalPainter::paint(int month)
             break;
         }
 
-        case(CalParams::Left):
+        case (CalParams::Left):
         {
             rImage.setHeight(height);
             rImage.setWidth((int)(width * params.ratio / (params.ratio + 100)));
@@ -153,7 +160,7 @@ void CalPainter::paint(int month)
             break;
         }
 
-        case(CalParams::Right):
+        case (CalParams::Right):
         {
             rImage.setHeight(height);
             rImage.setWidth((int)(width * params.ratio / (params.ratio + 100)));
@@ -212,11 +219,15 @@ void CalPainter::paint(int month)
 
     setPen(Qt::red);
     sy = rCal.top();
+
     for (int i=0; i<7; ++i)
     {
         int dayname = i + startDayOffset;
+
         if (dayname > 7)
+        {
             dayname = dayname-7;
+        }
 
         sx     = cellSizeX * i + rCal.left();
         r.moveTopLeft(QPoint(sx,sy));
@@ -224,8 +235,8 @@ void CalPainter::paint(int month)
         rsmall.setWidth(r.width() - 2);
         rsmall.setHeight(r.height() - 2);
         drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                         KGlobal::locale()->calendar()->weekDayName(dayname,
-                         KCalendarSystem::ShortDayName));
+                 KGlobal::locale()->calendar()->weekDayName(dayname,
+                                                            KCalendarSystem::ShortDayName));
     }
 
     restore();
@@ -233,6 +244,7 @@ void CalPainter::paint(int month)
     for (int j=0; j<6; ++j)
     {
         sy = cellSizeY * (j + 1) + rCal.top();
+
         for (int i=0; i<7; ++i)
         {
             sx     = cellSizeX * i + rCal.left();
@@ -240,6 +252,7 @@ void CalPainter::paint(int month)
             rsmall = r;
             rsmall.setWidth(r.width() - 2);
             rsmall.setHeight(r.height() - 2);
+
             if (days[index] != -1)
             {
                 if (settings->isSpecial(month, days[index]))
@@ -251,8 +264,8 @@ void CalPainter::paint(int month)
 
                     QString descr = settings->getDayDescr(month, days[index]);
                     kDebug() << "Painting special info: '" << descr
-                                  << "' for date " << days[index] << "/"
-                                  << month;
+                             << "' for date " << days[index] << "/"
+                             << month;
                     rSpecial = rsmall;
                     rSpecial.translate(2,0);
                     QFont f(params.baseFont);
@@ -269,6 +282,7 @@ void CalPainter::paint(int month)
                              QString::number(days[index]));
                 }
             }
+
             index++;
         }
     }
@@ -278,6 +292,7 @@ void CalPainter::paint(int month)
     if (params.drawLines)
     {
         sx = rCal.left();
+
         for (int j=0; j<8; ++j)
         {
             sy = cellSizeY * j + rCal.top();
@@ -285,6 +300,7 @@ void CalPainter::paint(int month)
         }
 
         sy = rCal.top();
+
         for (int i=0; i<8; ++i)
         {
             sx = cellSizeX * i + rCal.left();
@@ -296,10 +312,15 @@ void CalPainter::paint(int month)
     QFileInfo fi(imagePath_.path());
 
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+
     if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+    {
         KDcrawIface::KDcraw::loadDcrawPreview(image_, imagePath_.path());
+    }
     else
+    {
         image_.load(imagePath_.path());
+    }
 
     if (image_.isNull())
     {
@@ -325,14 +346,19 @@ void CalPainter::paint(int month)
 
         int blockSize = 10;
         int block = 0;
+
         while (block<h && !cancelled_)
         {
             if (block + blockSize > h)
+            {
                 blockSize = h - block;
+            }
+
             drawImage( x, y + block, image_, 0, block, image_.width(), blockSize );
             block += blockSize;
             emit signalProgress( block );
         }
+
         emit signalFinished();
     }
 }

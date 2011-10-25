@@ -44,7 +44,7 @@ K_PLUGIN_FACTORY( CalendarFactory, registerPlugin<Plugin_Calendar>(); )
 K_EXPORT_PLUGIN ( CalendarFactory("kipiplugin_calendar") )
 
 Plugin_Calendar::Plugin_Calendar(QObject* parent, const QVariantList&)
-               : KIPI::Plugin(CalendarFactory::componentData(), parent, "Calendar")
+    : KIPI::Plugin(CalendarFactory::componentData(), parent, "Calendar")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Calendar plugin loaded";
 }
@@ -67,10 +67,11 @@ void Plugin_Calendar::setup( QWidget* widget )
     addAction(m_actionCalendar);
 
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
+
     if (!m_interface)
     {
-       kError() << "Kipi interface is null!";
-       return;
+        kError() << "Kipi interface is null!";
+        return;
     }
 }
 
@@ -83,7 +84,9 @@ void Plugin_Calendar::slotActivate()
 KIPI::Category Plugin_Calendar::category( KAction* action ) const
 {
     if ( action == m_actionCalendar )
-       return KIPI::ToolsPlugin;
+    {
+        return KIPI::ToolsPlugin;
+    }
 
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ToolsPlugin; // no warning from compiler, please

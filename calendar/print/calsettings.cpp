@@ -55,7 +55,10 @@ CalSettings::~CalSettings()
 CalSettings* CalSettings::instance()
 {
     if (instance_.isNull())
-      instance_ = new CalSettings();
+    {
+        instance_ = new CalSettings();
+    }
+
     return instance_;
 }
 
@@ -79,7 +82,7 @@ KUrl CalSettings::image(int month) const
     return monthMap_.contains(month) ? monthMap_[month] : KUrl();
 }
 
-void CalSettings::setPaperSize(const QString &paperSize)
+void CalSettings::setPaperSize(const QString& paperSize)
 {
     if (paperSize == "A4")
     {
@@ -93,6 +96,7 @@ void CalSettings::setPaperSize(const QString &paperSize)
         params.paperHeight = 279;
         params.pageSize    = QPrinter::Letter;
     }
+
     emit settingsChanged();
 }
 
@@ -112,6 +116,7 @@ void CalSettings::setImagePos(int pos)
             params.imgPos = CalParams::Top;
             break;
         }
+
         case CalParams::Left:
         {
             float zoom    = qMin((float)previewSize/params.paperWidth,
@@ -122,6 +127,7 @@ void CalSettings::setImagePos(int pos)
             params.imgPos = CalParams::Left;
             break;
         }
+
         default:
         {
             float zoom    = qMin((float)previewSize/params.paperWidth,
@@ -133,6 +139,7 @@ void CalSettings::setImagePos(int pos)
             break;
         }
     }
+
     emit settingsChanged();
 }
 
@@ -171,9 +178,13 @@ void CalSettings::clearSpecial()
 void CalSettings::addSpecial(const QDate& date, const Day& info)
 {
     if (special.contains(date))
+    {
         special[date].second.append("; ").append(info.second);
+    }
     else
+    {
         special[date] = info;
+    }
 }
 
 void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
@@ -188,6 +199,7 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
     KCalCore::FileStorage::Ptr fileStorage(new KCalCore::FileStorage(memCal, url.path(), new KCalCore::ICalFormat));
 
     kDebug() << "Loading calendar from file " << url.path();
+
     if (!fileStorage->load())
     {
         kDebug() << "Failed!";
@@ -213,9 +225,10 @@ void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
             if (event->recurs())
             {
                 KCalCore::Recurrence* recur = event->recurrence();
+
                 for (dtCurrent = recur->getNextDateTime(dtFirst.addDays(-1));
-                        (dtCurrent <= dtLast) && dtCurrent.isValid();
-                        dtCurrent = recur->getNextDateTime(dtCurrent))
+                     (dtCurrent <= dtLast) && dtCurrent.isValid();
+                     dtCurrent = recur->getNextDateTime(dtCurrent))
                 {
                     addSpecial(dtCurrent.date(), Day(color, event->summary()));
                 }
@@ -257,10 +270,14 @@ QColor CalSettings::getDayColor(int month, int day) const
     KGlobal::locale()->calendar()->setDate(dt, params.year, month, day);
 
     if (isPrayDay(dt))
+    {
         return Qt::red;
+    }
 
     if (special.contains(dt))
+    {
         return special[dt].first;
+    }
 
     //default
     return Qt::black;
@@ -278,7 +295,9 @@ QString CalSettings::getDayDescr(int month, int day) const
     QString ret;
 
     if (special.contains(dt))
+    {
         ret = special[dt].second;
+    }
 
     return ret;
 }

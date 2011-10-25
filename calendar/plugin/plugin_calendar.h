@@ -36,7 +36,7 @@ class KAction;
 
 namespace KIPI
 {
-    class Interface;
+class Interface;
 }
 
 class Plugin_Calendar : public KIPI::Plugin

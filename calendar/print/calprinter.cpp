@@ -57,10 +57,10 @@ CalPrinter::~CalPrinter()
 
 void CalPrinter::run()
 {
-    connect(painter_, SIGNAL(signalTotal(int)), 
+    connect(painter_, SIGNAL(signalTotal(int)),
             this, SIGNAL(totalBlocks(int)));
 
-    connect(painter_, SIGNAL(signalProgress(int)), 
+    connect(painter_, SIGNAL(signalProgress(int)),
             this, SIGNAL(blocksFinished(int)));
 
     int currPage = 0;
@@ -69,7 +69,9 @@ void CalPrinter::run()
         emit pageChanged( currPage );
 
         if (currPage)
+        {
             printer_->newPage();
+        }
 
         ++currPage;
 
@@ -78,8 +80,11 @@ void CalPrinter::run()
         painter_->setImage(months_.value(month), angle);
 
         painter_->paint( month );
+
         if (cancelled_)
+        {
             break;
+        }
     }
     emit pageChanged( currPage );
 }

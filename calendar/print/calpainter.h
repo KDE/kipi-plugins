@@ -61,7 +61,7 @@ public Q_SLOTS:
 
     void cancel()
     {
-	cancelled_ = true; 
+        cancelled_ = true;
     };
 
 private:

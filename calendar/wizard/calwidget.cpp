@@ -33,7 +33,7 @@ namespace KIPICalendarPlugin
 {
 
 CalWidget::CalWidget(QWidget* parent)
-         : QWidget(parent,0)
+    : QWidget(parent,0)
 {
     setAttribute(Qt::WA_NoBackground);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
