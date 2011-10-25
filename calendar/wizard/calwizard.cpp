@@ -237,6 +237,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
                 break;
             default:
                 printer_->setOrientation(QPrinter::Landscape);
+                break;
         }
 
         kDebug() << "printing...";
