@@ -233,14 +233,10 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         switch (params.imgPos)
         {
             case(CalParams::Top):
-            {
                 printer_->setOrientation(QPrinter::Portrait);
                 break;
-            }
             default:
-            {
                 printer_->setOrientation(QPrinter::Landscape);
-            }
         }
 
         kDebug() << "printing...";
