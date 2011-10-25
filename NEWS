@@ -14,4 +14,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> 252306 : Tools Calendar creator - print to PDF file size for 12 pages 80-110 MB = about 30x larger than a year ago. 
 007 ==> 138585 : Calendar: Very low PDF/PS output quality. 
 008 ==> 204663 : Calendar Output Starts pdftops process but never completes. 
-009 ==> 
+009 ==> 154631 : Create Calendar function reduces photo resolution. 
+010 ==> 
