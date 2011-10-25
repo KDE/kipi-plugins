@@ -268,11 +268,16 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
 
         if (alt)
         {
-            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2,%3").arg(lng).arg(lat).arg(alt));
+            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2,%3")
+                .arg(lng, 0, 'f', 8)
+                .arg(lat, 0, 'f', 8)
+                .arg(alt, 0, 'f', 8));
         }
         else
         {
-            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2").arg(lng).arg(lat));
+            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2")
+                .arg(lng, 0, 'f', 8)
+                .arg(lat, 0, 'f', 8));
         }
 
         if (m_altitudeMode == 2 )
