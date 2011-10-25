@@ -309,7 +309,7 @@ void CalWizard::updatePage(int page)
     }
     int month = months_.keys().at( page );
 
-    calProgressUI.finishLabel->setText(i18n("Printing Calendar Page for %1 of %2",
+    calProgressUI.finishLabel->setText(i18n("Printing calendar page for %1 of %2",
                                        KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName),
                                        year));
 }
