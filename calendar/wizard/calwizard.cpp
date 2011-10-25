@@ -227,10 +227,8 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
 
         if (!printer_)
         {
-            printer_ = new QPrinter( QPrinter::HighResolution );
+            printer_ = new QPrinter(cSettings_->resolution());
         }
-
-        // TODO: Let user choose resolutions
 
         CalParams& params = cSettings_->params;
 

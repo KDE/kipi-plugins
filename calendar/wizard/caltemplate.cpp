@@ -43,11 +43,15 @@ CalTemplate::CalTemplate(QWidget* parent)
     settings->setDrawLines(ui.drawLinesCheckBox->isChecked());
     settings->setRatio(ui.ratioSlider->value());
     settings->setFont(ui.fontCombo->currentText());
+    settings->setResolution(ui.resolutionCombo->currentText());
 
     ui.calendarWidget->recreate();
 
     connect(ui.paperSizeCombo, SIGNAL(currentIndexChanged(QString)),
             settings, SLOT(setPaperSize(QString)));
+
+    connect(ui.resolutionCombo, SIGNAL(currentIndexChanged(QString)),
+            settings, SLOT(setResolution(QString)));
 
     connect(ui.imagePosButtonGroup, SIGNAL(changed(int)),
             settings, SLOT(setImagePos(int)));

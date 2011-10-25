@@ -57,16 +57,17 @@ public:
         Right
     };
 
-    QPrinter::PageSize pageSize;
-    int                paperWidth;
-    int                paperHeight;
-    int                width;
-    int                height;
-    bool               drawLines;
-    float              ratio;
-    ImagePosition      imgPos;
-    QFont              baseFont;
-    int                year;
+    QPrinter::PageSize    pageSize;
+    QPrinter::PrinterMode printResolution;
+    int                   paperWidth;
+    int                   paperHeight;
+    int                   width;
+    int                   height;
+    bool                  drawLines;
+    float                 ratio;
+    ImagePosition         imgPos;
+    QFont                 baseFont;
+    int                   year;
 };
 
 // ---------------------------------------------------------------------------
@@ -88,6 +89,7 @@ public:
 
     QColor getDayColor(int month, int day) const;
     QString getDayDescr(int month, int day) const;
+    QPrinter::PrinterMode resolution() const;
 
     static CalSettings* instance(QObject* parent = 0);
 
@@ -104,6 +106,7 @@ Q_SIGNALS:
 public Q_SLOTS:
 
     void setPaperSize(const QString& paperSize);
+    void setResolution(const QString& resolution);
     void setImagePos(int pos);
     void setDrawLines(bool draw);
     void setRatio(int ratio);

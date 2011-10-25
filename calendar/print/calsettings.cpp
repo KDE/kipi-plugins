@@ -47,6 +47,7 @@ CalSettings::CalSettings(QObject* parent)
 {
     params.year = KGlobal::locale()->calendar()->earliestValidDate().year() + 1;
     setPaperSize("A4");
+    setResolution("High");
     setImagePos(0);
 }
 
@@ -97,6 +98,20 @@ void CalSettings::setPaperSize(const QString& paperSize)
         params.paperWidth  = 216;
         params.paperHeight = 279;
         params.pageSize    = QPrinter::Letter;
+    }
+
+    emit settingsChanged();
+}
+
+void CalSettings::setResolution(const QString& resolution)
+{
+    if (resolution == "High")
+    {
+        params.printResolution = QPrinter::HighResolution;
+    }
+    else if (resolution == "Low")
+    {
+        params.printResolution = QPrinter::ScreenResolution;
     }
 
     emit settingsChanged();
@@ -302,6 +317,11 @@ QString CalSettings::getDayDescr(int month, int day) const
     }
 
     return ret;
+}
+
+QPrinter::PrinterMode CalSettings::resolution() const
+{
+    return params.printResolution;
 }
 
 }  // NameSpace KIPICalendarPlugin
