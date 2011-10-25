@@ -8,4 +8,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 283509 : Crash on final step of stiching large panorama.
 002 ==> 283321 : Photolayoutseditor crashes on exit.
-003 ==> 
+003 ==> 283853 : The advanced slideshow "Ken Burns Effect" doesn't respect the setting of the loop checkbox. 
+004 ==> 
