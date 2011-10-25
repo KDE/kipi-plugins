@@ -47,7 +47,7 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList, int width, int height)
+ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList, int width, int height, bool loop)
                : QThread()
 {
     m_initialized   = false;
@@ -58,6 +58,7 @@ ImageLoadThread::ImageLoadThread(QList<QPair<QString, int> >& fileList, int widt
     m_fileList      = fileList;
     m_width         = width;
     m_height        = height;
+    m_loop          = loop;
 }
 
 void ImageLoadThread::quit()
@@ -97,9 +98,16 @@ void ImageLoadThread::run()
 
             if ( m_fileIndex == (int)m_fileList.count() )
             {
-                m_needImage = false;
-                emit(signalEndOfShow());
-                continue;
+                if ( m_loop )
+                {
+                    m_fileIndex = 0;
+                }
+                else
+                {
+                    m_needImage = false;
+                    emit(signalEndOfShow());
+                    continue;
+                }
             }
 
             m_needImage = false;

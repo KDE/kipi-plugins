@@ -45,7 +45,7 @@ class ImageLoadThread : public QThread
 
 public:
 
-    ImageLoadThread(QList<QPair<QString, int> >& fileList, int width, int height);
+    ImageLoadThread(QList<QPair<QString, int> >& fileList, int width, int height, bool loop);
 
     void  quit();
     void  requestNewImage();
@@ -95,7 +95,7 @@ private:
 
     QWaitCondition              m_imageRequest;
     QMutex                      m_condLock, m_imageLock;
-    bool                        m_initialized, m_needImage, m_haveImages, m_quitRequested, m_scanSubdirectories;
+    bool                        m_initialized, m_needImage, m_haveImages, m_quitRequested, m_scanSubdirectories, m_loop;
 
     float                       m_textureAspect;
     QImage                      m_texture;

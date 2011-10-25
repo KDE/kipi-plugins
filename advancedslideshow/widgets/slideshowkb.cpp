@@ -209,7 +209,7 @@ SlideShowKB::SlideShowKB(const QList<QPair<QString, int> >& fileList,
 
     QList<QPair<QString, int> > m_fileList = fileList;
 
-    m_imageLoadThread = new ImageLoadThread(m_fileList, width(), height());
+    m_imageLoadThread = new ImageLoadThread(m_fileList, width(), height(), m_sharedData->loop);
     m_timer           = new QTimer;
     m_endOfShow       = false;
     m_showingEnd      = false;
