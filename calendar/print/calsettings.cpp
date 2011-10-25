@@ -30,9 +30,11 @@
 #include <klocale.h>
 #include <kcalendarsystem.h>
 
-// LibKCAL includes
+// KCalCore includes
 
-#include <kcal/calendarlocal.h>
+#include <kcalcore/icalformat.h>
+#include <kcalcore/filestorage.h>
+#include <kcalcore/memorycalendar.h>
 
 namespace KIPICalendarPlugin
 {
@@ -176,58 +178,57 @@ void CalSettings::addSpecial(const QDate& date, const Day& info)
 
 void CalSettings::loadSpecial(const KUrl& url, const QColor& color)
 {
-    /* TODO: KCal classes are deprecated now.
-             KCal::CalendarLocal ==> KCalCore::FileStorage
-             KCal::Event         ==> KCalCore::Event
-             KCal::Recurrence    ==> KCalCore::Recurrence
-    */
-
-    KCal::CalendarLocal calendar("UTC");
-
-    if (!(url.isEmpty()))
+    if (url.isEmpty())
     {
-        kDebug() << "Loading calendar from file " << url.path();
-        if (!calendar.load(url.path()))
-        {
-            kDebug() << "Failed!";
-        }
-        else
-        {
-            QDate qFirst, qLast;
-            KGlobal::locale()->calendar()->setDate(qFirst, params.year, 1, 1);
-            KGlobal::locale()->calendar()->setDate(qLast, params.year + 1, 1, 1);
-            qLast = qLast.addDays(-1);
-            KDateTime dtFirst(qFirst);
-            KDateTime dtLast(qLast);
-            KDateTime dtCurrent;
+        kDebug() << "Loading calendar from file failed: No valid url provided!";
+        return;
+    }
 
-            int counter            = 0;
-            KCal::Event::List list = calendar.rawEvents(qFirst, qLast);
+    KCalCore::MemoryCalendar::Ptr memCal(new KCalCore::MemoryCalendar("UTC"));
+    KCalCore::FileStorage::Ptr fileStorage(new KCalCore::FileStorage(memCal, url.path(), new KCalCore::ICalFormat));
 
-            foreach(KCal::Event* event, list)
+    kDebug() << "Loading calendar from file " << url.path();
+    if (!fileStorage->load())
+    {
+        kDebug() << "Failed!";
+    }
+    else
+    {
+        QDate qFirst, qLast;
+        KGlobal::locale()->calendar()->setDate(qFirst, params.year, 1, 1);
+        KGlobal::locale()->calendar()->setDate(qLast, params.year + 1, 1, 1);
+        qLast = qLast.addDays(-1);
+        KDateTime dtFirst(qFirst);
+        KDateTime dtLast(qLast);
+        KDateTime dtCurrent;
+
+        int counter = 0;
+        KCalCore::Event::List list = memCal->rawEvents(qFirst, qLast);
+
+        foreach(const KCalCore::Event::Ptr event, list)
+        {
+            kDebug() << event->summary() << endl << "--------";
+            counter++;
+
+            if (event->recurs())
             {
-                kDebug() << event->summary() << endl << "--------";
-                counter++;
-
-                if (event->recurs())
+                KCalCore::Recurrence* recur = event->recurrence();
+                for (dtCurrent = recur->getNextDateTime(dtFirst.addDays(-1));
+                        (dtCurrent <= dtLast) && dtCurrent.isValid();
+                        dtCurrent = recur->getNextDateTime(dtCurrent))
                 {
-                    KCal::Recurrence *recur = event->recurrence();
-                    for (dtCurrent = recur->getNextDateTime(dtFirst.addDays(-1));
-                         (dtCurrent <= dtLast) && dtCurrent.isValid();
-                         dtCurrent = recur->getNextDateTime(dtCurrent))
-                    {
-                        addSpecial(dtCurrent.date(), Day(color, event->summary()));
-                    }
-                }
-                else
-                {
-                    addSpecial(event->dtStart().date(), Day(color, event->summary()));
+                    addSpecial(dtCurrent.date(), Day(color, event->summary()));
                 }
             }
-
-            kDebug() << "Loaded " << counter << " events";
-            calendar.close();
+            else
+            {
+                addSpecial(event->dtStart().date(), Day(color, event->summary()));
+            }
         }
+
+        kDebug() << "Loaded " << counter << " events";
+        memCal->close();
+        fileStorage->close();
     }
 }
 

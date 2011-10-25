@@ -29,7 +29,7 @@ TARGET_LINK_LIBRARIES(kipiplugin_calendar
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
                       ${KDCRAW_LIBRARIES} 
-                      ${KDE4_KCAL_LIBS} 
+                      ${KDE4_KCALCORE_LIBS} 
                       kipiplugins
                      )
 
