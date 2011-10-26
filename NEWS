@@ -15,4 +15,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> 138585 : Calendar: Very low PDF/PS output quality. 
 008 ==> 204663 : Calendar Output Starts pdftops process but never completes. 
 009 ==> 154631 : Create Calendar function reduces photo resolution. 
-010 ==> 
+010 ==> 244258 : AdvancedSlideshow ignores "loop" settings when in KenBurns-Mode.
+011 ==> 
