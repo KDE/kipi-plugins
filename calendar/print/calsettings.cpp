@@ -125,8 +125,8 @@ void CalSettings::setImagePos(int pos)
     {
         case CalParams::Top:
         {
-            float zoom    = qMin((float)previewSize/params.paperWidth,
-                                 (float)previewSize/params.paperHeight);
+            float zoom    = qMin((float)previewSize / params.paperWidth,
+                                 (float)previewSize / params.paperHeight);
             params.width  = (int)(params.paperWidth  * zoom);
             params.height = (int)(params.paperHeight * zoom);
 
@@ -136,8 +136,8 @@ void CalSettings::setImagePos(int pos)
 
         case CalParams::Left:
         {
-            float zoom    = qMin((float)previewSize/params.paperWidth,
-                                 (float)previewSize/params.paperHeight);
+            float zoom    = qMin((float)previewSize / params.paperWidth,
+                                 (float)previewSize / params.paperHeight);
             params.width  = (int)(params.paperHeight  * zoom);
             params.height = (int)(params.paperWidth   * zoom);
 
@@ -147,8 +147,8 @@ void CalSettings::setImagePos(int pos)
 
         default:
         {
-            float zoom    = qMin((float)previewSize/params.paperWidth,
-                                 (float)previewSize/params.paperHeight);
+            float zoom    = qMin((float)previewSize / params.paperWidth,
+                                 (float)previewSize / params.paperHeight);
             params.width  = (int)(params.paperHeight  * zoom);
             params.height = (int)(params.paperWidth   * zoom);
 

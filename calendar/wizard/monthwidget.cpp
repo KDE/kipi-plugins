@@ -61,8 +61,8 @@
 namespace KIPICalendarPlugin
 {
 
-MonthWidget::MonthWidget( KIPI::Interface* interface, QWidget* parent, int month )
-    : QPushButton(parent), thumbSize( 64, 64 ), interface_( interface )
+MonthWidget::MonthWidget(KIPI::Interface* interface, QWidget* parent, int month)
+    : QPushButton(parent), thumbSize(64, 64), interface_(interface)
 {
     setAcceptDrops(true);
     setFixedSize(QSize(74, 94));
@@ -96,13 +96,13 @@ void MonthWidget::paintEvent(QPaintEvent* event)
 
     cr = contentsRect();
     cr.setBottom(70);
-    painter.drawPixmap(cr.width()/2 - thumb_.width()/2,
-                       cr.height()/2 - thumb_.height()/2,
+    painter.drawPixmap(cr.width() / 2 - thumb_.width() / 2,
+                       cr.height() / 2 - thumb_.height() / 2,
                        thumb_);
 
     cr = contentsRect();
     cr.setTop(70);
-    painter.drawText(cr,Qt::AlignHCenter, name);
+    painter.drawText(cr, Qt::AlignHCenter, name);
 }
 
 void MonthWidget::dragEnterEvent(QDragEnterEvent* event)
@@ -124,7 +124,7 @@ void MonthWidget::setThumb(const QPixmap& pic)
     update();
 }
 
-void MonthWidget::setImage( const KUrl& url )
+void MonthWidget::setImage(const KUrl& url)
 {
     if (!url.isValid())
     {
@@ -137,12 +137,12 @@ void MonthWidget::setImage( const KUrl& url )
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 
     // Check if RAW image.
-    if (!rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+    if (!rawFilesExt.toUpper().contains(fi.suffix().toUpper()))
     {
         // Check if image can be loaded by native Qt loader.
-        if ( QImageReader::imageFormat( url.path() ).isEmpty() )
+        if (QImageReader::imageFormat(url.path()).isEmpty())
         {
-            kWarning( AREA_CODE_LOADING ) << "Unknown image format for: " << url.prettyUrl();
+            kWarning(AREA_CODE_LOADING) << "Unknown image format for: " << url.prettyUrl();
             return;
         }
     }
@@ -150,37 +150,37 @@ void MonthWidget::setImage( const KUrl& url )
     imagePath_ = url;
     CalSettings::instance()->setImage(month_, imagePath_);
 
-    interface_->thumbnail( url, thumbSize.width() );
+    interface_->thumbnail(url, thumbSize.width());
 }
 
 void MonthWidget::dropEvent(QDropEvent* event)
 {
-    KUrl::List srcURLs = KUrl::List::fromMimeData( event->mimeData() );
+    KUrl::List srcURLs = KUrl::List::fromMimeData(event->mimeData());
 
-    if ( srcURLs.isEmpty() )
+    if (srcURLs.isEmpty())
     {
         return;
     }
 
     KUrl url = srcURLs.first();
-    setImage( url );
+    setImage(url);
 }
 
-void MonthWidget::gotThumbnail( const KUrl& url, const QPixmap& pix )
+void MonthWidget::gotThumbnail(const KUrl& url, const QPixmap& pix)
 {
-    if ( url != imagePath_ )
+    if (url != imagePath_)
     {
         return;
     }
 
     QPixmap image = pix;
-    int angle = interface_->info( url ).angle();
+    int angle = interface_->info(url).angle();
 
-    if ( angle != 0 )
+    if (angle != 0)
     {
         QMatrix matrix;
-        matrix.rotate( angle );
-        image = image.transformed( matrix );
+        matrix.rotate(angle);
+        image = image.transformed(matrix);
     }
 
     setThumb(image);
@@ -195,13 +195,13 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* event)
 
     if (event->button() == Qt::LeftButton)
     {
-        KIPIPlugins::ImageDialog dlg( this, interface_, true );
+        KIPIPlugins::ImageDialog dlg(this, interface_, true);
         setImage(dlg.url());
     }
     else if (event->button() == Qt::RightButton)
     {
         imagePath_ = QString("");
-        CalSettings::instance()->setImage(month_,imagePath_);
+        CalSettings::instance()->setImage(month_, imagePath_);
         setThumb(QPixmap(SmallIcon("image-x-generic",
                                    KIconLoader::SizeMedium,
                                    KIconLoader::DisabledState)));

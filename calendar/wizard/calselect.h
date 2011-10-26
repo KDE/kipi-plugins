@@ -48,12 +48,12 @@ class CalSelect : public QWidget
 
 public:
 
-    CalSelect( KIPI::Interface* interface, QWidget* parent );
+    CalSelect(KIPI::Interface* interface, QWidget* parent);
     ~CalSelect();
 
 private:
 
-    void setupView( KIPI::Interface* interface );
+    void setupView(KIPI::Interface* interface);
 
 private Q_SLOTS:
 

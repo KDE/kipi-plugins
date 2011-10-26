@@ -33,7 +33,7 @@ namespace KIPICalendarPlugin
 {
 
 CalWidget::CalWidget(QWidget* parent)
-    : QWidget(parent,0)
+    : QWidget(parent, 0)
 {
     setAttribute(Qt::WA_NoBackground);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -45,8 +45,8 @@ CalWidget::~CalWidget()
 
 void CalWidget::paintEvent(QPaintEvent* e)
 {
-    CalPainter painter( this );
-    painter.paint( 1 );
+    CalPainter painter(this);
+    painter.paint(1);
     Q_UNUSED(e);
 }
 
@@ -54,7 +54,7 @@ void CalWidget::recreate()
 {
     CalParams& params = CalSettings::instance()->params;
 
-    setFixedSize( params.width, params.height );
+    setFixedSize(params.width, params.height);
     update();
 }
 
