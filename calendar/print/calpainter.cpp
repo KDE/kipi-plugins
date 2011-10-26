@@ -108,16 +108,12 @@ void CalPainter::paint(int month)
 
     // -----------------------------------------------
 
-    QRect rCal;
-    QRect rImage;
-    QRect rCalHeader;
+    QRect rCal(0, 0, 0, 0);
+    QRect rImage(0, 0, 0, 0);
+    QRect rCalHeader(0, 0, 0, 0);
 
     int cellSizeX;
     int cellSizeY;
-
-    rImage     = QRect(0, 0, 0, 0);
-    rCal       = QRect(0, 0, 0, 0);
-    rCalHeader = QRect(0, 0, 0, 0);
 
     switch (params.imgPos)
     {
