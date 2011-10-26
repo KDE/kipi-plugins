@@ -8,11 +8,12 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 283509 : Crash on final step of stiching large panorama.
 002 ==> 283321 : Photolayoutseditor crashes on exit.
-003 ==> 283853 : The advanced slideshow "Ken Burns Effect" doesn't respect the setting of the loop checkbox. 
+003 ==> 283853 : The advanced slideshow "Ken Burns Effect" doesn't respect the setting of the loop checkbox.
 004 ==> 264423 : Export to KML drops significant figures in Lat/Long.
-005 ==> 220800 : Changing the ps output file name for create calendar tool does not work. 
-006 ==> 252306 : Tools Calendar creator - print to PDF file size for 12 pages 80-110 MB = about 30x larger than a year ago. 
-007 ==> 138585 : Calendar: Very low PDF/PS output quality. 
-008 ==> 204663 : Calendar Output Starts pdftops process but never completes. 
+005 ==> 220800 : Changing the ps output file name for create calendar tool does not work.
+006 ==> 252306 : Tools Calendar creator - print to PDF file size for 12 pages 80-110 MB = about 30x larger than a year ago.
+007 ==> 138585 : Calendar: Very low PDF/PS output quality.
+008 ==> 204663 : Calendar Output Starts pdftops process but never completes.
 009 ==> 154631 : Create Calendar function reduces photo resolution. 
-010 ==> 
+010 ==> 244258 : AdvancedSlideshow ignores "loop" settings when in KenBurns-Mode.
+011 ==> 
