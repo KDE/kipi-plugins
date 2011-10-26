@@ -87,7 +87,7 @@ void CalPainter::paint(int month)
     int days[42];
     int startDayOffset = KGlobal::locale()->weekStartDay();
 
-    for (int i=0; i<42; ++i)
+    for (int i = 0; i < 42; ++i)
     {
         days[i] = -1;
     }
@@ -96,19 +96,22 @@ void CalPainter::paint(int month)
     KGlobal::locale()->calendar()->setDate(d, params.year, month, 1);
     int s = d.dayOfWeek();
 
-    if (s+7-startDayOffset >= 7)
+    if (s + 7 - startDayOffset >= 7)
     {
-        s=s-7;
+        s = s - 7;
     }
 
-    for (int i=s; i<(s+KGlobal::locale()->calendar()->daysInMonth(d)); ++i)
+    for (int i = s; i < (s + KGlobal::locale()->calendar()->daysInMonth(d)); ++i)
     {
         days[i + (7 - startDayOffset)] = i - s + 1;
     }
 
     // -----------------------------------------------
 
-    QRect rCal, rImage, rCalHeader;
+    QRect rCal;
+    QRect rImage;
+    QRect rCalHeader;
+
     int cellSizeX;
     int cellSizeY;
 
@@ -121,11 +124,11 @@ void CalPainter::paint(int month)
         case (CalParams::Top):
         {
             rImage.setWidth(width);
-            rImage.setHeight((int)(height * params.ratio / (params.ratio + 100)));
+            rImage.setHeight((int) (height * params.ratio / (params.ratio + 100)));
 
             int remainingHeight = height - rImage.height();
-            cellSizeX           = (width - 20)/7;
-            cellSizeY           = remainingHeight/8;
+            cellSizeX           = (width - 20) / 7;
+            cellSizeY           = remainingHeight / 8;
 
             rCal.setWidth(cellSizeX*7);
             rCal.setHeight(cellSizeY*7);
@@ -133,7 +136,7 @@ void CalPainter::paint(int month)
             rCalHeader.setWidth(rCal.width());
             rCalHeader.setHeight(cellSizeY);
             rCalHeader.moveTop(rImage.bottom());
-            rCalHeader.moveLeft(width/2 - rCalHeader.width()/2);
+            rCalHeader.moveLeft(width / 2 - rCalHeader.width() / 2);
 
             rCal.moveTopLeft(rCalHeader.bottomLeft());
 
@@ -143,14 +146,14 @@ void CalPainter::paint(int month)
         case (CalParams::Left):
         {
             rImage.setHeight(height);
-            rImage.setWidth((int)(width * params.ratio / (params.ratio + 100)));
+            rImage.setWidth((int) (width * params.ratio / (params.ratio + 100)));
 
-            int remainingWidth = width - rImage.width();
-            cellSizeX          = (remainingWidth - 20)/8;
-            cellSizeY          = height/8;
+            int remainingWidth  = width - rImage.width();
+            cellSizeX           = (remainingWidth - 20) / 8;
+            cellSizeY           = height / 8;
 
-            rCal.setWidth(cellSizeX*7);
-            rCal.setHeight(cellSizeY*7);
+            rCal.setWidth(cellSizeX * 7);
+            rCal.setHeight(cellSizeY * 7);
 
             rCalHeader.setWidth(rCal.width());
             rCalHeader.setHeight(cellSizeY);
@@ -164,14 +167,14 @@ void CalPainter::paint(int month)
         case (CalParams::Right):
         {
             rImage.setHeight(height);
-            rImage.setWidth((int)(width * params.ratio / (params.ratio + 100)));
+            rImage.setWidth((int) (width * params.ratio / (params.ratio + 100)));
 
-            int remainingWidth = width - rImage.width();
-            cellSizeX          = (remainingWidth - 20)/8;
-            cellSizeY          = height/8;
+            int remainingWidth  = width - rImage.width();
+            cellSizeX           = (remainingWidth - 20) / 8;
+            cellSizeY           = height / 8;
 
-            rCal.setWidth(cellSizeX*7);
-            rCal.setHeight(cellSizeY*7);
+            rCal.setWidth(cellSizeX * 7);
+            rCal.setHeight(cellSizeY * 7);
 
             rCalHeader.setWidth(rCal.width());
             rCalHeader.setHeight(cellSizeY);
