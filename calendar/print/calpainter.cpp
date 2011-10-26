@@ -83,6 +83,7 @@ void CalPainter::paint(int month)
 
     // --------------------------------------------------
 
+    // FIXME: magic number 42
     int days[42];
     int startDayOffset = KGlobal::locale()->weekStartDay();
 
