@@ -54,11 +54,11 @@ class MonthWidget : public QPushButton
 
 public:
 
-    MonthWidget( KIPI::Interface* interface, QWidget* parent, int month );
+    MonthWidget(KIPI::Interface* interface, QWidget* parent, int month);
     ~MonthWidget();
 
     KUrl imagePath() const;
-    void setImage( const KUrl& url );
+    void setImage(const KUrl& url);
 
 protected:
 
@@ -69,7 +69,7 @@ protected:
 
 private Q_SLOTS:
 
-    void gotThumbnail( const KUrl& url, const QPixmap& pix );
+    void gotThumbnail(const KUrl& url, const QPixmap& pix);
 
 private:
 

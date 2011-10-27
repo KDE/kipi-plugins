@@ -40,19 +40,19 @@
 namespace KIPICalendarPlugin
 {
 
-CalSelect::CalSelect( KIPI::Interface* interface, QWidget* parent )
+CalSelect::CalSelect(KIPI::Interface* interface, QWidget* parent)
     : QWidget(parent), mwVector_(MAX_MONTHS)
 {
-    setupView( interface );
+    setupView(interface);
 }
 
 CalSelect::~CalSelect()
 {
 }
 
-void CalSelect::setupView( KIPI::Interface* interface )
+void CalSelect::setupView(KIPI::Interface* interface)
 {
-    ui.setupUi( this );
+    ui.setupUi(this);
 
     connect(ui.yearSpin, SIGNAL(valueChanged(int)),
             this, SLOT(yearChanged(int)));
@@ -63,7 +63,7 @@ void CalSelect::setupView( KIPI::Interface* interface )
     KUrl::List urlList;
     KIPI::ImageCollection images = interface->currentSelection();
 
-    if ( images.isValid() && !images.images().isEmpty())
+    if (images.isValid() && !images.images().isEmpty())
     {
         urlList = images.images();
     }
@@ -75,18 +75,18 @@ void CalSelect::setupView( KIPI::Interface* interface )
     int inRow      = (months / 2) + ((months % 2) != 0);
     MonthWidget* w = 0;
 
-    for (int i=0; i<MAX_MONTHS; ++i)
+    for (int i = 0; i < MAX_MONTHS; ++i)
     {
-        w = new MonthWidget( interface, ui.monthBox, i+1 );
+        w = new MonthWidget(interface, ui.monthBox, i + 1);
 
         if (i < urlList.count())
         {
-            w->setImage( urlList[i] );
+            w->setImage(urlList[i]);
         }
 
-        if (i<months)
+        if (i < months)
         {
-            ui.monthBoxLayout->addWidget( w, i / inRow, i % inRow );
+            ui.monthBoxLayout->addWidget(w, i / inRow, i % inRow);
         }
         else
         {
@@ -113,7 +113,7 @@ void CalSelect::yearChanged(int year)
     if ((cal->monthsInYear(oldD) != months) && !mwVector_.isEmpty())
     {
         // hide the last months that are not present on the current year
-        for (i=months; (i<cal->monthsInYear(oldD)) && (i<mwVector_.count()); ++i)
+        for (i = months; (i < cal->monthsInYear(oldD)) && (i < mwVector_.count()); ++i)
         {
             mwVector_.at(i)->hide();
         }
@@ -122,12 +122,12 @@ void CalSelect::yearChanged(int year)
         int inRow = (months / 2) + ((months % 2) != 0);
 
         // remove all the monthWidgets, then readd the needed ones
-        for (i=0; i<cal->monthsInYear(oldD); ++i)
+        for (i = 0; i < cal->monthsInYear(oldD); ++i)
         {
             ui.monthBoxLayout->removeWidget(mwVector_.at(i));
         }
 
-        for (i=0; (i<months) && (i<mwVector_.count()); ++i)
+        for (i = 0; (i < months) && (i < mwVector_.count()); ++i)
         {
             ui.monthBoxLayout->addWidget(mwVector_.at(i), i / inRow, i % inRow);
 

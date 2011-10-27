@@ -58,42 +58,42 @@
 namespace KIPICalendarPlugin
 {
 
-CalWizard::CalWizard( KIPI::Interface* interface, QWidget* parent )
+CalWizard::CalWizard(KIPI::Interface* interface, QWidget* parent)
     : KAssistantDialog(parent),
-      interface_( interface )
+      interface_(interface)
 {
-    setMaximumSize( 800, 600 );
+    setMaximumSize(800, 600);
     cSettings_   = CalSettings::instance(this);
 
     // ---------------------------------------------------------------
 
-    wTemplate_   = new CalTemplate( this );
-    addPage(wTemplate_, i18n( "Create Template for Calendar" ));
+    wTemplate_   = new CalTemplate(this);
+    addPage(wTemplate_, i18n("Create Template for Calendar"));
 
     // ---------------------------------------------------------------
 
-    wEvents_     = new QWidget( this );
-    calEventsUI.setupUi( wEvents_ );
-    addPage(wEvents_, i18n( "Choose events to show on the Calendar" ));
+    wEvents_     = new QWidget(this);
+    calEventsUI.setupUi(wEvents_);
+    addPage(wEvents_, i18n("Choose events to show on the Calendar"));
 
     // ---------------------------------------------------------------
 
-    wSelect_     = new CalSelect( interface, this );
-    addPage(wSelect_, i18n( "Select Year & Images" ));
+    wSelect_     = new CalSelect(interface, this);
+    addPage(wSelect_, i18n("Select Year & Images"));
 
     // ---------------------------------------------------------------
 
-    wPrintLabel_ = new QLabel( this );
-    wPrintLabel_->setIndent( 20 );
-    wPrintLabel_->setWordWrap( true );
+    wPrintLabel_ = new QLabel(this);
+    wPrintLabel_->setIndent(20);
+    wPrintLabel_->setWordWrap(true);
 
-    wPrintPage_ = addPage( wPrintLabel_, i18n( "Print" ) );
+    wPrintPage_ = addPage(wPrintLabel_, i18n("Print"));
 
     // ---------------------------------------------------------------
 
-    wFinish_     = new QWidget( this );
-    calProgressUI.setupUi( wFinish_ );
-    wFinishPage_ = addPage(wFinish_, i18n( "Printing" ));
+    wFinish_     = new QWidget(this);
+    calProgressUI.setupUi(wFinish_);
+    wFinishPage_ = addPage(wFinish_, i18n("Printing"));
 
     // ---------------------------------------------------------------
 
@@ -170,7 +170,7 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         QDate d;
         KGlobal::locale()->calendar()->setDate(d, cSettings_->year(), 1, 1);
 
-        for (int i=1; i<=KGlobal::locale()->calendar()->monthsInYear(d); ++i)
+        for (int i = 1; i <= KGlobal::locale()->calendar()->monthsInYear(d); ++i)
         {
             month = KGlobal::locale()->calendar()->monthName(i, cSettings_->year(), KCalendarSystem::LongName);
             image = cSettings_->image(i);
@@ -184,8 +184,8 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
 
         if (months_.empty())
         {
-            wPrintLabel_->setText("<qt>" +i18n("No valid images selected for months<br/>"
-                                               "Click Back to select images")+"</qt>");
+            wPrintLabel_->setText("<qt>" + i18n("No valid images selected for months<br/>"
+                                                "Click Back to select images") + "</qt>");
             setValid(wFinishPage_, false);
         }
         else
@@ -197,9 +197,9 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
             if ((KGlobal::locale()->calendar()->month(QDate::currentDate()) >= 6 &&
                  KGlobal::locale()->calendar()->year(QDate::currentDate()) == year) ||
                 KGlobal::locale()->calendar()->year(QDate::currentDate()) > year)
-                extra = "<br/><br/><b>"+i18n("Please note that you are making a "
-                                             "calendar for<br/>the current year or a year in the "
-                                             "past.")+"</b>";
+                extra = "<br/><br/><b>" + i18n("Please note that you are making a "
+                                               "calendar for<br/>the current year or a year in the "
+                                               "past.") + "</b>";
 
             KLocale tmpLocale(*KGlobal::locale());
             tmpLocale.setDateFormat("%Y");
@@ -247,15 +247,15 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
         kDebug() << "printing...";
         // PageSize
         printer_->setPageSize(params.pageSize);
-        QPrintDialog* printDialog = KdePrint::createPrintDialog( printer_, this );
+        QPrintDialog* printDialog = KdePrint::createPrintDialog(printer_, this);
 
-        if ( printDialog->exec() == QDialog::Accepted )
+        if (printDialog->exec() == QDialog::Accepted)
         {
             print();
         }
         else
         {
-            calProgressUI.finishLabel->setText(i18n( "Printing Cancelled" ));
+            calProgressUI.finishLabel->setText(i18n("Printing Cancelled"));
             enableButton(KDialog::User3, true); // enable 'Back' button
         }
 
@@ -266,8 +266,8 @@ void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* befo
 
 void CalWizard::print()
 {
-    calProgressUI.totalProgress->setMaximum( months_.count() );
-    calProgressUI.totalProgress->setValue( 0 );
+    calProgressUI.totalProgress->setMaximum(months_.count());
+    calProgressUI.totalProgress->setValue(0);
 
     if (printThread_)
     {
@@ -277,13 +277,13 @@ void CalWizard::print()
     }
 
     cSettings_->clearSpecial();
-    cSettings_->loadSpecial( calEventsUI.ohUrlRequester->url(), Qt::red );
-    cSettings_->loadSpecial( calEventsUI.fhUrlRequester->url(), Qt::darkGreen );
+    cSettings_->loadSpecial(calEventsUI.ohUrlRequester->url(), Qt::red);
+    cSettings_->loadSpecial(calEventsUI.fhUrlRequester->url(), Qt::darkGreen);
 
-    printThread_ = new CalPrinter( printer_,
-                                   months_,
-                                   interface_,
-                                   this );
+    printThread_ = new CalPrinter(printer_,
+                                  months_,
+                                  interface_,
+                                  this);
 
     connect(printThread_, SIGNAL(pageChanged(int)),
             this,         SLOT(updatePage(int)));
@@ -312,7 +312,7 @@ void CalWizard::updatePage(int page)
         return;
     }
 
-    int month = months_.keys().at( page );
+    int month = months_.keys().at(page);
 
     calProgressUI.finishLabel->setText(i18n("Printing calendar page for %1 of %2",
                                             KGlobal::locale()->calendar()->monthName(month, year, KCalendarSystem::LongName),
@@ -323,7 +323,7 @@ void CalWizard::printComplete()
 {
     enableButton(KDialog::User3, true); // enable 'Back' button
     enableButton(KDialog::User1, true); // enable 'Finish' button
-    calProgressUI.finishLabel->setText(i18n( "Printing Complete" ));
+    calProgressUI.finishLabel->setText(i18n("Printing Complete"));
 }
 
 }  // nameSpace KIPICalendarPlugin

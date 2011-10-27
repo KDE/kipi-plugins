@@ -47,8 +47,8 @@ public:
 
     Plugin_Calendar(QObject* parent, const QVariantList& args);
     ~Plugin_Calendar();
-    virtual KIPI::Category category( KAction* action ) const;
-    virtual void setup( QWidget* widget );
+    virtual KIPI::Category category(KAction* action) const;
+    virtual void setup(QWidget* widget);
 
 protected Q_SLOTS:
 

@@ -83,10 +83,11 @@ void CalPainter::paint(int month)
 
     // --------------------------------------------------
 
+    // FIXME: magic number 42
     int days[42];
     int startDayOffset = KGlobal::locale()->weekStartDay();
 
-    for (int i=0; i<42; ++i)
+    for (int i = 0; i < 42; ++i)
     {
         days[i] = -1;
     }
@@ -95,25 +96,24 @@ void CalPainter::paint(int month)
     KGlobal::locale()->calendar()->setDate(d, params.year, month, 1);
     int s = d.dayOfWeek();
 
-    if (s+7-startDayOffset >= 7)
+    if (s + 7 - startDayOffset >= 7)
     {
-        s=s-7;
+        s = s - 7;
     }
 
-    for (int i=s; i<(s+KGlobal::locale()->calendar()->daysInMonth(d)); ++i)
+    for (int i = s; i < (s + KGlobal::locale()->calendar()->daysInMonth(d)); ++i)
     {
         days[i + (7 - startDayOffset)] = i - s + 1;
     }
 
     // -----------------------------------------------
 
-    QRect rCal, rImage, rCalHeader;
+    QRect rCal(0, 0, 0, 0);
+    QRect rImage(0, 0, 0, 0);
+    QRect rCalHeader(0, 0, 0, 0);
+
     int cellSizeX;
     int cellSizeY;
-
-    rImage     = QRect(0, 0, 0, 0);
-    rCal       = QRect(0, 0, 0, 0);
-    rCalHeader = QRect(0, 0, 0, 0);
 
     switch (params.imgPos)
     {
@@ -123,16 +123,16 @@ void CalPainter::paint(int month)
             rImage.setHeight((int)(height * params.ratio / (params.ratio + 100)));
 
             int remainingHeight = height - rImage.height();
-            cellSizeX           = (width - 20)/7;
-            cellSizeY           = remainingHeight/8;
+            cellSizeX           = (width - 20) / 7;
+            cellSizeY           = remainingHeight / 8;
 
-            rCal.setWidth(cellSizeX*7);
-            rCal.setHeight(cellSizeY*7);
+            rCal.setWidth(cellSizeX * 7);
+            rCal.setHeight(cellSizeY * 7);
 
             rCalHeader.setWidth(rCal.width());
             rCalHeader.setHeight(cellSizeY);
             rCalHeader.moveTop(rImage.bottom());
-            rCalHeader.moveLeft(width/2 - rCalHeader.width()/2);
+            rCalHeader.moveLeft(width / 2 - rCalHeader.width() / 2);
 
             rCal.moveTopLeft(rCalHeader.bottomLeft());
 
@@ -144,12 +144,12 @@ void CalPainter::paint(int month)
             rImage.setHeight(height);
             rImage.setWidth((int)(width * params.ratio / (params.ratio + 100)));
 
-            int remainingWidth = width - rImage.width();
-            cellSizeX          = (remainingWidth - 20)/8;
-            cellSizeY          = height/8;
+            int remainingWidth  = width - rImage.width();
+            cellSizeX           = (remainingWidth - 20) / 8;
+            cellSizeY           = height / 8;
 
-            rCal.setWidth(cellSizeX*7);
-            rCal.setHeight(cellSizeY*7);
+            rCal.setWidth(cellSizeX * 7);
+            rCal.setHeight(cellSizeY * 7);
 
             rCalHeader.setWidth(rCal.width());
             rCalHeader.setHeight(cellSizeY);
@@ -165,12 +165,12 @@ void CalPainter::paint(int month)
             rImage.setHeight(height);
             rImage.setWidth((int)(width * params.ratio / (params.ratio + 100)));
 
-            int remainingWidth = width - rImage.width();
-            cellSizeX          = (remainingWidth - 20)/8;
-            cellSizeY          = height/8;
+            int remainingWidth  = width - rImage.width();
+            cellSizeX           = (remainingWidth - 20) / 8;
+            cellSizeY           = height / 8;
 
-            rCal.setWidth(cellSizeX*7);
-            rCal.setHeight(cellSizeY*7);
+            rCal.setWidth(cellSizeX * 7);
+            rCal.setHeight(cellSizeY * 7);
 
             rCalHeader.setWidth(rCal.width());
             rCalHeader.setHeight(cellSizeY);
@@ -185,7 +185,7 @@ void CalPainter::paint(int month)
             return;
     }
 
-    int fontPixels = cellSizeX/3;
+    int fontPixels = cellSizeX / 3;
     params.baseFont.setPixelSize(fontPixels);
 
     // ---------------------------------------------------------------
@@ -200,8 +200,8 @@ void CalPainter::paint(int month)
     f.setBold(true);
     f.setPixelSize(f.pixelSize() + 5);
     setFont(f);
-    drawText(rCalHeader, Qt::AlignLeft|Qt::AlignVCenter, QString::number(params.year));
-    drawText(rCalHeader, Qt::AlignRight|Qt::AlignVCenter,
+    drawText(rCalHeader, Qt::AlignLeft | Qt::AlignVCenter, QString::number(params.year));
+    drawText(rCalHeader, Qt::AlignRight | Qt::AlignVCenter,
              KGlobal::locale()->calendar()->monthName(month, params.year));
     restore();
 
@@ -220,35 +220,34 @@ void CalPainter::paint(int month)
     setPen(Qt::red);
     sy = rCal.top();
 
-    for (int i=0; i<7; ++i)
+    for (int i = 0; i < 7; ++i)
     {
         int dayname = i + startDayOffset;
 
         if (dayname > 7)
         {
-            dayname = dayname-7;
+            dayname = dayname - 7;
         }
 
-        sx     = cellSizeX * i + rCal.left();
-        r.moveTopLeft(QPoint(sx,sy));
+        sx = cellSizeX * i + rCal.left();
+        r.moveTopLeft(QPoint(sx, sy));
         rsmall = r;
         rsmall.setWidth(r.width() - 2);
         rsmall.setHeight(r.height() - 2);
-        drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
-                 KGlobal::locale()->calendar()->weekDayName(dayname,
-                                                            KCalendarSystem::ShortDayName));
+        drawText(rsmall, Qt::AlignRight | Qt::AlignBottom,
+                 KGlobal::locale()->calendar()->weekDayName(dayname, KCalendarSystem::ShortDayName));
     }
 
     restore();
 
-    for (int j=0; j<6; ++j)
+    for (int j = 0; j < 6; ++j)
     {
         sy = cellSizeY * (j + 1) + rCal.top();
 
-        for (int i=0; i<7; ++i)
+        for (int i = 0; i < 7; ++i)
         {
             sx     = cellSizeX * i + rCal.left();
-            r.moveTopLeft(QPoint(sx,sy));
+            r.moveTopLeft(QPoint(sx, sy));
             rsmall = r;
             rsmall.setWidth(r.width() - 2);
             rsmall.setHeight(r.height() - 2);
@@ -258,8 +257,8 @@ void CalPainter::paint(int month)
                 if (settings->isSpecial(month, days[index]))
                 {
                     save();
-                    setPen( settings->getDayColor(month, days[index]) );
-                    drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
+                    setPen(settings->getDayColor(month, days[index]));
+                    drawText(rsmall, Qt::AlignRight | Qt::AlignBottom,
                              QString::number(days[index]));
 
                     QString descr = settings->getDayDescr(month, days[index]);
@@ -267,18 +266,18 @@ void CalPainter::paint(int month)
                              << "' for date " << days[index] << "/"
                              << month;
                     rSpecial = rsmall;
-                    rSpecial.translate(2,0);
+                    rSpecial.translate(2, 0);
                     QFont f(params.baseFont);
                     f.setPixelSize(f.pixelSize() / 3);
                     setFont(f);
 
-                    drawText(rSpecial, Qt::AlignLeft|Qt::AlignTop, descr);
+                    drawText(rSpecial, Qt::AlignLeft | Qt::AlignTop, descr);
 
                     restore();
                 }
                 else
                 {
-                    drawText(rsmall, Qt::AlignRight|Qt::AlignBottom,
+                    drawText(rsmall, Qt::AlignRight | Qt::AlignBottom,
                              QString::number(days[index]));
                 }
             }
@@ -293,18 +292,18 @@ void CalPainter::paint(int month)
     {
         sx = rCal.left();
 
-        for (int j=0; j<8; ++j)
+        for (int j = 0; j < 8; ++j)
         {
             sy = cellSizeY * j + rCal.top();
-            drawLine(sx,sy,rCal.right(),sy);
+            drawLine(sx, sy, rCal.right(), sy);
         }
 
         sy = rCal.top();
 
-        for (int i=0; i<8; ++i)
+        for (int i = 0; i < 8; ++i)
         {
             sx = cellSizeX * i + rCal.left();
-            drawLine(sx,sy,sx,rCal.bottom());
+            drawLine(sx, sy, sx, rCal.bottom());
         }
     }
 
@@ -313,7 +312,7 @@ void CalPainter::paint(int month)
 
     QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
 
-    if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
+    if (rawFilesExt.toUpper().contains(fi.suffix().toUpper()))
     {
         KDcrawIface::KDcraw::loadDcrawPreview(image_, imagePath_.path());
     }
@@ -328,17 +327,17 @@ void CalPainter::paint(int month)
     }
     else
     {
-        if ( angle_ != 0 )
+        if (angle_ != 0)
         {
             QMatrix matrix;
-            matrix.rotate( angle_ );
-            image_ = image_.transformed( matrix );
+            matrix.rotate(angle_);
+            image_ = image_.transformed(matrix);
         }
 
-        emit signalProgress( 0 );
-        image_ = image_.scaled( rImage.width(), rImage.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
+        emit signalProgress(0);
+        image_ = image_.scaled(rImage.width(), rImage.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-        emit signalTotal( image_.height() );
+        emit signalTotal(image_.height());
 
         int h = image_.height();
         int x = (rImage.width() - image_.width()) / 2;
@@ -347,16 +346,16 @@ void CalPainter::paint(int month)
         int blockSize = 10;
         int block = 0;
 
-        while (block<h && !cancelled_)
+        while (block < h && !cancelled_)
         {
             if (block + blockSize > h)
             {
                 blockSize = h - block;
             }
 
-            drawImage( x, y + block, image_, 0, block, image_.width(), blockSize );
+            drawImage(x, y + block, image_, 0, block, image_.width(), blockSize);
             block += blockSize;
-            emit signalProgress( block );
+            emit signalProgress(block);
         }
 
         emit signalFinished();

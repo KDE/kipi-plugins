@@ -66,7 +66,7 @@ class CalWizard : public KAssistantDialog
 
 public:
 
-    explicit CalWizard( KIPI::Interface* interface, QWidget* parent=0 );
+    explicit CalWizard(KIPI::Interface* interface, QWidget* parent=0);
     virtual ~CalWizard();
 
 private:

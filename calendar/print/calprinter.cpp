@@ -44,7 +44,7 @@ CalPrinter::CalPrinter(QPrinter* printer,
     : QThread(parent)
 {
     printer_   = printer;
-    painter_   = new CalPainter( printer_ );
+    painter_   = new CalPainter(printer_);
     months_    = months;
     interface_ = interface;
     cancelled_ = false;
@@ -64,9 +64,9 @@ void CalPrinter::run()
             this, SIGNAL(blocksFinished(int)));
 
     int currPage = 0;
-    foreach (const int month, months_.keys())
+    foreach(const int month, months_.keys())
     {
-        emit pageChanged( currPage );
+        emit pageChanged(currPage);
 
         if (currPage)
         {
@@ -75,18 +75,18 @@ void CalPrinter::run()
 
         ++currPage;
 
-        int angle = interface_->info( months_.value(month) ).angle();
+        int angle = interface_->info(months_.value(month)).angle();
 
         painter_->setImage(months_.value(month), angle);
 
-        painter_->paint( month );
+        painter_->paint(month);
 
         if (cancelled_)
         {
             break;
         }
     }
-    emit pageChanged( currPage );
+    emit pageChanged(currPage);
 }
 
 void CalPrinter::cancel()

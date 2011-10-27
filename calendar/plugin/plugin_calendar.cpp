@@ -40,8 +40,8 @@
 
 #include "calwizard.h"
 
-K_PLUGIN_FACTORY( CalendarFactory, registerPlugin<Plugin_Calendar>(); )
-K_EXPORT_PLUGIN ( CalendarFactory("kipiplugin_calendar") )
+K_PLUGIN_FACTORY(CalendarFactory, registerPlugin<Plugin_Calendar>();)
+K_EXPORT_PLUGIN(CalendarFactory("kipiplugin_calendar"))
 
 Plugin_Calendar::Plugin_Calendar(QObject* parent, const QVariantList&)
     : KIPI::Plugin(CalendarFactory::componentData(), parent, "Calendar")
@@ -53,7 +53,7 @@ Plugin_Calendar::~Plugin_Calendar()
 {
 }
 
-void Plugin_Calendar::setup( QWidget* widget )
+void Plugin_Calendar::setup(QWidget* widget)
 {
     KIPI::Plugin::setup(widget);
 
@@ -77,13 +77,13 @@ void Plugin_Calendar::setup( QWidget* widget )
 
 void Plugin_Calendar::slotActivate()
 {
-    KIPICalendarPlugin::CalWizard w( m_interface, kapp->activeWindow() );
+    KIPICalendarPlugin::CalWizard w(m_interface, kapp->activeWindow());
     w.exec();
 }
 
-KIPI::Category Plugin_Calendar::category( KAction* action ) const
+KIPI::Category Plugin_Calendar::category(KAction* action) const
 {
-    if ( action == m_actionCalendar )
+    if (action == m_actionCalendar)
     {
         return KIPI::ToolsPlugin;
     }
