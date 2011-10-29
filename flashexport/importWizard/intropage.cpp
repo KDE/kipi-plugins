@@ -75,7 +75,7 @@ IntroPage::IntroPage(KAssistantDialog* dlg)
                         "<p>3. Postcardviewer is designed only for small amount of photos</p>"
                         "</qt>"));
     KHBox* hbox          = new KHBox(vbox);
-    QLabel* label        = new QLabel(i18n("Thumbnail &Position:"), hbox); 
+    QLabel* label        = new QLabel(i18n("Select &Plugin:"), hbox);
 
     d->plugin_select = new KComboBox(hbox);
     QString simplew  = i18nc("SimpleViewer",   "SimpleViewer");
