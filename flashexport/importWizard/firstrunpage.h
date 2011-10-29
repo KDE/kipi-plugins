@@ -3,11 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2006-01-06
- * Description : a plugin to export image collections using SimpleViewer.
+ * Date        : 2011-09-13
+ * Description : a plugin to export to flash
  *
- * Copyright (C) 2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,8 +20,9 @@
  *
  * ============================================================ */
 
-#ifndef FIRSTRUNDLG_H
-#define FIRSTRUNDLG_H
+
+#ifndef FIRSTRUNPAGE_H
+#define FIRSTRUNPAGE_H
 
 // Include files for KDE
 
@@ -32,6 +32,9 @@
 // Include files for KIPI
 
 #include <libkipi/interface.h>
+// Local includes
+
+#include "wizardpage.h"
 
 namespace KIPIFlashExportPlugin
 {
@@ -43,40 +46,43 @@ namespace KIPIFlashExportPlugin
  * the plugin to that archive to install it. This is done by this dialog.
  */ 
 
-class FirstRunDlg : public KDialog
-{
-    Q_OBJECT
 
+class FirstRunPage : public KIPIPlugins::WizardPage
+{
+	Q_OBJECT
 public:
 
-    FirstRunDlg(QWidget* parent=0);
-    ~FirstRunDlg();
+	FirstRunPage(KAssistantDialog* dlg);
+    ~FirstRunPage();
 
     /**
      * Returns the URL, where the SimpleViewer package is stored
      */
     KUrl getUrl() const;
+        
+Q_SIGNALS:
+ void signalUrlObtained();
+
 
 private Q_SLOTS:
 
-    /**
-     * Opens the browser with the SimpleViewer download page
-     */
-    void slotDownload(const QString& url);
+/**
+ * Opens the browser with the SimpleViewer download page
+ */
+void slotDownload(const QString& url);
 
-    /**
-     * Starts the installation of SimpleViewer
-     */
-    void slotUrlSelected(const KUrl& url);
+/**
+ * Starts the installation of SimpleViewer
+ */
+void slotUrlSelected(const KUrl& url);
 
-    void slotHelp();
 
 private:
 
-    class FirstRunDlgPriv;
-    FirstRunDlgPriv* const d;
+class FirstRunPagePriv;
+FirstRunPagePriv* const d;
 };
 
-} // namespace KIPIFlashExportPlugin
+}   // namespace KIPIFlashexport
 
-#endif /* FIRSTRUNDLG_H */
+#endif /* FIRSTRUNPAGE_H */

@@ -44,6 +44,8 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include "simpleviewersettingscontainer.h"
+#include "batchprogressdialog.h"
 
 namespace KIPIFlashExportPlugin
 {
@@ -54,15 +56,24 @@ class SimpleViewer : public QObject
 
 public:
 
-    static void run(KIPI::Interface* interface, QObject* parent=0);
-
-private:
-
     explicit SimpleViewer(KIPI::Interface* interface, QObject* parent=0);
     ~SimpleViewer();
-
-    bool configure() const;
+    
+    void initProgressWdg();
+    /**
+     * Installs the SimpleViewer files for the later export
+     * on the users machine
+     */
+    bool unzip(const QString& url) const;
+    
+    KIPIPlugins::BatchProgressWidget* progressWidget();
+    
+    void setSettings(SimpleViewerSettingsContainer* settings);
+    
     void startExport();
+    
+    void appendPluginFiles(int pluginType);
+private:
 
     /**
      * Creates the standard simpleviewer directories
@@ -119,20 +130,7 @@ private:
      */
     bool copySimpleViewer() const;
 
-    /**
-     * Is the SimpleViewer flash installed?
-     */
-    bool checkSimpleViewer() const;
-
-    /**
-     * Installs the SimpleViewer files for the later export
-     * on the users machine
-     */
-    bool installSimpleViewer() const;
-
     bool upload() const;
-
-    bool unzip(const QString& url) const;
 
     bool openArchive(KZip& zip) const;
 
@@ -142,6 +140,10 @@ private:
     
 static bool cmpUrl(const KUrl &url1, const KUrl &url2);
 
+Q_SIGNALS:
+
+	void signalProcessingDone();
+	
 public Q_SLOTS:
 
     void slotProcess();

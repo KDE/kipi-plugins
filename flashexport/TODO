@@ -1,0 +1,34 @@
+FlashExport TODO List:
+
+Stage 1: New GUI 
+1. Create wizard and config files                                                    [DONE]
+2. FirstRunPage 
+   -disabled if plugin already installed,                                            [DONE]
+   -activate next on obtaining url                                                   [DONE]
+   -erorr message if Archieve is invalid                                             [DONE]
+3. SelectionPage - Erorr message if no collection selected                           [DONE]
+4. General Page - Message Box if folder already exist                                [DONE]
+5. ProgressPage 
+  - Disable Finish Button until processing is done                                   [DONE]
+  - Pressing Back button will cancel exporting                                       [DONE]
+  - Message box if export was canceled and folder must be deleted.                   [DONE]
+  - Pressing cancel button will cancel progress                                      [DONE]
+  - Clean progressdialog if exporting was canceled via back button                   [DONE]
+6. GUI polishing                                                                     [DONE]
+-----------------------------------------------------------------------------------------------
+
+Stage 2: adding support for other 3 plug-ins 
+1. Link KcomboBox on first page with settings container                              [DONE]
+2. Function to check if selected plugin is installed                                 [DONE]
+3. Function to install every plug-in in different directories and store 
+them for further use                                                                 [DONE]
+4. Extend simpleviewersettings container with settings from new plugins              [DONE]
+5. Change lookpage to switch displayed option according to what plug-in was selected [DONE]
+6. Fix broken aboutdata                                                              [DONE]
+6. Fix index.html to work with each plug-in                                          [DONE]
+7. Fix Gallery.xml to be compatible with other 3 plug-ins                            [DONE]
+8. Test gallery.xml changes                                                          [DONE]
+9. Overall plugin testing                                                            [Peding...]
+
+
+To be continued....

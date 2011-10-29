@@ -59,6 +59,14 @@ public:
         LEFT2RIGHT = 0,
         RIGHT2LEFT
     };
+    
+    enum PluginType
+    {
+        SIMPLE = 0,
+        AUTO,
+        TILT,
+        POSTCARD
+    };
 
 public:
 
@@ -68,6 +76,27 @@ public:
 
     ~SimpleViewerSettingsContainer(){};
 
+    QString pluginType() const
+    {
+    	switch(plugType)
+    	{
+    		case SIMPLE:
+    			return QString("SimpleViewer");
+    			break;
+
+    		case AUTO:
+    			return QString("AutoViewer");
+    			break;
+
+    		case TILT:
+    			return QString("TiltViewer");
+    			break;
+
+    		case POSTCARD:
+    			return QString("PostcardViewer");
+    	}
+    };
+    	
     QString thumbPosition() const
     {
         switch(thumbnailPosition)
@@ -114,9 +143,11 @@ public:
 
 public:
 
-    ThumbPosition                thumbnailPosition;
-    NavDir                       navDirection;
 
+    PluginType		             plugType;
+//Settings for all plug-ins
+    KUrl                         exportUrl;
+    
     bool                         enableRightClickOpen;
     bool                         resizeExportImages;
     bool                         showComments;
@@ -124,20 +155,43 @@ public:
     bool                         openInKonqueror;
     bool                         showKeywords;
 
-    int                          imagesExportSize;
-    int                          maxImageDimension;
-    int                          frameWidth;
-    int                          stagePadding;
-    int                          thumbnailColumns;
-    int                          thumbnailRows;
-
     QString                      title;
 
-    QColor                       textColor;
+
     QColor                       backgroundColor;
     QColor                       frameColor;
+    int                          thumbnailColumns; //columns 
+    int                          thumbnailRows;    // rows
 
-    KUrl                         exportUrl;
+
+    
+    int                          imagesExportSize;
+    int                          frameWidth;
+//simpleViewer settings
+    
+    QColor                       textColor;
+    int                          stagePadding;
+    int                          maxImageDimension;
+
+    ThumbPosition                thumbnailPosition;
+    // Navdir is deprecated and must be removed
+    NavDir                       navDirection;
+// Autoviewer settings
+    
+    int                          imagePadding;
+    int                          displayTime;
+// Tiltviewer options
+    bool                         showFlipButton;
+    bool                         useReloadButton;
+    QColor						 backColor;
+    QColor                       bkgndInnerColor;
+    QColor                       bkgndOuterColor;
+// postcard options
+    int                          cellDimension;
+    int                          zoomOutPerc;
+    int                          zoomInPerc;
+  
+
 
     QList<KIPI::ImageCollection> collections;
 };

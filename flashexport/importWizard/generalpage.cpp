@@ -3,11 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-02-21
- * Description : general settings page.
+ * Date        : 2011-09-13
+ * Description : a plugin to export images to flash
  *
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici@gmail.com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,6 +36,13 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <kurlrequester.h>
+#include <kvbox.h>
+#include <kstandarddirs.h>
+#include <kiconloader.h>
+
+//Local includes
+
+#include "simpleviewer.h"
 
 namespace KIPIFlashExportPlugin
 {
@@ -74,14 +80,14 @@ public:
     KUrlRequester* exportUrl;
 };
 
-GeneralPage::GeneralPage(QWidget* parent)
-    : QWidget(parent), d(new GeneralPagePriv)
+GeneralPage::GeneralPage (KAssistantDialog* dlg)
+         : KIPIPlugins::WizardPage(dlg, i18n("General Settings")), d(new GeneralPagePriv)
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    KVBox *vbox   = new KVBox(this);
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* box    = new QGroupBox(i18n("Gallery &Title"), this);
+    QGroupBox* box    = new QGroupBox(i18n("Gallery &Title"), vbox);
     QVBoxLayout* vlay = new QVBoxLayout(box);
     d->title          = new KLineEdit(this);
     d->title->setWhatsThis(i18n("Enter here the gallery title"));
@@ -92,7 +98,7 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* box2    = new QGroupBox(i18n("Save Gallery To"), this);
+    QGroupBox* box2    = new QGroupBox(i18n("Save Gallery To"), vbox);
     QVBoxLayout* vlay2 = new QVBoxLayout(box2);
     d->exportUrl       = new KUrlRequester(QString(KGlobalSettings::documentPath() + QLatin1String("/simpleviewer")), this);
     d->exportUrl->setMode(KFile::Directory | KFile::LocalOnly);
@@ -103,7 +109,7 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* box3       = new QGroupBox(i18n("Image Properties"), this);
+    QGroupBox* box3       = new QGroupBox(i18n("Image Properties"), vbox);
     QGridLayout* grid     = new QGridLayout(box3);
     d->resizeExportImages = new QCheckBox(i18n("Resize Target Images"), this);
     d->resizeExportImages->setChecked(true);
@@ -117,13 +123,15 @@ GeneralPage::GeneralPage(QWidget* parent)
                                          "the images' orientations will be set according "
                                          "to their Exif information."));
 
-    d->imagesExportSize = new KIntNumInput(this);
+    KHBox* hbox          = new KHBox;
+    QLabel* label        = new QLabel(i18n("&Target Images' Size:"), hbox);
+    d->imagesExportSize = new KIntNumInput(hbox);
     d->imagesExportSize->setRange(200, 2000, 1);
     d->imagesExportSize->setValue(640);
-    d->imagesExportSize->setLabel(i18n("&Target Images' Size:"), Qt::AlignVCenter);
     d->imagesExportSize->setWhatsThis(i18n("The new size of the exported images, in pixels. "
                                            "SimpleViewer resizes the images too, but this "
                                            "resizes the images before they are uploaded to your server."));
+    label->setBuddy(d->imagesExportSize);
 
     connect(d->resizeExportImages, SIGNAL(toggled(bool)),
             d->imagesExportSize, SLOT(setEnabled(bool)));
@@ -131,7 +139,9 @@ GeneralPage::GeneralPage(QWidget* parent)
     connect(d->resizeExportImages, SIGNAL(toggled(bool)),
             d->fixOrientation, SLOT(setEnabled(bool)));
 
-    d->maxImageDimension = new KIntNumInput(this);
+    KHBox* hbox2          = new KHBox;
+    QLabel* label2        = new QLabel(i18n("&Displayed Images' Size:"), hbox2);
+    d->maxImageDimension = new KIntNumInput(hbox2);
     d->maxImageDimension->setRange(200, 2000, 1);
     d->maxImageDimension->setValue(640);
     d->maxImageDimension->setLabel(i18n("&Displayed Images' Size:"), Qt::AlignVCenter);
@@ -139,18 +149,19 @@ GeneralPage::GeneralPage(QWidget* parent)
                                             "the height or width of your largest image (in pixels). "
                                             "Images will not be scaled up above this size, to "
                                             "preserve image quality."));
+    label2->setBuddy(d->maxImageDimension);
 
     grid->addWidget(d->resizeExportImages, 0, 0, 1, 2);
     grid->addWidget(d->fixOrientation,     1, 1, 1, 1);
-    grid->addWidget(d->imagesExportSize,   2, 1, 1, 1);
-    grid->addWidget(d->maxImageDimension,  3, 0, 1, 2);
+    grid->addWidget(hbox,   2, 1, 1, 1);
+    grid->addWidget(hbox2,  3, 0, 1, 2);
     grid->setColumnMinimumWidth(0, KDialog::spacingHint());
     grid->setMargin(KDialog::spacingHint());
     grid->setSpacing(KDialog::spacingHint());
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* box4    = new QGroupBox(i18n("Misc"), this);
+    QGroupBox* box4    = new QGroupBox(i18n("Misc"), vbox);
     QVBoxLayout* vlay4 = new QVBoxLayout(box4);
 
     d->showComments = new QCheckBox(i18n("Display Captions"), this);
@@ -183,13 +194,8 @@ GeneralPage::GeneralPage(QWidget* parent)
 
     // ------------------------------------------------------------------------
 
-    mainLayout->addWidget(box);
-    mainLayout->addWidget(box2);
-    mainLayout->addWidget(box3);
-    mainLayout->addWidget(box4);
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(KDialog::spacingHint());
-    mainLayout->addStretch(10);
+    setPageWidget(vbox);
+    setLeftBottomPix(DesktopIcon("flash", 128));
 }
 
 GeneralPage::~GeneralPage()
@@ -197,32 +203,32 @@ GeneralPage::~GeneralPage()
     delete d;
 }
 
-void GeneralPage::setSettings(const SimpleViewerSettingsContainer& settings)
+void GeneralPage::setSettings(const SimpleViewerSettingsContainer* settings)
 {
-    d->title->setText(settings.title);
-    d->exportUrl->setUrl(settings.exportUrl);
-    d->resizeExportImages->setChecked(settings.resizeExportImages);
-    d->imagesExportSize->setValue(settings.imagesExportSize);
-    d->maxImageDimension->setValue(settings.maxImageDimension);
-    d->showComments->setChecked(settings.showComments);
-    d->rightClick->setChecked(settings.enableRightClickOpen);
-    d->fixOrientation->setChecked(settings.fixOrientation);
-    d->openInKonqueror->setChecked(settings.openInKonqueror);
-    d->showKeywords->setChecked(settings.showKeywords);
+    d->title->setText(settings->title);
+    d->exportUrl->setUrl(settings->exportUrl);
+    d->resizeExportImages->setChecked(settings->resizeExportImages);
+    d->imagesExportSize->setValue(settings->imagesExportSize);
+    d->maxImageDimension->setValue(settings->maxImageDimension);
+    d->showComments->setChecked(settings->showComments);
+    d->rightClick->setChecked(settings->enableRightClickOpen);
+    d->fixOrientation->setChecked(settings->fixOrientation);
+    d->openInKonqueror->setChecked(settings->openInKonqueror);
+    d->showKeywords->setChecked(settings->showKeywords);
 }
 
-void GeneralPage::settings(SimpleViewerSettingsContainer& settings)
+void GeneralPage::settings(SimpleViewerSettingsContainer* settings)
 {
-    settings.title                = d->title->text();
-    settings.exportUrl            = d->exportUrl->url();
-    settings.resizeExportImages   = d->resizeExportImages->isChecked();
-    settings.imagesExportSize     = d->imagesExportSize->value();
-    settings.maxImageDimension    = d->maxImageDimension->value();
-    settings.showComments         = d->showComments->isChecked();
-    settings.enableRightClickOpen = d->rightClick->isChecked();
-    settings.fixOrientation       = d->fixOrientation->isChecked();
-    settings.openInKonqueror      = d->openInKonqueror->isChecked();
-    settings.showKeywords         = d->showKeywords->isChecked();
+    settings->title                = d->title->text();
+    settings->exportUrl            = d->exportUrl->url();
+    settings->resizeExportImages   = d->resizeExportImages->isChecked();
+    settings->imagesExportSize     = d->imagesExportSize->value();
+    settings->maxImageDimension    = d->maxImageDimension->value();
+    settings->showComments         = d->showComments->isChecked();
+    settings->enableRightClickOpen = d->rightClick->isChecked();
+    settings->fixOrientation       = d->fixOrientation->isChecked();
+    settings->openInKonqueror      = d->openInKonqueror->isChecked();
+    settings->showKeywords         = d->showKeywords->isChecked();
 }
 
-}  // namespace KIPIFlashExportPlugin
+}   // namespace KIPIFlashExportPlugin

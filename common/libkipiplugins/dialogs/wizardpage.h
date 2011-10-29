@@ -50,6 +50,7 @@ public:
     KPageWidgetItem* page() const;
 
     void setPageWidget(QWidget* w);
+    void removePageWidget(QWidget* w);
     void setLeftBottomPix(const QPixmap& pix);
 
 private:

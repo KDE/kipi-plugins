@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-02-21
- * Description : collections selection settings page.
+ * Date        : 2011-09-13
+ * Description : a plugin to export images to flash
  *
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,20 +24,27 @@
 
 // Qt includes
 
-#include <QLayout>
+#include <QVBoxLayout>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kdialog.h>
+#include <kvbox.h>
+#include <kstandarddirs.h>
+#include <kiconloader.h>
 
 // LibKIPI includes
 
 #include <libkipi/imagecollectionselector.h>
 
+//Local includes
+
+#include "flashmanager.h"
+
 namespace KIPIFlashExportPlugin
 {
-
+    
 class SelectionPage::SelectionPagePriv
 {
 public:
@@ -50,16 +57,15 @@ public:
     KIPI::ImageCollectionSelector* imageCollectionSelector;
 };
 
-SelectionPage::SelectionPage(KIPI::Interface* interface, QWidget* parent)
-    : QWidget(parent), d(new SelectionPagePriv)
+SelectionPage::SelectionPage(FlashManager *mngr, KAssistantDialog* dlg)
+    : KIPIPlugins::WizardPage(dlg, i18n("Select Image Collections")), d(new SelectionPagePriv)
 {
-    QVBoxLayout* layout        = new QVBoxLayout(this);
-    d->imageCollectionSelector = interface->imageCollectionSelector(this);
+    KVBox *vbox   = new KVBox(this);
+    KIPI::Interface* interface = mngr->iface();
+    d->imageCollectionSelector = interface->imageCollectionSelector(vbox);
 
-    layout->addWidget(d->imageCollectionSelector);
-    layout->setMargin(0);
-    layout->setSpacing(KDialog::spacingHint());
-    layout->setAlignment(Qt::AlignTop);
+    setPageWidget(vbox);
+    setLeftBottomPix(DesktopIcon("flash", 128));
 }
 
 SelectionPage::~SelectionPage()
@@ -72,4 +78,4 @@ QList<KIPI::ImageCollection> SelectionPage::selection() const
     return d->imageCollectionSelector->selectedImageCollections();
 }
 
-}  // namespace KIPIFlashExportPlugin
+}   // namespace KIPIFlashExportPlugin
