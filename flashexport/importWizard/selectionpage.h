@@ -3,13 +3,13 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-02-21
- * Description : look settings page.
+ * Date        : 2011-09-13
+ * Description : a plugin to export to flash
  *
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU Look
+ * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
  *
@@ -20,38 +20,43 @@
  *
  * ============================================================ */
 
-#ifndef LOOK_PAGE_H
-#define LOOK_PAGE_H
+#ifndef SELECTIONPAGE_H
+#define SELECTIONPAGE_H
 
 // Qt includes
 
 #include <QWidget>
 
+// Include files for KIPI
+
+#include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
+
 // Local includes
 
-#include "simpleviewersettingscontainer.h"
+#include "wizardpage.h"
 
 namespace KIPIFlashExportPlugin
 {
 
-class LookPage : public QWidget
-{
-    Q_OBJECT
+class FlashManager; 
 
+class SelectionPage: public KIPIPlugins::WizardPage
+{
+	Q_OBJECT
 public:
 
-    LookPage(QWidget* parent);
-    ~LookPage();
-
-    void setSettings(const SimpleViewerSettingsContainer& settings);
-    void settings(SimpleViewerSettingsContainer& settings);
+	SelectionPage(FlashManager *mngr, KAssistantDialog* dlg);
+    ~SelectionPage();
+    
+    QList<KIPI::ImageCollection> selection() const;
 
 private:
 
-    class LookPagePriv;
-    LookPagePriv* const d;
+    class SelectionPagePriv;
+    SelectionPagePriv* const d;
 };
 
-}  // namespace KIPIFlashExportPlugin
+}   // namespace KIPIFlashExportPlugin
 
-#endif // LOOK_PAGE_H 
+#endif /* SelectionPage_H */

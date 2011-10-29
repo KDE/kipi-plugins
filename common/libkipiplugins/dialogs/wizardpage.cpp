@@ -107,6 +107,10 @@ void WizardPage::setPageWidget(QWidget* w)
     d->hlay->addWidget(w);
     d->hlay->setStretchFactor(w, 10);
 }
+void WizardPage::removePageWidget(QWidget* w)
+{
+    d->hlay->removeWidget(w);
+}
 
 void WizardPage::setLeftBottomPix(const QPixmap& pix)
 {

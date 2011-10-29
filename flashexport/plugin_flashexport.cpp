@@ -3,16 +3,16 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2005-12-19
- * Description : a plugin to export image collections using SimpleViewer.
+ * Date        : 2011-09-20
+ * Description : a tool to export images to flash
  *
- * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option) any later version.
+ * either version 2, or (at your option)
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,65 +31,86 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
+#include <kiconloader.h>
 #include <klibloader.h>
 #include <klocale.h>
+#include <kmessagebox.h>
+#include <kwindowsystem.h>
 
 // LibKIPI includes
 
 #include <libkipi/imagecollection.h>
+#include <libkipi/interface.h>
 
 // Local includes
 
-#include "svedialog.h"
-#include "simpleviewer.h"
+#include "flashmanager.h"
+#include "aboutdata.h"
+
+using namespace KIPIFlashExportPlugin;
 
 K_PLUGIN_FACTORY( FlashExportFactory, registerPlugin<Plugin_FlashExport>(); )
 K_EXPORT_PLUGIN ( FlashExportFactory("kipiplugin_flashexport") )
 
 Plugin_FlashExport::Plugin_FlashExport(QObject* parent, const QVariantList&)
-    : KIPI::Plugin(FlashExportFactory::componentData(), parent, "FlashExport")
+                   : KIPI::Plugin(FlashExportFactory::componentData(), parent, "FlashExport")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_FlashExport plugin loaded" ;
+    m_interface    = 0;
+    m_action       = 0;
+    m_parentWidget = 0;
+    m_manager      = 0;
+
+    kDebug(AREA_CODE_LOADING) << "Plugin_Flashexport plugin loaded";
+}
+
+Plugin_FlashExport::~Plugin_FlashExport()
+{
 }
 
 void Plugin_FlashExport::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    m_parentWidget = widget;
+    KIPI::Plugin::setup(m_parentWidget);
 
-    KIconLoader::global()->addAppDir("kipiplugin_flashexport");
-
-    m_actionFlashExport = actionCollection()->addAction("flashexport");
-    m_actionFlashExport->setText(i18n("Export to F&lash..."));
-    m_actionFlashExport->setIcon(KIcon("flash"));
-    m_actionFlashExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L));
-
-    connect(m_actionFlashExport, SIGNAL(triggered(bool)),
+    m_action = actionCollection()->addAction("flashexport");
+    m_action->setText(i18n("Export to F&lash..."));
+    m_action->setIcon(KIcon("flash"));
+    m_action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_L));
+    
+    connect(m_action, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_actionFlashExport);
+    addAction(m_action);
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
-    if ( !m_interface )
+    m_interface = dynamic_cast< KIPI::Interface* >(parent());
+    if (!m_interface)
     {
-        kError() << "Kipi interface is null!" ;
-        return;
+       kError() << "Kipi interface is null!";
+       return;
     }
 }
 
 void Plugin_FlashExport::slotActivate()
 {
-    if ( !m_interface )
+    if (!m_interface)
     {
-        kError() << "Kipi interface is null!" ;
+        kError() << "Kipi interface is null!";
         return;
     }
 
-    KIPIFlashExportPlugin::SimpleViewer::run(m_interface, this);
+    if (!m_manager)
+    {
+        m_manager = new FlashManager(this);
+        m_manager->setAbout(new FlashExportAboutData());
+    }
+
+    m_manager->setIface(m_interface);
+    m_manager->run();
 }
 
 KIPI::Category Plugin_FlashExport::category( KAction* action ) const
 {
-    if ( action == m_actionFlashExport )
+    if ( action == m_action )
        return KIPI::ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification" ;

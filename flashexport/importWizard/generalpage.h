@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2008-02-21
- * Description : general settings page.
+ * Date        : 2011-09-13
+ * Description : a plugin to export to flash
  *
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,28 +23,26 @@
 #ifndef GENERAL_PAGE_H
 #define GENERAL_PAGE_H
 
-// Qt includes
-
-#include <QWidget>
-
 // Local includes
 
+#include "wizardpage.h"
 #include "simpleviewersettingscontainer.h"
 
 namespace KIPIFlashExportPlugin
 {
 
-class GeneralPage : public QWidget
-{
-    Q_OBJECT
+class FlashManager; 
 
+class GeneralPage: public KIPIPlugins::WizardPage
+{
+	Q_OBJECT
 public:
 
-    GeneralPage(QWidget* parent);
+	GeneralPage(KAssistantDialog* dlg);
     ~GeneralPage();
-
-    void setSettings(const SimpleViewerSettingsContainer& settings);
-    void settings(SimpleViewerSettingsContainer& settings);
+    
+    void setSettings(const SimpleViewerSettingsContainer* settings);
+    void settings(SimpleViewerSettingsContainer* settings);
 
 private:
 
@@ -52,6 +50,6 @@ private:
     GeneralPagePriv* const d;
 };
 
-}  // namespace KIPIFlashExportPlugin
+}   // namespace KIPIFlashExportPlugin
 
-#endif // GENERAL_PAGE_H 
+#endif /* GENERAL_PAGE_H */
