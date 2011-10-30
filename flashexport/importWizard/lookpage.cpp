@@ -447,7 +447,7 @@ void LookPage::setPageContent(int plugType)
         d->zoomInPerc = new KIntNumInput(hbox6);
         d->zoomInPerc->setRange(0, 100, 1);
         d->zoomInPerc->setValue(100);
-        d->zoomInPerc->setWhatsThis(i18n("The amout of scale when zoomed in (percentage)"));
+        d->zoomInPerc->setWhatsThis(i18n("The amount of scale when zoomed in (percentage)"));
         label6->setBuddy(d->zoomInPerc);
 
         KHBox* hbox7    = new KHBox;
@@ -455,7 +455,7 @@ void LookPage::setPageContent(int plugType)
         d->zoomOutPerc = new KIntNumInput(hbox7);
         d->zoomOutPerc->setRange(0, 100, 1);
         d->zoomOutPerc->setValue(15);
-        d->zoomOutPerc->setWhatsThis(i18n("The amout of scale when zoomed out (percentage)"));
+        d->zoomOutPerc->setWhatsThis(i18n("The amount of scale when zoomed out (percentage)"));
         label7->setBuddy(d->zoomOutPerc);
 
         KHBox* hbox8    = new KHBox;
@@ -463,7 +463,7 @@ void LookPage::setPageContent(int plugType)
         d->frameWidth = new KIntNumInput(hbox8);
         d->frameWidth->setRange(0, 15, 1);
         d->frameWidth->setValue(3);
-        d->frameWidth->setWhatsThis(i18n("The amout of scale when zoomed out (percentage)"));
+        d->frameWidth->setWhatsThis(i18n("The frame width"));
         label8->setBuddy(d->frameWidth);
         
         vlay3->setMargin(KDialog::spacingHint());
