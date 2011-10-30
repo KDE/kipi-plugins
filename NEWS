@@ -21,4 +21,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 009 ==> 154631 : Create Calendar function reduces photo resolution. 
 010 ==> 244258 : AdvancedSlideshow ignores "loop" settings when in KenBurns-Mode.
 011 ==> 168927 : Add support for PostcardViewer, AutoViewer and TiltViewer.
-012 ==> 
+012 ==> 285300 : Unable to blend bracketed images (enfuse missing).
+013 ==> 
+
