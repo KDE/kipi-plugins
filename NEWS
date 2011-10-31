@@ -22,5 +22,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> 244258 : AdvancedSlideshow ignores "loop" settings when in KenBurns-Mode.
 011 ==> 168927 : Add support for PostcardViewer, AutoViewer and TiltViewer.
 012 ==> 285300 : Unable to blend bracketed images (enfuse missing).
-013 ==> 
+013 ==> 220793 : Create calendar tool: last week-row is cut off.
+014 ==> 
 
