@@ -45,9 +45,6 @@
 #include "pluginsversion.h"
 #include <libkipi/imagecollectionselector.h>
 
-//Local includes
-
-#include "simpleviewer.h"/// ???
 
 namespace KIPIFlashExportPlugin
 {
@@ -74,15 +71,16 @@ FirstRunPage::FirstRunPage(KAssistantDialog* dlg)
 //    QVBoxLayout* topLayout = new QVBoxLayout(vbox);
     QLabel* info1 = new QLabel(vbox);
     info1->setWordWrap(true);
-    info1->setText( i18n("<p>SimpleViewer is a Flash component which is free to use, "
-                         "but uses a license which comes into conflict with several distributions. "
-                         "Due to the license it is not possible to ship it with this plugin.</p>"
-                         "<p>You can now download SimpleViewer from its homepage and point this tool "
+    info1->setText( i18n("<p>SimpleViewer's plugins are Flash components which are free to use, "
+                         "but use a license which comes into conflict with several distributions. "
+                         "Due to the license it is not possible to ship it with this tool.</p>"
+                         "<p>You can now download plugin from its homepage and point this tool "
                          "to the downloaded archive. The archive will be stored with the plugin configuration, "
-                         "so it is available for further use.</p>"));
+                         "so it is available for further use.</p>"
+                         "<p><b>Note: Please download the plugin that you selected on the first page.</b></p>"));
 
     QLabel* info2 = new QLabel(vbox);
-    info2->setText(i18n("<p>1.) Download SimpleViewer Version 2.1.x</p>"));
+    info2->setText(i18n("<p>1.) Download plugin from the following url:</p>"));
 
     KUrlLabel* link = new KUrlLabel(vbox);
     link->setText("http://www.simpleviewer.net");
@@ -98,16 +96,6 @@ FirstRunPage::FirstRunPage(KAssistantDialog* dlg)
     connect(d->urlRequester, SIGNAL(urlSelected(KUrl)),
             this, SLOT(slotUrlSelected(KUrl)));
     
-
-/*    topLayout->setMargin(0);
-    topLayout->setSpacing(spacingHint()); ???
-    topLayout->addWidget(info1);
-    topLayout->addWidget(info2);
-    topLayout->addWidget(link);
-    topLayout->addWidget(info3);
-    topLayout->addWidget(d->urlRequester);
-    topLayout->addStretch(10);
-*/
     setPageWidget(vbox);
     setLeftBottomPix(DesktopIcon("flash", 128));
 }
