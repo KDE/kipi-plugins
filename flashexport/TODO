@@ -28,7 +28,13 @@ them for further use                                                            
 6. Fix index.html to work with each plug-in                                          [DONE]
 7. Fix Gallery.xml to be compatible with other 3 plug-ins                            [DONE]
 8. Test gallery.xml changes                                                          [DONE]
-9. Overall plugin testing                                                            [Peding...]
+9. Overall plugin testing                                                            [Pending...]
+
+-----------------------------------------------------------------------------------------------
+Stage 2: adding multithreading support
+1. Look into SendImages tool how thread manager is implemented
+2. Implement a similar multithreaded queue to resize image for flash export
+3. Look if code can be foactored into libkipi-plugins to reduce code duplication
 
 
 To be continued....
