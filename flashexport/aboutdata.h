@@ -40,8 +40,8 @@ public:
                       KAboutData::License_GPL,
                       ki18n("A Kipi plugin to export images to Flash using the SimpleViewer's components."),
                       ki18n("(c) 2005-2006, Joern Ahrens\n"
-                            "(c) 2008-2011, Gilles Caulier \n"
-                    		"(c) 2011, Veaceslav Munteanu "))
+                            "(c) 2008-2011, Gilles Caulier\n"
+                            "(c) 2011, Veaceslav Munteanu"))
 
     {
 	    addAuthor(ki18n("Joern Ahrens"),
@@ -51,7 +51,7 @@ public:
 	    addAuthor(ki18n("Gilles Caulier"),
 	              ki18n("Developer and maintainer"),
 	              "caulier dot gilles at gmail dot com");
-	    
+
 	    addAuthor(ki18n("Veaceslav Munteanu"),
 	              ki18n("Developer and maintainer"),
 	              "slavuttici at gmail dot com");

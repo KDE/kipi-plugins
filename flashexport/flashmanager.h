@@ -51,7 +51,7 @@ namespace KIPIFlashExportPlugin
 {
 
 //class ActionThread;
-class FlashExportAboutData;// must write own flashexport aboutdata
+class FlashExportAboutData;  // must write own flashexport aboutdata
 class SimpleViewer;
 class FlashManagerPriv;
 
@@ -71,14 +71,12 @@ public:
     void setIface(Interface* iface);
     Interface* iface() const;
 
-    
     bool installPlugin(KUrl url);
 
-    
     SimpleViewer* simpleView() const;
-    
+
     void initSimple();
-    
+
     void run();
 
 private:

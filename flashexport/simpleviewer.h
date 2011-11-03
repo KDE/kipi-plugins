@@ -58,21 +58,22 @@ public:
 
     explicit SimpleViewer(KIPI::Interface* interface, QObject* parent=0);
     ~SimpleViewer();
-    
+
     void initProgressWdg();
     /**
      * Installs the SimpleViewer files for the later export
      * on the users machine
      */
     bool unzip(const QString& url) const;
-    
+
     KIPIPlugins::BatchProgressWidget* progressWidget();
-    
+
     void setSettings(SimpleViewerSettingsContainer* settings);
-    
+
     void startExport();
-    
+
     void appendPluginFiles(int pluginType);
+
 private:
 
     /**
@@ -137,13 +138,13 @@ private:
     bool extractArchive(KZip& zip) const;
 
     bool extractFile(const KArchiveEntry* entry) const;
-    
+
 static bool cmpUrl(const KUrl &url1, const KUrl &url2);
 
 Q_SIGNALS:
 
-	void signalProcessingDone();
-	
+    void signalProcessingDone();
+
 public Q_SLOTS:
 
     void slotProcess();

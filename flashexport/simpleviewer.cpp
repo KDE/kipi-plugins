@@ -93,7 +93,7 @@ public:
 
     const int                         maxThumbSize;
     const QString                     viewer;
-    
+
     QString                           dataDir;
     QString                           dataLocal;
     QString                           hostName;
@@ -140,40 +140,42 @@ void SimpleViewer::appendPluginFiles(int pluginType)
 			d->simpleViewerFiles.clear();
 			d->simpleViewerFiles.append("web/svcore/swf/simpleviewer.swf");
 			d->simpleViewerFiles.append("web/svcore/js/swfobject.js");
-	        d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/simpleviewer/", true);
-	        d->dataDir = KStandardDirs::locate("data", "kipiplugin_flashexport/simpleviewer/");
-	        kDebug() << "Data dir when set is " << d->dataDir;
+	                d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/simpleviewer/", true);
+	                d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/simpleviewer/");
+	                kDebug() << "Data dir when set is " << d->dataDir;
 			break;
 		case 1:
 			d->simpleViewerFiles.clear();
 			d->simpleViewerFiles.append("autoviewer.swf");
 			d->simpleViewerFiles.append("swfobject.js");
 			d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/autoviewer/", true);
-	        d->dataDir = KStandardDirs::locate("data", "kipiplugin_flashexport/autoviewer/");
+	                d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/autoviewer/");
 			break;
 		case 2:
 			d->simpleViewerFiles.clear();
 			d->simpleViewerFiles.append("TiltViewer.swf");
 			d->simpleViewerFiles.append("swfobject.js");
 			d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/tiltviewer/", true);
-	        d->dataDir = KStandardDirs::locate("data", "kipiplugin_flashexport/tiltviewer/");
+                        d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/tiltviewer/");
 			break;
 		case 3:
 			d->simpleViewerFiles.clear();
 			d->simpleViewerFiles.append("viewer.swf");
 			d->simpleViewerFiles.append("swfobject.js");
 			d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/postcardviewer/", true);
-	        d->dataDir = KStandardDirs::locate("data", "kipiplugin_flashexport/postcardviewer/");
+                        d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/postcardviewer/");
 			break;
 		default:
 			break;
 	}
 }
+
 void SimpleViewer::initProgressWdg()
 {
     d->progressWdg = new KIPIPlugins::BatchProgressWidget(kapp->activeWindow());
     kDebug() << "progress dialog initialized";
 }
+
 void SimpleViewer::startExport()
 {
     if(d->canceled)
@@ -197,7 +199,6 @@ void SimpleViewer::startExport()
     d->progressWdg->setProgress(0, d->totalActions);
 
     slotProcess();
-
 }
 
 void SimpleViewer::slotCancel()
@@ -507,14 +508,14 @@ bool SimpleViewer::exportImages() const
             if (rotated) meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
             meta.save(imagePath.path());
 
-            
-            d->width=image.width();
-            d->height=image.height();
+            d->width  = image.width();
+            d->height = image.height();
 
             if(d->settings->plugType!=2)
                 cfgAddImage(xmlDoc, galleryElem, url, newName);
             else
                 cfgAddImage(xmlDoc, photosElem, url, newName);
+
             d->progressWdg->setProgress(++d->action, d->totalActions);
             index++;
         }
@@ -609,11 +610,9 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         keywords.clear();
     }
 
-
     switch(d->settings->plugType)
     {
-        //Simpleviewer
-        case 0:
+        case 0: //Simpleviewer
         {
 
             QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
@@ -628,11 +627,10 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
             QDomText captiontxt1 = xmlDoc.createTextNode(comment+keywords);
             caption1.appendChild(captiontxt1);
-         }
             break;
+        }
 
-        case 1:
-        //Autoviewer
+        case 1: //Autoviewer
         {
             QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
 
@@ -660,11 +658,10 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
             QDomText    heightText = xmlDoc.createTextNode(QString::number(d->height));
             heightElem.appendChild(heightText);
+            break;
         }
 
-            break;
-        case 2:
-        //TiltWiever
+        case 2: //TiltWiever
         {
             QDomElement img = xmlDoc.createElement(QString::fromLatin1("photo"));
             galleryElem.appendChild(img);
@@ -682,8 +679,8 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
             QDomText captiontxt1 = xmlDoc.createTextNode(comment+keywords);
             caption1.appendChild(captiontxt1);
         }
-        case 3:
-        //PostcardViewer
+
+        case 3: //PostcardViewer
         {
             QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
             galleryElem.appendChild(img);
@@ -696,9 +693,9 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
             QDomElement caption2 = xmlDoc.createElement(QString::fromLatin1("caption"));
             img.appendChild( caption2 );
             QDomText captiontxt2 = xmlDoc.createTextNode(comment+keywords);
-                caption2.appendChild(captiontxt2);
-        }
+            caption2.appendChild(captiontxt2);
         break;
+        }
 
         default:
             break;
@@ -720,7 +717,7 @@ bool SimpleViewer::createIndex() const
             QString indexTemplateName = KStandardDirs::locate("data", "kipiplugin_flashexport/index.template");
             if(indexTemplateName.isEmpty())
             {
-            //TODO: errormsg
+                //TODO: errormsg
                 kDebug() << "No indexTemplateName" ;
                 return false;
             }
@@ -742,14 +739,15 @@ bool SimpleViewer::createIndex() const
             QTextStream out(&outfile);
             out << indexTemplate;
             outfile.close();
+            break;
         }
-        break;
+
         case 1:
         {
             QString indexTemplateName = KStandardDirs::locate("data", "kipiplugin_flashexport/index2.template");
             if(indexTemplateName.isEmpty())
             {
-            //TODO: errormsg
+                //TODO: errormsg
                 kDebug() << "No indexTemplateName" ;
                 return false;
             }
@@ -771,8 +769,9 @@ bool SimpleViewer::createIndex() const
             QTextStream out(&outfile);
             out << indexTemplate;
             outfile.close();
+            break;
         }
-        break;
+
         case 2:
         {
             QString indexTemplateName = KStandardDirs::locate("data", "kipiplugin_flashexport/index3.template");
@@ -813,14 +812,14 @@ bool SimpleViewer::createIndex() const
             QTextStream out(&outfile);
             out << indexTemplate;
             outfile.close();
+            break;
         }
-        break;
         case 3:
         {
             QString indexTemplateName = KStandardDirs::locate("data", "kipiplugin_flashexport/index4.template");
             if(indexTemplateName.isEmpty())
             {
-            //TODO: errormsg
+                //TODO: errormsg
                 kDebug() << "No indexTemplateName" ;
                 return false;
             }
@@ -840,9 +839,9 @@ bool SimpleViewer::createIndex() const
             QTextStream out(&outfile);
             out << indexTemplate;
             outfile.close();
+            break;
         }
-        break;
-        
+
         default:
             break;
     }
@@ -984,7 +983,7 @@ void SimpleViewer::setSettings(SimpleViewerSettingsContainer* setting)
 {
 	d->settings=setting;
     d->canceled = false;
-    
+
     kDebug() << "Settings reached SimpleViewer";
 }
 

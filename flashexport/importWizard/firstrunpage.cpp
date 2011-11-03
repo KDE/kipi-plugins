@@ -95,7 +95,7 @@ FirstRunPage::FirstRunPage(KAssistantDialog* dlg)
     d->urlRequester = new KUrlRequester(vbox);
     connect(d->urlRequester, SIGNAL(urlSelected(KUrl)),
             this, SLOT(slotUrlSelected(KUrl)));
-    
+
     setPageWidget(vbox);
     setLeftBottomPix(DesktopIcon("flash", 128));
 }

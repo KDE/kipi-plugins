@@ -59,7 +59,7 @@ public:
         LEFT2RIGHT = 0,
         RIGHT2LEFT
     };
-    
+
     enum PluginType
     {
         SIMPLE = 0,
@@ -96,7 +96,7 @@ public:
     			return QString("PostcardViewer");
     	}
     };
-    	
+
     QString thumbPosition() const
     {
         switch(thumbnailPosition)
@@ -143,11 +143,11 @@ public:
 
 public:
 
-
     PluginType		             plugType;
-//Settings for all plug-ins
+
+    //Settings for all plug-ins
     KUrl                         exportUrl;
-    
+
     bool                         enableRightClickOpen;
     bool                         resizeExportImages;
     bool                         showComments;
@@ -160,38 +160,38 @@ public:
 
     QColor                       backgroundColor;
     QColor                       frameColor;
-    int                          thumbnailColumns; //columns 
+
+    int                          thumbnailColumns; //columns
     int                          thumbnailRows;    // rows
 
-
-    
     int                          imagesExportSize;
     int                          frameWidth;
-//simpleViewer settings
-    
+
+    //simpleViewer settings
     QColor                       textColor;
     int                          stagePadding;
     int                          maxImageDimension;
 
     ThumbPosition                thumbnailPosition;
+
     // Navdir is deprecated and must be removed
     NavDir                       navDirection;
-// Autoviewer settings
-    
+
+    // Autoviewer settings
     int                          imagePadding;
     int                          displayTime;
-// Tiltviewer options
+
+    // Tiltviewer options
     bool                         showFlipButton;
     bool                         useReloadButton;
     QColor						 backColor;
     QColor                       bkgndInnerColor;
     QColor                       bkgndOuterColor;
-// postcard options
+
+    // postcard options
     int                          cellDimension;
     int                          zoomOutPerc;
     int                          zoomInPerc;
-  
-
 
     QList<KIPI::ImageCollection> collections;
 };

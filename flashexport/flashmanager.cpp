@@ -54,20 +54,20 @@ public:
     }
 
 
-    SimpleViewerSettingsContainer  *containerSettings;
+    SimpleViewerSettingsContainer* containerSettings;
 
     Interface*                     iface;
 
     FlashExportAboutData*          about;
-    
+
     ImportWizardDlg*               wizard;
-    
+
     SimpleViewer*                  simple;
 
 };
 
 FlashManager::FlashManager(QObject* parent)
-       : QObject(parent), d(new FlashManagerPriv)
+   : QObject(parent), d(new FlashManagerPriv)
 {
 }
 
@@ -78,12 +78,14 @@ FlashManager::~FlashManager()
     delete d->simple;
     delete d;
 }
+
 void FlashManager::initSimple()
 {
 // it cannot be initialized in main function because interface pointer is null.
 	d->simple = new SimpleViewer(d->iface,this); 
 	kDebug() << "simpleview Initialized...";
 }
+
 void FlashManager::setAbout(FlashExportAboutData* about)
 {
     d->about = about;
@@ -104,7 +106,6 @@ Interface* FlashManager::iface() const
     return d->iface;
 }
 
-
 bool FlashManager::installPlugin(KUrl url)
 {
 	if(d->simple->unzip(url.path()))
@@ -117,6 +118,7 @@ SimpleViewer* FlashManager::simpleView() const
 {
 	return d->simple;
 }
+
 void FlashManager::run()
 {
     startWizard();
