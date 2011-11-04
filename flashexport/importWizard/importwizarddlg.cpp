@@ -151,7 +151,7 @@ void ImportWizardDlg::slotActivate()
 	    KMessageBox::error(this, i18n("<p>SimpleViewer installation failed. </p>"
                                       "<p>Please check if:</p>"
                                       "<p>- archive corresponds to plugin selected on previous page.</p>"
-                                      "<p>- archieve is up-to-date and is not corrupted.</p>"));
+                                      "<p>- archive is up-to-date and is not corrupted.</p>"));
 }
 void ImportWizardDlg::slotFinishEnable()
 {
