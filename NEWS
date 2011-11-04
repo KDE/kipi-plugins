@@ -24,4 +24,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 012 ==> 285300 : Unable to blend bracketed images (enfuse missing).
 013 ==> 220793 : Create calendar tool: last week-row is cut off.
 014 ==> 221862 : Launching the flickr exporter with pic selected, or adding picture to exporter window.
-015 ==> 
+015 ==> 284215 : digiKam crashes when "Create photo layouts" used second time.
+016 ==> 
