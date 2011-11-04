@@ -44,6 +44,18 @@ using namespace KIPIPhotoLayoutsEditor;
 
 class ToolsDockWidget::ToolsDockWidgetPrivate
 {
+    ToolsDockWidgetPrivate() :
+        zoom_tool(0),
+        canvas_tool(0),
+        effects_tool(0),
+        text_tool(0),
+        border_tool(0)
+    {}
+    ZoomTool * zoom_tool;
+    CanvasEditTool * canvas_tool;
+    EffectsEditorTool * effects_tool;
+    TextEditorTool * text_tool;
+    BorderEditTool * border_tool;
     QGridLayout * formLayout;
     QScrollArea * toolArea;
     friend class ToolsDockWidget;
@@ -312,19 +324,18 @@ void ToolsDockWidget::setHandToolVisible(bool isSelected)
 
 void ToolsDockWidget::setZoomWidgetVisible(bool isVisible)
 {
-    static ZoomTool * w = 0;
-    if (w)
+    if (d->zoom_tool)
     {
-        w->deleteLater();
-        w = 0;
+        d->zoom_tool->deleteLater();
+        d->zoom_tool = 0;
     }
     m_tool_zoom->setChecked(isVisible);
     emit zoomToolSelectionChanged(isVisible);
     if (isVisible)
     {
-        w = new ZoomTool(0, d->toolArea);
-        w->setScene(m_scene);
-        d->toolArea->setWidget(w);
+        d->zoom_tool = new ZoomTool(0, d->toolArea);
+        d->zoom_tool->setScene(m_scene);
+        d->toolArea->setWidget(d->zoom_tool);
         emit requireSingleSelection();
         emit zoomToolSelected();
     }
@@ -332,19 +343,18 @@ void ToolsDockWidget::setZoomWidgetVisible(bool isVisible)
 
 void ToolsDockWidget::setCanvasWidgetVisible(bool isVisible)
 {
-    static CanvasEditTool * w = 0;
-    if (w)
+    if (d->canvas_tool)
     {
-        w->deleteLater();
-        w = 0;
+        d->canvas_tool->deleteLater();
+        d->canvas_tool = 0;
     }
     m_canvas_button->setChecked(isVisible);
     emit canvasToolSelectionChanged(isVisible);
     if (isVisible)
     {
-        w = new CanvasEditTool(0, d->toolArea);
-        w->setScene(m_scene);
-        d->toolArea->setWidget(w);
+        d->canvas_tool = new CanvasEditTool(0, d->toolArea);
+        d->canvas_tool->setScene(m_scene);
+        d->toolArea->setWidget(d->canvas_tool);
         emit requireMultiSelection();
         emit canvasToolSelected();
     }
@@ -352,20 +362,19 @@ void ToolsDockWidget::setCanvasWidgetVisible(bool isVisible)
 
 void ToolsDockWidget::setEffectsWidgetVisible(bool isVisible)
 {
-    static EffectsEditorTool * w = 0;
-    if (w)
+    if (d->effects_tool)
     {
-        w->deleteLater();
-        w = 0;
+        d->effects_tool->deleteLater();
+        d->effects_tool = 0;
     }
     m_effects_button->setChecked(isVisible);
     emit effectsToolSelectionChanged(isVisible);
     if (isVisible)
     {
-        w = new EffectsEditorTool(0, d->toolArea);
-        w->setScene(m_scene);
-        w->setCurrentItem(m_current_item);
-        d->toolArea->setWidget(w);
+        d->effects_tool = new EffectsEditorTool(0, d->toolArea);
+        d->effects_tool->setScene(m_scene);
+        d->effects_tool->setCurrentItem(m_current_item);
+        d->toolArea->setWidget(d->effects_tool);
         emit requireSingleSelection();
         emit effectsToolSelected();
     }
@@ -373,21 +382,20 @@ void ToolsDockWidget::setEffectsWidgetVisible(bool isVisible)
 
 void ToolsDockWidget::setTextWidgetVisible(bool isVisible)
 {
-    static TextEditorTool * w = 0;
-    if (w)
+    if (d->text_tool)
     {
-        w->deleteLater();
-        w = 0;
+        d->text_tool->deleteLater();
+        d->text_tool = 0;
     }
     m_text_button->setChecked(isVisible);
     emit textToolSelectionChanged(isVisible);
     if (isVisible)
     {
-        w = new TextEditorTool(0, d->toolArea);
-        connect(w, SIGNAL(itemCreated(AbstractPhoto*)), this, SLOT(emitNewItemCreated(AbstractPhoto*)));
-        w->setScene(m_scene);
-        w->setCurrentItem(m_current_item);
-        d->toolArea->setWidget(w);
+        d->text_tool = new TextEditorTool(0, d->toolArea);
+        connect(d->text_tool, SIGNAL(itemCreated(AbstractPhoto*)), this, SLOT(emitNewItemCreated(AbstractPhoto*)));
+        d->text_tool->setScene(m_scene);
+        d->text_tool->setCurrentItem(m_current_item);
+        d->toolArea->setWidget(d->text_tool);
         emit requireSingleSelection();
         emit textToolSelected();
     }
@@ -431,20 +439,19 @@ void ToolsDockWidget::setCropWidgetVisible(bool isVisible)
 
 void ToolsDockWidget::setBordersWidgetVisible(bool isVisible)
 {
-    static BorderEditTool * w = 0;
-    if (w)
+    if (d->border_tool)
     {
-        w->deleteLater();
-        w = 0;
+        d->border_tool->deleteLater();
+        d->border_tool = 0;
     }
     m_tool_border->setChecked(isVisible);
     emit borderToolSelectionChanged(isVisible);
     if (isVisible)
     {
-        w = new BorderEditTool(0, d->toolArea);
-        w->setScene(m_scene);
-        w->setCurrentItem(m_current_item);
-        d->toolArea->setWidget(w);
+        d->border_tool = new BorderEditTool(0, d->toolArea);
+        d->border_tool->setScene(m_scene);
+        d->border_tool->setCurrentItem(m_current_item);
+        d->toolArea->setWidget(d->border_tool);
         emit requireSingleSelection();
         emit borderToolSelected();
     }
