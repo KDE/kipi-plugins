@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-
 #ifndef FIRSTRUNPAGE_H
 #define FIRSTRUNPAGE_H
 
@@ -32,6 +31,7 @@
 // Include files for KIPI
 
 #include <libkipi/interface.h>
+
 // Local includes
 
 #include "wizardpage.h"
@@ -44,43 +44,40 @@ namespace KIPIFlashExportPlugin
  * Flash cannot be shipped with the plugin. During the first run of the
  * plugin, the user has to download SimpleViewer from its homepage and point
  * the plugin to that archive to install it. This is done by this dialog.
- */ 
-
-
+ */
 class FirstRunPage : public KIPIPlugins::WizardPage
 {
 	Q_OBJECT
 public:
 
-	FirstRunPage(KAssistantDialog* dlg);
+    FirstRunPage(KAssistantDialog* dlg);
     ~FirstRunPage();
 
     /**
      * Returns the URL, where the SimpleViewer package is stored
      */
     KUrl getUrl() const;
-        
-Q_SIGNALS:
- void signalUrlObtained();
 
+Q_SIGNALS:
+
+    void signalUrlObtained();
 
 private Q_SLOTS:
 
-/**
- * Opens the browser with the SimpleViewer download page
- */
-void slotDownload(const QString& url);
+    /**
+     * Opens the browser with the SimpleViewer download page
+     */
+    void slotDownload(const QString& url);
 
-/**
- * Starts the installation of SimpleViewer
- */
-void slotUrlSelected(const KUrl& url);
-
+    /**
+     * Starts the installation of SimpleViewer
+     */
+    void slotUrlSelected(const KUrl& url);
 
 private:
 
-class FirstRunPagePriv;
-FirstRunPagePriv* const d;
+    class FirstRunPagePriv;
+    FirstRunPagePriv* const d;
 };
 
 }   // namespace KIPIFlashexport

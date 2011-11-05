@@ -46,48 +46,48 @@ using namespace KIPI;
 
 namespace KIPIFlashExportPlugin
 {
-    class SimpleViewer;
-    class ImportWizardDlgPriv;
-   
+
+class SimpleViewer;
+class ImportWizardDlgPriv;
+
 class ImportWizardDlg: public KAssistantDialog
 {
-	
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ImportWizardDlg(FlashManager* mngr, QWidget* parent=0);
-	~ImportWizardDlg();
 
-	FlashManager* manager() const;
-	bool checkIfPluginInstalled();
-	
-	// Read settings from configuration file
-	void readSettings();
-	//Write settings to configuration file and pass them for processing.
-	void saveSettings();
-	
-	bool checkIfFolderExist();
+    ImportWizardDlg(FlashManager* mngr, QWidget* parent=0);
+    ~ImportWizardDlg();
 
-	
+    FlashManager* manager() const;
+    bool checkIfPluginInstalled();
+    
+    // Read settings from configuration file
+    void readSettings();
+    //Write settings to configuration file and pass them for processing.
+    void saveSettings();
+    
+    bool checkIfFolderExist();
 
 private Q_SLOTS:
-	
-	void next();
-	void back();
-	
-	void slotHelp();
-	
-	//will activate the next button if a url was selected.
-	void slotActivate();
-	
-	//Allow acces to Finish only after processing is done
-	void slotFinishEnable();
+    
+    void next();
+    void back();
+    
+    void slotHelp();
+    
+    //will activate the next button if a url was selected.
+    void slotActivate();
+    
+    //Allow acces to Finish only after processing is done
+    void slotFinishEnable();
 
 private:
 
-	class ImportWizardDlgPriv;
-	ImportWizardDlgPriv* const d;
-	
+    class ImportWizardDlgPriv;
+    ImportWizardDlgPriv* const d;
 };
-} 
+
+}
+
 #endif // IMPORTWIZARDDLG_H

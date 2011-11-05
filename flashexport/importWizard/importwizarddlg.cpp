@@ -36,11 +36,13 @@
 #include <kdebug.h>
 #include <kio/netaccess.h>
 #include <kapplication.h>
+
 // LibKIPI includes
 
 #include <libkipi/interface.h>
 
 // Locale incudes.
+
 //#include "actionthread.h"
 #include "aboutdata.h"
 #include "intropage.h"
@@ -69,21 +71,20 @@ public:
         progressPage      = 0;
     }
 
-    FlashManager*           mngr;
-    SimpleViewer*           simple;
+    FlashManager*                  mngr;
+    SimpleViewer*                  simple;
     SimpleViewerSettingsContainer* settings;
-//-----------------------------------------
-    IntroPage*         introPage;
-    FirstRunPage*	   firstrunPage;
-    SelectionPage*     selectionPage;
-    LookPage*          lookPage;
-    GeneralPage*       generalPage;
-    ProgressPage*      progressPage;
 
+    IntroPage*                     introPage;
+    FirstRunPage*               firstrunPage;
+    SelectionPage*                 selectionPage;
+    LookPage*                      lookPage;
+    GeneralPage*                   generalPage;
+    ProgressPage*                  progressPage;
 };
 
 ImportWizardDlg::ImportWizardDlg(FlashManager* mngr, QWidget* parent)
-               : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
+    : KAssistantDialog(parent), d(new ImportWizardDlgPriv)
 {
     setModal(false);
     setWindowTitle(i18n("Flash Export Wizard"));
@@ -93,7 +94,9 @@ ImportWizardDlg::ImportWizardDlg(FlashManager* mngr, QWidget* parent)
     d->mngr->initSimple();
     d->simple            = mngr->simpleView();
     kDebug() << "pointer of simpleview" << mngr->simpleView();
- //-----------------------------------------------------------------
+
+    //-----------------------------------------------------------------
+
     d->settings          = new SimpleViewerSettingsContainer;
     d->introPage         = new IntroPage(this);
     d->firstrunPage      = new FirstRunPage(this);
@@ -103,15 +106,16 @@ ImportWizardDlg::ImportWizardDlg(FlashManager* mngr, QWidget* parent)
     d->progressPage      = new ProgressPage(d->mngr, this);
     readSettings();
 
- 
-//------------------------------------------------------------
-    connect(d->firstrunPage, SIGNAL(signalUrlObtained())
-    		,this, SLOT(slotActivate()));
+    //------------------------------------------------------------
+
+    connect(d->firstrunPage, SIGNAL(signalUrlObtained()),
+            this, SLOT(slotActivate()));
+
     connect(this, SIGNAL(rejected()),
-    		d->simple,SLOT(slotCancel()));
+            d->simple,SLOT(slotCancel()));
+
     connect(d->simple, SIGNAL(signalProcessingDone()),
-    		this,SLOT(slotFinishEnable()));
-    
+            this, SLOT(slotFinishEnable()));
 
     // ---------------------------------------------------------------
     // About data and help button.
@@ -143,80 +147,87 @@ void ImportWizardDlg::slotHelp()
 {
     KToolInvocation::invokeHelp("flashexport", "kipi-plugins");
 }
+
 void ImportWizardDlg::slotActivate()
 {
-	if(d->mngr->installPlugin(d->firstrunPage->getUrl()))
-		setValid(d->firstrunPage->page(),true);
-	else
-	    KMessageBox::error(this, i18n("<p>SimpleViewer installation failed. </p>"
+    if(d->mngr->installPlugin(d->firstrunPage->getUrl()))
+        setValid(d->firstrunPage->page(),true);
+    else
+        KMessageBox::error(this, i18n("<p>SimpleViewer installation failed. </p>"
                                       "<p>Please check if:</p>"
                                       "<p>- archive corresponds to plugin selected on previous page.</p>"
                                       "<p>- archive is up-to-date and is not corrupted.</p>"));
 }
+
 void ImportWizardDlg::slotFinishEnable()
 {
-	setValid(d->progressPage->page(),true);
+    setValid(d->progressPage->page(),true);
 }
+
 FlashManager* ImportWizardDlg::manager() const
 {
     return d->mngr;
 }
 
-
 void ImportWizardDlg::next()
 {
-
-	if(currentPage() == d->introPage->page())
-	{
-		d->introPage->settings(d->settings);
-	    d->simple->appendPluginFiles(d->settings->plugType);
+    if(currentPage() == d->introPage->page())
+    {
+        d->introPage->settings(d->settings);
+        d->simple->appendPluginFiles(d->settings->plugType);
         d->lookPage->setPageContent(d->settings->plugType);
         readSettings();
-	}
-// Using KAssistantDialog::next twice to skip firstrun page if 
-//  plugin is already installed
-	if(checkIfPluginInstalled())
-	{
-		if(currentPage() == d->introPage->page())
-			KAssistantDialog::next();
-	}
-	else
-		//next must be disabled until receive Url via slotActivate.
-		setValid(d->firstrunPage->page(),false);
-	
-// Must have at least one collection to proceed.
-	if(currentPage() == d->selectionPage->page())
-	    if (d->selectionPage->selection().isEmpty())
-	    {
-	        KMessageBox::sorry(this, i18n("You must select at least one collection to export."));
-	        return;
-	    }
-	if(currentPage() == d->generalPage->page())
-	{
-		saveSettings();
+    }
+
+    // Using KAssistantDialog::next twice to skip firstrun page if
+    // plugin is already installed
+    if(checkIfPluginInstalled())
+    {
+        if(currentPage() == d->introPage->page())
+            KAssistantDialog::next();
+    }
+    else
+    {
+        //next must be disabled until receive Url via slotActivate.
+        setValid(d->firstrunPage->page(),false);
+    }
+    
+    // Must have at least one collection to proceed.
+    if(currentPage() == d->selectionPage->page())
+    {
+        if (d->selectionPage->selection().isEmpty())
+        {
+            KMessageBox::sorry(this, i18n("You must select at least one collection to export."));
+            return;
+        }
+    }
+
+    if(currentPage() == d->generalPage->page())
+    {
+        saveSettings();
         // Disable Finish button while exporting
         setValid(d->progressPage->page(),false);
-		if(!checkIfFolderExist())
-			return;
-	    KAssistantDialog::next();
+        if(!checkIfFolderExist())
+            return;
+        KAssistantDialog::next();
         d->simple->startExport();
         return;
-	}
-    KAssistantDialog::next();
+    }
 
+    KAssistantDialog::next();
 }
 
 void ImportWizardDlg::back()
 {
 
-	if(checkIfPluginInstalled() && currentPage() == d->selectionPage->page())
-		 KAssistantDialog::back();
-    if(currentPage() == d->progressPage->page())
-    		d->simple->slotCancel();
-    KAssistantDialog::back();
-    
+    if(checkIfPluginInstalled() && currentPage() == d->selectionPage->page())
+        KAssistantDialog::back();
 
+    if(currentPage() == d->progressPage->page())
+        d->simple->slotCancel();
+    KAssistantDialog::back();
 }
+
 bool ImportWizardDlg::checkIfFolderExist()
 {
     if(KIO::NetAccess::exists(d->settings->exportUrl, KIO::NetAccess::DestinationSide, kapp->activeWindow()))
@@ -243,37 +254,38 @@ bool ImportWizardDlg::checkIfFolderExist()
             case KMessageBox::No:
                 return false;
                 break;
-            	
+                
             case KMessageBox::Cancel:
                 return false;
                 break;
 
             default:
-            	return false;
+                return false;
         }
     }
     return true;
 }
+
 bool ImportWizardDlg::checkIfPluginInstalled()
 { 
-	switch(d->settings->plugType)
-	{
-	case 0:
-		return ! KStandardDirs::locate("data","kipiplugin_flashexport/simpleviewer/simpleviewer.swf").isEmpty(); 
-		break;
-	case 1:
-		return ! KStandardDirs::locate("data","kipiplugin_flashexport/autoviewer/autoviewer.swf").isEmpty(); 
-		break;	
-	case 2:
-		return ! KStandardDirs::locate("data","kipiplugin_flashexport/tiltviewer/TiltViewer.swf").isEmpty(); 
-		break;
-	case 3:
-		return ! KStandardDirs::locate("data","kipiplugin_flashexport/postcardviewer/viewer.swf").isEmpty(); 
-		break;
-	default:
-		kDebug() << "Unkown plugin type";
-		return false;
-	}
+    switch(d->settings->plugType)
+    {
+        case 0:
+            return ! KStandardDirs::locate("data","kipiplugin_flashexport/simpleviewer/simpleviewer.swf").isEmpty();
+            break;
+        case 1:
+            return ! KStandardDirs::locate("data","kipiplugin_flashexport/autoviewer/autoviewer.swf").isEmpty();
+            break;
+        case 2:
+            return ! KStandardDirs::locate("data","kipiplugin_flashexport/tiltviewer/TiltViewer.swf").isEmpty();
+            break;
+        case 3:
+            return ! KStandardDirs::locate("data","kipiplugin_flashexport/postcardviewer/viewer.swf").isEmpty();
+            break;
+        default:
+            kDebug() << "Unkown plugin type";
+            return false;
+    }
 
 }
 void ImportWizardDlg::readSettings()
@@ -296,29 +308,33 @@ void ImportWizardDlg::readSettings()
     d->settings->fixOrientation       = group.readEntry("FixOrientation", true);
     d->settings->openInKonqueror      = group.readEntry("OpenInKonqueror", true);
     d->settings->showKeywords         = group.readEntry("ShowKeywords", true);
-//---Simpleviewer settings ----
+
+    //---Simpleviewer settings ----
     d->settings->textColor            = group.readEntry("TextColor", QColor("#ffffff"));
     d->settings->thumbnailPosition    = (SimpleViewerSettingsContainer::ThumbPosition)group.readEntry("ThumbnailPosition", (int)SimpleViewerSettingsContainer::RIGHT);
     d->settings->stagePadding         = group.readEntry("StagePadding", 20);
     d->settings->maxImageDimension    = group.readEntry("MaxImageDimension", 640);
-//---Autoviewer settings ----
+
+    //---Autoviewer settings ----
     d->settings->imagePadding         = group.readEntry("ImagePadding", 20);
     d->settings->displayTime          = group.readEntry("DisplayTime", 6);
-//---Tiltviewer settings ----
+
+    //---Tiltviewer settings ----
     d->settings->showFlipButton       = group.readEntry("ShowFlipButton", true);
     d->settings->useReloadButton      = group.readEntry("UseReloadButton",true);
     d->settings->bkgndInnerColor      = group.readEntry("BackgroundInnerColor", QColor("#ffffff"));
     d->settings->bkgndOuterColor      = group.readEntry("BackgroundOuterColor", QColor("#ffffff"));
     d->settings->backColor            = group.readEntry("BackColor", QColor("#FFDCA8"));
-//---Postcardviewer settings ----
+
+    //---Postcardviewer settings ----
     d->settings->cellDimension        = group.readEntry("CellDimension", 800);
     d->settings->zoomOutPerc          = group.readEntry("ZoomOutPerc", 15);
     d->settings->zoomInPerc           = group.readEntry("ZoomInPerc", 100);
 
     d->generalPage->setSettings(d->settings);
     d->lookPage->setSettings(d->settings);
-
 }
+
 void ImportWizardDlg::saveSettings()
 {
     d->settings->collections = d->selectionPage->selection();
@@ -343,24 +359,24 @@ void ImportWizardDlg::saveSettings()
     group.writeEntry("OpenInKonqueror", d->settings->openInKonqueror);
     group.writeEntry("ShowKeywords", d->settings->showKeywords);
 
-//---Simpleviewer settings ---
+    //---Simpleviewer settings ---
     group.writeEntry("ThumbnailPosition", (int)d->settings->thumbnailPosition);
     group.writeEntry("TextColor", d->settings->textColor);
     group.writeEntry("StagePadding", d->settings->stagePadding);
     group.writeEntry("MaxImageDimension", d->settings->maxImageDimension);
 
-//---Autoviewer settings ---
+    //---Autoviewer settings ---
     group.writeEntry("ImagePadding",d->settings->imagePadding);
     group.writeEntry("DisplayTime",d->settings->displayTime);
 
-//---Tiltviewer settings ----
+    //---Tiltviewer settings ----
     group.writeEntry("ShowFlipButton", d->settings->showFlipButton);
     group.writeEntry("UseReloadButton",d->settings->useReloadButton);
     group.writeEntry("BackgroundInnerColor", d->settings->bkgndInnerColor);
     group.writeEntry("BackgroundOuterColor", d->settings->bkgndOuterColor);
     group.writeEntry("BackColor", d->settings->backColor);
 
-//---Postcardviewer settings ----
+    //---Postcardviewer settings ----
     group.writeEntry("CellDimension", d->settings->cellDimension);
     group.writeEntry("ZoomOutPerc", d->settings->zoomOutPerc);
     group.writeEntry("ZoomInPerc", d->settings->zoomInPerc);
@@ -368,7 +384,6 @@ void ImportWizardDlg::saveSettings()
     config.sync();
     d->simple->setSettings(d->settings);
 
-    
     kDebug() <<"Settings Saved";
 }
 

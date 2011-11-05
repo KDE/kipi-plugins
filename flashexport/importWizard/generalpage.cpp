@@ -81,9 +81,9 @@ public:
 };
 
 GeneralPage::GeneralPage (KAssistantDialog* dlg)
-         : KIPIPlugins::WizardPage(dlg, i18n("General Settings")), d(new GeneralPagePriv)
+    : KIPIPlugins::WizardPage(dlg, i18n("General Settings")), d(new GeneralPagePriv)
 {
-    KVBox *vbox   = new KVBox(this);
+    KVBox *vbox       = new KVBox(this);
 
     // ------------------------------------------------------------------------
 

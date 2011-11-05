@@ -139,7 +139,7 @@ private:
 
     bool extractFile(const KArchiveEntry* entry) const;
 
-static bool cmpUrl(const KUrl &url1, const KUrl &url2);
+    static bool cmpUrl(const KUrl &url1, const KUrl &url2);
 
 Q_SIGNALS:
 

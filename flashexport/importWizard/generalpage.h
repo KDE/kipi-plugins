@@ -31,16 +31,17 @@
 namespace KIPIFlashExportPlugin
 {
 
-class FlashManager; 
+class FlashManager;
 
 class GeneralPage: public KIPIPlugins::WizardPage
 {
-	Q_OBJECT
+    Q_OBJECT
+
 public:
 
-	GeneralPage(KAssistantDialog* dlg);
+    GeneralPage(KAssistantDialog* dlg);
     ~GeneralPage();
-    
+
     void setSettings(const SimpleViewerSettingsContainer* settings);
     void settings(SimpleViewerSettingsContainer* settings);
 

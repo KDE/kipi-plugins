@@ -45,7 +45,6 @@
 #include "pluginsversion.h"
 #include <libkipi/imagecollectionselector.h>
 
-
 namespace KIPIFlashExportPlugin
 {
 
@@ -67,7 +66,7 @@ public:
 FirstRunPage::FirstRunPage(KAssistantDialog* dlg)
     : KIPIPlugins::WizardPage(dlg, i18n("First Run")), d(new FirstRunPagePriv)
 {
-    KVBox* vbox = new KVBox(this);
+    KVBox* vbox   = new KVBox(this);
 //    QVBoxLayout* topLayout = new QVBoxLayout(vbox);
     QLabel* info1 = new QLabel(vbox);
     info1->setWordWrap(true);
@@ -79,7 +78,7 @@ FirstRunPage::FirstRunPage(KAssistantDialog* dlg)
                          "so it is available for further use.</p>"
                          "<p><b>Note: Please download the plugin that you selected on the first page.</b></p>"));
 
-    QLabel* info2 = new QLabel(vbox);
+    QLabel* info2   = new QLabel(vbox);
     info2->setText(i18n("<p>1.) Download plugin from the following url:</p>"));
 
     KUrlLabel* link = new KUrlLabel(vbox);
@@ -89,7 +88,7 @@ FirstRunPage::FirstRunPage(KAssistantDialog* dlg)
     connect(link, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotDownload(QString)));
 
-    QLabel* info3 = new QLabel(vbox);
+    QLabel* info3   = new QLabel(vbox);
     info3->setText(i18n("<p>2.) Point this tool to the downloaded archive</p>"));
 
     d->urlRequester = new KUrlRequester(vbox);

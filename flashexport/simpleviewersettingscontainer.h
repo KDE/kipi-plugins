@@ -143,7 +143,7 @@ public:
 
 public:
 
-    PluginType		             plugType;
+    PluginType                   plugType;
 
     //Settings for all plug-ins
     KUrl                         exportUrl;
@@ -161,7 +161,7 @@ public:
     QColor                       backgroundColor;
     QColor                       frameColor;
 
-    int                          thumbnailColumns; //columns
+    int                          thumbnailColumns; // columns
     int                          thumbnailRows;    // rows
 
     int                          imagesExportSize;
@@ -184,7 +184,7 @@ public:
     // Tiltviewer options
     bool                         showFlipButton;
     bool                         useReloadButton;
-    QColor						 backColor;
+    QColor                       backColor;
     QColor                       bkgndInnerColor;
     QColor                       bkgndOuterColor;
 

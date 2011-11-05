@@ -107,7 +107,7 @@ public:
     KIPI::Interface*                  interface;
 
     KIPIPlugins::BatchProgressWidget* progressWdg;
-    
+
     SimpleViewerSettingsContainer*    settings;
 };
 
@@ -115,8 +115,8 @@ SimpleViewer::SimpleViewer(KIPI::Interface* interface, QObject* parent)
     : QObject(parent), d(new SimpleViewerPriv)
 {
     d->interface = interface;
-    d->hostName = KGlobal::mainComponent().aboutData()->programName();
-    d->hostUrl  = KGlobal::mainComponent().aboutData()->homepage();
+    d->hostName  = KGlobal::mainComponent().aboutData()->programName();
+    d->hostUrl   = KGlobal::mainComponent().aboutData()->homepage();
 
     if (d->hostUrl.isEmpty())
     {
@@ -188,11 +188,13 @@ void SimpleViewer::startExport()
     d->totalActions    = 0;
     d->action          = 0;
     d->progressWdg->reset();
+
     for( QList<KIPI::ImageCollection>::ConstIterator it = d->collectionsList.constBegin() ;
          !d->canceled && (it != d->collectionsList.constEnd()) ; ++it )
     {
         d->totalActions += (*it).images().count();
     }
+
     // +copying SimpleViewer, +creating index.html
     d->totalActions += 2;
 
@@ -303,12 +305,14 @@ bool SimpleViewer::createExportDirectories() const
     KUrl imagesDir = d->tempDir->name();
     imagesDir.addPath("/images");
     kDebug() << "image folder url is" << imagesDir.url();
+
     if(!KIO::NetAccess::mkdir(imagesDir, kapp->activeWindow()))
     {
         d->progressWdg->addedAction(i18n("Could not create folder '%1'", imagesDir.url()),
                                     KIPIPlugins::ErrorMessage);
         return (false);
     }
+
     d->progressWdg->addedAction(i18n("Finished Creating directories..."), KIPIPlugins::StartingMessage);
     d->progressWdg->setProgress(++d->action, d->totalActions);
 
@@ -320,14 +324,16 @@ bool SimpleViewer::cmpUrl(const KUrl &url1, const KUrl &url2)
 
     KExiv2Iface::KExiv2 meta1;
     meta1.load(url1.path());
-    QDateTime clock1              = meta1.getImageDateTime();
+    QDateTime clock1             = meta1.getImageDateTime();
 
     KExiv2Iface::KExiv2 meta2;
     meta2.load(url2.path());
     QDateTime clock2             = meta2.getImageDateTime();
 
     if(clock1.isValid() || clock2.isValid())
+    {
     	return clock1 < clock2;
+    }
     else
     {
     	QString name1 = url1.fileName();
@@ -420,9 +426,11 @@ bool SimpleViewer::exportImages() const
             galleryElem.setAttribute(QString::fromLatin1("bgColor"),              d->settings->backgroundColor.name().replace('#', "0x"));
             break;
         }
+
         default:
             break;
     }
+
     KExiv2Iface::KExiv2 meta;
     QImage              image;
     QImage              thumbnail;
@@ -439,7 +447,7 @@ bool SimpleViewer::exportImages() const
     {
          KUrl::List images = (*it).images();
 
-         qSort(images.begin(),images.end(),cmpUrl);
+         qSort(images.begin(), images.end(), cmpUrl);
 
         for(KUrl::List::ConstIterator it = images.constBegin();
             !d->canceled && (it != images.constEnd()) ; ++it)
@@ -447,8 +455,9 @@ bool SimpleViewer::exportImages() const
             kapp->processEvents();
             KUrl url = *it;
             QFileInfo fi(url.path());
+
             //video can't be exported, need to add for all video files
-            if(fi.suffix().toUpper()=="MOV")
+            if(fi.suffix().toUpper() == "MOV")
                 continue;
 
             d->progressWdg->addedAction(i18n("Processing %1", url.fileName()), KIPIPlugins::StartingMessage);
@@ -467,14 +476,17 @@ bool SimpleViewer::exportImages() const
                 continue;
             }
 
-           if(d->settings->plugType == 0)
-            // Thumbnails are generated only for simpleviewer plugin
+            if(d->settings->plugType == 0)
+            {
+                // Thumbnails are generated only for simpleviewer plugin
+
                 if(!createThumbnail(image, thumbnail))
                 {
                     d->progressWdg->addedAction(i18n("Could not create thumbnail from '%1'", url.fileName()),
                                            KIPIPlugins::WarningMessage);
                     continue;
                 }
+            }
 
             if(resizeImages && !resizeImage(image, maxSize, image))
             {
@@ -491,21 +503,28 @@ bool SimpleViewer::exportImages() const
             {
                 KUrl thumbnailPath(thumbsDir);
                 thumbnailPath.addPath(newName);
+
                 if (resizeImages && fixOrientation)
                     meta.rotateExifQImage(thumbnail, meta.getImageOrientation());
-                    thumbnail.save(thumbnailPath.path(), "JPEG");
+
+                thumbnail.save(thumbnailPath.path(), "JPEG");
             }
 
             KUrl imagePath(imagesDir);
             imagePath.addPath(newName);
+
             if (resizeImages && fixOrientation)
                 rotated = meta.rotateExifQImage(image, meta.getImageOrientation());
+
             image.save(imagePath.path(), "JPEG");
 
             // Backup metadata from original image.
             meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
             meta.setImageDimensions(image.size());
-            if (rotated) meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+
+            if (rotated)
+                meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+
             meta.save(imagePath.path());
 
             d->width  = image.width();
@@ -597,11 +616,13 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     {
         comment.clear();
     }
+
     if(d->settings->showKeywords && d->interface->hasFeature(KIPI::HostSupportsTags))
     {
-        KIPI::ImageInfo info =d->interface->info(url);
+        KIPI::ImageInfo info            = d->interface->info(url);
         QMap<QString, QVariant> attribs = info.attributes();
-        QStringList tagList = attribs["tags"].toStringList();
+        QStringList tagList             = attribs["tags"].toStringList();
+
         if(!tagList.join(" ").isEmpty())
             keywords = QString("\nTags: ")+tagList.join(", ");
     }
@@ -632,19 +653,19 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
         case 1: //Autoviewer
         {
-            QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
+            QDomElement img      = xmlDoc.createElement(QString::fromLatin1("image"));
 
             galleryElem.appendChild(img);
 
-            QDomElement urlElem = xmlDoc.createElement(QString::fromLatin1("url"));
+            QDomElement urlElem  = xmlDoc.createElement(QString::fromLatin1("url"));
             img.appendChild(urlElem);
-            QDomText    urlText = xmlDoc.createTextNode(QString("images/")+ newName);
+            QDomText    urlText  = xmlDoc.createTextNode(QString("images/")+ newName);
             urlElem.appendChild(urlText);
 
             QDomElement caption2 = xmlDoc.createElement(QString::fromLatin1("caption"));
             img.appendChild( caption2 );
             QDomText captiontxt2 = xmlDoc.createTextNode(comment+keywords);
-                caption2.appendChild(captiontxt2);
+            caption2.appendChild(captiontxt2);
 
             QDomElement widthElem = xmlDoc.createElement(QString::fromLatin1("width"));
             img.appendChild(widthElem);
@@ -663,7 +684,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
         case 2: //TiltWiever
         {
-            QDomElement img = xmlDoc.createElement(QString::fromLatin1("photo"));
+            QDomElement img       = xmlDoc.createElement(QString::fromLatin1("photo"));
             galleryElem.appendChild(img);
             img.setAttribute(QString::fromLatin1("imageurl"),QString("images/")+newName);
             img.setAttribute(QString::fromLatin1("linkurl"),QString());
@@ -673,16 +694,16 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
             QDomText    titleText = xmlDoc.createTextNode(newName);
             titleElem.appendChild(titleText);
 
-            QDomElement caption1 = xmlDoc.createElement(QString::fromLatin1("description"));
+            QDomElement caption1  = xmlDoc.createElement(QString::fromLatin1("description"));
             img.appendChild(caption1);
 
-            QDomText captiontxt1 = xmlDoc.createTextNode(comment+keywords);
+            QDomText captiontxt1  = xmlDoc.createTextNode(comment+keywords);
             caption1.appendChild(captiontxt1);
         }
 
         case 3: //PostcardViewer
         {
-            QDomElement img = xmlDoc.createElement(QString::fromLatin1("image"));
+            QDomElement img     = xmlDoc.createElement(QString::fromLatin1("image"));
             galleryElem.appendChild(img);
 
             QDomElement urlElem = xmlDoc.createElement(QString::fromLatin1("url"));
@@ -972,16 +993,16 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
 
     return false;
 }
+
 KIPIPlugins::BatchProgressWidget* SimpleViewer::progressWidget()
 {
 	initProgressWdg();
 	return d->progressWdg;
 }
 
-
 void SimpleViewer::setSettings(SimpleViewerSettingsContainer* setting)
 {
-	d->settings=setting;
+    d->settings=setting;
     d->canceled = false;
 
     kDebug() << "Settings reached SimpleViewer";
