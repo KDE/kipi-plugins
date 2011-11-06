@@ -39,28 +39,29 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            explicit ImageLoadingThread(QObject * parent = 0);
+            explicit ImageLoadingThread(QObject* parent = 0);
             ~ImageLoadingThread();
+
             virtual void run();
 
-        signals:
+        Q_SIGNALS:
 
-            void imageLoaded(const KUrl & url, const QImage & image);
+            void imageLoaded(const KUrl& url, const QImage& image);
 
-        public slots:
+        public Q_SLOTS:
 
             void setMaximumProgress(double limit);
-            void setImageUrl(const KUrl & url);
-            void setImagesUrls(const KUrl::List & urls);
+            void setImageUrl(const KUrl& url);
+            void setImagesUrls(const KUrl::List& urls);
 
         private:
 
-            void loadRaw(const KUrl & url);
-            void loadImage(const KUrl & url);
+            void loadRaw(const KUrl& url);
+            void loadImage(const KUrl& url);
 
             class ImageLoadingThreadPrivate;
             friend class ImageLoadingThreadPrivate;
-            ImageLoadingThreadPrivate * d;
+            ImageLoadingThreadPrivate* d;
     };
 }
 

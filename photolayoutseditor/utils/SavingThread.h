@@ -33,22 +33,23 @@
 namespace KIPIPhotoLayoutsEditor
 {
     class Canvas;
+
     class SavingThread : public QThread
     {
         Q_OBJECT
 
-        Canvas * canvas;
-        KUrl url;
+        Canvas* canvas;
+        KUrl    url;
 
     public:
 
-        SavingThread(Canvas * canvas, const KUrl & url, QObject * parent = 0);
+        SavingThread(Canvas* canvas, const KUrl& url, QObject* parent = 0);
 
     protected:
 
         virtual void run();
 
-    signals:
+    Q_SIGNALS:
 
         void savingError(QString);
     };

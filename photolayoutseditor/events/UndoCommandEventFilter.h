@@ -36,15 +36,16 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            explicit UndoCommandEventFilter(QObject *parent = 0) :
+            explicit UndoCommandEventFilter(QObject* parent = 0) :
                 QObject(parent)
-            {}
+            {
+            }
 
-            virtual bool eventFilter(QObject * watched, QEvent * event);
+            virtual bool eventFilter(QObject* watched, QEvent* event);
 
-        signals:
+        Q_SIGNALS:
 
-        public slots:
+        public Q_SLOTS:
 
     };
 }

@@ -33,8 +33,6 @@ namespace KIPIPhotoLayoutsEditor
 {
     class UndoCommandEvent : public QEvent
     {
-            QUndoCommand * m_command;
-
         public:
 
             static Type registeredEventType()
@@ -45,19 +43,23 @@ namespace KIPIPhotoLayoutsEditor
 
             explicit UndoCommandEvent();
 
-            void setUndoCommand(QUndoCommand * command)
+            void setUndoCommand(QUndoCommand* command)
             {
                 m_command = command;
             }
-            QUndoCommand * undoCommand()
+
+            QUndoCommand* undoCommand()
             {
                 return m_command;
             }
 
-        signals:
+        public:
 
-        public slots:
+            QUndoCommand* m_command;
 
+        Q_SIGNALS:
+
+        public Q_SLOTS:
     };
 }
 
