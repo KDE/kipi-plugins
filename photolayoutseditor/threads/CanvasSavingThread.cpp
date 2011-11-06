@@ -23,7 +23,8 @@
  *
  * ============================================================ */
 
-#include "CanvasSavingThread.h"
+#include "CanvasSavingThread.moc"
+
 #include "Canvas.h"
 #include "Canvas_p.h"
 #include "Scene.h"
