@@ -686,9 +686,11 @@ void PhotoLayoutsEditor::changeCanvasSize()
 {
     if (!m_canvas)
         return;
-    CanvasSizeDialog * ccd = new CanvasSizeDialog(m_canvas->canvasSize(), this);
-    int result = ccd->exec();
-    CanvasSize size = ccd->canvasSize();
+
+    CanvasSizeDialog* ccd = new CanvasSizeDialog(m_canvas->canvasSize(), this);
+    int result            = ccd->exec();
+    CanvasSize size       = ccd->canvasSize();
+
     if (result == KDialog::Accepted)
     {
         if (size.isValid())
@@ -702,11 +704,14 @@ void PhotoLayoutsEditor::changeCanvasSize()
         else
             KMessageBox::error(this, i18n("Invalid image size!"));
     }
+
     delete ccd;
 }
 
 void PhotoLayoutsEditor::setTemplateEditMode(bool isEnabled)
 {
+    Q_UNUSED(isEnabled);
+
     //d->toolsWidget->setTemplateEditMode(isEnabled);
     //d->treeWidget->setTemplateEditMode(isEnabled);
     //m_canvas->setTemplateEditMode(isEnabled);
