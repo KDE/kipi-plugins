@@ -44,17 +44,14 @@ namespace KIPIPhotoLayoutsEditor
 {
     class PhotoEffectsGroup;
     class AbstractPhotoEffectFactory;
+
     class AbstractPhotoEffectInterface : public QObject
     {
             Q_OBJECT
 
-            AbstractPhotoEffectFactory * m_factory;
-            PhotoEffectsGroup * m_group;
-            int m_strength;
-
         public:
 
-            explicit AbstractPhotoEffectInterface(AbstractPhotoEffectFactory * factory, QObject * parent = 0) :
+            explicit AbstractPhotoEffectInterface(AbstractPhotoEffectFactory* factory, QObject* parent = 0) :
                 QObject(parent),
                 m_factory(factory),
                 m_group(0),
@@ -70,9 +67,10 @@ namespace KIPIPhotoLayoutsEditor
             {
             }
 
-            virtual QImage apply(const QImage & image) const
+            virtual QImage apply(const QImage& image) const
             {
                 int _opacity = strength();
+
                 if (_opacity != 100)
                 {
                     QImage result(image.size(),QImage::Format_ARGB32_Premultiplied);
@@ -82,14 +80,15 @@ namespace KIPIPhotoLayoutsEditor
                     p.fillRect(image.rect(), QColor(0, 0, 0, _opacity*255/100));
                     return result;
                 }
+
                 return image;
             }
 
-            virtual QString name() const = 0;
+            virtual QString name()     const = 0;
             virtual QString toString() const = 0;
             virtual operator QString() const = 0;
 
-            void setGroup(PhotoEffectsGroup * group)
+            void setGroup(PhotoEffectsGroup* group)
             {
                 if (group)
                 {
@@ -99,70 +98,94 @@ namespace KIPIPhotoLayoutsEditor
                 }
             }
 
-            PhotoEffectsGroup * group() const
+            PhotoEffectsGroup* group() const
             {
                 return m_group;
             }
 
-            AbstractPhotoEffectFactory * factory() const
+            AbstractPhotoEffectFactory* factory() const
             {
                 return m_factory;
             }
 
-            virtual QString propertyName(const QMetaProperty & property) const
+            virtual QString propertyName(const QMetaProperty& property) const
             {
                 if (!QString("strength").compare(property.name()))
                     return STRENGTH_PROPERTY;
+
                 return QString();
             }
-            virtual QVariant propertyValue(const QString & propertyName) const
+
+            virtual QVariant propertyValue(const QString& propertyName) const
             {
                 if (propertyName == STRENGTH_PROPERTY)
                     return m_strength;
+
                 return QVariant();
             }
-            virtual void setPropertyValue(const QString & propertyName, const QVariant & value)
+
+            virtual void setPropertyValue(const QString& propertyName, const QVariant& value)
             {
                 if (STRENGTH_PROPERTY == propertyName)
                     this->setStrength(value.toInt());
             }
-            virtual QVariant stringNames(const QMetaProperty & /*property*/) { return QVariant(); }
-            virtual QVariant minimumValue(const QMetaProperty & property)
+
+            virtual QVariant stringNames(const QMetaProperty& /*property*/)
+            {
+                return QVariant();
+            }
+
+            virtual QVariant minimumValue(const QMetaProperty& property)
             {
                 if (!QString("strength").compare(property.name()))
                     return QVariant(0);
+
                 return QVariant();
             }
-            virtual QVariant maximumValue(const QMetaProperty & property)
+
+            virtual QVariant maximumValue(const QMetaProperty& property)
             {
                 if (!QString("strength").compare(property.name()))
                     return QVariant(100);
+
                 return QVariant();
             }
-            virtual QVariant stepValue(const QMetaProperty & property)
+
+            virtual QVariant stepValue(const QMetaProperty& property)
             {
                 if (!QString("strength").compare(property.name()))
                     return 1;
+
                 return QVariant();
             }
 
             Q_PROPERTY(int strength READ strength WRITE setStrength)
+
             int strength() const
             {
                 return m_strength;
             }
+
             void setStrength(int strength)
             {
                 qDebug() << strength;
+
                 if (strength < 0 || strength > 100)
                     return;
+
                 m_strength = strength;
                 propertiesChanged();
             }
 
-        signals:
+        Q_SIGNALS:
 
             void changed();
+
+        public:
+
+            AbstractPhotoEffectFactory* m_factory;
+            PhotoEffectsGroup*          m_group;
+            int                         m_strength;
 
         protected:
 

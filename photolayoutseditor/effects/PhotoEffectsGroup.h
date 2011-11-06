@@ -41,43 +41,46 @@ namespace KIPIPhotoLayoutsEditor
     {
             Q_OBJECT
 
-            AbstractPhoto * m_photo;
-            QList<AbstractPhotoEffectInterface*> m_effects_list;
-
         public:
 
-            explicit PhotoEffectsGroup(AbstractPhoto * photo, QObject * parent = 0);
+            explicit PhotoEffectsGroup(AbstractPhoto* photo, QObject* parent = 0);
             ~PhotoEffectsGroup();
-            QDomElement toSvg(QDomDocument & document) const;
-            static PhotoEffectsGroup * fromSvg(const QDomElement & element, AbstractPhoto * graphicsItem);
-            AbstractPhoto * photo() const;
-            virtual QObject * item(const QModelIndex & index) const;
-            virtual void setItem(QObject * graphicsItem, const QModelIndex & index);
-            AbstractPhotoEffectInterface * graphicsItem(const QModelIndex & index = QModelIndex()) const;
+
+            QDomElement toSvg(QDomDocument& document) const;
+            static PhotoEffectsGroup* fromSvg(const QDomElement& element, AbstractPhoto* graphicsItem);
+            AbstractPhoto* photo() const;
+            virtual QObject* item(const QModelIndex& index) const;
+            virtual void setItem(QObject* graphicsItem, const QModelIndex& index);
+            AbstractPhotoEffectInterface* graphicsItem(const QModelIndex& index = QModelIndex()) const;
             bool moveRows(int sourcePosition, int sourceCount, int destPosition);
-            bool insertRow(int row, AbstractPhotoEffectInterface * effect);
-            bool insertRow(int row, const QModelIndex & index = QModelIndex());
+            bool insertRow(int row, AbstractPhotoEffectInterface* effect);
+            bool insertRow(int row, const QModelIndex& index = QModelIndex());
 
             // Reimplemented QAbstractItemModel methods
-            virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
-            virtual QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-            virtual Qt::ItemFlags flags(const QModelIndex & index) const;
-            virtual QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const;
-            virtual bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex());
-            virtual QModelIndex parent(const QModelIndex & index) const;
-            virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
-            virtual bool removeRows(int row, int count, const QModelIndex & parent);
+            virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
+            virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+            virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+            virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+            virtual bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex());
+            virtual QModelIndex parent(const QModelIndex& index) const;
+            virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+            virtual bool removeRows(int row, int count, const QModelIndex& parent);
 
-        signals:
+        Q_SIGNALS:
 
             void effectsChanged();
 
-        public slots:
+        public Q_SLOTS:
 
-            void push_back(AbstractPhotoEffectInterface * effect);
-            void push_front(AbstractPhotoEffectInterface * effect);
-            void emitEffectsChanged(AbstractPhotoEffectInterface * effect = 0);
-            QImage apply(const QImage & image);
+            void push_back(AbstractPhotoEffectInterface* effect);
+            void push_front(AbstractPhotoEffectInterface* effect);
+            void emitEffectsChanged(AbstractPhotoEffectInterface* effect = 0);
+            QImage apply(const QImage& image);
+
+        public:
+
+            AbstractPhoto*                       m_photo;
+            QList<AbstractPhotoEffectInterface*> m_effects_list;
 
         friend class AbstractPhoto;
     };
