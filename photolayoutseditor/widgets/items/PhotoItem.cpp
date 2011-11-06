@@ -23,7 +23,8 @@
  *
  * ============================================================ */
 
-#include "PhotoItem.h"
+#include "PhotoItem.moc"
+
 #include "PhotoEffectsGroup.h"
 #include "PhotoEffectsLoader.h"
 #include "ImageFileDialog.h"

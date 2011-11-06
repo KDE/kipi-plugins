@@ -39,18 +39,25 @@ namespace KIPIPhotoLayoutsEditor
     {
             Q_OBJECT
 
-            KPushButton * m_acceptButton;
-            AbstractItemsListViewTool * m_parent;
-            AbstractMovableModel * m_model;
-            QModelIndex m_index;
-            QObject * m_object;
+        public:
+
+            KPushButton*               m_acceptButton;
+            AbstractItemsListViewTool* m_parent;
+            AbstractMovableModel*      m_model;
+            QModelIndex                m_index;
+            QObject*                   m_object;
 
         public:
+
             AbstractListToolViewDelegate(AbstractMovableModel * model, QModelIndex index, AbstractItemsListViewTool * parent);
-        signals:
+
+        Q_SIGNALS:
+
             void editorClosed();
             void showEditor(QObject * object);
-        protected slots:
+
+        protected Q_SLOTS:
+
             void editorAccepted();
             void editorCancelled();
             void itemSelected(const QString & selectedItem);
@@ -61,23 +68,32 @@ namespace KIPIPhotoLayoutsEditor
     class AbstractListToolView : public QListView
     {
             Q_OBJECT
+
         public:
+
             AbstractListToolView(QWidget * parent = 0) :
                 QListView(parent)
             {
                 this->setSelectionMode(QAbstractItemView::SingleSelection);
                 this->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
             }
+
             QModelIndex selectedIndex() const
             {
                 QModelIndexList indexes = selectedIndexes();
+
                 if (indexes.count() == 1)
                     return indexes.at(0);
+
                 return QModelIndex();
             }
-        signals:
+
+        Q_SIGNALS:
+
             void selectedIndex(const QModelIndex & index);
+
         protected:
+
             virtual void selectionChanged(const QItemSelection & selected, const QItemSelection & /*deselected*/)
             {
                 QModelIndexList indexes = selected.indexes();
@@ -90,6 +106,7 @@ namespace KIPIPhotoLayoutsEditor
                         return;
                     }
                 }
+
                 emit selectedIndex(QModelIndex());
             }
 

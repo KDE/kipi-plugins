@@ -23,7 +23,8 @@
  *
  * ============================================================ */
 
-#include "Scene.h"
+#include "Scene.moc"
+
 #include "global.h"
 #include "RotationWidgetItem.h"
 #include "ScalingWidgetItem.h"

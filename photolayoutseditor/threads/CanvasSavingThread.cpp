@@ -1,3 +1,28 @@
+/* ============================================================
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2011-09-01
+ * Description : a plugin to create photo layouts by fusion of several images.
+ * Acknowledge : based on the expoblending plugin
+ *
+ * Copyright (C) 2011 by Łukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
 #include "CanvasSavingThread.h"
 #include "Canvas.h"
 #include "Canvas_p.h"
@@ -11,16 +36,16 @@
 
 using namespace KIPIPhotoLayoutsEditor;
 
-CanvasSavingThread::CanvasSavingThread(QObject *parent) :
+CanvasSavingThread::CanvasSavingThread(QObject* parent) :
     QThread(parent),
     m_canvas(0)
 {
 }
 
-void CanvasSavingThread::save(Canvas * canvas, const KUrl & url)
+void CanvasSavingThread::save(Canvas* canvas, const KUrl & url)
 {
     m_canvas = canvas;
-    m_url = url;
+    m_url    = url;
     this->start();
 }
 
@@ -100,7 +125,7 @@ void CanvasSavingThread::run()
 
     //---------------------------------------------------------------------------
 
-    Scene * scene = dynamic_cast<Scene*>(m_canvas->scene());
+    Scene* scene = dynamic_cast<Scene*>(m_canvas->scene());
     if (!scene)
     {
         this->exit(1);
@@ -138,7 +163,7 @@ void CanvasSavingThread::run()
 
     //---------------------------------------------------------------------------
 
-    ProgressEvent * finishEvent = new ProgressEvent(this);
+    ProgressEvent* finishEvent = new ProgressEvent(this);
     finishEvent->setData(ProgressEvent::Finish, 0);
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), finishEvent);
     QCoreApplication::processEvents();
@@ -153,15 +178,15 @@ void CanvasSavingThread::bytesWritten(qint64 b)
 
 void CanvasSavingThread::sendProgressUpdate(double v)
 {
-    ProgressEvent * event = new ProgressEvent(this);
+    ProgressEvent* event = new ProgressEvent(this);
     event->setData(ProgressEvent::ProgressUpdate, v);
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
     QCoreApplication::processEvents();
 }
 
-void CanvasSavingThread::sendActionUpdate(const QString & str)
+void CanvasSavingThread::sendActionUpdate(const QString& str)
 {
-    ProgressEvent * event = new ProgressEvent(this);
+    ProgressEvent* event = new ProgressEvent(this);
     event->setData(ProgressEvent::ActionUpdate, str);
     QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), event);
     QCoreApplication::processEvents();
