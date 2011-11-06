@@ -61,36 +61,38 @@ namespace KIPIPhotoLayoutsEditor
     {
             Q_OBJECT
 
-            CanvasPrivate * d;
+            CanvasPrivate* d;
 
         public:
 
             enum SelectionMode
             {
-                Viewing = 1,
-                Zooming = 2,
+                Viewing        = 1,
+                Zooming        = 2,
                 MultiSelecting = 4,
                 SingleSelcting = 8
             };
 
-            explicit Canvas(const CanvasSize & size, QWidget * parent = 0);
+        public:
+
+            explicit Canvas(const CanvasSize & size, QWidget* parent = 0);
             ~Canvas();
 
-            virtual void wheelEvent(QWheelEvent *event);
+            virtual void wheelEvent(QWheelEvent* event);
 
             QDomDocument toSvg() const;
-            static Canvas * fromSvg(QDomDocument & document);
+            static Canvas* fromSvg(QDomDocument& document);
 
-            void scale(qreal factor, const QPoint & center = QPoint());
-            void scale(const QRect & rect);
+            void scale(qreal factor, const QPoint& center = QPoint());
+            void scale(const QRect& rect);
 
             /// Hold URL to the file connected with this canvas.
             Q_PROPERTY(KUrl m_file READ file WRITE setFile)
             KUrl file() const;
-            void setFile(const KUrl & file);
+            void setFile(const KUrl& file);
 
             /// Saves canvas state to SVG format file
-            void save(const KUrl & file, bool setAsDefault = true);
+            void save(const KUrl& file, bool setAsDefault = true);
 
             /// Check if canvas is saved
             bool isSaved();
@@ -98,24 +100,24 @@ namespace KIPIPhotoLayoutsEditor
             /// Set selection mode
             void setSelectionMode(SelectionMode mode);
 
-            Scene * scene() const
+            Scene* scene() const
             {
                 return m_scene;
             }
 
-            LayersModel * model() const;
+            LayersModel* model() const;
 
-            LayersSelectionModel * selectionModel() const;
+            LayersSelectionModel* selectionModel() const;
 
-            QUndoStack * undoStack() const
+            QUndoStack* undoStack() const
             {
                 return m_undo_stack;
             }
 
             CanvasSize canvasSize() const;
-            void setCanvasSize(const CanvasSize & size);
+            void setCanvasSize(const CanvasSize& size);
 
-            void preparePrinter(QPrinter * printer);
+            void preparePrinter(QPrinter* printer);
 
             operator Scene*()
             {
@@ -137,7 +139,7 @@ namespace KIPIPhotoLayoutsEditor
                 return m_undo_stack;
             }
 
-        public slots:
+        public Q_SLOTS:
 
             void enable()
             {
@@ -145,15 +147,15 @@ namespace KIPIPhotoLayoutsEditor
             }
 
             /// Progress state update event
-            void progressEvent(ProgressEvent * event);
+            void progressEvent(ProgressEvent* event);
 
-            void addImage(const QImage & image);
-            void addImage(const KUrl & imageUrl);
-            void addImages(const KUrl::List & images);
-            void addText(const QString & text);
+            void addImage(const QImage& image);
+            void addImage(const KUrl& imageUrl);
+            void addImages(const KUrl::List& images);
+            void addText(const QString& text);
 
             /// Creates move rows command and pushes it onto the stack
-            void moveRowsCommand(const QModelIndex & startIndex, int count, const QModelIndex & parentIndex, int move, const QModelIndex & destinationParent);
+            void moveRowsCommand(const QModelIndex& startIndex, int count, const QModelIndex& parentIndex, int move, const QModelIndex& destinationParent);
 
             /// Move selected items up on scene & model. (Called by layers tree)
             void moveSelectedRowsUp();
@@ -162,10 +164,10 @@ namespace KIPIPhotoLayoutsEditor
             void moveSelectedRowsDown();
 
             /// Remove item selected on scene (remove from scene & model => calls removeComand())
-            void removeItem(AbstractPhoto * item);
+            void removeItem(AbstractPhoto* item);
 
             /// Remove items selected on scene (remove from scene & model => calls removeComand())
-            void removeItems(const QList<AbstractPhoto*> & items);
+            void removeItems(const QList<AbstractPhoto*>& items);
 
             /// Remove items selected on model (remove from model & scene => calls removeComand())
             void removeSelectedRows();
@@ -181,10 +183,10 @@ namespace KIPIPhotoLayoutsEditor
             void isSavedChanged(bool isStackClean);
 
             /// Draws whole canvas onto the QPaintDevice
-            void renderCanvas(QPaintDevice * device);
+            void renderCanvas(QPaintDevice* device);
 
             /// Draws whole canvas content onto the printer
-            void renderCanvas(QPrinter * device);
+            void renderCanvas(QPrinter* device);
 
             /// Groups operations into one undo operation
             void beginRowsRemoving();
@@ -226,41 +228,43 @@ namespace KIPIPhotoLayoutsEditor
             void refreshWidgetConnections(bool isVisible);
 
             /// Appends new undo command
-            void newUndoCommand(QUndoCommand * command);
+            void newUndoCommand(QUndoCommand* command);
 
-        signals:
+        Q_SIGNALS:
 
             void hasSelectionChanged(bool hasSelection);
-            void selectedItem(AbstractPhoto * photo);
+            void selectedItem(AbstractPhoto* photo);
             void setInitialValues(qreal width, Qt::PenJoinStyle cornersStyle, const QColor & color);
             void savedStateChanged();
 
-        protected slots:
+        protected Q_SLOTS:
 
             /// Used when new item has been created and needs to be added to the scene and to the model
-            void addNewItem(AbstractPhoto * item);
+            void addNewItem(AbstractPhoto* item);
             void setAntialiasing(bool antialiasing);
             void imageLoaded(const KUrl & url, const QImage & image);
 
-        private slots:
+        private Q_SLOTS:
 
             void savingFinished();
 
         private:
 
-            explicit Canvas(Scene * scene, QWidget * parent = 0);
+            explicit Canvas(Scene* scene, QWidget* parent = 0);
 
             void init();
             void setupGUI();
             void prepareSignalsConnection();
 
-            KUrl m_file;
-            bool m_is_saved;
-            int m_saved_on_index;
+        private:
 
-            Scene * m_scene;
-            QUndoStack * m_undo_stack;
-            double m_scale_factor;
+            KUrl          m_file;
+            bool          m_is_saved;
+            int           m_saved_on_index;
+
+            Scene*        m_scene;
+            QUndoStack*   m_undo_stack;
+            double        m_scale_factor;
 
             SelectionMode m_selection_mode;
 
