@@ -37,51 +37,60 @@ namespace KIPIPhotoLayoutsEditor
 {
     class BordersGroup;
     class BorderDrawerFactoryInterface;
+
     class BorderDrawerInterface : public QObject
     {
             Q_OBJECT
 
-            BordersGroup * m_group;
-            BorderDrawerFactoryInterface * m_factory;
-
         public:
 
-            explicit BorderDrawerInterface(BorderDrawerFactoryInterface * factory, QObject * parent = 0) :
+            explicit BorderDrawerInterface(BorderDrawerFactoryInterface* factory, QObject* parent = 0) :
                 QObject(parent),
                 m_group(0),
                 m_factory(factory)
-            {}
+            {
+            }
 
-            void setGroup(BordersGroup * group)
+            void setGroup(BordersGroup* group)
             {
                 this->m_group = group;
             }
-            BordersGroup * group() const
+
+            BordersGroup* group() const
             {
                 return this->m_group;
             }
-            BorderDrawerFactoryInterface * factory() const
+
+            BorderDrawerFactoryInterface* factory() const
             {
                 return m_factory;
             }
 
-            virtual QPainterPath path(const QPainterPath & path) = 0;
-            virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option) = 0;
+        public:
 
-            virtual QString propertyName(const QMetaProperty & property) const = 0;
-            virtual QVariant propertyValue(const QString & propertyName) const = 0;
-            virtual void setPropertyValue(const QString & propertyName, const QVariant & value) = 0;
-            virtual QVariant stringNames(const QMetaProperty & /*property*/){ return QVariant(); }
-            virtual QVariant minimumValue(const QMetaProperty & /*property*/){ return QVariant(); }
-            virtual QVariant maximumValue(const QMetaProperty & /*property*/){ return QVariant(); }
-            virtual QVariant stepValue(const QMetaProperty & /*property*/){ return QVariant(); }
+            virtual QPainterPath path(const QPainterPath& path) = 0;
+            virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option) = 0;
 
-            virtual QDomElement toSvg(QDomDocument & document) const = 0;
+            virtual QString propertyName(const QMetaProperty& property) const = 0;
+            virtual QVariant propertyValue(const QString& propertyName) const = 0;
+            virtual void setPropertyValue(const QString& propertyName, const QVariant& value) = 0;
+
+            virtual QVariant stringNames(const QMetaProperty& /*property*/) { return QVariant(); }
+            virtual QVariant minimumValue(const QMetaProperty& /*property*/){ return QVariant(); }
+            virtual QVariant maximumValue(const QMetaProperty& /*property*/){ return QVariant(); }
+            virtual QVariant stepValue(const QMetaProperty& /*property*/)   { return QVariant(); }
+
+            virtual QDomElement toSvg(QDomDocument& document) const = 0;
             virtual QString name() const = 0;
             virtual QString toString() const = 0;
             virtual operator QString() const = 0;
 
-        signals:
+        public:
+
+            BordersGroup* m_group;
+            BorderDrawerFactoryInterface* m_factory;
+
+        Q_SIGNALS:
 
             void changed();
 
