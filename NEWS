@@ -6,4 +6,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
+001 ==> 260649 : digiKam crashed rotate photo.
+002 ==> 
