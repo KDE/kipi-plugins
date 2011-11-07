@@ -1,3 +1,599 @@
+2.3.0 2011-11-07
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/events/UndoCommandEvent.h,
+	photolayoutseditor/events/UndoCommandEventFilter.h,
+	photolayoutseditor/models/LayersModel.h,
+	photolayoutseditor/threads/ImageLoadingThread.h,
+	photolayoutseditor/utils/SavingThread.h: use Qt macro to declare
+	signals and slots polish
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/effects/AbstractPhotoEffectInterface.h,
+	photolayoutseditor/effects/PhotoEffectsGroup.h: use Qt macro to
+	declare signals and slots.  Code polish
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/borders/BorderDrawerInterface.h,
+	photolayoutseditor/borders/BordersGroup.h: use Qt macro for
+	signals/slots code polish
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/widgets/items/AbstractPhoto_p.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto_p.h: missing header
+	polish
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/widgets/canvas/Canvas.h: use Qt macro to define
+	signals and slots
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/effectplugins/StarndardEffectsFactory.cpp,
+	photolayoutseditor/effectplugins/StarndardEffectsFactory.h: missing
+	header
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/threads/CanvasSavingThread.cpp: use moc file
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/threads/CanvasSavingThread.cpp,
+	photolayoutseditor/threads/CanvasSavingThread.h,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool_p.h: fix
+	warnings use moc files when it's possible add missing license header
+	is cpp/h files
+
+2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp: fix warning
+
+2011-11-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flashexport/importWizard/firstrunpage.cpp,
+	flashexport/importWizard/firstrunpage.h,
+	flashexport/importWizard/generalpage.cpp,
+	flashexport/importWizard/generalpage.h,
+	flashexport/importWizard/importwizarddlg.cpp,
+	flashexport/importWizard/importwizarddlg.h,
+	flashexport/simpleviewer.cpp, flashexport/simpleviewer.h,
+	flashexport/simpleviewersettingscontainer.h: polish implementation : NEVER use tab in source code. Always use 4 spaces char instead.
+	Please respect coding style. Do not emcapsulate if, if, if whithout
+	brackets. take a care about indentation.  space if statement in code to prevent coding error and to improve
+	post reading.  Please take a look to HACKING file from digiKam :
+	https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/master/entry/HACKINGNot all code are patched. Please complete it and check all my
+	patches if there is no regression. thanks in advance.  CCMAIL: slavuttici@gmail.com
+
+2011-11-05  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-11-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-11-04  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/tools/ToolsDockWidget.cpp: BUG: 284215
+
+2011-11-04  Yuri Chornoivan <yurchor@ukr.net>
+
+	* flashexport/importWizard/importwizarddlg.cpp: fix typo:
+	archieve->archive
+
+2011-11-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flashexport/aboutdata.h, flashexport/flashmanager.cpp,
+	flashexport/flashmanager.h,
+	flashexport/importWizard/firstrunpage.cpp,
+	flashexport/plugin_flashexport.cpp, flashexport/simpleviewer.cpp,
+	flashexport/simpleviewer.h,
+	flashexport/simpleviewersettingscontainer.h: polish
+
+2011-11-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flashexport/TODO: update
+
+2011-11-03  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-11-03  Ananta Palani <anantapalani@gmail.com>
+
+	* dngconverter/CMakeLists.txt: Fix compilation problem under Windows
+
+2011-11-02  Script Kiddy <scripty@kde.org>
+
+	* debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	mediawiki/kipiplugin_wikimedia.desktop,
+	panorama/plugin/kipiplugin_panorama.desktop,
+	panorama/plugin/panoramagui.desktop,
+	printimages/templates/Photoframe.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-11-01  Veaceslav Munteanu <slavuttici@gmail.com>
+
+	* flashexport/importWizard/firstrunpage.cpp,
+	flashexport/importWizard/importwizarddlg.cpp: Flashexport
+	firstrundialog gui polish, erorr message offer more info
+
+2011-10-31  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-10-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-10-30  Yuri Chornoivan <yurchor@ukr.net>
+
+	* flashexport/importWizard/lookpage.cpp: Fix typos and copy-paste
+
+2011-10-29  Veaceslav Munteanu <slavuttici@gmail.com>
+
+	* NEWS, flashexport/importWizard/intropage.cpp: updated NEWS file,
+	changed label on Flashexport Intropage
+
+2011-10-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-10-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: to fill with last FlashExport improvements list
+
+2011-10-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit 92cb16b6ed051c16e865e61dd958e951b734da2b Author:
+	Veaceslav Munteanu <slavuttici@gmail.com> Date:   Sat Oct 29
+	17:17:45 2011 +0000
+
+2011-10-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit b6c69773da07ae13825aeab30b38a93afccb900c Author: Andi
+	Clemens <andi.clemens@googlemail.com> Date:   Wed Oct 26 13:56:20
+	2011 +0200
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calpainter.cpp: assign values on init
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calpainter.cpp: code polsih
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calpainter.cpp: added comment
+
+2011-10-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* : commit 46eeab88980e4265326d2cdb579d93a00c328cc7 Author: Andi
+	Clemens <andi.clemens@googlemail.com> Date:   Wed Oct 26 13:31:04
+	2011 +0200
+
+2011-10-26  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* NEWS: update
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* NEWS: update
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* NEWS: update
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* NEWS: update
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/wizard/caltemplate.cpp: updated copyright header
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* NEWS: update
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calsettings.cpp, calendar/print/calsettings.h,
+	calendar/ui/caltemplate.ui, calendar/wizard/caltemplate.cpp,
+	calendar/wizard/calwizard.cpp: Added option to choose the resolution
+	of the printout (High / Low). Default is High:
+	QPrinter::HighResolution BUG: 252306
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calsettings.h: updated copyright header
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* NEWS: update
+
+2011-10-26  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calsettings.cpp, calendar/print/calsettings.h,
+	calendar/wizard/calwizard.cpp: Quick fix: Assign a pointer to the
+	parent in the CalSettings::instance() method. This way the singleton
+	class will be destroyed when the calendar wizard is closed.  BUG: 220800
+
+2011-10-25  Michael Georg Hansen <mike@mghansen.de>
+
+	* NEWS, kmlexport/kmlexport.cpp: Fix bug 264423: Export to KML drops
+	significant figures in Lat/Long Patch by Vincent Batts. Thanks! BUG: 264423
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* NEWS: update
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* advancedslideshow/plugin/imageloadthread.cpp,
+	advancedslideshow/plugin/imageloadthread.h,
+	advancedslideshow/widgets/slideshowkb.cpp: Applied patch by Lutz
+	Maendle BUG: 283853
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calsettings.cpp: update copyright header
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/plugin/plugin_calendar.cpp,
+	calendar/plugin/plugin_calendar.h, calendar/print/calpainter.cpp,
+	calendar/print/calpainter.h, calendar/print/calprinter.cpp,
+	calendar/print/calprinter.h, calendar/print/calsettings.cpp,
+	calendar/print/calsettings.h, calendar/wizard/calselect.cpp,
+	calendar/wizard/caltemplate.cpp, calendar/wizard/calwidget.cpp,
+	calendar/wizard/calwizard.cpp, calendar/wizard/calwizard.h,
+	calendar/wizard/monthwidget.cpp, calendar/wizard/monthwidget.h: code
+	polish
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/CMakeLists.txt, calendar/print/calsettings.cpp: Fix
+	deprecation warnings: Use KCalCore classes
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/wizard/calwizard.cpp: fix compile warning, add missing
+	"break"
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/wizard/calwizard.cpp: code polish
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/wizard/calwizard.cpp: update copyright header
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/wizard/calwizard.cpp: Fix rendering of the year string in
+	the calwizard
+
+2011-10-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/wizard/calwizard.cpp: This should be lowercase
+
+2011-10-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* AUTHORS: updated my email address
+
+2011-10-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	removeredeyes/plugin/removeredeyeswindow.cpp: updated my email
+	address
+
+2011-10-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* advancedslideshow/dialogs/maindialog.cpp,
+	advancedslideshow/dialogs/maindialog.h,
+	advancedslideshow/dialogs/slideshowconfig.cpp,
+	advancedslideshow/dialogs/slideshowconfig.h,
+	advancedslideshow/plugin/plugin_advancedslideshow.cpp,
+	advancedslideshow/plugin/plugin_advancedslideshow.h,
+	advancedslideshow/plugin/slideshowloader.cpp,
+	advancedslideshow/plugin/slideshowloader.h,
+	advancedslideshow/widgets/listsounditems.cpp,
+	advancedslideshow/widgets/listsounditems.h,
+	advancedslideshow/widgets/playbackwidget.cpp,
+	advancedslideshow/widgets/playbackwidget.h,
+	advancedslideshow/widgets/slideshow.cpp,
+	advancedslideshow/widgets/slideshow.h,
+	advancedslideshow/widgets/slideshowgl.cpp,
+	advancedslideshow/widgets/slideshowgl.h,
+	common/libkipiplugins/widgets/imageslist.cpp,
+	common/libkipiplugins/widgets/imageslist.h,
+	flickrexport/flickrnewphotosetdialog.h,
+	metadataedit/iptc/iptcsubjects.cpp,
+	metadataedit/iptc/iptcsubjects.h, metadataedit/xmp/xmpsubjects.cpp,
+	metadataedit/xmp/xmpsubjects.h, picasawebexport/newalbumdialog.h,
+	removeredeyes/detection/locators/haarclassifier/haarclassifierlocat
+	or.cpp,
+	removeredeyes/detection/locators/haarclassifier/haarclassifierlocat
+	or.h,
+	removeredeyes/detection/locators/haarclassifier/haarsettings.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/advancedset
+	tings.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/advancedset
+	tings.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/blobsetting
+	sbox.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/blobsetting
+	sbox.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/classifiers
+	ettingsbox.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/classifiers
+	ettingsbox.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/haarsetting
+	swidget.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/haarsetting
+	swidget.h,
+	removeredeyes/detection/locators/haarclassifier/widgets/simplesetti
+	ngs.cpp,
+	removeredeyes/detection/locators/haarclassifier/widgets/simplesetti
+	ngs.h, removeredeyes/detection/locators/locator.h,
+	removeredeyes/detection/locators/locatorfactory.cpp,
+	removeredeyes/detection/locators/locatorfactory.h,
+	removeredeyes/detection/savemethods/savemethodfactory.cpp,
+	removeredeyes/detection/savemethods/savemethodfactory.h,
+	removeredeyes/detection/savemethods/savemethods.cpp,
+	removeredeyes/detection/savemethods/savemethods.h,
+	removeredeyes/opencv_tests/testForIPP.cpp,
+	removeredeyes/plugin/commonsettings.h,
+	removeredeyes/plugin/plugin_removeredeyes.cpp,
+	removeredeyes/plugin/plugin_removeredeyes.h,
+	removeredeyes/plugin/removeredeyeswindow.cpp,
+	removeredeyes/plugin/removeredeyeswindow.h,
+	removeredeyes/plugin/workerthread.cpp,
+	removeredeyes/plugin/workerthread.h,
+	removeredeyes/plugin/workerthreaddata.cpp,
+	removeredeyes/plugin/workerthreaddata.h,
+	removeredeyes/widgets/controlwidget.cpp,
+	removeredeyes/widgets/controlwidget.h,
+	removeredeyes/widgets/infomessagewidget.cpp,
+	removeredeyes/widgets/infomessagewidget.h,
+	removeredeyes/widgets/myimageslist.cpp,
+	removeredeyes/widgets/myimageslist.h,
+	removeredeyes/widgets/previewwidget.cpp,
+	removeredeyes/widgets/previewwidget.h,
+	removeredeyes/widgets/storagesettingsbox.cpp,
+	removeredeyes/widgets/storagesettingsbox.h,
+	removeredeyes/widgets/unprocessedsettingsbox.cpp,
+	removeredeyes/widgets/unprocessedsettingsbox.h,
+	sendimages/emailsettingscontainer.h, sendimages/imageresize.cpp,
+	sendimages/sendimages.cpp: updated my email address
+
+2011-10-23  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calsettings.cpp: Fix compile warning: add missing
+	"break" statement
+
+2011-10-23  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calpainter.cpp: code polish
+
+2011-10-23  Andi Clemens <andi.clemens@googlemail.com>
+
+	* calendar/print/calpainter.cpp, calendar/wizard/calselect.cpp: 
+	setYMD() is deprecated. Use setDate() instead.
+
+2011-09-11  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/vkwindow.cpp, vkontakte/vkwindow.h: No need to call
+	updateLabels() immediately
+
+2011-10-17  Andi Clemens <andi.clemens@googlemail.com>
+
+	* picasawebexport/picasawebwindow.cpp: fix compile warning: missing
+	"break"
+
+2011-10-17  Andi Clemens <andi.clemens@googlemail.com>
+
+	* picasawebexport/picasawebwindow.cpp: fix formatting
+
+2011-10-17  Andi Clemens <andi.clemens@googlemail.com>
+
+	* picasawebexport/picasawebwindow.cpp: fix compile warning: add
+	missing "break"
+
+2011-10-17  Andi Clemens <andi.clemens@googlemail.com>
+
+	* yandexfotki/yandexrsa.cpp, yandexfotki/yandexrsa.h: parameter
+	should / can be passed by reference
+
+2011-10-17  Andi Clemens <andi.clemens@googlemail.com>
+
+	* facebook/fbtalker.cpp, flickrexport/flickrtalker.cpp,
+	flickrexport/flickrwindow.cpp: prefer prefix
+
+2011-10-17  Andi Clemens <andi.clemens@googlemail.com>
+
+	* advancedslideshow/widgets/slideshowgl.cpp: These variables are not
+	used, so we don't need to calculate their values.
+
+2011-10-17  Andi Clemens <andi.clemens@googlemail.com>
+
+	* dngconverter/dngwriter/dngwriter.cpp: We should try to refactor
+	this method
+
+2011-10-16  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-10-16  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/borderplugins/StandardBordersFactory.cpp,
+	photolayoutseditor/borderplugins/StandardBordersFactory.h: Licenses
+
+2011-10-16  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* CMakeLists.txt: BUG: 283321
+
+2011-10-16  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* CMakeLists.txt, photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/borderplugins/StandardBordersFactory.cpp,
+	photolayoutseditor/borderplugins/StandardBordersFactory.h,
+	photolayoutseditor/borderplugins/polaroid/CMakeLists.txt,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer.cpp,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer.h,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer_glob
+	al.h,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer_p.cp
+	p,
+	photolayoutseditor/borderplugins/polaroid/PolaroidBorderDrawer_p.h,
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/CMakeLists.txt,
+	photolayoutseditor/borderplugins/solid/SolidBorderDrawer.cpp,
+	photolayoutseditor/borderplugins/solid/SolidBorderDrawer.h,
+	photolayoutseditor/borderplugins/solid/SolidBorderDrawer_global.h,
+	photolayoutseditor/borderplugins/solid/SolidBorderDrawer_p.cpp,
+	photolayoutseditor/borderplugins/solid/SolidBorderDrawer_p.h,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/BorderChangeListener.cpp,
+	photolayoutseditor/borders/BorderDrawerFactoryInterface.h,
+	photolayoutseditor/borders/BorderDrawerInterface.cpp,
+	photolayoutseditor/borders/BorderDrawerInterface.h,
+	photolayoutseditor/borders/BorderDrawersLoader.cpp,
+	photolayoutseditor/borders/BordersGroup.cpp,
+	photolayoutseditor/borders/BordersGroup.h,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.cpp,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.h,
+	photolayoutseditor/effects/PhotoEffectChangeListener.cpp,
+	photolayoutseditor/effects/PhotoEffectsGroup.cpp,
+	photolayoutseditor/effects/PhotoEffectsGroup.h,
+	photolayoutseditor/effects/PhotoEffectsLoader.cpp,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/threads/AbstractPhotoItemLoader.cpp,
+	photolayoutseditor/widgets/canvas/RotationWidgetItem.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/TextItem.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool.h,
+	photolayoutseditor/widgets/tools/AbstractItemsListViewTool_p.h,
+	photolayoutseditor/widgets/tools/AbstractItemsTool.cpp,
+	photolayoutseditor/widgets/tools/EffectsEditorTool.cpp,
+	photolayoutseditor/widgets/tools/ToolsDockWidget.cpp: BUG: 283321
+
+2011-10-11  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/CMakeLists.txt, gpssync/borrowed/README,
+	gpssync/borrowed/modeltest.cpp, gpssync/borrowed/modeltest.h: Update
+	modeltest code to the latest code from Qt 4.7 repository.
+
+2011-10-11  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/kipiimageitem.cpp: Remove unnecessary variable.
+
+2011-10-11  Michael Georg Hansen <mike@mghansen.de>
+
+	* photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.cpp: Fix build:
+	Add missing #include <limits>
+
+2011-10-10  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.cpp: div by zero
+	fixes v2
+
+2011-10-10  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop: SVN_SILENT made messages (.desktop file)
+
+2011-10-09  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borderplugins/polaroid/photolayoutseditorborderp
+	lugin_polaroid.desktop,
+	photolayoutseditor/borderplugins/solid/photolayoutseditorborderplug
+	in_solid.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-10-08  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/widgets/canvas/RotationWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/ScalingWidgetItem.cpp: MSVC fix
+
+2011-10-08  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/plugin/photolayoutseditor.h,
+	photolayoutseditor/widgets/canvas/CropWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/RotationWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/ScalingWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.cpp: MSVC fix
+
+2011-10-08  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/widgets/canvas/CropWidgetItem.cpp: MSVC
+	compiler report a divide by zero here (why GCC do not see it)
+	1.0/1.0 is the right init to use ? CCMAIL: anantapalani@gmail.com
+	CCMAIL: lukasz.spas@gmail.com
+
+2011-10-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-10-07  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/actionthread.cpp: Panorama: bugfix Extra test for an empty string.  BUG: 283509
+
+2011-10-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* panorama/manager/actionthread.cpp: add debug statements
+
+2011-10-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: polish
+
+2011-10-04  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/NEWS.2.2.0: update
+
+2011-10-03  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* CMakeLists.txt, NEWS: Open for digikam 2.3.0
+
+2011-10-03  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.2.0: New release 2.2.0
+
 2.2.0 2011-10-03
 
 2011-10-03  Script Kiddy <scripty@kde.org>
