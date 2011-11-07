@@ -1,29 +1,9 @@
-Kipi-plugins 2.3.0 - Release date: 2011/11/06
+Kipi-plugins 2.4.0 - Release date: 2011/12/04
 ------------------------------------------------------------------------
 
 NEW FEATURES:
 
-FlashExport    : New interface for plugin: now  a wizard will guide you through exporting process.
-               : All plugins are stored locally, user will need to download once
-               : Posibility to always return and select a different plugin on first page(previous version requested restarting plugin)
-               : Different options and exporting settings for every plugin
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 283509 : Crash on final step of stiching large panorama.
-002 ==> 283321 : Photolayoutseditor crashes on exit.
-003 ==> 283853 : The advanced slideshow "Ken Burns Effect" doesn't respect the setting of the loop checkbox.
-004 ==> 264423 : Export to KML drops significant figures in Lat/Long.
-005 ==> 220800 : Changing the ps output file name for create calendar tool does not work.
-006 ==> 252306 : Tools Calendar creator - print to PDF file size for 12 pages 80-110 MB = about 30x larger than a year ago.
-007 ==> 138585 : Calendar: Very low PDF/PS output quality.
-008 ==> 204663 : Calendar Output Starts pdftops process but never completes.
-009 ==> 154631 : Create Calendar function reduces photo resolution. 
-010 ==> 244258 : AdvancedSlideshow ignores "loop" settings when in KenBurns-Mode.
-011 ==> 168927 : Add support for PostcardViewer, AutoViewer and TiltViewer.
-012 ==> 285300 : Unable to blend bracketed images (enfuse missing).
-013 ==> 220793 : Create calendar tool: last week-row is cut off.
-014 ==> 221862 : Launching the flickr exporter with pic selected, or adding picture to exporter window.
-015 ==> 284215 : digiKam crashes when "Create photo layouts" used second time.
-016 ==> 243109 : Send image by mail, crash.
-017 ==> 
+001 ==> 
