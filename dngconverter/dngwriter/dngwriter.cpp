@@ -38,6 +38,7 @@
     DNG4PS2:             http://dng4ps2.chat.ru/index_en.html
     CORNERFIX:           http://sourceforge.net/projects/cornerfix
     ADOBE DNG CONVERTER: ftp://ftp.adobe.com/pub/adobe/photoshop/cameraraw/win/4.x
+    DNGCONVERT:          https://github.com/jmue/dngconvert    
 */
 
 // C ansi includes
@@ -238,7 +239,8 @@ int DNGWriter::convert()
         }
 
         bool useFullSensorImage = false;
-#if KDCRAW_VERSION >= 0x010300
+
+#if KDCRAW_VERSION < 0x020001
         // disable general fullsensor image see #240750
         // seems this bug is fixed with libRaw 0.12beta4
         if ((identifyMake.make == "Canon") && 
@@ -248,7 +250,9 @@ int DNGWriter::convert()
         }
 #endif
 
-        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, useFullSensorImage, 0))
+        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, 
+                                         useFullSensorImage,             // arg deprecated with KDCRAW >=0x020001
+                                         0))
         {
             kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
             return -1;
@@ -267,8 +271,10 @@ int DNGWriter::convert()
         kDebug() << "--- Orientation:   " << identify.orientation;
         kDebug() << "--- Top margin:    " << identify.topMargin;
         kDebug() << "--- Left margin:   " << identify.leftMargin;
+#if KDCRAW_VERSION < 0x020001
         kDebug() << "--- Right margin:  " << identify.rightMargin;
         kDebug() << "--- Bottom margin: " << identify.bottomMargin;
+#endif        
         kDebug() << "--- Filter:        " << identify.filterPattern;
         kDebug() << "--- Colors:        " << identify.rawColors;
         kDebug() << "--- Black:         " << identify.blackPoint;
@@ -385,6 +391,7 @@ int DNGWriter::convert()
             outputHeight = tmp;
         }
 
+#if KDCRAW_VERSION < 0x020001
         if (true == useFullSensorImage)
         {
             activeArea   = dng_rect(identify.topMargin,
@@ -400,6 +407,11 @@ int DNGWriter::convert()
             activeWidth  = identify.outputSize.width();
             activeHeight = identify.outputSize.height();
         }
+#else
+        activeArea   = dng_rect(identify.outputSize.height(), identify.outputSize.width());
+        activeWidth  = identify.outputSize.width();
+        activeHeight = identify.outputSize.height();
+#endif
 
         // Check if number of Raw Color components is supported.
         if ((identify.rawColors != 3) && (identify.rawColors != 4))
