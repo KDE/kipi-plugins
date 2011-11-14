@@ -40,6 +40,8 @@
 #include <kvbox.h>
 #include <klocale.h>
 
+// Local includes
+
 namespace KIPIPanoramaPlugin
 {
 

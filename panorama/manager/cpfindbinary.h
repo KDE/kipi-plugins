@@ -46,6 +46,10 @@ public:
     QString projectName()    const;
 
     void    checkSystem();
+    bool    developmentVersion();
+
+private:
+    bool    dev;
 };
 
 } // namespace KIPIPanoramaPlugin

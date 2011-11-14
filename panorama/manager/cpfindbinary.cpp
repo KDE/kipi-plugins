@@ -47,23 +47,33 @@ CPFindBinary::~CPFindBinary()
 void CPFindBinary::checkSystem()
 {
     QProcess process;
-    process.start(path(), QStringList() << "-h");
+    process.start(path(), QStringList() << "--version");
     m_available       = process.waitForFinished();
 
     QString headerStarts("Hugins cpfind ");
 
     QString stdOut(process.readAllStandardOutput());
-    QString firstLine = stdOut.section('\n', 0, 0);
+    QStringList lines = stdOut.split('\n');
 
-    kDebug() << path() << " help header line: \n" << firstLine;
-
-    if (firstLine.startsWith(headerStarts))
+    dev = false;
+    foreach (QString line, lines)
     {
-        m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
-        m_version.remove("Pre-Release ");            // Special case with Hugin beta.
+        kDebug() << path() << " help header line: \n" << line;
+        if (line.startsWith(headerStarts))
+        {
+            m_version = line.remove(0, headerStarts.length()).section('.', 0, 1);
+            m_version.remove("Pre-Release ");            // Special case with Hugin beta.
 
-        kDebug() << "Found " << path() << " version: " << version() ;
+            kDebug() << "Found " << path() << " version: " << version() ;
+            return;
+        }
+        dev = true;
     }
+}
+
+bool CPFindBinary::developmentVersion()
+{
+    return dev;
 }
 
 KUrl CPFindBinary::url() const
