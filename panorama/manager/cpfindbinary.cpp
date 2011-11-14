@@ -50,7 +50,9 @@ void CPFindBinary::checkSystem()
     process.start(path(), QStringList() << "--version");
     m_available       = process.waitForFinished();
 
+    // FIXME: Change that to a regexp
     QString headerStarts("Hugins cpfind ");
+    QString headerStartsNew("Hugin's cpfind ");          // For Hugin 2011.4
 
     QString stdOut(process.readAllStandardOutput());
     QStringList lines = stdOut.split('\n');
@@ -59,9 +61,18 @@ void CPFindBinary::checkSystem()
     foreach (QString line, lines)
     {
         kDebug() << path() << " help header line: \n" << line;
+	m_version = "";
         if (line.startsWith(headerStarts))
         {
             m_version = line.remove(0, headerStarts.length()).section('.', 0, 1);
+        }
+	else if (line.startsWith(headerStartsNew))
+	{
+            m_version = line.remove(0, headerStartsNew.length()).section('.', 0, 1);
+	}
+
+        if (m_version != "")
+        {
             m_version.remove("Pre-Release ");            // Special case with Hugin beta.
 
             kDebug() << "Found " << path() << " version: " << version() ;
