@@ -59,11 +59,6 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
                     "This can be any address as used in Dolphin or Konqueror, "
                     "e.g. ftp://my.server.org/sub/folder."));
 
-    m_targetDialog = new KFileDialog(KUrl(), "*", this);
-    m_targetDialog->setMode(KFile::Directory);
-    m_targetDialog->setWindowTitle(i18n("Select target..."));
-    m_targetDialog->setOperationMode(KFileDialog::Other);
-
     m_targetSearchButton = new KPushButton(i18n("Select target location..."), this);
     m_targetSearchButton->setIcon(KIcon("folder-remote"));
 
@@ -84,9 +79,6 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     layout->setMargin(0);
 
     // ------------------------------------------------------------------------
-
-    connect(m_targetDialog, SIGNAL(okClicked()),
-            this, SLOT(slotTargetOkClicked()));
 
     connect(m_targetSearchButton, SIGNAL(clicked(bool)),
             this, SLOT(slotShowTargetDialogClicked(bool)));
@@ -111,7 +103,6 @@ KUrl KioExportWidget::targetUrl() const
 void KioExportWidget::setTargetUrl(const KUrl& url)
 {
     m_targetUrl = url;
-    m_targetDialog->setUrl(url);
     updateTargetLabel();
 }
 
@@ -123,14 +114,20 @@ void KioExportWidget::slotProcessUrl(const QString& url)
 void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 {
     Q_UNUSED(checked);
-    m_targetDialog->show();
-}
-
-void KioExportWidget::slotTargetOkClicked()
-{
-    m_targetUrl = m_targetDialog->selectedUrl();
-    updateTargetLabel();
-    emit signalTargetUrlChanged(m_targetUrl);
+    
+    m_targetDialog = new KFileDialog(KUrl(), "*", this);
+    m_targetDialog->setMode(KFile::Directory);
+    m_targetDialog->setWindowTitle(i18n("Select target..."));
+    m_targetDialog->setOperationMode(KFileDialog::Other);
+    m_targetDialog->setUrl(m_targetUrl); // should this check if m_targetUrl is non-null?
+    
+    if (m_targetDialog->exec() == KFileDialog::Accepted) {
+        m_targetUrl = m_targetDialog->selectedUrl();
+        updateTargetLabel();
+        emit signalTargetUrlChanged(m_targetUrl);
+    }
+    
+    delete m_targetDialog;
 }
 
 void KioExportWidget::updateTargetLabel()

@@ -9,5 +9,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 001 ==> 260649 : digiKam crashed rotate photo.
 002 ==> 285941 : digiKam crashes when launching batch proccessing tool.
 003 ==> 286155 : digiKam crashing.
-004 ==> 
+004 ==> 286661 : KIOImportExport folder browsing fix for Windows
+005 ==> 
 
