@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Name=Photo Layouts Editor
 Name[ca]=Editor de formats de foto
+Name[da]=Editor til fotolayout
 Name[el]=Επεξεργαστής διατάξεων φωτογραφιών
 Name[it]=Editor di impaginazioni di foto
 Name[nb]=Fotoutleggsredigerer
@@ -14,6 +15,7 @@ Name[x-test]=xxPhoto Layouts Editorxx
 Name[zh_TW]=相片佈局編輯器
 Comment=Photo layouts management tool
 Comment[ca]=Eina de gestió de formats de foto
+Comment[da]=Håndteringsværktøj til fotolayout
 Comment[el]=Εργαλείο διαχείρισης διατάξεων φωτογραφιών
 Comment[it]=Strumento di impaginazione di foto
 Comment[nb]=Verktøy for å behandle foto-utforminger
