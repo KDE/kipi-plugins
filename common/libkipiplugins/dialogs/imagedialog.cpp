@@ -6,7 +6,7 @@
  * Date        : 2004-05-01
  * Description : image files selector dialog.
  *
- * Copyright (C) 2004-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,6 +33,7 @@
 
 // KDE includes
 
+#include <kdeversion.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -81,7 +82,7 @@ public:
 };
 
 ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
-                  : KPreviewWidgetBase(parent), d(new ImageDialogPreviewPrivate)
+    : KPreviewWidgetBase(parent), d(new ImageDialogPreviewPrivate)
 {
     d->iface = iface;
 
@@ -90,7 +91,7 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
     d->imageLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->imageLabel->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 
-    d->infoLabel = new QLabel(this);
+    d->infoLabel      = new QLabel(this);
     d->infoLabel->setAlignment(Qt::AlignCenter);
 
     vlay->setMargin(0);
@@ -103,14 +104,14 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-                this, SLOT(slotThumbnail(KUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl, QPixmap)),
+                this, SLOT(slotThumbnail(KUrl, QPixmap)));
     }
 
     d->loadRawThumb = new LoadRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
-            this, SLOT(slotRawThumb(KUrl,QImage)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
+            this, SLOT(slotRawThumb(KUrl, QImage)));
 }
 
 ImageDialogPreview::~ImageDialogPreview()
@@ -156,7 +157,16 @@ void ImageDialogPreview::showPreview(const KUrl& url)
         }
         else
         {
+            if ( !d->currentUrl.isValid() )
+                return;
+
+#if KDE_IS_VERSION(4,7,0)
+            KFileItemList items;
+            items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, d->currentUrl, true));
+            KIO::PreviewJob* job = KIO::filePreview(items, QSize(256, 256));
+#else
             KIO::PreviewJob *job = KIO::filePreview(d->currentUrl, 256);
+#endif
 
             connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
                     this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
@@ -350,7 +360,7 @@ public:
     KUrl             url;
     KUrl::List       urls;
 
-    KIPI::Interface *iface;
+    KIPI::Interface* iface;
 };
 
 ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelect, bool onlyRaw)
