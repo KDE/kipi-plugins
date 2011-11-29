@@ -956,7 +956,13 @@ void ImagesList::updateThumbnail(const KUrl& url)
     }
     else
     {
-        KIO::PreviewJob* job = KIO::filePreview(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
+#if KDE_IS_VERSION(4,7,0)
+        KFileItemList items;
+        items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url.toLocalFile(), true));
+        KIO::PreviewJob* job = KIO::filePreview(items, QSize(DEFAULTSIZE, DEFAULTSIZE));
+#else
+        KIO::PreviewJob *job = KIO::filePreview(KUrl::List() << url.toLocalFile(), DEFAULTSIZE);
+#endif
 
         connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
                 this, SLOT(slotKDEPreview(KFileItem,QPixmap)));
