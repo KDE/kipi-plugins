@@ -7,7 +7,7 @@
  * Description : a tool to export image to an Ipod device.
  *
  * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
- * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -66,6 +66,7 @@ extern "C"
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kurl.h>
+#include <kdeversion.h>
 
 // Local includes
 
@@ -521,7 +522,16 @@ void UploadDialog::imageSelected( QTreeWidgetItem* item )
 
     KUrl url( IdemIndexed );
 
-    KIO::PreviewJob* m_thumbJob = KIO::filePreview( url, m_imagePreview->height() );
+    if ( !url.isValid() )
+        return;
+
+#if KDE_IS_VERSION(4,7,0)
+    KFileItemList items;
+    items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
+    KIO::PreviewJob* m_thumbJob = KIO::filePreview(items, QSize(m_imagePreview->height(), m_imagePreview->height()));
+#else
+    KIO::PreviewJob* m_thumbJob = KIO::filePreview(url, m_imagePreview->height());
+#endif
 
     connect(m_thumbJob, SIGNAL(gotPreview(const KFileItem*,QPixmap)),
             this,   SLOT(gotImagePreview(const KFileItem*,QPixmap)) );
