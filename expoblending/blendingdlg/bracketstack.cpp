@@ -30,6 +30,7 @@
 
 // KDE includes
 
+#include <kdeversion.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kiconloader.h>
@@ -233,7 +234,17 @@ void BracketStackList::addItems(const KUrl::List& list)
     }
     else
     {
+#if KDE_IS_VERSION(4,7,0)
+        KFileItemList items;
+        for (KUrl::List::ConstIterator it = urls.begin() ; it != urls.end() ; ++it)
+        {
+            if ((*it).isValid())
+                items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, *it, true));
+        }
+        KIO::PreviewJob* job = KIO::filePreview(items, iconSize());
+#else
         KIO::PreviewJob *job = KIO::filePreview(urls, iconSize().width());
+#endif
 
         connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
                 this, SLOT(slotKDEPreview(KFileItem,QPixmap)));

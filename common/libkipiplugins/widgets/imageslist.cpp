@@ -957,6 +957,9 @@ void ImagesList::updateThumbnail(const KUrl& url)
     }
     else
     {
+        if ( !url.isValid() )
+            return;
+
 #if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
         items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url.toLocalFile(), true));
