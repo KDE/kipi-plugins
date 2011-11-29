@@ -45,6 +45,7 @@ extern "C"
 
 // KDE includes
 
+#include <kdeversion.h>
 #include <kapplication.h>
 #include <kcombobox.h>
 #include <kdebug.h>
@@ -262,7 +263,16 @@ void BatchProcessImagesDialog::slotImageSelected(QTreeWidgetItem * item)
 
     KUrl url(IdemIndexed);
 
+    if ( !url.isValid() )
+        return;
+
+#if KDE_IS_VERSION(4,7,0)
+    KFileItemList items;
+    items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
+    KIO::PreviewJob* m_thumbJob = KIO::filePreview(items, QSize(m_ui->m_imageLabel->height(), m_ui->m_imageLabel->height()));
+#else
     KIO::PreviewJob* m_thumbJob = KIO::filePreview(url, m_ui->m_imageLabel->height());
+#endif
 
     connect(m_thumbJob, SIGNAL(gotPreview(KFileItem,QPixmap)),
             this, SLOT(slotGotPreview(KFileItem,QPixmap)));
