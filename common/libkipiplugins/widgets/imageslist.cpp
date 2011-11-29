@@ -39,6 +39,7 @@
 
 // KDE includes
 
+#include <kdeversion.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
