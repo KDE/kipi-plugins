@@ -30,14 +30,14 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class StarndardEffectsFactory;
+    class StandardEffectsFactory;
     class GrayscalePhotoEffect : public AbstractPhotoEffectInterface
     {
             Q_OBJECT
 
         public:
 
-            explicit GrayscalePhotoEffect(StarndardEffectsFactory * factory, QObject * parent = 0);
+            explicit GrayscalePhotoEffect(StandardEffectsFactory * factory, QObject * parent = 0);
             virtual QImage apply(const QImage & image) const;
             virtual QString name() const;
             virtual QString toString() const;
@@ -58,7 +58,7 @@ namespace KIPIPhotoLayoutsEditor
                 return result;
             }
 
-        friend class StarndardEffectsFactory;
+        friend class StandardEffectsFactory;
     };
 }
 

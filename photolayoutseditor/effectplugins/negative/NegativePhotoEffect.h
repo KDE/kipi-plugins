@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2011-09-01
+ * Date        : 2011-11-29
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
@@ -23,26 +23,24 @@
  *
  * ============================================================ */
 
-#ifndef COLORIZEPHOTOEFFECT_H
-#define COLORIZEPHOTOEFFECT_H
+#ifndef NEGATIVEPHOTOEFFECT_H
+#define NEGATIVEPHOTOEFFECT_H
 
 #include "AbstractPhotoEffectInterface.h"
 
-#define COLOR_PROPERTY "Color"
+#include <QImage>
+#include <QRect>
 
 namespace KIPIPhotoLayoutsEditor
 {
     class StandardEffectsFactory;
-    class ColorizePhotoEffect : public AbstractPhotoEffectInterface
+    class NegativePhotoEffect : public AbstractPhotoEffectInterface
     {
             Q_OBJECT
 
-            static QColor m_last_color;
-            QColor m_color;
-
         public:
 
-            explicit ColorizePhotoEffect(StandardEffectsFactory * factory, QObject * parent = 0);
+            explicit NegativePhotoEffect(StandardEffectsFactory * factory, QObject * parent = 0);
             virtual QImage apply(const QImage & image) const;
             virtual QString name() const;
             virtual QString toString() const;
@@ -50,59 +48,46 @@ namespace KIPIPhotoLayoutsEditor
 
             virtual QString propertyName(const QMetaProperty & property) const
             {
-                if (!QString("color").compare(property.name()))
-                    return COLOR_PROPERTY;
                 return AbstractPhotoEffectInterface::propertyName(property);
             }
             virtual QVariant propertyValue(const QString & propertyName) const
             {
-                if (propertyName == COLOR_PROPERTY)
-                    return m_color;
                 return AbstractPhotoEffectInterface::propertyValue(propertyName);
             }
             virtual void setPropertyValue(const QString & propertyName, const QVariant & value)
             {
-                if (COLOR_PROPERTY == propertyName)
-                    this->setColor(value.value<QColor>());
-                else
-                    AbstractPhotoEffectInterface::setPropertyValue(propertyName, value);
+                AbstractPhotoEffectInterface::setPropertyValue(propertyName, value);
             }
-
-            Q_PROPERTY(QColor color READ color WRITE setColor)
-            QColor color() const
+            virtual QVariant stringNames(const QMetaProperty & property)
             {
-                return m_color;
+                return AbstractPhotoEffectInterface::stringNames(property);
             }
-            void setColor(QColor color)
+            virtual QVariant minimumValue(const QMetaProperty & property)
             {
-                if (!color.isValid())
-                    return;
-                m_color = color;
-                m_last_color = color;
-                this->propertiesChanged();
+                return AbstractPhotoEffectInterface::minimumValue(property);
+            }
+            virtual QVariant maximumValue(const QMetaProperty & property)
+            {
+                return AbstractPhotoEffectInterface::maximumValue(property);
+            }
+            virtual QVariant stepValue(const QMetaProperty & property)
+            {
+                return AbstractPhotoEffectInterface::stepValue(property);
             }
 
         private:
 
-            static inline QImage colorized(const QImage & image, const QColor & color)
+            static QImage negative(const QImage & image)
             {
-                QImage result = image;
+                QImage result = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
                 unsigned int pixels = result.width() * result.height();
                 unsigned int * data = (unsigned int *) result.bits();
                 for (unsigned int i = 0; i < pixels; ++i)
-                {
-                    int val = qGray(data[i]);
-                    data[i] = qRgb(val,val,val);
-                }
-                QPainter p(&result);
-                p.setCompositionMode(QPainter::CompositionMode_Overlay);
-                p.fillRect(result.rect(),color);
-                p.end();
+                    data[i] = qRgb(255-qRed(data[i]),255-qGreen(data[i]),255-qBlue(data[i]));
+
                 return result;
             }
-
-        friend class StandardEffectsFactory;
     };
 }
 
-#endif // COLORIZEPHOTOEFFECT_H
+#endif // NEGATIVEPHOTOEFFECT_H

@@ -24,7 +24,7 @@
  * ============================================================ */
 
 #include "ColorizePhotoEffect.moc"
-#include "StarndardEffectsFactory.h"
+#include "StandardEffectsFactory.h"
 
 #include <klocalizedstring.h>
 
@@ -32,7 +32,7 @@ using namespace KIPIPhotoLayoutsEditor;
 
 QColor ColorizePhotoEffect::m_last_color = QColor(255,255,255,0);
 
-ColorizePhotoEffect::ColorizePhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
+ColorizePhotoEffect::ColorizePhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
     AbstractPhotoEffectInterface(factory, parent),
     m_color(m_last_color)
 {

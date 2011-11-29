@@ -24,13 +24,13 @@
  * ============================================================ */
 
 #include "SepiaPhotoEffect.moc"
-#include "StarndardEffectsFactory.h"
+#include "StandardEffectsFactory.h"
 
 #include <klocalizedstring.h>
 
 using namespace KIPIPhotoLayoutsEditor;
 
-SepiaPhotoEffect::SepiaPhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
+SepiaPhotoEffect::SepiaPhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
     AbstractPhotoEffectInterface(factory, parent)
 {
 }

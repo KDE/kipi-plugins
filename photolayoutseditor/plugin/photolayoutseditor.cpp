@@ -79,7 +79,7 @@
 #include "PLEConfigDialog.h"
 #include "PLEConfigSkeleton.h"
 #include "PLEAboutData.h"
-#include "StarndardEffectsFactory.h"
+#include "StandardEffectsFactory.h"
 #include "StandardBordersFactory.h"
 #include "global.h"
 #include "ProgressEvent.h"
@@ -719,7 +719,7 @@ void PhotoLayoutsEditor::setTemplateEditMode(bool isEnabled)
 
 void PhotoLayoutsEditor::loadEffects()
 {
-    StarndardEffectsFactory * stdEffects = new StarndardEffectsFactory( PhotoEffectsLoader::instance() );
+    StandardEffectsFactory * stdEffects = new StandardEffectsFactory( PhotoEffectsLoader::instance() );
     PhotoEffectsLoader::registerEffect( stdEffects );
 
     const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsEditor/EffectPlugin");

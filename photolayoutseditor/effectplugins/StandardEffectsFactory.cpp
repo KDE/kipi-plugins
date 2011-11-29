@@ -23,40 +23,40 @@
  *
  * ============================================================ */
 
-#include "GrayscalePhotoEffect.moc"
 #include "StandardEffectsFactory.h"
 
-#include <klocalizedstring.h>
+#include "BlurPhotoEffect.h"
+#include "ColorizePhotoEffect.h"
+#include "GrayscalePhotoEffect.h"
+#include "SepiaPhotoEffect.h"
+#include "NegativePhotoEffect.h"
 
 using namespace KIPIPhotoLayoutsEditor;
 
-GrayscalePhotoEffect::GrayscalePhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
-    AbstractPhotoEffectInterface(factory, parent)
+StandardEffectsFactory::StandardEffectsFactory(QObject* parent) :
+    AbstractPhotoEffectFactory(parent)
+{}
+
+AbstractPhotoEffectInterface * StandardEffectsFactory::getEffectInstance(const QString& name)
 {
+    if (name == i18n("Blur effect"))
+        return new BlurPhotoEffect(this);
+    if (name == i18n("Colorize effect"))
+        return new ColorizePhotoEffect(this);
+    if (name == i18n("Grayscale effect"))
+        return new GrayscalePhotoEffect(this);
+    if (name == i18n("Sepia effect"))
+        return new SepiaPhotoEffect(this);
+    if (name == i18n("Negative effect"))
+        return new NegativePhotoEffect(this);
+    return 0;
 }
 
-QImage GrayscalePhotoEffect::apply(const QImage & image) const
+QString StandardEffectsFactory::effectName() const
 {
-    if (!strength())
-        return image;
-    QImage result = image;
-    QPainter p(&result);
-    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(greyscaled(image)));
-    return result;
-}
-
-QString GrayscalePhotoEffect::name() const
-{
-    return i18n("Grayscale effect");
-}
-
-QString GrayscalePhotoEffect::toString() const
-{
-    return i18n("Grayscale effect");
-}
-
-GrayscalePhotoEffect::operator QString() const
-{
-    return toString();
+    return i18n("Blur effect") + QString(";") +
+           i18n("Colorize effect") + QString(";") +
+           i18n("Grayscale effect") + QString(";") +
+           i18n("Sepia effect") + QString(";") +
+           i18n("Negative effect");
 }

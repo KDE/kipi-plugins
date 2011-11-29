@@ -3,7 +3,7 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2011-09-01
+ * Date        : 2011-11-29
  * Description : a plugin to create photo layouts by fusion of several images.
  * Acknowledge : based on the expoblending plugin
  *
@@ -23,36 +23,38 @@
  *
  * ============================================================ */
 
-#include "StarndardEffectsFactory.h"
-
-#include "BlurPhotoEffect.h"
-#include "ColorizePhotoEffect.h"
-#include "GrayscalePhotoEffect.h"
-#include "SepiaPhotoEffect.h"
+#include "NegativePhotoEffect.moc"
+#include "StandardEffectsFactory.h"
 
 using namespace KIPIPhotoLayoutsEditor;
 
-StarndardEffectsFactory::StarndardEffectsFactory(QObject* parent) :
-    AbstractPhotoEffectFactory(parent)
-{}
-
-AbstractPhotoEffectInterface * StarndardEffectsFactory::getEffectInstance(const QString& name)
+NegativePhotoEffect::NegativePhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
+    AbstractPhotoEffectInterface(factory, parent)
 {
-    if (name == i18n("Blur effect"))
-        return new BlurPhotoEffect(this);
-    if (name == i18n("Colorize effect"))
-        return new ColorizePhotoEffect(this);
-    if (name == i18n("Grayscale effect"))
-        return new GrayscalePhotoEffect(this);
-    if (name == i18n("Sepia effect"))
-        return new SepiaPhotoEffect(this);
-    return 0;
 }
 
-QString StarndardEffectsFactory::effectName() const
+QImage NegativePhotoEffect::apply(const QImage & image) const
 {
-    return i18n("Blur effect") + QString(";") +
-           i18n("Colorize effect") + QString(";") +
-           i18n("Grayscale effect") + QString(";") +
-           i18n("Sepia effect");
+    if (!this->strength())
+        return image;
+    QImage result = image;
+    QPainter p(&result);
+    p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    p.drawImage(0,0,AbstractPhotoEffectInterface::apply(negative(image)));
+    return result;
+}
+
+QString NegativePhotoEffect::name() const
+{
+    return i18n("Negative effect");
+}
+
+QString NegativePhotoEffect::toString() const
+{
+    return i18n("Negative effect");
+}
+
+NegativePhotoEffect::operator QString() const
+{
+    return toString();
 }

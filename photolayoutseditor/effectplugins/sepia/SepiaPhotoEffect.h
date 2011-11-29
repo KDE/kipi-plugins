@@ -30,14 +30,14 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class StarndardEffectsFactory;
+    class StandardEffectsFactory;
     class SepiaPhotoEffect : public AbstractPhotoEffectInterface
     {
             Q_OBJECT
 
         public:
 
-            explicit SepiaPhotoEffect(StarndardEffectsFactory * factory, QObject * parent = 0);
+            explicit SepiaPhotoEffect(StandardEffectsFactory * factory, QObject * parent = 0);
             virtual QImage apply(const QImage & image) const;
             virtual QString name() const;
             virtual QString toString() const;
@@ -61,7 +61,7 @@ namespace KIPIPhotoLayoutsEditor
                 return result;
             }
 
-        friend class StarndardEffectsFactory;
+        friend class StandardEffectsFactory;
     };
 }
 

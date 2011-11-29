@@ -24,13 +24,13 @@
  * ============================================================ */
 
 #include "BlurPhotoEffect.moc"
-#include "StarndardEffectsFactory.h"
+#include "StandardEffectsFactory.h"
 
 #include <klocalizedstring.h>
 
 using namespace KIPIPhotoLayoutsEditor;
 
-BlurPhotoEffect::BlurPhotoEffect(StarndardEffectsFactory * factory, QObject * parent) :
+BlurPhotoEffect::BlurPhotoEffect(StandardEffectsFactory * factory, QObject * parent) :
     AbstractPhotoEffectInterface(factory, parent),
     m_radius(10)
 {

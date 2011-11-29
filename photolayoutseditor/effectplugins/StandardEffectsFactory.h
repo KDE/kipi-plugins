@@ -23,19 +23,19 @@
  *
  * ============================================================ */
 
-#ifndef STARNDARDEFFECTSFACTORY_H
-#define STARNDARDEFFECTSFACTORY_H
+#ifndef STANDARDEFFECTSFACTORY_H
+#define STANDARDEFFECTSFACTORY_H
 
 #include "AbstractPhotoEffectFactory.h"
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class StarndardEffectsFactory : public AbstractPhotoEffectFactory
+    class StandardEffectsFactory : public AbstractPhotoEffectFactory
     {
         public:
 
-            explicit StarndardEffectsFactory(QObject* parent = 0);
-            virtual ~StarndardEffectsFactory()
+            explicit StandardEffectsFactory(QObject* parent = 0);
+            virtual ~StandardEffectsFactory()
             {}
 
             virtual AbstractPhotoEffectInterface* getEffectInstance(const QString& name = QString());
@@ -44,4 +44,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // STARNDARDEFFECTSFACTORY_H
+#endif // STANDARDEFFECTSFACTORY_H

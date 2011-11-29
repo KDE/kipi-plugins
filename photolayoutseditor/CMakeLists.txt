@@ -77,11 +77,12 @@
 )
 
   SET( PLE_Effects_SRCS
-      effectplugins/StarndardEffectsFactory.cpp
+      effectplugins/StandardEffectsFactory.cpp
       effectplugins/blur/BlurPhotoEffect.cpp
       effectplugins/colorize/ColorizePhotoEffect.cpp
       effectplugins/grayscale/GrayscalePhotoEffect.cpp
       effectplugins/sepia/SepiaPhotoEffect.cpp
+      effectplugins/negative/NegativePhotoEffect.cpp
       effects/AbstractPhotoEffectInterface.cpp
       effects/PhotoEffectChangeListener.cpp
       effects/PhotoEffectsGroup.cpp
@@ -127,6 +128,7 @@
       effectplugins/colorize
       effectplugins/grayscale
       effectplugins/sepia
+      effectplugins/negative
       events
       listeners
       models

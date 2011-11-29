@@ -35,7 +35,7 @@
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class StarndardEffectsFactory;
+    class StandardEffectsFactory;
     class BlurPhotoEffect : public AbstractPhotoEffectInterface
     {
             Q_OBJECT
@@ -44,7 +44,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            explicit BlurPhotoEffect(StarndardEffectsFactory * factory, QObject * parent = 0);
+            explicit BlurPhotoEffect(StandardEffectsFactory * factory, QObject * parent = 0);
             virtual QImage apply(const QImage & image) const;
             virtual QString name() const;
             virtual QString toString() const;

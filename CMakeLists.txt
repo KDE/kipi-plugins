@@ -107,6 +107,8 @@ ENDMACRO(PRINT_OPTIONAL_QTMODULE_STATUS)
 
 # =======================================================
 
+cmake_policy(SET CMP0017 NEW)
+
 FIND_PACKAGE(KDE4 REQUIRED)
 
 ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
