@@ -1053,7 +1053,15 @@ bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFi
 
     d->pto2MkProcess = new KProcess();
     d->pto2MkProcess->clearProgram();
+/* clearEnvironment() causes pto2mk to crash on Windows.
+    Before this function is called, the environment is an empty QStringList,
+	after it is called the environment contains one QString "_KPROCESS_DUMMY_=".
+	For some reason this crashes pto2mk. Since the QStringList is already empty
+	with a new KProcess() on Windows, there is no need to call this function.
+	*/
+#ifndef Q_WS_WIN
     d->pto2MkProcess->clearEnvironment();
+#endif //Q_WS_WIN
     d->pto2MkProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->pto2MkProcess->setOutputChannelMode(KProcess::MergedChannels);
 
