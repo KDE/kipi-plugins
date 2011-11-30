@@ -7,7 +7,7 @@
  * @date   2006-05-16
  * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * @author Copyright (C) 2006-2010 by Gilles Caulier
+ * @author Copyright (C) 2006-2011 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010, 2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -215,13 +215,13 @@ public:
     // map: UI
     MapLayout                                mapLayout;
     QSplitter                               *mapSplitter;
-    KGeoMap::KGeoMapWidget                        *mapWidget;
-    KGeoMap::KGeoMapWidget                        *mapWidget2;
+    KGeoMap::KGeoMapWidget                  *mapWidget;
+    KGeoMap::KGeoMapWidget                  *mapWidget2;
 
     // map: helpers
     MapDragDropHandler                      *mapDragDropHandler;
-    GPSSyncKGeoMapModelHelper                  *mapModelHelper;
-    KGeoMap::ItemMarkerTiler                   *kgeomapMarkerModel;
+    GPSSyncKGeoMapModelHelper               *mapModelHelper;
+    KGeoMap::ItemMarkerTiler                *kgeomapMarkerModel;
 
     // map: actions
     QAction                                 *sortActionOldestFirst;
@@ -240,23 +240,22 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     setCaption(i18n("Geolocation"));
 //     setModal(true);
     setMinimumSize(300,400);
-    d->imageModel = new KipiImageModel(this);
+    d->imageModel     = new KipiImageModel(this);
     d->selectionModel = new QItemSelectionModel(d->imageModel);
 
 #ifdef GPSSYNC_MODELTEST
     new ModelTest(d->imageModel, this);
 #endif /* GPSSYNC_MODELTEST */
 
-    
-    d->undoStack = new KUndoStack(this);
+    d->undoStack     = new KUndoStack(this);
     d->bookmarkOwner = new GPSBookmarkOwner(d->imageModel, this);
     d->stackedWidget = new QStackedWidget();
-    d->searchWidget = new SearchWidget(d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
+    d->searchWidget  = new SearchWidget(d->bookmarkOwner, d->imageModel, d->selectionModel, d->stackedWidget);
 
     d->imageModel->setKipiInterface(d->interface);
     KipiImageItem::setHeaderData(d->imageModel);
     d->imageModel->setSupportedDragActions(Qt::CopyAction);
-    d->mapModelHelper = new GPSSyncKGeoMapModelHelper(d->imageModel, d->selectionModel, this);
+    d->mapModelHelper     = new GPSSyncKGeoMapModelHelper(d->imageModel, d->selectionModel, this);
     d->mapModelHelper->addUngroupedModelHelper(d->bookmarkOwner->bookmarkModelHelper());
     d->mapModelHelper->addUngroupedModelHelper(d->searchWidget->getModelHelper());
     d->mapDragDropHandler = new MapDragDropHandler(d->imageModel, d->mapModelHelper);
@@ -267,17 +266,17 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->actionBookmarkVisibility->setToolTip(i18n("Display bookmarked positions on the map."));
     d->actionBookmarkVisibility->setCheckable(true);
 
-    KVBox* const vboxMain = new KVBox(this);
+    KVBox* const vboxMain   = new KVBox(this);
     setMainWidget(vboxMain);
 
-    KHBox* const hboxMain = new KHBox(vboxMain);
+    KHBox* const hboxMain   = new KHBox(vboxMain);
 
-    d->HSplitter = new QSplitter(Qt::Horizontal, hboxMain);
+    d->HSplitter            = new QSplitter(Qt::Horizontal, hboxMain);
     d->HSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     KHBox* const hboxBottom = new KHBox(vboxMain);
 
-    d->progressBar = new QProgressBar(hboxBottom);
+    d->progressBar          = new QProgressBar(hboxBottom);
     d->progressBar->setVisible(false);
     d->progressBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     // we need a really large stretch factor here because the QDialogButtonBox also stretches a lot...
@@ -291,15 +290,16 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
             this, SLOT(slotProgressCancelButtonClicked()));
 
     d->buttonBox = new KDialogButtonBox(hboxBottom);
+    QPushButton* helpButton = d->buttonBox->addButton(KStandardGuiItem::help(), QDialogButtonBox::HelpRole);
     d->buttonBox->addButton(KStandardGuiItem::configure(), QDialogButtonBox::ActionRole, this, SLOT(slotConfigureClicked()));
-    d->buttonBox->addButton(KStandardGuiItem::apply(), QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
-    d->buttonBox->addButton(KStandardGuiItem::close(), QDialogButtonBox::RejectRole, this, SLOT(close()));
+    d->buttonBox->addButton(KStandardGuiItem::apply(),     QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
+    d->buttonBox->addButton(KStandardGuiItem::close(),     QDialogButtonBox::RejectRole, this, SLOT(close()));
 
     // TODO: the code below does not seem to have any effect, slotApplyClicked is still triggered
     //       when 'Enter' is pressed...
     // make sure the 'Apply' button is not triggered when enter is pressed,
     // because that causes problems with the search widget
-    QAbstractButton* testButton;
+    QAbstractButton* testButton = 0;
     Q_FOREACH(testButton, d->buttonBox->buttons())
     {
 //         if (d->buttonBox->buttonRole(testButton)==QDialogButtonBox::AcceptRole)
@@ -336,15 +336,14 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->actionBookmarkVisibility, SIGNAL(changed()),
             this, SLOT(slotBookmarkVisibilityToggled()));
 
-
-    QWidget* mapVBox;
-    d->mapWidget = makeMapWidget(&mapVBox);
+    QWidget* mapVBox = 0;
+    d->mapWidget   = makeMapWidget(&mapVBox);
     d->searchWidget->setPrimaryMapWidget(d->mapWidget);
     d->mapSplitter = new QSplitter(this);
     d->mapSplitter->addWidget(mapVBox);
     d->VSplitter->addWidget(d->mapSplitter);
 
-    d->treeView = new KipiImageList(d->interface, this);
+    d->treeView    = new KipiImageList(d->interface, this);
     d->treeView->setModelAndSelectionModel(d->imageModel, d->selectionModel);
     d->treeView->setDragDropHandler(new GPSImageListDragDropHandler(this));
     d->treeView->setDragEnabled(true);
@@ -359,7 +358,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->HSplitter->setCollapsible(1, true);
 
-    d->HSplitter->addWidget(d->stackedWidget);          
+    d->HSplitter->addWidget(d->stackedWidget);
     d->splitterSize = 0;
 
     KVBox* vboxTabBar = new KVBox(hboxMain);
@@ -393,7 +392,6 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     d->stackedWidget->addWidget(d->searchWidget);
 
-
     // ---------------------------------------------------------------
     // About data and help button.
 
@@ -401,11 +399,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Plugin to synchronize pictures' metadata with a GPS device"),
-                   ki18n("(c) 2006-2010, Gilles Caulier"));
-
-    d->about->addAuthor(ki18n("Gilles Caulier"),
-                        ki18n("Developer and maintainer"),
-                              "caulier dot gilles at gmail dot com");
+                   ki18n("(c) 2006-2011, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Michael G. Hansen"),
                         ki18n("Developer and maintainer"),
@@ -414,6 +408,20 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     d->about->addAuthor(ki18n("Gabriel Voicu"),
                         ki18n("Developer"),
                               "ping dot gabi at gmail dot com");
+
+    d->about->addAuthor(ki18n("Gilles Caulier"),
+                        ki18n("Developer"),
+                              "caulier dot gilles at gmail dot com");
+
+    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
+    connect(handbook, SIGNAL(triggered(bool)),
+            this, SLOT(slotHelp()));
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    helpButton->setMenu(helpMenu->menu());
+
+    // ---------------------------------------------------------------
 
     connect(d->treeView, SIGNAL(signalImageActivated(QModelIndex)),
             this, SLOT(slotImageActivated(QModelIndex)));
@@ -494,7 +502,6 @@ GPSSyncDialog::~GPSSyncDialog()
     delete d->about;
     delete d;
 }
-
 
 bool GPSSyncDialog::eventFilter(QObject* const o, QEvent* const e)
 {
