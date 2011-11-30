@@ -155,18 +155,20 @@ public:
     }
 };
 
-class GPSSyncDialogPriv
+// ---------------------------------------------------------------------------------
+
+class GPSSyncDialog::GPSSyncDialogPriv
 {
 public:
 
     GPSSyncDialogPriv()
     {
         // TODO: initialize in the initializer list
-        interface = 0;
-        mapWidget = 0;
-        uiEnabled = true;
-        splitterSize = 0;
-        mapWidget2 = 0;
+        interface         = 0;
+        mapWidget         = 0;
+        uiEnabled         = true;
+        splitterSize      = 0;
+        mapWidget2        = 0;
         setupGlobalObject = SetupGlobalObject::instance();
     }
 
@@ -503,11 +505,16 @@ GPSSyncDialog::~GPSSyncDialog()
     delete d;
 }
 
+void GPSSyncDialog::slotHelp()
+{
+    KToolInvocation::invokeHelp("gpssync", "kipi-plugins");
+}
+
 bool GPSSyncDialog::eventFilter(QObject* const o, QEvent* const e)
 {
     if ( ( o == d->tabBar ) && ( e->type() == QEvent::MouseButtonPress ) )
     {
-        QMouseEvent const *m = static_cast<QMouseEvent*>(e);
+        QMouseEvent const* m = static_cast<QMouseEvent*>(e);
 
         QPoint p (m->x(), m->y());
         const int var = d->tabBar->tabAt(p);
@@ -554,7 +561,6 @@ void GPSSyncDialog::slotCurrentTabChanged(int index)
     d->detailsWidget->slotSetActive(d->stackedWidget->currentWidget()==d->detailsWidget);
 }
 
-
 void GPSSyncDialog::setCurrentTab(int index)
 {
     d->tabBar->setCurrentIndex(index);
@@ -590,9 +596,10 @@ void GPSSyncDialog::setImages(const KUrl::List& images)
     slotProgressSetup(imagesToLoad.count(), i18n("Loading metadata - %p%"));
 
     // initiate the saving
-    d->fileIOCountDone = 0;
-    d->fileIOCountTotal = imagesToLoad.count();
+    d->fileIOCountDone     = 0;
+    d->fileIOCountTotal    = imagesToLoad.count();
     d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+
     connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
             this, SLOT(slotFileMetadataLoaded(int,int)));
 
@@ -603,10 +610,10 @@ void GPSSyncDialog::setImages(const KUrl::List& images)
 void GPSSyncDialog::slotFileMetadataLoaded(int beginIndex, int endIndex)
 {
     kDebug()<<beginIndex<<endIndex;
-    d->fileIOCountDone+=(endIndex-beginIndex);
+    d->fileIOCountDone += (endIndex-beginIndex);
     slotProgressChanged(d->fileIOCountDone);
 
-    if (d->fileIOCountDone==d->fileIOCountTotal)
+    if (d->fileIOCountDone == d->fileIOCountTotal)
     {
         slotSetUIEnabled(true);
     }
@@ -722,13 +729,13 @@ void GPSSyncDialog::saveSettings()
 
     // --------------------------
 
-    group.writeEntry("Current Tab", d->tabBar->currentIndex());
-    group.writeEntry("Show oldest images first", d->sortActionOldestFirst->isChecked());
-    group.writeEntry("Bookmarks visible", d->actionBookmarkVisibility->isChecked());
+    group.writeEntry("Current Tab",               d->tabBar->currentIndex());
+    group.writeEntry("Show oldest images first",  d->sortActionOldestFirst->isChecked());
+    group.writeEntry("Bookmarks visible",         d->actionBookmarkVisibility->isChecked());
     group.writeEntry(QString("SplitterState V1"), d->VSplitter->saveState().toBase64());
     group.writeEntry(QString("SplitterState H1"), d->HSplitter->saveState().toBase64());
     group.writeEntry("Splitter H1 CollapsedSize", d->splitterSize);
-    group.writeEntry("Map Layout", QVariant::fromValue(int(d->mapLayout)));
+    group.writeEntry("Map Layout",                QVariant::fromValue(int(d->mapLayout)));
 
     // --------------------------
 
@@ -748,7 +755,8 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
 
     // are there any modified images?
     int dirtyImagesCount = 0;
-    for (int i=0; i<d->imageModel->rowCount(); ++i)
+
+    for (int i=0; i < d->imageModel->rowCount(); ++i)
     {
         const QModelIndex itemIndex = d->imageModel->index(i, 0);
         KipiImageItem* const item = d->imageModel->itemFromIndex(itemIndex);
@@ -759,7 +767,7 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
         }
     }
 
-    if (dirtyImagesCount>0)
+    if (dirtyImagesCount > 0)
     {
         const QString message = i18np(
                     "You have 1 modified image.",
@@ -774,13 +782,14 @@ void GPSSyncDialog::closeEvent(QCloseEvent *e)
             KGuiItem(i18n("Close and discard changes"))
             );
 
-        if (chosenAction==KMessageBox::No)
+        if (chosenAction == KMessageBox::No)
         {
             saveSettings();
             e->accept();
             return;
         }
-        if (chosenAction==KMessageBox::Yes)
+
+        if (chosenAction == KMessageBox::Yes)
         {
             // the user wants to save his changes.
             // this will initiate the saving process and then close the dialog.
@@ -841,22 +850,28 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState)
     slotSetUIEnabled(enabledState, 0, QString());
 }
 
-class GPSSyncKGeoMapModelHelperPrivate
+// ------------------------------------------------------------------------------------------------
+
+class GPSSyncKGeoMapModelHelper::GPSSyncKGeoMapModelHelperPrivate
 {
 public:
+
     GPSSyncKGeoMapModelHelperPrivate()
     {
+        model          = 0;
+        selectionModel = 0;
     }
 
-    KipiImageModel* model;
-    QItemSelectionModel* selectionModel;
+    KipiImageModel*              model;
+    QItemSelectionModel*         selectionModel;
     QList<KGeoMap::ModelHelper*> ungroupedModelHelpers;
 };
 
-GPSSyncKGeoMapModelHelper::GPSSyncKGeoMapModelHelper(KipiImageModel* const model, QItemSelectionModel* const selectionModel, QObject* const parent)
-: KGeoMap::ModelHelper(parent), d(new GPSSyncKGeoMapModelHelperPrivate())
+GPSSyncKGeoMapModelHelper::GPSSyncKGeoMapModelHelper(KipiImageModel* const model, 
+                                                     QItemSelectionModel* const selectionModel, QObject* const parent)
+    : KGeoMap::ModelHelper(parent), d(new GPSSyncKGeoMapModelHelperPrivate())
 {
-    d->model = model;
+    d->model          = model;
     d->selectionModel = selectionModel;
 
     connect(d->model, SIGNAL(signalThumbnailForIndexAvailable(QPersistentModelIndex,QPixmap)),
@@ -905,7 +920,8 @@ QPersistentModelIndex GPSSyncKGeoMapModelHelper::bestRepresentativeIndexFromList
     const bool oldestFirst = sortKey & 1;
 
     QPersistentModelIndex bestIndex;
-    QDateTime bestTime;
+    QDateTime             bestTime;
+
     for (int i=0; i<list.count(); ++i)
     {
         const QPersistentModelIndex currentIndex = list.at(i);
@@ -939,7 +955,9 @@ void GPSSyncKGeoMapModelHelper::slotThumbnailFromModel(const QPersistentModelInd
     emit(signalThumbnailAvailableForIndex(index, pixmap));
 }
 
-void GPSSyncKGeoMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KGeoMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex)
+void GPSSyncKGeoMapModelHelper::onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, 
+                                               const KGeoMap::GeoCoordinates& targetCoordinates, 
+                                               const QPersistentModelIndex& targetSnapIndex)
 {
     if (targetSnapIndex.isValid())
     {
@@ -991,6 +1009,7 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
     // TODO: actually save the changes
     // are there any modified images?
     QList<QPersistentModelIndex> dirtyImages;
+
     for (int i=0; i<d->imageModel->rowCount(); ++i)
     {
         const QModelIndex itemIndex = d->imageModel->index(i, 0);
@@ -1020,6 +1039,7 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
     d->fileIOCountTotal = dirtyImages.count();
     d->fileIOCloseAfterSaving = closeAfterwards;
     d->fileIOFutureWatcher = new QFutureWatcher<QPair<KUrl, QString> >(this);
+
     connect(d->fileIOFutureWatcher, SIGNAL(resultsReadyAt(int,int)),
             this, SLOT(slotFileChangesSaved(int,int)));
 
@@ -1029,10 +1049,12 @@ void GPSSyncDialog::saveChanges(const bool closeAfterwards)
 
 void GPSSyncDialog::slotFileChangesSaved(int beginIndex, int endIndex)
 {
-    kDebug()<<beginIndex<<endIndex;
-    d->fileIOCountDone+=(endIndex-beginIndex);
+    kDebug() << beginIndex << endIndex;
+
+    d->fileIOCountDone += (endIndex-beginIndex);
     slotProgressChanged(d->fileIOCountDone);
-    if (d->fileIOCountDone==d->fileIOCountTotal)
+
+    if (d->fileIOCountDone == d->fileIOCountTotal)
     {
         slotSetUIEnabled(true);
 
@@ -1092,7 +1114,7 @@ void GPSSyncDialog::slotSortOptionTriggered(QAction* /*sortAction*/)
     int newSortKey = 0;
     if (d->sortActionOldestFirst->isChecked())
     {
-        newSortKey|=1;
+        newSortKey |= 1;
     }
 
     d->mapWidget->setSortKey(newSortKey);
@@ -1134,7 +1156,7 @@ void GPSSyncDialog::slotSetupChanged()
 KGeoMap::KGeoMapWidget* GPSSyncDialog::makeMapWidget(QWidget** const pvbox)
 {
     QWidget* const dummyWidget = new QWidget(this);
-    QVBoxLayout* const vbox = new QVBoxLayout(dummyWidget);
+    QVBoxLayout* const vbox    = new QVBoxLayout(dummyWidget);
 
     KGeoMap::KGeoMapWidget* const mapWidget = new KGeoMap::KGeoMapWidget(dummyWidget);
     mapWidget->setAvailableMouseModes(KGeoMap::MouseModePan|KGeoMap::MouseModeZoomIntoGroup|KGeoMap::MouseModeSelectThumbnail);
@@ -1172,15 +1194,14 @@ void GPSSyncDialog::adjustMapLayout(const bool syncSettings)
     {
         if (d->mapSplitter->count()==1)
         {
-            QWidget* mapHolder;
+            QWidget* mapHolder = 0;
             d->mapWidget2 = makeMapWidget(&mapHolder);
             d->mapSplitter->addWidget(mapHolder);
 
             if (syncSettings)
             {
                 KConfig config("kipirc");
-                KConfigGroup group = config.group(QString("GPS Sync 2 Settings"));
-
+                KConfigGroup group                = config.group(QString("GPS Sync 2 Settings"));
                 const KConfigGroup groupMapWidget = KConfigGroup(&group, "Map Widget");
                 d->mapWidget2->readSettingsFromGroup(&groupMapWidget);
 

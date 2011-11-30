@@ -7,7 +7,7 @@
  * @date   2006-05-16
  * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * @author Copyright (C) 2006-2010 by Gilles Caulier
+ * @author Copyright (C) 2006-2011 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -59,13 +59,9 @@ namespace KIPIGPSSyncPlugin
 class KipiImageModel;
 class GPSUndoCommand;
 
-class GPSSyncDialogPriv;
-
-class GPSSyncKGeoMapModelHelperPrivate;
-
 class GPSSyncKGeoMapModelHelper : public KGeoMap::ModelHelper
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -80,7 +76,8 @@ public:
     virtual QPixmap pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size);
     virtual QPersistentModelIndex bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey);
 
-    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, const KGeoMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
+    virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, 
+                                const KGeoMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
 
     void addUngroupedModelHelper(KGeoMap::ModelHelper* const newModelHelper);
 
@@ -89,10 +86,12 @@ private Q_SLOTS:
     void slotThumbnailFromModel(const QPersistentModelIndex& index, const QPixmap& pixmap);
 
 Q_SIGNALS:
+
     void signalUndoCommand(GPSUndoCommand* undoCommand);
 
 private:
 
+    class GPSSyncKGeoMapModelHelperPrivate;
     GPSSyncKGeoMapModelHelperPrivate* const d;
 };
 
@@ -140,10 +139,11 @@ private Q_SLOTS:
     void slotCurrentTabChanged(int);
     void slotBookmarkVisibilityToggled();
     void slotSetupChanged();
+    void slotHelp();
 
 private:
 
-    int splitterSize;
+    class GPSSyncDialogPriv;
     GPSSyncDialogPriv* const d;
 };
 
