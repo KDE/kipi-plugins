@@ -524,7 +524,6 @@ bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, bool celeste, QString& errors
 
     d->CPFindProcess = new KProcess();
     d->CPFindProcess->clearProgram();
-    d->CPFindProcess->clearEnvironment();
     d->CPFindProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->CPFindProcess->setOutputChannelMode(KProcess::MergedChannels);
 
@@ -565,7 +564,6 @@ bool ActionThread::startCPClean(KUrl& ptoUrl, QString& errors)
 
     d->CPCleanProcess = new KProcess();
     d->CPCleanProcess->clearProgram();
-    d->CPCleanProcess->clearEnvironment();
     d->CPCleanProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->CPCleanProcess->setOutputChannelMode(KProcess::MergedChannels);
 
@@ -605,7 +603,6 @@ bool ActionThread::startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optim
 
     d->autoOptimiseProcess = new KProcess();
     d->autoOptimiseProcess->clearProgram();
-    d->autoOptimiseProcess->clearEnvironment();
     d->autoOptimiseProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->autoOptimiseProcess->setOutputChannelMode(KProcess::MergedChannels);
 
@@ -1053,16 +1050,6 @@ bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFi
 
     d->pto2MkProcess = new KProcess();
     d->pto2MkProcess->clearProgram();
-/* clearEnvironment() causes pto2mk to crash on Windows.
- * Before this function is called, the environment is an empty QStringList,
- * which gives the process the system environment. Presumably pto2mk requires
- * some element in the environment. After clearEnvironment() is called the
- * environment contains one QString "_KPROCESS_DUMMY_=". For some reason this
- * crashes pto2mk.
- */
-#ifndef Q_WS_WIN
-    d->pto2MkProcess->clearEnvironment();
-#endif //Q_WS_WIN
     d->pto2MkProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->pto2MkProcess->setOutputChannelMode(KProcess::MergedChannels);
 
@@ -1098,7 +1085,6 @@ bool ActionThread::compileMK(KUrl& mkUrl, QString& errors)
 {
     d->makeProcess = new KProcess();
     d->makeProcess->clearProgram();
-    d->makeProcess->clearEnvironment();
     d->makeProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->makeProcess->setOutputChannelMode(KProcess::MergedChannels);
 
@@ -1143,7 +1129,6 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
 
         QPointer<KProcess> makeProcess = new KProcess;
         makeProcess->clearProgram();
-        makeProcess->clearEnvironment();
         makeProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
         makeProcess->setOutputChannelMode(KProcess::MergedChannels);
 

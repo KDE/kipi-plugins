@@ -536,7 +536,6 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
 
         d->alignProcess = new KProcess;
         d->alignProcess->clearProgram();
-        d->alignProcess->clearEnvironment();
         d->alignProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
         d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
 
@@ -729,7 +728,6 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
 
     d->enfuseProcess = new KProcess;
     d->enfuseProcess->clearProgram();
-    d->enfuseProcess->clearEnvironment();
     d->enfuseProcess->setOutputChannelMode(KProcess::MergedChannels);
     QStringList args;
     args << "enfuse";
