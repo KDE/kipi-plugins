@@ -1,3 +1,175 @@
+2.4.0 2011-12-04
+
+2011-12-03  Script Kiddy <scripty@kde.org>
+
+	* expoblending/plugin/expoblending.desktop,
+	expoblending/plugin/kipiplugin_expoblending.desktop,
+	htmlexport/themes/details/details.desktop,
+	htmlexport/themes/floating_cards/floating_cards.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-12-02  Ananta Palani <anantapalani@gmail.com>
+
+	* expoblending/manager/actionthread.cpp,
+	panorama/manager/actionthread.cpp: Removing all clearEnvironment()
+	calls for KProcesses because it can cause some programs, such as
+	pto2mk form Hugin, to crash. If this function is not called, the
+	custom environment is an empty QStringList which gives the process
+	the system environment. Presumably pto2mk requires some element in
+	the system environment that is eliminated by clearEnvironment(). All
+	other instances of clearEnvironment() were removed so that anyone
+	who bases their plugin on these existing plugins will not encounter
+	the same problem.
+
+2011-11-30  Ananta Palani <anantapalani@gmail.com>
+
+	* panorama/manager/actionthread.cpp: Clarification
+
+2011-11-30  Ananta Palani <anantapalani@gmail.com>
+
+	* panorama/manager/actionthread.cpp: Fix for crash in pto2mk for
+	panorama builder on Windows
+
+2011-11-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/gpssyncdialog.cpp, gpssync/gpssyncdialog.h: more private
+	internal container Code polish
+
+2011-11-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/gpssyncdialog.cpp: add Help button to main dialog
+
+2011-11-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* ipodexport/IpodExportDialog.cpp, ipodexport/IpodExportDialog.h: 
+	fix KDE 4.7 warnings
+
+2011-11-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* batchprocessimages/common/batchprocessimagesdialog.cpp: fix KDE
+	4.7 warnings
+
+2011-11-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp,
+	expoblending/blendingdlg/bracketstack.cpp: fix KDE 4.7 warnings
+
+2011-11-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp: compile
+
+2011-11-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp: fix KDE 4.7 warnings
+
+2011-11-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* photolayoutseditor/effectplugins/negative/CMakeLists.txt: missi,ng
+	file
+
+2011-11-29  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* CMakeLists.txt, photolayoutseditor/CMakeLists.txt,
+	photolayoutseditor/effectplugins/CMakeLists.txt,
+	photolayoutseditor/effectplugins/StandardEffectsFactory.cpp,
+	photolayoutseditor/effectplugins/StandardEffectsFactory.h,
+	photolayoutseditor/effectplugins/StarndardEffectsFactory.cpp,
+	photolayoutseditor/effectplugins/StarndardEffectsFactory.h,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.h,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.cpp,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.h,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect.cpp
+	,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect.h,
+	photolayoutseditor/effectplugins/negative/NegativePhotoEffect.cpp,
+	photolayoutseditor/effectplugins/negative/NegativePhotoEffect.h,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect.h,
+	photolayoutseditor/plugin/photolayoutseditor.cpp: Negative
+	PhotoEffect + class StandardEffectsFactory name change (from
+	mispelled StarndardEffectsFactory)
+
+2011-11-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* common/libkipiplugins/dialogs/imagedialog.cpp,
+	common/libkipiplugins/dialogs/imagedialog.h: fix to compile
+	deprecated method with KDE 4.7 I see these warnings everywhere under
+	MACOSX. Need to check indeep if it work fine before to apply all.
+
+2011-11-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-11-27  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop: SVN_SILENT
+	made messages (.desktop file)
+
+2011-11-24  Ananta Palani <anantapalani@gmail.com>
+
+	* NEWS, kioexportimport/KioExportWidget.cpp,
+	kioexportimport/KioExportWidget.h: Fixes problem with
+	KIOImportExport on Windows where it was impossible to browse for a
+	target destination.  BUG: 286661 FIXED-IN: 2.4.0
+
+2011-11-20  Andi Clemens <andi.clemens@googlemail.com>
+
+	* photolayoutseditor/widgets/items/AbstractPhoto.cpp: fix compile
+	warnings
+
+2011-11-15  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/manager/cpfindbinary.cpp: Panorama plugin: bugfix cpfind
+	detection Solves an issue with cpfind version headline with Hugin 2011.4.
+	CCBUG: 286633
+
+2011-11-14  Benjamin Girault <benjamin.girault@gmail.com>
+
+	* panorama/importwizard/importwizarddlg.cpp,
+	panorama/importwizard/intropage.cpp,
+	panorama/manager/cpfindbinary.cpp, panorama/manager/cpfindbinary.h: 
+	Panorama plugin: bugfix cpfind Detects a development version of cpfind and allow its usage with a
+	warning.
+
+2011-11-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-11-10  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-11-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* dngconverter/dngwriter/dngwriter.cpp: fix compilation with new
+	libkdcraw including libraw 0.14.3
+
+2011-11-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-11-07  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/NEWS.2.3.0: polish
+
+2011-11-07  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* CMakeLists.txt, NEWS: Open for digikam 2.4.0
+
+2011-11-07  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.3.0: Update Changelog for digikam 2.3.0
+
 2.3.0 2011-11-07
 
 2011-11-06  Gilles Caulier <caulier.gilles@gmail.com>
