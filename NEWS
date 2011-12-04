@@ -1,4 +1,4 @@
-Kipi-plugins 2.4.0 - Release date: 2011/12/04
+Kipi-plugins 2.5.0 - Release date: 2012/01/01
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -6,11 +6,6 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 260649 : digiKam crashed rotate photo.
-002 ==> 285941 : digiKam crashes when launching batch proccessing tool.
-003 ==> 286155 : digiKam crashing.
-004 ==> 286661 : KIOImportExport folder browsing fix for Windows
-005 ==> 283650 : Panorama tool can't find cpfind version on OS X.
-006 ==> 
+001 ==> 
 
 
