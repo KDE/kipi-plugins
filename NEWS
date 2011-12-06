@@ -7,6 +7,9 @@ NEW FEATURES:
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 269482 : Picasa Upload.
-002 ==> 
-
-
+002 ==> 234865 : Crash Facebook tool.
+003 ==> 233263 : Crash when uploading to Flickr.
+004 ==> 263077 : Crashed when select kipi convert plugin in gwenview.
+005 ==> 256974 : Gwenview crashed when printing multiple images >1 per page.
+006 ==> 259370 : Crash when making a slideshow.
+007 ==> 
