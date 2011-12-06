@@ -11,6 +11,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 286155 : digiKam crashing.
 004 ==> 286661 : KIOImportExport folder browsing fix for Windows
 005 ==> 283650 : Panorama tool can't find cpfind version on OS X.
-006 ==> 
 
 
