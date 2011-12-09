@@ -12,4 +12,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> 263077 : Crashed when select kipi convert plugin in gwenview.
 005 ==> 256974 : Gwenview crashed when printing multiple images >1 per page.
 006 ==> 259370 : Crash when making a slideshow.
-007 ==> 
+007 ==> 235112 : Gwenview crashed trying to save scan as TIFF.
+008 ==> 
