@@ -600,18 +600,20 @@ void YandexFotkiWindow::authenticate(bool forceAuthWindow)
     if (forceAuthWindow || m_talker.login().isNull() ||
         m_talker.password().isNull())
     {
-        LoginDialog dlg(this, m_talker.login(), QString());
+        QPointer<LoginDialog> dlg = new LoginDialog(this, m_talker.login(), QString());
 
-        if (dlg.exec() == QDialog::Accepted)
+        if (dlg->exec() == QDialog::Accepted)
         {
-            m_talker.setLogin(dlg.login());
-            m_talker.setPassword(dlg.password());
+            m_talker.setLogin(dlg->login());
+            m_talker.setPassword(dlg->password());
         }
         else
         {
             // don't change anything
             return;
         }
+
+        delete dlg;
     }
 
     /*else
@@ -885,13 +887,15 @@ void YandexFotkiWindow::updateNextPhoto()
 void YandexFotkiWindow::slotNewAlbumRequest()
 {
     YandexFotkiAlbum album;
-    YandexFotkiAlbumDialog dlg(this, album);
+    QPointer<YandexFotkiAlbumDialog> dlg = new YandexFotkiAlbumDialog(this, album);
 
-    if (dlg.exec() == QDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         updateControls(false);
         m_talker.updateAlbum(album);
     }
+
+    delete dlg;
 }
 
 void YandexFotkiWindow::slotReloadAlbumsRequest()
