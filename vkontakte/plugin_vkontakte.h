@@ -53,11 +53,6 @@ public Q_SLOTS:
     void slotExport();
 //    void slotImport();
 
-private Q_SLOTS:
-
-    // slot for cleaning up dialog data after closing
-    void slotDialogFinished(int result);
-
 private:
 
     KAction *m_actionExport;

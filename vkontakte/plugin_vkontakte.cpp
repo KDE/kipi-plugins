@@ -110,12 +110,10 @@ void Plugin_Vkontakte::slotExport()
 
     if (!m_dlgExport)
     {
+        // This object will live forever, we will reuse it on future accesses
+        // to the plugin.
         m_dlgExport = new KIPIVkontaktePlugin::VkontakteWindow(interface,
                 false, kapp->activeWindow());
-
-        // clean it up in finish signal
-        connect(m_dlgExport, SIGNAL(finished(int)),
-            this, SLOT(slotDialogFinished(int)));
     }
     else
     {
@@ -126,14 +124,6 @@ void Plugin_Vkontakte::slotExport()
     }
 
     m_dlgExport->startReactivation();
-}
-
-void Plugin_Vkontakte::slotDialogFinished(int)
-{
-    // don't use Qt::WA_DeleteOnClose, delete explicitly
-    kDebug() << "Dialog destroyed";
-    delete m_dlgExport;
-    m_dlgExport = 0;
 }
 
 KIPI::Category Plugin_Vkontakte::category(KAction *action) const
