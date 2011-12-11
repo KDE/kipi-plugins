@@ -13,4 +13,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 256974 : Gwenview crashed when printing multiple images >1 per page.
 006 ==> 259370 : Crash when making a slideshow.
 007 ==> 235112 : Gwenview crashed trying to save scan as TIFF.
-008 ==> 
+008 ==> 288674 : digiKam crashes when i close the export window (export to yandex-fotki).
+009 ==> 286844 : digiKam crashes when close Export to VKontakte Web Service window.
+010 ==> 
