@@ -109,12 +109,10 @@ void Plugin_YandexFotki::slotExport()
 
     if (!m_dlgExport)
     {
+        // This object will live forever, we will reuse it on future accesses
+        // to the plugin.
         m_dlgExport = new KIPIYandexFotkiPlugin::YandexFotkiWindow(interface,
                 false, kapp->activeWindow());
-
-        // clean it up in finish signal
-        connect(m_dlgExport, SIGNAL(finished(int)),
-            this, SLOT(slotDialogFinished(int)));
     }
     else
     {
@@ -125,14 +123,6 @@ void Plugin_YandexFotki::slotExport()
     }
 
     m_dlgExport->reactivate();
-}
-
-void Plugin_YandexFotki::slotDialogFinished(int)
-{
-    // don't use Qt::WA_DeleteOnClose, delete explicitly
-    kDebug() << "Dialog destroyed";
-    delete m_dlgExport;
-    m_dlgExport = 0;
 }
 
 KIPI::Category Plugin_YandexFotki::category( KAction* action ) const
