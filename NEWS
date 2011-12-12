@@ -15,4 +15,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 007 ==> 235112 : Gwenview crashed trying to save scan as TIFF.
 008 ==> 288674 : digiKam crashes when i close the export window (export to yandex-fotki).
 009 ==> 286844 : digiKam crashes when close Export to VKontakte Web Service window.
-010 ==> 
+010 ==> 288465 : Spelling-error-in-binary usr/lib/kde4/kipiplugin_flashexport.so Unkown Unknown.
+011 ==>
