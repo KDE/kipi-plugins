@@ -283,7 +283,7 @@ bool ImportWizardDlg::checkIfPluginInstalled()
             return ! KStandardDirs::locate("data","kipiplugin_flashexport/postcardviewer/viewer.swf").isEmpty();
             break;
         default:
-            kDebug() << "Unkown plugin type";
+            kDebug() << "Unknown plugin type";
             return false;
     }
 

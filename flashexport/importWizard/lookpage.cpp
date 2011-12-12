@@ -102,7 +102,6 @@ public:
     KIntNumInput* cellDimension;
     KIntNumInput* zoomInPerc;
     KIntNumInput* zoomOutPerc;
-    
 };
 
 LookPage::LookPage( KAssistantDialog* dlg)
@@ -465,7 +464,7 @@ void LookPage::setPageContent(int plugType)
         d->frameWidth->setValue(3);
         d->frameWidth->setWhatsThis(i18n("The frame width"));
         label8->setBuddy(d->frameWidth);
-        
+
         vlay3->setMargin(KDialog::spacingHint());
         vlay3->setSpacing(KDialog::spacingHint());
         vlay3->addWidget(hbox6);
@@ -475,10 +474,11 @@ void LookPage::setPageContent(int plugType)
         break;
         }
     default:
-    kDebug() << "Unkown plugin type";
+    kDebug() << "Unknown plugin type";
 
     }
-// ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
 
     setPageWidget(d->vbox);
     setLeftBottomPix(DesktopIcon("flash", 128));
