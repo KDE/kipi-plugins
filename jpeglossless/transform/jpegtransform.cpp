@@ -305,6 +305,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
     dstinfo.write_JFIF_header = false;
 
     // Start compressor (note no image data is actually written here)
+    dstinfo.optimize_coding = true;
     jpeg_write_coefficients(&dstinfo, dst_coef_arrays);
 
     // Copy to the output file any extra markers that we want to preserve
@@ -376,6 +377,7 @@ bool transformJPEG(const QString& src, const QString& destGiven,
         dstinfo.write_JFIF_header = false;
 
         // Start compressor (note no image data is actually written here)
+        dstinfo.optimize_coding = true;
         jpeg_write_coefficients(&dstinfo, dst_coef_arrays);
 
         // Copy to the output file any extra markers that we want to preserve
