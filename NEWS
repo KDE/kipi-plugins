@@ -19,4 +19,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> 203603 : Country names in digikam should come from iso_3166 GNU package.
 012 ==> 268760 : Facebook uploader crashed.
 013 ==> 171303 : Auto-rotate on advanced slideshow doesn't work.
-014 ==> 
+014 ==> 253862 : Compile fails can not find gdk-pixbuf/gdk-pixbuf.h: No such file or directory.
+015 ==> 
