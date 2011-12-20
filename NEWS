@@ -20,4 +20,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 012 ==> 268760 : Facebook uploader crashed.
 013 ==> 171303 : Auto-rotate on advanced slideshow doesn't work.
 014 ==> 253862 : Compile fails can not find gdk-pixbuf/gdk-pixbuf.h: No such file or directory.
-015 ==> 
+015 ==> 197899 : In "Rename images" plugin photos are displayed in reverted order.
+016 ==> 
