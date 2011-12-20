@@ -18,4 +18,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 010 ==> 288465 : Spelling-error-in-binary usr/lib/kde4/kipiplugin_flashexport.so Unkown Unknown.
 011 ==> 203603 : Country names in digikam should come from iso_3166 GNU package.
 012 ==> 268760 : Facebook uploader crashed.
-013 ==> 
+013 ==> 171303 : Auto-rotate on advanced slideshow doesn't work.
+014 ==> 
