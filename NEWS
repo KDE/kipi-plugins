@@ -28,4 +28,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 020 ==> 207157 : Regression: Can't transfer EXIF creation date to file date.
 021 ==> 256937 : Change word "locator" to something less geeky.
 022 ==> 228051 : Geotags are not saved when converting RAW to JPEG.
-023 ==> 
+023 ==> 242579 : Changing captions/GPS info only works on first image in a selection.
+024 ==> 
+
