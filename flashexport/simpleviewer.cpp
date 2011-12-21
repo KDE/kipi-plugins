@@ -286,7 +286,7 @@ bool SimpleViewer::createExportDirectories() const
     {
         d->progressWdg->addedAction(i18n("Could not create folder '%1'", root.url()),
                                     KIPIPlugins::ErrorMessage);
-        return (false);
+        return false;
     }
 
     if(d->settings->plugType == 0)
@@ -298,7 +298,7 @@ bool SimpleViewer::createExportDirectories() const
         {
             d->progressWdg->addedAction(i18n("Could not create folder '%1'", thumbsDir.url()),
                                    KIPIPlugins::ErrorMessage);
-            return (false);
+            return false;
         }
     }
 
@@ -310,13 +310,13 @@ bool SimpleViewer::createExportDirectories() const
     {
         d->progressWdg->addedAction(i18n("Could not create folder '%1'", imagesDir.url()),
                                     KIPIPlugins::ErrorMessage);
-        return (false);
+        return false;
     }
 
     d->progressWdg->addedAction(i18n("Finished Creating directories..."), KIPIPlugins::StartingMessage);
     d->progressWdg->setProgress(++d->action, d->totalActions);
 
-    return (true);
+    return true;
 }
 
 bool SimpleViewer::cmpUrl(const KUrl &url1, const KUrl &url2)
