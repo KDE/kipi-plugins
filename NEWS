@@ -25,6 +25,8 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 017 ==> 265012 : Crashed while uploading to Smugmug.
 018 ==> 190293 : Export as html gallery has the forward button disabled before changing the selected folder.
 019 ==> 254105 : Please, split translations of string "Free" in different contexts.
-020 ==> 
+020 ==> 207157 : Regression: Can't transfer EXIF creation date to file date.
+021 ==> 
+
 
 
