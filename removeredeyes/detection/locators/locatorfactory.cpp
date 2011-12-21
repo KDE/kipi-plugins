@@ -44,7 +44,7 @@ Locator* LocatorFactory::create(const QString& type)
 
     Locator* locator = 0;
 
-    if (type.contains("HaarClassifierLocator"))
+    if (type == "HaarClassifierLocator")
     {
         locator = new HaarClassifierLocator;
     }
