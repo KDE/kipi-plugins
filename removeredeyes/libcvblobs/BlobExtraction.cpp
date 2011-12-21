@@ -1296,6 +1296,7 @@ bool BlobAnalysis(  IplImage* inputImage,
 
                 default:
                     ErrorFlag = -1;
+                    break;
             }    // end switch case
 
             // calculate the blob moments and mean gray level of the current blob (ThisRegionNum)
