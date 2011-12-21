@@ -25,6 +25,7 @@
  * ============================================================ */
 
 #include "BlobExtraction.h"
+#include <QScopedArrayPointer>
 
 // -----------------------------------------------------------------
 
@@ -107,7 +108,6 @@ bool BlobAnalysis(  IplImage* inputImage,
 
     // row 0 and row Rows+1 represent the border
     int i;
-    int* Transition;                // Transition Matrix
 
     int nombre_pixels_mascara = 0;
     //! Imatge amb el perimetre extern de cada pixel
@@ -142,8 +142,8 @@ bool BlobAnalysis(  IplImage* inputImage,
     }
 
     // Initialize Transition array
-    Transition=new int[(Rows + 2)*(Cols + 2)];
-    memset(Transition,0,(Rows + 2) * (Cols + 2)*sizeof(int));
+    QScopedArrayPointer<int> Transition(new int[(Rows + 2)*(Cols + 2)]);
+    memset(Transition.data(),0,(Rows + 2) * (Cols + 2)*sizeof(int));
     Transition[0] = Transition[(Rows + 1) * (Cols + 2)] = Cols + 2;
 
     // Start at the beginning of the image (startCol, startRow)
@@ -397,8 +397,6 @@ bool BlobAnalysis(  IplImage* inputImage,
     int LastIndex, ThisIndex;        // Which run are we up to
     int LastIndexCount, ThisIndexCount;    // Out of these runs
     int LastRegionNum, ThisRegionNum;    // Which assignment
-    int* LastRegion;                // Row assignment of region number
-    int* ThisRegion;        // Row assignment of region number
 
     int LastOffset = -(Trans + 2);    // For performance to avoid multiplication
     int ThisOffset = 0;                // For performance to avoid multiplication
@@ -411,8 +409,8 @@ bool BlobAnalysis(  IplImage* inputImage,
     // apuntadors als blobs de la regi� actual i last
     CBlob* regionDataThisRegion, *regionDataLastRegion;
 
-    LastRegion=new int[Cols+2];
-    ThisRegion=new int[Cols+2];
+    QScopedArrayPointer<int> LastRegion(new int[Cols+2]);
+    QScopedArrayPointer<int> ThisRegion(new int[Cols+2]);
 
     for (i = 0; i < Cols + 2; ++i)   // Initialize result arrays
     {
@@ -1440,9 +1438,6 @@ bool BlobAnalysis(  IplImage* inputImage,
 
         if (ErrorFlag != 0)
         {
-            delete [] Transition;
-            delete [] ThisRegion;
-            delete [] LastRegion;
             return false;
         }
 
@@ -1563,9 +1558,6 @@ bool BlobAnalysis(  IplImage* inputImage,
     }
 
     free(SubsumedRegion);
-    delete [] Transition;
-    delete [] ThisRegion;
-    delete [] LastRegion;
 
     if ( imatgePerimetreExtern )
     {
