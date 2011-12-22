@@ -35,7 +35,7 @@
 #include <kurl.h>
 #include <kio/job.h>
 
-// Local includes.
+// Local includes
 
 #include "flickritem.h"
 

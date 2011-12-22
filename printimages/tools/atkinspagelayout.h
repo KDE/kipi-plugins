@@ -23,7 +23,7 @@
 #ifndef ATKINSPAGELAYOUT_H
 #define ATKINSPAGELAYOUT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QRectF>
 #include <QMap>

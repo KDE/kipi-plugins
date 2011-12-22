@@ -23,7 +23,7 @@
 
 #include "IpodExportDialog.moc"
 
-// Libgdk includes.
+// Libgdk includes
 
 extern "C"
 {

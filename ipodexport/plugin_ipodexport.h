@@ -24,11 +24,11 @@
 #ifndef PLUGIN_IPODEXPORT_H
 #define PLUGIN_IPODEXPORT_H
 
-// Qt includes.
+// Qt includes
 
 #include <QVariant>
 
-// libkipi includes.
+// libkipi includes
 
 #include <libkipi/plugin.h>
 

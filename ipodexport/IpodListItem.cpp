@@ -22,7 +22,7 @@
 
 #include "IpodListItem.h"
 
-// KDE includes.
+// KDE includes
 
 #include <kicon.h>
 #include <klocale.h>

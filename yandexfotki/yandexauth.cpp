@@ -26,7 +26,7 @@
 
 #include <cstdlib> // size_t
 
-// Qt includes.
+// Qt includes
 
 #include <QString>
 #include <QtCrypto> // Base64

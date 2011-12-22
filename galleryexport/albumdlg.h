@@ -25,7 +25,7 @@
 
 #include "ui_galleryalbumwidget.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QDialog>
 #include <QWidget>

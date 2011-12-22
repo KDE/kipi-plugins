@@ -23,12 +23,12 @@
 #ifndef IPODLISTITEM_H
 #define IPODLISTITEM_H
 
-// Qt includes.
+// Qt includes
 
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-// libgpod includes.
+// libgpod includes
 
 extern "C"
 {

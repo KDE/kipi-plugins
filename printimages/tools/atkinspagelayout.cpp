@@ -22,15 +22,15 @@
 
 #include "atkinspagelayout.h"
 
-// C++ includes.
+// C++ includes
 
 #include <cmath>
 
-// Qt includes.
+// Qt includes
 
 #include <QList>
 
-// Local includes.
+// Local includes
 
 #include "layouttree.h"
 

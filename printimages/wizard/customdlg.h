@@ -26,7 +26,7 @@
 
 #include "ui_customlayout.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QDialog>
 #include <QWidget>

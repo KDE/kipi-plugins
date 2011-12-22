@@ -24,7 +24,7 @@
 #ifndef KPWRITEHELP_H
 #define KPWRITEHELP_H
 
-// C++ includes.
+// C++ includes
 
 #include <cstdio>
  

@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-// Local includes.
+// Local includes
 
 #include "albumdlg.moc"
 

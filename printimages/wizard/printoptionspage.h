@@ -23,11 +23,11 @@
 #ifndef PRINTOPTIONSPAGE_H
 #define PRINTOPTIONSPAGE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 
-// Local includes.
+// Local includes
 
 #include "tphoto.h"
 

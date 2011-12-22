@@ -31,7 +31,7 @@
 #include <functional>
 #include <algorithm>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 

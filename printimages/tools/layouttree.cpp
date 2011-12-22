@@ -22,11 +22,11 @@
 
 #include "layouttree.h"
 
-// C++ includes.
+// C++ includes
 
 #include <cmath>
 
-// Qt includes.
+// Qt includes
 
 #include <QList>
 

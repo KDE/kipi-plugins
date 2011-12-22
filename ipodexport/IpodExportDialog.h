@@ -44,7 +44,7 @@
 #include "imagedialog.h"
 #endif // KIPI_PLUGIN
 
-// Libgpod includes.
+// Libgpod includes
 
 extern "C"
 {

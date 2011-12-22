@@ -33,7 +33,7 @@
 #include <QDomDocument>
 #include <QPointer>
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kmenu.h>
@@ -44,11 +44,11 @@
 
 #include <libkgeomap/lookup_factory.h>
 
-// LibKIPI includes.
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
-// Local includes.
+// Local includes
 
 #include "gpsbookmarkowner.h"
 #include "gpsundocommand.h"

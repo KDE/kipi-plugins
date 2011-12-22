@@ -24,7 +24,7 @@
 #ifndef SLIDESHOWCONFIG_H
 #define SLIDESHOWCONFIG_H
 
-// KDE includes.
+// KDE includes
 
 #include <kpagedialog.h>
 

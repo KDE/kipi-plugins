@@ -23,7 +23,7 @@
 #ifndef LAYOUTTREE_H
 #define LAYOUTTREE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QRectF>
 #include <QMap>

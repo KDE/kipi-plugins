@@ -62,7 +62,7 @@
 
 #include <libkipi/imageinfo.h>
 
-// local includes.
+// local includes
 
 #include "commoncontainer.h"
 #include "playbackwidget.h"

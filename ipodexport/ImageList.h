@@ -23,7 +23,7 @@
 #ifndef IMAGELIST_H
 #define IMAGELIST_H
 
-// Qt includes.
+// Qt includes
 
 #include <QTreeWidget>
 

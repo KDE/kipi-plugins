@@ -22,18 +22,18 @@
 
 #include "IpodHeader.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFrame>
 
-// KDE includes.
+// KDE includes
 
 #include <klocale.h>
 #include <kpushbutton.h>
 
-// Locale includes.
+// Locale includes
 
 #include "IpodExportDialog.h"
 
