@@ -31,7 +31,9 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 023 ==> 242579 : Changing captions/GPS info only works on first image in a selection.
 024 ==> 121124 : Newbie friendly features wishlist.
 025 ==> 218777 : digiKam should remember the folder for scans.
-026 ==> 
+026 ==> 249841 : Add option to transfer metadata to final image in "blend bracketed images" tool.
+027 ==> 
+
 
 
 
