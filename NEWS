@@ -33,8 +33,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 025 ==> 218777 : digiKam should remember the folder for scans.
 026 ==> 249841 : Add option to transfer metadata to final image in "blend bracketed images" tool.
 027 ==> 167494 : The Google Maps GPS Edit Screen shows satellite images only for a limited time in the GPS Sync KIPI Plugin.
-028 ==> 
-
-
-
-
+028 ==> 148427 : Adjust date/time tool sets date to current time instead of EXIF/IPTC time.
+029 ==> 
