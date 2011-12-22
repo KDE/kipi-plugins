@@ -29,5 +29,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 021 ==> 256937 : Change word "locator" to something less geeky.
 022 ==> 228051 : Geotags are not saved when converting RAW to JPEG.
 023 ==> 242579 : Changing captions/GPS info only works on first image in a selection.
-024 ==> 
+024 ==> 121124 : Newbie friendly features wishlist.
+025 ==> 
+
 
