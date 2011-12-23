@@ -37,6 +37,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 029 ==> 203564 : Rotate jpg change date.
 030 ==> 192163 : Facebook photo does support max 60 photos pro album.
 031 ==> 271315 : GUI improvement for manual geotagging.
-032 ==> 
+032 ==> 249930 : Support for multi-monitor view [patch].
+033 ==> 
 
 
