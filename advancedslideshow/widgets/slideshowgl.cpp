@@ -50,6 +50,7 @@
 
 // KDE includes
 
+#include <kapplication.h>
 #include <kconfiggroup.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -77,7 +78,7 @@ SlideShowGL::SlideShowGL(const QList<QPair<QString, int> >& fileList,
            : QGLWidget(0, 0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint)
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    QRect deskRect = KGlobalSettings::desktopGeometry(this);
+    QRect deskRect = KGlobalSettings::desktopGeometry( kapp->activeWindow() );
     m_deskX        = deskRect.x();
     m_deskY        = deskRect.y();
     m_deskWidth    = deskRect.width();

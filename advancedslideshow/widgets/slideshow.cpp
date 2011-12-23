@@ -48,6 +48,7 @@
 
 // KDE includes
 
+#include <kapplication.h>
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -73,7 +74,7 @@ SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, 
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_sharedData   = sharedData;
-    QRect deskRect = KGlobalSettings::desktopGeometry( this );
+    QRect deskRect = KGlobalSettings::desktopGeometry( kapp->activeWindow() );
     m_deskX        = deskRect.x();
     m_deskY        = deskRect.y();
     m_deskWidth    = deskRect.width();
