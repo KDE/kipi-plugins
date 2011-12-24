@@ -188,7 +188,7 @@ LayoutTree::LayoutTree(const LayoutTree& other)
 
 LayoutTree &LayoutTree::operator=(const LayoutTree& other)
 {
-    // FIXME: this line might contain a possible memory leak, since the pointer is not deleted before it is re-allocated.
+    delete m_root;
     m_root             = new LayoutNode(*(other.m_root));
     m_count            = other.m_count;
     m_aspectRatioPage  = other.m_aspectRatioPage;
