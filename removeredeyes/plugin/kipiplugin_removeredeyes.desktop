@@ -82,6 +82,6 @@ Comment[zh_CN]=一个自动从图像去除红眼的工具
 Comment[zh_TW]=自動從影像移除紅眼的工具
 ServiceTypes=KIPI/Plugin
 Type=Service
-Icon=
+Icon=draw-eraser
 X-KDE-Library=kipiplugin_removeredeyes
 author=Andi Clemens, andi dot clemens at googlemail dot com
