@@ -85,8 +85,10 @@ void Plugin_AcquireImages::setup(QWidget* widget)
     if (!m_interface)
     {
         kError() << "Kipi interface is null!";
+        m_action_scanimages->setEnabled(false);
         return;
     }
+    m_action_scanimages->setEnabled(true);
 }
 
 Plugin_AcquireImages::~Plugin_AcquireImages()
