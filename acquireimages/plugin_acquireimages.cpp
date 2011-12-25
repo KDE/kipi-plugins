@@ -52,11 +52,11 @@
 
 using namespace KIPIAcquireImagesPlugin;
 
-K_PLUGIN_FACTORY( AcquireImagesFactory, registerPlugin<Plugin_AcquireImages>(); )
-K_EXPORT_PLUGIN ( AcquireImagesFactory("kipiplugin_acquireimages") )
+K_PLUGIN_FACTORY(AcquireImagesFactory, registerPlugin<Plugin_AcquireImages>();)
+K_EXPORT_PLUGIN(AcquireImagesFactory("kipiplugin_acquireimages"))
 
 Plugin_AcquireImages::Plugin_AcquireImages(QObject* parent, const QVariantList&)
-                    : KIPI::Plugin(AcquireImagesFactory::componentData(), parent, "AcquireImages")
+    : KIPI::Plugin(AcquireImagesFactory::componentData(), parent, "AcquireImages")
 {
     m_interface         = 0;
     m_action_scanimages = 0;
@@ -81,10 +81,11 @@ void Plugin_AcquireImages::setup(QWidget* widget)
     addAction(m_action_scanimages);
 
     m_interface = dynamic_cast< KIPI::Interface* >(parent());
+
     if (!m_interface)
     {
-       kError() << "Kipi interface is null!";
-       return;
+        kError() << "Kipi interface is null!";
+        return;
     }
 }
 
@@ -95,13 +96,18 @@ Plugin_AcquireImages::~Plugin_AcquireImages()
 void Plugin_AcquireImages::slotActivate()
 {
     if (!m_saneWidget)
+    {
         m_saneWidget = new KSaneIface::KSaneWidget(0);
+    }
 
     if (m_saneWidget)
     {
         QString dev = m_saneWidget->selectDevice(0);
+
         if (dev.isEmpty())
+        {
             return;
+        }
 
         if (!m_saneWidget->openDevice(dev))
         {
@@ -118,7 +124,9 @@ void Plugin_AcquireImages::slotActivate()
     else
     {
         if (m_scanDlg->isMinimized())
+        {
             KWindowSystem::unminimizeWindow(m_scanDlg->winId());
+        }
 
         KWindowSystem::activateWindow(m_scanDlg->winId());
     }
@@ -126,10 +134,12 @@ void Plugin_AcquireImages::slotActivate()
     m_scanDlg->show();
 }
 
-KIPI::Category Plugin_AcquireImages::category( KAction* action ) const
+KIPI::Category Plugin_AcquireImages::category(KAction* action) const
 {
-    if ( action == m_action_scanimages )
-       return KIPI::ImportPlugin;
+    if (action == m_action_scanimages)
+    {
+        return KIPI::ImportPlugin;
+    }
 
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ImportPlugin; // no warning from compiler, please
