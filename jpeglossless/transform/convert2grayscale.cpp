@@ -213,6 +213,7 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     dstinfo.write_JFIF_header = false;
 
     // Start compressor (note no image data is actually written here)
+    dstinfo.optimize_coding = true;
     jpeg_write_coefficients(&dstinfo, dst_coef_arrays);
 
     // Copy to the output file any extra markers that we want to preserve (merging from src file with Qt tmp file)
