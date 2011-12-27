@@ -76,25 +76,27 @@ bool MPForm::addPair(const QString& name, const QString& value, const QString& c
     str += m_boundary;
     str += "\r\n";
 
-    if (!name.isEmpty()) 
-    { 
-      	str += "Content-Disposition: form-data; name=\"";
-    	str += name.toAscii();
-    	str += "\"\r\n";
+    if (!name.isEmpty())
+    {
+        str += "Content-Disposition: form-data; name=\"";
+        str += name.toAscii();
+        str += "\"\r\n";
     }
-    if (!contentType.isEmpty()) 
+
+    if (!contentType.isEmpty())
     {
         str += "Content-Type: " + QByteArray(contentType.toAscii());
         str += "\r\n";
-    	str += "Mime-version: 1.0 ";
-    	str += "\r\n";
+        str += "Mime-version: 1.0 ";
+        str += "\r\n";
     }
+
     str += "Content-Length: ";
     str += content_length.toAscii();
     str += "\r\n\r\n";
     str += value.toUtf8();
 
-    m_buffer.append(str); 
+    m_buffer.append(str);
     m_buffer.append("\r\n");
     return true;
 }
@@ -103,6 +105,7 @@ bool MPForm::addFile(const QString& name, const QString& path)
 {
     KMimeType::Ptr ptr = KMimeType::findByUrl(path);
     QString mime       = ptr->name();
+
     if (mime.isEmpty())
     {
         // if we ourselves can't determine the mime of the local file,
@@ -111,8 +114,11 @@ bool MPForm::addFile(const QString& name, const QString& path)
     }
 
     QFile imageFile(path);
+
     if (!imageFile.open(QIODevice::ReadOnly))
+    {
         return false;
+    }
 
     QByteArray imageData = imageFile.readAll();
 

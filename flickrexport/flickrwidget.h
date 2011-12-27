@@ -47,13 +47,13 @@ class KHTMLPart;
 
 namespace KIPI
 {
-    class Interface;
+class Interface;
 }
 
 namespace KIPIFlickrExportPlugin
 {
 
-    class FlickrList;
+class FlickrList;
 
 class FlickrWidget : public QWidget
 {
@@ -63,7 +63,7 @@ public:
 
     enum SettingsTab
     {
-        FILELIST=0,
+        FILELIST = 0,
         UPLOAD
     };
 

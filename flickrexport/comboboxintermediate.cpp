@@ -31,10 +31,10 @@
 namespace KIPIFlickrExportPlugin
 {
 
-ComboBoxIntermediate::ComboBoxIntermediate(QWidget* parent, const QString& text) 
-                    : QComboBox(parent),
-                      m_isIntermediate(false),
-                      m_intermediateText(text)
+ComboBoxIntermediate::ComboBoxIntermediate(QWidget* parent, const QString& text)
+    : QComboBox(parent),
+      m_isIntermediate(false),
+      m_intermediateText(text)
 {
     // Whenever the signal changes, there's a chance that the combobox should
     // be changed from intermediate to normal.
@@ -75,7 +75,10 @@ void ComboBoxIntermediate::setIntermediate(bool state)
 
 void ComboBoxIntermediate::slotIndexChanged(int)
 {
-    if (m_isIntermediate) setIntermediate(false);
+    if (m_isIntermediate)
+    {
+        setIntermediate(false);
+    }
 }
 
 } // namespace KIPIFlickrExportPlugin

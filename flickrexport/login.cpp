@@ -41,14 +41,14 @@ namespace KIPIFlickrExportPlugin
 
 FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
                          const QString& _name, const QString& _passwd)
-           : KDialog(parent)
+    : KDialog(parent)
 {
     setWindowTitle(header);
-    setButtons(Help|Ok|Cancel);
+    setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);
     setModal(false);
 
-    QWidget *widget = new QWidget(this);
+    QWidget* widget = new QWidget(this);
     setMainWidget(widget);
 
     QVBoxLayout* vbox = new QVBoxLayout(widget);
@@ -56,7 +56,7 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
     m_headerLabel->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
     m_headerLabel->setText(header);
 
-    KSeparator *hline = new KSeparator(Qt::Horizontal, widget);
+    KSeparator* hline = new KSeparator(Qt::Horizontal, widget);
 
     QGridLayout* centerLayout = new QGridLayout();
 
@@ -83,7 +83,7 @@ FlickrLogin::FlickrLogin(QWidget* parent, const QString& header,
     vbox->setMargin(0);
     vbox->setSpacing(KDialog::spacingHint());
 
-    resize( QSize(300, 150).expandedTo(minimumSizeHint()) );
+    resize(QSize(300, 150).expandedTo(minimumSizeHint()));
 
     m_nameEdit->setText(_name);
     m_passwdEdit->setText(_passwd);

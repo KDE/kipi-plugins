@@ -103,7 +103,7 @@ public:
 Q_SIGNALS:
 
     void signalError(const QString& msg);
-//  void signalLoginFailed( const QString& msg );
+    //  void signalLoginFailed( const QString& msg );
     void signalBusy(bool val);
     void signalAlbums(const QList<GAlbum>& albumList);
     void signalPhotos(const QList<GPhoto>& photoList);
@@ -118,7 +118,7 @@ Q_SIGNALS:
 
 private:
 
-//  void parseResponseLogin(const QByteArray& data);
+    //  void parseResponseLogin(const QByteArray& data);
     void parseResponseListPhotoSets(const QByteArray& data);
     void parseResponseListPhotos(const QByteArray& data);
     void parseResponseCreateAlbum(const QByteArray& data);
@@ -136,13 +136,13 @@ private Q_SLOTS:
 
     void slotError(const QString& msg);
     void slotAuthenticate();
-    void data(KIO::Job *job, const QByteArray& data);
-    void slotResult(KJob *job);
+    void data(KIO::Job* job, const QByteArray& data);
+    void slotResult(KJob* job);
 
 private:
 
     QWidget*   m_parent;
-//  QString    m_cookie;
+    //  QString    m_cookie;
     QByteArray m_buffer;
 
     QString    m_serviceName;

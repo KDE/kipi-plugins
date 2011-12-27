@@ -127,7 +127,7 @@ class FlickrListViewItem : public KIPIPlugins::ImagesListViewItem
 
 public:
 
-    FlickrListViewItem(KIPIPlugins::ImagesListView *view, const KUrl& url,
+    FlickrListViewItem(KIPIPlugins::ImagesListView* view, const KUrl& url,
                        bool, bool, bool, bool,
                        FlickrList::SafetyLevel, FlickrList::ContentType);
     //virtual ~FlickrListViewItem();

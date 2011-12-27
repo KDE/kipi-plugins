@@ -63,16 +63,16 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QString& serviceName)
-            : QWidget(parent)
+FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QString& serviceName)
+    : QWidget(parent)
 {
     setObjectName("FlickrWidget");
 
     QVBoxLayout* flickrWidgetLayout = new QVBoxLayout(this);
     m_photoView                     = 0; //new KHTMLPart(splitter);
-    KSeparator *line                = new KSeparator(Qt::Horizontal, this);
+    KSeparator* line                = new KSeparator(Qt::Horizontal, this);
     m_tab                           = new KTabWidget(this);
-    QLabel *headerLabel             = new QLabel(this);
+    QLabel* headerLabel             = new QLabel(this);
     headerLabel->setOpenExternalLinks(true);
     headerLabel->setFocusPolicy(Qt::NoFocus);
 
@@ -98,7 +98,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imglst = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab, (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
-    QHeaderView *hdr     = m_imglst->listView()->header();
+    QHeaderView* hdr     = m_imglst->listView()->header();
     QFontMetrics hdrFont = QFontMetrics(hdr->font());
     int permColWidth     = hdrFont.width(i18nc("photo permissions", "Public"));
 
@@ -108,16 +108,18 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC), i18nc("photo permissions", "Public"), true);
 
     // Handle extra tags per image.
-    m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType> (FlickrList::TAGS),
+    m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::TAGS),
                                     i18n("Extra tags"), true);
 
     if (serviceName != "23")
     {
         int tmpWidth;
+
         if ((tmpWidth = hdrFont.width(i18nc("photo permissions", "Family"))) > permColWidth)
         {
             permColWidth = tmpWidth;
         }
+
         if ((tmpWidth = hdrFont.width(i18nc("photo permissions", "Friends"))) > permColWidth)
         {
             permColWidth = tmpWidth;
@@ -144,14 +146,15 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
         contentTypeItems[FlickrList::PHOTO]      = i18nc("photo content type", "Photo");
         contentTypeItems[FlickrList::SCREENSHOT] = i18nc("photo content type", "Screenshot");
         contentTypeItems[FlickrList::OTHER]      = i18nc("photo content type", "Other");
-        ComboBoxDelegate *safetyLevelDelegate = new ComboBoxDelegate(m_imglst, safetyLevelItems);
-        ComboBoxDelegate *contentTypeDelegate = new ComboBoxDelegate(m_imglst, contentTypeItems);
+        ComboBoxDelegate* safetyLevelDelegate = new ComboBoxDelegate(m_imglst, safetyLevelItems);
+        ComboBoxDelegate* contentTypeDelegate = new ComboBoxDelegate(m_imglst, contentTypeItems);
         m_imglst->listView()->setItemDelegateForColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
                                                        safetyLevelDelegate);
         m_imglst->listView()->setItemDelegateForColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
                                                        contentTypeDelegate);
 
     }
+
     hdr->setResizeMode(FlickrList::PUBLIC, QHeaderView::Interactive);
     hdr->resizeSection(FlickrList::PUBLIC, permColWidth);
 
@@ -172,7 +175,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     QGroupBox*   accountBox    = new QGroupBox(i18n("Account"), settingsBox);
     QGridLayout* accountLayout = new QGridLayout(accountBox);
 
-    QLabel *userNameLabel  = new QLabel(i18nc("account settings", "Username: "), accountBox);
+    QLabel* userNameLabel  = new QLabel(i18nc("account settings", "Username: "), accountBox);
     m_userNameDisplayLabel = new QLabel(accountBox);
     m_changeUserButton     = new QPushButton(accountBox);
     m_changeUserButton->setText(i18n("Use a different account"));
@@ -214,7 +217,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     m_extendedTagsBox               = new QGroupBox("", settingsBox);
     m_extendedTagsBox->setFlat(true);
-    QGridLayout *extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
+    QGridLayout* extendedTagsLayout = new QGridLayout(m_extendedTagsBox);
 
     QLabel* tagsLabel        = new QLabel(i18n("Added Tags: "),
                                           m_extendedTagsBox);
@@ -223,7 +226,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     m_addExtraTagsCheckBox   = new QCheckBox(m_extendedTagsBox);
     m_addExtraTagsCheckBox->setText(i18n("Add tags per image"));
     m_addExtraTagsCheckBox->setToolTip(i18n("If checked, you can set extra tags for "
-                                    "each image in the File List tab"));
+                                            "each image in the File List tab"));
     m_addExtraTagsCheckBox->setChecked(true);
     m_stripSpaceTagsCheckBox = new QCheckBox(m_extendedTagsBox);
     m_stripSpaceTagsCheckBox->setText(i18n("Strip Spaces From Tags"));
@@ -240,7 +243,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     // -- Layout for the publication options ----------------------------------
 
     QGroupBox*   publicationBox       = new QGroupBox(i18n("Publication Options"), settingsBox);
-    QGridLayout *publicationBoxLayout = new QGridLayout;
+    QGridLayout* publicationBoxLayout = new QGridLayout;
     publicationBox->setLayout(publicationBoxLayout);
 
     m_publicCheckBox = new QCheckBox(publicationBox);
@@ -264,15 +267,15 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
 
     m_extendedPublicationBox            = new QGroupBox("", publicationBox);
     m_extendedPublicationBox->setFlat(true);
-    QGridLayout *extendedSettingsLayout = new QGridLayout(m_extendedPublicationBox);
+    QGridLayout* extendedSettingsLayout = new QGridLayout(m_extendedPublicationBox);
 
-    QLabel *imageSafetyLabel = new QLabel(i18n("Safety level:"));
+    QLabel* imageSafetyLabel = new QLabel(i18n("Safety level:"));
     m_safetyLevelComboBox    = new ComboBoxIntermediate();
     m_safetyLevelComboBox->addItem(i18n("Safe"),       QVariant(FlickrList::SAFE));
     m_safetyLevelComboBox->addItem(i18n("Moderate"),   QVariant(FlickrList::MODERATE));
     m_safetyLevelComboBox->addItem(i18n("Restricted"), QVariant(FlickrList::RESTRICTED));
 
-    QLabel *imageTypeLabel = new QLabel(i18n("Content type:"));
+    QLabel* imageTypeLabel = new QLabel(i18n("Content type:"));
     m_contentTypeComboBox  = new ComboBoxIntermediate();
     m_contentTypeComboBox->addItem(i18nc("photo content type", "Photo"),      QVariant(FlickrList::PHOTO));
     m_contentTypeComboBox->addItem(i18nc("photo content type", "Screenshot"), QVariant(FlickrList::SCREENSHOT));
@@ -294,7 +297,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface *iface, const QStrin
     // -- Layout for the resizing options -------------------------------------
 
     m_resizingBox  = new QGroupBox(i18n("Resizing Options"), settingsBox);
-    QGridLayout *resizingBoxLayout = new QGridLayout;
+    QGridLayout* resizingBoxLayout = new QGridLayout;
     m_resizingBox->setLayout(resizingBoxLayout);
 
     m_sendOriginalCheckBox = new QCheckBox(m_resizingBox);
@@ -452,19 +455,34 @@ void FlickrWidget::slotPermissionChanged(FlickrList::FieldType checkbox, Qt::Che
      * changed. */
 
     // Select the proper checkbox.
-    QCheckBox *currBox;
-    if      (checkbox == FlickrList::PUBLIC) currBox = m_publicCheckBox;
-    else if (checkbox == FlickrList::FAMILY) currBox = m_familyCheckBox;
-    else                                     currBox = m_friendsCheckBox;
+    QCheckBox* currBox;
+
+    if (checkbox == FlickrList::PUBLIC)
+    {
+        currBox = m_publicCheckBox;
+    }
+    else if (checkbox == FlickrList::FAMILY)
+    {
+        currBox = m_familyCheckBox;
+    }
+    else
+    {
+        currBox = m_friendsCheckBox;
+    }
 
     // If the checkbox should be set in the intermediate state, the tristate
     // property of the checkbox should be manually set to true, otherwise, it
     // has to be set to false so that the user cannot select it.
     currBox->setCheckState(state);
+
     if ((state == Qt::Checked) || (state == Qt::Unchecked))
+    {
         currBox->setTristate(false);
+    }
     else
+    {
         currBox->setTristate(true);
+    }
 }
 
 void FlickrWidget::slotSafetyLevelChanged(FlickrList::SafetyLevel safetyLevel)
@@ -522,9 +540,18 @@ void FlickrWidget::mainPermissionToggled(FlickrList::FieldType checkbox, Qt::Che
     if (state != Qt::PartiallyChecked)
     {
         // Set the states for the image list.
-        if      (checkbox == FlickrList::PUBLIC)  m_imglst->setPublic(state);
-        else if (checkbox == FlickrList::FAMILY)  m_imglst->setFamily(state);
-        else if (checkbox == FlickrList::FRIENDS) m_imglst->setFriends(state);
+        if (checkbox == FlickrList::PUBLIC)
+        {
+            m_imglst->setPublic(state);
+        }
+        else if (checkbox == FlickrList::FAMILY)
+        {
+            m_imglst->setFamily(state);
+        }
+        else if (checkbox == FlickrList::FRIENDS)
+        {
+            m_imglst->setFriends(state);
+        }
 
         // Dis- or enable the family and friends checkboxes if the public
         // checkbox is clicked.
@@ -544,9 +571,18 @@ void FlickrWidget::mainPermissionToggled(FlickrList::FieldType checkbox, Qt::Che
 
         // Set the main checkbox tristate state to false, so that the user
         // cannot select the intermediate state.
-        if (checkbox == FlickrList::PUBLIC)       m_publicCheckBox->setTristate(false);
-        else if (checkbox == FlickrList::FAMILY)  m_familyCheckBox->setTristate(false);
-        else if (checkbox == FlickrList::FRIENDS) m_friendsCheckBox->setTristate(false);
+        if (checkbox == FlickrList::PUBLIC)
+        {
+            m_publicCheckBox->setTristate(false);
+        }
+        else if (checkbox == FlickrList::FAMILY)
+        {
+            m_familyCheckBox->setTristate(false);
+        }
+        else if (checkbox == FlickrList::FRIENDS)
+        {
+            m_friendsCheckBox->setTristate(false);
+        }
     }
 }
 
@@ -569,6 +605,7 @@ void FlickrWidget::slotExtendedPublicationToggled(bool status)
     m_extendedPublicationBox->setVisible(status);
     m_imglst->listView()->setColumnHidden(FlickrList::SAFETYLEVEL, !status);
     m_imglst->listView()->setColumnHidden(FlickrList::CONTENTTYPE, !status);
+
     if (status)
     {
         m_extendedPublicationButton->setText(i18n("Fewer publication options"));
@@ -584,6 +621,7 @@ void FlickrWidget::slotExtendedTagsToggled(bool status)
     // Show or hide the extended tag settings when the extended tag option
     // button is toggled.
     m_extendedTagsBox->setVisible(status);
+
     if (!status)
     {
         m_imglst->listView()->setColumnHidden(FlickrList::TAGS, true);

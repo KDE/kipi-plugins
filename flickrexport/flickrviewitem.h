@@ -46,7 +46,7 @@ public:
 
 protected:
 
-    void paintCell(QPainter *p, const QColorGroup& cg, int column, int width, int);
+    void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int);
     void paintFocus(QPainter*, const QColorGroup&, const QRect&);
     void setup();
 

@@ -42,7 +42,7 @@ public:
     FlickrNewPhotoSetDialog(QWidget* parent)
         : QDialog(parent)
     {
-        setupUi( this );
+        setupUi(this);
     }
 };
 

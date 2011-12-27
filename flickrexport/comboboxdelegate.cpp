@@ -43,10 +43,10 @@ namespace KIPIFlickrExportPlugin
 
 ComboBoxDelegate::ComboBoxDelegate(KIPIPlugins::ImagesList* parent,
                                    QMap<int, QString> items)
-                : QAbstractItemDelegate(parent),
-                  m_parent(parent),
-                  m_items(items),
-                  m_rowEdited(-1)
+    : QAbstractItemDelegate(parent),
+      m_parent(parent),
+      m_items(items),
+      m_rowEdited(-1)
 {
     // Figure out the maximum width of a displayed item from the items list and
     // save it in the m_size parameter.
@@ -54,11 +54,16 @@ ComboBoxDelegate::ComboBoxDelegate(KIPIPlugins::ImagesList* parent,
     m_size                = QSize(0, listFont.height());
     int tmpWidth          = 0;
     QMapIterator<int, QString> i(m_items);
+
     while (i.hasNext())
     {
         i.next();
         tmpWidth = listFont.width(i.value());
-        if (tmpWidth > m_size.width()) m_size.setWidth(tmpWidth);
+
+        if (tmpWidth > m_size.width())
+        {
+            m_size.setWidth(tmpWidth);
+        }
     }
 }
 
@@ -96,8 +101,11 @@ void ComboBoxDelegate::paint(QPainter* painter,
         // PE: These values are found by trial and error. I don't have any idea
         // if it's actually correct, but it seems to work across all themes.
         QPalette::ColorRole textColor = QPalette::Text;
+
         if (option.state & QStyle::State_Selected)
+        {
             textColor = QPalette::HighlightedText;
+        }
 
         // Draw the text.
         style->drawItemText(painter, option.rect, option.displayAlignment,
@@ -120,6 +128,7 @@ QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
     // the user items list on construction.
     QComboBox* cb = new QComboBox(parent);
     QMapIterator<int, QString> i(m_items);
+
     while (i.hasNext())
     {
         i.next();
@@ -147,10 +156,13 @@ void ComboBoxDelegate::setEditorData(QWidget* editor,
 {
     // Scroll the combobox to the current selected state on initialization.
     QComboBox* cb = qobject_cast<QComboBox*>(editor);
+
     for (int i = 0; i < cb->count(); ++i)
     {
         if (cb->itemData(i).toInt() == index.data().toInt())
+        {
             cb->setCurrentIndex(i);
+        }
     }
 }
 

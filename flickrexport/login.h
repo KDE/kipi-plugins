@@ -54,9 +54,9 @@ public:
 
 private:
 
-    QLabel    *m_headerLabel;
-    KLineEdit *m_nameEdit;
-    KLineEdit *m_passwdEdit;
+    QLabel*    m_headerLabel;
+    KLineEdit* m_nameEdit;
+    KLineEdit* m_passwdEdit;
 };
 
 } // namespace KIPIFlickrExportPlugin

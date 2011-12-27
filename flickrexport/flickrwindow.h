@@ -103,11 +103,11 @@ private Q_SLOTS:
     void slotBusy(bool val);
     void slotError(const QString& msg);
 
-//  void slotLoginFailed( const QString& msg );
-//  void slotAlbums( const QValueList<GAlbum>& albumList );
-//  void slotPhotos( const QValueList<GPhoto>& photoList );
-//  void slotTagSelected();
-//  void slotOpenPhoto( const KUrl& url );
+    //  void slotLoginFailed( const QString& msg );
+    //  void slotAlbums( const QValueList<GAlbum>& albumList );
+    //  void slotPhotos( const QValueList<GPhoto>& photoList );
+    //  void slotTagSelected();
+    //  void slotOpenPhoto( const KUrl& url );
 
     void slotCreateNewPhotoSet();
     void slotUserChangeRequest();
@@ -137,28 +137,28 @@ private:
 
     QString                                m_serviceName;
 
-    QPushButton                           *m_newAlbumBtn;
-    QPushButton                           *m_changeUserButton;
+    QPushButton*                           m_newAlbumBtn;
+    QPushButton*                           m_changeUserButton;
 
-    KComboBox                             *m_albumsListComboBox;
-    QCheckBox                             *m_publicCheckBox;
-    QCheckBox                             *m_familyCheckBox;
-    QCheckBox                             *m_friendsCheckBox;
-    QCheckBox                             *m_exportHostTagsCheckBox;
-    QCheckBox                             *m_stripSpaceTagsCheckBox;
-    QCheckBox                             *m_addExtraTagsCheckBox;
-    QCheckBox                             *m_resizeCheckBox;
-    QCheckBox                             *m_sendOriginalCheckBox;
+    KComboBox*                             m_albumsListComboBox;
+    QCheckBox*                             m_publicCheckBox;
+    QCheckBox*                             m_familyCheckBox;
+    QCheckBox*                             m_friendsCheckBox;
+    QCheckBox*                             m_exportHostTagsCheckBox;
+    QCheckBox*                             m_stripSpaceTagsCheckBox;
+    QCheckBox*                             m_addExtraTagsCheckBox;
+    QCheckBox*                             m_resizeCheckBox;
+    QCheckBox*                             m_sendOriginalCheckBox;
 
-    QSpinBox                              *m_dimensionSpinBox;
-    QSpinBox                              *m_imageQualitySpinBox;
+    QSpinBox*                              m_dimensionSpinBox;
+    QSpinBox*                              m_imageQualitySpinBox;
 
-    QPushButton                           *m_extendedPublicationButton;
-    QPushButton                           *m_extendedTagsButton;
-    ComboBoxIntermediate                  *m_contentTypeComboBox;
-    ComboBoxIntermediate                  *m_safetyLevelComboBox;
+    QPushButton*                           m_extendedPublicationButton;
+    QPushButton*                           m_extendedTagsButton;
+    ComboBoxIntermediate*                  m_contentTypeComboBox;
+    ComboBoxIntermediate*                  m_safetyLevelComboBox;
 
-//    QHash<int, GAlbumViewItem>             m_albumDict;
+    //    QHash<int, GAlbumViewItem>             m_albumDict;
 
     QString                                m_token;
     QString                                m_username;
@@ -166,25 +166,25 @@ private:
     QString                                m_lastSelectedAlbum;
     QString                                m_tmp;
 
-    QLabel                                *m_userNameDisplayLabel;
+    QLabel*                                m_userNameDisplayLabel;
 
-    QProgressDialog                       *m_progressDlg;
-    QProgressDialog                       *m_authProgressDlg;
+    QProgressDialog*                       m_progressDlg;
+    QProgressDialog*                       m_authProgressDlg;
 
     QList< QPair<KUrl, FPhotoInfo> >       m_uploadQueue;
 
-//  KWallet::Wallet                       *m_wallet;
-    KHTMLPart                             *m_photoView;
+    //    KWallet::Wallet                       *m_wallet;
+    KHTMLPart*                             m_photoView;
 
-    KLineEdit                             *m_tagsLineEdit;
+    KLineEdit*                             m_tagsLineEdit;
 
-    FlickrWidget                          *m_widget;
-    FlickrTalker                          *m_talker;
+    FlickrWidget*                          m_widget;
+    FlickrTalker*                          m_talker;
 
-    KIPI::Interface                       *m_interface;
+    KIPI::Interface*                       m_interface;
 
-    KIPIPlugins::KPAboutData              *m_about;
-    KIPIFlickrExportPlugin::FlickrList    *m_imglst;
+    KIPIPlugins::KPAboutData*              m_about;
+    KIPIFlickrExportPlugin::FlickrList*    m_imglst;
 };
 
 } // namespace KIPIFlickrExportPlugin

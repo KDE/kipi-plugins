@@ -36,7 +36,7 @@ class KAction;
 
 namespace KIPIFlickrExportPlugin
 {
-    class FlickrWindow;
+class FlickrWindow;
 }
 
 class Plugin_FlickrExport : public KIPI::Plugin
@@ -45,7 +45,7 @@ class Plugin_FlickrExport : public KIPI::Plugin
 
 public:
 
-    Plugin_FlickrExport( QObject *parent, const QVariantList &args);
+    Plugin_FlickrExport(QObject* parent, const QVariantList& args);
     ~Plugin_FlickrExport();
 
     KIPI::Category category(KAction* action) const;
@@ -59,13 +59,13 @@ public Q_SLOTS:
 
 private:
 
-    KAction                              *m_actionFlickr;
-    KAction                              *m_action23;
-    KAction                              *m_actionZooomr;
+    KAction*                              m_actionFlickr;
+    KAction*                              m_action23;
+    KAction*                              m_actionZooomr;
 
-    KIPIFlickrExportPlugin::FlickrWindow *m_dlgFlickr;
-    KIPIFlickrExportPlugin::FlickrWindow *m_dlg23;
-    KIPIFlickrExportPlugin::FlickrWindow *m_dlgZooomr;
+    KIPIFlickrExportPlugin::FlickrWindow* m_dlgFlickr;
+    KIPIFlickrExportPlugin::FlickrWindow* m_dlg23;
+    KIPIFlickrExportPlugin::FlickrWindow* m_dlgZooomr;
 };
 
 #endif // PLUGIN_FLICKREXPORT_H

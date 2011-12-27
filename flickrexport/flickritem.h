@@ -42,7 +42,7 @@ public:
 
     GPhoto()
     {
-//      ref_num = -1;
+        //        ref_num = -1;
     }
 
     bool        is_public;
@@ -50,15 +50,15 @@ public:
     bool        is_family;
 
     int         ref_num;
-//  int         album_num;
+    //    int         album_num;
 
     QStringList tags;
     QString     title;
     QString     description;
 
-//  QString     caption;
-//  QString     thumbName;
-//  QString     albumURL;
+    //    QString     caption;
+    //    QString     thumbName;
+    //    QString     albumURL;
 };
 
 // -------------------------------------------------------------

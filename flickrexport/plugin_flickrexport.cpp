@@ -57,11 +57,11 @@ extern "C"
 
 #include "flickrwindow.h"
 
-K_PLUGIN_FACTORY( FlickrExportFactory, registerPlugin<Plugin_FlickrExport>(); )
-K_EXPORT_PLUGIN ( FlickrExportFactory("kipiplugin_flickrexport") )
+K_PLUGIN_FACTORY(FlickrExportFactory, registerPlugin<Plugin_FlickrExport>();)
+K_EXPORT_PLUGIN(FlickrExportFactory("kipiplugin_flickrexport"))
 
-Plugin_FlickrExport::Plugin_FlickrExport(QObject *parent, const QVariantList &/*args*/)
-                   : KIPI::Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
+Plugin_FlickrExport::Plugin_FlickrExport(QObject* parent, const QVariantList& /*args*/)
+    : KIPI::Plugin(FlickrExportFactory::componentData(), parent, "FlickrExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_FlickrExport plugin loaded";
 }
@@ -80,7 +80,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_actionFlickr->setText(i18n("Export to Flick&r..."));
     m_actionFlickr->setIcon(KIcon("flickr"));
     m_actionFlickr->setEnabled(false);
-    m_actionFlickr->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_R));
+    m_actionFlickr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_R));
 
     connect(m_actionFlickr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateFlickr()));
@@ -91,7 +91,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_action23->setText(i18n("Export to &23..."));
     m_action23->setIcon(KIcon("hq"));
     m_action23->setEnabled(false);
-    m_action23->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_2));
+    m_action23->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_2));
 
     connect(m_action23, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate23()));
@@ -102,7 +102,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
     m_actionZooomr->setText(i18n("Export to &Zooomr..."));
     m_actionZooomr->setIcon(KIcon("zooomr"));
     m_actionZooomr->setEnabled(false);
-    m_actionZooomr->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_Z));
+    m_actionZooomr->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_Z));
 
     connect(m_actionZooomr, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateZooomr()));
@@ -116,6 +116,7 @@ void Plugin_FlickrExport::setup(QWidget* widget)
         kError() << "Kipi interface is null!";
         return;
     }
+
     m_actionFlickr->setEnabled(true);
     m_action23->setEnabled(true);
     m_actionZooomr->setEnabled(true);
@@ -128,6 +129,7 @@ Plugin_FlickrExport::~Plugin_FlickrExport()
 void Plugin_FlickrExport::slotActivateFlickr()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -145,7 +147,9 @@ void Plugin_FlickrExport::slotActivateFlickr()
     else
     {
         if (m_dlgFlickr->isMinimized())
+        {
             KWindowSystem::unminimizeWindow(m_dlgFlickr->winId());
+        }
 
         KWindowSystem::activateWindow(m_dlgFlickr->winId());
     }
@@ -156,6 +160,7 @@ void Plugin_FlickrExport::slotActivateFlickr()
 void Plugin_FlickrExport::slotActivate23()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -173,7 +178,9 @@ void Plugin_FlickrExport::slotActivate23()
     else
     {
         if (m_dlg23->isMinimized())
+        {
             KWindowSystem::unminimizeWindow(m_dlg23->winId());
+        }
 
         KWindowSystem::activateWindow(m_dlg23->winId());
     }
@@ -184,6 +191,7 @@ void Plugin_FlickrExport::slotActivate23()
 void Plugin_FlickrExport::slotActivateZooomr()
 {
     KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -201,7 +209,9 @@ void Plugin_FlickrExport::slotActivateZooomr()
     else
     {
         if (m_dlgZooomr->isMinimized())
+        {
             KWindowSystem::unminimizeWindow(m_dlgZooomr->winId());
+        }
 
         KWindowSystem::activateWindow(m_dlgZooomr->winId());
     }
@@ -209,10 +219,12 @@ void Plugin_FlickrExport::slotActivateZooomr()
     m_dlgZooomr->reactivate();
 }
 
-KIPI::Category Plugin_FlickrExport::category( KAction* action ) const
+KIPI::Category Plugin_FlickrExport::category(KAction* action) const
 {
     if (action == m_actionFlickr || action == m_action23 || action == m_actionZooomr)
+    {
         return KIPI::ExportPlugin;
+    }
 
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;

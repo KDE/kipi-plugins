@@ -32,13 +32,13 @@ namespace KIPIFlickrExportPlugin
 {
 
 GAlbumViewItem::GAlbumViewItem(Q3ListView* parent, const QString& name, const GAlbum& album)
-              : Q3ListViewItem(parent, name)
+    : Q3ListViewItem(parent, name)
 {
     m_album = album;
 }
 
 GAlbumViewItem::GAlbumViewItem(Q3ListViewItem* parent, const QString& name, const GAlbum& album)
-              : Q3ListViewItem(parent, name)
+    : Q3ListViewItem(parent, name)
 {
     m_album = album;
 }
@@ -50,52 +50,66 @@ GAlbumViewItem::~GAlbumViewItem()
 void GAlbumViewItem::paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int)
 {
     if (!p)
+    {
         return;
+    }
 
-    Q3ListView *lv = listView();
+    Q3ListView* lv = listView();
+
     if (!lv)
+    {
         return;
+    }
 
     QFontMetrics fm(p->fontMetrics());
 
     if (isSelected())
+    {
         p->fillRect(0, 0, width, height(), cg.color(QColorGroup::Highlight));
+    }
     else
+    {
         p->fillRect(0, 0, width, height(), cg.color(QColorGroup::Base));
+    }
 
     const QPixmap* icon = pixmap(column);
 
     int iconWidth = 0;
+
     if (icon)
     {
         iconWidth = icon->width() + lv->itemMargin();
         int xo    = lv->itemMargin();
-        int yo    = (height() - icon->height())/2;
-        p->drawPixmap( xo, yo, *icon );
+        int yo    = (height() - icon->height()) / 2;
+        p->drawPixmap(xo, yo, *icon);
     }
 
     if (isSelected())
-        p->setPen( cg.color(QColorGroup::HighlightedText) );
+    {
+        p->setPen(cg.color(QColorGroup::HighlightedText));
+    }
     else
-        p->setPen( cg.color(QColorGroup::Text) );
+    {
+        p->setPen(cg.color(QColorGroup::Text));
+    }
 
     int r = lv->itemMargin() + iconWidth;
     int h = lv->fontMetrics().height() + 2;
-    p->drawText(r, 0, width-r, h, Qt::AlignVCenter, m_album.title);
+    p->drawText(r, 0, width - r, h, Qt::AlignVCenter, m_album.title);
 
     QFont fn(lv->font());
-    fn.setPointSize(fn.pointSize()-2);
+    fn.setPointSize(fn.pointSize() - 2);
     fn.setItalic(true);
     p->setFont(fn);
     p->setPen(isSelected() ? cg.color(QColorGroup::HighlightedText) : Qt::gray);
-    p->drawText(r, h, width-r, h, Qt::AlignVCenter, m_album.name);
+    p->drawText(r, h, width - r, h, Qt::AlignVCenter, m_album.name);
 }
 
 void GAlbumViewItem::setup()
 {
     int h      = listView()->fontMetrics().height();
     int margin = 4;
-    setHeight( qMax(2*h + margin, 32) );
+    setHeight(qMax(2 * h + margin, 32));
 }
 
 void GAlbumViewItem::paintFocus(QPainter*, const QColorGroup&, const QRect&)
