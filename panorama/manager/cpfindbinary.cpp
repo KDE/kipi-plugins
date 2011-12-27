@@ -61,17 +61,18 @@ void CPFindBinary::checkSystem()
     foreach (QString line, lines)
     {
         kDebug() << path() << " help header line: \n" << line;
-	m_version = "";
+        m_version.clear();
+
         if (line.startsWith(headerStarts))
         {
             m_version = line.remove(0, headerStarts.length()).section('.', 0, 1);
         }
-	else if (line.startsWith(headerStartsNew))
-	{
+        else if (line.startsWith(headerStartsNew))
+        {
             m_version = line.remove(0, headerStartsNew.length()).section('.', 0, 1);
-	}
+        }
 
-        if (m_version != "")
+        if (!m_version.isEmpty())
         {
             m_version.remove("Pre-Release ");            // Special case with Hugin beta.
 
