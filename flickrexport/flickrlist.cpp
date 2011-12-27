@@ -157,7 +157,12 @@ void FlickrList::slotItemClicked(QTreeWidgetItem* item, int column)
              (column == static_cast<int>(FlickrList::CONTENTTYPE)))
     {
         m_userIsEditing = true;
-        dynamic_cast<ComboBoxDelegate*>(listView()->itemDelegateForColumn(column))->startEditing(item, column);
+        ComboBoxDelegate* cbDelegate = dynamic_cast<ComboBoxDelegate*>(listView()->itemDelegateForColumn(column));
+
+        if (cbDelegate)
+        {
+            cbDelegate->startEditing(item, column);
+        }
     }
 }
 
