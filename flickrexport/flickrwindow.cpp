@@ -78,26 +78,32 @@ namespace KIPIFlickrExportPlugin
 
 FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* /*parent*/,
                            const QString& serviceName)
-            : KDialog(0)
+    : KDialog(0)
 {
     m_serviceName = serviceName;
     setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));
-    setButtons(Help|User1|Close);
+    setButtons(Help | User1 | Close);
     setDefaultButton(Close);
     setModal(false);
 
-    if (serviceName == "23") 
+    if (serviceName == "23")
+    {
         setWindowIcon(KIcon("hq"));
+    }
     else if (serviceName == "Zooomr")
+    {
         setWindowIcon(KIcon("zooomr"));
+    }
     else
+    {
         setWindowIcon(KIcon("flickr"));
+    }
 
     m_tmp                       = tmpFolder;
     m_interface                 = interface;
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
-//  m_wallet                    = 0;
+    //  m_wallet                    = 0;
     m_widget                    = new FlickrWidget(this, interface, serviceName);
     m_photoView                 = m_widget->m_photoView;
     m_albumsListComboBox        = m_widget->m_albumsListComboBox;
@@ -137,15 +143,15 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export an image collection to a "
-                                                     "Flickr / 23 / Zooomr web service."),
-                                           ki18n( "(c) 2005-2008, Vardhman Jain\n"
-                                           "(c) 2008-2009, Gilles Caulier\n"
-                                           "(c) 2009, Luka Renko" ));
+                                                 "Flickr / 23 / Zooomr web service."),
+                                           ki18n("(c) 2005-2008, Vardhman Jain\n"
+                                                 "(c) 2008-2009, Gilles Caulier\n"
+                                                 "(c) 2009, Luka Renko"));
 
-    m_about->addAuthor(ki18n( "Vardhman Jain" ), ki18n("Author and maintainer"),
+    m_about->addAuthor(ki18n("Vardhman Jain"), ki18n("Author and maintainer"),
                        "Vardhman at gmail dot com");
 
-    m_about->addAuthor(ki18n( "Gilles Caulier" ), ki18n("Developer"),
+    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
                        "caulier dot gilles at gmail dot com");
 
     disconnect(this, SIGNAL(helpClicked()),
@@ -153,7 +159,7 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
@@ -232,10 +238,14 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     kDebug() << "Calling auth methods";
 
-    if(m_token.length()< 1)
+    if (m_token.length() < 1)
+    {
         m_talker->getFrob();
+    }
     else
+    {
         m_talker->checkToken(m_token);
+    }
 
     // --------------------------------------------------------------------------
 
@@ -248,8 +258,8 @@ FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
 FlickrWindow::~FlickrWindow()
 {
-//   if (m_wallet)
-//      delete m_wallet;
+    //   if (m_wallet)
+    //      delete m_wallet;
 
     delete m_progressDlg;
     delete m_authProgressDlg;
@@ -270,9 +280,12 @@ void FlickrWindow::slotClose()
     done(Close);
 }
 
-void FlickrWindow::closeEvent(QCloseEvent *e)
+void FlickrWindow::closeEvent(QCloseEvent* e)
 {
-    if (!e) return;
+    if (!e)
+    {
+        return;
+    }
 
     writeSettings();
     m_imglst->listView()->clear();
@@ -297,7 +310,7 @@ void FlickrWindow::readSettings()
     m_stripSpaceTagsCheckBox->setChecked(grp.readEntry("Strip Space From Tags", false));
     m_stripSpaceTagsCheckBox->setEnabled(m_exportHostTagsCheckBox->isChecked());
 
-    if(!m_interface->hasFeature(KIPI::HostSupportsTags))
+    if (!m_interface->hasFeature(KIPI::HostSupportsTags))
     {
         m_exportHostTagsCheckBox->setEnabled(false);
         m_stripSpaceTagsCheckBox->setEnabled(false);
@@ -309,11 +322,21 @@ void FlickrWindow::readSettings()
     m_extendedPublicationButton->setChecked(grp.readEntry("Show Extended Publication Options", false));
 
     int safetyLevel = m_safetyLevelComboBox->findData(QVariant(grp.readEntry("Safety Level", 0)));
-    if (safetyLevel == -1) safetyLevel = 0;
+
+    if (safetyLevel == -1)
+    {
+        safetyLevel = 0;
+    }
+
     m_safetyLevelComboBox->setCurrentIndex(safetyLevel);
 
     int contentType = m_contentTypeComboBox->findData(QVariant(grp.readEntry("Content Type", 0)));
-    if (contentType == -1) contentType = 0;
+
+    if (contentType == -1)
+    {
+        contentType = 0;
+    }
+
     m_contentTypeComboBox->setCurrentIndex(contentType);
 
     if (grp.readEntry("Resize", false))
@@ -326,6 +349,7 @@ void FlickrWindow::readSettings()
         m_resizeCheckBox->setChecked(false);
         m_dimensionSpinBox->setEnabled(false);
     }
+
     m_sendOriginalCheckBox->setChecked(grp.readEntry("Send original", false));
 
     m_dimensionSpinBox->setValue(grp.readEntry("Maximum Width", 1600));
@@ -357,7 +381,7 @@ void FlickrWindow::writeSettings()
     grp.writeEntry("Maximum Width",                     m_dimensionSpinBox->value());
     grp.writeEntry("Image Quality",                     m_imageQualitySpinBox->value());
     KConfigGroup dialogGroup = config.group(QString("%1Export Dialog").arg(m_serviceName));
-    saveDialogSize(dialogGroup );
+    saveDialogSize(dialogGroup);
     config.sync();
 }
 
@@ -376,7 +400,9 @@ void FlickrWindow::slotTokenObtained(const QString& token)
     // Mutable photosets are not supported by Zooomr (Zooomr only has smart
     // folder-type photosets).
     if (m_serviceName != "Zooomr")
+    {
         m_talker->listPhotoSets();
+    }
 }
 
 void FlickrWindow::slotBusy(bool val)
@@ -384,82 +410,84 @@ void FlickrWindow::slotBusy(bool val)
     if (val)
     {
         setCursor(Qt::WaitCursor);
-//      m_newAlbumBtn->setEnabled( false );
-//      m_addPhotoButton->setEnabled( false );
+        //      m_newAlbumBtn->setEnabled( false );
+        //      m_addPhotoButton->setEnabled( false );
     }
     else
     {
         setCursor(Qt::ArrowCursor);
-//      m_newAlbumBtn->setEnabled( loggedIn );
-//      m_addPhotoButton->setEnabled( loggedIn && m_albumView->selectedItem() );
+        //      m_newAlbumBtn->setEnabled( loggedIn );
+        //      m_addPhotoButton->setEnabled( loggedIn && m_albumView->selectedItem() );
     }
 }
 
 void FlickrWindow::slotError(const QString& msg)
 {
     //m_talker->slotError(msg);
-    KMessageBox::error( this, msg );
+    KMessageBox::error(this, msg);
 }
 
 void FlickrWindow::slotUserChangeRequest()
 {
     kDebug() << "Slot Change User Request ";
     m_talker->getFrob();
-//  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
+    //  m_addPhotoButton->setEnabled(m_selectImagesButton->isChecked());
 }
 
 void FlickrWindow::slotCreateNewPhotoSet()
 {
-   /* This method is called when the photo set creation button is pressed. It
-    * summons a creation dialog for user input. When that is closed, it
-    * creates a new photo set in the local list. The id gets the form of
-    * UNDEFINED_ followed by a number, to indicate that it doesn't exist on
-    * Flickr yet. */
+    /* This method is called when the photo set creation button is pressed. It
+     * summons a creation dialog for user input. When that is closed, it
+     * creates a new photo set in the local list. The id gets the form of
+     * UNDEFINED_ followed by a number, to indicate that it doesn't exist on
+     * Flickr yet. */
 
-   // Call the dialog
-   QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
-   int resp = dlg->exec();
+    // Call the dialog
+    QPointer<FlickrNewPhotoSetDialog> dlg = new FlickrNewPhotoSetDialog(kapp->activeWindow());
+    int resp = dlg->exec();
 
-   if ((resp == QDialog::Accepted) && (!dlg->titleEdit->text().isEmpty()))
-   {
-      // Create a new photoset with title and description from the dialog.
-      FPhotoSet fps;
-      fps.title       = dlg->titleEdit->text();
-      fps.description = dlg->descriptionEdit->toPlainText();
+    if ((resp == QDialog::Accepted) && (!dlg->titleEdit->text().isEmpty()))
+    {
+        // Create a new photoset with title and description from the dialog.
+        FPhotoSet fps;
+        fps.title       = dlg->titleEdit->text();
+        fps.description = dlg->descriptionEdit->toPlainText();
 
-      // Lets find an UNDEFINED_ style id that isn't taken yet.s
-      QString id;
-      int i                               = 0;
-      id                                  = "UNDEFINED_" + QString::number(i);
-      QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
+        // Lets find an UNDEFINED_ style id that isn't taken yet.s
+        QString id;
+        int i                               = 0;
+        id                                  = "UNDEFINED_" + QString::number(i);
+        QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
 
-      while(it != m_talker->m_photoSetsList->end())
-      {
-          FPhotoSet fps = *it;
-          if (fps.id == id)
-          {
-              id = "UNDEFINED_" + QString::number(++i);
-              it = m_talker->m_photoSetsList->begin();
-          }
-          ++it;
-      }
+        while (it != m_talker->m_photoSetsList->end())
+        {
+            FPhotoSet fps = *it;
 
-      fps.id = id;
+            if (fps.id == id)
+            {
+                id = "UNDEFINED_" + QString::number(++i);
+                it = m_talker->m_photoSetsList->begin();
+            }
 
-      kDebug() << "Created new photoset with temporary id " << id;
-      // Append the new photoset to the list.
-      m_talker->m_photoSetsList->prepend(fps);
-      m_talker->m_selectedPhotoSet = fps;
+            ++it;
+        }
 
-      // Re-populate the photo sets combo box.
-      slotPopulatePhotoSetComboBox();
-   }
-   else
-   {
-       kDebug() << "New Photoset creation aborted ";
-   }
+        fps.id = id;
 
-   delete dlg;
+        kDebug() << "Created new photoset with temporary id " << id;
+        // Append the new photoset to the list.
+        m_talker->m_photoSetsList->prepend(fps);
+        m_talker->m_selectedPhotoSet = fps;
+
+        // Re-populate the photo sets combo box.
+        slotPopulatePhotoSetComboBox();
+    }
+    else
+    {
+        kDebug() << "New Photoset creation aborted ";
+    }
+
+    delete dlg;
 }
 
 void FlickrWindow::slotAuthCancel()
@@ -497,7 +525,7 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
         QLinkedList<FPhotoSet>::iterator it = list->begin();
         int index = 2, curr_index = 0;
 
-        while(it != list->end())
+        while (it != list->end())
         {
             FPhotoSet photoSet = *it;
             QString name       = photoSet.title;
@@ -505,7 +533,9 @@ void FlickrWindow::slotPopulatePhotoSetComboBox()
             QVariant id        = QVariant(photoSet.id);
 
             if (id == m_talker->m_selectedPhotoSet.id)
+            {
                 curr_index = index;
+            }
 
             m_albumsListComboBox->insertItem(index++, name, id);
             ++it;
@@ -524,7 +554,9 @@ void FlickrWindow::slotUser1()
     m_widget->m_tab->setCurrentIndex(FlickrWidget::FILELIST);
 
     if (m_imglst->imageUrls().isEmpty())
+    {
         return;
+    }
 
     typedef QPair<KUrl, FPhotoInfo> Pair;
 
@@ -532,7 +564,7 @@ void FlickrWindow::slotUser1()
 
     for (int i = 0; i < m_imglst->listView()->topLevelItemCount(); ++i)
     {
-        FlickrListViewItem *lvItem = dynamic_cast<FlickrListViewItem*>
+        FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>
                                      (m_imglst->listView()->topLevelItem(i));
 
         KIPI::ImageInfo info = m_interface->info(lvItem->url());
@@ -554,14 +586,15 @@ void FlickrWindow::slotUser1()
 
         // Tags from the dialog
         itTags = tagsFromDialog.begin();
-        while(itTags != tagsFromDialog.end())
+
+        while (itTags != tagsFromDialog.end())
         {
             allTags.append(*itTags);
             ++itTags;
         }
 
         // Tags from the database
-        if(m_exportHostTagsCheckBox->isChecked())
+        if (m_exportHostTagsCheckBox->isChecked())
         {
             QMap <QString, QVariant> attribs = info.attributes();
             QStringList tagsFromDatabase;
@@ -569,7 +602,7 @@ void FlickrWindow::slotUser1()
             tagsFromDatabase = attribs["tags"].toStringList();
             itTags           = tagsFromDatabase.begin();
 
-            while(itTags != tagsFromDatabase.end())
+            while (itTags != tagsFromDatabase.end())
             {
                 allTags.append(*itTags);
                 ++itTags;
@@ -579,7 +612,7 @@ void FlickrWindow::slotUser1()
         // Tags from the list view.
         itTags = tagsFromList.begin();
 
-        while(itTags != tagsFromList.end())
+        while (itTags != tagsFromList.end())
         {
             allTags.append(*itTags);
             ++itTags;
@@ -599,7 +632,7 @@ void FlickrWindow::slotUser1()
         // Debug the tag list.
         itTags = allTags.begin();
 
-        while(itTags != allTags.end())
+        while (itTags != allTags.end())
         {
             kDebug() << "Tags list: " << (*itTags);
             ++itTags;
@@ -635,20 +668,23 @@ void FlickrWindow::slotAddPhotoNext()
     {
         // mutable photosets are not supported by Zooomr (Zooomr only has smart folder-type photosets)
         QString selectedPhotoSetId = m_albumsListComboBox->itemData(m_albumsListComboBox->currentIndex()).toString();
+
         if (selectedPhotoSetId.isEmpty())
         {
-           m_talker->m_selectedPhotoSet = FPhotoSet();
+            m_talker->m_selectedPhotoSet = FPhotoSet();
         }
         else
         {
             QLinkedList<FPhotoSet>::iterator it = m_talker->m_photoSetsList->begin();
-            while(it != m_talker->m_photoSetsList->end())
+
+            while (it != m_talker->m_photoSetsList->end())
             {
                 if (it->id == selectedPhotoSetId)
                 {
                     m_talker->m_selectedPhotoSet = *it;
                     break;
                 }
+
                 ++it;
             }
         }
@@ -667,10 +703,12 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1",pathComments.first.fileName()));
+    m_progressDlg->setLabelText(i18n("Uploading file %1", pathComments.first.fileName()));
 
     if (m_progressDlg->isHidden())
+    {
         m_progressDlg->show();
+    }
 }
 
 void FlickrWindow::slotAddPhotoSucceeded()
@@ -687,13 +725,13 @@ void FlickrWindow::slotAddPhotoSucceeded()
 void FlickrWindow::slotListPhotoSetsFailed(const QString& msg)
 {
     KMessageBox::error(this,
-                 i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
+                       i18n("Failed to Fetch Photoset information from %1. %2\n", m_serviceName, msg));
 }
 void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 {
     if (KMessageBox::warningContinueCancel(this,
-                     i18n("Failed to upload photo into %1. %2\nDo you want to continue?", m_serviceName, msg))
-                     != KMessageBox::Continue)
+                                           i18n("Failed to upload photo into %1. %2\nDo you want to continue?", m_serviceName, msg))
+        != KMessageBox::Continue)
     {
         m_uploadQueue.clear();
         m_progressDlg->reset();
@@ -713,11 +751,11 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
 
 void FlickrWindow::slotAddPhotoSetSucceeded()
 {
-  /* Method called when a photo set has been successfully created on Flickr.
-   * It functions to restart the normal flow after a photo set has been created
-   * on Flickr. */
-  slotPopulatePhotoSetComboBox();
-  slotAddPhotoSucceeded();
+    /* Method called when a photo set has been successfully created on Flickr.
+     * It functions to restart the normal flow after a photo set has been created
+     * on Flickr. */
+    slotPopulatePhotoSetComboBox();
+    slotAddPhotoSucceeded();
 }
 
 void FlickrWindow::slotAddPhotoCancel()
