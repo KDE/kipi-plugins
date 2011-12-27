@@ -104,14 +104,14 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl, QPixmap)),
-                this, SLOT(slotThumbnail(KUrl, QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
+                this, SLOT(slotThumbnail(KUrl,QPixmap)));
     }
 
     d->loadRawThumb = new LoadRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
-            this, SLOT(slotRawThumb(KUrl, QImage)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
+            this, SLOT(slotRawThumb(KUrl,QImage)));
 }
 
 ImageDialogPreview::~ImageDialogPreview()
