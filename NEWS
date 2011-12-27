@@ -39,6 +39,7 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 031 ==> 271315 : GUI improvement for manual geotagging.
 032 ==> 249930 : Support for multi-monitor view [patch].
 033 ==> 275180 : Geolocation window unintuitive and "overloaded".
-034 ==> 
+034 ==> 209365 : Geolocation Max. number of API calls per day reached.
+035 ==> 
 
 
