@@ -6,8 +6,7 @@
 # @date   2011-12-28
 # @brief  threadweaver api test application
 #
-# @author Copyright (C) 2010-2011 by A Janardhan Reddy
-#         annapareddyjanardhanreddy@gmail.com
+# @author Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail.com>
 #
 # This program is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General
@@ -22,15 +21,16 @@
 #
 # ============================================================
 
-include_directories( ${KDE4_INCLUDES}
+INCLUDE_DIRECTORIES(${KDE4_INCLUDES}
                     ${JPEG_INCLUDE_DIR}
-                    ${QT_INCLUDE_DIR} ${QT_QTCORE_INCLUDE_DIR}
+                    ${QT_INCLUDE_DIR}
+                    ${QT_QTCORE_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/transform
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/libjpeg
                    )
 
-set(multithread_SRCS
+SET(multithread_SRCS
     main.cpp
     weaverobservertest.cpp imageselector.cpp actionthread.cpp
     ../../jpeglossless/transform/imagerotate.cpp
@@ -41,8 +41,16 @@ set(multithread_SRCS
     ../../common/libkipiplugins/tools/kpwritehelp.cpp
 )
 
-kde4_add_executable(multithread ${multithread_SRCS})
+KDE4_ADD_EXECUTABLE(multithread ${multithread_SRCS})
 
-target_link_libraries(multithread ${QT_QTGUI_LIBRARY} ${QT_AND_KDECORE_LIBS}  ${KDE4_KPARTS_LIBS} ${JPEG_LIBRARY} ${KEXIV2_LIBRARIES} ${KDCRAW_LIBRARIES} threadweaver)
+TARGET_LINK_LIBRARIES(multithread
+                      ${QT_QTGUI_LIBRARY}
+                      ${QT_AND_KDECORE_LIBS}
+                      ${KDE4_KPARTS_LIBS}
+                      ${JPEG_LIBRARY}
+                      ${KEXIV2_LIBRARIES}
+                      ${KDCRAW_LIBRARIES}
+                      threadweaver
+                     )
 
-install(TARGETS multithread DESTINATION ${BIN_INSTALL_DIR})
+INSTALL(TARGETS multithread DESTINATION ${BIN_INSTALL_DIR})
