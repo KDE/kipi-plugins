@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "actionthread.h"
+#include "actionthread.moc"
 
 // Qt includes
 
@@ -48,20 +48,20 @@ public:
 
     ActionThreadPriv()
     {
-        running             = false;
-        weaverRunning       = false;
+        running       = false;
+        weaverRunning = false;
     }
 
-    bool             running;
-    bool             weaverRunning;
+    bool                  running;
+    bool                  weaverRunning;
 
-    QMutex           mutex;
+    QMutex                mutex;
 
-    QWaitCondition   condVar,condVarJobs;
+    QWaitCondition        condVar, condVarJobs;
 
-    QList<JobCollection*>     todo;
+    QList<JobCollection*> todo;
 
-    Weaver weaver;
+    Weaver                weaver;
 };
 
 class Task : public Job
@@ -73,36 +73,43 @@ public:
     {
     }
 
-    QString                    filePath;
-    QString                    errString;
+    QString                              filePath;
+    QString                              errString;
     KIPIJPEGLossLessPlugin::Action       action;
     KIPIJPEGLossLessPlugin::RotateAction rotAction;
+
 protected:
 
     void run()
     {
         switch (action)
         {
-        case KIPIJPEGLossLessPlugin::Rotate:
-        {
-            KIPIJPEGLossLessPlugin::ImageRotate imageRotate;
-            imageRotate.rotate(filePath, rotAction, errString, false);
+            case KIPIJPEGLossLessPlugin::Rotate:
+            {
+                KIPIJPEGLossLessPlugin::ImageRotate imageRotate;
+                imageRotate.rotate(filePath, rotAction, errString, false);
 
-            break;
-        }
-        case KIPIJPEGLossLessPlugin::GrayScale:
-        {
-            KIPIJPEGLossLessPlugin::ImageGrayScale imageGrayScale;
-            imageGrayScale.image2GrayScale(filePath, errString, false);
+                break;
+            }
+            case KIPIJPEGLossLessPlugin::Flip:
+            {
+                kError() << "Flip action not managed in this test program...";
 
-            break;
-        }
+                break;
+            }
+            case KIPIJPEGLossLessPlugin::GrayScale:
+            {
+                KIPIJPEGLossLessPlugin::ImageGrayScale imageGrayScale;
+                imageGrayScale.image2GrayScale(filePath, errString, false);
+
+                break;
+            }
         }
     }
 };
 
 ActionThread::ActionThread(QObject* parent)
-        : QThread(parent),d(new ActionThreadPriv)
+    : QThread(parent),d(new ActionThreadPriv)
 {
     const int maximumNumberOfThreads = 4;
     m_log = new WeaverObserverTest(this);
@@ -132,35 +139,43 @@ void ActionThread::slotFinished()
 
 void ActionThread::slotJobDone(ThreadWeaver::Job *job)
 {
-    Task *task = static_cast<Task *>(job);
+    Task* task = static_cast<Task*>(job);
+
     if(task->errString.isEmpty())
-    kError() << "Job done:" << task->filePath << "\n";
+        kError() << "Job done:" << task->filePath << "\n";
     else
-    kError() << "could n't complete the job: " << task->filePath << " Error: " << task->errString << "\n";
+        kError() << "could n't complete the job: " << task->filePath << " Error: " << task->errString << "\n";
+
     delete job;
 }
 
 void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
 {
-    Task *task = static_cast<Task *>(job);
+    Task* task = static_cast<Task*>(job);
     kError() << "Job Started:" << task->filePath  << "\n";
 }
 
 void ActionThread::rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::RotateAction val)
 {
-    JobCollection *collection = new JobCollection(this);
-    for (KUrl::List::const_iterator it = urlList.constBegin();
-            it != urlList.constEnd(); ++it )
-    {
-        Task* t = new Task;
-        t->filePath               = (*it).toLocalFile();
-        t->action                 = KIPIJPEGLossLessPlugin::Rotate;
-        t->rotAction              = val;
+    JobCollection* collection = new JobCollection(this);
 
-        connect(t,SIGNAL(started(ThreadWeaver::Job*)),this,SLOT(slotJobStarted(ThreadWeaver::Job*)));
-        connect(t,SIGNAL(done(ThreadWeaver::Job*)),this,SLOT(slotJobDone(ThreadWeaver::Job*)));
+    for (KUrl::List::const_iterator it = urlList.constBegin();
+         it != urlList.constEnd(); ++it )
+    {
+        Task* t      = new Task;
+        t->filePath  = (*it).toLocalFile();
+        t->action    = KIPIJPEGLossLessPlugin::Rotate;
+        t->rotAction = val;
+
+        connect(t, SIGNAL(started(ThreadWeaver::Job*)),
+                this, SLOT(slotJobStarted(ThreadWeaver::Job*)));
+
+        connect(t, SIGNAL(done(ThreadWeaver::Job*)),
+                this, SLOT(slotJobDone(ThreadWeaver::Job*)));
+
         collection->addJob(t);
     }
+
     QMutexLocker lock(&d->mutex);
     d->todo << collection;
     d->condVar.wakeAll();
@@ -168,18 +183,23 @@ void ActionThread::rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::Rot
 
 void ActionThread::convert2grayscale(const KUrl::List& urlList)
 {
-    JobCollection *collection = new JobCollection(this);
+    JobCollection* collection = new JobCollection(this);
     for (KUrl::List::const_iterator it = urlList.constBegin();
-            it != urlList.constEnd(); ++it )
+         it != urlList.constEnd(); ++it )
     {
-        Task* t = new Task;
-        t->filePath               = (*it).toLocalFile();
-        t->action                 = KIPIJPEGLossLessPlugin::GrayScale;
+        Task* t     = new Task;
+        t->filePath = (*it).toLocalFile();
+        t->action   = KIPIJPEGLossLessPlugin::GrayScale;
 
-        connect(t,SIGNAL(started(ThreadWeaver::Job*)),this,SLOT(slotJobStarted(ThreadWeaver::Job*)));
-        connect(t,SIGNAL(done(ThreadWeaver::Job*)),this,SLOT(slotJobDone(ThreadWeaver::Job*)));
+        connect(t, SIGNAL(started(ThreadWeaver::Job*)),
+                this, SLOT(slotJobStarted(ThreadWeaver::Job*)));
+
+        connect(t, SIGNAL(done(ThreadWeaver::Job*)),
+                this, SLOT(slotJobDone(ThreadWeaver::Job*)));
+
         collection->addJob(t);
     }
+
     QMutexLocker lock(&d->mutex);
     d->todo << collection;
     d->condVar.wakeAll();
@@ -189,7 +209,7 @@ void ActionThread::cancel()
 {
     QMutexLocker lock(&d->mutex);
     d->todo.clear();
-    d->running = false;
+    d->running       = false;
     d->weaverRunning = true;
     d->weaver.dequeue();
     d->condVar.wakeAll();
@@ -200,29 +220,38 @@ void ActionThread::run()
 {
     d->running = true;
     kError() << "In action thread Run";
+
     while (d->running)
     {
         JobCollection* t = 0;
         {
             QMutexLocker lock(&d->mutex);
-            if (!d->todo.isEmpty()) {
+            if (!d->todo.isEmpty())
+            {
                 if (!d->weaverRunning)
                     t = d->todo.takeFirst();
                 else
                     d->condVarJobs.wait(&d->mutex);
             }
             else
+            {
                 d->condVar.wait(&d->mutex);
+            }
         }
 
         if (t)
         {
-            connect(t,SIGNAL(done(ThreadWeaver::Job*)),this,SLOT(slotFinished()));
-            connect(t,SIGNAL(done(ThreadWeaver::Job*)),t,SLOT(deleteLater()));
+            connect(t, SIGNAL(done(ThreadWeaver::Job*)),
+                    this, SLOT(slotFinished()));
+
+            connect(t, SIGNAL(done(ThreadWeaver::Job*)),
+                    t, SLOT(deleteLater()));
+
             d->weaver.enqueue(t);
             d->weaverRunning = true;
         }
     }
+
     d->weaver.finish();
     kError() << "Exiting Action Thread";
 }

@@ -36,7 +36,6 @@
 
 #include <threadweaver/Job.h>
 
-
 class ActionThread : public QThread
 {
     Q_OBJECT
@@ -54,17 +53,18 @@ protected:
 
     void run();
 
+private Q_SLOTS:
+
+    void slotFinished();
+    void slotJobDone(ThreadWeaver::Job*);
+    void slotJobStarted(ThreadWeaver::Job*);
+
 private:
+
+    WeaverObserverTest* m_log;
 
     class ActionThreadPriv;
     ActionThreadPriv* const d;
-    WeaverObserverTest *m_log;
-
-private Q_SLOTS:
-    void slotFinished();
-    void slotJobDone (ThreadWeaver::Job*);
-    void slotJobStarted (ThreadWeaver::Job*);
-
 };
 
 #endif // ACTIONTHREAD_H
