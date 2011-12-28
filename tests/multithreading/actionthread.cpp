@@ -27,18 +27,18 @@
 #include <QMutexLocker>
 #include <QMutex>
 #include <QWaitCondition>
-#include <QThread>
+
+// KDE includes
+
+#include <kdebug.h>
+#include <threadweaver/ThreadWeaver.h>
+#include <threadweaver/JobCollection.h>
 
 // Local includes
 
 #include "imagerotate.h"
 #include "convert2grayscale.h"
-
-// ThreadWeaver includes
-#include <threadweaver/ThreadWeaver.h>
-#include <threadweaver/JobCollection.h>
-
-#include <kdebug.h>
+#include "weaverobservertest.h"
 
 using namespace ThreadWeaver;
 
@@ -50,6 +50,7 @@ public:
     {
         running       = false;
         weaverRunning = false;
+        log           = 0;
     }
 
     bool                  running;
@@ -57,11 +58,14 @@ public:
 
     QMutex                mutex;
 
-    QWaitCondition        condVar, condVarJobs;
+    QWaitCondition        condVar;
+    QWaitCondition        condVarJobs;
 
     QList<JobCollection*> todo;
 
     Weaver                weaver;
+    WeaverObserverTest*   log;
+
 };
 
 class Task : public Job
@@ -69,7 +73,7 @@ class Task : public Job
 public:
 
     Task(QObject *parent = 0)
-            :Job(parent)
+        :Job(parent)
     {
     }
 
@@ -112,8 +116,8 @@ ActionThread::ActionThread(QObject* parent)
     : QThread(parent),d(new ActionThreadPriv)
 {
     const int maximumNumberOfThreads = 4;
-    m_log = new WeaverObserverTest(this);
-    d->weaver.registerObserver(m_log);
+    d->log = new WeaverObserverTest(this);
+    d->weaver.registerObserver(d->log);
     d->weaver.setMaximumNumberOfThreads(maximumNumberOfThreads);
     kError() << "Starting Main Thread";
 }
@@ -126,8 +130,9 @@ ActionThread::~ActionThread()
     // wait for the thread to finish
     wait();
 
+    delete d->log;
     delete d;
-    delete m_log;
+
     kError() << "Ending Main Thread";
 }
 
@@ -142,9 +147,13 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
     Task* task = static_cast<Task*>(job);
 
     if(task->errString.isEmpty())
+    {
         kError() << "Job done:" << task->filePath << "\n";
+    }
     else
-        kError() << "could n't complete the job: " << task->filePath << " Error: " << task->errString << "\n";
+    {
+        kError() << "could n't complete the job: " << task->filePath << " Error: " << task->errString << endl;
+    }
 
     delete job;
 }
@@ -152,7 +161,7 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
 void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
 {
     Task* task = static_cast<Task*>(job);
-    kError() << "Job Started:" << task->filePath  << "\n";
+    kError() << "Job Started:" << task->filePath  << endl;
 }
 
 void ActionThread::rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::RotateAction val)
@@ -184,6 +193,7 @@ void ActionThread::rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::Rot
 void ActionThread::convert2grayscale(const KUrl::List& urlList)
 {
     JobCollection* collection = new JobCollection(this);
+
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
@@ -229,9 +239,13 @@ void ActionThread::run()
             if (!d->todo.isEmpty())
             {
                 if (!d->weaverRunning)
+                {
                     t = d->todo.takeFirst();
+                }
                 else
+                {
                     d->condVarJobs.wait(&d->mutex);
+                }
             }
             else
             {

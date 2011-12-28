@@ -30,11 +30,11 @@
 // KDE includes
 
 #include <kurl.h>
+#include <threadweaver/Job.h>
+
+// Local includes
 
 #include "actions.h"
-#include "weaverobservertest.h"
-
-#include <threadweaver/Job.h>
 
 class ActionThread : public QThread
 {
@@ -42,7 +42,7 @@ class ActionThread : public QThread
 
 public:
 
-    ActionThread(QObject *parent=0);
+    ActionThread(QObject* parent=0);
     ~ActionThread();
 
     void rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::RotateAction val = KIPIJPEGLossLessPlugin::Rot180);
@@ -60,8 +60,6 @@ private Q_SLOTS:
     void slotJobStarted(ThreadWeaver::Job*);
 
 private:
-
-    WeaverObserverTest* m_log;
 
     class ActionThreadPriv;
     ActionThreadPriv* const d;
