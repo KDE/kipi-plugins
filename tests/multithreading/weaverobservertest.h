@@ -23,24 +23,31 @@
 #ifndef WEAVEROBSERVERTEST_H
 #define WEAVEROBSERVERTEST_H
 
+// KDE includes
+
 #include <threadweaver/Job.h>
 #include <threadweaver/WeaverObserver.h>
 #include <threadweaver/State.h>
 #include <threadweaver/Thread.h>
 
 /** WeaverObserverTest is a simple test of the actionThread class that
-    prints debug messages when signals are received. */
+    prints debug messages when signals are received.
+*/
 class WeaverObserverTest : public ThreadWeaver::WeaverObserver
 {
     Q_OBJECT
+
 public:
-    WeaverObserverTest ( QObject *parent=0 );
+
+    WeaverObserverTest(QObject* parent=0);
 
 protected Q_SLOTS:
-    void slotWeaverStateChanged ( ThreadWeaver::State* );
-    void slotThreadStarted ( ThreadWeaver::Thread* );
-    void slotThreadBusy ( ThreadWeaver::Thread*, ThreadWeaver::Job* );
-    void slotThreadSuspended ( ThreadWeaver::Thread* );
-    void slotThreadExited ( ThreadWeaver::Thread* );
+
+    void slotWeaverStateChanged(ThreadWeaver::State*);
+    void slotThreadStarted(ThreadWeaver::Thread*);
+    void slotThreadBusy(ThreadWeaver::Thread*, ThreadWeaver::Job*);
+    void slotThreadSuspended(ThreadWeaver::Thread*);
+    void slotThreadExited(ThreadWeaver::Thread*);
 };
+
 #endif // WEAVEROBSERVERTEST_H

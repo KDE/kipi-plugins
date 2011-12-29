@@ -20,48 +20,54 @@
  *
  * ============================================================ */
 
-#include "weaverobservertest.h"
+#include "weaverobservertest.moc"
+
+// KDE includes
 
 #include <kdebug.h>
 
 using namespace ThreadWeaver;
 
-WeaverObserverTest::WeaverObserverTest ( QObject *parent )
-        : WeaverObserver ( parent )
+WeaverObserverTest::WeaverObserverTest(QObject* parent)
+    : WeaverObserver(parent)
 {
-    connect ( this,  SIGNAL ( weaverStateChanged ( ThreadWeaver::State* ) ),
-              SLOT ( slotWeaverStateChanged ( ThreadWeaver::State* ) ) );
-    connect ( this,  SIGNAL ( threadStarted( ThreadWeaver::Thread* ) ),
-              SLOT ( slotThreadStarted ( ThreadWeaver::Thread* ) ) );
-    connect ( this,  SIGNAL ( threadBusy ( ThreadWeaver::Thread *,  ThreadWeaver::Job* ) ),
-              SLOT ( slotThreadBusy ( ThreadWeaver::Thread *,  ThreadWeaver::Job* ) ) );
-    connect ( this,  SIGNAL ( threadSuspended ( ThreadWeaver::Thread* ) ),
-              SLOT ( slotThreadSuspended ( ThreadWeaver::Thread* ) ) );
-    connect ( this,  SIGNAL ( threadExited ( ThreadWeaver::Thread* ) ),
-              SLOT ( slotThreadExited ( ThreadWeaver::Thread* ) ) );
+    connect(this, SIGNAL(weaverStateChanged(ThreadWeaver::State*)),
+            SLOT(slotWeaverStateChanged(ThreadWeaver::State*)));
+    
+    connect(this, SIGNAL(threadStarted(ThreadWeaver::Thread*)),
+            SLOT(slotThreadStarted(ThreadWeaver::Thread*)));
+
+    connect(this, SIGNAL(threadBusy(ThreadWeaver::Thread*, ThreadWeaver::Job*)),
+            SLOT(slotThreadBusy(ThreadWeaver::Thread*, ThreadWeaver::Job*)));
+
+    connect(this, SIGNAL(threadSuspended(ThreadWeaver::Thread*)),
+            SLOT(slotThreadSuspended(ThreadWeaver::Thread*)));
+
+    connect(this, SIGNAL(threadExited(ThreadWeaver::Thread*)),
+            SLOT(slotThreadExited(ThreadWeaver::Thread*)));
 }
 
-void WeaverObserverTest::slotWeaverStateChanged ( State *state )
+void WeaverObserverTest::slotWeaverStateChanged(State* state)
 {
-    kError() << "WeaverObserverTest: thread state changed to " << state->stateName();
+    kDebug() << "WeaverObserverTest: thread state changed to " << state->stateName();
 }
 
-void WeaverObserverTest::slotThreadStarted ( Thread* th )
+void WeaverObserverTest::slotThreadStarted(Thread* th)
 {
-    kError() << "WeaverObserverTest: thread " << th->id()  <<" started.\n";
+    kDebug() << "WeaverObserverTest: thread " << th->id()  <<" started" << endl;
 }
 
-void WeaverObserverTest::slotThreadBusy ( Thread *th,  Job* job)
+void WeaverObserverTest::slotThreadBusy(Thread* th, Job* /*job*/)
 {
-    kError() << "WeaverObserverTest: thread " << th->id()  <<" busy.\n";
+    kDebug() << "WeaverObserverTest: thread " << th->id()  << " busy" << endl;
 }
 
-void WeaverObserverTest::slotThreadSuspended ( Thread *th )
+void WeaverObserverTest::slotThreadSuspended(Thread* th )
 {
-    kError() << "WeaverObserverTest: thread " << th->id()  <<" suspended.\n";
+    kDebug() << "WeaverObserverTest: thread " << th->id()  << " suspended" << endl;
 }
 
-void WeaverObserverTest::slotThreadExited ( Thread *th )
+void WeaverObserverTest::slotThreadExited(Thread* th)
 {
-    kError() << "WeaverObserverTest: thread " << th->id()  <<" exited.\n";
+    kDebug() << "WeaverObserverTest: thread " << th->id()  << " exited" << endl;
 }
