@@ -56,4 +56,5 @@ void ImageSelector::selectImages()
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
     mainThread->rotate(selectedImages);
+    mainThread->start();
 }
