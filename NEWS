@@ -42,4 +42,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 034 ==> 209365 : Geolocation Max. number of API calls per day reached.
 035 ==> 289725 : Crash during upload on Picasaweb.
 036 ==> 212542 : Advanced slideshow doesn't respect exif orientation of ORF images.
-037 ==> 
+037 ==> 231600 : Uploading video files results in spurious warnings.
+038 ==> 
+
