@@ -20,23 +20,28 @@
  *
  * ============================================================ */
 
-#include "imageselector.h"
+// KDE includes
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 
-// implements rotation of images using threadWeaver api
-// rotates the selected images by 180
+// Local includes
+
+#include "imageselector.h"
+
+/** Implements rotation of images using threadWeaver api
+    rotates the selected images by 180.
+*/
 int main(int argc, char* argv[])
 {
-    const KAboutData aboutData("multiThreadTest","multiThreadTest",ki18n("multiThreadTest"),"1.0");
+    const KAboutData aboutData("multiThreadTest", "multiThreadTest", ki18n("multiThreadTest"), "1.0");
 
     KCmdLineArgs::init(argc, argv, &aboutData);
 
     KApplication app;
     //A simple gui to select images
-    ImageSelector *selector = new ImageSelector();
+    ImageSelector* selector = new ImageSelector();
     selector->show();
     app.exec();
     return 0;
