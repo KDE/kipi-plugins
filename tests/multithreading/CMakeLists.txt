@@ -21,36 +21,39 @@
 #
 # ============================================================
 
-INCLUDE_DIRECTORIES(${KDE4_INCLUDES}
-                    ${JPEG_INCLUDE_DIR}
-                    ${QT_INCLUDE_DIR}
-                    ${QT_QTCORE_INCLUDE_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/plugin
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/transform
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/libjpeg
-                   )
+SET(THREADWEAVER_FOUND ${KDE4_THREADWEAVER_LIBRARIES})
+IF(THREADWEAVER_FOUND)
+    INCLUDE_DIRECTORIES(${KDE4_INCLUDES}
+                        ${JPEG_INCLUDE_DIR}
+                        ${QT_INCLUDE_DIR}
+                        ${QT_QTCORE_INCLUDE_DIR}
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/plugin
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/transform
+                        ${CMAKE_CURRENT_SOURCE_DIR}/../../jpeglossless/libjpeg
+                       )
 
-SET(multithread_SRCS
-    main.cpp
-    weaverobservertest.cpp imageselector.cpp actionthread.cpp
-    ../../jpeglossless/transform/imagerotate.cpp
-    ../../jpeglossless/transform/convert2grayscale.cpp
-    ../../jpeglossless/libjpeg/transupp.cpp
-    ../../jpeglossless/plugin/utils.cpp
-    ../../jpeglossless/transform/jpegtransform.cpp
-    ../../common/libkipiplugins/tools/kpwritehelp.cpp
-)
+    SET(multithread_SRCS
+        main.cpp
+        weaverobservertest.cpp imageselector.cpp actionthread.cpp
+        ../../jpeglossless/transform/imagerotate.cpp
+        ../../jpeglossless/transform/convert2grayscale.cpp
+        ../../jpeglossless/libjpeg/transupp.cpp
+        ../../jpeglossless/plugin/utils.cpp
+        ../../jpeglossless/transform/jpegtransform.cpp
+        ../../common/libkipiplugins/tools/kpwritehelp.cpp
+    )
 
-KDE4_ADD_EXECUTABLE(multithread ${multithread_SRCS})
+    KDE4_ADD_EXECUTABLE(multithread ${multithread_SRCS})
 
-TARGET_LINK_LIBRARIES(multithread
-                      ${QT_QTGUI_LIBRARY}
-                      ${QT_AND_KDECORE_LIBS}
-                      ${KDE4_KPARTS_LIBS}
-                      ${JPEG_LIBRARY}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      threadweaver
-                     )
+    TARGET_LINK_LIBRARIES(multithread
+                          ${QT_QTGUI_LIBRARY}
+                          ${QT_AND_KDECORE_LIBS}
+                          ${KDE4_KPARTS_LIBS}
+                          ${JPEG_LIBRARY}
+                          ${KEXIV2_LIBRARIES}
+                          ${KDCRAW_LIBRARIES}
+                          ${KDE4_THREADWEAVER_LIBRARIES}
+                         )
 
-INSTALL(TARGETS multithread DESTINATION ${BIN_INSTALL_DIR})
+    INSTALL(TARGETS multithread DESTINATION ${BIN_INSTALL_DIR})
+ENDIF(THREADWEAVER_FOUND)
