@@ -22,10 +22,6 @@
 
 #include "imageselector.moc"
 
-// Qt includes
-
-#include <QPushButton>
-
 // KDE includes
 
 #include <kurl.h>
@@ -37,24 +33,24 @@
 
 ImageSelector::ImageSelector()
 {
-    QPushButton* button = new QPushButton(this);
-    button->setText("Select Images");
+    setText("Select Images");
 
-    connect(button, SIGNAL(clicked(bool)),
+    connect(this, SIGNAL(clicked(bool)),
             this, SLOT(selectImages()));
 
-    mainThread = new ActionThread(this);
-    mainThread->start();
+    m_mainThread = new ActionThread(this);
 }
 
 void ImageSelector::selectImages()
 {
     KUrl::List selectedImages = KIPIPlugins::ImageDialog::getImageUrls(this, 0);
-
+    if (selectedImages.isEmpty()) return;
+    
     kDebug() << selectedImages;
-
+    setDisabled(true);
+    
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
-    mainThread->rotate(selectedImages);
-    mainThread->start();
+    m_mainThread->rotate(selectedImages);
+    m_mainThread->start();
 }
