@@ -22,7 +22,9 @@
 # ============================================================
 
 SET(THREADWEAVER_FOUND ${KDE4_THREADWEAVER_LIBRARIES})
+
 IF(THREADWEAVER_FOUND)
+
     INCLUDE_DIRECTORIES(${KDE4_INCLUDES}
                         ${JPEG_INCLUDE_DIR}
                         ${QT_INCLUDE_DIR}
@@ -53,7 +55,9 @@ IF(THREADWEAVER_FOUND)
                           ${KEXIV2_LIBRARIES}
                           ${KDCRAW_LIBRARIES}
                           ${KDE4_THREADWEAVER_LIBRARIES}
+                          kipiplugins
                          )
 
     INSTALL(TARGETS multithread DESTINATION ${BIN_INSTALL_DIR})
+
 ENDIF(THREADWEAVER_FOUND)
