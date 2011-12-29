@@ -73,7 +73,7 @@ class Task : public Job
 {
 public:
 
-    Task(QObject *parent = 0)
+    Task(QObject* parent = 0)
         :Job(parent)
     {
     }
@@ -98,7 +98,7 @@ protected:
             }
             case KIPIJPEGLossLessPlugin::Flip:
             {
-                kError() << "Flip action not managed in this test program...";
+                kDebug() << "Flip action not managed in this test program...";
 
                 break;
             }
@@ -120,12 +120,12 @@ ActionThread::ActionThread(QObject* parent)
     d->log = new WeaverObserverTest(this);
     d->weaver.registerObserver(d->log);
     d->weaver.setMaximumNumberOfThreads(maximumNumberOfThreads);
-    kError() << "Starting Main Thread";
+    kDebug() << "Starting Main Thread";
 }
 
 ActionThread::~ActionThread()
 {
-    kError() << "calling action thread destructor";
+    kDebug() << "calling action thread destructor";
     // cancel the thread
     cancel();
     // wait for the thread to finish
@@ -134,7 +134,7 @@ ActionThread::~ActionThread()
     delete d->log;
     delete d;
 
-    kError() << "Ending Main Thread";
+    kDebug() << "Ending Main Thread";
 }
 
 void ActionThread::slotFinished()
@@ -149,11 +149,11 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
 
     if(task->errString.isEmpty())
     {
-        kError() << "Job done:" << task->filePath << "\n";
+        kDebug() << "Job done:" << task->filePath << "\n";
     }
     else
     {
-        kError() << "could n't complete the job: " << task->filePath << " Error: " << task->errString << endl;
+        kDebug() << "could n't complete the job: " << task->filePath << " Error: " << task->errString << endl;
     }
 
     delete job;
@@ -162,7 +162,7 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
 void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
 {
     Task* task = static_cast<Task*>(job);
-    kError() << "Job Started:" << task->filePath  << endl;
+    kDebug() << "Job Started:" << task->filePath  << endl;
 }
 
 void ActionThread::rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::RotateAction val)
@@ -230,7 +230,7 @@ void ActionThread::cancel()
 void ActionThread::run()
 {
     d->running = true;
-    kError() << "In action thread Run";
+    kDebug() << "In action thread Run";
 
     while (d->running)
     {
@@ -268,5 +268,5 @@ void ActionThread::run()
     }
 
     d->weaver.finish();
-    kError() << "Exiting Action Thread";
+    kDebug() << "Exiting Action Thread";
 }
