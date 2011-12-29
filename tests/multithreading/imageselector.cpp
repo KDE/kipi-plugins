@@ -49,9 +49,11 @@ ImageSelector::ImageSelector()
 
 void ImageSelector::selectImages()
 {
-   KUrl::List selectedImages = KIPIPlugins::ImageDialog::getImageUrls(this, 0);
+    KUrl::List selectedImages = KIPIPlugins::ImageDialog::getImageUrls(this, 0);
 
-   //rotate the selected images by 180 degrees
-   //It can be converted to gray scale also, just change the function here
-   mainThread->rotate(selectedImages);
+    kDebug() << selectedImages;
+
+    // Rotate the selected images by 180 degrees
+    // It can be converted to gray scale also, just change the function here
+    mainThread->rotate(selectedImages);
 }
