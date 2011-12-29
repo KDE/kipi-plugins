@@ -63,6 +63,10 @@ void TestGPXParsing::testNoOp()
 
 /**
  * @brief Test how well QDateTime deals with various string representations
+ * 
+ * The behavior of QDateTime::fromString changed in some Qt version, so here
+ * we can test what the current behavior is and quickly detect if Qt changes
+ * again.
  */
 void TestGPXParsing::testQDateTimeParsing()
 {
@@ -75,7 +79,8 @@ void TestGPXParsing::testQDateTimeParsing()
     }
 
     {
-        // eCoach in N900: 2010-01-14T09:26:02.287+02:00
+        // eCoach in N900 records GPX files with this kind of date format:
+        // 2010-01-14T09:26:02.287+02:00
         QDateTime time1 = QDateTime::fromString("2010-01-14T09:26:02.287+02:00", Qt::ISODate);
 
 #if QT_VERSION>=0x040700
