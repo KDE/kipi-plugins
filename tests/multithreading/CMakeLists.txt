@@ -55,6 +55,7 @@ IF(THREADWEAVER_FOUND)
                           ${KEXIV2_LIBRARIES}
                           ${KDCRAW_LIBRARIES}
                           ${KDE4_THREADWEAVER_LIBRARIES}
+                          ${PNG_LIBRARIES}
                           kipiplugins
                          )
 
