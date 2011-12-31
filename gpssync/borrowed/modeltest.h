@@ -39,7 +39,6 @@
 **
 ****************************************************************************/
 
-
 #ifndef MODELTEST_H
 #define MODELTEST_H
 
@@ -52,9 +51,11 @@ class ModelTest : public QObject
   Q_OBJECT
 
 public:
+
   ModelTest( QAbstractItemModel *model, QObject *parent = 0 );
 
 private Q_SLOTS:
+
   void nonDestructiveBasicTest();
   void rowCount();
   void columnCount();
@@ -64,6 +65,7 @@ private Q_SLOTS:
   void data();
 
 protected Q_SLOTS:
+
   void runAllTests();
   void layoutAboutToBeChanged();
   void layoutChanged();
@@ -73,22 +75,27 @@ protected Q_SLOTS:
   void rowsRemoved( const QModelIndex & parent, int start, int end );
 
 private:
+
   void checkChildren( const QModelIndex &parent, int currentDepth = 0 );
 
-  QAbstractItemModel *model;
+private:
 
-  struct Changing {
-    QModelIndex parent;
-    int oldSize;
-    QVariant last;
-    QVariant next;
+  struct Changing
+  {
+      QModelIndex parent;
+      int         oldSize;
+      QVariant    last;
+      QVariant    next;
   };
-  QStack<Changing> insert;
-  QStack<Changing> remove;
 
-  bool fetchingMore;
+  QAbstractItemModel*          model;
+
+  QStack<Changing>             insert;
+  QStack<Changing>             remove;
+
+  bool                         fetchingMore;
 
   QList<QPersistentModelIndex> changing;
 };
 
-#endif
+#endif // MODELTEST_H
