@@ -23,9 +23,13 @@
  *
  * ============================================================ */
 
+// Local
 #include "UndoMoveRowsCommand.h"
 #include "LayersModel.h"
 #include "LayersModelItem.h"
+
+// KDE
+#include <klocalizedstring.h>
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -38,12 +42,12 @@ UndoMoveRowsCommand::UndoMoveRowsCommand(int startingRow, int rowsCount, const Q
         if (sourceParent == destinationParent)
         {
             if (startingRow > destinationRow)
-                this->setText("Move up");
+                this->setText(i18n("Move layers up"));
             else
-                this->setText("Move down");
+                this->setText(i18n("Move layers down"));
         }
         else
-            this->setText("Change parent");
+            this->setText(i18n("Change parent layer"));
         m_src_parent_row = model->getItem(sourceParent);
         m_dest_parent_row = model->getItem(destinationParent);
         m_starting_row = startingRow;

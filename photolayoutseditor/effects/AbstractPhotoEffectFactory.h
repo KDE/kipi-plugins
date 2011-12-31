@@ -50,7 +50,7 @@ namespace KIPIPhotoLayoutsEditor
             */
             virtual AbstractPhotoEffectInterface * getEffectInstance(const QString & name = QString()) = 0;
 
-          /** Returns effect name.
+            /** Returns effect name.
             * This name is used be the user to identify effect. This name should be unique becouse effects are identified by this name.
             * Moreover, this name is used in UI to name effects.
             */

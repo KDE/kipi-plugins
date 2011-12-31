@@ -286,7 +286,7 @@ class KIPIPhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
             items << item;
         }
         AddItemsCommand(const QList<AbstractPhoto*> & items, int position, Scene * scene, QUndoCommand * parent = 0) :
-            QUndoCommand((items.count() > 1 ? i18n("Add items") : i18n("Add item")), parent),
+            QUndoCommand(i18n("Add item(s)"), parent),
             items(items),
             position(position),
             scene(scene),
@@ -329,7 +329,7 @@ class KIPIPhotoLayoutsEditor::MoveItemsCommand : public QUndoCommand
         bool done;
     public:
         MoveItemsCommand(QMap<AbstractPhoto*,QPointF> items, Scene * scene, QUndoCommand * parent = 0) :
-            QUndoCommand(i18n("Move items"), parent),
+            QUndoCommand(i18n("Move item(s)"), parent),
             m_items(items),
             m_scene(scene),
             done(true)
@@ -468,7 +468,7 @@ class KIPIPhotoLayoutsEditor::CropItemsCommand : public QUndoCommand
     QMap<AbstractPhoto*,QPainterPath> data;
 public:
     CropItemsCommand(const QPainterPath & path, const QList<AbstractPhoto*> & items, QUndoCommand * parent = 0) :
-        QUndoCommand((items.count() > 1 ? i18n("Crop items") : i18n("Crop item")), parent)
+        QUndoCommand(i18n("Crop item(s)"), parent)
     {
         qDebug() << "scene crop shape" << path.boundingRect();
         foreach (AbstractPhoto * item, items)
@@ -607,7 +607,7 @@ void Scene::addItems(const QList<AbstractPhoto*> & items)
     QUndoCommand * parent = 0;
     QUndoCommand * command = 0;
     if (items.count() > 1)
-        parent = new QUndoCommand(i18n("Add items"));
+        parent = new QUndoCommand(i18n("Add item(s)"));
 
     foreach (AbstractPhoto * item, tempItems)
         command = new AddItemsCommand(item, insertionRow++, this, parent);
@@ -635,7 +635,7 @@ void Scene::removeItems(const QList<AbstractPhoto *> & items)
     QUndoCommand * command = 0;
     QUndoCommand * parent = 0;
     if (items.count() > 1)
-        parent = new QUndoCommand("Remove items");
+        parent = new QUndoCommand("Remove item(s)");
     foreach (AbstractPhoto * item, items)
         command = new RemoveItemsCommand(item, this, parent);
     if (parent)
@@ -659,7 +659,7 @@ void Scene::contextMenuEvent(QGraphicsSceneMouseEvent * event)
     QList<AbstractPhoto*> items = this->selectedItems();
     if (items.count())
     {
-        QAction * removeAction = menu.addAction( (items.count() > 1 ? i18n("Delete items") : "Delete item") );
+        QAction * removeAction = menu.addAction( i18n("Delete selected item(s)") );
         connect(removeAction, SIGNAL(triggered()), this, SLOT(removeSelectedItems()));
         menu.addSeparator();
     }
@@ -1296,7 +1296,7 @@ QDomDocument Scene::toSvg(ProgressObserver * observer)
     observer->progresChanged(0);
     //--------------------------------------------------------
 
-    if (observer) observer->progresName( i18n("Saving background") );
+    if (observer) observer->progresName( i18n("Saving background...") );
     QDomElement background = document.createElement("g");
     background.setAttribute("class", "background");
     background.appendChild(d->m_background->toSvg(document));
@@ -1311,7 +1311,7 @@ QDomDocument Scene::toSvg(ProgressObserver * observer)
         AbstractPhoto * photo = dynamic_cast<AbstractPhoto*>(item);
         if (photo)
         {
-            if (observer) observer->progresName( i18n("Saving %1", photo->name()) );
+            if (observer) observer->progresName( i18n("Saving %1...", photo->name()) );
             QDomDocument photoItemDocument = photo->toSvg();
             sceneElement.appendChild( photoItemDocument.documentElement() );
         }
@@ -1382,8 +1382,7 @@ Scene * Scene::fromSvg(QDomElement & sceneElement)
     if (errorsCount)
     {
         KMessageBox::error(0,
-                           i18n("Unable to create %1 element(s)!",
-                                QString::number(errorsCount).toAscii().constData()));
+                           i18n("Unable to create %1 element(s)!", errorsCount));
     }
 
     return result;
@@ -1489,7 +1488,7 @@ bool Scene::askAboutRemoving(int count)
 {
     if (count)
     {
-        int result = KMessageBox::questionYesNo(KApplication::activeWindow(), i18n("Are you sure you want to delete %1 selected item%2?", QString::number(count), (count>1?"s":"")), i18n("Items deleting"));
+        int result = KMessageBox::questionYesNo(KApplication::activeWindow(), i18n("Are you sure you want to delete %1 selected item(s)?", count), i18n("Items deleting"));
         if (result == KMessageBox::Yes)
             return true;
     }

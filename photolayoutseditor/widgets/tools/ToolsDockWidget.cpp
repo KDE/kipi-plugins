@@ -90,7 +90,7 @@ ToolsDockWidget * ToolsDockWidget::instance(QWidget * parent)
 }
 
 ToolsDockWidget::ToolsDockWidget(QWidget * parent) :
-    QDockWidget("Tools",parent),
+    QDockWidget(i18n("Tools"),parent),
     m_has_selection(false),
     m_current_item(0),
     m_scene(0),

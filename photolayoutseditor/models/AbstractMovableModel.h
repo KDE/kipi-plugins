@@ -37,7 +37,9 @@ namespace KIPIPhotoLayoutsEditor
 
     class AbstractMovableModel : public QAbstractItemModel
     {
+
         public:
+
             AbstractMovableModel(QObject * parent = 0);
             virtual bool moveRows(int sourcePosition, int sourceCount, int destPosition) = 0;
             virtual void setItem(QObject * graphicsItem, const QModelIndex & index) = 0;

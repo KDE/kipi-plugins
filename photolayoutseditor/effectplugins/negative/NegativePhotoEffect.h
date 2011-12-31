@@ -46,35 +46,6 @@ namespace KIPIPhotoLayoutsEditor
             virtual QString toString() const;
             virtual operator QString() const;
 
-            virtual QString propertyName(const QMetaProperty & property) const
-            {
-                return AbstractPhotoEffectInterface::propertyName(property);
-            }
-            virtual QVariant propertyValue(const QString & propertyName) const
-            {
-                return AbstractPhotoEffectInterface::propertyValue(propertyName);
-            }
-            virtual void setPropertyValue(const QString & propertyName, const QVariant & value)
-            {
-                AbstractPhotoEffectInterface::setPropertyValue(propertyName, value);
-            }
-            virtual QVariant stringNames(const QMetaProperty & property)
-            {
-                return AbstractPhotoEffectInterface::stringNames(property);
-            }
-            virtual QVariant minimumValue(const QMetaProperty & property)
-            {
-                return AbstractPhotoEffectInterface::minimumValue(property);
-            }
-            virtual QVariant maximumValue(const QMetaProperty & property)
-            {
-                return AbstractPhotoEffectInterface::maximumValue(property);
-            }
-            virtual QVariant stepValue(const QMetaProperty & property)
-            {
-                return AbstractPhotoEffectInterface::stepValue(property);
-            }
-
         private:
 
             static QImage negative(const QImage & image)

@@ -35,6 +35,7 @@
 namespace KIPIPhotoLayoutsEditor
 {
     class ToolsDockWidget;
+
     class AbstractTool : public QWidget
     {
             Q_OBJECT

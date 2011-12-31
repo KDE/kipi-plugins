@@ -53,7 +53,7 @@ QString SepiaPhotoEffect::name() const
 
 QString SepiaPhotoEffect::toString() const
 {
-    return i18n("Sepia effect");
+    return this->name();
 }
 
 SepiaPhotoEffect::operator QString() const

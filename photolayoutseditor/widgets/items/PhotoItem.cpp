@@ -55,12 +55,12 @@ class KIPIPhotoLayoutsEditor::PhotoItemPixmapChangeCommand : public QUndoCommand
     PhotoItem * m_item;
 public:
     PhotoItemPixmapChangeCommand(const QImage & image, PhotoItem * item, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Image change"), parent),
+        QUndoCommand(i18n("Image Change"), parent),
         m_image(image),
         m_item(item)
     {}
     PhotoItemPixmapChangeCommand(const QPixmap & pixmap, PhotoItem * item, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Image change"), parent),
+        QUndoCommand(i18n("Image Change"), parent),
         m_image(pixmap.toImage()),
         m_item(item)
     {}
@@ -84,7 +84,7 @@ class KIPIPhotoLayoutsEditor::PhotoItemUrlChangeCommand : public QUndoCommand
     PhotoItem * m_item;
 public:
     PhotoItemUrlChangeCommand(const KUrl & url, PhotoItem * item, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Image path change"), parent),
+        QUndoCommand(i18n("Image Path Change"), parent),
         m_url(url),
         m_item(item)
     {}
@@ -110,7 +110,7 @@ class KIPIPhotoLayoutsEditor::PhotoItemImagePathChangeCommand : public QUndoComm
     CropShapeChangeCommand * command;
 public:
     PhotoItemImagePathChangeCommand(PhotoItem * item, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Image shape change"), parent),
+        QUndoCommand(i18n("Image Shape Change"), parent),
         m_item(item),
         m_image_path(m_item->m_image_path)
     {}
@@ -138,9 +138,11 @@ QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
         if (!QFile::exists(resultPath))
         {
             int result = KMessageBox::questionYesNo(0,
-                                                    i18n("Can't find image file in this location:\n %s\n\n"
-                                                         "Would you like to set new location of this file?\n"
-                                                         "If not this image will be removed from the composition.").append(resultPath.toAscii()),
+                                                    i18n("Can't find image file in this location:"
+                                                         "\n%1"
+                                                         "\n"
+                                                         "\nWould you like to set new location of this file?"
+                                                         "\nIf not this image will be removed from the composition.", resultPath),
                                                     i18n("File reading error"));
             if (result != KMessageBox::Yes)
                 resultPath.clear();
@@ -432,7 +434,7 @@ void PhotoItem::setImage(const QImage & image)
     qDebug() << "setImage();";
     if (image.isNull())
         return;
-    PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
+    PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image Change"));
     PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
     if (this->cropShape().isEmpty())
         this->setCropShape( m_image_path );
@@ -445,7 +447,7 @@ void PhotoItem::imageLoaded(const KUrl & url, const QImage & image)
     if (image.isNull())
         return;
 
-    PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image change"));
+    PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Image Change"));
     PLE_PostUndoCommand(new PhotoItemPixmapChangeCommand(image, this));
     if (this->cropShape().isEmpty())
         this->setCropShape( m_image_path );

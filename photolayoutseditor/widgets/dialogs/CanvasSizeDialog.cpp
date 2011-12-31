@@ -325,11 +325,11 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     /// ----------------------- TEMPLATES PART -----------------------
     QGridLayout * gridLayout = new QGridLayout();
     d->paperSize = new KComboBox(main);
-    d->paperSize->addItem( "Custom" );
+    d->paperSize->addItem( i18n("Custom") );
     d->paperSize->insertSeparator(1);
     d->paperSize->addItems(d->paperSizes.keys());
     d->paperSize->setCurrentIndex(0);
-    gridLayout->addWidget(new QLabel("Template:", main),0,0);
+    gridLayout->addWidget(new QLabel( i18n("Template"), main),0,0);
     gridLayout->addWidget(d->paperSize,0,1);
     vLayout->addLayout(gridLayout);
 
@@ -349,7 +349,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
                                     resolution.width(),
                                     CanvasSize::sizeUnit(tempSizeUnits),
                                     CanvasSize::resolutionUnit(tempResolutionUnits));
-    gridLayout->addWidget(new QLabel("Width:", d->sizeWidget),0,0);
+    gridLayout->addWidget(new QLabel(i18n("Width"), d->sizeWidget),0,0);
     gridLayout->addWidget(d->xSize,0,1);
 
     // Height widget
@@ -361,7 +361,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
                                      resolution.height(),
                                      CanvasSize::sizeUnit(tempSizeUnits),
                                      CanvasSize::resolutionUnit(tempResolutionUnits));
-    gridLayout->addWidget(new QLabel("Height:", d->sizeWidget),1,0);
+    gridLayout->addWidget(new QLabel(i18n("Height"), d->sizeWidget),1,0);
     gridLayout->addWidget(d->ySize,1,1);
 
     // Unit widget
@@ -383,7 +383,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     QHBoxLayout * hLayout = new QHBoxLayout();
     hLayout->addWidget(d->horizontalButton);
     hLayout->addWidget(d->verticalButton);
-    gridLayout->addWidget(new QLabel("Orientation:", d->sizeWidget),2,0);
+    gridLayout->addWidget(new QLabel(i18n("Orientation"), d->sizeWidget),2,0);
     gridLayout->addLayout(hLayout,2,1);
     d->sizeLabel = new QLabel(d->sizeWidget);
     gridLayout->addWidget(d->sizeLabel,2, 2);
@@ -401,7 +401,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     d->xResolution->setValue(resolution.width());
     d->xResolution->setDecimals(3);
     d->WIDTH_RES = resolution.width() * CanvasSize::resolutionUnitFactor(tempResolutionUnits);
-    gridLayout->addWidget(new QLabel("Resolution X:", d->advancedWidget),0,0);
+    gridLayout->addWidget(new QLabel(i18n("Resolution X"), d->advancedWidget),0,0);
     gridLayout->addWidget(d->xResolution,0,1);
 
     // y resolution widget
@@ -411,7 +411,7 @@ void CanvasSizeDialog::setupDialog(const QSizeF & size, const QString & sizeUnit
     d->yResolution->setValue(resolution.height());
     d->yResolution->setDecimals(3);
     d->HEIGHT_RES = resolution.height() * CanvasSize::resolutionUnitFactor(tempResolutionUnits);
-    gridLayout->addWidget(new QLabel("Resolution Y:", d->advancedWidget),1,0);
+    gridLayout->addWidget(new QLabel(i18n("Resolution Y"), d->advancedWidget),1,0);
     gridLayout->addWidget(d->yResolution,1,1);
 
     // Unit widget

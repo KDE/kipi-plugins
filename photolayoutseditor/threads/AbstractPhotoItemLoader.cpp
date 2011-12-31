@@ -72,7 +72,7 @@ void AbstractPhotoItemLoader::run()
     if (observer)
     {
         observer->progresChanged(0.1);
-        observer->progresName(i18n("Reading properties"));
+        observer->progresName(i18n("Reading properties..."));
     }
     // Items visibility
     m_item->d->m_visible = (m_element.attribute("visibility") != "hide");
@@ -133,7 +133,7 @@ void AbstractPhotoItemLoader::run()
     if (observer)
     {
         observer->progresChanged(0.2);
-        observer->progresName(i18n("Reading borders"));
+        observer->progresName(i18n("Reading borders..."));
     }
     // Borders
     if (m_item->d->m_borders_group)
@@ -159,7 +159,7 @@ void AbstractPhotoItemLoader::run()
     if (observer)
     {
         observer->progresChanged(0.3);
-        observer->progresName(i18n("Reading effects"));
+        observer->progresName(i18n("Reading effects..."));
     }
     // Effects
     if (m_item->d->m_effects_group)
@@ -176,7 +176,7 @@ void AbstractPhotoItemLoader::run()
     if (observer)
     {
         observer->progresChanged(0.4);
-        observer->progresName(i18n("Reading cropping shape"));
+        observer->progresName(i18n("Reading cropping shape..."));
     }
     // Crop path
     QDomElement cropPath = appNS.firstChildElement("crop_path");

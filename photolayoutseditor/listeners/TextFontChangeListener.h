@@ -33,13 +33,19 @@ class QtProperty;
 namespace KIPIPhotoLayoutsEditor
 {
     class TextItem;
+
     class TextFontChangeListener : public QObject
     {
             Q_OBJECT
+
             TextItem * m_item;
+
         public:
+
             explicit TextFontChangeListener(TextItem * item, QObject * parent = 0);
+
         public slots:
+
             void propertyChanged(QtProperty * property);
     };
 }

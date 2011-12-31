@@ -26,13 +26,15 @@
 #include "BorderChangeListener.moc"
 #include "BordersGroup.h"
 #include "global.h"
+#include "KEditFactory.h"
 
 #include <QtProperty>
-#include <KEditFactory.h>
 #include <QtVariantPropertyManager>
 
 #include <QUndoCommand>
 #include <QMetaProperty>
+
+#include <klocalizedstring.h>
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -43,7 +45,7 @@ class KIPIPhotoLayoutsEditor::BorderChangeCommand : public QUndoCommand
         QVariant value;
     public:
         BorderChangeCommand(BorderDrawerInterface * drawer, QUndoCommand * parent = 0) :
-            QUndoCommand(parent),
+            QUndoCommand(i18n("Border Change"), parent),
             drawer(drawer)
         {
         }

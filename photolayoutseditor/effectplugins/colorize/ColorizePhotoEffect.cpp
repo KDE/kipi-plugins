@@ -57,7 +57,7 @@ QString ColorizePhotoEffect::name() const
 
 QString ColorizePhotoEffect::toString() const
 {
-    return i18n("Colorize effect") + " [" + color().name() + ']';
+    return this->name() + " [" + color().name() + ']';
 }
 
 ColorizePhotoEffect::operator QString() const

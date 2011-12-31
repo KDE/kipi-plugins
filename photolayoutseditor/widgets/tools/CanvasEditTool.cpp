@@ -338,7 +338,7 @@ void CanvasEditTool::imageUrlRequest()
     if (!valid)
     {
         KMessageBox::error(0,
-                           i18n("Invalid or unsupported image file!"));
+                           i18n("Invalid or unsupported image file."));
         d->background_image_label->setIcon(QIcon(d->background_image_empty_pixmap));
         d->background_image_label->setIconSize(d->background_image_empty_pixmap.size());
     }

@@ -51,7 +51,7 @@ QString NegativePhotoEffect::name() const
 
 QString NegativePhotoEffect::toString() const
 {
-    return i18n("Negative effect");
+    return this->name();
 }
 
 NegativePhotoEffect::operator QString() const

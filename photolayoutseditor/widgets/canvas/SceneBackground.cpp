@@ -55,7 +55,7 @@ class KIPIPhotoLayoutsEditor::SceneBackground::BackgroundImageChangedCommand : p
 public:
 
     BackgroundImageChangedCommand(const QImage & image, Qt::Alignment alignment, const QSize & size, bool repeat, SceneBackground * backgroundItem, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Background changed"), parent),
+        QUndoCommand(i18n("Background Change"), parent),
         m_image(image),
         m_alignment(alignment),
         m_aspect_ratio(Qt::IgnoreAspectRatio),
@@ -66,7 +66,7 @@ public:
     }
 
     BackgroundImageChangedCommand(const QImage & image, Qt::Alignment alignment, Qt::AspectRatioMode aspectRatio, bool repeat, SceneBackground * backgroundItem, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Background changed"), parent),
+        QUndoCommand(i18n("Background Change"), parent),
         m_image(image),
         m_alignment(alignment),
         m_aspect_ratio(aspectRatio),
@@ -116,7 +116,7 @@ class KIPIPhotoLayoutsEditor::SceneBackground::BackgroundFirstBrushChangeCommand
     SceneBackground * m_background;
 public:
     BackgroundFirstBrushChangeCommand(const QBrush & brush, SceneBackground * background, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Background changed"), parent),
+        QUndoCommand(i18n("Background Change"), parent),
         m_brush(brush),
         m_background(background)
     {}
@@ -144,7 +144,7 @@ class KIPIPhotoLayoutsEditor::SceneBackground::BackgroundSecondBrushChangeComman
     SceneBackground * m_background;
 public:
     BackgroundSecondBrushChangeCommand(const QBrush & brush, SceneBackground * background, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Background changed"), parent),
+        QUndoCommand(i18n("Background Change"), parent),
         m_brush(brush),
         m_background(background)
     {}
@@ -204,7 +204,7 @@ void SceneBackground::setSolidColor(const QColor & color)
 
     if ((colorChanged && secondColorChanged) ||
         (patternChaged && secondColorChanged))
-        parent = new QUndoCommand(i18n("Background changed"));
+        parent = new QUndoCommand(i18n("Background Change"));
 
     if (colorChanged || patternChaged)
         command = new BackgroundFirstBrushChangeCommand(QBrush(color), this, parent);
@@ -224,7 +224,7 @@ void SceneBackground::setPattern(const QColor & firstColor, const QColor & secon
 
     QUndoCommand * parent = 0;
     if (color1Changed && color2Changed)
-        parent = new QUndoCommand("Background changed");
+        parent = new QUndoCommand("Background Change");
     QUndoCommand * command = 0;
 
     if (color1Changed)
@@ -250,7 +250,7 @@ void SceneBackground::setImage(const QImage & image, const QColor & backgroundCo
 
     QUndoCommand * parent = 0;
     if (imageChanged && colorChanged)
-        parent = new QUndoCommand(i18n("Background changed"));
+        parent = new QUndoCommand(i18n("Background Change"));
 
     QUndoCommand * command = 0;
     if (imageChanged)
@@ -276,7 +276,7 @@ void SceneBackground::setImage(const QImage & image, const QColor & backgroundCo
 
     QUndoCommand * parent = 0;
     if (imageChanged && colorChanged)
-        parent = new QUndoCommand(i18n("Background changed"));
+        parent = new QUndoCommand(i18n("Background Change"));
 
     QUndoCommand * command = 0;
     if (imageChanged)

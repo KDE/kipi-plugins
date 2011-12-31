@@ -479,7 +479,7 @@ void ScalingWidgetItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 void ScalingWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
 {
     if (d->scale_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Scale items"));
+        PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Scale item(s)"));
     for (QMap<AbstractPhoto*,ScaleItemCommand*>::iterator it = d->scale_commands.begin(); it != d->scale_commands.end(); ++it)
     {
         if (it.value())
@@ -494,7 +494,7 @@ void ScalingWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
     d->scale_commands.clear();
 
     if (d->move_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Move items"));
+        PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Move item(s)"));
     for (QMap<AbstractPhoto*,MoveItemCommand*>::iterator it = d->move_commands.begin(); it != d->move_commands.end(); ++it)
     {
         if (it.value())

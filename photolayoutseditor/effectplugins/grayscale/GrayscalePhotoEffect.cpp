@@ -53,7 +53,7 @@ QString GrayscalePhotoEffect::name() const
 
 QString GrayscalePhotoEffect::toString() const
 {
-    return i18n("Grayscale effect");
+    return this->name();
 }
 
 GrayscalePhotoEffect::operator QString() const

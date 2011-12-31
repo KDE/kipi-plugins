@@ -39,9 +39,10 @@ namespace KIPIPhotoLayoutsEditor
     class AbstractItemsTool : public AbstractTool
     {
             Q_OBJECT
-            Q_PROPERTY(AbstractPhoto * m_photo READ currentItem WRITE setCurrentItem)
 
+            Q_PROPERTY(AbstractPhoto * m_photo READ currentItem WRITE setCurrentItem)
             AbstractPhoto * m_photo;
+
             QPointF m_point;
 
         public:

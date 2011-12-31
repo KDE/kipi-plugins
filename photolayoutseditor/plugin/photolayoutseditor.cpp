@@ -253,7 +253,7 @@ void PhotoLayoutsEditor::setupActions()
     d->saveAsAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_S));
     actionCollection()->addAction("save_as", d->saveAsAction);
     //------------------------------------------------------------------------
-    d->exportFileAction = new KAction(i18nc("Export current frame layout to image file", "Export"), actionCollection());
+    d->exportFileAction = new KAction(i18nc("Export current frame layout to image file...", "Export..."), actionCollection());
     d->exportFileAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_E));
     connect(d->exportFileAction, SIGNAL(triggered()), this, SLOT(exportFile()));
     actionCollection()->addAction("export", d->exportFileAction);
@@ -285,21 +285,21 @@ void PhotoLayoutsEditor::setupActions()
     d->settingsAction = KStandardAction::preferences(this, SLOT(settings()), actionCollection());
     actionCollection()->addAction("settings", d->settingsAction);
     //------------------------------------------------------------------------
-    d->addImageAction = new KAction(i18nc("Adds new image(s) from file", "Add image(s)..."), actionCollection());
+    d->addImageAction = new KAction(i18nc("Adds new image(s) from file...", "Add image(s)..."), actionCollection());
     connect(d->addImageAction, SIGNAL(triggered()), this, SLOT(loadNewImage()));
     actionCollection()->addAction("new_image", d->addImageAction);
     //------------------------------------------------------------------------
-    d->showGridToggleAction = new KToggleAction(i18nc("View grid lines", "Show"), actionCollection());
+    d->showGridToggleAction = new KToggleAction(i18nc("View grid lines...", "Show..."), actionCollection());
     d->showGridToggleAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_G));
     d->showGridToggleAction->setChecked( PLEConfigSkeleton::self()->showGrid() );
     connect(d->showGridToggleAction, SIGNAL(triggered(bool)), this, SLOT(setGridVisible(bool)));
     actionCollection()->addAction("grid_toggle", d->showGridToggleAction);
     //------------------------------------------------------------------------
-    d->gridConfigAction = new KAction(i18nc("Configure grid lines visibility", "Setup grid"), actionCollection());
+    d->gridConfigAction = new KAction(i18nc("Configure grid lines visibility...", "Setup grid..."), actionCollection());
     connect(d->gridConfigAction, SIGNAL(triggered()), this, SLOT(setupGrid()));
     actionCollection()->addAction("grid_config", d->gridConfigAction);
     //------------------------------------------------------------------------
-    d->changeCanvasSizeAction = new KAction(i18nc("Configure canvas size", "Change canvas size"), actionCollection());
+    d->changeCanvasSizeAction = new KAction(i18nc("Configure canvas size...", "Change canvas size..."), actionCollection());
     connect(d->changeCanvasSizeAction, SIGNAL(triggered()), this, SLOT(changeCanvasSize()));
     actionCollection()->addAction("canvas_size", d->changeCanvasSizeAction);
 
@@ -358,7 +358,7 @@ void PhotoLayoutsEditor::createWidgets()
     this->addDockWidget(Qt::RightDockWidgetArea, d->toolsWidget);
 
     // Layers dockwidget
-    d->treeWidget = new QDockWidget("Layers", this);
+    d->treeWidget = new QDockWidget(i18n("Layers"), this);
     d->treeWidget->setFeatures(QDockWidget::DockWidgetMovable);
     d->treeWidget->setFloating(false);
     d->treeWidget->setAllowedAreas(Qt::RightDockWidgetArea | Qt::LeftDockWidgetArea);
@@ -420,7 +420,7 @@ void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl)
     else
     {
         KMessageBox::error(this,
-                           i18n("Can't read image file."));
+                           i18n("Cannot read image file."));
     }
     file.close();
 }
@@ -536,7 +536,7 @@ void PhotoLayoutsEditor::saveFile(const KUrl & fileUrl, bool setFileAsDefault)
         m_canvas->save(fileUrl, setFileAsDefault);
     else
         KMessageBox::error(this,
-                           i18n("There is nothing to save!"));
+                           i18n("There is nothing to save."));
 }
 
 void PhotoLayoutsEditor::exportFile()
@@ -564,7 +564,7 @@ void PhotoLayoutsEditor::exportFile()
             if (!writer.write(image.toImage()))
             {
                 KMessageBox::detailedError(this,
-                                   i18n("Unexpected error while saving an image!"),
+                                   i18n("Unexpected error while saving an image."),
                                    writer.errorString());
             }
         }
@@ -702,7 +702,7 @@ void PhotoLayoutsEditor::changeCanvasSize()
             }
         }
         else
-            KMessageBox::error(this, i18n("Invalid image size!"));
+            KMessageBox::error(this, i18n("Invalid image size."));
     }
 
     delete ccd;

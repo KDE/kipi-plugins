@@ -72,7 +72,7 @@ class KIPIPhotoLayoutsEditor::TextColorUndoCommand : public QUndoCommand
         QColor m_color;
     public:
         TextColorUndoCommand(const QColor & color, TextItem * item, QUndoCommand * parent = 0) :
-            QUndoCommand(i18n("Change text color"), parent),
+            QUndoCommand(i18n("Text color change"), parent),
             m_item(item),
             m_color(color)
         {}
@@ -98,7 +98,7 @@ class KIPIPhotoLayoutsEditor::TextFontUndoCommand : public QUndoCommand
         QFont m_font;
     public:
         TextFontUndoCommand(const QFont & font, TextItem * item, QUndoCommand * parent = 0) :
-            QUndoCommand(i18n("Change text font"), parent),
+            QUndoCommand(i18n("Text font change"), parent),
             m_item(item),
             m_font(font)
         {}
@@ -441,7 +441,7 @@ void TextItem::focusOutEvent(QFocusEvent * event)
 
 void TextItem::keyPressEvent(QKeyEvent * event)
 {
-    bool textChange = false;
+    //bool textChange = false;
     switch (event->key())
     {
         case Qt::Key_Left:
@@ -470,15 +470,15 @@ void TextItem::keyPressEvent(QKeyEvent * event)
             break;
         case Qt::Key_Delete:
             d->removeTextAfter();
-            textChange = true;
+            //textChange = true;
             break;
         case Qt::Key_Backspace:
             d->removeTextBefore();
-            textChange = true;
+            //textChange = true;
             break;
         default:
             d->addText(event->text());
-            textChange = true;
+            //textChange = true;
     }
     refreshItem();
     event->setAccepted(true);

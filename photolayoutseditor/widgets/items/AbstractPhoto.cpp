@@ -51,7 +51,7 @@ class KIPIPhotoLayoutsEditor::CropShapeChangeCommand : public QUndoCommand
     AbstractPhoto * m_item;
 public:
     CropShapeChangeCommand(const QPainterPath & cropShape, AbstractPhoto * item, QUndoCommand * parent = 0) :
-        QUndoCommand(parent),
+        QUndoCommand(i18n("Crop shape change"), parent),
         m_crop_shape(cropShape),
         m_item(item)
     {}
@@ -76,7 +76,7 @@ class KIPIPhotoLayoutsEditor::ItemNameChangeCommand : public QUndoCommand
     AbstractPhoto * m_item;
 public:
     ItemNameChangeCommand(const QString & name, AbstractPhoto * item, QUndoCommand * parent = 0) :
-        QUndoCommand(i18n("Name change"), parent),
+        QUndoCommand(i18n("Name Change"), parent),
         m_name(name),
         m_item(item)
     {}
