@@ -46,5 +46,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 038 ==> 281719 : Wizard -> Page Setup -> Paper Size: Use QPrinterInfo to get the printer's supported paper sizes instead of QPrinter defaults (or: cropping issues with photo paper).
 039 ==> 213340 : "rotate left" and "rotate right" actually rotate by 180 degrees.
 040 ==> 221175 : White screen with Ken Burns Effect or other OpenGL slideshow with full screen resolution.
-041 ==> 
+041 ==> 288159 : i18n done horribly in PhotoLayoutsEditor.
+042 ==> 
 
