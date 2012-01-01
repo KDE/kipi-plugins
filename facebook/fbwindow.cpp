@@ -223,6 +223,7 @@ void FbWindow::slotButtonClicked(int button)
             break;
         default:
              KDialog::slotButtonClicked(button);
+             break;
     }
 }
 
