@@ -112,6 +112,7 @@ void  Plugin_viewer::slotActivate()
             kError() << "no OpenGL context found";
             delete widget;
             QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("no OpenGL context found"));
+            break;
     }
 }
 

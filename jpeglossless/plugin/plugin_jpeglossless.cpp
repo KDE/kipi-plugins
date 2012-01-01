@@ -352,6 +352,7 @@ void Plugin_JPEGLossless::slotStarting(const QString& filePath, int action)
         default:
         {
             kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
+            break;
         }
     }
 
@@ -384,6 +385,7 @@ void Plugin_JPEGLossless::slotFinished(const QString& filePath, int action)
         default:
         {
             kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
+            break;
         }
     }
 
@@ -419,6 +421,7 @@ void Plugin_JPEGLossless::slotFailed(const QString& filePath, int action, const 
         default:
         {
             kWarning() << "KIPIJPEGLossLessPlugin: Unknown event";
+            break;
         }
     }
 
