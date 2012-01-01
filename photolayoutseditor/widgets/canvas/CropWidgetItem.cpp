@@ -248,7 +248,7 @@ void CropWidgetItem::keyPressEvent(QKeyEvent * event)
                 PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Crop items"));
             }
 
-            foreach (AbstractPhoto * item, d->m_items)
+            foreach(AbstractPhoto* item, d->m_items)
                 item->setCropShape( this->mapToItem(item, p) );
 
             if (commandGroupOpened)
@@ -442,7 +442,7 @@ void CropWidgetItem::setItems(const QList<AbstractPhoto*> & items)
 {
     d->m_items = items;
 
-    foreach (AbstractPhoto * item, items)
+    foreach(AbstractPhoto* item, items)
         connect(item, SIGNAL(changed()), this, SLOT(updateShapes()));
 
     this->updateShapes();
@@ -451,11 +451,11 @@ void CropWidgetItem::setItems(const QList<AbstractPhoto*> & items)
 void CropWidgetItem::updateShapes()
 {
     d->m_crop_shape = QPainterPath();
-    foreach (AbstractPhoto * item, d->m_items)
+    foreach(AbstractPhoto* item, d->m_items)
         d->m_crop_shape += this->mapFromItem(item, item->itemDrawArea());
 
     QPainterPath temp;
-    foreach (AbstractPhoto * item, d->m_items)
+    foreach(AbstractPhoto* item, d->m_items)
         temp += this->mapFromItem(item, item->itemOpaqueArea());
     d->m_rect = temp.boundingRect();
 

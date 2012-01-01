@@ -248,7 +248,7 @@ void ActionThread::cancel()
     if (d->makeProcess)
         d->makeProcess->kill();
 
-    foreach (QPointer<KDcraw> rawProcess, d->rawProcesses)
+    foreach(QPointer<KDcraw> rawProcess, d->rawProcesses)
     {
         if (rawProcess)
         {
@@ -256,7 +256,7 @@ void ActionThread::cancel()
         }
     }
 
-    foreach (KProcess* makeProcess, d->makeProcesses)
+    foreach(KProcess* makeProcess, d->makeProcesses)
     {
         if (makeProcess)
         {
@@ -687,7 +687,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
     KExiv2 metaPreview(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
     double scalingFactor = ((double) metaPreview.getPixelSize().width()) / ((double) metaOrig.getPixelSize().width());
 
-    foreach (const QString& line, pto)
+    foreach(const QString& line, pto)
     {
         if (line.isEmpty())
         {
@@ -700,7 +700,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
         if (line[0] == 'p')
         {
             tmp.clear();
-            foreach (const QString& p, parameters)
+            foreach(const QString& p, parameters)
             {
                 if (p[0] == 'w' || p[0] == 'h')
                 {
@@ -729,7 +729,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
             tmp.clear();
             QStringList realParameters;
             bool nRead = false;
-            foreach (const QString& p, parameters)
+            foreach(const QString& p, parameters)
             {
                 if (p[0] != 'n')
                 {
@@ -748,7 +748,7 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
                     realParameters << p;
                 }
             }
-            foreach (const QString& p, realParameters)
+            foreach(const QString& p, realParameters)
             {
                 if (p[0] == 'w')
                 {

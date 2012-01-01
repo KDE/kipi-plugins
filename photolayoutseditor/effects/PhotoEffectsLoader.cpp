@@ -82,7 +82,7 @@ bool PhotoEffectsLoader::registerEffect(AbstractPhotoEffectFactory * effectFacto
     QString effectName = effectFactory->effectName();
     QStringList names = effectName.split(';', QString::SkipEmptyParts);
     bool result = true;
-    foreach (QString name, names)
+    foreach(QString name, names)
         result &= (registeredEffects.insert(name, effectFactory) != registeredEffects.end());
     effectFactory->setParent(instance());
     return result;
@@ -178,7 +178,7 @@ QtAbstractPropertyBrowser * PhotoEffectsLoader::propertyBrowser(AbstractPhotoEff
                     }
                     property = variantManager->addProperty(metaProperty.type(), propertyName);
                     variantManager->setValue(property, metaProperty.read(effect));
-                    foreach (QtProperty * p, property->subProperties())
+                    foreach(QtProperty* p, property->subProperties())
                         p->setEnabled(false);
                 }
         }

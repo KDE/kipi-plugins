@@ -252,7 +252,7 @@ void ActionThread::cancel()
     if (d->alignProcess)
         d->alignProcess->kill();
 
-    foreach (QPointer<KDcraw> rawProcess, d->rawProcesses)
+    foreach(QPointer<KDcraw> rawProcess, d->rawProcesses)
     {
         if (rawProcess)
         {

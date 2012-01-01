@@ -240,7 +240,7 @@ void PhotoLayoutsEditor::setupActions()
     //------------------------------------------------------------------------
     d->openRecentFilesMenu = KStandardAction::openRecent(this, SLOT(open(KUrl)), actionCollection());
     KUrl::List urls = PLEConfigSkeleton::recentFiles();
-    foreach (KUrl url, urls)
+    foreach(KUrl url, urls)
         d->openRecentFilesMenu->addUrl(url);
     connect(d->openRecentFilesMenu, SIGNAL(recentListCleared()), this, SLOT(clearRecentList()));
     actionCollection()->addAction("open_recent", d->openRecentFilesMenu);
@@ -723,13 +723,13 @@ void PhotoLayoutsEditor::loadEffects()
     PhotoEffectsLoader::registerEffect( stdEffects );
 
     const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsEditor/EffectPlugin");
-    foreach (const KService::Ptr& service, offers)
+    foreach(const KService::Ptr& service, offers)
     {
         if (service)
             d->effectsServiceMap[service->name()] = service;
     }
 
-    foreach (const QString & name, d->effectsServiceMap.keys())
+    foreach(const QString& name, d->effectsServiceMap.keys())
     {
         KService::Ptr service = d->effectsServiceMap.value(name);
         AbstractPhotoEffectFactory * plugin;
@@ -764,13 +764,13 @@ void PhotoLayoutsEditor::loadBorders()
     BorderDrawersLoader::registerDrawer( stdBorders );
 
     const KService::List offers = KServiceTypeTrader::self()->query("PhotoLayoutsEditor/BorderPlugin");
-    foreach (const KService::Ptr& service, offers)
+    foreach(const KService::Ptr& service, offers)
     {
         if (service)
             d->bordersServiceMap[service->name()] = service;
     }
 
-    foreach (const QString & name, d->bordersServiceMap.keys())
+    foreach(const QString& name, d->bordersServiceMap.keys())
     {
         KService::Ptr service = d->bordersServiceMap.value(name);
         BorderDrawerFactoryInterface * plugin;

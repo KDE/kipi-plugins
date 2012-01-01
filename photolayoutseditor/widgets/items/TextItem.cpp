@@ -716,7 +716,7 @@ void TextItem::refreshItem()
     int maxBearing = 0;
     int maxWidth = 0;
     const int lineSpacing = m_metrics.lineSpacing();
-    foreach (QString string, d->m_string_list)
+    foreach(QString string, d->m_string_list)
     {
         if (string.length())
         {
@@ -758,7 +758,7 @@ QtAbstractPropertyBrowser * TextItem::propertyBrowser()
     TextColorChangeListener * colorListener = new TextColorChangeListener(this);
     colorListener->connect(browser, SIGNAL(destroyed()), SLOT(deleteLater()));
     colorListener->connect(colorManager, SIGNAL(propertyChanged(QtProperty*)), SLOT(propertyChanged(QtProperty*)));
-    foreach (QtProperty * p, colorProperty->subProperties())
+    foreach(QtProperty* p, colorProperty->subProperties())
         p->setEnabled(false);
 
     // Font
@@ -771,7 +771,7 @@ QtAbstractPropertyBrowser * TextItem::propertyBrowser()
     TextFontChangeListener * fontListener = new TextFontChangeListener(this);
     fontListener->connect(browser, SIGNAL(destroyed()), SLOT(deleteLater()));
     fontListener->connect(fontManager, SIGNAL(propertyChanged(QtProperty*)), SLOT(propertyChanged(QtProperty*)));
-    foreach (QtProperty * p, fontProperty->subProperties())
+    foreach(QtProperty* p, fontProperty->subProperties())
         p->setEnabled(false);
 
     return browser;

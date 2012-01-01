@@ -99,7 +99,7 @@ void ImageLoadingThread::run()
 
     // Calculating reading progress
     d->m_loaded_bytes = d->m_size = 0;
-    foreach (KUrl url, urls)
+    foreach(KUrl url, urls)
     {
         QFile f(url.path());
         f.open(QIODevice::ReadOnly);
@@ -116,7 +116,7 @@ void ImageLoadingThread::run()
         goto finish_thread;
 
     // Reading
-    foreach (KUrl url, urls)
+    foreach(KUrl url, urls)
     {
         ProgressEvent * startEvent = new ProgressEvent(this);
         startEvent->setData(ProgressEvent::Init, 0);

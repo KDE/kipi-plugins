@@ -331,7 +331,7 @@ void RotationWidgetItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
         this->scene()->invalidate(d->itemToViewportRect(refreshRect, event->widget()));
 
         // Rotate items
-        foreach (AbstractPhoto * item, d->m_items)
+        foreach(AbstractPhoto* item, d->m_items)
         {
             RotateItemCommand * rotCom = d->rotate_commands[item];
             if (!rotCom)
@@ -363,7 +363,7 @@ void RotationWidgetItem::setItems(const QList<AbstractPhoto*> & items)
         return;
 
     QPainterPath itemsPath;
-    foreach (AbstractPhoto * item, items)
+    foreach(AbstractPhoto* item, items)
         itemsPath += this->mapFromItem(item, item->shape());
     initRotation(itemsPath, items.at(0)->boundingRect().center() * items.at(0)->transform());
     setPos(itemsPath.boundingRect().center());

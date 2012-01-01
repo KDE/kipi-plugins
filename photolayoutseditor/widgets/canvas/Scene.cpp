@@ -116,7 +116,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     {
         QList<QGraphicsItem*> items = itemsAtPosition(scenePos, widget);
         QList<AbstractItemInterface*> r;
-        foreach (QGraphicsItem * i, items)
+        foreach(QGraphicsItem* i, items)
         {
             AbstractItemInterface * iface = dynamic_cast<AbstractItemInterface*>(i);
             if (iface)
@@ -185,7 +185,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     void deselectSelected()
     {
         m_selected_items_all_movable = true;
-        foreach (AbstractItemInterface * photo, m_selected_items.keys())
+        foreach(AbstractItemInterface* photo, m_selected_items.keys())
         {
             photo->setSelected(false);
             if (photo->hasFocus())
@@ -296,13 +296,13 @@ class KIPIPhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
         {
             if (done)
                 return;
-            foreach (AbstractPhoto * item, items)
+            foreach(AbstractPhoto* item, items)
                 item->deleteLater();
             items.clear();
         }
         virtual void redo()
         {
-            foreach (AbstractPhoto * item, items)
+            foreach(AbstractPhoto* item, items)
                 scene->QGraphicsScene::addItem(item);
             scene->model()->insertItems(items, position);
             done = true;
@@ -310,7 +310,7 @@ class KIPIPhotoLayoutsEditor::AddItemsCommand : public QUndoCommand
         virtual void undo()
         {
             QRectF region;
-            foreach (AbstractPhoto * item, items)
+            foreach(AbstractPhoto* item, items)
             {
                 region = region.united( item->mapRectToScene(item->boundingRect()) );
                 if (item->isSelected())
@@ -447,7 +447,7 @@ class KIPIPhotoLayoutsEditor::RemoveItemsCommand : public QUndoCommand
                 // Sort using z-Values (z-Value == models row)
                 qSort(items.begin(), items.end(), KIPIPhotoLayoutsEditor::RemoveItemsCommand::compareGraphicsItems);
                 int i = 0;
-                foreach (QGraphicsItem * childItem, items)
+                foreach(QGraphicsItem* childItem, items)
                 {
                     AbstractPhoto * photo = dynamic_cast<AbstractPhoto*>(childItem);
                     if (photo)
@@ -471,7 +471,7 @@ public:
         QUndoCommand(i18n("Crop item(s)"), parent)
     {
         qDebug() << "scene crop shape" << path.boundingRect();
-        foreach (AbstractPhoto * item, items)
+        foreach(AbstractPhoto* item, items)
             data.insert(item, item->mapFromScene(path));
     }
     virtual void redo()
@@ -562,7 +562,7 @@ void Scene::addItem(AbstractPhoto * item)
 
     QModelIndexList selectedIndexes = d->selection_model->selectedIndexes();
     unsigned insertionRow = -1;
-    foreach (QModelIndex index, selectedIndexes)
+    foreach(QModelIndex index, selectedIndexes)
     {
         if (index.column() != LayersModelItem::NameString)
             continue;
@@ -582,7 +582,7 @@ void Scene::addItems(const QList<AbstractPhoto*> & items)
 {
     // Prevent multiple addition of the item
     QList<AbstractPhoto*> tempItems;
-    foreach (AbstractPhoto * item, items)
+    foreach(AbstractPhoto* item, items)
     {
         if (item->scene() == this && this->model()->findIndex(item).isValid())
             continue;
@@ -593,7 +593,7 @@ void Scene::addItems(const QList<AbstractPhoto*> & items)
 
     QModelIndexList selectedIndexes = d->selection_model->selectedIndexes();
     unsigned insertionRow = -1;
-    foreach (QModelIndex index, selectedIndexes)
+    foreach(QModelIndex index, selectedIndexes)
     {
         if (index.column() != LayersModelItem::NameString)
             continue;
@@ -609,7 +609,7 @@ void Scene::addItems(const QList<AbstractPhoto*> & items)
     if (items.count() > 1)
         parent = new QUndoCommand(i18n("Add item(s)"));
 
-    foreach (AbstractPhoto * item, tempItems)
+    foreach(AbstractPhoto* item, tempItems)
         command = new AddItemsCommand(item, insertionRow++, this, parent);
 
     if (parent)
@@ -636,7 +636,7 @@ void Scene::removeItems(const QList<AbstractPhoto *> & items)
     QUndoCommand * parent = 0;
     if (items.count() > 1)
         parent = new QUndoCommand("Remove item(s)");
-    foreach (AbstractPhoto * item, items)
+    foreach(AbstractPhoto* item, items)
         command = new RemoveItemsCommand(item, this, parent);
     if (parent)
         PLE_PostUndoCommand(parent);
@@ -730,7 +730,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent * event)
             d->m_pressed_object = d->m_pressed_item = 0;
             QList<AbstractItemInterface*> itemsList = d->itemsAt(event->scenePos(), event->widget());
 
-            foreach (AbstractItemInterface * i, itemsList)
+            foreach(AbstractItemInterface* i, itemsList)
             {
                 // Get pressed item
                 d->m_pressed_object = i;
@@ -835,7 +835,7 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
                 d->m_selected_items_path.translate(-difference);
                 difference = distance - difference;
                 d->m_selected_items_path.translate(difference);
-                foreach (AbstractItemInterface * item, d->m_selected_items.keys())
+                foreach(AbstractItemInterface* item, d->m_selected_items.keys())
                     item->moveBy(difference.x(), difference.y());
             }
         }
@@ -1031,7 +1031,7 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent * event)
     {
         QList<QUrl> urls = mimeData->urls();
         KUrl::List list;
-        foreach (QUrl url, urls)
+        foreach(QUrl url, urls)
             list << KUrl(url);
 
         ImageLoadingThread * ilt = new ImageLoadingThread(this);
@@ -1306,7 +1306,7 @@ QDomDocument Scene::toSvg(ProgressObserver * observer)
     //--------------------------------------------------------
 
     int i = 1;
-    foreach (QGraphicsItem * item, itemsList)
+    foreach(QGraphicsItem* item, itemsList)
     {
         AbstractPhoto * photo = dynamic_cast<AbstractPhoto*>(item);
         if (photo)
@@ -1421,7 +1421,7 @@ QList<AbstractPhoto*> Scene::selectedItems() const
 {
     QList<AbstractPhoto*> result;
     const QList<QGraphicsItem*> & list = QGraphicsScene::selectedItems();
-    foreach (QGraphicsItem * item, list)
+    foreach(QGraphicsItem* item, list)
         result << static_cast<AbstractPhoto*>(item);
     return result;
 }
@@ -1429,13 +1429,13 @@ QList<AbstractPhoto*> Scene::selectedItems() const
 //#####################################################################################################
 void Scene::updateSelection()
 {
-    foreach (AbstractPhoto * item, d->m_selected_items.keys())
+    foreach(AbstractPhoto* item, d->m_selected_items.keys())
         if (!item->isSelected())
             d->m_selected_items.remove(item);
 
     d->m_selected_items_path = QPainterPath();
     QList<AbstractPhoto*> itemsList = this->selectedItems();
-    foreach (AbstractPhoto * item, itemsList)
+    foreach(AbstractPhoto* item, itemsList)
     {
         if (d->m_selection_filters.count() && !d->m_selection_filters.contains( item->metaObject()->className() ))
         {
@@ -1479,7 +1479,7 @@ void Scene::imageLoaded(const KUrl & url, const QImage & image)
 void Scene::calcSelectionBoundingRect()
 {
     d->m_selected_items_path = QPainterPath();
-    foreach (AbstractItemInterface * item, d->m_selected_items.keys())
+    foreach(AbstractItemInterface* item, d->m_selected_items.keys())
         d->m_selected_items_path = d->m_selected_items_path.united(item->mapToScene(item->shape()));
 }
 
@@ -1503,7 +1503,7 @@ bool Scene::canDecode(const QMimeData * mimeData)
         return true;
 
     QList<QUrl> urls = mimeData->urls();
-    foreach (QUrl url, urls)
+    foreach(QUrl url, urls)
     {
         QImageReader ir(url.toLocalFile());
         if (!ir.canRead())

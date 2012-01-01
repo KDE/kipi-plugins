@@ -508,7 +508,7 @@ void Canvas::removeSelectedRows()
 {
     QList<AbstractPhoto*> items;
     QModelIndexList selectedIndexes = selectionModel()->selectedRows();
-    foreach (QModelIndex index, selectedIndexes)
+    foreach(QModelIndex index, selectedIndexes)
         items << static_cast<LayersModelItem*>(index.internalPointer())->photo();
     m_scene->removeItems(items);
 }
@@ -521,7 +521,7 @@ void Canvas::selectionChanged()
     QList<AbstractPhoto*> selectedItems = m_scene->selectedItems();
     QModelIndexList oldSelected = selectionModel()->selectedIndexes();
     QModelIndexList newSelected = model()->itemsToIndexes(selectedItems);
-    foreach (QModelIndex index, oldSelected)
+    foreach(QModelIndex index, oldSelected)
     {
         if (!newSelected.contains(index) && index.column() == LayersModelItem::NameString)
             selectionModel()->select(index, QItemSelectionModel::Rows | QItemSelectionModel::Deselect);
@@ -561,7 +561,7 @@ void Canvas::selectionChanged(const QItemSelection & newSelection, const QItemSe
     const QModelIndexList & oldSel = oldSelection.indexes();
     const QModelIndexList & newSel = newSelection.indexes();
     QSet<QModelIndex> deselected = oldSel.toSet().subtract(newSel.toSet());
-    foreach (QModelIndex index, deselected)
+    foreach(QModelIndex index, deselected)
     {
         if (index.column() != LayersModelItem::NameString)
             continue;
@@ -570,7 +570,7 @@ void Canvas::selectionChanged(const QItemSelection & newSelection, const QItemSe
             temp->photo()->setSelected(false);
     }
     QSet<QModelIndex> selected = newSel.toSet().subtract(oldSel.toSet());
-    foreach (QModelIndex index, selected)
+    foreach(QModelIndex index, selected)
     {
         if (index.column() != LayersModelItem::NameString)
             continue;

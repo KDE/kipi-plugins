@@ -575,7 +575,7 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
 
     m_albumsCombo->clear();
     m_albums = job->list();
-    foreach (const Vkontakte::AlbumInfoPtr &album, m_albums)
+    foreach(const Vkontakte::AlbumInfoPtr &album, m_albums)
         m_albumsCombo->addItem(KIcon("folder-image"), album->title());
 
     if (m_albumToSelect != -1)
@@ -785,7 +785,7 @@ void VkontakteWindow::slotStartTransfer()
         updateControls(false);
 
         QStringList files;
-        foreach (const KUrl &url, m_imgList->imageUrls(true))
+        foreach(const KUrl &url, m_imgList->imageUrls(true))
             files.append(url.toLocalFile());
 
         Vkontakte::UploadPhotosJob *job = new Vkontakte::UploadPhotosJob(

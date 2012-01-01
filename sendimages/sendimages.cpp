@@ -149,7 +149,7 @@ void SendImages::sendImages()
     {
         // Add all original files to the attachments list.
 
-        foreach (const EmailItem& item, d->settings.itemsList)
+        foreach(const EmailItem& item, d->settings.itemsList)
         {
             d->attachementFiles.append(item.orgUrl);
             d->settings.setEmailUrl(item.orgUrl, item.orgUrl);
@@ -224,7 +224,7 @@ void SendImages::buildPropertiesFile()
 
         QString propertiesText;
 
-        foreach (const EmailItem& item, d->settings.itemsList)
+        foreach(const EmailItem& item, d->settings.itemsList)
         {
             QString comments  = item.comments;
             QString tags      = item.tags.join(", ");

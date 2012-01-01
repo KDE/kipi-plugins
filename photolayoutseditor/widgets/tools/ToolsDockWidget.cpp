@@ -471,12 +471,12 @@ void ToolsDockWidget::resizeEvent(QResizeEvent * event)
       << m_effects_button
       << m_tool_border;
 
-    foreach (QWidget * w, l)
+    foreach(QWidget* w, l)
         d->formLayout->removeWidget(w);
 
     int width = 0;
     int col = 0, row = 0;
-    foreach (QWidget * w, l)
+    foreach(QWidget* w, l)
     {
         width += w->size().width();
         if (row < (int)(width / event->size().width()) )

@@ -95,7 +95,7 @@ void UndoRemoveItem::appendChild(AbstractPhoto * item, const QModelIndex & paren
         // Sort using z-Values (z-Value == models row)
         qSort(items.begin(), items.end(), UndoRemoveItem::compareGraphicsItems);
         int i = 0;
-        foreach (QGraphicsItem * childItem, items)
+        foreach(QGraphicsItem* childItem, items)
         {
             AbstractPhoto * photo = dynamic_cast<AbstractPhoto*>(childItem);
             if (photo)
