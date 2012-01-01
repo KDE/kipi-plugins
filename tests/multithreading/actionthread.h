@@ -50,6 +50,11 @@ public:
     void convert2grayscale(const KUrl::List& urlList);
     void cancel();
 
+Q_SIGNALS:
+
+    void signalStartToProcess(const KUrl& url);
+    void signalEndToProcess(const KUrl& url, bool state);
+    
 protected:
 
     void run();

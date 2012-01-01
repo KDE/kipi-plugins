@@ -22,35 +22,115 @@
 
 #include "imageselector.moc"
 
+// Qt includes
+
+#include <QGridLayout>
+#include <QProgressBar>
+
 // KDE includes
 
 #include <kurl.h>
 #include <kdebug.h>
+#include <kiconloader.h>
 
 // Kipiplugins includes
 
 #include "imagedialog.h"
+#include "imageslist.h"
+
+using namespace KIPIPlugins;
+
+class ImageSelector::ImageSelectorPriv
+{
+public:
+
+    ImageSelectorPriv()
+    {
+        page               = 0;
+        progressBar        = 0;
+        listView           = 0;
+        thread             = 0;
+    }
+
+    QWidget*      page;
+
+    QProgressBar* progressBar;
+
+    ImagesList*   listView;
+
+    ActionThread* thread;
+};
 
 ImageSelector::ImageSelector()
+    : KDialog(0), d(new ImageSelectorPriv)
 {
-    setText("Select Images");
+    setButtons(Apply | Close);
+    setDefaultButton(KDialog::Close);
+    setModal(false);
 
-    connect(this, SIGNAL(clicked(bool)),
-            this, SLOT(selectImages()));
+    d->page = new QWidget(this);
+    setMainWidget(d->page);
+    QGridLayout* mainLayout = new QGridLayout(d->page);
 
-    m_mainThread = new ActionThread(this);
+    d->listView    = new ImagesList(0, d->page);
+    d->listView->setControlButtonsPlacement(ImagesList::ControlButtonsRight);
+
+    d->progressBar = new QProgressBar(d->page);
+    d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
+
+    mainLayout->addWidget(d->listView,    0, 0, 1, 1);
+    mainLayout->addWidget(d->progressBar, 1, 0, 1, 1);
+    mainLayout->setRowStretch(0, 10);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacingHint());
+    
+    d->thread = new ActionThread(this);
+
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotStart()));
+
+    connect(d->thread, SIGNAL(signalStartToProcess(const KUrl&)),
+            this, SLOT(slotStartToProcess(const KUrl&)));
+
+    connect(d->thread, SIGNAL(signalEndToProcess(const KUrl&, bool)),
+            this, SLOT(slotEndToProcess(const KUrl&, bool)));
 }
 
-void ImageSelector::selectImages()
+ImageSelector::~ImageSelector()
 {
-    KUrl::List selectedImages = KIPIPlugins::ImageDialog::getImageUrls(this, 0);
+    delete d;
+}
+
+void ImageSelector::slotStart()
+{
+    KUrl::List selectedImages = d->listView->imageUrls();
     if (selectedImages.isEmpty()) return;
     
     kDebug() << selectedImages;
-    setDisabled(true);
+    d->progressBar->setMaximum(selectedImages.count());
+    d->progressBar->setValue(0);
     
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
-    m_mainThread->rotate(selectedImages);
-    m_mainThread->start();
+    d->thread->rotate(selectedImages);
+    d->thread->start();
+}
+
+void ImageSelector::slotStartToProcess(const KUrl& url)
+{
+    ImagesListViewItem* item = d->listView->listView()->findItem(url);
+    if (item)
+    {
+        item->setProcessedIcon(SmallIcon("run-build"));
+    }
+}
+
+void ImageSelector::slotEndToProcess(const KUrl& url, bool state)
+{
+    ImagesListViewItem* item = d->listView->listView()->findItem(url);
+    if (item)
+    {
+        item->setProcessedIcon(SmallIcon(state ?  "dialog-ok" : "dialog-cancel"));
+        d->progressBar->setValue(d->progressBar->value()+1);
+    }
 }

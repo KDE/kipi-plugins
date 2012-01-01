@@ -23,29 +23,33 @@
 #ifndef IMAGESELECTOR_H
 #define IMAGESELECTOR_H
 
-// Qt includes
+// KDE includes
 
-#include <QPushButton>
+#include <kdialog.h>
 
 // Local includes
 
 #include "actionthread.h"
 
-class ImageSelector : public QPushButton
+class ImageSelector : public KDialog
 {
     Q_OBJECT
 
 public:
 
     ImageSelector();
-
+    ~ImageSelector();
+    
 private Q_SLOTS:
 
-    void selectImages();
+    void slotStart();
+    void slotStartToProcess(const KUrl& url);
+    void slotEndToProcess(const KUrl& url, bool state);
 
 private:
-    
-    ActionThread* m_mainThread;
+
+    class ImageSelectorPriv;
+    ImageSelectorPriv* const d;
 };
 
 #endif // IMAGESELECTOR_H
