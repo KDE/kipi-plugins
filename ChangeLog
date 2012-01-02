@@ -1,3 +1,534 @@
+2.5.0 2012-01-03
+
+2012-01-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/imageselector.cpp,
+	tests/multithreading/imageselector.h,
+	tests/multithreading/main.cpp,
+	tests/multithreading/weaverobservertest.cpp,
+	tests/multithreading/weaverobservertest.h: (c) and anti-spam
+
+2012-01-01  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/actionthread.cpp,
+	tests/multithreading/actionthread.h,
+	tests/multithreading/imageselector.cpp,
+	tests/multithreading/imageselector.h: multithreading test program
+	based on threadWeather interface now use a more user friendly GUI,
+	based on kipi-plugin imagelist.  Processing is reported on GUI for
+	each item starting and ending to be processed.  We can see that 4
+	item are processed properly at the same time on each processor (here
+	i5 CPU).  CCMAIL: annapareddyjanardhanreddy@gmail.com
+
+2012-01-01  Andi Clemens <andi.clemens@googlemail.com>
+
+	* imageviewer/plugin_viewer.cpp,
+	jpeglossless/plugin/plugin_jpeglossless.cpp: fix compile warning
+
+2012-01-01  Andi Clemens <andi.clemens@googlemail.com>
+
+	* facebook/fbwindow.cpp: code polish
+
+2012-01-01  Andi Clemens <andi.clemens@googlemail.com>
+
+	* facebook/fbwindow.cpp: fix compile warning
+
+2012-01-01  Andi Clemens <andi.clemens@googlemail.com>
+
+	* advancedslideshow/dialogs/slideshowconfig.cpp,
+	advancedslideshow/widgets/listsounditems.cpp,
+	common/libkipiplugins/widgets/imageslist.cpp,
+	expoblending/manager/actionthread.cpp,
+	panorama/manager/actionthread.cpp,
+	panorama/manager/cpfindbinary.cpp,
+	photolayoutseditor/borders/BorderDrawersLoader.cpp,
+	photolayoutseditor/borders/BordersGroup.cpp,
+	photolayoutseditor/effects/PhotoEffectsLoader.cpp,
+	photolayoutseditor/models/LayersModel.cpp,
+	photolayoutseditor/models/LayersModelItem.cpp,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/threads/ImageLoadingThread.cpp,
+	photolayoutseditor/undo/UndoRemoveItem.cpp,
+	photolayoutseditor/widgets/canvas/Canvas.cpp,
+	photolayoutseditor/widgets/canvas/CropWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/RotationWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/ScalingWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/TextItem.cpp,
+	photolayoutseditor/widgets/tools/ToolsDockWidget.cpp,
+	photolayoutseditor/widgets/tools/ZoomTool.cpp,
+	sendimages/sendimages.cpp, vkontakte/vkwindow.cpp: code polish
+
+2011-12-31  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* gpssync/borrowed/modeltest.cpp, gpssync/borrowed/modeltest.h: use
+	moc file
+
+2011-12-31  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-31  Łukasz Spas <lukasz.spas@gmail.com>
+
+	* photolayoutseditor/borders/BorderChangeListener.cpp,
+	photolayoutseditor/effectplugins/blur/BlurPhotoEffect.cpp,
+	photolayoutseditor/effectplugins/colorize/ColorizePhotoEffect.cpp,
+	photolayoutseditor/effectplugins/grayscale/GrayscalePhotoEffect.cpp
+	,
+	photolayoutseditor/effectplugins/negative/NegativePhotoEffect.cpp,
+	photolayoutseditor/effectplugins/negative/NegativePhotoEffect.h,
+	photolayoutseditor/effectplugins/sepia/SepiaPhotoEffect.cpp,
+	photolayoutseditor/effects/AbstractPhotoEffectFactory.h,
+	photolayoutseditor/listeners/TextColorChangeListener.h,
+	photolayoutseditor/listeners/TextFontChangeListener.h,
+	photolayoutseditor/models/AbstractMovableModel.h,
+	photolayoutseditor/plugin/photolayoutseditor.cpp,
+	photolayoutseditor/threads/AbstractPhotoItemLoader.cpp,
+	photolayoutseditor/threads/CanvasSavingThread.cpp,
+	photolayoutseditor/threads/PhotoItemLoader.cpp,
+	photolayoutseditor/threads/TextItemLoader.cpp,
+	photolayoutseditor/undo/UndoMoveRowsCommand.cpp,
+	photolayoutseditor/utils/KEditFactory.h,
+	photolayoutseditor/utils/SavingThread.h,
+	photolayoutseditor/widgets/canvas/RotationWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/ScalingWidgetItem.cpp,
+	photolayoutseditor/widgets/canvas/Scene.cpp,
+	photolayoutseditor/widgets/canvas/SceneBackground.cpp,
+	photolayoutseditor/widgets/dialogs/CanvasSizeDialog.cpp,
+	photolayoutseditor/widgets/items/AbstractPhoto.cpp,
+	photolayoutseditor/widgets/items/PhotoItem.cpp,
+	photolayoutseditor/widgets/items/TextItem.cpp,
+	photolayoutseditor/widgets/tools/AbstractItemsTool.h,
+	photolayoutseditor/widgets/tools/AbstractTool.h,
+	photolayoutseditor/widgets/tools/CanvasEditTool.cpp,
+	photolayoutseditor/widgets/tools/ToolsDockWidget.cpp: BUG: 288159
+
+2011-12-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-30  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-29  Michael Georg Hansen <mike@mghansen.de>
+
+	* gpssync/tests/test_gpxparsing.cpp,
+	kmlexport/tests/test_kmlexport_gpxparsing.cpp: Fix the gpxparsing
+	thread in kmlexport and give more details about the purpose of the
+	test.
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/imageselector.cpp,
+	tests/multithreading/imageselector.h: no need kmainwindow here.
+
+2011-12-29  Andi Clemens <andi.clemens@googlemail.com>
+
+	* tests/multithreading/CMakeLists.txt: link against libPNG
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/imageselector.cpp: it's better to start
+	thread only when it's needs
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/imageselector.cpp: polish
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/actionthread.cpp: use kdebug insted kderror
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/weaverobservertest.cpp,
+	tests/multithreading/weaverobservertest.h: code polish
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/main.cpp: polish
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/CMakeLists.txt,
+	tests/multithreading/imageselector.cpp,
+	tests/multithreading/imageselector.h: code polish and fix coding
+	style.  Use ImageDialog from libkipiplugins to simplify code and
+	provide image preview properlly (better than KDE image dialog).
+
+2011-12-29  Janardhan Reddy <annapareddyjanardhanreddy@gmail.com>
+
+	* tests/multithreading/CMakeLists.txt: use cmake variable to link
+	threadweaver libraries and make the compilation optional
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/CMakeLists.txt,
+	tests/multithreading/actionthread.cpp,
+	tests/multithreading/actionthread.h: polish
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/actionthread.cpp,
+	tests/multithreading/actionthread.h: add copyright
+
+2011-12-29  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/actionthread.cpp,
+	tests/multithreading/actionthread.h: m_job must be hosted in d
+	provate container.  Fix coding style again.
+
+2011-12-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* tests/multithreading/actionthread.cpp,
+	tests/multithreading/actionthread.h: code polish, fix indent, fix
+	coding style. Not yet complete
+
+2011-12-28  Janardhan Reddy <annapareddyjanardhanreddy@gmail.com>
+
+	* tests/CMakeLists.txt, tests/multithreading/CMakeLists.txt,
+	tests/multithreading/actionthread.cpp,
+	tests/multithreading/actionthread.h,
+	tests/multithreading/imageselector.cpp,
+	tests/multithreading/imageselector.h,
+	tests/multithreading/main.cpp,
+	tests/multithreading/weaverobservertest.cpp,
+	tests/multithreading/weaverobservertest.h: Test for rotating images
+	using ThreadWeaver api in actionthread class to utilize the benifits
+	of multicore cpu
+
+2011-12-28  Script Kiddy <scripty@kde.org>
+
+	*
+	photolayoutseditor/borders/photolayoutseditorborderplugin.desktop,
+	photolayoutseditor/effects/photolayoutseditoreffectplugin.desktop,
+	photolayoutseditor/plugin/kipiplugin_photolayoutseditor.desktop,
+	photolayoutseditor/plugin/photolayoutseditor.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop: SVN_SILENT made messages
+	(.desktop file)
+
+2011-12-28  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-27  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* jpeglossless/transform/convert2grayscale.cpp: Write optimized jpeg
+	after converting to grayscale.
+
+2011-12-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* NEWS: Update NEWS.
+
+2011-12-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* flashexport/importWizard/importwizarddlg.h,
+	flashexport/plugin_flashexport.h, panorama/manager/cpfindbinary.cpp: 
+	Fix krazy2 warnings.
+
+2011-12-27  Michael Georg Hansen <mike@mghansen.de>
+
+	* common/libkipiplugins/dialogs/imagedialog.cpp: Normalize
+	signal/slot names.
+
+2011-12-27  Andi Clemens <andi.clemens@googlemail.com>
+
+	* flickrexport/flickrlist.cpp: Do not use a dynamic_cast without
+	checking the pointer. If we are so sure about what we are doing
+	here, maybe a static_cast would be sufficient, too.
+
+2011-12-27  Andi Clemens <andi.clemens@googlemail.com>
+
+	* flickrexport/comboboxdelegate.cpp,
+	flickrexport/comboboxintermediate.cpp, flickrexport/flickritem.h,
+	flickrexport/flickrlist.cpp, flickrexport/flickrlist.h,
+	flickrexport/flickrnewphotosetdialog.h,
+	flickrexport/flickrtalker.cpp, flickrexport/flickrtalker.h,
+	flickrexport/flickrviewitem.cpp, flickrexport/flickrviewitem.h,
+	flickrexport/flickrwidget.cpp, flickrexport/flickrwidget.h,
+	flickrexport/flickrwindow.h, flickrexport/login.cpp,
+	flickrexport/login.h, flickrexport/mpform.cpp,
+	flickrexport/plugin_flickrexport.cpp,
+	flickrexport/plugin_flickrexport.h: code polish
+
+2011-12-27  Andi Clemens <andi.clemens@googlemail.com>
+
+	* flickrexport/flickrwindow.cpp: code polish
+
+2011-12-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* acquireimages/kipiplugin_acquireimages.desktop,
+	advancedslideshow/plugin/kipiplugin_advancedslideshow.desktop,
+	batchprocessimages/plugin/kipiplugin_batchprocessimages.desktop,
+	calendar/plugin/kipiplugin_calendar.desktop,
+	debianscreenshots/kipiplugin_debianscreenshots.desktop,
+	flickrexport/kipiplugin_flickrexport.desktop,
+	galleryexport/kipiplugin_galleryexport.desktop,
+	gpssync/kipiplugin_gpssync.desktop,
+	htmlexport/kipiplugin_htmlexport.desktop,
+	imageviewer/kipiplugin_imageviewer.desktop,
+	ipodexport/kipiplugin_ipodexport.desktop,
+	jpeglossless/plugin/kipiplugin_jpeglossless.desktop,
+	kioexportimport/kipiplugin_kioexportimport.desktop,
+	kmlexport/kipiplugin_kmlexport.desktop,
+	metadataedit/plugin/kipiplugin_metadataedit.desktop,
+	picasawebexport/kipiplugin_picasawebexport.desktop,
+	piwigoexport/kipiplugin_piwigoexport.desktop,
+	printimages/plugin/kipiplugin_printimages.desktop,
+	rajceexport/kipiplugin_rajceexport.desktop,
+	rawconverter/plugin/kipiplugin_rawconverter.desktop,
+	removeredeyes/plugin/kipiplugin_removeredeyes.desktop,
+	sendimages/kipiplugin_sendimages.desktop,
+	shwup/kipiplugin_shwup.desktop, smug/kipiplugin_smug.desktop,
+	timeadjust/kipiplugin_timeadjust.desktop,
+	vkontakte/kipiplugin_vkontakte.desktop,
+	yandexfotki/kipiplugin_yandexfotki.desktop: Add icons to desktop
+	files so that they are shown in the setup page when the plugin is
+	disablesd.  This should also avoid the infamous pluginloader crash that occurs
+	when a plugin is disabled and the setup dialog is entered again.
+	CCBUG:289779
+
+2011-12-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* acquireimages/plugin_acquireimages.cpp: activate actions properly
+
+2011-12-25  Andi Clemens <andi.clemens@googlemail.com>
+
+	* acquireimages/plugin_acquireimages.cpp: code polish
+
+2011-12-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* printimages/tools/layouttree.cpp: delete the layout before
+	assigning a new pointer to it
+
+2011-12-24  Andi Clemens <andi.clemens@googlemail.com>
+
+	* common/libkipiplugins/widgets/imageslist.cpp: code polish
+
+2011-12-24  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* advancedslideshow/widgets/slideshow.cpp,
+	advancedslideshow/widgets/slideshowgl.cpp,
+	advancedslideshow/widgets/slideshowkb.cpp: apply patch #67066 from
+	Ludovic Pageaud BUGS: 249930
+
+2011-12-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-23  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-22  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-22  Andi Clemens <andi.clemens@googlemail.com>
+
+	* advancedslideshow/dialogs/slideshowconfig.h,
+	advancedslideshow/widgets/slideshowgl.cpp,
+	common/libkipiplugins/tools/kpwritehelp.h,
+	flickrexport/flickrtalker.h, galleryexport/albumdlg.cpp,
+	galleryexport/albumdlg.h, gpssync/gpslistviewcontextmenu.cpp,
+	ipodexport/ImageList.h, ipodexport/IpodExportDialog.cpp,
+	ipodexport/IpodExportDialog.h, ipodexport/IpodHeader.cpp,
+	ipodexport/IpodListItem.cpp, ipodexport/IpodListItem.h,
+	ipodexport/plugin_ipodexport.h,
+	printimages/tools/atkinspagelayout.cpp,
+	printimages/tools/atkinspagelayout.h,
+	printimages/tools/layouttree.cpp, printimages/tools/layouttree.h,
+	printimages/tools/utils.cpp, printimages/wizard/customdlg.cpp,
+	printimages/wizard/customdlg.h,
+	printimages/wizard/printoptionspage.h,
+	removeredeyes/libcvblobs/BlobResult.cpp, yandexfotki/yandexauth.cpp: 
+	code polish
+
+2011-12-21  Andi Clemens <andi.clemens@googlemail.com>
+
+	* flashexport/simpleviewer.cpp: code polish
+
+2011-12-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-21  Andi Clemens <andi.clemens@googlemail.com>
+
+	* removeredeyes/libcvblobs/BlobExtraction.cpp: fix compile warning
+
+2011-12-21  Andi Clemens <andi.clemens@googlemail.com>
+
+	* removeredeyes/libcvblobs/BlobExtraction.cpp: use
+	QScopedArrayPointer for better memory management
+
+2011-12-21  Andi Clemens <andi.clemens@googlemail.com>
+
+	* NEWS: update
+
+2011-12-21  Andi Clemens <andi.clemens@googlemail.com>
+
+	* removeredeyes/plugin/removeredeyeswindow.cpp: Change word
+	"locator" to something less geeky BUG:256937
+
+2011-12-21  Andi Clemens <andi.clemens@googlemail.com>
+
+	* removeredeyes/detection/locators/locatorfactory.cpp: search for
+	the exact config parameter, do not use contains()
+
+2011-12-21  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-20  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-14  Michael Georg Hansen <mike@mghansen.de>
+
+	* jpeglossless/transform/jpegtransform.cpp: Write optimized JPG
+	files to save space.  libjpeg can be told to do optimization on the compression process,
+	resulting in smaller file sizes. In case of images from my Canon
+	camera, this is usually a few percent. This optimization is
+	lossless.
+
+2011-12-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-13  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* metadataedit/iptc/iptcorigin.cpp, metadataedit/xmp/xmporigin.cpp: 
+	remove country name/code definition and use factored list provided
+	by libkexiv2 BUGS: 203603
+
+2011-12-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-12  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* flashexport/importWizard/importwizarddlg.cpp,
+	flashexport/importWizard/lookpage.cpp: fix typo BUGS: 288465
+
+2011-12-11  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-11  Alexander Potashev <aspotashev@gmail.com>
+
+	* yandexfotki/plugin_yandexfotki.cpp,
+	yandexfotki/plugin_yandexfotki.h: yandexfotki: Do not destroy the
+	export dialog (fix crash) BUG: 288674
+
+2011-12-11  Alexander Potashev <aspotashev@gmail.com>
+
+	* vkontakte/plugin_vkontakte.cpp, vkontakte/plugin_vkontakte.h: 
+	vkontakte: Do not destroy the export dialog (fix crash) BUG: 286844
+
+2011-12-11  Alexander Potashev <aspotashev@gmail.com>
+
+	* yandexfotki/yfwindow.cpp: Use QPointers when showing modal dialogs
+	via exec(), as discussed in <http://www.kdedevelopers.org/node/3919>
+
+2011-12-09  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* project/NEWS.2.4.0: update
+
+2011-12-06  Gilles Caulier <caulier.gilles@gmail.com>
+
+	* NEWS: update
+
+2011-12-04  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* CMakeLists.txt, NEWS: Open for Digikam SC 2.5.0
+
+2011-12-04  Nicolas Lécureuil <neoclust.kde@free.fr>
+
+	* ChangeLog, project/NEWS.2.4.0: Update changelog
+
+
 2.4.0 2011-12-04
 
 2011-12-03  Script Kiddy <scripty@kde.org>
