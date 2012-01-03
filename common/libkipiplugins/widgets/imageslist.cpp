@@ -477,7 +477,6 @@ public:
         iconSize              = DEFAULTSIZE;
         allowRAW              = true;
         controlButtonsEnabled = true;
-        processItem           = 0;
         progressCount         = 0;
         progressTimer         = 0;
         loadRawThumb          = 0;
@@ -496,7 +495,7 @@ public:
     CtrlButton*         loadButton;
     CtrlButton*         saveButton;
 
-    ImagesListViewItem* processItem;
+    KUrl::List          processItems;
     KPixmapSequence     progressPix;
     int                 progressCount;
     QTimer*             progressTimer;
@@ -819,10 +818,10 @@ void ImagesList::slotRemoveItems()
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin();
          it != selectedItemsList.constEnd(); ++it)
     {
-        if (*it == d->processItem)
+        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        if (item && d->processItems.contains(item->url()))
         {
-            d->progressTimer->stop();
-            d->processItem = NULL;
+            d->processItems.removeAll(item->url());
         }
 
         d->listView->removeItemWidget(*it, 0);
@@ -903,10 +902,9 @@ void ImagesList::removeItemByUrl(const KUrl& url)
 
             if (item->url() == url)
             {
-                if (item == d->processItem)
+                if (d->processItems.contains(item->url()))
                 {
-                    d->progressTimer->stop();
-                    d->processItem = NULL;
+                    d->processItems.removeAll(item->url());
                 }
 
                 delete item;
@@ -944,9 +942,13 @@ KUrl::List ImagesList::imageUrls(bool onlyUnprocessed) const
 
 void ImagesList::slotProgressTimerDone()
 {
-    if (d->processItem)
+    if (!d->processItems.isEmpty())
     {
-        d->processItem->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
+        foreach(KUrl url, d->processItems)
+        {
+            ImagesListViewItem* item = listView()->findItem(url);
+            if (item) item->setProgressAnimation(d->progressPix.frameAt(d->progressCount));
+        }
 
         d->progressCount++;
 
@@ -961,26 +963,35 @@ void ImagesList::slotProgressTimerDone()
 
 void ImagesList::processing(const KUrl& url)
 {
-    d->processItem = d->listView->findItem(url);
+    ImagesListViewItem* item = listView()->findItem(url);
 
-    if (d->processItem)
+    if (item)
     {
-        d->listView->setCurrentItem(d->processItem, true);
-        d->listView->scrollToItem(d->processItem);
+        d->processItems.append(url);
+        d->listView->setCurrentItem(item, true);
+        d->listView->scrollToItem(item);
         d->progressTimer->start(300);
+    }
+}
+
+void ImagesList::processed(const KUrl& url, bool success)
+{
+    ImagesListViewItem* item = listView()->findItem(url);
+
+    if (item)
+    {
+        d->processItems.removeAll(url);
+        item->setProcessedIcon(SmallIcon(success ?  "dialog-ok" : "dialog-cancel"));
+        item->setState(success ? ImagesListViewItem::Success : ImagesListViewItem::Failed);
+
+        if(d->processItems.isEmpty())
+            d->progressTimer->stop();
     }
 }
 
 void ImagesList::processed(bool success)
 {
-    if (d->processItem)
-    {
-        d->progressTimer->stop();
-        d->processItem->setProcessedIcon(
-            SmallIcon(success ?  "dialog-ok" : "dialog-cancel"));
-        d->processItem->setState(success ? ImagesListViewItem::Success : ImagesListViewItem::Failed);
-        d->processItem = 0;
-    }
+    processed(d->processItems[0], success);
 }
 
 void ImagesList::clearProcessedStatus()

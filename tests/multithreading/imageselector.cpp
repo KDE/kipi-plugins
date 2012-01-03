@@ -32,11 +32,10 @@
 
 #include <kurl.h>
 #include <kdebug.h>
-#include <kiconloader.h>
+#include <kpushbutton.h>
 
 // Kipiplugins includes
 
-#include "imagedialog.h"
 #include "imageslist.h"
 
 using namespace KIPIPlugins;
@@ -110,6 +109,7 @@ void ImageSelector::slotStart()
     kDebug() << selectedImages;
     d->progressBar->setMaximum(selectedImages.count());
     d->progressBar->setValue(0);
+    button(Apply)->setDisabled(true);
     
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
@@ -119,19 +119,11 @@ void ImageSelector::slotStart()
 
 void ImageSelector::slotStartToProcess(const KUrl& url)
 {
-    ImagesListViewItem* item = d->listView->listView()->findItem(url);
-    if (item)
-    {
-        item->setProcessedIcon(SmallIcon("run-build"));
-    }
+    d->listView->processing(url);
 }
 
 void ImageSelector::slotEndToProcess(const KUrl& url, bool state)
 {
-    ImagesListViewItem* item = d->listView->listView()->findItem(url);
-    if (item)
-    {
-        item->setProcessedIcon(SmallIcon(state ?  "dialog-ok" : "dialog-cancel"));
-        d->progressBar->setValue(d->progressBar->value()+1);
-    }
+    d->listView->processed(url, state);
+    d->progressBar->setValue(d->progressBar->value()+1);
 }

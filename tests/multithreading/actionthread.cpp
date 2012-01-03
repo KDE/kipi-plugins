@@ -150,12 +150,12 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
     if(task->errString.isEmpty())
     {
         kDebug() << "Job done:" << task->fileUrl.toLocalFile() << endl;
-        emit signalEndToProcess(task->fileUrl.toLocalFile(), true);
+        emit signalEndToProcess(task->fileUrl, true);
     }
     else
     {
         kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString << endl;
-        emit signalEndToProcess(task->fileUrl.toLocalFile(), false);
+        emit signalEndToProcess(task->fileUrl, false);
     }
 
     delete job;
@@ -165,7 +165,7 @@ void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
 {
     Task* task = static_cast<Task*>(job);
     kDebug() << "Job Started:" << task->fileUrl.toLocalFile() << endl;
-    emit signalStartToProcess(task->fileUrl.toLocalFile());
+    emit signalStartToProcess(task->fileUrl);
 }
 
 void ActionThread::rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::RotateAction val)
