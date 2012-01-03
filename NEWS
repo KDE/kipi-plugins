@@ -6,5 +6,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 
-
+001 ==> 149269 : Thumbnails are square (HTML Export plugin) [patch].
+002 ==> 
