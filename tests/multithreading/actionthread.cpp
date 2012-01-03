@@ -66,7 +66,6 @@ public:
 
     Weaver                weaver;
     WeaverObserverTest*   log;
-
 };
 
 class Task : public Job

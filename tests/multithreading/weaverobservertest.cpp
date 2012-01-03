@@ -33,7 +33,7 @@ WeaverObserverTest::WeaverObserverTest(QObject* parent)
 {
     connect(this, SIGNAL(weaverStateChanged(ThreadWeaver::State*)),
             SLOT(slotWeaverStateChanged(ThreadWeaver::State*)));
-    
+
     connect(this, SIGNAL(threadStarted(ThreadWeaver::Thread*)),
             SLOT(slotThreadStarted(ThreadWeaver::Thread*)));
 
