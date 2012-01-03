@@ -16,7 +16,7 @@ When the plugin is run it does the following:
 - Create an output folder
 - For each image collection:
  - Create a folder
- - Generate square thumbnails
+ - Generate thumbnails (square by default)
  - Generate full images
  - Optionally copy original images
 - Copy the theme folder to the output folder
@@ -218,6 +218,22 @@ Here is an example:
 			<a href="{original/@fileName}"><xsl:value-of select="$i18nOriginalImage"/></a>
 		</p>
 	</xsl:if>
+
+## Non-square thumbnails
+
+By default, thumbnails are cropped so that they are square-shaped and all have
+an identical size. This makes it easier to create the HTML/CSS style.
+
+However, if your theme is ready to cope with thumbnails of different sizes,
+add this snippet to your desktop file:
+	
+	[X-HTMLExport Options]
+	Allow non-square thumbnails=true
+
+The user will then be able to select whether squares should or should not be
+square.  For non-square thumbnails, the specified thumbnail size becomes the
+size of the larger side of the thumbnail.
+
 
 ## Going further, theme parameters
 

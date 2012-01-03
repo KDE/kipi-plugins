@@ -51,6 +51,10 @@
 		<entry name="thumbnailQuality" type="Int">
 			<default>80</default>
 		</entry>
+		
+		<entry name="thumbnailSquare" type="Bool">
+			<default>true</default>
+		</entry>
 
 		<entry name="destUrl" type="Url">
 		</entry>

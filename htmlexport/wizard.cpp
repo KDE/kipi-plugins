@@ -297,6 +297,7 @@ void Wizard::slotThemeSelectionChanged() {
 
         QString url=theme->authorUrl();
         QString author=theme->authorName();
+	bool allowNonsquareThumbnails=theme->allowNonsquareThumbnails();
         if (!url.isEmpty()) {
             author=QString("<a href='%1'>%2</a>").arg(url).arg(author);
         }
@@ -317,6 +318,10 @@ void Wizard::slotThemeSelectionChanged() {
         // Enable theme parameter page if there is any parameter
         Theme::ParameterList parameterList = theme->parameterList();
         setAppropriate(d->mThemeParametersPage->page(), parameterList.size() > 0);
+
+	d->mImageSettingsPage->kcfg_thumbnailSquare->setEnabled(allowNonsquareThumbnails);
+	if (!allowNonsquareThumbnails)
+		d->mImageSettingsPage->kcfg_thumbnailSquare->setChecked(true);
 
         d->fillThemeParametersPage(theme);
     } else {

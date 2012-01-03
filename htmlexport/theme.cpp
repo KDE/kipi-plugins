@@ -46,6 +46,7 @@ static const char* AUTHOR_GROUP = "X-HTMLExport Author";
 static const char* PARAMETER_GROUP_PREFIX = "X-HTMLExport Parameter ";
 static const char* PARAMETER_TYPE_KEY = "Type";
 static const char* PREVIEW_GROUP = "X-HTMLExport Preview";
+static const char* OPTIONS_GROUP = "X-HTMLExport Options";
 
 static const char* STRING_PARAMETER_TYPE = "string";
 static const char* LIST_PARAMETER_TYPE = "list";
@@ -216,6 +217,9 @@ QString Theme::previewUrl() const {
         return d->mDesktopFile->group(PREVIEW_GROUP).readEntry("Url");
 }
 
+QBool Theme::allowNonsquareThumbnails() const {
+	return QBool(d->mDesktopFile->group(OPTIONS_GROUP).readEntry("Allow non-square thumbnails", false));
+}
 
 Theme::ParameterList Theme::parameterList() const {
 	return d->mParameterList;

@@ -58,12 +58,15 @@ namespace KIPIHTMLExport {
 
 
 /**
- * Genearate a square thumbnail from @fullImage of @size x @size pixels
+ * Genearate a thumbnail from @fullImage of @size x @size pixels
+ * If square == true, crop the result to a square
  */
-static QImage generateSquareThumbnail(const QImage& fullImage, int size) {
-    QImage image = fullImage.scaled(size, size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+static QImage generateThumbnail(const QImage& fullImage, int size, bool square) {
+    QImage image = fullImage.scaled(size, size,
+        square ? Qt::KeepAspectRatioByExpanding : Qt::KeepAspectRatio,
+        Qt::SmoothTransformation);
 
-    if (image.width() != size || image.height() != size) {
+    if (square && (image.width() != size || image.height() != size)) {
         int sx=0, sy=0;
         if (image.width() > size) {
             sx=(image.width() - size) / 2;
@@ -138,7 +141,7 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
         }
     }
 
-    QImage thumbnail = generateSquareThumbnail(fullImage, mInfo->thumbnailSize());
+    QImage thumbnail = generateThumbnail(fullImage, mInfo->thumbnailSize(), mInfo->thumbnailSquare());
 
     // Save images
     QString baseFileName = Generator::webifyFileName(element.mTitle);

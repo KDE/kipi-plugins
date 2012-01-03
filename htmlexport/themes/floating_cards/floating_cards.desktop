@@ -134,3 +134,6 @@ Name[x-test]=xxFloating Cardsxx
 Name[zh_CN]=浮动卡片
 Name[zh_TW]=紙牌浮空
 Url=preview.png
+
+[X-HTMLExport Options]
+Allow non-square thumbnails=true
