@@ -234,8 +234,10 @@ public:
 
     void                processing(const KUrl& url);
     void                processed(const KUrl& url, bool success);
-    KDE_DEPRECATED void processed(bool success);
+    void                cancelProcess();
     void                clearProcessedStatus();
+
+    KDE_DEPRECATED void processed(bool success);
 
     void                setControlButtons(ControlButtons buttonMask);
     void                setControlButtonsPlacement(ControlButtonPlacement placement);

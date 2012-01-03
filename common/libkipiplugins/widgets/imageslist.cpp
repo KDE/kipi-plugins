@@ -989,6 +989,14 @@ void ImagesList::processed(const KUrl& url, bool success)
     }
 }
 
+void ImagesList::cancelProcess()
+{
+    foreach(KUrl url, d->processItems)
+    {
+        processed(url, false);
+    }
+}
+
 void ImagesList::processed(bool success)
 {
     processed(d->processItems[0], success);
