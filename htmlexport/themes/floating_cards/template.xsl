@@ -22,6 +22,9 @@
 		<link rel="stylesheet" type="text/css" href="../thumb_size.css"/>
 	</head>
 	<body class="image">
+	<xsl:if test="$keyboard_navigation = 1">
+	<script type="text/javascript" src="../floating_cards/image_nav.js"/>
+	</xsl:if>
 	<h1>
 		<xsl:value-of select="title"/>
 		(<xsl:value-of select="position()"/>/<xsl:value-of select="last()"/>):
@@ -42,17 +45,20 @@
 			<img src="{full/@fileName}" width="{full/@width}" height="{full/@height}" alt=""/>
 		</xsl:otherwise>
 	</xsl:choose>
+		<xsl:if test="$preload = 1">
+			<img class="preload" src="{following-sibling::image[position()=1]/full/@fileName}" alt=""/>
+		</xsl:if>
 	</div>
 
 	<!-- navigation buttons at the top -->
 	<div class="nav right">
 		<xsl:if test="position() &lt; last()">
-			<a href="{following-sibling::image[position()=1]/full/@fileName}.html">
+			<a href="{following-sibling::image[position()=1]/full/@fileName}.html" id="next">
 				<img src="../floating_cards/next.png" alt="&gt;"/>
 			</a>
 		</xsl:if>
 		<xsl:if test="position() &gt; 1">
-			<a href="{preceding-sibling::image[position()=1]/full/@fileName}.html">
+			<a href="{preceding-sibling::image[position()=1]/full/@fileName}.html" id="prev">
 				<img src="../floating_cards/prev.png" alt="&lt;"/>
 			</a>
 		</xsl:if>
@@ -61,11 +67,11 @@
 	<div class="nav left">
 		<xsl:choose>
 			<xsl:when test="count(/collections/collection) &gt; 1">
-				<a href="../{../fileName}.html">
+				<a href="../{../fileName}.html" id="up">
 				<img src="../floating_cards/up.png" alt="&lt;&lt;&lt;"/></a>
 			</xsl:when>
 			<xsl:otherwise>
-				<a href="../index.html">
+				<a href="../index.html" id="up">
 				<img src="../floating_cards/up.png" alt="&lt;&lt;&lt;"/></a>
 			</xsl:otherwise>
 		</xsl:choose>

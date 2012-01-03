@@ -137,3 +137,33 @@ Url=preview.png
 
 [X-HTMLExport Options]
 Allow non-square thumbnails=true
+
+[X-HTMLExport Parameter keyboard_navigation]
+Name[en_GB]=Keyboard navigation
+Name[en_US]=Keyboard navigation
+Name[cz]=Ovládání pomocí klávesnice
+Type=list
+Default=1
+Value_0=1
+Caption_0[en_GB]=on
+Caption_0[en_US]=on
+Caption_0[cz]=zapnuto
+Value_1=0
+Caption_1[en_GB]=off
+Caption_1[en_US]=off
+Caption_1[cz]=vypnuto
+
+[X-HTMLExport Parameter preload]
+Name[en_GB]=Preload following image
+Name[en_US]=Preload following image
+Name[cz]=Přednačítat následující obrázek
+Type=list
+Default=1
+Value_0=1
+Caption_0[en_GB]=yes
+Caption_0[en_US]=yes
+Caption_0[cz]=ano
+Value_1=0
+Caption_1[en_GB]=no
+Caption_1[en_US]=no
+Caption_1[cz]=ne
