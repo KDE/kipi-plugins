@@ -6,7 +6,7 @@
  * Date        : 2008-09-24
  * Description : DNG converter batch dialog
  *
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2010-2011 by Jens Mueller <tschenser at gmx dot de>
  * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
@@ -301,7 +301,7 @@ void BatchDialog::slotStartStop()
         d->thread->cancel();
         busy(false);
 
-        d->listView->processed(false);
+        d->listView->cancelProcess();
 
         QTimer::singleShot(500, this, SLOT(slotAborted()));
     }
@@ -410,7 +410,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
                 case KIO::R_SKIP:
                 {
                     destFile.clear();
-                    d->listView->processed(false);
+                    d->listView->cancelProcess();
                     break;
                 }
                 case KIO::R_RENAME:
@@ -429,12 +429,12 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
-            d->listView->processed(false);
+            d->listView->processed(url, false);
         }
         else
         {
             item->setDestFileName(QFileInfo(destFile).fileName());
-            d->listView->processed(true);
+            d->listView->processed(url, true);
 
             if (d->iface)
             {
@@ -450,9 +450,9 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
     d->progressBar->setValue(d->progressBar->value()+1);
 }
 
-void BatchDialog::processingFailed(const KUrl& /*url*/)
+void BatchDialog::processingFailed(const KUrl& url)
 {
-    d->listView->processed(false);
+    d->listView->processed(url, false);
     d->progressBar->setValue(d->progressBar->value()+1);
 }
 
