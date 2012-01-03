@@ -64,8 +64,8 @@ namespace KIPIRajceExportPlugin
 RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent)
     : QWidget(parent)
 {
-    m_lastLoggedInState      = false;
-    m_session                = new RajceSession(this, tmpFolder);
+    m_lastLoggedInState     = false;
+    m_session               = new RajceSession(this, tmpFolder);
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
 
     // -------------------------------------------------------------------
@@ -75,8 +75,7 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
     m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
-    m_imgList->listView()->setWhatsThis(
-    i18n("This is the list of images to upload to your Rajce.net account."));
+    m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Rajce.net account."));
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
@@ -160,9 +159,9 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
     QLabel* imageQualityLbl = new QLabel(i18n("JPEG quality:"), optionsBox);
 
     optionsBoxLayout->addWidget(imageQualityLbl,   0, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_imageQualitySpB,  0, 2, 1, 1);
+    optionsBoxLayout->addWidget(m_imageQualitySpB, 0, 2, 1, 1);
     optionsBoxLayout->addWidget(dimensionLbl,      1, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_dimensionSpB,     1, 2, 1, 1);
+    optionsBoxLayout->addWidget(m_dimensionSpB,    1, 2, 1, 1);
     optionsBoxLayout->setRowStretch(8, 10);
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
@@ -275,7 +274,7 @@ void RajceWidget::update()
     }
 
     connect(m_albumsCoB, SIGNAL(currentIndexChanged(QString)),
-               this, SLOT(selectedAlbumChanged(QString)));
+            this, SLOT(selectedAlbumChanged(QString)));
 
     unsigned max = m_session->state().maxHeight();
     max          = max > m_session->state().maxWidth() ? max : m_session->state().maxWidth();
@@ -305,22 +304,22 @@ void RajceWidget::update()
             case InvalidCommand:                 m_progressBar->setFormat(i18n("Invalid command"));                break;
             case InvalidCredentials:             m_progressBar->setFormat(i18n("Invalid login name or password")); break;
             case InvalidSessionToken:            m_progressBar->setFormat(i18n("Session expired"));                break;
-            case InvalidOrRepeatedColumnName:                                                                     break;
+            case InvalidOrRepeatedColumnName:                                                                      break;
             case InvalidAlbumId:                 m_progressBar->setFormat(i18n("Unknown album"));                  break;
             case AlbumDoesntExistOrNoPrivileges: m_progressBar->setFormat(i18n("Unknown album"));                  break;
             case InvalidAlbumToken:              m_progressBar->setFormat(i18n("Failed to open album"));           break;
             case AlbumNameEmpty:                 m_progressBar->setFormat(i18n("The album name cannot be empty")); break;
             case FailedToCreateAlbum:            m_progressBar->setFormat(i18n("Failed to create album"));         break;
             case AlbumDoesntExist:               m_progressBar->setFormat(i18n("Album does not exist"));           break;
-            case UnknownApplication:                                                                              break;
-            case InvalidApplicationKey:                                                                           break;
+            case UnknownApplication:                                                                               break;
+            case InvalidApplicationKey:                                                                            break;
             case FileNotAttached:                m_progressBar->setFormat(i18n("File upload failed"));             break;
-            case NewerVersionExists:                                                                              break;
+            case NewerVersionExists:                                                                               break;
             case SavingFileFailed:               m_progressBar->setFormat(i18n("File upload failed"));             break;
             case UnsupportedFileExtension:       m_progressBar->setFormat(i18n("Unsupported file extension"));     break;
-            case UnknownClientVersion:                                                                            break;
-            case NonexistentTarget:                                                                               break;
-            default:                                                                                              break;
+            case UnknownClientVersion:                                                                             break;
+            case NonexistentTarget:                                                                                break;
+            default:                                                                                               break;
         }
     }
 
@@ -507,7 +506,7 @@ void RajceWidget::uploadNext()
 {
     if (m_currentUploadImage != m_uploadQueue.begin())
     {
-        m_imgList->processed(m_session->state().lastErrorCode() == 0);
+        m_imgList->processed(KUrl::fromLocalFile(*m_currentUploadImage), (m_session->state().lastErrorCode() == 0));
     }
 
     if (m_currentUploadImage == m_uploadQueue.end())
@@ -531,7 +530,7 @@ void RajceWidget::cancelUpload()
 {
     if (m_currentUploadImage != m_uploadQueue.begin() && m_currentUploadImage != m_uploadQueue.end())
     {
-        m_imgList->processed(false);
+        m_imgList->processed(KUrl::fromLocalFile(*m_currentUploadImage), false);
     }
 
     disconnect(m_session, SIGNAL(busyFinished(uint)),

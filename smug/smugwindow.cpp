@@ -8,7 +8,7 @@
  *                SmugMug web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -133,7 +133,7 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
                       ki18n("A Kipi plugin to import/export image collections "
                             "from/to the SmugMug web service."),
                       ki18n("(c) 2005-2008, Vardhman Jain\n"
-                            "(c) 2008-2009, Gilles Caulier\n"
+                            "(c) 2008-2012, Gilles Caulier\n"
                             "(c) 2008-2009, Luka Renko"));
 
     m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
@@ -270,7 +270,7 @@ void SmugWindow::slotButtonClicked(int button)
             {
                 m_talker->cancel();
                 m_transferQueue.clear();
-                m_widget->m_imgList->processed(false);
+                m_widget->m_imgList->cancelProcess();
                 m_widget->progressBar()->hide();
             }
             break;
@@ -783,7 +783,7 @@ void SmugWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
         m_tmpPath.clear();
     }
 
-    m_widget->m_imgList->processed(errCode == 0);
+    m_widget->m_imgList->processed(m_transferQueue.first(), (errCode == 0));
 
     if (errCode == 0)
     {

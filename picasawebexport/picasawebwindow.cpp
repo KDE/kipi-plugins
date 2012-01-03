@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
  *
@@ -138,7 +138,7 @@ PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpF
                               ki18n("A Kipi plugin to export image collections to "
                                     "PicasaWeb web service."),
                               ki18n( "(c) 2007-2009, Vardhman Jain\n"
-                              "(c) 2008-2010, Gilles Caulier\n"
+                              "(c) 2008-2012, Gilles Caulier\n"
                               "(c) 2009, Luka Renko\n"
                               "(c) 2010, Jens Mueller" ));
 
@@ -240,7 +240,7 @@ void PicasawebWindow::cancelProcessing()
 {
     m_talker->cancel();
     m_transferQueue.clear();
-    m_widget->m_imgList->processed(false);
+    m_widget->m_imgList->cancelProcess();
     m_widget->progressBar()->hide();
 }
 
@@ -763,7 +763,7 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
     }
 
     KExiv2Iface::KExiv2 exiv2Iface;
-    bool bRet = false;
+    bool bRet        = false;
     QString fileName = m_transferQueue.first().first.path();
     if (!photoId.isEmpty() &&
         exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(fileName) && exiv2Iface.load(fileName))
@@ -772,7 +772,7 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
         bRet = exiv2Iface.save(fileName);
     }
 
-    m_widget->m_imgList->processed(errCode == 0);
+    m_widget->m_imgList->processed(m_transferQueue.first().first, (errCode == 0));
 
     if (errCode == 0)
     {
@@ -834,7 +834,9 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
             errText = imgFile.errorString();
         }
         else
+        {
             imgFile.close();
+        }
 
         if (errText.isEmpty())
         {
