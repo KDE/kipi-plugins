@@ -1,9 +1,6 @@
 Kipi-plugins 2.5.0 - Release date: 2012/01/01
 ------------------------------------------------------------------------
 
-NEW FEATURES:
-
-
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 269482 : Picasa Upload.
@@ -47,5 +44,4 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 039 ==> 213340 : "rotate left" and "rotate right" actually rotate by 180 degrees.
 040 ==> 221175 : White screen with Ken Burns Effect or other OpenGL slideshow with full screen resolution.
 041 ==> 288159 : i18n done horribly in PhotoLayoutsEditor.
-042 ==> 
 
