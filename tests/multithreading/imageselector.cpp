@@ -68,14 +68,14 @@ ImageSelector::ImageSelector()
     setDefaultButton(KDialog::Close);
     setModal(false);
 
-    d->page = new QWidget(this);
+    d->page                 = new QWidget(this);
     setMainWidget(d->page);
     QGridLayout* mainLayout = new QGridLayout(d->page);
 
-    d->listView    = new ImagesList(0, d->page);
+    d->listView             = new ImagesList(0, d->page);
     d->listView->setControlButtonsPlacement(ImagesList::ControlButtonsRight);
 
-    d->progressBar = new QProgressBar(d->page);
+    d->progressBar          = new QProgressBar(d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
 
     mainLayout->addWidget(d->listView,    0, 0, 1, 1);
@@ -83,7 +83,7 @@ ImageSelector::ImageSelector()
     mainLayout->setRowStretch(0, 10);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
-    
+
     d->thread = new ActionThread(this);
 
     connect(this, SIGNAL(applyClicked()),
@@ -105,12 +105,12 @@ void ImageSelector::slotStart()
 {
     KUrl::List selectedImages = d->listView->imageUrls();
     if (selectedImages.isEmpty()) return;
-    
+
     kDebug() << selectedImages;
     d->progressBar->setMaximum(selectedImages.count());
     d->progressBar->setValue(0);
     button(Apply)->setDisabled(true);
-    
+
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
     d->thread->rotate(selectedImages);
@@ -122,8 +122,8 @@ void ImageSelector::slotStartToProcess(const KUrl& url)
     d->listView->processing(url);
 }
 
-void ImageSelector::slotEndToProcess(const KUrl& url, bool state)
+void ImageSelector::slotEndToProcess(const KUrl& url, bool success)
 {
-    d->listView->processed(url, state);
+    d->listView->processed(url, success);
     d->progressBar->setValue(d->progressBar->value()+1);
 }

@@ -40,12 +40,12 @@ public:
 
     ImageSelector();
     ~ImageSelector();
-    
+
 private Q_SLOTS:
 
     void slotStart();
     void slotStartToProcess(const KUrl& url);
-    void slotEndToProcess(const KUrl& url, bool state);
+    void slotEndToProcess(const KUrl& url, bool success);
 
 private:
 

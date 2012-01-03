@@ -54,7 +54,7 @@ Q_SIGNALS:
 
     void signalStartToProcess(const KUrl& url);
     void signalEndToProcess(const KUrl& url, bool state);
-    
+
 protected:
 
     void run();
