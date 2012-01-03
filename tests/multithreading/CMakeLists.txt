@@ -59,6 +59,4 @@ IF(THREADWEAVER_FOUND)
                           kipiplugins
                          )
 
-    INSTALL(TARGETS multithread DESTINATION ${BIN_INSTALL_DIR})
-
 ENDIF(THREADWEAVER_FOUND)
