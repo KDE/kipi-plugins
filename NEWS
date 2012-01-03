@@ -1,4 +1,4 @@
-Kipi-plugins 2.5.0 - Release date: 2012/01/01
+Kipi-plugins 2.6.0 - Release date: 2012/02/05
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -6,46 +6,5 @@ NEW FEATURES:
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
-001 ==> 269482 : Picasa Upload.
-002 ==> 234865 : Crash Facebook tool.
-003 ==> 233263 : Crash when uploading to Flickr.
-004 ==> 263077 : Crashed when select kipi convert plugin in gwenview.
-005 ==> 256974 : Gwenview crashed when printing multiple images >1 per page.
-006 ==> 259370 : Crash when making a slideshow.
-007 ==> 235112 : Gwenview crashed trying to save scan as TIFF.
-008 ==> 288674 : digiKam crashes when i close the export window (export to yandex-fotki).
-009 ==> 286844 : digiKam crashes when close Export to VKontakte Web Service window.
-010 ==> 288465 : Spelling-error-in-binary usr/lib/kde4/kipiplugin_flashexport.so Unkown Unknown.
-011 ==> 203603 : Country names in digikam should come from iso_3166 GNU package.
-012 ==> 268760 : Facebook uploader crashed.
-013 ==> 171303 : Auto-rotate on advanced slideshow doesn't work.
-014 ==> 253862 : Compile fails can not find gdk-pixbuf/gdk-pixbuf.h: No such file or directory.
-015 ==> 197899 : In "Rename images" plugin photos are displayed in reverted order.
-016 ==> 217546 : Picasaweb export does not point to the current album.
-017 ==> 265012 : Crashed while uploading to Smugmug.
-018 ==> 190293 : Export as html gallery has the forward button disabled before changing the selected folder.
-019 ==> 254105 : Please, split translations of string "Free" in different contexts.
-020 ==> 207157 : Regression: Can't transfer EXIF creation date to file date.
-021 ==> 256937 : Change word "locator" to something less geeky.
-022 ==> 228051 : Geotags are not saved when converting RAW to JPEG.
-023 ==> 242579 : Changing captions/GPS info only works on first image in a selection.
-024 ==> 121124 : Newbie friendly features wishlist.
-025 ==> 218777 : digiKam should remember the folder for scans.
-026 ==> 249841 : Add option to transfer metadata to final image in "blend bracketed images" tool.
-027 ==> 167494 : The Google Maps GPS Edit Screen shows satellite images only for a limited time in the GPS Sync KIPI Plugin.
-028 ==> 148427 : Adjust date/time tool sets date to current time instead of EXIF/IPTC time.
-029 ==> 203564 : Rotate jpg change date.
-030 ==> 192163 : Facebook photo does support max 60 photos pro album.
-031 ==> 271315 : GUI improvement for manual geotagging.
-032 ==> 249930 : Support for multi-monitor view [patch].
-033 ==> 275180 : Geolocation window unintuitive and "overloaded".
-034 ==> 209365 : Geolocation Max. number of API calls per day reached.
-035 ==> 289725 : Crash during upload on Picasaweb.
-036 ==> 212542 : Advanced slideshow doesn't respect exif orientation of ORF images.
-037 ==> 231600 : Uploading video files results in spurious warnings.
-038 ==> 281719 : Wizard -> Page Setup -> Paper Size: Use QPrinterInfo to get the printer's supported paper sizes instead of QPrinter defaults (or: cropping issues with photo paper).
-039 ==> 213340 : "rotate left" and "rotate right" actually rotate by 180 degrees.
-040 ==> 221175 : White screen with Ken Burns Effect or other OpenGL slideshow with full screen resolution.
-041 ==> 288159 : i18n done horribly in PhotoLayoutsEditor.
-042 ==> 
+001 ==> 
 
