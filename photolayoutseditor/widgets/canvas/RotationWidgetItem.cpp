@@ -272,7 +272,7 @@ void RotationWidgetItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * /*event*/)
     this->setCursor(QCursor(Qt::OpenHandCursor));
 
     if (d->rotate_commands.count() > 1)
-        PhotoLayoutsEditor::instance()->beginUndoCommandGroup(i18n("Rotate item(s)"));
+        PhotoLayoutsEditor::instance()->beginUndoCommandGroup( i18np("Rotate item", "Rotate items", d->rotate_commands.count()) );
     for (QMap<AbstractPhoto*,RotateItemCommand*>::iterator it = d->rotate_commands.begin(); it != d->rotate_commands.end(); ++it)
     {
         if (it.value())
