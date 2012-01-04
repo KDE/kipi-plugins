@@ -139,9 +139,6 @@ Url=preview.png
 Allow non-square thumbnails=true
 
 [X-HTMLExport Parameter keyboard_navigation]
-Name[en_GB]=Keyboard navigation
-Name[en_US]=Keyboard navigation
-Name[cz]=Ovládání pomocí klávesnice
 Type=list
 Default=1
 Value_0=1
@@ -154,9 +151,6 @@ Caption_1[en_US]=off
 Caption_1[cz]=vypnuto
 
 [X-HTMLExport Parameter preload]
-Name[en_GB]=Preload following image
-Name[en_US]=Preload following image
-Name[cz]=Přednačítat následující obrázek
 Type=list
 Default=1
 Value_0=1
