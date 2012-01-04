@@ -216,7 +216,7 @@ void SlideShowConfig::readSettings()
         // load and check playlist files, if valid, add to tracklist widget
         QStringList playlistFiles = soundGrp.readEntry("Tracks", QStringList());
 
-        foreach (const QString& playlistFile, playlistFiles)
+        foreach(const QString& playlistFile, playlistFiles)
         {
             KUrl file(playlistFile);
             QFileInfo fi(file.toLocalFile());

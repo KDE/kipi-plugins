@@ -155,7 +155,7 @@ void ListSoundItems::dropEvent(QDropEvent* e)
     QList<QUrl> list = e->mimeData()->urls();
     KUrl::List urls;
 
-    foreach (const QUrl &url, list)
+    foreach(const QUrl &url, list)
     {
         QFileInfo fi(url.toLocalFile());
         if (fi.isFile() && fi.exists())

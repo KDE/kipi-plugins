@@ -6,7 +6,8 @@
  * Date        : 2011-12-28
  * Description : Simple gui to select images
  *
- * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy@gmail.com>
+ * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,35 +23,107 @@
 
 #include "imageselector.moc"
 
+// Qt includes
+
+#include <QGridLayout>
+#include <QProgressBar>
+
 // KDE includes
 
 #include <kurl.h>
 #include <kdebug.h>
+#include <kpushbutton.h>
 
 // Kipiplugins includes
 
-#include "imagedialog.h"
+#include "imageslist.h"
+
+using namespace KIPIPlugins;
+
+class ImageSelector::ImageSelectorPriv
+{
+public:
+
+    ImageSelectorPriv()
+    {
+        page               = 0;
+        progressBar        = 0;
+        listView           = 0;
+        thread             = 0;
+    }
+
+    QWidget*      page;
+
+    QProgressBar* progressBar;
+
+    ImagesList*   listView;
+
+    ActionThread* thread;
+};
 
 ImageSelector::ImageSelector()
+    : KDialog(0), d(new ImageSelectorPriv)
 {
-    setText("Select Images");
+    setButtons(Apply | Close);
+    setDefaultButton(KDialog::Close);
+    setModal(false);
 
-    connect(this, SIGNAL(clicked(bool)),
-            this, SLOT(selectImages()));
+    d->page                 = new QWidget(this);
+    setMainWidget(d->page);
+    QGridLayout* mainLayout = new QGridLayout(d->page);
 
-    m_mainThread = new ActionThread(this);
+    d->listView             = new ImagesList(0, d->page);
+    d->listView->setControlButtonsPlacement(ImagesList::ControlButtonsRight);
+
+    d->progressBar          = new QProgressBar(d->page);
+    d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
+
+    mainLayout->addWidget(d->listView,    0, 0, 1, 1);
+    mainLayout->addWidget(d->progressBar, 1, 0, 1, 1);
+    mainLayout->setRowStretch(0, 10);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacingHint());
+
+    d->thread = new ActionThread(this);
+
+    connect(this, SIGNAL(applyClicked()),
+            this, SLOT(slotStart()));
+
+    connect(d->thread, SIGNAL(signalStartToProcess(const KUrl&)),
+            this, SLOT(slotStartToProcess(const KUrl&)));
+
+    connect(d->thread, SIGNAL(signalEndToProcess(const KUrl&, bool)),
+            this, SLOT(slotEndToProcess(const KUrl&, bool)));
 }
 
-void ImageSelector::selectImages()
+ImageSelector::~ImageSelector()
 {
-    KUrl::List selectedImages = KIPIPlugins::ImageDialog::getImageUrls(this, 0);
+    delete d;
+}
+
+void ImageSelector::slotStart()
+{
+    KUrl::List selectedImages = d->listView->imageUrls();
     if (selectedImages.isEmpty()) return;
-    
+
     kDebug() << selectedImages;
-    setDisabled(true);
-    
+    d->progressBar->setMaximum(selectedImages.count());
+    d->progressBar->setValue(0);
+    button(Apply)->setDisabled(true);
+
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
-    m_mainThread->rotate(selectedImages);
-    m_mainThread->start();
+    d->thread->rotate(selectedImages);
+    d->thread->start();
+}
+
+void ImageSelector::slotStartToProcess(const KUrl& url)
+{
+    d->listView->processing(url);
+}
+
+void ImageSelector::slotEndToProcess(const KUrl& url, bool success)
+{
+    d->listView->processed(url, success);
+    d->progressBar->setValue(d->progressBar->value()+1);
 }

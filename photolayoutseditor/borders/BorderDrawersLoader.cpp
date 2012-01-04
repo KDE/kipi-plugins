@@ -71,7 +71,7 @@ void BorderDrawersLoader::registerDrawer(BorderDrawerFactoryInterface * factory)
 {
     factory->setParent(instance());
     QStringList names = factory->drawersNames().split(';', QString::SkipEmptyParts);
-    foreach (QString name, names)
+    foreach(QString name, names)
         instance()->d->factories.insert(name, factory);
 }
 
@@ -236,7 +236,7 @@ QWidget * BorderDrawersLoader::createEditor(BorderDrawerInterface * drawer, bool
                     }
                     property = variantManager->addProperty(metaProperty.type(), propertyName);
                     variantManager->setValue(property, metaProperty.read(drawer));
-                    foreach (QtProperty * p, property->subProperties())
+                    foreach(QtProperty* p, property->subProperties())
                         p->setEnabled(false);
                 }
         }

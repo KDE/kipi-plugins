@@ -76,7 +76,7 @@ void BordersGroup::calculateShape()
 {
     QPainterPath photoShape = graphicsItem()->itemOpaqueArea();//graphicsItem()->transform().map(graphicsItem()->itemOpaqueArea());
     d->shape = QPainterPath();
-    foreach (BorderDrawerInterface * drawer, d->borders)
+    foreach(BorderDrawerInterface* drawer, d->borders)
     {
         if (drawer)
             d->shape = d->shape.united( drawer->path(photoShape) );

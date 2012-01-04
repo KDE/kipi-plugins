@@ -56,6 +56,7 @@ public:
 	
 	QString previewName() const;
 	QString previewUrl() const;
+        QBool allowNonsquareThumbnails() const;
 
 	/**
 	 * Theme directory on hard disk

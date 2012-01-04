@@ -41,7 +41,7 @@
 
 #define CHUNK 65536
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     bool extractOriginal = false;
     if(argc == 1) 
@@ -98,10 +98,10 @@ int main(int argc, char **argv)
 
         QString originalFileName(negative->OriginalRawFileName().Get());
         dng_fingerprint originalDigest = negative->OriginalRawFileDigest();
-        quint32 originalDataLength = negative->OriginalRawFileDataLength();
-        const void* originalData = negative->OriginalRawFileData();
+        quint32 originalDataLength     = negative->OriginalRawFileDataLength();
+        const void* originalData       = negative->OriginalRawFileData();
 
-        if (true == extractOriginal)
+        if (extractOriginal)
         {
             if(originalDataLength > 0)
             {

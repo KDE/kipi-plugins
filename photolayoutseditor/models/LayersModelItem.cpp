@@ -53,7 +53,7 @@ LayersModelItem::LayersModelItem(AbstractPhoto * photo, LayersModelItem * parent
 
 LayersModelItem::~LayersModelItem()
 {
-    foreach (LayersModelItem * child, childItems)
+    foreach(LayersModelItem* child, childItems)
         delete child;
 }
 
@@ -214,7 +214,7 @@ bool LayersModelItem::moveChildren(int sourcePosition, int count, LayersModelIte
 void LayersModelItem::refreshZValues()
 {
     int i = childItems.count();
-    foreach (LayersModelItem * item, childItems)
+    foreach(LayersModelItem* item, childItems)
     {
         AbstractPhoto * photo = item->photo();
         if (photo)

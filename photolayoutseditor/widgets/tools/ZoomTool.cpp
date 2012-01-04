@@ -101,7 +101,7 @@ void ZoomTool::zoom(const QPointF & point)
         return;
     QList<QGraphicsView*> views = scene->views();
     qreal factor = 1 + (d->out->isChecked() ? -0.1 : 0.1);
-    foreach (QGraphicsView * view, views)
+    foreach(QGraphicsView* view, views)
     {
         Canvas * canvas = qobject_cast<Canvas*>(view);
         if (!canvas)

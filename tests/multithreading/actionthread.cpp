@@ -66,7 +66,6 @@ public:
 
     Weaver                weaver;
     WeaverObserverTest*   log;
-
 };
 
 class Task : public Job
@@ -78,7 +77,7 @@ public:
     {
     }
 
-    QString                              filePath;
+    KUrl                                 fileUrl;
     QString                              errString;
     KIPIJPEGLossLessPlugin::Action       action;
     KIPIJPEGLossLessPlugin::RotateAction rotAction;
@@ -92,7 +91,7 @@ protected:
             case KIPIJPEGLossLessPlugin::Rotate:
             {
                 KIPIJPEGLossLessPlugin::ImageRotate imageRotate;
-                imageRotate.rotate(filePath, rotAction, errString, false);
+                imageRotate.rotate(fileUrl.toLocalFile(), rotAction, errString, false);
 
                 break;
             }
@@ -105,7 +104,7 @@ protected:
             case KIPIJPEGLossLessPlugin::GrayScale:
             {
                 KIPIJPEGLossLessPlugin::ImageGrayScale imageGrayScale;
-                imageGrayScale.image2GrayScale(filePath, errString, false);
+                imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString, false);
 
                 break;
             }
@@ -117,7 +116,7 @@ ActionThread::ActionThread(QObject* parent)
     : QThread(parent),d(new ActionThreadPriv)
 {
     const int maximumNumberOfThreads = 4;
-    d->log = new WeaverObserverTest(this);
+    d->log                           = new WeaverObserverTest(this);
     d->weaver.registerObserver(d->log);
     d->weaver.setMaximumNumberOfThreads(maximumNumberOfThreads);
     kDebug() << "Starting Main Thread";
@@ -149,11 +148,13 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
 
     if(task->errString.isEmpty())
     {
-        kDebug() << "Job done:" << task->filePath << "\n";
+        kDebug() << "Job done:" << task->fileUrl.toLocalFile() << endl;
+        emit signalEndToProcess(task->fileUrl, true);
     }
     else
     {
-        kDebug() << "could n't complete the job: " << task->filePath << " Error: " << task->errString << endl;
+        kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString << endl;
+        emit signalEndToProcess(task->fileUrl, false);
     }
 
     delete job;
@@ -162,7 +163,8 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
 void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
 {
     Task* task = static_cast<Task*>(job);
-    kDebug() << "Job Started:" << task->filePath  << endl;
+    kDebug() << "Job Started:" << task->fileUrl.toLocalFile() << endl;
+    emit signalStartToProcess(task->fileUrl);
 }
 
 void ActionThread::rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::RotateAction val)
@@ -173,7 +175,7 @@ void ActionThread::rotate(const KUrl::List& urlList, KIPIJPEGLossLessPlugin::Rot
          it != urlList.constEnd(); ++it )
     {
         Task* t      = new Task;
-        t->filePath  = (*it).toLocalFile();
+        t->fileUrl   = *it;
         t->action    = KIPIJPEGLossLessPlugin::Rotate;
         t->rotAction = val;
 
@@ -198,9 +200,9 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        Task* t     = new Task;
-        t->filePath = (*it).toLocalFile();
-        t->action   = KIPIJPEGLossLessPlugin::GrayScale;
+        Task* t    = new Task;
+        t->fileUrl = *it;
+        t->action  = KIPIJPEGLossLessPlugin::GrayScale;
 
         connect(t, SIGNAL(started(ThreadWeaver::Job*)),
                 this, SLOT(slotJobStarted(ThreadWeaver::Job*)));

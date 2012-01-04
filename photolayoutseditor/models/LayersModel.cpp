@@ -192,7 +192,7 @@ bool LayersModel::appendItems(const QList<AbstractPhoto*> & items, const QModelI
 
 bool LayersModel::insertItems(const QList<AbstractPhoto*> & items, int position, const QModelIndex & parent)
 {
-    foreach(AbstractPhoto * item, items)
+    foreach(AbstractPhoto* item, items)
         if (!insertItem(item, position++, parent))
             return false;
     return true;
@@ -228,7 +228,7 @@ QModelIndexList LayersModel::itemsToIndexes(const QList<AbstractPhoto*> & items)
 {
     QModelIndexList indexes;
     QModelIndex temp;
-    foreach(AbstractPhoto * item, items)
+    foreach(AbstractPhoto* item, items)
     {
         temp = findIndex(item);
         if (temp.isValid())

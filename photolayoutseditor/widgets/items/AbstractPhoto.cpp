@@ -149,7 +149,7 @@ QString AbstractPhoto::uniqueName(const QString & name)
         return result;
     int nameNumber = 1;
     QList<QGraphicsItem*> items = scene->items();
-    foreach (QGraphicsItem * item, items)
+    foreach(QGraphicsItem* item, items)
     {
         AbstractPhoto * myItem = dynamic_cast<AbstractPhoto*>(item);
         if (!myItem || myItem == this || myItem->name().isEmpty())

@@ -58,7 +58,7 @@ void CPFindBinary::checkSystem()
     QStringList lines = stdOut.split('\n');
 
     dev = false;
-    foreach (QString line, lines)
+    foreach(QString line, lines)
     {
         kDebug() << path() << " help header line: \n" << line;
         m_version.clear();

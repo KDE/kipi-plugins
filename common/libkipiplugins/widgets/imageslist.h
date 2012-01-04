@@ -6,7 +6,7 @@
  * Date        : 2008-05-21
  * Description : widget to display an imagelist
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2010 by Andi Clemens <andi dot clemens at googlemail dot com>
  * Copyright (C) 2009-2010 by Luka Renko <lure at kubuntu dot org>
  *
@@ -224,27 +224,28 @@ public:
     explicit ImagesList(Interface* iface, QWidget* parent = 0, int iconSize = -1);
     virtual ~ImagesList();
 
-    void               setAllowRAW(bool allow);
-    void               loadImagesFromCurrentSelection();
+    void                setAllowRAW(bool allow);
+    void                loadImagesFromCurrentSelection();
 
-    int                iconSize()  const;
+    int                 iconSize()  const;
 
-    ImagesListView*    listView()  const;
-    KIPI::Interface*   iface()     const;
+    ImagesListView*     listView()  const;
+    KIPI::Interface*    iface()     const;
 
-    void               processing(const KUrl& url);
-    void               processed(bool success);
-    void               clearProcessedStatus();
+    void                processing(const KUrl& url);
+    void                processed(const KUrl& url, bool success);
+    void                cancelProcess();
+    void                clearProcessedStatus();
 
-    void               setControlButtons(ControlButtons buttonMask);
-    void               setControlButtonsPlacement(ControlButtonPlacement placement);
-    void               enableControlButtons(bool enable = true);
-    void               enableDragAndDrop(const bool enable = true);
+    void                setControlButtons(ControlButtons buttonMask);
+    void                setControlButtonsPlacement(ControlButtonPlacement placement);
+    void                enableControlButtons(bool enable = true);
+    void                enableDragAndDrop(const bool enable = true);
 
-    void               updateThumbnail(const KUrl& url);
+    void                updateThumbnail(const KUrl& url);
 
-    virtual KUrl::List imageUrls(bool onlyUnprocessed = false) const;
-    virtual void       removeItemByUrl(const KUrl& url);
+    virtual KUrl::List  imageUrls(bool onlyUnprocessed = false) const;
+    virtual void        removeItemByUrl(const KUrl& url);
 
 Q_SIGNALS:
 

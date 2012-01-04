@@ -7,7 +7,7 @@
  * Description : Raw converter batch dialog
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -189,7 +189,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to batch convert RAW images"),
                    ki18n("(c) 2003-2005, Renchi Raju\n"
-                         "(c) 2006-2011, Gilles Caulier"));
+                         "(c) 2006-2012, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Renchi Raju"),
                        ki18n("Author"),
@@ -362,7 +362,7 @@ void BatchDialog::slotStartStop()
         d->thread->cancel();
         busy(false);
 
-        d->listView->processed(false);
+        d->listView->cancelProcess();
 
         QTimer::singleShot(500, this, SLOT(slotAborted()));
     }
@@ -373,6 +373,7 @@ void BatchDialog::slotAborted()
     d->progressBar->setValue(0);
     d->progressBar->hide();
 }
+
 void BatchDialog::addItems(const KUrl::List& itemList)
 {
     d->listView->slotAddImages(itemList);
@@ -517,7 +518,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
                 case KIO::R_SKIP:
                 {
                     destFile.clear();
-                    d->listView->processed(false);
+                    d->listView->cancelProcess();
                     break;
                 }
                 case KIO::R_RENAME:
@@ -536,12 +537,12 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));
-            d->listView->processed(false);
+            d->listView->processed(url, false);
         }
         else
         {
             item->setDestFileName(QFileInfo(destFile).fileName());
-            d->listView->processed(true);
+            d->listView->processed(url, true);
 
             // Assign Kipi host attributes from original RAW image.
 
@@ -554,9 +555,9 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
     d->progressBar->setValue(d->progressBar->value()+1);
 }
 
-void BatchDialog::processingFailed(const KUrl& /*url*/)
+void BatchDialog::processingFailed(const KUrl& url)
 {
-    d->listView->processed(false);
+    d->listView->processed(url, false);
     d->progressBar->setValue(d->progressBar->value()+1);
 }
 

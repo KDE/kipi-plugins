@@ -151,7 +151,7 @@ void DsWindow::slotButtonClicked(int button)
             else // cancel login/transfer
             {
                 m_transferQueue.clear();
-                m_widget->m_imgList->processed(false);
+                m_widget->m_imgList->cancelProcess();
                 m_widget->progressBar()->hide();
             }
             break;
@@ -313,7 +313,7 @@ void DsWindow::slotAddScreenshotDone(int errCode, const QString& errMsg)
         m_tmpPath.clear();
     }
 
-    m_widget->m_imgList->processed(errCode == 0);
+    m_widget->m_imgList->processed(m_transferQueue.first(), (errCode == 0));
 
     if (errCode == 0)
     {

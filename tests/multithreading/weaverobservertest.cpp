@@ -6,7 +6,7 @@
  * Date        : 2011-12-28
  * Description : prints debugging messages about the thread activity in action thread class
  *
- * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy@gmail.com>
+ * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,7 +33,7 @@ WeaverObserverTest::WeaverObserverTest(QObject* parent)
 {
     connect(this, SIGNAL(weaverStateChanged(ThreadWeaver::State*)),
             SLOT(slotWeaverStateChanged(ThreadWeaver::State*)));
-    
+
     connect(this, SIGNAL(threadStarted(ThreadWeaver::Thread*)),
             SLOT(slotThreadStarted(ThreadWeaver::Thread*)));
 
