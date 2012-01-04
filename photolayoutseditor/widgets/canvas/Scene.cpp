@@ -635,13 +635,8 @@ void Scene::removeItems(const QList<AbstractPhoto *> & items)
     QUndoCommand * command = 0;
     QUndoCommand * parent = 0;
     if (items.count() > 1)
-<<<<<<< HEAD
         parent = new QUndoCommand( i18np("Remove item", "Remove items", items.count()) );
     foreach (AbstractPhoto * item, items)
-=======
-        parent = new QUndoCommand("Remove item(s)");
-    foreach(AbstractPhoto* item, items)
->>>>>>> 6b5dd73b2264f0f89248bd8fc703e92458a22496
         command = new RemoveItemsCommand(item, this, parent);
     if (parent)
         PLE_PostUndoCommand(parent);
