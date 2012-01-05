@@ -88,7 +88,7 @@ public:
     WizardPage ( KAssistantDialog* dialog, const QString& title )
         : QWidget ( dialog )
     {
-        setupUi ( this );
+        this->setupUi ( this );
         layout()->setMargin ( 0 );
         mPage = dialog->addPage ( this, title );
     }
