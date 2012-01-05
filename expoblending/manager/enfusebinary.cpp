@@ -37,43 +37,42 @@ namespace KIPIExpoBlendingPlugin
 EnfuseBinary::EnfuseBinary()
             : BinaryIface()
 {
-    checkSystem();
+    m_configGroup       = "ExpoBlending Settings";
+    m_pathToBinary      = "enfuse";
+    setBaseName("enfuse");
+    m_versionArguments<<"-V";
+    readConfig();
 }
 
 EnfuseBinary::~EnfuseBinary()
 {
 }
 
-void EnfuseBinary::checkSystem()
+bool EnfuseBinary::parseHeader(const QString & output)
 {
-    QProcess process;
-    process.start(path(), QStringList() << "-V");
-    m_available = process.waitForFinished();
-
-    QString stdOut = process.readAll();
-
     // Work around Enfuse <= 3.2
     // The output look like this : ==== enfuse, version 3.2 ====
-
     QString headerStarts("==== enfuse, version ");
-    QString firstLine = findHeader(stdOut.split('\n', QString::SkipEmptyParts), headerStarts);
+    QString firstLine = findHeader(output.split('\n', QString::SkipEmptyParts), headerStarts);
     if (firstLine.isEmpty())
     {
         // Work around Enfuse >= 4.0
         // The output look like this : enfuse 4.0-753b534c819d
-
         headerStarts = QString("enfuse ");
-        firstLine = findHeader(stdOut.split('\n', QString::SkipEmptyParts), headerStarts);
+        firstLine = findHeader(output.split('\n', QString::SkipEmptyParts), headerStarts);
         kDebug() << path() << " help header line: \n" << firstLine;
         m_version = firstLine.remove(0, headerStarts.length()).section('-', 0, 0);
         kDebug() << "Found " << path() << " version: " << version();
+        return true;
     }
     else
     {
         kDebug() << path() << " help header line: \n" << firstLine;
         m_version = firstLine.remove(0, headerStarts.length()).section(' ', 0, 0);
         kDebug() << "Found " << path() << " version: " << version();
+        return true;
     }
+    return false;
 }
 
 KUrl EnfuseBinary::url() const
@@ -84,11 +83,6 @@ KUrl EnfuseBinary::url() const
 QString EnfuseBinary::projectName() const
 {
     return QString("Enblend");
-}
-
-QString EnfuseBinary::path() const
-{
-    return QString("enfuse");
 }
 
 QString EnfuseBinary::minimalVersion() const

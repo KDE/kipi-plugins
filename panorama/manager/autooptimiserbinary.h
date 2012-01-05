@@ -40,12 +40,13 @@ public:
     AutoOptimiserBinary();
     ~AutoOptimiserBinary();
 
-    QString path()           const;
     QString minimalVersion() const;
     KUrl    url()            const;
     QString projectName()    const;
 
-    void    checkSystem();
+protected:
+    virtual bool parseHeader (const QString & output);
+
 };
 
 } // namespace KIPIPanoramaPlugin

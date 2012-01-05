@@ -37,33 +37,30 @@ namespace KIPIPanoramaPlugin
 Pto2MkBinary::Pto2MkBinary()
     : BinaryIface()
 {
-    checkSystem();
+    m_configGroup       = "Panorama Settings";
+    m_pathToBinary      = "pto2mk";
+    setBaseName("pto2mk");
+    m_versionArguments << "-h";
+    readConfig();
 }
 
 Pto2MkBinary::~Pto2MkBinary()
 {
 }
 
-void Pto2MkBinary::checkSystem()
+bool Pto2MkBinary::parseHeader(const QString & output)
 {
-    QProcess process;
-    process.start(path(), QStringList() << "-h");
-    m_available       = process.waitForFinished();
-
     QString headerStarts("pto2mk version ");
-
-    QString stdOut(process.readAllStandardError());
-    QString firstLine = stdOut.section('\n', 2, 2);
-
+    QString firstLine = output.section('\n', 2, 2);
     kDebug() << path() << " help header line: \n" << firstLine;
-
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
         m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-
         kDebug() << "Found " << path() << " version: " << version() ;
+        return true;
     }
+    return false;
 }
 
 KUrl Pto2MkBinary::url() const
@@ -76,10 +73,12 @@ QString Pto2MkBinary::projectName() const
     return QString("Hugin");
 }
 
+/*
 QString Pto2MkBinary::path() const
 {
     return QString("pto2mk");
 }
+*/
 
 QString Pto2MkBinary::minimalVersion() const
 {

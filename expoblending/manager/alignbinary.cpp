@@ -37,34 +37,32 @@ namespace KIPIExpoBlendingPlugin
 AlignBinary::AlignBinary()
            : BinaryIface()
 {
-    checkSystem();
+    m_configGroup       = "ExpoBlending Settings";
+    m_pathToBinary      = "align_image_stack";
+    setBaseName("align_image_stack");
+    m_versionArguments<<"-h";
+    readConfig();
 }
 
 AlignBinary::~AlignBinary()
 {
 }
 
-void AlignBinary::checkSystem()
+bool AlignBinary::parseHeader(const QString & output)
 {
-    QProcess process;
-    process.start(path(), QStringList() << "-h");
-    m_available = process.waitForFinished();
-
     // The output look like this : align_image_stack version 2009.2.0.4461
     QString headerStarts("align_image_stack version ");
-
-    QString stdOut(process.readAllStandardError());
-    QString firstLine = stdOut.section('\n', 1, 2);
-
+    QString firstLine = output.section('\n', 1, 2);
     kDebug() << path() << " help header line: \n" << firstLine;
-
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
         m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-
         kDebug() << "Found " << path() << " version: " << version() ;
+        return true;
     }
+    return false;
+
 }
 
 KUrl AlignBinary::url() const
@@ -75,11 +73,6 @@ KUrl AlignBinary::url() const
 QString AlignBinary::projectName() const
 {
     return QString("Hugin");
-}
-
-QString AlignBinary::path() const
-{
-    return QString("align_image_stack");
 }
 
 QString AlignBinary::minimalVersion() const
