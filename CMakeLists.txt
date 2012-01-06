@@ -368,7 +368,9 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 
     # kipi host test program to check plugins
 
-    ADD_SUBDIRECTORY(tests)
+    if(KDE4_BUILD_TESTS)
+        ADD_SUBDIRECTORY(tests)
+    ENDIF(KDE4_BUILD_TESTS)
 
     # Plugins which will be always compiled
 
