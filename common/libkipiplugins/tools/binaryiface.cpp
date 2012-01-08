@@ -41,20 +41,12 @@ namespace KIPIPlugins
 {
 
 BinaryIface::BinaryIface()
- :  m_available(false),
-    m_isFound(false),
-    m_developmentVersion(false),
-    m_pathToBinary("Not Set"),
-    m_binaryBaseName("Not Set"),
-    m_minimalVersion("Not Set"),
-    m_version("N/A"),
+    : m_available(false), m_isFound(false), m_developmentVersion(false), m_version("N/A"),
+    m_pathToBinary("Not Set"), m_binaryBaseName("Not Set"), m_minimalVersion("Not Set"),
     m_configGroup("BinaryIFace Settings")
 {
     m_searchPaths.clear();
     constructPathWidget();
-#ifdef Q_WS_MAC
-    m_searchPaths.insert("/Applications/Hugin/HuginTools");
-#endif // Q_WS_MAC
 }
 
 BinaryIface::~BinaryIface()
@@ -68,15 +60,15 @@ bool BinaryIface::showResults() const
         KMessageBox::information(
                 kapp->activeWindow(),
                 i18n("<qt><p>Unable to find <i>%1</i> executable.</p>"
-                    "<p>This program is required to continue.<br/>"
-                    "Please install it from <b>%2</b> package provided by your distributor<br/>"
-                    "or download and install <a href=\"%3\">the source</a>.</p>"
-                    "<p>Note: at least, <i>%4</i> version <b>%5</b> is required.</p></qt>",
-                    path(),
-                    projectName(),
-                    url().url(),
-                    path(),
-                    minimalVersion()),
+                     "<p>This program is required to continue.<br/>"
+                     "Please install it from <b>%2</b> package provided by your distributor<br/>"
+                     "or download and install <a href=\"%3\">the source</a>.</p>"
+                     "<p>Note: at least, <i>%4</i> version <b>%5</b> is required.</p></qt>",
+                     path(),
+                     projectName(),
+                     url().url(),
+                     path(),
+                     minimalVersion()),
                 QString(),
                 QString(),
                 KMessageBox::Notify | KMessageBox::AllowLink);
@@ -121,10 +113,9 @@ void BinaryIface::setBinaryFound(bool f)
 {
     if (f)
     {
-        //m_status->setText("found!");
         if (developmentVersion())
         {
-            m_statusIcon->setPixmap(SmallIcon("dialog-ok"));
+            m_statusIcon->setPixmap(SmallIcon("dialog-warning"));
         }
         else
         {
@@ -132,13 +123,14 @@ void BinaryIface::setBinaryFound(bool f)
         }
         m_isFound = true;
         m_pathButton->hide();
+        m_downloadButton->hide();
     }
     else
     {
-        //m_status->setText("not found!");
-        m_statusIcon->setPixmap(SmallIcon("edit-delete"));
+        m_statusIcon->setPixmap(SmallIcon("dialog-cancel"));
         m_isFound = false;
         m_pathButton->show();
+        m_downloadButton->show();
     }
     emit signalBinaryValid(m_isFound);
 }
@@ -146,16 +138,15 @@ void BinaryIface::setBinaryFound(bool f)
 QString BinaryIface::slotNavigateToBinary()
 {
     QString f = KFileDialog::getOpenFileName(KUrl(),
-                        QString(m_binaryBaseName),
-                        0,
-                        QString("Navigate to %1").arg(m_binaryBaseName));
+                                             QString(m_binaryBaseName),
+                                             0,
+                                             QString(i18n("Navigate to %1",m_binaryBaseName)));
     m_pathToBinary = f;
     if (checkPath(m_pathToBinary))
     {
-        //m_status->setText("found!");
         QDir d(m_pathToBinary);
         int lastIndex = m_pathToBinary.lastIndexOf(QDir::separator());
-        emit signalSearchDirectoryAdded( m_pathToBinary.left(lastIndex+1) );
+        emit signalSearchDirectoryAdded( m_pathToBinary.left(lastIndex + 1) );
     }
     else
     {
@@ -164,44 +155,45 @@ QString BinaryIface::slotNavigateToBinary()
     return f;
 }
 
-void BinaryIface::slotAddSearchDirectory(const QString & dir)
+void BinaryIface::slotAddSearchDirectory(const QString& dir)
 {
-    m_searchPaths<<dir;
+    m_searchPaths << dir;
     checkSystem();
 }
 
 QWidget * BinaryIface::constructPathWidget()
 {
-    m_pathWidget    = new KHBox();
+    m_pathWidget        = new KHBox();
     m_pathWidget->setContentsMargins(0,0,0,0);
-    m_binaryLabel   = new QLabel(m_pathWidget);
-    m_versionLabel   = new QLabel(m_pathWidget);
-    m_pathButton    = new QPushButton(m_pathWidget);
-    //m_status        = new QLabel(m_pathWidget);
-    m_statusIcon    = new QLabel(m_pathWidget);
+    m_binaryLabel       = new QLabel(m_pathWidget);
+    m_versionLabel      = new QLabel(m_pathWidget);
+    m_pathButton        = new QPushButton(m_pathWidget);
+    m_downloadButton    = new QLabel(m_pathWidget);
+    m_statusIcon        = new QLabel(m_pathWidget);
 
     connect(m_pathButton, SIGNAL(clicked()), this, SLOT(slotNavigateAndCheck()));
 
     return m_pathWidget;
 }
 
-QWidget * BinaryIface::binaryFileStatusWidget(QWidget * p, QGridLayout *l, int r)
+QWidget * BinaryIface::binaryFileStatusWidget(QWidget* p, QGridLayout* l, int r)
 {
     checkSystem();
     m_pathWidget->setParent(p);
     m_binaryLabel->setText(baseName());
-    m_versionLabel->setText(QString("%1: %2").arg(i18n("version")).arg(version()));
-    m_pathButton->setText("Find");
+    m_versionLabel->setText(i18n("version: %1", version()));
+    m_pathButton->setText(i18n("Find"));
     m_pathButton->hide();
+    m_downloadButton->setText(i18n(" or <a href=\"%1\">download</a>", url().url()));
+    m_downloadButton->hide();
     setBinaryFound(m_isFound);
 
-    if (l!=NULL)
+    if (l != NULL)
     {
-        l->addWidget(m_binaryLabel,     r, 0);
-        l->addWidget(m_versionLabel,    r, 1);
-        l->addWidget(m_pathButton,      r, 2);
-        //l->addWidget(m_status,      r, 2);
-        l->addWidget(m_statusIcon,      r, 3);
+        l->addWidget(m_binaryLabel, r, 0);
+        l->addWidget(m_versionLabel, r, 1);
+        l->addWidget(m_pathButton, r, 2);
+        l->addWidget(m_statusIcon, r, 3);
     }
 
     return m_pathWidget;
@@ -211,7 +203,7 @@ void BinaryIface::readConfig()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(m_configGroup);
-    m_pathToBinary = group.readPathEntry(QString("%1Binary").arg(m_binaryBaseName),m_binaryBaseName);
+    m_pathToBinary = group.readPathEntry(QString("%1Binary").arg(m_binaryBaseName), m_binaryBaseName);
 }
 
 void BinaryIface::writeConfig()
@@ -221,13 +213,13 @@ void BinaryIface::writeConfig()
     group.writePathEntry(QString("%1Binary").arg(m_binaryBaseName), path());
 }
 
-bool BinaryIface::checkPath(const QString & possiblePath)
+bool BinaryIface::checkPath(const QString& possiblePath)
 {
     bool ret = false;
     QProcess process;
     process.setProcessChannelMode(QProcess::MergedChannels);
     process.start(possiblePath, m_versionArguments);
-    m_available       = process.waitForFinished();
+    m_available = process.waitForFinished();
 
     if (process.error() == QProcess::FailedToStart)
     {
@@ -252,14 +244,17 @@ bool BinaryIface::checkPath(const QString & possiblePath)
     return ret;
 }
 
-bool BinaryIface::checkSystem(const QStringList & binaryArgs)
+bool BinaryIface::checkSystem(const QStringList& /* binaryArgs */)
 {
     bool ret = false;
-    /* first check the PATH, then check m_searchPaths */
-    if(checkPath(baseName())) ret = true;
+    // first check the PATH, then check m_searchPaths
+    if (checkPath(baseName()))
+    {
+        ret = true;
+    }
     else
     {
-        foreach (const QString &dir, m_searchPaths)
+        foreach(const QString& dir, m_searchPaths)
         {
             QString testPath = QString("%1%2%3").arg(dir).arg(QDir::separator()).arg(baseName());
             if (checkPath(testPath))
@@ -269,7 +264,7 @@ bool BinaryIface::checkSystem(const QStringList & binaryArgs)
             }
         }
     }
-    m_versionLabel->setText(QString("%1: %2").arg(i18n("version")).arg(version()));
+    m_versionLabel->setText(i18n("version: %1", version()));
     return ret;
 }
 

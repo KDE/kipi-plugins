@@ -11,6 +11,7 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagedialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/wizardpage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/outputdialog.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/binarysearch.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imageslist.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/savesettingswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewmanager.cpp
