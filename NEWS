@@ -8,4 +8,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
 001 ==> 149269 : Thumbnails are square (HTML Export plugin) [patch].
 002 ==> 289283 : HTMLExport: add keyboard navigation and image preloading to floating_cards theme [patch].
-003 ==> 
+003 ==> 153249 : Photo arranging and printing plugin.
+004 ==> 
