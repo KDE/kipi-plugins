@@ -31,9 +31,10 @@
 
 #include <klocale.h>
 
-// Local includes.
-
-#include "gitversion.h"
+namespace pluginsVersion
+{
+    const QString gitVersion();
+}
 
 static const char kipiplugins_version[] = "${KIPIPLUGINS_VERSION_STRING}";
 
@@ -44,7 +45,7 @@ static inline const QString kipipluginsVersion()
 
 static inline KLocalizedString additionalInformation()
 {
-    QString gitVer       = QString(GITVERSION);
+    QString gitVer       = pluginsVersion::gitVersion();
     KLocalizedString ret = ki18n("IRC:\n"
                      "irc.freenode.net - #kde-imaging\n\n"
                      "Feedback:\n"
