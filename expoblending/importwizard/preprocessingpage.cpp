@@ -185,7 +185,7 @@ void PreProcessingPage::process()
             this, SLOT(slotAction(KIPIExpoBlendingPlugin::ActionData)));
 
     d->mngr->thread()->setPreProcessingSettings(d->alignCheckBox->isChecked(), d->mngr->rawDecodingSettings());
-    d->mngr->thread()->preProcessFiles(d->mngr->itemsList());
+    d->mngr->thread()->preProcessFiles(d->mngr->itemsList(), d->mngr->alignBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }

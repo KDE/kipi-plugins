@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "intropage.h"
+#include "intropage.moc"
 
 // Qt includes
 
@@ -33,11 +33,28 @@
 #include <kvbox.h>
 #include <klocale.h>
 
+// local includes
+
+#include "binarysearch.h"
+#include "alignbinary.h"
+#include "enfusebinary.h"
+
 namespace KIPIExpoBlendingPlugin
 {
 
-IntroPage::IntroPage(KAssistantDialog* dlg)
-         : KIPIPlugins::WizardPage(dlg, i18n("Welcome to Exposure Blending Tool"))
+class IntroPage::IntroPagePriv
+{
+public:
+
+    IntroPagePriv(Manager* m) : mngr(m), binariesWidget(0)
+    {}
+
+    Manager*                    mngr;
+    KIPIPlugins::BinarySearch*  binariesWidget;
+};
+
+IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
+         : KIPIPlugins::WizardPage(dlg, i18n("Welcome to Exposure Blending Tool")), d(new IntroPagePriv(mngr))
 {
     KVBox *vbox   = new KVBox(this);
     QLabel *title = new QLabel(vbox);
@@ -57,6 +74,19 @@ IntroPage::IntroPage(KAssistantDialog* dlg)
                         "<a href='http://en.wikipedia.org/wiki/Bracketing'>this page</a></p>"
                         "</qt>"));
 
+    d->binariesWidget = new KIPIPlugins::BinarySearch(vbox);
+    d->binariesWidget->setTitle(i18n("Exposure Blending Binaries"));
+    d->binariesWidget->addBinary(d->mngr->alignBinary());
+    d->binariesWidget->addBinary(d->mngr->enfuseBinary());
+#ifdef Q_WS_MAC
+    d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
+#endif
+
+    connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
+            this, SIGNAL(signalIntroPageIsValid(bool)));
+
+    emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
+
     setPageWidget(vbox);
 
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_expoblending/pics/assistant-tripod.png");
@@ -65,6 +95,11 @@ IntroPage::IntroPage(KAssistantDialog* dlg)
 
 IntroPage::~IntroPage()
 {
+}
+
+bool IntroPage::binariesFound()
+{
+    return d->binariesWidget->allBinariesFound();
 }
 
 }   // namespace KIPIExpoBlendingPlugin

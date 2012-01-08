@@ -70,7 +70,8 @@ private Q_SLOTS:
 
     void next();
     void back();
-
+    
+    void slotIntroPageIsValid(bool);
     void slotItemsPageIsValid(bool);
     void slotPreProcessed(const ItemUrlsMap&);
     void slotHelp();

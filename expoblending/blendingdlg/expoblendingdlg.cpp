@@ -80,6 +80,7 @@ extern "C"
 // Local includes
 
 #include "manager.h"
+#include "enfusebinary.h"
 #include "enfusesettings.h"
 #include "enfusestack.h"
 #include "savesettingswidget.h"
@@ -417,7 +418,7 @@ void ExpoBlendingDlg::slotPreview()
     EnfuseSettings settings = d->enfuseSettingsBox->settings();
     settings.inputUrls      = d->bracketStack->urls();
     settings.outputFormat   = d->saveSettingsBox->fileFormat();
-    d->mngr->thread()->enfusePreview(preprocessedList, d->mngr->itemsList()[0], settings);
+    d->mngr->thread()->enfusePreview(preprocessedList, d->mngr->itemsList()[0], settings, d->mngr->enfuseBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
@@ -440,7 +441,7 @@ void ExpoBlendingDlg::slotProcess()
             preprocessedList.append(preprocessedUrls.preprocessedUrl);
         }
 
-        d->mngr->thread()->enfuseFinal(preprocessedList, d->mngr->itemsList()[0], settings);
+        d->mngr->thread()->enfuseFinal(preprocessedList, d->mngr->itemsList()[0], settings, d->mngr->enfuseBinary().path());
         if (!d->mngr->thread()->isRunning())
             d->mngr->thread()->start();
     }

@@ -75,7 +75,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     setWindowTitle(i18n("Exposure Blending Import Wizard"));
 
     d->mngr              = mngr;
-    d->introPage         = new IntroPage(this);
+    d->introPage         = new IntroPage(d->mngr, this);
     d->itemsPage         = new ItemsPage(d->mngr, this);
     d->preProcessingPage = new PreProcessingPage(d->mngr, this);
     d->lastPage          = new LastPage(d->mngr, this);
@@ -96,13 +96,18 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    resize(600, 500);
+    resize(600, 580);
+
+    connect(d->introPage, SIGNAL(signalIntroPageIsValid(bool)),
+            this, SLOT(slotIntroPageIsValid(bool)));
 
     connect(d->itemsPage, SIGNAL(signalItemsPageIsValid(bool)),
             this, SLOT(slotItemsPageIsValid(bool)));
 
     connect(d->preProcessingPage, SIGNAL(signalPreProcessed(ItemUrlsMap)),
             this, SLOT(slotPreProcessed(ItemUrlsMap)));
+
+    setValid(d->introPage->page(), d->introPage->binariesFound());
 }
 
 ImportWizardDlg::~ImportWizardDlg()
@@ -154,6 +159,11 @@ void ImportWizardDlg::back()
     }
 
     KAssistantDialog::back();
+}
+
+void ImportWizardDlg::slotIntroPageIsValid(bool binariesFound)
+{
+    setValid(d->introPage->page(), binariesFound);
 }
 
 void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
