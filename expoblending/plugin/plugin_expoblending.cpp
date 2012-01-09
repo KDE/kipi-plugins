@@ -108,8 +108,8 @@ void Plugin_ExpoBlending::slotActivate()
         m_manager->setAbout(new ExpoBlendingAboutData());
     }
 
-    if (!m_manager->checkBinaries())
-        return;
+    //if (!m_manager->checkBinaries())
+    //    return;
     m_manager->setItemsList(images.images());
     m_manager->setIface(m_interface);
     m_manager->run();

@@ -90,6 +90,7 @@ Manager::~Manager()
     delete d;
 }
 
+/*
 bool Manager::checkBinaries()
 {
     if (!d->alignBinary.showResults())
@@ -101,6 +102,7 @@ bool Manager::checkBinaries()
     d->thread->setEnfuseVersion(d->enfuseBinary.version());
     return true;
 }
+*/
 
 void Manager::setAbout(ExpoBlendingAboutData* about)
 {
