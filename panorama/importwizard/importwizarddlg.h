@@ -72,6 +72,7 @@ private Q_SLOTS:
     void back();
     void accept();
 
+    void slotIntroPageIsValid(bool);
     void slotItemsPageIsValid(bool);
     void slotPreProcessed(const ItemUrlsMap&);
     void slotOptimized(const KUrl&);

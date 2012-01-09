@@ -171,7 +171,8 @@ void OptimizePage::process()
 
     d->mngr->thread()->optimizeProject(d->mngr->cpFindUrl(),
                                        d->horizonCheckbox->isChecked(),
-                                       d->projectionAndSizeCheckbox->isChecked());
+                                       d->projectionAndSizeCheckbox->isChecked(),
+                                       d->mngr->autoOptimiserBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }

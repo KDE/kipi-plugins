@@ -110,8 +110,8 @@ void Plugin_Panorama::slotActivate()
         m_manager->setAbout(new PanoramaAboutData());
     }
 
-    if (!m_manager->checkBinaries())
-        return;
+    //if (!m_manager->checkBinaries())
+    //    return;
     m_manager->setItemsList(images.images());
     m_manager->setIface(m_interface);
     m_manager->run();

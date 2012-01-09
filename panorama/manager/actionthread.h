@@ -77,11 +77,16 @@ public:
 
     void setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType fileType,
                                   const KDcrawIface::RawDecodingSettings& settings);
-    void preProcessFiles(const KUrl::List& urlList);
-    void optimizeProject(const KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize);
-    void generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap);
+    void preProcessFiles(const KUrl::List& urlList, const QString& cpcleanPath,
+                         const QString& cpfindPath);
+    void optimizeProject(const KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize,
+                         const QString& autooptimiserPath);
+    void generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
+                                 const QString& makePath, const QString& pto2mkPath,
+                                 const QString& enblendPath, const QString& nonaPath);
     void compileProject(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
-                        PanoramaFileType fileType);
+                        PanoramaFileType fileType, const QString& makePath, const QString& pto2mkPath,
+                        const QString& enblendPath, const QString& nonaPath);
     void copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
                    const ItemUrlsMap& preProcessedUrlsMap, bool savePTO);
     void cancel();
@@ -103,21 +108,24 @@ private:
 
     bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
                                const RawDecodingSettings& settings);
-    bool    startCPFind(KUrl& ptoUrl, bool celeste, QString& errors);
-    bool    startCPClean(KUrl& ptoUrl, QString& errors);
+    bool    startCPFind(KUrl& ptoUrl, bool celeste, const QString& cpfindPath, QString& errors);
+    bool    startCPClean(KUrl& ptoUrl, const QString& cpcleanPath, QString& errors);
     bool    startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize,
-                              QString& errors);
-    bool    computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl,
-                                   const ItemUrlsMap& preProcessedUrlsMap, QString& errors);
+                              const QString& autooptimiserPath, QString& errors);
+    bool    computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const ItemUrlsMap& preProcessedUrlsMap,
+                                   const QString& makePath, const QString& pto2mkPath,
+                                   const QString& enblendPath, const QString& nonaPath, QString& errors);
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
     bool    isRawFile(const KUrl& url);
     bool    createPTO(bool hdr, PanoramaFileType fileType, const KUrl::List& inUrls,
                       const KIPIPanoramaPlugin::ItemUrlsMap& urlList, KUrl& ptoUrl);
     bool    createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFileType fileType,
-                     QString& errors);
-    bool    compileMK(KUrl& mkUrl, QString& errors);
-    bool    compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, QString& errors);
+                     const QString& pto2mkPath, const QString& enblendPath,
+                     const QString& nonaPath, QString& errors);
+    bool    compileMK(KUrl& mkUrl, const QString& makePath, QString& errors);
+    bool    compileMKStepByStep(KUrl& mkUrl, const KIPIPanoramaPlugin::ItemUrlsMap& urlList,
+                                const QString& makePath, QString& errors);
     bool    copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, const KUrl& ptoUrl,
                       const ItemUrlsMap& urlList, bool savePTO, QString& errors);
 

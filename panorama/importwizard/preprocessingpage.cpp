@@ -52,6 +52,7 @@
 // Local includes
 
 #include "outputdialog.h"
+#include "cpcleanbinary.h"
 #include "cpfindbinary.h"
 #include "manager.h"
 #include "actionthread.h"
@@ -173,7 +174,8 @@ void PreProcessingPage::process()
                                                 d->mngr->hdr(),
                                                 d->mngr->format(),
                                                 d->mngr->rawDecodingSettings());
-    d->mngr->thread()->preProcessFiles(d->mngr->itemsList());
+    d->mngr->thread()->preProcessFiles(d->mngr->itemsList(), d->mngr->cpCleanBinary().path(),
+                                       d->mngr->cpFindBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }

@@ -43,6 +43,10 @@
 #include "savesettingswidget.h"
 #include "manager.h"
 #include "previewmanager.h"
+#include "enblendbinary.h"
+#include "makebinary.h"
+#include "nonabinary.h"
+#include "pto2mkbinary.h"
 
 namespace KIPIPanoramaPlugin
 {
@@ -121,7 +125,12 @@ void PreviewPage::computePreview()
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     emit signalPreviewGenerating();
-    d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimiseUrl(), d->mngr->preProcessedMap());
+    d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimiseUrl(),
+                                               d->mngr->preProcessedMap(),
+                                               d->mngr->makeBinary().path(),
+                                               d->mngr->pto2MkBinary().path(),
+                                               d->mngr->enblendBinary().path(),
+                                               d->mngr->nonaBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
@@ -143,7 +152,11 @@ void PreviewPage::startStitching()
 
     d->mngr->thread()->compileProject(d->mngr->autoOptimiseUrl(),
                                       d->mngr->preProcessedMap(),
-                                      d->mngr->format());
+                                      d->mngr->format(),
+                                      d->mngr->makeBinary().path(),
+                                      d->mngr->pto2MkBinary().path(),
+                                      d->mngr->enblendBinary().path(),
+                                      d->mngr->nonaBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }
