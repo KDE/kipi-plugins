@@ -42,19 +42,33 @@
 
 // Local includes
 
+#include "binarysearch.h"
+#include "autooptimiserbinary.h"
+#include "cpcleanbinary.h"
+#include "cpfindbinary.h"
+#include "enblendbinary.h"
+#include "makebinary.h"
+#include "nonabinary.h"
+#include "pto2mkbinary.h"
+
 namespace KIPIPanoramaPlugin
 {
 
 struct IntroPage::IntroPagePriv
 {
-    IntroPagePriv(Manager* m) : mngr(m), hdrCheckBox(0), formatGroupBox(0), jpegRadioButton(0), tiffRadioButton(0) {}
+    IntroPagePriv(Manager* m)
+        : mngr(m), hdrCheckBox(0), formatGroupBox(0), settingsGroupBox(0),
+          jpegRadioButton(0), tiffRadioButton(0), binariesWidget(0)
+    {}
 
-    Manager*      mngr;
+    Manager*                    mngr;
 
-    QCheckBox*    hdrCheckBox;
-    QGroupBox*    formatGroupBox;
-    QRadioButton* jpegRadioButton;
-    QRadioButton* tiffRadioButton;
+    QCheckBox*                  hdrCheckBox;
+    QGroupBox*                  formatGroupBox;
+    QGroupBox*                  settingsGroupBox;
+    QRadioButton*               jpegRadioButton;
+    QRadioButton*               tiffRadioButton;
+    KIPIPlugins::BinarySearch*  binariesWidget;
 };
 
 IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
@@ -75,19 +89,31 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
                         "<a href='http://hugin.sourceforge.net/tutorials/overview/en.shtml'>this page</a></p>"
                         "</qt>"));
 
-    QLabel* space   = new QLabel(vbox);
+    d->binariesWidget = new KIPIPlugins::BinarySearch(vbox);d->binariesWidget->setTitle(i18n("Panorama Binaries"));
+    d->binariesWidget->addBinary(d->mngr->autoOptimiserBinary());
+    d->binariesWidget->addBinary(d->mngr->cpCleanBinary());
+    d->binariesWidget->addBinary(d->mngr->cpFindBinary());
+    d->binariesWidget->addBinary(d->mngr->enblendBinary());
+    d->binariesWidget->addBinary(d->mngr->makeBinary());
+    d->binariesWidget->addBinary(d->mngr->nonaBinary());
+    d->binariesWidget->addBinary(d->mngr->pto2MkBinary());
+#ifdef Q_WS_MAC
+    d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
+#endif
 
-    QLabel* options = new QLabel(vbox);
-    options->setWordWrap(true);
-    options->setText(i18n("Panorama Settings:"));
+    QVBoxLayout* settingsVBox   = new QVBoxLayout();
+    d->settingsGroupBox         = new QGroupBox(i18n("Panorama Settings"), vbox);
+    d->settingsGroupBox->setLayout(settingsVBox);
+    settingsVBox->addStretch(1);
 
-    d->hdrCheckBox  = new QCheckBox(i18n("HDR output"), vbox);
+    d->hdrCheckBox  = new QCheckBox(i18n("HDR output"), d->settingsGroupBox);
     d->hdrCheckBox->setToolTip(i18n("When checked, the panorama will be stitched into an High Dynamic Range (HDR) "
                                     "image, that can be processed further with a dedicated software."));
     d->hdrCheckBox->setWhatsThis(i18n("<b>HDR output</b>: Output in High Dynamic Range, meaning that every piece of "
                                       "information contained in the original photos are preserved. Note that you "
                                       "need another software to process the resulting panorama, like "
                                       "<a href=\"http://qtpfsgui.sourceforge.net/\">Luminance HDR</a>"));
+    settingsVBox->addWidget(d->hdrCheckBox);
 
     QVBoxLayout* formatVBox = new QVBoxLayout();
     d->formatGroupBox       = new QGroupBox(i18n("File Format"), vbox);
@@ -122,6 +148,8 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
             break;
     }
 
+    QLabel* space   = new QLabel(vbox);
+
     vbox->setStretchFactor(space, 2);
 
     setPageWidget(vbox);
@@ -135,11 +163,21 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
     connect(group, SIGNAL(buttonClicked(QAbstractButton*)),
             this, SLOT(slotChangeFileFormat(QAbstractButton*)));
 
+    connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
+            this, SIGNAL(signalIntroPageIsValid(bool)));
+
+    emit signalIntroPageIsValid(d->binariesWidget->allBinariesFound());
+
     d->hdrCheckBox->setChecked(d->mngr->hdr());
 }
 
 IntroPage::~IntroPage()
 {
+}
+
+bool IntroPage::binariesFound()
+{
+    return d->binariesWidget->allBinariesFound();
 }
 
 void IntroPage::slotShowFileFormat(int state)

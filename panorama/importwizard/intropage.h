@@ -48,10 +48,16 @@ public:
     IntroPage(Manager* mngr, KAssistantDialog* dlg);
     ~IntroPage();
 
+    bool binariesFound();
+
 private Q_SLOTS:
 
     void slotShowFileFormat(int state);
     void slotChangeFileFormat(QAbstractButton* button);
+
+Q_SIGNALS:
+
+    void signalIntroPageIsValid(bool);
 
 private:
 

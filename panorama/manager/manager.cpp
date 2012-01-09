@@ -184,9 +184,9 @@ PanoramaAboutData* Manager::about() const
     return d->about;
 }
 
-CPFindBinary& Manager::cpFindBinary() const
+AutoOptimiserBinary& Manager::autoOptimiserBinary() const
 {
-    return d->cpFindBinary;
+    return d->autoOptimiserBinary;
 }
 
 CPCleanBinary& Manager::cpCleanBinary() const
@@ -194,9 +194,29 @@ CPCleanBinary& Manager::cpCleanBinary() const
     return d->cpCleanBinary;
 }
 
-AutoOptimiserBinary& Manager::autoOptimiserBinary() const
+CPFindBinary& Manager::cpFindBinary() const
 {
-    return d->autoOptimiserBinary;
+    return d->cpFindBinary;
+}
+
+EnblendBinary& Manager::enblendBinary() const
+{
+    return d->enblendBinary;
+}
+
+MakeBinary& Manager::makeBinary() const
+{
+    return d->makeBinary;
+}
+
+NonaBinary& Manager::nonaBinary() const
+{
+    return d->nonaBinary;
+}
+
+Pto2MkBinary& Manager::pto2MkBinary() const
+{
+    return d->pto2MkBinary;
 }
 
 void Manager::setPreviewUrl(const KUrl& url)

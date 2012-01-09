@@ -25,11 +25,13 @@
 // Qt includes
 
 #include <QProcess>
+#include <QMessageBox>
 
 // KDE includes
 
 #include <kdebug.h>
 #include <kglobal.h>
+#include <kstandarddirs.h>
 
 namespace KIPIPanoramaPlugin
 {
@@ -37,33 +39,30 @@ namespace KIPIPanoramaPlugin
 AutoOptimiserBinary::AutoOptimiserBinary()
     : BinaryIface()
 {
-    checkSystem();
+    m_configGroup       = "Panorama Settings";
+    m_pathToBinary      = "autooptimiser";
+    setBaseName("autooptimiser");
+    m_versionArguments.clear();
+    readConfig();
 }
 
 AutoOptimiserBinary::~AutoOptimiserBinary()
 {
 }
 
-void AutoOptimiserBinary::checkSystem()
+bool AutoOptimiserBinary::parseHeader(const QString& output)
 {
-    QProcess process;
-    process.start(path());
-    m_available       = process.waitForFinished();
-
     QString headerStarts("autooptimiser version ");
-
-    QString stdOut(process.readAllStandardError());
-    QString firstLine = stdOut.section('\n', 1, 1);
-
+    QString firstLine = output.section('\n', 1, 1);
     kDebug() << path() << " help header line: \n" << firstLine;
-
     if (firstLine.startsWith(headerStarts))
     {
-        m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
+        m_version = firstLine.remove(0, headerStarts.length()).section(".", 0, 1);
         m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-
         kDebug() << "Found " << path() << " version: " << version() ;
+        return true;
     }
+    return false;
 }
 
 KUrl AutoOptimiserBinary::url() const
@@ -74,11 +73,6 @@ KUrl AutoOptimiserBinary::url() const
 QString AutoOptimiserBinary::projectName() const
 {
     return QString("Hugin");
-}
-
-QString AutoOptimiserBinary::path() const
-{
-    return QString("autooptimiser");
 }
 
 QString AutoOptimiserBinary::minimalVersion() const

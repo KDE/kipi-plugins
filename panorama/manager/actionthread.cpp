@@ -81,6 +81,13 @@ struct ActionThread::ActionThreadPriv
         KUrl                outputUrl;
         Action              action;
         RawDecodingSettings rawDecodingSettings;
+        QString             autooptimiserPath;
+        QString             cpcleanPath;
+        QString             cpfindPath;
+        QString             enblendPath;
+        QString             makePath;
+        QString             nonaPath;
+        QString             pto2mkPath;
     };
 
     bool                            cancel;
@@ -157,7 +164,8 @@ void ActionThread::setPreProcessingSettings(bool celeste, bool hdr, PanoramaFile
     d->rawDecodingSettings  = settings;
 }
 
-void ActionThread::preProcessFiles(const KUrl::List& urlList)
+void ActionThread::preProcessFiles(const KUrl::List& urlList, const QString& cpcleanPath,
+                                   const QString& cpfindPath)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = PREPROCESS;
@@ -166,31 +174,41 @@ void ActionThread::preProcessFiles(const KUrl::List& urlList)
     t->celeste                  = d->celeste;
     t->hdr                      = d->hdr;
     t->fileType                 = d->fileType;
+    t->cpcleanPath              = cpcleanPath;
+    t->cpfindPath               = cpfindPath;
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
     d->condVar.wakeAll();
 }
 
-void ActionThread::optimizeProject(const KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize)
+void ActionThread::optimizeProject(const KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize,
+                                   const QString& autooptimiserPath)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = OPTIMIZE;
     t->ptoUrl                   = ptoUrl;
     t->horizon                  = levelHorizon;
     t->projectionAndSize        = optimizeProjectionAndSize;
+    t->autooptimiserPath        = autooptimiserPath;
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
     d->condVar.wakeAll();
 }
 
-void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap)
+void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
+                                           const QString& makePath, const QString& pto2mkPath,
+                                           const QString& enblendPath, const QString& nonaPath)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = PREVIEW;
     t->preProcessedUrlsMap      = preProcessedUrlsMap;
     t->ptoUrl                   = ptoUrl;
+    t->makePath                 = makePath;
+    t->pto2mkPath               = pto2mkPath;
+    t->enblendPath              = enblendPath;
+    t->nonaPath                 = nonaPath;
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
@@ -198,13 +216,18 @@ void ActionThread::generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap
 }
 
 void ActionThread::compileProject(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
-                                  PanoramaFileType fileType)
+                                  PanoramaFileType fileType, const QString& makePath, const QString& pto2mkPath,
+                                  const QString& enblendPath, const QString& nonaPath)
 {
     ActionThreadPriv::Task* t   = new ActionThreadPriv::Task;
     t->action                   = STITCH;
     t->preProcessedUrlsMap      = preProcessedUrlsMap;
     t->ptoUrl                   = ptoUrl;
     t->fileType                 = fileType;
+    t->makePath                 = makePath;
+    t->pto2mkPath               = pto2mkPath;
+    t->enblendPath              = enblendPath;
+    t->nonaPath                 = nonaPath;
 
     QMutexLocker lock(&d->todo_mutex);
     d->todo << t;
@@ -307,10 +330,10 @@ void ActionThread::run()
                         result_success = createPTO(t->hdr, t->fileType, t->urls, preProcessedUrlsMap, t->ptoUrl);
                         if (result_success)
                         {
-                            result_success = startCPFind(t->ptoUrl, t->celeste, errors);
+                            result_success = startCPFind(t->ptoUrl, t->celeste, t->cpfindPath, errors);
                             if (result_success)
                             {
-                                result_success = startCPClean(t->ptoUrl, errors);
+                                result_success = startCPClean(t->ptoUrl, t->cpcleanPath, errors);
                             }
                         }
                     }
@@ -337,7 +360,7 @@ void ActionThread::run()
                     QString errors;
                     bool    result = false;
 
-                    result  = startOptimization(t->ptoUrl, t->horizon, t->projectionAndSize, errors);
+                    result  = startOptimization(t->ptoUrl, t->horizon, t->projectionAndSize, t->autooptimiserPath, errors);
 
                     ActionData ad2;
                     ad2.action      = OPTIMIZE;
@@ -361,7 +384,9 @@ void ActionThread::run()
                     bool    result = false;
 
                     KUrl previewUrl;
-                    result = computePanoramaPreview(ad1.ptoUrl, previewUrl, ad1.preProcessedUrlsMap, errors);
+                    result = computePanoramaPreview(ad1.ptoUrl, previewUrl, ad1.preProcessedUrlsMap,
+                                                    t->makePath, t->pto2mkPath, t->enblendPath,
+                                                    t->nonaPath, errors);
 
                     ActionData ad2;
                     ad2.action                  = PREVIEW;
@@ -378,10 +403,11 @@ void ActionThread::run()
                     bool result = false;
 
                     KUrl mkUrl, panoUrl;
-                    result = createMK(t->ptoUrl, mkUrl, panoUrl, t->fileType, errors);
+                    result = createMK(t->ptoUrl, mkUrl, panoUrl, t->fileType,
+                                      t->pto2mkPath, t->enblendPath, t->nonaPath, errors);
                     if (result)
                     {
-                        result = compileMKStepByStep(mkUrl, t->preProcessedUrlsMap, errors);
+                        result = compileMKStepByStep(mkUrl, t->preProcessedUrlsMap, t->makePath, errors);
                     }
 
                     ActionData ad2;
@@ -514,7 +540,7 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
     return true;
 }
 
-bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, bool celeste, QString& errors)
+bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, bool celeste, const QString& cpfindPath, QString& errors)
 {
     // Run CPFind to get control points and order the images
 
@@ -528,7 +554,7 @@ bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, bool celeste, QString& errors
     d->CPFindProcess->setOutputChannelMode(KProcess::MergedChannels);
 
     QStringList args;
-    args << "cpfind";
+    args << cpfindPath;
     if (celeste)
         args << "--celeste";
     args << "-o";
@@ -556,7 +582,7 @@ bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, bool celeste, QString& errors
     return true;
 }
 
-bool ActionThread::startCPClean(KUrl& ptoUrl, QString& errors)
+bool ActionThread::startCPClean(KUrl& ptoUrl, const QString& cpcleanPath, QString& errors)
 {
     KUrl ptoInUrl = ptoUrl;
     ptoUrl = d->preprocessingTmpDir->name();
@@ -568,7 +594,7 @@ bool ActionThread::startCPClean(KUrl& ptoUrl, QString& errors)
     d->CPCleanProcess->setOutputChannelMode(KProcess::MergedChannels);
 
     QStringList args;
-    args << "cpclean";
+    args << cpcleanPath;
     args << "-o";
     args << ptoUrl.toLocalFile();
     args << ptoInUrl.toLocalFile();
@@ -594,7 +620,8 @@ bool ActionThread::startCPClean(KUrl& ptoUrl, QString& errors)
     return true;
 }
 
-bool ActionThread::startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize, QString& errors)
+bool ActionThread::startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize,
+                                     const QString& autooptimiserPath, QString& errors)
 {
     KUrl ptoAOUrl = d->preprocessingTmpDir->name();
     ptoAOUrl.setFileName(QString("auto_op_pano.pto"));
@@ -607,7 +634,7 @@ bool ActionThread::startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optim
     d->autoOptimiseProcess->setOutputChannelMode(KProcess::MergedChannels);
 
     QStringList argsAO;
-    argsAO << "autooptimiser";
+    argsAO << autooptimiserPath;
     argsAO << "-am";
     if (levelHorizon)
     {
@@ -645,7 +672,9 @@ bool ActionThread::startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optim
     return true;
 }
 
-bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const ItemUrlsMap& preProcessedUrlsMap, QString& errors)
+bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const ItemUrlsMap& preProcessedUrlsMap,
+                                          const QString& makePath, const QString& pto2mkPath,
+                                          const QString& enblendPath, const QString& nonaPath, QString& errors)
 {
     kDebug() << "Preview Generation (" << ptoUrl.toLocalFile() << ")";
     QFile input(ptoUrl.toLocalFile());
@@ -802,14 +831,14 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
     kDebug() << "Preview PTO File created: " << ptoUrl.fileName();
 
     KUrl mkUrl;
-    if (!createMK(ptoUrl, mkUrl, previewUrl, JPEG, errors))
+    if (!createMK(ptoUrl, mkUrl, previewUrl, JPEG, pto2mkPath, enblendPath, nonaPath, errors))
     {
         errors = i18n("Cannot create Makefile.");
         kDebug() << "Makefile creation failed!";
         return false;
     }
 
-    if (!compileMK(mkUrl, errors))
+    if (!compileMK(mkUrl, makePath, errors))
     {
         errors = i18n("Preview cannot be processed.");
         kDebug() << "Makefile execution failed!";
@@ -1031,7 +1060,9 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const KUrl::Li
     return true;
 }
 
-bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFileType fileType, QString& errors)
+bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFileType fileType,
+                            const QString& pto2mkPath, const QString& enblendPath,
+                            const QString& nonaPath, QString& errors)
 {
     QFileInfo fi(ptoUrl.toLocalFile());
     mkUrl = d->preprocessingTmpDir->name();
@@ -1054,7 +1085,7 @@ bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFi
     d->pto2MkProcess->setOutputChannelMode(KProcess::MergedChannels);
 
     QStringList args;
-    args << "pto2mk";
+    args << pto2mkPath;
     args << "-o";
     args << mkUrl.toLocalFile();
     args << "-p";
@@ -1078,18 +1109,35 @@ bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFi
     delete d->pto2MkProcess;
     d->pto2MkProcess = 0;
 
+    /* Just replacing strings in the generated makefile to reflect the
+     * location of the binaries of nona and enblend. This ensures that
+     * the make process will be able to execute those binaries without
+     * worring that any binary is not in the system path.
+     */
+    QFile mkUrlFile(mkUrl.toLocalFile());
+    mkUrlFile.open(QIODevice::ReadWrite);
+
+    QString fileData = mkUrlFile.readAll();
+    fileData.replace("NONA=nona", QString("NONA=%1").arg(nonaPath));
+    fileData.replace("ENBLEND=enblend", QString("ENBLEND=%1").arg(enblendPath));
+
+    mkUrlFile.seek(0L);
+    mkUrlFile.write(fileData.toAscii());
+    mkUrlFile.close();
+
     return true;
 }
 
-bool ActionThread::compileMK(KUrl& mkUrl, QString& errors)
+bool ActionThread::compileMK(KUrl& mkUrl, const QString& makePath, QString& errors)
 {
     d->makeProcess = new KProcess();
     d->makeProcess->clearProgram();
     d->makeProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->makeProcess->setOutputChannelMode(KProcess::MergedChannels);
+    d->makeProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
-    args << "make";
+    args << makePath;
     args << "-f";
     args << mkUrl.toLocalFile();
 
@@ -1113,7 +1161,7 @@ bool ActionThread::compileMK(KUrl& mkUrl, QString& errors)
     return true;
 }
 
-bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, QString& errors)
+bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, const QString& makePath, QString& errors)
 {
     QFileInfo fi(mkUrl.toLocalFile());
 
@@ -1131,6 +1179,7 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
         makeProcess->clearProgram();
         makeProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
         makeProcess->setOutputChannelMode(KProcess::MergedChannels);
+        makeProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
         {
             QMutexLocker lock(&d->todo_mutex);
@@ -1139,7 +1188,7 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
 
         QString mkFile = fi.completeBaseName() + (i >= 10 ? (i >= 100 ? "0" : "00") : "000") + QString::number(i) + ".tif";
         QStringList args;
-        args << "make";
+        args << makePath;
         args << "-f";
         args << mkUrl.toLocalFile();
         args << mkFile;
@@ -1206,7 +1255,7 @@ bool ActionThread::compileMKStepByStep(KUrl& mkUrl, const ItemUrlsMap& urlList, 
 
     emit starting(ad1);
 
-    return compileMK(mkUrl, errors);
+    return compileMK(mkUrl, makePath, errors);
 }
 
 bool ActionThread::copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, const KUrl& ptoUrl,

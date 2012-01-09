@@ -74,8 +74,8 @@ int main(int argc, char* argv[])
     args->clear();
 
     Manager mngr;
-    if (!mngr.checkBinaries())
-        return -1;
+    //if (!mngr.checkBinaries())
+    //    return -1;
 
     mngr.setItemsList(urlList);
     mngr.setAbout(aboutData);

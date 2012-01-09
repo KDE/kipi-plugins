@@ -26,16 +26,30 @@
 // Local includes
 
 #include "wizardpage.h"
+#include "manager.h"
 
 namespace KIPIExpoBlendingPlugin
 {
 
 class IntroPage : public KIPIPlugins::WizardPage
 {
+    Q_OBJECT
+
 public:
 
-    IntroPage(KAssistantDialog* dlg);
+    IntroPage(Manager* mngr, KAssistantDialog* dlg);
     ~IntroPage();
+
+    bool binariesFound();
+
+Q_SIGNALS:
+
+    void signalIntroPageIsValid(bool);
+
+private:
+
+    class IntroPagePriv;
+    IntroPagePriv* const d;
 };
 
 }   // namespace KIPIExpoBlendingPlugin

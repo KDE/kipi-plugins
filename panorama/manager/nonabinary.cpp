@@ -37,33 +37,30 @@ namespace KIPIPanoramaPlugin
 NonaBinary::NonaBinary()
     : BinaryIface()
 {
-    checkSystem();
+    m_configGroup       = "Panorama Settings";
+    m_pathToBinary      = "nona";
+    setBaseName("nona");
+    m_versionArguments << "-h";
+    readConfig();
 }
 
 NonaBinary::~NonaBinary()
 {
 }
 
-void NonaBinary::checkSystem()
+bool NonaBinary::parseHeader(const QString& output)
 {
-    QProcess process;
-    process.start(path(), QStringList() << "-h");
-    m_available       = process.waitForFinished();
-
     QString headerStarts("nona version ");
-
-    QString stdOut(process.readAllStandardError());
-    QString firstLine = stdOut.section('\n', 2, 2);
-
+    QString firstLine = output.section('\n', 2, 2);
     kDebug() << path() << " help header line: \n" << firstLine;
-
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
         m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-
         kDebug() << "Found " << path() << " version: " << version() ;
+        return true;
     }
+    return false;
 }
 
 KUrl NonaBinary::url() const
@@ -74,11 +71,6 @@ KUrl NonaBinary::url() const
 QString NonaBinary::projectName() const
 {
     return QString("Hugin");
-}
-
-QString NonaBinary::path() const
-{
-    return QString("nona");
 }
 
 QString NonaBinary::minimalVersion() const

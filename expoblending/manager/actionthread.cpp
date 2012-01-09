@@ -81,6 +81,7 @@ public:
             bool                align;
             KUrl::List          urls;
             KUrl                outputUrl;
+            QString             binaryPath;
             Action              action;
             RawDecodingSettings rawDecodingSettings;
             EnfuseSettings      enfuseSettings;
@@ -201,39 +202,44 @@ void ActionThread::loadProcessed(const KUrl& url)
     d->condVar.wakeAll();
 }
 
-void ActionThread::preProcessFiles(const KUrl::List& urlList)
+void ActionThread::preProcessFiles(const KUrl::List& urlList, const QString& alignPath)
 {
     ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
     t->action                 = PREPROCESSING;
     t->urls                   = urlList;
     t->rawDecodingSettings    = d->rawDecodingSettings;
     t->align                  = d->align;
+    t->binaryPath             = alignPath;
 
     QMutexLocker lock(&d->mutex);
     d->todo << t;
     d->condVar.wakeAll();
 }
 
-void ActionThread::enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings)
+void ActionThread::enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl,
+                                 const EnfuseSettings& settings, const QString& enfusePath)
 {
     ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
     t->action                 = ENFUSEPREVIEW;
     t->urls                   = alignedUrls;
     t->outputUrl              = outputUrl;
     t->enfuseSettings         = settings;
+    t->binaryPath             = enfusePath;
 
     QMutexLocker lock(&d->mutex);
     d->todo << t;
     d->condVar.wakeAll();
 }
 
-void ActionThread::enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings)
+void ActionThread::enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl,
+                               const EnfuseSettings& settings, const QString& enfusePath)
 {
     ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
     t->action                 = ENFUSEFINAL;
     t->urls                   = alignedUrls;
     t->outputUrl              = outputUrl;
     t->enfuseSettings         = settings;
+    t->binaryPath             = enfusePath;
 
     QMutexLocker lock(&d->mutex);
     d->todo << t;
@@ -314,7 +320,7 @@ void ActionThread::run()
                     ItemUrlsMap preProcessedUrlsMap;
                     QString     errors;
 
-                    bool result  = startPreProcessing(t->urls, preProcessedUrlsMap, t->align, t->rawDecodingSettings, errors);
+                    bool result  = startPreProcessing(t->urls, preProcessedUrlsMap, t->align, t->rawDecodingSettings, t->binaryPath, errors);
 
                     ActionData ad2;
                     ad2.action              = PREPROCESSING;
@@ -366,7 +372,7 @@ void ActionThread::run()
                     KUrl    destUrl         = t->outputUrl;
                     EnfuseSettings settings = t->enfuseSettings;
                     settings.outputFormat   = SaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
-                    bool result             = startEnfuse(t->urls, destUrl, settings, errors);
+                    bool result             = startEnfuse(t->urls, destUrl, settings, t->binaryPath, errors);
 
                     kDebug() << "Preview result was: " << result;
 
@@ -407,7 +413,7 @@ void ActionThread::run()
                     bool    result  = false;
                     QString errors;
 
-                    result = startEnfuse(t->urls, destUrl, t->enfuseSettings, errors);
+                    result = startEnfuse(t->urls, destUrl, t->enfuseSettings, t->binaryPath, errors);
 
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
                     KExiv2 meta;
@@ -451,7 +457,7 @@ void ActionThread::run()
 
 bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
                                       bool align, const RawDecodingSettings& settings,
-                                      QString& errors)
+                                      const QString& alignPath, QString& errors)
 {
     QString prefix = KStandardDirs::locateLocal("tmp", QString("kipi-expoblending-preprocessing-tmp-") +
                                                        QString::number(QDateTime::currentDateTime().toTime_t()));
@@ -540,7 +546,8 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
         d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
 
         QStringList args;
-        args << "align_image_stack";
+        //args << "align_image_stack";
+        args << alignPath;
         args << "-v";
         args << "-a";
         args << "aligned";
@@ -716,7 +723,7 @@ bool ActionThread::isRawFile(const KUrl& url)
 
 bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
                                const EnfuseSettings& settings,
-                               QString& errors)
+                               const QString& enfusePath, QString& errors)
 {
     QString comp;
     QString ext = SaveSettingsWidget::extensionForFormat(settings.outputFormat);
@@ -730,7 +737,8 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     d->enfuseProcess->clearProgram();
     d->enfuseProcess->setOutputChannelMode(KProcess::MergedChannels);
     QStringList args;
-    args << "enfuse";
+    //args << "enfuse";
+    args << enfusePath;
 
     if (!settings.autoLevels)
     {

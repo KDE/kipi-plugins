@@ -159,7 +159,7 @@ OptimizePage::~OptimizePage()
 void OptimizePage::process()
 {
     d->title->setText(i18n("<qt>"
-    "<p>Optimization is under progress, please wait.</p>"
+    "<p>Optimization is in progress, please wait.</p>"
     "<p>This can take a while...</p>"
     "</qt>"));
     d->horizonCheckbox->hide();
@@ -171,7 +171,8 @@ void OptimizePage::process()
 
     d->mngr->thread()->optimizeProject(d->mngr->cpFindUrl(),
                                        d->horizonCheckbox->isChecked(),
-                                       d->projectionAndSizeCheckbox->isChecked());
+                                       d->projectionAndSizeCheckbox->isChecked(),
+                                       d->mngr->autoOptimiserBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();
 }

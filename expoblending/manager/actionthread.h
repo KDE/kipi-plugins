@@ -69,9 +69,11 @@ public:
     void loadProcessed(const KUrl& url);
     void identifyFiles(const KUrl::List& urlList);
     void convertRawFiles(const KUrl::List& urlList);
-    void preProcessFiles(const KUrl::List& urlList);
-    void enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings);
-    void enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl, const EnfuseSettings& settings);
+    void preProcessFiles(const KUrl::List& urlList, const QString& alignPath);
+    void enfusePreview(const KUrl::List& alignedUrls, const KUrl& outputUrl,
+                       const EnfuseSettings& settings, const QString& enfusePath);
+    void enfuseFinal(const KUrl::List& alignedUrls, const KUrl& outputUrl,
+                     const EnfuseSettings& settings, const QString& enfusePath);
 
     void cancel();
 
@@ -91,14 +93,14 @@ private:
 
     bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
                                bool align, const RawDecodingSettings& settings,
-                               QString& errors);
+                               const QString& alignPath, QString& errors);
     bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
     bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
     bool    isRawFile(const KUrl& url);
 
     bool    startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
                         const EnfuseSettings& settings,
-                        QString& errors);
+                        const QString& enfusePath, QString& errors);
 
     QString getProcessError(KProcess* proc) const;
 

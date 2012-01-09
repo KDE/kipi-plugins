@@ -55,9 +55,13 @@ namespace KIPIPanoramaPlugin
 
 class ActionThread;
 class PanoramaAboutData;
-class CPFindBinary;
-class CPCleanBinary;
 class AutoOptimiserBinary;
+class CPCleanBinary;
+class CPFindBinary;
+class EnblendBinary;
+class MakeBinary;
+class NonaBinary;
+class Pto2MkBinary;
 
 class Manager : public QObject
 {
@@ -104,10 +108,14 @@ public:
     void setPreProcessedMap(const ItemUrlsMap& urls);
     ItemUrlsMap preProcessedMap() const;
 
-    ActionThread*        thread() const;
-    CPFindBinary&        cpFindBinary() const;
-    CPCleanBinary&       cpCleanBinary() const;
-    AutoOptimiserBinary& autoOptimiserBinary() const;
+    ActionThread*           thread() const;
+    AutoOptimiserBinary&    autoOptimiserBinary() const;
+    CPCleanBinary&          cpCleanBinary() const;
+    CPFindBinary&           cpFindBinary() const;
+    EnblendBinary&          enblendBinary() const;
+    MakeBinary&             makeBinary() const;
+    NonaBinary&             nonaBinary() const;
+    Pto2MkBinary&           pto2MkBinary() const;
 
     void run();
 

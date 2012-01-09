@@ -37,32 +37,29 @@ namespace KIPIPanoramaPlugin
 EnblendBinary::EnblendBinary()
             : BinaryIface()
 {
-    checkSystem();
+    m_configGroup       = "Panorama Settings";
+    m_pathToBinary      = "enblend";
+    setBaseName("enblend");
+    m_versionArguments << "-V";
+    readConfig();
 }
 
 EnblendBinary::~EnblendBinary()
 {
 }
 
-void EnblendBinary::checkSystem()
+bool EnblendBinary::parseHeader(const QString& output)
 {
-    QProcess process;
-    process.start(path(), QStringList() << "-V");
-    m_available       = process.waitForFinished();
-
     QString headerStarts("enblend ");
-
-    QString stdOut(process.readAllStandardOutput());
-    QString firstLine = stdOut.section('\n', 0, 0);
-
+    QString firstLine = output.section('\n', 0, 0);
     kDebug() << path() << " help header line: \n" << firstLine;
-
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section('-', 0, 0);
-
         kDebug() << "Found " << path() << " version: " << version() ;
+        return true;
     }
+    return false;
 }
 
 KUrl EnblendBinary::url() const
@@ -73,11 +70,6 @@ KUrl EnblendBinary::url() const
 QString EnblendBinary::projectName() const
 {
     return QString("Enblend");
-}
-
-QString EnblendBinary::path() const
-{
-    return QString("enblend");
 }
 
 QString EnblendBinary::minimalVersion() const

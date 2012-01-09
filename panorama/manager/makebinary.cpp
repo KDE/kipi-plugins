@@ -36,32 +36,29 @@ namespace KIPIPanoramaPlugin
 
 MakeBinary::MakeBinary() : BinaryIface()
 {
-    checkSystem();
+    m_configGroup       = "Panorama Settings";
+    m_pathToBinary      = "make";
+    setBaseName("make");
+    m_versionArguments << "-v";
+    readConfig();
 }
 
 MakeBinary::~MakeBinary()
 {
 }
 
-void MakeBinary::checkSystem()
+bool MakeBinary::parseHeader(const QString& output)
 {
-    QProcess process;
-    process.start(path(), QStringList() << "-v");
-    m_available       = process.waitForFinished();
-
     QString headerStarts("GNU Make ");
-
-    QString stdOut(process.readAllStandardOutput());
-    QString firstLine = stdOut.section('\n', 0, 0);
-
+    QString firstLine = output.section('\n', 0, 0);
     kDebug() << path() << " help header line: \n" << firstLine;
-
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
-
         kDebug() << "Found " << path() << " version: " << version() ;
+        return true;
     }
+    return false;
 }
 
 KUrl MakeBinary::url() const
@@ -72,11 +69,6 @@ KUrl MakeBinary::url() const
 QString MakeBinary::projectName() const
 {
     return QString("GNU");
-}
-
-QString MakeBinary::path() const
-{
-    return QString("make");
 }
 
 QString MakeBinary::minimalVersion() const

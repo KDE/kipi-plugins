@@ -37,33 +37,30 @@ namespace KIPIPanoramaPlugin
 CPCleanBinary::CPCleanBinary()
     : BinaryIface()
 {
-    checkSystem();
+    m_configGroup       = "Panorama Settings";
+    m_pathToBinary      = "cpclean";
+    setBaseName("cpclean");
+    m_versionArguments << "-h";
+    readConfig();
 }
 
 CPCleanBinary::~CPCleanBinary()
 {
 }
 
-void CPCleanBinary::checkSystem()
+bool CPCleanBinary::parseHeader(const QString& output)
 {
-    QProcess process;
-    process.start(path(), QStringList() << "-h");
-    m_available       = process.waitForFinished();
-
     QString headerStarts("cpclean version ");
-
-    QString stdOut(process.readAllStandardOutput());
-    QString firstLine = stdOut.section('\n', 1, 1);
-
+    QString firstLine = output.section('\n', 1, 1);
     kDebug() << path() << " help header line: \n" << firstLine;
-
     if (firstLine.startsWith(headerStarts))
     {
         m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
         m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-
         kDebug() << "Found " << path() << " version: " << version() ;
+        return true;
     }
+    return false;
 }
 
 KUrl CPCleanBinary::url() const
@@ -74,11 +71,6 @@ KUrl CPCleanBinary::url() const
 QString CPCleanBinary::projectName() const
 {
     return QString("Hugin");
-}
-
-QString CPCleanBinary::path() const
-{
-    return QString("cpclean");
 }
 
 QString CPCleanBinary::minimalVersion() const
