@@ -48,7 +48,7 @@ NonaBinary::~NonaBinary()
 {
 }
 
-bool NonaBinary::parseHeader(const QString & output)
+bool NonaBinary::parseHeader(const QString& output)
 {
     QString headerStarts("nona version ");
     QString firstLine = output.section('\n', 2, 2);

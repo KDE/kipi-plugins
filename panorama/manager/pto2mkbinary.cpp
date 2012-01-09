@@ -48,7 +48,7 @@ Pto2MkBinary::~Pto2MkBinary()
 {
 }
 
-bool Pto2MkBinary::parseHeader(const QString & output)
+bool Pto2MkBinary::parseHeader(const QString& output)
 {
     QString headerStarts("pto2mk version ");
     QString firstLine = output.section('\n', 2, 2);
@@ -72,13 +72,6 @@ QString Pto2MkBinary::projectName() const
 {
     return QString("Hugin");
 }
-
-/*
-QString Pto2MkBinary::path() const
-{
-    return QString("pto2mk");
-}
-*/
 
 QString Pto2MkBinary::minimalVersion() const
 {

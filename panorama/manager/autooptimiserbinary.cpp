@@ -50,7 +50,7 @@ AutoOptimiserBinary::~AutoOptimiserBinary()
 {
 }
 
-bool AutoOptimiserBinary::parseHeader(const QString & output)
+bool AutoOptimiserBinary::parseHeader(const QString& output)
 {
     QString headerStarts("autooptimiser version ");
     QString firstLine = output.section('\n', 1, 1);

@@ -48,7 +48,7 @@ CPCleanBinary::~CPCleanBinary()
 {
 }
 
-bool CPCleanBinary::parseHeader(const QString & output)
+bool CPCleanBinary::parseHeader(const QString& output)
 {
     QString headerStarts("cpclean version ");
     QString firstLine = output.section('\n', 1, 1);

@@ -48,7 +48,7 @@ AlignBinary::~AlignBinary()
 {
 }
 
-bool AlignBinary::parseHeader(const QString & output)
+bool AlignBinary::parseHeader(const QString& output)
 {
     // The output look like this : align_image_stack version 2009.2.0.4461
     QString headerStarts("align_image_stack version ");

@@ -47,7 +47,7 @@ MakeBinary::~MakeBinary()
 {
 }
 
-bool MakeBinary::parseHeader(const QString & output)
+bool MakeBinary::parseHeader(const QString& output)
 {
     QString headerStarts("GNU Make ");
     QString firstLine = output.section('\n', 0, 0);

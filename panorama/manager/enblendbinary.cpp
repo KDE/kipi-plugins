@@ -48,7 +48,7 @@ EnblendBinary::~EnblendBinary()
 {
 }
 
-bool EnblendBinary::parseHeader(const QString & output)
+bool EnblendBinary::parseHeader(const QString& output)
 {
     QString headerStarts("enblend ");
     QString firstLine = output.section('\n', 0, 0);

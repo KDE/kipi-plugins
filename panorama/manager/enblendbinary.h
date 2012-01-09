@@ -45,7 +45,7 @@ public:
     QString projectName()    const;
 
 protected:
-    virtual bool parseHeader (const QString & output);
+    virtual bool parseHeader(const QString& output);
 
 };
 

@@ -51,7 +51,7 @@ CPFindBinary::~CPFindBinary()
 {
 }
 
-bool CPFindBinary::parseHeader(const QString & output)
+bool CPFindBinary::parseHeader(const QString& output)
 {
     bool ret = false;
 
@@ -60,7 +60,7 @@ bool CPFindBinary::parseHeader(const QString & output)
     QString headerStartsNew("Hugin's cpfind ");          // For Hugin 2011.4
     QStringList lines = output.split('\n');
 
-    // m_developmentVersion = false;
+    m_developmentVersion = false;
     foreach(QString line, lines)
     {
         kDebug() << path() << " help header line: \n" << line;
@@ -91,7 +91,7 @@ bool CPFindBinary::parseHeader(const QString & output)
         {
             ret = false;
         }
-        // m_developmentVersion = true;
+        m_developmentVersion = true;
     }
     return ret;
 }

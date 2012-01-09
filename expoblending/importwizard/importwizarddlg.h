@@ -59,7 +59,7 @@ class ImportWizardDlg : public KAssistantDialog
 
 public:
 
-    explicit ImportWizardDlg(Manager* mngr, QWidget* parent=0);
+    explicit ImportWizardDlg(Manager* mngr, QWidget* parent = 0);
     ~ImportWizardDlg();
 
     KUrl::List itemUrls() const;

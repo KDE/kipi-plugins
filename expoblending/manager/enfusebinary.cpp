@@ -48,7 +48,7 @@ EnfuseBinary::~EnfuseBinary()
 {
 }
 
-bool EnfuseBinary::parseHeader(const QString & output)
+bool EnfuseBinary::parseHeader(const QString& output)
 {
     // Work around Enfuse <= 3.2
     // The output look like this : ==== enfuse, version 3.2 ====
