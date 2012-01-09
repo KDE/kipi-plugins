@@ -96,7 +96,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    resize(600, 580);
+    resize(800, 580);
 
     connect(d->introPage, SIGNAL(signalIntroPageIsValid(bool)),
             this, SLOT(slotIntroPageIsValid(bool)));
