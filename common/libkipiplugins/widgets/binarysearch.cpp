@@ -86,7 +86,7 @@ void BinarySearch::addBinary(BinaryIface& binary)
 
     d->downloadLabel = new QLabel(i18n(
         "<font color=\"red\">Warning:</font> The necessary binaries have not been found on "
-        "your system. If you have these binaries installed, please click the 'Find' button to locate them on your"
+        "your system. If you have these binaries installed, please click the 'Find' button to locate them on your "
         "system, otherwise please download them to proceed."), parentWidget());
     d->downloadLabel->hide();
 }
