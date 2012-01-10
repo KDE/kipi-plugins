@@ -353,7 +353,7 @@ int main(int argc, char* argv[])
     // create an instance of the plugin loader:
     new KIPI::PluginLoader(QStringList(), kipiInterface);
 
-    KCmdLineArgs* const args           = KCmdLineArgs::parsedArgs();
+    KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
     if (args->isSet("stderr"))
     {
