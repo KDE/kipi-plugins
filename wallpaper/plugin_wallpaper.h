@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * http://www.digikam.org
  *
  * Date        : 2004-01-01
  * Description : Wall Paper kipi-plugin

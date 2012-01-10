@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * http://www.digikam.org
  *
  * Date        : 2004-05-16
  * Description : a plugin to set time stamp of picture files.

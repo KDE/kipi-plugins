@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * http://www.digikam.org
  *
  * Date        : 2003-08-08
  * Description : Blob analysis package

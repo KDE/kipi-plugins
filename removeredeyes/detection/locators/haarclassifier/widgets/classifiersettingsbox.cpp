@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * http://www.digikam.org
  *
  * Date        : 2008-11-01
  * Description : a widget that holds all classifier settings

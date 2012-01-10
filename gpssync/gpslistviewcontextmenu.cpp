@@ -2,7 +2,7 @@
  * @file
  *
  * This file is a part of kipi-plugins project
- * <a href="http://www.kipi-plugins.org">http://www.kipi-plugins.org</a>
+ * <a href="http://www.digikam.org">http://www.digikam.org</a>
  *
  * @date   2009-05-07
  * @brief  Context menu for GPS list view.

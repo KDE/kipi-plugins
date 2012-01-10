@@ -1,7 +1,7 @@
 /* ===============================================================
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * http://www.digikam.org
  *
  * Date        : 2010-10-01
  * Description : Dialog to allow a custom page layout for

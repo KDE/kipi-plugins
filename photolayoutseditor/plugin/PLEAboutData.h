@@ -1,12 +1,12 @@
 /* ============================================================
  *
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * http://www.digikam.org
  *
  * Date        : 2011-09-01
  * Description : a tool to create photo layouts by fusion of several images.
  *
- * Copyright (C) 2011 by Åukasz Spas <lukasz dot spas at gmail dot com>
+ * Copyright (C) 2011 by ï¿½ukasz Spas <lukasz dot spas at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

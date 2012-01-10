@@ -1,7 +1,7 @@
 /* ============================================================
  * 
  * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * http://www.digikam.org
  *
  * Date        : 2011-05-23
  * Description : a plugin to create panorama by fusion of several images.
