@@ -324,7 +324,7 @@ int main(int argc, char* argv[])
                                KAboutData::License_GPL,
                                ki18n("(c) 2009-2010 Michael G. Hansen"),
                                KLocalizedString(),             // optional text
-                               "http://www.kipi-plugins.org",  // URI of homepage
+                               "http://www.digikam.org",       // URI of homepage
                                "kde-imaging@kde.org"           // bugs e-mail address
                               );
 

@@ -121,7 +121,7 @@ SimpleViewer::SimpleViewer(KIPI::Interface* interface, QObject* parent)
     if (d->hostUrl.isEmpty())
     {
         d->hostName = QString("Kipi");
-        d->hostUrl  = QString("http://www.kipi-plugins.org");
+        d->hostUrl  = QString("http://www.digikam.org");
     }
 }
 

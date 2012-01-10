@@ -50,7 +50,7 @@ KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          licenseType,
                          copyrightStatement,
                          pluginDescription,
-                         QByteArray("http://www.kipi-plugins.org"))
+                         QByteArray("http://www.digikam.org"))
 {
     if (KGlobal::hasMainComponent())
     {

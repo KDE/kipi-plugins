@@ -11,7 +11,7 @@ Author:         caulier dot gilles at gmail dot com (Gilles Caulier)
                 renchi dot raju at gmail dot com (Renchi Raju)
                 pgquiles at elpauer dot org (Pau Garcia i Quiles)
 Maintained-by:
-Primary-site:   http://www.kipi-plugins.org
+Primary-site:   http://www.digikam.org
 Alternate-site: http://www.digikam.org
 Original-site:
 Platforms:      Linux and other Unices, MacOs-X, Win32. Needs KDE 4.x

@@ -169,4 +169,4 @@ Name[zh_CN]=页脚信息
 Name[zh_TW]=頁尾資訊
 
 Type=string
-Default=My personal gallery <a href="mailto:email@mydomain.tld">email@mydomain.tld</a> - Powered by <a href="http://www.kipi-plugins.org/drupal/node/17">Kipi Plugins - HTMLExport</a>
+Default=My personal gallery <a href="mailto:email@mydomain.tld">email@mydomain.tld</a> - Powered by <a href="http://www.digikam.org/drupal/node/17">Kipi Plugins - HTMLExport</a>

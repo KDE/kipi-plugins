@@ -451,7 +451,7 @@ void kmlExport::generate()
     QDomElement kmlAlbum            = addKmlElement(kmlRoot, "Document");
     QDomElement kmlName             = addKmlTextElement(kmlAlbum, "name", album.name());
     QDomElement kmlDescription      = addKmlHtmlElement(kmlAlbum, "description",
-                                                        "Created with kmlexport <a href=\"http://www.kipi-plugins.org/\">kipi-plugin</a>");
+                                                        "Created with kmlexport <a href=\"http://www.digikam.org/\">kipi-plugin</a>");
 
     if (m_GPXtracks)
     {
