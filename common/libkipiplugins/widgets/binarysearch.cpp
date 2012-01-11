@@ -43,11 +43,8 @@ namespace KIPIPlugins
 struct BinarySearch::BinarySearchPriv
 {
     BinarySearchPriv()
-        : binariesFound(false)
     {
     }
-
-    bool                binariesFound;
 
     QGridLayout*        layout;
     QList<QWidget*>     binaryWidgets;
@@ -60,6 +57,11 @@ BinarySearch::BinarySearch(QWidget* parent)
             : QGroupBox(parent), d(new BinarySearchPriv)
 {
     d->layout = new QGridLayout;
+    d->layout->setColumnMinimumWidth(1, 10);
+    d->layout->setColumnStretch(2, 10);
+    d->layout->setColumnStretch(3, 10);
+    d->layout->setColumnStretch(4, 10);
+    d->layout->setColumnStretch(5, 10);
     setLayout(d->layout);
 
     d->downloadLabel = new QLabel(parentWidget());
@@ -81,13 +83,15 @@ void BinarySearch::addBinary(BinaryIface& binary)
             this, SLOT(slotAreBinariesFound(bool)));
     connect(&binary, SIGNAL(signalSearchDirectoryAdded(QString)),
             this, SIGNAL(signalAddDirectory(QString)));
-    connect(&binary, SIGNAL(signalSearchDirectoryAdded(QString)),
-            this, SLOT(signalAddDirectory(QString)));
+    connect(this, SIGNAL(signalSearchDirectoryAdded(QString)),
+            &binary, SLOT(signalAddDirectory(QString)));
 
     d->downloadLabel = new QLabel(i18n(
-        "<font color=\"red\">Warning:</font> The necessary binaries have not been found on "
+        "<qt><p><font color=\"red\"><b>Warning:</b> Some necessary binaries have not been found on "
         "your system. If you have these binaries installed, please click the 'Find' button to locate them on your "
-        "system, otherwise please download them to proceed."), parentWidget());
+        "system, otherwise please download and install them to proceed.</font></p></qt>"), parentWidget());
+    d->downloadLabel->setWordWrap(true);
+    d->downloadLabel->setMargin(20);
     d->downloadLabel->hide();
 }
 
@@ -102,24 +106,17 @@ bool BinarySearch::allBinariesFound()
     {
         if (!biniface->isValid())
         {
+            d->downloadLabel->show();
             return false;
         }
     }
+    d->downloadLabel->hide();
     return true;
 }
 
 void BinarySearch::slotAreBinariesFound(bool)
 {
-    d->binariesFound = allBinariesFound();
-    if (d->binariesFound)
-    {
-        d->downloadLabel->hide();
-    }
-    else
-    {
-        d->downloadLabel->show();
-    }
-    emit signalBinariesFound(d->binariesFound);
+    emit signalBinariesFound(allBinariesFound());
 }
 
 } // namespace KIPIPlugins

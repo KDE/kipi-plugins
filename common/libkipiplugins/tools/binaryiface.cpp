@@ -157,19 +157,22 @@ QString BinaryIface::slotNavigateToBinary()
 
 void BinaryIface::slotAddSearchDirectory(const QString& dir)
 {
-    m_searchPaths << dir;
-    checkSystem();
+    if (!m_searchPaths.contains(dir))
+    {
+        m_searchPaths << dir;
+        checkSystem();
+    }
 }
 
 QWidget * BinaryIface::constructPathWidget()
 {
     m_pathWidget        = new KHBox();
     m_pathWidget->setContentsMargins(0,0,0,0);
+    m_statusIcon        = new QLabel(m_pathWidget);
     m_binaryLabel       = new QLabel(m_pathWidget);
     m_versionLabel      = new QLabel(m_pathWidget);
     m_pathButton        = new QPushButton(m_pathWidget);
     m_downloadButton    = new QLabel(m_pathWidget);
-    m_statusIcon        = new QLabel(m_pathWidget);
 
     connect(m_pathButton, SIGNAL(clicked()), this, SLOT(slotNavigateAndCheck()));
 
@@ -185,15 +188,17 @@ QWidget * BinaryIface::binaryFileStatusWidget(QWidget* p, QGridLayout* l, int r)
     m_pathButton->setText(i18n("Find"));
     m_pathButton->hide();
     m_downloadButton->setText(i18n(" or <a href=\"%1\">download</a>", url().url()));
+    m_downloadButton->setMargin(5);
     m_downloadButton->hide();
     setBinaryFound(m_isFound);
 
     if (l != NULL)
     {
-        l->addWidget(m_binaryLabel, r, 0);
-        l->addWidget(m_versionLabel, r, 1);
-        l->addWidget(m_pathButton, r, 2);
-        l->addWidget(m_statusIcon, r, 3);
+        l->addWidget(m_statusIcon, r, 0);
+        l->addWidget(m_binaryLabel, r, 2);
+        l->addWidget(m_versionLabel, r, 3);
+        l->addWidget(m_pathButton, r, 4);
+        l->addWidget(m_downloadButton, r, 5);
     }
 
     return m_pathWidget;
