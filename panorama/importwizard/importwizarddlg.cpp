@@ -82,7 +82,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 {
     setModal(false);
     setWindowTitle(i18n("Panorama Creator Wizard"));
-
+/*
     if (mngr->cpFindBinary().developmentVersion())
     {
         KMessageBox::information(this,
@@ -92,7 +92,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
                                  i18n("Development version of Hugin")
                                  );
     }
-
+*/
     d->mngr              = mngr;
     d->introPage         = new IntroPage(d->mngr, this);
     d->itemsPage         = new ItemsPage(d->mngr, this);

@@ -83,8 +83,8 @@ void BinarySearch::addBinary(BinaryIface& binary)
             this, SLOT(slotAreBinariesFound(bool)));
     connect(&binary, SIGNAL(signalSearchDirectoryAdded(QString)),
             this, SIGNAL(signalAddDirectory(QString)));
-    connect(this, SIGNAL(signalSearchDirectoryAdded(QString)),
-            &binary, SLOT(signalAddDirectory(QString)));
+    connect(this, SIGNAL(signalAddDirectory(QString)),
+            &binary, SLOT(slotAddSearchDirectory(QString)));
 
     d->downloadLabel = new QLabel(i18n(
         "<qt><p><font color=\"red\"><b>Warning:</b> Some necessary binaries have not been found on "

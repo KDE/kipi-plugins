@@ -116,6 +116,8 @@ void BinaryIface::setBinaryFound(bool f)
         if (developmentVersion())
         {
             m_statusIcon->setPixmap(SmallIcon("dialog-warning"));
+            m_statusIcon->setToolTip(i18n("A development version has been detect. "
+                                          "There is no guarantee on the behavior of this binary."));
         }
         else
         {
@@ -128,6 +130,7 @@ void BinaryIface::setBinaryFound(bool f)
     else
     {
         m_statusIcon->setPixmap(SmallIcon("dialog-cancel"));
+        m_statusIcon->setToolTip(i18n("Binary not found."));
         m_isFound = false;
         m_pathButton->show();
         m_downloadButton->show();
