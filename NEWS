@@ -11,4 +11,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 003 ==> 153249 : Photo arranging and printing plugin.
 004 ==> 209721 : Search field in digikam's coordinates editor uses black text on black background.
 005 ==> 279182 : Batch resize fails possibly due to timestamp in filename.
-006 ==> 
+006 ==> 290932 : KIPI Plugins - up to date website.
+007 ==> 
