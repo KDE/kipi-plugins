@@ -101,7 +101,10 @@ void BinarySearch::addBinary(BinaryIface& binary)
     insertTopLevelItem(d->binaryIfaces.size() - 1, item);
     QPushButton* findButton = new QPushButton(i18n("Find"));
     setItemWidget(item, Button, findButton);
-    setItemWidget(item, Link, new QLabel(i18n(" or <a href=\"%1\">download</a>", binary.url().url())));
+    QLabel* downloadLabel = new QLabel(i18n(" or <a href=\"%1\">download</a>", binary.url().url()));
+    downloadLabel->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
+    downloadLabel->setOpenExternalLinks(true);
+    setItemWidget(item, Link, downloadLabel);
 
     // Starts a dialog to find the binary
     connect(findButton, SIGNAL(clicked(bool)),
