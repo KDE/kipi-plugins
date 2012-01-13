@@ -225,6 +225,8 @@ public:
     virtual ~ImagesList();
 
     void                setAllowRAW(bool allow);
+    void                setAllowDuplicate(bool allow);
+
     void                loadImagesFromCurrentSelection();
 
     int                 iconSize()  const;

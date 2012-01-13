@@ -477,6 +477,7 @@ public:
         iconSize              = DEFAULTSIZE;
         allowRAW              = true;
         controlButtonsEnabled = true;
+        allowDuplicate        = false;
         progressCount         = 0;
         progressTimer         = 0;
         loadRawThumb          = 0;
@@ -484,6 +485,7 @@ public:
     }
 
     bool                allowRAW;
+    bool                allowDuplicate;
     bool                controlButtonsEnabled;
     int                 iconSize;
 
@@ -707,6 +709,11 @@ ImagesList::~ImagesList()
     delete d;
 }
 
+void ImagesList::setAllowDuplicate(bool allow)
+{
+  d->allowDuplicate = allow;
+}
+    
 void ImagesList::setAllowRAW(bool allow)
 {
     d->allowRAW = allow;
@@ -779,7 +786,7 @@ void ImagesList::slotAddImages(const KUrl::List& list)
             ++iter;
         }
 
-        if (!found)
+        if (d->allowDuplicate || !found)
         {
             // if RAW files are not allowed, skip the image
             if (!d->allowRAW && isRAWFile(imageUrl.path()))
@@ -1122,7 +1129,8 @@ void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
                 item->setThumb(pix.scaled(d->iconSize, d->iconSize, Qt::KeepAspectRatio));
             }
 
-            return;
+            if (!d->allowDuplicate)
+              return;
         }
 
         ++it;
