@@ -26,12 +26,13 @@
 // Qt includes
 
 #include <QLabel>
-#include <QGridLayout>
+#include <QHeaderView>
 
 // KDE includes
 
 #include <kvbox.h>
 #include <klocale.h>
+#include <kdebug.h>
 
 // Local includes
 
@@ -46,25 +47,38 @@ struct BinarySearch::BinarySearchPriv
     {
     }
 
-    QGridLayout*        layout;
-    QList<QWidget*>     binaryWidgets;
-    QList<BinaryIface*> binaryIfaces;
-    QLabel*             downloadLabel;
+    QVector<BinaryIface*>       binaryIfaces;
+    QVector<QTreeWidgetItem*>   items;
+    QLabel*                     downloadLabel;
 
 };
 
 BinarySearch::BinarySearch(QWidget* parent)
-            : QGroupBox(parent), d(new BinarySearchPriv)
+            : QTreeWidget(parent), d(new BinarySearchPriv)
 {
-    d->layout = new QGridLayout;
-    d->layout->setColumnMinimumWidth(1, 10);
-    d->layout->setColumnStretch(2, 10);
-    d->layout->setColumnStretch(3, 10);
-    d->layout->setColumnStretch(4, 10);
-    d->layout->setColumnStretch(5, 10);
-    setLayout(d->layout);
+    setIconSize(QSize(KIconLoader::SizeSmall, KIconLoader::SizeSmall));
+    setAlternatingRowColors(true);
+    setSelectionMode(QAbstractItemView::NoSelection);
+    setSortingEnabled(false);
+    setAllColumnsShowFocus(true);
+    setRootIsDecorated(false);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setColumnCount(5);
+    setHeaderLabels(QStringList() << QString("")
+                                  << i18n("Binary")
+                                  << i18n("Version")
+                                  << QString("")
+                                  << QString(""));
+
+    header()->setResizeMode(Status, QHeaderView::ResizeToContents);
+    header()->setResizeMode(Binary, QHeaderView::Stretch);
+    header()->setResizeMode(Version, QHeaderView::Stretch);
+    header()->setResizeMode(Button, QHeaderView::Stretch);
+    header()->setResizeMode(Link, QHeaderView::Stretch);
 
     d->downloadLabel = new QLabel(parentWidget());
+
+    qobject_cast<QGridLayout*>(parentWidget()->layout())->addWidget(this, 0, 0);
 }
 
 BinarySearch::~BinarySearch()
@@ -76,20 +90,41 @@ void BinarySearch::addBinary(BinaryIface& binary)
 {
     delete d->downloadLabel;
 
-    QWidget* w = binary.binaryFileStatusWidget(parentWidget(), d->layout, d->binaryWidgets.size());
-    d->binaryWidgets.append(w);
     d->binaryIfaces.append(&binary);
-    connect(&binary, SIGNAL(signalBinaryValid(bool)),
-            this, SLOT(slotAreBinariesFound(bool)));
+    d->items.append(new QTreeWidgetItem());
+    QTreeWidgetItem* item = d->items[d->items.size() - 1];
+    item->setIcon(Status, QIcon(SmallIcon("dialog-cancel")));
+    item->setText(Binary, binary.baseName());
+    item->setText(Version, binary.version());
+    item->setToolTip(Status, i18n("Binary not found."));
+    item->setToolTip(Version, i18n("Minimal version number required for this binary is %1", binary.minimalVersion()));
+    insertTopLevelItem(d->binaryIfaces.size() - 1, item);
+    QPushButton* findButton = new QPushButton(i18n("Find"));
+    setItemWidget(item, Button, findButton);
+    setItemWidget(item, Link, new QLabel(i18n(" or <a href=\"%1\">download</a>", binary.url().url())));
+
+    // Starts a dialog to find the binary
+    connect(findButton, SIGNAL(clicked(bool)),
+            &binary, SLOT(slotNavigateAndCheck()));
+    // Rechecks full validity when a binary is found and valid
+    connect(&binary, SIGNAL(signalBinaryValid()),
+            this, SLOT(slotAreBinariesFound()));
+    // Scans (if no binary were found) a new directory where a binary was found
     connect(&binary, SIGNAL(signalSearchDirectoryAdded(QString)),
-            this, SIGNAL(signalAddDirectory(QString)));
+            this, SIGNAL(signalAddPossibleDirectory(QString)));
+    connect(this, SIGNAL(signalAddPossibleDirectory(QString)),
+            &binary, SLOT(slotAddPossibleSearchDirectory(QString)));
+    // Force scan of a new directory
     connect(this, SIGNAL(signalAddDirectory(QString)),
             &binary, SLOT(slotAddSearchDirectory(QString)));
+
 
     d->downloadLabel = new QLabel(i18n(
         "<qt><p><font color=\"red\"><b>Warning:</b> Some necessary binaries have not been found on "
         "your system. If you have these binaries installed, please click the 'Find' button to locate them on your "
         "system, otherwise please download and install them to proceed.</font></p></qt>"), parentWidget());
+    QGridLayout* layout = qobject_cast<QGridLayout*>(parentWidget()->layout());
+    layout->addWidget(d->downloadLabel, layout->rowCount(), 0);
     d->downloadLabel->setWordWrap(true);
     d->downloadLabel->setMargin(20);
     d->downloadLabel->hide();
@@ -97,26 +132,49 @@ void BinarySearch::addBinary(BinaryIface& binary)
 
 void BinarySearch::addDirectory(const QString& dir)
 {
-    emit(signalAddDirectory(dir));
+    emit(signalAddPossibleDirectory(dir));
 }
 
 bool BinarySearch::allBinariesFound()
 {
-    foreach(BinaryIface* biniface, d->binaryIfaces)
+    bool ret = true;
+    foreach(BinaryIface* binary, d->binaryIfaces)
     {
-        if (!biniface->isValid())
+        int index = d->binaryIfaces.indexOf(binary);
+        if (binary->isValid())
         {
-            d->downloadLabel->show();
-            return false;
+            if (!binary->developmentVersion())
+            {
+                d->items[index]->setIcon(Status, QIcon(SmallIcon("dialog-ok-apply")));
+                d->items[index]->setToolTip(Status, QString());
+            }
+            else
+            {
+                d->items[index]->setIcon(Status, QIcon(SmallIcon("dialog-warning")));
+                d->items[index]->setToolTip(Status, i18n("A development version has been detect. "
+                                                         "There is no guarantee on the behavior of this binary."));
+                d->downloadLabel->show();
+            }
+            d->items[index]->setText(Version, binary->version());
+            qobject_cast<QPushButton*>(itemWidget(d->items[index], Button))->setText(i18n("Change"));
+        }
+        else
+        {
+            ret = false;
         }
     }
-    d->downloadLabel->hide();
-    return true;
+    if (ret)
+    {
+        d->downloadLabel->hide();
+    }
+    return ret;
 }
 
-void BinarySearch::slotAreBinariesFound(bool)
+void BinarySearch::slotAreBinariesFound()
 {
-    emit signalBinariesFound(allBinariesFound());
+    kDebug() << "new binary found!!";
+    bool allFound = allBinariesFound();
+    emit signalBinariesFound(allFound);
 }
 
 } // namespace KIPIPlugins

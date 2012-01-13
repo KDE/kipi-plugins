@@ -26,6 +26,7 @@
 
 #include <QLabel>
 #include <QPixmap>
+#include <QGroupBox>
 
 // KDE includes
 
@@ -74,13 +75,16 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
                         "<a href='http://en.wikipedia.org/wiki/Bracketing'>this page</a></p>"
                         "</qt>"));
 
-    d->binariesWidget = new KIPIPlugins::BinarySearch(vbox);
-    d->binariesWidget->setTitle(i18n("Exposure Blending Binaries"));
+    QGroupBox* binaryBox        = new QGroupBox(vbox);
+    QGridLayout* binaryLayout   = new QGridLayout;
+    binaryBox->setLayout(binaryLayout);
+    binaryBox->setTitle(i18n("Exposure Blending Binaries"));
+    d->binariesWidget = new KIPIPlugins::BinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->alignBinary());
     d->binariesWidget->addBinary(d->mngr->enfuseBinary());
-#ifdef Q_WS_MAC
+    #ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
-#endif
+    #endif
 
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
             this, SIGNAL(signalIntroPageIsValid(bool)));

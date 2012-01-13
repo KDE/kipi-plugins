@@ -34,48 +34,4 @@
 namespace KIPIPanoramaPlugin
 {
 
-Pto2MkBinary::Pto2MkBinary()
-    : BinaryIface()
-{
-    m_configGroup       = "Panorama Settings";
-    m_pathToBinary      = "pto2mk";
-    setBaseName("pto2mk");
-    m_versionArguments << "-h";
-    readConfig();
-}
-
-Pto2MkBinary::~Pto2MkBinary()
-{
-}
-
-bool Pto2MkBinary::parseHeader(const QString& output)
-{
-    QString headerStarts("pto2mk version ");
-    QString firstLine = output.section('\n', 2, 2);
-    kDebug() << path() << " help header line: \n" << firstLine;
-    if (firstLine.startsWith(headerStarts))
-    {
-        m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
-        m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-        kDebug() << "Found " << path() << " version: " << version() ;
-        return true;
-    }
-    return false;
-}
-
-KUrl Pto2MkBinary::url() const
-{
-    return KUrl("http://hugin.sourceforge.net");
-}
-
-QString Pto2MkBinary::projectName() const
-{
-    return QString("Hugin");
-}
-
-QString Pto2MkBinary::minimalVersion() const
-{
-    return QString("2010.4");
-}
-
 }  // namespace KIPIPanoramaPlugin

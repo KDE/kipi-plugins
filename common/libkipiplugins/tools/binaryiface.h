@@ -55,80 +55,80 @@ Q_OBJECT;
 
 public:
 
-    BinaryIface();
+    BinaryIface(const QString& binaryName, const QString& minimalVersion, const QString& header,
+                const int headerLine, const QString& projectName, const QString& url,
+                const QString& pluginName, const QStringList& args = QStringList());
     virtual ~BinaryIface();
 
-    bool                isAvailable()           const;
+    bool                isFound()               const { return m_isFound; }
     QString             version()               const;
     bool                versionIsRight()        const;
-    bool                showResults()           const;
-    bool                isValid()               const { return (m_isFound && versionIsRight()); }
-    bool                developmentVersion()    const { return m_developmentVersion; }
+    inline bool         isValid()               const { return (m_isFound && versionIsRight()); }
+    inline bool         developmentVersion()    const { return m_developmentVersion; }
 
-    virtual bool        checkSystem(const QStringList& binaryArgs);
-    virtual bool        checkSystem()                 { return checkSystem(m_versionArguments); }
-    virtual bool        checkPath(const QString& path);
+    virtual void        setup();
+    virtual bool        checkDir(const QString& path);
 
-    virtual QString     path()                  const { return m_pathToBinary; }
+    virtual QString     path(const QString& dir) const;
+    virtual QString     path()                  const { return path(m_pathDir); }
     virtual QString     baseName()              const { return m_binaryBaseName; }
     virtual QString     minimalVersion()        const { return m_minimalVersion; }
 
-    virtual void        setPath(const QString& p)          { m_pathToBinary = p; }
-    virtual void        setMinimalVersion(const QString& m){ m_minimalVersion = m; }
-    virtual void        setConfigGroup(const QString& g)   { m_configGroup = g; }
-    virtual void        setBaseName(const QString& b)      {
+    static QString      goodBaseName(const QString& b)      {
                             #ifdef Q_WS_WIN
-                                m_binaryBaseName = b+".exe";
+                                return b + ".exe";
                             #else
-                                m_binaryBaseName = b;
+                                return b;
                             #endif // Q_WS_WIN
                         }
 
-    virtual KUrl        url() const = 0;
-    virtual QString     projectName() const = 0;
-    virtual QWidget*    binaryFileStatusWidget(QWidget* p, QGridLayout* l, int r);
+    virtual KUrl        url()                   const { return m_url; }
+    virtual QString     projectName()           const { return m_projectName; }
 
 public Q_SLOTS:
-    QString             slotNavigateToBinary();
-    virtual void        slotNavigateAndCheck() { slotNavigateToBinary(); checkSystem(); }
+    virtual void        slotNavigateAndCheck();
+    virtual void        slotAddPossibleSearchDirectory(const QString& dir);
     virtual void        slotAddSearchDirectory(const QString& dir);
 
 Q_SIGNALS:
     void                signalSearchDirectoryAdded(const QString& dir);
-    void                signalBinaryValid(bool);
+    void                signalBinaryValid();
 
 protected:
-    virtual QWidget*    constructPathWidget();
-    virtual void        setBinaryFound(bool f = true);
-    QString             findHeader(const QStringList& output, const QString& header) const;
-    virtual bool        parseHeader(const QString& output) = 0;
 
-    virtual void        readConfig();
+    QString             findHeader(const QStringList& output, const QString& header) const;
+    virtual bool        parseHeader(const QString& output);
+    void                setVersion(QString& version);
+
+    virtual QString     readConfig();
     virtual void        writeConfig();
 
 protected:
 
-    bool            m_available;
-    bool            m_isFound;
-    bool            m_developmentVersion;
+    const QString       m_headerStarts;
+    const int           m_headerLine;
+    const QString       m_minimalVersion;
+    const QString       m_configGroup;
+    const QString       m_binaryBaseName;
+    const QStringList   m_binaryArguments;
+    const QString       m_projectName;
+    const KUrl          m_url;
 
-    QString         m_version;
-    QString         m_pathToBinary;
-    QString         m_binaryBaseName;
-    QString         m_headerStarts;
-    QString         m_minimalVersion;
-    QString         m_configGroup;
-    QStringList     m_versionArguments;
+    bool                m_isFound;
+    bool                m_developmentVersion;
 
-    QFrame          *m_pathWidget;
-    QLabel          *m_binaryLabel;
-    QLabel          *m_versionLabel;
-    QPushButton     *m_pathButton;
-    QLabel          *m_downloadButton;
-    QLineEdit       *m_lineEdit;
-    QLabel          *m_statusIcon;
+    QString             m_version;
+    QString             m_pathDir;
 
-    QSet<QString>   m_searchPaths;
+    QFrame              *m_pathWidget;
+    QLabel              *m_binaryLabel;
+    QLabel              *m_versionLabel;
+    QPushButton         *m_pathButton;
+    QLabel              *m_downloadButton;
+    QLineEdit           *m_lineEdit;
+    QLabel              *m_statusIcon;
+
+    QSet<QString>       m_searchPaths;
 };
 
 } // namespace KIPIPlugins

@@ -37,15 +37,18 @@ class EnfuseBinary : public BinaryIface
 
 public:
 
-    EnfuseBinary();
-    ~EnfuseBinary();
+    EnfuseBinary()
+    : BinaryIface(QString("enfuse"), QString("3.2"), QString("enfuse "),
+                      0, QString("Enblend"), QString("http://enblend.sourceforge.net"),
+                      QString("ExpoBlending"), QStringList("-V"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
+    ~EnfuseBinary() {}
 
 protected:
-    virtual bool parseHeader(const QString& output);
+
+    bool parseHeader(const QString& output);
+
 };
 
 } // namespace KIPIExpoBlendingPlugin

@@ -37,15 +37,14 @@ class Pto2MkBinary : public BinaryIface
 
 public:
 
-    Pto2MkBinary();
-    ~Pto2MkBinary();
+    Pto2MkBinary()
+        : BinaryIface(QString("pto2mk"), QString("2010.4"), QString("pto2mk version "),
+                      2, QString("Hugin"), QString("http://hugin.sourceforge.net"),
+                      QString("Panorama"), QStringList("-V"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
+    ~Pto2MkBinary() {}
 
-protected:
-    virtual bool parseHeader(const QString& output);
 };
 
 } // namespace KIPIPanoramaPlugin

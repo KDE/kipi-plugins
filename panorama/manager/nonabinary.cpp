@@ -34,48 +34,4 @@
 namespace KIPIPanoramaPlugin
 {
 
-NonaBinary::NonaBinary()
-    : BinaryIface()
-{
-    m_configGroup       = "Panorama Settings";
-    m_pathToBinary      = "nona";
-    setBaseName("nona");
-    m_versionArguments << "-h";
-    readConfig();
-}
-
-NonaBinary::~NonaBinary()
-{
-}
-
-bool NonaBinary::parseHeader(const QString& output)
-{
-    QString headerStarts("nona version ");
-    QString firstLine = output.section('\n', 2, 2);
-    kDebug() << path() << " help header line: \n" << firstLine;
-    if (firstLine.startsWith(headerStarts))
-    {
-        m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
-        m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-        kDebug() << "Found " << path() << " version: " << version() ;
-        return true;
-    }
-    return false;
-}
-
-KUrl NonaBinary::url() const
-{
-    return KUrl("http://hugin.sourceforge.net");
-}
-
-QString NonaBinary::projectName() const
-{
-    return QString("Hugin");
-}
-
-QString NonaBinary::minimalVersion() const
-{
-    return QString("2010.4");
-}
-
 }  // namespace KIPIPanoramaPlugin

@@ -40,47 +40,19 @@
 namespace KIPIPlugins
 {
 
-BinaryIface::BinaryIface()
-    : m_available(false), m_isFound(false), m_developmentVersion(false), m_version("N/A"),
-    m_pathToBinary("Not Set"), m_binaryBaseName("Not Set"), m_minimalVersion("Not Set"),
-    m_configGroup("BinaryIFace Settings")
+    BinaryIface::BinaryIface(const QString& binaryName, const QString& minimalVersion, const QString& header,
+                             const int headerLine, const QString& projectName, const QString& url,
+                             const QString& pluginName, const QStringList& args)
+    : m_headerStarts(header), m_headerLine(headerLine), m_minimalVersion(minimalVersion),
+      m_configGroup(pluginName + " Settings"), m_binaryBaseName(goodBaseName(binaryName)),
+      m_binaryArguments(args), m_projectName(projectName), m_url(KUrl(url)),
+      m_isFound(false), m_developmentVersion(false),
+      m_version(""), m_pathDir("")
 {
-    m_searchPaths.clear();
-    constructPathWidget();
 }
 
 BinaryIface::~BinaryIface()
 {
-}
-
-bool BinaryIface::showResults() const
-{
-    if (!isAvailable() || !versionIsRight())
-    {
-        KMessageBox::information(
-                kapp->activeWindow(),
-                i18n("<qt><p>Unable to find <i>%1</i> executable.</p>"
-                     "<p>This program is required to continue.<br/>"
-                     "Please install it from <b>%2</b> package provided by your distributor<br/>"
-                     "or download and install <a href=\"%3\">the source</a>.</p>"
-                     "<p>Note: at least, <i>%4</i> version <b>%5</b> is required.</p></qt>",
-                     path(),
-                     projectName(),
-                     url().url(),
-                     path(),
-                     minimalVersion()),
-                QString(),
-                QString(),
-                KMessageBox::Notify | KMessageBox::AllowLink);
-
-        return false;
-    }
-    return true;
-}
-
-bool BinaryIface::isAvailable() const
-{
-    return m_available;
 }
 
 QString BinaryIface::version() const
@@ -90,13 +62,12 @@ QString BinaryIface::version() const
 
 bool BinaryIface::versionIsRight() const
 {
-    if (version().isNull() || !isAvailable())
-        return false;
-
-    if (version().toFloat() >= minimalVersion().toFloat())
-        return true;
-
-    return false;
+    QRegExp reg("^(\\d*[.]\\d*)");
+    version().indexOf(reg);
+    float floatVersion = reg.capturedTexts()[0].toFloat();
+    return (!version().isNull()
+         && isFound()
+         && floatVersion >= minimalVersion().toFloat());
 }
 
 QString BinaryIface::findHeader(const QStringList& output, const QString& header) const
@@ -109,170 +80,125 @@ QString BinaryIface::findHeader(const QStringList& output, const QString& header
     return QString();
 }
 
-void BinaryIface::setBinaryFound(bool f)
+bool BinaryIface::parseHeader(const QString& output)
 {
-    if (f)
+    QString firstLine = output.section('\n', m_headerLine, m_headerLine);
+    kDebug() << path() << " help header line: \n" << firstLine;
+    if (firstLine.startsWith(m_headerStarts))
     {
-        if (developmentVersion())
+        QString version = firstLine.remove(0, m_headerStarts.length());
+        if (version.startsWith("Pre-Release "))
         {
-            m_statusIcon->setPixmap(SmallIcon("dialog-warning"));
-            m_statusIcon->setToolTip(i18n("A development version has been detect. "
-                                          "There is no guarantee on the behavior of this binary."));
+            version.remove("Pre-Release ");            // Special case with Hugin beta.
+            m_developmentVersion = true;
         }
-        else
-        {
-            m_statusIcon->setPixmap(SmallIcon("dialog-ok-apply"));
-        }
-        m_isFound = true;
-        m_pathButton->hide();
-        m_downloadButton->hide();
+        setVersion(version);
+        return true;
     }
-    else
-    {
-        m_statusIcon->setPixmap(SmallIcon("dialog-cancel"));
-        m_statusIcon->setToolTip(i18n("Binary not found."));
-        m_isFound = false;
-        m_pathButton->show();
-        m_downloadButton->show();
-    }
-    emit signalBinaryValid(m_isFound);
+    return false;
 }
 
-QString BinaryIface::slotNavigateToBinary()
+void BinaryIface::setVersion(QString& version)
+{
+    QRegExp versionRegExp("\\d*(\\.\\d+)*");
+    version.indexOf(versionRegExp);
+    m_version = versionRegExp.capturedTexts()[0];
+}
+
+void BinaryIface::slotNavigateAndCheck()
 {
     QString f = KFileDialog::getOpenFileName(KUrl(),
                                              QString(m_binaryBaseName),
                                              0,
-                                             QString(i18n("Navigate to %1",m_binaryBaseName)));
-    m_pathToBinary = f;
-    if (checkPath(m_pathToBinary))
+                                             QString(i18n("Navigate to %1", m_binaryBaseName)));
+    QString dir = KUrl(f).directory();
+    m_searchPaths << dir;
+    if (checkDir(dir))
     {
-        QDir d(m_pathToBinary);
-        int lastIndex = m_pathToBinary.lastIndexOf(QDir::separator());
-        emit signalSearchDirectoryAdded( m_pathToBinary.left(lastIndex + 1) );
+        emit signalSearchDirectoryAdded(dir);
     }
-    else
+}
+
+void BinaryIface::slotAddPossibleSearchDirectory(const QString& dir)
+{
+    if (!isValid() && !m_searchPaths.contains(dir))
     {
-        setBinaryFound(false);
+        m_searchPaths << dir;
+        checkDir(dir);
     }
-    return f;
 }
 
 void BinaryIface::slotAddSearchDirectory(const QString& dir)
 {
-    if (!m_searchPaths.contains(dir))
-    {
-        m_searchPaths << dir;
-        checkSystem();
-    }
+    m_searchPaths << dir;
+    checkDir(dir);       // Forces the use of that directory
 }
 
-QWidget * BinaryIface::constructPathWidget()
-{
-    m_pathWidget        = new KHBox();
-    m_pathWidget->setContentsMargins(0,0,0,0);
-    m_statusIcon        = new QLabel(m_pathWidget);
-    m_binaryLabel       = new QLabel(m_pathWidget);
-    m_versionLabel      = new QLabel(m_pathWidget);
-    m_pathButton        = new QPushButton(m_pathWidget);
-    m_downloadButton    = new QLabel(m_pathWidget);
-
-    connect(m_pathButton, SIGNAL(clicked()), this, SLOT(slotNavigateAndCheck()));
-
-    return m_pathWidget;
-}
-
-QWidget * BinaryIface::binaryFileStatusWidget(QWidget* p, QGridLayout* l, int r)
-{
-    checkSystem();
-    m_pathWidget->setParent(p);
-    m_binaryLabel->setText(baseName());
-    m_versionLabel->setText(i18n("version: %1", version()));
-    m_pathButton->setText(i18n("Find"));
-    m_pathButton->hide();
-    m_downloadButton->setText(i18n(" or <a href=\"%1\">download</a>", url().url()));
-    m_downloadButton->setMargin(5);
-    m_downloadButton->hide();
-    setBinaryFound(m_isFound);
-
-    if (l != NULL)
-    {
-        l->addWidget(m_statusIcon, r, 0);
-        l->addWidget(m_binaryLabel, r, 2);
-        l->addWidget(m_versionLabel, r, 3);
-        l->addWidget(m_pathButton, r, 4);
-        l->addWidget(m_downloadButton, r, 5);
-    }
-
-    return m_pathWidget;
-}
-
-void BinaryIface::readConfig()
+QString BinaryIface::readConfig()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(m_configGroup);
-    m_pathToBinary = group.readPathEntry(QString("%1Binary").arg(m_binaryBaseName), m_binaryBaseName);
+    return group.readPathEntry(QString("%1Binary").arg(m_binaryBaseName), "");
 }
 
 void BinaryIface::writeConfig()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(m_configGroup);
-    group.writePathEntry(QString("%1Binary").arg(m_binaryBaseName), path());
+    group.writePathEntry(QString("%1Binary").arg(m_binaryBaseName), m_pathDir);
 }
 
-bool BinaryIface::checkPath(const QString& possiblePath)
+QString BinaryIface::path(const QString& dir) const
+{
+    if (dir.isEmpty())
+    {
+        return baseName();
+    }
+    return QString("%1%2%3").arg(dir).arg(QDir::separator()).arg(baseName());
+}
+
+void BinaryIface::setup()
+{
+    QString previous_dir = readConfig();
+    m_searchPaths << previous_dir;
+    checkDir(previous_dir);
+    if (previous_dir != "" && !isValid())
+    {
+        m_searchPaths << "";
+        checkDir("");
+    }
+}
+
+bool BinaryIface::checkDir(const QString& possibleDir)
 {
     bool ret = false;
+    QString possiblePath = path(possibleDir);
+
+    kDebug() << "Testing " << possiblePath << "...";
     QProcess process;
     process.setProcessChannelMode(QProcess::MergedChannels);
-    process.start(possiblePath, m_versionArguments);
-    m_available = process.waitForFinished();
+    process.start(possiblePath, m_binaryArguments);
+    process.waitForFinished();
 
-    if (process.error() == QProcess::FailedToStart)
+    if (process.error() != QProcess::FailedToStart)
     {
-        m_isFound = false;
-    }
-    else
-    {
-        m_pathToBinary = possiblePath;
         m_isFound = true;
 
         QString stdOut(process.readAllStandardOutput());
         if (parseHeader(stdOut))
         {
-            kDebug() << "Found " << path() << " version: " << version();
-            setBinaryFound(true);
+            m_pathDir = possibleDir;
             writeConfig();
-            ret = true;
-            m_isFound = true;
-        }
-    }
-    emit signalBinaryValid(m_isFound);
-    return ret;
-}
 
-bool BinaryIface::checkSystem(const QStringList& /* binaryArgs */)
-{
-    bool ret = false;
-    // first check the PATH, then check m_searchPaths
-    if (checkPath(baseName()))
-    {
-        ret = true;
-    }
-    else
-    {
-        foreach(const QString& dir, m_searchPaths)
+            kDebug() << "Found " << path() << " version: " << version();
+            ret = true;
+        }
+        else
         {
-            QString testPath = QString("%1%2%3").arg(dir).arg(QDir::separator()).arg(baseName());
-            if (checkPath(testPath))
-            {
-                ret = true;
-                break;
-            }
+            // TODO: do something if the version is not right or not found
         }
     }
-    m_versionLabel->setText(i18n("version: %1", version()));
+    emit signalBinaryValid();
     return ret;
 }
 

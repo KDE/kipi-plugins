@@ -34,47 +34,4 @@
 namespace KIPIPanoramaPlugin
 {
 
-EnblendBinary::EnblendBinary()
-            : BinaryIface()
-{
-    m_configGroup       = "Panorama Settings";
-    m_pathToBinary      = "enblend";
-    setBaseName("enblend");
-    m_versionArguments << "-V";
-    readConfig();
-}
-
-EnblendBinary::~EnblendBinary()
-{
-}
-
-bool EnblendBinary::parseHeader(const QString& output)
-{
-    QString headerStarts("enblend ");
-    QString firstLine = output.section('\n', 0, 0);
-    kDebug() << path() << " help header line: \n" << firstLine;
-    if (firstLine.startsWith(headerStarts))
-    {
-        m_version = firstLine.remove(0, headerStarts.length()).section('-', 0, 0);
-        kDebug() << "Found " << path() << " version: " << version() ;
-        return true;
-    }
-    return false;
-}
-
-KUrl EnblendBinary::url() const
-{
-    return KUrl("http://enblend.sourceforge.net");
-}
-
-QString EnblendBinary::projectName() const
-{
-    return QString("Enblend");
-}
-
-QString EnblendBinary::minimalVersion() const
-{
-    return QString("4.0");
-}
-
 }  // namespace KIPIPanoramaPlugin

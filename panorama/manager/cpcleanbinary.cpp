@@ -34,48 +34,4 @@
 namespace KIPIPanoramaPlugin
 {
 
-CPCleanBinary::CPCleanBinary()
-    : BinaryIface()
-{
-    m_configGroup       = "Panorama Settings";
-    m_pathToBinary      = "cpclean";
-    setBaseName("cpclean");
-    m_versionArguments << "-h";
-    readConfig();
-}
-
-CPCleanBinary::~CPCleanBinary()
-{
-}
-
-bool CPCleanBinary::parseHeader(const QString& output)
-{
-    QString headerStarts("cpclean version ");
-    QString firstLine = output.section('\n', 1, 1);
-    kDebug() << path() << " help header line: \n" << firstLine;
-    if (firstLine.startsWith(headerStarts))
-    {
-        m_version = firstLine.remove(0, headerStarts.length()).section('.', 0, 1);
-        m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-        kDebug() << "Found " << path() << " version: " << version() ;
-        return true;
-    }
-    return false;
-}
-
-KUrl CPCleanBinary::url() const
-{
-    return KUrl("http://hugin.sourceforge.net");
-}
-
-QString CPCleanBinary::projectName() const
-{
-    return QString("Hugin");
-}
-
-QString CPCleanBinary::minimalVersion() const
-{
-    return QString("2010.4");
-}
-
 }  // namespace KIPIPanoramaPlugin

@@ -37,15 +37,12 @@ class CPCleanBinary : public BinaryIface
 
 public:
 
-    CPCleanBinary();
-    ~CPCleanBinary();
+    CPCleanBinary()
+        : BinaryIface(QString("cpclean"), QString("2010.4"), QString("cpclean version "),
+                      1, QString("Hugin"), QString("http://hugin.sourceforge.net"),
+                      QString("Panorama"), QStringList("-h"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
-
-protected:
-    virtual bool parseHeader(const QString& output);
 };
 
 } // namespace KIPIPanoramaPlugin

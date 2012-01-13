@@ -37,15 +37,18 @@ class CPFindBinary : public BinaryIface
 
 public:
 
-    CPFindBinary();
-    ~CPFindBinary();
+    CPFindBinary()
+        : BinaryIface(QString("cpfind"), QString("2010.4"), QString("Hugins cpfind "),
+                      0, QString("Hugin"), QString("http://hugin.sourceforge.net"),
+                      QString("Panorama"), QStringList("--version"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
+    ~CPFindBinary() {}
 
 protected:
+
     virtual bool parseHeader(const QString& output);
+
 };
 
 } // namespace KIPIPanoramaPlugin
