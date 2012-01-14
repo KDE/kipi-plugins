@@ -387,6 +387,11 @@ ImagesListViewItem* ImagesListView::findItem(const KUrl& url)
     return 0;
 }
 
+QModelIndex ImagesListView::indexFromItem ( ImagesListViewItem * item, int column ) const
+{
+  return QTreeWidget::indexFromItem(item, column);
+}
+
 void ImagesListView::dragEnterEvent(QDragEnterEvent* e)
 {
     QTreeWidget::dragEnterEvent(e);
@@ -815,17 +820,22 @@ void ImagesList::slotAddItems()
         slotAddImages(urls);
     }
 
-    emit signalImageListChanged();
+//     emit signalImageListChanged();
 }
 
 void ImagesList::slotRemoveItems()
 {
     QList<QTreeWidgetItem*> selectedItemsList = d->listView->selectedItems();
-
+    KUrl::List urls;
+    
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin();
          it != selectedItemsList.constEnd(); ++it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        
+        emit signalRemovingItem(item);
+        urls.append(item->url());
+        
         if (item && d->processItems.contains(item->url()))
         {
             d->processItems.removeAll(item->url());
@@ -835,6 +845,7 @@ void ImagesList::slotRemoveItems()
         delete *it;
     }
 
+    emit signalRemovedItems(urls);
     emit signalImageListChanged();
 }
 
@@ -861,6 +872,7 @@ void ImagesList::slotMoveUpItems()
     dynamic_cast<KIPIPlugins::ImagesListViewItem*>(temp)->updateItemWidgets();
 
     emit signalImageListChanged();
+    emit signalMoveUpItem();
 }
 
 void ImagesList::slotMoveDownItems()
@@ -886,6 +898,7 @@ void ImagesList::slotMoveDownItems()
     dynamic_cast<KIPIPlugins::ImagesListViewItem*>(temp)->updateItemWidgets();
 
     emit signalImageListChanged();
+    emit signalMoveDownItem();
 }
 
 void ImagesList::slotClearItems()
