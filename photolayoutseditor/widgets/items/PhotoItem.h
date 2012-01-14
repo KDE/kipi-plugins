@@ -44,6 +44,7 @@ namespace KIPIPhotoLayoutsEditor
         public:
 
             explicit PhotoItem(const QImage & photo, const QString & name = QString(), Scene * scene = 0);
+            explicit PhotoItem(const QPainterPath & shape, const QString & name = QString(), Scene * scene = 0);
             virtual ~PhotoItem();
 
             /// Convert photo item to SVG format
@@ -67,7 +68,7 @@ namespace KIPIPhotoLayoutsEditor
             /// Reimplemented from QGraphicsItem
             virtual bool contains(const QPointF & point) const
             {
-                return m_complete_path.contains(point);
+                return m_image_path.contains(point);
             }
 
             /// Reimplemented from AbstractPhoto
@@ -97,9 +98,12 @@ namespace KIPIPhotoLayoutsEditor
             /// Returns item's property browser
             virtual QtAbstractPropertyBrowser * propertyBrowser();
 
+            /// Returns if item is empty (not contains image)
+            bool isEmpty() const;
+
         protected:
 
-            PhotoItem(const QString & name = QString(), Scene * scene = 0);
+            explicit PhotoItem(const QString & name = QString(), Scene * scene = 0);
 
             /// Converts item data to SVG format
             virtual QDomDocument svgVisibleArea() const;
@@ -108,6 +112,9 @@ namespace KIPIPhotoLayoutsEditor
             virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
             virtual void dragMoveEvent(QGraphicsSceneDragDropEvent * event);
             virtual void dropEvent(QGraphicsSceneDragDropEvent * event);
+            virtual void mousePressEvent(QGraphicsSceneMouseEvent * event);
+            virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
+            virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * event);
 
             /// Updates item icon
             virtual void updateIcon();
@@ -156,6 +163,9 @@ namespace KIPIPhotoLayoutsEditor
                 void setFileUrl(const KUrl & url);
                 inline KUrl & fileUrl();
                 KUrl m_file_path;
+
+                QTransform m_brush_transform;
+                QTransform m_complete_path_transform;
 
                 friend class PhotoItem;
                 friend class PhotoItemLoader;

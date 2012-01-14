@@ -67,7 +67,7 @@ namespace KIPIPhotoLayoutsEditor
 
             void open();
             void openDialog();
-            void open(const KUrl & fileUrl);
+            void open(const KUrl & fileUrl, bool isTemplate = false);
             void save();
             void saveAs();
             void saveFile(const KUrl & fileUrl = KUrl(), bool setFileAsDefault = true);
@@ -78,7 +78,7 @@ namespace KIPIPhotoLayoutsEditor
             void loadNewImage();
             void setGridVisible(bool isVisible);
             void createCanvas(const CanvasSize & size);
-            void createCanvas(const KUrl & fileUrl);
+            void createCanvas(const KUrl & fileUrl, bool isTemplate = false);
             void settings();
             void setupGrid();
             void changeCanvasSize();

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoItem.moc"
+#include "PhotoItem.h"
 
 #include "PhotoEffectsGroup.h"
 #include "PhotoEffectsLoader.h"
@@ -46,6 +46,8 @@
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>
+
+#define EMPTY_FILL_COLOR QColor(255, 0, 0, 120)
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -187,6 +189,15 @@ PhotoItem::PhotoItem(const QImage & photo, const QString & name, Scene * scene) 
     this->setupItem(photo);
 }
 
+PhotoItem::PhotoItem(const QPainterPath & shape, const QString & name, Scene * scene) :
+    AbstractPhoto((name.isEmpty() ? i18n("New image") : name), scene),
+    m_highlight(false),
+    d(new PhotoItemPrivate(this))
+{
+    m_image_path = shape;
+    this->refresh();
+}
+
 PhotoItem::PhotoItem(const QString & name, Scene * scene) :
     AbstractPhoto((name.isEmpty() ? i18n("New image") : name), scene),
     m_highlight(false),
@@ -226,36 +237,64 @@ QDomDocument PhotoItem::toSvg() const
         appNS.appendChild(document.documentElement());
     }
 
-    QDomElement image = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "image");
-    appNS.appendChild(image);
-    // Saving image data
-    if (!PLEConfigSkeleton::embedImagesData())
-    {
-        int result = KMessageBox::questionYesNo(0,
-                                                i18n("Do you want to embed images data?\n"
-                                                        "Remember that when you move or rename image files on your disk or the storage device become unavailable, those images become unavailable for %1 "
-                                                        "and this layout might become broken.", KApplication::applicationName()),
-                                                i18n("Saving: %1", this->name()),
-                                                KStandardGuiItem::yes(),
-                                                KStandardGuiItem::no(),
-                                                PLEConfigSkeleton::self()->config()->name());
-        if (result == KMessageBox::Yes)
-            PLEConfigSkeleton::setEmbedImagesData(true);
-    }
+    // 'defs'-> ple:'data' ->'transform'
+    QDomElement transform = document.createElement("transform");
+    transform.setPrefix(KIPIPhotoLayoutsEditor::name());
+    QString matrix = "matrix("+
+                     QString::number(this->transform().m11())+
+                     ','+
+                     QString::number(this->transform().m12())+
+                     ','+
+                     QString::number(this->transform().m21())+
+                     ','+
+                     QString::number(this->transform().m22())+
+                     ','+
+                     QString::number(this->transform().m31())+
+                     ','+
+                     QString::number(this->transform().m32())+
+                     ')';
+    transform.setAttribute("matrix", matrix);
+    appNS.appendChild(transform);
 
-    if ( (PLEConfigSkeleton::embedImagesData() && !d->image().isNull()) || !d->fileUrl().isValid())
-    {
-        QByteArray byteArray;
-        QBuffer buffer(&byteArray);
-        d->image().save(&buffer, "PNG");
-        image.appendChild( document.createTextNode( QString(byteArray.toBase64()) ) );
-        image.setAttribute("width",QString::number(d->image().width()));
-        image.setAttribute("height",QString::number(d->image().height()));
-    }
+    qDebug() << matrix;
 
-    // Saving image path
-    if (d->fileUrl().isValid())
-        image.setAttribute("src", d->fileUrl().url());
+    if (!this->isEmpty())
+    {
+        QDomElement image = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "image");
+        appNS.appendChild(image);
+        // Saving image data
+        if (!PLEConfigSkeleton::embedImagesData())
+        {
+            int result = KMessageBox::questionYesNo(0,
+                                                    i18n("Do you want to embed images data?\n"
+                                                            "Remember that when you move or rename image files on your disk or the storage device become unavailable, those images become unavailable for %1 "
+                                                            "and this layout might become broken.", KApplication::applicationName()),
+                                                    i18n("Saving: %1", this->name()),
+                                                    KStandardGuiItem::yes(),
+                                                    KStandardGuiItem::no(),
+                                                    PLEConfigSkeleton::self()->config()->name());
+            if (result == KMessageBox::Yes)
+                PLEConfigSkeleton::setEmbedImagesData(true);
+        }
+
+        if ( (PLEConfigSkeleton::embedImagesData() && !d->image().isNull()) || !d->fileUrl().isValid())
+        {
+            QByteArray byteArray;
+            QBuffer buffer(&byteArray);
+            d->image().save(&buffer, "PNG");
+            image.appendChild( document.createTextNode( QString(byteArray.toBase64()) ) );
+            image.setAttribute("width",QString::number(d->image().width()));
+            image.setAttribute("height",QString::number(d->image().height()));
+        }
+
+        // Saving image path
+        if (d->fileUrl().isValid())
+            image.setAttribute("src", d->fileUrl().url());
+    }
+    else
+    {
+        itemElement.setAttribute("visibility", "hidden");
+    }
 
     return document;
 }
@@ -321,15 +360,42 @@ _delete:
 QDomDocument PhotoItem::svgVisibleArea() const
 {
     QDomDocument document;
-    // 'defs'->'image'
-    QByteArray byteArray;
-    QBuffer buffer(&byteArray);
-    m_temp_image.save(&buffer, "PNG");
-    QDomElement img = document.createElement("image");
-    img.setAttribute("width",m_temp_image.width());
-    img.setAttribute("height",m_temp_image.height());
-    img.setAttribute("xlink:href",QString("data:image/png;base64,")+byteArray.toBase64());
-    document.appendChild(img);
+    if (!this->isEmpty())
+    {
+        // 'defs' -> 'g'
+        QDomElement g = document.createElement("g");
+        document.appendChild(g);
+        QTransform transform = d->m_brush_transform;
+        QString translate = "translate("+
+                            QString::number(this->pos().x())+
+                            ','+
+                            QString::number(this->pos().y())+
+                            ')';
+        QString matrix = "matrix("+
+                         QString::number(transform.m11())+
+                         ','+
+                         QString::number(transform.m12())+
+                         ','+
+                         QString::number(transform.m21())+
+                         ','+
+                         QString::number(transform.m22())+
+                         ','+
+                         QString::number(transform.m31())+
+                         ','+
+                         QString::number(transform.m32())+
+                         ')';
+        g.setAttribute("transform", translate + ' ' + matrix);
+
+        // 'defs' -> 'g' -> 'image'
+        QByteArray byteArray;
+        QBuffer buffer(&byteArray);
+        m_temp_image.save(&buffer, "PNG");
+        QDomElement img = document.createElement("image");
+        img.setAttribute("width",m_temp_image.width());
+        img.setAttribute("height",m_temp_image.height());
+        img.setAttribute("xlink:href",QString("data:image/png;base64,")+byteArray.toBase64());
+        g.appendChild(img);
+    }
     return document;
 }
 
@@ -417,6 +483,32 @@ void PhotoItem::dropEvent(QGraphicsSceneDragDropEvent * event)
 
     this->setHighlightItem(false);
     event->setAccepted( !img.isNull() );
+}
+
+void PhotoItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
+{
+    if (!event->modifiers() & Qt::ControlModifier || !event->buttons() & Qt::LeftButton)
+        AbstractPhoto::mousePressEvent(event);
+}
+
+void PhotoItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
+{
+    if (event->modifiers() & Qt::ControlModifier && event->buttons() & Qt::LeftButton)
+    {
+        QPointF p = event->pos() - event->lastPos();
+        d->m_brush_transform.translate(p.x(), p.y());
+        d->m_complete_path_transform.translate(p.x(), p.y());
+        m_complete_path.translate(p);
+        this->update();
+    }
+    else
+        AbstractPhoto::mouseMoveEvent(event);
+}
+
+void PhotoItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+{
+    if (!event->modifiers() & Qt::ControlModifier || !event->buttons() & Qt::LeftButton)
+        AbstractPhoto::mouseReleaseEvent(event);
 }
 
 QImage & PhotoItem::image()
@@ -510,10 +602,12 @@ void PhotoItem::fitToRect(const QRect & rect)
 
 void PhotoItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
+    painter->fillPath(itemOpaqueArea(), EMPTY_FILL_COLOR);
     if (!m_temp_image.isNull())
     {
         QBrush b(this->m_temp_image);
-        painter->fillPath(itemOpaqueArea(), b);
+        b.setTransform(d->m_brush_transform);
+        painter->fillPath(itemOpaqueArea() & m_complete_path, b);
     }
     AbstractPhoto::paint(painter, option, widget);
 
@@ -542,6 +636,11 @@ QtAbstractPropertyBrowser * PhotoItem::propertyBrowser()
     return 0; /// TODO
 }
 
+bool PhotoItem::isEmpty() const
+{
+    return d->m_image.isNull();
+}
+
 void PhotoItem::setupItem(const QImage & image)
 {
     if (image.isNull())
@@ -564,6 +663,7 @@ void PhotoItem::setupItem(const QImage & image)
 void PhotoItem::recalcShape()
 {
     m_complete_path = m_image_path;
+    d->m_brush_transform = QTransform();
 }
 
 bool PhotoItem::highlightItem()

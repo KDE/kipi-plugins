@@ -131,6 +131,7 @@ namespace KIPIPhotoLayoutsEditor
         public Q_SLOTS:
 
             void removeSelectedItems();
+            void changeSelectedImage();
             void setGrid(double x, double y);
             void setHorizontalGrid(double x);
             void setVerticalGrid(double y);

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "Scene.moc"
+#include "Scene.h"
 
 #include "global.h"
 #include "RotationWidgetItem.h"
@@ -37,6 +37,9 @@
 #include "ImageLoadingThread.h"
 #include "ProgressEvent.h"
 #include "CanvasLoadingThread.h"
+#include "PhotoItem.h"
+
+#include "imagedialog.h"
 
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -651,6 +654,27 @@ void Scene::removeSelectedItems()
 }
 
 //#####################################################################################################
+void Scene::changeSelectedImage()
+{
+    QList<AbstractPhoto*> items = selectedItems();
+    if (items.count() != 1)
+        return;
+    PhotoItem * item = dynamic_cast<PhotoItem*>(items.first());
+    if (!item)
+        return;
+
+    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrl(PhotoLayoutsEditor::instance(), PhotoLayoutsEditor::instance()->interface());
+    if (urls.count() != 1)
+        return;
+
+    ImageLoadingThread * ilt = new ImageLoadingThread(this);
+    ilt->setImageUrl(urls.first());
+    ilt->setMaximumProgress(1);
+    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), item, SLOT(imageLoaded(KUrl,QImage)));
+    ilt->start();
+}
+
+//#####################################################################################################
 void Scene::contextMenuEvent(QGraphicsSceneMouseEvent * event)
 {
     QMenu menu;
@@ -659,6 +683,16 @@ void Scene::contextMenuEvent(QGraphicsSceneMouseEvent * event)
     QList<AbstractPhoto*> items = this->selectedItems();
     if (items.count())
     {
+        if (items.count() == 1)
+        {
+            PhotoItem * item = dynamic_cast<PhotoItem*>(items.first());
+            if (item)
+            {
+                QAction * removeAction = menu.addAction( i18n("Change item's image") );
+                connect(removeAction, SIGNAL(triggered()), this, SLOT(changeSelectedImage()));
+            }
+        }
+
         QAction * removeAction = menu.addAction( i18np("Delete selected item", "Delete selected items", items.count()) );
         connect(removeAction, SIGNAL(triggered()), this, SLOT(removeSelectedItems()));
         menu.addSeparator();
@@ -815,7 +849,8 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
         if (d->m_pressed_object)
             d->sendMoveEventToItem(d->m_pressed_object, event);
 
-        if (m_interaction_mode & Moving)
+        if (m_interaction_mode & Moving &&
+                !(event->modifiers() & Qt::ControlModifier))
         {
             // Selecting pressed item
             event->setAccepted(d->selectPressed());

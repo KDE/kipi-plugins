@@ -38,6 +38,10 @@
       widgets/dialogs/CanvasSizeDialog.cpp
       widgets/dialogs/GridSetupDialog.cpp
       widgets/dialogs/ImageFileDialog.cpp
+      widgets/dialogs/NewCanvasDialog.cpp
+      widgets/dialogs/CanvasSizeWidget.cpp
+      widgets/dialogs/TemplatesModel.cpp
+      widgets/dialogs/TemplatesView.cpp
       widgets/extra/PatternsComboBox.cpp
       widgets/extra/PLEStatusBar.cpp
       widgets/layers/LayersTree.cpp
@@ -154,6 +158,7 @@
                       ${KIPI_INCLUDE_DIR})
 
   ADD_SUBDIRECTORY( ./resources/app )
+  ADD_SUBDIRECTORY( ./data )
 
   ADD_DEFINITIONS( -Wall )
 

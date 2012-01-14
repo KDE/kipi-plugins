@@ -334,6 +334,32 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         }
     }
 
+    if (element.firstChildElement().tagName() == "g")
+    {
+        element = element.firstChildElement();
+        QString transform = element.attribute("transform");
+        if (!transform.isEmpty())
+        {
+            QRegExp rot("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)");
+            if (rot.indexIn(transform) >= 0)
+            {
+                QStringList list = rot.capturedTexts();
+                QString matrix = list.at(0);
+                matrix.remove(matrix.length()-1,1).remove(0,7);
+                list = matrix.split(',');
+                QString m11 = list.at(0);
+                QString m12 = list.at(1);
+                QString m21 = list.at(2);
+                QString m22 = list.at(3);
+                QString m31 = list.at(4);
+                QString m32 = list.at(5);
+                this->setTransform(QTransform(m11.toDouble(), m12.toDouble(), 0,
+                                              m21.toDouble(), m22.toDouble(), 0,
+                                              m31.toDouble(), m32.toDouble(), 1));
+            }
+        }
+    }
+
     // ID & name
     d->m_id = element.attribute("id");
     d->setName(element.attribute("name"));
@@ -401,7 +427,8 @@ QString AbstractPhoto::name() const
 
 void AbstractPhoto::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * /*widget*/)
 {
-    bordersGroup()->paint(painter, option);
+    if (d->m_borders_group)
+        d->m_borders_group->paint(painter, option);
 }
 
 QVariant AbstractPhoto::itemChange(GraphicsItemChange change, const QVariant & value)
@@ -518,7 +545,8 @@ void AbstractPhoto::refresh()
     this->setPos(d->m_pos);
     this->setTransform(d->m_transform);
     this->refreshItem();
-    d->m_borders_group->refresh();
+    if (d->m_borders_group)
+        d->m_borders_group->refresh();
     emit changed();
 }
 

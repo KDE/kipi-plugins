@@ -42,10 +42,11 @@ PhotoItemLoader::PhotoItemLoader(PhotoItem * item, QDomElement & element, QObjec
 
 void PhotoItemLoader::run()
 {
-    QDomElement e = this->element();
     PhotoItem * item = (PhotoItem*) this->item();
     ProgressObserver * observer = this->observer();
     AbstractPhotoItemLoader::run();
+
+    QDomElement e = this->element();
 
     // Gets data field
     QDomElement defs = e.firstChildElement("defs");
@@ -69,6 +70,32 @@ void PhotoItemLoader::run()
     item->m_image_path = KIPIPhotoLayoutsEditor::pathFromSvg(path);
     if (item->m_image_path.isEmpty())
         this->exit(1);
+
+    // transform
+    QDomElement transform = path.nextSiblingElement("transform");
+    if (!transform.isNull())
+    {
+        item->d->m_brush_transform = QTransform();
+        QRegExp rot("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)");
+        if (rot.indexIn(transform.attribute("matrix")) >= 0)
+        {
+            QStringList list = rot.capturedTexts();
+            QString matrix = list.at(0);
+            matrix.remove(matrix.length()-1,1).remove(0,7);
+            list = matrix.split(',');
+            QString m11 = list.at(0);
+            QString m12 = list.at(1);
+            QString m21 = list.at(2);
+            QString m22 = list.at(3);
+            QString m31 = list.at(4);
+            QString m32 = list.at(5);
+            item->d->m_brush_transform *= QTransform(m11.toDouble(), m12.toDouble(), 0,
+                                                     m21.toDouble(), m22.toDouble(), 0,
+                                                     m31.toDouble(), m32.toDouble(), 1);
+        }
+        qDebug() << item->d->m_brush_transform;
+    }
+    qDebug() << item->d->m_brush_transform;
 
     // m_pixmap_original
     if (observer)

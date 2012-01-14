@@ -24,7 +24,7 @@
  * ============================================================ */
 
 #include "photolayoutseditor_p.h"
-#include "photolayoutseditor.moc"
+#include "photolayoutseditor.h"
 
 // Qt includes
 
@@ -85,6 +85,7 @@
 #include "ProgressEvent.h"
 #include "BorderDrawerInterface.h"
 #include "BorderDrawersLoader.h"
+#include "NewCanvasDialog.h"
 
 // Q_*_RESOURCE cannot be used in a namespace
 inline void initIconsResource() { Q_INIT_RESOURCE(icons); }
@@ -396,7 +397,7 @@ void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)
     this->prepareSignalsConnections();
 }
 
-void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl)
+void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl, bool isTemplate)
 {
     if (m_canvas)
     {
@@ -410,12 +411,14 @@ void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl)
     m_canvas = Canvas::fromSvg(document);
     if (m_canvas)
     {
-        m_canvas->setFile(fileUrl);
+        if (!isTemplate)
+        {
+            m_canvas->setFile(fileUrl);
+            // Adds recent open file
+            this->addRecentFile(m_canvas->file());
+        }
         m_canvas->setParent(d->centralWidget);
         this->prepareSignalsConnections();
-
-        // Adds recent open file
-        this->addRecentFile(m_canvas->file());
     }
     else
     {
@@ -466,18 +469,29 @@ void PhotoLayoutsEditor::prepareSignalsConnections()
 
 void PhotoLayoutsEditor::open()
 {
-    CanvasSizeDialog * canvasSizeDialog = new CanvasSizeDialog(this);
-    canvasSizeDialog->setModal(true);
-    int result = canvasSizeDialog->exec();
+    NewCanvasDialog * dialog = new NewCanvasDialog(this);
+    dialog->setModal(true);
 
-    CanvasSize size = canvasSizeDialog->canvasSize();
-    if (result == KDialog::Accepted && size.isValid())
+    int result = dialog->exec();
+    if (result != KDialog::Accepted)
+        return;
+
+    QString tmp;
+    if (dialog->hasTemplateSelected() && !(tmp = dialog->templateSelected()).isEmpty())
     {
-        closeDocument();
-        createCanvas(size);
-        refreshActions();
+        open(KUrl(dialog->templateSelected()), true);
     }
-    delete canvasSizeDialog;
+    else
+    {
+        CanvasSize size = dialog->canvasSize();
+        if (size.isValid())
+        {
+            closeDocument();
+            createCanvas(size);
+            refreshActions();
+        }
+    }
+    delete dialog;
 }
 
 void PhotoLayoutsEditor::openDialog()
@@ -492,7 +506,7 @@ void PhotoLayoutsEditor::openDialog()
         open(d->fileDialog->selectedUrl());
 }
 
-void PhotoLayoutsEditor::open(const KUrl & fileUrl)
+void PhotoLayoutsEditor::open(const KUrl & fileUrl, bool isTemplate)
 {
     if (m_canvas && m_canvas->file() == fileUrl)
         return;
@@ -500,7 +514,7 @@ void PhotoLayoutsEditor::open(const KUrl & fileUrl)
     if (fileUrl.isValid())
     {
         closeDocument();
-        createCanvas(fileUrl);
+        createCanvas(fileUrl, isTemplate);
         refreshActions();
     }
 }
@@ -509,7 +523,7 @@ void PhotoLayoutsEditor::save()
 {
     if (!m_canvas)
         return;
-    if (m_canvas->file().fileName().isEmpty())
+    if (!m_canvas->file().isValid() || m_canvas->file().fileName().isEmpty())
         saveAs();
     else
         saveFile();

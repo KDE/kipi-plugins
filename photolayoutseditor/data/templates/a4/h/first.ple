@@ -1,0 +1,60 @@
+<!DOCTYPE  svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="297mm" version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842 595" height="210mm" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="tiny">
+ <page xmlns="http://coder89.pl/ple" width="72" unit="px/in" height="72"/>
+ <g width="842" height="595" id="Scene">
+  <g class="background">
+   <g id="background">
+    <defs>
+     <type>color</type>
+    </defs>
+    <rect width="842" x="0" opacity="0" y="0" fill="#000000" height="595"/>
+   </g>
+  </g>
+  <g class="PhotoItem" id="2fc1430" name="Sesja V.png" transform="translate(27.1429,25.7143) matrix(0.645064,0,0,0.645064,0,0)">
+   <defs id="data_2fc1430">
+    <clipPath id="clipPath_2fc1430">
+     <path d="M 0 0 L 809 0 L 809 423 L 0 423 L 0 0 z" fill="#ff0000" opacity="100" />
+    </clipPath>
+    <ple:data xmlns:ple="http://coder89.pl/ple">
+     <effects/>
+     <crop_path/>
+    </ple:data>
+    <g id="vis_data_2fc1430">
+     <g class="borders"/>
+    </g>
+   </defs>
+   <g>
+    <path d="M 0 0 L 809 0 L 809 423 L 0 423 L 0 0 z" fill="#ff0000" opacity="100" />
+   </g>
+   <defs class="data">
+    <ple:data xmlns:ple="http://coder89.pl/ple">
+     <path class="m_image_path" d="M 0 0 L 809 0 L 809 423 L 0 423 L 0 0 z"/>
+    </ple:data>
+   </defs>
+  </g>
+  <g class="PhotoItem" id="32f4d50" name="Sesja V.png 2" transform="translate(377.143,338.571)">
+  <g transform="matrix(0.517055,0,0,0.517055,0,0)">
+   <defs id="data_32f4d50">
+    <clipPath id="clipPath_32f4d50">
+     <path d="M 0 0 L 809 0 L 809 423 L 0 423 L 0 0 z" fill="#ff0000" opacity="100" />
+    </clipPath>
+    <ple:data xmlns:ple="http://coder89.pl/ple">
+     <effects/>
+     <crop_path/>
+    </ple:data>
+    <g id="vis_data_32f4d50">
+     <g class="borders"/>
+    </g>
+   </defs>
+   <g>
+    <path d="M 0 0 L 809 0 L 809 423 L 0 423 L 0 0 z" fill="#ff0000" opacity="100" />
+   </g>
+   <defs class="data">
+    <ple:data xmlns:ple="http://coder89.pl/ple">
+     <path class="m_image_path" d="M 0 0 L 809 0 L 809 423 L 0 423 L 0 0 z"/>
+    </ple:data>
+   </defs>
+   </g>
+  </g>
+ </g>
+</svg>
