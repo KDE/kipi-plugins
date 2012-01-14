@@ -625,9 +625,12 @@ void CanvasEditTool::setupGUI()
 
         SceneBorder * border = scene->border();
         d->m_border_image = border->image();
-        QPixmap tempPX = QPixmap::fromImage(d->m_border_image.scaled(QSize(150,150), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        d->border_image_label->setIcon(QIcon(tempPX));
-        d->border_image_label->setIconSize(tempPX.size());
+        if (!d->m_border_image.isNull())
+        {
+            QPixmap tempPX = QPixmap::fromImage(d->m_border_image.scaled(QSize(150,150), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            d->border_image_label->setIcon(QIcon(tempPX));
+            d->border_image_label->setIconSize(tempPX.size());
+        }
     }
 }
 
@@ -651,9 +654,12 @@ void CanvasEditTool::updateWidgets()
         return;
 
     d->m_border_image = border->image();
-    QPixmap tempPX = QPixmap::fromImage(d->m_border_image.scaled(QSize(150,150), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    d->border_image_label->setIcon(QIcon(tempPX));
-    d->border_image_label->setIconSize(tempPX.size());
+    if (!d->m_border_image.isNull())
+    {
+        QPixmap tempPX = QPixmap::fromImage(d->m_border_image.scaled(QSize(150,150), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        d->border_image_label->setIcon(QIcon(tempPX));
+        d->border_image_label->setIconSize(tempPX.size());
+    }
 
     this->hold_update = true;
 
