@@ -112,19 +112,22 @@ void CanvasLoadingThread::run()
     QCoreApplication::processEvents();
 
     // Background
-    ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
-    actionUpdateEvent->setData(ProgressEvent::ActionUpdate, i18n("Loading background...") );
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
-    QCoreApplication::processEvents();
-
-    SceneBackgroundLoader * loader = new SceneBackgroundLoader(d->background.first, d->background.second);
-    loader->start();
-    loader->wait();
-
-    ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
-    progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, 1/((double)d->data.count()+2) );
-    QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
-    QCoreApplication::processEvents();
+    {
+        ProgressEvent * actionUpdateEvent = new ProgressEvent(this);
+        actionUpdateEvent->setData(ProgressEvent::ActionUpdate, i18n("Loading background...") );
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
+        QCoreApplication::processEvents();
+        if (d->background.first)
+        {
+            SceneBackgroundLoader * loader = new SceneBackgroundLoader(d->background.first, d->background.second);
+            loader->start();
+            loader->wait();
+        }
+        ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
+        progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, 1/((double)d->data.count()+2) );
+        QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
+        QCoreApplication::processEvents();
+    }
 
     // Items
     int count = d->data.count();
@@ -164,11 +167,12 @@ void CanvasLoadingThread::run()
         actionUpdateEvent->setData(ProgressEvent::ActionUpdate, i18n("Loading border...") );
         QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), actionUpdateEvent);
         QCoreApplication::processEvents();
-
-        SceneBorderLoader * borderLoader = new SceneBorderLoader(d->border.first, d->border.second);
-        borderLoader->start();
-        borderLoader->wait();
-
+        if (d->border.first)
+        {
+            SceneBorderLoader * borderLoader = new SceneBorderLoader(d->border.first, d->border.second);
+            borderLoader->start();
+            borderLoader->wait();
+        }
         ProgressEvent * progressUpdateEvent = new ProgressEvent(this);
         progressUpdateEvent->setData(ProgressEvent::ProgressUpdate, 1/((double)d->data.count()+2) );
         QCoreApplication::postEvent(PhotoLayoutsEditor::instance(), progressUpdateEvent);
