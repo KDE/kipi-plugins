@@ -103,6 +103,15 @@ namespace KIPIPhotoLayoutsEditor
               */
             virtual QDomDocument toSvg() const;
 
+            /** Converts item data into SVG format as a template item
+              * Each derived class should has its own implementation of this method to save its specific data.
+              * \note You should save everything inside your <defs> tag because \class AbstractPhoto's implementation
+              * of \fn toSvg() saves presentation data.
+              * \note In your implementation you have to call this method to save presentation data in correct format,
+              * independendly to your class.
+              */
+            virtual QDomDocument toTemplateSvg() const;
+
             /// Reads item data from SVG structure
             bool fromSvg(QDomElement & element);
 
@@ -167,6 +176,15 @@ namespace KIPIPhotoLayoutsEditor
               * Data will be also cut to fit their visual shape.
               */
             virtual QDomDocument svgVisibleArea() const = 0;
+
+            /** Returns SVG visible part of data.
+              * This is a pure virtual method which should returns QDomElement with part of SVG document
+              * with visible data. For example it could be <image> tag if the item describes QGraphicsItem with image
+              * or <text> tag if the item is the QGraphicsItem drawing text.
+              * This data also should include applied all effects because this data will be directly presented to the user.
+              * Data will be also cut to fit their visual shape.
+              */
+            virtual QDomDocument svgTemplateArea() const = 0;
 
             // Draws abstract item presentation
             virtual void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);

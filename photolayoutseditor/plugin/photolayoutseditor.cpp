@@ -254,6 +254,10 @@ void PhotoLayoutsEditor::setupActions()
     d->saveAsAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_S));
     actionCollection()->addAction("save_as", d->saveAsAction);
     //------------------------------------------------------------------------
+    d->saveAsTemplateAction = new KAction(i18nc("Saves canvas as a template file...", "Save As Template..."), actionCollection());
+    connect(d->saveAsTemplateAction, SIGNAL(triggered()), this, SLOT(saveAsTemplate()));
+    actionCollection()->addAction("save_as_template", d->saveAsTemplateAction);
+    //------------------------------------------------------------------------
     d->exportFileAction = new KAction(i18nc("Export current frame layout to image file...", "Export..."), actionCollection());
     d->exportFileAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_E));
     connect(d->exportFileAction, SIGNAL(triggered()), this, SLOT(exportFile()));
@@ -318,6 +322,7 @@ void PhotoLayoutsEditor::refreshActions()
         d->saveAction->setEnabled(isEnabledForCanvas && !m_canvas->isSaved());
     }
     d->saveAsAction->setEnabled(isEnabledForCanvas);
+    d->saveAsTemplateAction->setEnabled(isEnabledForCanvas);
     d->exportFileAction->setEnabled(isEnabledForCanvas);
     d->printPreviewAction->setEnabled(isEnabledForCanvas);
     d->printAction->setEnabled(isEnabledForCanvas);
@@ -541,6 +546,25 @@ void PhotoLayoutsEditor::saveAs()
     {
         KUrl url = d->fileDialog->selectedUrl();
         saveFile(url);
+    }
+}
+
+void PhotoLayoutsEditor::saveAsTemplate()
+{
+    if (!d->fileDialog)
+        d->fileDialog = new KFileDialog(KUrl(), "*.ple|Photo Layouts Editor files", this);
+    d->fileDialog->setOperationMode(KFileDialog::Saving);
+    d->fileDialog->setMode(KFile::File);
+    d->fileDialog->setKeepLocation(true);
+    int result = d->fileDialog->exec();
+    if (result == KFileDialog::Accepted)
+    {
+        KUrl url = d->fileDialog->selectedUrl();
+        if (m_canvas)
+            m_canvas->saveTemplate(url);
+        else
+            KMessageBox::error(this,
+                               i18n("There is nothing to save."));
     }
 }
 

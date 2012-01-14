@@ -35,6 +35,7 @@ namespace KIPIPhotoLayoutsEditor
     class PhotoItemPixmapChangeCommand;
     class PhotoItemUrlChangeCommand;
     class PhotoItemImagePathChangeCommand;
+    class PhotoItemImageMovedCommand;
     class PhotoItemLoader;
 
     class PhotoItem : public AbstractPhoto
@@ -49,6 +50,9 @@ namespace KIPIPhotoLayoutsEditor
 
             /// Convert photo item to SVG format
             virtual QDomDocument toSvg() const;
+
+            /// Convert photo item to SVG template format
+            virtual QDomDocument toTemplateSvg() const;
 
             /// Create Photo item from SVG format code
             static PhotoItem * fromSvg(QDomElement & element);
@@ -107,6 +111,9 @@ namespace KIPIPhotoLayoutsEditor
 
             /// Converts item data to SVG format
             virtual QDomDocument svgVisibleArea() const;
+
+            /// Converts item data to SVG format
+            virtual QDomDocument svgTemplateArea() const;
 
             virtual void dragEnterEvent(QGraphicsSceneDragDropEvent * event);
             virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
@@ -171,6 +178,7 @@ namespace KIPIPhotoLayoutsEditor
                 friend class PhotoItemLoader;
                 friend class PhotoItemPixmapChangeCommand;
                 friend class PhotoItemUrlChangeCommand;
+                friend class PhotoItemImageMovedCommand;
             };
             PhotoItemPrivate * d;
             friend class PhotoItemPrivate;
@@ -185,6 +193,7 @@ namespace KIPIPhotoLayoutsEditor
         friend class PhotoItemPixmapChangeCommand;
         friend class PhotoItemUrlChangeCommand;
         friend class PhotoItemImagePathChangeCommand;
+        friend class PhotoItemImageMovedCommand;
         friend class PhotoItemLoader;
     };
 }

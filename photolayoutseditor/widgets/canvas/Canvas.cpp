@@ -852,7 +852,6 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
             if (sizeRegExp.exactMatch(width) &&
                     sizeRegExp.exactMatch(height) &&
                     width.right(2) == height.right(2) &&
-                    pageElement.namespaceURI() == KIPIPhotoLayoutsEditor::uri() &&
                     resRegExp.exactMatch(xResolution) &&
                     resRegExp.exactMatch(yResolution) &&
                     CanvasSize::resolutionUnit(resUnit) != CanvasSize::UnknownResolutionUnit)
@@ -971,6 +970,24 @@ void Canvas::save(const KUrl & fileUrl, bool setAsDefault)
     CanvasSavingThread * thread = new CanvasSavingThread(this);
     connect(thread, SIGNAL(saved()), this, SLOT(savingFinished()));
     thread->save(this, m_file);
+}
+
+/** ###########################################################################################################################
+ * Save canvas as a template
+ #############################################################################################################################*/
+void Canvas::saveTemplate(const KUrl & fileUrl)
+{
+    if (fileUrl.isEmpty() || !fileUrl.isValid())
+    {
+        KMessageBox::detailedError(0,
+                                   i18n("Can't save canvas!"),
+                                   i18n("Invalid file path."));
+        return;
+    }
+
+    CanvasSavingThread * thread = new CanvasSavingThread(this);
+    connect(thread, SIGNAL(saved()), this, SLOT(savingFinished()));
+    thread->saveAsTemplate(this, fileUrl);
 }
 
 /** ###########################################################################################################################

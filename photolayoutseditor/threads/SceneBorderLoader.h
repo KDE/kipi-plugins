@@ -23,53 +23,30 @@
  *
  * ============================================================ */
 
-#ifndef CANVASSAVINGTHREAD_H
-#define CANVASSAVINGTHREAD_H
+#ifndef SCENEBORDERLOADER_H
+#define SCENEBORDERLOADER_H
 
 #include <QThread>
-
-#include <kurl.h>
-
-#include "ProgressObserver.h"
+#include <QDomDocument>
 
 namespace KIPIPhotoLayoutsEditor
 {
-    class Canvas;
-    class CanvasSavingThread : public QThread, public ProgressObserver
+    class SceneBorder;
+    class SceneBorderLoader : public QThread
     {
-            Q_OBJECT
-
         public:
 
-            explicit CanvasSavingThread(QObject* parent = 0);
-            void save(Canvas * canvas, const KUrl& url);
-            void saveAsTemplate(Canvas * canvas, const KUrl& url);
-            virtual void progresChanged(double progress);
-            virtual void progresName(const QString& name);
-
-        Q_SIGNALS:
-
-            void saved();
+            explicit SceneBorderLoader(SceneBorder * border, QDomElement & element, QObject * parent = 0);
 
         protected:
 
             virtual void run();
 
-        private Q_SLOTS:
-
-            void bytesWritten(qint64);
-
         private:
 
-            void sendProgressUpdate(double v);
-            void sendActionUpdate(const QString& str);
-
-        private:
-
-            Canvas* m_canvas;
-            KUrl    m_url;
-            bool    m_template;
+            SceneBorder * m_border;
+            QDomElement & m_element;
     };
 }
 
-#endif // CANVASSAVINGTHREAD_H
+#endif // SCENEBORDERLOADER_H

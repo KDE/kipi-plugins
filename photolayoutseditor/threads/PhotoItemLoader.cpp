@@ -109,8 +109,8 @@ void PhotoItemLoader::run()
     if (!(imageAttribute = imageElement.text()).isEmpty())
     {
         item->d->m_image = QImage::fromData( QByteArray::fromBase64(imageAttribute.toAscii()) );
-        if (item->d->m_image.isNull())
-            this->exit(1);
+        //if (item->d->m_image.isNull())
+        //    this->exit(1);
     }
     // Try to find file from path attribute
     else if ( !(imageAttribute = PhotoItem::PhotoItemPrivate::locateFile( imageElement.attribute("xlink:href") )).isEmpty() )

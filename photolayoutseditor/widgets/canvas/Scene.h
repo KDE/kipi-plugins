@@ -44,6 +44,7 @@ namespace KIPIPhotoLayoutsEditor
     // My classes declarations
     class Canvas;
     class SceneBackground;
+    class SceneBorder;
     class MousePressListener;
     class LayersModel;
     class LayersSelectionModel;
@@ -88,6 +89,7 @@ namespace KIPIPhotoLayoutsEditor
             ~Scene();
 
             SceneBackground * background();
+            SceneBorder * border();
 
             LayersModel * model() const;
             LayersSelectionModel * selectionModel() const;
@@ -101,6 +103,8 @@ namespace KIPIPhotoLayoutsEditor
             void setSelectionMode(SelectionMode selectionMode);
             bool isSelectionVisible();
             QDomDocument toSvg(ProgressObserver * observer);
+            QDomDocument toTemplateSvg(ProgressObserver * observer);
+            QDomDocument toSvg(ProgressObserver * observer, bool asTemplate);
             static Scene * fromSvg(QDomElement & svgImage);
             void addSelectingFilter(const QMetaObject & classMeta);
             void clearSelectingFilters();

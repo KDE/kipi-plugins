@@ -38,6 +38,7 @@
 #include "ProgressEvent.h"
 #include "CanvasLoadingThread.h"
 #include "PhotoItem.h"
+#include "SceneBorder.h"
 
 #include "imagedialog.h"
 
@@ -97,6 +98,8 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     {
         // Background of the scene
         m_background = new SceneBackground(m_scene);
+        // Border of the scene
+        m_border = new SceneBorder(m_scene);
     }
 
     QList<QGraphicsItem*> itemsAtPosition(const QPointF & scenePos, QWidget * widget)
@@ -183,6 +186,8 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     LayersSelectionModel * selection_model;
     // Background item
     SceneBackground * m_background;
+    // Border item
+    SceneBorder * m_border;
 
     // Used for selecting items
     void deselectSelected()
@@ -542,6 +547,12 @@ Scene::~Scene()
 SceneBackground * Scene::background()
 {
     return d->m_background;
+}
+
+//#####################################################################################################
+SceneBorder * Scene::border()
+{
+    return d->m_border;
 }
 
 //#####################################################################################################
@@ -1319,6 +1330,18 @@ qreal Scene::gridVerticalDistance() const
 //#####################################################################################################
 QDomDocument Scene::toSvg(ProgressObserver * observer)
 {
+    return toSvg(observer, false);
+}
+
+//#####################################################################################################
+QDomDocument Scene::toTemplateSvg(ProgressObserver * observer)
+{
+    return toSvg(observer, true);
+}
+
+//#####################################################################################################
+QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
+{
     QDomDocument document;
 
     QDomElement sceneElement = document.createElement("g");
@@ -1347,11 +1370,21 @@ QDomDocument Scene::toSvg(ProgressObserver * observer)
         if (photo)
         {
             if (observer) observer->progresName( i18n("Saving %1...", photo->name()) );
-            QDomDocument photoItemDocument = photo->toSvg();
+            QDomDocument photoItemDocument = asTemplate ? photo->toTemplateSvg() : photo->toSvg();
             sceneElement.appendChild( photoItemDocument.documentElement() );
         }
         if (observer) observer->progresChanged((double)i++ / (double)(itemsList.count()+1.0));
     }
+
+    //--------------------------------------------------------
+
+    if (observer) observer->progresName( i18n("Saving border...") );
+    QDomElement border = document.createElement("g");
+    border.setAttribute("class", "border");
+    border.appendChild(d->m_border->toSvg(document));
+    sceneElement.appendChild(border);
+    if (observer) observer->progresChanged(1.0 / (double)(itemsList.count()+1.0));
+
     return document;
 }
 
@@ -1395,6 +1428,11 @@ Scene * Scene::fromSvg(QDomElement & sceneElement)
         else if (itemClass == "background")
         {
             thread->addBackground(result->d->m_background, element);
+            continue;
+        }
+        else if (itemClass == "border")
+        {
+            thread->addBorder(result->d->m_border, element);
             continue;
         }
         else

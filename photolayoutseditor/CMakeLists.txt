@@ -35,6 +35,7 @@
       widgets/canvas/ScalingWidgetItem.cpp
       widgets/canvas/Scene.cpp
       widgets/canvas/SceneBackground.cpp
+      widgets/canvas/SceneBorder.cpp
       widgets/dialogs/CanvasSizeDialog.cpp
       widgets/dialogs/GridSetupDialog.cpp
       widgets/dialogs/ImageFileDialog.cpp
@@ -100,6 +101,7 @@
       threads/ImageLoadingThread.cpp
       threads/PhotoItemLoader.cpp
       threads/SceneBackgroundLoader.cpp
+      threads/SceneBorderLoader.cpp
       threads/TextItemLoader.cpp
 )
 

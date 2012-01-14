@@ -54,6 +54,7 @@
 #include "SceneBackground.h"
 #include "MousePressListener.h"
 #include "PatternsComboBox.h"
+#include "SceneBorder.h"
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -102,6 +103,11 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
         background_image_empty_pixmap.fill(Qt::transparent);
         QPainter p(&background_image_empty_pixmap);
         p.drawText(background_image_empty_pixmap.rect(), Qt::AlignCenter, i18n("Click here to set an image"));
+
+        border_image_empty_pixmap = QPixmap(150, 100);
+        border_image_empty_pixmap.fill(Qt::transparent);
+        QPainter p2(&border_image_empty_pixmap);
+        p2.drawText(border_image_empty_pixmap.rect(), Qt::AlignCenter, i18n("Click here to set an image"));
     }
 
     void setImageWidgetsEnabled(bool enabled)
@@ -144,6 +150,9 @@ class KIPIPhotoLayoutsEditor::CanvasEditToolPrivate
     KColorButton * background_image_color;
     QImage m_image;
 
+    QPixmap border_image_empty_pixmap;
+    QPushButton * border_image_label;
+    QImage m_border_image;
 
     QWidget * background_pattern_widget;
     KColorButton * background_pattern_color1;
@@ -347,6 +356,41 @@ void CanvasEditTool::imageUrlRequest()
     startUrl = fd.baseUrl();
 }
 
+void CanvasEditTool::borderImageUrlRequest()
+{
+    static KUrl startUrl("~");
+    KFileDialog fd(startUrl, "", 0);
+    fd.setOperationMode(KFileDialog::Opening);
+    fd.setMode(KFile::File);
+    if (fd.exec() != KFileDialog::Accepted)
+        return;
+
+    bool valid = false;
+    QImageReader ir(fd.selectedFile());
+    if (ir.canRead())
+    {
+        if (ir.read(&d->m_border_image))
+        {
+            QPixmap tempPX = QPixmap::fromImage(d->m_border_image.scaled(QSize(150,150), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            d->border_image_label->setIcon(QIcon(tempPX));
+            d->border_image_label->setIconSize(tempPX.size());
+
+            this->setImageBorder();
+            valid = true;
+        }
+    }
+
+    if (!valid)
+    {
+        KMessageBox::error(0,
+                           i18n("Invalid or unsupported image file."));
+        d->border_image_label->setIcon(QIcon(d->border_image_empty_pixmap));
+        d->border_image_label->setIconSize(d->border_image_empty_pixmap.size());
+    }
+
+    startUrl = fd.baseUrl();
+}
+
 void CanvasEditTool::imageScallingChanged(const QString & scallingName)
 {
     CanvasEditToolPrivate::ScallingType st = d->background_image_scalling_map.key(scallingName);
@@ -427,10 +471,34 @@ void CanvasEditTool::setPatternBackground()
                                     d->background_pattern_type->pattern());
 }
 
+void CanvasEditTool::setImageBorder()
+{
+    if (d->m_border_image.isNull() || this->hold_update)
+        return;
+
+    SceneBorder * border = scene()->border();
+    if (border)
+        border->setImage(d->m_border_image);
+}
+
 void CanvasEditTool::setupGUI()
 {
     QVBoxLayout * layout = new QVBoxLayout();
     this->setLayout(layout);
+
+    // Canvas border group
+    QGroupBox * borderGroup = new QGroupBox(i18n("Border"), this);
+    layout->addWidget(borderGroup);
+    QFormLayout * borderLayout = new QFormLayout();
+    borderGroup->setLayout(borderLayout);
+    {
+        d->border_image_label = new QPushButton(borderGroup);
+        borderLayout->addRow(d->border_image_label);
+        d->border_image_label->setFlat(true);
+        d->border_image_label->setFocusPolicy(Qt::NoFocus);
+        d->border_image_label->setIcon(QIcon(d->border_image_empty_pixmap));
+        d->border_image_label->setIconSize(d->border_image_empty_pixmap.size());
+    }
 
     // Canvas background group
     QGroupBox * backgroundGroup = new QGroupBox(i18n("Background"), this);
@@ -540,6 +608,7 @@ void CanvasEditTool::setupGUI()
     connect(d->background_pattern_color2, SIGNAL(changed(QColor)), this, SLOT(patternSecondColorChanged(QColor)));
     connect(d->background_pattern_type, SIGNAL(currentPatternChanged(Qt::BrushStyle)), this, SLOT(patternStyleChanged(Qt::BrushStyle)));
     connect(&(d->mouse_listener), SIGNAL(mousePressed(QPointF)), this, SLOT(readMousePosition(QPointF)));
+    connect(d->border_image_label, SIGNAL(clicked()), this, SLOT(borderImageUrlRequest()));
 
     if (scene())
     {
@@ -553,6 +622,12 @@ void CanvasEditTool::setupGUI()
             this->imageBackgroundSelected();
         else if (background->isPattern())
             this->patternBackgroundSelected();
+
+        SceneBorder * border = scene->border();
+        d->m_border_image = border->image();
+        QPixmap tempPX = QPixmap::fromImage(d->m_border_image.scaled(QSize(150,150), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        d->border_image_label->setIcon(QIcon(tempPX));
+        d->border_image_label->setIconSize(tempPX.size());
     }
 }
 
@@ -571,7 +646,17 @@ void CanvasEditTool::updateWidgets()
     if (!background)
         return;
 
+    SceneBorder * border = scene->border();
+    if (!border)
+        return;
+
+    d->m_border_image = border->image();
+    QPixmap tempPX = QPixmap::fromImage(d->m_border_image.scaled(QSize(150,150), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    d->border_image_label->setIcon(QIcon(tempPX));
+    d->border_image_label->setIconSize(tempPX.size());
+
     this->hold_update = true;
+
     if (background->isPattern())
     {
         d->background_widgets->setCurrentWidget(d->background_pattern_widget);

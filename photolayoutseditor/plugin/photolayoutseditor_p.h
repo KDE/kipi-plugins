@@ -63,6 +63,7 @@ namespace KIPIPhotoLayoutsEditor
                 openRecentFilesMenu(0),
                 saveAction(0),
                 saveAsAction(0),
+                saveAsTemplateAction(0),
                 exportFileAction(0),
                 printPreviewAction(0),
                 printAction(0),
@@ -95,6 +96,7 @@ namespace KIPIPhotoLayoutsEditor
                 Q_DELETE(openRecentFilesMenu)
                 Q_DELETE(saveAction)
                 Q_DELETE(saveAsAction)
+                Q_DELETE(saveAsTemplateAction)
                 Q_DELETE(exportFileAction)
                 Q_DELETE(printPreviewAction)
                 Q_DELETE(printAction)
@@ -132,6 +134,7 @@ namespace KIPIPhotoLayoutsEditor
             KRecentFilesAction *   openRecentFilesMenu;
             KAction *   saveAction;
             KAction *   saveAsAction;
+            KAction *   saveAsTemplateAction;
             KAction *   exportFileAction;
             KAction *   printPreviewAction;
             KAction *   printAction;

@@ -94,6 +94,9 @@ namespace KIPIPhotoLayoutsEditor
             /// Saves canvas state to SVG format file
             void save(const KUrl& file, bool setAsDefault = true);
 
+            /// Saves canvas state to SVG format file as a template file
+            void saveTemplate(const KUrl& file);
+
             /// Check if canvas is saved
             bool isSaved();
 

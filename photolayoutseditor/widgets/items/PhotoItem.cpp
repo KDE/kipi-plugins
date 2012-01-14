@@ -130,6 +130,58 @@ public:
         m_item->update();
     }
 };
+class KIPIPhotoLayoutsEditor::PhotoItemImageMovedCommand : public QUndoCommand
+{
+    PhotoItem * m_item;
+    QPointF translation;
+    bool done;
+    static PhotoItemImageMovedCommand * m_instance;
+    PhotoItemImageMovedCommand(PhotoItem * item, QUndoCommand * parent = 0) :
+        QUndoCommand(i18n("Image Position Change"), parent),
+        m_item(item),
+        done(true)
+    {}
+public:
+    static PhotoItemImageMovedCommand * instance(PhotoItem * item)
+    {
+        if (!m_instance)
+            m_instance = new PhotoItemImageMovedCommand(item);
+        return m_instance;
+    }
+    void translate(const QPointF & translation)
+    {
+        this->translation += translation;
+    }
+    virtual void redo()
+    {
+        if (done)
+            return;
+        m_item->d->m_brush_transform.translate(translation.x(), translation.y());
+        m_item->d->m_complete_path_transform.translate(translation.x(), translation.y());
+        m_item->m_complete_path.translate(translation);
+        m_item->update();
+        done = !done;
+    }
+    virtual void undo()
+    {
+        if (!done)
+            return;
+        m_item->d->m_brush_transform.translate(-translation.x(), -translation.y());
+        m_item->d->m_complete_path_transform.translate(-translation.x(), -translation.y());
+        m_item->m_complete_path.translate(-translation);
+        m_item->update();
+        done = !done;
+    }
+    static void post()
+    {
+        if (!m_instance)
+            return;
+        PLE_PostUndoCommand(m_instance);
+        m_instance = 0;
+    }
+};
+
+PhotoItemImageMovedCommand * PhotoItemImageMovedCommand::m_instance = 0;
 
 QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
 {
@@ -256,8 +308,6 @@ QDomDocument PhotoItem::toSvg() const
     transform.setAttribute("matrix", matrix);
     appNS.appendChild(transform);
 
-    qDebug() << matrix;
-
     if (!this->isEmpty())
     {
         QDomElement image = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "image");
@@ -295,6 +345,54 @@ QDomDocument PhotoItem::toSvg() const
     {
         itemElement.setAttribute("visibility", "hidden");
     }
+
+    return document;
+}
+
+QDomDocument PhotoItem::toTemplateSvg() const
+{
+    QDomDocument document = AbstractPhoto::toTemplateSvg();
+    QDomElement itemElement = document.firstChildElement();
+    itemElement.setAttribute("class", "PhotoItem");
+
+    // 'defs' tag
+    QDomElement defs = document.createElement("defs");
+    defs.setAttribute("class", "data");
+    itemElement.appendChild(defs);
+
+    // 'defs'-> ple:'data'
+    QDomElement appNS = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
+    appNS.setPrefix(KIPIPhotoLayoutsEditor::name());
+    defs.appendChild(appNS);
+
+    if (!m_image_path.isEmpty())
+    {
+        // 'defs'-> ple:'data' ->'path'
+        QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_image_path);
+        QDomElement path = document.firstChildElement("path");
+        path.setAttribute("class", "m_image_path");
+        path.setPrefix(KIPIPhotoLayoutsEditor::name());
+        appNS.appendChild(document.documentElement());
+    }
+
+    // 'defs'-> ple:'data' ->'transform'
+    QDomElement transform = document.createElement("transform");
+    transform.setPrefix(KIPIPhotoLayoutsEditor::name());
+    QString matrix = "matrix("+
+                     QString::number(this->transform().m11())+
+                     ','+
+                     QString::number(this->transform().m12())+
+                     ','+
+                     QString::number(this->transform().m21())+
+                     ','+
+                     QString::number(this->transform().m22())+
+                     ','+
+                     QString::number(this->transform().m31())+
+                     ','+
+                     QString::number(this->transform().m32())+
+                     ')';
+    transform.setAttribute("matrix", matrix);
+    appNS.appendChild(transform);
 
     return document;
 }
@@ -399,6 +497,45 @@ QDomDocument PhotoItem::svgVisibleArea() const
     return document;
 }
 
+QDomDocument PhotoItem::svgTemplateArea() const
+{
+    QDomDocument document;
+    if (!this->isEmpty())
+    {
+        // 'defs' -> 'g'
+        QDomElement g = document.createElement("g");
+        document.appendChild(g);
+        QTransform transform = d->m_brush_transform;
+        QString translate = "translate("+
+                            QString::number(this->pos().x())+
+                            ','+
+                            QString::number(this->pos().y())+
+                            ')';
+        QString matrix = "matrix("+
+                         QString::number(transform.m11())+
+                         ','+
+                         QString::number(transform.m12())+
+                         ','+
+                         QString::number(transform.m21())+
+                         ','+
+                         QString::number(transform.m22())+
+                         ','+
+                         QString::number(transform.m31())+
+                         ','+
+                         QString::number(transform.m32())+
+                         ')';
+        g.setAttribute("transform", translate + ' ' + matrix);
+
+        // 'defs' -> 'g' -> 'path'
+        QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_image_path);
+        QDomElement path = document.firstChildElement("path");
+        path.setAttribute("opacity", 100);
+        path.setAttribute("fill", "#ff0000");
+        g.appendChild(path);
+    }
+    return document;
+}
+
 void PhotoItem::dragEnterEvent(QGraphicsSceneDragDropEvent * event)
 {
     const QMimeData * mimeData = event->mimeData();
@@ -499,14 +636,19 @@ void PhotoItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
         d->m_brush_transform.translate(p.x(), p.y());
         d->m_complete_path_transform.translate(p.x(), p.y());
         m_complete_path.translate(p);
+        PhotoItemImageMovedCommand::instance(this)->translate(p);
         this->update();
     }
     else
+    {
+        PhotoItemImageMovedCommand::post();
         AbstractPhoto::mouseMoveEvent(event);
+    }
 }
 
 void PhotoItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 {
+    PhotoItemImageMovedCommand::post();
     if (!event->modifiers() & Qt::ControlModifier || !event->buttons() & Qt::LeftButton)
         AbstractPhoto::mouseReleaseEvent(event);
 }
