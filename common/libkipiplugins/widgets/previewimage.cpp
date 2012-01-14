@@ -54,16 +54,26 @@ static const qreal      selMargin = 8.0;
 static const QPointF    boundMargin(selMargin,selMargin);
 
 struct SelectionItem::SelectionItemPriv {
-    QPen       penDark;
-    QPen       penLight;
-    QRectF     rect;
-    qreal      maxX;
-    qreal      maxY;
-    bool       hasMaxX;
-    bool       hasMaxY;
-    bool       hasMax;
-    qreal      invZoom;
-    qreal      selMargin;
+    QPen        penDark;
+    QPen        penLight;
+    QPen        penAnchors;
+    QRectF      rect;
+    qreal       maxX;
+    qreal       maxY;
+    bool        hasMaxX;
+    bool        hasMaxY;
+    bool        hasMax;
+    qreal       invZoom;
+    qreal       selMargin;
+    QRectF      anchorTopLeft;
+    QRectF      anchorTopRight;
+    QRectF      anchorBottomLeft;
+    QRectF      anchorBottomRight;
+    QLineF      anchorTop;
+    QLineF      anchorBottom;
+    QLineF      anchorLeft;
+    QLineF      anchorRight;
+    bool        showAnchors;
 };
 
 SelectionItem::SelectionItem(QRectF rect)
@@ -78,6 +88,8 @@ SelectionItem::SelectionItem(QRectF rect)
     d->penDark.setStyle(Qt::SolidLine);
     d->penLight.setColor(Qt::white);
     d->penLight.setStyle(Qt::DashLine);
+    d->penAnchors.setColor(Qt::white);
+    d->penAnchors.setStyle(Qt::SolidLine);
 
     // FIXME We should probably use some standard KDE color here and not hard code it
     d->invZoom = 1;
@@ -98,6 +110,8 @@ void SelectionItem::saveZoom(qreal zoom)
     d->invZoom = 1 / zoom;
 
     d->selMargin = selMargin * d->invZoom;
+
+    updateAnchors();
 }
 
 void SelectionItem::setMaxRight(qreal maxX)
@@ -128,8 +142,13 @@ SelectionItem::Intersects SelectionItem::intersects(QPointF point)
         (point.y() < (d->rect.top()    - d->selMargin)) ||
         (point.y() > (d->rect.bottom() + d->selMargin)))
     {
+        d->showAnchors = false;
+        update();
         return None;
     }
+
+    d->showAnchors = true;
+    update();
 
     if (point.x() < (d->rect.left() + d->selMargin))
     {
@@ -187,6 +206,7 @@ void SelectionItem::setRect(QRectF rect)
             d->rect.setBottom(d->maxY);
         }
     }
+    updateAnchors();
 }
 
 QPointF SelectionItem::fixTranslation(QPointF dp)
@@ -227,7 +247,129 @@ void SelectionItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QW
 
     painter->setPen(d->penLight);
     painter->drawRect(d->rect);
+
+    if (d->showAnchors)
+    {
+        painter->setPen(d->penAnchors);
+        painter->setOpacity(0.4);
+        if (!d->anchorTop.isNull())
+        {
+            painter->drawLine(d->anchorTop);
+        }
+        if (!d->anchorBottom.isNull())
+        {
+            painter->drawLine(d->anchorBottom);
+        }
+        if (!d->anchorLeft.isNull())
+        {
+            painter->drawLine(d->anchorLeft);
+        }
+        if (!d->anchorRight.isNull())
+        {
+            painter->drawLine(d->anchorRight);
+        }
+        painter->setOpacity(0.4);
+        if (!d->anchorTopLeft.isNull())
+        {
+            painter->fillRect(d->anchorTopLeft, Qt::white);
+        }
+        if (!d->anchorTopRight.isNull())
+        {
+            painter->fillRect(d->anchorTopRight, Qt::white);
+        }
+        if (!d->anchorBottomLeft.isNull())
+        {
+            painter->fillRect(d->anchorBottomLeft, Qt::white);
+        }
+        if (!d->anchorBottomRight.isNull())
+        {
+            painter->fillRect(d->anchorBottomRight, Qt::white);
+        }
+    }
 }
+
+void SelectionItem::updateAnchors()
+{
+    QPointF moveDown(0.0, d->selMargin);
+    QPointF moveRight(d->selMargin, 0.0);
+    bool verticalCondition      = (d->rect.height() - 3 * d->selMargin) > 0;
+    bool horizontalCondition    = (d->rect.width()  - 3 * d->selMargin) > 0;
+    if (verticalCondition)
+    {
+        if (horizontalCondition)
+        {
+            d->anchorTop    = QLineF(d->rect.topLeft() + moveDown,
+                                     d->rect.topRight() + moveDown);
+            d->anchorBottom = QLineF(d->rect.bottomLeft() - moveDown,
+                                     d->rect.bottomRight() - moveDown);
+            d->anchorLeft   = QLineF(d->rect.topLeft() + moveRight,
+                                     d->rect.bottomLeft() + moveRight);
+            d->anchorRight  = QLineF(d->rect.topRight() - moveRight,
+                                     d->rect.bottomRight() - moveRight);
+
+            d->anchorTopLeft        = QRectF(d->rect.topLeft(),
+                                             d->rect.topLeft() + moveDown + moveRight);
+            d->anchorTopRight       = QRectF(d->rect.topRight() - moveRight,
+                                             d->rect.topRight() + moveDown);
+            d->anchorBottomLeft     = QRectF(d->rect.bottomLeft() - moveDown,
+                                             d->rect.bottomLeft() + moveRight);
+            d->anchorBottomRight    = QRectF(d->rect.bottomRight() - moveDown - moveRight,
+                                             d->rect.bottomRight());
+        }
+        else
+        {
+            // Only the top & bottom lines & middle line plus two corners are drawn
+            d->anchorTop    = QLineF(d->rect.topLeft() + moveDown,
+                                     d->rect.topRight() + moveDown);
+            d->anchorBottom = QLineF(d->rect.bottomLeft() - moveDown,
+                                     d->rect.bottomRight() - moveDown);
+            d->anchorLeft   = QLineF(d->rect.topLeft() + QPointF(d->rect.width() / 2.0, 0.0),
+                                     d->rect.bottomLeft() + QPointF(d->rect.width() / 2.0, 0.0));
+            d->anchorRight  = QLineF();
+
+            d->anchorTopLeft        = QRectF(d->rect.topLeft(),
+                                             d->rect.topRight() + moveDown);
+            d->anchorTopRight       = QRectF();
+            d->anchorBottomLeft     = QRectF(d->rect.bottomLeft() - moveDown,
+                                             d->rect.bottomRight());
+            d->anchorBottomRight    = QRectF();
+        }
+    }
+    else
+    {
+        if (horizontalCondition)
+        {
+            // Only the left & right lines & middle line plus two corners are drawn
+            d->anchorTop    = QLineF(d->rect.topLeft() + QPointF(0.0, d->rect.height() / 2.0),
+                                     d->rect.topRight() + QPointF(0.0, d->rect.height() / 2.0));
+            d->anchorBottom = QLineF();
+            d->anchorLeft   = QLineF(d->rect.topLeft() + moveRight,
+                                     d->rect.bottomLeft() + moveRight);
+            d->anchorRight  = QLineF(d->rect.topRight() - moveRight,
+                                     d->rect.bottomRight() - moveRight);
+
+            d->anchorTopLeft        = QRectF(d->rect.topLeft(),
+                                             d->rect.bottomLeft() + moveRight);
+            d->anchorTopRight       = QRectF(d->rect.topRight() - moveRight,
+                                             d->rect.bottomRight());
+            d->anchorBottomLeft     = QRectF();
+            d->anchorBottomRight    = QRectF();
+        }
+        else
+        {
+            d->anchorTop    = QLineF();
+            d->anchorBottom = QLineF();
+            d->anchorLeft   = QLineF();
+            d->anchorRight  = QLineF();
+
+            d->anchorTopLeft        = QRectF();
+            d->anchorTopRight       = QRectF();
+            d->anchorBottomLeft     = QRectF();
+            d->anchorBottomRight    = QRectF();
+        }
+    }
+}
+
 
 
 // -------------------------------------------------------------
@@ -253,6 +395,7 @@ public:
     QGraphicsScene*             scene;
     QGraphicsPixmapItem*        pixmapItem;
     SelectionItem*              selection;
+    bool                        enableSelection;
     SelectionItem::Intersects   mouseZone;
     QPointF                     lastMousePoint;
     enum {NONE, LOOKAROUND, DRAWSELECTION, EXPANDORSHRINK, MOVESELECTION}
@@ -285,6 +428,7 @@ PreviewImage::PreviewImage(QWidget* parent)
     d->selection = new SelectionItem(QRectF());
     d->selection->setZValue(10);
     d->selection->setVisible(false);
+    d->enableSelection = false;
 
     d->scene->addItem(d->pixmapItem);
     setScene(d->scene);
@@ -377,11 +521,16 @@ bool PreviewImage::setImage(const QImage& img) const
     return false;
 }
 
+void PreviewImage::enableSelectionArea(bool b)
+{
+    d->enableSelection = b;
+}
+
 bool PreviewImage::load(const QString& file) const
 {
     QImage image(file);
     bool ret = setImage(image);
-    if (ret)
+    if (ret && d->enableSelection)
     {
         d->selection->setMaxRight(d->scene->width());
         d->selection->setMaxBottom(d->scene->height());
@@ -578,7 +727,7 @@ void PreviewImage::mousePressEvent(QMouseEvent* e)
         d->lastdy = e->y();
         QPointF scenePoint = mapToScene(e->pos());
         d->lastMousePoint = scenePoint;
-        if (e->modifiers() != Qt::ControlModifier)
+        if (e->modifiers() != Qt::ControlModifier && d->enableSelection)
         {
             if (!d->selection->isVisible() || !d->selection->contains(scenePoint))
             {
@@ -921,6 +1070,17 @@ bool PreviewImage::eventFilter(QObject *obj, QEvent *ev)
     }
 
     return QGraphicsView::eventFilter(obj, ev);
+}
+
+void PreviewImage::resizeEvent(QResizeEvent* e)
+{
+    if (!d->zoom2FitAction->isEnabled())
+    {
+        // Fit the image to the new size...
+        fitInView(d->pixmapItem->boundingRect(), Qt::KeepAspectRatio);
+        d->selection->saveZoom(transform().m11());
+    }
+    QGraphicsView::resizeEvent(e);
 }
 
 void PreviewImage::updateSelVisibility()

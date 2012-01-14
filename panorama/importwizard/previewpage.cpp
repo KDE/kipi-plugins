@@ -195,6 +195,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     QString errorString("<qt><h2><b>Error</b></h2><p>" + ad.message + "</p></qt>");
                     errorString.replace('\n', "</p><p>");
                     d->previewWidget->setText(errorString);
+                    d->previewWidget->setSelectionAreaPossible(false);
                     emit signalPreviewGenerated(KUrl());
                     break;
                 }
@@ -239,6 +240,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewUrl = ad.outUrl;
                     d->mngr->setPreviewUrl(ad.outUrl);
                     d->previewWidget->load(ad.outUrl.toLocalFile(), true);
+                    d->previewWidget->setSelectionAreaPossible(true);
                     kDebug() << "Preview URL: " << ad.outUrl.toLocalFile();
 
                     emit signalPreviewGenerated(ad.outUrl);

@@ -82,6 +82,9 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
 
 private:
+    void updateAnchors();
+
+private:
     struct SelectionItemPriv;
     SelectionItemPriv* const d;
 };
@@ -97,6 +100,7 @@ public:
 
     bool load(const QString& file) const;
     bool setImage(const QImage& img) const;
+    void enableSelectionArea(bool b);
 
 public Q_SLOTS:
 
@@ -146,6 +150,7 @@ protected:
     void enterEvent(QEvent*);
     void leaveEvent(QEvent*);
     bool eventFilter(QObject*, QEvent*);
+    void resizeEvent(QResizeEvent*);
 
     void updateSelVisibility();
     void updateHighlight();
