@@ -846,6 +846,8 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
             QString xResolution = pageElement.attribute("width");
             QString yResolution = pageElement.attribute("height");
             QString resUnit = pageElement.attribute("unit");
+            qDebug() << pageElement.namespaceURI() << KIPIPhotoLayoutsEditor::templateUri();
+
             // Canvas size validation
             QRegExp sizeRegExp("[0-9.]+((cm)|(mm)|(in)|(pc)|(pt)|(px))");
             QRegExp resRegExp("[0-9.]+");
@@ -876,6 +878,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
                         result = new Canvas(scene);
                         result->setEnabled(false);
                         result->d->m_size = size;
+                        result->d->m_template = (pageElement.namespaceURI() == KIPIPhotoLayoutsEditor::templateUri());
                     }
                 }
             }
@@ -1017,6 +1020,14 @@ void Canvas::isSavedChanged(bool /*isStackClean*/)
     else
         m_is_saved = (m_saved_on_index == m_undo_stack->index());
     emit savedStateChanged();
+}
+
+/** ###########################################################################################################################
+ * Controls changes on cavnas (based on QUndoStack state)
+ #############################################################################################################################*/
+bool Canvas::isTemplate() const
+{
+    return d->m_template;
 }
 
 /** ###########################################################################################################################

@@ -105,10 +105,19 @@ QDomElement SceneBorder::toSvg(QDomDocument & document) const
 {
     QDomElement result = document.createElement("g");
     result.setAttribute("id", "border");
+
     QDomElement defs = document.createElement("defs");
     result.appendChild(defs);
 
     QSize s = this->m_rect.size().toSize();
+
+    QDomElement pattern = document.createElement("pattern");
+    pattern.setAttribute("x", 0);
+    pattern.setAttribute("y", 0);
+    pattern.setAttribute("width", QString::number(s.width())+"px");
+    pattern.setAttribute("height",QString::number(s.height())+"px");
+    pattern.setAttribute("patternUnits", "userSpaceOnUse");
+    defs.appendChild(pattern);
 
     QDomElement image = document.createElement("image");
     QByteArray byteArray;
@@ -117,15 +126,15 @@ QDomElement SceneBorder::toSvg(QDomDocument & document) const
     image.setAttribute("width", QString::number(s.width())+"px");
     image.setAttribute("height",QString::number(s.height())+"px");
     image.setAttribute("xlink:href",QString("data:image/png;base64,")+byteArray.toBase64());
-    image.setAttribute("id", QString::number(qChecksum(byteArray.constData(), byteArray.length())).append("bkg"));
-    defs.appendChild(image);
+    pattern.setAttribute("id", QString::number(qChecksum(byteArray.constData(), byteArray.length())).append("bkg"));
+    pattern.appendChild(image);
 
     QDomElement bckg = document.createElement("rect");
     bckg.setAttribute("x", 0);
     bckg.setAttribute("y", 0);
     bckg.setAttribute("width", image.attribute("width"));
     bckg.setAttribute("height",image.attribute("height"));
-    bckg.setAttribute("fill", "url(#"+image.attribute("id")+')');
+    bckg.setAttribute("fill", "url(#"+pattern.attribute("id")+')');
     result.appendChild(bckg);
 
     return result;

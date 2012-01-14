@@ -100,6 +100,9 @@ namespace KIPIPhotoLayoutsEditor
             /// Check if canvas is saved
             bool isSaved();
 
+            /// Check if canvas is loaded from template (read only)
+            bool isTemplate() const;
+
             /// Set selection mode
             void setSelectionMode(SelectionMode mode);
 

@@ -54,7 +54,11 @@ void SceneBorderLoader::run()
     if (defs.isNull())
         this->exit(1);
 
-    QDomElement image = defs.firstChildElement("image");
+    QDomElement pattern = defs.firstChildElement("pattern");
+    if (pattern.isNull())
+        this->exit(1);
+
+    QDomElement image = pattern.firstChildElement("image");
     if (image.isNull())
         this->exit(1);
     m_border->m_image = QImage::fromData( QByteArray::fromBase64(image.attributeNS("http://www.w3.org/1999/xlink", "href").remove("data:image/png;base64,").toAscii()) );

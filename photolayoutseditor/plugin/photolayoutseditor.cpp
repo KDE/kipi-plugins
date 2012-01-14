@@ -402,7 +402,7 @@ void PhotoLayoutsEditor::createCanvas(const CanvasSize & size)
     this->prepareSignalsConnections();
 }
 
-void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl, bool isTemplate)
+void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl)
 {
     if (m_canvas)
     {
@@ -416,7 +416,7 @@ void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl, bool isTemplate)
     m_canvas = Canvas::fromSvg(document);
     if (m_canvas)
     {
-        if (!isTemplate)
+        if (!m_canvas->isTemplate())
         {
             m_canvas->setFile(fileUrl);
             // Adds recent open file
@@ -484,7 +484,7 @@ void PhotoLayoutsEditor::open()
     QString tmp;
     if (dialog->hasTemplateSelected() && !(tmp = dialog->templateSelected()).isEmpty())
     {
-        open(KUrl(dialog->templateSelected()), true);
+        open(KUrl(dialog->templateSelected()));
     }
     else
     {
@@ -511,7 +511,7 @@ void PhotoLayoutsEditor::openDialog()
         open(d->fileDialog->selectedUrl());
 }
 
-void PhotoLayoutsEditor::open(const KUrl & fileUrl, bool isTemplate)
+void PhotoLayoutsEditor::open(const KUrl & fileUrl)
 {
     if (m_canvas && m_canvas->file() == fileUrl)
         return;
@@ -519,16 +519,17 @@ void PhotoLayoutsEditor::open(const KUrl & fileUrl, bool isTemplate)
     if (fileUrl.isValid())
     {
         closeDocument();
-        createCanvas(fileUrl, isTemplate);
+        createCanvas(fileUrl);
         refreshActions();
     }
 }
 
 void PhotoLayoutsEditor::save()
 {
+    qDebug() << !m_canvas->file().isValid() <<  m_canvas->file().fileName().isEmpty() << m_canvas->isTemplate();
     if (!m_canvas)
         return;
-    if (!m_canvas->file().isValid() || m_canvas->file().fileName().isEmpty())
+    if (!m_canvas->file().isValid() || m_canvas->file().fileName().isEmpty() || m_canvas->isTemplate())
         saveAs();
     else
         saveFile();
