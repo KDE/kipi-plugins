@@ -860,8 +860,7 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
         if (d->m_pressed_object)
             d->sendMoveEventToItem(d->m_pressed_object, event);
 
-        if (m_interaction_mode & Moving &&
-                !(event->modifiers() & Qt::ControlModifier))
+        if (m_interaction_mode & Moving && !event->isAccepted())
         {
             // Selecting pressed item
             event->setAccepted(d->selectPressed());

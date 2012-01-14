@@ -624,32 +624,44 @@ void PhotoItem::dropEvent(QGraphicsSceneDragDropEvent * event)
 
 void PhotoItem::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
-    if (!event->modifiers() & Qt::ControlModifier || !event->buttons() & Qt::LeftButton)
+    if ((event->modifiers() & Qt::ControlModifier) && (event->buttons() & Qt::LeftButton))
+        d->m_image_moving = true;
+    else
         AbstractPhoto::mousePressEvent(event);
 }
 
 void PhotoItem::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 {
-    if (event->modifiers() & Qt::ControlModifier && event->buttons() & Qt::LeftButton)
+    event->setAccepted(false);
+    if (d->m_image_moving)
     {
-        QPointF p = event->pos() - event->lastPos();
-        d->m_brush_transform.translate(p.x(), p.y());
-        d->m_complete_path_transform.translate(p.x(), p.y());
-        m_complete_path.translate(p);
-        PhotoItemImageMovedCommand::instance(this)->translate(p);
-        this->update();
+        if ((event->modifiers() & Qt::ControlModifier) && (event->buttons() & Qt::LeftButton))
+        {
+            QPointF p = event->pos() - event->lastPos();
+            d->m_brush_transform.translate(p.x(), p.y());
+            d->m_complete_path_transform.translate(p.x(), p.y());
+            m_complete_path.translate(p);
+            PhotoItemImageMovedCommand::instance(this)->translate(p);
+            this->update();
+        }
+        else
+            PhotoItemImageMovedCommand::post();
+        event->setAccepted(true);
     }
     else
     {
-        PhotoItemImageMovedCommand::post();
         AbstractPhoto::mouseMoveEvent(event);
     }
 }
 
 void PhotoItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 {
-    PhotoItemImageMovedCommand::post();
-    if (!event->modifiers() & Qt::ControlModifier || !event->buttons() & Qt::LeftButton)
+    if (d->m_image_moving)
+    {
+        PhotoItemImageMovedCommand::post();
+        d->m_image_moving = false;
+    }
+    else
         AbstractPhoto::mouseReleaseEvent(event);
 }
 

@@ -154,7 +154,8 @@ namespace KIPIPhotoLayoutsEditor
             class PhotoItemPrivate
             {
                 PhotoItemPrivate(PhotoItem * item) :
-                    m_item(item)
+                    m_item(item),
+                    m_image_moving(false)
                 {}
 
                 static QString locateFile(const QString & filePath);
@@ -173,6 +174,7 @@ namespace KIPIPhotoLayoutsEditor
 
                 QTransform m_brush_transform;
                 QTransform m_complete_path_transform;
+                bool m_image_moving;
 
                 friend class PhotoItem;
                 friend class PhotoItemLoader;
