@@ -903,8 +903,9 @@ void ImagesList::slotMoveDownItems()
 
 void ImagesList::slotClearItems()
 {
-    listView()->clear();
-    slotRemoveItems();
+  listView()->selectAll();
+  slotRemoveItems();
+  listView()->clear();
 }
 
 void ImagesList::removeItemByUrl(const KUrl& url)
