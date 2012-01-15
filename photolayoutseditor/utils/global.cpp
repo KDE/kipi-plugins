@@ -42,6 +42,11 @@ QString KIPIPhotoLayoutsEditor::uri()
     return QString("http://coder89.pl/ple");
 }
 
+QString KIPIPhotoLayoutsEditor::templateUri()
+{
+    return QString("http://coder89.pl/ple/template");
+}
+
 void KIPIPhotoLayoutsEditor::PLE_PostUndoCommand(QUndoCommand * command)
 {
     PhotoLayoutsEditor::instance()->addUndoCommand(command);

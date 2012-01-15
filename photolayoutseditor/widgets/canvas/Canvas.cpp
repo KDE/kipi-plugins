@@ -846,13 +846,14 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
             QString xResolution = pageElement.attribute("width");
             QString yResolution = pageElement.attribute("height");
             QString resUnit = pageElement.attribute("unit");
+            qDebug() << pageElement.namespaceURI() << KIPIPhotoLayoutsEditor::templateUri();
+
             // Canvas size validation
             QRegExp sizeRegExp("[0-9.]+((cm)|(mm)|(in)|(pc)|(pt)|(px))");
             QRegExp resRegExp("[0-9.]+");
             if (sizeRegExp.exactMatch(width) &&
                     sizeRegExp.exactMatch(height) &&
                     width.right(2) == height.right(2) &&
-                    pageElement.namespaceURI() == KIPIPhotoLayoutsEditor::uri() &&
                     resRegExp.exactMatch(xResolution) &&
                     resRegExp.exactMatch(yResolution) &&
                     CanvasSize::resolutionUnit(resUnit) != CanvasSize::UnknownResolutionUnit)
@@ -877,6 +878,7 @@ Canvas * Canvas::fromSvg(QDomDocument & document)
                         result = new Canvas(scene);
                         result->setEnabled(false);
                         result->d->m_size = size;
+                        result->d->m_template = (pageElement.namespaceURI() == KIPIPhotoLayoutsEditor::templateUri());
                     }
                 }
             }
@@ -974,6 +976,24 @@ void Canvas::save(const KUrl & fileUrl, bool setAsDefault)
 }
 
 /** ###########################################################################################################################
+ * Save canvas as a template
+ #############################################################################################################################*/
+void Canvas::saveTemplate(const KUrl & fileUrl)
+{
+    if (fileUrl.isEmpty() || !fileUrl.isValid())
+    {
+        KMessageBox::detailedError(0,
+                                   i18n("Can't save canvas!"),
+                                   i18n("Invalid file path."));
+        return;
+    }
+
+    CanvasSavingThread * thread = new CanvasSavingThread(this);
+    connect(thread, SIGNAL(saved()), this, SLOT(savingFinished()));
+    thread->saveAsTemplate(this, fileUrl);
+}
+
+/** ###########################################################################################################################
  * Check if canvas is saved
  #############################################################################################################################*/
 bool Canvas::isSaved()
@@ -1000,6 +1020,14 @@ void Canvas::isSavedChanged(bool /*isStackClean*/)
     else
         m_is_saved = (m_saved_on_index == m_undo_stack->index());
     emit savedStateChanged();
+}
+
+/** ###########################################################################################################################
+ * Controls changes on cavnas (based on QUndoStack state)
+ #############################################################################################################################*/
+bool Canvas::isTemplate() const
+{
+    return d->m_template;
 }
 
 /** ###########################################################################################################################

@@ -37,7 +37,12 @@ namespace KIPIPhotoLayoutsEditor
     class CanvasSavingThread;
     class CanvasPrivate
     {
+        CanvasPrivate() :
+            m_template(false)
+        {}
+
         CanvasSize m_size;
+        bool m_template;
 
         QMap<QObject*,QProgressBar*> progressMap;
 

@@ -24,7 +24,7 @@
  * ============================================================ */
 
 #include "photolayoutseditor_p.h"
-#include "photolayoutseditor.moc"
+#include "photolayoutseditor.h"
 
 // Qt includes
 
@@ -85,6 +85,7 @@
 #include "ProgressEvent.h"
 #include "BorderDrawerInterface.h"
 #include "BorderDrawersLoader.h"
+#include "NewCanvasDialog.h"
 
 // Q_*_RESOURCE cannot be used in a namespace
 inline void initIconsResource() { Q_INIT_RESOURCE(icons); }
@@ -253,6 +254,10 @@ void PhotoLayoutsEditor::setupActions()
     d->saveAsAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_S));
     actionCollection()->addAction("save_as", d->saveAsAction);
     //------------------------------------------------------------------------
+    d->saveAsTemplateAction = new KAction(i18nc("Saves canvas as a template file...", "Save As Template..."), actionCollection());
+    connect(d->saveAsTemplateAction, SIGNAL(triggered()), this, SLOT(saveAsTemplate()));
+    actionCollection()->addAction("save_as_template", d->saveAsTemplateAction);
+    //------------------------------------------------------------------------
     d->exportFileAction = new KAction(i18nc("Export current frame layout to image file...", "Export..."), actionCollection());
     d->exportFileAction->setShortcut(KShortcut(Qt::SHIFT + Qt::CTRL + Qt::Key_E));
     connect(d->exportFileAction, SIGNAL(triggered()), this, SLOT(exportFile()));
@@ -317,6 +322,7 @@ void PhotoLayoutsEditor::refreshActions()
         d->saveAction->setEnabled(isEnabledForCanvas && !m_canvas->isSaved());
     }
     d->saveAsAction->setEnabled(isEnabledForCanvas);
+    d->saveAsTemplateAction->setEnabled(isEnabledForCanvas);
     d->exportFileAction->setEnabled(isEnabledForCanvas);
     d->printPreviewAction->setEnabled(isEnabledForCanvas);
     d->printAction->setEnabled(isEnabledForCanvas);
@@ -410,12 +416,14 @@ void PhotoLayoutsEditor::createCanvas(const KUrl & fileUrl)
     m_canvas = Canvas::fromSvg(document);
     if (m_canvas)
     {
-        m_canvas->setFile(fileUrl);
+        if (!m_canvas->isTemplate())
+        {
+            m_canvas->setFile(fileUrl);
+            // Adds recent open file
+            this->addRecentFile(m_canvas->file());
+        }
         m_canvas->setParent(d->centralWidget);
         this->prepareSignalsConnections();
-
-        // Adds recent open file
-        this->addRecentFile(m_canvas->file());
     }
     else
     {
@@ -466,18 +474,29 @@ void PhotoLayoutsEditor::prepareSignalsConnections()
 
 void PhotoLayoutsEditor::open()
 {
-    CanvasSizeDialog * canvasSizeDialog = new CanvasSizeDialog(this);
-    canvasSizeDialog->setModal(true);
-    int result = canvasSizeDialog->exec();
+    NewCanvasDialog * dialog = new NewCanvasDialog(this);
+    dialog->setModal(true);
 
-    CanvasSize size = canvasSizeDialog->canvasSize();
-    if (result == KDialog::Accepted && size.isValid())
+    int result = dialog->exec();
+    if (result != KDialog::Accepted)
+        return;
+
+    QString tmp;
+    if (dialog->hasTemplateSelected() && !(tmp = dialog->templateSelected()).isEmpty())
     {
-        closeDocument();
-        createCanvas(size);
-        refreshActions();
+        open(KUrl(dialog->templateSelected()));
     }
-    delete canvasSizeDialog;
+    else
+    {
+        CanvasSize size = dialog->canvasSize();
+        if (size.isValid())
+        {
+            closeDocument();
+            createCanvas(size);
+            refreshActions();
+        }
+    }
+    delete dialog;
 }
 
 void PhotoLayoutsEditor::openDialog()
@@ -507,9 +526,10 @@ void PhotoLayoutsEditor::open(const KUrl & fileUrl)
 
 void PhotoLayoutsEditor::save()
 {
+    qDebug() << !m_canvas->file().isValid() <<  m_canvas->file().fileName().isEmpty() << m_canvas->isTemplate();
     if (!m_canvas)
         return;
-    if (m_canvas->file().fileName().isEmpty())
+    if (!m_canvas->file().isValid() || m_canvas->file().fileName().isEmpty() || m_canvas->isTemplate())
         saveAs();
     else
         saveFile();
@@ -527,6 +547,25 @@ void PhotoLayoutsEditor::saveAs()
     {
         KUrl url = d->fileDialog->selectedUrl();
         saveFile(url);
+    }
+}
+
+void PhotoLayoutsEditor::saveAsTemplate()
+{
+    if (!d->fileDialog)
+        d->fileDialog = new KFileDialog(KUrl(), "*.ple|Photo Layouts Editor files", this);
+    d->fileDialog->setOperationMode(KFileDialog::Saving);
+    d->fileDialog->setMode(KFile::File);
+    d->fileDialog->setKeepLocation(true);
+    int result = d->fileDialog->exec();
+    if (result == KFileDialog::Accepted)
+    {
+        KUrl url = d->fileDialog->selectedUrl();
+        if (m_canvas)
+            m_canvas->saveTemplate(url);
+        else
+            KMessageBox::error(this,
+                               i18n("There is nothing to save."));
     }
 }
 

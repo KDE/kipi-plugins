@@ -35,6 +35,7 @@ namespace KIPIPhotoLayoutsEditor
 {
     class AbstractPhoto;
     class SceneBackground;
+    class SceneBorder;
     class CanvasLoadingThread : public QThread, public ProgressObserver
     {
             Q_OBJECT
@@ -47,6 +48,7 @@ namespace KIPIPhotoLayoutsEditor
             virtual void progresName(const QString & name);
             void addItem(AbstractPhoto * item, QDomElement & element);
             void addBackground(SceneBackground * background, QDomElement & element);
+            void addBorder(SceneBorder * border, QDomElement & element);
 
         protected:
 

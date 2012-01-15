@@ -387,6 +387,11 @@ ImagesListViewItem* ImagesListView::findItem(const KUrl& url)
     return 0;
 }
 
+QModelIndex ImagesListView::indexFromItem ( ImagesListViewItem * item, int column ) const
+{
+  return QTreeWidget::indexFromItem(item, column);
+}
+
 void ImagesListView::dragEnterEvent(QDragEnterEvent* e)
 {
     QTreeWidget::dragEnterEvent(e);
@@ -477,6 +482,7 @@ public:
         iconSize              = DEFAULTSIZE;
         allowRAW              = true;
         controlButtonsEnabled = true;
+        allowDuplicate        = false;
         progressCount         = 0;
         progressTimer         = 0;
         loadRawThumb          = 0;
@@ -484,6 +490,7 @@ public:
     }
 
     bool                allowRAW;
+    bool                allowDuplicate;
     bool                controlButtonsEnabled;
     int                 iconSize;
 
@@ -707,6 +714,11 @@ ImagesList::~ImagesList()
     delete d;
 }
 
+void ImagesList::setAllowDuplicate(bool allow)
+{
+  d->allowDuplicate = allow;
+}
+    
 void ImagesList::setAllowRAW(bool allow)
 {
     d->allowRAW = allow;
@@ -779,7 +791,7 @@ void ImagesList::slotAddImages(const KUrl::List& list)
             ++iter;
         }
 
-        if (!found)
+        if (d->allowDuplicate || !found)
         {
             // if RAW files are not allowed, skip the image
             if (!d->allowRAW && isRAWFile(imageUrl.path()))
@@ -808,17 +820,22 @@ void ImagesList::slotAddItems()
         slotAddImages(urls);
     }
 
-    emit signalImageListChanged();
+//     emit signalImageListChanged();
 }
 
 void ImagesList::slotRemoveItems()
 {
     QList<QTreeWidgetItem*> selectedItemsList = d->listView->selectedItems();
-
+    KUrl::List urls;
+    
     for (QList<QTreeWidgetItem*>::const_iterator it = selectedItemsList.constBegin();
          it != selectedItemsList.constEnd(); ++it)
     {
         ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        
+        emit signalRemovingItem(item);
+        urls.append(item->url());
+        
         if (item && d->processItems.contains(item->url()))
         {
             d->processItems.removeAll(item->url());
@@ -828,6 +845,7 @@ void ImagesList::slotRemoveItems()
         delete *it;
     }
 
+    emit signalRemovedItems(urls);
     emit signalImageListChanged();
 }
 
@@ -854,6 +872,7 @@ void ImagesList::slotMoveUpItems()
     dynamic_cast<KIPIPlugins::ImagesListViewItem*>(temp)->updateItemWidgets();
 
     emit signalImageListChanged();
+    emit signalMoveUpItem();
 }
 
 void ImagesList::slotMoveDownItems()
@@ -879,6 +898,7 @@ void ImagesList::slotMoveDownItems()
     dynamic_cast<KIPIPlugins::ImagesListViewItem*>(temp)->updateItemWidgets();
 
     emit signalImageListChanged();
+    emit signalMoveDownItem();
 }
 
 void ImagesList::slotClearItems()
@@ -1122,7 +1142,8 @@ void ImagesList::slotThumbnail(const KUrl& url, const QPixmap& pix)
                 item->setThumb(pix.scaled(d->iconSize, d->iconSize, Qt::KeepAspectRatio));
             }
 
-            return;
+            if (!d->allowDuplicate)
+              return;
         }
 
         ++it;

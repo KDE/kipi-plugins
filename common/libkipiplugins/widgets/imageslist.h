@@ -147,6 +147,7 @@ public:
     void setColumn(ColumnType column, const QString& label, bool enable);
 
     ImagesListViewItem* findItem(const KUrl& url);
+    QModelIndex indexFromItem ( ImagesListViewItem * item, int column = 0 ) const;
 
     KIPI::Interface* iface() const;
 
@@ -225,6 +226,8 @@ public:
     virtual ~ImagesList();
 
     void                setAllowRAW(bool allow);
+    void                setAllowDuplicate(bool allow);
+
     void                loadImagesFromCurrentSelection();
 
     int                 iconSize()  const;
@@ -250,6 +253,10 @@ public:
 Q_SIGNALS:
 
     void signalAddItems(const KUrl::List&);
+    void signalMoveUpItem();
+    void signalMoveDownItem();
+    void signalRemovedItems(const KUrl::List&);
+    void signalRemovingItem(KIPIPlugins::ImagesListViewItem*);
     void signalImageListChanged();
     void signalFoundRAWImages(bool);
     void signalItemClicked(QTreeWidgetItem*);

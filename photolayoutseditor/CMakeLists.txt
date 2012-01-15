@@ -35,9 +35,14 @@
       widgets/canvas/ScalingWidgetItem.cpp
       widgets/canvas/Scene.cpp
       widgets/canvas/SceneBackground.cpp
+      widgets/canvas/SceneBorder.cpp
       widgets/dialogs/CanvasSizeDialog.cpp
       widgets/dialogs/GridSetupDialog.cpp
       widgets/dialogs/ImageFileDialog.cpp
+      widgets/dialogs/NewCanvasDialog.cpp
+      widgets/dialogs/CanvasSizeWidget.cpp
+      widgets/dialogs/TemplatesModel.cpp
+      widgets/dialogs/TemplatesView.cpp
       widgets/extra/PatternsComboBox.cpp
       widgets/extra/PLEStatusBar.cpp
       widgets/layers/LayersTree.cpp
@@ -96,6 +101,7 @@
       threads/ImageLoadingThread.cpp
       threads/PhotoItemLoader.cpp
       threads/SceneBackgroundLoader.cpp
+      threads/SceneBorderLoader.cpp
       threads/TextItemLoader.cpp
 )
 
@@ -154,6 +160,7 @@
                       ${KIPI_INCLUDE_DIR})
 
   ADD_SUBDIRECTORY( ./resources/app )
+  ADD_SUBDIRECTORY( ./data )
 
   ADD_DEFINITIONS( -Wall )
 

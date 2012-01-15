@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "Scene.moc"
+#include "Scene.h"
 
 #include "global.h"
 #include "RotationWidgetItem.h"
@@ -37,6 +37,10 @@
 #include "ImageLoadingThread.h"
 #include "ProgressEvent.h"
 #include "CanvasLoadingThread.h"
+#include "PhotoItem.h"
+#include "SceneBorder.h"
+
+#include "imagedialog.h"
 
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -94,6 +98,8 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     {
         // Background of the scene
         m_background = new SceneBackground(m_scene);
+        // Border of the scene
+        m_border = new SceneBorder(m_scene);
     }
 
     QList<QGraphicsItem*> itemsAtPosition(const QPointF & scenePos, QWidget * widget)
@@ -180,6 +186,8 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
     LayersSelectionModel * selection_model;
     // Background item
     SceneBackground * m_background;
+    // Border item
+    SceneBorder * m_border;
 
     // Used for selecting items
     void deselectSelected()
@@ -542,6 +550,12 @@ SceneBackground * Scene::background()
 }
 
 //#####################################################################################################
+SceneBorder * Scene::border()
+{
+    return d->m_border;
+}
+
+//#####################################################################################################
 LayersModel * Scene::model() const
 {
     return d->model;
@@ -651,6 +665,27 @@ void Scene::removeSelectedItems()
 }
 
 //#####################################################################################################
+void Scene::changeSelectedImage()
+{
+    QList<AbstractPhoto*> items = selectedItems();
+    if (items.count() != 1)
+        return;
+    PhotoItem * item = dynamic_cast<PhotoItem*>(items.first());
+    if (!item)
+        return;
+
+    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrl(PhotoLayoutsEditor::instance(), PhotoLayoutsEditor::instance()->interface());
+    if (urls.count() != 1)
+        return;
+
+    ImageLoadingThread * ilt = new ImageLoadingThread(this);
+    ilt->setImageUrl(urls.first());
+    ilt->setMaximumProgress(1);
+    connect(ilt, SIGNAL(imageLoaded(KUrl,QImage)), item, SLOT(imageLoaded(KUrl,QImage)));
+    ilt->start();
+}
+
+//#####################################################################################################
 void Scene::contextMenuEvent(QGraphicsSceneMouseEvent * event)
 {
     QMenu menu;
@@ -659,6 +694,16 @@ void Scene::contextMenuEvent(QGraphicsSceneMouseEvent * event)
     QList<AbstractPhoto*> items = this->selectedItems();
     if (items.count())
     {
+        if (items.count() == 1)
+        {
+            PhotoItem * item = dynamic_cast<PhotoItem*>(items.first());
+            if (item)
+            {
+                QAction * removeAction = menu.addAction( i18n("Change item's image") );
+                connect(removeAction, SIGNAL(triggered()), this, SLOT(changeSelectedImage()));
+            }
+        }
+
         QAction * removeAction = menu.addAction( i18np("Delete selected item", "Delete selected items", items.count()) );
         connect(removeAction, SIGNAL(triggered()), this, SLOT(removeSelectedItems()));
         menu.addSeparator();
@@ -815,7 +860,7 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
         if (d->m_pressed_object)
             d->sendMoveEventToItem(d->m_pressed_object, event);
 
-        if (m_interaction_mode & Moving)
+        if (m_interaction_mode & Moving && !event->isAccepted())
         {
             // Selecting pressed item
             event->setAccepted(d->selectPressed());
@@ -1284,6 +1329,18 @@ qreal Scene::gridVerticalDistance() const
 //#####################################################################################################
 QDomDocument Scene::toSvg(ProgressObserver * observer)
 {
+    return toSvg(observer, false);
+}
+
+//#####################################################################################################
+QDomDocument Scene::toTemplateSvg(ProgressObserver * observer)
+{
+    return toSvg(observer, true);
+}
+
+//#####################################################################################################
+QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
+{
     QDomDocument document;
 
     QDomElement sceneElement = document.createElement("g");
@@ -1312,11 +1369,21 @@ QDomDocument Scene::toSvg(ProgressObserver * observer)
         if (photo)
         {
             if (observer) observer->progresName( i18n("Saving %1...", photo->name()) );
-            QDomDocument photoItemDocument = photo->toSvg();
+            QDomDocument photoItemDocument = asTemplate ? photo->toTemplateSvg() : photo->toSvg();
             sceneElement.appendChild( photoItemDocument.documentElement() );
         }
         if (observer) observer->progresChanged((double)i++ / (double)(itemsList.count()+1.0));
     }
+
+    //--------------------------------------------------------
+
+    if (observer) observer->progresName( i18n("Saving border...") );
+    QDomElement border = document.createElement("g");
+    border.setAttribute("class", "border");
+    border.appendChild(d->m_border->toSvg(document));
+    sceneElement.appendChild(border);
+    if (observer) observer->progresChanged(1.0 / (double)(itemsList.count()+1.0));
+
     return document;
 }
 
@@ -1360,6 +1427,11 @@ Scene * Scene::fromSvg(QDomElement & sceneElement)
         else if (itemClass == "background")
         {
             thread->addBackground(result->d->m_background, element);
+            continue;
+        }
+        else if (itemClass == "border")
+        {
+            thread->addBorder(result->d->m_border, element);
             continue;
         }
         else

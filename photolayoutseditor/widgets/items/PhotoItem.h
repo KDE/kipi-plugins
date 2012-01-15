@@ -35,6 +35,7 @@ namespace KIPIPhotoLayoutsEditor
     class PhotoItemPixmapChangeCommand;
     class PhotoItemUrlChangeCommand;
     class PhotoItemImagePathChangeCommand;
+    class PhotoItemImageMovedCommand;
     class PhotoItemLoader;
 
     class PhotoItem : public AbstractPhoto
@@ -44,10 +45,14 @@ namespace KIPIPhotoLayoutsEditor
         public:
 
             explicit PhotoItem(const QImage & photo, const QString & name = QString(), Scene * scene = 0);
+            explicit PhotoItem(const QPainterPath & shape, const QString & name = QString(), Scene * scene = 0);
             virtual ~PhotoItem();
 
             /// Convert photo item to SVG format
             virtual QDomDocument toSvg() const;
+
+            /// Convert photo item to SVG template format
+            virtual QDomDocument toTemplateSvg() const;
 
             /// Create Photo item from SVG format code
             static PhotoItem * fromSvg(QDomElement & element);
@@ -67,7 +72,7 @@ namespace KIPIPhotoLayoutsEditor
             /// Reimplemented from QGraphicsItem
             virtual bool contains(const QPointF & point) const
             {
-                return m_complete_path.contains(point);
+                return m_image_path.contains(point);
             }
 
             /// Reimplemented from AbstractPhoto
@@ -97,17 +102,26 @@ namespace KIPIPhotoLayoutsEditor
             /// Returns item's property browser
             virtual QtAbstractPropertyBrowser * propertyBrowser();
 
+            /// Returns if item is empty (not contains image)
+            bool isEmpty() const;
+
         protected:
 
-            PhotoItem(const QString & name = QString(), Scene * scene = 0);
+            explicit PhotoItem(const QString & name = QString(), Scene * scene = 0);
 
             /// Converts item data to SVG format
             virtual QDomDocument svgVisibleArea() const;
+
+            /// Converts item data to SVG format
+            virtual QDomDocument svgTemplateArea() const;
 
             virtual void dragEnterEvent(QGraphicsSceneDragDropEvent * event);
             virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent * event);
             virtual void dragMoveEvent(QGraphicsSceneDragDropEvent * event);
             virtual void dropEvent(QGraphicsSceneDragDropEvent * event);
+            virtual void mousePressEvent(QGraphicsSceneMouseEvent * event);
+            virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
+            virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * event);
 
             /// Updates item icon
             virtual void updateIcon();
@@ -140,7 +154,8 @@ namespace KIPIPhotoLayoutsEditor
             class PhotoItemPrivate
             {
                 PhotoItemPrivate(PhotoItem * item) :
-                    m_item(item)
+                    m_item(item),
+                    m_image_moving(false)
                 {}
 
                 static QString locateFile(const QString & filePath);
@@ -157,10 +172,15 @@ namespace KIPIPhotoLayoutsEditor
                 inline KUrl & fileUrl();
                 KUrl m_file_path;
 
+                QTransform m_brush_transform;
+                QTransform m_complete_path_transform;
+                bool m_image_moving;
+
                 friend class PhotoItem;
                 friend class PhotoItemLoader;
                 friend class PhotoItemPixmapChangeCommand;
                 friend class PhotoItemUrlChangeCommand;
+                friend class PhotoItemImageMovedCommand;
             };
             PhotoItemPrivate * d;
             friend class PhotoItemPrivate;
@@ -175,6 +195,7 @@ namespace KIPIPhotoLayoutsEditor
         friend class PhotoItemPixmapChangeCommand;
         friend class PhotoItemUrlChangeCommand;
         friend class PhotoItemImagePathChangeCommand;
+        friend class PhotoItemImageMovedCommand;
         friend class PhotoItemLoader;
     };
 }

@@ -77,6 +77,7 @@ namespace KIPIPhotoLayoutsEditor
 
             // Image background
             void imageUrlRequest();
+            void borderImageUrlRequest();
             void imageScallingChanged(const QString & scallingName);
             void imageTiledChanged(int state);
             void imageHorizontalAlignmentChanged(int index);
@@ -91,6 +92,7 @@ namespace KIPIPhotoLayoutsEditor
 
             void setImageBackground();
             void setPatternBackground();
+            void setImageBorder();
             void setupGUI();
 
         private slots:
