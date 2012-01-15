@@ -24,6 +24,11 @@
 
 #include "importwizarddlg.moc"
 
+// Qt includes
+
+#include <QDesktopWidget>
+#include <QApplication>
+
 // KDE includes
 
 #include <kmenu.h>
@@ -107,7 +112,11 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    resize(800, 700);
+    QDesktopWidget* desktop = QApplication::desktop();
+    int screen = desktop->screenNumber();
+    QRect srect = desktop->availableGeometry(screen);
+    resize(800 <= srect.width()  ? 800 : srect.width(),
+           750 <= srect.height() ? 750 : srect.height());
 
     connect(d->introPage, SIGNAL(signalIntroPageIsValid(bool)),
             this, SLOT(slotIntroPageIsValid(bool)));
