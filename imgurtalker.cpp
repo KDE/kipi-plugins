@@ -19,22 +19,25 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-#include "imgurexportwebservice.h"
+#include "imgurtalker.h"
 
 #include <KDebug>
 #include <KIO/Job>
 
-namespace KIPIImgurExportPlugin {
-    ImgurExportWebservice::ImgurExportWebservice (QWidget *parent) {
+// local
+#include "mpform.h"
+
+namespace KIPIImgurTalkerPlugin {
+    ImgurTalker::ImgurTalker (QObject *parent) {
         m_parent        = parent;
 
         m_job           = 0;
-        m_userAgent     = QString("KIPI-Plugin-ImgurExport/0.0.1");
-        m_exportUrl     = QString("http://imgur.com/api/upload");
-        m_apiKey          = _IMGUR_API_KEY;
+        m_userAgent     = QString("KIPI-Plugin-ImgurTalker/0.0.1");
+        m_exportUrl     = QString("http://api.imgur.com/2/upload.json");
+        m_apiKey        = _IMGUR_API_KEY;
     }
 
-    const QString ImgurExportWebservice::getStatusError (ImgurExportWebservice::ServerStatusCode code) {
+    const QString ImgurTalker::getStatusError (ImgurTalker::ServerStatusCode code) {
         switch (code) {
         case NO_IMAGE:
             return tr ("No image selected");
@@ -86,7 +89,7 @@ namespace KIPIImgurExportPlugin {
         }
     }
 
-    ImgurExportWebservice::~ImgurExportWebservice()
+    ImgurTalker::~ImgurTalker()
     {
         if (m_job) {
             kDebug() << "Killing job";
@@ -94,27 +97,59 @@ namespace KIPIImgurExportPlugin {
         }
     }
 
-    QString ImgurExportWebservice::data (QFile* file)
+    void ImgurTalker::data(KIO::Job*, const QByteArray& data)
     {
-        return file->readAll().toBase64();
+        if (data.isEmpty())
+            return;
+
+        int oldSize = m_buffer.size();
+        m_buffer.resize(m_buffer.size() + data.size());
+        memcpy(m_buffer.data()+oldSize, data.data(), data.size());
     }
 
-    bool ImgurExportWebservice::imageUpload (QFile* file)
+//    void ImgurTalker::dataReq(KIO::Job* job, QByteArray& data)
+//    {
+//        if (m_jobData.contains(job))
+//        {
+//            data = m_jobData.value(job);
+//            m_jobData.remove(job);
+//        }
+//    }
+
+    void ImgurTalker::slotResult (KJob *kjob) {
+        KIO::Job* job = static_cast<KIO::Job*>(kjob);
+
+        if ( job->error() )
+            kDebug() << "err: " << job->errorString();
+
+//        QString s = QString(m_buffer);
+        switch(m_state)
+        {
+            default:
+//                parseResponseImageUpload(m_buffer);
+                break;
+        }
+
+        kDebug () << "buff len" << m_buffer.length() << m_buffer;
+        return;
+    }
+
+    bool ImgurTalker::imageUpload (QString filePath)
     {
         KUrl url(m_exportUrl);
+        MPForm form;
+
         url.addQueryItem("key", m_apiKey);
-        QString imgData = data (file);
-        url.addQueryItem("data", imgData);
-        QByteArray postData;
-        //postData["key"] = m_apiKey;
-        //QByteArray encodedImage = data (file);
+        url.addQueryItem("title", "TEST Kipi Imgur uploader");
 
-        int imgSize = imgData.size();
-        //postData["data"] = encodedImage;
+        form.addFile("image", filePath);
+        form.finish();
 
-        KIO::TransferJob* job = KIO::http_post(url, postData, KIO::HideProgressInfo);
+        KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
+        job->addMetaData("content-type", form.contentType());
+        job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
         job->addMetaData("UserAgent", m_userAgent);
-        job->addMetaData("content-length", QString("Content-Length: %1").arg(QString::number(imgSize)));
+
 
         connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
                 this, SLOT(data(KIO::Job*, const QByteArray&)));
@@ -124,16 +159,20 @@ namespace KIPIImgurExportPlugin {
 
          m_job   = job;
 
-         kDebug() << job;
+//         m_state = FE_ADDPHOTO;
+         emit signalBusy(true);
+
+         m_buffer.resize(0);
          return true;
     }
 
-//    bool ImgurExportWebservice::imageDelete (QString hash)
-//    {
-//     /* TODO */
-//    }
+    bool ImgurTalker::imageDelete (QString hash)
+    {
+     /* TODO */
+        return true;
+    }
 
-    void ImgurExportWebservice::cancel()
+    void ImgurTalker::cancel()
     {
         if (m_job) {
             m_job->kill();
@@ -142,3 +181,4 @@ namespace KIPIImgurExportPlugin {
         emit signalBusy(false);
     }
 }
+

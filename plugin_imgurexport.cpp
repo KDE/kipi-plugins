@@ -21,6 +21,7 @@
  * ============================================================ */
 
 #include "plugin_imgurexport.h"
+#include "imgurtalker.h"
 
 // KDE includes
 #include <KDebug>
@@ -40,6 +41,7 @@
 #include <libkipi/interface.h>
 
 using namespace KIPIImgurExportPlugin;
+using namespace KIPIImgurTalkerPlugin;
 
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
@@ -87,8 +89,17 @@ void Plugin_ImgurExport::slotActivate()
         return;
     }
 
+    // i doubt i need this.
     KStandardDirs dir;
     QString Tmp = dir.saveLocation("tmp", "kipi-imgurexportplugin-" + QString::number(getpid()) + '/');
+
+    ImgurTalker* ws = new ImgurTalker(parent());
+    for (int i = 0; i < interface->currentSelection().images().length(); i++ ) {
+        QString path =  interface->currentSelection().images().at(i).path();
+        kDebug() << path;
+
+        ws->imageUpload(path);
+    }
 
     kDebug() << "We have activated imgur exporter!";
 }

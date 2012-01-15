@@ -19,11 +19,11 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-#ifndef  IMGUREXPORTWEBSERVICE_H
-#define IMGUREXPORTWEBSERVICE_H
+#ifndef IMGURTALKER_H
+#define IMGURTALKER_H
 
 // api key from imgur
-#define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3";
+#define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3asd";
 
 // Qt
 #include <QObject>
@@ -38,12 +38,15 @@ namespace KIO
     class Job;
 }
 
-namespace KIPIImgurExportPlugin
+namespace KIPIImgurTalkerPlugin
 {
-    class ImgurExportWebservice : public QObject
+    class ImgurTalker : public QObject
     {
         Q_OBJECT
 
+        /**
+         * @deprecated
+         */
         enum ServerStatusCode {
             NO_IMAGE = 1000,
             UPLOAD_FAILED,
@@ -61,15 +64,28 @@ namespace KIPIImgurExportPlugin
             INVALID_API_REQUEST = 9000,
             INVALID_RESPONSE_FORMAT
         };
-    public:
-        ImgurExportWebservice (QWidget *parent = 0);
-        ~ImgurExportWebservice();
 
-        const QString getStatusError (ImgurExportWebservice::ServerStatusCode code);
-        bool imageUpload (QFile* file);
-//        bool imageDelete (QString hash);
+        enum State
+        {
+            FE_LOGIN = 0,
+            FE_LISTALBUMS,
+            FE_LISTPHOTOS,
+            FE_ADDPHOTO,
+            FE_UPDATEPHOTO,
+            FE_GETPHOTO,
+            FE_CHECKTOKEN,
+            FE_GETTOKEN,
+            FE_CREATEALBUM
+        };
+    public:
+        ImgurTalker (QObject *parent = 0);
+        ~ImgurTalker();
+
+        const QString getStatusError (ImgurTalker::ServerStatusCode code);
+        bool imageUpload (QString filePath);
+        bool imageDelete (QString hash);
         void cancel ();
-        QString data (QFile *file);
+//        void dataReq(KIO::Job* job, QByteArray &data);
 
 
     Q_SIGNALS:
@@ -78,15 +94,22 @@ namespace KIPIImgurExportPlugin
         void signalUploadDone(int, const QString&);
 
     private:
-        QString   m_apiKey;
-        QString   m_exportUrl;
-        QString   m_userAgent;
+        QString         m_apiKey;
+        QString         m_exportUrl;
+        QString         m_userAgent;
+
+        QObject*        m_parent;
+        QByteArray      m_buffer;
+
+        State           m_state;
+
         KIO::Job*       m_job;
-        QWidget*        m_parent;
+        QMap<KIO::Job*, QByteArray> m_jobData;
 
     private Q_SLOTS:
-    //    void slotResult (KJob *job);
+        void slotResult (KJob *job);
+        void data (KIO::Job* job, const QByteArray &data);
 
     };
-} // namespace KIPIImgurExportPlugin
-#endif // IMGUREXPORTWEBSERVICE_H
+} // namespace KIPIImgurTalkerPlugin
+#endif // IMGURTALKER_H

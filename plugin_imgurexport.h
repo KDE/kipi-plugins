@@ -23,16 +23,14 @@
 #define PLUGIN_IMGUREXPORT_H
 
 #include <QVariant>
+#include <unistd.h>
 
 // LibKIPI includes
 #include <libkipi/plugin.h>
 
-#include "imgurexportwidget.h"
-
 namespace KIPIImgurExportPlugin
 {
 
-using namespace KIPIImgurExportPlugin;
 class Plugin_ImgurExport : public KIPI::Plugin
 {
     Q_OBJECT

@@ -1,9 +1,9 @@
 SUBDIRS(icons)
 
 SET(kipiplugin_imgurexport_PART_SRCS
-   plugin_imgurexport.cpp
-   imgurexportwidget.cpp
-   imgurexportwebservice.cpp
+    plugin_imgurexport.cpp
+    imgurtalker.cpp
+    mpform.cpp
 )
 
 KDE4_ADD_PLUGIN(kipiplugin_imgurexport ${kipiplugin_imgurexport_PART_SRCS})
