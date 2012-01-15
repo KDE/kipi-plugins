@@ -82,17 +82,7 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
 {
     setModal(false);
     setWindowTitle(i18n("Panorama Creator Wizard"));
-/*
-    if (mngr->cpFindBinary().developmentVersion())
-    {
-        KMessageBox::information(this,
-                                 i18n("Hugin's tools have been detected. However, the version detected is not a stable one. "
-                                      "Be advised that it may lead to undefined behavior and we strongly encourage you "
-                                      "to switch to a stable one."),
-                                 i18n("Development version of Hugin")
-                                 );
-    }
-*/
+
     d->mngr              = mngr;
     d->introPage         = new IntroPage(d->mngr, this);
     d->itemsPage         = new ItemsPage(d->mngr, this);
