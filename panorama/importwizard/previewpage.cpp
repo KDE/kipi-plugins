@@ -267,7 +267,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewUrl = ad.outUrl;
                     d->mngr->setPreviewUrl(ad.outUrl);
                     d->previewWidget->load(ad.outUrl.toLocalFile(), true);
-                    d->previewWidget->setSelectionAreaPossible(true);
+//                     d->previewWidget->setSelectionAreaPossible(true);
                     kDebug() << "Preview URL: " << ad.outUrl.toLocalFile();
 
                     break;
