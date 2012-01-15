@@ -76,10 +76,8 @@ private Q_SLOTS:
     void slotItemsPageIsValid(bool);
     void slotPreProcessed(const ItemUrlsMap&);
     void slotOptimized(const KUrl&);
-    void slotPreviewProcessing();
-    void slotPreviewProcessed(const KUrl&);
     void slotStitchingFinished(const KUrl&);
-    void slotCopyFinished();
+    void slotCopyFinished(bool);
     void slotHelp();
 
 private:

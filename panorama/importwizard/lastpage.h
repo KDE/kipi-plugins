@@ -49,7 +49,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalCopyFinished();
+    void signalCopyFinished(bool);
 
 private Q_SLOTS:
 

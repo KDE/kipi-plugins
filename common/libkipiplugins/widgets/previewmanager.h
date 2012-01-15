@@ -66,6 +66,7 @@ public:
     void setThumbnail(const QPixmap& preview=QPixmap());
     void setButtonText(const QString& text);
     void setButtonVisible(bool b);
+    void setSelectionAreaPossible(bool b);
 
 Q_SIGNALS:
 

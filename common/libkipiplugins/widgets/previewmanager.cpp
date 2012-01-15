@@ -193,6 +193,11 @@ void PreviewManager::setButtonVisible(bool b)
     d->button->setVisible(b);
 }
 
+void PreviewManager::setSelectionAreaPossible(bool b)
+{
+    d->preview->enableSelectionArea(b);
+}
+
 void PreviewManager::setText(const QString& text, const QColor& color)
 {
     d->textLabel->setText(QString("<qt text=\"%1\">%2</qt>").arg(color.name()).arg(text));
