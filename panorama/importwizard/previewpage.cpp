@@ -26,6 +26,8 @@
 // Qt includes
 
 #include <QLabel>
+#include <QMutex>
+#include <QMutexLocker>
 
 // KDE includes
 
@@ -54,15 +56,19 @@ namespace KIPIPanoramaPlugin
 struct PreviewPage::PreviewPagePriv
 {
     PreviewPagePriv(Manager *m)
-        : title(0), previewWidget(0), previewBusy(false), postProcessing(0), mngr(m)
+        : title(0), previewWidget(0), previewBusy(false), stitchingBusy(false),
+          postProcessing(0), canceled(false), mngr(m)
     {}
 
     QLabel*              title;
     QUrl                 previewUrl;
     PreviewManager*      previewWidget;
     bool                 previewBusy;
+    bool                 stitchingBusy;
     BatchProgressWidget* postProcessing;
     int                  curProgress, totalProgress;
+    QMutex               actionMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
+    bool                 canceled;
 
     QString              output;
 
@@ -95,6 +101,9 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 }
 
 PreviewPage::~PreviewPage()
@@ -102,29 +111,39 @@ PreviewPage::~PreviewPage()
     delete d;
 }
 
-void PreviewPage::cancel()
+bool PreviewPage::cancel()
 {
-    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+    d->canceled = true;
 
     d->mngr->thread()->cancel();
 
+    QMutexLocker lock(&d->actionMutex);
     if (d->previewBusy)
     {
+        d->previewBusy = false;
         d->previewWidget->setBusy(false);
         d->previewWidget->setText(i18n("Preview Processing Cancelled."));
+        return true;
     }
+    else if (d->stitchingBusy)
+    {
+        d->stitchingBusy = false;
+        lock.unlock();
+        resetPage();
+        return false;
+    }
+    return true;
 }
 
 void PreviewPage::computePreview()
 {
+    QMutexLocker lock(&d->actionMutex);
+
+    d->canceled = false;
+
     d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
     d->previewBusy = true;
 
-    connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    emit signalPreviewGenerating();
     d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimiseUrl(),
                                                d->mngr->preProcessedMap(),
                                                d->mngr->makeBinary().path(),
@@ -137,6 +156,9 @@ void PreviewPage::computePreview()
 
 void PreviewPage::startStitching()
 {
+    QMutexLocker lock(&d->actionMutex);
+
+    d->stitchingBusy = true;
     d->curProgress   = 0;
     d->totalProgress = d->mngr->preProcessedMap().size() + 1;
     d->previewWidget->hide();
@@ -144,11 +166,9 @@ void PreviewPage::startStitching()
                            "<p><h1>Panorama Post-Processing</h1></p>"
                            "</qt>"));
 
+    d->postProcessing->reset();
     d->postProcessing->setTotal(d->totalProgress);
     d->postProcessing->show();
-
-    connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     d->mngr->thread()->compileProject(d->mngr->autoOptimiseUrl(),
                                       d->mngr->preProcessedMap(),
@@ -177,17 +197,23 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
     QString text;
 
+    QMutexLocker lock(&d->actionMutex);
     if (!ad.starting)           // Something is complete...
     {
         if (!ad.success)        // Something is failed...
         {
+            if (d->canceled)    // In that case, the error is expected
+            {
+                return;
+            }
             switch (ad.action)
             {
                 case PREVIEW :
                 {
-                    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
+                    if (!d->previewBusy)
+                    {
+                        return;
+                    }
                     d->output = ad.message;
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
@@ -196,14 +222,14 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     errorString.replace('\n', "</p><p>");
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
-                    emit signalPreviewGenerated(KUrl());
                     break;
                 }
                 case STITCH:
                 {
-                    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
+                    if (!d->stitchingBusy)
+                    {
+                        return;
+                    }
                     d->postProcessing->addedAction(QString("Panorama compilation: ") + ad.message, ErrorMessage);
                     kDebug() << "Enblend call failed";
                     break;
@@ -234,23 +260,24 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             {
                 case PREVIEW:
                 {
-                    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
+                    if (!d->previewBusy)
+                    {
+                        return;
+                    }
                     d->previewUrl = ad.outUrl;
                     d->mngr->setPreviewUrl(ad.outUrl);
                     d->previewWidget->load(ad.outUrl.toLocalFile(), true);
                     d->previewWidget->setSelectionAreaPossible(true);
                     kDebug() << "Preview URL: " << ad.outUrl.toLocalFile();
 
-                    emit signalPreviewGenerated(ad.outUrl);
                     break;
                 }
                 case STITCH:
                 {
-                    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
-                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
+                    if (!d->stitchingBusy)
+                    {
+                        return;
+                    }
                     d->postProcessing->addedAction(QString("Panorama compilation"), SuccessMessage);
                     d->curProgress++;
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
@@ -280,7 +307,7 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
         }
     }
-    else
+    else           // Some step is started...
     {
         switch (ad.action)
         {

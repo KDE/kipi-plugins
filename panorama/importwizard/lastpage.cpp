@@ -157,6 +157,10 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             {
                 case COPY:
                 {
+                    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    emit signalCopyFinished(false);
                     //TODO
                     break;
                 }
@@ -173,7 +177,10 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             {
                 case COPY:
                 {
-                    emit signalCopyFinished();
+                    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+                    emit signalCopyFinished(true);
                     break;
                 }
                 default:

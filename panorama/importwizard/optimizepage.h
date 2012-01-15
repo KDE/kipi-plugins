@@ -46,7 +46,7 @@ public:
     ~OptimizePage();
 
     void process();
-    void cancel();
+    bool cancel();
     void resetPage();
 
 Q_SIGNALS:

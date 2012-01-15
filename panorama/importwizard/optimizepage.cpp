@@ -29,6 +29,8 @@
 #include <QPushButton>
 #include <QTimer>
 #include <QCheckBox>
+#include <QMutex>
+#include <QMutexLocker>
 
 // KDE includes
 
@@ -54,7 +56,7 @@ namespace KIPIPanoramaPlugin
 struct OptimizePage::OptimizePagePriv
 {
     OptimizePagePriv()
-        : progressCount(0), progressLabel(0), progressTimer(0), title(0),
+        : progressCount(0), progressLabel(0), progressTimer(0), canceled(false), title(0),
           horizonCheckbox(0), projectionAndSizeCheckbox(0), detailsBtn(0),
           mngr(0)
     {
@@ -64,6 +66,8 @@ struct OptimizePage::OptimizePagePriv
     int             progressCount;
     QLabel*         progressLabel;
     QTimer*         progressTimer;
+    QMutex          progressMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
+    bool            canceled;
 
     QLabel*         title;
 
@@ -135,8 +139,8 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
     QPixmap leftPix = KStandardDirs::locate("data", "kipiplugin_panorama/pics/assistant-hugin.png");
     setLeftBottomPix(leftPix.scaledToWidth(128, Qt::SmoothTransformation));
 
-    connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
-            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+//     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
+//             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     connect(d->progressTimer, SIGNAL(timeout()),
             this, SLOT(slotProgressTimerDone()));
@@ -158,6 +162,8 @@ OptimizePage::~OptimizePage()
 
 void OptimizePage::process()
 {
+    QMutexLocker lock(&d->progressMutex);
+
     d->title->setText(i18n("<qt>"
     "<p>Optimization is in progress, please wait.</p>"
     "<p>This can take a while...</p>"
@@ -177,19 +183,29 @@ void OptimizePage::process()
         d->mngr->thread()->start();
 }
 
-void OptimizePage::cancel()
+bool OptimizePage::cancel()
 {
+    d->canceled = true;
     disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
     d->mngr->thread()->cancel();
-    d->progressTimer->stop();
-    d->progressLabel->clear();
-    resetTitle();
+
+    QMutexLocker lock(&d->progressMutex);
+    if (d->progressTimer->isActive())
+    {
+        d->progressTimer->stop();
+        d->progressLabel->clear();
+        resetTitle();
+        return false;
+    }
+
+    return true;
 }
 
 void OptimizePage::resetPage()
 {
+    d->canceled = false;
     resetTitle();
 }
 
@@ -208,14 +224,23 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 {
     QString text;
 
+    QMutexLocker lock(&d->progressMutex);
+
     if (!ad.starting)           // Something is complete...
     {
         if (!ad.success)        // Something is failed...
         {
+            if (d->canceled)    // In that case, the error is expected
+            {
+                return;
+            }
             switch (ad.action)
             {
                 case(OPTIMIZE):
                 {
+                    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
                     d->title->setText(i18n("<qt>"
                     "<p>Optimization has failed.</p>"
                     "<p>Press \"Details\" to show processing messages.</p>"
@@ -242,6 +267,9 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             {
                 case(OPTIMIZE):
                 {
+                    disconnect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
+                               this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
                     d->progressTimer->stop();
                     d->progressLabel->clear();
                     emit signalOptimized(ad.ptoUrl);
