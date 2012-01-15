@@ -89,7 +89,11 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
                         "<a href='http://hugin.sourceforge.net/tutorials/overview/en.shtml'>this page</a></p>"
                         "</qt>"));
 
-    d->binariesWidget = new KIPIPlugins::BinarySearch(vbox);d->binariesWidget->setTitle(i18n("Panorama Binaries"));
+    QGroupBox* binaryBox        = new QGroupBox(vbox);
+    QGridLayout* binaryLayout   = new QGridLayout;
+    binaryBox->setLayout(binaryLayout);
+    binaryBox->setTitle(i18n("Panorama Binaries"));
+    d->binariesWidget = new KIPIPlugins::BinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->autoOptimiserBinary());
     d->binariesWidget->addBinary(d->mngr->cpCleanBinary());
     d->binariesWidget->addBinary(d->mngr->cpFindBinary());
@@ -104,7 +108,6 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
     QVBoxLayout* settingsVBox   = new QVBoxLayout();
     d->settingsGroupBox         = new QGroupBox(i18n("Panorama Settings"), vbox);
     d->settingsGroupBox->setLayout(settingsVBox);
-    settingsVBox->addStretch(1);
 
     d->hdrCheckBox  = new QCheckBox(i18n("HDR output"), d->settingsGroupBox);
     d->hdrCheckBox->setToolTip(i18n("When checked, the panorama will be stitched into an High Dynamic Range (HDR) "
@@ -119,7 +122,6 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
     d->formatGroupBox       = new QGroupBox(i18n("File Format"), vbox);
     d->formatGroupBox->setLayout(formatVBox);
     QButtonGroup* group     = new QButtonGroup();
-    formatVBox->addStretch(1);
 
     d->jpegRadioButton      = new QRadioButton(i18n("JPEG output"), d->formatGroupBox);
     // xgettext: no-c-format
@@ -147,10 +149,6 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
             d->tiffRadioButton->setChecked(true);
             break;
     }
-
-    QLabel* space   = new QLabel(vbox);
-
-    vbox->setStretchFactor(space, 2);
 
     setPageWidget(vbox);
 

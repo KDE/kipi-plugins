@@ -70,6 +70,7 @@ namespace KIPIPhotoLayoutsEditor
             void open(const KUrl & fileUrl);
             void save();
             void saveAs();
+            void saveAsTemplate();
             void saveFile(const KUrl & fileUrl = KUrl(), bool setFileAsDefault = true);
             void exportFile();
             void printPreview();

@@ -37,16 +37,13 @@ class AlignBinary : public BinaryIface
 
 public:
 
-    AlignBinary();
-    ~AlignBinary();
+    AlignBinary()
+        : BinaryIface(QString("align_image_stack"), QString("0.8"), QString("align_image_stack version "),
+                      1, QString("Hugin"), QString("http://hugin.sourceforge.net"),
+                      QString("ExpoBlending"), QStringList("-h"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
-
-protected:
-
-    virtual bool parseHeader(const QString& output);
+    ~AlignBinary() {}
 
 };
 

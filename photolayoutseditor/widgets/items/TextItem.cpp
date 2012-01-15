@@ -661,7 +661,51 @@ QDomDocument TextItem::toSvg() const
     return document;
 }
 
+QDomDocument TextItem::toTemplateSvg() const
+{
+    QDomDocument document = AbstractPhoto::toSvg();
+    QDomElement result = document.firstChildElement();
+    result.setAttribute("class", "TextItem");
+
+    // 'defs' tag
+    QDomElement defs = document.createElement("defs");
+    defs.setAttribute("class", "data");
+    result.appendChild(defs);
+
+    // 'defs'-> ple:'data'
+    QDomElement appNS = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
+    appNS.setPrefix(KIPIPhotoLayoutsEditor::name());
+    defs.appendChild(appNS);
+
+    // 'defs'-> ple:'data' -> 'text'
+    QDomElement text = document.createElement("text");
+    text.appendChild(document.createTextNode(d->m_string_list.join("\n").toUtf8()));
+    text.setPrefix(KIPIPhotoLayoutsEditor::name());
+    appNS.appendChild(text);
+
+    // 'defs'-> ple:'data' -> 'color'
+    QDomElement color = document.createElement("color");
+    color.setPrefix(KIPIPhotoLayoutsEditor::name());
+    color.setAttribute("name", m_color.name());
+    appNS.appendChild(color);
+
+    // 'defs'-> ple:'data' -> 'font'
+    QDomElement font = document.createElement("font");
+    font.setPrefix(KIPIPhotoLayoutsEditor::name());
+    font.setAttribute("data", m_font.toString());
+    appNS.appendChild(font);
+
+    return document;
+}
+
 QDomDocument TextItem::svgVisibleArea() const
+{
+    QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_text_path);
+    document.firstChildElement("path").setAttribute("fill", m_color.name());
+    return document;
+}
+
+QDomDocument TextItem::svgTemplateArea() const
 {
     QDomDocument document = KIPIPhotoLayoutsEditor::pathToSvg(m_text_path);
     document.firstChildElement("path").setAttribute("fill", m_color.name());

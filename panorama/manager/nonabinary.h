@@ -37,15 +37,14 @@ class NonaBinary : public BinaryIface
 
 public:
 
-    NonaBinary();
-    ~NonaBinary();
+    NonaBinary()
+        : BinaryIface(QString("nona"), QString("2010.4"), QString("nona version "),
+                      2, QString("Hugin"), QString("http://hugin.sourceforge.net"),
+                      QString("Panorama"), QStringList("-h"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
+    ~NonaBinary() {}
 
-protected:
-    virtual bool parseHeader(const QString& output);
 };
 
 } // namespace KIPIPanoramaPlugin

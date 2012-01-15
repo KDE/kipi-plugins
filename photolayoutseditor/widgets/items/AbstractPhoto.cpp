@@ -290,13 +290,125 @@ QDomDocument AbstractPhoto::toSvg() const
     return document;
 }
 
+QDomDocument AbstractPhoto::toTemplateSvg() const
+{
+    QDomDocument document;
+    QTransform transform = this->transform();
+    QString translate = "translate("+
+                        QString::number(this->pos().x())+
+                        ','+
+                        QString::number(this->pos().y())+
+                        ')';
+    QString matrix = "matrix("+
+                     QString::number(transform.m11())+
+                     ','+
+                     QString::number(transform.m12())+
+                     ','+
+                     QString::number(transform.m21())+
+                     ','+
+                     QString::number(transform.m22())+
+                     ','+
+                     QString::number(transform.m31())+
+                     ','+
+                     QString::number(transform.m32())+
+                     ')';
+    QDomElement itemSVG = document.createElement("g");
+    document.appendChild(itemSVG);
+    itemSVG.setAttribute("transform", translate + ' ' + matrix);
+    itemSVG.setAttribute("id", this->id());
+    itemSVG.setAttribute("name", QString(this->name().toUtf8()));
+    if (!this->isVisible())
+        itemSVG.setAttribute("visibility", "hide");
+
+    // 'defs' tag
+    QDomElement defs = document.createElement("defs");
+    defs.setAttribute("id", "data_"+this->id());
+    itemSVG.appendChild(defs);
+
+    // 'defs'->'clipPath'
+    QDomElement clipPath = document.createElement("clipPath");
+    clipPath.setAttribute("id", "clipPath_"+this->id());
+    defs.appendChild(clipPath);
+
+    // 'defs'->'ple:data'
+    QDomElement appNSData = document.createElementNS(KIPIPhotoLayoutsEditor::uri(), "data");
+    appNSData.setPrefix(KIPIPhotoLayoutsEditor::name());
+    defs.appendChild(appNSData);
+    appNSData.appendChild(d->m_effects_group->toSvg(document));
+
+    // 'defs'->'ple:data'->'crop_path'
+    QDomElement cropPath = document.createElement("crop_path");
+    cropPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(this->cropShape()).documentElement() );
+    appNSData.appendChild(cropPath);
+
+    // Convert visible area to SVG path's 'd' attribute
+    QPainterPath visibleArea = this->shape();
+    if (!visibleArea.isEmpty())
+    {
+        // 'defs'->'clipPath'->'path'
+        clipPath.appendChild( KIPIPhotoLayoutsEditor::pathToSvg(visibleArea).documentElement() );
+    }
+
+    QDomElement visibleData = document.createElement("g");
+    visibleData.setAttribute("id", "vis_data_" + this->id());
+    defs.appendChild(visibleData);
+    visibleData.appendChild(this->svgTemplateArea());
+    visibleData.appendChild(d->m_borders_group->toSvg(document));
+
+    // 'use'
+    QDomElement use = document.createElement("use");
+    use.setAttribute("xlink:href",'#'+visibleData.attribute("id"));
+    use.setAttribute("style","clip-path: url(#" + clipPath.attribute("id") + ");");
+    itemSVG.appendChild(use);
+
+    // 'g'
+    QDomElement g2 = document.createElement("g");
+    itemSVG.appendChild(g2);
+
+    // 'g'->'use'
+    QDomElement use3 = document.createElement("use");
+    use3.setAttribute("xlink:href",'#' + clipPath.attribute("id"));
+    g2.appendChild(use3);
+
+     /*
+      * <g>
+      *     <defs>
+      *         <clipPath>      // clippingPath == m_image_path
+      *             <path />
+      *         </clipPath>
+      *         <g>
+      *             .........     // Children data
+      *             .........     // Borders applied to the item
+      *         </g>
+      *         <ple:data>
+      *             .........     // Effects applied to the item
+      *             .........     // Crop path
+      *             .........     // Other data from the AbstractPhoto class.
+      *         </ple:data>
+      *     </defs>
+      *     <use />             // Cuts image
+      *     <g>
+      *         <use />         // Print cut image
+      *     </g>
+      * </g>
+      */
+
+    return document;
+}
+
 bool AbstractPhoto::fromSvg(QDomElement & element)
 {
+    qDebug() << "1";
+
     if (element.tagName() != "g")
         return false;
 
+    qDebug() << "2";
+
     if (element.attribute("visibility") == "hide")
         this->setVisible(false);
+
+    qDebug() << "3";
 
     // Position & transformation
     this->setPos(0,0);
@@ -334,9 +446,44 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
         }
     }
 
+
+    qDebug() << "4";
+
+    if (element.firstChildElement().tagName() == "g")
+    {
+        element = element.firstChildElement();
+        QString transform = element.attribute("transform");
+        if (!transform.isEmpty())
+        {
+            QRegExp rot("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)");
+            if (rot.indexIn(transform) >= 0)
+            {
+                QStringList list = rot.capturedTexts();
+                QString matrix = list.at(0);
+                matrix.remove(matrix.length()-1,1).remove(0,7);
+                list = matrix.split(',');
+                QString m11 = list.at(0);
+                QString m12 = list.at(1);
+                QString m21 = list.at(2);
+                QString m22 = list.at(3);
+                QString m31 = list.at(4);
+                QString m32 = list.at(5);
+                this->setTransform(QTransform(m11.toDouble(), m12.toDouble(), 0,
+                                              m21.toDouble(), m22.toDouble(), 0,
+                                              m31.toDouble(), m32.toDouble(), 1));
+            }
+        }
+    }
+
+
+    qDebug() << "5";
+
     // ID & name
     d->m_id = element.attribute("id");
     d->setName(element.attribute("name"));
+
+
+    qDebug() << "6";
 
     // Validation purpose
     QDomElement defs = element.firstChildElement("defs");
@@ -345,11 +492,17 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
     if (defs.isNull())
         return false;
 
+
+    qDebug() << "7";
+
     QDomElement itemDataElement = defs.firstChildElement("g");
     while (!itemDataElement.isNull() && itemDataElement.attribute("id") != "vis_data_"+this->id())
         itemDataElement = itemDataElement.nextSiblingElement("g");
     if (itemDataElement.isNull())
         return false;
+
+
+    qDebug() << "8";
 
     // Borders
     if (d->m_borders_group)
@@ -361,14 +514,23 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
     if (!d->m_borders_group)
         return false;
 
+
+    qDebug() << "9";
+
     QDomElement clipPath = defs.firstChildElement("clipPath");
     if (clipPath.isNull() || clipPath.attribute("id") != "clipPath_"+this->id())
         return false;
+
+
+    qDebug() << "10";
 
     // Other application specific data
     QDomElement appNS = defs.firstChildElement("data");
     if (appNS.isNull() || appNS.prefix() != KIPIPhotoLayoutsEditor::name())
         return false;
+
+
+    qDebug() << "11";
 
     // Effects
     if (d->m_effects_group)
@@ -377,12 +539,18 @@ bool AbstractPhoto::fromSvg(QDomElement & element)
     if (!d->m_effects_group)
         return false;
 
+
+    qDebug() << "12";
+
     // Crop path
     QDomElement cropPath = appNS.firstChildElement("crop_path");
     if (!cropPath.isNull())
         this->d->setCropShape( KIPIPhotoLayoutsEditor::pathFromSvg( cropPath.firstChildElement("path") ) );
     else
         return false;
+
+
+    qDebug() << "13";
 
     return true;
 }
@@ -401,7 +569,8 @@ QString AbstractPhoto::name() const
 
 void AbstractPhoto::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * /*widget*/)
 {
-    bordersGroup()->paint(painter, option);
+    if (d->m_borders_group)
+        d->m_borders_group->paint(painter, option);
 }
 
 QVariant AbstractPhoto::itemChange(GraphicsItemChange change, const QVariant & value)
@@ -518,7 +687,8 @@ void AbstractPhoto::refresh()
     this->setPos(d->m_pos);
     this->setTransform(d->m_transform);
     this->refreshItem();
-    d->m_borders_group->refresh();
+    if (d->m_borders_group)
+        d->m_borders_group->refresh();
     emit changed();
 }
 

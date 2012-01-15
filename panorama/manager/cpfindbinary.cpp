@@ -37,26 +37,12 @@
 
 namespace KIPIPanoramaPlugin
 {
-CPFindBinary::CPFindBinary()
-    : BinaryIface()
-{
-    m_configGroup       = "Panorama Settings";
-    m_pathToBinary      = "cpfind";
-    setBaseName("cpfind");
-    m_versionArguments << "--version";
-    readConfig();
-}
-
-CPFindBinary::~CPFindBinary()
-{
-}
 
 bool CPFindBinary::parseHeader(const QString& output)
 {
     bool ret = false;
 
     // FIXME: Change that to a regexp
-    QString headerStarts("Hugins cpfind ");
     QString headerStartsNew("Hugin's cpfind ");          // For Hugin 2011.4
     QStringList lines = output.split('\n');
 
@@ -64,11 +50,10 @@ bool CPFindBinary::parseHeader(const QString& output)
     foreach(QString line, lines)
     {
         kDebug() << path() << " help header line: \n" << line;
-        m_version.clear();
 
-        if (line.startsWith(headerStarts))
+        if (line.startsWith(m_headerStarts))
         {
-            m_version = line.remove(0, headerStarts.length()).section('.', 0, 1);
+            m_version = line.remove(0, m_headerStarts.length()).section('.', 0, 1);
         }
         else if (line.startsWith(headerStartsNew))
         {
@@ -81,9 +66,11 @@ bool CPFindBinary::parseHeader(const QString& output)
 
         if (!m_version.isEmpty())
         {
-            m_version.remove("Pre-Release ");            // Special case with Hugin beta.
-
-            kDebug() << "Found " << path() << " version: " << version() ;
+            if (m_version.startsWith("Pre-Release "))
+            {
+                m_developmentVersion = true;
+                m_version.remove("Pre-Release ");            // Special case with Hugin beta.
+            }
             ret = true;
             break;
         }
@@ -94,21 +81,6 @@ bool CPFindBinary::parseHeader(const QString& output)
         m_developmentVersion = true;
     }
     return ret;
-}
-
-KUrl CPFindBinary::url() const
-{
-    return KUrl("http://hugin.sourceforge.net");
-}
-
-QString CPFindBinary::projectName() const
-{
-    return QString("Hugin");
-}
-
-QString CPFindBinary::minimalVersion() const
-{
-    return QString("2010.4");
 }
 
 }  // namespace KIPIPanoramaPlugin

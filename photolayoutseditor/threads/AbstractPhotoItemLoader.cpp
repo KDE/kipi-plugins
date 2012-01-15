@@ -30,6 +30,7 @@
 #include "global.h"
 
 #include <klocalizedstring.h>
+#include <QDebug>
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -77,6 +78,10 @@ void AbstractPhotoItemLoader::run()
     // Items visibility
     m_item->d->m_visible = (m_element.attribute("visibility") != "hide");
 
+    // ID & name
+    m_item->d->m_id = m_element.attribute("id");
+    m_item->d->m_name = m_element.attribute("name");
+
     // Position & transformation
     m_item->d->m_pos = QPointF(0,0);
     QString transform = m_element.attribute("transform");
@@ -113,9 +118,28 @@ void AbstractPhotoItemLoader::run()
         }
     }
 
-    // ID & name
-    m_item->d->m_id = m_element.attribute("id");
-    m_item->d->m_name = m_element.attribute("name");
+    if (m_element.firstChildElement().tagName() == "g")
+    {
+        m_element = m_element.firstChildElement();
+        QString transform = m_element.attribute("transform");
+        QRegExp rot("matrix\\([-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+,[-0-9.]+\\)");
+        if (rot.indexIn(transform) >= 0)
+        {
+            QStringList list = rot.capturedTexts();
+            QString matrix = list.at(0);
+            matrix.remove(matrix.length()-1,1).remove(0,7);
+            list = matrix.split(',');
+            QString m11 = list.at(0);
+            QString m12 = list.at(1);
+            QString m21 = list.at(2);
+            QString m22 = list.at(3);
+            QString m31 = list.at(4);
+            QString m32 = list.at(5);
+            m_item->d->m_transform = QTransform(m11.toDouble(), m12.toDouble(), 0,
+                                                m21.toDouble(), m22.toDouble(), 0,
+                                                m31.toDouble(), m32.toDouble(), 1);
+        }
+    }
 
     // Validation purpose
     QDomElement defs = m_element.firstChildElement("defs");

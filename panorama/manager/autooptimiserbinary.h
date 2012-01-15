@@ -37,15 +37,12 @@ class AutoOptimiserBinary : public BinaryIface
 
 public:
 
-    AutoOptimiserBinary();
-    ~AutoOptimiserBinary();
+    AutoOptimiserBinary()
+        : BinaryIface(QString("autooptimiser"), QString("2010.4"), QString("autooptimiser version "),
+                      1, QString("Hugin"), QString("http://hugin.sourceforge.net"), QString("Panorama"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
-
-protected:
-    virtual bool parseHeader(const QString& output);
+    ~AutoOptimiserBinary() {}
 
 };
 

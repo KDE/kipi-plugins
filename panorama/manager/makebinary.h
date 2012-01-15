@@ -37,15 +37,14 @@ class MakeBinary : public BinaryIface
 
 public:
 
-    MakeBinary();
-    ~MakeBinary();
+    MakeBinary()
+        : BinaryIface(QString("make"), QString("3.80"), QString("GNU Make "),
+                      0, QString("GNU"), QString("http://www.gnu.org/software/make/"),
+                      QString("Panorama"), QStringList("-v"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
+    ~MakeBinary() {}
 
-protected:
-    virtual bool parseHeader(const QString& output);
 };
 
 } // namespace KIPIPanoramaPlugin

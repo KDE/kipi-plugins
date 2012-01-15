@@ -34,60 +34,27 @@
 namespace KIPIExpoBlendingPlugin
 {
 
-EnfuseBinary::EnfuseBinary()
-            : BinaryIface()
-{
-    m_configGroup       = "ExpoBlending Settings";
-    m_pathToBinary      = "enfuse";
-    setBaseName("enfuse");
-    m_versionArguments<<"-V";
-    readConfig();
-}
-
-EnfuseBinary::~EnfuseBinary()
-{
-}
-
 bool EnfuseBinary::parseHeader(const QString& output)
 {
     // Work around Enfuse <= 3.2
     // The output look like this : ==== enfuse, version 3.2 ====
-    QString headerStarts("==== enfuse, version ");
-    QString firstLine = findHeader(output.split('\n', QString::SkipEmptyParts), headerStarts);
-    if (firstLine.isEmpty())
+    QString headerStartsOld("==== enfuse, version ");
+    QString firstLine = output.section('\n', m_headerLine, m_headerLine);
+    if (firstLine.startsWith(m_headerStarts))
     {
-        // Work around Enfuse >= 4.0
-        // The output look like this : enfuse 4.0-753b534c819d
-        headerStarts = QString("enfuse ");
-        firstLine = findHeader(output.split('\n', QString::SkipEmptyParts), headerStarts);
         kDebug() << path() << " help header line: \n" << firstLine;
-        m_version = firstLine.remove(0, headerStarts.length()).section('-', 0, 0);
+        setVersion(firstLine.remove(0, m_headerStarts.length()));
         kDebug() << "Found " << path() << " version: " << version();
         return true;
     }
-    else
+    else if (firstLine.startsWith(headerStartsOld))
     {
         kDebug() << path() << " help header line: \n" << firstLine;
-        m_version = firstLine.remove(0, headerStarts.length()).section(' ', 0, 0);
+        setVersion(firstLine.remove(0, headerStartsOld.length()));
         kDebug() << "Found " << path() << " version: " << version();
         return true;
     }
     return false;
-}
-
-KUrl EnfuseBinary::url() const
-{
-    return KUrl("http://enblend.sourceforge.net");
-}
-
-QString EnfuseBinary::projectName() const
-{
-    return QString("Enblend");
-}
-
-QString EnfuseBinary::minimalVersion() const
-{
-    return QString("3.2");
 }
 
 }  // namespace KIPIExpoBlendingPlugin

@@ -37,18 +37,15 @@ class EnblendBinary : public BinaryIface
 
 public:
 
-    EnblendBinary();
-    ~EnblendBinary();
+    EnblendBinary()
+        : BinaryIface(QString("enblend"), QString("4.0"), QString("enblend "),
+                      0, QString("Hugin"), QString("http://hugin.sourceforge.net"),
+                      QString("Panorama"), QStringList("-V"))
+        { setup(); }
 
-    QString minimalVersion() const;
-    KUrl    url()            const;
-    QString projectName()    const;
-
-protected:
-    virtual bool parseHeader(const QString& output);
+    ~EnblendBinary() {}
 
 };
-
 
 } // namespace KIPIPanoramaPlugin
 

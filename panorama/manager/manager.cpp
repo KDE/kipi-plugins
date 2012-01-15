@@ -123,31 +123,31 @@ Manager::~Manager()
     delete d;
 }
 
-bool Manager::checkBinaries() const
-{
-    if (!d->autoOptimiserBinary.showResults())
-        return false;
-
-    if (!d->cpCleanBinary.showResults())
-        return false;
-
-    if (!d->cpFindBinary.showResults())
-        return false;
-
-    if (!d->enblendBinary.showResults())
-        return false;
-
-    if (!d->makeBinary.showResults())
-        return false;
-
-    if (!d->nonaBinary.showResults())
-        return false;
-
-    if (!d->pto2MkBinary.showResults())
-        return false;
-
-    return true;
-}
+// bool Manager::checkBinaries() const
+// {
+//     if (!d->autoOptimiserBinary.showResults())
+//         return false;
+// 
+//     if (!d->cpCleanBinary.showResults())
+//         return false;
+// 
+//     if (!d->cpFindBinary.showResults())
+//         return false;
+// 
+//     if (!d->enblendBinary.showResults())
+//         return false;
+// 
+//     if (!d->makeBinary.showResults())
+//         return false;
+// 
+//     if (!d->nonaBinary.showResults())
+//         return false;
+// 
+//     if (!d->pto2MkBinary.showResults())
+//         return false;
+// 
+//     return true;
+// }
 
 void Manager::setHDR(bool hdr)
 {

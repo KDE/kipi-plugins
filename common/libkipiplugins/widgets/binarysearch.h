@@ -29,7 +29,7 @@
 // Qt includes
 
 #include <QString>
-#include <QGroupBox>
+#include <QTreeWidget>
 
 // Local includes
 
@@ -38,11 +38,20 @@
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT BinarySearch : public QGroupBox
+class KIPIPLUGINS_EXPORT BinarySearch : public QTreeWidget
 {
     Q_OBJECT
 
 public:
+
+    enum ColumnType
+    {
+        Status = 0,
+        Binary,
+        Version,
+        Button,
+        Link
+    };
 
     BinarySearch(QWidget* parent);
     ~BinarySearch();
@@ -53,12 +62,13 @@ public:
 
 public Q_SLOTS:
 
-    void slotAreBinariesFound(bool);
+    void slotAreBinariesFound(void);
 
 Q_SIGNALS:
 
     void signalBinariesFound(bool);
     void signalAddDirectory(const QString& dir);
+    void signalAddPossibleDirectory(const QString& dir);
 
 private:
 

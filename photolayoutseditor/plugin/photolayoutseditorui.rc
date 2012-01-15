@@ -11,6 +11,7 @@
          <Separator/>
            <Action name="save" />
            <Action name="save_as" />
+           <Action name="save_as_template" />
          <Separator/>
            <Action name="export" />
          <Separator/>
