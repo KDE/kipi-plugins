@@ -3,6 +3,9 @@ Kipi-plugins 2.6.0 - Release date: 2012/02/05
 
 NEW FEATURES:
 
+PhotoLayoutEditor : Add SuperImpose Template support to compose fun frame, post-card, etc... template file use SVG format.
+Panorama          : ???
+PrintAssistant    : 
 
 BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 
