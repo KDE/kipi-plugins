@@ -69,7 +69,7 @@ QVariant TemplatesModel::data(const QModelIndex & index, int role) const
     return QVariant();
 }
 
-QModelIndex TemplatesModel::parent(const QModelIndex & child) const
+QModelIndex TemplatesModel::parent(const QModelIndex& /*child*/) const
 {
     return QModelIndex();
 }
