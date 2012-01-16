@@ -12,4 +12,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 004 ==> 209721 : Search field in digikam's coordinates editor uses black text on black background.
 005 ==> 279182 : Batch resize fails possibly due to timestamp in filename.
 006 ==> 290932 : KIPI Plugins - up to date website.
-007 ==> 
+007 ==> 212785 : Cannot preserve rotation when exporting from raw to Facebook.
+008 ==> 
