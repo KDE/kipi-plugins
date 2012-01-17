@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef ABSTRACTPROPERTIESMODEL_H
-#define ABSTRACTPROPERTIESMODEL_H
+#ifndef ABSTRACTITEMSTOOL_H
+#define ABSTRACTITEMSTOOL_H
 
 #include <QWidget>
 
@@ -90,4 +90,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // ABSTRACTPROPERTIESMODEL_H
+#endif // ABSTRACTITEMSTOOL_H
