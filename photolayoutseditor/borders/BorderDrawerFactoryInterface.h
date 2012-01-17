@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef BORDERDRAWERFACTORY_H
-#define BORDERDRAWERFACTORY_H
+#ifndef BORDERDRAWERFACTORYINTERFACE_H
+#define BORDERDRAWERFACTORYINTERFACE_H
 
 #include <QObject>
 
@@ -35,18 +35,18 @@ namespace KIPIPhotoLayoutsEditor
     {
         public:
 
-            explicit BorderDrawerFactoryInterface(QObject * parent = 0) :
+            explicit BorderDrawerFactoryInterface(QObject* parent = 0) :
                 QObject(parent)
             {}
+
             virtual ~BorderDrawerFactoryInterface()
             {}
 
             virtual QString drawersNames() const = 0;
-
-            virtual BorderDrawerInterface * getDrawerInstance(const QString & name) = 0;
+            virtual BorderDrawerInterface* getDrawerInstance(const QString& name) = 0;
     };
 }
 
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerFactoryInterface,"pl.coder89.ple.BorderDrawerFactoryInterface/1.0")
+Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerFactoryInterface, "pl.coder89.ple.BorderDrawerFactoryInterface/1.0")
 
-#endif // BORDERDRAWERFACTORY_H
+#endif // BORDERDRAWERFACTORYINTERFACE_H

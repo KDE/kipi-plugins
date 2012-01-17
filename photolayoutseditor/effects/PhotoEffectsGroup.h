@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef ABSTRACTPHOTOEFFECTSGROUP_H
-#define ABSTRACTPHOTOEFFECTSGROUP_H
+#ifndef PHOTOEFFECTSGROUP_H
+#define PHOTOEFFECTSGROUP_H
 
 #include <QPixmap>
 #include <QDomDocument>
@@ -86,4 +86,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // ABSTRACTPHOTOEFFECTSGROUP_H
+#endif // PHOTOEFFECTSGROUP_H
