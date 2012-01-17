@@ -42,15 +42,15 @@ namespace KIPIPhotoLayoutsEditor
                 Vertical
             };
 
-            explicit CanvasSizeWidget(QWidget *parent = 0);
+            explicit CanvasSizeWidget(QWidget* parent = 0);
             Orientation orientation() const;
             CanvasSize canvasSize() const;
 
-        signals:
+        Q_SIGNALS:
 
             void orientationChanged();
 
-        public slots:
+        public Q_SLOTS:
 
             void sizeUnitsChanged(const QString & unitName);
             void resolutionUnitsChanged(const QString & unitName);
@@ -68,7 +68,7 @@ namespace KIPIPhotoLayoutsEditor
             void prepareSignalsConnections();
 
             class Private;
-            Private * d;
+            Private* d;
             friend class Private;
     };
 }

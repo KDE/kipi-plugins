@@ -22,8 +22,7 @@
  *
  * ============================================================ */
 
-#include "CanvasSizeWidget.h"
-#include "CanvasSize.h"
+#include "CanvasSizeWidget.moc"
 
 #include <kcombobox.h>
 #include <kpushbutton.h>
@@ -35,6 +34,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGroupBox>
+
+#include "CanvasSize.h"
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -349,4 +350,3 @@ void CanvasSizeWidget::yResolutionChanged(double yResolution)
     d->HEIGHT_RES = yResolution * resolutionFactor;
     d->updateSizeLabel();
 }
-
