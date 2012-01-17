@@ -26,15 +26,17 @@
 #ifndef PLECONFIGDIALOG_H
 #define PLECONFIGDIALOG_H
 
-#include <kconfigdialog.h>
 #include <QDebug>
+
+#include <kconfigdialog.h>
+
 namespace KIPIPhotoLayoutsEditor
 {
     class PLEConfigDialogPrivate;
 
     class PLEConfigDialog : public KConfigDialog
     {
-            PLEConfigDialogPrivate * d;
+            PLEConfigDialogPrivate* d;
 
         public:
 

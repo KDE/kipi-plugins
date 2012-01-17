@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef MOTELITEM_H
-#define MOTELITEM_H
+#ifndef LAYERSMOTELITEM_H
+#define LAYERSMOTELITEM_H
 
 #include <QObject>
 #include <QDebug>
@@ -85,4 +85,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // MOTELITEM_H
+#endif // LAYERSMOTELITEM_H
