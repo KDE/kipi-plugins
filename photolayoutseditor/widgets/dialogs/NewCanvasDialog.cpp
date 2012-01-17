@@ -22,11 +22,7 @@
  *
  * ============================================================ */
 
-#include "NewCanvasDialog.h"
-#include "CanvasSizeWidget.h"
-#include "TemplatesView.h"
-#include "TemplatesModel.h"
-#include "CanvasSize.h"
+#include "NewCanvasDialog.moc"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -45,6 +41,11 @@
 #include <kpushbutton.h>
 #include <kicon.h>
 
+#include "CanvasSizeWidget.h"
+#include "TemplatesView.h"
+#include "TemplatesModel.h"
+#include "CanvasSize.h"
+
 #define PAPER_SIZE_ROLE 128
 
 using namespace KIPIPhotoLayoutsEditor;
@@ -53,9 +54,7 @@ class NewCanvasDialog::Private
 {
     Private()
     {
-        QListWidgetItem * temp;
-
-        temp = new QListWidgetItem("Custom");
+        QListWidgetItem* temp = new QListWidgetItem("Custom");
         temp->setData(PAPER_SIZE_ROLE, -1);
         paperSizes.append(temp);
 
