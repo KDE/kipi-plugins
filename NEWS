@@ -18,4 +18,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 005 ==> 279182 : Batch resize fails possibly due to timestamp in filename.
 006 ==> 290932 : KIPI Plugins - up to date website.
 007 ==> 212785 : Cannot preserve rotation when exporting from raw to Facebook.
-008 ==> 
+008 ==> 291762 : Crash with export.
+009 ==> 
+
