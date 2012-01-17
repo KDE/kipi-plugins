@@ -96,9 +96,9 @@ namespace KIPIPhotoLayoutsEditor
 
             void addTemplate(const QString & path, const QString & name);
 
-        signals:
+        Q_SIGNALS:
 
-        public slots:
+        public Q_SLOTS:
 
     };
 }

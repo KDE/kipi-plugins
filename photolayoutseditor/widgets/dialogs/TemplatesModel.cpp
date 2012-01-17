@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "TemplatesModel.h"
+#include "TemplatesModel.moc"
 
 using namespace KIPIPhotoLayoutsEditor;
 
