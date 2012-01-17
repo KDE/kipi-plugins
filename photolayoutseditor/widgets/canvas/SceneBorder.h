@@ -33,6 +33,7 @@
 namespace KIPIPhotoLayoutsEditor
 {
     class SceneBorderLoader;
+
     class SceneBorder : public QObject, public QGraphicsItem
     {
             Q_OBJECT

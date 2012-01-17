@@ -23,8 +23,7 @@
  *
  * ============================================================ */
 
-#include "SceneBorder.h"
-#include "global.h"
+#include "SceneBorder.moc"
 
 // C++ std includes
 
@@ -42,12 +41,15 @@
 
 #include <klocalizedstring.h>
 
+#include "global.h"
+
 using namespace KIPIPhotoLayoutsEditor;
 
 class KIPIPhotoLayoutsEditor::SceneBorder::BorderImageChangedCommand : public QUndoCommand
 {
-    QImage m_image;
-    SceneBorder * m_backgropund_item;
+    QImage       m_image;
+    SceneBorder* m_backgropund_item;
+
 public:
 
     BorderImageChangedCommand(const QImage & image, SceneBorder * borderItem, QUndoCommand * parent = 0) :
@@ -303,5 +305,7 @@ void SceneBorder::sceneRectChanged(const QRectF & sceneRect)
         render();
     }
     else
+    {
         m_rect = QRectF();
+    }
 }
