@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef CANVASCREATIONDIALOG_H
-#define CANVASCREATIONDIALOG_H
+#ifndef CANVASSIZEDIALOG_H
+#define CANVASSIZEDIALOG_H
 
 #include "CanvasSize.h"
 
@@ -72,4 +72,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // CANVASCREATIONDIALOG_H
+#endif // CANVASSIZEDIALOG_H
