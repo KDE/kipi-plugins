@@ -26,29 +26,35 @@
 #ifndef CANVAS_P_H
 #define CANVAS_P_H
 
-#include "CanvasSize.h"
-
 #include <QMap>
 #include <QProgressBar>
 
+#include "CanvasSize.h"
+
 namespace KIPIPhotoLayoutsEditor
 {
-    class Canvas;
-    class CanvasSavingThread;
-    class CanvasPrivate
-    {
-        CanvasPrivate() :
-            m_template(false)
-        {}
 
-        CanvasSize m_size;
-        bool m_template;
+class Canvas;
+class CanvasSavingThread;
 
-        QMap<QObject*,QProgressBar*> progressMap;
+class CanvasPrivate
+{
+public:
 
-        friend class Canvas;
-        friend class CanvasSavingThread;
-    };
-}
+    CanvasPrivate() :
+        m_template(false)
+    {}
+
+    CanvasSize                   m_size;
+    bool                         m_template;
+    QMap<QObject*,QProgressBar*> progressMap;
+
+public:
+
+    friend class Canvas;
+    friend class CanvasSavingThread;
+};
+
+} // namespace KIPIPhotoLayoutsEditor
 
 #endif // CANVAS_P_H
