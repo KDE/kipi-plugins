@@ -22,14 +22,15 @@
  *
  * ============================================================ */
 
-#include "TemplatesView.h"
-#include "TemplatesModel.h"
+#include "TemplatesView.moc"
 
 #include <QScrollBar>
 #include <QPainter>
 #include <QPen>
 #include <QApplication>
 #include <QMouseEvent>
+
+#include "TemplatesModel.h"
 
 QHash<int, QRectF> rectForRow;
 
