@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef EYEDELEGATE_H
-#define EYEDELEGATE_H
+#ifndef LAYERSTREEDELEGATE_H
+#define LAYERSTREEDELEGATE_H
 
 #include <QStyledItemDelegate>
 
@@ -56,4 +56,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // EYEDELEGATE_H
+#endif // LAYERSTREEDELEGATE_H
