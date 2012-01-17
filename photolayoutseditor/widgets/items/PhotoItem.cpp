@@ -23,17 +23,7 @@
  *
  * ============================================================ */
 
-#include "PhotoItem.h"
-
-#include "PhotoEffectsGroup.h"
-#include "PhotoEffectsLoader.h"
-#include "ImageFileDialog.h"
-#include "BordersGroup.h"
-#include "global.h"
-#include "PLEConfigSkeleton.h"
-#include "photolayoutseditor.h"
-#include "ImageLoadingThread.h"
-#include "ProgressEvent.h"
+#include "PhotoItem.moc"
 
 #include <QBuffer>
 #include <QStyleOptionGraphicsItem>
@@ -47,31 +37,46 @@
 #include <klocalizedstring.h>
 #include <kstandarddirs.h>
 
+#include "PhotoEffectsGroup.h"
+#include "PhotoEffectsLoader.h"
+#include "ImageFileDialog.h"
+#include "BordersGroup.h"
+#include "global.h"
+#include "PLEConfigSkeleton.h"
+#include "photolayoutseditor.h"
+#include "ImageLoadingThread.h"
+#include "ProgressEvent.h"
+
 #define EMPTY_FILL_COLOR QColor(255, 0, 0, 120)
 
 using namespace KIPIPhotoLayoutsEditor;
 
 class KIPIPhotoLayoutsEditor::PhotoItemPixmapChangeCommand : public QUndoCommand
 {
-    QImage m_image;
-    PhotoItem * m_item;
+    QImage     m_image;
+    PhotoItem* m_item;
+
 public:
+
     PhotoItemPixmapChangeCommand(const QImage & image, PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Change"), parent),
         m_image(image),
         m_item(item)
     {}
+
     PhotoItemPixmapChangeCommand(const QPixmap & pixmap, PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Change"), parent),
         m_image(pixmap.toImage()),
         m_item(item)
     {}
+
     virtual void redo()
     {
         QImage temp = m_item->image();
         m_item->d->setImage(m_image);
         m_image = temp;
     }
+
     virtual void undo()
     {
         QImage temp = m_item->image();
@@ -80,24 +85,30 @@ public:
         m_item->update();
     }
 };
+
 class KIPIPhotoLayoutsEditor::PhotoItemUrlChangeCommand : public QUndoCommand
 {
-    KUrl m_url;
-    PhotoItem * m_item;
+    KUrl       m_url;
+    PhotoItem* m_item;
+
 public:
+
     PhotoItemUrlChangeCommand(const KUrl & url, PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Path Change"), parent),
         m_url(url),
         m_item(item)
     {}
+
     virtual void redo()
     {
         this->run();
     }
+
     virtual void undo()
     {
         this->run();
     }
+
     void run()
     {
         KUrl temp = m_item->d->fileUrl();
@@ -105,12 +116,15 @@ public:
         m_url = temp;
     }
 };
+
 class KIPIPhotoLayoutsEditor::PhotoItemImagePathChangeCommand : public QUndoCommand
 {
-    PhotoItem * m_item;
-    QPainterPath m_image_path;
-    CropShapeChangeCommand * command;
+    PhotoItem*              m_item;
+    QPainterPath            m_image_path;
+    CropShapeChangeCommand* command;
+
 public:
+
     PhotoItemImagePathChangeCommand(PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Shape Change"), parent),
         m_item(item),
@@ -130,28 +144,35 @@ public:
         m_item->update();
     }
 };
+
 class KIPIPhotoLayoutsEditor::PhotoItemImageMovedCommand : public QUndoCommand
 {
-    PhotoItem * m_item;
-    QPointF translation;
-    bool done;
-    static PhotoItemImageMovedCommand * m_instance;
+    PhotoItem* m_item;
+    QPointF    translation;
+    bool       done;
+
+    static PhotoItemImageMovedCommand* m_instance;
+
     PhotoItemImageMovedCommand(PhotoItem * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Image Position Change"), parent),
         m_item(item),
         done(true)
     {}
+
 public:
+
     static PhotoItemImageMovedCommand * instance(PhotoItem * item)
     {
         if (!m_instance)
             m_instance = new PhotoItemImageMovedCommand(item);
         return m_instance;
     }
+
     void translate(const QPointF & translation)
     {
         this->translation += translation;
     }
+
     virtual void redo()
     {
         if (done)
@@ -162,6 +183,7 @@ public:
         m_item->update();
         done = !done;
     }
+
     virtual void undo()
     {
         if (!done)
@@ -172,6 +194,7 @@ public:
         m_item->update();
         done = !done;
     }
+
     static void post()
     {
         if (!m_instance)
@@ -213,6 +236,7 @@ QString PhotoItem::PhotoItemPrivate::locateFile(const QString & filePath)
     }
     return resultPath;
 }
+
 void PhotoItem::PhotoItemPrivate::setImage(const QImage & image)
 {
     if (image.isNull() || image == m_image)
@@ -220,14 +244,17 @@ void PhotoItem::PhotoItemPrivate::setImage(const QImage & image)
     m_image = image;
     m_item->refresh();
 }
+
 QImage & PhotoItem::PhotoItemPrivate::image()
 {
     return m_image;
 }
+
 void PhotoItem::PhotoItemPrivate::setFileUrl(const KUrl & url)
 {
     this->m_file_path = url;
 }
+
 KUrl & PhotoItem::PhotoItemPrivate::fileUrl()
 {
     return this->m_file_path;
