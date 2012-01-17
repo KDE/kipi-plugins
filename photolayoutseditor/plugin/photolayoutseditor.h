@@ -107,15 +107,16 @@ namespace KIPIPhotoLayoutsEditor
             void loadBorders();
             void prepareSignalsConnections();
 
-            Canvas * m_canvas;
-            KIPI::Interface * m_interface;
+        private:
+
+            Canvas*          m_canvas;
+            KIPI::Interface* m_interface;
 
             class PhotoLayoutsEditorPriv;
-            PhotoLayoutsEditorPriv * const d;
+            PhotoLayoutsEditorPriv* const d;
 
             friend class UndoCommandEventFilter;
     };
-
 }
 
 #endif // PHOTOLAYOUTSEDITOR_H

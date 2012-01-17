@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
+#include "photolayoutseditor.moc"
 #include "photolayoutseditor_p.h"
-#include "photolayoutseditor.h"
 
 // Qt includes
 
@@ -96,21 +96,25 @@ using namespace KIPIPhotoLayoutsEditor;
 class KIPIPhotoLayoutsEditor::CanvasSizeChangeCommand : public QUndoCommand
 {
     CanvasSize m_size;
-    Canvas * m_canvas;
+    Canvas*    m_canvas;
+
 public:
     CanvasSizeChangeCommand(const CanvasSize & size, Canvas * canvas, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Canvas size change"), parent),
         m_size(size),
         m_canvas(canvas)
     {}
+
     virtual void redo()
     {
         this->run();
     }
+
     virtual void undo()
     {
         this->run();
     }
+
     void run()
     {
         CanvasSize temp = m_canvas->canvasSize();
@@ -119,7 +123,7 @@ public:
     }
 };
 
-PhotoLayoutsEditor * PhotoLayoutsEditor::m_instance = 0;
+PhotoLayoutsEditor* PhotoLayoutsEditor::m_instance = 0;
 
 PhotoLayoutsEditor::PhotoLayoutsEditor(QWidget * parent) :
     KXmlGuiWindow(parent),
