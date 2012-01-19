@@ -67,7 +67,9 @@ public:
     inline bool         developmentVersion()    const { return m_developmentVersion; }
 
     virtual void        setup();
+    virtual bool        checkDir()                    { return checkDir(m_pathDir); }
     virtual bool        checkDir(const QString& path);
+    virtual bool        recheckDirectories();
 
     virtual QString     path(const QString& dir) const;
     virtual QString     path()                  const { return path(m_pathDir); }

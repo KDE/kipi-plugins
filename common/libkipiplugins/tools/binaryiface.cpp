@@ -136,9 +136,9 @@ void BinaryIface::slotNavigateAndCheck()
 
 void BinaryIface::slotAddPossibleSearchDirectory(const QString& dir)
 {
+    m_searchPaths << dir;
     if (!isValid() && !m_searchPaths.contains(dir))
     {
-        m_searchPaths << dir;
         checkDir(dir);
     }
 }
@@ -215,6 +215,19 @@ bool BinaryIface::checkDir(const QString& possibleDir)
     }
     emit signalBinaryValid();
     return ret;
+}
+
+bool BinaryIface::recheckDirectories()
+{
+    foreach(QString dir, m_searchPaths)
+    {
+        checkDir(dir);
+        if (isValid())
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 }  // namespace KIPIPlugins
