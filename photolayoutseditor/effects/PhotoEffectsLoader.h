@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef ABSTRACTPHOTOEFFECTS_H
-#define ABSTRACTPHOTOEFFECTS_H
+#ifndef PHOTOEFFECTSLOADER_H
+#define PHOTOEFFECTSLOADER_H
 
 #include <QImage>
 #include <QObject>
@@ -120,4 +120,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // ABSTRACTPHOTOEFFECTS_H
+#endif // PHOTOEFFECTSLOADER_H

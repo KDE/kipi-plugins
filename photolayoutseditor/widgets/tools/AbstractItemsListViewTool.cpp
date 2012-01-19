@@ -23,12 +23,8 @@
  *
  * ============================================================ */
 
-#include "AbstractItemsListViewTool.h"
-#include "AbstractItemsListViewTool_p.h"
-#include "AbstractPhoto.h"
-#include "ToolsDockWidget.h"
-#include "BorderDrawersLoader.h"
-#include "global.h"
+#include "AbstractItemsListViewTool.moc"
+#include "AbstractItemsListViewTool_p.moc"
 
 #include <QGridLayout>
 #include <QLabel>
@@ -39,14 +35,20 @@
 #include <kpushbutton.h>
 #include <kcombobox.h>
 
+#include "AbstractPhoto.h"
+#include "ToolsDockWidget.h"
+#include "BorderDrawersLoader.h"
+#include "global.h"
+
 using namespace KIPIPhotoLayoutsEditor;
 
 class ItemCreatedCommand : public QUndoCommand
 {
-    QObject * item;
-    int row;
-    AbstractMovableModel * model;
-    bool done;
+    QObject*              item;
+    int                   row;
+    AbstractMovableModel* model;
+    bool                  done;
+
 public:
     ItemCreatedCommand(QObject * item, int row, AbstractMovableModel * model, QUndoCommand * parent = 0) :
         QUndoCommand(parent),
@@ -55,11 +57,13 @@ public:
         model(model),
         done(false)
     {}
+
     ~ItemCreatedCommand()
     {
         if (!done)
             delete item;
     }
+
     virtual void redo()
     {
         done = true;
@@ -68,6 +72,7 @@ public:
         model->insertRow(row);
         model->setItem(item, model->index(row, 0));
     }
+
     virtual void undo()
     {
         done = false;
@@ -76,13 +81,16 @@ public:
         model->removeRow(row);
     }
 };
+
 class ItemRemovedCommand : public QUndoCommand
 {
-    QObject * item;
-    int row;
-    AbstractMovableModel * model;
-    bool done;
+    QObject*              item;
+    int                   row;
+    AbstractMovableModel* model;
+    bool                  done;
+
 public:
+
     ItemRemovedCommand(QObject * item, int row, AbstractMovableModel * model, QUndoCommand * parent = 0) :
         QUndoCommand(parent),
         item(item),
@@ -90,11 +98,13 @@ public:
         model(model),
         done(true)
     {}
+
     ~ItemRemovedCommand()
     {
         if (done)
             delete item;
     }
+
     virtual void redo()
     {
         done = true;
@@ -102,6 +112,7 @@ public:
             return;
         model->removeRow(row);
     }
+
     virtual void undo()
     {
         done = false;
@@ -111,13 +122,16 @@ public:
         model->setItem(item, model->index(row, 0));
     }
 };
+
 class ItemMoveRowsCommand : public QUndoCommand
 {
-    int sourceStart;
-    int count;
-    int destinationRow;
-    AbstractMovableModel * model;
+    int                   sourceStart;
+    int                   count;
+    int                   destinationRow;
+    AbstractMovableModel* model;
+
 public:
+
     ItemMoveRowsCommand(int sourceStart, int count, int destinationRow, AbstractMovableModel * model, QUndoCommand * parent = 0) :
         QUndoCommand(parent),
         sourceStart(sourceStart),
@@ -125,21 +139,25 @@ public:
         destinationRow(destinationRow),
         model(model)
     {}
+
     virtual void redo()
     {
         model->moveRows(sourceStart, count, destinationRow);
         this->swap();
     }
+
     virtual void undo()
     {
         model->moveRows(sourceStart, count, destinationRow);
         this->swap();
     }
+
     void swap()
     {
-        int temp = sourceStart;
-        sourceStart = destinationRow;
+        int temp       = sourceStart;
+        sourceStart    = destinationRow;
         destinationRow = temp;
+
         if (destinationRow > sourceStart)
             destinationRow += count;
         else

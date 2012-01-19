@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef CANVAS_H
-#define CANVAS_H
+#ifndef SCENE_H
+#define SCENE_H
 
 #include <QGraphicsScene>
 #include <QPainter>
@@ -198,4 +198,4 @@ namespace KIPIPhotoLayoutsEditor
 
 }
 
-#endif // CANVAS_H
+#endif // SCENE_H

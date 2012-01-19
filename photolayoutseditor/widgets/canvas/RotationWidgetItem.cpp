@@ -24,23 +24,27 @@
  * ============================================================ */
 
 #include "RotationWidgetItem.moc"
-#include "photolayoutseditor.h"
-#include "global.h"
+
 #include <limits>
 
 #include <QUndoCommand>
 
 #include <klocalizedstring.h>
 
+#include "photolayoutseditor.h"
+#include "global.h"
+
 using namespace KIPIPhotoLayoutsEditor;
 
 class KIPIPhotoLayoutsEditor::RotateItemCommand : public QUndoCommand
 {
-    AbstractPhoto * item;
-    QPointF rotationPoint;
-    qreal angle;
-    bool done;
+    AbstractPhoto* item;
+    QPointF        rotationPoint;
+    qreal          angle;
+    bool           done;
+
 public:
+
     RotateItemCommand(AbstractPhoto * item, QUndoCommand * parent = 0) :
         QUndoCommand(i18n("Rotate item"), parent),
         item(item),
@@ -48,6 +52,7 @@ public:
         done(false)
     {
     }
+
     virtual void redo()
     {
         if (done)
@@ -64,6 +69,7 @@ public:
             item->scene()->invalidate(updateRect);
         done = true;
     }
+
     virtual void undo()
     {
         if (!done)
@@ -80,14 +86,17 @@ public:
             item->scene()->invalidate(updateRect);
         done = false;
     }
+
     void setRotationPoint(const QPointF & point)
     {
         rotationPoint = point;
     }
+
     void setAngle(qreal angle)
     {
         this->angle = angle;
     }
+
     void setDone(bool done)
     {
         this->done = done;
@@ -117,6 +126,7 @@ class KIPIPhotoLayoutsEditor::RotationWidgetItemPrivate
 
         return pos;
     }
+
     QRectF itemToViewportRect(const QRectF & rect, QWidget * widget)
     {
         QGraphicsView *view = 0;
@@ -128,6 +138,7 @@ class KIPIPhotoLayoutsEditor::RotationWidgetItemPrivate
 
         return rect;
     }
+
     void transformDrawings(const QTransform & viewTransform)
     {
         if (currentViewTransform == viewTransform)
@@ -137,6 +148,7 @@ class KIPIPhotoLayoutsEditor::RotationWidgetItemPrivate
 
         this->calculateDrawings();
     }
+
     void calculateDrawings()
     {
         m_elipse = QPainterPath();
@@ -144,6 +156,7 @@ class KIPIPhotoLayoutsEditor::RotationWidgetItemPrivate
                             -20 / currentViewTransform.m11(),
                             -20 / currentViewTransform.m22());
     }
+
     QList<AbstractPhoto*> m_items;
     QPainterPath rotated_shape;
     QPointF rotation_point;

@@ -23,11 +23,9 @@
  *
  * ============================================================ */
 
-#ifndef DOCUMENT_H
-#define DOCUMENT_H
+#ifndef CANVAS_H
+#define CANVAS_H
 
-#include "global.h"
-#include "CanvasSize.h"
 
 // Qt
 #include <QObject>
@@ -45,6 +43,9 @@
 // KDE
 #include <klocalizedstring.h>
 #include <kurl.h>
+
+#include "global.h"
+#include "CanvasSize.h"
 
 namespace KIPIPhotoLayoutsEditor
 {
@@ -279,4 +280,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // DOCUMENT_H
+#endif // CANVAS_H

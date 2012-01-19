@@ -40,7 +40,7 @@ namespace KIPIPhotoLayoutsEditor
 
         public:
 
-            explicit NewCanvasDialog(QWidget * parent = 0);
+            explicit NewCanvasDialog(QWidget* parent = 0);
             ~NewCanvasDialog();
 
             bool hasTemplateSelected() const;
@@ -49,7 +49,7 @@ namespace KIPIPhotoLayoutsEditor
 
         private slots:
 
-            void paperSizeSelected(QListWidgetItem * current, QListWidgetItem * previous);
+            void paperSizeSelected(QListWidgetItem* current, QListWidgetItem* previous);
             void orientationChanged();
             void setHorizontal(bool);
             void setVertical(bool);
@@ -57,10 +57,10 @@ namespace KIPIPhotoLayoutsEditor
         private:
 
             void setupUI();
-            void loadTemplatesList(const QString & path, TemplatesModel * model);
+            void loadTemplatesList(const QString & path, TemplatesModel* model);
 
             class Private;
-            Private * d;
+            Private* d;
             friend class Private;
 
     };

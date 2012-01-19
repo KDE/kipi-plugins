@@ -23,30 +23,4 @@
  *
  * ============================================================ */
 
-#ifndef BORDERDRAWERFACTORYINTERFACE_H
-#define BORDERDRAWERFACTORYINTERFACE_H
-
-#include <QObject>
-
-namespace KIPIPhotoLayoutsEditor
-{
-    class BorderDrawerInterface;
-    class BorderDrawerFactoryInterface : public QObject
-    {
-        public:
-
-            explicit BorderDrawerFactoryInterface(QObject* parent = 0) :
-                QObject(parent)
-            {}
-
-            virtual ~BorderDrawerFactoryInterface()
-            {}
-
-            virtual QString drawersNames() const = 0;
-            virtual BorderDrawerInterface* getDrawerInstance(const QString& name) = 0;
-    };
-}
-
-Q_DECLARE_INTERFACE(KIPIPhotoLayoutsEditor::BorderDrawerFactoryInterface, "pl.coder89.ple.BorderDrawerFactoryInterface/1.0")
-
-#endif // BORDERDRAWERFACTORYINTERFACE_H
+#include "AbstractItemsListViewTool_p.moc"

@@ -24,8 +24,6 @@
  * ============================================================ */
 
 #include "CanvasSizeDialog.moc"
-#include "CanvasSize.h"
-#include "global.h"
 
 // KDE
 #include <kcombobox.h>
@@ -39,6 +37,9 @@
 #include <QGroupBox>
 #include <QButtonGroup>
 #include <QDebug>
+
+#include "CanvasSize.h"
+#include "global.h"
 
 using namespace KIPIPhotoLayoutsEditor;
 
@@ -580,4 +581,3 @@ void CanvasSizeDialog::yResolutionChanged(double yResolution)
     d->HEIGHT_RES = yResolution * resolutionFactor;
     d->updateSizeLabel();
 }
-

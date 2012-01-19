@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef QTSLIDEREDITFACTORY_H
-#define QTSLIDEREDITFACTORY_H
+#ifndef KEDITFACTORY_H
+#define KEDITFACTORY_H
 
 #include <qteditorfactory.h>
 #include <qtvariantproperty.h>
@@ -206,4 +206,4 @@ class KSliderEditFactory : public QtAbstractEditorFactory<QtIntPropertyManager>
 QT_END_NAMESPACE
 #endif
 
-#endif // QTSLIDEREDITFACTORY_H
+#endif // KEDITFACTORY_H

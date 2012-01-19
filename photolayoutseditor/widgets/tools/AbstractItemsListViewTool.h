@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef ABSTRACTLISTTOOL_H
-#define ABSTRACTLISTTOOL_H
+#ifndef ABSTRACTITEMSLISTVIEWTOOL_H
+#define ABSTRACTITEMSLISTVIEWTOOL_H
 
 #include "AbstractItemsTool.h"
 #include "AbstractMovableModel.h"
@@ -32,7 +32,6 @@
 namespace KIPIPhotoLayoutsEditor
 {
     class AbstractItemsListViewToolPrivate;
-
     class AbstractListToolView;
     class AbstractListToolViewDelegate;
 
@@ -41,31 +40,37 @@ namespace KIPIPhotoLayoutsEditor
             Q_OBJECT
 
         public:
-            explicit AbstractItemsListViewTool(const QString & toolsName, Scene * scene, Canvas::SelectionMode selectionMode, QWidget * parent = 0);
+            explicit AbstractItemsListViewTool(const QString& toolsName, Scene* scene, Canvas::SelectionMode selectionMode, QWidget* parent=0);
             virtual ~AbstractItemsListViewTool();
+
             virtual void currentItemAboutToBeChanged();
             virtual void currentItemChanged();
             virtual void positionAboutToBeChanged(){} // Unused
-            virtual void positionChanged(){} // Unused
+            virtual void positionChanged(){}          // Unused
             virtual QStringList options() const = 0;
-            virtual QObject * createItem(const QString & name) = 0;
+            virtual QObject* createItem(const QString& name) = 0;
 
-        protected slots:
+        protected Q_SLOTS:
 
-            virtual AbstractMovableModel * model() = 0;
             void viewCurrentEditor(const QModelIndex & index);
-            void viewCurrentEditor(QObject * object);
-            virtual QWidget * createEditor(QObject * item, bool createCommands = true) = 0;
+            void viewCurrentEditor(QObject* object);
             void createChooser();
             void closeChooser();
             void removeSelected();
             void moveSelectedDown();
             void moveSelectedUp();
 
+            virtual AbstractMovableModel* model() = 0;
+            virtual QWidget* createEditor(QObject* item, bool createCommands=true) = 0;
+
         private:
+
             void closeEditor();
-            AbstractItemsListViewToolPrivate * d;
+
+        private:
+
+            AbstractItemsListViewToolPrivate* d;
     };
 }
 
-#endif // ABSTRACTLISTTOOL_H
+#endif // ABSTRACTITEMSLISTVIEWTOOL_H

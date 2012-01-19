@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef QGRAPHICSSELECTIONITEM_P_H
-#define QGRAPHICSSELECTIONITEM_P_H
+#ifndef ROTATIONWIDGETITEM_P_H
+#define ROTATIONWIDGETITEM_P_H
 
 #include <qmath.h>
 #include <QPainter>
@@ -81,4 +81,4 @@ namespace KIPIPhotoLayoutsEditor
 
 }
 
-#endif // QGRAPHICSSELECTIONITEM_P_H
+#endif // ROTATIONWIDGETITEM_P_H

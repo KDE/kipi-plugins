@@ -26,6 +26,15 @@
 #include "Canvas.moc"
 #include "Canvas_p.h"
 
+#include <QPrinter>
+#include <QPaintDevice>
+#include <QPaintEngine>
+#include <QVBoxLayout>
+
+#include <kapplication.h>
+#include <kmessagebox.h>
+#include <klocalizedstring.h>
+
 #include "Scene.h"
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -40,15 +49,6 @@
 #include "CanvasLoadingThread.h"
 #include "CanvasSavingThread.h"
 #include "PLEStatusBar.h"
-
-#include <QPrinter>
-#include <QPaintDevice>
-#include <QPaintEngine>
-#include <QVBoxLayout>
-
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <klocalizedstring.h>
 
 #define MAX_SCALE_LIMIT 4
 #define MIN_SCALE_LIMIT 0.5

@@ -23,11 +23,12 @@
  *
  * ============================================================ */
 
-#ifndef ABSTRACTLISTTOOL_P_H
-#define ABSTRACTLISTTOOL_P_H
+#ifndef ABSTRACTITEMSLISTVIEWTOOL_P_H
+#define ABSTRACTITEMSLISTVIEWTOOL_P_H
 
 #include <QWidget>
 #include <QListView>
+
 #include <kpushbutton.h>
 
 namespace KIPIPhotoLayoutsEditor
@@ -114,4 +115,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // ABSTRACTLISTTOOL_P_H
+#endif // ABSTRACTITEMSLISTVIEWTOOL_P_H

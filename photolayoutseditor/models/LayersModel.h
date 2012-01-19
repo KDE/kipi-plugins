@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef MODEL_H
-#define MODEL_H
+#ifndef LAYERSMODEL_H
+#define LAYERSMODEL_H
 
 // Qt
 #include <QObject>
@@ -91,4 +91,4 @@ namespace KIPIPhotoLayoutsEditor
     };
 }
 
-#endif // MODEL_H
+#endif // LAYERSMODEL_H

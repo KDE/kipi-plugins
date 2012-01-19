@@ -26,9 +26,9 @@
 #ifndef PHOTOITEM_H
 #define PHOTOITEM_H
 
-#include "AbstractPhoto.h"
-
 #include <kurl.h>
+
+#include "AbstractPhoto.h"
 
 namespace KIPIPhotoLayoutsEditor
 {
