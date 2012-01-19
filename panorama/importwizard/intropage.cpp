@@ -104,6 +104,10 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
 #ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
 #endif
+#ifdef Q_WS_WIN
+    d->binariesWidget->addDirectory("C:/Program Files/Hugin/bin");
+    d->binariesWidget->addDirectory("C:/Program Files (x86)/Hugin/bin");
+#endif
 
     QVBoxLayout* settingsVBox   = new QVBoxLayout();
     d->settingsGroupBox         = new QGroupBox(i18n("Panorama Settings"), vbox);

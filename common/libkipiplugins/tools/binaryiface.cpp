@@ -107,7 +107,22 @@ void BinaryIface::setVersion(QString& version)
 
 void BinaryIface::slotNavigateAndCheck()
 {
-    QString f = KFileDialog::getOpenFileName(KUrl(),
+    KUrl start = KUrl();
+    if (isValid() && m_pathDir != "")
+    {
+        start = KUrl(m_pathDir);
+    }
+    else
+    {
+        start = KUrl("/usr/bin/");
+#ifdef Q_WS_MAC
+        start = KUrl("/Applications/");
+#endif
+#ifdef Q_WS_WIN
+        start = KUrl("C:/Program Files/");
+#endif
+    }
+    QString f = KFileDialog::getOpenFileName(start,
                                              QString(m_binaryBaseName),
                                              0,
                                              QString(i18n("Navigate to %1", m_binaryBaseName)));
