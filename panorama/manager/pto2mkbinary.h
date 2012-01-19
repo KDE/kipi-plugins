@@ -40,7 +40,7 @@ public:
     Pto2MkBinary()
         : BinaryIface(QString("pto2mk"), QString("2010.4"), QString("pto2mk version "),
                       2, QString("Hugin"), QString("http://hugin.sourceforge.net"),
-                      QString("Panorama"), QStringList("-V"))
+                      QString("Panorama"), QStringList("-h"))
         { setup(); }
 
     ~Pto2MkBinary() {}
