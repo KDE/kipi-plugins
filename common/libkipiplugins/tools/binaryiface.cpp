@@ -135,10 +135,14 @@ void BinaryIface::slotNavigateAndCheck()
 
 void BinaryIface::slotAddPossibleSearchDirectory(const QString& dir)
 {
-    m_searchPaths << dir;
-    if (!isValid() && !m_searchPaths.contains(dir))
+    if (!isValid())
     {
+        m_searchPaths << dir;
         checkDir(dir);
+    }
+    else
+    {
+        m_searchPaths << dir;
     }
 }
 
