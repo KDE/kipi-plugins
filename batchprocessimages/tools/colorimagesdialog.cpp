@@ -64,7 +64,7 @@ ColorImagesDialog::ColorImagesDialog(const KUrl::List& urlList, KIPI::Interface*
                                            QByteArray(),
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin for batch image-color enhancement.\n"
-                                                 "This plugin use the \"convert\" program from the \"ImageMagick\" package."),
+                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
                                            ki18n("(c) 2003-2009, Gilles Caulier\n"
                                                  "(c) 2007-2009, Aurélien Gateau"));
 

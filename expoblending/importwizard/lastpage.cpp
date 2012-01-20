@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QDir>
 #include <QLabel>
 #include <QPixmap>
 
@@ -70,7 +71,7 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
                         "project will be used.</p>"
                         "<p>Press \"Finish\" button to fuse your items and make a pseudo HDR image.</p>"
                         "</qt>",
-                        QString(d->mngr->enfuseBinary().path()),
+                        QDir::toNativeSeparators(d->mngr->enfuseBinary().path()),
                         d->mngr->enfuseBinary().url().url()));
 
     setPageWidget(vbox);

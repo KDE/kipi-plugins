@@ -22,7 +22,6 @@
 
 #include "binaryiface.h"
 
-
 // Qt includes
 
 #include <QProcess>

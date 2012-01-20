@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QDir>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QTimer>
@@ -164,7 +165,7 @@ void PreProcessingPage::resetTitle()
                            "to 16-bit sRGB images with auto-gamma.</p>"
                            "<p>Press \"Next\" to start pre-processing.</p>"
                            "</qt>",
-                           QString(d->mngr->alignBinary().path()),
+                           QDir::toNativeSeparators(d->mngr->alignBinary().path()),
                            d->mngr->alignBinary().url().url(),
                            d->mngr->alignBinary().projectName()));
     d->detailsBtn->hide();

@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QDir>
 #include <QLabel>
 #include <QPixmap>
 #include <QGroupBox>
@@ -206,7 +207,7 @@ void LastPage::slotTemplateChanged(const QString& fileTemplate)
                            "the stitching process will be copied at the same time (those are "
                            "TIFF files that can be big).</p>"
                            "</qt>",
-                           d->mngr->preProcessedMap().begin().key().directory(),
+                           QDir::toNativeSeparators(d->mngr->preProcessedMap().begin().key().directory()),
                            panoFileName(fileTemplate),
                            fileTemplate + ".pto"
                           ));

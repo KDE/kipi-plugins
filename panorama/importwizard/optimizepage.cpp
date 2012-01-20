@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QDir>
 #include <QLabel>
 #include <QPixmap>
 #include <QPushButton>
@@ -306,7 +307,7 @@ void OptimizePage::resetTitle()
                            "<a href='%2'>%3</a> project will be used.</p>"
                            "<p>Press the \"Next\" button to run the optimization.</p>"
                            "</qt>",
-                           QString(d->mngr->autoOptimiserBinary().path()),
+                           QDir::toNativeSeparators(d->mngr->autoOptimiserBinary().path()),
                            d->mngr->autoOptimiserBinary().url().url(),
                            d->mngr->autoOptimiserBinary().projectName()));
     d->detailsBtn->hide();
