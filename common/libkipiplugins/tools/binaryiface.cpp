@@ -110,16 +110,16 @@ void BinaryIface::slotNavigateAndCheck()
     KUrl start;
     if (isValid() && m_pathDir != "")
     {
-        start = KUrl::fromPath(m_pathDir);
+        start = KUrl(m_pathDir);
     }
     else
     {
 #if defined Q_WS_MAC
-        start = KUrl::fromPath("/Applications/");
+        start = KUrl(QString("/Applications/"));
 #elif defined Q_WS_WIN
-        start = KUrl::fromPath("C:/Program Files/");
+        start = KUrl(QString("C:/Program Files/"));
 #else
-        start = KUrl::fromPath("/usr/bin/");
+        start = KUrl(QString("/usr/bin/"));
 #endif
     }
     QString f = KFileDialog::getOpenFileName(start,
@@ -169,7 +169,7 @@ QString BinaryIface::path(const QString& dir) const
     {
         return baseName();
     }
-    return QString("%1%2%3").arg(dir).arg(QDir::separator()).arg(baseName());
+    return QString("%1%2%3").arg(dir).arg('/').arg(baseName());
 }
 
 void BinaryIface::setup()
