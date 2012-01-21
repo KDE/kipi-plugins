@@ -93,22 +93,20 @@ protected Q_SLOTS:
     virtual void imageSelected(QTreeWidgetItem*);
     virtual void infopage_selectNext();
     virtual void infopage_selectPrev();
-    virtual void infopage_decreaseCopies();
-    virtual void infopage_increaseCopies();
+    virtual void decreaseCopies();
+    virtual void increaseCopies();
     virtual void infopage_updateCaptions();
     
     virtual void slotAddItems(const KUrl::List&);    
     virtual void slotRemovingItem(KIPIPlugins::ImagesListViewItem*);
-    //private slots:
-    //	void updateFinishButton();
-
+    virtual void slotContextMenuRequested();
+    
 private:
 
     // Initialize page layout to the given pageSize in mm
     void initPhotoSizes(const QSizeF& pageSize);
     void previewPhotos();
 
-    void infopage_enableButtons();
     void infopage_blockCaptionButtons(bool block=true);
     void infopage_setCaptionButtons();
     void infopage_readCaptionSettings();

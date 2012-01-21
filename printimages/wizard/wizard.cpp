@@ -36,6 +36,8 @@
 #include <QPrinterInfo>
 #include <QProgressDialog>
 #include <QDomDocument>
+#include <QContextMenuEvent>
+
 
 // KDE includes
 #include <kapplication.h>
@@ -181,12 +183,6 @@ Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
     helpMenu->menu()->removeAction ( helpMenu->menu()->actions().first() );
     QAction *handbook   = new QAction ( i18n ( "Handbook" ), this );
 
-//     // create a QButtonGroup to manage button ids
-//     d->m_outputSettings = new QButtonGroup ( this );
-//     d->m_outputSettings->addButton ( d->mPhotoPage->RdoOutputPrinter, ToPrinter );
-//     d->m_outputSettings->addButton ( d->mPhotoPage->RdoOutputGimp,    ToGimp );
-//     d->m_outputSettings->addButton ( d->mPhotoPage->RdoOutputFile,    ToFile );
-
     //TODO
     d->m_pageSize = QSizeF(-1,-1); // select a different page to force a refresh in initPhotoSizes.
 
@@ -317,6 +313,9 @@ Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
     connect (d->m_ImagesFilesListBox, SIGNAL (signalItemClicked(QTreeWidgetItem*)),
               this, SLOT (imageSelected(QTreeWidgetItem* )) );
       
+    connect (d->m_ImagesFilesListBox, SIGNAL (contextMenuRequested()),
+              this, SLOT (slotContextMenuRequested()) );
+        
  //   connect ( d->mPhotoPage->m_PictureInfo, SIGNAL (itemSelectionChanged()),
   //            this, SLOT (infopage_imageSelected()) );
 //     connect (d->m_ImagesFilesListBox, SIGNAL (signalImageListChanged()),
@@ -383,23 +382,9 @@ void Wizard::print ( const KUrl::List& fileList, const QString& tempPath )
         photo->filename = fileList[i];
         photo->first    = true;
         d->m_photos.append ( photo );
-        //FileName
-     //   QTableWidgetItem* newItem = new QTableWidgetItem(photo->filename.fileName());
-      //  d->mPhotoPage->m_PictureInfo->setItem(i, 0, newItem); //setItem(row, column, newItem);
-        // Number of copies
-       // newItem = new QTableWidgetItem(tr("%1").arg(photo->copies));
-        //d->mPhotoPage->m_PictureInfo->setItem(i, 1, newItem);
-        // load the print order listbox
-        //TODO      d->mPhotoPage->ListPrintOrder->addItem ( photo->filename.fileName() );
     }
-    //TODO    d->mPhotoPage->ListPrintOrder->setCurrentRow ( 0, QItemSelectionModel::Select );
-
-   // d->mPhotoPage->m_PictureInfo->setCurrentCell(0,0);
 
     d->m_tempPath = tempPath;
-    //TODO    d->mPhotoPage->LblPhotoCount->setText ( QString::number ( d->m_photos.count() ) );
-
-    // TODO move right to pageChanged()
     d->mCropPage->BtnCropPrev->setEnabled ( false );
 
     if ( d->m_photos.count() == 1 )
@@ -691,7 +676,7 @@ void Wizard::initPhotoSizes ( const QSizeF& pageSize )
     ti.begin();
     QPainter& painter = ti.getPainter();
     painter.setPen( Qt::color1 );
-    painter.drawText(painter.viewport(), Qt::AlignCenter, i18n("Free"));
+    painter.drawText(painter.viewport(), Qt::AlignCenter, i18n("Custom layout"));
     ti.end();
 
     pWItem->setIcon( ti.getIcon());
@@ -1222,32 +1207,6 @@ void Wizard::manageBtnPreviewPage()
     }
 }
 
-void Wizard::infopage_enableButtons()
-{
-#ifdef NOT_YET
-    if (d->m_photos.size() == 1)
-    {
-        d->mPhotoPage->m_preview_left->setEnabled(false);
-        d->mPhotoPage->m_preview_right->setEnabled(false);
-    }
-    else if (d->m_infopage_currentPhoto == 0)
-    {
-        d->mPhotoPage->m_preview_left->setEnabled(false);
-        d->mPhotoPage->m_preview_right->setEnabled(true);
-    }
-    else if (d->m_infopage_currentPhoto == d->m_photos.size()-1)
-    {
-        d->mPhotoPage->m_preview_right->setEnabled(false);
-        d->mPhotoPage->m_preview_left->setEnabled(true);
-    }
-    else
-    {
-        d->mPhotoPage->m_preview_left->setEnabled(true);
-        d->mPhotoPage->m_preview_right->setEnabled(true);
-    }
-#endif
-}
-
 void Wizard::infopage_setCaptionButtons()
 {
     if (d->m_photos.size())
@@ -1274,6 +1233,31 @@ void Wizard::infopage_setCaptionButtons()
     }
 }
 
+void Wizard::slotContextMenuRequested()
+{
+    if (d->m_photos.size())
+    {
+        int itemIndex = d->m_ImagesFilesListBox->listView()->currentIndex().row();
+
+        d->m_ImagesFilesListBox->listView()->blockSignals(true);
+        QMenu menu(d->m_ImagesFilesListBox->listView());
+        QAction *action=menu.addAction( i18n("Add again"));
+        QObject::connect(action, SIGNAL(triggered()), this , 
+                        SLOT(increaseCopies()));
+        TPhoto * pPhoto = d->m_photos[itemIndex];
+        kDebug() << " copies " << pPhoto->copies << " first " << pPhoto->first;
+        if (pPhoto->copies > 1 || !pPhoto->first)
+        {
+            QAction *actionr=menu.addAction( i18n("Remove"));
+            QObject::connect(actionr, SIGNAL(triggered()), this , 
+                            SLOT(decreaseCopies()));
+        }
+        menu.exec(QCursor::pos());
+        d->m_ImagesFilesListBox->listView()->blockSignals(false);
+    }
+}
+
+    
 void Wizard::imageSelected(QTreeWidgetItem* item)
 {
     KIPIPlugins::ImagesListViewItem* l_item = dynamic_cast<KIPIPlugins::ImagesListViewItem*>(item);
@@ -1283,7 +1267,6 @@ void Wizard::imageSelected(QTreeWidgetItem* item)
     d->m_infopage_currentPhoto = itemIndex;
 
     infopage_setCaptionButtons();   
-    infopage_enableButtons();
 }
 
 void Wizard::infopage_selectNext()
@@ -1296,7 +1279,6 @@ void Wizard::infopage_selectNext()
   //  d->mPhotoPage->m_PictureInfo->blockSignals(false);
 
     infopage_setCaptionButtons();
-    infopage_enableButtons();
 }
 
 void Wizard::infopage_selectPrev()
@@ -1309,24 +1291,15 @@ void Wizard::infopage_selectPrev()
   //  d->mPhotoPage->m_PictureInfo->blockSignals(false);
 
     infopage_setCaptionButtons();    
-    infopage_enableButtons();
 }
 
-void Wizard::infopage_decreaseCopies()
+void Wizard::decreaseCopies()
 {
     if (d->m_photos.size())
     {
-        TPhoto *pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
-        if (pPhoto->copies>1)
-        {
-            pPhoto->copies--;
-
-  //          d->mPhotoPage->m_PictureInfo->blockSignals(true);
-   //         QTableWidgetItem* newItem = new QTableWidgetItem(tr("%1").arg(pPhoto->copies));
-    //        d->mPhotoPage->m_PictureInfo->setItem(d->m_infopage_currentPhoto, 1, newItem);
-     //       d->mPhotoPage->m_PictureInfo->blockSignals(false);
-            //d->mPhotoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mPhotoPage->m_preview->size(),Qt::KeepAspectRatioByExpanding)) );
-        }
+        KIPIPlugins::ImagesListViewItem* item = dynamic_cast<KIPIPlugins::ImagesListViewItem* >(d->m_ImagesFilesListBox->listView()->currentItem());
+        kDebug() << " Removing a copy of " << item->url();
+        d->m_ImagesFilesListBox->slotRemoveItems();
     }
 }
 void Wizard::slotRemovingItem(KIPIPlugins::ImagesListViewItem* item)
@@ -1394,6 +1367,7 @@ void Wizard::slotRemovingItem(KIPIPlugins::ImagesListViewItem* item)
     }
     if (d->m_photos.empty())
     {
+      // No photos => disabling next button (e.g. crop page)
       d->mPhotoPage->parent()->setValid(d->mPhotoPage->page() , false);
     }
   }
@@ -1449,18 +1423,15 @@ void Wizard::slotAddItems(const KUrl::List& list)
     }
 }
 
-void Wizard::infopage_increaseCopies()
+void Wizard::increaseCopies()
 {
     if (d->m_photos.size())
     {
-        TPhoto *pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
-        pPhoto->copies++;
-
- //       d->mPhotoPage->m_PictureInfo->blockSignals(true);
-  //      QTableWidgetItem* newItem = new QTableWidgetItem(tr("%1").arg(pPhoto->copies));
-   //     d->mPhotoPage->m_PictureInfo->setItem(d->m_infopage_currentPhoto, 1, newItem);
-    //    d->mPhotoPage->m_PictureInfo->blockSignals(false);
-        //d->mPhotoPage->m_preview->setPixmap ( QPixmap::fromImage( pPhoto->loadPhoto().scaled(d->mPhotoPage->m_preview->size(),Qt::KeepAspectRatioByExpanding)) );
+        KUrl::List list;
+        KIPIPlugins::ImagesListViewItem* item = dynamic_cast<KIPIPlugins::ImagesListViewItem* >(d->m_ImagesFilesListBox->listView()->currentItem());
+        list.append(item->url());
+        kDebug() << " Adding a copy of " << item->url();
+        d->m_ImagesFilesListBox->slotAddImages(list);
     }
 }
 
@@ -1566,7 +1537,6 @@ void Wizard::pageChanged ( KPageWidgetItem* current, KPageWidgetItem* before )
         }
         
         infopage_updateCaptions();    
-        infopage_enableButtons();
         // create our photo sizes list
         previewPhotos();
     }
@@ -1575,17 +1545,15 @@ void Wizard::pageChanged ( KPageWidgetItem* current, KPageWidgetItem* before )
         d->m_currentCropPhoto = 0;
         if (d->m_photos.size())
         {
-          TPhoto *photo = d->m_photos[d->m_currentCropPhoto];
-          setBtnCropEnabled();
-          this->update();
-          updateCropFrame ( photo, d->m_currentCropPhoto );
+            TPhoto *photo = d->m_photos[d->m_currentCropPhoto];
+            setBtnCropEnabled();
+            this->update();
+            updateCropFrame ( photo, d->m_currentCropPhoto );
         }
         else
         {
-          // ANGELO TODO disable crop 
-//           current = before;
-//           d->mCropPage->page()->setEnabled(false);
-//           updateCropFrame ( NULL, 0 );
+            // NOTE it should not pass here
+            kDebug() << "Not any photos selected cropping is disabled";
         }
     }
     QApplication::restoreOverrideCursor();
@@ -2345,7 +2313,7 @@ void Wizard::pagesetupdialogexit()
     kDebug() << " dialog exited from : " << printer->fromPage ()
     << " to:   " << d->m_printer->toPage();
 #endif
-}
+}   
 
 void Wizard::pagesetupclicked()
 {
