@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QDir>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QTimer>
@@ -309,7 +310,7 @@ void PreProcessingPage::resetTitle()
                            "<a href='%2'>%3</a> project will be used.</p>"
                            "<p>Press \"Next\" to start pre-processing.</p>"
                            "</qt>",
-                           QString(d->mngr->cpFindBinary().path()),
+                           QDir::toNativeSeparators(d->mngr->cpFindBinary().path()),
                            d->mngr->cpFindBinary().url().url(),
                            d->mngr->cpFindBinary().projectName()));
     d->detailsBtn->hide();

@@ -552,6 +552,7 @@ bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, bool celeste, const QString& 
     d->CPFindProcess->clearProgram();
     d->CPFindProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->CPFindProcess->setOutputChannelMode(KProcess::MergedChannels);
+    d->CPFindProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
     args << cpfindPath;
@@ -592,6 +593,7 @@ bool ActionThread::startCPClean(KUrl& ptoUrl, const QString& cpcleanPath, QStrin
     d->CPCleanProcess->clearProgram();
     d->CPCleanProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->CPCleanProcess->setOutputChannelMode(KProcess::MergedChannels);
+    d->CPCleanProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
     args << cpcleanPath;
@@ -632,6 +634,7 @@ bool ActionThread::startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optim
     d->autoOptimiseProcess->clearProgram();
     d->autoOptimiseProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->autoOptimiseProcess->setOutputChannelMode(KProcess::MergedChannels);
+    d->autoOptimiseProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList argsAO;
     argsAO << autooptimiserPath;
@@ -1083,6 +1086,7 @@ bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFi
     d->pto2MkProcess->clearProgram();
     d->pto2MkProcess->setWorkingDirectory(d->preprocessingTmpDir->name());
     d->pto2MkProcess->setOutputChannelMode(KProcess::MergedChannels);
+    d->pto2MkProcess->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
 
     QStringList args;
     args << pto2mkPath;
@@ -1118,8 +1122,8 @@ bool ActionThread::createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFi
     mkUrlFile.open(QIODevice::ReadWrite);
 
     QString fileData = mkUrlFile.readAll();
-    fileData.replace("NONA=nona", QString("NONA=%1").arg(nonaPath));
-    fileData.replace("ENBLEND=enblend", QString("ENBLEND=%1").arg(enblendPath));
+    fileData.replace("NONA=\"nona\"", QString("NONA=\"%1\"").arg(nonaPath));
+    fileData.replace("ENBLEND=\"enblend\"", QString("ENBLEND=\"%1\"").arg(enblendPath));
 
     mkUrlFile.seek(0L);
     mkUrlFile.write(fileData.toAscii());

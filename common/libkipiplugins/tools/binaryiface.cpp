@@ -22,7 +22,6 @@
 
 #include "binaryiface.h"
 
-
 // Qt includes
 
 #include <QProcess>
@@ -107,19 +106,19 @@ void BinaryIface::setVersion(QString& version)
 
 void BinaryIface::slotNavigateAndCheck()
 {
-    KUrl start = KUrl();
+    KUrl start;
     if (isValid() && m_pathDir != "")
     {
         start = KUrl(m_pathDir);
     }
     else
     {
-        start = KUrl("/usr/bin/");
-#ifdef Q_WS_MAC
-        start = KUrl("/Applications/");
-#endif
-#ifdef Q_WS_WIN
-        start = KUrl("C:/Program Files/");
+#if defined Q_WS_MAC
+        start = KUrl(QString("/Applications/"));
+#elif defined Q_WS_WIN
+        start = KUrl(QString("C:/Program Files/"));
+#else
+        start = KUrl(QString("/usr/bin/"));
 #endif
     }
     QString f = KFileDialog::getOpenFileName(start,
@@ -136,10 +135,14 @@ void BinaryIface::slotNavigateAndCheck()
 
 void BinaryIface::slotAddPossibleSearchDirectory(const QString& dir)
 {
-    m_searchPaths << dir;
-    if (!isValid() && !m_searchPaths.contains(dir))
+    if (!isValid())
     {
+        m_searchPaths << dir;
         checkDir(dir);
+    }
+    else
+    {
+        m_searchPaths << dir;
     }
 }
 
@@ -169,7 +172,7 @@ QString BinaryIface::path(const QString& dir) const
     {
         return baseName();
     }
-    return QString("%1%2%3").arg(dir).arg(QDir::separator()).arg(baseName());
+    return QString("%1%2%3").arg(dir).arg('/').arg(baseName());
 }
 
 void BinaryIface::setup()
