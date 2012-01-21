@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2010-02-04
- * Description : a tool to export or import image to imgur.com
+ * Description : a tool to export images to imgur.com
  *
  * Copyright (C) 2010 by Marius Orcisk <marius at habarnam dot ro>
  *
@@ -38,7 +38,7 @@ namespace KIO
     class Job;
 }
 
-namespace KIPIImgurTalkerPlugin
+namespace KIPIImgurExportPlugin
 {
     class ImgurTalker : public QObject
     {
@@ -75,7 +75,8 @@ namespace KIPIImgurTalkerPlugin
             FE_GETPHOTO,
             FE_CHECKTOKEN,
             FE_GETTOKEN,
-            FE_CREATEALBUM
+            FE_CREATEALBUM,
+            FE_REMOVEPHOTO
         };
     public:
         ImgurTalker (QObject *parent = 0);
@@ -96,6 +97,7 @@ namespace KIPIImgurTalkerPlugin
     private:
         QString         m_apiKey;
         QString         m_exportUrl;
+        QString         m_removeUrl;
         QString         m_userAgent;
 
         QObject*        m_parent;
@@ -104,7 +106,9 @@ namespace KIPIImgurTalkerPlugin
         State           m_state;
 
         KIO::Job*       m_job;
-        QMap<KIO::Job*, QByteArray> m_jobData;
+//        QMap<KIO::Job*, QByteArray> m_jobData;
+
+        void parseResponseImageUpload (QByteArray data);
 
     private Q_SLOTS:
         void slotResult (KJob *job);

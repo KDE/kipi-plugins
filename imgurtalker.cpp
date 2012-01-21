@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2010-02-04
- * Description : a tool to export or import image to imgur.com
+ * Description : a tool to export images to imgur.com
  *
  * Copyright (C) 2010 by Marius Orcisk <marius at habarnam dot ro>
  *
@@ -21,19 +21,27 @@
  * ============================================================ */
 #include "imgurtalker.h"
 
+// qt
+#include <QVariant>
+
+// kde
 #include <KDebug>
 #include <KIO/Job>
+#include <qjson/parser.h>
 
 // local
 #include "mpform.h"
 
-namespace KIPIImgurTalkerPlugin {
+namespace KIPIImgurExportPlugin {
     ImgurTalker::ImgurTalker (QObject *parent) {
         m_parent        = parent;
 
         m_job           = 0;
         m_userAgent     = QString("KIPI-Plugin-ImgurTalker/0.0.1");
+
         m_exportUrl     = QString("http://api.imgur.com/2/upload.json");
+        m_removeUrl     = QString("http://api.imgur.com/2/delete.json");
+        \
         m_apiKey        = _IMGUR_API_KEY;
     }
 
@@ -122,15 +130,24 @@ namespace KIPIImgurTalkerPlugin {
         if ( job->error() )
             kDebug() << "err: " << job->errorString();
 
-//        QString s = QString(m_buffer);
         switch(m_state)
         {
             default:
-//                parseResponseImageUpload(m_buffer);
-                break;
+                kDebug () << m_buffer;
+                parseResponseImageUpload(m_buffer);
+                emit signalUploadDone(1, "Done");
+            break;
         }
 
-        kDebug () << "buff len" << m_buffer.length() << m_buffer;
+//        kDebug () << "buff len" << m_buffer.length() << m_buffer;
+        return;
+    }
+
+    void ImgurTalker::parseResponseImageUpload (QByteArray data) {
+        QJson::Parser* p = new QJson::Parser();
+        QVariant r = p->parse(data);
+
+        kDebug() << "qJson :" << r;
         return;
     }
 
@@ -159,7 +176,7 @@ namespace KIPIImgurTalkerPlugin {
 
          m_job   = job;
 
-//         m_state = FE_ADDPHOTO;
+         m_state = FE_ADDPHOTO;
          emit signalBusy(true);
 
          m_buffer.resize(0);
@@ -169,6 +186,7 @@ namespace KIPIImgurTalkerPlugin {
     bool ImgurTalker::imageDelete (QString hash)
     {
      /* TODO */
+         m_state = FE_REMOVEPHOTO;
         return true;
     }
 

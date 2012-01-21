@@ -29,7 +29,7 @@
 #include <QByteArray>
 #include <QString>
 
-namespace KIPIImgurTalkerPlugin
+namespace KIPIImgurExportPlugin
 {
 
 class MPForm

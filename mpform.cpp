@@ -40,7 +40,7 @@
 #include <kurl.h>
 #include <krandom.h>
 
-namespace KIPIImgurTalkerPlugin
+namespace KIPIImgurExportPlugin
 {
 
 MPForm::MPForm()
