@@ -155,6 +155,7 @@ Q_SIGNALS:
 
     void addedDropedItems(const KUrl::List& urls);
     void signalItemClicked(QTreeWidgetItem*);
+    void contextMenuRequested();
 
 private Q_SLOTS:
 
@@ -169,7 +170,8 @@ private:
     void dragEnterEvent(QDragEnterEvent* e);
     void dragMoveEvent(QDragMoveEvent* e);
     void dropEvent(QDropEvent* e);
-
+    void contextMenuEvent(QContextMenuEvent * e);
+    
     void setup(int iconSize);
 
     void drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const;
@@ -260,17 +262,18 @@ Q_SIGNALS:
     void signalImageListChanged();
     void signalFoundRAWImages(bool);
     void signalItemClicked(QTreeWidgetItem*);
+    void contextMenuRequested();
 
 public Q_SLOTS:
 
     virtual void slotAddImages(const KUrl::List& list);
+    virtual void slotRemoveItems();
 
 protected Q_SLOTS:
 
     void slotProgressTimerDone();
 
     virtual void slotAddItems();
-    virtual void slotRemoveItems();
     virtual void slotMoveUpItems();
     virtual void slotMoveDownItems();
     virtual void slotClearItems();
