@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2010-02-04
- * Description : a tool to export or import image to imgur.com
+ * Description : a tool to export images to imgur.com
  *
  * Copyright (C) 2010 by Marius Orcisk <marius at habarnam dot ro>
  *
@@ -23,7 +23,6 @@
 #define PLUGIN_IMGUREXPORT_H
 
 #include <QVariant>
-#include <unistd.h>
 
 // LibKIPI includes
 #include <libkipi/plugin.h>

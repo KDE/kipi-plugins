@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2010-02-04
- * Description : a tool to export or import image to imgur.com
+ * Description : a tool to export images to imgur.com
  *
  * Copyright (C) 2010 by Marius Orcisk <marius at habarnam dot ro>
  *
@@ -19,9 +19,11 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+#include <unistd.h>
 
 #include "plugin_imgurexport.h"
 #include "imgurtalker.h"
+#include "imgurwidget.h"
 
 // KDE includes
 #include <KDebug>
@@ -35,13 +37,14 @@
 #include <KLocale>
 #include <KPluginFactory>
 #include <KPluginLoader>
+#include <KDialog>
 
 
 // LibKipi includes
 #include <libkipi/interface.h>
 
+
 using namespace KIPIImgurExportPlugin;
-using namespace KIPIImgurTalkerPlugin;
 
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
@@ -49,7 +52,7 @@ K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
 Plugin_ImgurExport::Plugin_ImgurExport(QObject *parent, const QVariantList &args)
                       : KIPI::Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport")
 {
-    kDebug(AREA_CODE_LOADING) << "Plugin_ImgurExport plugin loaded";
+    kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
 }
 
 void Plugin_ImgurExport::setup(QWidget* widget)
@@ -93,13 +96,8 @@ void Plugin_ImgurExport::slotActivate()
     KStandardDirs dir;
     QString Tmp = dir.saveLocation("tmp", "kipi-imgurexportplugin-" + QString::number(getpid()) + '/');
 
-    ImgurTalker* ws = new ImgurTalker(parent());
-    for (int i = 0; i < interface->currentSelection().images().length(); i++ ) {
-        QString path =  interface->currentSelection().images().at(i).path();
-        kDebug() << path;
-
-        ws->imageUpload(path);
-    }
+    ImgurWidget* m_dlgExport = new ImgurWidget(interface, false);
+    m_dlgExport->show();
 
     kDebug() << "We have activated imgur exporter!";
 }
