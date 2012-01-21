@@ -3,13 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2007-16-07
- * Description : a kipi plugin to export images to Picasa web service
+ * Date        : 2011-01-21
+ * Description : a tool to export images to imgur.com
  *
- * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
- * Copyright (C) 2010 by Jens Mueller <tschenser at gmx dot de>
- * Copyright (C) 2010 by Caulier Gilles <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011 by Marius Orcisk <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -57,6 +54,8 @@ ImgurWidget::ImgurWidget(Interface* iface, bool import)
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
 
+    m_imglst = new ImagesList(iface, m_tab, (serviceName == "23"));
+
     // ------------------------------------------------------------------------
 
     QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
@@ -80,20 +79,10 @@ ImgurWidget::ImgurWidget(Interface* iface, bool import)
 
     // ------------------------------------------------------------------------
 
-//    //mainLayout->addWidget(m_imgList);
+    mainLayout->addWidget(m_imgList);
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
-
-//    updateLabels();  // use empty labels until login
-
-//    // ------------------------------------------------------------------------
-
-////    connect(m_changeUserBtn, SIGNAL(clicked()),
-////            this, SLOT(slotChangeUserClicked()));
-
-//    connect(m_resizeChB, SIGNAL(clicked()),
-//            this, SLOT(slotResizeChecked()));
 
 }
 
@@ -101,25 +90,14 @@ ImgurWidget::~ImgurWidget()
 {
 }
 
-//ImagesList* ImgurWidget::imagesList() const
-//{
-//    return m_imgList;
-//}
+ImagesList* ImgurWidget::imagesList() const
+{
+    return m_imgList;
+}
 
 QProgressBar* ImgurWidget::progressBar() const
 {
     return m_progressBar;
-}
-
-void ImgurWidget::slotChangeUserClicked()
-{
-//    emit signalUserChangeRequest(false);
-}
-
-void ImgurWidget::slotResizeChecked()
-{
-//    m_dimensionSpB->setEnabled(m_resizeChB->isChecked());
-//    m_imageQualitySpB->setEnabled(m_resizeChB->isChecked());
 }
 
 } // namespace KIPIImgurExportPlugin

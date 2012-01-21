@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2005-07-07
- * Description : a kipi plugin to export images to Flickr web service
+ * Description : a tool to export images to imgur.com
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
