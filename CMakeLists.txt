@@ -156,8 +156,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(KdepimLibs)    # For Calendar (libkcal).
 MACRO_OPTIONAL_FIND_PACKAGE(QCA2)          # For Shwup and YandexFotki.
 MACRO_OPTIONAL_FIND_PACKAGE(KSane)         # For AcquireImages.
 MACRO_OPTIONAL_FIND_PACKAGE(OpenCV)        # For RemoveRedEyes.
-MACRO_OPTIONAL_FIND_PACKAGE(QJSON)         # For Debian Screenshots and
-Facebook, and Imgur.
+MACRO_OPTIONAL_FIND_PACKAGE(QJSON)         # For Debian Screenshots and Facebook, and Imgur.
 MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)       # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)     # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte) # For VKontakte.
