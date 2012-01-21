@@ -6,7 +6,7 @@
  * Date        : 2008-01-11
  * Description : a kipi plugin to print images
  *
- * Copyright 2008-2009 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright 2008-2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,8 +29,9 @@
 #include <QIcon>
 
 // KDE includes
-
 #include <kassistantdialog.h>
+// Local includes
+#include "imageslist.h"
 
 namespace KIPI
 {
@@ -81,8 +82,6 @@ protected Q_SLOTS:
     virtual void BtnCropRotate_clicked();
     virtual void BtnCropNext_clicked();
     virtual void BtnCropPrev_clicked();
-    virtual void ListPrintOrder_selected();
-    virtual void ListPhotoOrder_highlighted (int );
     virtual void ListPhotoSizes_selected();
 
     virtual void reject();
@@ -91,12 +90,15 @@ protected Q_SLOTS:
 
     virtual void pagesetupclicked();
     virtual void pagesetupdialogexit();
-    virtual void infopage_imageSelected();
+    virtual void imageSelected(QTreeWidgetItem*);
     virtual void infopage_selectNext();
     virtual void infopage_selectPrev();
     virtual void infopage_decreaseCopies();
     virtual void infopage_increaseCopies();
     virtual void infopage_updateCaptions();
+    
+    virtual void slotAddItems(const KUrl::List&);    
+    virtual void slotRemovingItem(KIPIPlugins::ImagesListViewItem*);
     //private slots:
     //	void updateFinishButton();
 
@@ -107,7 +109,6 @@ private:
     void previewPhotos();
 
     void infopage_enableButtons();
-    void infopage_imagePreview();
     void infopage_blockCaptionButtons(bool block=true);
     void infopage_setCaptionButtons();
     void infopage_readCaptionSettings();
@@ -130,7 +131,6 @@ private:
     bool paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList<QRect*>& layouts,
                       int& current, bool cropDisabled, bool useThumbnails = false);
 
-    void manageBtnPrintOrder();
     void manageBtnPreviewPage();
 
     void saveSettings(const QString& pageName);
