@@ -313,7 +313,7 @@
             </property>
            </spacer>
           </item>
-          <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+          <item>
            <widget class="QLabel" name="BmpFirstPagePreview">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
