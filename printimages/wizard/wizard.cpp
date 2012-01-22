@@ -291,9 +291,9 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
                                                ImagesList::MoveDown |
                                                ImagesList::Clear |
                                                ImagesList::Save |
-                                               ImagesList::Load);                           // add all buttons (default)
-    d->m_ImagesFilesListBox->setControlButtonsPlacement(ImagesList::ControlButtonsAbove);   // buttons on the right  (default)
-    d->m_ImagesFilesListBox->enableDragAndDrop(false);                                      // enable drag and drop  (default)
+                                               ImagesList::Load);                           // add all buttons
+    d->m_ImagesFilesListBox->setControlButtonsPlacement(ImagesList::ControlButtonsAbove);   // buttons above
+    d->m_ImagesFilesListBox->enableDragAndDrop(false);                                      // disable drag and drop
 
 
     //d->m_ImagesFilesListBox-> loadImagesFromCurrentSelection();
