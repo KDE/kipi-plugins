@@ -203,8 +203,8 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
             this, SLOT(slotHelp()));
 
     // selected page
-    connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)),
-            this, SLOT(pageChanged(KPageWidgetItem*, KPageWidgetItem*)));
+    connect(this, SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
+            this, SLOT(pageChanged(KPageWidgetItem*,KPageWidgetItem*)));
 
     // cancel button
     connect(this, SIGNAL(cancelClicked()),
@@ -303,8 +303,8 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
     connect(d->m_ImagesFilesListBox, SIGNAL(signalMoveUpItem()),
             this, SLOT(BtnPrintOrderUp_clicked()));
 
-    connect(d->m_ImagesFilesListBox, SIGNAL(signalAddItems(const KUrl::List&)),
-            this, SLOT(slotAddItems(const KUrl::List&)));
+    connect(d->m_ImagesFilesListBox, SIGNAL(signalAddItems(KUrl::List)),
+            this, SLOT(slotAddItems(KUrl::List)));
 
     connect(d->m_ImagesFilesListBox, SIGNAL(signalRemovingItem(KIPIPlugins::ImagesListViewItem*)),
             this, SLOT(slotRemovingItem(KIPIPlugins::ImagesListViewItem*)));
