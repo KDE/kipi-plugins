@@ -79,7 +79,8 @@ protected Q_SLOTS:
 
     virtual void BtnPreviewPageDown_clicked();
     virtual void BtnPreviewPageUp_clicked();
-    virtual void BtnCropRotate_clicked();
+    virtual void BtnCropRotateLeft_clicked();
+    virtual void BtnCropRotateRight_clicked();
     virtual void BtnCropNext_clicked();
     virtual void BtnCropPrev_clicked();
     virtual void ListPhotoSizes_selected();

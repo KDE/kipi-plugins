@@ -255,15 +255,12 @@ Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
     connect ( d->mCropPage->BtnCropNext, SIGNAL (clicked()),
               this, SLOT (BtnCropNext_clicked()) );
 
-    connect ( d->mCropPage->BtnCropRotate, SIGNAL (clicked()),
-              this, SLOT (BtnCropRotate_clicked()) );
+    connect ( d->mCropPage->BtnCropRotateRight, SIGNAL (clicked()),
+              this, SLOT (BtnCropRotateRight_clicked()) );
 
-//     connect ( d->mPhotoPage->ListPrintOrder, SIGNAL (itemSelectionChanged()),
-//               this, SLOT (ListPrintOrder_selected()) );
-// 
-//     connect ( d->mPhotoPage->ListPrintOrder, SIGNAL (itemEntered(QListWidgetItem*)),
-//               this, SLOT (ListPrintOrder_selected()) );
-
+    connect ( d->mCropPage->BtnCropRotateLeft, SIGNAL (clicked()),
+              this, SLOT (BtnCropRotateLeft_clicked()) );
+        
     connect ( d->mPhotoPage->ListPhotoSizes, SIGNAL (currentRowChanged(int)),
               this, SLOT (ListPhotoSizes_selected()) );
 
@@ -278,8 +275,6 @@ Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
     connect ( d->mPhotoPage->m_pagesetup, SIGNAL (clicked()),
               this, SLOT (pagesetupclicked()) );
 
-//         void addedDropedItems(const KUrl::List& urls);
-
   
     d->m_ImagesFilesListBox = new ImagesList(interface,
                                               d->mPhotoPage->mPrintList,
@@ -291,12 +286,13 @@ Wizard::Wizard ( QWidget* parent, KIPI::Interface* interface )
                                                ImagesList::MoveDown | 
                                                ImagesList::Clear |
                                                 ImagesList::Save |
-                                                ImagesList::Load); // add all buttons       (default)
-    d->m_ImagesFilesListBox->setControlButtonsPlacement(ImagesList::ControlButtonsAbove);             // buttons on the right  (default)
-    d->m_ImagesFilesListBox->enableDragAndDrop(false);                                     // enable drag and drop  (default)
+                                                ImagesList::Load); 
+    d->m_ImagesFilesListBox->setControlButtonsPlacement(ImagesList::ControlButtonsAbove);
+    d->m_ImagesFilesListBox->enableDragAndDrop(false);
 
+    d->mCropPage->BtnCropRotateRight->setIcon(SmallIcon("object-rotate-right"));
+    d->mCropPage->BtnCropRotateLeft->setIcon(SmallIcon("object-rotate-left"));
     
-    //d->m_ImagesFilesListBox-> loadImagesFromCurrentSelection();
     
     connect (d->m_ImagesFilesListBox, SIGNAL (signalMoveDownItem()),
               this, SLOT (BtnPrintOrderDown_clicked()) );
@@ -1637,7 +1633,21 @@ void Wizard::captionChanged ( const QString& text )
     infopage_updateCaptions();
 }
 
-void Wizard::BtnCropRotate_clicked()
+void Wizard::BtnCropRotateLeft_clicked()
+{
+    // by definition, the cropRegion should be set by now,
+    // which means that after our rotation it will become invalid,
+    // so we will initialize it to -2 in an awful hack (this
+    // tells the cropFrame to reset the crop region, but don't
+    // automagically rotate the image to fit.
+    TPhoto *photo = d->m_photos[d->m_currentCropPhoto];
+    photo->cropRegion = QRect ( -2, -2, -2, -2 );
+    photo->rotation = ( photo->rotation - 90 ) % 360;
+
+    updateCropFrame ( photo, d->m_currentCropPhoto );
+}
+
+void Wizard::BtnCropRotateRight_clicked()
 {
     // by definition, the cropRegion should be set by now,
     // which means that after our rotation it will become invalid,
