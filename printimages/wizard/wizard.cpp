@@ -311,6 +311,7 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
     connect(d->m_ImagesFilesListBox, SIGNAL(signalMoveDownItem()),
             this, SLOT(BtnPrintOrderDown_clicked()));
+
     connect(d->m_ImagesFilesListBox, SIGNAL(signalMoveUpItem()),
             this, SLOT(BtnPrintOrderUp_clicked()));
 
