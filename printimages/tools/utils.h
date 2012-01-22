@@ -7,7 +7,7 @@
  * Description : a kipi plugin to print images
  *
  * Copyright 2003 by Todd Shoemaker <todd@theshoemakers.net>
- * Copyright 2007-2008 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright 2007-2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
