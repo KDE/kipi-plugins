@@ -280,6 +280,13 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
 
     //         void addedDropedItems(const KUrl::List& urls);
 
+    if (d->mPhotoPage->mPrintList->layout())
+    {
+        delete d->mPhotoPage->mPrintList->layout();
+    }
+    QVBoxLayout* printListLayout = new QVBoxLayout;
+    printListLayout->setMargin(0);
+    printListLayout->setSpacing(0);
 
     d->m_ImagesFilesListBox = new ImagesList(interface,
                                              d->mPhotoPage->mPrintList,
@@ -295,6 +302,8 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
     d->m_ImagesFilesListBox->setControlButtonsPlacement(ImagesList::ControlButtonsAbove);   // buttons above
     d->m_ImagesFilesListBox->enableDragAndDrop(false);                                      // disable drag and drop
 
+    printListLayout->addWidget(d->m_ImagesFilesListBox);
+    d->mPhotoPage->mPrintList->setLayout(printListLayout);
 
     //d->m_ImagesFilesListBox-> loadImagesFromCurrentSelection();
 
