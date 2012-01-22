@@ -1488,7 +1488,9 @@ void Wizard::pageChanged ( KPageWidgetItem* current, KPageWidgetItem* before )
         // back to this page
         if (!before)
           infopage_updateCaptions();
-
+        
+        // reset preview page number
+        d->m_currentPreviewPage = 0;
         // create our photo sizes list
         previewPhotos();
     }
@@ -1863,7 +1865,9 @@ void Wizard::ListPhotoSizes_selected()
         d->mPhotoPage->ListPhotoSizes->setCurrentRow ( 0, QItemSelectionModel::Select );
         d->mPhotoPage->ListPhotoSizes->blockSignals ( false );
     }
-
+    
+    // reset preview page number
+    d->m_currentPreviewPage = 0;
     previewPhotos();
 }
 
