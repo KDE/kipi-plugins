@@ -66,7 +66,6 @@
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "ui_croppage.h"
-#include "ui_infopage.h"
 #include "ui_photopage.h"
 #include "tphoto.h"
 #include "utils.h"
