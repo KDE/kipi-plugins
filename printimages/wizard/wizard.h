@@ -91,8 +91,6 @@ protected Q_SLOTS:
     virtual void pagesetupclicked();
     virtual void pagesetupdialogexit();
     virtual void imageSelected(QTreeWidgetItem*);
-    virtual void infopage_selectNext();
-    virtual void infopage_selectPrev();
     virtual void decreaseCopies();
     virtual void increaseCopies();
     virtual void infopage_updateCaptions();
@@ -130,6 +128,9 @@ private:
                       int& current, bool cropDisabled, bool useThumbnails = false);
 
     void manageBtnPreviewPage();
+    
+    // fix caption group layout according to captions combobox text
+    void enableCaptionGroup(const QString& text);
 
     void saveSettings(const QString& pageName);
     void readSettings(const QString& pageName);
