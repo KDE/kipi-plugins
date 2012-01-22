@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>682</width>
-    <height>555</height>
+    <width>685</width>
+    <height>602</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -313,7 +313,7 @@
             </property>
            </spacer>
           </item>
-          <item>
+          <item alignment="Qt::AlignHCenter|Qt::AlignTop">
            <widget class="QLabel" name="BmpFirstPagePreview">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
