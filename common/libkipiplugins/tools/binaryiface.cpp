@@ -222,6 +222,11 @@ bool BinaryIface::checkDir(const QString& possibleDir)
 
 bool BinaryIface::recheckDirectories()
 {
+    if (isValid())
+    {
+        // No need for recheck if it is already valid...
+        return true;
+    }
     foreach(QString dir, m_searchPaths)
     {
         checkDir(dir);
