@@ -37,8 +37,8 @@ WeaverObserverTest::WeaverObserverTest(QObject* parent)
     connect(this, SIGNAL(threadStarted(ThreadWeaver::Thread*)),
             SLOT(slotThreadStarted(ThreadWeaver::Thread*)));
 
-    connect(this, SIGNAL(threadBusy(ThreadWeaver::Thread*, ThreadWeaver::Job*)),
-            SLOT(slotThreadBusy(ThreadWeaver::Thread*, ThreadWeaver::Job*)));
+    connect(this, SIGNAL(threadBusy(ThreadWeaver::Thread*,ThreadWeaver::Job*)),
+            SLOT(slotThreadBusy(ThreadWeaver::Thread*,ThreadWeaver::Job*)));
 
     connect(this, SIGNAL(threadSuspended(ThreadWeaver::Thread*)),
             SLOT(slotThreadSuspended(ThreadWeaver::Thread*)));

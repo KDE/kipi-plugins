@@ -10,8 +10,8 @@
     <height>300</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
     <widget class="KIPIPrintImagesPlugin::CropFrame" name="cropFrame" native="true">
      <property name="minimumSize">
       <size>
@@ -27,7 +27,7 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QCheckBox" name="m_disableCrop">
@@ -53,15 +53,28 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="BtnCropRotate">
+      <widget class="QPushButton" name="BtnCropRotateLeft">
        <property name="toolTip">
-        <string>Rotate photo</string>
+        <string>Rotate photo to the left</string>
        </property>
        <property name="whatsThis">
-        <string>Rotate photo</string>
+        <string>Rotate photo to the left</string>
        </property>
        <property name="text">
-        <string>&amp;Rotate</string>
+        <string>&amp;Rotate left</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="BtnCropRotateRight">
+       <property name="toolTip">
+        <string>Rotate photo to the right</string>
+       </property>
+       <property name="whatsThis">
+        <string>Rotate photo to the right</string>
+       </property>
+       <property name="text">
+        <string>&amp;Rotate right</string>
        </property>
       </widget>
      </item>
@@ -141,7 +154,7 @@ Enable &quot;Do not crop&quot; to avoid cropping all of the photos.</string>
      </item>
     </layout>
    </item>
-   <item>
+   <item row="2" column="0">
     <widget class="KUrlRequester" name="m_outputPath">
      <property name="enabled">
       <bool>false</bool>

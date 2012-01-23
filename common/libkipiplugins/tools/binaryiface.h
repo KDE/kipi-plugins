@@ -51,7 +51,7 @@ namespace KIPIPlugins
 
 class KIPIPLUGINS_EXPORT BinaryIface : public QObject
 {
-Q_OBJECT;
+Q_OBJECT
 
 public:
 

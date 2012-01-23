@@ -391,6 +391,12 @@ QModelIndex ImagesListView::indexFromItem ( ImagesListViewItem * item, int colum
 {
   return QTreeWidget::indexFromItem(item, column);
 }
+ 
+void ImagesListView::contextMenuEvent(QContextMenuEvent * e)
+{
+    QTreeWidget::contextMenuEvent(e);
+    emit contextMenuRequested();
+}
 
 void ImagesListView::dragEnterEvent(QDragEnterEvent* e)
 {
@@ -572,6 +578,9 @@ ImagesList::ImagesList(Interface* iface, QWidget* parent, int iconSize)
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
 
+    connect(d->listView, SIGNAL(contextMenuRequested()),
+            this, SIGNAL(contextMenuRequested()));
+    
     // queue this connection because itemSelectionChanged is emitted
     // while items are deleted, and accessing selectedItems at that
     // time causes a crash ...
@@ -923,6 +932,8 @@ void ImagesList::removeItemByUrl(const KUrl& url)
 
             if (item->url() == url)
             {
+                emit signalRemovingItem(item);
+               
                 if (d->processItems.contains(item->url()))
                 {
                     d->processItems.removeAll(item->url());

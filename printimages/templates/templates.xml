@@ -150,7 +150,20 @@
     </template>
 
   </paper>
-
+  
+  <paper name="passport-uk" width="90" height="150" unit="mm" >
+    
+    <template name="6_photos_3.5x4.5cm" dpi="0" autorotate="true">
+        <photo x="10" y="3"  width="35" height="45" />
+        <photo x="55" y="3"  width="35" height="45" />
+        <photo x="10" y="53" width="35" height="45" />
+        <photo x="55" y="53" width="35" height="45" />
+        <photo x="10" y="103" width="35" height="45" />
+        <photo x="55" y="103" width="35" height="45" />
+    </template>
+  
+  </paper>
+  
   <paper name="13x18cm" width="127" height="177.8" unit="mm" >
 
     <template name="1_photo_10x15cm" dpi="0" autorotate="true">
