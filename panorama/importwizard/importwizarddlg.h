@@ -78,6 +78,7 @@ private Q_SLOTS:
     void slotOptimized(const KUrl&);
     void slotStitchingFinished(const KUrl&);
     void slotCopyFinished(bool);
+    void slotLastPageIsValid(bool);
     void slotHelp();
 
 private:

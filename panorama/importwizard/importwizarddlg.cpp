@@ -136,6 +136,9 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     connect(d->lastPage, SIGNAL(signalCopyFinished(bool)),
             this, SLOT(slotCopyFinished(bool)));
 
+    connect(d->lastPage, SIGNAL(signalIsValid(bool)),
+            this, SLOT(slotLastPageIsValid(bool)));
+
     setValid(d->introPage->page(), d->introPage->binariesFound());
 }
 
@@ -317,6 +320,11 @@ void ImportWizardDlg::slotCopyFinished(bool ok)
     {
         setValid(d->lastPage->page(), true);
     }
+}
+
+void ImportWizardDlg::slotLastPageIsValid(bool isValid)
+{
+    setValid(d->lastPage->page(), isValid);
 }
 
 void ImportWizardDlg::slotHelp()
