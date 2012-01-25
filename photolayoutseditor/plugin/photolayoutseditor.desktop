@@ -5,7 +5,6 @@ Type=Application
 Categories=Qt;KDE;Graphics;Photography;
 Exec=photolayoutseditor
 Icon=photolayoutseditor
-#X-DocPath=photolayoutseditor/index.html
 Name=Photo Layouts Editor
 Name[ca]=Editor de formats de foto
 Name[ca@valencia]=Editor de formats de foto

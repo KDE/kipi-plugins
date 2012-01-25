@@ -99,6 +99,5 @@ Terminal=false
 Type=Application
 X-DBUS-ServiceName=
 X-DBUS-StartupType=
-X-DocPath=kipi-plugins/index.html#expoblending
 X-KDE-SubstituteUID=false
 X-KDE-Username=
