@@ -99,6 +99,10 @@ protected Q_SLOTS:
     virtual void slotAddItems(const KUrl::List&);    
     virtual void slotRemovingItem(KIPIPlugins::ImagesListViewItem*);
     virtual void slotContextMenuRequested();
+    virtual void slotXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::ImagesListViewItem*);
+    virtual void slotXMLLoadElement(QXmlStreamReader&);
+    virtual void slotXMLCustomElement(QXmlStreamWriter&);
+    virtual void slotXMLCustomElement(QXmlStreamReader&);
     
 private:
 

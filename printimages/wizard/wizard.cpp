@@ -37,7 +37,7 @@
 #include <QProgressDialog>
 #include <QDomDocument>
 #include <QContextMenuEvent>
-
+#include <QXmlStreamWriter>
 
 // KDE includes
 #include <kapplication.h>
@@ -321,14 +321,24 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
     connect(d->m_ImagesFilesListBox, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SLOT(imageSelected(QTreeWidgetItem*)));
 
-    connect(d->m_ImagesFilesListBox, SIGNAL(contextMenuRequested()),
+    connect(d->m_ImagesFilesListBox, SIGNAL(signalContextMenuRequested()),
             this, SLOT(slotContextMenuRequested()));
 
-//   connect ( d->mPhotoPage->m_PictureInfo, SIGNAL (itemSelectionChanged()),
-    //            this, SLOT (infopage_imageSelected()) );
-//     connect (d->m_ImagesFilesListBox, SIGNAL (signalImageListChanged()),
-//               this, SLOT (previewPhotos()) );
-//
+    // Save item list => we catch the signal to add our PA attributes and elements Image children
+    connect(d->m_ImagesFilesListBox, SIGNAL(signalXMLSaveItem(QXmlStreamWriter&,KIPIPlugins::ImagesListViewItem*)),
+            this, SLOT(slotXMLSaveItem(QXmlStreamWriter&,KIPIPlugins::ImagesListViewItem*)));
+
+    // Save item list => we catch the signal to add our PA elements (not per image)
+    connect(d->m_ImagesFilesListBox, SIGNAL(signalXMLCustomElements(QXmlStreamWriter&)),
+            this, SLOT(slotXMLCustomElement(QXmlStreamWriter&)));
+
+    connect(d->m_ImagesFilesListBox, SIGNAL(signalXMLLoadImageElement(QXmlStreamReader&)),
+            this, SLOT(slotXMLLoadElement(QXmlStreamReader&)));
+
+    connect(d->m_ImagesFilesListBox, SIGNAL(signalXMLCustomElements(QXmlStreamReader&)),
+            this, SLOT(slotXMLCustomElement(QXmlStreamReader&)));
+    
+
     // To get rid of icons that sometime are not shown
     d->mPhotoPage->BtnPreviewPageUp->setIcon(SmallIcon("arrow-right"));
     d->mPhotoPage->BtnPreviewPageDown->setIcon(SmallIcon("arrow-left"));
@@ -1245,6 +1255,52 @@ void Wizard::infopage_setCaptionButtons()
     }
 }
 
+void Wizard::slotXMLCustomElement(QXmlStreamWriter& xmlWriter)
+{
+    kDebug() << " invoked " ;
+    xmlWriter.writeStartElement("PA_test");
+    xmlWriter.writeAttribute("test", "it works");
+    xmlWriter.writeEndElement(); // PA_test
+}
+
+void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KIPIPlugins::ImagesListViewItem* item)
+{
+    if (d->m_photos.size())
+    {
+        int itemIndex = d->m_ImagesFilesListBox->listView()->indexFromItem(item).row();
+        TPhoto* pPhoto = d->m_photos[itemIndex];
+        // TODO anaselli: first and copies could be removed since they are not useful any more
+        xmlWriter.writeAttribute("first", QString("%1").arg(pPhoto->first));
+        xmlWriter.writeAttribute("copies", QString("%1").arg(pPhoto->first ? pPhoto->copies : 0));
+        
+        // additional info (caption... etc)
+        xmlWriter.writeStartElement("test");
+        xmlWriter.writeAttribute("test_attribute", "attribute value");
+        xmlWriter.writeEndElement();
+    }
+}
+
+void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
+{
+   kDebug() << " invoked " << xmlReader.name();
+}
+
+void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
+{
+    if (d->m_photos.size())
+    {
+        // read image is the last.
+        TPhoto* pPhoto = d->m_photos[d->m_photos.size()-1];
+        kDebug() << " invoked " << xmlReader.name();
+
+        while (xmlReader.readNextStartElement())
+        {
+            kDebug() << pPhoto->filename << " " << xmlReader.name();
+        }
+    }
+    
+}
+
 void Wizard::slotContextMenuRequested()
 {
     if (d->m_photos.size())
@@ -1451,26 +1507,12 @@ void Wizard::pageChanged(KPageWidgetItem* current, KPageWidgetItem* before)
         d->m_ImagesFilesListBox->listView()->clear();
         KUrl::List list;
 
-        for (int i = 0; i < d->m_photos.count();)
+        for (int i = 0; i < d->m_photos.count();++i)
         {
             TPhoto* pCurrentPhoto = d->m_photos.at(i);
             if (pCurrentPhoto)
             {
                 list.push_back(pCurrentPhoto->filename);
-                // adding copies
-                for (int adding = pCurrentPhoto->copies - 1; adding > 0 ;adding--)
-                {
-                    TPhoto* pPhoto = new TPhoto(*pCurrentPhoto);
-                    pPhoto->first = false;
-                    d->m_photos.insert(i, pPhoto);
-                    kDebug() << "FileName: " << pPhoto->filename.fileName();
-                    list.push_back(pCurrentPhoto->filename);
-                }
-                i += pCurrentPhoto->copies;
-            }
-            else // useless
-            {
-                i++;
             }
         }
         d->m_ImagesFilesListBox->blockSignals(true);
