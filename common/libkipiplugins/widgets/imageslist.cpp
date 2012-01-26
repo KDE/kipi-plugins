@@ -952,8 +952,6 @@ void ImagesList::slotLoadItems()
           QXmlStreamAttributes attrs = xmlReader.attributes();
           // get value of each attribute from QXmlStreamAttributes
           QStringRef url = attrs.value("url");
-          kDebug() << xmlReader.name() << " attributes test? " << url.toString();
-          
           if (url.isEmpty())
           {
               xmlReader.readNext();
