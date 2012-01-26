@@ -54,6 +54,7 @@
 
 // LibKIPI includes
 
+#include <libkipi/version.h>
 #include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 
@@ -91,6 +92,8 @@ public:
     }
 
     bool                   busy;
+
+    QString                progressId;
 
     QWidget*               page;
 
@@ -293,6 +296,18 @@ void BatchDialog::slotStartStop()
         d->progressBar->setValue(0);
         d->progressBar->show();
 
+#if KIPI_VERSION >= 0x010500
+        if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+        {
+            d->progressId = d->iface->progressScheduled(i18n("DNG Converter"), true, true);
+
+            connect(d->iface, SIGNAL(progressCanceled(QString)),
+                    this, SLOT(slotProgressCanceled(QString)));
+
+            d->iface->progresssThumbnailChanged(d->progressId, KIcon("dngconverter").pixmap(22));
+        }
+#endif // KIPI_VERSION >= 0x010500
+
         processOne();
     }
     else
@@ -307,6 +322,12 @@ void BatchDialog::slotStartStop()
     }
 }
 
+void BatchDialog::slotProgressCanceled(const QString& id)
+{
+    if (d->progressId == id)
+        slotStartStop();
+}
+
 void BatchDialog::addItems(const KUrl::List& itemList)
 {
     d->listView->slotAddImages(itemList);
@@ -316,6 +337,13 @@ void BatchDialog::slotAborted()
 {
     d->progressBar->setValue(0);
     d->progressBar->hide();
+
+#if KIPI_VERSION >= 0x010500
+    if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+    {
+        d->iface->progressCompleted(d->progressId);
+    }
+#endif // KIPI_VERSION >= 0x010500
 }
 
 /// Set Identity and Target file
@@ -448,12 +476,28 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
     }
 
     d->progressBar->setValue(d->progressBar->value()+1);
+
+#if KIPI_VERSION >= 0x010500
+    if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+    {
+        float percents = ((float)d->progressBar->value() / (float)d->progressBar->maximum()) * 100.0;
+        d->iface->progressValueChanged(d->progressId, percents);
+    }
+#endif // KIPI_VERSION >= 0x010500
 }
 
 void BatchDialog::processingFailed(const KUrl& url)
 {
     d->listView->processed(url, false);
     d->progressBar->setValue(d->progressBar->value()+1);
+
+#if KIPI_VERSION >= 0x010500
+    if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+    {
+        float percents = ((float)d->progressBar->value() / (float)d->progressBar->maximum()) * 100.0;
+        d->iface->progressValueChanged(d->progressId, percents);
+    }
+#endif // KIPI_VERSION >= 0x010500
 }
 
 void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)

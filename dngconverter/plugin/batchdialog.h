@@ -77,6 +77,7 @@ private Q_SLOTS:
     void slotAborted();
     void slotIdentify();
     void slotAction(const KIPIDNGConverterPlugin::ActionData&);
+    void slotProgressCanceled(const QString&);
 
 private:
 
