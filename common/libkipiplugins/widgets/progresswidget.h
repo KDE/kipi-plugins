@@ -49,13 +49,30 @@ public:
     ProgressWidget(KIPI::Interface* iface, QWidget* parent);
     ~ProgressWidget();
 
+    /** Call this method to start a new instance of progress notification into KIPI host application
+     *  You can pass tite string to name progress item, and set it as cancelable. In this case,
+     *  signalProgressCanceled() is fired when user press cancel button from KIPI host application.
+     *  This item can also accept a thumbnail that you can change through progresssThumbnailChanged().
+     *  For more details about Progress management through KIPI host application, look into KIPI::Interface class.
+     */
     void progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb);
+
+    /** Change thumbnail in progress notifier from KIPI host application
+     */
     void progresssThumbnailChanged(const QPixmap& thumb);
+
+    /** Change status string in progress notifier from KIPI host application
+     */
     void progressStatusChanged(const QString& status);
+
+    /** Call this method to query KIPI host application that process is done.
+     */
     void progressCompleted();
 
 Q_SIGNALS:
 
+    /** Fired when user press cancel button from KIPI host application progress notifier.
+     */
     void signalProgressCanceled();
 
 private Q_SLOTS:
