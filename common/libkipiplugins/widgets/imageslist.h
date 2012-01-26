@@ -52,6 +52,9 @@ namespace KIPI
 class Interface;
 }
 
+class QXmlStreamWriter;
+class QXmlStreamReader;
+
 using namespace KIPI;
 
 namespace KIPIPlugins
@@ -155,7 +158,7 @@ Q_SIGNALS:
 
     void addedDropedItems(const KUrl::List& urls);
     void signalItemClicked(QTreeWidgetItem*);
-    void contextMenuRequested();
+    void signalContextMenuRequested();
 
 private Q_SLOTS:
 
@@ -262,8 +265,12 @@ Q_SIGNALS:
     void signalImageListChanged();
     void signalFoundRAWImages(bool);
     void signalItemClicked(QTreeWidgetItem*);
-    void contextMenuRequested();
-
+    void signalContextMenuRequested();
+    void signalXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::ImagesListViewItem*);
+    void signalXMLLoadImageElement(QXmlStreamReader&);
+    void signalXMLCustomElements(QXmlStreamWriter&);
+    void signalXMLCustomElements(QXmlStreamReader&);
+    
 public Q_SLOTS:
 
     virtual void slotAddImages(const KUrl::List& list);
@@ -277,8 +284,8 @@ protected Q_SLOTS:
     virtual void slotMoveUpItems();
     virtual void slotMoveDownItems();
     virtual void slotClearItems();
-    virtual void slotLoadItems(){};
-    virtual void slotSaveItems(){};
+    virtual void slotLoadItems();
+    virtual void slotSaveItems();
     virtual void slotThumbnail(const KUrl& url, const QPixmap& pix);
     virtual void slotImageListChanged();
 
