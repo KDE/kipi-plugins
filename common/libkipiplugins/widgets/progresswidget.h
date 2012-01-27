@@ -59,7 +59,7 @@ public:
 
     /** Change thumbnail in progress notifier from KIPI host application
      */
-    void progresssThumbnailChanged(const QPixmap& thumb);
+    void progressThumbnailChanged(const QPixmap& thumb);
 
     /** Change status string in progress notifier from KIPI host application
      */

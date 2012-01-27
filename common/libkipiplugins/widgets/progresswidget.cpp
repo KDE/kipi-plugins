@@ -83,12 +83,12 @@ void ProgressWidget::progressCompleted()
 #endif // KIPI_VERSION >= 0x010500
 }
 
-void ProgressWidget::progresssThumbnailChanged(const QPixmap& thumb)
+void ProgressWidget::progressThumbnailChanged(const QPixmap& thumb)
 {
 #if KIPI_VERSION >= 0x010500
     if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
     {
-        d->iface->progresssThumbnailChanged(d->progressId, thumb);
+        d->iface->progressThumbnailChanged(d->progressId, thumb);
     }
 #endif // KIPI_VERSION >= 0x010500
 }
