@@ -110,7 +110,7 @@ public:
 };
 
 BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
-           : KDialog(0), d(new BatchDialogPriv)
+    : KDialog(0), d(new BatchDialogPriv)
 {
     d->iface = iface;
     d->about = about;
@@ -296,7 +296,7 @@ void BatchDialog::slotStartStop()
         d->progressBar->setValue(0);
         d->progressBar->show();
         d->progressBar->progressScheduled(i18n("DNG Converter"), true, true);
-        d->progressBar->progresssThumbnailChanged(KIcon("dngconverter").pixmap(22));
+        d->progressBar->progressThumbnailChanged(KIcon("dngconverter").pixmap(22));
 
         processOne();
     }
