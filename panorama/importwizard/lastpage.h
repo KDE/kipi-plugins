@@ -50,15 +50,19 @@ public:
 Q_SIGNALS:
 
     void signalCopyFinished(bool);
+    void signalIsValid(bool);
 
 private Q_SLOTS:
 
     void slotAction(const KIPIPanoramaPlugin::ActionData&);
     void slotTemplateChanged(const QString&);
+    void slotPtoCheckBoxChanged(int);
 
 private:
 
     QString panoFileName(const QString& fileTemplate) const;
+    void checkFiles(void);
+    void resetWarningMsg(void);
 
 private:
 

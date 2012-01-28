@@ -133,4 +133,3 @@ Type=Application
 MimeType=image/x-dcraw;
 Terminal=false
 Categories=Qt;KDE;Graphics;
-X-DocPath=kipi-plugins/index.html#dngconverter

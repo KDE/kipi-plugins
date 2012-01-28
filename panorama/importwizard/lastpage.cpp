@@ -58,6 +58,7 @@ struct LastPage::LastPagePriv
     QGroupBox* saveSettingsGroupBox;
     KLineEdit* fileTemplateKLineEdit;
     QCheckBox* savePtoCheckBox;
+    QLabel*    warningLabel;
 
     Manager*   mngr;
 };
@@ -74,8 +75,6 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
     d->title                  = new QLabel(vbox);
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
-
-    QLabel* space             = new QLabel(vbox);
 
     QVBoxLayout *formatVBox   = new QVBoxLayout();
     d->saveSettingsGroupBox   = new QGroupBox(i18n("Save Settings"), vbox);
@@ -102,6 +101,11 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
                                           "This is useful if you want a different projection, modify the horizon or "
                                           "the center of the panorama, or modify the control points to get better results."));
     formatVBox->addWidget(d->savePtoCheckBox);
+    d->warningLabel = new QLabel(d->saveSettingsGroupBox);
+    d->warningLabel->hide();
+    formatVBox->addWidget(d->warningLabel);
+
+    QLabel* space             = new QLabel(vbox);
     vbox->setStretchFactor(space, 2);
 
     setPageWidget(vbox);
@@ -111,6 +115,9 @@ LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
 
     connect(d->fileTemplateKLineEdit, SIGNAL(textChanged(QString)),
             this, SLOT(slotTemplateChanged(QString)));
+
+    connect(d->savePtoCheckBox, SIGNAL(stateChanged(int)),
+            this, SLOT(slotPtoCheckBoxChanged(int)));
 
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
@@ -129,6 +136,7 @@ LastPage::~LastPage()
 void LastPage::resetTitle()
 {
     slotTemplateChanged(d->fileTemplateKLineEdit->text());
+    checkFiles();
 }
 
 void LastPage::copyFiles()
@@ -162,7 +170,8 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                                this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
                     emit signalCopyFinished(false);
-                    //TODO
+                    d->warningLabel->setText(i18n("<qt><p><font color=\"red\"><b>Error:</b> "
+                                                  "%1</font></p></qt>", ad.message));
                     break;
                 }
                 default:
@@ -194,7 +203,7 @@ void LastPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
     }
 }
 
-void LastPage::slotTemplateChanged(const QString& fileTemplate)
+void LastPage::slotTemplateChanged(const QString&)
 {
     d->title->setText(i18n("<qt>"
                            "<p><h1><b>Panorama Stitching is Done</b></h1></p>"
@@ -207,10 +216,14 @@ void LastPage::slotTemplateChanged(const QString& fileTemplate)
                            "the stitching process will be copied at the same time (those are "
                            "TIFF files that can be big).</p>"
                            "</qt>",
-                           QDir::toNativeSeparators(d->mngr->preProcessedMap().begin().key().directory()),
-                           panoFileName(fileTemplate),
-                           fileTemplate + ".pto"
+                           QDir::toNativeSeparators(d->mngr->preProcessedMap().begin().key().directory())
                           ));
+    checkFiles();
+}
+
+void LastPage::slotPtoCheckBoxChanged(int)
+{
+    checkFiles();
 }
 
 QString LastPage::panoFileName(const QString& fileTemplate) const
@@ -223,6 +236,30 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
         case ActionThread::TIFF:
             return fileTemplate + ".tif";
     }
+}
+
+void LastPage::checkFiles(void)
+{
+    QFile panoFile(d->mngr->preProcessedMap().begin().key().directory() + '/' + panoFileName(d->fileTemplateKLineEdit->text()));
+    QFile ptoFile(d->mngr->preProcessedMap().begin().key().directory() + '/' + d->fileTemplateKLineEdit->text() + ".pto");
+    if (panoFile.exists() || (d->savePtoCheckBox->isChecked() && ptoFile.exists()))
+    {
+        emit signalIsValid(false);
+        resetWarningMsg();
+        d->warningLabel->show();
+    }
+    else
+    {
+        emit signalIsValid(true);
+        d->warningLabel->hide();
+    }
+
+}
+
+void LastPage::resetWarningMsg(void )
+{
+    d->warningLabel->setText(i18n("<qt><p><font color=\"red\"><b>Warning:</b> "
+                                  "This file already exists.</font></p></qt>"));
 }
 
 }   // namespace KIPIPanoramaPlugin

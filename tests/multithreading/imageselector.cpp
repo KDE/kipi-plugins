@@ -89,11 +89,11 @@ ImageSelector::ImageSelector()
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStart()));
 
-    connect(d->thread, SIGNAL(signalStartToProcess(const KUrl&)),
-            this, SLOT(slotStartToProcess(const KUrl&)));
+    connect(d->thread, SIGNAL(signalStartToProcess(KUrl)),
+            this, SLOT(slotStartToProcess(KUrl)));
 
-    connect(d->thread, SIGNAL(signalEndToProcess(const KUrl&, bool)),
-            this, SLOT(slotEndToProcess(const KUrl&, bool)));
+    connect(d->thread, SIGNAL(signalEndToProcess(KUrl,bool)),
+            this, SLOT(slotEndToProcess(KUrl,bool)));
 }
 
 ImageSelector::~ImageSelector()

@@ -123,6 +123,17 @@ Manager::~Manager()
     delete d;
 }
 
+bool Manager::checkBinaries()
+{
+    return d->autoOptimiserBinary.recheckDirectories()
+        && d->cpCleanBinary.recheckDirectories()
+        && d->cpFindBinary.recheckDirectories()
+        && d->enblendBinary.recheckDirectories()
+        && d->makeBinary.recheckDirectories()
+        && d->nonaBinary.recheckDirectories()
+        && d->pto2MkBinary.recheckDirectories();
+}
+
 void Manager::setHDR(bool hdr)
 {
     d->hdr = hdr;

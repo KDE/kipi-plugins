@@ -238,9 +238,10 @@ int DNGWriter::convert()
             outputWidth  = identifyMake.outputSize.width();
         }
 
+
+#if KDCRAW_VERSION < 0x020100
         bool useFullSensorImage = false;
 
-#if KDCRAW_VERSION < 0x020001
         // disable general fullsensor image see #240750
         // seems this bug is fixed with libRaw 0.12beta4
         if ((identifyMake.make == "Canon") && 
@@ -248,7 +249,6 @@ int DNGWriter::convert()
         {
             useFullSensorImage = true;
         }
-#endif
 
         if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, 
                                          useFullSensorImage,             // arg deprecated with KDCRAW >=0x020001
@@ -256,7 +256,14 @@ int DNGWriter::convert()
         {
             kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
             return -1;
+        }  
+#else
+        if (!rawProcessor.extractRAWData(inputFile(), rawData, identify, 0))
+        {
+            kDebug() << "DNGWriter: Loading RAW data failed. Aborted..." ;
+            return -1;
         }
+#endif
 
         if (d->cancel) return -2;
 

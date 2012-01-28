@@ -36,6 +36,12 @@
 #include <QPushButton>
 #include <QUrl>
 #include <QTimer>
+#include <QFile>
+#include <QPointer>
+#include <QXmlStreamWriter>
+#include <QXmlStreamReader>
+#include <QXmlStreamAttributes>
+#include <QStringRef>
 
 // KDE includes
 
@@ -47,6 +53,8 @@
 #include <knuminput.h>
 #include <kio/previewjob.h>
 #include <kpixmapsequence.h>
+#include <KFileDialog>
+#include <KGlobalSettings>
 
 // LibKIPI includes
 
@@ -391,6 +399,12 @@ QModelIndex ImagesListView::indexFromItem ( ImagesListViewItem * item, int colum
 {
   return QTreeWidget::indexFromItem(item, column);
 }
+ 
+void ImagesListView::contextMenuEvent(QContextMenuEvent * e)
+{
+    QTreeWidget::contextMenuEvent(e);
+    emit signalContextMenuRequested();
+}
 
 void ImagesListView::dragEnterEvent(QDragEnterEvent* e)
 {
@@ -572,6 +586,9 @@ ImagesList::ImagesList(Interface* iface, QWidget* parent, int iconSize)
     connect(d->listView, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SIGNAL(signalItemClicked(QTreeWidgetItem*)));
 
+    connect(d->listView, SIGNAL(signalContextMenuRequested()),
+            this, SIGNAL(signalContextMenuRequested()));
+    
     // queue this connection because itemSelectionChanged is emitted
     // while items are deleted, and accessing selectedItems at that
     // time causes a crash ...
@@ -903,9 +920,119 @@ void ImagesList::slotMoveDownItems()
 
 void ImagesList::slotClearItems()
 {
-  listView()->selectAll();
-  slotRemoveItems();
-  listView()->clear();
+    listView()->selectAll();
+    slotRemoveItems();
+    listView()->clear();
+}
+
+void ImagesList::slotLoadItems()
+{
+    KUrl loadLevelsFile;
+
+    loadLevelsFile = KFileDialog::getOpenUrl(KGlobalSettings::documentPath(),
+                                            QString( "*" ), this,
+                                            QString( i18n("Select the image file list to load")) );
+
+    if ( loadLevelsFile.isEmpty() )
+    {
+        return;
+    }
+    QFile file(loadLevelsFile.path());
+
+    kDebug() << "file path " <<loadLevelsFile.path();
+    file.open(QIODevice::ReadOnly);
+    QXmlStreamReader xmlReader;
+    xmlReader.setDevice(&file);
+
+    while (!xmlReader.atEnd())
+    {
+        if (xmlReader.isStartElement() && xmlReader.name() == "Image")
+        {
+          // get all attributes and its value of a tag in attrs variable.
+          QXmlStreamAttributes attrs = xmlReader.attributes();
+          // get value of each attribute from QXmlStreamAttributes
+          QStringRef url = attrs.value("url");
+          if (url.isEmpty())
+          {
+              xmlReader.readNext();
+              continue;
+          }
+          KUrl::List urls;
+          urls.append(url.toString());
+
+          if (!urls.isEmpty())
+          {
+              //allow plugins to append a new file
+              slotAddImages(urls);
+              // read plugin Image custom attributes and children element  
+              emit signalXMLLoadImageElement(xmlReader);
+          }
+        }
+        else if (xmlReader.isStartElement() && xmlReader.name() != "Images")
+        {
+          // unmanaged start element (it should be plugins one)
+          emit signalXMLCustomElements(xmlReader);
+        }
+        else if(xmlReader.isEndElement() && xmlReader.name() == "Images")
+        {
+          // if EndElement is Images return
+          return;
+        }
+        xmlReader.readNext();
+    }
+}
+
+void ImagesList::slotSaveItems()
+{
+    KUrl saveLevelsFile;
+    saveLevelsFile = KFileDialog::getSaveUrl(KGlobalSettings::documentPath(),
+                                             QString( "*" ), this,
+                                             QString( i18n("Select the image file list to save")) );
+    kDebug() << "file url " <<saveLevelsFile.prettyUrl().toAscii();
+
+    if ( saveLevelsFile.isEmpty() )
+    {
+       kDebug() << "empty url ";
+        return;
+    }
+
+    QFile file(saveLevelsFile.path() /*.prettyUrl().toAscii()*/);
+    file.open(QIODevice::WriteOnly);
+//     file.open(stdout, QIODevice::WriteOnly);
+
+    QXmlStreamWriter xmlWriter;
+    xmlWriter.setDevice(&file);
+
+    xmlWriter.setAutoFormatting(true);
+    xmlWriter.writeStartDocument();
+
+    xmlWriter.writeStartElement("Images");
+    
+    QTreeWidgetItemIterator it(listView());
+
+    while (*it)
+    {
+        ImagesListViewItem* lvItem = dynamic_cast<ImagesListViewItem*>(*it);
+
+        if (lvItem)
+        {
+            xmlWriter.writeStartElement("Image");
+
+            xmlWriter.writeAttribute("url", lvItem->url().prettyUrl().toAscii());
+            
+            //emit xmlWriter, item?
+            emit signalXMLSaveItem(xmlWriter, lvItem);
+            
+            xmlWriter.writeEndElement(); //Image        
+        }
+        ++it;
+    }
+
+    emit signalXMLCustomElements(xmlWriter);
+
+    xmlWriter.writeEndElement(); // Images
+
+    xmlWriter.writeEndDocument(); //end document
 }
 
 void ImagesList::removeItemByUrl(const KUrl& url)
@@ -923,6 +1050,8 @@ void ImagesList::removeItemByUrl(const KUrl& url)
 
             if (item->url() == url)
             {
+                emit signalRemovingItem(item);
+               
                 if (d->processItems.contains(item->url()))
                 {
                     d->processItems.removeAll(item->url());
@@ -1075,7 +1204,7 @@ void ImagesList::slotImageListChanged()
     // enabled, if the buttons are not explicitly disabled with enableControlButtons()
     d->addButton->setEnabled(d->controlButtonsEnabled);
 
-    // TODO: load and save are not yet implemented, when should they be enabled/disabled?
+    // TODO: should they be enabled by default now?
     d->loadButton->setEnabled(d->controlButtonsEnabled);
     d->saveButton->setEnabled(d->controlButtonsEnabled);
 }

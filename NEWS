@@ -1,4 +1,4 @@
-Kipi-plugins 2.6.0 - Release date: 2012/02/05
+Kipi-plugins 2.6.0-beta1 - Release date: 2012/02/05
 ------------------------------------------------------------------------
 
 NEW FEATURES:
@@ -19,5 +19,10 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 006 ==> 290932 : KIPI Plugins - up to date website.
 007 ==> 212785 : Cannot preserve rotation when exporting from raw to Facebook.
 008 ==> 291762 : Crash with export.
-009 ==> 
+009 ==> 286736 : PrintAssistant: If you step through multiple images in crop image, it adds pages 
+010 ==> 286735 : PrintAssistant: Custom paper size isn't retained
+011 ==> 257636 : PrintAssistant: add 35x45mm photo template for UK passports
+012 ==> 272336 : Picasaweb, album date -1.
+013 ==> 292537 : Dng plugin segfaults.
+014 ==> 
 

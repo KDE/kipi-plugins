@@ -7,7 +7,7 @@
  * Description : Dialog to allow a custom page layout for
  *               printimages plugin.
  *
- * Copyright (C) 2010 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2010-2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

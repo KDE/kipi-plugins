@@ -72,6 +72,8 @@ public:
     Manager(QObject* parent=0);
     ~Manager();
 
+    bool checkBinaries();
+
     void setHDR(bool hdr);
     bool hdr() const;
 

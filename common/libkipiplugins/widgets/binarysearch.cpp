@@ -90,13 +90,7 @@ void BinarySearch::addBinary(BinaryIface& binary)
 {
     delete d->downloadLabel;
 
-    binary.checkDir();
-    if (!binary.isValid())
-    {
-        // In case hugin has moved since the last time the plugin was called
-        // within the same digikam session
-        binary.recheckDirectories();
-    }
+    binary.recheckDirectories();
 
     d->binaryIfaces.append(&binary);
     d->items.append(new QTreeWidgetItem());

@@ -31,7 +31,6 @@
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QPixmap>
-#include <QProgressBar>
 #include <QPushButton>
 #include <QTimer>
 #include <QTreeWidgetItemIterator>
@@ -67,6 +66,7 @@
 #include "imagedialog.h"
 #include "pluginsversion.h"
 #include "settingswidget.h"
+#include "progresswidget.h"
 
 using namespace DNGIface;
 using namespace KIPIPlugins;
@@ -96,7 +96,7 @@ public:
 
     QStringList            fileList;
 
-    QProgressBar*          progressBar;
+    ProgressWidget*        progressBar;
 
     MyImageList*           listView;
 
@@ -110,7 +110,7 @@ public:
 };
 
 BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
-           : KDialog(0), d(new BatchDialogPriv)
+    : KDialog(0), d(new BatchDialogPriv)
 {
     d->iface = iface;
     d->about = about;
@@ -134,7 +134,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
 
     d->settingsBox = new SettingsWidget(d->page);
 
-    d->progressBar = new QProgressBar(d->page);
+    d->progressBar = new ProgressWidget(d->iface, d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
     d->progressBar->hide();
 
@@ -183,6 +183,9 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
 
     connect(d->listView, SIGNAL(signalImageListChanged()),
             this, SLOT(slotIdentify()));
+
+    connect(d->progressBar, SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotStartStop()));
 
     // ---------------------------------------------------------------
 
@@ -292,6 +295,8 @@ void BatchDialog::slotStartStop()
         d->progressBar->setMaximum(d->fileList.count());
         d->progressBar->setValue(0);
         d->progressBar->show();
+        d->progressBar->progressScheduled(i18n("DNG Converter"), true, true);
+        d->progressBar->progressThumbnailChanged(KIcon("dngconverter").pixmap(22));
 
         processOne();
     }
@@ -316,6 +321,7 @@ void BatchDialog::slotAborted()
 {
     d->progressBar->setValue(0);
     d->progressBar->hide();
+    d->progressBar->progressCompleted();
 }
 
 /// Set Identity and Target file
@@ -470,6 +476,7 @@ void BatchDialog::slotAction(const KIPIDNGConverterPlugin::ActionData& ad)
             {
                 busy(true);
                 d->listView->processing(ad.fileUrl);
+                d->progressBar->progressStatusChanged(i18n("Processing %1", ad.fileUrl.fileName()));
                 break;
             }
             default:
