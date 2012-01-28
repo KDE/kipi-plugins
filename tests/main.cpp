@@ -39,6 +39,8 @@
 #include <kdebug.h>
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <klocale.h>
+#include <kstandarddirs.h>
 
 // LibKIPI includes
 
@@ -344,6 +346,7 @@ int main(int argc, char* argv[])
     KCmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;
+    app.setWindowIcon(QIcon(KStandardDirs::locate("data", "kipi/data/kipi-icon.svg")));
 
     KGlobal::locale()->insertCatalog("kipiplugins");
     KGlobal::locale()->insertCatalog("libkdcraw");
