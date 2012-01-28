@@ -38,6 +38,8 @@
 #include <QDomDocument>
 #include <QContextMenuEvent>
 #include <QXmlStreamWriter>
+#include <QXmlStreamAttributes>
+#include <QStringRef>
 
 // KDE includes
 #include <kapplication.h>
@@ -1258,9 +1260,11 @@ void Wizard::infopage_setCaptionButtons()
 void Wizard::slotXMLCustomElement(QXmlStreamWriter& xmlWriter)
 {
     kDebug() << " invoked " ;
-    xmlWriter.writeStartElement("PA_test");
-    xmlWriter.writeAttribute("test", "it works");
-    xmlWriter.writeEndElement(); // PA_test
+    xmlWriter.writeStartElement("pa_layout");
+    xmlWriter.writeAttribute("Printer", d->mPhotoPage->m_printer_choice->currentText());
+    xmlWriter.writeAttribute("PageSize", QString("%1").arg(d->m_printer->paperSize()));
+    xmlWriter.writeAttribute("PhotoSize", d->mPhotoPage->ListPhotoSizes->currentItem()->text());
+    xmlWriter.writeEndElement(); // pa_layout
 }
 
 void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KIPIPlugins::ImagesListViewItem* item)
@@ -1274,15 +1278,71 @@ void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KIPIPlugins::ImagesLis
         xmlWriter.writeAttribute("copies", QString("%1").arg(pPhoto->first ? pPhoto->copies : 0));
         
         // additional info (caption... etc)
-        xmlWriter.writeStartElement("test");
-        xmlWriter.writeAttribute("test_attribute", "attribute value");
-        xmlWriter.writeEndElement();
+        if (pPhoto->pCaptionInfo)
+        {
+          xmlWriter.writeStartElement("pa_caption");
+          xmlWriter.writeAttribute("type",  QString("%1").arg(pPhoto->pCaptionInfo->m_caption_type));
+          xmlWriter.writeAttribute("font",  pPhoto->pCaptionInfo->m_caption_font.toString());
+          xmlWriter.writeAttribute("size",  QString("%1").arg(pPhoto->pCaptionInfo->m_caption_size));
+          xmlWriter.writeAttribute("color", pPhoto->pCaptionInfo->m_caption_color.name());
+          xmlWriter.writeAttribute("text",  pPhoto->pCaptionInfo->m_caption_text);
+          xmlWriter.writeEndElement(); // pa_caption
+        }
     }
 }
 
 void Wizard::slotXMLCustomElement(QXmlStreamReader& xmlReader)
 {
-   kDebug() << " invoked " << xmlReader.name();
+    kDebug() << " invoked " << xmlReader.name();
+    while (!xmlReader.atEnd())
+    {
+        if (xmlReader.isStartElement() && xmlReader.name() == "pa_layout")
+        {
+            bool ok;
+            QXmlStreamAttributes attrs = xmlReader.attributes();
+            // get value of each attribute from QXmlStreamAttributes
+            QStringRef attr = attrs.value("Printer");
+            if (!attr.isEmpty())
+            {
+                kDebug() <<  " found " << attr.toString();
+                int index = d->mPhotoPage->m_printer_choice->findText(attr.toString());
+                if (index != -1)
+                {
+                    d->mPhotoPage->m_printer_choice->setCurrentIndex(index);
+                }
+                outputChanged(d->mPhotoPage->m_printer_choice->currentText());
+            }
+            
+            attr = attrs.value("PageSize");
+            if (!attr.isEmpty())
+            {
+                kDebug() <<  " found " << attr.toString();
+                QPrinter::PaperSize paperSize = (QPrinter::PaperSize)attr.toString().toInt(&ok);
+                d->m_printer->setPaperSize(paperSize);
+            }
+
+            attr = attrs.value("PhotoSize");
+            if (!attr.isEmpty())
+            {
+                kDebug() <<  " found " << attr.toString();
+                d->m_savedPhotoSize = attr.toString();
+            }            
+        }
+        xmlReader.readNext();
+    }
+    
+    // reset preview page number
+    d->m_currentPreviewPage = 0;
+    initPhotoSizes(d->m_printer->paperSize(QPrinter::Millimeter));   
+    QList<QListWidgetItem* > list = d->mPhotoPage->ListPhotoSizes->findItems(d->m_savedPhotoSize, Qt::MatchExactly);
+    if (list.count())
+    {
+        kDebug() << " PhotoSize " << list[0]->text();
+        d->mPhotoPage->ListPhotoSizes->setCurrentItem(list[0]);
+    }
+    else
+        d->mPhotoPage->ListPhotoSizes->setCurrentRow(0);
+    previewPhotos();
 }
 
 void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
@@ -1296,6 +1356,50 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
         while (xmlReader.readNextStartElement())
         {
             kDebug() << pPhoto->filename << " " << xmlReader.name();
+            if (xmlReader.name() == "pa_caption")
+            {
+              d->mPhotoPage->m_sameCaption->blockSignals(true);
+              d->mPhotoPage->m_sameCaption->setCheckState( Qt::Unchecked );
+              d->mPhotoPage->m_sameCaption->blockSignals(false);
+              //useless this item has been added now
+              if (pPhoto->pCaptionInfo) delete pPhoto->pCaptionInfo;
+              pPhoto->pCaptionInfo = new CaptionInfo();
+              // get all attributes and its value of a tag in attrs variable.
+              QXmlStreamAttributes attrs = xmlReader.attributes();
+              // get value of each attribute from QXmlStreamAttributes
+              QStringRef attr = attrs.value("type");
+              bool ok;
+              if (!attr.isEmpty())
+              {
+                 kDebug() <<  " found " << attr.toString();
+                 pPhoto->pCaptionInfo->m_caption_type = (CaptionInfo::AvailableCaptions)attr.toString().toInt(&ok);
+              }
+              attr = attrs.value("font");
+              if (!attr.isEmpty())
+              {
+                 kDebug() <<  " found " << attr.toString();
+                 pPhoto->pCaptionInfo->m_caption_font.fromString(attr.toString());
+              }
+              attr = attrs.value("color");
+              if (!attr.isEmpty())
+              {
+                  kDebug() <<  " found " << attr.toString();
+                  pPhoto->pCaptionInfo->m_caption_color.setNamedColor(attr.toString());
+              }
+              attr = attrs.value("size");
+              if (!attr.isEmpty())
+              {
+                  kDebug() <<  " found " << attr.toString();
+                  pPhoto->pCaptionInfo->m_caption_size = attr.toString().toInt(&ok);
+              }
+              attr = attrs.value("text");
+              if (!attr.isEmpty())
+              {
+                  kDebug() <<  " found " << attr.toString();
+                  pPhoto->pCaptionInfo->m_caption_text = attr.toString();
+              }
+              infopage_setCaptionButtons();
+            }
         }
     }
     
@@ -2247,18 +2351,29 @@ void Wizard::accept()
 
         qreal left, top, right, bottom;
         d->m_printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
-        kDebug() << "Dialog exit, new margins: left " << left
+        kDebug() << "Margins before print dialog: left " << left
                  << " right " << right << " top " << top << " bottom " << bottom;
+        kDebug() << "(1) paper page " << d->m_printer->paperSize() << " size " << d->m_printer->paperSize(QPrinter::Millimeter);
+QPrinter::PaperSize paperSize =  d->m_printer->paperSize();
         std::auto_ptr<QPrintDialog> dialog(KdePrint::createPrintDialog(d->m_printer, this));
-        dialog->setWindowTitle(i18n("Print Image"));
-
+        dialog->setWindowTitle(i18n("Print assistant"));
+        kDebug() << "(2) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
         bool wantToPrint = dialog->exec() == QDialog::Accepted;
         if (!wantToPrint)
         {
             KAssistantDialog::accept();
             return;
         }
-        kDebug() << "paper page " << dialog->printer()->paperSize() ;
+        kDebug() << "(3) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
+        
+        // Why paperSize changes if pronter properties is not pressed?
+        if (paperSize !=  d->m_printer->paperSize())
+          d->m_printer->setPaperSize(paperSize);
+        
+        kDebug() << "(4) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
+        dialog->printer()->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
+        kDebug() << "Dialog exit, new margins: left " << left
+                 << " right " << right << " top " << top << " bottom " << bottom;
 
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         printPhotos(d->m_photos, s->layouts, *d->m_printer);
