@@ -1755,8 +1755,15 @@ void Wizard::infopage_updateCaptions()
         }
         else
         {
-            TPhoto* pPhoto = d->m_photos.at(d->m_infopage_currentPhoto);
-            updateCaption(pPhoto);
+            QList <QTreeWidgetItem* > list =  d->m_ImagesFilesListBox->listView()->selectedItems();
+            
+            foreach(QTreeWidgetItem *item, list)
+            {
+                ImagesListViewItem* lvItem = dynamic_cast<ImagesListViewItem*>(item);
+                int itemIndex = d->m_ImagesFilesListBox->listView()->indexFromItem(lvItem).row();
+                TPhoto* pPhoto = d->m_photos.at(itemIndex);
+                updateCaption(pPhoto);
+            }
         }
     }
     // create our photo sizes list
