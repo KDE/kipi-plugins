@@ -2366,7 +2366,7 @@ QPrinter::PaperSize paperSize =  d->m_printer->paperSize();
         }
         kDebug() << "(3) paper page " << dialog->printer()->paperSize() << " size " << dialog->printer()->paperSize(QPrinter::Millimeter);
         
-        // Why paperSize changes if pronter properties is not pressed?
+        // Why paperSize changes if printer properties is not pressed?
         if (paperSize !=  d->m_printer->paperSize())
           d->m_printer->setPaperSize(paperSize);
         
