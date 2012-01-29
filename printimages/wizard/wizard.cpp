@@ -233,18 +233,6 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
     connect(d->mPhotoPage->m_printer_choice, SIGNAL(activated(QString)),
             this, SLOT(outputChanged(QString)));
 
-//   connect ( d->mPhotoPage->m_preview_right, SIGNAL (clicked()),
-    //            this, SLOT (infopage_selectNext()) );
-//
-//   connect ( d->mPhotoPage->m_preview_left, SIGNAL (clicked()),
-    //            this, SLOT (infopage_selectPrev()) );
-
-//   connect ( d->mPhotoPage->m_increase_copies, SIGNAL (clicked()),
-    //            this, SLOT (infopage_increaseCopies()) );
-
-//   connect ( d->mPhotoPage->m_decrease_copies, SIGNAL (clicked()),
-    //            this, SLOT (infopage_decreaseCopies()) );
-
     connect(d->mPhotoPage->BtnPreviewPageUp, SIGNAL(clicked()),
             this, SLOT(BtnPreviewPageUp_clicked()));
 
