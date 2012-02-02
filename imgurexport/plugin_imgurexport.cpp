@@ -21,9 +21,12 @@
  * ============================================================ */
 #include <unistd.h>
 
+#include "../common/libkipiplugins/widgets/imageslist.h"
+#include "../common/libkipiplugins/widgets/progresswidget.h"
+
 #include "plugin_imgurexport.h"
 #include "imgurtalker.h"
-#include "imgurwidget.h"
+//#include "imgurwidget.h"
 
 // KDE includes
 #include <KDebug>
@@ -45,6 +48,7 @@
 
 
 using namespace KIPIImgurExportPlugin;
+using namespace KIPIPlugins;
 
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
@@ -53,6 +57,7 @@ Plugin_ImgurExport::Plugin_ImgurExport(QObject *parent, const QVariantList &args
                       : KIPI::Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport")
 {
     kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
+    kDebug(AREA_CODE_LOADING) << args;
 }
 
 void Plugin_ImgurExport::setup(QWidget* widget)
@@ -93,19 +98,34 @@ void Plugin_ImgurExport::slotActivate()
     }
 
     // i doubt i need this.
-    KStandardDirs dir;
-    QString Tmp = dir.saveLocation("tmp", "kipi-imgurexportplugin-" + QString::number(getpid()) + '/');
+    // KStandardDirs dir;
+    // QString Tmp = dir.saveLocation("tmp", "kipi-imgurexportplugin-" + QString::number(getpid()) + '/');
 
-    ImgurWidget* m_dlgExport = new ImgurWidget(interface, false);
+    ImagesList* m_dlgExport = new ImagesList(interface);
+    m_dlgExport->setWindowIcon(KIcon("imgur"));
+    m_dlgExport->setWindowTitle(i18n("Export to the imgur.com web service"));
+
+    // i need to connect image list process slot to the imgur talker
+
+//    m_dlgExport->addActions();
+//    ProgressWidget *p = new ProgressWidget(interface, m_dlgExport);
+//    p->show();
+
+    m_dlgExport->loadImagesFromCurrentSelection();
+    m_dlgExport->setAllowRAW(false);
     m_dlgExport->show();
 
-    kDebug() << "We have activated imgur exporter!";
+    ImgurTalker *ImgurWebService = new ImgurTalker(interface);
+//    ImgurWebService->
+
+    Q_OBJECT::conn
+
+    kDebug() << "We have activated the imgur exporter!";
 }
 
 KIPI::Category Plugin_ImgurExport::category( KAction* action ) const
 {
-    return KIPI::ExportPlugin;
-
+    kDebug() << action;
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;
 }
