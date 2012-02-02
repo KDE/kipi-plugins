@@ -1,2 +1,1 @@
-# Install Oxygen icons.
-add_subdirectory(oxygen)
+KDE4_INSTALL_ICONS( ${ICON_INSTALL_DIR} )
