@@ -62,13 +62,11 @@ extern "C"
 
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imageinfo.h>
-
-// KIPI includes
-
-#include "imagedialog.h"
+#include <libkipi/imagecollection.h>
 
 // Local includes
 
+#include "imagedialog.h"
 #include "imagepreview.h"
 #include "outputdialog.h"
 #include "pluginsversion.h"

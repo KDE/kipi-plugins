@@ -46,6 +46,12 @@
 #include <kcombobox.h>
 #include <kpushbutton.h>
 
+// Libkipi includes
+
+#include <libkipi/imagecollection.h>
+
+// Local includes
+
 #include "picasawebimglist.h"
 
 namespace KIPIPicasawebExportPlugin

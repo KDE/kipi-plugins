@@ -87,14 +87,15 @@ extern "C"
 
 // LibKIPI includes
 
-#include <kpaboutdata.h>
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 #include <libkipi/version.h>
-#include "pluginsversion.h"
+#include <libkipi/imagecollection.h>
 
 // Local includes
 
+#include "kpaboutdata.h"
+#include "pluginsversion.h"
 #include "imageslist.h"
 #include "yftalker.h"
 #include "yfalbumdialog.h"
