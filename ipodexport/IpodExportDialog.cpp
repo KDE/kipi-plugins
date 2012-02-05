@@ -68,6 +68,11 @@ extern "C"
 #include <kurl.h>
 #include <kdeversion.h>
 
+// Libkipi includes
+
+#include <libkipi/imagecollection.h>
+#include <libkipi/imageinfo.h>
+
 // Local includes
 
 #include "IpodHeader.h"
