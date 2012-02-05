@@ -60,6 +60,7 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes
 

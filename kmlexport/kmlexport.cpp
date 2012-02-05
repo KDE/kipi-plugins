@@ -56,6 +56,7 @@ extern "C"
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 #include <libkipi/version.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes
 

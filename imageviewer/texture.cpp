@@ -43,6 +43,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+#include <libkipi/imageinfo.h>
 
 // Local includes
 #ifdef PERFORMANCE_ANALYSIS

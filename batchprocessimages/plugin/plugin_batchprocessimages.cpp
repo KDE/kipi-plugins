@@ -54,6 +54,7 @@ extern "C"
 // KIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes
 
@@ -65,7 +66,6 @@ extern "C"
 #include "recompressimagesdialog.h"
 #include "renameimagesdialog.h"
 #include "resizeimagesdialog.h"
-
 
 K_PLUGIN_FACTORY(BatchProcessImagesFactory, registerPlugin<Plugin_BatchProcessImages>();)
 K_EXPORT_PLUGIN(BatchProcessImagesFactory("kipiplugin_batchprocessimages"))

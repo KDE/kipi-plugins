@@ -50,6 +50,7 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 K_PLUGIN_FACTORY( KopeteFactory, registerPlugin<Plugin_Kopete>(); )
 K_EXPORT_PLUGIN ( KopeteFactory("kipiplugin_kopete") )

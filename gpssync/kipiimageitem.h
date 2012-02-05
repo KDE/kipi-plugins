@@ -29,6 +29,7 @@
 
 #include <QPersistentModelIndex>
 #include <QVariant>
+#include <QDateTime>
 
 // KDE includes
 

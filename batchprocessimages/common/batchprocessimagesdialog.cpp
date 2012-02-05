@@ -61,6 +61,7 @@ extern "C"
 // LibKIPI includes
 
 #include <libkipi/uploadwidget.h>
+#include <libkipi/imageinfo.h>
 
 // KIPI includes
 

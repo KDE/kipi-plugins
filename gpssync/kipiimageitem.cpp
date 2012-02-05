@@ -40,6 +40,10 @@
 #include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
+// Libkipi includes
+
+#include <libkipi/imageinfo.h>
+
 // local includes
 
 #include "kipiimagemodel.h"

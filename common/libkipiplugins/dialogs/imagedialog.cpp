@@ -51,6 +51,10 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
+// Libkipi includes
+
+#include <libkipi/imagecollection.h>
+
 using namespace KDcrawIface;
 
 namespace KIPIPlugins
