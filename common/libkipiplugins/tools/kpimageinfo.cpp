@@ -78,6 +78,8 @@ public:
         }
     }
 
+public:
+
     KUrl             url;
     KIPI::Interface* iface;
 };
