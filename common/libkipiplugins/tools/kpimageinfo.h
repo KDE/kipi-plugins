@@ -77,7 +77,7 @@ public:
     /** Manage item name.
      */
     void setName(const QString& name);
-    QString KPImageInfo::name() const;
+    QString name() const;
 
 private:
 
