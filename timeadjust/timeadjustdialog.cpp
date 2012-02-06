@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -69,7 +69,6 @@ extern "C"
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
 
 // LibKExiv2 includes
 
@@ -79,6 +78,7 @@ extern "C"
 // Local includes
 
 #include "kpaboutdata.h"
+#include "kpimageinfo.h"
 #include "pluginsversion.h"
 #include "clockphotodialog.h"
 
@@ -522,50 +522,23 @@ void TimeAdjustDialog::readExampleTimestamps()
 
 void TimeAdjustDialog::readApplicationTimestamps()
 {
-    int       exactCount   = 0;
-    int       inexactCount = 0;
-    QDateTime nullDateTime;
-
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPI::ImageInfo info = d->interface->info(*it);
-        if (info.isTimeExact())
-        {
-            exactCount++;
-            d->imageOriginalDates.append(info.time());
-        }
-        else
-        {
-            inexactCount++;
-            d->imageOriginalDates.append(nullDateTime);
-        }
+        KIPIPlugins::KPImageInfo info(d->interface, *it);
+        d->imageOriginalDates.append(info.date());
     }
 
-    if (inexactCount == 0)
-    {
-        d->exampleSummaryLabel->setText(i18np("1 image will be changed",
+    d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                     "%1 images will be changed",
                                     d->imageURLs.count()));
-    }
-    else
-    {
-        d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
-                                    "%1 images will be changed; ",
-                                    exactCount)
-                                + "<br>"
-                                + i18np("1 image will be skipped due to an inexact date.",
-                                        "%1 images will be skipped due to inexact dates.",
-                                        inexactCount));
-    }
-    // PENDING(blackie) handle all images being inexact.
 }
 
 void TimeAdjustDialog::readFileTimestamps()
 {
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPI::ImageInfo info = d->interface->info(*it);
-        QFileInfo fileInfo(info.path().toLocalFile());
+        KIPIPlugins::KPImageInfo info(d->interface, *it);
+        QFileInfo fileInfo((*it).toLocalFile());
         d->imageOriginalDates.append(fileInfo.lastModified());
     }
 
@@ -582,9 +555,9 @@ void TimeAdjustDialog::readMetadataTimestamps()
 
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPI::ImageInfo info = d->interface->info( *it );
         KExiv2Iface::KExiv2 exiv2Iface;
-        if (!exiv2Iface.load(info.path().path()))
+
+        if (!exiv2Iface.load((*it).path()))
         {
             missingCount++;
             d->imageOriginalDates.append(nullDateTime);
@@ -592,35 +565,38 @@ void TimeAdjustDialog::readMetadataTimestamps()
         }
 
         QDateTime curImageDateTime;
-        switch (d->useMetaDateTypeChooser->currentIndex()) {
-        case 0:
-            curImageDateTime = exiv2Iface.getImageDateTime();
-            break;
-        case 1:
-            curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Image.DateTime"), "yyyy:MM:dd hh:mm:ss");
-            break;
-        case 2:
-            curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeOriginal"), "yyyy:MM:dd hh:mm:ss");
-            break;
-        case 3:
-            curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeDigitized"), "yyyy:MM:dd hh:mm:ss");
-            break;
-        case 4:
-            // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
-            curImageDateTime = QDateTime(QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
-                                         QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
-            //kDebug() << "IPTC for " << info.path().path() << ": " << exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated") << ", " << exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
-            //kDebug() << "converted: " << QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
-            break;
-        case 5:
-            curImageDateTime = QDateTime::fromString(exiv2Iface.getXmpTagString("Xmp.xmp.CreateDate"), "yyyy:MM:dd hh:mm:ss");
-            break;
-        default:
-            // curImageDateTime stays invalid
-            break;
+
+        switch (d->useMetaDateTypeChooser->currentIndex())
+        {
+            case 0:
+                curImageDateTime = exiv2Iface.getImageDateTime();
+                break;
+            case 1:
+                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Image.DateTime"), "yyyy:MM:dd hh:mm:ss");
+                break;
+            case 2:
+                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeOriginal"), "yyyy:MM:dd hh:mm:ss");
+                break;
+            case 3:
+                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeDigitized"), "yyyy:MM:dd hh:mm:ss");
+                break;
+            case 4:
+                // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
+                curImageDateTime = QDateTime(QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
+                                            QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
+                //kDebug() << "IPTC for " << (*it).path() << ": " << exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated") << ", " << exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
+                //kDebug() << "converted: " << QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
+                break;
+            case 5:
+                curImageDateTime = QDateTime::fromString(exiv2Iface.getXmpTagString("Xmp.xmp.CreateDate"), "yyyy:MM:dd hh:mm:ss");
+                break;
+            default:
+                // curImageDateTime stays invalid
+                break;
         };
 
         d->imageOriginalDates.append(curImageDateTime);
+
         if (curImageDateTime.isValid())
             okCount++;
         else
@@ -802,8 +778,8 @@ void TimeAdjustDialog::slotOk()
 
         if (d->updAppDateCheck->isChecked())
         {
-            KIPI::ImageInfo info = d->interface->info(url);
-            info.setTime(dateTime);
+            KIPIPlugins::KPImageInfo info(d->interface, url);
+            info.setDate(dateTime);
         }
 
         if (metadataChanged)
