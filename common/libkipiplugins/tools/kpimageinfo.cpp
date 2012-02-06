@@ -126,4 +126,26 @@ int KPImageInfo::rating() const
     return (-1);
 }
 
+void KPImageInfo::setTitle(const QString& title)
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map;
+        map.insert("title", title);
+        info.addAttributes(map);
+    }
+}
+
+QString KPImageInfo::title() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return map.value("title", QString()).toString();
+    }
+    return QString();
+}
+
 }  // namespace KIPIPlugins

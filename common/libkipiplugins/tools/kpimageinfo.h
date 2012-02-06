@@ -69,6 +69,11 @@ public:
     void setRating(int r);
     int  rating() const;
 
+    /** Manage title of item.
+     */
+    void    setTitle(const QString& title);
+    QString title() const;
+
 private:
 
     class KPImageInfoPrivate;
