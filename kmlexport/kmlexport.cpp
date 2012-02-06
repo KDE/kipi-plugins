@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,15 +52,14 @@ extern "C"
 
 // LibKIPI includes
 
-#include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
-#include <libkipi/version.h>
 #include <libkipi/imagecollection.h>
 
 // Local includes
 
 #include "batchprogressdialog.h"
+#include "kpimageinfo.h"
 
 namespace KIPIKMLExportPlugin
 {
@@ -165,8 +164,7 @@ QImage kmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
  */
 void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imageURL, QDomElement& kmlAlbum )
 {
-    KIPI::Interface* mInterface = interface;
-    KIPI::ImageInfo info        = mInterface->info(imageURL);
+    KIPIPlugins::KPImageInfo info(interface, imageURL);
 
     // Load image
     QString path = imageURL.path();
@@ -196,13 +194,11 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     }
 
     // Process images
-    /** FIXME depending the soft used, angle could return a good value (digikam) or a value of 0 (gwenview)
-        * and, in some case the picture is not rotated as it should be.
-        */
-    if ( info.angle() != 0 )
+
+    if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
     {
         QMatrix matrix;
-        matrix.rotate( info.angle() );
+        matrix.rotate( info.orientation() );
         image = image.transformed( matrix );
     }
     image = image.scaled(m_size, m_size, Qt::KeepAspectRatioByExpanding);
@@ -223,11 +219,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         * it's appear with digikam but not with gwenview
         * which already seems to strip the extension
         */
-#if KIPI_VERSION >= 0x010300
     QString baseFileName = webifyFileName(info.name());
-#else
-    QString baseFileName = webifyFileName(info.title());
-#endif
     //baseFileName       = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
     fullFileName         = baseFileName + '.' + imageFormat.toLower();
@@ -242,19 +234,14 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
     {
         //logInfo(i18n("Creation of picture '%1'").arg(fullFileName));
 
-        double                  alt, lat, lng;
-        QMap<QString, QVariant> attributes;
-        KExiv2Iface::KExiv2     exiv2Iface;
-        KIPI::ImageInfo info = m_interface->info(imageURL);
-        attributes           = info.attributes();
+        double              alt, lat, lng;
+        KExiv2Iface::KExiv2 exiv2Iface;
 
-        if (attributes.contains("latitude") &&
-            attributes.contains("longitude") &&
-            attributes.contains("altitude"))
+        if (info.hasFullGeolocationInfo())
         {
-            lat = attributes["latitude"].toDouble();
-            lng = attributes["longitude"].toDouble();
-            alt = attributes["altitude"].toDouble();
+            lat = info.latitude();
+            lng = info.longitude();
+            alt = info.altitude();
         }
         else
         {
@@ -319,10 +306,10 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
             QDomElement kmlTimeStamp = addKmlElement(kmlPlacemark, "TimeStamp");
             addKmlTextElement(kmlTimeStamp, "when", datetime.toString("yyyy-MM-ddThh:mm:ssZ"));
         }
-        else if ( mInterface->hasFeature(KIPI::ImagesHasTime))
+        else if ( interface->hasFeature(KIPI::ImagesHasTime))
         {
             QDomElement kmlTimeStamp = addKmlElement(kmlGeometry, "TimeStamp");
-            addKmlTextElement(kmlTimeStamp, "when", (info.time()).toString("yyyy-MM-ddThh:mm:ssZ"));
+            addKmlTextElement(kmlTimeStamp, "when", (info.date()).toString("yyyy-MM-ddThh:mm:ssZ"));
         }
         QString my_description;
         if (m_optimize_googlemap)
@@ -338,7 +325,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
             my_description += "<br/>" + info.description() ;
         }
         addKmlTextElement(kmlPlacemark, "description", my_description);
-        logInfo(i18n("Creation of placemark '%1'",fullFileName));
+        logInfo(i18n("Creation of placemark '%1'", fullFileName));
 
         // Save icon
         QString iconFileName = "thumb_" + baseFileName + '.' + imageFormat.toLower();
@@ -468,22 +455,16 @@ void kmlExport::generate()
 
     for( KUrl::List::ConstIterator selIt = images.constBegin(); selIt != imagesEnd; ++selIt, ++pos)
     {
-        KUrl url             = *selIt;
-
         double alt, lat, lng;
-        bool hasGPSInfo      = false;
-        QMap<QString, QVariant> attributes;
-        KIPI::ImageInfo info = m_interface->info(url);
-        attributes           = info.attributes();
+        KUrl url        = *selIt;
+        KIPIPlugins::KPImageInfo info(m_interface, url);
+        bool hasGPSInfo = info.hasFullGeolocationInfo();
 
-        if (attributes.contains("latitude")  &&
-            attributes.contains("longitude") &&
-            attributes.contains("altitude"))
+        if (hasGPSInfo)
         {
-            lat        = attributes["latitude"].toDouble();
-            lng        = attributes["longitude"].toDouble();
-            alt        = attributes["altitude"].toDouble();
-            hasGPSInfo = true;
+            lat = info.latitude();
+            lng = info.longitude();
+            alt = info.altitude();
         }
         else
         {
@@ -498,11 +479,7 @@ void kmlExport::generate()
         }
         else
         {
-#if KIPI_VERSION >= 0x010300
             logWarning(i18n("No position data for '%1'", info.name()));
-#else
-            logWarning(i18n("No position data for '%1'", info.title()));
-#endif
             defectImage++;
         }
         m_progressDialog->progressWidget()->setProgress(pos, count);

@@ -327,9 +327,9 @@ KExiv2::ImageOrientation KPImageInfo::orientation() const
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
-        if (!map.isEmpty()) return (KExiv2::ImageOrientation)(map.value("angle", KExiv2::ORIENTATION_NORMAL).toInt());
+        if (!map.isEmpty()) return (KExiv2::ImageOrientation)(map.value("angle", KExiv2::ORIENTATION_UNSPECIFIED).toInt());
     }
-    return KExiv2::ORIENTATION_NORMAL;
+    return KExiv2::ORIENTATION_UNSPECIFIED;
 }
 
 }  // namespace KIPIPlugins
