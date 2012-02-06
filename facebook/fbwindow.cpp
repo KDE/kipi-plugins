@@ -55,12 +55,12 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
 
 // Local includes
 
 #include "imageslist.h"
 #include "kpaboutdata.h"
+#include "kpimageinfo.h"
 #include "pluginsversion.h"
 #include "fbitem.h"
 #include "fbtalker.h"
@@ -642,10 +642,9 @@ void FbWindow::setProfileAID(long long userID)
 
 QString FbWindow::getImageCaption(const QString& fileName)
 {
-    KIPI::ImageInfo info = m_interface->info(fileName);
-    QMap <QString, QVariant> attribs = info.attributes();
+    KIPIPlugins::KPImageInfo info(m_interface, fileName);
     // Facebook doesn't support image titles. Include it in descriptions if needed.
-    QStringList descriptions = QStringList() << attribs["title"].toString() << info.description();
+    QStringList descriptions = QStringList() << info.title() << info.description();
     descriptions.removeAll("");
     return descriptions.join("\n\n");
 }
