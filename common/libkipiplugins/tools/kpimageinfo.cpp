@@ -198,6 +198,18 @@ QString KPImageInfo::name() const
     return QString();
 }
 
+bool KPImageInfo::hasFullGeolocationInfo() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty() && map.contains("latitude") && map.contains("longitude") && map.contains("altitude"))
+            return true;
+    }
+    return false;
+}
+
 void KPImageInfo::setLatitude(double lat)
 {
     if (d->iface)
@@ -226,19 +238,19 @@ double KPImageInfo::latitude() const
     return 0.0;
 }
 
-void KPImageInfo::setLongitude(double lon)
+void KPImageInfo::setLongitude(double lng)
 {
     if (d->iface)
     {
-        if (lon < -180.0  || lon > 180)
+        if (lng < -180.0  || lng > 180)
         {
-            kDebug() << "Latitude value is out of range (" << lon << ")";
+            kDebug() << "Latitude value is out of range (" << lng << ")";
             return;
         }
 
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
-        map.insert("latitude", lon);
+        map.insert("longitude", lng);
         info.addAttributes(map);
     }
 }
@@ -260,7 +272,7 @@ void KPImageInfo::setAltitude(double alt)
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
-        map.insert("latitude", alt);
+        map.insert("altitude", alt);
         info.addAttributes(map);
     }
 }

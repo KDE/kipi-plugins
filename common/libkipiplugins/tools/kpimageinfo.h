@@ -91,6 +91,10 @@ public:
     void setName(const QString& name);
     QString name() const;
 
+    /** Return true if all geolocation info are available (latitude, longitude, and altitude)
+     */
+    bool hasFullGeolocationInfo() const;
+
     /** Manage item latitude geolocation information : double value in degrees (-90.0 >= lat <=90.0).
      */
     void   setLatitude(double lat);
@@ -98,7 +102,7 @@ public:
 
     /** Manage item longitude geolocation information : double value in degrees (-180.0 >= long <=180.0).
      */
-    void   setLongitude(double lon);
+    void   setLongitude(double lng);
     double longitude() const;
 
     /** Manage item altitude geolocation information : double value in meters.
