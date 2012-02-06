@@ -27,14 +27,13 @@
 
 // LibKIPI includes
 
-#include <libkipi/version.h>
 #include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
-#include <libkipi/imageinfo.h>
 
-// local includes
-
-#include "kipiimagecollectionshared.h"
+namespace KIPI
+{
+    class ImageCollection;
+    class ImageInfo;
+}
 
 class KipiInterface : public KIPI::Interface
 {

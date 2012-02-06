@@ -32,11 +32,18 @@
 
 #include <klocale.h>
 
+// LibKIPI includes
+
+#include <libkipi/version.h>
+#include <libkipi/imagecollection.h>
+#include <libkipi/imageinfo.h>
+
 // local includes
 
 #include "kipiimageinfoshared.h"
 #include "kipiimagecollectionselector.h"
 #include "kipiuploadwidget.h"
+#include "kipiimagecollectionshared.h"
 #include "kipitest-debug.h"
 
 KipiInterface::KipiInterface(QObject* parent, const char* name)

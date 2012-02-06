@@ -34,6 +34,10 @@
 
 #include <klocale.h>
 
+// LibKIPI includes
+
+#include <libkipi/imagecollection.h>
+
 // local includes
 
 #include "kipiinterface.h"
