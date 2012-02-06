@@ -50,6 +50,11 @@ public:
         iface = 0;
     }
 
+    bool hasValidData() const
+    {
+        return (iface && !url.isEmpty());
+    }
+
     KUrl             url;
     KIPI::Interface* iface;
 };
@@ -68,7 +73,7 @@ KPImageInfo::~KPImageInfo()
 
 void KPImageInfo::setDescription(const QString& desc)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
@@ -79,7 +84,7 @@ void KPImageInfo::setDescription(const QString& desc)
 
 QString KPImageInfo::description() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -90,7 +95,7 @@ QString KPImageInfo::description() const
 
 void KPImageInfo::setTagsPath(const QStringList& tp)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
@@ -101,7 +106,7 @@ void KPImageInfo::setTagsPath(const QStringList& tp)
 
 QStringList KPImageInfo::tagsPath() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -112,7 +117,7 @@ QStringList KPImageInfo::tagsPath() const
 
 QStringList KPImageInfo::keywords() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -123,7 +128,7 @@ QStringList KPImageInfo::keywords() const
 
 void KPImageInfo::setRating(int r)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         if (r < 0 || r > 5)
         {
@@ -140,7 +145,7 @@ void KPImageInfo::setRating(int r)
 
 int KPImageInfo::rating() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -151,7 +156,7 @@ int KPImageInfo::rating() const
 
 void KPImageInfo::setDate(const QDateTime& date)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
@@ -162,7 +167,7 @@ void KPImageInfo::setDate(const QDateTime& date)
 
 QDateTime KPImageInfo::date() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -173,7 +178,7 @@ QDateTime KPImageInfo::date() const
 
 void KPImageInfo::setTitle(const QString& title)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
@@ -184,7 +189,7 @@ void KPImageInfo::setTitle(const QString& title)
 
 QString KPImageInfo::title() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -195,7 +200,7 @@ QString KPImageInfo::title() const
 
 void KPImageInfo::setName(const QString& name)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
 #if KIPI_VERSION >= 0x010300
@@ -208,7 +213,7 @@ void KPImageInfo::setName(const QString& name)
 
 QString KPImageInfo::name() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
 #if KIPI_VERSION >= 0x010300
@@ -222,7 +227,7 @@ QString KPImageInfo::name() const
 
 bool KPImageInfo::hasFullGeolocationInfo() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -234,7 +239,7 @@ bool KPImageInfo::hasFullGeolocationInfo() const
 
 void KPImageInfo::setLatitude(double lat)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         if (lat < -90.0 || lat > 90)
         {
@@ -251,7 +256,7 @@ void KPImageInfo::setLatitude(double lat)
 
 double KPImageInfo::latitude() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -262,7 +267,7 @@ double KPImageInfo::latitude() const
 
 void KPImageInfo::setLongitude(double lng)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         if (lng < -180.0  || lng > 180)
         {
@@ -279,7 +284,7 @@ void KPImageInfo::setLongitude(double lng)
 
 double KPImageInfo::longitude() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -290,7 +295,7 @@ double KPImageInfo::longitude() const
 
 void KPImageInfo::setAltitude(double alt)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
@@ -301,7 +306,7 @@ void KPImageInfo::setAltitude(double alt)
 
 double KPImageInfo::altitude() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
@@ -312,7 +317,7 @@ double KPImageInfo::altitude() const
 
 void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
@@ -323,7 +328,7 @@ void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
 
 KExiv2::ImageOrientation KPImageInfo::orientation() const
 {
-    if (d->iface)
+    if (d->hasValidData())
     {
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
