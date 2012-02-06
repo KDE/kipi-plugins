@@ -31,8 +31,6 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 #include <libkipi/imageinfo.h>
-#include <libkipi/imageinfoshared.h>
-#include <libkipi/imagecollectionshared.h>
 
 // local includes
 
