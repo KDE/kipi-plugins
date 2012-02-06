@@ -29,6 +29,7 @@
 #include <QList>
 #include <QString>
 #include <QStringList>
+#include <QDateTime>
 
 // KDE includes
 
@@ -80,6 +81,11 @@ public:
      */
     void setRating(int r);
     int  rating() const;
+
+    /** Manage date of item.
+     */
+    void      setDate(const QDateTime& date);
+    QDateTime date() const;
 
     /** Manage title of item.
      */

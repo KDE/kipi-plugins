@@ -149,6 +149,28 @@ int KPImageInfo::rating() const
     return (-1);
 }
 
+void KPImageInfo::setDate(const QDateTime& date)
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map;
+        map.insert("date", date);
+        info.addAttributes(map);
+    }
+}
+
+QDateTime KPImageInfo::date() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return map.value("date", QDateTime()).toDateTime();
+    }
+    return QDateTime();
+}
+
 void KPImageInfo::setTitle(const QString& title)
 {
     if (d->iface)
