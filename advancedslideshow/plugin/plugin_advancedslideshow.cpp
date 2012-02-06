@@ -65,6 +65,7 @@ extern "C"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
 #include "commoncontainer.h"
+#include "kpimageinfo.h"
 
 using namespace KIPIAdvancedSlideshowPlugin;
 
@@ -205,9 +206,11 @@ void Plugin_AdvancedSlideshow::slotSlideShow()
     {
         fileList.append(FileAnglePair((*urlIt).toLocalFile(), 0));
         commentsList.append(QString());
-//        KIPI::ImageInfo info = m_interface->info( *urlIt );
-//        fileList.append( FileAnglePair((*urlIt).toLocalFile(), info.angle()) );
-//        commentsList.append(info.description());
+/*
+        KIPIPlugins::KPImageInfo info(m_interface, *urlIt);
+        fileList.append(FileAnglePair((*urlIt).toLocalFile(), info.orientation()));
+        commentsList.append(info.description());
+*/
     }
 
     m_urlList.clear();
