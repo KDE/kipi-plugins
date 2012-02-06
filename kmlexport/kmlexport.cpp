@@ -48,7 +48,7 @@ extern "C"
 
 // Libkexiv2 includes
 
-#include <libkexiv2/kexiv2.h>
+#include <libkexiv2/rotationmatrix.h>
 
 // LibKIPI includes
 
@@ -60,6 +60,8 @@ extern "C"
 
 #include "batchprogressdialog.h"
 #include "kpimageinfo.h"
+
+using namespace KExiv2Iface;
 
 namespace KIPIKMLExportPlugin
 {
@@ -197,9 +199,8 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
 
     if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
     {
-        QMatrix matrix;
-        matrix.rotate( info.orientation() );
-        image = image.transformed( matrix );
+        QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
+        image          = image.transformed( matrix );
     }
     image = image.scaled(m_size, m_size, Qt::KeepAspectRatioByExpanding);
 
