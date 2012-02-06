@@ -117,6 +117,7 @@ public:
     double altitude() const;
 
     /** Manage orientation of item. See KExiv2::ImageOrientation for possible values.
+     *  Use KExiv2Iface::RotationMatrix::toMatrix() to get a QMatrix corresponding to orientation flage and to apply on QImage.
      */
     void setOrientation(KExiv2::ImageOrientation orientation);
     KExiv2::ImageOrientation orientation() const;
