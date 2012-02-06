@@ -4,9 +4,10 @@ INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
 SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwriteimage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwritehelp.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/binaryiface.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/iccjpeg.c
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwritehelp.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/batchprogressdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagedialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/wizardpage.cpp
@@ -41,4 +42,4 @@ SET_TARGET_PROPERTIES(kipiplugins PROPERTIES VERSION 2.0.0 SOVERSION 2)
 
 INSTALL(TARGETS kipiplugins ${INSTALL_TARGETS_DEFAULT_ARGS})
 
-install( PROGRAMS kipiplugins.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR})
+INSTALL(PROGRAMS kipiplugins.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR})
