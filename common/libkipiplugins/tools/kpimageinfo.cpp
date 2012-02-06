@@ -88,6 +88,28 @@ QString KPImageInfo::description() const
     return QString();
 }
 
+void KPImageInfo::setTagsPath(const QStringList& tp)
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map;
+        map.insert("tagspath", tp);
+        info.addAttributes(map);
+    }
+}
+
+QStringList KPImageInfo::tagsPath() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return map.value("tagspath", QStringList()).toStringList();
+    }
+    return QStringList();
+}
+
 QStringList KPImageInfo::keywords() const
 {
     if (d->iface)

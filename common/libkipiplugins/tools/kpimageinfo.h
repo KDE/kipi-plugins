@@ -61,6 +61,11 @@ public:
     void    setDescription(const QString& desc);
     QString description() const;
 
+    /** Manage complete tags path of item.
+     */
+    void        setTagsPath(const QStringList& tp);
+    QStringList tagsPath() const;
+
     /** Get keywords list (tag names) of item.
      */
     QStringList keywords() const;
