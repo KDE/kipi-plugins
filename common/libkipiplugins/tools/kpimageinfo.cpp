@@ -180,6 +180,12 @@ void KPImageInfo::setLatitude(double lat)
 {
     if (d->iface)
     {
+        if (lat < -90.0 || lat > 90)
+        {
+            kDebug() << "Latitude value is out of range (" << lat << ")";
+            return;
+        }
+
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
         map.insert("latitude", lat);
@@ -202,6 +208,12 @@ void KPImageInfo::setLongitude(double lon)
 {
     if (d->iface)
     {
+        if (lon < -180.0  || lon > 180)
+        {
+            kDebug() << "Latitude value is out of range (" << lon << ")";
+            return;
+        }
+
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
         map.insert("latitude", lon);
