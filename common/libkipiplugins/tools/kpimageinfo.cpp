@@ -176,4 +176,70 @@ QString KPImageInfo::name() const
     return QString();
 }
 
+void KPImageInfo::setLatitude(double lat)
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map;
+        map.insert("latitude", lat);
+        info.addAttributes(map);
+    }
+}
+
+double KPImageInfo::latitude() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return map.value("latitude", 0.0).toDouble();
+    }
+    return 0.0;
+}
+
+void KPImageInfo::setLongitude(double lon)
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map;
+        map.insert("latitude", lon);
+        info.addAttributes(map);
+    }
+}
+
+double KPImageInfo::longitude() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return map.value("longitude", 0.0).toDouble();
+    }
+    return 0.0;
+}
+
+void KPImageInfo::setAltitude(double alt)
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map;
+        map.insert("latitude", alt);
+        info.addAttributes(map);
+    }
+}
+
+double KPImageInfo::altitude() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return map.value("altitude", 0.0).toDouble();
+    }
+    return 0.0;
+}
+
 }  // namespace KIPIPlugins

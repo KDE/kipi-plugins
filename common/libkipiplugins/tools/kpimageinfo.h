@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QList>
 #include <QString>
 #include <QStringList>
 
@@ -78,6 +79,21 @@ public:
      */
     void setName(const QString& name);
     QString name() const;
+
+    /** Manage item latitude geolocation information : double value in degrees (-90.0 >= lat <=90.0).
+     */
+    void   setLatitude(double lat);
+    double latitude() const;
+
+    /** Manage item longitude geolocation information : double value in degrees (-180.0 >= long <=180.0).
+     */
+    void   setLongitude(double lon);
+    double longitude() const;
+
+    /** Manage item altitude geolocation information : double value in meters.
+     */
+    void   setAltitude(double alt);
+    double altitude() const;
 
 private:
 
