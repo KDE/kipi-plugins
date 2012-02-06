@@ -103,7 +103,10 @@ void KPImageInfo::setRating(int r)
     if (d->iface)
     {
         if (r < 0 || r > 5)
+        {
             kDebug() << "rating is out of rage (" << r << ")";
+            return;
+        }
 
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map;
