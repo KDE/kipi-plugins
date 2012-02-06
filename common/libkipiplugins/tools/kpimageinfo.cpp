@@ -55,15 +55,27 @@ public:
         return (iface && !url.isEmpty());
     }
 
-    QMap<QString, QVariant> attributes()
+    QVariant attribute(const QString& name) const
     {
         QMap<QString, QVariant> map; 
         if (hasValidData())
         {
             KIPI::ImageInfo info = iface->info(url);
             map                  = info.attributes();
+            if (!map.isEmpty()) return map.value(name, QVariant());
         }
-        return map;
+        return QVariant();
+    }
+
+    void setAttribute(const QString& name, const QVariant& value)
+    {
+        if (hasValidData())
+        {
+            KIPI::ImageInfo info = iface->info(url);
+            QMap<QString, QVariant> map;
+            map.insert(name, value);
+            info.addAttributes(map);
+        }
     }
 
     KUrl             url;
@@ -84,123 +96,63 @@ KPImageInfo::~KPImageInfo()
 
 void KPImageInfo::setDescription(const QString& desc)
 {
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("comment", desc);
-        info.addAttributes(map);
-    }
+    d->setAttribute("comment", desc);
 }
 
 QString KPImageInfo::description() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("comment", QString()).toString();
-    }
-    return QString();
+    return d->attribute("comment").toString();
 }
 
 void KPImageInfo::setTagsPath(const QStringList& tp)
 {
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("tagspath", tp);
-        info.addAttributes(map);
-    }
+    d->setAttribute("tagspath", tp);
 }
 
 QStringList KPImageInfo::tagsPath() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("tagspath", QStringList()).toStringList();
-    }
-    return QStringList();
+    return d->attribute("tagspath").toStringList();
 }
 
 QStringList KPImageInfo::keywords() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("tags", QStringList()).toStringList();
-    }
-    return QStringList();
+    return d->attribute("tags").toStringList();
 }
 
 void KPImageInfo::setRating(int r)
 {
-    if (d->hasValidData())
+    if (r < 0 || r > 5)
     {
-        if (r < 0 || r > 5)
-        {
-            kDebug() << "Rating value is out of range (" << r << ")";
-            return;
-        }
-
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("rating", r);
-        info.addAttributes(map);
+        kDebug() << "Rating value is out of range (" << r << ")";
+        return;
     }
+
+    d->setAttribute("rating", r);
 }
 
 int KPImageInfo::rating() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("rating", -1).toInt();
-    }
-    return (-1);
+    return d->attribute("rating").toInt();
 }
 
 void KPImageInfo::setDate(const QDateTime& date)
 {
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("date", date);
-        info.addAttributes(map);
-    }
+    d->setAttribute("date", date);
 }
 
 QDateTime KPImageInfo::date() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("date", QDateTime()).toDateTime();
-    }
-    return QDateTime();
+    return d->attribute("date").toDateTime();
 }
 
 void KPImageInfo::setTitle(const QString& title)
 {
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("title", title);
-        info.addAttributes(map);
-    }
+    d->setAttribute("title", title);
 }
 
 QString KPImageInfo::title() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("title", QString()).toString();
-    }
-    return QString();
+    return d->attribute("title").toString();
 }
 
 void KPImageInfo::setName(const QString& name)
@@ -234,7 +186,8 @@ bool KPImageInfo::hasFullGeolocationInfo() const
 {
     if (d->hasValidData())
     {
-        QMap<QString, QVariant> map = d->attributes();
+        KIPI::ImageInfo info        = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
         if (!map.isEmpty() && map.contains("latitude") && map.contains("longitude") && map.contains("altitude"))
             return true;
     }
@@ -243,98 +196,54 @@ bool KPImageInfo::hasFullGeolocationInfo() const
 
 void KPImageInfo::setLatitude(double lat)
 {
-    if (d->hasValidData())
+    if (lat < -90.0 || lat > 90)
     {
-        if (lat < -90.0 || lat > 90)
-        {
-            kDebug() << "Latitude value is out of range (" << lat << ")";
-            return;
-        }
-
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("latitude", lat);
-        info.addAttributes(map);
+        kDebug() << "Latitude value is out of range (" << lat << ")";
+        return;
     }
+
+    d->setAttribute("latitude", lat);
 }
 
 double KPImageInfo::latitude() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("latitude", 0.0).toDouble();
-    }
-    return 0.0;
+    return d->attribute("latitude").toDouble();
 }
 
 void KPImageInfo::setLongitude(double lng)
 {
-    if (d->hasValidData())
+    if (lng < -180.0  || lng > 180)
     {
-        if (lng < -180.0  || lng > 180)
-        {
-            kDebug() << "Latitude value is out of range (" << lng << ")";
-            return;
-        }
-
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("longitude", lng);
-        info.addAttributes(map);
+        kDebug() << "Latitude value is out of range (" << lng << ")";
+        return;
     }
+
+    d->setAttribute("longitude", lng);
 }
 
 double KPImageInfo::longitude() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("longitude", 0.0).toDouble();
-    }
-    return 0.0;
+    return d->attribute("longitude").toDouble();
 }
 
 void KPImageInfo::setAltitude(double alt)
 {
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("altitude", alt);
-        info.addAttributes(map);
-    }
+    d->setAttribute("altitude", alt);
 }
 
 double KPImageInfo::altitude() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return map.value("altitude", 0.0).toDouble();
-    }
-    return 0.0;
+    return d->attribute("altitude").toDouble();
 }
 
 void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
 {
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map;
-        map.insert("angle", (int)orientation);
-        info.addAttributes(map);
-    }
+    d->setAttribute("angle", (int)orientation);
 }
 
 KExiv2::ImageOrientation KPImageInfo::orientation() const
 {
-    if (d->hasValidData())
-    {
-        QMap<QString, QVariant> map = d->attributes();
-        if (!map.isEmpty()) return (KExiv2::ImageOrientation)(map.value("angle", KExiv2::ORIENTATION_UNSPECIFIED).toInt());
-    }
-    return KExiv2::ORIENTATION_UNSPECIFIED;
+    return (KExiv2::ImageOrientation)(d->attribute("angle").toInt());
 }
 
 }  // namespace KIPIPlugins
