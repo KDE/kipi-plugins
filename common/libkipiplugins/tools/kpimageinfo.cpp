@@ -276,4 +276,26 @@ double KPImageInfo::altitude() const
     return 0.0;
 }
 
+void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map;
+        map.insert("angle", (int)orientation);
+        info.addAttributes(map);
+    }
+}
+
+KExiv2::ImageOrientation KPImageInfo::orientation() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return (KExiv2::ImageOrientation)(map.value("angle", KExiv2::ORIENTATION_NORMAL).toInt());
+    }
+    return KExiv2::ORIENTATION_NORMAL;
+}
+
 }  // namespace KIPIPlugins

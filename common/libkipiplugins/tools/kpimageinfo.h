@@ -34,6 +34,10 @@
 
 #include <kurl.h>
 
+// LibKexiv2 includes
+
+#include <libkexiv2/kexiv2.h>
+
 // Local includes
 
 #include "kipiplugins_export.h"
@@ -42,6 +46,8 @@ namespace KIPI
 {
     class Interface;
 }
+
+using namespace KExiv2Iface;
 
 namespace KIPIPlugins
 {
@@ -99,6 +105,11 @@ public:
      */
     void   setAltitude(double alt);
     double altitude() const;
+
+    /** Manage orientation of item. See KExiv2::ImageOrientation for possible values.
+     */
+    void setOrientation(KExiv2::ImageOrientation orientation);
+    KExiv2::ImageOrientation orientation() const;
 
 private:
 
