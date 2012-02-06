@@ -104,7 +104,7 @@ void KPImageInfo::setRating(int r)
     {
         if (r < 0 || r > 5)
         {
-            kDebug() << "rating is out of rage (" << r << ")";
+            kDebug() << "Rating value is out of range (" << r << ")";
             return;
         }
 
