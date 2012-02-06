@@ -44,6 +44,10 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
+// Libkexiv2 includes
+
+#include <libkexiv2/rotationmatrix.h>
+
 // Local includes
 
 #include "calsettings.h"
@@ -54,18 +58,18 @@ namespace KIPICalendarPlugin
 CalPainter::CalPainter(QPaintDevice* pd)
     : QPainter(pd)
 {
-    angle_     = 0;
-    cancelled_ = false;
+    orientation_ = KExiv2::ORIENTATION_UNSPECIFIED;
+    cancelled_   = false;
 }
 
 CalPainter::~CalPainter()
 {
 }
 
-void CalPainter::setImage(const KUrl& imagePath, int angle)
+void CalPainter::setImage(const KUrl& imagePath, KExiv2::ImageOrientation orientation)
 {
-    imagePath_ = imagePath;
-    angle_     = angle;
+    imagePath_   = imagePath;
+    orientation_ = orientation;
 }
 
 void CalPainter::paint(int month)
@@ -327,11 +331,10 @@ void CalPainter::paint(int month)
     }
     else
     {
-        if (angle_ != 0)
+        if ( orientation_ != KExiv2::ORIENTATION_UNSPECIFIED )
         {
-            QMatrix matrix;
-            matrix.rotate(angle_);
-            image_ = image_.transformed(matrix);
+            QMatrix matrix = RotationMatrix::toMatrix(orientation_);
+            image_         = image_.transformed( matrix );
         }
 
         emit signalProgress(0);
