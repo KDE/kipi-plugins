@@ -74,6 +74,11 @@ public:
     void    setTitle(const QString& title);
     QString title() const;
 
+    /** Manage item name.
+     */
+    void setName(const QString& name);
+    QString KPImageInfo::name() const;
+
 private:
 
     class KPImageInfoPrivate;

@@ -34,6 +34,7 @@
 
 // Libkipi includes
 
+#include <libkipi/version.h>
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
@@ -144,6 +145,33 @@ QString KPImageInfo::title() const
         KIPI::ImageInfo info = d->iface->info(d->url);
         QMap<QString, QVariant> map = info.attributes();
         if (!map.isEmpty()) return map.value("title", QString()).toString();
+    }
+    return QString();
+}
+
+void KPImageInfo::setName(const QString& name)
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+#if KIPI_VERSION >= 0x010300
+        info.setName(name);
+#else
+        info.setTitle(name);
+#endif
+    }
+}
+
+QString KPImageInfo::name() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+#if KIPI_VERSION >= 0x010300
+        return info.name();
+#else
+        return info.title();
+#endif
     }
     return QString();
 }
