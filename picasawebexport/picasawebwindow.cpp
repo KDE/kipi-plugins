@@ -65,6 +65,7 @@
 
 #include <libkipi/uploadwidget.h>
 #include <libkipi/version.h>
+#include <libkipi/imageinfo.h>
 
 // Local includes
 
@@ -82,7 +83,7 @@ namespace KIPIPicasawebExportPlugin
 
 PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpFolder,
                                  bool import, QWidget* /*parent*/)
-               : KDialog(0)
+    : KDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;

@@ -61,6 +61,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
+#include <libkipi/imageinfo.h>
 
 // Local includes
 

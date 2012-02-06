@@ -60,6 +60,7 @@
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
+#include <libkipi/imageinfo.h>
 
 // LibKDcraw includes
 
