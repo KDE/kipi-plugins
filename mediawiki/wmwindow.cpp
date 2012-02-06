@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to wikimedia commons
  *
  * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,9 +47,15 @@
 
 #include <libmediawiki/version.h>
 
+// KIPI includes
+
+#include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
+
 // Local includes
 
 #include "kpaboutdata.h"
+#include "kpimageinfo.h"
 #include "wmwidget.h"
 #include "wikimediajob.h"
 #include "imageslist.h"
@@ -58,7 +64,7 @@ namespace KIPIWikiMediaPlugin
 {
 
 WMWindow::WMWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* /*parent*/)
-       : KDialog(0)
+    : KDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir    = tmpFolder;
@@ -178,26 +184,21 @@ void WMWindow::slotStartTransfer()
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        KIPI::ImageInfo info = m_interface->info(urls.at(i));
+        KIPIPlugins::KPImageInfo info(m_interface, urls.at(i));
 
-        QMap<QString,QString> map;
+        QMap<QString, QString> map;
 
         map["url"]         = urls.at(i).url();
         map["licence"]     = licence;
         map["author"]      = author;
         map["description"] = description;
-        map["time"]        = info.time().toString(Qt::ISODate);
+        map["time"]        = info.date().toString(Qt::ISODate);
 
-        if(info.attributes().contains("latitude")  ||
-           info.attributes().contains("longitude") ||
-           info.attributes().contains("altitude"))
+        if(info.hasFullGeolocationInfo())
         {
-            if(info.attributes().contains("latitude"))
-                map["latitude"] = info.attributes()["latitude"].toString();
-            if(info.attributes().contains("longitude"))
-                map["longitude"] = info.attributes()["longitude"].toString();
-            if(info.attributes().contains("altitude"))
-                map["altitude"] = info.attributes()["altitude"].toString();
+            map["latitude"]  = QString::number(info.latitude());
+            map["longitude"] = QString::number(info.longitude());
+            map["altitude"]  = QString::number(info.altitude());
         }
 
         imageDesc << map;

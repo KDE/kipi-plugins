@@ -34,11 +34,6 @@
 #include <KUrl>
 #include <KJob>
 
-// KIPI includes
-
-#include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
-
 // Local includes
 
 #include "imageslist.h"
@@ -46,6 +41,11 @@
 namespace mediawiki
 {
     class MediaWiki;
+}
+
+namespace KIPI
+{
+    class Interface;
 }
 
 namespace KIPIWikiMediaPlugin
