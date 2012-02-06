@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2011 by Veaceslav Munteanu <slavuttici@gmail.com>
  *
  * This program is free software; you can redistribute it
@@ -48,10 +48,6 @@
 #include <ktempdir.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes
-
-#include <libkipi/imageinfo.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -60,7 +56,9 @@
 // Local includes
 
 #include "pluginsversion.h"
+#include "kpimageinfo.h"
 
+using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
@@ -133,41 +131,41 @@ SimpleViewer::~SimpleViewer()
 
 void SimpleViewer::appendPluginFiles(int pluginType)
 {
-	kDebug() << "Value of plugin type in append files" << pluginType;
-	switch(pluginType)
-	{
-		case 0:
-			d->simpleViewerFiles.clear();
-			d->simpleViewerFiles.append("web/svcore/swf/simpleviewer.swf");
-			d->simpleViewerFiles.append("web/svcore/js/swfobject.js");
-	                d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/simpleviewer/", true);
-	                d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/simpleviewer/");
-	                kDebug() << "Data dir when set is " << d->dataDir;
-			break;
-		case 1:
-			d->simpleViewerFiles.clear();
-			d->simpleViewerFiles.append("autoviewer.swf");
-			d->simpleViewerFiles.append("swfobject.js");
-			d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/autoviewer/", true);
-	                d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/autoviewer/");
-			break;
-		case 2:
-			d->simpleViewerFiles.clear();
-			d->simpleViewerFiles.append("TiltViewer.swf");
-			d->simpleViewerFiles.append("swfobject.js");
-			d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/tiltviewer/", true);
+    kDebug() << "Value of plugin type in append files" << pluginType;
+    switch(pluginType)
+    {
+        case 0:
+            d->simpleViewerFiles.clear();
+            d->simpleViewerFiles.append("web/svcore/swf/simpleviewer.swf");
+            d->simpleViewerFiles.append("web/svcore/js/swfobject.js");
+                    d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/simpleviewer/", true);
+                    d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/simpleviewer/");
+                    kDebug() << "Data dir when set is " << d->dataDir;
+            break;
+        case 1:
+            d->simpleViewerFiles.clear();
+            d->simpleViewerFiles.append("autoviewer.swf");
+            d->simpleViewerFiles.append("swfobject.js");
+            d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/autoviewer/", true);
+                    d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/autoviewer/");
+            break;
+        case 2:
+            d->simpleViewerFiles.clear();
+            d->simpleViewerFiles.append("TiltViewer.swf");
+            d->simpleViewerFiles.append("swfobject.js");
+            d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/tiltviewer/", true);
                         d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/tiltviewer/");
-			break;
-		case 3:
-			d->simpleViewerFiles.clear();
-			d->simpleViewerFiles.append("viewer.swf");
-			d->simpleViewerFiles.append("swfobject.js");
-			d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/postcardviewer/", true);
+            break;
+        case 3:
+            d->simpleViewerFiles.clear();
+            d->simpleViewerFiles.append("viewer.swf");
+            d->simpleViewerFiles.append("swfobject.js");
+            d->dataLocal = KStandardDirs::locateLocal("data", "kipiplugin_flashexport/postcardviewer/", true);
                         d->dataDir   = KStandardDirs::locate("data", "kipiplugin_flashexport/postcardviewer/");
-			break;
-		default:
-			break;
-	}
+            break;
+        default:
+            break;
+    }
 }
 
 void SimpleViewer::initProgressWdg()
@@ -266,9 +264,9 @@ void SimpleViewer::slotProcess()
     {
         d->progressWdg->addedAction(i18nc("Flash export has finished", "Finished..."),
                                     KIPIPlugins::SuccessMessage);
-    	emit signalProcessingDone();
+        emit signalProcessingDone();
         if(d->settings->openInKonqueror)
-        	KToolInvocation::invokeBrowser(d->settings->exportUrl.path());
+            KToolInvocation::invokeBrowser(d->settings->exportUrl.path());
     }
 }
 
@@ -332,14 +330,14 @@ bool SimpleViewer::cmpUrl(const KUrl &url1, const KUrl &url2)
 
     if(clock1.isValid() || clock2.isValid())
     {
-    	return clock1 < clock2;
+        return clock1 < clock2;
     }
     else
     {
-    	QString name1 = url1.fileName();
-    	QString name2 = url2.fileName();
+        QString name1 = url1.fileName();
+        QString name2 = url2.fileName();
 
-    	return name1 < name2;
+        return name1 < name2;
     }
 
 }
@@ -609,8 +607,8 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
     if(d->settings->showComments)
     {
-        KIPI::ImageInfo info = d->interface->info(url);
-        comment              = info.description();
+        KPImageInfo info(d->interface, url);
+        comment = info.description();
     }
     else
     {
@@ -619,9 +617,8 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
 
     if(d->settings->showKeywords && d->interface->hasFeature(KIPI::HostSupportsTags))
     {
-        KIPI::ImageInfo info            = d->interface->info(url);
-        QMap<QString, QVariant> attribs = info.attributes();
-        QStringList tagList             = attribs["tags"].toStringList();
+        KPImageInfo info(d->interface, url);
+        QStringList tagList = info.keywords();
 
         if(!tagList.join(" ").isEmpty())
             keywords = QString("\nTags: ")+tagList.join(", ");
@@ -996,8 +993,8 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
 
 KIPIPlugins::BatchProgressWidget* SimpleViewer::progressWidget()
 {
-	initProgressWdg();
-	return d->progressWdg;
+    initProgressWdg();
+    return d->progressWdg;
 }
 
 void SimpleViewer::setSettings(SimpleViewerSettingsContainer* setting)

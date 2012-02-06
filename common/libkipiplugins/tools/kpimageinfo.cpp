@@ -87,4 +87,15 @@ QString KPImageInfo::description() const
     return QString();
 }
 
+QStringList KPImageInfo::keywords() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return map.value("tags", QStringList()).toStringList();
+    }
+    return QStringList();
+}
+
 }  // namespace KIPIPlugins

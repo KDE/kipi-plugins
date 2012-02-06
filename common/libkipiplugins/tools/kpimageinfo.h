@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QString>
+#include <QStringList>
 
 // KDE includes
 
@@ -58,6 +59,11 @@ public:
      */
     void    setDescription(const QString& desc);
     QString description() const;
+
+    /** Get keywords list (tag names) of item.
+     */
+    QStringList keywords() const;
+
 
 private:
 
