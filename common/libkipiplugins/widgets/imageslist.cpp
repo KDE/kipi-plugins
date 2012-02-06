@@ -60,7 +60,6 @@
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
 
 // LibKDcraw includes
 
@@ -69,6 +68,7 @@
 // Local includes
 
 #include "imagedialog.h"
+#include "kpimageinfo.h"
 
 using namespace KIPIPlugins;
 
@@ -127,7 +127,7 @@ void ImagesListViewItem::updateInformation()
 {
     if (d->view->iface())
     {
-        ImageInfo info = d->view->iface()->info(d->url);
+        KPImageInfo info(d->view->iface(), d->url);
 
         setComments(info.description());
 
@@ -135,14 +135,12 @@ void ImagesListViewItem::updateInformation()
 
         if (d->view->iface()->hasFeature(HostSupportsTags))
         {
-            QMap<QString, QVariant> attribs = info.attributes();
-            setTags(attribs["tags"].toStringList());
+            setTags(info.keywords());
         }
 
         if (d->view->iface()->hasFeature(HostSupportsRating))
         {
-            QMap<QString, QVariant> attribs = info.attributes();
-            setRating(attribs["rating"].toInt());
+            setRating(info.rating());
         }
     }
 }

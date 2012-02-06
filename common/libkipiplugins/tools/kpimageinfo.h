@@ -64,6 +64,10 @@ public:
      */
     QStringList keywords() const;
 
+    /** Manage rating (0-5 stars) of item.
+     */
+    void setRating(int r);
+    int  rating() const;
 
 private:
 

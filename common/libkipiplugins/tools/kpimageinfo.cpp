@@ -98,4 +98,29 @@ QStringList KPImageInfo::keywords() const
     return QStringList();
 }
 
+void KPImageInfo::setRating(int r)
+{
+    if (d->iface)
+    {
+        if (r < 0 || r > 5)
+            kDebug() << "rating is out of rage (" << r << ")";
+
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map;
+        map.insert("rating", r);
+        info.addAttributes(map);
+    }
+}
+
+int KPImageInfo::rating() const
+{
+    if (d->iface)
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        QMap<QString, QVariant> map = info.attributes();
+        if (!map.isEmpty()) return map.value("rating", -1).toInt();
+    }
+    return (-1);
+}
+
 }  // namespace KIPIPlugins
