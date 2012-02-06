@@ -55,6 +55,17 @@ public:
         return (iface && !url.isEmpty());
     }
 
+    QMap<QString, QVariant> attributes()
+    {
+        QMap<QString, QVariant> map; 
+        if (hasValidData())
+        {
+            KIPI::ImageInfo info = iface->info(url);
+            map                  = info.attributes();
+        }
+        return map;
+    }
+
     KUrl             url;
     KIPI::Interface* iface;
 };
@@ -86,8 +97,7 @@ QString KPImageInfo::description() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("comment", QString()).toString();
     }
     return QString();
@@ -108,8 +118,7 @@ QStringList KPImageInfo::tagsPath() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("tagspath", QStringList()).toStringList();
     }
     return QStringList();
@@ -119,8 +128,7 @@ QStringList KPImageInfo::keywords() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("tags", QStringList()).toStringList();
     }
     return QStringList();
@@ -147,8 +155,7 @@ int KPImageInfo::rating() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("rating", -1).toInt();
     }
     return (-1);
@@ -169,8 +176,7 @@ QDateTime KPImageInfo::date() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("date", QDateTime()).toDateTime();
     }
     return QDateTime();
@@ -191,8 +197,7 @@ QString KPImageInfo::title() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("title", QString()).toString();
     }
     return QString();
@@ -229,8 +234,7 @@ bool KPImageInfo::hasFullGeolocationInfo() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty() && map.contains("latitude") && map.contains("longitude") && map.contains("altitude"))
             return true;
     }
@@ -258,8 +262,7 @@ double KPImageInfo::latitude() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("latitude", 0.0).toDouble();
     }
     return 0.0;
@@ -286,8 +289,7 @@ double KPImageInfo::longitude() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("longitude", 0.0).toDouble();
     }
     return 0.0;
@@ -308,8 +310,7 @@ double KPImageInfo::altitude() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return map.value("altitude", 0.0).toDouble();
     }
     return 0.0;
@@ -330,8 +331,7 @@ KExiv2::ImageOrientation KPImageInfo::orientation() const
 {
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
+        QMap<QString, QVariant> map = d->attributes();
         if (!map.isEmpty()) return (KExiv2::ImageOrientation)(map.value("angle", KExiv2::ORIENTATION_UNSPECIFIED).toInt());
     }
     return KExiv2::ORIENTATION_UNSPECIFIED;
