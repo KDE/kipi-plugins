@@ -103,6 +103,17 @@ void KPImageInfo::cloneData(const KUrl& destination)
     destInfo.cloneData(srcInfo);
 }
 
+bool KPImageInfo::hasAttribute(const QString& name) const
+{
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info       = d->iface->info(d->url);
+        QMap<QString, QVariant>map = info.attributes();
+        return (map.contains(name));
+    }
+    return false;
+}
+
 void KPImageInfo::setDescription(const QString& desc)
 {
     d->setAttribute("comment", desc);

@@ -63,6 +63,11 @@ public:
     KPImageInfo(KIPI::Interface* iface, const KUrl& url);
     ~KPImageInfo();
 
+    /** Return true if KIPI host application provide attribute name for item
+     *  List of supported attributes is given in KIPI::ImageInfo class.
+     */
+    bool hasAttribute(const QString& name) const;
+
     /** Clone all attributes from current KPImageInfo instance to item pointed by destination url.
      *  In other words, url of KPImageInfo instance is the source of attributes to clone on destination.
      */
