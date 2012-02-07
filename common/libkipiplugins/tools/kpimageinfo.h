@@ -72,48 +72,57 @@ public:
      */
     void cloneData(const KUrl& destination);
 
-    /** return item file size in bytes.
+    /** Manage item file size in bytes.
      */
     qlonglong fileSize() const;
+    bool      hasFileSize() const;
 
     /** Manage description (lead comment) of item.
      */
     void    setDescription(const QString& desc);
     QString description() const;
+    bool    hasDescription() const;
 
     /** Manage complete tags path of item.
      */
     void        setTagsPath(const QStringList& tp);
     QStringList tagsPath() const;
+    bool        hasTagsPath() const;
 
     /** Get keywords list (tag names) of item.
      */
     QStringList keywords() const;
+    bool        hasKeywords() const;
 
     /** Manage rating (0-5 stars) of item.
      */
     void setRating(int r);
     int  rating() const;
-
+    bool hasRating() const;
+    
     /** Manage color label of item (0-10 : none, red, orange, yellow, green, blue, magenta, gray, black, white)
      */
     void setColorLabel(int cl);
     int  colorLabel() const;
+    bool hasColorLabel() const;
 
     /** Manage pick label of item (0-4 : none, rejected, pending, accepted)
      */
     void setPickLabel(int pl);
     int  pickLabel() const;
+    bool hasPickLabel() const;
 
     /** Manage date of item.
      */
     void      setDate(const QDateTime& date);
     QDateTime date() const;
+    bool      hasDate() const;
 
     /** Manage title of item.
      */
     void    setTitle(const QString& title);
     QString title() const;
+    bool    hasTitle() const;
 
     /** Manage item name.
      */
@@ -151,6 +160,7 @@ public:
      */
     void                     setOrientation(KExiv2::ImageOrientation orientation);
     KExiv2::ImageOrientation orientation() const;
+    bool                     hasOrientation() const;
 
 private:
 

@@ -130,6 +130,11 @@ qlonglong KPImageInfo::fileSize() const
     return d->attribute("filesize").toLongLong();
 }
 
+bool KPImageInfo::hasFileSize() const
+{
+    return d->hasAttribute("filesize");
+}
+
 void KPImageInfo::setDescription(const QString& desc)
 {
     d->setAttribute("comment", desc);
@@ -138,6 +143,11 @@ void KPImageInfo::setDescription(const QString& desc)
 QString KPImageInfo::description() const
 {
     return d->attribute("comment").toString();
+}
+
+bool KPImageInfo::hasDescription() const
+{
+    return d->hasAttribute("comment");
 }
 
 void KPImageInfo::setTagsPath(const QStringList& tp)
@@ -150,6 +160,11 @@ QStringList KPImageInfo::tagsPath() const
     return d->attribute("tagspath").toStringList();
 }
 
+bool KPImageInfo::hasTagsPath() const
+{
+    return d->hasAttribute("tagspath");
+}
+
 QStringList KPImageInfo::keywords() const
 {
     QStringList keywords = d->attribute("keywords").toStringList();
@@ -157,6 +172,12 @@ QStringList KPImageInfo::keywords() const
         keywords = d->attribute("tags").toStringList();     // For compatibility.
 
     return keywords;
+}
+
+bool KPImageInfo::hasKeywords() const
+{
+    return (d->hasAttribute("keywords") || 
+            d->hasAttribute("tags"));                      // For compatibility.
 }
 
 void KPImageInfo::setRating(int r)
@@ -175,6 +196,11 @@ int KPImageInfo::rating() const
     return d->attribute("rating").toInt();
 }
 
+bool KPImageInfo::hasRating() const
+{
+    return d->hasAttribute("rating");
+}
+
 void KPImageInfo::setColorLabel(int cl)
 {
     if (cl < 0 || cl > 10)
@@ -189,6 +215,11 @@ void KPImageInfo::setColorLabel(int cl)
 int KPImageInfo::colorLabel() const
 {
     return d->attribute("colorlabel").toInt();
+}
+
+bool KPImageInfo::hasColorLabel() const
+{
+    return d->hasAttribute("colorlabel");
 }
 
 void KPImageInfo::setPickLabel(int pl)
@@ -207,6 +238,11 @@ int KPImageInfo::pickLabel() const
     return d->attribute("picklabel").toInt();
 }
 
+bool KPImageInfo::hasPickLabel() const
+{
+    return d->hasAttribute("picklabel");
+}
+
 void KPImageInfo::setDate(const QDateTime& date)
 {
     d->setAttribute("date", date);
@@ -217,6 +253,11 @@ QDateTime KPImageInfo::date() const
     return d->attribute("date").toDateTime();
 }
 
+bool KPImageInfo::hasDate() const
+{
+    return d->hasAttribute("date");
+}
+
 void KPImageInfo::setTitle(const QString& title)
 {
     d->setAttribute("title", title);
@@ -225,6 +266,11 @@ void KPImageInfo::setTitle(const QString& title)
 QString KPImageInfo::title() const
 {
     return d->attribute("title").toString();
+}
+
+bool KPImageInfo::hasTitle() const
+{
+    return d->hasAttribute("title");
 }
 
 void KPImageInfo::setName(const QString& name)
@@ -336,6 +382,12 @@ KExiv2::ImageOrientation KPImageInfo::orientation() const
         orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());       // For compatibility.
     
     return orientation;
+}
+
+bool KPImageInfo::hasOrientation() const
+{
+    return (d->hasAttribute("orientation") || 
+            d->hasAttribute("angle"));                      // For compatibility.
 }
 
 }  // namespace KIPIPlugins
