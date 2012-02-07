@@ -68,7 +68,10 @@ TARGET_LINK_LIBRARIES(kipiplugin_gpssync
 
 IF(KDE4_BUILD_TESTS)
     # needed by modeltest
-    TARGET_LINK_LIBRARIES(kipiplugin_gpssync ${QT_QTTEST_LIBRARY})
+    TARGET_LINK_LIBRARIES(kipiplugin_gpssync
+                          ${QT_QTTEST_LIBRARY}
+                          kipiplugins
+                         )
 ENDIF(KDE4_BUILD_TESTS)
 
 INSTALL(TARGETS kipiplugin_gpssync DESTINATION ${PLUGIN_INSTALL_DIR})

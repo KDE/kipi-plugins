@@ -63,11 +63,6 @@ public:
     KPImageInfo(KIPI::Interface* iface, const KUrl& url);
     ~KPImageInfo();
 
-    /** Return true if KIPI host application provide attribute name for item
-     *  List of supported attributes is given in KIPI::ImageInfo class.
-     */
-    bool hasAttribute(const QString& name) const;
-
     /** Clone all attributes from current KPImageInfo instance to item pointed by destination url.
      *  In other words, url of KPImageInfo instance is the source of attributes to clone on destination.
      */
@@ -104,32 +99,39 @@ public:
 
     /** Manage item name.
      */
-    void setName(const QString& name);
+    void    setName(const QString& name);
     QString name() const;
-
-    /** Return true if all geolocation info are available (latitude, longitude, and altitude)
-     */
-    bool hasFullGeolocationInfo() const;
 
     /** Manage item latitude geolocation information : double value in degrees (-90.0 >= lat <=90.0).
      */
     void   setLatitude(double lat);
     double latitude() const;
+    bool   hasLatitude() const;
 
     /** Manage item longitude geolocation information : double value in degrees (-180.0 >= long <=180.0).
      */
     void   setLongitude(double lng);
     double longitude() const;
+    bool   hasLongitude() const;
 
     /** Manage item altitude geolocation information : double value in meters.
      */
     void   setAltitude(double alt);
     double altitude() const;
+    bool   hasAltitude() const;
+
+    /** Return true if all geolocation attributes are available (latitude, longitude, and altitude).
+     */
+    bool hasGeolocationInfo() const;
+
+    /** Remove all geolocation attributes of item.
+     */
+    void removeGeolocationInfo();
 
     /** Manage orientation of item. See KExiv2::ImageOrientation for possible values.
      *  Use KExiv2Iface::RotationMatrix::toMatrix() to get a QMatrix corresponding to orientation flage and to apply on QImage.
      */
-    void setOrientation(KExiv2::ImageOrientation orientation);
+    void                     setOrientation(KExiv2::ImageOrientation orientation);
     KExiv2::ImageOrientation orientation() const;
 
 private:

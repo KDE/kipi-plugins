@@ -238,7 +238,7 @@ void kmlExport::generateImagesthumb(KIPI::Interface* interface, const KUrl& imag
         double              alt, lat, lng;
         KExiv2Iface::KExiv2 exiv2Iface;
 
-        if (info.hasFullGeolocationInfo())
+        if (info.hasGeolocationInfo())
         {
             lat = info.latitude();
             lng = info.longitude();
@@ -459,7 +459,7 @@ void kmlExport::generate()
         double alt, lat, lng;
         KUrl url        = *selIt;
         KIPIPlugins::KPImageInfo info(m_interface, url);
-        bool hasGPSInfo = info.hasFullGeolocationInfo();
+        bool hasGPSInfo = info.hasGeolocationInfo();
 
         if (hasGPSInfo)
         {

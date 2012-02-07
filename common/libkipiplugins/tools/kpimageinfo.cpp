@@ -78,6 +78,23 @@ public:
         }
     }
 
+    void removeAttribute(const QString& name)
+    {
+        KIPI::ImageInfo info = iface->info(url);
+        info.delAttributes(QStringList() << name);
+    }
+
+    bool hasAttribute(const QString& name) const
+    {
+        if (hasValidData())
+        {
+            KIPI::ImageInfo info       = iface->info(url);
+            QMap<QString, QVariant>map = info.attributes();
+            return (map.contains(name));
+        }
+        return false;
+    }
+
 public:
 
     KUrl             url;
@@ -101,17 +118,6 @@ void KPImageInfo::cloneData(const KUrl& destination)
     KIPI::ImageInfo srcInfo  = d->iface->info(d->url);
     KIPI::ImageInfo destInfo = d->iface->info(destination);
     destInfo.cloneData(srcInfo);
-}
-
-bool KPImageInfo::hasAttribute(const QString& name) const
-{
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info       = d->iface->info(d->url);
-        QMap<QString, QVariant>map = info.attributes();
-        return (map.contains(name));
-    }
-    return false;
 }
 
 void KPImageInfo::setDescription(const QString& desc)
@@ -202,11 +208,6 @@ QString KPImageInfo::name() const
     return QString();
 }
 
-bool KPImageInfo::hasFullGeolocationInfo() const
-{
-    return (hasAttribute("latitude") && hasAttribute("longitude") && hasAttribute("altitude"));
-}
-
 void KPImageInfo::setLatitude(double lat)
 {
     if (lat < -90.0 || lat > 90)
@@ -216,6 +217,11 @@ void KPImageInfo::setLatitude(double lat)
     }
 
     d->setAttribute("latitude", lat);
+}
+
+bool KPImageInfo::hasLatitude() const
+{
+    return d->hasAttribute("latitude");
 }
 
 double KPImageInfo::latitude() const
@@ -239,6 +245,11 @@ double KPImageInfo::longitude() const
     return d->attribute("longitude").toDouble();
 }
 
+bool KPImageInfo::hasLongitude() const
+{
+    return d->hasAttribute("longitude");
+}
+
 void KPImageInfo::setAltitude(double alt)
 {
     d->setAttribute("altitude", alt);
@@ -247,6 +258,21 @@ void KPImageInfo::setAltitude(double alt)
 double KPImageInfo::altitude() const
 {
     return d->attribute("altitude").toDouble();
+}
+
+bool KPImageInfo::hasAltitude() const
+{
+    return d->hasAttribute("altitude");
+}
+
+bool KPImageInfo::hasGeolocationInfo() const
+{
+    return (d->hasAttribute("latitude") && d->hasAttribute("longitude") && d->hasAttribute("altitude"));
+}
+
+void KPImageInfo::removeGeolocationInfo()
+{
+    d->removeAttribute("gpslocation");
 }
 
 void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)

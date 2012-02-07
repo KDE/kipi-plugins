@@ -40,7 +40,12 @@ SET(kipicmd_sources
 
 KDE4_ADD_EXECUTABLE(kipicmd ${kipicmd_sources})
 
-TARGET_LINK_LIBRARIES(kipicmd ${KDE4_UI_LIBS} ${KDE4_KPARTS_LIBS} ${KEXIV2_LIBRARIES} ${KIPI_LIBRARIES})
+TARGET_LINK_LIBRARIES(kipicmd 
+                      ${KDE4_UI_LIBS}
+                      ${KDE4_KPARTS_LIBS}
+                      ${KEXIV2_LIBRARIES}
+                      ${KIPI_LIBRARIES}
+                      kipiplugins
+                     )
 
 ADD_SUBDIRECTORY(multithreading)
-
