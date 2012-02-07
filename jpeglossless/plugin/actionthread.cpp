@@ -9,7 +9,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,7 +45,6 @@ extern "C"
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
 
 // Local includes
 
@@ -113,8 +112,6 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        KIPI::ImageInfo info = d->interface->info( *it );
-
         ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->filePath               = (*it).toLocalFile();
         t->action                 = Rotate;
@@ -131,18 +128,6 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        KIPI::ImageInfo info = d->interface->info( *it );
-        int angle = (info.angle() + 360) % 360;
-
-        if ( ((90-45) <= angle && angle < (90+45)) ||
-             ((270-45) < angle && angle < (270+45)) )
-        {
-            // The image is rotated 90 or 270 degrees, which means that the flip operations
-            // must be switched to gain the effect the user expects.
-            // Note: this will only work if the angles is one of 90,180,270.
-            val = (FlipAction) !val;
-        }
-
         ActionThreadPriv::Task* t = new ActionThreadPriv::Task;
         t->filePath               = (*it).toLocalFile();
         t->action                 = Flip;
