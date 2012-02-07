@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "binaryiface.h"
+#include "binaryiface.moc"
 
 // Qt includes
 
