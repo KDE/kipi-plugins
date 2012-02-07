@@ -113,6 +113,11 @@ KPImageInfo::~KPImageInfo()
     delete d;
 }
 
+KUrl KPImageInfo::url() const
+{
+    return d->url;
+}
+
 void KPImageInfo::cloneData(const KUrl& destination)
 {
     KIPI::ImageInfo srcInfo  = d->iface->info(d->url);

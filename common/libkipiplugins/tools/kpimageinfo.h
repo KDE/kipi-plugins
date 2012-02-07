@@ -63,6 +63,10 @@ public:
     KPImageInfo(KIPI::Interface* iface, const KUrl& url);
     ~KPImageInfo();
 
+    /** return item url.
+     */
+    KUrl url() const;
+
     /** Clone all attributes from current KPImageInfo instance to item pointed by destination url.
      *  In other words, url of KPImageInfo instance is the source of attributes to clone on destination.
      */
