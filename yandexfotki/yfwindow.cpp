@@ -89,13 +89,12 @@ extern "C"
 
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
-#include <libkipi/version.h>
 #include <libkipi/imagecollection.h>
-#include <libkipi/imageinfo.h>
 
 // Local includes
 
 #include "kpaboutdata.h"
+#include "kpimageinfo.h"
 #include "pluginsversion.h"
 #include "imageslist.h"
 #include "yftalker.h"
@@ -688,7 +687,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
     m_transferQueue.clear();
     foreach(const KUrl& url, m_imgList->imageUrls(true))
     {
-        KIPI::ImageInfo info = m_interface->info(url);
+        KIPIPlugins::KPImageInfo info(m_interface, url);
         KExiv2Iface::KExiv2 exiv2Iface;
 
         const QString imgPath = url.toLocalFile();
@@ -704,10 +703,8 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         }
 
         // get tags
-        const QMap <QString, QVariant> attribs = info.attributes();
-        QStringList tags = attribs["tagspath"].toStringList();
-
-        bool updateFile = true;
+        QStringList tags = info.tagsPath();
+        bool updateFile  = true;
 
         QSet<QString> oldtags;
 
@@ -745,11 +742,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         YandexFotkiPhoto& photo = m_transferQueue.top();
         // TODO: updateFile is not used
         photo.setOriginalUrl(imgPath);
-#if KIPI_VERSION >= 0x010300
         photo.setTitle(info.name());
-#else
-        photo.setTitle(info.title());
-#endif
         photo.setSummary(info.description());
         photo.setAccess(access);
         photo.setHideOriginal(m_hideOriginalCheck->isChecked());
