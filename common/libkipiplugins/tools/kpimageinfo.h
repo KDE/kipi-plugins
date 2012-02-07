@@ -63,6 +63,10 @@ public:
     KPImageInfo(KIPI::Interface* iface, const KUrl& url);
     ~KPImageInfo();
 
+    /** Clone all meta-information from current instance to item pointed by url.
+     */
+    void cloneData(const KUrl& dest);
+
     /** Manage description (lead comment) of item.
      */
     void    setDescription(const QString& desc);

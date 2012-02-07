@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,8 +61,11 @@ extern "C"
 // LibKIPI includes
 
 #include <libkipi/uploadwidget.h>
-#include <libkipi/imageinfo.h>
 #include <libkipi/imagecollection.h>
+
+// Libkexiv2 includes
+
+#include <libkexiv2/rotationmatrix.h>
 
 // Local includes
 
@@ -71,8 +74,10 @@ extern "C"
 #include "outputdialog.h"
 #include "pluginsversion.h"
 #include "ui_batchprocessimagesdialog.h"
+#include "kpimageinfo.h"
 
 using namespace KIPIPlugins;
+using namespace KExiv2Iface;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -221,7 +226,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd()
 {
     QStringList ImageFilesList;
 
-    const KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
+    const KUrl::List urls = ImageDialog::getImageUrls(this, m_interface);
 
     if (urls.isEmpty())
         return;
@@ -282,15 +287,14 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem& item, const QPixm
     QPixmap pix(pixmap);
 
     // Rotate the thumbnail compared to the angle the host application dictate
-    KIPI::ImageInfo info = m_interface->info(item.url());
-    if (info.angle() != 0)
-    {
-        QImage img = pix.toImage();
-        QMatrix matrix;
+    KPImageInfo info(m_interface, item.url());
 
-        matrix.rotate(info.angle());
-        img = img.transformed(matrix);
-        pix.fromImage(img);
+    if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
+    {
+        QImage image   = pix.toImage();
+        QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
+        image          = image.transformed( matrix );
+        pix.fromImage(image);
     }
 
     m_ui->m_imageLabel->setPixmap(pix);
@@ -634,9 +638,8 @@ void BatchProcessImagesDialog::slotFinished()
 
             if (src != dest)
             {
-                KIPI::ImageInfo srcInfo  = m_interface->info(src);
-                KIPI::ImageInfo destInfo = m_interface->info(dest);
-                destInfo.cloneData(srcInfo);
+                KPImageInfo info(m_interface, src);
+                info.cloneData(dest);
             }
 
             if (m_ui->m_removeOriginal->isChecked() && src != dest)

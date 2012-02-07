@@ -96,6 +96,13 @@ KPImageInfo::~KPImageInfo()
     delete d;
 }
 
+void KPImageInfo::cloneData(const KUrl& dest)
+{
+    KIPI::ImageInfo srcInfo  = d->iface->info(d->url);
+    KIPI::ImageInfo destInfo = d->iface->info(dest);
+    destInfo.cloneData(srcInfo);
+}
+
 void KPImageInfo::setDescription(const QString& desc)
 {
     d->setAttribute("comment", desc);
