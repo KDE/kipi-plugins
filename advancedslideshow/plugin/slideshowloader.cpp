@@ -43,21 +43,25 @@
 // Libkipi includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
+
+// Libkexiv2 includes
+
+#include <libkexiv2/rotationmatrix.h>
 
 // Local includes
 
 #include "commoncontainer.h"
+#include "kpimageinfo.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 LoadThread::LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl& path,
-                       const int angle, int width, int height)
+                       KExiv2::ImageOrientation orientation, int width, int height)
           : QThread()
 {
     m_path         = path;
-    m_angle        = angle;
+    m_orientation  = orientation;
     m_swidth       = width;
     m_sheight      = height;
     m_imageLock    = imageLock;
@@ -86,12 +90,11 @@ void LoadThread::run()
         newImage = QImage(m_path.toLocalFile());
     }
 
-    // Rotate according to angle
-    if (m_angle != 0)
+    // Rotate according to orientation flag
+    if ( m_orientation != KExiv2::ORIENTATION_UNSPECIFIED )
     {
-        QMatrix matrix;
-        matrix.rotate((double) m_angle);
-        newImage = newImage.transformed(matrix);
+        QMatrix matrix = RotationMatrix::toMatrix(m_orientation);
+        newImage       = newImage.transformed(matrix);
     }
 
     newImage = newImage.scaled(m_swidth, m_sheight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -117,16 +120,17 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     m_threadLock     = new QMutex();
     m_sharedData     = sharedData;
 
-    KUrl filePath;
-    int  angle = 0;
+    KUrl                     filePath;
+    KExiv2::ImageOrientation orientation;
 
     for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); ++i)
     {
-        filePath = KUrl(m_pathList[i].first);
-        angle    = m_sharedData->iface()->info(filePath).angle();
+        filePath    = KUrl(m_pathList[i].first);
+        KIPIPlugins::KPImageInfo info(m_sharedData->iface(), filePath);
+        orientation = info.orientation();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                               filePath, angle, m_swidth, m_sheight);
+                                               filePath, orientation, m_swidth, m_sheight);
         m_threadLock->lock();
         m_loadingThreads->insert(filePath, newThread);
         newThread->start();
@@ -135,18 +139,18 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
 
     for (uint i = 0; i < (m_cacheSize % 2 == 0 ? (m_cacheSize % 2) : uint(m_cacheSize / 2) + 1); ++i)
     {
-        int toLoad = (m_currIndex - i) % m_pathList.count();
-        filePath   = KUrl(m_pathList[toLoad].first);
-        angle      = m_sharedData->iface()->info(filePath).angle();
+        int toLoad   = (m_currIndex - i) % m_pathList.count();
+        filePath     = KUrl(m_pathList[toLoad].first);
+        KIPIPlugins::KPImageInfo info(m_sharedData->iface(), filePath);
+        orientation = info.orientation();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                               filePath, angle, m_swidth, m_sheight);
+                                               filePath, orientation, m_swidth, m_sheight);
         m_threadLock->lock();
         m_loadingThreads->insert(filePath, newThread);
         newThread->start();
         m_threadLock->unlock();
     }
-
 }
 
 SlideShowLoader::~SlideShowLoader()
@@ -195,11 +199,12 @@ void SlideShowLoader::next()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    KUrl filePath = KUrl(m_pathList[newBorn].first);
-    int  angle    = m_sharedData->iface()->info(filePath).angle();
+    KUrl filePath                        = KUrl(m_pathList[newBorn].first);
+    KIPIPlugins::KPImageInfo info(m_sharedData->iface(), filePath);
+    KExiv2::ImageOrientation orientation = info.orientation();
 
     LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                           filePath, angle, m_swidth, m_sheight);
+                                           filePath, orientation, m_swidth, m_sheight);
 
     m_threadLock->lock();
 
@@ -213,7 +218,7 @@ void SlideShowLoader::next()
 
 void SlideShowLoader::prev()
 {
-    int victim = (m_currIndex + int(m_currIndex / 2)) % m_pathList.count();
+    int victim  = (m_currIndex + int(m_currIndex / 2)) % m_pathList.count();
     int newBorn = (m_currIndex - ((m_cacheSize & 2) == 0 ?
                   (m_cacheSize / 2) :
                    int(m_cacheSize / 2) + 1)) % m_pathList.count();
@@ -227,6 +232,7 @@ void SlideShowLoader::prev()
     LoadThread* oldThread = m_loadingThreads->value(m_pathList[victim].first);
     if (oldThread)
         oldThread->wait();
+
     delete oldThread;
 
     m_loadingThreads->remove(m_pathList[victim].first);
@@ -236,10 +242,11 @@ void SlideShowLoader::prev()
     m_threadLock->unlock();
 
     KUrl filePath = KUrl(m_pathList[newBorn].first);
-    int  angle    = m_sharedData->iface()->info(filePath).angle();
+    KIPIPlugins::KPImageInfo info(m_sharedData->iface(), filePath);
+    KExiv2::ImageOrientation orientation = info.orientation();
 
     LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                           filePath, angle, m_swidth, m_sheight);
+                                           filePath, orientation, m_swidth, m_sheight);
 
     m_threadLock->lock();
 
@@ -285,11 +292,12 @@ void SlideShowLoader::checkIsIn(int index)
     }
     else
     {
-        KUrl filePath = KUrl(m_pathList[index].first);
-        int  angle    = m_sharedData->iface()->info(filePath).angle();
+        KUrl filePath                        = KUrl(m_pathList[index].first);
+        KIPIPlugins::KPImageInfo info(m_sharedData->iface(), filePath);
+        KExiv2::ImageOrientation orientation = info.orientation();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
-                                               filePath, angle, m_swidth, m_sheight);
+                                               filePath, orientation, m_swidth, m_sheight);
 
         m_loadingThreads->insert(m_pathList[index].first, newThread);
         newThread->start();
