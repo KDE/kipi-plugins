@@ -96,10 +96,10 @@ KPImageInfo::~KPImageInfo()
     delete d;
 }
 
-void KPImageInfo::cloneData(const KUrl& dest)
+void KPImageInfo::cloneData(const KUrl& destination)
 {
     KIPI::ImageInfo srcInfo  = d->iface->info(d->url);
-    KIPI::ImageInfo destInfo = d->iface->info(dest);
+    KIPI::ImageInfo destInfo = d->iface->info(destination);
     destInfo.cloneData(srcInfo);
 }
 
