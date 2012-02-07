@@ -251,8 +251,9 @@ struct Generator::Private {
                 if (path.isEmpty()) {
                     continue;
                 }
-                ImageElement element = ImageElement(mInterface->info(url));
-                element.mPath = remoteUrlHash.value(url, url.toLocalFile());
+                KPImageInfo info(mInterface, url);
+                ImageElement element = ImageElement(info);
+                element.mPath        = remoteUrlHash.value(url, url.toLocalFile());
                 imageElementList << element;
             }
 
@@ -263,7 +264,7 @@ struct Generator::Private {
             QFutureWatcher<void> watcher;
             watcher.setFuture(future);
             connect(&watcher, SIGNAL(progressValueChanged(int)),
-                mProgressDialog, SLOT(setProgress(int)));
+                    mProgressDialog, SLOT(setProgress(int)));
 
             mProgressDialog->progressWidget()->setTotal(imageElementList.count());
             while (!future.isFinished()) {
