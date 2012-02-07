@@ -118,16 +118,16 @@ KUrl KPImageInfo::url() const
     return d->url;
 }
 
-qlonglong KPImageInfo::fileSize() const
-{
-    return d->attribute("filesize").toLongLong();
-}
-
 void KPImageInfo::cloneData(const KUrl& destination)
 {
     KIPI::ImageInfo srcInfo  = d->iface->info(d->url);
     KIPI::ImageInfo destInfo = d->iface->info(destination);
     destInfo.cloneData(srcInfo);
+}
+
+qlonglong KPImageInfo::fileSize() const
+{
+    return d->attribute("filesize").toLongLong();
 }
 
 void KPImageInfo::setDescription(const QString& desc)
@@ -169,6 +169,38 @@ void KPImageInfo::setRating(int r)
 int KPImageInfo::rating() const
 {
     return d->attribute("rating").toInt();
+}
+
+void KPImageInfo::setColorLabel(int cl)
+{
+    if (cl < 0 || cl > 10)
+    {
+        kDebug() << "Color label value is out of range (" << cl << ")";
+        return;
+    }
+
+    d->setAttribute("colorlabel", cl);
+}
+
+int KPImageInfo::colorLabel() const
+{
+    return d->attribute("colorlabel").toInt();
+}
+
+void KPImageInfo::setPickLabel(int pl)
+{
+    if (pl < 0 || pl > 10)
+    {
+        kDebug() << "Pick label value is out of range (" << pl << ")";
+        return;
+    }
+
+    d->setAttribute("picklabel", pl);
+}
+
+int KPImageInfo::pickLabel() const
+{
+    return d->attribute("picklabel").toInt();
 }
 
 void KPImageInfo::setDate(const QDateTime& date)

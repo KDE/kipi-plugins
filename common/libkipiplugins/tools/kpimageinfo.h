@@ -67,14 +67,14 @@ public:
      */
     KUrl url() const;
 
-    /** return item file size in bytes.
-     */
-    qlonglong fileSize() const;
-
     /** Clone all attributes from current KPImageInfo instance to item pointed by destination url.
      *  In other words, url of KPImageInfo instance is the source of attributes to clone on destination.
      */
     void cloneData(const KUrl& destination);
+
+    /** return item file size in bytes.
+     */
+    qlonglong fileSize() const;
 
     /** Manage description (lead comment) of item.
      */
@@ -94,6 +94,16 @@ public:
      */
     void setRating(int r);
     int  rating() const;
+
+    /** Manage color label of item (0-10 : none, red, orange, yellow, green, blue, magenta, gray, black, white)
+     */
+    void setColorLabel(int cl);
+    int  colorLabel() const;
+
+    /** Manage pick label of item (0-4 : none, rejected, pending, accepted)
+     */
+    void setPickLabel(int pl);
+    int  pickLabel() const;
 
     /** Manage date of item.
      */
