@@ -204,14 +204,7 @@ QString KPImageInfo::name() const
 
 bool KPImageInfo::hasFullGeolocationInfo() const
 {
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info        = d->iface->info(d->url);
-        QMap<QString, QVariant> map = info.attributes();
-        if (!map.isEmpty() && map.contains("latitude") && map.contains("longitude") && map.contains("altitude"))
-            return true;
-    }
-    return false;
+    return (hasAttribute("latitude") && hasAttribute("longitude") && hasAttribute("altitude"));
 }
 
 void KPImageInfo::setLatitude(double lat)
