@@ -118,6 +118,12 @@ public:
     QDateTime date() const;
     bool      hasDate() const;
 
+    /** In the case the application supports time ranges (like this image is from 1998-2000),
+        this attribute will be true if the date is an exact specification, and thus not a range.
+        If KIPI host do not support date range, thi smethod return always true.
+    */
+    bool      isExactDate() const;
+
     /** Manage title of item.
      */
     void    setTitle(const QString& title);

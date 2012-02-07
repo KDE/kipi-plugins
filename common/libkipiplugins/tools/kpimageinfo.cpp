@@ -258,6 +258,14 @@ bool KPImageInfo::hasDate() const
     return d->hasAttribute("date");
 }
 
+bool KPImageInfo::isExactDate() const
+{
+    if (d->hasAttribute("isexactdate"))
+        return d->attribute("isexactdate").toBool();
+
+    return true;
+}
+
 void KPImageInfo::setTitle(const QString& title)
 {
     d->setAttribute("title", title);

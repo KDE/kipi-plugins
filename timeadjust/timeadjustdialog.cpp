@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -522,22 +522,48 @@ void TimeAdjustDialog::readExampleTimestamps()
 
 void TimeAdjustDialog::readApplicationTimestamps()
 {
+    int       exactCount   = 0;
+    int       inexactCount = 0;
+    QDateTime nullDateTime;
+
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
         KIPIPlugins::KPImageInfo info(d->interface, *it);
-        d->imageOriginalDates.append(info.date());
+        if (info.isExactDate())
+        {
+            exactCount++;
+            d->imageOriginalDates.append(info.date());
+        }
+        else
+        {
+            inexactCount++;
+            d->imageOriginalDates.append(nullDateTime);
+        }
     }
 
-    d->exampleSummaryLabel->setText(i18np("1 image will be changed",
+    if (inexactCount == 0)
+    {
+        d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                     "%1 images will be changed",
                                     d->imageURLs.count()));
+    }
+    else
+    {
+        d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
+                                    "%1 images will be changed; ",
+                                    exactCount)
+                                + "<br>"
+                                + i18np("1 image will be skipped due to an inexact date.",
+                                        "%1 images will be skipped due to inexact dates.",
+                                        inexactCount));
+    }
+    // PENDING(blackie) handle all images being inexact.
 }
 
 void TimeAdjustDialog::readFileTimestamps()
 {
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPIPlugins::KPImageInfo info(d->interface, *it);
         QFileInfo fileInfo((*it).toLocalFile());
         d->imageOriginalDates.append(fileInfo.lastModified());
     }
@@ -555,8 +581,8 @@ void TimeAdjustDialog::readMetadataTimestamps()
 
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
+        KIPIPlugins::KPImageInfo info(d->interface, *it);
         KExiv2Iface::KExiv2 exiv2Iface;
-
         if (!exiv2Iface.load((*it).path()))
         {
             missingCount++;
@@ -565,7 +591,6 @@ void TimeAdjustDialog::readMetadataTimestamps()
         }
 
         QDateTime curImageDateTime;
-
         switch (d->useMetaDateTypeChooser->currentIndex())
         {
             case 0:
@@ -583,7 +608,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
             case 4:
                 // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
                 curImageDateTime = QDateTime(QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
-                                            QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
+                                             QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
                 //kDebug() << "IPTC for " << (*it).path() << ": " << exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated") << ", " << exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
                 //kDebug() << "converted: " << QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
                 break;
@@ -596,7 +621,6 @@ void TimeAdjustDialog::readMetadataTimestamps()
         };
 
         d->imageOriginalDates.append(curImageDateTime);
-
         if (curImageDateTime.isValid())
             okCount++;
         else
