@@ -67,6 +67,10 @@ public:
      */
     KUrl url() const;
 
+    /** return item file size in bytes.
+     */
+    qlonglong fileSize() const;
+
     /** Clone all attributes from current KPImageInfo instance to item pointed by destination url.
      *  In other words, url of KPImageInfo instance is the source of attributes to clone on destination.
      */

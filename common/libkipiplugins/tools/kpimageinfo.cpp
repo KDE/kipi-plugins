@@ -118,6 +118,11 @@ KUrl KPImageInfo::url() const
     return d->url;
 }
 
+qlonglong KPImageInfo::fileSize() const
+{
+    return d->attribute("filesize").toLongLong();
+}
+
 void KPImageInfo::cloneData(const KUrl& destination)
 {
     KIPI::ImageInfo srcInfo  = d->iface->info(d->url);
