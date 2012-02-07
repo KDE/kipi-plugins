@@ -152,7 +152,11 @@ QStringList KPImageInfo::tagsPath() const
 
 QStringList KPImageInfo::keywords() const
 {
-    return d->attribute("tags").toStringList();
+    QStringList keywords = d->attribute("keywords").toStringList();
+    if (keywords.isEmpty())
+        keywords = d->attribute("tags").toStringList();     // For compatibility.
+
+    return keywords;
 }
 
 void KPImageInfo::setRating(int r)
@@ -319,12 +323,19 @@ void KPImageInfo::removeGeolocationInfo()
 
 void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
 {
-    d->setAttribute("angle", (int)orientation);
+    d->setAttribute("orientation", (int)orientation);
+    d->setAttribute("angle",       (int)orientation);     // For compatibility.
 }
 
 KExiv2::ImageOrientation KPImageInfo::orientation() const
 {
-    return (KExiv2::ImageOrientation)(d->attribute("angle").toInt());
+    KExiv2::ImageOrientation orientation = KExiv2::ORIENTATION_UNSPECIFIED;
+    if (d->hasAttribute("orientation"))
+        orientation = (KExiv2::ImageOrientation)(d->attribute("orientation").toInt());
+    else
+        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());       // For compatibility.
+    
+    return orientation;
 }
 
 }  // namespace KIPIPlugins
