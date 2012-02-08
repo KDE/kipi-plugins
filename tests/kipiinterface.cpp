@@ -35,8 +35,6 @@
 // LibKIPI includes
 
 #include <libkipi/version.h>
-#include <libkipi/imagecollection.h>
-#include <libkipi/imageinfo.h>
 
 // local includes
 
