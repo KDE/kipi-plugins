@@ -127,7 +127,17 @@ void KPImageInfo::cloneData(const KUrl& destination)
 
 qlonglong KPImageInfo::fileSize() const
 {
-    return d->attribute("filesize").toLongLong();
+    if (hasFileSize()) return d->attribute("filesize").toLongLong();
+
+#if KIPI_VERSION < 0x010500
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        return (qlonglong)info.size();
+    }
+#endif
+
+    return (-1);
 }
 
 bool KPImageInfo::hasFileSize() const
@@ -138,11 +148,29 @@ bool KPImageInfo::hasFileSize() const
 void KPImageInfo::setDescription(const QString& desc)
 {
     d->setAttribute("comment", desc);
+
+#if KIPI_VERSION < 0x010500
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        info.setDescription(desc);
+    }
+#endif
 }
 
 QString KPImageInfo::description() const
 {
-    return d->attribute("comment").toString();
+    if (hasDescription()) return d->attribute("comment").toString();
+
+#if KIPI_VERSION < 0x010500
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        return info.description();
+    }
+#endif
+
+    return QString();
 }
 
 bool KPImageInfo::hasDescription() const
@@ -150,107 +178,32 @@ bool KPImageInfo::hasDescription() const
     return d->hasAttribute("comment");
 }
 
-void KPImageInfo::setTagsPath(const QStringList& tp)
-{
-    d->setAttribute("tagspath", tp);
-}
-
-QStringList KPImageInfo::tagsPath() const
-{
-    return d->attribute("tagspath").toStringList();
-}
-
-bool KPImageInfo::hasTagsPath() const
-{
-    return d->hasAttribute("tagspath");
-}
-
-QStringList KPImageInfo::keywords() const
-{
-    QStringList keywords = d->attribute("keywords").toStringList();
-    if (keywords.isEmpty())
-        keywords = d->attribute("tags").toStringList();     // For compatibility.
-
-    return keywords;
-}
-
-bool KPImageInfo::hasKeywords() const
-{
-    return (d->hasAttribute("keywords") || 
-            d->hasAttribute("tags"));                      // For compatibility.
-}
-
-void KPImageInfo::setRating(int r)
-{
-    if (r < 0 || r > 5)
-    {
-        kDebug() << "Rating value is out of range (" << r << ")";
-        return;
-    }
-
-    d->setAttribute("rating", r);
-}
-
-int KPImageInfo::rating() const
-{
-    return d->attribute("rating").toInt();
-}
-
-bool KPImageInfo::hasRating() const
-{
-    return d->hasAttribute("rating");
-}
-
-void KPImageInfo::setColorLabel(int cl)
-{
-    if (cl < 0 || cl > 10)
-    {
-        kDebug() << "Color label value is out of range (" << cl << ")";
-        return;
-    }
-
-    d->setAttribute("colorlabel", cl);
-}
-
-int KPImageInfo::colorLabel() const
-{
-    return d->attribute("colorlabel").toInt();
-}
-
-bool KPImageInfo::hasColorLabel() const
-{
-    return d->hasAttribute("colorlabel");
-}
-
-void KPImageInfo::setPickLabel(int pl)
-{
-    if (pl < 0 || pl > 10)
-    {
-        kDebug() << "Pick label value is out of range (" << pl << ")";
-        return;
-    }
-
-    d->setAttribute("picklabel", pl);
-}
-
-int KPImageInfo::pickLabel() const
-{
-    return d->attribute("picklabel").toInt();
-}
-
-bool KPImageInfo::hasPickLabel() const
-{
-    return d->hasAttribute("picklabel");
-}
-
 void KPImageInfo::setDate(const QDateTime& date)
 {
     d->setAttribute("date", date);
+
+#if KIPI_VERSION < 0x010500
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        info.setTime(date);
+    }
+#endif
 }
 
 QDateTime KPImageInfo::date() const
 {
-    return d->attribute("date").toDateTime();
+    if (hasDate()) return d->attribute("date").toDateTime();
+
+#if KIPI_VERSION < 0x010500
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        return info.time();
+    }
+#endif
+
+    return QDateTime();
 }
 
 bool KPImageInfo::hasDate() const
@@ -263,7 +216,93 @@ bool KPImageInfo::isExactDate() const
     if (d->hasAttribute("isexactdate"))
         return d->attribute("isexactdate").toBool();
 
+#if KIPI_VERSION < 0x010500
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        return info.isTimeExact();
+    }
+#endif
+
     return true;
+}
+
+void KPImageInfo::setName(const QString& name)
+{
+    d->setAttribute("name", name);
+
+    if (d->hasValidData())
+    {
+#if (KIPI_VERSION >= 0x010300) && (KIPI_VERSION < 0x010500)
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        info.setName(name);
+#elif (KIPI_VERSION < 0x010300)
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        info.setTitle(name);
+#endif
+    }
+}
+
+QString KPImageInfo::name() const
+{
+    if (hasName()) return d->attribute("name").toString();
+
+    if (d->hasValidData())
+    {
+#if (KIPI_VERSION >= 0x010300) && (KIPI_VERSION < 0x010500)
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        return info.name();
+#elif (KIPI_VERSION < 0x010300)
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        return info.title();
+#endif
+    }
+    return QString();
+}
+
+bool KPImageInfo::hasName() const
+{
+    return d->hasAttribute("name");
+}
+
+void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
+{
+    d->setAttribute("orientation", (int)orientation);
+    d->setAttribute("angle",       (int)orientation);                               // For compatibility.
+
+#if KIPI_VERSION < 0x010500
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        info.setAngle((int)orientation);
+    }
+#endif
+}
+
+KExiv2::ImageOrientation KPImageInfo::orientation() const
+{
+    KExiv2::ImageOrientation orientation = KExiv2::ORIENTATION_UNSPECIFIED;
+
+    if (d->hasAttribute("orientation"))
+        orientation = (KExiv2::ImageOrientation)(d->attribute("orientation").toInt());
+    else if (d->hasAttribute("angle"))
+        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());    // For compatibility.
+
+#if KIPI_VERSION < 0x010500
+    if (d->hasValidData())
+    {
+        KIPI::ImageInfo info = d->iface->info(d->url);
+        orientation          = (KExiv2::ImageOrientation)info.angle();
+    }
+#endif
+
+    return orientation;
+}
+
+bool KPImageInfo::hasOrientation() const
+{
+    return (d->hasAttribute("orientation") || 
+            d->hasAttribute("angle"));                                              // For compatibility.
 }
 
 void KPImageInfo::setTitle(const QString& title)
@@ -279,33 +318,6 @@ QString KPImageInfo::title() const
 bool KPImageInfo::hasTitle() const
 {
     return d->hasAttribute("title");
-}
-
-void KPImageInfo::setName(const QString& name)
-{
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-#if KIPI_VERSION >= 0x010300
-        info.setName(name);
-#else
-        info.setTitle(name);
-#endif
-    }
-}
-
-QString KPImageInfo::name() const
-{
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-#if KIPI_VERSION >= 0x010300
-        return info.name();
-#else
-        return info.title();
-#endif
-    }
-    return QString();
 }
 
 void KPImageInfo::setLatitude(double lat)
@@ -375,27 +387,97 @@ void KPImageInfo::removeGeolocationInfo()
     d->removeAttribute("gpslocation");
 }
 
-void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
+void KPImageInfo::setRating(int r)
 {
-    d->setAttribute("orientation", (int)orientation);
-    d->setAttribute("angle",       (int)orientation);     // For compatibility.
+    if (r < 0 || r > 5)
+    {
+        kDebug() << "Rating value is out of range (" << r << ")";
+        return;
+    }
+
+    d->setAttribute("rating", r);
 }
 
-KExiv2::ImageOrientation KPImageInfo::orientation() const
+int KPImageInfo::rating() const
 {
-    KExiv2::ImageOrientation orientation = KExiv2::ORIENTATION_UNSPECIFIED;
-    if (d->hasAttribute("orientation"))
-        orientation = (KExiv2::ImageOrientation)(d->attribute("orientation").toInt());
-    else
-        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());       // For compatibility.
-    
-    return orientation;
+    return d->attribute("rating").toInt();
 }
 
-bool KPImageInfo::hasOrientation() const
+bool KPImageInfo::hasRating() const
 {
-    return (d->hasAttribute("orientation") || 
-            d->hasAttribute("angle"));                      // For compatibility.
+    return d->hasAttribute("rating");
+}
+
+void KPImageInfo::setColorLabel(int cl)
+{
+    if (cl < 0 || cl > 10)
+    {
+        kDebug() << "Color label value is out of range (" << cl << ")";
+        return;
+    }
+
+    d->setAttribute("colorlabel", cl);
+}
+
+int KPImageInfo::colorLabel() const
+{
+    return d->attribute("colorlabel").toInt();
+}
+
+bool KPImageInfo::hasColorLabel() const
+{
+    return d->hasAttribute("colorlabel");
+}
+
+void KPImageInfo::setPickLabel(int pl)
+{
+    if (pl < 0 || pl > 10)
+    {
+        kDebug() << "Pick label value is out of range (" << pl << ")";
+        return;
+    }
+
+    d->setAttribute("picklabel", pl);
+}
+
+int KPImageInfo::pickLabel() const
+{
+    return d->attribute("picklabel").toInt();
+}
+
+bool KPImageInfo::hasPickLabel() const
+{
+    return d->hasAttribute("picklabel");
+}
+
+void KPImageInfo::setTagsPath(const QStringList& tp)
+{
+    d->setAttribute("tagspath", tp);
+}
+
+QStringList KPImageInfo::tagsPath() const
+{
+    return d->attribute("tagspath").toStringList();
+}
+
+bool KPImageInfo::hasTagsPath() const
+{
+    return d->hasAttribute("tagspath");
+}
+
+QStringList KPImageInfo::keywords() const
+{
+    QStringList keywords = d->attribute("keywords").toStringList();
+    if (keywords.isEmpty())
+        keywords = d->attribute("tags").toStringList();     // For compatibility.
+
+    return keywords;
+}
+
+bool KPImageInfo::hasKeywords() const
+{
+    return (d->hasAttribute("keywords") || 
+            d->hasAttribute("tags"));                      // For compatibility.
 }
 
 }  // namespace KIPIPlugins

@@ -134,6 +134,7 @@ public:
      */
     void    setName(const QString& name);
     QString name() const;
+    bool    hasName() const;
 
     /** Manage item latitude geolocation information : double value in degrees (-90.0 >= lat <=90.0).
      */
