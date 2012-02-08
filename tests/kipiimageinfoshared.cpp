@@ -55,12 +55,6 @@ KipiImageInfoShared::~KipiImageInfoShared()
     delete d;
 }
 
-QString KipiImageInfoShared::description()
-{
-    kipiDebug("QString KipiImageInfoShared::description()");
-    return QString("Image located at \"%1\"").arg(_url.url());
-}
-
 void KipiImageInfoShared::setDescription(const QString& newDescription)
 {
     kipiDebug(QString("void KipiImageInfoShared::setDescription( \"%1\" )").arg(newDescription));
@@ -69,6 +63,10 @@ void KipiImageInfoShared::setDescription(const QString& newDescription)
 QMap<QString, QVariant> KipiImageInfoShared::attributes()
 {
     kipiDebug("QMap<QString,QVariant> attributes()");
+
+    QMap<QString, QVariant> res;
+    res["comment"]       = QString("Image located at \"%1\"").arg(_url.url());
+
     return QMap<QString, QVariant>();
 }
 void KipiImageInfoShared::clearAttributes()

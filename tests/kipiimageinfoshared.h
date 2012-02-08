@@ -36,13 +36,12 @@ public:
     KipiImageInfoShared(KIPI::Interface* interface, const KUrl& url);
     ~KipiImageInfoShared();
 
-    QString description();
     void setDescription(const QString&);
 
     QMap<QString, QVariant> attributes();
-    void addAttributes(const QMap<QString, QVariant>& attributesToAdd);
-    void delAttributes(const QStringList& attributesToDelete);
-    void clearAttributes();
+    void                    addAttributes(const QMap<QString, QVariant>& attributesToAdd);
+    void                    delAttributes(const QStringList& attributesToDelete);
+    void                    clearAttributes();
 
     virtual QDateTime time(KIPI::TimeSpec timeSpec);
 
