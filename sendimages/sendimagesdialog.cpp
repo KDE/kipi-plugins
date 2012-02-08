@@ -50,7 +50,7 @@
 // Local includes
 
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "imagespage.h"
 #include "emailpage.h"
 

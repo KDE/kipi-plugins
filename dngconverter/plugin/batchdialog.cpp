@@ -63,7 +63,7 @@
 #include "myimagelist.h"
 #include "dngwriter.h"
 #include "imagedialog.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "settingswidget.h"
 #include "progresswidget.h"
 #include "kpimageinfo.h"

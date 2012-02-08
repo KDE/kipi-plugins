@@ -64,7 +64,7 @@
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "login.h"
 #include "flickrtalker.h"
 #include "flickritem.h"

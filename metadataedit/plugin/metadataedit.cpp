@@ -59,7 +59,7 @@
 // Local includes
 
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "exifeditwidget.h"
 #include "iptceditwidget.h"
 #include "xmpeditwidget.h"

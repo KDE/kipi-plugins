@@ -49,7 +49,7 @@
 #include "effectoptionsdialog.h"
 #include "imagepreview.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {

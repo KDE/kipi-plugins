@@ -76,7 +76,7 @@
 #include "picasawebitem.h"
 #include "picasaweblogin.h"
 #include "picasawebwindow.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 class PicasawebLogin;
 

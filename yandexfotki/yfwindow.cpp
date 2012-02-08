@@ -95,7 +95,7 @@ extern "C"
 
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "imageslist.h"
 #include "yftalker.h"
 #include "yfalbumdialog.h"

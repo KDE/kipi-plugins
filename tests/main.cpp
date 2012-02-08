@@ -51,7 +51,7 @@
 
 #include "kipiinterface.h"
 #include "kipitest-debug.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 /**
 * \brief Returns the name of a KIPI::Category

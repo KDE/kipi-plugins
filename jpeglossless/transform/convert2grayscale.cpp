@@ -67,7 +67,7 @@ extern "C"
 // Local includes
 
 #include "utils.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "transupp.h"
 #include "kpwritehelp.h"
 

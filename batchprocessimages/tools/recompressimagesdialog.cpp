@@ -48,7 +48,7 @@
 
 #include "dialogutils.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "recompressoptionsdialog.h"
 
 namespace KIPIBatchProcessImagesPlugin

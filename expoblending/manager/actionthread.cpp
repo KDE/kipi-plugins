@@ -56,7 +56,7 @@
 // Local includes
 
 #include "kpwriteimage.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 namespace KIPIExpoBlendingPlugin
 {

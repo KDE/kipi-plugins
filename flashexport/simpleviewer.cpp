@@ -55,7 +55,7 @@
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "kpimageinfo.h"
 
 using namespace KIPIPlugins;

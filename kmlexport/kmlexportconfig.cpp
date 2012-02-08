@@ -53,7 +53,7 @@
 // Local includes
 
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 namespace KIPIKMLExportPlugin
 {

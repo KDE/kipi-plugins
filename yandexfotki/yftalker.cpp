@@ -42,7 +42,7 @@
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "yandexauth.h" // authentication
 #include "yfalbum.h"
 

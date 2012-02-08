@@ -72,7 +72,7 @@ extern "C"
 #include "imagedialog.h"
 #include "imagepreview.h"
 #include "outputdialog.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "ui_batchprocessimagesdialog.h"
 #include "kpimageinfo.h"
 

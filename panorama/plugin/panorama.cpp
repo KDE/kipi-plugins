@@ -41,7 +41,7 @@
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "aboutdata.h"
 #include "manager/manager.h"
 

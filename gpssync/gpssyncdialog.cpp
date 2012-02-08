@@ -90,7 +90,7 @@
 #include "kipiimagemodel.h"
 #include "kipiimageitem.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "mapdragdrophandler.h"
 #include "kipiimagelist.h"
 #include "gpsimagelistdragdrophandler.h"

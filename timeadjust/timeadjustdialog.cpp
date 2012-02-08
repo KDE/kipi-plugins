@@ -79,7 +79,7 @@ extern "C"
 
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "clockphotodialog.h"
 
 namespace KIPITimeAdjustPlugin

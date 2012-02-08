@@ -58,7 +58,7 @@
 // Local includes
 
 #include "aboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "saveimgthread.h"
 
 namespace KIPIAcquireImagesPlugin

@@ -74,7 +74,7 @@
 #include "picasawebitem.h"
 #include "picasawebtalker.h"
 #include "picasawebwidget.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "picasawebreplacedialog.h"
 
 namespace KIPIPicasawebExportPlugin

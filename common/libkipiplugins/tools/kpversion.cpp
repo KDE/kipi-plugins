@@ -20,13 +20,15 @@
  *
  * ============================================================ */
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "gitversion.h"
 
 namespace pluginsVersion
 {
+
 const QString gitVersion()
 {
     return QString(GITVERSION);
 }
+
 } // namespace pluginsVersion

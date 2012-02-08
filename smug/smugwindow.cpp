@@ -67,7 +67,7 @@
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "smugitem.h"
 #include "smugtalker.h"
 #include "smugwidget.h"

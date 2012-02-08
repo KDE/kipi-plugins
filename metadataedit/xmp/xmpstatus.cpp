@@ -45,7 +45,7 @@
 
 #include "altlangstringedit.h"
 #include "multistringsedit.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 using namespace KExiv2Iface;
 

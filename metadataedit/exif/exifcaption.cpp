@@ -46,7 +46,7 @@
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 using namespace KExiv2Iface;
 

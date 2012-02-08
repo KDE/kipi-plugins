@@ -58,7 +58,7 @@
 #include "convertoptionsdialog.h"
 #include "dialogutils.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {

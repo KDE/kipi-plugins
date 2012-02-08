@@ -55,7 +55,7 @@
 // Local includes
 
 #include "piwigoitem.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 namespace KIPIPiwigoExportPlugin
 {

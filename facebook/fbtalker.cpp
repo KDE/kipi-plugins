@@ -51,7 +51,7 @@
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "fbitem.h"
 #include "mpform.h"
 

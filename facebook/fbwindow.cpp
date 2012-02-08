@@ -61,7 +61,7 @@
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "fbitem.h"
 #include "fbtalker.h"
 #include "fbwidget.h"
