@@ -24,9 +24,12 @@
 
 #include "kipiimageinfoshared.h"
 
+// Qt includes
+
+#include <QFileInfo>
+
 // LibKExiv2 includes
 
-#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
 
 // local includes:
@@ -55,59 +58,60 @@ KipiImageInfoShared::~KipiImageInfoShared()
     delete d;
 }
 
-void KipiImageInfoShared::setDescription(const QString& newDescription)
-{
-    kipiDebug(QString("void KipiImageInfoShared::setDescription( \"%1\" )").arg(newDescription));
-}
-
 QMap<QString, QVariant> KipiImageInfoShared::attributes()
 {
     kipiDebug("QMap<QString,QVariant> attributes()");
 
     QMap<QString, QVariant> res;
-    res["comment"]       = QString("Image located at \"%1\"").arg(_url.url());
 
-    return QMap<QString, QVariant>();
+    // Comment attribute
+    res["comment"] = QString("Image located at \"%1\"").arg(_url.url());
+
+    // Date attribute
+    if (!d->dateTime.isValid())
+    {
+        if ( ! _url.isLocalFile() )
+        {
+            kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
+            d->dateTime = QDateTime();
+        }
+        else
+        {
+            KExiv2Iface::KExiv2 exiv2Iface;
+            exiv2Iface.load(_url.path());
+            d->dateTime = exiv2Iface.getImageDateTime();
+
+            if (!d->dateTime.isValid())
+            {
+                d->dateTime = QFileInfo( _url.toLocalFile() ).lastModified();
+            }
+        }
+    }
+    res["date"] = d->dateTime;
+
+    return res;
 }
 void KipiImageInfoShared::clearAttributes()
 {
     kipiDebug("void KipiImageInfoShared::clearAttributes()");
 }
 
-void KipiImageInfoShared::addAttributes(const QMap<QString, QVariant>& attributesToAdd)
+void KipiImageInfoShared::addAttributes(const QMap<QString, QVariant>& attributes)
 {
-    Q_UNUSED(attributesToAdd);
-    kipiDebug("void KipiImageInfoShared::addAttributes( const QMap<QString,QVariant>& attributesToAdd )");
+    kipiDebug("void KipiImageInfoShared::addAttributes()");
+
+    QMap<QString, QVariant>::const_iterator it = attributes.constBegin();
+    while (it != attributes.constEnd())
+    {
+        QString key = it.key();
+        QString val = it.value().toString();
+        kipiDebug(QString("attribute( \"%1\" ), value( \"%2\" )").arg(key).arg(val));
+        ++it;
+    }
 }
 
-void KipiImageInfoShared::delAttributes(const QStringList& attributesToDelete)
+void KipiImageInfoShared::delAttributes(const QStringList& attributes)
 {
-    Q_UNUSED(attributesToDelete);
-    kipiDebug("void KipiImageInfoShared::delAttributes( const QStringList& attributesToDelete )");
-}
-
-QDateTime KipiImageInfoShared::time(KIPI::TimeSpec timeSpec)
-{
-    if (d->dateTime.isValid())
-        return d->dateTime;
-
-    if ( ! _url.isLocalFile() )
-    {
-        kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
-        return QDateTime();
-    }
-    else
-    {
-        KExiv2Iface::KExiv2* const exiv2Iface = new KExiv2Iface::KExiv2;
-        exiv2Iface->load(_url.path());
-        d->dateTime = exiv2Iface->getImageDateTime();
-        delete exiv2Iface;
-
-        if (!d->dateTime.isValid())
-        {
-            d->dateTime = ImageInfoShared::time(timeSpec);
-        }
-
-        return d->dateTime;
-    }
+    kipiDebug("void KipiImageInfoShared::delAttributes()");
+    kipiDebug(QString("attributes : \"%1\"").arg(attributes.join(", ")));
 }
