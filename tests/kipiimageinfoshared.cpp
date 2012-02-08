@@ -58,7 +58,7 @@ KipiImageInfoShared::~KipiImageInfoShared()
 QString KipiImageInfoShared::description()
 {
     kipiDebug("QString KipiImageInfoShared::description()");
-    return QString("Image located at \"%1\"").arg(path().url());
+    return QString("Image located at \"%1\"").arg(_url.url());
 }
 
 void KipiImageInfoShared::setDescription(const QString& newDescription)
