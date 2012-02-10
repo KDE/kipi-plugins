@@ -1,8 +1,13 @@
 SUBDIRS(icons)
 
+FIND_PACKAGE(Boost COMPONENTS spirit FATAL_ERROR)
+#INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser
+                    ${Boost_INCLUDE_DIR}/boost              # NOTICE: this is the only way for my system to compile it
                    )
 
 IF(OPENMP_FOUND AND NOT APPLE)
@@ -22,6 +27,14 @@ INSTALL(DIRECTORY pics
 # Common source code
 
 SET(panorama_common_SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/common.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/controlpointline.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/imageline.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/optimisationline.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/projectline.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/ptoparser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/ptotype.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser/variousgrammar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/actionthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/cpfindbinary.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/manager/manager.cpp
@@ -66,7 +79,7 @@ INSTALL(TARGETS kipiplugin_panorama DESTINATION ${PLUGIN_INSTALL_DIR})
 INSTALL(FILES plugin/kipiplugin_panorama.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 
 # =======================================================
-# Stand alone version of ExpoBlending plugin
+# Stand alone version of Panorama plugin
 
 SET(panorama_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/plugin/panorama.cpp)
 
