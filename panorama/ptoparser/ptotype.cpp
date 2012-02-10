@@ -25,6 +25,8 @@
 
 #include "ptotype.h"
 
+#include <math.h>
+
 namespace KIPIPanoramaPlugin
 {
 
@@ -73,6 +75,64 @@ void PTOType::addControlPoint(PTOType::ControlPoint& c)
     int last = controlPoints.size() - 1;
     controlPoints[last].previousComments = QStringList(lastComments);
     lastComments = QStringList();
+}
+
+QPair<double, int> PTOType::standardDeviation(int image1Id, int image2Id)
+{
+    double mean_x = 0, mean_y = 0;
+    double n = 0;
+    foreach (ControlPoint cp, controlPoints)
+    {
+        if ((cp.image1Id == image1Id && cp.image2Id == image2Id) || (cp.image1Id == image2Id && cp.image2Id == image1Id))
+        {
+            mean_x += cp.p2.x() - cp.p1.x();
+            mean_y += cp.p2.y() - cp.p1.y();
+            n++;
+        }
+    }
+    if (n == 0)
+    {
+        return QPair<double, int>(0, 0);
+    }
+    mean_x /= n;
+    mean_y /= n;
+    double result = 0;
+    foreach (PTOType::ControlPoint cp, controlPoints)
+    {
+        if ((cp.image1Id == image1Id && cp.image2Id == image2Id) || (cp.image1Id == image2Id && cp.image2Id == image1Id))
+        {
+            double epsilon_x = (cp.p2 - cp.p1).x() - mean_x;
+            double epsilon_y = (cp.p2 - cp.p1).y() - mean_y;
+            result += epsilon_x * epsilon_x + epsilon_y * epsilon_y;
+        }
+    }
+    return QPair<double, int>(result, n);
+}
+
+QPair<double, int> PTOType::standardDeviation(int imageId)
+{
+    int n = 0;
+    double result = 0;
+    for (int i = 0; i < images.size(); ++i)
+    {
+        QPair<double, int> tmp = standardDeviation(imageId, i);
+        result += tmp.first;
+        n += tmp.second;
+    }
+    return QPair<double, int>(result, n);
+}
+
+QPair<double, int> PTOType::standardDeviation()
+{
+    int n = 0;
+    double result = 0;
+    for (int i = 0; i < images.size(); ++i)
+    {
+        QPair<double, int> tmp = standardDeviation(i);
+        result += tmp.first;
+        n += tmp.second;
+    }
+    return QPair<double, int>(result, n);
 }
 
 } // namespace KIPIPanoramaPlugin

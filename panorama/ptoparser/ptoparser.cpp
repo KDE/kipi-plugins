@@ -66,7 +66,6 @@ namespace KIPIPanoramaPlugin { namespace PtoParser
             using phoenix::bind;
 
             // ------------------------- PTO file parsing -------------------------
-//             start = commentLine                        [bind(&QStringList::push_back, bind(&PTOType::lastComments, _val), _1)];
             start = no_skip[*((
                       'p' >> skip[projectLine]      [bind(&PTOType::setProject, _val, _1)]
                     | 'm' >> skip[stitcherLine]     [bind(&PTOType::setStitcher, _val, _1)]

@@ -32,6 +32,7 @@
 #include <QString>
 #include <QRect>
 #include <QStringList>
+#include <QPair>
 
 namespace KIPIPanoramaPlugin
 {
@@ -63,7 +64,7 @@ struct PTOType
         QStringList                 previousComments;
         QSize                       size;
         ProjectionType              projection;
-        unsigned int                fieldOfView;
+        double                      fieldOfView;
         FileFormat                  fileFormat;
         double                      exposure;
         bool                        hdr;
@@ -207,6 +208,10 @@ struct PTOType
     void addMask(Mask& m, int imageId);
     void addOptimisation(Optimisation& o, int imageId);
     void addControlPoint(ControlPoint& c);
+
+    QPair<double, int>  standardDeviation(int image1Id, int image2Id);
+    QPair<double, int>  standardDeviation(int imageId);
+    QPair<double, int>  standardDeviation();
 
 
     Project                 project;

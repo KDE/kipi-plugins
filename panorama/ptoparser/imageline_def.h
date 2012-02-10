@@ -28,10 +28,220 @@
 
 #include "imageline.h"
 
+#include "kdebug.h"
+
 
 namespace KIPIPanoramaPlugin { namespace PtoParser
 {
 
+typedef enum {
+    HEIGHT, WIDTH, PROJECTION, FOV, YAW, PITCH, ROLL,
+    BARREL_A, BARREL_B, BARREL_C, CENTER_X, CENTER_Y, SHEAR_X, SHEAR_Y,
+    EXPOSURE, WB_RED, WB_BLUE,
+    V_MODE, V_I, V_J, V_K, V_L, VOFFSET_X, VOFFSET_Y, VFLATFIELD,
+    EMOR_A, EMOR_B, EMOR_C, EMOR_D, EMOR_E, MOSAIC_X, MOSAIC_Y, MOSAIC_Z,
+    CROP, STACK, FILENAME
+} ImageParameter;
+
+struct imageParameterInt_ : qi::symbols<char, ImageParameter>
+{
+    imageParameterInt_()
+    {
+        add
+        ("w",   WIDTH)
+        ("h",   HEIGHT)
+        ("f",   PROJECTION)
+        ("Vm",  V_MODE)
+        ("TrX", MOSAIC_X)
+        ("TrY", MOSAIC_Y)
+        ("TrZ", MOSAIC_Z)
+        ("j",   STACK);
+    }
+} imageParameterInt;
+
+void setParameterFromInt(ImageParameter p, int i, PTOType::Image& image)
+{
+    switch (p)
+    {
+        case WIDTH:
+            image.size.setWidth(i);
+            break;
+        case HEIGHT:
+            image.size.setHeight(i);
+            break;
+        case PROJECTION:
+            image.lensProjection = PTOType::Image::LensProjection(i);
+            break;
+        case V_MODE:
+            image.vignettingMode = PTOType::Image::VignettingMode(i);
+            break;
+        case MOSAIC_X:
+            image.mosaicModeOffsetX = i;
+            break;
+        case MOSAIC_Y:
+            image.mosaicModeOffsetY = i;
+            break;
+        case MOSAIC_Z:
+            image.mosaicModeOffsetZ = i;
+            break;
+        case STACK:
+            image.stackNumber = i;
+            break;
+        default:
+            kDebug() << "Wrong parameter type!!";
+    }
+}
+
+struct imageParameterDouble_ : qi::symbols<char, ImageParameter>
+{
+    imageParameterDouble_()
+    {
+        add
+        ("y",   YAW)
+        ("p",   PITCH)
+        ("r",   ROLL)
+        ("Eev", EXPOSURE)
+        ("Er",  WB_RED)
+        ("Eb",  WB_BLUE);
+    }
+} imageParameterDouble;
+
+void setParameterFromDouble(ImageParameter p, double d, PTOType::Image& image)
+{
+    switch (p)
+    {
+        case YAW:
+            image.yaw = d;
+            break;
+        case PITCH:
+            image.pitch = d;
+            break;
+        case ROLL:
+            image.roll = d;
+            break;
+        case EXPOSURE:
+            image.exposure = d;
+            break;
+        case WB_RED:
+            image.whiteBalanceRed = d;
+            break;
+        case WB_BLUE:
+            image.whiteBalanceBlue = d;
+            break;
+        default:
+            kDebug() << "Wrong parameter type!!";
+    }
+}
+
+struct imageParameterLPInt_ : qi::symbols<char, ImageParameter>
+{
+    imageParameterLPInt_()
+    {
+        add
+        ("d",   CENTER_X)
+        ("e",   CENTER_Y)
+        ("g",   SHEAR_X)
+        ("t",   SHEAR_Y)
+        ("Vx",  VOFFSET_X)
+        ("Vy",  VOFFSET_Y);
+    }
+} imageParameterLPInt;
+
+void setParameterFromLPInt(ImageParameter p, PTOType::Image::LensParameter<int> lp, PTOType::Image& image)
+{
+    switch (p)
+    {
+        case CENTER_X:
+            image.lensCenterOffsetX = lp;
+            break;
+        case CENTER_Y:
+            image.lensCenterOffsetY = lp;
+            break;
+        case SHEAR_X:
+            image.lensShearX = lp;
+            break;
+        case SHEAR_Y:
+            image.lensShearY = lp;
+            break;
+        case VOFFSET_X:
+            image.vignettingOffsetX = lp;
+            break;
+        case VOFFSET_Y:
+            image.vignettingOffsetY = lp;
+            break;
+        default:
+            kDebug() << "Wrong parameter type!!";
+    }
+}
+
+struct imageParameterLPDouble_ : qi::symbols<char, ImageParameter>
+{
+    imageParameterLPDouble_()
+    {
+        add
+        ("v",   FOV)
+        ("a",   BARREL_A)
+        ("b",   BARREL_B)
+        ("c",   BARREL_C)
+        ("Va",  V_I)
+        ("Vb",  V_J)
+        ("Vc",  V_K)
+        ("Vd",  V_L)
+        ("Ra",  EMOR_A)
+        ("Rb",  EMOR_B)
+        ("Rc",  EMOR_C)
+        ("Rd",  EMOR_D)
+        ("Re",  EMOR_E);
+    }
+} imageParameterLPDouble;
+
+void setParameterFromLPDouble(ImageParameter p, PTOType::Image::LensParameter<double> lp, PTOType::Image& image)
+{
+    switch (p)
+    {
+        case FOV:
+            image.fieldOfView = lp;
+            break;
+        case BARREL_A:
+            image.lensBarrelCoefficientA = lp;
+            break;
+        case BARREL_B:
+            image.lensBarrelCoefficientB = lp;
+            break;
+        case BARREL_C:
+            image.lensBarrelCoefficientC = lp;
+            break;
+        case V_I:
+            image.vignettingCorrectionI = lp;
+            break;
+        case V_J:
+            image.vignettingCorrectionJ = lp;
+            break;
+        case V_K:
+            image.vignettingCorrectionK = lp;
+            break;
+        case V_L:
+            image.vignettingCorrectionL = lp;
+            break;
+        case EMOR_A:
+            image.photometricEMoRA = lp;
+            break;
+        case EMOR_B:
+            image.photometricEMoRB = lp;
+            break;
+        case EMOR_C:
+            image.photometricEMoRC = lp;
+            break;
+        case EMOR_D:
+            image.photometricEMoRD = lp;
+            break;
+        case EMOR_E:
+            image.photometricEMoRE = lp;
+            break;
+        default:
+            kDebug() << "Wrong parameter type!!";
+    }
+}
 
 template <typename Iterator>
 imageLineGrammar<Iterator>::imageLineGrammar() : imageLineGrammar::base_type(line)
@@ -43,6 +253,7 @@ imageLineGrammar<Iterator>::imageLineGrammar() : imageLineGrammar::base_type(lin
     using qi::lexeme;
     using phoenix::bind;
     using phoenix::construct;
+    using phoenix::ref;
     typedef PTOType::Image Image;
 
     // ------------------------- Image line parsing -------------------------
@@ -55,42 +266,19 @@ imageLineGrammar<Iterator>::imageLineGrammar() : imageLineGrammar::base_type(lin
           int_                          [bind(&Image::LensParameter<double>::value, _val) = _1]
         | '=' >> double_                [bind(&Image::LensParameter<double>::referenceId, _val) = _1];
 
+    ImageParameter p;
+
     line = *(
-          'w' >> int_                   [bind(&QSize::setWidth, bind(&Image::size, _val), _1)]
-        | 'h' >> int_                   [bind(&QSize::setHeight, bind(&Image::size, _val), _1)]
-        | 'f' >> int_                   [bind(&Image::lensProjection, _val) = construct<Image::LensProjection>(_1)]
-        | 'v' >> lensParameterDouble    [bind(&Image::fieldOfView, _val) = _1]
-        | 'y' >> double_                [bind(&Image::yaw, _val) = _1]
-        | 'p' >> double_                [bind(&Image::pitch, _val) = _1]
-        | 'r' >> double_                [bind(&Image::roll, _val) = _1]
-        | 'a' >> lensParameterDouble    [bind(&Image::lensBarrelCoefficientA, _val) = _1]
-        | 'b' >> lensParameterDouble    [bind(&Image::lensBarrelCoefficientB, _val) = _1]
-        | 'c' >> lensParameterDouble    [bind(&Image::lensBarrelCoefficientC, _val) = _1]
-        | 'd' >> lensParameterInt       [bind(&Image::lensCenterOffsetX, _val) = _1]
-        | 'e' >> lensParameterInt       [bind(&Image::lensCenterOffsetY, _val) = _1]
-        | 'g' >> lensParameterInt       [bind(&Image::lensShearX, _val) = _1]
-        | 't' >> lensParameterInt       [bind(&Image::lensShearY, _val) = _1]
-        | "Eev" >> double_              [bind(&Image::exposure, _val) = _1]
-        | "Er" >> double_               [bind(&Image::whiteBalanceRed, _val) = _1]
-        | "Eb" >> double_               [bind(&Image::whiteBalanceBlue, _val) = _1]
-        | "Vm" >> int_                  [bind(&Image::vignettingMode, _val) = construct<Image::VignettingMode>(_1)]
-        | "Va" >> lensParameterDouble   [bind(&Image::vignettingCorrectionI, _val) = _1]
-        | "Vb" >> lensParameterDouble   [bind(&Image::vignettingCorrectionJ, _val) = _1]
-        | "Vc" >> lensParameterDouble   [bind(&Image::vignettingCorrectionK, _val) = _1]
-        | "Vd" >> lensParameterDouble   [bind(&Image::vignettingCorrectionL, _val) = _1]
-        | "Vx" >> lensParameterInt      [bind(&Image::vignettingOffsetX, _val) = _1]
-        | "Vy" >> lensParameterInt      [bind(&Image::vignettingOffsetY, _val) = _1]
+          imageParameterInt             [ref(p) = _1]
+            >> int_                     [bind(&setParameterFromInt, ref(p), _1, _val)]
+        | imageParameterDouble          [ref(p) = _1]
+            >> double_                  [bind(&setParameterFromDouble, ref(p), _1, _val)]
+        | imageParameterLPInt           [ref(p) = _1]
+            >> lensParameterInt         [bind(&setParameterFromLPInt, ref(p), _1, _val)]
+        | imageParameterLPDouble        [ref(p) = _1]
+            >> lensParameterDouble      [bind(&setParameterFromLPDouble, ref(p), _1, _val)]
         | ("Vf\"" >> string >> '"')     [bind(&Image::vignettingFlatfieldImageName, _val) = _1]
-        | "Ra" >> lensParameterDouble   [bind(&Image::photometricEMoRA, _val) = _1]
-        | "Rb" >> lensParameterDouble   [bind(&Image::photometricEMoRB, _val) = _1]
-        | "Rc" >> lensParameterDouble   [bind(&Image::photometricEMoRC, _val) = _1]
-        | "Rd" >> lensParameterDouble   [bind(&Image::photometricEMoRD, _val) = _1]
-        | "Re" >> lensParameterDouble   [bind(&Image::photometricEMoRE, _val) = _1]
-        | "TrX" >> int_                 [bind(&Image::mosaicModeOffsetX, _val) = _1]
-        | "TrY" >> int_                 [bind(&Image::mosaicModeOffsetY, _val) = _1]
-        | "TrZ" >> int_                 [bind(&Image::mosaicModeOffsetZ, _val) = _1]
         | 'S' >> rectangle              [bind(&Image::crop, _val) = _1]
-        | 'j' >> int_                   [bind(&Image::stackNumber, _val) = _1]
         | ("n\"" >> string >> '"')      [bind(&Image::fileName, _val) = _1]
         | lexeme[string                 [bind(&QStringList::push_back, bind(&Image::unmatchedParameters, _val), _1)]]
     );
