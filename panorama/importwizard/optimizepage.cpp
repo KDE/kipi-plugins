@@ -71,6 +71,7 @@ struct OptimizePage::OptimizePagePriv
     bool            canceled;
 
     QLabel*         title;
+    QLabel*         preprocessResults;
 
     QCheckBox*      horizonCheckbox;
     QCheckBox*      projectionAndSizeCheckbox;
@@ -109,6 +110,8 @@ OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
                                                   "projection so that every photo fits in the resulting panorama."));
     d->projectionAndSizeCheckbox->setWhatsThis(i18n("<b>Automatic projection and crop</b>: Automatically adapt the projection "
                                                     "and the crop of the panorama to get every photos into the panorama."));
+
+    d->preprocessResults            = new QLabel(vbox);
 
     QLabel* space1                  = new QLabel(vbox);
     vbox->setStretchFactor(space1, 2);
@@ -310,6 +313,8 @@ void OptimizePage::resetTitle()
                            QDir::toNativeSeparators(d->mngr->autoOptimiserBinary().path()),
                            d->mngr->autoOptimiserBinary().url().url(),
                            d->mngr->autoOptimiserBinary().projectName()));
+//     QPair<double, int> result = d->mngr->cpFindUrlData().standardDeviation();
+//     d->preprocessResults->setText(i18n("Alignment error: %1px", result.first / ((double) result.second)));
     d->detailsBtn->hide();
     d->horizonCheckbox->show();
     d->projectionAndSizeCheckbox->show();

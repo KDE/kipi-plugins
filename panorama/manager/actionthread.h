@@ -47,6 +47,7 @@
 
 #include "actions.h"
 #include "savesettingswidget.h"
+#include "ptotype.h"
 
 using namespace KIPIPlugins;
 using namespace KExiv2Iface;
@@ -109,7 +110,7 @@ private:
     bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
                                const RawDecodingSettings& settings);
     bool    startCPFind(KUrl& ptoUrl, bool celeste, const QString& cpfindPath, QString& errors);
-    bool    startCPClean(KUrl& ptoUrl, const QString& cpcleanPath, QString& errors);
+    bool    startCPClean(KUrl& ptoUrl, PTOType& ptoUrlData, const QString& cpcleanPath, QString& errors);
     bool    startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize,
                               const QString& autooptimiserPath, QString& errors);
     bool    computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const ItemUrlsMap& preProcessedUrlsMap,

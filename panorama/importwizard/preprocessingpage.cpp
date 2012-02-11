@@ -286,6 +286,7 @@ void PreProcessingPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->progressTimer->stop();
                     d->progressLabel->clear();
                     d->mngr->setCPFindUrl(ad.ptoUrl);
+                    d->mngr->setCPFindUrlData(ad.ptoUrlData);
                     emit signalPreProcessed(ad.preProcessedUrlsMap);
                     break;
                 }
