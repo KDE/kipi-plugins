@@ -173,17 +173,7 @@ void MonthWidget::gotThumbnail(const KUrl& url, const QPixmap& pix)
         return;
     }
 
-    QPixmap image = pix;
-    int angle = interface_->info(url).angle();
-
-    if (angle != 0)
-    {
-        QMatrix matrix;
-        matrix.rotate(angle);
-        image = image.transformed(matrix);
-    }
-
-    setThumb(image);
+    setThumb(pix);
 }
 
 void MonthWidget::mouseReleaseEvent(QMouseEvent* event)

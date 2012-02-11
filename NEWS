@@ -24,5 +24,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 011 ==> 257636 : PrintAssistant: add 35x45mm photo template for UK passports
 012 ==> 272336 : Picasaweb, album date -1.
 013 ==> 292537 : Dng plugin segfaults.
-014 ==> 
+014 ==> 293301 : digiKam crashes when uploading to PicasaWeb.
+015 ==> 
 

@@ -40,7 +40,6 @@
 
 // LibKipi includes
 
-#include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 

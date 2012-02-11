@@ -28,10 +28,6 @@
 
 #include <KDialog>
 
-// KIPI includes
-
-#include <libkipi/interface.h>
-
 // MediaWiki includes
 
 #include <libmediawiki/login.h>

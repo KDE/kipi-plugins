@@ -42,8 +42,11 @@
 
 // LibKIPI includes
 
-#include "pluginsversion.h"
 #include <libkipi/imagecollectionselector.h>
+
+// Local includes
+
+#include "kpversion.h"
 
 namespace KIPIFlashExportPlugin
 {

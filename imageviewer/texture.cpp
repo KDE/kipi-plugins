@@ -44,7 +44,14 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
+// Libkexiv2 includes
+
+#include <libkexiv2/rotationmatrix.h>
+
 // Local includes
+
+#include "kpimageinfo.h"
+
 #ifdef PERFORMANCE_ANALYSIS
 #include "timer.h"
 #endif
@@ -55,10 +62,10 @@ namespace KIPIviewer
 Texture::Texture(KIPI::Interface* i)
 {
     kipiInterface  = i;
-    rotate_list[0] = 90;
-    rotate_list[1] = 180;
-    rotate_list[2] = 270;
-    rotate_list[3] = 180;
+    rotate_list[0] = KExiv2::ORIENTATION_ROT_90;
+    rotate_list[1] = KExiv2::ORIENTATION_ROT_180;
+    rotate_list[2] = KExiv2::ORIENTATION_ROT_270;
+    rotate_list[3] = KExiv2::ORIENTATION_ROT_180;
     rotate_idx     = 0;
     reset();
 }
@@ -113,13 +120,11 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     }
 
     //handle rotation
-    KIPI::ImageInfo info = kipiInterface->info(filename);
-    if (info.angle() != 0)
+    KIPIPlugins::KPImageInfo info(kipiInterface, filename);
+    if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
     {
-        QMatrix r;
-        r.rotate(info.angle());
-        qimage = qimage.transformed(r);
-        kDebug() << "image rotated by " << info.angle() << " degree";
+        QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
+        qimage         = qimage.transformed(matrix);
     }
 
     if (qimage.isNull())
@@ -412,14 +417,13 @@ bool Texture::setSize(QSize size)
  */
 void Texture::rotate()
 {
-    QMatrix r;
-    r.rotate(rotate_list[rotate_idx%4]);
-    qimage = qimage.transformed(r);
+    QMatrix matrix = RotationMatrix::toMatrix(rotate_list[rotate_idx%4]);
+    qimage = qimage.transformed(matrix);
     _load();
 
     //save new rotation in exif header
-    KIPI::ImageInfo info = kipiInterface->info(filename);
-    info.setAngle(rotate_list[rotate_idx%4]);
+    KIPIPlugins::KPImageInfo info(kipiInterface, filename);
+    info.setOrientation(rotate_list[rotate_idx%4]);
 
     reset();
     rotate_idx++;

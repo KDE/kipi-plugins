@@ -10,7 +10,7 @@
  *
  * GUI based on PicasaWeb KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -87,14 +87,15 @@ extern "C"
 
 // LibKIPI includes
 
-#include <kpaboutdata.h>
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
-#include <libkipi/version.h>
-#include "pluginsversion.h"
+#include <libkipi/imagecollection.h>
 
 // Local includes
 
+#include "kpaboutdata.h"
+#include "kpimageinfo.h"
+#include "kpversion.h"
 #include "imageslist.h"
 #include "yftalker.h"
 #include "yfalbumdialog.h"
@@ -686,7 +687,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
     m_transferQueue.clear();
     foreach(const KUrl& url, m_imgList->imageUrls(true))
     {
-        KIPI::ImageInfo info = m_interface->info(url);
+        KIPIPlugins::KPImageInfo info(m_interface, url);
         KExiv2Iface::KExiv2 exiv2Iface;
 
         const QString imgPath = url.toLocalFile();
@@ -702,10 +703,8 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         }
 
         // get tags
-        const QMap <QString, QVariant> attribs = info.attributes();
-        QStringList tags = attribs["tagspath"].toStringList();
-
-        bool updateFile = true;
+        QStringList tags = info.tagsPath();
+        bool updateFile  = true;
 
         QSet<QString> oldtags;
 
@@ -743,11 +742,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         YandexFotkiPhoto& photo = m_transferQueue.top();
         // TODO: updateFile is not used
         photo.setOriginalUrl(imgPath);
-#if KIPI_VERSION >= 0x010300
         photo.setTitle(info.name());
-#else
-        photo.setTitle(info.title());
-#endif
         photo.setSummary(info.description());
         photo.setAccess(access);
         photo.setHideOriginal(m_hideOriginalCheck->isChecked());

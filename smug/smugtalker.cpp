@@ -42,7 +42,7 @@
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "mpform.h"
 #include "smugitem.h"
 

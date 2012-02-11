@@ -6,7 +6,7 @@
  * Date        : 2006-14-09
  * Description : Kipi-Plugins release ID header.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef KIPIPLUGINS_VERSION_H
-#define KIPIPLUGINS_VERSION_H
+#ifndef KP_VERSION_H
+#define KP_VERSION_H
 
 // Qt includes.
 
@@ -70,4 +70,4 @@ static inline KLocalizedString additionalInformation()
     return ret;
 }
 
-#endif // KIPIPLUGINS_VERSION_H
+#endif // KP_VERSION_H

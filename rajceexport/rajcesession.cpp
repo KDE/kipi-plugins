@@ -49,7 +49,7 @@
 // Local includes
 
 #include "mpform.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 namespace KIPIRajceExportPlugin
 {

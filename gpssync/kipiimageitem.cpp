@@ -43,13 +43,15 @@
 // local includes
 
 #include "kipiimagemodel.h"
+#include "kpimageinfo.h"
 
 using namespace KExiv2Iface;
 
 namespace KIPIGPSSyncPlugin
 {
 
-bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const char* const exifTagName, const char* const xmpTagName, const QVariant& value)
+bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const char* const exifTagName, 
+                                    const char* const xmpTagName, const QVariant& value)
 {
     bool success = exiv2Iface->setExifTagVariant(exifTagName, value);
 
@@ -196,21 +198,18 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
     if (fromInterface && m_interface)
     {
         // try to load the GPS data from the KIPI interface:
-        QMap<QString, QVariant> attributes;
-        KIPI::ImageInfo info = m_interface->info(m_url);
-        attributes = info.attributes();
+        KIPIPlugins::KPImageInfo info(m_interface, m_url);
 
-        if (attributes.contains("latitude") &&
-            attributes.contains("longitude"))
+        if (info.hasLatitude() && info.hasLongitude())
         {
-            m_gpsData.setLatLon(attributes["latitude"].toDouble(), attributes["longitude"].toDouble());
-            if (attributes.contains("altitude"))
+            m_gpsData.setLatLon(info.latitude(), info.longitude());
+            if (info.hasAltitude())
             {
-                m_gpsData.setAltitude(attributes["altitude"].toDouble());
+                m_gpsData.setAltitude(info.altitude());
             }
         }
 
-        m_dateTime = info.time(KIPI::FromInfo);
+        m_dateTime = info.date();
     }
 
     if (fromFile)
@@ -251,13 +250,14 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
          */
         // read the remaining GPS information from the file:
         const QByteArray speedRef = exiv2Iface->getExifTagData("Exif.GPSInfo.GPSSpeedRef");
-        bool success = !speedRef.isEmpty();
+        bool success              = !speedRef.isEmpty();
         long num, den;
-        success&= exiv2Iface->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
+        success &= exiv2Iface->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
+
         if (success)
         {
             // be relaxed about 0/0
-            if ((num==0.0)&&(den==0.0))
+            if ((num==0.0) && (den==0.0))
                 den = 1.0;
 
             const qreal speedInRef = qreal(num)/qreal(den);
@@ -294,7 +294,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
 
         // number of satellites
         const QString gpsSatellitesString = exiv2Iface->getExifTagString("Exif.GPSInfo.GPSSatellites");
-        bool satellitesOkay = !gpsSatellitesString.isEmpty();
+        bool satellitesOkay               = !gpsSatellitesString.isEmpty();
         if (satellitesOkay)
         {
             /**
@@ -310,7 +310,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
 
         // fix type / measure mode
         const QByteArray gpsMeasureModeByteArray = exiv2Iface->getExifTagData("Exif.GPSInfo.GPSMeasureMode");
-        bool measureModeOkay = !gpsMeasureModeByteArray.isEmpty();
+        bool measureModeOkay                     = !gpsMeasureModeByteArray.isEmpty();
         if (measureModeOkay)
         {
             const int measureMode = gpsMeasureModeByteArray.toInt(&measureModeOkay);
@@ -328,7 +328,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
         if (success)
         {
             // be relaxed about 0/0
-            if ((num==0.0)&&(den==0.0))
+            if ((num==0.0) && (den==0.0))
                 den = 1.0;
 
             const qreal dop = qreal(num)/qreal(den);
@@ -339,7 +339,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
     }
 
     // mark us as not-dirty, because the data was just loaded:
-    m_dirty = false;
+    m_dirty      = false;
     m_savedState = m_gpsData;
 
     emitDataChanged();
@@ -838,26 +838,21 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
     // TODO: remove the altitude if it is not available
     if (m_interface)
     {
+        KIPIPlugins::KPImageInfo info(m_interface, m_url);
+
         if (shouldWriteCoordinates)
         {
-            QMap<QString, QVariant> attributes;
-            attributes.insert("latitude", latitude);
-            attributes.insert("longitude", longitude);
+            info.setLatitude(latitude);
+            info.setLongitude(longitude);
             if (shouldWriteAltitude)
             {
-                attributes.insert("altitude", altitude);
+                info.setAltitude(altitude);
             }
-
-            KIPI::ImageInfo info = m_interface->info(m_url);
-            info.addAttributes(attributes);
         }
 
         if (shouldRemoveCoordinates)
         {
-            QStringList listToRemove;
-            listToRemove << "gpslocation";
-            KIPI::ImageInfo info = m_interface->info(m_url);
-            info.delAttributes(listToRemove);
+            info.removeGeolocationInfo();
         }
 
         if (!m_tagList.isEmpty())
@@ -882,9 +877,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
                 tagsPath.append(singleTagPath);
             }
 
-            attributes.insert("tagspath", tagsPath);
-            KIPI::ImageInfo info = m_interface->info(m_url);
-            info.addAttributes(attributes);
+            info.setTagsPath(tagsPath);
         }
     }
 
@@ -912,7 +905,9 @@ void KipiImageItem::restoreRGTagList(const QList<QList<TagData> >& tagList)
     //TODO: override == operator
 
     if (tagList.count() != m_savedTagList.count())
+    {
         m_tagListDirty = true;
+    }
     else
     {
         for (int i=0; i<tagList.count(); ++i)

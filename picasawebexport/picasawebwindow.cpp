@@ -64,17 +64,17 @@
 // LibKIPI includes
 
 #include <libkipi/uploadwidget.h>
-#include <libkipi/version.h>
 
 // Local includes
 
 #include "imageslist.h"
+#include "kpimageinfo.h"
 #include "newalbumdialog.h"
 #include "picasawebalbum.h"
 #include "picasawebitem.h"
 #include "picasawebtalker.h"
 #include "picasawebwidget.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "picasawebreplacedialog.h"
 
 namespace KIPIPicasawebExportPlugin
@@ -82,7 +82,7 @@ namespace KIPIPicasawebExportPlugin
 
 PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpFolder,
                                  bool import, QWidget* /*parent*/)
-               : KDialog(0)
+    : KDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -419,17 +419,12 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
 
     for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        KIPI::ImageInfo info = m_interface->info(*it);
-        QMap <QString, QVariant> attribs = info.attributes();
+        KIPIPlugins::KPImageInfo info(m_interface, *it);
         PicasaWebPhoto temp;
-#if KIPI_VERSION >= 0x010300
         temp.title = info.name();
-#else
-        temp.title = info.title();
-#endif
 
         // Picasa doesn't support image titles. Include it in descriptions if needed.
-        QStringList descriptions = QStringList() << attribs["title"].toString() << info.description();
+        QStringList descriptions = QStringList() << info.title() << info.description();
         descriptions.removeAll("");
         temp.description = descriptions.join("\n\n");
 
@@ -445,18 +440,18 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
         {
             if ((*itPWP).id == localId)
             {
-                temp.id = localId;
-                temp.editUrl = (*itPWP).editUrl;
+                temp.id       = localId;
+                temp.editUrl  = (*itPWP).editUrl;
                 temp.thumbURL = (*itPWP).thumbURL;
                 break;
             }
         }
 
         //Tags from the database
-        temp.gpsLat = attribs["latitude"].toString();
-        temp.gpsLon = attribs["longitude"].toString();
+        temp.gpsLat.setNum(info.latitude());
+        temp.gpsLon.setNum(info.longitude());
 
-        temp.tags = attribs["tagspath"].toStringList();
+        temp.tags = info.tagsPath();
         m_transferQueue.append( Pair( (*it), temp) );
     }
 
@@ -969,20 +964,14 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         }
         else
         {
-            QMap<QString, QVariant> attributes;
-            KIPI::ImageInfo info = m_interface->info(newUrl);
-#if KIPI_VERSION >= 0x010300
+            KIPIPlugins::KPImageInfo info(m_interface, newUrl);
             info.setName(item.description);
-#else
-            info.setTitle(item.description);
-#endif
-            attributes.insert("tagspath", item.tags);
+            info.setTagsPath(item.tags);
             if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
             {
-                attributes.insert("latitude",  item.gpsLat);
-                attributes.insert("longitude", item.gpsLon);
+                info.setLatitude(item.gpsLat.toDouble());
+                info.setLongitude(item.gpsLon.toDouble());
             }
-            info.addAttributes(attributes);
         }
     }
 

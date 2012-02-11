@@ -40,7 +40,7 @@
 // Local includes
 
 #include "aboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "manager.h"
 
 using namespace KIPIExpoBlendingPlugin;

@@ -38,7 +38,7 @@
 // Local includes
 
 #include "kpwriteimage.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 using namespace KExiv2Iface;
 using namespace KDcrawIface;

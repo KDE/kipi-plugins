@@ -37,8 +37,14 @@
 
 #include <kurl.h>
 
+// LibKexiv2 includes
+
+#include <libkexiv2/kexiv2.h>
+
 typedef QPair<QString, int>  FileAnglePair;
 typedef QList<FileAnglePair> FileList;
+
+using namespace KExiv2Iface;
 
 namespace KIPIAdvancedSlideshowPlugin
 {
@@ -53,7 +59,7 @@ class LoadThread : public QThread
 public:
 
     LoadThread(LoadedImages* loadedImages, QMutex* imageLock, const KUrl& path,
-               const int angle, int width, int height);
+               KExiv2::ImageOrientation orientation, int width, int height);
     ~LoadThread();
 
 protected:
@@ -62,14 +68,14 @@ protected:
 
 private:
 
-    QMutex*       m_imageLock;
-    LoadedImages* m_loadedImages;
+    QMutex*                  m_imageLock;
+    LoadedImages*            m_loadedImages;
 
-    KUrl          m_path;
-    QString       m_filename;
-    int           m_angle;
-    int           m_swidth;
-    int           m_sheight;
+    KUrl                     m_path;
+    QString                  m_filename;
+    KExiv2::ImageOrientation m_orientation;
+    int                      m_swidth;
+    int                      m_sheight;
 };
 
 // ----------------------------------------------------------------------------

@@ -22,7 +22,6 @@
 
 #include "picasawebimglist.moc"
 
-
 // Qt includes
 
 #include <QPointer>
@@ -40,7 +39,12 @@
 
 #include <libkdcraw/kdcraw.h>
 
+// Libkipi includes
+
+#include <libkipi/imagecollection.h>
+
 using namespace KDcrawIface;
+
 namespace KIPIPicasawebExportPlugin
 {
 

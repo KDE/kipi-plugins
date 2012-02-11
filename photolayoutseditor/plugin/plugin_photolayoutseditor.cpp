@@ -33,6 +33,7 @@
 #include <kaboutdata.h>
 
 #include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 #include "photolayoutseditor.h"
 #include "PLEAboutData.h"

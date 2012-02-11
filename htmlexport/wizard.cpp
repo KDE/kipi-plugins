@@ -52,7 +52,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include "galleryinfo.h"
 #include "invisiblebuttongroup.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "theme.h"
 #include "ui_imagesettingspage.h"
 #include "ui_outputpage.h"

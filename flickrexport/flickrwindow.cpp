@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
@@ -53,17 +53,18 @@
 #include <kdeversion.h>
 #include <kwallet.h>
 #include <kpushbutton.h>
+#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <ktoolinvocation.h>
 
 // Local includes
 
 #include "imageslist.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpimageinfo.h"
+#include "kpversion.h"
 #include "login.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
@@ -567,11 +568,11 @@ void FlickrWindow::slotUser1()
         FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>
                                      (m_imglst->listView()->topLevelItem(i));
 
-        KIPI::ImageInfo info = m_interface->info(lvItem->url());
+        KIPIPlugins::KPImageInfo info(m_interface, lvItem->url());
         kDebug() << "Adding images to the list";
         FPhotoInfo temp;
 
-        temp.title                 = info.attributes()["title"].toString();
+        temp.title                 = info.title();
         temp.description           = info.description();
         temp.is_public             = lvItem->isPublic()  ? 1 : 0;
         temp.is_family             = lvItem->isFamily()  ? 1 : 0;
@@ -596,10 +597,9 @@ void FlickrWindow::slotUser1()
         // Tags from the database
         if (m_exportHostTagsCheckBox->isChecked())
         {
-            QMap <QString, QVariant> attribs = info.attributes();
             QStringList tagsFromDatabase;
 
-            tagsFromDatabase = attribs["tags"].toStringList();
+            tagsFromDatabase = info.keywords();
             itTags           = tagsFromDatabase.begin();
 
             while (itTags != tagsFromDatabase.end())

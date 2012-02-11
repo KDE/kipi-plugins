@@ -47,6 +47,10 @@
 #include <kurl.h>
 #include <kstandarddirs.h>
 
+// Libkipi includes
+
+#include <libkipi/imagecollection.h>
+
 // Local includes
 
 #include "commoncontainer.h"

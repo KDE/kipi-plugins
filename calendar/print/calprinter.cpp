@@ -33,6 +33,7 @@
 // Local includes
 
 #include "calpainter.h"
+#include "kpimageinfo.h"
 
 namespace KIPICalendarPlugin
 {
@@ -75,10 +76,10 @@ void CalPrinter::run()
 
         ++currPage;
 
-        int angle = interface_->info(months_.value(month)).angle();
+        KIPIPlugins::KPImageInfo info(interface_, months_.value(month));
+        KExiv2::ImageOrientation orientation = info.orientation();
 
-        painter_->setImage(months_.value(month), angle);
-
+        painter_->setImage(months_.value(month), orientation);
         painter_->paint(month);
 
         if (cancelled_)

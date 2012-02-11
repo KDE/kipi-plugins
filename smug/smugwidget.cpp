@@ -47,6 +47,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes
 

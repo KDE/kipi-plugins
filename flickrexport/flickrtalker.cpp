@@ -67,7 +67,7 @@
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "mpform.h"
 #include "flickritem.h"
 #include "flickrwindow.h"

@@ -51,9 +51,8 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
-// LibKIPI includes
+// LibKipi includes
 
-#include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 
 // Local includes
@@ -64,9 +63,10 @@
 #include "myimagelist.h"
 #include "dngwriter.h"
 #include "imagedialog.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "settingswidget.h"
 #include "progresswidget.h"
+#include "kpimageinfo.h"
 
 using namespace DNGIface;
 using namespace KIPIPlugins;
@@ -446,9 +446,8 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             {
                 // Assign Kipi host attributes from original RAW image.
 
-                KIPI::ImageInfo orgInfo = d->iface->info(url);
-                KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
-                newInfo.cloneData(orgInfo);
+                KPImageInfo info(d->iface, url);
+                info.cloneData(KUrl(destFile));
             }
         }
     }

@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -68,6 +68,7 @@
 #include "gallerytalker.h"
 #include "imagedialog.h"
 #include "kpaboutdata.h"
+#include "kpimageinfo.h"
 
 namespace KIPIGalleryExportPlugin
 {
@@ -713,9 +714,8 @@ void GalleryWindow::slotAddPhotoNext()
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
     QString photoPath     = mpUploadList->takeFirst();
-    KIPI::ImageInfo info  = m_interface->info(photoPath);
-    QMap <QString, QVariant> attribs = info.attributes();
-    QString title         = attribs["title"].toString();
+    KIPIPlugins::KPImageInfo info(m_interface, photoPath);
+    QString title         = info.title();
     QString description   = info.description();
     bool res              = m_talker->addPhoto(album.name, photoPath, title, description,
                                                d->resizeCheckBox->isChecked(),

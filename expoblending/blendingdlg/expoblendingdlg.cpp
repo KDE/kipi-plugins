@@ -70,7 +70,6 @@ extern "C"
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
 
 // libKdcraw includes
 
@@ -85,7 +84,7 @@ extern "C"
 #include "enfusestack.h"
 #include "savesettingswidget.h"
 #include "aboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "previewmanager.h"
 #include "actionthread.h"
 #include "bracketstack.h"

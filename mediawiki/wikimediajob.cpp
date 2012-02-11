@@ -39,6 +39,10 @@
 #include <libmediawiki/upload.h>
 #include <libmediawiki/mediawiki.h>
 
+// KIPI includes
+
+#include <libkipi/interface.h>
+
 // Local includes
 
 #include "imageslist.h"

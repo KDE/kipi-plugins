@@ -49,7 +49,7 @@
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "kpwriteimage.h"
 
 namespace KIPIRawConverterPlugin

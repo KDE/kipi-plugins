@@ -53,7 +53,7 @@
 // Local includes
 
 #include "kpwriteimage.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "ptoparser.h"
 
 namespace KIPIPanoramaPlugin

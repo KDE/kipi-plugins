@@ -41,7 +41,7 @@
 
 #include "dialogutils.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "renameimageswidget.h"
 
 namespace KIPIBatchProcessImagesPlugin

@@ -52,7 +52,7 @@
 // Local includes
 
 #include "metadatacheckbox.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 using namespace KDcrawIface;
 using namespace KExiv2Iface;

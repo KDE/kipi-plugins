@@ -19,9 +19,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 // Self
+
 #include "generator.moc"
 
 // Qt
+
 #include <QDir>
 #include <QFile>
 #include <QFutureWatcher>
@@ -30,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QtConcurrentMap>
 
 // KDE
+
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -41,29 +44,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <kurl.h>
 
 // KIPI
-#include <libkipi/imageinfo.h>
+
 #include <libkipi/interface.h>
 
-// libkipiplugins
-#include <batchprogressdialog.h>
-
-
 // libxslt
+
 #include <libxslt/transform.h>
 #include <libxslt/xsltutils.h>
 #include <libxslt/xslt.h>
 #include <libexslt/exslt.h>
 
 // Local
+
 #include "abstractthemeparameter.h"
 #include "imageelement.h"
 #include "imagegenerationfunctor.h"
 #include "galleryinfo.h"
 #include "theme.h"
 #include "xmlutils.h"
+#include "batchprogressdialog.h"
 
-namespace KIPIHTMLExport {
-
+namespace KIPIHTMLExport
+{
 
 typedef QMap<QByteArray,QByteArray> XsltParameterMap;
 
@@ -249,8 +251,9 @@ struct Generator::Private {
                 if (path.isEmpty()) {
                     continue;
                 }
-                ImageElement element = ImageElement(mInterface->info(url));
-                element.mPath = remoteUrlHash.value(url, url.toLocalFile());
+                KPImageInfo info(mInterface, url);
+                ImageElement element = ImageElement(info);
+                element.mPath        = remoteUrlHash.value(url, url.toLocalFile());
                 imageElementList << element;
             }
 
@@ -261,7 +264,7 @@ struct Generator::Private {
             QFutureWatcher<void> watcher;
             watcher.setFuture(future);
             connect(&watcher, SIGNAL(progressValueChanged(int)),
-                mProgressDialog, SLOT(setProgress(int)));
+                    mProgressDialog, SLOT(setProgress(int)));
 
             mProgressDialog->progressWidget()->setTotal(imageElementList.count());
             while (!future.isFinished()) {
@@ -480,6 +483,5 @@ bool Generator::warnings() const {
 void Generator::logWarning(const QString& text) {
     d->logWarning(text);
 }
-
 
 } // namespace

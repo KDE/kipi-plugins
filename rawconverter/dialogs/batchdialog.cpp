@@ -73,7 +73,6 @@ extern "C"
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
 
 // Local includes
 
@@ -82,9 +81,10 @@ extern "C"
 #include "myimagelist.h"
 #include "imagedialog.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
+#include "kpimageinfo.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
@@ -546,9 +546,8 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 
             // Assign Kipi host attributes from original RAW image.
 
-            KIPI::ImageInfo orgInfo = d->iface->info(url);
-            KIPI::ImageInfo newInfo = d->iface->info(KUrl(destFile));
-            newInfo.cloneData(orgInfo);
+            KPImageInfo info(d->iface, url);
+            info.cloneData(KUrl(destFile));
         }
     }
 

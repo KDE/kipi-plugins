@@ -20,22 +20,27 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 #include "imagegenerationfunctor.h"
 
-// Qt
+// Qt includes
+
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
 #include <QImageReader>
 
-// KDE
+// KDE includes
+
 #include <klocale.h>
 #include <kdebug.h>
 
-// KIPI
+// LibKIPI includes
+
 #include <libkipi/interface.h>
 
 // LibKExiv2 includes
+
 #include <libkexiv2/kexiv2.h>
 #include <libkexiv2/version.h>
+#include <libkexiv2/rotationmatrix.h>
 
 // LibKDcraw includes
 
@@ -43,11 +48,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
-#if KDCRAW_VERSION < 0x000400
-#include <libkdcraw/dcrawbinary.h>
-#endif
+// Local includes
 
-// Local
 #include "galleryinfo.h"
 #include "generator.h"
 #include "imageelement.h"
@@ -129,15 +131,18 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
 
     // Process images
     QImage fullImage = originalImage;
-    if (!mInfo->useOriginalImageAsFullImage()) {
-        if (mInfo->fullResize()) {
-            int size = mInfo->fullSize();
+    if (!mInfo->useOriginalImageAsFullImage())
+    {
+        if (mInfo->fullResize())
+        {
+            int size  = mInfo->fullSize();
             fullImage = fullImage.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
-        if (element.mAngle != 0) {
-            QMatrix matrix;
-            matrix.rotate(element.mAngle);
-            fullImage = fullImage.transformed(matrix);
+
+        if (element.mOrientation != KExiv2::ORIENTATION_UNSPECIFIED )
+        {
+            QMatrix matrix = RotationMatrix::toMatrix(element.mOrientation);
+            fullImage      = fullImage.transformed(matrix);
         }
     }
 

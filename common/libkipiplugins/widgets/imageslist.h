@@ -39,10 +39,6 @@
 #include <kicon.h>
 #include <kiconloader.h>
 
-// LibKIPI includes
-
-#include <libkipi/imageinfo.h>
-
 // Local includes
 
 #include "kipiplugins_export.h"
@@ -174,7 +170,7 @@ private:
     void dragMoveEvent(QDragMoveEvent* e);
     void dropEvent(QDropEvent* e);
     void contextMenuEvent(QContextMenuEvent * e);
-    
+
     void setup(int iconSize);
 
     void drawRow(QPainter* p, const QStyleOptionViewItem& opt, const QModelIndex& index) const;

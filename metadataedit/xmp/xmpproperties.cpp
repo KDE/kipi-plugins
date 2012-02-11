@@ -55,7 +55,7 @@
 #include "metadatacheckbox.h"
 #include "multivaluesedit.h"
 #include "objectattributesedit.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 using namespace KDcrawIface;
 using namespace KExiv2Iface;

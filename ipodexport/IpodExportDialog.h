@@ -38,10 +38,13 @@
 // Kipi includes
 
 #if KIPI_PLUGIN
+
 #include <libkipi/interface.h>
+
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "imagedialog.h"
+
 #endif // KIPI_PLUGIN
 
 // Libgpod includes

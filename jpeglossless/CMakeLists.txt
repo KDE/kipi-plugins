@@ -9,6 +9,7 @@ INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/libjpeg
                     ${CMAKE_CURRENT_SOURCE_DIR}/transform
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../common/libkipiplugins/tools/threads
                    )
 
 SET(kipiplugin_jpeglossless_PART_SRCS plugin/plugin_jpeglossless.cpp 
@@ -19,6 +20,8 @@ SET(kipiplugin_jpeglossless_PART_SRCS plugin/plugin_jpeglossless.cpp
                                       transform/convert2grayscale.cpp 
                                       transform/imageflip.cpp 
                                       libjpeg/transupp.cpp 
+                                      ../common/libkipiplugins/tools/threads/weaverobservertest.cpp
+                                      ../common/libkipiplugins/tools/threads/actionthreadbase.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
@@ -34,6 +37,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${JPEG_LIBRARY}
+                      ${KDE4_SOLID_LIBS}
+                      ${KDE4_THREADWEAVER_LIBRARIES}
                       kipiplugins
                      )
 

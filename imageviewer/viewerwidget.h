@@ -45,7 +45,6 @@
 // LibKIPI includes
 
 #include <libkipi/imagecollection.h>
-#include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 
 // Local includes
@@ -91,13 +90,13 @@ public:
         }
     }
 
-    void drawImage(Texture* tex);
-    void downloadTex(Texture* tex);
+    void     drawImage(Texture* tex);
+    void     downloadTex(Texture* tex);
     Texture* loadImage(int file_index);
-    void prevImage();
-    void nextImage();
-    bool listOfFilesIsEmpty() const;
-    void zoom(int mdelta, const QPoint& pos, float factor);
+    void     prevImage();
+    void     nextImage();
+    bool     listOfFilesIsEmpty() const;
+    void     zoom(int mdelta, const QPoint& pos, float factor);
     OGLstate getOGLstate();
 
     virtual void initializeGL();

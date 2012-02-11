@@ -68,12 +68,21 @@ extern "C"
 #include <kurl.h>
 #include <kdeversion.h>
 
+// Libkipi includes
+
+#include <libkipi/imagecollection.h>
+
+// Libkexiv2 includes
+
+#include <libkexiv2/rotationmatrix.h>
+
 // Local includes
 
 #include "IpodHeader.h"
 #include "ImageList.h"
 #include "ImageListItem.h"
 #include "IpodListItem.h"
+#include "kpimageinfo.h"
 
 namespace KIPIIpodExportPlugin
 {
@@ -543,14 +552,12 @@ void UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap& pixmap 
     QPixmap pix( pixmap );
 
     // Rotate the thumbnail compared to the angle the host application dictate
-    KIPI::ImageInfo info = m_interface->info( url->url() );
-    if ( info.angle() != 0 )
+    KIPIPlugins::KPImageInfo info(m_interface, url->url());
+    if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
     {
-        QImage img = pix.toImage();
-        QMatrix matrix;
-
-        matrix.rotate( info.angle() );
-        img = img.transformed( matrix );
+        QImage img     = pix.toImage();
+        QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
+        img            = img.transformed( matrix );
         pix.fromImage( img );
     }
 
@@ -569,7 +576,7 @@ void UploadDialog::imagesFilesButtonAdd()
 #if KIPI_PLUGIN
     urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
 #else
-    const QString filter = QString( "*.jpg *.jpeg *.jpe *.tiff *.gif *.png *.bmp|" + i18n("Image files") );
+    const QString filter      = QString( "*.jpg *.jpeg *.jpe *.tiff *.gif *.png *.bmp|" + i18n("Image files") );
     QPointer<KFileDialog> dlg = new KFileDialog( QString(), filter, this );
 //    QPointer<KFileDialog> dlg = new KFileDialog( QString::null, filter, this, "addImagesDlg", true );
     dlg->setCaption( i18n("Add Images") );
@@ -619,7 +626,7 @@ void UploadDialog::createIpodAlbum()
         m_ipodAlbumList->clearSelection();
 
         // commit the changes to the iPod
-        GError *err = 0;
+        GError* err = 0;
         itdb_photodb_write( m_itdb, &err );
     }
 }
@@ -632,12 +639,12 @@ void UploadDialog::renameIpodAlbum()
     if( selectedItems.size() != 1 )
         return;
 
-    IpodAlbumItem *selected = dynamic_cast<IpodAlbumItem*>( selectedItems.first() );
+    IpodAlbumItem* selected = dynamic_cast<IpodAlbumItem*>( selectedItems.first() );
     if( !selected )
         return;
 
 
-    bool ok = false;
+    bool ok         = false;
     QString newName = KInputDialog::getText( i18n("Rename iPod Photo Album"),
                                              i18n("New album title:"),
                                              selected->text(0), &ok, this );
@@ -646,7 +653,7 @@ void UploadDialog::renameIpodAlbum()
         // change the name on the ipod, and rename the listviewitem
         selected->setName( newName );
         // commit changes to the iPod
-        GError *err = 0;
+        GError* err = 0;
         itdb_photodb_write( m_itdb, &err );
     }
 }
@@ -656,12 +663,12 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
     if( !photo )
         return false;
 
-    IpodAlbumItem *album = static_cast<IpodAlbumItem *>( photo->parent() );
+    IpodAlbumItem* album = static_cast<IpodAlbumItem*>( photo->parent() );
 
     if( !album )
         return false;
 
-    Itdb_Artwork *artwork = photo->artwork();
+    Itdb_Artwork* artwork = photo->artwork();
 
     if( !artwork )
     {
@@ -669,7 +676,7 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
         return false;
     }
 
-    Itdb_PhotoAlbum *photo_album = album->photoAlbum();
+    Itdb_PhotoAlbum* photo_album = album->photoAlbum();
     itdb_photodb_remove_photo( m_itdb, photo_album, artwork );
 
     // if we remove from the library, remove from all sub albums too
@@ -678,10 +685,12 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
         for( int i = 1; // skip library
              i < m_ipodAlbumList->topLevelItemCount(); ++ i )
         {
-            QTreeWidgetItem *albumItem = m_ipodAlbumList->topLevelItem( i );
+            QTreeWidgetItem* albumItem = m_ipodAlbumList->topLevelItem( i );
+
             for( int j = 0; j < albumItem->childCount(); ++j )
             {
                 QTreeWidgetItem *photoItem = albumItem->child( j );
+
                 if( photoItem->text(0) == photo->text(0) ) // FIXME
                 {
                     kDebug() << "removing reference to photo from album " << albumItem->text(0) ;

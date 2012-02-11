@@ -6,7 +6,7 @@
  * Date        : 2011-03-14
  * Description : a KPageWidget to edit EXIF metadata
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
 
  *
@@ -46,10 +46,8 @@
 
 // LibKIPI includes
 
-#include <libkipi/imagecollection.h>
-#include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
-#include <libkipi/plugin.h>
+#include <libkipi/imagecollection.h>
 
 // LibKExiv2 includes
 
@@ -65,6 +63,7 @@
 #include "exifdevice.h"
 #include "exiflens.h"
 #include "exiflight.h"
+#include "kpimageinfo.h"
 
 using namespace KExiv2Iface;
 
@@ -248,7 +247,7 @@ void EXIFEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        ImageInfo info = d->dlg->iface()->info(*d->dlg->currentItem());
+        KIPIPlugins::KPImageInfo info(d->dlg->iface(), *d->dlg->currentItem());
 
         if (d->captionPage->syncHOSTCommentIsChecked())
         {
@@ -258,7 +257,7 @@ void EXIFEditWidget::apply()
 
         if (d->datetimePage->syncHOSTDateIsChecked())
         {
-            info.setTime(d->datetimePage->getEXIFCreationDate());
+            info.setDate(d->datetimePage->getEXIFCreationDate());
         }
         d->datetimePage->applyMetadata(d->exifData, d->iptcData, d->xmpData);
 

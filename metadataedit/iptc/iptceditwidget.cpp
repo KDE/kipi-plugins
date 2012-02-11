@@ -6,7 +6,7 @@
  * Date        : 2011-03-14
  * Description : a KPageWidget to edit IPTC metadata
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2011 by Victor Dodon <dodon dot victor at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -44,10 +44,7 @@
 
 // LibKIPI includes
 
-#include <libkipi/imagecollection.h>
-#include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
-#include <libkipi/plugin.h>
 
 // LibKExiv2 includes
 
@@ -66,6 +63,7 @@
 #include "iptcproperties.h"
 #include "iptcstatus.h"
 #include "iptcsubjects.h"
+#include "kpimageinfo.h"
 
 using namespace KExiv2Iface;
 
@@ -295,7 +293,7 @@ void IPTCEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        ImageInfo info = d->dlg->iface()->info(*d->dlg->currentItem());
+        KIPIPlugins::KPImageInfo info(d->dlg->iface(), *d->dlg->currentItem());
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
@@ -305,7 +303,7 @@ void IPTCEditWidget::apply()
 
         if (d->originPage->syncHOSTDateIsChecked())
         {
-            info.setTime(d->originPage->getIPTCCreationDate());
+            info.setDate(d->originPage->getIPTCCreationDate());
         }
         d->originPage->applyMetadata(d->exifData, d->iptcData);
 

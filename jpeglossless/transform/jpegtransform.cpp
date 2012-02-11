@@ -65,7 +65,7 @@ extern "C"
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "transupp.h"
 #include "jpegtransform.h"
 #include "kpwritehelp.h"

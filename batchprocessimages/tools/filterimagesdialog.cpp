@@ -47,7 +47,7 @@
 
 #include "dialogutils.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "filteroptionsdialog.h"
 #include "imagepreview.h"
 

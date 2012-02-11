@@ -55,7 +55,6 @@
 
 // libkipi includes
 
-#include <libkipi/imageinfo.h>
 #include <libkipi/interface.h>
 
 // Local includes
@@ -64,12 +63,13 @@
 #include "slideplaybackwidget.h"
 #include "slideshowloader.h"
 #include "playbackwidget.h"
+#include "kpimageinfo.h"
 
 namespace KIPIAdvancedSlideshowPlugin
 {
 
 SlideShow::SlideShow(const FileList& fileList, const QStringList& commentsList, SharedContainer* sharedData)
-         : QWidget(0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint)
+    : QWidget(0, Qt::WindowStaysOnTopHint | Qt::Popup | Qt::X11BypassWindowManagerHint)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -420,8 +420,8 @@ void SlideShow::printComments()
     if (m_currImage.isNull())
         return;
 
-    KIPI::ImageInfo info = m_sharedData->iface()->info(m_imageLoader->currPath());
-    QString comments     = info.description();
+    KIPIPlugins::KPImageInfo info(m_sharedData->iface(), m_imageLoader->currPath());
+    QString comments = info.description();
 
     int yPos = 30; // Text Y coordinate
 

@@ -57,7 +57,7 @@ extern "C"
 
 // Local includes
 
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 namespace KIPIPlugins
 {

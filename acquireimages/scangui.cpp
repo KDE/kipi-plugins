@@ -43,7 +43,7 @@
 // Local includes
 
 #include "aboutdata.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 #include "scandialog.h"
 
 using namespace KIPIAcquireImagesPlugin;

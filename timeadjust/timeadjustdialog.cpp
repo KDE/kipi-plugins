@@ -69,7 +69,6 @@ extern "C"
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
 
 // LibKExiv2 includes
 
@@ -79,7 +78,8 @@ extern "C"
 // Local includes
 
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpimageinfo.h"
+#include "kpversion.h"
 #include "clockphotodialog.h"
 
 namespace KIPITimeAdjustPlugin
@@ -528,11 +528,11 @@ void TimeAdjustDialog::readApplicationTimestamps()
 
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPI::ImageInfo info = d->interface->info(*it);
-        if (info.isTimeExact())
+        KIPIPlugins::KPImageInfo info(d->interface, *it);
+        if (info.isExactDate())
         {
             exactCount++;
-            d->imageOriginalDates.append(info.time());
+            d->imageOriginalDates.append(info.date());
         }
         else
         {
@@ -564,8 +564,7 @@ void TimeAdjustDialog::readFileTimestamps()
 {
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPI::ImageInfo info = d->interface->info(*it);
-        QFileInfo fileInfo(info.path().toLocalFile());
+        QFileInfo fileInfo((*it).toLocalFile());
         d->imageOriginalDates.append(fileInfo.lastModified());
     }
 
@@ -582,9 +581,9 @@ void TimeAdjustDialog::readMetadataTimestamps()
 
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPI::ImageInfo info = d->interface->info( *it );
+        KIPIPlugins::KPImageInfo info(d->interface, *it);
         KExiv2Iface::KExiv2 exiv2Iface;
-        if (!exiv2Iface.load(info.path().path()))
+        if (!exiv2Iface.load((*it).path()))
         {
             missingCount++;
             d->imageOriginalDates.append(nullDateTime);
@@ -592,32 +591,33 @@ void TimeAdjustDialog::readMetadataTimestamps()
         }
 
         QDateTime curImageDateTime;
-        switch (d->useMetaDateTypeChooser->currentIndex()) {
-        case 0:
-            curImageDateTime = exiv2Iface.getImageDateTime();
-            break;
-        case 1:
-            curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Image.DateTime"), "yyyy:MM:dd hh:mm:ss");
-            break;
-        case 2:
-            curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeOriginal"), "yyyy:MM:dd hh:mm:ss");
-            break;
-        case 3:
-            curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeDigitized"), "yyyy:MM:dd hh:mm:ss");
-            break;
-        case 4:
-            // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
-            curImageDateTime = QDateTime(QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
-                                         QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
-            //kDebug() << "IPTC for " << info.path().path() << ": " << exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated") << ", " << exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
-            //kDebug() << "converted: " << QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
-            break;
-        case 5:
-            curImageDateTime = QDateTime::fromString(exiv2Iface.getXmpTagString("Xmp.xmp.CreateDate"), "yyyy:MM:dd hh:mm:ss");
-            break;
-        default:
-            // curImageDateTime stays invalid
-            break;
+        switch (d->useMetaDateTypeChooser->currentIndex())
+        {
+            case 0:
+                curImageDateTime = exiv2Iface.getImageDateTime();
+                break;
+            case 1:
+                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Image.DateTime"), "yyyy:MM:dd hh:mm:ss");
+                break;
+            case 2:
+                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeOriginal"), "yyyy:MM:dd hh:mm:ss");
+                break;
+            case 3:
+                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeDigitized"), "yyyy:MM:dd hh:mm:ss");
+                break;
+            case 4:
+                // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
+                curImageDateTime = QDateTime(QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
+                                             QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
+                //kDebug() << "IPTC for " << (*it).path() << ": " << exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated") << ", " << exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
+                //kDebug() << "converted: " << QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
+                break;
+            case 5:
+                curImageDateTime = QDateTime::fromString(exiv2Iface.getXmpTagString("Xmp.xmp.CreateDate"), "yyyy:MM:dd hh:mm:ss");
+                break;
+            default:
+                // curImageDateTime stays invalid
+                break;
         };
 
         d->imageOriginalDates.append(curImageDateTime);
@@ -802,8 +802,8 @@ void TimeAdjustDialog::slotOk()
 
         if (d->updAppDateCheck->isChecked())
         {
-            KIPI::ImageInfo info = d->interface->info(url);
-            info.setTime(dateTime);
+            KIPIPlugins::KPImageInfo info(d->interface, url);
+            info.setDate(dateTime);
         }
 
         if (metadataChanged)

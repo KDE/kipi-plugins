@@ -6,7 +6,7 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2005 by Owen Hirst <n8rider@sbcglobal.net>
  *
  * This program is free software; you can redistribute it
@@ -59,17 +59,13 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-#include <libkipi/imageinfo.h>
-#include <libkipi/version.h>
-
-// LibKIPI includes
-
-#include "imagedialog.h"
 
 // Local includes
 
 #include "batchprocessimagesitem.h"
 #include "ui_renameimagesbase.h"
+#include "kpimageinfo.h"
+#include "imagedialog.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -263,8 +259,8 @@ void RenameImagesWidget::sortList(QAction* action)
         else if (action == m_byDateAction)
         {
             KUrl url(item->pathSrc());
-            KIPI::ImageInfo info = m_interface->info(url);
-            item->changeSortKey(info.time().toString(Qt::ISODate));
+            KIPIPlugins::KPImageInfo info(m_interface, url);
+            item->changeSortKey(info.date().toString(Qt::ISODate));
         }
     }
 
@@ -347,7 +343,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
 
     QFileInfo fi(item->pathSrc());
 
-    KIPI::ImageInfo info = m_interface->info(url);
+    KIPIPlugins::KPImageInfo info(m_interface, url);
 
     bool useExtraSymbols = ui->m_addFileDateCheck->isChecked() &&
                            ui->m_useExtraSymbolsCheck->isChecked();
@@ -429,7 +425,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
         format.replace('/', '!');
         format.replace("%[", "% [");
 
-        time_t time        = info.time().toTime_t();
+        time_t time        = info.date().toTime_t();
         struct tm* time_tm = ::localtime(&time);
         char s[100];
         ::strftime(s, 100, QFile::encodeName(format), time_tm);
@@ -583,16 +579,12 @@ void RenameImagesWidget::slotNext()
     else
     {
         // Get the src info
-        KIPI::ImageInfo srcInfo = m_interface->info(src);
+        KIPIPlugins::KPImageInfo srcInfo(m_interface, src);
 
         if (KDE_rename(QFile::encodeName(src.path()),
-                     QFile::encodeName(dst.path())) == 0)
+                       QFile::encodeName(dst.path())) == 0)
         {
-#if KIPI_VERSION >= 0x010300
             srcInfo.setName(dst.fileName());
-#else
-            srcInfo.setTitle(dst.fileName());
-#endif
 
             item->changeResult(i18nc("batch process result", "OK"));
         }

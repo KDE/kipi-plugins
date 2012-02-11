@@ -66,7 +66,8 @@
 
 #include "imageslist.h"
 #include "kpaboutdata.h"
-#include "pluginsversion.h"
+#include "kpimageinfo.h"
+#include "kpversion.h"
 #include "smugitem.h"
 #include "smugtalker.h"
 #include "smugwidget.h"
@@ -77,7 +78,7 @@ namespace KIPISmugPlugin
 
 SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
                        bool import, QWidget* /*parent*/)
-          : KDialog(0)
+    : KDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -741,7 +742,7 @@ void SmugWindow::uploadNextPhoto()
     m_widget->m_imgList->processing(m_transferQueue.first());
 
     QString imgPath = m_transferQueue.first().path();
-    KIPI::ImageInfo info(m_interface->info(imgPath));
+    KIPIPlugins::KPImageInfo info(m_interface, imgPath);
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);

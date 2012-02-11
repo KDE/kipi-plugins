@@ -59,7 +59,7 @@
 
 #include "galleryitem.h"
 #include "gallerympform.h"
-#include "pluginsversion.h"
+#include "kpversion.h"
 
 namespace KIPIGalleryExportPlugin
 {
