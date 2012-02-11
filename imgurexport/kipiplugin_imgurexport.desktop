@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Imgur Export
+Comment=A tool to export images to the imgur.com image hosting service
+Type=Service
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_imgurexport
+X-KDE-Icon=imgur
+X-KIPI-Mimetypes=image/png,image/jpg
+X-KIPI-Interfaces=org.kde.kipi.ExportPlugin
+author=Marius Orcsik, marius@habarnam.ro
