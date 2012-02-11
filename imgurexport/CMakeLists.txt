@@ -3,7 +3,6 @@ SUBDIRS(icons)
 SET(kipiplugin_imgurexport_PART_SRCS
     plugin_imgurexport.cpp
     imgurtalker.cpp
-#    imgurwidget.cpp
     mpform.cpp
 )
 
