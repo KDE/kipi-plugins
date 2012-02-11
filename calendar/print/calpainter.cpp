@@ -343,19 +343,17 @@ void CalPainter::paint(int month)
         emit signalTotal(image_.height());
 
         int h = image_.height();
-        int x = (rImage.width() - image_.width()) / 2;
+        int x = rImage.bottomLeft().x() + (rImage.width() - image_.width()) / 2;
         int y = (rImage.height() - h) / 2;
 
         int blockSize = 10;
         int block = 0;
-
         while (block < h && !cancelled_)
         {
             if (block + blockSize > h)
             {
                 blockSize = h - block;
             }
-
             drawImage(x, y + block, image_, 0, block, image_.width(), blockSize);
             block += blockSize;
             emit signalProgress(block);
