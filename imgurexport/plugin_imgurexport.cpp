@@ -45,6 +45,7 @@
 
 // LibKipi includes
 #include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 
 using namespace KIPIImgurExportPlugin;
@@ -97,10 +98,6 @@ void Plugin_ImgurExport::slotActivate()
         return;
     }
 
-    // i doubt i need this.
-    // KStandardDirs dir;
-    // QString Tmp = dir.saveLocation("tmp", "kipi-imgurexportplugin-" + QString::number(getpid()) + '/');
-
     ImagesList* m_dlgExport = new ImagesList(interface);
     m_dlgExport->setWindowIcon(KIcon("imgur"));
     m_dlgExport->setWindowTitle(i18n("Export to the imgur.com web service"));
@@ -116,12 +113,20 @@ void Plugin_ImgurExport::slotActivate()
     m_dlgExport->show();
 
     ImgurTalker *ImgurWebService = new ImgurTalker(interface);
-    //ImgurWebService->
+    ImageCollection images = interface->currentSelection();
 
     connect(ImgurWebService, SIGNAL(signalUploadDone()),
             m_dlgExport, SLOT(slotProgressTimerDone()));
 
     kDebug() << "We have activated the imgur exporter!";
+
+
+    if (images.isValid()) {
+        for (int i = 0; i < images.images().length(); i++) {
+            ImgurWebService->imageUpload(images.images().at(i));
+            //kDebug () << images.images().at(i).pathOrUrl();
+        }
+    }
 }
 
 KIPI::Category Plugin_ImgurExport::category( KAction* action ) const

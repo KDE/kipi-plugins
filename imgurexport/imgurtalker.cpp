@@ -28,6 +28,7 @@
 #include <KDebug>
 #include <KIO/Job>
 #include <qjson/parser.h>
+#include <qjson/qobjecthelper.h>
 
 // local
 #include "mpform.h"
@@ -41,7 +42,7 @@ namespace KIPIImgurExportPlugin {
 
         m_exportUrl     = QString("http://api.imgur.com/2/upload.json");
         m_removeUrl     = QString("http://api.imgur.com/2/delete.json");
-        \
+
         m_apiKey        = _IMGUR_API_KEY;
     }
 
@@ -105,14 +106,19 @@ namespace KIPIImgurExportPlugin {
         }
     }
 
-    void ImgurTalker::data(KIO::Job*, const QByteArray& data)
+    void ImgurTalker::data(KIO::Job* j, const QByteArray& data)
     {
-        if (data.isEmpty())
+        if (data.isEmpty()) {
             return;
+        }
 
         int oldSize = m_buffer.size();
-        m_buffer.resize(m_buffer.size() + data.size());
-        memcpy(m_buffer.data()+oldSize, data.data(), data.size());
+        int newSize = data.size();
+
+        m_buffer.resize(m_buffer.size() + newSize);
+        memcpy(m_buffer.data()+oldSize, data.data(), newSize);
+
+        emit signalUploadProgress(j->percent());
     }
 
 //    void ImgurTalker::dataReq(KIO::Job* job, QByteArray& data)
@@ -134,8 +140,8 @@ namespace KIPIImgurExportPlugin {
         {
             default:
                 kDebug () << m_buffer;
-                parseResponseImageUpload(m_buffer);
-                emit signalUploadDone();
+                if (parseResponseImageUpload(m_buffer))
+                    emit signalUploadDone();
             break;
         }
 
@@ -143,12 +149,31 @@ namespace KIPIImgurExportPlugin {
         return;
     }
 
-    void ImgurTalker::parseResponseImageUpload (QByteArray data) {
-        QJson::Parser* p = new QJson::Parser();
-        QVariant r = p->parse(data);
+    bool ImgurTalker::parseResponseImageUpload (QByteArray data) {
+        bool ok;
 
-        kDebug() << "qJson :" << r;
-        return;
+        QJson::Parser* p = new QJson::Parser();
+        QVariant r = p->parse(data, &ok);
+
+        if (ok) {
+
+             QString responseType = r.toMap().begin().key();
+             if (responseType == "error") {
+                 // TODO
+             }
+             if (responseType == "upload" ) {
+                // TODO
+             }
+
+             //QJson::QObjectHelper::qvariant2qobject(r.toMap(), response);
+             kDebug () << responseType;
+        } else {
+            emit signalError (tr ("Upload error")); // p->errorString()
+            return false;
+        }
+
+        kDebug() << "qJson :" << tr(data);
+        return true;
     }
 
     bool ImgurTalker::imageUpload (KUrl filePath)
@@ -185,8 +210,7 @@ namespace KIPIImgurExportPlugin {
 
     bool ImgurTalker::imageDelete (QString hash)
     {
-     /* TODO */
-         m_state = FE_REMOVEPHOTO;
+        m_state = FE_REMOVEPHOTO;
         return true;
     }
 

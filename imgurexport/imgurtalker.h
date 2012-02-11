@@ -23,11 +23,12 @@
 #define IMGURTALKER_H
 
 // api key from imgur
-#define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3asd";
+#define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3";
 
 // Qt
 #include <QObject>
 #include <QFileInfo>
+#include <QDateTime>
 
 // KDE
 #include <kurl.h>
@@ -40,6 +41,56 @@ namespace KIO
 
 namespace KIPIImgurExportPlugin
 {
+
+    class ImgurError : public QObject
+    {
+        Q_OBJECT
+        struct Error {
+            QString message;
+            QString request;
+            enum ImgurMethod {
+                POST = 0,
+                GET,
+                HEAD
+            } method;
+            enum ImgurFormat {
+                XML = 0,
+                JSON
+            } format;
+            QVariant parameters;
+        } error;
+    };
+
+    class ImgurSuccess : public QObject
+    {
+        Q_OBJECT
+        struct Upload {
+            struct ImgurImage {
+                QString name;
+                QString title;
+                QString caption;
+                QString hash;
+                QString deletehash;
+                QDateTime datetime;
+                QString type; // maybe enum
+                bool animated;
+                uint width;
+                uint height;
+                uint size;
+                uint views;
+                qulonglong bandwidth;
+            } image;
+
+            struct ImgurLinks {
+                KUrl original;
+                KUrl imgur_page;
+                KUrl delete_page;
+                KUrl small_square;
+                KUrl large_thumbnail;
+            } links;
+        } upload;
+    };
+
     class ImgurTalker : public QObject
     {
         Q_OBJECT
@@ -109,7 +160,7 @@ namespace KIPIImgurExportPlugin
         KIO::Job*       m_job;
 //        QMap<KIO::Job*, QByteArray> m_jobData;
 
-        void parseResponseImageUpload (QByteArray data);
+        bool parseResponseImageUpload (QByteArray data);
 
     private Q_SLOTS:
         void slotResult (KJob *job);
