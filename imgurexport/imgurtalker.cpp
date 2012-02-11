@@ -135,7 +135,7 @@ namespace KIPIImgurExportPlugin {
             default:
                 kDebug () << m_buffer;
                 parseResponseImageUpload(m_buffer);
-                emit signalUploadDone(1, "Done");
+                emit signalUploadDone();
             break;
         }
 
@@ -151,7 +151,7 @@ namespace KIPIImgurExportPlugin {
         return;
     }
 
-    bool ImgurTalker::imageUpload (QString filePath)
+    bool ImgurTalker::imageUpload (KUrl filePath)
     {
         KUrl url(m_exportUrl);
         MPForm form;
@@ -159,7 +159,7 @@ namespace KIPIImgurExportPlugin {
         url.addQueryItem("key", m_apiKey);
         url.addQueryItem("title", "TEST Kipi Imgur uploader");
 
-        form.addFile("image", filePath);
+        form.addFile("image", filePath.path());
         form.finish();
 
         KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);

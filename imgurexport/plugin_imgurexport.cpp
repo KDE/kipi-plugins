@@ -116,9 +116,10 @@ void Plugin_ImgurExport::slotActivate()
     m_dlgExport->show();
 
     ImgurTalker *ImgurWebService = new ImgurTalker(interface);
-//    ImgurWebService->
+    //ImgurWebService->
 
-    Q_OBJECT::conn
+    connect(ImgurWebService, SIGNAL(signalUploadDone()),
+            m_dlgExport, SLOT(slotProgressTimerDone()));
 
     kDebug() << "We have activated the imgur exporter!";
 }

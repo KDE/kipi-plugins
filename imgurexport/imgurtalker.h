@@ -83,7 +83,7 @@ namespace KIPIImgurExportPlugin
         ~ImgurTalker();
 
         const QString getStatusError (ImgurTalker::ServerStatusCode code);
-        bool imageUpload (QString filePath);
+        bool imageUpload (KUrl filePath);
         bool imageDelete (QString hash);
         void cancel ();
 //        void dataReq(KIO::Job* job, QByteArray &data);
@@ -92,7 +92,8 @@ namespace KIPIImgurExportPlugin
     Q_SIGNALS:
         void signalError( const QString& msg );
         void signalBusy( bool val );
-        void signalUploadDone(int, const QString&);
+        void signalUploadProgress(int);
+        void signalUploadDone();
 
     private:
         QString         m_apiKey;
