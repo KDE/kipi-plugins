@@ -28,6 +28,10 @@
 
 #include <QWidget>
 
+// LibKIPi includes
+
+#include <libkipi/interface.h>
+
 // Local include
 
 #include "ui_caltemplate.h"
@@ -35,16 +39,29 @@
 namespace KIPICalendarPlugin
 {
 
+class MonthWidget;
+
 class CalTemplate : public QWidget
 {
+    Q_OBJECT
+
 public:
 
-    CalTemplate(QWidget* parent);
+    CalTemplate(KIPI::Interface* interface, QWidget* parent);
     ~CalTemplate();
 
-private:
+private Q_SLOTS:
 
+    void yearChanged(int year);
+    void monthChanged(int);
+private:
+  
+    KIPI::Interface* _interface;
     Ui::CalTemplate ui;
+
+    QVector<MonthWidget*>  mwVector_;
+    QGridLayout*           monthBoxLayout_;
+
 };
 
 }  // NameSpace KIPICalendarPlugin

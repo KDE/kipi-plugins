@@ -41,6 +41,10 @@
 
 #include <kurl.h>
 
+namespace KIPI {
+class Interface;
+}
+
 namespace KIPICalendarPlugin
 {
 
@@ -68,6 +72,9 @@ public:
     ImagePosition         imgPos;
     QFont                 baseFont;
     int                   year;
+
+    // adding interface so who needs it can get it from settings
+    KIPI::Interface*      interface;
 };
 
 // ---------------------------------------------------------------------------
@@ -91,6 +98,9 @@ public:
     QString getDayDescr(int month, int day) const;
     QPrinter::PrinterMode resolution() const;
 
+    void setKipiInterface(KIPI::Interface* interface);
+    KIPI::Interface* kipiInterface();
+    
     static CalSettings* instance(QObject* parent = 0);
 
     ~CalSettings();

@@ -5,13 +5,11 @@ SET(kipiplugin_calendar_PART_SRCS plugin/plugin_calendar.cpp
                                   wizard/caltemplate.cpp
                                   wizard/calwizard.cpp
                                   wizard/calwidget.cpp
-                                  wizard/calselect.cpp
                                   wizard/monthwidget.cpp
    )
 
 KDE4_ADD_UI_FILES(kipiplugin_calendar_PART_SRCS ui/caltemplate.ui
                                                 ui/calevents.ui
-                                                ui/calselect.ui
                                                 ui/calprogress.ui
                  )
 

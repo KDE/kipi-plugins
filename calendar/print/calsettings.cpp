@@ -68,6 +68,7 @@ CalSettings* CalSettings::instance(QObject* parent)
 void CalSettings::setYear(int year)
 {
     params.year = year;
+    emit settingsChanged();
 }
 
 int CalSettings::year() const
@@ -322,6 +323,17 @@ QString CalSettings::getDayDescr(int month, int day) const
 QPrinter::PrinterMode CalSettings::resolution() const
 {
     return params.printResolution;
+}
+
+
+void CalSettings::setKipiInterface(KIPI::Interface* interface)
+{
+  params.interface = interface;
+}
+
+KIPI::Interface* CalSettings::kipiInterface()
+{
+  return params.interface;
 }
 
 }  // NameSpace KIPICalendarPlugin

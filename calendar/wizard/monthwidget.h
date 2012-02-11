@@ -59,7 +59,12 @@ public:
 
     KUrl imagePath() const;
     void setImage(const KUrl& url);
+    int month();
 
+Q_SIGNALS:
+  
+  void monthSelected(int);
+  
 protected:
 
     void dragEnterEvent(QDragEnterEvent* event);
@@ -70,7 +75,7 @@ protected:
 private Q_SLOTS:
 
     void gotThumbnail(const KUrl& url, const QPixmap& pix);
-
+    void monthSelected();
 private:
 
     QPixmap thumb() const;
