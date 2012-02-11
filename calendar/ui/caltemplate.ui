@@ -237,8 +237,7 @@
         <item row="1" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Left click on a month to select an image, right click to clear an image.
-You can also drag and drop images onto a month.</string>
+           <string>Left click on a month to select an image, right click to clear an image.</string>
           </property>
          </widget>
         </item>
