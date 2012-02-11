@@ -274,6 +274,7 @@ void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
         // pre-processing Done.
         d->mngr->setPreProcessedMap(map);
         setValid(d->preProcessingPage->page(), true);
+        d->optimizePage->resetPage();
         KAssistantDialog::next();
     }
 }

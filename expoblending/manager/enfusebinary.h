@@ -34,6 +34,7 @@ namespace KIPIExpoBlendingPlugin
 
 class EnfuseBinary : public BinaryIface
 {
+    Q_OBJECT
 
 public:
 
@@ -44,6 +45,10 @@ public:
         { setup(); }
 
     ~EnfuseBinary() {}
+
+Q_SIGNALS:
+
+    void signalEnfuseVersion(double version);
 
 protected:
 

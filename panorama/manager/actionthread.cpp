@@ -54,6 +54,7 @@
 
 #include "kpwriteimage.h"
 #include "kpversion.h"
+#include "ptoparser.h"
 
 namespace KIPIPanoramaPlugin
 {
@@ -77,6 +78,7 @@ struct ActionThread::ActionThreadPriv
         KUrl::List          urls;
         ItemUrlsMap         preProcessedUrlsMap;
         KUrl                ptoUrl;
+        PTOType             ptoUrlData;
         KUrl                mkUrl;
         KUrl                outputUrl;
         Action              action;
@@ -333,7 +335,7 @@ void ActionThread::run()
                             result_success = startCPFind(t->ptoUrl, t->celeste, t->cpfindPath, errors);
                             if (result_success)
                             {
-                                result_success = startCPClean(t->ptoUrl, t->cpcleanPath, errors);
+                                result_success = startCPClean(t->ptoUrl, t->ptoUrlData, t->cpcleanPath, errors);
                             }
                         }
                     }
@@ -342,6 +344,7 @@ void ActionThread::run()
                     ad2.action              = PREPROCESS;
                     ad2.inUrls              = t->urls;
                     ad2.ptoUrl              = t->ptoUrl;
+                    ad2.ptoUrlData          = t->ptoUrlData;
                     ad2.preProcessedUrlsMap = preProcessedUrlsMap;
                     ad2.success             = result_success;
                     ad2.message             = errors;
@@ -583,7 +586,7 @@ bool ActionThread::startCPFind(KUrl& cpFindPtoUrl, bool celeste, const QString& 
     return true;
 }
 
-bool ActionThread::startCPClean(KUrl& ptoUrl, const QString& cpcleanPath, QString& errors)
+bool ActionThread::startCPClean(KUrl& ptoUrl, PTOType& ptoUrlData, const QString& cpcleanPath, QString& errors)
 {
     KUrl ptoInUrl = ptoUrl;
     ptoUrl = d->preprocessingTmpDir->name();
@@ -613,6 +616,11 @@ bool ActionThread::startCPClean(KUrl& ptoUrl, const QString& cpcleanPath, QStrin
         delete d->CPCleanProcess;
         d->CPCleanProcess = 0;
         return false;
+    }
+
+    if (!PTOParser::parseFile(ptoUrl.toLocalFile(), ptoUrlData))
+    {
+        kDebug() << "Parse Failed!!";
     }
 
     emit stepFinished();

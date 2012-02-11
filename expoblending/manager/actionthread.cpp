@@ -154,9 +154,9 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setEnfuseVersion(const QString& version)
+void ActionThread::setEnfuseVersion(const double version)
 {
-    d->enfuseVersion4x = (version.toDouble() >= 4.0);
+    d->enfuseVersion4x = (version >= 4.0);
 }
 
 void ActionThread::cleanUpResultFiles()
@@ -546,7 +546,6 @@ bool ActionThread::startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& pre
         d->alignProcess->setOutputChannelMode(KProcess::MergedChannels);
 
         QStringList args;
-        //args << "align_image_stack";
         args << alignPath;
         args << "-v";
         args << "-a";
@@ -737,7 +736,6 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
     d->enfuseProcess->clearProgram();
     d->enfuseProcess->setOutputChannelMode(KProcess::MergedChannels);
     QStringList args;
-    //args << "enfuse";
     args << enfusePath;
 
     if (!settings.autoLevels)

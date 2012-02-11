@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2003-12-03
- * Description : a class to manage JPEGLossLess plugin 
+ * Description : a class to manage JPEGLossLess plugin
  *               actions using threads
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
@@ -37,19 +37,19 @@
 // Local includes
 
 #include "actions.h"
+#include "actionthreadbase.h"
 
 namespace KIPI
 {
-    class Interface;
+class Interface;
 }
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-class ActionThread : public QThread
+class ActionThread : public ActionThreadBase
 {
     Q_OBJECT
-
 public:
 
     ActionThread(KIPI::Interface* interface, QObject *parent);
@@ -58,11 +58,9 @@ public:
     void rotate(const KUrl::List& urlList, RotateAction val);
     void flip(const KUrl::List& urlList, FlipAction val);
     void convert2grayscale(const KUrl::List& urlList);
-    void cancel();
+
 
 protected:
-
-    void run();
 
 Q_SIGNALS:
 
@@ -70,11 +68,18 @@ Q_SIGNALS:
     void finished(const QString& filePath, int action);
     void failed(const QString& filePath, int action, const QString& errString);
 
-private:
+private Q_SLOTS:
+    void slotJobDone(ThreadWeaver::Job*);
+    void slotJobStarted(ThreadWeaver::Job*);
 
-    class ActionThreadPriv;
-    ActionThreadPriv* const d;
+private:
+    KIPI::Interface* interface;
+    bool updateFileStamp;
+    class Task;
 };
+
+
+
 
 }  // namespace KIPIJPEGLossLessPlugin
 

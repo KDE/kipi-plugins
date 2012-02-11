@@ -64,7 +64,7 @@ public:
     explicit ActionThread(QObject* parent);
     ~ActionThread();
 
-    void setEnfuseVersion(const QString& version);
+    void setEnfuseVersion(const double version);
     void setPreProcessingSettings(bool align, const RawDecodingSettings& settings);
     void loadProcessed(const KUrl& url);
     void identifyFiles(const KUrl::List& urlList);

@@ -65,7 +65,7 @@ public:
     Manager(QObject* parent=0);
     ~Manager();
 
-    //bool checkBinaries();
+    bool checkBinaries();
 
     void setAbout(ExpoBlendingAboutData* about);
     ExpoBlendingAboutData* about() const;
@@ -96,6 +96,7 @@ public:
 private Q_SLOTS:
 
     void slotStartDialog();
+    void slotSetEnfuseVersion(double version);
 
 private:
 

@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "enfusebinary.h"
+#include "enfusebinary.moc"
 
 // Qt includes
 
@@ -44,6 +44,7 @@ bool EnfuseBinary::parseHeader(const QString& output)
     {
         kDebug() << path() << " help header line: \n" << firstLine;
         setVersion(firstLine.remove(0, m_headerStarts.length()));
+        emit signalEnfuseVersion(version().toDouble());
         kDebug() << "Found " << path() << " version: " << version();
         return true;
     }
@@ -51,6 +52,7 @@ bool EnfuseBinary::parseHeader(const QString& output)
     {
         kDebug() << path() << " help header line: \n" << firstLine;
         setVersion(firstLine.remove(0, headerStartsOld.length()));
+        emit signalEnfuseVersion(version().toDouble());
         kDebug() << "Found " << path() << " version: " << version();
         return true;
     }

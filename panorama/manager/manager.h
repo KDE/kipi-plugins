@@ -93,6 +93,9 @@ public:
     void setCPFindUrl(const KUrl& url);
     KUrl cpFindUrl() const;
 
+    void setCPFindUrlData(const PTOType& urlData);
+    PTOType cpFindUrlData() const;
+
     void setAutoOptimiseUrl(const KUrl& url);
     KUrl autoOptimiseUrl() const;
 

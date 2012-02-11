@@ -38,6 +38,8 @@
 
 // Local includes
 
+#include "ptotype.h"
+
 namespace KIPIPanoramaPlugin
 {
 
@@ -84,6 +86,7 @@ struct ActionData
     KUrl::List          inUrls;
     KUrl                outUrl;
     KUrl                ptoUrl;
+    PTOType             ptoUrlData;
 
     int                 id;
 

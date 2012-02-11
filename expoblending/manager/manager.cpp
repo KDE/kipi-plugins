@@ -79,6 +79,14 @@ Manager::Manager(QObject* parent)
 {
     d->thread                               = new ActionThread(this);
     d->rawDecodingSettings.sixteenBitsImage = true;
+
+    connect(&d->enfuseBinary, SIGNAL(signalEnfuseVersion(double)),
+            this, SLOT(slotSetEnfuseVersion(double)));
+
+    if (d->enfuseBinary.isValid())
+    {
+        slotSetEnfuseVersion(d->enfuseBinary.version().toDouble());
+    }
 }
 
 Manager::~Manager()
@@ -90,19 +98,16 @@ Manager::~Manager()
     delete d;
 }
 
-/*
 bool Manager::checkBinaries()
 {
-    if (!d->alignBinary.showResults())
+    if (!d->alignBinary.recheckDirectories())
         return false;
 
-    if (!d->enfuseBinary.showResults())
+    if (!d->enfuseBinary.recheckDirectories())
         return false;
 
-    d->thread->setEnfuseVersion(d->enfuseBinary.version());
     return true;
 }
-*/
 
 void Manager::setAbout(ExpoBlendingAboutData* about)
 {
@@ -193,6 +198,11 @@ void Manager::slotStartDialog()
     d->inputUrls = d->wizard->itemUrls();
     d->dlg = new ExpoBlendingDlg(this);
     d->dlg->show();
+}
+
+void Manager::slotSetEnfuseVersion(double version)
+{
+    d->thread->setEnfuseVersion(version);
 }
 
 } // namespace KIPIExpoBlendingPlugin
