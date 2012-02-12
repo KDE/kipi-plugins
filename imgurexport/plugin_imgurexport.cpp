@@ -42,12 +42,6 @@
 #include <KPluginLoader>
 #include <KDialog>
 
-
-// LibKipi includes
-#include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
-
-
 using namespace KIPIImgurExportPlugin;
 using namespace KIPIPlugins;
 
@@ -105,28 +99,31 @@ void Plugin_ImgurExport::slotActivate()
     // i need to connect image list process slot to the imgur talker
 
 //    m_dlgExport->addActions();
-//    ProgressWidget *p = new ProgressWidget(interface, m_dlgExport);
+//    ProgressWidget *p = new ProgressWidget(interface);
 //    p->show();
 
     m_dlgExport->loadImagesFromCurrentSelection();
+    m_dlgExport->setAllowDuplicate(false);
     m_dlgExport->setAllowRAW(false);
+
     m_dlgExport->show();
 
-    ImgurTalker *ImgurWebService = new ImgurTalker(interface);
-    ImageCollection images = interface->currentSelection();
+    ImgurTalker *ImgurWebService = new ImgurTalker(interface, m_dlgExport);
 
-    connect(ImgurWebService, SIGNAL(signalUploadDone()),
+    connect(ImgurWebService, SIGNAL(signalUploadStart(KUrl)),
+            m_dlgExport, SLOT(processing(KUrl)));
+
+    connect(ImgurWebService, SIGNAL(signalUploadDone(KUrl, bool)),
+            m_dlgExport, SLOT(processed(KUrl, bool)));
+
+    connect(ImgurWebService, SIGNAL(signalUploadProgress(int)),
             m_dlgExport, SLOT(slotProgressTimerDone()));
 
+    connect(m_dlgExport, SIGNAL(signalAddItems(KUrl::List)),
+            ImgurWebService, SLOT(slotAddItems(KUrl::List)));
+
+    ImgurWebService->startUpload();
     kDebug() << "We have activated the imgur exporter!";
-
-
-    if (images.isValid()) {
-        for (int i = 0; i < images.images().length(); i++) {
-            ImgurWebService->imageUpload(images.images().at(i));
-            //kDebug () << images.images().at(i).pathOrUrl();
-        }
-    }
 }
 
 KIPI::Category Plugin_ImgurExport::category( KAction* action ) const
