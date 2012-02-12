@@ -9,6 +9,7 @@
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  * Copyright (C) 2011 by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,6 +42,10 @@
 
 #include <kurl.h>
 
+namespace KIPI {
+class Interface;
+}
+
 namespace KIPICalendarPlugin
 {
 
@@ -68,6 +73,9 @@ public:
     ImagePosition         imgPos;
     QFont                 baseFont;
     int                   year;
+
+    // adding interface so who needs it can get it from settings
+    KIPI::Interface*      interface;
 };
 
 // ---------------------------------------------------------------------------
@@ -91,6 +99,9 @@ public:
     QString getDayDescr(int month, int day) const;
     QPrinter::PrinterMode resolution() const;
 
+    void setKipiInterface(KIPI::Interface* interface);
+    KIPI::Interface* kipiInterface();
+    
     static CalSettings* instance(QObject* parent = 0);
 
     ~CalSettings();

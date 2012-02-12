@@ -9,6 +9,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
+ * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,16 +25,21 @@
 
 #include "calwidget.moc"
 
+// LibKIPI includes
+
+#include <libkipi/interface.h>
+
 // Local includes
 
 #include "calpainter.h"
+#include "kpimageinfo.h"
 #include "calsettings.h"
 
 namespace KIPICalendarPlugin
 {
 
 CalWidget::CalWidget(QWidget* parent)
-    : QWidget(parent, 0)
+    : QWidget(parent, 0), _current(1)
 {
     setAttribute(Qt::WA_NoBackground);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -45,8 +51,17 @@ CalWidget::~CalWidget()
 
 void CalWidget::paintEvent(QPaintEvent* e)
 {
+    CalParams& params = CalSettings::instance()->params;
+    int month = _current;
     CalPainter painter(this);
-    painter.paint(1);
+    
+    KUrl imgUrl = CalSettings::instance()->image(month);
+    KIPIPlugins::KPImageInfo info(params.interface, imgUrl);
+    KExiv2::ImageOrientation orientation = info.orientation();
+    painter.setImage(imgUrl, orientation);
+
+    painter.paint(month);
+
     Q_UNUSED(e);
 }
 

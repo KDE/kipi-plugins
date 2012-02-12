@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
+ * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -343,19 +344,17 @@ void CalPainter::paint(int month)
         emit signalTotal(image_.height());
 
         int h = image_.height();
-        int x = (rImage.width() - image_.width()) / 2;
+        int x = rImage.bottomLeft().x() + (rImage.width() - image_.width()) / 2;
         int y = (rImage.height() - h) / 2;
 
         int blockSize = 10;
         int block = 0;
-
         while (block < h && !cancelled_)
         {
             if (block + blockSize > h)
             {
                 blockSize = h - block;
             }
-
             drawImage(x, y + block, image_, 0, block, image_.width(), blockSize);
             block += blockSize;
             emit signalProgress(block);

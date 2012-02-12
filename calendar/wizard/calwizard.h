@@ -9,6 +9,7 @@
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
+ * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,7 +55,6 @@ class KPAboutData;
 namespace KIPICalendarPlugin
 {
 
-class CalSelect;
 class CalEvents;
 class CalPrinter;
 class CalSettings;
@@ -68,6 +68,8 @@ public:
 
     explicit CalWizard(KIPI::Interface* interface, QWidget* parent=0);
     virtual ~CalWizard();
+    
+    KIPI::Interface* interface() {return interface_;}
 
 private:
 
@@ -84,7 +86,6 @@ private:
 
     CalSettings*              cSettings_;
     CalTemplate*              wTemplate_;
-    CalSelect*                wSelect_;
     QWidget*                  wEvents_;
     Ui::CalEvents             calEventsUI;
     Ui::CalProgress           calProgressUI;

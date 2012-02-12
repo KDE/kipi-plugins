@@ -10,6 +10,7 @@
  * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  * Copyright (C) 2011 by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -50,7 +51,6 @@
 // Local includes
 
 #include "calprinter.h"
-#include "calselect.h"
 #include "calsettings.h"
 #include "caltemplate.h"
 #include "kpaboutdata.h"
@@ -67,7 +67,7 @@ CalWizard::CalWizard(KIPI::Interface* interface, QWidget* parent)
 
     // ---------------------------------------------------------------
 
-    wTemplate_   = new CalTemplate(this);
+    wTemplate_   = new CalTemplate(interface, this);
     addPage(wTemplate_, i18n("Create Template for Calendar"));
 
     // ---------------------------------------------------------------
@@ -75,11 +75,6 @@ CalWizard::CalWizard(KIPI::Interface* interface, QWidget* parent)
     wEvents_     = new QWidget(this);
     calEventsUI.setupUi(wEvents_);
     addPage(wEvents_, i18n("Choose events to show on the Calendar"));
-
-    // ---------------------------------------------------------------
-
-    wSelect_     = new CalSelect(interface, this);
-    addPage(wSelect_, i18n("Select Year & Images"));
 
     // ---------------------------------------------------------------
 

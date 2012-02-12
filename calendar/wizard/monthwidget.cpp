@@ -9,6 +9,7 @@
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
+ * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -74,6 +75,10 @@ MonthWidget::MonthWidget(KIPI::Interface* interface, QWidget* parent, int month)
 
     connect(interface_, SIGNAL(gotThumbnail(KUrl,QPixmap)),
             this, SLOT(gotThumbnail(KUrl,QPixmap)));
+
+    connect(this, SIGNAL(pressed()), 
+            this, SLOT(monthSelected()));
+    
 }
 
 MonthWidget::~MonthWidget()
@@ -116,6 +121,11 @@ void MonthWidget::dragEnterEvent(QDragEnterEvent* event)
 QPixmap MonthWidget::thumb() const
 {
     return thumb_;
+}
+
+int MonthWidget::month()
+{
+  return month_;
 }
 
 void MonthWidget::setThumb(const QPixmap& pic)
@@ -164,6 +174,11 @@ void MonthWidget::dropEvent(QDropEvent* event)
 
     KUrl url = srcURLs.first();
     setImage(url);
+}
+
+void MonthWidget::monthSelected()
+{
+  emit monthSelected(month_);
 }
 
 void MonthWidget::gotThumbnail(const KUrl& url, const QPixmap& pix)

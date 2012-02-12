@@ -9,6 +9,7 @@
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
  * Copyright (C) 2011 by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -68,6 +69,7 @@ CalSettings* CalSettings::instance(QObject* parent)
 void CalSettings::setYear(int year)
 {
     params.year = year;
+    emit settingsChanged();
 }
 
 int CalSettings::year() const
@@ -322,6 +324,17 @@ QString CalSettings::getDayDescr(int month, int day) const
 QPrinter::PrinterMode CalSettings::resolution() const
 {
     return params.printResolution;
+}
+
+
+void CalSettings::setKipiInterface(KIPI::Interface* interface)
+{
+  params.interface = interface;
+}
+
+KIPI::Interface* CalSettings::kipiInterface()
+{
+  return params.interface;
 }
 
 }  // NameSpace KIPICalendarPlugin
