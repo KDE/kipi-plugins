@@ -125,15 +125,13 @@ namespace KIPIImgurExportPlugin
 
         enum State
         {
-            IE_LOGIN = 0,
+            IE_LOGIN = 1,
             IE_ADDPHOTO,
             IE_REMOVEPHOTO
         };
     public:
         ImgurTalker (Interface* iface, QWidget* parent = 0);
         ~ImgurTalker();
-
-        const QString getStatusError (ImgurTalker::ServerStatusCode code);
 
         void startUpload ();
 
@@ -142,16 +140,14 @@ namespace KIPIImgurExportPlugin
 
 
     Q_SIGNALS:
+        void signalBusy( bool busy);
         void signalUploadStart( const KUrl& url );
-        void signalError( const QString& msg );
-        void signalBusy( bool val );
         void signalUploadProgress(int);
         void signalUploadDone(const KUrl& url, bool success);
+        void signalError( const QString& msg );
 
     private:
         QString         m_apiKey;
-        KUrl            m_exportUrl;
-        KUrl            m_removeUrl;
         QString         m_userAgent;
 
         QWidget*        m_parent;
@@ -162,10 +158,10 @@ namespace KIPIImgurExportPlugin
         KUrl            m_currentUrl;
 
         KIO::Job*       m_job;
-//        QMap<KIO::Job*, QByteArray> m_jobData;
         bool imageUpload (KUrl filePath);
-        bool imageDelete (QString hash);
+        bool imageRemove (QString hash);
         bool parseResponseImageUpload (QByteArray data);
+        bool parseResponseImageRemove (QByteArray data);
 
     private Q_SLOTS:
         void slotResult (KJob *job);

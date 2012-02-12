@@ -46,9 +46,6 @@ namespace KIPIImgurExportPlugin {
         m_job           = 0;
         m_userAgent     = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
 
-        m_exportUrl     = KUrl("http://api.imgur.com/2/upload.json");
-        m_removeUrl     = KUrl("http://api.imgur.com/2/delete/");
-
         m_apiKey        = _IMGUR_API_KEY;
     }
 
@@ -80,26 +77,50 @@ namespace KIPIImgurExportPlugin {
 
         if ( job->error() ) {
             emit signalError(tr("Upload failed")); //job->errorString()
-            kDebug() << "err: " << job->errorString();
+            kDebug() << "Error :" << job->errorString();
         }
 
+        bool parseOk;
         switch(m_state)
         {
             case IE_REMOVEPHOTO:
+                if (m_currentUrl != NULL) {
+                    parseOk = parseResponseImageRemove(m_buffer);
+                }
             break;
             case IE_ADDPHOTO:
-            default:
-                if (m_currentUrl != NULL) {
-                    emit signalUploadDone(m_currentUrl, parseResponseImageUpload(m_buffer));
+                kDebug ()  << m_currentUrl;
+
+                if (!m_currentUrl.isEmpty()) {
+                    parseOk = parseResponseImageUpload(m_buffer);
                 }
+                break;
+            default:
+
             break;
         }
 
+        emit signalUploadDone(m_currentUrl, parseOk);
+        kDebug ()  << m_currentUrl << parseOk << "Emitted the upload done signal";
+
+        m_buffer.resize(0);
+        emit signalBusy(false);
         return;
     }
 
+    bool ImgurTalker::parseResponseImageRemove(QByteArray data) {
+        if (data.isEmpty()) {
+            //
+        }
+        return false;
+    }
+
     bool ImgurTalker::parseResponseImageUpload (QByteArray data) {
-        bool ok;
+        bool ok = false;
+
+        kDebug () << "\n_______________\n" + data + "\n______________\n";
+        if (data.isEmpty())
+            return false;
 
         QJson::Parser* p = new QJson::Parser();
         QVariant r = p->parse(data, &ok);
@@ -138,7 +159,7 @@ namespace KIPIImgurExportPlugin {
                     if (it.key() == "parameters") {
                         error.parameters =  v;
                     }
-                    kDebug() << "ERROR :" << error.message;
+
                     emit signalError (QString(error.message)); // p->errorString()
                     return false;
                 }
@@ -221,31 +242,32 @@ namespace KIPIImgurExportPlugin {
             }
         } else {
             emit signalError (tr ("Upload error")); // p->errorString()
+             kDebug() << "Parser error :" << p->errorString();
             return false;
         }
 
-//        kDebug() << "qJson :" << tr(data);
         return true;
     }
 
     bool ImgurTalker::imageUpload (KUrl filePath)
     {
+//        m_buffer.resize(0);
         m_currentUrl = filePath;
-        emit signalUploadStart(filePath);
         MPForm form;
 
-        m_exportUrl.addQueryItem("key", m_apiKey);
+        KUrl exportUrl     = KUrl("http://api.imgur.com/2/upload.json");
+        exportUrl.addQueryItem("key", m_apiKey);
 
-        m_exportUrl.addQueryItem("name", filePath.fileName());
-        m_exportUrl.addQueryItem("title", "TEST Kipi Imgur uploader"); // this should be replaced with something the user submits
-        m_exportUrl.addQueryItem("caption", ""); // this should be replaced with something the user submits
+        exportUrl.addQueryItem("name", filePath.fileName());
+        exportUrl.addQueryItem("title", filePath.fileName()); // this should be replaced with something the user submits
+//        exportUrl.addQueryItem("caption", ""); // this should be replaced with something the user submits
 
-        m_exportUrl.addQueryItem("type", "file");
+        exportUrl.addQueryItem("type", "file");
 
         form.addFile("image", filePath.path());
         form.finish();
 
-        KIO::TransferJob* job = KIO::http_post(m_exportUrl, form.formData(), KIO::HideProgressInfo);
+        KIO::TransferJob* job = KIO::http_post(exportUrl, form.formData(), KIO::HideProgressInfo);
         job->addMetaData("content-type", form.contentType());
         job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
         job->addMetaData("UserAgent", m_userAgent);
@@ -257,29 +279,31 @@ namespace KIPIImgurExportPlugin {
         connect(job, SIGNAL(result(KJob *)),
                 this, SLOT(slotResult(KJob *)));
 
-         m_job   = job;
-
+//         m_job   = job;
          m_state = IE_ADDPHOTO;
+
+         emit signalUploadStart(filePath);
          emit signalBusy(true);
 
-         m_buffer.resize(0);
          return true;
     }
 
-    bool ImgurTalker::imageDelete (QString delete_hash)
+    bool ImgurTalker::imageRemove (QString delete_hash)
     {
         // @TODO : make sure it works
         MPForm form;
 
-        m_removeUrl.addPath(delete_hash + ".json");
+        KUrl removeUrl     = KUrl("http://api.imgur.com/2/delete/");
+        removeUrl.addPath(delete_hash + ".json");
 
         form.finish();
 
-        KIO::TransferJob* job = KIO::http_post(m_removeUrl, form.formData(), KIO::HideProgressInfo);
+        KIO::TransferJob* job = KIO::http_post(removeUrl, form.formData(), KIO::HideProgressInfo);
         job->addMetaData("content-type", form.contentType());
         job->addMetaData("UserAgent", m_userAgent);
 
         m_state = IE_REMOVEPHOTO;
+
         emit signalBusy(true);
 
         return true;
