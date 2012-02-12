@@ -56,6 +56,11 @@ public:
     KPHostSettings(KIPI::Interface* iface);
     ~KPHostSettings();
 
+    /** Return all file extensions (image, sound, video) managed by host application, separated by
+     *  blank spaces, (ex: "JPG PNG TIF NEF AVI MP3").
+     */
+    QString fileExtensions() const;
+    bool    hasFileExtensions() const;
 
 private:
 

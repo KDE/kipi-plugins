@@ -52,7 +52,7 @@ public:
         return (iface);
     }
 
-    QVariant settings(const QString& name) const
+    QVariant setting(const QString& name) const
     {
         QVariant v;
         if (hasValidData())
@@ -66,7 +66,7 @@ public:
     {
         if (hasValidData())
         {
-            return (!settings(name).isNull());
+            return (!setting(name).isNull());
         }
         return false;
     }
@@ -87,5 +87,14 @@ KPHostSettings::~KPHostSettings()
     delete d;
 }
 
+QString KPHostSettings::fileExtensions() const
+{
+    return d->setting("FileExtensions").toString();
+}
+
+bool KPHostSettings::hasFileExtensions() const
+{
+    return d->hasSetting("FileExtensions");
+}
 
 }  // namespace KIPIPlugins
