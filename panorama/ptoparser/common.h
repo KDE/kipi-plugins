@@ -45,6 +45,20 @@
 #include "ptotype.h"
 
 
+// --------------------------------------
+// ------ Boost exceptions thrower ------
+// --------------------------------------
+
+#ifdef BOOST_NO_EXCEPTIONS
+    void throw_exception(std::exception const & /* e */) {} // user defined
+#else
+    template<class E> void throw_exception(E const & e)
+    {
+        throw e;
+    }
+#endif
+
+
 // ----------------------------------------------------
 // ------ Declaring our structures for boost::qi ------
 // ----------------------------------------------------
