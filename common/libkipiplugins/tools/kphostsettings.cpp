@@ -97,4 +97,44 @@ bool KPHostSettings::hasFileExtensions() const
     return d->hasSetting("FileExtensions");
 }
 
+QString KPHostSettings::imageExtensions() const
+{
+    return d->setting("ImagesExtensions").toString();
+}
+
+bool KPHostSettings::hasImageExtensions() const
+{
+    return d->hasSetting("ImagesExtensions");
+}
+
+QString KPHostSettings::rawExtensions() const
+{
+    return d->setting("RawExtensions").toString();
+}
+
+bool KPHostSettings::hasRawExtensions() const
+{
+    return d->hasSetting("RawExtensions");
+}
+    
+QString KPHostSettings::videoExtensions() const
+{
+    return d->setting("VideoExtensions").toString();
+}
+
+bool KPHostSettings::hasVideoExtensions() const
+{
+    return d->hasSetting("VideoExtensions");
+}
+
+QString KPHostSettings::audioExtensions() const
+{
+    return d->setting("AudioExtensions").toString();
+}
+
+bool KPHostSettings::hasAudioExtensions() const
+{
+    return d->hasSetting("AudioExtensions");
+}
+
 }  // namespace KIPIPlugins

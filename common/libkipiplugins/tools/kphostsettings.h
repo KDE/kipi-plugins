@@ -62,6 +62,30 @@ public:
     QString fileExtensions() const;
     bool    hasFileExtensions() const;
 
+    /** Return images file extensions managed by host application, not incuding RAW formats, separated by
+     *  blank spaces, (ex: "JPG PNG TIF").
+     */
+    QString imageExtensions() const;
+    bool    hasImageExtensions() const;
+
+    /** Return RAW file extensions managed by host application, separated by
+     *  blank spaces, (ex: "NEF CR2 ARW PEF").
+     */
+    QString rawExtensions() const;
+    bool    hasRawExtensions() const;
+
+    /** Return video file extensions managed by host application, separated by
+     *  blank spaces, (ex: "AVI MOV MPG").
+     */
+    QString videoExtensions() const;
+    bool    hasVideoExtensions() const;
+
+    /** Return audio file extensions managed by host application, separated by
+     *  blank spaces, (ex: "MP3 WAV OGG").
+     */
+    QString audioExtensions() const;
+    bool    hasAudioExtensions() const;
+    
 private:
 
     class KPHostSettingsPrivate;
