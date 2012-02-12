@@ -39,6 +39,7 @@ namespace KIPIPanoramaPlugin { namespace PtoParser
         using qi::double_;
         using qi::_val;
         using qi::_1;
+        using qi::lexeme;
         using phoenix::bind;
         using phoenix::push_back;
         typedef PTOType::ControlPoint ControlPoint;
@@ -52,7 +53,7 @@ namespace KIPIPanoramaPlugin { namespace PtoParser
             | 'y' >> double_            [bind(&QPoint::setY, bind(&ControlPoint::p1, _val), _1)]
             | 'X' >> double_            [bind(&QPoint::setX, bind(&ControlPoint::p2, _val), _1)]
             | 'Y' >> double_            [bind(&QPoint::setY, bind(&ControlPoint::p2, _val), _1)]
-            | string                    [bind(&QStringList::push_back, bind(&ControlPoint::unmatchedParameters, _val), _1)]
+            | lexeme[string             [bind(&QStringList::push_back, bind(&ControlPoint::unmatchedParameters, _val), _1)]]
         );
     }
 
