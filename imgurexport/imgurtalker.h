@@ -24,8 +24,10 @@
 
 // api key from imgur
 #define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3";
+//#define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3-err";
 
 // Qt
+#include <QWidget>
 #include <QObject>
 #include <QFileInfo>
 #include <QDateTime>
@@ -34,64 +36,69 @@
 #include <kurl.h>
 #include <kio/jobclasses.h>
 
+
+// kipi
+#include <libkipi/interface.h>
+
 namespace KIO
 {
     class Job;
 }
 
+using namespace KIPI;
+
 namespace KIPIImgurExportPlugin
 {
 
-    class ImgurError : public QObject
+    struct ImgurError
     {
-        Q_OBJECT
-        struct Error {
-            QString message;
-            QString request;
-            enum ImgurMethod {
-                POST = 0,
-                GET,
-                HEAD
-            } method;
-            enum ImgurFormat {
-                XML = 0,
-                JSON
-            } format;
-            QVariant parameters;
-        } error;
+        QString message;
+        QString request;
+        enum ImgurMethod
+        {
+            POST = 0,
+            GET,
+            HEAD
+        } method;
+        enum ImgurFormat
+        {
+            XML = 0,
+            JSON
+        } format;
+        QVariant parameters;
     };
 
-    class ImgurSuccess : public QObject
-    {
-        Q_OBJECT
-        struct Upload {
-            struct ImgurImage {
-                QString name;
-                QString title;
-                QString caption;
-                QString hash;
-                QString deletehash;
-                QDateTime datetime;
-                QString type; // maybe enum
-                bool animated;
-                uint width;
-                uint height;
-                uint size;
-                uint views;
-                qulonglong bandwidth;
-            } image;
 
-            struct ImgurLinks {
-                KUrl original;
-                KUrl imgur_page;
-                KUrl delete_page;
-                KUrl small_square;
-                KUrl large_thumbnail;
-            } links;
-        } upload;
+    struct ImgurSuccess
+    {
+        struct ImgurImage
+        {
+            QString name;
+            QString title;
+            QString caption;
+            QString hash;
+            QString deletehash;
+            QDateTime datetime;
+            QString type; // maybe enum
+            bool animated;
+            uint width;
+            uint height;
+            uint size;
+            uint views;
+            qulonglong bandwidth;
+        } image;
+
+        struct ImgurLinks
+        {
+            KUrl original;
+            KUrl imgur_page;
+            KUrl delete_page;
+            KUrl small_square;
+            KUrl large_thumbnail;
+        } links;
     };
 
-    class ImgurTalker : public QObject
+    class ImgurTalker : public QWidget
     {
         Q_OBJECT
 
@@ -118,53 +125,52 @@ namespace KIPIImgurExportPlugin
 
         enum State
         {
-            FE_LOGIN = 0,
-            FE_LISTALBUMS,
-            FE_LISTPHOTOS,
-            FE_ADDPHOTO,
-            FE_UPDATEPHOTO,
-            FE_GETPHOTO,
-            FE_CHECKTOKEN,
-            FE_GETTOKEN,
-            FE_CREATEALBUM,
-            FE_REMOVEPHOTO
+            IE_LOGIN = 0,
+            IE_ADDPHOTO,
+            IE_REMOVEPHOTO
         };
     public:
-        ImgurTalker (QObject *parent = 0);
+        ImgurTalker (Interface* iface, QWidget* parent = 0);
         ~ImgurTalker();
 
         const QString getStatusError (ImgurTalker::ServerStatusCode code);
-        bool imageUpload (KUrl filePath);
-        bool imageDelete (QString hash);
+
+        void startUpload ();
+
         void cancel ();
 //        void dataReq(KIO::Job* job, QByteArray &data);
 
 
     Q_SIGNALS:
+        void signalUploadStart( const KUrl& url );
         void signalError( const QString& msg );
         void signalBusy( bool val );
         void signalUploadProgress(int);
-        void signalUploadDone();
+        void signalUploadDone(const KUrl& url, bool success);
 
     private:
         QString         m_apiKey;
-        QString         m_exportUrl;
-        QString         m_removeUrl;
+        KUrl            m_exportUrl;
+        KUrl            m_removeUrl;
         QString         m_userAgent;
 
-        QObject*        m_parent;
+        QWidget*        m_parent;
+        Interface*      m_interface;
         QByteArray      m_buffer;
 
         State           m_state;
+        KUrl            m_currentUrl;
 
         KIO::Job*       m_job;
 //        QMap<KIO::Job*, QByteArray> m_jobData;
-
+        bool imageUpload (KUrl filePath);
+        bool imageDelete (QString hash);
         bool parseResponseImageUpload (QByteArray data);
 
     private Q_SLOTS:
         void slotResult (KJob *job);
         void data (KIO::Job* job, const QByteArray &data);
+        void slotAddItems (const KUrl::List& list);
 
     };
 } // namespace KIPIImgurTalkerPlugin

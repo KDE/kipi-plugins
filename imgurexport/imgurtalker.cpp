@@ -28,74 +28,28 @@
 #include <KDebug>
 #include <KIO/Job>
 #include <qjson/parser.h>
-#include <qjson/qobjecthelper.h>
 
 // local
 #include "mpform.h"
 
+// kipi
+#include <libkipi/imagecollection.h>
+#include "kpversion.h"
+
+using namespace KIPI;
+
 namespace KIPIImgurExportPlugin {
-    ImgurTalker::ImgurTalker (QObject *parent) {
+    ImgurTalker::ImgurTalker (Interface *interface, QWidget *parent) {
         m_parent        = parent;
+        m_interface     = interface;
 
         m_job           = 0;
-        m_userAgent     = QString("KIPI-Plugin-ImgurTalker/0.0.1");
+        m_userAgent     = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
 
-        m_exportUrl     = QString("http://api.imgur.com/2/upload.json");
-        m_removeUrl     = QString("http://api.imgur.com/2/delete.json");
+        m_exportUrl     = KUrl("http://api.imgur.com/2/upload.json");
+        m_removeUrl     = KUrl("http://api.imgur.com/2/delete/");
 
         m_apiKey        = _IMGUR_API_KEY;
-    }
-
-    const QString ImgurTalker::getStatusError (ImgurTalker::ServerStatusCode code) {
-        switch (code) {
-        case NO_IMAGE:
-            return tr ("No image selected");
-            break;
-        case UPLOAD_FAILED:
-            return tr ("Image failed to upload");
-            break;
-        case TOO_LARGE:
-            return tr ("Image larger than 10MB");
-            break;
-        case INVALID_TYPE:
-            return tr ("Invalid image type or URL");
-            break;
-        case INVALID_KEY:
-            return tr ("Invalid API Key");
-            break;
-        case PROCESS_FAILED:
-            return tr ("Upload failed during process");
-            break;
-        case COPY_FAILED:
-            return tr ("Upload failed during the copy process");
-            break;
-        case THUMBNAIL_FAILED:
-            return tr ("Upload failed during thumbnail process");
-            break;
-        case UPLOAD_LIMIT:
-            return tr ("Upload limit reached");
-            break;
-        case GIF_TOO_LARGE:
-            return tr ("Animated GIF is larger than 2MB");
-            break;
-        case PNG_TOO_LARGE:
-            return tr ("Animated PNG is larger than 2MB");
-            break;
-        case INVALID_URL:
-            return tr ("Invalid URL");
-            break;
-        case URL_UNAVAILABLE:
-            return tr ("Could not download the image from that URL");
-            break;
-        case INVALID_API_REQUEST:
-            return tr ("Invalid API request");
-            break;
-        case INVALID_RESPONSE_FORMAT:
-            return tr ("Invalid response format");
-            break;
-        default:
-            return tr ("Unimplemented");
-        }
     }
 
     ImgurTalker::~ImgurTalker()
@@ -121,31 +75,26 @@ namespace KIPIImgurExportPlugin {
         emit signalUploadProgress(j->percent());
     }
 
-//    void ImgurTalker::dataReq(KIO::Job* job, QByteArray& data)
-//    {
-//        if (m_jobData.contains(job))
-//        {
-//            data = m_jobData.value(job);
-//            m_jobData.remove(job);
-//        }
-//    }
-
     void ImgurTalker::slotResult (KJob *kjob) {
         KIO::Job* job = static_cast<KIO::Job*>(kjob);
 
-        if ( job->error() )
+        if ( job->error() ) {
+            emit signalError(tr("Upload failed")); //job->errorString()
             kDebug() << "err: " << job->errorString();
+        }
 
         switch(m_state)
         {
+            case IE_REMOVEPHOTO:
+            break;
+            case IE_ADDPHOTO:
             default:
-                kDebug () << m_buffer;
-                if (parseResponseImageUpload(m_buffer))
-                    emit signalUploadDone();
+                if (m_currentUrl != NULL) {
+                    emit signalUploadDone(m_currentUrl, parseResponseImageUpload(m_buffer));
+                }
             break;
         }
 
-//        kDebug () << "buff len" << m_buffer.length() << m_buffer;
         return;
     }
 
@@ -156,38 +105,147 @@ namespace KIPIImgurExportPlugin {
         QVariant r = p->parse(data, &ok);
 
         if (ok) {
+            QMap<QString, QVariant> m = r.toMap();
+            QString responseType = m.begin().key();
+            if (responseType == "error") {
+                ImgurError error;
+                QMap<QString,QVariant> errData = m.begin().value().toMap();
 
-             QString responseType = r.toMap().begin().key();
-             if (responseType == "error") {
-                 // TODO
-             }
-             if (responseType == "upload" ) {
-                // TODO
-             }
+                for (QMap<QString,QVariant>::iterator it = errData.begin(); it != errData.end(); ++it) {
+                    QString v = it.value().toString();
+                    if (it.key() == "message") {
+                        error.message = v;
+                    }
+                    if (it.key() == "request") {
+                        error.request = v;
+                    }
+                    if (it.key() == "method") {
+                       if ( v == "get") {
+                            error.method = ImgurError::GET;
+                        }
+                        if ( v == "post") {
+                            error.method = ImgurError::POST;
+                        }
+                    }
+                    if (it.key() == "format") {
+                        if ( v == "json") {
+                            error.format = ImgurError::JSON;
+                        }
+                        if ( v == "xml") {
+                            error.format = ImgurError::XML;
+                        }
+                    }
+                    if (it.key() == "parameters") {
+                        error.parameters =  v;
+                    }
+                    kDebug() << "ERROR :" << error.message;
+                    emit signalError (QString(error.message)); // p->errorString()
+                    return false;
+                }
+            }
 
-             //QJson::QObjectHelper::qvariant2qobject(r.toMap(), response);
-             kDebug () << responseType;
+            if (responseType == "upload" ) {
+                ImgurSuccess success;
+                QMap<QString,QVariant> successData = m.begin().value().toMap();
+                for (QMap<QString,QVariant>::iterator it = successData.begin(); it != successData.end(); ++it) {
+                    if (it.key() == "image") {
+                        QMap<QString, QVariant> v = it.value().toMap();
+                        for (QMap<QString,QVariant>::iterator it = v.begin(); it != v.end(); ++it) {
+                            QString value = it.value().toString();
+                            if (it.key() == "name") {
+                                success.image.name = value;
+                            }
+                            if (it.key() == "title") {
+                                success.image.title = value;
+                            }
+                            if (it.key() == "caption") {
+                                success.image.caption = value;
+                            }
+                            if (it.key() == "hash") {
+                                success.image.hash = value;
+                            }
+                            if (it.key() == "deleteHash") {
+                                success.image.deletehash = value;
+                            }
+                            if (it.key() == "dateTime") {
+                                //success.image.datetime = QDateTime(value);
+                            }
+                            if (it.key() == "type") {
+                                success.image.type = value;
+                            }
+                            if (it.key() == "animated") {
+                                success.image.animated = (value == "true");
+                            }
+                            if (it.key() == "width") {
+                                success.image.width = value.toInt();
+                            }
+                            if (it.key() == "height") {
+                                success.image.height = value.toInt();
+                            }
+                            if (it.key() == "size") {
+                                success.image.size = value.toInt();
+                            }
+                            if (it.key() == "views") {
+                                success.image.views = value.toInt();
+                            }
+                            if (it.key() == "bandwidth") {
+                                success.image.bandwidth = value.toLongLong();
+                            }
+                        }
+                    }
+                    if (it.key() == "links") {
+                        QMap<QString, QVariant> v = it.value().toMap();
+                        for (QMap<QString,QVariant>::iterator it = v.begin(); it != v.end(); ++it) {
+                            QString value = it.value().toString();
+                            if (it.key() == "original") {
+                                success.links.original = value;
+                            }
+                            if (it.key() == "imgur_page") {
+                                success.links.imgur_page = value;
+                            }
+                            if (it.key() == "delete_page") {
+                                success.links.delete_page = value;
+                            }
+                            if (it.key() == "small_square") {
+                                success.links.small_square = value;
+                            }
+                            if (it.key() == "largeThumbnail") {
+                                success.links.large_thumbnail = value;
+                            }
+                        }
+                    }
+
+                    kDebug () << "Link:" << success.links.imgur_page;
+                    kDebug () << "Delete:" << success.links.delete_page;
+                }
+            }
         } else {
             emit signalError (tr ("Upload error")); // p->errorString()
             return false;
         }
 
-        kDebug() << "qJson :" << tr(data);
+//        kDebug() << "qJson :" << tr(data);
         return true;
     }
 
     bool ImgurTalker::imageUpload (KUrl filePath)
     {
-        KUrl url(m_exportUrl);
+        m_currentUrl = filePath;
+        emit signalUploadStart(filePath);
         MPForm form;
 
-        url.addQueryItem("key", m_apiKey);
-        url.addQueryItem("title", "TEST Kipi Imgur uploader");
+        m_exportUrl.addQueryItem("key", m_apiKey);
+
+        m_exportUrl.addQueryItem("name", filePath.fileName());
+        m_exportUrl.addQueryItem("title", "TEST Kipi Imgur uploader"); // this should be replaced with something the user submits
+        m_exportUrl.addQueryItem("caption", ""); // this should be replaced with something the user submits
+
+        m_exportUrl.addQueryItem("type", "file");
 
         form.addFile("image", filePath.path());
         form.finish();
 
-        KIO::TransferJob* job = KIO::http_post(url, form.formData(), KIO::HideProgressInfo);
+        KIO::TransferJob* job = KIO::http_post(m_exportUrl, form.formData(), KIO::HideProgressInfo);
         job->addMetaData("content-type", form.contentType());
         job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
         job->addMetaData("UserAgent", m_userAgent);
@@ -201,16 +259,29 @@ namespace KIPIImgurExportPlugin {
 
          m_job   = job;
 
-         m_state = FE_ADDPHOTO;
+         m_state = IE_ADDPHOTO;
          emit signalBusy(true);
 
          m_buffer.resize(0);
          return true;
     }
 
-    bool ImgurTalker::imageDelete (QString hash)
+    bool ImgurTalker::imageDelete (QString delete_hash)
     {
-        m_state = FE_REMOVEPHOTO;
+        // @TODO : make sure it works
+        MPForm form;
+
+        m_removeUrl.addPath(delete_hash + ".json");
+
+        form.finish();
+
+        KIO::TransferJob* job = KIO::http_post(m_removeUrl, form.formData(), KIO::HideProgressInfo);
+        job->addMetaData("content-type", form.contentType());
+        job->addMetaData("UserAgent", m_userAgent);
+
+        m_state = IE_REMOVEPHOTO;
+        emit signalBusy(true);
+
         return true;
     }
 
@@ -221,6 +292,34 @@ namespace KIPIImgurExportPlugin {
             m_job = 0;
         }
         emit signalBusy(false);
+    }
+
+    void ImgurTalker::startUpload() {
+        ImageCollection images = m_interface->currentSelection();
+
+        if (images.isValid()) {
+            KUrl::List list = images.images();
+            for (KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it) {
+                KUrl imageUrl = *it;
+
+                imageUpload(imageUrl);
+                //kDebug () << images.images().at(i).pathOrUrl();
+            }
+        }
+    }
+
+    void ImgurTalker::slotAddItems (const KUrl::List &list) {
+       if (list.count() == 0)
+       {
+           return;
+       }
+
+      for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
+      {
+           KUrl imageUrl = *it;
+
+           imageUpload(imageUrl);
+      }
     }
 }
 
