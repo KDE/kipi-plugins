@@ -27,6 +27,9 @@
 // LibKIPI includes
 #include <libkipi/plugin.h>
 
+// local
+#include "imgurwindow.h"
+
 namespace KIPIImgurExportPlugin
 {
 
@@ -44,6 +47,7 @@ public Q_SLOTS:
 
 private:
         KAction         *m_actionExport;
+        ImgurWindow     *m_winExport;
 };
 }
 #endif // PLUGIN_IMGUREXPORT_H

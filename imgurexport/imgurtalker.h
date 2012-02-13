@@ -102,27 +102,6 @@ namespace KIPIImgurExportPlugin
     {
         Q_OBJECT
 
-        /**
-         * @deprecated
-         */
-        enum ServerStatusCode {
-            NO_IMAGE = 1000,
-            UPLOAD_FAILED,
-            TOO_LARGE,
-            INVALID_TYPE,
-            INVALID_KEY,
-            PROCESS_FAILED,
-            COPY_FAILED,
-            THUMBNAIL_FAILED,
-            UPLOAD_LIMIT,
-            GIF_TOO_LARGE,
-            PNG_TOO_LARGE,
-            INVALID_URL,
-            URL_UNAVAILABLE,
-            INVALID_API_REQUEST = 9000,
-            INVALID_RESPONSE_FORMAT
-        };
-
         enum State
         {
             IE_LOGIN = 1,
@@ -134,7 +113,6 @@ namespace KIPIImgurExportPlugin
         ~ImgurTalker();
 
         void startUpload ();
-
         void cancel ();
 //        void dataReq(KIO::Job* job, QByteArray &data);
 
@@ -156,6 +134,7 @@ namespace KIPIImgurExportPlugin
 
         State           m_state;
         KUrl            m_currentUrl;
+        KUrl::List      m_processQueue;
 
         KIO::Job*       m_job;
         bool imageUpload (KUrl filePath);

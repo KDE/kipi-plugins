@@ -84,19 +84,12 @@ namespace KIPIImgurExportPlugin {
         switch(m_state)
         {
             case IE_REMOVEPHOTO:
-                if (m_currentUrl != NULL) {
-                    parseOk = parseResponseImageRemove(m_buffer);
-                }
+                parseOk = parseResponseImageRemove(m_buffer);
             break;
             case IE_ADDPHOTO:
-                kDebug ()  << m_currentUrl;
-
-                if (!m_currentUrl.isEmpty()) {
-                    parseOk = parseResponseImageUpload(m_buffer);
-                }
-                break;
+                parseOk = parseResponseImageUpload(m_buffer);
+            break;
             default:
-
             break;
         }
 

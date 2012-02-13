@@ -25,8 +25,6 @@
 #include "../common/libkipiplugins/widgets/progresswidget.h"
 
 #include "plugin_imgurexport.h"
-#include "imgurtalker.h"
-//#include "imgurwidget.h"
 
 // KDE includes
 #include <KDebug>
@@ -41,9 +39,18 @@
 #include <KPluginFactory>
 #include <KPluginLoader>
 #include <KDialog>
+#include <KWindowSystem>
+
+// KIPI
+#include "libkipi/interface.h"
+
+
+// local
+#include "imgurwindow.h"
 
 using namespace KIPIImgurExportPlugin;
 using namespace KIPIPlugins;
+
 
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
@@ -57,6 +64,8 @@ Plugin_ImgurExport::Plugin_ImgurExport(QObject *parent, const QVariantList &args
 
 void Plugin_ImgurExport::setup(QWidget* widget)
 {
+    m_winExport = 0;
+
     KIPI::Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_imgurexport");
@@ -92,37 +101,22 @@ void Plugin_ImgurExport::slotActivate()
         return;
     }
 
-    ImagesList* m_dlgExport = new ImagesList(interface);
-    m_dlgExport->setWindowIcon(KIcon("imgur"));
-    m_dlgExport->setWindowTitle(i18n("Export to the imgur.com web service"));
+    if (!m_winExport)
+    {
+        // We clean it up in the close button
+        m_winExport = new KIPIImgurExportPlugin::ImgurWindow(interface, kapp->activeWindow());
+    }
+    else
+    {
+        if (m_winExport->isMinimized())
+        {
+            KWindowSystem::unminimizeWindow(m_winExport->winId());
+        }
 
-    // i need to connect image list process slot to the imgur talker
+        KWindowSystem::activateWindow(m_winExport->winId());
+    }
+    m_winExport->reactivate();
 
-//    m_dlgExport->addActions();
-//    ProgressWidget *p = new ProgressWidget(interface);
-//    p->show();
-
-    m_dlgExport->loadImagesFromCurrentSelection();
-    m_dlgExport->setAllowDuplicate(false);
-    m_dlgExport->setAllowRAW(false);
-
-    m_dlgExport->show();
-
-    ImgurTalker *ImgurWebService = new ImgurTalker(interface, m_dlgExport);
-
-    connect(ImgurWebService, SIGNAL(signalUploadStart(KUrl)),
-            m_dlgExport, SLOT(processing(KUrl)));
-
-    connect(ImgurWebService, SIGNAL(signalUploadDone(KUrl, bool)),
-            m_dlgExport, SLOT(processed(KUrl, bool)));
-
-    connect(ImgurWebService, SIGNAL(signalUploadProgress(int)),
-            m_dlgExport, SLOT(slotProgressTimerDone()));
-
-    connect(m_dlgExport, SIGNAL(signalAddItems(KUrl::List)),
-            ImgurWebService, SLOT(slotAddItems(KUrl::List)));
-
-    ImgurWebService->startUpload();
     kDebug() << "We have activated the imgur exporter!";
 }
 
