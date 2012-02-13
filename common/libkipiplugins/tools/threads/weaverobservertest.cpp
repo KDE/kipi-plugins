@@ -50,6 +50,10 @@ WeaverObserverTest::WeaverObserverTest(QObject* parent)
             this, SLOT(slotThreadExited(ThreadWeaver::Thread*)));
 }
 
+WeaverObserverTest::~WeaverObserverTest()
+{
+}
+
 void WeaverObserverTest::slotWeaverStateChanged(State* state)
 {
     kDebug() << "WeaverObserverTest: thread state changed to " << state->stateName();
@@ -60,7 +64,7 @@ void WeaverObserverTest::slotThreadStarted(Thread* th)
     kDebug() << "WeaverObserverTest: thread " << th->id()  <<" started";
 }
 
-void WeaverObserverTest::slotThreadBusy(Thread* th, Job* /*job*/)
+void WeaverObserverTest::slotThreadBusy(Thread* th, Job*)
 {
     kDebug() << "WeaverObserverTest: thread " << th->id()  << " busy";
 }

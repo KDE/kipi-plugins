@@ -43,6 +43,7 @@ class WeaverObserverTest : public ThreadWeaver::WeaverObserver
 public:
 
     WeaverObserverTest(QObject* parent=0);
+    ~WeaverObserverTest();
 
 protected Q_SLOTS:
 
