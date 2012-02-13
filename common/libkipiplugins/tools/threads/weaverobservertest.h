@@ -30,6 +30,9 @@
 #include <threadweaver/State.h>
 #include <threadweaver/Thread.h>
 
+namespace KIPIPlugins
+{
+
 /** WeaverObserverTest is a simple test of the actionThread class that
     prints debug messages when signals are received.
 */
@@ -49,5 +52,7 @@ protected Q_SLOTS:
     void slotThreadSuspended(ThreadWeaver::Thread*);
     void slotThreadExited(ThreadWeaver::Thread*);
 };
+
+}  // namespace KIPIPlugins
 
 #endif // WEAVEROBSERVERTEST_H

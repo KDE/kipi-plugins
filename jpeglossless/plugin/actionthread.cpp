@@ -56,8 +56,6 @@ extern "C"
 #include "imageflip.h"
 #include "convert2grayscale.h"
 
-using namespace KIPIPlugins;
-
 namespace KIPIJPEGLossLessPlugin
 {
 
@@ -119,6 +117,8 @@ protected:
     }
 };
 
+// ----------------------------------------------------------------------------------------------------
+
 ActionThread::ActionThread(KIPI::Interface* interface, QObject* parent)
     : ActionThreadBase(parent)
 {
@@ -168,9 +168,9 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
     for (KUrl::List::const_iterator it = urlList.constBegin();
             it != urlList.constEnd(); ++it )
     {
-        Task* t      = new Task(this,updateFileStamp);
-        t->fileUrl   = *it;
-        t->action    = Flip;
+        Task* t       = new Task(this,updateFileStamp);
+        t->fileUrl    = *it;
+        t->action     = Flip;
         t->flipAction = val;
 
         connect(t, SIGNAL(started(ThreadWeaver::Job*)),
@@ -195,8 +195,8 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
             it != urlList.constEnd(); ++it )
     {
         ActionThread::Task* t    = new Task(this,updateFileStamp);
-        t->fileUrl = *it;
-        t->action  = KIPIJPEGLossLessPlugin::GrayScale;
+        t->fileUrl               = *it;
+        t->action                = KIPIJPEGLossLessPlugin::GrayScale;
 
         connect(t, SIGNAL(started(ThreadWeaver::Job*)),
                 this, SLOT(slotJobStarted(ThreadWeaver::Job*)));
@@ -213,28 +213,28 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
 
 }
 
-void ActionThread::slotJobDone(ThreadWeaver::Job *job)
+void ActionThread::slotJobDone(ThreadWeaver::Job* job)
 {
     Task* task = static_cast<Task*>(job);
 
     if (task->errString.isEmpty())
     {
-        kDebug() << "Job done:" << task->fileUrl.toLocalFile() << endl;
+        kDebug() << "Job done:" << task->fileUrl.toLocalFile();
         emit finished(task->fileUrl.toLocalFile(),task->action);
     }
     else
     {
-        kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString << endl;
+        kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString;
         emit failed(task->fileUrl.toLocalFile(),task->action,task->errString);
     }
 
     delete job;
 }
 
-void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
+void ActionThread::slotJobStarted(ThreadWeaver::Job* job)
 {
     Task* task = static_cast<Task*>(job);
-    kDebug() << "Job Started:" << task->fileUrl.toLocalFile() << endl;
+    kDebug() << "Job Started:" << task->fileUrl.toLocalFile();
     emit starting(task->fileUrl.toLocalFile(),task->action);
 }
 
