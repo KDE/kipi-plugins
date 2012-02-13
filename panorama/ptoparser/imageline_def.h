@@ -277,9 +277,13 @@ imageLineGrammar<Iterator>::imageLineGrammar() : imageLineGrammar::base_type(lin
             >> lensParameterInt         [bind(&setParameterFromLPInt, ref(p), _1, _val)]
         | imageParameterLPDouble        [ref(p) = _1]
             >> lensParameterDouble      [bind(&setParameterFromLPDouble, ref(p), _1, _val)]
-        | ("Vf\"" >> string >> '"')     [bind(&Image::vignettingFlatfieldImageName, _val) = _1]
+        | "Vf\""
+            >> lexeme[string            [bind(&Image::vignettingFlatfieldImageName, _val) = _1]]
+            >> '"'
         | 'S' >> rectangle              [bind(&Image::crop, _val) = _1]
-        | ("n\"" >> string >> '"')      [bind(&Image::fileName, _val) = _1]
+        | "n\""
+            >> lexeme[string            [bind(&Image::fileName, _val) = _1]]
+            >> '"'
         | lexeme[string                 [bind(&QStringList::push_back, bind(&Image::unmatchedParameters, _val), _1)]]
     );
 }

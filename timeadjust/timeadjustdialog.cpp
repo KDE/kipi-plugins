@@ -78,9 +78,13 @@ extern "C"
 // Local includes
 
 #include "kpaboutdata.h"
+#include "kphostsettings.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
 #include "clockphotodialog.h"
+
+using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
 {
@@ -125,52 +129,52 @@ public:
         about                  = 0;
     }
 
-    QGroupBox                *useGroupBox;
-    QGroupBox                *adjustGroupBox;
-    QGroupBox                *updateGroupBox;
-    QGroupBox                *exampleGroupBox;
+    QGroupBox*       useGroupBox;
+    QGroupBox*       adjustGroupBox;
+    QGroupBox*       updateGroupBox;
+    QGroupBox*       exampleGroupBox;
 
-    QButtonGroup             *useButtonGroup;
+    QButtonGroup*    useButtonGroup;
 
-    QRadioButton             *useApplDateBtn;
-    QRadioButton             *useFileDateBtn;
-    QRadioButton             *useMetaDateBtn;
-    QRadioButton             *useCustomDateBtn;
+    QRadioButton*    useApplDateBtn;
+    QRadioButton*    useFileDateBtn;
+    QRadioButton*    useMetaDateBtn;
+    QRadioButton*    useCustomDateBtn;
 
-    QCheckBox                *updAppDateCheck;
-    QCheckBox                *updFileModDateCheck;
-    QCheckBox                *updEXIFModDateCheck;
-    QCheckBox                *updEXIFOriDateCheck;
-    QCheckBox                *updEXIFDigDateCheck;
-    QCheckBox                *updIPTCDateCheck;
-    QCheckBox                *updXMPDateCheck;
+    QCheckBox*       updAppDateCheck;
+    QCheckBox*       updFileModDateCheck;
+    QCheckBox*       updEXIFModDateCheck;
+    QCheckBox*       updEXIFOriDateCheck;
+    QCheckBox*       updEXIFDigDateCheck;
+    QCheckBox*       updIPTCDateCheck;
+    QCheckBox*       updXMPDateCheck;
 
-    QComboBox                *useFileDateTypeChooser;
-    QComboBox                *useMetaDateTypeChooser;
-    QComboBox                *adjTypeChooser;
-    QComboBox                *exampleFileChooser;
+    QComboBox*       useFileDateTypeChooser;
+    QComboBox*       useMetaDateTypeChooser;
+    QComboBox*       adjTypeChooser;
+    QComboBox*       exampleFileChooser;
 
-    QLabel                   *adjDaysLabel;
-    QLabel                   *exampleSummaryLabel;
-    QLabel                   *exampleTimeChangeLabel;
+    QLabel*          adjDaysLabel;
+    QLabel*          exampleSummaryLabel;
+    QLabel*          exampleTimeChangeLabel;
 
-    QSpinBox                 *adjDaysInput;
+    QSpinBox*        adjDaysInput;
 
-    QPushButton              *adjDetByClockPhotoBtn;
+    QPushButton*     adjDetByClockPhotoBtn;
 
-    QDateEdit                *useCustDateInput;
+    QDateEdit*       useCustDateInput;
 
-    QTimeEdit                *useCustTimeInput;
-    QTimeEdit                *adjTimeInput;
+    QTimeEdit*       useCustTimeInput;
+    QTimeEdit*       adjTimeInput;
 
-    QToolButton              *useCustomDateTodayBtn;
+    QToolButton*     useCustomDateTodayBtn;
 
-    KUrl::List                imageURLs;
-    QList<QDateTime>          imageOriginalDates;
+    KUrl::List       imageURLs;
+    QList<QDateTime> imageOriginalDates;
 
-    KIPI::Interface          *interface;
+    KIPI::Interface* interface;
 
-    KIPIPlugins::KPAboutData *about;
+    KPAboutData*     about;
 };
 
 TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
@@ -188,7 +192,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
 
     // -- About data and help button ----------------------------------------
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Time Adjust"),
+    d->about = new KPAboutData(ki18n("Time Adjust"),
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
@@ -327,7 +331,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 0, 1, 1);
     updateGBLayout->addWidget(d->updXMPDateCheck,     0, 2, 1, 1);
 
-    if (!KExiv2Iface::KExiv2::supportXmp())
+    if (!KExiv2::supportXmp())
     {
         d->updXMPDateCheck->setEnabled(false);
     }
@@ -528,7 +532,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
 
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPIPlugins::KPImageInfo info(d->interface, *it);
+        KPImageInfo info(d->interface, *it);
         if (info.isExactDate())
         {
             exactCount++;
@@ -581,8 +585,8 @@ void TimeAdjustDialog::readMetadataTimestamps()
 
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KIPIPlugins::KPImageInfo info(d->interface, *it);
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KPImageInfo info(d->interface, *it);
+        KExiv2 exiv2Iface;
         if (!exiv2Iface.load((*it).path()))
         {
             missingCount++;
@@ -802,7 +806,7 @@ void TimeAdjustDialog::slotOk()
 
         if (d->updAppDateCheck->isChecked())
         {
-            KIPIPlugins::KPImageInfo info(d->interface, url);
+            KPImageInfo info(d->interface, url);
             info.setDate(dateTime);
         }
 
@@ -810,12 +814,10 @@ void TimeAdjustDialog::slotOk()
         {
             bool ret = true;
 
-            KExiv2Iface::KExiv2 exiv2Iface;
-            exiv2Iface.setWriteRawFiles(d->interface->hostSetting("WriteMetadataToRAW").toBool());
-
-#if KEXIV2_VERSION >= 0x000600
-            exiv2Iface.setUpdateFileTimeStamp(d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-#endif
+            KExiv2 exiv2Iface;
+            KPHostSettings hSettings(d->interface);
+            exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+            exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
             ret &= exiv2Iface.load(url.path());
             if (ret)

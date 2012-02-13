@@ -26,5 +26,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 013 ==> 292537 : Dng plugin segfaults.
 014 ==> 293301 : digiKam crashes when uploading to PicasaWeb.
 015 ==> 220798 : It is not possible to set the language in create calendar tool.
-016 ==> 
+016 ==> 293917 : Crash when exiting digikam.
+017 ==> 
 

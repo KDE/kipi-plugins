@@ -1,7 +1,17 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Imgur Export
+Name[ca]=Exportació a Imgur
+Name[it]=Esportazione a Imgur
+Name[pt]=Exportação para o Imgur
+Name[uk]=Експорт до Imgur
+Name[x-test]=xxImgur Exportxx
 Comment=A tool to export images to the imgur.com image hosting service
+Comment[ca]=Una eina per exportar imatges al servei d'allotjament d'imatges imgur.com
+Comment[it]=Uno strumento per esportare immagini al servizio di immagini imgur.com
+Comment[pt]=Uma ferramenta para exportar imagens para o serviço Web remoto do imgur.com
+Comment[uk]=Інструмент для експорту зображень до сховища зображень imgur.com
+Comment[x-test]=xxA tool to export images to the imgur.com image hosting servicexx
 Type=Service
 ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_imgurexport

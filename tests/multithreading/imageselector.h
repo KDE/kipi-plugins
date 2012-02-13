@@ -26,11 +26,8 @@
 
 // KDE includes
 
+#include <kurl.h>
 #include <kdialog.h>
-
-// Local includes
-
-#include "actionthread.h"
 
 class ImageSelector : public KDialog
 {
@@ -44,8 +41,9 @@ public:
 private Q_SLOTS:
 
     void slotStart();
-    void slotStartToProcess(const KUrl& url);
-    void slotEndToProcess(const KUrl& url, bool success);
+    void slotStarting(const KUrl&, int);
+    void slotFinished(const KUrl&, int);
+    void slotFailed(const KUrl&, int, const QString&);
 
 private:
 

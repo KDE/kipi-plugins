@@ -1,13 +1,11 @@
 SUBDIRS(icons)
 
-FIND_PACKAGE(Boost COMPONENTS spirit FATAL_ERROR)
-#INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
-
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser
                     ${Boost_INCLUDE_DIR}/boost              # NOTICE: this is the only way for my system to compile it
+#                     ${Boost_INCLUDE_DIRS}
                    )
 
 IF(OPENMP_FOUND AND NOT APPLE)

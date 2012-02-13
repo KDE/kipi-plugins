@@ -30,15 +30,16 @@
 
 // KDE includes
 
-#include <kurl.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 
-// Kipiplugins includes
+// Local includes
 
+#include "actionthread.h"
 #include "imageslist.h"
 
 using namespace KIPIPlugins;
+using namespace KIPIJPEGLossLessPlugin;
 
 class ImageSelector::ImageSelectorPriv
 {
@@ -84,16 +85,19 @@ ImageSelector::ImageSelector()
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
 
-    d->thread = new ActionThread(this);
+    d->thread = new ActionThread(0, this);
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStart()));
 
-    connect(d->thread, SIGNAL(signalStartToProcess(KUrl)),
-            this, SLOT(slotStartToProcess(KUrl)));
+    connect(d->thread, SIGNAL(starting(KUrl, int)),
+            this, SLOT(slotStarting(KUrl, int)));
 
-    connect(d->thread, SIGNAL(signalEndToProcess(KUrl,bool)),
-            this, SLOT(slotEndToProcess(KUrl,bool)));
+    connect(d->thread, SIGNAL(finished(KUrl, int)),
+            this, SLOT(slotFinished(KUrl, int)));
+
+    connect(d->thread, SIGNAL(failed(KUrl, int, QString)),
+            this, SLOT(slotFailed(KUrl, int, QString)));
 }
 
 ImageSelector::~ImageSelector()
@@ -113,17 +117,23 @@ void ImageSelector::slotStart()
 
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
-    d->thread->rotate(selectedImages);
+    d->thread->rotate(selectedImages, KIPIJPEGLossLessPlugin::Rot180);
     d->thread->start();
 }
 
-void ImageSelector::slotStartToProcess(const KUrl& url)
+void ImageSelector::slotStarting(const KUrl& url, int)
 {
     d->listView->processing(url);
 }
 
-void ImageSelector::slotEndToProcess(const KUrl& url, bool success)
+void ImageSelector::slotFinished(const KUrl& url, int)
 {
-    d->listView->processed(url, success);
+    d->listView->processed(url, true);
+    d->progressBar->setValue(d->progressBar->value()+1);
+}
+
+void ImageSelector::slotFailed(const KUrl& url, int, const QString&)
+{
+    d->listView->processed(url, false);
     d->progressBar->setValue(d->progressBar->value()+1);
 }

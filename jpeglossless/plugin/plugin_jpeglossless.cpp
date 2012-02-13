@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,7 +42,6 @@
 #include <kmessagebox.h>
 #include <kshortcut.h>
 #include <kstandardguiitem.h>
-#include <kurl.h>
 
 // LibKIPI includes
 
@@ -178,14 +177,14 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
 
     d->thread = new KIPIJPEGLossLessPlugin::ActionThread(interface, this);
 
-    connect( d->thread, SIGNAL(starting(QString,int)),
-             this, SLOT(slotStarting(QString,int)));
+    connect( d->thread, SIGNAL(starting(KUrl, int)),
+             this, SLOT(slotStarting(KUrl, int)));
 
-    connect( d->thread, SIGNAL(finished(QString,int)),
-             this, SLOT(slotFinished(QString,int)));
+    connect( d->thread, SIGNAL(finished(KUrl, int)),
+             this, SLOT(slotFinished(KUrl, int)));
 
-    connect( d->thread, SIGNAL(failed(QString,int,QString)),
-             this, SLOT(slotFailed(QString,int,QString)));
+    connect( d->thread, SIGNAL(failed(KUrl, int, QString)),
+             this, SLOT(slotFailed(KUrl, int, QString)));
 
     bool hasSelection = interface->currentSelection().isValid();
 
@@ -328,9 +327,10 @@ void Plugin_JPEGLossless::slotCancel()
     interface->refreshImages( d->images );
 }
 
-void Plugin_JPEGLossless::slotStarting(const QString& filePath, int action)
+void Plugin_JPEGLossless::slotStarting(const KUrl& url, int action)
 {
     QString text;
+    QString filePath = url.toLocalFile();
 
     switch ((KIPIJPEGLossLessPlugin::Action)action)
     {
@@ -359,9 +359,9 @@ void Plugin_JPEGLossless::slotStarting(const QString& filePath, int action)
     d->progressDlg->progressWidget()->addedAction(text, KIPIPlugins::StartingMessage);
 }
 
-void Plugin_JPEGLossless::slotFinished(const QString& filePath, int action)
+void Plugin_JPEGLossless::slotFinished(const KUrl& url, int action)
 {
-    Q_UNUSED(filePath);
+    Q_UNUSED(url);
 
     QString text;
 
@@ -394,9 +394,9 @@ void Plugin_JPEGLossless::slotFinished(const QString& filePath, int action)
     oneTaskCompleted();
 }
 
-void Plugin_JPEGLossless::slotFailed(const QString& filePath, int action, const QString& errString)
+void Plugin_JPEGLossless::slotFailed(const KUrl& url, int action, const QString& errString)
 {
-    Q_UNUSED(filePath);
+    Q_UNUSED(url);
 
     d->failed = true;
     QString text;

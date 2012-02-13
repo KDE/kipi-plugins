@@ -50,6 +50,7 @@ extern "C"
 
 // Local includes
 
+#include "kphostsettings.h"
 #include "utils.h"
 #include "imagerotate.h"
 #include "imageflip.h"
@@ -62,81 +63,86 @@ class ActionThread::Task : public ThreadWeaver::Job
 {
 public:
 
-    Task(QObject* parent = 0,bool updateFileStamp = true)
-            :Job(parent)
+    Task(QObject* parent = 0, bool updateFileStamp = true)
+        :Job(parent)
     {
         this->updateFileStamp = updateFileStamp;
     }
 
-    KUrl                                 fileUrl;
-    QString                              errString;
+    bool         updateFileStamp;
+
+    QString      errString;
+
+    KUrl         fileUrl;
+
     Action       action;
     RotateAction rotAction;
     FlipAction   flipAction;
-    bool updateFileStamp;
 
 protected:
-    void run()
 
+    void run()
     {
         switch (action)
         {
-        case KIPIJPEGLossLessPlugin::Rotate:
-        {
-            KIPIJPEGLossLessPlugin::ImageRotate imageRotate;
-            imageRotate.rotate(fileUrl.toLocalFile(), rotAction, errString, updateFileStamp);
+            case KIPIJPEGLossLessPlugin::Rotate:
+            {
+                KIPIJPEGLossLessPlugin::ImageRotate imageRotate;
+                imageRotate.rotate(fileUrl.toLocalFile(), rotAction, errString, updateFileStamp);
 
-            break;
-        }
-        case KIPIJPEGLossLessPlugin::Flip:
-        {
+                break;
+            }
+            case KIPIJPEGLossLessPlugin::Flip:
+            {
 
-            ImageFlip imageFlip;
-            imageFlip.flip(fileUrl.toLocalFile(), flipAction, errString, updateFileStamp);
+                ImageFlip imageFlip;
+                imageFlip.flip(fileUrl.toLocalFile(), flipAction, errString, updateFileStamp);
 
-        }
-        case KIPIJPEGLossLessPlugin::GrayScale:
-        {
+            }
+            case KIPIJPEGLossLessPlugin::GrayScale:
+            {
 
-            KIPIJPEGLossLessPlugin::ImageGrayScale imageGrayScale;
-            imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString, updateFileStamp);
+                KIPIJPEGLossLessPlugin::ImageGrayScale imageGrayScale;
+                imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString, updateFileStamp);
 
 
-            break;
-        }
-        default:
-        {
-            kError() << "KIPIJPEGLossLessPlugin:ActionThread: "
-            << "Unknown action specified";
-        }
+                break;
+            }
+            default:
+            {
+                kError() << "KIPIJPEGLossLessPlugin:ActionThread: "
+                         << "Unknown action specified";
+            }
         }
     }
 };
 
+// ----------------------------------------------------------------------------------------------------
 
 ActionThread::ActionThread(KIPI::Interface* interface, QObject* parent)
-        : ActionThreadBase(parent)
+    : ActionThreadBase(parent)
 {
-    interface = interface;
+    m_updateFileStamp = false;
+
     if (interface)
-        updateFileStamp = interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool();
+    {
+        KPHostSettings hSettings(interface);
+        m_updateFileStamp = hSettings.metadataSettings().updateFileTimeStamp;
+    }
 }
 
 ActionThread::~ActionThread()
 {
-    delete interface;
 }
-
 
 void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 {
-
     ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
-            it != urlList.constEnd(); ++it )
+         it != urlList.constEnd(); ++it )
     {
-        Task* t      = new Task(this,updateFileStamp);
+        Task* t      = new Task(this, m_updateFileStamp);
         t->fileUrl   = *it;
         t->action    = Rotate;
         t->rotAction = val;
@@ -160,11 +166,11 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
     ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
-            it != urlList.constEnd(); ++it )
+         it != urlList.constEnd(); ++it )
     {
-        Task* t      = new Task(this,updateFileStamp);
-        t->fileUrl   = *it;
-        t->action    = Flip;
+        Task* t       = new Task(this, m_updateFileStamp);
+        t->fileUrl    = *it;
+        t->action     = Flip;
         t->flipAction = val;
 
         connect(t, SIGNAL(started(ThreadWeaver::Job*)),
@@ -186,11 +192,11 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
-            it != urlList.constEnd(); ++it )
+         it != urlList.constEnd(); ++it )
     {
-        ActionThread::Task* t    = new Task(this,updateFileStamp);
-        t->fileUrl = *it;
-        t->action  = KIPIJPEGLossLessPlugin::GrayScale;
+        ActionThread::Task* t    = new Task(this, m_updateFileStamp);
+        t->fileUrl               = *it;
+        t->action                = KIPIJPEGLossLessPlugin::GrayScale;
 
         connect(t, SIGNAL(started(ThreadWeaver::Job*)),
                 this, SLOT(slotJobStarted(ThreadWeaver::Job*)));
@@ -204,34 +210,31 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     QMutexLocker lock(&d->mutex);
     d->todo << collection;
     d->condVar.wakeAll();
-
 }
 
-void ActionThread::slotJobDone(ThreadWeaver::Job *job)
+void ActionThread::slotJobDone(ThreadWeaver::Job* job)
 {
     Task* task = static_cast<Task*>(job);
 
     if (task->errString.isEmpty())
     {
-        kDebug() << "Job done:" << task->fileUrl.toLocalFile() << endl;
-        emit finished(task->fileUrl.toLocalFile(),task->action);
+        kDebug() << "Job done:" << task->fileUrl.toLocalFile();
+        emit finished(task->fileUrl, task->action);
     }
     else
     {
-        kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString << endl;
-        emit failed(task->fileUrl.toLocalFile(),task->action,task->errString);
+        kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString;
+        emit failed(task->fileUrl, task->action,task->errString);
     }
 
     delete job;
 }
 
-void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
+void ActionThread::slotJobStarted(ThreadWeaver::Job* job)
 {
     Task* task = static_cast<Task*>(job);
-    kDebug() << "Job Started:" << task->fileUrl.toLocalFile() << endl;
-    emit starting(task->fileUrl.toLocalFile(),task->action);
+    kDebug() << "Job Started:" << task->fileUrl.toLocalFile();
+    emit starting(task->fileUrl, task->action);
 }
-
-
 
 }  // namespace KIPIJPEGLossLessPlugin

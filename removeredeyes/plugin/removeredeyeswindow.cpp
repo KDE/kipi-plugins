@@ -58,6 +58,7 @@
 #include "commonsettings.h"
 #include "haarsettingswidget.h"
 #include "kpaboutdata.h"
+#include "kphostsettings.h"
 #include "imageslist.h"
 #include "myimageslist.h"
 #include "previewwidget.h"
@@ -145,7 +146,7 @@ public:
     SaveMethod*               saveMethod;
 
     KIPI::Interface*          interface;
-    KIPIPlugins::KPAboutData* about;
+    KPAboutData*              about;
 };
 const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configGroupName("RemoveRedEyes Settings");
 const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configStorageModeEntry("Storage Mode");
@@ -167,8 +168,8 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* interface)
     setModal(false);
 
     d->interface     = interface;
-    d->thread        = new WorkerThread(this,
-                                        d->interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+    KPHostSettings hSettings(d->interface);
+    d->thread        = new WorkerThread(this, hSettings.metadataSettings().updateFileTimeStamp);
     d->runtype       = WorkerThread::Testrun;
     d->tabWidget     = new KTabWidget;
 
@@ -187,12 +188,12 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* interface)
 
     // ----------------------------------------------------------
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Remove Red-Eye"),
-                                            0,
-                                            KAboutData::License_GPL,
-                                            ki18n("A plugin to automatically "
-                                                    "detect and remove red-eye effect."),
-                                            ki18n("(c) 2008-2009, Andi Clemens"));
+    d->about = new KPAboutData(ki18n("Remove Red-Eye"),
+                               0,
+                               KAboutData::License_GPL,
+                               ki18n("A plugin to automatically "
+                                     "detect and remove red-eye effect."),
+                               ki18n("(c) 2008-2009, Andi Clemens"));
 
     d->about->addAuthor(ki18n("Andi Clemens"), ki18n("Author and Maintainer"),
                         "andi dot clemens at googlemail dot com");
@@ -468,8 +469,8 @@ void RemoveRedEyesWindow::startTestrun()
 
 void RemoveRedEyesWindow::startPreview()
 {
-    KIPIPlugins::ImagesListViewItem* item = dynamic_cast<KIPIPlugins::ImagesListViewItem*>(
-            d->imageList->listView()->currentItem());
+    ImagesListViewItem* item = dynamic_cast<KIPIPlugins::ImagesListViewItem*>(
+                                            d->imageList->listView()->currentItem());
 
     if (!item)
     {

@@ -40,9 +40,11 @@
 #include "variousgrammar.h"
 
 
-// namespace boost {
-//     void throw_exception(std::exception const & e) {kDebug() << "Boost exception";}
-// }
+#ifdef BOOST_NO_EXCEPTIONS
+namespace boost {
+    void throw_exception(std::exception const &e) {kDebug() << "Boost exception" << QString(e.what());}
+}
+#endif
 
 namespace KIPIPanoramaPlugin { namespace PtoParser
 {

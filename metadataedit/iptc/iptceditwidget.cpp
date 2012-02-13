@@ -64,8 +64,10 @@
 #include "iptcstatus.h"
 #include "iptcsubjects.h"
 #include "kpimageinfo.h"
+#include "kphostsettings.h"
 
 using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -293,7 +295,7 @@ void IPTCEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        KIPIPlugins::KPImageInfo info(d->dlg->iface(), *d->dlg->currentItem());
+        KPImageInfo info(d->dlg->iface(), *d->dlg->currentItem());
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {
@@ -316,11 +318,9 @@ void IPTCEditWidget::apply()
         d->envelopePage->applyMetadata(d->iptcData);
 
         KExiv2 exiv2Iface;
-        exiv2Iface.setWriteRawFiles(d->dlg->iface()->hostSetting("WriteMetadataToRAW").toBool());
-
-#if KEXIV2_VERSION >= 0x000600
-        exiv2Iface.setUpdateFileTimeStamp(d->dlg->iface()->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-#endif
+        KPHostSettings hSettings(d->dlg->iface());
+        exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+        exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
         exiv2Iface.load((*d->dlg->currentItem()).path());
         exiv2Iface.setExif(d->exifData);

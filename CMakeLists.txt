@@ -160,6 +160,7 @@ MACRO_OPTIONAL_FIND_PACKAGE(QJSON)         # For Debian Screenshots and Facebook
 MACRO_OPTIONAL_FIND_PACKAGE(KGeoMap)       # For GPSSync.
 MACRO_OPTIONAL_FIND_PACKAGE(Mediawiki)     # For Mediawiki.
 MACRO_OPTIONAL_FIND_PACKAGE(LibKVkontakte) # For VKontakte.
+MACRO_OPTIONAL_FIND_PACKAGE(Boost)         # For Panorama
 
 # check the libkgeomap version
 # note that old versions don't specify version information, so for now
@@ -242,6 +243,7 @@ PRINT_OPTIONAL_LIBRARY_STATUS("qca2" QCA2_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkgeomap" KGEOMAP_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libmediawiki" MEDIAWIKI_FOUND)
 PRINT_OPTIONAL_LIBRARY_STATUS("libkvkontakte" LIBKVKONTAKTE_FOUND)
+PRINT_OPTIONAL_LIBRARY_STATUS("boost" Boost_FOUND)
 
 IF(OPENMP_VERSION_CMAKE)
     PRINT_OPTIONAL_LIBRARY_STATUS("OpenMP" OPENMP_FOUND)
@@ -301,6 +303,7 @@ PRINT_PLUGIN_COMPILE_STATUS("IpodExport" IPOD_FOUND AND GLIB2_FOUND AND GOBJECT_
 PRINT_PLUGIN_COMPILE_STATUS("Calendar" KDEPIMLIBS_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("GPSSync" KGEOMAP_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("Mediawiki" MEDIAWIKI_FOUND)
+PRINT_PLUGIN_COMPILE_STATUS("Panorama" Boost_FOUND)
 
 MESSAGE(STATUS "----------------------------------------------------------------------------------")
 MESSAGE(STATUS "")
@@ -339,6 +342,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/widgets
                         ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools
                         ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools
+                        ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/threads
+                        ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools/threads
                         ${KEXIV2_INCLUDE_DIR}
                         ${KDCRAW_INCLUDE_DIR}
                         ${KIPI_INCLUDE_DIR}
@@ -390,7 +395,6 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(batchprocessimages)
     ADD_SUBDIRECTORY(rajceexport)
     ADD_SUBDIRECTORY(kmlexport)
-    ADD_SUBDIRECTORY(panorama)
     ADD_SUBDIRECTORY(photolayoutseditor)
 
     # Plugins which are optional depencies.
@@ -449,6 +453,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
 #        Disabled for the moment due to problem with libmediawiki api
 #        ADD_SUBDIRECTORY(mediawiki)
     ENDIF(MEDIAWIKI_FOUND)
+
+    IF(Boost_FOUND)
+        ADD_SUBDIRECTORY(panorama)
+    ENDIF(Boost_FOUND)
 
 #   Laurent Montel : wallpaper is currently disabled. Waiting new api with KDE 4.2
 #

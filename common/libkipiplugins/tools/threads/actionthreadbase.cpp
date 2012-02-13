@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "actionthreadbase.h"
+#include "actionthreadbase.moc"
 
 // Qt includes
 
@@ -40,12 +40,15 @@
 
 using namespace ThreadWeaver;
 
-ActionThreadBase::ActionThreadBase(QObject* parent)
-        : QThread(parent),d(new ActionThreadBasePriv)
+namespace KIPIPlugins
 {
-    const int maximumNumberOfThreads    = qMax(Solid::Device::listFromType(Solid::DeviceInterface::Processor).count(), 1);
-    d->log                           = new WeaverObserverTest(this);
-    d->weaver = new ThreadWeaver::Weaver(this);
+
+ActionThreadBase::ActionThreadBase(QObject* parent)
+    : QThread(parent), d(new ActionThreadBasePriv)
+{
+    const int maximumNumberOfThreads = qMax(Solid::Device::listFromType(Solid::DeviceInterface::Processor).count(), 1);
+    d->log                           = new KPWeaverObserver(this);
+    d->weaver                        = new ThreadWeaver::Weaver(this);
     d->weaver->registerObserver(d->log);
     d->weaver->setMaximumNumberOfThreads(maximumNumberOfThreads);
     kDebug() << "Starting Main Thread";
@@ -70,7 +73,6 @@ void ActionThreadBase::slotFinished()
     d->weaverRunning = false;
     d->condVarJobs.wakeAll();
 }
-
 
 void ActionThreadBase::cancel()
 {
@@ -127,3 +129,4 @@ void ActionThreadBase::run()
     kDebug() << "Exiting Action Thread";
 }
 
+}  // namespace KIPIPlugins

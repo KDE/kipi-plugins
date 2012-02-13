@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "weaverobservertest.moc"
+#include "kpweaverobserver.moc"
 
 // KDE includes
 
@@ -28,46 +28,55 @@
 
 using namespace ThreadWeaver;
 
-WeaverObserverTest::WeaverObserverTest(QObject* parent)
+namespace KIPIPlugins
+{
+
+KPWeaverObserver::KPWeaverObserver(QObject* parent)
     : WeaverObserver(parent)
 {
     connect(this, SIGNAL(weaverStateChanged(ThreadWeaver::State*)),
-            SLOT(slotWeaverStateChanged(ThreadWeaver::State*)));
+            this, SLOT(slotWeaverStateChanged(ThreadWeaver::State*)));
 
     connect(this, SIGNAL(threadStarted(ThreadWeaver::Thread*)),
-            SLOT(slotThreadStarted(ThreadWeaver::Thread*)));
+            this, SLOT(slotThreadStarted(ThreadWeaver::Thread*)));
 
     connect(this, SIGNAL(threadBusy(ThreadWeaver::Thread*,ThreadWeaver::Job*)),
-            SLOT(slotThreadBusy(ThreadWeaver::Thread*,ThreadWeaver::Job*)));
+            this, SLOT(slotThreadBusy(ThreadWeaver::Thread*,ThreadWeaver::Job*)));
 
     connect(this, SIGNAL(threadSuspended(ThreadWeaver::Thread*)),
-            SLOT(slotThreadSuspended(ThreadWeaver::Thread*)));
+            this, SLOT(slotThreadSuspended(ThreadWeaver::Thread*)));
 
     connect(this, SIGNAL(threadExited(ThreadWeaver::Thread*)),
-            SLOT(slotThreadExited(ThreadWeaver::Thread*)));
+            this, SLOT(slotThreadExited(ThreadWeaver::Thread*)));
 }
 
-void WeaverObserverTest::slotWeaverStateChanged(State* state)
+KPWeaverObserver::~KPWeaverObserver()
 {
-    kDebug() << "WeaverObserverTest: thread state changed to " << state->stateName();
 }
 
-void WeaverObserverTest::slotThreadStarted(Thread* th)
+void KPWeaverObserver::slotWeaverStateChanged(State* state)
 {
-    kDebug() << "WeaverObserverTest: thread " << th->id()  <<" started" << endl;
+    kDebug() << "KPWeaverObserver: thread state changed to " << state->stateName();
 }
 
-void WeaverObserverTest::slotThreadBusy(Thread* th, Job* /*job*/)
+void KPWeaverObserver::slotThreadStarted(Thread* th)
 {
-    kDebug() << "WeaverObserverTest: thread " << th->id()  << " busy" << endl;
+    kDebug() << "KPWeaverObserver: thread " << th->id()  <<" started";
 }
 
-void WeaverObserverTest::slotThreadSuspended(Thread* th )
+void KPWeaverObserver::slotThreadBusy(Thread* th, Job*)
 {
-    kDebug() << "WeaverObserverTest: thread " << th->id()  << " suspended" << endl;
+    kDebug() << "KPWeaverObserver: thread " << th->id()  << " busy";
 }
 
-void WeaverObserverTest::slotThreadExited(Thread* th)
+void KPWeaverObserver::slotThreadSuspended(Thread* th )
 {
-    kDebug() << "WeaverObserverTest: thread " << th->id()  << " exited" << endl;
+    kDebug() << "KPWeaverObserver: thread " << th->id()  << " suspended";
 }
+
+void KPWeaverObserver::slotThreadExited(Thread* th)
+{
+    kDebug() << "KPWeaverObserver: thread " << th->id()  << " exited";
+}
+
+}  // namespace KIPIPlugins

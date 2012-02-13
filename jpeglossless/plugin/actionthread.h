@@ -44,12 +44,15 @@ namespace KIPI
 class Interface;
 }
 
+using namespace KIPIPlugins;
+
 namespace KIPIJPEGLossLessPlugin
 {
 
 class ActionThread : public ActionThreadBase
 {
     Q_OBJECT
+
 public:
 
     ActionThread(KIPI::Interface* interface, QObject *parent);
@@ -59,27 +62,23 @@ public:
     void flip(const KUrl::List& urlList, FlipAction val);
     void convert2grayscale(const KUrl::List& urlList);
 
-
-protected:
-
 Q_SIGNALS:
 
-    void starting(const QString& filePath, int action);
-    void finished(const QString& filePath, int action);
-    void failed(const QString& filePath, int action, const QString& errString);
+    void starting(const KUrl& url, int action);
+    void finished(const KUrl& url, int action);
+    void failed(const KUrl& url, int action, const QString& errString);
 
 private Q_SLOTS:
+
     void slotJobDone(ThreadWeaver::Job*);
     void slotJobStarted(ThreadWeaver::Job*);
 
 private:
-    KIPI::Interface* interface;
-    bool updateFileStamp;
+
+    bool  m_updateFileStamp;
+
     class Task;
 };
-
-
-
 
 }  // namespace KIPIJPEGLossLessPlugin
 

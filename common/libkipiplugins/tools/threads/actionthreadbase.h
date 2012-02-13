@@ -37,9 +37,14 @@
 #include <ThreadWeaver/Weaver>
 
 //Local includes
-#include "weaverobservertest.h"
 
-class ActionThreadBase : public QThread
+#include "kpweaverobserver.h"
+#include "kipiplugins_export.h"
+
+namespace KIPIPlugins
+{
+
+class KIPIPLUGINS_EXPORT ActionThreadBase : public QThread
 {
     Q_OBJECT
 
@@ -64,6 +69,8 @@ protected:
     ActionThreadBasePriv* const d;
 };
 
+// ------------------------------------------------------------------------------------------------
+
 class ActionThreadBase::ActionThreadBasePriv
 {
 public:
@@ -75,18 +82,20 @@ public:
         log           = 0;
     }
 
-    bool                  running;
-    bool                  weaverRunning;
+    bool                                running;
+    bool                                weaverRunning;
 
-    QMutex                mutex;
+    QMutex                              mutex;
 
-    QWaitCondition        condVar;
-    QWaitCondition        condVarJobs;
+    QWaitCondition                      condVar;
+    QWaitCondition                      condVarJobs;
 
     QList<ThreadWeaver::JobCollection*> todo;
 
-    ThreadWeaver::Weaver*                weaver;
-    WeaverObserverTest*   log;
+    ThreadWeaver::Weaver*               weaver;
+    KPWeaverObserver*                   log;
 };
+
+}  // namespace KIPIPlugins
 
 #endif // ACTIONTHREAD_H
