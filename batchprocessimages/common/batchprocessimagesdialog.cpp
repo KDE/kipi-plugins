@@ -73,8 +73,9 @@ extern "C"
 #include "imagepreview.h"
 #include "outputdialog.h"
 #include "kpversion.h"
-#include "ui_batchprocessimagesdialog.h"
+#include "kphostsettings.h"
 #include "kpimageinfo.h"
+#include "ui_batchprocessimagesdialog.h"
 
 using namespace KIPIPlugins;
 using namespace KExiv2Iface;
@@ -125,7 +126,8 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, KI
 
     // Get the image files filters from the hosts app.
 
-    m_ImagesFilesSort = m_interface->hostSetting("FileExtensions").toString();
+    KPHostSettings hSettings(m_interface);
+    m_ImagesFilesSort = hSettings.imageExtensions();
 }
 
 void BatchProcessImagesDialog::setupUi()
