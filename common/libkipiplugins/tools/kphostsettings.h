@@ -28,20 +28,15 @@
 
 #include <QString>
 
-// LibKexiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kipiplugins_export.h"
+#include "kpmetasettings.h"
 
 namespace KIPI
 {
     class Interface;
 }
-
-using namespace KExiv2Iface;
 
 namespace KIPIPlugins
 {
@@ -85,7 +80,11 @@ public:
      */
     QString audioExtensions() const;
     bool    hasAudioExtensions() const;
-    
+
+    /** Return metadata settings container from KIPI host application.
+     */
+    KPMetaSettings metadataSettings() const;
+
 private:
 
     class KPHostSettingsPrivate;

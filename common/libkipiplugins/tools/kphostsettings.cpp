@@ -116,7 +116,7 @@ bool KPHostSettings::hasRawExtensions() const
 {
     return d->hasSetting("RawExtensions");
 }
-    
+
 QString KPHostSettings::videoExtensions() const
 {
     return d->setting("VideoExtensions").toString();
@@ -135,6 +135,17 @@ QString KPHostSettings::audioExtensions() const
 bool KPHostSettings::hasAudioExtensions() const
 {
     return d->hasSetting("AudioExtensions");
+}
+
+KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
+{
+    KPMetaSettings meta;
+    meta.writeRawFiles         = d->setting("WriteMetadataToRAW").toBool();
+    meta.updateFileTimeStamp   = d->setting("WriteMetadataUpdateFiletimeStamp").toBool();
+    meta.useXMPSidecar4Reading = d->setting("UseXMPSidecar4Reading").toBool();
+    meta.metadataWritingMode   = (KExiv2::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
+
+    return meta;
 }
 
 }  // namespace KIPIPlugins
