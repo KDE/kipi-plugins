@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,6 +24,10 @@
 
 #ifndef PLUGIN_JPEGLOSSLESS_H
 #define PLUGIN_JPEGLOSSLESS_H
+
+// KDE includes
+
+#include <kurl.h>
 
 // LibKIPI includes
 
@@ -61,9 +65,9 @@ private Q_SLOTS:
     void slotRotateExif();
     void slotConvert2GrayScale();
     void slotCancel();
-    void slotStarting(const QString& filePath, int action);
-    void slotFinished(const QString& filePath, int action);
-    void slotFailed(const QString& filePath, int action, const QString& errString);
+    void slotStarting(const KUrl& url, int action);
+    void slotFinished(const KUrl& url, int action);
+    void slotFailed(const KUrl& url, int action, const QString& errString);
 
 private:
 

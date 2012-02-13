@@ -30,7 +30,6 @@
 
 // KDE includes
 
-#include <kurl.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 
@@ -91,14 +90,14 @@ ImageSelector::ImageSelector()
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStart()));
 
-    connect(d->thread, SIGNAL(starting(QString, int)),
-            this, SLOT(slotStarting(QString, int)));
+    connect(d->thread, SIGNAL(starting(KUrl, int)),
+            this, SLOT(slotStarting(KUrl, int)));
 
-    connect(d->thread, SIGNAL(finished(QString, int)),
-            this, SLOT(slotFinished(QString, int)));
+    connect(d->thread, SIGNAL(finished(KUrl, int)),
+            this, SLOT(slotFinished(KUrl, int)));
 
-    connect(d->thread, SIGNAL(failed(QString, int, QString)),
-            this, SLOT(slotFailed(QString, int, QString)));
+    connect(d->thread, SIGNAL(failed(KUrl, int, QString)),
+            this, SLOT(slotFailed(KUrl, int, QString)));
 }
 
 ImageSelector::~ImageSelector()
@@ -122,19 +121,19 @@ void ImageSelector::slotStart()
     d->thread->start();
 }
 
-void ImageSelector::slotStarting(const QString& filePath, int)
+void ImageSelector::slotStarting(const KUrl& url, int)
 {
-    d->listView->processing(KUrl(filePath));
+    d->listView->processing(url);
 }
 
-void ImageSelector::slotFinished(const QString& filePath, int)
+void ImageSelector::slotFinished(const KUrl& url, int)
 {
-    d->listView->processed(KUrl(filePath), true);
+    d->listView->processed(url, true);
     d->progressBar->setValue(d->progressBar->value()+1);
 }
 
-void ImageSelector::slotFailed(const QString& filePath, int, const QString&)
+void ImageSelector::slotFailed(const KUrl& url, int, const QString&)
 {
-    d->listView->processed(KUrl(filePath), false);
+    d->listView->processed(url, false);
     d->progressBar->setValue(d->progressBar->value()+1);
 }

@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "actionthread.moc"
+#include "actionthread.h"
 
 // C ANSI includes
 
@@ -219,12 +219,12 @@ void ActionThread::slotJobDone(ThreadWeaver::Job* job)
     if (task->errString.isEmpty())
     {
         kDebug() << "Job done:" << task->fileUrl.toLocalFile();
-        emit finished(task->fileUrl.toLocalFile(),task->action);
+        emit finished(task->fileUrl, task->action);
     }
     else
     {
         kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString;
-        emit failed(task->fileUrl.toLocalFile(),task->action,task->errString);
+        emit failed(task->fileUrl, task->action,task->errString);
     }
 
     delete job;
@@ -234,7 +234,7 @@ void ActionThread::slotJobStarted(ThreadWeaver::Job* job)
 {
     Task* task = static_cast<Task*>(job);
     kDebug() << "Job Started:" << task->fileUrl.toLocalFile();
-    emit starting(task->fileUrl.toLocalFile(),task->action);
+    emit starting(task->fileUrl, task->action);
 }
 
 }  // namespace KIPIJPEGLossLessPlugin

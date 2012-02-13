@@ -64,9 +64,9 @@ public:
 
 Q_SIGNALS:
 
-    void starting(const QString& filePath, int action);
-    void finished(const QString& filePath, int action);
-    void failed(const QString& filePath, int action, const QString& errString);
+    void starting(const KUrl& url, int action);
+    void finished(const KUrl& url, int action);
+    void failed(const KUrl& url, int action, const QString& errString);
 
 private Q_SLOTS:
 
