@@ -138,7 +138,11 @@ void Plugin_ImgurExport::slotActivate()
 
 KIPI::Category Plugin_ImgurExport::category( KAction* action ) const
 {
-    kDebug() << action;
+    if (action == m_actionExport)
+    {
+        return KIPI::ExportPlugin;
+    }
+
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ExportPlugin;
 }
