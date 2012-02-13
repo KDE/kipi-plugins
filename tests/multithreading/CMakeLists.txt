@@ -37,13 +37,13 @@ IF(THREADWEAVER_FOUND)
     SET(multithread_SRCS
         main.cpp
         imageselector.cpp
-        actionthread.cpp
-        ../../jpeglossless/transform/imagerotate.cpp
         ../../jpeglossless/transform/convert2grayscale.cpp
+        ../../jpeglossless/transform/jpegtransform.cpp
+        ../../jpeglossless/transform/imagerotate.cpp
+        ../../jpeglossless/transform/imageflip.cpp
         ../../jpeglossless/libjpeg/transupp.cpp
         ../../jpeglossless/plugin/utils.cpp
-        ../../jpeglossless/transform/jpegtransform.cpp
-        ../../common/libkipiplugins/tools/kpwritehelp.cpp
+        ../../jpeglossless/plugin/actionthread.cpp
     )
 
     KDE4_ADD_EXECUTABLE(multithread ${multithread_SRCS})

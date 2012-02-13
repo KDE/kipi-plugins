@@ -28,10 +28,6 @@
 
 #include <kdialog.h>
 
-// Local includes
-
-#include "actionthread.h"
-
 class ImageSelector : public KDialog
 {
     Q_OBJECT
@@ -44,8 +40,9 @@ public:
 private Q_SLOTS:
 
     void slotStart();
-    void slotStartToProcess(const KUrl& url);
-    void slotEndToProcess(const KUrl& url, bool success);
+    void slotStarting(const QString&, int);
+    void slotFinished(const QString&, int);
+    void slotFailed(const QString&, int, const QString&);
 
 private:
 
