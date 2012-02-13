@@ -50,10 +50,13 @@ extern "C"
 
 // Local includes
 
+#include "kphostsettings.h"
 #include "utils.h"
 #include "imagerotate.h"
 #include "imageflip.h"
 #include "convert2grayscale.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIJPEGLossLessPlugin
 {
@@ -62,71 +65,74 @@ class ActionThread::Task : public ThreadWeaver::Job
 {
 public:
 
-    Task(QObject* parent = 0,bool updateFileStamp = true)
-            :Job(parent)
+    Task(QObject* parent = 0, bool updateFileStamp = true)
+        :Job(parent)
     {
         this->updateFileStamp = updateFileStamp;
     }
 
-    KUrl                                 fileUrl;
-    QString                              errString;
+    bool         updateFileStamp;
+
+    QString      errString;
+
+    KUrl         fileUrl;
+
     Action       action;
     RotateAction rotAction;
     FlipAction   flipAction;
-    bool updateFileStamp;
 
 protected:
-    void run()
 
+    void run()
     {
         switch (action)
         {
-        case KIPIJPEGLossLessPlugin::Rotate:
-        {
-            KIPIJPEGLossLessPlugin::ImageRotate imageRotate;
-            imageRotate.rotate(fileUrl.toLocalFile(), rotAction, errString, updateFileStamp);
+            case KIPIJPEGLossLessPlugin::Rotate:
+            {
+                KIPIJPEGLossLessPlugin::ImageRotate imageRotate;
+                imageRotate.rotate(fileUrl.toLocalFile(), rotAction, errString, updateFileStamp);
 
-            break;
-        }
-        case KIPIJPEGLossLessPlugin::Flip:
-        {
+                break;
+            }
+            case KIPIJPEGLossLessPlugin::Flip:
+            {
 
-            ImageFlip imageFlip;
-            imageFlip.flip(fileUrl.toLocalFile(), flipAction, errString, updateFileStamp);
+                ImageFlip imageFlip;
+                imageFlip.flip(fileUrl.toLocalFile(), flipAction, errString, updateFileStamp);
 
-        }
-        case KIPIJPEGLossLessPlugin::GrayScale:
-        {
+            }
+            case KIPIJPEGLossLessPlugin::GrayScale:
+            {
 
-            KIPIJPEGLossLessPlugin::ImageGrayScale imageGrayScale;
-            imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString, updateFileStamp);
+                KIPIJPEGLossLessPlugin::ImageGrayScale imageGrayScale;
+                imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString, updateFileStamp);
 
 
-            break;
-        }
-        default:
-        {
-            kError() << "KIPIJPEGLossLessPlugin:ActionThread: "
-            << "Unknown action specified";
-        }
+                break;
+            }
+            default:
+            {
+                kError() << "KIPIJPEGLossLessPlugin:ActionThread: "
+                         << "Unknown action specified";
+            }
         }
     }
 };
 
-
 ActionThread::ActionThread(KIPI::Interface* interface, QObject* parent)
-        : ActionThreadBase(parent)
+    : ActionThreadBase(parent)
 {
     interface = interface;
     if (interface)
-        updateFileStamp = interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool();
+    {
+        KPHostSettings hSettings(interface);
+        updateFileStamp = hSettings.metadataSettings().updateFileTimeStamp;
+    }
 }
 
 ActionThread::~ActionThread()
 {
-    delete interface;
 }
-
 
 void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 {
@@ -231,7 +237,5 @@ void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
     kDebug() << "Job Started:" << task->fileUrl.toLocalFile() << endl;
     emit starting(task->fileUrl.toLocalFile(),task->action);
 }
-
-
 
 }  // namespace KIPIJPEGLossLessPlugin
