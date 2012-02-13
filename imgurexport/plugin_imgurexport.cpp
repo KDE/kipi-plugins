@@ -19,16 +19,15 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+#include "plugin_imgurexport.moc"
+
+// C++ includes
+
 #include <unistd.h>
 
-#include "../common/libkipiplugins/widgets/imageslist.h"
-#include "../common/libkipiplugins/widgets/progresswidget.h"
-
-#include "plugin_imgurexport.h"
-#include "imgurtalker.h"
-//#include "imgurwidget.h"
-
 // KDE includes
+
 #include <KDebug>
 #include <KConfig>
 #include <KApplication>
@@ -42,17 +41,28 @@
 #include <KPluginLoader>
 #include <KDialog>
 
+// Local includes
+
+#include "imgurtalker.h"
+#include "imageslist.h"
+#include "progresswidget.h"
+//#include "imgurwidget.h"
+
 using namespace KIPIImgurExportPlugin;
 using namespace KIPIPlugins;
 
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
 
-Plugin_ImgurExport::Plugin_ImgurExport(QObject *parent, const QVariantList &args)
-                      : KIPI::Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport")
+Plugin_ImgurExport::Plugin_ImgurExport(QObject* parent, const QVariantList& args)
+    : KIPI::Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport")
 {
     kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
     kDebug(AREA_CODE_LOADING) << args;
+}
+
+Plugin_ImgurExport::~Plugin_ImgurExport()
+{
 }
 
 void Plugin_ImgurExport::setup(QWidget* widget)
