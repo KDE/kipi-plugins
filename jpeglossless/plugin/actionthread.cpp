@@ -122,11 +122,12 @@ protected:
 ActionThread::ActionThread(KIPI::Interface* interface, QObject* parent)
     : ActionThreadBase(parent)
 {
-    interface = interface;
+    m_updateFileStamp = false;
+
     if (interface)
     {
         KPHostSettings hSettings(interface);
-        updateFileStamp = hSettings.metadataSettings().updateFileTimeStamp;
+        m_updateFileStamp = hSettings.metadataSettings().updateFileTimeStamp;
     }
 }
 
@@ -140,9 +141,9 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
     ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
-            it != urlList.constEnd(); ++it )
+         it != urlList.constEnd(); ++it )
     {
-        Task* t      = new Task(this,updateFileStamp);
+        Task* t      = new Task(this, m_updateFileStamp);
         t->fileUrl   = *it;
         t->action    = Rotate;
         t->rotAction = val;
@@ -166,9 +167,9 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
     ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
-            it != urlList.constEnd(); ++it )
+         it != urlList.constEnd(); ++it )
     {
-        Task* t       = new Task(this,updateFileStamp);
+        Task* t       = new Task(this, m_updateFileStamp);
         t->fileUrl    = *it;
         t->action     = Flip;
         t->flipAction = val;
@@ -192,9 +193,9 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
-            it != urlList.constEnd(); ++it )
+         it != urlList.constEnd(); ++it )
     {
-        ActionThread::Task* t    = new Task(this,updateFileStamp);
+        ActionThread::Task* t    = new Task(this, m_updateFileStamp);
         t->fileUrl               = *it;
         t->action                = KIPIJPEGLossLessPlugin::GrayScale;
 
@@ -210,7 +211,6 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     QMutexLocker lock(&d->mutex);
     d->todo << collection;
     d->condVar.wakeAll();
-
 }
 
 void ActionThread::slotJobDone(ThreadWeaver::Job* job)

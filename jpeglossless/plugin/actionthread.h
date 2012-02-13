@@ -75,8 +75,7 @@ private Q_SLOTS:
 
 private:
 
-    KIPI::Interface* interface;
-    bool             updateFileStamp;
+    bool  m_updateFileStamp;
 
     class Task;
 };
