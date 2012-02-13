@@ -28,7 +28,7 @@
 
 #include <kaboutdata.h>
 
-// LibKIPI includes
+// Local includes
 
 #include "kipiplugins_export.h"
 

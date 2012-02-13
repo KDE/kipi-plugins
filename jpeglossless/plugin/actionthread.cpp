@@ -137,7 +137,6 @@ ActionThread::~ActionThread()
 
 void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 {
-
     ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();

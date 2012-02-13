@@ -38,12 +38,13 @@
 
 //Local includes
 
-#include "weaverobservertest.h"
+#include "kpweaverobserver.h"
+#include "kipiplugins_export.h"
 
 namespace KIPIPlugins
 {
 
-class ActionThreadBase : public QThread
+class KIPIPLUGINS_EXPORT ActionThreadBase : public QThread
 {
     Q_OBJECT
 
@@ -92,7 +93,7 @@ public:
     QList<ThreadWeaver::JobCollection*> todo;
 
     ThreadWeaver::Weaver*               weaver;
-    WeaverObserverTest*                 log;
+    KPWeaverObserver*                   log;
 };
 
 }  // namespace KIPIPlugins

@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef WEAVEROBSERVERTEST_H
-#define WEAVEROBSERVERTEST_H
+#ifndef KPWEAVEROBSERVER_H
+#define KPWEAVEROBSERVER_H
 
 // KDE includes
 
@@ -30,20 +30,24 @@
 #include <threadweaver/State.h>
 #include <threadweaver/Thread.h>
 
+// Local includes
+
+#include "kipiplugins_export.h"
+
 namespace KIPIPlugins
 {
 
-/** WeaverObserverTest is a simple test of the actionThread class that
+/** KPWeaverObserver is a simple wrapper to plug on the ActionThread class to
     prints debug messages when signals are received.
 */
-class WeaverObserverTest : public ThreadWeaver::WeaverObserver
+class KIPIPLUGINS_EXPORT KPWeaverObserver : public ThreadWeaver::WeaverObserver
 {
     Q_OBJECT
 
 public:
 
-    WeaverObserverTest(QObject* parent=0);
-    ~WeaverObserverTest();
+    KPWeaverObserver(QObject* parent=0);
+    ~KPWeaverObserver();
 
 protected Q_SLOTS:
 
@@ -56,4 +60,4 @@ protected Q_SLOTS:
 
 }  // namespace KIPIPlugins
 
-#endif // WEAVEROBSERVERTEST_H
+#endif // KPWEAVEROBSERVER_H

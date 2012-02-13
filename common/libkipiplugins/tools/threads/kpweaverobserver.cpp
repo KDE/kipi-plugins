@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "weaverobservertest.moc"
+#include "kpweaverobserver.moc"
 
 // KDE includes
 
@@ -31,7 +31,7 @@ using namespace ThreadWeaver;
 namespace KIPIPlugins
 {
 
-WeaverObserverTest::WeaverObserverTest(QObject* parent)
+KPWeaverObserver::KPWeaverObserver(QObject* parent)
     : WeaverObserver(parent)
 {
     connect(this, SIGNAL(weaverStateChanged(ThreadWeaver::State*)),
@@ -50,33 +50,33 @@ WeaverObserverTest::WeaverObserverTest(QObject* parent)
             this, SLOT(slotThreadExited(ThreadWeaver::Thread*)));
 }
 
-WeaverObserverTest::~WeaverObserverTest()
+KPWeaverObserver::~KPWeaverObserver()
 {
 }
 
-void WeaverObserverTest::slotWeaverStateChanged(State* state)
+void KPWeaverObserver::slotWeaverStateChanged(State* state)
 {
-    kDebug() << "WeaverObserverTest: thread state changed to " << state->stateName();
+    kDebug() << "KPWeaverObserver: thread state changed to " << state->stateName();
 }
 
-void WeaverObserverTest::slotThreadStarted(Thread* th)
+void KPWeaverObserver::slotThreadStarted(Thread* th)
 {
-    kDebug() << "WeaverObserverTest: thread " << th->id()  <<" started";
+    kDebug() << "KPWeaverObserver: thread " << th->id()  <<" started";
 }
 
-void WeaverObserverTest::slotThreadBusy(Thread* th, Job*)
+void KPWeaverObserver::slotThreadBusy(Thread* th, Job*)
 {
-    kDebug() << "WeaverObserverTest: thread " << th->id()  << " busy";
+    kDebug() << "KPWeaverObserver: thread " << th->id()  << " busy";
 }
 
-void WeaverObserverTest::slotThreadSuspended(Thread* th )
+void KPWeaverObserver::slotThreadSuspended(Thread* th )
 {
-    kDebug() << "WeaverObserverTest: thread " << th->id()  << " suspended";
+    kDebug() << "KPWeaverObserver: thread " << th->id()  << " suspended";
 }
 
-void WeaverObserverTest::slotThreadExited(Thread* th)
+void KPWeaverObserver::slotThreadExited(Thread* th)
 {
-    kDebug() << "WeaverObserverTest: thread " << th->id()  << " exited";
+    kDebug() << "KPWeaverObserver: thread " << th->id()  << " exited";
 }
 
 }  // namespace KIPIPlugins

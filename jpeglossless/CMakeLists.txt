@@ -9,19 +9,16 @@ INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/libjpeg
                     ${CMAKE_CURRENT_SOURCE_DIR}/transform
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../common/libkipiplugins/tools/threads
                    )
 
-SET(kipiplugin_jpeglossless_PART_SRCS plugin/plugin_jpeglossless.cpp 
-                                      plugin/utils.cpp 
+SET(kipiplugin_jpeglossless_PART_SRCS plugin/plugin_jpeglossless.cpp
+                                      plugin/utils.cpp
                                       plugin/actionthread.cpp
-                                      transform/jpegtransform.cpp 
-                                      transform/imagerotate.cpp 
-                                      transform/convert2grayscale.cpp 
-                                      transform/imageflip.cpp 
-                                      libjpeg/transupp.cpp 
-                                      ../common/libkipiplugins/tools/threads/weaverobservertest.cpp
-                                      ../common/libkipiplugins/tools/threads/actionthreadbase.cpp
+                                      transform/jpegtransform.cpp
+                                      transform/imagerotate.cpp
+                                      transform/convert2grayscale.cpp
+                                      transform/imageflip.cpp
+                                      libjpeg/transupp.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_jpeglossless ${kipiplugin_jpeglossless_PART_SRCS})
@@ -32,13 +29,12 @@ ENDIF(WIN32)
 
 TARGET_LINK_LIBRARIES(kipiplugin_jpeglossless
                       ${KDE4_KPARTS_LIBS}
+                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}
                       ${KDCRAW_LIBRARIES}
                       ${JPEG_LIBRARY}
-                      ${KDE4_SOLID_LIBS}
-                      ${KDE4_THREADWEAVER_LIBRARIES}
                       kipiplugins
                      )
 

@@ -1,1 +1,1 @@
-subdirs(libkipiplugins)
+SUBDIRS(libkipiplugins)

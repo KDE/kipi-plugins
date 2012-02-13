@@ -11,6 +11,8 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/binaryiface.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/iccjpeg.c
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/actionthreadbase.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpweaverobserver.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/batchprogressdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagedialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/wizardpage.cpp
@@ -32,6 +34,8 @@ TARGET_LINK_LIBRARIES(kipiplugins
                       ${KDE4_KIO_LIBRARY}
                       ${KDE4_KIO_LIBS}
                       ${KDE4_KFILE_LIBS}
+                      ${KDE4_SOLID_LIBS}
+                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${JPEG_LIBRARIES}
                       ${TIFF_LIBRARIES}
                       ${PNG_LIBRARIES}
