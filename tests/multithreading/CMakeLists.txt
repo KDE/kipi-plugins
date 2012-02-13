@@ -36,7 +36,8 @@ IF(THREADWEAVER_FOUND)
 
     SET(multithread_SRCS
         main.cpp
-        weaverobservertest.cpp imageselector.cpp actionthread.cpp
+        imageselector.cpp
+        actionthread.cpp
         ../../jpeglossless/transform/imagerotate.cpp
         ../../jpeglossless/transform/convert2grayscale.cpp
         ../../jpeglossless/libjpeg/transupp.cpp

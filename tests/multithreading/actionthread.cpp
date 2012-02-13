@@ -39,9 +39,10 @@
 
 #include "imagerotate.h"
 #include "convert2grayscale.h"
-#include "weaverobservertest.h"
+#include "kpweaverobserver.h"
 
 using namespace ThreadWeaver;
+using namespace KIPIPlugins;
 
 class ActionThread::ActionThreadPriv
 {
@@ -65,7 +66,7 @@ public:
     QList<JobCollection*> todo;
 
     Weaver                weaver;
-    WeaverObserverTest*   log;
+    KPWeaverObserver*     log;
 };
 
 class Task : public Job
@@ -113,10 +114,10 @@ protected:
 };
 
 ActionThread::ActionThread(QObject* parent)
-    : QThread(parent),d(new ActionThreadPriv)
+    : QThread(parent), d(new ActionThreadPriv)
 {
     const int maximumNumberOfThreads = 4;
-    d->log                           = new WeaverObserverTest(this);
+    d->log                           = new KPWeaverObserver(this);
     d->weaver.registerObserver(d->log);
     d->weaver.setMaximumNumberOfThreads(maximumNumberOfThreads);
     kDebug() << "Starting Main Thread";
@@ -148,12 +149,12 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
 
     if(task->errString.isEmpty())
     {
-        kDebug() << "Job done:" << task->fileUrl.toLocalFile() << endl;
+        kDebug() << "Job done:" << task->fileUrl.toLocalFile();
         emit signalEndToProcess(task->fileUrl, true);
     }
     else
     {
-        kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString << endl;
+        kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString;
         emit signalEndToProcess(task->fileUrl, false);
     }
 
@@ -163,7 +164,7 @@ void ActionThread::slotJobDone(ThreadWeaver::Job *job)
 void ActionThread::slotJobStarted(ThreadWeaver::Job *job)
 {
     Task* task = static_cast<Task*>(job);
-    kDebug() << "Job Started:" << task->fileUrl.toLocalFile() << endl;
+    kDebug() << "Job Started:" << task->fileUrl.toLocalFile();
     emit signalStartToProcess(task->fileUrl);
 }
 
