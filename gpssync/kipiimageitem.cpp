@@ -44,8 +44,10 @@
 
 #include "kipiimagemodel.h"
 #include "kpimageinfo.h"
+#include "kphostsettings.h"
 
 using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIGPSSyncPlugin
 {
@@ -146,10 +148,11 @@ KExiv2Iface::KExiv2* KipiImageItem::getExiv2ForFile()
 
     if (m_interface)
     {
-        exiv2Iface->setWriteRawFiles(m_interface->hostSetting("WriteMetadataToRAW").toBool());
-        exiv2Iface->setUpdateFileTimeStamp(m_interface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
-        exiv2Iface->setUseXMPSidecar4Reading(m_interface->hostSetting("UseXMPSidecar4Reading").toBool());
-        exiv2Iface->setMetadataWritingMode(m_interface->hostSetting("MetadataWritingMode").toInt());
+        KPHostSettings hSettings(m_interface);
+        exiv2Iface->setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+        exiv2Iface->setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+        exiv2Iface->setUseXMPSidecar4Reading(hSettings.metadataSettings().useXMPSidecar4Reading);
+        exiv2Iface->setMetadataWritingMode(hSettings.metadataSettings().metadataWritingMode);
     }
     else
     {
@@ -198,7 +201,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
     if (fromInterface && m_interface)
     {
         // try to load the GPS data from the KIPI interface:
-        KIPIPlugins::KPImageInfo info(m_interface, m_url);
+        KPImageInfo info(m_interface, m_url);
 
         if (info.hasLatitude() && info.hasLongitude())
         {
@@ -838,7 +841,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
     // TODO: remove the altitude if it is not available
     if (m_interface)
     {
-        KIPIPlugins::KPImageInfo info(m_interface, m_url);
+        KPImageInfo info(m_interface, m_url);
 
         if (shouldWriteCoordinates)
         {
