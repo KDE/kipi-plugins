@@ -82,9 +82,10 @@ extern "C"
 #include "imagedialog.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
+#include "kpimageinfo.h"
+#include "kphostsettings.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
-#include "kpimageinfo.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
@@ -212,7 +213,8 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
 
     // ---------------------------------------------------------------
 
-    d->thread = new ActionThread(this, d->iface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+    KPHostSettings hSettings(d->iface);
+    d->thread = new ActionThread(this, hSettings.metadataSettings().updateFileTimeStamp);
 
     // ---------------------------------------------------------------
 

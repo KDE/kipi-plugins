@@ -76,10 +76,11 @@ extern "C"
 #include "actionthread.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
+#include "kpimageinfo.h"
+#include "kphostsettings.h"
 #include "previewmanager.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
-#include "kpimageinfo.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
@@ -202,7 +203,8 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
 
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
 
-    d->thread = new ActionThread(this, d->iface->hostSetting("WriteMetadataUpdateFiletimeStamp").toBool());
+    KPHostSettings hSettings(d->iface);
+    d->thread = new ActionThread(this, hSettings.metadataSettings().updateFileTimeStamp);
 
     // ---------------------------------------------------------------
 
