@@ -156,9 +156,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
         collection->addJob(t);
     }
 
-    QMutexLocker lock(&m_mutex);
-    m_todo << collection;
-    m_condVar.wakeAll();
+    appendJob(collection);
 }
 
 void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
@@ -182,9 +180,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
         collection->addJob(t);
     }
 
-    QMutexLocker lock(&m_mutex);
-    m_todo << collection;
-    m_condVar.wakeAll();
+    appendJob(collection);
 }
 
 void ActionThread::convert2grayscale(const KUrl::List& urlList)
@@ -207,9 +203,7 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
         collection->addJob(t);
     }
 
-    QMutexLocker lock(&m_mutex);
-    m_todo << collection;
-    m_condVar.wakeAll();
+    appendJob(collection);
 }
 
 void ActionThread::slotJobDone(ThreadWeaver::Job* job)

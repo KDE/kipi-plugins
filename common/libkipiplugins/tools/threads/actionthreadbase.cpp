@@ -25,11 +25,14 @@
 
 // Qt includes
 
+#include <QList>
+#include <QMutex>
 #include <QMutexLocker>
 #include <QWaitCondition>
 
 // KDE includes
 
+#include <kurl.h>
 #include <kdebug.h>
 #include <threadweaver/ThreadWeaver.h>
 #include <ThreadWeaver/Weaver>
@@ -53,13 +56,16 @@ public:
         log           = 0;
     }
 
-    bool                  running;
-    bool                  weaverRunning;
+    bool                                running;
+    bool                                weaverRunning;
 
-    QWaitCondition        condVarJobs;
+    QWaitCondition                      condVarJobs;
+    QWaitCondition                      condVar;
+    QMutex                              mutex;
+    QList<ThreadWeaver::JobCollection*> todo;
 
-    ThreadWeaver::Weaver* weaver;
-    KPWeaverObserver*     log;
+    ThreadWeaver::Weaver*               weaver;
+    KPWeaverObserver*                   log;
 };
 
 ActionThreadBase::ActionThreadBase(QObject* parent)
@@ -95,13 +101,20 @@ void ActionThreadBase::slotFinished()
 void ActionThreadBase::cancel()
 {
     kDebug() << "Cancel Main Thread";
-    QMutexLocker lock(&m_mutex);
-    m_todo.clear();
+    QMutexLocker lock(&d->mutex);
+    d->todo.clear();
     d->running       = false;
     d->weaverRunning = true;
     d->weaver->dequeue();
-    m_condVar.wakeAll();
+    d->condVar.wakeAll();
     d->condVarJobs.wakeAll();
+}
+
+void ActionThreadBase::appendJob(ThreadWeaver::JobCollection* job)
+{
+    QMutexLocker lock(&d->mutex);
+    d->todo << job;
+    d->condVar.wakeAll();
 }
 
 void ActionThreadBase::run()
@@ -114,21 +127,21 @@ void ActionThreadBase::run()
     {
         JobCollection* t = 0;
         {
-            QMutexLocker lock(&m_mutex);
-            if (!m_todo.isEmpty())
+            QMutexLocker lock(&d->mutex);
+            if (!d->todo.isEmpty())
             {
                 if (!d->weaverRunning)
                 {
-                    t = m_todo.takeFirst();
+                    t = d->todo.takeFirst();
                 }
                 else
                 {
-                    d->condVarJobs.wait(&m_mutex);
+                    d->condVarJobs.wait(&d->mutex);
                 }
             }
             else
             {
-                m_condVar.wait(&m_mutex);
+                d->condVar.wait(&d->mutex);
             }
         }
 

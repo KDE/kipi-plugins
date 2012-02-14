@@ -26,14 +26,10 @@
 
 // Qt includes
 
-#include <QList>
 #include <QThread>
-#include <QMutex>
-#include <QWaitCondition>
 
 // KDE includes
 
-#include <kurl.h>
 #include <ThreadWeaver/JobCollection>
 
 //Local includes
@@ -58,16 +54,11 @@ public:
 protected:
 
     void run();
+    void appendJob(ThreadWeaver::JobCollection* job);
 
 private Q_SLOTS:
 
     void slotFinished();
-
-protected:
-
-    QWaitCondition                      m_condVar;
-    QMutex                              m_mutex;
-    QList<ThreadWeaver::JobCollection*> m_todo;
 
 private:
 
