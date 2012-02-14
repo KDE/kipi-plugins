@@ -28,14 +28,15 @@
 
 #include <QThread>
 
-// KDE includes
-
-#include <ThreadWeaver/JobCollection>
-
 //Local includes
 
 #include "kpweaverobserver.h"
 #include "kipiplugins_export.h"
+
+namespace ThreadWeaver
+{
+    class JobCollection;
+}
 
 namespace KIPIPlugins
 {

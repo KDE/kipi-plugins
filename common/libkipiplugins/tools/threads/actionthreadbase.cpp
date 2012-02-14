@@ -34,8 +34,9 @@
 
 #include <kurl.h>
 #include <kdebug.h>
-#include <threadweaver/ThreadWeaver.h>
+#include <ThreadWeaver/JobCollection>
 #include <ThreadWeaver/Weaver>
+#include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/Job.h>
 #include <solid/device.h>
 
@@ -56,16 +57,16 @@ public:
         log           = 0;
     }
 
-    bool                                running;
-    bool                                weaverRunning;
+    bool                  running;
+    bool                  weaverRunning;
 
-    QWaitCondition                      condVarJobs;
-    QWaitCondition                      condVar;
-    QMutex                              mutex;
-    QList<ThreadWeaver::JobCollection*> todo;
+    QWaitCondition        condVarJobs;
+    QWaitCondition        condVar;
+    QMutex                mutex;
+    QList<JobCollection*> todo;
 
-    ThreadWeaver::Weaver*               weaver;
-    KPWeaverObserver*                   log;
+    Weaver*               weaver;
+    KPWeaverObserver*     log;
 };
 
 ActionThreadBase::ActionThreadBase(QObject* parent)
@@ -73,7 +74,7 @@ ActionThreadBase::ActionThreadBase(QObject* parent)
 {
     const int maximumNumberOfThreads = qMax(Solid::Device::listFromType(Solid::DeviceInterface::Processor).count(), 1);
     d->log                           = new KPWeaverObserver(this);
-    d->weaver                        = new ThreadWeaver::Weaver(this);
+    d->weaver                        = new Weaver(this);
     d->weaver->registerObserver(d->log);
     d->weaver->setMaximumNumberOfThreads(maximumNumberOfThreads);
     kDebug() << "Starting Main Thread";
@@ -110,7 +111,7 @@ void ActionThreadBase::cancel()
     d->condVarJobs.wakeAll();
 }
 
-void ActionThreadBase::appendJob(ThreadWeaver::JobCollection* job)
+void ActionThreadBase::appendJob(JobCollection* job)
 {
     QMutexLocker lock(&d->mutex);
     d->todo << job;
