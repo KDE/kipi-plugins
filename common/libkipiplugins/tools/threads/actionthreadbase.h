@@ -26,6 +26,7 @@
 
 // Qt includes
 
+#include <QList>
 #include <QThread>
 #include <QMutex>
 #include <QWaitCondition>
@@ -34,7 +35,6 @@
 
 #include <kurl.h>
 #include <ThreadWeaver/JobCollection>
-#include <ThreadWeaver/Weaver>
 
 //Local includes
 
@@ -65,35 +65,14 @@ private Q_SLOTS:
 
 protected:
 
+    QWaitCondition                      m_condVar;
+    QMutex                              m_mutex;
+    QList<ThreadWeaver::JobCollection*> m_todo;
+
+private:
+
     class ActionThreadBasePriv;
     ActionThreadBasePriv* const d;
-};
-
-// ------------------------------------------------------------------------------------------------
-
-class ActionThreadBase::ActionThreadBasePriv
-{
-public:
-
-    ActionThreadBasePriv()
-    {
-        running       = false;
-        weaverRunning = false;
-        log           = 0;
-    }
-
-    bool                                running;
-    bool                                weaverRunning;
-
-    QWaitCondition                      condVarJobs;
-
-    ThreadWeaver::Weaver*               weaver;
-    KPWeaverObserver*                   log;
-
-    // Move as protected in ActionThreadBase
-    QWaitCondition                      condVar;
-    QMutex                              mutex;
-    QList<ThreadWeaver::JobCollection*> todo;
 };
 
 }  // namespace KIPIPlugins
