@@ -64,18 +64,18 @@ ActionThreadBase::~ActionThreadBase()
 
     delete d->log;
     delete d;
-
-    kDebug() << "Ending Main Thread";
 }
 
 void ActionThreadBase::slotFinished()
 {
+    kDebug() << "Finish Main Thread";
     d->weaverRunning = false;
     d->condVarJobs.wakeAll();
 }
 
 void ActionThreadBase::cancel()
 {
+    kDebug() << "Cancel Main Thread";
     QMutexLocker lock(&d->mutex);
     d->todo.clear();
     d->running       = false;
@@ -87,7 +87,7 @@ void ActionThreadBase::cancel()
 
 void ActionThreadBase::run()
 {
-    d->running = true;
+    d->running       = true;
     d->weaverRunning = false;
     kDebug() << "In action thread Run";
 

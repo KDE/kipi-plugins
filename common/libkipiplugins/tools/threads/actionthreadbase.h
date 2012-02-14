@@ -85,15 +85,15 @@ public:
     bool                                running;
     bool                                weaverRunning;
 
-    QMutex                              mutex;
-
-    QWaitCondition                      condVar;
     QWaitCondition                      condVarJobs;
-
-    QList<ThreadWeaver::JobCollection*> todo;
 
     ThreadWeaver::Weaver*               weaver;
     KPWeaverObserver*                   log;
+
+    // Move as protected in ActionThreadBase
+    QWaitCondition                      condVar;
+    QMutex                              mutex;
+    QList<ThreadWeaver::JobCollection*> todo;
 };
 
 }  // namespace KIPIPlugins
