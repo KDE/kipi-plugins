@@ -88,6 +88,7 @@ void ActionThreadBase::cancel()
 void ActionThreadBase::run()
 {
     d->running = true;
+    d->weaverRunning = false;
     kDebug() << "In action thread Run";
 
     while (d->running)
