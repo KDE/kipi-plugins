@@ -77,7 +77,7 @@ void Plugin_ImageshackExport::setup(QWidget* widget)
     m_action = actionCollection()->addAction("imageshackexport");
     m_action->setText(i18n("Export to &Imageshack..."));
     m_action->setIcon(KIcon("imageshack"));
-    m_action->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_H));
+    m_action->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::Key_M));
     m_action->setEnabled(true);
 
     connect(m_action, SIGNAL(triggered(bool)),
