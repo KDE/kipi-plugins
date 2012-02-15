@@ -6,7 +6,7 @@
  * Date        : 2007-11-09
  * Description : a class to resize image in a separate thread.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,9 +38,43 @@
 #include "actionthreadbase.h"
 
 using namespace KIPIPlugins;
+using namespace ThreadWeaver;
 
 namespace KIPISendimagesPlugin
 {
+
+class Task : public Job
+{
+    Q_OBJECT
+
+public:
+
+    Task(QObject* parent = 0, int* count = 0);
+    ~Task();
+
+public:
+
+    KUrl                   m_orgUrl;
+    QString                m_destName;
+    EmailSettingsContainer m_settings;
+
+    int*                   m_count;
+
+Q_SIGNALS:
+
+    void startingResize(const KUrl& orgUrl);
+    void finishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent);
+    void failedResize(const KUrl& orgUrl, const QString& errString, int percent);
+    void completeResize();
+
+private:
+
+    void run();
+    bool imageResize(const EmailSettingsContainer& settings,
+                     const KUrl& orgUrl, const QString& destName, QString& err);
+};
+
+// ----------------------------------------------------------------------------------------------------
 
 class ImageResize : public ActionThreadBase
 {
@@ -48,7 +82,7 @@ class ImageResize : public ActionThreadBase
 
 public:
 
-    ImageResize(QObject *parent);
+    ImageResize(QObject* parent);
     ~ImageResize();
 
     void resize(const EmailSettingsContainer& settings);
@@ -63,9 +97,7 @@ Q_SIGNALS:
 
 private:
 
-    int            *count;    // although it is private, it's address is passed to Task
-
-    class Task;
+    int* m_count;    // although it is private, it's address is passed to Task
 };
 
 }  // namespace KIPISendimagesPlugin
