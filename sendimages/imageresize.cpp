@@ -39,6 +39,8 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <ktempdir.h>
+#include <threadweaver/ThreadWeaver.h>
+#include <threadweaver/JobCollection.h>
 
 // LibKExiv2 includes
 
@@ -54,134 +56,68 @@
 #include "kpversion.h"
 #include "kpwriteimage.h"
 
+using namespace ThreadWeaver;
+
 namespace KIPISendimagesPlugin
 {
 
-class ImageResize::ImageResizePriv
+class ImageResize::Task : public Job
 {
 public:
 
-    ImageResizePriv()
+    Task(QObject* parent = 0, int *count = 0)
+            :Job(parent)
     {
-        count   = 0;
-        running = false;
+        this->count = count;
     }
 
-    class Task
+    KUrl                   orgUrl;
+    QString                destName;
+    EmailSettingsContainer settings;
+
+    int            *count;
+
+private:
+
+    bool imageResize(const EmailSettingsContainer& settings,
+                     const KUrl& orgUrl, const QString& destName, QString& err);
+
+Q_SIGNALS:
+
+    void startingResize(const KUrl &orgUrl) {}
+    void finishedResize(const KUrl &orgUrl, const KUrl& emailUrl, int percent) {}
+    void failedResize(const KUrl &orgUrl, const QString &errString, int percent) {}
+    void completeResize() {}
+
+protected:
+
+    void run()
     {
-        public:
+        QString errString;
 
-            KUrl                   orgUrl;
-            QString                destName;
-            EmailSettingsContainer settings;
-    };
+        emit startingResize(orgUrl);
+        (*count)++;
+        int percent = (int)(((float)(*count)/(float)settings.itemsList.count())*100.0);
 
-    bool           running;
+        if (imageResize(settings, orgUrl, destName, errString))
+        {
+            KUrl emailUrl(destName);
+            emit finishedResize(orgUrl, emailUrl, percent);
+        }
+        else
+        {
+            emit failedResize(orgUrl, errString, percent);
+        }
 
-    int            count;
-
-    QMutex         mutex;
-
-    QWaitCondition condVar;
-
-    QList<Task*>   todo;
+        if (settings.itemsList.count() == *count)
+        {
+            emit completeResize();
+            *count = 0;
+        }
+    }
 };
 
-ImageResize::ImageResize(QObject *parent)
-           : QThread(parent), d(new ImageResizePriv)
-{
-}
-
-ImageResize::~ImageResize()
-{
-    // cancel the thread
-    cancel();
-    // wait for the thread to finish
-    wait();
-
-    delete d;
-}
-
-void ImageResize::resize(const EmailSettingsContainer& settings)
-{
-    d->count = 0;
-    int i    = 1;
-
-    for (QList<EmailItem>::const_iterator it = settings.itemsList.constBegin();
-         it != settings.itemsList.constEnd(); ++it)
-    {
-        QString tmp;
-
-        ImageResizePriv::Task *t = new ImageResizePriv::Task;
-        t->orgUrl                = (*it).orgUrl;
-        t->settings              = settings;
-
-        KTempDir tmpDir(KStandardDirs::locateLocal("tmp", t->settings.tempFolderName + t->settings.tempPath), 0700);
-        tmpDir.setAutoRemove(false);
-        QFileInfo fi(t->orgUrl.fileName());
-        t->destName = tmpDir.name() + QString("%1.%2").arg(fi.baseName()).arg(t->settings.format().toLower());
-
-        QMutexLocker lock(&d->mutex);
-        d->todo << t;
-        d->condVar.wakeAll();
-        i++;
-    }
-}
-
-void ImageResize::cancel()
-{
-    QMutexLocker lock(&d->mutex);
-    d->todo.clear();
-    d->running = false;
-    d->count   = 0;
-    d->condVar.wakeAll();
-}
-
-void ImageResize::run()
-{
-    d->running = true;
-    while (d->running)
-    {
-        ImageResizePriv::Task *t = 0;
-        {
-            QMutexLocker lock(&d->mutex);
-            if (!d->todo.isEmpty())
-                t = d->todo.takeFirst();
-            else
-                d->condVar.wait(&d->mutex);
-        }
-
-        if (t)
-        {
-            QString errString;
-
-            emit startingResize(t->orgUrl);
-            d->count++;
-            int percent = (int)(((float)d->count/(float)t->settings.itemsList.count())*100.0);
-
-            if (imageResize(t->settings, t->orgUrl, t->destName, errString))
-            {
-                KUrl emailUrl(t->destName);
-                emit finishedResize(t->orgUrl, emailUrl, percent);
-            }
-            else
-            {
-                emit failedResize(t->orgUrl, errString, percent);
-            }
-
-            if (t->settings.itemsList.count() == d->count)
-            {
-                emit completeResize();
-                d->count = 0;
-            }
-
-            delete t;
-        }
-    }
-}
-
-bool ImageResize::imageResize(const EmailSettingsContainer& settings,
-                              const KUrl& orgUrl, const QString& destName, QString& err)
+bool ImageResize::Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& settings, const KUrl& orgUrl, const QString& destName, QString& err)
 {
     EmailSettingsContainer emailSettings = settings;
     QFileInfo fi(orgUrl.path());
@@ -219,9 +155,9 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
         int w = img.width();
         int h = img.height();
 
-        if( w > sizeFactor || h > sizeFactor )
+        if ( w > sizeFactor || h > sizeFactor )
         {
-            if( w > h )
+            if ( w > h )
             {
                 h = (int)( (double)( h * sizeFactor ) / w );
 
@@ -287,6 +223,58 @@ bool ImageResize::imageResize(const EmailSettingsContainer& settings,
     }
 
     return false;
+}
+
+// ----------------------------------------------------------------------------------------------------
+
+ImageResize::ImageResize(QObject *parent)
+        : ActionThreadBase(parent)
+{
+    count = new int;
+    *count = 0;
+}
+
+ImageResize::~ImageResize()
+{
+    delete count;
+}
+
+void ImageResize::resize(const EmailSettingsContainer& settings)
+{
+    JobCollection* collection = new JobCollection(this);
+    *count = 0;
+    int i    = 1;
+
+    for (QList<EmailItem>::const_iterator it = settings.itemsList.constBegin();
+            it != settings.itemsList.constEnd(); ++it)
+    {
+        QString tmp;
+
+        Task *t = new Task(this,count);
+        t->orgUrl                = (*it).orgUrl;
+        t->settings              = settings;
+
+        KTempDir tmpDir(KStandardDirs::locateLocal("tmp", t->settings.tempFolderName + t->settings.tempPath), 0700);
+        tmpDir.setAutoRemove(false);
+        QFileInfo fi(t->orgUrl.fileName());
+        t->destName = tmpDir.name() + QString("%1.%2").arg(fi.baseName()).arg(t->settings.format().toLower());
+
+        connect(t,SIGNAL(startingResize(KUrl)),this,SIGNAL(startingResize(KUrl)));
+        connect(t,SIGNAL(finishedResize(KUrl,KUrl,int)),this,SIGNAL(finishedResize(KUrl,KUrl,int)));
+        connect(t,SIGNAL(failedResize(KUrl,QString,int)),this,SIGNAL(failedResize(KUrl,QString,int)));
+        connect(t,SIGNAL(completeResize()),this,SIGNAL(completeResize()));
+
+        collection->addJob(t);
+        i++;
+    }
+
+    appendJob(collection);
+}
+
+void ImageResize::cancel()
+{
+    *count   = 0;
+    ActionThreadBase::cancel();
 }
 
 }  // namespace KIPISendimagesPlugin
