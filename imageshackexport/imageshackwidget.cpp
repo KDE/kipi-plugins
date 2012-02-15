@@ -75,7 +75,7 @@ ImageshackWidget::ImageshackWidget(QWidget* parent, Interface* interface, Images
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->setWhatsThis("Images to upload to Imageshack web service");
 
-    QWidget* settingsBox = new QWidget(this);
+    QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
     m_headerLbl = new QLabel(settingsBox);
@@ -187,14 +187,14 @@ ImageshackWidget::ImageshackWidget(QWidget* parent, Interface* interface, Images
     m_noResizeRdb->setChecked(true);
     m_resizeOptsCob->setEnabled(false);
 
-    resizeOptionsLayout->addWidget(m_noResizeRdb,  0, 0, 1, 5);
-    resizeOptionsLayout->addWidget(m_predefSizeRdb,1, 0, 1, 5);
-    resizeOptionsLayout->addWidget(m_resizeOptsCob,   2, 1, 1, 4);
-    resizeOptionsLayout->addWidget(m_customSizeRdb,3, 0, 1, 5);
-    resizeOptionsLayout->addWidget(widthLbl,       4, 1, 1, 2);
-    resizeOptionsLayout->addWidget(m_widthSpb,     4, 2, 1, 2);
-    resizeOptionsLayout->addWidget(heightLbl,      5, 1, 1, 2);
-    resizeOptionsLayout->addWidget(m_heightSpb,    5, 2, 1, 2);
+    resizeOptionsLayout->addWidget(m_noResizeRdb,   0, 0, 1, 5);
+    resizeOptionsLayout->addWidget(m_predefSizeRdb, 1, 0, 1, 5);
+    resizeOptionsLayout->addWidget(m_resizeOptsCob, 2, 1, 1, 4);
+    resizeOptionsLayout->addWidget(m_customSizeRdb, 3, 0, 1, 5);
+    resizeOptionsLayout->addWidget(widthLbl,        4, 1, 1, 2);
+    resizeOptionsLayout->addWidget(m_widthSpb,      4, 2, 1, 2);
+    resizeOptionsLayout->addWidget(heightLbl,       5, 1, 1, 2);
+    resizeOptionsLayout->addWidget(m_heightSpb,     5, 2, 1, 2);
     resizeOptionsLayout->setSpacing(KDialog::spacingHint());
     resizeOptionsLayout->setMargin(KDialog::spacingHint());
 
@@ -239,7 +239,6 @@ ImageshackWidget::ImageshackWidget(QWidget* parent, Interface* interface, Images
 
 ImageshackWidget::~ImageshackWidget()
 {
-
 }
 
 KIPIPlugins::ImagesList* ImageshackWidget::imagesList() const
@@ -282,6 +281,7 @@ void ImageshackWidget::updateResizeOpts()
     titleList << "1280x1024 (19-inch monitor)";
     titleList << "1600x1200 (21-inch monitor)";
     titleList << "optimize without resizing";
+
     for (int i = 0; i < titleList.size(); i++)
     {
         m_resizeOptsCob->addItem(titleList.at(i), valueList.at(i));
@@ -300,4 +300,3 @@ void ImageshackWidget::slotEnableCustomSize(bool checked)
 }
 
 }  // namespace KIPIImageshackExportPlugin
-

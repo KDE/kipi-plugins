@@ -69,7 +69,8 @@ Q_SIGNALS:
 
 private:
 
-    enum State {
+    enum State
+    {
         IMGHCK_CHECKREGCODE = 0,
         IMGHCK_ADDPHOTO,
         IMGHCK_ADDVIDEO
@@ -100,22 +101,21 @@ private:
 
     Imageshack* m_imageshack;
 
-    QByteArray m_buffer;
+    QByteArray  m_buffer;
 
-    QString    m_userAgent;
-    KUrl       m_photoApiUrl;
-    KUrl       m_videoApiUrl;
-    KUrl       m_loginApiUrl;
-    QString    m_appKey;
+    QString     m_userAgent;
+    KUrl        m_photoApiUrl;
+    KUrl        m_videoApiUrl;
+    KUrl        m_loginApiUrl;
+    QString     m_appKey;
 
     bool        m_loginInProgress;
 
     KIO::Job*   m_job;
 
     State       m_state;
-
 };
 
-}
+} // namespace KIPIImageshackExportPlugin
 
 #endif // IMAGESHACKTALKER_H

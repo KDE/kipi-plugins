@@ -39,17 +39,18 @@
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class KPAboutData;
-class ImagesList;
+    class KPAboutData;
+    class ImagesList;
 }
 
 namespace KIPIImageshackExportPlugin
 {
+
 class Imageshack;
 class ImageshackWidget;
 class ImageshackTalker;
@@ -102,21 +103,20 @@ private Q_SLOTS:
 
 private:
 
-    bool m_import;
-    unsigned int m_imagesCount;
-    unsigned int m_imagesTotal;
+    bool                      m_import;
+    unsigned int              m_imagesCount;
+    unsigned int              m_imagesTotal;
 
-    KUrl::List m_transferQueue;
+    KUrl::List                m_transferQueue;
 
-    Imageshack*         m_imageshack;
-    ImageshackWidget*   m_widget;
-    ImageshackTalker*   m_talker;
+    Imageshack*               m_imageshack;
+    ImageshackWidget*         m_widget;
+    ImageshackTalker*         m_talker;
 
-    KIPI::Interface*            m_interface;
-    KIPIPlugins::KPAboutData*   m_about;
-
+    KIPI::Interface*          m_interface;
+    KIPIPlugins::KPAboutData* m_about;
 };
 
-}
+} // namespace KIPIImageshackExportPlugin
 
 #endif // IMAGESHACKWINDOW_H

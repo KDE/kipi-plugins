@@ -73,34 +73,35 @@ private Q_SLOTS:
     void slotEnableCustomSize(bool checked);
 
 private:
+
     KIPIPlugins::ImagesList* m_imgList;
 
-    Imageshack* m_imageshack;
-    bool m_hasAccount;
+    Imageshack*              m_imageshack;
+    bool                     m_hasAccount;
 
-    QLabel* m_headerLbl;
-    QLabel* m_accountNameLbl;
-    QLabel* m_accountEmailLbl;
+    QLabel*                  m_headerLbl;
+    QLabel*                  m_accountNameLbl;
+    QLabel*                  m_accountEmailLbl;
 
-    QLineEdit* m_tagsFld;
-    QRadioButton* m_noResizeRdb;
-    QRadioButton* m_predefSizeRdb;
-    QRadioButton* m_customSizeRdb;
+    QLineEdit*               m_tagsFld;
+    QRadioButton*            m_noResizeRdb;
+    QRadioButton*            m_predefSizeRdb;
+    QRadioButton*            m_customSizeRdb;
 
-    QCheckBox* m_privateImagesChb;
-    QCheckBox* m_remBarChb;
+    QCheckBox*               m_privateImagesChb;
+    QCheckBox*               m_remBarChb;
 
-    KPushButton* m_chgRegCodeBtn;
-    KPushButton* m_newGalleryBtn;
-    KPushButton* m_reloadGalleriesBtn;
+    KPushButton*             m_chgRegCodeBtn;
+    KPushButton*             m_newGalleryBtn;
+    KPushButton*             m_reloadGalleriesBtn;
 
-    KComboBox* m_resizeOptsCob;
-    KComboBox* m_galleriesCob;
+    KComboBox*               m_resizeOptsCob;
+    KComboBox*               m_galleriesCob;
 
-    QSpinBox* m_widthSpb;
-    QSpinBox* m_heightSpb;
+    QSpinBox*                m_widthSpb;
+    QSpinBox*                m_heightSpb;
 
-    QProgressBar* m_progressBar;
+    QProgressBar*            m_progressBar;
 
     friend class ImageshackWindow;
 

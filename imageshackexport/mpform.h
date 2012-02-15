@@ -3,7 +3,6 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- *
  * Date        : 2012-02-02
  * Description : a plugin to export photos or videos to ImageShack web service
  *

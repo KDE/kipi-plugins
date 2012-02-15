@@ -34,6 +34,7 @@ class Imageshack
 {
 
 public:
+
     Imageshack();
     ~Imageshack();
 
@@ -57,7 +58,7 @@ private:
 
 private:
 
-    bool m_loggedIn;
+    bool    m_loggedIn;
 
     QString m_registrationCode;
     QString m_username;

@@ -48,6 +48,7 @@
 
 namespace KIPIImageshackExportPlugin
 {
+
 ImageshackTalker::ImageshackTalker(Imageshack* imghack)
 {
     m_job         = 0;
@@ -100,7 +101,7 @@ QString ImageshackTalker::getCallString(QMap< QString, QString >& args)
     return result;
 }
 
-void ImageshackTalker::data(KIO::Job* job, const QByteArray& data)
+void ImageshackTalker::data(KIO::Job* /*job*/, const QByteArray& data)
 {
     if (data.isEmpty())
         return;
@@ -115,7 +116,8 @@ void ImageshackTalker::slotResult(KJob* kjob)
     m_job = 0;
     KIO::Job* job = static_cast<KIO::Job*>(kjob);
 
-    if (job->error()) {
+    if (job->error())
+    {
         if (m_loginInProgress)
         {
             checkRegistrationCodeDone(job->error(), job->errorString());
@@ -128,7 +130,8 @@ void ImageshackTalker::slotResult(KJob* kjob)
         return;
     }
 
-    switch (m_state) {
+    switch (m_state)
+    {
         case IMGHCK_CHECKREGCODE:
             parseCheckRegistrationCode(m_buffer);
             break;
@@ -184,7 +187,7 @@ void ImageshackTalker::checkRegistrationCode()
             this, SLOT(slotResult(KJob*)));
 
     m_state = IMGHCK_CHECKREGCODE;
-    m_job = job;
+    m_job   = job;
     m_buffer.resize(0);
 
 }
@@ -257,7 +260,6 @@ void ImageshackTalker::parseCheckRegistrationCode(const QByteArray& data)
     {
         authenticationDone(1, i18n("Registration code not valid!"));
     }
-
 }
 
 void ImageshackTalker::authenticationDone(int errCode, const QString& errMsg)
@@ -274,7 +276,6 @@ void ImageshackTalker::authenticationDone(int errCode, const QString& errMsg)
     emit signalLoginDone(errCode, errMsg);
     m_loginInProgress = false;
 }
-
 
 void ImageshackTalker::logOut()
 {
@@ -293,7 +294,6 @@ QString ImageshackTalker::mimeType(const QString& path)
     KMimeType::Ptr mimePtr = KMimeType::findByUrl(path);
     return mimePtr->name();
 }
-
 
 void ImageshackTalker::uploadItem(QString path, QMap<QString, QString> opts)
 {
@@ -390,13 +390,11 @@ int ImageshackTalker::parseErrorResponse(QDomElement elem, QString& errMsg)
     }
 
     return errCode;
-
 }
-
 
 void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
 {
-    int errCode = -1;
+    int errCode    = -1;
     QString errMsg = "";
     QDomDocument doc("addPhoto");
     if (!doc.setContent(data))
@@ -424,4 +422,4 @@ void ImageshackTalker::parseUploadPhotoDone(QByteArray data)
     emit signalAddPhotoDone(errCode, errMsg);
 }
 
-}
+} // namespace KIPIImageshackExportPlugin
