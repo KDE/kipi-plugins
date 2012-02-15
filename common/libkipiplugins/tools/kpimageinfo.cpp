@@ -153,15 +153,35 @@ bool KPImageInfo::hasFileSize() const
 
 void KPImageInfo::setDescription(const QString& desc)
 {
-    d->setAttribute("comment", desc);
+    if (d->iface)
+    {
+        d->setAttribute("comment", desc);
 
 #if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        info.setDescription(desc);
-    }
+        if (d->hasValidData())
+        {
+            KIPI::ImageInfo info = d->iface->info(d->url);
+            info.setDescription(desc);
+        }
 #endif
+    }
+    else
+    {
+        // Use Kexiv2 to set comment to metadata.
+        KExiv2 meta(d->url.toLocalFile());
+
+        // We set image comments, outside Exif, XMP, and IPTC.
+        meta.setComments(desc.toUtf8());
+
+        // We set Exif comments
+        meta.setExifComment(desc);
+
+        // We set IPTC comments
+        QString trunc = desc;
+        trunc.truncate(2000);
+        meta.removeIptcTag("Iptc.Application2.Caption");
+        meta.setIptcTagString("Iptc.Application2.Caption", trunc);
+    }
 }
 
 QString KPImageInfo::description() const
@@ -182,8 +202,8 @@ QString KPImageInfo::description() const
     {
         // Use Kexiv2 to get comment from metadata.
         KExiv2 meta(d->url.toLocalFile());
-        
-        // We trying JFIF Comments section
+
+        // We trying image comments, outside Exif, XMP, and IPTC.
         QString comment = meta.getCommentsDecoded();
         if (!comment.isEmpty()) return comment;
 
@@ -203,7 +223,10 @@ QString KPImageInfo::description() const
 
 bool KPImageInfo::hasDescription() const
 {
-    return d->hasAttribute("comment");
+    if (d->iface)
+        return d->hasAttribute("comment");
+
+    return (!description().isNull());
 }
 
 void KPImageInfo::setDate(const QDateTime& date)

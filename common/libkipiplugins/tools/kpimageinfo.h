@@ -77,7 +77,8 @@ public:
     qlonglong fileSize() const;
     bool      hasFileSize() const;
 
-    /** Manage description (lead comment) of item.
+    /** Manage description (lead comment) of item with KIPI host application.
+     *  NOTE: if interface is null, description is managed through image metadata directly.
      */
     void    setDescription(const QString& desc);
     QString description() const;
