@@ -36,8 +36,13 @@
 
 #include <libkipi/version.h>
 
+// LibKEXIV2 includes
+
+#include <libkexiv2/kexiv2.h>
+
 // local includes
 
+#include "kprawthumbthread.h"
 #include "kipiimageinfoshared.h"
 #include "kipiimagecollectionselector.h"
 #include "kipiuploadwidget.h"
@@ -50,6 +55,10 @@ KipiInterface::KipiInterface(QObject* parent, const char* name)
       m_selectedAlbums(),
       m_albums()
 {
+    m_loadRawThumb = new KIPIPlugins::KPRawThumbThread(this);
+
+    connect(m_loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
+            this, SLOT(slotRawThumb(KUrl, QImage)));
 }
 
 KipiInterface::~KipiInterface()
@@ -189,8 +198,26 @@ QVariant KipiInterface::hostSetting(const QString& settingName)
     }
     else if (settingName == QString("MetadataWritingMode"))
     {
-        return (QVariant::fromValue(3 /* KExiv2::WRITETOSIDECARONLY4READONLYFILES*/));
+        return (QVariant::fromValue((int)KExiv2Iface::KExiv2::WRITETOSIDECARONLY4READONLYFILES));
     }
 
     return QVariant();
+}
+
+void KipiInterface::thumbnails(const KUrl::List& list, int)
+{
+    foreach(const KUrl& url, list)
+        m_loadRawThumb->getRawThumb(url);
+}
+
+void KipiInterface::slotRawThumb(const KUrl& url, const QImage& img)
+{
+    if (img.isNull())
+    {
+        KIPI::Interface::thumbnail(url, 256);
+    }
+    else
+    {
+        emit gotThumbnail(url, QPixmap::fromImage(img));
+    }
 }

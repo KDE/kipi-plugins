@@ -35,6 +35,11 @@ namespace KIPI
     class ImageInfo;
 }
 
+namespace KIPIPlugins
+{
+    class KPRawThumbThread;
+}
+
 class KipiInterface : public KIPI::Interface
 {
     Q_OBJECT
@@ -74,7 +79,15 @@ public:
     void addAlbums(const KUrl::List& albums);
     void addAlbum(const KUrl& album);
 
-public:
+    void thumbnails(const KUrl::List& list, int size);
+
+private Q_SLOTS:
+
+    void slotRawThumb(const KUrl&, const QImage&);
+
+private:
+
+    KIPIPlugins::KPRawThumbThread* m_loadRawThumb;
 
     friend class KipiUploadWidget;
     friend class KipiImageCollectionSelector;

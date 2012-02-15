@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a tool to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,7 +42,7 @@
 
 // Local includes
 
-#include "imagedialog.h"
+#include "kprawthumbthread.h"
 
 using namespace KIPIPlugins;
 
@@ -117,8 +117,8 @@ public:
         loadRawThumb = 0;
     }
 
-    Interface*          iface;
-    LoadRawThumbThread* loadRawThumb;
+    Interface*        iface;
+    KPRawThumbThread* loadRawThumb;
 };
 
 BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
@@ -149,7 +149,7 @@ BracketStackList::BracketStackList(Interface* iface, QWidget* parent)
                 this, SLOT(slotThumbnail(KUrl,QPixmap)));
     }
 
-    d->loadRawThumb = new LoadRawThumbThread(this);
+    d->loadRawThumb = new KPRawThumbThread(this);
 
     connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
             this, SLOT(slotRawThumb(KUrl,QImage)));
