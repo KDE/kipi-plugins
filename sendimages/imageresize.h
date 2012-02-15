@@ -35,11 +35,14 @@
 // Local includes
 
 #include "emailsettingscontainer.h"
+#include "actionthreadbase.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
 {
 
-class ImageResize : public QThread
+class ImageResize : public ActionThreadBase
 {
     Q_OBJECT
 
@@ -51,12 +54,6 @@ public:
     void resize(const EmailSettingsContainer& settings);
     void cancel();
 
-private:
-
-    void run();
-    bool imageResize(const EmailSettingsContainer& settings, 
-                     const KUrl& orgUrl, const QString& destName, QString& err);
-
 Q_SIGNALS:
 
     void startingResize(const KUrl &orgUrl);
@@ -66,8 +63,9 @@ Q_SIGNALS:
 
 private:
 
-    class ImageResizePriv;
-    ImageResizePriv* const d;
+    int            *count;    // although it is private, it's address is passed to Task
+
+    class Task;
 };
 
 }  // namespace KIPISendimagesPlugin
