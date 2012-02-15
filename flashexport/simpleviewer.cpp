@@ -605,35 +605,6 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     QString comment;
     QString keywords;
 
-    //This is a small preparation for using plugin as standalone
-    // when kipi interface won't be available
-    //kipi interface is null and using KExiv2 to get information
-    if(d->interface == 0)
-    {
-        KExiv2Iface::KExiv2 metaData;
-        metaData.load(url.path());
-        if(d->settings->showComments)
-        {
-            comment = metaData.getExifComment();
-        }
-        else
-        {
-            comment.clear();
-        }
-        if(d->settings->showKeywords)
-        {
-            QStringList  tagList = metaData.getXmpKeywords();
-
-            if(!tagList.join(" ").isEmpty())
-                keywords = QString("\nTags: ")+tagList.join(", ");
-        }
-        else
-        {
-            keywords.clear();
-        }
-    }
-    else
-    {
         KPImageInfo info(d->interface, url);
 
         if(d->settings->showComments)
@@ -644,7 +615,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         {
             comment.clear();
         }
-        if(d->settings->showKeywords && d->interface->hasFeature(KIPI::HostSupportsTags))
+        if(d->settings->showKeywords)
         {
             QStringList tagList = info.keywords();
             if(!tagList.join(" ").isEmpty())
@@ -654,7 +625,6 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         {
             keywords.clear();
         }
-    }
 
     switch(d->settings->plugType)
     {
