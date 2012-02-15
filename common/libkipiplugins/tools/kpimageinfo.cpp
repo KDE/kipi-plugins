@@ -38,6 +38,12 @@
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
+// Libkexiv2 includes
+
+#include <libkexiv2/kexiv2.h>
+
+using namespace KExiv2Iface;
+
 namespace KIPIPlugins
 {
 
@@ -160,15 +166,37 @@ void KPImageInfo::setDescription(const QString& desc)
 
 QString KPImageInfo::description() const
 {
-    if (hasDescription()) return d->attribute("comment").toString();
+    if (d->iface)
+    {
+        if (hasDescription()) return d->attribute("comment").toString();
 
 #if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        return info.description();
-    }
+        if (d->hasValidData())
+        {
+            KIPI::ImageInfo info = d->iface->info(d->url);
+            return info.description();
+        }
 #endif
+    }
+    else
+    {
+        // Use Kexiv2 to get comment from metadata.
+        KExiv2 meta(d->url.toLocalFile());
+        
+        // We trying JFIF Comments section
+        QString comment = meta.getCommentsDecoded();
+        if (!comment.isEmpty()) return comment;
+
+        // We trying to get Exif comments
+
+        comment = meta.getExifComment();
+        if (!comment.isEmpty()) return comment;
+
+        // We trying to get IPTC comments
+
+        comment = meta.getIptcTagString("Iptc.Application2.Caption", false);
+        if (!comment.isEmpty()) return comment;
+    }
 
     return QString();
 }
