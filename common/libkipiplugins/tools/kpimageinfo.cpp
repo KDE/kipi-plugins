@@ -518,17 +518,52 @@ bool KPImageInfo::hasTagsPath() const
 
 QStringList KPImageInfo::keywords() const
 {
-    QStringList keywords = d->attribute("keywords").toStringList();
-    if (keywords.isEmpty())
-        keywords = d->attribute("tags").toStringList();     // For compatibility.
+    QStringList keywords;
+    if(d->iface)
+    {
+        keywords = d->attribute("keywords").toStringList();
+        if (keywords.isEmpty())
+            keywords = d->attribute("tags").toStringList();     // For compatibility.
+    }
+    else
+    {
+        KExiv2 meta(d->url.toLocalFile());
+        // Trying to find IPTC keywords
+        keywords = meta.getIptcKeywords();
+        if(!keywords.isEmpty())
+            return keywords;
 
+        // Trying to find Xmp keywords
+        keywords = meta.getXmpKeywords();
+        if(!keywords.isEmpty())
+            return keywords;
+    }
     return keywords;
+
 }
 
 bool KPImageInfo::hasKeywords() const
 {
-    return (d->hasAttribute("keywords") || 
-            d->hasAttribute("tags"));                      // For compatibility.
+    if(d->iface)
+    {
+        return (d->hasAttribute("keywords") ||
+                d->hasAttribute("tags"));    // For compatibility.
+    }
+    else
+    {
+        KExiv2 meta(d->url.toLocalFile());
+        // Trying to find IPTC keywords
+        QStringList keywords = meta.getIptcKeywords();
+        if(!keywords.isEmpty())
+            return true;
+
+        // Trying to find Xmp keywords
+        keywords = meta.getXmpKeywords();
+        if(!keywords.isEmpty())
+            return true;
+
+        return false;
+    }
 }
 
 }  // namespace KIPIPlugins
