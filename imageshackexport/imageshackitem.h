@@ -33,13 +33,13 @@ public:
     }
 
     QString m_user;
-
     QString m_server;
     QString m_name;
     QString m_title;
     QString m_url;
-
 };
+
+// -------------------------------------------------------------------
 
 class ImageshackPhoto
 {
@@ -53,7 +53,6 @@ public:
     QString m_server;
     QString m_name;
     QString m_bucket;
-
 };
 
-}
+} // namespace KIPIImageshackExportPlugin

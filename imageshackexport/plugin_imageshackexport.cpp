@@ -54,7 +54,7 @@ K_EXPORT_PLUGIN(Factory("kipiplugin_imageshackexport"))
 
 Plugin_ImageshackExport::Plugin_ImageshackExport(QObject *parent, const QVariantList&)
     : KIPI::Plugin(Factory::componentData(), parent, "ImageshackExport"),
-      m_action(0), mpImageshack(0)
+      m_action(0), m_pImageshack(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_ImageshackExport plugin loaded";
 }
@@ -63,7 +63,7 @@ void Plugin_ImageshackExport::setup(QWidget* widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_imageshackexport");
 
-    mpImageshack = new KIPIImageshackExportPlugin::Imageshack();
+    m_pImageshack = new KIPIImageshackExportPlugin::Imageshack();
 
     KIPI::Plugin::setup(widget);
 
@@ -88,7 +88,7 @@ void Plugin_ImageshackExport::setup(QWidget* widget)
 
 Plugin_ImageshackExport::~Plugin_ImageshackExport()
 {
-    delete mpImageshack;
+    delete m_pImageshack;
 }
 
 void Plugin_ImageshackExport::slotExport()
@@ -104,7 +104,7 @@ void Plugin_ImageshackExport::slotExport()
 
     QPointer<KIPIImageshackExportPlugin::ImageshackWindow> dlg;
 
-    dlg = new KIPIImageshackExportPlugin::ImageshackWindow(interface, kapp->activeWindow(), mpImageshack);
+    dlg = new KIPIImageshackExportPlugin::ImageshackWindow(interface, kapp->activeWindow(), m_pImageshack);
     dlg->exec();
 
     delete dlg;

@@ -56,8 +56,8 @@ public Q_SLOTS:
 
 private:
 
-    KAction*                                 m_action;
-    KIPIImageshackExportPlugin::Imageshack*  mpImageshack;
+    KAction*                                m_action;
+    KIPIImageshackExportPlugin::Imageshack* m_pImageshack;
 
 };
 

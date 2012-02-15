@@ -38,6 +38,8 @@
 #include <QButtonGroup>
 #include <QGridLayout>
 #include <QCloseEvent>
+#include <QPlainTextEdit>
+#include <QRadioButton>
 
 // KDE includes
 
@@ -55,6 +57,7 @@
 #include <ktoolinvocation.h>
 #include <kurllabel.h>
 #include <kstandarddirs.h>
+#include <kcombobox.h>
 
 // LibKIPI includes
 
@@ -67,9 +70,6 @@
 #include "imageshacktalker.h"
 #include "kpaboutdata.h"
 #include "imageslist.h"
-#include <QPlainTextEdit>
-#include <QRadioButton>
-#include <KComboBox>
 
 namespace KIPIImageshackExportPlugin
 {
@@ -405,7 +405,6 @@ void ImageshackWindow::slotLoginDone(int errCode, const QString& errMsg)
         KMessageBox::error(this, i18n("Login failed: %1\n", errMsg));
     }
 }
-
 
 void ImageshackWindow::uploadNextItem()
 {
