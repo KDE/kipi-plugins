@@ -37,6 +37,7 @@
 // LibKIPI includes
 
 #include <libkipi/version.h>
+#include <libkipi/imagecollection.h>
 
 // LibKEXIV2 includes
 
@@ -70,7 +71,8 @@ KipiInterface::~KipiInterface()
 
 KIPI::ImageCollection KipiInterface::currentAlbum()
 {
-    kipiDebug("KIPI::ImageCollection KipiInterface::currentAlbum()");
+    kipiDebug("Called by plugins");
+
     KUrl currentAlbumUrl;
     if (!m_selectedAlbums.isEmpty())
     {
@@ -82,7 +84,7 @@ KIPI::ImageCollection KipiInterface::currentAlbum()
 
 KIPI::ImageCollection KipiInterface::currentSelection()
 {
-    kipiDebug("KIPI::ImageCollection KipiInterface::currentSelection()");
+    kipiDebug("Called by plugins");
     return KIPI::ImageCollection(new KipiImageCollectionShared(m_selectedImages));
 }
 
@@ -108,7 +110,7 @@ QList<KIPI::ImageCollection> KipiInterface::allAlbums()
 
 KIPI::ImageInfo KipiInterface::info(const KUrl& url)
 {
-    kipiDebug(QString( "KipiInterface::info: Plugin wants information about image \"%1\"").arg( url.url() ));
+    kipiDebug(QString( "Plugin wants information about image \"%1\"").arg( url.url() ));
 
     return KIPI::ImageInfo( new KipiImageInfoShared(this, url ) );
 }
@@ -116,18 +118,18 @@ KIPI::ImageInfo KipiInterface::info(const KUrl& url)
 bool KipiInterface::addImage(const KUrl& url, QString& errmsg)
 {
     Q_UNUSED(errmsg);
-    kipiDebug(QString( "KipiInterface::addImage: Plugin added an image: \"%1\"").arg( url.url() ));
+    kipiDebug(QString( "Plugin added an image: \"%1\"").arg( url.url() ));
     return true;
 }
 
 void KipiInterface::delImage(const KUrl& url)
 {
-    kipiDebug(QString( "KipiInterface::delImage: Plugin deleted an image: \"%1\"").arg( url.url() ));
+    kipiDebug(QString( "Plugin deleted an image: \"%1\"").arg( url.url() ));
 }
 
 void KipiInterface::refreshImages(const KUrl::List& urls)
 {
-    kipiDebug(QString( "KipiInterface::refreshImages: Plugin asks to refresh %1 images:").arg( urls.size() ));
+    kipiDebug(QString( "Plugin asks to refresh %1 images:").arg( urls.size() ));
     for (KUrl::List::ConstIterator it = urls.constBegin(); it!=urls.constEnd(); ++it)
     {
         kipiDebug("  " + (*it).url());
@@ -136,19 +138,19 @@ void KipiInterface::refreshImages(const KUrl::List& urls)
 
 int KipiInterface::features() const
 {
-    kipiDebug("KipiInterface::features");
+    kipiDebug("Called by plugins");
     return KIPI::ImagesHasTime;
 }
 
 KIPI::ImageCollectionSelector* KipiInterface::imageCollectionSelector(QWidget* parent)
 {
-    kipiDebug("KipiInterface::imageCollectionSelector");
+    kipiDebug("Called by plugins");
     return new KipiImageCollectionSelector(this, parent);
 }
 
 KIPI::UploadWidget* KipiInterface::uploadWidget(QWidget* parent)
 {
-    kipiDebug("KipiInterface::uploadWidget");
+    kipiDebug("Called by plugins");
     return new KipiUploadWidget(this, parent);
 }
 
