@@ -90,7 +90,8 @@ public:
     QStringList tagsPath() const;
     bool        hasTagsPath() const;
 
-    /** Get keywords list (tag names) of item.
+    /** Get keywords list (tag names) of item with KIPI host application.
+     *  NOTE: if interface is null, keywords are managed through image metadata directly.
      */
     QStringList keywords() const;
     bool        hasKeywords() const;

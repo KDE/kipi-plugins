@@ -319,7 +319,7 @@ bool KPImageInfo::hasName() const
 void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
 {
     d->setAttribute("orientation", (int)orientation);
-    d->setAttribute("angle",       (int)orientation);                               // For compatibility.
+    d->setAttribute("angle",       (int)orientation);     // NOTE: For compatibility.
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -337,7 +337,7 @@ KExiv2::ImageOrientation KPImageInfo::orientation() const
     if (d->hasAttribute("orientation"))
         orientation = (KExiv2::ImageOrientation)(d->attribute("orientation").toInt());
     else if (d->hasAttribute("angle"))
-        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());    // For compatibility.
+        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());    // NOTE: For compatibility.
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -353,7 +353,7 @@ KExiv2::ImageOrientation KPImageInfo::orientation() const
 bool KPImageInfo::hasOrientation() const
 {
     return (d->hasAttribute("orientation") || 
-            d->hasAttribute("angle"));                                              // For compatibility.
+            d->hasAttribute("angle"));          // NOTE: For compatibility.
 }
 
 void KPImageInfo::setTitle(const QString& title)
@@ -519,11 +519,12 @@ bool KPImageInfo::hasTagsPath() const
 QStringList KPImageInfo::keywords() const
 {
     QStringList keywords;
+
     if(d->iface)
     {
         keywords = d->attribute("keywords").toStringList();
         if (keywords.isEmpty())
-            keywords = d->attribute("tags").toStringList();     // For compatibility.
+            keywords = d->attribute("tags").toStringList();     // NOTE: For compatibility.
     }
     else
     {
@@ -538,8 +539,8 @@ QStringList KPImageInfo::keywords() const
         if(!keywords.isEmpty())
             return keywords;
     }
-    return keywords;
 
+    return keywords;
 }
 
 bool KPImageInfo::hasKeywords() const
@@ -547,7 +548,7 @@ bool KPImageInfo::hasKeywords() const
     if(d->iface)
     {
         return (d->hasAttribute("keywords") ||
-                d->hasAttribute("tags"));    // For compatibility.
+                d->hasAttribute("tags"));       // NOTE: For compatibility.
     }
     else
     {
@@ -561,9 +562,9 @@ bool KPImageInfo::hasKeywords() const
         keywords = meta.getXmpKeywords();
         if(!keywords.isEmpty())
             return true;
-
-        return false;
     }
+
+    return false;
 }
 
 }  // namespace KIPIPlugins
