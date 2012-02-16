@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Remote Imageshack Export
+Comment=A tool to export images to a remote Imageshack
+Type=Service
+Icon=imageshack
+ServiceTypes=KIPI/Plugin
+X-KDE-Library=kipiplugin_imageshackexport

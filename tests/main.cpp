@@ -9,6 +9,8 @@
  *
  * @author Copyright (C) 2009-2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2011-2012 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -324,7 +326,8 @@ int main(int argc, char* argv[])
                                kipiplugins_version,            // version
                                ki18n("Kipi host test application"),
                                KAboutData::License_GPL,
-                               ki18n("(c) 2009-2010 Michael G. Hansen"),
+                               ki18n("(c) 2009-2010 Michael G. Hansen\n"
+                                     "(c) 2011-2012 Gilles Caulier "),
                                KLocalizedString(),             // optional text
                                "http://www.digikam.org",       // URI of homepage
                                "kde-imaging@kde.org"           // bugs e-mail address
@@ -343,6 +346,7 @@ int main(int argc, char* argv[])
     options.add( "!allalbums <albums>", ki18n("All albums") );
     options.add( "+[images]", ki18n("List of images") );
     options.add( "+[albums]", ki18n("List of albums") );
+    options.add( "", ki18n("Exemple : ./kipicmd -w -lkipiplugin_rawconverter -a\"Batch RAW Converter...\"") );
     KCmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;

@@ -67,8 +67,9 @@
 
 // Local includes
 
-#include "imagedialog.h"
+#include "kprawthumbthread.h"
 #include "kpimageinfo.h"
+#include "imagedialog.h"
 
 using namespace KIPIPlugins;
 
@@ -502,27 +503,27 @@ public:
         progressPix           = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
     }
 
-    bool                allowRAW;
-    bool                allowDuplicate;
-    bool                controlButtonsEnabled;
-    int                 iconSize;
+    bool              allowRAW;
+    bool              allowDuplicate;
+    bool              controlButtonsEnabled;
+    int               iconSize;
 
-    CtrlButton*         addButton;
-    CtrlButton*         removeButton;
-    CtrlButton*         moveUpButton;
-    CtrlButton*         moveDownButton;
-    CtrlButton*         clearButton;
-    CtrlButton*         loadButton;
-    CtrlButton*         saveButton;
+    CtrlButton*       addButton;
+    CtrlButton*       removeButton;
+    CtrlButton*       moveUpButton;
+    CtrlButton*       moveDownButton;
+    CtrlButton*       clearButton;
+    CtrlButton*       loadButton;
+    CtrlButton*       saveButton;
 
-    KUrl::List          processItems;
-    KPixmapSequence     progressPix;
-    int                 progressCount;
-    QTimer*             progressTimer;
+    KUrl::List        processItems;
+    KPixmapSequence   progressPix;
+    int               progressCount;
+    QTimer*           progressTimer;
 
-    ImagesListView*     listView;
-    Interface*          iface;
-    LoadRawThumbThread* loadRawThumb;
+    ImagesListView*   listView;
+    Interface*        iface;
+    KPRawThumbThread* loadRawThumb;
 };
 
 ImagesList::ImagesList(Interface* iface, QWidget* parent, int iconSize)
@@ -577,7 +578,7 @@ ImagesList::ImagesList(Interface* iface, QWidget* parent, int iconSize)
                 this, SLOT(slotThumbnail(KUrl,QPixmap)));
     }
 
-    d->loadRawThumb = new LoadRawThumbThread(this);
+    d->loadRawThumb = new KPRawThumbThread(this);
 
     connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
             this, SLOT(slotRawThumb(KUrl,QImage)));

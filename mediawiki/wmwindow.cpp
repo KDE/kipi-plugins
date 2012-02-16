@@ -194,7 +194,7 @@ void WMWindow::slotStartTransfer()
         map["description"] = description;
         map["time"]        = info.date().toString(Qt::ISODate);
 
-        if(info.hasFullGeolocationInfo())
+        if(info.hasGeolocationInfo())
         {
             map["latitude"]  = QString::number(info.latitude());
             map["longitude"] = QString::number(info.longitude());

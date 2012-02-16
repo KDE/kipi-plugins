@@ -390,11 +390,12 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(picasawebexport)
     ADD_SUBDIRECTORY(smug)
     ADD_SUBDIRECTORY(printimages)
-    ADD_SUBDIRECTORY(expoblending)
+	ADD_SUBDIRECTORY(expoblending)
     ADD_SUBDIRECTORY(kopete)
     ADD_SUBDIRECTORY(batchprocessimages)
     ADD_SUBDIRECTORY(rajceexport)
     ADD_SUBDIRECTORY(kmlexport)
+	ADD_SUBDIRECTORY(imageshackexport)
     ADD_SUBDIRECTORY(photolayoutseditor)
 
     # Plugins which are optional depencies.

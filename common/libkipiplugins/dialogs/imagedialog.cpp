@@ -6,7 +6,7 @@
  * Date        : 2004-05-01
  * Description : image files selector dialog.
  *
- * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,8 +27,6 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPointer>
-#include <QMutex>
-#include <QWaitCondition>
 #include <QDesktopServices>
 
 // KDE includes
@@ -54,6 +52,10 @@
 // Libkipi includes
 
 #include <libkipi/imagecollection.h>
+
+// Local includes
+
+#include "kprawthumbthread.h"
 
 using namespace KDcrawIface;
 
@@ -82,7 +84,7 @@ public:
 
     KIPI::Interface*    iface;
 
-    LoadRawThumbThread* loadRawThumb;
+    KPRawThumbThread* loadRawThumb;
 };
 
 ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
@@ -112,7 +114,7 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
                 this, SLOT(slotThumbnail(KUrl,QPixmap)));
     }
 
-    d->loadRawThumb = new LoadRawThumbThread(this);
+    d->loadRawThumb = new KPRawThumbThread(this);
 
     connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
             this, SLOT(slotRawThumb(KUrl,QImage)));
@@ -481,82 +483,6 @@ KUrl::List ImageDialog::getImageUrls(QWidget* parent, KIPI::Interface* iface, bo
     else
     {
         return KUrl::List();
-    }
-}
-
-// ------------------------------------------------------------------------
-
-class LoadRawThumbThread::LoadRawThumbThreadPriv
-{
-public:
-
-    LoadRawThumbThreadPriv()
-    {
-        size    = 256;
-        running = false;
-    }
-
-    bool           running;
-
-    int            size;
-
-    QMutex         mutex;
-
-    QWaitCondition condVar;
-
-    KUrl::List     todo;
-};
-
-LoadRawThumbThread::LoadRawThumbThread(QObject* parent, int size)
-                  : QThread(parent), d(new LoadRawThumbThreadPriv)
-{
-    d->size = size;
-    start();
-}
-
-LoadRawThumbThread::~LoadRawThumbThread()
-{
-    cancel();
-    wait();
-
-    delete d;
-}
-
-void LoadRawThumbThread::cancel()
-{
-    QMutexLocker lock(&d->mutex);
-    d->todo.clear();
-    d->running = false;
-    d->condVar.wakeAll();
-}
-
-void LoadRawThumbThread::getRawThumb(const KUrl& url)
-{
-    QMutexLocker lock(&d->mutex);
-    d->todo << url;
-    d->condVar.wakeAll();
-}
-
-void LoadRawThumbThread::run()
-{
-    d->running = true;
-    while (d->running)
-    {
-        KUrl url;
-        {
-            QMutexLocker lock(&d->mutex);
-            if (!d->todo.isEmpty())
-                url = d->todo.takeFirst();
-            else
-                d->condVar.wait(&d->mutex);
-        }
-
-        if (!url.isEmpty())
-        {
-            QImage img;
-            KDcraw::loadDcrawPreview(img, url.path());
-            emit signalRawThumb(url, img.scaled(d->size, d->size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        }
     }
 }
 

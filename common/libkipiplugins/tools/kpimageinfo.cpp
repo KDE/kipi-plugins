@@ -38,6 +38,12 @@
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
+// Libkexiv2 includes
+
+#include <libkexiv2/kexiv2.h>
+
+using namespace KExiv2Iface;
+
 namespace KIPIPlugins
 {
 
@@ -147,35 +153,80 @@ bool KPImageInfo::hasFileSize() const
 
 void KPImageInfo::setDescription(const QString& desc)
 {
-    d->setAttribute("comment", desc);
+    if (d->iface)
+    {
+        d->setAttribute("comment", desc);
 
 #if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        info.setDescription(desc);
-    }
+        if (d->hasValidData())
+        {
+            KIPI::ImageInfo info = d->iface->info(d->url);
+            info.setDescription(desc);
+        }
 #endif
+    }
+    else
+    {
+        // Use Kexiv2 to set comment to metadata.
+        KExiv2 meta(d->url.toLocalFile());
+
+        // We set image comments, outside Exif, XMP, and IPTC.
+        meta.setComments(desc.toUtf8());
+
+        // We set Exif comments
+        meta.setExifComment(desc);
+
+        // We set IPTC comments
+        QString trunc = desc;
+        trunc.truncate(2000);
+        meta.removeIptcTag("Iptc.Application2.Caption");
+        meta.setIptcTagString("Iptc.Application2.Caption", trunc);
+    }
 }
 
 QString KPImageInfo::description() const
 {
-    if (hasDescription()) return d->attribute("comment").toString();
+    if (d->iface)
+    {
+        if (hasDescription()) return d->attribute("comment").toString();
 
 #if KIPI_VERSION < 0x010500
-    if (d->hasValidData())
-    {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        return info.description();
-    }
+        if (d->hasValidData())
+        {
+            KIPI::ImageInfo info = d->iface->info(d->url);
+            return info.description();
+        }
 #endif
+    }
+    else
+    {
+        // Use Kexiv2 to get comment from metadata.
+        KExiv2 meta(d->url.toLocalFile());
+
+        // We trying image comments, outside Exif, XMP, and IPTC.
+        QString comment = meta.getCommentsDecoded();
+        if (!comment.isEmpty()) return comment;
+
+        // We trying to get Exif comments
+
+        comment = meta.getExifComment();
+        if (!comment.isEmpty()) return comment;
+
+        // We trying to get IPTC comments
+
+        comment = meta.getIptcTagString("Iptc.Application2.Caption", false);
+        if (!comment.isEmpty()) return comment;
+    }
 
     return QString();
 }
 
 bool KPImageInfo::hasDescription() const
 {
-    return d->hasAttribute("comment");
+    if (d->iface)
+        return d->hasAttribute("comment");
+
+    return (!description().isNull());
 }
 
 void KPImageInfo::setDate(const QDateTime& date)
@@ -268,7 +319,7 @@ bool KPImageInfo::hasName() const
 void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
 {
     d->setAttribute("orientation", (int)orientation);
-    d->setAttribute("angle",       (int)orientation);                               // For compatibility.
+    d->setAttribute("angle",       (int)orientation);     // NOTE: For compatibility.
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -286,7 +337,7 @@ KExiv2::ImageOrientation KPImageInfo::orientation() const
     if (d->hasAttribute("orientation"))
         orientation = (KExiv2::ImageOrientation)(d->attribute("orientation").toInt());
     else if (d->hasAttribute("angle"))
-        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());    // For compatibility.
+        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());    // NOTE: For compatibility.
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
@@ -302,7 +353,7 @@ KExiv2::ImageOrientation KPImageInfo::orientation() const
 bool KPImageInfo::hasOrientation() const
 {
     return (d->hasAttribute("orientation") || 
-            d->hasAttribute("angle"));                                              // For compatibility.
+            d->hasAttribute("angle"));          // NOTE: For compatibility.
 }
 
 void KPImageInfo::setTitle(const QString& title)
@@ -467,17 +518,53 @@ bool KPImageInfo::hasTagsPath() const
 
 QStringList KPImageInfo::keywords() const
 {
-    QStringList keywords = d->attribute("keywords").toStringList();
-    if (keywords.isEmpty())
-        keywords = d->attribute("tags").toStringList();     // For compatibility.
+    QStringList keywords;
+
+    if(d->iface)
+    {
+        keywords = d->attribute("keywords").toStringList();
+        if (keywords.isEmpty())
+            keywords = d->attribute("tags").toStringList();     // NOTE: For compatibility.
+    }
+    else
+    {
+        KExiv2 meta(d->url.toLocalFile());
+        // Trying to find IPTC keywords
+        keywords = meta.getIptcKeywords();
+        if(!keywords.isEmpty())
+            return keywords;
+
+        // Trying to find Xmp keywords
+        keywords = meta.getXmpKeywords();
+        if(!keywords.isEmpty())
+            return keywords;
+    }
 
     return keywords;
 }
 
 bool KPImageInfo::hasKeywords() const
 {
-    return (d->hasAttribute("keywords") || 
-            d->hasAttribute("tags"));                      // For compatibility.
+    if(d->iface)
+    {
+        return (d->hasAttribute("keywords") ||
+                d->hasAttribute("tags"));       // NOTE: For compatibility.
+    }
+    else
+    {
+        KExiv2 meta(d->url.toLocalFile());
+        // Trying to find IPTC keywords
+        QStringList keywords = meta.getIptcKeywords();
+        if(!keywords.isEmpty())
+            return true;
+
+        // Trying to find Xmp keywords
+        keywords = meta.getXmpKeywords();
+        if(!keywords.isEmpty())
+            return true;
+    }
+
+    return false;
 }
 
 }  // namespace KIPIPlugins

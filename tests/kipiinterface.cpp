@@ -9,6 +9,8 @@
  *
  * @author Copyright (C) 2009-2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2011-2012 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,9 +37,15 @@
 // LibKIPI includes
 
 #include <libkipi/version.h>
+#include <libkipi/imagecollection.h>
+
+// LibKEXIV2 includes
+
+#include <libkexiv2/kexiv2.h>
 
 // local includes
 
+#include "kprawthumbthread.h"
 #include "kipiimageinfoshared.h"
 #include "kipiimagecollectionselector.h"
 #include "kipiuploadwidget.h"
@@ -50,6 +58,10 @@ KipiInterface::KipiInterface(QObject* parent, const char* name)
       m_selectedAlbums(),
       m_albums()
 {
+    m_loadRawThumb = new KIPIPlugins::KPRawThumbThread(this);
+
+    connect(m_loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
+            this, SLOT(slotRawThumb(KUrl, QImage)));
 }
 
 KipiInterface::~KipiInterface()
@@ -59,7 +71,8 @@ KipiInterface::~KipiInterface()
 
 KIPI::ImageCollection KipiInterface::currentAlbum()
 {
-    kipiDebug("KIPI::ImageCollection KipiInterface::currentAlbum()");
+    kipiDebug("Called by plugins");
+
     KUrl currentAlbumUrl;
     if (!m_selectedAlbums.isEmpty())
     {
@@ -71,7 +84,7 @@ KIPI::ImageCollection KipiInterface::currentAlbum()
 
 KIPI::ImageCollection KipiInterface::currentSelection()
 {
-    kipiDebug("KIPI::ImageCollection KipiInterface::currentSelection()");
+    kipiDebug("Called by plugins");
     return KIPI::ImageCollection(new KipiImageCollectionShared(m_selectedImages));
 }
 
@@ -97,7 +110,7 @@ QList<KIPI::ImageCollection> KipiInterface::allAlbums()
 
 KIPI::ImageInfo KipiInterface::info(const KUrl& url)
 {
-    kipiDebug(QString( "KipiInterface::info: Plugin wants information about image \"%1\"").arg( url.url() ));
+    kipiDebug(QString( "Plugin wants information about image \"%1\"").arg( url.url() ));
 
     return KIPI::ImageInfo( new KipiImageInfoShared(this, url ) );
 }
@@ -105,18 +118,18 @@ KIPI::ImageInfo KipiInterface::info(const KUrl& url)
 bool KipiInterface::addImage(const KUrl& url, QString& errmsg)
 {
     Q_UNUSED(errmsg);
-    kipiDebug(QString( "KipiInterface::addImage: Plugin added an image: \"%1\"").arg( url.url() ));
+    kipiDebug(QString( "Plugin added an image: \"%1\"").arg( url.url() ));
     return true;
 }
 
 void KipiInterface::delImage(const KUrl& url)
 {
-    kipiDebug(QString( "KipiInterface::delImage: Plugin deleted an image: \"%1\"").arg( url.url() ));
+    kipiDebug(QString( "Plugin deleted an image: \"%1\"").arg( url.url() ));
 }
 
 void KipiInterface::refreshImages(const KUrl::List& urls)
 {
-    kipiDebug(QString( "KipiInterface::refreshImages: Plugin asks to refresh %1 images:").arg( urls.size() ));
+    kipiDebug(QString( "Plugin asks to refresh %1 images:").arg( urls.size() ));
     for (KUrl::List::ConstIterator it = urls.constBegin(); it!=urls.constEnd(); ++it)
     {
         kipiDebug("  " + (*it).url());
@@ -125,19 +138,19 @@ void KipiInterface::refreshImages(const KUrl::List& urls)
 
 int KipiInterface::features() const
 {
-    kipiDebug("KipiInterface::features");
+    kipiDebug("Called by plugins");
     return KIPI::ImagesHasTime;
 }
 
 KIPI::ImageCollectionSelector* KipiInterface::imageCollectionSelector(QWidget* parent)
 {
-    kipiDebug("KipiInterface::imageCollectionSelector");
+    kipiDebug("Called by plugins");
     return new KipiImageCollectionSelector(this, parent);
 }
 
 KIPI::UploadWidget* KipiInterface::uploadWidget(QWidget* parent)
 {
-    kipiDebug("KipiInterface::uploadWidget");
+    kipiDebug("Called by plugins");
     return new KipiUploadWidget(this, parent);
 }
 
@@ -189,8 +202,26 @@ QVariant KipiInterface::hostSetting(const QString& settingName)
     }
     else if (settingName == QString("MetadataWritingMode"))
     {
-        return (QVariant::fromValue(3 /* KExiv2::WRITETOSIDECARONLY4READONLYFILES*/));
+        return (QVariant::fromValue((int)KExiv2Iface::KExiv2::WRITETOSIDECARONLY4READONLYFILES));
     }
 
     return QVariant();
+}
+
+void KipiInterface::thumbnails(const KUrl::List& list, int)
+{
+    foreach(const KUrl& url, list)
+        m_loadRawThumb->getRawThumb(url);
+}
+
+void KipiInterface::slotRawThumb(const KUrl& url, const QImage& img)
+{
+    if (img.isNull())
+    {
+        KIPI::Interface::thumbnail(url, 256);
+    }
+    else
+    {
+        emit gotThumbnail(url, QPixmap::fromImage(img));
+    }
 }

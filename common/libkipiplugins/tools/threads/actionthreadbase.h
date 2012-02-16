@@ -27,19 +27,16 @@
 // Qt includes
 
 #include <QThread>
-#include <QMutex>
-#include <QWaitCondition>
-
-// KDE includes
-
-#include <kurl.h>
-#include <ThreadWeaver/JobCollection>
-#include <ThreadWeaver/Weaver>
 
 //Local includes
 
 #include "kpweaverobserver.h"
 #include "kipiplugins_export.h"
+
+namespace ThreadWeaver
+{
+    class JobCollection;
+}
 
 namespace KIPIPlugins
 {
@@ -58,42 +55,16 @@ public:
 protected:
 
     void run();
+    void appendJob(ThreadWeaver::JobCollection* job);
 
 private Q_SLOTS:
 
     void slotFinished();
 
-protected:
+private:
 
     class ActionThreadBasePriv;
     ActionThreadBasePriv* const d;
-};
-
-// ------------------------------------------------------------------------------------------------
-
-class ActionThreadBase::ActionThreadBasePriv
-{
-public:
-
-    ActionThreadBasePriv()
-    {
-        running       = false;
-        weaverRunning = false;
-        log           = 0;
-    }
-
-    bool                                running;
-    bool                                weaverRunning;
-
-    QMutex                              mutex;
-
-    QWaitCondition                      condVar;
-    QWaitCondition                      condVarJobs;
-
-    QList<ThreadWeaver::JobCollection*> todo;
-
-    ThreadWeaver::Weaver*               weaver;
-    KPWeaverObserver*                   log;
 };
 
 }  // namespace KIPIPlugins

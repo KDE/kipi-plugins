@@ -56,6 +56,8 @@ extern "C"
 #include "imageflip.h"
 #include "convert2grayscale.h"
 
+using namespace ThreadWeaver;
+
 namespace KIPIJPEGLossLessPlugin
 {
 
@@ -110,8 +112,7 @@ protected:
             }
             default:
             {
-                kError() << "KIPIJPEGLossLessPlugin:ActionThread: "
-                         << "Unknown action specified";
+                kError() << "Unknown action specified";
             }
         }
     }
@@ -137,7 +138,7 @@ ActionThread::~ActionThread()
 
 void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 {
-    ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
+    JobCollection* collection = new JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
@@ -156,14 +157,12 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
         collection->addJob(t);
     }
 
-    QMutexLocker lock(&d->mutex);
-    d->todo << collection;
-    d->condVar.wakeAll();
+    appendJob(collection);
 }
 
 void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
 {
-    ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
+    JobCollection* collection = new JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
@@ -182,14 +181,12 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
         collection->addJob(t);
     }
 
-    QMutexLocker lock(&d->mutex);
-    d->todo << collection;
-    d->condVar.wakeAll();
+    appendJob(collection);
 }
 
 void ActionThread::convert2grayscale(const KUrl::List& urlList)
 {
-    ThreadWeaver::JobCollection* collection = new ThreadWeaver::JobCollection(this);
+    JobCollection* collection = new JobCollection(this);
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
@@ -207,9 +204,7 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
         collection->addJob(t);
     }
 
-    QMutexLocker lock(&d->mutex);
-    d->todo << collection;
-    d->condVar.wakeAll();
+    appendJob(collection);
 }
 
 void ActionThread::slotJobDone(ThreadWeaver::Job* job)
@@ -223,7 +218,7 @@ void ActionThread::slotJobDone(ThreadWeaver::Job* job)
     }
     else
     {
-        kDebug() << "could n't complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString;
+        kDebug() << "Could not complete the job: " << task->fileUrl.toLocalFile() << " Error: " << task->errString;
         emit failed(task->fileUrl, task->action,task->errString);
     }
 

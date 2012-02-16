@@ -9,6 +9,8 @@
  *
  * @author Copyright (C) 2009-2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2011-2012 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,6 +35,11 @@ namespace KIPI
 {
     class ImageCollection;
     class ImageInfo;
+}
+
+namespace KIPIPlugins
+{
+    class KPRawThumbThread;
 }
 
 class KipiInterface : public KIPI::Interface
@@ -74,7 +81,15 @@ public:
     void addAlbums(const KUrl::List& albums);
     void addAlbum(const KUrl& album);
 
-public:
+    void thumbnails(const KUrl::List& list, int size);
+
+private Q_SLOTS:
+
+    void slotRawThumb(const KUrl&, const QImage&);
+
+private:
+
+    KIPIPlugins::KPRawThumbThread* m_loadRawThumb;
 
     friend class KipiUploadWidget;
     friend class KipiImageCollectionSelector;

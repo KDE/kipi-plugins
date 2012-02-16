@@ -605,28 +605,26 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     QString comment;
     QString keywords;
 
-    if(d->settings->showComments)
-    {
         KPImageInfo info(d->interface, url);
-        comment = info.description();
-    }
-    else
-    {
-        comment.clear();
-    }
 
-    if(d->settings->showKeywords && d->interface->hasFeature(KIPI::HostSupportsTags))
-    {
-        KPImageInfo info(d->interface, url);
-        QStringList tagList = info.keywords();
-
-        if(!tagList.join(" ").isEmpty())
-            keywords = QString("\nTags: ")+tagList.join(", ");
-    }
-    else
-    {
-        keywords.clear();
-    }
+        if(d->settings->showComments)
+        {
+            comment = info.description();
+        }
+        else
+        {
+            comment.clear();
+        }
+        if(d->settings->showKeywords)
+        {
+            QStringList tagList = info.keywords();
+            if(!tagList.join(" ").isEmpty())
+                keywords = QString("\nTags: ")+tagList.join(", ");
+        }
+        else
+        {
+            keywords.clear();
+        }
 
     switch(d->settings->plugType)
     {
