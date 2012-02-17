@@ -20,11 +20,13 @@
  *
  * ============================================================ */
 
-#ifndef IMGURWINDOW_H
-#define IMGURWINDOW_H
+#ifndef IMGURWIDGET_H
+#define IMGURWIDGET_H
 
 // Qt
-#include <QObject>
+#include <QWidget>
+#include <QProgressBar>
+#include <QLabel>
 
 // KDE
 #include <KDialog>
@@ -34,7 +36,6 @@
 #include "libkipi/interface.h"
 #include "imageslist.h"
 #include "imgurtalker.h"
-#include "imgurwidget.h"
 
 namespace KIPIPlugins {
 class ImagesList;
@@ -47,32 +48,22 @@ class Interface;
 
 namespace KIPIImgurExportPlugin
 {
-class ImgurWindow : public KDialog
+class ImgurWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ImgurWindow(KIPI::Interface* interface, QWidget* parent = 0);
-    ~ImgurWindow();
+    ImgurWidget(KIPI::Interface* interface, QWidget* parent = 0);
+    ~ImgurWidget();
 
-    void reactivate();
-
-private:
-    ImgurTalker* m_webService;
-    ImgurWidget* m_widget;
-
-public Q_SLOTS:
-//    void slotHelp();
-    void slotImageListChanged();
-    void slotStartUpload();
-    void slotBusy(bool val);
-
-    void slotButtonClicked(int button);
-    void slotAddPhotoDone(int errCode, const QString& errMsg);
+    KIPIPlugins::ImagesList* imagesList() const;
+    QProgressBar* progressBar() const;
 
 private:
-    void uploadNextItem();
-    void closeEvent(QCloseEvent* e);
+    KIPIPlugins::ImagesList* m_imagesList;
+    ImgurTalker* m_webServiceTalker;
+    QLabel* m_headerLbl;
+    QProgressBar* m_progressBar;
 };
 } // namespace KIPIImgurExportPlugin
-#endif /* IMGURWINDOW_H */
+#endif /* IMGURWIDGET_H */

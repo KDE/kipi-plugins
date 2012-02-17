@@ -123,9 +123,10 @@ public:
 
     ImgurTalker (Interface* iface, QWidget* parent = 0);
     ~ImgurTalker();
+
     void startUpload ();
     void cancel ();
-
+    KUrl::List*      processQueue();
 
 Q_SIGNALS:
     void signalBusy( bool busy);

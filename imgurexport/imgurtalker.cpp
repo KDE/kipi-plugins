@@ -120,7 +120,7 @@ void ImgurTalker::slotResult (KJob *kjob)
     return;
 }
 
-bool ImgurTalker::parseResponseImageRemove(QByteArray data) 
+bool ImgurTalker::parseResponseImageRemove(QByteArray data)
 {
     if (data.isEmpty()) {
         //
@@ -128,7 +128,7 @@ bool ImgurTalker::parseResponseImageRemove(QByteArray data)
     return false;
 }
 
-bool ImgurTalker::parseResponseImageUpload (QByteArray data) 
+bool ImgurTalker::parseResponseImageUpload (QByteArray data)
 {
     bool ok;
 
@@ -390,7 +390,7 @@ void ImgurTalker::startUpload()
     if (images.isValid())
     {
         KUrl::List list = images.images();
-        for (KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it) 
+        for (KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it)
         {
             KUrl imageUrl = *it;
 
@@ -415,5 +415,9 @@ void ImgurTalker::slotAddItems (const KUrl::List &list)
     }
 }
 
+KUrl::List* ImgurTalker::processQueue ()
+{
+    return &m_processQueue;
+}
 
 } // namespace KIPIImgurExportPlugin
