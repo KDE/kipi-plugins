@@ -60,7 +60,7 @@ namespace KIPISendimagesPlugin
 {
 
 Task::Task(QObject* parent, int* count)
-    : Job(parent)
+        : Job(parent)
 {
     m_count = count;
 }
@@ -74,7 +74,9 @@ void Task::run()
     QString errString;
 
     emit startingResize(m_orgUrl);
+    mutex.lock();
     (*m_count)++;
+    mutex.unlock();
     int percent = (int)(((float)(*m_count)/(float)m_settings.itemsList.count())*100.0);
 
     if (imageResize(m_settings, m_orgUrl, m_destName, errString))
@@ -89,7 +91,9 @@ void Task::run()
 
     if (m_settings.itemsList.count() == *m_count)
     {
+        mutex.lock();
         *m_count = 0;
+        mutex.unlock();
     }
 }
 
@@ -204,7 +208,7 @@ bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& setti
 // ----------------------------------------------------------------------------------------------------
 
 ImageResize::ImageResize(QObject *parent)
-    : ActionThreadBase(parent)
+        : ActionThreadBase(parent)
 {
     m_count  = new int;
     *m_count = 0;
@@ -222,7 +226,7 @@ void ImageResize::resize(const EmailSettingsContainer& settings)
     int i                     = 1;
 
     for (QList<EmailItem>::const_iterator it = settings.itemsList.constBegin();
-         it != settings.itemsList.constEnd(); ++it)
+            it != settings.itemsList.constEnd(); ++it)
     {
         QString tmp;
 

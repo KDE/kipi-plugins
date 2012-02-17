@@ -27,6 +27,7 @@
 
 #include <QThread>
 #include <QString>
+#include <QMutex>
 
 // KDE includes
 
@@ -71,6 +72,8 @@ private:
     void run();
     bool imageResize(const EmailSettingsContainer& settings,
                      const KUrl& orgUrl, const QString& destName, QString& err);
+    
+    QMutex mutex;
 };
 
 // ----------------------------------------------------------------------------------------------------
