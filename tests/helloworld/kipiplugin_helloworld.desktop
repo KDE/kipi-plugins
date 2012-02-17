@@ -1,9 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=HelloWorld
-Name[x-test]=xxHelloWorldxx
+Name[ga]=HelloWorld
 Comment=An hello world tool
-Comment[x-test]=xxAn hello world toolxx
 Type=Service
 Icon=
 ServiceTypes=KIPI/Plugin
