@@ -57,7 +57,7 @@ protected:
     void run();
     void appendJob(ThreadWeaver::JobCollection* job);
 
-private Q_SLOTS:
+protected Q_SLOTS:
 
     void slotFinished();
 

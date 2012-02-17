@@ -65,7 +65,6 @@ Q_SIGNALS:
     void startingResize(const KUrl& orgUrl);
     void finishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent);
     void failedResize(const KUrl& orgUrl, const QString& errString, int percent);
-    void completeResize();
 
 private:
 
@@ -94,6 +93,10 @@ Q_SIGNALS:
     void finishedResize(const KUrl &orgUrl, const KUrl& emailUrl, int percent);
     void failedResize(const KUrl &orgUrl, const QString &errString, int percent);
     void completeResize();
+    
+private Q_SLOTS:
+
+    void slotFinished();
 
 private:
 

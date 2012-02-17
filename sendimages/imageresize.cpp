@@ -89,7 +89,6 @@ void Task::run()
 
     if (m_settings.itemsList.count() == *m_count)
     {
-        emit completeResize();
         *m_count = 0;
     }
 }
@@ -245,9 +244,6 @@ void ImageResize::resize(const EmailSettingsContainer& settings)
         connect(t, SIGNAL(failedResize(KUrl, QString, int)),
                 this, SIGNAL(failedResize(KUrl, QString, int)));
 
-        connect(t, SIGNAL(completeResize()),
-                this, SIGNAL(completeResize()));
-
         collection->addJob(t);
         i++;
     }
@@ -260,5 +256,12 @@ void ImageResize::cancel()
     *m_count   = 0;
     ActionThreadBase::cancel();
 }
+
+void ImageResize::slotFinished()
+{
+    emit completeResize();
+    ActionThreadBase::slotFinished();
+}
+
 
 }  // namespace KIPISendimagesPlugin
