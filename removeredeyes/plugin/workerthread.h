@@ -26,23 +26,32 @@
 
 // Qt includes
 
-#include <QThread>
+#include <ThreadWeaver/Job>
 
 // KDE includes
 
 #include <kurl.h>
 
+// local includes
+
+#include "actionthreadbase.h"
+#include "commonsettings.h"
+#include "savemethods.h"
+#include "locator.h"
+#include "workerthreaddata.h"
+
+using namespace KIPIPlugins;
+
 class QString;
+struct WorkerThreadPriv;
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-class CommonSettings;
-class Locator;
-class SaveMethod;
 class WorkerThreadData;
+struct WorkerThreadPriv;
 
-class WorkerThread : public QThread
+class WorkerThread : public ActionThreadBase
 {
     Q_OBJECT
 
@@ -82,13 +91,65 @@ public:
     void setTempFile(const QString&, ImageType);
 
     void cancel();
-    void run();
+    
+private:
+
+    WorkerThreadPriv* const pd;
+    
+};
+
+struct WorkerThreadPriv
+{
+    WorkerThreadPriv()
+    {
+        runtype             = WorkerThread::Testrun;
+        cancel              = false;
+        updateFileTimeStamp = false;
+        saveMethod          = 0;
+        locator             = 0;
+    }
+
+    bool           	updateFileTimeStamp;
+    bool           	cancel;
+    int            	runtype;
+    int                 progress;
+
+    CommonSettings 	settings;
+    SaveMethod*    	saveMethod;
+    Locator*       	locator;
+    
+    KUrl::List          urls;
+    QString        	maskPreviewFile;
+    QString        	correctedPreviewFile;
+    QString        	originalPreviewFile;
+    
+    QMutex mutex;  
+};
+
+class Task : public ThreadWeaver::Job
+{
+    Q_OBJECT
+
+public:
+
+    Task(const KUrl &url,QObject* parent = 0, WorkerThreadPriv*  d =0);
+
+    const KUrl &url;
+
+Q_SIGNALS:
+
+    void calculationFinished(WorkerThreadData* );
 
 private:
 
-    struct WorkerThreadPriv;
-    WorkerThreadPriv* const d;
+    WorkerThreadPriv*  ld;
+
+protected:
+
+    void run();
 };
+
+
 } // namespace KIPIRemoveRedEyesPlugin
 
 #endif
