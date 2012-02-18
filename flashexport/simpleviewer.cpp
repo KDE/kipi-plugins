@@ -100,8 +100,6 @@ public:
 
     KTempDir*                         tempDir;
 
-    QList<KIPI::ImageCollection>      collectionsList;
-
     KIPI::Interface*                  interface;
 
     KIPIPlugins::BatchProgressWidget* progressWdg;
@@ -182,15 +180,21 @@ void SimpleViewer::startExport()
      kDebug() << "SimpleViewer started...";
     // Estimate the number of actions for the KIPIPlugins progress dialog.
     d->progressWdg->addedAction(i18n("Initialising..."), KIPIPlugins::StartingMessage);
-    d->collectionsList = d->settings->collections;
     d->totalActions    = 0;
     d->action          = 0;
     d->progressWdg->reset();
 
-    for( QList<KIPI::ImageCollection>::ConstIterator it = d->collectionsList.constBegin() ;
-         !d->canceled && (it != d->collectionsList.constEnd()) ; ++it )
+    if(d->settings->imgGetOption == 0)
     {
-        d->totalActions += (*it).images().count();
+        for( QList<KIPI::ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
+            !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
+        {
+            d->totalActions += (*it).images().count();
+        }
+    }
+    else
+    {
+        d->totalActions+=d->settings->imageDialogList.count();
     }
 
     // +copying SimpleViewer, +creating index.html
@@ -342,18 +346,14 @@ bool SimpleViewer::cmpUrl(const KUrl &url1, const KUrl &url2)
 
 }
 
-bool SimpleViewer::exportImages() const
+bool SimpleViewer::exportImages()
 {
     if(d->canceled)
         return false;
 
     d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), KIPIPlugins::StartingMessage);
 
-    KUrl thumbsDir(d->tempDir->name());
-    thumbsDir.addPath("/thumbs");
 
-    KUrl imagesDir(d->tempDir->name());
-    imagesDir.addPath("/images");
 
     KUrl xmlFile(d->tempDir->name());
     xmlFile.addPath("/gallery.xml");
@@ -428,7 +428,30 @@ bool SimpleViewer::exportImages() const
         default:
             break;
     }
+    if(d->settings->imgGetOption ==0)
+    {
+        for( QList<KIPI::ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
+            !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
+        {
+            KUrl::List images = (*it).images();
+            processKUrlList(images,xmlDoc,galleryElem,photosElem);
+        }
+    }
+    else
+    {
+        KUrl::List images = d->settings->imageDialogList;
+        processKUrlList(images,xmlDoc,galleryElem,photosElem);
+    }
 
+    QByteArray data(xmlDoc.toByteArray());
+    QDataStream stream( &file );
+    stream.writeRawData(data.data(), data.size());
+    file.close();
+
+    return true;
+}
+void SimpleViewer::processKUrlList(KUrl::List images, QDomDocument xmlDoc, QDomElement galleryElem, QDomElement photosElem)
+{
     KExiv2Iface::KExiv2 meta;
     QImage              image;
     QImage              thumbnail;
@@ -440,12 +463,13 @@ bool SimpleViewer::exportImages() const
     bool resizeImages   = d->settings->resizeExportImages;
     bool fixOrientation = d->settings->fixOrientation;
 
-    for( QList<KIPI::ImageCollection>::ConstIterator it = d->collectionsList.constBegin() ;
-         !d->canceled && (it != d->collectionsList.constEnd()) ; ++it )
-    {
-         KUrl::List images = (*it).images();
+    KUrl thumbsDir(d->tempDir->name());
+    thumbsDir.addPath("/thumbs");
 
-         qSort(images.begin(), images.end(), cmpUrl);
+    KUrl imagesDir(d->tempDir->name());
+    imagesDir.addPath("/images");
+
+             qSort(images.begin(), images.end(), cmpUrl);
 
         for(KUrl::List::ConstIterator it = images.constBegin();
             !d->canceled && (it != images.constEnd()) ; ++it)
@@ -536,16 +560,7 @@ bool SimpleViewer::exportImages() const
             d->progressWdg->setProgress(++d->action, d->totalActions);
             index++;
         }
-    }
-
-    QByteArray data(xmlDoc.toByteArray());
-    QDataStream stream( &file );
-    stream.writeRawData(data.data(), data.size());
-    file.close();
-
-    return true;
 }
-
 bool SimpleViewer::createThumbnail(const QImage& image, QImage& thumbnail) const
 {
     int w = image.width();

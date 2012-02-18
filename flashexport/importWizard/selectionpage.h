@@ -35,6 +35,7 @@
 // Local includes
 
 #include "wizardpage.h"
+#include "simpleviewersettingscontainer.h"
 
 namespace KIPIFlashExportPlugin
 {
@@ -48,8 +49,22 @@ public:
 
 	SelectionPage(FlashManager *mngr, KAssistantDialog* dlg);
     ~SelectionPage();
-    
-    QList<KIPI::ImageCollection> selection() const;
+    /**
+     * Set a collection selector or a image dialog acording to user choice on the intropage
+     * @param choice - 0 -collection, 1 - image dialog
+     */
+    void setPageContent(int choice);
+    /**
+     * Set settings intro SimpleViewerSettingsContainer
+     */
+    void settings(SimpleViewerSettingsContainer* container);
+    /**
+     * Check if at least one collection or one image is selected
+     * User won't be allowed to start export with no images selected
+     * @param imageGetOption 0 - collection 1 - iamgeDialog
+     * to know where to check for selected images
+     */
+    bool isSelectionEmpty(int imageGetOption);
 
 private:
 
