@@ -27,6 +27,7 @@
 
 #include <QThread>
 #include <QString>
+#include <QMutex>
 
 // KDE includes
 
@@ -65,13 +66,14 @@ Q_SIGNALS:
     void startingResize(const KUrl& orgUrl);
     void finishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent);
     void failedResize(const KUrl& orgUrl, const QString& errString, int percent);
-    void completeResize();
 
 private:
 
     void run();
     bool imageResize(const EmailSettingsContainer& settings,
                      const KUrl& orgUrl, const QString& destName, QString& err);
+    
+    QMutex mutex;
 };
 
 // ----------------------------------------------------------------------------------------------------
@@ -94,6 +96,10 @@ Q_SIGNALS:
     void finishedResize(const KUrl &orgUrl, const KUrl& emailUrl, int percent);
     void failedResize(const KUrl &orgUrl, const QString &errString, int percent);
     void completeResize();
+    
+private Q_SLOTS:
+
+    void slotFinished();
 
 private:
 
