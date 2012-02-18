@@ -293,7 +293,6 @@ Wizard::Wizard(QWidget* parent, KIPI::Interface* interface)
     printListLayout->addWidget(d->m_ImagesFilesListBox);
     d->mPhotoPage->mPrintList->setLayout(printListLayout);
 
-
     d->mPhotoPage->BmpFirstPagePreview->setAlignment(Qt::AlignHCenter);
 
     connect(d->m_ImagesFilesListBox, SIGNAL(signalMoveDownItem()),
