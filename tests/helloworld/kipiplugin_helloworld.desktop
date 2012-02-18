@@ -1,8 +1,19 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=HelloWorld
+Name[ca]=Hola món
+Name[cs]=HelloWorld
 Name[ga]=HelloWorld
+Name[pt]=Olá Mundo
+Name[pt_BR]=Olá mundo
+Name[uk]=Тестовий додаток
+Name[x-test]=xxHelloWorldxx
 Comment=An hello world tool
+Comment[ca]=Una eina de «Hola món»
+Comment[pt]=Uma ferramenta do tipo 'olá mundo'
+Comment[pt_BR]=Ferramenta do tipo 'olá mundo'
+Comment[uk]=Тестовий інструмент
+Comment[x-test]=xxAn hello world toolxx
 Type=Service
 Icon=
 ServiceTypes=KIPI/Plugin
