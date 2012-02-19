@@ -109,8 +109,8 @@ void KPRawThumbThread::run()
         if (!url.isEmpty())
         {
             QImage img;
-            KDcraw::loadDcrawPreview(img, url.path());
-            emit signalRawThumb(url, img.scaled(d->size, d->size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            bool ret = KDcraw::loadDcrawPreview(img, url.path());
+            emit signalRawThumb(url, ret ? img.scaled(d->size, d->size, Qt::KeepAspectRatio, Qt::SmoothTransformation) : img);
         }
     }
 }
