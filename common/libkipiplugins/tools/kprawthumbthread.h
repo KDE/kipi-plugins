@@ -53,6 +53,8 @@ public:
 
 Q_SIGNALS:
 
+    /** Emmited when Raw thumb is extracted. Send a null image if failed
+     */
     void signalRawThumb(const KUrl&, const QImage& img);
 
 private:
