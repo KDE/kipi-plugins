@@ -6,6 +6,7 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwriteimage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetadata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetasettings.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwritehelp.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp

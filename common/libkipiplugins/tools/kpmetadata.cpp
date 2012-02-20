@@ -1,0 +1,79 @@
+/* ============================================================
+ *
+ * This file is a part of digiKam project
+ * http://www.digikam.org
+ *
+ * Date        : 2012-02-20
+ * Description : Metadata interface for kipi-plugins.
+ *
+ * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+#include "kpmetadata.h"
+
+// LibKipi includes
+
+#include <libkipi/version.h>
+#include <libkipi/interface.h>
+
+using namespace KIPI;
+
+namespace KIPIPlugins
+{
+
+KPMetadata::KPMetadata(const QString& filePath, const KPMetaSettings& settings)
+    : KExiv2()
+{
+    setSettings(settings);
+    load(filePath);
+}
+
+void KPMetadata::setSettings(const KPMetaSettings& settings)
+{
+    setUseXMPSidecar4Reading(settings.useXMPSidecar4Reading);
+    setWriteRawFiles(settings.writeRawFiles);
+    setMetadataWritingMode(settings.metadataWritingMode);
+    setUpdateFileTimeStamp(settings.updateFileTimeStamp);
+}
+
+bool KPMetadata::load(const QString& filePath) const
+{
+#if KIPI_VERSION >= 0x010500
+    //FileReadLocker(KUrl(filePath));
+#endif
+
+    return KExiv2::load(filePath);
+}
+
+bool KPMetadata::save(const QString& filePath) const
+{
+#if KIPI_VERSION >= 0x010500
+    //FileWriteLocker(KUrl(filePath));
+#endif
+
+    return KExiv2::save(filePath);
+}
+
+bool KPMetadata::applyChanges() const
+{
+#if KIPI_VERSION >= 0x010500
+    //FileWriteLocker(KUrl(getFilePath()));
+#endif
+
+    return KExiv2::applyChanges();
+}
+
+}  // namespace KIPIPlugins
