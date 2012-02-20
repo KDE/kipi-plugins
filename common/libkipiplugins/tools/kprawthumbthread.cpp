@@ -95,22 +95,31 @@ void KPRawThumbThread::getRawThumb(const KUrl& url)
 void KPRawThumbThread::run()
 {
     d->running = true;
+
     while (d->running)
     {
         KUrl url;
-        {
-            QMutexLocker lock(&d->mutex);
-            if (!d->todo.isEmpty())
-                url = d->todo.takeFirst();
-            else
-                d->condVar.wait(&d->mutex);
-        }
+
+        QMutexLocker lock(&d->mutex);
+        if (!d->todo.isEmpty())
+            url = d->todo.takeFirst();
+        else
+            d->condVar.wait(&d->mutex);
 
         if (!url.isEmpty())
         {
             QImage img;
             bool ret = KDcraw::loadDcrawPreview(img, url.path());
-            emit signalRawThumb(url, ret ? img.scaled(d->size, d->size, Qt::KeepAspectRatio, Qt::SmoothTransformation) : img);
+            if (ret)
+            {
+                kDebug() << url << " :: processed as RAW file";
+                emit signalRawThumb(url, img.scaled(d->size, d->size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            }
+            else
+            {
+                kDebug() << url << " :: processed not a RAW file";
+                emit signalRawThumb(url, QImage());
+            }
         }
     }
 }
