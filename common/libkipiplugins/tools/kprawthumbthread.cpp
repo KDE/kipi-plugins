@@ -117,7 +117,7 @@ void KPRawThumbThread::run()
             }
             else
             {
-                kDebug() << url << " :: processed not a RAW file";
+                kDebug() << url << " :: not a RAW file";
                 emit signalRawThumb(url, QImage());
             }
         }
