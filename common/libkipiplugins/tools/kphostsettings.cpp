@@ -73,10 +73,10 @@ public:
 
 public:
 
-    KIPI::Interface* iface;
+    Interface* iface;
 };
 
-KPHostSettings::KPHostSettings(KIPI::Interface* iface)
+KPHostSettings::KPHostSettings(Interface* const iface)
     : d(new KPHostSettingsPrivate)
 {
     d->iface = iface;

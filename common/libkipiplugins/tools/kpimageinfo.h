@@ -48,6 +48,7 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
 using namespace KExiv2Iface;
 
 namespace KIPIPlugins
@@ -60,7 +61,7 @@ public:
 
     /** Contructor with KIPI interface instance get from plugin and item url that you want to manage.
      */
-    KPImageInfo(KIPI::Interface* iface, const KUrl& url);
+    KPImageInfo(Interface* const iface, const KUrl& url);
     ~KPImageInfo();
 
     /** return item url.
