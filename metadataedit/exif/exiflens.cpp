@@ -325,7 +325,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     }
     else if (exiv2Iface.getExifTagRational("Exif.Photo.ApertureValue", num, den))
     {
-        double aperture = pow(2.0, ((double)(num)/(double)(den))/2.0);
+        double aperture = std::pow(2.0, ((double)(num)/(double)(den))/2.0);
 
         QString fnumber = QString::number(aperture, 'f', 1);
 
@@ -350,7 +350,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
     d->maxApertureCheck->setChecked(false);
     if (exiv2Iface.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))
     {
-        double maxAperture = pow(2.0, ((double)(num)/(double)(den))/2.0);
+        double maxAperture = std::pow(2.0, ((double)(num)/(double)(den))/2.0);
 
         QString fnumber = QString::number(maxAperture, 'f', 1);
 
@@ -407,7 +407,7 @@ void EXIFLens::applyMetadata(QByteArray& exifData)
         exiv2Iface.setExifTagRational("Exif.Photo.FNumber", num, den);
 
         double fnumber  = d->apertureCB->currentText().remove(0, 2).toDouble();
-        double aperture = 2.0*(log(fnumber)/log(2.0));
+        double aperture = 2.0*(std::log(fnumber)/std::log(2.0));
         exiv2Iface.convertToRational(aperture, &num, &den, 8);
         exiv2Iface.setExifTagRational("Exif.Photo.ApertureValue", num, den);
     }
@@ -420,7 +420,7 @@ void EXIFLens::applyMetadata(QByteArray& exifData)
     if (d->maxApertureCheck->isChecked())
     {
         double fnumber  = d->maxApertureCB->currentText().remove(0, 2).toDouble();
-        double aperture = 2.0*(log(fnumber)/log(2.0));
+        double aperture = 2.0*(std::log(fnumber)/std::log(2.0));
         exiv2Iface.convertToRational(aperture, &num, &den, 8);
         exiv2Iface.setExifTagRational("Exif.Photo.MaxApertureValue", num, den);
     }

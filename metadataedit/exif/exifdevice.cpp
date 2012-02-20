@@ -540,7 +540,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     }
     else if (exiv2Iface.getExifTagRational("Exif.Photo.ShutterSpeedValue", num, den))
     {
-        double tmp = exp(log(2.0) * (double)(num)/(double)(den));
+        double tmp = std::exp(std::log(2.0) * (double)(num)/(double)(den));
         if (tmp > 1.0)
             num = (long int)(tmp + 0.5);
         else
@@ -712,7 +712,7 @@ void EXIFDevice::applyMetadata(QByteArray& exifData)
 
         double exposureTime = (double)(d->exposureTimeNumEdit->value())/
                               (double)(d->exposureTimeDenEdit->value());
-        double shutterSpeed = (-1.0)*(log(exposureTime)/log(2.0));
+        double shutterSpeed = (-1.0)*(std::log(exposureTime)/std::log(2.0));
         exiv2Iface.convertToRational(shutterSpeed, &num, &den, 8);
         exiv2Iface.setExifTagRational("Exif.Photo.ShutterSpeedValue", num, den);
     }
