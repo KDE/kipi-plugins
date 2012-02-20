@@ -33,6 +33,10 @@
 // KDE includes
 
 #include <klocale.h>
+#include <kdeversion.h>
+#include <kdebug.h>
+#include <kfileitem.h>
+#include <kio/previewjob.h>
 
 // LibKIPI includes
 
@@ -218,10 +222,32 @@ void KipiInterface::slotRawThumb(const KUrl& url, const QImage& img)
 {
     if (img.isNull())
     {
-        KIPI::Interface::thumbnail(url, 256);
+#if KDE_IS_VERSION(4,7,0)
+        KFileItemList items;
+        items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
+        KIO::PreviewJob* job = KIO::filePreview(items, QSize(256, 256));
+#else
+        KIO::PreviewJob *job = KIO::filePreview(KUrl::List() << url, 256);
+#endif
+
+        connect(job, SIGNAL(gotPreview(KFileItem, QPixmap)),
+                this, SLOT(slotGotKDEPreview(KFileItem, QPixmap)));
+
+        connect(job, SIGNAL(failed(KFileItem)),
+                this, SLOT(slotFailedKDEPreview(KFileItem)));
     }
     else
     {
         emit gotThumbnail(url, QPixmap::fromImage(img));
     }
+}
+
+void KipiInterface::slotGotKDEPreview(const KFileItem& item, const QPixmap& pix)
+{
+    emit gotThumbnail(item.url(), pix);
+}
+
+void KipiInterface::slotFailedKDEPreview(const KFileItem& item)
+{
+    emit gotThumbnail(item.url(), QPixmap());
 }

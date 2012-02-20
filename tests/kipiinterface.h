@@ -31,6 +31,8 @@
 
 #include <libkipi/interface.h>
 
+class KFileItem;
+
 namespace KIPI
 {
     class ImageCollection;
@@ -86,6 +88,8 @@ public:
 private Q_SLOTS:
 
     void slotRawThumb(const KUrl&, const QImage&);
+    void slotGotKDEPreview(const KFileItem&, const QPixmap&);
+    void slotFailedKDEPreview(const KFileItem&);
 
 private:
 
