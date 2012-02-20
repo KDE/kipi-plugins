@@ -30,5 +30,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 016 ==> 293917 : Crash when exiting digikam.
 017 ==> 294133 : Expoblending cannot be compiled.
 018 ==> 233926 : New tool to export to Imageshack.
-019 ==> 
-
+019 ==> 294460 : Std namespace issue in kipi-plugins [patch].
+020 ==> 
