@@ -53,19 +53,17 @@ public:
         TOP,
         BOTTOM
     };
-
-    enum NavDir
-    {
-        LEFT2RIGHT = 0,
-        RIGHT2LEFT
-    };
-
     enum PluginType
     {
         SIMPLE = 0,
         AUTO,
         TILT,
         POSTCARD
+    };
+    enum ImageGetOption
+    {
+        COLLECTION = 0,
+        IMAGEDIALOG
     };
 
 public:
@@ -76,25 +74,36 @@ public:
 
     ~SimpleViewerSettingsContainer(){};
 
+    QString imageGetOptions() const
+    {
+        switch(imgGetOption)
+        {
+            case COLLECTION:
+                return QString("Collections");
+                break;
+            case IMAGEDIALOG:
+                return QString("Image Dialog");
+        }
+    };
     QString pluginType() const
     {
-    	switch(plugType)
-    	{
-    		case SIMPLE:
-    			return QString("SimpleViewer");
-    			break;
+        switch(plugType)
+        {
+            case SIMPLE:
+                return QString("SimpleViewer");
+                break;
 
-    		case AUTO:
-    			return QString("AutoViewer");
-    			break;
+            case AUTO:
+                return QString("AutoViewer");
+                break;
 
-    		case TILT:
-    			return QString("TiltViewer");
-    			break;
+            case TILT:
+                return QString("TiltViewer");
+                break;
 
-    		case POSTCARD:
-    			return QString("PostcardViewer");
-    	}
+            case POSTCARD:
+                return QString("PostcardViewer");
+        }
     };
 
     QString thumbPosition() const
@@ -119,20 +128,6 @@ public:
         }
     };
 
-    QString navDir() const
-    {
-        switch(navDirection)
-        {
-            case LEFT2RIGHT:
-                return QString("LTR");
-                break;
-
-            default: // RIGHT2LEFT
-                return QString("RTL");
-                break;
-        }
-    };
-
     QString enableRightClickToOpen() const
     {
         if (enableRightClickOpen)
@@ -144,6 +139,10 @@ public:
 public:
 
     PluginType                   plugType;
+
+    // Choose between getting images with collections or with imagedialog
+    ImageGetOption               imgGetOption;
+
 
     //Settings for all plug-ins
     KUrl                         exportUrl;
@@ -174,9 +173,6 @@ public:
 
     ThumbPosition                thumbnailPosition;
 
-    // Navdir is deprecated and must be removed
-    NavDir                       navDirection;
-
     // Autoviewer settings
     int                          imagePadding;
     int                          displayTime;
@@ -194,6 +190,7 @@ public:
     int                          zoomInPerc;
 
     QList<KIPI::ImageCollection> collections;
+    KUrl::List                   imageDialogList;
 };
 
 }  // namespace KIPIFlashExportPlugin

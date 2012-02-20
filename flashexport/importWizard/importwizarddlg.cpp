@@ -177,6 +177,7 @@ void ImportWizardDlg::next()
         d->simple->appendPluginFiles(d->settings->plugType);
         d->lookPage->setPageContent(d->settings->plugType);
         readSettings();
+        d->selectionPage->setPageContent(d->settings->imgGetOption);
     }
 
     // Using KAssistantDialog::next twice to skip firstrun page if
@@ -192,10 +193,10 @@ void ImportWizardDlg::next()
         setValid(d->firstrunPage->page(),false);
     }
     
-    // Must have at least one collection to proceed.
+    // Must have at least one collection (or some images) to proceed.
     if(currentPage() == d->selectionPage->page())
     {
-        if (d->selectionPage->selection().isEmpty())
+        if (d->selectionPage->isSelectionEmpty(d->settings->imgGetOption))
         {
             KMessageBox::sorry(this, i18n("You must select at least one collection to export."));
             return;
@@ -295,7 +296,6 @@ void ImportWizardDlg::readSettings()
 
     d->settings->thumbnailRows        = group.readEntry("ThumbnailRows", 3);
     d->settings->thumbnailColumns     = group.readEntry("ThumbnailColumns", 3);
-//    d->settings->navDirection         = (SimpleViewerSettingsContainer::NavDir)group.readEntry("NavDirection", (int)SimpleViewerSettingsContainer::LEFT2RIGHT);
     d->settings->backgroundColor      = group.readEntry("BackgroundColor", QColor("#181818"));
     d->settings->frameColor           = group.readEntry("FrameColor", QColor("#ffffff"));
     d->settings->frameWidth           = group.readEntry("FrameWidth", 1);
@@ -337,7 +337,7 @@ void ImportWizardDlg::readSettings()
 
 void ImportWizardDlg::saveSettings()
 {
-    d->settings->collections = d->selectionPage->selection();
+    d->selectionPage->settings(d->settings);
     d->generalPage->settings(d->settings);
     d->lookPage->settings(d->settings);
 

@@ -48,10 +48,12 @@ public:
   
     IntroPagePriv()
     {
-        plugin_select = 0;
+        plugin_select  = 0;
+        imageGetOption = 0;
     }
     
     KComboBox* plugin_select;
+    KComboBox* imageGetOption;
 };
 
 IntroPage::IntroPage(KAssistantDialog* dlg)
@@ -90,6 +92,19 @@ IntroPage::IntroPage(KAssistantDialog* dlg)
 
     label->setBuddy(d->plugin_select);
 
+    // ComboBox for image selection method
+
+    KHBox* hbox2          = new KHBox(vbox);
+    QLabel* getImageLabel = new QLabel(i18n("&Choose image selection method:"),hbox2);
+    d->imageGetOption     = new KComboBox(hbox2);
+    QString collection    = i18nc("Collections",     "Collections");
+    QString dialog   = i18nc("Image Dialog",    "Image Dialog");
+    d->imageGetOption->insertItem(SimpleViewerSettingsContainer::COLLECTION, collection);
+    d->imageGetOption->insertItem(SimpleViewerSettingsContainer::IMAGEDIALOG, dialog);
+
+    getImageLabel->setBuddy(d->imageGetOption);
+
+
     setPageWidget(vbox);
     setLeftBottomPix(DesktopIcon("flash", 128));
 }
@@ -101,6 +116,7 @@ IntroPage::~IntroPage()
 void IntroPage::settings(SimpleViewerSettingsContainer* settings)
 {
     settings->plugType = (SimpleViewerSettingsContainer::PluginType)d->plugin_select->currentIndex();
+    settings->imgGetOption = (SimpleViewerSettingsContainer::ImageGetOption)d->imageGetOption->currentIndex();
     kDebug() << "Plugin type obtained" ;
 }
 

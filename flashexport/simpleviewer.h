@@ -88,8 +88,15 @@ private:
      *
      * @return true=ok
      */
-    bool exportImages() const;
-
+    bool exportImages();
+    /**
+     * Create images and thumbnail from every list on images
+     * @param images - list with image's url
+     * @param xmlDoc - xml configuration file for simpleviewer plugin
+     * @param galleryElem - xml tag that contains info about all uploaded images( SimpleViewer, Autoviewer, PostcardViewer)
+     * @param photosElem - xml tag that contains info about all uploaded images (TiltViewer)
+     */
+    void processKUrlList(KUrl::List images, QDomDocument xmlDoc, QDomElement galleryElem, QDomElement photosElem);
     /**
      * Creates a simpleviewer thumbnail from images
      *
