@@ -29,18 +29,18 @@
 
 #include <libkexiv2/kexiv2.h>
 
-// LibKipi includes
-
-#include <libkipi/version.h>
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kpmetasettings.h"
 #include "kipiplugins_export.h"
 
-using namespace KExiv2Iface;
+namespace KIPI
+{
+    class Interface;
+}
+
 using namespace KIPI;
+using namespace KExiv2Iface;
 
 namespace KIPIPlugins
 {

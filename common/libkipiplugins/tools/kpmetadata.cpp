@@ -27,6 +27,7 @@
 // LibKipi includes
 
 #include <libkipi/version.h>
+#include <libkipi/interface.h>
 
 namespace KIPIPlugins
 {
