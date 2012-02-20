@@ -76,10 +76,10 @@ public:
     QString token() { return m_token;}
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
-    void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
+    void authenticate(const QString& token=QString(), const QString& username=QString(), const QString& password=QString()) ;
     void listAlbums(const QString& username);
     void listPhotos(const QString& username, const QString& albumId,
-                    const QString& imgmax=NULL);
+                    const QString& imgmax=QString());
     void createAlbum(const PicasaWebAlbum& newAlbum);
     bool addPhoto(const QString& photoPath, PicasaWebPhoto& info, const QString& albumId);
     bool updatePhoto(const QString& photoPath, PicasaWebPhoto& info);
