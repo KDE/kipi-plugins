@@ -27,15 +27,12 @@
 // LibKipi includes
 
 #include <libkipi/version.h>
-#include <libkipi/interface.h>
-
-using namespace KIPI;
 
 namespace KIPIPlugins
 {
 
-KPMetadata::KPMetadata(const QString& filePath, const KPMetaSettings& settings)
-    : KExiv2()
+KPMetadata::KPMetadata(const QString& filePath, const KPMetaSettings& settings, Interface* const iface)
+    : KExiv2(), m_iface(iface)
 {
     setSettings(settings);
     load(filePath);
@@ -52,7 +49,8 @@ void KPMetadata::setSettings(const KPMetaSettings& settings)
 bool KPMetadata::load(const QString& filePath) const
 {
 #if KIPI_VERSION >= 0x010500
-    //FileReadLocker(KUrl(filePath));
+    if (m_iface)
+        FileReadLocker(m_iface, KUrl(filePath));
 #endif
 
     return KExiv2::load(filePath);
@@ -61,7 +59,8 @@ bool KPMetadata::load(const QString& filePath) const
 bool KPMetadata::save(const QString& filePath) const
 {
 #if KIPI_VERSION >= 0x010500
-    //FileWriteLocker(KUrl(filePath));
+    if (m_iface)
+        FileWriteLocker(m_iface, KUrl(filePath));
 #endif
 
     return KExiv2::save(filePath);
@@ -70,7 +69,8 @@ bool KPMetadata::save(const QString& filePath) const
 bool KPMetadata::applyChanges() const
 {
 #if KIPI_VERSION >= 0x010500
-    //FileWriteLocker(KUrl(getFilePath()));
+    if (m_iface)
+        FileWriteLocker(m_iface, KUrl(getFilePath()));
 #endif
 
     return KExiv2::applyChanges();

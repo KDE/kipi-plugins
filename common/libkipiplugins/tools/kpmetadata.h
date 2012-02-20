@@ -29,12 +29,18 @@
 
 #include <libkexiv2/kexiv2.h>
 
+// LibKipi includes
+
+#include <libkipi/version.h>
+#include <libkipi/interface.h>
+
 // Local includes
 
 #include "kpmetasettings.h"
 #include "kipiplugins_export.h"
 
 using namespace KExiv2Iface;
+using namespace KIPI;
 
 namespace KIPIPlugins
 {
@@ -50,8 +56,9 @@ class KIPIPLUGINS_EXPORT KPMetadata : public KExiv2
 public:
 
     /** Constructor to load metadata from file, using metadata settings from KIPI host application.
+     *  If interface is null, no file lock is performed with read and write operations.
      */
-    KPMetadata(const QString& filePath, const KPMetaSettings& settings);
+    KPMetadata(const QString& filePath, const KPMetaSettings& settings, Interface* const iface);
 
     /** Apply metadata settings from KIPI host application to this interface. To use before load and save operations.
      */
@@ -77,6 +84,10 @@ private:
 
     KPMetadata()  {};  // Disable
     ~KPMetadata() {};  // Disable
+
+private:
+
+    Interface* m_iface;
 };
 
 }  // namespace KIPIPlugins
