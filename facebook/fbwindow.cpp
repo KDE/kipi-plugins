@@ -43,10 +43,6 @@
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -61,11 +57,14 @@
 #include "imageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
+#include "kpmetadata.h"
 #include "kpversion.h"
 #include "fbitem.h"
 #include "fbtalker.h"
 #include "fbwidget.h"
 #include "fbalbum.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIFacebookPlugin
 {
@@ -686,14 +685,14 @@ bool FbWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta data to temporary image
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KPMetadata meta;
 
-    if (exiv2Iface.load(imgPath))
+    if (meta.load(imgPath))
     {
         caption = getImageCaption(imgPath);
-        exiv2Iface.setImageDimensions(image.size());
-        exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
-        exiv2Iface.save(m_tmpPath);
+        meta.setImageDimensions(image.size());
+        meta.setImageProgramId("Kipi-plugins", kipiplugins_version);
+        meta.save(m_tmpPath);
     }
     else
     {
