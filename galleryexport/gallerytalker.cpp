@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
 *
 * This program is free software; you can redistribute it
@@ -46,10 +46,6 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -60,6 +56,9 @@
 #include "galleryitem.h"
 #include "gallerympform.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIGalleryExportPlugin
 {
@@ -68,7 +67,7 @@ bool GalleryTalker::s_using_gallery2 = true;
 QString GalleryTalker::s_authToken   = "";
 
 GalleryTalker::GalleryTalker(QWidget* parent)
-             : m_parent(parent),  m_job(0),  m_loggedIn(false)
+    : m_parent(parent),  m_job(0),  m_loggedIn(false)
 {
 }
 
@@ -244,13 +243,13 @@ bool GalleryTalker::addPhoto(const QString& albumName,
         kDebug() << "Resizing and saving to temp file: " << path ;
 
         // Restore all metadata.
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KPMetadata meta;
 
-        if (exiv2Iface.load(photoPath))
+        if (meta.load(photoPath))
         {
-            exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-            exiv2Iface.setImageDimensions(image.size());
-            exiv2Iface.save(path);
+            meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+            meta.setImageDimensions(image.size());
+            meta.save(path);
         }
         else
         {
