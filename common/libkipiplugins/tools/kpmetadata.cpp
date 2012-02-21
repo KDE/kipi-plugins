@@ -36,36 +36,62 @@
 namespace KIPIPlugins
 {
 
-KPMetadata::KPMetadata()
-    : KExiv2(), m_iface(0)
+class KPMetadata::KPMetadataPrivate
 {
-    init();
+public:
+
+    KPMetadataPrivate(KPMetadata* p)
+    {
+        parent = p;
+        iface  = 0;
+    }
+
+    void init()
+    {
+        KPHostSettings hset(iface);
+        parent->setSettings(hset.metadataSettings());
+    }
+
+public:
+
+    Interface* iface;
+
+private:
+
+    KPMetadata* parent;
+};
+
+KPMetadata::KPMetadata()
+    : KExiv2(), d(new KPMetadataPrivate(this))
+{
+    d->init();
 }
 
 KPMetadata::KPMetadata(const QString& filePath)
-    : KExiv2(), m_iface(0)
+    : KExiv2(), d(new KPMetadataPrivate(this))
 {
-    init();
+    d->init();
     load(filePath);
 }
 
 KPMetadata::KPMetadata(Interface* const iface)
-    : KExiv2(), m_iface(iface)
+    : KExiv2(), d(new KPMetadataPrivate(this))
 {
-    init();
+    d->iface = iface;
+    d->init();
 }
 
 KPMetadata::KPMetadata(const QString& filePath, Interface* const iface)
-    : KExiv2(), m_iface(iface)
+    : KExiv2(), d(new KPMetadataPrivate(this))
 {
-    init();
+    d->iface = iface;
+    d->init();
     load(filePath);
 }
 
-void KPMetadata::init()
+KPMetadata::~KPMetadata()
 {
-    KPHostSettings hset(m_iface);
-    setSettings(hset.metadataSettings());
+    delete d;
 }
 
 void KPMetadata::setSettings(const KPMetaSettings& settings)
@@ -79,8 +105,8 @@ void KPMetadata::setSettings(const KPMetaSettings& settings)
 bool KPMetadata::load(const QString& filePath) const
 {
 #if KIPI_VERSION >= 0x010500
-    if (m_iface)
-        FileReadLocker(m_iface, KUrl(filePath));
+    if (d->iface)
+        FileReadLocker(d->iface, KUrl(filePath));
 #endif
 
     return KExiv2::load(filePath);
@@ -89,8 +115,8 @@ bool KPMetadata::load(const QString& filePath) const
 bool KPMetadata::save(const QString& filePath) const
 {
 #if KIPI_VERSION >= 0x010500
-    if (m_iface)
-        FileWriteLocker(m_iface, KUrl(filePath));
+    if (d->iface)
+        FileWriteLocker(d->iface, KUrl(filePath));
 #endif
 
     return KExiv2::save(filePath);
@@ -99,8 +125,8 @@ bool KPMetadata::save(const QString& filePath) const
 bool KPMetadata::applyChanges() const
 {
 #if KIPI_VERSION >= 0x010500
-    if (m_iface)
-        FileWriteLocker(m_iface, KUrl(getFilePath()));
+    if (d->iface)
+        FileWriteLocker(d->iface, KUrl(getFilePath()));
 #endif
 
     return KExiv2::applyChanges();

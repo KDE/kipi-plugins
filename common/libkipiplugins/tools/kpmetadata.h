@@ -58,6 +58,7 @@ public:
      *  This contructor work like KExiv2 constructor.
      */
     KPMetadata();
+    ~KPMetadata();
 
     /** Constructor to load metadata from file. Same behavior than KPMetadata() constructor.
      */
@@ -73,6 +74,8 @@ public:
     /** Constructor to load metadata from file. Same behavior than KPMetadata(Interface* const iface) constructor.
      */
     KPMetadata(const QString& filePath, Interface* const iface);
+
+public:
 
     /** Apply metadata settings from KIPI host application to this interface. To use before load and save operations.
      */
@@ -95,13 +98,8 @@ public:
 
 private:
 
-    ~KPMetadata() {};  // Disable
-
-    void init();
-
-private:
-
-    Interface* m_iface;
+    class KPMetadataPrivate;
+    KPMetadataPrivate* const d;
 };
 
 }  // namespace KIPIPlugins
