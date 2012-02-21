@@ -9,6 +9,8 @@
  *
  * @author Copyright (C) 2009-2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
+ * @author Copyright (C) 2011-2012 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -29,11 +31,13 @@
 
 #include <libkipi/imageinfoshared.h>
 
-class KipiImageInfoShared : public KIPI::ImageInfoShared
+using namespace KIPI;
+
+class KipiImageInfoShared : public ImageInfoShared
 {
 public:
 
-    KipiImageInfoShared(KIPI::Interface* interface, const KUrl& url);
+    KipiImageInfoShared(Interface* const interface, const KUrl& url);
     ~KipiImageInfoShared();
 
     QMap<QString, QVariant> attributes();

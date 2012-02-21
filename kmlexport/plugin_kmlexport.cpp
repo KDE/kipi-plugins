@@ -49,11 +49,6 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kmlexport.h"
