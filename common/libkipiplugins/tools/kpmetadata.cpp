@@ -29,14 +29,30 @@
 #include <libkipi/version.h>
 #include <libkipi/interface.h>
 
+// Local includes
+
+#include "kphostsettings.h"
+
 namespace KIPIPlugins
 {
 
-KPMetadata::KPMetadata(const QString& filePath, const KPMetaSettings& settings, Interface* const iface)
+KPMetadata::KPMetadata(Interface* const iface)
     : KExiv2(), m_iface(iface)
 {
-    setSettings(settings);
+    init();
+}
+
+KPMetadata::KPMetadata(const QString& filePath, Interface* const iface)
+    : KExiv2(), m_iface(iface)
+{
+    init();
     load(filePath);
+}
+
+void KPMetadata::init()
+{
+    KPHostSettings hset(m_iface);
+    setSettings(hset.metadataSettings());
 }
 
 void KPMetadata::setSettings(const KPMetaSettings& settings)

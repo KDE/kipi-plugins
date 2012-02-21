@@ -55,10 +55,15 @@ class KIPIPLUGINS_EXPORT KPMetadata : public KExiv2
 
 public:
 
-    /** Constructor to load metadata from file, using metadata settings from KIPI host application.
-     *  If interface is null, no file lock is performed with read and write operations.
+    /** Standard constructor. Metadata settings is taken from KIPI host application through KIPI interface.
+     *  If interface is null, default settings is used, and no file lock will be performed with read and write operations.
+     * With this construcotr, load metadata form file using load() method.
      */
-    KPMetadata(const QString& filePath, const KPMetaSettings& settings, Interface* const iface);
+    KPMetadata(Interface* const iface);
+
+    /** Constructor to load metadata from file. Same behavior than standard constructor.
+     */
+    KPMetadata(const QString& filePath, Interface* const iface);
 
     /** Apply metadata settings from KIPI host application to this interface. To use before load and save operations.
      */
@@ -84,6 +89,8 @@ private:
 
     KPMetadata()  {};  // Disable
     ~KPMetadata() {};  // Disable
+
+    void init();
 
 private:
 
