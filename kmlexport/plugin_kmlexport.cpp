@@ -6,7 +6,7 @@
  * Date        : 2006-05-16
  * Description : A plugin to create KML files to present images with coordinates.
  *
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -58,14 +58,14 @@ K_PLUGIN_FACTORY( KMLExportFactory, registerPlugin<Plugin_KMLExport>(); )
 K_EXPORT_PLUGIN ( KMLExportFactory("kipiplugin_kmlexport") )
 
 Plugin_KMLExport::Plugin_KMLExport(QObject* parent, const QVariantList&)
-    : KIPI::Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
+    : Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
 }
 
-void Plugin_KMLExport::setup( QWidget* widget )
+void Plugin_KMLExport::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup( widget );
+    Plugin::setup( widget );
 
     m_actionKMLExport = actionCollection()->addAction("kmlexport");
     m_actionKMLExport->setText(i18n("Export to KML..."));
@@ -76,7 +76,7 @@ void Plugin_KMLExport::setup( QWidget* widget )
 
     addAction( m_actionKMLExport );
 
-    m_interface = dynamic_cast<KIPI::Interface*>( parent() );
+    m_interface = dynamic_cast<Interface*>( parent() );
 
     if ( !m_interface )
     {
@@ -87,7 +87,7 @@ void Plugin_KMLExport::setup( QWidget* widget )
 
 void Plugin_KMLExport::slotKMLExport()
 {
-    KIPI::ImageCollection selection = m_interface->currentSelection();
+    ImageCollection selection = m_interface->currentSelection();
 
     if ( !selection.isValid() )
     {
@@ -106,21 +106,21 @@ void Plugin_KMLExport::slotKMLExport()
 
 void Plugin_KMLExport::slotKMLGenerate()
 {
-    KIPI::ImageCollection selection = m_interface->currentSelection();
-    KIPIKMLExportPlugin::kmlExport myExport(m_interface);
+    ImageCollection selection = m_interface->currentSelection();
+    KIPIKMLExportPlugin::KmlExport myExport(m_interface);
     if(!myExport.getConfig())
         return;
 
     myExport.generate();
 }
 
-KIPI::Category Plugin_KMLExport::category( KAction* action ) const
+Category Plugin_KMLExport::category(KAction* action) const
 {
     if ( action == m_actionKMLExport )
     {
-       return KIPI::ExportPlugin;
+       return ExportPlugin;
     }
 
     kWarning() << "Unrecognized action for plugin category identification" ;
-    return KIPI::ImagesPlugin; // no warning from compiler, please
+    return ImagesPlugin; // no warning from compiler, please
 }

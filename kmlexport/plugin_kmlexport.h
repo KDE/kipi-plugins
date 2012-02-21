@@ -6,7 +6,7 @@
  * Date        : 2006-05-16
  * Description : A plugin to create KML files to present images with coordinates.
  *
- * Copyright 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,10 +37,12 @@ class KAction;
 
 namespace KIPI
 {
-class Interface;
-} // namespace KIPI
+    class Interface;
+}
 
-class Plugin_KMLExport : public KIPI::Plugin
+using namespace KIPI;
+
+class Plugin_KMLExport : public Plugin
 {
     Q_OBJECT
 
@@ -48,8 +50,8 @@ public:
 
     Plugin_KMLExport(QObject* parent, const QVariantList& args);
 
-    KIPI::Category category( KAction* action ) const;
-    void setup( QWidget* );
+    Category category(KAction* action) const;
+    void setup(QWidget*);
 
 protected Q_SLOTS:
 
@@ -58,9 +60,9 @@ protected Q_SLOTS:
 
 private:
 
-    KAction*         m_actionKMLExport;
+    KAction*   m_actionKMLExport;
 
-    KIPI::Interface* m_interface;
+    Interface* m_interface;
 };
 
 #endif // PLUGIN_KMLEXPORT_H
