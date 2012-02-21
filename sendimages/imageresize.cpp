@@ -42,10 +42,6 @@
 #include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/JobCollection.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -55,12 +51,13 @@
 
 #include "kpversion.h"
 #include "kpwriteimage.h"
+#include "kpmetadata.h"
 
 namespace KIPISendimagesPlugin
 {
 
 Task::Task(QObject* parent, int* count)
-        : Job(parent)
+    : Job(parent)
 {
     m_count = count;
 }
@@ -97,7 +94,8 @@ void Task::run()
     }
 }
 
-bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& settings, const KUrl& orgUrl, const QString& destName, QString& err)
+bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& settings, const KUrl& orgUrl, 
+                       const QString& destName, QString& err)
 {
     EmailSettingsContainer emailSettings = settings;
     QFileInfo fi(orgUrl.path());
@@ -169,8 +167,7 @@ bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& setti
 
         QString destPath = destName;
 
-        KExiv2Iface::KExiv2 meta;
-
+        KPMetadata meta;
         meta.load(orgUrl.path());
         meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
         meta.setImageDimensions(img.size());
@@ -208,7 +205,7 @@ bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& setti
 // ----------------------------------------------------------------------------------------------------
 
 ImageResize::ImageResize(QObject *parent)
-        : ActionThreadBase(parent)
+    : ActionThreadBase(parent)
 {
     m_count  = new int;
     *m_count = 0;
@@ -230,7 +227,7 @@ void ImageResize::resize(const EmailSettingsContainer& settings)
     {
         QString tmp;
 
-        Task *t       = new Task(this, m_count);
+        Task* t       = new Task(this, m_count);
         t->m_orgUrl   = (*it).orgUrl;
         t->m_settings = settings;
 
@@ -266,6 +263,5 @@ void ImageResize::slotFinished()
     emit completeResize();
     ActionThreadBase::slotFinished();
 }
-
 
 }  // namespace KIPISendimagesPlugin
