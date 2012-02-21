@@ -34,10 +34,12 @@
 
 #include <kurl.h>
 
-namespace KExiv2Iface
+namespace KIPIPlugins
 {
-class KExiv2;
+    class KPMetadata;
 }
+
+using namespace KIPIPlugins;
 
 namespace KIPIPrintImagesPlugin
 {
@@ -136,7 +138,7 @@ public:
     double scaleWidth(double unitToInches);
     double scaleHeight(double unitToInches);
 
-    KExiv2Iface::KExiv2* exiv2Iface();
+    KPMetadata* metaIface();
 
 public:
 
@@ -159,9 +161,9 @@ private:
 
 private:
 
-    QPixmap*             m_thumbnail;
-    QSize*               m_size;
-    KExiv2Iface::KExiv2* m_exiv2Iface;
+    QPixmap*    m_thumbnail;
+    QSize*      m_size;
+    KPMetadata* m_metaIface;
 };
 
 }  // NameSpace KIPIPrintImagesPlugin

@@ -28,13 +28,13 @@
 #include <QPainter>
 #include <QFileInfo>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/kdcraw.h>
+
+// Local includes
+
+#include "kpmetadata.h"
 
 #define IMAGE_FILE_MASK "*"
 //"*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.PNG"
@@ -53,7 +53,7 @@ TPhoto::TPhoto(int thumbnailSize)
     copies                = 1;
     //TODO mPrintPosition;
     filename              = "";
-    m_exiv2Iface          = NULL;
+    m_metaIface           = NULL;
 
     m_thumbnail           = NULL;
 
@@ -80,16 +80,16 @@ TPhoto::TPhoto (const TPhoto& photo)
         pCaptionInfo = new CaptionInfo(*photo.pCaptionInfo);
     }
 
-    m_size       = 0;
-    m_exiv2Iface = NULL;
-    m_thumbnail  = NULL;
+    m_size      = 0;
+    m_metaIface = NULL;
+    m_thumbnail = NULL;
 }
 
 TPhoto::~TPhoto()
 {
     delete m_thumbnail;
     delete m_size;
-    delete m_exiv2Iface;
+    delete m_metaIface;
     delete pAddInfo;
     delete pCaptionInfo;
 }
@@ -115,6 +115,7 @@ QPixmap& TPhoto::thumbnail()
 {
     if (!m_thumbnail)
         loadCache();
+
     return *m_thumbnail;
 }
 
@@ -140,14 +141,14 @@ QSize& TPhoto::size()  // private
     return *m_size;
 }
 
-KExiv2Iface::KExiv2* TPhoto::exiv2Iface()
+KPMetadata* TPhoto::metaIface()
 {
-    if (!m_exiv2Iface && !filename.url().isEmpty())
+    if (!m_metaIface && !filename.url().isEmpty())
     {
-        m_exiv2Iface = new KExiv2Iface::KExiv2(filename.path());
+        m_metaIface = new KPMetadata(filename.path());
     }
 
-    return m_exiv2Iface;
+    return m_metaIface;
 }
 
 int TPhoto::width()
