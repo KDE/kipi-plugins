@@ -47,21 +47,30 @@ namespace KIPIPlugins
 
 /** This class must be used in plugins instead KExiv2 metadata interface to handle file lock mechanism
  *  with KIPI host application to prevent concurent operations on file during load and save operations.
- *  This class is also able to use KIPI host application metadata settings through KPMetaSettings container.
- *  This settings must be taken from KIPI host application using KPHostSettings interface.
  */
 class KIPIPLUGINS_EXPORT KPMetadata : public KExiv2
 {
 
 public:
 
-    /** Standard constructor. Metadata settings is taken from KIPI host application through KIPI interface.
-     *  If interface is null, default settings is used, and no file lock will be performed with read and write operations.
-     * With this construcotr, load metadata form file using load() method.
+    /** Empty contructor. KIPI interface is null. Default metadata settings is used, 
+     *  and no file lock will be performed with read and write operations.
+     *  This contructor work like KExiv2 constructor.
+     */
+    KPMetadata();
+
+    /** Constructor to load metadata from file. Same behavior than KPMetadata() constructor.
+     */
+    KPMetadata(const QString& filePath);
+
+    /** Constructor with KIPI interface. Metadata settings is taken from KIPI host application and file 
+     *  lock will be performed with read and write operations.
+     *  If interface is null, default settings is used, and no file lock will be performed.
+     *  With this constructor, just load metadata from file using load() method.
      */
     KPMetadata(Interface* const iface);
 
-    /** Constructor to load metadata from file. Same behavior than standard constructor.
+    /** Constructor to load metadata from file. Same behavior than KPMetadata(Interface* const iface) constructor.
      */
     KPMetadata(const QString& filePath, Interface* const iface);
 
@@ -86,8 +95,6 @@ public:
 
 private:
 
-
-    KPMetadata()  {};  // Disable
     ~KPMetadata() {};  // Disable
 
     void init();

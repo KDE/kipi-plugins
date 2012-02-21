@@ -36,6 +36,19 @@
 namespace KIPIPlugins
 {
 
+KPMetadata::KPMetadata()
+    : KExiv2(), m_iface(0)
+{
+    init();
+}
+
+KPMetadata::KPMetadata(const QString& filePath)
+    : KExiv2(), m_iface(0)
+{
+    init();
+    load(filePath);
+}
+
 KPMetadata::KPMetadata(Interface* const iface)
     : KExiv2(), m_iface(iface)
 {
