@@ -52,10 +52,6 @@
 #include <ktoolinvocation.h>
 #include <kio/renamedialog.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -69,13 +65,16 @@
 
 #include "imageslist.h"
 #include "kpimageinfo.h"
+#include "kpmetadata.h"
+#include "kpversion.h"
 #include "newalbumdialog.h"
 #include "picasawebalbum.h"
 #include "picasawebitem.h"
 #include "picasawebtalker.h"
 #include "picasawebwidget.h"
-#include "kpversion.h"
 #include "picasawebreplacedialog.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIPicasawebExportPlugin
 {
@@ -419,7 +418,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
 
     for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        KIPIPlugins::KPImageInfo info(m_interface, *it);
+        KPImageInfo info(m_interface, *it);
         PicasaWebPhoto temp;
         temp.title = info.name();
 
@@ -430,10 +429,10 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
 
         // check for existing items
         QString localId;
-        KExiv2Iface::KExiv2 exiv2Iface;
-        if (exiv2Iface.load((*it).toLocalFile()))
+        KPMetadata meta;
+        if (meta.load((*it).toLocalFile()))
         {
-            localId = exiv2Iface.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
+            localId = meta.getXmpTagString("Xmp.kipi.picasawebGPhotoId");
         }
         QList<PicasaWebPhoto>::const_iterator itPWP;
         for (itPWP = photosList.begin(); itPWP != photosList.end(); ++itPWP)
@@ -578,15 +577,15 @@ bool PicasawebWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta data to temporary image
-    KExiv2Iface::KExiv2 exiv2Iface;
-    if (exiv2Iface.load(imgPath))
+    KPMetadata meta;
+    if (meta.load(imgPath))
     {
-        exiv2Iface.setImageDimensions(image.size());
-        exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
+        meta.setImageDimensions(image.size());
+        meta.setImageProgramId("Kipi-plugins", kipiplugins_version);
         // #225161 Picasaweb do not like XMP (exif-GPS is ignored if set)
         // follow Picasa 3 and remove XMP
-        //exiv2Iface.clearXmp();
-        exiv2Iface.save(m_tmpPath);
+        //meta.clearXmp();
+        meta.save(m_tmpPath);
     }
 
     return true;
@@ -757,14 +756,14 @@ void PicasawebWindow::slotAddPhotoDone(int errCode, const QString& errMsg, const
         m_tmpPath.clear();
     }
 
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KPMetadata meta;
     bool bRet        = false;
     QString fileName = m_transferQueue.first().first.path();
-    if (!photoId.isEmpty() &&
-        exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(fileName) && exiv2Iface.load(fileName))
+
+    if (!photoId.isEmpty() && meta.supportXmp() && meta.canWriteXmp(fileName) && meta.load(fileName))
     {
-        bRet = exiv2Iface.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
-        bRet = exiv2Iface.save(fileName);
+        bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", photoId, false);
+        bRet = meta.save(fileName);
     }
 
     m_widget->m_imgList->processed(m_transferQueue.first().first, (errCode == 0));
@@ -835,23 +834,22 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
 
         if (errText.isEmpty())
         {
-            KExiv2Iface::KExiv2 exiv2Iface;
+            KPMetadata meta;
             bool bRet = false;
-            if (exiv2Iface.load(tmpUrl.toLocalFile()))
+            if (meta.load(tmpUrl.toLocalFile()))
             {
-                if (exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(tmpUrl.toLocalFile()))
+                if (meta.supportXmp() && meta.canWriteXmp(tmpUrl.toLocalFile()))
                 {
-                    bRet = exiv2Iface.setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id, false);
-                    bRet = exiv2Iface.setXmpKeywords(item.tags, false);
+                    bRet = meta.setXmpTagString("Xmp.kipi.picasawebGPhotoId", item.id, false);
+                    bRet = meta.setXmpKeywords(item.tags, false);
                 }
 
 
                 if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())
                 {
-                    bRet = exiv2Iface.setGPSInfo(0.0, item.gpsLat.toDouble(),
-                                          item.gpsLon.toDouble(), false);
+                    bRet = meta.setGPSInfo(0.0, item.gpsLat.toDouble(), item.gpsLon.toDouble(), false);
                 }
-                bRet = exiv2Iface.save(tmpUrl.toLocalFile());
+                bRet = meta.save(tmpUrl.toLocalFile());
             }
 
             m_transferQueue.pop_front();
@@ -964,7 +962,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         }
         else
         {
-            KIPIPlugins::KPImageInfo info(m_interface, newUrl);
+            KPImageInfo info(m_interface, newUrl);
             info.setName(item.description);
             info.setTagsPath(item.tags);
             if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())

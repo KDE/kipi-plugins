@@ -75,7 +75,7 @@ class PicasawebWindow : public KDialog
 
 public:
 
-    PicasawebWindow(Interface* interface, const QString& tmpFolder,
+    PicasawebWindow(Interface* const interface, const QString& tmpFolder,
                     bool import, QWidget *parent);
     ~PicasawebWindow();
 
