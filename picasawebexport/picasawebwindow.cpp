@@ -74,12 +74,10 @@
 #include "picasawebwidget.h"
 #include "picasawebreplacedialog.h"
 
-using namespace KIPIPlugins;
-
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebWindow::PicasawebWindow(KIPI::Interface* interface, const QString& tmpFolder,
+PicasawebWindow::PicasawebWindow(Interface* const interface, const QString& tmpFolder,
                                  bool import, QWidget* /*parent*/)
     : KDialog(0)
 {
