@@ -32,4 +32,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 018 ==> 233926 : New tool to export to Imageshack.
 019 ==> 294460 : Std namespace issue in kipi-plugins [patch].
 020 ==> 294461 : Build failure in picasawebexport - QString ambiguity [patch].
-021 ==> 
+021 ==> 294547 : The url http://www.kipi-plugins.org in 'about' menu does nt work.
+022 ==> 
+
