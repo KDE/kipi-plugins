@@ -38,11 +38,9 @@
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
-// Libkexiv2 includes
+// Local includes
 
-#include <libkexiv2/kexiv2.h>
-
-using namespace KExiv2Iface;
+#include "kpmetadata.h"
 
 namespace KIPIPlugins
 {
@@ -168,7 +166,7 @@ void KPImageInfo::setDescription(const QString& desc)
     else
     {
         // Use Kexiv2 to set comment to metadata.
-        KExiv2 meta(d->url.toLocalFile());
+        KPMetadata meta(d->url.toLocalFile());
 
         // We set image comments, outside Exif, XMP, and IPTC.
         meta.setComments(desc.toUtf8());
@@ -201,7 +199,7 @@ QString KPImageInfo::description() const
     else
     {
         // Use Kexiv2 to get comment from metadata.
-        KExiv2 meta(d->url.toLocalFile());
+        KPMetadata meta(d->url.toLocalFile());
 
         // We trying image comments, outside Exif, XMP, and IPTC.
         QString comment = meta.getCommentsDecoded();
@@ -343,7 +341,7 @@ KExiv2::ImageOrientation KPImageInfo::orientation() const
     if (d->hasValidData())
     {
         ImageInfo info = d->iface->info(d->url);
-        orientation          = (KExiv2::ImageOrientation)info.angle();
+        orientation    = (KExiv2::ImageOrientation)info.angle();
     }
 #endif
 
@@ -528,7 +526,7 @@ QStringList KPImageInfo::keywords() const
     }
     else
     {
-        KExiv2 meta(d->url.toLocalFile());
+        KPMetadata meta(d->url.toLocalFile());
         // Trying to find IPTC keywords
         keywords = meta.getIptcKeywords();
         if(!keywords.isEmpty())
@@ -552,7 +550,7 @@ bool KPImageInfo::hasKeywords() const
     }
     else
     {
-        KExiv2 meta(d->url.toLocalFile());
+        KPMetadata meta(d->url.toLocalFile());
         // Trying to find IPTC keywords
         QStringList keywords = meta.getIptcKeywords();
         if(!keywords.isEmpty())
