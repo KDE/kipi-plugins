@@ -18,6 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
+
 #include "imagegenerationfunctor.h"
 
 // Qt includes
@@ -38,8 +39,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // LibKExiv2 includes
 
-#include <libkexiv2/kexiv2.h>
-#include <libkexiv2/version.h>
 #include <libkexiv2/rotationmatrix.h>
 
 // LibKDcraw includes
@@ -53,24 +52,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "galleryinfo.h"
 #include "generator.h"
 #include "imageelement.h"
+#include "kpmetadata.h"
 
 using namespace KDcrawIface;
 
-namespace KIPIHTMLExport {
-
+namespace KIPIHTMLExport
+{
 
 /**
  * Genearate a thumbnail from @fullImage of @size x @size pixels
  * If square == true, crop the result to a square
  */
-static QImage generateThumbnail(const QImage& fullImage, int size, bool square) {
+static QImage generateThumbnail(const QImage& fullImage, int size, bool square)
+{
     QImage image = fullImage.scaled(size, size,
         square ? Qt::KeepAspectRatioByExpanding : Qt::KeepAspectRatio,
         Qt::SmoothTransformation);
 
-    if (square && (image.width() != size || image.height() != size)) {
+    if (square && (image.width() != size || image.height() != size))
+    {
         int sx=0, sy=0;
-        if (image.width() > size) {
+        if (image.width() > size)
+        {
             sx=(image.width() - size) / 2;
         } else {
             sy=(image.height() - size) / 2;
@@ -81,19 +84,18 @@ static QImage generateThumbnail(const QImage& fullImage, int size, bool square) 
     return image;
 }
 
-
 ImageGenerationFunctor::ImageGenerationFunctor(Generator* generator, GalleryInfo* info, const QString& destDir)
-: mGenerator(generator)
-, mInfo(info)
-, mDestDir(destDir)
-{}
+    : mGenerator(generator), mInfo(info), mDestDir(destDir)
+{
+}
 
 void ImageGenerationFunctor::operator()(ImageElement& element)
 {
     // Load image
     QString path = element.mPath;
     QFile imageFile(path);
-    if (!imageFile.open(QIODevice::ReadOnly)) {
+    if (!imageFile.open(QIODevice::ReadOnly))
+    {
         emitWarning(i18n("Could not read image '%1'", path));
         return;
     }
@@ -102,19 +104,23 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
 
     // Check if RAW file.
     QFileInfo fi(path);
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QString rawFilesExt(KDcraw::rawFiles());
     QString imageFormat;
     QByteArray imageData;
 
-    if (rawFilesExt.toUpper().contains(fi.suffix().toUpper()) && !mInfo->useOriginalImageAsFullImage()) {
-        if (!KDcrawIface::KDcraw::loadDcrawPreview(originalImage, path)) {
+    if (rawFilesExt.toUpper().contains(fi.suffix().toUpper()) && !mInfo->useOriginalImageAsFullImage())
+    {
+        if (!KDcraw::loadDcrawPreview(originalImage, path))
+        {
             emitWarning(i18n("Error loading RAW image '%1'", path));
             return;
         }
     }
-    else {
+    else
+    {
         imageFormat = QImageReader::imageFormat(&imageFile);
-        if (imageFormat.isEmpty()) {
+        if (imageFormat.isEmpty())
+        {
             emitWarning(i18n("Format of image '%1' is unknown", path));
             return;
         }
@@ -123,7 +129,8 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
 
         imageData = imageFile.readAll();
 
-        if (!originalImage.loadFromData(imageData) ) {
+        if (!originalImage.loadFromData(imageData) )
+        {
             emitWarning(i18n("Error loading image '%1'", path));
             return;
         }
@@ -154,16 +161,21 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
 
     // Save full
     QString fullFileName;
-    if (mInfo->useOriginalImageAsFullImage()) {
+    if (mInfo->useOriginalImageAsFullImage())
+    {
         fullFileName = baseFileName + '.' + imageFormat.toLower();
-        if (!writeDataToFile(imageData, mDestDir + '/' + fullFileName)) {
+        if (!writeDataToFile(imageData, mDestDir + '/' + fullFileName))
+        {
             return;
         }
 
-    } else {
+    }
+    else
+    {
         fullFileName = baseFileName + '.' + mInfo->fullFormatString().toLower();
         QString destPath = mDestDir + '/' + fullFileName;
-        if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality())) {
+        if (!fullImage.save(destPath, mInfo->fullFormatString().toAscii(), mInfo->fullQuality()))
+        {
             emitWarning(i18n("Could not save image '%1' to '%2'", path, destPath));
             return;
         }
@@ -172,9 +184,11 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
     element.mFullSize = fullImage.size();
 
     // Save original
-    if (mInfo->copyOriginalImage()) {
+    if (mInfo->copyOriginalImage())
+    {
         QString originalFileName = "original_" + fullFileName;
-        if (!writeDataToFile(imageData, mDestDir + '/' + originalFileName)) {
+        if (!writeDataToFile(imageData, mDestDir + '/' + originalFileName))
+        {
             return;
         }
         element.mOriginalFileName = originalFileName;
@@ -184,7 +198,8 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
     // Save thumbnail
     QString thumbnailFileName = "thumb_" + baseFileName + '.' + mInfo->thumbnailFormatString().toLower();
     QString destPath = mDestDir + '/' + thumbnailFileName;
-    if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality())) {
+    if (!thumbnail.save(destPath, mInfo->thumbnailFormatString().toAscii(), mInfo->thumbnailQuality()))
+    {
         mGenerator->logWarningRequested(i18n("Could not save thumbnail for image '%1' to '%2'", path, destPath));
         return;
     }
@@ -195,115 +210,115 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
 
         // Read Exif Metadata
         QString unavailable(i18n("unavailable"));
-        KExiv2Iface::KExiv2 exiv2Iface;
-        exiv2Iface.load(path);
-        if (exiv2Iface.hasExif() || exiv2Iface.hasXmp())
+        KPMetadata meta;
+        meta.load(path);
+        if (meta.hasExif() || meta.hasXmp())
         {
             // Try to use libkexiv2 to get image info
 
-            element.mExifImageMake = exiv2Iface.getExifTagString("Exif.Image.Make");
+            element.mExifImageMake = meta.getExifTagString("Exif.Image.Make");
             if (element.mExifImageMake.isEmpty())
             {
-                element.mExifImageMake = exiv2Iface.getXmpTagString("Xmp.tiff.Make");
+                element.mExifImageMake = meta.getXmpTagString("Xmp.tiff.Make");
             }
 
-            element.mExifImageModel = exiv2Iface.getExifTagString("Exif.Image.Model");
+            element.mExifImageModel = meta.getExifTagString("Exif.Image.Model");
             if (element.mExifImageModel.isEmpty())
             {
-                element.mExifImageModel = exiv2Iface.getXmpTagString("Xmp.tiff.Model");
+                element.mExifImageModel = meta.getXmpTagString("Xmp.tiff.Model");
             }
 
-            element.mExifImageOrientation = exiv2Iface.getExifTagString("Exif.Image.Orientation");
+            element.mExifImageOrientation = meta.getExifTagString("Exif.Image.Orientation");
             if (element.mExifImageOrientation.isEmpty())
             {
-                element.mExifImageOrientation = exiv2Iface.getXmpTagString("Xmp.tiff.Orientation");
+                element.mExifImageOrientation = meta.getXmpTagString("Xmp.tiff.Orientation");
             }
 
-            element.mExifImageXResolution = exiv2Iface.getExifTagString("Exif.Image.XResolution");
+            element.mExifImageXResolution = meta.getExifTagString("Exif.Image.XResolution");
             if (element.mExifImageXResolution.isEmpty())
             {
-                element.mExifImageXResolution = exiv2Iface.getXmpTagString("Xmp.tiff.XResolution");
+                element.mExifImageXResolution = meta.getXmpTagString("Xmp.tiff.XResolution");
             }
 
-            element.mExifImageYResolution = exiv2Iface.getExifTagString("Exif.Image.YResolution");
+            element.mExifImageYResolution = meta.getExifTagString("Exif.Image.YResolution");
             if (element.mExifImageYResolution.isEmpty())
             {
-                element.mExifImageYResolution = exiv2Iface.getXmpTagString("Xmp.tiff.YResolution");
+                element.mExifImageYResolution = meta.getXmpTagString("Xmp.tiff.YResolution");
             }
 
-            element.mExifImageResolutionUnit = exiv2Iface.getExifTagString("Exif.Image.ResolutionUnit");
+            element.mExifImageResolutionUnit = meta.getExifTagString("Exif.Image.ResolutionUnit");
             if (element.mExifImageResolutionUnit.isEmpty())
             {
-                element.mExifImageResolutionUnit = exiv2Iface.getXmpTagString("Xmp.tiff.ResolutionUnit");
+                element.mExifImageResolutionUnit = meta.getXmpTagString("Xmp.tiff.ResolutionUnit");
             }
 
-            if (exiv2Iface.getImageDateTime().isValid())
+            if (meta.getImageDateTime().isValid())
             {
-                element.mExifImageDateTime = KGlobal::locale()->formatDateTime(exiv2Iface.getImageDateTime(),
-                                                             KLocale::ShortDate, true);
+                element.mExifImageDateTime = KGlobal::locale()->formatDateTime(meta.getImageDateTime(),
+                                                                               KLocale::ShortDate, true);
             }
 
-            element.mExifImageYCbCrPositioning = exiv2Iface.getExifTagString("Exif.Image.YCbCrPositioning");
+            element.mExifImageYCbCrPositioning = meta.getExifTagString("Exif.Image.YCbCrPositioning");
             if (element.mExifImageYCbCrPositioning.isEmpty())
             {
-                element.mExifImageYCbCrPositioning = exiv2Iface.getXmpTagString("Xmp.tiff.YCbCrPositioning");
+                element.mExifImageYCbCrPositioning = meta.getXmpTagString("Xmp.tiff.YCbCrPositioning");
             }
 
-            element.mExifPhotoFNumber = exiv2Iface.getExifTagString("Exif.Photo.FNumber");
+            element.mExifPhotoFNumber = meta.getExifTagString("Exif.Photo.FNumber");
             if (element.mExifPhotoFNumber.isEmpty())
             {
-                element.mExifPhotoFNumber = exiv2Iface.getXmpTagString("Xmp.exif.FNumber");
+                element.mExifPhotoFNumber = meta.getXmpTagString("Xmp.exif.FNumber");
             }
 
-            element.mExifPhotoApertureValue = exiv2Iface.getExifTagString("Exif.Photo.ApertureValue");
+            element.mExifPhotoApertureValue = meta.getExifTagString("Exif.Photo.ApertureValue");
             if (element.mExifPhotoApertureValue.isEmpty())
             {
-                element.mExifPhotoApertureValue = exiv2Iface.getXmpTagString("Xmp.exif.ApertureValue");
+                element.mExifPhotoApertureValue = meta.getXmpTagString("Xmp.exif.ApertureValue");
             }
 
-            element.mExifPhotoFocalLength = exiv2Iface.getExifTagString("Exif.Photo.FocalLength");
+            element.mExifPhotoFocalLength = meta.getExifTagString("Exif.Photo.FocalLength");
             if (element.mExifPhotoFocalLength.isEmpty())
             {
-                element.mExifPhotoFocalLength = exiv2Iface.getXmpTagString("Xmp.exif.FocalLength");
+                element.mExifPhotoFocalLength = meta.getXmpTagString("Xmp.exif.FocalLength");
             }
 
-            element.mExifPhotoExposureTime = exiv2Iface.getExifTagString("Exif.Photo.ExposureTime");
+            element.mExifPhotoExposureTime = meta.getExifTagString("Exif.Photo.ExposureTime");
             if (element.mExifPhotoExposureTime.isEmpty())
             {
-                element.mExifPhotoExposureTime = exiv2Iface.getXmpTagString("Xmp.exif.ExposureTime");
+                element.mExifPhotoExposureTime = meta.getXmpTagString("Xmp.exif.ExposureTime");
             }
 
-            element.mExifPhotoShutterSpeedValue = exiv2Iface.getExifTagString("Exif.Photo.ShutterSpeedValue");
+            element.mExifPhotoShutterSpeedValue = meta.getExifTagString("Exif.Photo.ShutterSpeedValue");
             if (element.mExifPhotoShutterSpeedValue.isEmpty())
             {
-                element.mExifPhotoShutterSpeedValue = exiv2Iface.getXmpTagString("Xmp.exif.ShutterSpeedValue");
+                element.mExifPhotoShutterSpeedValue = meta.getXmpTagString("Xmp.exif.ShutterSpeedValue");
             }
 
-            element.mExifPhotoISOSpeedRatings = exiv2Iface.getExifTagString("Exif.Photo.ISOSpeedRatings");
+            element.mExifPhotoISOSpeedRatings = meta.getExifTagString("Exif.Photo.ISOSpeedRatings");
             if (element.mExifPhotoISOSpeedRatings.isEmpty())
             {
-                element.mExifPhotoISOSpeedRatings = exiv2Iface.getXmpTagString("Xmp.exif.ISOSpeedRatings");
+                element.mExifPhotoISOSpeedRatings = meta.getXmpTagString("Xmp.exif.ISOSpeedRatings");
             }
 
-            element.mExifPhotoExposureProgram = exiv2Iface.getExifTagString("Exif.Photo.ExposureIndex");
+            element.mExifPhotoExposureProgram = meta.getExifTagString("Exif.Photo.ExposureIndex");
             if (element.mExifPhotoExposureProgram.isEmpty())
             {
-                element.mExifPhotoExposureProgram = exiv2Iface.getXmpTagString("Xmp.exif.ExposureIndex");
+                element.mExifPhotoExposureProgram = meta.getXmpTagString("Xmp.exif.ExposureIndex");
             }
 
             // Get GPS values
             double gpsvalue;
-            if (exiv2Iface.getGPSAltitude(&gpsvalue))
+            if (meta.getGPSAltitude(&gpsvalue))
             {
                 element.mExifGPSAltitude = QString::number(gpsvalue,'f',3);
             }
 
-            if (exiv2Iface.getGPSLatitudeNumber(&gpsvalue))
+            if (meta.getGPSLatitudeNumber(&gpsvalue))
             {
                 element.mExifGPSLatitude = QString::number(gpsvalue,'f',6);
             }
 
-            if (exiv2Iface.getGPSLongitudeNumber(&gpsvalue))
+            if (meta.getGPSLongitudeNumber(&gpsvalue))
             {
                 element.mExifGPSLongitude = QString::number(gpsvalue,'f',6);
             }
@@ -341,60 +356,62 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
             }
         }
 
-           if (element.mExifImageMake.isEmpty()) element.mExifImageMake = unavailable;
+        if (element.mExifImageMake.isEmpty()) element.mExifImageMake = unavailable;
 
-           if (element.mExifImageModel.isEmpty()) element.mExifImageModel   = unavailable;
+        if (element.mExifImageModel.isEmpty()) element.mExifImageModel   = unavailable;
 
-           if (element.mExifImageOrientation.isEmpty()) element.mExifImageOrientation = unavailable;
+        if (element.mExifImageOrientation.isEmpty()) element.mExifImageOrientation = unavailable;
 
-           if (element.mExifImageXResolution.isEmpty()) element.mExifImageXResolution = unavailable;
+        if (element.mExifImageXResolution.isEmpty()) element.mExifImageXResolution = unavailable;
 
-           if (element.mExifImageYResolution.isEmpty()) element.mExifImageYResolution = unavailable;
+        if (element.mExifImageYResolution.isEmpty()) element.mExifImageYResolution = unavailable;
 
-           if (element.mExifImageResolutionUnit.isEmpty()) element.mExifImageResolutionUnit = unavailable;
+        if (element.mExifImageResolutionUnit.isEmpty()) element.mExifImageResolutionUnit = unavailable;
 
-           if (element.mExifImageDateTime.isEmpty()) element.mExifImageDateTime = unavailable;
+        if (element.mExifImageDateTime.isEmpty()) element.mExifImageDateTime = unavailable;
 
-           if (element.mExifImageYCbCrPositioning.isEmpty()) element.mExifImageYCbCrPositioning = unavailable;
+        if (element.mExifImageYCbCrPositioning.isEmpty()) element.mExifImageYCbCrPositioning = unavailable;
 
-           if (element.mExifPhotoApertureValue.isEmpty()) element.mExifPhotoApertureValue   = unavailable;
+        if (element.mExifPhotoApertureValue.isEmpty()) element.mExifPhotoApertureValue   = unavailable;
 
-           if (element.mExifPhotoFocalLength.isEmpty()) element.mExifPhotoFocalLength   = unavailable;
+        if (element.mExifPhotoFocalLength.isEmpty()) element.mExifPhotoFocalLength   = unavailable;
 
-           if (element.mExifPhotoFNumber.isEmpty()) element.mExifPhotoFNumber   = unavailable;
+        if (element.mExifPhotoFNumber.isEmpty()) element.mExifPhotoFNumber   = unavailable;
 
-           if (element.mExifPhotoExposureTime.isEmpty()) element.mExifPhotoExposureTime = unavailable;
+        if (element.mExifPhotoExposureTime.isEmpty()) element.mExifPhotoExposureTime = unavailable;
 
-           if (element.mExifPhotoShutterSpeedValue.isEmpty()) element.mExifPhotoShutterSpeedValue = unavailable;
+        if (element.mExifPhotoShutterSpeedValue.isEmpty()) element.mExifPhotoShutterSpeedValue = unavailable;
 
-           if (element.mExifPhotoISOSpeedRatings.isEmpty()) element.mExifPhotoISOSpeedRatings   = unavailable;
+        if (element.mExifPhotoISOSpeedRatings.isEmpty()) element.mExifPhotoISOSpeedRatings   = unavailable;
 
-           if (element.mExifPhotoExposureProgram.isEmpty()) element.mExifPhotoExposureProgram   = unavailable;
-   
-           if (element.mExifGPSAltitude.isEmpty()) element.mExifGPSAltitude = unavailable;
-   
-           if (element.mExifGPSLatitude.isEmpty()) element.mExifGPSLatitude = unavailable;
-   
-           if (element.mExifGPSLongitude.isEmpty()) element.mExifGPSLongitude = unavailable;
+        if (element.mExifPhotoExposureProgram.isEmpty()) element.mExifPhotoExposureProgram   = unavailable;
+
+        if (element.mExifGPSAltitude.isEmpty()) element.mExifGPSAltitude = unavailable;
+
+        if (element.mExifGPSLatitude.isEmpty()) element.mExifGPSLatitude = unavailable;
+
+        if (element.mExifGPSLongitude.isEmpty()) element.mExifGPSLongitude = unavailable;
 }
 
-
-bool ImageGenerationFunctor::writeDataToFile(const QByteArray& data, const QString& destPath) {
+bool ImageGenerationFunctor::writeDataToFile(const QByteArray& data, const QString& destPath)
+{
     QFile destFile(destPath);
-    if (!destFile.open(QIODevice::WriteOnly)) {
+    if (!destFile.open(QIODevice::WriteOnly))
+    {
         emitWarning(i18n("Could not open file '%1' for writing", destPath));
         return false;
     }
-    if (destFile.write(data) != data.size()) {
+    if (destFile.write(data) != data.size())
+    {
         emitWarning(i18n("Could not save image to file '%1'", destPath));
         return false;
     }
     return true;
 }
 
-
-void ImageGenerationFunctor::emitWarning(const QString& message) {
+void ImageGenerationFunctor::emitWarning(const QString& message)
+{
     emit mGenerator->logWarningRequested(message);
 }
 
-} // namespace
+} // namespace KIPIHTMLExport
