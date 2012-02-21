@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
 * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
 *
@@ -38,14 +38,9 @@
 // KDE includes
 
 #include <kdebug.h>
-#include <kio/job.h>
 #include <kio/jobuidelegate.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
 
 // LibKDcraw includes
 
@@ -56,11 +51,14 @@
 
 #include "piwigoitem.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIPiwigoExportPlugin
 {
 
-QString PiwigoTalker::s_authToken   = "";
+QString PiwigoTalker::s_authToken = "";
 
 PiwigoTalker::PiwigoTalker(QWidget* parent)
     : m_parent(parent),  m_job(0),  m_loggedIn(false)
@@ -161,8 +159,8 @@ bool PiwigoTalker::addPhoto(int   albumId,
                             int   maxDim,
                             int   thumbDim)
 {
-    m_job        = 0;
-    m_state      = GE_CHECKPHOTOEXIST;
+    m_job     = 0;
+    m_state   = GE_CHECKPHOTOEXIST;
     m_talker_buffer.resize(0);
 
     m_path    = photoPath;
@@ -197,8 +195,8 @@ bool PiwigoTalker::addPhoto(int   albumId,
         QImage thumbnail = image.scaled(thumbDim, thumbDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         m_thumbpath      = KStandardDirs::locateLocal("tmp", "thumb-" + KUrl(photoPath).fileName());
         thumbnail.save(m_thumbpath, "JPEG", 95);
-        kDebug() << "Thumbnail to temp file: " << m_thumbpath ;
 
+        kDebug() << "Thumbnail to temp file: " << m_thumbpath ;
 
         // image file - see if we need to rescale it
         if (rescale && (image.width() > maxDim || image.height() > maxDim))
@@ -208,6 +206,7 @@ bool PiwigoTalker::addPhoto(int   albumId,
 
         m_path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
         image.save(m_path, "JPEG", 95);
+        
         kDebug() << "Resizing and saving to temp file: " << m_path ;
 
         // Complete name and comment for summary sending
@@ -215,30 +214,30 @@ bool PiwigoTalker::addPhoto(int   albumId,
         m_date    = fi.created();
 
         // Restore all metadata.
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KPMetadata metaIface;
 
-        if (exiv2Iface.load(photoPath))
+        if (metaIface.load(photoPath))
         {
-            exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-            exiv2Iface.setImageDimensions(image.size());
-            exiv2Iface.save(m_path);
-            kDebug() << "Comment : " << exiv2Iface.getExifComment();
-            if (exiv2Iface.getExifComment().length())
+            metaIface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+            metaIface.setImageDimensions(image.size());
+            metaIface.save(m_path);
+            kDebug() << "Comment : " << metaIface.getExifComment();
+
+            if (metaIface.getExifComment().length())
             {
-                if (captionIsTitle) m_name = exiv2Iface.getExifComment();
-                if (captionIsDescription) m_comment = exiv2Iface.getExifComment();
+                if (captionIsTitle)       m_name    = metaIface.getExifComment();
+                if (captionIsDescription) m_comment = metaIface.getExifComment();
             }
 
-            if (!exiv2Iface.getImageDateTime().isNull())
+            if (!metaIface.getImageDateTime().isNull())
             {
-                m_date = exiv2Iface.getImageDateTime();
+                m_date = metaIface.getImageDateTime();
             }
         }
         else
         {
             kWarning() << "Image " << photoPath << " has no exif data";
         }
-
     }
     else
     {
@@ -302,7 +301,7 @@ void PiwigoTalker::slotResult(KJob* job)
         }
         else
         {
-            if (m_state == GE_CHECKPHOTOEXIST || m_state == GE_ADDPHOTO || m_state == GE_ADDTHUMB || 
+            if (m_state == GE_CHECKPHOTOEXIST || m_state == GE_ADDPHOTO        || m_state == GE_ADDTHUMB ||
                 m_state == GE_ADDHQ           || m_state == GE_ADDPHOTOSUMMARY)
             {
                 emit signalAddPhotoFailed(tempjob->errorString());
@@ -319,27 +318,27 @@ void PiwigoTalker::slotResult(KJob* job)
 
     switch (m_state)
     {
-    case(GE_LOGIN):
-        parseResponseLogin(m_talker_buffer);
-        break;
-    case(GE_LISTALBUMS):
-        parseResponseListAlbums(m_talker_buffer);
-        break;
-    case(GE_CHECKPHOTOEXIST):
-        parseResponseDoesPhotoExist(m_talker_buffer);
-        break;
-    case(GE_ADDPHOTO):
-        parseResponseAddPhoto(m_talker_buffer);
-        break;
-    case(GE_ADDTHUMB):
-        parseResponseAddThumbnail(m_talker_buffer);
-        break;
-    case(GE_ADDHQ):
-        parseResponseAddHQPhoto(m_talker_buffer);
-        break;
-    case(GE_ADDPHOTOSUMMARY):
-        parseResponseAddPhotoSummary(m_talker_buffer);
-        break;
+        case(GE_LOGIN):
+            parseResponseLogin(m_talker_buffer);
+            break;
+        case(GE_LISTALBUMS):
+            parseResponseListAlbums(m_talker_buffer);
+            break;
+        case(GE_CHECKPHOTOEXIST):
+            parseResponseDoesPhotoExist(m_talker_buffer);
+            break;
+        case(GE_ADDPHOTO):
+            parseResponseAddPhoto(m_talker_buffer);
+            break;
+        case(GE_ADDTHUMB):
+            parseResponseAddThumbnail(m_talker_buffer);
+            break;
+        case(GE_ADDHQ):
+            parseResponseAddHQPhoto(m_talker_buffer);
+            break;
+        case(GE_ADDPHOTOSUMMARY):
+            parseResponseAddPhotoSummary(m_talker_buffer);
+            break;
     }
 
     tempjob->kill();
@@ -435,8 +434,9 @@ void PiwigoTalker::parseResponseListAlbums(const QByteArray& data)
             }
             if (ts.name() == "uppercats")
             {
-                QString uppercats = ts.readElementText();
+                QString uppercats   = ts.readElementText();
                 QStringList catlist = uppercats.split(',');
+
                 if (catlist.size() > 1 && catlist.at(catlist.size() - 2).toInt() != (*iter).ref_num)
                 {
                     (*iter).parent_ref_num = catlist.at(catlist.size() - 2).toInt();
@@ -810,6 +810,7 @@ void PiwigoTalker::parseResponseAddPhotoSummary(const QByteArray& data)
 
     if (m_path.size())
         QFile(m_path).remove();
+
     if (m_thumbpath.size())
         QFile(m_thumbpath).remove();
 
