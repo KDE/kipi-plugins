@@ -420,7 +420,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     IF(QJSON_FOUND)
         ADD_SUBDIRECTORY(debianscreenshots)
         ADD_SUBDIRECTORY(facebook)
-        ADD_SUBDIRECTORY(imgurexport)
+
+# Plugin not yet complete. Disabled for the moment.
+#        ADD_SUBDIRECTORY(imgurexport)
+
     ENDIF(QJSON_FOUND)
 
     IF(LIBKVKONTAKTE_FOUND)
