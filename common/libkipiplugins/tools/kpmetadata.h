@@ -84,7 +84,7 @@ public:
      */
     KPMetadata(const KPMetadata& other);
 
-    /** Equality operator.
+    /** Assignement operator.
      */
     KPMetadata& operator=(const KPMetadata& other);
     
