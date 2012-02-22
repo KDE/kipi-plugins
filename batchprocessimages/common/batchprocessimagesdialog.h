@@ -49,8 +49,11 @@ class KProcess;
 
 namespace Ui
 {
-class BatchProcessImagesDialog;
+    class BatchProcessImagesDialog;
 }
+
+using namespace KIPI;
+
 namespace KIPIBatchProcessImagesPlugin
 {
 
@@ -65,7 +68,7 @@ public:
     // Don't forget to add the 'm_Type' and 'm_labelType' implementation in the constructor of
     // children dialog class.
 
-    BatchProcessImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface,
+    BatchProcessImagesDialog(const KUrl::List& urlList, Interface* interface,
                              const QString& caption, QWidget* parent = 0);
     ~BatchProcessImagesDialog();protected:
 
@@ -99,7 +102,7 @@ protected:
     QString                  m_previewOutput;
     KUrl::List               m_selectedImageFiles;
 
-    KIPI::Interface*         m_interface;
+    Interface*               m_interface;
 
     // --------------------------------------------------------------------------------------------------------
     // Standards functions
