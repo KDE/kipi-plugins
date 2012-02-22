@@ -72,10 +72,6 @@ extern "C"
 
 #include <libkipi/imagecollection.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/rotationmatrix.h>
-
 // Local includes
 
 #include "IpodHeader.h"
@@ -83,6 +79,7 @@ extern "C"
 #include "ImageListItem.h"
 #include "IpodListItem.h"
 #include "kpimageinfo.h"
+#include "kpmetadata.h"
 
 namespace KIPIIpodExportPlugin
 {

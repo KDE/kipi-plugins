@@ -37,10 +37,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/rotationmatrix.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/dcrawinfocontainer.h>

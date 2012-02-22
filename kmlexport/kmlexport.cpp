@@ -46,10 +46,6 @@ extern "C"
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/rotationmatrix.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>

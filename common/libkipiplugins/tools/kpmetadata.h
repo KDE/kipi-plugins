@@ -27,7 +27,11 @@
 
 // LibKExiv2 includes
 
+// NOTE: all file included here will be used into plugins as well, to prevent files to include from libkexiv2.
+//       developpers just need to include kpmetadata.h, that all...
+#include <libkexiv2/version.h>
 #include <libkexiv2/kexiv2.h>
+#include <libkexiv2/rotationmatrix.h>
 
 // Local includes
 

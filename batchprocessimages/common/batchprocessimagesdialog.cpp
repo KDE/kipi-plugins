@@ -63,10 +63,6 @@ extern "C"
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imagecollection.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/rotationmatrix.h>
-
 // Local includes
 
 #include "imagedialog.h"
@@ -75,6 +71,7 @@ extern "C"
 #include "kpversion.h"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
+#include "kpmetadata.h"
 #include "ui_batchprocessimagesdialog.h"
 
 using namespace KIPIPlugins;

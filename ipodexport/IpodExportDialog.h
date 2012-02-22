@@ -43,7 +43,6 @@
 
 // Local includes
 
-#include "kpmetadata.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
 #include "imagedialog.h"

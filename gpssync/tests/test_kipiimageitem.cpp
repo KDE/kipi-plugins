@@ -35,11 +35,6 @@
 #include <kdebug.h>
 #include <kurl.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // local includes
 
 #include "kpmetadata.h"

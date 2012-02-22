@@ -44,10 +44,6 @@
 
 #include <libkipi/interface.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/rotationmatrix.h>
-
 // Local includes
 
 #include "commoncontainer.h"
