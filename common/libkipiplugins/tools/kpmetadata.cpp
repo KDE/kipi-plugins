@@ -31,6 +31,7 @@
 
 // Local includes
 
+#include "kpmetasettings.h"
 #include "kphostsettings.h"
 
 namespace KIPIPlugins

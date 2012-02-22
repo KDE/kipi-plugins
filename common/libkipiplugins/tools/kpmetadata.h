@@ -31,7 +31,6 @@
 
 // Local includes
 
-#include "kpmetasettings.h"
 #include "kipiplugins_export.h"
 
 namespace KIPI
@@ -44,6 +43,8 @@ using namespace KExiv2Iface;
 
 namespace KIPIPlugins
 {
+
+class KPMetaSettings;
 
 /** This class must be used in plugins instead KExiv2 metadata interface to handle file lock mechanism
  *  with KIPI host application to prevent concurent operations on file during load and save operations.
