@@ -65,7 +65,6 @@
 #include <libkipi/imagecollectionselector.h>
 #include <libkipi/interface.h>
 
-
 // Local includes
 
 #include "imageslist.h"
@@ -78,9 +77,6 @@
 #include "ui_croppage.h"
 #include "ui_photopage.h"
 
-using namespace KIPI;
-using namespace KIPIPlugins;
-
 namespace KIPIPrintImagesPlugin
 {
 
@@ -90,7 +86,7 @@ class WizardPage : public QWidget, public Ui_Class
 {
 public:
 
-    WizardPage(KAssistantDialog* dialog, const QString& title)
+    WizardPage(KAssistantDialog* const dialog, const QString& title)
             : QWidget(dialog), mAssistant(dialog)
     {
         this->setupUi(this);
@@ -113,7 +109,9 @@ private:
     KPageWidgetItem*  mPage;
 };
 
-// some title name definitions (managed for translators)
+// ---------------------------------------------------------------------------
+
+// some title name definitions (managed by translators)
 const char* photoPageName        =  I18N_NOOP("Select page layout");
 const char* cropPageName         =  I18N_NOOP("Crop photos");
 // custom page layout
@@ -154,8 +152,8 @@ struct Wizard::Private
     ImagesList*              m_imagesFilesListBox;
 };
 
-Wizard::Wizard(QWidget* parent, Interface* interface)
-        : KAssistantDialog(parent), d(new Private)
+Wizard::Wizard(QWidget* const parent, Interface* const interface)
+    : KAssistantDialog(parent), d(new Private)
 {
     d->m_interface    = interface;
     //d->m_printDialog = NULL;
@@ -729,7 +727,7 @@ double getMaxDPI(const QList<TPhoto*>& photos, const QList<QRect*>& layouts, /*u
     return maxDPI;
 }
 
-QRect* Wizard::getLayout(int photoIndex)
+QRect* Wizard::getLayout(int photoIndex) const
 {
     TPhotoSize* s   = d->m_photoSizes.at(d->m_photoPage->ListPhotoSizes->currentRow());
     // how many photos would actually be printed, including copies?
@@ -847,7 +845,7 @@ void Wizard::printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH
     }
 }
 
-QString Wizard::captionFormatter(TPhoto* photo)
+QString Wizard::captionFormatter(TPhoto* const photo)
 {
     if (!photo->pCaptionInfo)
         return QString();
@@ -1045,10 +1043,10 @@ bool Wizard::paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList
             int orientatation = photo->rotation;
 
             //ORIENTATION_ROT_90_HFLIP .. ORIENTATION_ROT_270
-            if (exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_HFLIP ||
-                exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90 ||
-                exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_90_VFLIP ||
-                exifOrientation == KExiv2Iface::KExiv2::ORIENTATION_ROT_270)
+            if (exifOrientation == KPMetadata::ORIENTATION_ROT_90_HFLIP ||
+                exifOrientation == KPMetadata::ORIENTATION_ROT_90       ||
+                exifOrientation == KPMetadata::ORIENTATION_ROT_90_VFLIP ||
+                exifOrientation == KPMetadata::ORIENTATION_ROT_270)
             {
                 orientatation = (photo->rotation + 270) % 360;   // -90 degrees
             }
