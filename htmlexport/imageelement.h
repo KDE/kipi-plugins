@@ -27,16 +27,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QSize>
 #include <QString>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "xmlutils.h"
 #include "kpimageinfo.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
 using namespace KIPIPlugins;
 
 namespace KIPIHTMLExport
@@ -102,9 +98,9 @@ public:
         xmlWriter.writeElement("exifphotofocallength", mExifPhotoFocalLength);
 
         // GPS
-        xmlWriter.writeElement("exifgpslatitude", mExifGPSLatitude);
+        xmlWriter.writeElement("exifgpslatitude",  mExifGPSLatitude);
         xmlWriter.writeElement("exifgpslongitude", mExifGPSLongitude);
-        xmlWriter.writeElement("exifgpsaltitude", mExifGPSAltitude);
+        xmlWriter.writeElement("exifgpsaltitude",  mExifGPSAltitude);
     }
 
     void appendImageElementToXML(XMLWriter& xmlWriter, const QString& elementName,
@@ -119,42 +115,42 @@ public:
 
 public:
 
-    bool                     mValid;
-    QString                  mTitle;
-    QString                  mDescription;
-    KExiv2::ImageOrientation mOrientation;
-    QDateTime                mTime;
+    bool                         mValid;
+    QString                      mTitle;
+    QString                      mDescription;
+    KPMetadata::ImageOrientation mOrientation;
+    QDateTime                    mTime;
 
-    QString                  mPath;
+    QString                      mPath;
 
-    QString                  mThumbnailFileName;
-    QSize                    mThumbnailSize;
-    QString                  mFullFileName;
-    QSize                    mFullSize;
-    QString                  mOriginalFileName;
-    QSize                    mOriginalSize;
+    QString                      mThumbnailFileName;
+    QSize                        mThumbnailSize;
+    QString                      mFullFileName;
+    QSize                        mFullSize;
+    QString                      mOriginalFileName;
+    QSize                        mOriginalSize;
 
     // Exif Metadata
-    QString                  mExifImageMake;
-    QString                  mExifImageModel;
-    QString                  mExifImageOrientation;
-    QString                  mExifImageXResolution;
-    QString                  mExifImageYResolution;
-    QString                  mExifImageResolutionUnit;
-    QString                  mExifImageDateTime;
-    QString                  mExifImageYCbCrPositioning;
-    QString                  mExifPhotoExposureTime;
-    QString                  mExifPhotoFNumber;
-    QString                  mExifPhotoExposureProgram;
-    QString                  mExifPhotoISOSpeedRatings;
-    QString                  mExifPhotoShutterSpeedValue;
-    QString                  mExifPhotoApertureValue;
-    QString                  mExifPhotoFocalLength;
+    QString                      mExifImageMake;
+    QString                      mExifImageModel;
+    QString                      mExifImageOrientation;
+    QString                      mExifImageXResolution;
+    QString                      mExifImageYResolution;
+    QString                      mExifImageResolutionUnit;
+    QString                      mExifImageDateTime;
+    QString                      mExifImageYCbCrPositioning;
+    QString                      mExifPhotoExposureTime;
+    QString                      mExifPhotoFNumber;
+    QString                      mExifPhotoExposureProgram;
+    QString                      mExifPhotoISOSpeedRatings;
+    QString                      mExifPhotoShutterSpeedValue;
+    QString                      mExifPhotoApertureValue;
+    QString                      mExifPhotoFocalLength;
 
     // GPS Metadata
-    QString                  mExifGPSLatitude;
-    QString                  mExifGPSLongitude;
-    QString                  mExifGPSAltitude;
+    QString                      mExifGPSLatitude;
+    QString                      mExifGPSLongitude;
+    QString                      mExifGPSAltitude;
 };
 
 } // namespace KIPIHTMLExport
