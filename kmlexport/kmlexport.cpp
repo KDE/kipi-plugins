@@ -196,7 +196,7 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
 
     // Process images
 
-    if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
+    if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
         QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
         image          = image.transformed( matrix );
@@ -216,9 +216,9 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
 
     // Save images
     /** @todo remove the extension of the file
-        * it's appear with digikam but not with gwenview
-        * which already seems to strip the extension
-        */
+     * it's appear with digikam but not with gwenview
+     * which already seems to strip the extension
+     */
     QString baseFileName = webifyFileName(info.name());
     //baseFileName       = mUniqueNameHelper.makeNameUnique(baseFileName);
     QString fullFileName;
@@ -544,9 +544,9 @@ int KmlExport::getConfig()
     m_GPXAltitudeMode    = group.readEntry("GPX Altitude Mode", 0);
 
     KStandardDirs dir;
-    m_tempDestDir   = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + '/');
-    m_imageDir      = "images/";
-    m_googlemapSize = 32;
+    m_tempDestDir        = dir.saveLocation("tmp", "kipi-kmlrexportplugin-" + QString::number(getpid()) + '/');
+    m_imageDir           = "images/";
+    m_googlemapSize      = 32;
     return 1;
 }
 
