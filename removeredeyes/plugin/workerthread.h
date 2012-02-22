@@ -40,10 +40,9 @@
 #include "locator.h"
 #include "workerthreaddata.h"
 
-using namespace KIPIPlugins;
-
 class QString;
-struct WorkerThreadPriv;
+
+using namespace KIPIPlugins;
 
 namespace KIPIRemoveRedEyesPlugin
 {
@@ -91,12 +90,13 @@ public:
     void setTempFile(const QString&, ImageType);
 
     void cancel();
-    
+
 private:
 
     WorkerThreadPriv* const pd;
-    
 };
+
+// --------------------------------------------------------------------------
 
 struct WorkerThreadPriv
 {
@@ -109,22 +109,24 @@ struct WorkerThreadPriv
         locator             = 0;
     }
 
-    bool           	updateFileTimeStamp;
-    bool           	cancel;
-    int            	runtype;
-    int                 progress;
+    bool           updateFileTimeStamp;
+    bool           cancel;
+    int            runtype;
+    int            progress;
 
-    CommonSettings 	settings;
-    SaveMethod*    	saveMethod;
-    Locator*       	locator;
-    
-    KUrl::List          urls;
-    QString        	maskPreviewFile;
-    QString        	correctedPreviewFile;
-    QString        	originalPreviewFile;
-    
-    QMutex mutex;  
+    CommonSettings settings;
+    SaveMethod*    saveMethod;
+    Locator*       locator;
+
+    KUrl::List     urls;
+    QString        maskPreviewFile;
+    QString        correctedPreviewFile;
+    QString        originalPreviewFile;
+
+    QMutex         mutex;
 };
+
+// --------------------------------------------------------------------------
 
 class Task : public ThreadWeaver::Job
 {
@@ -132,24 +134,23 @@ class Task : public ThreadWeaver::Job
 
 public:
 
-    Task(const KUrl &url,QObject* parent = 0, WorkerThreadPriv*  d =0);
+    Task(const KUrl& url, QObject* parent = 0, WorkerThreadPriv* d = 0);
 
-    const KUrl &url;
+    const KUrl& url;
 
 Q_SIGNALS:
 
-    void calculationFinished(WorkerThreadData* );
+    void calculationFinished(WorkerThreadData*);
 
 private:
 
-    WorkerThreadPriv*  ld;
+    WorkerThreadPriv* ld;
 
 protected:
 
     void run();
 };
 
-
 } // namespace KIPIRemoveRedEyesPlugin
 
-#endif
+#endif // WORKERTHREAD_H
