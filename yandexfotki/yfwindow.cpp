@@ -676,9 +676,9 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         i++;
     }
 
-    const UpdatePolicy policy              = static_cast<UpdatePolicy>(m_policyGroup->checkedId());
+    const UpdatePolicy policy             = static_cast<UpdatePolicy>(m_policyGroup->checkedId());
     const YandexFotkiPhoto::Access access = static_cast<YandexFotkiPhoto::Access>(
-            m_accessCombo->itemData(m_accessCombo->currentIndex()).toInt());
+                                            m_accessCombo->itemData(m_accessCombo->currentIndex()).toInt());
 
     kDebug() << "";
     kDebug() << "----";
@@ -859,8 +859,7 @@ void YandexFotkiWindow::updateNextPhoto()
             }
         }
 
-        const YandexFotkiAlbum& album =  m_talker.albums().
-                                         at(m_albumsCombo->currentIndex());
+        const YandexFotkiAlbum& album =  m_talker.albums().at(m_albumsCombo->currentIndex());
 
         kDebug() << photo.originalUrl();
 
@@ -871,8 +870,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
     updateControls(true);
 
-    KMessageBox::information(this,
-                             i18n("Images has been uploaded"));
+    KMessageBox::information(this, i18n("Images has been uploaded"));
     return;
 }
 
@@ -910,8 +908,7 @@ void YandexFotkiWindow::slotStartTransfer()
     if (!m_import)
     {
         // list photos of the album, then start upload
-        const YandexFotkiAlbum& album =  m_talker.albums().
-                                         at(m_albumsCombo->currentIndex());
+        const YandexFotkiAlbum& album =  m_talker.albums().at(m_albumsCombo->currentIndex());
 
         kDebug() << "Album selected" << album;
 
