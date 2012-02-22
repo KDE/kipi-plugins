@@ -6,7 +6,7 @@
  * Date        : 2009-10-11
  * Description : save image thread
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,8 +39,8 @@
 
 #include "kpwriteimage.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
 
@@ -72,7 +72,7 @@ public:
 };
 
 SaveImgThread::SaveImgThread(QObject* parent)
-             : QThread(parent), d(new SaveImgThreadPriv)
+    : QThread(parent), d(new SaveImgThreadPriv)
 {
 }
 
@@ -119,7 +119,7 @@ void SaveImgThread::run()
     QImage thumb    = d->img.scaled(160, 120,   Qt::KeepAspectRatio, Qt::SmoothTransformation);
     QByteArray prof = KPWriteImage::getICCProfilFromFile(RawDecodingSettings::SRGB);
 
-    KExiv2 meta;
+    KPMetadata meta;
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
     meta.setImageDimensions(d->img.size());
     if (d->format != QString("JPEG"))
@@ -131,8 +131,8 @@ void SaveImgThread::run()
     meta.setExifTagString("Exif.Image.Model", d->model);
     meta.setXmpTagString("Xmp.tiff.Model",    d->model);
     meta.setImageDateTime(QDateTime::currentDateTime());
-    meta.setImageOrientation(KExiv2::ORIENTATION_NORMAL);
-    meta.setImageColorWorkSpace(KExiv2::WORKSPACE_SRGB);
+    meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
+    meta.setImageColorWorkSpace(KPMetadata::WORKSPACE_SRGB);
 
     KPWriteImage wImageIface;
     if (d->frmt != KSaneIface::KSaneWidget::FormatRGB_16_C)

@@ -42,17 +42,16 @@ extern "C"
 #include <png.h>
 }
 
-// LibKIPI includes
-
-#include "kipiplugins_export.h"
-
 // LibKDcraw includes
 
 #include <libkdcraw/rawdecodingsettings.h>
 
-// LibKExiv2 includes
+// Local includes
 
-#include <libkexiv2/kexiv2.h>
+#include "kipiplugins_export.h"
+#include "kpmetadata.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIPlugins
 {
@@ -65,9 +64,9 @@ public:
     ~KPWriteImage();
 
     void setImageData(const QByteArray& data, uint width, uint height,
-                      bool sixteenBit, bool hasAlpha,
+                      bool  sixteenBit, bool hasAlpha,
                       const QByteArray& iccProfile,
-                      const KExiv2Iface::KExiv2& metadata);
+                      const KPMetadata& metadata);
 
     void setCancel(bool* cancel);
     bool cancel() const;
@@ -77,7 +76,7 @@ public:
     bool write2TIFF(const QString& destPath);
     bool write2PPM(const QString& destPath);
 
-    static QByteArray getICCProfilFromFile(KDcrawIface::RawDecodingSettings::OutputColorSpace colorSpace);
+    static QByteArray getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace);
 
 private:
 
@@ -89,12 +88,8 @@ private:
     long   formatString(char* string, const size_t length, const char* format, ...);
     long   formatStringList(char* string, const size_t length, const char *format, va_list operands);
 
-    void tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag,
-                             const KExiv2Iface::KExiv2& metadata,
-                             const char* exifTagName);
-    void tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag,
-                            const KExiv2Iface::KExiv2& metadata,
-                            const char* exifTagName);
+    void tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag, const KPMetadata& metadata, const char* exifTagName);
+    void tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag, const KPMetadata& metadata, const char* exifTagName);
 
     int bytesDepth() const;
 

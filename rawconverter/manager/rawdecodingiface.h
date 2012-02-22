@@ -34,11 +34,12 @@
 #include "savesettingswidget.h"
 
 using namespace KIPIPlugins;
+using namespace KDcrawIface;
 
 namespace KIPIRawConverterPlugin
 {
 
-class RawDecodingIface : public KDcrawIface::KDcraw
+class RawDecodingIface : public KDcraw
 {
     Q_OBJECT
 
@@ -56,21 +57,21 @@ public:
     */
     bool decodeHalfRAWImage(const QString& filePath,
                             QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                            const KDcrawIface::RawDecodingSettings& rawDecodingSettings);
+                            const RawDecodingSettings& rawDecodingSettings);
 
     /** Extract a full size of RAW data in 8 bits/color/pixels using 
         sRGB color space.
     */
     bool decodeRAWImage(const QString& filePath,
                         QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                        const KDcrawIface::RawDecodingSettings& rawDecodingSettings);
+                        const RawDecodingSettings& rawDecodingSettings);
 
 private:
 
     bool loadedFromDcraw(const QString& filePath,
                          QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                          const QByteArray& imageData, int width, int height, int rgbmax,
-                         const KDcrawIface::RawDecodingSettings& rawDecodingSettings);
+                         const RawDecodingSettings& rawDecodingSettings);
 
 private:
 

@@ -51,10 +51,6 @@ extern "C"
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-
 // Local includes
 
 #include "kpversion.h"
@@ -90,11 +86,11 @@ public:
 
     QString              kipipluginsVer;
 
-    KExiv2Iface::KExiv2  metadata;
+    KPMetadata           metadata;
 };
 
 KPWriteImage::KPWriteImage()
-            : d(new KPWriteImagePriv)
+    : d(new KPWriteImagePriv)
 {
 }
 
@@ -133,9 +129,9 @@ bool KPWriteImage::cancel() const
 }
 
 void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
-                                bool sixteenBit, bool hasAlpha,
+                                bool  sixteenBit, bool hasAlpha,
                                 const QByteArray& iccProfile,
-                                const KExiv2Iface::KExiv2& metadata)
+                                const KPMetadata& metadata)
 {
     d->data       = data;
     d->width      = width;
@@ -401,13 +397,13 @@ bool KPWriteImage::write2PNG(const QString& destPath)
         // In libpng 1.5, the icc profile data changed from png_charp to png_bytep
         // BUG: 264184
 
-        #if PNG_LIBPNG_VER_MAJOR >= 1 && PNG_LIBPNG_VER_MINOR >= 5
+#if PNG_LIBPNG_VER_MAJOR >= 1 && PNG_LIBPNG_VER_MINOR >= 5
         png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE,
                      (png_bytep)d->iccProfile.data(), d->iccProfile.size());
-        #else
+#else
         png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE,
                      d->iccProfile.data(), d->iccProfile.size());
-        #endif
+#endif
     }
 
     // Write Software info.
@@ -610,7 +606,7 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
 
     // Write full image data in tiff directory IFD0
 
-    uchar  *pixel;
+    uchar*  pixel=0;
     double  alpha_factor;
     uint32  x, y;
     uint8   r8, g8, b8, a8=0;
@@ -728,9 +724,9 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
         TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,   8);
         TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
 
-        uchar *pixelThumb;
-        uchar *dataThumb = thumb.bits();
-        uint8 *bufThumb  = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
+        uchar* pixelThumb = 0;
+        uchar* dataThumb  = thumb.bits();
+        uint8* bufThumb   = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
 
         if (!bufThumb)
         {
@@ -826,7 +822,7 @@ void KPWriteImage::writeRawProfile(png_struct* ping, png_info* ping_info, char* 
 
     register long  i;
 
-    uchar         *sp;
+    uchar*         sp = 0;
 
     png_charp      dp;
 
@@ -884,9 +880,9 @@ void KPWriteImage::writeRawProfile(png_struct* ping, png_info* ping_info, char* 
 
 size_t KPWriteImage::concatenateString(char* destination, const char* source, const size_t length)
 {
-    register char*       q;
+    register char*       q = 0;
 
-    register const char* p;
+    register const char* p = 0;
 
     register size_t      i;
 
@@ -925,9 +921,9 @@ size_t KPWriteImage::concatenateString(char* destination, const char* source, co
 
 size_t KPWriteImage::copyString(char* destination, const char* source, const size_t length)
 {
-    register char*       q;
+    register char*       q = 0;
 
-    register const char* p;
+    register const char* p = 0;
 
     register size_t      i;
 
@@ -985,7 +981,7 @@ long KPWriteImage::formatStringList(char* string, const size_t length, const cha
 }
 
 void KPWriteImage::tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag,
-                                       const KExiv2Iface::KExiv2& metadata,
+                                       const KPMetadata& metadata,
                                        const char* exifTagName)
 {
     QByteArray tag = metadata.getExifTagData(exifTagName);
@@ -997,7 +993,7 @@ void KPWriteImage::tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag,
 }
 
 void KPWriteImage::tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag,
-                                      const KExiv2Iface::KExiv2 &metadata,
+                                      const KPMetadata &metadata,
                                       const char* exifTagName)
 {
     QByteArray tag = metadata.getExifTagData(exifTagName);

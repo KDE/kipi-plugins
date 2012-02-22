@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2011 by Johannes Wienke <languitar at semipol dot de>
  *
  * This program is free software; you can redistribute it
@@ -52,6 +52,7 @@
 
 // Local includes
 
+#include "kpmetadata.h"
 #include "kpwriteimage.h"
 #include "kpversion.h"
 #include "ptoparser.h"
@@ -132,14 +133,13 @@ struct ActionThread::ActionThreadPriv
 };
 
 ActionThread::ActionThread(QObject* parent)
-            : QThread(parent), d(new ActionThreadPriv)
+    : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
 }
 
 ActionThread::~ActionThread()
 {
-
     kDebug() << "ActionThread shutting down."
              << "Canceling all actions and waiting for them";
 
@@ -158,7 +158,7 @@ ActionThread::~ActionThread()
 }
 
 void ActionThread::setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType fileType,
-                                            const KDcrawIface::RawDecodingSettings& settings)
+                                            const RawDecodingSettings& settings)
 {
     d->celeste              = celeste;
     d->hdr                  = hdr;
@@ -723,8 +723,8 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
 
     QTextStream previewPtoStream(&input);
 
-    KExiv2 metaOrig(preProcessedUrlsMap.begin().value().preprocessedUrl.toLocalFile());
-    KExiv2 metaPreview(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
+    KPMetadata metaOrig(preProcessedUrlsMap.begin().value().preprocessedUrl.toLocalFile());
+    KPMetadata metaPreview(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
     double scalingFactor = ((double) metaPreview.getPixelSize().width()) / ((double) metaOrig.getPixelSize().width());
 
     foreach(const QString& line, pto)
@@ -873,8 +873,8 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
         // save exif information also to preview image for auto rotation
         if (saved)
         {
-            KExiv2 metai(inUrl.toLocalFile());
-            KExiv2 metao(outUrl.toLocalFile());
+            KPMetadata metai(inUrl.toLocalFile());
+            KPMetadata metao(outUrl.toLocalFile());
             metao.setImageOrientation(metai.getImageOrientation());
             metao.setImageDimensions(QSize(preview.width(), preview.height()));
             metao.applyChanges();
@@ -921,10 +921,10 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
             sptr += 6;
         }
 
-        KExiv2 meta, meta_orig;
+        KPMetadata meta, meta_orig;
         meta_orig.load(inUrl.toLocalFile());
-        KExiv2::MetaDataMap m = meta_orig.getExifTagsDataList(QStringList("Photo"), true);
-        KExiv2::MetaDataMap::iterator it;
+        KPMetadata::MetaDataMap m = meta_orig.getExifTagsDataList(QStringList("Photo"), true);
+        KPMetadata::MetaDataMap::iterator it;
         for (it = m.begin(); it != m.end(); ++it)
         {
             meta_orig.removeExifTag(it.key().toAscii().data(), false);
@@ -935,7 +935,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         meta.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
         meta.setXmpTagString("Xmp.tiff.Make",  meta.getExifTagString("Exif.Image.Make"));
         meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
-        meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+        meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
 
         QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
 
@@ -1005,7 +1005,7 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const KUrl::Li
     for (int i = 0; i < inUrls.size(); ++i)
     {
         KUrl preprocessedUrl(urlList[inUrls.at(i)].preprocessedUrl);
-        KExiv2 meta;
+        KPMetadata meta;
         meta.load(preprocessedUrl.toLocalFile());
         QSize size = meta.getPixelSize();
 

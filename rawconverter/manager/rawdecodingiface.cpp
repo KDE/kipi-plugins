@@ -39,10 +39,6 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -51,12 +47,13 @@
 
 #include "kpversion.h"
 #include "kpwriteimage.h"
+#include "kpmetadata.h"
 
 namespace KIPIRawConverterPlugin
 {
 
 RawDecodingIface::RawDecodingIface()
-                : KDcrawIface::KDcraw()
+    : KDcraw()
 {
     m_updateFileTimeStamp = false;
 }
@@ -72,12 +69,11 @@ void RawDecodingIface::setUpdateFileTimeStamp(bool b)
 
 bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
                                           QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                                          const KDcrawIface::RawDecodingSettings& rawDecodingSettings)
+                                          const RawDecodingSettings& rawDecodingSettings)
 {
     int width, height, rgbmax;
     QByteArray imageData;
-    if (!KDcrawIface::KDcraw::decodeHalfRAWImage(filePath, rawDecodingSettings,
-                                                 imageData, width, height, rgbmax))
+    if (!KDcraw::decodeHalfRAWImage(filePath, rawDecodingSettings, imageData, width, height, rgbmax))
         return false;
 
     return (loadedFromDcraw(filePath, destPath, outputFileFormat,
@@ -86,12 +82,11 @@ bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
 
 bool RawDecodingIface::decodeRAWImage(const QString& filePath, 
                                       QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
-                                      const KDcrawIface::RawDecodingSettings& rawDecodingSettings)
+                                      const RawDecodingSettings& rawDecodingSettings)
 {
     int width, height, rgbmax;
     QByteArray imageData;
-    if (!KDcrawIface::KDcraw::decodeRAWImage(filePath, rawDecodingSettings,
-                                             imageData, width, height, rgbmax))
+    if (!KDcraw::decodeRAWImage(filePath, rawDecodingSettings, imageData, width, height, rgbmax))
         return false;
 
     return (loadedFromDcraw(filePath, destPath, outputFileFormat,
@@ -103,7 +98,7 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
 bool RawDecodingIface::loadedFromDcraw(const QString& filePath, 
                                        QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
                                        const QByteArray& imageData, int width, int height, int rgbmax, 
-                                       const KDcrawIface::RawDecodingSettings& rawDecodingSettings)
+                                       const RawDecodingSettings& rawDecodingSettings)
 {
     bool sixteenBits = rawDecodingSettings.sixteenBitsImage;
     uchar* sptr      = (uchar*)imageData.data();
@@ -175,7 +170,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                                  + QString::number(QDateTime::currentDateTime().toTime_t());
 
     // Metadata restoration and update.
-    KExiv2Iface::KExiv2 meta;
+    KPMetadata meta;
 
 #if KEXIV2_VERSION >= 0x000600
     meta.setUpdateFileTimeStamp(m_updateFileTimeStamp);
@@ -200,9 +195,9 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 
     // the image has already been rotated after being read from the raw format,
     // therefore reset the EXIF-tag:
-    meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+    meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
 
-    KIPIPlugins::KPWriteImage wImageIface;
+    KPWriteImage wImageIface;
     wImageIface.setImageData(imageData, width, height, sixteenBits, false, prof, meta);
     wImageIface.setCancel(&m_cancel);
 
