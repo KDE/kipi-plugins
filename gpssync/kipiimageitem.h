@@ -34,6 +34,7 @@
 // KDE includes
 
 #include <kurl.h>
+#include <kdebug.h>
 
 // LibKIPI includes
 
@@ -46,12 +47,10 @@
 // local includes
 
 #include "gpsdatacontainer.h"
-#include "kdebug.h"
+#include "kpmetadata.h"
 
-namespace KExiv2Iface
-{
-    class KExiv2;
-}
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIGPSSyncPlugin
 {
@@ -70,7 +69,7 @@ class RGInfo
      * Constructor
      */ 
     RGInfo()
-	:id(),
+        :id(),
          coordinates(),
          rgData()
     {
@@ -91,7 +90,6 @@ class RGInfo
      */ 
     QMap<QString, QString> rgData;
 };
-
 
 enum Type
 {
@@ -131,7 +129,7 @@ public:
 
     static const int ColumnGPSImageItemCount = 13;
 
-    KipiImageItem(KIPI::Interface* const interface, const KUrl& url);
+    KipiImageItem(Interface* const interface, const KUrl& url);
     virtual ~KipiImageItem();
 
     /// @name Loading and saving
@@ -196,24 +194,24 @@ protected:
     QVariant data(const int column, const int role) const;
     void setModel(KipiImageModel* const model);
     void emitDataChanged();
-    KExiv2Iface::KExiv2* getExiv2ForFile();
+    KPMetadata* getMetadataForFile() const;
 
 protected:
 
-    KIPI::Interface* m_interface;
-    KipiImageModel* m_model;
+    Interface*             m_interface;
+    KipiImageModel*        m_model;
 
-    KUrl m_url;
-    QDateTime m_dateTime;
+    KUrl                   m_url;
+    QDateTime              m_dateTime;
 
-    bool m_dirty;
-    GPSDataContainer m_gpsData;
-    GPSDataContainer m_savedState;
+    bool                   m_dirty;
+    GPSDataContainer       m_gpsData;
+    GPSDataContainer       m_savedState;
 
-    bool m_tagListDirty;
+    bool                   m_tagListDirty;
     QList<QList<TagData> > m_tagList;
     QList<QList<TagData> > m_savedTagList;
-    bool m_writeXmpTags;
+    bool                   m_writeXmpTags;
 
     friend class KipiImageModel;
 };
