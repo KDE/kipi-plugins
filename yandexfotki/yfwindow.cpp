@@ -676,7 +676,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         i++;
     }
 
-    const UpdatePolicy policy             = static_cast<UpdatePolicy>(m_policyGroup->checkedId());
+    const UpdatePolicy policy              = static_cast<UpdatePolicy>(m_policyGroup->checkedId());
     const YandexFotkiPhoto::Access access = static_cast<YandexFotkiPhoto::Access>(
             m_accessCombo->itemData(m_accessCombo->currentIndex()).toInt());
 
