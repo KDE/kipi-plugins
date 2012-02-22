@@ -51,11 +51,6 @@
 #include <libkipi/interface.h>
 #include <libkipi/plugin.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kpaboutdata.h"
@@ -65,7 +60,6 @@
 #include "xmpeditwidget.h"
 #include "kpimageinfo.h"
 
-using namespace KExiv2Iface;
 using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
