@@ -31,11 +31,6 @@
 #include <kconfig.h>
 #include <kglobal.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "aboutdata.h"
@@ -43,7 +38,7 @@
 #include "batchdialog.h"
 
 using namespace KIPIDNGConverterPlugin;
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 int main(int argc, char* argv[])
 {
@@ -57,7 +52,7 @@ int main(int argc, char* argv[])
     options.add("+[file(s)]", ki18n("File(s) to convert"));
     KCmdLineArgs::addCmdLineOptions(options);
 
-    KExiv2::initializeExiv2();
+    KPMetadata::initializeExiv2();
 
     KApplication app;
 
@@ -79,7 +74,7 @@ int main(int argc, char* argv[])
 
     int ret = app.exec();
 
-    KExiv2::cleanupExiv2();
+    KPMetadata::cleanupExiv2();
 
     return ret;
 }
