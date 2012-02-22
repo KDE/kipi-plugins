@@ -138,7 +138,7 @@ KipiImageItem::~KipiImageItem()
 
 KPMetadata* KipiImageItem::getMetadataForFile() const
 {
-    QScopedPointer<KPMetadata> meta(new KPMetadata);
+    QScopedPointer<KPMetadata> meta(new KPMetadata(m_interface));
 
     if (m_interface)
     {
