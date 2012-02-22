@@ -42,14 +42,13 @@
 
 #include <libkdcraw/kdcraw.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "mpform.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIRajceExportPlugin
 {
@@ -94,12 +93,12 @@ PreparedImage _prepareImageForUpload(const QString& saveDir, const QImage& img, 
     thumb.save(ret.thumbPath, "JPEG", jpgQuality);
 
     // copy meta data to temporary image
-    KExiv2Iface::KExiv2 exiv2Iface;
-    if (exiv2Iface.load(imagePath))
+    KPMetadata meta;
+    if (meta.load(imagePath))
     {
-        exiv2Iface.setImageDimensions(image.size());
-        exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
-        exiv2Iface.save(ret.scaledImagePath);
+        meta.setImageDimensions(image.size());
+        meta.setImageProgramId("Kipi-plugins", kipiplugins_version);
+        meta.save(ret.scaledImagePath);
     }
 
     return ret;
@@ -605,20 +604,20 @@ QString AddPhotoCommand::additionalXml() const
     QMap<QString, QString> metadata;
     QFileInfo f(m_imagePath);
 
-    metadata["FullFilePath"] = m_imagePath;
-    metadata["OriginalFileName"] = f.fileName();
+    metadata["FullFilePath"]          = m_imagePath;
+    metadata["OriginalFileName"]      = f.fileName();
     metadata["OriginalFileExtension"] = QString(".") + f.suffix();
-    metadata["PerceivedType"] = "image"; //what are the other values here? video?
-    metadata["OriginalWidth"] = QString::number(m_image.width());
-    metadata["OriginalHeight"] = QString::number(m_image.height());
-    metadata["LengthMS"] = '0';
-    metadata["FileSize"] = QString::number(f.size());
+    metadata["PerceivedType"]         = "image"; //what are the other values here? video?
+    metadata["OriginalWidth"]         = QString::number(m_image.width());
+    metadata["OriginalHeight"]        = QString::number(m_image.height());
+    metadata["LengthMS"]              = '0';
+    metadata["FileSize"]              = QString::number(f.size());
 
     //TODO extract these from exif
-    //    KExiv2Iface::KExiv2 exiv2Iface;
-    //    if (exiv2Iface.load(m_imagePath)) {
-        metadata["Title"] = "";
-        metadata["KeywordSet"] = "";
+    //    KPMetadata meta;
+    //    if (meta.load(m_imagePath)) {
+        metadata["Title"]           = "";
+        metadata["KeywordSet"]      = "";
         metadata["PeopleRegionSet"] = "";
         //    }
 
