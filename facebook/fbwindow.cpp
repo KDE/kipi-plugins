@@ -64,12 +64,10 @@
 #include "fbwidget.h"
 #include "fbalbum.h"
 
-using namespace KIPIPlugins;
-
 namespace KIPIFacebookPlugin
 {
 
-FbWindow::FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
+FbWindow::FbWindow(Interface* interface, const QString& tmpFolder,
                    bool import, QWidget* /*parent*/)
     : KDialog(0)
 {
@@ -123,7 +121,7 @@ FbWindow::FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     // ------------------------------------------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Facebook Import/Export"), 0,
+    m_about = new KPAboutData(ki18n("Facebook Import/Export"), 0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to import/export image collection "
                                                  "to/from Facebook web service."),
@@ -641,7 +639,7 @@ void FbWindow::setProfileAID(long long userID)
 
 QString FbWindow::getImageCaption(const QString& fileName)
 {
-    KIPIPlugins::KPImageInfo info(m_interface, fileName);
+    KPImageInfo info(m_interface, fileName);
     // Facebook doesn't support image titles. Include it in descriptions if needed.
     QStringList descriptions = QStringList() << info.title() << info.description();
     descriptions.removeAll("");
