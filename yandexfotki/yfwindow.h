@@ -58,14 +58,17 @@ class KLineEdit;
 
 namespace KIPI
 {
-class Interface;
-class UploadWidget;
+    class Interface;
+    class UploadWidget;
 }
 
 namespace KIPIPlugins
 {
-class ImagesList;
+    class ImagesList;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIYandexFotkiPlugin
 {
@@ -76,8 +79,8 @@ class YandexFotkiWindow : public KDialog
 
 public:
 
-    YandexFotkiWindow(KIPI::Interface* interface,
-                      bool import, QWidget* parent);
+    YandexFotkiWindow(Interface* const interface,
+                      bool import, QWidget* const parent);
     ~YandexFotkiWindow();
 
     /**
@@ -142,7 +145,7 @@ protected:
      */
 
     bool                     m_import;
-    KIPI::Interface*         m_interface;
+    Interface*               m_interface;
 
     /*
      * User interface
@@ -171,8 +174,8 @@ protected:
     QSpinBox*                m_imageQualitySpin;
     QButtonGroup*            m_policyGroup;
 
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
+    ImagesList*              m_imgList;
+    UploadWidget*            m_uploadWidget;
 
     QProgressBar*            m_progressBar;
 
