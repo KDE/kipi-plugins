@@ -46,10 +46,6 @@
 #include <kprogressdialog.h>
 #include <ktoolinvocation.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -63,12 +59,15 @@
 
 #include "imageslist.h"
 #include "kpaboutdata.h"
+#include "kpmetadata.h"
 #include "kpversion.h"
 #include "switem.h"
 #include "swconnector.h"
 #include "swwidget.h"
 #include "swalbum.h"
 #include "swlogin.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIShwupPlugin
 {
@@ -429,37 +428,37 @@ void SwWindow::slotStartTransfer()
     uploadNextPhoto();
 }
 
-QString SwWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
+QString SwWindow::getImageCaption(const KPMetadata& meta) const
 {
-    QString caption = ev.getCommentsDecoded();
+    QString caption = meta.getCommentsDecoded();
     if (!caption.isEmpty())
         return caption;
 
-    if (ev.hasExif())
+    if (meta.hasExif())
     {
-        caption = ev.getExifComment();
+        caption = meta.getExifComment();
         if (!caption.isEmpty())
             return caption;
     }
 
-    if (ev.hasXmp())
+    if (meta.hasXmp())
     {
-        caption = ev.getXmpTagStringLangAlt("Xmp.dc.description", QString(), false);
+        caption = meta.getXmpTagStringLangAlt("Xmp.dc.description", QString(), false);
         if (!caption.isEmpty())
             return caption;
 
-        caption = ev.getXmpTagStringLangAlt("Xmp.exif.UserComment", QString(), false);
+        caption = meta.getXmpTagStringLangAlt("Xmp.exif.UserComment", QString(), false);
         if (!caption.isEmpty())
             return caption;
 
-        caption = ev.getXmpTagStringLangAlt("Xmp.tiff.ImageDescription", QString(), false);
+        caption = meta.getXmpTagStringLangAlt("Xmp.tiff.ImageDescription", QString(), false);
         if (!caption.isEmpty())
             return caption;
     }
 
-    if (ev.hasIptc())
+    if (meta.hasIptc())
     {
-        caption = ev.getIptcTagString("Iptc.Application2.Caption", false);
+        caption = meta.getIptcTagString("Iptc.Application2.Caption", false);
         if (!caption.isEmpty() && !caption.trimmed().isEmpty())
             return caption;
     }
@@ -467,14 +466,13 @@ QString SwWindow::getImageCaption(const KExiv2Iface::KExiv2& ev)
     return caption;
 }
 
-bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
-                                     QString& caption)
+bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption)
 {
     QImage image;
     if (isRAW)
     {
         kDebug() << "Get RAW preview " << imgPath;
-        KDcrawIface::KDcraw::loadDcrawPreview(image, imgPath);
+        KDcraw::loadDcrawPreview(image, imgPath);
     }
     else
     {
@@ -485,7 +483,7 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
         return false;
 
     // get temporary file name
-    m_tmpPath = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + ".jpg";
+    m_tmpPath = m_tmpDir + QFileInfo(imgPath).baseName().trimmed() + QString(".jpg");
 
     // rescale image if requested
     int maxDim = m_widget->m_dimensionSpB->value();
@@ -501,13 +499,13 @@ bool SwWindow::prepareImageForUpload(const QString& imgPath, bool isRAW,
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
     // copy meta data to temporary image
-    KExiv2Iface::KExiv2 exiv2Iface;
-    if (exiv2Iface.load(imgPath))
+    KPMetadata meta;
+    if (meta.load(imgPath))
     {
-        caption = getImageCaption(exiv2Iface);
-        exiv2Iface.setImageDimensions(image.size());
-        exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
-        exiv2Iface.save(m_tmpPath);
+        caption = getImageCaption(meta);
+        meta.setImageDimensions(image.size());
+        meta.setImageProgramId("Kipi-plugins", kipiplugins_version);
+        meta.save(m_tmpPath);
     }
     else
     {
@@ -546,11 +544,12 @@ void SwWindow::uploadNextPhoto()
     QString imgPath = m_transferQueue.first().path();
 
     // check if we have to RAW file -> use preview image then
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QString rawFilesExt(KDcraw::rawFiles());
     QFileInfo fileInfo(imgPath);
     QString caption;
     bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
     bool res;
+
     if (isRAW || m_widget->m_resizeChB->isChecked())
     {
         if (!prepareImageForUpload(imgPath, isRAW, caption))
@@ -562,16 +561,17 @@ void SwWindow::uploadNextPhoto()
     }
     else
     {
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KPMetadata meta;
 
-        if (exiv2Iface.load(imgPath))
-            caption = getImageCaption(exiv2Iface);
+        if (meta.load(imgPath))
+            caption = getImageCaption(meta);
         else
             caption.clear();
 
         m_tmpPath.clear();
         res = m_connector->addPhoto(imgPath, m_currentAlbumID, caption);
     }
+
     if (!res)
     {
         slotAddPhotoDone(666, i18n("Cannot open file"));
@@ -630,11 +630,7 @@ void SwWindow::slotCreateAlbumDone(int errCode, const QString& errMsg, const SwA
     }
     else
     {
-        m_widget->m_albumsCoB->addItem(
-            KIcon("system-users"),
-            newAlbum.title,
-            newAlbum.id);
-
+        m_widget->m_albumsCoB->addItem(KIcon("system-users"), newAlbum.title, newAlbum.id);
         m_widget->m_albumsCoB->setCurrentIndex( m_widget->m_albumsCoB->count() - 1 );
     }
 

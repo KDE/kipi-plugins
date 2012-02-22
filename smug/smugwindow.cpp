@@ -70,9 +70,6 @@
 #include "smugwidget.h"
 #include "smugalbum.h"
 
-using namespace KIPI;
-using namespace KIPIPlugins;
-
 namespace KIPISmugPlugin
 {
 
