@@ -42,6 +42,7 @@
 // Local includes
 
 #include "kipiplugins_export.h"
+#include "kpmetadata.h"
 
 namespace KIPI
 {
@@ -49,7 +50,6 @@ namespace KIPI
 }
 
 using namespace KIPI;
-using namespace KExiv2Iface;
 
 namespace KIPIPlugins
 {
@@ -168,9 +168,9 @@ public:
     /** Manage orientation of item. See KExiv2::ImageOrientation for possible values.
      *  Use KExiv2Iface::RotationMatrix::toMatrix() to get a QMatrix corresponding to orientation flage and to apply on QImage.
      */
-    void                     setOrientation(KExiv2::ImageOrientation orientation);
-    KExiv2::ImageOrientation orientation() const;
-    bool                     hasOrientation() const;
+    void                         setOrientation(KPMetadata::ImageOrientation orientation);
+    KPMetadata::ImageOrientation orientation() const;
+    bool                         hasOrientation() const;
 
 private:
 

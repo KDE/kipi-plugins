@@ -38,10 +38,6 @@
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
-// Local includes
-
-#include "kpmetadata.h"
-
 namespace KIPIPlugins
 {
 
@@ -165,7 +161,6 @@ void KPImageInfo::setDescription(const QString& desc)
     }
     else
     {
-        // Use Kexiv2 to set comment to metadata.
         KPMetadata meta(d->url.toLocalFile());
 
         // We set image comments, outside Exif, XMP, and IPTC.
@@ -198,7 +193,6 @@ QString KPImageInfo::description() const
     }
     else
     {
-        // Use Kexiv2 to get comment from metadata.
         KPMetadata meta(d->url.toLocalFile());
 
         // We trying image comments, outside Exif, XMP, and IPTC.
@@ -314,7 +308,7 @@ bool KPImageInfo::hasName() const
     return d->hasAttribute("name");
 }
 
-void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
+void KPImageInfo::setOrientation(KPMetadata::ImageOrientation orientation)
 {
     d->setAttribute("orientation", (int)orientation);
     d->setAttribute("angle",       (int)orientation);     // NOTE: For compatibility.
@@ -328,20 +322,20 @@ void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
 #endif
 }
 
-KExiv2::ImageOrientation KPImageInfo::orientation() const
+KPMetadata::ImageOrientation KPImageInfo::orientation() const
 {
-    KExiv2::ImageOrientation orientation = KExiv2::ORIENTATION_UNSPECIFIED;
+    KPMetadata::ImageOrientation orientation = KPMetadata::ORIENTATION_UNSPECIFIED;
 
     if (d->hasAttribute("orientation"))
-        orientation = (KExiv2::ImageOrientation)(d->attribute("orientation").toInt());
+        orientation = (KPMetadata::ImageOrientation)(d->attribute("orientation").toInt());
     else if (d->hasAttribute("angle"))
-        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());    // NOTE: For compatibility.
+        orientation = (KPMetadata::ImageOrientation)(d->attribute("angle").toInt());    // NOTE: For compatibility.
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
     {
         ImageInfo info = d->iface->info(d->url);
-        orientation    = (KExiv2::ImageOrientation)info.angle();
+        orientation    = (KPMetadata::ImageOrientation)info.angle();
     }
 #endif
 

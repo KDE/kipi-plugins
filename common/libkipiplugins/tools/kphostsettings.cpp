@@ -146,7 +146,7 @@ KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
         meta.writeRawFiles         = d->setting("WriteMetadataToRAW").toBool();
         meta.updateFileTimeStamp   = d->setting("WriteMetadataUpdateFiletimeStamp").toBool();
         meta.useXMPSidecar4Reading = d->setting("UseXMPSidecar4Reading").toBool();
-        meta.metadataWritingMode   = (KExiv2::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
+        meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
     }
 
     return meta;
