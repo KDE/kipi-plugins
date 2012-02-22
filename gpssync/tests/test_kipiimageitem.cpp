@@ -22,6 +22,8 @@
  *
  * ============================================================ */
 
+#include "test_kipiimageitem.moc"
+
 // Qt includes
 
 #include <QDateTime>
@@ -40,24 +42,25 @@
 
 // local includes
 
-#include "test_kipiimageitem.moc"
+#include "kpmetadata.h"
 #include "../gpsdatacontainer.h"
 #include "../kipiimageitem.h"
 
+using namespace KIPIPlugins;
 using namespace KIPIGPSSyncPlugin;
 
 QTEST_KDEMAIN_CORE(TestKipiImageItem)
 
 void TestKipiImageItem::initTestCase()
 {
-    // initialize kexiv2 before doing any multitasking
-    KExiv2Iface::KExiv2::initializeExiv2();
+    // initialize exiv2 before doing any multitasking
+    KPMetadata::initializeExiv2();
 }
 
 void TestKipiImageItem::cleanupTestCase()
 {
-    // clean up the kexiv2 memory:
-    KExiv2Iface::KExiv2::cleanupExiv2();
+    // clean up the exiv2 memory:
+    KPMetadata::cleanupExiv2();
 }
 
 /**
@@ -131,4 +134,3 @@ void TestKipiImageItem::testBasicLoading()
         QVERIFY(!container.hasFixType());
     }
 }
-

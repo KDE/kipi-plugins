@@ -44,7 +44,10 @@ namespace KIPIPlugins
     class KPRawThumbThread;
 }
 
-class KipiInterface : public KIPI::Interface
+using namespace KIPI;
+using namespace KIPIPlugins;
+
+class KipiInterface : public Interface
 {
     Q_OBJECT
 
@@ -59,10 +62,10 @@ public:
     KipiInterface(QObject* parent, const char* name=0);
     ~KipiInterface();
 
-    KIPI::ImageCollection        currentAlbum();
-    KIPI::ImageCollection        currentSelection();
-    QList<KIPI::ImageCollection> allAlbums();
-    KIPI::ImageInfo              info(const KUrl&);
+    ImageCollection        currentAlbum();
+    ImageCollection        currentSelection();
+    QList<ImageCollection> allAlbums();
+    ImageInfo              info(const KUrl&);
 
     bool addImage(const KUrl& url, QString& errmsg);
     void delImage(const KUrl& url);
@@ -71,8 +74,8 @@ public:
     int features() const;
     QVariant hostSetting(const QString& settingName);
 
-    KIPI::ImageCollectionSelector* imageCollectionSelector(QWidget * parent);
-    KIPI::UploadWidget* uploadWidget(QWidget* parent);
+    ImageCollectionSelector* imageCollectionSelector(QWidget * parent);
+    UploadWidget* uploadWidget(QWidget* parent);
 
     void addSelectedImages(const KUrl::List& images);
     void addSelectedImage(const KUrl& image);
@@ -93,7 +96,7 @@ private Q_SLOTS:
 
 private:
 
-    KIPIPlugins::KPRawThumbThread* m_loadRawThumb;
+    KPRawThumbThread* m_loadRawThumb;
 
     friend class KipiUploadWidget;
     friend class KipiImageCollectionSelector;
