@@ -90,9 +90,23 @@ KPMetadata::KPMetadata(const QString& filePath, Interface* const iface)
     load(filePath);
 }
 
+KPMetadata::KPMetadata(const KPMetadata& other)
+    : KExiv2(other.data()), d(other.d)
+{
+    setFilePath(other.getFilePath());
+}
+
 KPMetadata::~KPMetadata()
 {
     delete d;
+}
+
+KPMetadata& KPMetadata::operator=(const KPMetadata& other)
+{
+    setData(other.data());
+    d = other.d;
+    setFilePath(other.getFilePath());
+    return *this;
 }
 
 void KPMetadata::setSettings(const KPMetaSettings& settings)
