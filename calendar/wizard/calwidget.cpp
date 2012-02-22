@@ -35,6 +35,8 @@
 #include "kpimageinfo.h"
 #include "calsettings.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPICalendarPlugin
 {
 
@@ -56,8 +58,8 @@ void CalWidget::paintEvent(QPaintEvent* e)
     CalPainter painter(this);
     
     KUrl imgUrl = CalSettings::instance()->image(month);
-    KIPIPlugins::KPImageInfo info(params.interface, imgUrl);
-    KExiv2::ImageOrientation orientation = info.orientation();
+    KPImageInfo info(params.interface, imgUrl);
+    KPMetadata::ImageOrientation orientation = info.orientation();
     painter.setImage(imgUrl, orientation);
 
     painter.paint(month);

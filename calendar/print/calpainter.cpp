@@ -59,7 +59,7 @@ namespace KIPICalendarPlugin
 CalPainter::CalPainter(QPaintDevice* pd)
     : QPainter(pd)
 {
-    orientation_ = KExiv2::ORIENTATION_UNSPECIFIED;
+    orientation_ = KPMetadata::ORIENTATION_UNSPECIFIED;
     cancelled_   = false;
 }
 
@@ -67,7 +67,12 @@ CalPainter::~CalPainter()
 {
 }
 
-void CalPainter::setImage(const KUrl& imagePath, KExiv2::ImageOrientation orientation)
+void CalPainter::cancel()
+{
+    cancelled_ = true;
+}
+
+void CalPainter::setImage(const KUrl& imagePath, KPMetadata::ImageOrientation orientation)
 {
     imagePath_   = imagePath;
     orientation_ = orientation;
@@ -332,7 +337,7 @@ void CalPainter::paint(int month)
     }
     else
     {
-        if ( orientation_ != KExiv2::ORIENTATION_UNSPECIFIED )
+        if ( orientation_ != KPMetadata::ORIENTATION_UNSPECIFIED )
         {
             QMatrix matrix = RotationMatrix::toMatrix(orientation_);
             image_         = image_.transformed( matrix );
