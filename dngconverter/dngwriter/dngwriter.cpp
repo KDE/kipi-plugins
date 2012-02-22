@@ -683,7 +683,7 @@ int DNGWriter::convert()
 
         kDebug() << "DNGWriter: Updating metadata to DNG Negative" ;
 
-        dng_exif *exif = negative->GetExif();
+        dng_exif* exif = negative->GetExif();
         exif->fModel.Set_ASCII(identify.model.toAscii());
         exif->fMake.Set_ASCII(identify.make.toAscii());
 
