@@ -55,10 +55,10 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
+#include "kpimageinfo.h"
 #include "exifeditwidget.h"
 #include "iptceditwidget.h"
 #include "xmpeditwidget.h"
-#include "kpimageinfo.h"
 
 using namespace KIPIPlugins;
 
@@ -163,7 +163,7 @@ MetadataEditDialog::MetadataEditDialog(QWidget* parent, const KUrl::List& urls, 
                                0,
                                KAboutData::License_GPL,
                                ki18n("A Plugin to edit pictures' metadata."),
-                               ki18n("(c) 2006-2011, Gilles Caulier"));
+                               ki18n("(c) 2006-2012, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
