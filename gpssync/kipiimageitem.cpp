@@ -117,18 +117,18 @@ bool setExifXmpTagDataVariant(KPMetadata* const meta, const char* const exifTagN
     return success;
 }
 
-KipiImageItem::KipiImageItem(KIPI::Interface* const interface, const KUrl& url)
-             : m_interface(interface),
-               m_model(0),
-               m_url(url),
-               m_dateTime(),
-               m_dirty(false),
-               m_gpsData(),
-               m_savedState(),
-               m_tagListDirty(false),
-               m_tagList(),
-               m_savedTagList(),
-               m_writeXmpTags(true)
+KipiImageItem::KipiImageItem(Interface* const interface, const KUrl& url)
+    : m_interface(interface),
+      m_model(0),
+      m_url(url),
+      m_dateTime(),
+      m_dirty(false),
+      m_gpsData(),
+      m_savedState(),
+      m_tagListDirty(false),
+      m_tagList(),
+      m_savedTagList(),
+      m_writeXmpTags(true)
 {
 }
 
@@ -148,7 +148,7 @@ KPMetadata* KipiImageItem::getMetadataForFile() const
     else
     {
         meta->setUseXMPSidecar4Reading(true);
-        meta->setMetadataWritingMode(KExiv2::WRITETOSIDECARONLY4READONLYFILES);
+        meta->setMetadataWritingMode(KPMetadata::WRITETOSIDECARONLY4READONLYFILES);
     }
 
     if (!meta->load(m_url.path()))
@@ -229,7 +229,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
             bool haveCoordinates = meta->getGPSLatitudeNumber(&lat) && meta->getGPSLongitudeNumber(&lng);
             if (haveCoordinates)
             {
-                KGeoMap::GeoCoordinates coordinates(lat, lng);
+                GeoCoordinates coordinates(lat, lng);
                 double alt;
                 if (meta->getGPSAltitude(&alt))
                 {
@@ -445,7 +445,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
         return KGlobal::locale()->formatNumber(m_gpsData.getSpeed());
     }
-    else if ((column==ColumnStatus)&&(role==Qt::DisplayRole))
+    else if ((column == ColumnStatus) && (role == Qt::DisplayRole))
     {
         if (m_dirty || m_tagListDirty)
         {
@@ -454,16 +454,16 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
         return QString();
     }
-    else if ((column==ColumnTags)&&(role==Qt::DisplayRole))
+    else if ((column == ColumnTags) && (role == Qt::DisplayRole))
     {
         if (!m_tagList.isEmpty())
         {
 
             QString myTagsList;
-            for (int i=0; i<m_tagList.count(); ++i)
+            for (int i = 0; i < m_tagList.count(); ++i)
             {
                 QString myTag;
-                for (int j=0; j<m_tagList[i].count(); ++j)
+                for (int j = 0; j < m_tagList[i].count(); ++j)
                 {
                     myTag.append(QString("/") + m_tagList[i].at(j).tagName);
                     if (j == 0)
@@ -472,6 +472,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
                 if (!myTagsList.isEmpty())
                     myTagsList.append(", ");
+
                 myTagsList.append(myTag);
             }
 
@@ -481,11 +482,10 @@ QVariant KipiImageItem::data(const int column, const int role) const
         return QString();
     }
 
-
     return QVariant();
 }
 
-void KipiImageItem::setCoordinates(const KGeoMap::GeoCoordinates& newCoordinates)
+void KipiImageItem::setCoordinates(const GeoCoordinates& newCoordinates)
 {
     m_gpsData.setCoordinates(newCoordinates);
     m_dirty = true;
