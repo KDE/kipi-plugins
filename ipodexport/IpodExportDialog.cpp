@@ -7,7 +7,7 @@
  * Description : a tool to export image to an Ipod device.
  *
  * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -92,7 +92,7 @@ UploadDialog* UploadDialog::s_instance = 0;
 UploadDialog::UploadDialog
 (
 #if KIPI_PLUGIN
-    KIPI::Interface* interface,
+    Interface* interface,
 #endif
     const QString& caption, QWidget* /*parent*/ )
     : KDialog(0)
@@ -118,12 +118,12 @@ UploadDialog::UploadDialog
     // ---------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("iPod Export"),
+    m_about = new KPAboutData(ki18n("iPod Export"),
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A tool to export image to an iPod device"),
                                            ki18n("(c) 2006-2008, Seb Ruiz\n"
-                                                 "(c) 2008-2010, Gilles Caulier"));
+                                                 "(c) 2008-2012, Gilles Caulier"));
 
     m_about->addAuthor(ki18n("Seb Ruiz"), ki18n("Author and Maintainer"),
                        "ruiz@kde.org");
@@ -318,7 +318,7 @@ void UploadDialog::loadImagesFromCurrentSelection()
 {
 #if KIPI_PLUGIN
     /// add selected items to the ImageList
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if( images.isValid() )
     {
@@ -552,8 +552,9 @@ void UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap& pixmap 
     QPixmap pix( pixmap );
 
     // Rotate the thumbnail compared to the angle the host application dictate
-    KIPIPlugins::KPImageInfo info(m_interface, url->url());
-    if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
+    KPImageInfo info(m_interface, url->url());
+
+    if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
         QImage img     = pix.toImage();
         QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
@@ -574,7 +575,7 @@ void UploadDialog::imagesFilesButtonAdd()
     KUrl::List urls;
 
 #if KIPI_PLUGIN
-    urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
+    urls = ImageDialog::getImageUrls(this, m_interface);
 #else
     const QString filter      = QString( "*.jpg *.jpeg *.jpe *.tiff *.gif *.png *.bmp|" + i18n("Image files") );
     QPointer<KFileDialog> dlg = new KFileDialog( QString(), filter, this );
@@ -607,7 +608,7 @@ void UploadDialog::createIpodAlbum()
     QString helper;
 
 #if KIPI_PLUGIN
-    KIPI::ImageCollection album = m_interface->currentAlbum();
+    ImageCollection album = m_interface->currentAlbum();
     if( album.isValid() )
         helper = album.name();
 #endif
