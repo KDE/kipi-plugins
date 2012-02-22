@@ -7,7 +7,7 @@
  * Description : batch images grayscale conversion
  *
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -48,8 +48,7 @@ public:
 
 private:
 
-    bool image2GrayScaleJPEG(const QString& src, const QString& dest, 
-                             QString& err, bool updateFileTimeStamp);
+    bool image2GrayScaleJPEG(const QString& src, const QString& dest, QString& err, bool updateFileTimeStamp);
     bool image2GrayScaleImageMagick(const QString& src, const QString& dest, QString& err);
 
 private:
