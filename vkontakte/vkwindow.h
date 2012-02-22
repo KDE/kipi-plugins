@@ -10,7 +10,7 @@
  *
  * GUI based on Yandex.Fotki KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010 by Roman Tsisyk <roman at tsisyk dot com>
  *
@@ -56,14 +56,17 @@ class KJob;
 
 namespace KIPI
 {
-class Interface;
-class UploadWidget;
+    class Interface;
+    class UploadWidget;
 }
 
 namespace KIPIPlugins
 {
-class ImagesList;
+    class ImagesList;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIVkontaktePlugin
 {
@@ -74,7 +77,7 @@ class VkontakteWindow : public KDialog
 
 public:
 
-    VkontakteWindow(KIPI::Interface *interface,
+    VkontakteWindow(Interface *interface,
                     bool import, QWidget *parent);
     ~VkontakteWindow();
 
@@ -87,9 +90,11 @@ public:
     QString getDestinationPath() const;
 
 Q_SIGNALS:
+
     void signalAuthenticationDone();
 
 protected Q_SLOTS:
+
     // ui slots
     void slotChangeUserClicked();
 
@@ -128,6 +133,7 @@ protected Q_SLOTS:
     void slotFinished();
 
 protected:
+
     void readSettings();
     void writeSettings();
 
@@ -146,46 +152,49 @@ protected:
 
 protected:
 
-    // Plugin
-    bool m_import;
-    KIPI::Interface *m_interface;
+    /// Plugin
+    bool                           m_import;
+    Interface*                     m_interface;
 
-    // User interface
-    QWidget *m_mainWidget;
-    // accounts
-    QGroupBox *m_accountBox;
-    QLabel *m_loginLabel;
-    QLabel *m_headerLabel;
-    KPushButton *m_changeUserButton;
+    /// User interface
+    QWidget*                       m_mainWidget;
 
-    // albums
-    QGroupBox *m_albumsBox;
-    KPushButton *m_newAlbumButton;
-    KPushButton *m_reloadAlbumsButton;
-    KComboBox *m_albumsCombo;
-    QToolButton *m_editAlbumButton;
-    QToolButton *m_deleteAlbumButton;
+    /// accounts
+    QGroupBox*                     m_accountBox;
+    QLabel*                        m_loginLabel;
+    QLabel*                        m_headerLabel;
+    KPushButton*                   m_changeUserButton;
 
-    // options
-//     QCheckBox *m_checkKeepOriginal;
+    /// albums
+    QGroupBox*                     m_albumsBox;
+    KPushButton*                   m_newAlbumButton;
+    KPushButton*                   m_reloadAlbumsButton;
+    KComboBox*                     m_albumsCombo;
+    QToolButton*                   m_editAlbumButton;
+    QToolButton*                   m_deleteAlbumButton;
 
-    KIPIPlugins::ImagesList *m_imgList;
-    KIPI::UploadWidget *m_uploadWidget;
+    /// options
+//     QCheckBox*                  m_checkKeepOriginal;
 
-    QProgressBar *m_progressBar;
+    ImagesList*                    m_imgList;
+    UploadWidget*                  m_uploadWidget;
 
+    QProgressBar*                  m_progressBar;
 
-    QList<KJob *> m_jobs; /** Pointers to running jobs */
-    bool m_authenticated;
-    QString m_accessToken;
+    /** Pointers to running jobs */
+    QList<KJob*>                   m_jobs;
+
+    bool                           m_authenticated;
+    QString                        m_accessToken;
     QList<Vkontakte::AlbumInfoPtr> m_albums;
 
-    QString m_userFullName;
-    int m_userId;
+    QString                        m_userFullName;
+    int                            m_userId;
 
-    int m_albumToSelect; // album with this "aid" will be selected in slotAlbumsUpdateDone()
+    /** album with this "aid" will be selected in slotAlbumsUpdateDone() */
+    int                            m_albumToSelect;
 
-    QString m_appId;
+    QString                        m_appId;
 };
 
 } // namespace KIPIVkontaktePlugin
