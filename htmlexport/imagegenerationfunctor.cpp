@@ -146,7 +146,7 @@ void ImageGenerationFunctor::operator()(ImageElement& element)
             fullImage = fullImage.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
-        if (element.mOrientation != KExiv2::ORIENTATION_UNSPECIFIED )
+        if (element.mOrientation != KPMetadata::ORIENTATION_UNSPECIFIED )
         {
             QMatrix matrix = RotationMatrix::toMatrix(element.mOrientation);
             fullImage      = fullImage.transformed(matrix);
