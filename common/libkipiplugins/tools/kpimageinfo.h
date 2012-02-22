@@ -166,7 +166,7 @@ public:
     void removeGeolocationInfo();
 
     /** Manage orientation of item. See libkexiv2 library for details.
-     *  Use KExiv2Iface::RotationMatrix::toMatrix() to get a QMatrix corresponding to orientation flage and to apply it on QImage.
+     *  Use RotationMatrix::toMatrix() from libkexiv2 to get a QMatrix corresponding to orientation flage and to apply it on QImage.
      */
     void                         setOrientation(KPMetadata::ImageOrientation orientation);
     KPMetadata::ImageOrientation orientation() const;
