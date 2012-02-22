@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,19 +34,15 @@
 #include <kconfig.h>
 #include <kglobal.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kpversion.h"
+#include "kpmetadata.h"
 #include "aboutdata.h"
 #include "manager/manager.h"
 
 using namespace KIPIPanoramaPlugin;
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 int main(int argc, char* argv[])
 {
@@ -60,7 +56,7 @@ int main(int argc, char* argv[])
     options.add("+[file(s)]", ki18n("File(s) to open"));
     KCmdLineArgs::addCmdLineOptions( options );
 
-    KExiv2::initializeExiv2();
+    KPMetadata::initializeExiv2();
 
     KApplication app;
     aboutData->setProgramLogo(KIcon("layer-visible-on"));
@@ -81,7 +77,7 @@ int main(int argc, char* argv[])
     mngr.run();
 
     app.exec();
-    KExiv2::cleanupExiv2();
+    KPMetadata::cleanupExiv2();
 
     return 0;
 }
