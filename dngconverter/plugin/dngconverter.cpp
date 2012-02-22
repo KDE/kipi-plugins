@@ -35,6 +35,7 @@
 
 #include "aboutdata.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
 #include "batchdialog.h"
 
 using namespace KIPIDNGConverterPlugin;
