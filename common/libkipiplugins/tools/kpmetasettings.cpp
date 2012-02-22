@@ -34,4 +34,8 @@ KPMetaSettings::KPMetaSettings()
     metadataWritingMode   = KExiv2::WRITETOIMAGEONLY;
 }
 
+KPMetaSettings::~KPMetaSettings()
+{
+}
+
 }  // namespace KIPIPlugins

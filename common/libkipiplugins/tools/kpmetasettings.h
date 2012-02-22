@@ -43,10 +43,11 @@ namespace KIPIPlugins
 */
 class KIPIPLUGINS_EXPORT KPMetaSettings
 {
+
 public:
 
     KPMetaSettings();
-    ~KPMetaSettings() {};
+    virtual ~KPMetaSettings();
 
 public:
 
@@ -62,7 +63,7 @@ public:
      */
     bool                        useXMPSidecar4Reading;
 
-    /** Metadata writting mode between file and XMP sidecar. See KExiv2 for details.
+    /** Metadata writting mode between file and XMP sidecar. See KExiv2 library for details.
      */
     KExiv2::MetadataWritingMode metadataWritingMode;
 };
