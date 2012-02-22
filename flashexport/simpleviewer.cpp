@@ -57,8 +57,7 @@
 
 #include "kpversion.h"
 #include "kpimageinfo.h"
-
-using namespace KIPIPlugins;
+#include "kpmetadata.h"
 
 namespace KIPIFlashExportPlugin
 {
@@ -100,14 +99,14 @@ public:
 
     KTempDir*                         tempDir;
 
-    KIPI::Interface*                  interface;
+    Interface*                        interface;
 
-    KIPIPlugins::BatchProgressWidget* progressWdg;
+    BatchProgressWidget*              progressWdg;
 
     SimpleViewerSettingsContainer*    settings;
 };
 
-SimpleViewer::SimpleViewer(KIPI::Interface* interface, QObject* parent)
+SimpleViewer::SimpleViewer(Interface* interface, QObject* parent)
     : QObject(parent), d(new SimpleViewerPriv)
 {
     d->interface = interface;
@@ -166,9 +165,9 @@ void SimpleViewer::appendPluginFiles(int pluginType)
     }
 }
 
-void SimpleViewer::initProgressWdg()
+void SimpleViewer::initProgressWdg() const
 {
-    d->progressWdg = new KIPIPlugins::BatchProgressWidget(kapp->activeWindow());
+    d->progressWdg = new BatchProgressWidget(kapp->activeWindow());
     kDebug() << "progress dialog initialized";
 }
 
@@ -179,14 +178,14 @@ void SimpleViewer::startExport()
 
      kDebug() << "SimpleViewer started...";
     // Estimate the number of actions for the KIPIPlugins progress dialog.
-    d->progressWdg->addedAction(i18n("Initialising..."), KIPIPlugins::StartingMessage);
+    d->progressWdg->addedAction(i18n("Initialising..."), StartingMessage);
     d->totalActions    = 0;
     d->action          = 0;
     d->progressWdg->reset();
 
     if(d->settings->imgGetOption == 0)
     {
-        for( QList<KIPI::ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
+        for( QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
         {
             d->totalActions += (*it).images().count();
@@ -207,7 +206,7 @@ void SimpleViewer::startExport()
 
 void SimpleViewer::slotCancel()
 {
-    d->progressWdg->addedAction(i18n("Export canceled"), KIPIPlugins::ErrorMessage);
+    d->progressWdg->addedAction(i18n("Export canceled"), ErrorMessage);
     d->canceled = true;
 }
 
@@ -219,35 +218,35 @@ void SimpleViewer::slotProcess()
     if(!d->canceled && !createExportDirectories())
     {
             d->progressWdg->addedAction(i18n("Failed to create export directories"),
-                                       KIPIPlugins::ErrorMessage);
+                                       ErrorMessage);
         return;
     }
 
     if(!d->canceled && !exportImages())
     {
         d->progressWdg->addedAction(i18n("Failed to export the images"),
-                                   KIPIPlugins::ErrorMessage);
+                                   ErrorMessage);
         return;
     }
 
     if(!d->canceled && !createIndex())
     {
         d->progressWdg->addedAction(i18n("Failed to create index.html"),
-                                   KIPIPlugins::ErrorMessage);
+                                   ErrorMessage);
         return;
     }
 
     if(!d->canceled && !copySimpleViewer())
     {
         d->progressWdg->addedAction(i18n("Failed to copy SimpleViewer files"),
-                                   KIPIPlugins::ErrorMessage);
+                                   ErrorMessage);
         return;
     }
 
     if(!d->canceled && !upload())
     {
         d->progressWdg->addedAction(i18n("Failed to upload the gallery"),
-                                   KIPIPlugins::ErrorMessage);
+                                   ErrorMessage);
         return;
     }
 
@@ -267,7 +266,7 @@ void SimpleViewer::slotProcess()
     if(!d->canceled)
     {
         d->progressWdg->addedAction(i18nc("Flash export has finished", "Finished..."),
-                                    KIPIPlugins::SuccessMessage);
+                                    SuccessMessage);
         emit signalProcessingDone();
         if(d->settings->openInKonqueror)
             KToolInvocation::invokeBrowser(d->settings->exportUrl.path());
@@ -280,14 +279,14 @@ bool SimpleViewer::createExportDirectories() const
     d->tempDir = new KTempDir(KStandardDirs::locateLocal("tmp", "flashexport"));
     d->tempDir->setAutoRemove(true);
 
-    d->progressWdg->addedAction(i18n("Creating directories..."), KIPIPlugins::StartingMessage);
+    d->progressWdg->addedAction(i18n("Creating directories..."), StartingMessage);
 
     KUrl root = d->settings->exportUrl;
     kDebug() << "export url is" << root.url();
     if(!KIO::NetAccess::mkdir(root, kapp->activeWindow()))
     {
         d->progressWdg->addedAction(i18n("Could not create folder '%1'", root.url()),
-                                    KIPIPlugins::ErrorMessage);
+                                    ErrorMessage);
         return false;
     }
 
@@ -299,7 +298,7 @@ bool SimpleViewer::createExportDirectories() const
         if(!KIO::NetAccess::mkdir(thumbsDir, kapp->activeWindow()))
         {
             d->progressWdg->addedAction(i18n("Could not create folder '%1'", thumbsDir.url()),
-                                   KIPIPlugins::ErrorMessage);
+                                   ErrorMessage);
             return false;
         }
     }
@@ -311,28 +310,27 @@ bool SimpleViewer::createExportDirectories() const
     if(!KIO::NetAccess::mkdir(imagesDir, kapp->activeWindow()))
     {
         d->progressWdg->addedAction(i18n("Could not create folder '%1'", imagesDir.url()),
-                                    KIPIPlugins::ErrorMessage);
+                                    ErrorMessage);
         return false;
     }
 
-    d->progressWdg->addedAction(i18n("Finished Creating directories..."), KIPIPlugins::StartingMessage);
+    d->progressWdg->addedAction(i18n("Finished Creating directories..."), StartingMessage);
     d->progressWdg->setProgress(++d->action, d->totalActions);
 
     return true;
 }
 
-bool SimpleViewer::cmpUrl(const KUrl &url1, const KUrl &url2)
+bool SimpleViewer::cmpUrl(const KUrl& url1, const KUrl& url2)
 {
-
-    KExiv2Iface::KExiv2 meta1;
+    KPMetadata meta1;
     meta1.load(url1.path());
-    QDateTime clock1             = meta1.getImageDateTime();
+    QDateTime clock1 = meta1.getImageDateTime();
 
-    KExiv2Iface::KExiv2 meta2;
+    KPMetadata meta2;
     meta2.load(url2.path());
-    QDateTime clock2             = meta2.getImageDateTime();
+    QDateTime clock2 = meta2.getImageDateTime();
 
-    if(clock1.isValid() || clock2.isValid())
+    if (clock1.isValid() || clock2.isValid())
     {
         return clock1 < clock2;
     }
@@ -341,9 +339,8 @@ bool SimpleViewer::cmpUrl(const KUrl &url1, const KUrl &url2)
         QString name1 = url1.fileName();
         QString name2 = url2.fileName();
 
-        return name1 < name2;
+        return (name1 < name2) ;
     }
-
 }
 
 bool SimpleViewer::exportImages()
@@ -351,9 +348,7 @@ bool SimpleViewer::exportImages()
     if(d->canceled)
         return false;
 
-    d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), KIPIPlugins::StartingMessage);
-
-
+    d->progressWdg->addedAction(i18n("Creating images and thumbnails..."), StartingMessage);
 
     KUrl xmlFile(d->tempDir->name());
     xmlFile.addPath("/gallery.xml");
@@ -361,11 +356,11 @@ bool SimpleViewer::exportImages()
     file.open(QIODevice::WriteOnly);
 
     // header of gallery.xml
+    QDomElement  galleryElem;
+    QDomElement  photosElem;
     QDomDocument xmlDoc;
     xmlDoc.appendChild(xmlDoc.createProcessingInstruction( QString::fromLatin1("xml"),
                        QString::fromLatin1("version=\"1.0\" encoding=\"UTF-8\"") ) );
-    QDomElement galleryElem;
-    QDomElement photosElem;
 
     switch(d->settings->plugType)
     {
@@ -430,7 +425,7 @@ bool SimpleViewer::exportImages()
     }
     if(d->settings->imgGetOption ==0)
     {
-        for( QList<KIPI::ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
+        for( QList<ImageCollection>::ConstIterator it = d->settings->collections.constBegin() ;
             !d->canceled && (it != d->settings->collections.constEnd()) ; ++it )
         {
             KUrl::List images = (*it).images();
@@ -450,13 +445,14 @@ bool SimpleViewer::exportImages()
 
     return true;
 }
-void SimpleViewer::processKUrlList(KUrl::List images, QDomDocument xmlDoc, QDomElement galleryElem, QDomElement photosElem)
+void SimpleViewer::processKUrlList(KUrl::List& images, QDomDocument& xmlDoc,
+                                   QDomElement& galleryElem, QDomElement& photosElem)
 {
-    KExiv2Iface::KExiv2 meta;
-    QImage              image;
-    QImage              thumbnail;
-    QString             tmp;
-    QString             newName;
+    KPMetadata meta;
+    QImage     image;
+    QImage     thumbnail;
+    QString    tmp;
+    QString    newName;
 
     int index           = 1;
     int maxSize         = d->settings->imagesExportSize;
@@ -469,97 +465,97 @@ void SimpleViewer::processKUrlList(KUrl::List images, QDomDocument xmlDoc, QDomE
     KUrl imagesDir(d->tempDir->name());
     imagesDir.addPath("/images");
 
-             qSort(images.begin(), images.end(), cmpUrl);
+    qSort(images.begin(), images.end(), cmpUrl);
 
-        for(KUrl::List::ConstIterator it = images.constBegin();
-            !d->canceled && (it != images.constEnd()) ; ++it)
+    for(KUrl::List::ConstIterator it = images.constBegin();
+        !d->canceled && (it != images.constEnd()) ; ++it)
+    {
+        kapp->processEvents();
+        KUrl url = *it;
+        QFileInfo fi(url.path());
+
+        //video can't be exported, need to add for all video files
+        if(fi.suffix().toUpper() == "MOV")
+            continue;
+
+        d->progressWdg->addedAction(i18n("Processing %1", url.fileName()), StartingMessage);
+
+        // Check if RAW file.
+        QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+        if (rawFilesExt.toUpper().contains( fi.suffix().toUpper()))
+            KDcrawIface::KDcraw::loadDcrawPreview(image, url.path());
+        else
+            image.load(url.path());
+
+        if(image.isNull())
         {
-            kapp->processEvents();
-            KUrl url = *it;
-            QFileInfo fi(url.path());
+            d->progressWdg->addedAction(i18n("Could not open image '%1'", url.fileName()),
+                                        WarningMessage);
+            continue;
+        }
 
-            //video can't be exported, need to add for all video files
-            if(fi.suffix().toUpper() == "MOV")
-                continue;
+        if(d->settings->plugType == 0)
+        {
+            // Thumbnails are generated only for simpleviewer plugin
 
-            d->progressWdg->addedAction(i18n("Processing %1", url.fileName()), KIPIPlugins::StartingMessage);
-
-            // Check if RAW file.
-            QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
-            if (rawFilesExt.toUpper().contains( fi.suffix().toUpper()))
-                KDcrawIface::KDcraw::loadDcrawPreview(image, url.path());
-            else
-                image.load(url.path());
-
-            if(image.isNull())
+            if(!createThumbnail(image, thumbnail))
             {
-                d->progressWdg->addedAction(i18n("Could not open image '%1'", url.fileName()),
-                                           KIPIPlugins::WarningMessage);
+                d->progressWdg->addedAction(i18n("Could not create thumbnail from '%1'", url.fileName()),
+                                        WarningMessage);
                 continue;
             }
+        }
 
-            if(d->settings->plugType == 0)
-            {
-                // Thumbnails are generated only for simpleviewer plugin
+        if(resizeImages && !resizeImage(image, maxSize, image))
+        {
+            d->progressWdg->addedAction(i18n("Could not resize image '%1'", url.fileName()),
+                                        WarningMessage);
+            continue;
+        }
 
-                if(!createThumbnail(image, thumbnail))
-                {
-                    d->progressWdg->addedAction(i18n("Could not create thumbnail from '%1'", url.fileName()),
-                                           KIPIPlugins::WarningMessage);
-                    continue;
-                }
-            }
+        meta.load(url.path());
+        bool rotated = false;
+        newName      = QString("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QString("jpg"));
 
-            if(resizeImages && !resizeImage(image, maxSize, image))
-            {
-                d->progressWdg->addedAction(i18n("Could not resize image '%1'", url.fileName()),
-                                           KIPIPlugins::WarningMessage);
-                continue;
-            }
-
-            meta.load(url.path());
-            bool rotated = false;
-            newName      = QString("%1.%2").arg(tmp.sprintf("%03i", index)).arg(QString("jpg"));
-
-            if(d->settings->plugType == 0)
-            {
-                KUrl thumbnailPath(thumbsDir);
-                thumbnailPath.addPath(newName);
-
-                if (resizeImages && fixOrientation)
-                    meta.rotateExifQImage(thumbnail, meta.getImageOrientation());
-
-                thumbnail.save(thumbnailPath.path(), "JPEG");
-            }
-
-            KUrl imagePath(imagesDir);
-            imagePath.addPath(newName);
+        if(d->settings->plugType == 0)
+        {
+            KUrl thumbnailPath(thumbsDir);
+            thumbnailPath.addPath(newName);
 
             if (resizeImages && fixOrientation)
-                rotated = meta.rotateExifQImage(image, meta.getImageOrientation());
+                meta.rotateExifQImage(thumbnail, meta.getImageOrientation());
 
-            image.save(imagePath.path(), "JPEG");
-
-            // Backup metadata from original image.
-            meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-            meta.setImageDimensions(image.size());
-
-            if (rotated)
-                meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
-
-            meta.save(imagePath.path());
-
-            d->width  = image.width();
-            d->height = image.height();
-
-            if(d->settings->plugType!=2)
-                cfgAddImage(xmlDoc, galleryElem, url, newName);
-            else
-                cfgAddImage(xmlDoc, photosElem, url, newName);
-
-            d->progressWdg->setProgress(++d->action, d->totalActions);
-            index++;
+            thumbnail.save(thumbnailPath.path(), "JPEG");
         }
+
+        KUrl imagePath(imagesDir);
+        imagePath.addPath(newName);
+
+        if (resizeImages && fixOrientation)
+            rotated = meta.rotateExifQImage(image, meta.getImageOrientation());
+
+        image.save(imagePath.path(), "JPEG");
+
+        // Backup metadata from original image.
+        meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+        meta.setImageDimensions(image.size());
+
+        if (rotated)
+            meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
+
+        meta.save(imagePath.path());
+
+        d->width  = image.width();
+        d->height = image.height();
+
+        if(d->settings->plugType!=2)
+            cfgAddImage(xmlDoc, galleryElem, url, newName);
+        else
+            cfgAddImage(xmlDoc, photosElem, url, newName);
+
+        d->progressWdg->setProgress(++d->action, d->totalActions);
+        index++;
+    }
 }
 bool SimpleViewer::createThumbnail(const QImage& image, QImage& thumbnail) const
 {
@@ -620,26 +616,26 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     QString comment;
     QString keywords;
 
-        KPImageInfo info(d->interface, url);
+    KPImageInfo info(d->interface, url);
 
-        if(d->settings->showComments)
-        {
-            comment = info.description();
-        }
-        else
-        {
-            comment.clear();
-        }
-        if(d->settings->showKeywords)
-        {
-            QStringList tagList = info.keywords();
-            if(!tagList.join(" ").isEmpty())
-                keywords = QString("\nTags: ")+tagList.join(", ");
-        }
-        else
-        {
-            keywords.clear();
-        }
+    if(d->settings->showComments)
+    {
+        comment = info.description();
+    }
+    else
+    {
+        comment.clear();
+    }
+    if(d->settings->showKeywords)
+    {
+        QStringList tagList = info.keywords();
+        if(!tagList.join(" ").isEmpty())
+            keywords = QString("\nTags: ")+tagList.join(", ");
+    }
+    else
+    {
+        keywords.clear();
+    }
 
     switch(d->settings->plugType)
     {
@@ -731,7 +727,6 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
         default:
             break;
     }
-
 }
 
 bool SimpleViewer::createIndex() const
@@ -739,7 +734,7 @@ bool SimpleViewer::createIndex() const
     if(d->canceled)
         return false;
 
-    d->progressWdg->addedAction(i18n("Creating index.html..."), KIPIPlugins::StartingMessage);
+    d->progressWdg->addedAction(i18n("Creating index.html..."), StartingMessage);
 
     switch(d->settings->plugType)
     {
@@ -878,7 +873,7 @@ bool SimpleViewer::createIndex() const
     }
 
     d->progressWdg->setProgress(++d->action, d->totalActions);
-    d->progressWdg->addedAction(i18n("index.html created..."), KIPIPlugins::SuccessMessage);
+    d->progressWdg->addedAction(i18n("index.html created..."), SuccessMessage);
 
     return true;
 }
@@ -888,7 +883,7 @@ bool SimpleViewer::copySimpleViewer() const
     if(d->canceled)
         return false;
 
-    d->progressWdg->addedAction(i18n("Copying flash files..."), KIPIPlugins::StartingMessage);
+    d->progressWdg->addedAction(i18n("Copying flash files..."), StartingMessage);
 
     // Due to its license, simpleviewer is installed in $KDEHOME
     KUrl::List  files;
@@ -906,7 +901,7 @@ bool SimpleViewer::copySimpleViewer() const
     // TODO: catch errors
     /*KIO::CopyJob *copyJob =*/ KIO::copy(files, d->settings->exportUrl, KIO::HideProgressInfo);
 
-    d->progressWdg->addedAction(i18n("Flash files copied..."), KIPIPlugins::SuccessMessage);
+    d->progressWdg->addedAction(i18n("Flash files copied..."), SuccessMessage);
 
     return true;
 }
@@ -916,12 +911,12 @@ bool SimpleViewer::upload() const
     if(d->canceled)
         return false;
 
-    d->progressWdg->addedAction(i18n("Uploading gallery..."), KIPIPlugins::StartingMessage);
+    d->progressWdg->addedAction(i18n("Uploading gallery..."), StartingMessage);
 
     if(!KIO::NetAccess::dircopy(KUrl(d->tempDir->name() + "./"), d->settings->exportUrl))
         return false;
 
-    d->progressWdg->addedAction(i18n("Gallery uploaded..."), KIPIPlugins::SuccessMessage);
+    d->progressWdg->addedAction(i18n("Gallery uploaded..."), SuccessMessage);
 
     return true;
 }
@@ -991,7 +986,7 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
         return false;
 
     const KArchiveFile* entryFile = dynamic_cast<const KArchiveFile*>(entry);
-    QByteArray array = entryFile->data();
+    QByteArray array              = entryFile->data();
 
     QFile file( d->dataLocal + entry->name() );
     if(file.open( QIODevice::WriteOnly ))
@@ -1004,7 +999,7 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
     return false;
 }
 
-KIPIPlugins::BatchProgressWidget* SimpleViewer::progressWidget()
+BatchProgressWidget* SimpleViewer::progressWidget() const
 {
     initProgressWdg();
     return d->progressWdg;
@@ -1012,7 +1007,7 @@ KIPIPlugins::BatchProgressWidget* SimpleViewer::progressWidget()
 
 void SimpleViewer::setSettings(SimpleViewerSettingsContainer* setting)
 {
-    d->settings=setting;
+    d->settings = setting;
     d->canceled = false;
 
     kDebug() << "Settings reached SimpleViewer";

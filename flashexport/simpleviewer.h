@@ -7,7 +7,7 @@
  * Description : a plugin to export image collections using SimpleViewer.
  *
  * Copyright (C) 2005-2006 by Joern Ahrens <joern dot ahrens at kdemail dot net>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,15 +37,17 @@
 #include <kurl.h>
 #include <kzip.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+
+// Local includes
+
 #include "simpleviewersettingscontainer.h"
 #include "batchprogressdialog.h"
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
@@ -56,17 +58,18 @@ class SimpleViewer : public QObject
 
 public:
 
-    explicit SimpleViewer(KIPI::Interface* interface, QObject* parent=0);
+    explicit SimpleViewer(Interface* interface, QObject* parent=0);
     ~SimpleViewer();
 
-    void initProgressWdg();
+    void initProgressWdg() const;
+
     /**
      * Installs the SimpleViewer files for the later export
      * on the users machine
      */
     bool unzip(const QString& url) const;
 
-    KIPIPlugins::BatchProgressWidget* progressWidget();
+    BatchProgressWidget* progressWidget() const;
 
     void setSettings(SimpleViewerSettingsContainer* settings);
 
@@ -96,7 +99,8 @@ private:
      * @param galleryElem - xml tag that contains info about all uploaded images( SimpleViewer, Autoviewer, PostcardViewer)
      * @param photosElem - xml tag that contains info about all uploaded images (TiltViewer)
      */
-    void processKUrlList(KUrl::List images, QDomDocument xmlDoc, QDomElement galleryElem, QDomElement photosElem);
+    void processKUrlList(KUrl::List& images, QDomDocument& xmlDoc,
+                         QDomElement& galleryElem, QDomElement& photosElem);
     /**
      * Creates a simpleviewer thumbnail from images
      *
@@ -146,7 +150,7 @@ private:
 
     bool extractFile(const KArchiveEntry* entry) const;
 
-    static bool cmpUrl(const KUrl &url1, const KUrl &url2);
+    static bool cmpUrl(const KUrl& url1, const KUrl& url2);
 
 Q_SIGNALS:
 
