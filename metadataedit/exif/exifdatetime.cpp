@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF date and time settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,12 +40,11 @@
 #include <knuminput.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes
+// Local includes
 
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -122,7 +121,7 @@ EXIFDateTime::EXIFDateTime(QWidget* parent)
     d->setTodayCreatedBtn->setIcon(SmallIcon("go-jump-today"));
     d->setTodayCreatedBtn->setWhatsThis(i18n("Set creation date to today"));
 
-    if (!KExiv2::supportXmp())
+    if (!KPMetadata::supportXmp())
         d->syncXMPDateCheck->setEnabled(false);
 
     d->dateCreatedSel->setWhatsThis(i18n("Set here the date and time of image creation. "
@@ -303,17 +302,17 @@ void EXIFDateTime::slotSetTodayDigitalized()
     d->dateDigitalizedSubSecEdit->setValue(0);
 }
 
-bool EXIFDateTime::syncHOSTDateIsChecked()
+bool EXIFDateTime::syncHOSTDateIsChecked() const
 {
     return d->syncHOSTDateCheck->isChecked();
 }
 
-bool EXIFDateTime::syncXMPDateIsChecked()
+bool EXIFDateTime::syncXMPDateIsChecked() const
 {
     return d->syncXMPDateCheck->isChecked();
 }
 
-bool EXIFDateTime::syncIPTCDateIsChecked()
+bool EXIFDateTime::syncIPTCDateIsChecked() const
 {
     return d->syncIPTCDateCheck->isChecked();
 }
@@ -333,7 +332,7 @@ void EXIFDateTime::setCheckedSyncIPTCDate(bool c)
     d->syncIPTCDateCheck->setChecked(c);
 }
 
-QDateTime EXIFDateTime::getEXIFCreationDate()
+QDateTime EXIFDateTime::getEXIFCreationDate() const
 {
     return d->dateCreatedSel->dateTime();
 }
@@ -341,15 +340,15 @@ QDateTime EXIFDateTime::getEXIFCreationDate()
 void EXIFDateTime::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
 
     QDateTime datetime;
     QString datetimeStr, data;
 
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     d->dateCreatedCheck->setChecked(false);
-    datetimeStr = exiv2Iface.getExifTagString("Exif.Image.DateTime", false);
+    datetimeStr = meta.getExifTagString("Exif.Image.DateTime", false);
     if (!datetimeStr.isEmpty())
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
@@ -366,7 +365,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
     d->dateCreatedSubSecEdit->setValue(0);
     d->dateCreatedSubSecCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTime", false);
+    data = meta.getExifTagString("Exif.Photo.SubSecTime", false);
     if (!data.isNull())
     {
         bool ok    = false;
@@ -381,7 +380,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
     d->dateOriginalSel->setDateTime(QDateTime::currentDateTime());
     d->dateOriginalCheck->setChecked(false);
-    datetimeStr = exiv2Iface.getExifTagString("Exif.Photo.DateTimeOriginal", false);
+    datetimeStr = meta.getExifTagString("Exif.Photo.DateTimeOriginal", false);
     if (!datetimeStr.isEmpty())
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
@@ -395,7 +394,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
     d->dateOriginalSubSecEdit->setValue(0);
     d->dateOriginalSubSecCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTimeOriginal", false);
+    data = meta.getExifTagString("Exif.Photo.SubSecTimeOriginal", false);
     if (!data.isNull())
     {
         bool ok    = false;
@@ -410,7 +409,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
     d->dateDigitalizedCheck->setChecked(false);
-    datetimeStr = exiv2Iface.getExifTagString("Exif.Photo.DateTimeDigitized", false);
+    datetimeStr = meta.getExifTagString("Exif.Photo.DateTimeDigitized", false);
     if (!datetimeStr.isEmpty())
     {
         datetime = QDateTime::fromString(datetimeStr, Qt::ISODate);
@@ -424,7 +423,7 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
     d->dateDigitalizedSubSecEdit->setValue(0);
     d->dateDigitalizedSubSecCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Photo.SubSecTimeDigitized", false);
+    data = meta.getExifTagString("Exif.Photo.SubSecTimeDigitized", false);
     if (!data.isNull())
     {
         bool ok    = false;
@@ -442,81 +441,81 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
 
 void EXIFDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
-    exiv2Iface.setIptc(iptcData);
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setExif(exifData);
+    meta.setIptc(iptcData);
+    meta.setXmp(xmpData);
 
     if (d->dateCreatedCheck->isChecked())
     {
-        exiv2Iface.setExifTagString("Exif.Image.DateTime",
+        meta.setExifTagString("Exif.Image.DateTime",
                    d->dateCreatedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
 
-        if (exiv2Iface.supportXmp() && d->syncXMPDateCheck->isChecked())
+        if (meta.supportXmp() && d->syncXMPDateCheck->isChecked())
         {
-            exiv2Iface.setXmpTagString("Xmp.exif.DateTimeOriginal",
+            meta.setXmpTagString("Xmp.exif.DateTimeOriginal",
                 d->dateCreatedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-            exiv2Iface.setXmpTagString("Xmp.photoshop.DateCreated",
+            meta.setXmpTagString("Xmp.photoshop.DateCreated",
                 d->dateCreatedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-            exiv2Iface.setXmpTagString("Xmp.tiff.DateTime",
+            meta.setXmpTagString("Xmp.tiff.DateTime",
                 d->dateCreatedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-            exiv2Iface.setXmpTagString("Xmp.xmp.CreateDate",
+            meta.setXmpTagString("Xmp.xmp.CreateDate",
                 d->dateCreatedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-            exiv2Iface.setXmpTagString("Xmp.xmp.MetadataDate",
+            meta.setXmpTagString("Xmp.xmp.MetadataDate",
                 d->dateCreatedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-            exiv2Iface.setXmpTagString("Xmp.xmp.ModifyDate",
+            meta.setXmpTagString("Xmp.xmp.ModifyDate",
                 d->dateCreatedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
         }
 
         if (syncIPTCDateIsChecked())
         {
-            exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
+            meta.setIptcTagString("Iptc.Application2.DateCreated",
                        d->dateCreatedSel->dateTime().date().toString(Qt::ISODate));
-            exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
+            meta.setIptcTagString("Iptc.Application2.TimeCreated",
                        d->dateCreatedSel->dateTime().time().toString(Qt::ISODate));
         }
     }
     else
-        exiv2Iface.removeExifTag("Exif.Image.DateTime");
+        meta.removeExifTag("Exif.Image.DateTime");
 
     if (d->dateCreatedSubSecCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Photo.SubSecTime",
+        meta.setExifTagString("Exif.Photo.SubSecTime",
                    QString::number(d->dateCreatedSubSecEdit->value()).toAscii());
     else
-        exiv2Iface.removeExifTag("Exif.Photo.SubSecTime");
+        meta.removeExifTag("Exif.Photo.SubSecTime");
 
     if (d->dateOriginalCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Photo.DateTimeOriginal",
+        meta.setExifTagString("Exif.Photo.DateTimeOriginal",
                    d->dateOriginalSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
     else
-        exiv2Iface.removeExifTag("Exif.Photo.DateTimeOriginal");
+        meta.removeExifTag("Exif.Photo.DateTimeOriginal");
 
     if (d->dateOriginalSubSecCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Photo.SubSecTimeOriginal",
+        meta.setExifTagString("Exif.Photo.SubSecTimeOriginal",
                    QString::number(d->dateOriginalSubSecEdit->value()).toAscii());
     else
-        exiv2Iface.removeExifTag("Exif.Photo.SubSecTimeOriginal");
+        meta.removeExifTag("Exif.Photo.SubSecTimeOriginal");
 
     if (d->dateDigitalizedCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Photo.DateTimeDigitized",
+        meta.setExifTagString("Exif.Photo.DateTimeDigitized",
                    d->dateDigitalizedSel->dateTime().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
     else
-        exiv2Iface.removeExifTag("Exif.Photo.DateTimeDigitized");
+        meta.removeExifTag("Exif.Photo.DateTimeDigitized");
 
     if (d->dateDigitalizedSubSecCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Photo.SubSecTimeDigitized",
+        meta.setExifTagString("Exif.Photo.SubSecTimeDigitized",
                    QString::number(d->dateDigitalizedSubSecEdit->value()).toAscii());
     else
-        exiv2Iface.removeExifTag("Exif.Photo.SubSecTimeDigitized");
+        meta.removeExifTag("Exif.Photo.SubSecTimeDigitized");
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 
-    iptcData = exiv2Iface.getIptc();
-    xmpData  = exiv2Iface.getXmp();
+    iptcData = meta.getIptc();
+    xmpData  = meta.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

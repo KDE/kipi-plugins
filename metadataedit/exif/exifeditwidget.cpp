@@ -42,17 +42,13 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
-#include <KConfigGroup>
+#include <kconfiggroup.h>
+#include <kurl.h>
 
 // LibKIPI includes
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
-
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
 
 // Local includes
 
@@ -65,8 +61,8 @@
 #include "exiflight.h"
 #include "kpimageinfo.h"
 #include "kphostsettings.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
 using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
@@ -217,17 +213,17 @@ void EXIFEditWidget::saveSettings()
 
 void EXIFEditWidget::slotItemChanged()
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.load((*d->dlg->currentItem()).path());
+    KPMetadata meta;
+    meta.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
-    d->exifData = exiv2Iface.getExifEncoded();
+    d->exifData = meta.getExifEncoded();
 #else
-    d->exifData = exiv2Iface.getExif();
+    d->exifData = meta.getExif();
 #endif
 
-    d->iptcData = exiv2Iface.getIptc();
-    d->xmpData  = exiv2Iface.getXmp();
+    d->iptcData = meta.getIptc();
+    d->xmpData  = meta.getXmp();
     d->captionPage->readMetadata(d->exifData);
     d->datetimePage->readMetadata(d->exifData);
     d->lensPage->readMetadata(d->exifData);
@@ -235,7 +231,7 @@ void EXIFEditWidget::slotItemChanged()
     d->lightPage->readMetadata(d->exifData);
     d->adjustPage->readMetadata(d->exifData);
 
-    d->isReadOnly = !KExiv2::canWriteExif((*d->dlg->currentItem()).path());
+    d->isReadOnly = !KPMetadata::canWriteExif((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
     d->page_caption->setEnabled(!d->isReadOnly);
     d->page_datetime->setEnabled(!d->isReadOnly);
@@ -268,16 +264,16 @@ void EXIFEditWidget::apply()
         d->lightPage->applyMetadata(d->exifData);
         d->adjustPage->applyMetadata(d->exifData);
 
-        KExiv2 exiv2Iface;
+        KPMetadata meta;
         KPHostSettings hSettings(d->dlg->iface());
-        exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+        meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+        meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
-        exiv2Iface.load((*d->dlg->currentItem()).path());
-        exiv2Iface.setExif(d->exifData);
-        exiv2Iface.setIptc(d->iptcData);
-        exiv2Iface.setXmp(d->xmpData);
-        exiv2Iface.save((*d->dlg->currentItem()).path());
+        meta.load((*d->dlg->currentItem()).path());
+        meta.setExif(d->exifData);
+        meta.setIptc(d->iptcData);
+        meta.setXmp(d->xmpData);
+        meta.save((*d->dlg->currentItem()).path());
 
         d->modified = false;
     }

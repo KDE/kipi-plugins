@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF lens settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,16 +37,12 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -272,14 +268,14 @@ EXIFLens::~EXIFLens()
 void EXIFLens::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
 
     d->focalLengthEdit->setValue(50.0);
     d->focalLengthCheck->setChecked(false);
-    if (exiv2Iface.getExifTagRational("Exif.Photo.FocalLength", num, den))
+    if (meta.getExifTagRational("Exif.Photo.FocalLength", num, den))
     {
         d->focalLengthEdit->setValue((double)(num) / (double)(den));
         d->focalLengthCheck->setChecked(true);
@@ -288,7 +284,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
 
     d->focalLength35mmEdit->setValue(10);
     d->focalLength35mmCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", val))
+    if (meta.getExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", val))
     {
         d->focalLength35mmEdit->setValue(val);
         d->focalLength35mmCheck->setChecked(true);
@@ -297,7 +293,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
 
     d->digitalZoomRatioEdit->setValue(1.0);
     d->digitalZoomRatioCheck->setChecked(false);
-    if (exiv2Iface.getExifTagRational("Exif.Photo.DigitalZoomRatio", num, den))
+    if (meta.getExifTagRational("Exif.Photo.DigitalZoomRatio", num, den))
     {
         d->digitalZoomRatioEdit->setValue((num == 0) ? 0.0 : (double)(num) / (double)(den));
         d->digitalZoomRatioCheck->setChecked(true);
@@ -306,7 +302,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
 
     d->apertureCB->setCurrentIndex(0);
     d->apertureCheck->setChecked(false);
-    if (exiv2Iface.getExifTagRational("Exif.Photo.FNumber", num, den))
+    if (meta.getExifTagRational("Exif.Photo.FNumber", num, den))
     {
         QString fnumber = QString::number((double)(num)/(double)(den), 'f', 1);
 
@@ -323,7 +319,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
             d->apertureCheck->setChecked(true);
         }
     }
-    else if (exiv2Iface.getExifTagRational("Exif.Photo.ApertureValue", num, den))
+    else if (meta.getExifTagRational("Exif.Photo.ApertureValue", num, den))
     {
         double aperture = std::pow(2.0, ((double)(num)/(double)(den))/2.0);
 
@@ -348,7 +344,7 @@ void EXIFLens::readMetadata(QByteArray& exifData)
 
     d->maxApertureCB->setCurrentIndex(0);
     d->maxApertureCheck->setChecked(false);
-    if (exiv2Iface.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))
+    if (meta.getExifTagRational("Exif.Photo.MaxApertureValue", num, den))
     {
         double maxAperture = std::pow(2.0, ((double)(num)/(double)(den))/2.0);
 
@@ -376,61 +372,61 @@ void EXIFLens::readMetadata(QByteArray& exifData)
 
 void EXIFLens::applyMetadata(QByteArray& exifData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     long int num=1, den=1;
 
     if (d->focalLengthCheck->isChecked())
     {
-        exiv2Iface.convertToRational(d->focalLengthEdit->value(), &num, &den, 1);
-        exiv2Iface.setExifTagRational("Exif.Photo.FocalLength", num, den);
+        meta.convertToRational(d->focalLengthEdit->value(), &num, &den, 1);
+        meta.setExifTagRational("Exif.Photo.FocalLength", num, den);
     }
     else
-        exiv2Iface.removeExifTag("Exif.Photo.FocalLength");
+        meta.removeExifTag("Exif.Photo.FocalLength");
 
     if (d->focalLength35mmCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", d->focalLength35mmEdit->value());
+        meta.setExifTagLong("Exif.Photo.FocalLengthIn35mmFilm", d->focalLength35mmEdit->value());
     else
-        exiv2Iface.removeExifTag("Exif.Photo.FocalLengthIn35mmFilm");
+        meta.removeExifTag("Exif.Photo.FocalLengthIn35mmFilm");
 
     if (d->digitalZoomRatioCheck->isChecked())
     {
-        exiv2Iface.convertToRational(d->digitalZoomRatioEdit->value(), &num, &den, 1);
-        exiv2Iface.setExifTagRational("Exif.Photo.DigitalZoomRatio", num, den);
+        meta.convertToRational(d->digitalZoomRatioEdit->value(), &num, &den, 1);
+        meta.setExifTagRational("Exif.Photo.DigitalZoomRatio", num, den);
     }
     else
-        exiv2Iface.removeExifTag("Exif.Photo.DigitalZoomRatio");
+        meta.removeExifTag("Exif.Photo.DigitalZoomRatio");
 
     if (d->apertureCheck->isChecked())
     {
-        exiv2Iface.convertToRational(d->apertureCB->currentText().remove(0, 2).toDouble(), &num, &den, 1);
-        exiv2Iface.setExifTagRational("Exif.Photo.FNumber", num, den);
+        meta.convertToRational(d->apertureCB->currentText().remove(0, 2).toDouble(), &num, &den, 1);
+        meta.setExifTagRational("Exif.Photo.FNumber", num, den);
 
         double fnumber  = d->apertureCB->currentText().remove(0, 2).toDouble();
         double aperture = 2.0*(std::log(fnumber)/std::log(2.0));
-        exiv2Iface.convertToRational(aperture, &num, &den, 8);
-        exiv2Iface.setExifTagRational("Exif.Photo.ApertureValue", num, den);
+        meta.convertToRational(aperture, &num, &den, 8);
+        meta.setExifTagRational("Exif.Photo.ApertureValue", num, den);
     }
     else if (d->apertureCheck->isValid())
     {
-        exiv2Iface.removeExifTag("Exif.Photo.FNumber");
-        exiv2Iface.removeExifTag("Exif.Photo.ApertureValue");
+        meta.removeExifTag("Exif.Photo.FNumber");
+        meta.removeExifTag("Exif.Photo.ApertureValue");
     }
 
     if (d->maxApertureCheck->isChecked())
     {
         double fnumber  = d->maxApertureCB->currentText().remove(0, 2).toDouble();
         double aperture = 2.0*(std::log(fnumber)/std::log(2.0));
-        exiv2Iface.convertToRational(aperture, &num, &den, 8);
-        exiv2Iface.setExifTagRational("Exif.Photo.MaxApertureValue", num, den);
+        meta.convertToRational(aperture, &num, &den, 8);
+        meta.setExifTagRational("Exif.Photo.MaxApertureValue", num, den);
     }
     else if (d->maxApertureCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.MaxApertureValue");
+        meta.removeExifTag("Exif.Photo.MaxApertureValue");
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 }
 

@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF date and time settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,15 +44,15 @@ public:
     void applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData);
     void readMetadata(QByteArray& exifData);
 
-    bool syncHOSTDateIsChecked();
-    bool syncXMPDateIsChecked();
-    bool syncIPTCDateIsChecked();
+    bool syncHOSTDateIsChecked() const;
+    bool syncXMPDateIsChecked() const;
+    bool syncIPTCDateIsChecked() const;
 
     void setCheckedSyncHOSTDate(bool c);
     void setCheckedSyncXMPDate(bool c);
     void setCheckedSyncIPTCDate(bool c);
 
-    QDateTime getEXIFCreationDate();
+    QDateTime getEXIFCreationDate() const;
 
 Q_SIGNALS:
 

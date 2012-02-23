@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF device settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,16 +41,12 @@
 #include <knuminput.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -120,7 +116,7 @@ public:
 };
 
 EXIFDevice::EXIFDevice(QWidget* parent)
-          : QWidget(parent), d(new EXIFDevicePriv)
+    : QWidget(parent), d(new EXIFDevicePriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
@@ -489,15 +485,15 @@ EXIFDevice::~EXIFDevice()
 void EXIFDevice::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
     QString  data;
 
     d->makeEdit->clear();
     d->makeCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.Make", false);
+    data = meta.getExifTagString("Exif.Image.Make", false);
     if (!data.isNull())
     {
         d->makeEdit->setText(data);
@@ -507,7 +503,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->modelEdit->clear();
     d->modelCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.Model", false);
+    data = meta.getExifTagString("Exif.Image.Model", false);
     if (!data.isNull())
     {
         d->modelEdit->setText(data);
@@ -517,7 +513,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->deviceTypeCB->setCurrentIndex(2);     // DSC
     d->deviceTypeCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.FileSource", val))
+    if (meta.getExifTagLong("Exif.Photo.FileSource", val))
     {
         if (val>0 && val<4)
         {
@@ -532,13 +528,13 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
     d->exposureTimeNumEdit->setValue(1);
     d->exposureTimeDenEdit->setValue(1);
     d->exposureTimeCheck->setChecked(false);
-    if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureTime", num, den))
+    if (meta.getExifTagRational("Exif.Photo.ExposureTime", num, den))
     {
         d->exposureTimeNumEdit->setValue(num);
         d->exposureTimeDenEdit->setValue(den);
         d->exposureTimeCheck->setChecked(true);
     }
-    else if (exiv2Iface.getExifTagRational("Exif.Photo.ShutterSpeedValue", num, den))
+    else if (meta.getExifTagRational("Exif.Photo.ShutterSpeedValue", num, den))
     {
         double tmp = std::exp(std::log(2.0) * (double)(num)/(double)(den));
         if (tmp > 1.0)
@@ -555,7 +551,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->exposureProgramCB->setCurrentIndex(0);
     d->exposureProgramCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.ExposureProgram", val))
+    if (meta.getExifTagLong("Exif.Photo.ExposureProgram", val))
     {
         if (val>=0 && val <=8)
         {
@@ -569,7 +565,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->exposureModeCB->setCurrentIndex(0);
     d->exposureModeCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.ExposureMode", val))
+    if (meta.getExifTagLong("Exif.Photo.ExposureMode", val))
     {
         if (val>=0 && val <=2)
         {
@@ -583,7 +579,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->exposureBiasEdit->setValue(0.0);
     d->exposureBiasCheck->setChecked(false);
-    if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureBiasValue", num, den))
+    if (meta.getExifTagRational("Exif.Photo.ExposureBiasValue", num, den))
     {
         d->exposureBiasEdit->setValue((double)(num) / (double)(den));
         d->exposureBiasCheck->setChecked(true);
@@ -592,7 +588,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->meteringModeCB->setCurrentIndex(0);
     d->meteringModeCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.MeteringMode", val))
+    if (meta.getExifTagLong("Exif.Photo.MeteringMode", val))
     {
         if ((val>= 0 && val <=6) || val == 255)
         {
@@ -606,7 +602,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->ISOSpeedCB->setCurrentIndex(10);       // 100 ISO
     d->ISOSpeedCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.ISOSpeedRatings", val))
+    if (meta.getExifTagLong("Exif.Photo.ISOSpeedRatings", val))
     {
         int item = -1;
         for (int i = 0 ; i < d->ISOSpeedCB->count() ; ++i)
@@ -621,7 +617,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
         else
             d->ISOSpeedCheck->setValid(false);
     }
-    else if (exiv2Iface.getExifTagRational("Exif.Photo.ExposureIndex", num, den))
+    else if (meta.getExifTagRational("Exif.Photo.ExposureIndex", num, den))
     {
         val = num / den;
         int item = -1;
@@ -641,7 +637,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->sensingMethodCB->setCurrentIndex(0);
     d->sensingMethodCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.SensingMethod", val))
+    if (meta.getExifTagLong("Exif.Photo.SensingMethod", val))
     {
         if (val>=1 && val<=8 && val!=6)
         {
@@ -655,7 +651,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->sceneTypeCB->setCurrentIndex(0);
     d->sceneTypeCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.SceneCaptureType", val))
+    if (meta.getExifTagLong("Exif.Photo.SceneCaptureType", val))
     {
         if (val>=0 && val<=3)
         {
@@ -669,7 +665,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
     d->subjectDistanceTypeCB->setCurrentIndex(0);
     d->subjectDistanceTypeCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.SubjectDistanceRange", val))
+    if (meta.getExifTagLong("Exif.Photo.SubjectDistanceRange", val))
     {
         if (val>=0 && val<=3)
         {
@@ -686,103 +682,103 @@ void EXIFDevice::readMetadata(QByteArray& exifData)
 
 void EXIFDevice::applyMetadata(QByteArray& exifData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     long int num=1, den=1;
 
     if (d->makeCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Image.Make", d->makeEdit->text());
+        meta.setExifTagString("Exif.Image.Make", d->makeEdit->text());
     else
-        exiv2Iface.removeExifTag("Exif.Image.Make");
+        meta.removeExifTag("Exif.Image.Make");
 
     if (d->modelCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Image.Model", d->modelEdit->text());
+        meta.setExifTagString("Exif.Image.Model", d->modelEdit->text());
     else
-        exiv2Iface.removeExifTag("Exif.Image.Model");
+        meta.removeExifTag("Exif.Image.Model");
 
     if (d->deviceTypeCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.FileSource", d->deviceTypeCB->currentIndex()+1);
+        meta.setExifTagLong("Exif.Photo.FileSource", d->deviceTypeCB->currentIndex()+1);
     else if (d->deviceTypeCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.FileSource");
+        meta.removeExifTag("Exif.Photo.FileSource");
 
     if (d->exposureTimeCheck->isChecked())
     {
-        exiv2Iface.setExifTagRational("Exif.Photo.ExposureTime", d->exposureTimeNumEdit->value(),
+        meta.setExifTagRational("Exif.Photo.ExposureTime", d->exposureTimeNumEdit->value(),
                                       d->exposureTimeDenEdit->value());
 
         double exposureTime = (double)(d->exposureTimeNumEdit->value())/
                               (double)(d->exposureTimeDenEdit->value());
         double shutterSpeed = (-1.0)*(std::log(exposureTime)/std::log(2.0));
-        exiv2Iface.convertToRational(shutterSpeed, &num, &den, 8);
-        exiv2Iface.setExifTagRational("Exif.Photo.ShutterSpeedValue", num, den);
+        meta.convertToRational(shutterSpeed, &num, &den, 8);
+        meta.setExifTagRational("Exif.Photo.ShutterSpeedValue", num, den);
     }
     else
     {
-        exiv2Iface.removeExifTag("Exif.Photo.ExposureTime");
-        exiv2Iface.removeExifTag("Exif.Photo.ShutterSpeedValue");
+        meta.removeExifTag("Exif.Photo.ExposureTime");
+        meta.removeExifTag("Exif.Photo.ShutterSpeedValue");
     }
 
     if (d->exposureProgramCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.ExposureProgram", d->exposureProgramCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.ExposureProgram", d->exposureProgramCB->currentIndex());
     else if (d->exposureProgramCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.ExposureProgram");
+        meta.removeExifTag("Exif.Photo.ExposureProgram");
 
     if (d->exposureModeCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.ExposureMode", d->exposureModeCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.ExposureMode", d->exposureModeCB->currentIndex());
     else if (d->exposureModeCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.ExposureMode");
+        meta.removeExifTag("Exif.Photo.ExposureMode");
 
     if (d->exposureBiasCheck->isChecked())
     {
-        exiv2Iface.convertToRational(d->exposureBiasEdit->value(), &num, &den, 1);
-        exiv2Iface.setExifTagRational("Exif.Photo.ExposureBiasValue", num, den);
+        meta.convertToRational(d->exposureBiasEdit->value(), &num, &den, 1);
+        meta.setExifTagRational("Exif.Photo.ExposureBiasValue", num, den);
     }
     else
-        exiv2Iface.removeExifTag("Exif.Photo.ExposureBiasValue");
+        meta.removeExifTag("Exif.Photo.ExposureBiasValue");
 
     if (d->meteringModeCheck->isChecked())
     {
         long met = d->meteringModeCB->currentIndex();
-        exiv2Iface.setExifTagLong("Exif.Photo.MeteringMode", met > 6 ? 255 : met);
+        meta.setExifTagLong("Exif.Photo.MeteringMode", met > 6 ? 255 : met);
     }
     else if (d->meteringModeCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.MeteringMode");
+        meta.removeExifTag("Exif.Photo.MeteringMode");
 
     if (d->ISOSpeedCheck->isChecked())
     {
-        exiv2Iface.setExifTagLong("Exif.Photo.ISOSpeedRatings", d->ISOSpeedCB->currentText().toLong());
+        meta.setExifTagLong("Exif.Photo.ISOSpeedRatings", d->ISOSpeedCB->currentText().toLong());
 
-        exiv2Iface.convertToRational(d->ISOSpeedCB->currentText().toDouble(), &num, &den, 1);
-        exiv2Iface.setExifTagRational("Exif.Photo.ExposureIndex", num, den);
+        meta.convertToRational(d->ISOSpeedCB->currentText().toDouble(), &num, &den, 1);
+        meta.setExifTagRational("Exif.Photo.ExposureIndex", num, den);
     }
     else if (d->ISOSpeedCheck->isValid())
     {
-        exiv2Iface.removeExifTag("Exif.Photo.ISOSpeedRatings");
-        exiv2Iface.removeExifTag("Exif.Photo.ExposureIndex");
+        meta.removeExifTag("Exif.Photo.ISOSpeedRatings");
+        meta.removeExifTag("Exif.Photo.ExposureIndex");
     }
 
     if (d->sensingMethodCheck->isChecked())
     {
         long sem = d->sensingMethodCB->currentIndex();
-        exiv2Iface.setExifTagLong("Exif.Photo.SensingMethod", sem > 4 ? sem+2 : sem+1);
+        meta.setExifTagLong("Exif.Photo.SensingMethod", sem > 4 ? sem+2 : sem+1);
     }
     else if (d->sensingMethodCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.SensingMethod");
+        meta.removeExifTag("Exif.Photo.SensingMethod");
 
     if (d->sceneTypeCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.SceneCaptureType", d->sceneTypeCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.SceneCaptureType", d->sceneTypeCB->currentIndex());
     else if (d->sceneTypeCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.SceneCaptureType");
+        meta.removeExifTag("Exif.Photo.SceneCaptureType");
 
     if (d->subjectDistanceTypeCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.SubjectDistanceRange", d->subjectDistanceTypeCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.SubjectDistanceRange", d->subjectDistanceTypeCB->currentIndex());
     else if (d->subjectDistanceTypeCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.SubjectDistanceRange");
+        meta.removeExifTag("Exif.Photo.SubjectDistanceRange");
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 }
 
