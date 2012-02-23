@@ -214,24 +214,24 @@ bool PiwigoTalker::addPhoto(int   albumId,
         m_date    = fi.created();
 
         // Restore all metadata.
-        KPMetadata metaIface;
+        KPMetadata meta;
 
-        if (metaIface.load(photoPath))
+        if (meta.load(photoPath))
         {
-            metaIface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-            metaIface.setImageDimensions(image.size());
-            metaIface.save(m_path);
-            kDebug() << "Comment : " << metaIface.getExifComment();
+            meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+            meta.setImageDimensions(image.size());
+            meta.save(m_path);
+            kDebug() << "Comment : " << meta.getExifComment();
 
-            if (metaIface.getExifComment().length())
+            if (meta.getExifComment().length())
             {
-                if (captionIsTitle)       m_name    = metaIface.getExifComment();
-                if (captionIsDescription) m_comment = metaIface.getExifComment();
+                if (captionIsTitle)       m_name    = meta.getExifComment();
+                if (captionIsDescription) m_comment = meta.getExifComment();
             }
 
-            if (!metaIface.getImageDateTime().isNull())
+            if (!meta.getImageDateTime().isNull())
             {
-                m_date = metaIface.getImageDateTime();
+                m_date = meta.getImageDateTime();
             }
         }
         else

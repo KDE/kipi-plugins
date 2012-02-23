@@ -322,13 +322,12 @@ bool SimpleViewer::createExportDirectories() const
 
 bool SimpleViewer::cmpUrl(const KUrl& url1, const KUrl& url2)
 {
-    KPMetadata meta1;
-    meta1.load(url1.path());
-    QDateTime clock1 = meta1.getImageDateTime();
+    KPMetadata meta;
+    meta.load(url1.path());
+    QDateTime clock1 = meta.getImageDateTime();
 
-    KPMetadata meta2;
-    meta2.load(url2.path());
-    QDateTime clock2 = meta2.getImageDateTime();
+    meta.load(url2.path());
+    QDateTime clock2 = meta.getImageDateTime();
 
     if (clock1.isValid() || clock2.isValid())
     {

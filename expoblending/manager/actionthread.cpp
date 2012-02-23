@@ -379,10 +379,10 @@ void ActionThread::run()
                     // preserve exif information for auto rotation
                     if (result)
                     {
-                        KPMetadata metai(t->urls[0].toLocalFile());
-                        KPMetadata metao(destUrl.toLocalFile());
-                        metao.setImageOrientation(metai.getImageOrientation());
-                        metao.applyChanges();
+                        KPMetadata metaIn(t->urls[0].toLocalFile());
+                        KPMetadata metaOut(destUrl.toLocalFile());
+                        metaOut.setImageOrientation(metaIn.getImageOrientation());
+                        metaOut.applyChanges();
                     }
 
                     // To be cleaned in destructor.
@@ -627,14 +627,14 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
     if (img.load(inUrl.toLocalFile()))
     {
         QImage preview = img.scaled(1280, 1024, Qt::KeepAspectRatio);
-        bool saved = preview.save(outUrl.toLocalFile(), "JPEG");
+        bool saved     = preview.save(outUrl.toLocalFile(), "JPEG");
         // save exif information also to preview image for auto rotation
         if (saved)
         {
-            KPMetadata metai(inUrl.toLocalFile());
-            KPMetadata metao(outUrl.toLocalFile());
-            metao.setImageOrientation(metai.getImageOrientation());
-            metao.applyChanges();
+            KPMetadata metaIn(inUrl.toLocalFile());
+            KPMetadata metaOut(outUrl.toLocalFile());
+            metaOut.setImageOrientation(metaIn.getImageOrientation());
+            metaOut.applyChanges();
         }
         kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;

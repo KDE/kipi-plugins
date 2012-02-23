@@ -313,7 +313,7 @@ void ConvertImagesDialog::processDone()
             kDebug() << src ;
             kDebug() << tgt << fi.size();
 
-            KPMetadata metaSrc(src, m_interface);
+            KPMetadata metaIn(src, m_interface);
 
             // Update Iptc preview.
             // NOTE: see B.K.O #130525. a JPEG segment is limited to 64K. If the IPTC byte array is
@@ -321,13 +321,13 @@ void ConvertImagesDialog::processDone()
             // broken. Note that IPTC image preview tag is limited to 256K!!!
             // There is no limitation with TIFF and PNG about IPTC byte array size.
 
-            metaSrc.removeIptcTag("Iptc.Application2.Preview");
-            metaSrc.removeIptcTag("Iptc.Application2.PreviewFormat");
-            metaSrc.removeIptcTag("Iptc.Application2.PreviewVersion");
+            metaIn.removeIptcTag("Iptc.Application2.Preview");
+            metaIn.removeIptcTag("Iptc.Application2.PreviewFormat");
+            metaIn.removeIptcTag("Iptc.Application2.PreviewVersion");
 
-            KPMetadata metaTgt(tgt, m_interface);
-            metaTgt.setIptc(metaSrc.getIptc());
-            metaTgt.applyChanges();
+            KPMetadata metaOut(tgt, m_interface);
+            metaOut.setIptc(metaIn.getIptc());
+            metaOut.applyChanges();
         }
     }
 
