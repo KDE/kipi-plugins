@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "progresswidget.moc"
+#include "kpprogresswidget.moc"
 
 // Qt includes
 
@@ -35,21 +35,21 @@
 namespace KIPIPlugins
 {
 
-class ProgressWidget::ProgressWidgetPriv
+class KPProgressWidget::KPProgressWidgetPriv
 {
 public:
 
-    ProgressWidgetPriv()
+    KPProgressWidgetPriv()
     {
         iface = 0;
     }
 
-    QString          progressId;
-    KIPI::Interface* iface;
+    QString    progressId;
+    Interface* iface;
 };
 
-ProgressWidget::ProgressWidget(KIPI::Interface* iface, QWidget* parent)
-    : QProgressBar(parent), d(new ProgressWidgetPriv)
+KPProgressWidget::KPProgressWidget(Interface* iface, QWidget* parent)
+    : QProgressBar(parent), d(new KPProgressWidgetPriv)
 {
     d->iface = iface;
 
@@ -57,15 +57,15 @@ ProgressWidget::ProgressWidget(KIPI::Interface* iface, QWidget* parent)
             this, SLOT(slotValueChanged(int)));
 }
 
-ProgressWidget::~ProgressWidget()
+KPProgressWidget::~KPProgressWidget()
 {
     delete d;
 }
 
-void ProgressWidget::slotValueChanged(int)
+void KPProgressWidget::slotValueChanged(int)
 {
 #if KIPI_VERSION >= 0x010500
-    if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+    if (d->iface && d->iface->hasFeature(HostSupportsProgressBar))
     {
         float percents = ((float)value() / (float)maximum()) * 100.0;
         d->iface->progressValueChanged(d->progressId, percents);
@@ -73,40 +73,40 @@ void ProgressWidget::slotValueChanged(int)
 #endif // KIPI_VERSION >= 0x010500
 }
 
-void ProgressWidget::progressCompleted()
+void KPProgressWidget::progressCompleted()
 {
 #if KIPI_VERSION >= 0x010500
-    if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+    if (d->iface && d->iface->hasFeature(HostSupportsProgressBar))
     {
         d->iface->progressCompleted(d->progressId);
     }
 #endif // KIPI_VERSION >= 0x010500
 }
 
-void ProgressWidget::progressThumbnailChanged(const QPixmap& thumb)
+void KPProgressWidget::progressThumbnailChanged(const QPixmap& thumb)
 {
 #if KIPI_VERSION >= 0x010500
-    if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+    if (d->iface && d->iface->hasFeature(HostSupportsProgressBar))
     {
         d->iface->progressThumbnailChanged(d->progressId, thumb);
     }
 #endif // KIPI_VERSION >= 0x010500
 }
 
-void ProgressWidget::progressStatusChanged(const QString& status)
+void KPProgressWidget::progressStatusChanged(const QString& status)
 {
 #if KIPI_VERSION >= 0x010500
-    if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+    if (d->iface && d->iface->hasFeature(HostSupportsProgressBar))
     {
         d->iface->progressStatusChanged(d->progressId, status);
     }
 #endif // KIPI_VERSION >= 0x010500
 }
 
-void ProgressWidget::progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb)
+void KPProgressWidget::progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb)
 {
 #if KIPI_VERSION >= 0x010500
-    if (d->iface && d->iface->hasFeature(KIPI::HostSupportsProgressBar))
+    if (d->iface && d->iface->hasFeature(HostSupportsProgressBar))
     {
         d->progressId = d->iface->progressScheduled(title, canBeCanceled, hasThumb);
 
@@ -119,7 +119,7 @@ void ProgressWidget::progressScheduled(const QString& title, bool canBeCanceled,
 #endif // KIPI_VERSION >= 0x010500
 }
 
-void ProgressWidget::slotProgressCanceled(const QString& id)
+void KPProgressWidget::slotProgressCanceled(const QString& id)
 {
     if (d->progressId == id)
         emit signalProgressCanceled();

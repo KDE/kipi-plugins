@@ -24,7 +24,7 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/savesettingswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewmanager.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewimage.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/progresswidget.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})
