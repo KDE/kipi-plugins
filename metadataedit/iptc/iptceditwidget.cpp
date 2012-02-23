@@ -41,15 +41,7 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
-
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
+#include <kurl.h>
 
 // Local includes
 
@@ -65,8 +57,8 @@
 #include "iptcsubjects.h"
 #include "kpimageinfo.h"
 #include "kphostsettings.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
 using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
@@ -257,16 +249,16 @@ void IPTCEditWidget::saveSettings()
 
 void IPTCEditWidget::slotItemChanged()
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.load((*d->dlg->currentItem()).path());
+    KPMetadata meta;
+    meta.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
-    d->exifData = exiv2Iface.getExifEncoded();
+    d->exifData = meta.getExifEncoded();
 #else
-    d->exifData = exiv2Iface.getExif();
+    d->exifData = meta.getExif();
 #endif
 
-    d->iptcData = exiv2Iface.getIptc();
+    d->iptcData = meta.getIptc();
     d->contentPage->readMetadata(d->iptcData);
     d->originPage->readMetadata(d->iptcData);
     d->creditsPage->readMetadata(d->iptcData);
@@ -277,7 +269,7 @@ void IPTCEditWidget::slotItemChanged()
     d->propertiesPage->readMetadata(d->iptcData);
     d->envelopePage->readMetadata(d->iptcData);
 
-    d->isReadOnly = !KExiv2::canWriteIptc((*d->dlg->currentItem()).path());
+    d->isReadOnly = !KPMetadata::canWriteIptc((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
 
     d->page_content->setEnabled(!d->isReadOnly);
@@ -317,15 +309,15 @@ void IPTCEditWidget::apply()
         d->propertiesPage->applyMetadata(d->iptcData);
         d->envelopePage->applyMetadata(d->iptcData);
 
-        KExiv2 exiv2Iface;
+        KPMetadata meta;
         KPHostSettings hSettings(d->dlg->iface());
-        exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+        meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+        meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
-        exiv2Iface.load((*d->dlg->currentItem()).path());
-        exiv2Iface.setExif(d->exifData);
-        exiv2Iface.setIptc(d->iptcData);
-        exiv2Iface.save((*d->dlg->currentItem()).path());
+        meta.load((*d->dlg->currentItem()).path());
+        meta.setExif(d->exifData);
+        meta.setIptc(d->iptcData);
+        meta.save((*d->dlg->currentItem()).path());
         d->modified = false;
     }
 }
@@ -376,7 +368,7 @@ void IPTCEditWidget::showPage(int page)
     }
 }
 
-int IPTCEditWidget::activePageIndex()
+int IPTCEditWidget::activePageIndex() const
 {
     KPageWidgetItem* cur = currentPage();
 
@@ -393,7 +385,7 @@ int IPTCEditWidget::activePageIndex()
     return 0;
 }
 
-bool IPTCEditWidget::isModified()
+bool IPTCEditWidget::isModified() const
 {
     return d->modified;
 }

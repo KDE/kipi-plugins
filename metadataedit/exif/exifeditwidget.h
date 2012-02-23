@@ -42,7 +42,7 @@ public:
     EXIFEditWidget(MetadataEditDialog* parent);
     ~EXIFEditWidget();
 
-    bool isModified();
+    bool isModified() const;
     void saveSettings();
     void apply();
 
@@ -60,7 +60,7 @@ private:
 
     void readSettings();
 
-    int  activePageIndex();
+    int  activePageIndex() const;
     void showPage(int page);
 
 private:

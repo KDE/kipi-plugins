@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC content settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,16 +40,12 @@
 #include <kseparator.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-#include <libkexiv2/version.h>
-
 // Local includes
 
 #include "multistringsedit.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -194,22 +190,22 @@ IPTCContent::~IPTCContent()
     delete d;
 }
 
-bool IPTCContent::syncJFIFCommentIsChecked()
+bool IPTCContent::syncJFIFCommentIsChecked() const
 {
     return d->syncJFIFCommentCheck->isChecked();
 }
 
-bool IPTCContent::syncHOSTCommentIsChecked()
+bool IPTCContent::syncHOSTCommentIsChecked() const
 {
     return d->syncHOSTCommentCheck->isChecked();
 }
 
-bool IPTCContent::syncEXIFCommentIsChecked()
+bool IPTCContent::syncEXIFCommentIsChecked() const
 {
     return d->syncEXIFCommentCheck->isChecked();
 }
 
-QString IPTCContent::getIPTCCaption()
+QString IPTCContent::getIPTCCaption() const
 {
     return d->captionEdit->toPlainText();
 }
@@ -232,14 +228,14 @@ void IPTCContent::setCheckedSyncEXIFComment(bool c)
 void IPTCContent::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
     QString     data;
     QStringList list;
 
     d->captionEdit->clear();
     d->captionCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Caption", false);
+    data = meta.getIptcTagString("Iptc.Application2.Caption", false);
     if (!data.isNull())
     {
         d->captionEdit->setText(data);
@@ -250,12 +246,12 @@ void IPTCContent::readMetadata(QByteArray& iptcData)
     d->syncHOSTCommentCheck->setEnabled(d->captionCheck->isChecked());
     d->syncEXIFCommentCheck->setEnabled(d->captionCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Writer", false);
+    list = meta.getIptcTagsStringList("Iptc.Application2.Writer", false);
     d->writerEdit->setValues(list);
 
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Headline", false);
+    data = meta.getIptcTagString("Iptc.Application2.Headline", false);
     if (!data.isNull())
     {
         d->headlineEdit->setText(data);
@@ -268,41 +264,41 @@ void IPTCContent::readMetadata(QByteArray& iptcData)
 
 void IPTCContent::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setExif(exifData);
+    meta.setIptc(iptcData);
 
     if (d->captionCheck->isChecked())
     {
-        exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->toPlainText());
+        meta.setIptcTagString("Iptc.Application2.Caption", d->captionEdit->toPlainText());
 
         if (syncEXIFCommentIsChecked())
-            exiv2Iface.setExifComment(getIPTCCaption());
+            meta.setExifComment(getIPTCCaption());
 
         if (syncJFIFCommentIsChecked())
-            exiv2Iface.setComments(getIPTCCaption().toUtf8());
+            meta.setComments(getIPTCCaption().toUtf8());
     }
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Caption");
+        meta.removeIptcTag("Iptc.Application2.Caption");
 
     QStringList oldList, newList;
     if (d->writerEdit->getValues(oldList, newList))
-        exiv2Iface.setIptcTagsStringList("Iptc.Application2.Writer", 32, oldList, newList);
+        meta.setIptcTagsStringList("Iptc.Application2.Writer", 32, oldList, newList);
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Writer");
+        meta.removeIptcTag("Iptc.Application2.Writer");
 
     if (d->headlineCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
+        meta.setIptcTagString("Iptc.Application2.Headline", d->headlineEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Headline");
+        meta.removeIptcTag("Iptc.Application2.Headline");
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 
-    iptcData = exiv2Iface.getIptc();
+    iptcData = meta.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

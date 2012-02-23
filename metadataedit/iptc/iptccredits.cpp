@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC credits settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,15 +36,12 @@
 #include <klineedit.h>
 #include <klocale.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "multistringsedit.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -223,14 +220,14 @@ IPTCCredits::~IPTCCredits()
 void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
     QString     data;
     QStringList list;
 
     d->copyrightEdit->clear();
     d->copyrightCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Copyright", false);
+    data = meta.getIptcTagString("Iptc.Application2.Copyright", false);
     if (!data.isNull())
     {
         d->copyrightEdit->setText(data);
@@ -238,15 +235,15 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->copyrightEdit->setEnabled(d->copyrightCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Byline", false);
+    list = meta.getIptcTagsStringList("Iptc.Application2.Byline", false);
     d->bylineEdit->setValues(list);
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.BylineTitle", false);
+    list = meta.getIptcTagsStringList("Iptc.Application2.BylineTitle", false);
     d->bylineTitleEdit->setValues(list);
 
     d->creditEdit->clear();
     d->creditCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Credit", false);
+    data = meta.getIptcTagString("Iptc.Application2.Credit", false);
     if (!data.isNull())
     {
         d->creditEdit->setText(data);
@@ -256,7 +253,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
 
     d->sourceEdit->clear();
     d->sourceCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Source", false);
+    data = meta.getIptcTagString("Iptc.Application2.Source", false);
     if (!data.isNull())
     {
         d->sourceEdit->setText(data);
@@ -264,7 +261,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     }
     d->sourceEdit->setEnabled(d->sourceCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.Contact", false);
+    list = meta.getIptcTagsStringList("Iptc.Application2.Contact", false);
     d->contactEdit->setValues(list);
 
     blockSignals(false);
@@ -273,40 +270,40 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
 void IPTCCredits::applyMetadata(QByteArray& iptcData)
 {
     QStringList oldList, newList;
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
 
     if (d->copyrightCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Copyright", d->copyrightEdit->text());
+        meta.setIptcTagString("Iptc.Application2.Copyright", d->copyrightEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Copyright");
+        meta.removeIptcTag("Iptc.Application2.Copyright");
 
     if (d->bylineEdit->getValues(oldList, newList))
-        exiv2Iface.setIptcTagsStringList("Iptc.Application2.Byline", 32, oldList, newList);
+        meta.setIptcTagsStringList("Iptc.Application2.Byline", 32, oldList, newList);
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Byline");
+        meta.removeIptcTag("Iptc.Application2.Byline");
 
     if (d->bylineTitleEdit->getValues(oldList, newList))
-        exiv2Iface.setIptcTagsStringList("Iptc.Application2.BylineTitle", 32, oldList, newList);
+        meta.setIptcTagsStringList("Iptc.Application2.BylineTitle", 32, oldList, newList);
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.BylineTitle");
+        meta.removeIptcTag("Iptc.Application2.BylineTitle");
 
     if (d->creditCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Credit", d->creditEdit->text());
+        meta.setIptcTagString("Iptc.Application2.Credit", d->creditEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Credit");
+        meta.removeIptcTag("Iptc.Application2.Credit");
 
     if (d->sourceCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Source", d->sourceEdit->text());
+        meta.setIptcTagString("Iptc.Application2.Source", d->sourceEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Source");
+        meta.removeIptcTag("Iptc.Application2.Source");
 
     if (d->contactEdit->getValues(oldList, newList))
-        exiv2Iface.setIptcTagsStringList("Iptc.Application2.Contact", 128, oldList, newList);
+        meta.setIptcTagsStringList("Iptc.Application2.Contact", 128, oldList, newList);
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Contact");
+        meta.removeIptcTag("Iptc.Application2.Contact");
 
-    iptcData = exiv2Iface.getIptc();
+    iptcData = meta.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

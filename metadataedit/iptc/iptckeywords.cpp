@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : IPTC keywords settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,11 +38,11 @@
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKExiv2 includes
+// LibKPMetadata includes
 
-#include <libkexiv2/kexiv2.h>
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -246,9 +246,9 @@ void IPTCKeywords::slotAddKeyword()
 void IPTCKeywords::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
-    d->oldKeywords = exiv2Iface.getIptcKeywords();
+    KPMetadata meta;
+    meta.setIptc(iptcData);
+    d->oldKeywords = meta.getIptcKeywords();
 
     d->keywordsBox->clear();
     d->keywordsCheck->setChecked(false);
@@ -267,8 +267,8 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData)
 
 void IPTCKeywords::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
     QStringList newKeywords;
 
     for (int i = 0 ; i < d->keywordsBox->count(); ++i)
@@ -278,11 +278,11 @@ void IPTCKeywords::applyMetadata(QByteArray& iptcData)
     }
 
     if (d->keywordsCheck->isChecked())
-        exiv2Iface.setIptcKeywords(d->oldKeywords, newKeywords);
+        meta.setIptcKeywords(d->oldKeywords, newKeywords);
     else
-        exiv2Iface.setIptcKeywords(d->oldKeywords, QStringList());
+        meta.setIptcKeywords(d->oldKeywords, QStringList());
 
-    iptcData = exiv2Iface.getIptc();
+    iptcData = meta.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

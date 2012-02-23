@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC status settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,15 +36,12 @@
 #include <klocale.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kpversion.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -204,15 +201,15 @@ IPTCStatus::~IPTCStatus()
 void IPTCStatus::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
 
     QString     data;
     QStringList list;
 
     d->objectNameEdit->clear();
     d->objectNameCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectName", false);
+    data = meta.getIptcTagString("Iptc.Application2.ObjectName", false);
     if (!data.isNull())
     {
         d->objectNameEdit->setText(data);
@@ -222,7 +219,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
     d->statusEdit->clear();
     d->statusCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.EditStatus", false);
+    data = meta.getIptcTagString("Iptc.Application2.EditStatus", false);
     if (!data.isNull())
     {
         d->statusEdit->setText(data);
@@ -232,7 +229,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
     d->JobIDEdit->clear();
     d->JobIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.FixtureId", false);
+    data = meta.getIptcTagString("Iptc.Application2.FixtureId", false);
     if (!data.isNull())
     {
         d->JobIDEdit->setText(data);
@@ -242,7 +239,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
     d->specialInstructionEdit->clear();
     d->specialInstructionCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.SpecialInstructions", false);
+    data = meta.getIptcTagString("Iptc.Application2.SpecialInstructions", false);
     if (!data.isNull())
     {
         d->specialInstructionEdit->setText(data);
@@ -255,32 +252,32 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
 
 void IPTCStatus::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
 
     if (d->objectNameCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectName", d->objectNameEdit->text());
+        meta.setIptcTagString("Iptc.Application2.ObjectName", d->objectNameEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectName");
+        meta.removeIptcTag("Iptc.Application2.ObjectName");
 
     if (d->statusCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.EditStatus", d->statusEdit->text());
+        meta.setIptcTagString("Iptc.Application2.EditStatus", d->statusEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.EditStatus");
+        meta.removeIptcTag("Iptc.Application2.EditStatus");
 
     if (d->JobIDCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.FixtureId", d->JobIDEdit->text());
+        meta.setIptcTagString("Iptc.Application2.FixtureId", d->JobIDEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.FixtureId");
+        meta.removeIptcTag("Iptc.Application2.FixtureId");
 
     if (d->specialInstructionCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->toPlainText());
+        meta.setIptcTagString("Iptc.Application2.SpecialInstructions", d->specialInstructionEdit->toPlainText());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.SpecialInstructions");
+        meta.removeIptcTag("Iptc.Application2.SpecialInstructions");
 
-    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
-    iptcData = exiv2Iface.getIptc();
+    iptcData = meta.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

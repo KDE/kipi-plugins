@@ -316,7 +316,7 @@ void EXIFEditWidget::showPage(int page)
     }
 }
 
-int EXIFEditWidget::activePageIndex()
+int EXIFEditWidget::activePageIndex() const
 {
     KPageWidgetItem *cur = currentPage();
 
@@ -330,7 +330,7 @@ int EXIFEditWidget::activePageIndex()
     return 0;
 }
 
-bool EXIFEditWidget::isModified()
+bool EXIFEditWidget::isModified() const
 {
     return d->modified;
 }

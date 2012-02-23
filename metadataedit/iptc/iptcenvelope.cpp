@@ -6,7 +6,7 @@
  * Date        : 2007-11-10
  * Description : IPTC envelope settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,10 +41,6 @@
 #include <klocale.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/squeezedcombobox.h>
@@ -53,9 +49,10 @@
 
 #include "metadatacheckbox.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
 
+using namespace KIPIPlugins;
 using namespace KDcrawIface;
-using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -410,8 +407,8 @@ void IPTCEnvelope::slotSetTodaySent()
 void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
 
     int         val;
     QString     data, format, version;
@@ -422,7 +419,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->destinationEdit->clear();
     d->destinationCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.Destination", false);
+    data = meta.getIptcTagString("Iptc.Envelope.Destination", false);
     if (!data.isNull())
     {
         d->destinationEdit->setText(data);
@@ -432,7 +429,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->envelopeIDEdit->clear();
     d->envelopeIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.EnvelopeNumber", false);
+    data = meta.getIptcTagString("Iptc.Envelope.EnvelopeNumber", false);
     if (!data.isNull())
     {
         d->envelopeIDEdit->setText(data);
@@ -442,7 +439,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->serviceIDEdit->clear();
     d->serviceIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.ServiceId", false);
+    data = meta.getIptcTagString("Iptc.Envelope.ServiceId", false);
     if (!data.isNull())
     {
         d->serviceIDEdit->setText(data);
@@ -452,7 +449,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->unoIDEdit->clear();
     d->unoIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.UNO", false);
+    data = meta.getIptcTagString("Iptc.Envelope.UNO", false);
     if (!data.isNull())
     {
         d->unoIDEdit->setText(data);
@@ -462,7 +459,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->productIDEdit->clear();
     d->productIDCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.ProductId", false);
+    data = meta.getIptcTagString("Iptc.Envelope.ProductId", false);
     if (!data.isNull())
     {
         d->productIDEdit->setText(data);
@@ -472,7 +469,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Envelope.EnvelopePriority", false);
+    data = meta.getIptcTagString("Iptc.Envelope.EnvelopePriority", false);
     if (!data.isNull())
     {
         val = data.toInt();
@@ -488,8 +485,8 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
     d->formatCB->setCurrentIndex(0);
     d->formatCheck->setChecked(false);
-    format  = exiv2Iface.getIptcTagString("Iptc.Envelope.FileFormat", false);
-    version = exiv2Iface.getIptcTagString("Iptc.Envelope.FileVersion", false);
+    format  = meta.getIptcTagString("Iptc.Envelope.FileFormat", false);
+    version = meta.getIptcTagString("Iptc.Envelope.FileVersion", false);
     if (!format.isNull())
     {
         if (!version.isNull())
@@ -518,8 +515,8 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     }
     d->formatCB->setEnabled(d->formatCheck->isChecked());
 
-    dateStr = exiv2Iface.getIptcTagString("Iptc.Envelope.DateSent", false);
-    timeStr = exiv2Iface.getIptcTagString("Iptc.Envelope.TimeSent", false);
+    dateStr = meta.getIptcTagString("Iptc.Envelope.DateSent", false);
+    timeStr = meta.getIptcTagString("Iptc.Envelope.TimeSent", false);
 
     d->dateSentSel->setDate(QDate::currentDate());
     d->dateSentCheck->setChecked(false);
@@ -552,38 +549,38 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 
 void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
 
     if (d->destinationCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Envelope.Destination", d->destinationEdit->toPlainText());
+        meta.setIptcTagString("Iptc.Envelope.Destination", d->destinationEdit->toPlainText());
     else
-        exiv2Iface.removeIptcTag("Iptc.Envelope.Destination");
+        meta.removeIptcTag("Iptc.Envelope.Destination");
 
     if (d->envelopeIDCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Envelope.EnvelopeNumber", d->envelopeIDEdit->text());
+        meta.setIptcTagString("Iptc.Envelope.EnvelopeNumber", d->envelopeIDEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Envelope.EnvelopeNumber");
+        meta.removeIptcTag("Iptc.Envelope.EnvelopeNumber");
 
     if (d->serviceIDCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Envelope.ServiceId", d->serviceIDEdit->text());
+        meta.setIptcTagString("Iptc.Envelope.ServiceId", d->serviceIDEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Envelope.ServiceId");
+        meta.removeIptcTag("Iptc.Envelope.ServiceId");
 
     if (d->unoIDCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Envelope.UNO", d->unoIDEdit->text());
+        meta.setIptcTagString("Iptc.Envelope.UNO", d->unoIDEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Envelope.UNO");
+        meta.removeIptcTag("Iptc.Envelope.UNO");
 
     if (d->productIDCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Envelope.ProductId", d->productIDEdit->text());
+        meta.setIptcTagString("Iptc.Envelope.ProductId", d->productIDEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Envelope.ProductId");
+        meta.removeIptcTag("Iptc.Envelope.ProductId");
 
     if (d->priorityCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Envelope.EnvelopePriority", QString::number(d->priorityCB->currentIndex()));
+        meta.setIptcTagString("Iptc.Envelope.EnvelopePriority", QString::number(d->priorityCB->currentIndex()));
     else if (d->priorityCheck->isValid())
-        exiv2Iface.removeIptcTag("Iptc.Envelope.EnvelopePriority");
+        meta.removeIptcTag("Iptc.Envelope.EnvelopePriority");
 
     if (d->formatCheck->isChecked())
     {
@@ -599,30 +596,30 @@ void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
 
         QString format  = key.section('-', 0, 0);
         QString version = key.section('-', -1);
-        exiv2Iface.setIptcTagString("Iptc.Envelope.FileFormat", format);
-        exiv2Iface.setIptcTagString("Iptc.Envelope.FileVersion", version);
+        meta.setIptcTagString("Iptc.Envelope.FileFormat", format);
+        meta.setIptcTagString("Iptc.Envelope.FileVersion", version);
     }
     else if (d->priorityCheck->isValid())
     {
-        exiv2Iface.removeIptcTag("Iptc.Envelope.FileFormat");
-        exiv2Iface.removeIptcTag("Iptc.Envelope.FileVersion");
+        meta.removeIptcTag("Iptc.Envelope.FileFormat");
+        meta.removeIptcTag("Iptc.Envelope.FileVersion");
     }
 
     if (d->dateSentCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Envelope.DateSent",
+        meta.setIptcTagString("Iptc.Envelope.DateSent",
                                     d->dateSentSel->date().toString(Qt::ISODate));
     else
-        exiv2Iface.removeIptcTag("Iptc.Envelope.DateSent");
+        meta.removeIptcTag("Iptc.Envelope.DateSent");
 
     if (d->timeSentCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Envelope.TimeSent",
+        meta.setIptcTagString("Iptc.Envelope.TimeSent",
                                     d->timeSentSel->time().toString(Qt::ISODate));
     else
-        exiv2Iface.removeIptcTag("Iptc.Envelope.TimeSent");
+        meta.removeIptcTag("Iptc.Envelope.TimeSent");
 
-    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
-    iptcData = exiv2Iface.getIptc();
+    iptcData = meta.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin
