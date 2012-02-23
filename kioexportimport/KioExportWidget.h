@@ -34,8 +34,9 @@
 #include <kfiledialog.h>
 #include <kpushbutton.h>
 #include <kurl.h>
+#include <kurlrequester.h>
 
-class KUrlLabel;
+class KComboBox;
 
 namespace KIPI
 {
@@ -46,6 +47,9 @@ namespace KIPIPlugins
 {
     class ImagesList;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIKioExportPlugin
 {
@@ -62,7 +66,7 @@ public:
      * @param parent the parent widget
      * @param interface the KIPI interface to use
      */
-    KioExportWidget(QWidget *parent, KIPI::Interface *interface);
+    KioExportWidget(QWidget* parent, Interface* const interface);
 
     /**
      * Destructor.
@@ -72,7 +76,7 @@ public:
     /**
      * Returns a pointer to the imagelist that is displayed.
      */
-    KIPIPlugins::ImagesList* imagesList() const;
+    ImagesList* imagesList() const;
 
     /**
      * Returns the currently selected target url. Maybe invalid.
@@ -84,14 +88,17 @@ public:
      */
     void setTargetUrl(const KUrl& url);
 
+    KUrl::List history() const;
+    void setHistory(const KUrl::List& urls);
+
 private Q_SLOTS:
 
+    void slotLabelUrlChanged();
     void slotShowTargetDialogClicked(bool checked);
-    void slotProcessUrl(const QString&);
 
 Q_SIGNALS:
 
-    void signalTargetUrlChanged(const KUrl & target);
+    void signalTargetUrlChanged(const KUrl& target);
 
 private:
 
@@ -99,12 +106,12 @@ private:
 
 private:
 
-    KUrlLabel               *m_targetLabel;
-    KFileDialog             *m_targetDialog;
-    KPushButton             *m_targetSearchButton;
-    KUrl                     m_targetUrl;
-
-    KIPIPlugins::ImagesList *m_imageList;
+    KUrlRequester* m_targetLabel;
+    KFileDialog*   m_targetDialog;
+    KPushButton*   m_targetSearchButton;
+    KUrl           m_targetUrl;
+    KComboBox*     m_comboUrl;
+    ImagesList*    m_imageList;
 };
 
 } // namespace KIPIKioExportPlugin

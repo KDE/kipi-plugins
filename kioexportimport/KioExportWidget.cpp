@@ -34,25 +34,33 @@
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <kdebug.h>
-#include <kurllabel.h>
 #include <khbox.h>
 #include <ktoolinvocation.h>
+#include <kcombobox.h>
 
 // Local includes
 
 #include "imageslist.h"
+#include "KioExportWidget.h"
 
 namespace KIPIKioExportPlugin
 {
 
-KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
-               : QWidget(parent)
+KioExportWidget::KioExportWidget(QWidget* parent, Interface* const interface)
+    : QWidget(parent)
 {
     // setup kio target selection
 
-    KHBox *hbox   = new KHBox(this);
-    QLabel *label = new QLabel(hbox);
-    m_targetLabel = new KUrlLabel(hbox);
+    KHBox* hbox   = new KHBox(this);
+    QLabel* label = new QLabel(hbox);
+    m_comboUrl    = new KComboBox(false);
+    m_targetLabel = new KUrlRequester(m_comboUrl, hbox);
+
+    if(m_targetLabel->button())
+      m_targetLabel->button()->hide();
+
+    m_targetLabel->comboBox()->setEditable(true);
+
     label->setText(i18n("Target location: "));
     m_targetLabel->setWhatsThis(i18n(
                     "Sets the target address to upload the images to. "
@@ -63,7 +71,7 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     m_targetSearchButton->setIcon(KIcon("folder-remote"));
 
     // setup image list
-    m_imageList = new KIPIPlugins::ImagesList(interface, this);
+    m_imageList = new ImagesList(interface, this);
     m_imageList->setAllowRAW(true);
     m_imageList->listView()->setWhatsThis(i18n("This is the list of images to upload "
                                                "to the specified target."));
@@ -83,8 +91,8 @@ KioExportWidget::KioExportWidget(QWidget *parent, KIPI::Interface *interface)
     connect(m_targetSearchButton, SIGNAL(clicked(bool)),
             this, SLOT(slotShowTargetDialogClicked(bool)));
 
-    connect(m_targetLabel, SIGNAL(leftClickedUrl(QString)),
-            this, SLOT(slotProcessUrl(QString)));
+    connect(m_targetLabel, SIGNAL(textChanged(QString)),
+            this, SLOT(slotLabelUrlChanged()));
 
     // ------------------------------------------------------------------------
 
@@ -100,41 +108,54 @@ KUrl KioExportWidget::targetUrl() const
     return m_targetUrl;
 }
 
+KUrl::List KioExportWidget::history() const
+{
+    KUrl::List urls;
+    for (int i=0; i <= m_comboUrl->count(); i++)
+        urls << m_comboUrl->itemText(i);
+
+    return urls;
+}
+
+void KioExportWidget::setHistory(const KUrl::List& urls)
+{
+    m_comboUrl->clear();
+
+    foreach (KUrl url, urls)
+        m_comboUrl->addUrl(url);
+}
+
 void KioExportWidget::setTargetUrl(const KUrl& url)
 {
     m_targetUrl = url;
     updateTargetLabel();
 }
 
-void KioExportWidget::slotProcessUrl(const QString& url)
-{
-    KToolInvocation::self()->invokeBrowser(url);
-}
-
 void KioExportWidget::slotShowTargetDialogClicked(bool checked)
 {
     Q_UNUSED(checked);
-    
+
     m_targetDialog = new KFileDialog(KUrl(), "*", this);
     m_targetDialog->setMode(KFile::Directory);
     m_targetDialog->setWindowTitle(i18n("Select target..."));
     m_targetDialog->setOperationMode(KFileDialog::Other);
     m_targetDialog->setUrl(m_targetUrl); // should this check if m_targetUrl is non-null?
-    
-    if (m_targetDialog->exec() == KFileDialog::Accepted) {
+
+    if (m_targetDialog->exec() == KFileDialog::Accepted)
+    {
         m_targetUrl = m_targetDialog->selectedUrl();
         updateTargetLabel();
         emit signalTargetUrlChanged(m_targetUrl);
     }
-    
+
     delete m_targetDialog;
 }
 
 void KioExportWidget::updateTargetLabel()
 {
-    kDebug() << "KioExportWidget::updateTargetLabel called for url "
-                  << m_targetUrl.prettyUrl() << ", valid = "
-                  << m_targetUrl.isValid();
+    kDebug() << "Call for url "
+             << m_targetUrl.prettyUrl() << ", valid = "
+             << m_targetUrl.isValid();
 
     QString urlString = '<' + i18n("not selected") + '>';
     if (m_targetUrl.isValid())
@@ -142,14 +163,17 @@ void KioExportWidget::updateTargetLabel()
         urlString = m_targetUrl.prettyUrl();
         m_targetLabel->setUrl(urlString);
     }
-
-    m_targetLabel->setOpenExternalLinks(m_targetUrl.isValid());
-    m_targetLabel->setText(urlString);
 }
 
-KIPIPlugins::ImagesList* KioExportWidget::imagesList() const
+ImagesList* KioExportWidget::imagesList() const
 {
     return m_imageList;
+}
+
+void KioExportWidget::slotLabelUrlChanged()
+{
+    m_targetUrl = m_targetLabel->url();
+    emit signalTargetUrlChanged(m_targetUrl);
 }
 
 } // namespace KIPIKioExportPlugin

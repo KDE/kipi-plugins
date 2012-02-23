@@ -44,6 +44,9 @@ namespace KIPIPlugins
     class KPAboutData;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPIKioExportPlugin
 {
 
@@ -63,7 +66,7 @@ public:
      * @param parent parent QWidget
      * @param interface pointer to the KIPI interface to use. Must not be null.
      */
-    KioExportWindow(QWidget *parent, KIPI::Interface *interface);
+    KioExportWindow(QWidget* parent, Interface* const interface);
 
     /**
      * Destructor.
@@ -96,7 +99,7 @@ private Q_SLOTS:
     /**
      * Removes the copied image from the image list.
      */
-    void slotCopyingDone(KIO::Job *job, const KUrl& from, const KUrl& to,
+    void slotCopyingDone(KIO::Job* job, const KUrl& from, const KUrl& to,
                          time_t mtime, bool directory, bool renamed);
 
     /**
@@ -120,7 +123,7 @@ protected:
     /**
      * Handle Close event from dialog title bar.
      */
-    void closeEvent(QCloseEvent *e);
+    void closeEvent(QCloseEvent* e);
 
     /**
      * Refresh status (enabled / disabled) of the upload button according to
@@ -141,15 +144,16 @@ protected:
 private:
 
     const static QString TARGET_URL_PROPERTY;
+    const static QString HISTORY_URL_PROPERTY;
     const static QString CONFIG_GROUP;
 
 private:
 
-    KIPI::Interface          *m_interface;
+    Interface*       m_interface;
 
-    KioExportWidget          *m_exportWidget;
+    KioExportWidget* m_exportWidget;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KPAboutData*     m_about;
 };
 
 } // namespace KIPIKioExportPlugin
