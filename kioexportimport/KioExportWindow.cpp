@@ -231,7 +231,7 @@ void KioExportWindow::slotUpload()
 
     // start copying and react on signals
     setEnabled(false);
-    KIO::CopyJob *copyJob = KIO::copy(m_exportWidget->imagesList()->imageUrls(),
+    KIO::CopyJob* copyJob = KIO::copy(m_exportWidget->imagesList()->imageUrls(),
                             m_exportWidget->targetUrl());
 
     connect(copyJob, SIGNAL(copyingDone(KIO::Job*, KUrl, KUrl, time_t, bool, bool)),
