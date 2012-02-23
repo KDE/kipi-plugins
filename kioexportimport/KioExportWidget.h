@@ -106,12 +106,11 @@ private:
 
 private:
 
-    KUrlRequester* m_targetLabel;
-    KFileDialog*   m_targetDialog;
-    KPushButton*   m_targetSearchButton;
-    KUrl           m_targetUrl;
-    KComboBox*     m_comboUrl;
-    ImagesList*    m_imageList;
+    KUrlComboRequester* m_targetLabel;
+    KFileDialog*        m_targetDialog;
+    KPushButton*        m_targetSearchButton;
+    KUrl                m_targetUrl;
+    ImagesList*         m_imageList;
 };
 
 } // namespace KIPIKioExportPlugin

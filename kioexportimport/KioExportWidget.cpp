@@ -53,11 +53,10 @@ KioExportWidget::KioExportWidget(QWidget* parent, Interface* const interface)
 
     KHBox* hbox   = new KHBox(this);
     QLabel* label = new QLabel(hbox);
-    m_comboUrl    = new KComboBox(false);
-    m_targetLabel = new KUrlRequester(m_comboUrl, hbox);
+    m_targetLabel = new KUrlComboRequester(hbox);
 
     if(m_targetLabel->button())
-      m_targetLabel->button()->hide();
+        m_targetLabel->button()->hide();
 
     m_targetLabel->comboBox()->setEditable(true);
 
@@ -111,18 +110,18 @@ KUrl KioExportWidget::targetUrl() const
 KUrl::List KioExportWidget::history() const
 {
     KUrl::List urls;
-    for (int i=0; i <= m_comboUrl->count(); i++)
-        urls << m_comboUrl->itemText(i);
+    for (int i=0; i <= m_targetLabel->comboBox()->count(); i++)
+        urls << m_targetLabel->comboBox()->itemText(i);
 
     return urls;
 }
 
 void KioExportWidget::setHistory(const KUrl::List& urls)
 {
-    m_comboUrl->clear();
+    m_targetLabel->comboBox()->clear();
 
     foreach (KUrl url, urls)
-        m_comboUrl->addUrl(url);
+        m_targetLabel->comboBox()->addUrl(url);
 }
 
 void KioExportWidget::setTargetUrl(const KUrl& url)
