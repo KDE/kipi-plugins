@@ -6,7 +6,7 @@
  * Date        : 2007-10-18
  * Description : XMP content settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,15 +43,15 @@ public:
     void applyMetadata(QByteArray& exifData, QByteArray& xmpData);
     void readMetadata(QByteArray& xmpData);
 
-    bool syncJFIFCommentIsChecked();
-    bool syncHOSTCommentIsChecked();
-    bool syncEXIFCommentIsChecked();
+    bool syncJFIFCommentIsChecked() const;
+    bool syncHOSTCommentIsChecked() const;
+    bool syncEXIFCommentIsChecked() const;
 
     void setCheckedSyncJFIFComment(bool c);
     void setCheckedSyncHOSTComment(bool c);
     void setCheckedSyncEXIFComment(bool c);
 
-    QString getXMPCaption();
+    QString getXMPCaption() const;
 
 Q_SIGNALS:
 

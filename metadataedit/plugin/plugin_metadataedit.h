@@ -54,7 +54,7 @@ public:
     Plugin_MetadataEdit(QObject* parent, const QVariantList& args);
     ~Plugin_MetadataEdit();
 
-    virtual KIPI::Category category(KAction* action) const;
+    virtual Category category(KAction* action) const;
     virtual void setup(QWidget*);
 
 protected Q_SLOTS:

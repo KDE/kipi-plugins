@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP workflow status properties settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -41,10 +41,6 @@
 #include <kdebug.h>
 #include <kconfiggroup.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/squeezedcombobox.h>
@@ -56,9 +52,10 @@
 #include "multivaluesedit.h"
 #include "objectattributesedit.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
 
+using namespace KIPIPlugins;
 using namespace KDcrawIface;
-using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -336,18 +333,18 @@ XMPProperties::~XMPProperties()
 void XMPProperties::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
 
     int         val;
     QString     data;
     QStringList code, list, list2;
     QString     dateStr, timeStr;
-    KExiv2::AltLangMap map;
+    KPMetadata::AltLangMap map;
 
     // ---------------------------------------------------------------
 
-    code = exiv2Iface.getXmpTagStringBag("Xmp.dc.language", false);
+    code = meta.getXmpTagStringBag("Xmp.dc.language", false);
     for (QStringList::Iterator it = code.begin(); it != code.end(); ++it)
     {
         QStringList data = d->languageEdit->getData();
@@ -369,7 +366,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Urgency", false);
+    data = meta.getXmpTagString("Xmp.photoshop.Urgency", false);
     if (!data.isNull())
     {
         val = data.toInt();
@@ -385,7 +382,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 
     // ---------------------------------------------------------------
 
-    code = exiv2Iface.getXmpTagStringBag("Xmp.iptc.Scene", false);
+    code = meta.getXmpTagStringBag("Xmp.iptc.Scene", false);
     for (QStringList::Iterator it = code.begin(); it != code.end(); ++it)
     {
         QStringList data = d->sceneEdit->getData();
@@ -405,7 +402,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 
     // ---------------------------------------------------------------
 
-    code = exiv2Iface.getXmpTagStringBag("Xmp.dc.Type", false);
+    code = meta.getXmpTagStringBag("Xmp.dc.Type", false);
     for (QStringList::Iterator it3 = code.begin(); it3 != code.end(); ++it3)
     {
         QStringList data = d->objectTypeEdit->getData();
@@ -428,7 +425,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     d->objectAttributeCB->setCurrentIndex(0);
     d->objectAttributeEdit->clear();
     d->objectAttributeCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.IntellectualGenre", false);
+    data = meta.getXmpTagString("Xmp.iptc.IntellectualGenre", false);
     if (!data.isNull())
     {
         QString attrSec = data.section(':', 0, 0);
@@ -452,7 +449,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 
     d->originalTransEdit->clear();
     d->originalTransCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.TransmissionReference", false);
+    data = meta.getXmpTagString("Xmp.photoshop.TransmissionReference", false);
     if (!data.isNull())
     {
         d->originalTransEdit->setText(data);
@@ -468,8 +465,8 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
 void XMPProperties::applyMetadata(QByteArray& xmpData)
 {
     QStringList oldList, newList;
-    KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
 
     // ---------------------------------------------------------------
 
@@ -480,19 +477,19 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
         for (QStringList::Iterator it2 = newList.begin(); it2 != newList.end(); ++it2)
             newCode.append((*it2).left(2));
 
-        exiv2Iface.setXmpTagStringBag("Xmp.dc.language", newCode, false);
+        meta.setXmpTagStringBag("Xmp.dc.language", newCode, false);
     }
     else
     {
-        exiv2Iface.removeXmpTag("Xmp.dc.language");
+        meta.removeXmpTag("Xmp.dc.language");
     }
 
     // ---------------------------------------------------------------
 
     if (d->priorityCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.Urgency", QString::number(d->priorityCB->currentIndex()));
+        meta.setXmpTagString("Xmp.photoshop.Urgency", QString::number(d->priorityCB->currentIndex()));
     else if (d->priorityCheck->isValid())
-        exiv2Iface.removeXmpTag("Xmp.photoshop.Urgency");
+        meta.removeXmpTag("Xmp.photoshop.Urgency");
 
     // ---------------------------------------------------------------
 
@@ -503,19 +500,19 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
         for (QStringList::Iterator it2 = newList.begin(); it2 != newList.end(); ++it2)
             newCode.append((*it2).left(6));
 
-        exiv2Iface.setXmpTagStringBag("Xmp.iptc.Scene", newCode, false);
+        meta.setXmpTagStringBag("Xmp.iptc.Scene", newCode, false);
     }
     else
     {
-        exiv2Iface.removeXmpTag("Xmp.iptc.Scene");
+        meta.removeXmpTag("Xmp.iptc.Scene");
     }
 
     // ---------------------------------------------------------------
 
     if (d->objectTypeEdit->getValues(oldList, newList))
-        exiv2Iface.setXmpTagStringBag("Xmp.dc.Type", newList, false);
+        meta.setXmpTagStringBag("Xmp.dc.Type", newList, false);
     else
-        exiv2Iface.removeXmpTag("Xmp.dc.Type");
+        meta.removeXmpTag("Xmp.dc.Type");
 
     // ---------------------------------------------------------------
 
@@ -524,25 +521,25 @@ void XMPProperties::applyMetadata(QByteArray& xmpData)
         QString objectAttribute;
         objectAttribute.sprintf("%3d", d->objectAttributeCB->currentIndex()+1);
         objectAttribute.append(QString(":%1").arg(d->objectAttributeEdit->text()));
-        exiv2Iface.setXmpTagString("Xmp.iptc.IntellectualGenre", objectAttribute);
+        meta.setXmpTagString("Xmp.iptc.IntellectualGenre", objectAttribute);
     }
     else if (d->objectAttributeCheck->isValid())
     {
-        exiv2Iface.removeXmpTag("Xmp.iptc.IntellectualGenre");
+        meta.removeXmpTag("Xmp.iptc.IntellectualGenre");
     }
 
     // ---------------------------------------------------------------
 
     if (d->originalTransCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.TransmissionReference", d->originalTransEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.TransmissionReference", d->originalTransEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.TransmissionReference");
+        meta.removeXmpTag("Xmp.photoshop.TransmissionReference");
 
     // ---------------------------------------------------------------
 
-    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
-    xmpData = exiv2Iface.getXmp();
+    xmpData = meta.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP workflow status settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,17 +37,14 @@
 #include <kseparator.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "altlangstringedit.h"
 #include "multistringsedit.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -161,21 +158,21 @@ XMPStatus::~XMPStatus()
 void XMPStatus::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
 
     QString            data;
     QStringList        list;
-    KExiv2::AltLangMap map;
+    KPMetadata::AltLangMap map;
 
     d->objectNameEdit->setValid(false);
-    map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.title", false);
+    map = meta.getXmpTagStringListLangAlt("Xmp.dc.title", false);
     if (!map.isEmpty())
         d->objectNameEdit->setValues(map);
 
     d->nicknameEdit->clear();
     d->nicknameCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.xmp.Nickname", false);
+    data = meta.getXmpTagString("Xmp.xmp.Nickname", false);
     if (!data.isNull())
     {
         d->nicknameEdit->setText(data);
@@ -183,12 +180,12 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     }
     d->nicknameEdit->setEnabled(d->nicknameCheck->isChecked());
 
-    list = exiv2Iface.getXmpTagStringSeq("Xmp.xmp.Identifier", false);
+    list = meta.getXmpTagStringSeq("Xmp.xmp.Identifier", false);
     d->identifiersEdit->setValues(list);
 
     d->specialInstructionEdit->clear();
     d->specialInstructionCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Instructions", false);
+    data = meta.getXmpTagString("Xmp.photoshop.Instructions", false);
     if (!data.isNull())
     {
         d->specialInstructionEdit->setText(data);
@@ -202,33 +199,33 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
 void XMPStatus::applyMetadata(QByteArray& xmpData)
 {
     QStringList oldList, newList;
-    KExiv2      exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata      meta;
+    meta.setXmp(xmpData);
 
-    KExiv2::AltLangMap oldAltLangMap, newAltLangMap;
+    KPMetadata::AltLangMap oldAltLangMap, newAltLangMap;
     if (d->objectNameEdit->getValues(oldAltLangMap, newAltLangMap))
-        exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.title", newAltLangMap, false);
+        meta.setXmpTagStringListLangAlt("Xmp.dc.title", newAltLangMap, false);
     else if (d->objectNameEdit->isValid())
-        exiv2Iface.removeXmpTag("Xmp.dc.title");
+        meta.removeXmpTag("Xmp.dc.title");
 
     if (d->nicknameCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.xmp.Nickname", d->nicknameEdit->text());
+        meta.setXmpTagString("Xmp.xmp.Nickname", d->nicknameEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.xmp.Nickname");
+        meta.removeXmpTag("Xmp.xmp.Nickname");
 
     if (d->identifiersEdit->getValues(oldList, newList))
-        exiv2Iface.setXmpTagStringSeq("Xmp.xmp.Identifier", newList);
+        meta.setXmpTagStringSeq("Xmp.xmp.Identifier", newList);
     else
-        exiv2Iface.removeXmpTag("Xmp.xmp.Identifier");
+        meta.removeXmpTag("Xmp.xmp.Identifier");
 
     if (d->specialInstructionCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.Instructions", d->specialInstructionEdit->toPlainText());
+        meta.setXmpTagString("Xmp.photoshop.Instructions", d->specialInstructionEdit->toPlainText());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.Instructions");
+        meta.removeXmpTag("Xmp.photoshop.Instructions");
 
-    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
-    xmpData = exiv2Iface.getXmp();
+    xmpData = meta.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

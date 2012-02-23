@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP credits settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,15 +35,12 @@
 #include <klineedit.h>
 #include <klocale.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "multistringsedit.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -315,17 +312,17 @@ XMPCredits::~XMPCredits()
 void XMPCredits::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
     QString     data;
     QStringList list;
 
-    list = exiv2Iface.getXmpTagStringSeq("Xmp.dc.creator", false);
+    list = meta.getXmpTagStringSeq("Xmp.dc.creator", false);
     d->bylineEdit->setValues(list);
 
     d->bylineTitleEdit->clear();
     d->bylineTitleCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.AuthorsPosition", false);
+    data = meta.getXmpTagString("Xmp.photoshop.AuthorsPosition", false);
     if (!data.isNull())
     {
         d->bylineTitleEdit->setText(data);
@@ -335,7 +332,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->emailEdit->clear();
     d->emailCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiEmailWork", false);
+    data = meta.getXmpTagString("Xmp.iptc.CiEmailWork", false);
     if (!data.isNull())
     {
         d->emailEdit->setText(data);
@@ -345,7 +342,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->urlEdit->clear();
     d->urlCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiUrlWork", false);
+    data = meta.getXmpTagString("Xmp.iptc.CiUrlWork", false);
     if (!data.isNull())
     {
         d->urlEdit->setText(data);
@@ -355,7 +352,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->phoneEdit->clear();
     d->phoneCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiTelWork", false);
+    data = meta.getXmpTagString("Xmp.iptc.CiTelWork", false);
     if (!data.isNull())
     {
         d->phoneEdit->setText(data);
@@ -365,7 +362,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->addressEdit->clear();
     d->addressCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrExtadr", false);
+    data = meta.getXmpTagString("Xmp.iptc.CiAdrExtadr", false);
     if (!data.isNull())
     {
         d->addressEdit->setText(data);
@@ -375,7 +372,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->postalCodeEdit->clear();
     d->postalCodeCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrPcode", false);
+    data = meta.getXmpTagString("Xmp.iptc.CiAdrPcode", false);
     if (!data.isNull())
     {
         d->postalCodeEdit->setText(data);
@@ -385,7 +382,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrCity", false);
+    data = meta.getXmpTagString("Xmp.iptc.CiAdrCity", false);
     if (!data.isNull())
     {
         d->cityEdit->setText(data);
@@ -395,7 +392,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->countryEdit->clear();
     d->countryCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CiAdrCtry", false);
+    data = meta.getXmpTagString("Xmp.iptc.CiAdrCtry", false);
     if (!data.isNull())
     {
         d->countryEdit->setText(data);
@@ -405,7 +402,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->creditEdit->clear();
     d->creditCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Credit", false);
+    data = meta.getXmpTagString("Xmp.photoshop.Credit", false);
     if (!data.isNull())
     {
         d->creditEdit->setText(data);
@@ -415,9 +412,9 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 
     d->sourceEdit->clear();
     d->sourceCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Source", false);
+    data = meta.getXmpTagString("Xmp.photoshop.Source", false);
     if (data.isNull())
-        data = exiv2Iface.getXmpTagString("Xmp.dc.source", false);
+        data = meta.getXmpTagString("Xmp.dc.source", false);
 
     if (!data.isNull())
     {
@@ -432,71 +429,71 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
 void XMPCredits::applyMetadata(QByteArray& xmpData)
 {
     QStringList oldList, newList;
-    KExiv2Iface::KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
 
     if (d->bylineEdit->getValues(oldList, newList))
-        exiv2Iface.setXmpTagStringSeq("Xmp.dc.creator", newList);
+        meta.setXmpTagStringSeq("Xmp.dc.creator", newList);
     else
-        exiv2Iface.removeXmpTag("Xmp.dc.creator");
+        meta.removeXmpTag("Xmp.dc.creator");
 
     if (d->bylineTitleCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.AuthorsPosition", d->bylineTitleEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.AuthorsPosition", d->bylineTitleEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.AuthorsPosition");
+        meta.removeXmpTag("Xmp.photoshop.AuthorsPosition");
 
     if (d->emailCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.iptc.CiEmailWork", d->emailEdit->text());
+        meta.setXmpTagString("Xmp.iptc.CiEmailWork", d->emailEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.iptc.CiEmailWork");
+        meta.removeXmpTag("Xmp.iptc.CiEmailWork");
 
     if (d->urlCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.iptc.CiUrlWork", d->urlEdit->text());
+        meta.setXmpTagString("Xmp.iptc.CiUrlWork", d->urlEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.iptc.CiUrlWork");
+        meta.removeXmpTag("Xmp.iptc.CiUrlWork");
 
     if (d->phoneCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.iptc.CiTelWork", d->phoneEdit->text());
+        meta.setXmpTagString("Xmp.iptc.CiTelWork", d->phoneEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.iptc.CiTelWork");
+        meta.removeXmpTag("Xmp.iptc.CiTelWork");
 
     if (d->addressCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.iptc.CiAdrExtadr", d->addressEdit->text());
+        meta.setXmpTagString("Xmp.iptc.CiAdrExtadr", d->addressEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.iptc.CiAdrExtadr");
+        meta.removeXmpTag("Xmp.iptc.CiAdrExtadr");
 
     if (d->postalCodeCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.iptc.CiAdrPcode", d->postalCodeEdit->text());
+        meta.setXmpTagString("Xmp.iptc.CiAdrPcode", d->postalCodeEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.iptc.CiAdrPcode");
+        meta.removeXmpTag("Xmp.iptc.CiAdrPcode");
 
     if (d->cityCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.iptc.CiAdrCity", d->cityEdit->text());
+        meta.setXmpTagString("Xmp.iptc.CiAdrCity", d->cityEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.iptc.CiAdrCity");
+        meta.removeXmpTag("Xmp.iptc.CiAdrCity");
 
     if (d->countryCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.iptc.CiAdrCtry", d->countryEdit->text());
+        meta.setXmpTagString("Xmp.iptc.CiAdrCtry", d->countryEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.iptc.CiAdrCtry");
+        meta.removeXmpTag("Xmp.iptc.CiAdrCtry");
 
     if (d->creditCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.Credit", d->creditEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.Credit", d->creditEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.Credit");
+        meta.removeXmpTag("Xmp.photoshop.Credit");
 
     if (d->sourceCheck->isChecked())
     {
-        exiv2Iface.setXmpTagString("Xmp.photoshop.Source", d->sourceEdit->text());
-        exiv2Iface.setXmpTagString("Xmp.dc.source", d->sourceEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.Source", d->sourceEdit->text());
+        meta.setXmpTagString("Xmp.dc.source", d->sourceEdit->text());
     }
     else
     {
-        exiv2Iface.removeXmpTag("Xmp.photoshop.Source");
-        exiv2Iface.removeXmpTag("Xmp.dc.source");
+        meta.removeXmpTag("Xmp.photoshop.Source");
+        meta.removeXmpTag("Xmp.dc.source");
     }
 
-    xmpData = exiv2Iface.getXmp();
+    xmpData = meta.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

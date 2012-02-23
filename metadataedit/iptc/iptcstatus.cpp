@@ -75,7 +75,7 @@ public:
 };
 
 IPTCStatus::IPTCStatus(QWidget* parent)
-          : QWidget(parent), d(new IPTCStatusPriv)
+    : QWidget(parent), d(new IPTCStatusPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 

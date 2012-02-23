@@ -35,10 +35,6 @@
 
 #include <kurl.h>
 
-// LibKexiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kipiplugins_export.h"

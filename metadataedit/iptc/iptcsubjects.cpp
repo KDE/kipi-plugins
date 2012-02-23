@@ -31,17 +31,11 @@
 
 #include <klocale.h>
 
-// Local includes
-
-#include "kpmetadata.h"
-
-using namespace KIPIPlugins;
-
 namespace KIPIMetadataEditPlugin
 {
 
 IPTCSubjects::IPTCSubjects(QWidget* parent)
-            : SubjectWidget(parent)
+    : SubjectWidget(parent)
 {
     // Subject string only accept printable Ascii char excepted these one:
     // - '*' (\x2A)

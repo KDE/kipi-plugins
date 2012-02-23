@@ -6,7 +6,7 @@
  * Date        : 2007-10-16
  * Description : XMP keywords settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,11 +36,11 @@
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKExiv2 includes
+// Local includes
 
-#include <libkexiv2/kexiv2.h>
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -223,9 +223,9 @@ void XMPKeywords::slotAddKeyword()
 void XMPKeywords::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
-    d->oldKeywords = exiv2Iface.getXmpKeywords();
+    KPMetadata meta;
+    meta.setXmp(xmpData);
+    d->oldKeywords = meta.getXmpKeywords();
 
     d->keywordsBox->clear();
     d->keywordsCheck->setChecked(false);
@@ -244,8 +244,8 @@ void XMPKeywords::readMetadata(QByteArray& xmpData)
 
 void XMPKeywords::applyMetadata(QByteArray& xmpData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
     QStringList newKeywords;
 
     for (int i = 0 ; i < d->keywordsBox->count(); ++i)
@@ -255,13 +255,13 @@ void XMPKeywords::applyMetadata(QByteArray& xmpData)
     }
 
     // We remove in first all existing keywords.
-    exiv2Iface.removeXmpTag("Xmp.dc.subject");
+    meta.removeXmpTag("Xmp.dc.subject");
 
     // And add new list if necessary.
     if (d->keywordsCheck->isChecked())
-        exiv2Iface.setXmpKeywords(newKeywords);
+        meta.setXmpKeywords(newKeywords);
 
-    xmpData = exiv2Iface.getXmp();
+    xmpData = meta.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

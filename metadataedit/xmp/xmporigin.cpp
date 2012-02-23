@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP origin settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,8 +44,6 @@
 
 // LibKExiv2 includes
 
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
 #include <libkexiv2/countryselector.h>
 
 // LibKDcraw includes
@@ -55,9 +53,10 @@
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "kpmetadata.h"
 
+using namespace KIPIPlugins;
 using namespace KDcrawIface;
-using namespace KExiv2Iface;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -291,12 +290,12 @@ void XMPOrigin::slotSetTodayDigitalized()
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
 }
 
-bool XMPOrigin::syncHOSTDateIsChecked()
+bool XMPOrigin::syncHOSTDateIsChecked() const
 {
     return d->syncHOSTDateCheck->isChecked();
 }
 
-bool XMPOrigin::syncEXIFDateIsChecked()
+bool XMPOrigin::syncEXIFDateIsChecked() const
 {
     return d->syncEXIFDateCheck->isChecked();
 }
@@ -311,7 +310,7 @@ void XMPOrigin::setCheckedSyncEXIFDate(bool c)
     d->syncEXIFDateCheck->setChecked(c);
 }
 
-QDateTime XMPOrigin::getXMPCreationDate()
+QDateTime XMPOrigin::getXMPCreationDate() const
 {
     return d->dateCreatedSel->dateTime();
 }
@@ -319,29 +318,29 @@ QDateTime XMPOrigin::getXMPCreationDate()
 void XMPOrigin::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
 
     QString     data;
     QStringList code, list;
     QDateTime   dateTime;
     QString     dateTimeStr;
 
-    dateTimeStr = exiv2Iface.getXmpTagString("Xmp.photoshop.DateCreated", false);
+    dateTimeStr = meta.getXmpTagString("Xmp.photoshop.DateCreated", false);
     if (dateTimeStr.isEmpty())
-        dateTimeStr = exiv2Iface.getXmpTagString("Xmp.xmp.CreateDate", false);
+        dateTimeStr = meta.getXmpTagString("Xmp.xmp.CreateDate", false);
     else if (dateTimeStr.isEmpty())
-        dateTimeStr = exiv2Iface.getXmpTagString("Xmp.xmp.ModifyDate", false);
+        dateTimeStr = meta.getXmpTagString("Xmp.xmp.ModifyDate", false);
     else if (dateTimeStr.isEmpty())
-        dateTimeStr = exiv2Iface.getXmpTagString("Xmp.exif.DateTimeCreated", false);
+        dateTimeStr = meta.getXmpTagString("Xmp.exif.DateTimeCreated", false);
     else if (dateTimeStr.isEmpty())
-        dateTimeStr = exiv2Iface.getXmpTagString("Xmp.exif.DateTimeOriginal", false);
+        dateTimeStr = meta.getXmpTagString("Xmp.exif.DateTimeOriginal", false);
     else if (dateTimeStr.isEmpty())
-        dateTimeStr = exiv2Iface.getXmpTagString("Xmp.tiff.DateTime", false);
+        dateTimeStr = meta.getXmpTagString("Xmp.tiff.DateTime", false);
     else if (dateTimeStr.isEmpty())
-        dateTimeStr = exiv2Iface.getXmpTagString("Xmp.xmp.ModifyDate", false);
+        dateTimeStr = meta.getXmpTagString("Xmp.xmp.ModifyDate", false);
     else if (dateTimeStr.isEmpty())
-        dateTimeStr = exiv2Iface.getXmpTagString("Xmp.xmp.MetadataDate", false);
+        dateTimeStr = meta.getXmpTagString("Xmp.xmp.MetadataDate", false);
 
     d->dateCreatedSel->setDateTime(QDateTime::currentDateTime());
     d->dateCreatedCheck->setChecked(false);
@@ -358,7 +357,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
     d->syncHOSTDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
     d->syncEXIFDateCheck->setEnabled(d->dateCreatedCheck->isChecked());
 
-    dateTimeStr = exiv2Iface.getXmpTagString("Xmp.exif.DateTimeDigitized", false);
+    dateTimeStr = meta.getXmpTagString("Xmp.exif.DateTimeDigitized", false);
 
     d->dateDigitalizedSel->setDateTime(QDateTime::currentDateTime());
     d->dateDigitalizedCheck->setChecked(false);
@@ -375,7 +374,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->cityEdit->clear();
     d->cityCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.City", false);
+    data = meta.getXmpTagString("Xmp.photoshop.City", false);
     if (!data.isNull())
     {
         d->cityEdit->setText(data);
@@ -385,7 +384,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->sublocationEdit->clear();
     d->sublocationCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.Location", false);
+    data = meta.getXmpTagString("Xmp.iptc.Location", false);
     if (!data.isNull())
     {
         d->sublocationEdit->setText(data);
@@ -395,7 +394,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->provinceEdit->clear();
     d->provinceCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.State", false);
+    data = meta.getXmpTagString("Xmp.photoshop.State", false);
     if (!data.isNull())
     {
         d->provinceEdit->setText(data);
@@ -405,7 +404,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
     d->countryCB->setCurrentIndex(0);
     d->countryCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.iptc.CountryCode", false);
+    data = meta.getXmpTagString("Xmp.iptc.CountryCode", false);
     if (!data.isNull())
     {
         int item = -1;
@@ -428,84 +427,84 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
 
 void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setExif(exifData);
+    meta.setXmp(xmpData);
 
     if (d->dateCreatedCheck->isChecked())
     {
-        exiv2Iface.setXmpTagString("Xmp.photoshop.DateCreated",
+        meta.setXmpTagString("Xmp.photoshop.DateCreated",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
-        exiv2Iface.setXmpTagString("Xmp.xmp.CreateDate",
+        meta.setXmpTagString("Xmp.xmp.CreateDate",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
-        exiv2Iface.setXmpTagString("Xmp.exif.DateTimeCreated",
+        meta.setXmpTagString("Xmp.exif.DateTimeCreated",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
-        exiv2Iface.setXmpTagString("Xmp.exif.DateTimeOriginal",
+        meta.setXmpTagString("Xmp.exif.DateTimeOriginal",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
-        exiv2Iface.setXmpTagString("Xmp.tiff.DateTime",
+        meta.setXmpTagString("Xmp.tiff.DateTime",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
-        exiv2Iface.setXmpTagString("Xmp.xmp.ModifyDate",
+        meta.setXmpTagString("Xmp.xmp.ModifyDate",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
-        exiv2Iface.setXmpTagString("Xmp.xmp.MetadataDate",
+        meta.setXmpTagString("Xmp.xmp.MetadataDate",
                                    getXMPCreationDate().toString("yyyy:MM:dd hh:mm:ss"));
         if (syncEXIFDateIsChecked())
         {
-            exiv2Iface.setExifTagString("Exif.Image.DateTime",
+            meta.setExifTagString("Exif.Image.DateTime",
                     getXMPCreationDate().toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
         }
     }
     else
     {
-        exiv2Iface.removeXmpTag("Xmp.photoshop.DateCreated");
-        exiv2Iface.removeXmpTag("Xmp.xmp.CreateDate");
-        exiv2Iface.removeXmpTag("Xmp.exif.DateTimeCreated");
-        exiv2Iface.removeXmpTag("Xmp.exif.DateTimeOriginal");
-        exiv2Iface.removeXmpTag("Xmp.tiff.DateTime");
-        exiv2Iface.removeXmpTag("Xmp.xmp.ModifyDate");
-        exiv2Iface.removeXmpTag("Xmp.xmp.MetadataDate");
+        meta.removeXmpTag("Xmp.photoshop.DateCreated");
+        meta.removeXmpTag("Xmp.xmp.CreateDate");
+        meta.removeXmpTag("Xmp.exif.DateTimeCreated");
+        meta.removeXmpTag("Xmp.exif.DateTimeOriginal");
+        meta.removeXmpTag("Xmp.tiff.DateTime");
+        meta.removeXmpTag("Xmp.xmp.ModifyDate");
+        meta.removeXmpTag("Xmp.xmp.MetadataDate");
     }
 
     if (d->dateDigitalizedCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.exif.DateTimeDigitized",
+        meta.setXmpTagString("Xmp.exif.DateTimeDigitized",
                                    d->dateDigitalizedSel->dateTime().toString("yyyy:MM:dd hh:mm:ss"));
     else
-        exiv2Iface.removeXmpTag("Xmp.exif.DateTimeDigitized");
+        meta.removeXmpTag("Xmp.exif.DateTimeDigitized");
 
     if (d->cityCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.City", d->cityEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.City", d->cityEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.City");
+        meta.removeXmpTag("Xmp.photoshop.City");
 
     if (d->sublocationCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.iptc.Location", d->sublocationEdit->text());
+        meta.setXmpTagString("Xmp.iptc.Location", d->sublocationEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.iptc.Location");
+        meta.removeXmpTag("Xmp.iptc.Location");
 
     if (d->provinceCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.State", d->provinceEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.State", d->provinceEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.State");
+        meta.removeXmpTag("Xmp.photoshop.State");
 
     if (d->countryCheck->isChecked())
     {
         QString countryName = d->countryCB->currentText().mid(6);
         QString countryCode = d->countryCB->currentText().left(3);
-        exiv2Iface.setXmpTagString("Xmp.iptc.CountryCode", countryCode);
-        exiv2Iface.setXmpTagString("Xmp.photoshop.Country", countryName);
+        meta.setXmpTagString("Xmp.iptc.CountryCode", countryCode);
+        meta.setXmpTagString("Xmp.photoshop.Country", countryName);
     }
     else if (d->countryCheck->isValid())
     {
-        exiv2Iface.removeXmpTag("Xmp.iptc.CountryCode");
-        exiv2Iface.removeXmpTag("Xmp.photoshop.Country");
+        meta.removeXmpTag("Xmp.iptc.CountryCode");
+        meta.removeXmpTag("Xmp.photoshop.Country");
     }
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 
-    xmpData  = exiv2Iface.getXmp();
+    xmpData  = meta.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

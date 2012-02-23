@@ -41,15 +41,7 @@
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <ktoolinvocation.h>
-
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
+#include <kurl.h>
 
 // Local includes
 
@@ -64,8 +56,8 @@
 #include "xmpsubjects.h"
 #include "kpimageinfo.h"
 #include "kphostsettings.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
 using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
@@ -254,17 +246,17 @@ void XMPEditWidget::saveSettings()
 
 void XMPEditWidget::slotItemChanged()
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.load((*d->dlg->currentItem()).path());
+    KPMetadata meta;
+    meta.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
-    d->exifData = exiv2Iface.getExifEncoded();
+    d->exifData = meta.getExifEncoded();
 #else
-    d->exifData = exiv2Iface.getExif();
+    d->exifData = meta.getExif();
 #endif
 
-    d->iptcData = exiv2Iface.getIptc();
-    d->xmpData  = exiv2Iface.getXmp();
+    d->iptcData = meta.getIptc();
+    d->xmpData  = meta.getXmp();
 
     d->contentPage->readMetadata(d->xmpData);
     d->originPage->readMetadata(d->xmpData);
@@ -274,7 +266,7 @@ void XMPEditWidget::slotItemChanged()
     d->creditsPage->readMetadata(d->xmpData);
     d->statusPage->readMetadata(d->xmpData);
     d->propertiesPage->readMetadata(d->xmpData);
-    d->isReadOnly = !KExiv2::canWriteXmp((*d->dlg->currentItem()).path());
+    d->isReadOnly = !KPMetadata::canWriteXmp((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
 
     d->page_content->setEnabled(!d->isReadOnly);
@@ -313,16 +305,16 @@ void XMPEditWidget::apply()
         d->statusPage->applyMetadata(d->xmpData);
         d->propertiesPage->applyMetadata(d->xmpData);
 
-        KExiv2 exiv2Iface;
+        KPMetadata meta;
         KPHostSettings hSettings(d->dlg->iface());
-        exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+        meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+        meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
-        exiv2Iface.load((*d->dlg->currentItem()).path());
-        exiv2Iface.setExif(d->exifData);
-        exiv2Iface.setIptc(d->iptcData);
-        exiv2Iface.setXmp(d->xmpData);
-        exiv2Iface.save((*d->dlg->currentItem()).path());
+        meta.load((*d->dlg->currentItem()).path());
+        meta.setExif(d->exifData);
+        meta.setIptc(d->iptcData);
+        meta.setXmp(d->xmpData);
+        meta.save((*d->dlg->currentItem()).path());
         d->modified = false;
     }
 }
@@ -370,7 +362,7 @@ void XMPEditWidget::showPage(int page)
     }
 }
 
-int XMPEditWidget::activePageIndex()
+int XMPEditWidget::activePageIndex() const
 {
     KPageWidgetItem* cur = currentPage();
 
@@ -386,7 +378,7 @@ int XMPEditWidget::activePageIndex()
     return 0;
 }
 
-bool XMPEditWidget::isModified()
+bool XMPEditWidget::isModified() const
 {
     return d->modified;
 }

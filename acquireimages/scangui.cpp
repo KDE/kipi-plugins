@@ -31,11 +31,6 @@
 #include <kconfig.h>
 #include <kglobal.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // LibKSane includes
 
 #include <libksane/ksane.h>

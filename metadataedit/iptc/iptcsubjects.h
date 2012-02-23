@@ -33,7 +33,11 @@
 
 #include <libkexiv2/subjectwidget.h>
 
-using namespace KExiv2Iface;
+// Local includes
+
+#include "kpmetadata.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {

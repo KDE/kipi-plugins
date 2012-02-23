@@ -45,7 +45,7 @@
 #include <klocale.h>
 #include <kseparator.h>
 
-// LibKPMetadata includes
+// LibKExiv2 includes
 
 #include <libkexiv2/countryselector.h>
 

@@ -293,8 +293,8 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
           * - a panorama created from several pictures, the right time is the DateTimeOriginal (average of DateTimeOriginal actually)
           *          The (standard)DateTime is the creation date of the panorama.
           * it's seems the time to take into acccount is the DateTimeOriginal.
-          * but the exiv2Iface.getImageDateTime() return the (standard)DateTime first
-          * libkexiv2 seems to take Original dateTime first so it shoul be alright now.
+          * but the KPMetadata::getImageDateTime() return the (standard)DateTime first
+          * KPMetadata seems to take Original dateTime first so it shoul be alright now.
           */
         QDateTime datetime = meta.getImageDateTime();
 
