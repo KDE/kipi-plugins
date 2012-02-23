@@ -6,8 +6,9 @@
  * Date        : 2011-02-11
  * Description : a kipi plugin to export images to wikimedia commons
  *
- * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,16 +33,16 @@
 // KDE includes
 
 #include <kdebug.h>
-#include <KConfig>
-#include <KLocale>
-#include <KMenu>
-#include <KUrl>
-#include <KHelpMenu>
-#include <KLineEdit>
-#include <KComboBox>
-#include <KPushButton>
-#include <KMessageBox>
-#include <KToolInvocation>
+#include <kconfig.h>
+#include <klocale.h>
+#include <kmenu.h>
+#include <kurl.h>
+#include <khelpmenu.h>
+#include <klineedit.h>
+#include <kcombobox.h>
+#include <kpushbutton.h>
+#include <kmessagebox.h>
+#include <ktoolinvocation.h>
 
 // Mediawiki includes
 
@@ -63,7 +64,7 @@
 namespace KIPIWikiMediaPlugin
 {
 
-WMWindow::WMWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* /*parent*/)
+WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* /*parent*/)
     : KDialog(0)
 {
     m_tmpPath.clear();
@@ -110,17 +111,17 @@ WMWindow::WMWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
 
-    disconnect(this, SIGNAL(user1Clicked()),
-               this, SLOT(slotStartTransfer()));
-
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartTransfer()));
+
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
 
     connect(m_widget, SIGNAL(signalChangeUserRequest()),
             this, SLOT(slotChangeUserClicked()));
 
-    connect(m_widget, SIGNAL(signalLoginRequest(QString,QString,QUrl)),
-            this, SLOT(slotDoLogin(QString,QString,QUrl)));
+    connect(m_widget, SIGNAL(signalLoginRequest(QString, QString, QUrl)),
+            this, SLOT(slotDoLogin(QString, QString, QUrl)));
 
     readSettings();
     reactivate();
@@ -173,27 +174,42 @@ void WMWindow::slotHelp()
     KToolInvocation::invokeHelp("wikimedia", "kipi-plugins");
 }
 
+void WMWindow::slotClose()
+{
+    saveSettings();
+    done(Close);
+}
+
 void WMWindow::slotStartTransfer()
 {
+    saveSettings();
     KUrl::List urls = m_interface->currentSelection().images();
 
     QList<QMap<QString, QString> > imageDesc;
-    QString author      = m_widget->author();
-    QString licence     = m_widget->licence();
-    QString description = m_widget->description();
+    QString author  = m_widget->author();
+    QString licence = m_widget->licence();
+    QString category;
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        KIPIPlugins::KPImageInfo info(m_interface, urls.at(i));
-
+        KPImageInfo info(m_interface, urls.at(i));
+    
+        QStringList keywar = info.keywords();
         QMap<QString, QString> map;
 
         map["url"]         = urls.at(i).url();
         map["licence"]     = licence;
         map["author"]      = author;
-        map["description"] = description;
+        map["description"] = info.description();
         map["time"]        = info.date().toString(Qt::ISODate);
 
+        for( int i = keywar.size(); i > 0; i++)
+        {
+            if(keywar.at(i).contains("wikimedia"))
+            category.append(" "+keywar.at(i)+"\n|[[Category:");
+        }
+        map["categories"] = category;
+    
         if(info.hasGeolocationInfo())
         {
             map["latitude"]  = QString::number(info.latitude());
@@ -227,19 +243,21 @@ void WMWindow::slotChangeUserClicked()
 
 void WMWindow::slotDoLogin(const QString& login, const QString& pass, const QUrl& wiki)
 {
-    m_login                    = login;
-    m_pass                     = pass;
-    m_wiki                     = wiki;
-    m_mediawiki                = new mediawiki::MediaWiki(wiki);
-    mediawiki::Login* loginJob = new mediawiki::Login(*m_mediawiki, login, pass);
+    m_login         = login;
+    m_pass          = pass;
+    m_wiki          = wiki;
+    m_mediawiki     = new MediaWiki(wiki);
+    Login* loginJob = new Login(*m_mediawiki, login, pass);
+
     connect(loginJob, SIGNAL(result(KJob*)), 
             this, SLOT(loginHandle(KJob*)));
+
     loginJob->start();
 }
 
 int WMWindow::loginHandle(KJob* loginJob)
 {
-    kDebug()<< loginJob->error();
+    kDebug() << loginJob->error();
 
     if(loginJob->error())
     {
@@ -251,11 +269,12 @@ int WMWindow::loginHandle(KJob* loginJob)
     }
     else
     {
-        m_uploadJob = new KIPIWikiMediaPlugin::WikiMediaJob(m_interface, m_mediawiki, this);
+        m_uploadJob = new WikiMediaJob(m_interface, m_mediawiki, this);
         enableButton(User1, true);
         m_widget->invertAccountLoginBox();
         m_widget->updateLabels(m_login, m_wiki.toString());
     }
+
     return loginJob->error();
 }
 
@@ -263,6 +282,7 @@ void WMWindow::slotEndUpload()
 {
     disconnect(m_uploadJob, SIGNAL(uploadProgress(int)),
                m_widget->progressBar(),SLOT(setValue(int)));
+
     disconnect(m_uploadJob, SIGNAL(endUpload()),
                this, SLOT(slotEndUpload()));
  

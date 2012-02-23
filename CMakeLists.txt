@@ -454,8 +454,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ENDIF(KGEOMAP_FOUND)
 
     IF(MEDIAWIKI_FOUND)
-#        Disabled for the moment due to problem with libmediawiki api
-#        ADD_SUBDIRECTORY(mediawiki)
+        ADD_SUBDIRECTORY(mediawiki)
     ENDIF(MEDIAWIKI_FOUND)
 
     IF(Boost_FOUND)

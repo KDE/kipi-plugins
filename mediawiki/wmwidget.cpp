@@ -6,8 +6,9 @@
  * Date        : 2011-02-11
  * Description : a kipi plugin to export images to wikimedia commons
  *
- * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,18 +38,19 @@
 #include <QVBoxLayout>
 #include <QTabWidget>
 #include <QComboBox>
-#include <QLineEdit>
 #include <QScrollArea>
+#include <QMap>
 
 // KDE includes
 
 #include <kdebug.h>
 #include <kvbox.h>
-#include <KLocale>
-#include <KDialog>
-#include <KComboBox>
-#include <KPushButton>
-#include <KLineEdit>
+#include <klocale.h>
+#include <kdialog.h>
+#include <kcombobox.h>
+#include <kpushbutton.h>
+#include <kconfiggroup.h>
+#include <kcombobox.h>
 
 // LibKIPI includes
 
@@ -59,17 +61,17 @@
 
 #include <libkdcraw/rexpanderbox.h>
 #include <libkdcraw/version.h>
+#include <libkdcraw/squeezedcombobox.h>
 
 // Local includes
 
 #include "imageslist.h"
-
-using namespace KDcrawIface;
+#include "wmwidget.h"
 
 namespace KIPIWikiMediaPlugin
 {
 
-WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
+WmWidget::WmWidget(QWidget* parent, Interface* const iface)
     : QWidget(parent)
 {
     setObjectName("WmWidget");
@@ -78,8 +80,8 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KIPIPlugins::ImagesList(iface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList = new ImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Wikimedia account."));
@@ -109,35 +111,36 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_loginBox->setWhatsThis(i18n("This is the login form to your Wikimedia account."));
     QGridLayout* loginBoxLayout = new QGridLayout(m_loginBox);
 
+    m_wikiSelect = new KUrlComboRequester(m_loginBox);
     m_nameEdit   = new KLineEdit(m_loginBox);
     m_passwdEdit = new KLineEdit(m_loginBox);
-    m_wikiSelect = new QComboBox(m_loginBox);
     m_passwdEdit->setEchoMode(KLineEdit::Password);
 
-    m_wikiSelect->addItem(QString("test wikipedia"), QUrl("http://test.wikipedia.org/w/api.php"));
-    m_wikiSelect->addItem(QString("en wikipedia"),   QUrl("http://en.wikipedia.org/w/api.php"));
-    m_wikiSelect->addItem(QString("fr wikipedia"),   QUrl("http://fr.wikipedia.org/w/api.php"));
+    if(m_wikiSelect->button())
+        m_wikiSelect->button()->hide();
+    
+    m_wikiSelect->comboBox()->setEditable(true);
+
+    QLabel* wikiLabel     = new QLabel(m_loginBox);
+    wikiLabel->setText(i18n("Wiki:"));
 
     QLabel* nameLabel     = new QLabel(m_loginBox);
     nameLabel->setText(i18n( "Login:" ));
 
     QLabel* passwdLabel   = new QLabel(m_loginBox);
     passwdLabel->setText(i18n("Password:"));
-
-    QLabel* wikiLabel     = new QLabel(m_loginBox);
-    wikiLabel->setText(i18n("Wiki:"));
-
+    
     QPushButton* loginBtn = new QPushButton(m_loginBox);
     loginBtn->setAutoDefault(true);
     loginBtn->setDefault(true);
     loginBtn->setText(i18n("&Log in"));
 
-    loginBoxLayout->addWidget(nameLabel,    0, 0, 1, 1);
-    loginBoxLayout->addWidget(m_nameEdit,   0, 1, 1, 1);
-    loginBoxLayout->addWidget(m_passwdEdit, 1, 1, 1, 1);
-    loginBoxLayout->addWidget(m_wikiSelect, 2, 1, 1, 1);
-    loginBoxLayout->addWidget(passwdLabel,  1, 0, 1, 1);
-    loginBoxLayout->addWidget(wikiLabel,    2, 0, 1, 1);
+    loginBoxLayout->addWidget(wikiLabel,    0, 0, 1, 1);
+    loginBoxLayout->addWidget(m_wikiSelect, 0, 1, 1, 1);
+    loginBoxLayout->addWidget(nameLabel,    1, 0, 1, 1);
+    loginBoxLayout->addWidget(m_nameEdit,   1, 1, 1, 1);
+    loginBoxLayout->addWidget(m_passwdEdit, 2, 1, 1, 1);
+    loginBoxLayout->addWidget(passwdLabel,  2, 0, 1, 1);
     loginBoxLayout->addWidget(loginBtn,     3, 0, 1, 1);
     loginBoxLayout->setObjectName("m_loginBoxLayout");
 
@@ -163,29 +166,35 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_textBox->setWhatsThis(i18n("This is the login form to your Wikimedia account."));
     QGridLayout* textBoxLayout = new QGridLayout(m_textBox);
 
-    QLabel* desc      = new QLabel(i18n("Description:"), m_textBox);
-    m_descriptionEdit = new QTextEdit(m_textBox);
-
-    QLabel* aut  = new QLabel(i18n("Author:"), m_textBox);
-    m_authorEdit = new KLineEdit(m_textBox);
+    QLabel* aut          = new QLabel(i18n("Author:"), m_textBox);
+    m_authorEdit         = new KLineEdit(m_textBox);
 
     QLabel* licenceLabel = new QLabel(i18n("License:"), m_textBox);
-    m_licenceComboBox    = new QComboBox(m_textBox);
+    m_licenceComboBox    = new SqueezedComboBox(m_textBox);
 
-    m_licenceComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), QString("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
-    m_licenceComboBox->addItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and older"), QString("{{self|cc-by-sa-3.0,2.5,2.0,1.0}}"));
-    m_licenceComboBox->addItem(i18n("Creative Commons Attribution-Share Alike 3.0"), QString("{{self|cc-by-sa-3.0}}"));
-    m_licenceComboBox->addItem(i18n("Own work, Creative Commons Attribution 3.0"), QString("{{self|cc-by-3.0}}"));
-    m_licenceComboBox->addItem(i18n("Own work, release into public domain under the CC-Zero license"), QString("{{self|cc-zero}}"));
-    m_licenceComboBox->addItem(i18n("Author died more than 100 years ago"), QString("{{PD-old}}"));
-    m_licenceComboBox->addItem(i18n("Photo of a two-dimensional work whose author died more than 100 years ago"), QString("{{PD-art}}"));
-    m_licenceComboBox->addItem(i18n("First published in the United States before 1923"), QString("{{PD-US}}"));
-    m_licenceComboBox->addItem(i18n("Work of a U.S. government agency"), QString("{{PD-USGov}}"));
-    m_licenceComboBox->addItem(i18n("Simple typefaces, individual words or geometric shapes"), QString("{{PD-text}}"));
-    m_licenceComboBox->addItem(i18n("Logos with only simple typefaces, individual words or geometric shapes"), QString("{{PD-textlogo}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and GFDL"), 
+                                QString("{{self|cc-by-sa-3.0|GFDL|migration=redundant}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Own work, multi-license with CC-BY-SA-3.0 and older"), 
+                                QString("{{self|cc-by-sa-3.0,2.5,2.0,1.0}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Creative Commons Attribution-Share Alike 3.0"),
+                                QString("{{self|cc-by-sa-3.0}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Own work, Creative Commons Attribution 3.0"),
+                                QString("{{self|cc-by-3.0}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Own work, release into public domain under the CC-Zero license"),
+                                QString("{{self|cc-zero}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Author died more than 100 years ago"),
+                                QString("{{PD-old}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Photo of a two-dimensional work whose author died more than 100 years ago"),
+                                QString("{{PD-art}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("First published in the United States before 1923"),
+                                QString("{{PD-US}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Work of a U.S. government agency"),
+                                QString("{{PD-USGov}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Simple typefaces, individual words or geometric shapes"),
+                                QString("{{PD-text}}"));
+    m_licenceComboBox->addSqueezedItem(i18n("Logos with only simple typefaces, individual words or geometric shapes"),
+                                QString("{{PD-textlogo}}"));
 
-    textBoxLayout->addWidget(desc,              0, 0, 1, 1);
-    textBoxLayout->addWidget(m_descriptionEdit, 0, 2, 1, 2);
     textBoxLayout->addWidget(aut,               1, 0, 1, 1);
     textBoxLayout->addWidget(m_authorEdit,      1, 2, 1, 2);
     textBoxLayout->addWidget(licenceLabel,      3, 0, 1, 1);
@@ -213,7 +222,7 @@ WmWidget::WmWidget(QWidget* parent, KIPI::Interface* iface)
     m_dimensionSpB->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_dimensionSpB->setEnabled(false);
     QLabel* dimensionLbl = new QLabel(i18n("Maximum size:"), m_optionsBox);
-
+  
     m_imageQualitySpB = new QSpinBox(m_optionsBox);
     m_imageQualitySpB->setMinimum(0);
     m_imageQualitySpB->setMaximum(100);
@@ -267,32 +276,46 @@ WmWidget::~WmWidget()
 
 void WmWidget::readSettings(KConfigGroup& group)
 {
+    kDebug() <<  "pass here";
+
 #if KDCRAW_VERSION >= 0x020000
     m_settingsExpander->readSettings(group);
 #else
     m_settingsExpander->readSettings();
 #endif
 
-    m_resizeChB->setChecked(group.readEntry("Resize", false));
-    m_dimensionSpB->setValue(group.readEntry("Dimension", 600));
+    m_resizeChB->setChecked(group.readEntry("Resize",      false));
+    m_dimensionSpB->setValue(group.readEntry("Dimension",  600));
     m_imageQualitySpB->setValue(group.readEntry("Quality", 85));
     slotResizeChecked();
+
+    m_history = group.readEntry("Urls history", QStringList());
+
+    foreach(KUrl url, m_history)
+    {
+        m_wikiSelect->comboBox()->addUrl(url);
+    }
 }
 
 void WmWidget::saveSettings(KConfigGroup& group)
 {
+    kDebug() <<  "pass here";
+
 #if KDCRAW_VERSION >= 0x020000
     m_settingsExpander->writeSettings(group);
 #else
     m_settingsExpander->writeSettings();
 #endif
 
-    group.writeEntry("Resize", m_resizeChB->isChecked());
-    group.readEntry("Dimension", m_dimensionSpB->value());
-    group.readEntry("Quality", m_imageQualitySpB->value());
+    group.writeEntry("Resize",       m_resizeChB->isChecked());
+    group.writeEntry("Dimension",    m_dimensionSpB->value());
+    group.writeEntry("Quality",      m_imageQualitySpB->value());
+
+    m_history.append(m_wikiSelect->url());
+    group.writeEntry("Urls history", m_history.toStringList());
 }
 
-KIPIPlugins::ImagesList* WmWidget::imagesList() const
+ImagesList* WmWidget::imagesList() const
 {
     return m_imgList;
 }
@@ -305,6 +328,7 @@ QProgressBar* WmWidget::progressBar() const
 void WmWidget::updateLabels(const QString& name, const QString& url)
 {
     QString web("http://commons.wikimedia.org");
+
     if (!url.isEmpty())
         web = url;
 
@@ -348,20 +372,13 @@ void WmWidget::slotChangeUserClicked()
 
 void WmWidget::slotLoginClicked()
 {
-    emit signalLoginRequest(m_nameEdit->text(), m_passwdEdit->text(),
-                            m_wikiSelect->itemData(m_wikiSelect->currentIndex()).toUrl());
+    emit signalLoginRequest(m_nameEdit->text(), m_passwdEdit->text(), m_wikiSelect->url());
 }
 
 QString WmWidget::author()
 {
     kDebug() << "WmWidget::author()";
-    return this->m_authorEdit->text();
-}
-
-QString WmWidget::description()
-{
-    kDebug() << "WmWidget::description()";
-    return this->m_descriptionEdit->toPlainText();
+    return m_authorEdit->text();
 }
 
 QString WmWidget::licence()
