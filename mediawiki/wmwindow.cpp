@@ -193,7 +193,7 @@ void WMWindow::slotStartTransfer()
     for (int i = 0; i < urls.size(); ++i)
     {
         KPImageInfo info(m_interface, urls.at(i));
-    
+
         QStringList keywar = info.keywords();
         QMap<QString, QString> map;
 
@@ -203,13 +203,13 @@ void WMWindow::slotStartTransfer()
         map["description"] = info.description();
         map["time"]        = info.date().toString(Qt::ISODate);
 
-        for( int i = keywar.size(); i > 0; i++)
+        for( int i = keywar.size(); i > 0; i--)
         {
             if(keywar.at(i).contains("wikimedia"))
             category.append(" "+keywar.at(i)+"\n|[[Category:");
         }
         map["categories"] = category;
-    
+
         if(info.hasGeolocationInfo())
         {
             map["latitude"]  = QString::number(info.latitude());
@@ -285,7 +285,7 @@ void WMWindow::slotEndUpload()
 
     disconnect(m_uploadJob, SIGNAL(endUpload()),
                this, SLOT(slotEndUpload()));
- 
+
     KMessageBox::information(this, i18n("Upload finished with no errors."));
     m_widget->progressBar()->hide();
     hide();
