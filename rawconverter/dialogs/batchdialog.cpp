@@ -84,8 +84,8 @@ extern "C"
 #include "kpversion.h"
 #include "kpimageinfo.h"
 #include "kphostsettings.h"
+#include "kpsavesettingswidget.h"
 #include "rawdecodingiface.h"
-#include "savesettingswidget.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
@@ -110,28 +110,28 @@ public:
         iface               = 0;
     }
 
-    bool                 busy;
+    bool                  busy;
 
-    QWidget*             page;
+    QWidget*              page;
 
-    QStringList          fileList;
+    QStringList           fileList;
 
-    QProgressBar*        progressBar;
+    QProgressBar*         progressBar;
 
-    MyImageList*         listView;
+    MyImageList*          listView;
 
-    ActionThread*        thread;
+    ActionThread*         thread;
 
-    SaveSettingsWidget*  saveSettingsBox;
+    KPSaveSettingsWidget* saveSettingsBox;
 
-    DcrawSettingsWidget* decodingSettingsBox;
+    DcrawSettingsWidget*  decodingSettingsBox;
 
-    KPAboutData*         about;
+    KPAboutData*          about;
 
-    KIPI::Interface*     iface;
+    Interface*            iface;
 };
 
-BatchDialog::BatchDialog(KIPI::Interface* iface)
+BatchDialog::BatchDialog(Interface* const iface)
            : KDialog(0), d(new BatchDialogPriv)
 {
     d->iface = iface;
@@ -157,7 +157,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
                                                               DcrawSettingsWidget::POSTPROCESSING |
                                                               DcrawSettingsWidget::BLACKWHITEPOINTS);
     d->decodingSettingsBox->setObjectName("RawSettingsBox Expander");
-    d->saveSettingsBox     = new SaveSettingsWidget(d->page);
+    d->saveSettingsBox     = new KPSaveSettingsWidget(d->page);
 
 #if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
@@ -185,7 +185,7 @@ BatchDialog::BatchDialog(KIPI::Interface* iface)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
+    d->about = new KPAboutData(ki18n("RAW Image Converter"),
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to batch convert RAW images"),
@@ -387,16 +387,16 @@ void BatchDialog::slotIdentify() // Set Identity and Target file
 
     switch(d->saveSettingsBox->fileFormat())
     {
-        case SaveSettingsWidget::OUTPUT_JPEG:
+        case KPSaveSettingsWidget::OUTPUT_JPEG:
             ext = ".jpg";
             break;
-        case SaveSettingsWidget::OUTPUT_TIFF:
+        case KPSaveSettingsWidget::OUTPUT_TIFF:
             ext = ".tif";
             break;
-        case SaveSettingsWidget::OUTPUT_PPM:
+        case KPSaveSettingsWidget::OUTPUT_PPM:
             ext = ".ppm";
             break;
-        case SaveSettingsWidget::OUTPUT_PNG:
+        case KPSaveSettingsWidget::OUTPUT_PNG:
             ext = ".png";
             break;
     }
@@ -424,16 +424,16 @@ void BatchDialog::slotSaveFormatChanged()
 
     switch(d->saveSettingsBox->fileFormat())
     {
-        case SaveSettingsWidget::OUTPUT_JPEG:
+        case KPSaveSettingsWidget::OUTPUT_JPEG:
             ext = "jpg";
             break;
-        case SaveSettingsWidget::OUTPUT_TIFF:
+        case KPSaveSettingsWidget::OUTPUT_TIFF:
             ext = "tif";
             break;
-        case SaveSettingsWidget::OUTPUT_PPM:
+        case KPSaveSettingsWidget::OUTPUT_PPM:
             ext = "ppm";
             break;
-        case SaveSettingsWidget::OUTPUT_PNG:
+        case KPSaveSettingsWidget::OUTPUT_PNG:
             ext = "png";
             break;
     }
@@ -504,7 +504,7 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
     if (!item) return;
     QString destFile(item->destPath());
 
-    if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
+    if (d->saveSettingsBox->conflictRule() != KPSaveSettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)

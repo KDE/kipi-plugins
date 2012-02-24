@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,7 +35,7 @@
 
 // Locale includes
 
-#include "savesettingswidget.h"
+#include "kpsavesettingswidget.h"
 
 using namespace KIPIPlugins;
 
@@ -91,22 +91,22 @@ public:
         return ret;
     }
 
-    bool                             autoLevels;
-    bool                             hardMask;
-    bool                             ciecam02;
+    bool                               autoLevels;
+    bool                               hardMask;
+    bool                               ciecam02;
 
-    int                              levels;
+    int                                levels;
 
-    double                           exposure;
-    double                           saturation;
-    double                           contrast;
+    double                             exposure;
+    double                             saturation;
+    double                             contrast;
 
-    QString                          targetFileName;
+    QString                            targetFileName;
 
-    KUrl::List                       inputUrls;
-    KUrl                             previewUrl;
+    KUrl::List                         inputUrls;
+    KUrl                               previewUrl;
 
-    SaveSettingsWidget::OutputFormat outputFormat;
+    KPSaveSettingsWidget::OutputFormat outputFormat;
 };
 
 // ------------------------------------------------------------------------
@@ -118,7 +118,7 @@ class EnfuseSettingsWidget : public QWidget
 
 public:
 
-    EnfuseSettingsWidget(QWidget* parent);
+    EnfuseSettingsWidget(QWidget* const parent);
     ~EnfuseSettingsWidget();
 
     void           setSettings(const EnfuseSettings& settings);

@@ -77,8 +77,8 @@ extern "C"
 #include "kpimageinfo.h"
 #include "kphostsettings.h"
 #include "kppreviewmanager.h"
+#include "kpsavesettingswidget.h"
 #include "rawdecodingiface.h"
-#include "savesettingswidget.h"
 #include "actions.h"
 #include "actionthread.h"
 
@@ -102,25 +102,25 @@ public:
         iface               = 0;
     }
 
-    QString              inputFileName;
+    QString               inputFileName;
 
-    KUrl                 inputFile;
+    KUrl                  inputFile;
 
-    KPPreviewManager*      previewWidget;
+    KPPreviewManager*     previewWidget;
 
-    ActionThread*        thread;
+    ActionThread*         thread;
 
-    SaveSettingsWidget*  saveSettingsBox;
+    KPSaveSettingsWidget* saveSettingsBox;
 
-    DcrawSettingsWidget* decodingSettingsBox;
+    DcrawSettingsWidget*  decodingSettingsBox;
 
-    KPAboutData*         about;
+    KPAboutData*          about;
 
-    Interface*           iface;
+    Interface*            iface;
 };
 
 SingleDialog::SingleDialog(const QString& file, Interface* const iface)
-            : KDialog(0), d(new SingleDialogPriv)
+    : KDialog(0), d(new SingleDialogPriv)
 {
     d->iface = iface;
     setButtons(Help | Default | User1 | User2 | User3 | Close);
@@ -143,7 +143,7 @@ SingleDialog::SingleDialog(const QString& file, Interface* const iface)
                                                             DcrawSettingsWidget::COLORSPACE     |
                                                             DcrawSettingsWidget::POSTPROCESSING |
                                                             DcrawSettingsWidget::BLACKWHITEPOINTS);
-    d->saveSettingsBox      = new SaveSettingsWidget(d->decodingSettingsBox);
+    d->saveSettingsBox      = new KPSaveSettingsWidget(d->decodingSettingsBox);
 
 #if KDCRAW_VERSION <= 0x000500
     d->decodingSettingsBox->addItem(d->saveSettingsBox, i18n("Save settings"));
@@ -318,7 +318,7 @@ void SingleDialog::saveSettings()
 // 'Preview' dialog button.
 void SingleDialog::slotUser1()
 {
-    d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), SaveSettingsWidget::OUTPUT_PNG);
+    d->thread->setRawDecodingSettings(d->decodingSettingsBox->settings(), KPSaveSettingsWidget::OUTPUT_PNG);
     d->thread->processHalfRawFile(KUrl(d->inputFile));
     if (!d->thread->isRunning())
         d->thread->start();
@@ -413,16 +413,16 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
 
     switch(d->saveSettingsBox->fileFormat())
     {
-        case SaveSettingsWidget::OUTPUT_JPEG:
+        case KPSaveSettingsWidget::OUTPUT_JPEG:
             ext = "jpg";
             break;
-        case SaveSettingsWidget::OUTPUT_TIFF:
+        case KPSaveSettingsWidget::OUTPUT_TIFF:
             ext = "tif";
             break;
-        case SaveSettingsWidget::OUTPUT_PPM:
+        case KPSaveSettingsWidget::OUTPUT_PPM:
             ext = "ppm";
             break;
-        case SaveSettingsWidget::OUTPUT_PNG:
+        case KPSaveSettingsWidget::OUTPUT_PNG:
             ext = "png";
             break;
     }
@@ -431,7 +431,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
     QFileInfo fi(d->inputFile.path());
     QString destFile = fi.absolutePath() + QString("/") + fi.completeBaseName() + QString(".") + ext;
 
-    if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
+    if (d->saveSettingsBox->conflictRule() != KPSaveSettingsWidget::OVERWRITE)
     {
         struct stat statBuf;
         if (::stat(QFile::encodeName(destFile), &statBuf) == 0)

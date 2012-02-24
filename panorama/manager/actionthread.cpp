@@ -57,15 +57,27 @@
 #include "kpversion.h"
 #include "ptoparser.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIPanoramaPlugin
 {
 
 struct ActionThread::ActionThreadPriv
 {
     ActionThreadPriv()
-        : cancel(false), celeste(false), hdr(false), fileType(JPEG), savePTO(false),
-          CPFindProcess(0), CPCleanProcess(0), autoOptimiseProcess(0), pto2MkProcess(0),
-          makeProcess(0), preprocessingTmpDir(0) {}
+        : cancel(false),
+          celeste(false),
+          hdr(false),
+          fileType(JPEG),
+          savePTO(false),
+          CPFindProcess(0),
+          CPCleanProcess(0),
+          autoOptimiseProcess(0),
+          pto2MkProcess(0),
+          makeProcess(0),
+          preprocessingTmpDir(0)
+        {
+        }
 
     struct Task
     {
@@ -132,7 +144,7 @@ struct ActionThread::ActionThreadPriv
     }
 };
 
-ActionThread::ActionThread(QObject* parent)
+ActionThread::ActionThread(QObject* const parent)
     : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();

@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a tool to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -62,8 +62,8 @@ public:
     EnfuseSettings settings;
 };
 
-EnfuseStackItem::EnfuseStackItem(QTreeWidget* parent)
-               : QTreeWidgetItem(parent), d(new EnfuseStackItemPriv)
+EnfuseStackItem::EnfuseStackItem(QTreeWidget* const parent)
+    : QTreeWidgetItem(parent), d(new EnfuseStackItemPriv)
 {
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     setCheckState(0, Qt::Unchecked);
@@ -124,7 +124,7 @@ void EnfuseStackItem::setProcessedIcon(const QIcon& icon)
     setIcon(0, QIcon(d->thumb));
 }
 
-bool EnfuseStackItem::asValidThumb()
+bool EnfuseStackItem::asValidThumb() const
 {
     return d->asValidThumb;
 }
@@ -153,7 +153,7 @@ public:
         processItem   = 0;
     }
 
-    SaveSettingsWidget::OutputFormat outputFormat;
+    KPSaveSettingsWidget::OutputFormat outputFormat;
 
     QString                          templateFileName;
 
@@ -163,8 +163,8 @@ public:
     EnfuseStackItem*                 processItem;
 };
 
-EnfuseStackList::EnfuseStackList(QWidget* parent)
-               : QTreeWidget(parent), d(new EnfuseStackListPriv)
+EnfuseStackList::EnfuseStackList(QWidget* const parent)
+    : QTreeWidget(parent), d(new EnfuseStackListPriv)
 {
     d->progressTimer = new QTimer(this);
 
@@ -287,7 +287,7 @@ void EnfuseStackList::addItem(const KUrl& url, const EnfuseSettings& settings)
     if (!findItemByUrl(url))
     {
         EnfuseSettings enfusePrms = settings;
-        QString ext               = SaveSettingsWidget::extensionForFormat(enfusePrms.outputFormat);
+        QString ext               = KPSaveSettingsWidget::extensionForFormat(enfusePrms.outputFormat);
         enfusePrms.previewUrl     = url;
 
         EnfuseStackItem* item = new EnfuseStackItem(this);
@@ -366,7 +366,7 @@ void EnfuseStackList::processedItem(const KUrl& url, bool success)
         item->setProcessedIcon(SmallIcon(success ? "dialog-ok" : "dialog-cancel"));
 }
 
-void EnfuseStackList::setTemplateFileName(SaveSettingsWidget::OutputFormat frm, const QString& string)
+void EnfuseStackList::setTemplateFileName(KPSaveSettingsWidget::OutputFormat frm, const QString& string)
 {
     d->outputFormat     = frm;
     d->templateFileName = string;
@@ -380,7 +380,7 @@ void EnfuseStackList::setTemplateFileName(SaveSettingsWidget::OutputFormat frm, 
         {
             QString temp;
             EnfuseSettings settings = item->enfuseSettings();
-            QString ext             = SaveSettingsWidget::extensionForFormat(d->outputFormat);
+            QString ext             = KPSaveSettingsWidget::extensionForFormat(d->outputFormat);
             settings.outputFormat   = d->outputFormat;
             settings.targetFileName = d->templateFileName + temp.sprintf("-%02i", count+1).append(ext);
             item->setEnfuseSettings(settings);

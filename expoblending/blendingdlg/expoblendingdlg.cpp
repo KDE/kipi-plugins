@@ -82,13 +82,13 @@ extern "C"
 #include "enfusebinary.h"
 #include "enfusesettings.h"
 #include "enfusestack.h"
-#include "savesettingswidget.h"
 #include "aboutdata.h"
 #include "actionthread.h"
 #include "bracketstack.h"
 #include "outputdialog.h"
 #include "kpversion.h"
 #include "kppreviewmanager.h"
+#include "kpsavesettingswidget.h"
 
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
@@ -124,7 +124,7 @@ public:
 
     EnfuseSettingsWidget* enfuseSettingsBox;
 
-    SaveSettingsWidget*   saveSettingsBox;
+    KPSaveSettingsWidget*   saveSettingsBox;
 
     BracketStackList*     bracketStack;
     EnfuseStackList*      enfuseStack;
@@ -184,7 +184,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
     d->settingsExpander->setObjectName("Exposure Blending Settings Expander");
 
     d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
-    d->saveSettingsBox   = new SaveSettingsWidget(d->settingsExpander);
+    d->saveSettingsBox   = new KPSaveSettingsWidget(d->settingsExpander);
 
     KHBox* hbox          = new KHBox(d->saveSettingsBox);
     QLabel* customLabel  = new QLabel(hbox);
@@ -452,7 +452,7 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
     newUrl.setFileName(settings.targetFileName);
     QFileInfo fi(newUrl.toLocalFile());
 
-    if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
+    if (d->saveSettingsBox->conflictRule() != KPSaveSettingsWidget::OVERWRITE)
     {
         if (fi.exists())
         {

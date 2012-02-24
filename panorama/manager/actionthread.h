@@ -42,10 +42,8 @@
 // Local includes
 
 #include "actions.h"
-#include "savesettingswidget.h"
 #include "ptotype.h"
 
-using namespace KIPIPlugins;
 using namespace KDcrawIface;
 
 namespace KIPIPanoramaPlugin
@@ -68,7 +66,7 @@ public:
 
 public:
 
-    explicit ActionThread(QObject* parent);
+    explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
     void setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType fileType,

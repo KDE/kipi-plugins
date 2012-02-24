@@ -31,7 +31,7 @@
 
 // Local includes
 
-#include "savesettingswidget.h"
+#include "kpsavesettingswidget.h"
 
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
@@ -56,20 +56,20 @@ public:
         using sRGB color space.
     */
     bool decodeHalfRAWImage(const QString& filePath,
-                            QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
+                            QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
                             const RawDecodingSettings& rawDecodingSettings);
 
     /** Extract a full size of RAW data in 8 bits/color/pixels using 
         sRGB color space.
     */
     bool decodeRAWImage(const QString& filePath,
-                        QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
+                        QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
                         const RawDecodingSettings& rawDecodingSettings);
 
 private:
 
     bool loadedFromDcraw(const QString& filePath,
-                         QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
+                         QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
                          const QByteArray& imageData, int width, int height, int rgbmax,
                          const RawDecodingSettings& rawDecodingSettings);
 

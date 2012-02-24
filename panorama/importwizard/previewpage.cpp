@@ -42,7 +42,6 @@
 
 #include "outputdialog.h"
 #include "batchprogressdialog.h"
-#include "savesettingswidget.h"
 #include "manager.h"
 #include "kppreviewmanager.h"
 #include "enblendbinary.h"

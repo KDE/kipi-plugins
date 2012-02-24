@@ -24,7 +24,7 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/savesettingswidget.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})

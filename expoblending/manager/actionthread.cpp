@@ -371,7 +371,7 @@ void ActionThread::run()
                     QString errors;
                     KUrl    destUrl         = t->outputUrl;
                     EnfuseSettings settings = t->enfuseSettings;
-                    settings.outputFormat   = SaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
+                    settings.outputFormat   = KPSaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
                     bool result             = startEnfuse(t->urls, destUrl, settings, t->binaryPath, errors);
 
                     kDebug() << "Preview result was: " << result;
@@ -421,7 +421,7 @@ void ActionThread::run()
                     meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
                     meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace('\n', " ; "), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
-                    if (t->enfuseSettings.outputFormat != SaveSettingsWidget::OUTPUT_JPEG)
+                    if (t->enfuseSettings.outputFormat != KPSaveSettingsWidget::OUTPUT_JPEG)
                     {
                         QImage img;
                         if (img.load(destUrl.toLocalFile()))
@@ -725,7 +725,7 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
                                const QString& enfusePath, QString& errors)
 {
     QString comp;
-    QString ext = SaveSettingsWidget::extensionForFormat(settings.outputFormat);
+    QString ext = KPSaveSettingsWidget::extensionForFormat(settings.outputFormat);
 
     if (ext == QString(".tif"))
         comp = QString("--compression=DEFLATE");

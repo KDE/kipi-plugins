@@ -40,6 +40,8 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIRawConverterPlugin
 {
 
@@ -52,7 +54,7 @@ Q_OBJECT
 
 public:
 
-    BatchDialog(KIPI::Interface* iface);
+    BatchDialog(Interface* const iface);
     ~BatchDialog();
 
     void addItems(const KUrl::List& itemList);

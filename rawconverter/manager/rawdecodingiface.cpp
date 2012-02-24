@@ -68,7 +68,7 @@ void RawDecodingIface::setUpdateFileTimeStamp(bool b)
 }
 
 bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
-                                          QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
+                                          QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
                                           const RawDecodingSettings& rawDecodingSettings)
 {
     int width, height, rgbmax;
@@ -81,7 +81,7 @@ bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
 }
 
 bool RawDecodingIface::decodeRAWImage(const QString& filePath, 
-                                      QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
+                                      QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
                                       const RawDecodingSettings& rawDecodingSettings)
 {
     int width, height, rgbmax;
@@ -96,7 +96,7 @@ bool RawDecodingIface::decodeRAWImage(const QString& filePath,
 // ----------------------------------------------------------------------------------
 
 bool RawDecodingIface::loadedFromDcraw(const QString& filePath, 
-                                       QString& destPath, SaveSettingsWidget::OutputFormat outputFileFormat,
+                                       QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
                                        const QByteArray& imageData, int width, int height, int rgbmax, 
                                        const RawDecodingSettings& rawDecodingSettings)
 {
@@ -186,7 +186,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
     // bigger than 64K duing of image preview tag size, the target JPEG image will be
     // broken. Note that IPTC image preview tag is limited to 256K!!!
     // There is no limitation with TIFF and PNG about IPTC byte array size.
-    if (outputFileFormat != SaveSettingsWidget::OUTPUT_JPEG)
+    if (outputFileFormat != KPSaveSettingsWidget::OUTPUT_JPEG)
         meta.setImagePreview(iptcPreview);
 
     meta.setExifTagString("Exif.Image.DocumentName", fi.fileName());
@@ -203,22 +203,22 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 
     switch(outputFileFormat)
     {
-        case SaveSettingsWidget::OUTPUT_JPEG:
+        case KPSaveSettingsWidget::OUTPUT_JPEG:
         {
             if (!wImageIface.write2JPEG(destPath)) return false;
             break;
         }
-        case SaveSettingsWidget::OUTPUT_PNG:
+        case KPSaveSettingsWidget::OUTPUT_PNG:
         {
             if (!wImageIface.write2PNG(destPath)) return false;
             break;
         }
-        case SaveSettingsWidget::OUTPUT_TIFF:
+        case KPSaveSettingsWidget::OUTPUT_TIFF:
         {
             if (!wImageIface.write2TIFF(destPath)) return false;
             break;
         }
-        case SaveSettingsWidget::OUTPUT_PPM:
+        case KPSaveSettingsWidget::OUTPUT_PPM:
         {
             if (!wImageIface.write2PPM(destPath)) return false;
             break;
