@@ -36,7 +36,7 @@
 // Local includes
 
 #include "emailsettingscontainer.h"
-#include "actionthreadbase.h"
+#include "kpactionthreadbase.h"
 
 using namespace KIPIPlugins;
 using namespace ThreadWeaver;
@@ -50,7 +50,7 @@ class Task : public Job
 
 public:
 
-    Task(QObject* parent = 0, int* count = 0);
+    Task(QObject* const parent = 0, int* count = 0);
     ~Task();
 
 public:
@@ -78,13 +78,13 @@ private:
 
 // ----------------------------------------------------------------------------------------------------
 
-class ImageResize : public ActionThreadBase
+class ImageResize : public KPActionThreadBase
 {
     Q_OBJECT
 
 public:
 
-    ImageResize(QObject* parent);
+    ImageResize(QObject* const parent);
     ~ImageResize();
 
     void resize(const EmailSettingsContainer& settings);

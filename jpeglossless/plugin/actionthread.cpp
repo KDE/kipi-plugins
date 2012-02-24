@@ -61,7 +61,7 @@ using namespace ThreadWeaver;
 namespace KIPIJPEGLossLessPlugin
 {
 
-class ActionThread::Task : public ThreadWeaver::Job
+class ActionThread::Task : public Job
 {
 public:
 
@@ -120,8 +120,8 @@ protected:
 
 // ----------------------------------------------------------------------------------------------------
 
-ActionThread::ActionThread(KIPI::Interface* interface, QObject* parent)
-    : ActionThreadBase(parent)
+ActionThread::ActionThread(Interface* const interface, QObject* const parent)
+    : KPActionThreadBase(parent)
 {
     m_updateFileStamp = false;
 

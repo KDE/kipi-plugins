@@ -41,12 +41,10 @@
 #include "storagesettingsbox.h"
 #include "kpmetadata.h"
 
-using namespace ThreadWeaver;
-
 namespace KIPIRemoveRedEyesPlugin
 {
 
-Task::Task(const KUrl& urli, QObject* parent, WorkerThreadPriv* d)
+Task::Task(const KUrl& urli, QObject* const parent, WorkerThreadPriv* const d)
     : Job(parent), url(urli)
 {
     this->ld = d;
@@ -124,13 +122,12 @@ void Task::run()
     ld->progress++;
 
     emit calculationFinished(new WorkerThreadData(url, ld->progress, eyes));
-
 }
 
 // ----------------------------------------------------------------------------------------------------
 
-WorkerThread::WorkerThread(QObject* parent, bool updateFileTimeStamp)
-    : ActionThreadBase(parent), pd(new WorkerThreadPriv)
+WorkerThread::WorkerThread(QObject* const parent, bool updateFileTimeStamp)
+    : KPActionThreadBase(parent), pd(new WorkerThreadPriv)
 {
     pd->updateFileTimeStamp = updateFileTimeStamp;
 }
@@ -157,7 +154,7 @@ void WorkerThread::cancel()
 {
     pd->cancel = true;
 
-    ActionThreadBase::cancel();
+    KPActionThreadBase::cancel();
 }
 
 void WorkerThread::loadSettings(const CommonSettings& newSettings)
@@ -209,7 +206,7 @@ void WorkerThread::setTempFile(const QString& temp, ImageType type)
     }
 }
 
-void WorkerThread::setSaveMethod(SaveMethod* method)
+void WorkerThread::setSaveMethod(SaveMethod* const method)
 {
     if (!method)
     {
@@ -219,7 +216,7 @@ void WorkerThread::setSaveMethod(SaveMethod* method)
     pd->saveMethod = method;
 }
 
-void WorkerThread::setLocator(Locator* locator)
+void WorkerThread::setLocator(Locator* const locator)
 {
     if (!locator)
     {

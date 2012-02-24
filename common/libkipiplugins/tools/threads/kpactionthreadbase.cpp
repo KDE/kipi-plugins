@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "actionthreadbase.moc"
+#include "kpactionthreadbase.moc"
 
 // Qt includes
 
@@ -40,16 +40,16 @@
 #include <threadweaver/Job.h>
 #include <solid/device.h>
 
-using namespace ThreadWeaver;
+using namespace Solid;
 
 namespace KIPIPlugins
 {
 
-class ActionThreadBase::ActionThreadBasePriv
+class KPActionThreadBase::KPActionThreadBasePriv
 {
 public:
 
-    ActionThreadBasePriv()
+    KPActionThreadBasePriv()
     {
         running       = false;
         weaverRunning = false;
@@ -69,10 +69,10 @@ public:
     KPWeaverObserver*     log;
 };
 
-ActionThreadBase::ActionThreadBase(QObject* parent)
-    : QThread(parent), d(new ActionThreadBasePriv)
+KPActionThreadBase::KPActionThreadBase(QObject* parent)
+    : QThread(parent), d(new KPActionThreadBasePriv)
 {
-    const int maximumNumberOfThreads = qMax(Solid::Device::listFromType(Solid::DeviceInterface::Processor).count(), 1);
+    const int maximumNumberOfThreads = qMax(Device::listFromType(DeviceInterface::Processor).count(), 1);
     d->log                           = new KPWeaverObserver(this);
     d->weaver                        = new Weaver(this);
     d->weaver->registerObserver(d->log);
@@ -80,7 +80,7 @@ ActionThreadBase::ActionThreadBase(QObject* parent)
     kDebug() << "Starting Main Thread";
 }
 
-ActionThreadBase::~ActionThreadBase()
+KPActionThreadBase::~KPActionThreadBase()
 {
     kDebug() << "calling action thread destructor";
     // cancel the thread
@@ -92,14 +92,14 @@ ActionThreadBase::~ActionThreadBase()
     delete d;
 }
 
-void ActionThreadBase::slotFinished()
+void KPActionThreadBase::slotFinished()
 {
     kDebug() << "Finish Main Thread";
     d->weaverRunning = false;
     d->condVarJobs.wakeAll();
 }
 
-void ActionThreadBase::cancel()
+void KPActionThreadBase::cancel()
 {
     kDebug() << "Cancel Main Thread";
     QMutexLocker lock(&d->mutex);
@@ -111,14 +111,14 @@ void ActionThreadBase::cancel()
     d->condVarJobs.wakeAll();
 }
 
-void ActionThreadBase::appendJob(JobCollection* job)
+void KPActionThreadBase::appendJob(JobCollection* const job)
 {
     QMutexLocker lock(&d->mutex);
     d->todo << job;
     d->condVar.wakeAll();
 }
 
-void ActionThreadBase::run()
+void KPActionThreadBase::run()
 {
     d->running       = true;
     d->weaverRunning = false;

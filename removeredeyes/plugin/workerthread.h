@@ -34,13 +34,11 @@
 
 // local includes
 
-#include "actionthreadbase.h"
+#include "kpactionthreadbase.h"
 #include "commonsettings.h"
 #include "savemethods.h"
 #include "locator.h"
 #include "workerthreaddata.h"
-
-class QString;
 
 using namespace KIPIPlugins;
 
@@ -50,7 +48,7 @@ namespace KIPIRemoveRedEyesPlugin
 class WorkerThreadData;
 struct WorkerThreadPriv;
 
-class WorkerThread : public ActionThreadBase
+class WorkerThread : public KPActionThreadBase
 {
     Q_OBJECT
 
@@ -76,14 +74,14 @@ Q_SIGNALS:
 
 public:
 
-    WorkerThread(QObject* parent, bool updateFileTimeStamp);
+    WorkerThread(QObject* const parent, bool updateFileTimeStamp);
     ~WorkerThread();
 
     int  runType() const;
     void setRunType(int);
 
-    void setSaveMethod(SaveMethod* method);
-    void setLocator(Locator* locator);
+    void setSaveMethod(SaveMethod* const method);
+    void setLocator(Locator* const locator);
 
     void loadSettings(const CommonSettings&);
     void setImagesList(const KUrl::List&);
@@ -128,13 +126,13 @@ struct WorkerThreadPriv
 
 // --------------------------------------------------------------------------
 
-class Task : public ThreadWeaver::Job
+class Task : public Job
 {
     Q_OBJECT
 
 public:
 
-    Task(const KUrl& url, QObject* parent = 0, WorkerThreadPriv* d = 0);
+    Task(const KUrl& url, QObject* const parent = 0, WorkerThreadPriv* const d = 0);
 
     const KUrl& url;
 

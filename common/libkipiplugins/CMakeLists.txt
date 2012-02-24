@@ -13,7 +13,7 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kprawthumbthread.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/binaryiface.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/iccjpeg.c
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/actionthreadbase.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpactionthreadbase.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpweaverobserver.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/batchprogressdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagedialog.cpp

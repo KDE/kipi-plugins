@@ -37,25 +37,26 @@
 // Local includes
 
 #include "actions.h"
-#include "actionthreadbase.h"
+#include "kpactionthreadbase.h"
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-class ActionThread : public ActionThreadBase
+class ActionThread : public KPActionThreadBase
 {
     Q_OBJECT
 
 public:
 
-    ActionThread(KIPI::Interface* interface, QObject *parent);
+    ActionThread(Interface* const interface, QObject* const parent);
     ~ActionThread();
 
     void rotate(const KUrl::List& urlList, RotateAction val);
