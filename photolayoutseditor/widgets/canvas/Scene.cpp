@@ -68,6 +68,7 @@
 #include <QUndoCommand>
 #include <QImageReader>
 #include <QtAlgorithms>
+#include <QBuffer>
 
 // KDE
 #include <kapplication.h>
@@ -1348,6 +1349,36 @@ QDomDocument Scene::toSvg(ProgressObserver * observer, bool asTemplate)
     sceneElement.setAttribute("width", QString::number(this->width()));
     sceneElement.setAttribute("height", QString::number(this->height()));
     document.appendChild(sceneElement);
+
+    if (asTemplate)
+    {
+        QDomElement previewImage = document.createElement("defs");
+        previewImage.setAttribute("id", "Preview");
+        QDomElement image = document.createElement("image");
+
+        QSizeF sceneSize = this->sceneRect().size();
+        double imgw = 200, imgh = 200;
+        if ((imgw / sceneSize.width()) < (imgh / sceneSize.height()))
+            imgh = qRound(sceneSize.height() * imgw / sceneSize.width());
+        else
+            imgw = qRound(sceneSize.width() * imgh / sceneSize.height());
+
+        QByteArray byteArray;
+        QBuffer buffer(&byteArray);
+        QImage img(QSize(imgw, imgh), QImage::Format_ARGB32_Premultiplied);
+        img.fill(Qt::white);
+        QPainter p(&img);
+        this->render(&p, QRectF(0, 0, imgw, imgh), this->sceneRect(), Qt::KeepAspectRatio);
+        p.end();
+        img.save(QString("/home/coder89/pliczek.png"));
+        img.save(&buffer, "PNG");
+        image.appendChild( document.createTextNode( QString(byteArray.toBase64()) ) );
+        image.setAttribute("width",QString::number((int)imgw));
+        image.setAttribute("height",QString::number((int)imgh));
+
+        previewImage.appendChild(image);
+        sceneElement.appendChild(previewImage);
+    }
 
     QList<QGraphicsItem*> itemsList = this->items(Qt::AscendingOrder);
     observer->progresChanged(0);

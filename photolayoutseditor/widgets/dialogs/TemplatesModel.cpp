@@ -71,7 +71,7 @@ bool TemplatesModel::removeRows(int row, int count, const QModelIndex & /*parent
         templates[row]->deleteLater();
     return true;
 }
-
+#include <QMessageBox>
 QVariant TemplatesModel::data(const QModelIndex & index, int role) const
 {
     if (!index.isValid())
