@@ -72,15 +72,15 @@ extern "C"
 
 // Local includes
 
-#include "actions.h"
-#include "actionthread.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
 #include "kpimageinfo.h"
 #include "kphostsettings.h"
-#include "previewmanager.h"
+#include "kppreviewmanager.h"
 #include "rawdecodingiface.h"
 #include "savesettingswidget.h"
+#include "actions.h"
+#include "actionthread.h"
 
 using namespace KDcrawIface;
 using namespace KIPIPlugins;
@@ -106,7 +106,7 @@ public:
 
     KUrl                 inputFile;
 
-    PreviewManager*      previewWidget;
+    KPPreviewManager*      previewWidget;
 
     ActionThread*        thread;
 
@@ -116,10 +116,10 @@ public:
 
     KPAboutData*         about;
 
-    KIPI::Interface*     iface;
+    Interface*           iface;
 };
 
-SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
+SingleDialog::SingleDialog(const QString& file, Interface* const iface)
             : KDialog(0), d(new SingleDialogPriv)
 {
     d->iface = iface;
@@ -135,7 +135,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     setMainWidget( page );
     QGridLayout* mainLayout = new QGridLayout(page);
 
-    d->previewWidget        = new PreviewManager(page);
+    d->previewWidget        = new KPPreviewManager(page);
 
     // ---------------------------------------------------------------
 
@@ -164,7 +164,7 @@ SingleDialog::SingleDialog(const QString& file, KIPI::Interface* iface)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("RAW Image Converter"),
+    d->about = new KPAboutData(ki18n("RAW Image Converter"),
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to convert RAW images"),
@@ -341,7 +341,7 @@ void SingleDialog::slotUser3()
 
 void SingleDialog::slotIdentify()
 {
-    if (!d->iface->hasFeature(KIPI::HostSupportsThumbnails))
+    if (!d->iface->hasFeature(HostSupportsThumbnails))
     {
         d->thread->thumbRawFile(KUrl(d->inputFile));
     }

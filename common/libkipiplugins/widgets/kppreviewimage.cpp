@@ -6,9 +6,9 @@
  * Date        : 2009-12-13
  * Description : a widget to preview image effect.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Kare Sars <kare dot sars at iki dot fi>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008      by Kare Sars <kare dot sars at iki dot fi>
+ * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "previewimage.moc"
+#include "kppreviewimage.moc"
 
 // Qt includes
 
@@ -50,10 +50,11 @@
 namespace KIPIPlugins
 {
 
-static const qreal      selMargin = 8.0;
-static const QPointF    boundMargin(selMargin,selMargin);
+static const qreal   selMargin = 8.0;
+static const QPointF boundMargin(selMargin,selMargin);
 
-struct SelectionItem::SelectionItemPriv {
+struct KPSelectionItem::KPSelectionItemPriv
+{
     QPen        penDark;
     QPen        penLight;
     QPen        penAnchors;
@@ -76,12 +77,12 @@ struct SelectionItem::SelectionItemPriv {
     bool        showAnchors;
 };
 
-SelectionItem::SelectionItem(QRectF rect)
-    : QGraphicsItem(), d(new SelectionItemPriv)
+KPSelectionItem::KPSelectionItem(const QRectF& rect)
+    : QGraphicsItem(), d(new KPSelectionItemPriv)
 {
     d->hasMaxX = false;
     d->hasMaxY = false;
-    d->hasMax = false;
+    d->hasMax  = false;
     setRect(rect);
 
     d->penDark.setColor(Qt::black);
@@ -92,16 +93,16 @@ SelectionItem::SelectionItem(QRectF rect)
     d->penAnchors.setStyle(Qt::SolidLine);
 
     // FIXME We should probably use some standard KDE color here and not hard code it
-    d->invZoom = 1;
+    d->invZoom   = 1;
     d->selMargin = selMargin;
 }
 
-SelectionItem::~SelectionItem()
+KPSelectionItem::~KPSelectionItem()
 {
     delete d;
 }
 
-void SelectionItem::saveZoom(qreal zoom)
+void KPSelectionItem::saveZoom(qreal zoom)
 {
     if (zoom < 0.00001)
     {
@@ -114,7 +115,7 @@ void SelectionItem::saveZoom(qreal zoom)
     updateAnchors();
 }
 
-void SelectionItem::setMaxRight(qreal maxX)
+void KPSelectionItem::setMaxRight(qreal maxX)
 {
     d->maxX = maxX;
     d->hasMaxX = true;
@@ -124,7 +125,7 @@ void SelectionItem::setMaxRight(qreal maxX)
     }
 }
 
-void SelectionItem::setMaxBottom(qreal maxY)
+void KPSelectionItem::setMaxBottom(qreal maxY)
 {
     d->maxY = maxY;
     d->hasMaxY = true;
@@ -134,7 +135,7 @@ void SelectionItem::setMaxBottom(qreal maxY)
     }
 }
 
-SelectionItem::Intersects SelectionItem::intersects(QPointF point)
+KPSelectionItem::Intersects KPSelectionItem::intersects(QPointF& point)
 {
 
     if ((point.x() < (d->rect.left()   - d->selMargin)) ||
@@ -182,11 +183,12 @@ SelectionItem::Intersects SelectionItem::intersects(QPointF point)
     return Move;
 }
 
-void SelectionItem::setRect(QRectF rect)
+void KPSelectionItem::setRect(const QRectF& rect)
 {
     prepareGeometryChange();
     d->rect = rect;
     d->rect = d->rect.normalized();
+
     if (d->hasMax)
     {
         if (d->rect.top() < 0)
@@ -206,10 +208,11 @@ void SelectionItem::setRect(QRectF rect)
             d->rect.setBottom(d->maxY);
         }
     }
+
     updateAnchors();
 }
 
-QPointF SelectionItem::fixTranslation(QPointF dp)
+QPointF KPSelectionItem::fixTranslation(QPointF dp) const
 {
     if ((d->rect.left()   + dp.x()) < 0)
     {
@@ -227,20 +230,21 @@ QPointF SelectionItem::fixTranslation(QPointF dp)
     {
         dp.setY(d->maxY - d->rect.bottom());
     }
+
     return dp;
 }
 
-QRectF SelectionItem::rect()
+QRectF KPSelectionItem::rect() const
 {
     return d->rect;
 }
 
-QRectF SelectionItem::boundingRect() const
+QRectF KPSelectionItem::boundingRect() const
 {
     return QRectF(d->rect.topLeft() - boundMargin, d->rect.bottomRight() + boundMargin);
 }
 
-void SelectionItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
+void KPSelectionItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     painter->setPen(d->penDark);
     painter->drawRect(d->rect);
@@ -288,12 +292,13 @@ void SelectionItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QW
     }
 }
 
-void SelectionItem::updateAnchors()
+void KPSelectionItem::updateAnchors()
 {
     QPointF moveDown(0.0, d->selMargin);
     QPointF moveRight(d->selMargin, 0.0);
     bool verticalCondition      = (d->rect.height() - 3 * d->selMargin) > 0;
     bool horizontalCondition    = (d->rect.width()  - 3 * d->selMargin) > 0;
+
     if (verticalCondition)
     {
         if (horizontalCondition)
@@ -370,16 +375,26 @@ void SelectionItem::updateAnchors()
     }
 }
 
+// -------------------------------------------------------------------------------------------------
 
-
-// -------------------------------------------------------------
-
-class PreviewImage::PreviewImagePriv
+class KPPreviewImage::KPPreviewImagePriv
 {
 
 public:
 
-    PreviewImagePriv()
+    enum 
+    {
+        NONE, 
+        LOOKAROUND, 
+        DRAWSELECTION, 
+        EXPANDORSHRINK, 
+        MOVESELECTION
+    }
+    mouseDragAction;
+
+public:
+
+    KPPreviewImagePriv()
     {
         pixmapItem     = 0;
         scene          = 0;
@@ -394,12 +409,10 @@ public:
 
     QGraphicsScene*             scene;
     QGraphicsPixmapItem*        pixmapItem;
-    SelectionItem*              selection;
+    KPSelectionItem*            selection;
     bool                        enableSelection;
-    SelectionItem::Intersects   mouseZone;
+    KPSelectionItem::Intersects mouseZone;
     QPointF                     lastMousePoint;
-    enum {NONE, LOOKAROUND, DRAWSELECTION, EXPANDORSHRINK, MOVESELECTION}
-                                mouseDragAction;
 
     QAction*                    zoomInAction;
     QAction*                    zoomOutAction;
@@ -414,8 +427,8 @@ public:
     QGraphicsRectItem*          highLightArea;
 };
 
-PreviewImage::PreviewImage(QWidget* parent)
-            : QGraphicsView(parent), d(new PreviewImagePriv)
+KPPreviewImage::KPPreviewImage(QWidget* const parent)
+    : QGraphicsView(parent), d(new KPPreviewImagePriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -425,7 +438,7 @@ PreviewImage::PreviewImage(QWidget* parent)
     d->scene      = new QGraphicsScene;
     d->pixmapItem = new QGraphicsPixmapItem;
 
-    d->selection = new SelectionItem(QRectF());
+    d->selection  = new KPSelectionItem(QRectF());
     d->selection->setZValue(10);
     d->selection->setVisible(false);
     d->enableSelection = false;
@@ -433,11 +446,11 @@ PreviewImage::PreviewImage(QWidget* parent)
     d->scene->addItem(d->pixmapItem);
     setScene(d->scene);
 
-    d->highLightTop = new QGraphicsRectItem;
+    d->highLightTop    = new QGraphicsRectItem;
     d->highLightBottom = new QGraphicsRectItem;
-    d->highLightRight = new QGraphicsRectItem;
-    d->highLightLeft = new QGraphicsRectItem;
-    d->highLightArea = new QGraphicsRectItem;
+    d->highLightRight  = new QGraphicsRectItem;
+    d->highLightLeft   = new QGraphicsRectItem;
+    d->highLightArea   = new QGraphicsRectItem;
 
     d->highLightTop->setOpacity(0.4);
     d->highLightBottom->setOpacity(0.4);
@@ -463,7 +476,7 @@ PreviewImage::PreviewImage(QWidget* parent)
     d->scene->addItem(d->highLightLeft);
     d->scene->addItem(d->highLightArea);
 
-    d->mouseZone = SelectionItem::None;
+    d->mouseZone = KPSelectionItem::None;
 
     // create context menu
 
@@ -503,12 +516,12 @@ PreviewImage::PreviewImage(QWidget* parent)
     verticalScrollBar()->installEventFilter(this);
 }
 
-PreviewImage::~PreviewImage()
+KPPreviewImage::~KPPreviewImage()
 {
     delete d;
 }
 
-bool PreviewImage::setImage(const QImage& img) const
+bool KPPreviewImage::setImage(const QImage& img) const
 {
     if (!img.isNull())
     {
@@ -521,12 +534,12 @@ bool PreviewImage::setImage(const QImage& img) const
     return false;
 }
 
-void PreviewImage::enableSelectionArea(bool b)
+void KPPreviewImage::enableSelectionArea(bool b)
 {
     d->enableSelection = b;
 }
 
-bool PreviewImage::load(const QString& file) const
+bool KPPreviewImage::load(const QString& file) const
 {
     QImage image(file);
     bool ret = setImage(image);
@@ -539,28 +552,28 @@ bool PreviewImage::load(const QString& file) const
     return ret;
 }
 
-void PreviewImage::slotZoomIn()
+void KPPreviewImage::slotZoomIn()
 {
     scale(1.5, 1.5);
     d->selection->saveZoom(transform().m11());
     d->zoom2FitAction->setDisabled(false);
 }
 
-void PreviewImage::slotZoomOut()
+void KPPreviewImage::slotZoomOut()
 {
     scale(1.0 / 1.5, 1.0 / 1.5);
     d->selection->saveZoom(transform().m11());
     d->zoom2FitAction->setDisabled(false);
 }
 
-void PreviewImage::slotZoom2Fit()
+void KPPreviewImage::slotZoom2Fit()
 {
     fitInView(d->pixmapItem->boundingRect(), Qt::KeepAspectRatio);
     d->selection->saveZoom(transform().m11());
     d->zoom2FitAction->setDisabled(true);
 }
 
-void PreviewImage::slotSetTLX(float ratio)
+void KPPreviewImage::slotSetTLX(float ratio)
 {
     if (!d->selection->isVisible())
         return; // only correct the selection if it is visible
@@ -571,7 +584,7 @@ void PreviewImage::slotSetTLX(float ratio)
     updateSelVisibility();
 }
 
-void PreviewImage::slotSetTLY(float ratio)
+void KPPreviewImage::slotSetTLY(float ratio)
 {
     if (!d->selection->isVisible())
         return; // only correct the selection if it is visible
@@ -582,7 +595,7 @@ void PreviewImage::slotSetTLY(float ratio)
     updateSelVisibility();
 }
 
-void PreviewImage::slotSetBRX(float ratio)
+void KPPreviewImage::slotSetBRX(float ratio)
 {
     if (!d->selection->isVisible())
         return; // only correct the selection if it is visible
@@ -593,7 +606,7 @@ void PreviewImage::slotSetBRX(float ratio)
     updateSelVisibility();
 }
 
-void PreviewImage::slotSetBRY(float ratio)
+void KPPreviewImage::slotSetBRY(float ratio)
 {
     if (!d->selection->isVisible())
         return; // only correct the selection if it is visible
@@ -604,7 +617,7 @@ void PreviewImage::slotSetBRY(float ratio)
     updateSelVisibility();
 }
 
-void PreviewImage::slotSetSelection(float tl_x, float tl_y, float br_x, float br_y)
+void KPPreviewImage::slotSetSelection(float tl_x, float tl_y, float br_x, float br_y)
 {
     QRectF rect;
     rect.setCoords(tl_x * d->scene->width(),
@@ -616,13 +629,13 @@ void PreviewImage::slotSetSelection(float tl_x, float tl_y, float br_x, float br
     updateSelVisibility();
 }
 
-void PreviewImage::slotClearActiveSelection()
+void KPPreviewImage::slotClearActiveSelection()
 {
-    d->selection->setRect(QRectF(0,0,0,0));
+    d->selection->setRect(QRectF(0, 0, 0, 0));
     d->selection->setVisible(false);
 }
 
-void PreviewImage::slotSetHighlightArea(float tl_x, float tl_y, float br_x, float br_y)
+void KPPreviewImage::slotSetHighlightArea(float tl_x, float tl_y, float br_x, float br_y)
 {
     QRectF rect;
 
@@ -670,7 +683,7 @@ void PreviewImage::slotSetHighlightArea(float tl_x, float tl_y, float br_x, floa
     d->highLightArea->hide();
 }
 
-void PreviewImage::slotSetHighlightShown(int percentage, QColor highLightColor)
+void KPPreviewImage::slotSetHighlightShown(int percentage, QColor highLightColor)
 {
     if (percentage >= 100)
     {
@@ -691,7 +704,7 @@ void PreviewImage::slotSetHighlightShown(int percentage, QColor highLightColor)
     d->highLightArea->show();
 }
 
-void PreviewImage::slotClearHighlight()
+void KPPreviewImage::slotClearHighlight()
 {
     d->highLightLeft->hide();
     d->highLightRight->hide();
@@ -700,7 +713,7 @@ void PreviewImage::slotClearHighlight()
     d->highLightArea->hide();
 }
 
-void PreviewImage::wheelEvent(QWheelEvent *e)
+void KPPreviewImage::wheelEvent(QWheelEvent* e)
 {
     if (e->modifiers() == Qt::ControlModifier)
     {
@@ -719,7 +732,7 @@ void PreviewImage::wheelEvent(QWheelEvent *e)
     }
 }
 
-void PreviewImage::mousePressEvent(QMouseEvent* e)
+void KPPreviewImage::mousePressEvent(QMouseEvent* e)
 {
     if (e->button() & Qt::LeftButton)
     {
@@ -732,40 +745,40 @@ void PreviewImage::mousePressEvent(QMouseEvent* e)
             if (!d->selection->isVisible() || !d->selection->contains(scenePoint))
             {
                 // Beginning of a selection area change
-                d->mouseDragAction = PreviewImagePriv::DRAWSELECTION;
+                d->mouseDragAction = KPPreviewImagePriv::DRAWSELECTION;
                 d->selection->setVisible(true);
                 d->selection->setRect(QRectF(scenePoint, QSizeF(0,0)));
-                d->mouseZone = SelectionItem::BottomRight;
+                d->mouseZone = KPSelectionItem::BottomRight;
             }
             else if (d->selection->isVisible() &&
-                     d->mouseZone != SelectionItem::None &&
-                     d->mouseZone != SelectionItem::Move)
+                     d->mouseZone != KPSelectionItem::None &&
+                     d->mouseZone != KPSelectionItem::Move)
             {
                 // Modification of the selection area
-                d->mouseDragAction = PreviewImagePriv::EXPANDORSHRINK;
+                d->mouseDragAction = KPPreviewImagePriv::EXPANDORSHRINK;
             }
             else
             {
                 // Selection movement called by QGraphicsView
-                d->mouseDragAction = PreviewImagePriv::MOVESELECTION;
+                d->mouseDragAction = KPPreviewImagePriv::MOVESELECTION;
             }
             updateHighlight();
         }
         else
         {
             // Beginning of moving around the picture
-            d->mouseDragAction = PreviewImagePriv::LOOKAROUND;
+            d->mouseDragAction = KPPreviewImagePriv::LOOKAROUND;
             setCursor(Qt::ClosedHandCursor);
         }
     }
     QGraphicsView::mousePressEvent(e);
 }
 
-void PreviewImage::mouseReleaseEvent(QMouseEvent* e)
+void KPPreviewImage::mouseReleaseEvent(QMouseEvent* e)
 {
     if (e->button() & Qt::LeftButton)
     {
-        if (d->mouseDragAction == PreviewImagePriv::DRAWSELECTION)
+        if (d->mouseDragAction == KPPreviewImagePriv::DRAWSELECTION)
         {
             // Stop and setup the selection area
             // Only one case: small rectangle that we drop
@@ -780,18 +793,18 @@ void PreviewImage::mouseReleaseEvent(QMouseEvent* e)
             setCursor(Qt::CrossCursor);
         }
     }
-    d->mouseDragAction = PreviewImagePriv::NONE;
+    d->mouseDragAction = KPPreviewImagePriv::NONE;
     updateHighlight();
     QGraphicsView::mouseReleaseEvent(e);
 }
 
-void PreviewImage::mouseMoveEvent(QMouseEvent* e)
+void KPPreviewImage::mouseMoveEvent(QMouseEvent* e)
 {
     QPointF scenePoint = mapToScene(e->pos());
 
     if (e->buttons() & Qt::LeftButton)
     {
-        if (d->mouseDragAction == PreviewImagePriv::LOOKAROUND)
+        if (d->mouseDragAction == KPPreviewImagePriv::LOOKAROUND)
         {
             int dx    = e->x() - d->lastdx;
             int dy    = e->y() - d->lastdy;
@@ -800,36 +813,36 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
             d->lastdx = e->x();
             d->lastdy = e->y();
         }
-        else if (d->mouseDragAction == PreviewImagePriv::DRAWSELECTION ||
-                 d->mouseDragAction == PreviewImagePriv::EXPANDORSHRINK ||
-                 d->mouseDragAction == PreviewImagePriv::MOVESELECTION)
+        else if (d->mouseDragAction == KPPreviewImagePriv::DRAWSELECTION ||
+                 d->mouseDragAction == KPPreviewImagePriv::EXPANDORSHRINK ||
+                 d->mouseDragAction == KPPreviewImagePriv::MOVESELECTION)
         {
             ensureVisible(QRectF(scenePoint, QSizeF(0,0)), 1, 1);
             QRectF rect = d->selection->rect();
             switch (d->mouseZone)
             {
-                case SelectionItem::None:
+                case KPSelectionItem::None:
                     // should not be here :)
                     break;
-                case SelectionItem::Top:
+                case KPSelectionItem::Top:
                     if (scenePoint.y() < rect.bottom())
                     {
                         rect.setTop(scenePoint.y());
                     }
                     else
                     {
-                        d->mouseZone = SelectionItem::Bottom;
+                        d->mouseZone = KPSelectionItem::Bottom;
                         rect.setTop(rect.bottom());
                     }
                     break;
-                case SelectionItem::TopRight:
+                case KPSelectionItem::TopRight:
                     if (scenePoint.x() > rect.left())
                     {
                         rect.setRight(scenePoint.x());
                     }
                     else
                     {
-                        d->mouseZone = SelectionItem::TopLeft;
+                        d->mouseZone = KPSelectionItem::TopLeft;
                         setCursor(Qt::SizeFDiagCursor);
                         rect.setRight(rect.left());
                     }
@@ -839,38 +852,38 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
                     }
                     else
                     {
-                        if (d->mouseZone != SelectionItem::TopLeft)
+                        if (d->mouseZone != KPSelectionItem::TopLeft)
                         {
-                            d->mouseZone = SelectionItem::BottomRight;
+                            d->mouseZone = KPSelectionItem::BottomRight;
                             setCursor(Qt::SizeFDiagCursor);
                         }
                         else
                         {
-                            d->mouseZone = SelectionItem::BottomLeft;
+                            d->mouseZone = KPSelectionItem::BottomLeft;
                             setCursor(Qt::SizeBDiagCursor);
                         }
                         rect.setTop(rect.bottom());
                     }
                     break;
-                case SelectionItem::Right:
+                case KPSelectionItem::Right:
                     if (scenePoint.x() > rect.left())
                     {
                         rect.setRight(scenePoint.x());
                     }
                     else
                     {
-                        d->mouseZone = SelectionItem::Left;
+                        d->mouseZone = KPSelectionItem::Left;
                         rect.setRight(rect.left());
                     }
                     break;
-                case SelectionItem::BottomRight:
+                case KPSelectionItem::BottomRight:
                     if (scenePoint.x() > rect.left())
                     {
                         rect.setRight(scenePoint.x());
                     }
                     else
                     {
-                        d->mouseZone = SelectionItem::BottomLeft;
+                        d->mouseZone = KPSelectionItem::BottomLeft;
                         setCursor(Qt::SizeBDiagCursor);
                         rect.setRight(rect.left());
                     }
@@ -880,38 +893,38 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
                     }
                     else
                     {
-                        if (d->mouseZone != SelectionItem::BottomLeft)
+                        if (d->mouseZone != KPSelectionItem::BottomLeft)
                         {
-                            d->mouseZone = SelectionItem::TopRight;
+                            d->mouseZone = KPSelectionItem::TopRight;
                             setCursor(Qt::SizeBDiagCursor);
                         }
                         else
                         {
-                            d->mouseZone = SelectionItem::TopLeft;
+                            d->mouseZone = KPSelectionItem::TopLeft;
                             setCursor(Qt::SizeFDiagCursor);
                         }
                         rect.setBottom(rect.top());
                     }
                     break;
-                case SelectionItem::Bottom:
+                case KPSelectionItem::Bottom:
                     if (scenePoint.y() > rect.top())
                     {
                         rect.setBottom(scenePoint.y());
                     }
                     else
                     {
-                        d->mouseZone = SelectionItem::Top;
+                        d->mouseZone = KPSelectionItem::Top;
                         rect.setBottom(rect.top());
                     }
                     break;
-                case SelectionItem::BottomLeft:
+                case KPSelectionItem::BottomLeft:
                     if (scenePoint.x() < rect.right())
                     {
                         rect.setLeft(scenePoint.x());
                     }
                     else
                     {
-                        d->mouseZone = SelectionItem::BottomRight;
+                        d->mouseZone = KPSelectionItem::BottomRight;
                         setCursor(Qt::SizeFDiagCursor);
                         rect.setLeft(rect.right());
                     }
@@ -921,38 +934,38 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
                     }
                     else
                     {
-                        if (d->mouseZone != SelectionItem::BottomRight)
+                        if (d->mouseZone != KPSelectionItem::BottomRight)
                         {
-                            d->mouseZone = SelectionItem::TopLeft;
+                            d->mouseZone = KPSelectionItem::TopLeft;
                             setCursor(Qt::SizeFDiagCursor);
                         }
                         else
                         {
-                            d->mouseZone = SelectionItem::TopRight;
+                            d->mouseZone = KPSelectionItem::TopRight;
                             setCursor(Qt::SizeBDiagCursor);
                         }
                         rect.setBottom(rect.top());
                     }
                     break;
-                case SelectionItem::Left:
+                case KPSelectionItem::Left:
                     if (scenePoint.x() < rect.right())
                     {
                         rect.setLeft(scenePoint.x());
                     }
                     else
                     {
-                        d->mouseZone = SelectionItem::Right;
+                        d->mouseZone = KPSelectionItem::Right;
                         rect.setLeft(rect.right());
                     }
                     break;
-                case SelectionItem::TopLeft:
+                case KPSelectionItem::TopLeft:
                     if (scenePoint.x() < rect.right())
                     {
                         rect.setLeft(scenePoint.x());
                     }
                     else
                     {
-                        d->mouseZone = SelectionItem::TopRight;
+                        d->mouseZone = KPSelectionItem::TopRight;
                         setCursor(Qt::SizeBDiagCursor);
                         rect.setLeft(rect.right());
                     }
@@ -962,20 +975,20 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
                     }
                     else
                     {
-                        if (d->mouseZone != SelectionItem::TopRight)
+                        if (d->mouseZone != KPSelectionItem::TopRight)
                         {
-                            d->mouseZone = SelectionItem::BottomLeft;
+                            d->mouseZone = KPSelectionItem::BottomLeft;
                             setCursor(Qt::SizeBDiagCursor);
                         }
                         else
                         {
-                            d->mouseZone = SelectionItem::BottomRight;
+                            d->mouseZone = KPSelectionItem::BottomRight;
                             setCursor(Qt::SizeFDiagCursor);
                         }
                         rect.setTop(rect.bottom());
                     }
                     break;
-                case SelectionItem::Move:
+                case KPSelectionItem::Move:
                     rect.translate(d->selection->fixTranslation(scenePoint - d->lastMousePoint));
                     break;
             }
@@ -988,34 +1001,34 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
 
         switch (d->mouseZone)
         {
-            case SelectionItem::None:
+            case KPSelectionItem::None:
                 setCursor(Qt::CrossCursor);
                 break;
-            case SelectionItem::Top:
+            case KPSelectionItem::Top:
                 setCursor(Qt::SizeVerCursor);
                 break;
-            case SelectionItem::TopRight:
+            case KPSelectionItem::TopRight:
                 setCursor(Qt::SizeBDiagCursor);
                 break;
-            case SelectionItem::Right:
+            case KPSelectionItem::Right:
                 setCursor(Qt::SizeHorCursor);
                 break;
-            case SelectionItem::BottomRight:
+            case KPSelectionItem::BottomRight:
                 setCursor(Qt::SizeFDiagCursor);
                 break;
-            case SelectionItem::Bottom:
+            case KPSelectionItem::Bottom:
                 setCursor(Qt::SizeVerCursor);
                 break;
-            case SelectionItem::BottomLeft:
+            case KPSelectionItem::BottomLeft:
                 setCursor(Qt::SizeBDiagCursor);
                 break;
-            case SelectionItem::Left:
+            case KPSelectionItem::Left:
                 setCursor(Qt::SizeHorCursor);
                 break;
-            case SelectionItem::TopLeft:
+            case KPSelectionItem::TopLeft:
                 setCursor(Qt::SizeFDiagCursor);
                 break;
-            case SelectionItem::Move:
+            case KPSelectionItem::Move:
                 setCursor(Qt::SizeAllCursor);
                 break;
         }
@@ -1029,17 +1042,17 @@ void PreviewImage::mouseMoveEvent(QMouseEvent* e)
     QGraphicsView::mouseMoveEvent(e);
 }
 
-void PreviewImage::enterEvent(QEvent*)
+void KPPreviewImage::enterEvent(QEvent*)
 {
     d->toolBar->show();
 }
 
-void PreviewImage::leaveEvent(QEvent*)
+void KPPreviewImage::leaveEvent(QEvent*)
 {
     d->toolBar->hide();
 }
 
-bool PreviewImage::eventFilter(QObject *obj, QEvent *ev)
+bool KPPreviewImage::eventFilter(QObject* obj, QEvent* ev)
 {
     if ( obj == d->toolBar )
     {
@@ -1072,7 +1085,7 @@ bool PreviewImage::eventFilter(QObject *obj, QEvent *ev)
     return QGraphicsView::eventFilter(obj, ev);
 }
 
-void PreviewImage::resizeEvent(QResizeEvent* e)
+void KPPreviewImage::resizeEvent(QResizeEvent* e)
 {
     if (!d->zoom2FitAction->isEnabled())
     {
@@ -1083,7 +1096,7 @@ void PreviewImage::resizeEvent(QResizeEvent* e)
     QGraphicsView::resizeEvent(e);
 }
 
-void PreviewImage::updateSelVisibility()
+void KPPreviewImage::updateSelVisibility()
 {
     if ((d->selection->rect().width() > 0.001) &&
         (d->selection->rect().height() > 0.001) &&
@@ -1098,9 +1111,10 @@ void PreviewImage::updateSelVisibility()
     updateHighlight();
 }
 
-void PreviewImage::updateHighlight()
+void KPPreviewImage::updateHighlight()
 {
-    if (d->selection->isVisible()) {
+    if (d->selection->isVisible())
+    {
         QRectF rect;
         // Left
         rect.setCoords(0,

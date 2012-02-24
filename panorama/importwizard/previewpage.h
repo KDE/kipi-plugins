@@ -28,18 +28,20 @@
 #include "wizardpage.h"
 #include "actions.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIPanoramaPlugin
 {
 
 class Manager;
 
-class PreviewPage : public KIPIPlugins::WizardPage
+class PreviewPage : public WizardPage
 {
     Q_OBJECT
 
 public:
 
-    PreviewPage(Manager* mngr, KAssistantDialog* dlg);
+    PreviewPage(Manager* const mngr, KAssistantDialog* const dlg);
     ~PreviewPage();
 
     bool cancel();

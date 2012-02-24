@@ -49,7 +49,7 @@
 
 // local includes
 
-#include "previewmanager.h"
+#include "kppreviewmanager.h"
 #include "kipiimagemodel.h"
 #include "gpsundocommand.h"
 
@@ -77,7 +77,7 @@ public:
     }
 
     KipiImageModel*              imageModel;
-    KIPIPlugins::PreviewManager* previewManager;
+    KPPreviewManager*            previewManager;
 
     QCheckBox*                   cbCoordinates;
     KLineEdit*                   leLatitude;
@@ -168,7 +168,7 @@ GPSImageDetails::GPSImageDetails(QWidget* const parent, KipiImageModel* const im
 
     /* *** *** *** */
 
-    d->previewManager = new KIPIPlugins::PreviewManager(this);
+    d->previewManager = new KPPreviewManager(this);
     d->previewManager->setMinimumSize(QSize(200, 200));
     layout1->addWidget(d->previewManager);
 
@@ -448,4 +448,4 @@ void GPSImageDetails::slotSetActive(const bool state)
     }
 }
 
-} /* KIPIGPSSyncPlugin */
+} // namespace KIPIGPSSyncPlugin

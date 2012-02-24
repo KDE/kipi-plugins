@@ -44,7 +44,7 @@
 #include "batchprogressdialog.h"
 #include "savesettingswidget.h"
 #include "manager.h"
-#include "previewmanager.h"
+#include "kppreviewmanager.h"
 #include "enblendbinary.h"
 #include "makebinary.h"
 #include "nonabinary.h"
@@ -56,13 +56,18 @@ namespace KIPIPanoramaPlugin
 struct PreviewPage::PreviewPagePriv
 {
     PreviewPagePriv(Manager *m)
-        : title(0), previewWidget(0), previewBusy(false), stitchingBusy(false),
-          postProcessing(0), canceled(false), mngr(m)
+        : title(0), 
+          previewWidget(0), 
+          previewBusy(false), 
+          stitchingBusy(false),
+          postProcessing(0), 
+          canceled(false), 
+          mngr(m)
     {}
 
     QLabel*              title;
     QUrl                 previewUrl;
-    PreviewManager*      previewWidget;
+    KPPreviewManager*    previewWidget;
     bool                 previewBusy;
     bool                 stitchingBusy;
     BatchProgressWidget* postProcessing;
@@ -75,8 +80,8 @@ struct PreviewPage::PreviewPagePriv
     Manager*             mngr;
 };
 
-PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
-        : KIPIPlugins::WizardPage(dlg, i18n("<b>Preview and Post-Processing</b>")),
+PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
+        : WizardPage(dlg, i18n("<b>Preview and Post-Processing</b>")),
           d(new PreviewPagePriv(mngr))
 {
     KVBox* vbox       = new KVBox(this);
@@ -84,7 +89,7 @@ PreviewPage::PreviewPage(Manager* mngr, KAssistantDialog* dlg)
     d->title->setOpenExternalLinks(true);
     d->title->setWordWrap(true);
 
-    d->previewWidget  = new PreviewManager(vbox);
+    d->previewWidget  = new KPPreviewManager(vbox);
     d->previewWidget->setButtonText(i18n("Details..."));
     d->previewWidget->show();
 

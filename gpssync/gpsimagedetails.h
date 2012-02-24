@@ -83,6 +83,6 @@ private:
     GPSImageDetailsPrivate* const d;
 };
 
-} /* KIPIGPSSyncPlugin */
+} // namespace KIPIGPSSyncPlugin
 
 #endif /* GPSIMAGEDETAILS_H */
