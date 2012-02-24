@@ -4,15 +4,15 @@ INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
 SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetadata.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwriteimage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetasettings.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwritehelp.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kprawthumbthread.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/binaryiface.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/iccjpeg.c
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwritehelp.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpactionthreadbase.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpweaverobserver.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/batchprogressdialog.cpp
