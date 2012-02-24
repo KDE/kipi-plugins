@@ -50,12 +50,12 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPIShwupPlugin
 {
 
-SwWidget::SwWidget(QWidget* parent, KIPI::Interface* iface)
+SwWidget::SwWidget(QWidget* const parent, KIPI::Interface* const iface)
     : QWidget(parent)
 {
     setObjectName("SwWidget");
@@ -64,8 +64,8 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface* iface)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::ImagesList(iface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList  = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Shwup account."));
@@ -99,9 +99,9 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface* iface)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* albBox    = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* albBox            = new QGroupBox(i18n("Destination"), settingsBox);
     albBox->setWhatsThis(i18n("This is the Shwup album to which selected photos will be uploaded."));
-    QGridLayout* albumsBoxLayout  = new QGridLayout(albBox);
+    QGridLayout* albumsBoxLayout = new QGridLayout(albBox);
 
     QLabel* albLbl  = new QLabel(i18n("Album:"), albBox);
     m_albumsCoB     = new KComboBox(albBox);
@@ -119,7 +119,7 @@ SwWidget::SwWidget(QWidget* parent, KIPI::Interface* iface)
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox    = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location to which Shwup images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
     m_uploadWidget = iface->uploadWidget(uploadBox);
@@ -195,7 +195,7 @@ SwWidget::~SwWidget()
 {
 }
 
-KIPIPlugins::ImagesList* SwWidget::imagesList() const
+KIPIPlugins::KPImagesList* SwWidget::imagesList() const
 {
     return m_imgList;
 }

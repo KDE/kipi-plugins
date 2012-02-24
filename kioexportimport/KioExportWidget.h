@@ -45,7 +45,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 using namespace KIPI;
@@ -66,7 +66,7 @@ public:
      * @param parent the parent widget
      * @param interface the KIPI interface to use
      */
-    KioExportWidget(QWidget* parent, Interface* const interface);
+    KioExportWidget(QWidget* const parent, Interface* const interface);
 
     /**
      * Destructor.
@@ -76,7 +76,7 @@ public:
     /**
      * Returns a pointer to the imagelist that is displayed.
      */
-    ImagesList* imagesList() const;
+    KPImagesList* imagesList() const;
 
     /**
      * Returns the currently selected target url. Maybe invalid.
@@ -110,7 +110,7 @@ private:
     KFileDialog*        m_targetDialog;
     KPushButton*        m_targetSearchButton;
     KUrl                m_targetUrl;
-    ImagesList*         m_imageList;
+    KPImagesList*       m_imageList;
 };
 
 } // namespace KIPIKioExportPlugin

@@ -50,12 +50,12 @@ class KPasswordDialog;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class KPAboutData;
+    class KPAboutData;
 }
 
 using namespace KIPI;
@@ -74,8 +74,8 @@ class SmugWindow : public KDialog
 
 public:
 
-    SmugWindow(Interface* interface, const QString& tmpFolder,
-               bool import, QWidget *parent);
+    SmugWindow(Interface* const interface, const QString& tmpFolder,
+               bool import, QWidget* const parent);
     ~SmugWindow();
 
     /**

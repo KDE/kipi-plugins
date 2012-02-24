@@ -70,8 +70,8 @@ class FbWindow : public KDialog
 
 public:
 
-    FbWindow(Interface* interface, const QString& tmpFolder,
-             bool import, QWidget* parent);
+    FbWindow(Interface* const interface, const QString& tmpFolder,
+             bool import, QWidget* const parent);
     ~FbWindow();
 
     /**

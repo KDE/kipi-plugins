@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,7 +44,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "manager.h"
 #include "actionthread.h"
 
@@ -61,18 +61,18 @@ public:
         mngr = 0;
     }
 
-    ImagesList* list;
+    KPImagesList* list;
 
-    Manager*    mngr;
+    Manager*      mngr;
 };
 
-ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
+ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
          : WizardPage(dlg, i18n("<b>Set Bracketed Images</b>")),
            d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
-    KVBox *vbox    = new KVBox(this);
-    QLabel *label1 = new QLabel(vbox);
+    KVBox* vbox    = new KVBox(this);
+    QLabel* label1 = new QLabel(vbox);
     label1->setWordWrap(true);
     label1->setText(i18n("<qt>"
                          "<p>Set here the list of your bracketed images to fuse. Please follow these conditions:</p>"
@@ -81,8 +81,8 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
                          "<li>All images must have the same dimensions.</li></ul>"
                          "</qt>"));
 
-    d->list = new ImagesList(d->mngr->iface(), vbox);
-    d->list->listView()->setColumn(ImagesListView::User1, i18n("Exposure (EV)"), true);
+    d->list = new KPImagesList(d->mngr->iface(), vbox);
+    d->list->listView()->setColumn(KPImagesListView::User1, i18n("Exposure (EV)"), true);
     d->list->slotAddImages(d->mngr->itemsList());
 
     setPageWidget(vbox);
@@ -134,9 +134,9 @@ KUrl::List ItemsPage::itemUrls() const
 
 void ItemsPage::setIdentity(const KUrl& url, const QString& identity)
 {
-    ImagesListViewItem* item = d->list->listView()->findItem(url);
+    KPImagesListViewItem* item = d->list->listView()->findItem(url);
     if (item)
-        item->setText(ImagesListView::User1, identity);
+        item->setText(KPImagesListView::User1, identity);
 }
 
 void ItemsPage::slotImageListChanged()

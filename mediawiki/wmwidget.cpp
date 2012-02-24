@@ -65,13 +65,13 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "wmwidget.h"
 
 namespace KIPIWikiMediaPlugin
 {
 
-WmWidget::WmWidget(QWidget* parent, Interface* const iface)
+WmWidget::WmWidget(QWidget* const parent, Interface* const iface)
     : QWidget(parent)
 {
     setObjectName("WmWidget");
@@ -80,8 +80,8 @@ WmWidget::WmWidget(QWidget* parent, Interface* const iface)
 
     // -------------------------------------------------------------------
 
-    m_imgList = new ImagesList(iface, this);
-    m_imgList->setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
+    m_imgList = new KPImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Wikimedia account."));
@@ -315,7 +315,7 @@ void WmWidget::saveSettings(KConfigGroup& group)
     group.writeEntry("Urls history", m_history.toStringList());
 }
 
-ImagesList* WmWidget::imagesList() const
+KPImagesList* WmWidget::imagesList() const
 {
     return m_imgList;
 }
@@ -375,13 +375,13 @@ void WmWidget::slotLoginClicked()
     emit signalLoginRequest(m_nameEdit->text(), m_passwdEdit->text(), m_wikiSelect->url());
 }
 
-QString WmWidget::author()
+QString WmWidget::author() const
 {
     kDebug() << "WmWidget::author()";
     return m_authorEdit->text();
 }
 
-QString WmWidget::licence()
+QString WmWidget::licence() const
 {
     kDebug() << "WmWidget::licence()";
     return m_licenceComboBox->itemData(m_licenceComboBox->currentIndex()).toString();

@@ -40,13 +40,13 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "KioExportWidget.h"
 
 namespace KIPIKioExportPlugin
 {
 
-KioExportWidget::KioExportWidget(QWidget* parent, Interface* const interface)
+KioExportWidget::KioExportWidget(QWidget* const parent, Interface* const interface)
     : QWidget(parent)
 {
     // setup kio target selection
@@ -70,7 +70,7 @@ KioExportWidget::KioExportWidget(QWidget* parent, Interface* const interface)
     m_targetSearchButton->setIcon(KIcon("folder-remote"));
 
     // setup image list
-    m_imageList = new ImagesList(interface, this);
+    m_imageList = new KPImagesList(interface, this);
     m_imageList->setAllowRAW(true);
     m_imageList->listView()->setWhatsThis(i18n("This is the list of images to upload "
                                                "to the specified target."));
@@ -164,7 +164,7 @@ void KioExportWidget::updateTargetLabel()
     }
 }
 
-ImagesList* KioExportWidget::imagesList() const
+KPImagesList* KioExportWidget::imagesList() const
 {
     return m_imageList;
 }

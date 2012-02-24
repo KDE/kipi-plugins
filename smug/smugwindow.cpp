@@ -60,7 +60,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "kpmetadata.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
@@ -73,8 +73,8 @@
 namespace KIPISmugPlugin
 {
 
-SmugWindow::SmugWindow(Interface* interface, const QString& tmpFolder,
-                       bool import, QWidget* /*parent*/)
+SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
+                       bool import, QWidget* const /*parent*/)
     : KDialog(0)
 {
     m_tmpPath.clear();

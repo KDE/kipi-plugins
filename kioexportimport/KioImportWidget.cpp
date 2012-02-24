@@ -40,16 +40,16 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPIKioExportPlugin
 {
 
-KioImportWidget::KioImportWidget(QWidget *parent, KIPI::Interface *interface)
+KioImportWidget::KioImportWidget(QWidget* parent, KIPI::Interface* interface)
                : QWidget(parent)
 {
     // setup image list
-    m_imageList = new KIPIPlugins::ImagesList(interface, this);
+    m_imageList = new KIPIPlugins::KPImagesList(interface, this);
     m_imageList->setAllowRAW(true);
     m_imageList->listView()->setWhatsThis(i18n(
                     "This is the list of images to import "
@@ -71,7 +71,7 @@ KioImportWidget::~KioImportWidget()
 {
 }
 
-KIPIPlugins::ImagesList* KioImportWidget::imagesList() const
+KIPIPlugins::KPImagesList* KioImportWidget::imagesList() const
 {
     return m_imageList;
 }

@@ -45,7 +45,7 @@ namespace KIPI
 namespace KIPIPlugins
 {
     class KPAboutData;
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KIPIImageshackExportPlugin
@@ -61,10 +61,10 @@ class ImageshackWindow : public KDialog
 
 public:
 
-    ImageshackWindow(KIPI::Interface* interface, QWidget* parent, Imageshack* pImageshack);
+    ImageshackWindow(KIPI::Interface* const interface, QWidget* const parent, Imageshack* const pImageshack);
     ~ImageshackWindow();
 
-    KIPIPlugins::ImagesList* getImagesList() const;
+    KIPIPlugins::KPImagesList* getImagesList() const;
 
 Q_SIGNALS:
 

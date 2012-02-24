@@ -29,10 +29,12 @@
 #include <QIcon>
 
 // KDE includes
+
 #include <kassistantdialog.h>
 
 // Local includes
-#include "imageslist.h"
+
+#include "kpimageslist.h"
 
 namespace KIPI
 {
@@ -101,9 +103,9 @@ protected Q_SLOTS:
     virtual void infopage_updateCaptions();
     
     virtual void slotAddItems(const KUrl::List&);    
-    virtual void slotRemovingItem(ImagesListViewItem*);
+    virtual void slotRemovingItem(KPImagesListViewItem*);
     virtual void slotContextMenuRequested();
-    virtual void slotXMLSaveItem(QXmlStreamWriter&, ImagesListViewItem*);
+    virtual void slotXMLSaveItem(QXmlStreamWriter&, KPImagesListViewItem*);
     virtual void slotXMLLoadElement(QXmlStreamReader&);
     virtual void slotXMLCustomElement(QXmlStreamWriter&);
     virtual void slotXMLCustomElement(QXmlStreamReader&);

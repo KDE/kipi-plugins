@@ -46,7 +46,7 @@
 
 // LibKIPI includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "kpaboutdata.h"
 
 // Local includes
@@ -60,7 +60,7 @@ namespace KIPIDebianScreenshotsPlugin
 static int maxWidth  = 800;
 static int maxHeight = 600;
 
-DsWindow::DsWindow(KIPI::Interface* interface, const QString &tmpFolder, QWidget* /*parent*/)
+DsWindow::DsWindow(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const /*parent*/)
     : KDialog(0),
       m_uploadEnabled(false),
       m_imagesCount(0),

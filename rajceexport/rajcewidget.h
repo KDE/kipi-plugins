@@ -47,7 +47,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KIPIRajceExportPlugin
@@ -101,35 +101,35 @@ private:
 
 private:
 
-    QLabel*                  m_headerLbl;
-    QLabel*                  m_userNameLbl;
-    QLabel*                  m_userName;
+    QLabel*                    m_headerLbl;
+    QLabel*                    m_userNameLbl;
+    QLabel*                    m_userName;
 
-    QRadioButton*            m_anonymousRBtn;
-    QRadioButton*            m_accountRBtn;
+    QRadioButton*              m_anonymousRBtn;
+    QRadioButton*              m_accountRBtn;
 
-    QSpinBox*                m_dimensionSpB;
-    QSpinBox*                m_imageQualitySpB;
+    QSpinBox*                  m_dimensionSpB;
+    QSpinBox*                  m_imageQualitySpB;
 
-    KComboBox*               m_albumsCoB;
+    KComboBox*                 m_albumsCoB;
 
-    KPushButton*             m_newAlbumBtn;
-    KPushButton*             m_reloadAlbumsBtn;
-    KPushButton*             m_changeUserBtn;
+    KPushButton*               m_newAlbumBtn;
+    KPushButton*               m_reloadAlbumsBtn;
+    KPushButton*               m_changeUserBtn;
 
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
+    KIPIPlugins::KPImagesList* m_imgList;
+    KIPI::UploadWidget*        m_uploadWidget;
 
-    QProgressBar*            m_progressBar;
+    QProgressBar*              m_progressBar;
 
-    RajceSession*            m_session;
+    RajceSession*              m_session;
 
-    QList<QString>           m_uploadQueue;
-    QList<QString>::Iterator m_currentUploadImage;
+    QList<QString>             m_uploadQueue;
+    QList<QString>::Iterator   m_currentUploadImage;
 
-    bool                     m_uploadingPhotos;
-    bool                     m_lastLoggedInState;
-    QString                  m_currentAlbumName;
+    bool                       m_uploadingPhotos;
+    bool                       m_lastLoggedInState;
+    QString                    m_currentAlbumName;
 };
 
 } // namespace KIPIRajceExportPlugin

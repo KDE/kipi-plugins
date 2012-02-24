@@ -67,7 +67,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "kpmetadata.h"
 #include "tphoto.h"
@@ -149,7 +149,7 @@ struct Wizard::Private
     QPageSetupDialog*        m_pDlg;
     QPrinter*                m_printer;
     QList<QPrinterInfo>      m_printerList;
-    ImagesList*              m_imagesFilesListBox;
+    KPImagesList*            m_imagesFilesListBox;
 };
 
 Wizard::Wizard(QWidget* const parent, Interface* const interface)
@@ -281,16 +281,16 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     printListLayout->setMargin(0);
     printListLayout->setSpacing(0);
 
-    d->m_imagesFilesListBox = new ImagesList(interface, d->m_photoPage->mPrintList, KIconLoader::SizeMedium);
+    d->m_imagesFilesListBox = new KPImagesList(interface, d->m_photoPage->mPrintList, KIconLoader::SizeMedium);
     d->m_imagesFilesListBox->setAllowDuplicate(true);
-    d->m_imagesFilesListBox->setControlButtons(ImagesList::Add |
-                                               ImagesList::Remove |
-                                               ImagesList::MoveUp |
-                                               ImagesList::MoveDown |
-                                               ImagesList::Clear |
-                                               ImagesList::Save |
-                                               ImagesList::Load);
-    d->m_imagesFilesListBox->setControlButtonsPlacement(ImagesList::ControlButtonsAbove);
+    d->m_imagesFilesListBox->setControlButtons(KPImagesList::Add |
+                                               KPImagesList::Remove |
+                                               KPImagesList::MoveUp |
+                                               KPImagesList::MoveDown |
+                                               KPImagesList::Clear |
+                                               KPImagesList::Save |
+                                               KPImagesList::Load);
+    d->m_imagesFilesListBox->setControlButtonsPlacement(KPImagesList::ControlButtonsAbove);
     d->m_imagesFilesListBox->enableDragAndDrop(false);
 
     d->m_cropPage->BtnCropRotateRight->setIcon(SmallIcon("object-rotate-right"));
@@ -310,8 +310,8 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
     connect(d->m_imagesFilesListBox, SIGNAL(signalAddItems(const KUrl::List&)),
             this, SLOT(slotAddItems(const KUrl::List&)));
 
-    connect(d->m_imagesFilesListBox, SIGNAL(signalRemovingItem(ImagesListViewItem*)),
-            this, SLOT(slotRemovingItem(ImagesListViewItem*)));
+    connect(d->m_imagesFilesListBox, SIGNAL(signalRemovingItem(KPImagesListViewItem*)),
+            this, SLOT(slotRemovingItem(KPImagesListViewItem*)));
 
     connect(d->m_imagesFilesListBox, SIGNAL(signalItemClicked(QTreeWidgetItem*)),
             this, SLOT(imageSelected(QTreeWidgetItem*)));
@@ -320,8 +320,8 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
             this, SLOT(slotContextMenuRequested()));
 
     // Save item list => we catch the signal to add our PA attributes and elements Image children
-    connect(d->m_imagesFilesListBox, SIGNAL(signalXMLSaveItem(QXmlStreamWriter&,ImagesListViewItem*)),
-            this, SLOT(slotXMLSaveItem(QXmlStreamWriter&,ImagesListViewItem*)));
+    connect(d->m_imagesFilesListBox, SIGNAL(signalXMLSaveItem(QXmlStreamWriter&, KPImagesListViewItem*)),
+            this, SLOT(slotXMLSaveItem(QXmlStreamWriter&, KPImagesListViewItem*)));
 
     // Save item list => we catch the signal to add our PA elements (not per image)
     connect(d->m_imagesFilesListBox, SIGNAL(signalXMLCustomElements(QXmlStreamWriter&)),
@@ -332,7 +332,6 @@ Wizard::Wizard(QWidget* const parent, Interface* const interface)
 
     connect(d->m_imagesFilesListBox, SIGNAL(signalXMLCustomElements(QXmlStreamReader&)),
             this, SLOT(slotXMLCustomElement(QXmlStreamReader&)));
-    
 
     // To get rid of icons that sometime are not shown
     d->m_photoPage->BtnPreviewPageUp->setIcon(SmallIcon("arrow-right"));
@@ -1260,11 +1259,11 @@ void Wizard::slotXMLCustomElement(QXmlStreamWriter& xmlWriter)
     xmlWriter.writeEndElement(); // pa_layout
 }
 
-void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, ImagesListViewItem* item)
+void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, KPImagesListViewItem* item)
 {
     if (d->m_photos.size())
     {
-        int itemIndex = d->m_imagesFilesListBox->listView()->indexFromItem(item).row();
+        int itemIndex  = d->m_imagesFilesListBox->listView()->indexFromItem(item).row();
         TPhoto* pPhoto = d->m_photos[itemIndex];
         // TODO anaselli: first and copies could be removed since they are not useful any more
         xmlWriter.writeAttribute("first", QString("%1").arg(pPhoto->first));
@@ -1273,13 +1272,13 @@ void Wizard::slotXMLSaveItem(QXmlStreamWriter& xmlWriter, ImagesListViewItem* it
         // additional info (caption... etc)
         if (pPhoto->pCaptionInfo)
         {
-          xmlWriter.writeStartElement("pa_caption");
-          xmlWriter.writeAttribute("type",  QString("%1").arg(pPhoto->pCaptionInfo->m_caption_type));
-          xmlWriter.writeAttribute("font",  pPhoto->pCaptionInfo->m_caption_font.toString());
-          xmlWriter.writeAttribute("size",  QString("%1").arg(pPhoto->pCaptionInfo->m_caption_size));
-          xmlWriter.writeAttribute("color", pPhoto->pCaptionInfo->m_caption_color.name());
-          xmlWriter.writeAttribute("text",  pPhoto->pCaptionInfo->m_caption_text);
-          xmlWriter.writeEndElement(); // pa_caption
+            xmlWriter.writeStartElement("pa_caption");
+            xmlWriter.writeAttribute("type",  QString("%1").arg(pPhoto->pCaptionInfo->m_caption_type));
+            xmlWriter.writeAttribute("font",  pPhoto->pCaptionInfo->m_caption_font.toString());
+            xmlWriter.writeAttribute("size",  QString("%1").arg(pPhoto->pCaptionInfo->m_caption_size));
+            xmlWriter.writeAttribute("color", pPhoto->pCaptionInfo->m_caption_color.name());
+            xmlWriter.writeAttribute("text",  pPhoto->pCaptionInfo->m_caption_text);
+            xmlWriter.writeEndElement(); // pa_caption
         }
     }
 }
@@ -1353,47 +1352,47 @@ void Wizard::slotXMLLoadElement(QXmlStreamReader& xmlReader)
             kDebug() << pPhoto->filename << " " << xmlReader.name();
             if (xmlReader.name() == "pa_caption")
             {
-              d->m_photoPage->m_sameCaption->blockSignals(true);
-              d->m_photoPage->m_sameCaption->setCheckState( Qt::Unchecked );
-              d->m_photoPage->m_sameCaption->blockSignals(false);
-              //useless this item has been added now
-              if (pPhoto->pCaptionInfo) delete pPhoto->pCaptionInfo;
-              pPhoto->pCaptionInfo = new CaptionInfo();
-              // get all attributes and its value of a tag in attrs variable.
-              QXmlStreamAttributes attrs = xmlReader.attributes();
-              // get value of each attribute from QXmlStreamAttributes
-              QStringRef attr = attrs.value("type");
-              bool ok;
-              if (!attr.isEmpty())
-              {
-                 kDebug() <<  " found " << attr.toString();
-                 pPhoto->pCaptionInfo->m_caption_type = (CaptionInfo::AvailableCaptions)attr.toString().toInt(&ok);
-              }
-              attr = attrs.value("font");
-              if (!attr.isEmpty())
-              {
-                 kDebug() <<  " found " << attr.toString();
-                 pPhoto->pCaptionInfo->m_caption_font.fromString(attr.toString());
-              }
-              attr = attrs.value("color");
-              if (!attr.isEmpty())
-              {
-                  kDebug() <<  " found " << attr.toString();
-                  pPhoto->pCaptionInfo->m_caption_color.setNamedColor(attr.toString());
-              }
-              attr = attrs.value("size");
-              if (!attr.isEmpty())
-              {
-                  kDebug() <<  " found " << attr.toString();
-                  pPhoto->pCaptionInfo->m_caption_size = attr.toString().toInt(&ok);
-              }
-              attr = attrs.value("text");
-              if (!attr.isEmpty())
-              {
-                  kDebug() <<  " found " << attr.toString();
-                  pPhoto->pCaptionInfo->m_caption_text = attr.toString();
-              }
-              infopage_setCaptionButtons();
+                d->m_photoPage->m_sameCaption->blockSignals(true);
+                d->m_photoPage->m_sameCaption->setCheckState( Qt::Unchecked );
+                d->m_photoPage->m_sameCaption->blockSignals(false);
+                //useless this item has been added now
+                if (pPhoto->pCaptionInfo) delete pPhoto->pCaptionInfo;
+                pPhoto->pCaptionInfo = new CaptionInfo();
+                // get all attributes and its value of a tag in attrs variable.
+                QXmlStreamAttributes attrs = xmlReader.attributes();
+                // get value of each attribute from QXmlStreamAttributes
+                QStringRef attr = attrs.value("type");
+                bool ok;
+                if (!attr.isEmpty())
+                {
+                    kDebug() <<  " found " << attr.toString();
+                    pPhoto->pCaptionInfo->m_caption_type = (CaptionInfo::AvailableCaptions)attr.toString().toInt(&ok);
+                }
+                attr = attrs.value("font");
+                if (!attr.isEmpty())
+                {
+                    kDebug() <<  " found " << attr.toString();
+                    pPhoto->pCaptionInfo->m_caption_font.fromString(attr.toString());
+                }
+                attr = attrs.value("color");
+                if (!attr.isEmpty())
+                {
+                    kDebug() <<  " found " << attr.toString();
+                    pPhoto->pCaptionInfo->m_caption_color.setNamedColor(attr.toString());
+                }
+                attr = attrs.value("size");
+                if (!attr.isEmpty())
+                {
+                    kDebug() <<  " found " << attr.toString();
+                    pPhoto->pCaptionInfo->m_caption_size = attr.toString().toInt(&ok);
+                }
+                attr = attrs.value("text");
+                if (!attr.isEmpty())
+                {
+                    kDebug() <<  " found " << attr.toString();
+                    pPhoto->pCaptionInfo->m_caption_text = attr.toString();
+                }
+                infopage_setCaptionButtons();
             }
         }
     }
@@ -1429,7 +1428,7 @@ void Wizard::slotContextMenuRequested()
 
 void Wizard::imageSelected(QTreeWidgetItem* item)
 {
-    ImagesListViewItem* l_item = dynamic_cast<ImagesListViewItem*>(item);
+    KPImagesListViewItem* l_item = dynamic_cast<KPImagesListViewItem*>(item);
     int itemIndex = d->m_imagesFilesListBox->listView()->indexFromItem(l_item).row();
 
     kDebug() << " current row now is " << itemIndex;
@@ -1442,13 +1441,13 @@ void Wizard::decreaseCopies()
 {
     if (d->m_photos.size())
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
         kDebug() << " Removing a copy of " << item->url();
         d->m_imagesFilesListBox->slotRemoveItems();
     }
 }
 
-void Wizard::slotRemovingItem(ImagesListViewItem* item)
+void Wizard::slotRemovingItem(KPImagesListViewItem* item)
 {
     if (item)
     {
@@ -1574,7 +1573,7 @@ void Wizard::increaseCopies()
     if (d->m_photos.size())
     {
         KUrl::List list;
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem* >(d->m_imagesFilesListBox->listView()->currentItem());
         list.append(item->url());
         kDebug() << " Adding a copy of " << item->url();
         d->m_imagesFilesListBox->slotAddImages(list);
@@ -1757,7 +1756,7 @@ void Wizard::infopage_updateCaptions()
             
             foreach(QTreeWidgetItem *item, list)
             {
-                ImagesListViewItem* lvItem = dynamic_cast<ImagesListViewItem*>(item);
+                KPImagesListViewItem* lvItem = dynamic_cast<KPImagesListViewItem*>(item);
                 int itemIndex = d->m_imagesFilesListBox->listView()->indexFromItem(lvItem).row();
                 TPhoto* pPhoto = d->m_photos.at(itemIndex);
                 updateCaption(pPhoto);
@@ -1771,6 +1770,7 @@ void Wizard::infopage_updateCaptions()
 void Wizard::enableCaptionGroup(const QString& text)
 {
     bool fontSettingsEnabled;
+
     if (text == i18n("No captions"))
     {
         fontSettingsEnabled = false;
@@ -1789,6 +1789,7 @@ void Wizard::enableCaptionGroup(const QString& text)
         d->m_photoPage->m_FreeCaptionFormat->setEnabled(false);
         d->m_photoPage->m_free_label->setEnabled(false);
     }
+
     d->m_photoPage->m_font_name->setEnabled(fontSettingsEnabled);
     d->m_photoPage->m_font_size->setEnabled(fontSettingsEnabled);
     d->m_photoPage->m_font_color->setEnabled(fontSettingsEnabled);

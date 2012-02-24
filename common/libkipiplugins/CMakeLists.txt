@@ -21,7 +21,7 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/outputdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imageslist.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/savesettingswidget.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewmanager.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewimage.cpp

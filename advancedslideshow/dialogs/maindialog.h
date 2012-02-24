@@ -41,7 +41,7 @@ class QTreeWidgetItem;
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KIPIAdvancedSlideshowPlugin
@@ -55,7 +55,7 @@ class MainDialog : public QWidget, Ui::MainDialog
 
 public:
 
-    MainDialog(QWidget* parent, SharedContainer* sharedData);
+    MainDialog(QWidget* const parent, SharedContainer* const sharedData);
     ~MainDialog();
 
     void readSettings();
@@ -92,11 +92,11 @@ private:
 
 private:
 
-    SharedContainer*         m_sharedData;
-    KIO::PreviewJob*         m_thumbJob;
-    QTime                    m_totalTime;
-    QPixmap                  m_noPreviewPixmap;
-    KIPIPlugins::ImagesList* m_ImagesFilesListBox;
+    SharedContainer*           m_sharedData;
+    KIO::PreviewJob*           m_thumbJob;
+    QTime                      m_totalTime;
+    QPixmap                    m_noPreviewPixmap;
+    KIPIPlugins::KPImagesList* m_ImagesFilesListBox;
 };
 
 } // namespace KIPIAdvancedSlideshowPlugin

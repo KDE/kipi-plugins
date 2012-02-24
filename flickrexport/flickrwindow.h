@@ -55,18 +55,17 @@ class KComboBox;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class KPAboutData;
-class FlickrList;
+    class KPAboutData;
 }
 
 namespace KWallet
 {
-class Wallet;
+    class Wallet;
 }
 
 namespace KIPIFlickrExportPlugin
@@ -80,14 +79,17 @@ class GPhoto;
 class GAlbum;
 //class GAlbumViewItem;
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 class FlickrWindow : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder,
-                 QWidget* parent, const QString& serviceName);
+    FlickrWindow(Interface* const interface, const QString& tmpFolder,
+                 QWidget* const parent, const QString& serviceName);
     ~FlickrWindow();
 
     /**
@@ -181,9 +183,9 @@ private:
     FlickrWidget*                          m_widget;
     FlickrTalker*                          m_talker;
 
-    KIPI::Interface*                       m_interface;
+    Interface*                             m_interface;
 
-    KIPIPlugins::KPAboutData*              m_about;
+    KPAboutData*                           m_about;
     KIPIFlickrExportPlugin::FlickrList*    m_imglst;
 };
 

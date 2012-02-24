@@ -90,7 +90,7 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "vkalbumdialog.h"
 
 #define SLOT_JOB_DONE_INIT(JobClass) \
@@ -106,24 +106,25 @@
 namespace KIPIVkontaktePlugin
 {
 
-VkontakteWindow::VkontakteWindow(Interface* interface, bool import, QWidget* parent)
+VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidget* const parent)
     : KDialog(parent)
 {
     m_authenticated = false;
 
     // read settings from file
     readSettings();
+
     connect(this, SIGNAL(finished()), 
             this, SLOT(slotFinished()));
 
     m_interface = interface;
     m_import    = import;
 
-    m_mainWidget = new QWidget(this);
-    QHBoxLayout *mainLayout = new QHBoxLayout(m_mainWidget);
+    m_mainWidget            = new QWidget(this);
+    QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
 
-    m_imgList  = new ImagesList(interface, this);
-    m_imgList->setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
+    m_imgList  = new KPImagesList(interface, this);
+    m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false); // TODO: implement conversion
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
@@ -222,10 +223,10 @@ VkontakteWindow::VkontakteWindow(Interface* interface, bool import, QWidget* par
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox = new QGroupBox(i18n("Destination"), settingsBox);
+    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
     uploadBox->setWhatsThis(i18n("This is the location where VKontakte images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget = interface->uploadWidget(uploadBox);
+    m_uploadWidget               = interface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------

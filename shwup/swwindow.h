@@ -69,7 +69,7 @@ class SwWindow : public KDialog
 
 public:
 
-    SwWindow(Interface* interface, const QString& tmpFolder, QWidget* parent);
+    SwWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
     ~SwWindow();
 
     /**

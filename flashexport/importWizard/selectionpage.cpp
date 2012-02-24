@@ -41,7 +41,7 @@
 //Local includes
 
 #include "flashmanager.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPIFlashExportPlugin
 {
@@ -54,19 +54,21 @@ public:
     {
         imageCollectionSelector = 0;
         imageList               = 0;
+        vbox                    = 0;
     }
 
-    KIPI::ImageCollectionSelector* imageCollectionSelector;
-    KIPIPlugins::ImagesList*       imageList;
-    FlashManager*                  manager;
-    KVBox*                         vbox;
+    ImageCollectionSelector* imageCollectionSelector;
+    KPImagesList*            imageList;
+    FlashManager*            manager;
+    KVBox*                   vbox;
 };
 
-SelectionPage::SelectionPage(FlashManager *mngr, KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("Select Image Collections")), d(new SelectionPagePriv)
+SelectionPage::SelectionPage(FlashManager* const mngr, KAssistantDialog* const dlg)
+    : WizardPage(dlg, i18n("Select Image Collections")), d(new SelectionPagePriv)
 {
     d->manager=mngr;
 }
+
 void SelectionPage::setPageContent(int choice)
 {
     if(d->vbox)
@@ -79,30 +81,32 @@ void SelectionPage::setPageContent(int choice)
 
     if(choice == 0) // Collection Selector
     {
-        KIPI::Interface* interface = d->manager->iface();
+        Interface* interface = d->manager->iface();
         d->imageCollectionSelector = interface->imageCollectionSelector(d->vbox);
     }
     else //Image Dialog
     {
-        d->imageList = new KIPIPlugins::ImagesList(0,d->vbox);
-        d->imageList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+        d->imageList = new KPImagesList(0, d->vbox);
+        d->imageList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     }
 
     setPageWidget(d->vbox);
     setLeftBottomPix(DesktopIcon("flash", 128));
 }
+
 SelectionPage::~SelectionPage()
 {
     delete d;
 }
 
-void SelectionPage::settings(SimpleViewerSettingsContainer* container)
+void SelectionPage::settings(SimpleViewerSettingsContainer* const container)
 {
     if(container->imgGetOption == 0)
         container->collections = d->imageCollectionSelector->selectedImageCollections();
     else
         container->imageDialogList = d->imageList->imageUrls();
 }
+
 bool SelectionPage::isSelectionEmpty(int imageGetOption)
 {
     if(imageGetOption==0) //Collections
@@ -110,4 +114,5 @@ bool SelectionPage::isSelectionEmpty(int imageGetOption)
     else //Image Dialog
         return d->imageList->imageUrls().isEmpty();
 }
+
 }   // namespace KIPIFlashExportPlugin

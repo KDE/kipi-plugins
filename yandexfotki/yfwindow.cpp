@@ -93,7 +93,7 @@ extern "C"
 #include "kpimageinfo.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "yftalker.h"
 #include "yfalbumdialog.h"
 #include "logindialog.h"
@@ -122,8 +122,8 @@ YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
     m_mainWidget            = new QWidget(this);
     QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
 
-    m_imgList               = new ImagesList(interface, this);
-    m_imgList->setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
+    m_imgList               = new KPImagesList(interface, this);
+    m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(

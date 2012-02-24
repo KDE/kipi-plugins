@@ -66,7 +66,7 @@ public:
      * @param parent parent QWidget
      * @param interface pointer to the KIPI interface to use. Must not be null.
      */
-    KioExportWindow(QWidget* parent, Interface* const interface);
+    KioExportWindow(QWidget* const parent, Interface* const interface);
 
     /**
      * Destructor.

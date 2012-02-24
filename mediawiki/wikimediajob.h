@@ -35,10 +35,6 @@
 #include <kurl.h>
 #include <kjob.h>
 
-// Local includes
-
-#include "imageslist.h"
-
 namespace mediawiki
 {
     class MediaWiki;
@@ -61,7 +57,7 @@ class WikiMediaJob : public KJob
 
 public:
 
-    WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* parent=0);
+    WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent=0);
     QString buildWikiText(const QMap<QString, QString>& info);
 
     void setImageMap(const QList<QMap<QString, QString> >& imageDesc);

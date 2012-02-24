@@ -64,7 +64,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "packagedelegate.h"
 #include "debshots.h"
 #include "kclickableimagelabel.h"
@@ -72,7 +72,7 @@
 namespace KIPIDebianScreenshotsPlugin
 {
 
-DsWidget::DsWidget(QWidget* parent, KIPI::Interface* iface)
+DsWidget::DsWidget(QWidget* const parent, KIPI::Interface* const iface)
     : QWidget(parent),
       m_lastTip( QString() ),
       m_lastQueryUrl( QUrl() ),
@@ -85,13 +85,13 @@ DsWidget::DsWidget(QWidget* parent, KIPI::Interface* iface)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::ImagesList(iface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList  = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis( i18n("This is the list of images to upload to Debian Screenshots.") );
 
-    QWidget* settingsBox = new QWidget(this);
+    QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
 //    m_headerLabel = new QLabel(settingsBox);
@@ -174,7 +174,7 @@ DsWidget::~DsWidget()
 {
 }
 
-KIPIPlugins::ImagesList* DsWidget::imagesList() const
+KIPIPlugins::KPImagesList* DsWidget::imagesList() const
 {
     return m_imgList;
 }

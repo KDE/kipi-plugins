@@ -34,15 +34,10 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-// Local includes
-
-#include "imageslist.h"
-
 namespace KIPIFlickrExportPlugin
 {
 
-ComboBoxDelegate::ComboBoxDelegate(KIPIPlugins::ImagesList* parent,
-                                   QMap<int, QString> items)
+ComboBoxDelegate::ComboBoxDelegate(KPImagesList* const parent, QMap<int, QString> items)
     : QAbstractItemDelegate(parent),
       m_parent(parent),
       m_items(items),
@@ -151,8 +146,7 @@ QWidget* ComboBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
     return cb;
 }
 
-void ComboBoxDelegate::setEditorData(QWidget* editor,
-                                     const QModelIndex& index) const
+void ComboBoxDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
     // Scroll the combobox to the current selected state on initialization.
     QComboBox* cb = qobject_cast<QComboBox*>(editor);

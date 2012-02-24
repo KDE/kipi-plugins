@@ -44,7 +44,7 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "KioExportWidget.h"
 
 namespace KIPIKioExportPlugin
@@ -54,7 +54,7 @@ const QString KioExportWindow::TARGET_URL_PROPERTY  = "targetUrl";
 const QString KioExportWindow::HISTORY_URL_PROPERTY = "historyUrls";
 const QString KioExportWindow::CONFIG_GROUP         = "KioExport";
 
-KioExportWindow::KioExportWindow(QWidget* /*parent*/, Interface* const interface)
+KioExportWindow::KioExportWindow(QWidget* const /*parent*/, Interface* const interface)
     : KDialog(0), m_interface(interface)
 {
     if (!interface)

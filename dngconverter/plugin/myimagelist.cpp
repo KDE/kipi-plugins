@@ -36,14 +36,14 @@
 namespace KIPIDNGConverterPlugin
 {
 
-MyImageList::MyImageList(KIPI::Interface* iface, QWidget* parent)
-    : ImagesList(iface, parent)
+MyImageList::MyImageList(KIPI::Interface* const iface, QWidget* const parent)
+    : KPImagesList(iface, parent)
 {
-    setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
-    listView()->setColumnLabel(ImagesListView::Filename, i18n("Raw File"));
-    listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(MyImageList::TARGETFILENAME),
+    setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
+    listView()->setColumnLabel(KPImagesListView::Filename, i18n("Raw File"));
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(MyImageList::TARGETFILENAME),
                           i18n("Target File"), true);
-    listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(MyImageList::IDENTIFICATION),
+    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(MyImageList::IDENTIFICATION),
                           i18n("Camera"), true);
 }
 
@@ -53,7 +53,7 @@ MyImageList::~MyImageList()
 
 void MyImageList::slotAddImages(const KUrl::List& list)
 {
-    /* Replaces the ImagesList::slotAddImages method, so that
+    /* Replaces the KPImagesList::slotAddImages method, so that
      * MyImageListViewItems can be added instead of ImagesListViewItems */
 
     // Figure out which of the supplied URL's should actually be added and which
@@ -107,8 +107,8 @@ void MyImageList::slotRemoveItems()
 }
 // ------------------------------------------------------------------------------------------------
 
-MyImageListViewItem::MyImageListViewItem(ImagesListView* view, const KUrl& url)
-    : ImagesListViewItem(view, url)
+MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
+    : KPImagesListViewItem(view, url)
 {
 }
 

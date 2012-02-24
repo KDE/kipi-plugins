@@ -63,7 +63,7 @@ class WMWindow : public KDialog
 
 public:
 
-    WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* parent);
+    WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
     ~WMWindow();
 
     void reactivate();

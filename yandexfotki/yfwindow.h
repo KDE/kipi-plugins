@@ -64,7 +64,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 using namespace KIPI;
@@ -174,7 +174,7 @@ protected:
     QSpinBox*                m_imageQualitySpin;
     QButtonGroup*            m_policyGroup;
 
-    ImagesList*              m_imgList;
+    KPImagesList*            m_imgList;
     UploadWidget*            m_uploadWidget;
 
     QProgressBar*            m_progressBar;

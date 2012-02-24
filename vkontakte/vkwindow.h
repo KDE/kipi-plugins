@@ -62,7 +62,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 using namespace KIPI;
@@ -77,8 +77,8 @@ class VkontakteWindow : public KDialog
 
 public:
 
-    VkontakteWindow(Interface *interface,
-                    bool import, QWidget *parent);
+    VkontakteWindow(Interface* const interface,
+                    bool import, QWidget* const parent);
     ~VkontakteWindow();
 
     /**
@@ -176,7 +176,7 @@ protected:
     /// options
 //     QCheckBox*                  m_checkKeepOriginal;
 
-    ImagesList*                    m_imgList;
+    KPImagesList*                  m_imgList;
     UploadWidget*                  m_uploadWidget;
 
     QProgressBar*                  m_progressBar;

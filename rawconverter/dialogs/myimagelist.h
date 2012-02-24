@@ -25,14 +25,14 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIRawConverterPlugin
 {
 
-class MyImageList : public ImagesList
+class MyImageList : public KPImagesList
 {
     Q_OBJECT
 
@@ -41,13 +41,13 @@ public:
     /* The different columns in a list. */
     enum FieldType
     {
-        TARGETFILENAME = ImagesListView::User1,
-        IDENTIFICATION = ImagesListView::User2
+        TARGETFILENAME = KPImagesListView::User1,
+        IDENTIFICATION = KPImagesListView::User2
     };
 
 public:
 
-    explicit MyImageList(KIPI::Interface* iface, QWidget* parent = 0);
+    explicit MyImageList(Interface* const iface, QWidget* const parent = 0);
     virtual ~MyImageList();
 
 public Q_SLOTS:
@@ -55,17 +55,18 @@ public Q_SLOTS:
     virtual void slotAddImages(const KUrl::List& list);
 
 protected Q_SLOTS:
+
     virtual void slotRemoveItems();
 };
 
 // -------------------------------------------------------------------------
 
-class MyImageListViewItem : public ImagesListViewItem
+class MyImageListViewItem : public KPImagesListViewItem
 {
 
 public:
 
-    MyImageListViewItem(ImagesListView* view, const KUrl& url);
+    MyImageListViewItem(KPImagesListView* const view, const KUrl& url);
     virtual ~MyImageListViewItem();
 
     void setDestFileName(const QString& str);

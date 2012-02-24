@@ -59,7 +59,7 @@ class DsWindow : public KDialog
 
 public:
 
-    DsWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
+    DsWindow(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent);
     ~DsWindow();
 
     /**
@@ -87,6 +87,8 @@ private:
         NotPNG
     };
 
+private:
+
     bool prepareImageForUpload(const QString& imgPath, MassageType massage);
     void uploadNextPhoto();
     void buttonStateChange(bool state);
@@ -109,7 +111,6 @@ private:
 
     DsTalker*                 m_talker;
     DsWidget*                 m_widget;
-
 };
 
 } // namespace KIPIDebianScreenshotsPlugin

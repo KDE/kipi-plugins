@@ -22,8 +22,8 @@
  *
  * ============================================================ */
 
-#ifndef IMAGESLIST_H
-#define IMAGESLIST_H
+#ifndef KPIMAGESLIST_H
+#define KPIMAGESLIST_H
 
 // Qt includes
 
@@ -56,10 +56,10 @@ using namespace KIPI;
 namespace KIPIPlugins
 {
 
-class ImagesList;
-class ImagesListView;
+class KPImagesList;
+class KPImagesListView;
 
-class KIPIPLUGINS_EXPORT ImagesListViewItem : public QTreeWidgetItem
+class KIPIPLUGINS_EXPORT KPImagesListViewItem : public QTreeWidgetItem
 {
 
 public:
@@ -73,8 +73,8 @@ public:
 
 public:
 
-    explicit ImagesListViewItem(ImagesListView* view, const KUrl& url);
-    ~ImagesListViewItem();
+    explicit KPImagesListViewItem(KPImagesListView* const view, const KUrl& url);
+    ~KPImagesListViewItem();
 
     bool hasValidThumbnail() const;
 
@@ -105,7 +105,7 @@ public:
 
 protected:
 
-    ImagesListView* view() const;
+    KPImagesListView* view() const;
 
 private:
 
@@ -113,13 +113,13 @@ private:
 
 private:
 
-    class ImagesListViewItemPriv;
-    ImagesListViewItemPriv* const d;
+    class KPImagesListViewItemPriv;
+    KPImagesListViewItemPriv* const d;
 };
 
 // -------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT ImagesListView : public QTreeWidget
+class KIPIPLUGINS_EXPORT KPImagesListView : public QTreeWidget
 {
     Q_OBJECT
 
@@ -137,18 +137,18 @@ public:
         User6
     };
 
-    explicit ImagesListView(ImagesList* parent = 0);
-    explicit ImagesListView(int iconSize, ImagesList* parent = 0);
-    ~ImagesListView();
+    explicit KPImagesListView(KPImagesList* const parent = 0);
+    explicit KPImagesListView(int iconSize, KPImagesList* const parent = 0);
+    ~KPImagesListView();
 
     void setColumnLabel(ColumnType column, const QString& label);
     void setColumnEnabled(ColumnType column, bool enable);
     void setColumn(ColumnType column, const QString& label, bool enable);
 
-    ImagesListViewItem* findItem(const KUrl& url);
-    QModelIndex indexFromItem ( ImagesListViewItem * item, int column = 0 ) const;
+    KPImagesListViewItem* findItem(const KUrl& url);
+    QModelIndex indexFromItem(KPImagesListViewItem* item, int column = 0) const;
 
-    KIPI::Interface* iface() const;
+    Interface* iface() const;
 
 Q_SIGNALS:
 
@@ -194,7 +194,7 @@ public:
 
 // -------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT ImagesList : public QWidget
+class KIPIPLUGINS_EXPORT KPImagesList : public QWidget
 {
     Q_OBJECT
 
@@ -223,8 +223,8 @@ public:
 
 public:
 
-    explicit ImagesList(Interface* iface, QWidget* parent = 0, int iconSize = -1);
-    virtual ~ImagesList();
+    explicit KPImagesList(Interface* const iface, QWidget* const parent = 0, int iconSize = -1);
+    virtual ~KPImagesList();
 
     void                setAllowRAW(bool allow);
     void                setAllowDuplicate(bool allow);
@@ -233,8 +233,8 @@ public:
 
     int                 iconSize()  const;
 
-    ImagesListView*     listView()  const;
-    KIPI::Interface*    iface()     const;
+    KPImagesListView*   listView()  const;
+    Interface*          iface()     const;
 
     void                processing(const KUrl& url);
     void                processed(const KUrl& url, bool success);
@@ -257,12 +257,12 @@ Q_SIGNALS:
     void signalMoveUpItem();
     void signalMoveDownItem();
     void signalRemovedItems(const KUrl::List&);
-    void signalRemovingItem(KIPIPlugins::ImagesListViewItem*);
+    void signalRemovingItem(KIPIPlugins::KPImagesListViewItem*);
     void signalImageListChanged();
     void signalFoundRAWImages(bool);
     void signalItemClicked(QTreeWidgetItem*);
     void signalContextMenuRequested();
-    void signalXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::ImagesListViewItem*);
+    void signalXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::KPImagesListViewItem*);
     void signalXMLLoadImageElement(QXmlStreamReader&);
     void signalXMLCustomElements(QXmlStreamWriter&);
     void signalXMLCustomElements(QXmlStreamReader&);
@@ -298,12 +298,12 @@ private:
 
 private:
 
-    class ImagesListPriv;
-    ImagesListPriv* const d;
+    class KPImagesListPriv;
+    KPImagesListPriv* const d;
 };
 
 }  // namespace KIPIPlugins
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(KIPIPlugins::ImagesList::ControlButtons)
+Q_DECLARE_OPERATORS_FOR_FLAGS(KIPIPlugins::KPImagesList::ControlButtons)
 
-#endif // IMAGESLIST_H
+#endif // KPIMAGESLIST_H

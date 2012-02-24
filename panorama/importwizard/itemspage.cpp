@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,7 +46,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "manager.h"
 #include "actionthread.h"
 
@@ -61,13 +61,13 @@ struct ItemsPage::ItemsPagePriv
     {
     }
 
-    ImagesList* list;
+    KPImagesList* list;
 
-    Manager*    mngr;
+    Manager*      mngr;
 };
 
-ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
-    : WizardPage(dlg, i18n("<b>Set Panorama Images</b>")),d(new ItemsPagePriv)
+ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
+    : WizardPage(dlg, i18n("<b>Set Panorama Images</b>")), d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
     KVBox* vbox    = new KVBox(this);
@@ -84,7 +84,7 @@ ItemsPage::ItemsPage(Manager* mngr, KAssistantDialog* dlg)
                          "the panorama.</p>"
                          "</qt>"));
 
-    d->list = new ImagesList(d->mngr->iface(), vbox);
+    d->list = new KPImagesList(d->mngr->iface(), vbox);
     d->list->slotAddImages(d->mngr->itemsList());
 
     setPageWidget(vbox);

@@ -63,7 +63,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
 #include "kpversion.h"

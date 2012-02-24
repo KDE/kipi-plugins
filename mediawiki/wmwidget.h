@@ -54,7 +54,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KDcrawIface
@@ -84,20 +84,19 @@ class WmWidget : public QWidget
 
 public:
 
-    WmWidget(QWidget* parent, Interface* const iface);
+    WmWidget(QWidget* const parent, Interface* const iface);
     ~WmWidget();
 
     void updateLabels(const QString& name = QString(), const QString& url = QString());
 
     void invertAccountLoginBox();
 
-    ImagesList* imagesList() const;
+    KPImagesList* imagesList() const;
 
     QProgressBar* progressBar() const;
 
-    QString author();
-    QString licence();
-
+    QString author() const;
+    QString licence() const;
 
     void readSettings(KConfigGroup& group);
     void saveSettings(KConfigGroup& group);
@@ -140,7 +139,7 @@ private:
     QProgressBar*              m_progressBar;
 
     RExpanderBox*              m_settingsExpander;
-    ImagesList*                m_imgList;
+    KPImagesList*              m_imgList;
     UploadWidget*              m_uploadWidget;
     
     KUrl::List                 m_history;

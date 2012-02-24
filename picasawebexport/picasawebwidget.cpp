@@ -57,8 +57,8 @@
 namespace KIPIPicasawebExportPlugin
 {
 
-PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
-               : QWidget(parent)
+PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, bool import)
+    : QWidget(parent)
 {
     setObjectName("PicasawebWidget");
 
@@ -67,7 +67,7 @@ PicasawebWidget::PicasawebWidget(QWidget* parent, Interface* iface, bool import)
     // -------------------------------------------------------------------
 
     m_imgList  = new PicasawebImagesList(iface, this);
-    m_imgList->setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
+    m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
@@ -280,7 +280,7 @@ PicasawebWidget::~PicasawebWidget()
 {
 }
 
-ImagesList* PicasawebWidget::imagesList() const
+KPImagesList* PicasawebWidget::imagesList() const
 {
     return m_imgList;
 }

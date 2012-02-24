@@ -36,15 +36,13 @@
 namespace KIPIRawConverterPlugin
 {
 
-MyImageList::MyImageList(KIPI::Interface* iface, QWidget* parent)
-    : ImagesList(iface, parent)
+MyImageList::MyImageList(Interface* const iface, QWidget* const parent)
+    : KPImagesList(iface, parent)
 {
-    setControlButtonsPlacement(ImagesList::ControlButtonsBelow);
-    listView()->setColumnLabel(ImagesListView::Filename, i18n("Raw File"));
-    listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(MyImageList::TARGETFILENAME),
-                          i18n("Target File"), true);
-    listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(MyImageList::IDENTIFICATION),
-                          i18n("Camera"), true);
+    setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
+    listView()->setColumnLabel(KPImagesListView::Filename, i18n("Raw File"));
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::TARGETFILENAME), i18n("Target File"), true);
+    listView()->setColumn(static_cast<KPImagesListView::ColumnType>(MyImageList::IDENTIFICATION), i18n("Camera"),      true);
 }
 
 MyImageList::~MyImageList()
@@ -64,6 +62,7 @@ void MyImageList::slotAddImages(const KUrl::List& list)
     {
         KUrl imageUrl = *it;
         found         = false;
+
         for (int i = 0; i < listView()->topLevelItemCount(); ++i)
         {
             MyImageListViewItem* currItem = dynamic_cast<MyImageListViewItem*>(listView()->topLevelItem(i));
@@ -107,8 +106,8 @@ void MyImageList::slotRemoveItems()
 }
 // ------------------------------------------------------------------------------------------------
 
-MyImageListViewItem::MyImageListViewItem(ImagesListView* view, const KUrl& url)
-    : ImagesListViewItem(view, url)
+MyImageListViewItem::MyImageListViewItem(KPImagesListView* const view, const KUrl& url)
+    : KPImagesListViewItem(view, url)
 {
 }
 

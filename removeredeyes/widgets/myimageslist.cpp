@@ -51,7 +51,7 @@ using namespace KIPIPlugins;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct MyImagesListPriv
+struct MyImagesList::MyImagesListPriv
 {
     MyImagesListPriv()
     {
@@ -61,15 +61,15 @@ struct MyImagesListPriv
     KIPI::Interface* iface;
 };
 
-MyImagesList::MyImagesList(KIPI::Interface* iface, QWidget* parent)
-    : ImagesList(iface, parent), d(new MyImagesListPriv)
+MyImagesList::MyImagesList(KIPI::Interface* const iface, QWidget* const parent)
+    : KPImagesList(iface, parent), d(new MyImagesListPriv)
 {
     d->iface = iface;
     setAllowRAW(false);
 
     // --------------------------------------------------------
 
-    listView()->setColumn(ImagesListView::User1, i18n("Corrected Eyes"), true);
+    listView()->setColumn(KPImagesListView::User1, i18n("Corrected Eyes"), true);
     listView()->header()->setResizeMode(QHeaderView::Stretch);
     listView()->setWhatsThis(i18n("This is the list of images from which to remove red-eye."));
 }
@@ -85,11 +85,11 @@ void MyImagesList::addEyeCounterByUrl(const KUrl& url, int eyes)
 
     while (*it)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
 
         if (item->url() == url)
         {
-            item->setText(ImagesListView::User1, QString::number(eyes));
+            item->setText(KPImagesListView::User1, QString::number(eyes));
             break;
         }
 
@@ -105,8 +105,8 @@ void MyImagesList::resetEyeCounterColumn()
 
     while (*it)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
-        item->setText(ImagesListView::User1, QString(""));
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        item->setText(KPImagesListView::User1, QString(""));
         ++it;
     }
 
@@ -121,9 +121,9 @@ bool MyImagesList::hasUnprocessedImages()
 
     while (*it)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-        if (item->text(ImagesListView::User1).toInt() <= 0)
+        if (item->text(KPImagesListView::User1).toInt() <= 0)
         {
             hasNone = true;
             break;
@@ -141,13 +141,13 @@ void MyImagesList::removeUnprocessedImages()
 
     while (*it)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
         // first, deselect item if selected
         item->setSelected(false);
 
         // select the item if no corrections were made
-        if (item->text(ImagesListView::User1).toInt() <= 0 &&
-            !item->text(ImagesListView::User1).isEmpty())
+        if (item->text(KPImagesListView::User1).toInt() <= 0 &&
+            !item->text(KPImagesListView::User1).isEmpty())
         {
             item->setSelected(true);
         }

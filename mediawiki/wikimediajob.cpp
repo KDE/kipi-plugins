@@ -47,7 +47,7 @@
 namespace KIPIWikiMediaPlugin
 {
 
-WikiMediaJob::WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* parent)
+WikiMediaJob::WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent)
     : KJob(parent), m_interface(interface), m_mediawiki(mediawiki)
 {
 }

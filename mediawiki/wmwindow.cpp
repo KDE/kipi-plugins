@@ -57,14 +57,14 @@
 
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
+#include "kpimageslist.h"
 #include "wmwidget.h"
 #include "wikimediajob.h"
-#include "imageslist.h"
 
 namespace KIPIWikiMediaPlugin
 {
 
-WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* /*parent*/)
+WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* const /*parent*/)
     : KDialog(0)
 {
     m_tmpPath.clear();

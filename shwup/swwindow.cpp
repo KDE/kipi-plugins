@@ -57,7 +57,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "kpaboutdata.h"
 #include "kpmetadata.h"
 #include "kpversion.h"
@@ -72,7 +72,7 @@ using namespace KDcrawIface;
 namespace KIPIShwupPlugin
 {
 
-SwWindow::SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent)
+SwWindow::SwWindow(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
     : KDialog(parent)
 {
     m_tmpPath.clear();
