@@ -25,26 +25,35 @@
 
 // Local includes
 
-#include "binaryiface.h"
+#include "kpbinaryiface.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
-class Pto2MkBinary : public BinaryIface
+class Pto2MkBinary : public KPBinaryIface
 {
 
 public:
 
     Pto2MkBinary()
-        : BinaryIface(QString("pto2mk"), QString("2010.4"), QString("pto2mk version "),
-                      2, QString("Hugin"), QString("http://hugin.sourceforge.net"),
-                      QString("Panorama"), QStringList("-h"))
-        { setup(); }
+        : KPBinaryIface(QString("pto2mk"),
+                        QString("2010.4"), 
+                        QString("pto2mk version "),
+                        2, 
+                        QString("Hugin"),
+                        QString("http://hugin.sourceforge.net"),
+                        QString("Panorama"),
+                        QStringList("-h")
+                       )
+        { 
+            setup(); 
+        }
 
-    ~Pto2MkBinary() {}
-
+    ~Pto2MkBinary()
+    {
+    }
 };
 
 } // namespace KIPIPanoramaPlugin

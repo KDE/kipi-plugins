@@ -6,7 +6,7 @@
  * Date        : 2009-12-23
  * Description : Autodetect enfuse binary program and version
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,26 +25,35 @@
 
 // Local includes
 
-#include "binaryiface.h"
+#include "kpbinaryiface.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
 
-class EnfuseBinary : public BinaryIface
+class EnfuseBinary : public KPBinaryIface
 {
     Q_OBJECT
 
 public:
 
     EnfuseBinary()
-    : BinaryIface(QString("enfuse"), QString("3.2"), QString("enfuse "),
-                      0, QString("Enblend"), QString("http://enblend.sourceforge.net"),
-                      QString("ExpoBlending"), QStringList("-V"))
-        { setup(); }
+    : KPBinaryIface(QString("enfuse"), 
+                    QString("3.2"), 
+                    QString("enfuse "),
+                    0, 
+                    QString("Enblend"), 
+                    QString("http://enblend.sourceforge.net"),
+                    QString("ExpoBlending"), 
+                    QStringList("-V"))
+        {
+            setup();
+        }
 
-    ~EnfuseBinary() {}
+    ~EnfuseBinary()
+    {
+    }
 
 Q_SIGNALS:
 
@@ -53,7 +62,6 @@ Q_SIGNALS:
 protected:
 
     bool parseHeader(const QString& output);
-
 };
 
 } // namespace KIPIExpoBlendingPlugin

@@ -33,7 +33,7 @@
 
 // Local includes
 
-#include "binaryiface.h"
+#include "kpbinaryiface.h"
 
 namespace KIPIPlugins
 {
@@ -56,7 +56,7 @@ public:
     BinarySearch(QWidget* parent);
     ~BinarySearch();
 
-    void addBinary(KIPIPlugins::BinaryIface& binary);
+    void addBinary(KPBinaryIface& binary);
     void addDirectory(const QString& dir);
     bool allBinariesFound();
 

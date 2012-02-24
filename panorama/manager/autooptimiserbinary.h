@@ -25,25 +25,34 @@
 
 // Local includes
 
-#include "binaryiface.h"
+#include "kpbinaryiface.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
-class AutoOptimiserBinary : public BinaryIface
+class AutoOptimiserBinary : public KPBinaryIface
 {
 
 public:
 
     AutoOptimiserBinary()
-        : BinaryIface(QString("autooptimiser"), QString("2010.4"), QString("autooptimiser version "),
-                      1, QString("Hugin"), QString("http://hugin.sourceforge.net"), QString("Panorama"))
-        { setup(); }
+        : KPBinaryIface(QString("autooptimiser"), 
+                        QString("2010.4"), 
+                        QString("autooptimiser version "),
+                        1, 
+                        QString("Hugin"), 
+                        QString("http://hugin.sourceforge.net"), 
+                        QString("Panorama")
+                       )
+        { 
+            setup();
+        }
 
-    ~AutoOptimiserBinary() {}
-
+    ~AutoOptimiserBinary()
+    {
+    }
 };
 
 } // namespace KIPIPanoramaPlugin

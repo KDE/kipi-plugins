@@ -25,24 +25,31 @@
 
 // Local includes
 
-#include "binaryiface.h"
+#include "kpbinaryiface.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
-class CPCleanBinary : public BinaryIface
+class CPCleanBinary : public KPBinaryIface
 {
 
 public:
 
     CPCleanBinary()
-        : BinaryIface(QString("cpclean"), QString("2010.4"), QString("cpclean version "),
-                      1, QString("Hugin"), QString("http://hugin.sourceforge.net"),
-                      QString("Panorama"), QStringList("-h"))
-        { setup(); }
-
+        : KPBinaryIface(QString("cpclean"),
+                        QString("2010.4"),
+                        QString("cpclean version "),
+                        1, 
+                        QString("Hugin"),
+                        QString("http://hugin.sourceforge.net"),
+                        QString("Panorama"), 
+                        QStringList("-h")
+                       )
+        { 
+            setup();
+        }
 };
 
 } // namespace KIPIPanoramaPlugin

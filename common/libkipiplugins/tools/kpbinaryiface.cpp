@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "binaryiface.moc"
+#include "kpbinaryiface.moc"
 
 // Qt includes
 
@@ -39,37 +39,45 @@
 namespace KIPIPlugins
 {
 
-    BinaryIface::BinaryIface(const QString& binaryName, const QString& minimalVersion, const QString& header,
+KPBinaryIface::KPBinaryIface(const QString& binaryName, const QString& minimalVersion, const QString& header,
                              const int headerLine, const QString& projectName, const QString& url,
                              const QString& pluginName, const QStringList& args)
-    : m_headerStarts(header), m_headerLine(headerLine), m_minimalVersion(minimalVersion),
-      m_configGroup(pluginName + " Settings"), m_binaryBaseName(goodBaseName(binaryName)),
-      m_binaryArguments(args), m_projectName(projectName), m_url(KUrl(url)),
-      m_isFound(false), m_developmentVersion(false),
-      m_version(""), m_pathDir("")
+    : m_headerStarts(header),
+      m_headerLine(headerLine),
+      m_minimalVersion(minimalVersion),
+      m_configGroup(pluginName + " Settings"), 
+      m_binaryBaseName(goodBaseName(binaryName)),
+      m_binaryArguments(args), 
+      m_projectName(projectName), 
+      m_url(KUrl(url)),
+      m_isFound(false), 
+      m_developmentVersion(false),
+      m_version(""), 
+      m_pathDir("")
 {
 }
 
-BinaryIface::~BinaryIface()
+KPBinaryIface::~KPBinaryIface()
 {
 }
 
-QString BinaryIface::version() const
+QString KPBinaryIface::version() const
 {
     return m_version;
 }
 
-bool BinaryIface::versionIsRight() const
+bool KPBinaryIface::versionIsRight() const
 {
     QRegExp reg("^(\\d*[.]\\d*)");
     version().indexOf(reg);
     float floatVersion = reg.capturedTexts()[0].toFloat();
+
     return (!version().isNull() &&
             isFound()           &&
             floatVersion >= minimalVersion().toFloat());
 }
 
-QString BinaryIface::findHeader(const QStringList& output, const QString& header) const
+QString KPBinaryIface::findHeader(const QStringList& output, const QString& header) const
 {
     foreach(const QString& s, output)
     {
@@ -79,7 +87,7 @@ QString BinaryIface::findHeader(const QStringList& output, const QString& header
     return QString();
 }
 
-bool BinaryIface::parseHeader(const QString& output)
+bool KPBinaryIface::parseHeader(const QString& output)
 {
     QString firstLine = output.section('\n', m_headerLine, m_headerLine);
     kDebug() << path() << " help header line: \n" << firstLine;
@@ -97,14 +105,14 @@ bool BinaryIface::parseHeader(const QString& output)
     return false;
 }
 
-void BinaryIface::setVersion(QString& version)
+void KPBinaryIface::setVersion(QString& version)
 {
     QRegExp versionRegExp("\\d*(\\.\\d+)*");
     version.indexOf(versionRegExp);
     m_version = versionRegExp.capturedTexts()[0];
 }
 
-void BinaryIface::slotNavigateAndCheck()
+void KPBinaryIface::slotNavigateAndCheck()
 {
     KUrl start;
     if (isValid() && m_pathDir != "")
@@ -133,7 +141,7 @@ void BinaryIface::slotNavigateAndCheck()
     }
 }
 
-void BinaryIface::slotAddPossibleSearchDirectory(const QString& dir)
+void KPBinaryIface::slotAddPossibleSearchDirectory(const QString& dir)
 {
     if (!isValid())
     {
@@ -146,27 +154,27 @@ void BinaryIface::slotAddPossibleSearchDirectory(const QString& dir)
     }
 }
 
-void BinaryIface::slotAddSearchDirectory(const QString& dir)
+void KPBinaryIface::slotAddSearchDirectory(const QString& dir)
 {
     m_searchPaths << dir;
     checkDir(dir);       // Forces the use of that directory
 }
 
-QString BinaryIface::readConfig()
+QString KPBinaryIface::readConfig()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(m_configGroup);
     return group.readPathEntry(QString("%1Binary").arg(m_binaryBaseName), "");
 }
 
-void BinaryIface::writeConfig()
+void KPBinaryIface::writeConfig()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group(m_configGroup);
     group.writePathEntry(QString("%1Binary").arg(m_binaryBaseName), m_pathDir);
 }
 
-QString BinaryIface::path(const QString& dir) const
+QString KPBinaryIface::path(const QString& dir) const
 {
     if (dir.isEmpty())
     {
@@ -175,7 +183,7 @@ QString BinaryIface::path(const QString& dir) const
     return QString("%1%2%3").arg(dir).arg('/').arg(baseName());
 }
 
-void BinaryIface::setup()
+void KPBinaryIface::setup()
 {
     QString previous_dir = readConfig();
     m_searchPaths << previous_dir;
@@ -187,7 +195,7 @@ void BinaryIface::setup()
     }
 }
 
-bool BinaryIface::checkDir(const QString& possibleDir)
+bool KPBinaryIface::checkDir(const QString& possibleDir)
 {
     bool ret = false;
     QString possiblePath = path(possibleDir);
@@ -220,7 +228,7 @@ bool BinaryIface::checkDir(const QString& possibleDir)
     return ret;
 }
 
-bool BinaryIface::recheckDirectories()
+bool KPBinaryIface::recheckDirectories()
 {
     if (isValid())
     {
