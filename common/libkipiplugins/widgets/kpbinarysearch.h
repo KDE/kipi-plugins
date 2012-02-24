@@ -23,8 +23,8 @@
 
 // NOTE: this has nothing to do with a binary search, it is a widget to search for binaries...
 
-#ifndef BINARY_SEARCH_H
-#define BINARY_SEARCH_H
+#ifndef KPBINARY_SEARCH_H
+#define KPBINARY_SEARCH_H
 
 // Qt includes
 
@@ -38,7 +38,7 @@
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT BinarySearch : public QTreeWidget
+class KIPIPLUGINS_EXPORT KPBinarySearch : public QTreeWidget
 {
     Q_OBJECT
 
@@ -53,8 +53,10 @@ public:
         Link
     };
 
-    BinarySearch(QWidget* parent);
-    ~BinarySearch();
+public:
+
+    KPBinarySearch(QWidget* parent);
+    ~KPBinarySearch();
 
     void addBinary(KPBinaryIface& binary);
     void addDirectory(const QString& dir);
@@ -72,10 +74,10 @@ Q_SIGNALS:
 
 private:
 
-    struct BinarySearchPriv;
-    BinarySearchPriv* const d;
+    struct KPBinarySearchPriv;
+    KPBinarySearchPriv* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* BINARY_SEARCH_H */
+#endif /* KPBINARY_SEARCH_H */

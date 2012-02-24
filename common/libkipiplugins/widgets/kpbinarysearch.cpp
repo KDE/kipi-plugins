@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "binarysearch.moc"
+#include "kpbinarysearch.moc"
 
 // Qt includes
 
@@ -37,9 +37,9 @@
 namespace KIPIPlugins
 {
 
-struct BinarySearch::BinarySearchPriv
+struct KPBinarySearch::KPBinarySearchPriv
 {
-    BinarySearchPriv()
+    KPBinarySearchPriv()
     {
         downloadLabel = 0;
     }
@@ -50,8 +50,8 @@ struct BinarySearch::BinarySearchPriv
 
 };
 
-BinarySearch::BinarySearch(QWidget* parent)
-    : QTreeWidget(parent), d(new BinarySearchPriv)
+KPBinarySearch::KPBinarySearch(QWidget* parent)
+    : QTreeWidget(parent), d(new KPBinarySearchPriv)
 {
     setIconSize(QSize(KIconLoader::SizeSmall, KIconLoader::SizeSmall));
     setAlternatingRowColors(true);
@@ -78,12 +78,12 @@ BinarySearch::BinarySearch(QWidget* parent)
     qobject_cast<QGridLayout*>(parentWidget()->layout())->addWidget(this, 0, 0);
 }
 
-BinarySearch::~BinarySearch()
+KPBinarySearch::~KPBinarySearch()
 {
     delete d;
 }
 
-void BinarySearch::addBinary(KPBinaryIface& binary)
+void KPBinarySearch::addBinary(KPBinaryIface& binary)
 {
     delete d->downloadLabel;
 
@@ -136,12 +136,12 @@ void BinarySearch::addBinary(KPBinaryIface& binary)
     d->downloadLabel->hide();
 }
 
-void BinarySearch::addDirectory(const QString& dir)
+void KPBinarySearch::addDirectory(const QString& dir)
 {
     emit(signalAddPossibleDirectory(dir));
 }
 
-bool BinarySearch::allBinariesFound()
+bool KPBinarySearch::allBinariesFound()
 {
     bool ret = true;
 
@@ -180,7 +180,7 @@ bool BinarySearch::allBinariesFound()
     return ret;
 }
 
-void BinarySearch::slotAreBinariesFound()
+void KPBinarySearch::slotAreBinariesFound()
 {
     kDebug() << "new binary found!!";
     bool allFound = allBinariesFound();
