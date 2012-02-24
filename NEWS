@@ -33,5 +33,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 019 ==> 294460 : Std namespace issue in kipi-plugins [patch].
 020 ==> 294461 : Build failure in picasawebexport - QString ambiguity [patch].
 021 ==> 294547 : The url http://www.kipi-plugins.org in 'about' menu does nt work.
-022 ==> 
+022 ==> 294751 : Unlisted dependancy (hugin).
+023 ==> 
 
