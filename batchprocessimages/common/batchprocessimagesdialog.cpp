@@ -67,7 +67,7 @@ extern "C"
 
 #include "imagedialog.h"
 #include "imagepreview.h"
-#include "outputdialog.h"
+#include "kpoutputdialog.h"
 #include "kpversion.h"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
@@ -95,8 +95,8 @@ enum ProcessState
     STOP_PROCESS
 };
 
-BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, Interface* interface,
-                                                   const QString& caption, QWidget* parent)
+BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, Interface* const interface,
+                                                   const QString& caption, QWidget* const parent)
     : KDialog(parent),
         m_listFile2Process_iterator(0),
         m_selectedImageFiles(urlList),
@@ -142,7 +142,7 @@ void BatchProcessImagesDialog::setupUi()
                                             "Enable this option if you have a slow computer."));
 
     m_ui->m_previewButton->setWhatsThis(i18n("This button builds a process "
-                                        "preview for the currently selected image on the list."));
+                                             "preview for the currently selected image on the list."));
 
     m_ui->m_overWriteMode->addItem(i18n("Ask"));
     m_ui->m_overWriteMode->addItem(i18n("Always Overwrite"));
@@ -150,10 +150,10 @@ void BatchProcessImagesDialog::setupUi()
     m_ui->m_overWriteMode->addItem(i18n("Skip"));
     m_ui->m_overWriteMode->setCurrentItem(i18n("Rename"));
     m_ui->m_overWriteMode->setWhatsThis(i18n("Select here the overwrite mode used if your target's image "
-                                        "files already exist."));
+                                             "files already exist."));
 
     m_ui->m_removeOriginal->setWhatsThis(i18n("If you enable this option, "
-                                         "all original image files will be removed after processing."));
+                                              "all original image files will be removed after processing."));
 
     m_ui->m_destinationUrl->setMode(KFile::Directory | KFile::LocalOnly);
     ImageCollection album = m_interface->currentAlbum();
@@ -171,7 +171,7 @@ void BatchProcessImagesDialog::setupUi()
         m_ui->m_destinationUrl->lineEdit()->setText(url);
     }
     m_ui->m_destinationUrl->setWhatsThis(i18n("Here you can select the target folder which "
-                                         "will used by the process."));
+                                              "will used by the process."));
 
     m_ui->m_addImagesButton->setWhatsThis(i18n("Add images to the list."));
     m_ui->m_remImagesButton->setWhatsThis(i18n("Remove selected image from the list."));
@@ -685,7 +685,7 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicke
 
     if (m_convertStatus == PROCESS_DONE)
     {
-        QPointer<OutputDialog> infoDialog = new OutputDialog(this, i18n("Image processing error"),
+        QPointer<KPOutputDialog> infoDialog = new KPOutputDialog(this, i18n("Image processing error"),
                 item->outputMess(),
                 i18n("Image \"%1\": %2\n\nThe output messages are:\n",
                      item->nameSrc(),
@@ -695,7 +695,7 @@ void BatchProcessImagesDialog::slotListDoubleClicked(QTreeWidgetItem *itemClicke
     }
 }
 
-void BatchProcessImagesDialog::slotPreview(void)
+void BatchProcessImagesDialog::slotPreview()
 {
     kDebug() << "BatchProcessImagesDialog::slotPreview";
 
@@ -782,7 +782,7 @@ void BatchProcessImagesDialog::slotPreviewFinished()
     }
     else
     {
-        QPointer<OutputDialog> infoDialog = new OutputDialog(this, i18n("Preview processing error"),
+        QPointer<KPOutputDialog> infoDialog = new KPOutputDialog(this, i18n("Preview processing error"),
                 m_previewOutput, i18n("Cannot process preview for image \"%1\"."
                                       "\nThe output messages are:\n", item->nameSrc()));
         infoDialog->exec();
@@ -829,7 +829,7 @@ void BatchProcessImagesDialog::listImageFiles()
             it != m_selectedImageFiles.end(); ++it)
     {
         QString currentFile = (*it).path(); // PENDING(blackie) Handle URLS
-        QFileInfo *fi = new QFileInfo(currentFile);
+        QFileInfo* fi       = new QFileInfo(currentFile);
 
         // Check if the new item already exist in the list.
 
@@ -946,7 +946,7 @@ void BatchProcessImagesDialog::endProcess()
             this, SLOT(slotOk()));
 }
 
-QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo *fi)
+QString BatchProcessImagesDialog::RenameTargetImageFile(QFileInfo* fi)
 {
     QString Temp;
     int Enumerator = 0;

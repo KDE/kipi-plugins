@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -50,7 +50,7 @@
 
 // Local includes
 
-#include "outputdialog.h"
+#include "kpoutputdialog.h"
 #include "alignbinary.h"
 #include "manager.h"
 #include "actionthread.h"
@@ -92,9 +92,9 @@ public:
     Manager*        mngr;
 };
 
-PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
-                 : WizardPage(dlg, i18n("<b>Pre-Processing Bracketed Images</b>")),
-                   d(new PreProcessingPagePriv)
+PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
+    : WizardPage(dlg, i18n("<b>Pre-Processing Bracketed Images</b>")),
+      d(new PreProcessingPagePriv)
 {
     d->mngr          = mngr;
     d->progressTimer = new QTimer(this);
@@ -215,10 +215,10 @@ void PreProcessingPage::slotProgressTimerDone()
 
 void PreProcessingPage::slotShowDetails()
 {
-    OutputDialog dlg(kapp->activeWindow(),
-                     i18n("Pre-Processing Messages"),
-                     d->output);
-                     i18n("Pre-Processing Messages"),
+    KPOutputDialog dlg(kapp->activeWindow(),
+                       i18n("Pre-Processing Messages"),
+                       d->output);
+
     dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("expoblending"));
     dlg.exec();
 }

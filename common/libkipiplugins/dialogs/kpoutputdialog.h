@@ -6,7 +6,7 @@
  * Date        : 2009-12-24
  * Description : a dialog to display processed messages in background
  *
- * Copyright (C) 2009-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef OUTPUTDIALOG_H
-#define OUTPUTDIALOG_H
+#ifndef KPOUTPUTDIALOG_H
+#define KPOUTPUTDIALOG_H
 
 // Qt includes
 
@@ -40,19 +40,19 @@ namespace KIPIPlugins
 
 class KPAboutData;
 
-class KIPIPLUGINS_EXPORT OutputDialog : public KDialog
+class KIPIPLUGINS_EXPORT KPOutputDialog : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    explicit OutputDialog(QWidget* parent=0,
-                          const QString& caption=QString(),
-                          const QString& Messages=QString(),
-                          const QString& Header=QString());
-    ~OutputDialog();
+    explicit KPOutputDialog(QWidget* const parent=0,
+                            const QString& caption=QString(),
+                            const QString& Messages=QString(),
+                            const QString& Header=QString());
+    ~KPOutputDialog();
 
-    void setAboutData(KPAboutData* about, const QString& handbookName);
+    void setAboutData(KPAboutData* const about, const QString& handbookName);
 
 private Q_SLOTS:
 
@@ -61,10 +61,10 @@ private Q_SLOTS:
 
 private:
 
-    class OutputDialogPriv;
-    OutputDialogPriv* const d;
+    class KPOutputDialogPriv;
+    KPOutputDialogPriv* const d;
 };
 
 }  // namespace KIPIPlugins
 
-#endif  // OUTPUTDIALOG_H
+#endif  // KPOUTPUTDIALOG_H

@@ -6,7 +6,7 @@
  * Date        : 2009-12-24
  * Description : a dialog to display processed messages in background
  *
- * Copyright (C) 2009-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "outputdialog.moc"
+#include "kpoutputdialog.moc"
 
 // Qt includes
 
@@ -46,11 +46,11 @@
 namespace KIPIPlugins
 {
 
-class OutputDialog::OutputDialogPriv
+class KPOutputDialog::KPOutputDialogPriv
 {
 public:
 
-    OutputDialogPriv()
+    KPOutputDialogPriv()
     {
         debugView = 0;
     }
@@ -59,9 +59,9 @@ public:
     KTextBrowser* debugView;
 };
 
-OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
-                           const QString& Messages, const QString& Header)
-            : KDialog(parent), d(new OutputDialogPriv)
+KPOutputDialog::KPOutputDialog(QWidget* const  parent, const QString& caption,
+                               const QString& Messages, const QString& Header)
+    : KDialog(parent), d(new KPOutputDialogPriv)
 {
     setCaption(caption);
     setModal(true);
@@ -88,12 +88,12 @@ OutputDialog::OutputDialog(QWidget* parent, const QString& caption,
     resize(600, 400);
 }
 
-OutputDialog::~OutputDialog()
+KPOutputDialog::~KPOutputDialog()
 {
     delete d;
 }
 
-void OutputDialog::setAboutData(KPAboutData* about, const QString& handbookName)
+void KPOutputDialog::setAboutData(KPAboutData* const about, const QString& handbookName)
 {
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
@@ -109,12 +109,12 @@ void OutputDialog::setAboutData(KPAboutData* about, const QString& handbookName)
     showButton(Help, true);
 }
 
-void OutputDialog::slotHelp()
+void KPOutputDialog::slotHelp()
 {
     KToolInvocation::invokeHelp(d->handbookName, "kipi-plugins");
 }
 
-void OutputDialog::slotCopyToCliboard()
+void KPOutputDialog::slotCopyToCliboard()
 {
     d->debugView->selectAll();
     d->debugView->copy();

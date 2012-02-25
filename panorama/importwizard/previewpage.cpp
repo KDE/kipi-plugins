@@ -40,10 +40,9 @@
 
 // Local includes
 
-#include "outputdialog.h"
+#include "kppreviewmanager.h"
 #include "batchprogressdialog.h"
 #include "manager.h"
-#include "kppreviewmanager.h"
 #include "enblendbinary.h"
 #include "makebinary.h"
 #include "nonabinary.h"
@@ -54,7 +53,7 @@ namespace KIPIPanoramaPlugin
 
 struct PreviewPage::PreviewPagePriv
 {
-    PreviewPagePriv(Manager *m)
+    PreviewPagePriv(Manager* const m)
         : title(0), 
           previewWidget(0), 
           previewBusy(false), 
