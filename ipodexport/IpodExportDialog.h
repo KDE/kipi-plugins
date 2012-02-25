@@ -45,7 +45,7 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 
 #endif // KIPI_PLUGIN
 

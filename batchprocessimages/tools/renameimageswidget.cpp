@@ -65,17 +65,17 @@
 #include "batchprocessimagesitem.h"
 #include "ui_renameimagesbase.h"
 #include "kpimageinfo.h"
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-RenameImagesWidget::RenameImagesWidget(QWidget *parent, KIPI::Interface* interface,
+RenameImagesWidget::RenameImagesWidget(QWidget* parent, KIPI::Interface* interface,
                                        const KUrl::List& urlList)
-                  : QWidget(parent),
-                    m_interface(interface),
-                    m_urlList(urlList),
-                    ui(new Ui::RenameImagesBase)
+    : QWidget(parent),
+      m_interface(interface),
+      m_urlList(urlList),
+      ui(new Ui::RenameImagesBase)
 {
     ui->setupUi(this);
     readSettings();
@@ -608,7 +608,7 @@ void RenameImagesWidget::slotNext()
 
 void RenameImagesWidget::slotAddImages()
 {
-    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
+    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this, m_interface);
 
     for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {

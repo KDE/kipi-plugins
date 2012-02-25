@@ -65,13 +65,13 @@ extern "C"
 
 // Local includes
 
-#include "imagedialog.h"
-#include "imagepreview.h"
+#include "kpimagedialog.h"
 #include "kpoutputdialog.h"
 #include "kpversion.h"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
+#include "imagepreview.h"
 #include "ui_batchprocessimagesdialog.h"
 
 using namespace KIPIPlugins;
@@ -224,7 +224,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd()
 {
     QStringList ImageFilesList;
 
-    const KUrl::List urls = ImageDialog::getImageUrls(this, m_interface);
+    const KUrl::List urls = KPImageDialog::getImageUrls(this, m_interface);
 
     if (urls.isEmpty())
         return;

@@ -40,7 +40,7 @@
 #include "PhotoItem.h"
 #include "SceneBorder.h"
 
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 
 #include "LayersModel.h"
 #include "LayersModelItem.h"
@@ -675,7 +675,7 @@ void Scene::changeSelectedImage()
     if (!item)
         return;
 
-    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrl(PhotoLayoutsEditor::instance(), PhotoLayoutsEditor::instance()->interface());
+    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrl(PhotoLayoutsEditor::instance(), PhotoLayoutsEditor::instance()->interface());
     if (urls.count() != 1)
         return;
 

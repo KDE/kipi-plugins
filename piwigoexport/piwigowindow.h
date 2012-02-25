@@ -8,7 +8,7 @@
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
 * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
-* Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+* Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
 * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
 * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
 *
@@ -42,13 +42,16 @@
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class KPAboutData;
+    class KPAboutData;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIPiwigoExportPlugin
 {
@@ -63,7 +66,7 @@ class PiwigoWindow : public KDialog
 
 public:
 
-    PiwigoWindow(KIPI::Interface* interface, QWidget* parent, Piwigo* pPiwigo);
+    PiwigoWindow(Interface* const interface, QWidget* const parent, Piwigo* const pPiwigo);
     ~PiwigoWindow();
 
 private:
@@ -93,16 +96,16 @@ private Q_SLOTS:
 
 private:
 
-    KIPI::Interface*          m_interface;
-    KIPIPlugins::KPAboutData* m_about;
-    PiwigoTalker*             m_talker;
-    Piwigo*                   mpPiwigo;
+    Interface*          m_interface;
+    KPAboutData*        m_about;
+    PiwigoTalker*       m_talker;
+    Piwigo*             mpPiwigo;
 
-    QProgressDialog*          m_progressDlg;
-    unsigned int              m_uploadCount;
-    unsigned int              m_uploadTotal;
-    QStringList*              mpUploadList;
-    QString                   firstAlbumName;
+    QProgressDialog*    m_progressDlg;
+    unsigned int        m_uploadCount;
+    unsigned int        m_uploadTotal;
+    QStringList*        mpUploadList;
+    QString             firstAlbumName;
 
     class Private;
     Private* const d;

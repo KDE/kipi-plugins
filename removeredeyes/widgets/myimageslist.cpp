@@ -44,7 +44,7 @@
 
 // Local includes
 
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 
 using namespace KIPIPlugins;
 

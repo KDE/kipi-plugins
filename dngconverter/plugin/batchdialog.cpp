@@ -62,9 +62,9 @@
 #include "actionthread.h"
 #include "myimagelist.h"
 #include "dngwriter.h"
-#include "imagedialog.h"
-#include "kpversion.h"
 #include "settingswidget.h"
+#include "kpimagedialog.h"
+#include "kpversion.h"
 #include "kpprogresswidget.h"
 #include "kpimageinfo.h"
 

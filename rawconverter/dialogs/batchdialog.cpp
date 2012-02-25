@@ -79,7 +79,7 @@ extern "C"
 #include "actions.h"
 #include "actionthread.h"
 #include "myimagelist.h"
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
 #include "kpimageinfo.h"
@@ -132,7 +132,7 @@ public:
 };
 
 BatchDialog::BatchDialog(Interface* const iface)
-           : KDialog(0), d(new BatchDialogPriv)
+    : KDialog(0), d(new BatchDialogPriv)
 {
     d->iface = iface;
 

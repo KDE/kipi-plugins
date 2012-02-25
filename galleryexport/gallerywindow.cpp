@@ -66,7 +66,7 @@
 #include "galleryconfig.h"
 #include "galleryitem.h"
 #include "gallerytalker.h"
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 
@@ -77,7 +77,7 @@ class GalleryWindow::Private
 {
 public:
 
-    Private(GalleryWindow* parent);
+    Private(GalleryWindow* const parent);
 
     QWidget*               widget;
 
@@ -95,13 +95,13 @@ public:
     KUrlLabel*             logo;
 };
 
-GalleryWindow::Private::Private(GalleryWindow* parent)
+GalleryWindow::Private::Private(GalleryWindow* const parent)
 {
     widget = new QWidget(parent);
     parent->setMainWidget(widget);
     parent->setModal(false);
 
-    QHBoxLayout *hlay = new QHBoxLayout(widget);
+    QHBoxLayout* hlay = new QHBoxLayout(widget);
 
     // ---------------------------------------------------------------------------
 
@@ -191,7 +191,7 @@ GalleryWindow::Private::Private(GalleryWindow* parent)
 
 // --------------------------------------------------------------------------------------------------------------
 
-GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Gallery* pGallery)
+GalleryWindow::GalleryWindow(Interface* interface, QWidget *parent, Gallery* pGallery)
              : KDialog(parent),
                m_interface(interface),
                mpGallery(pGallery),
@@ -202,7 +202,7 @@ GalleryWindow::GalleryWindow(KIPI::Interface* interface, QWidget *parent, Galler
     setModal(false);
 
     // About data.
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Gallery Export"),
+    m_about = new KPAboutData(ki18n("Gallery Export"),
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
@@ -683,7 +683,7 @@ void GalleryWindow::slotAddPhoto()
         return;     // NO album name found: FIXME: do something
 
     // photoPath
-    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
+    KUrl::List urls = KPImageDialog::getImageUrls(this, m_interface);
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
@@ -714,7 +714,7 @@ void GalleryWindow::slotAddPhotoNext()
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
     QString photoPath     = mpUploadList->takeFirst();
-    KIPIPlugins::KPImageInfo info(m_interface, photoPath);
+    KPImageInfo info(m_interface, photoPath);
     QString title         = info.title();
     QString description   = info.description();
     bool res              = m_talker->addPhoto(album.name, photoPath, title, description,

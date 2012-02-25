@@ -59,7 +59,7 @@
 
 // Local includes
 
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 #include "kpmetadata.h"
 
 using namespace KDcrawIface;
@@ -67,7 +67,7 @@ using namespace KDcrawIface;
 namespace KIPITimeAdjustPlugin
 {
 
-ImageDisplay::ImageDisplay(QScrollArea* parentArea)
+ImageDisplay::ImageDisplay(QScrollArea* const parentArea)
     : QLabel()
 {
     currX  = 0;
@@ -150,8 +150,8 @@ public:
     Interface *interface;
 };
 
-ClockPhotoDialog::ClockPhotoDialog(Interface* interface, QWidget* parent)
-                : KDialog(parent), d(new ClockPhotoDialogPrivate)
+ClockPhotoDialog::ClockPhotoDialog(Interface* const interface, QWidget* const parent)
+    : KDialog(parent), d(new ClockPhotoDialogPrivate)
 {
     d->interface     = interface;
 
@@ -175,7 +175,7 @@ ClockPhotoDialog::ClockPhotoDialog(Interface* interface, QWidget* parent)
 
     // Everything else is stacked in a vertical box.
     setMainWidget(new QWidget(this));
-    QVBoxLayout *vBox = new QVBoxLayout(mainWidget());
+    QVBoxLayout* vBox = new QVBoxLayout(mainWidget());
 
     // Some explanation.
     QLabel* explanationLabel =
@@ -402,7 +402,7 @@ void ClockPhotoDialog::saveSize()
 void ClockPhotoDialog::slotLoadPhoto()
 {
     // Present the user with a dialog to load the photo.
-    ImageDialog dlg(this, d->interface, true, false);
+    KPImageDialog dlg(this, d->interface, true, false);
 
     if (!dlg.url().isEmpty())
     {

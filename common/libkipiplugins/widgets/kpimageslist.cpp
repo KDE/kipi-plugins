@@ -69,7 +69,7 @@
 
 #include "kprawthumbthread.h"
 #include "kpimageinfo.h"
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 
 using namespace KIPIPlugins;
 
@@ -829,7 +829,7 @@ void KPImagesList::slotAddImages(const KUrl::List& list)
 
 void KPImagesList::slotAddItems()
 {
-    ImageDialog dlg(this, d->iface, false);
+    KPImageDialog dlg(this, d->iface, false);
     KUrl::List urls = dlg.urls();
 
     if (!urls.isEmpty())

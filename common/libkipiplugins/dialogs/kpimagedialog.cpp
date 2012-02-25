@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "imagedialog.moc"
+#include "kpimagedialog.moc"
 
 // Qt includes
 
@@ -59,12 +59,12 @@ using namespace KDcrawIface;
 namespace KIPIPlugins
 {
 
-class ImageDialogPreview::ImageDialogPreviewPrivate
+class KPImageDialogPreview::KPImageDialogPreviewPrivate
 {
 
 public:
 
-    ImageDialogPreviewPrivate()
+    KPImageDialogPreviewPrivate()
     {
         imageLabel   = 0;
         infoLabel    = 0;
@@ -72,20 +72,20 @@ public:
         loadRawThumb = 0;
     }
 
-    QLabel*             imageLabel;
-    QLabel*             infoLabel;
+    QLabel*           imageLabel;
+    QLabel*           infoLabel;
 
-    KUrl                currentUrl;
+    KUrl              currentUrl;
 
     KPMetadata        metaIface;
 
-    KIPI::Interface*  iface;
+    Interface*        iface;
 
     KPRawThumbThread* loadRawThumb;
 };
 
-ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
-    : KPreviewWidgetBase(parent), d(new ImageDialogPreviewPrivate)
+KPImageDialogPreview::KPImageDialogPreview(Interface* const iface, QWidget* const parent)
+    : KPreviewWidgetBase(parent), d(new KPImageDialogPreviewPrivate)
 {
     d->iface = iface;
 
@@ -117,30 +117,30 @@ ImageDialogPreview::ImageDialogPreview(KIPI::Interface* iface, QWidget* parent)
             this, SLOT(slotRawThumb(KUrl,QImage)));
 }
 
-ImageDialogPreview::~ImageDialogPreview()
+KPImageDialogPreview::~KPImageDialogPreview()
 {
     d->loadRawThumb->cancel();
     delete d;
 }
 
-QSize ImageDialogPreview::sizeHint() const
+QSize KPImageDialogPreview::sizeHint() const
 {
     return QSize(256, 256);
 }
 
-void ImageDialogPreview::resizeEvent(QResizeEvent*)
+void KPImageDialogPreview::resizeEvent(QResizeEvent*)
 {
     QMetaObject::invokeMethod(this, "showPreview", Qt::QueuedConnection);
 }
 
-void ImageDialogPreview::showPreview()
+void KPImageDialogPreview::showPreview()
 {
     KUrl url(d->currentUrl);
     clearPreview();
     showPreview(url);
 }
 
-void ImageDialogPreview::showPreview(const KUrl& url)
+void KPImageDialogPreview::showPreview(const KUrl& url)
 {
     if (!url.isValid())
     {
@@ -168,7 +168,7 @@ void ImageDialogPreview::showPreview(const KUrl& url)
             items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, d->currentUrl, true));
             KIO::PreviewJob* job = KIO::filePreview(items, QSize(256, 256));
 #else
-            KIO::PreviewJob *job = KIO::filePreview(d->currentUrl, 256);
+            KIO::PreviewJob* job = KIO::filePreview(d->currentUrl, 256);
 #endif
 
             connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
@@ -302,23 +302,23 @@ void ImageDialogPreview::showPreview(const KUrl& url)
 }
 
 // Used only if Kipi interface is null.
-void ImageDialogPreview::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
+void KPImageDialogPreview::slotKDEPreview(const KFileItem& item, const QPixmap& pix)
 {
     if (!pix.isNull())
         slotThumbnail(item.url(), pix);
 }
 
-void ImageDialogPreview::slotKDEPreviewFailed(const KFileItem& item)
+void KPImageDialogPreview::slotKDEPreviewFailed(const KFileItem& item)
 {
     d->loadRawThumb->getRawThumb(item.url());
 }
 
-void ImageDialogPreview::slotRawThumb(const KUrl& url, const QImage& img)
+void KPImageDialogPreview::slotRawThumb(const KUrl& url, const QImage& img)
 {
     slotThumbnail(url, QPixmap::fromImage(img));
 }
 
-void ImageDialogPreview::slotThumbnail(const KUrl& url, const QPixmap& pix)
+void KPImageDialogPreview::slotThumbnail(const KUrl& url, const QPixmap& pix)
 {
     if (url == d->currentUrl)
     {
@@ -334,7 +334,7 @@ void ImageDialogPreview::slotThumbnail(const KUrl& url, const QPixmap& pix)
     }
 }
 
-void ImageDialogPreview::clearPreview()
+void KPImageDialogPreview::clearPreview()
 {
     d->imageLabel->clear();
     d->infoLabel->clear();
@@ -343,12 +343,12 @@ void ImageDialogPreview::clearPreview()
 
 // ------------------------------------------------------------------------
 
-class ImageDialog::ImageDialogPrivate
+class KPImageDialog::KPImageDialogPrivate
 {
 
 public:
 
-    ImageDialogPrivate()
+    KPImageDialogPrivate()
     {
         onlyRaw      = false;
         singleSelect = false;
@@ -363,11 +363,11 @@ public:
     KUrl             url;
     KUrl::List       urls;
 
-    KIPI::Interface* iface;
+    Interface*       iface;
 };
 
-ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelect, bool onlyRaw)
-           : d(new ImageDialogPrivate)
+KPImageDialog::KPImageDialog(QWidget* const parent, Interface* const iface, bool singleSelect, bool onlyRaw)
+           : d(new KPImageDialogPrivate)
 {
     d->singleSelect = singleSelect;
     d->onlyRaw      = onlyRaw;
@@ -400,11 +400,11 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
 
     d->fileFormats = patternList.join("\n");
 
-    QString alternatePath = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
-    QPointer<KFileDialog> dlg   = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
-                                                           : alternatePath,
-                                                  d->fileFormats, parent);
-    ImageDialogPreview* preview = new ImageDialogPreview(d->iface, dlg);
+    QString alternatePath         = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+    QPointer<KFileDialog> dlg     = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
+                                                             : alternatePath,
+                                                    d->fileFormats, parent);
+    KPImageDialogPreview* preview = new KPImageDialogPreview(d->iface, dlg);
     dlg->setPreviewWidget(preview);
     dlg->setOperationMode(KFileDialog::Opening);
 
@@ -426,39 +426,39 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
     delete dlg;
 }
 
-ImageDialog::~ImageDialog()
+KPImageDialog::~KPImageDialog()
 {
     delete d;
 }
 
-bool ImageDialog::onlyRaw() const
+bool KPImageDialog::onlyRaw() const
 {
     return d->onlyRaw;
 }
 
-bool ImageDialog::singleSelect() const
+bool KPImageDialog::singleSelect() const
 {
     return d->singleSelect;
 }
 
-QString ImageDialog::fileFormats() const
+QString KPImageDialog::fileFormats() const
 {
     return d->fileFormats;
 }
 
-KUrl ImageDialog::url() const
+KUrl KPImageDialog::url() const
 {
     return d->url;
 }
 
-KUrl::List ImageDialog::urls() const
+KUrl::List KPImageDialog::urls() const
 {
     return d->urls;
 }
 
-KUrl ImageDialog::getImageUrl(QWidget* parent, KIPI::Interface* iface, bool onlyRaw)
+KUrl KPImageDialog::getImageUrl(QWidget* const parent, Interface* const iface, bool onlyRaw)
 {
-    ImageDialog dlg(parent, iface, true, onlyRaw);
+    KPImageDialog dlg(parent, iface, true, onlyRaw);
 
     if (dlg.url().isValid())
     {
@@ -470,9 +470,9 @@ KUrl ImageDialog::getImageUrl(QWidget* parent, KIPI::Interface* iface, bool only
     }
 }
 
-KUrl::List ImageDialog::getImageUrls(QWidget* parent, KIPI::Interface* iface, bool onlyRaw)
+KUrl::List KPImageDialog::getImageUrls(QWidget* const parent, Interface* const iface, bool onlyRaw)
 {
-    ImageDialog dlg(parent, iface, false, onlyRaw);
+    KPImageDialog dlg(parent, iface, false, onlyRaw);
     if (!dlg.urls().isEmpty())
     {
         return dlg.urls();
