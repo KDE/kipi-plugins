@@ -34,7 +34,9 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
@@ -45,12 +47,12 @@ namespace KIPIFlashExportPlugin
  * plugin, the user has to download SimpleViewer from its homepage and point
  * the plugin to that archive to install it. This is done by this dialog.
  */
-class FirstRunPage : public KIPIPlugins::WizardPage
+class FirstRunPage : public KPWizardPage
 {
 	Q_OBJECT
 public:
 
-    FirstRunPage(KAssistantDialog* dlg);
+    FirstRunPage(KAssistantDialog* const dlg);
     ~FirstRunPage();
 
     /**

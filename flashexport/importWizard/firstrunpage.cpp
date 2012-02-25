@@ -66,8 +66,9 @@ public:
 };
 
 // link this page to SimpleViewer to gain acess to settings container.
-FirstRunPage::FirstRunPage(KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("First Run")), d(new FirstRunPagePriv)
+FirstRunPage::FirstRunPage(KAssistantDialog* const dlg)
+    : KPWizardPage(dlg, i18n("First Run")),
+      d(new FirstRunPagePriv)
 {
     KVBox* vbox   = new KVBox(this);
 //    QVBoxLayout* topLayout = new QVBoxLayout(vbox);

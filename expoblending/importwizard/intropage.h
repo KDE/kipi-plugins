@@ -25,13 +25,15 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 #include "manager.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIExpoBlendingPlugin
 {
 
-class IntroPage : public KIPIPlugins::WizardPage
+class IntroPage : public KPWizardPage
 {
     Q_OBJECT
 

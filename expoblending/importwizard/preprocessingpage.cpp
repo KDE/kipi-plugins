@@ -93,7 +93,7 @@ public:
 };
 
 PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : WizardPage(dlg, i18n("<b>Pre-Processing Bracketed Images</b>")),
+    : KPWizardPage(dlg, i18n("<b>Pre-Processing Bracketed Images</b>")),
       d(new PreProcessingPagePriv)
 {
     d->mngr          = mngr;

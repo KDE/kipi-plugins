@@ -25,17 +25,20 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
+    
 class FlashManager;
 
-class ProgressPage : public KIPIPlugins::WizardPage
+class ProgressPage : public KPWizardPage
 {
 public:
 
-    ProgressPage(FlashManager *mngr, KAssistantDialog* dlg);
+    ProgressPage(FlashManager* const mngr, KAssistantDialog* const dlg);
     ~ProgressPage();
 };
 

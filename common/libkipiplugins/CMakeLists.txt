@@ -17,7 +17,7 @@ SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpweaverobserver.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/batchprogressdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagedialog.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/wizardpage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpwizardpage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/kpoutputdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp

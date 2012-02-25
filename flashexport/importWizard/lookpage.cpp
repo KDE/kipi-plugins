@@ -89,25 +89,33 @@ public:
     KIntNumInput* stagePadding;
     KIntNumInput* thumbnailColumns;
     KIntNumInput* thumbnailRows;
-// ---Autoviewer------
+
+    // ---Autoviewer------
     KIntNumInput* displayTime;
     KIntNumInput* imagePadding;
-// ---Tiltviewer------
+
+    // ---Tiltviewer------
     KColorButton* bkgndInnerColor;
     KColorButton* bkgndOuterColor;
     KColorButton* backColor;
     QCheckBox*    useReloadButton;
     QCheckBox*    showFlipButton;
-// ---Postcardviewer----
+
+    // ---Postcardviewer----
     KIntNumInput* cellDimension;
     KIntNumInput* zoomInPerc;
     KIntNumInput* zoomOutPerc;
 };
 
-LookPage::LookPage( KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("Configure appearance")), d(new LookPagePriv)
+LookPage::LookPage(KAssistantDialog* const dlg)
+    : KPWizardPage(dlg, i18n("Configure appearance")),
+      d(new LookPagePriv)
 {
+}
 
+LookPage::~LookPage()
+{
+    delete d;
 }
 
 void LookPage::setPageContent(int plugType)
@@ -125,357 +133,357 @@ void LookPage::setPageContent(int plugType)
     */
     switch(plugType)
     {
-    case 0:
+        case 0:
         {
-        //---Navigation Options -------------------------
-        QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
-        QVBoxLayout* vlay = new QVBoxLayout(box);
+            //---Navigation Options -------------------------
+            QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
+            QVBoxLayout* vlay = new QVBoxLayout(box);
 
-        KHBox* hbox          = new KHBox;
-        QLabel* label        = new QLabel(i18n("Thumbnail &Rows:"), hbox);
-        d->thumbnailRows = new KIntNumInput(hbox);
-        d->thumbnailRows->setRange(1, 10, 1);
-        d->thumbnailRows->setValue(3);
-        d->thumbnailRows->setWhatsThis(i18n("Number of thumbnails rows"));
-        label->setBuddy(d->thumbnailRows);
+            KHBox* hbox       = new KHBox;
+            QLabel* label     = new QLabel(i18n("Thumbnail &Rows:"), hbox);
+            d->thumbnailRows  = new KIntNumInput(hbox);
+            d->thumbnailRows->setRange(1, 10, 1);
+            d->thumbnailRows->setValue(3);
+            d->thumbnailRows->setWhatsThis(i18n("Number of thumbnails rows"));
+            label->setBuddy(d->thumbnailRows);
 
-        KHBox* hbox2          = new KHBox;
-        QLabel* label2        = new QLabel(i18n("Thumbnail &Columns:"), hbox2);
-        d->thumbnailColumns = new KIntNumInput(hbox2);
-        d->thumbnailColumns->setRange(1, 10, 1);
-        d->thumbnailColumns->setValue(3);
-        d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
-        label2->setBuddy(d->thumbnailColumns);
+            KHBox* hbox2        = new KHBox;
+            QLabel* label2      = new QLabel(i18n("Thumbnail &Columns:"), hbox2);
+            d->thumbnailColumns = new KIntNumInput(hbox2);
+            d->thumbnailColumns->setRange(1, 10, 1);
+            d->thumbnailColumns->setValue(3);
+            d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
+            label2->setBuddy(d->thumbnailColumns);
 
-        KHBox* hbox3          = new KHBox;
-        QLabel* label3        = new QLabel(i18n("Thumbnail &Position:"), hbox3);
-        d->thumbnailPosition = new KComboBox(hbox3);
-        QString pos_right  = i18nc("thumbnail position: right",  "Right");
-        QString pos_left   = i18nc("thumbnail position: left",   "Left");
-        QString pos_top    = i18nc("thumbnail position: top",    "Top");
-        QString pos_bottom = i18nc("thumbnail position: bottom", "Bottom");
-        d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::RIGHT,  pos_right);
-        d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::LEFT,   pos_left);
-        d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::TOP,    pos_top);
-        d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::BOTTOM, pos_bottom);
-        d->thumbnailPosition->setCurrentIndex(SimpleViewerSettingsContainer::RIGHT);
-        label3->setBuddy(d->thumbnailPosition);
+            KHBox* hbox3         = new KHBox;
+            QLabel* label3       = new QLabel(i18n("Thumbnail &Position:"), hbox3);
+            d->thumbnailPosition = new KComboBox(hbox3);
+            QString pos_right  = i18nc("thumbnail position: right",  "Right");
+            QString pos_left   = i18nc("thumbnail position: left",   "Left");
+            QString pos_top    = i18nc("thumbnail position: top",    "Top");
+            QString pos_bottom = i18nc("thumbnail position: bottom", "Bottom");
+            d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::RIGHT,  pos_right);
+            d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::LEFT,   pos_left);
+            d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::TOP,    pos_top);
+            d->thumbnailPosition->insertItem(SimpleViewerSettingsContainer::BOTTOM, pos_bottom);
+            d->thumbnailPosition->setCurrentIndex(SimpleViewerSettingsContainer::RIGHT);
+            label3->setBuddy(d->thumbnailPosition);
 
-        vlay->setMargin(KDialog::spacingHint());
-        vlay->setSpacing(KDialog::spacingHint());
-        vlay->addWidget(hbox);
-        vlay->addWidget(hbox2);
-        vlay->addWidget(hbox3);
+            vlay->setMargin(KDialog::spacingHint());
+            vlay->setSpacing(KDialog::spacingHint());
+            vlay->addWidget(hbox);
+            vlay->addWidget(hbox2);
+            vlay->addWidget(hbox3);
 
-    //---Colors Options -----------------------------------------------
+            //---Colors Options -----------------------------------------------
 
-        QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
-        QVBoxLayout* vlay2 = new QVBoxLayout(box2);
+            QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
+            QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-        KHBox* hbox4    = new KHBox;
-        QLabel* label4  = new QLabel(i18n("&Text Color:"), hbox4);
-        d->textColor    = new KColorButton(hbox4);
-        d->textColor->setColor(QColor("#FFFFFF"));
-        d->textColor->setWhatsThis(i18n("Color of title and caption text"));
-        label4->setBuddy(d->textColor);
+            KHBox* hbox4    = new KHBox;
+            QLabel* label4  = new QLabel(i18n("&Text Color:"), hbox4);
+            d->textColor    = new KColorButton(hbox4);
+            d->textColor->setColor(QColor("#FFFFFF"));
+            d->textColor->setWhatsThis(i18n("Color of title and caption text"));
+            label4->setBuddy(d->textColor);
 
-        KHBox* hbox5       = new KHBox;
-        QLabel* label5     = new QLabel(i18n("&Background Color:"), hbox5);
-        d->backgroundColor = new KColorButton(hbox5);
-        d->backgroundColor->setColor(QColor("#181818"));
-        label5->setBuddy(d->backgroundColor);
+            KHBox* hbox5       = new KHBox;
+            QLabel* label5     = new QLabel(i18n("&Background Color:"), hbox5);
+            d->backgroundColor = new KColorButton(hbox5);
+            d->backgroundColor->setColor(QColor("#181818"));
+            label5->setBuddy(d->backgroundColor);
 
-        KHBox* hbox6    = new KHBox;
-        QLabel* label6  = new QLabel(i18n("&Frame Color:"), hbox6);
-        d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox6);
-        d->frameColor->setColor(QColor("#FFFFFF"));
-        d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
-        label6->setBuddy(d->frameColor);
+            KHBox* hbox6    = new KHBox;
+            QLabel* label6  = new QLabel(i18n("&Frame Color:"), hbox6);
+            d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox6);
+            d->frameColor->setColor(QColor("#FFFFFF"));
+            d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
+            label6->setBuddy(d->frameColor);
 
-        vlay2->setMargin(KDialog::spacingHint());
-        vlay2->setSpacing(KDialog::spacingHint());
-        vlay2->addWidget(hbox4);
-        vlay2->addWidget(hbox5);
-        vlay2->addWidget(hbox6);
+            vlay2->setMargin(KDialog::spacingHint());
+            vlay2->setSpacing(KDialog::spacingHint());
+            vlay2->addWidget(hbox4);
+            vlay2->addWidget(hbox5);
+            vlay2->addWidget(hbox6);
 
-    // ----Style Options------------------------------------------------
+            // ----Style Options------------------------------------------------
 
-        QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
-        QVBoxLayout* vlay3 = new QVBoxLayout(box3);
+            QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
+            QVBoxLayout* vlay3 = new QVBoxLayout(box3);
 
-        KHBox* hbox7    = new KHBox;
-        QLabel* label7  = new QLabel(i18n("&Frame Width:"), hbox7);
-        d->frameWidth = new KIntNumInput(hbox7);
-        d->frameWidth->setRange(0, 10, 1);
-        d->frameWidth->setValue(1);
-        d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
-        label7->setBuddy(d->frameWidth);
+            KHBox* hbox7   = new KHBox;
+            QLabel* label7 = new QLabel(i18n("&Frame Width:"), hbox7);
+            d->frameWidth  = new KIntNumInput(hbox7);
+            d->frameWidth->setRange(0, 10, 1);
+            d->frameWidth->setValue(1);
+            d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
+            label7->setBuddy(d->frameWidth);
 
-        KHBox* hbox8    = new KHBox;
-        QLabel* label8  = new QLabel(i18n("&Stage Padding:"), hbox8);
-        d->stagePadding = new KIntNumInput(hbox8);
-        d->stagePadding->setRange(10, 100, 1);
-        d->stagePadding->setValue(20);
-        d->stagePadding->setWhatsThis(i18n("Distance between image and thumbnails in pixels."));
-        label8->setBuddy(d->stagePadding);
+            KHBox* hbox8    = new KHBox;
+            QLabel* label8  = new QLabel(i18n("&Stage Padding:"), hbox8);
+            d->stagePadding = new KIntNumInput(hbox8);
+            d->stagePadding->setRange(10, 100, 1);
+            d->stagePadding->setValue(20);
+            d->stagePadding->setWhatsThis(i18n("Distance between image and thumbnails in pixels."));
+            label8->setBuddy(d->stagePadding);
 
-        vlay3->setMargin(KDialog::spacingHint());
-        vlay3->setSpacing(KDialog::spacingHint());
-        vlay3->addWidget(hbox7);
-        vlay3->addWidget(hbox8);
+            vlay3->setMargin(KDialog::spacingHint());
+            vlay3->setSpacing(KDialog::spacingHint());
+            vlay3->addWidget(hbox7);
+            vlay3->addWidget(hbox8);
 
-        break;
+            break;
         }
-    case 1:
+        case 1:
         {
-        //---Navigation Options -------------------------
-        QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
-        QVBoxLayout* vlay = new QVBoxLayout(box);
+            //---Navigation Options -------------------------
+            QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
+            QVBoxLayout* vlay = new QVBoxLayout(box);
 
-        KHBox* hbox          = new KHBox;
-        QLabel* label        = new QLabel(i18n("&Display Time:"), hbox);
-        d->displayTime = new KIntNumInput(hbox);
-        d->displayTime->setRange(1, 15, 1);
-        d->displayTime->setValue(3);
-        d->displayTime->setWhatsThis(i18n("Number of seconds each image will display in auto-play mode."));
-        label->setBuddy(d->displayTime);
+            KHBox* hbox          = new KHBox;
+            QLabel* label        = new QLabel(i18n("&Display Time:"), hbox);
+            d->displayTime = new KIntNumInput(hbox);
+            d->displayTime->setRange(1, 15, 1);
+            d->displayTime->setValue(3);
+            d->displayTime->setWhatsThis(i18n("Number of seconds each image will display in auto-play mode."));
+            label->setBuddy(d->displayTime);
 
-        vlay->setMargin(KDialog::spacingHint());
-        vlay->setSpacing(KDialog::spacingHint());
-        vlay->addWidget(hbox);
+            vlay->setMargin(KDialog::spacingHint());
+            vlay->setSpacing(KDialog::spacingHint());
+            vlay->addWidget(hbox);
 
-    //---Colors Options -----------------------------------------------
+            //---Colors Options -----------------------------------------------
 
-        QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
-        QVBoxLayout* vlay2 = new QVBoxLayout(box2);
+            QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
+            QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-        KHBox* hbox2       = new KHBox;
-        QLabel* label2     = new QLabel(i18n("&Background Color:"), hbox2);
-        d->backgroundColor = new KColorButton(hbox2);
-        d->backgroundColor->setColor(QColor("#181818"));
-        label2->setBuddy(d->backgroundColor);
+            KHBox* hbox2       = new KHBox;
+            QLabel* label2     = new QLabel(i18n("&Background Color:"), hbox2);
+            d->backgroundColor = new KColorButton(hbox2);
+            d->backgroundColor->setColor(QColor("#181818"));
+            label2->setBuddy(d->backgroundColor);
 
-        KHBox* hbox3    = new KHBox;
-        QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
-        d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox3);
-        d->frameColor->setColor(QColor("#FFFFFF"));
-        d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
-        label3->setBuddy(d->frameColor);
+            KHBox* hbox3    = new KHBox;
+            QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
+            d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox3);
+            d->frameColor->setColor(QColor("#FFFFFF"));
+            d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
+            label3->setBuddy(d->frameColor);
 
-        vlay2->setMargin(KDialog::spacingHint());
-        vlay2->setSpacing(KDialog::spacingHint());
-        vlay2->addWidget(hbox2);
-        vlay2->addWidget(hbox3);
+            vlay2->setMargin(KDialog::spacingHint());
+            vlay2->setSpacing(KDialog::spacingHint());
+            vlay2->addWidget(hbox2);
+            vlay2->addWidget(hbox3);
 
-    // ----Style Options------------------------------------------------
+            // ----Style Options------------------------------------------------
 
-        QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
-        QVBoxLayout* vlay3 = new QVBoxLayout(box3);
+            QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
+            QVBoxLayout* vlay3 = new QVBoxLayout(box3);
 
-        KHBox* hbox4    = new KHBox;
-        QLabel* label4  = new QLabel(i18n("&Frame Width:"), hbox4);
-        d->frameWidth = new KIntNumInput(hbox4);
-        d->frameWidth->setRange(0, 10, 1);
-        d->frameWidth->setValue(1);
-        d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
-        label4->setBuddy(d->frameWidth);
+            KHBox* hbox4    = new KHBox;
+            QLabel* label4  = new QLabel(i18n("&Frame Width:"), hbox4);
+            d->frameWidth = new KIntNumInput(hbox4);
+            d->frameWidth->setRange(0, 10, 1);
+            d->frameWidth->setValue(1);
+            d->frameWidth->setWhatsThis(i18n("Width of image frame in pixels."));
+            label4->setBuddy(d->frameWidth);
 
-        KHBox* hbox5    = new KHBox;
-        QLabel* label5  = new QLabel(i18n("&Image Padding:"), hbox5);
-        d->imagePadding = new KIntNumInput(hbox5);
-        d->imagePadding->setRange(10, 100, 1);
-        d->imagePadding->setValue(20);
-        d->imagePadding->setWhatsThis(i18n("Distance between images in pixels"));
-        label5->setBuddy(d->imagePadding);
+            KHBox* hbox5    = new KHBox;
+            QLabel* label5  = new QLabel(i18n("&Image Padding:"), hbox5);
+            d->imagePadding = new KIntNumInput(hbox5);
+            d->imagePadding->setRange(10, 100, 1);
+            d->imagePadding->setValue(20);
+            d->imagePadding->setWhatsThis(i18n("Distance between images in pixels"));
+            label5->setBuddy(d->imagePadding);
 
-        vlay3->setMargin(KDialog::spacingHint());
-        vlay3->setSpacing(KDialog::spacingHint());
-        vlay3->addWidget(hbox4);
-        vlay3->addWidget(hbox5);
+            vlay3->setMargin(KDialog::spacingHint());
+            vlay3->setSpacing(KDialog::spacingHint());
+            vlay3->addWidget(hbox4);
+            vlay3->addWidget(hbox5);
 
-        break;
+            break;
         }
-    case 2:
+        case 2:
         {
-        //---Navigation Options -------------------------
-        QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
-        QVBoxLayout* vlay = new QVBoxLayout(box);
+            //---Navigation Options -------------------------
+            QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
+            QVBoxLayout* vlay = new QVBoxLayout(box);
 
-        KHBox* hbox          = new KHBox;
-        QLabel* label        = new QLabel(i18n(" &Rows:"), hbox);
-        d->thumbnailRows = new KIntNumInput(hbox);
-        d->thumbnailRows->setRange(1, 10, 1);
-        d->thumbnailRows->setValue(3);
-        d->thumbnailRows->setWhatsThis(i18n("Number of rows of images to display."));
-        label->setBuddy(d->thumbnailRows);
+            KHBox* hbox          = new KHBox;
+            QLabel* label        = new QLabel(i18n(" &Rows:"), hbox);
+            d->thumbnailRows = new KIntNumInput(hbox);
+            d->thumbnailRows->setRange(1, 10, 1);
+            d->thumbnailRows->setValue(3);
+            d->thumbnailRows->setWhatsThis(i18n("Number of rows of images to display."));
+            label->setBuddy(d->thumbnailRows);
 
-        KHBox* hbox2          = new KHBox;
-        QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
-        d->thumbnailColumns = new KIntNumInput(hbox2);
-        d->thumbnailColumns->setRange(1, 10, 1);
-        d->thumbnailColumns->setValue(3);
-        d->thumbnailColumns->setWhatsThis(i18n("Number of columns of images to display."));
-        label2->setBuddy(d->thumbnailColumns);
+            KHBox* hbox2          = new KHBox;
+            QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
+            d->thumbnailColumns = new KIntNumInput(hbox2);
+            d->thumbnailColumns->setRange(1, 10, 1);
+            d->thumbnailColumns->setValue(3);
+            d->thumbnailColumns->setWhatsThis(i18n("Number of columns of images to display."));
+            label2->setBuddy(d->thumbnailColumns);
 
-        d->showFlipButton = new QCheckBox(i18n("Show Flip Button"), this);
-        d->showFlipButton->setChecked(true);
-        d->showFlipButton->setWhatsThis(i18n("If you enable this option, "
-                                         "the images' orientations will be set according "
-                                         "to their Exif information."));
-        d->useReloadButton = new QCheckBox(i18n("Use reload button"), this);
-        d->useReloadButton->setChecked(true);
-        d->useReloadButton->setWhatsThis(i18n("If you enable this option, "
-                                         "the images' orientations will be set according "
-                                         "to their Exif information."));
+            d->showFlipButton = new QCheckBox(i18n("Show Flip Button"), this);
+            d->showFlipButton->setChecked(true);
+            d->showFlipButton->setWhatsThis(i18n("If you enable this option, "
+                                            "the images' orientations will be set according "
+                                            "to their Exif information."));
+            d->useReloadButton = new QCheckBox(i18n("Use reload button"), this);
+            d->useReloadButton->setChecked(true);
+            d->useReloadButton->setWhatsThis(i18n("If you enable this option, "
+                                            "the images' orientations will be set according "
+                                            "to their Exif information."));
 
-        vlay->setMargin(KDialog::spacingHint());
-        vlay->setSpacing(KDialog::spacingHint());
-        vlay->addWidget(hbox);
-        vlay->addWidget(hbox2);
-        vlay->addWidget(d->showFlipButton);
-        vlay->addWidget(d->useReloadButton);
+            vlay->setMargin(KDialog::spacingHint());
+            vlay->setSpacing(KDialog::spacingHint());
+            vlay->addWidget(hbox);
+            vlay->addWidget(hbox2);
+            vlay->addWidget(d->showFlipButton);
+            vlay->addWidget(d->useReloadButton);
 
-    //---Colors Options -----------------------------------------------
+            //---Colors Options -----------------------------------------------
 
-        QGroupBox* box2    = new QGroupBox(i18nc("Settings for flash export navigation", "Colors"), d->vbox);
-        QVBoxLayout* vlay2 = new QVBoxLayout(box2);
+            QGroupBox* box2    = new QGroupBox(i18nc("Settings for flash export navigation", "Colors"), d->vbox);
+            QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-        KHBox* hbox3    = new KHBox;
-        QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
-        d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox3);
-        d->frameColor->setColor(QColor("#FFFFFF"));
-        d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
-        label3->setBuddy(d->frameColor);
-        
-        KHBox* hbox4    = new KHBox;
-        QLabel* label4  = new QLabel(i18n("Background &Inner Color:"), hbox4);
-        d->bkgndInnerColor    = new KColorButton(hbox4);
-        d->bkgndInnerColor->setColor(QColor("#FFFFFF"));
-        d->bkgndInnerColor->setWhatsThis(i18n("Color of the stage background gradient center."));
-        label4->setBuddy(d->bkgndInnerColor);
+            KHBox* hbox3    = new KHBox;
+            QLabel* label3  = new QLabel(i18n("&Frame Color:"), hbox3);
+            d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox3);
+            d->frameColor->setColor(QColor("#FFFFFF"));
+            d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
+            label3->setBuddy(d->frameColor);
 
-        KHBox* hbox5    = new KHBox;
-        QLabel* label5  = new QLabel(i18n("Background &Outer Color:"), hbox5);
-        d->bkgndOuterColor    = new KColorButton(hbox5);
-        d->bkgndOuterColor->setColor(QColor("#FFFFFF"));
-        d->bkgndOuterColor->setWhatsThis(i18n("Color of the stage background gradient edge."));
-        label5->setBuddy(d->bkgndOuterColor);
+            KHBox* hbox4    = new KHBox;
+            QLabel* label4  = new QLabel(i18n("Background &Inner Color:"), hbox4);
+            d->bkgndInnerColor    = new KColorButton(hbox4);
+            d->bkgndInnerColor->setColor(QColor("#FFFFFF"));
+            d->bkgndInnerColor->setWhatsThis(i18n("Color of the stage background gradient center."));
+            label4->setBuddy(d->bkgndInnerColor);
 
-        KHBox* hbox6    = new KHBox;
-        QLabel* label6  = new QLabel(i18n("Image Back Color:"), hbox6);
-        d->backColor    = new KColorButton(hbox6);
-        d->backColor->setColor(QColor("#FFFFFF"));
-        d->backColor->setWhatsThis(i18n("Image's back color when pressing flip button"));
-        label6->setBuddy(d->bkgndOuterColor);
+            KHBox* hbox5    = new KHBox;
+            QLabel* label5  = new QLabel(i18n("Background &Outer Color:"), hbox5);
+            d->bkgndOuterColor    = new KColorButton(hbox5);
+            d->bkgndOuterColor->setColor(QColor("#FFFFFF"));
+            d->bkgndOuterColor->setWhatsThis(i18n("Color of the stage background gradient edge."));
+            label5->setBuddy(d->bkgndOuterColor);
 
-        vlay2->setMargin(KDialog::spacingHint());
-        vlay2->setSpacing(KDialog::spacingHint());
-        vlay2->addWidget(hbox3);
-        vlay2->addWidget(hbox4);
-        vlay2->addWidget(hbox5);
-        vlay2->addWidget(hbox6);
+            KHBox* hbox6    = new KHBox;
+            QLabel* label6  = new QLabel(i18n("Image Back Color:"), hbox6);
+            d->backColor    = new KColorButton(hbox6);
+            d->backColor->setColor(QColor("#FFFFFF"));
+            d->backColor->setWhatsThis(i18n("Image's back color when pressing flip button"));
+            label6->setBuddy(d->bkgndOuterColor);
 
-        break;
+            vlay2->setMargin(KDialog::spacingHint());
+            vlay2->setSpacing(KDialog::spacingHint());
+            vlay2->addWidget(hbox3);
+            vlay2->addWidget(hbox4);
+            vlay2->addWidget(hbox5);
+            vlay2->addWidget(hbox6);
+
+            break;
         }
-    case 3:
+        case 3:
         {
-        //---Navigation Options -------------------------
-        QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
-        QVBoxLayout* vlay = new QVBoxLayout(box);
+            //---Navigation Options -------------------------
+            QGroupBox* box    = new QGroupBox(i18nc("Settings for flash export navigation", "Navigation"), d->vbox);
+            QVBoxLayout* vlay = new QVBoxLayout(box);
 
-        KHBox* hbox          = new KHBox;
-        QLabel* label        = new QLabel(i18n("Cell Dimension:"), hbox);
-        d->cellDimension = new KIntNumInput(hbox);
-        d->cellDimension->setRange(500, 1500, 1);
-        d->cellDimension->setValue(800);
-        d->cellDimension->setWhatsThis(i18n("Dimension of displayed image cells. Please use a higher value if you set high image size"));
-        label->setBuddy(d->cellDimension);
+            KHBox* hbox          = new KHBox;
+            QLabel* label        = new QLabel(i18n("Cell Dimension:"), hbox);
+            d->cellDimension = new KIntNumInput(hbox);
+            d->cellDimension->setRange(500, 1500, 1);
+            d->cellDimension->setValue(800);
+            d->cellDimension->setWhatsThis(i18n("Dimension of displayed image cells. Please use a higher value if you set high image size"));
+            label->setBuddy(d->cellDimension);
 
-        KHBox* hbox2          = new KHBox;
-        QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
-        d->thumbnailColumns = new KIntNumInput(hbox2);
-        d->thumbnailColumns->setRange(1, 10, 1);
-        d->thumbnailColumns->setValue(3);
-        d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
-        label2->setBuddy(d->thumbnailColumns);
+            KHBox* hbox2          = new KHBox;
+            QLabel* label2        = new QLabel(i18n(" &Columns:"), hbox2);
+            d->thumbnailColumns = new KIntNumInput(hbox2);
+            d->thumbnailColumns->setRange(1, 10, 1);
+            d->thumbnailColumns->setValue(3);
+            d->thumbnailColumns->setWhatsThis(i18n("Number of thumbnails columns"));
+            label2->setBuddy(d->thumbnailColumns);
 
-        vlay->setMargin(KDialog::spacingHint());
-        vlay->setSpacing(KDialog::spacingHint());
-        vlay->addWidget(hbox);
-        vlay->addWidget(hbox2);
+            vlay->setMargin(KDialog::spacingHint());
+            vlay->setSpacing(KDialog::spacingHint());
+            vlay->addWidget(hbox);
+            vlay->addWidget(hbox2);
 
 
-    //---Colors Options -----------------------------------------------
+            //---Colors Options -----------------------------------------------
 
-        QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
-        QVBoxLayout* vlay2 = new QVBoxLayout(box2);
+            QGroupBox* box2    = new QGroupBox(i18n("Colors"), d->vbox);
+            QVBoxLayout* vlay2 = new QVBoxLayout(box2);
 
-        KHBox* hbox3    = new KHBox;
-        QLabel* label3  = new QLabel(i18n("&Caption Color:"), hbox3);
-        d->textColor    = new KColorButton(hbox3);
-        d->textColor->setColor(QColor("#FFFFFF"));
-        d->textColor->setWhatsThis(i18n("Color of title and caption text"));
-        label3->setBuddy(d->textColor);
+            KHBox* hbox3    = new KHBox;
+            QLabel* label3  = new QLabel(i18n("&Caption Color:"), hbox3);
+            d->textColor    = new KColorButton(hbox3);
+            d->textColor->setColor(QColor("#FFFFFF"));
+            d->textColor->setWhatsThis(i18n("Color of title and caption text"));
+            label3->setBuddy(d->textColor);
 
-        KHBox* hbox4       = new KHBox;
-        QLabel* label4     = new QLabel(i18n("&Background Color:"), hbox4);
-        d->backgroundColor = new KColorButton(hbox4);
-        d->backgroundColor->setColor(QColor("#181818"));
-        label4->setBuddy(d->backgroundColor);
+            KHBox* hbox4       = new KHBox;
+            QLabel* label4     = new QLabel(i18n("&Background Color:"), hbox4);
+            d->backgroundColor = new KColorButton(hbox4);
+            d->backgroundColor->setColor(QColor("#181818"));
+            label4->setBuddy(d->backgroundColor);
 
-        KHBox* hbox5    = new KHBox;
-        QLabel* label5  = new QLabel(i18n("&Frame Color:"), hbox5);
-        d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox5);
-        d->frameColor->setColor(QColor("#FFFFFF"));
-        d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
-        label5->setBuddy(d->frameColor);
+            KHBox* hbox5    = new KHBox;
+            QLabel* label5  = new QLabel(i18n("&Frame Color:"), hbox5);
+            d->frameColor   = new KColorButton(QColor("#FFFFFF"), hbox5);
+            d->frameColor->setColor(QColor("#FFFFFF"));
+            d->frameColor->setWhatsThis(i18n("Color of image frame, viewed icon, load bars, thumbnail arrows"));
+            label5->setBuddy(d->frameColor);
 
-        vlay2->setMargin(KDialog::spacingHint());
-        vlay2->setSpacing(KDialog::spacingHint());
-        vlay2->addWidget(hbox3);
-        vlay2->addWidget(hbox4);
-        vlay2->addWidget(hbox5);
+            vlay2->setMargin(KDialog::spacingHint());
+            vlay2->setSpacing(KDialog::spacingHint());
+            vlay2->addWidget(hbox3);
+            vlay2->addWidget(hbox4);
+            vlay2->addWidget(hbox5);
 
-    // ----Style Options------------------------------------------------
+            // ----Style Options------------------------------------------------
 
-        QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
-        QVBoxLayout* vlay3 = new QVBoxLayout(box3);
+            QGroupBox* box3    = new QGroupBox(i18n("Style"), d->vbox);
+            QVBoxLayout* vlay3 = new QVBoxLayout(box3);
 
-        KHBox* hbox6    = new KHBox;
-        QLabel* label6  = new QLabel(i18n("&Zoom In Percentage:"), hbox6);
-        d->zoomInPerc = new KIntNumInput(hbox6);
-        d->zoomInPerc->setRange(0, 100, 1);
-        d->zoomInPerc->setValue(100);
-        d->zoomInPerc->setWhatsThis(i18n("The amount of scale when zoomed in (percentage)"));
-        label6->setBuddy(d->zoomInPerc);
+            KHBox* hbox6   = new KHBox;
+            QLabel* label6 = new QLabel(i18n("&Zoom In Percentage:"), hbox6);
+            d->zoomInPerc  = new KIntNumInput(hbox6);
+            d->zoomInPerc->setRange(0, 100, 1);
+            d->zoomInPerc->setValue(100);
+            d->zoomInPerc->setWhatsThis(i18n("The amount of scale when zoomed in (percentage)"));
+            label6->setBuddy(d->zoomInPerc);
 
-        KHBox* hbox7    = new KHBox;
-        QLabel* label7  = new QLabel(i18n("&Zoom Out Percentage:"), hbox7);
-        d->zoomOutPerc = new KIntNumInput(hbox7);
-        d->zoomOutPerc->setRange(0, 100, 1);
-        d->zoomOutPerc->setValue(15);
-        d->zoomOutPerc->setWhatsThis(i18n("The amount of scale when zoomed out (percentage)"));
-        label7->setBuddy(d->zoomOutPerc);
+            KHBox* hbox7   = new KHBox;
+            QLabel* label7 = new QLabel(i18n("&Zoom Out Percentage:"), hbox7);
+            d->zoomOutPerc = new KIntNumInput(hbox7);
+            d->zoomOutPerc->setRange(0, 100, 1);
+            d->zoomOutPerc->setValue(15);
+            d->zoomOutPerc->setWhatsThis(i18n("The amount of scale when zoomed out (percentage)"));
+            label7->setBuddy(d->zoomOutPerc);
 
-        KHBox* hbox8    = new KHBox;
-        QLabel* label8  = new QLabel(i18n("&Frame Width:"), hbox8);
-        d->frameWidth = new KIntNumInput(hbox8);
-        d->frameWidth->setRange(0, 15, 1);
-        d->frameWidth->setValue(3);
-        d->frameWidth->setWhatsThis(i18n("The frame width"));
-        label8->setBuddy(d->frameWidth);
+            KHBox* hbox8   = new KHBox;
+            QLabel* label8 = new QLabel(i18n("&Frame Width:"), hbox8);
+            d->frameWidth  = new KIntNumInput(hbox8);
+            d->frameWidth->setRange(0, 15, 1);
+            d->frameWidth->setValue(3);
+            d->frameWidth->setWhatsThis(i18n("The frame width"));
+            label8->setBuddy(d->frameWidth);
 
-        vlay3->setMargin(KDialog::spacingHint());
-        vlay3->setSpacing(KDialog::spacingHint());
-        vlay3->addWidget(hbox6);
-        vlay3->addWidget(hbox7);
-        vlay3->addWidget(hbox8);
+            vlay3->setMargin(KDialog::spacingHint());
+            vlay3->setSpacing(KDialog::spacingHint());
+            vlay3->addWidget(hbox6);
+            vlay3->addWidget(hbox7);
+            vlay3->addWidget(hbox8);
 
-        break;
+            break;
         }
+
     default:
-    kDebug() << "Unknown plugin type";
-
+        kDebug() << "Unknown plugin type";
     }
 
     // ------------------------------------------------------------------------
@@ -483,12 +491,8 @@ void LookPage::setPageContent(int plugType)
     setPageWidget(d->vbox);
     setLeftBottomPix(DesktopIcon("flash", 128));
 }
-LookPage::~LookPage()
-{
-    delete d;
-}
 
-void LookPage::setSettings(const SimpleViewerSettingsContainer* settings)
+void LookPage::setSettings(const SimpleViewerSettingsContainer* const settings)
 {
 
    switch(settings->plugType)
@@ -544,7 +548,7 @@ void LookPage::setSettings(const SimpleViewerSettingsContainer* settings)
    }
 }
 
-void LookPage::settings(SimpleViewerSettingsContainer* settings)
+void LookPage::settings(SimpleViewerSettingsContainer* const settings)
 {   
     switch(settings->plugType)
     {
@@ -593,7 +597,7 @@ void LookPage::settings(SimpleViewerSettingsContainer* settings)
             settings->backgroundColor   = d->backgroundColor->color();
             settings->textColor         = d->textColor->color();
         }
+    }
 }
 
 }   // namespace KIPIFlashExportPlugin
-}

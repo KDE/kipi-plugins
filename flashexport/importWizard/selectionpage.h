@@ -34,7 +34,7 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 #include "simpleviewersettingscontainer.h"
 
 using namespace KIPIPlugins;
@@ -44,7 +44,7 @@ namespace KIPIFlashExportPlugin
 
 class FlashManager; 
 
-class SelectionPage: public WizardPage
+class SelectionPage: public KPWizardPage
 {
     Q_OBJECT
 

@@ -23,26 +23,31 @@
 #ifndef INTRO_PAGE_H
 #define INTRO_PAGE_H
 
+// KDE includes
+
+#include <kcombobox.h>
+
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 #include "simpleviewersettingscontainer.h"
-#include <kcombobox.h>
+
+using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
 
 class FlashManager; 
 
-class IntroPage : public KIPIPlugins::WizardPage
+class IntroPage : public KPWizardPage
 {
 public:
 
-    IntroPage(KAssistantDialog* dlg);
+    IntroPage(KAssistantDialog* const dlg);
     ~IntroPage();
-    
-    void settings(SimpleViewerSettingsContainer* settings);
-    
+
+    void settings(SimpleViewerSettingsContainer* const settings);
+
 private:
 
     class IntroPagePriv;

@@ -25,7 +25,7 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 
 // Local includes
 
@@ -38,7 +38,7 @@ namespace KIPIPanoramaPlugin
 
 class Manager;
 
-class OptimizePage : public WizardPage
+class OptimizePage : public KPWizardPage
 {
     Q_OBJECT
 

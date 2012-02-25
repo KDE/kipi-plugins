@@ -25,7 +25,7 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 
 // KDE includes
 
@@ -42,7 +42,7 @@ namespace KIPIExpoBlendingPlugin
 
 class Manager;
 
-class ItemsPage : public WizardPage
+class ItemsPage : public KPWizardPage
 {
     Q_OBJECT
 

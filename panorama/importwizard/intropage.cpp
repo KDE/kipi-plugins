@@ -78,7 +78,7 @@ struct IntroPage::IntroPagePriv
 };
 
 IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("<b>Welcome to Panorama Tool</b>")),
+    : KPWizardPage(dlg, i18n("<b>Welcome to Panorama Tool</b>")),
       d(new IntroPagePriv(mngr))
 {
     KVBox* vbox   = new KVBox(this);

@@ -67,7 +67,7 @@ public:
 };
 
 ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
-         : WizardPage(dlg, i18n("<b>Set Bracketed Images</b>")),
+         : KPWizardPage(dlg, i18n("<b>Set Bracketed Images</b>")),
            d(new ItemsPagePriv)
 {
     d->mngr        = mngr;

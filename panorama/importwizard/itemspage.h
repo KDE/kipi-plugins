@@ -27,7 +27,7 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 
 // KDE includes
 
@@ -44,7 +44,7 @@ namespace KIPIPanoramaPlugin
 
 class Manager;
 
-class ItemsPage : public WizardPage
+class ItemsPage : public KPWizardPage
 {
     Q_OBJECT
 

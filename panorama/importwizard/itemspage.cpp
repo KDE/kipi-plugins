@@ -67,7 +67,7 @@ struct ItemsPage::ItemsPagePriv
 };
 
 ItemsPage::ItemsPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : WizardPage(dlg, i18n("<b>Set Panorama Images</b>")), d(new ItemsPagePriv)
+    : KPWizardPage(dlg, i18n("<b>Set Panorama Images</b>")), d(new ItemsPagePriv)
 {
     d->mngr        = mngr;
     KVBox* vbox    = new KVBox(this);

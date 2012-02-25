@@ -92,7 +92,7 @@ struct OptimizePage::OptimizePagePriv
 };
 
 OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
-    : WizardPage(dlg, i18n("<b>Optimization</b>")),
+    : KPWizardPage(dlg, i18n("<b>Optimization</b>")),
       d(new OptimizePagePriv)
 {
     d->mngr                         = mngr;

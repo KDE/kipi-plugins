@@ -25,7 +25,7 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 #include "actions.h"
 
 using namespace KIPIPlugins;
@@ -35,7 +35,7 @@ namespace KIPIPanoramaPlugin
 
 class Manager;
 
-class PreviewPage : public WizardPage
+class PreviewPage : public KPWizardPage
 {
     Q_OBJECT
 

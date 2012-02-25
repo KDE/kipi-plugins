@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,13 +54,13 @@ public:
     Manager* mngr;
 };
 
-LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
-        : KIPIPlugins::WizardPage(dlg, i18n("Pre-Processing is Complete")),
+LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
+        : KPWizardPage(dlg, i18n("Pre-Processing is Complete")),
           d(new LastPagePriv)
 {
     d->mngr       = mngr;
-    KVBox *vbox   = new KVBox(this);
-    QLabel *title = new QLabel(vbox);
+    KVBox* vbox   = new KVBox(this);
+    QLabel* title = new QLabel(vbox);
     title->setOpenExternalLinks(true);
     title->setWordWrap(true);
     title->setText(i18n("<qt>"
