@@ -35,12 +35,14 @@
 #include "calpainter.h"
 #include "kpimageinfo.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPICalendarPlugin
 {
 
 CalPrinter::CalPrinter(QPrinter* printer,
                        QMap<int, KUrl>& months,
-                       KIPI::Interface* interface,
+                       Interface* interface,
                        QObject* parent)
     : QThread(parent)
 {
@@ -65,6 +67,7 @@ void CalPrinter::run()
             this, SIGNAL(blocksFinished(int)));
 
     int currPage = 0;
+
     foreach(const int month, months_.keys())
     {
         emit pageChanged(currPage);
@@ -76,8 +79,8 @@ void CalPrinter::run()
 
         ++currPage;
 
-        KIPIPlugins::KPImageInfo info(interface_, months_.value(month));
-        KExiv2::ImageOrientation orientation = info.orientation();
+        KPImageInfo info(interface_, months_.value(month));
+        KPMetadata::ImageOrientation orientation = info.orientation();
 
         painter_->setImage(months_.value(month), orientation);
         painter_->paint(month);

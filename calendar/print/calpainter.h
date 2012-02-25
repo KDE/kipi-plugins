@@ -35,13 +35,13 @@
 
 #include <kurl.h>
 
-// LibKexiv2 includes
+// Local includes
 
-#include <libkexiv2/kexiv2.h>
+#include "kpmetadata.h"
 
 class QPaintDevice;
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPICalendarPlugin
 {
@@ -55,7 +55,7 @@ public:
     CalPainter(QPaintDevice* pd);
     virtual ~CalPainter();
 
-    void setImage(const KUrl& imagePath, KExiv2::ImageOrientation orientation);
+    void setImage(const KUrl& imagePath, KPMetadata::ImageOrientation orientation);
     void paint(int month);
 
 Q_SIGNALS:
@@ -66,20 +66,17 @@ Q_SIGNALS:
 
 public Q_SLOTS:
 
-    void cancel()
-    {
-        cancelled_ = true;
-    };
+    void cancel();
 
 private:
 
-    bool                     cancelled_;
+    bool                         cancelled_;
 
-    KExiv2::ImageOrientation orientation_;
+    KPMetadata::ImageOrientation orientation_;
 
-    QImage                   image_;
+    QImage                       image_;
 
-    KUrl                     imagePath_;
+    KUrl                         imagePath_;
 };
 
 }  // NameSpace KIPICalendarPlugin

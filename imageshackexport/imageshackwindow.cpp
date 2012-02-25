@@ -69,15 +69,15 @@
 #include "imageshackwidget.h"
 #include "imageshacktalker.h"
 #include "kpaboutdata.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPIImageshackExportPlugin
 {
 
-ImageshackWindow::ImageshackWindow(KIPI::Interface* interface, QWidget* parent, Imageshack *imghack)
+ImageshackWindow::ImageshackWindow(KIPI::Interface* const interface, QWidget* const parent, Imageshack* const imghack)
     : KDialog(parent)
 {
-    m_interface = interface;
+    m_interface  = interface;
     m_imageshack = imghack;
 
     m_widget = new ImageshackWidget(this, interface, imghack);
@@ -115,9 +115,9 @@ ImageshackWindow::ImageshackWindow(KIPI::Interface* interface, QWidget* parent, 
 
     // Help button
 
-    KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook = new QAction(i18n("Handbook"), this);
+    QAction* handbook = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
 

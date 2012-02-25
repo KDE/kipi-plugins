@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : EXIF caption settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,17 +43,17 @@ public:
     void applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData);
     void readMetadata(QByteArray& exifData);
 
-    bool syncJFIFCommentIsChecked();
-    bool syncHOSTCommentIsChecked();
-    bool syncXMPCaptionIsChecked();
-    bool syncIPTCCaptionIsChecked();
+    bool syncJFIFCommentIsChecked() const;
+    bool syncHOSTCommentIsChecked() const;
+    bool syncXMPCaptionIsChecked() const;
+    bool syncIPTCCaptionIsChecked() const;
 
     void setCheckedSyncJFIFComment(bool c);
     void setCheckedSyncHOSTComment(bool c);
     void setCheckedSyncXMPCaption(bool c);
     void setCheckedSyncIPTCCaption(bool c);
 
-    QString getEXIFUserComments();
+    QString getEXIFUserComments() const;
 
 Q_SIGNALS:
 

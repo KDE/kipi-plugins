@@ -59,7 +59,6 @@
 #include "haarsettingswidget.h"
 #include "kpaboutdata.h"
 #include "kphostsettings.h"
-#include "imageslist.h"
 #include "myimageslist.h"
 #include "previewwidget.h"
 #include "simplesettings.h"
@@ -159,7 +158,7 @@ const QString RemoveRedEyesWindow::RemoveRedEyesWindowPriv::configLocatorDefault
 
 // --------------------------------------------------------
 
-RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* interface)
+RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* const interface)
     : KDialog(0), d(new RemoveRedEyesWindowPriv)
 {
     setWindowTitle(i18n("Automatic Red-Eye Removal"));
@@ -469,7 +468,7 @@ void RemoveRedEyesWindow::startTestrun()
 
 void RemoveRedEyesWindow::startPreview()
 {
-    ImagesListViewItem* item = dynamic_cast<KIPIPlugins::ImagesListViewItem*>(
+    KPImagesListViewItem* item = dynamic_cast<KIPIPlugins::KPImagesListViewItem*>(
                                             d->imageList->listView()->currentItem());
 
     if (!item)
@@ -878,11 +877,11 @@ void RemoveRedEyesWindow::updateSummary()
 
     while (*it)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
 
-        if (!item->text(ImagesListView::User1).isEmpty())
+        if (!item->text(KPImagesListView::User1).isEmpty())
         {
-            if (item->text(ImagesListView::User1).toInt() > 0)
+            if (item->text(KPImagesListView::User1).toInt() > 0)
             {
                 d->processed++;
             }

@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF light settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,16 +38,12 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -262,14 +258,14 @@ EXIFLight::~EXIFLight()
 void EXIFLight::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
 
     d->lightSourceCB->setCurrentIndex(0);
     d->lightSourceCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.LightSource", val))
+    if (meta.getExifTagLong("Exif.Photo.LightSource", val))
     {
         if ((val>=0 && val <=4) || (val> 8 && val <16) || (val> 16 && val <25) || val == 255)
         {
@@ -290,7 +286,7 @@ void EXIFLight::readMetadata(QByteArray& exifData)
 
     d->flashModeCB->setCurrentIndex(0);
     d->flashModeCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.Flash", val))
+    if (meta.getExifTagLong("Exif.Photo.Flash", val))
     {
         int item = -1;
         for (EXIFLightPriv::FlashModeMap::Iterator it = d->flashModeMap.begin();
@@ -312,7 +308,7 @@ void EXIFLight::readMetadata(QByteArray& exifData)
 
     d->flashEnergyEdit->setValue(1.0);
     d->flashEnergyCheck->setChecked(false);
-    if (exiv2Iface.getExifTagRational("Exif.Photo.FlashEnergy", num, den))
+    if (meta.getExifTagRational("Exif.Photo.FlashEnergy", num, den))
     {
         d->flashEnergyEdit->setValue((double)(num) / (double)(den));
         d->flashEnergyCheck->setChecked(true);
@@ -321,7 +317,7 @@ void EXIFLight::readMetadata(QByteArray& exifData)
 
     d->whiteBalanceCB->setCurrentIndex(0);
     d->whiteBalanceCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.WhiteBalance", val))
+    if (meta.getExifTagLong("Exif.Photo.WhiteBalance", val))
     {
         if (val>=0 && val<=1)
         {
@@ -338,8 +334,8 @@ void EXIFLight::readMetadata(QByteArray& exifData)
 
 void EXIFLight::applyMetadata(QByteArray& exifData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     long int num=1, den=1;
 
     if (d->lightSourceCheck->isChecked())
@@ -352,36 +348,36 @@ void EXIFLight::applyMetadata(QByteArray& exifData)
         else if (val == 20)
             val = 255;
 
-        exiv2Iface.setExifTagLong("Exif.Photo.LightSource", val);
+        meta.setExifTagLong("Exif.Photo.LightSource", val);
     }
     else if (d->lightSourceCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.LightSource");
+        meta.removeExifTag("Exif.Photo.LightSource");
 
     if (d->flashModeCheck->isChecked())
     {
         long val = d->flashModeCB->currentIndex();
-        exiv2Iface.setExifTagLong("Exif.Photo.Flash", d->flashModeMap[val].id());
+        meta.setExifTagLong("Exif.Photo.Flash", d->flashModeMap[val].id());
     }
     else if (d->flashModeCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.Flash");
+        meta.removeExifTag("Exif.Photo.Flash");
 
     if (d->flashEnergyCheck->isChecked())
     {
-        exiv2Iface.convertToRational(d->flashEnergyEdit->value(), &num, &den, 1);
-        exiv2Iface.setExifTagRational("Exif.Photo.FlashEnergy", num, den);
+        meta.convertToRational(d->flashEnergyEdit->value(), &num, &den, 1);
+        meta.setExifTagRational("Exif.Photo.FlashEnergy", num, den);
     }
     else
-        exiv2Iface.removeExifTag("Exif.Photo.FlashEnergy");
+        meta.removeExifTag("Exif.Photo.FlashEnergy");
 
     if (d->whiteBalanceCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.WhiteBalance", d->whiteBalanceCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.WhiteBalance", d->whiteBalanceCB->currentIndex());
     else if (d->whiteBalanceCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.WhiteBalance");
+        meta.removeExifTag("Exif.Photo.WhiteBalance");
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 }
 

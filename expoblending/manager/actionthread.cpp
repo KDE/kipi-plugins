@@ -346,7 +346,7 @@ void ActionThread::run()
                     // rotate image
                     if (result)
                     {
-                        KExiv2 meta(t->urls[0].toLocalFile());
+                        KPMetadata meta(t->urls[0].toLocalFile());
                         meta.rotateExifQImage(image, meta.getImageOrientation());
                     }
 
@@ -371,7 +371,7 @@ void ActionThread::run()
                     QString errors;
                     KUrl    destUrl         = t->outputUrl;
                     EnfuseSettings settings = t->enfuseSettings;
-                    settings.outputFormat   = SaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
+                    settings.outputFormat   = KPSaveSettingsWidget::OUTPUT_JPEG;    // JPEG for preview: fast and small.
                     bool result             = startEnfuse(t->urls, destUrl, settings, t->binaryPath, errors);
 
                     kDebug() << "Preview result was: " << result;
@@ -379,10 +379,10 @@ void ActionThread::run()
                     // preserve exif information for auto rotation
                     if (result)
                     {
-                        KExiv2 metai(t->urls[0].toLocalFile());
-                        KExiv2 metao(destUrl.toLocalFile());
-                        metao.setImageOrientation(metai.getImageOrientation());
-                        metao.applyChanges();
+                        KPMetadata metaIn(t->urls[0].toLocalFile());
+                        KPMetadata metaOut(destUrl.toLocalFile());
+                        metaOut.setImageOrientation(metaIn.getImageOrientation());
+                        metaOut.applyChanges();
                     }
 
                     // To be cleaned in destructor.
@@ -416,12 +416,12 @@ void ActionThread::run()
                     result = startEnfuse(t->urls, destUrl, t->enfuseSettings, t->binaryPath, errors);
 
                     // We will take first image metadata from stack to restore Exif, Iptc, and Xmp.
-                    KExiv2 meta;
+                    KPMetadata meta;
                     meta.load(t->urls[0].toLocalFile());
                     meta.setXmpTagString("Xmp.kipi.EnfuseInputFiles", t->enfuseSettings.inputImagesList(), false);
                     meta.setXmpTagString("Xmp.kipi.EnfuseSettings", t->enfuseSettings.asCommentString().replace('\n', " ; "), false);
                     meta.setImageDateTime(QDateTime::currentDateTime());
-                    if (t->enfuseSettings.outputFormat != SaveSettingsWidget::OUTPUT_JPEG)
+                    if (t->enfuseSettings.outputFormat != KPSaveSettingsWidget::OUTPUT_JPEG)
                     {
                         QImage img;
                         if (img.load(destUrl.toLocalFile()))
@@ -627,14 +627,14 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
     if (img.load(inUrl.toLocalFile()))
     {
         QImage preview = img.scaled(1280, 1024, Qt::KeepAspectRatio);
-        bool saved = preview.save(outUrl.toLocalFile(), "JPEG");
+        bool saved     = preview.save(outUrl.toLocalFile(), "JPEG");
         // save exif information also to preview image for auto rotation
         if (saved)
         {
-            KExiv2 metai(inUrl.toLocalFile());
-            KExiv2 metao(outUrl.toLocalFile());
-            metao.setImageOrientation(metai.getImageOrientation());
-            metao.applyChanges();
+            KPMetadata metaIn(inUrl.toLocalFile());
+            KPMetadata metaOut(outUrl.toLocalFile());
+            metaOut.setImageOrientation(metaIn.getImageOrientation());
+            metaOut.applyChanges();
         }
         kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;
@@ -678,14 +678,14 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
             sptr += 6;
         }
 
-        KExiv2 meta;
+        KPMetadata meta;
         meta.load(inUrl.toLocalFile());
         meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
         meta.setImageDimensions(QSize(width, height));
         meta.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
         meta.setXmpTagString("Xmp.tiff.Make",  meta.getExifTagString("Exif.Image.Make"));
         meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
-        meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+        meta.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
 
         QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
 
@@ -725,7 +725,7 @@ bool ActionThread::startEnfuse(const KUrl::List& inUrls, KUrl& outUrl,
                                const QString& enfusePath, QString& errors)
 {
     QString comp;
-    QString ext = SaveSettingsWidget::extensionForFormat(settings.outputFormat);
+    QString ext = KPSaveSettingsWidget::extensionForFormat(settings.outputFormat);
 
     if (ext == QString(".tif"))
         comp = QString("--compression=DEFLATE");
@@ -839,7 +839,7 @@ QString ActionThread::getProcessError(KProcess* proc) const
  */
 float ActionThread::getAverageSceneLuminance(const KUrl& url)
 {
-    KExiv2 meta;
+    KPMetadata meta;
     meta.load(url.toLocalFile());
     if (!meta.hasExif())
         return -1;
@@ -966,7 +966,7 @@ float ActionThread::getAverageSceneLuminance(const KUrl& url)
     return -1.0;
 }
 
-bool ActionThread::getXmpRational(const char* xmpTagName, long& num, long& den, KExiv2& meta)
+bool ActionThread::getXmpRational(const char* xmpTagName, long& num, long& den, KPMetadata& meta)
 {
     QVariant rationals = meta.getXmpTagVariant(xmpTagName);
 

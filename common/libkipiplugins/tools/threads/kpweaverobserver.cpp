@@ -26,8 +26,6 @@
 
 #include <kdebug.h>
 
-using namespace ThreadWeaver;
-
 namespace KIPIPlugins
 {
 

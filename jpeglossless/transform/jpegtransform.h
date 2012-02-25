@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2004      by Ralf Hoelzer <kde at ralfhoelzer.com>
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,14 +25,16 @@
 #ifndef JPEGTRANSFORM_H
 #define JPEGTRANSFORM_H
 
-// LibKExiv2 includes
+// Local includes
 
-#include <libkexiv2/kexiv2.h>
+#include "kpmetadata.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIJPEGLossLessPlugin
 {
 
-/*
+/**
    If the picture is displayed according to the exif orientation tag,
    the user will request rotating operations relative to what he sees,
    and that is the picture rotated according to the EXIF tag.
@@ -64,64 +66,63 @@ class Matrix
 
 public:
 
-   Matrix()
-   { 
-        set( 1, 0, 0, 1 );
-   }
+    Matrix()
+    {
+            set( 1, 0, 0, 1 );
+    }
 
-   Matrix &operator*=(const Matrix &ma)
-   {
+    Matrix &operator*=(const Matrix &ma)
+    {
         set( ma.m[0][0]*m[0][0] + ma.m[0][1]*m[1][0],  ma.m[0][0]*m[0][1] + ma.m[0][1]*m[1][1],
-             ma.m[1][0]*m[0][0] + ma.m[1][1]*m[1][0],  ma.m[1][0]*m[0][1] + ma.m[1][1]*m[1][1] );
+            ma.m[1][0]*m[0][0] + ma.m[1][1]*m[1][0],  ma.m[1][0]*m[0][1] + ma.m[1][1]*m[1][1] );
         return *this;
-   }
+    }
 
-   bool operator==(const Matrix &ma) const
-   {
+    bool operator==(const Matrix &ma) const
+    {
         return m[0][0]==ma.m[0][0] &&
                m[0][1]==ma.m[0][1] &&
                m[1][0]==ma.m[1][0] &&
                m[1][1]==ma.m[1][1];
-   }
+    }
 
-   bool operator!=(const Matrix &ma) const
-   {
+    bool operator!=(const Matrix &ma) const
+    {
         return !(*this==ma);
-   }
+    }
 
-   static const Matrix none;                   //( 1,  0,  0,  1)
-   static const Matrix rotate90;               //( 0, -1,  1,  0)
-   static const Matrix rotate180;              //(-1,  0,  0, -1)
-   static const Matrix rotate270;              //( 0,  1, -1,  0)
-   static const Matrix flipHorizontal;         //(-1,  0,  0,  1)
-   static const Matrix flipVertical;           //( 1,  0,  0, -1)
-   static const Matrix rotate90flipHorizontal; //( 0,  1,  1,  0), first rotate, then flip
-   static const Matrix rotate90flipVertical;   //( 0, -1, -1,  0), first rotate, then flip
+    static const Matrix none;                   //( 1,  0,  0,  1)
+    static const Matrix rotate90;               //( 0, -1,  1,  0)
+    static const Matrix rotate180;              //(-1,  0,  0, -1)
+    static const Matrix rotate270;              //( 0,  1, -1,  0)
+    static const Matrix flipHorizontal;         //(-1,  0,  0,  1)
+    static const Matrix flipVertical;           //( 1,  0,  0, -1)
+    static const Matrix rotate90flipHorizontal; //( 0,  1,  1,  0), first rotate, then flip
+    static const Matrix rotate90flipVertical;   //( 0, -1, -1,  0), first rotate, then flip
 
 protected:
 
-   Matrix(int m11, int m12, int m21, int m22)
-   {
+    Matrix(int m11, int m12, int m21, int m22)
+    {
         set(m11, m12, m21, m22);
-   }
+    }
 
-   void set(int m11, int m12, int m21, int m22)
-   {
+    void set(int m11, int m12, int m21, int m22)
+    {
         m[0][0]=m11;
         m[0][1]=m12;
         m[1][0]=m21;
         m[1][1]=m22;
-   }
+    }
 
-   int m[2][2];
+    int m[2][2];
 };
 
-bool transformJPEG(const QString& src, const QString& dest, Matrix &action, 
-                   QString& err, bool updateFileTimeStamp);
+bool transformJPEG(const QString& src, const QString& dest, Matrix &action, QString& err, bool updateFileTimeStamp);
 
 void convertTransform(Matrix& action, JXFORM_CODE& flip, JXFORM_CODE& rotate);
 
-void getExifAction(Matrix& action, KExiv2Iface::KExiv2::ImageOrientation exifOrientation);
+void getExifAction(Matrix& action, KPMetadata::ImageOrientation exifOrientation);
 
 }  // namespace KIPIJPEGLossLessPlugin
 

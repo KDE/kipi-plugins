@@ -37,7 +37,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 class QLabel;
 class QSpinBox;
@@ -66,14 +66,14 @@ class PicasawebWidget : public QWidget
 
 public:
 
-    PicasawebWidget(QWidget* parent, Interface* iface, bool import);
+    PicasawebWidget(QWidget* const parent, Interface* const iface, bool import);
     ~PicasawebWidget();
 
     void updateLabels(const QString& name = QString());
 
     QString getDestinationPath();
 
-    ImagesList* imagesList() const;
+    KPImagesList* imagesList() const;
 
     QProgressBar* progressBar() const;
 
@@ -110,7 +110,7 @@ private:
     KPushButton*  m_reloadAlbumsBtn;
     KPushButton*  m_changeUserBtn;
 
-    ImagesList*   m_imgList;
+    KPImagesList* m_imgList;
     UploadWidget* m_uploadWidget;
 
     QProgressBar* m_progressBar;

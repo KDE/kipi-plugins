@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : images list settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,7 +25,7 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "emailsettingscontainer.h"
 
 namespace KIPI
@@ -33,19 +33,22 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPISendimagesPlugin
 {
 
-class ImagesPage : public KIPIPlugins::ImagesList
+class ImagesPage : public KPImagesList
 {
     Q_OBJECT
 
 public:
 
-    ImagesPage(QWidget* parent, KIPI::Interface* iface);
+    ImagesPage(QWidget* const parent, Interface* const iface);
     ~ImagesPage();
 
-    QList<EmailItem> imagesList();
+    QList<EmailItem> imagesList() const;
 };
 
 }  // namespace KIPISendimagesPlugin

@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
  * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
+ * Copyright (C) 2009      by Luka Renko <lure at kubuntu dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -61,7 +61,6 @@
 
 // Local includes
 
-#include "imageslist.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
@@ -69,16 +68,16 @@
 #include "flickrtalker.h"
 #include "flickritem.h"
 #include "flickrlist.h"
-//#include "flickrviewitem.h"
 #include "flickrnewphotosetdialog.h"
 #include "flickrwidget.h"
 #include "ui_flickralbumdialog.h"
+//#include "flickrviewitem.h"
 
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWindow::FlickrWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* /*parent*/,
-                           const QString& serviceName)
+FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder, 
+                           QWidget* const /*parent*/, const QString& serviceName)
     : KDialog(0)
 {
     m_serviceName = serviceName;

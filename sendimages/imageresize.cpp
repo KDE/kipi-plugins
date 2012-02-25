@@ -42,10 +42,6 @@
 #include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/JobCollection.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -55,12 +51,15 @@
 
 #include "kpversion.h"
 #include "kpwriteimage.h"
+#include "kpmetadata.h"
+
+using namespace KDcrawIface;
 
 namespace KIPISendimagesPlugin
 {
 
-Task::Task(QObject* parent, int* count)
-        : Job(parent)
+Task::Task(QObject* const parent, int* count)
+    : Job(parent)
 {
     m_count = count;
 }
@@ -97,7 +96,8 @@ void Task::run()
     }
 }
 
-bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& settings, const KUrl& orgUrl, const QString& destName, QString& err)
+bool Task::imageResize(const EmailSettingsContainer& settings, const KUrl& orgUrl,
+                       const QString& destName, QString& err)
 {
     EmailSettingsContainer emailSettings = settings;
     QFileInfo fi(orgUrl.path());
@@ -122,9 +122,9 @@ bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& setti
     QImage img;
 
     // Check if RAW file.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QString rawFilesExt(KDcraw::rawFiles());
     if (rawFilesExt.toUpper().contains( fi.suffix().toUpper() ))
-        KDcrawIface::KDcraw::loadDcrawPreview(img, orgUrl.path());
+        KDcraw::loadDcrawPreview(img, orgUrl.path());
     else
         img.load(orgUrl.path());
 
@@ -169,8 +169,7 @@ bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& setti
 
         QString destPath = destName;
 
-        KExiv2Iface::KExiv2 meta;
-
+        KPMetadata meta;
         meta.load(orgUrl.path());
         meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
         meta.setImageDimensions(img.size());
@@ -207,8 +206,8 @@ bool Task::imageResize(const KIPISendimagesPlugin::EmailSettingsContainer& setti
 
 // ----------------------------------------------------------------------------------------------------
 
-ImageResize::ImageResize(QObject *parent)
-        : ActionThreadBase(parent)
+ImageResize::ImageResize(QObject* const parent)
+    : KPActionThreadBase(parent)
 {
     m_count  = new int;
     *m_count = 0;
@@ -230,7 +229,7 @@ void ImageResize::resize(const EmailSettingsContainer& settings)
     {
         QString tmp;
 
-        Task *t       = new Task(this, m_count);
+        Task* t       = new Task(this, m_count);
         t->m_orgUrl   = (*it).orgUrl;
         t->m_settings = settings;
 
@@ -258,14 +257,13 @@ void ImageResize::resize(const EmailSettingsContainer& settings)
 void ImageResize::cancel()
 {
     *m_count   = 0;
-    ActionThreadBase::cancel();
+    KPActionThreadBase::cancel();
 }
 
 void ImageResize::slotFinished()
 {
     emit completeResize();
-    ActionThreadBase::slotFinished();
+    KPActionThreadBase::slotFinished();
 }
-
 
 }  // namespace KIPISendimagesPlugin

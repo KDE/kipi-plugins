@@ -52,13 +52,13 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "imageshack.h"
 
 namespace KIPIImageshackExportPlugin
 {
 
-ImageshackWidget::ImageshackWidget(QWidget* parent, Interface* interface, Imageshack* imageshack)
+ImageshackWidget::ImageshackWidget(QWidget* const parent, Interface* const interface, Imageshack* const imageshack)
     : QWidget(parent)
 {
     setObjectName("ImageshackWidget");
@@ -69,8 +69,8 @@ ImageshackWidget::ImageshackWidget(QWidget* parent, Interface* interface, Images
 
     // --------------------------------------------
 
-    m_imgList = new KIPIPlugins::ImagesList(interface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList = new KIPIPlugins::KPImagesList(interface, this);
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->setWhatsThis("Images to upload to Imageshack web service");
@@ -90,15 +90,15 @@ ImageshackWidget::ImageshackWidget(QWidget* parent, Interface* interface, Images
     accountBox->setWhatsThis(i18n("Imageshack account info"));
     QGridLayout *accountBoxLayout = new QGridLayout(accountBox);
 
-    QLabel* accountName = new QLabel(i18nc("Account info", "Name:"), accountBox);
+    QLabel* accountName  = new QLabel(i18nc("Account info", "Name:"),  accountBox);
     QLabel* accountEmail = new QLabel(i18nc("Account info", "Email:"), accountBox);
 
     m_accountNameLbl  = new QLabel(accountBox);
     m_accountEmailLbl = new QLabel(accountBox);
-    m_chgRegCodeBtn = new KPushButton(KGuiItem(i18n("Change account"),
-                                               "system-switch-user",
-                                               i18n("Change the registration code for the Imageshack account used to upload images")),
-                                      accountBox);
+    m_chgRegCodeBtn   = new KPushButton(KGuiItem(i18n("Change account"),
+                                                 "system-switch-user",
+                                                 i18n("Change the registration code for the Imageshack account used to upload images")),
+                                        accountBox);
 
     accountBoxLayout->addWidget(accountName,          0, 0, 1, 1);
     accountBoxLayout->addWidget(m_accountNameLbl,     0, 1, 1, 2);
@@ -241,7 +241,7 @@ ImageshackWidget::~ImageshackWidget()
 {
 }
 
-KIPIPlugins::ImagesList* ImageshackWidget::imagesList() const
+KIPIPlugins::KPImagesList* ImageshackWidget::imagesList() const
 {
     return m_imgList;
 }

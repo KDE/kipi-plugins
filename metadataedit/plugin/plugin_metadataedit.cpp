@@ -48,17 +48,12 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "metadataedit.h"
 #include "kphostsettings.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
 using namespace KIPIPlugins;
 using namespace KIPIMetadataEditPlugin;
 
@@ -181,8 +176,8 @@ void Plugin_MetadataEdit::slotImportExif()
 
     d->lastSelectedDirectory = importEXIFFile.upUrl();
 
-    KExiv2 exiv2Iface;
-    if (!exiv2Iface.load(importEXIFFile.path()))
+    KPMetadata meta;
+    if (!meta.load(importEXIFFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
                            i18n("Cannot load metadata from \"%1\"", importEXIFFile.fileName()),
@@ -191,9 +186,9 @@ void Plugin_MetadataEdit::slotImportExif()
     }
 
 #if KEXIV2_VERSION >= 0x010000
-    QByteArray exifData = exiv2Iface.getExifEncoded();
+    QByteArray exifData = meta.getExifEncoded();
 #else
-    QByteArray exifData = exiv2Iface.getExif();
+    QByteArray exifData = meta.getExif();
 #endif
 
     if (exifData.isEmpty())
@@ -222,17 +217,17 @@ void Plugin_MetadataEdit::slotImportExif()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2::canWriteExif(url.path()))
+        if (KPMetadata::canWriteExif(url.path()))
         {
             ret = true;
-            KExiv2 exiv2Iface;
+            KPMetadata meta;
             KPHostSettings hSettings(d->interface);
-            exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
-            ret &= exiv2Iface.load(url.path());
-            ret &= exiv2Iface.setExif(exifData);
-            ret &= exiv2Iface.save(url.path());
+            ret &= meta.load(url.path());
+            ret &= meta.setExif(exifData);
+            ret &= meta.save(url.path());
         }
 
         if (!ret)
@@ -276,8 +271,8 @@ void Plugin_MetadataEdit::slotImportIptc()
 
     d->lastSelectedDirectory = importIPTCFile.upUrl();
 
-    KExiv2 exiv2Iface;
-    if (!exiv2Iface.load(importIPTCFile.path()))
+    KPMetadata meta;
+    if (!meta.load(importIPTCFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
                            i18n("Cannot load metadata from \"%1\"", importIPTCFile.fileName()),
@@ -285,7 +280,7 @@ void Plugin_MetadataEdit::slotImportIptc()
         return;
     }
 
-    QByteArray iptcData = exiv2Iface.getIptc();
+    QByteArray iptcData = meta.getIptc();
     if (iptcData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -312,17 +307,17 @@ void Plugin_MetadataEdit::slotImportIptc()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2::canWriteIptc(url.path()))
+        if (KPMetadata::canWriteIptc(url.path()))
         {
             ret = true;
-            KExiv2 exiv2Iface;
+            KPMetadata meta;
             KPHostSettings hSettings(d->interface);
-            exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
-            ret &= exiv2Iface.load(url.path());
-            ret &= exiv2Iface.setIptc(iptcData);
-            ret &= exiv2Iface.save(url.path());
+            ret &= meta.load(url.path());
+            ret &= meta.setIptc(iptcData);
+            ret &= meta.save(url.path());
         }
 
         if (!ret)
@@ -366,8 +361,8 @@ void Plugin_MetadataEdit::slotImportXmp()
 
     d->lastSelectedDirectory = importXMPFile.upUrl();
 
-    KExiv2 exiv2Iface;
-    if (!exiv2Iface.load(importXMPFile.path()))
+    KPMetadata meta;
+    if (!meta.load(importXMPFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
                            i18n("Cannot load metadata from \"%1\"", importXMPFile.fileName()),
@@ -375,7 +370,7 @@ void Plugin_MetadataEdit::slotImportXmp()
         return;
     }
 
-    QByteArray xmpData = exiv2Iface.getXmp();
+    QByteArray xmpData = meta.getXmp();
     if (xmpData.isEmpty())
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -402,17 +397,17 @@ void Plugin_MetadataEdit::slotImportXmp()
         KUrl url = *it;
         bool ret = false;
 
-        if (KExiv2::canWriteXmp(url.path()))
+        if (KPMetadata::canWriteXmp(url.path()))
         {
             ret = true;
-            KExiv2 exiv2Iface;
+            KPMetadata meta;
             KPHostSettings hSettings(d->interface);
-            exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
-            ret &= exiv2Iface.load(url.path());
-            ret &= exiv2Iface.setXmp(xmpData);
-            ret &= exiv2Iface.save(url.path());
+            ret &= meta.load(url.path());
+            ret &= meta.setXmp(xmpData);
+            ret &= meta.save(url.path());
         }
 
         if (!ret)

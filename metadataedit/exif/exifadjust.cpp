@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : EXIF adjustments settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,16 +37,12 @@
 #include <klocale.h>
 #include <knuminput.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "metadatacheckbox.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -240,14 +236,14 @@ EXIFAdjust::~EXIFAdjust()
 void EXIFAdjust::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
 
     d->brightnessEdit->setValue(0.0);
     d->brightnessCheck->setChecked(false);
-    if (exiv2Iface.getExifTagRational("Exif.Photo.BrightnessValue", num, den))
+    if (meta.getExifTagRational("Exif.Photo.BrightnessValue", num, den))
     {
         d->brightnessEdit->setValue((double)(num) / (double)(den));
         d->brightnessCheck->setChecked(true);
@@ -256,7 +252,7 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
 
     d->gainControlCB->setCurrentIndex(0);
     d->gainControlCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.GainControl", val))
+    if (meta.getExifTagLong("Exif.Photo.GainControl", val))
     {
         if (val >= 0 && val <= 4)
         {
@@ -270,7 +266,7 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
 
     d->contrastCB->setCurrentIndex(0);
     d->contrastCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.Contrast", val))
+    if (meta.getExifTagLong("Exif.Photo.Contrast", val))
     {
         if (val >= 0 && val <= 2)
         {
@@ -284,7 +280,7 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
 
     d->saturationCB->setCurrentIndex(0);
     d->saturationCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.Saturation", val))
+    if (meta.getExifTagLong("Exif.Photo.Saturation", val))
     {
         if (val >= 0 && val <= 2)
         {
@@ -298,7 +294,7 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
 
     d->sharpnessCB->setCurrentIndex(0);
     d->sharpnessCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.Sharpness", val))
+    if (meta.getExifTagLong("Exif.Photo.Sharpness", val))
     {
         if (val >= 0 && val <= 2)
         {
@@ -312,7 +308,7 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
 
     d->customRenderedCB->setCurrentIndex(0);
     d->customRenderedCheck->setChecked(false);
-    if (exiv2Iface.getExifTagLong("Exif.Photo.CustomRendered", val))
+    if (meta.getExifTagLong("Exif.Photo.CustomRendered", val))
     {
         if (val >= 0 && val <= 1)
         {
@@ -329,47 +325,47 @@ void EXIFAdjust::readMetadata(QByteArray& exifData)
 
 void EXIFAdjust::applyMetadata(QByteArray& exifData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     long int num=1, den=1;
 
     if (d->brightnessCheck->isChecked())
     {
-        exiv2Iface.convertToRational(d->brightnessEdit->value(), &num, &den, 1);
-        exiv2Iface.setExifTagRational("Exif.Photo.BrightnessValue", num, den);
+        meta.convertToRational(d->brightnessEdit->value(), &num, &den, 1);
+        meta.setExifTagRational("Exif.Photo.BrightnessValue", num, den);
     }
     else
-        exiv2Iface.removeExifTag("Exif.Photo.BrightnessValue");
+        meta.removeExifTag("Exif.Photo.BrightnessValue");
 
     if (d->gainControlCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.GainControl", d->gainControlCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.GainControl", d->gainControlCB->currentIndex());
     else if (d->gainControlCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.GainControl");
+        meta.removeExifTag("Exif.Photo.GainControl");
 
     if (d->contrastCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.Contrast", d->contrastCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.Contrast", d->contrastCB->currentIndex());
     else if (d->contrastCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.Contrast");
+        meta.removeExifTag("Exif.Photo.Contrast");
 
     if (d->saturationCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.Saturation", d->saturationCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.Saturation", d->saturationCB->currentIndex());
     else if (d->saturationCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.Saturation");
+        meta.removeExifTag("Exif.Photo.Saturation");
 
     if (d->sharpnessCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.Sharpness", d->sharpnessCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.Sharpness", d->sharpnessCB->currentIndex());
     else if (d->sharpnessCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.Sharpness");
+        meta.removeExifTag("Exif.Photo.Sharpness");
 
     if (d->customRenderedCheck->isChecked())
-        exiv2Iface.setExifTagLong("Exif.Photo.CustomRendered", d->customRenderedCB->currentIndex());
+        meta.setExifTagLong("Exif.Photo.CustomRendered", d->customRenderedCB->currentIndex());
     else if (d->customRenderedCheck->isValid())
-        exiv2Iface.removeExifTag("Exif.Photo.CustomRendered");
+        meta.removeExifTag("Exif.Photo.CustomRendered");
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 }
 

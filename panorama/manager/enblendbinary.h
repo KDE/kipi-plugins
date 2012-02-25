@@ -25,26 +25,35 @@
 
 // Local includes
 
-#include "binaryiface.h"
+#include "kpbinaryiface.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
-class EnblendBinary : public BinaryIface
+class EnblendBinary : public KPBinaryIface
 {
 
 public:
 
     EnblendBinary()
-        : BinaryIface(QString("enblend"), QString("4.0"), QString("enblend "),
-                      0, QString("Hugin"), QString("http://hugin.sourceforge.net"),
-                      QString("Panorama"), QStringList("-V"))
-        { setup(); }
+        : KPBinaryIface(QString("enblend"), 
+                        QString("4.0"), 
+                        QString("enblend "),
+                        0,
+                        QString("Hugin"), 
+                        QString("http://hugin.sourceforge.net"),
+                        QString("Panorama"),
+                        QStringList("-V")
+                       )
+        { 
+            setup(); 
+        }
 
-    ~EnblendBinary() {}
-
+    ~EnblendBinary() 
+    {
+    }
 };
 
 } // namespace KIPIPanoramaPlugin

@@ -6,7 +6,7 @@
  * Date        : 2009-12-23
  * Description : a widget to manage preview.
  *
- * Copyright (C) 2009-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "previewmanager.moc"
+#include "kppreviewmanager.moc"
 
 // Qt includes
 
@@ -43,16 +43,16 @@
 
 // Local includes
 
-#include "previewimage.h"
+#include "kppreviewimage.h"
 
 namespace KIPIPlugins
 {
 
-class PreviewManager::PreviewManagerPriv
+class KPPreviewManager::KPPreviewManagerPriv
 {
 public:
 
-    PreviewManagerPriv()
+    KPPreviewManagerPriv()
     {
         progressPix   = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
         progressCount = 0;
@@ -77,11 +77,11 @@ public:
     QTimer*         progressTimer;
     QLabel*         progressLabel;
 
-    PreviewImage*   preview;
+    KPPreviewImage* preview;
 };
 
-PreviewManager::PreviewManager(QWidget* parent)
-              : QStackedWidget(parent), d(new PreviewManagerPriv)
+KPPreviewManager::KPPreviewManager(QWidget* const parent)
+    : QStackedWidget(parent), d(new KPPreviewManagerPriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setMinimumSize(QSize(400, 300));
@@ -119,7 +119,7 @@ PreviewManager::PreviewManager(QWidget* parent)
     vbox->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
     vbox->setLineWidth( style()->pixelMetric(QStyle::PM_DefaultFrameWidth) );
 
-    d->preview = new PreviewImage(this);
+    d->preview = new KPPreviewImage(this);
 
     insertWidget(MessageMode, vbox);
     insertWidget(PreviewMode, d->preview);
@@ -133,17 +133,17 @@ PreviewManager::PreviewManager(QWidget* parent)
             this, SIGNAL(signalButtonClicked()));
 }
 
-PreviewManager::~PreviewManager()
+KPPreviewManager::~KPPreviewManager()
 {
     delete d;
 }
 
-void PreviewManager::slotLoad(const KUrl& url)
+void KPPreviewManager::slotLoad(const KUrl& url)
 {
     load(url.path());
 }
 
-void PreviewManager::setImage(const QImage& img, bool fit)
+void KPPreviewManager::setImage(const QImage& img, bool fit)
 {
     setBusy(false);
 
@@ -160,7 +160,7 @@ void PreviewManager::setImage(const QImage& img, bool fit)
     }
 }
 
-void PreviewManager::load(const QString& file, bool fit)
+void KPPreviewManager::load(const QString& file, bool fit)
 {
     setBusy(false);
 
@@ -177,34 +177,34 @@ void PreviewManager::load(const QString& file, bool fit)
     }
 }
 
-void PreviewManager::setThumbnail(const QPixmap& thumbnail)
+void KPPreviewManager::setThumbnail(const QPixmap& thumbnail)
 {
     d->thumbLabel->setPixmap(thumbnail);
     setCurrentIndex(MessageMode);
 }
 
-void PreviewManager::setButtonText(const QString& text)
+void KPPreviewManager::setButtonText(const QString& text)
 {
     d->button->setText(text);
 }
 
-void PreviewManager::setButtonVisible(bool b)
+void KPPreviewManager::setButtonVisible(bool b)
 {
     d->button->setVisible(b);
 }
 
-void PreviewManager::setSelectionAreaPossible(bool b)
+void KPPreviewManager::setSelectionAreaPossible(bool b)
 {
     d->preview->enableSelectionArea(b);
 }
 
-void PreviewManager::setText(const QString& text, const QColor& color)
+void KPPreviewManager::setText(const QString& text, const QColor& color)
 {
     d->textLabel->setText(QString("<qt text=\"%1\">%2</qt>").arg(color.name()).arg(text));
     setCurrentIndex(MessageMode);
 }
 
-void PreviewManager::setBusy(bool b, const QString& text)
+void KPPreviewManager::setBusy(bool b, const QString& text)
 {
     d->busy = b;
 
@@ -223,7 +223,7 @@ void PreviewManager::setBusy(bool b, const QString& text)
     }
 }
 
-void PreviewManager::slotProgressTimerDone()
+void KPPreviewManager::slotProgressTimerDone()
 {
     d->progressLabel->setPixmap(d->progressPix.frameAt(d->progressCount));
     d->progressCount++;

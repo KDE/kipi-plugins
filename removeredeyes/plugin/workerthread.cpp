@@ -33,26 +33,19 @@
 #include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/JobCollection.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-#include <libkexiv2/version.h>
-
 // Local includes
 
 #include "savemethodfactory.h"
 #include "haarsettings.h"
 #include "simplesettings.h"
 #include "storagesettingsbox.h"
-
-using namespace ThreadWeaver;
+#include "kpmetadata.h"
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-
-
-Task::Task(const KUrl& urli,QObject* parent, WorkerThreadPriv* d): Job(parent),url(urli)
+Task::Task(const KUrl& urli, QObject* const parent, WorkerThreadPriv* const d)
+    : Job(parent), url(urli)
 {
     this->ld = d;
 }
@@ -81,60 +74,60 @@ void Task::run()
         return;
     }
 
-    QString src  = url.path();
-    int eyes     = 0;
+    QString src = url.path();
+    int eyes    = 0;
 
     switch (ld->runtype)
     {
-    case WorkerThread::Correction:
-    {
-        // backup metatdata
-        KExiv2Iface::KExiv2 meta;
-#if KEXIV2_VERSION >= 0x000600
-        meta.setUpdateFileTimeStamp(ld->updateFileTimeStamp);
-#endif
-        meta.load(src);
-
-        // check if custom keyword should be added
-        if (ld->settings.addKeyword)
+        case WorkerThread::Correction:
         {
-            QStringList oldKeywords = meta.getIptcKeywords();
-            QStringList newKeywords = meta.getIptcKeywords();
-            newKeywords.append(ld->settings.keywordName);
-            meta.setIptcKeywords(oldKeywords, newKeywords);
+            // backup metadata
+            KPMetadata meta;
+#if KEXIV2_VERSION >= 0x000600
+            meta.setUpdateFileTimeStamp(ld->updateFileTimeStamp);
+#endif
+            meta.load(src);
+
+            // check if custom keyword should be added
+            if (ld->settings.addKeyword)
+            {
+                QStringList oldKeywords = meta.getIptcKeywords();
+                QStringList newKeywords = meta.getIptcKeywords();
+                newKeywords.append(ld->settings.keywordName);
+                meta.setIptcKeywords(oldKeywords, newKeywords);
+            }
+
+            // start correction
+            ld->mutex.lock();
+            QString dest = ld->saveMethod->savePath(src, ld->settings.extraName);
+            eyes         = ld->locator->startCorrection(src, dest);
+            ld->mutex.unlock();
+
+            // restore metadata
+            meta.save(dest);
+            break;
         }
-
-        // start correction
-        ld->mutex.lock();
-        QString dest = ld->saveMethod->savePath(src, ld->settings.extraName);
-        eyes = ld->locator->startCorrection(src, dest);
-        ld->mutex.unlock();
-
-        // restore metadata
-        meta.save(dest);
-        break;
-    }
-    case WorkerThread::Testrun:
-        ld->mutex.lock();
-        eyes = ld->locator->startTestrun(src);
-        ld->mutex.unlock();
-        break;
-    case WorkerThread::Preview:
-        ld->mutex.lock();
-        eyes = ld->locator->startPreview(src);
-        ld->mutex.unlock();
-        break;
+        case WorkerThread::Testrun:
+            ld->mutex.lock();
+            eyes = ld->locator->startTestrun(src);
+            ld->mutex.unlock();
+            break;
+        case WorkerThread::Preview:
+            ld->mutex.lock();
+            eyes = ld->locator->startPreview(src);
+            ld->mutex.unlock();
+            break;
     }
 
     ld->progress++;
-    emit calculationFinished(new WorkerThreadData(url, ld->progress, eyes));
 
+    emit calculationFinished(new WorkerThreadData(url, ld->progress, eyes));
 }
 
 // ----------------------------------------------------------------------------------------------------
 
-WorkerThread::WorkerThread(QObject* parent, bool updateFileTimeStamp)
-        : ActionThreadBase(parent), pd(new WorkerThreadPriv)
+WorkerThread::WorkerThread(QObject* const parent, bool updateFileTimeStamp)
+    : KPActionThreadBase(parent), pd(new WorkerThreadPriv)
 {
     pd->updateFileTimeStamp = updateFileTimeStamp;
 }
@@ -144,7 +137,6 @@ WorkerThread::~ WorkerThread()
     wait();
 
     delete pd->saveMethod;
-
     delete pd;
 }
 
@@ -162,7 +154,7 @@ void WorkerThread::cancel()
 {
     pd->cancel = true;
 
-    ActionThreadBase::cancel();
+    KPActionThreadBase::cancel();
 }
 
 void WorkerThread::loadSettings(const CommonSettings& newSettings)
@@ -177,20 +169,22 @@ void WorkerThread::loadSettings(const CommonSettings& newSettings)
 
 void WorkerThread::setImagesList(const KUrl::List& list)
 {
-    pd->urls = list;
+    pd->urls                  = list;
     JobCollection* collection = new JobCollection(this);
-    for ( KUrl::List::const_iterator it = pd->urls.constBegin();
-            it != pd->urls.constEnd();++it)
+
+    for (KUrl::List::const_iterator it = pd->urls.constBegin();
+         it != pd->urls.constEnd(); ++it)
     {
         Task *t       = new Task((KUrl&)(*it), this, pd);
 
-        connect(t,SIGNAL(calculationFinished(WorkerThreadData*)),this,SIGNAL(calculationFinished(WorkerThreadData*)));
+        connect(t, SIGNAL(calculationFinished(WorkerThreadData*)),
+                this, SIGNAL(calculationFinished(WorkerThreadData*)));
 
         collection->addJob(t);
     }
 
     appendJob(collection);
-    pd->cancel = false;
+    pd->cancel   = false;
     pd->progress = 0;
 }
 
@@ -198,21 +192,21 @@ void WorkerThread::setTempFile(const QString& temp, ImageType type)
 {
     switch (type)
     {
-    case OriginalImage:
-        pd->originalPreviewFile = temp;
-        break;
+        case OriginalImage:
+            pd->originalPreviewFile = temp;
+            break;
 
-    case CorrectedImage:
-        pd->correctedPreviewFile = temp;
-        break;
+        case CorrectedImage:
+            pd->correctedPreviewFile = temp;
+            break;
 
-    case MaskImage:
-        pd->maskPreviewFile = temp;
-        break;
+        case MaskImage:
+            pd->maskPreviewFile = temp;
+            break;
     }
 }
 
-void WorkerThread::setSaveMethod(SaveMethod* method)
+void WorkerThread::setSaveMethod(SaveMethod* const method)
 {
     if (!method)
     {
@@ -222,7 +216,7 @@ void WorkerThread::setSaveMethod(SaveMethod* method)
     pd->saveMethod = method;
 }
 
-void WorkerThread::setLocator(Locator* locator)
+void WorkerThread::setLocator(Locator* const locator)
 {
     if (!locator)
     {
@@ -232,6 +226,4 @@ void WorkerThread::setLocator(Locator* locator)
     pd->locator = locator;
 }
 
-
 } // namespace KIPIRemoveRedEyesPlugin
-

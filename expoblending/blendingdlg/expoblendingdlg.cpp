@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a tool to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -82,13 +82,13 @@ extern "C"
 #include "enfusebinary.h"
 #include "enfusesettings.h"
 #include "enfusestack.h"
-#include "savesettingswidget.h"
 #include "aboutdata.h"
-#include "kpversion.h"
-#include "previewmanager.h"
 #include "actionthread.h"
 #include "bracketstack.h"
 #include "outputdialog.h"
+#include "kpversion.h"
+#include "kppreviewmanager.h"
+#include "kpsavesettingswidget.h"
 
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
@@ -118,13 +118,13 @@ public:
 
     KLineEdit*            templateFileName;
 
-    PreviewManager*       previewWidget;
+    KPPreviewManager*     previewWidget;
 
     RExpanderBox*         settingsExpander;
 
     EnfuseSettingsWidget* enfuseSettingsBox;
 
-    SaveSettingsWidget*   saveSettingsBox;
+    KPSaveSettingsWidget*   saveSettingsBox;
 
     BracketStackList*     bracketStack;
     EnfuseStackList*      enfuseStack;
@@ -134,7 +134,7 @@ public:
     bool                  firstImageDisplayed;
 };
 
-ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
+ExpoBlendingDlg::ExpoBlendingDlg(Manager* const mngr, QWidget* const parent)
                : KDialog(parent), d(new ExpoBlendingDlgPriv)
 {
     d->mngr = mngr;
@@ -165,12 +165,12 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     QGridLayout *grid = new QGridLayout(page);
     setMainWidget(page);
 
-    d->previewWidget  = new PreviewManager(page);
+    d->previewWidget  = new KPPreviewManager(page);
     d->previewWidget->setButtonText(i18n("Details..."));
 
     // ---------------------------------------------------------------
 
-    QScrollArea *sv      = new QScrollArea(page);
+    QScrollArea* sv      = new QScrollArea(page);
     KVBox *panel         = new KVBox(sv->viewport());
     panel->setAutoFillBackground(false);
     sv->setWidget(panel);
@@ -184,7 +184,7 @@ ExpoBlendingDlg::ExpoBlendingDlg(Manager* mngr, QWidget* parent)
     d->settingsExpander->setObjectName("Exposure Blending Settings Expander");
 
     d->enfuseSettingsBox = new EnfuseSettingsWidget(d->settingsExpander);
-    d->saveSettingsBox   = new SaveSettingsWidget(d->settingsExpander);
+    d->saveSettingsBox   = new KPSaveSettingsWidget(d->settingsExpander);
 
     KHBox* hbox          = new KHBox(d->saveSettingsBox);
     QLabel* customLabel  = new QLabel(hbox);
@@ -452,7 +452,7 @@ void ExpoBlendingDlg::saveItem(const KUrl& temp, const EnfuseSettings& settings)
     newUrl.setFileName(settings.targetFileName);
     QFileInfo fi(newUrl.toLocalFile());
 
-    if (d->saveSettingsBox->conflictRule() != SaveSettingsWidget::OVERWRITE)
+    if (d->saveSettingsBox->conflictRule() != KPSaveSettingsWidget::OVERWRITE)
     {
         if (fi.exists())
         {

@@ -25,30 +25,39 @@
 
 // Local includes
 
-#include "binaryiface.h"
+#include "kpbinaryiface.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
-class CPFindBinary : public BinaryIface
+class CPFindBinary : public KPBinaryIface
 {
 
 public:
 
     CPFindBinary()
-        : BinaryIface(QString("cpfind"), QString("2010.4"), QString("Hugins cpfind "),
-                      0, QString("Hugin"), QString("http://hugin.sourceforge.net"),
-                      QString("Panorama"), QStringList("--version"))
-        { setup(); }
+        : KPBinaryIface(QString("cpfind"), 
+                        QString("2010.4"), 
+                        QString("Hugins cpfind "),
+                        0, 
+                        QString("Hugin"), 
+                        QString("http://hugin.sourceforge.net"),
+                        QString("Panorama"), 
+                        QStringList("--version")
+                       )
+        {
+            setup();
+        }
 
-    ~CPFindBinary() {}
+    ~CPFindBinary()
+    {
+    }
 
 protected:
 
     virtual bool parseHeader(const QString& output);
-
 };
 
 } // namespace KIPIPanoramaPlugin

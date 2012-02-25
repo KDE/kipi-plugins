@@ -45,7 +45,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KIPISmugPlugin
@@ -57,7 +57,7 @@ class SmugWidget : public QWidget
 
 public:
 
-    SmugWidget(QWidget* parent, KIPI::Interface *iface, bool import);
+    SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool import);
     ~SmugWidget();
 
     void updateLabels(const QString& email = "", const QString& name = "", 
@@ -73,7 +73,7 @@ public:
     QString getAlbumPassword() const;
     QString getDestinationPath() const;
 
-    KIPIPlugins::ImagesList* imagesList() const;
+    KIPIPlugins::KPImagesList* imagesList() const;
 
     QProgressBar* progressBar() const;
 
@@ -89,37 +89,37 @@ private Q_SLOTS:
 
 private:
 
-    QLabel*                  m_headerLbl;
-    QLabel*                  m_userNameLbl;
-    QLabel*                  m_userName;
-    QLabel*                  m_emailLbl;
-    QLabel*                  m_email;
-    QLabel*                  m_nickNameLbl;
-    QLabel*                  m_sitePasswordLbl;
-    QLabel*                  m_albumPasswordLbl;
+    QLabel*                    m_headerLbl;
+    QLabel*                    m_userNameLbl;
+    QLabel*                    m_userName;
+    QLabel*                    m_emailLbl;
+    QLabel*                    m_email;
+    QLabel*                    m_nickNameLbl;
+    QLabel*                    m_sitePasswordLbl;
+    QLabel*                    m_albumPasswordLbl;
 
-    QRadioButton*            m_anonymousRBtn;
-    QRadioButton*            m_accountRBtn;
+    QRadioButton*              m_anonymousRBtn;
+    QRadioButton*              m_accountRBtn;
 
-    QCheckBox*               m_resizeChB;
+    QCheckBox*                 m_resizeChB;
 
-    QSpinBox*                m_dimensionSpB;
-    QSpinBox*                m_imageQualitySpB;
+    QSpinBox*                  m_dimensionSpB;
+    QSpinBox*                  m_imageQualitySpB;
 
-    KComboBox*               m_albumsCoB;
+    KComboBox*                 m_albumsCoB;
 
-    KPushButton*             m_newAlbumBtn;
-    KPushButton*             m_reloadAlbumsBtn;
-    KPushButton*             m_changeUserBtn;
+    KPushButton*               m_newAlbumBtn;
+    KPushButton*               m_reloadAlbumsBtn;
+    KPushButton*               m_changeUserBtn;
 
-    KLineEdit*               m_albumPasswordEdt;
-    KLineEdit*               m_nickNameEdt;
-    KLineEdit*               m_sitePasswordEdt;
+    KLineEdit*                 m_albumPasswordEdt;
+    KLineEdit*                 m_nickNameEdt;
+    KLineEdit*                 m_sitePasswordEdt;
 
-    QProgressBar*            m_progressBar;
+    QProgressBar*              m_progressBar;
 
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
+    KIPIPlugins::KPImagesList* m_imgList;
+    KIPI::UploadWidget*        m_uploadWidget;
 
     friend class SmugWindow;
 };

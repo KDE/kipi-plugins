@@ -48,23 +48,19 @@
 #include <ktoolinvocation.h>
 #include <kurlrequester.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "batchprocessimageslist.h"
 #include "convertoptionsdialog.h"
 #include "dialogutils.h"
-#include "kpaboutdata.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ConvertImagesDialog::ConvertImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface, QWidget *parent)
-                   : BatchProcessImagesDialog(urlList, interface, i18n("Batch Convert Images"), parent)
+ConvertImagesDialog::ConvertImagesDialog(const KUrl::List& urlList, Interface* interface, QWidget *parent)
+    : BatchProcessImagesDialog(urlList, interface, i18n("Batch Convert Images"), parent)
 {
     // About data and help button.
 
@@ -83,6 +79,7 @@ ConvertImagesDialog::ConvertImagesDialog(const KUrl::List& urlList, KIPI::Interf
                        "aurelien dot gateau at free dot fr");
 
     DialogUtils::setupHelpButton(this, m_about);
+
     //---------------------------------------------
 
     setOptionBoxTitle(i18n("Image Conversion Options"));
@@ -306,7 +303,7 @@ void ConvertImagesDialog::processDone()
     {
         // JPEG file, we remove IPTC preview.
 
-        BatchProcessImagesItem *item = dynamic_cast<BatchProcessImagesItem*>(**m_listFile2Process_iterator);
+        BatchProcessImagesItem* item = dynamic_cast<BatchProcessImagesItem*>(**m_listFile2Process_iterator);
         if (item)
         {
             QString src = item->pathSrc();
@@ -316,7 +313,7 @@ void ConvertImagesDialog::processDone()
             kDebug() << src ;
             kDebug() << tgt << fi.size();
 
-            KExiv2Iface::KExiv2 metaSrc(src);
+            KPMetadata metaIn(src, m_interface);
 
             // Update Iptc preview.
             // NOTE: see B.K.O #130525. a JPEG segment is limited to 64K. If the IPTC byte array is
@@ -324,13 +321,13 @@ void ConvertImagesDialog::processDone()
             // broken. Note that IPTC image preview tag is limited to 256K!!!
             // There is no limitation with TIFF and PNG about IPTC byte array size.
 
-            metaSrc.removeIptcTag("Iptc.Application2.Preview");
-            metaSrc.removeIptcTag("Iptc.Application2.PreviewFormat");
-            metaSrc.removeIptcTag("Iptc.Application2.PreviewVersion");
+            metaIn.removeIptcTag("Iptc.Application2.Preview");
+            metaIn.removeIptcTag("Iptc.Application2.PreviewFormat");
+            metaIn.removeIptcTag("Iptc.Application2.PreviewVersion");
 
-            KExiv2Iface::KExiv2 metaTgt(tgt);
-            metaTgt.setIptc(metaSrc.getIptc());
-            metaTgt.applyChanges();
+            KPMetadata metaOut(tgt, m_interface);
+            metaOut.setIptc(metaIn.getIptc());
+            metaOut.applyChanges();
         }
     }
 

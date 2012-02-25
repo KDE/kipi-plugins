@@ -45,8 +45,8 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrList::FlickrList(KIPI::Interface* iface, QWidget* parent, bool is_23)
-    : ImagesList(iface, parent),
+FlickrList::FlickrList(Interface* const iface, QWidget* const parent, bool is_23)
+    : KPImagesList(iface, parent),
       m_public(Qt::Unchecked),
       m_family(Qt::Unchecked),
       m_friends(Qt::Unchecked),
@@ -56,12 +56,12 @@ FlickrList::FlickrList(KIPI::Interface* iface, QWidget* parent, bool is_23)
       m_is23(is_23)
 {
     // Catch a click on the items.
-    connect(listView(), SIGNAL(itemClicked(QTreeWidgetItem*,int)),
-            this, SLOT(slotItemClicked(QTreeWidgetItem*,int)));
+    connect(listView(), SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+            this, SLOT(slotItemClicked(QTreeWidgetItem*, int)));
 
     // Catch it if the items change.
-    connect(listView(), SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-            this, SLOT(slotItemChanged(QTreeWidgetItem*,int)));
+    connect(listView(), SIGNAL(itemChanged(QTreeWidgetItem*, int)),
+            this, SLOT(slotItemChanged(QTreeWidgetItem*, int)));
 }
 
 void FlickrList::setPublic(Qt::CheckState isPublic)
@@ -376,7 +376,9 @@ void FlickrList::slotAddImages(const KUrl::List& list)
     emit signalImageListChanged();
 }
 
-FlickrListViewItem::FlickrListViewItem(KIPIPlugins::ImagesListView* view,
+// ------------------------------------------------------------------------------------------------
+
+FlickrListViewItem::FlickrListViewItem(KPImagesListView* const view,
                                        const KUrl& url,
                                        bool is23 = false,
                                        bool accessPublic  = true,
@@ -384,7 +386,7 @@ FlickrListViewItem::FlickrListViewItem(KIPIPlugins::ImagesListView* view,
                                        bool accessFriends = true,
                                        FlickrList::SafetyLevel safetyLevel = FlickrList::SAFE,
                                        FlickrList::ContentType contentType = FlickrList::PHOTO)
-    : KIPIPlugins::ImagesListViewItem(view, url),
+    : KPImagesListViewItem(view, url),
       m_is23(is23)
 {
     /* Initialize the FlickrListViewItem with the ImagesListView and a KUrl
@@ -398,28 +400,28 @@ FlickrListViewItem::FlickrListViewItem(KIPIPlugins::ImagesListView* view,
     setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
     // Set the text and checkbox for the public column.
-    setCheckState(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+    setCheckState(static_cast<KPImagesListView::ColumnType>(
                       FlickrList::PUBLIC),
                   accessPublic ? Qt::Checked : Qt::Unchecked);
 
     // Set the tooltips to guide the user to the mass settings options.
-    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+    setToolTip(static_cast<KPImagesListView::ColumnType>(
                    FlickrList::PUBLIC),
                i18n("Check if photo should be publicly visible or use Upload "
                     "Options tab to specify this for all images"));
-    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+    setToolTip(static_cast<KPImagesListView::ColumnType>(
                    FlickrList::FAMILY),
                i18n("Check if photo should be visible to family or use Upload "
                     "Options tab to specify this for all images"));
-    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+    setToolTip(static_cast<KPImagesListView::ColumnType>(
                    FlickrList::FRIENDS),
                i18n("Check if photo should be visible to friends or use "
                     "Upload Options tab to specify this for all images"));
-    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+    setToolTip(static_cast<KPImagesListView::ColumnType>(
                    FlickrList::SAFETYLEVEL),
                i18n("Indicate the safety level for the photo or use Upload "
                     "Options tab to specify this for all images"));
-    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+    setToolTip(static_cast<KPImagesListView::ColumnType>(
                    FlickrList::CONTENTTYPE),
                i18n("Indicate what kind of image this is or use Upload "
                     "Options tab to specify this for all images"));
@@ -432,13 +434,13 @@ FlickrListViewItem::FlickrListViewItem(KIPIPlugins::ImagesListView* view,
     setContentType(contentType);
 
     // Extra per image tags handling.
-    setToolTip(static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+    setToolTip(static_cast<KPImagesListView::ColumnType>(
                    FlickrList::TAGS),
                i18n("Add extra tags per image or use Upload Options tab to "
                     "add tags for all images"));
     //m_tagLineEdit = new KLineEdit(view);
     //m_tagLineEdit->setToolTip(i18n("Enter extra tags, separated by commas."));
-    //view->setItemWidget(this, static_cast<KIPIPlugins::ImagesListView::ColumnType>(
+    //view->setItemWidget(this, static_cast<KPImagesListView::ColumnType>(
     //                    FlickrList::TAGS), m_tagLineEdit);
     updateItemWidgets();
 }
@@ -447,12 +449,11 @@ void FlickrListViewItem::updateItemWidgets()
 {
     m_tagLineEdit = new KLineEdit(view());
     m_tagLineEdit->setToolTip(i18n("Enter extra tags, separated by commas."));
-    view()->setItemWidget(this, static_cast<KIPIPlugins::ImagesListView::ColumnType>(
-                              FlickrList::TAGS), m_tagLineEdit);
+    view()->setItemWidget(this, static_cast<KPImagesListView::ColumnType>(
+                          FlickrList::TAGS), m_tagLineEdit);
 }
 
-
-QStringList FlickrListViewItem::extraTags()
+QStringList FlickrListViewItem::extraTags() const
 {
     return m_tagLineEdit->text().split(',', QString::SkipEmptyParts);
 }
@@ -465,16 +466,16 @@ void FlickrListViewItem::toggled()
     {
         if (data(FlickrList::FAMILY, Qt::CheckStateRole) != QVariant())
         {
-            setFamily(checkState(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FAMILY)));
+            setFamily(checkState(static_cast<KPImagesListView::ColumnType>(FlickrList::FAMILY)));
         }
 
         if (data(FlickrList::FRIENDS, Qt::CheckStateRole) != QVariant())
         {
-            setFriends(checkState(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FRIENDS)));
+            setFriends(checkState(static_cast<KPImagesListView::ColumnType>(FlickrList::FRIENDS)));
         }
     }
 
-    setPublic(checkState(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC)));
+    setPublic(checkState(static_cast<KPImagesListView::ColumnType>(FlickrList::PUBLIC)));
 }
 
 void FlickrListViewItem::setPublic(bool status)
@@ -494,17 +495,17 @@ void FlickrListViewItem::setPublic(bool status)
             // CheckStateRole. This might seem like a hack, but it's described in
             // the Qt FAQ at
             // http://www.qtsoftware.com/developer/faqs/faq.2007-04-23.8353273326.
-            setData(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FAMILY),
+            setData(static_cast<KPImagesListView::ColumnType>(FlickrList::FAMILY),
                     Qt::CheckStateRole, QVariant());
-            setData(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FRIENDS),
+            setData(static_cast<KPImagesListView::ColumnType>(FlickrList::FRIENDS),
                     Qt::CheckStateRole, QVariant());
         }
         else
         {
             // Show the checkboxes.
-            setCheckState(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FAMILY),
+            setCheckState(static_cast<KPImagesListView::ColumnType>(FlickrList::FAMILY),
                           m_family  ? Qt::Checked : Qt::Unchecked);
-            setCheckState(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FRIENDS),
+            setCheckState(static_cast<KPImagesListView::ColumnType>(FlickrList::FRIENDS),
                           m_friends ? Qt::Checked : Qt::Unchecked);
         }
     }

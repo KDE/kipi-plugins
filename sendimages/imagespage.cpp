@@ -6,7 +6,7 @@
  * Date        : 2006-10-18
  * Description : images list settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -24,14 +24,11 @@
 
 #include "imagespage.moc"
 
-using namespace KIPI;
-using namespace KIPIPlugins;
-
 namespace KIPISendimagesPlugin
 {
 
-ImagesPage::ImagesPage(QWidget* parent, Interface* iface)
-          : ImagesList(iface, parent)
+ImagesPage::ImagesPage(QWidget* const parent, Interface* const iface)
+    : KPImagesList(iface, parent)
 {
 }
 
@@ -39,14 +36,14 @@ ImagesPage::~ImagesPage()
 {
 }
 
-QList<EmailItem> ImagesPage::imagesList()
+QList<EmailItem> ImagesPage::imagesList() const
 {
     QList<EmailItem> list;
 
     QTreeWidgetItemIterator it(listView());
     while (*it)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
         if (item)
         {
             item->updateInformation();

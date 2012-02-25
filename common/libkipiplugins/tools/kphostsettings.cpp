@@ -73,10 +73,10 @@ public:
 
 public:
 
-    KIPI::Interface* iface;
+    Interface* iface;
 };
 
-KPHostSettings::KPHostSettings(KIPI::Interface* iface)
+KPHostSettings::KPHostSettings(Interface* const iface)
     : d(new KPHostSettingsPrivate)
 {
     d->iface = iface;
@@ -139,11 +139,15 @@ bool KPHostSettings::hasAudioExtensions() const
 
 KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
 {
-    KPMetaSettings meta;
-    meta.writeRawFiles         = d->setting("WriteMetadataToRAW").toBool();
-    meta.updateFileTimeStamp   = d->setting("WriteMetadataUpdateFiletimeStamp").toBool();
-    meta.useXMPSidecar4Reading = d->setting("UseXMPSidecar4Reading").toBool();
-    meta.metadataWritingMode   = (KExiv2::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
+    KPMetaSettings meta; // if no valid data, default setting is returned.
+
+    if (d->hasValidData())
+    {
+        meta.writeRawFiles         = d->setting("WriteMetadataToRAW").toBool();
+        meta.updateFileTimeStamp   = d->setting("WriteMetadataUpdateFiletimeStamp").toBool();
+        meta.useXMPSidecar4Reading = d->setting("UseXMPSidecar4Reading").toBool();
+        meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
+    }
 
     return meta;
 }

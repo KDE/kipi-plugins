@@ -47,7 +47,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KIPIDebianScreenshotsPlugin
@@ -61,12 +61,12 @@ class DsWidget : public QWidget
 
 public:
 
-    DsWidget(QWidget* parent, KIPI::Interface* iface);
+    DsWidget(QWidget* const parent, KIPI::Interface* const iface);
     ~DsWidget();
 
      QString getDestinationPath() const;
 
-     KIPIPlugins::ImagesList* imagesList() const;
+     KIPIPlugins::KPImagesList* imagesList() const;
 
     QProgressBar* progressBar() const;
 
@@ -84,22 +84,22 @@ private Q_SLOTS:
 
 private:
 
-    QButtonGroup*            m_dlGrp;
-    QString                  m_lastTip;
-    QUrl                     m_lastQueryUrl;
-    QProgressBar*            m_progressBar;
+    QButtonGroup*              m_dlGrp;
+    QString                    m_lastTip;
+    QUrl                       m_lastQueryUrl;
+    QProgressBar*              m_progressBar;
 
-    KLineEdit*               m_pkgLineEdit;
-    KComboBox*               m_versionsComboBox;
-    KLineEdit*               m_descriptionLineEdit;
+    KLineEdit*                 m_pkgLineEdit;
+    KComboBox*                 m_versionsComboBox;
+    KLineEdit*                 m_descriptionLineEdit;
 
-    KIO::AccessManager*      m_httpManager;
-    KIO::AccessManager*      m_jsonManager;
+    KIO::AccessManager*        m_httpManager;
+    KIO::AccessManager*        m_jsonManager;
 
-    KClickableImageLabel*    m_headerLabel;
+    KClickableImageLabel*      m_headerLabel;
 
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
+    KIPIPlugins::KPImagesList* m_imgList;
+    KIPI::UploadWidget*        m_uploadWidget;
 
     friend class DsWindow;
 };

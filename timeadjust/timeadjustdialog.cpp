@@ -70,20 +70,15 @@ extern "C"
 
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kpaboutdata.h"
+#include "kpmetadata.h"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
 #include "clockphotodialog.h"
 
-using namespace KExiv2Iface;
 using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
@@ -172,12 +167,12 @@ public:
     KUrl::List       imageURLs;
     QList<QDateTime> imageOriginalDates;
 
-    KIPI::Interface* interface;
+    Interface* interface;
 
     KPAboutData*     about;
 };
 
-TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
+TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
                 : KDialog(parent), d(new TimeAdjustDialogPrivate)
 {
     d->interface = interface;
@@ -331,7 +326,7 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 0, 1, 1);
     updateGBLayout->addWidget(d->updXMPDateCheck,     0, 2, 1, 1);
 
-    if (!KExiv2::supportXmp())
+    if (!KPMetadata::supportXmp())
     {
         d->updXMPDateCheck->setEnabled(false);
     }
@@ -339,11 +334,11 @@ TimeAdjustDialog::TimeAdjustDialog(KIPI::Interface* interface, QWidget* parent)
     // -- Example ------------------------------------------------------------
 
     d->exampleGroupBox           = new QGroupBox(i18n("Example"), mainWidget());
-    QVBoxLayout *exampleGBLayout = new QVBoxLayout(d->exampleGroupBox);
+    QVBoxLayout* exampleGBLayout = new QVBoxLayout(d->exampleGroupBox);
 
-    d->exampleSummaryLabel    = new QLabel(d->exampleGroupBox);
-    d->exampleFileChooser     = new QComboBox(d->exampleGroupBox);
-    d->exampleTimeChangeLabel = new QLabel(d->exampleGroupBox);
+    d->exampleSummaryLabel       = new QLabel(d->exampleGroupBox);
+    d->exampleFileChooser        = new QComboBox(d->exampleGroupBox);
+    d->exampleTimeChangeLabel    = new QLabel(d->exampleGroupBox);
     //d->exampleTimeChangeLabel->setAlignment(Qt::AlignCenter);
 
     exampleGBLayout->setMargin(spacingHint());
@@ -586,8 +581,8 @@ void TimeAdjustDialog::readMetadataTimestamps()
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
         KPImageInfo info(d->interface, *it);
-        KExiv2 exiv2Iface;
-        if (!exiv2Iface.load((*it).path()))
+        KPMetadata  meta;
+        if (!meta.load((*it).path()))
         {
             missingCount++;
             d->imageOriginalDates.append(nullDateTime);
@@ -598,26 +593,26 @@ void TimeAdjustDialog::readMetadataTimestamps()
         switch (d->useMetaDateTypeChooser->currentIndex())
         {
             case 0:
-                curImageDateTime = exiv2Iface.getImageDateTime();
+                curImageDateTime = meta.getImageDateTime();
                 break;
             case 1:
-                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Image.DateTime"), "yyyy:MM:dd hh:mm:ss");
+                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Image.DateTime"), "yyyy:MM:dd hh:mm:ss");
                 break;
             case 2:
-                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeOriginal"), "yyyy:MM:dd hh:mm:ss");
+                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeOriginal"), "yyyy:MM:dd hh:mm:ss");
                 break;
             case 3:
-                curImageDateTime = QDateTime::fromString(exiv2Iface.getExifTagString("Exif.Photo.DateTimeDigitized"), "yyyy:MM:dd hh:mm:ss");
+                curImageDateTime = QDateTime::fromString(meta.getExifTagString("Exif.Photo.DateTimeDigitized"), "yyyy:MM:dd hh:mm:ss");
                 break;
             case 4:
                 // we have to truncate the timezone from the time, otherwise it cannot be converted to a QTime
-                curImageDateTime = QDateTime(QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
-                                             QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
-                //kDebug() << "IPTC for " << (*it).path() << ": " << exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated") << ", " << exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
-                //kDebug() << "converted: " << QDate::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(exiv2Iface.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
+                curImageDateTime = QDateTime(QDate::fromString(meta.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate),
+                                             QTime::fromString(meta.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate));
+                //kDebug() << "IPTC for " << (*it).path() << ": " << meta.getIptcTagString("Iptc.Application2.DateCreated") << ", " << meta.getIptcTagString("Iptc.Application2.TimeCreated") << endl;
+                //kDebug() << "converted: " << QDate::fromString(meta.getIptcTagString("Iptc.Application2.DateCreated"), Qt::ISODate) << ", " << QTime::fromString(meta.getIptcTagString("Iptc.Application2.TimeCreated").left(8), Qt::ISODate) << endl;
                 break;
             case 5:
-                curImageDateTime = QDateTime::fromString(exiv2Iface.getXmpTagString("Xmp.xmp.CreateDate"), "yyyy:MM:dd hh:mm:ss");
+                curImageDateTime = QDateTime::fromString(meta.getXmpTagString("Xmp.xmp.CreateDate"), "yyyy:MM:dd hh:mm:ss");
                 break;
             default:
                 // curImageDateTime stays invalid
@@ -625,6 +620,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
         };
 
         d->imageOriginalDates.append(curImageDateTime);
+
         if (curImageDateTime.isValid())
             okCount++;
         else
@@ -634,18 +630,18 @@ void TimeAdjustDialog::readMetadataTimestamps()
     if (missingCount == 0)
     {
         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
-                                    "%1 images will be changed",
-                                    d->imageURLs.count()));
+                                              "%1 images will be changed",
+                                              d->imageURLs.count()));
     }
     else
     {
         d->exampleSummaryLabel->setText(i18np("1 image will be changed; ",
-                                    "%1 images will be changed; ",
-                                    okCount)
-                            + "<br>"
-                            + i18np("1 image will be skipped due to a missing source timestamp.",
-                                    "%1 images will be skipped due to missing source timestamps.",
-                                    missingCount));
+                                              "%1 images will be changed; ",
+                                              okCount)
+                                        + QString("<br>")
+                                        + i18np("1 image will be skipped due to a missing source timestamp.",
+                                                "%1 images will be skipped due to missing source timestamps.",
+                                                missingCount));
     }
 }
 
@@ -814,31 +810,31 @@ void TimeAdjustDialog::slotOk()
         {
             bool ret = true;
 
-            KExiv2 exiv2Iface;
+            KPMetadata     meta;
             KPHostSettings hSettings(d->interface);
-            exiv2Iface.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            exiv2Iface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
+            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
-            ret &= exiv2Iface.load(url.path());
+            ret &= meta.load(url.path());
             if (ret)
             {
-                if (exiv2Iface.canWriteExif(url.path()))
+                if (meta.canWriteExif(url.path()))
                 {
                     if (d->updEXIFModDateCheck->isChecked())
                     {
-                        ret &= exiv2Iface.setExifTagString("Exif.Image.DateTime",
+                        ret &= meta.setExifTagString("Exif.Image.DateTime",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
 
                     if (d->updEXIFOriDateCheck->isChecked())
                     {
-                        ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeOriginal",
+                        ret &= meta.setExifTagString("Exif.Photo.DateTimeOriginal",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
 
                     if (d->updEXIFDigDateCheck->isChecked())
                     {
-                        ret &= exiv2Iface.setExifTagString("Exif.Photo.DateTimeDigitized",
+                        ret &= meta.setExifTagString("Exif.Photo.DateTimeDigitized",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
                 }
@@ -850,11 +846,11 @@ void TimeAdjustDialog::slotOk()
 
                 if (d->updIPTCDateCheck->isChecked())
                 {
-                    if (exiv2Iface.canWriteIptc(url.path()))
+                    if (meta.canWriteIptc(url.path()))
                     {
-                        ret &= exiv2Iface.setIptcTagString("Iptc.Application2.DateCreated",
+                        ret &= meta.setIptcTagString("Iptc.Application2.DateCreated",
                             dateTime.date().toString(Qt::ISODate));
-                        ret &= exiv2Iface.setIptcTagString("Iptc.Application2.TimeCreated",
+                        ret &= meta.setIptcTagString("Iptc.Application2.TimeCreated",
                             dateTime.time().toString(Qt::ISODate));
                     }
                     else ret = false;
@@ -862,25 +858,25 @@ void TimeAdjustDialog::slotOk()
 
                 if (d->updXMPDateCheck->isChecked())
                 {
-                    if (exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(url.path()))
+                    if (meta.supportXmp() && meta.canWriteXmp(url.path()))
                     {
-                        ret &= exiv2Iface.setXmpTagString("Xmp.exif.DateTimeOriginal",
+                        ret &= meta.setXmpTagString("Xmp.exif.DateTimeOriginal",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.photoshop.DateCreated",
+                        ret &= meta.setXmpTagString("Xmp.photoshop.DateCreated",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.tiff.DateTime",
+                        ret &= meta.setXmpTagString("Xmp.tiff.DateTime",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.CreateDate",
+                        ret &= meta.setXmpTagString("Xmp.xmp.CreateDate",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.MetadataDate",
+                        ret &= meta.setXmpTagString("Xmp.xmp.MetadataDate",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
-                        ret &= exiv2Iface.setXmpTagString("Xmp.xmp.ModifyDate",
+                        ret &= meta.setXmpTagString("Xmp.xmp.ModifyDate",
                             dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")).toAscii());
                     }
                     else ret = false;
                 }
 
-                ret &= exiv2Iface.save(url.path());
+                ret &= meta.save(url.path());
 
                 if (!ret)
                 {
@@ -902,7 +898,7 @@ void TimeAdjustDialog::slotOk()
             // we have to use the utime() system call
 
             utimbuf times;
-            times.actime = QDateTime::currentDateTime().toTime_t();
+            times.actime  = QDateTime::currentDateTime().toTime_t();
             times.modtime = dateTime.toTime_t();
 
             if (0 != utime(url.path().toLatin1().constData(), &times)) 

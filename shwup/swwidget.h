@@ -43,7 +43,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KIPIShwupPlugin
@@ -55,7 +55,7 @@ class SwWidget : public QWidget
 
 public:
 
-    SwWidget(QWidget* parent, KIPI::Interface* iface);
+    SwWidget(QWidget* const parent, KIPI::Interface* const iface);
     ~SwWidget();
 
     QString getDestinationPath() const;
@@ -64,7 +64,7 @@ public:
 
     long long getAlbumID() const;
 
-    KIPIPlugins::ImagesList* imagesList() const;
+    KIPIPlugins::KPImagesList* imagesList() const;
 
 Q_SIGNALS:
 
@@ -77,20 +77,20 @@ private Q_SLOTS:
 
 private:
 
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
+    KIPIPlugins::KPImagesList* m_imgList;
+    KIPI::UploadWidget*        m_uploadWidget;
 
-    QLabel*                  m_headerLbl;
-    QLabel*                  m_userNameDisplayLbl;
-    KPushButton*             m_changeUserBtn;
+    QLabel*                    m_headerLbl;
+    QLabel*                    m_userNameDisplayLbl;
+    KPushButton*               m_changeUserBtn;
 
-    KComboBox*               m_albumsCoB;
-    KPushButton*             m_newAlbumBtn;
-    KPushButton*             m_reloadAlbumsBtn;
+    KComboBox*                 m_albumsCoB;
+    KPushButton*               m_newAlbumBtn;
+    KPushButton*               m_reloadAlbumsBtn;
 
-    QCheckBox*               m_resizeChB;
-    QSpinBox*                m_dimensionSpB;
-    QSpinBox*                m_imageQualitySpB;
+    QCheckBox*                 m_resizeChB;
+    QSpinBox*                  m_dimensionSpB;
+    QSpinBox*                  m_imageQualitySpB;
 
     friend class SwWindow;
 };

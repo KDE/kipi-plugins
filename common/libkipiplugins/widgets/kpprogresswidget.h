@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef PROGRESS_WIDGET_H
-#define PROGRESS_WIDGET_H
+#ifndef KPPROGRESS_WIDGET_H
+#define KPPROGRESS_WIDGET_H
 
 // Qt includes
 
@@ -37,23 +37,25 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT ProgressWidget : public QProgressBar
+class KIPIPLUGINS_EXPORT KPProgressWidget : public QProgressBar
 {
     Q_OBJECT
 
 public:
 
-    ProgressWidget(KIPI::Interface* iface, QWidget* parent);
-    ~ProgressWidget();
+    KPProgressWidget(Interface* iface, QWidget* parent);
+    ~KPProgressWidget();
 
     /** Call this method to start a new instance of progress notification into KIPI host application
      *  You can pass tite string to name progress item, and set it as cancelable. In this case,
      *  signalProgressCanceled() is fired when user press cancel button from KIPI host application.
      *  This item can also accept a thumbnail that you can change through progresssThumbnailChanged().
-     *  For more details about Progress management through KIPI host application, look into KIPI::Interface class.
+     *  For more details about Progress management through KIPI host application, look into Interface class.
      */
     void progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb);
 
@@ -82,10 +84,10 @@ private Q_SLOTS:
 
 private:
 
-    class ProgressWidgetPriv;
-    ProgressWidgetPriv* const d;
+    class KPProgressWidgetPriv;
+    KPProgressWidgetPriv* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* PROGRESS_WIDGET_H */
+#endif /* KPPROGRESS_WIDGET_H */

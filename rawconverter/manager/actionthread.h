@@ -38,9 +38,10 @@
 
 // Local includes
 
-#include "savesettingswidget.h"
+#include "kpsavesettingswidget.h"
 
 using namespace KIPIPlugins;
+using namespace KDcrawIface;
 
 namespace KIPIRawConverterPlugin
 {
@@ -53,11 +54,11 @@ class ActionThread : public QThread
 
 public:
 
-    explicit ActionThread(QObject* parent, bool updateFileTimeStamp=false);
+    explicit ActionThread(QObject* const parent, bool updateFileTimeStamp=false);
     ~ActionThread();
 
-    void setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings, 
-                                SaveSettingsWidget::OutputFormat outputFormat);
+    void setRawDecodingSettings(RawDecodingSettings rawDecodingSettings, 
+                                KPSaveSettingsWidget::OutputFormat outputFormat);
 
     void identifyRawFile(const KUrl& url, bool full=false);
     void identifyRawFiles(const KUrl::List& urlList, bool full=false);

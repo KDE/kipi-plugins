@@ -41,6 +41,8 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIRawConverterPlugin
 {
 
@@ -52,7 +54,7 @@ class SingleDialog : public KDialog
 
 public:
 
-    SingleDialog(const QString& file, KIPI::Interface* iface);
+    SingleDialog(const QString& file, Interface* const iface);
     ~SingleDialog();
 
     void setFile(const QString& file);

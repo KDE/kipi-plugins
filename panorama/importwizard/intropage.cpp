@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,7 +42,7 @@
 
 // Local includes
 
-#include "binarysearch.h"
+#include "kpbinarysearch.h"
 #include "autooptimiserbinary.h"
 #include "cpcleanbinary.h"
 #include "cpfindbinary.h"
@@ -56,23 +56,30 @@ namespace KIPIPanoramaPlugin
 
 struct IntroPage::IntroPagePriv
 {
-    IntroPagePriv(Manager* m)
-        : mngr(m), hdrCheckBox(0), formatGroupBox(0), settingsGroupBox(0),
-          jpegRadioButton(0), tiffRadioButton(0), binariesWidget(0)
-    {}
+    IntroPagePriv(Manager* const m)
+        : mngr(m), 
+          hdrCheckBox(0), 
+          formatGroupBox(0), 
+          settingsGroupBox(0),
+          jpegRadioButton(0), 
+          tiffRadioButton(0), 
+          binariesWidget(0)
+    {
+    }
 
-    Manager*                    mngr;
+    Manager*                      mngr;
 
-    QCheckBox*                  hdrCheckBox;
-    QGroupBox*                  formatGroupBox;
-    QGroupBox*                  settingsGroupBox;
-    QRadioButton*               jpegRadioButton;
-    QRadioButton*               tiffRadioButton;
-    KIPIPlugins::BinarySearch*  binariesWidget;
+    QCheckBox*                    hdrCheckBox;
+    QGroupBox*                    formatGroupBox;
+    QGroupBox*                    settingsGroupBox;
+    QRadioButton*                 jpegRadioButton;
+    QRadioButton*                 tiffRadioButton;
+    KIPIPlugins::KPBinarySearch*  binariesWidget;
 };
 
-IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("<b>Welcome to Panorama Tool</b>")), d(new IntroPagePriv(mngr))
+IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
+    : KIPIPlugins::WizardPage(dlg, i18n("<b>Welcome to Panorama Tool</b>")),
+      d(new IntroPagePriv(mngr))
 {
     KVBox* vbox   = new KVBox(this);
     QLabel* title = new QLabel(vbox);
@@ -93,7 +100,7 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
     QGridLayout* binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18n("Panorama Binaries"));
-    d->binariesWidget = new KIPIPlugins::BinarySearch(binaryBox);
+    d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->autoOptimiserBinary());
     d->binariesWidget->addBinary(d->mngr->cpCleanBinary());
     d->binariesWidget->addBinary(d->mngr->cpFindBinary());

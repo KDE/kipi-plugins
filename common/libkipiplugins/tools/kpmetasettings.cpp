@@ -31,7 +31,11 @@ KPMetaSettings::KPMetaSettings()
     writeRawFiles         = false;
     updateFileTimeStamp   = false;
     useXMPSidecar4Reading = false;
-    metadataWritingMode   = KExiv2::WRITETOIMAGEONLY;
+    metadataWritingMode   = KPMetadata::WRITETOIMAGEONLY;
+}
+
+KPMetaSettings::~KPMetaSettings()
+{
 }
 
 }  // namespace KIPIPlugins

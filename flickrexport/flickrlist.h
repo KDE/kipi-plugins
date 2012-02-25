@@ -29,12 +29,14 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIFlickrExportPlugin
 {
 
-class FlickrList : public KIPIPlugins::ImagesList
+class FlickrList : public KPImagesList
 {
     Q_OBJECT
 
@@ -43,12 +45,12 @@ public:
     /* The different columns in a Flickr list. */
     enum FieldType
     {
-        SAFETYLEVEL = KIPIPlugins::ImagesListView::User1,
-        CONTENTTYPE = KIPIPlugins::ImagesListView::User2,
-        TAGS        = KIPIPlugins::ImagesListView::User3,
-        PUBLIC      = KIPIPlugins::ImagesListView::User4,
-        FAMILY      = KIPIPlugins::ImagesListView::User5,
-        FRIENDS     = KIPIPlugins::ImagesListView::User6
+        SAFETYLEVEL = KPImagesListView::User1,
+        CONTENTTYPE = KPImagesListView::User2,
+        TAGS        = KPImagesListView::User3,
+        PUBLIC      = KPImagesListView::User4,
+        FAMILY      = KPImagesListView::User5,
+        FRIENDS     = KPImagesListView::User6
     };
 
     /* The different possible safety levels recognized by Flickr. */
@@ -71,7 +73,7 @@ public:
 
 public:
 
-    explicit FlickrList(KIPI::Interface* iface, QWidget* parent = 0, bool = false);
+    explicit FlickrList(Interface* const iface, QWidget* const parent = 0, bool = false);
 
     void setPublic(Qt::CheckState);
     void setFamily(Qt::CheckState);
@@ -122,12 +124,12 @@ private:
 
 // -------------------------------------------------------------------------
 
-class FlickrListViewItem : public KIPIPlugins::ImagesListViewItem
+class FlickrListViewItem : public KPImagesListViewItem
 {
 
 public:
 
-    FlickrListViewItem(KIPIPlugins::ImagesListView* view, const KUrl& url,
+    FlickrListViewItem(KPImagesListView* const view, const KUrl& url,
                        bool, bool, bool, bool,
                        FlickrList::SafetyLevel, FlickrList::ContentType);
     //virtual ~FlickrListViewItem();
@@ -146,7 +148,7 @@ public:
     /**
      * Returns the list of extra tags that the user specified for this image.
      */
-    QStringList extraTags();
+    QStringList extraTags() const;
 
     /* This method should be called when one of the checkboxes is clicked. */
     void toggled();

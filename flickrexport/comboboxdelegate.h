@@ -37,7 +37,9 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIFlickrExportPlugin
 {
@@ -48,7 +50,7 @@ class ComboBoxDelegate : public QAbstractItemDelegate
 
 public:
 
-    ComboBoxDelegate(KIPIPlugins::ImagesList*, QMap<int, QString>);
+    ComboBoxDelegate(KPImagesList* const, QMap<int, QString>);
 
     /* Whenever an element needs to be edited, this method should be called.
      * It's actually a hack to prevent the item text shining through whenever
@@ -69,7 +71,7 @@ private Q_SLOTS:
 
 private:
 
-    KIPIPlugins::ImagesList* m_parent;
+    KPImagesList*            m_parent;
     QMap<int, QString>       m_items;
 
     /* The row in the view that is currently being edited. Should be -1 to

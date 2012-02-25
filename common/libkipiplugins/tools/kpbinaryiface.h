@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef BINARYIFACE_H
-#define BINARYIFACE_H
+#ifndef KPBINARYIFACE_H
+#define KPBINARYIFACE_H
 
 // Qt includes
 
@@ -47,43 +47,49 @@
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT BinaryIface : public QObject
+class KIPIPLUGINS_EXPORT KPBinaryIface : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
-    BinaryIface(const QString& binaryName, const QString& minimalVersion, const QString& header,
-                const int headerLine, const QString& projectName, const QString& url,
-                const QString& pluginName, const QStringList& args = QStringList());
-    virtual ~BinaryIface();
+    KPBinaryIface(const QString& binaryName, 
+                  const QString& minimalVersion, 
+                  const QString& header,
+                  const int headerLine, 
+                  const QString& projectName, 
+                  const QString& url,
+                  const QString& pluginName, 
+                  const QStringList& args = QStringList()
+                 );
+    virtual ~KPBinaryIface();
 
-    bool                isFound()               const { return m_isFound; }
+    bool                isFound()               const { return m_isFound;                       }
     QString             version()               const;
     bool                versionIsRight()        const;
     inline bool         isValid()               const { return (m_isFound && versionIsRight()); }
-    inline bool         developmentVersion()    const { return m_developmentVersion; }
+    inline bool         developmentVersion()    const { return m_developmentVersion;            }
 
     virtual void        setup();
-    virtual bool        checkDir()                    { return checkDir(m_pathDir); }
+    virtual bool        checkDir()                    { return checkDir(m_pathDir);             }
     virtual bool        checkDir(const QString& path);
     virtual bool        recheckDirectories();
 
     virtual QString     path(const QString& dir) const;
-    virtual QString     path()                  const { return path(m_pathDir); }
-    virtual QString     baseName()              const { return m_binaryBaseName; }
-    virtual QString     minimalVersion()        const { return m_minimalVersion; }
+    virtual QString     path()                  const { return path(m_pathDir);                 }
+    virtual QString     baseName()              const { return m_binaryBaseName;                }
+    virtual QString     minimalVersion()        const { return m_minimalVersion;                }
 
 
-    virtual KUrl        url()                   const { return m_url; }
-    virtual QString     projectName()           const { return m_projectName; }
+    virtual KUrl        url()                   const { return m_url;                           }
+    virtual QString     projectName()           const { return m_projectName;                   }
 
     static QString      goodBaseName(const QString& b)
                         {
 #ifdef Q_WS_WIN
-                                return b + ".exe";
+                            return b + ".exe";
 #else
-                                return b;
+                            return b;
 #endif // Q_WS_WIN
                         }
 
@@ -137,4 +143,4 @@ protected:
 
 } // namespace KIPIPlugins
 
-#endif  // BINARYIFACE_H
+#endif  // KPBINARYIFACE_H

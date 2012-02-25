@@ -6,7 +6,7 @@
  * Date        : 2008-09-30
  * Description : stand alone Scanner interface.
  *
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,11 +31,6 @@
 #include <kconfig.h>
 #include <kglobal.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // LibKSane includes
 
 #include <libksane/ksane.h>
@@ -43,11 +38,12 @@
 // Local includes
 
 #include "aboutdata.h"
+#include "kpmetadata.h"
 #include "kpversion.h"
 #include "scandialog.h"
 
 using namespace KIPIAcquireImagesPlugin;
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 using namespace KSaneIface;
 
 int main(int argc, char* argv[])
@@ -57,7 +53,7 @@ int main(int argc, char* argv[])
     aboutData->setCatalogName("kipiplugin_acquireimages");
     KCmdLineArgs::init(argc, argv, aboutData);
 
-    KExiv2::initializeExiv2();
+    KPMetadata::initializeExiv2();
 
     KApplication app;
     aboutData->setProgramLogo(KIcon("scanner"));
@@ -83,7 +79,7 @@ int main(int argc, char* argv[])
 
     int ret = app.exec();
 
-    KExiv2::cleanupExiv2();
+    KPMetadata::cleanupExiv2();
 
     return ret;
 }

@@ -7,7 +7,7 @@
  * Description : a tool to export GPS data to KML file.
  *
  * Copyright (C) 2006-2007 by Stephane Pontier <shadow dot walker at free dot fr>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,6 +46,9 @@ namespace KIPIPlugins
     class BatchProgressDialog;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPIKMLExportPlugin 
 {
 
@@ -53,13 +56,13 @@ namespace KIPIKMLExportPlugin
  * @brief Exporte to KML
  * @author KIPI dev. team
  */
-class kmlExport
+class KmlExport
 {
 
 public:
 
-    kmlExport(KIPI::Interface* interface);
-    ~kmlExport();
+    KmlExport(Interface* const interface);
+    ~KmlExport();
 
     bool createDir(const QDir& dir);
 
@@ -68,7 +71,7 @@ public:
      *  @param KUrl the URL of the picture
      *  @param kmlAlbum the album used
      */
-    void generateImagesthumb(KIPI::Interface* interface, const KUrl&, QDomElement& kmlAlbum);
+    void generateImagesthumb(const KUrl&, QDomElement& kmlAlbum);
 
     /*! Produce a web-friendly file name
      *  otherwise, while google earth works fine, maps.google.com may not find pictures and thumbnail
@@ -128,7 +131,7 @@ public:
 
     QColor           m_GPXColor;
 
-    KIPI::Interface* m_interface;
+    Interface* m_interface;
 
 private:
 
@@ -137,7 +140,7 @@ private:
     void logWarning(const QString& msg);
 
     /*!
-     *  \fn KIPIKMLExport::kmlExport::addKmlElement(QDomElement target, QString tag)
+     *  \fn KIPIKMLExport::KmlExport::addKmlElement(QDomElement target, QString tag)
      *  Add a new element
      *  @param target the parent element to which add the element
      *  @param tag the new element name
@@ -151,7 +154,7 @@ private:
     }
 
     /*!
-     *  \fn KIPIKMLExport::kmlExport::addKmlTextElement(QDomElement target, QString tag, QString text)
+     *  \fn KIPIKMLExport::KmlExport::addKmlTextElement(QDomElement target, QString tag, QString text)
      *  Add a new element with a text
      *  @param target the parent element to which add the element
      *  @param tag the new element name
@@ -168,7 +171,7 @@ private:
     }
 
     /*!
-     *  \fn KIPIKMLExport::kmlExport::addKmlHtmlElement(QDomElement target, QString tag, QString text)
+     *  \fn KIPIKMLExport::KmlExport::addKmlHtmlElement(QDomElement target, QString tag, QString text)
      *  Add a new element with html content (html entities are escaped and text is wrapped in a CDATA section)
      *  @param target the parent element to which add the element
      *  @param tag the new element name
@@ -192,7 +195,7 @@ private:
     /*! the GPS parsed data */
     KMLGPSDataParser                  m_gpxParser;
 
-    KIPIPlugins::BatchProgressDialog* m_progressDialog;
+    BatchProgressDialog* m_progressDialog;
 };
 
 } // namespace KIPIKMLExportPlugin

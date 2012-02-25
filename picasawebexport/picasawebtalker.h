@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,7 +42,6 @@ namespace KIO
     class Job;
 }
 
-
 namespace KIPIPicasawebExportPlugin
 {
 //class FPhotoInfo;
@@ -76,18 +75,16 @@ public:
     QString token() { return m_token;}
     void getToken(const QString& user, const QString& passwd) ;
     void checkToken(const QString& token) ;
-    void authenticate(const QString& token=NULL, const QString& username=NULL, const QString& password=NULL) ;
+    void authenticate(const QString& token=QString(), const QString& username=QString(), const QString& password=QString()) ;
     void listAlbums(const QString& username);
     void listPhotos(const QString& username, const QString& albumId,
-                    const QString& imgmax=NULL);
+                    const QString& imgmax=QString());
     void createAlbum(const PicasaWebAlbum& newAlbum);
     bool addPhoto(const QString& photoPath, PicasaWebPhoto& info, const QString& albumId);
     bool updatePhoto(const QString& photoPath, PicasaWebPhoto& info);
     void getPhoto(const QString& imgPath);
     QString getUserName();
     void cancel();
-
-public:
 
 Q_SIGNALS:
 

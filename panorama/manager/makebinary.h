@@ -25,26 +25,35 @@
 
 // Local includes
 
-#include "binaryiface.h"
+#include "kpbinaryiface.h"
 
 using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
-class MakeBinary : public BinaryIface
+class MakeBinary : public KPBinaryIface
 {
 
 public:
 
     MakeBinary()
-        : BinaryIface(QString("make"), QString("3.80"), QString("GNU Make "),
-                      0, QString("GNU"), QString("http://www.gnu.org/software/make/"),
-                      QString("Panorama"), QStringList("-v"))
-        { setup(); }
+        : KPBinaryIface(QString("make"),
+                        QString("3.80"),
+                        QString("GNU Make "),
+                        0,
+                        QString("GNU"),
+                        QString("http://www.gnu.org/software/make/"),
+                        QString("Panorama"),
+                        QStringList("-v")
+                       )
+        {
+            setup();
+        }
 
-    ~MakeBinary() {}
-
+    ~MakeBinary()
+    {
+    }
 };
 
 } // namespace KIPIPanoramaPlugin

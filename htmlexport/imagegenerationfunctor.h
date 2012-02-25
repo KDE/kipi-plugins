@@ -18,43 +18,49 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
+
 #ifndef IMAGEGENERATIONFUNCTOR_H
 #define IMAGEGENERATIONFUNCTOR_H
 
 #include "uniquenamehelper.h"
 
-namespace KIPIHTMLExport {
+namespace KIPIHTMLExport
+{
 
 class GalleryInfo;
 class Generator;
 class ImageElement;
-
 
 /**
  * This functor generates images (full and thumbnail) for an url and returns an
  * ImageElement initialized to fill the xml writer.
  * It is used as an argument to QtConcurrent::mapped().
  */
-class ImageGenerationFunctor {
+class ImageGenerationFunctor
+{
 public:
-	typedef ImageElement result_type;
 
-	ImageGenerationFunctor(Generator* generator, GalleryInfo* info, const QString& destDir);
+    typedef ImageElement result_type;
 
-	void operator()(ImageElement& element);
+public:
+
+    ImageGenerationFunctor(Generator* generator, GalleryInfo* info, const QString& destDir);
+
+    void operator()(ImageElement& element);
 
 private:
-	Generator* mGenerator;
-	GalleryInfo* mInfo;
-	QString mDestDir;
 
-	UniqueNameHelper mUniqueNameHelper;
+    bool writeDataToFile(const QByteArray& data, const QString& destPath);
+    void emitWarning(const QString& msg);
 
-	bool writeDataToFile(const QByteArray& data, const QString& destPath);
-	void emitWarning(const QString& msg);
+private:
+
+    Generator*       mGenerator;
+    GalleryInfo*     mInfo;
+    QString          mDestDir;
+    UniqueNameHelper mUniqueNameHelper;
 };
 
-
-} // namespace
+} // namespace KIPIHTMLExport
 
 #endif /* IMAGEGENERATIONFUNCTOR_H */

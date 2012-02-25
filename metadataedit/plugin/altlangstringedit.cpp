@@ -7,7 +7,7 @@
  * Description : a widget to edit a tag with multiple alternative
  *               language string entries.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,7 +37,7 @@
 
 #include <libkdcraw/squeezedcombobox.h>
 
-// LibKExiv2 includes
+// LibKPMetadata includes
 
 #include <libkexiv2/altlangstredit.h>
 
@@ -60,7 +60,7 @@ public:
         editor     = 0;
     }
 
-    KExiv2::AltLangMap oldValues;
+    KPMetadata::AltLangMap oldValues;
     MetadataCheckBox*  valueCheck;
     AltLangStrEdit*    editor;
 };
@@ -122,13 +122,13 @@ bool AltLangStringsEdit::isValid() const
     return d->valueCheck->isValid();
 }
 
-void AltLangStringsEdit::setValues(const KExiv2::AltLangMap& values)
+void AltLangStringsEdit::setValues(const KPMetadata::AltLangMap& values)
 {
     d->oldValues = values;
     d->editor->setValues(values);
 }
 
-bool AltLangStringsEdit::getValues(KExiv2::AltLangMap& oldValues, KExiv2::AltLangMap& newValues)
+bool AltLangStringsEdit::getValues(KPMetadata::AltLangMap& oldValues, KPMetadata::AltLangMap& newValues)
 {
     oldValues = d->oldValues;
     newValues = d->editor->values();

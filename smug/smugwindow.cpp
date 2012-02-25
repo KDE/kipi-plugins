@@ -48,10 +48,6 @@
 #include <kpassworddialog.h>
 #include <ktoolinvocation.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -64,7 +60,8 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
+#include "kpmetadata.h"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
@@ -76,8 +73,8 @@
 namespace KIPISmugPlugin
 {
 
-SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
-                       bool import, QWidget* /*parent*/)
+SmugWindow::SmugWindow(Interface* const interface, const QString& tmpFolder,
+                       bool import, QWidget* const /*parent*/)
     : KDialog(0)
 {
     m_tmpPath.clear();
@@ -129,7 +126,7 @@ SmugWindow::SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
 
     // ------------------------------------------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Smug Import/Export"), 0,
+    m_about = new KPAboutData(ki18n("Smug Import/Export"), 0,
                       KAboutData::License_GPL,
                       ki18n("A Kipi plugin to import/export image collections "
                             "from/to the SmugMug web service."),
@@ -719,13 +716,13 @@ bool SmugWindow::prepareImageForUpload(const QString& imgPath, bool isRAW)
     kDebug() << "Saving to temp file: " << m_tmpPath;
     image.save(m_tmpPath, "JPEG", m_widget->m_imageQualitySpB->value());
 
-    // copy meta data to temporary image
-    KExiv2Iface::KExiv2 exiv2Iface;
-    if (exiv2Iface.load(imgPath))
+    // copy meta-data to temporary image
+    KPMetadata meta;
+    if (meta.load(imgPath))
     {
-        exiv2Iface.setImageDimensions(image.size());
-        exiv2Iface.setImageProgramId("Kipi-plugins", kipiplugins_version);
-        exiv2Iface.save(m_tmpPath);
+        meta.setImageDimensions(image.size());
+        meta.setImageProgramId("Kipi-plugins", kipiplugins_version);
+        meta.save(m_tmpPath);
     }
 
     return true;
@@ -742,7 +739,7 @@ void SmugWindow::uploadNextPhoto()
     m_widget->m_imgList->processing(m_transferQueue.first());
 
     QString imgPath = m_transferQueue.first().path();
-    KIPIPlugins::KPImageInfo info(m_interface, imgPath);
+    KPImageInfo info(m_interface, imgPath);
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);

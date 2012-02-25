@@ -35,6 +35,7 @@
 #include <QScrollArea>
 #include <QSpinBox>
 #include <QVBoxLayout>
+#include <QTreeWidget>
 
 // KDE includes
 
@@ -57,13 +58,12 @@
 
 #include "comboboxdelegate.h"
 #include "comboboxintermediate.h"
-#include "imageslist.h"
 #include "flickrlist.h"
 
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QString& serviceName)
+FlickrWidget::FlickrWidget(QWidget* parent, Interface* iface, const QString& serviceName)
     : QWidget(parent)
 {
     setObjectName("FlickrWidget");
@@ -95,7 +95,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QStrin
 
     // -- The image list tab --------------------------------------------------
 
-    m_imglst = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab, (serviceName == "23"));
+    m_imglst             = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab, (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
     QHeaderView* hdr     = m_imglst->listView()->header();
@@ -105,10 +105,10 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QStrin
     m_imglst->setAllowRAW(true);
     m_imglst->loadImagesFromCurrentSelection();
     m_imglst->listView()->setWhatsThis(i18n("This is the list of images to upload to your Flickr account."));
-    m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::PUBLIC), i18nc("photo permissions", "Public"), true);
+    m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::PUBLIC), i18nc("photo permissions", "Public"), true);
 
     // Handle extra tags per image.
-    m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::TAGS),
+    m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::TAGS),
                                     i18n("Extra tags"), true);
 
     if (serviceName != "23")
@@ -125,18 +125,18 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QStrin
             permColWidth = tmpWidth;
         }
 
-        m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FAMILY),
+        m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::FAMILY),
                                         i18nc("photo permissions", "Family"), true);
-        m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::FRIENDS),
+        m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::FRIENDS),
                                         i18nc("photo permissions", "Friends"), true);
         hdr->setResizeMode(FlickrList::FAMILY,  QHeaderView::Interactive);
         hdr->setResizeMode(FlickrList::FRIENDS, QHeaderView::Interactive);
         hdr->resizeSection(FlickrList::FAMILY,  permColWidth);
         hdr->resizeSection(FlickrList::FRIENDS, permColWidth);
 
-        m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
+        m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
                                         i18n("Safety level"), true);
-        m_imglst->listView()->setColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
+        m_imglst->listView()->setColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
                                         i18n("Content type"), true);
         QMap<int, QString> safetyLevelItems;
         QMap<int, QString> contentTypeItems;
@@ -148,9 +148,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QStrin
         contentTypeItems[FlickrList::OTHER]      = i18nc("photo content type", "Other");
         ComboBoxDelegate* safetyLevelDelegate = new ComboBoxDelegate(m_imglst, safetyLevelItems);
         ComboBoxDelegate* contentTypeDelegate = new ComboBoxDelegate(m_imglst, contentTypeItems);
-        m_imglst->listView()->setItemDelegateForColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
+        m_imglst->listView()->setItemDelegateForColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
                                                        safetyLevelDelegate);
-        m_imglst->listView()->setItemDelegateForColumn(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
+        m_imglst->listView()->setItemDelegateForColumn(static_cast<KPImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
                                                        contentTypeDelegate);
 
     }
@@ -424,9 +424,9 @@ FlickrWidget::FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QStrin
     {
         m_extendedPublicationBox->hide();
         m_extendedPublicationButton->hide();
-        m_imglst->listView()->setColumnEnabled(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
+        m_imglst->listView()->setColumnEnabled(static_cast<KPImagesListView::ColumnType>(FlickrList::SAFETYLEVEL),
                                                false);
-        m_imglst->listView()->setColumnEnabled(static_cast<KIPIPlugins::ImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
+        m_imglst->listView()->setColumnEnabled(static_cast<KPImagesListView::ColumnType>(FlickrList::CONTENTTYPE),
                                                false);
     }
 }

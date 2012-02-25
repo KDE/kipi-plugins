@@ -6,7 +6,8 @@
  * Date        : 2009-05-31
  * Description : Figure out camera clock delta from a clock picture.
  *
- * Copyright (C) 2009 by Pieter Edelman (p dot edelman at gmx dot net)
+ * Copyright (C) 2009 by Pieter Edelman <p dot edelman at gmx dot net>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,11 +52,6 @@
 
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -64,11 +60,15 @@
 // Local includes
 
 #include "imagedialog.h"
+#include "kpmetadata.h"
+
+using namespace KDcrawIface;
 
 namespace KIPITimeAdjustPlugin
 {
 
-ImageDisplay::ImageDisplay(QScrollArea *parentArea) : QLabel()
+ImageDisplay::ImageDisplay(QScrollArea* parentArea)
+    : QLabel()
 {
     currX  = 0;
     currY  = 0;
@@ -89,7 +89,7 @@ void ImageDisplay::mousePressEvent(QMouseEvent *event)
     QLabel::mousePressEvent(event);
 }
 
-void ImageDisplay::mouseMoveEvent(QMouseEvent *event)
+void ImageDisplay::mouseMoveEvent(QMouseEvent* event)
 {
     // If the mouse is moved while the middle button is still pressed, calculate
     // the position difference compared the last update, move the QScrollArea's
@@ -105,7 +105,7 @@ void ImageDisplay::mouseMoveEvent(QMouseEvent *event)
     QLabel::mouseMoveEvent(event);
 }
 
-void ImageDisplay::mouseReleaseEvent(QMouseEvent *event)
+void ImageDisplay::mouseReleaseEvent(QMouseEvent* event)
 {
     // When the middle (or rather, any) mouse button is released, we release the
     // cursor again.
@@ -114,7 +114,9 @@ void ImageDisplay::mouseReleaseEvent(QMouseEvent *event)
     QLabel::mouseReleaseEvent(event);
 }
 
-class ClockPhotoDialogPrivate
+// ------------------------------------------------------------------------------
+
+class ClockPhotoDialog::ClockPhotoDialogPrivate
 {
 
 public:
@@ -145,10 +147,10 @@ public:
 
     ImageDisplay    *imageLabel;
 
-    KIPI::Interface *interface;
+    Interface *interface;
 };
 
-ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface, QWidget* parent)
+ClockPhotoDialog::ClockPhotoDialog(Interface* interface, QWidget* parent)
                 : KDialog(parent), d(new ClockPhotoDialogPrivate)
 {
     d->interface     = interface;
@@ -176,7 +178,7 @@ ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface, QWidget* parent)
     QVBoxLayout *vBox = new QVBoxLayout(mainWidget());
 
     // Some explanation.
-    QLabel *explanationLabel =
+    QLabel* explanationLabel =
             new QLabel(i18n("If you have a photo in your set with a clock or "
                             "another external time source on it, you can load "
                             "it here and set the indicator to the (date and) "
@@ -206,7 +208,7 @@ ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface, QWidget* parent)
 
     // For zooming support, a scale is displayed beneath the image with zoom out
     // and zoom in buttons.
-    QLabel *scale_label = new QLabel(i18n("Scale:"));
+    QLabel* scale_label = new QLabel(i18n("Scale:"));
     d->zoomOutButton    = new QPushButton(KIcon("zoom-out"), "");
     d->zoomInButton     = new QPushButton(KIcon("zoom-in"), "");
     d->zoomInButton->setFlat(true);
@@ -226,7 +228,7 @@ ClockPhotoDialog::ClockPhotoDialog(KIPI::Interface* interface, QWidget* parent)
     // The date and time entry widget allows the user to enter the date and time
     // displayed in the image. The format is explicitly set, otherwise seconds
     // might not get displayed.
-    QLabel *dtLabel = new QLabel(i18n("The clock date and time:"));
+    QLabel* dtLabel = new QLabel(i18n("The clock date and time:"));
     d->calendar     = new QDateTimeEdit();
     d->calendar->setDisplayFormat("d MMMM yyyy, hh:mm:ss");
     d->calendar->setCalendarPopup(true);
@@ -274,12 +276,12 @@ ClockPhotoDialog::~ClockPhotoDialog()
     delete d;
 }
 
-bool ClockPhotoDialog::setImage(const KUrl &imageFile)
+bool ClockPhotoDialog::setImage(const KUrl& imageFile)
 {
     bool success = false;
 
     // Raw housekeeping.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QString rawFilesExt(KDcraw::rawFiles());
     QFileInfo info(imageFile.path());
 
     // Try to load the image into the d->image variable.
@@ -289,7 +291,7 @@ bool ClockPhotoDialog::setImage(const KUrl &imageFile)
         // In case of raw images, load the image the a QImage and convert it to
         // the QPixmap for display.
         QImage tmp  = QImage();
-        imageLoaded = KDcrawIface::KDcraw::loadDcrawPreview(tmp, imageFile.path());
+        imageLoaded = KDcraw::loadDcrawPreview(tmp, imageFile.path());
         delete d->image;
         d->image    = new QPixmap(d->image->fromImage(tmp));
     }
@@ -301,13 +303,14 @@ bool ClockPhotoDialog::setImage(const KUrl &imageFile)
     if (imageLoaded)
     {
         // Try to read the datetime data.
-        KExiv2Iface::KExiv2 exiv2Iface;
-        bool result = exiv2Iface.load(imageFile.path());
+        KPMetadata meta;
+        bool result = meta.load(imageFile.path());
         if (result)
         {
             delete d->photoDateTime;
-            d->photoDateTime = new QDateTime(exiv2Iface.getImageDateTime());
-            if (d->photoDateTime->isValid()) {
+            d->photoDateTime = new QDateTime(meta.getImageDateTime());
+            if (d->photoDateTime->isValid())
+            {
                 // Set the datetime widget to the photo datetime.
                 d->calendar->setDateTime(*(d->photoDateTime));
                 d->calendar->setEnabled(true);
@@ -399,7 +402,7 @@ void ClockPhotoDialog::saveSize()
 void ClockPhotoDialog::slotLoadPhoto()
 {
     // Present the user with a dialog to load the photo.
-    KIPIPlugins::ImageDialog dlg(this, d->interface, true, false);
+    ImageDialog dlg(this, d->interface, true, false);
 
     if (!dlg.url().isEmpty())
     {

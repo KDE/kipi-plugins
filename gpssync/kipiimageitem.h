@@ -34,6 +34,7 @@
 // KDE includes
 
 #include <kurl.h>
+#include <kdebug.h>
 
 // LibKIPI includes
 
@@ -46,12 +47,11 @@
 // local includes
 
 #include "gpsdatacontainer.h"
-#include "kdebug.h"
+#include "kpmetadata.h"
 
-namespace KExiv2Iface
-{
-    class KExiv2;
-}
+using namespace KIPI;
+using namespace KIPIPlugins;
+using namespace KGeoMap;
 
 namespace KIPIGPSSyncPlugin
 {
@@ -70,21 +70,21 @@ class RGInfo
      * Constructor
      */ 
     RGInfo()
-	:id(),
-         coordinates(),
-         rgData()
+      : id(),
+        coordinates(),
+        rgData()
     {
     }
 
     /**
      * The image index.
      */ 
-    QPersistentModelIndex id;
+    QPersistentModelIndex  id;
 
     /**
      * The coordinates of current image.
      */ 
-    KGeoMap::GeoCoordinates coordinates;
+    GeoCoordinates         coordinates;
 
     /**
      * The address elements and their names.
@@ -92,18 +92,17 @@ class RGInfo
     QMap<QString, QString> rgData;
 };
 
-
 enum Type
 {
-    TypeChild = 1,
-    TypeSpacer = 2,
+    TypeChild    = 1,
+    TypeSpacer   = 2,
     TypeNewChild = 4
 };
 
 typedef struct TagData
 {
     QString tagName;
-    Type tagType;
+    Type    tagType;
 
 } TagData;
 
@@ -113,25 +112,25 @@ class KipiImageItem
 {
 public:
 
-    static const int RoleCoordinates = Qt::UserRole + 1;
+    static const int RoleCoordinates         = Qt::UserRole + 1;
 
-    static const int ColumnThumbnail = 0;
-    static const int ColumnFilename = 1;
-    static const int ColumnDateTime = 2;
-    static const int ColumnLatitude = 3;
-    static const int ColumnLongitude = 4;
-    static const int ColumnAltitude = 5;
-    static const int ColumnAccuracy = 6;
-    static const int ColumnTags = 7;
-    static const int ColumnStatus = 8;
-    static const int ColumnDOP = 9;
-    static const int ColumnFixType = 10;
-    static const int ColumnNSatellites = 11;
-    static const int ColumnSpeed = 12;
+    static const int ColumnThumbnail         = 0;
+    static const int ColumnFilename          = 1;
+    static const int ColumnDateTime          = 2;
+    static const int ColumnLatitude          = 3;
+    static const int ColumnLongitude         = 4;
+    static const int ColumnAltitude          = 5;
+    static const int ColumnAccuracy          = 6;
+    static const int ColumnTags              = 7;
+    static const int ColumnStatus            = 8;
+    static const int ColumnDOP               = 9;
+    static const int ColumnFixType           = 10;
+    static const int ColumnNSatellites       = 11;
+    static const int ColumnSpeed             = 12;
 
     static const int ColumnGPSImageItemCount = 13;
 
-    KipiImageItem(KIPI::Interface* const interface, const KUrl& url);
+    KipiImageItem(Interface* const interface, const KUrl& url);
     virtual ~KipiImageItem();
 
     /// @name Loading and saving
@@ -154,9 +153,9 @@ public:
 
     /// @name GPS related functions
     //@{
-    void setCoordinates(const KGeoMap::GeoCoordinates& newCoordinates);
-    inline KGeoMap::GeoCoordinates coordinates() const { return m_gpsData.getCoordinates(); }
-    inline GPSDataContainer gpsData() const { return m_gpsData; }
+    void setCoordinates(const GeoCoordinates& newCoordinates);
+    inline GeoCoordinates coordinates() const                 { return m_gpsData.getCoordinates();                        }
+    inline GPSDataContainer gpsData() const                   { return m_gpsData;                                         }
     inline void setGPSData(const GPSDataContainer& container) { m_gpsData = container; m_dirty = true; emitDataChanged(); }
     void restoreGPSData(const GPSDataContainer& container);
     //@}
@@ -196,24 +195,24 @@ protected:
     QVariant data(const int column, const int role) const;
     void setModel(KipiImageModel* const model);
     void emitDataChanged();
-    KExiv2Iface::KExiv2* getExiv2ForFile();
+    KPMetadata* getMetadataForFile() const;
 
 protected:
 
-    KIPI::Interface* m_interface;
-    KipiImageModel* m_model;
+    Interface*             m_interface;
+    KipiImageModel*        m_model;
 
-    KUrl m_url;
-    QDateTime m_dateTime;
+    KUrl                   m_url;
+    QDateTime              m_dateTime;
 
-    bool m_dirty;
-    GPSDataContainer m_gpsData;
-    GPSDataContainer m_savedState;
+    bool                   m_dirty;
+    GPSDataContainer       m_gpsData;
+    GPSDataContainer       m_savedState;
 
-    bool m_tagListDirty;
+    bool                   m_tagListDirty;
     QList<QList<TagData> > m_tagList;
     QList<QList<TagData> > m_savedTagList;
-    bool m_writeXmpTags;
+    bool                   m_writeXmpTags;
 
     friend class KipiImageModel;
 };

@@ -36,7 +36,7 @@
 // Local includes
 
 #include "actionthread.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 using namespace KIPIPlugins;
 using namespace KIPIJPEGLossLessPlugin;
@@ -57,7 +57,7 @@ public:
 
     QProgressBar* progressBar;
 
-    ImagesList*   listView;
+    KPImagesList* listView;
 
     ActionThread* thread;
 };
@@ -73,8 +73,8 @@ ImageSelector::ImageSelector()
     setMainWidget(d->page);
     QGridLayout* mainLayout = new QGridLayout(d->page);
 
-    d->listView             = new ImagesList(0, d->page);
-    d->listView->setControlButtonsPlacement(ImagesList::ControlButtonsRight);
+    d->listView             = new KPImagesList(0, d->page);
+    d->listView->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
 
     d->progressBar          = new QProgressBar(d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );

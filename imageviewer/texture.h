@@ -35,17 +35,18 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
-// LibKexiv2 includes
+// Local includes
 
-#include <libkexiv2/kexiv2.h>
+#include "kpmetadata.h"
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 /**
  * @short Texture class
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
  * @version 0.2
  */
-
-using namespace KExiv2Iface;
 
 namespace KIPIviewer
 {
@@ -55,7 +56,7 @@ class Texture
 
 public:
 
-    Texture(KIPI::Interface*);
+    Texture(Interface*);
     ~Texture();
 
     int  height() const;
@@ -85,16 +86,16 @@ protected:
 
 protected:
 
-    int                      display_x, display_y;
-    GLuint                   _texnr;
-    QSize                    initial_size;
-    QString                  filename;
-    QImage                   qimage, glimage;
-    float                    rdx, rdy, z, ux, uy, rtx, rty;
-    float                    vtop, vbottom, vleft, vright;
-    KExiv2::ImageOrientation rotate_list[4];
-    int                      rotate_idx;
-    KIPI::Interface*         kipiInterface;
+    int                          display_x, display_y;
+    GLuint                       _texnr;
+    QSize                        initial_size;
+    QString                      filename;
+    QImage                       qimage, glimage;
+    float                        rdx, rdy, z, ux, uy, rtx, rty;
+    float                        vtop, vbottom, vleft, vright;
+    KPMetadata::ImageOrientation rotate_list[4];
+    int                          rotate_idx;
+    Interface*                   kipiInterface;
 };
 
 } // namespace KIPIviewer

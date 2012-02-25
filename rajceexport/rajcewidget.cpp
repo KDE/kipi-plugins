@@ -56,12 +56,12 @@
 #include "rajcesession.h"
 #include "rajcelogindialog.h"
 #include "newalbumdialog.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPIRajceExportPlugin
 {
 
-RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent)
+RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent)
     : QWidget(parent)
 {
     m_lastLoggedInState     = false;
@@ -70,9 +70,9 @@ RajceWidget::RajceWidget(KIPI::Interface* interface, const QString& tmpFolder, Q
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KIPIPlugins::ImagesList(interface, this);
+    m_imgList = new KIPIPlugins::KPImagesList(interface, this);
 
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Rajce.net account."));

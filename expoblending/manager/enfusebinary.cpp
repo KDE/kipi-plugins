@@ -6,7 +6,7 @@
  * Date        : 2009-12-23
  * Description : Autodetect enfuse binary program and version
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,6 +40,7 @@ bool EnfuseBinary::parseHeader(const QString& output)
     // The output look like this : ==== enfuse, version 3.2 ====
     QString headerStartsOld("==== enfuse, version ");
     QString firstLine = output.section('\n', m_headerLine, m_headerLine);
+
     if (firstLine.startsWith(m_headerStarts))
     {
         kDebug() << path() << " help header line: \n" << firstLine;
@@ -56,6 +57,7 @@ bool EnfuseBinary::parseHeader(const QString& output)
         kDebug() << "Found " << path() << " version: " << version();
         return true;
     }
+
     return false;
 }
 

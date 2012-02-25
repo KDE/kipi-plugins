@@ -25,25 +25,23 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct MyImagesListPriv;
-
-class MyImagesList : public KIPIPlugins::ImagesList
+class MyImagesList : public KIPIPlugins::KPImagesList
 {
     Q_OBJECT
 
 public:
 
-    explicit MyImagesList(KIPI::Interface* iface, QWidget* parent = 0);
+    explicit MyImagesList(KIPI::Interface* const iface, QWidget* const parent = 0);
     ~MyImagesList();
 
     bool hasUnprocessedImages();
@@ -56,6 +54,7 @@ public Q_SLOTS:
 
 private:
 
+    struct MyImagesListPriv;
     MyImagesListPriv* const d;
 };
 

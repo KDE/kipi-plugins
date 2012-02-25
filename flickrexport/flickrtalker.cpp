@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2009 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2009      by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -56,10 +56,6 @@
 #include <ktoolinvocation.h>
 #include <kguiitem.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -68,9 +64,12 @@
 // Local includes
 
 #include "kpversion.h"
+#include "kpmetadata.h"
 #include "mpform.h"
 #include "flickritem.h"
 #include "flickrwindow.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIFlickrExportPlugin
 {
@@ -642,18 +641,18 @@ bool FlickrTalker::addPhoto(const QString& photoPath, const FPhotoInfo& info,
 
         // Restore all metadata.
 
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KPMetadata meta;
 
-        if (exiv2Iface.load(photoPath))
+        if (meta.load(photoPath))
         {
-            exiv2Iface.setImageDimensions(image.size());
+            meta.setImageDimensions(image.size());
 
             // NOTE: see B.K.O #153207: Flickr use IPTC keywords to create Tags in web interface
             //       As IPTC do not support UTF-8, we need to remove it.
-            exiv2Iface.removeIptcTag("Iptc.Application2.Keywords", false);
+            meta.removeIptcTag("Iptc.Application2.Keywords", false);
 
-            exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-            exiv2Iface.save(path);
+            meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+            meta.save(path);
         }
         else
         {

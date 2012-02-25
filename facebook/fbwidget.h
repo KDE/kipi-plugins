@@ -43,7 +43,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KIPIFacebookPlugin
@@ -63,7 +63,7 @@ class FbWidget : public QWidget
 
 public:
 
-    FbWidget(QWidget* parent, KIPI::Interface* iface, bool import);
+    FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool import);
     ~FbWidget();
 
     void updateLabels(const QString& name = QString(), const QString& url = QString(), bool uplPerm = false);
@@ -72,7 +72,7 @@ public:
     QString   getAlbumID() const;
     QString   getDestinationPath() const;
 
-    KIPIPlugins::ImagesList* imagesList() const;
+    KIPIPlugins::KPImagesList* imagesList() const;
 
     QProgressBar* progressBar() const;
 
@@ -89,25 +89,25 @@ private Q_SLOTS:
 
 private:
 
-    KIPIPlugins::ImagesList* m_imgList;
-    KIPI::UploadWidget*      m_uploadWidget;
+    KIPIPlugins::KPImagesList* m_imgList;
+    KIPI::UploadWidget*        m_uploadWidget;
 
-    QLabel*                  m_headerLbl;
-    QLabel*                  m_userNameDisplayLbl;
-    QLabel*                  m_permissionLbl;
-    KPushButton*             m_changeUserBtn;
+    QLabel*                    m_headerLbl;
+    QLabel*                    m_userNameDisplayLbl;
+    QLabel*                    m_permissionLbl;
+    KPushButton*               m_changeUserBtn;
 
-    QButtonGroup*            m_dlGrp;
-    KComboBox*               m_friendsCoB;
-    KComboBox*               m_albumsCoB;
-    KPushButton*             m_newAlbumBtn;
-    KPushButton*             m_reloadAlbumsBtn;
+    QButtonGroup*              m_dlGrp;
+    KComboBox*                 m_friendsCoB;
+    KComboBox*                 m_albumsCoB;
+    KPushButton*               m_newAlbumBtn;
+    KPushButton*               m_reloadAlbumsBtn;
 
-    QCheckBox*               m_resizeChB;
-    QSpinBox*                m_dimensionSpB;
-    QSpinBox*                m_imageQualitySpB;
+    QCheckBox*                 m_resizeChB;
+    QSpinBox*                  m_dimensionSpB;
+    QSpinBox*                  m_imageQualitySpB;
 
-    QProgressBar*            m_progressBar;
+    QProgressBar*              m_progressBar;
 
     friend class FbWindow;
 };

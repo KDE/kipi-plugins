@@ -6,7 +6,7 @@
  * Date        : 2007-10-24
  * Description : XMP origin settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,13 +44,13 @@ public:
     void applyMetadata(QByteArray& exifData, QByteArray& xmpData);
     void readMetadata(QByteArray& xmpData);
 
-    bool syncHOSTDateIsChecked();
-    bool syncEXIFDateIsChecked();
+    bool syncHOSTDateIsChecked() const;
+    bool syncEXIFDateIsChecked() const;
 
     void setCheckedSyncHOSTDate(bool c);
     void setCheckedSyncEXIFDate(bool c);
 
-    QDateTime getXMPCreationDate();
+    QDateTime getXMPCreationDate() const;
 
 Q_SIGNALS:
 

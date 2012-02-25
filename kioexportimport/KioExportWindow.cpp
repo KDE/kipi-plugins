@@ -44,21 +44,22 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "KioExportWidget.h"
 
 namespace KIPIKioExportPlugin
 {
 
-const QString KioExportWindow::TARGET_URL_PROPERTY = "targetUrl";
-const QString KioExportWindow::CONFIG_GROUP        = "KioExport";
+const QString KioExportWindow::TARGET_URL_PROPERTY  = "targetUrl";
+const QString KioExportWindow::HISTORY_URL_PROPERTY = "historyUrls";
+const QString KioExportWindow::CONFIG_GROUP         = "KioExport";
 
-KioExportWindow::KioExportWindow(QWidget* /*parent*/, KIPI::Interface *interface)
-               : KDialog(0), m_interface(interface)
+KioExportWindow::KioExportWindow(QWidget* const /*parent*/, Interface* const interface)
+    : KDialog(0), m_interface(interface)
 {
     if (!interface)
     {
-        kFatal() << "KIPI::Interface is empty";
+        kFatal() << "Interface is empty";
     }
 
     m_exportWidget = new KioExportWidget(this, interface);
@@ -78,6 +79,9 @@ KioExportWindow::KioExportWindow(QWidget* /*parent*/, KIPI::Interface *interface
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotUpload()));
 
+    connect(this, SIGNAL(closeClicked()),
+            this, SLOT(slotClose()));
+
     connect(m_exportWidget->imagesList(), SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
@@ -86,7 +90,7 @@ KioExportWindow::KioExportWindow(QWidget* /*parent*/, KIPI::Interface *interface
 
     // -- About data and help button ----------------------------------------
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Export to remote computer"),
+    m_about = new KPAboutData(ki18n("Export to remote computer"),
                    0,
                    KAboutData::License_GPL,
                    ki18n("A Kipi plugin to export images over network using KIO-Slave"),
@@ -123,12 +127,9 @@ void KioExportWindow::slotHelp()
     KToolInvocation::invokeHelp("kioexport", "kipi-plugins");
 }
 
-void KioExportWindow::closeEvent(QCloseEvent *e)
+void KioExportWindow::closeEvent(QCloseEvent* e)
 {
-    if (!e)
-    {
-        return;
-    }
+    if (!e) return;
 
     saveSettings();
     m_exportWidget->imagesList()->listView()->clear();
@@ -150,14 +151,11 @@ void KioExportWindow::reactivate()
 
 void KioExportWindow::restoreSettings()
 {
-    kDebug() << "restoring settings";
-
+    kDebug() <<  "pass here";
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
-    m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, ""));
-
-    kDebug() << "target url after restoring: "
-                  << m_exportWidget->targetUrl().prettyUrl();
+    m_exportWidget->setHistory(group.readEntry(HISTORY_URL_PROPERTY, QStringList()));
+    m_exportWidget->setTargetUrl(group.readEntry(TARGET_URL_PROPERTY, KUrl()));
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
     restoreDialogSize(group2);
@@ -165,14 +163,11 @@ void KioExportWindow::restoreSettings()
 
 void KioExportWindow::saveSettings()
 {
-    kDebug() << "saving settings";
-
+    kDebug() <<  "pass here";
     KConfig config("kipirc");
     KConfigGroup group = config.group(CONFIG_GROUP);
-    group.writeEntry(TARGET_URL_PROPERTY, m_exportWidget->targetUrl().url());
-
-    kDebug() << "stored target url "
-                  << m_exportWidget->targetUrl().prettyUrl();
+    group.writeEntry(HISTORY_URL_PROPERTY, m_exportWidget->history().toStringList());
+    group.writeEntry(TARGET_URL_PROPERTY,  m_exportWidget->targetUrl().url());
 
     KConfigGroup group2 = config.group(QString("Kio Export Dialog"));
     saveDialogSize(group2);
@@ -196,8 +191,8 @@ void KioExportWindow::updateUploadButton()
     enableButton(User1, listNotEmpty && m_exportWidget->targetUrl().isValid());
 
     kDebug() << "Updated upload button with listNotEmpty = "
-                  << listNotEmpty << ", targetUrl().isValid() = "
-                  << m_exportWidget->targetUrl().isValid();
+             << listNotEmpty << ", targetUrl().isValid() = "
+             << m_exportWidget->targetUrl().isValid();
 }
 
 void KioExportWindow::slotCopyingDone(KIO::Job *job, const KUrl& from,
@@ -232,13 +227,15 @@ void KioExportWindow::slotCopyingFinished(KJob *job)
 
 void KioExportWindow::slotUpload()
 {
+    saveSettings();
+
     // start copying and react on signals
     setEnabled(false);
-    KIO::CopyJob *copyJob = KIO::copy(m_exportWidget->imagesList()->imageUrls(),
+    KIO::CopyJob* copyJob = KIO::copy(m_exportWidget->imagesList()->imageUrls(),
                             m_exportWidget->targetUrl());
 
-    connect(copyJob, SIGNAL(copyingDone(KIO::Job*,KUrl,KUrl,time_t,bool,bool)),
-            this, SLOT(slotCopyingDone(KIO::Job*,KUrl,KUrl,time_t,bool,bool)));
+    connect(copyJob, SIGNAL(copyingDone(KIO::Job*, KUrl, KUrl, time_t, bool, bool)),
+            this, SLOT(slotCopyingDone(KIO::Job*, KUrl, KUrl, time_t, bool, bool)));
 
     connect(copyJob, SIGNAL(result(KJob*)),
             this, SLOT(slotCopyingFinished(KJob*)));

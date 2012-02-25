@@ -6,7 +6,7 @@
  * Date        : 2007-10-18
  * Description : XMP content settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,16 +39,12 @@
 #include <kseparator.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "altlangstringedit.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -184,22 +180,22 @@ XMPContent::~XMPContent()
     delete d;
 }
 
-bool XMPContent::syncJFIFCommentIsChecked()
+bool XMPContent::syncJFIFCommentIsChecked() const
 {
     return d->syncJFIFCommentCheck->isChecked();
 }
 
-bool XMPContent::syncHOSTCommentIsChecked()
+bool XMPContent::syncHOSTCommentIsChecked() const
 {
     return d->syncHOSTCommentCheck->isChecked();
 }
 
-bool XMPContent::syncEXIFCommentIsChecked()
+bool XMPContent::syncEXIFCommentIsChecked() const
 {
     return d->syncEXIFCommentCheck->isChecked();
 }
 
-QString XMPContent::getXMPCaption()
+QString XMPContent::getXMPCaption() const
 {
     return d->captionEdit->defaultAltLang();
 }
@@ -222,15 +218,15 @@ void XMPContent::setCheckedSyncEXIFComment(bool c)
 void XMPContent::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2Iface::KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
 
-    KExiv2Iface::KExiv2::AltLangMap map;
+    KPMetadata::AltLangMap map;
     QString data;
 
     d->headlineEdit->clear();
     d->headlineCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Headline", false);
+    data = meta.getXmpTagString("Xmp.photoshop.Headline", false);
     if (!data.isNull())
     {
         d->headlineEdit->setText(data);
@@ -239,11 +235,11 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     d->headlineEdit->setEnabled(d->headlineCheck->isChecked());
 
     d->captionEdit->setValid(false);
-    map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.description", false);
+    map = meta.getXmpTagStringListLangAlt("Xmp.dc.description", false);
     if (!map.isEmpty())
         d->captionEdit->setValues(map);
 
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.CaptionWriter", false);
+    data = meta.getXmpTagString("Xmp.photoshop.CaptionWriter", false);
     if (!data.isNull())
     {
         d->writerEdit->setText(data);
@@ -252,7 +248,7 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     d->writerEdit->setEnabled(d->writerCheck->isChecked());
 
     d->copyrightEdit->setValid(false);
-    map = exiv2Iface.getXmpTagStringListLangAlt("Xmp.dc.rights", false);
+    map = meta.getXmpTagStringListLangAlt("Xmp.dc.rights", false);
     if (!map.isEmpty())
         d->copyrightEdit->setValues(map);
 
@@ -261,46 +257,46 @@ void XMPContent::readMetadata(QByteArray& xmpData)
 
 void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
 {
-    KExiv2Iface::KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setExif(exifData);
+    meta.setXmp(xmpData);
 
     if (d->headlineCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.Headline", d->headlineEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.Headline", d->headlineEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.Headline");
+        meta.removeXmpTag("Xmp.photoshop.Headline");
 
-    KExiv2Iface::KExiv2::AltLangMap oldAltLangMap, newAltLangMap;
+    KPMetadata::AltLangMap oldAltLangMap, newAltLangMap;
     if (d->captionEdit->getValues(oldAltLangMap, newAltLangMap))
     {
-        exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.description", newAltLangMap, false);
+        meta.setXmpTagStringListLangAlt("Xmp.dc.description", newAltLangMap, false);
 
         if (syncEXIFCommentIsChecked())
-            exiv2Iface.setExifComment(getXMPCaption());
+            meta.setExifComment(getXMPCaption());
 
         if (syncJFIFCommentIsChecked())
-            exiv2Iface.setComments(getXMPCaption().toUtf8());
+            meta.setComments(getXMPCaption().toUtf8());
     }
     else if (d->captionEdit->isValid())
-        exiv2Iface.removeXmpTag("Xmp.dc.description");
+        meta.removeXmpTag("Xmp.dc.description");
 
     if (d->writerCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.CaptionWriter", d->writerEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.CaptionWriter", d->writerEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.CaptionWriter");
+        meta.removeXmpTag("Xmp.photoshop.CaptionWriter");
 
     if (d->copyrightEdit->getValues(oldAltLangMap, newAltLangMap))
-        exiv2Iface.setXmpTagStringListLangAlt("Xmp.dc.rights", newAltLangMap, false);
+        meta.setXmpTagStringListLangAlt("Xmp.dc.rights", newAltLangMap, false);
     else if (d->copyrightEdit->isValid())
-        exiv2Iface.removeXmpTag("Xmp.dc.rights");
+        meta.removeXmpTag("Xmp.dc.rights");
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 
-    xmpData  = exiv2Iface.getXmp();
+    xmpData  = meta.getXmp();
 }
 
 void XMPContent::slotSyncOptionsEnabled(bool defaultLangAlt)

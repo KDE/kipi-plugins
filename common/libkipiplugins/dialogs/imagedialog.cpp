@@ -39,10 +39,6 @@
 #include <kimageio.h>
 #include <kio/previewjob.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/dcrawinfocontainer.h>
@@ -56,6 +52,7 @@
 // Local includes
 
 #include "kprawthumbthread.h"
+#include "kpmetadata.h"
 
 using namespace KDcrawIface;
 
@@ -80,9 +77,9 @@ public:
 
     KUrl                currentUrl;
 
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KPMetadata        metaIface;
 
-    KIPI::Interface*    iface;
+    KIPI::Interface*  iface;
 
     KPRawThumbThread* loadRawThumb;
 };
@@ -183,58 +180,58 @@ void ImageDialogPreview::showPreview(const KUrl& url)
 
         // Try to use libkexiv2 to identify image.
 
-        if (d->exiv2Iface.load(d->currentUrl.path()) &&
-            (d->exiv2Iface.hasExif() || d->exiv2Iface.hasXmp()))
+        if (d->metaIface.load(d->currentUrl.path()) &&
+            (d->metaIface.hasExif() || d->metaIface.hasXmp()))
         {
-            make = d->exiv2Iface.getExifTagString("Exif.Image.Make");
+            make = d->metaIface.getExifTagString("Exif.Image.Make");
             if (make.isEmpty())
-                make = d->exiv2Iface.getXmpTagString("Xmp.tiff.Make");
+                make = d->metaIface.getXmpTagString("Xmp.tiff.Make");
 
-            model = d->exiv2Iface.getExifTagString("Exif.Image.Model");
+            model = d->metaIface.getExifTagString("Exif.Image.Model");
             if (model.isEmpty())
-                model = d->exiv2Iface.getXmpTagString("Xmp.tiff.Model");
+                model = d->metaIface.getXmpTagString("Xmp.tiff.Model");
 
-            if (d->exiv2Iface.getImageDateTime().isValid())
-                dateTime = KGlobal::locale()->formatDateTime(d->exiv2Iface.getImageDateTime(),
+            if (d->metaIface.getImageDateTime().isValid())
+                dateTime = KGlobal::locale()->formatDateTime(d->metaIface.getImageDateTime(),
                                                              KLocale::ShortDate, true);
 
-            aperture = d->exiv2Iface.getExifTagString("Exif.Photo.FNumber");
+            aperture = d->metaIface.getExifTagString("Exif.Photo.FNumber");
             if (aperture.isEmpty())
             {
-                aperture = d->exiv2Iface.getExifTagString("Exif.Photo.ApertureValue");
+                aperture = d->metaIface.getExifTagString("Exif.Photo.ApertureValue");
                 if (aperture.isEmpty())
                 {
-                    aperture = d->exiv2Iface.getXmpTagString("Xmp.exif.FNumber");
+                    aperture = d->metaIface.getXmpTagString("Xmp.exif.FNumber");
                     if (aperture.isEmpty())
-                        aperture = d->exiv2Iface.getXmpTagString("Xmp.exif.ApertureValue");
+                        aperture = d->metaIface.getXmpTagString("Xmp.exif.ApertureValue");
                 }
             }
 
-            focalLength = d->exiv2Iface.getExifTagString("Exif.Photo.FocalLength");
+            focalLength = d->metaIface.getExifTagString("Exif.Photo.FocalLength");
             if (focalLength.isEmpty())
-                focalLength = d->exiv2Iface.getXmpTagString("Xmp.exif.FocalLength");
+                focalLength = d->metaIface.getXmpTagString("Xmp.exif.FocalLength");
 
-            exposureTime = d->exiv2Iface.getExifTagString("Exif.Photo.ExposureTime");
+            exposureTime = d->metaIface.getExifTagString("Exif.Photo.ExposureTime");
             if (exposureTime.isEmpty())
             {
-                exposureTime = d->exiv2Iface.getExifTagString("Exif.Photo.ShutterSpeedValue");
+                exposureTime = d->metaIface.getExifTagString("Exif.Photo.ShutterSpeedValue");
                 if (exposureTime.isEmpty())
                 {
-                    exposureTime = d->exiv2Iface.getXmpTagString("Xmp.exif.ExposureTime");
+                    exposureTime = d->metaIface.getXmpTagString("Xmp.exif.ExposureTime");
                     if (exposureTime.isEmpty())
-                        exposureTime = d->exiv2Iface.getXmpTagString("Xmp.exif.ShutterSpeedValue");
+                        exposureTime = d->metaIface.getXmpTagString("Xmp.exif.ShutterSpeedValue");
                 }
             }
 
-            sensitivity = d->exiv2Iface.getExifTagString("Exif.Photo.ISOSpeedRatings");
+            sensitivity = d->metaIface.getExifTagString("Exif.Photo.ISOSpeedRatings");
             if (sensitivity.isEmpty())
             {
-                sensitivity = d->exiv2Iface.getExifTagString("Exif.Photo.ExposureIndex");
+                sensitivity = d->metaIface.getExifTagString("Exif.Photo.ExposureIndex");
                 if (sensitivity.isEmpty())
                 {
-                    sensitivity = d->exiv2Iface.getXmpTagString("Xmp.exif.ISOSpeedRatings");
+                    sensitivity = d->metaIface.getXmpTagString("Xmp.exif.ISOSpeedRatings");
                     if (sensitivity.isEmpty())
-                        sensitivity = d->exiv2Iface.getXmpTagString("Xmp.exif.ExposureIndex");
+                        sensitivity = d->metaIface.getXmpTagString("Xmp.exif.ExposureIndex");
                 }
             }
         }

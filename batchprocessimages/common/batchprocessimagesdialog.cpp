@@ -63,10 +63,6 @@ extern "C"
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imagecollection.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/rotationmatrix.h>
-
 // Local includes
 
 #include "imagedialog.h"
@@ -75,10 +71,10 @@ extern "C"
 #include "kpversion.h"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
+#include "kpmetadata.h"
 #include "ui_batchprocessimagesdialog.h"
 
 using namespace KIPIPlugins;
-using namespace KExiv2Iface;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -99,13 +95,13 @@ enum ProcessState
     STOP_PROCESS
 };
 
-BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface,
+BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, Interface* interface,
                                                    const QString& caption, QWidget* parent)
-                        : KDialog(parent),
-                          m_listFile2Process_iterator(0),
-                          m_selectedImageFiles(urlList),
-                          m_interface(interface),
-                          m_ui(new Ui::BatchProcessImagesDialog())
+    : KDialog(parent),
+        m_listFile2Process_iterator(0),
+        m_selectedImageFiles(urlList),
+        m_interface(interface),
+        m_ui(new Ui::BatchProcessImagesDialog())
 {
     setCaption(caption);
     setButtons(Help | User1 | Cancel);
@@ -160,7 +156,7 @@ void BatchProcessImagesDialog::setupUi()
                                          "all original image files will be removed after processing."));
 
     m_ui->m_destinationUrl->setMode(KFile::Directory | KFile::LocalOnly);
-    KIPI::ImageCollection album = m_interface->currentAlbum();
+    ImageCollection album = m_interface->currentAlbum();
     if (album.isValid())
     {
         QString url;
@@ -291,7 +287,7 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem& item, const QPixm
     // Rotate the thumbnail compared to the angle the host application dictate
     KPImageInfo info(m_interface, item.url());
 
-    if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
+    if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
         QImage image   = pix.toImage();
         QMatrix matrix = RotationMatrix::toMatrix(info.orientation());

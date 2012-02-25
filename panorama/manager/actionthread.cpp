@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2011 by Johannes Wienke <languitar at semipol dot de>
  *
  * This program is free software; you can redistribute it
@@ -52,9 +52,12 @@
 
 // Local includes
 
+#include "kpmetadata.h"
 #include "kpwriteimage.h"
 #include "kpversion.h"
 #include "ptoparser.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
@@ -62,9 +65,19 @@ namespace KIPIPanoramaPlugin
 struct ActionThread::ActionThreadPriv
 {
     ActionThreadPriv()
-        : cancel(false), celeste(false), hdr(false), fileType(JPEG), savePTO(false),
-          CPFindProcess(0), CPCleanProcess(0), autoOptimiseProcess(0), pto2MkProcess(0),
-          makeProcess(0), preprocessingTmpDir(0) {}
+        : cancel(false),
+          celeste(false),
+          hdr(false),
+          fileType(JPEG),
+          savePTO(false),
+          CPFindProcess(0),
+          CPCleanProcess(0),
+          autoOptimiseProcess(0),
+          pto2MkProcess(0),
+          makeProcess(0),
+          preprocessingTmpDir(0)
+        {
+        }
 
     struct Task
     {
@@ -131,15 +144,14 @@ struct ActionThread::ActionThreadPriv
     }
 };
 
-ActionThread::ActionThread(QObject* parent)
-            : QThread(parent), d(new ActionThreadPriv)
+ActionThread::ActionThread(QObject* const parent)
+    : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
 }
 
 ActionThread::~ActionThread()
 {
-
     kDebug() << "ActionThread shutting down."
              << "Canceling all actions and waiting for them";
 
@@ -158,7 +170,7 @@ ActionThread::~ActionThread()
 }
 
 void ActionThread::setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType fileType,
-                                            const KDcrawIface::RawDecodingSettings& settings)
+                                            const RawDecodingSettings& settings)
 {
     d->celeste              = celeste;
     d->hdr                  = hdr;
@@ -723,9 +735,9 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
 
     QTextStream previewPtoStream(&input);
 
-    KExiv2 metaOrig(preProcessedUrlsMap.begin().value().preprocessedUrl.toLocalFile());
-    KExiv2 metaPreview(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
-    double scalingFactor = ((double) metaPreview.getPixelSize().width()) / ((double) metaOrig.getPixelSize().width());
+    KPMetadata metaIn(preProcessedUrlsMap.begin().value().preprocessedUrl.toLocalFile());
+    KPMetadata metaOut(preProcessedUrlsMap.begin().value().previewUrl.toLocalFile());
+    double scalingFactor = ((double) metaOut.getPixelSize().width()) / ((double) metaIn.getPixelSize().width());
 
     foreach(const QString& line, pto)
     {
@@ -793,12 +805,12 @@ bool ActionThread::computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const 
                 if (p[0] == 'w')
                 {
                     tmp.append("w");
-                    tmp.append(QString::number(metaPreview.getPixelSize().width()));
+                    tmp.append(QString::number(metaOut.getPixelSize().width()));
                 }
                 else if (p[0] == 'h')
                 {
                     tmp.append("h");
-                    tmp.append(QString::number(metaPreview.getPixelSize().height()));
+                    tmp.append(QString::number(metaOut.getPixelSize().height()));
                 }
                 else if (p[0] == 'n')
                 {
@@ -869,15 +881,15 @@ bool ActionThread::computePreview(const KUrl& inUrl, KUrl& outUrl)
     if (img.load(inUrl.toLocalFile()))
     {
         QImage preview = img.scaled(1280, 1024, Qt::KeepAspectRatio);
-        bool saved = preview.save(outUrl.toLocalFile(), "JPEG");
+        bool saved     = preview.save(outUrl.toLocalFile(), "JPEG");
         // save exif information also to preview image for auto rotation
         if (saved)
         {
-            KExiv2 metai(inUrl.toLocalFile());
-            KExiv2 metao(outUrl.toLocalFile());
-            metao.setImageOrientation(metai.getImageOrientation());
-            metao.setImageDimensions(QSize(preview.width(), preview.height()));
-            metao.applyChanges();
+            KPMetadata metaIn(inUrl.toLocalFile());
+            KPMetadata metaOut(outUrl.toLocalFile());
+            metaOut.setImageOrientation(metaIn.getImageOrientation());
+            metaOut.setImageDimensions(QSize(preview.width(), preview.height()));
+            metaOut.applyChanges();
         }
         kDebug() << "Preview Image url: " << outUrl << ", saved: " << saved;
         return saved;
@@ -921,27 +933,27 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
             sptr += 6;
         }
 
-        KExiv2 meta, meta_orig;
-        meta_orig.load(inUrl.toLocalFile());
-        KExiv2::MetaDataMap m = meta_orig.getExifTagsDataList(QStringList("Photo"), true);
-        KExiv2::MetaDataMap::iterator it;
+        KPMetadata metaIn, metaOut;
+        metaIn.load(inUrl.toLocalFile());
+        KPMetadata::MetaDataMap m = metaIn.getExifTagsDataList(QStringList("Photo"), true);
+        KPMetadata::MetaDataMap::iterator it;
         for (it = m.begin(); it != m.end(); ++it)
         {
-            meta_orig.removeExifTag(it.key().toAscii().data(), false);
+            metaIn.removeExifTag(it.key().toAscii().data(), false);
         }
-        meta.setData(meta_orig.data());
-        meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-        meta.setImageDimensions(QSize(width, height));
-        meta.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
-        meta.setXmpTagString("Xmp.tiff.Make",  meta.getExifTagString("Exif.Image.Make"));
-        meta.setXmpTagString("Xmp.tiff.Model", meta.getExifTagString("Exif.Image.Model"));
-        meta.setImageOrientation(KExiv2Iface::KExiv2::ORIENTATION_NORMAL);
+        metaOut.setData(metaIn.data());
+        metaOut.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+        metaOut.setImageDimensions(QSize(width, height));
+        metaOut.setExifTagString("Exif.Image.DocumentName", inUrl.fileName());
+        metaOut.setXmpTagString("Xmp.tiff.Make",  metaOut.getExifTagString("Exif.Image.Make"));
+        metaOut.setXmpTagString("Xmp.tiff.Model", metaOut.getExifTagString("Exif.Image.Model"));
+        metaOut.setImageOrientation(KPMetadata::ORIENTATION_NORMAL);
 
         QByteArray prof = KPWriteImage::getICCProfilFromFile(settings.outputColorSpace);
 
         KPWriteImage wImageIface;
         wImageIface.setCancel(&d->cancel);
-        wImageIface.setImageData(imageData, width, height, true, false, prof, meta);
+        wImageIface.setImageData(imageData, width, height, true, false, prof, metaOut);
         outUrl = d->preprocessingTmpDir->name();
         QFileInfo fi(inUrl.toLocalFile());
         outUrl.setFileName(fi.completeBaseName().replace('.', '_') + QString(".tif"));
@@ -949,7 +961,7 @@ bool ActionThread::convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecoding
         if (!wImageIface.write2TIFF(outUrl.toLocalFile()))
             return false;
         else
-            meta.save(outUrl.toLocalFile());
+            metaOut.save(outUrl.toLocalFile());
     }
     else
     {
@@ -1005,7 +1017,7 @@ bool ActionThread::createPTO(bool hdr, PanoramaFileType fileType, const KUrl::Li
     for (int i = 0; i < inUrls.size(); ++i)
     {
         KUrl preprocessedUrl(urlList[inUrls.at(i)].preprocessedUrl);
-        KExiv2 meta;
+        KPMetadata meta;
         meta.load(preprocessedUrl.toLocalFile());
         QSize size = meta.getPixelSize();
 

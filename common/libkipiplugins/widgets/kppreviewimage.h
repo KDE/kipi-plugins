@@ -6,9 +6,9 @@
  * Date        : 2009-12-13
  * Description : a widget to preview image effect.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Kare Sars <kare dot sars at iki dot fi>
- * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008      by Kare Sars <kare dot sars at iki dot fi>
+ * Copyright (C) 2012      by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,8 +23,8 @@
  *
  * ============================================================ */
 
-#ifndef PREVIEW_IMAGE_H
-#define PREVIEW_IMAGE_H
+#ifndef KPPREVIEW_IMAGE_H
+#define KPPREVIEW_IMAGE_H
 
 // Qt includes
 
@@ -45,9 +45,10 @@ class QEvent;
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT SelectionItem : public QGraphicsItem
+class KIPIPLUGINS_EXPORT KPSelectionItem : public QGraphicsItem
 {
 public:
+
     typedef enum
     {
         None,
@@ -62,41 +63,48 @@ public:
         Move
     } Intersects;
 
-    explicit SelectionItem(QRectF rect);
-    ~SelectionItem();
+public:
+
+    explicit KPSelectionItem(const QRectF& rect);
+    ~KPSelectionItem();
 
     void setMaxRight(qreal maxRight);
     void setMaxBottom(qreal maxBottom);
 
-    Intersects intersects(QPointF point);
+    Intersects intersects(QPointF& point);
 
     void saveZoom(qreal zoom);
 
-    void setRect(QRectF rect);
-    QPointF fixTranslation(QPointF dp);
-    QRectF rect();
+    void setRect(const QRectF& rect);
+    QPointF fixTranslation(QPointF dp) const;
+    QRectF rect() const;
 
 public:
+
     // Graphics Item methods
     QRectF boundingRect() const;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
 
 private:
+    
     void updateAnchors();
 
 private:
-    struct SelectionItemPriv;
-    SelectionItemPriv* const d;
+
+    struct KPSelectionItemPriv;
+    KPSelectionItemPriv* const d;
 };
 
-class KIPIPLUGINS_EXPORT PreviewImage : public QGraphicsView
+// -----------------------------------------------------------------------------------------
+
+class KIPIPLUGINS_EXPORT KPPreviewImage : public QGraphicsView
 {
     Q_OBJECT
 
 public:
 
-    PreviewImage(QWidget* parent);
-    ~PreviewImage();
+    KPPreviewImage(QWidget* const parent);
+    ~KPPreviewImage();
 
     bool load(const QString& file) const;
     bool setImage(const QImage& img) const;
@@ -157,10 +165,10 @@ protected:
 
 private:
 
-    class PreviewImagePriv;
-    PreviewImagePriv* const d;
+    class KPPreviewImagePriv;
+    KPPreviewImagePriv* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* PREVIEW_IMAGE_H */
+#endif /* KPPREVIEW_IMAGE_H */

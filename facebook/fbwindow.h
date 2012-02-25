@@ -37,10 +37,6 @@
 
 #include <libkipi/interface.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 class QCloseEvent;
 
 class KUrl;
@@ -54,6 +50,9 @@ namespace KIPIPlugins
 {
     class KPAboutData;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIFacebookPlugin
 {
@@ -71,8 +70,8 @@ class FbWindow : public KDialog
 
 public:
 
-    FbWindow(KIPI::Interface* interface, const QString& tmpFolder,
-             bool import, QWidget* parent);
+    FbWindow(Interface* const interface, const QString& tmpFolder,
+             bool import, QWidget* const parent);
     ~FbWindow();
 
     /**
@@ -126,29 +125,30 @@ private:
 
 private:
 
-    bool                      m_import;
-    unsigned int              m_imagesCount;
-    unsigned int              m_imagesTotal;
-    QString                   m_tmpDir;
-    QString                   m_tmpPath;
+    bool         m_import;
+    unsigned int m_imagesCount;
+    unsigned int m_imagesTotal;
+    QString      m_tmpDir;
+    QString      m_tmpPath;
 
-    QString                   m_profileAID;
-    QString                   m_currentAlbumID;
+    QString      m_profileAID;
+    QString      m_currentAlbumID;
+
     // the next two entries are only used to upgrade to the new authentication scheme
-    QString                   m_sessionKey;             // old world session key
-    QString                   m_sessionSecret;          // old world session secret
-    unsigned int              m_sessionExpires;
-    QString                   m_accessToken;            // OAuth access token
+    QString      m_sessionKey;             // old world session key
+    QString      m_sessionSecret;          // old world session secret
+    unsigned int m_sessionExpires;
+    QString      m_accessToken;            // OAuth access token
 
-    KUrl::List                m_transferQueue;
+    KUrl::List   m_transferQueue;
 
-    FbTalker*                 m_talker;
-    FbWidget*                 m_widget;
-    FbNewAlbum*               m_albumDlg;
+    FbTalker*    m_talker;
+    FbWidget*    m_widget;
+    FbNewAlbum*  m_albumDlg;
 
-    KIPI::Interface*          m_interface;
+    Interface*   m_interface;
 
-    KIPIPlugins::KPAboutData* m_about;
+    KPAboutData* m_about;
 };
 
 } // namespace KIPIFacebookPlugin

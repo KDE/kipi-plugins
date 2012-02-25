@@ -29,14 +29,20 @@
 #include <QIcon>
 
 // KDE includes
+
 #include <kassistantdialog.h>
+
 // Local includes
-#include "imageslist.h"
+
+#include "kpimageslist.h"
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIPrintImagesPlugin
 {
@@ -61,7 +67,7 @@ class Wizard : public KAssistantDialog
 
 public:
 
-    Wizard(QWidget* parent, KIPI::Interface*);
+    Wizard(QWidget* const, Interface* const);
     ~Wizard();
 
     void print(const KUrl::List& fileList, const QString& tempPath);
@@ -97,9 +103,9 @@ protected Q_SLOTS:
     virtual void infopage_updateCaptions();
     
     virtual void slotAddItems(const KUrl::List&);    
-    virtual void slotRemovingItem(KIPIPlugins::ImagesListViewItem*);
+    virtual void slotRemovingItem(KPImagesListViewItem*);
     virtual void slotContextMenuRequested();
-    virtual void slotXMLSaveItem(QXmlStreamWriter&, KIPIPlugins::ImagesListViewItem*);
+    virtual void slotXMLSaveItem(QXmlStreamWriter&, KPImagesListViewItem*);
     virtual void slotXMLLoadElement(QXmlStreamReader&);
     virtual void slotXMLCustomElement(QXmlStreamWriter&);
     virtual void slotXMLCustomElement(QXmlStreamReader&);
@@ -125,8 +131,8 @@ private:
     QStringList printPhotosToFile(const QList<TPhoto*>& photos, QString& baseFilename, TPhotoSize* layouts);
 
     int     getPageCount();
-    QRect*  getLayout(int photoIndex);
-    QString captionFormatter(TPhoto* photo);
+    QRect*  getLayout(int photoIndex) const;
+    QString captionFormatter(TPhoto* const photo);
     void    printCaption(QPainter& p, TPhoto* photo, int captionW, int captionH, const QString& caption);
 
     bool paintOnePage(QPainter& p, const QList<TPhoto*>& photos, const QList<QRect*>& layouts,

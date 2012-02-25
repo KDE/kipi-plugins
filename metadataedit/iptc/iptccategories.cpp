@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : IPTC categories settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -38,11 +38,11 @@
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKExiv2 includes
+// Local includes
 
-#include <libkexiv2/kexiv2.h>
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -289,15 +289,15 @@ void IPTCCategories::slotAddCategory()
 void IPTCCategories::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
     QString data;
 
     // In first we handle all sub-categories.
 
     d->subCategoriesBox->clear();
     d->subCategoriesCheck->setChecked(false);
-    d->oldSubCategories = exiv2Iface.getIptcSubCategories();
+    d->oldSubCategories = meta.getIptcSubCategories();
     if (!d->oldSubCategories.isEmpty())
     {
         d->subCategoriesBox->insertItems(0, d->oldSubCategories);
@@ -308,7 +308,7 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
 
     d->categoryEdit->clear();
     d->categoryCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Category", false);
+    data = meta.getIptcTagString("Iptc.Application2.Category", false);
     if (!data.isNull())
     {
         d->categoryEdit->setText(data);
@@ -327,13 +327,13 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
 void IPTCCategories::applyMetadata(QByteArray& iptcData)
 {
     QStringList newCategories;
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
 
     if (d->categoryCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Category", d->categoryEdit->text());
+        meta.setIptcTagString("Iptc.Application2.Category", d->categoryEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.Category");
+        meta.removeIptcTag("Iptc.Application2.Category");
 
     for (int i = 0 ; i < d->subCategoriesBox->count(); ++i)
     {
@@ -342,11 +342,11 @@ void IPTCCategories::applyMetadata(QByteArray& iptcData)
     }
 
     if (d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked())
-        exiv2Iface.setIptcSubCategories(d->oldSubCategories, newCategories);
+        meta.setIptcSubCategories(d->oldSubCategories, newCategories);
     else
-        exiv2Iface.setIptcSubCategories(d->oldSubCategories, QStringList());
+        meta.setIptcSubCategories(d->oldSubCategories, QStringList());
 
-    iptcData = exiv2Iface.getIptc();
+    iptcData = meta.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

@@ -35,27 +35,21 @@
 #include <kglobal.h>
 #include <klocale.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // local includes
 
 #include "kipiimagemodel.h"
 #include "kpimageinfo.h"
 #include "kphostsettings.h"
 
-using namespace KExiv2Iface;
 using namespace KIPIPlugins;
 
 namespace KIPIGPSSyncPlugin
 {
 
-bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const char* const exifTagName, 
-                                    const char* const xmpTagName, const QVariant& value)
+bool setExifXmpTagDataVariant(KPMetadata* const meta, const char* const exifTagName,
+                              const char* const xmpTagName, const QVariant& value)
 {
-    bool success = exiv2Iface->setExifTagVariant(exifTagName, value);
+    bool success = meta->setExifTagVariant(exifTagName, value);
 
     if (success)
     {
@@ -68,14 +62,14 @@ bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const
             case QVariant::Bool:
             case QVariant::LongLong:
             case QVariant::ULongLong:
-                success = exiv2Iface->setXmpTagString(xmpTagName, QString::number(value.toInt()));
+                success = meta->setXmpTagString(xmpTagName, QString::number(value.toInt()));
                 break;
 
             case QVariant::Double:
             {
                 long num, den;
-                exiv2Iface->convertToRationalSmallDenominator(value.toDouble(), &num, &den);
-                success = exiv2Iface->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
+                meta->convertToRationalSmallDenominator(value.toDouble(), &num, &den);
+                success = meta->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
                 break;
             }
             case QVariant::List:
@@ -86,7 +80,7 @@ bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const
                     num = list[0].toInt();
                 if (list.size() >= 2)
                     den = list[1].toInt();
-                success = exiv2Iface->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
+                success = meta->setXmpTagString(xmpTagName, QString("%1/%2").arg(num).arg(den));
                 break;
             }
 
@@ -100,13 +94,13 @@ bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const
                     break;
                 }
 
-                success = exiv2Iface->setXmpTagString(xmpTagName, dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")));
+                success = meta->setXmpTagString(xmpTagName, dateTime.toString(QString("yyyy:MM:dd hh:mm:ss")));
                 break;
             }
 
             case QVariant::String:
             case QVariant::Char:
-                success = exiv2Iface->setXmpTagString(xmpTagName, value.toString());
+                success = meta->setXmpTagString(xmpTagName, value.toString());
                 break;
 
             case QVariant::ByteArray:
@@ -123,18 +117,18 @@ bool KExiv2SetExifXmpTagDataVariant(KExiv2Iface::KExiv2* const exiv2Iface, const
     return success;
 }
 
-KipiImageItem::KipiImageItem(KIPI::Interface* const interface, const KUrl& url)
-             : m_interface(interface),
-               m_model(0),
-               m_url(url),
-               m_dateTime(),
-               m_dirty(false),
-               m_gpsData(),
-               m_savedState(),
-               m_tagListDirty(false),
-               m_tagList(),
-               m_savedTagList(),
-               m_writeXmpTags(true)
+KipiImageItem::KipiImageItem(Interface* const interface, const KUrl& url)
+    : m_interface(interface),
+      m_model(0),
+      m_url(url),
+      m_dateTime(),
+      m_dirty(false),
+      m_gpsData(),
+      m_savedState(),
+      m_tagListDirty(false),
+      m_tagList(),
+      m_savedTagList(),
+      m_writeXmpTags(true)
 {
 }
 
@@ -142,30 +136,27 @@ KipiImageItem::~KipiImageItem()
 {
 }
 
-KExiv2Iface::KExiv2* KipiImageItem::getExiv2ForFile()
+KPMetadata* KipiImageItem::getMetadataForFile() const
 {
-    QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(new KExiv2Iface::KExiv2);
+    QScopedPointer<KPMetadata> meta(new KPMetadata(m_interface));
 
     if (m_interface)
     {
         KPHostSettings hSettings(m_interface);
-        exiv2Iface->setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        exiv2Iface->setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
-        exiv2Iface->setUseXMPSidecar4Reading(hSettings.metadataSettings().useXMPSidecar4Reading);
-        exiv2Iface->setMetadataWritingMode(hSettings.metadataSettings().metadataWritingMode);
+        meta->setSettings(hSettings.metadataSettings());
     }
     else
     {
-        exiv2Iface->setUseXMPSidecar4Reading(true);
-        exiv2Iface->setMetadataWritingMode(KExiv2::WRITETOSIDECARONLY4READONLYFILES);
+        meta->setUseXMPSidecar4Reading(true);
+        meta->setMetadataWritingMode(KPMetadata::WRITETOSIDECARONLY4READONLYFILES);
     }
 
-    if (!exiv2Iface->load(m_url.path()))
+    if (!meta->load(m_url.path()))
     {
         return 0;
     }
 
-    return exiv2Iface.take();
+    return meta.take();
 }
 
 int getWarningLevelFromGPSDataContainer(const GPSDataContainer& data)
@@ -217,14 +208,14 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
 
     if (fromFile)
     {
-        QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(getExiv2ForFile());
+        QScopedPointer<KPMetadata> meta(getMetadataForFile());
 
-        if (!exiv2Iface)
+        if (!meta)
             return false;
 
         if (!m_dateTime.isValid())
         {
-            m_dateTime = exiv2Iface->getImageDateTime();
+            m_dateTime = meta->getImageDateTime();
         }
 
         m_gpsData.clear();
@@ -235,12 +226,12 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
             // read them directly from the file
 
             double lat, lng;
-            bool haveCoordinates = exiv2Iface->getGPSLatitudeNumber(&lat) && exiv2Iface->getGPSLongitudeNumber(&lng);
+            bool haveCoordinates = meta->getGPSLatitudeNumber(&lat) && meta->getGPSLongitudeNumber(&lng);
             if (haveCoordinates)
             {
-                KGeoMap::GeoCoordinates coordinates(lat, lng);
+                GeoCoordinates coordinates(lat, lng);
                 double alt;
-                if (exiv2Iface->getGPSAltitude(&alt))
+                if (meta->getGPSAltitude(&alt))
                 {
                     coordinates.setAlt(alt);
                 }
@@ -252,10 +243,10 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
          *  therefore no need to read XMP as well?
          */
         // read the remaining GPS information from the file:
-        const QByteArray speedRef = exiv2Iface->getExifTagData("Exif.GPSInfo.GPSSpeedRef");
+        const QByteArray speedRef = meta->getExifTagData("Exif.GPSInfo.GPSSpeedRef");
         bool success              = !speedRef.isEmpty();
         long num, den;
-        success &= exiv2Iface->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
+        success &= meta->getExifTagRational("Exif.GPSInfo.GPSSpeed", num, den);
 
         if (success)
         {
@@ -296,7 +287,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
         }
 
         // number of satellites
-        const QString gpsSatellitesString = exiv2Iface->getExifTagString("Exif.GPSInfo.GPSSatellites");
+        const QString gpsSatellitesString = meta->getExifTagString("Exif.GPSInfo.GPSSatellites");
         bool satellitesOkay               = !gpsSatellitesString.isEmpty();
         if (satellitesOkay)
         {
@@ -312,7 +303,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
         }
 
         // fix type / measure mode
-        const QByteArray gpsMeasureModeByteArray = exiv2Iface->getExifTagData("Exif.GPSInfo.GPSMeasureMode");
+        const QByteArray gpsMeasureModeByteArray = meta->getExifTagData("Exif.GPSInfo.GPSMeasureMode");
         bool measureModeOkay                     = !gpsMeasureModeByteArray.isEmpty();
         if (measureModeOkay)
         {
@@ -327,7 +318,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
         }
 
         // read the DOP value:
-        success= exiv2Iface->getExifTagRational("Exif.GPSInfo.GPSDOP", num, den);
+        success= meta->getExifTagRational("Exif.GPSInfo.GPSDOP", num, den);
         if (success)
         {
             // be relaxed about 0/0
@@ -338,7 +329,6 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
 
             m_gpsData.setDop(dop);
         }
-
     }
 
     // mark us as not-dirty, because the data was just loaded:
@@ -455,7 +445,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
         return KGlobal::locale()->formatNumber(m_gpsData.getSpeed());
     }
-    else if ((column==ColumnStatus)&&(role==Qt::DisplayRole))
+    else if ((column == ColumnStatus) && (role == Qt::DisplayRole))
     {
         if (m_dirty || m_tagListDirty)
         {
@@ -464,16 +454,16 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
         return QString();
     }
-    else if ((column==ColumnTags)&&(role==Qt::DisplayRole))
+    else if ((column == ColumnTags) && (role == Qt::DisplayRole))
     {
         if (!m_tagList.isEmpty())
         {
 
             QString myTagsList;
-            for (int i=0; i<m_tagList.count(); ++i)
+            for (int i = 0; i < m_tagList.count(); ++i)
             {
                 QString myTag;
-                for (int j=0; j<m_tagList[i].count(); ++j)
+                for (int j = 0; j < m_tagList[i].count(); ++j)
                 {
                     myTag.append(QString("/") + m_tagList[i].at(j).tagName);
                     if (j == 0)
@@ -482,6 +472,7 @@ QVariant KipiImageItem::data(const int column, const int role) const
 
                 if (!myTagsList.isEmpty())
                     myTagsList.append(", ");
+
                 myTagsList.append(myTag);
             }
 
@@ -491,11 +482,10 @@ QVariant KipiImageItem::data(const int column, const int role) const
         return QString();
     }
 
-
     return QVariant();
 }
 
-void KipiImageItem::setCoordinates(const KGeoMap::GeoCoordinates& newCoordinates)
+void KipiImageItem::setCoordinates(const GeoCoordinates& newCoordinates)
 {
     m_gpsData.setCoordinates(newCoordinates);
     m_dirty = true;
@@ -709,8 +699,8 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
     // first try to write the information to the image file
     bool success = false;
-    QScopedPointer<KExiv2Iface::KExiv2> exiv2Iface(getExiv2ForFile());
-    if (!exiv2Iface)
+    QScopedPointer<KPMetadata> meta(getMetadataForFile());
+    if (!meta)
     {
         // TODO: more verbosity!
         returnString = i18n("Failed to open file.");
@@ -721,17 +711,17 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
         {
             if (shouldWriteAltitude)
             {
-                success = exiv2Iface->setGPSInfo(altitude, latitude, longitude);
+                success = meta->setGPSInfo(altitude, latitude, longitude);
             }
             else
             {
-                success = exiv2Iface->setGPSInfo(static_cast<const double* const>(0), latitude, longitude);
+                success = meta->setGPSInfo(static_cast<const double* const>(0), latitude, longitude);
             }
 
             // write all other GPS information here too
             if (success && m_gpsData.hasSpeed())
             {
-                success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(), "Exif.GPSInfo.GPSSpeedRef", "Xmp.exif.GPSSpeedRef", QVariant(QString("K")));
+                success = setExifXmpTagDataVariant(meta.data(), "Exif.GPSInfo.GPSSpeedRef", "Xmp.exif.GPSSpeedRef", QVariant(QString("K")));
 
                 if (success)
                 {
@@ -739,7 +729,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
                     // km/h = 0.001 * m / ( s * 1/(60*60) ) = 3.6 * m/s
                     const qreal speedInKilometersPerHour = 3.6 * speedInMetersPerSecond;
-                    success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(), "Exif.GPSInfo.GPSSpeed", "Xmp.exif.GPSSpeed", QVariant(speedInKilometersPerHour));
+                    success = setExifXmpTagDataVariant(meta.data(), "Exif.GPSInfo.GPSSpeed", "Xmp.exif.GPSSpeed", QVariant(speedInKilometersPerHour));
                 }
             }
 
@@ -750,14 +740,14 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
                  * number of satellites or more details about each satellite used. For now, we just write
                  * the number of satellites. Are we using the correct format for the number of satellites here?
                  */
-                success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(),
+                success = setExifXmpTagDataVariant(meta.data(),
                                                          "Exif.GPSInfo.GPSSatellites", "Xmp.exif.GPSSatellites",
                                                          QVariant(QString::number(m_gpsData.getNSatellites())));
             }
 
             if (success && m_gpsData.hasFixType())
             {
-                success = KExiv2SetExifXmpTagDataVariant(exiv2Iface.data(),
+                success = setExifXmpTagDataVariant(meta.data(),
                                                          "Exif.GPSInfo.GPSMeasureMode", "Xmp.exif.GPSMeasureMode",
                                                          QVariant(QString::number(m_gpsData.getFixType())));
             }
@@ -765,8 +755,8 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
             // write DOP
             if (success && m_gpsData.hasDop())
             {
-                success = KExiv2SetExifXmpTagDataVariant(
-                        exiv2Iface.data(),
+                success = setExifXmpTagDataVariant(
+                        meta.data(),
                         "Exif.GPSInfo.GPSDOP",
                         "Xmp.exif.GPSDOP",
                         QVariant(m_gpsData.getDop())
@@ -782,7 +772,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
         if (shouldRemoveCoordinates)
         {
             // TODO: remove only the altitude if requested
-            success = exiv2Iface->removeGPSInfo();
+            success = meta->removeGPSInfo();
             if (!success)
             {
                 returnString = i18n("Failed to remove GPS info from image");
@@ -808,12 +798,12 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
                 tagSeq.append(tag);
             }
 
-            bool success = exiv2Iface->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
+            bool success = meta->setXmpTagStringSeq("Xmp.digiKam.TagsList", tagSeq, true);
             if (!success)
             {
                 returnString = i18n("Failed to save tags to file.");
             }
-            success = exiv2Iface->setXmpTagStringSeq("Xmp.dc.subject", tagSeq, true);
+            success = meta->setXmpTagStringSeq("Xmp.dc.subject", tagSeq, true);
             if (!success)
             {
                 returnString = i18n("Failed to save tags to file.");
@@ -823,7 +813,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
 
     if (success)
     {
-        success = exiv2Iface->save(m_url.path());
+        success = meta->save(m_url.path());
         if (!success)
         {
             returnString = i18n("Unable to save changes to file");

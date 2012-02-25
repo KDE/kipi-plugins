@@ -35,20 +35,17 @@
 
 #include <kurl.h>
 
-// LibKexiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kipiplugins_export.h"
+#include "kpmetadata.h"
 
 namespace KIPI
 {
     class Interface;
 }
 
-using namespace KExiv2Iface;
+using namespace KIPI;
 
 namespace KIPIPlugins
 {
@@ -60,7 +57,7 @@ public:
 
     /** Contructor with KIPI interface instance get from plugin and item url that you want to manage.
      */
-    KPImageInfo(KIPI::Interface* iface, const KUrl& url);
+    KPImageInfo(Interface* const iface, const KUrl& url);
     ~KPImageInfo();
 
     /** return item url.
@@ -164,12 +161,12 @@ public:
      */
     void removeGeolocationInfo();
 
-    /** Manage orientation of item. See KExiv2::ImageOrientation for possible values.
-     *  Use KExiv2Iface::RotationMatrix::toMatrix() to get a QMatrix corresponding to orientation flage and to apply on QImage.
+    /** Manage orientation of item. See libkexiv2 library for details.
+     *  Use RotationMatrix::toMatrix() from libkexiv2 to get a QMatrix corresponding to orientation flage and to apply it on QImage.
      */
-    void                     setOrientation(KExiv2::ImageOrientation orientation);
-    KExiv2::ImageOrientation orientation() const;
-    bool                     hasOrientation() const;
+    void                         setOrientation(KPMetadata::ImageOrientation orientation);
+    KPMetadata::ImageOrientation orientation() const;
+    bool                         hasOrientation() const;
 
 private:
 

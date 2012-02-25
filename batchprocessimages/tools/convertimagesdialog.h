@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -28,6 +28,8 @@
 #include "kpaboutdata.h"
 #include "batchprocessimagesdialog.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPIBatchProcessImagesPlugin
 {
 
@@ -39,7 +41,7 @@ class ConvertImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    ConvertImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget *parent = 0);
+    ConvertImagesDialog(const KUrl::List& images, Interface* interface, QWidget* parent = 0);
     ~ConvertImagesDialog();
 
 private Q_SLOTS:
@@ -50,7 +52,7 @@ private Q_SLOTS:
 
 protected:
 
-    void initProcess(KProcess* proc, BatchProcessImagesItem *item,
+    void initProcess(KProcess* proc, BatchProcessImagesItem* item,
                      const QString& albumDest, bool previewMode);
 
     void processDone();
@@ -63,14 +65,14 @@ protected:
 
 protected:
 
-    int                    m_JPEGPNGCompression;
-    bool                   m_compressLossLess;
-    QString                m_TIFFCompressionAlgo;
-    QString                m_TGACompressionAlgo;
+    int     m_JPEGPNGCompression;
+    bool    m_compressLossLess;
+    QString m_TIFFCompressionAlgo;
+    QString m_TGACompressionAlgo;
 
 private:
 
-    KIPIPlugins::KPAboutData *m_about;
+    KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to shwup.com web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008-2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2009 by Timothée Groleau <kde at timotheegroleau dot com>
  *
@@ -34,14 +34,6 @@
 
 #include <kdialog.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 class QCloseEvent;
 
 class KProgressDialog;
@@ -49,13 +41,17 @@ class KUrl;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class KPAboutData;
+    class KPAboutData;
+    class KPMetadata;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIShwupPlugin
 {
@@ -73,7 +69,7 @@ class SwWindow : public KDialog
 
 public:
 
-    SwWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
+    SwWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
     ~SwWindow();
 
     /**
@@ -105,7 +101,7 @@ private Q_SLOTS:
 
 private:
 
-    QString getImageCaption(const KExiv2Iface::KExiv2& ev);
+    QString getImageCaption(const KPMetadata& meta) const;
     bool    prepareImageForUpload(const QString& imgPath, bool isRAW, QString& caption);
     void    uploadNextPhoto();
 
@@ -120,30 +116,30 @@ private:
 
 private:
 
-    unsigned int              m_imagesCount;
-    unsigned int              m_imagesTotal;
+    unsigned int     m_imagesCount;
+    unsigned int     m_imagesTotal;
 
-    QString                   m_tmpDir;
-    QString                   m_tmpPath;
+    QString          m_tmpDir;
+    QString          m_tmpPath;
 
-    long long                 m_currentAlbumID;
+    long long        m_currentAlbumID;
 
-    QList<SwAlbum>            m_albumsList;
-    QString                   m_userEmail;
-    QString                   m_userPassword;
+    QList<SwAlbum>   m_albumsList;
+    QString          m_userEmail;
+    QString          m_userPassword;
 
-    KProgressDialog*          m_progressDlg;
-    SwLogin*                  m_loginDlg;
+    KProgressDialog* m_progressDlg;
+    SwLogin*         m_loginDlg;
 
-    KUrl::List                m_transferQueue;
+    KUrl::List       m_transferQueue;
 
-    SwConnector*              m_connector;
-    SwWidget*                 m_widget;
-    SwNewAlbum*               m_albumDlg;
+    SwConnector*     m_connector;
+    SwWidget*        m_widget;
+    SwNewAlbum*      m_albumDlg;
 
-    KIPI::Interface*          m_interface;
+    Interface*       m_interface;
 
-    KIPIPlugins::KPAboutData* m_about;
+    KPAboutData*     m_about;
 };
 
 } // namespace KIPIShwupPlugin

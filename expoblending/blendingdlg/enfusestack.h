@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a tool to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -52,13 +52,12 @@ using namespace KIPI;
 namespace KIPIExpoBlendingPlugin
 {
 
-
 class EnfuseStackItem : public QTreeWidgetItem
 {
 
 public:
 
-    EnfuseStackItem(QTreeWidget* parent);
+    EnfuseStackItem(QTreeWidget* const parent);
     virtual ~EnfuseStackItem();
 
     /** Return the preview image url assigned to item.
@@ -74,12 +73,11 @@ public:
     void setProgressAnimation(const QPixmap& pix);
     void setThumbnail(const QPixmap& pix);
     void setProcessedIcon(const QIcon& icon);
-    bool asValidThumb();
+    bool asValidThumb() const;
 
 private:
 
     class EnfuseStackItemPriv;
-
     EnfuseStackItemPriv* const d;
 };
 
@@ -91,10 +89,10 @@ class EnfuseStackList : public QTreeWidget
 
 public:
 
-    EnfuseStackList(QWidget* parent);
+    EnfuseStackList(QWidget* const parent);
     virtual ~EnfuseStackList();
 
-    void setTemplateFileName(SaveSettingsWidget::OutputFormat, const QString&);
+    void setTemplateFileName(KPSaveSettingsWidget::OutputFormat, const QString&);
 
     void setThumbnail(const KUrl& url, const QImage& img);
     void setOnItem(const KUrl& url, bool on);

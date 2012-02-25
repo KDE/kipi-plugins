@@ -6,7 +6,7 @@
  * Date        : 2007-10-16
  * Description : XMP categories settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,11 +36,11 @@
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKExiv2 includes
+// Local includes
 
-#include <libkexiv2/kexiv2.h>
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -265,15 +265,15 @@ void XMPCategories::slotAddCategory()
 void XMPCategories::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
     QString data;
 
     // In first we handle all sub-categories.
 
     d->subCategoriesBox->clear();
     d->subCategoriesCheck->setChecked(false);
-    d->oldSubCategories = exiv2Iface.getXmpSubCategories();
+    d->oldSubCategories = meta.getXmpSubCategories();
     if (!d->oldSubCategories.isEmpty())
     {
         d->subCategoriesBox->insertItems(0, d->oldSubCategories);
@@ -284,7 +284,7 @@ void XMPCategories::readMetadata(QByteArray& xmpData)
 
     d->categoryEdit->clear();
     d->categoryCheck->setChecked(false);
-    data = exiv2Iface.getXmpTagString("Xmp.photoshop.Category", false);
+    data = meta.getXmpTagString("Xmp.photoshop.Category", false);
     if (!data.isNull())
     {
         d->categoryEdit->setText(data);
@@ -303,13 +303,13 @@ void XMPCategories::readMetadata(QByteArray& xmpData)
 void XMPCategories::applyMetadata(QByteArray& xmpData)
 {
     QStringList newCategories;
-    KExiv2 exiv2Iface;
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setXmp(xmpData);
 
     if (d->categoryCheck->isChecked())
-        exiv2Iface.setXmpTagString("Xmp.photoshop.Category", d->categoryEdit->text());
+        meta.setXmpTagString("Xmp.photoshop.Category", d->categoryEdit->text());
     else
-        exiv2Iface.removeXmpTag("Xmp.photoshop.Category");
+        meta.removeXmpTag("Xmp.photoshop.Category");
 
     for (int i = 0 ; i < d->subCategoriesBox->count(); ++i)
     {
@@ -318,13 +318,13 @@ void XMPCategories::applyMetadata(QByteArray& xmpData)
     }
 
     // We remove in first all existing sub-categories.
-    exiv2Iface.removeXmpTag("Xmp.photoshop.SupplementalCategories");
+    meta.removeXmpTag("Xmp.photoshop.SupplementalCategories");
 
     // And add new list if necessary.
     if (d->categoryCheck->isChecked() && d->subCategoriesCheck->isChecked())
-        exiv2Iface.setXmpSubCategories(newCategories);
+        meta.setXmpSubCategories(newCategories);
 
-    xmpData = exiv2Iface.getXmp();
+    xmpData = meta.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

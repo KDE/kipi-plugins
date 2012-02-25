@@ -6,8 +6,9 @@
  * Date        : 2011-02-11
  * Description : a kipi plugin to export images to WikiMedia web service
  *
- * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,26 +28,22 @@
 // Qt includes
 
 #include <QWidget>
-#include <QTextEdit>
 
 //KDE includes
 
-#include <KLineEdit>
-#include <KTextEdit>
-#include <KConfig>
+#include <klineedit.h>
+#include <ktextedit.h>
+#include <kconfig.h>
+#include <kurlrequester.h>
+#include <kurl.h>
 
 class QLabel;
 class QSpinBox;
 class QCheckBox;
-class QButtonGroup;
 class QProgressBar;
-class QTabWidget;
-class QComboBox;
-class QLineEdit;
 
 class KVBox;
 class KHBox;
-class KComboBox;
 class KPushButton;
 
 namespace KIPI
@@ -57,13 +54,18 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KDcrawIface
 {
     class RExpanderBox;
+    class SqueezedComboBox;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
+using namespace KDcrawIface;
 
 namespace KIPIWikiMediaPlugin
 {
@@ -82,20 +84,19 @@ class WmWidget : public QWidget
 
 public:
 
-    WmWidget(QWidget* parent, KIPI::Interface* iface);
+    WmWidget(QWidget* const parent, Interface* const iface);
     ~WmWidget();
 
-    void updateLabels(const QString& name = "", const QString& url = "");
+    void updateLabels(const QString& name = QString(), const QString& url = QString());
 
     void invertAccountLoginBox();
 
-    KIPIPlugins::ImagesList* imagesList() const;
+    KPImagesList* imagesList() const;
 
     QProgressBar* progressBar() const;
 
-    QString author();
-    QString licence();
-    QString description();
+    QString author() const;
+    QString licence() const;
 
     void readSettings(KConfigGroup& group);
     void saveSettings(KConfigGroup& group);
@@ -118,10 +119,10 @@ private:
     QLabel*                    m_loginHeaderLbl;
     KLineEdit*                 m_nameEdit;
     KLineEdit*                 m_passwdEdit;
-    QComboBox*                 m_wikiSelect;
+    KUrlComboRequester*        m_wikiSelect;
 
     QWidget*                   m_textBox;
-    QTextEdit*                 m_descriptionEdit;
+
     KLineEdit*                 m_authorEdit;
 
     KHBox*                     m_accountBox;
@@ -133,14 +134,16 @@ private:
     QCheckBox*                 m_resizeChB;
     QSpinBox*                  m_dimensionSpB;
     QSpinBox*                  m_imageQualitySpB;
-    QComboBox*                 m_licenceComboBox;
+    SqueezedComboBox*          m_licenceComboBox;
 
     QProgressBar*              m_progressBar;
 
-    KDcrawIface::RExpanderBox* m_settingsExpander;
-    KIPIPlugins::ImagesList*   m_imgList;
-    KIPI::UploadWidget*        m_uploadWidget;
-
+    RExpanderBox*              m_settingsExpander;
+    KPImagesList*              m_imgList;
+    UploadWidget*              m_uploadWidget;
+    
+    KUrl::List                 m_history;
+    
     friend class WmWindow;
 };
 

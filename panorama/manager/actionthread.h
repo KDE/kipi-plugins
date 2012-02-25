@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009-2011 by Johannes Wienke <languitar at semipol dot de>
  *
  * This program is free software; you can redistribute it
@@ -35,10 +35,6 @@
 #include <kurl.h>
 #include <kprocess.h>
 
-// LibKexiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/rawdecodingsettings.h>
@@ -46,11 +42,8 @@
 // Local includes
 
 #include "actions.h"
-#include "savesettingswidget.h"
 #include "ptotype.h"
 
-using namespace KIPIPlugins;
-using namespace KExiv2Iface;
 using namespace KDcrawIface;
 
 namespace KIPIPanoramaPlugin
@@ -73,11 +66,11 @@ public:
 
 public:
 
-    explicit ActionThread(QObject* parent);
+    explicit ActionThread(QObject* const parent);
     ~ActionThread();
 
     void setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType fileType,
-                                  const KDcrawIface::RawDecodingSettings& settings);
+                                  const RawDecodingSettings& settings);
     void preProcessFiles(const KUrl::List& urlList, const QString& cpcleanPath,
                          const QString& cpfindPath);
     void optimizeProject(const KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize,

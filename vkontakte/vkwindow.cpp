@@ -10,7 +10,7 @@
  *
  * GUI based on Yandex.Fotki KIPI Plugin
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Luka Renko <lure at kubuntu dot org>
  * Copyright (C) 2010 by Roman Tsisyk <roman at tsisyk dot com>
  *
@@ -26,7 +26,7 @@
  *
  * ============================================================ */
 
-#include "vkwindow.h"
+#include "vkwindow.moc"
 
 // Qt includes
 
@@ -75,10 +75,6 @@
 #include <libkvkontakte/uploadphotosjob.h>
 #include <libkvkontakte/getvariablejob.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -94,7 +90,7 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "vkalbumdialog.h"
 
 #define SLOT_JOB_DONE_INIT(JobClass) \
@@ -110,24 +106,25 @@
 namespace KIPIVkontaktePlugin
 {
 
-VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
-                                 bool import, QWidget *parent)
+VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidget* const parent)
     : KDialog(parent)
 {
     m_authenticated = false;
 
     // read settings from file
     readSettings();
-    connect(this, SIGNAL(finished()), this, SLOT(slotFinished()));
+
+    connect(this, SIGNAL(finished()), 
+            this, SLOT(slotFinished()));
 
     m_interface = interface;
-    m_import = import;
+    m_import    = import;
 
-    m_mainWidget = new QWidget(this);
-    QHBoxLayout *mainLayout = new QHBoxLayout(m_mainWidget);
+    m_mainWidget            = new QWidget(this);
+    QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
 
-    m_imgList  = new KIPIPlugins::ImagesList(interface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList  = new KPImagesList(interface, this);
+    m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false); // TODO: implement conversion
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
@@ -166,7 +163,8 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     accountBoxLayout->setSpacing(KDialog::spacingHint());
     accountBoxLayout->setMargin(KDialog::spacingHint());
 
-    connect(m_changeUserButton, SIGNAL(clicked()), this, SLOT(slotChangeUserClicked()));
+    connect(m_changeUserButton, SIGNAL(clicked()), 
+            this, SLOT(slotChangeUserClicked()));
 
     /*
      * Album box
@@ -211,18 +209,24 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     albumsBoxLayout->addWidget(currentAlbumWidget);
     albumsBoxLayout->addWidget(albumButtons);
 
-    connect(m_editAlbumButton, SIGNAL(clicked()), this, SLOT(slotEditAlbumRequest()));
-    connect(m_deleteAlbumButton, SIGNAL(clicked()), this, SLOT(slotDeleteAlbumRequest()));
-    connect(m_newAlbumButton, SIGNAL(clicked()), this, SLOT(slotNewAlbumRequest()));
-    connect(m_reloadAlbumsButton, SIGNAL(clicked()), this, SLOT(slotReloadAlbumsRequest()));
+    connect(m_editAlbumButton, SIGNAL(clicked()), 
+            this, SLOT(slotEditAlbumRequest()));
+
+    connect(m_deleteAlbumButton, SIGNAL(clicked()),
+            this, SLOT(slotDeleteAlbumRequest()));
+
+    connect(m_newAlbumButton, SIGNAL(clicked()),
+            this, SLOT(slotNewAlbumRequest()));
+
+    connect(m_reloadAlbumsButton, SIGNAL(clicked()),
+            this, SLOT(slotReloadAlbumsRequest()));
 
     // ------------------------------------------------------------------------
 
-    QGroupBox* uploadBox = new QGroupBox(i18n("Destination"), settingsBox);
-    uploadBox->setWhatsThis(
-        i18n("This is the location where VKontakte images will be downloaded."));
+    QGroupBox* uploadBox         = new QGroupBox(i18n("Destination"), settingsBox);
+    uploadBox->setWhatsThis(i18n("This is the location where VKontakte images will be downloaded."));
     QVBoxLayout* uploadBoxLayout = new QVBoxLayout(uploadBox);
-    m_uploadWidget = interface->uploadWidget(uploadBox);
+    m_uploadWidget               = interface->uploadWidget(uploadBox);
     uploadBoxLayout->addWidget(m_uploadWidget);
 
     // ------------------------------------------------------------------------
@@ -241,7 +245,6 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     m_progressBar = new QProgressBar(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
-
 
     /*
      * Layouts
@@ -267,7 +270,6 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     setDefaultButton(Close);
     setModal(false);
 
-
     if (!m_import)
     {
         setWindowTitle(i18nc("@title:window", "Export to VKontakte Web Service"));
@@ -285,7 +287,7 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 //         optionsBox->hide();
     }
 
-    KIPIPlugins::KPAboutData* about = new KIPIPlugins::KPAboutData(
+    KPAboutData* about = new KPAboutData(
         ki18n("VKontakte Plugin"),
         0,
         KAboutData::License_GPL,
@@ -300,7 +302,8 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
 
     about->addAuthor(ki18n("Alexander Potashev"), ki18n("Author"), "aspotashev@gmail.com");
 
-    disconnect(this, SIGNAL(helpClicked()), this, SLOT(slotHelp()));
+    disconnect(this, SIGNAL(helpClicked()),
+               this, SLOT(slotHelp()));
 
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
@@ -312,15 +315,21 @@ VkontakteWindow::VkontakteWindow(KIPI::Interface *interface,
     /*
      * UI slots
      */
-    connect(this, SIGNAL(user1Clicked()), this, SLOT(slotStartTransfer()));
+    connect(this, SIGNAL(user1Clicked()),
+            this, SLOT(slotStartTransfer()));
 
+    connect(this, SIGNAL(signalAuthenticationDone()),
+            this, SLOT(startAlbumsUpdate()));
 
-    connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startAlbumsUpdate()));
-    connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startGetFullName()));
-    connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(startGetUserId()));
+    connect(this, SIGNAL(signalAuthenticationDone()),
+            this, SLOT(startGetFullName()));
+
+    connect(this, SIGNAL(signalAuthenticationDone()),
+            this, SLOT(startGetUserId()));
 
     // for startReactivation()
-    connect(this, SIGNAL(signalAuthenticationDone()), this, SLOT(show()));
+    connect(this, SIGNAL(signalAuthenticationDone()),
+            this, SLOT(show()));
 }
 
 VkontakteWindow::~VkontakteWindow()
@@ -424,15 +433,15 @@ void VkontakteWindow::selectAlbum(int aid)
         }
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup grp = config.group("VKontakte Settings");
 
-    m_appId = grp.readEntry("VkAppId", "2446321");
-    m_accessToken = grp.readEntry("AccessToken", "");
+    m_appId         = grp.readEntry("VkAppId", "2446321");
+    m_accessToken   = grp.readEntry("AccessToken", "");
     m_albumToSelect = grp.readEntry("SelectedAlbumId", -1);
 }
 
@@ -447,13 +456,14 @@ void VkontakteWindow::writeSettings()
         grp.writeEntry("AccessToken", m_accessToken);
 
     Vkontakte::AlbumInfoPtr album = currentAlbum();
+
     if (album.isNull())
         grp.deleteEntry("SelectedAlbumId");
     else
         grp.writeEntry("SelectedAlbumId", album->aid());
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 QString VkontakteWindow::getDestinationPath() const
 {
@@ -508,8 +518,11 @@ void VkontakteWindow::startAuthentication(bool forceLogout)
 
     if (!m_accessToken.isEmpty())
     {
-        Vkontakte::GetApplicationPermissionsJob *job = new Vkontakte::GetApplicationPermissionsJob(m_accessToken);
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotApplicationPermissionCheckDone(KJob*)));
+        Vkontakte::GetApplicationPermissionsJob* job = new Vkontakte::GetApplicationPermissionsJob(m_accessToken);
+
+        connect(job, SIGNAL(result(KJob*)), 
+                this, SLOT(slotApplicationPermissionCheckDone(KJob*)));
+
         m_jobs.append(job);
         job->start();
     }
@@ -520,17 +533,20 @@ void VkontakteWindow::startAuthentication(bool forceLogout)
         Vkontakte::AuthenticationDialog *authDialog = new Vkontakte::AuthenticationDialog(this);
         authDialog->setAppId(m_appId);
         authDialog->setPermissions(permissions);
+
         connect(authDialog, SIGNAL(authenticated(QString)),
                 this, SLOT(slotAuthenticationDialogDone(QString)));
+
         connect(authDialog, SIGNAL(canceled()),
                 this, SLOT(slotAuthenticationDialogCanceled()));
+
         authDialog->start();
     }
 }
 
-void VkontakteWindow::slotApplicationPermissionCheckDone(KJob *kjob)
+void VkontakteWindow::slotApplicationPermissionCheckDone(KJob* kjob)
 {
-    Vkontakte::GetApplicationPermissionsJob *job = dynamic_cast<Vkontakte::GetApplicationPermissionsJob *>(kjob);
+    Vkontakte::GetApplicationPermissionsJob* job = dynamic_cast<Vkontakte::GetApplicationPermissionsJob*>(kjob);
     Q_ASSERT(job);
     m_jobs.removeAll(job);
     if (job->error() || (job->permissions() & 4) != 4)
@@ -553,19 +569,22 @@ void VkontakteWindow::slotAuthenticationDialogDone(const QString &accessToken)
     emit signalAuthenticationDone();
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::handleVkError(KJob *kjob)
 {
     KMessageBox::error(this, kjob->errorText(), i18nc("@title:window", "Request to VKontakte failed"));
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::startAlbumsUpdate()
 {
-    Vkontakte::AlbumListJob *job = new Vkontakte::AlbumListJob(m_accessToken);
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumsUpdateDone(KJob*)));
+    Vkontakte::AlbumListJob* job = new Vkontakte::AlbumListJob(m_accessToken);
+
+    connect(job, SIGNAL(result(KJob*)), 
+            this, SLOT(slotAlbumsUpdateDone(KJob*)));
+
     m_jobs.append(job);
     job->start();
 }
@@ -576,6 +595,7 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
 
     m_albumsCombo->clear();
     m_albums = job->list();
+
     foreach(const Vkontakte::AlbumInfoPtr &album, m_albums)
         m_albumsCombo->addItem(KIcon("folder-image"), album->title());
 
@@ -596,12 +616,15 @@ void VkontakteWindow::slotAlbumsUpdateDone(KJob *kjob)
     updateControls(true);
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::startGetFullName()
 {
-    Vkontakte::GetVariableJob *job = new Vkontakte::GetVariableJob(m_accessToken, 1281);
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotGetFullNameDone(KJob*)));
+    Vkontakte::GetVariableJob* job = new Vkontakte::GetVariableJob(m_accessToken, 1281);
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotGetFullNameDone(KJob*)));
+
     m_jobs.append(job);
     job->start();
 }
@@ -614,12 +637,15 @@ void VkontakteWindow::slotGetFullNameDone(KJob *kjob)
     updateLabels();
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::startGetUserId()
 {
-    Vkontakte::GetVariableJob *job = new Vkontakte::GetVariableJob(m_accessToken, 1280);
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotGetUserIdDone(KJob*)));
+    Vkontakte::GetVariableJob* job = new Vkontakte::GetVariableJob(m_accessToken, 1280);
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotGetUserIdDone(KJob*)));
+
     m_jobs.append(job);
     job->start();
 }
@@ -632,15 +658,18 @@ void VkontakteWindow::slotGetUserIdDone(KJob *kjob)
     updateLabels();
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::startAlbumCreation(Vkontakte::AlbumInfoPtr album)
 {
-    Vkontakte::CreateAlbumJob *job = new Vkontakte::CreateAlbumJob(
+    Vkontakte::CreateAlbumJob* job = new Vkontakte::CreateAlbumJob(
         m_accessToken,
         album->title(), album->description(),
         album->privacy(), album->commentPrivacy());
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumCreationDone(KJob*)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotAlbumCreationDone(KJob*)));
+
     m_jobs.append(job);
     job->start();
 }
@@ -659,7 +688,7 @@ void VkontakteWindow::slotAlbumCreationDone(KJob *kjob)
     updateControls(false);
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
 {
@@ -670,7 +699,10 @@ void VkontakteWindow::startAlbumEditing(Vkontakte::AlbumInfoPtr album)
         m_accessToken,
         album->aid(), album->title(), album->description(),
         album->privacy(), album->commentPrivacy());
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumEditingDone(KJob*)));
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotAlbumEditingDone(KJob*)));
+
     m_jobs.append(job);
     job->start();
 }
@@ -686,13 +718,15 @@ void VkontakteWindow::slotAlbumEditingDone(KJob *kjob)
     updateControls(false);
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::startAlbumDeletion(Vkontakte::AlbumInfoPtr album)
 {
-    Vkontakte::DeleteAlbumJob *job = new Vkontakte::DeleteAlbumJob(
-        m_accessToken, album->aid());
-    connect(job, SIGNAL(result(KJob*)), this, SLOT(slotAlbumDeletionDone(KJob*)));
+    Vkontakte::DeleteAlbumJob* job = new Vkontakte::DeleteAlbumJob(m_accessToken, album->aid());
+
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotAlbumDeletionDone(KJob*)));
+
     m_jobs.append(job);
     job->start();
 }
@@ -708,7 +742,7 @@ void VkontakteWindow::slotAlbumDeletionDone(KJob *kjob)
     updateControls(false);
 }
 
-//------------------------------
+//---------------------------------------------------------------------------
 
 void VkontakteWindow::slotNewAlbumRequest()
 {
@@ -786,13 +820,18 @@ void VkontakteWindow::slotStartTransfer()
         updateControls(false);
 
         QStringList files;
-        foreach(const KUrl &url, m_imgList->imageUrls(true))
+        foreach(const KUrl& url, m_imgList->imageUrls(true))
             files.append(url.toLocalFile());
 
-        Vkontakte::UploadPhotosJob *job = new Vkontakte::UploadPhotosJob(
+        Vkontakte::UploadPhotosJob* job = new Vkontakte::UploadPhotosJob(
             m_accessToken, files, false /*m_checkKeepOriginal->isChecked()*/, album->aid());
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotPhotoUploadDone(KJob*)));
-        connect(job, SIGNAL(progress(int)), m_progressBar, SLOT(setValue(int)));
+
+        connect(job, SIGNAL(result(KJob*)),
+                this, SLOT(slotPhotoUploadDone(KJob*)));
+
+        connect(job, SIGNAL(progress(int)),
+                m_progressBar, SLOT(setValue(int)));
+
         m_jobs.append(job);
         job->start();
     }
@@ -814,5 +853,3 @@ bool VkontakteWindow::isAuthenticated()
 }
 
 } // namespace KIPIVkontaktePlugin
-
-#include "vkwindow.moc"

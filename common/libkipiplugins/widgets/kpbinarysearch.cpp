@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "binarysearch.moc"
+#include "kpbinarysearch.moc"
 
 // Qt includes
 
@@ -34,27 +34,24 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-// Local includes
-
-#include "binaryiface.h"
-
 namespace KIPIPlugins
 {
 
-struct BinarySearch::BinarySearchPriv
+struct KPBinarySearch::KPBinarySearchPriv
 {
-    BinarySearchPriv()
+    KPBinarySearchPriv()
     {
+        downloadLabel = 0;
     }
 
-    QVector<BinaryIface*>       binaryIfaces;
-    QVector<QTreeWidgetItem*>   items;
-    QLabel*                     downloadLabel;
+    QVector<KPBinaryIface*>   binaryIfaces;
+    QVector<QTreeWidgetItem*> items;
+    QLabel*                   downloadLabel;
 
 };
 
-BinarySearch::BinarySearch(QWidget* parent)
-            : QTreeWidget(parent), d(new BinarySearchPriv)
+KPBinarySearch::KPBinarySearch(QWidget* parent)
+    : QTreeWidget(parent), d(new KPBinarySearchPriv)
 {
     setIconSize(QSize(KIconLoader::SizeSmall, KIconLoader::SizeSmall));
     setAlternatingRowColors(true);
@@ -70,23 +67,23 @@ BinarySearch::BinarySearch(QWidget* parent)
                                   << QString("")
                                   << QString(""));
 
-    header()->setResizeMode(Status, QHeaderView::ResizeToContents);
-    header()->setResizeMode(Binary, QHeaderView::Stretch);
+    header()->setResizeMode(Status,  QHeaderView::ResizeToContents);
+    header()->setResizeMode(Binary,  QHeaderView::Stretch);
     header()->setResizeMode(Version, QHeaderView::Stretch);
-    header()->setResizeMode(Button, QHeaderView::Stretch);
-    header()->setResizeMode(Link, QHeaderView::Stretch);
+    header()->setResizeMode(Button,  QHeaderView::Stretch);
+    header()->setResizeMode(Link,    QHeaderView::Stretch);
 
     d->downloadLabel = new QLabel(parentWidget());
 
     qobject_cast<QGridLayout*>(parentWidget()->layout())->addWidget(this, 0, 0);
 }
 
-BinarySearch::~BinarySearch()
+KPBinarySearch::~KPBinarySearch()
 {
     delete d;
 }
 
-void BinarySearch::addBinary(BinaryIface& binary)
+void KPBinarySearch::addBinary(KPBinaryIface& binary)
 {
     delete d->downloadLabel;
 
@@ -94,7 +91,7 @@ void BinarySearch::addBinary(BinaryIface& binary)
 
     d->binaryIfaces.append(&binary);
     d->items.append(new QTreeWidgetItem());
-    QTreeWidgetItem* item = d->items[d->items.size() - 1];
+    QTreeWidgetItem* item   = d->items[d->items.size() - 1];
     item->setIcon(Status, QIcon(SmallIcon("dialog-cancel")));
     item->setText(Binary, binary.baseName());
     item->setText(Version, binary.version());
@@ -103,7 +100,7 @@ void BinarySearch::addBinary(BinaryIface& binary)
     insertTopLevelItem(d->binaryIfaces.size() - 1, item);
     QPushButton* findButton = new QPushButton(i18n("Find"));
     setItemWidget(item, Button, findButton);
-    QLabel* downloadLabel = new QLabel(i18n(" or <a href=\"%1\">download</a>", binary.url().url()));
+    QLabel* downloadLabel   = new QLabel(i18n(" or <a href=\"%1\">download</a>", binary.url().url()));
     downloadLabel->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
     downloadLabel->setOpenExternalLinks(true);
     setItemWidget(item, Link, downloadLabel);
@@ -111,23 +108,27 @@ void BinarySearch::addBinary(BinaryIface& binary)
     // Starts a dialog to find the binary
     connect(findButton, SIGNAL(clicked(bool)),
             &binary, SLOT(slotNavigateAndCheck()));
+
     // Rechecks full validity when a binary is found and valid
     connect(&binary, SIGNAL(signalBinaryValid()),
             this, SLOT(slotAreBinariesFound()));
+
     // Scans (if no binary were found) a new directory where a binary was found
     connect(&binary, SIGNAL(signalSearchDirectoryAdded(QString)),
             this, SIGNAL(signalAddPossibleDirectory(QString)));
+
     connect(this, SIGNAL(signalAddPossibleDirectory(QString)),
             &binary, SLOT(slotAddPossibleSearchDirectory(QString)));
+
     // Force scan of a new directory
     connect(this, SIGNAL(signalAddDirectory(QString)),
             &binary, SLOT(slotAddSearchDirectory(QString)));
 
-
-    d->downloadLabel = new QLabel(i18n(
+    d->downloadLabel    = new QLabel(i18n(
         "<qt><p><font color=\"red\"><b>Warning:</b> Some necessary binaries have not been found on "
         "your system. If you have these binaries installed, please click the 'Find' button to locate them on your "
         "system, otherwise please download and install them to proceed.</font></p></qt>"), parentWidget());
+
     QGridLayout* layout = qobject_cast<QGridLayout*>(parentWidget()->layout());
     layout->addWidget(d->downloadLabel, layout->rowCount(), 0);
     d->downloadLabel->setWordWrap(true);
@@ -135,17 +136,19 @@ void BinarySearch::addBinary(BinaryIface& binary)
     d->downloadLabel->hide();
 }
 
-void BinarySearch::addDirectory(const QString& dir)
+void KPBinarySearch::addDirectory(const QString& dir)
 {
     emit(signalAddPossibleDirectory(dir));
 }
 
-bool BinarySearch::allBinariesFound()
+bool KPBinarySearch::allBinariesFound()
 {
     bool ret = true;
-    foreach(BinaryIface* binary, d->binaryIfaces)
+
+    foreach(KPBinaryIface* const binary, d->binaryIfaces)
     {
         int index = d->binaryIfaces.indexOf(binary);
+
         if (binary->isValid())
         {
             if (!binary->developmentVersion())
@@ -160,6 +163,7 @@ bool BinarySearch::allBinariesFound()
                                                          "There is no guarantee on the behavior of this binary."));
                 d->downloadLabel->show();
             }
+
             d->items[index]->setText(Version, binary->version());
             qobject_cast<QPushButton*>(itemWidget(d->items[index], Button))->setText(i18n("Change"));
         }
@@ -172,10 +176,11 @@ bool BinarySearch::allBinariesFound()
     {
         d->downloadLabel->hide();
     }
+
     return ret;
 }
 
-void BinarySearch::slotAreBinariesFound()
+void KPBinarySearch::slotAreBinariesFound()
 {
     kDebug() << "new binary found!!";
     bool allFound = allBinariesFound();

@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : IPTC caption settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -43,15 +43,15 @@ public:
     void applyMetadata(QByteArray& exifData, QByteArray& iptcData);
     void readMetadata(QByteArray& iptcData);
 
-    bool syncJFIFCommentIsChecked();
-    bool syncHOSTCommentIsChecked();
-    bool syncEXIFCommentIsChecked();
+    bool syncJFIFCommentIsChecked() const;
+    bool syncHOSTCommentIsChecked() const;
+    bool syncEXIFCommentIsChecked() const;
 
     void setCheckedSyncJFIFComment(bool c);
     void setCheckedSyncHOSTComment(bool c);
     void setCheckedSyncEXIFComment(bool c);
 
-    QString getIPTCCaption();
+    QString getIPTCCaption() const;
 
 Q_SIGNALS:
 

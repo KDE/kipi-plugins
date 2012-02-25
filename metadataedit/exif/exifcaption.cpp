@@ -6,7 +6,7 @@
  * Date        : 2006-10-12
  * Description : EXIF caption settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,16 +39,12 @@
 #include <klocale.h>
 #include <ktextedit.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "kpversion.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -155,7 +151,7 @@ EXIFCaption::EXIFCaption(QWidget* parent)
     d->syncIPTCCaptionCheck = new QCheckBox(i18n("Sync IPTC caption (warning: limited to 2000 printable "
                                                  "Ascii characters)"), this);
 
-    if (!KExiv2::supportXmp())
+    if (!KPMetadata::supportXmp())
         d->syncXMPCaptionCheck->setEnabled(false);
 
     // --------------------------------------------------------
@@ -260,27 +256,27 @@ EXIFCaption::~EXIFCaption()
     delete d;
 }
 
-bool EXIFCaption::syncJFIFCommentIsChecked()
+bool EXIFCaption::syncJFIFCommentIsChecked() const
 {
     return d->syncJFIFCommentCheck->isChecked();
 }
 
-bool EXIFCaption::syncHOSTCommentIsChecked()
+bool EXIFCaption::syncHOSTCommentIsChecked() const
 {
     return d->syncHOSTCommentCheck->isChecked();
 }
 
-bool EXIFCaption::syncXMPCaptionIsChecked()
+bool EXIFCaption::syncXMPCaptionIsChecked() const
 {
     return d->syncXMPCaptionCheck->isChecked();
 }
 
-bool EXIFCaption::syncIPTCCaptionIsChecked()
+bool EXIFCaption::syncIPTCCaptionIsChecked() const
 {
     return d->syncIPTCCaptionCheck->isChecked();
 }
 
-QString EXIFCaption::getEXIFUserComments()
+QString EXIFCaption::getEXIFUserComments() const
 {
     return d->userCommentEdit->toPlainText();
 }
@@ -308,13 +304,13 @@ void EXIFCaption::setCheckedSyncIPTCCaption(bool c)
 void EXIFCaption::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
+    KPMetadata meta;
+    meta.setExif(exifData);
     QString data;
 
     d->documentNameEdit->clear();
     d->documentNameCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.DocumentName", false);
+    data = meta.getExifTagString("Exif.Image.DocumentName", false);
     if (!data.isNull())
     {
         d->documentNameEdit->setText(data);
@@ -324,7 +320,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->imageDescEdit->clear();
     d->imageDescCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.ImageDescription", false);
+    data = meta.getExifTagString("Exif.Image.ImageDescription", false);
     if (!data.isNull())
     {
         d->imageDescEdit->setText(data);
@@ -334,7 +330,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->artistEdit->clear();
     d->artistCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.Artist", false);
+    data = meta.getExifTagString("Exif.Image.Artist", false);
     if (!data.isNull())
     {
         d->artistEdit->setText(data);
@@ -344,7 +340,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->copyrightEdit->clear();
     d->copyrightCheck->setChecked(false);
-    data = exiv2Iface.getExifTagString("Exif.Image.Copyright", false);
+    data = meta.getExifTagString("Exif.Image.Copyright", false);
     if (!data.isNull())
     {
         d->copyrightEdit->setText(data);
@@ -354,7 +350,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
     d->userCommentEdit->clear();
     d->userCommentCheck->setChecked(false);
-    data = exiv2Iface.getExifComment();
+    data = meta.getExifComment();
     if (!data.isNull())
     {
         d->userCommentEdit->setText(data);
@@ -371,65 +367,65 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
 
 void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setExif(exifData);
-    exiv2Iface.setIptc(iptcData);
-    exiv2Iface.setXmp(xmpData);
+    KPMetadata meta;
+    meta.setExif(exifData);
+    meta.setIptc(iptcData);
+    meta.setXmp(xmpData);
 
     if (d->documentNameCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Image.DocumentName", d->documentNameEdit->text());
+        meta.setExifTagString("Exif.Image.DocumentName", d->documentNameEdit->text());
     else
-        exiv2Iface.removeExifTag("Exif.Image.DocumentName");
+        meta.removeExifTag("Exif.Image.DocumentName");
 
     if (d->imageDescCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Image.ImageDescription", d->imageDescEdit->text());
+        meta.setExifTagString("Exif.Image.ImageDescription", d->imageDescEdit->text());
     else
-        exiv2Iface.removeExifTag("Exif.Image.ImageDescription");
+        meta.removeExifTag("Exif.Image.ImageDescription");
 
     if (d->artistCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Image.Artist", d->artistEdit->text());
+        meta.setExifTagString("Exif.Image.Artist", d->artistEdit->text());
     else
-        exiv2Iface.removeExifTag("Exif.Image.Artist");
+        meta.removeExifTag("Exif.Image.Artist");
 
     if (d->copyrightCheck->isChecked())
-        exiv2Iface.setExifTagString("Exif.Image.Copyright", d->copyrightEdit->text());
+        meta.setExifTagString("Exif.Image.Copyright", d->copyrightEdit->text());
     else
-        exiv2Iface.removeExifTag("Exif.Image.Copyright");
+        meta.removeExifTag("Exif.Image.Copyright");
 
     if (d->userCommentCheck->isChecked())
     {
-        exiv2Iface.setExifComment(d->userCommentEdit->toPlainText());
+        meta.setExifComment(d->userCommentEdit->toPlainText());
 
         if (syncJFIFCommentIsChecked())
-            exiv2Iface.setComments(d->userCommentEdit->toPlainText().toUtf8());
+            meta.setComments(d->userCommentEdit->toPlainText().toUtf8());
 
-        if (exiv2Iface.supportXmp() && syncXMPCaptionIsChecked())
+        if (meta.supportXmp() && syncXMPCaptionIsChecked())
         {
-            exiv2Iface.setXmpTagStringLangAlt("Xmp.dc.description",
+            meta.setXmpTagStringLangAlt("Xmp.dc.description",
                                               d->userCommentEdit->toPlainText(),
                                               QString(), false);
 
-            exiv2Iface.setXmpTagStringLangAlt("Xmp.exif.UserComment",
+            meta.setXmpTagStringLangAlt("Xmp.exif.UserComment",
                                               d->userCommentEdit->toPlainText(),
                                               QString(), false);
         }
 
         if (syncIPTCCaptionIsChecked())
-            exiv2Iface.setIptcTagString("Iptc.Application2.Caption", d->userCommentEdit->toPlainText());
+            meta.setIptcTagString("Iptc.Application2.Caption", d->userCommentEdit->toPlainText());
     }
     else
-        exiv2Iface.removeExifTag("Exif.Photo.UserComment");
+        meta.removeExifTag("Exif.Photo.UserComment");
 
-    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
 #if KEXIV2_VERSION >= 0x010000
-    exifData = exiv2Iface.getExifEncoded();
+    exifData = meta.getExifEncoded();
 #else
-    exifData = exiv2Iface.getExif();
+    exifData = meta.getExif();
 #endif
 
-    iptcData = exiv2Iface.getIptc();
-    xmpData  = exiv2Iface.getXmp();
+    iptcData = meta.getIptc();
+    xmpData  = meta.getXmp();
 }
 
 }  // namespace KIPIMetadataEditPlugin

@@ -6,7 +6,8 @@
  * Date        : 2009-05-31
  * Description : Figure out camera clock delta from a clock picture.
  *
- * Copyright (C) 2009 by Pieter Edelman (p dot edelman at gmx dot net)
+ * Copyright (C) 2009 by Pieter Edelman <p dot edelman at gmx dot net>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,6 +46,9 @@ namespace KIPIPlugins
     class ImageDialog;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPITimeAdjustPlugin
 {
 
@@ -56,7 +60,7 @@ class ImageDisplay : public QLabel
 
 public:
 
-    ImageDisplay(QScrollArea *);
+    ImageDisplay(QScrollArea*);
 
 protected:
 
@@ -69,29 +73,28 @@ private:
     int         currX;
     int         currY;
 
-    QScrollBar *barX;
-    QScrollBar *barY;
+    QScrollBar* barX;
+    QScrollBar* barY;
 };
 
 // -----------------------------------------------------------------------------------
 
-class ClockPhotoDialogPrivate;
-
-/* Class for determining the camera time difference from a photo of a time
- * display. The user can load a photo and tell the time displayed on this
- * photo. This class calculates the time difference and stores it in a set
- * of public variables: deltaNegative indicates whether the time should be
- * added (false) or subtracted (true). deltaDays, deltaHours, deltaMinutes
- * and deltaSeconds hold the numbers of days, hours, minutes and seconds
- * to add or subtract. Months and years are not used, because these can be
- * ambigious. */
+/** Class for determining the camera time difference from a photo of a time
+ *  display. The user can load a photo and tell the time displayed on this
+ *  photo. This class calculates the time difference and stores it in a set
+ *  of public variables: deltaNegative indicates whether the time should be
+ *  added (false) or subtracted (true). deltaDays, deltaHours, deltaMinutes
+ *  and deltaSeconds hold the numbers of days, hours, minutes and seconds
+ *  to add or subtract. Months and years are not used, because these can be
+ *  ambigious.
+ */
 class ClockPhotoDialog : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    ClockPhotoDialog(KIPI::Interface* interface, QWidget* parent);
+    ClockPhotoDialog(Interface* interface, QWidget* parent);
     ~ClockPhotoDialog();
 
     /* The public variables that hold the time difference. */
@@ -108,7 +111,7 @@ public:
 
 protected:
 
-    void resizeEvent(QResizeEvent *);
+    void resizeEvent(QResizeEvent*);
 
 private Q_SLOTS:
 
@@ -121,8 +124,9 @@ private Q_SLOTS:
 
 private:
 
-    /* Calculate the minimum value for the scroll slider according to the window
-     * size. If fit is true, the image is made to fit in the viewport. */
+    /** Calculate the minimum value for the scroll slider according to the window
+     *  size. If fit is true, the image is made to fit in the viewport.
+     */
     void adjustToWindowSize(bool);
 
     void saveSize();
@@ -130,6 +134,8 @@ private:
 private:
 
     QDateTime                photoDateTime;
+    
+    class ClockPhotoDialogPrivate;
     ClockPhotoDialogPrivate* const d;
 };
 

@@ -49,6 +49,7 @@ MediaWiki          : A tool to export images to Mediawiki based web service (htt
 RajceExport        : A tool to export images to Rajce web service (http://www.rajce.idnes.cz).
 Vkontakte          : A tool to export images to VKontakte web service (http://www.vkontakte.ru)
 PhotoLayoutEditor  : A tool to assemble images together.
+ImageShackExport   : A tool to export images to ImageShack web service (http://imageshack.us)
 
 Porting under progress to Qt4/KDE4:
 

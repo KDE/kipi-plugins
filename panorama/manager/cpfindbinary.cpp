@@ -33,8 +33,6 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 
-
-
 namespace KIPIPanoramaPlugin
 {
 
@@ -44,9 +42,9 @@ bool CPFindBinary::parseHeader(const QString& output)
 
     // FIXME: Change that to a regexp
     QString headerStartsNew("Hugin's cpfind ");          // For Hugin 2011.4
-    QStringList lines = output.split('\n');
-
+    QStringList lines    = output.split('\n');
     m_developmentVersion = false;
+    
     foreach(QString line, lines)
     {
         kDebug() << path() << " help header line: \n" << line;
@@ -80,6 +78,7 @@ bool CPFindBinary::parseHeader(const QString& output)
         }
         m_developmentVersion = true;
     }
+
     return ret;
 }
 

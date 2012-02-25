@@ -7,7 +7,7 @@
  * Description : batch images grayscale conversion
  *
  * Copyright (C) 2004-2011 by Marcel Wiesweg <marcel dot wiesweg at gmx dot de>
- * Copyright (C) 2003-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2003-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -59,17 +59,13 @@ extern "C"
 #include <kurl.h>
 #include <kdebug.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/version.h>
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "utils.h"
 #include "kpversion.h"
 #include "transupp.h"
 #include "kpwritehelp.h"
+#include "kpmetadata.h"
 
 using namespace KIPIPlugins;
 
@@ -77,7 +73,7 @@ namespace KIPIJPEGLossLessPlugin
 {
 
 ImageGrayScale::ImageGrayScale()
-              : QObject()
+    : QObject()
 {
     m_tmpFile.setSuffix("kipiplugin-grayscale");
     m_tmpFile.setAutoRemove(true);
@@ -233,18 +229,18 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
 
     // And set finaly update the metadata to target file.
 
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KPMetadata meta;
 
 #if KEXIV2_VERSION >= 0x000600
-    exiv2Iface.setUpdateFileTimeStamp(updateFileTimeStamp);
+    meta.setUpdateFileTimeStamp(updateFileTimeStamp);
 #endif
 
     QImage img(dest);
     QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    exiv2Iface.load(dest);
-    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
-    exiv2Iface.setExifThumbnail(exifThumbnail);
-    exiv2Iface.save(dest);
+    meta.load(dest);
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setExifThumbnail(exifThumbnail);
+    meta.save(dest);
 
     return true;
 }

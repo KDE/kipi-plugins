@@ -39,6 +39,8 @@ namespace KIPI
 class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPICalendarPlugin
 {
 
@@ -52,7 +54,7 @@ public:
 
     CalPrinter(QPrinter* printer,
                QMap<int, KUrl>& months,
-               KIPI::Interface* interface,
+               Interface* interface,
                QObject* parent);
 
     virtual ~CalPrinter();
@@ -80,7 +82,7 @@ private:
 
     CalPainter*      painter_;
 
-    KIPI::Interface* interface_;
+    Interface*       interface_;
 };
 
 }  // NameSpace KIPICalendarPlugin

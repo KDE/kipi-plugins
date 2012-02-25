@@ -65,7 +65,7 @@
 #include "imagedialog.h"
 #include "kpversion.h"
 #include "settingswidget.h"
-#include "progresswidget.h"
+#include "kpprogresswidget.h"
 #include "kpimageinfo.h"
 
 using namespace DNGIface;
@@ -80,14 +80,14 @@ public:
 
     BatchDialogPriv()
     {
-        busy               = false;
-        page               = 0;
-        progressBar        = 0;
-        listView           = 0;
-        thread             = 0;
-        settingsBox        = 0;
-        iface              = 0;
-        about              = 0;
+        busy        = false;
+        page        = 0;
+        progressBar = 0;
+        listView    = 0;
+        thread      = 0;
+        settingsBox = 0;
+        iface       = 0;
+        about       = 0;
     }
 
     bool                   busy;
@@ -96,7 +96,7 @@ public:
 
     QStringList            fileList;
 
-    ProgressWidget*        progressBar;
+    KPProgressWidget*      progressBar;
 
     MyImageList*           listView;
 
@@ -104,12 +104,12 @@ public:
 
     SettingsWidget*        settingsBox;
 
-    KIPI::Interface*       iface;
+    Interface*             iface;
 
     DNGConverterAboutData* about;
 };
 
-BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
+BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const about)
     : KDialog(0), d(new BatchDialogPriv)
 {
     d->iface = iface;
@@ -134,8 +134,8 @@ BatchDialog::BatchDialog(KIPI::Interface* iface, DNGConverterAboutData* about)
 
     d->settingsBox = new SettingsWidget(d->page);
 
-    d->progressBar = new ProgressWidget(d->iface, d->page);
-    d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
+    d->progressBar = new KPProgressWidget(d->iface, d->page);
+    d->progressBar->setMaximumHeight(fontMetrics().height()+2);
     d->progressBar->hide();
 
     mainLayout->addWidget(d->listView,    0, 0, 3, 1);

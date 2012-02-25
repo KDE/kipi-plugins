@@ -6,8 +6,9 @@
  * Date        : 2011-02-11
  * Description : a kipi plugin to export images to WikiMedia web service
  *
- * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Parthasarathy Gopavarapu <gparthasarathy93 at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,7 +27,7 @@
 
 // KDE includes
 
-#include <KDialog>
+#include <kdialog.h>
 
 // MediaWiki includes
 
@@ -45,6 +46,10 @@ namespace KIPIPlugins
     class KPAboutData;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+using namespace mediawiki;
+
 namespace KIPIWikiMediaPlugin
 {
 
@@ -58,13 +63,14 @@ class WMWindow : public KDialog
 
 public:
 
-    WMWindow(KIPI::Interface* interface, const QString& tmpFolder, QWidget* parent);
+    WMWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
     ~WMWindow();
 
     void reactivate();
 
 private Q_SLOTS:
 
+    void slotClose();
     void slotHelp();
     void slotStartTransfer();
     void slotChangeUserClicked();
@@ -80,19 +86,19 @@ private:
 
 private:
 
-    QString                            m_tmpDir;
-    QString                            m_tmpPath;
-    QString                            m_login;
-    QString                            m_pass;
-    QUrl                               m_wiki;
+    QString       m_tmpDir;
+    QString       m_tmpPath;
+    QString       m_login;
+    QString       m_pass;
+    QUrl          m_wiki;
 
-    WmWidget*                          m_widget;
-    mediawiki::MediaWiki*              m_mediawiki;
+    WmWidget*     m_widget;
+    MediaWiki*    m_mediawiki;
 
-    KIPI::Interface*                   m_interface;
-    KIPIPlugins::KPAboutData*          m_about;
-    KIPIWikiMediaPlugin::WmLogin*      m_dlgLoginExport;
-    KIPIWikiMediaPlugin::WikiMediaJob* m_uploadJob;
+    Interface*    m_interface;
+    KPAboutData*  m_about;
+    WmLogin*      m_dlgLoginExport;
+    WikiMediaJob* m_uploadJob;
 };
 
 } // namespace KIPIWikiMediaPlugin

@@ -38,6 +38,8 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIPlugins
 {
 
@@ -48,7 +50,7 @@ public:
 
     /** Contructor with KIPI interface instance get from plugin.
      */
-    KPHostSettings(KIPI::Interface* iface);
+    KPHostSettings(Interface* const iface);
     ~KPHostSettings();
 
     /** Return all file extensions (image, sound, video) managed by host application, separated by

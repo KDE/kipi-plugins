@@ -3,27 +3,28 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.h.cmake ${CMAKE_CURRE
 INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
 SET(kipiplugins_LIB_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpaboutdata.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwriteimage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetadata.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpimageinfo.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kphostsettings.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpmetasettings.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpwritehelp.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpversion.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/kprawthumbthread.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/binaryiface.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/iccjpeg.c
-                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/actionthreadbase.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/kpbinaryiface.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwritehelp.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/kpwriteimage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/imageio/iccjpeg.c
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpactionthreadbase.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/tools/threads/kpweaverobserver.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/batchprogressdialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/imagedialog.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/wizardpage.cpp
                          ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/outputdialog.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/binarysearch.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/imageslist.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/savesettingswidget.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewmanager.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/previewimage.cpp
-                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/progresswidget.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpbinarysearch.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpprogresswidget.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpimageslist.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewimage.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kppreviewmanager.cpp
+                         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/kpsavesettingswidget.cpp
                          )
 
 KDE4_ADD_LIBRARY(kipiplugins SHARED ${kipiplugins_LIB_SRCS})

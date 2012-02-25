@@ -7,7 +7,7 @@
  * Description : a tool to export image to an Ipod device.
  *
  * Copyright (C) 2006-2008 by Seb Ruiz <ruiz@kde.org>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,11 +35,13 @@
 
 #include <kdialog.h>
 
-// Kipi includes
-
 #if KIPI_PLUGIN
 
+// Kipi includes
+
 #include <libkipi/interface.h>
+
+// Local includes
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
@@ -81,13 +83,13 @@ public:
 
     UploadDialog(
 #if KIPI_PLUGIN
-                 KIPI::Interface* interface,
+                 Interface* interface,
 #endif
-                 const QString& caption, QWidget *parent=0 );
+                 const QString& caption, QWidget* parent=0 );
 
     ~UploadDialog();
 
-    static UploadDialog *instance() { return s_instance; }
+    static UploadDialog* instance() { return s_instance; }
 
     QString ipodModel() const;
     QString mountPoint() { return m_mountPoint; }
@@ -106,10 +108,10 @@ private Q_SLOTS:
 
     void addDropItems( const QStringList& filesPath );
 
-    void imageSelected( QTreeWidgetItem *item );
-    void gotImagePreview( const KFileItem*, const QPixmap &pixmap );
+    void imageSelected( QTreeWidgetItem* item );
+    void gotImagePreview( const KFileItem*, const QPixmap& pixmap );
 
-    void ipodItemSelected( QTreeWidgetItem *item );
+    void ipodItemSelected( QTreeWidgetItem* item );
 
     void imagesFilesButtonAdd();
     void imagesFilesButtonRem();
@@ -129,12 +131,12 @@ private Q_SLOTS:
 private:
 
     void addUrlToList( const QString& file );
-    bool deleteIpodAlbum( IpodAlbumItem *album );
-    bool deleteIpodPhoto( IpodPhotoItem *photo );
+    bool deleteIpodAlbum( IpodAlbumItem* album );
+    bool deleteIpodPhoto( IpodPhotoItem* photo );
     void getIpodAlbums();
-    void getIpodAlbumPhotos( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
+    void getIpodAlbumPhotos( IpodAlbumItem* item, Itdb_PhotoAlbum* album );
     Itdb_Artwork *photoFromId( const uint id );
-    void reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album );
+    void reloadIpodAlbum( IpodAlbumItem* item, Itdb_PhotoAlbum* album );
 
     bool openDevice(); // connect to the ipod
     void closeEvent(QCloseEvent*);
@@ -144,35 +146,35 @@ private:
     bool                 m_transferring;
 
 #if KIPI_PLUGIN
-    Interface           *m_interface;
-    KPAboutData         *m_about;
+    Interface*           m_interface;
+    KPAboutData*         m_about;
 #endif
 
-    Itdb_PhotoDB        *m_itdb;
-    Itdb_IpodInfo       *m_ipodInfo;
-    IpodHeader          *m_ipodHeader;
+    Itdb_PhotoDB*        m_itdb;
+    Itdb_IpodInfo*       m_ipodInfo;
+    IpodHeader*          m_ipodHeader;
 
-    QGroupBox           *m_destinationBox;
-    QGroupBox           *m_urlListBox;
+    QGroupBox*           m_destinationBox;
+    QGroupBox*           m_urlListBox;
 
-    QPushButton         *m_createAlbumButton;
-    QPushButton         *m_removeAlbumButton;
-    QPushButton         *m_renameAlbumButton;
-    QPushButton         *m_addImagesButton;
-    QPushButton         *m_remImagesButton;
-    QPushButton         *m_transferImagesButton;
+    QPushButton*         m_createAlbumButton;
+    QPushButton*         m_removeAlbumButton;
+    QPushButton*         m_renameAlbumButton;
+    QPushButton*         m_addImagesButton;
+    QPushButton*         m_remImagesButton;
+    QPushButton*         m_transferImagesButton;
 
-    QLabel              *m_imagePreview;
-    QLabel              *m_ipodPreview;
+    QLabel*              m_imagePreview;
+    QLabel*              m_ipodPreview;
 
     QString              m_mountPoint;
     QString              m_deviceNode;
 
-    ImageList           *m_ipodAlbumList;
+    ImageList*           m_ipodAlbumList;
 
-    ImageList           *m_uploadList;
+    ImageList*           m_uploadList;
 
-    static UploadDialog *s_instance;
+    static UploadDialog* s_instance;
 };
 
 } // namespace KIPIIpodExportPlugin

@@ -32,6 +32,8 @@
 #include <QtSvg/QSvgRenderer>
 #include <QPainter>
 #include <QFile>
+#include <QDomDocument>
+#include <QDebug>
 
 namespace KIPIPhotoLayoutsEditor
 {
@@ -46,18 +48,52 @@ namespace KIPIPhotoLayoutsEditor
                 fpath(path),
                 fname(name)
             {
+                fname.remove(".ple");
                 if (fpath.isEmpty())
                     return;
-                QSvgRenderer renderer(fpath);
-                if (renderer.isValid())
+
+		// Try to read preview image
+                bool render = false;
+		QFile f(path);
+		QDomDocument document;
+                QString imageAttribute;
+		document.setContent(&f, true);
+
+                QDomElement svg = document.firstChildElement("svg");
+                if  (svg.isNull())
+                    return;
+
+                QDomElement g = svg.firstChildElement("g");
+                if  (svg.isNull())
+                    return;
+
+                QDomElement defs = g.firstChildElement("defs");
+                while(!defs.isNull() && (defs.attribute("id") != "Preview"))
+                    defs = defs.nextSiblingElement("defs");
+                QDomElement img = defs.firstChildElement("image");
+
+                if (!img.isNull() && !(imageAttribute = img.text()).isEmpty())
                 {
-                    image = QImage( renderer.viewBoxF().size().toSize(), QImage::Format_ARGB32 );
-                    image.fill(Qt::white);
-                    QPainter p(&image);
-                    renderer.render(&p);
-                    p.end();
-                    image = image.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    image = QImage::fromData( QByteArray::fromBase64(imageAttribute.toAscii()) );
+                    if (image.isNull())
+                        render = true;
                 }
+		else
+                     render = true;
+                if (render)
+		{
+		    // Try to render preview image
+                    QSvgRenderer renderer(fpath);
+                    if (renderer.isValid())
+                    {
+                    	image = QImage( renderer.viewBoxF().size().toSize(), QImage::Format_ARGB32 );
+                    	image.fill(Qt::white);
+                    	QPainter p(&image);
+                    	renderer.render(&p);
+                    	p.end();
+                    }
+                }
+                image = image.scaled(QSize(100, 100), Qt::KeepAspectRatio, Qt::SmoothTransformation);
             }
 
             QString name() const

@@ -68,6 +68,7 @@ class TemplateItemDelegate : public QAbstractItemDelegate
                                    rf.top() + 5,
                                    i);
                 ir = i.rect();
+                painter->setPen(QPen(Qt::black, 0));
                 painter->drawRect(ir.translated(rf.left() + (WIDTH - ir.width()) / 2,
                                                       rf.top() + 5));
             }
@@ -79,7 +80,7 @@ class TemplateItemDelegate : public QAbstractItemDelegate
                               Qt::AlignHCenter,
                               item->name());
             painter->save();
-            painter->setPen(QPen(Qt::gray, 0.5));
+            painter->setPen(QPen(Qt::gray, 0));
             painter->drawRect(rf.x(), rf.y(), rf.width(), rf.height());
             painter->restore();
         }

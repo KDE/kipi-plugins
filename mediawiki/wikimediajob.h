@@ -7,6 +7,7 @@
  * Description : a kipi plugin to export images to WikiMedia web service
  *
  * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,12 +32,8 @@
 
 // KDE includes
 
-#include <KUrl>
-#include <KJob>
-
-// Local includes
-
-#include "imageslist.h"
+#include <kurl.h>
+#include <kjob.h>
 
 namespace mediawiki
 {
@@ -48,6 +45,9 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+using namespace mediawiki;
+
 namespace KIPIWikiMediaPlugin
 {
 
@@ -57,7 +57,7 @@ class WikiMediaJob : public KJob
 
 public:
 
-    WikiMediaJob(KIPI::Interface* interface ,mediawiki::MediaWiki* mediawiki, QObject* parent=0);
+    WikiMediaJob(Interface* const interface, MediaWiki* const mediawiki, QObject* const parent=0);
     QString buildWikiText(const QMap<QString, QString>& info);
 
     void setImageMap(const QList<QMap<QString, QString> >& imageDesc);
@@ -77,8 +77,8 @@ public Q_SLOTS:
 private:
 
     KUrl::List                    m_urls;
-    KIPI::Interface*              m_interface;
-    mediawiki::MediaWiki*         m_mediawiki;
+    Interface*                    m_interface;
+    MediaWiki*                    m_mediawiki;
     QList<QMap<QString,QString> > m_imageDesc;
     QString                       m_error;
     QString                       m_currentFile;

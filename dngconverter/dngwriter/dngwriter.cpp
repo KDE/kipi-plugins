@@ -67,18 +67,15 @@ extern "C"
 
 #include <libkdcraw/version.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "dngwriter_p.h"
 #include "dngwriterhost.h"
+#include "kpmetadata.h"
 
 #define CHUNK 65536
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace DNGIface
 {
@@ -105,7 +102,7 @@ dng_date_time dngDateTime(QDateTime qDT)
 }
 
 DNGWriter::DNGWriter()
-         : d(new DNGWriterPrivate)
+    : d(new DNGWriterPrivate)
 {
 }
 
@@ -686,14 +683,14 @@ int DNGWriter::convert()
 
         kDebug() << "DNGWriter: Updating metadata to DNG Negative" ;
 
-        dng_exif *exif = negative->GetExif();
+        dng_exif* exif = negative->GetExif();
         exif->fModel.Set_ASCII(identify.model.toAscii());
         exif->fMake.Set_ASCII(identify.make.toAscii());
 
-        long int num, den;
-        long     val;
-        QString  str;
-        KExiv2   meta;
+        long int   num, den;
+        long       val;
+        QString    str;
+        KPMetadata meta;
         if (meta.load(inputFile()))
         {
             // Time from original shot

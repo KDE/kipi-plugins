@@ -23,45 +23,45 @@
 #ifndef PICASAWEBIMGLIST_H
 #define PICASAWEBIMGLIST_H
 
-#ifndef IMAGESLIST_H
-#include "imageslist.h"
-#endif
+// Local includes
 
+#include "kpimageslist.h"
 
 using namespace KIPI;
 
 namespace KIPIPicasawebExportPlugin
 {
-    
-class PicasawebImageDialogPrivate;    
 
-class PicasawebImagesList : public KIPIPlugins::ImagesList
+class PicasawebImagesList : public KIPIPlugins::KPImagesList
 {
     Q_OBJECT
 
 public:
 
-    explicit PicasawebImagesList(Interface* iface, QWidget* parent = 0, int iconSize = -1);
+    explicit PicasawebImagesList(Interface* const iface, QWidget* const parent = 0, int iconSize = -1);
     virtual ~PicasawebImagesList();
 
 protected Q_SLOTS:
 
     virtual void slotAddItems();
-
 };
+
+// -----------------------------------------------------------------------------------------------------
 
 class PicasawebImageDialog
 {
 
 public:
 
-    PicasawebImageDialog(QWidget* parent, KIPI::Interface* iface);
+    PicasawebImageDialog(QWidget* const parent, KIPI::Interface* const iface);
     ~PicasawebImageDialog();
 
     KUrl::List urls() const;
     
 private:
 
+        
+    class PicasawebImageDialogPrivate;  
     PicasawebImageDialogPrivate* const d;
 };
 

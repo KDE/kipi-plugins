@@ -44,10 +44,6 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/rotationmatrix.h>
-
 // Local includes
 
 #include "kpimageinfo.h"
@@ -56,16 +52,18 @@
 #include "timer.h"
 #endif
 
+using namespace KDcrawIface;
+
 namespace KIPIviewer
 {
 
-Texture::Texture(KIPI::Interface* i)
+Texture::Texture(Interface* i)
 {
     kipiInterface  = i;
-    rotate_list[0] = KExiv2::ORIENTATION_ROT_90;
-    rotate_list[1] = KExiv2::ORIENTATION_ROT_180;
-    rotate_list[2] = KExiv2::ORIENTATION_ROT_270;
-    rotate_list[3] = KExiv2::ORIENTATION_ROT_180;
+    rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
+    rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
+    rotate_list[2] = KPMetadata::ORIENTATION_ROT_270;
+    rotate_list[3] = KPMetadata::ORIENTATION_ROT_180;
     rotate_idx     = 0;
     reset();
 }
@@ -106,12 +104,12 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     _texnr       = tn;
 
     // check if its a RAW file.
-    QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+    QString rawFilesExt(KDcraw::rawFiles());
     QFileInfo fileInfo(fn);
     if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcrawIface::KDcraw::loadDcrawPreview(qimage, filename);
+        KDcraw::loadDcrawPreview(qimage, filename);
     }
     else
     {
@@ -120,8 +118,8 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     }
 
     //handle rotation
-    KIPIPlugins::KPImageInfo info(kipiInterface, filename);
-    if ( info.orientation() != KExiv2::ORIENTATION_UNSPECIFIED )
+    KPImageInfo info(kipiInterface, filename);
+    if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
         QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
         qimage         = qimage.transformed(matrix);
@@ -422,7 +420,7 @@ void Texture::rotate()
     _load();
 
     //save new rotation in exif header
-    KIPIPlugins::KPImageInfo info(kipiInterface, filename);
+    KPImageInfo info(kipiInterface, filename);
     info.setOrientation(rotate_list[rotate_idx%4]);
 
     reset();

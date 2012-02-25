@@ -6,7 +6,7 @@
  * Date        : 2006-09-13
  * Description : a widget to provide options to save image.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef SAVESETTINGSWIDGET_H
-#define SAVESETTINGSWIDGET_H
+#ifndef KPSAVESETTINGSWIDGET_H
+#define KPSAVESETTINGSWIDGET_H
 
 // Qt includes
 
@@ -38,7 +38,7 @@
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT SaveSettingsWidget : public QWidget
+class KIPIPLUGINS_EXPORT KPSaveSettingsWidget : public QWidget
 {
     Q_OBJECT
 
@@ -60,10 +60,10 @@ public:
 
 public:
 
-    SaveSettingsWidget(QWidget *parent);
-    ~SaveSettingsWidget();
+    KPSaveSettingsWidget(QWidget* const parent);
+    ~KPSaveSettingsWidget();
 
-    void setCustomSettingsWidget(QWidget* custom);
+    void setCustomSettingsWidget(QWidget* const custom);
 
     OutputFormat fileFormat() const;
     void setFileFormat(OutputFormat f);
@@ -91,10 +91,10 @@ Q_SIGNALS:
 
 private:
 
-    class SaveSettingsWidgetPriv;
-    SaveSettingsWidgetPriv* const d;
+    class KPSaveSettingsWidgetPriv;
+    KPSaveSettingsWidgetPriv* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* SAVESETTINGSWIDGET_H */
+#endif /* KPSAVESETTINGSWIDGET_H */

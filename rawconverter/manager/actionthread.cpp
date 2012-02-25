@@ -60,29 +60,29 @@ public:
     {
         public:
 
-            KUrl                             fileUrl;
-            Action                           action;
-            SaveSettingsWidget::OutputFormat outputFormat;
-            KDcrawIface::RawDecodingSettings decodingSettings;
+            KUrl                               fileUrl;
+            Action                             action;
+            KPSaveSettingsWidget::OutputFormat outputFormat;
+            RawDecodingSettings                decodingSettings;
     };
 
-    bool                             running;
+    bool                               running;
 
-    QMutex                           mutex;
+    QMutex                             mutex;
 
-    QWaitCondition                   condVar;
+    QWaitCondition                     condVar;
 
-    QList<Task*>                     todo;
+    QList<Task*>                       todo;
 
-    RawDecodingIface                 dcrawIface;
+    RawDecodingIface                   dcrawIface;
 
-    SaveSettingsWidget::OutputFormat outputFormat;
+    KPSaveSettingsWidget::OutputFormat outputFormat;
 
-    KDcrawIface::RawDecodingSettings rawDecodingSettings;
+    RawDecodingSettings                rawDecodingSettings;
 };
 
-ActionThread::ActionThread(QObject* parent, bool updateFileTimeStamp)
-            : QThread(parent), d(new ActionThreadPriv)
+ActionThread::ActionThread(QObject* const parent, bool updateFileTimeStamp)
+    : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
     d->dcrawIface.setUpdateFileTimeStamp(updateFileTimeStamp);
@@ -98,8 +98,8 @@ ActionThread::~ActionThread()
     delete d;
 }
 
-void ActionThread::setRawDecodingSettings(KDcrawIface::RawDecodingSettings rawDecodingSettings,
-                                          SaveSettingsWidget::OutputFormat outputFormat)
+void ActionThread::setRawDecodingSettings(RawDecodingSettings rawDecodingSettings,
+                                          KPSaveSettingsWidget::OutputFormat outputFormat)
 {
     d->rawDecodingSettings = rawDecodingSettings;
     d->outputFormat        = outputFormat;
@@ -228,7 +228,7 @@ void ActionThread::run()
                 case IDENTIFY_FULL:
                 {
                     // Identify Camera model.
-                    KDcrawIface::DcrawInfoContainer info;
+                    DcrawInfoContainer info;
                     d->dcrawIface.rawFileIdentify(info, t->fileUrl.path());
 
                     QString identify = i18n("Cannot identify RAW image");

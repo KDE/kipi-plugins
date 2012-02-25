@@ -51,13 +51,13 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPISmugPlugin
 {
 
-SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface* iface, bool import)
-          : QWidget(parent)
+SmugWidget::SmugWidget(QWidget* const parent, KIPI::Interface* const iface, bool import)
+    : QWidget(parent)
 {
     setObjectName("SmugWidget");
 
@@ -65,8 +65,8 @@ SmugWidget::SmugWidget(QWidget* parent, KIPI::Interface* iface, bool import)
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KIPIPlugins::ImagesList(iface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
@@ -257,7 +257,7 @@ SmugWidget::~SmugWidget()
 {
 }
 
-KIPIPlugins::ImagesList* SmugWidget::imagesList() const
+KIPIPlugins::KPImagesList* SmugWidget::imagesList() const
 {
     return m_imgList;
 }

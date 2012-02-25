@@ -48,12 +48,12 @@
 
 #include "KioImportWidget.h"
 #include "kpaboutdata.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPIKioExportPlugin
 {
 
-KioImportWindow::KioImportWindow(QWidget* /*parent*/, KIPI::Interface *interface)
+KioImportWindow::KioImportWindow(QWidget* /*parent*/, KIPI::Interface* interface)
                : KDialog(0), m_interface(interface)
 {
     if (!interface)

@@ -50,10 +50,9 @@ namespace KIPIPicasawebExportPlugin
 
 static const char picasaweb_video_extentions[] = "*.3gp *.avi *.asf *.mov *.wmv *.mpg *.mp4 *.m2t *.mmv *.m2ts *.3gpp";
 
-PicasawebImagesList::PicasawebImagesList(Interface *iface, QWidget* parent, int iconSize)
-  : ImagesList(iface, parent, iconSize)
+PicasawebImagesList::PicasawebImagesList(Interface* const iface, QWidget* const parent, int iconSize)
+    : KPImagesList(iface, parent, iconSize)
 {
-
 }
 
 PicasawebImagesList::~PicasawebImagesList()
@@ -72,7 +71,7 @@ void PicasawebImagesList::slotAddItems()
 
 // ------------------------------------------------------------------------
 
-class PicasawebImageDialogPrivate
+class PicasawebImageDialog::PicasawebImageDialogPrivate
 {
 
 public:
@@ -81,12 +80,12 @@ public:
     {
     }
 
-    KUrl::List       urls;
+    KUrl::List urls;
 };
 
 // ------------------------------------------------------------------------
 
-PicasawebImageDialog::PicasawebImageDialog(QWidget* parent, KIPI::Interface* iface)
+PicasawebImageDialog::PicasawebImageDialog(QWidget* const parent, KIPI::Interface* const iface)
     : d(new PicasawebImageDialogPrivate)
 {
     QStringList patternList;
@@ -144,6 +143,5 @@ KUrl::List PicasawebImageDialog::urls() const
 {
     return d->urls;
 }
-
 
 } // namespace KIPIPicasawebExportPlugin

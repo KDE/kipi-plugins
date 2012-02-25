@@ -50,12 +50,12 @@
 
 // Local includes
 
-#include "imageslist.h"
+#include "kpimageslist.h"
 
 namespace KIPIFacebookPlugin
 {
 
-FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
+FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool import)
     : QWidget(parent)
 {
     setObjectName("FbWidget");
@@ -64,8 +64,8 @@ FbWidget::FbWidget(QWidget* parent, KIPI::Interface *iface, bool import)
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KIPIPlugins::ImagesList(iface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(i18n("This is the list of images to upload to your Facebook account."));
@@ -270,7 +270,7 @@ FbWidget::~FbWidget()
 {
 }
 
-KIPIPlugins::ImagesList* FbWidget::imagesList() const
+KIPIPlugins::KPImagesList* FbWidget::imagesList() const
 {
     return m_imgList;
 }

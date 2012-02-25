@@ -38,12 +38,6 @@
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
 
-// Libkexiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
-using namespace KExiv2Iface;
-
 namespace KIPIPlugins
 {
 
@@ -66,8 +60,8 @@ public:
         QMap<QString, QVariant> map; 
         if (hasValidData())
         {
-            KIPI::ImageInfo info = iface->info(url);
-            map                  = info.attributes();
+            ImageInfo info = iface->info(url);
+            map            = info.attributes();
             if (!map.isEmpty()) return map.value(name, QVariant());
         }
         return QVariant();
@@ -77,7 +71,7 @@ public:
     {
         if (hasValidData())
         {
-            KIPI::ImageInfo info = iface->info(url);
+            ImageInfo info = iface->info(url);
             QMap<QString, QVariant> map;
             map.insert(name, value);
             info.addAttributes(map);
@@ -86,7 +80,7 @@ public:
 
     void removeAttribute(const QString& name)
     {
-        KIPI::ImageInfo info = iface->info(url);
+        ImageInfo info = iface->info(url);
         info.delAttributes(QStringList() << name);
     }
 
@@ -94,7 +88,7 @@ public:
     {
         if (hasValidData())
         {
-            KIPI::ImageInfo info       = iface->info(url);
+            ImageInfo info             = iface->info(url);
             QMap<QString, QVariant>map = info.attributes();
             return (map.contains(name));
         }
@@ -103,11 +97,11 @@ public:
 
 public:
 
-    KUrl             url;
-    KIPI::Interface* iface;
+    KUrl       url;
+    Interface* iface;
 };
 
-KPImageInfo::KPImageInfo(KIPI::Interface* iface, const KUrl& url)
+KPImageInfo::KPImageInfo(Interface* const iface, const KUrl& url)
     : d(new KPImageInfoPrivate)
 {
     d->iface = iface;
@@ -160,15 +154,14 @@ void KPImageInfo::setDescription(const QString& desc)
 #if KIPI_VERSION < 0x010500
         if (d->hasValidData())
         {
-            KIPI::ImageInfo info = d->iface->info(d->url);
+            ImageInfo info = d->iface->info(d->url);
             info.setDescription(desc);
         }
 #endif
     }
     else
     {
-        // Use Kexiv2 to set comment to metadata.
-        KExiv2 meta(d->url.toLocalFile());
+        KPMetadata meta(d->url.toLocalFile());
 
         // We set image comments, outside Exif, XMP, and IPTC.
         meta.setComments(desc.toUtf8());
@@ -193,15 +186,14 @@ QString KPImageInfo::description() const
 #if KIPI_VERSION < 0x010500
         if (d->hasValidData())
         {
-            KIPI::ImageInfo info = d->iface->info(d->url);
+            ImageInfo info = d->iface->info(d->url);
             return info.description();
         }
 #endif
     }
     else
     {
-        // Use Kexiv2 to get comment from metadata.
-        KExiv2 meta(d->url.toLocalFile());
+        KPMetadata meta(d->url.toLocalFile());
 
         // We trying image comments, outside Exif, XMP, and IPTC.
         QString comment = meta.getCommentsDecoded();
@@ -236,7 +228,7 @@ void KPImageInfo::setDate(const QDateTime& date)
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         info.setTime(date);
     }
 #endif
@@ -249,7 +241,7 @@ QDateTime KPImageInfo::date() const
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         return info.time();
     }
 #endif
@@ -270,7 +262,7 @@ bool KPImageInfo::isExactDate() const
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         return info.isTimeExact();
     }
 #endif
@@ -285,10 +277,10 @@ void KPImageInfo::setName(const QString& name)
     if (d->hasValidData())
     {
 #if (KIPI_VERSION >= 0x010300) && (KIPI_VERSION < 0x010500)
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         info.setName(name);
 #elif (KIPI_VERSION < 0x010300)
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         info.setTitle(name);
 #endif
     }
@@ -301,10 +293,10 @@ QString KPImageInfo::name() const
     if (d->hasValidData())
     {
 #if (KIPI_VERSION >= 0x010300) && (KIPI_VERSION < 0x010500)
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         return info.name();
 #elif (KIPI_VERSION < 0x010300)
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         return info.title();
 #endif
     }
@@ -316,7 +308,7 @@ bool KPImageInfo::hasName() const
     return d->hasAttribute("name");
 }
 
-void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
+void KPImageInfo::setOrientation(KPMetadata::ImageOrientation orientation)
 {
     d->setAttribute("orientation", (int)orientation);
     d->setAttribute("angle",       (int)orientation);     // NOTE: For compatibility.
@@ -324,26 +316,26 @@ void KPImageInfo::setOrientation(KExiv2::ImageOrientation orientation)
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         info.setAngle((int)orientation);
     }
 #endif
 }
 
-KExiv2::ImageOrientation KPImageInfo::orientation() const
+KPMetadata::ImageOrientation KPImageInfo::orientation() const
 {
-    KExiv2::ImageOrientation orientation = KExiv2::ORIENTATION_UNSPECIFIED;
+    KPMetadata::ImageOrientation orientation = KPMetadata::ORIENTATION_UNSPECIFIED;
 
     if (d->hasAttribute("orientation"))
-        orientation = (KExiv2::ImageOrientation)(d->attribute("orientation").toInt());
+        orientation = (KPMetadata::ImageOrientation)(d->attribute("orientation").toInt());
     else if (d->hasAttribute("angle"))
-        orientation = (KExiv2::ImageOrientation)(d->attribute("angle").toInt());    // NOTE: For compatibility.
+        orientation = (KPMetadata::ImageOrientation)(d->attribute("angle").toInt());    // NOTE: For compatibility.
 
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
-        orientation          = (KExiv2::ImageOrientation)info.angle();
+        ImageInfo info = d->iface->info(d->url);
+        orientation    = (KPMetadata::ImageOrientation)info.angle();
     }
 #endif
 
@@ -528,7 +520,7 @@ QStringList KPImageInfo::keywords() const
     }
     else
     {
-        KExiv2 meta(d->url.toLocalFile());
+        KPMetadata meta(d->url.toLocalFile());
         // Trying to find IPTC keywords
         keywords = meta.getIptcKeywords();
         if(!keywords.isEmpty())
@@ -552,7 +544,7 @@ bool KPImageInfo::hasKeywords() const
     }
     else
     {
-        KExiv2 meta(d->url.toLocalFile());
+        KPMetadata meta(d->url.toLocalFile());
         // Trying to find IPTC keywords
         QStringList keywords = meta.getIptcKeywords();
         if(!keywords.isEmpty())

@@ -50,13 +50,16 @@ class KPasswordDialog;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
 namespace KIPIPlugins
 {
-class KPAboutData;
+    class KPAboutData;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPISmugPlugin
 {
@@ -71,8 +74,8 @@ class SmugWindow : public KDialog
 
 public:
 
-    SmugWindow(KIPI::Interface* interface, const QString& tmpFolder,
-               bool import, QWidget *parent);
+    SmugWindow(Interface* const interface, const QString& tmpFolder,
+               bool import, QWidget* const parent);
     ~SmugWindow();
 
     /**
@@ -118,37 +121,37 @@ private:
     void readSettings();
     void writeSettings();
 
-    void authenticate(const QString& email = "", const QString& password = "");
+    void authenticate(const QString& email = QString(), const QString& password = QString());
 
     void buttonStateChange(bool state);
 
 private:
 
-    bool                      m_import;
-    unsigned int              m_imagesCount;
-    unsigned int              m_imagesTotal;
-    QString                   m_tmpDir;
-    QString                   m_tmpPath;
+    bool             m_import;
+    unsigned int     m_imagesCount;
+    unsigned int     m_imagesTotal;
+    QString          m_tmpDir;
+    QString          m_tmpPath;
 
-    bool                      m_anonymousImport;
-    QString                   m_anonymousNick;
-    QString                   m_email;
-    QString                   m_password;
-    int                       m_currentAlbumID;
-    int                       m_currentTmplID;
-    int                       m_currentCategoryID;
+    bool             m_anonymousImport;
+    QString          m_anonymousNick;
+    QString          m_email;
+    QString          m_password;
+    int              m_currentAlbumID;
+    int              m_currentTmplID;
+    int              m_currentCategoryID;
 
-    KPasswordDialog          *m_loginDlg;
+    KPasswordDialog* m_loginDlg;
 
-    KUrl::List                m_transferQueue;
+    KUrl::List       m_transferQueue;
 
-    SmugTalker               *m_talker;
-    SmugWidget               *m_widget;
-    SmugNewAlbum             *m_albumDlg;
+    SmugTalker*      m_talker;
+    SmugWidget*      m_widget;
+    SmugNewAlbum*    m_albumDlg;
 
-    KIPI::Interface          *m_interface;
+    Interface*       m_interface;
 
-    KIPIPlugins::KPAboutData *m_about;
+    KPAboutData*     m_about;
 };
 
 } // namespace KIPISmugPlugin

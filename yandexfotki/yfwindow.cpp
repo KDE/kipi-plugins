@@ -76,10 +76,6 @@ extern "C"
 #include <ktoolinvocation.h>
 #include <kio/renamedialog.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -96,10 +92,13 @@ extern "C"
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
-#include "imageslist.h"
+#include "kpmetadata.h"
+#include "kpimageslist.h"
 #include "yftalker.h"
 #include "yfalbumdialog.h"
 #include "logindialog.h"
+
+using namespace KDcrawIface;
 
 namespace KIPIYandexFotkiPlugin
 {
@@ -109,22 +108,22 @@ namespace KIPIYandexFotkiPlugin
  */
 const char* YandexFotkiWindow::XMP_SERVICE_ID = "Xmp.kipi.yandexGPhotoId";
 
-YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
-                                     bool import, QWidget* parent)
+YandexFotkiWindow::YandexFotkiWindow(Interface* const interface,
+                                     bool import, QWidget* const parent)
     : KDialog(parent)
 {
-    m_interface   = interface;
-    m_import      = import;
+    m_interface = interface;
+    m_import    = import;
 
     KStandardDirs dir;
-    m_tmpDir = dir.saveLocation("tmp", "kipiplugin-yandexfotki-" +
-                                QString::number(getpid()) + '/');
+    m_tmpDir    = dir.saveLocation("tmp", "kipiplugin-yandexfotki-" +
+                                   QString::number(getpid()) + '/');
 
-    m_mainWidget = new QWidget(this);
+    m_mainWidget            = new QWidget(this);
     QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
 
-    m_imgList  = new KIPIPlugins::ImagesList(interface, this);
-    m_imgList->setControlButtonsPlacement(KIPIPlugins::ImagesList::ControlButtonsBelow);
+    m_imgList               = new KPImagesList(interface, this);
+    m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();
     m_imgList->listView()->setWhatsThis(
@@ -169,23 +168,23 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
      * Album box
      */
 
-    m_albumsBox    = new QGroupBox(i18n("Album"), settingsBox);
+    m_albumsBox      = new QGroupBox(i18n("Album"), settingsBox);
     m_albumsBox->setWhatsThis(
         i18n("This is the Yandex.Fotki album that will be used for the transfer."));
     QGridLayout* albumsBoxLayout  = new QGridLayout(m_albumsBox);
 
-    m_albumsCombo = new KComboBox(m_albumsBox);
+    m_albumsCombo    = new KComboBox(m_albumsBox);
     m_albumsCombo->setEditable(false);
 
-    m_newAlbumButton       = new KPushButton(
+    m_newAlbumButton = new KPushButton(
         KGuiItem(i18n("New Album"), "list-add",
                  i18n("Create new Yandex.Fotki album")), m_albumsBox);
     m_reloadAlbumsButton   = new KPushButton(
         KGuiItem(i18nc("reload albums list", "Reload"), "view-refresh",
                  i18n("Reload albums list")), m_albumsBox);
 
-    albumsBoxLayout->addWidget(m_albumsCombo, 0, 0, 1, 5);
-    albumsBoxLayout->addWidget(m_newAlbumButton, 1, 3, 1, 1);
+    albumsBoxLayout->addWidget(m_albumsCombo,        0, 0, 1, 5);
+    albumsBoxLayout->addWidget(m_newAlbumButton,     1, 3, 1, 1);
     albumsBoxLayout->addWidget(m_reloadAlbumsButton, 1, 4, 1, 1);
 
     connect(m_newAlbumButton, SIGNAL(clicked()),
@@ -214,6 +213,7 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
     m_resizeCheck     = new QCheckBox(optionsBox);
     m_resizeCheck->setText(i18n("Resize photos before uploading"));
     m_resizeCheck->setChecked(false);
+
     connect(m_resizeCheck, SIGNAL(clicked()),
             this, SLOT(slotResizeChecked()));
 
@@ -236,16 +236,17 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
 
     QSpacerItem* spacer1 = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
     QSpacerItem* spacer2 = new QSpacerItem(1, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    QLabel* policyLabel = new QLabel(i18n("Update policy:"), optionsBox);
+    QLabel* policyLabel  = new QLabel(i18n("Update policy:"), optionsBox);
 
     QRadioButton* policyRadio1 = new QRadioButton(i18n("Update metadata"), optionsBox);
-    policyRadio1->setWhatsThis(
-        i18n("Update metadata of remote file and merge remote tags with local"));
+    policyRadio1->setWhatsThis(i18n("Update metadata of remote file and merge remote tags with local"));
+    
 /*
     QRadioButton* policyRadio2 = new QRadioButton(i18n("Update metadata, keep tags"), optionsBox);
     policyRadio2->setWhatsThis(
         i18n("Update metadata of remote file but keep remote tags untouched."));
 */
+
     QRadioButton* policyRadio3  = new QRadioButton(i18n("Skip photo"), optionsBox);
     policyRadio3->setWhatsThis(i18n("Simple skip photo"));
     QRadioButton* policyRadio4  = new QRadioButton(i18n("Upload as new"), optionsBox);
@@ -270,25 +271,25 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
     m_policyGroup->addButton(policyRadio3, POLICY_SKIP);
     m_policyGroup->addButton(policyRadio4, POLICY_ADDNEW);
 
-    optionsBoxLayout->addWidget(m_resizeCheck,       0, 0, 1, 5);
-    optionsBoxLayout->addWidget(imageQualityLabel,   1, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_imageQualitySpin, 1, 2, 1, 1);
-    optionsBoxLayout->addWidget(dimensionLbl,      2, 1, 1, 1);
-    optionsBoxLayout->addWidget(m_dimensionSpin,    2, 2, 1, 1);
-    optionsBoxLayout->addItem(spacer1,              3, 0, 1, 5);
+    optionsBoxLayout->addWidget(m_resizeCheck,          0, 0, 1, 5);
+    optionsBoxLayout->addWidget(imageQualityLabel,      1, 1, 1, 1);
+    optionsBoxLayout->addWidget(m_imageQualitySpin,     1, 2, 1, 1);
+    optionsBoxLayout->addWidget(dimensionLbl,           2, 1, 1, 1);
+    optionsBoxLayout->addWidget(m_dimensionSpin,        2, 2, 1, 1);
+    optionsBoxLayout->addItem(spacer1,                  3, 0, 1, 5);
 
-    optionsBoxLayout->addWidget(accessLabel, 4, 0, 1, 5);
-    optionsBoxLayout->addWidget(m_accessCombo, 5, 1, 1, 4);
-    optionsBoxLayout->addWidget(m_adultCheck, 6, 1, 1, 4);
-    optionsBoxLayout->addWidget(m_hideOriginalCheck, 7, 1, 1, 4);
+    optionsBoxLayout->addWidget(accessLabel,            4, 0, 1, 5);
+    optionsBoxLayout->addWidget(m_accessCombo,          5, 1, 1, 4);
+    optionsBoxLayout->addWidget(m_adultCheck,           6, 1, 1, 4);
+    optionsBoxLayout->addWidget(m_hideOriginalCheck,    7, 1, 1, 4);
     optionsBoxLayout->addWidget(m_disableCommentsCheck, 8, 1, 1, 4);
-    optionsBoxLayout->addItem(spacer2, 9, 0, 1, 5);
+    optionsBoxLayout->addItem(spacer2,                  9, 0, 1, 5);
 
-    optionsBoxLayout->addWidget(policyLabel, 10, 0, 1, 5);
-    optionsBoxLayout->addWidget(policyRadio1, 11, 1, 1, 4);
-    //optionsBoxLayout->addWidget(policyRadio2, 12, 1, 1, 4);
-    optionsBoxLayout->addWidget(policyRadio3, 13, 1, 1, 4);
-    optionsBoxLayout->addWidget(policyRadio4, 14, 1, 1, 4);
+    optionsBoxLayout->addWidget(policyLabel,            10, 0, 1, 5);
+    optionsBoxLayout->addWidget(policyRadio1,           11, 1, 1, 4);
+    //optionsBoxLayout->addWidget(policyRadio2,         12, 1, 1, 4);
+    optionsBoxLayout->addWidget(policyRadio3,           13, 1, 1, 4);
+    optionsBoxLayout->addWidget(policyRadio4,           14, 1, 1, 4);
 
     optionsBoxLayout->setRowStretch(14, 10);
 
@@ -323,7 +324,6 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
     setDefaultButton(Close);
     setModal(false);
 
-
     if (!m_import)
     {
         setWindowTitle(i18n("Export to Yandex.Fotki Web Service"));
@@ -341,14 +341,14 @@ YandexFotkiWindow::YandexFotkiWindow(KIPI::Interface* interface,
         optionsBox->hide();
     }
 
-    KIPIPlugins::KPAboutData* about = new KIPIPlugins::KPAboutData(
+    KPAboutData* about = new KPAboutData(
         ki18n("Yandex.Fotki Plugin"),
         0,
         KAboutData::License_GPL,
         ki18n("A Kipi plugin to export image collections to "
               "Yandex.Fotki web service."),
         ki18n( "(c) 2007-2009, Vardhman Jain\n"
-               "(c) 2008-2010, Gilles Caulier\n"
+               "(c) 2008-2012, Gilles Caulier\n"
                "(c) 2009, Luka Renko\n"
                "(c) 2010, Roman Tsisyk" )
     );
@@ -535,7 +535,6 @@ void YandexFotkiWindow::writeSettings()
     grp.writeEntry("Sync policy", m_policyGroup->checkedId());
 }
 
-
 QString YandexFotkiWindow::getDestinationPath() const
 {
     return m_uploadWidget->selectedImageCollection().uploadPath().path();
@@ -647,7 +646,6 @@ void YandexFotkiWindow::authenticate(bool forceAuthWindow)
 */
 }
 
-
 void YandexFotkiWindow::slotListPhotosDone(const QList <YandexFotkiPhoto>& photosList)
 {
     if (m_import)
@@ -678,17 +676,17 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
         i++;
     }
 
-    const UpdatePolicy policy = static_cast<UpdatePolicy>(m_policyGroup->checkedId());
+    const UpdatePolicy policy             = static_cast<UpdatePolicy>(m_policyGroup->checkedId());
     const YandexFotkiPhoto::Access access = static_cast<YandexFotkiPhoto::Access>(
-            m_accessCombo->itemData(m_accessCombo->currentIndex()).toInt());
+                                            m_accessCombo->itemData(m_accessCombo->currentIndex()).toInt());
 
     kDebug() << "";
     kDebug() << "----";
     m_transferQueue.clear();
     foreach(const KUrl& url, m_imgList->imageUrls(true))
     {
-        KIPIPlugins::KPImageInfo info(m_interface, url);
-        KExiv2Iface::KExiv2 exiv2Iface;
+        KPImageInfo info(m_interface, url);
+        KPMetadata  meta;
 
         const QString imgPath = url.toLocalFile();
 
@@ -696,10 +694,10 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
 
         int oldPhotoId = -1;
 
-        if (exiv2Iface.load(imgPath))
+        if (meta.load(imgPath))
         {
-            QString localId = exiv2Iface.getXmpTagString(XMP_SERVICE_ID);
-            oldPhotoId = dups.value(localId, -1);
+            QString localId = meta.getXmpTagString(XMP_SERVICE_ID);
+            oldPhotoId      = dups.value(localId, -1);
         }
 
         // get tags
@@ -794,14 +792,14 @@ void YandexFotkiWindow::updateNextPhoto()
             const QFileInfo fileInfo(photo.originalUrl());
 
             // check if we have to RAW file -> use preview image then
-            QString rawFilesExt(KDcrawIface::KDcraw::rawFiles());
+            QString rawFilesExt(KDcraw::rawFiles());
             bool isRAW = rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper());
 
             QImage image;
 
             if (isRAW)
             {
-                KDcrawIface::KDcraw::loadDcrawPreview(image, photo.originalUrl());
+                KDcraw::loadDcrawPreview(image, photo.originalUrl());
             }
             else
             {
@@ -830,16 +828,15 @@ void YandexFotkiWindow::updateNextPhoto()
                 }
 
                 // copy meta data to temporary image
-                KExiv2Iface::KExiv2 exiv2Iface;
+                KPMetadata meta;
 
-                if (image.save(photo.localUrl(), "JPEG",
-                               m_imageQualitySpin->value())
-                    && exiv2Iface.load(photo.originalUrl()))
+                if (image.save(photo.localUrl(), "JPEG", m_imageQualitySpin->value()) &&
+                    meta.load(photo.originalUrl()))
                 {
-                    exiv2Iface.setImageDimensions(image.size());
-                    exiv2Iface.setImageProgramId("Kipi-plugins",
+                    meta.setImageDimensions(image.size());
+                    meta.setImageProgramId("Kipi-plugins",
                                                  kipiplugins_version);
-                    exiv2Iface.save(photo.localUrl());
+                    meta.save(photo.localUrl());
                     prepared = true;
                 }
             }
@@ -862,8 +859,7 @@ void YandexFotkiWindow::updateNextPhoto()
             }
         }
 
-        const YandexFotkiAlbum& album =  m_talker.albums().
-                                         at(m_albumsCombo->currentIndex());
+        const YandexFotkiAlbum& album =  m_talker.albums().at(m_albumsCombo->currentIndex());
 
         kDebug() << photo.originalUrl();
 
@@ -874,8 +870,7 @@ void YandexFotkiWindow::updateNextPhoto()
 
     updateControls(true);
 
-    KMessageBox::information(this,
-                             i18n("Images has been uploaded"));
+    KMessageBox::information(this, i18n("Images has been uploaded"));
     return;
 }
 
@@ -913,8 +908,7 @@ void YandexFotkiWindow::slotStartTransfer()
     if (!m_import)
     {
         // list photos of the album, then start upload
-        const YandexFotkiAlbum& album =  m_talker.albums().
-                                         at(m_albumsCombo->currentIndex());
+        const YandexFotkiAlbum& album =  m_talker.albums().at(m_albumsCombo->currentIndex());
 
         kDebug() << "Album selected" << album;
 
@@ -1036,14 +1030,14 @@ void YandexFotkiWindow::slotUpdatePhotoDone(YandexFotkiPhoto& photo)
 {
     kDebug() << "photoUploaded" << photo;
 
-    KExiv2Iface::KExiv2 exiv2Iface;
+    KPMetadata meta;
 
-    if (exiv2Iface.supportXmp() && exiv2Iface.canWriteXmp(photo.originalUrl())
-        && exiv2Iface.load(photo.originalUrl()))
+    if (meta.supportXmp() && meta.canWriteXmp(photo.originalUrl()) && 
+        meta.load(photo.originalUrl()))
     {
         // ignore errors here
-        if (exiv2Iface.setXmpTagString(XMP_SERVICE_ID, photo.urn(), false) &&
-            exiv2Iface.save(photo.originalUrl()))
+        if (meta.setXmpTagString(XMP_SERVICE_ID, photo.urn(), false) &&
+            meta.save(photo.originalUrl()))
         {
             kDebug() << "MARK: " << photo.originalUrl();
         }

@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,7 +36,7 @@
 
 // local includes
 
-#include "binarysearch.h"
+#include "kpbinarysearch.h"
 #include "alignbinary.h"
 #include "enfusebinary.h"
 
@@ -47,15 +47,19 @@ class IntroPage::IntroPagePriv
 {
 public:
 
-    IntroPagePriv(Manager* m) : mngr(m), binariesWidget(0)
-    {}
+    IntroPagePriv(Manager* const m)
+        : mngr(m), 
+          binariesWidget(0)
+    {
+    }
 
-    Manager*                    mngr;
-    KIPIPlugins::BinarySearch*  binariesWidget;
+    Manager*                     mngr;
+    KIPIPlugins::KPBinarySearch* binariesWidget;
 };
 
-IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
-         : KIPIPlugins::WizardPage(dlg, i18n("Welcome to Exposure Blending Tool")), d(new IntroPagePriv(mngr))
+IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
+    : KIPIPlugins::WizardPage(dlg, i18n("Welcome to Exposure Blending Tool")), 
+      d(new IntroPagePriv(mngr))
 {
     KVBox *vbox   = new KVBox(this);
     QLabel *title = new QLabel(vbox);
@@ -79,12 +83,12 @@ IntroPage::IntroPage(Manager* mngr, KAssistantDialog* dlg)
     QGridLayout* binaryLayout   = new QGridLayout;
     binaryBox->setLayout(binaryLayout);
     binaryBox->setTitle(i18n("Exposure Blending Binaries"));
-    d->binariesWidget = new KIPIPlugins::BinarySearch(binaryBox);
+    d->binariesWidget = new KIPIPlugins::KPBinarySearch(binaryBox);
     d->binariesWidget->addBinary(d->mngr->alignBinary());
     d->binariesWidget->addBinary(d->mngr->enfuseBinary());
-    #ifdef Q_WS_MAC
+#ifdef Q_WS_MAC
     d->binariesWidget->addDirectory("/Applications/Hugin/HuginTools");
-    #endif
+#endif
 
     connect(d->binariesWidget, SIGNAL(signalBinariesFound(bool)),
             this, SIGNAL(signalIntroPageIsValid(bool)));

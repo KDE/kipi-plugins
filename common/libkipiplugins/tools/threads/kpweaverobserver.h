@@ -34,13 +34,15 @@
 
 #include "kipiplugins_export.h"
 
+using namespace ThreadWeaver;
+
 namespace KIPIPlugins
 {
 
 /** KPWeaverObserver is a simple wrapper to plug on the ActionThread class to
     prints debug messages when signals are received.
 */
-class KIPIPLUGINS_EXPORT KPWeaverObserver : public ThreadWeaver::WeaverObserver
+class KIPIPLUGINS_EXPORT KPWeaverObserver : public WeaverObserver
 {
     Q_OBJECT
 
@@ -51,11 +53,11 @@ public:
 
 protected Q_SLOTS:
 
-    void slotWeaverStateChanged(ThreadWeaver::State*);
-    void slotThreadStarted(ThreadWeaver::Thread*);
-    void slotThreadBusy(ThreadWeaver::Thread*, ThreadWeaver::Job*);
-    void slotThreadSuspended(ThreadWeaver::Thread*);
-    void slotThreadExited(ThreadWeaver::Thread*);
+    void slotWeaverStateChanged(State*);
+    void slotThreadStarted(Thread*);
+    void slotThreadBusy(Thread*, Job*);
+    void slotThreadSuspended(Thread*);
+    void slotThreadExited(Thread*);
 };
 
 }  // namespace KIPIPlugins

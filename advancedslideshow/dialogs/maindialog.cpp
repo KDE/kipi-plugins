@@ -56,7 +56,7 @@
 #include "commoncontainer.h"
 #include "imagedialog.h"
 #include "advanceddialog.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
@@ -66,8 +66,8 @@ using namespace KIPIPlugins;
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-MainDialog::MainDialog(QWidget* parent, SharedContainer* sharedData)
-          : QWidget(parent)
+MainDialog::MainDialog(QWidget* const parent, SharedContainer* const sharedData)
+    : QWidget(parent)
 {
     setupUi(this);
 
@@ -77,9 +77,9 @@ MainDialog::MainDialog(QWidget* parent, SharedContainer* sharedData)
     // --------------------------------------------------------
 
     QVBoxLayout* listBoxContainerLayout = new QVBoxLayout;
-    m_ImagesFilesListBox                = new ImagesList(m_sharedData->iface(),
-                                                         m_ImagesFilesListBoxContainer,
-                                                         KIconLoader::SizeMedium);
+    m_ImagesFilesListBox                = new KPImagesList(m_sharedData->iface(),
+                                                           m_ImagesFilesListBoxContainer,
+                                                           KIconLoader::SizeMedium);
     m_ImagesFilesListBox->listView()->header()->hide();
 
     listBoxContainerLayout->addWidget(m_ImagesFilesListBox);
@@ -319,7 +319,7 @@ bool MainDialog::updateUrlList()
     QTreeWidgetItemIterator it(m_ImagesFilesListBox->listView());
     while (*it)
     {
-        ImagesListViewItem* item = dynamic_cast<ImagesListViewItem*>(*it);
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
         if (!item)
             continue;
 
@@ -346,7 +346,7 @@ void MainDialog::slotImagesFilesSelected(QTreeWidgetItem* item)
         return;
     }
 
-    ImagesListViewItem *pitem = static_cast<ImagesListViewItem*> (item);
+    KPImagesListViewItem* pitem = static_cast<KPImagesListViewItem*>(item);
 
     if (!pitem)
         return;

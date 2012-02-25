@@ -40,7 +40,7 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class ImagesList;
+    class KPImagesList;
 }
 
 namespace KIPIKioExportPlugin
@@ -81,7 +81,7 @@ public:
      *
      * @return pointer to the image list
      */
-    KIPIPlugins::ImagesList* imagesList() const;
+    KIPIPlugins::KPImagesList* imagesList() const;
 
     /**
      * Returns the upload widget for specifying the target location.
@@ -92,8 +92,8 @@ public:
 
 private:
 
-    KIPIPlugins::ImagesList *m_imageList;
-    KIPI::UploadWidget      *m_uploadWidget;
+    KIPIPlugins::KPImagesList* m_imageList;
+    KIPI::UploadWidget*        m_uploadWidget;
 };
 
 } // namespace KIPIKioExportPlugin

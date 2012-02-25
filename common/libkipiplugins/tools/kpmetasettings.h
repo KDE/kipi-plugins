@@ -24,15 +24,10 @@
 #ifndef KPMETASETTINGS_H
 #define KPMETASETTINGS_H
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
+#include "kpmetadata.h"
 #include "kipiplugins_export.h"
-
-using namespace KExiv2Iface;
 
 namespace KIPIPlugins
 {
@@ -43,28 +38,29 @@ namespace KIPIPlugins
 */
 class KIPIPLUGINS_EXPORT KPMetaSettings
 {
+
 public:
 
     KPMetaSettings();
-    ~KPMetaSettings() {};
+    virtual ~KPMetaSettings();
 
 public:
 
     /** Write metadata to RAW files.
      */
-    bool                        writeRawFiles;
+    bool                            writeRawFiles;
 
     /** Update file time-stamp when metadata are changed.
      */
-    bool                        updateFileTimeStamp;
+    bool                            updateFileTimeStamp;
 
     /** Use XMP sidecar to read metadata of image.
      */
-    bool                        useXMPSidecar4Reading;
+    bool                            useXMPSidecar4Reading;
 
-    /** Metadata writting mode between file and XMP sidecar. See KExiv2 for details.
+    /** Metadata writting mode between file and XMP sidecar. See libkexiv2 library for details.
      */
-    KExiv2::MetadataWritingMode metadataWritingMode;
+    KPMetadata::MetadataWritingMode metadataWritingMode;
 };
 
 }  // namespace KIPIPlugins

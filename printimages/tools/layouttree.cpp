@@ -126,12 +126,12 @@ void LayoutNode::computeRelativeSizes()
     m_leftChild->computeRelativeSizes();
     m_rightChild->computeRelativeSizes();
 
-    double leftProductRoot = sqrt(m_leftChild->m_a * m_leftChild->m_e);
-    double rightProductRoot = sqrt(m_rightChild->m_a * m_rightChild->m_e);
+    double leftProductRoot = std::sqrt(m_leftChild->m_a * m_leftChild->m_e);
+    double rightProductRoot = std::sqrt(m_rightChild->m_a * m_rightChild->m_e);
     double maxProductRoot = leftProductRoot > rightProductRoot ? leftProductRoot : rightProductRoot;
 
-    double leftDivisionRoot = sqrt(m_leftChild->m_e / m_leftChild->m_a);
-    double rightDivisionRoot = sqrt(m_rightChild->m_e / m_rightChild->m_a);
+    double leftDivisionRoot = std::sqrt(m_leftChild->m_e / m_leftChild->m_a);
+    double rightDivisionRoot = std::sqrt(m_rightChild->m_e / m_rightChild->m_a);
     double maxDivisionRoot = leftDivisionRoot > rightDivisionRoot ? leftDivisionRoot : rightDivisionRoot;
 
     if (m_type == VerticalDivision) // side by side
@@ -157,16 +157,16 @@ void LayoutNode::computeDivisions()
 
     if (m_type == VerticalDivision) // side by side
     {
-        double leftDivisionRoot  = sqrt(m_leftChild->m_e / m_leftChild->m_a);
-        double rightDivisionRoot = sqrt(m_rightChild->m_e / m_rightChild->m_a);
+        double leftDivisionRoot  = std::sqrt(m_leftChild->m_e / m_leftChild->m_a);
+        double rightDivisionRoot = std::sqrt(m_rightChild->m_e / m_rightChild->m_a);
 
         m_division = leftDivisionRoot / (leftDivisionRoot + rightDivisionRoot);
     }
     else if (m_type == HorizontalDivision) // one on top of the other
     {
         // left child is topmost
-        double leftProductRoot  = sqrt(m_leftChild->m_a * m_leftChild->m_e);
-        double rightProductRoot = sqrt(m_rightChild->m_a * m_rightChild->m_e);
+        double leftProductRoot  = std::sqrt(m_leftChild->m_a * m_leftChild->m_e);
+        double rightProductRoot = std::sqrt(m_rightChild->m_a * m_rightChild->m_e);
 
         // the term in the paper takes 0 = bottom, we use 0 = top
         m_division = 1 - (rightProductRoot / (rightProductRoot + leftProductRoot));
@@ -373,8 +373,8 @@ QRectF LayoutTree::drawingArea(int index, const QRectF& absoluteRectPage)
 // (not in the paper)
 QRectF LayoutTree::rectInRect(const QRectF &rect, double aspectRatio, double absoluteArea)
 {
-    double width  = sqrt(absoluteArea / aspectRatio);
-    double height = sqrt(absoluteArea * aspectRatio);
+    double width  = std::sqrt(absoluteArea / aspectRatio);
+    double height = std::sqrt(absoluteArea * aspectRatio);
     double x      = rect.x() + (rect.width() - width) / 2;
     double y      = rect.y() + (rect.height() - height) / 2;
     return QRectF(x,y,width, height);

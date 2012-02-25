@@ -6,7 +6,7 @@
  * Date        : 2009-12-23
  * Description : a widget to manage preview.
  *
- * Copyright (C) 2009-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef PREVIEW_MANAGER_H
-#define PREVIEW_MANAGER_H
+#ifndef KPPREVIEW_MANAGER_H
+#define KPPREVIEW_MANAGER_H
 
 // Qt includes
 
@@ -42,7 +42,7 @@
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT PreviewManager : public QStackedWidget
+class KIPIPLUGINS_EXPORT KPPreviewManager : public QStackedWidget
 {
     Q_OBJECT
 
@@ -56,8 +56,8 @@ public:
 
 public:
 
-    PreviewManager(QWidget* parent);
-    ~PreviewManager();
+    KPPreviewManager(QWidget* const parent);
+    ~KPPreviewManager();
 
     void load(const QString& file, bool fit = true);
     void setImage(const QImage& img, bool fit = true);
@@ -82,10 +82,10 @@ private Q_SLOTS:
 
 private:
 
-    class PreviewManagerPriv;
-    PreviewManagerPriv* const d;
+    class KPPreviewManagerPriv;
+    KPPreviewManagerPriv* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* PREVIEW_MANAGER_H */
+#endif /* KPPREVIEW_MANAGER_H */

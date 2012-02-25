@@ -344,6 +344,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
                         ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools
                         ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/threads
                         ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools/threads
+                        ${CMAKE_CURRENT_SOURCE_DIR}/common/libkipiplugins/tools/imageio
+                        ${CMAKE_CURRENT_BINARY_DIR}/common/libkipiplugins/tools/imageio
                         ${KEXIV2_INCLUDE_DIR}
                         ${KDCRAW_INCLUDE_DIR}
                         ${KIPI_INCLUDE_DIR}
@@ -390,7 +392,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ADD_SUBDIRECTORY(picasawebexport)
     ADD_SUBDIRECTORY(smug)
     ADD_SUBDIRECTORY(printimages)
-	ADD_SUBDIRECTORY(expoblending)
+    ADD_SUBDIRECTORY(expoblending)
     ADD_SUBDIRECTORY(kopete)
     ADD_SUBDIRECTORY(batchprocessimages)
     ADD_SUBDIRECTORY(rajceexport)
@@ -420,7 +422,10 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     IF(QJSON_FOUND)
         ADD_SUBDIRECTORY(debianscreenshots)
         ADD_SUBDIRECTORY(facebook)
-        ADD_SUBDIRECTORY(imgurexport)
+
+# Plugin not yet complete. Disabled for the moment.
+#        ADD_SUBDIRECTORY(imgurexport)
+
     ENDIF(QJSON_FOUND)
 
     IF(LIBKVKONTAKTE_FOUND)
@@ -451,8 +456,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
     ENDIF(KGEOMAP_FOUND)
 
     IF(MEDIAWIKI_FOUND)
-#        Disabled for the moment due to problem with libmediawiki api
-#        ADD_SUBDIRECTORY(mediawiki)
+        ADD_SUBDIRECTORY(mediawiki)
     ENDIF(MEDIAWIKI_FOUND)
 
     IF(Boost_FOUND)

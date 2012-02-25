@@ -6,7 +6,7 @@
  * Date        : 2006-10-15
  * Description : IPTC subjects settings page.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
@@ -31,17 +31,11 @@
 
 #include <klocale.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
-using namespace KExiv2Iface;
-
 namespace KIPIMetadataEditPlugin
 {
 
 IPTCSubjects::IPTCSubjects(QWidget* parent)
-            : SubjectWidget(parent)
+    : SubjectWidget(parent)
 {
     // Subject string only accept printable Ascii char excepted these one:
     // - '*' (\x2A)
@@ -111,23 +105,23 @@ IPTCSubjects::~IPTCSubjects()
 
 void IPTCSubjects::readMetadata(QByteArray& iptcData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
-    setSubjectsList(exiv2Iface.getIptcSubjects());
+    KPMetadata meta;
+    meta.setIptc(iptcData);
+    setSubjectsList(meta.getIptcSubjects());
 }
 
 void IPTCSubjects::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
     QStringList newSubjects = subjectsList();
 
     if (m_subjectsCheck->isChecked())
-        exiv2Iface.setIptcSubjects(exiv2Iface.getIptcSubjects(), newSubjects);
+        meta.setIptcSubjects(meta.getIptcSubjects(), newSubjects);
     else
-        exiv2Iface.setIptcSubjects(exiv2Iface.getIptcSubjects(), QStringList());
+        meta.setIptcSubjects(meta.getIptcSubjects(), QStringList());
 
-    iptcData = exiv2Iface.getIptc();
+    iptcData = meta.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

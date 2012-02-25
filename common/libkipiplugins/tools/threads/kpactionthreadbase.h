@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef ACTIONTHREADBASE_H
-#define ACTIONTHREADBASE_H
+#ifndef KPACTIONTHREADBASE_H
+#define KPACTIONTHREADBASE_H
 
 // Qt includes
 
@@ -38,24 +38,26 @@ namespace ThreadWeaver
     class JobCollection;
 }
 
+using namespace ThreadWeaver;
+
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT ActionThreadBase : public QThread
+class KIPIPLUGINS_EXPORT KPActionThreadBase : public QThread
 {
     Q_OBJECT
 
 public:
 
-    ActionThreadBase(QObject* parent=0);
-    ~ActionThreadBase();
+    KPActionThreadBase(QObject* parent=0);
+    ~KPActionThreadBase();
 
     void cancel();
 
 protected:
 
     void run();
-    void appendJob(ThreadWeaver::JobCollection* job);
+    void appendJob(JobCollection* const job);
 
 protected Q_SLOTS:
 
@@ -63,10 +65,10 @@ protected Q_SLOTS:
 
 private:
 
-    class ActionThreadBasePriv;
-    ActionThreadBasePriv* const d;
+    class KPActionThreadBasePriv;
+    KPActionThreadBasePriv* const d;
 };
 
 }  // namespace KIPIPlugins
 
-#endif // ACTIONTHREAD_H
+#endif // KPACTIONTHREADBASE_H

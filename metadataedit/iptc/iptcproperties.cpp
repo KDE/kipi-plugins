@@ -6,7 +6,7 @@
  * Date        : 2007-11-10
  * Description : IPTC workflow status properties settings page.
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -44,17 +44,14 @@
 #include <klocale.h>
 #include <kseparator.h>
 
-// LibKExiv2 includes
-
-#include <libkexiv2/kexiv2.h>
-
 // Local includes
 
 #include "metadatacheckbox.h"
 #include "objectattributesedit.h"
 #include "kpversion.h"
+#include "kpmetadata.h"
 
-using namespace KExiv2Iface;
+using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
 {
@@ -406,8 +403,8 @@ void IPTCProperties::slotSetTodayExpired()
 void IPTCProperties::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
 
     int         val;
     QString     data;
@@ -416,8 +413,8 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     QTime       time;
     QString     dateStr, timeStr;
 
-    dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.ReleaseDate", false);
-    timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.ReleaseTime", false);
+    dateStr = meta.getIptcTagString("Iptc.Application2.ReleaseDate", false);
+    timeStr = meta.getIptcTagString("Iptc.Application2.ReleaseTime", false);
 
     d->dateReleasedSel->setDate(QDate::currentDate());
     d->dateReleasedCheck->setChecked(false);
@@ -445,8 +442,8 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     }
     d->timeReleasedSel->setEnabled(d->timeReleasedCheck->isChecked());
 
-    dateStr = exiv2Iface.getIptcTagString("Iptc.Application2.ExpirationDate", false);
-    timeStr = exiv2Iface.getIptcTagString("Iptc.Application2.ExpirationTime", false);
+    dateStr = meta.getIptcTagString("Iptc.Application2.ExpirationDate", false);
+    timeStr = meta.getIptcTagString("Iptc.Application2.ExpirationTime", false);
 
     d->dateExpiredSel->setDate(QDate::currentDate());
     d->dateExpiredCheck->setChecked(false);
@@ -475,7 +472,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     d->timeExpiredSel->setEnabled(d->timeExpiredCheck->isChecked());
 
     d->languageCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Language", false);
+    data = meta.getIptcTagString("Iptc.Application2.Language", false);
     if (!data.isNull())
     {
         if (d->languageBtn->contains(data))
@@ -490,7 +487,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->priorityCB->setCurrentIndex(0);
     d->priorityCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.Urgency", false);
+    data = meta.getIptcTagString("Iptc.Application2.Urgency", false);
     if (!data.isNull())
     {
         val = data.toInt();
@@ -506,7 +503,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
     d->objectCycleCB->setCurrentIndex(0);
     d->objectCycleCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectCycle", false);
+    data = meta.getIptcTagString("Iptc.Application2.ObjectCycle", false);
     if (!data.isNull())
     {
         if (data == QString("a"))
@@ -532,7 +529,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     d->objectTypeCB->setCurrentIndex(0);
     d->objectTypeDescEdit->clear();
     d->objectTypeCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.ObjectType", false);
+    data = meta.getIptcTagString("Iptc.Application2.ObjectType", false);
     if (!data.isNull())
     {
         QString typeSec = data.section(':', 0, 0);
@@ -552,12 +549,12 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     d->objectTypeCB->setEnabled(d->objectTypeCheck->isChecked());
     d->objectTypeDescEdit->setEnabled(d->objectTypeCheck->isChecked());
 
-    list = exiv2Iface.getIptcTagsStringList("Iptc.Application2.ObjectAttribute", false);
+    list = meta.getIptcTagsStringList("Iptc.Application2.ObjectAttribute", false);
     d->objectAttribute->setValues(list);
 
     d->originalTransEdit->clear();
     d->originalTransCheck->setChecked(false);
-    data = exiv2Iface.getIptcTagString("Iptc.Application2.TransmissionReference", false);
+    data = meta.getIptcTagString("Iptc.Application2.TransmissionReference", false);
     if (!data.isNull())
     {
         d->originalTransEdit->setText(data);
@@ -570,87 +567,87 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
 
 void IPTCProperties::applyMetadata(QByteArray& iptcData)
 {
-    KExiv2 exiv2Iface;
-    exiv2Iface.setIptc(iptcData);
+    KPMetadata meta;
+    meta.setIptc(iptcData);
 
     if (d->dateReleasedCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.ReleaseDate",
+        meta.setIptcTagString("Iptc.Application2.ReleaseDate",
                                     d->dateReleasedSel->date().toString(Qt::ISODate));
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ReleaseDate");
+        meta.removeIptcTag("Iptc.Application2.ReleaseDate");
 
     if (d->dateExpiredCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.ExpirationDate",
+        meta.setIptcTagString("Iptc.Application2.ExpirationDate",
                                     d->dateExpiredSel->date().toString(Qt::ISODate));
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ExpirationDate");
+        meta.removeIptcTag("Iptc.Application2.ExpirationDate");
 
     if (d->timeReleasedCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.ReleaseTime",
+        meta.setIptcTagString("Iptc.Application2.ReleaseTime",
                                     d->timeReleasedSel->time().toString(Qt::ISODate));
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ReleaseTime");
+        meta.removeIptcTag("Iptc.Application2.ReleaseTime");
 
     if (d->timeExpiredCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.ExpirationTime",
+        meta.setIptcTagString("Iptc.Application2.ExpirationTime",
                                     d->timeExpiredSel->time().toString(Qt::ISODate));
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.ExpirationTime");
+        meta.removeIptcTag("Iptc.Application2.ExpirationTime");
 
     if (d->languageCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Language", d->languageBtn->current());
+        meta.setIptcTagString("Iptc.Application2.Language", d->languageBtn->current());
     else if (d->languageCheck->isValid())
-        exiv2Iface.removeIptcTag("Iptc.Application2.Language");
+        meta.removeIptcTag("Iptc.Application2.Language");
 
     if (d->priorityCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentIndex()));
+        meta.setIptcTagString("Iptc.Application2.Urgency", QString::number(d->priorityCB->currentIndex()));
     else if (d->priorityCheck->isValid())
-        exiv2Iface.removeIptcTag("Iptc.Application2.Urgency");
+        meta.removeIptcTag("Iptc.Application2.Urgency");
 
     if (d->objectCycleCheck->isChecked())
     {
         switch (d->objectCycleCB->currentIndex())
         {
             case(0):
-                exiv2Iface.setIptcTagString("Iptc.Application2.ObjectCycle", QString("a"));
+                meta.setIptcTagString("Iptc.Application2.ObjectCycle", QString("a"));
                 break;
 
             case(1):
-                exiv2Iface.setIptcTagString("Iptc.Application2.ObjectCycle", QString("b"));
+                meta.setIptcTagString("Iptc.Application2.ObjectCycle", QString("b"));
                 break;
 
             case(2):
-                exiv2Iface.setIptcTagString("Iptc.Application2.ObjectCycle", QString("c"));
+                meta.setIptcTagString("Iptc.Application2.ObjectCycle", QString("c"));
                 break;
         }
     }
     else if (d->objectCycleCheck->isValid())
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectCycle");
+        meta.removeIptcTag("Iptc.Application2.ObjectCycle");
 
     if (d->objectTypeCheck->isChecked())
     {
         QString objectType;
         objectType.sprintf("%2d", d->objectTypeCB->currentIndex()+1);
         objectType.append(QString(":%1").arg(d->objectTypeDescEdit->text()));
-        exiv2Iface.setIptcTagString("Iptc.Application2.ObjectType", objectType);
+        meta.setIptcTagString("Iptc.Application2.ObjectType", objectType);
     }
     else if (d->objectTypeCheck->isValid())
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectType");
+        meta.removeIptcTag("Iptc.Application2.ObjectType");
 
     QStringList oldList, newList;
     if (d->objectAttribute->getValues(oldList, newList))
-        exiv2Iface.setIptcTagsStringList("Iptc.Application2.ObjectAttribute", 64, oldList, newList);
+        meta.setIptcTagsStringList("Iptc.Application2.ObjectAttribute", 64, oldList, newList);
     else if (d->objectAttribute->isValid())
-        exiv2Iface.removeIptcTag("Iptc.Application2.ObjectAttribute");
+        meta.removeIptcTag("Iptc.Application2.ObjectAttribute");
 
     if (d->originalTransCheck->isChecked())
-        exiv2Iface.setIptcTagString("Iptc.Application2.TransmissionReference", d->originalTransEdit->text());
+        meta.setIptcTagString("Iptc.Application2.TransmissionReference", d->originalTransEdit->text());
     else
-        exiv2Iface.removeIptcTag("Iptc.Application2.TransmissionReference");
+        meta.removeIptcTag("Iptc.Application2.TransmissionReference");
 
-    exiv2Iface.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
+    meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
 
-    iptcData = exiv2Iface.getIptc();
+    iptcData = meta.getIptc();
 }
 
 }  // namespace KIPIMetadataEditPlugin

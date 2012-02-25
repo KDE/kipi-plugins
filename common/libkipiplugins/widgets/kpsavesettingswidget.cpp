@@ -6,7 +6,7 @@
  * Date        : 2006-09-13
  * Description : a widget to provide options to save image.
  *
- * Copyright (C) 2006-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "savesettingswidget.moc"
+#include "kpsavesettingswidget.moc"
 
 // Qt includes
 
@@ -39,11 +39,11 @@
 namespace KIPIPlugins
 {
 
-class SaveSettingsWidget::SaveSettingsWidgetPriv
+class KPSaveSettingsWidget::KPSaveSettingsWidgetPriv
 {
 public:
 
-    SaveSettingsWidgetPriv()
+    KPSaveSettingsWidgetPriv()
     {
         formatLabel         = 0;
         conflictLabel       = 0;
@@ -67,8 +67,8 @@ public:
     QRadioButton* promptButton;
 };
 
-SaveSettingsWidget::SaveSettingsWidget(QWidget* parent)
-                  : QWidget(parent), d(new SaveSettingsWidgetPriv)
+KPSaveSettingsWidget::KPSaveSettingsWidget(QWidget* parent)
+                  : QWidget(parent), d(new KPSaveSettingsWidgetPriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -119,55 +119,55 @@ SaveSettingsWidget::SaveSettingsWidget(QWidget* parent)
             this, SIGNAL(signalSaveFormatChanged()));
 }
 
-SaveSettingsWidget::~SaveSettingsWidget()
+KPSaveSettingsWidget::~KPSaveSettingsWidget()
 {
     delete d;
 }
 
-void SaveSettingsWidget::setCustomSettingsWidget(QWidget* custom)
+void KPSaveSettingsWidget::setCustomSettingsWidget(QWidget* custom)
 {
     d->grid->addWidget(custom, 3, 0, 1, 2);
 }
 
-void SaveSettingsWidget::resetToDefault()
+void KPSaveSettingsWidget::resetToDefault()
 {
     setFileFormat(OUTPUT_PNG);
     setConflictRule(OVERWRITE);
 }
 
-SaveSettingsWidget::OutputFormat SaveSettingsWidget::fileFormat() const
+KPSaveSettingsWidget::OutputFormat KPSaveSettingsWidget::fileFormat() const
 {
     return(OutputFormat)(d->formatComboBox->currentIndex());
 }
 
-void SaveSettingsWidget::setFileFormat(OutputFormat f)
+void KPSaveSettingsWidget::setFileFormat(OutputFormat f)
 {
     d->formatComboBox->setCurrentIndex((int)f);
 }
 
-SaveSettingsWidget::ConflictRule SaveSettingsWidget::conflictRule() const
+KPSaveSettingsWidget::ConflictRule KPSaveSettingsWidget::conflictRule() const
 {
     return((ConflictRule)(d->conflictButtonGroup->checkedId()));
 }
 
-void SaveSettingsWidget::setConflictRule(ConflictRule r)
+void KPSaveSettingsWidget::setConflictRule(ConflictRule r)
 {
     d->conflictButtonGroup->button((int)r)->setChecked(true);
 }
 
-void SaveSettingsWidget::readSettings(KConfigGroup& group)
+void KPSaveSettingsWidget::readSettings(KConfigGroup& group)
 {
-    setFileFormat((SaveSettingsWidget::OutputFormat)group.readEntry("Output Format", (int)(SaveSettingsWidget::OUTPUT_PNG)));
-    setConflictRule((SaveSettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(SaveSettingsWidget::OVERWRITE)));
+    setFileFormat((KPSaveSettingsWidget::OutputFormat)group.readEntry("Output Format", (int)(KPSaveSettingsWidget::OUTPUT_PNG)));
+    setConflictRule((KPSaveSettingsWidget::ConflictRule)group.readEntry("Conflict", (int)(KPSaveSettingsWidget::OVERWRITE)));
 }
 
-void SaveSettingsWidget::writeSettings(KConfigGroup& group)
+void KPSaveSettingsWidget::writeSettings(KConfigGroup& group)
 {
     group.writeEntry("Output Format", (int)fileFormat());
     group.writeEntry("Conflict",      (int)conflictRule());
 }
 
-void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
+void KPSaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
 {
     d->formatComboBox->clear();
     d->formatComboBox->insertItem( OUTPUT_PNG,  "PNG" );
@@ -182,12 +182,12 @@ void SaveSettingsWidget::slotPopulateImageFormat(bool sixteenBits)
     emit signalSaveFormatChanged();
 }
 
-QString SaveSettingsWidget::extension() const
+QString KPSaveSettingsWidget::extension() const
 {
     return extensionForFormat(fileFormat());
 }
 
-QString SaveSettingsWidget::typeMime() const
+QString KPSaveSettingsWidget::typeMime() const
 {
     QString mime;
 
@@ -210,7 +210,7 @@ QString SaveSettingsWidget::typeMime() const
     return mime;
 }
 
-QString SaveSettingsWidget::extensionForFormat(SaveSettingsWidget::OutputFormat format)
+QString KPSaveSettingsWidget::extensionForFormat(KPSaveSettingsWidget::OutputFormat format)
 {
     QString ext;
 
