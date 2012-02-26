@@ -572,7 +572,7 @@ void UploadDialog::imagesFilesButtonAdd()
     KUrl::List urls;
 
 #if KIPI_PLUGIN
-    urls = ImageDialog::getImageUrls(this, m_interface);
+    urls = KPImageDialog::getImageUrls(this, m_interface);
 #else
     const QString filter      = QString( "*.jpg *.jpeg *.jpe *.tiff *.gif *.png *.bmp|" + i18n("Image files") );
     QPointer<KFileDialog> dlg = new KFileDialog( QString(), filter, this );

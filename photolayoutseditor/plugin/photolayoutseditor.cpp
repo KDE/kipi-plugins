@@ -66,7 +66,7 @@
 
 // Local includes
 
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 #include "CanvasSizeDialog.h"
 #include "Canvas.h"
 #include "Scene.h"
@@ -697,7 +697,7 @@ void PhotoLayoutsEditor::loadNewImage()
     if (!m_canvas)
         return;
 
-    KUrl::List urls = KIPIPlugins::ImageDialog::getImageUrls(this, m_interface);
+    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this, m_interface);
     if (!urls.isEmpty())
         m_canvas->addImages(urls);
 }

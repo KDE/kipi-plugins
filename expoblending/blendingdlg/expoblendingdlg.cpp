@@ -85,7 +85,7 @@ extern "C"
 #include "aboutdata.h"
 #include "actionthread.h"
 #include "bracketstack.h"
-#include "outputdialog.h"
+#include "kpoutputdialog.h"
 #include "kpversion.h"
 #include "kppreviewmanager.h"
 #include "kpsavesettingswidget.h"
@@ -301,10 +301,10 @@ void ExpoBlendingDlg::slotFileFormatChanged()
 
 void ExpoBlendingDlg::slotPreviewButtonClicked()
 {
-    OutputDialog dlg(kapp->activeWindow(),
-                     i18n("Enfuse Processing Messages"),
-                     d->output);
-                     i18n("Enfuse Processing Messages"),
+    KPOutputDialog dlg(kapp->activeWindow(),
+                       i18n("Enfuse Processing Messages"),
+                       d->output);
+
     dlg.setAboutData(d->mngr->about(), QString("expoblending"));
     dlg.exec();
 }

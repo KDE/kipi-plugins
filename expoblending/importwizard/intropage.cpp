@@ -58,7 +58,7 @@ public:
 };
 
 IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("Welcome to Exposure Blending Tool")), 
+    : KPWizardPage(dlg, i18n("Welcome to Exposure Blending Tool")),
       d(new IntroPagePriv(mngr))
 {
     KVBox *vbox   = new KVBox(this);

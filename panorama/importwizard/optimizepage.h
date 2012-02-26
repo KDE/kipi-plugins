@@ -25,24 +25,26 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 
 // Local includes
 
 #include "actions.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
 class Manager;
 
-class OptimizePage : public KIPIPlugins::WizardPage
+class OptimizePage : public KPWizardPage
 {
     Q_OBJECT
 
 public:
 
-    OptimizePage(Manager* mngr, KAssistantDialog* dlg);
+    OptimizePage(Manager* const mngr, KAssistantDialog* const dlg);
     ~OptimizePage();
 
     void process();

@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a template to create wizzard page.
  *
- * Copyright (C) 2009-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 
 // Qt includes
 
@@ -39,11 +39,11 @@
 namespace KIPIPlugins
 {
 
-class WizardPage::WizardPagePriv
+class KPWizardPage::KPWizardPagePriv
 {
 public:
 
-    WizardPagePriv()
+    KPWizardPagePriv()
     {
         hlay          = 0;
         page          = 0;
@@ -59,10 +59,10 @@ public:
     KPageWidgetItem* page;
 };
 
-WizardPage::WizardPage(KAssistantDialog* dlg, const QString& title)
-          : QScrollArea(dlg), d(new WizardPagePriv)
+KPWizardPage::KPWizardPage(KAssistantDialog* const dlg, const QString& title)
+    : QScrollArea(dlg), d(new KPWizardPagePriv)
 {
-    QWidget *panel = new QWidget(viewport());
+    QWidget* panel = new QWidget(viewport());
     panel->setAutoFillBackground(false);
     setWidget(panel);
     setWidgetResizable(true);
@@ -92,27 +92,27 @@ WizardPage::WizardPage(KAssistantDialog* dlg, const QString& title)
     d->page = dlg->addPage(this, title);
 }
 
-WizardPage::~WizardPage()
+KPWizardPage::~KPWizardPage()
 {
     delete d;
 }
 
-KPageWidgetItem* WizardPage::page() const
+KPageWidgetItem* KPWizardPage::page() const
 {
     return d->page;
 }
 
-void WizardPage::setPageWidget(QWidget* w)
+void KPWizardPage::setPageWidget(QWidget* const w)
 {
     d->hlay->addWidget(w);
     d->hlay->setStretchFactor(w, 10);
 }
-void WizardPage::removePageWidget(QWidget* w)
+void KPWizardPage::removePageWidget(QWidget* const w)
 {
     d->hlay->removeWidget(w);
 }
 
-void WizardPage::setLeftBottomPix(const QPixmap& pix)
+void KPWizardPage::setLeftBottomPix(const QPixmap& pix)
 {
     d->leftBottomPix->setPixmap(pix);
 }

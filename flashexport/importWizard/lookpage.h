@@ -25,24 +25,26 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 #include "simpleviewersettingscontainer.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
 
 class FlashManager; 
 
-class LookPage : public KIPIPlugins::WizardPage
+class LookPage : public KPWizardPage
 {
 	Q_OBJECT
 public:
 
-	LookPage(KAssistantDialog* dlg);
+	LookPage(KAssistantDialog* const dlg);
     ~LookPage();
     
-    void setSettings(const SimpleViewerSettingsContainer* settings);
-    void settings(SimpleViewerSettingsContainer* settings);
+    void setSettings(const SimpleViewerSettingsContainer* const settings);
+    void settings(SimpleViewerSettingsContainer* const settings);
     
     void setPageContent(int plugType);
 

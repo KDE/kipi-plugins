@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,13 +54,11 @@
 
 // Local includes
 
-#include "outputdialog.h"
+#include "kpoutputdialog.h"
 #include "cpcleanbinary.h"
 #include "cpfindbinary.h"
 #include "manager.h"
 #include "actionthread.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
@@ -68,8 +66,14 @@ namespace KIPIPanoramaPlugin
 struct PreProcessingPage::PreProcessingPagePriv
 {
     PreProcessingPagePriv()
-        : progressCount(0), progressLabel(0), progressTimer(0), canceled(false),
-          title(0), celesteCheckBox(0), detailsBtn(0), mngr(0)
+        : progressCount(0),
+          progressLabel(0),
+          progressTimer(0),
+          canceled(false),
+          title(0),
+          celesteCheckBox(0),
+          detailsBtn(0),
+          mngr(0)
     {
         progressPix = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
     }
@@ -93,9 +97,9 @@ struct PreProcessingPage::PreProcessingPagePriv
     Manager*        mngr;
 };
 
-PreProcessingPage::PreProcessingPage(Manager* mngr, KAssistantDialog* dlg)
-                 : WizardPage(dlg, i18n("<b>Pre-Processing Images</b>")),
-                   d(new PreProcessingPagePriv)
+PreProcessingPage::PreProcessingPage(Manager* const mngr, KAssistantDialog* const dlg)
+    : KPWizardPage(dlg, i18n("<b>Pre-Processing Images</b>")),
+      d(new PreProcessingPagePriv)
 {
     d->mngr             = mngr;
     d->progressTimer    = new QTimer(this);
@@ -226,10 +230,9 @@ void PreProcessingPage::slotProgressTimerDone()
 
 void PreProcessingPage::slotShowDetails()
 {
-    OutputDialog dlg(kapp->activeWindow(),
-                     i18n("Pre-Processing Messages"),
-                     d->output);
-                     i18n("Pre-Processing Messages"),
+    KPOutputDialog dlg(kapp->activeWindow(),
+                       i18n("Pre-Processing Messages"),
+                       d->output);
     dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("panorama"));
     dlg.exec();
 }

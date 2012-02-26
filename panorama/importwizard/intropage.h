@@ -31,15 +31,17 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 #include "manager.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
 class Manager;
 
-class IntroPage : public KIPIPlugins::WizardPage
+class IntroPage : public KPWizardPage
 {
     Q_OBJECT
 

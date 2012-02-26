@@ -64,7 +64,7 @@ public:
 };
 
 SelectionPage::SelectionPage(FlashManager* const mngr, KAssistantDialog* const dlg)
-    : WizardPage(dlg, i18n("Select Image Collections")), d(new SelectionPagePriv)
+    : KPWizardPage(dlg, i18n("Select Image Collections")), d(new SelectionPagePriv)
 {
     d->manager=mngr;
 }

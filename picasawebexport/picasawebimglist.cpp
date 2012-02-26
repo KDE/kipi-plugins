@@ -33,7 +33,6 @@
 #include <kfiledialog.h>
 #include <kimageio.h>
 #include <kglobalsettings.h>
-#include "imagedialog.h"
 
 // LibKDcraw includes
 
@@ -42,6 +41,10 @@
 // Libkipi includes
 
 #include <libkipi/imagecollection.h>
+
+// local includes
+
+#include "kpimagedialog.h"
 
 using namespace KDcrawIface;
 
@@ -122,7 +125,7 @@ PicasawebImageDialog::PicasawebImageDialog(QWidget* const parent, KIPI::Interfac
     QPointer<KFileDialog> dlg = new KFileDialog(iface ? iface->currentAlbum().path().path()
                                                          : KGlobalSettings::documentPath(),
                                                 fileFormats, parent);
-    KIPIPlugins::ImageDialogPreview *preview = new KIPIPlugins::ImageDialogPreview(iface, dlg);
+    KIPIPlugins::KPImageDialogPreview *preview = new KIPIPlugins::KPImageDialogPreview(iface, dlg);
     dlg->setPreviewWidget(preview);
     dlg->setOperationMode(KFileDialog::Opening);
 

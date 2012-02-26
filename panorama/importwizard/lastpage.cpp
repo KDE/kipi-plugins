@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -51,7 +51,14 @@ namespace KIPIPanoramaPlugin
 
 struct LastPage::LastPagePriv
 {
-    LastPagePriv() : title(0), saveSettingsGroupBox(0), fileTemplateKLineEdit(0), savePtoCheckBox(0), mngr(0) {}
+    LastPagePriv()
+        : title(0),
+          saveSettingsGroupBox(0),
+          fileTemplateKLineEdit(0),
+          savePtoCheckBox(0),
+          mngr(0)
+    {
+    }
 
     QLabel*    title;
 
@@ -63,8 +70,8 @@ struct LastPage::LastPagePriv
     Manager*   mngr;
 };
 
-LastPage::LastPage(Manager* mngr, KAssistantDialog* dlg)
-     : KIPIPlugins::WizardPage(dlg, i18n("<b>Panorama Stitched</b>")),
+LastPage::LastPage(Manager* const mngr, KAssistantDialog* const dlg)
+     : KPWizardPage(dlg, i18n("<b>Panorama Stitched</b>")),
        d(new LastPagePriv)
 {
     KConfig config("kipirc");
@@ -238,7 +245,7 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
     }
 }
 
-void LastPage::checkFiles(void)
+void LastPage::checkFiles()
 {
     QFile panoFile(d->mngr->preProcessedMap().begin().key().directory() + '/' + panoFileName(d->fileTemplateKLineEdit->text()));
     QFile ptoFile(d->mngr->preProcessedMap().begin().key().directory() + '/' + d->fileTemplateKLineEdit->text() + ".pto");
@@ -256,7 +263,7 @@ void LastPage::checkFiles(void)
 
 }
 
-void LastPage::resetWarningMsg(void )
+void LastPage::resetWarningMsg()
 {
     d->warningLabel->setText(i18n("<qt><p><font color=\"red\"><b>Warning:</b> "
                                   "This file already exists.</font></p></qt>"));

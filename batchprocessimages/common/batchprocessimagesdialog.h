@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -68,9 +68,11 @@ public:
     // Don't forget to add the 'm_Type' and 'm_labelType' implementation in the constructor of
     // children dialog class.
 
-    BatchProcessImagesDialog(const KUrl::List& urlList, Interface* interface,
-                             const QString& caption, QWidget* parent = 0);
-    ~BatchProcessImagesDialog();protected:
+    BatchProcessImagesDialog(const KUrl::List& urlList, Interface* const interface,
+                             const QString& caption, QWidget* const parent = 0);
+    ~BatchProcessImagesDialog();
+
+protected:
 
     virtual QSize sizeHint() const;
 

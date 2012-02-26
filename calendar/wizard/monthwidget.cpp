@@ -57,7 +57,7 @@
 // Local includes
 
 #include "calsettings.h"
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 
 namespace KIPICalendarPlugin
 {
@@ -200,7 +200,7 @@ void MonthWidget::mouseReleaseEvent(QMouseEvent* event)
 
     if (event->button() == Qt::LeftButton)
     {
-        KIPIPlugins::ImageDialog dlg(this, interface_, true);
+        KIPIPlugins::KPImageDialog dlg(this, interface_, true);
         setImage(dlg.url());
     }
     else if (event->button() == Qt::RightButton)

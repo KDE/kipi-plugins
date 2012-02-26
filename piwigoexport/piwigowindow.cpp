@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
  * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
@@ -68,7 +68,7 @@
 #include "piwigoconfig.h"
 #include "piwigoitem.h"
 #include "piwigotalker.h"
-#include "imagedialog.h"
+#include "kpimagedialog.h"
 #include "kpaboutdata.h"
 
 namespace KIPIPiwigoExportPlugin
@@ -78,7 +78,7 @@ class PiwigoWindow::Private
 {
 public:
 
-    Private(PiwigoWindow* parent);
+    Private(PiwigoWindow* const parent);
 
     QWidget*               widget;
 
@@ -99,13 +99,13 @@ public:
     KUrlLabel*             logo;
 };
 
-PiwigoWindow::Private::Private(PiwigoWindow* parent)
+PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 {
     widget = new QWidget(parent);
     parent->setMainWidget(widget);
     parent->setModal(false);
 
-    QHBoxLayout *hlay = new QHBoxLayout(widget);
+    QHBoxLayout* hlay = new QHBoxLayout(widget);
 
     // ---------------------------------------------------------------------------
 
@@ -218,7 +218,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* parent)
 
 // --------------------------------------------------------------------------------------------------------------
 
-PiwigoWindow::PiwigoWindow(KIPI::Interface* interface, QWidget *parent, Piwigo* pPiwigo)
+PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Piwigo* const pPiwigo)
     : KDialog(parent),
       m_interface(interface),
       mpPiwigo(pPiwigo),
@@ -229,7 +229,7 @@ PiwigoWindow::PiwigoWindow(KIPI::Interface* interface, QWidget *parent, Piwigo* 
     setModal(false);
 
     // About data.
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Piwigo Export"),
+    m_about = new KPAboutData(ki18n("Piwigo Export"),
                                            0,
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export image collections to a remote Piwigo server."),

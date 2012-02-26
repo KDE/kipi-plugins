@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a template to create wizzard page.
  *
- * Copyright (C) 2009-2010 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef WIZARD_PAGE_H
-#define WIZARD_PAGE_H
+#ifndef KPWIZARD_PAGE_H
+#define KPWIZARD_PAGE_H
 
 // Qt includes
 
@@ -39,26 +39,26 @@ class KPageWidgetItem;
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT WizardPage : public QScrollArea
+class KIPIPLUGINS_EXPORT KPWizardPage : public QScrollArea
 {
 
 public:
 
-    WizardPage(KAssistantDialog* dlg, const QString& title);
-    virtual ~WizardPage();
+    KPWizardPage(KAssistantDialog* const dlg, const QString& title);
+    virtual ~KPWizardPage();
 
     KPageWidgetItem* page() const;
 
-    void setPageWidget(QWidget* w);
-    void removePageWidget(QWidget* w);
+    void setPageWidget(QWidget* const w);
+    void removePageWidget(QWidget* const w);
     void setLeftBottomPix(const QPixmap& pix);
 
 private:
 
-    class WizardPagePriv;
-    WizardPagePriv* const d;
+    class KPWizardPagePriv;
+    KPWizardPagePriv* const d;
 };
 
 }   // namespace KIPIPlugins
 
-#endif /* WIZARD_PAGE_H */
+#endif /* KPWIZARD_PAGE_H */

@@ -46,7 +46,7 @@
 
 // Local includes
 
-#include "outputdialog.h"
+#include "kpoutputdialog.h"
 #include "autooptimiserbinary.h"
 #include "manager.h"
 #include "actionthread.h"
@@ -57,8 +57,14 @@ namespace KIPIPanoramaPlugin
 struct OptimizePage::OptimizePagePriv
 {
     OptimizePagePriv()
-        : progressCount(0), progressLabel(0), progressTimer(0), canceled(false), title(0),
-          horizonCheckbox(0), projectionAndSizeCheckbox(0), detailsBtn(0),
+        : progressCount(0),
+          progressLabel(0),
+          progressTimer(0),
+          canceled(false),
+          title(0),
+          horizonCheckbox(0),
+          projectionAndSizeCheckbox(0),
+          detailsBtn(0),
           mngr(0)
     {
         progressPix = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
@@ -85,8 +91,8 @@ struct OptimizePage::OptimizePagePriv
     Manager*        mngr;
 };
 
-OptimizePage::OptimizePage(Manager* mngr, KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("<b>Optimization</b>")),
+OptimizePage::OptimizePage(Manager* const mngr, KAssistantDialog* const dlg)
+    : KPWizardPage(dlg, i18n("<b>Optimization</b>")),
       d(new OptimizePagePriv)
 {
     d->mngr                         = mngr;
@@ -291,11 +297,11 @@ void OptimizePage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
 
 void OptimizePage::slotShowDetails()
 {
-    OutputDialog dlg(kapp->activeWindow(),
-                     i18n("Pre-Processing Messages"),
-                     d->output);
-    i18n("Pre-Processing Messages"),
-         dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("panorama"));
+    KPOutputDialog dlg(kapp->activeWindow(),
+                       i18n("Pre-Processing Messages"),
+                       d->output);
+
+    dlg.setAboutData((KPAboutData*)d->mngr->about(), QString("panorama"));
     dlg.exec();
 }
 

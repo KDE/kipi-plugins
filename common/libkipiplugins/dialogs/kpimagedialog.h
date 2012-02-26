@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef IMAGEDIALOG_H
-#define IMAGEDIALOG_H
+#ifndef KPIMAGEDIALOG_H
+#define KPIMAGEDIALOG_H
 
 // Qt includes
 
@@ -40,17 +40,19 @@
 
 #include "kipiplugins_export.h"
 
+using namespace KIPI;
+
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT ImageDialogPreview : public KPreviewWidgetBase
+class KIPIPLUGINS_EXPORT KPImageDialogPreview : public KPreviewWidgetBase
 {
     Q_OBJECT
 
 public:
 
-    explicit ImageDialogPreview(KIPI::Interface* iface, QWidget* parent=0);
-    ~ImageDialogPreview();
+    explicit KPImageDialogPreview(Interface* const iface, QWidget* const parent=0);
+    ~KPImageDialogPreview();
 
     QSize sizeHint() const;
 
@@ -70,19 +72,19 @@ private:
 
 private:
 
-    class ImageDialogPreviewPrivate;
-    ImageDialogPreviewPrivate* const d;
+    class KPImageDialogPreviewPrivate;
+    KPImageDialogPreviewPrivate* const d;
 };
 
 // ------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT ImageDialog
+class KIPIPLUGINS_EXPORT KPImageDialog
 {
 
 public:
 
-    ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelect=false, bool onlyRaw=false);
-    ~ImageDialog();
+    KPImageDialog(QWidget* const parent, Interface* const iface, bool singleSelect=false, bool onlyRaw=false);
+    ~KPImageDialog();
 
     KUrl       url() const;
     KUrl::List urls() const;
@@ -91,15 +93,15 @@ public:
     bool       singleSelect() const;
     QString    fileFormats() const;
 
-    static KUrl getImageUrl(QWidget* parent, KIPI::Interface* iface, bool onlyRaw=false);
-    static KUrl::List getImageUrls(QWidget* parent, KIPI::Interface* iface, bool onlyRaw=false);
+    static KUrl getImageUrl(QWidget* const parent, Interface* const iface, bool onlyRaw=false);
+    static KUrl::List getImageUrls(QWidget* const parent, Interface* const iface, bool onlyRaw=false);
 
 private:
 
-    class ImageDialogPrivate;
-    ImageDialogPrivate* const d;
+    class KPImageDialogPrivate;
+    KPImageDialogPrivate* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif /* IMAGEDIALOG_H */
+#endif /* KPIMAGEDIALOG_H */

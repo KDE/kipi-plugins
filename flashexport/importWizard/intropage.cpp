@@ -56,8 +56,9 @@ public:
     KComboBox* imageGetOption;
 };
 
-IntroPage::IntroPage(KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("Welcome to FlashExport Tool")),d(new IntroPagePriv)
+IntroPage::IntroPage(KAssistantDialog* const dlg)
+    : KPWizardPage(dlg, i18n("Welcome to FlashExport Tool")),
+      d(new IntroPagePriv)
 {
     KVBox* vbox   = new KVBox(this);
     QLabel* title = new QLabel(vbox);
@@ -113,7 +114,7 @@ IntroPage::~IntroPage()
 {
 }
 
-void IntroPage::settings(SimpleViewerSettingsContainer* settings)
+void IntroPage::settings(SimpleViewerSettingsContainer* const settings)
 {
     settings->plugType = (SimpleViewerSettingsContainer::PluginType)d->plugin_select->currentIndex();
     settings->imgGetOption = (SimpleViewerSettingsContainer::ImageGetOption)d->imageGetOption->currentIndex();

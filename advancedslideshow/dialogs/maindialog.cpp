@@ -54,12 +54,12 @@
 // Local includes
 
 #include "commoncontainer.h"
-#include "imagedialog.h"
 #include "advanceddialog.h"
-#include "kpimageslist.h"
 #include "slideshow.h"
 #include "slideshowgl.h"
 #include "slideshowkb.h"
+#include "kpimagedialog.h"
+#include "kpimageslist.h"
 
 using namespace KIPIPlugins;
 

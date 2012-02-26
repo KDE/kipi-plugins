@@ -81,7 +81,8 @@ public:
 };
 
 GeneralPage::GeneralPage (KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("General Settings")), d(new GeneralPagePriv)
+    : KPWizardPage(dlg, i18n("General Settings")),
+      d(new GeneralPagePriv)
 {
     KVBox *vbox       = new KVBox(this);
 
@@ -203,7 +204,7 @@ GeneralPage::~GeneralPage()
     delete d;
 }
 
-void GeneralPage::setSettings(const SimpleViewerSettingsContainer* settings)
+void GeneralPage::setSettings(const SimpleViewerSettingsContainer* const settings)
 {
     d->title->setText(settings->title);
     d->exportUrl->setUrl(settings->exportUrl);
@@ -217,7 +218,7 @@ void GeneralPage::setSettings(const SimpleViewerSettingsContainer* settings)
     d->showKeywords->setChecked(settings->showKeywords);
 }
 
-void GeneralPage::settings(SimpleViewerSettingsContainer* settings)
+void GeneralPage::settings(SimpleViewerSettingsContainer* const settings)
 {
     settings->title                = d->title->text();
     settings->exportUrl            = d->exportUrl->url();

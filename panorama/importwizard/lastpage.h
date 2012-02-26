@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,21 +27,23 @@
 
 // Local includes
 
-#include "wizardpage.h"
+#include "kpwizardpage.h"
 #include "actions.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
 class Manager;
 
-class LastPage : public KIPIPlugins::WizardPage
+class LastPage : public KPWizardPage
 {
     Q_OBJECT
 
 public:
 
-    LastPage(Manager* mngr, KAssistantDialog* dlg);
+    LastPage(Manager* const mngr, KAssistantDialog* const dlg);
     ~LastPage();
 
     void resetTitle();
@@ -61,8 +63,8 @@ private Q_SLOTS:
 private:
 
     QString panoFileName(const QString& fileTemplate) const;
-    void checkFiles(void);
-    void resetWarningMsg(void);
+    void checkFiles();
+    void resetWarningMsg();
 
 private:
 

@@ -60,7 +60,7 @@ class ImageDisplay : public QLabel
 
 public:
 
-    ImageDisplay(QScrollArea*);
+    ImageDisplay(QScrollArea* const);
 
 protected:
 
@@ -94,7 +94,7 @@ class ClockPhotoDialog : public KDialog
 
 public:
 
-    ClockPhotoDialog(Interface* interface, QWidget* parent);
+    ClockPhotoDialog(Interface* const interface, QWidget* const parent);
     ~ClockPhotoDialog();
 
     /* The public variables that hold the time difference. */
@@ -133,8 +133,6 @@ private:
 
 private:
 
-    QDateTime                photoDateTime;
-    
     class ClockPhotoDialogPrivate;
     ClockPhotoDialogPrivate* const d;
 };

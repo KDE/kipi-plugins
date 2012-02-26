@@ -45,14 +45,14 @@
 namespace KIPIFlashExportPlugin
 {
 // link this page to SimpleViewer to gain acess to settings container.
-ProgressPage::ProgressPage(FlashManager *mngr, KAssistantDialog* dlg)
-    : KIPIPlugins::WizardPage(dlg, i18n("Exporting..."))
+ProgressPage::ProgressPage(FlashManager* const mngr, KAssistantDialog* const dlg)
+    : KPWizardPage(dlg, i18n("Exporting..."))
 {
 
     SimpleViewer* simple = mngr->simpleView();
-    KIPIPlugins::BatchProgressWidget* progresswdg = simple->progressWidget();
+    BatchProgressWidget* progresswdg = simple->progressWidget();
     progresswdg->show();
-    
+
     setPageWidget(progresswdg);
     setLeftBottomPix(DesktopIcon("flash", 128));
 }

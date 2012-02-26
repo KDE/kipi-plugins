@@ -7,7 +7,7 @@
  * Description : a plugin to create panorama by fusion of several images.
  *
  * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -40,10 +40,9 @@
 
 // Local includes
 
-#include "outputdialog.h"
+#include "kppreviewmanager.h"
 #include "batchprogressdialog.h"
 #include "manager.h"
-#include "kppreviewmanager.h"
 #include "enblendbinary.h"
 #include "makebinary.h"
 #include "nonabinary.h"
@@ -54,7 +53,7 @@ namespace KIPIPanoramaPlugin
 
 struct PreviewPage::PreviewPagePriv
 {
-    PreviewPagePriv(Manager *m)
+    PreviewPagePriv(Manager* const m)
         : title(0), 
           previewWidget(0), 
           previewBusy(false), 
@@ -80,7 +79,7 @@ struct PreviewPage::PreviewPagePriv
 };
 
 PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
-        : WizardPage(dlg, i18n("<b>Preview and Post-Processing</b>")),
+        : KPWizardPage(dlg, i18n("<b>Preview and Post-Processing</b>")),
           d(new PreviewPagePriv(mngr))
 {
     KVBox* vbox       = new KVBox(this);
