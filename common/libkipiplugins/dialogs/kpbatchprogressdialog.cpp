@@ -6,7 +6,7 @@
  * Date        : 2004-05-04
  * Description : Batch progress dialog
  *
- * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "batchprogressdialog.moc"
+#include "kpbatchprogressdialog.moc"
 
 // Qt includes
 
@@ -44,11 +44,11 @@
 namespace KIPIPlugins
 {
 
-class BatchProgressItem : public QListWidgetItem
+class KPBatchProgressItem : public QListWidgetItem
 {
 public:
 
-BatchProgressItem(QListWidget* parent, const QString& message, int messageType)
+KPBatchProgressItem(QListWidget* const parent, const QString& message, int messageType)
     : QListWidgetItem(message, parent)
 {
     // Set the icon.
@@ -85,11 +85,11 @@ BatchProgressItem(QListWidget* parent, const QString& message, int messageType)
 
 // ----------------------------------------------------------------------
 
-class BatchProgressWidget::BatchProgressWidgetPriv
+class KPBatchProgressWidget::KPBatchProgressWidgetPriv
 {
 public:
 
-    BatchProgressWidgetPriv()
+    KPBatchProgressWidgetPriv()
     {
         progress    = 0;
         actionsList = 0;
@@ -100,8 +100,8 @@ public:
     QListWidget*  actionsList;
 };
 
-BatchProgressWidget::BatchProgressWidget(QWidget* parent)
-   : KVBox(parent), d(new BatchProgressWidgetPriv)
+KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
+   : KVBox(parent), d(new KPBatchProgressWidgetPriv)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     layout()->setSpacing(KDialog::spacingHint());
@@ -123,60 +123,60 @@ BatchProgressWidget::BatchProgressWidget(QWidget* parent)
             this, SLOT(slotContextMenu()));
 }
 
-BatchProgressWidget::~BatchProgressWidget()
+KPBatchProgressWidget::~KPBatchProgressWidget()
 {
     delete d;
 }
 
-QListWidget* BatchProgressWidget::listView() const
+QListWidget* KPBatchProgressWidget::listView() const
 {
     return d->actionsList;
 }
 
-QProgressBar* BatchProgressWidget::progressBar() const
+QProgressBar* KPBatchProgressWidget::progressBar() const
 {
     return d->progress;
 }
 
-void BatchProgressWidget::addedAction(const QString& text, int type)
+void KPBatchProgressWidget::addedAction(const QString& text, int type)
 {
-    BatchProgressItem* item = new BatchProgressItem(d->actionsList, text, type);
+    KPBatchProgressItem* item = new KPBatchProgressItem(d->actionsList, text, type);
     d->actionsList->setCurrentItem(item);
 }
 
-void BatchProgressWidget::reset()
+void KPBatchProgressWidget::reset()
 {
     d->actionsList->clear();
     d->progress->setValue(0);
 }
 
-void BatchProgressWidget::setProgress(int current, int total)
+void KPBatchProgressWidget::setProgress(int current, int total)
 {
     d->progress->setMaximum(total);
     d->progress->setValue(current);
 }
 
-int BatchProgressWidget::progress() const
+int KPBatchProgressWidget::progress() const
 {
     return d->progress->value();
 }
 
-int BatchProgressWidget::total() const
+int KPBatchProgressWidget::total() const
 {
     return d->progress->maximum();
 }
 
-void BatchProgressWidget::setTotal(int total)
+void KPBatchProgressWidget::setTotal(int total)
 {
     d->progress->setMaximum(total);
 }
 
-void BatchProgressWidget::setProgress(int current)
+void KPBatchProgressWidget::setProgress(int current)
 {
     d->progress->setValue(current);
 }
 
-void BatchProgressWidget::slotContextMenu()
+void KPBatchProgressWidget::slotContextMenu()
 {
     KMenu popmenu(this);
     KAction* action = new KAction(KIcon("edit-copy"), i18n("Copy to Clipboard"), this);
@@ -187,7 +187,7 @@ void BatchProgressWidget::slotContextMenu()
     popmenu.exec(QCursor::pos());
 }
 
-void BatchProgressWidget::slotCopy2ClipBoard()
+void KPBatchProgressWidget::slotCopy2ClipBoard()
 {
     QString textInfo;
 
@@ -204,37 +204,37 @@ void BatchProgressWidget::slotCopy2ClipBoard()
 
 // ---------------------------------------------------------------------------------
 
-class BatchProgressDialog::BatchProgressDialogPriv
+class KPBatchProgressDialog::KPBatchProgressDialogPriv
 {
 public:
 
-    BatchProgressDialogPriv()
+    KPBatchProgressDialogPriv()
     {
         box = 0;
     }
 
-    BatchProgressWidget* box;
+    KPBatchProgressWidget* box;
 };
 
-BatchProgressDialog::BatchProgressDialog(QWidget* parent, const QString& caption)
-   : KDialog(parent), d(new BatchProgressDialogPriv)
+KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const parent, const QString& caption)
+   : KDialog(parent), d(new KPBatchProgressDialogPriv)
 {
     setCaption(caption);
     setButtons(Cancel);
     setDefaultButton(Cancel);
     setModal(true);
 
-    d->box = new BatchProgressWidget(this);
+    d->box = new KPBatchProgressWidget(this);
     setMainWidget(d->box);
     resize(600, 400);
 }
 
-BatchProgressDialog::~BatchProgressDialog()
+KPBatchProgressDialog::~KPBatchProgressDialog()
 {
     delete d;
 }
 
-BatchProgressWidget* BatchProgressDialog::progressWidget() const
+KPBatchProgressWidget* KPBatchProgressDialog::progressWidget() const
 {
     return d->box;
 }

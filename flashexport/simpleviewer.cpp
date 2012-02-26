@@ -66,7 +66,9 @@ class SimpleViewer::SimpleViewerPriv
 {
 public:
 
-    SimpleViewerPriv() : maxThumbSize(45), viewer("simpleviewer.swf")
+    SimpleViewerPriv() :
+        maxThumbSize(45),
+        viewer("simpleviewer.swf")
     {
         totalActions = 0;
         action       = 0;
@@ -101,12 +103,12 @@ public:
 
     Interface*                        interface;
 
-    BatchProgressWidget*              progressWdg;
+    KPBatchProgressWidget*            progressWdg;
 
     SimpleViewerSettingsContainer*    settings;
 };
 
-SimpleViewer::SimpleViewer(Interface* interface, QObject* parent)
+SimpleViewer::SimpleViewer(Interface* const interface, QObject* const parent)
     : QObject(parent), d(new SimpleViewerPriv)
 {
     d->interface = interface;
@@ -167,7 +169,7 @@ void SimpleViewer::appendPluginFiles(int pluginType)
 
 void SimpleViewer::initProgressWdg() const
 {
-    d->progressWdg = new BatchProgressWidget(kapp->activeWindow());
+    d->progressWdg = new KPBatchProgressWidget(kapp->activeWindow());
     kDebug() << "progress dialog initialized";
 }
 
@@ -388,9 +390,9 @@ bool SimpleViewer::exportImages()
             galleryElem = xmlDoc.createElement(QString::fromLatin1("gallery"));
             xmlDoc.appendChild( galleryElem );
             galleryElem.setAttribute(QString::fromLatin1("enableRightClickOpen"), d->settings->enableRightClickToOpen());
-            galleryElem.setAttribute(QString::fromLatin1("imagePadding"),        d->settings->imagePadding);
-            galleryElem.setAttribute(QString::fromLatin1("displayTime"),       d->settings->displayTime);
-            galleryElem.setAttribute(QString::fromLatin1("frameWidth"),            d->settings->frameWidth);
+            galleryElem.setAttribute(QString::fromLatin1("imagePadding"),         d->settings->imagePadding);
+            galleryElem.setAttribute(QString::fromLatin1("displayTime"),          d->settings->displayTime);
+            galleryElem.setAttribute(QString::fromLatin1("frameWidth"),           d->settings->frameWidth);
             galleryElem.setAttribute(QString::fromLatin1("frameColor"),           d->settings->frameColor.name().replace('#', "0x"));
             galleryElem.setAttribute(QString::fromLatin1("bgColor"),              d->settings->backgroundColor.name().replace('#', "0x"));
             break;
@@ -998,13 +1000,13 @@ bool SimpleViewer::extractFile(const KArchiveEntry* entry) const
     return false;
 }
 
-BatchProgressWidget* SimpleViewer::progressWidget() const
+KPBatchProgressWidget* SimpleViewer::progressWidget() const
 {
     initProgressWdg();
     return d->progressWdg;
 }
 
-void SimpleViewer::setSettings(SimpleViewerSettingsContainer* setting)
+void SimpleViewer::setSettings(SimpleViewerSettingsContainer* const setting)
 {
     d->settings = setting;
     d->canceled = false;

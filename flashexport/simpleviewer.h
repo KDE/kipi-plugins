@@ -44,7 +44,7 @@
 // Local includes
 
 #include "simpleviewersettingscontainer.h"
-#include "batchprogressdialog.h"
+#include "kpbatchprogressdialog.h"
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -58,7 +58,7 @@ class SimpleViewer : public QObject
 
 public:
 
-    explicit SimpleViewer(Interface* interface, QObject* parent=0);
+    explicit SimpleViewer(Interface* const interface, QObject* const parent=0);
     ~SimpleViewer();
 
     void initProgressWdg() const;
@@ -69,9 +69,9 @@ public:
      */
     bool unzip(const QString& url) const;
 
-    BatchProgressWidget* progressWidget() const;
+    KPBatchProgressWidget* progressWidget() const;
 
-    void setSettings(SimpleViewerSettingsContainer* settings);
+    void setSettings(SimpleViewerSettingsContainer* const settings);
 
     void startExport();
 

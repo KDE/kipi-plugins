@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,7 +36,6 @@
 
 //#include "actions.h"
 #include "simpleviewersettingscontainer.h"
-#include "batchprogressdialog.h"
 #include "simpleviewer.h"
 
 namespace KIPI
@@ -45,12 +44,10 @@ namespace KIPI
 }
 
 using namespace KIPI;
-//using namespace KDcrawIface;
 
 namespace KIPIFlashExportPlugin
 {
 
-//class ActionThread;
 class FlashExportAboutData;  // must write own flashexport aboutdata
 class SimpleViewer;
 class FlashManagerPriv;
@@ -61,17 +58,17 @@ class FlashManager: public QObject
 
 public:
 
-    FlashManager(QObject* parent=0);
+    FlashManager(QObject* const parent=0);
     ~FlashManager();
 
 // replace with flashexport
-    void setAbout(FlashExportAboutData* about);
+    void setAbout(FlashExportAboutData* const about);
     FlashExportAboutData* about() const;
 
-    void setIface(Interface* iface);
+    void setIface(Interface* const iface);
     Interface* iface() const;
 
-    bool installPlugin(KUrl url);
+    bool installPlugin(const KUrl& url);
 
     SimpleViewer* simpleView() const;
 

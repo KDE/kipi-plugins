@@ -23,15 +23,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QObject>
 
-namespace KIPIPlugins {
-class BatchProgressDialog;
+// Local includes
+
+#include "kpbatchprogressdialog.h"
+
+namespace KIPI
+{
+    class Interface;
 }
 
-namespace KIPI {
-class Interface;
-}
+using namespace KIPI;
+using namespace KIPIPlugins;
 
-namespace KIPIHTMLExport {
+namespace KIPIHTMLExport
+{
 
 class GalleryInfo;
 class ImageGenerationFunctor;
@@ -40,36 +45,41 @@ class ImageGenerationFunctor;
  * This class is responsible for generating the HTML and scaling the images
  * according to the settings specified by the user.
  */
-class Generator : public QObject {
-Q_OBJECT
-public:
-	Generator(KIPI::Interface*, GalleryInfo*, KIPIPlugins::BatchProgressDialog*);
-	~Generator();
-	bool run();
-	bool warnings() const;
+class Generator : public QObject
+{
+    Q_OBJECT
 
-	static QString webifyFileName(const QString&);
+public:
+
+    Generator(Interface* const, GalleryInfo* const, KPBatchProgressDialog* const);
+    ~Generator();
+    
+    bool run();
+    bool warnings() const;
+
+    static QString webifyFileName(const QString&);
 
 Q_SIGNALS:
-	/**
-	 * This signal is emitted from ImageGenerationFunctor. It uses a
-	 * QueuedConnection to switch between the ImageGenerationFunctor thread and
-	 * the gui thread.
-	 */
-	void logWarningRequested(const QString& text);
+    /**
+     * This signal is emitted from ImageGenerationFunctor. It uses a
+     * QueuedConnection to switch between the ImageGenerationFunctor thread and
+     * the gui thread.
+     */
+    void logWarningRequested(const QString& text);
 
 private:
-	struct Private;
-	friend struct Private;
-	Private* d;
+    
+    struct Private;
+    friend struct Private;
+    Private* d;
 
-	friend class ImageGenerationFunctor;
+    friend class ImageGenerationFunctor;
 
 private Q_SLOTS:
-	void logWarning(const QString& text);
+    
+    void logWarning(const QString& text);
 };
 
-
-} // namespace
+} // namespace KIPIPlugins
 
 #endif /* GENERATOR_H */

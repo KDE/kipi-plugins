@@ -43,7 +43,7 @@ namespace KIPI
 
 namespace KIPIPlugins 
 {
-    class BatchProgressDialog;
+    class KPBatchProgressDialog;
 }
 
 using namespace KIPI;
@@ -64,7 +64,7 @@ public:
     KmlExport(Interface* const interface);
     ~KmlExport();
 
-    bool createDir(const QDir& dir);
+    bool createDir(const QDir& dir) const;
 
     /*! generate the kml element for pictures with tumbnails
      *  @param interface the kipi interface
@@ -79,14 +79,14 @@ public:
      *  @param the filename
      *  @return the webifyed filename
      */
-    QString webifyFileName(const QString& fileName);
+    QString webifyFileName(const QString& fileName) const;
 
     /*! Generate a square thumbnail from @fullImage of @size x @size pixels
      *  @param fullImage the original image
      *  @param size the size of the thumbnail
      *  @return the thumbnail
      */
-    QImage generateSquareThumbnail(const QImage& fullImage, int size);
+    QImage generateSquareThumbnail(const QImage& fullImage, int size) const;
 
     /*! Generate a square thumbnail from @fullImage of @size x @size pixels
      *  with a white border
@@ -94,7 +94,7 @@ public:
      *  @param size the size of the thumbnail
      *  @return the thumbnail
      */
-    QImage generateBorderedThumbnail(const QImage& fullImage, int size);
+    QImage generateBorderedThumbnail(const QImage& fullImage, int size) const;
 
     void   addTrack(QDomElement& kmlAlbum);
     void   generate();
@@ -131,13 +131,13 @@ public:
 
     QColor           m_GPXColor;
 
-    Interface* m_interface;
+    Interface*       m_interface;
 
 private:
 
-    void logInfo(const QString& msg);
-    void logError(const QString& msg);
-    void logWarning(const QString& msg);
+    void logInfo(const QString& msg) const;
+    void logError(const QString& msg) const;
+    void logWarning(const QString& msg) const;
 
     /*!
      *  \fn KIPIKMLExport::KmlExport::addKmlElement(QDomElement target, QString tag)
@@ -146,7 +146,7 @@ private:
      *  @param tag the new element name
      *  @return the New element
      */
-    QDomElement addKmlElement(QDomElement& target, const QString& tag)
+    QDomElement addKmlElement(QDomElement& target, const QString& tag) const
     {
         QDomElement kmlElement = m_kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
@@ -161,7 +161,7 @@ private:
      *  @param text the text content of the new element
      *  @return the New element
      */
-    QDomElement addKmlTextElement(QDomElement& target, const QString& tag, const QString& text)
+    QDomElement addKmlTextElement(QDomElement& target, const QString& tag, const QString& text) const
     {
         QDomElement kmlElement  = m_kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
@@ -178,7 +178,7 @@ private:
      *  @param text the HTML content of the new element
      *  @return the New element
      */
-    QDomElement addKmlHtmlElement(QDomElement& target, const QString& tag, const QString& text)
+    QDomElement addKmlHtmlElement(QDomElement& target, const QString& tag, const QString& text) const
     {
         QDomElement kmlElement  = m_kmlDocument->createElement( tag );
         target.appendChild( kmlElement );
@@ -190,12 +190,12 @@ private:
 private:
 
     /*! the root document, used to create all QDomElements */
-    QDomDocument*                     m_kmlDocument;
+    QDomDocument*          m_kmlDocument;
 
     /*! the GPS parsed data */
-    KMLGPSDataParser                  m_gpxParser;
+    KMLGPSDataParser       m_gpxParser;
 
-    BatchProgressDialog* m_progressDialog;
+    KPBatchProgressDialog* m_progressDialog;
 };
 
 } // namespace KIPIKMLExportPlugin

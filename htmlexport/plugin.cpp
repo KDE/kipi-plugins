@@ -18,13 +18,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 
 */
-// Self
+
 #include "plugin.moc"
 
-// Qt
+// Qt includes
+
 #include <QPointer>
 
-// KDE
+// KDE includes
+
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kapplication.h>
@@ -33,41 +35,43 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include <klocale.h>
 #include <krun.h>
 
-// KIPIPlugins
-#include <batchprogressdialog.h>
+// libKipi includes
+
 #include <libkipi/interface.h>
 
-// Local
+// Local includes
+
 #include "galleryinfo.h"
 #include "generator.h"
 #include "wizard.h"
+#include "kpbatchprogressdialog.h"
 
-K_PLUGIN_FACTORY(HTMLExportFactory, registerPlugin<KIPIHTMLExport::Plugin>();)
-K_EXPORT_PLUGIN( HTMLExportFactory("kipiplugin_htmlexport"))
+using namespace KIPIHTMLExport;
+using namespace KIPIPlugins;
 
-namespace KIPIHTMLExport {
+K_PLUGIN_FACTORY(HTMLExportFactory, registerPlugin<Plugin_HTMLExport>();)
+K_EXPORT_PLUGIN(HTMLExportFactory("kipiplugin_htmlexport"))
 
-
-struct Plugin::Private {
+struct Plugin_HTMLExport::Private
+{
     KAction* mAction;
 };
 
-
-Plugin::Plugin(QObject *parent, const QVariantList&)
-: KIPI::Plugin(HTMLExportFactory::componentData(), parent, "HTMLExport")
+Plugin_HTMLExport::Plugin_HTMLExport(QObject* const parent, const QVariantList&)
+    : Plugin(HTMLExportFactory::componentData(), parent, "HTMLExport")
 {
-    d=new Private;
-    d->mAction=0;
+    d          = new Private;
+    d->mAction = 0;
 }
 
-
-Plugin::~Plugin() {
+Plugin_HTMLExport::~Plugin_HTMLExport()
+{
     delete d;
 }
 
-
-void Plugin::setup( QWidget* widget ) {
-    KIPI::Plugin::setup( widget );
+void Plugin_HTMLExport::setup( QWidget* widget )
+{
+    Plugin::setup( widget );
     d->mAction = actionCollection()->addAction("htmlexport");
     d->mAction->setText(i18n("Export to &HTML..."));
     d->mAction->setIcon(KIcon("text-html"));
@@ -77,38 +81,44 @@ void Plugin::setup( QWidget* widget ) {
     addAction(d->mAction);
 }
 
-
-void Plugin::slotActivate() {
-    KIPI::Interface* interface = dynamic_cast< KIPI::Interface* >( parent() );
+void Plugin_HTMLExport::slotActivate()
+{
+    Interface* interface = dynamic_cast< Interface* >( parent() );
     Q_ASSERT(interface);
 
     GalleryInfo info;
     info.readConfig();
     QWidget* parent=QApplication::activeWindow();
     QPointer<Wizard> wizard = new Wizard(parent, &info, interface);
-    if (wizard->exec()==QDialog::Rejected)  {
-	    delete wizard;
-	    return;
+    if (wizard->exec()==QDialog::Rejected)
+    {
+        delete wizard;
+        return;
     }
     info.writeConfig();
 
-    KIPIPlugins::BatchProgressDialog* progressDialog=new KIPIPlugins::BatchProgressDialog(parent, i18n("Generating gallery..."));
+    KPBatchProgressDialog* progressDialog = new KPBatchProgressDialog(parent, i18n("Generating gallery..."));
 
     Generator generator(interface, &info, progressDialog);
     progressDialog->show();
-    if (!generator.run())  {
-	    delete wizard;
-	    return;
+    if (!generator.run())
+    {
+        delete wizard;
+        return;
     }
 
-    if (generator.warnings()) {
-        progressDialog->progressWidget()->addedAction(i18n("Finished, but some warnings occurred."), KIPIPlugins::WarningMessage);
+    if (generator.warnings())
+    {
+        progressDialog->progressWidget()->addedAction(i18n("Finished, but some warnings occurred."), WarningMessage);
         progressDialog->setButtons(KDialog::Close);
-    } else {
+    }
+    else
+    {
         progressDialog->close();
     }
 
-    if (info.openInBrowser()) {
+    if (info.openInBrowser())
+    {
         KUrl url=info.destUrl();
         url.addPath("index.html");
         KRun::runUrl(url, "text/html", parent);
@@ -117,14 +127,13 @@ void Plugin::slotActivate() {
     delete wizard;
 }
 
-
-KIPI::Category Plugin::category(KAction* action) const {
-    if (action == d->mAction) {
-        return KIPI::ExportPlugin;
+Category Plugin_HTMLExport::category(KAction* action) const
+{
+    if (action == d->mAction)
+    {
+        return ExportPlugin;
     }
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin; // no warning from compiler, please
+    return ExportPlugin; // no warning from compiler, please
 }
-
-} // namespace

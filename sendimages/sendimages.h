@@ -36,6 +36,9 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+using namespace KIPISendimagesPlugin;
+
 namespace KIPISendimagesPlugin
 {
 
@@ -46,7 +49,7 @@ class SendImages : public QObject
 
 public:
 
-    SendImages(const EmailSettingsContainer& settings, QObject* parent, KIPI::Interface* iface);
+    SendImages(const EmailSettingsContainer& settings, QObject* const parent, Interface* const iface);
     ~SendImages();
 
     void sendImages();

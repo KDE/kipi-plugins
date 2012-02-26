@@ -38,18 +38,19 @@
 
 #include "actions.h"
 
-class Plugin_JPEGLosslessPriv;
+using namespace KIPI;
+using namespace KIPIJPEGLossLessPlugin;
 
-class Plugin_JPEGLossless : public KIPI::Plugin
+class Plugin_JPEGLossless : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_JPEGLossless(QObject* parent, const QVariantList& args);
+    Plugin_JPEGLossless(QObject* const parent, const QVariantList& args);
     ~Plugin_JPEGLossless();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget* widget);
 
 protected:
@@ -71,8 +72,8 @@ private Q_SLOTS:
 
 private:
 
-    void flip(KIPIJPEGLossLessPlugin::FlipAction action, const QString& title);
-    void rotate(KIPIJPEGLossLessPlugin::RotateAction action, const QString& title);
+    void flip(FlipAction action, const QString& title);
+    void rotate(RotateAction action, const QString& title);
     void oneTaskCompleted();
 
 private:
