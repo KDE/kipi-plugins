@@ -54,8 +54,8 @@ public Q_SLOTS:
     void slotActivate();
 
 private:
-    KAction* m_actionExport;
-    ImgurWindow     *m_winExport;
+    KAction        *m_actionExport;
+    ImgurWindow    *m_winExport;
 };
 
 } // namespace KIPIImgurExportPlugin

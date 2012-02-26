@@ -77,6 +77,13 @@ struct ImgurError
 
 // -----------------------------------------------------------------------------
 
+struct ImgurUploadData
+{
+    QString    title;
+    QString    caption;
+    KUrl       fileUrl;
+};
+
 struct ImgurSuccess
 {
     struct ImgurImage
@@ -120,27 +127,23 @@ class ImgurTalker : public QWidget
     };
 
 public:
-
     ImgurTalker (Interface* iface, QWidget* parent = 0);
     ~ImgurTalker();
 
-    void startUpload ();
+//    void startUpload ();
     void cancel ();
-    KUrl::List*      processQueue();
+    bool imageUpload (KUrl filePath);
+    ImgurSuccess success();
+    ImgurError error();
 
 Q_SIGNALS:
-    void signalBusy( bool busy);
     void signalUploadStart( const KUrl& url );
     void signalUploadProgress(int);
-    void signalUploadDone(const KUrl& url, bool success);
+    void signalUploadDone();
+    void signalBusy( bool busy);
     void signalError( const QString& msg );
 
 private:
-
-    bool imageUpload (KUrl filePath);
-    bool imageDelete (QString hash);
-    bool parseResponseImageUpload (QByteArray data);
-
     QString         m_apiKey;
     QString         m_userAgent;
 
@@ -150,14 +153,18 @@ private:
 
     State           m_state;
     KUrl            m_currentUrl;
-    KUrl::List      m_processQueue;
     KIO::Job*       m_job;
+
+    ImgurSuccess    m_success;
+    ImgurError      m_error;
+
+    bool imageDelete (QString hash);
+    bool parseResponseImageUpload (QByteArray data);
 
     bool imageRemove (QString hash);
     bool parseResponseImageRemove (QByteArray data);
 
 private Q_SLOTS:
-
     void slotResult (KJob *job);
     void data (KIO::Job* job, const QByteArray &data);
     void slotAddItems (const KUrl::List& list);

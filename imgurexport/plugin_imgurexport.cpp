@@ -51,8 +51,7 @@
 // Local includes
 
 #include "imgurtalker.h"
-#include "imageslist.h"
-#include "progresswidget.h"
+#include "kpimageslist.h"
 //#include "imgurwidget.h"
 
 using namespace KIPIImgurExportPlugin;

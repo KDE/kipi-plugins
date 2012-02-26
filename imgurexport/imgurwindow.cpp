@@ -23,7 +23,14 @@
 // local
 #include "imgurwindow.h"
 
+// KDE
+#include <KDebug>
+#include <KMessageBox>
+#include "kpmetadata.h"
+#include "kpimageinfo.h"
+
 using namespace KIPIPlugins;
+using namespace KExiv2Iface;
 
 namespace KIPIImgurExportPlugin
 {
@@ -38,37 +45,38 @@ ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
     setMainWidget(m_widget);
 
     setWindowIcon(KIcon("imgur"));
-    setWindowTitle(i18n("Export to the imgur.com web service"));
+    setWindowTitle(i18n("Export to imgur.com"));
 
     setDefaultButton(Close);
     setModal(false);
 
-//    show();
 //    connect(m_webService, SIGNAL(signalUploadStart(KUrl)),
 //            m_widget, SLOT(processing(KUrl)));
 
-//    connect(m_webService, SIGNAL(signalUploadDone(KUrl, bool)),
-//            m_widget, SLOT(processed(KUrl, bool)));
+    connect(m_webService, SIGNAL(signalUploadDone()),
+            this, SLOT(slotAddPhotoDone()));
 
 //    connect(m_webService, SIGNAL(signalUploadProgress(int)),
-//            m_widget, SLOT(slotProgressTimerDone(int)));
+//            this, SLOT(slotProgressTimerDone(int)));
 
 //    connect(m_widget, SIGNAL(signalAddItems(KUrl::List)),
 //            m_webService, SLOT(slotAddItems(KUrl::List)));
 
-//    m_webService->startUpload();
+    setButtons(KDialog::Close | KDialog::User1);
 
-    setButtons(KDialog::Close | KDialog::User1 | KDialog::Help);
-    setButtonGuiItem(User1,
+    setButtonGuiItem(KDialog::User1,
                      KGuiItem(i18n("Upload"), "network-workgroup",
-                              i18n("Start upload to Imageshack web service")));
-    enableButton(User1, !m_widget->imagesList()->imageUrls().isEmpty());
+                              i18n("Start upload to Imgur")));
+    enableButton(KDialog::User1, !m_widget->imagesList()->imageUrls().isEmpty());
 
-//    connect(m_widget->m_imgagesList, SIGNAL(signalImageListChanged()),
-//            this, SLOT(slotImageListChanged()));
+    connect(m_widget->imagesList(), SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()));
 
 //    connect(this, SIGNAL(user1Clicked()),
 //            this, SLOT(slotStartUpload()));
+
+    connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
+            this, SLOT(slotButtonClicked(int button)));
 }
 
 ImgurWindow::~ImgurWindow()
@@ -76,169 +84,155 @@ ImgurWindow::~ImgurWindow()
     //
 }
 
-void ImgurWindow::slotStartUpload () {
-//    m_widget->imagesList()->clearProcessedStatus();
-//    KUrl::List m_transferQueue = m_widget->imagesList()->imageUrls();
+void ImgurWindow::slotStartUpload() {
+    kDebug() << "Start upload";
 
-//    if (m_transferQueue.isEmpty())
-//    {
-//        return;
-//    }
+    m_widget->imagesList()->clearProcessedStatus();
+    KUrl::List m_transferQueue = m_widget->imagesList()->imageUrls();
 
-//    int m_imagesTotal = m_webService->processQueue().count();
-//    int m_imagesCount = 0;
+    if (m_transferQueue.isEmpty())
+    {
+        kDebug() << "Upload queue empty. Exiting.";
+        return;
+    }
 
-//    m_widget->progressBar()->setFormat(i18n("%v / %m"));
-//    m_widget->progressBar()->setMaximum(m_imagesTotal);
-//    m_widget->progressBar()->setValue(0);
-//    m_widget->progressBar()->setVisible(true);
+    m_imagesTotal = m_transferQueue.count();
+    m_imagesCount = 0;
 
-////    uploadNextItem();
-//    m_webService->startUpload();
+    m_widget->progressBar()->setFormat(i18n("%v / %m"));
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(0);
+    m_widget->progressBar()->setVisible(true);
+
+    kDebug() << "Upload queue has " << m_transferQueue.length() << "items";
+
+    uploadNextItem();
+}
+
+void ImgurWindow::slotButtonClicked (int button)
+{
+    kDebug() << "Button clicked" << button;
+    switch (button)
+    {
+        case KDialog::User1:
+            slotStartUpload();
+            break;
+        case KDialog::Close:
+            // Must cancel the transfer
+            m_webService->cancel();
+            m_widget->imagesList()->cancelProcess();
+            m_widget->progressBar()->setVisible(false);
+
+            // close the dialog
+            m_widget->imagesList()->listView()->clear();
+            done(Close);
+        default:
+            KDialog::slotButtonClicked(button);
+    }
 }
 
 void ImgurWindow::reactivate()
 {
+    kDebug() << m_widget->imagesList()->imageUrls();
     m_widget->imagesList()->loadImagesFromCurrentSelection();
     show();
 }
 
-//void ImgurWindow::slotHelp()
-//{
-////    KToolInvocation::invokeHelp("imageshackexport", "kipi-plugins");
-//}
-
 void ImgurWindow::slotImageListChanged()
 {
-//    enableButton(User1, !m_widget->m_imgList->imageUrls().isEmpty());
+    enableButton(User1, !m_widget->imagesList()->imageUrls().isEmpty());
 }
 
-void ImgurWindow::slotButtonClicked(int button)
+void ImgurWindow::slotAddPhotoDone()
 {
-//    switch (button)
-//    {
-//        case Close:
-//            if (m_widget->progressBar()->isVisible())
-//            {
-//                // Must cancel the transfer
-////                m_talker->cancel();
-////                m_transferQueue.clear();
-////                m_widget->m_imgList->cancelProcess();
-////                m_widget->m_progressBar->setVisible(false);
-//            }
-//            else
-//            {
-//                // close the dialog
-////                saveSettings();
-////                m_widget->m_imgList->listView()->clear();
-////                done(Close);
-//            }
-//            break;
-//        case User1:
-////            slotStartTransfer();
-//            break;
-//        default:
-////            KDialog::slotButtonClicked(button);
-//    }
-}
+    KUrl::List m_transferQueue = m_widget->imagesList()->imageUrls();
 
-void ImgurWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
-{
-//    kDebug() << errCode << "----------------------++++";
-//    m_widget->m_imgList->processed(m_transferQueue.first(), (errCode == 0));
+    ImgurError error = m_webService->error();
+    ImgurSuccess success = m_webService->success();
 
-//    if (!errCode)
-//    {
-//        m_transferQueue.pop_front();
-//        m_imagesCount++;
-//    }
-//    else
-//    {
-//        if (KMessageBox::warningContinueCancel(this,
-//                                               i18n("Failed to upload photo to Imageshack: %1\n"
-//                                                    "Do you want to continue?", errMsg))
-//            != KMessageBox::Continue)
-//        {
-//            m_widget->m_progressBar->setVisible(false);
-//            m_transferQueue.clear();
-//            return;
-//        }
-//    }
+    KUrl currentImage = m_transferQueue.first();
 
-//    uploadNextItem();
+    QString errMsg = QString(error.message);
+
+    kDebug() << error.message << "----------------------++++";
+    m_widget->imagesList()->processed(currentImage, errMsg.isEmpty());
+
+    if (errMsg.isEmpty())
+    {
+        m_widget->imagesList()->imageUrls().pop_front();
+        m_imagesCount++;
+
+        QByteArray sUrl = success.links.imgur_page.toEncoded();
+        QByteArray sDeleteUrl = success.links.delete_page.toEncoded();
+
+        kDebug() << sUrl;
+
+        QString path = currentImage.toLocalFile();
+//        KMessageBox::questionYesNo(this, i18n("Url: %1", sUrl));
+        // we add tags to the image
+        KPMetadata meta;
+        meta.load(path);
+
+        meta.setXmpTagString("Imgur_URL", sUrl, true);
+        meta.setXmpTagString("Imgur_DeleteURL", sDeleteUrl, true);
+
+        bool saved = meta.save(path);
+
+        kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta.getXmpTagString("Xmp.Imgur.URL");
+    }
+    else
+    {
+        if (KMessageBox::warningContinueCancel(this,
+                                               i18n("Failed to upload photo to Imgur: %1\n"
+                                                    "Do you want to continue?", error.message))
+            != KMessageBox::Continue)
+        {
+            m_widget->progressBar()->setVisible(false);
+            m_transferQueue.clear();
+            return;
+        }
+    }
+
+    //uploadNextItem();
 }
 
 void ImgurWindow::slotBusy(bool val)
 {
-//    if (val)
-//    {
-//        setCursor(Qt::WaitCursor);
-//        m_widget->m_chgRegCodeBtn->setEnabled(false);
-//        enableButton(User1, false);
-//    }
-//    else
-//    {
-//        setCursor(Qt::ArrowCursor);
-//        m_widget->m_chgRegCodeBtn->setEnabled(true);
-//        enableButton(User1, m_widget->imagesList()->imageUrls().isEmpty());
-//    }
+    if (val)
+    {
+        setCursor(Qt::WaitCursor);
+        enableButton(User1, false);
+    }
+    else
+    {
+        setCursor(Qt::ArrowCursor);
+        enableButton(User1, m_widget->imagesList()->imageUrls().isEmpty());
+    }
 }
 
 void ImgurWindow::closeEvent(QCloseEvent* e)
 {
+    kDebug() << "Close event";
 }
 
 void ImgurWindow::uploadNextItem()
 {
-//    if (m_transferQueue.empty())
-//    {
-//        m_widget->m_progressBar->hide();
-//        return;
-//    }
+    KUrl::List m_transferQueue = m_widget->imagesList()->imageUrls();
 
-//    m_widget->m_imgList->processing(m_transferQueue.first());
-//    QString imgPath = m_transferQueue.first().toLocalFile();
+    if (m_transferQueue.empty())
+    {
+        m_widget->progressBar()->hide();
+        return;
+    }
 
-//    m_widget->m_progressBar->setMaximum(m_imagesTotal);
-//    m_widget->m_progressBar->setValue(m_imagesCount);
+    KUrl current = m_transferQueue.first();
+    m_widget->imagesList()->processing(current);
 
-//    QMap<QString, QString> opts;
+    m_widget->progressBar()->setMaximum(m_imagesTotal);
+    m_widget->progressBar()->setValue(m_imagesCount);
 
-//    if (m_widget->m_privateImagesChb->isChecked())
-//    {
-//        opts["public"] = "no";
-//    }
-
-//    if (m_widget->m_remBarChb->isChecked())
-//    {
-//        opts["rembar"] = "yes";
-//    }
-
-//    if (m_widget->m_predefSizeRdb->isChecked())
-//    {
-//        opts["optimage"] = "1";
-//        opts["optsize"] = m_widget->m_resizeOptsCob->itemData(m_widget->m_resizeOptsCob->currentIndex()).toString();
-//    }
-//    else if (m_widget->m_customSizeRdb->isChecked())
-//    {
-//        opts["optimage"] = "1";
-//        QString dim =  "";
-//        dim.append(QString("%1x%2").arg(m_widget->m_widthSpb->value()).arg(m_widget->m_heightSpb->value()));
-//        opts["optsize"] = dim;
-//    }
-
-//    // tags
-//    if (!m_widget->m_tagsFld->text().isEmpty())
-//    {
-//        QString str = m_widget->m_tagsFld->text();
-//        QStringList tagsList;
-//        tagsList = str.split(QRegExp("\\W+"), QString::SkipEmptyParts);
-//        opts["tags"] = tagsList.join(",");
-//    }
-
-//    opts["cookie"] = m_imageshack->registrationCode();
-
-//    m_talker->uploadItem(imgPath, opts);
+    kDebug() << "Starting upload for:" << current;
+    m_webService->imageUpload(current);
 }
 
 } // namespace KIPIImgurExportPlugin

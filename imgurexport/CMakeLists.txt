@@ -13,6 +13,7 @@ KDE4_ADD_PLUGIN(kipiplugin_imgurexport ${kipiplugin_imgurexport_PART_SRCS})
 TARGET_LINK_LIBRARIES(kipiplugin_imgurexport
                       ${KIPI_LIBRARIES}
                       ${KDE4_KIO_LIBS}
+                      ${KEXIV2_LIBRARIES}
                       ${QJSON_LIBRARIES}
                       kipiplugins
                      )

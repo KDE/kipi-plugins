@@ -1,0 +1,61 @@
+{
+	"error": {
+		"message":"Invalid API Key",
+		"request":"/2/upload.json",
+		"method":"post",
+		"format":"json",
+		"parameters":"key = 2da1cc4923f33dc72885aa32adede5c3asd"
+	 }
+}
+{
+	"upload": {
+		"image": {
+			"name":null,
+			"title":"TEST Kipi Imgur uploader",
+			"caption":null,
+			"hash":"yVOGu",
+			"deletehash":"JPTKJ3FPSsk10G4",
+			"datetime":"2012-02-11 11:10:53",
+			"type":"image/png",
+			"animated":"false",
+			"width":480,
+			"height":852,
+			"size":262377,
+			"views":0,
+			"bandwidth":0
+		 },
+		 "links": {
+			"original":"http://i.imgur.com/yVOGu.png",
+			"imgur_page":"http://imgur.com/yVOGu",
+			"delete_page":"http://imgur.com/delete/JPTKJ3FPSsk10G4",
+			"small_square":"http://i.imgur.com/yVOGus.jpg",
+			"large_thumbnail":"http://i.imgur.com/yVOGul.jpg"
+		}
+	}
+}
+{
+	"upload": {
+		"image": { 
+			"name":null,
+			"title":"TEST Kipi Imgur uploader",
+			"caption":null,
+			"hash":"ljhyl",
+			"deletehash":"hXx7s7vdsuqyB1k",
+			"datetime":"2012-02-11 11:56:09",
+			"type":"image/png",
+			"animated":"false",
+			"width":480,
+			"height":852,
+			"size":279347,
+			"views":0,
+			"bandwidth":0
+		},
+		"links": {
+			"original":"http://i.imgur.com/ljhyl.png",
+			"imgur_page":"http://imgur.com/ljhyl",
+			"delete_page":"http://imgur.com/delete/hXx7s7vdsuqyB1k",
+			"small_square":"http://i.imgur.com/ljhyls.jpg",
+			"large_thumbnail":"http://i.imgur.com/ljhyll.jpg"
+		}
+	}
+}

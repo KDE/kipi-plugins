@@ -32,12 +32,12 @@
 
 // KIPI
 #include "libkipi/interface.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "imgurtalker.h"
 #include "imgurwidget.h"
 
 namespace KIPIPlugins {
-class ImagesList;
+class KPImagesList;
 }
 
 namespace KIPI
@@ -61,6 +61,10 @@ private:
     ImgurTalker* m_webService;
     ImgurWidget* m_widget;
 
+    int m_imagesCount;
+    int m_imagesTotal;
+
+
 public Q_SLOTS:
 //    void slotHelp();
     void slotImageListChanged();
@@ -68,11 +72,13 @@ public Q_SLOTS:
     void slotBusy(bool val);
 
     void slotButtonClicked(int button);
-    void slotAddPhotoDone(int errCode, const QString& errMsg);
+//    void slotAddPhotoDone(int errCode, const QString& errMsg);
+    void slotAddPhotoDone();
 
 private:
     void uploadNextItem();
     void closeEvent(QCloseEvent* e);
+    void close();
 };
 } // namespace KIPIImgurExportPlugin
 #endif /* IMGURWINDOW_H */

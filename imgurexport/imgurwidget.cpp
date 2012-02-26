@@ -36,11 +36,7 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
 {
 
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    m_imagesList = new ImagesList(interface, this);
-
-//        m_imagesList->addActions();
-//        ProgressWidget *p = new ProgressWidget(interface);
-//        p->show();
+    m_imagesList = new KPImagesList(interface, this);
 
     m_imagesList->loadImagesFromCurrentSelection();
     m_imagesList->setAllowDuplicate(false);
@@ -51,7 +47,7 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
 
     m_headerLbl = new QLabel(settingsBox);
     m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
-    m_headerLbl->setText(QString("<b><h2><a href='http://imgur.com'>Imgur</a></h2></b>"));
+    m_headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
@@ -63,6 +59,7 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
 
     settingsBoxLayout->addWidget(m_headerLbl);
 
+
     settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
@@ -73,7 +70,6 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
-
 }
 
 ImgurWidget::~ImgurWidget()
@@ -81,7 +77,7 @@ ImgurWidget::~ImgurWidget()
     //
 }
 
-KIPIPlugins::ImagesList* ImgurWidget::imagesList() const
+KIPIPlugins::KPImagesList* ImgurWidget::imagesList() const
 {
     return m_imagesList;
 }

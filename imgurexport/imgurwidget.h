@@ -34,11 +34,11 @@
 
 // KIPI
 #include "libkipi/interface.h"
-#include "imageslist.h"
+#include "kpimageslist.h"
 #include "imgurtalker.h"
 
 namespace KIPIPlugins {
-class ImagesList;
+class KPImagesList;
 }
 
 namespace KIPI
@@ -56,14 +56,13 @@ public:
     ImgurWidget(KIPI::Interface* interface, QWidget* parent = 0);
     ~ImgurWidget();
 
-    KIPIPlugins::ImagesList* imagesList() const;
+    KIPIPlugins::KPImagesList* imagesList() const;
     QProgressBar* progressBar() const;
 
 private:
-    KIPIPlugins::ImagesList* m_imagesList;
-    ImgurTalker* m_webServiceTalker;
-    QLabel* m_headerLbl;
-    QProgressBar* m_progressBar;
+    KIPIPlugins::KPImagesList   *m_imagesList;
+    QLabel                      *m_headerLbl;
+    QProgressBar                *m_progressBar;
 };
 } // namespace KIPIImgurExportPlugin
 #endif /* IMGURWIDGET_H */

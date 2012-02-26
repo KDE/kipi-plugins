@@ -106,14 +106,11 @@ void ImgurTalker::slotResult (KJob *kjob)
             parseOk = parseResponseImageUpload(m_buffer);
             break;
         default:
-
-
-
             break;
     }
 
-    emit signalUploadDone(m_currentUrl, parseOk);
-    kDebug ()  << m_currentUrl << parseOk << "Emitted the upload done signal";
+    emit signalUploadDone();
+    kDebug()  << m_currentUrl << parseOk << "Emitted the upload done signal";
 
     m_buffer.resize(0);
     emit signalBusy(false);
@@ -132,8 +129,6 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
 {
     bool ok;
 
-
-
     if (data.isEmpty())
         return false;
 
@@ -147,7 +142,6 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
 
         if (responseType == "error")
         {
-            ImgurError error;
             QMap<QString,QVariant> errData = m.begin().value().toMap();
 
             for (QMap<QString,QVariant>::iterator it = errData.begin(); it != errData.end(); ++it)
@@ -156,22 +150,22 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
 
                 if (it.key() == "message")
                 {
-                    error.message = v;
+                    m_error.message = v;
                 }
                 if (it.key() == "request")
                 {
-                    error.request = v;
+                    m_error.request = v;
                 }
 
                 if (it.key() == "method")
                 {
                     if ( v == "get")
                     {
-                        error.method = ImgurError::GET;
+                        m_error.method = ImgurError::GET;
                     }
                     if ( v == "post")
                     {
-                        error.method = ImgurError::POST;
+                        m_error.method = ImgurError::POST;
                     }
                 }
 
@@ -179,30 +173,29 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
                 {
                     if ( v == "json")
                     {
-                        error.format = ImgurError::JSON;
+                        m_error.format = ImgurError::JSON;
                     }
                     if ( v == "xml")
                     {
-                        error.format = ImgurError::XML;
+                        m_error.format = ImgurError::XML;
                     }
                 }
 
                 if (it.key() == "parameters")
                 {
-                    error.parameters =  v;
+                    m_error.parameters =  v;
                 }
 
-                emit signalError (QString(error.message)); // p->errorString()
+                emit signalError (QString(m_error.message)); // p->errorString()
                 return false;
             }
         }
 
         if (responseType == "upload" )
         {
-            ImgurSuccess success;
-            QMap<QString, QVariant> successData = m.begin().value().toMap();
+            QMap<QString, QVariant> m_successData = m.begin().value().toMap();
 
-            for (QMap<QString,QVariant>::iterator it = successData.begin(); it != successData.end(); ++it)
+            for (QMap<QString,QVariant>::iterator it = m_successData.begin(); it != m_successData.end(); ++it)
             {
                 if (it.key() == "image")
                 {
@@ -213,55 +206,55 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
                         QString value = it.value().toString();
                         if (it.key() == "name")
                         {
-                            success.image.name = value;
+                            m_success.image.name = value;
                         }
                         if (it.key() == "title")
                         {
-                            success.image.title = value;
+                            m_success.image.title = value;
                         }
                         if (it.key() == "caption")
                         {
-                            success.image.caption = value;
+                            m_success.image.caption = value;
                         }
                         if (it.key() == "hash")
                         {
-                            success.image.hash = value;
+                            m_success.image.hash = value;
                         }
                         if (it.key() == "deleteHash")
                         {
-                            success.image.deletehash = value;
+                            m_success.image.deletehash = value;
                         }
                         if (it.key() == "dateTime")
                         {
-                            //success.image.datetime = QDateTime(value);
+                            //m_success.image.datetime = QDateTime(value);
                         }
                         if (it.key() == "type")
                         {
-                            success.image.type = value;
+                            m_success.image.type = value;
                         }
                         if (it.key() == "animated")
                         {
-                            success.image.animated = (value == "true");
+                            m_success.image.animated = (value == "true");
                         }
                         if (it.key() == "width")
                         {
-                            success.image.width = value.toInt();
+                            m_success.image.width = value.toInt();
                         }
                         if (it.key() == "height")
                         {
-                            success.image.height = value.toInt();
+                            m_success.image.height = value.toInt();
                         }
                         if (it.key() == "size")
                         {
-                            success.image.size = value.toInt();
+                            m_success.image.size = value.toInt();
                         }
                         if (it.key() == "views")
                         {
-                            success.image.views = value.toInt();
+                            m_success.image.views = value.toInt();
                         }
                         if (it.key() == "bandwidth")
                         {
-                            success.image.bandwidth = value.toLongLong();
+                            m_success.image.bandwidth = value.toLongLong();
                         }
                     }
                 }
@@ -275,29 +268,29 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
 
                         if (it.key() == "original")
                         {
-                            success.links.original = value;
+                            m_success.links.original = value;
                         }
                         if (it.key() == "imgur_page")
                         {
-                            success.links.imgur_page = value;
+                            m_success.links.imgur_page = value;
                         }
                         if (it.key() == "delete_page")
                         {
-                            success.links.delete_page = value;
+                            m_success.links.delete_page = value;
                         }
                         if (it.key() == "small_square")
                         {
-                            success.links.small_square = value;
+                            m_success.links.small_square = value;
                         }
                         if (it.key() == "largeThumbnail")
                         {
-                            success.links.large_thumbnail = value;
+                            m_success.links.large_thumbnail = value;
                         }
                     }
                 }
 
-                kDebug () << "Link:" << success.links.imgur_page;
-                kDebug () << "Delete:" << success.links.delete_page;
+                kDebug() << "Link:" << m_success.links.imgur_page;
+                kDebug() << "Delete:" << m_success.links.delete_page;
             }
         }
     }
@@ -315,6 +308,8 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
 bool ImgurTalker::imageUpload (KUrl filePath)
 {
 //        m_buffer.resize(0);
+
+    kDebug() << "Upload image" << filePath;
     m_currentUrl = filePath;
 
     MPForm form;
@@ -383,22 +378,22 @@ void ImgurTalker::cancel()
     emit signalBusy(false);
 }
 
-void ImgurTalker::startUpload()
-{
-    ImageCollection images = m_interface->currentSelection();
+//void ImgurTalker::startUpload()
+//{
+//    ImageCollection images = m_interface->currentSelection();
 
-    if (images.isValid())
-    {
-        KUrl::List list = images.images();
-        for (KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it)
-        {
-            KUrl imageUrl = *it;
+//    if (images.isValid())
+//    {
+//        KUrl::List list = images.images();
+//        for (KUrl::List::ConstIterator it = list.begin(); it != list.end(); ++it)
+//        {
+//            KUrl imageUrl = *it;
 
-            imageUpload(imageUrl);
-            //kDebug () << images.images().at(i).pathOrUrl();
-        }
-    }
-}
+//            imageUpload(imageUrl);
+//            //kDebug() << images.images().at(i).pathOrUrl();
+//        }
+//    }
+//}
 
 void ImgurTalker::slotAddItems (const KUrl::List &list)
 {
@@ -415,9 +410,14 @@ void ImgurTalker::slotAddItems (const KUrl::List &list)
     }
 }
 
-KUrl::List* ImgurTalker::processQueue ()
+ImgurSuccess ImgurTalker::success()
 {
-    return &m_processQueue;
+    return m_success;
+}
+
+ImgurError ImgurTalker::error()
+{
+    return m_error;
 }
 
 } // namespace KIPIImgurExportPlugin
