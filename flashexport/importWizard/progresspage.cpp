@@ -39,7 +39,7 @@
 
 #include "simpleviewer.h"
 #include "simpleviewersettingscontainer.h"
-#include "batchprogressdialog.h"
+#include "kpbatchprogressdialog.h"
 #include "flashmanager.h"
 
 namespace KIPIFlashExportPlugin
@@ -48,9 +48,8 @@ namespace KIPIFlashExportPlugin
 ProgressPage::ProgressPage(FlashManager* const mngr, KAssistantDialog* const dlg)
     : KPWizardPage(dlg, i18n("Exporting..."))
 {
-
-    SimpleViewer* simple = mngr->simpleView();
-    BatchProgressWidget* progresswdg = simple->progressWidget();
+    SimpleViewer* simple               = mngr->simpleView();
+    KPBatchProgressWidget* progresswdg = simple->progressWidget();
     progresswdg->show();
 
     setPageWidget(progresswdg);

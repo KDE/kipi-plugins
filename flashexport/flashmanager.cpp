@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : a plugin to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,6 +25,7 @@
 // KDE includes
 
 #include <kdebug.h>
+#include <kapplication.h>
 
 // LibKIPI includes
 
@@ -35,8 +36,8 @@
 #include "aboutdata.h"
 #include "importwizarddlg.h"
 #include "simpleviewer.h"
-#include <kapplication.h>
 
+using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
@@ -45,14 +46,13 @@ class FlashManager::FlashManagerPriv
 {
 public:
 
-	FlashManagerPriv()
+    FlashManagerPriv()
     {
         iface  = 0;
         about  = 0;
         wizard = 0;
         simple = 0;
     }
-
 
     SimpleViewerSettingsContainer* containerSettings;
 
@@ -63,10 +63,9 @@ public:
     ImportWizardDlg*               wizard;
 
     SimpleViewer*                  simple;
-
 };
 
-FlashManager::FlashManager(QObject* parent)
+FlashManager::FlashManager(QObject* const parent)
    : QObject(parent), d(new FlashManagerPriv)
 {
 }
@@ -82,11 +81,11 @@ FlashManager::~FlashManager()
 void FlashManager::initSimple()
 {
 // it cannot be initialized in main function because interface pointer is null.
-	d->simple = new SimpleViewer(d->iface,this); 
-	kDebug() << "simpleview Initialized...";
+    d->simple = new SimpleViewer(d->iface,this);
+    kDebug() << "simpleview Initialized...";
 }
 
-void FlashManager::setAbout(FlashExportAboutData* about)
+void FlashManager::setAbout(FlashExportAboutData* const about)
 {
     d->about = about;
 }
@@ -96,7 +95,7 @@ FlashExportAboutData* FlashManager::about() const
     return d->about;
 }
 
-void FlashManager::setIface(Interface* iface)
+void FlashManager::setIface(Interface* const iface)
 {
     d->iface = iface;
 }
@@ -106,17 +105,17 @@ Interface* FlashManager::iface() const
     return d->iface;
 }
 
-bool FlashManager::installPlugin(KUrl url)
+bool FlashManager::installPlugin(const KUrl& url)
 {
-	if(d->simple->unzip(url.path()))
-		return true;
-	else
-		return false;
+    if(d->simple->unzip(url.path()))
+        return true;
+    else
+        return false;
 }
 
 SimpleViewer* FlashManager::simpleView() const
 {
-	return d->simple;
+    return d->simple;
 }
 
 void FlashManager::run()
@@ -126,7 +125,7 @@ void FlashManager::run()
 
 void FlashManager::startWizard()
 {
-    d->wizard = new ImportWizardDlg(this,kapp->activeWindow());
+    d->wizard = new ImportWizardDlg(this, kapp->activeWindow());
     d->wizard->show();
 }
 

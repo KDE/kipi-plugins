@@ -41,7 +41,7 @@
 // Local includes
 
 #include "kppreviewmanager.h"
-#include "batchprogressdialog.h"
+#include "kpbatchprogressdialog.h"
 #include "manager.h"
 #include "enblendbinary.h"
 #include "makebinary.h"
@@ -63,19 +63,19 @@ struct PreviewPage::PreviewPagePriv
           mngr(m)
     {}
 
-    QLabel*              title;
-    QUrl                 previewUrl;
-    KPPreviewManager*    previewWidget;
-    bool                 previewBusy;
-    bool                 stitchingBusy;
-    BatchProgressWidget* postProcessing;
-    int                  curProgress, totalProgress;
-    QMutex               actionMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
-    bool                 canceled;
+    QLabel*                title;
+    QUrl                   previewUrl;
+    KPPreviewManager*      previewWidget;
+    bool                   previewBusy;
+    bool                   stitchingBusy;
+    KPBatchProgressWidget* postProcessing;
+    int                    curProgress, totalProgress;
+    QMutex                 actionMutex;      // This is a precaution in case the user does a back / next action at the wrong moment
+    bool                   canceled;
 
-    QString              output;
+    QString                output;
 
-    Manager*             mngr;
+    Manager*               mngr;
 };
 
 PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
@@ -91,7 +91,7 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
     d->previewWidget->setButtonText(i18n("Details..."));
     d->previewWidget->show();
 
-    d->postProcessing = new BatchProgressWidget(vbox);
+    d->postProcessing = new KPBatchProgressWidget(vbox);
     d->postProcessing->hide();
 
     vbox->setSpacing(KDialog::spacingHint());

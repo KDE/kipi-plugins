@@ -18,8 +18,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA.
 
 */
-#ifndef PLUGIN_H
-#define PLUGIN_H
+#ifndef PLUGINHTMLEXPORT_H
+#define PLUGINHTMLEXPORT_H
 
 #include <QVariant>
 
@@ -27,31 +27,31 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 class KAction;
 
-namespace KIPIHTMLExport {
-
+using namespace KIPI;
 
 /**
- * Implementation of the KIPI::Plugin abstract class for HTMLExport.
+ * Implementation of the Plugin abstract class for HTMLExport.
  */
-class Plugin : public KIPI::Plugin {
-	Q_OBJECT
+class Plugin_HTMLExport : public Plugin
+{
+    Q_OBJECT
 
 public:
-	Plugin(QObject *parent, const QVariantList &args);
-	virtual ~Plugin();
+    
+    Plugin_HTMLExport(QObject* const parent, const QVariantList& args);
+    virtual ~Plugin_HTMLExport();
 
-	KIPI::Category category( KAction* action ) const;
-	virtual void setup( QWidget* widget );
+    Category category( KAction* action ) const;
+    virtual void setup( QWidget* widget );
 
 private Q_SLOTS:
-	void slotActivate();
+
+    void slotActivate();
 
 private:
-	struct Private;
-	Private* d;
+
+    struct Private;
+    Private* d;
 };
 
-} // namespace
-
-
-#endif // PLUGIN_H
+#endif // PLUGINHTMLEXPORT_H

@@ -54,7 +54,7 @@ extern "C"
 
 // Local includes
 
-#include "batchprogressdialog.h"
+#include "kpbatchprogressdialog.h"
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
 
@@ -65,7 +65,7 @@ KmlExport::KmlExport(Interface* const interface)
 {
     m_kmlDocument    = 0;
     m_interface      = interface;
-    m_progressDialog = new BatchProgressDialog(kapp->activeWindow(), i18n("Generating KML file..."));
+    m_progressDialog = new KPBatchProgressDialog(kapp->activeWindow(), i18n("Generating KML file..."));
 }
 
 KmlExport::~KmlExport()
@@ -76,7 +76,7 @@ KmlExport::~KmlExport()
 /*!
 	\fn KmlExport::createDir(QDir dir)
  */
-bool KmlExport::createDir(const QDir& dir)
+bool KmlExport::createDir(const QDir& dir) const
 {
     if (dir.exists()) return true;
 
@@ -85,7 +85,7 @@ bool KmlExport::createDir(const QDir& dir)
     bool ok     = createDir(parent);
     if (!ok)
     {
-        logError(i18n("Could not create '%1'",parent.path()));
+        logError(i18n("Could not create '%1'", parent.path()));
         return false;
     }
     return parent.mkdir(dir.dirName());
@@ -94,7 +94,7 @@ bool KmlExport::createDir(const QDir& dir)
 /*!
 \fn KmlExport::webifyFileName(const QString &fileName)
  */
-QString KmlExport::webifyFileName(const QString& fileName)
+QString KmlExport::webifyFileName(const QString& fileName) const
 {
     QString webFileName = fileName.toLower();
 
@@ -107,7 +107,7 @@ QString KmlExport::webifyFileName(const QString& fileName)
 /*!
     \fn KmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
  */
-QImage KmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
+QImage KmlExport::generateSquareThumbnail(const QImage& fullImage, int size) const
 {
     QImage image = fullImage.scaled(size, size, Qt::KeepAspectRatioByExpanding);
 
@@ -136,7 +136,7 @@ QImage KmlExport::generateSquareThumbnail(const QImage& fullImage, int size)
 /*!
     \fn KmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
  */
-QImage KmlExport::generateBorderedThumbnail(const QImage& fullImage, int size)
+QImage KmlExport::generateBorderedThumbnail(const QImage& fullImage, int size) const
 {
     int image_border = 3;
 
@@ -546,17 +546,17 @@ int KmlExport::getConfig()
     return 1;
 }
 
-void KmlExport::logInfo(const QString& msg)
+void KmlExport::logInfo(const QString& msg) const
 {
     m_progressDialog->progressWidget()->addedAction(msg, ProgressMessage);
 }
 
-void KmlExport::logError(const QString& msg)
+void KmlExport::logError(const QString& msg) const
 {
     m_progressDialog->progressWidget()->addedAction(msg, ErrorMessage);
 }
 
-void KmlExport::logWarning(const QString& msg)
+void KmlExport::logWarning(const QString& msg) const
 {
     m_progressDialog->progressWidget()->addedAction(msg, WarningMessage);
     // mWarnings=true;

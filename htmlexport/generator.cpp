@@ -62,7 +62,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "galleryinfo.h"
 #include "theme.h"
 #include "xmlutils.h"
-#include "batchprogressdialog.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPIHTMLExport
 {
@@ -73,13 +74,13 @@ typedef QMap<QByteArray,QByteArray> XsltParameterMap;
 /**
  * Produce a web-friendly file name
  */
-QString Generator::webifyFileName(const QString& _fileName) {
+QString Generator::webifyFileName(const QString& _fileName)
+{
     QString fileName = _fileName.toLower();
 
     // Remove potentially troublesome chars
     return fileName.replace(QRegExp("[^-0-9a-z]+"), "_");
 }
-
 
 /**
  * Prepare an XSLT param, managing quote mess.
@@ -88,20 +89,26 @@ QString Generator::webifyFileName(const QString& _fileName) {
  * a'bc  => "a'bc"
  * a"'bc => concat('a"', "'", 'bc')
  */
-QByteArray makeXsltParam(const QString& txt) {
+QByteArray makeXsltParam(const QString& txt)
+{
     QString param;
     static const char apos='\'';
     static const char quote='"';
 
-    if (txt.indexOf(apos)==-1) {
+    if (txt.indexOf(apos)==-1)
+    {
         // First or second case: no apos
         param= apos + txt + apos;
 
-    } else if (txt.indexOf(quote)==-1) {
+    }
+    else if (txt.indexOf(quote)==-1)
+    {
         // Third case: only apos, no quote
         param= quote + txt + quote;
 
-    } else {
+    }
+    else
+    {
         // Forth case: both apos and quote :-(
         const QStringList lst = txt.split(apos, QString::KeepEmptyParts);
 
@@ -109,7 +116,8 @@ QByteArray makeXsltParam(const QString& txt) {
         param= "concat(";
         param+= apos + *it + apos;
         ++it;
-        for (;it!=end; ++it) {
+        for (;it!=end; ++it)
+        {
             param+= ", \"'\", ";
             param+= apos + *it + apos;
         }
@@ -119,61 +127,69 @@ QByteArray makeXsltParam(const QString& txt) {
     return param.toUtf8();
 }
 
-
 //// Generator::Private ////
-struct Generator::Private {
-    Generator* that;
-    KIPI::Interface* mInterface;
-    GalleryInfo* mInfo;
-    KIPIPlugins::BatchProgressDialog* mProgressDialog;
-    Theme::Ptr mTheme;
+struct Generator::Private
+{
+    Generator*             that;
+    Interface*       mInterface;
+    GalleryInfo*           mInfo;
+    KPBatchProgressDialog* mProgressDialog;
+    Theme::Ptr             mTheme;
 
     // State info
-    bool mWarnings;
-    QString mXMLFileName;
+    bool                   mWarnings;
+    QString                mXMLFileName;
 
-    bool init() {
+    bool init()
+    {
         mTheme=Theme::findByInternalName(mInfo->theme());
-        if (!mTheme) {
+        if (!mTheme)
+        {
             logError( i18n("Could not find theme in '%1'", mInfo->theme()) );
             return false;
         }
         return true;
     }
 
-    bool copyTheme() {
-        mProgressDialog->progressWidget()->addedAction(i18n("Copying theme"), KIPIPlugins::ProgressMessage);
+    bool copyTheme()
+    {
+        mProgressDialog->progressWidget()->addedAction(i18n("Copying theme"), ProgressMessage);
 
         KUrl srcUrl=KUrl(mTheme->directory());
 
         KUrl destUrl=mInfo->destUrl();
         destUrl.addPath(srcUrl.fileName());
 
-        if (QFile::exists(destUrl.toLocalFile())) {
+        if (QFile::exists(destUrl.toLocalFile()))
+        {
             KIO::NetAccess::del(destUrl, mProgressDialog);
         }
         bool ok=KIO::NetAccess::dircopy(srcUrl, destUrl, mProgressDialog);
-        if (!ok) {
+        if (!ok)
+        {
             logError(i18n("Could not copy theme"));
             return false;
         }
         return true;
     }
 
-
     // Url => local temp path
     typedef QHash<KUrl, QString> RemoteUrlHash;
 
-    bool downloadRemoteUrls(const QString& collectionName, const KUrl::List& _list, RemoteUrlHash* hash) {
+    bool downloadRemoteUrls(const QString& collectionName, const KUrl::List& _list, RemoteUrlHash* hash)
+    {
         Q_ASSERT(hash);
         KUrl::List list;
-        Q_FOREACH(const KUrl& url, _list) {
-            if (!url.isLocalFile()) {
+        Q_FOREACH(const KUrl& url, _list)
+        {
+            if (!url.isLocalFile())
+            {
                 list << url;
             }
         }
 
-        if (list.count() == 0) {
+        if (list.count() == 0)
+        {
             return true;
         }
 
@@ -181,8 +197,10 @@ struct Generator::Private {
 
         mProgressDialog->progressWidget()->setTotal(list.count());
         int count = 0;
-        Q_FOREACH(const KUrl& url, list) {
-            if (mProgressDialog->isHidden()) {
+        Q_FOREACH(const KUrl& url, list)
+        {
+            if (mProgressDialog->isHidden())
+            {
                 return false;
             }
             KTemporaryFile* tempFile = new KTemporaryFile;
@@ -190,16 +208,20 @@ struct Generator::Private {
             tempFile->setParent(mProgressDialog);
             tempFile->setPrefix("htmlexport-");
 
-            if (!tempFile->open()) {
-                                delete tempFile;
+            if (!tempFile->open())
+            {
+                delete tempFile;
                 logError(i18n("Could not open temporary file"));
                 return false;
             }
             const QString tempPath = KStandardDirs::locate("tmp", tempFile->fileName());
-            KIO::Job* job = KIO::file_copy(url, KUrl::fromPath(tempPath), -1 /* permissions */, KIO::Overwrite);
-            if (KIO::NetAccess::synchronousRun(job, mProgressDialog)) {
+            KIO::Job* job          = KIO::file_copy(url, KUrl::fromPath(tempPath), -1 /* permissions */, KIO::Overwrite);
+            if (KIO::NetAccess::synchronousRun(job, mProgressDialog))
+            {
                 hash->insert(url, tempFile->fileName());
-            } else {
+            }
+            else
+            {
                 logWarning(i18n("Could not download %1", url.prettyUrl()));
                 hash->insert(url, QString());
             }
@@ -211,13 +233,15 @@ struct Generator::Private {
         return true;
     }
 
-    bool generateImagesAndXML() {
+    bool generateImagesAndXML()
+    {
         QString baseDestDir=mInfo->destUrl().toLocalFile();
         if (!createDir(baseDestDir)) return false;
 
         mXMLFileName=baseDestDir + "/gallery.xml";
         XMLWriter xmlWriter;
-        if (!xmlWriter.open(mXMLFileName)) {
+        if (!xmlWriter.open(mXMLFileName))
+        {
             logError(i18n("Could not create gallery.xml"));
             return false;
         }
@@ -225,10 +249,11 @@ struct Generator::Private {
         XMLElement collectionsX(xmlWriter, "collections");
 
         // Loop on collections
-        QList<KIPI::ImageCollection>::ConstIterator collectionIt=mInfo->mCollectionList.constBegin();
-        QList<KIPI::ImageCollection>::ConstIterator collectionEnd=mInfo->mCollectionList.constEnd();
-        for (; collectionIt!=collectionEnd; ++collectionIt) {
-            KIPI::ImageCollection collection=*collectionIt;
+        QList<ImageCollection>::ConstIterator collectionIt=mInfo->mCollectionList.constBegin();
+        QList<ImageCollection>::ConstIterator collectionEnd=mInfo->mCollectionList.constEnd();
+        for (; collectionIt!=collectionEnd; ++collectionIt)
+        {
+            ImageCollection collection=*collectionIt;
 
             QString collectionFileName = webifyFileName(collection.name());
             QString destDir = baseDestDir + '/' + collectionFileName;
@@ -242,13 +267,16 @@ struct Generator::Private {
             // Gather image element list
             KUrl::List imageList = collection.images();
             RemoteUrlHash remoteUrlHash;
-            if (!downloadRemoteUrls(collection.name(), imageList, &remoteUrlHash)) {
+            if (!downloadRemoteUrls(collection.name(), imageList, &remoteUrlHash))
+            {
                 return false;
             }
             QList<ImageElement> imageElementList;
-            Q_FOREACH(const KUrl& url, imageList) {
+            Q_FOREACH(const KUrl& url, imageList)
+            {
                 const QString path = remoteUrlHash.value(url, url.toLocalFile());
-                if (path.isEmpty()) {
+                if (path.isEmpty())
+                {
                     continue;
                 }
                 KPImageInfo info(mInterface, url);
@@ -267,9 +295,11 @@ struct Generator::Private {
                     mProgressDialog, SLOT(setProgress(int)));
 
             mProgressDialog->progressWidget()->setTotal(imageElementList.count());
-            while (!future.isFinished()) {
+            while (!future.isFinished())
+            {
                 qApp->processEvents();
-                if (mProgressDialog->isHidden()) {
+                if (mProgressDialog->isHidden())
+                {
                     future.cancel();
                     future.waitForFinished();
                     return false;
@@ -277,10 +307,10 @@ struct Generator::Private {
             }
 
             // Generate xml
-            Q_FOREACH(const ImageElement& element, imageElementList) {
+            Q_FOREACH(const ImageElement& element, imageElementList)
+            {
                 element.appendToXML(xmlWriter, mInfo->copyOriginalImage());
             }
-
         }
         return true;
     }
@@ -289,7 +319,8 @@ struct Generator::Private {
     /**
      * Add to map all the i18n parameters.
      */
-    void addI18nParameters(XsltParameterMap& map) {
+    void addI18nParameters(XsltParameterMap& map)
+    {
         map["i18nPrevious"] = makeXsltParam(i18n("Previous"));
         map["i18nNext"] = makeXsltParam(i18n("Next"));
         map["i18nCollectionList"] = makeXsltParam(i18n("Collection List"));
@@ -316,17 +347,19 @@ struct Generator::Private {
         map["i18nexifgpslongitude"] = makeXsltParam(i18n("GPS Longitude"));
     }
 
-
     /**
      * Add to map all the theme parameters, as specified by the user.
      */
-    void addThemeParameters(XsltParameterMap& map) {
+    void addThemeParameters(XsltParameterMap& map)
+    {
         Theme::ParameterList parameterList = mTheme->parameterList();
         QString themeInternalName = mTheme->internalName();
         Theme::ParameterList::ConstIterator
             it = parameterList.constBegin(),
             end = parameterList.constEnd();
-        for (; it!=end; ++it) {
+
+        for (; it!=end; ++it)
+        {
             AbstractThemeParameter* themeParameter = *it;
             QByteArray internalName = themeParameter->internalName();
             QString value = mInfo->getThemeParameterValue(
@@ -338,20 +371,22 @@ struct Generator::Private {
         }
     }
 
-
-    bool generateHTML() {
+    bool generateHTML()
+    {
         logInfo(i18n("Generating HTML files"));
 
         QString xsltFileName=mTheme->directory() + "/template.xsl";
         CWrapper<xsltStylesheetPtr, xsltFreeStylesheet> xslt= xsltParseStylesheetFile( (const xmlChar*) QDir::toNativeSeparators( xsltFileName ).toLocal8Bit().data() );
 
-        if (!xslt) {
+        if (!xslt)
+        {
             logError(i18n("Could not load XSL file '%1'", xsltFileName));
             return false;
         }
 
         CWrapper<xmlDocPtr, xmlFreeDoc> xmlGallery=xmlParseFile( QDir::toNativeSeparators( mXMLFileName ).toLocal8Bit().data() );
-        if (!xmlGallery) {
+        if (!xmlGallery)
+        {
             logError(i18n("Could not load XML file '%1'", mXMLFileName));
             return false;
         }
@@ -365,7 +400,8 @@ struct Generator::Private {
 
         XsltParameterMap::Iterator it=map.begin(), end=map.end();
         const char** ptr=params;
-        for (;it!=end; ++it) {
+        for (;it!=end; ++it)
+        {
             *ptr=it.key().data();
             ++ptr;
             *ptr=it.value().data();
@@ -383,20 +419,23 @@ struct Generator::Private {
         QDir::setCurrent(oldCD);
         //delete []params;
 
-        if (!xmlOutput) {
+        if (!xmlOutput)
+        {
             logError(i18n("Error processing XML file"));
             return false;
         }
 
         QString destFileName=QDir::toNativeSeparators( mInfo->destUrl().toLocalFile() + "/index.html" );
 #ifdef Q_CC_MSVC
-        if(-1==xsltSaveResultToFilename(destFileName.toLocal8Bit().data(), xmlOutput, xslt, 0)) {
+        if(-1==xsltSaveResultToFilename(destFileName.toLocal8Bit().data(), xmlOutput, xslt, 0))
+        {
             logError(i18n("Could not open '%1' for writing", destFileName));
             return false;
         }
 #else
         FILE* file=fopen(destFileName.toLocal8Bit().data(), "w");
-        if (!file) {
+        if (!file)
+        {
             logError(i18n("Could not open '%1' for writing", destFileName));
             return false;
         }
@@ -407,12 +446,16 @@ struct Generator::Private {
     }
 
 
-    bool createDir(const QString& dirName) {
+    bool createDir(const QString& dirName)
+    {
         QStringList parts = dirName.split('/', QString::SkipEmptyParts);
         QDir dir = QDir::root();
-        Q_FOREACH(const QString& part, parts) {
-            if (!dir.exists(part)) {
-                if (!dir.mkdir(part)) {
+        Q_FOREACH(const QString& part, parts)
+        {
+            if (!dir.exists(part))
+            {
+                if (!dir.mkdir(part))
+                {
                     logError(i18n("Could not create folder '%1' in '%2'", part, dir.absolutePath()));
                     return false;
                 }
@@ -422,42 +465,44 @@ struct Generator::Private {
         return true;
     }
 
-
-    void logInfo(const QString& msg) {
-        mProgressDialog->progressWidget()->addedAction(msg, KIPIPlugins::ProgressMessage);
+    void logInfo(const QString& msg)
+    {
+        mProgressDialog->progressWidget()->addedAction(msg, ProgressMessage);
     }
 
-    void logError(const QString& msg) {
-        mProgressDialog->progressWidget()->addedAction(msg, KIPIPlugins::ErrorMessage);
+    void logError(const QString& msg)
+    {
+        mProgressDialog->progressWidget()->addedAction(msg, ErrorMessage);
     }
 
-    void logWarning(const QString& msg) {
-        mProgressDialog->progressWidget()->addedAction(msg, KIPIPlugins::WarningMessage);
+    void logWarning(const QString& msg)
+    {
+        mProgressDialog->progressWidget()->addedAction(msg, WarningMessage);
         mWarnings=true;
     }
 };
 
-
-Generator::Generator(KIPI::Interface* interface, GalleryInfo* info, KIPIPlugins::BatchProgressDialog* progressDialog)
-: QObject() {
-    d=new Private;
-    d->that = this;
-    d->mInterface=interface;
-    d->mInfo=info;
-    d->mProgressDialog=progressDialog;
-    d->mWarnings=false;
+Generator::Generator(Interface* const interface, GalleryInfo* const info, KPBatchProgressDialog* const progressDialog)
+    : QObject()
+{
+    d                  = new Private;
+    d->that            = this;
+    d->mInterface      = interface;
+    d->mInfo           = info;
+    d->mProgressDialog = progressDialog;
+    d->mWarnings       = false;
 
     connect(this, SIGNAL(logWarningRequested(QString)),
-        SLOT(logWarning(QString)), Qt::QueuedConnection);
+            SLOT(logWarning(QString)), Qt::QueuedConnection);
 }
 
-
-Generator::~Generator() {
+Generator::~Generator()
+{
     delete d;
 }
 
-
-bool Generator::run() {
+bool Generator::run()
+{
     if (!d->init()) return false;
 
     QString destDir=d->mInfo->destUrl().toLocalFile();
@@ -475,13 +520,14 @@ bool Generator::run() {
     return result;
 }
 
-bool Generator::warnings() const {
+bool Generator::warnings() const
+{
     return d->mWarnings;
 }
 
-
-void Generator::logWarning(const QString& text) {
+void Generator::logWarning(const QString& text)
+{
     d->logWarning(text);
 }
 
-} // namespace
+} // namespace KIPIHTMLExport 

@@ -6,7 +6,7 @@
  * Date        : 2004-05-04
  * Description : Batch progress dialog
  *
- * Copyright (C) 2004-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,8 +22,8 @@
 
 /** @file batchprogressdialog.h */
 
-#ifndef BATCHPROGRESSDIALOG_H
-#define BATCHPROGRESSDIALOG_H
+#ifndef KPBATCHPROGRESSDIALOG_H
+#define KPBATCHPROGRESSDIALOG_H
 
 // KDE includes
 
@@ -51,14 +51,14 @@ enum ActionMessageType
 
 // --------------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT BatchProgressWidget : public KVBox
+class KIPIPLUGINS_EXPORT KPBatchProgressWidget : public KVBox
 {
     Q_OBJECT
 
 public:
 
-    explicit BatchProgressWidget(QWidget* parent=0);
-    ~BatchProgressWidget();
+    explicit KPBatchProgressWidget(QWidget* const parent=0);
+    ~KPBatchProgressWidget();
 
     QListWidget*  listView() const;
     QProgressBar* progressBar() const;
@@ -82,27 +82,27 @@ private Q_SLOTS:
 
 private:
 
-    class BatchProgressWidgetPriv;
-    BatchProgressWidgetPriv* const d;
+    class KPBatchProgressWidgetPriv;
+    KPBatchProgressWidgetPriv* const d;
 };
 
 // --------------------------------------------------------------------------------------
 
-class KIPIPLUGINS_EXPORT BatchProgressDialog : public KDialog
+class KIPIPLUGINS_EXPORT KPBatchProgressDialog : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    explicit BatchProgressDialog(QWidget* parent=0, const QString& caption=QString());
-    ~BatchProgressDialog();
+    explicit KPBatchProgressDialog(QWidget* const parent=0, const QString& caption=QString());
+    ~KPBatchProgressDialog();
 
-    BatchProgressWidget* progressWidget() const;
+    KPBatchProgressWidget* progressWidget() const;
 
 private:
 
-    class BatchProgressDialogPriv;
-    BatchProgressDialogPriv* const d;
+    class KPBatchProgressDialogPriv;
+    KPBatchProgressDialogPriv* const d;
 };
 
 }  // namespace KIPIPlugins
