@@ -134,6 +134,7 @@ public:
     bool imageUpload (KUrl filePath);
     ImgurSuccess success();
     ImgurError error();
+    KUrl::List* imageQueue();
 
 Q_SIGNALS:
     void signalUploadStart( const KUrl& url );

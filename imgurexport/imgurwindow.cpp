@@ -62,8 +62,8 @@ ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
 //    connect(m_webService, SIGNAL(signalUploadProgress(int)),
 //            this, SLOT(slotProgressTimerDone(int)));
 
-//    connect(m_widget, SIGNAL(signalAddItems(KUrl::List)),
-//            m_webService, SLOT(slotAddItems(KUrl::List)));
+    connect(m_widget, SIGNAL(signalAddItems(KUrl::List)),
+            m_webService, SLOT(slotAddItems(KUrl::List)));
 
     setButtons(KDialog::Close | KDialog::User1);
 
@@ -73,7 +73,7 @@ ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
 
     enableButton(KDialog::User1, !m_widget->imagesList()->imageUrls().isEmpty());
 
-    connect(m_widget->imagesList(), SIGNAL(signalImageListChanged()),
+    connect(m_widget, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
 //    connect(this, SIGNAL(user1Clicked()),
@@ -92,15 +92,15 @@ void ImgurWindow::slotStartUpload() {
     kDebug() << "Start upload";
 
     m_widget->imagesList()->clearProcessedStatus();
-    KUrl::List m_transferQueue = m_widget->imagesList()->imageUrls();
+    KUrl::List *m_transferQueue = m_webService->imageQueue();
 
-    if (m_transferQueue.isEmpty())
+    if (m_transferQueue->isEmpty())
     {
         kDebug() << "Upload queue empty. Exiting.";
         return;
     }
 
-    m_imagesTotal = m_transferQueue.count();
+    m_imagesTotal = m_transferQueue->count();
     m_imagesCount = 0;
 
     m_widget->progressBar()->setFormat(i18n("%v / %m"));
@@ -108,7 +108,7 @@ void ImgurWindow::slotStartUpload() {
     m_widget->progressBar()->setValue(0);
     m_widget->progressBar()->setVisible(true);
 
-    kDebug() << "Upload queue has " << m_transferQueue.length() << "items";
+    kDebug() << "Upload queue has " << m_transferQueue->length() << "items";
 
     uploadNextItem();
 }
@@ -138,7 +138,6 @@ void ImgurWindow::slotButtonClicked (int button)
 
 void ImgurWindow::reactivate()
 {
-    kDebug() << m_widget->imagesList()->imageUrls();
     m_widget->imagesList()->loadImagesFromCurrentSelection();
     show();
 }
@@ -150,12 +149,12 @@ void ImgurWindow::slotImageListChanged()
 
 void ImgurWindow::slotAddPhotoDone()
 {
-    KUrl::List m_transferQueue = m_widget->imagesList()->imageUrls();
+    KUrl::List *m_transferQueue = m_webService->imageQueue();
 
     ImgurError error = m_webService->error();
     ImgurSuccess success = m_webService->success();
 
-    KUrl currentImage = m_transferQueue.first();
+    KUrl currentImage = m_transferQueue->first();
 
     QString errMsg = QString(error.message);
 
@@ -164,9 +163,9 @@ void ImgurWindow::slotAddPhotoDone()
 
     if (errMsg.isEmpty())
     {
-        kDebug() << m_widget->imagesList()->imageUrls().length();
-        m_widget->imagesList()->imageUrls().pop_front();
-        kDebug() << m_widget->imagesList()->imageUrls().length();
+        //kDebug() << m_widget->imagesList()->imageUrls().length();
+        m_webService->imageQueue()->pop_front();
+        //kDebug() << m_widget->imagesList()->imageUrls().length();
         m_imagesCount++;
 
         QByteArray sUrl = success.links.imgur_page.toEncoded();
@@ -196,7 +195,7 @@ void ImgurWindow::slotAddPhotoDone()
             != KMessageBox::Continue)
         {
             m_widget->progressBar()->setVisible(false);
-            m_transferQueue.clear();
+            m_transferQueue->clear();
             return;
         }
     }
@@ -225,15 +224,15 @@ void ImgurWindow::closeEvent(QCloseEvent* e)
 
 void ImgurWindow::uploadNextItem()
 {
-    KUrl::List m_transferQueue = m_widget->imagesList()->imageUrls();
+    KUrl::List *m_transferQueue = m_webService->imageQueue();
 
-    if (m_transferQueue.empty())
+    if (m_transferQueue->empty())
     {
         m_widget->progressBar()->hide();
         return;
     }
 
-    KUrl current = m_transferQueue.first();
+    KUrl current = m_transferQueue->first();
     m_widget->imagesList()->processing(current);
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);

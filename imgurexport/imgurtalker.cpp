@@ -409,6 +409,7 @@ void ImgurTalker::slotAddItems (const KUrl::List &list)
         return;
     }
 
+    kDebug() << "Appended" << list;
     m_queue->append(list);
 }
 
@@ -421,5 +422,11 @@ ImgurError ImgurTalker::error()
 {
     return m_error;
 }
+
+KUrl::List* ImgurTalker::imageQueue()
+{
+    return m_queue;
+}
+
 
 } // namespace KIPIImgurExportPlugin

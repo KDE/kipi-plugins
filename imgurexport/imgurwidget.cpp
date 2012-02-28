@@ -72,6 +72,23 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
+
+    connect(m_imagesList, SIGNAL(signalAddItems(KUrl::List)),
+            this, SLOT(slotAddItems(KUrl::List)));
+
+    connect(m_imagesList, SIGNAL(signalImageListChanged()),
+            this, SLOT(slotImageListChanged()));
+
+}
+
+void ImgurWidget::slotAddItems(KUrl::List list)
+{
+    emit signalAddItems(list);
+}
+
+void ImgurWidget::slotImageListChanged ()
+{
+    emit signalImageListChanged();
 }
 
 ImgurWidget::~ImgurWidget()

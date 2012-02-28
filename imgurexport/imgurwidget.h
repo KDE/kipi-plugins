@@ -59,10 +59,18 @@ public:
     ImgurImagesList* imagesList() const;
     QProgressBar* progressBar() const;
 
+Q_SIGNALS:
+    void signalAddItems(KUrl::List list);
+    void signalImageListChanged ();
+
 private:
     ImgurImagesList     *m_imagesList;
     QLabel              *m_headerLbl;
     QProgressBar        *m_progressBar;
+
+public Q_SLOTS:
+    void slotAddItems(KUrl::List list);
+    void slotImageListChanged ();
 };
 } // namespace KIPIImgurExportPlugin
 
