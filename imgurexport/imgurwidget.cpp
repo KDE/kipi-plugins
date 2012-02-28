@@ -20,10 +20,12 @@
  *
  * ============================================================ */
 
-// Qt
+// Qt includes
+
 #include <QBoxLayout>
 
-// local
+// Local includes
+
 #include "imgurwidget.h"
 
 using namespace KIPIPlugins;
@@ -36,7 +38,7 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
 {
 
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    m_imagesList = new KPImagesList(interface, this);
+    m_imagesList = new ImgurImagesList(interface, this);
 
     m_imagesList->loadImagesFromCurrentSelection();
     m_imagesList->setAllowDuplicate(false);
@@ -45,11 +47,11 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-    m_headerLbl = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
-    m_headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
-    m_headerLbl->setOpenExternalLinks(true);
-    m_headerLbl->setFocusPolicy(Qt::NoFocus);
+//    m_headerLbl = new QLabel(settingsBox);
+//    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
+//    m_headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
+//    m_headerLbl->setOpenExternalLinks(true);
+//    m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
     m_progressBar = new QProgressBar(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred ,QSizePolicy::Fixed);
@@ -57,7 +59,7 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
 
     // --------------------------------------------
 
-    settingsBoxLayout->addWidget(m_headerLbl);
+//    settingsBoxLayout->addWidget(m_headerLbl);
 
 
     settingsBoxLayout->addWidget(m_progressBar);
@@ -77,7 +79,7 @@ ImgurWidget::~ImgurWidget()
     //
 }
 
-KIPIPlugins::KPImagesList* ImgurWidget::imagesList() const
+ImgurImagesList* ImgurWidget::imagesList() const
 {
     return m_imagesList;
 }

@@ -5,6 +5,7 @@ SET(kipiplugin_imgurexport_PART_SRCS
     imgurtalker.cpp
     imgurwidget.cpp
     imgurwindow.cpp
+    imgurimageslist.cpp
     mpform.cpp
 )
 

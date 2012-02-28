@@ -23,23 +23,23 @@
 #ifndef IMGURWIDGET_H
 #define IMGURWIDGET_H
 
-// Qt
+// Qt includes
+
 #include <QWidget>
 #include <QProgressBar>
 #include <QLabel>
 
-// KDE
-#include <KDialog>
-#include <KLocale>
+// KDE includes
 
-// KIPI
+#include <kdialog.h>
+
+// LibKIPI includes
 #include "libkipi/interface.h"
-#include "kpimageslist.h"
-#include "imgurtalker.h"
 
-namespace KIPIPlugins {
-class KPImagesList;
-}
+// Local includes
+
+#include "imgurtalker.h"
+#include "imgurimageslist.h"
 
 namespace KIPI
 {
@@ -56,13 +56,14 @@ public:
     ImgurWidget(KIPI::Interface* interface, QWidget* parent = 0);
     ~ImgurWidget();
 
-    KIPIPlugins::KPImagesList* imagesList() const;
+    ImgurImagesList* imagesList() const;
     QProgressBar* progressBar() const;
 
 private:
-    KIPIPlugins::KPImagesList   *m_imagesList;
-    QLabel                      *m_headerLbl;
-    QProgressBar                *m_progressBar;
+    ImgurImagesList     *m_imagesList;
+    QLabel              *m_headerLbl;
+    QProgressBar        *m_progressBar;
 };
 } // namespace KIPIImgurExportPlugin
+
 #endif /* IMGURWIDGET_H */
