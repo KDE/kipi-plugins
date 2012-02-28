@@ -236,7 +236,7 @@ void ImgurWindow::slotAddPhotoDone()
 
         kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") 
                  << "to" << path << "\nURL" 
-                 << meta.getXmpTagString("Xmp.kipi.Imgur_URL");
+                 << meta.getXmpTagString("Xmp.kipi.ImgurURL");
     }
     else
     {
