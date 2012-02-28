@@ -20,8 +20,7 @@
  *
  * ============================================================ */
 
-
-#include "imgurtalker.moc"
+#include "imgurtalker.h"
 
 // Qt includes
 
@@ -30,16 +29,16 @@
 // KDE includes
 
 #include <kdebug.h>
-#include <KIO/Job>
-#include <qjson/parser.h>
+#include <kio/job.h>
 
-// LibKipi includes
-
-
+// LibKIPI includes
 
 #include <libkipi/imagecollection.h>
 
-// local includes
+// qJson include
+#include <qjson/parser.h>
+
+// Local includes
 
 #include "mpform.h"
 #include "kpversion.h"
@@ -58,6 +57,14 @@ ImgurTalker::ImgurTalker (Interface *interface, QWidget *parent)
     m_userAgent     = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
 
     m_apiKey        = _IMGUR_API_KEY;
+
+    m_queue         = new KUrl::List();
+    ImageCollection images = interface->currentSelection();
+
+    if (images.isValid())
+    {
+        slotAddItems(images.images());
+    }
 }
 
 ImgurTalker::~ImgurTalker()
@@ -132,8 +139,8 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
     if (data.isEmpty())
         return false;
 
-    QJson::Parser* p = new QJson::Parser();
-    QVariant r       = p->parse(data, &ok);
+    QJson::Parser   *p = new QJson::Parser();
+    QVariant         r = p->parse(data, &ok);
 
     if (ok)
     {
@@ -402,12 +409,7 @@ void ImgurTalker::slotAddItems (const KUrl::List &list)
         return;
     }
 
-    for (KUrl::List::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it)
-    {
-        KUrl imageUrl = *it;
-
-        imageUpload(imageUrl);
-    }
+    m_queue->append(list);
 }
 
 ImgurSuccess ImgurTalker::success()

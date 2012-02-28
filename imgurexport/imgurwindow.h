@@ -23,15 +23,21 @@
 #ifndef IMGURWINDOW_H
 #define IMGURWINDOW_H
 
-// Qt
+// Qt includes
+
 #include <QObject>
 
-// KDE
-#include <KDialog>
-#include <KLocale>
+// KDE includes
 
-// KIPI
+#include <kdialog.h>
+#include <klocale.h>
+
+// LibKIPI includes
+
 #include "libkipi/interface.h"
+
+// Local includes
+
 #include "kpimageslist.h"
 #include "imgurtalker.h"
 #include "imgurwidget.h"

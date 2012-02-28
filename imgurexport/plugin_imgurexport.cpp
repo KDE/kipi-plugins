@@ -20,39 +20,25 @@
  *
  * ============================================================ */
 
-#include "plugin_imgurexport.moc"
+#include "plugin_imgurexport.h"
 
 // C++ includes
+
 #include <unistd.h>
 
 // KDE includes
 
-#include <KDebug>
-#include <KConfig>
-#include <KApplication>
-#include <KAction>
-#include <KActionCollection>
-#include <KGenericFactory>
-#include <KLibLoader>
-#include <KStandardDirs>
-#include <KLocale>
-#include <KPluginFactory>
-#include <KPluginLoader>
-#include <KDialog>
-#include <KWindowSystem>
+#include <kdebug.h>
+#include <kapplication.h>
+#include <kaction.h>
+#include <kactioncollection.h>
+#include <kpluginfactory.h>
+#include <kpluginloader.h>
+#include <kwindowsystem.h>
 
-// KIPI
+// LibKIPI includes
+
 #include "libkipi/interface.h"
-
-
-// local
-#include "imgurwindow.h"
-
-// Local includes
-
-#include "imgurtalker.h"
-#include "kpimageslist.h"
-//#include "imgurwidget.h"
 
 using namespace KIPIImgurExportPlugin;
 using namespace KIPIPlugins;

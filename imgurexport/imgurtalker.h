@@ -23,7 +23,7 @@
 #ifndef IMGURTALKER_H
 #define IMGURTALKER_H
 
-// api key from imgur
+// API key from imgur
 #define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3";
 //#define _IMGUR_API_KEY "2da1cc4923f33dc72885aa32adede5c3-err";
 
@@ -39,8 +39,7 @@
 #include <kurl.h>
 #include <kio/jobclasses.h>
 
-// LibKipi includes
-
+// LibKIPI includes
 
 #include <libkipi/interface.h>
 
@@ -154,6 +153,8 @@ private:
     State           m_state;
     KUrl            m_currentUrl;
     KIO::Job*       m_job;
+
+    KUrl::List*     m_queue;
 
     ImgurSuccess    m_success;
     ImgurError      m_error;

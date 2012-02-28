@@ -20,12 +20,15 @@
  *
  * ============================================================ */
 
-// local
 #include "imgurwindow.h"
 
-// KDE
-#include <KDebug>
-#include <KMessageBox>
+// KDE includes
+
+#include <kdebug.h>
+#include <kmessagebox.h>
+
+// Local includes
+
 #include "kpmetadata.h"
 #include "kpimageinfo.h"
 
@@ -67,6 +70,7 @@ ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
     setButtonGuiItem(KDialog::User1,
                      KGuiItem(i18n("Upload"), "network-workgroup",
                               i18n("Start upload to Imgur")));
+
     enableButton(KDialog::User1, !m_widget->imagesList()->imageUrls().isEmpty());
 
     connect(m_widget->imagesList(), SIGNAL(signalImageListChanged()),
@@ -76,7 +80,7 @@ ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
 //            this, SLOT(slotStartUpload()));
 
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
-            this, SLOT(slotButtonClicked(int button)));
+            this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
 }
 
 ImgurWindow::~ImgurWindow()
@@ -120,6 +124,7 @@ void ImgurWindow::slotButtonClicked (int button)
         case KDialog::Close:
             // Must cancel the transfer
             m_webService->cancel();
+
             m_widget->imagesList()->cancelProcess();
             m_widget->progressBar()->setVisible(false);
 
@@ -159,7 +164,9 @@ void ImgurWindow::slotAddPhotoDone()
 
     if (errMsg.isEmpty())
     {
+        kDebug() << m_widget->imagesList()->imageUrls().length();
         m_widget->imagesList()->imageUrls().pop_front();
+        kDebug() << m_widget->imagesList()->imageUrls().length();
         m_imagesCount++;
 
         QByteArray sUrl = success.links.imgur_page.toEncoded();
@@ -167,18 +174,19 @@ void ImgurWindow::slotAddPhotoDone()
 
         kDebug() << sUrl;
 
-        QString path = currentImage.toLocalFile();
+        const QString path = currentImage.toLocalFile();
 //        KMessageBox::questionYesNo(this, i18n("Url: %1", sUrl));
         // we add tags to the image
-        KPMetadata meta;
-        meta.load(path);
+        KPMetadata *meta = new KPMetadata(path);
+//        meta.load(path);
 
-        meta.setXmpTagString("Imgur_URL", sUrl, true);
-        meta.setXmpTagString("Imgur_DeleteURL", sDeleteUrl, true);
+        meta->setXmpTagString("Xmp.kipi.Imgur_URL", sUrl);
+        meta->setXmpTagString("Xmp.kipi.Imgur_DeleteURL", sDeleteUrl);
+//        meta.setXmpTagString("Xmp.BaseURL", sDeleteUrl);
 
-        bool saved = meta.save(path);
+        bool saved = meta->applyChanges();
 
-        kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta.getXmpTagString("Xmp.Imgur.URL");
+        kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta->getXmp();
     }
     else
     {
@@ -193,7 +201,7 @@ void ImgurWindow::slotAddPhotoDone()
         }
     }
 
-    //uploadNextItem();
+    uploadNextItem();
 }
 
 void ImgurWindow::slotBusy(bool val)
@@ -212,7 +220,7 @@ void ImgurWindow::slotBusy(bool val)
 
 void ImgurWindow::closeEvent(QCloseEvent* e)
 {
-    kDebug() << "Close event";
+    kDebug() << "Close event" << e;
 }
 
 void ImgurWindow::uploadNextItem()
