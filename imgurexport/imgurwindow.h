@@ -80,6 +80,8 @@ public Q_SLOTS:
     void slotButtonClicked(int button);
 //    void slotAddPhotoDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone();
+    void slotAddPhotoSuccess (ImgurSuccess success);
+    void slotAddPhotoError (ImgurError error);
 
 private:
     void uploadNextItem();

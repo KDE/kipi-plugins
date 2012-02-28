@@ -53,14 +53,11 @@ ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
     setDefaultButton(Close);
     setModal(false);
 
-//    connect(m_webService, SIGNAL(signalUploadStart(KUrl)),
-//            m_widget, SLOT(processing(KUrl)));
+    connect(m_webService, SIGNAL(signalError(ImgurError)),
+            this, SLOT(slotAddPhotoError(ImgurError)));
 
-    connect(m_webService, SIGNAL(signalUploadDone()),
-            this, SLOT(slotAddPhotoDone()));
-
-//    connect(m_webService, SIGNAL(signalUploadProgress(int)),
-//            this, SLOT(slotProgressTimerDone(int)));
+    connect(m_webService, SIGNAL(signalSuccess(ImgurSuccess)),
+            this, SLOT(slotAddPhotoSuccess(ImgurSuccess)));
 
     connect(m_widget, SIGNAL(signalAddItems(KUrl::List)),
             m_webService, SLOT(slotAddItems(KUrl::List)));
@@ -75,6 +72,9 @@ ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
 
     connect(m_widget, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
+
+    connect(m_webService, SIGNAL(signalBusy(bool)),
+            this, SLOT(slotBusy(bool)));
 
 //    connect(this, SIGNAL(user1Clicked()),
 //            this, SLOT(slotStartUpload()));
@@ -147,12 +147,62 @@ void ImgurWindow::slotImageListChanged()
     enableButton(User1, !m_widget->imagesList()->imageUrls().isEmpty());
 }
 
-void ImgurWindow::slotAddPhotoDone()
+void ImgurWindow::slotAddPhotoError(ImgurError error)
 {
     KUrl::List *m_transferQueue = m_webService->imageQueue();
+    KUrl currentImage = m_transferQueue->first();
 
-    ImgurError error = m_webService->error();
-    ImgurSuccess success = m_webService->success();
+    kError() << error.message;
+    m_widget->imagesList()->processed(currentImage, false);
+    if (KMessageBox::warningContinueCancel(this,
+                                           i18n("Failed to upload photo to Imgur: %1\n"
+                                                "Do you want to continue?", error.message))
+        != KMessageBox::Continue)
+    {
+        m_widget->progressBar()->setVisible(false);
+        m_transferQueue->clear();
+        return;
+    }
+}
+
+void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
+{
+    KUrl::List *m_transferQueue = m_webService->imageQueue();
+    KUrl currentImage = m_transferQueue->first();
+
+    m_widget->imagesList()->processed(currentImage, true);
+
+    m_webService->imageQueue()->pop_front();
+    m_imagesCount++;
+
+    QByteArray sUrl = success.links.imgur_page.toEncoded();
+    QByteArray sDeleteUrl = success.links.delete_page.toEncoded();
+
+    const QString path = currentImage.toLocalFile();
+
+    // we add tags to the image
+    KPMetadata *meta = new KPMetadata(path);
+//    meta->load(path);
+
+    meta->setXmpTagString("Xmp.kipi.Imgur_URL", sUrl);
+    meta->setXmpTagString("Xmp.kipi.Imgur_DeleteURL", sDeleteUrl);
+
+    bool saved = meta->save(path);
+    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta->getXmp();
+
+    kDebug () << "URL" << sUrl;
+    kDebug () << "Delete URL" << sDeleteUrl;
+}
+
+void ImgurWindow::slotAddPhotoDone()
+{
+    return;
+    KUrl::List *m_transferQueue = m_webService->imageQueue();
+
+//    ImgurError error = m_webService->error();
+//    ImgurSuccess success = m_webService->success();
+    ImgurError error;
+    ImgurSuccess success;
 
     KUrl currentImage = m_transferQueue->first();
 
@@ -185,7 +235,7 @@ void ImgurWindow::slotAddPhotoDone()
 
         bool saved = meta->applyChanges();
 
-        kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta->getXmp();
+        kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta->getXmpTagString("Xmp.kipi.Imgur_URL");
     }
     else
     {
@@ -213,7 +263,7 @@ void ImgurWindow::slotBusy(bool val)
     else
     {
         setCursor(Qt::ArrowCursor);
-        enableButton(User1, m_widget->imagesList()->imageUrls().isEmpty());
+        enableButton(User1, m_webService->imageQueue()->isEmpty());
     }
 }
 

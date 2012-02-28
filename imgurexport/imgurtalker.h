@@ -132,8 +132,6 @@ public:
 //    void startUpload ();
     void cancel ();
     bool imageUpload (KUrl filePath);
-    ImgurSuccess success();
-    ImgurError error();
     KUrl::List* imageQueue();
 
 Q_SIGNALS:
@@ -141,7 +139,8 @@ Q_SIGNALS:
     void signalUploadProgress(int);
     void signalUploadDone();
     void signalBusy( bool busy);
-    void signalError( const QString& msg );
+    void signalError( ImgurError err );
+    void signalSuccess ( ImgurSuccess success );
 
 private:
     QString         m_apiKey;
@@ -156,9 +155,6 @@ private:
     KIO::Job*       m_job;
 
     KUrl::List*     m_queue;
-
-    ImgurSuccess    m_success;
-    ImgurError      m_error;
 
     bool imageDelete (QString hash);
     bool parseResponseImageUpload (QByteArray data);
