@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "imgurimageslist.h"
+#include "imgurimageslist.moc"
 
 // KDE includes
 
@@ -45,4 +45,4 @@ void ImgurImagesList::updateItemWidgets()
     kDebug() << "update";
 }
 
-}
+} // namespace KIPIImgurExportPlugin

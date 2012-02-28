@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "plugin_imgurexport.h"
+#include "plugin_imgurexport.moc"
 
 // C++ includes
 
@@ -42,7 +42,6 @@
 
 using namespace KIPIImgurExportPlugin;
 using namespace KIPIPlugins;
-
 
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )

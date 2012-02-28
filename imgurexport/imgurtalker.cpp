@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "imgurtalker.h"
+#include "imgurtalker.moc"
 
 // Qt includes
 
@@ -417,6 +417,5 @@ KUrl::List* ImgurTalker::imageQueue()
 {
     return m_queue;
 }
-
 
 } // namespace KIPIImgurExportPlugin

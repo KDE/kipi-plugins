@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "imgurwindow.h"
+#include "imgurwindow.moc"
 
 // KDE includes
 

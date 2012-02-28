@@ -20,13 +20,11 @@
  *
  * ============================================================ */
 
+#include "imgurwidget.moc"
+
 // Qt includes
 
 #include <QBoxLayout>
-
-// Local includes
-
-#include "imgurwidget.h"
 
 using namespace KIPIPlugins;
 
