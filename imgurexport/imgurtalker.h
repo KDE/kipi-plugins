@@ -55,9 +55,6 @@ namespace KIPIImgurExportPlugin
 
 struct ImgurError
 {
-    QString message;
-    QString request;
-
     enum ImgurMethod
     {
         POST = 0,
@@ -71,6 +68,8 @@ struct ImgurError
         JSON
     } format;
 
+    QString  message;
+    QString  request;
     QVariant parameters;
 };
 
@@ -126,23 +125,40 @@ class ImgurTalker : public QWidget
     };
 
 public:
-    ImgurTalker (Interface* iface, QWidget* parent = 0);
+
+    ImgurTalker(Interface* const iface, QWidget* const parent = 0);
     ~ImgurTalker();
 
 //    void startUpload ();
     void cancel ();
-    bool imageUpload (KUrl filePath);
-    KUrl::List* imageQueue();
+    bool imageUpload(const KUrl& filePath);
+    KUrl::List* imageQueue() const;
 
 Q_SIGNALS:
-    void signalUploadStart( const KUrl& url );
+
+    void signalUploadStart(const KUrl& url);
     void signalUploadProgress(int);
     void signalUploadDone();
-    void signalBusy( bool busy);
-    void signalError( ImgurError err );
-    void signalSuccess ( ImgurSuccess success );
+    void signalBusy(bool busy);
+    void signalError(ImgurError err);
+    void signalSuccess(ImgurSuccess success);
 
 private:
+
+    bool imageDelete(const QString& hash);
+    bool parseResponseImageUpload(const QByteArray& data);
+
+    bool imageRemove(const QString& hash);
+    bool parseResponseImageRemove(const QByteArray& data);
+
+private Q_SLOTS:
+
+    void slotResult(KJob *job);
+    void data(KIO::Job* job, const QByteArray& data);
+    void slotAddItems(const KUrl::List& list);
+
+private:
+
     QString         m_apiKey;
     QString         m_userAgent;
 
@@ -155,17 +171,6 @@ private:
     KIO::Job*       m_job;
 
     KUrl::List*     m_queue;
-
-    bool imageDelete (QString hash);
-    bool parseResponseImageUpload (QByteArray data);
-
-    bool imageRemove (QString hash);
-    bool parseResponseImageRemove (QByteArray data);
-
-private Q_SLOTS:
-    void slotResult (KJob *job);
-    void data (KIO::Job* job, const QByteArray &data);
-    void slotAddItems (const KUrl::List& list);
 };
 
 } // namespace KIPIImgurTalkerPlugin

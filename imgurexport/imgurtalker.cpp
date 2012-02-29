@@ -43,22 +43,20 @@
 #include "mpform.h"
 #include "kpversion.h"
 
-using namespace KIPI;
-
 namespace KIPIImgurExportPlugin
 {
 
-ImgurTalker::ImgurTalker (Interface *interface, QWidget *parent)
+ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
 {
-    m_parent        = parent;
-    m_interface     = interface;
+    m_parent               = parent;
+    m_interface            = interface;
 
-    m_job           = 0;
-    m_userAgent     = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
+    m_job                  = 0;
+    m_userAgent            = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
 
-    m_apiKey        = _IMGUR_API_KEY;
+    m_apiKey               = _IMGUR_API_KEY;
 
-    m_queue         = new KUrl::List();
+    m_queue                = new KUrl::List();
     ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
@@ -92,7 +90,7 @@ void ImgurTalker::data(KIO::Job* j, const QByteArray& data)
     emit signalUploadProgress(j->percent());
 }
 
-void ImgurTalker::slotResult (KJob *kjob)
+void ImgurTalker::slotResult(KJob* kjob)
 {
     KIO::Job* job = static_cast<KIO::Job*>(kjob);
 
@@ -125,28 +123,29 @@ void ImgurTalker::slotResult (KJob *kjob)
     return;
 }
 
-bool ImgurTalker::parseResponseImageRemove(QByteArray data)
+bool ImgurTalker::parseResponseImageRemove(const QByteArray& data)
 {
-    if (data.isEmpty()) {
-        //
+    if (data.isEmpty())
+    {
+        // TODO
     }
     return false;
 }
 
-bool ImgurTalker::parseResponseImageUpload (QByteArray data)
+bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 {
-    bool ok;
+    bool ok = false;
 
     if (data.isEmpty())
         return false;
 
-    QJson::Parser   *p = new QJson::Parser();
-    QVariant         r = p->parse(data, &ok);
+    QJson::Parser* p = new QJson::Parser();
+    QVariant       r = p->parse(data, &ok);
 
     if (ok)
     {
         QMap<QString, QVariant> m = r.toMap();
-        QString responseType = m.begin().key();
+        QString responseType      = m.begin().key();
 
         if (responseType == "error")
         {
@@ -316,14 +315,14 @@ bool ImgurTalker::parseResponseImageUpload (QByteArray data)
     return true;
 }
 
-bool ImgurTalker::imageUpload (KUrl filePath)
+bool ImgurTalker::imageUpload(const KUrl& filePath)
 {
     kDebug() << "Upload image" << filePath;
     m_currentUrl = filePath;
 
     MPForm form;
 
-    KUrl exportUrl     = KUrl("http://api.imgur.com/2/upload.json");
+    KUrl exportUrl = KUrl("http://api.imgur.com/2/upload.json");
     exportUrl.addQueryItem("key", m_apiKey);
 
     exportUrl.addQueryItem("name", filePath.fileName());
@@ -343,8 +342,8 @@ bool ImgurTalker::imageUpload (KUrl filePath)
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(data(KIO::Job*, const QByteArray&)));
 
-    connect(job, SIGNAL(result(KJob *)),
-            this, SLOT(slotResult(KJob *)));
+    connect(job, SIGNAL(result(KJob*)),
+            this, SLOT(slotResult(KJob*)));
 
     m_state = IE_ADDPHOTO;
 
@@ -354,12 +353,12 @@ bool ImgurTalker::imageUpload (KUrl filePath)
     return true;
 }
 
-bool ImgurTalker::imageRemove (QString delete_hash)
+bool ImgurTalker::imageRemove(const QString& delete_hash)
 {
     // @TODO : make sure it works
     MPForm form;
 
-    KUrl removeUrl     = KUrl("http://api.imgur.com/2/delete/");
+    KUrl removeUrl = KUrl("http://api.imgur.com/2/delete/");
     removeUrl.addPath(delete_hash + ".json");
 
     form.finish();
@@ -402,7 +401,7 @@ void ImgurTalker::cancel()
 //    }
 //}
 
-void ImgurTalker::slotAddItems (const KUrl::List &list)
+void ImgurTalker::slotAddItems(const KUrl::List& list)
 {
     if (list.count() == 0)
     {
@@ -413,7 +412,7 @@ void ImgurTalker::slotAddItems (const KUrl::List &list)
     m_queue->append(list);
 }
 
-KUrl::List* ImgurTalker::imageQueue()
+KUrl::List* ImgurTalker::imageQueue() const
 {
     return m_queue;
 }
