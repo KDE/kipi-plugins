@@ -75,7 +75,7 @@ ImgurTalker::~ImgurTalker()
     }
 }
 
-void ImgurTalker::data(KIO::Job* j, const QByteArray& data)
+void ImgurTalker::slotData(KIO::Job* j, const QByteArray& data)
 {
     if (data.isEmpty())
     {
@@ -103,7 +103,8 @@ void ImgurTalker::slotResult(KJob* kjob)
         kDebug() << "Error :" << job->errorString();
     }
 
-    bool parseOk;
+    bool parseOk = false;
+
     switch(m_state)
     {
         case IE_REMOVEPHOTO:
@@ -121,6 +122,7 @@ void ImgurTalker::slotResult(KJob* kjob)
 
     emit signalUploadDone();
     emit signalBusy(false);
+
     return;
 }
 
@@ -195,7 +197,8 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                     error.parameters =  v;
                 }
             }
-            emit signalError (error); // p->errorString()
+
+            emit signalError(error); // p->errorString()
             return false;
         }
 
@@ -298,6 +301,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
                     }
                 }
             }
+
             emit signalSuccess(success);
 //             kDebug() << "Link:" << success.links.imgur_page;
 //             kDebug() << "Delete:" << success.links.delete_page;
@@ -319,7 +323,7 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 bool ImgurTalker::imageUpload(const KUrl& filePath)
 {
     kDebug() << "Upload image" << filePath;
-    m_currentUrl = filePath;
+    m_currentUrl   = filePath;
 
     MPForm form;
 
@@ -341,7 +345,7 @@ bool ImgurTalker::imageUpload(const KUrl& filePath)
     job->addMetaData("UserAgent", m_userAgent);
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
-            this, SLOT(data(KIO::Job*, const QByteArray&)));
+            this, SLOT(slotData(KIO::Job*, const QByteArray&)));
 
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
@@ -382,6 +386,7 @@ void ImgurTalker::cancel()
         m_job->kill();
         m_job = 0;
     }
+
     emit signalBusy(false);
 }
 

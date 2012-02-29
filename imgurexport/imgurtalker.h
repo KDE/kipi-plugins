@@ -130,8 +130,8 @@ public:
     ~ImgurTalker();
 
 //    void startUpload ();
-    void cancel ();
-    bool imageUpload(const KUrl& filePath);
+    void        cancel();
+    bool        imageUpload(const KUrl& filePath);
     KUrl::List* imageQueue() const;
 
 Q_SIGNALS:
@@ -153,24 +153,24 @@ private:
 
 private Q_SLOTS:
 
-    void slotResult(KJob *job);
-    void data(KIO::Job* job, const QByteArray& data);
+    void slotResult(KJob* job);
+    void slotData(KIO::Job* job, const QByteArray& data);
     void slotAddItems(const KUrl::List& list);
 
 private:
 
-    QString         m_apiKey;
-    QString         m_userAgent;
+    QString     m_apiKey;
+    QString     m_userAgent;
 
-    QWidget*        m_parent;
-    Interface*      m_interface;
-    QByteArray      m_buffer;
+    QWidget*    m_parent;
+    Interface*  m_interface;
+    QByteArray  m_buffer;
 
-    State           m_state;
-    KUrl            m_currentUrl;
-    KIO::Job*       m_job;
+    State       m_state;
+    KUrl        m_currentUrl;
+    KIO::Job*   m_job;
 
-    KUrl::List*     m_queue;
+    KUrl::List* m_queue;
 };
 
 } // namespace KIPIImgurTalkerPlugin
