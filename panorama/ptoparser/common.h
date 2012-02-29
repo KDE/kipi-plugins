@@ -26,6 +26,22 @@
 #ifndef PTOPARSER_COMMON_H
 #define PTOPARSER_COMMON_H
 
+// Fixes building with MSVC on Windows by disabling internal
+// KDE_isspace function mapping. Otherwise, compilation with
+// boost spirit will error stating that the isspace function
+// is not a member of namespace std
+#ifdef _MSC_VER
+#ifndef KDEWIN_CTYPE_H
+#define KDEWIN_CTYPE_H
+#include <sys/types.h>
+#ifndef _WIN32_WCE
+#include <../include/ctype.h>
+#else
+#include <../wcecompat/ctype.h>
+#endif // _WIN32_WCE
+#endif // KDEWIN_CTYPE_H
+#endif // _MSC_VER
+
 #include <QString>
 #include <QRect>
 
