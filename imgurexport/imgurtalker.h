@@ -6,7 +6,7 @@
  * Date        : 2010-02-04
  * Description : a tool to export images to imgur.com
  *
- * Copyright (C) 2010 by Marius Orcisk <marius at habarnam dot ro>
+ * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
