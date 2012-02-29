@@ -33,14 +33,8 @@
 #ifdef _MSC_VER
 #ifndef KDEWIN_CTYPE_H
 #define KDEWIN_CTYPE_H
-#include <sys/types.h>
-#ifndef _WIN32_WCE
-#include <../include/ctype.h>
-#else
-#include <../wcecompat/ctype.h>
-#endif // _WIN32_WCE
-#endif // KDEWIN_CTYPE_H
-#endif // _MSC_VER
+#endif
+#endif
 
 #include <QString>
 #include <QRect>
