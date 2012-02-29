@@ -36,6 +36,7 @@
 #include <libkipi/imagecollection.h>
 
 // qJson include
+
 #include <qjson/parser.h>
 
 // Local includes
