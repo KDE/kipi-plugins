@@ -39,7 +39,7 @@ using namespace KExiv2Iface;
 namespace KIPIImgurExportPlugin
 {
 
-ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
+ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const parent)
     : KDialog(parent)
 {
 
@@ -89,7 +89,8 @@ ImgurWindow::~ImgurWindow()
     //
 }
 
-void ImgurWindow::slotStartUpload() {
+void ImgurWindow::slotStartUpload() 
+{
     kDebug() << "Start upload";
 
     m_widget->imagesList()->clearProcessedStatus();

@@ -34,7 +34,7 @@
 
 // LibKIPI includes
 
-#include "libkipi/interface.h"
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -42,7 +42,8 @@
 #include "imgurtalker.h"
 #include "imgurwidget.h"
 
-namespace KIPIPlugins {
+namespace KIPIPlugins 
+{
 class KPImagesList;
 }
 
@@ -51,6 +52,9 @@ namespace KIPI
 class Interface;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPIImgurExportPlugin
 {
 class ImgurWindow : public KDialog
@@ -58,20 +62,14 @@ class ImgurWindow : public KDialog
     Q_OBJECT
 
 public:
-    ImgurWindow(KIPI::Interface* interface, QWidget* parent = 0);
+
+    ImgurWindow(Interface* const interface, QWidget* const parent = 0);
     ~ImgurWindow();
 
     void reactivate();
 
-private:
-    ImgurTalker* m_webService;
-    ImgurWidget* m_widget;
-
-    int m_imagesCount;
-    int m_imagesTotal;
-
-
 public Q_SLOTS:
+
 //    void slotHelp();
     void slotImageListChanged();
     void slotStartUpload();
@@ -84,9 +82,20 @@ public Q_SLOTS:
     void slotAddPhotoError (ImgurError error);
 
 private:
+
     void uploadNextItem();
     void closeEvent(QCloseEvent* e);
     void close();
+
+private:
+
+    ImgurTalker* m_webService;
+    ImgurWidget* m_widget;
+
+    int          m_imagesCount;
+    int          m_imagesTotal;
+
+
 };
 } // namespace KIPIImgurExportPlugin
 #endif /* IMGURWINDOW_H */
