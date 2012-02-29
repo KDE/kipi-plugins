@@ -6,7 +6,7 @@
  * Date        : 2012-02-12
  * Description : a kipi plugin to export images to the Imgur web service
  *
- * Copyright (C) 2012-2012 by Marius Orcsik <marius at habarnam dot ro>
+ * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

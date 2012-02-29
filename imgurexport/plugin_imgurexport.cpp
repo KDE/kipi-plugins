@@ -38,16 +38,15 @@
 
 // LibKIPI includes
 
-#include "libkipi/interface.h"
+#include <libkipi/interface.h>
 
-using namespace KIPIImgurExportPlugin;
 using namespace KIPIPlugins;
 
 K_PLUGIN_FACTORY( ImgurExportFactory, registerPlugin<Plugin_ImgurExport>(); )
 K_EXPORT_PLUGIN ( ImgurExportFactory("kipiplugin_imgurexport") )
 
-Plugin_ImgurExport::Plugin_ImgurExport(QObject* parent, const QVariantList& args)
-    : KIPI::Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport")
+Plugin_ImgurExport::Plugin_ImgurExport(QObject* const parent, const QVariantList& args)
+    : Plugin(ImgurExportFactory::componentData(), parent, "ImgurExport")
 {
     kDebug(AREA_CODE_LOADING) << "ImgurExport plugin loaded";
     kDebug(AREA_CODE_LOADING) << args;
@@ -61,7 +60,7 @@ void Plugin_ImgurExport::setup(QWidget* widget)
 {
     m_winExport = 0;
 
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_imgurexport");
 
@@ -75,7 +74,7 @@ void Plugin_ImgurExport::setup(QWidget* widget)
 
     addAction(m_actionExport);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
 
     if (!interface)
     {
@@ -89,7 +88,7 @@ void Plugin_ImgurExport::setup(QWidget* widget)
 
 void Plugin_ImgurExport::slotActivate()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!" ;
@@ -99,7 +98,7 @@ void Plugin_ImgurExport::slotActivate()
     if (!m_winExport)
     {
         // We clean it up in the close button
-        m_winExport = new KIPIImgurExportPlugin::ImgurWindow(interface, kapp->activeWindow());
+        m_winExport = new ImgurWindow(interface, kapp->activeWindow());
     }
     else
     {
@@ -115,13 +114,13 @@ void Plugin_ImgurExport::slotActivate()
     kDebug() << "We have activated the imgur exporter!";
 }
 
-KIPI::Category Plugin_ImgurExport::category( KAction* action ) const
+Category Plugin_ImgurExport::category(KAction* action) const
 {
     if (action == m_actionExport)
     {
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
     }
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }

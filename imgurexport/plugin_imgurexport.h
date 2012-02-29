@@ -32,32 +32,32 @@
 #include <libkipi/plugin.h>
 
 // Local includes
+
 #include "imgurwindow.h"
 
-namespace KIPIImgurExportPlugin
-{
+using namespace KIPI;
+using namespace KIPIImgurExportPlugin;
 
-class Plugin_ImgurExport : public KIPI::Plugin
+class Plugin_ImgurExport : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    explicit Plugin_ImgurExport(QObject* parent, const QVariantList& args);
+    explicit Plugin_ImgurExport(QObject* const parent, const QVariantList& args);
     ~Plugin_ImgurExport();
 
     void setup(QWidget*);
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
 
 public Q_SLOTS:
 
     void slotActivate();
 
 private:
-    KAction        *m_actionExport;
-    ImgurWindow    *m_winExport;
-};
 
-} // namespace KIPIImgurExportPlugin
+    KAction*     m_actionExport;
+    ImgurWindow* m_winExport;
+};
 
 #endif // PLUGIN_IMGUREXPORT_H

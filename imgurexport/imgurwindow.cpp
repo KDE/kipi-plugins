@@ -6,7 +6,7 @@
  * Date        : 2012-02-12
  * Description : a kipi plugin to export images to the Imgur web service
  *
- * Copyright (C) 2012-2012 by Marius Orcsik <marius at habarnam dot ro>
+ * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,17 +32,16 @@
 #include "kpmetadata.h"
 #include "kpimageinfo.h"
 
-using namespace KIPIPlugins;
 using namespace KExiv2Iface;
 
 namespace KIPIImgurExportPlugin
 {
 
-ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
+ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const parent)
     : KDialog(parent)
 {
 
-    m_widget = new ImgurWidget(interface, this);
+    m_widget     = new ImgurWidget(interface, this);
     m_webService = new ImgurTalker(interface, this);
 
     setMainWidget(m_widget);
@@ -85,14 +84,15 @@ ImgurWindow::ImgurWindow(KIPI::Interface* interface, QWidget* parent)
 
 ImgurWindow::~ImgurWindow()
 {
-    //
+    // TODO
 }
 
-void ImgurWindow::slotStartUpload() {
+void ImgurWindow::slotStartUpload()
+{
     kDebug() << "Start upload";
 
     m_widget->imagesList()->clearProcessedStatus();
-    KUrl::List *m_transferQueue = m_webService->imageQueue();
+    KUrl::List* m_transferQueue = m_webService->imageQueue();
 
     if (m_transferQueue->isEmpty())
     {
@@ -113,9 +113,10 @@ void ImgurWindow::slotStartUpload() {
     uploadNextItem();
 }
 
-void ImgurWindow::slotButtonClicked (int button)
+void ImgurWindow::slotButtonClicked(int button)
 {
     kDebug() << "Button clicked" << button;
+
     switch (button)
     {
         case KDialog::User1:
@@ -149,8 +150,8 @@ void ImgurWindow::slotImageListChanged()
 
 void ImgurWindow::slotAddPhotoError(ImgurError error)
 {
-    KUrl::List *m_transferQueue = m_webService->imageQueue();
-    KUrl currentImage = m_transferQueue->first();
+    KUrl::List* m_transferQueue = m_webService->imageQueue();
+    KUrl currentImage           = m_transferQueue->first();
 
     kError() << error.message;
     m_widget->imagesList()->processed(currentImage, false);
@@ -167,28 +168,25 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
 
 void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
 {
-    KUrl::List *m_transferQueue = m_webService->imageQueue();
-    KUrl currentImage = m_transferQueue->first();
+    KUrl::List* m_transferQueue = m_webService->imageQueue();
+    KUrl currentImage           = m_transferQueue->first();
 
     m_widget->imagesList()->processed(currentImage, true);
 
     m_webService->imageQueue()->pop_front();
     m_imagesCount++;
 
-    QByteArray sUrl = success.links.imgur_page.toEncoded();
+    QByteArray sUrl       = success.links.imgur_page.toEncoded();
     QByteArray sDeleteUrl = success.links.delete_page.toEncoded();
-
-    const QString path = currentImage.toLocalFile();
+    const QString path    = currentImage.toLocalFile();
 
     // we add tags to the image
-    KPMetadata *meta = new KPMetadata(path);
-//    meta->load(path);
+    KPMetadata meta(path);
+    meta.setXmpTagString("Xmp.kipi.ImgurURL",       sUrl);
+    meta.setXmpTagString("Xmp.kipi.ImgurDeleteURL", sDeleteUrl);
 
-    meta->setXmpTagString("Xmp.kipi.Imgur_URL", sUrl);
-    meta->setXmpTagString("Xmp.kipi.Imgur_DeleteURL", sDeleteUrl);
-
-    bool saved = meta->save(path);
-    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta->getXmp();
+    bool saved = meta.save(path);
+    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta.getXmp();
 
     kDebug () << "URL" << sUrl;
     kDebug () << "Delete URL" << sDeleteUrl;
@@ -275,7 +273,7 @@ void ImgurWindow::closeEvent(QCloseEvent* e)
 
 void ImgurWindow::uploadNextItem()
 {
-    KUrl::List *m_transferQueue = m_webService->imageQueue();
+    KUrl::List* m_transferQueue = m_webService->imageQueue();
 
     if (m_transferQueue->empty())
     {

@@ -6,7 +6,7 @@
  * Date        : 2012-02-12
  * Description : a kipi plugin to export images to the Imgur web service
  *
- * Copyright (C) 2012-2012 by Marius Orcsik <marius at habarnam dot ro>
+ * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,7 +34,7 @@
 
 // LibKIPI includes
 
-#include "libkipi/interface.h"
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -42,36 +42,35 @@
 #include "imgurtalker.h"
 #include "imgurwidget.h"
 
-namespace KIPIPlugins {
-class KPImagesList;
+namespace KIPIPlugins
+{
+    class KPImagesList;
 }
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIImgurExportPlugin
 {
+
 class ImgurWindow : public KDialog
 {
     Q_OBJECT
 
 public:
-    ImgurWindow(KIPI::Interface* interface, QWidget* parent = 0);
+
+    ImgurWindow(Interface* const interface, QWidget* const parent = 0);
     ~ImgurWindow();
 
     void reactivate();
 
-private:
-    ImgurTalker* m_webService;
-    ImgurWidget* m_widget;
-
-    int m_imagesCount;
-    int m_imagesTotal;
-
-
 public Q_SLOTS:
+
 //    void slotHelp();
     void slotImageListChanged();
     void slotStartUpload();
@@ -80,13 +79,22 @@ public Q_SLOTS:
     void slotButtonClicked(int button);
 //    void slotAddPhotoDone(int errCode, const QString& errMsg);
     void slotAddPhotoDone();
-    void slotAddPhotoSuccess (ImgurSuccess success);
-    void slotAddPhotoError (ImgurError error);
+    void slotAddPhotoSuccess(ImgurSuccess success);
+    void slotAddPhotoError(ImgurError error);
 
 private:
+
     void uploadNextItem();
     void closeEvent(QCloseEvent* e);
     void close();
+
+private:
+
+    ImgurTalker* m_webService;
+    ImgurWidget* m_widget;
+
+    int          m_imagesCount;
+    int          m_imagesTotal;
 };
 } // namespace KIPIImgurExportPlugin
 #endif /* IMGURWINDOW_H */
