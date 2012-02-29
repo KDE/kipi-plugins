@@ -26,6 +26,10 @@
 
 #include <QBoxLayout>
 
+// KDE includes
+
+#include <klocalizedstring.h>
+
 using namespace KIPIPlugins;
 
 namespace KIPIImgurExportPlugin
@@ -44,11 +48,16 @@ ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-//    m_headerLbl = new QLabel(settingsBox);
-//    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
-//    m_headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
-//    m_headerLbl->setOpenExternalLinks(true);
-//    m_headerLbl->setFocusPolicy(Qt::NoFocus);
+    m_headerLbl = new QLabel(settingsBox);
+    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
+    m_headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
+    m_headerLbl->setOpenExternalLinks(true);
+    m_headerLbl->setFocusPolicy(Qt::NoFocus);
+
+    m_textLbl = new QLabel(settingsBox);
+    m_textLbl->setText(i18n("You can retreive the image URLs from the Xmp tags:\n"
+                            "\"Imgur URL\" and \"Imgur Delete URL\". \n"));
+    m_textLbl->setFocusPolicy(Qt::NoFocus);
 
     m_progressBar = new QProgressBar(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred ,QSizePolicy::Fixed);
@@ -56,7 +65,8 @@ ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
 
     // --------------------------------------------
 
-//    settingsBoxLayout->addWidget(m_headerLbl);
+    settingsBoxLayout->addWidget(m_headerLbl);
+    settingsBoxLayout->addWidget(m_textLbl);
 
     settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());

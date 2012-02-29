@@ -78,6 +78,7 @@ private:
 
     ImgurImagesList* m_imagesList;
     QLabel*          m_headerLbl;
+    QLabel*          m_textLbl;
     QProgressBar*    m_progressBar;
 };
 
