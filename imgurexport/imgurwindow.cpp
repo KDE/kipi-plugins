@@ -163,6 +163,7 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
         m_transferQueue->clear();
         return;
     }
+    uploadNextItem();
 }
 
 void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
@@ -175,83 +176,29 @@ void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
     m_webService->imageQueue()->pop_front();
     m_imagesCount++;
 
-    QByteArray sUrl = success.links.imgur_page.toEncoded();
-    QByteArray sDeleteUrl = success.links.delete_page.toEncoded();
+    const QString sUrl = success.links.imgur_page.toEncoded();
+    const QString sDeleteUrl = success.links.delete_page.toEncoded();
 
     const QString path = currentImage.toLocalFile();
 
     // we add tags to the image
-    KPMetadata *meta = new KPMetadata(path);
-//    meta->load(path);
+    KPMetadata meta(path);
+    meta.setXmpTagString("Xmp.kipi.Imgur URL", sUrl);
+    meta.setXmpTagString("Xmp.kipi.Imgur Delete URL", sDeleteUrl);
 
-    meta->setXmpTagString("Xmp.kipi.Imgur_URL", sUrl);
-    meta->setXmpTagString("Xmp.kipi.Imgur_DeleteURL", sDeleteUrl);
-
-    bool saved = meta->save(path);
-    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path << "\nURL" << meta->getXmp();
+    bool saved = meta.applyChanges();
+    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
+    kDebug() << "URL" << meta.getXmpTagString ("Xmp.kipi.Imgur.URL");
 
     kDebug () << "URL" << sUrl;
     kDebug () << "Delete URL" << sDeleteUrl;
+
+    uploadNextItem();
 }
 
 void ImgurWindow::slotAddPhotoDone()
 {
-    return;
-    KUrl::List* m_transferQueue = m_webService->imageQueue();
-
-//    ImgurError error = m_webService->error();
-//    ImgurSuccess success = m_webService->success();
-    ImgurError error;
-    ImgurSuccess success;
-
-    KUrl currentImage = m_transferQueue->first();
-
-    QString errMsg = QString(error.message);
-
-    kDebug() << error.message << "----------------------++++";
-    m_widget->imagesList()->processed(currentImage, errMsg.isEmpty());
-
-    if (errMsg.isEmpty())
-    {
-        //kDebug() << m_widget->imagesList()->imageUrls().length();
-        m_webService->imageQueue()->pop_front();
-        //kDebug() << m_widget->imagesList()->imageUrls().length();
-        m_imagesCount++;
-
-        QByteArray sUrl       = success.links.imgur_page.toEncoded();
-        QByteArray sDeleteUrl = success.links.delete_page.toEncoded();
-
-        kDebug() << sUrl;
-
-        const QString path    = currentImage.toLocalFile();
-//        KMessageBox::questionYesNo(this, i18n("Url: %1", sUrl));
-
-        // we add tags to the image
-        KPMetadata meta(path);
-        meta.setXmpTagString("Xmp.kipi.ImgurURL",       sUrl);
-        meta.setXmpTagString("Xmp.kipi.ImgurDeleteURL", sDeleteUrl);
-//        meta.setXmpTagString("Xmp.kipi.ImgurBaseURL",   sDeleteUrl);
-
-        bool saved = meta.applyChanges();
-
-        kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") 
-                 << "to" << path << "\nURL" 
-                 << meta.getXmpTagString("Xmp.kipi.ImgurURL");
-    }
-    else
-    {
-        if (KMessageBox::warningContinueCancel(this,
-                                               i18n("Failed to upload photo to Imgur: %1\n"
-                                                    "Do you want to continue?", error.message))
-            != KMessageBox::Continue)
-        {
-            m_widget->progressBar()->setVisible(false);
-            m_transferQueue->clear();
-            return;
-        }
-    }
-
-    uploadNextItem();
+// not used atm
 }
 
 void ImgurWindow::slotBusy(bool val)
