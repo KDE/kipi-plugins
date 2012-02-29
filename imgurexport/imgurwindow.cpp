@@ -26,6 +26,7 @@
 
 #include <kdebug.h>
 #include <kmessagebox.h>
+#include <klocalizedstring.h>
 
 // Local includes
 
@@ -183,12 +184,11 @@ void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
 
     // we add tags to the image
     KPMetadata meta(path);
-    meta.setXmpTagString("Xmp.kipi.Imgur URL", sUrl);
-    meta.setXmpTagString("Xmp.kipi.Imgur Delete URL", sDeleteUrl);
+    meta.setXmpTagString("Xmp.kipi.ImgurURL", sUrl);
+    meta.setXmpTagString("Xmp.kipi.ImgurDeleteURL", sDeleteUrl);
 
     bool saved = meta.applyChanges();
     kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
-    kDebug() << "URL" << meta.getXmpTagString ("Xmp.kipi.Imgur.URL");
 
     kDebug () << "URL" << sUrl;
     kDebug () << "Delete URL" << sDeleteUrl;
