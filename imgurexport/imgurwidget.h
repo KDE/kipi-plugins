@@ -34,7 +34,8 @@
 #include <kdialog.h>
 
 // LibKIPI includes
-#include "libkipi/interface.h"
+
+#include <libkipi/interface.h>
 
 // Local includes
 
@@ -43,35 +44,43 @@
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
+
+using namespace KIPI;
 
 namespace KIPIImgurExportPlugin
 {
+
 class ImgurWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ImgurWidget(KIPI::Interface* interface, QWidget* parent = 0);
+
+    ImgurWidget(Interface* const interface, QWidget* const parent = 0);
     ~ImgurWidget();
 
-    ImgurImagesList* imagesList() const;
-    QProgressBar* progressBar() const;
+    ImgurImagesList* imagesList()  const;
+    QProgressBar*    progressBar() const;
 
 Q_SIGNALS:
-    void signalAddItems(KUrl::List list);
-    void signalImageListChanged ();
 
-private:
-    ImgurImagesList     *m_imagesList;
-    QLabel              *m_headerLbl;
-    QProgressBar        *m_progressBar;
+    void signalAddItems(const KUrl::List& list);
+    void signalImageListChanged();
 
 public Q_SLOTS:
-    void slotAddItems(KUrl::List list);
-    void slotImageListChanged ();
+
+    void slotAddItems(const KUrl::List& list);
+    void slotImageListChanged();
+
+private:
+
+    ImgurImagesList* m_imagesList;
+    QLabel*          m_headerLbl;
+    QProgressBar*    m_progressBar;
 };
+
 } // namespace KIPIImgurExportPlugin
 
 #endif /* IMGURWIDGET_H */

@@ -6,7 +6,7 @@
  * Date        : 2012-02-12
  * Description : a kipi plugin to export images to the Imgur web service
  *
- * Copyright (C) 2012-2012 by Marius Orcsik <marius at habarnam dot ro>
+ * Copyright (C) 2010-2012 by Marius Orcsik <marius at habarnam dot ro>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,12 +31,11 @@ using namespace KIPIPlugins;
 namespace KIPIImgurExportPlugin
 {
 
-ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
+ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
     : QWidget(parent)
 {
-
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    m_imagesList = new ImgurImagesList(interface, this);
+    m_imagesList            = new ImgurImagesList(interface, this);
 
     m_imagesList->loadImagesFromCurrentSelection();
     m_imagesList->setAllowDuplicate(false);
@@ -59,7 +58,6 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
 
 //    settingsBoxLayout->addWidget(m_headerLbl);
 
-
     settingsBoxLayout->addWidget(m_progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
@@ -79,19 +77,19 @@ ImgurWidget::ImgurWidget(KIPI::Interface* interface, QWidget* parent)
 
 }
 
-void ImgurWidget::slotAddItems(KUrl::List list)
+void ImgurWidget::slotAddItems(const KUrl::List& list)
 {
     emit signalAddItems(list);
 }
 
-void ImgurWidget::slotImageListChanged ()
+void ImgurWidget::slotImageListChanged()
 {
     emit signalImageListChanged();
 }
 
 ImgurWidget::~ImgurWidget()
 {
-    //
+    // TODO
 }
 
 ImgurImagesList* ImgurWidget::imagesList() const
