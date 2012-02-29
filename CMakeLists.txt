@@ -424,7 +424,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(facebook)
 
 # Plugin not yet complete. Disabled for the moment.
-#        ADD_SUBDIRECTORY(imgurexport)
+        ADD_SUBDIRECTORY(imgurexport)
 
     ENDIF(QJSON_FOUND)
 

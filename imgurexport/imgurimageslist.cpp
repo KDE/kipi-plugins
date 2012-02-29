@@ -26,12 +26,10 @@
 
 #include "kdebug.h"
 
-using namespace KIPIPlugins;
-
 namespace KIPIImgurExportPlugin
 {
 
-ImgurImagesList::ImgurImagesList(KIPI::Interface* interface, QWidget* parent)
+ImgurImagesList::ImgurImagesList(Interface* const interface, QWidget* const parent)
     : KPImagesList(interface, parent)
 {
 }

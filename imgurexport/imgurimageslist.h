@@ -35,23 +35,28 @@
 
 #include "kpimageslist.h"
 
+using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIImgurExportPlugin
 {
+
 class ImgurImagesList : public KPImagesList
 {
     Q_OBJECT
 
 public:
-    ImgurImagesList (KIPI::Interface* iface, QWidget* parent = 0);
+
+    ImgurImagesList(Interface* const iface, QWidget* const parent = 0);
     ~ImgurImagesList();
 
 public:
+
     // implement this, if you have special item widgets, e.g. an edit line
     // they will be set automatically when adding items, changing order, etc.
     virtual void updateItemWidgets();
 };
+
 } // namespace KIPIImgurTalkerPlugin
 
 #endif // IMGURIMAGESLIST_H
