@@ -77,9 +77,9 @@ struct ImgurError
 
 struct ImgurUploadData
 {
-    QString    title;
-    QString    caption;
-    KUrl       fileUrl;
+    QString title;
+    QString caption;
+    KUrl    fileUrl;
 };
 
 struct ImgurSuccess

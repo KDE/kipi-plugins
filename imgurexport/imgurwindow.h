@@ -96,5 +96,7 @@ private:
     int          m_imagesCount;
     int          m_imagesTotal;
 };
+
 } // namespace KIPIImgurExportPlugin
+
 #endif /* IMGURWINDOW_H */

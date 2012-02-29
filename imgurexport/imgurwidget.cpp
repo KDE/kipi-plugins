@@ -28,7 +28,7 @@
 
 // KDE includes
 
-#include <klocalizedstring.h>
+#include <klocale.h>
 
 using namespace KIPIPlugins;
 
@@ -60,7 +60,7 @@ ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
     m_textLbl->setFocusPolicy(Qt::NoFocus);
 
     m_progressBar = new QProgressBar(settingsBox);
-    m_progressBar->setSizePolicy(QSizePolicy::Preferred ,QSizePolicy::Fixed);
+    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->setVisible(false);
 
     // --------------------------------------------

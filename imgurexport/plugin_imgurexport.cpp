@@ -109,6 +109,7 @@ void Plugin_ImgurExport::slotActivate()
 
         KWindowSystem::activateWindow(m_winExport->winId());
     }
+
     m_winExport->reactivate();
 
     kDebug() << "We have activated the imgur exporter!";

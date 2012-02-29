@@ -26,7 +26,7 @@
 
 #include <kdebug.h>
 #include <kmessagebox.h>
-#include <klocalizedstring.h>
+#include <klocale.h>
 
 // Local includes
 
@@ -133,8 +133,10 @@ void ImgurWindow::slotButtonClicked(int button)
             // close the dialog
             m_widget->imagesList()->listView()->clear();
             done(Close);
+            break;
         default:
             KDialog::slotButtonClicked(button);
+            break;
     }
 }
 
@@ -156,6 +158,7 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
 
     kError() << error.message;
     m_widget->imagesList()->processed(currentImage, false);
+
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo to Imgur: %1\n"
                                                 "Do you want to continue?", error.message))
@@ -165,6 +168,7 @@ void ImgurWindow::slotAddPhotoError(ImgurError error)
         m_transferQueue->clear();
         return;
     }
+
     uploadNextItem();
 }
 
@@ -178,19 +182,18 @@ void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
     m_webService->imageQueue()->pop_front();
     m_imagesCount++;
 
-    const QString sUrl = success.links.imgur_page.toEncoded();
+    const QString sUrl       = success.links.imgur_page.toEncoded();
     const QString sDeleteUrl = success.links.delete_page.toEncoded();
 
-    const QString path = currentImage.toLocalFile();
+    const QString path       = currentImage.toLocalFile();
 
     // we add tags to the image
     KPMetadata meta(path);
     meta.setXmpTagString("Xmp.kipi.ImgurURL", sUrl);
     meta.setXmpTagString("Xmp.kipi.ImgurDeleteURL", sDeleteUrl);
-
     bool saved = meta.applyChanges();
-    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
 
+    kDebug() << "Metadata" << (saved ? "Saved" : "Not Saved") << "to" << path;
     kDebug () << "URL" << sUrl;
     kDebug () << "Delete URL" << sDeleteUrl;
 
@@ -199,7 +202,7 @@ void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
 
 void ImgurWindow::slotAddPhotoDone()
 {
-// not used atm
+    // NOTE: not used atm
 }
 
 void ImgurWindow::slotBusy(bool val)
