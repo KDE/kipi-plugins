@@ -107,7 +107,7 @@ ENDMACRO(PRINT_OPTIONAL_QTMODULE_STATUS)
 
 # =======================================================
 
-cmake_policy(SET CMP0017 NEW)
+CMAKE_POLICY(SET CMP0017 NEW)
 
 FIND_PACKAGE(KDE4 REQUIRED)
 
@@ -131,12 +131,12 @@ FIND_PACKAGE(TIFF REQUIRED)
 # just inform the user if version information was found
 SET(KDCRAW_MIN_VERSION "1.1.0")
 IF (KDCRAW_VERSION)
-  MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION} (required: ${KDCRAW_MIN_VERSION})")
-  IF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
-    SET(KDCRAW_FOUND FALSE)
-  ENDIF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
+    MESSAGE(STATUS "libkdcraw: Found version ${KDCRAW_VERSION} (required: ${KDCRAW_MIN_VERSION})")
+    IF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
+        SET(KDCRAW_FOUND FALSE)
+    ENDIF (${KDCRAW_VERSION} VERSION_LESS ${KDCRAW_MIN_VERSION})
 ELSE (KDCRAW_VERSION)
-  MESSAGE(WARNING "libkdcraw: Version information not found, your version is probably too old.")
+    MESSAGE(WARNING "libkdcraw: Version information not found, your version is probably too old.")
 ENDIF (KDCRAW_VERSION)
 
 # Optional depencies detection required by some plugins
@@ -166,8 +166,8 @@ MACRO_OPTIONAL_FIND_PACKAGE(Boost)         # For Panorama
 # note that old versions don't specify version information, so for now
 # just inform the user if version information was found
 IF (KGEOMAP_VERSION)
-  MESSAGE(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION}")
-  # TODO: fail if the version is too low
+    MESSAGE(STATUS "libkgeomap: Found version ${KGEOMAP_VERSION}")
+    # TODO: fail if the version is too low
 ENDIF (KGEOMAP_VERSION)
 
 # X11 check, LINUX Only.
@@ -181,16 +181,16 @@ ENDIF(NOT WIN32 AND NOT APPLE)
 # OpenCV_LIBRARIES, the other defining OpenCV_LIBS. Make sure we handle
 # both cases.
 IF (NOT OpenCV_LIBRARIES)
-  SET(OpenCV_LIBRARIES ${OpenCV_LIBS})
+    SET(OpenCV_LIBRARIES ${OpenCV_LIBS})
 ENDIF (NOT OpenCV_LIBRARIES)
 
 # same story with OpenCV_INCLUDE_DIRS and OpenCV_INCLUDE_DIR:
 IF (NOT OpenCV_INCLUDE_DIRS)
-  SET(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIR})
+    SET(OpenCV_INCLUDE_DIRS ${OpenCV_INCLUDE_DIR})
 ENDIF (NOT OpenCV_INCLUDE_DIRS)
 
 IF (OpenCV_LIBRARIES AND OpenCV_INCLUDE_DIRS)
-  SET (OpenCV_FOUND TRUE)
+    SET (OpenCV_FOUND TRUE)
 ENDIF (OpenCV_LIBRARIES AND OpenCV_INCLUDE_DIRS)
 
 # OpenMP detection requires CMake >= 2.6.3
@@ -291,7 +291,6 @@ ENDIF(NOT WIN32 AND NOT APPLE)
 
 PRINT_PLUGIN_COMPILE_STATUS("AdvancedSlideshow" BUILD_VIEWERS)
 PRINT_PLUGIN_COMPILE_STATUS("ImageViewer" BUILD_VIEWERS)
-
 PRINT_PLUGIN_COMPILE_STATUS("AcquireImages" KSANE_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("DNGConverter" EXPAT_FOUND)
 PRINT_PLUGIN_COMPILE_STATUS("RemoveRedEyes" OpenCV_FOUND)
@@ -361,7 +360,7 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_DEFINITIONS(-D_AFX_SECURE_NO_WARNINGS)
     ENDIF(WIN32 AND MSVC)
 
-    # debug settings
+    # Debug settings
 
     SET(AREA_CODE_GENERAL "51000")
     SET(AREA_CODE_LOADING "51001")
@@ -423,9 +422,8 @@ IF(KIPIPLUGINS_CAN_BE_COMPILED)
         ADD_SUBDIRECTORY(debianscreenshots)
         ADD_SUBDIRECTORY(facebook)
 
-# Plugin not yet complete. Disabled for the moment.
-#        ADD_SUBDIRECTORY(imgurexport)
-
+        # Plugin not yet complete. Disabled for the moment.
+        #ADD_SUBDIRECTORY(imgurexport)
     ENDIF(QJSON_FOUND)
 
     IF(LIBKVKONTAKTE_FOUND)
