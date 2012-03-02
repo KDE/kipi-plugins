@@ -85,6 +85,9 @@ ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
     connect(m_imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
 
+    connect(this, SIGNAL(signalImageUploadSuccess(KUrl, ImgurSuccess)),
+            m_imagesList, SLOT(slotImageUploadSuccess(KUrl, ImgurSuccess)));
+
 }
 
 void ImgurWidget::slotAddItems(const KUrl::List& list)
@@ -95,6 +98,11 @@ void ImgurWidget::slotAddItems(const KUrl::List& list)
 void ImgurWidget::slotImageListChanged()
 {
     emit signalImageListChanged();
+}
+
+void ImgurWidget::slotImageUploadSuccess(const KUrl imgPath, ImgurSuccess success)
+{
+    emit signalImageUploadSuccess(imgPath, success);
 }
 
 ImgurWidget::~ImgurWidget()

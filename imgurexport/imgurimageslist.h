@@ -46,6 +46,12 @@ class ImgurImagesList : public KPImagesList
     Q_OBJECT
 
 public:
+    /* The different columns in a list. */
+    enum FieldType
+    {
+        URL = KPImagesListView::User1,
+        DELETEURL = KPImagesListView::User2
+    };
 
     ImgurImagesList(Interface* const iface, QWidget* const parent = 0);
     ~ImgurImagesList();
@@ -55,6 +61,34 @@ public:
     // implement this, if you have special item widgets, e.g. an edit line
     // they will be set automatically when adding items, changing order, etc.
     virtual void updateItemWidgets();
+
+public Q_SLOTS:
+    virtual void slotAddImages(const KUrl::List& list);
+    virtual void slotImageChanged (const KUrl& imageUrl, ImgurSuccess success);
+};
+
+// -------------------------------------------------------------------------
+
+class ImgurImageListViewItem : public KPImagesListViewItem
+{
+
+public:
+
+    ImgurImageListViewItem(KPImagesListView* const view, const KUrl& url);
+    virtual ~ImgurImageListViewItem();
+
+    void setUrl(const QString& str);
+    QString Url() const;
+
+    void setDeleteUrl(const QString& str);
+    QString deleteUrl() const;
+
+//    QString destPath() const;
+
+private:
+
+    QString m_Url;
+    QString m_deleteUrl;
 };
 
 } // namespace KIPIImgurTalkerPlugin

@@ -81,6 +81,9 @@ ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const parent)
 
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
             this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
+
+    connect(this, SIGNAL(signalImageUploadSuccess(KUrl, ImgurSuccess)),
+            m_widget, SLOT(slotImageUploadSuccess(KUrl, ImgurSuccess)));
 }
 
 ImgurWindow::~ImgurWindow()
@@ -88,7 +91,7 @@ ImgurWindow::~ImgurWindow()
     // TODO
 }
 
-void ImgurWindow::slotStartUpload() 
+void ImgurWindow::slotStartUpload()
 {
     kDebug() << "Start upload";
 
@@ -197,6 +200,7 @@ void ImgurWindow::slotAddPhotoSuccess(ImgurSuccess success)
     kDebug () << "URL" << sUrl;
     kDebug () << "Delete URL" << sDeleteUrl;
 
+    emit signalImageUploadSuccess(currentImage, success);
     uploadNextItem();
 }
 
