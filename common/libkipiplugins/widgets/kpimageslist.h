@@ -31,6 +31,8 @@
 #include <QStringList>
 #include <QTreeWidget>
 #include <QWidget>
+#include <QXmlStreamWriter>
+#include <QXmlStreamReader>
 
 // KDE includes
 
@@ -47,9 +49,6 @@ namespace KIPI
 {
 class Interface;
 }
-
-class QXmlStreamWriter;
-class QXmlStreamReader;
 
 using namespace KIPI;
 
