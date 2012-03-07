@@ -49,7 +49,7 @@ class KIPIPLUGINS_EXPORT KPActionThreadBase : public QThread
 
 public:
 
-    KPActionThreadBase(QObject* parent=0);
+    KPActionThreadBase(QObject* const parent=0);
     ~KPActionThreadBase();
 
     void cancel();

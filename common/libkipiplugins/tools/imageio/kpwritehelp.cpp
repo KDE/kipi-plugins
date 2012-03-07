@@ -58,7 +58,7 @@ typedef struct
     JOCTET*    buffer;      /* start of buffer */
 } my_destination_mgr;
 
-typedef my_destination_mgr * my_dest_ptr;
+typedef my_destination_mgr* my_dest_ptr;
 
 typedef struct
 {
@@ -77,7 +77,7 @@ void init_destination (j_compress_ptr cinfo)
     my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
 
     /* Allocate the output buffer --- it will be released when done with image */
-    dest->buffer = (JOCTET *)
+    dest->buffer = (JOCTET*)
         (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_IMAGE,
                     BUFFER_SIZE * (size_t)sizeof(JOCTET));
 
@@ -92,12 +92,11 @@ boolean empty_output_buffer (j_compress_ptr cinfo)
 {
     my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
 
-    if (dest->outDevice->write((char*)dest->buffer, BUFFER_SIZE) !=
-        (size_t) BUFFER_SIZE)
-      ERREXIT(cinfo, JERR_FILE_WRITE);
+    if (dest->outDevice->write((char*)dest->buffer, BUFFER_SIZE) != (size_t) BUFFER_SIZE)
+        ERREXIT(cinfo, JERR_FILE_WRITE);
 
     dest->pub.next_output_byte = dest->buffer;
-    dest->pub.free_in_buffer = BUFFER_SIZE;
+    dest->pub.free_in_buffer   = BUFFER_SIZE;
 
     return true;
 }
@@ -123,7 +122,7 @@ void term_destination (j_compress_ptr cinfo)
     }
 }
 
-void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* outDevice)
+void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* const outDevice)
 {
     my_dest_ptr dest;
 
@@ -136,23 +135,23 @@ void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* outDevice)
     if (cinfo->dest == NULL)
     {
         /* first time for this JPEG object? */
-        cinfo->dest = (struct jpeg_destination_mgr *)
+        cinfo->dest = (struct jpeg_destination_mgr*)
                       (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
                       (size_t)sizeof(my_destination_mgr));
     }
 
-    dest = (my_dest_ptr) cinfo->dest;
-    dest->pub.init_destination = init_destination;
+    dest                          = (my_dest_ptr) cinfo->dest;
+    dest->pub.init_destination    = init_destination;
     dest->pub.empty_output_buffer = empty_output_buffer;
-    dest->pub.term_destination = term_destination;
-    dest->outDevice = outDevice;
+    dest->pub.term_destination    = term_destination;
+    dest->outDevice               = outDevice;
 }
 
 boolean fill_input_buffer(j_decompress_ptr cinfo)
 {
     my_source_mgr* src = (my_source_mgr*)cinfo->src;
     Q_ASSERT(src->inDevice);
-    int readSize = src->inDevice->read((char*)src->buffer, BUFFER_SIZE);
+    int readSize       = src->inDevice->read((char*)src->buffer, BUFFER_SIZE);
     if (readSize > 0)
     {
         src->pub.next_input_byte = src->buffer;
@@ -200,21 +199,20 @@ void term_source(j_decompress_ptr)
 {
 }
 
-void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* ioDevice)
+void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const ioDevice)
 {
     Q_ASSERT(!cinfo->src);
     my_source_mgr* src = (my_source_mgr*)
                          (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
                          sizeof(my_source_mgr));
-    cinfo->src = (jpeg_source_mgr*)src;
+    cinfo->src         = (jpeg_source_mgr*)src;
 
-    src->pub.init_source = init_source;
+    src->pub.init_source       = init_source;
     src->pub.fill_input_buffer = fill_input_buffer;
-    src->pub.skip_input_data = skip_input_data;
+    src->pub.skip_input_data   = skip_input_data;
     src->pub.resync_to_restart = jpeg_resync_to_restart;
-    src->pub.term_source = term_source;
-
-    src->inDevice = ioDevice;
+    src->pub.term_source       = term_source;
+    src->inDevice              = ioDevice;
 }
 
 /*

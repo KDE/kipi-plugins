@@ -62,7 +62,7 @@ public:
     KUrl::List     todo;
 };
 
-KPRawThumbThread::KPRawThumbThread(QObject* parent, int size)
+KPRawThumbThread::KPRawThumbThread(QObject* const parent, int size)
     : QThread(parent), d(new KPRawThumbThreadPriv)
 {
     d->size = size;

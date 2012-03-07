@@ -29,7 +29,7 @@
 namespace KIPIPlugins
 {
 
-KPWeaverObserver::KPWeaverObserver(QObject* parent)
+KPWeaverObserver::KPWeaverObserver(QObject* const parent)
     : WeaverObserver(parent)
 {
     connect(this, SIGNAL(weaverStateChanged(ThreadWeaver::State*)),

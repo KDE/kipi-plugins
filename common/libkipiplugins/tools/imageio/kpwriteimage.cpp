@@ -769,28 +769,28 @@ bool KPWriteImage::write2TIFF(const QString& destPath)
     return true;
 }
 
-QByteArray KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::OutputColorSpace colorSpace)
+QByteArray KPWriteImage::getICCProfilFromFile(RawDecodingSettings::OutputColorSpace colorSpace)
 {
     QString filePath = KStandardDirs::installPath("data") + QString("libkdcraw/profiles/");
 
     switch(colorSpace)
     {
-        case KDcrawIface::RawDecodingSettings::SRGB:
+        case RawDecodingSettings::SRGB:
         {
             filePath.append("srgb.icm");
             break;
         }
-        case KDcrawIface::RawDecodingSettings::ADOBERGB:
+        case RawDecodingSettings::ADOBERGB:
         {
             filePath.append("adobergb.icm");
             break;
         }
-        case KDcrawIface::RawDecodingSettings::WIDEGAMMUT:
+        case RawDecodingSettings::WIDEGAMMUT:
         {
             filePath.append("widegamut.icm");
             break;
         }
-        case KDcrawIface::RawDecodingSettings::PROPHOTO:
+        case RawDecodingSettings::PROPHOTO:
         {
             filePath.append("prophoto.icm");
             break;
@@ -815,8 +815,8 @@ QByteArray KPWriteImage::getICCProfilFromFile(KDcrawIface::RawDecodingSettings::
     return data;
 }
 
-void KPWriteImage::writeRawProfile(png_struct* ping, png_info* ping_info, char* profile_type,
-                                   char* profile_data, png_uint_32 length)
+void KPWriteImage::writeRawProfile(png_struct* const ping, png_info* const ping_info, char* const profile_type,
+                                   char* const profile_data, png_uint_32 length)
 {
     png_textp      text;
 
@@ -878,7 +878,7 @@ void KPWriteImage::writeRawProfile(png_struct* ping, png_info* ping_info, char* 
     png_free(ping, text);
 }
 
-size_t KPWriteImage::concatenateString(char* destination, const char* source, const size_t length)
+size_t KPWriteImage::concatenateString(char* const destination, const char* source, const size_t length)
 {
     register char*       q = 0;
 
@@ -919,7 +919,7 @@ size_t KPWriteImage::concatenateString(char* destination, const char* source, co
     return(count+(p-source));
 }
 
-size_t KPWriteImage::copyString(char* destination, const char* source, const size_t length)
+size_t KPWriteImage::copyString(char* const destination, const char* source, const size_t length)
 {
     register char*       q = 0;
 
@@ -958,7 +958,7 @@ size_t KPWriteImage::copyString(char* destination, const char* source, const siz
     return((size_t) (p-source-1));
 }
 
-long KPWriteImage::formatString(char* string, const size_t length, const char* format, ...)
+long KPWriteImage::formatString(char* const string, const size_t length, const char* format, ...)
 {
     long n;
 
@@ -970,7 +970,7 @@ long KPWriteImage::formatString(char* string, const size_t length, const char* f
     return(n);
 }
 
-long KPWriteImage::formatStringList(char* string, const size_t length, const char* format, va_list operands)
+long KPWriteImage::formatStringList(char* const string, const size_t length, const char* format, va_list operands)
 {
     int n = vsnprintf(string, length, format, operands);
 
@@ -980,7 +980,7 @@ long KPWriteImage::formatStringList(char* string, const size_t length, const cha
     return((long) n);
 }
 
-void KPWriteImage::tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag,
+void KPWriteImage::tiffSetExifAsciiTag(TIFF* const tif, ttag_t tiffTag,
                                        const KPMetadata& metadata,
                                        const char* exifTagName)
 {
@@ -992,7 +992,7 @@ void KPWriteImage::tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag,
     }
 }
 
-void KPWriteImage::tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag,
+void KPWriteImage::tiffSetExifDataTag(TIFF* const tif, ttag_t tiffTag,
                                       const KPMetadata &metadata,
                                       const char* exifTagName)
 {

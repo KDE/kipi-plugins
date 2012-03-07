@@ -48,7 +48,7 @@ class KIPIPLUGINS_EXPORT KPWeaverObserver : public WeaverObserver
 
 public:
 
-    KPWeaverObserver(QObject* parent=0);
+    KPWeaverObserver(QObject* const parent=0);
     ~KPWeaverObserver();
 
 protected Q_SLOTS:

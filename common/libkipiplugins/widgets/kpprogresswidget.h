@@ -48,7 +48,7 @@ class KIPIPLUGINS_EXPORT KPProgressWidget : public QProgressBar
 
 public:
 
-    KPProgressWidget(Interface* iface, QWidget* parent);
+    KPProgressWidget(Interface* const iface, QWidget* const parent);
     ~KPProgressWidget();
 
     /** Call this method to start a new instance of progress notification into KIPI host application
