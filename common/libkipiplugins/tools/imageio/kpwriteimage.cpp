@@ -411,9 +411,10 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     libpngver.replace('\n', ' ');
     QString soft     = d->kipipluginsVer;
     soft.append(QString(" (%1)").arg(libpngver));
+    QByteArray softAscii = soft.toAscii();
     png_text text;
     text.key         = (png_charp)"Software";
-    text.text        = soft.toAscii().data();
+    text.text        = softAscii.data();
     text.compression = PNG_TEXT_COMPRESSION_zTXt;
     png_set_text(png_ptr, info_ptr, &(text), 1);
 
