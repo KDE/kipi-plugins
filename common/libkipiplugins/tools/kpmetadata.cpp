@@ -24,15 +24,14 @@
 
 #include "kpmetadata.h"
 
-// LibKipi includes
-
-#include <libkipi/version.h>
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kpmetasettings.h"
 #include "kphostsettings.h"
+
+// LibKipi includes
+
+#include <libkipi/interface.h>
 
 namespace KIPIPlugins
 {
@@ -73,23 +72,6 @@ KPMetadata::~KPMetadata()
 {
 }
 
-/*
-KPMetadata::KPMetadata(const KPMetadata& other)
-    : KExiv2(other.data()), d(other.d)
-{
-    setFilePath(other.getFilePath());
-}
-*/
-
-/*
-KPMetadata& KPMetadata::operator=(const KPMetadata& other)
-{
-    setData(other.data());
-    d = other.d;
-    setFilePath(other.getFilePath());
-    return *this;
-}
-*/
 void KPMetadata::setSettings(const KPMetaSettings& settings)
 {
     setUseXMPSidecar4Reading(settings.useXMPSidecar4Reading);
@@ -100,30 +82,21 @@ void KPMetadata::setSettings(const KPMetaSettings& settings)
 
 bool KPMetadata::load(const QString& filePath) const
 {
-#if KIPI_VERSION >= 0x010500
-    if (m_iface)
-        FileReadLocker(m_iface, KUrl(filePath));
-#endif
+    KPFileReadLocker(m_iface, KUrl(filePath));
 
     return KExiv2::load(filePath);
 }
 
 bool KPMetadata::save(const QString& filePath) const
 {
-#if KIPI_VERSION >= 0x010500
-    if (m_iface)
-        FileWriteLocker(m_iface, KUrl(filePath));
-#endif
+    KPFileWriteLocker(m_iface, KUrl(filePath));
 
     return KExiv2::save(filePath);
 }
 
 bool KPMetadata::applyChanges() const
 {
-#if KIPI_VERSION >= 0x010500
-    if (m_iface)
-        FileWriteLocker(m_iface, KUrl(getFilePath()));
-#endif
+    KPFileWriteLocker(m_iface, KUrl(getFilePath()));
 
     return KExiv2::applyChanges();
 }

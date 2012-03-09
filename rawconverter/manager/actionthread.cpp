@@ -48,6 +48,7 @@
 #include "actions.h"
 #include "rawdecodingiface.h"
 #include "kphostsettings.h"
+#include "kpmetadata.h"
 
 namespace KIPIRawConverterPlugin
 {
@@ -240,7 +241,7 @@ void ActionThread::run()
                     // Identify Camera model.
                     DcrawInfoContainer info;
                     {
-                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
                         d->dcrawIface.rawFileIdentify(info, t->fileUrl.toLocalFile());
                     }
 
@@ -297,7 +298,7 @@ void ActionThread::run()
                     // Get embedded RAW file thumbnail.
                     QImage image;
                     {
-                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
                         d->dcrawIface.loadDcrawPreview(image, t->fileUrl.toLocalFile());
                     }
 
@@ -321,7 +322,7 @@ void ActionThread::run()
                     QString destPath;
                     bool result = false;
                     {
-                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
                         result = d->dcrawIface.decodeHalfRAWImage(t->fileUrl.toLocalFile(), destPath,
                                                                   t->outputFormat, t->decodingSettings);
                     }
@@ -346,7 +347,7 @@ void ActionThread::run()
                     QString destPath;
                     bool result = false;
                     {
-                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
                         result = d->dcrawIface.decodeRAWImage(t->fileUrl.toLocalFile(), destPath,
                                                               t->outputFormat, t->decodingSettings);
                     }

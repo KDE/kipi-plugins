@@ -49,8 +49,10 @@
 
 #include "actions.h"
 #include "dngwriter.h"
+#include "kpmetadata.h"
 
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 using namespace DNGIface;
 
 namespace KIPIDNGConverterPlugin
@@ -209,7 +211,7 @@ void ActionThread::run()
                     // Identify Camera model.
                     DcrawInfoContainer info;
                     {
-                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
                         KDcraw::rawFileIdentify(info, t->fileUrl.toLocalFile());
                     }
 
@@ -240,7 +242,7 @@ void ActionThread::run()
                     QString destPath;
 
                     {
-                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
                         QFileInfo fi(t->fileUrl.toLocalFile());
                         destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-" +
                                    QString::number(QDateTime::currentDateTime().toTime_t());
