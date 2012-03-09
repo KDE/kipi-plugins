@@ -37,70 +37,51 @@
 namespace KIPIPlugins
 {
 
-class KPMetadata::KPMetadataPrivate
-{
-public:
-
-    KPMetadataPrivate(KPMetadata* p)
-    {
-        parent = p;
-        iface  = 0;
-    }
-
-    void init()
-    {
-        KPHostSettings hset(iface);
-        parent->setSettings(hset.metadataSettings());
-    }
-
-public:
-
-    Interface* iface;
-
-private:
-
-    KPMetadata* parent;
-};
-
 KPMetadata::KPMetadata()
-    : KExiv2(), d(new KPMetadataPrivate(this))
+    : KExiv2()
 {
-    d->init();
+    m_iface = 0;
+    setSettings(KPMetaSettings());
 }
 
 KPMetadata::KPMetadata(const QString& filePath)
-    : KExiv2(), d(new KPMetadataPrivate(this))
+    : KExiv2()
 {
-    d->init();
+    m_iface = 0;
+    setSettings(KPMetaSettings());
     load(filePath);
 }
 
 KPMetadata::KPMetadata(Interface* const iface)
-    : KExiv2(), d(new KPMetadataPrivate(this))
+    : KExiv2()
 {
-    d->iface = iface;
-    d->init();
+    m_iface = iface;
+    KPHostSettings hset(m_iface);
+    setSettings(hset.metadataSettings());
 }
 
 KPMetadata::KPMetadata(const QString& filePath, Interface* const iface)
-    : KExiv2(), d(new KPMetadataPrivate(this))
+    : KExiv2()
 {
-    d->iface = iface;
-    d->init();
+    m_iface = iface;
+    KPHostSettings hset(m_iface);
+    setSettings(hset.metadataSettings());
     load(filePath);
 }
 
+KPMetadata::~KPMetadata()
+{
+}
+
+/*
 KPMetadata::KPMetadata(const KPMetadata& other)
     : KExiv2(other.data()), d(other.d)
 {
     setFilePath(other.getFilePath());
 }
+*/
 
-KPMetadata::~KPMetadata()
-{
-    delete d;
-}
-
+/*
 KPMetadata& KPMetadata::operator=(const KPMetadata& other)
 {
     setData(other.data());
@@ -108,7 +89,7 @@ KPMetadata& KPMetadata::operator=(const KPMetadata& other)
     setFilePath(other.getFilePath());
     return *this;
 }
-
+*/
 void KPMetadata::setSettings(const KPMetaSettings& settings)
 {
     setUseXMPSidecar4Reading(settings.useXMPSidecar4Reading);
@@ -120,8 +101,8 @@ void KPMetadata::setSettings(const KPMetaSettings& settings)
 bool KPMetadata::load(const QString& filePath) const
 {
 #if KIPI_VERSION >= 0x010500
-    if (d->iface)
-        FileReadLocker(d->iface, KUrl(filePath));
+    if (m_iface)
+        FileReadLocker(m_iface, KUrl(filePath));
 #endif
 
     return KExiv2::load(filePath);
@@ -130,8 +111,8 @@ bool KPMetadata::load(const QString& filePath) const
 bool KPMetadata::save(const QString& filePath) const
 {
 #if KIPI_VERSION >= 0x010500
-    if (d->iface)
-        FileWriteLocker(d->iface, KUrl(filePath));
+    if (m_iface)
+        FileWriteLocker(m_iface, KUrl(filePath));
 #endif
 
     return KExiv2::save(filePath);
@@ -140,8 +121,8 @@ bool KPMetadata::save(const QString& filePath) const
 bool KPMetadata::applyChanges() const
 {
 #if KIPI_VERSION >= 0x010500
-    if (d->iface)
-        FileWriteLocker(d->iface, KUrl(getFilePath()));
+    if (m_iface)
+        FileWriteLocker(m_iface, KUrl(getFilePath()));
 #endif
 
     return KExiv2::applyChanges();

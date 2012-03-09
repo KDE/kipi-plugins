@@ -80,14 +80,15 @@ public:
      */
     KPMetadata(const QString& filePath, Interface* const iface);
 
+
     /** Copy Constructor.
      */
-    KPMetadata(const KPMetadata& other);
+//    KPMetadata(const KPMetadata& other);
 
     /** Assignement operator.
      */
-    KPMetadata& operator=(const KPMetadata& other);
-    
+//    KPMetadata& operator=(const KPMetadata& other);
+
 public:
 
     /** Apply metadata settings from KIPI host application to this interface. To use before load and save operations.
@@ -111,8 +112,7 @@ public:
 
 private:
 
-    class KPMetadataPrivate;
-    KPMetadataPrivate* d;
+    Interface* m_iface;
 };
 
 }  // namespace KIPIPlugins
