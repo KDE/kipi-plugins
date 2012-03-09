@@ -48,9 +48,11 @@
 // Local includes
 
 #include "dngwriter.h"
+#include "kphostsettings.h"
 
 using namespace DNGIface;
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPIDNGConverterPlugin
 {
@@ -87,8 +89,8 @@ public:
     RComboBox*    previewModeCB;
 };
 
-SettingsWidget::SettingsWidget(QWidget *parent)
-              : QWidget(parent), d(new SettingsWidgetPriv)
+SettingsWidget::SettingsWidget(QWidget* const parent, Interface* const iface)
+    : QWidget(parent), d(new SettingsWidgetPriv)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -106,12 +108,24 @@ SettingsWidget::SettingsWidget(QWidget *parent)
 
     d->compressLossLess      = new QCheckBox(i18n("Lossless Compression"), this);
 
+    // ------------------------------------------------------------------------
+
     d->updateFileDate        = new QCheckBox(i18n("Update File Modification Date"), this);
     d->updateFileDate->setWhatsThis(i18n("Sets the file modification date "
         "to the creation date provided in the image metadata."));
 
-    d->previewModeLabel      = new QLabel(i18n("JPEG Preview:"), this);
-    d->previewModeCB         = new RComboBox(this);
+    if (iface)
+    {
+        // If plugin run from KIPI host, use file time-stamp host settings instead.
+        d->updateFileDate->hide();
+        KPHostSettings hSettings(iface);
+        d->updateFileDate->setChecked(hSettings.metadataSettings().updateFileTimeStamp);
+    }
+
+    // ------------------------------------------------------------------------
+
+    d->previewModeLabel = new QLabel(i18n("JPEG Preview:"), this);
+    d->previewModeCB    = new RComboBox(this);
     d->previewModeCB->insertItem(DNGWriter::NONE,     i18nc("embedded preview type in dng file", "None"));
     d->previewModeCB->insertItem(DNGWriter::MEDIUM,   i18nc("embedded preview type in dng file", "Medium"));
     d->previewModeCB->insertItem(DNGWriter::FULLSIZE, i18nc("embedded preview type in dng file", "Full size"));
