@@ -142,9 +142,9 @@ BatchDialog::BatchDialog(Interface* const iface)
     setCaption(i18n("RAW Image Batch Converter"));
     setModal(false);
 
-    d->page = new QWidget( this );
-    setMainWidget( d->page );
-    QGridLayout *mainLayout = new QGridLayout(d->page);
+    d->page = new QWidget(this);
+    setMainWidget(d->page);
+    QGridLayout* mainLayout = new QGridLayout(d->page);
 
     //---------------------------------------------
 
@@ -213,8 +213,7 @@ BatchDialog::BatchDialog(Interface* const iface)
 
     // ---------------------------------------------------------------
 
-    KPHostSettings hSettings(d->iface);
-    d->thread = new ActionThread(this, hSettings.metadataSettings().updateFileTimeStamp);
+    d->thread = new ActionThread(this, d->iface);
 
     // ---------------------------------------------------------------
 

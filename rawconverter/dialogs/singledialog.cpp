@@ -75,7 +75,6 @@ extern "C"
 #include "kpaboutdata.h"
 #include "kpversion.h"
 #include "kpimageinfo.h"
-#include "kphostsettings.h"
 #include "kppreviewmanager.h"
 #include "kpsavesettingswidget.h"
 #include "rawdecodingiface.h"
@@ -203,8 +202,9 @@ SingleDialog::SingleDialog(const QString& file, Interface* const iface)
 
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
 
-    KPHostSettings hSettings(d->iface);
-    d->thread = new ActionThread(this, hSettings.metadataSettings().updateFileTimeStamp);
+    // ---------------------------------------------------------------
+
+    d->thread = new ActionThread(this, d->iface);
 
     // ---------------------------------------------------------------
 

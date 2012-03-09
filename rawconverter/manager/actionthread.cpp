@@ -35,6 +35,10 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
+// LibKIPI includes
+
+#include <libkipi/interface.h>
+
 // LibKDcraw includes
 
 #include <libkdcraw/dcrawinfocontainer.h>
@@ -43,6 +47,7 @@
 
 #include "actions.h"
 #include "rawdecodingiface.h"
+#include "kphostsettings.h"
 
 namespace KIPIRawConverterPlugin
 {
@@ -54,6 +59,7 @@ public:
     ActionThreadPriv()
     {
         running = false;
+        iface   = 0;
     }
 
     class Task
@@ -79,13 +85,17 @@ public:
     KPSaveSettingsWidget::OutputFormat outputFormat;
 
     RawDecodingSettings                rawDecodingSettings;
+
+    Interface*                         iface;
 };
 
-ActionThread::ActionThread(QObject* const parent, bool updateFileTimeStamp)
+ActionThread::ActionThread(QObject* const parent, Interface* const iface)
     : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
-    d->dcrawIface.setUpdateFileTimeStamp(updateFileTimeStamp);
+    d->iface = iface;
+    KPHostSettings hSettings(d->iface);
+    d->dcrawIface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 }
 
 ActionThread::~ActionThread()
@@ -229,7 +239,10 @@ void ActionThread::run()
                 {
                     // Identify Camera model.
                     DcrawInfoContainer info;
-                    d->dcrawIface.rawFileIdentify(info, t->fileUrl.path());
+                    {
+                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        d->dcrawIface.rawFileIdentify(info, t->fileUrl.toLocalFile());
+                    }
 
                     QString identify = i18n("Cannot identify RAW image");
                     if (info.isDecodable)
@@ -238,7 +251,7 @@ void ActionThread::run()
                             identify = info.make + QString("-") + info.model;
                         else
                         {
-                            identify = i18n("<br>Make: %1<br>", info.make);
+                            identify = i18n("<br>Make: %1<br>",   info.make);
                             identify.append(i18n("Model: %1<br>", info.model));
 
                             if (info.dateTime.isValid())
@@ -283,7 +296,10 @@ void ActionThread::run()
                 {
                     // Get embedded RAW file thumbnail.
                     QImage image;
-                    d->dcrawIface.loadDcrawPreview(image, t->fileUrl.path());
+                    {
+                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        d->dcrawIface.loadDcrawPreview(image, t->fileUrl.toLocalFile());
+                    }
 
                     ActionData ad;
                     ad.action  = t->action;
@@ -303,8 +319,12 @@ void ActionThread::run()
                     emit starting(ad1);
 
                     QString destPath;
-                    bool result = d->dcrawIface.decodeHalfRAWImage(t->fileUrl.path(), destPath,
-                                                                   t->outputFormat, t->decodingSettings);
+                    bool result = false;
+                    {
+                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        result = d->dcrawIface.decodeHalfRAWImage(t->fileUrl.toLocalFile(), destPath,
+                                                                  t->outputFormat, t->decodingSettings);
+                    }
 
                     ActionData ad2;
                     ad2.action   = PREVIEW;
@@ -324,8 +344,12 @@ void ActionThread::run()
                     emit starting(ad1);
 
                     QString destPath;
-                    bool result = d->dcrawIface.decodeRAWImage(t->fileUrl.path(), destPath,
-                                                               t->outputFormat, t->decodingSettings);
+                    bool result = false;
+                    {
+                        FileReadLocker lock(d->iface, t->fileUrl.toLocalFile());
+                        result = d->dcrawIface.decodeRAWImage(t->fileUrl.toLocalFile(), destPath,
+                                                              t->outputFormat, t->decodingSettings);
+                    }
 
                     ActionData ad2;
                     ad2.action   = PROCESS;
