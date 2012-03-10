@@ -41,11 +41,11 @@ namespace KIPIImgurExportPlugin
 ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const parent)
     : KDialog(parent)
 {
-
     m_widget     = new ImgurWidget(interface, this);
     m_webService = new ImgurTalker(interface, this);
 
     setMainWidget(m_widget);
+    setMinimumWidth(600);
 
     setWindowIcon(KIcon("imgur"));
     setWindowTitle(i18n("Export to imgur.com"));
@@ -138,9 +138,9 @@ void ImgurWindow::slotButtonClicked(int button)
             done(Close);
             break;
         default:
-            KDialog::slotButtonClicked(button);
             break;
     }
+    KDialog::slotButtonClicked(button);
 }
 
 void ImgurWindow::reactivate()

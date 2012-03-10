@@ -82,6 +82,10 @@ public Q_SLOTS:
     void slotAddPhotoSuccess(ImgurSuccess success);
     void slotAddPhotoError(ImgurError error);
 
+Q_SIGNALS:
+    void signalImageUploadSuccess(const KUrl, ImgurSuccess);
+    void signalImageUploadError(const KUrl, ImgurError);
+
 private:
 
     void uploadNextItem();

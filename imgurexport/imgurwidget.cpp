@@ -48,9 +48,8 @@ ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-    m_headerLbl = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
-    m_headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
+    m_headerLbl = new QLabel(this);
+    m_headerLbl->setText(i18n("<b><h2><a href='http://imgur.com'>imgur.com</a></h2></b>"));
     m_headerLbl->setOpenExternalLinks(true);
     m_headerLbl->setFocusPolicy(Qt::NoFocus);
 
@@ -66,9 +65,13 @@ ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
     // --------------------------------------------
 
     settingsBoxLayout->addWidget(m_headerLbl);
+    settingsBoxLayout->setAlignment(m_headerLbl, Qt::AlignTop);
     settingsBoxLayout->addWidget(m_textLbl);
+    settingsBoxLayout->setAlignment(m_textLbl, Qt::AlignTop);
 
     settingsBoxLayout->addWidget(m_progressBar);
+    settingsBoxLayout->setAlignment(m_progressBar, Qt::AlignBottom);
+
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 

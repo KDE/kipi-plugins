@@ -22,6 +22,10 @@
 
 #include "imgurimageslist.moc"
 
+// Qt includes
+
+#include <QLabel>
+
 // KDE includes
 
 #include <kdebug.h>
@@ -30,7 +34,6 @@
 // Local includes
 
 #include "kpmetadata.h"
-#include "imgurtalker.h"
 
 namespace KIPIImgurExportPlugin
 {
@@ -38,12 +41,17 @@ namespace KIPIImgurExportPlugin
 ImgurImagesList::ImgurImagesList(Interface* const interface, QWidget* const parent)
     : KPImagesList(interface, parent)
 {
-    //setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
-    listView()->setColumnLabel(KPImagesListView::Filename, i18n("Raw File"));
+    listView()->setColumnLabel(KPImagesListView::Thumbnail, i18n("Thumbnail"));
+    listView()->setColumnLabel(KPImagesListView::Filename, i18n("File name"));
+
+    listView()->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::TITLE),
+                               i18n("Submission title"));
+    listView()->setColumnLabel(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DESCRIPTION),
+                               i18n("Submission description"));
     listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::URL),
                           i18n("Imgur URL"), true);
-    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DELETEURL),
-                          i18n("Imgur Delete URL"), true);
+//    listView()->setColumn(static_cast<KIPIPlugins::KPImagesListView::ColumnType>(ImgurImagesList::DeleteURL),
+//                          i18n("Imgur Delete URL"), true);
 }
 
 ImgurImagesList::~ImgurImagesList()
@@ -101,15 +109,23 @@ void ImgurImagesList::slotAddImages(const KUrl::List& list)
     emit signalImageListChanged();
 }
 
-void ImgurImagesList::slotImageChanged (const KUrl& imageUrl, ImgurSuccess success) {
-    KPMetadata meta(imageUrl.toLocalFile());
+void ImgurImagesList::slotImageChanged (const KUrl localFile, ImgurSuccess success) {
+    for (int i = 0; i < listView()->topLevelItemCount(); ++i)
+    {
+        ImgurImageListViewItem* currItem = dynamic_cast<ImgurImageListViewItem*>(listView()->topLevelItem(i));
+        if (currItem && currItem->url() == localFile)
+        {
+            if (!success.links.imgur_page.isEmpty()) {
+                const QString sUrl = success.links.imgur_page.toEncoded();
+                currItem->setUrl(sUrl);
+            }
 
-    if (!sUrl.isEmpty()) {
-        currItem->setUrl(success.links.imgur_page);
-    }
-
-    if (!sDeleteUrl.isEmpty()) {
-        currItem->setDeleteUrl(success.links.delete_page);
+            if (!success.links.delete_page.isEmpty()) {
+                const QString sDeleteUrl = success.links.delete_page.toEncoded();
+                currItem->setDeleteUrl(sDeleteUrl);
+            }
+            break;
+        }
     }
 }
 
@@ -126,8 +142,7 @@ ImgurImageListViewItem::~ImgurImageListViewItem()
 
 void ImgurImageListViewItem::setUrl(const QString& str)
 {
-    m_Url = str;
-    setText(ImgurImagesList::URL, m_Url);
+    setText(ImgurImagesList::URL, str);
 }
 
 QString ImgurImageListViewItem::Url() const
@@ -137,8 +152,7 @@ QString ImgurImageListViewItem::Url() const
 
 void ImgurImageListViewItem::setDeleteUrl(const QString& str)
 {
-    m_deleteUrl = str;
-    setText(ImgurImagesList::DELETEURL, m_deleteUrl);
+    setText(ImgurImagesList::DELETEURL, str);
 }
 
 QString ImgurImageListViewItem::deleteUrl() const

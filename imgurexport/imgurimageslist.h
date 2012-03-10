@@ -34,6 +34,7 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "imgurtalker.h"
 
 using namespace KIPI;
 using namespace KIPIPlugins;
@@ -49,8 +50,10 @@ public:
     /* The different columns in a list. */
     enum FieldType
     {
-        URL = KPImagesListView::User1,
-        DELETEURL = KPImagesListView::User2
+        TITLE           = KPImagesListView::User1,
+        DESCRIPTION     = KPImagesListView::User2,
+        URL             = KPImagesListView::User3,
+        DELETEURL       = KPImagesListView::User4
     };
 
     ImgurImagesList(Interface* const iface, QWidget* const parent = 0);
@@ -64,7 +67,7 @@ public:
 
 public Q_SLOTS:
     virtual void slotAddImages(const KUrl::List& list);
-    virtual void slotImageChanged (const KUrl& imageUrl, ImgurSuccess success);
+    virtual void slotImageChanged (const KUrl imageUrl, ImgurSuccess success);
 };
 
 // -------------------------------------------------------------------------
@@ -87,6 +90,8 @@ public:
 
 private:
 
+    QString m_Title;
+    QString m_Description;
     QString m_Url;
     QString m_deleteUrl;
 };
