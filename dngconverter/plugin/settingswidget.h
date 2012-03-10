@@ -27,6 +27,13 @@
 
 #include <QWidget>
 
+namespace KIPI
+{
+    class Interface;
+}
+
+using namespace KIPI;
+
 namespace KIPIDNGConverterPlugin
 {
 
@@ -44,7 +51,7 @@ public:
 
 public:
 
-    SettingsWidget(QWidget* parent);
+    SettingsWidget(QWidget* const parent, Interface* const iface);
     ~SettingsWidget();
 
     ConflictRule conflictRule();

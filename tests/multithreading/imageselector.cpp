@@ -30,6 +30,7 @@
 
 // KDE includes
 
+#include <klocale.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 
@@ -66,7 +67,8 @@ ImageSelector::ImageSelector()
     : KDialog(0), d(new ImageSelectorPriv)
 {
     setButtons(Apply | Close);
-    setDefaultButton(KDialog::Close);
+    setButtonText(Apply, i18n("Rotate Items"));
+    setDefaultButton(Close);
     setModal(false);
 
     d->page                 = new QWidget(this);
@@ -117,7 +119,7 @@ void ImageSelector::slotStart()
 
     // Rotate the selected images by 180 degrees
     // It can be converted to gray scale also, just change the function here
-    d->thread->rotate(selectedImages, KIPIJPEGLossLessPlugin::Rot180);
+    d->thread->rotate(selectedImages, KIPIJPEGLossLessPlugin::Rot90);
     d->thread->start();
 }
 
@@ -130,6 +132,7 @@ void ImageSelector::slotFinished(const KUrl& url, int)
 {
     d->listView->processed(url, true);
     d->progressBar->setValue(d->progressBar->value()+1);
+    d->listView->updateThumbnail(url);
 }
 
 void ImageSelector::slotFailed(const KUrl& url, int, const QString&)

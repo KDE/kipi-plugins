@@ -382,6 +382,9 @@ bool BatchProcessImagesDialog::startProcess()
     BatchProcessImagesItem* item = static_cast<BatchProcessImagesItem*>(**m_listFile2Process_iterator);
     m_listFiles->setCurrentItem(item);
 
+    // Lock current item into KIPI host application
+    KPFileReadLocker(m_interface, item->pathSrc());
+
     if (prepareStartProcess(item, targetAlbum) == false)   // If there is a problem during the
     {                                                   // preparation -> pass to the next item!
         ++*m_listFile2Process_iterator;

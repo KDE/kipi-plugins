@@ -40,6 +40,12 @@
 
 #include "kpsavesettingswidget.h"
 
+namespace KIPI
+{
+    class Interface;
+}
+
+using namespace KIPI;
 using namespace KIPIPlugins;
 using namespace KDcrawIface;
 
@@ -54,7 +60,7 @@ class ActionThread : public QThread
 
 public:
 
-    explicit ActionThread(QObject* const parent, bool updateFileTimeStamp=false);
+    explicit ActionThread(QObject* const parent, Interface* const iface);
     ~ActionThread();
 
     void setRawDecodingSettings(RawDecodingSettings rawDecodingSettings, 

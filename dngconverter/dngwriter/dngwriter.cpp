@@ -690,7 +690,8 @@ int DNGWriter::convert()
         long int   num, den;
         long       val;
         QString    str;
-        KPMetadata meta;
+        KPMetadata meta;    // NOTE : no need to lock item through KIPI::Interface, it's a temp file processed.
+
         if (meta.load(inputFile()))
         {
             // Time from original shot

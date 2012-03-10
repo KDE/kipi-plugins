@@ -170,7 +170,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                                  + QString::number(QDateTime::currentDateTime().toTime_t());
 
     // Metadata restoration and update.
-    KPMetadata meta;
+    KPMetadata meta;    // NOTE : no need to lock item through KIPI::Interface, it's a temp file processed.
 
 #if KEXIV2_VERSION >= 0x000600
     meta.setUpdateFileTimeStamp(m_updateFileTimeStamp);

@@ -48,7 +48,7 @@ public:
     Interface* iface;
 };
 
-KPProgressWidget::KPProgressWidget(Interface* iface, QWidget* parent)
+KPProgressWidget::KPProgressWidget(Interface* const iface, QWidget* const parent)
     : QProgressBar(parent), d(new KPProgressWidgetPriv)
 {
     d->iface = iface;

@@ -45,7 +45,7 @@ class KIPIPLUGINS_EXPORT KPRawThumbThread : public QThread
 
 public:
 
-    explicit KPRawThumbThread(QObject* parent, int size=256);
+    explicit KPRawThumbThread(QObject* const parent, int size=256);
     ~KPRawThumbThread();
 
     void getRawThumb(const KUrl& url);

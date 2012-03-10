@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-#include "actionthread.h"
+#include "actionthread.moc"
 
 // C ANSI includes
 
@@ -87,24 +87,24 @@ protected:
     {
         switch (action)
         {
-            case KIPIJPEGLossLessPlugin::Rotate:
+            case Rotate:
             {
-                KIPIJPEGLossLessPlugin::ImageRotate imageRotate;
+                ImageRotate imageRotate;
                 imageRotate.rotate(fileUrl.toLocalFile(), rotAction, errString, updateFileStamp);
 
                 break;
             }
-            case KIPIJPEGLossLessPlugin::Flip:
+            case Flip:
             {
 
                 ImageFlip imageFlip;
                 imageFlip.flip(fileUrl.toLocalFile(), flipAction, errString, updateFileStamp);
 
             }
-            case KIPIJPEGLossLessPlugin::GrayScale:
+            case GrayScale:
             {
 
-                KIPIJPEGLossLessPlugin::ImageGrayScale imageGrayScale;
+                ImageGrayScale imageGrayScale;
                 imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString, updateFileStamp);
 
 
@@ -191,9 +191,9 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        ActionThread::Task* t    = new Task(this, m_updateFileStamp);
-        t->fileUrl               = *it;
-        t->action                = KIPIJPEGLossLessPlugin::GrayScale;
+        ActionThread::Task* t = new Task(this, m_updateFileStamp);
+        t->fileUrl            = *it;
+        t->action             = GrayScale;
 
         connect(t, SIGNAL(started(ThreadWeaver::Job*)),
                 this, SLOT(slotJobStarted(ThreadWeaver::Job*)));

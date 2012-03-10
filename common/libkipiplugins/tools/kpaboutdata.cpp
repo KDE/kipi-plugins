@@ -39,7 +39,7 @@ namespace KIPIPlugins
 
 KPAboutData::KPAboutData(const KLocalizedString& pluginName,
                          const QByteArray& /*pluginVersion*/,
-                         enum LicenseKey licenseType,
+                         enum  LicenseKey licenseType,
                          const KLocalizedString& pluginDescription,
                          const KLocalizedString& copyrightStatement)
            : KAboutData (QByteArray("kipiplugins"),  // Name without minus separator for KDE bug report.

@@ -132,7 +132,7 @@ BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const ab
 
     // ---------------------------------------------------------------
 
-    d->settingsBox = new SettingsWidget(d->page);
+    d->settingsBox = new SettingsWidget(d->page, d->iface);
 
     d->progressBar = new KPProgressWidget(d->iface, d->page);
     d->progressBar->setMaximumHeight(fontMetrics().height()+2);
@@ -162,7 +162,7 @@ BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const ab
 
     // ---------------------------------------------------------------
 
-    d->thread = new ActionThread(this);
+    d->thread = new ActionThread(this, d->iface);
 
     // ---------------------------------------------------------------
 

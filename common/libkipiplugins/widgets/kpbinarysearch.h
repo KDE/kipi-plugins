@@ -55,7 +55,7 @@ public:
 
 public:
 
-    KPBinarySearch(QWidget* parent);
+    KPBinarySearch(QWidget* const parent);
     ~KPBinarySearch();
 
     void addBinary(KPBinaryIface& binary);
@@ -64,7 +64,7 @@ public:
 
 public Q_SLOTS:
 
-    void slotAreBinariesFound(void);
+    void slotAreBinariesFound();
 
 Q_SIGNALS:
 

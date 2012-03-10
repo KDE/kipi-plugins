@@ -56,7 +56,7 @@ namespace KIPIPlugins
   * The caller must have already opened the device, and is responsible
   * for closing it after finishing compression.
   */
-KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* outfile);
+KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_dest(j_compress_ptr cinfo, QIODevice* const outfile);
 
 /**
   * a replacement function for jpeg_stdio_src
@@ -67,7 +67,7 @@ KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice*
   * The caller must have already opened the device, and is responsible
   * for closing it after finishing reading.
   */
-KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_src (j_decompress_ptr cinfo, QIODevice* infile);
+KIPIPLUGINS_EXPORT void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const infile);
 
 /**
   * a callback function for writing a png image

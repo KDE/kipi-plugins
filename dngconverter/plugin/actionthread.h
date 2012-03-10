@@ -35,6 +35,13 @@
 
 #include "settingswidget.h"
 
+namespace KIPI
+{
+    class Interface;
+}
+
+using namespace KIPI;
+
 namespace KIPIDNGConverterPlugin
 {
 
@@ -46,7 +53,7 @@ class ActionThread : public QThread
 
 public:
 
-    ActionThread(QObject* parent);
+    ActionThread(QObject* const parent, Interface* const iface);
     ~ActionThread();
 
     void setBackupOriginalRawFile(bool b);

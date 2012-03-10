@@ -80,16 +80,16 @@ public:
 
 private:
 
-    void   writeRawProfile(png_struct* ping, png_info* ping_info, char* profile_type,
-                           char* profile_data, png_uint_32 length);
+    void   writeRawProfile(png_struct* const ping, png_info* const ping_info, char* const profile_type,
+                           char* const profile_data, png_uint_32 length);
 
-    size_t concatenateString(char* destination, const char* source, const size_t length);
-    size_t copyString(char* destination, const char* source, const size_t length);
-    long   formatString(char* string, const size_t length, const char* format, ...);
-    long   formatStringList(char* string, const size_t length, const char *format, va_list operands);
+    size_t concatenateString(char* const destination, const char* source, const size_t length);
+    size_t copyString(char* const destination, const char* source, const size_t length);
+    long   formatString(char* const string, const size_t length, const char* format, ...);
+    long   formatStringList(char* const string, const size_t length, const char* format, va_list operands);
 
-    void tiffSetExifAsciiTag(TIFF* tif, ttag_t tiffTag, const KPMetadata& metadata, const char* exifTagName);
-    void tiffSetExifDataTag(TIFF* tif, ttag_t tiffTag, const KPMetadata& metadata, const char* exifTagName);
+    void tiffSetExifAsciiTag(TIFF* const tif, ttag_t tiffTag, const KPMetadata& metadata, const char* exifTagName);
+    void tiffSetExifDataTag(TIFF* const tif, ttag_t tiffTag, const KPMetadata& metadata, const char* exifTagName);
 
     int bytesDepth() const;
 

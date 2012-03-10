@@ -48,16 +48,16 @@ class KIPIPLUGINS_EXPORT KPWeaverObserver : public WeaverObserver
 
 public:
 
-    KPWeaverObserver(QObject* parent=0);
+    KPWeaverObserver(QObject* const parent=0);
     ~KPWeaverObserver();
 
 protected Q_SLOTS:
 
-    void slotWeaverStateChanged(State*);
-    void slotThreadStarted(Thread*);
-    void slotThreadBusy(Thread*, Job*);
-    void slotThreadSuspended(Thread*);
-    void slotThreadExited(Thread*);
+    void slotWeaverStateChanged(ThreadWeaver::State*);
+    void slotThreadStarted(ThreadWeaver::Thread*);
+    void slotThreadBusy(ThreadWeaver::Thread*, ThreadWeaver::Job*);
+    void slotThreadSuspended(ThreadWeaver::Thread*);
+    void slotThreadExited(ThreadWeaver::Thread*);
 };
 
 }  // namespace KIPIPlugins

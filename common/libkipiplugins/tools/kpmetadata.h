@@ -33,9 +33,27 @@
 #include <libkexiv2/kexiv2.h>
 #include <libkexiv2/rotationmatrix.h>
 
+// LibKipi includes
+
+#include <libkipi/version.h>
+
 // Local includes
 
 #include "kipiplugins_export.h"
+
+// Wrapper for KIPI file locker
+
+#if KIPI_VERSION >= 0x010500
+    #define KPFileReadLocker(iface, url) if (iface) FileReadLocker(iface, url);
+#else
+    #define KPFileReadLocker(iface, url)
+#endif
+
+#if KIPI_VERSION >= 0x010500
+    #define KPFileWriteLocker(iface, url) if (iface) FileWriteLocker(iface, url);
+#else
+    #define KPFileWriteLocker(iface, url)
+#endif
 
 namespace KIPI
 {
@@ -80,14 +98,6 @@ public:
      */
     KPMetadata(const QString& filePath, Interface* const iface);
 
-    /** Copy Constructor.
-     */
-    KPMetadata(const KPMetadata& other);
-
-    /** Assignement operator.
-     */
-    KPMetadata& operator=(const KPMetadata& other);
-    
 public:
 
     /** Apply metadata settings from KIPI host application to this interface. To use before load and save operations.
@@ -111,8 +121,7 @@ public:
 
 private:
 
-    class KPMetadataPrivate;
-    KPMetadataPrivate* d;
+    Interface* m_iface;
 };
 
 }  // namespace KIPIPlugins

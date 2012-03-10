@@ -50,7 +50,7 @@ struct KPBinarySearch::KPBinarySearchPriv
 
 };
 
-KPBinarySearch::KPBinarySearch(QWidget* parent)
+KPBinarySearch::KPBinarySearch(QWidget* const parent)
     : QTreeWidget(parent), d(new KPBinarySearchPriv)
 {
     setIconSize(QSize(KIconLoader::SizeSmall, KIconLoader::SizeSmall));

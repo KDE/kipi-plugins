@@ -38,8 +38,6 @@
 #include <QTimer>
 #include <QFile>
 #include <QPointer>
-#include <QXmlStreamWriter>
-#include <QXmlStreamReader>
 #include <QXmlStreamAttributes>
 #include <QStringRef>
 
@@ -53,8 +51,8 @@
 #include <knuminput.h>
 #include <kio/previewjob.h>
 #include <kpixmapsequence.h>
-#include <KFileDialog>
-#include <KGlobalSettings>
+#include <kfiledialog.h>
+#include <kglobalsettings.h>
 
 // LibKIPI includes
 

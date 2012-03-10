@@ -69,7 +69,7 @@ public:
     KPWeaverObserver*     log;
 };
 
-KPActionThreadBase::KPActionThreadBase(QObject* parent)
+KPActionThreadBase::KPActionThreadBase(QObject* const parent)
     : QThread(parent), d(new KPActionThreadBasePriv)
 {
     const int maximumNumberOfThreads = qMax(Device::listFromType(DeviceInterface::Processor).count(), 1);

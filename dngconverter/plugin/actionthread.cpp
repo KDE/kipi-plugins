@@ -41,12 +41,18 @@
 #include <libkdcraw/dcrawinfocontainer.h>
 #include <libkdcraw/kdcraw.h>
 
+// LibKIPI includes
+
+#include <libkipi/interface.h>
+
 // Local includes
 
 #include "actions.h"
 #include "dngwriter.h"
+#include "kpmetadata.h"
 
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 using namespace DNGIface;
 
 namespace KIPIDNGConverterPlugin
@@ -63,6 +69,7 @@ public:
         updateFileDate        = false;
         running               = false;
         previewMode           = DNGWriter::MEDIUM;
+        iface                 = 0;
     }
 
     class Task
@@ -87,12 +94,15 @@ public:
     QList<Task*>   todo;
 
     DNGWriter      dngProcessor;
+
+    Interface*     iface;
 };
 
-ActionThread::ActionThread(QObject* parent)
+ActionThread::ActionThread(QObject* const parent, Interface* const iface)
             : QThread(parent), d(new ActionThreadPriv)
 {
     qRegisterMetaType<ActionData>();
+    d->iface = iface;
 }
 
 ActionThread::~ActionThread()
@@ -200,7 +210,10 @@ void ActionThread::run()
                 {
                     // Identify Camera model.
                     DcrawInfoContainer info;
-                    KDcraw::rawFileIdentify(info, t->fileUrl.path());
+                    {
+                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
+                        KDcraw::rawFileIdentify(info, t->fileUrl.toLocalFile());
+                    }
 
                     QString identify = i18n("Cannot identify Raw image");
                     if (info.isDecodable)
@@ -225,24 +238,30 @@ void ActionThread::run()
                     ad1.starting = true;
                     emit starting(ad1);
 
-                    QFileInfo fi(t->fileUrl.path());
-                    QString destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-"
-                                     + QString::number(QDateTime::currentDateTime().toTime_t());
+                    int     ret = 0;
+                    QString destPath;
 
-                    d->dngProcessor.reset();
-                    d->dngProcessor.setInputFile(t->fileUrl.path());
-                    d->dngProcessor.setOutputFile(destPath);
-                    d->dngProcessor.setBackupOriginalRawFile(d->backupOriginalRawFile);
-                    d->dngProcessor.setCompressLossLess(d->compressLossLess);
-                    d->dngProcessor.setUpdateFileDate(d->updateFileDate);
-                    d->dngProcessor.setPreviewMode(d->previewMode);
-                    int ret = d->dngProcessor.convert();
+                    {
+                        KPFileReadLocker(d->iface, t->fileUrl.toLocalFile());
+                        QFileInfo fi(t->fileUrl.toLocalFile());
+                        destPath = fi.absolutePath() + QString("/") + ".kipi-dngconverter-tmp-" +
+                                   QString::number(QDateTime::currentDateTime().toTime_t());
+
+                        d->dngProcessor.reset();
+                        d->dngProcessor.setInputFile(t->fileUrl.toLocalFile());
+                        d->dngProcessor.setOutputFile(destPath);
+                        d->dngProcessor.setBackupOriginalRawFile(d->backupOriginalRawFile);
+                        d->dngProcessor.setCompressLossLess(d->compressLossLess);
+                        d->dngProcessor.setUpdateFileDate(d->updateFileDate);
+                        d->dngProcessor.setPreviewMode(d->previewMode);
+                        ret = d->dngProcessor.convert();
+                    }
 
                     ActionData ad2;
                     ad2.action   = PROCESS;
                     ad2.fileUrl  = t->fileUrl;
                     ad2.destPath = destPath;
-                    ad2.success  = ret == 0 ? true : false;
+                    ad2.success  = (ret == 0) ? true : false;
                     emit finished(ad2);
                     break;
                 }
