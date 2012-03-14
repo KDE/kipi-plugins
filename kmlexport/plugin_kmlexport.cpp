@@ -122,5 +122,5 @@ Category Plugin_KMLExport::category(KAction* action) const
     }
 
     kWarning() << "Unrecognized action for plugin category identification" ;
-    return ImagesPlugin; // no warning from compiler, please
+    return ExportPlugin; // no warning from compiler, please
 }

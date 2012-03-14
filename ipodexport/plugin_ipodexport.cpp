@@ -103,5 +103,5 @@ KIPI::Category Plugin_iPodExport::category(KAction* action) const
     if ( action == m_actionImageUpload )
         return KIPI::ExportPlugin;
 
-    return KIPI::ImagesPlugin; // no warning from compiler, please
+    return KIPI::ExportPlugin; // no warning from compiler, please
 }
