@@ -69,10 +69,6 @@ QString PluginCategoriesToString(const KIPI::Category& category)
             categorystring = i18n("Images");
             break;
 
-        case KIPI::EffectsPlugin:
-            categorystring = i18n("Effect");
-            break;
-
         case KIPI::ToolsPlugin:
             categorystring = i18n("Tool");
             break;
