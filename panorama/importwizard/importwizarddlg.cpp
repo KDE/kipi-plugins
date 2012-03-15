@@ -124,14 +124,14 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     connect(d->itemsPage, SIGNAL(signalItemsPageIsValid(bool)),
             this, SLOT(slotItemsPageIsValid(bool)));
 
-    connect(d->preProcessingPage, SIGNAL(signalPreProcessed(ItemUrlsMap)),
-            this, SLOT(slotPreProcessed(ItemUrlsMap)));
+    connect(d->preProcessingPage, SIGNAL(signalPreProcessed(bool)),
+            this, SLOT(slotPreProcessed(bool)));
 
-    connect(d->optimizePage, SIGNAL(signalOptimized(KUrl)),
-            this, SLOT(slotOptimized(KUrl)));
+    connect(d->optimizePage, SIGNAL(signalOptimized(bool)),
+            this, SLOT(slotOptimized(bool)));
 
-    connect(d->previewPage, SIGNAL(signalStitchingFinished(KUrl)),
-            this, SLOT(slotStitchingFinished(KUrl)));
+    connect(d->previewPage, SIGNAL(signalStitchingFinished(bool)),
+            this, SLOT(slotStitchingFinished(bool)));
 
     connect(d->lastPage, SIGNAL(signalCopyFinished(bool)),
             this, SLOT(slotCopyFinished(bool)));
@@ -181,9 +181,6 @@ void ImportWizardDlg::next()
     }
     else if (currentPage() == d->previewPage->page())
     {
-        // Cancel any preview being processed
-        d->previewPage->cancel();
-
         // And start the final stitching process
         setValid(d->previewPage->page(), false);
         d->previewPage->startStitching();
@@ -262,9 +259,9 @@ void ImportWizardDlg::slotItemsPageIsValid(bool valid)
     setValid(d->itemsPage->page(), valid);
 }
 
-void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
+void ImportWizardDlg::slotPreProcessed(bool success)
 {
-    if (map.isEmpty())
+    if (!success)
     {
         // pre-processing failed.
         setValid(d->preProcessingPage->page(), false);
@@ -272,24 +269,21 @@ void ImportWizardDlg::slotPreProcessed(const ItemUrlsMap& map)
     else
     {
         // pre-processing Done.
-        d->mngr->setPreProcessedMap(map);
         setValid(d->preProcessingPage->page(), true);
         d->optimizePage->resetPage();
         KAssistantDialog::next();
     }
 }
 
-void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
+void ImportWizardDlg::slotOptimized(bool success)
 {
-    if (ptoUrl.isEmpty())
+    if (!success)
     {
         // Optimization failed.
         setValid(d->optimizePage->page(), false);
     }
     else
     {
-        d->mngr->setAutoOptimiseUrl(ptoUrl);
-
         // Optimization finished.
         setValid(d->optimizePage->page(), true);
         setValid(d->previewPage->page(), true);
@@ -300,20 +294,19 @@ void ImportWizardDlg::slotOptimized(const KUrl& ptoUrl)
     }
 }
 
-void ImportWizardDlg::slotStitchingFinished(const KUrl& url)
+void ImportWizardDlg::slotStitchingFinished(bool success)
 {
-    if (url != KUrl())
+    if (success)
     {
-        d->mngr->setPanoUrl(url);
+        setValid(d->previewPage->page(), true);
+        KAssistantDialog::next();
+        d->lastPage->resetTitle();
     }
-    setValid(d->previewPage->page(), true);
-    KAssistantDialog::next();
-    d->lastPage->resetTitle();
 }
 
-void ImportWizardDlg::slotCopyFinished(bool ok)
+void ImportWizardDlg::slotCopyFinished(bool success)
 {
-    if (ok)
+    if (success)
     {
         QDialog::accept();
     }

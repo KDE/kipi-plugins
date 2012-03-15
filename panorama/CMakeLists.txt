@@ -56,6 +56,7 @@ KDE4_ADD_LIBRARY(libpanorama STATIC ${panorama_common_SRCS})
 
 TARGET_LINK_LIBRARIES(libpanorama
                       ${KDE4_KPARTS_LIBS}
+                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       ${KEXIV2_LIBRARIES}

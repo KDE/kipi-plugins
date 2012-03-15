@@ -53,7 +53,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalOptimized(const KUrl&);
+    void signalOptimized(bool);
 
 private Q_SLOTS:
 

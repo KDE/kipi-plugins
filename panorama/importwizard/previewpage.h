@@ -51,11 +51,12 @@ public:
 
 Q_SIGNALS:
 
-    void signalStitchingFinished(const KUrl&);
+    void signalStitchingFinished(bool);
 
 private Q_SLOTS:
 
     void slotAction(const KIPIPanoramaPlugin::ActionData&);
+    void slotGetPreviewFile(const KUrl&);
 
 private:
 

@@ -36,6 +36,10 @@
 
 #include <kurl.h>
 
+// LibKDcraw includes
+
+#include <libkdcraw/kdcraw.h>
+
 // Local includes
 
 #include "ptotype.h"
@@ -46,11 +50,18 @@ namespace KIPIPanoramaPlugin
 enum Action
 {
     NONE = 0,
-    PREPROCESS,
+    PREPROCESS_INPUT,
+    CREATEPTO,
+    CPFIND,
+    CPCLEAN,
     OPTIMIZE,
-    PREVIEW,
-    STITCH,
+    CREATEPREVIEWPTO,
+    CREATEMK,
+    CREATEMKPREVIEW,
     NONAFILE,
+    NONAFILEPREVIEW,
+    STITCH,
+    STITCHPREVIEW,
     COPY
 };
 
@@ -79,18 +90,9 @@ struct ActionData
     bool                starting;
     bool                success;
 
-    QString             message;
-
-    QImage              image;
-
-    KUrl::List          inUrls;
-    KUrl                outUrl;
-    KUrl                ptoUrl;
-    PTOType             ptoUrlData;
+    QString             message;        // Usually, an error message
 
     int                 id;
-
-    ItemUrlsMap         preProcessedUrlsMap;
 
     Action              action;
 };

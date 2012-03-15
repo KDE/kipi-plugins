@@ -113,6 +113,15 @@ Manager::Manager(QObject* parent)
 {
     d->thread                               = new ActionThread(this);
     d->rawDecodingSettings.sixteenBitsImage = true;
+
+    connect(d->thread, SIGNAL(itemUrlsMapReady(ItemUrlsMap)),
+            this, SLOT(setPreProcessedMap(ItemUrlsMap)));
+    connect(d->thread, SIGNAL(cpCleanPtoReady(KUrl)),
+            this, SLOT(setCPFindUrl(KUrl)));
+    connect(d->thread, SIGNAL(previewFileReady(KUrl)),
+            this, SLOT(setPreviewUrl(KUrl)));
+    connect(d->thread, SIGNAL(panoFileReady(KUrl)),
+            this, SLOT(setPanoUrl(KUrl)));
 }
 
 Manager::~Manager()
@@ -210,7 +219,7 @@ void Manager::setPreviewUrl(const KUrl& url)
     d->previewUrl = url;
 }
 
-KUrl Manager::previewUrl() const
+KUrl& Manager::previewUrl() const
 {
     return d->previewUrl;
 }
@@ -220,7 +229,7 @@ void Manager::setPanoUrl(const KUrl& url)
     d->panoUrl = url;
 }
 
-KUrl Manager::panoUrl() const
+KUrl& Manager::panoUrl() const
 {
     return d->panoUrl;
 }
@@ -240,7 +249,7 @@ void Manager::setItemsList(const KUrl::List& urls)
     d->inputUrls = urls;
 }
 
-KUrl::List Manager::itemsList() const
+KUrl::List& Manager::itemsList() const
 {
     return d->inputUrls;
 }
@@ -250,7 +259,7 @@ void Manager::setCPFindUrl(const KUrl& url)
     d->cpFindUrl = url;
 }
 
-KUrl Manager::cpFindUrl() const
+KUrl& Manager::cpFindUrl() const
 {
     return d->cpFindUrl;
 }
@@ -260,7 +269,7 @@ void Manager::setCPFindUrlData(const KIPIPanoramaPlugin::PTOType& urlData)
     d->cpFindUrlData = urlData;
 }
 
-PTOType Manager::cpFindUrlData() const
+PTOType& Manager::cpFindUrlData() const
 {
     return d->cpFindUrlData;
 }
@@ -270,7 +279,7 @@ void Manager::setAutoOptimiseUrl(const KUrl& url)
     d->autoOptimiseUrl = url;
 }
 
-KUrl Manager::autoOptimiseUrl() const
+KUrl& Manager::autoOptimiseUrl() const
 {
     return d->autoOptimiseUrl;
 }
@@ -280,7 +289,7 @@ void Manager::setRawDecodingSettings(const RawDecodingSettings& settings)
     d->rawDecodingSettings = settings;
 }
 
-RawDecodingSettings Manager::rawDecodingSettings() const
+RawDecodingSettings& Manager::rawDecodingSettings() const
 {
     return d->rawDecodingSettings;
 }
@@ -290,7 +299,7 @@ void Manager::setPreProcessedMap(const ItemUrlsMap& urls)
     d->preProcessedUrlsMap = urls;
 }
 
-ItemUrlsMap Manager::preProcessedMap() const
+ItemUrlsMap& Manager::preProcessedMap() const
 {
     return d->preProcessedUrlsMap;
 }
@@ -303,11 +312,6 @@ ActionThread* Manager::thread() const
 void Manager::run()
 {
     startWizard();
-}
-
-void Manager::cleanUp()
-{
-    d->thread->cleanUpResultFiles();
 }
 
 void Manager::startWizard()

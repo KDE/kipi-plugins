@@ -28,6 +28,7 @@
 #include <QLabel>
 #include <QMutex>
 #include <QMutexLocker>
+#include <QTextDocument>
 
 // KDE includes
 
@@ -105,8 +106,14 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
     connect(d->mngr->thread(), SIGNAL(starting(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
 
+    connect(d->mngr->thread(), SIGNAL(stepFinished(KIPIPanoramaPlugin::ActionData)),
+            this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
+
+    connect(d->mngr->thread(), SIGNAL(previewFileReady(KUrl)),
+            this, SLOT(slotGetPreviewFile(KUrl)));
 }
 
 PreviewPage::~PreviewPage()
@@ -140,8 +147,14 @@ bool PreviewPage::cancel()
 
 void PreviewPage::computePreview()
 {
-    QMutexLocker lock(&d->actionMutex);
+    // Cancel any stitching being processed
+    if (d->stitchingBusy)
+    {
+        cancel();
+    }
+    d->mngr->thread()->finish();
 
+    QMutexLocker lock(&d->actionMutex);
     d->canceled = false;
 
     d->previewWidget->setBusy(true, i18n("Processing Panorama Preview..."));
@@ -159,7 +172,15 @@ void PreviewPage::computePreview()
 
 void PreviewPage::startStitching()
 {
+    // Cancel any preview being processed
+    if (d->previewBusy)
+    {
+        cancel();
+        d->mngr->thread()->finish();
+    }
+
     QMutexLocker lock(&d->actionMutex);
+    d->canceled = false;
 
     d->stitchingBusy = true;
     d->curProgress   = 0;
@@ -211,7 +232,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
             switch (ad.action)
             {
-                case PREVIEW :
+                case CREATEPREVIEWPTO:
+                case NONAFILEPREVIEW:
+                case STITCHPREVIEW:
                 {
                     if (!d->previewBusy)
                     {
@@ -221,24 +244,19 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewWidget->setBusy(false);
                     d->previewBusy = false;
                     kDebug() << "Preview compilation failed: " << ad.message;
-                    QString errorString("<qt><h2><b>Error</b></h2><p>" + ad.message + "</p></qt>");
+                    QString errorString(i18n("<qt><h2><b>Error</b></h2><p>%1</p></qt>", Qt::escape(ad.message)));
                     errorString.replace('\n', "</p><p>");
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
                     break;
                 }
-                case STITCH:
+                case NONAFILE:
                 {
                     if (!d->stitchingBusy)
                     {
                         return;
                     }
-                    d->postProcessing->addedAction(QString("Panorama compilation: ") + ad.message, ErrorMessage);
-                    kDebug() << "Enblend call failed";
-                    break;
-                }
-                case NONAFILE:
-                {
+                    d->stitchingBusy = false;
                     QStringList message;
                     message << "Processing file ";
                     message << QString::number(ad.id + 1);
@@ -248,6 +266,19 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     message << ad.message;
                     kDebug() << "Nona call failed for file #" << ad.id;
                     d->postProcessing->addedAction(message.join(""), ErrorMessage);
+                    emit signalStitchingFinished(false);
+                    break;
+                }
+                case STITCH:
+                {
+                    if (!d->stitchingBusy)
+                    {
+                        return;
+                    }
+                    d->stitchingBusy = false;
+                    d->postProcessing->addedAction(i18n("Panorama compilation: %1", Qt::escape(ad.message)), ErrorMessage);
+                    kDebug() << "Enblend call failed";
+                    emit signalStitchingFinished(false);
                     break;
                 }
                 default:
@@ -261,18 +292,29 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
         {
             switch (ad.action)
             {
-                case PREVIEW:
+                case CREATEPREVIEWPTO:
+                case NONAFILEPREVIEW:
+                {
+                    // Nothing to do yet, a step is finished, that's all
+                    break;
+                }
+                case STITCHPREVIEW:
                 {
                     if (!d->previewBusy)
                     {
                         return;
                     }
-                    d->previewUrl = ad.outUrl;
-                    d->mngr->setPreviewUrl(ad.outUrl);
-                    d->previewWidget->load(ad.outUrl.toLocalFile(), true);
-//                     d->previewWidget->setSelectionAreaPossible(true);
-                    kDebug() << "Preview URL: " << ad.outUrl.toLocalFile();
-
+                    kDebug() << "Preview Stitching finished";
+                    d->previewBusy = false;
+                    break;
+                }
+                case NONAFILE:
+                {
+                    QString message = i18n("Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
+                    d->postProcessing->addedAction(message, SuccessMessage);
+                    d->curProgress++;
+                    d->postProcessing->setProgress(d->curProgress, d->totalProgress);
+                    kDebug() << "Nona URL #" << ad.id;
                     break;
                 }
                 case STITCH:
@@ -281,25 +323,13 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     {
                         return;
                     }
-                    d->postProcessing->addedAction(QString("Panorama compilation"), SuccessMessage);
+                    d->stitchingBusy = false;
+                    d->postProcessing->addedAction(i18n("Panorama compilation"), SuccessMessage);
                     d->curProgress++;
                     d->postProcessing->setProgress(d->curProgress, d->totalProgress);
                     d->postProcessing->hide();
-                    kDebug() << "Panorama URL: " << ad.outUrl.toLocalFile();
-                    emit signalStitchingFinished(ad.outUrl);
-                    break;
-                }
-                case NONAFILE:
-                {
-                    QStringList message;
-                    message << "Processing file ";
-                    message << QString::number(ad.id + 1);
-                    message << " / ";
-                    message << QString::number(d->totalProgress - 1);
-                    d->postProcessing->addedAction(message.join(""), SuccessMessage);
-                    d->curProgress++;
-                    d->postProcessing->setProgress(d->curProgress, d->totalProgress);
-                    kDebug() << "Nona URL #" << ad.id << " URL: " << ad.outUrl.toLocalFile();
+                    kDebug() << "Panorama stitched";
+                    emit signalStitchingFinished(true);
                     break;
                 }
                 default:
@@ -314,19 +344,22 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
     {
         switch (ad.action)
         {
-            case STITCH:
+            case CREATEPREVIEWPTO:
+            case NONAFILEPREVIEW:
+            case STITCHPREVIEW:
             {
-                d->postProcessing->addedAction(QString("Panorama compilation"), StartingMessage);
+                // Nothing to do...
                 break;
             }
             case NONAFILE:
             {
-                QStringList message;
-                message << "Processing file ";
-                message << QString::number(ad.id + 1);
-                message << " / ";
-                message << QString::number(d->totalProgress - 1);
-                d->postProcessing->addedAction(message.join(""), StartingMessage);
+                QString message = i18n("Processing file %1 / %2", QString::number(ad.id + 1), QString::number(d->totalProgress - 1));
+                d->postProcessing->addedAction(message, StartingMessage);
+                break;
+            }
+            case STITCH:
+            {
+                d->postProcessing->addedAction(i18n("Panorama compilation"), StartingMessage);
                 break;
             }
             default:
@@ -336,6 +369,14 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
         }
     }
+}
+
+void PreviewPage::slotGetPreviewFile(const KUrl& previewUrl)
+{
+    d->previewUrl = previewUrl;
+    d->previewWidget->load(previewUrl.toLocalFile(), true);
+//     d->previewWidget->setSelectionAreaPossible(true);
+    kDebug() << "Preview URL: " << previewUrl;
 }
 
 }   // namespace KIPIPanoramaPlugin

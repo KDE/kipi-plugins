@@ -88,28 +88,22 @@ public:
     Interface* iface() const;
 
     void setItemsList(const KUrl::List& urls);
-    KUrl::List itemsList() const;
+    KUrl::List& itemsList() const;
 
-    void setCPFindUrl(const KUrl& url);
-    KUrl cpFindUrl() const;
+    KUrl& cpFindUrl() const;
 
-    void setCPFindUrlData(const PTOType& urlData);
-    PTOType cpFindUrlData() const;
+    PTOType& cpFindUrlData() const;
 
-    void setAutoOptimiseUrl(const KUrl& url);
-    KUrl autoOptimiseUrl() const;
+    KUrl& autoOptimiseUrl() const;
 
-    void setPreviewUrl(const KUrl& url);
-    KUrl previewUrl() const;
+    KUrl& previewUrl() const;
 
-    void setPanoUrl(const KUrl& url);
-    KUrl panoUrl() const;
+    KUrl& panoUrl() const;
 
     void setRawDecodingSettings(const RawDecodingSettings& settings);
-    RawDecodingSettings rawDecodingSettings() const;
+    RawDecodingSettings& rawDecodingSettings() const;
 
-    void setPreProcessedMap(const ItemUrlsMap& urls);
-    ItemUrlsMap preProcessedMap() const;
+    ItemUrlsMap& preProcessedMap() const;
 
     ActionThread*           thread() const;
     AutoOptimiserBinary&    autoOptimiserBinary() const;
@@ -122,10 +116,14 @@ public:
 
     void run();
 
-    /**
-     * Clean up all temporary files produced so far.
-     */
-    void cleanUp();
+private Q_SLOTS:
+
+    void setCPFindUrl(const KUrl& url);
+    void setCPFindUrlData(const PTOType& urlData);
+    void setAutoOptimiseUrl(const KUrl& url);
+    void setPreviewUrl(const KUrl& url);
+    void setPanoUrl(const KUrl& url);
+    void setPreProcessedMap(const ItemUrlsMap& urls);
 
 private:
 

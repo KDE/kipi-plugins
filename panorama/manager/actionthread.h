@@ -34,6 +34,7 @@
 
 #include <kurl.h>
 #include <kprocess.h>
+#include <threadweaver/JobCollection.h>
 
 // LibKDcraw includes
 
@@ -43,6 +44,7 @@
 
 #include "actions.h"
 #include "ptotype.h"
+#include "kpactionthreadbase.h"
 
 using namespace KDcrawIface;
 
@@ -51,7 +53,7 @@ namespace KIPIPanoramaPlugin
 
 struct ActionData;
 
-class ActionThread : public QThread
+class ActionThread : public KIPIPlugins::KPActionThreadBase
 {
     Q_OBJECT
 
@@ -64,6 +66,10 @@ public:
     }
     PanoramaFileType;
 
+private:
+
+    class Task;
+
 public:
 
     explicit ActionThread(QObject* const parent);
@@ -71,10 +77,10 @@ public:
 
     void setPreProcessingSettings(bool celeste, bool hdr, PanoramaFileType fileType,
                                   const RawDecodingSettings& settings);
-    void preProcessFiles(const KUrl::List& urlList, const QString& cpcleanPath,
-                         const QString& cpfindPath);
-    void optimizeProject(const KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize,
-                         const QString& autooptimiserPath);
+    void preProcessFiles(const KUrl::List& urlList, const QString& cpCleanPath,
+                         const QString& cpFindPath);
+    void optimizeProject(KUrl& ptoUrl, KUrl& optimizePtoUrl, bool levelHorizon,
+                         bool optimizeProjectionAndSize, const QString& autooptimiserPath);
     void generatePanoramaPreview(const KUrl& ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
                                  const QString& makePath, const QString& pto2mkPath,
                                  const QString& enblendPath, const QString& nonaPath);
@@ -83,52 +89,46 @@ public:
                         const QString& enblendPath, const QString& nonaPath);
     void copyFiles(const KUrl& ptoUrl, const KUrl& panoUrl, const KUrl& finalPanoUrl,
                    const ItemUrlsMap& preProcessedUrlsMap, bool savePTO);
-    void cancel();
-
-    /**
-     * Clean up all temporary results produced so far.
-     */
-    void cleanUpResultFiles();
 
 Q_SIGNALS:
 
     void starting(const KIPIPanoramaPlugin::ActionData& ad);
-    void stepFinished();
+    void stepFinished(const KIPIPanoramaPlugin::ActionData& ad);
     void finished(const KIPIPanoramaPlugin::ActionData& ad);
+
+    void itemUrlsMapReady(const ItemUrlsMap& items);
+    void ptoBaseReady(const KUrl& ptoUrl);
+    void cpFindPtoReady(const KUrl& cpFindPtoUrl);
+    void cpCleanPtoReady(const KUrl& cpCleanPtoUrl);
+    void optimizePtoReady(const KUrl& optimizePtoUrl);
+    void previewFileReady(const KUrl& previewFileUrl);
+    void panoFileReady(const KUrl& panoFileUrl);
+
+private Q_SLOTS:
+
+    void slotDone(ThreadWeaver::Job* j);
+    void slotStepDone(ThreadWeaver::Job* j);
+    void slotStarting(ThreadWeaver::Job* j);
+
+    void slotExtractItemUrlMaps(ThreadWeaver::Job* j);
+    void slotExtractPtoBase(ThreadWeaver::Job* j);
+    void slotExtractCpFindPto(ThreadWeaver::Job* j);
+    void slotExtractCpCleanPto(ThreadWeaver::Job* j);
+    void slotExtractOptimizePto(ThreadWeaver::Job* j);
+    void slotExtractPreviewUrl(ThreadWeaver::Job* j);
+    void slotExtractPanoUrl(ThreadWeaver::Job* j);
 
 private:
 
-    void    run();
-
-    bool    startPreProcessing(const KUrl::List& inUrls, ItemUrlsMap& preProcessedUrlsMap,
-                               const RawDecodingSettings& settings);
-    bool    startCPFind(KUrl& ptoUrl, bool celeste, const QString& cpfindPath, QString& errors);
-    bool    startCPClean(KUrl& ptoUrl, PTOType& ptoUrlData, const QString& cpcleanPath, QString& errors);
-    bool    startOptimization(KUrl& ptoUrl, bool levelHorizon, bool optimizeProjectionAndSize,
-                              const QString& autooptimiserPath, QString& errors);
-    bool    computePanoramaPreview(KUrl& ptoUrl, KUrl& previewUrl, const ItemUrlsMap& preProcessedUrlsMap,
-                                   const QString& makePath, const QString& pto2mkPath,
-                                   const QString& enblendPath, const QString& nonaPath, QString& errors);
-    bool    computePreview(const KUrl& inUrl, KUrl& outUrl);
-    bool    convertRaw(const KUrl& inUrl, KUrl& outUrl, const RawDecodingSettings& settings);
-    bool    isRawFile(const KUrl& url);
-    bool    createPTO(bool hdr, PanoramaFileType fileType, const KUrl::List& inUrls,
-                      const KIPIPanoramaPlugin::ItemUrlsMap& urlList, KUrl& ptoUrl);
-    bool    createMK(KUrl& ptoUrl, KUrl& mkUrl, KUrl& panoUrl, PanoramaFileType fileType,
-                     const QString& pto2mkPath, const QString& enblendPath,
-                     const QString& nonaPath, QString& errors);
-    bool    compileMK(KUrl& mkUrl, const QString& makePath, QString& errors);
-    bool    compileMKStepByStep(KUrl& mkUrl, const KIPIPanoramaPlugin::ItemUrlsMap& urlList,
-                                const QString& makePath, QString& errors);
-    bool    copyFiles(const KUrl& panoUrl, const KUrl& finalPanoUrl, const KUrl& ptoUrl,
-                      const ItemUrlsMap& urlList, bool savePTO, QString& errors);
-
-    QString getProcessError(KProcess* proc) const;
+    void appendStitchingJobs(Job* prevJob, JobCollection* jc, KUrl* ptoUrl, const ItemUrlsMap& preProcessedUrlsMap,
+                             PanoramaFileType fileType, const QString& makePath, const QString& pto2mkPath,
+                             const QString& enblendPath, const QString& nonaPath, bool preview);
 
 private:
 
     struct ActionThreadPriv;
     ActionThreadPriv* const d;
+
 };
 
 }  // namespace KIPIPanoramaPlugin

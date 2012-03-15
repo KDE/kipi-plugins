@@ -59,7 +59,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalPreProcessed(const ItemUrlsMap&);
+    void signalPreProcessed(bool);
 
 private Q_SLOTS:
 
