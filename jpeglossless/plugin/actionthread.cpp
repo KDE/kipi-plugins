@@ -138,7 +138,7 @@ ActionThread::~ActionThread()
 
 void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 {
-    JobCollection* collection = new JobCollection(this);
+    JobCollection* collection = new JobCollection();
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
@@ -162,7 +162,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
 
 void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
 {
-    JobCollection* collection = new JobCollection(this);
+    JobCollection* collection = new JobCollection();
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
@@ -186,7 +186,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
 
 void ActionThread::convert2grayscale(const KUrl::List& urlList)
 {
-    JobCollection* collection = new JobCollection(this);
+    JobCollection* collection = new JobCollection();
 
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
