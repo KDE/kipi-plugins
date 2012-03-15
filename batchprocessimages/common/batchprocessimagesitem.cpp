@@ -121,26 +121,4 @@ void BatchProcessImagesItem::setDidOverWrite(bool b)
     _overwrote = b;
 }
 
-/* FIXME
-void BatchProcessImagesItem::paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
-{
-    QColorGroup _cg( cg );
-
-    if (text(3) != i18n("OK") && !text(3).isEmpty() )
-       {
-       _cg.setColor( QColorGroup::Text, Qt::red );
-       K3ListViewItem::paintCell( p, _cg, column, width, alignment );
-       return;
-       }
-    if (text(3) == i18n("OK") )
-       {
-       _cg.setColor( QColorGroup::Text, Qt::darkGreen );
-       K3ListViewItem::paintCell( p, _cg, column, width, alignment );
-       return;
-       }
-
-    K3ListViewItem::paintCell( p, cg, column, width, alignment );
-}
-*/
-
 }  // namespace KIPIBatchProcessImagesPlugin
