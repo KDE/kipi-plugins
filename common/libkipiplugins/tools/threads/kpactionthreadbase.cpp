@@ -38,6 +38,7 @@
 #include <ThreadWeaver/Weaver>
 #include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/Job.h>
+#include <threadweaver/DebuggingAids.h>
 #include <solid/device.h>
 
 using namespace Solid;
@@ -57,11 +58,10 @@ public:
         log           = 0;
     }
 
-    bool                  running;
-    bool                  weaverRunning;
+    volatile bool         running;
+    volatile bool         weaverRunning;
 
     QWaitCondition        condVarJobs;
-    QWaitCondition        condVar;
     QMutex                mutex;
     QList<JobCollection*> todo;
 
@@ -89,6 +89,7 @@ KPActionThreadBase::~KPActionThreadBase()
     wait();
 
     delete d->log;
+    delete d->weaver;
     delete d;
 }
 
@@ -106,16 +107,21 @@ void KPActionThreadBase::cancel()
     d->todo.clear();
     d->running       = false;
     d->weaverRunning = true;
+    d->weaver->requestAbort();
     d->weaver->dequeue();
-    d->condVar.wakeAll();
     d->condVarJobs.wakeAll();
+}
+
+void KPActionThreadBase::finish()
+{
+    d->weaver->finish();
 }
 
 void KPActionThreadBase::appendJob(JobCollection* const job)
 {
     QMutexLocker lock(&d->mutex);
     d->todo << job;
-    d->condVar.wakeAll();
+    d->condVarJobs.wakeAll();
 }
 
 void KPActionThreadBase::run()
@@ -129,20 +135,13 @@ void KPActionThreadBase::run()
         JobCollection* t = 0;
         {
             QMutexLocker lock(&d->mutex);
-            if (!d->todo.isEmpty())
+            if (!d->todo.isEmpty() && !d->weaverRunning)
             {
-                if (!d->weaverRunning)
-                {
-                    t = d->todo.takeFirst();
-                }
-                else
-                {
-                    d->condVarJobs.wait(&d->mutex);
-                }
+                t = d->todo.takeFirst();
             }
             else
             {
-                d->condVar.wait(&d->mutex);
+                d->condVarJobs.wait(&d->mutex);
             }
         }
 
@@ -154,8 +153,8 @@ void KPActionThreadBase::run()
             connect(t, SIGNAL(done(ThreadWeaver::Job*)),
                     t, SLOT(deleteLater()));
 
-            d->weaver->enqueue(t);
             d->weaverRunning = true;
+            d->weaver->enqueue(t);
         }
     }
 

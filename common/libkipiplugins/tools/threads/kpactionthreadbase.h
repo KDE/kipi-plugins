@@ -53,6 +53,7 @@ public:
     ~KPActionThreadBase();
 
     void cancel();
+    void finish();
 
 protected:
 
