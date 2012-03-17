@@ -25,6 +25,10 @@
 #ifndef KPMETADATA_H
 #define KPMETADATA_H
 
+// KDE includes
+
+#include <kurl.h>
+
 // LibKExiv2 includes
 
 // NOTE: all file included here will be used into plugins as well, to prevent files to include from libkexiv2.
@@ -118,6 +122,16 @@ public:
      *  Re-implemented from libKexiv2 to use lock mechanism with KIPI host application through KIPI::Interface.
      */
     bool applyChanges() const;
+
+public:
+
+    static QString sidecarPath(const QString& path);
+    /** Like KExiv2::sidecarFilePathForFile, but works for remote URLs */
+    static KUrl sidecarUrl(const KUrl& url);
+    /** Gives a file url for a local path */
+    static KUrl sidecarUrl(const QString& path);
+    /** Performs a QFileInfo based check if the given local file has a sidecar */
+    static bool hasSidecar(const QString& path);
 
 private:
 

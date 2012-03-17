@@ -24,6 +24,10 @@
 
 #include "kpmetadata.h"
 
+// Qt includes
+
+#include <QFileInfo>
+
 // Local includes
 
 #include "kpmetasettings.h"
@@ -99,6 +103,31 @@ bool KPMetadata::applyChanges() const
     KPFileWriteLocker(m_iface, KUrl(getFilePath()));
 
     return KExiv2::applyChanges();
+}
+
+// Static methods to factoring later in KExiv2 (same code is available into Digikam::DMetadata
+
+KUrl KPMetadata::sidecarUrl(const KUrl& url)
+{
+    QString sidecarPath = sidecarFilePathForFile(url.path());
+    KUrl sidecarUrl(url);
+    sidecarUrl.setPath(sidecarPath);
+    return sidecarUrl;
+}
+
+KUrl KPMetadata::sidecarUrl(const QString& path)
+{
+    return KUrl::fromPath(sidecarFilePathForFile(path));
+}
+
+QString KPMetadata::sidecarPath(const QString& path)
+{
+    return sidecarFilePathForFile(path);
+}
+
+bool KPMetadata::hasSidecar(const QString& path)
+{
+    return QFileInfo(sidecarFilePathForFile(path)).exists();
 }
 
 }  // namespace KIPIPlugins
