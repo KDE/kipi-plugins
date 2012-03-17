@@ -149,5 +149,5 @@ KIPI::Category Plugin_SendImages::category( KAction* action ) const
        return KIPI::ExportPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ImagesPlugin; // no warning from compiler, please
+    return KIPI::ExportPlugin; // no warning from compiler, please
 }
