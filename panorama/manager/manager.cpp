@@ -61,7 +61,7 @@ struct Manager::ManagerPriv
       group(config.group(QString("Panorama Settings")))
     {
         hdr      = group.readEntry("HDR", false);
-        fileType = (ActionThread::PanoramaFileType) group.readEntry("File Type", (int) ActionThread::JPEG);
+        fileType = (PanoramaFileType) group.readEntry("File Type", (int) JPEG);
     }
 
 
@@ -80,7 +80,7 @@ struct Manager::ManagerPriv
 
     bool                           hdr;
 
-    ActionThread::PanoramaFileType fileType;
+    PanoramaFileType               fileType;
 
     ItemUrlsMap                    preProcessedUrlsMap;
 
@@ -113,15 +113,6 @@ Manager::Manager(QObject* parent)
 {
     d->thread                               = new ActionThread(this);
     d->rawDecodingSettings.sixteenBitsImage = true;
-
-    connect(d->thread, SIGNAL(itemUrlsMapReady(ItemUrlsMap)),
-            this, SLOT(setPreProcessedMap(ItemUrlsMap)));
-    connect(d->thread, SIGNAL(cpCleanPtoReady(KUrl)),
-            this, SLOT(setCPFindUrl(KUrl)));
-    connect(d->thread, SIGNAL(previewFileReady(KUrl)),
-            this, SLOT(setPreviewUrl(KUrl)));
-    connect(d->thread, SIGNAL(panoFileReady(KUrl)),
-            this, SLOT(setPanoUrl(KUrl)));
 }
 
 Manager::~Manager()
@@ -156,15 +147,15 @@ bool Manager::hdr() const
 
 void Manager::setFileFormatJPEG()
 {
-    d->fileType = ActionThread::JPEG;
+    d->fileType = JPEG;
 }
 
 void Manager::setFileFormatTIFF()
 {
-    d->fileType = ActionThread::TIFF;
+    d->fileType = TIFF;
 }
 
-ActionThread::PanoramaFileType Manager::format() const
+PanoramaFileType Manager::format() const
 {
     return d->fileType;
 }

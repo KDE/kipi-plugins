@@ -65,7 +65,7 @@ struct PreviewPage::PreviewPagePriv
     {}
 
     QLabel*                title;
-    QUrl                   previewUrl;
+
     KPPreviewManager*      previewWidget;
     bool                   previewBusy;
     bool                   stitchingBusy;
@@ -111,9 +111,6 @@ PreviewPage::PreviewPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     connect(d->mngr->thread(), SIGNAL(finished(KIPIPanoramaPlugin::ActionData)),
             this, SLOT(slotAction(KIPIPanoramaPlugin::ActionData)));
-
-    connect(d->mngr->thread(), SIGNAL(previewFileReady(KUrl)),
-            this, SLOT(slotGetPreviewFile(KUrl)));
 }
 
 PreviewPage::~PreviewPage()
@@ -161,6 +158,7 @@ void PreviewPage::computePreview()
     d->previewBusy = true;
 
     d->mngr->thread()->generatePanoramaPreview(d->mngr->autoOptimiseUrl(),
+                                               d->mngr->previewUrl(),
                                                d->mngr->preProcessedMap(),
                                                d->mngr->makeBinary().path(),
                                                d->mngr->pto2MkBinary().path(),
@@ -195,6 +193,7 @@ void PreviewPage::startStitching()
     d->postProcessing->show();
 
     d->mngr->thread()->compileProject(d->mngr->autoOptimiseUrl(),
+                                      d->mngr->panoUrl(),
                                       d->mngr->preProcessedMap(),
                                       d->mngr->format(),
                                       d->mngr->makeBinary().path(),
@@ -304,8 +303,13 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     {
                         return;
                     }
+
                     kDebug() << "Preview Stitching finished";
                     d->previewBusy = false;
+
+                    d->previewWidget->load(d->mngr->previewUrl().toLocalFile(), true);
+                    //     d->previewWidget->setSelectionAreaPossible(true);
+                    kDebug() << "Preview URL: " << d->mngr->previewUrl();
                     break;
                 }
                 case NONAFILE:
@@ -369,14 +373,6 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
             }
         }
     }
-}
-
-void PreviewPage::slotGetPreviewFile(const KUrl& previewUrl)
-{
-    d->previewUrl = previewUrl;
-    d->previewWidget->load(previewUrl.toLocalFile(), true);
-//     d->previewWidget->setSelectionAreaPossible(true);
-    kDebug() << "Preview URL: " << previewUrl;
 }
 
 }   // namespace KIPIPanoramaPlugin

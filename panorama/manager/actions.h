@@ -65,6 +65,13 @@ enum Action
     COPY
 };
 
+typedef enum
+{
+    JPEG,
+    TIFF
+}
+PanoramaFileType;
+
 struct ItemPreprocessedUrls
 {
     ItemPreprocessedUrls() {}

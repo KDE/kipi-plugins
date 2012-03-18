@@ -186,11 +186,15 @@ void PreProcessingPage::process()
 
 //     d->nbFilesProcessed = 0;
 
-    d->mngr->thread()->setPreProcessingSettings(d->celesteCheckBox->isChecked(),
-                                                d->mngr->hdr(),
-                                                d->mngr->format(),
-                                                d->mngr->rawDecodingSettings());
-    d->mngr->thread()->preProcessFiles(d->mngr->itemsList(), d->mngr->cpCleanBinary().path(),
+    d->mngr->thread()->preProcessFiles(d->mngr->itemsList(),
+                                       d->mngr->preProcessedMap(),
+                                       d->mngr->cpFindUrl(),
+                                       d->mngr->cpFindUrlData(),
+                                       d->celesteCheckBox->isChecked(),
+                                       d->mngr->hdr(),
+                                       d->mngr->format(),
+                                       d->mngr->rawDecodingSettings(),
+                                       d->mngr->cpCleanBinary().path(),
                                        d->mngr->cpFindBinary().path());
     if (!d->mngr->thread()->isRunning())
         d->mngr->thread()->start();

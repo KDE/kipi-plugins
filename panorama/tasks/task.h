@@ -1,12 +1,12 @@
 /* ============================================================
- *
+ * 
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2011-05-23
+ * Date        : 2012-03-15
  * Description : a plugin to create panorama by fusion of several images.
  *
- * Copyright (C) 2011 by Benjamin Girault <benjamin dot girault at gmail dot com>
+ * Copyright (C) 2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -20,49 +20,50 @@
  *
  * ============================================================ */
 
-#ifndef PREVIEW_PAGE_H
-#define PREVIEW_PAGE_H
+#ifndef TASK_H
+#define TASK_H
+
+// KDE includes
+
+#include <threadweaver/Job.h>
+#include <kprocess.h>
 
 // Local includes
 
-#include "kpwizardpage.h"
 #include "actions.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIPanoramaPlugin
 {
 
-class Manager;
-
-class PreviewPage : public KPWizardPage
+class Task : public ThreadWeaver::Job
 {
-    Q_OBJECT
+public:
+
+    QString                     errString;
+    const Action                action;
+
+protected:
+
+    bool                        successFlag;
+    bool                        isAbortedFlag;
+    const KUrl                  tmpDir;
 
 public:
 
-    PreviewPage(Manager* const mngr, KAssistantDialog* const dlg);
-    ~PreviewPage();
+    Task(QObject* parent, Action action, const KUrl& workDir);
+    ~Task();
 
-    bool cancel();
-    void computePreview();
-    void startStitching();
-    void resetPage();
+    bool success() const;
+    void requestAbort();
 
-Q_SIGNALS:
+protected:
 
-    void signalStitchingFinished(bool);
+    virtual void run() = 0;
 
-private Q_SLOTS:
-
-    void slotAction(const KIPIPanoramaPlugin::ActionData&);
-
-private:
-
-    struct PreviewPagePriv;
-    PreviewPagePriv* const d;
+    static bool isRawFile(const KUrl& url);
+    static QString getProcessError(KProcess& proc);
 };
 
-}   // namespace KIPIPanoramaPlugin
+}  // namespace KIPIPanoramaPlugin
 
-#endif /* PREVIEW_PAGE_H */
+#endif /* TASK_H */

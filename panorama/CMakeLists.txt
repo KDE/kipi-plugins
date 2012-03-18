@@ -1,9 +1,10 @@
-SUBDIRS(icons)
+ADD_SUBDIRECTORY(icons)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/importwizard
                     ${CMAKE_CURRENT_SOURCE_DIR}/manager
                     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/ptoparser
+                    ${CMAKE_CURRENT_SOURCE_DIR}/tasks
                     ${Boost_INCLUDE_DIR}/boost              # NOTICE: this is the only way for my system to compile it
 #                     ${Boost_INCLUDE_DIRS}
                    )
@@ -43,6 +44,17 @@ SET(panorama_common_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/optimizepage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/preprocessingpage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/importwizard/previewpage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/task.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/preprocesstask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createptotask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/cpfindtask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/cpcleantask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/optimisationtask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createpreviewtask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/createmktask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/compilemksteptask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/compilemktask.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tasks/copyfilestask.cpp
    )
 
 # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)

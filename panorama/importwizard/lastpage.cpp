@@ -238,9 +238,9 @@ QString LastPage::panoFileName(const QString& fileTemplate) const
     switch (d->mngr->format())
     {
         default:
-        case ActionThread::JPEG:
+        case JPEG:
             return fileTemplate + ".jpg";
-        case ActionThread::TIFF:
+        case TIFF:
             return fileTemplate + ".tif";
     }
 }

@@ -79,7 +79,7 @@ public:
 
     void setFileFormatJPEG();
     void setFileFormatTIFF();
-    ActionThread::PanoramaFileType format() const;
+    PanoramaFileType format() const;
 
     void setAbout(PanoramaAboutData* about);
     PanoramaAboutData* about() const;
@@ -91,13 +91,9 @@ public:
     KUrl::List& itemsList() const;
 
     KUrl& cpFindUrl() const;
-
     PTOType& cpFindUrlData() const;
-
     KUrl& autoOptimiseUrl() const;
-
     KUrl& previewUrl() const;
-
     KUrl& panoUrl() const;
 
     void setRawDecodingSettings(const RawDecodingSettings& settings);

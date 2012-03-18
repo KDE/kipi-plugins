@@ -153,10 +153,10 @@ IntroPage::IntroPage(Manager* const mngr, KAssistantDialog* const dlg)
 
     switch (d->mngr->format())
     {
-        case ActionThread::JPEG:
+        case JPEG:
             d->jpegRadioButton->setChecked(true);
             break;
-        case ActionThread::TIFF:
+        case TIFF:
             d->tiffRadioButton->setChecked(true);
             break;
     }
