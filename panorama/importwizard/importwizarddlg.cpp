@@ -130,6 +130,9 @@ ImportWizardDlg::ImportWizardDlg(Manager* mngr, QWidget* parent)
     connect(d->optimizePage, SIGNAL(signalOptimized(bool)),
             this, SLOT(slotOptimized(bool)));
 
+    connect(d->previewPage, SIGNAL(signalPreviewStitchingFinished(bool)),
+            this, SLOT(slotPreviewStitchingFinished(bool)));
+
     connect(d->previewPage, SIGNAL(signalStitchingFinished(bool)),
             this, SLOT(slotStitchingFinished(bool)));
 
@@ -291,6 +294,14 @@ void ImportWizardDlg::slotOptimized(bool success)
 
         // Start the Preview generation
         d->previewPage->computePreview();
+    }
+}
+
+void ImportWizardDlg::slotPreviewStitchingFinished(bool success)
+{
+    if (!success)
+    {
+        setValid(d->previewPage->page(), false);
     }
 }
 

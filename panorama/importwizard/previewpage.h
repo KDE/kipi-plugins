@@ -51,6 +51,7 @@ public:
 
 Q_SIGNALS:
 
+    void signalPreviewStitchingFinished(bool);
     void signalStitchingFinished(bool);
 
 private Q_SLOTS:

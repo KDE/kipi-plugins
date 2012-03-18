@@ -76,6 +76,7 @@ private Q_SLOTS:
     void slotItemsPageIsValid(bool);
     void slotPreProcessed(bool);
     void slotOptimized(bool);
+    void slotPreviewStitchingFinished(bool);
     void slotStitchingFinished(bool);
     void slotCopyFinished(bool);
     void slotLastPageIsValid(bool);

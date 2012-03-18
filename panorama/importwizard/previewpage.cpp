@@ -247,6 +247,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     errorString.replace('\n', "</p><p>");
                     d->previewWidget->setText(errorString);
                     d->previewWidget->setSelectionAreaPossible(false);
+
+                    emit signalPreviewStitchingFinished(false);
+
                     break;
                 }
                 case NONAFILE:
@@ -256,15 +259,13 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                         return;
                     }
                     d->stitchingBusy = false;
-                    QStringList message;
-                    message << "Processing file ";
-                    message << QString::number(ad.id + 1);
-                    message << " / ";
-                    message << QString::number(d->totalProgress - 1);
-                    message << ": ";
-                    message << ad.message;
+                    QString message = i18n("Processing file %1 / %2: %3",
+                                           QString::number(ad.id + 1),
+                                           QString::number(d->totalProgress - 1),
+                                           ad.message
+                                          );
                     kDebug() << "Nona call failed for file #" << ad.id;
-                    d->postProcessing->addedAction(message.join(""), ErrorMessage);
+                    d->postProcessing->addedAction(message, ErrorMessage);
                     emit signalStitchingFinished(false);
                     break;
                 }
@@ -310,6 +311,9 @@ void PreviewPage::slotAction(const KIPIPanoramaPlugin::ActionData& ad)
                     d->previewWidget->load(d->mngr->previewUrl().toLocalFile(), true);
                     //     d->previewWidget->setSelectionAreaPossible(true);
                     kDebug() << "Preview URL: " << d->mngr->previewUrl();
+
+                    emit signalPreviewStitchingFinished(true);
+
                     break;
                 }
                 case NONAFILE:
