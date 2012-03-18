@@ -37,4 +37,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 022 ==> 294751 : Unlisted dependancy (hugin).
 023 ==> 206842 : New tool to export to Wikimedia Commons.
 024 ==> 286018 : Pano Tool and ExpoBlend tool do not work on OS X [patch]
-025 ==> 
+025 ==> 286633 : Unable to find cpfind executable, but cpfind is installed and availabe within the path
+026 ==> 286382 : panorama stitcher doesn't run and asks for autooptimizer despite hugin is installed
+027 ==> 
