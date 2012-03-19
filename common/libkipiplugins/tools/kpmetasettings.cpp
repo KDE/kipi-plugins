@@ -38,4 +38,17 @@ KPMetaSettings::~KPMetaSettings()
 {
 }
 
+QDebug operator<<(QDebug dbg, const KPMetaSettings& inf)
+{
+    dbg.nospace() << "KPMetaSettings::writeRawFiles: "
+                  << inf.writeRawFiles << ", ";
+    dbg.nospace() << "KPMetaSettings::updateFileTimeStamp: "
+                  << inf.updateFileTimeStamp << ", ";
+    dbg.nospace() << "KPMetaSettings::useXMPSidecar4Reading: "
+                  << inf.useXMPSidecar4Reading << ", ";
+    dbg.nospace() << "KPMetaSettings::metadataWritingMode: "
+                  << inf.metadataWritingMode;
+    return dbg.space();
+}
+
 }  // namespace KIPIPlugins

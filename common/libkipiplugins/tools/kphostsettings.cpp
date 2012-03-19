@@ -149,6 +149,7 @@ KIPIPlugins::KPMetaSettings KPHostSettings::metadataSettings() const
         meta.metadataWritingMode   = (KPMetadata::MetadataWritingMode)d->setting("MetadataWritingMode").toInt();
     }
 
+    kDebug() << meta;
     return meta;
 }
 
