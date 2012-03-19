@@ -148,7 +148,7 @@ BOOST_FUSION_ADAPT_STRUCT(
     (int, mosaicModeOffsetZ)
     (QRect, crop)
     (int, stackNumber)
-    (QString, filename)
+    (QString, fileName)
     (QStringList, unmatchedParameters)
 )
 
