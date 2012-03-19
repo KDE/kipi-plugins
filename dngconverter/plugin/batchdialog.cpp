@@ -44,6 +44,7 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kio/renamedialog.h>
+#include <kde_file.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
@@ -432,6 +433,15 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
 
     if (!destFile.isEmpty())
     {
+        if (KPMetadata::hasSidecar(tmpFile))
+        {
+            if (KDE::rename(KPMetadata::sidecarPath(tmpFile),
+                            KPMetadata::sidecarPath(destFile)) != 0)
+            {
+                KMessageBox::information(this, i18n("Failed to save sidecar file for image %1...", destFile));
+            }
+        }
+
         if (::rename(QFile::encodeName(tmpFile), QFile::encodeName(destFile)) != 0)
         {
             KMessageBox::error(this, i18n("Failed to save image %1", destFile));

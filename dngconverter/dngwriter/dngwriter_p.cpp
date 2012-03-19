@@ -42,6 +42,7 @@ namespace DNGIface
 
 DNGWriter::DNGWriterPrivate::DNGWriterPrivate()
 {
+    iface = 0;
     reset();
 }
 

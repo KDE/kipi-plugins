@@ -75,15 +75,17 @@ public:
 
 public:
 
-    bool    cancel;
-    bool    jpegLossLessCompression;
-    bool    updateFileDate;
-    bool    backupOriginalRawFile;
+    bool             cancel;
+    bool             jpegLossLessCompression;
+    bool             updateFileDate;
+    bool             backupOriginalRawFile;
 
-    int     previewMode;
+    int              previewMode;
 
-    QString inputFile;
-    QString outputFile;
+    QString          inputFile;
+    QString          outputFile;
+    
+    KIPI::Interface* iface;       // Used by KPMetadata to get XMP sidecar settings from KIPI host
 
 public:
 

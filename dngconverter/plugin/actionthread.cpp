@@ -103,6 +103,7 @@ ActionThread::ActionThread(QObject* const parent, Interface* const iface)
 {
     qRegisterMetaType<ActionData>();
     d->iface = iface;
+    d->dngProcessor.setInterface(d->iface);
 }
 
 ActionThread::~ActionThread()
