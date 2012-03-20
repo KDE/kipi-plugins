@@ -54,6 +54,7 @@ extern "C"
 // Local includes
 
 #include "kpversion.h"
+#include "kpmetasettings.h"
 
 namespace KIPIPlugins
 {
