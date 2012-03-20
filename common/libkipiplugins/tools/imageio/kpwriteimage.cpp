@@ -140,6 +140,10 @@ void KPWriteImage::setImageData(const QByteArray& data, uint width, uint height,
     d->hasAlpha   = hasAlpha;
     d->iccProfile = iccProfile;
     d->metadata   = metadata;
+
+#if KEXIV2_VERSION < 0x020300
+    d->metadata.setSettings(metadata.settings());
+#endif // KEXIV2_VERSION < 0x020300
 }
 
 bool KPWriteImage::write2JPEG(const QString& destPath)
@@ -331,6 +335,8 @@ bool KPWriteImage::write2PPM(const QString& destPath)
     delete [] line;
     fclose(file);
 
+    d->metadata.save(destPath);
+
     return true;
 }
 
@@ -511,6 +517,9 @@ bool KPWriteImage::write2PNG(const QString& destPath)
     png_destroy_write_struct(&png_ptr, (png_infopp) & info_ptr);
     png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
     file.close();
+
+    d->metadata.save(destPath);
+
     return true;
 }
 

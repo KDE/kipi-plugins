@@ -108,6 +108,10 @@ public:
      */
     void setSettings(const KPMetaSettings& settings);
 
+    /** Return all metadata settings configured.
+     */
+    KPMetaSettings settings() const;
+
     /** Load metadata operation from a file.
      *  Re-implemented from libKexiv2 to use lock mechanism with KIPI host application through KIPI::Interface.
      */

@@ -29,6 +29,10 @@
 #include <libkdcraw/kdcraw.h>
 #include <libkdcraw/rawdecodingsettings.h>
 
+// LibKipi includes
+
+#include <libkipi/interface.h>
+
 // Local includes
 
 #include "kpsavesettingswidget.h"
@@ -48,7 +52,7 @@ public:
     RawDecodingIface();
     ~RawDecodingIface();
 
-    void setUpdateFileTimeStamp(bool b);
+    void setInterface(KIPI::Interface* const iface);
 
 public:
 
@@ -75,7 +79,7 @@ private:
 
 private:
 
-    bool m_updateFileTimeStamp;
+    KIPI::Interface* m_iface;
 };
 
 }  // namespace KIPIRawConverterPlugin

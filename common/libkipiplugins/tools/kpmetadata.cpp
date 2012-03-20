@@ -84,6 +84,19 @@ void KPMetadata::setSettings(const KPMetaSettings& settings)
     setUpdateFileTimeStamp(settings.updateFileTimeStamp);
 }
 
+KPMetaSettings KPMetadata::settings() const
+{
+    KPMetaSettings settings;
+
+    settings.useXMPSidecar4Reading = useXMPSidecar4Reading();
+    settings.writeRawFiles         = writeRawFiles();
+    settings.metadataWritingMode   = (KPMetadata::MetadataWritingMode)metadataWritingMode();
+    settings.updateFileTimeStamp   = updateFileTimeStamp();
+
+    return settings;
+}
+
+
 bool KPMetadata::load(const QString& filePath) const
 {
     KPFileReadLocker(m_iface, KUrl(filePath));

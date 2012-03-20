@@ -95,8 +95,7 @@ ActionThread::ActionThread(QObject* const parent, Interface* const iface)
 {
     qRegisterMetaType<ActionData>();
     d->iface = iface;
-    KPHostSettings hSettings(d->iface);
-    d->dcrawIface.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+    d->dcrawIface.setInterface(d->iface);
 }
 
 ActionThread::~ActionThread()

@@ -55,16 +55,16 @@ namespace KIPIRawConverterPlugin
 RawDecodingIface::RawDecodingIface()
     : KDcraw()
 {
-    m_updateFileTimeStamp = false;
+    m_iface = 0;
 }
 
 RawDecodingIface::~RawDecodingIface()
 {
 }
 
-void RawDecodingIface::setUpdateFileTimeStamp(bool b)
+void RawDecodingIface::setInterface(KIPI::Interface* const iface)
 {
-    m_updateFileTimeStamp = b;
+    m_iface = iface;
 }
 
 bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
@@ -170,11 +170,7 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
                                  + QString::number(QDateTime::currentDateTime().toTime_t());
 
     // Metadata restoration and update.
-    KPMetadata meta;    // NOTE : no need to lock item through KIPI::Interface, it's a temp file processed.
-
-#if KEXIV2_VERSION >= 0x000600
-    meta.setUpdateFileTimeStamp(m_updateFileTimeStamp);
-#endif
+    KPMetadata meta(m_iface);
 
     meta.load(filePath);
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));
