@@ -255,10 +255,10 @@ EXIFLight::~EXIFLight()
     delete d;
 }
 
-void EXIFLight::readMetadata(QByteArray& exifData)
+void EXIFLight::readMetadata(QByteArray& exifData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
@@ -332,9 +332,9 @@ void EXIFLight::readMetadata(QByteArray& exifData)
     blockSignals(false);
 }
 
-void EXIFLight::applyMetadata(QByteArray& exifData)
+void EXIFLight::applyMetadata(QByteArray& exifData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     long int num=1, den=1;
 

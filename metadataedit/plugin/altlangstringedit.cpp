@@ -37,7 +37,7 @@
 
 #include <libkdcraw/squeezedcombobox.h>
 
-// LibKPMetadata includes
+// libKExiv2 includes
 
 #include <libkexiv2/altlangstredit.h>
 

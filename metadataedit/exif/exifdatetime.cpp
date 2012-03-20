@@ -337,10 +337,10 @@ QDateTime EXIFDateTime::getEXIFCreationDate() const
     return d->dateCreatedSel->dateTime();
 }
 
-void EXIFDateTime::readMetadata(QByteArray& exifData)
+void EXIFDateTime::readMetadata(QByteArray& exifData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
 
     QDateTime datetime;
@@ -439,9 +439,9 @@ void EXIFDateTime::readMetadata(QByteArray& exifData)
     blockSignals(false);
 }
 
-void EXIFDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData)
+void EXIFDateTime::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     meta.setIptc(iptcData);
     meta.setXmp(xmpData);

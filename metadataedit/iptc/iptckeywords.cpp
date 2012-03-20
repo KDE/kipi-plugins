@@ -38,7 +38,7 @@
 #include <klistwidget.h>
 #include <klocale.h>
 
-// LibKPMetadata includes
+// local includes
 
 #include "kpmetadata.h"
 

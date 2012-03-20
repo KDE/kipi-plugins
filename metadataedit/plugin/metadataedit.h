@@ -53,7 +53,7 @@ class MetadataEditDialog : public KDialog
 
 public:
 
-    MetadataEditDialog(QWidget* parent, const KUrl::List& urls, Interface* iface);
+    MetadataEditDialog(QWidget* const parent, const KUrl::List& urls, Interface* const iface);
     ~MetadataEditDialog();
 
     KUrl::List::iterator currentItem() const;

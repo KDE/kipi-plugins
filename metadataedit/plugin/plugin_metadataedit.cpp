@@ -77,7 +77,7 @@ public:
     KUrl         lastSelectedDirectory;
 };
 
-Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* parent, const QVariantList&)
+Plugin_MetadataEdit::Plugin_MetadataEdit(QObject* const parent, const QVariantList&)
     : Plugin(MetadataEditFactory::componentData(), parent, "MetadataEdit"),
     d(new Plugin_MetadataEditPriv)
 {

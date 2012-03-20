@@ -301,10 +301,10 @@ void EXIFCaption::setCheckedSyncIPTCCaption(bool c)
     d->syncIPTCCaptionCheck->setChecked(c);
 }
 
-void EXIFCaption::readMetadata(QByteArray& exifData)
+void EXIFCaption::readMetadata(QByteArray& exifData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     QString data;
 
@@ -365,9 +365,9 @@ void EXIFCaption::readMetadata(QByteArray& exifData)
     blockSignals(false);
 }
 
-void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData)
+void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     meta.setIptc(iptcData);
     meta.setXmp(xmpData);

@@ -51,7 +51,7 @@ class Plugin_MetadataEdit : public Plugin
 
 public:
 
-    Plugin_MetadataEdit(QObject* parent, const QVariantList& args);
+    Plugin_MetadataEdit(QObject* const parent, const QVariantList& args);
     ~Plugin_MetadataEdit();
 
     virtual Category category(KAction* action) const;

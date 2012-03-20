@@ -265,10 +265,10 @@ EXIFLens::~EXIFLens()
     delete d;
 }
 
-void EXIFLens::readMetadata(QByteArray& exifData)
+void EXIFLens::readMetadata(QByteArray& exifData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
@@ -363,16 +363,18 @@ void EXIFLens::readMetadata(QByteArray& exifData)
             d->maxApertureCheck->setChecked(true);
         }
         else
+        {
             d->maxApertureCheck->setValid(false);
+        }
     }
     d->maxApertureCB->setEnabled(d->maxApertureCheck->isChecked());
 
     blockSignals(false);
 }
 
-void EXIFLens::applyMetadata(QByteArray& exifData)
+void EXIFLens::applyMetadata(QByteArray& exifData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     long int num=1, den=1;
 

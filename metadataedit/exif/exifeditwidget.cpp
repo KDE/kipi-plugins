@@ -116,10 +116,10 @@ public:
     MetadataEditDialog*  dlg;
 };
 
-EXIFEditWidget::EXIFEditWidget(MetadataEditDialog* parent)
+EXIFEditWidget::EXIFEditWidget(MetadataEditDialog* const parent)
     : KPageWidget(parent), d(new EXIFEditWidgetPrivate)
 {
-    d->dlg       = parent;
+    d->dlg           = parent;
 
     d->captionPage   = new EXIFCaption(this);
     d->page_caption  = addPage(d->captionPage, i18nc("image caption", "Caption"));
@@ -213,7 +213,7 @@ void EXIFEditWidget::saveSettings()
 
 void EXIFEditWidget::slotItemChanged()
 {
-    KPMetadata meta;
+    KPMetadata meta(d->dlg->iface());
     meta.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
@@ -224,12 +224,12 @@ void EXIFEditWidget::slotItemChanged()
 
     d->iptcData = meta.getIptc();
     d->xmpData  = meta.getXmp();
-    d->captionPage->readMetadata(d->exifData);
-    d->datetimePage->readMetadata(d->exifData);
-    d->lensPage->readMetadata(d->exifData);
-    d->devicePage->readMetadata(d->exifData);
-    d->lightPage->readMetadata(d->exifData);
-    d->adjustPage->readMetadata(d->exifData);
+    d->captionPage->readMetadata(d->exifData, d->dlg->iface());
+    d->datetimePage->readMetadata(d->exifData, d->dlg->iface());
+    d->lensPage->readMetadata(d->exifData, d->dlg->iface());
+    d->devicePage->readMetadata(d->exifData, d->dlg->iface());
+    d->lightPage->readMetadata(d->exifData, d->dlg->iface());
+    d->adjustPage->readMetadata(d->exifData, d->dlg->iface());
 
     d->isReadOnly = !KPMetadata::canWriteExif((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
@@ -251,23 +251,20 @@ void EXIFEditWidget::apply()
         {
             info.setDescription(d->captionPage->getEXIFUserComments());
         }
-        d->captionPage->applyMetadata(d->exifData, d->iptcData, d->xmpData);
+        d->captionPage->applyMetadata(d->exifData, d->iptcData, d->xmpData, d->dlg->iface());
 
         if (d->datetimePage->syncHOSTDateIsChecked())
         {
             info.setDate(d->datetimePage->getEXIFCreationDate());
         }
-        d->datetimePage->applyMetadata(d->exifData, d->iptcData, d->xmpData);
+        d->datetimePage->applyMetadata(d->exifData, d->iptcData, d->xmpData, d->dlg->iface());
 
-        d->lensPage->applyMetadata(d->exifData);
-        d->devicePage->applyMetadata(d->exifData);
-        d->lightPage->applyMetadata(d->exifData);
-        d->adjustPage->applyMetadata(d->exifData);
+        d->lensPage->applyMetadata(d->exifData, d->dlg->iface());
+        d->devicePage->applyMetadata(d->exifData, d->dlg->iface());
+        d->lightPage->applyMetadata(d->exifData, d->dlg->iface());
+        d->adjustPage->applyMetadata(d->exifData, d->dlg->iface());
 
-        KPMetadata meta;
-        KPHostSettings hSettings(d->dlg->iface());
-        meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+        KPMetadata meta(d->dlg->iface());
 
         meta.load((*d->dlg->currentItem()).path());
         meta.setExif(d->exifData);
