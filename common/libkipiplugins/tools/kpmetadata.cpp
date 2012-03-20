@@ -105,7 +105,7 @@ bool KPMetadata::applyChanges() const
     return KExiv2::applyChanges();
 }
 
-// Static methods to factoring later in KExiv2 (same code is available into Digikam::DMetadata
+#if KEXIV2_VERSION < 0x020300
 
 KUrl KPMetadata::sidecarUrl(const KUrl& url)
 {
@@ -129,5 +129,7 @@ bool KPMetadata::hasSidecar(const QString& path)
 {
     return QFileInfo(sidecarFilePathForFile(path)).exists();
 }
+
+#endif // KEXIV2_VERSION < 0x020300
 
 }  // namespace KIPIPlugins
