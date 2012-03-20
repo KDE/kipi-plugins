@@ -100,7 +100,7 @@ public:
     KDateTimeWidget* dateDigitalizedSel;
 };
 
-EXIFDateTime::EXIFDateTime(QWidget* parent)
+EXIFDateTime::EXIFDateTime(QWidget* const parent)
     : QWidget(parent), d(new EXIFDateTimePriv)
 {
     QGridLayout* grid = new QGridLayout(this);

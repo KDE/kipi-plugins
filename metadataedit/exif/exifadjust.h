@@ -44,7 +44,7 @@ class EXIFAdjust : public QWidget
 
 public:
 
-    EXIFAdjust(QWidget* parent);
+    EXIFAdjust(QWidget* const parent);
     ~EXIFAdjust();
 
     void applyMetadata(QByteArray& exifData, Interface* const iface);

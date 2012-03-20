@@ -89,7 +89,7 @@ public:
     KLineEdit* copyrightEdit;
 };
 
-EXIFCaption::EXIFCaption(QWidget* parent)
+EXIFCaption::EXIFCaption(QWidget* const parent)
     : QWidget(parent), d(new EXIFCaptionPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

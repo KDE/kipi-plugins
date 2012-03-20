@@ -142,7 +142,7 @@ public:
     MetadataCheckBox* maxApertureCheck;
 };
 
-EXIFLens::EXIFLens(QWidget* parent)
+EXIFLens::EXIFLens(QWidget* const parent)
     : QWidget(parent), d(new EXIFLensPriv)
 {
     QGridLayout* grid = new QGridLayout(this);

@@ -44,7 +44,7 @@ class EXIFCaption : public QWidget
 
 public:
 
-    EXIFCaption(QWidget* parent);
+    EXIFCaption(QWidget* const parent);
     ~EXIFCaption();
 
     void applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData, Interface* const iface);
