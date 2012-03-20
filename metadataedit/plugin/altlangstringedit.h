@@ -43,7 +43,7 @@ class AltLangStringsEdit : public QWidget
 
 public:
 
-    AltLangStringsEdit(QWidget* parent, const QString& title, const QString& desc);
+    AltLangStringsEdit(QWidget* const parent, const QString& title, const QString& desc);
     ~AltLangStringsEdit();
 
     void setValues(const KPMetadata::AltLangMap& values);

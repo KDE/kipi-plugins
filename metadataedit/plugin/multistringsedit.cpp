@@ -67,7 +67,7 @@ public:
     KListWidget* valueBox;
 };
 
-MultiStringsEdit::MultiStringsEdit(QWidget* parent, const QString& title,
+MultiStringsEdit::MultiStringsEdit(QWidget* const parent, const QString& title,
                                    const QString& desc, bool ascii, int size)
     : QWidget(parent), d(new MultiStringsEditPriv)
 {
