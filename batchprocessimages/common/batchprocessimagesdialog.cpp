@@ -601,7 +601,6 @@ void BatchProcessImagesDialog::slotFinished()
             item->changeError(i18n("no processing error"));
             processDone();
 
-            // Save the comments for the converted image
             KUrl src;
             src.setPath(item->pathSrc());
             KUrl dest = m_ui->m_destinationUrl->url();
@@ -639,8 +638,12 @@ void BatchProcessImagesDialog::slotFinished()
 
             if (src != dest)
             {
+                // Clone data in KIPI host application.
                 KPImageInfo info(m_interface, src);
                 info.cloneData(dest);
+
+                // Move XMP sidecar file.
+                KPMetadata::moveSidecar(src, dest);
             }
 
             if (m_ui->m_removeOriginal->isChecked() && src != dest)

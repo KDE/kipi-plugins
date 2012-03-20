@@ -66,6 +66,7 @@
 #include "ui_renameimagesbase.h"
 #include "kpimageinfo.h"
 #include "kpimagedialog.h"
+#include "kpmetadata.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -518,7 +519,7 @@ void RenameImagesWidget::slotNext()
     if (!m_overwriteAll)
     {
         KDE_struct_stat info;
-        while (KDE_stat(QFile::encodeName(dst.path()), &info) == 0)
+        while (KDE_stat(QFile::encodeName(dst.toLocalFile()), &info) == 0)
         {
             if (m_autoSkip)
             {
@@ -581,9 +582,12 @@ void RenameImagesWidget::slotNext()
         // Get the src info
         KIPIPlugins::KPImageInfo srcInfo(m_interface, src);
 
-        if (KDE_rename(QFile::encodeName(src.path()),
-                       QFile::encodeName(dst.path())) == 0)
+        if (KDE_rename(QFile::encodeName(src.toLocalFile()),
+                       QFile::encodeName(dst.toLocalFile())) == 0)
         {
+            // Rename XMP sidecar file
+            KIPIPlugins::KPMetadata::moveSidecar(src, dst);
+
             srcInfo.setName(dst.fileName());
 
             item->changeResult(i18nc("batch process result", "OK"));

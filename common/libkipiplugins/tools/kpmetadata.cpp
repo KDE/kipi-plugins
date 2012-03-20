@@ -26,7 +26,12 @@
 
 // Qt includes
 
+#include <QFile>
 #include <QFileInfo>
+
+// KDE includes
+
+#include <kde_file.h>
 
 // Local includes
 
@@ -144,5 +149,15 @@ bool KPMetadata::hasSidecar(const QString& path)
 }
 
 #endif // KEXIV2_VERSION < 0x020300
+
+bool KPMetadata::moveSidecar(const KUrl& src, const KUrl& dst)
+{
+    if (hasSidecar(src.toLocalFile()))
+    {
+        if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()), QFile::encodeName(sidecarUrl(dst).toLocalFile())) == 0)
+            return true;
+    }
+    return false;
+}
 
 }  // namespace KIPIPlugins

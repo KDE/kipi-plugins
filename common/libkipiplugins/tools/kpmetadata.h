@@ -140,6 +140,10 @@ public:
     static bool hasSidecar(const QString& path);
 #endif // KEXIV2_VERSION < 0x020300
 
+public:
+
+    static bool moveSidecar(const KUrl& src, const KUrl& dest);
+
 private:
 
     Interface* m_iface;
