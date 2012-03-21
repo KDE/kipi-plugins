@@ -176,7 +176,7 @@ void Plugin_MetadataEdit::slotImportExif()
 
     d->lastSelectedDirectory = importEXIFFile.upUrl();
 
-    KPMetadata meta;
+    KPMetadata meta(d->interface);
     if (!meta.load(importEXIFFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -220,10 +220,7 @@ void Plugin_MetadataEdit::slotImportExif()
         if (KPMetadata::canWriteExif(url.path()))
         {
             ret = true;
-            KPMetadata meta;
-            KPHostSettings hSettings(d->interface);
-            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+            KPMetadata meta(d->interface);
 
             ret &= meta.load(url.path());
             ret &= meta.setExif(exifData);
@@ -271,7 +268,7 @@ void Plugin_MetadataEdit::slotImportIptc()
 
     d->lastSelectedDirectory = importIPTCFile.upUrl();
 
-    KPMetadata meta;
+    KPMetadata meta(d->interface);
     if (!meta.load(importIPTCFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -310,10 +307,8 @@ void Plugin_MetadataEdit::slotImportIptc()
         if (KPMetadata::canWriteIptc(url.path()))
         {
             ret = true;
-            KPMetadata meta;
+            KPMetadata meta(d->interface);
             KPHostSettings hSettings(d->interface);
-            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
 
             ret &= meta.load(url.path());
             ret &= meta.setIptc(iptcData);
@@ -361,7 +356,7 @@ void Plugin_MetadataEdit::slotImportXmp()
 
     d->lastSelectedDirectory = importXMPFile.upUrl();
 
-    KPMetadata meta;
+    KPMetadata meta(d->interface);
     if (!meta.load(importXMPFile.path()))
     {
         KMessageBox::error(kapp->activeWindow(),
@@ -400,10 +395,7 @@ void Plugin_MetadataEdit::slotImportXmp()
         if (KPMetadata::canWriteXmp(url.path()))
         {
             ret = true;
-            KPMetadata meta;
-            KPHostSettings hSettings(d->interface);
-            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+            KPMetadata meta(d->interface);
 
             ret &= meta.load(url.path());
             ret &= meta.setXmp(xmpData);
