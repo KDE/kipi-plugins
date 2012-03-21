@@ -75,7 +75,7 @@ public:
     AltLangStringsEdit* objectNameEdit;
 };
 
-XMPStatus::XMPStatus(QWidget* parent)
+XMPStatus::XMPStatus(QWidget* const parent)
     : QWidget(parent), d(new XMPStatusPriv)
 {
     QGridLayout* grid  = new QGridLayout(this);
@@ -155,10 +155,10 @@ XMPStatus::~XMPStatus()
     delete d;
 }
 
-void XMPStatus::readMetadata(QByteArray& xmpData)
+void XMPStatus::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
 
     QString            data;
@@ -196,10 +196,10 @@ void XMPStatus::readMetadata(QByteArray& xmpData)
     blockSignals(false);
 }
 
-void XMPStatus::applyMetadata(QByteArray& xmpData)
+void XMPStatus::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
     QStringList oldList, newList;
-    KPMetadata      meta;
+    KPMetadata  meta(iface);
     meta.setXmp(xmpData);
 
     KPMetadata::AltLangMap oldAltLangMap, newAltLangMap;

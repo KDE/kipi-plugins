@@ -76,7 +76,7 @@ public:
     KListWidget* subCategoriesBox;
 };
 
-XMPCategories::XMPCategories(QWidget* parent)
+XMPCategories::XMPCategories(QWidget* const parent)
     : QWidget(parent), d(new XMPCategoriesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -262,10 +262,10 @@ void XMPCategories::slotAddCategory()
     }
 }
 
-void XMPCategories::readMetadata(QByteArray& xmpData)
+void XMPCategories::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
     QString data;
 
@@ -300,10 +300,10 @@ void XMPCategories::readMetadata(QByteArray& xmpData)
     blockSignals(false);
 }
 
-void XMPCategories::applyMetadata(QByteArray& xmpData)
+void XMPCategories::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
     QStringList newCategories;
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
 
     if (d->categoryCheck->isChecked())

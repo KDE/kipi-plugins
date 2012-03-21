@@ -78,7 +78,7 @@ public:
     AltLangStringsEdit* copyrightEdit;
 };
 
-XMPContent::XMPContent(QWidget* parent)
+XMPContent::XMPContent(QWidget* const parent)
     : QWidget(parent), d(new XMPContentPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -215,10 +215,10 @@ void XMPContent::setCheckedSyncEXIFComment(bool c)
     d->syncEXIFCommentCheck->setChecked(c);
 }
 
-void XMPContent::readMetadata(QByteArray& xmpData)
+void XMPContent::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
 
     KPMetadata::AltLangMap map;
@@ -255,9 +255,9 @@ void XMPContent::readMetadata(QByteArray& xmpData)
     blockSignals(false);
 }
 
-void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
+void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     meta.setXmp(xmpData);
 

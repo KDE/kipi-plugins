@@ -100,7 +100,7 @@ public:
     MultiStringsEdit* bylineEdit;
 };
 
-XMPCredits::XMPCredits(QWidget* parent)
+XMPCredits::XMPCredits(QWidget* const parent)
     : QWidget(parent), d(new XMPCreditsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -309,10 +309,10 @@ XMPCredits::~XMPCredits()
     delete d;
 }
 
-void XMPCredits::readMetadata(QByteArray& xmpData)
+void XMPCredits::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
     QString     data;
     QStringList list;
@@ -426,10 +426,10 @@ void XMPCredits::readMetadata(QByteArray& xmpData)
     blockSignals(false);
 }
 
-void XMPCredits::applyMetadata(QByteArray& xmpData)
+void XMPCredits::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
     QStringList oldList, newList;
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
 
     if (d->bylineEdit->getValues(oldList, newList))

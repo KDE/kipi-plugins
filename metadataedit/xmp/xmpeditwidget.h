@@ -39,7 +39,7 @@ class XMPEditWidget : public KPageWidget
 
 public:
 
-    XMPEditWidget(MetadataEditDialog* parent);
+    XMPEditWidget(MetadataEditDialog* const parent);
     ~XMPEditWidget();
 
     bool isModified() const;

@@ -72,7 +72,7 @@ public:
     KListWidget* keywordsBox;
 };
 
-XMPKeywords::XMPKeywords(QWidget* parent)
+XMPKeywords::XMPKeywords(QWidget* const parent)
     : QWidget(parent), d(new XMPKeywordsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -220,10 +220,10 @@ void XMPKeywords::slotAddKeyword()
     }
 }
 
-void XMPKeywords::readMetadata(QByteArray& xmpData)
+void XMPKeywords::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
     d->oldKeywords = meta.getXmpKeywords();
 
@@ -242,9 +242,9 @@ void XMPKeywords::readMetadata(QByteArray& xmpData)
     blockSignals(false);
 }
 
-void XMPKeywords::applyMetadata(QByteArray& xmpData)
+void XMPKeywords::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
     QStringList newKeywords;
 

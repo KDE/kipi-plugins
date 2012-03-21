@@ -34,7 +34,7 @@
 namespace KIPIMetadataEditPlugin
 {
 
-XMPSubjects::XMPSubjects(QWidget* parent)
+XMPSubjects::XMPSubjects(QWidget* const parent)
     : SubjectWidget(parent)
 {
     // Subject string do not accept these characters:
@@ -88,16 +88,16 @@ XMPSubjects::~XMPSubjects()
 {
 }
 
-void XMPSubjects::readMetadata(QByteArray& xmpData)
+void XMPSubjects::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
     setSubjectsList(meta.getXmpSubjects());
 }
 
-void XMPSubjects::applyMetadata(QByteArray& xmpData)
+void XMPSubjects::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
     QStringList newSubjects = subjectsList();
 

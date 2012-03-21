@@ -107,7 +107,7 @@ public:
     CountrySelector*               countryCB;
 };
 
-XMPOrigin::XMPOrigin(QWidget* parent)
+XMPOrigin::XMPOrigin(QWidget* const parent)
     : QWidget(parent), d(new XMPOriginPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -315,10 +315,10 @@ QDateTime XMPOrigin::getXMPCreationDate() const
     return d->dateCreatedSel->dateTime();
 }
 
-void XMPOrigin::readMetadata(QByteArray& xmpData)
+void XMPOrigin::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
 
     QString     data;
@@ -425,9 +425,9 @@ void XMPOrigin::readMetadata(QByteArray& xmpData)
     blockSignals(false);
 }
 
-void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
+void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     meta.setXmp(xmpData);
 

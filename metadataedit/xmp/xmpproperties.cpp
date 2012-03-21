@@ -161,7 +161,7 @@ public:
     SqueezedComboBox*               objectAttributeCB;
 };
 
-XMPProperties::XMPProperties(QWidget* parent)
+XMPProperties::XMPProperties(QWidget* const parent)
     : QWidget(parent), d(new XMPPropertiesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -330,10 +330,10 @@ XMPProperties::~XMPProperties()
     delete d;
 }
 
-void XMPProperties::readMetadata(QByteArray& xmpData)
+void XMPProperties::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
 
     int         val;
@@ -462,10 +462,10 @@ void XMPProperties::readMetadata(QByteArray& xmpData)
     blockSignals(false);
 }
 
-void XMPProperties::applyMetadata(QByteArray& xmpData)
+void XMPProperties::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
     QStringList oldList, newList;
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setXmp(xmpData);
 
     // ---------------------------------------------------------------
