@@ -74,7 +74,7 @@ public:
     KListWidget* keywordsBox;
 };
 
-IPTCKeywords::IPTCKeywords(QWidget* parent)
+IPTCKeywords::IPTCKeywords(QWidget* const parent)
     : QWidget(parent), d(new IPTCKeywordsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -243,10 +243,10 @@ void IPTCKeywords::slotAddKeyword()
     }
 }
 
-void IPTCKeywords::readMetadata(QByteArray& iptcData)
+void IPTCKeywords::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
     d->oldKeywords = meta.getIptcKeywords();
 
@@ -265,9 +265,9 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCKeywords::applyMetadata(QByteArray& iptcData)
+void IPTCKeywords::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
     QStringList newKeywords;
 

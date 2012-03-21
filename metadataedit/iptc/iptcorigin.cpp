@@ -123,7 +123,7 @@ public:
     CountrySelector*               countryCB;
 };
 
-IPTCOrigin::IPTCOrigin(QWidget* parent)
+IPTCOrigin::IPTCOrigin(QWidget* const parent)
     : QWidget(parent), d(new IPTCOriginPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -404,10 +404,10 @@ QDateTime IPTCOrigin::getIPTCCreationDate() const
     return QDateTime(d->dateCreatedSel->date(), d->timeCreatedSel->time());
 }
 
-void IPTCOrigin::readMetadata(QByteArray& iptcData)
+void IPTCOrigin::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     QString     data;
@@ -548,9 +548,9 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCOrigin::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
+void IPTCOrigin::applyMetadata(QByteArray& exifData, QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     meta.setIptc(iptcData);
 

@@ -74,7 +74,7 @@ public:
     KTextEdit* specialInstructionEdit;
 };
 
-IPTCStatus::IPTCStatus(QWidget* parent)
+IPTCStatus::IPTCStatus(QWidget* const parent)
     : QWidget(parent), d(new IPTCStatusPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -117,8 +117,10 @@ IPTCStatus::IPTCStatus(QWidget* parent)
 
     d->specialInstructionCheck = new QCheckBox(i18n("Special Instructions:"), this);
     d->specialInstructionEdit  = new KTextEdit(this);
-/*    d->specialInstructionEdit->setValidator(asciiValidator);
-    d->specialInstructionEdit->document()->setMaxLength;*/
+/*
+    d->specialInstructionEdit->setValidator(asciiValidator);
+    d->specialInstructionEdit->document()->setMaxLength;
+*/
     d->specialInstructionEdit->setWhatsThis(i18n("Enter the editorial usage instructions. "
                                                  "This field is limited to 256 ASCII characters."));
 
@@ -198,10 +200,10 @@ IPTCStatus::~IPTCStatus()
     delete d;
 }
 
-void IPTCStatus::readMetadata(QByteArray& iptcData)
+void IPTCStatus::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     QString     data;
@@ -250,9 +252,9 @@ void IPTCStatus::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCStatus::applyMetadata(QByteArray& iptcData)
+void IPTCStatus::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     if (d->objectNameCheck->isChecked())

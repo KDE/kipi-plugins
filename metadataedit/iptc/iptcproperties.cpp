@@ -118,7 +118,7 @@ public:
     ObjectAttributesEdit*          objectAttribute;
 };
 
-IPTCProperties::IPTCProperties(QWidget* parent)
+IPTCProperties::IPTCProperties(QWidget* const parent)
     : QWidget(parent), d(new IPTCPropertiesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -400,10 +400,10 @@ void IPTCProperties::slotSetTodayExpired()
     d->timeExpiredSel->setTime(QTime::currentTime());
 }
 
-void IPTCProperties::readMetadata(QByteArray& iptcData)
+void IPTCProperties::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     int         val;
@@ -565,9 +565,9 @@ void IPTCProperties::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCProperties::applyMetadata(QByteArray& iptcData)
+void IPTCProperties::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     if (d->dateReleasedCheck->isChecked())

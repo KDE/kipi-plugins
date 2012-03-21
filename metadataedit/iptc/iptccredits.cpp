@@ -82,7 +82,7 @@ public:
     MultiStringsEdit* contactEdit;
 };
 
-IPTCCredits::IPTCCredits(QWidget* parent)
+IPTCCredits::IPTCCredits(QWidget* const parent)
     : QWidget(parent), d(new IPTCCreditsPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -217,10 +217,10 @@ IPTCCredits::~IPTCCredits()
     delete d;
 }
 
-void IPTCCredits::readMetadata(QByteArray& iptcData)
+void IPTCCredits::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
     QString     data;
     QStringList list;
@@ -267,10 +267,10 @@ void IPTCCredits::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCCredits::applyMetadata(QByteArray& iptcData)
+void IPTCCredits::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
     QStringList oldList, newList;
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     if (d->copyrightCheck->isChecked())

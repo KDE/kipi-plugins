@@ -28,6 +28,13 @@
 #include <QWidget>
 #include <QByteArray>
 
+namespace KIPI
+{
+    class Interface;
+}
+
+using namespace KIPI;
+
 namespace KIPIMetadataEditPlugin
 {
 
@@ -37,11 +44,11 @@ class IPTCStatus : public QWidget
 
 public:
 
-    IPTCStatus(QWidget* parent);
+    IPTCStatus(QWidget* const parent);
     ~IPTCStatus();
 
-    void applyMetadata(QByteArray& iptcData);
-    void readMetadata(QByteArray& iptcData);
+    void applyMetadata(QByteArray& iptcData, Interface* const iface);
+    void readMetadata(QByteArray& iptcData, Interface* const iface);
 
 Q_SIGNALS:
 

@@ -78,7 +78,7 @@ public:
     KListWidget* subCategoriesBox;
 };
 
-IPTCCategories::IPTCCategories(QWidget* parent)
+IPTCCategories::IPTCCategories(QWidget* const parent)
     : QWidget(parent), d(new IPTCCategoriesPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -286,10 +286,10 @@ void IPTCCategories::slotAddCategory()
     }
 }
 
-void IPTCCategories::readMetadata(QByteArray& iptcData)
+void IPTCCategories::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
     QString data;
 
@@ -324,10 +324,10 @@ void IPTCCategories::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCCategories::applyMetadata(QByteArray& iptcData)
+void IPTCCategories::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
     QStringList newCategories;
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     if (d->categoryCheck->isChecked())

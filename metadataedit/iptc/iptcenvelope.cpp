@@ -157,7 +157,7 @@ public:
     SqueezedComboBox*              formatCB;
 };
 
-IPTCEnvelope::IPTCEnvelope(QWidget* parent)
+IPTCEnvelope::IPTCEnvelope(QWidget* const parent)
     : QWidget(parent), d(new IPTCEnvelopePriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -404,10 +404,10 @@ void IPTCEnvelope::slotSetTodaySent()
     d->timeSentSel->setTime(QTime::currentTime());
 }
 
-void IPTCEnvelope::readMetadata(QByteArray& iptcData)
+void IPTCEnvelope::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     int         val;
@@ -547,9 +547,9 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
+void IPTCEnvelope::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
 
     if (d->destinationCheck->isChecked())

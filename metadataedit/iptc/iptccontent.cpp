@@ -79,7 +79,7 @@ public:
     MultiStringsEdit* writerEdit;
 };
 
-IPTCContent::IPTCContent(QWidget* parent)
+IPTCContent::IPTCContent(QWidget* const parent)
     : QWidget(parent), d(new IPTCContentPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
@@ -225,10 +225,10 @@ void IPTCContent::setCheckedSyncEXIFComment(bool c)
     d->syncEXIFCommentCheck->setChecked(c);
 }
 
-void IPTCContent::readMetadata(QByteArray& iptcData)
+void IPTCContent::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
     QString     data;
     QStringList list;
@@ -262,9 +262,9 @@ void IPTCContent::readMetadata(QByteArray& iptcData)
     blockSignals(false);
 }
 
-void IPTCContent::applyMetadata(QByteArray& exifData, QByteArray& iptcData)
+void IPTCContent::applyMetadata(QByteArray& exifData, QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setExif(exifData);
     meta.setIptc(iptcData);
 

@@ -123,10 +123,10 @@ public:
     MetadataEditDialog*  dlg;
 };
 
-IPTCEditWidget::IPTCEditWidget(MetadataEditDialog* parent)
+IPTCEditWidget::IPTCEditWidget(MetadataEditDialog* const parent)
     : KPageWidget(parent), d(new IPTCEditWidgetPrivate)
 {
-    d->dlg       = parent;
+    d->dlg           = parent;
 
     d->contentPage   = new IPTCContent(this);
     d->page_content  = addPage(d->contentPage, i18n("Content"));
@@ -249,7 +249,7 @@ void IPTCEditWidget::saveSettings()
 
 void IPTCEditWidget::slotItemChanged()
 {
-    KPMetadata meta;
+    KPMetadata meta(d->dlg->iface());
     meta.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
@@ -259,15 +259,15 @@ void IPTCEditWidget::slotItemChanged()
 #endif
 
     d->iptcData = meta.getIptc();
-    d->contentPage->readMetadata(d->iptcData);
-    d->originPage->readMetadata(d->iptcData);
-    d->creditsPage->readMetadata(d->iptcData);
-    d->subjectsPage->readMetadata(d->iptcData);
-    d->keywordsPage->readMetadata(d->iptcData);
-    d->categoriesPage->readMetadata(d->iptcData);
-    d->statusPage->readMetadata(d->iptcData);
-    d->propertiesPage->readMetadata(d->iptcData);
-    d->envelopePage->readMetadata(d->iptcData);
+    d->contentPage->readMetadata(d->iptcData, d->dlg->iface());
+    d->originPage->readMetadata(d->iptcData, d->dlg->iface());
+    d->creditsPage->readMetadata(d->iptcData, d->dlg->iface());
+    d->subjectsPage->readMetadata(d->iptcData, d->dlg->iface());
+    d->keywordsPage->readMetadata(d->iptcData, d->dlg->iface());
+    d->categoriesPage->readMetadata(d->iptcData, d->dlg->iface());
+    d->statusPage->readMetadata(d->iptcData, d->dlg->iface());
+    d->propertiesPage->readMetadata(d->iptcData, d->dlg->iface());
+    d->envelopePage->readMetadata(d->iptcData, d->dlg->iface());
 
     d->isReadOnly = !KPMetadata::canWriteIptc((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
@@ -293,26 +293,23 @@ void IPTCEditWidget::apply()
         {
             info.setDescription(d->contentPage->getIPTCCaption());
         }
-        d->contentPage->applyMetadata(d->exifData, d->iptcData);
+        d->contentPage->applyMetadata(d->exifData, d->iptcData, d->dlg->iface());
 
         if (d->originPage->syncHOSTDateIsChecked())
         {
             info.setDate(d->originPage->getIPTCCreationDate());
         }
-        d->originPage->applyMetadata(d->exifData, d->iptcData);
+        d->originPage->applyMetadata(d->exifData, d->iptcData, d->dlg->iface());
 
-        d->creditsPage->applyMetadata(d->iptcData);
-        d->subjectsPage->applyMetadata(d->iptcData);
-        d->keywordsPage->applyMetadata(d->iptcData);
-        d->categoriesPage->applyMetadata(d->iptcData);
-        d->statusPage->applyMetadata(d->iptcData);
-        d->propertiesPage->applyMetadata(d->iptcData);
-        d->envelopePage->applyMetadata(d->iptcData);
+        d->creditsPage->applyMetadata(d->iptcData, d->dlg->iface());
+        d->subjectsPage->applyMetadata(d->iptcData, d->dlg->iface());
+        d->keywordsPage->applyMetadata(d->iptcData, d->dlg->iface());
+        d->categoriesPage->applyMetadata(d->iptcData, d->dlg->iface());
+        d->statusPage->applyMetadata(d->iptcData, d->dlg->iface());
+        d->propertiesPage->applyMetadata(d->iptcData, d->dlg->iface());
+        d->envelopePage->applyMetadata(d->iptcData, d->dlg->iface());
 
-        KPMetadata meta;
-        KPHostSettings hSettings(d->dlg->iface());
-        meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-        meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+        KPMetadata meta(d->dlg->iface());
 
         meta.load((*d->dlg->currentItem()).path());
         meta.setExif(d->exifData);

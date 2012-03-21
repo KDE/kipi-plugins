@@ -34,7 +34,7 @@
 namespace KIPIMetadataEditPlugin
 {
 
-IPTCSubjects::IPTCSubjects(QWidget* parent)
+IPTCSubjects::IPTCSubjects(QWidget* const parent)
     : SubjectWidget(parent)
 {
     // Subject string only accept printable Ascii char excepted these one:
@@ -103,16 +103,16 @@ IPTCSubjects::~IPTCSubjects()
 {
 }
 
-void IPTCSubjects::readMetadata(QByteArray& iptcData)
+void IPTCSubjects::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
     setSubjectsList(meta.getIptcSubjects());
 }
 
-void IPTCSubjects::applyMetadata(QByteArray& iptcData)
+void IPTCSubjects::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta;
+    KPMetadata meta(iface);
     meta.setIptc(iptcData);
     QStringList newSubjects = subjectsList();
 
