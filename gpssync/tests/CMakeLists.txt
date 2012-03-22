@@ -12,16 +12,20 @@ TARGET_LINK_LIBRARIES(gpssync_test_gpxparsing
                         kipiplugins
                      )
 
-KDE4_ADD_EXECUTABLE(gpssync_test_rgparsing
-                    test_rgparsing.cpp
-                    )
+IF(NOT WIN32)
 
-TARGET_LINK_LIBRARIES(gpssync_test_rgparsing
-                      ${KDE4_KDECORE_LIBS}
-                      ${QT_QTTEST_LIBRARY}
-                      ${QT_QTGUI_LIBRARY}
-                      kipiplugins
-                    )
+    KDE4_ADD_EXECUTABLE(gpssync_test_rgparsing
+               test_rgparsing.cpp
+               )
+
+    TARGET_LINK_LIBRARIES(gpssync_test_rgparsing
+                 ${KDE4_KDECORE_LIBS}
+                 ${QT_QTTEST_LIBRARY}
+                 ${QT_QTGUI_LIBRARY}
+                 kipiplugins
+               )
+
+ENDIF(NOT WIN32)
 
 KDE4_ADD_EXECUTABLE(gpssync_test_rgtagmodel
                     test_rgtagmodel.cpp
