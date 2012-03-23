@@ -7,7 +7,7 @@ IF(WIN32)
     REMOVE_DEFINITIONS(${KDE4_ENABLE_EXCEPTIONS})
 ENDIF(WIN32)
 
-KDE4_ADD_APP_ICON(dngconverter_SRCS "../icons/oxygen/*/apps/dngconverter.png")
+KDE4_ADD_APP_ICON(dngconverter_SRCS "../icons/*dngconverter.png")
 
 KDE4_ADD_EXECUTABLE(dngconverter ${dngconverter_SRCS})
 
