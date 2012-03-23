@@ -449,6 +449,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             item->setText(1, album.name );
             firstAlbumName = album.name;
             item->setText(2, i18n("Album") );
+            item->setText(3, QString::number(album.ref_num) );
 
             d->albumView->addTopLevelItem(item);
             d->albumDict.insert(album.title, album);
@@ -463,13 +464,14 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             while( !found && i < parentItemList.size() )
             {
                 parentItem = parentItemList.at(i);
-                if(parentItem && (parentItem->text(1) == QString::number(parentRefNum)))
+                if(parentItem && (parentItem->text(3) == QString::number(parentRefNum)))
                 {
                     QTreeWidgetItem *item = new QTreeWidgetItem(parentItem);
                     item->setText(0, cleanName(album.title) );
                     item->setIcon(0, KIcon("inode-directory") );
                     item->setText(1, album.name );
                     item->setText(2, i18n("Album") );
+                    item->setText(3, QString::number(album.ref_num) );
 
                     d->albumDict.insert(album.title, album);
                     parentItemList << item;
