@@ -163,8 +163,9 @@ FOREACH( _currentfile ${PhotoLayoutsEditor_SRCS} )
 ENDFOREACH( _currentfile ${PhotoLayoutsEditor_SRCS} )
 
 IF(NOT MSVC)
-    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC -fdata-sections -ffunction-sections" )
-    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
+	# Causes cmake error on openSUSE 12 (cmake 2.8.6)
+	#    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES COMPILE_FLAGS "-fPIC -fdata-sections -ffunction-sections" )
+	#    SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
 ENDIF(NOT MSVC)
 
 KDE4_ADD_LIBRARY( libphotolayoutseditor STATIC ${PhotoLayoutsEditor_SRCS} )
