@@ -211,7 +211,7 @@ class KIPIPhotoLayoutsEditor::ScenePrivate
             if (!m_pressed_item->isSelected())
             {
                 m_selected_items.insert(m_pressed_item, m_pressed_item->pos());
-                m_selected_items_path = m_selected_items_path.united(m_pressed_item->mapToScene(m_pressed_item->shape()));
+                m_selected_items_path         = m_selected_items_path.united(m_pressed_item->mapToScene(m_pressed_item->shape()));
                 m_selected_items_all_movable &= m_pressed_item->flags() & QGraphicsItem::ItemIsMovable;
                 m_pressed_item->setSelected(true);
                 setSelectionInitialPosition();
