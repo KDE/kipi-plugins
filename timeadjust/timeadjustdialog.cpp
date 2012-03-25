@@ -65,6 +65,8 @@ extern "C"
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 #include <kvbox.h>
+#include <KIO/NetAccess>
+#include <kde_file.h>
 
 // LibKIPI includes
 
@@ -107,6 +109,7 @@ public:
         updEXIFDigDateCheck    = 0;
         updIPTCDateCheck       = 0;
         updXMPDateCheck        = 0;
+        updFileNameCheck       = 0;
         useFileDateTypeChooser = 0;
         useMetaDateTypeChooser = 0;
         adjTypeChooser         = 0;
@@ -143,6 +146,7 @@ public:
     QCheckBox*       updEXIFDigDateCheck;
     QCheckBox*       updIPTCDateCheck;
     QCheckBox*       updXMPDateCheck;
+    QCheckBox*       updFileNameCheck;
 
     QComboBox*       useFileDateTypeChooser;
     QComboBox*       useMetaDateTypeChooser;
@@ -312,6 +316,7 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
     d->updEXIFDigDateCheck = new QCheckBox(i18n("EXIF: digitized"), d->updateGroupBox);
     d->updIPTCDateCheck    = new QCheckBox(i18n("IPTC: created"), d->updateGroupBox);
     d->updXMPDateCheck     = new QCheckBox(i18n("XMP"), d->updateGroupBox);
+    d->updFileNameCheck    = new QCheckBox(i18n("Filename"), d->updateGroupBox);
 
     updateGBLayout->setMargin(spacingHint());
     updateGBLayout->setSpacing(spacingHint());
@@ -325,6 +330,7 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
     updateGBLayout->addWidget(d->updEXIFDigDateCheck, 2, 1, 1, 1);
     updateGBLayout->addWidget(d->updIPTCDateCheck,    2, 0, 1, 1);
     updateGBLayout->addWidget(d->updXMPDateCheck,     0, 2, 1, 1);
+    updateGBLayout->addWidget(d->updFileNameCheck,    1, 2, 1, 1);
 
     if (!KPMetadata::supportXmp())
     {
@@ -445,6 +451,7 @@ void TimeAdjustDialog::readSettings()
     d->updEXIFDigDateCheck->setChecked(group.readEntry("Update EXIF Digitization Time", false));
     d->updIPTCDateCheck->setChecked(group.readEntry("Update IPTC Time", false));
     d->updXMPDateCheck->setChecked(group.readEntry("Update XMP Creation Time", false));
+    d->updFileNameCheck->setChecked(group.readEntry("Update File Name", false));
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     restoreDialogSize(group2);
@@ -477,6 +484,7 @@ void TimeAdjustDialog::saveSettings()
     group.writeEntry("Update EXIF Digitization Time", d->updEXIFDigDateCheck->isChecked());
     group.writeEntry("Update IPTC Time", d->updIPTCDateCheck->isChecked());
     group.writeEntry("Update XMP Creation Time", d->updXMPDateCheck->isChecked());
+    group.writeEntry("Update File Name", d->updFileNameCheck->isChecked());
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     saveDialogSize(group2);
@@ -816,6 +824,23 @@ void TimeAdjustDialog::slotOk()
             KPImageInfo info(d->interface, url);
             info.setDate(dateTime);
         }
+
+        if (d->updFileNameCheck->isChecked())
+	{
+            QString newdate;
+            QFileInfo image(url.path());
+
+            newdate = dateTime.toString(QString("yyyyMMddThhmmss"));
+            newdate += '.';
+            newdate += image.suffix();
+
+            KUrl newUrl = url;
+            newUrl.setFileName(newdate);
+
+            KIO::NetAccess::move(url, newUrl, 0);
+
+            KPMetadata::moveSidecar(url, newUrl);
+	}
 
         if (metadataChanged)
         {
