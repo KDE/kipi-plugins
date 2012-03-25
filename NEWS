@@ -40,4 +40,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 025 ==> 286633 : Unable to find cpfind executable, but cpfind is installed and availabe within the path.
 026 ==> 286382 : Panorama stitcher doesn't run and asks for autooptimizer despite hugin is installed.
 027 ==> 296579 : Adjust Date & Time: Wrong date format shown
-028 ==> 
+028 ==> 193874 : When changing dates, change date-based filename as well.
+029 ==> 
