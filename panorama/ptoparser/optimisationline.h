@@ -26,7 +26,7 @@
 #ifndef OPTIMISATIONLINE_H
 #define OPTIMISATIONLINE_H
 
-#include "common.h"
+#include "ptoparser/common.h"
 
 namespace KIPIPanoramaPlugin { namespace PtoParser
 {
