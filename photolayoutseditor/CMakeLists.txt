@@ -49,7 +49,6 @@ SET(PLE_Widgets_SRCS
     widgets/menus/LayersTreeMenu.cpp
     widgets/items/AbstractItemInterface.cpp
     widgets/tools/AbstractItemsListViewTool.cpp
-    widgets/tools/AbstractItemsListViewTool_p.cpp
     widgets/tools/AbstractItemsTool.cpp
     widgets/tools/AbstractTool.cpp
     widgets/tools/BorderEditTool.cpp
