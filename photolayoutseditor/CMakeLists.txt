@@ -1,18 +1,13 @@
-  PROJECT( photolayoutseditor )
-
-  CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-
-  ADD_SUBDIRECTORY( ./utils/qtpropertybrowser )
-
-  FIND_PACKAGE(KDE4 REQUIRED)
-  INCLUDE( KDE4Defaults )
-
-  FIND_PACKAGE(Kipi REQUIRED)
+  ADD_SUBDIRECTORY( utils/qtpropertybrowser )
+  ADD_SUBDIRECTORY( resources/app )
+  ADD_SUBDIRECTORY( data )
+  ADD_SUBDIRECTORY( effectplugins )
+  ADD_SUBDIRECTORY( borderplugins )
 
   SET( CMAKE_PACKAGE_QTGUI TRUE )
   SET( QT_USE_QTXML TRUE )
 
-  SET( PLE_Common_SRCS
+  SET(PLE_Common_SRCS
       plugin/photolayoutseditor.cpp
       settings/PLEConfigDialog.cpp
       settings/PLEConfigViewWidget.cpp
@@ -24,9 +19,9 @@
       listeners/TextColorChangeListener.cpp
       listeners/TextFontChangeListener.cpp
       undo/UndoMoveRowsCommand.cpp
-)
+     )
 
-  SET( PLE_Widgets_SRCS
+  SET(PLE_Widgets_SRCS
       widgets/canvas/Canvas.cpp
       widgets/canvas/CanvasSize.cpp
       widgets/canvas/CropWidgetItem.cpp
@@ -63,16 +58,16 @@
       widgets/tools/TextEditorTool.cpp
       widgets/tools/ToolsDockWidget.cpp
       widgets/tools/ZoomTool.cpp
-)
+     )
 
-  SET( PLE_Models_SRCS
+  SET(PLE_Models_SRCS
       models/AbstractMovableModel.cpp
       models/LayersModel.cpp
       models/LayersModelItem.cpp
       models/LayersSelectionModel.cpp
-)
+     )
 
-  SET( PLE_Borders_SRCS
+  SET(PLE_Borders_SRCS
       borderplugins/StandardBordersFactory.cpp
       borderplugins/polaroid/PolaroidBorderDrawer.cpp
       borderplugins/solid/SolidBorderDrawer.cpp
@@ -80,9 +75,9 @@
       borders/BorderDrawerInterface.cpp
       borders/BorderDrawersLoader.cpp
       borders/BordersGroup.cpp
-)
+     )
 
-  SET( PLE_Effects_SRCS
+  SET(PLE_Effects_SRCS
       effectplugins/StandardEffectsFactory.cpp
       effectplugins/blur/BlurPhotoEffect.cpp
       effectplugins/colorize/ColorizePhotoEffect.cpp
@@ -93,9 +88,9 @@
       effects/PhotoEffectChangeListener.cpp
       effects/PhotoEffectsGroup.cpp
       effects/PhotoEffectsLoader.cpp
-)
+     )
 
-  SET( PLE_Threads_SRCS
+  SET(PLE_Threads_SRCS
       threads/AbstractPhotoItemLoader.cpp
       threads/CanvasLoadingThread.cpp
       threads/CanvasSavingThread.cpp
@@ -104,27 +99,24 @@
       threads/SceneBackgroundLoader.cpp
       threads/SceneBorderLoader.cpp
       threads/TextItemLoader.cpp
-)
+     )
 
-  ADD_SUBDIRECTORY( effectplugins )
-  ADD_SUBDIRECTORY( borderplugins )
-
-  SET( PhotoLayoutsEditor_SRCS
+  SET(PhotoLayoutsEditor_SRCS
       ${PLE_Common_SRCS}
       ${PLE_Widgets_SRCS}
       ${PLE_Models_SRCS}
       ${PLE_Borders_SRCS}
       ${PLE_Effects_SRCS}
       ${PLE_Threads_SRCS}
-)
+     )
 
-  SET( PhotoLayoutsEditor_RCS
+  SET(PhotoLayoutsEditor_RCS
       resources/icons.qrc
-  )
+     )
 
   QT4_ADD_RESOURCES( PhotoLayoutsEditor_SRCS ${PhotoLayoutsEditor_RCS} )
 
-  SET( INCLUDE_DIRS
+  SET(INCLUDE_DIRS
       borders
       borderplugins
       borderplugins/polaroid
@@ -153,19 +145,18 @@
       widgets/layers
       widgets/menus
       widgets/tools
-  )
+     )
 
   INCLUDE_DIRECTORIES(${QT_INCLUDE}
                       ${KDE4_INCLUDES}
                       ${INCLUDE_DIRS}
-                      ${KIPI_INCLUDE_DIR})
-
-  ADD_SUBDIRECTORY( ./resources/app )
-  ADD_SUBDIRECTORY( ./data )
+                      ${KIPI_INCLUDE_DIR}
+                     )
 
   ADD_DEFINITIONS( -Wall )
 
   KDE4_ADD_KCFG_FILES( PhotoLayoutsEditor_SRCS GENERATE_MOC ./settings/PLEConfigSkeleton.kcfgc )
+
   INSTALL( FILES ./settings/PLEConfigSkeleton.kcfgc DESTINATION ${KCFG_INSTALL_DIR} )
 
   # Adjust flag for static lib and 64 bits computers using -fPIC for GCC compiler (B.K.O: #269903)
@@ -181,13 +172,14 @@
   SET_TARGET_PROPERTIES( libphotolayoutseditor PROPERTIES LINK_FLAGS "--gc-sections" )
 
   TARGET_LINK_LIBRARIES( libphotolayoutseditor 
-                                         PropertyBrowser
-                                         ${QT_LIBRARIES}
-                                         ${KDE4_KDEUI_LIBS}
-                                         ${KDE4_KPARTS_LIBS}
-                                         ${KIPI_LIBRARIES}
-                                         ${KDCRAW_LIBRARIES}
-                                         kipiplugins )
+                         PropertyBrowser
+                         ${QT_LIBRARIES}
+                         ${KDE4_KDEUI_LIBS}
+                         ${KDE4_KPARTS_LIBS}
+                         ${KIPI_LIBRARIES}
+                         ${KDCRAW_LIBRARIES}
+                         kipiplugins
+                       )
 
 # =======================================================
 # PhotoLayoutsEditor plugin
@@ -211,6 +203,7 @@
   KDE4_ADD_EXECUTABLE( photolayoutseditor ${PhotoLayoutsEditor_SRCS} )
 
   TARGET_LINK_LIBRARIES( photolayoutseditor libphotolayoutseditor )
+
   INSTALL( TARGETS photolayoutseditor ${INSTALL_TARGETS_DEFAULT_ARGS} )
   INSTALL( PROGRAMS plugin/photolayoutseditor.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
   INSTALL( FILES plugin/photolayoutseditorui.rc DESTINATION ${DATA_INSTALL_DIR}/photolayoutseditor )
