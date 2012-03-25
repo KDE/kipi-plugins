@@ -26,7 +26,7 @@
 #ifndef VARIOUSGRAMMAR_H
 #define VARIOUSGRAMMAR_H
 
-#include "common.h"
+#include "ptoparser/common.h"
 
 // ----------------------------------
 // ------ Some useful grammars ------

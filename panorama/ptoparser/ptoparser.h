@@ -26,8 +26,13 @@
 #ifndef PTOPARSER_H
 #define PTOPARSER_H
 
+// Qt includes
+
 #include <QString>
-#include "ptotype.h"
+
+// Local includes
+
+#include "ptoparser/common.h"
 
 namespace KIPIPanoramaPlugin
 {
