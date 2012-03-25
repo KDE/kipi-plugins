@@ -42,5 +42,5 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 027 ==> 296579 : Adjust Date & Time: Wrong date format shown
 028 ==> 193874 : When changing dates, change date-based filename as well.
 029 ==> 268317 : "Determine from clock photo" dialog: Allow zooming with +/- or ctrl+mousewheel in the preview.
-030 ==> 
-
+030 ==> 208291 : Lock zoom when switching photos.
+031 ==> 
