@@ -726,7 +726,7 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
 
 void TimeAdjustDialog::slotUpdateExample()
 {
-    static const QString exampleDateTimeFormat("dd.MM.yyyy hh:mm:ss");
+    static const QString exampleTimeFormat("hh:mm:ss");
 
     // When the custom timestamp is to be used, do not show any file original timestamps
     if (d->useCustomDateBtn->isChecked())
@@ -735,8 +735,11 @@ void TimeAdjustDialog::slotUpdateExample()
         if (d->adjTypeChooser->currentIndex() > 0)
             customTime = calculateAdjustedTime(customTime);
 
-        QString customTimeStr = customTime.toString(exampleDateTimeFormat);
-        d->exampleTimeChangeLabel->setText(i18n("Custom: <b>%1</b>", customTimeStr));
+        QDate customDate = customTime.date();
+        QString formattedCustomDate = KGlobal::locale()->formatDate(customDate, KLocale::ShortDate);
+
+        QString customTimeStr = customTime.toString(exampleTimeFormat);
+        d->exampleTimeChangeLabel->setText(i18n("Custom: <b>%1 %2</b>", formattedCustomDate, customTimeStr));
         return;
     }
 
@@ -758,19 +761,27 @@ void TimeAdjustDialog::slotUpdateExample()
     }
 
     // Show the file original timestamp (and adjusted one if needed)
-    QString originalTimeStr = originalTime.toString(exampleDateTimeFormat);
+
+    QDate originalDate = originalTime.date();
+    QString formattedOriginalDate = KGlobal::locale()->formatDate(originalDate, KLocale::ShortDate);
+
+    QString originalTimeStr = originalTime.toString(exampleTimeFormat);
     if (d->adjTypeChooser->currentIndex() == 0)
     {
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1</b>", originalTimeStr));
+        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b>", formattedOriginalDate, originalTimeStr));
         return;
     }
     else
     {
         QDateTime adjustedTime  = calculateAdjustedTime(originalTime);
-        QString adjustedTimeStr = adjustedTime.toString(exampleDateTimeFormat);
-        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1</b><br/>"
-                                                "Adjusted: <b>%2</b>",
-                                           originalTimeStr, adjustedTimeStr));
+
+        QDate adjustedDate = adjustedTime.date();
+        QString formattedAdjustedDate = KGlobal::locale()->formatDate(adjustedDate, KLocale::ShortDate);
+
+        QString adjustedTimeStr = adjustedTime.toString(exampleTimeFormat);
+        d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b><br/>"
+                                                "Adjusted: <b>%3 %4</b>",
+                                           formattedOriginalDate, originalTimeStr, formattedAdjustedDate, adjustedTimeStr));
     }
 }
 
