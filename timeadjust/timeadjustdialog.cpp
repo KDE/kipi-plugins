@@ -79,7 +79,9 @@ extern "C"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
+#include "kpprogresswidget.h"
 #include "clockphotodialog.h"
+
 
 using namespace KIPIPlugins;
 
@@ -123,6 +125,7 @@ public:
         useCustTimeInput       = 0;
         adjTimeInput           = 0;
         useCustomDateTodayBtn  = 0;
+        progressBar            = 0;
         interface              = 0;
         about                  = 0;
     }
@@ -174,6 +177,7 @@ public:
     Interface* interface;
 
     KPAboutData*     about;
+    KPProgressWidget* progressBar;
 };
 
 TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
@@ -216,6 +220,13 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
+
+    // -- Progress Bar ------------------------------------------------------------
+
+    d->progressBar = new KPProgressWidget(d->interface, parent);
+    d->progressBar->reset();
+    d->progressBar->hide();
+
 
     // -- Use ------------------------------------------------------------
 
@@ -361,6 +372,7 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* interface, QWidget* parent)
     mainWidgetLayout->addWidget(d->adjustGroupBox);
     mainWidgetLayout->addWidget(d->updateGroupBox);
     mainWidgetLayout->addWidget(d->exampleGroupBox);
+    mainWidgetLayout->addWidget(d->progressBar);
     mainWidgetLayout->addStretch();
 
     // -- Slots/Signals ------------------------------------------------------
@@ -810,8 +822,15 @@ void TimeAdjustDialog::slotOk()
                            d->updIPTCDateCheck->isChecked()    ||
                            d->updXMPDateCheck->isChecked();
 
+    d->progressBar->show();
+    d->progressBar->progressScheduled(i18n("Adjust Time and Date"), true, true);
+    d->progressBar->setMaximum(d->imageURLs.size());
+
     for (int i=0; i<d->imageURLs.size(); ++i)
     {
+        d->progressBar->setValue(i);
+        d->progressBar->progressStatusChanged(i18n("Processing %1", d->imageURLs[i].fileName()));
+
         KUrl url = d->imageURLs[i];
         if (d->useCustomDateBtn->isChecked()) dateTime = customTime;
         else dateTime = d->imageOriginalDates[i];
