@@ -44,4 +44,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 029 ==> 268317 : "Determine from clock photo" dialog: Allow zooming with +/- or ctrl+mousewheel in the preview.
 030 ==> 208291 : Lock zoom when switching photos.
 031 ==> 279444 : Missing progress information when updating date on several images.
-032 ==> 
+032 ==> 134222 : Gallery2 export doesn't respect items selections.
+033 ==> 
+
