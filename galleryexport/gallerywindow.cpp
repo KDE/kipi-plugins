@@ -145,7 +145,7 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
     QLabel *resizeLabel   = new QLabel(i18n("Maximum dimension:"));
 
     dimensionSpinBox      = new QSpinBox;
-    dimensionSpinBox->setRange(1,1600);
+    dimensionSpinBox->setRange(1,3200);
     dimensionSpinBox->setValue(600);
 
     resizeCheckBox->setChecked(false);
