@@ -7,7 +7,7 @@
  * Description : a plugin to set time stamp of picture files.
  *
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -47,8 +47,8 @@
 K_PLUGIN_FACTORY( TimeAdjustFactory, registerPlugin<Plugin_TimeAdjust>(); )
 K_EXPORT_PLUGIN ( TimeAdjustFactory("kipiplugin_timeadjust") )
 
-Plugin_TimeAdjust::Plugin_TimeAdjust(QObject *parent, const QVariantList&)
-                 : KIPI::Plugin( TimeAdjustFactory::componentData(), parent, "TimeAdjust")
+Plugin_TimeAdjust::Plugin_TimeAdjust(QObject* const parent, const QVariantList&)
+    : Plugin( TimeAdjustFactory::componentData(), parent, "TimeAdjust")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_TimeAdjust plugin loaded";
 }
@@ -59,7 +59,7 @@ Plugin_TimeAdjust::~Plugin_TimeAdjust()
 
 void Plugin_TimeAdjust::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     m_actionTimeAjust = actionCollection()->addAction("timeadjust");
     m_actionTimeAjust->setText(i18n("Adjust Time && Date..."));
@@ -70,16 +70,15 @@ void Plugin_TimeAdjust::setup(QWidget* widget)
 
     addAction(m_actionTimeAjust);
 
-    m_interface = dynamic_cast< KIPI::Interface* >(parent());
+    m_interface = dynamic_cast<Interface*>(parent());
     if (!m_interface)
     {
        kError() << "Kipi interface is null!";
        return;
     }
 
-    KIPI::ImageCollection selection = m_interface->currentSelection();
-    m_actionTimeAjust->setEnabled(selection.isValid() &&
-                                  !selection.images().isEmpty());
+    ImageCollection selection = m_interface->currentSelection();
+    m_actionTimeAjust->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
     connect(m_interface, SIGNAL(selectionChanged(bool)),
             m_actionTimeAjust, SLOT(setEnabled(bool)));
@@ -87,7 +86,7 @@ void Plugin_TimeAdjust::setup(QWidget* widget)
 
 void Plugin_TimeAdjust::slotActivate()
 {
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if (!images.isValid() || images.images().isEmpty())
         return;
@@ -97,11 +96,11 @@ void Plugin_TimeAdjust::slotActivate()
     dlg.exec();
 }
 
-KIPI::Category Plugin_TimeAdjust::category( KAction* action ) const
+Category Plugin_TimeAdjust::category(KAction* action) const
 {
     if ( action == m_actionTimeAjust )
-       return KIPI::ImagesPlugin;
+       return ImagesPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ImagesPlugin; // no warning from compiler, please
+    return ImagesPlugin; // no warning from compiler, please
 }

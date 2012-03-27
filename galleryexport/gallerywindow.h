@@ -7,9 +7,9 @@
 * Description : a plugin to export to a remote Gallery server.
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
-* Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+* Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
 * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
-* Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+* Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
 *
 * This program is free software; you can redistribute it
 * and/or modify it under the terms of the GNU General
@@ -68,7 +68,7 @@ private:
 
     void connectSignals();
     void readSettings();
-    QString cleanName(const QString&);
+    QString cleanName(const QString&) const;
 
 private Q_SLOTS:
 
@@ -93,16 +93,16 @@ private Q_SLOTS:
 
 private:
 
-    Interface*          m_interface;
-    KPAboutData* m_about;
-    GalleryTalker*            m_talker;
-    Gallery*                  mpGallery;
+    Interface*       m_interface;
+    KPAboutData*     m_about;
+    GalleryTalker*   m_talker;
+    Gallery*         m_gallery;
 
-    QProgressDialog*          m_progressDlg;
-    unsigned int              m_uploadCount;
-    unsigned int              m_uploadTotal;
-    QStringList*              mpUploadList;
-    QString                   firstAlbumName;
+    QProgressDialog* m_progressDlg;
+    unsigned int     m_uploadCount;
+    unsigned int     m_uploadTotal;
+    QStringList*     m_uploadList;
+    QString          m_firstAlbumName;
 
     class Private;
     Private* const d;

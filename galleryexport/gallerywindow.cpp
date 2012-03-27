@@ -7,9 +7,9 @@
  * Description : a plugin to export to a remote Gallery server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -58,6 +58,7 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/imagecollection.h>
 
 // Local includes
 
@@ -191,11 +192,11 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 
 // --------------------------------------------------------------------------------------------------------------
 
-GalleryWindow::GalleryWindow(Interface* interface, QWidget *parent, Gallery* pGallery)
-             : KDialog(parent),
-               m_interface(interface),
-               mpGallery(pGallery),
-               d(new Private(this))
+GalleryWindow::GalleryWindow(Interface* const interface, QWidget* const parent, Gallery* const pGallery)
+    : KDialog(parent),
+      m_interface(interface),
+      m_gallery(pGallery),
+      d(new Private(this))
 {
     setWindowTitle( i18n("Gallery Export") );
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
@@ -207,9 +208,9 @@ GalleryWindow::GalleryWindow(Interface* interface, QWidget *parent, Gallery* pGa
                                            KAboutData::License_GPL,
                                            ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
                                            ki18n("(c) 2003-2005, Renchi Raju\n"
-                                                    "(c) 2006-2007, Colin Guthrie\n"
-                                                    "(c) 2006-2009, Gilles Caulier\n"
-                                                    "(c) 2008, Andrea Diamantini\n"));
+                                                 "(c) 2006-2007, Colin Guthrie\n"
+                                                 "(c) 2006-2012, Gilles Caulier\n"
+                                                 "(c) 2008, Andrea Diamantini\n"));
 
     m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
                        "renchi dot raju at gmail dot com");
@@ -228,16 +229,16 @@ GalleryWindow::GalleryWindow(Interface* interface, QWidget *parent, Gallery* pGa
     disconnect(this, SIGNAL(helpClicked()),
                this, SLOT(slotHelp()));
 
-    KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
+    QAction* handbook   = new QAction(i18n("Handbook"), this);
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
 
     // User1 Button : to conf gallery settings
-    KPushButton *confButton = button( User1 );
+    KPushButton* confButton = button( User1 );
     confButton->setText( i18n("Settings") );
     confButton->setIcon( KIcon("configure") );
     connect(confButton, SIGNAL(clicked()),
@@ -253,7 +254,7 @@ GalleryWindow::GalleryWindow(Interface* interface, QWidget *parent, Gallery* pGa
     m_progressDlg->setAutoClose(true);
     m_uploadCount = 0;
     m_uploadTotal = 0;
-    mpUploadList  = new QStringList;
+    m_uploadList  = new QStringList;
 
     // connect functions
     connectSignals();
@@ -273,7 +274,7 @@ GalleryWindow::~GalleryWindow()
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
     group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
 
-    delete mpUploadList;
+    delete m_uploadList;
     delete m_about;
 
     delete d;
@@ -352,13 +353,13 @@ void GalleryWindow::slotHelp()
 
 void GalleryWindow::slotDoLogin()
 {
-    GalleryTalker::setGallery2((2 == mpGallery->version()));
+    GalleryTalker::setGallery2((2 == m_gallery->version()));
 
-    KUrl url(mpGallery->url());
+    KUrl url(m_gallery->url());
     if (url.protocol().isEmpty())
     {
         url.setProtocol("http");
-        url.setHost(mpGallery->url());
+        url.setHost(m_gallery->url());
     }
 
     if (!url.url().endsWith(QLatin1String(".php")))
@@ -370,13 +371,13 @@ void GalleryWindow::slotDoLogin()
     }
 
     // If we've done something clever, save it back to the gallery.
-    if (mpGallery->url() != url.url())
+    if (m_gallery->url() != url.url())
     {
-        mpGallery->setUrl(url.url());
-        mpGallery->save();
+        m_gallery->setUrl(url.url());
+        m_gallery->save();
     }
 
-    m_talker->login(url.url(), mpGallery->username(), mpGallery->password());
+    m_talker->login(url.url(), m_gallery->username(), m_gallery->password());
 }
 
 void GalleryWindow::slotLoginFailed(const QString& msg)
@@ -391,7 +392,7 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+    QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), m_gallery, i18n("Edit Gallery Data") );
     if ( configDlg->exec() != QDialog::Accepted )
     {
         delete configDlg;
@@ -447,7 +448,7 @@ void GalleryWindow::slotAlbums(const QList<GAlbum>& albumList)
             item->setText(0, cleanName(album.title) );
             item->setIcon(0, KIcon("inode-directory") );
             item->setText(1, album.name );
-            firstAlbumName = album.name;
+            m_firstAlbumName = album.name;
             item->setText(2, i18n("Album") );
             item->setText(3, QString::number(album.ref_num) );
 
@@ -668,7 +669,7 @@ void GalleryWindow::slotNewAlbum()
     }
     else
     {
-        m_talker->createAlbum( firstAlbumName, name, title, caption );
+        m_talker->createAlbum( m_firstAlbumName, name, title, caption );
     }
 }
 
@@ -691,10 +692,10 @@ void GalleryWindow::slotAddPhoto()
 
     for (KUrl::List::ConstIterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
-        mpUploadList->append( (*it).path() );
+        m_uploadList->append( (*it).path() );
     }
 
-    m_uploadTotal = mpUploadList->count();
+    m_uploadTotal = m_uploadList->count();
     m_progressDlg->reset();
     m_progressDlg->setMaximum(m_uploadTotal);
     m_uploadCount = 0;
@@ -703,7 +704,7 @@ void GalleryWindow::slotAddPhoto()
 
 void GalleryWindow::slotAddPhotoNext()
 {
-    if ( mpUploadList->isEmpty() )
+    if ( m_uploadList->isEmpty() )
     {
         m_progressDlg->reset();
         m_progressDlg->hide();
@@ -715,7 +716,7 @@ void GalleryWindow::slotAddPhotoNext()
     int column            = d->albumView->currentColumn();
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
-    QString photoPath     = mpUploadList->takeFirst();
+    QString photoPath     = m_uploadList->takeFirst();
     KPImageInfo info(m_interface, photoPath);
     QString title         = info.title();
     QString description   = info.description();
@@ -790,7 +791,7 @@ void GalleryWindow::slotEnableSpinBox(int n)
 void GalleryWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+    QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), m_gallery, i18n("Edit Gallery Data") );
     if( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
@@ -798,8 +799,7 @@ void GalleryWindow::slotSettings()
     delete dlg;
 }
 
-
-QString GalleryWindow::cleanName(const QString& str)
+QString GalleryWindow::cleanName(const QString& str) const
 {
     QString plain = str;
     plain.replace("&lt;", "<");
