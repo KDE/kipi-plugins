@@ -43,22 +43,20 @@ using namespace KIPI;
 namespace KIPITimeAdjustPlugin
 {
 
-class TimeAdjustDialogPrivate;
-
 class TimeAdjustDialog : public KDialog
 {
     Q_OBJECT
 
 public:
 
-    TimeAdjustDialog(Interface* interface, QWidget* parent);
+    TimeAdjustDialog(Interface* const interface, QWidget* const parent);
     ~TimeAdjustDialog();
 
     void setImages(const KUrl::List& images);
 
 protected:
 
-    void closeEvent(QCloseEvent *);
+    void closeEvent(QCloseEvent*);
 
 private Q_SLOTS:
 
@@ -83,6 +81,7 @@ private:
 
 private:
 
+    class TimeAdjustDialogPrivate;
     TimeAdjustDialogPrivate* const d;
 };
 
