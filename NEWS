@@ -46,5 +46,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 031 ==> 279444 : Missing progress information when updating date on several images.
 032 ==> 134222 : Gallery2 export doesn't respect items selections.
 033 ==> 154699 : Current item in the gallery export list view should be shown in preview.
-034 ==> 
+034 ==> 207390 : Gallery export shows regular file dialog instead of tags or folders.
+035 ==> 
 
