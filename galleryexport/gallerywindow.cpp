@@ -130,7 +130,7 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
     newAlbumBtn->setEnabled(false);
 
     addPhotoBtn = new QPushButton;
-    addPhotoBtn->setText(i18n("&Add Photos"));
+    addPhotoBtn->setText(i18n("&Add Selected Photos"));
     addPhotoBtn->setIcon(KIcon("list-add"));
     addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addPhotoBtn->setEnabled(false);
@@ -685,7 +685,7 @@ void GalleryWindow::slotAddPhoto()
         return;     // NO album name found: FIXME: do something
 
     // photoPath
-    KUrl::List urls = KPImageDialog::getImageUrls(this, m_interface);
+    const KUrl::List urls(m_interface->currentSelection().images());
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
