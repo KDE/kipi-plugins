@@ -93,10 +93,8 @@ private Q_SLOTS:
 
 private:
 
-    Interface*       m_interface;
     KPAboutData*     m_about;
     GalleryTalker*   m_talker;
-    Gallery*         m_gallery;
 
     QProgressDialog* m_progressDlg;
     unsigned int     m_uploadCount;

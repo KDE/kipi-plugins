@@ -94,10 +94,17 @@ public:
     QHash<QString, GAlbum> albumDict;
 
     KUrlLabel*             logo;
+
+    Interface*             interface;
+    
+    Gallery*               gallery;
 };
 
 GalleryWindow::Private::Private(GalleryWindow* const parent)
 {
+    interface = 0;
+    gallery   = 0;
+
     widget = new QWidget(parent);
     parent->setMainWidget(widget);
     parent->setModal(false);
@@ -194,10 +201,11 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 
 GalleryWindow::GalleryWindow(Interface* const interface, QWidget* const parent, Gallery* const pGallery)
     : KDialog(parent),
-      m_interface(interface),
-      m_gallery(pGallery),
       d(new Private(this))
 {
+    d->interface = interface;
+    d->gallery   = pGallery;
+  
     setWindowTitle( i18n("Gallery Export") );
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
     setModal(false);
@@ -353,13 +361,13 @@ void GalleryWindow::slotHelp()
 
 void GalleryWindow::slotDoLogin()
 {
-    GalleryTalker::setGallery2((2 == m_gallery->version()));
+    GalleryTalker::setGallery2((2 == d->gallery->version()));
 
-    KUrl url(m_gallery->url());
+    KUrl url(d->gallery->url());
     if (url.protocol().isEmpty())
     {
         url.setProtocol("http");
-        url.setHost(m_gallery->url());
+        url.setHost(d->gallery->url());
     }
 
     if (!url.url().endsWith(QLatin1String(".php")))
@@ -371,13 +379,13 @@ void GalleryWindow::slotDoLogin()
     }
 
     // If we've done something clever, save it back to the gallery.
-    if (m_gallery->url() != url.url())
+    if (d->gallery->url() != url.url())
     {
-        m_gallery->setUrl(url.url());
-        m_gallery->save();
+        d->gallery->setUrl(url.url());
+        d->gallery->save();
     }
 
-    m_talker->login(url.url(), m_gallery->username(), m_gallery->password());
+    m_talker->login(url.url(), d->gallery->username(), d->gallery->password());
 }
 
 void GalleryWindow::slotLoginFailed(const QString& msg)
@@ -392,7 +400,7 @@ void GalleryWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), m_gallery, i18n("Edit Gallery Data") );
+    QPointer<GalleryEdit> configDlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
     if ( configDlg->exec() != QDialog::Accepted )
     {
         delete configDlg;
@@ -686,7 +694,7 @@ void GalleryWindow::slotAddPhoto()
         return;     // NO album name found: FIXME: do something
 
     // photoPath
-    const KUrl::List urls(m_interface->currentSelection().images());
+    const KUrl::List urls(d->interface->currentSelection().images());
     if (urls.isEmpty())
         return; // NO photo selected: FIXME: do something
 
@@ -717,7 +725,7 @@ void GalleryWindow::slotAddPhotoNext()
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
     QString photoPath     = m_uploadList->takeFirst();
-    KPImageInfo info(m_interface, photoPath);
+    KPImageInfo info(d->interface, photoPath);
     QString title         = info.title();
     QString description   = info.description();
     bool res              = m_talker->addPhoto(album.name, photoPath, title, description,
@@ -791,7 +799,7 @@ void GalleryWindow::slotEnableSpinBox(int n)
 void GalleryWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), m_gallery, i18n("Edit Gallery Data") );
+    QPointer<GalleryEdit> dlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
     if( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
