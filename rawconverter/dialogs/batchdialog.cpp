@@ -169,7 +169,7 @@ BatchDialog::BatchDialog(Interface* const iface)
                                        QString("savesettings"), false);
 #endif
 
-    d->progressBar = new KPProgressWidget(d->iface, d->page);
+    d->progressBar = new KPProgressWidget(d->page);
     d->progressBar->setMaximumHeight( fontMetrics().height()+2 );
     d->progressBar->hide();
 

@@ -221,7 +221,7 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* const interface, QWidget* const pa
 
     // -- Progress Bar ------------------------------------------------------------
 
-    d->progressBar = new KPProgressWidget(d->interface, parent);
+    d->progressBar = new KPProgressWidget(parent);
     d->progressBar->reset();
     d->progressBar->hide();
 

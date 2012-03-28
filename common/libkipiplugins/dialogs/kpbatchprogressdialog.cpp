@@ -26,7 +26,6 @@
 
 #include <QBrush>
 #include <QWidget>
-#include <QProgressBar>
 #include <QLayout>
 #include <QListWidget>
 #include <QMimeData>
@@ -40,6 +39,10 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
+
+// Local includes
+
+#include <kpprogresswidget.h>
 
 namespace KIPIPlugins
 {
@@ -95,7 +98,7 @@ public:
         actionsList = 0;
     }
 
-    QProgressBar* progress;
+    KPProgressWidget* progress;
 
     QListWidget*  actionsList;
 };
@@ -112,7 +115,7 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
 
     //---------------------------------------------
 
-    d->progress = new QProgressBar(this);
+    d->progress = new KPProgressWidget(this);
     d->progress->setRange(0, 100);
     d->progress->setValue(0);
     d->progress->setWhatsThis(i18n("<p>This is the batch job progress as a percentage.</p>"));
@@ -133,7 +136,7 @@ QListWidget* KPBatchProgressWidget::listView() const
     return d->actionsList;
 }
 
-QProgressBar* KPBatchProgressWidget::progressBar() const
+KPProgressWidget* KPBatchProgressWidget::progressBar() const
 {
     return d->progress;
 }

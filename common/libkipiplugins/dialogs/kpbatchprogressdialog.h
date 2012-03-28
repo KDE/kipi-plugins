@@ -33,9 +33,10 @@
 // Local includes
 
 #include "kipiplugins_export.h"
+#include "kpprogresswidget.h"
 
 class QListWidget;
-class QProgressBar;
+
 
 namespace KIPIPlugins
 {
@@ -61,7 +62,7 @@ public:
     ~KPBatchProgressWidget();
 
     QListWidget*  listView() const;
-    QProgressBar* progressBar() const;
+    KPProgressWidget* progressBar() const;
 
     void addedAction(const QString& text, int type);
     void reset();
