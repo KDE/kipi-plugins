@@ -49,7 +49,7 @@ KioImportWidget::KioImportWidget(QWidget* parent, KIPI::Interface* interface)
                : QWidget(parent)
 {
     // setup image list
-    m_imageList = new KIPIPlugins::KPImagesList(interface, this);
+    m_imageList = new KIPIPlugins::KPImagesList(this);
     m_imageList->setAllowRAW(true);
     m_imageList->listView()->setWhatsThis(i18n(
                     "This is the list of images to import "

@@ -222,7 +222,7 @@ public:
 
 public:
 
-    explicit KPImagesList(Interface* const iface, QWidget* const parent = 0, int iconSize = -1);
+    explicit KPImagesList(QWidget* const parent = 0, int iconSize = -1);
     virtual ~KPImagesList();
 
     void                setAllowRAW(bool allow);
@@ -265,7 +265,7 @@ Q_SIGNALS:
     void signalXMLLoadImageElement(QXmlStreamReader&);
     void signalXMLCustomElements(QXmlStreamWriter&);
     void signalXMLCustomElements(QXmlStreamReader&);
-    
+
 public Q_SLOTS:
 
     virtual void slotAddImages(const KUrl::List& list);

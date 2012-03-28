@@ -66,7 +66,7 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new PicasawebImagesList(iface, this);
+    m_imgList  = new PicasawebImagesList(this);
     m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();

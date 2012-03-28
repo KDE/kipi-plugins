@@ -29,15 +29,11 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-// KIPI includes
-
-#include <libkipi/interface.h>
-
 namespace KIPIDNGConverterPlugin
 {
 
-MyImageList::MyImageList(KIPI::Interface* const iface, QWidget* const parent)
-    : KPImagesList(iface, parent)
+MyImageList::MyImageList(QWidget* const parent)
+    : KPImagesList(parent)
 {
     setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     listView()->setColumnLabel(KPImagesListView::Filename, i18n("Raw File"));

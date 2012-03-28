@@ -45,11 +45,6 @@ class KTabWidget;
 class KLineEdit;
 class KHTMLPart;
 
-namespace KIPI
-{
-class Interface;
-}
-
 namespace KIPIFlickrExportPlugin
 {
 
@@ -69,9 +64,11 @@ public:
 
 public:
 
-    FlickrWidget(QWidget* parent, KIPI::Interface* iface, const QString& serviceName);
+    FlickrWidget(QWidget* parent, const QString& serviceName);
     ~FlickrWidget();
+
 protected:
+
     virtual void showEvent(QShowEvent* event);
 
 private Q_SLOTS:

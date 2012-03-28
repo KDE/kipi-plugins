@@ -80,7 +80,7 @@ ImageshackWindow::ImageshackWindow(KIPI::Interface* const interface, QWidget* co
     m_interface  = interface;
     m_imageshack = imghack;
 
-    m_widget = new ImageshackWidget(this, interface, imghack);
+    m_widget = new ImageshackWidget(this, imghack);
     m_widget->setMinimumSize(700, 500);
     setMainWidget(m_widget);
     setWindowTitle(i18n("Imageshack Export"));

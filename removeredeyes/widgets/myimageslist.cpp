@@ -40,7 +40,6 @@
 // LibKIPI includes
 
 #include <libkipi/imagecollection.h>
-#include <libkipi/interface.h>
 
 // Local includes
 
@@ -51,20 +50,9 @@ using namespace KIPIPlugins;
 namespace KIPIRemoveRedEyesPlugin
 {
 
-struct MyImagesList::MyImagesListPriv
+MyImagesList::MyImagesList(QWidget* const parent)
+    : KPImagesList(parent)
 {
-    MyImagesListPriv()
-    {
-        iface = 0;
-    }
-
-    KIPI::Interface* iface;
-};
-
-MyImagesList::MyImagesList(KIPI::Interface* const iface, QWidget* const parent)
-    : KPImagesList(iface, parent), d(new MyImagesListPriv)
-{
-    d->iface = iface;
     setAllowRAW(false);
 
     // --------------------------------------------------------
@@ -76,7 +64,6 @@ MyImagesList::MyImagesList(KIPI::Interface* const iface, QWidget* const parent)
 
 MyImagesList::~MyImagesList()
 {
-    delete d;
 }
 
 void MyImagesList::addEyeCounterByUrl(const KUrl& url, int eyes)

@@ -54,7 +54,6 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imagecollection.h>
 
@@ -72,7 +71,7 @@
 namespace KIPIDebianScreenshotsPlugin
 {
 
-DsWidget::DsWidget(QWidget* const parent, KIPI::Interface* const iface)
+DsWidget::DsWidget(QWidget* const parent)
     : QWidget(parent),
       m_lastTip( QString() ),
       m_lastQueryUrl( QUrl() ),
@@ -85,7 +84,7 @@ DsWidget::DsWidget(QWidget* const parent, KIPI::Interface* const iface)
 
     // -------------------------------------------------------------------
 
-    m_imgList  = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList  = new KIPIPlugins::KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();

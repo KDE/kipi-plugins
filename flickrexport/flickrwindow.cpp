@@ -104,7 +104,7 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     m_uploadCount               = 0;
     m_uploadTotal               = 0;
     //  m_wallet                    = 0;
-    m_widget                    = new FlickrWidget(this, interface, serviceName);
+    m_widget                    = new FlickrWidget(this, serviceName);
     m_photoView                 = m_widget->m_photoView;
     m_albumsListComboBox        = m_widget->m_albumsListComboBox;
     m_newAlbumBtn               = m_widget->m_newAlbumBtn;

@@ -172,7 +172,7 @@ RemoveRedEyesWindow::RemoveRedEyesWindow(KIPI::Interface* const interface)
     d->runtype       = WorkerThread::Testrun;
     d->tabWidget     = new KTabWidget;
 
-    d->imageList     = new MyImagesList(interface);
+    d->imageList     = new MyImagesList;
     d->previewWidget = new PreviewWidget;
 
     d->progress      = new QProgressBar;

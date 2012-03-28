@@ -36,11 +36,6 @@ class QProgressBar;
 class KComboBox;
 class KPushButton;
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KIPIPlugins
 {
     class KPImagesList;
@@ -56,7 +51,7 @@ class ImageshackWidget : public QWidget
     Q_OBJECT
 
 public:
-    ImageshackWidget(QWidget* const parent, KIPI::Interface* const interface, Imageshack* const imageshack);
+    ImageshackWidget(QWidget* const parent, Imageshack* const imageshack);
     ~ImageshackWidget();
 
     KIPIPlugins::KPImagesList* imagesList() const;

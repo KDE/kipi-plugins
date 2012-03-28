@@ -70,7 +70,7 @@ WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget
     m_tmpPath.clear();
     m_tmpDir    = tmpFolder;
     m_interface = interface;
-    m_widget    = new WmWidget(this, interface);
+    m_widget    = new WmWidget(this);
     m_uploadJob = 0;
     m_login     = QString();
     m_pass      = QString();

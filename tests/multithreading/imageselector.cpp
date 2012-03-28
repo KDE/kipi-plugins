@@ -75,7 +75,7 @@ ImageSelector::ImageSelector()
     setMainWidget(d->page);
     QGridLayout* mainLayout = new QGridLayout(d->page);
 
-    d->listView             = new KPImagesList(0, d->page);
+    d->listView             = new KPImagesList(d->page);
     d->listView->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
 
     d->progressBar          = new QProgressBar(d->page);

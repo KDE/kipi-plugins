@@ -28,12 +28,6 @@
 #include "kpimageslist.h"
 #include "emailsettingscontainer.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
@@ -45,7 +39,7 @@ class ImagesPage : public KPImagesList
 
 public:
 
-    ImagesPage(QWidget* const parent, Interface* const iface);
+    ImagesPage(QWidget* const parent);
     ~ImagesPage();
 
     QList<EmailItem> imagesList() const;

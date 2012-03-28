@@ -64,7 +64,7 @@ FbWidget::FbWidget(QWidget* const parent, KIPI::Interface* const iface, bool imp
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KIPIPlugins::KPImagesList(iface, this);
+    m_imgList = new KIPIPlugins::KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();

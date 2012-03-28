@@ -123,7 +123,7 @@ VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidge
     m_mainWidget            = new QWidget(this);
     QHBoxLayout* mainLayout = new QHBoxLayout(m_mainWidget);
 
-    m_imgList  = new KPImagesList(interface, this);
+    m_imgList  = new KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false); // TODO: implement conversion
     m_imgList->loadImagesFromCurrentSelection();

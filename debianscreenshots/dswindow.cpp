@@ -75,7 +75,7 @@ DsWindow::DsWindow(KIPI::Interface* const interface, const QString& tmpFolder, Q
 //    m_imagesCount = 0;
 //    m_imagesTotal = 0;
     m_talker = new DsTalker(this);
-    m_widget = new DsWidget(this, interface);
+    m_widget = new DsWidget(this);
 
     setMainWidget(m_widget);
     setWindowIcon(KIcon("debianscreenshots"));

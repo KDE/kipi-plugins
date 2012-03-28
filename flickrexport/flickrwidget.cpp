@@ -63,7 +63,7 @@
 namespace KIPIFlickrExportPlugin
 {
 
-FlickrWidget::FlickrWidget(QWidget* parent, Interface* iface, const QString& serviceName)
+FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     : QWidget(parent)
 {
     setObjectName("FlickrWidget");
@@ -95,7 +95,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, Interface* iface, const QString& ser
 
     // -- The image list tab --------------------------------------------------
 
-    m_imglst             = new KIPIFlickrExportPlugin::FlickrList(iface, m_tab, (serviceName == "23"));
+    m_imglst             = new FlickrList(m_tab, (serviceName == "23"));
 
     // For figuring out the width of the permission columns.
     QHeaderView* hdr     = m_imglst->listView()->header();

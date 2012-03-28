@@ -58,6 +58,7 @@
 
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // LibKDcraw includes
 
@@ -499,6 +500,12 @@ public:
         progressTimer         = 0;
         loadRawThumb          = 0;
         progressPix           = KPixmapSequence("process-working", KIconLoader::SizeSmallMedium);
+
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     bool              allowRAW;
@@ -524,11 +531,9 @@ public:
     KPRawThumbThread* loadRawThumb;
 };
 
-KPImagesList::KPImagesList(Interface* const iface, QWidget* const parent, int iconSize)
+KPImagesList::KPImagesList(QWidget* const parent, int iconSize)
     : QWidget(parent), d(new KPImagesListPriv)
 {
-    d->iface = iface;
-
     if (iconSize != -1)  // default = ICONSIZE
     {
         setIconSize(iconSize);

@@ -54,8 +54,8 @@ namespace KIPIPicasawebExportPlugin
 
 static const char picasaweb_video_extentions[] = "*.3gp *.avi *.asf *.mov *.wmv *.mpg *.mp4 *.m2t *.mmv *.m2ts *.3gpp";
 
-PicasawebImagesList::PicasawebImagesList(Interface* const iface, QWidget* const parent, int iconSize)
-    : KPImagesList(iface, parent, iconSize)
+PicasawebImagesList::PicasawebImagesList(QWidget* const parent, int iconSize)
+    : KPImagesList(parent, iconSize)
 {
 }
 

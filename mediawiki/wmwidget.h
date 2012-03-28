@@ -48,7 +48,6 @@ class KPushButton;
 
 namespace KIPI
 {
-    class Interface;
     class UploadWidget;
 }
 
@@ -84,7 +83,7 @@ class WmWidget : public QWidget
 
 public:
 
-    WmWidget(QWidget* const parent, Interface* const iface);
+    WmWidget(QWidget* const parent);
     ~WmWidget();
 
     void updateLabels(const QString& name = QString(), const QString& url = QString());

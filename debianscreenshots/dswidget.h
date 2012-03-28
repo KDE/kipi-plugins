@@ -41,7 +41,6 @@ namespace KIO
 
 namespace KIPI
 {
-    class Interface;
     class UploadWidget;
 }
 
@@ -61,12 +60,12 @@ class DsWidget : public QWidget
 
 public:
 
-    DsWidget(QWidget* const parent, KIPI::Interface* const iface);
+    DsWidget(QWidget* const parent);
     ~DsWidget();
 
-     QString getDestinationPath() const;
+    QString getDestinationPath() const;
 
-     KIPIPlugins::KPImagesList* imagesList() const;
+    KIPIPlugins::KPImagesList* imagesList() const;
 
     QProgressBar* progressBar() const;
 

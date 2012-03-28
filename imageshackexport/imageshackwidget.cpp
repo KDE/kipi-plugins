@@ -46,7 +46,6 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 #include <libkipi/imagecollection.h>
 
@@ -58,7 +57,7 @@
 namespace KIPIImageshackExportPlugin
 {
 
-ImageshackWidget::ImageshackWidget(QWidget* const parent, Interface* const interface, Imageshack* const imageshack)
+ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imageshack)
     : QWidget(parent)
 {
     setObjectName("ImageshackWidget");
@@ -69,7 +68,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Interface* const inter
 
     // --------------------------------------------
 
-    m_imgList = new KIPIPlugins::KPImagesList(interface, this);
+    m_imgList = new KIPIPlugins::KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(false);
     m_imgList->loadImagesFromCurrentSelection();

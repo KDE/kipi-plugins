@@ -54,7 +54,6 @@
 
 // LibKIPI includes
 
-#include <libkipi/interface.h>
 #include <libkipi/uploadwidget.h>
 
 // libKdcraw includes
@@ -71,7 +70,7 @@
 namespace KIPIWikiMediaPlugin
 {
 
-WmWidget::WmWidget(QWidget* const parent, Interface* const iface)
+WmWidget::WmWidget(QWidget* const parent)
     : QWidget(parent)
 {
     setObjectName("WmWidget");
@@ -80,7 +79,7 @@ WmWidget::WmWidget(QWidget* const parent, Interface* const iface)
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KPImagesList(iface, this);
+    m_imgList = new KPImagesList(this);
     m_imgList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);
     m_imgList->loadImagesFromCurrentSelection();

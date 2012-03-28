@@ -27,8 +27,6 @@
 
 #include "kpimageslist.h"
 
-using namespace KIPI;
-
 namespace KIPIPicasawebExportPlugin
 {
 
@@ -38,7 +36,7 @@ class PicasawebImagesList : public KIPIPlugins::KPImagesList
 
 public:
 
-    explicit PicasawebImagesList(Interface* const iface, QWidget* const parent = 0, int iconSize = -1);
+    explicit PicasawebImagesList(QWidget* const parent = 0, int iconSize = -1);
     virtual ~PicasawebImagesList();
 
 protected Q_SLOTS:
@@ -57,10 +55,9 @@ public:
     ~PicasawebImageDialog();
 
     KUrl::List urls() const;
-    
+
 private:
 
-        
     class PicasawebImageDialogPrivate;  
     PicasawebImageDialogPrivate* const d;
 };

@@ -129,7 +129,7 @@ BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const ab
 
     //---------------------------------------------
 
-    d->listView = new MyImageList(d->iface, d->page);
+    d->listView = new MyImageList(d->page);
 
     // ---------------------------------------------------------------
 

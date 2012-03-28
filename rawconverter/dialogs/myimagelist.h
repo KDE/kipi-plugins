@@ -47,7 +47,7 @@ public:
 
 public:
 
-    explicit MyImageList(Interface* const iface, QWidget* const parent = 0);
+    explicit MyImageList(QWidget* const parent = 0);
     virtual ~MyImageList();
 
 public Q_SLOTS:

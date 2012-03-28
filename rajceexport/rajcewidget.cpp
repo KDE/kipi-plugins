@@ -70,7 +70,7 @@ RajceWidget::RajceWidget(KIPI::Interface* const interface, const QString& tmpFol
 
     // -------------------------------------------------------------------
 
-    m_imgList = new KIPIPlugins::KPImagesList(interface, this);
+    m_imgList = new KIPIPlugins::KPImagesList(this);
 
     m_imgList->setControlButtonsPlacement(KIPIPlugins::KPImagesList::ControlButtonsBelow);
     m_imgList->setAllowRAW(true);

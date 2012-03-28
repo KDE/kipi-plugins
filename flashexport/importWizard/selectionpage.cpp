@@ -81,12 +81,12 @@ void SelectionPage::setPageContent(int choice)
 
     if(choice == 0) // Collection Selector
     {
-        Interface* interface = d->manager->iface();
+        Interface* interface       = d->manager->iface();
         d->imageCollectionSelector = interface->imageCollectionSelector(d->vbox);
     }
     else //Image Dialog
     {
-        d->imageList = new KPImagesList(0, d->vbox);
+        d->imageList = new KPImagesList(d->vbox);
         d->imageList->setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
     }
 

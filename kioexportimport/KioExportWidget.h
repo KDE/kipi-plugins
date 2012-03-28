@@ -38,17 +38,12 @@
 
 class KComboBox;
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KIPIPlugins
 {
     class KPImagesList;
 }
 
-using namespace KIPI;
+
 using namespace KIPIPlugins;
 
 namespace KIPIKioExportPlugin
@@ -64,9 +59,8 @@ public:
      * Constructor.
      *
      * @param parent the parent widget
-     * @param interface the KIPI interface to use
      */
-    KioExportWidget(QWidget* const parent, Interface* const interface);
+    KioExportWidget(QWidget* const parent);
 
     /**
      * Destructor.

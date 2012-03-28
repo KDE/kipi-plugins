@@ -27,8 +27,8 @@
 namespace KIPISendimagesPlugin
 {
 
-ImagesPage::ImagesPage(QWidget* const parent, Interface* const iface)
-    : KPImagesList(iface, parent)
+ImagesPage::ImagesPage(QWidget* const parent)
+    : KPImagesList(parent)
 {
 }
 
