@@ -170,14 +170,14 @@ void Plugin_JPEGLossless::setup(QWidget* widget)
 
     // -----------------------------------------------------------------------------------
 
-    Interface* interface = dynamic_cast<Interface*>( parent() );
-    if ( !interface )
+    Interface* interface = dynamic_cast<Interface*>(parent());
+    if (!interface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    d->thread = new ActionThread(interface, this);
+    d->thread = new ActionThread(this);
 
     connect( d->thread, SIGNAL(starting(KUrl, int)),
              this, SLOT(slotStarting(KUrl, int)));

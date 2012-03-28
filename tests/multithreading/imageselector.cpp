@@ -87,7 +87,7 @@ ImageSelector::ImageSelector()
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
 
-    d->thread = new ActionThread(0, this);
+    d->thread = new ActionThread(this);
 
     connect(this, SIGNAL(applyClicked()),
             this, SLOT(slotStart()));

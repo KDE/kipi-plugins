@@ -44,10 +44,6 @@ extern "C"
 #include <threadweaver/ThreadWeaver.h>
 #include <threadweaver/JobCollection.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kphostsettings.h"
@@ -120,7 +116,7 @@ protected:
 
 // ----------------------------------------------------------------------------------------------------
 
-ActionThread::ActionThread(Interface* const interface, QObject* const parent)
+ActionThread::ActionThread(QObject* const parent)
     : KPActionThreadBase(parent)
 {
     m_updateFileStamp = false;
