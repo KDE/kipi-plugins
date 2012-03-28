@@ -64,6 +64,8 @@ public:
     QLabel*       labelMailAgent;
     QLabel*       labelImagesResize;
     QLabel*       labelImagesFormat;
+    QLabel*       labelAttachmentLimit;
+    QLabel*       labelImageCompression;
 
     KComboBox*    mailAgentName;
     KComboBox*    imagesResize;
@@ -115,8 +117,10 @@ EmailPage::EmailPage(QWidget* parent)
     d->attachmentlimit = new KIntNumInput(this);
     d->attachmentlimit->setRange(1, 50, 1);
     d->attachmentlimit->setValue(17);
-    d->attachmentlimit->setLabel( i18n("Maximum email size limit:"), Qt::AlignLeft | Qt::AlignVCenter);
     d->attachmentlimit->setSuffix(i18n(" MB"));
+
+    d->labelAttachmentLimit = new QLabel(i18n("Maximum email size limit:"), this);
+    d->labelAttachmentLimit->setBuddy(d->attachmentlimit);
 
     //---------------------------------------------
 
@@ -184,7 +188,6 @@ EmailPage::EmailPage(QWidget* parent)
     d->imageCompression = new KIntNumInput(groupBox);
     d->imageCompression->setRange(1, 100, 1);
     d->imageCompression->setValue(75);
-    d->imageCompression->setLabel(i18n("Image quality:"), Qt::AlignLeft | Qt::AlignVCenter);
     whatsThis = i18n("<p>The new compression value of JPEG images to be sent:</p>");
     whatsThis = whatsThis + i18n("<p><b>1</b>: very high compression<br/>"
                                  "<b>25</b>: high compression<br/>"
@@ -194,12 +197,16 @@ EmailPage::EmailPage(QWidget* parent)
 
     d->imageCompression->setWhatsThis(whatsThis);
 
+    d->labelImageCompression = new QLabel(i18n("Image quality:"), this);
+    d->labelImageCompression->setBuddy(d->imageCompression);
+
     //---------------------------------------------
     grid2->addWidget(d->labelImagesResize,  0, 0, 1, 1);
     grid2->addWidget(d->imagesResize,       0, 1, 1, 2);
     grid2->addWidget(d->labelImagesFormat,  1, 0, 1, 1);
     grid2->addWidget(d->imagesFormat,       1, 1, 1, 2);
-    grid2->addWidget(d->imageCompression,   2, 0, 1, 3);
+    grid2->addWidget(d->labelImageCompression, 2, 0, 1, 1);
+    grid2->addWidget(d->imageCompression,   2, 1, 1, 3);
     grid2->setRowStretch(4, 10);
     grid2->setColumnStretch(2, 10);
     grid2->setMargin(KDialog::spacingHint());
@@ -210,7 +217,8 @@ EmailPage::EmailPage(QWidget* parent)
 
     grid->addWidget(d->labelMailAgent,      0, 0, 1, 1);
     grid->addWidget(d->mailAgentName,       0, 1, 1, 2);
-    grid->addWidget(d->attachmentlimit,     1, 0, 1, 4);
+    grid->addWidget(d->labelAttachmentLimit,1, 0, 1, 1);
+    grid->addWidget(d->attachmentlimit,     1, 1, 1, 4);
     grid->addWidget(d->addComments,         2, 0, 1, 4);
     grid->addWidget(d->changeImagesProp,    3, 0, 1, 4);
     grid->addWidget(groupBox,               4, 0, 1, 4);
