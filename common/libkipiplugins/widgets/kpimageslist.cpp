@@ -832,7 +832,7 @@ void KPImagesList::slotAddImages(const KUrl::List& list)
 
 void KPImagesList::slotAddItems()
 {
-    KPImageDialog dlg(this, d->iface, false);
+    KPImageDialog dlg(this, false);
     KUrl::List urls = dlg.urls();
 
     if (!urls.isEmpty())
