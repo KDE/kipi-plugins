@@ -35,11 +35,11 @@ using namespace KIPIPlugins;
 namespace KIPIImgurExportPlugin
 {
 
-ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
+ImgurWidget::ImgurWidget(QWidget* const parent)
     : QWidget(parent)
 {
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    m_imagesList            = new ImgurImagesList(interface, this);
+    m_imagesList            = new ImgurImagesList(this);
 
     m_imagesList->loadImagesFromCurrentSelection();
     m_imagesList->setAllowDuplicate(false);
@@ -84,7 +84,6 @@ ImgurWidget::ImgurWidget(Interface* const interface, QWidget* const parent)
 
     connect(m_imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
-
 }
 
 void ImgurWidget::slotAddItems(const KUrl::List& list)

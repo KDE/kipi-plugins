@@ -29,8 +29,8 @@
 namespace KIPIImgurExportPlugin
 {
 
-ImgurImagesList::ImgurImagesList(Interface* const interface, QWidget* const parent)
-    : KPImagesList(interface, parent)
+ImgurImagesList::ImgurImagesList(QWidget* const parent)
+    : KPImagesList(parent)
 {
 }
 

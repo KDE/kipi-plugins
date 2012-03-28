@@ -33,10 +33,6 @@
 
 #include <kdialog.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "imgurtalker.h"
@@ -58,7 +54,7 @@ class ImgurWidget : public QWidget
 
 public:
 
-    ImgurWidget(Interface* const interface, QWidget* const parent = 0);
+    ImgurWidget(QWidget* const parent = 0);
     ~ImgurWidget();
 
     ImgurImagesList* imagesList()  const;

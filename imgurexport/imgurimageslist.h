@@ -27,10 +27,6 @@
 
 #include <QWidget>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kpimageslist.h"
@@ -47,7 +43,7 @@ class ImgurImagesList : public KPImagesList
 
 public:
 
-    ImgurImagesList(Interface* const iface, QWidget* const parent = 0);
+    ImgurImagesList(QWidget* const parent = 0);
     ~ImgurImagesList();
 
 public:
