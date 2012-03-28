@@ -77,6 +77,7 @@ public:
         previewModeLabel      = 0;
         backupOriginalRawFile = 0;
         updateFileDate        = 0;
+        iface                 = 0;
 
         PluginLoader* pl = PluginLoader::instance();
         if (pl)
