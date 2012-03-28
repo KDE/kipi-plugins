@@ -125,11 +125,8 @@ ActionThread::ActionThread(Interface* const interface, QObject* const parent)
 {
     m_updateFileStamp = false;
 
-    if (interface)
-    {
-        KPHostSettings hSettings(interface);
-        m_updateFileStamp = hSettings.metadataSettings().updateFileTimeStamp;
-    }
+    KPHostSettings hSettings;
+    m_updateFileStamp = hSettings.metadataSettings().updateFileTimeStamp;
 }
 
 ActionThread::~ActionThread()

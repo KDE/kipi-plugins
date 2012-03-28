@@ -39,7 +39,6 @@
 
 #include "kipiimagemodel.h"
 #include "kpimageinfo.h"
-#include "kphostsettings.h"
 
 using namespace KIPIPlugins;
 
@@ -140,12 +139,7 @@ KPMetadata* KipiImageItem::getMetadataForFile() const
 {
     QScopedPointer<KPMetadata> meta(new KPMetadata(m_interface));
 
-    if (m_interface)
-    {
-        KPHostSettings hSettings(m_interface);
-        meta->setSettings(hSettings.metadataSettings());
-    }
-    else
+    if (!m_interface)
     {
         meta->setUseXMPSidecar4Reading(true);
         meta->setMetadataWritingMode(KPMetadata::WRITETOSIDECARONLY4READONLYFILES);

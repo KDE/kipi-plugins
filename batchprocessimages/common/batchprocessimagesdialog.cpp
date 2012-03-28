@@ -122,7 +122,7 @@ BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, In
 
     // Get the image files filters from the hosts app.
 
-    KPHostSettings hSettings(m_interface);
+    KPHostSettings hSettings;
     m_ImagesFilesSort = hSettings.imageExtensions();
 }
 

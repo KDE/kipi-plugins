@@ -33,13 +33,6 @@
 #include "kipiplugins_export.h"
 #include "kpmetasettings.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIPlugins
 {
 
@@ -48,9 +41,9 @@ class KIPIPLUGINS_EXPORT KPHostSettings
 
 public:
 
-    /** Contructor with KIPI interface instance get from plugin.
+    /** Default Contructor and destructor.
      */
-    KPHostSettings(Interface* const iface);
+    KPHostSettings();
     ~KPHostSettings();
 
     /** Return all file extensions (image, sound, video) managed by host application, separated by

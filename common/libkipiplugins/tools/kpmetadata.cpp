@@ -64,7 +64,7 @@ KPMetadata::KPMetadata(Interface* const iface)
     : KExiv2()
 {
     m_iface = iface;
-    KPHostSettings hset(m_iface);
+    KPHostSettings hset;
     setSettings(hset.metadataSettings());
 }
 
@@ -72,7 +72,7 @@ KPMetadata::KPMetadata(const QString& filePath, Interface* const iface)
     : KExiv2()
 {
     m_iface = iface;
-    KPHostSettings hset(m_iface);
+    KPHostSettings hset;
     setSettings(hset.metadataSettings());
     load(filePath);
 }

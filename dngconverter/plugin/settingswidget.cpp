@@ -118,7 +118,7 @@ SettingsWidget::SettingsWidget(QWidget* const parent, Interface* const iface)
     {
         // If plugin run from KIPI host, use file time-stamp host settings instead.
         d->updateFileDate->hide();
-        KPHostSettings hSettings(iface);
+        KPHostSettings hSettings;
         d->updateFileDate->setChecked(hSettings.metadataSettings().updateFileTimeStamp);
     }
 
