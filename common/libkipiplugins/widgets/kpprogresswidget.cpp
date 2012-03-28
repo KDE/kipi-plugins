@@ -59,7 +59,6 @@ public:
 KPProgressWidget::KPProgressWidget(QWidget* const parent)
     : QProgressBar(parent), d(new KPProgressWidgetPriv)
 {
-
     connect(this, SIGNAL(valueChanged(int)),
             this, SLOT(slotValueChanged(int)));
 }
