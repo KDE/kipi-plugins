@@ -192,7 +192,7 @@ void WMWindow::slotStartTransfer()
 
     for (int i = 0; i < urls.size(); ++i)
     {
-        KPImageInfo info(m_interface, urls.at(i));
+        KPImageInfo info(urls.at(i));
 
         QStringList keywar = info.keywords();
         QMap<QString, QString> map;

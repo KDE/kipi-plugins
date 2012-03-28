@@ -161,7 +161,7 @@ QImage KmlExport::generateBorderedThumbnail(const QImage& fullImage, int size) c
  */
 void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum )
 {
-    KPImageInfo info(m_interface, imageURL);
+    KPImageInfo info(imageURL);
 
     // Load image
     QString path = imageURL.path();
@@ -458,7 +458,7 @@ void KmlExport::generate()
     {
         double alt, lat, lng;
         KUrl url        = *selIt;
-        KPImageInfo info(m_interface, url);
+        KPImageInfo info(url);
         bool hasGPSInfo = info.hasGeolocationInfo();
 
         if (hasGPSInfo)

@@ -567,7 +567,7 @@ void FlickrWindow::slotUser1()
         FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>
                                      (m_imglst->listView()->topLevelItem(i));
 
-        KIPIPlugins::KPImageInfo info(m_interface, lvItem->url());
+        KIPIPlugins::KPImageInfo info(lvItem->url());
         kDebug() << "Adding images to the list";
         FPhotoInfo temp;
 

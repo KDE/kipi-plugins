@@ -122,7 +122,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     for (uint i = 0; i < uint(m_cacheSize / 2) && i < uint(m_pathList.count()); ++i)
     {
         filePath    = KUrl(m_pathList[i].first);
-        KPImageInfo info(m_sharedData->iface(), filePath);
+        KPImageInfo info(filePath);
         orientation = info.orientation();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
@@ -137,7 +137,7 @@ SlideShowLoader::SlideShowLoader(FileList& pathList, uint cacheSize, int width, 
     {
         int toLoad  = (m_currIndex - i) % m_pathList.count();
         filePath    = KUrl(m_pathList[toLoad].first);
-        KPImageInfo info(m_sharedData->iface(), filePath);
+        KPImageInfo info(filePath);
         orientation = info.orientation();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock,
@@ -195,8 +195,8 @@ void SlideShowLoader::next()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    KUrl filePath                        = KUrl(m_pathList[newBorn].first);
-    KPImageInfo info(m_sharedData->iface(), filePath);
+    KUrl filePath                            = KUrl(m_pathList[newBorn].first);
+    KPImageInfo info(filePath);
     KPMetadata::ImageOrientation orientation = info.orientation();
 
     LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
@@ -235,8 +235,8 @@ void SlideShowLoader::prev()
     m_imageLock->unlock();
     m_threadLock->unlock();
 
-    KUrl filePath = KUrl(m_pathList[newBorn].first);
-    KPImageInfo info(m_sharedData->iface(), filePath);
+    KUrl filePath                            = KUrl(m_pathList[newBorn].first);
+    KPImageInfo info(filePath);
     KPMetadata::ImageOrientation orientation = info.orientation();
 
     LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);
@@ -286,7 +286,7 @@ void SlideShowLoader::checkIsIn(int index)
     else
     {
         KUrl filePath                            = KUrl(m_pathList[index].first);
-        KPImageInfo info(m_sharedData->iface(), filePath);
+        KPImageInfo info(filePath);
         KPMetadata::ImageOrientation orientation = info.orientation();
 
         LoadThread* newThread = new LoadThread(m_loadedImages, m_imageLock, filePath, orientation, m_swidth, m_sheight);

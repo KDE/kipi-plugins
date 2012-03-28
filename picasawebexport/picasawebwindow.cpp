@@ -416,7 +416,7 @@ void PicasawebWindow::slotListPhotosDoneForUpload(int errCode, const QString &er
 
     for (KUrl::List::ConstIterator it = urlList.constBegin(); it != urlList.constEnd(); ++it)
     {
-        KPImageInfo info(m_interface, *it);
+        KPImageInfo info(*it);
         PicasaWebPhoto temp;
         temp.title = info.name();
 
@@ -960,7 +960,7 @@ void PicasawebWindow::slotGetPhotoDone(int errCode, const QString& errMsg,
         }
         else
         {
-            KPImageInfo info(m_interface, newUrl);
+            KPImageInfo info(newUrl);
             info.setName(item.description);
             info.setTagsPath(item.tags);
             if (!item.gpsLat.isEmpty() && !item.gpsLon.isEmpty())

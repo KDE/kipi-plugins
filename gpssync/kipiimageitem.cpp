@@ -186,7 +186,7 @@ bool KipiImageItem::loadImageData(const bool fromInterface, const bool fromFile)
     if (fromInterface && m_interface)
     {
         // try to load the GPS data from the KIPI interface:
-        KPImageInfo info(m_interface, m_url);
+        KPImageInfo info(m_url);
 
         if (info.hasLatitude() && info.hasLongitude())
         {
@@ -825,7 +825,7 @@ QString KipiImageItem::saveChanges(const bool toInterface, const bool toFile)
     // TODO: remove the altitude if it is not available
     if (m_interface)
     {
-        KPImageInfo info(m_interface, m_url);
+        KPImageInfo info(m_url);
 
         if (shouldWriteCoordinates)
         {

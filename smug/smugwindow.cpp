@@ -739,7 +739,7 @@ void SmugWindow::uploadNextPhoto()
     m_widget->m_imgList->processing(m_transferQueue.first());
 
     QString imgPath = m_transferQueue.first().path();
-    KPImageInfo info(m_interface, imgPath);
+    KPImageInfo info(imgPath);
 
     m_widget->progressBar()->setMaximum(m_imagesTotal);
     m_widget->progressBar()->setValue(m_imagesCount);

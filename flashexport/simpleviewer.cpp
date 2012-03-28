@@ -617,7 +617,7 @@ void SimpleViewer::cfgAddImage(QDomDocument& xmlDoc, QDomElement& galleryElem,
     QString comment;
     QString keywords;
 
-    KPImageInfo info(d->interface, url);
+    KPImageInfo info(url);
 
     if(d->settings->showComments)
     {

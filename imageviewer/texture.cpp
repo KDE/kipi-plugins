@@ -118,7 +118,7 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     }
 
     //handle rotation
-    KPImageInfo info(kipiInterface, filename);
+    KPImageInfo info(filename);
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
         QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
@@ -416,11 +416,11 @@ bool Texture::setSize(QSize size)
 void Texture::rotate()
 {
     QMatrix matrix = RotationMatrix::toMatrix(rotate_list[rotate_idx%4]);
-    qimage = qimage.transformed(matrix);
+    qimage         = qimage.transformed(matrix);
     _load();
 
     //save new rotation in exif header
-    KPImageInfo info(kipiInterface, filename);
+    KPImageInfo info(filename);
     info.setOrientation(rotate_list[rotate_idx%4]);
 
     reset();

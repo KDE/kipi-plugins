@@ -420,7 +420,7 @@ void SlideShow::printComments()
     if (m_currImage.isNull())
         return;
 
-    KIPIPlugins::KPImageInfo info(m_sharedData->iface(), m_imageLoader->currPath());
+    KIPIPlugins::KPImageInfo info(m_imageLoader->currPath());
     QString comments = info.description();
 
     int yPos = 30; // Text Y coordinate

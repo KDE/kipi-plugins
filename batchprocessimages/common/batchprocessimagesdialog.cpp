@@ -285,7 +285,7 @@ void BatchProcessImagesDialog::slotGotPreview(const KFileItem& item, const QPixm
     QPixmap pix(pixmap);
 
     // Rotate the thumbnail compared to the angle the host application dictate
-    KPImageInfo info(m_interface, item.url());
+    KPImageInfo info(item.url());
 
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
@@ -639,7 +639,7 @@ void BatchProcessImagesDialog::slotFinished()
             if (src != dest)
             {
                 // Clone data in KIPI host application.
-                KPImageInfo info(m_interface, src);
+                KPImageInfo info(src);
                 info.cloneData(dest);
 
                 // Move XMP sidecar file.

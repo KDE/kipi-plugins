@@ -285,7 +285,7 @@ void XMPEditWidget::apply()
 {
     if (d->modified && !d->isReadOnly)
     {
-        KPImageInfo info(d->dlg->iface(), *d->dlg->currentItem());
+        KPImageInfo info(*d->dlg->currentItem());
 
         if (d->contentPage->syncHOSTCommentIsChecked())
         {

@@ -543,7 +543,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
 
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KPImageInfo info(d->interface, *it);
+        KPImageInfo info(*it);
         if (info.isExactDate())
         {
             exactCount++;
@@ -596,7 +596,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
 
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
-        KPImageInfo info(d->interface, *it);
+        KPImageInfo info(*it);
         KPMetadata  meta(d->interface);
         if (!meta.load((*it).path()))
         {
@@ -837,7 +837,7 @@ void TimeAdjustDialog::slotOk()
 
         if (d->updAppDateCheck->isChecked())
         {
-            KPImageInfo info(d->interface, url);
+            KPImageInfo info(url);
             info.setDate(dateTime);
         }
 

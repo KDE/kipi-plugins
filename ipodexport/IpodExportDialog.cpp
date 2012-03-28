@@ -549,7 +549,7 @@ void UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap& pixmap 
     QPixmap pix( pixmap );
 
     // Rotate the thumbnail compared to the angle the host application dictate
-    KPImageInfo info(m_interface, url->url());
+    KPImageInfo info(url->url());
 
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {

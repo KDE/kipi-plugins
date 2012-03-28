@@ -639,7 +639,7 @@ void FbWindow::setProfileAID(long long userID)
 
 QString FbWindow::getImageCaption(const QString& fileName)
 {
-    KPImageInfo info(m_interface, fileName);
+    KPImageInfo info(fileName);
     // Facebook doesn't support image titles. Include it in descriptions if needed.
     QStringList descriptions = QStringList() << info.title() << info.description();
     descriptions.removeAll("");

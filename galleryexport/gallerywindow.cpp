@@ -725,7 +725,7 @@ void GalleryWindow::slotAddPhotoNext()
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
     QString photoPath     = m_uploadList->takeFirst();
-    KPImageInfo info(d->interface, photoPath);
+    KPImageInfo info(photoPath);
     QString title         = info.title();
     QString description   = info.description();
     bool res              = m_talker->addPhoto(album.name, photoPath, title, description,

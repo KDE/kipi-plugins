@@ -279,7 +279,7 @@ struct Generator::Private
                 {
                     continue;
                 }
-                KPImageInfo info(mInterface, url);
+                KPImageInfo info(url);
                 ImageElement element = ImageElement(info);
                 element.mPath        = remoteUrlHash.value(url, url.toLocalFile());
                 imageElementList << element;

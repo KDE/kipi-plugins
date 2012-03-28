@@ -685,7 +685,7 @@ void YandexFotkiWindow::slotListPhotosDoneForUpload(const QList <YandexFotkiPhot
     m_transferQueue.clear();
     foreach(const KUrl& url, m_imgList->imageUrls(true))
     {
-        KPImageInfo info(m_interface, url);
+        KPImageInfo info(url);
         KPMetadata  meta;
 
         const QString imgPath = url.toLocalFile();

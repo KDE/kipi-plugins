@@ -126,7 +126,7 @@ void KPImagesListViewItem::updateInformation()
 {
     if (d->view->iface())
     {
-        KPImageInfo info(d->view->iface(), d->url);
+        KPImageInfo info(d->url);
 
         setComments(info.description());
 

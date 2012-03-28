@@ -479,7 +479,7 @@ void SingleDialog::processed(const KUrl& url, const QString& tmpFile)
         {
             // Assign Kipi host attributes from original RAW image.
 
-            KPImageInfo info(d->iface, url);
+            KPImageInfo info(url);
             info.cloneData(KUrl(destFile));
         }
     }

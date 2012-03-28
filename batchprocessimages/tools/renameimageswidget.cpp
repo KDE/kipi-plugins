@@ -260,7 +260,7 @@ void RenameImagesWidget::sortList(QAction* action)
         else if (action == m_byDateAction)
         {
             KUrl url(item->pathSrc());
-            KIPIPlugins::KPImageInfo info(m_interface, url);
+            KIPIPlugins::KPImageInfo info(url);
             item->changeSortKey(info.date().toString(Qt::ISODate));
         }
     }
@@ -344,7 +344,7 @@ QString RenameImagesWidget::oldToNewName(BatchProcessImagesItem* item, int itemP
 
     QFileInfo fi(item->pathSrc());
 
-    KIPIPlugins::KPImageInfo info(m_interface, url);
+    KIPIPlugins::KPImageInfo info(url);
 
     bool useExtraSymbols = ui->m_addFileDateCheck->isChecked() &&
                            ui->m_useExtraSymbolsCheck->isChecked();
@@ -580,7 +580,7 @@ void RenameImagesWidget::slotNext()
     else
     {
         // Get the src info
-        KIPIPlugins::KPImageInfo srcInfo(m_interface, src);
+        KIPIPlugins::KPImageInfo srcInfo(src);
 
         if (KDE_rename(QFile::encodeName(src.toLocalFile()),
                        QFile::encodeName(dst.toLocalFile())) == 0)

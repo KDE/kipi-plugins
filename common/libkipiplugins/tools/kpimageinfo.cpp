@@ -37,6 +37,9 @@
 #include <libkipi/version.h>
 #include <libkipi/interface.h>
 #include <libkipi/imageinfo.h>
+#include <libkipi/pluginloader.h>
+
+using namespace KIPI;
 
 namespace KIPIPlugins
 {
@@ -46,8 +49,13 @@ class KPImageInfo::KPImageInfoPrivate
 public:
 
     KPImageInfoPrivate()
+        : iface(0)
     {
-        iface = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     bool hasValidData() const
@@ -101,11 +109,10 @@ public:
     Interface* iface;
 };
 
-KPImageInfo::KPImageInfo(Interface* const iface, const KUrl& url)
+KPImageInfo::KPImageInfo(const KUrl& url)
     : d(new KPImageInfoPrivate)
 {
-    d->iface = iface;
-    d->url   = url;
+    d->url = url;
 }
 
 KPImageInfo::~KPImageInfo()
@@ -120,8 +127,8 @@ KUrl KPImageInfo::url() const
 
 void KPImageInfo::cloneData(const KUrl& destination)
 {
-    KIPI::ImageInfo srcInfo  = d->iface->info(d->url);
-    KIPI::ImageInfo destInfo = d->iface->info(destination);
+    ImageInfo srcInfo  = d->iface->info(d->url);
+    ImageInfo destInfo = d->iface->info(destination);
     destInfo.cloneData(srcInfo);
 }
 
@@ -132,7 +139,7 @@ qlonglong KPImageInfo::fileSize() const
 #if KIPI_VERSION < 0x010500
     if (d->hasValidData())
     {
-        KIPI::ImageInfo info = d->iface->info(d->url);
+        ImageInfo info = d->iface->info(d->url);
         return (qlonglong)info.size();
     }
 #endif

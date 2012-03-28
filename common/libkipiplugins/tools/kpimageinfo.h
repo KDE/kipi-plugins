@@ -40,13 +40,6 @@
 #include "kipiplugins_export.h"
 #include "kpmetadata.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIPlugins
 {
 
@@ -55,9 +48,11 @@ class KIPIPLUGINS_EXPORT KPImageInfo
 
 public:
 
-    /** Contructor with KIPI interface instance get from plugin and item url that you want to manage.
+    /** Contructor with item url that you want to manage. KIPI interface from plugin loader instance is used
+     *  to fill item info from kipi host. If no interface is available, for ex when plugin is loaded as 
+     *  stand-alone application, some info are filled with image file metadata.
      */
-    KPImageInfo(Interface* const iface, const KUrl& url);
+    KPImageInfo(const KUrl& url);
     ~KPImageInfo();
 
     /** return item url.
