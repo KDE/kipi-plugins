@@ -95,7 +95,6 @@ ActionThread::ActionThread(QObject* const parent, Interface* const iface)
 {
     qRegisterMetaType<ActionData>();
     d->iface = iface;
-    d->dcrawIface.setInterface(d->iface);
 }
 
 ActionThread::~ActionThread()

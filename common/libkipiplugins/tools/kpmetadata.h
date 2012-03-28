@@ -65,6 +65,7 @@ namespace KIPI
 }
 
 using namespace KIPI;
+
 using namespace KExiv2Iface;
 
 namespace KIPIPlugins
@@ -80,9 +81,11 @@ class KIPIPLUGINS_EXPORT KPMetadata : public KExiv2
 
 public:
 
-    /** Empty contructor. KIPI interface is null. Default metadata settings is used, 
-     *  and no file lock will be performed with read and write operations.
-     *  This contructor work like KExiv2 constructor.
+    /** Standard contructor. 
+     *  KIPI interface from plugin loader instance is used to lock item.
+     *  If no interface is available, for ex when plugin is loaded as stand-alone application,
+     *  default metadata settings is used, and no file lock will be performed with 
+     *  read and write operations. In this case, this contructor work like KExiv2 constructor.
      */
     KPMetadata();
     virtual ~KPMetadata();
@@ -90,17 +93,6 @@ public:
     /** Constructor to load metadata from file. Same behavior than KPMetadata() constructor.
      */
     KPMetadata(const QString& filePath);
-
-    /** Constructor with KIPI interface. Metadata settings is taken from KIPI host application and file 
-     *  lock will be performed with read and write operations.
-     *  If interface is null, default settings is used, and no file lock will be performed.
-     *  With this constructor, just load metadata from file using load() method.
-     */
-    KPMetadata(Interface* const iface);
-
-    /** Constructor to load metadata from file. Same behavior than KPMetadata(Interface* const iface) constructor.
-     */
-    KPMetadata(const QString& filePath, Interface* const iface);
 
 public:
 
@@ -146,6 +138,10 @@ public:
 
 private:
 
+    void init();
+
+private:
+    
     Interface* m_iface;
 };
 

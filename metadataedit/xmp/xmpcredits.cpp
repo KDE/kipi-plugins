@@ -312,7 +312,7 @@ XMPCredits::~XMPCredits()
 void XMPCredits::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
     QString     data;
     QStringList list;
@@ -429,7 +429,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData, Interface* const iface)
 void XMPCredits::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
     QStringList oldList, newList;
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
 
     if (d->bylineEdit->getValues(oldList, newList))

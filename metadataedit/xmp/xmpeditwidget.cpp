@@ -246,7 +246,7 @@ void XMPEditWidget::saveSettings()
 
 void XMPEditWidget::slotItemChanged()
 {
-    KPMetadata meta(d->dlg->iface());
+    KPMetadata meta;
     meta.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
@@ -306,7 +306,7 @@ void XMPEditWidget::apply()
         d->statusPage->applyMetadata(d->xmpData, d->dlg->iface());
         d->propertiesPage->applyMetadata(d->xmpData, d->dlg->iface());
 
-        KPMetadata meta(d->dlg->iface());
+        KPMetadata meta;
 
         meta.load((*d->dlg->currentItem()).path());
         meta.setExif(d->exifData);

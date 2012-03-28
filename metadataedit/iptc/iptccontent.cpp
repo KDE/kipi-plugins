@@ -228,7 +228,7 @@ void IPTCContent::setCheckedSyncEXIFComment(bool c)
 void IPTCContent::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
     QString     data;
     QStringList list;
@@ -264,7 +264,7 @@ void IPTCContent::readMetadata(QByteArray& iptcData, Interface* const iface)
 
 void IPTCContent::applyMetadata(QByteArray& exifData, QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setExif(exifData);
     meta.setIptc(iptcData);
 

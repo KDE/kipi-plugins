@@ -407,7 +407,7 @@ QDateTime IPTCOrigin::getIPTCCreationDate() const
 void IPTCOrigin::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     QString     data;
@@ -550,7 +550,7 @@ void IPTCOrigin::readMetadata(QByteArray& iptcData, Interface* const iface)
 
 void IPTCOrigin::applyMetadata(QByteArray& exifData, QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setExif(exifData);
     meta.setIptc(iptcData);
 

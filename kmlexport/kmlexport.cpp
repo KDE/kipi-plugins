@@ -231,7 +231,7 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
         //logInfo(i18n("Creation of picture '%1'").arg(fullFileName));
 
         double     alt, lat, lng;
-        KPMetadata meta(m_interface);
+        KPMetadata meta;
 
         if (info.hasGeolocationInfo())
         {
@@ -447,7 +447,7 @@ void KmlExport::generate()
         addTrack(kmlAlbum);
     }
 
-    KPMetadata meta(m_interface);
+    KPMetadata meta;
     KUrl::List images = selection.images();
     int defectImage   = 0;
     int pos           = 1;

@@ -220,7 +220,7 @@ IPTCCredits::~IPTCCredits()
 void IPTCCredits::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
     QString     data;
     QStringList list;
@@ -270,7 +270,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData, Interface* const iface)
 void IPTCCredits::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
     QStringList oldList, newList;
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     if (d->copyrightCheck->isChecked())

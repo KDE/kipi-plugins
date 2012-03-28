@@ -246,7 +246,7 @@ void IPTCKeywords::slotAddKeyword()
 void IPTCKeywords::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
     d->oldKeywords = meta.getIptcKeywords();
 
@@ -267,7 +267,7 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData, Interface* const iface)
 
 void IPTCKeywords::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
     QStringList newKeywords;
 

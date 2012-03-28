@@ -403,7 +403,7 @@ void IPTCProperties::slotSetTodayExpired()
 void IPTCProperties::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     int         val;
@@ -567,7 +567,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData, Interface* const iface)
 
 void IPTCProperties::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     if (d->dateReleasedCheck->isChecked())

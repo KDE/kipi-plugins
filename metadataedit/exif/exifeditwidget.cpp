@@ -213,7 +213,7 @@ void EXIFEditWidget::saveSettings()
 
 void EXIFEditWidget::slotItemChanged()
 {
-    KPMetadata meta(d->dlg->iface());
+    KPMetadata meta;
     meta.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
@@ -264,7 +264,7 @@ void EXIFEditWidget::apply()
         d->lightPage->applyMetadata(d->exifData, d->dlg->iface());
         d->adjustPage->applyMetadata(d->exifData, d->dlg->iface());
 
-        KPMetadata meta(d->dlg->iface());
+        KPMetadata meta;
 
         meta.load((*d->dlg->currentItem()).path());
         meta.setExif(d->exifData);

@@ -168,7 +168,7 @@ void KPImageInfo::setDescription(const QString& desc)
     }
     else
     {
-        KPMetadata meta(d->url.toLocalFile());
+        KPMetadata meta;
 
         // We set image comments, outside Exif, XMP, and IPTC.
         meta.setComments(desc.toUtf8());
@@ -200,7 +200,7 @@ QString KPImageInfo::description() const
     }
     else
     {
-        KPMetadata meta(d->url.toLocalFile());
+        KPMetadata meta;
 
         // We trying image comments, outside Exif, XMP, and IPTC.
         QString comment = meta.getCommentsDecoded();
@@ -527,7 +527,7 @@ QStringList KPImageInfo::keywords() const
     }
     else
     {
-        KPMetadata meta(d->url.toLocalFile());
+        KPMetadata meta;
         // Trying to find IPTC keywords
         keywords = meta.getIptcKeywords();
         if(!keywords.isEmpty())
@@ -551,7 +551,7 @@ bool KPImageInfo::hasKeywords() const
     }
     else
     {
-        KPMetadata meta(d->url.toLocalFile());
+        KPMetadata meta;
         // Trying to find IPTC keywords
         QStringList keywords = meta.getIptcKeywords();
         if(!keywords.isEmpty())

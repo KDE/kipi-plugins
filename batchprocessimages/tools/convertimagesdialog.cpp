@@ -313,7 +313,7 @@ void ConvertImagesDialog::processDone()
             kDebug() << src ;
             kDebug() << tgt << fi.size();
 
-            KPMetadata metaIn(src, m_interface);
+            KPMetadata metaIn(src);
 
             // Update Iptc preview.
             // NOTE: see B.K.O #130525. a JPEG segment is limited to 64K. If the IPTC byte array is
@@ -325,7 +325,7 @@ void ConvertImagesDialog::processDone()
             metaIn.removeIptcTag("Iptc.Application2.PreviewFormat");
             metaIn.removeIptcTag("Iptc.Application2.PreviewVersion");
 
-            KPMetadata metaOut(tgt, m_interface);
+            KPMetadata metaOut(tgt);
             metaOut.setIptc(metaIn.getIptc());
             metaOut.applyChanges();
         }

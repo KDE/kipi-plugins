@@ -318,7 +318,7 @@ QDateTime XMPOrigin::getXMPCreationDate() const
 void XMPOrigin::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
 
     QString     data;
@@ -427,7 +427,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData, Interface* const iface)
 
 void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setExif(exifData);
     meta.setXmp(xmpData);
 

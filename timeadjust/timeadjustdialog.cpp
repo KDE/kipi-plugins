@@ -597,7 +597,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
         KPImageInfo info(*it);
-        KPMetadata  meta(d->interface);
+        KPMetadata  meta;
         if (!meta.load((*it).path()))
         {
             missingCount++;
@@ -862,7 +862,7 @@ void TimeAdjustDialog::slotOk()
         {
             bool ret = true;
 
-            KPMetadata meta(d->interface);
+            KPMetadata meta;
 
             ret &= meta.load(url.path());
             if (ret)

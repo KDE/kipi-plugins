@@ -29,10 +29,6 @@
 #include <libkdcraw/kdcraw.h>
 #include <libkdcraw/rawdecodingsettings.h>
 
-// LibKipi includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kpsavesettingswidget.h"
@@ -51,8 +47,6 @@ public:
 
     RawDecodingIface();
     ~RawDecodingIface();
-
-    void setInterface(KIPI::Interface* const iface);
 
 public:
 
@@ -76,10 +70,6 @@ private:
                          QString& destPath, KPSaveSettingsWidget::OutputFormat outputFileFormat,
                          const QByteArray& imageData, int width, int height, int rgbmax,
                          const RawDecodingSettings& rawDecodingSettings);
-
-private:
-
-    KIPI::Interface* m_iface;
 };
 
 }  // namespace KIPIRawConverterPlugin

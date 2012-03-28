@@ -90,14 +90,14 @@ XMPSubjects::~XMPSubjects()
 
 void XMPSubjects::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
     setSubjectsList(meta.getXmpSubjects());
 }
 
 void XMPSubjects::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
     QStringList newSubjects = subjectsList();
 

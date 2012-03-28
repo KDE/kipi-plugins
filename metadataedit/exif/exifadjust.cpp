@@ -236,7 +236,7 @@ EXIFAdjust::~EXIFAdjust()
 void EXIFAdjust::readMetadata(QByteArray& exifData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setExif(exifData);
     long int num=1, den=1;
     long     val=0;
@@ -325,7 +325,7 @@ void EXIFAdjust::readMetadata(QByteArray& exifData, Interface* const iface)
 
 void EXIFAdjust::applyMetadata(QByteArray& exifData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setExif(exifData);
     long int num=1, den=1;
 

@@ -694,7 +694,7 @@ int DNGWriter::convert()
         long int   num, den;
         long       val;
         QString    str;
-        KPMetadata meta(d->iface);
+        KPMetadata meta;
 
         if (meta.load(inputFile()))
         {

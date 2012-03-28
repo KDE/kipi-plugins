@@ -203,7 +203,7 @@ IPTCStatus::~IPTCStatus()
 void IPTCStatus::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     QString     data;
@@ -254,7 +254,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData, Interface* const iface)
 
 void IPTCStatus::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     if (d->objectNameCheck->isChecked())

@@ -249,7 +249,7 @@ void IPTCEditWidget::saveSettings()
 
 void IPTCEditWidget::slotItemChanged()
 {
-    KPMetadata meta(d->dlg->iface());
+    KPMetadata meta;
     meta.load((*d->dlg->currentItem()).path());
 
 #if KEXIV2_VERSION >= 0x010000
@@ -309,7 +309,7 @@ void IPTCEditWidget::apply()
         d->propertiesPage->applyMetadata(d->iptcData, d->dlg->iface());
         d->envelopePage->applyMetadata(d->iptcData, d->dlg->iface());
 
-        KPMetadata meta(d->dlg->iface());
+        KPMetadata meta;
 
         meta.load((*d->dlg->currentItem()).path());
         meta.setExif(d->exifData);

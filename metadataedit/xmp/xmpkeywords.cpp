@@ -223,7 +223,7 @@ void XMPKeywords::slotAddKeyword()
 void XMPKeywords::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
     d->oldKeywords = meta.getXmpKeywords();
 
@@ -244,7 +244,7 @@ void XMPKeywords::readMetadata(QByteArray& xmpData, Interface* const iface)
 
 void XMPKeywords::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
     QStringList newKeywords;
 

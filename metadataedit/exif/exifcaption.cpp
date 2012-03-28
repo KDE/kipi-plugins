@@ -304,7 +304,7 @@ void EXIFCaption::setCheckedSyncIPTCCaption(bool c)
 void EXIFCaption::readMetadata(QByteArray& exifData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setExif(exifData);
     QString data;
 
@@ -367,7 +367,7 @@ void EXIFCaption::readMetadata(QByteArray& exifData, Interface* const iface)
 
 void EXIFCaption::applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setExif(exifData);
     meta.setIptc(iptcData);
     meta.setXmp(xmpData);

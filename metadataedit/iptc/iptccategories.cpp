@@ -289,7 +289,7 @@ void IPTCCategories::slotAddCategory()
 void IPTCCategories::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
     QString data;
 
@@ -327,7 +327,7 @@ void IPTCCategories::readMetadata(QByteArray& iptcData, Interface* const iface)
 void IPTCCategories::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
     QStringList newCategories;
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     if (d->categoryCheck->isChecked())

@@ -41,6 +41,7 @@
 // LibKipi includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 namespace KIPIPlugins
 {
@@ -48,32 +49,13 @@ namespace KIPIPlugins
 KPMetadata::KPMetadata()
     : KExiv2()
 {
-    m_iface = 0;
-    setSettings(KPMetaSettings());
+    init();
 }
 
 KPMetadata::KPMetadata(const QString& filePath)
     : KExiv2()
 {
-    m_iface = 0;
-    setSettings(KPMetaSettings());
-    load(filePath);
-}
-
-KPMetadata::KPMetadata(Interface* const iface)
-    : KExiv2()
-{
-    m_iface = iface;
-    KPHostSettings hset;
-    setSettings(hset.metadataSettings());
-}
-
-KPMetadata::KPMetadata(const QString& filePath, Interface* const iface)
-    : KExiv2()
-{
-    m_iface = iface;
-    KPHostSettings hset;
-    setSettings(hset.metadataSettings());
+    init();
     load(filePath);
 }
 
@@ -81,6 +63,18 @@ KPMetadata::~KPMetadata()
 {
 }
 
+void KPMetadata::init()
+{
+    m_iface          = 0;
+    PluginLoader* pl = PluginLoader::instance();
+    if (pl)
+    {
+        m_iface = pl->interface();
+    }
+    KPHostSettings hset;
+    setSettings(hset.metadataSettings());
+}
+    
 void KPMetadata::setSettings(const KPMetaSettings& settings)
 {
     setUseXMPSidecar4Reading(settings.useXMPSidecar4Reading);
@@ -100,7 +94,6 @@ KPMetaSettings KPMetadata::settings() const
 
     return settings;
 }
-
 
 bool KPMetadata::load(const QString& filePath) const
 {
@@ -154,7 +147,8 @@ bool KPMetadata::moveSidecar(const KUrl& src, const KUrl& dst)
 {
     if (hasSidecar(src.toLocalFile()))
     {
-        if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()), QFile::encodeName(sidecarUrl(dst).toLocalFile())) == 0)
+        if (KDE_rename(QFile::encodeName(sidecarUrl(src).toLocalFile()), 
+                       QFile::encodeName(sidecarUrl(dst).toLocalFile())) == 0)
             return true;
     }
     return false;

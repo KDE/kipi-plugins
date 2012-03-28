@@ -55,16 +55,10 @@ namespace KIPIRawConverterPlugin
 RawDecodingIface::RawDecodingIface()
     : KDcraw()
 {
-    m_iface = 0;
 }
 
 RawDecodingIface::~RawDecodingIface()
 {
-}
-
-void RawDecodingIface::setInterface(KIPI::Interface* const iface)
-{
-    m_iface = iface;
 }
 
 bool RawDecodingIface::decodeHalfRAWImage(const QString& filePath,
@@ -163,14 +157,14 @@ bool RawDecodingIface::loadedFromDcraw(const QString& filePath,
 
     // -- Write image data into destination file -------------------------------
 
-    QByteArray prof = KIPIPlugins::KPWriteImage::getICCProfilFromFile(m_rawDecodingSettings.outputColorSpace);
+    QByteArray prof = KPWriteImage::getICCProfilFromFile(m_rawDecodingSettings.outputColorSpace);
     QString soft = QString("Kipi Raw Converter v.%1").arg(kipiplugins_version);
     QFileInfo fi(filePath);
     destPath = fi.absolutePath() + QString("/") + ".kipi-rawconverter-tmp-" 
                                  + QString::number(QDateTime::currentDateTime().toTime_t());
 
     // Metadata restoration and update.
-    KPMetadata meta(m_iface);
+    KPMetadata meta;
 
     meta.load(filePath);
     meta.setImageProgramId(QString("Kipi-plugins"), QString(kipiplugins_version));

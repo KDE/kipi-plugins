@@ -158,7 +158,7 @@ XMPStatus::~XMPStatus()
 void XMPStatus::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
 
     QString            data;
@@ -199,7 +199,7 @@ void XMPStatus::readMetadata(QByteArray& xmpData, Interface* const iface)
 void XMPStatus::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
     QStringList oldList, newList;
-    KPMetadata  meta(iface);
+    KPMetadata  meta;
     meta.setXmp(xmpData);
 
     KPMetadata::AltLangMap oldAltLangMap, newAltLangMap;

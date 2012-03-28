@@ -407,7 +407,7 @@ void IPTCEnvelope::slotSetTodaySent()
 void IPTCEnvelope::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     int         val;
@@ -549,7 +549,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData, Interface* const iface)
 
 void IPTCEnvelope::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
 
     if (d->destinationCheck->isChecked())

@@ -105,14 +105,14 @@ IPTCSubjects::~IPTCSubjects()
 
 void IPTCSubjects::readMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
     setSubjectsList(meta.getIptcSubjects());
 }
 
 void IPTCSubjects::applyMetadata(QByteArray& iptcData, Interface* const iface)
 {
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setIptc(iptcData);
     QStringList newSubjects = subjectsList();
 

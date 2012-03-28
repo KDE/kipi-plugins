@@ -265,7 +265,7 @@ void XMPCategories::slotAddCategory()
 void XMPCategories::readMetadata(QByteArray& xmpData, Interface* const iface)
 {
     blockSignals(true);
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
     QString data;
 
@@ -303,7 +303,7 @@ void XMPCategories::readMetadata(QByteArray& xmpData, Interface* const iface)
 void XMPCategories::applyMetadata(QByteArray& xmpData, Interface* const iface)
 {
     QStringList newCategories;
-    KPMetadata meta(iface);
+    KPMetadata meta;
     meta.setXmp(xmpData);
 
     if (d->categoryCheck->isChecked())
