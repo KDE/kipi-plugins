@@ -133,7 +133,7 @@ BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const ab
 
     // ---------------------------------------------------------------
 
-    d->settingsBox = new SettingsWidget(d->page, d->iface);
+    d->settingsBox = new SettingsWidget(d->page);
 
     d->progressBar = new KPProgressWidget(d->iface, d->page);
     d->progressBar->setMaximumHeight(fontMetrics().height()+2);
