@@ -46,6 +46,7 @@ class KPHostSettings::KPHostSettingsPrivate
 public:
 
     KPHostSettingsPrivate()
+        : iface(0)
     {
         PluginLoader* pl = PluginLoader::instance();
         if (pl)
