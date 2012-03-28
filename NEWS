@@ -49,5 +49,6 @@ BUGFIXES FROM KDE BUGZILLA (alias B.K.O | http://bugs.kde.org):
 034 ==> 207390 : Gallery export shows regular file dialog instead of tags or folders.
 035 ==> 220319 : Gallery2 Export Plugin not allowing Maximum Dimension > 999 px
 036 ==>	292268 : Coordinates into LineString not correct
-037 ==>
+037 ==> 268315 : xx MB field below "Mail program": Function unclear
+038 ==>
 
