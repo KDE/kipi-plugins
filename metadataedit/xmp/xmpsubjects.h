@@ -37,12 +37,6 @@
 
 #include "kpmetadata.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIMetadataEditPlugin
@@ -57,8 +51,8 @@ public:
     XMPSubjects(QWidget* const parent);
     ~XMPSubjects();
 
-    void applyMetadata(QByteArray& xmpData, Interface* const iface);
-    void readMetadata(QByteArray& xmpData, Interface* const iface);
+    void applyMetadata(QByteArray& xmpData);
+    void readMetadata(QByteArray& xmpData);
 };
 
 }  // namespace KIPIMetadataEditPlugin

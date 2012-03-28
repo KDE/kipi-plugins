@@ -258,14 +258,14 @@ void XMPEditWidget::slotItemChanged()
     d->iptcData = meta.getIptc();
     d->xmpData  = meta.getXmp();
 
-    d->contentPage->readMetadata(d->xmpData, d->dlg->iface());
-    d->originPage->readMetadata(d->xmpData, d->dlg->iface());
-    d->subjectsPage->readMetadata(d->xmpData, d->dlg->iface());
-    d->keywordsPage->readMetadata(d->xmpData, d->dlg->iface());
-    d->categoriesPage->readMetadata(d->xmpData, d->dlg->iface());
-    d->creditsPage->readMetadata(d->xmpData, d->dlg->iface());
-    d->statusPage->readMetadata(d->xmpData, d->dlg->iface());
-    d->propertiesPage->readMetadata(d->xmpData, d->dlg->iface());
+    d->contentPage->readMetadata(d->xmpData);
+    d->originPage->readMetadata(d->xmpData);
+    d->subjectsPage->readMetadata(d->xmpData);
+    d->keywordsPage->readMetadata(d->xmpData);
+    d->categoriesPage->readMetadata(d->xmpData);
+    d->creditsPage->readMetadata(d->xmpData);
+    d->statusPage->readMetadata(d->xmpData);
+    d->propertiesPage->readMetadata(d->xmpData);
 
     d->isReadOnly = !KPMetadata::canWriteXmp((*d->dlg->currentItem()).path());
     emit signalSetReadOnly(d->isReadOnly);
@@ -291,20 +291,20 @@ void XMPEditWidget::apply()
         {
             info.setDescription(d->contentPage->getXMPCaption());
         }
-        d->contentPage->applyMetadata(d->exifData, d->xmpData, d->dlg->iface());
+        d->contentPage->applyMetadata(d->exifData, d->xmpData);
 
         if (d->originPage->syncHOSTDateIsChecked())
         {
             info.setDate(d->originPage->getXMPCreationDate());
         }
-        d->originPage->applyMetadata(d->exifData, d->xmpData, d->dlg->iface());
+        d->originPage->applyMetadata(d->exifData, d->xmpData);
 
-        d->subjectsPage->applyMetadata(d->xmpData, d->dlg->iface());
-        d->keywordsPage->applyMetadata(d->xmpData, d->dlg->iface());
-        d->categoriesPage->applyMetadata(d->xmpData, d->dlg->iface());
-        d->creditsPage->applyMetadata(d->xmpData, d->dlg->iface());
-        d->statusPage->applyMetadata(d->xmpData, d->dlg->iface());
-        d->propertiesPage->applyMetadata(d->xmpData, d->dlg->iface());
+        d->subjectsPage->applyMetadata(d->xmpData);
+        d->keywordsPage->applyMetadata(d->xmpData);
+        d->categoriesPage->applyMetadata(d->xmpData);
+        d->creditsPage->applyMetadata(d->xmpData);
+        d->statusPage->applyMetadata(d->xmpData);
+        d->propertiesPage->applyMetadata(d->xmpData);
 
         KPMetadata meta;
 

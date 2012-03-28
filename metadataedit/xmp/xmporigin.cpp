@@ -315,7 +315,7 @@ QDateTime XMPOrigin::getXMPCreationDate() const
     return d->dateCreatedSel->dateTime();
 }
 
-void XMPOrigin::readMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPOrigin::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -425,7 +425,7 @@ void XMPOrigin::readMetadata(QByteArray& xmpData, Interface* const iface)
     blockSignals(false);
 }
 
-void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData, Interface* const iface)
+void XMPOrigin::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
 {
     KPMetadata meta;
     meta.setExif(exifData);

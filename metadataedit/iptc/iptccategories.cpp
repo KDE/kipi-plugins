@@ -286,7 +286,7 @@ void IPTCCategories::slotAddCategory()
     }
 }
 
-void IPTCCategories::readMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCCategories::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -324,7 +324,7 @@ void IPTCCategories::readMetadata(QByteArray& iptcData, Interface* const iface)
     blockSignals(false);
 }
 
-void IPTCCategories::applyMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCCategories::applyMetadata(QByteArray& iptcData)
 {
     QStringList newCategories;
     KPMetadata meta;

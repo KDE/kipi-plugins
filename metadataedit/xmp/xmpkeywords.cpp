@@ -220,7 +220,7 @@ void XMPKeywords::slotAddKeyword()
     }
 }
 
-void XMPKeywords::readMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPKeywords::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -242,7 +242,7 @@ void XMPKeywords::readMetadata(QByteArray& xmpData, Interface* const iface)
     blockSignals(false);
 }
 
-void XMPKeywords::applyMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPKeywords::applyMetadata(QByteArray& xmpData)
 {
     KPMetadata meta;
     meta.setXmp(xmpData);

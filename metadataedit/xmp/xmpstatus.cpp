@@ -155,7 +155,7 @@ XMPStatus::~XMPStatus()
     delete d;
 }
 
-void XMPStatus::readMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPStatus::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -196,7 +196,7 @@ void XMPStatus::readMetadata(QByteArray& xmpData, Interface* const iface)
     blockSignals(false);
 }
 
-void XMPStatus::applyMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPStatus::applyMetadata(QByteArray& xmpData)
 {
     QStringList oldList, newList;
     KPMetadata  meta;

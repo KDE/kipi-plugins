@@ -482,7 +482,7 @@ EXIFDevice::~EXIFDevice()
     delete d;
 }
 
-void EXIFDevice::readMetadata(QByteArray& exifData, Interface* const iface)
+void EXIFDevice::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -680,7 +680,7 @@ void EXIFDevice::readMetadata(QByteArray& exifData, Interface* const iface)
     blockSignals(false);
 }
 
-void EXIFDevice::applyMetadata(QByteArray& exifData, Interface* const iface)
+void EXIFDevice::applyMetadata(QByteArray& exifData)
 {
     KPMetadata meta;
     meta.setExif(exifData);

@@ -243,7 +243,7 @@ void IPTCKeywords::slotAddKeyword()
     }
 }
 
-void IPTCKeywords::readMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCKeywords::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -265,7 +265,7 @@ void IPTCKeywords::readMetadata(QByteArray& iptcData, Interface* const iface)
     blockSignals(false);
 }
 
-void IPTCKeywords::applyMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCKeywords::applyMetadata(QByteArray& iptcData)
 {
     KPMetadata meta;
     meta.setIptc(iptcData);

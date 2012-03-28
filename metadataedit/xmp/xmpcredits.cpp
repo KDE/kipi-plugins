@@ -309,7 +309,7 @@ XMPCredits::~XMPCredits()
     delete d;
 }
 
-void XMPCredits::readMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPCredits::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -426,7 +426,7 @@ void XMPCredits::readMetadata(QByteArray& xmpData, Interface* const iface)
     blockSignals(false);
 }
 
-void XMPCredits::applyMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPCredits::applyMetadata(QByteArray& xmpData)
 {
     QStringList oldList, newList;
     KPMetadata meta;

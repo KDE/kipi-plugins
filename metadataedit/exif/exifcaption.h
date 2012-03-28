@@ -28,13 +28,6 @@
 #include <QWidget>
 #include <QByteArray>
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIMetadataEditPlugin
 {
 
@@ -47,8 +40,8 @@ public:
     EXIFCaption(QWidget* const parent);
     ~EXIFCaption();
 
-    void applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData, Interface* const iface);
-    void readMetadata(QByteArray& exifData, Interface* const iface);
+    void applyMetadata(QByteArray& exifData, QByteArray& iptcData, QByteArray& xmpData);
+    void readMetadata(QByteArray& exifData);
 
     bool syncJFIFCommentIsChecked() const;
     bool syncHOSTCommentIsChecked() const;

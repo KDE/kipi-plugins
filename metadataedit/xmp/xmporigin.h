@@ -29,13 +29,6 @@
 #include <QWidget>
 #include <QByteArray>
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIMetadataEditPlugin
 {
 
@@ -48,8 +41,8 @@ public:
     XMPOrigin(QWidget* const parent);
     ~XMPOrigin();
 
-    void applyMetadata(QByteArray& exifData, QByteArray& xmpData, Interface* const iface);
-    void readMetadata(QByteArray& xmpData, Interface* const iface);
+    void applyMetadata(QByteArray& exifData, QByteArray& xmpData);
+    void readMetadata(QByteArray& xmpData);
 
     bool syncHOSTDateIsChecked() const;
     bool syncEXIFDateIsChecked() const;

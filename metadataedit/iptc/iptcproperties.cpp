@@ -400,7 +400,7 @@ void IPTCProperties::slotSetTodayExpired()
     d->timeExpiredSel->setTime(QTime::currentTime());
 }
 
-void IPTCProperties::readMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCProperties::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -565,7 +565,7 @@ void IPTCProperties::readMetadata(QByteArray& iptcData, Interface* const iface)
     blockSignals(false);
 }
 
-void IPTCProperties::applyMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCProperties::applyMetadata(QByteArray& iptcData)
 {
     KPMetadata meta;
     meta.setIptc(iptcData);

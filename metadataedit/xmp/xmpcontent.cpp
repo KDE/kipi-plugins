@@ -215,7 +215,7 @@ void XMPContent::setCheckedSyncEXIFComment(bool c)
     d->syncEXIFCommentCheck->setChecked(c);
 }
 
-void XMPContent::readMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPContent::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -255,7 +255,7 @@ void XMPContent::readMetadata(QByteArray& xmpData, Interface* const iface)
     blockSignals(false);
 }
 
-void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData, Interface* const iface)
+void XMPContent::applyMetadata(QByteArray& exifData, QByteArray& xmpData)
 {
     KPMetadata meta;
     meta.setExif(exifData);

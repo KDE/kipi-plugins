@@ -217,7 +217,7 @@ IPTCCredits::~IPTCCredits()
     delete d;
 }
 
-void IPTCCredits::readMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCCredits::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -267,7 +267,7 @@ void IPTCCredits::readMetadata(QByteArray& iptcData, Interface* const iface)
     blockSignals(false);
 }
 
-void IPTCCredits::applyMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCCredits::applyMetadata(QByteArray& iptcData)
 {
     QStringList oldList, newList;
     KPMetadata meta;

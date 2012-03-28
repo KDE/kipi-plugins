@@ -262,7 +262,7 @@ void XMPCategories::slotAddCategory()
     }
 }
 
-void XMPCategories::readMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPCategories::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -300,7 +300,7 @@ void XMPCategories::readMetadata(QByteArray& xmpData, Interface* const iface)
     blockSignals(false);
 }
 
-void XMPCategories::applyMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPCategories::applyMetadata(QByteArray& xmpData)
 {
     QStringList newCategories;
     KPMetadata meta;

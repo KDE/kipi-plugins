@@ -404,7 +404,7 @@ void IPTCEnvelope::slotSetTodaySent()
     d->timeSentSel->setTime(QTime::currentTime());
 }
 
-void IPTCEnvelope::readMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCEnvelope::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -547,7 +547,7 @@ void IPTCEnvelope::readMetadata(QByteArray& iptcData, Interface* const iface)
     blockSignals(false);
 }
 
-void IPTCEnvelope::applyMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCEnvelope::applyMetadata(QByteArray& iptcData)
 {
     KPMetadata meta;
     meta.setIptc(iptcData);

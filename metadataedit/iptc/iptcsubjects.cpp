@@ -103,14 +103,14 @@ IPTCSubjects::~IPTCSubjects()
 {
 }
 
-void IPTCSubjects::readMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCSubjects::readMetadata(QByteArray& iptcData)
 {
     KPMetadata meta;
     meta.setIptc(iptcData);
     setSubjectsList(meta.getIptcSubjects());
 }
 
-void IPTCSubjects::applyMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCSubjects::applyMetadata(QByteArray& iptcData)
 {
     KPMetadata meta;
     meta.setIptc(iptcData);

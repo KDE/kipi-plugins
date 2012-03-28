@@ -265,7 +265,7 @@ EXIFLens::~EXIFLens()
     delete d;
 }
 
-void EXIFLens::readMetadata(QByteArray& exifData, Interface* const iface)
+void EXIFLens::readMetadata(QByteArray& exifData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -372,7 +372,7 @@ void EXIFLens::readMetadata(QByteArray& exifData, Interface* const iface)
     blockSignals(false);
 }
 
-void EXIFLens::applyMetadata(QByteArray& exifData, Interface* const iface)
+void EXIFLens::applyMetadata(QByteArray& exifData)
 {
     KPMetadata meta;
     meta.setExif(exifData);

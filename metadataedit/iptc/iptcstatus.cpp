@@ -200,7 +200,7 @@ IPTCStatus::~IPTCStatus()
     delete d;
 }
 
-void IPTCStatus::readMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCStatus::readMetadata(QByteArray& iptcData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -252,7 +252,7 @@ void IPTCStatus::readMetadata(QByteArray& iptcData, Interface* const iface)
     blockSignals(false);
 }
 
-void IPTCStatus::applyMetadata(QByteArray& iptcData, Interface* const iface)
+void IPTCStatus::applyMetadata(QByteArray& iptcData)
 {
     KPMetadata meta;
     meta.setIptc(iptcData);

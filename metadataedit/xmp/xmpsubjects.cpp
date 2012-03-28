@@ -88,14 +88,14 @@ XMPSubjects::~XMPSubjects()
 {
 }
 
-void XMPSubjects::readMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPSubjects::readMetadata(QByteArray& xmpData)
 {
     KPMetadata meta;
     meta.setXmp(xmpData);
     setSubjectsList(meta.getXmpSubjects());
 }
 
-void XMPSubjects::applyMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPSubjects::applyMetadata(QByteArray& xmpData)
 {
     KPMetadata meta;
     meta.setXmp(xmpData);

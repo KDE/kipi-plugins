@@ -330,7 +330,7 @@ XMPProperties::~XMPProperties()
     delete d;
 }
 
-void XMPProperties::readMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPProperties::readMetadata(QByteArray& xmpData)
 {
     blockSignals(true);
     KPMetadata meta;
@@ -462,7 +462,7 @@ void XMPProperties::readMetadata(QByteArray& xmpData, Interface* const iface)
     blockSignals(false);
 }
 
-void XMPProperties::applyMetadata(QByteArray& xmpData, Interface* const iface)
+void XMPProperties::applyMetadata(QByteArray& xmpData)
 {
     QStringList oldList, newList;
     KPMetadata meta;
