@@ -76,12 +76,10 @@ extern "C"
 
 #include "kpaboutdata.h"
 #include "kpmetadata.h"
-#include "kphostsettings.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
 #include "kpprogresswidget.h"
 #include "clockphotodialog.h"
-
 
 using namespace KIPIPlugins;
 
@@ -599,7 +597,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
     for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
     {
         KPImageInfo info(d->interface, *it);
-        KPMetadata  meta;
+        KPMetadata  meta(d->interface);
         if (!meta.load((*it).path()))
         {
             missingCount++;
@@ -864,10 +862,7 @@ void TimeAdjustDialog::slotOk()
         {
             bool ret = true;
 
-            KPMetadata     meta;
-            KPHostSettings hSettings(d->interface);
-            meta.setWriteRawFiles(hSettings.metadataSettings().writeRawFiles);
-            meta.setUpdateFileTimeStamp(hSettings.metadataSettings().updateFileTimeStamp);
+            KPMetadata meta(d->interface);
 
             ret &= meta.load(url.path());
             if (ret)
