@@ -32,7 +32,6 @@
 
 #include "kipiplugins_export.h"
 
-
 namespace KIPIPlugins
 {
 
