@@ -252,14 +252,14 @@ void KmlExport::generateImagesthumb(const KUrl& imageURL, QDomElement& kmlAlbum 
 
         if (alt)
         {
-            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2,%3")
+            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2,%3 ")
                 .arg(lng, 0, 'f', 8)
                 .arg(lat, 0, 'f', 8)
                 .arg(alt, 0, 'f', 8));
         }
         else
         {
-            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2")
+            addKmlTextElement(kmlGeometry, "coordinates", QString("%1,%2 ")
                 .arg(lng, 0, 'f', 8)
                 .arg(lat, 0, 'f', 8));
         }
