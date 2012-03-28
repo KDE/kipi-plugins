@@ -32,15 +32,11 @@
 #include <kurl.h>
 #include <kpreviewwidgetbase.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kipiplugins_export.h"
 
-using namespace KIPI;
+class KFileItem;
 
 namespace KIPIPlugins
 {
@@ -51,7 +47,7 @@ class KIPIPLUGINS_EXPORT KPImageDialogPreview : public KPreviewWidgetBase
 
 public:
 
-    explicit KPImageDialogPreview(Interface* const iface, QWidget* const parent=0);
+    explicit KPImageDialogPreview(QWidget* const parent=0);
     ~KPImageDialogPreview();
 
     QSize sizeHint() const;
@@ -83,7 +79,7 @@ class KIPIPLUGINS_EXPORT KPImageDialog
 
 public:
 
-    KPImageDialog(QWidget* const parent, Interface* const iface, bool singleSelect=false, bool onlyRaw=false);
+    KPImageDialog(QWidget* const parent, bool singleSelect=false, bool onlyRaw=false);
     ~KPImageDialog();
 
     KUrl       url() const;
@@ -93,8 +89,8 @@ public:
     bool       singleSelect() const;
     QString    fileFormats() const;
 
-    static KUrl getImageUrl(QWidget* const parent, Interface* const iface, bool onlyRaw=false);
-    static KUrl::List getImageUrls(QWidget* const parent, Interface* const iface, bool onlyRaw=false);
+    static KUrl getImageUrl(QWidget* const parent, bool onlyRaw=false);
+    static KUrl::List getImageUrls(QWidget* const parent, bool onlyRaw=false);
 
 private:
 

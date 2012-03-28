@@ -612,7 +612,7 @@ void RenameImagesWidget::slotNext()
 
 void RenameImagesWidget::slotAddImages()
 {
-    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this, m_interface);
+    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrls(this);
 
     for (KUrl::List::iterator it = urls.begin(); it != urls.end(); ++it)
     {

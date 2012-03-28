@@ -270,7 +270,7 @@ void ClockPhotoDialog::saveSize()
 void ClockPhotoDialog::slotLoadPhoto()
 {
     // Present the user with a dialog to load the photo.
-    KPImageDialog dlg(this, d->interface, true, false);
+    KPImageDialog dlg(this, true, false);
 
     if (!dlg.url().isEmpty())
     {

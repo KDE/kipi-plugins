@@ -40,6 +40,7 @@
 
 // Libkipi includes
 
+#include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
 // local includes
@@ -123,9 +124,9 @@ PicasawebImageDialog::PicasawebImageDialog(QWidget* const parent, KIPI::Interfac
     QString fileFormats = patternList.join("\n");
 
     QPointer<KFileDialog> dlg = new KFileDialog(iface ? iface->currentAlbum().path().path()
-                                                         : KGlobalSettings::documentPath(),
+                                                      : KGlobalSettings::documentPath(),
                                                 fileFormats, parent);
-    KIPIPlugins::KPImageDialogPreview *preview = new KIPIPlugins::KPImageDialogPreview(iface, dlg);
+    KIPIPlugins::KPImageDialogPreview* preview = new KIPIPlugins::KPImageDialogPreview(dlg);
     dlg->setPreviewWidget(preview);
     dlg->setOperationMode(KFileDialog::Opening);
 

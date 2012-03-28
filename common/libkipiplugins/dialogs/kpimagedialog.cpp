@@ -47,13 +47,16 @@
 
 // Libkipi includes
 
+#include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
+#include <libkipi/pluginloader.h>
 
 // Local includes
 
 #include "kprawthumbthread.h"
 #include "kpmetadata.h"
 
+using namespace KIPI;
 using namespace KDcrawIface;
 
 namespace KIPIPlugins
@@ -70,6 +73,12 @@ public:
         infoLabel    = 0;
         iface        = 0;
         loadRawThumb = 0;
+
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     QLabel*           imageLabel;
@@ -84,11 +93,9 @@ public:
     KPRawThumbThread* loadRawThumb;
 };
 
-KPImageDialogPreview::KPImageDialogPreview(Interface* const iface, QWidget* const parent)
+KPImageDialogPreview::KPImageDialogPreview(QWidget* const parent)
     : KPreviewWidgetBase(parent), d(new KPImageDialogPreviewPrivate)
 {
-    d->iface = iface;
-
     QVBoxLayout* vlay = new QVBoxLayout(this);
     d->imageLabel     = new QLabel(this);
     d->imageLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -107,14 +114,14 @@ KPImageDialogPreview::KPImageDialogPreview(Interface* const iface, QWidget* cons
 
     if (d->iface)
     {
-        connect(d->iface, SIGNAL(gotThumbnail(KUrl,QPixmap)),
-                this, SLOT(slotThumbnail(KUrl,QPixmap)));
+        connect(d->iface, SIGNAL(gotThumbnail(KUrl, QPixmap)),
+                this, SLOT(slotThumbnail(KUrl, QPixmap)));
     }
 
     d->loadRawThumb = new KPRawThumbThread(this);
 
-    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl,QImage)),
-            this, SLOT(slotRawThumb(KUrl,QImage)));
+    connect(d->loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
+            this, SLOT(slotRawThumb(KUrl, QImage)));
 }
 
 KPImageDialogPreview::~KPImageDialogPreview()
@@ -353,6 +360,12 @@ public:
         onlyRaw      = false;
         singleSelect = false;
         iface        = 0;
+
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     bool             onlyRaw;
@@ -366,12 +379,11 @@ public:
     Interface*       iface;
 };
 
-KPImageDialog::KPImageDialog(QWidget* const parent, Interface* const iface, bool singleSelect, bool onlyRaw)
+KPImageDialog::KPImageDialog(QWidget* const parent, bool singleSelect, bool onlyRaw)
            : d(new KPImageDialogPrivate)
 {
     d->singleSelect = singleSelect;
     d->onlyRaw      = onlyRaw;
-    d->iface        = iface;
 
     QStringList patternList;
     QString     allPictures;
@@ -404,7 +416,7 @@ KPImageDialog::KPImageDialog(QWidget* const parent, Interface* const iface, bool
     QPointer<KFileDialog> dlg     = new KFileDialog(d->iface ? d->iface->currentAlbum().path().path()
                                                              : alternatePath,
                                                     d->fileFormats, parent);
-    KPImageDialogPreview* preview = new KPImageDialogPreview(d->iface, dlg);
+    KPImageDialogPreview* preview = new KPImageDialogPreview(dlg);
     dlg->setPreviewWidget(preview);
     dlg->setOperationMode(KFileDialog::Opening);
 
@@ -456,9 +468,9 @@ KUrl::List KPImageDialog::urls() const
     return d->urls;
 }
 
-KUrl KPImageDialog::getImageUrl(QWidget* const parent, Interface* const iface, bool onlyRaw)
+KUrl KPImageDialog::getImageUrl(QWidget* const parent, bool onlyRaw)
 {
-    KPImageDialog dlg(parent, iface, true, onlyRaw);
+    KPImageDialog dlg(parent, true, onlyRaw);
 
     if (dlg.url().isValid())
     {
@@ -470,9 +482,9 @@ KUrl KPImageDialog::getImageUrl(QWidget* const parent, Interface* const iface, b
     }
 }
 
-KUrl::List KPImageDialog::getImageUrls(QWidget* const parent, Interface* const iface, bool onlyRaw)
+KUrl::List KPImageDialog::getImageUrls(QWidget* const parent, bool onlyRaw)
 {
-    KPImageDialog dlg(parent, iface, false, onlyRaw);
+    KPImageDialog dlg(parent, false, onlyRaw);
     if (!dlg.urls().isEmpty())
     {
         return dlg.urls();

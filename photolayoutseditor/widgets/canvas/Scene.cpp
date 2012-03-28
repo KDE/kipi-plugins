@@ -675,7 +675,7 @@ void Scene::changeSelectedImage()
     if (!item)
         return;
 
-    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrl(PhotoLayoutsEditor::instance(), PhotoLayoutsEditor::instance()->interface());
+    KUrl::List urls = KIPIPlugins::KPImageDialog::getImageUrl(PhotoLayoutsEditor::instance());
     if (urls.count() != 1)
         return;
 

@@ -224,7 +224,7 @@ void BatchProcessImagesDialog::slotImagesFilesButtonAdd()
 {
     QStringList ImageFilesList;
 
-    const KUrl::List urls = KPImageDialog::getImageUrls(this, m_interface);
+    const KUrl::List urls = KPImageDialog::getImageUrls(this);
 
     if (urls.isEmpty())
         return;
