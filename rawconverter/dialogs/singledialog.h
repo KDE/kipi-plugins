@@ -36,13 +36,6 @@
 
 class QCloseEvent;
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIRawConverterPlugin
 {
 
@@ -54,7 +47,7 @@ class SingleDialog : public KDialog
 
 public:
 
-    SingleDialog(const QString& file, Interface* const iface);
+    SingleDialog(const QString& file);
     ~SingleDialog();
 
     void setFile(const QString& file);

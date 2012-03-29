@@ -158,7 +158,7 @@ void Plugin_RawConverter::slotActivateSingle()
 
     if (!m_singleDlg)
     {
-        m_singleDlg = new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path(), interface);
+        m_singleDlg = new KIPIRawConverterPlugin::SingleDialog(images.images()[0].path());
     }
     else
     {
@@ -201,7 +201,7 @@ void Plugin_RawConverter::slotActivateBatch()
 
     if (!m_batchDlg)
     {
-        m_batchDlg = new KIPIRawConverterPlugin::BatchDialog(interface);
+        m_batchDlg = new KIPIRawConverterPlugin::BatchDialog();
     }
     else
     {

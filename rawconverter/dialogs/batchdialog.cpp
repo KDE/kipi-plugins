@@ -70,10 +70,6 @@ extern "C"
 #include <libkdcraw/version.h>
 #include <libkdcraw/dcrawsettingswidget.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "actions.h"
@@ -108,7 +104,6 @@ public:
         saveSettingsBox     = 0;
         decodingSettingsBox = 0;
         about               = 0;
-        iface               = 0;
     }
 
     bool                  busy;
@@ -128,15 +123,11 @@ public:
     DcrawSettingsWidget*  decodingSettingsBox;
 
     KPAboutData*          about;
-
-    Interface*            iface;
 };
 
-BatchDialog::BatchDialog(Interface* const iface)
+BatchDialog::BatchDialog()
     : KDialog(0), d(new BatchDialogPriv)
 {
-    d->iface = iface;
-
     setButtons(Help | Default | Apply | Close );
     setDefaultButton(Close);
     setButtonToolTip(Close, i18n("Exit RAW Converter"));
@@ -214,7 +205,7 @@ BatchDialog::BatchDialog(Interface* const iface)
 
     // ---------------------------------------------------------------
 
-    d->thread = new ActionThread(this, d->iface);
+    d->thread = new ActionThread(this);
 
     // ---------------------------------------------------------------
 

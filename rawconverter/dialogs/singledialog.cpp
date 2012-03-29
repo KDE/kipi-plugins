@@ -70,6 +70,7 @@ extern "C"
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // Local includes
 
@@ -100,6 +101,11 @@ public:
         decodingSettingsBox = 0;
         about               = 0;
         iface               = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
 
     QString               inputFileName;
@@ -119,10 +125,9 @@ public:
     Interface*            iface;
 };
 
-SingleDialog::SingleDialog(const QString& file, Interface* const iface)
+SingleDialog::SingleDialog(const QString& file)
     : KDialog(0), d(new SingleDialogPriv)
 {
-    d->iface = iface;
     setButtons(Help | Default | User1 | User2 | User3 | Close);
     setDefaultButton(Close);
     setButtonText(User1, i18n("&Preview"));
@@ -205,7 +210,7 @@ SingleDialog::SingleDialog(const QString& file, Interface* const iface)
 
     // ---------------------------------------------------------------
 
-    d->thread = new ActionThread(this, d->iface);
+    d->thread = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
