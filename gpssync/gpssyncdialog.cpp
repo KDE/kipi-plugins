@@ -44,7 +44,6 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QPointer>
-#include <QProgressBar>
 #include <QRadioButton>
 #include <QSplitter>
 #include <QStackedLayout>
@@ -91,6 +90,7 @@
 #include "kipiimageitem.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
+#include "kpprogresswidget.h"
 #include "mapdragdrophandler.h"
 #include "kipiimagelist.h"
 #include "gpsimagelistdragdrophandler.h"
@@ -203,7 +203,7 @@ public:
     QUndoView                               *undoView;
 
     // UI: progress
-    QProgressBar                            *progressBar;
+    KPProgressWidget                        *progressBar;
     QPushButton                             *progressCancelButton;
     QObject                                 *progressCancelObject;
     QString                                  progressCancelSlot;
@@ -278,7 +278,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
     KHBox* const hboxBottom = new KHBox(vboxMain);
 
-    d->progressBar          = new QProgressBar(hboxBottom);
+    d->progressBar          = new KPProgressWidget(hboxBottom);
     d->progressBar->setVisible(false);
     d->progressBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     // we need a really large stretch factor here because the QDialogButtonBox also stretches a lot...
