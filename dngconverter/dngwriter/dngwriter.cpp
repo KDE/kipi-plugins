@@ -89,18 +89,6 @@ enum DNGBayerPattern
     FourColor
 };
 
-dng_date_time dngDateTime(QDateTime qDT)
-{
-    dng_date_time dngDT;
-    dngDT.fYear   = qDT.date().year();
-    dngDT.fMonth  = qDT.date().month();
-    dngDT.fDay    = qDT.date().day();
-    dngDT.fHour   = qDT.time().hour();
-    dngDT.fMinute = qDT.time().minute();
-    dngDT.fSecond = qDT.time().second();
-    return dngDT;
-}
-
 DNGWriter::DNGWriter()
     : d(new DNGWriterPrivate)
 {
@@ -119,11 +107,6 @@ void DNGWriter::cancel()
 void DNGWriter::reset()
 {
     d->reset();
-}
-
-void DNGWriter::setInterface(KIPI::Interface* const iface)
-{
-    d->iface = iface;
 }
 
 void DNGWriter::setCompressLossLess(bool b)
@@ -700,10 +683,10 @@ int DNGWriter::convert()
         {
             // Time from original shot
             dng_date_time_info dti;
-            dti.SetDateTime(dngDateTime(meta.getImageDateTime()));
+            dti.SetDateTime(d->dngDateTime(meta.getImageDateTime()));
             exif->fDateTimeOriginal = dti;
 
-            dti.SetDateTime(dngDateTime(meta.getDigitizationDateTime(true)));
+            dti.SetDateTime(d->dngDateTime(meta.getDigitizationDateTime(true)));
             exif->fDateTimeDigitized = dti;
  
             negative->UpdateDateTime(dti);

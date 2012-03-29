@@ -112,7 +112,7 @@ void Plugin_DNGConverter::slotActivate()
 
     if (!m_batchDlg)
     {
-        m_batchDlg = new BatchDialog(interface, new DNGConverterAboutData);
+        m_batchDlg = new BatchDialog(new DNGConverterAboutData);
     }
     else
     {

@@ -32,10 +32,6 @@
 
 #include <libkdcraw/kdcraw.h>
 
-// Libkipi includes
-
-#include <libkipi/interface.h>
-
 namespace DNGIface
 {
 
@@ -55,8 +51,6 @@ public:
 
     DNGWriter();
     ~DNGWriter();
-
-    void setInterface(KIPI::Interface* const iface);
 
     void setInputFile(const QString& filePath);
     void setOutputFile(const QString& filePath);

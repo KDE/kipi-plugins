@@ -30,13 +30,6 @@
 
 class QCloseEvent;
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPIDNGConverterPlugin
 {
 
@@ -50,7 +43,7 @@ Q_OBJECT
 
 public:
 
-    BatchDialog(Interface* const iface, DNGConverterAboutData* const about);
+    BatchDialog(DNGConverterAboutData* const about);
     ~BatchDialog();
 
    void addItems(const KUrl::List& itemList);

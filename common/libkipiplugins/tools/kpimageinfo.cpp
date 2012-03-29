@@ -127,9 +127,12 @@ KUrl KPImageInfo::url() const
 
 void KPImageInfo::cloneData(const KUrl& destination)
 {
-    ImageInfo srcInfo  = d->iface->info(d->url);
-    ImageInfo destInfo = d->iface->info(destination);
-    destInfo.cloneData(srcInfo);
+    if (d->hasValidData())
+    {
+        ImageInfo srcInfo  = d->iface->info(d->url);
+        ImageInfo destInfo = d->iface->info(destination);
+        destInfo.cloneData(srcInfo);
+    }
 }
 
 qlonglong KPImageInfo::fileSize() const
@@ -168,7 +171,7 @@ void KPImageInfo::setDescription(const QString& desc)
     }
     else
     {
-        KPMetadata meta;
+        KPMetadata meta(d->url.toLocalFile());
 
         // We set image comments, outside Exif, XMP, and IPTC.
         meta.setComments(desc.toUtf8());
@@ -181,6 +184,7 @@ void KPImageInfo::setDescription(const QString& desc)
         trunc.truncate(2000);
         meta.removeIptcTag("Iptc.Application2.Caption");
         meta.setIptcTagString("Iptc.Application2.Caption", trunc);
+        meta.applyChanges();
     }
 }
 
@@ -200,7 +204,7 @@ QString KPImageInfo::description() const
     }
     else
     {
-        KPMetadata meta;
+        KPMetadata meta(d->url.toLocalFile());
 
         // We trying image comments, outside Exif, XMP, and IPTC.
         QString comment = meta.getCommentsDecoded();
@@ -527,7 +531,7 @@ QStringList KPImageInfo::keywords() const
     }
     else
     {
-        KPMetadata meta;
+        KPMetadata meta(d->url.toLocalFile());
         // Trying to find IPTC keywords
         keywords = meta.getIptcKeywords();
         if(!keywords.isEmpty())
@@ -551,7 +555,7 @@ bool KPImageInfo::hasKeywords() const
     }
     else
     {
-        KPMetadata meta;
+        KPMetadata meta(d->url.toLocalFile());
         // Trying to find IPTC keywords
         QStringList keywords = meta.getIptcKeywords();
         if(!keywords.isEmpty())

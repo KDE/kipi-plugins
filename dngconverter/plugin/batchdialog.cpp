@@ -52,10 +52,6 @@
 #include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
-// LibKipi includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "aboutdata.h"
@@ -87,7 +83,6 @@ public:
         listView    = 0;
         thread      = 0;
         settingsBox = 0;
-        iface       = 0;
         about       = 0;
     }
 
@@ -105,15 +100,12 @@ public:
 
     SettingsWidget*        settingsBox;
 
-    Interface*             iface;
-
     DNGConverterAboutData* about;
 };
 
-BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const about)
+BatchDialog::BatchDialog(DNGConverterAboutData* const about)
     : KDialog(0), d(new BatchDialogPriv)
 {
-    d->iface = iface;
     d->about = about;
 
     setWindowIcon(KIcon("dngconverter"));
@@ -163,7 +155,7 @@ BatchDialog::BatchDialog(Interface* const iface, DNGConverterAboutData* const ab
 
     // ---------------------------------------------------------------
 
-    d->thread = new ActionThread(this, d->iface);
+    d->thread = new ActionThread(this);
 
     // ---------------------------------------------------------------
 
@@ -452,13 +444,10 @@ void BatchDialog::processed(const KUrl& url, const QString& tmpFile)
             item->setDestFileName(QFileInfo(destFile).fileName());
             d->listView->processed(url, true);
 
-            if (d->iface)
-            {
-                // Assign Kipi host attributes from original RAW image.
+            // Assign Kipi host attributes from original RAW image.
 
-                KPImageInfo info(url);
-                info.cloneData(KUrl(destFile));
-            }
+            KPImageInfo info(url);
+            info.cloneData(KUrl(destFile));
         }
     }
 

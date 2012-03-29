@@ -35,7 +35,7 @@ class DNGWriterHost : public dng_host
 
 public:
 
-    DNGWriterHost(DNGWriter::DNGWriterPrivate* priv, dng_memory_allocator* allocator=0);
+    DNGWriterHost(DNGWriter::DNGWriterPrivate* const priv, dng_memory_allocator* const allocator=0);
     ~DNGWriterHost();
 
 private:
