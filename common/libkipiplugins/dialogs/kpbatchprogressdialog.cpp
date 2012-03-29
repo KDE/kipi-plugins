@@ -211,13 +211,13 @@ void KPBatchProgressWidget::slotCopy2ClipBoard()
 
 // ---------------------------------------------------------------------------------
 
-KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const parent, const QString& caption)
-   : KDialog(parent)
+KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const /*parent*/, const QString& caption)
+   : KDialog(0)
 {
     setCaption(caption);
     setButtons(Cancel);
     setDefaultButton(Cancel);
-    setModal(true);
+    setModal(false);
 
     KPBatchProgressWidget* w = new KPBatchProgressWidget(this);
     w->progressScheduled(caption, KIcon("kipi").pixmap(22, 22));
@@ -226,6 +226,9 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const parent, const QStrin
 
     connect(w, SIGNAL(signalProgressCanceled()),
             this, SIGNAL(cancelClicked()));
+
+    connect(this, SIGNAL(cancelClicked()),
+            this, SLOT(slotCancel()));
 }
 
 KPBatchProgressDialog::~KPBatchProgressDialog()
@@ -235,6 +238,12 @@ KPBatchProgressDialog::~KPBatchProgressDialog()
 KPBatchProgressWidget* KPBatchProgressDialog::progressWidget()
 {
     return (qobject_cast<KPBatchProgressWidget*>(mainWidget()));
+}
+
+void KPBatchProgressDialog::slotCancel()
+{
+    kDebug() << "pass here";
+    progressWidget()->progressCompleted();
 }
 
 }  // namespace KIPIPlugins

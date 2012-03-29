@@ -25,6 +25,10 @@
 #ifndef KPBATCHPROGRESSDIALOG_H
 #define KPBATCHPROGRESSDIALOG_H
 
+// Qt includes
+
+#include <QCloseEvent>
+
 // KDE includes
 
 #include <kdialog.h>
@@ -92,6 +96,7 @@ private:
 
 class KIPIPLUGINS_EXPORT KPBatchProgressDialog : public KDialog
 {
+    Q_OBJECT
 
 public:
 
@@ -99,6 +104,10 @@ public:
     ~KPBatchProgressDialog();
 
     KPBatchProgressWidget* progressWidget();
+
+private Q_SLOTS:
+
+    void slotCancel();
 };
 
 }  // namespace KIPIPlugins
