@@ -58,8 +58,6 @@ public:
     explicit KPBatchProgressWidget(QWidget* const parent=0);
     ~KPBatchProgressWidget();
 
-    KPProgressWidget* progressBar() const;
-
     void addedAction(const QString& text, int type);
 
     void setProgress(int current, int total);

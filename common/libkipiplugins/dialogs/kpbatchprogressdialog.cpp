@@ -130,11 +130,6 @@ KPBatchProgressWidget::~KPBatchProgressWidget()
     delete d;
 }
 
-KPProgressWidget* KPBatchProgressWidget::progressBar() const
-{
-    return d->progress;
-}
-
 void KPBatchProgressWidget::addedAction(const QString& text, int type)
 {
     KPBatchProgressItem* item = new KPBatchProgressItem(d->actionsList, text, type);
