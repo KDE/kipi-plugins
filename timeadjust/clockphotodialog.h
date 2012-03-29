@@ -36,17 +36,11 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-namespace KIPI
-{
-    class Interface;
-}
-
 namespace KIPIPlugins
 {
     class ImageDialog;
 }
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
@@ -58,7 +52,7 @@ class ClockPhotoDialog : public KDialog
 
 public:
 
-    ClockPhotoDialog(Interface* const interface, QWidget* const parent);
+    ClockPhotoDialog(QWidget* const parent);
     ~ClockPhotoDialog();
 
     /* The public variables that hold the time difference. */

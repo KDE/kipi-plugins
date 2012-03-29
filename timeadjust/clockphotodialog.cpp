@@ -48,10 +48,6 @@
 #include <klocale.h>
 #include <kpushbutton.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // LibKDcraw includes
 
 #include <libkdcraw/version.h>
@@ -88,15 +84,11 @@ public:
     QDateTime*        photoDateTime;
 
     KPPreviewManager* imagePreview;
-
-    Interface*        interface;
 };
 
-ClockPhotoDialog::ClockPhotoDialog(Interface* const interface, QWidget* const parent)
+ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
     : KDialog(parent), d(new ClockPhotoDialogPrivate)
 {
-    d->interface     = interface;
-
     // Initialize the variables.
     d->image         = new QPixmap();
     d->photoDateTime = new QDateTime();

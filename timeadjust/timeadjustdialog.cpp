@@ -714,7 +714,7 @@ void TimeAdjustDialog::slotDetAdjustmentByClockPhoto()
     /* When the use presses the clock photo button, present a dialog and set the
      * results to the proper widgets. */
 
-    QPointer<ClockPhotoDialog> dilg = new ClockPhotoDialog(d->interface, this);
+    QPointer<ClockPhotoDialog> dilg = new ClockPhotoDialog(this);
     int result = dilg->exec();
     if (result == QDialog::Accepted)
     {
