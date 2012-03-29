@@ -85,19 +85,13 @@ private:
 
 class KIPIPLUGINS_EXPORT KPBatchProgressDialog : public KDialog
 {
-    Q_OBJECT
 
 public:
 
     explicit KPBatchProgressDialog(QWidget* const parent=0, const QString& caption=QString());
     ~KPBatchProgressDialog();
 
-    KPBatchProgressWidget* progressWidget() const;
-
-private:
-
-    class KPBatchProgressDialogPriv;
-    KPBatchProgressDialogPriv* const d;
+    KPBatchProgressWidget* progressWidget();
 };
 
 }  // namespace KIPIPlugins

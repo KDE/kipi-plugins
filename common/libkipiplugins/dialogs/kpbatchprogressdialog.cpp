@@ -196,39 +196,24 @@ void KPBatchProgressWidget::slotCopy2ClipBoard()
 
 // ---------------------------------------------------------------------------------
 
-class KPBatchProgressDialog::KPBatchProgressDialogPriv
-{
-public:
-
-    KPBatchProgressDialogPriv()
-    {
-        box = 0;
-    }
-
-    KPBatchProgressWidget* box;
-};
-
 KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const parent, const QString& caption)
-   : KDialog(parent), d(new KPBatchProgressDialogPriv)
+   : KDialog(parent)
 {
     setCaption(caption);
     setButtons(Cancel);
     setDefaultButton(Cancel);
     setModal(true);
-
-    d->box = new KPBatchProgressWidget(this);
-    setMainWidget(d->box);
+    setMainWidget(new KPBatchProgressWidget(this));
     resize(600, 400);
 }
 
 KPBatchProgressDialog::~KPBatchProgressDialog()
 {
-    delete d;
 }
 
-KPBatchProgressWidget* KPBatchProgressDialog::progressWidget() const
+KPBatchProgressWidget* KPBatchProgressDialog::progressWidget()
 {
-    return d->box;
+    return (qobject_cast<KPBatchProgressWidget*>(mainWidget()));
 }
 
 }  // namespace KIPIPlugins
