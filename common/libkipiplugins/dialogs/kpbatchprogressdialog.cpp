@@ -123,6 +123,9 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
 
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(slotContextMenu()));
+
+    connect(d->progress, SIGNAL(signalProgressCanceled()),
+            this, SIGNAL(signalProgressCanceled()));
 }
 
 KPBatchProgressWidget::~KPBatchProgressWidget()
@@ -130,10 +133,22 @@ KPBatchProgressWidget::~KPBatchProgressWidget()
     delete d;
 }
 
+void KPBatchProgressWidget::progressScheduled(const QString& title, const QPixmap& thumb)
+{
+    d->progress->progressScheduled(title, true, true);
+    d->progress->progressThumbnailChanged(thumb);
+}
+
+void KPBatchProgressWidget::progressCompleted()
+{
+    d->progress->progressCompleted();
+}
+
 void KPBatchProgressWidget::addedAction(const QString& text, int type)
 {
     KPBatchProgressItem* item = new KPBatchProgressItem(d->actionsList, text, type);
     d->actionsList->setCurrentItem(item);
+    d->progress->progressStatusChanged(text);
 }
 
 void KPBatchProgressWidget::reset()
@@ -203,8 +218,14 @@ KPBatchProgressDialog::KPBatchProgressDialog(QWidget* const parent, const QStrin
     setButtons(Cancel);
     setDefaultButton(Cancel);
     setModal(true);
-    setMainWidget(new KPBatchProgressWidget(this));
+
+    KPBatchProgressWidget* w = new KPBatchProgressWidget(this);
+    w->progressScheduled(caption, KIcon("kipi").pixmap(22, 22));
+    setMainWidget(w);
     resize(600, 400);
+
+    connect(w, SIGNAL(signalProgressCanceled()),
+            this, SIGNAL(cancelClicked()));
 }
 
 KPBatchProgressDialog::~KPBatchProgressDialog()
