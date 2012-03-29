@@ -98,9 +98,8 @@ public:
         actionsList = 0;
     }
 
+    QListWidget*      actionsList;
     KPProgressWidget* progress;
-
-    QListWidget*  actionsList;
 };
 
 KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
@@ -129,11 +128,6 @@ KPBatchProgressWidget::KPBatchProgressWidget(QWidget* const parent)
 KPBatchProgressWidget::~KPBatchProgressWidget()
 {
     delete d;
-}
-
-QListWidget* KPBatchProgressWidget::listView() const
-{
-    return d->actionsList;
 }
 
 KPProgressWidget* KPBatchProgressWidget::progressBar() const

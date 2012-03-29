@@ -35,9 +35,6 @@
 #include "kipiplugins_export.h"
 #include "kpprogresswidget.h"
 
-class QListWidget;
-
-
 namespace KIPIPlugins
 {
 
@@ -61,15 +58,14 @@ public:
     explicit KPBatchProgressWidget(QWidget* const parent=0);
     ~KPBatchProgressWidget();
 
-    QListWidget*  listView() const;
     KPProgressWidget* progressBar() const;
 
     void addedAction(const QString& text, int type);
-    void reset();
-    void setProgress(int current, int total);
 
-    int progress() const;
-    int total() const;
+    void setProgress(int current, int total);
+    int  progress() const;
+    int  total() const;
+    void reset();
 
 public Q_SLOTS:
 
