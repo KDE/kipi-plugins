@@ -65,6 +65,13 @@ public:
     int  total() const;
     void reset();
 
+    void progressScheduled(const QString& title, const QPixmap& thumb);
+    void progressCompleted();
+
+Q_SIGNALS:
+
+    void signalProgressCanceled();
+
 public Q_SLOTS:
 
     void setProgress(int);
