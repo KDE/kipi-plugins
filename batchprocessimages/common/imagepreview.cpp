@@ -24,8 +24,8 @@
 
 // Qt includes
 
-#include <QLCDNumber>
-#include <QSlider>
+#include <QImage>
+#include <QPixmap>
 
 // KDE includes
 
@@ -37,7 +37,7 @@
 
 #include "dialogutils.h"
 #include "kpaboutdata.h"
-#include "pixmapview.h"
+#include "kppreviewmanager.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -78,28 +78,20 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     setMainWidget(box);
     resize(700, 400);
 
-    if (cropActionOrig == true || cropActionDest == true)
-        INIT_ZOOM_FACTOR = 20;
+    QImage original(fileOrig);
+    const QImage cropped = original.copy(0, 0, 300, 300);
+
+    if (cropActionOrig)
+    {
+        m_origView->setImage(cropped, true);
+    }
+
     else
-        INIT_ZOOM_FACTOR = 5;
+    {
+        m_origView->load(fileOrig, true);
+    }
 
-    m_zoomSlider->setValue(INIT_ZOOM_FACTOR);
-    m_zoomLcd->display(INIT_ZOOM_FACTOR * 5);
-
-    connect(m_zoomSlider, SIGNAL(valueChanged(int)),
-            this, SLOT(slotZoomFactorValueChanged(int)));
-
-    connect(m_origView, SIGNAL(wheelChanged(int)),
-            this, SLOT(slotWheelChanged(int)));
-
-    connect(m_destView, SIGNAL(wheelChanged(int)),
-            this, SLOT(slotWheelChanged(int)));
-
-    m_origView->setZoom(INIT_ZOOM_FACTOR * 5);
-    m_destView->setZoom(INIT_ZOOM_FACTOR * 5);
-
-    m_origView->setImage(fileOrig, tmpPath, cropActionOrig);
-    m_destView->setImage(fileDest, tmpPath, cropActionDest);
+    m_destView->load(fileDest, true);
 }
 
 ImagePreview::~ImagePreview()
@@ -110,24 +102,6 @@ ImagePreview::~ImagePreview()
 void ImagePreview::slotHelp(void)
 {
     KToolInvocation::invokeHelp("", "kipi-plugins");
-}
-
-void ImagePreview::slotWheelChanged(int delta)
-{
-    if (delta > 0)
-        m_zoomSlider->setValue(m_zoomSlider->value() - 1);
-    else
-        m_zoomSlider->setValue(m_zoomSlider->value() + 1);
-
-    slotZoomFactorValueChanged(m_zoomSlider->value());
-}
-
-void ImagePreview::slotZoomFactorValueChanged(int ZoomFactorValue)
-{
-    m_zoomLcd->display(QString::number(ZoomFactorValue * 5));
-
-    m_origView->setZoom(ZoomFactorValue * 5);
-    m_destView->setZoom(ZoomFactorValue * 5);
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

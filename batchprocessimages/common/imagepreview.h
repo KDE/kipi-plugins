@@ -54,15 +54,12 @@ public:
 
 private Q_SLOTS:
 
-    void slotZoomFactorValueChanged(int ZoomFactorValue);
-    void slotWheelChanged(int delta);
     void slotHelp(void);
 
 private:
 
     KIPIPlugins::KPAboutData    *m_about;
 
-    int INIT_ZOOM_FACTOR; // FIXME: Ugly name
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

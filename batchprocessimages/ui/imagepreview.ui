@@ -11,49 +11,7 @@
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Zoom:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="m_zoomSlider">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>20</number>
-       </property>
-       <property name="pageStep">
-        <number>1</number>
-       </property>
-       <property name="tracking">
-        <bool>false</bool>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-       <property name="tickInterval">
-        <number>5</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLCDNumber" name="m_zoomLcd"/>
-     </item>
-    </layout>
-   </item>
-   <item row="1" column="0">
+   <item row="0" column="0">
     <widget class="QGroupBox" name="groupBox">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -66,7 +24,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="KIPIBatchProcessImagesPlugin::PixmapView" name="m_origView">
+       <widget class="KIPIPlugins::KPPreviewManager" name="m_origView">
         <property name="whatsThis">
          <string>This is the original image preview. You can use the mouse wheel to change the zoom factor. Click in and use the mouse to move the image.</string>
         </property>
@@ -81,7 +39,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="0" column="1">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -94,7 +52,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="KIPIBatchProcessImagesPlugin::PixmapView" name="m_destView">
+       <widget class="KIPIPlugins::KPPreviewManager" name="m_destView">
         <property name="whatsThis">
          <string>This is the destination image preview. You can use the mouse wheel to change the zoom factor. Click in and use the mouse to move the image.</string>
         </property>
@@ -113,9 +71,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KIPIBatchProcessImagesPlugin::PixmapView</class>
-   <extends>QFrame</extends>
-   <header>pixmapview.h</header>
+   <class>KIPIPlugins::KPPreviewManager</class>
+   <extends>QGraphicsView</extends>
+   <header>kppreviewmanager.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
