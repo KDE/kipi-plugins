@@ -29,7 +29,7 @@
 
 // Local includes
 
-#include "emailsettingscontainer.h"
+#include "emailsettings.h"
 
 namespace KIPISendimagesPlugin
 {
@@ -40,7 +40,7 @@ class SendImages : public QObject
 
 public:
 
-    SendImages(const EmailSettingsContainer& settings, QObject* const parent);
+    SendImages(const EmailSettings& settings, QObject* const parent);
     ~SendImages();
 
     void sendImages();

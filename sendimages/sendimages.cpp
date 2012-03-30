@@ -53,7 +53,6 @@
 // Local includes
 
 #include "kpbatchprogressdialog.h"
-#include "emailsettingscontainer.h"
 #include "imageresize.h"
 
 using namespace KIPI;
@@ -87,12 +86,12 @@ public:
 
     KPBatchProgressDialog* progressDlg;
 
-    EmailSettingsContainer settings;
+    EmailSettings settings;
 
     ImageResize*           threadImgResize;
 };
 
-SendImages::SendImages(const EmailSettingsContainer& settings, QObject* const parent)
+SendImages::SendImages(const EmailSettings& settings, QObject* const parent)
     : QObject(parent), d(new SendImagesPriv)
 {
     d->settings        = settings;
@@ -417,7 +416,7 @@ bool SendImages::invokeMailAgent()
 
             switch ((int)d->settings.emailProgram)
             {
-                case EmailSettingsContainer::DEFAULT:
+                case EmailSettings::DEFAULT:
                 {
                     KToolInvocation::invokeMailer(
                         QString(),                     // Destination address.
@@ -434,7 +433,7 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::BALSA:
+                case EmailSettings::BALSA:
                 {
                     QString prog("balsa");
                     QStringList args;
@@ -457,9 +456,9 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::CLAWSMAIL:
-                case EmailSettingsContainer::SYLPHEED:
-                case EmailSettingsContainer::SYLPHEEDCLAWS:
+                case EmailSettings::CLAWSMAIL:
+                case EmailSettings::SYLPHEED:
+                case EmailSettings::SYLPHEEDCLAWS:
                 {
                     QStringList args;
                     args.append("--compose");
@@ -470,9 +469,9 @@ bool SendImages::invokeMailAgent()
                     }
 
                     QString prog;
-                    if (d->settings.emailProgram == EmailSettingsContainer::CLAWSMAIL)
+                    if (d->settings.emailProgram == EmailSettings::CLAWSMAIL)
                         prog = QString("claws-mail");
-                    else if (d->settings.emailProgram == EmailSettingsContainer::SYLPHEED)
+                    else if (d->settings.emailProgram == EmailSettings::SYLPHEED)
                         prog = QString("sylpheed");
                     else
                         prog = QString("sylpheed-claws");
@@ -488,7 +487,7 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::EVOLUTION:
+                case EmailSettings::EVOLUTION:
                 {
                     QString prog("evolution");
                     QStringList args;
@@ -511,7 +510,7 @@ bool SendImages::invokeMailAgent()
                     break;
                 }
 
-                case EmailSettingsContainer::KMAIL:
+                case EmailSettings::KMAIL:
                 {
                     QString prog("kmail");
                     QStringList args;
@@ -535,14 +534,14 @@ bool SendImages::invokeMailAgent()
                 // More info about command lines options with Mozilla & co:
                 // http://www.mozilla.org/docs/command-line-args.html#Syntax_Rules
 
-                case EmailSettingsContainer::NETSCAPE:
-                case EmailSettingsContainer::THUNDERBIRD:
-                case EmailSettingsContainer::GMAILAGENT:
+                case EmailSettings::NETSCAPE:
+                case EmailSettings::THUNDERBIRD:
+                case EmailSettings::GMAILAGENT:
                 {
                     QString prog;
-                    if (d->settings.emailProgram == EmailSettingsContainer::NETSCAPE)
+                    if (d->settings.emailProgram == EmailSettings::NETSCAPE)
                         prog = QString("netscape");
-                    else if (d->settings.emailProgram == EmailSettingsContainer::THUNDERBIRD)
+                    else if (d->settings.emailProgram == EmailSettings::THUNDERBIRD)
                         prog = QString("thunderbird");
                     else
                         prog = QString("gmailagent");

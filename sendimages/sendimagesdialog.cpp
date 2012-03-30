@@ -181,9 +181,9 @@ void SendImagesDialog::slotOk()
     accept();
 }
 
-EmailSettingsContainer SendImagesDialog::emailSettings() const
+EmailSettings SendImagesDialog::emailSettings() const
 {
-    EmailSettingsContainer settings = d->settingsWidget->emailSettings(); 
+    EmailSettings settings = d->settingsWidget->emailSettings(); 
     settings.itemsList              = d->imagesList->imagesList(); 
     return settings;
 }
@@ -193,10 +193,10 @@ void SendImagesDialog::readSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("SendImages Settings");
 
-    EmailSettingsContainer settings;
-    settings.emailProgram            = (EmailSettingsContainer::EmailClient)group.readEntry("EmailProgram", (int)EmailSettingsContainer::KMAIL);
-    settings.imageSize               = (EmailSettingsContainer::ImageSize)group.readEntry("ImageResize",    (int)EmailSettingsContainer::MEDIUM);
-    settings.imageFormat             = (EmailSettingsContainer::ImageFormat)group.readEntry("ImageFormat",  (int)EmailSettingsContainer::JPEG);
+    EmailSettings settings;
+    settings.emailProgram            = (EmailSettings::EmailClient)group.readEntry("EmailProgram", (int)EmailSettings::KMAIL);
+    settings.imageSize               = (EmailSettings::ImageSize)group.readEntry("ImageResize",    (int)EmailSettings::MEDIUM);
+    settings.imageFormat             = (EmailSettings::ImageFormat)group.readEntry("ImageFormat",  (int)EmailSettings::JPEG);
     settings.imagesChangeProp        = group.readEntry("ImagesChangeProp", false);
     settings.addCommentsAndTags      = group.readEntry("AddCommentsAndTags", false);
     settings.imageCompression        = group.readEntry("ImageCompression", 75);
@@ -212,7 +212,7 @@ void SendImagesDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("SendImages Settings");
 
-    EmailSettingsContainer settings = d->settingsWidget->emailSettings();
+    EmailSettings settings = d->settingsWidget->emailSettings();
     group.writeEntry("EmailProgram",       (int)settings.emailProgram);
     group.writeEntry("ImageResize",        (int)settings.imageSize);
     group.writeEntry("ImageFormat",        (int)settings.imageFormat);

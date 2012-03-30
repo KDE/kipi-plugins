@@ -35,7 +35,7 @@
 
 // Local includes
 
-#include "emailsettingscontainer.h"
+#include "emailsettings.h"
 #include "kpactionthreadbase.h"
 
 using namespace KIPIPlugins;
@@ -57,7 +57,7 @@ public:
 
     KUrl                   m_orgUrl;
     QString                m_destName;
-    EmailSettingsContainer m_settings;
+    EmailSettings m_settings;
 
     int*                   m_count;
 
@@ -70,7 +70,7 @@ Q_SIGNALS:
 private:
 
     void run();
-    bool imageResize(const EmailSettingsContainer& settings,
+    bool imageResize(const EmailSettings& settings,
                      const KUrl& orgUrl, const QString& destName, QString& err);
     
     QMutex mutex;
@@ -87,7 +87,7 @@ public:
     ImageResize(QObject* const parent);
     ~ImageResize();
 
-    void resize(const EmailSettingsContainer& settings);
+    void resize(const EmailSettings& settings);
     void cancel();
 
 Q_SIGNALS:

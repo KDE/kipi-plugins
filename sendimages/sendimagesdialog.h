@@ -30,7 +30,7 @@
 
 // Local includes
 
-#include "emailsettingscontainer.h"
+#include "emailsettings.h"
 
 class QCloseEvent;
 
@@ -46,7 +46,7 @@ public:
     SendImagesDialog(QWidget* const parent, const KUrl::List& urls);
     ~SendImagesDialog();
 
-    EmailSettingsContainer emailSettings() const;
+    EmailSettings emailSettings() const;
 
 protected:
 

@@ -21,8 +21,8 @@
  *
  * ============================================================ */
 
-#ifndef EMAILSETTINGSCONTAINER_H
-#define EMAILSETTINGSCONTAINER_H
+#ifndef EMAILSETTING_H
+#define EMAILSETTING_H
 
 // Qt includes
 
@@ -54,7 +54,7 @@ public:
 
 // -----------------------------------------------------------------------------------
 
-class EmailSettingsContainer
+class EmailSettings
 {
 
 public:
@@ -91,7 +91,7 @@ public:
 
 public:
 
-    EmailSettingsContainer()
+    EmailSettings()
     {
         addCommentsAndTags      = false;
         imagesChangeProp        = false;
@@ -102,7 +102,7 @@ public:
         imageFormat             = JPEG;
     };
 
-    ~EmailSettingsContainer()
+    ~EmailSettings()
     {
     };
 
@@ -182,4 +182,4 @@ public:
 
 }  // namespace KIPISendimagesPlugin
 
-#endif  // EMAILSETTINGSCONTAINER_H
+#endif  // EMAILSETTING_H

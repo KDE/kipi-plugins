@@ -26,7 +26,7 @@
 // Local includes
 
 #include "kpimageslist.h"
-#include "emailsettingscontainer.h"
+#include "emailsettings.h"
 
 using namespace KIPIPlugins;
 

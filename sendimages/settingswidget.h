@@ -29,7 +29,7 @@
 
 // Local includes
 
-#include <emailsettingscontainer.h>
+#include <emailsettings.h>
 
 namespace KIPISendimagesPlugin
 {
@@ -43,8 +43,8 @@ public:
     SettingsWidget(QWidget* const parent);
     ~SettingsWidget();
 
-    void setEmailSettings(const EmailSettingsContainer& settings);
-    EmailSettingsContainer emailSettings() const;
+    void setEmailSettings(const EmailSettings& settings);
+    EmailSettings emailSettings() const;
 
 private Q_SLOTS:
 

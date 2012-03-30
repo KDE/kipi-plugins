@@ -96,10 +96,10 @@ void Task::run()
     }
 }
 
-bool Task::imageResize(const EmailSettingsContainer& settings, const KUrl& orgUrl,
+bool Task::imageResize(const EmailSettings& settings, const KUrl& orgUrl,
                        const QString& destName, QString& err)
 {
-    EmailSettingsContainer emailSettings = settings;
+    EmailSettings emailSettings = settings;
     QFileInfo fi(orgUrl.path());
 
     if (!fi.exists() || !fi.isReadable())
@@ -218,7 +218,7 @@ ImageResize::~ImageResize()
     delete m_count;
 }
 
-void ImageResize::resize(const EmailSettingsContainer& settings)
+void ImageResize::resize(const EmailSettings& settings)
 {
     JobCollection* collection = new JobCollection(this);
     *m_count                  = 0;

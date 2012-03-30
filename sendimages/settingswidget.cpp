@@ -88,17 +88,17 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     d->labelMailAgent = new QLabel(i18n("Mail program:"), this);
 
     d->mailAgentName = new KComboBox(this);
-    d->mailAgentName->insertItem(EmailSettingsContainer::DEFAULT,       i18nc("default mail agent", "Default"));
-    d->mailAgentName->insertItem(EmailSettingsContainer::BALSA,         "Balsa");
-    d->mailAgentName->insertItem(EmailSettingsContainer::CLAWSMAIL,     "Claws Mail");
-    d->mailAgentName->insertItem(EmailSettingsContainer::EVOLUTION,     "Evolution");
-    d->mailAgentName->insertItem(EmailSettingsContainer::GMAILAGENT,    "Gmail-Agent");
-    d->mailAgentName->insertItem(EmailSettingsContainer::KMAIL,         "KMail");
-    d->mailAgentName->insertItem(EmailSettingsContainer::NETSCAPE,      "Netscape");
-    d->mailAgentName->insertItem(EmailSettingsContainer::SYLPHEED,      "Sylpheed");
-    d->mailAgentName->insertItem(EmailSettingsContainer::SYLPHEEDCLAWS, "Sylpheed-Claws");
-    d->mailAgentName->insertItem(EmailSettingsContainer::THUNDERBIRD,   "Thunderbird");
-    d->mailAgentName->setCurrentIndex(EmailSettingsContainer::DEFAULT);
+    d->mailAgentName->insertItem(EmailSettings::DEFAULT,       i18nc("default mail agent", "Default"));
+    d->mailAgentName->insertItem(EmailSettings::BALSA,         "Balsa");
+    d->mailAgentName->insertItem(EmailSettings::CLAWSMAIL,     "Claws Mail");
+    d->mailAgentName->insertItem(EmailSettings::EVOLUTION,     "Evolution");
+    d->mailAgentName->insertItem(EmailSettings::GMAILAGENT,    "Gmail-Agent");
+    d->mailAgentName->insertItem(EmailSettings::KMAIL,         "KMail");
+    d->mailAgentName->insertItem(EmailSettings::NETSCAPE,      "Netscape");
+    d->mailAgentName->insertItem(EmailSettings::SYLPHEED,      "Sylpheed");
+    d->mailAgentName->insertItem(EmailSettings::SYLPHEEDCLAWS, "Sylpheed-Claws");
+    d->mailAgentName->insertItem(EmailSettings::THUNDERBIRD,   "Thunderbird");
+    d->mailAgentName->setCurrentIndex(EmailSettings::DEFAULT);
     d->mailAgentName->setWhatsThis(i18n("Select your preferred external email program here. "
                                         "<b>Default</b> is the current email program set in KDE "
                                         "System Settings."));
@@ -133,13 +133,13 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     QGridLayout* grid2  = new QGridLayout(groupBox);
 
     d->imagesResize = new KComboBox(groupBox);
-    d->imagesResize->insertItem(EmailSettingsContainer::VERYSMALL, i18n("Very Small (320 pixels)"));
-    d->imagesResize->insertItem(EmailSettingsContainer::SMALL,     i18n("Small (640 pixels)"));
-    d->imagesResize->insertItem(EmailSettingsContainer::MEDIUM,    i18n("Medium (800 pixels)"));
-    d->imagesResize->insertItem(EmailSettingsContainer::BIG,       i18n("Big (1024 pixels)"));
-    d->imagesResize->insertItem(EmailSettingsContainer::VERYBIG,   i18n("Very Big (1280 pixels)"));
-    d->imagesResize->insertItem(EmailSettingsContainer::HUGE,      i18n("Huge - for printing (1600 pixels)"));
-    d->imagesResize->setCurrentIndex(EmailSettingsContainer::MEDIUM);
+    d->imagesResize->insertItem(EmailSettings::VERYSMALL, i18n("Very Small (320 pixels)"));
+    d->imagesResize->insertItem(EmailSettings::SMALL,     i18n("Small (640 pixels)"));
+    d->imagesResize->insertItem(EmailSettings::MEDIUM,    i18n("Medium (800 pixels)"));
+    d->imagesResize->insertItem(EmailSettings::BIG,       i18n("Big (1024 pixels)"));
+    d->imagesResize->insertItem(EmailSettings::VERYBIG,   i18n("Very Big (1280 pixels)"));
+    d->imagesResize->insertItem(EmailSettings::HUGE,      i18n("Huge - for printing (1600 pixels)"));
+    d->imagesResize->setCurrentIndex(EmailSettings::MEDIUM);
     QString whatsThis = i18n("<p>Select the size of the images that are to be sent:</p>"
                              "<p><b>%1</b>: use this if you have a very slow Internet "
                              "connection or the target mailbox size is very limited.</p>"
@@ -165,9 +165,9 @@ SettingsWidget::SettingsWidget(QWidget* const parent)
     //---------------------------------------------
 
     d->imagesFormat = new KComboBox(groupBox);
-    d->imagesFormat->insertItem(EmailSettingsContainer::JPEG, "JPEG");
-    d->imagesFormat->insertItem(EmailSettingsContainer::PNG,  "PNG");
-    d->imagesFormat->setCurrentIndex(EmailSettingsContainer::JPEG);
+    d->imagesFormat->insertItem(EmailSettings::JPEG, "JPEG");
+    d->imagesFormat->insertItem(EmailSettings::PNG,  "PNG");
+    d->imagesFormat->setCurrentIndex(EmailSettings::JPEG);
     whatsThis = i18n("<p>Select the file format of the image files to be sent.</p>");
     whatsThis = whatsThis + i18n("<p><b>JPEG</b>: The Joint Photographic Experts Group file format "
                 "is a good web file format but it uses lossy compression.</p>"
@@ -242,13 +242,13 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::slotImagesFormatChanged(int i)
 {
-    if ( i == EmailSettingsContainer::JPEG )
+    if ( i == EmailSettings::JPEG )
         d->imageCompression->setEnabled(true);
     else
         d->imageCompression->setEnabled(false);
 }
 
-void SettingsWidget::setEmailSettings(const EmailSettingsContainer& settings)
+void SettingsWidget::setEmailSettings(const EmailSettings& settings)
 {
     d->mailAgentName->setCurrentIndex((int)settings.emailProgram);
     d->imagesResize->setCurrentIndex((int)settings.imageSize);
@@ -263,12 +263,12 @@ void SettingsWidget::setEmailSettings(const EmailSettingsContainer& settings)
     slotImagesFormatChanged(d->imagesFormat->currentIndex());
 }
 
-EmailSettingsContainer SettingsWidget::emailSettings() const
+EmailSettings SettingsWidget::emailSettings() const
 {
-    EmailSettingsContainer settings;
-    settings.emailProgram            = EmailSettingsContainer::EmailClient(d->mailAgentName->currentIndex());
-    settings.imageSize               = EmailSettingsContainer::ImageSize(d->imagesResize->currentIndex());
-    settings.imageFormat             = EmailSettingsContainer::ImageFormat(d->imagesFormat->currentIndex());
+    EmailSettings settings;
+    settings.emailProgram            = EmailSettings::EmailClient(d->mailAgentName->currentIndex());
+    settings.imageSize               = EmailSettings::ImageSize(d->imagesResize->currentIndex());
+    settings.imageFormat             = EmailSettings::ImageFormat(d->imagesFormat->currentIndex());
 
     settings.imagesChangeProp        = d->changeImagesProp->isChecked();
     settings.addCommentsAndTags      = d->addComments->isChecked();

@@ -138,7 +138,7 @@ void Plugin_SendImages::slotPrepareEmail()
        return;
     }
 
-    EmailSettingsContainer settings = d->dialog->emailSettings();
+    EmailSettings settings = d->dialog->emailSettings();
     d->sendImagesOperation          = new SendImages(settings, this);
     d->sendImagesOperation->sendImages();
 }
