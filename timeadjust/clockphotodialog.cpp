@@ -60,6 +60,7 @@
 #include "kppreviewmanager.h"
 
 using namespace KDcrawIface;
+using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
 {
@@ -114,13 +115,12 @@ ClockPhotoDialog::ClockPhotoDialog(QWidget* const parent)
     QVBoxLayout* vBox = new QVBoxLayout(mainWidget());
 
     // Some explanation.
-    QLabel* explanationLabel =
-            new QLabel(i18n("If you have a photo in your set with a clock or "
-                            "another external time source on it, you can load "
-                            "it here and set the indicator to the (date and) "
-                            "time displayed. The difference of your internal "
-                            "camera clock will be determined from this "
-                            "setting."));
+    QLabel* explanationLabel = new QLabel(i18n("If you have a photo in your set with a clock or "
+                                               "another external time source on it, you can load "
+                                               "it here and set the indicator to the (date and) "
+                                               "time displayed. The difference of your internal "
+                                               "camera clock will be determined from this "
+                                               "setting."));
     explanationLabel->setWordWrap(true);
     vBox->addWidget(explanationLabel);
 
@@ -179,8 +179,10 @@ bool ClockPhotoDialog::setImage(const KUrl& imageFile)
     // Raw housekeeping.
     QString rawFilesExt(KDcraw::rawFiles());
     QFileInfo info(imageFile.path());
+
     // Try to load the image into the d->image variable.
-    bool imageLoaded;
+    bool imageLoaded = false;
+
     if (rawFilesExt.toUpper().contains(info.suffix().toUpper()))
     {
         // In case of raw images, load the image the a QImage and convert it to
@@ -293,7 +295,7 @@ void ClockPhotoDialog::slotOk()
     if (delta < 0)
     {
         deltaNegative = true;
-        delta *= -1;
+        delta         *= -1;
     }
     else
     {

@@ -68,10 +68,6 @@ extern "C"
 #include <kio/copyjob.h>
 #include <kde_file.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kpaboutdata.h"
@@ -124,7 +120,6 @@ public:
         adjTimeInput           = 0;
         useCustomDateTodayBtn  = 0;
         progressBar            = 0;
-        interface              = 0;
         about                  = 0;
     }
 
@@ -169,20 +164,16 @@ public:
 
     QToolButton*      useCustomDateTodayBtn;
 
-    KUrl::List        imageURLs;
+    KUrl::List        imageUrls;
     QList<QDateTime>  imageOriginalDates;
-
-    Interface*        interface;
 
     KPAboutData*      about;
     KPProgressWidget* progressBar;
 };
 
-TimeAdjustDialog::TimeAdjustDialog(Interface* const interface, QWidget* const parent)
+TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     : KDialog(parent), d(new TimeAdjustDialogPrivate)
 {
-    d->interface = interface;
-
     setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);
     setCaption(i18n("Adjust Time & Date"));
@@ -316,14 +307,14 @@ TimeAdjustDialog::TimeAdjustDialog(Interface* const interface, QWidget* const pa
     d->updateGroupBox           = new QGroupBox(i18n("Update Time && Date"), mainWidget());
     QGridLayout* updateGBLayout = new QGridLayout(d->updateGroupBox);
 
-    d->updAppDateCheck     = new QCheckBox(applDateLabelString, d->updateGroupBox);
+    d->updAppDateCheck     = new QCheckBox(applDateLabelString,        d->updateGroupBox);
     d->updFileModDateCheck = new QCheckBox(i18n("File last modified"), d->updateGroupBox);
-    d->updEXIFModDateCheck = new QCheckBox(i18n("EXIF: created"), d->updateGroupBox);
-    d->updEXIFOriDateCheck = new QCheckBox(i18n("EXIF: original"), d->updateGroupBox);
-    d->updEXIFDigDateCheck = new QCheckBox(i18n("EXIF: digitized"), d->updateGroupBox);
-    d->updIPTCDateCheck    = new QCheckBox(i18n("IPTC: created"), d->updateGroupBox);
-    d->updXMPDateCheck     = new QCheckBox(i18n("XMP"), d->updateGroupBox);
-    d->updFileNameCheck    = new QCheckBox(i18n("Filename"), d->updateGroupBox);
+    d->updEXIFModDateCheck = new QCheckBox(i18n("EXIF: created"),      d->updateGroupBox);
+    d->updEXIFOriDateCheck = new QCheckBox(i18n("EXIF: original"),     d->updateGroupBox);
+    d->updEXIFDigDateCheck = new QCheckBox(i18n("EXIF: digitized"),    d->updateGroupBox);
+    d->updIPTCDateCheck    = new QCheckBox(i18n("IPTC: created"),      d->updateGroupBox);
+    d->updXMPDateCheck     = new QCheckBox(i18n("XMP"),                d->updateGroupBox);
+    d->updFileNameCheck    = new QCheckBox(i18n("Filename"),           d->updateGroupBox);
 
     updateGBLayout->setMargin(spacingHint());
     updateGBLayout->setSpacing(spacingHint());
@@ -499,13 +490,13 @@ void TimeAdjustDialog::saveSettings()
     config.sync();
 }
 
-void TimeAdjustDialog::setImages(const KUrl::List& imageURLs)
+void TimeAdjustDialog::setImages(const KUrl::List& imageUrls)
 {
-    d->imageURLs.clear();
+    d->imageUrls.clear();
 
-    for (KUrl::List::ConstIterator it = imageURLs.constBegin(); it != imageURLs.constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = imageUrls.constBegin(); it != imageUrls.constEnd(); ++it)
     {
-        d->imageURLs.append(*it);
+        d->imageUrls.append(*it);
         d->exampleFileChooser->addItem((*it).fileName());
     }
 
@@ -529,7 +520,7 @@ void TimeAdjustDialog::readExampleTimestamps()
     {
         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                         "%1 images will be changed",
-                                        d->imageURLs.count()));
+                                        d->imageUrls.count()));
     }
 
     slotUpdateExample();
@@ -541,7 +532,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
     int       inexactCount = 0;
     QDateTime nullDateTime;
 
-    for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
     {
         KPImageInfo info(*it);
         if (info.isExactDate())
@@ -560,7 +551,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
     {
         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                     "%1 images will be changed",
-                                    d->imageURLs.count()));
+                                    d->imageUrls.count()));
     }
     else
     {
@@ -577,7 +568,7 @@ void TimeAdjustDialog::readApplicationTimestamps()
 
 void TimeAdjustDialog::readFileTimestamps()
 {
-    for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
     {
         QFileInfo fileInfo((*it).toLocalFile());
         d->imageOriginalDates.append(fileInfo.lastModified());
@@ -585,7 +576,7 @@ void TimeAdjustDialog::readFileTimestamps()
 
     d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                           "%1 images will be changed",
-                                          d->imageURLs.count()));
+                                          d->imageUrls.count()));
 }
 
 void TimeAdjustDialog::readMetadataTimestamps()
@@ -594,7 +585,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
     int missingCount = 0;
     QDateTime nullDateTime;
 
-    for (KUrl::List::ConstIterator it = d->imageURLs.constBegin(); it != d->imageURLs.constEnd(); ++it)
+    for (KUrl::List::ConstIterator it = d->imageUrls.constBegin(); it != d->imageUrls.constEnd(); ++it)
     {
         KPImageInfo info(*it);
         KPMetadata  meta;
@@ -647,7 +638,7 @@ void TimeAdjustDialog::readMetadataTimestamps()
     {
         d->exampleSummaryLabel->setText(i18np("1 image will be changed",
                                               "%1 images will be changed",
-                                              d->imageURLs.count()));
+                                              d->imageUrls.count()));
     }
     else
     {
@@ -778,10 +769,10 @@ void TimeAdjustDialog::slotUpdateExample()
 
     // Show the file original timestamp (and adjusted one if needed)
 
-    QDate originalDate = originalTime.date();
+    QDate originalDate            = originalTime.date();
     QString formattedOriginalDate = KGlobal::locale()->formatDate(originalDate, KLocale::ShortDate);
+    QString originalTimeStr       = originalTime.toString(exampleTimeFormat);
 
-    QString originalTimeStr = originalTime.toString(exampleTimeFormat);
     if (d->adjTypeChooser->currentIndex() == 0)
     {
         d->exampleTimeChangeLabel->setText(i18n("Original: <b>%1 %2</b>", formattedOriginalDate, originalTimeStr));
@@ -818,18 +809,20 @@ void TimeAdjustDialog::slotOk()
                            d->updXMPDateCheck->isChecked();
 
     d->progressBar->show();
-    d->progressBar->progressScheduled(i18n("Adjust Time and Date"), false, false);
-    d->progressBar->setMaximum(d->imageURLs.size());
+    d->progressBar->progressScheduled(i18n("Adjust Time and Date"), false, true);
+    d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+    d->progressBar->setMaximum(d->imageUrls.size());
 
-    for (int i=0; i<d->imageURLs.size(); ++i)
+    for (int i=0; i<d->imageUrls.size(); ++i)
     {
         d->progressBar->setValue(i);
-        d->progressBar->progressStatusChanged(i18n("Processing %1", d->imageURLs[i].fileName()));
+        d->progressBar->progressStatusChanged(i18n("Processing %1", d->imageUrls[i].fileName()));
+        kapp->processEvents();
 
-        KUrl url = d->imageURLs[i];
+        KUrl url = d->imageUrls[i];
 
         if (d->useCustomDateBtn->isChecked()) dateTime = customTime;
-        else dateTime = d->imageOriginalDates[i];
+        else                                  dateTime = d->imageOriginalDates[i];
 
         if (!dateTime.isValid()) continue;
 
@@ -842,7 +835,7 @@ void TimeAdjustDialog::slotOk()
         }
 
         if (d->updFileNameCheck->isChecked())
-	{
+        {
             QString newdate;
             QFileInfo image(url.path());
 
@@ -856,7 +849,7 @@ void TimeAdjustDialog::slotOk()
             KIO::move(url, newUrl);
 
             KPMetadata::moveSidecar(url, newUrl);
-	}
+        }
 
         if (metadataChanged)
         {
@@ -955,10 +948,6 @@ void TimeAdjustDialog::slotOk()
         }
     }
 
-    // We use kipi interface refreshImages() method to tell to host than
-    // metadata from pictures have changed and need to be re-read.
-    d->interface->refreshImages(d->imageURLs);
-
     if (!metaTimeErrorFiles.isEmpty())
     {
         KMessageBox::informationList(
@@ -977,6 +966,7 @@ void TimeAdjustDialog::slotOk()
                      i18n("Adjust Time & Date"));
     }
 
+    d->progressBar->progressCompleted();
     saveSettings();
     accept();
 }

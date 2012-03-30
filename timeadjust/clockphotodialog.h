@@ -36,13 +36,6 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-namespace KIPIPlugins
-{
-    class ImageDialog;
-}
-
-using namespace KIPIPlugins;
-
 namespace KIPITimeAdjustPlugin
 {
 

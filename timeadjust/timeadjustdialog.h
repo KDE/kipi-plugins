@@ -33,13 +33,6 @@
 #include <kdialog.h>
 #include <kurl.h>
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
-
 namespace KIPITimeAdjustPlugin
 {
 
@@ -49,7 +42,7 @@ class TimeAdjustDialog : public KDialog
 
 public:
 
-    TimeAdjustDialog(Interface* const interface, QWidget* const parent);
+    TimeAdjustDialog(QWidget* const parent);
     ~TimeAdjustDialog();
 
     void setImages(const KUrl::List& images);

@@ -91,7 +91,7 @@ void Plugin_TimeAdjust::slotActivate()
     if (!images.isValid() || images.images().isEmpty())
         return;
 
-    KIPITimeAdjustPlugin::TimeAdjustDialog dlg(m_interface, kapp->activeWindow());
+    KIPITimeAdjustPlugin::TimeAdjustDialog dlg(kapp->activeWindow());
     dlg.setImages(images.images());
     dlg.exec();
 }

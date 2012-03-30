@@ -50,7 +50,7 @@ public:
     Plugin_TimeAdjust(QObject* const parent, const QVariantList& args);
    ~Plugin_TimeAdjust();
 
-    virtual KIPI::Category category(KAction* action) const;
+    virtual Category category(KAction* action) const;
     virtual void setup(QWidget*);
 
 protected Q_SLOTS:
