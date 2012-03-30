@@ -34,7 +34,6 @@
 #include <QCheckBox>
 #include <QLineEdit>
 #include <QSpinBox>
-#include <QProgressBar>
 #include <QButtonGroup>
 #include <QGridLayout>
 #include <QCloseEvent>
@@ -70,6 +69,7 @@
 #include "imageshacktalker.h"
 #include "kpaboutdata.h"
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 
 namespace KIPIImageshackExportPlugin
 {
@@ -266,6 +266,8 @@ void ImageshackWindow::slotStartTransfer()
     m_widget->m_progressBar->setMaximum(m_imagesTotal);
     m_widget->m_progressBar->setValue(0);
     m_widget->m_progressBar->setVisible(true);
+    m_widget->m_progressBar->progressScheduled(i18n("Image Shack Export"), false, true);
+    m_widget->m_progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
     uploadNextItem();
 }
@@ -282,11 +284,13 @@ void ImageshackWindow::slotButtonClicked(int button)
                 m_transferQueue.clear();
                 m_widget->m_imgList->cancelProcess();
                 m_widget->m_progressBar->setVisible(false);
+                m_widget->m_progressBar->progressCompleted();
             }
             else
             {
                 // close the dialog
                 saveSettings();
+                m_widget->m_progressBar->progressCompleted();
                 m_widget->m_imgList->listView()->clear();
                 done(Close);
             }

@@ -31,7 +31,6 @@
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QStringList>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -53,6 +52,7 @@
 
 #include "kpimageslist.h"
 #include "imageshack.h"
+#include "kpprogresswidget.h"
 
 namespace KIPIImageshackExportPlugin
 {
@@ -212,7 +212,7 @@ ImageshackWidget::ImageshackWidget(QWidget* const parent, Imageshack* const imag
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
-    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred ,QSizePolicy::Fixed);
     m_progressBar->setVisible(false);
 
@@ -245,7 +245,7 @@ KIPIPlugins::KPImagesList* ImageshackWidget::imagesList() const
     return m_imgList;
 }
 
-QProgressBar* ImageshackWidget::progressBar() const
+KIPIPlugins::KPProgressWidget* ImageshackWidget::progressBar() const
 {
     return m_progressBar;
 }

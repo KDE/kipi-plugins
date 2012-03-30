@@ -32,13 +32,13 @@ class QSpinBox;
 class QCheckBox;
 class QLineEdit;
 class QLabel;
-class QProgressBar;
 class KComboBox;
 class KPushButton;
 
 namespace KIPIPlugins
 {
     class KPImagesList;
+    class KPProgressWidget;
 }
 
 namespace KIPIImageshackExportPlugin
@@ -55,7 +55,7 @@ public:
     ~ImageshackWidget();
 
     KIPIPlugins::KPImagesList* imagesList() const;
-    QProgressBar* progressBar() const;
+    KIPIPlugins::KPProgressWidget* progressBar() const;
 
 private:
 
@@ -96,7 +96,7 @@ private:
     QSpinBox*                  m_widthSpb;
     QSpinBox*                  m_heightSpb;
 
-    QProgressBar*              m_progressBar;
+    KIPIPlugins::KPProgressWidget* m_progressBar;
 
     friend class ImageshackWindow;
 
