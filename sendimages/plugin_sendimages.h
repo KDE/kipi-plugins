@@ -42,7 +42,7 @@ class Plugin_SendImages : public KIPI::Plugin
 
 public:
 
-    Plugin_SendImages(QObject* parent, const QVariantList& args);
+    Plugin_SendImages(QObject* const parent, const QVariantList& args);
     ~Plugin_SendImages();
 
     virtual KIPI::Category category( KAction* action ) const;

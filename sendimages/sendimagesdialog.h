@@ -43,7 +43,7 @@ class SendImagesDialog : public KPageDialog
 
 public:
 
-    SendImagesDialog(QWidget* parent, const KUrl::List& urls);
+    SendImagesDialog(QWidget* const parent, const KUrl::List& urls);
     ~SendImagesDialog();
 
     EmailSettingsContainer emailSettings();

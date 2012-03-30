@@ -82,7 +82,7 @@ public:
     KIPIPlugins::KPAboutData* about;
 };
 
-SendImagesDialog::SendImagesDialog(QWidget* /*parent*/, const KUrl::List& urls)
+SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& urls)
     : KPageDialog(0), d(new SendImagesDialogPrivate)
 {
     d->urls = urls;
@@ -113,7 +113,7 @@ SendImagesDialog::SendImagesDialog(QWidget* /*parent*/, const KUrl::List& urls)
                                             0,
                                             KAboutData::License_GPL,
                                             ki18n("A plugin to email pictures"),
-                                            ki18n("(c) 2003-2011, Gilles Caulier"));
+                                            ki18n("(c) 2003-2012, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");

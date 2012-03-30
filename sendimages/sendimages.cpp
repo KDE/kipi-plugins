@@ -48,12 +48,15 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+#include <libkipi/pluginloader.h>
 
 // Local includes
 
 #include "kpbatchprogressdialog.h"
 #include "emailsettingscontainer.h"
 #include "imageresize.h"
+
+using namespace KIPI;
 
 namespace KIPISendimagesPlugin
 {
@@ -64,10 +67,18 @@ public:
 
     SendImagesPriv()
     {
-        threadImgResize = 0;
-        progressDlg     = 0;
-        iface           = 0;
+        cancel           = false;
+        threadImgResize  = 0;
+        progressDlg      = 0;
+        iface            = 0;
+        PluginLoader* pl = PluginLoader::instance();
+        if (pl)
+        {
+            iface = pl->interface();
+        }
     }
+
+    bool                   cancel;
 
     KUrl::List             attachementFiles;
     KUrl::List             failedResizedImages;
@@ -81,11 +92,10 @@ public:
     ImageResize*           threadImgResize;
 };
 
-SendImages::SendImages(const EmailSettingsContainer& settings, QObject* const parent, Interface* const iface)
+SendImages::SendImages(const EmailSettingsContainer& settings, QObject* const parent)
     : QObject(parent), d(new SendImagesPriv)
 {
     d->settings        = settings;
-    d->iface           = iface;
     d->threadImgResize = new ImageResize(this);
 
     connect(d->threadImgResize, SIGNAL(startingResize(KUrl)),
@@ -109,6 +119,8 @@ SendImages::~SendImages()
 
 void SendImages::sendImages()
 {
+    d->cancel = false;
+
     if (!d->threadImgResize->isRunning())
     {
         d->threadImgResize->cancel();
@@ -161,6 +173,14 @@ void SendImages::sendImages()
 
 void SendImages::slotCancel()
 {
+    d->cancel = true;
+
+    if (!d->threadImgResize->isRunning())
+    {
+        d->threadImgResize->cancel();
+        d->threadImgResize->wait();
+    }
+
     d->progressDlg->progressWidget()->addedAction(i18n("Operation canceled by user"), WarningMessage);
     d->progressDlg->progressWidget()->setProgress(0, 100);
     d->progressDlg->setButtonGuiItem(KDialog::Cancel, KStandardGuiItem::close());
@@ -173,12 +193,16 @@ void SendImages::slotCancel()
 
 void SendImages::slotStartingResize(const KUrl& orgUrl)
 {
+    if (d->cancel) return;
+
     QString text = i18n("Resizing %1", orgUrl.fileName());
     d->progressDlg->progressWidget()->addedAction(text, StartingMessage);
 }
 
 void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, int percent)
 {
+    if (d->cancel) return;
+
     d->progressDlg->progressWidget()->setProgress((int)(80.0*(percent/100.0)), 100);
     kDebug() << emailUrl;
     d->attachementFiles.append(emailUrl);
@@ -190,6 +214,8 @@ void SendImages::slotFinishedResize(const KUrl& orgUrl, const KUrl& emailUrl, in
 
 void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int percent)
 {
+    if (d->cancel) return;
+
     d->progressDlg->progressWidget()->setProgress((int)(80.0*(percent/100.0)), 100);
     QString text = i18n("Failed to resize %1: %2", orgUrl.fileName(), error);
     d->progressDlg->progressWidget()->addedAction(text, ErrorMessage);
@@ -199,25 +225,33 @@ void SendImages::slotFailedResize(const KUrl& orgUrl, const QString& error, int 
 
 void SendImages::slotCompleteResize()
 {
+    if (d->cancel) return;
+
     if (!showFailedResizedImages())
     {
         slotCancel();
         return;
     }
+
     secondStage();
 }
 
 void SendImages::secondStage()
 {
+    if (d->cancel) return;
+
     buildPropertiesFile();
     d->progressDlg->progressWidget()->setProgress(90, 100);
     invokeMailAgent();
     d->progressDlg->progressWidget()->setProgress(100, 100);
 }
 
-/** Creates a text file with all images Comments, Tags, and Rating. */
+/** Creates a text file with all images Comments, Tags, and Rating.
+ */
 void SendImages::buildPropertiesFile()
 {
+    if (d->cancel) return;
+
     if (d->settings.addCommentsAndTags)
     {
         d->progressDlg->progressWidget()->addedAction(i18n("Build images properties file"), StartingMessage);
@@ -265,7 +299,8 @@ void SendImages::buildPropertiesFile()
     }
 }
 
-/** Shows up an error dialog about the problematic resized images. */
+/** Shows up an error dialog about the problematic resized images.
+ */
 bool SendImages::showFailedResizedImages()
 {
     if (!d->failedResizedImages.isEmpty())
@@ -360,9 +395,12 @@ KUrl::List SendImages::divideEmails()
 }
 
 /** Invokes mail agent. Depending on which mail agent to be used, we have different
-    proceedings. Easy for every agent except of mozilla derivates */
+    proceedings. Easy for every agent except of mozilla derivates
+ */
 bool SendImages::invokeMailAgent()
 {
+    if (d->cancel) return false;
+
     bool       agentInvoked = false;
     KUrl::List fileList;
     do

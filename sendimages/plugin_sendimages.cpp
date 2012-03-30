@@ -67,9 +67,9 @@ public:
     SendImages*       sendImagesOperation;
 };
 
-Plugin_SendImages::Plugin_SendImages(QObject* parent, const QVariantList&)
-                 : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
-                   d(new Plugin_SendImagesPriv)
+Plugin_SendImages::Plugin_SendImages(QObject* const parent, const QVariantList&)
+    : KIPI::Plugin(SendImagesFactory::componentData(), parent, "SendImages"), 
+      d(new Plugin_SendImagesPriv)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_SendImages plugin loaded";
 }
@@ -139,7 +139,7 @@ void Plugin_SendImages::slotPrepareEmail()
     }
 
     EmailSettingsContainer settings = d->dialog->emailSettings();
-    d->sendImagesOperation          = new SendImages(settings, this, interface);
+    d->sendImagesOperation          = new SendImages(settings, this);
     d->sendImagesOperation->sendImages();
 }
 

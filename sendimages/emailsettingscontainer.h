@@ -7,7 +7,7 @@
  * Description : e-mail settings container.
  *
  * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2010 by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -102,7 +102,9 @@ public:
         imageFormat             = JPEG;
     };
 
-    ~EmailSettingsContainer(){};
+    ~EmailSettingsContainer()
+    {
+    };
 
     int size() const
     {
@@ -120,7 +122,7 @@ public:
             return 320; // VERYSMALL
     };
 
-    QString format()
+    QString format() const
     {
         if (imageFormat == JPEG)
             return QString("JPEG");
@@ -130,8 +132,7 @@ public:
 
     void setEmailUrl(const KUrl& orgUrl, const KUrl& emailUrl)
     {
-        for (QList<EmailItem>::iterator it = itemsList.begin();
-            it != itemsList.end(); ++it)
+        for (QList<EmailItem>::iterator it = itemsList.begin(); it != itemsList.end(); ++it)
         {
             if ((*it).orgUrl == orgUrl)
             {
@@ -141,10 +142,9 @@ public:
         }
     };
 
-    KUrl emailUrl(const KUrl& orgUrl)
+    KUrl emailUrl(const KUrl& orgUrl) const
     {
-        for (QList<EmailItem>::iterator it = itemsList.begin();
-            it != itemsList.end(); ++it)
+        for (QList<EmailItem>::const_iterator it = itemsList.begin(); it != itemsList.end(); ++it)
         {
             if ((*it).orgUrl == orgUrl)
             {

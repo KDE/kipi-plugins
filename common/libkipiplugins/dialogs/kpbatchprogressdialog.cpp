@@ -242,7 +242,6 @@ KPBatchProgressWidget* KPBatchProgressDialog::progressWidget()
 
 void KPBatchProgressDialog::slotCancel()
 {
-    kDebug() << "pass here";
     progressWidget()->progressCompleted();
 }
 

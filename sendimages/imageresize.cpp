@@ -7,7 +7,7 @@
  * Description : a class to resize image in a separate thread.
  *
  * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2010 by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2010      by Andi Clemens <andi dot clemens at googlemail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -189,7 +189,7 @@ bool Task::imageResize(const EmailSettingsContainer& settings, const KUrl& orgUr
         else if (emailSettings.format() == QString("PNG"))
         {
             QByteArray data((const char*)img.bits(), img.numBytes());
-            KIPIPlugins::KPWriteImage wImageIface;
+            KPWriteImage wImageIface;
             wImageIface.setImageData(data, img.width(), img.height(), false, true, QByteArray(), meta);
             if ( !wImageIface.write2PNG(destPath) )
             {
