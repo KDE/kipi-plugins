@@ -20,31 +20,47 @@
  *
  * ============================================================ */
 
-#ifndef IMAGES_PAGE_H
-#define IMAGES_PAGE_H
+#define ICONSIZE 64
 
-// Local includes
-
-#include "kpimageslist.h"
-#include "emailsettingscontainer.h"
-
-using namespace KIPIPlugins;
+#include "myimagelist.moc"
 
 namespace KIPISendimagesPlugin
 {
 
-class ImagesPage : public KPImagesList
+MyImageList::MyImageList(QWidget* const parent)
+    : KPImagesList(parent)
 {
-    Q_OBJECT
+    setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
+}
 
-public:
+MyImageList::~MyImageList()
+{
+}
 
-    ImagesPage(QWidget* const parent);
-    ~ImagesPage();
+QList<EmailItem> MyImageList::imagesList() const
+{
+    QList<EmailItem> list;
 
-    QList<EmailItem> imagesList() const;
-};
+    QTreeWidgetItemIterator it(listView());
+    while (*it)
+    {
+        KPImagesListViewItem* item = dynamic_cast<KPImagesListViewItem*>(*it);
+        if (item)
+        {
+            item->updateInformation();
+
+            EmailItem etem;
+            etem.orgUrl   = item->url();
+            etem.tags     = item->tags();
+            etem.comments = item->comments();
+            etem.rating   = item->rating();
+            list.append(etem);
+        }
+
+        ++it;
+    }
+
+    return list;
+}
 
 }  // namespace KIPISendimagesPlugin
-
-#endif // IMAGES_PAGE_H

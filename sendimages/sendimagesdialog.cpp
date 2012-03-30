@@ -52,7 +52,7 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
-#include "imagespage.h"
+#include "myimagelist.h"
 #include "emailpage.h"
 
 using namespace KIPIPlugins;
@@ -68,13 +68,13 @@ public:
     SendImagesDialogPrivate()
     {
         about      = 0;
-        imagesPage = 0;
+        imagesList = 0;
         emailPage  = 0;
     }
 
     KUrl::List   urls;
 
-    ImagesPage*  imagesPage;
+    MyImageList* imagesList;
     EmailPage*   emailPage;
 
     KPAboutData* about;
@@ -94,11 +94,11 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
 
     setMainWidget(new QWidget(this));
     QGridLayout* mainLayout = new QGridLayout(mainWidget());
-    d->imagesPage           = new ImagesPage(mainWidget());
+    d->imagesList           = new MyImageList(mainWidget());
     d->emailPage            = new EmailPage(mainWidget());
-    d->imagesPage->slotAddImages(urls);
+    d->imagesList->slotAddImages(urls);
 
-    mainLayout->addWidget(d->imagesPage, 0, 0, 1, 1);
+    mainLayout->addWidget(d->imagesList, 0, 0, 1, 1);
     mainLayout->addWidget(d->emailPage,  0, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setMargin(0);
@@ -141,7 +141,7 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
     connect(this, SIGNAL(okClicked()),
             this, SLOT(slotOk()));
 
-    connect(d->imagesPage, SIGNAL(signalImageListChanged()),
+    connect(d->imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImagesCountChanged()));
 
     // ------------------------------------------------------------
@@ -164,14 +164,14 @@ void SendImagesDialog::closeEvent(QCloseEvent *e)
 {
     if (!e) return;
     saveSettings();
-    d->imagesPage->listView()->clear();
+    d->imagesList->listView()->clear();
     e->accept();
 }
 
 void SendImagesDialog::slotCancel()
 {
     saveSettings();
-    d->imagesPage->listView()->clear();
+    d->imagesList->listView()->clear();
     reject();
 }
 
@@ -184,7 +184,7 @@ void SendImagesDialog::slotOk()
 EmailSettingsContainer SendImagesDialog::emailSettings() const
 {
     EmailSettingsContainer settings = d->emailPage->emailSettings(); 
-    settings.itemsList              = d->imagesPage->imagesList(); 
+    settings.itemsList              = d->imagesList->imagesList(); 
     return settings;
 }
 
@@ -228,7 +228,7 @@ void SendImagesDialog::saveSettings()
 
 void SendImagesDialog::slotImagesCountChanged()
 {
-   enableButtonOk(!d->imagesPage->imagesList().isEmpty());
+   enableButtonOk(!d->imagesList->imagesList().isEmpty());
 }
 
 }  // namespace KIPISendimagesPlugin
