@@ -1104,7 +1104,8 @@ void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& prog
     d->progressBar->setMaximum(maxProgress);
     d->progressBar->setValue(0);
     d->progressBar->setVisible(true);
-    d->progressBar->progressScheduled(i18n("GPS sync"), true, false);
+    d->progressBar->progressScheduled(i18n("GPS sync"), true, true);
+    d->progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
     d->progressCancelButton->setVisible(d->progressCancelObject!=0);
 }
 
