@@ -494,6 +494,9 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     connect(d->setupGlobalObject, SIGNAL(signalSetupChanged()),
             this, SLOT(slotSetupChanged()));
 
+    connect(d->progressBar, SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotProgressCancelButtonClicked()));
+
     readSettings();
 
     d->mapWidget->setActive(true);
@@ -1101,6 +1104,7 @@ void GPSSyncDialog::slotProgressSetup(const int maxProgress, const QString& prog
     d->progressBar->setMaximum(maxProgress);
     d->progressBar->setValue(0);
     d->progressBar->setVisible(true);
+    d->progressBar->progressScheduled(i18n("GPS sync"), true, false);
     d->progressCancelButton->setVisible(d->progressCancelObject!=0);
 }
 
@@ -1125,6 +1129,7 @@ void GPSSyncDialog::slotProgressCancelButtonClicked()
     if (d->progressCancelObject)
     {
         QTimer::singleShot(0, d->progressCancelObject, d->progressCancelSlot.toUtf8());
+        d->progressBar->progressCompleted();
     }
 }
 
