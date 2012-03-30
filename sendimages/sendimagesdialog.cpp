@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QCloseEvent>
+#include <QGridLayout>
 
 // KDE includes
 
@@ -54,6 +55,8 @@
 #include "imagespage.h"
 #include "emailpage.h"
 
+using namespace KIPIPlugins;
+
 namespace KIPISendimagesPlugin
 {
 
@@ -64,56 +67,51 @@ public:
 
     SendImagesDialogPrivate()
     {
-        about       = 0;
-        page_images = 0;
-        page_email  = 0;
-        imagesPage  = 0;
-        emailPage   = 0;
+        about      = 0;
+        imagesPage = 0;
+        emailPage  = 0;
     }
 
-    KPageWidgetItem*          page_images;
-    KPageWidgetItem*          page_email;
+    KUrl::List   urls;
 
-    KUrl::List                urls;
+    ImagesPage*  imagesPage;
+    EmailPage*   emailPage;
 
-    ImagesPage*               imagesPage;
-    EmailPage*                emailPage;
-
-    KIPIPlugins::KPAboutData* about;
+    KPAboutData* about;
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& urls)
-    : KPageDialog(0), d(new SendImagesDialogPrivate)
+    : KDialog(0), d(new SendImagesDialogPrivate)
 {
     d->urls = urls;
 
     setCaption(i18n("Email Images Options"));
     setButtons(Help|Ok|Cancel);
     setDefaultButton(Ok);
-    setFaceType(List);
     setModal(false);
 
     // ---------------------------------------------------------------
 
-    d->imagesPage  = new ImagesPage(this);
-    d->page_images = addPage(d->imagesPage, i18n("Images"));
-    d->page_images->setHeader(i18n("Image List"));
-    d->page_images->setIcon(KIcon("image-jp2"));
+    setMainWidget(new QWidget(this));
+    QGridLayout* mainLayout = new QGridLayout(mainWidget());
+    d->imagesPage           = new ImagesPage(mainWidget());
+    d->emailPage            = new EmailPage(mainWidget());
     d->imagesPage->slotAddImages(urls);
 
-    d->emailPage  = new EmailPage(this);
-    d->page_email = addPage(d->emailPage, i18n("Mail"));
-    d->page_email->setHeader(i18n("Mail Options"));
-    d->page_email->setIcon(KIcon("kontact"));
+    mainLayout->addWidget(d->imagesPage, 0, 0, 1, 1);
+    mainLayout->addWidget(d->emailPage,  0, 1, 1, 1);
+    mainLayout->setColumnStretch(0, 10);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(spacingHint());
 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Send Images"),
-                                            0,
-                                            KAboutData::License_GPL,
-                                            ki18n("A plugin to email pictures"),
-                                            ki18n("(c) 2003-2012, Gilles Caulier"));
+    d->about = new KPAboutData(ki18n("Send Images"),
+                               0,
+                               KAboutData::License_GPL,
+                               ki18n("A plugin to e-mail items"),
+                               ki18n("(c) 2003-2012, Gilles Caulier"));
 
     d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
                         "caulier dot gilles at gmail dot com");
@@ -183,7 +181,7 @@ void SendImagesDialog::slotOk()
     accept();
 }
 
-EmailSettingsContainer SendImagesDialog::emailSettings()
+EmailSettingsContainer SendImagesDialog::emailSettings() const
 {
     EmailSettingsContainer settings = d->emailPage->emailSettings(); 
     settings.itemsList              = d->imagesPage->imagesList(); 
@@ -194,7 +192,6 @@ void SendImagesDialog::readSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("SendImages Settings");
-    showPage(group.readEntry("SendImages Page", 0));
 
     EmailSettingsContainer settings;
     settings.emailProgram            = (EmailSettingsContainer::EmailClient)group.readEntry("EmailProgram", (int)EmailSettingsContainer::KMAIL);
@@ -214,7 +211,6 @@ void SendImagesDialog::saveSettings()
 {
     KConfig config("kipirc");
     KConfigGroup group = config.group("SendImages Settings");
-    group.writeEntry("SendImages Page", activePageIndex());
 
     EmailSettingsContainer settings = d->emailPage->emailSettings();
     group.writeEntry("EmailProgram",       (int)settings.emailProgram);
@@ -228,32 +224,6 @@ void SendImagesDialog::saveSettings()
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
     saveDialogSize(group2);
     config.sync();
-}
-
-void SendImagesDialog::showPage(int page)
-{
-    switch(page)
-    {
-        case 0:
-            setCurrentPage(d->page_images); 
-            break;
-        case 1:
-            setCurrentPage(d->page_email); 
-            break;
-        default: 
-            setCurrentPage(d->page_images); 
-            break;
-    }
-}
-
-int SendImagesDialog::activePageIndex()
-{
-    KPageWidgetItem *cur = currentPage();
-
-    if (cur == d->page_images)  return 0;
-    if (cur == d->page_email)   return 1;
-
-    return 0;
 }
 
 void SendImagesDialog::slotImagesCountChanged()

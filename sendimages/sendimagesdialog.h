@@ -25,7 +25,7 @@
 
 // KDE includes
 
-#include <kpagedialog.h>
+#include <kdialog.h>
 #include <kurl.h>
 
 // Local includes
@@ -37,7 +37,7 @@ class QCloseEvent;
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesDialog : public KPageDialog
+class SendImagesDialog : public KDialog
 {
     Q_OBJECT
 
@@ -46,7 +46,7 @@ public:
     SendImagesDialog(QWidget* const parent, const KUrl::List& urls);
     ~SendImagesDialog();
 
-    EmailSettingsContainer emailSettings();
+    EmailSettingsContainer emailSettings() const;
 
 protected:
 
@@ -63,9 +63,6 @@ private:
 
     void readSettings();
     void saveSettings();
-
-    int  activePageIndex();
-    void showPage(int page);
 
 private:
 

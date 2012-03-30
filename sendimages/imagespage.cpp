@@ -30,6 +30,7 @@ namespace KIPISendimagesPlugin
 ImagesPage::ImagesPage(QWidget* const parent)
     : KPImagesList(parent)
 {
+    setControlButtonsPlacement(KPImagesList::ControlButtonsBelow);
 }
 
 ImagesPage::~ImagesPage()

@@ -79,7 +79,7 @@ public:
 };
 
 EmailPage::EmailPage(QWidget* const parent)
-         : QWidget(parent), d(new EmailPagePriv)
+    : QWidget(parent), d(new EmailPagePriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
@@ -180,7 +180,7 @@ EmailPage::EmailPage(QWidget* const parent)
                 "and chromaticity data for improved color-matching on heterogeneous platforms.</p>");
     d->imagesFormat->setWhatsThis(whatsThis);
 
-    d->labelImagesFormat = new QLabel(i18n("Image file format:"), groupBox);
+    d->labelImagesFormat = new QLabel(i18n("Image format:"), groupBox);
     d->labelImagesFormat->setBuddy(d->imagesFormat);
 
     // --------------------------------------------------------
