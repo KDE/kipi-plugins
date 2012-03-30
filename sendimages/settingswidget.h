@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 
-#ifndef EMAIL_PAGE_H
-#define EMAIL_PAGE_H
+#ifndef SETTINGSWIDGET_H
+#define SETTINGSWIDGET_H
 
 // Qt includes
 
@@ -34,17 +34,17 @@
 namespace KIPISendimagesPlugin
 {
 
-class EmailPage : public QWidget
+class SettingsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
 
-    EmailPage(QWidget* const parent);
-    ~EmailPage();
+    SettingsWidget(QWidget* const parent);
+    ~SettingsWidget();
 
     void setEmailSettings(const EmailSettingsContainer& settings);
-    EmailSettingsContainer emailSettings();
+    EmailSettingsContainer emailSettings() const;
 
 private Q_SLOTS:
 
@@ -52,10 +52,10 @@ private Q_SLOTS:
 
 private:
 
-    class EmailPagePriv;
-    EmailPagePriv* const d;
+    class SettingsWidgetPriv;
+    SettingsWidgetPriv* const d;
 };
 
 }  // namespace KIPISendimagesPlugin
 
-#endif // EMAIL_PAGE_H 
+#endif // SETTINGSWIDGET_H 

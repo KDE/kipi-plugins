@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "emailpage.moc"
+#include "settingswidget.moc"
 
 // Qt includes
 
@@ -43,11 +43,11 @@
 namespace KIPISendimagesPlugin
 {
 
-class EmailPage::EmailPagePriv
+class SettingsWidget::SettingsWidgetPriv
 {
 public:
 
-    EmailPagePriv()
+    SettingsWidgetPriv()
     {
         labelMailAgent    = 0;
         mailAgentName     = 0;
@@ -78,8 +78,8 @@ public:
     KIntNumInput* attachmentlimit;
 };
 
-EmailPage::EmailPage(QWidget* const parent)
-    : QWidget(parent), d(new EmailPagePriv)
+SettingsWidget::SettingsWidget(QWidget* const parent)
+    : QWidget(parent), d(new SettingsWidgetPriv)
 {
     QGridLayout* grid = new QGridLayout(this);
 
@@ -129,8 +129,8 @@ EmailPage::EmailPage(QWidget* const parent)
     d->changeImagesProp->setWhatsThis(i18n("If you enable this option, "
                                            "all images to be sent can be resized and recompressed."));
 
-    QGroupBox *groupBox = new QGroupBox(i18n("Image Properties"), this);
-    QGridLayout *grid2  = new QGridLayout(groupBox);
+    QGroupBox* groupBox = new QGroupBox(i18n("Image Properties"), this);
+    QGridLayout* grid2  = new QGridLayout(groupBox);
 
     d->imagesResize = new KComboBox(groupBox);
     d->imagesResize->insertItem(EmailSettingsContainer::VERYSMALL, i18n("Very Small (320 pixels)"));
@@ -158,7 +158,6 @@ EmailPage::EmailPage(QWidget* const parent)
                              i18n("Very Big (1280 pixels)"),
                              i18n("Huge - for printing (1600 pixels)"));
     d->imagesResize->setWhatsThis(whatsThis);
-
 
     d->labelImagesResize = new QLabel( i18n("Image size:"), groupBox);
     d->labelImagesResize->setBuddy(d->imagesResize);
@@ -201,12 +200,12 @@ EmailPage::EmailPage(QWidget* const parent)
     d->labelImageCompression->setBuddy(d->imageCompression);
 
     //---------------------------------------------
-    grid2->addWidget(d->labelImagesResize,  0, 0, 1, 1);
-    grid2->addWidget(d->imagesResize,       0, 1, 1, 2);
-    grid2->addWidget(d->labelImagesFormat,  1, 0, 1, 1);
-    grid2->addWidget(d->imagesFormat,       1, 1, 1, 2);
+    grid2->addWidget(d->labelImagesResize,     0, 0, 1, 1);
+    grid2->addWidget(d->imagesResize,          0, 1, 1, 2);
+    grid2->addWidget(d->labelImagesFormat,     1, 0, 1, 1);
+    grid2->addWidget(d->imagesFormat,          1, 1, 1, 2);
     grid2->addWidget(d->labelImageCompression, 2, 0, 1, 1);
-    grid2->addWidget(d->imageCompression,   2, 1, 1, 3);
+    grid2->addWidget(d->imageCompression,      2, 1, 1, 3);
     grid2->setRowStretch(4, 10);
     grid2->setColumnStretch(2, 10);
     grid2->setMargin(KDialog::spacingHint());
@@ -236,12 +235,12 @@ EmailPage::EmailPage(QWidget* const parent)
             groupBox, SLOT(setEnabled(bool)));
 }
 
-EmailPage::~EmailPage()
+SettingsWidget::~SettingsWidget()
 {
     delete d;
 }
 
-void EmailPage::slotImagesFormatChanged(int i)
+void SettingsWidget::slotImagesFormatChanged(int i)
 {
     if ( i == EmailSettingsContainer::JPEG )
         d->imageCompression->setEnabled(true);
@@ -249,7 +248,7 @@ void EmailPage::slotImagesFormatChanged(int i)
         d->imageCompression->setEnabled(false);
 }
 
-void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
+void SettingsWidget::setEmailSettings(const EmailSettingsContainer& settings)
 {
     d->mailAgentName->setCurrentIndex((int)settings.emailProgram);
     d->imagesResize->setCurrentIndex((int)settings.imageSize);
@@ -264,7 +263,7 @@ void EmailPage::setEmailSettings(const EmailSettingsContainer& settings)
     slotImagesFormatChanged(d->imagesFormat->currentIndex());
 }
 
-EmailSettingsContainer EmailPage::emailSettings()
+EmailSettingsContainer SettingsWidget::emailSettings() const
 {
     EmailSettingsContainer settings;
     settings.emailProgram            = EmailSettingsContainer::EmailClient(d->mailAgentName->currentIndex());

@@ -53,7 +53,7 @@
 #include "kpaboutdata.h"
 #include "kpversion.h"
 #include "myimagelist.h"
-#include "emailpage.h"
+#include "settingswidget.h"
 
 using namespace KIPIPlugins;
 
@@ -67,17 +67,17 @@ public:
 
     SendImagesDialogPrivate()
     {
-        about      = 0;
-        imagesList = 0;
-        emailPage  = 0;
+        about          = 0;
+        imagesList     = 0;
+        settingsWidget = 0;
     }
 
     KUrl::List   urls;
 
-    MyImageList* imagesList;
-    EmailPage*   emailPage;
+    MyImageList*    imagesList;
+    SettingsWidget* settingsWidget;
 
-    KPAboutData* about;
+    KPAboutData*    about;
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& urls)
@@ -95,11 +95,11 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
     setMainWidget(new QWidget(this));
     QGridLayout* mainLayout = new QGridLayout(mainWidget());
     d->imagesList           = new MyImageList(mainWidget());
-    d->emailPage            = new EmailPage(mainWidget());
+    d->settingsWidget       = new SettingsWidget(mainWidget());
     d->imagesList->slotAddImages(urls);
 
-    mainLayout->addWidget(d->imagesList, 0, 0, 1, 1);
-    mainLayout->addWidget(d->emailPage,  0, 1, 1, 1);
+    mainLayout->addWidget(d->imagesList,     0, 0, 1, 1);
+    mainLayout->addWidget(d->settingsWidget, 0, 1, 1, 1);
     mainLayout->setColumnStretch(0, 10);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
@@ -183,7 +183,7 @@ void SendImagesDialog::slotOk()
 
 EmailSettingsContainer SendImagesDialog::emailSettings() const
 {
-    EmailSettingsContainer settings = d->emailPage->emailSettings(); 
+    EmailSettingsContainer settings = d->settingsWidget->emailSettings(); 
     settings.itemsList              = d->imagesList->imagesList(); 
     return settings;
 }
@@ -201,7 +201,7 @@ void SendImagesDialog::readSettings()
     settings.addCommentsAndTags      = group.readEntry("AddCommentsAndTags", false);
     settings.imageCompression        = group.readEntry("ImageCompression", 75);
     settings.attachmentLimitInMbytes = group.readEntry("AttachmentLimit", 17);
-    d->emailPage->setEmailSettings(settings);
+    d->settingsWidget->setEmailSettings(settings);
 
     KConfigGroup group2 = config.group(QString("SendImages Dialog"));
     restoreDialogSize(group2);
@@ -212,7 +212,7 @@ void SendImagesDialog::saveSettings()
     KConfig config("kipirc");
     KConfigGroup group = config.group("SendImages Settings");
 
-    EmailSettingsContainer settings = d->emailPage->emailSettings();
+    EmailSettingsContainer settings = d->settingsWidget->emailSettings();
     group.writeEntry("EmailProgram",       (int)settings.emailProgram);
     group.writeEntry("ImageResize",        (int)settings.imageSize);
     group.writeEntry("ImageFormat",        (int)settings.imageFormat);
