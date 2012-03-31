@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -36,15 +36,15 @@ class KAction;
 
 namespace KIPIBatchProcessImagesPlugin
 {
-    class BorderImagesDialog;
-    class ColorImagesDialog;
-    class ConvertImagesDialog;
-    class EffectImagesDialog;
-    class FilterImagesDialog;
-    class RecompressImagesDialog;
-    class RenameImagesDialog;
-    class ResizeImagesDialog;
-}
+
+class BorderImagesDialog;
+class ColorImagesDialog;
+class ConvertImagesDialog;
+class EffectImagesDialog;
+class FilterImagesDialog;
+class RecompressImagesDialog;
+class RenameImagesDialog;
+class ResizeImagesDialog;
 
 class Plugin_BatchProcessImages : public KIPI::Plugin
 {
@@ -52,7 +52,7 @@ class Plugin_BatchProcessImages : public KIPI::Plugin
 
 public:
 
-    Plugin_BatchProcessImages(QObject* parent, const QVariantList& args);
+    Plugin_BatchProcessImages(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_BatchProcessImages();
 
     virtual KIPI::Category category(KAction* action) const;
@@ -64,23 +64,25 @@ public Q_SLOTS:
 
 private:
 
-    KAction                                              *m_action_borderimages;
-    KAction                                              *m_action_colorimages;
-    KAction                                              *m_action_convertimages;
-    KAction                                              *m_action_effectimages;
-    KAction                                              *m_action_filterimages;
-    KAction                                              *m_action_renameimages;
-    KAction                                              *m_action_recompressimages;
-    KAction                                              *m_action_resizeimages;
+    KAction*                m_action_borderimages;
+    KAction*                m_action_colorimages;
+    KAction*                m_action_convertimages;
+    KAction*                m_action_effectimages;
+    KAction*                m_action_filterimages;
+    KAction*                m_action_renameimages;
+    KAction*                m_action_recompressimages;
+    KAction*                m_action_resizeimages;
 
-    KIPIBatchProcessImagesPlugin::BorderImagesDialog     *m_BorderImagesDialog;
-    KIPIBatchProcessImagesPlugin::ColorImagesDialog      *m_ColorImagesDialog;
-    KIPIBatchProcessImagesPlugin::ConvertImagesDialog    *m_ConvertImagesDialog;
-    KIPIBatchProcessImagesPlugin::EffectImagesDialog     *m_EffectImagesDialog;
-    KIPIBatchProcessImagesPlugin::FilterImagesDialog     *m_FilterImagesDialog;
-    KIPIBatchProcessImagesPlugin::RenameImagesDialog     *m_RenameImagesDialog;
-    KIPIBatchProcessImagesPlugin::RecompressImagesDialog *m_RecompressImagesDialog;
-    KIPIBatchProcessImagesPlugin::ResizeImagesDialog     *m_ResizeImagesDialog;
+    BorderImagesDialog*     m_BorderImagesDialog;
+    ColorImagesDialog*      m_ColorImagesDialog;
+    ConvertImagesDialog*    m_ConvertImagesDialog;
+    EffectImagesDialog*     m_EffectImagesDialog;
+    FilterImagesDialog*     m_FilterImagesDialog;
+    RenameImagesDialog*     m_RenameImagesDialog;
+    RecompressImagesDialog* m_RecompressImagesDialog;
+    ResizeImagesDialog*     m_ResizeImagesDialog;
 };
+
+}  // namespace KIPIBatchProcessImagesPlugin
 
 #endif /* PLUGIN_BATCHPROCESSIMAGES_H */
