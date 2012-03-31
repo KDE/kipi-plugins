@@ -178,6 +178,9 @@ FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
     connect(m_talker, SIGNAL(signalListFriendsDone(int,QString,QList<FbUser>)),
             this, SLOT(slotListFriendsDone(int,QString,QList<FbUser>)));
 
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotStopAndCloseProgressBar()));
+
     // ------------------------------------------------------------------------
 
     readSettings();
@@ -195,6 +198,17 @@ FbWindow::~FbWindow()
 void FbWindow::slotHelp()
 {
     KToolInvocation::invokeHelp("facebook", "kipi-plugins");
+}
+
+void FbWindow::slotStopAndCloseProgressBar()
+{
+    m_talker->cancel();
+    m_transferQueue.clear();
+    m_widget->m_imgList->cancelProcess();
+    writeSettings();
+    m_widget->imagesList()->listView()->clear();
+    done(Close);
+    m_widget->progressBar()->progressCompleted();
 }
 
 void FbWindow::slotButtonClicked(int button)
@@ -604,7 +618,7 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(0);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
-        m_widget->progressBar()->progressScheduled(i18n("Facebook export"), false, true);
+        m_widget->progressBar()->progressScheduled(i18n("Facebook export"), true, true);
         m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
 
@@ -629,7 +643,7 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
-        m_widget->progressBar()->progressScheduled(i18n("Facebook export"), false, true);
+        m_widget->progressBar()->progressScheduled(i18n("Facebook export"), true, true);
         m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
 

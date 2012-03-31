@@ -104,6 +104,7 @@ private Q_SLOTS:
     void slotStartTransfer();
     void slotImageListChanged();
     void slotButtonClicked(int button);
+    void slotStopAndCloseProgressBar();
 
 private:
 
