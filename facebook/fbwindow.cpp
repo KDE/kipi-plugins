@@ -28,7 +28,6 @@
 
 #include <QFileInfo>
 #include <QCheckBox>
-#include <QProgressBar>
 #include <QCloseEvent>
 #include <QSpinBox>
 
@@ -59,6 +58,7 @@
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
 #include "kpversion.h"
+#include "kpprogresswidget.h"
 #include "fbitem.h"
 #include "fbtalker.h"
 #include "fbwidget.h"
@@ -206,6 +206,7 @@ void FbWindow::slotButtonClicked(int button)
             {
                 writeSettings();
                 m_widget->imagesList()->listView()->clear();
+                m_widget->progressBar()->progressCompleted();
                 done(Close);
             }
             else // cancel login/transfer
@@ -214,6 +215,7 @@ void FbWindow::slotButtonClicked(int button)
                 m_transferQueue.clear();
                 m_widget->m_imgList->cancelProcess();
                 m_widget->progressBar()->hide();
+                m_widget->progressBar()->progressCompleted();
             }
 
             break;
@@ -357,7 +359,7 @@ void FbWindow::authenticate()
 
 void FbWindow::slotLoginProgress(int step, int maxStep, const QString& label)
 {
-    QProgressBar* progressBar = m_widget->progressBar();
+    KIPIPlugins::KPProgressWidget* progressBar = m_widget->progressBar();
 
     if (!label.isEmpty())
     {
@@ -602,6 +604,9 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(0);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
+        m_widget->progressBar()->progressScheduled(i18n("Facebook export"), false, true);
+        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+
 
         m_talker->listPhotos(m_widget->getFriendID(), m_widget->getAlbumID());
     }
@@ -624,6 +629,9 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(m_imagesTotal);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
+        m_widget->progressBar()->progressScheduled(i18n("Facebook export"), false, true);
+        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
+
 
         uploadNextPhoto();
     }
@@ -769,6 +777,7 @@ void FbWindow::slotAddPhotoDone(int errCode, const QString& errMsg)
             != KMessageBox::Continue)
         {
             m_widget->progressBar()->hide();
+            m_widget->progressBar()->progressCompleted();
             m_transferQueue.clear();
             return;
         }
@@ -782,6 +791,7 @@ void FbWindow::downloadNextPhoto()
     if (m_transferQueue.isEmpty())
     {
         m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         return;
     }
 
@@ -829,6 +839,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
                 != KMessageBox::Continue)
             {
                 m_widget->progressBar()->hide();
+                m_widget->progressBar()->progressCompleted();
                 m_transferQueue.clear();
                 return;
             }
@@ -842,6 +853,7 @@ void FbWindow::slotGetPhotoDone(int errCode, const QString& errMsg, const QByteA
             != KMessageBox::Continue)
         {
             m_widget->progressBar()->hide();
+            m_widget->progressBar()->progressCompleted();
             m_transferQueue.clear();
             return;
         }

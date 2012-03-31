@@ -30,7 +30,6 @@
 // Qt includes
 
 #include <QList>
-#include <QProgressDialog>
 
 // Debug
 
