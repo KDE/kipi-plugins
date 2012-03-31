@@ -67,14 +67,15 @@ extern "C"
 #include "commoncontainer.h"
 #include "kpimageinfo.h"
 
-using namespace KIPIAdvancedSlideshowPlugin;
+namespace KIPIAdvancedSlideshowPlugin
+{
 
 K_PLUGIN_FACTORY( AdvancedSlideshowFactory, registerPlugin<Plugin_AdvancedSlideshow>(); )
 K_EXPORT_PLUGIN ( AdvancedSlideshowFactory("kipiplugin_advancedslideshow") )
 
-Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject* parent, const QVariantList &/*args*/)
-                        : KIPI::Plugin(AdvancedSlideshowFactory::componentData(),
-                                       parent, "AdvancedSlideshow")
+Plugin_AdvancedSlideshow::Plugin_AdvancedSlideshow(QObject* const parent, const QVariantList &/*args*/)
+    : KIPI::Plugin(AdvancedSlideshowFactory::componentData(),
+                   parent, "AdvancedSlideshow")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_AdvancedSlideshow plugin loaded" ;
     m_sharedData = 0;
@@ -277,3 +278,5 @@ KIPI::Category Plugin_AdvancedSlideshow::category(KAction* action) const
 
     return KIPI::ToolsPlugin; // no warning from compiler, please
 }
+
+}  // namespace KIPIAdvancedSlideshowPlugin

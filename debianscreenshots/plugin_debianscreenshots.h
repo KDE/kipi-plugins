@@ -31,38 +31,26 @@
 
 #include <libkipi/plugin.h>
 
-//#if KDE_IS_VERSION(4,3,60)
-//#include <libkipi/exportinterface.h>
-//#endif
-
 class KAction;
+
+using namespace KIPI;
 
 namespace KIPIDebianScreenshotsPlugin
 {
-    class DsWindow;
-}
 
-class KJob;
+class DsWindow;
 
-class Plugin_DebianScreenshots
-    : public KIPI::Plugin
-//#if KDE_IS_VERSION(4,3,60)
-//    , public KIPI::ExportInterface
-//#endif
+class Plugin_DebianScreenshots : public Plugin
 {
-Q_OBJECT
-//#if KDE_IS_VERSION(4,3,60)
-//Q_INTERFACES( KIPI::ExportInterface )
-//#endif
+    Q_OBJECT
 
 public:
 
-    Plugin_DebianScreenshots(QObject* parent, const QVariantList& args);
+    Plugin_DebianScreenshots(QObject* const parent, const QVariantList& args);
     ~Plugin_DebianScreenshots();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget*);
-//    virtual KJob* exportFiles(const QString& album);
 
 public Q_SLOTS:
 
@@ -70,8 +58,10 @@ public Q_SLOTS:
 
 private:
 
-    KAction*                               m_actionExport;
-    KIPIDebianScreenshotsPlugin::DsWindow* m_dlgExport;
+    KAction*  m_actionExport;
+    DsWindow* m_dlgExport;
 };
+
+} // namespace KIPIDebianScreenshotsPlugin
 
 #endif // PLUGIN_DEBIANSCREENSHOTS_H
