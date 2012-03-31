@@ -275,6 +275,7 @@ void ActionThread::run()
                 {
                     kError() << "KIPIDNGConverterPlugin:ActionThread: "
                              << "Unknown action specified";
+                    break;
                 }
             }
         }

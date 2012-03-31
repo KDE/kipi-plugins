@@ -812,6 +812,7 @@ RDF_NodeElementAttrs ( XMP_Node * xmpParent, const XML_Node & xmlNode, bool isTo
 
 			default :
 				XMP_Throw ( "Invalid nodeElement attribute", kXMPErr_BadRDF );
+				break;
 
 		}
 

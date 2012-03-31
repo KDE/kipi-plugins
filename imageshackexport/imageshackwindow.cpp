@@ -300,6 +300,7 @@ void ImageshackWindow::slotButtonClicked(int button)
             break;
         default:
             KDialog::slotButtonClicked(button);
+            break;
     }
 }
 

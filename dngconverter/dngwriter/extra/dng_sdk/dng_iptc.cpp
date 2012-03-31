@@ -200,10 +200,11 @@ void dng_iptc::ParseString (dng_stream &stream,
 			}
 			
 		default:
-			{
-			s.Set_SystemEncoding (c);
-			}
-			
+		{
+		    s.Set_SystemEncoding (c);
+		    break;
+		}
+
 		}
 	
 	s.SetLineEndingsToNewLines ();

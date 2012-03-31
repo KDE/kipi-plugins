@@ -164,6 +164,7 @@ void DsWindow::slotButtonClicked(int button)
         default:
         {
              KDialog::slotButtonClicked(button);
+             break;
         }
     }
 }

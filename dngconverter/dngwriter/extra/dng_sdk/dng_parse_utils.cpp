@@ -1839,6 +1839,7 @@ void DumpString (const dng_string &s)
 			default:
 				{
 				printf ("[%X]", (unsigned) c);
+				break;
 				}
 			
 			}
@@ -2046,7 +2047,8 @@ void DumpTagValues (dng_stream &stream,
 				DumpHexAscii (stream, tagSize);
 				
 				}
-	
+
+			break;
 			}
 		
 		}

@@ -78,6 +78,7 @@ void dng_orientation::SetTIFF (uint32 tiff)
 		default:
 			{
 			fAdobeOrientation = kNormal;
+			break;
 			}
 
 		}

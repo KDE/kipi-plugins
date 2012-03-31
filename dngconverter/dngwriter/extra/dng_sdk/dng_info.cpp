@@ -80,7 +80,7 @@ void dng_info::ValidateMagic ()
 			#endif
 			
 			ThrowBadFormat ();
-			
+			break;
 			}
 			
 		}

@@ -109,6 +109,7 @@ protected:
             default:
             {
                 kError() << "Unknown action specified";
+                break;
             }
         }
     }

@@ -959,6 +959,7 @@ XMPMeta::SetLocalizedText ( XMP_StringPtr  schemaNS,
 			
 		default :
 			XMP_Throw ( "Unexpected result from ChooseLocalizedText", kXMPErr_InternalFailure );
+			break;
 
 	}
 

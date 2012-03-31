@@ -1014,7 +1014,7 @@ JpegMarker dng_lossless_decoder::ProcessTables ()
 
 			default:		// must be DNL, DHP, EXP, APPn, JPGn, COM, or RESn
 			    SkipVariable ();
-			    
+			    break;
 			}
 			
     	}
@@ -1116,7 +1116,7 @@ int32 dng_lossless_decoder::ReadScanHeader ()
 
     	default:
 			ThrowBadFormat ();
-			
+			break;
     	}
     	
     return 0;

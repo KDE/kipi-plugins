@@ -77,6 +77,7 @@ KPBatchProgressItem(QListWidget* const parent, const QString& message, int messa
             break;
         default:
             setIcon(SmallIcon("dialog-information"));
+            break;
     }
 
     // Set the message text.

@@ -448,6 +448,7 @@ void ActionThread::run()
                 default:
                 {
                     qCritical() << "Unknown action specified" << endl;
+                    break;
                 }
             }
         }

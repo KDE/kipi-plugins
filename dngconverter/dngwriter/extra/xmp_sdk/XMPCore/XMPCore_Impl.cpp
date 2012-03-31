@@ -616,6 +616,7 @@ ComposeXPath ( const XMP_ExpandedXPath & expandedXPath,
 
 			default:
 				XMP_Throw ( "Unexpected", kXMPErr_InternalFailure );
+				break;
 
 		}
 

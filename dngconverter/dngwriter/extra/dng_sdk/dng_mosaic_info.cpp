@@ -559,7 +559,7 @@ void dng_bilinear_pattern::Calculate (const dng_mosaic_info &info,
 					
 		default:
 			ThrowProgramError ();
-		
+			break;
 		}
 		
 	// Find projections of maps.
