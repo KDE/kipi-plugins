@@ -672,7 +672,7 @@ void QtTreePropertyBrowserPrivate::slotCollapsed(const QModelIndex &index)
     QTreeWidgetItem *item = indexToItem(index);
     QtBrowserItem *idx = m_itemToIndex.value(item);
     if (item)
-        emit q_ptr->collapsed(idx);
+        emit (q_ptr->collapsed(idx));
 }
 
 void QtTreePropertyBrowserPrivate::slotExpanded(const QModelIndex &index)
@@ -680,7 +680,7 @@ void QtTreePropertyBrowserPrivate::slotExpanded(const QModelIndex &index)
     QTreeWidgetItem *item = indexToItem(index);
     QtBrowserItem *idx = m_itemToIndex.value(item);
     if (item)
-        emit q_ptr->expanded(idx);
+        emit (q_ptr->expanded(idx));
 }
 
 void QtTreePropertyBrowserPrivate::slotCurrentBrowserItemChanged(QtBrowserItem *item)

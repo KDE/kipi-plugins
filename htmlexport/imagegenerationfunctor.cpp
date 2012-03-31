@@ -407,7 +407,7 @@ bool ImageGenerationFunctor::writeDataToFile(const QByteArray& data, const QStri
 
 void ImageGenerationFunctor::emitWarning(const QString& message)
 {
-    emit mGenerator->logWarningRequested(message);
+    emit (mGenerator->logWarningRequested(message));
 }
 
 } // namespace KIPIHTMLExport

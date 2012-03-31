@@ -510,7 +510,7 @@ void QtProperty::propertyChanged()
 void QtAbstractPropertyManagerPrivate::propertyDestroyed(QtProperty *property)
 {
     if (m_properties.contains(property)) {
-        emit q_ptr->propertyDestroyed(property);
+        emit (q_ptr->propertyDestroyed(property));
         q_ptr->uninitializeProperty(property);
         m_properties.remove(property);
     }
@@ -518,19 +518,19 @@ void QtAbstractPropertyManagerPrivate::propertyDestroyed(QtProperty *property)
 
 void QtAbstractPropertyManagerPrivate::propertyChanged(QtProperty *property) const
 {
-    emit q_ptr->propertyChanged(property);
+    emit (q_ptr->propertyChanged(property));
 }
 
 void QtAbstractPropertyManagerPrivate::propertyRemoved(QtProperty *property,
             QtProperty *parentProperty) const
 {
-    emit q_ptr->propertyRemoved(property, parentProperty);
+    emit (q_ptr->propertyRemoved(property, parentProperty));
 }
 
 void QtAbstractPropertyManagerPrivate::propertyInserted(QtProperty *property,
             QtProperty *parentProperty, QtProperty *afterProperty) const
 {
-    emit q_ptr->propertyInserted(property, parentProperty, afterProperty);
+    emit (q_ptr->propertyInserted(property, parentProperty, afterProperty));
 }
 
 /*!
