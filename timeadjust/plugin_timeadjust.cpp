@@ -44,6 +44,9 @@
 
 #include "timeadjustdialog.h"
 
+namespace KIPITimeAdjustPlugin
+{
+
 K_PLUGIN_FACTORY( TimeAdjustFactory, registerPlugin<Plugin_TimeAdjust>(); )
 K_EXPORT_PLUGIN ( TimeAdjustFactory("kipiplugin_timeadjust") )
 
@@ -91,7 +94,7 @@ void Plugin_TimeAdjust::slotActivate()
     if (!images.isValid() || images.images().isEmpty())
         return;
 
-    KIPITimeAdjustPlugin::TimeAdjustDialog dlg(kapp->activeWindow());
+    TimeAdjustDialog dlg(kapp->activeWindow());
     dlg.setImages(images.images());
     dlg.exec();
 }
@@ -104,3 +107,5 @@ Category Plugin_TimeAdjust::category(KAction* action) const
     kWarning() << "Unrecognized action for plugin category identification";
     return ImagesPlugin; // no warning from compiler, please
 }
+
+}  // namespace KIPITimeAdjustPlugin

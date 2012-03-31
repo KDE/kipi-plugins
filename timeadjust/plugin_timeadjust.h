@@ -41,6 +41,9 @@ namespace KIPI
 
 using namespace KIPI;
 
+namespace KIPITimeAdjustPlugin
+{
+
 class Plugin_TimeAdjust : public Plugin
 {
     Q_OBJECT
@@ -63,5 +66,7 @@ private:
 
     Interface* m_interface;
 };
+
+}  // namespace KIPITimeAdjustPlugin
 
 #endif // PLUGIN_TIMEADJUST_H
