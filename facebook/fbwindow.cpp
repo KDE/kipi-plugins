@@ -618,7 +618,7 @@ void FbWindow::slotStartTransfer()
         m_widget->progressBar()->setMaximum(0);
         m_widget->progressBar()->setValue(0);
         m_widget->progressBar()->show();
-        m_widget->progressBar()->progressScheduled(i18n("Facebook export"), true, true);
+        m_widget->progressBar()->progressScheduled(i18n("Facebook import"), true, true);
         m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
 
