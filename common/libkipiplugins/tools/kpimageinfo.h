@@ -93,7 +93,7 @@ public:
     void setRating(int r);
     int  rating() const;
     bool hasRating() const;
-    
+
     /** Manage color label of item (0-10 : none, red, orange, yellow, green, blue, magenta, gray, black, white)
      */
     void setColorLabel(int cl);

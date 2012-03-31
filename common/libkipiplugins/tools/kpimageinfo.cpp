@@ -65,7 +65,7 @@ public:
 
     QVariant attribute(const QString& name) const
     {
-        QMap<QString, QVariant> map; 
+        QMap<QString, QVariant> map;
         if (hasValidData())
         {
             ImageInfo info = iface->info(url);
