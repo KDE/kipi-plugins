@@ -32,7 +32,6 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QButtonGroup>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -65,6 +64,7 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 #include "wmwidget.h"
 
 namespace KIPIWikiMediaPlugin
@@ -244,7 +244,7 @@ WmWidget::WmWidget(QWidget* const parent)
 
     // ------------------------------------------------------------------------
 
-    m_progressBar = new QProgressBar(panel);
+    m_progressBar = new KPProgressWidget(panel);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
@@ -319,7 +319,7 @@ KPImagesList* WmWidget::imagesList() const
     return m_imgList;
 }
 
-QProgressBar* WmWidget::progressBar() const
+KPProgressWidget* WmWidget::progressBar() const
 {
     return m_progressBar;
 }

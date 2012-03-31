@@ -40,7 +40,6 @@
 class QLabel;
 class QSpinBox;
 class QCheckBox;
-class QProgressBar;
 
 class KVBox;
 class KHBox;
@@ -54,6 +53,7 @@ namespace KIPI
 namespace KIPIPlugins
 {
     class KPImagesList;
+    class KPProgressWidget;
 }
 
 namespace KDcrawIface
@@ -92,7 +92,7 @@ public:
 
     KPImagesList* imagesList() const;
 
-    QProgressBar* progressBar() const;
+    KPProgressWidget* progressBar() const;
 
     QString author() const;
     QString licence() const;
@@ -135,7 +135,7 @@ private:
     QSpinBox*                  m_imageQualitySpB;
     SqueezedComboBox*          m_licenceComboBox;
 
-    QProgressBar*              m_progressBar;
+    KPProgressWidget*          m_progressBar;
 
     RExpanderBox*              m_settingsExpander;
     KPImagesList*              m_imgList;

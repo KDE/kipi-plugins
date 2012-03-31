@@ -27,7 +27,6 @@
 // Qt includes
 
 #include <QLayout>
-#include <QProgressBar>
 #include <QCloseEvent>
 
 // KDE includes
@@ -58,6 +57,7 @@
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 #include "wmwidget.h"
 #include "wikimediajob.h"
 
@@ -123,6 +123,9 @@ WMWindow::WMWindow(Interface* const interface, const QString& tmpFolder, QWidget
     connect(m_widget, SIGNAL(signalLoginRequest(QString, QString, QUrl)),
             this, SLOT(slotDoLogin(QString, QString, QUrl)));
 
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotClose()));
+
     readSettings();
     reactivate();
 }
@@ -176,6 +179,7 @@ void WMWindow::slotHelp()
 
 void WMWindow::slotClose()
 {
+    m_widget->progressBar()->progressCompleted();
     saveSettings();
     done(Close);
 }
@@ -232,6 +236,8 @@ void WMWindow::slotStartTransfer()
             this, SLOT(slotEndUpload()));
 
     m_widget->progressBar()->show();
+    m_widget->progressBar()->progressScheduled(i18n("Wiki Export"), true, true);
+    m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
     m_uploadJob->begin();
 }
 
@@ -288,6 +294,7 @@ void WMWindow::slotEndUpload()
 
     KMessageBox::information(this, i18n("Upload finished with no errors."));
     m_widget->progressBar()->hide();
+    m_widget->progressBar()->progressCompleted();
     hide();
 }
 
