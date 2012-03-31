@@ -36,6 +36,9 @@ namespace KIPI
     class Interface;
 }
 
+namespace KIPIHelloWorldPlugin
+{
+
 class Plugin_HelloWorld : public KIPI::Plugin
 {
     Q_OBJECT
@@ -43,10 +46,10 @@ class Plugin_HelloWorld : public KIPI::Plugin
 public:
 
     /** Notice the constructor
-        takes two arguments QObject *parent (the parent of this object),
+        takes two arguments QObject* const parent (the parent of this object),
         and const QStringList& args (the arguments passed).
     */
-    Plugin_HelloWorld(QObject* parent, const QVariantList& args);
+    Plugin_HelloWorld(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_HelloWorld();
 
     virtual KIPI::Category category(KAction* action) const;
@@ -54,14 +57,22 @@ public:
 
 private slots:
 
-    /// This is an example slot to which your action is connected.
+    /** This is an example slot to which your action is connected.
+     */
     void slotActivate();
 
 private:
 
+    /** This is the plugin action that KIPI host application will plug into menu.
+     */
     KAction*         m_action;
 
+    /** this is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
+     *  instance of KIPI::PluginLoader singleton which provide a method for that.
+     */
     KIPI::Interface* m_iface;
 };
+
+}  // namespace KIPIHelloWorldPlugin
 
 #endif // PLUGIN_HELLOWORLD_H

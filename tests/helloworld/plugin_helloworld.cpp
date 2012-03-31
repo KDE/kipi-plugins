@@ -37,6 +37,10 @@
 #include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
+// You must wrap all your plugin code to a dedicated namespace
+namespace KIPIHelloWorldPlugin
+{
+
 // Macros from KDE KParts to export the symbols for this plugin and
 // create the factory for it. The first argument is the name of the
 // plugin library and the second is the genericfactory templated from
@@ -46,7 +50,7 @@ K_PLUGIN_FACTORY(HelloWorldFactory, registerPlugin<Plugin_HelloWorld>();)
 
 K_EXPORT_PLUGIN(HelloWorldFactory("kipiplugin_helloworld") )
 
-Plugin_HelloWorld::Plugin_HelloWorld(QObject* parent, const QVariantList&)
+Plugin_HelloWorld::Plugin_HelloWorld(QObject* const parent, const QVariantList&)
     : KIPI::Plugin(HelloWorldFactory::componentData(), parent, "HelloWorld")
 {
     kDebug() << "Plugin_HelloWorld plugin loaded";
@@ -104,3 +108,5 @@ KIPI::Category Plugin_HelloWorld::category(KAction* action) const
     kWarning() << "Unrecognized action for plugin category identification";
     return KIPI::ImagesPlugin; // no warning from compiler, please
 }
+
+}  // namespace KIPIHelloWorldPlugin
