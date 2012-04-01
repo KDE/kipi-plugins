@@ -21,13 +21,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #ifndef PLUGINHTMLEXPORT_H
 #define PLUGINHTMLEXPORT_H
 
+// Qt includes
+
 #include <QVariant>
+
+// Libkipi includes
 
 #include <libkipi/plugin.h>
 
 class KAction;
 
 using namespace KIPI;
+
+namespace KIPIHTMLExport
+{
 
 /**
  * Implementation of the Plugin abstract class for HTMLExport.
@@ -53,5 +60,7 @@ private:
     struct Private;
     Private* d;
 };
+
+} // namespace KIPIHTMLExport
 
 #endif // PLUGINHTMLEXPORT_H

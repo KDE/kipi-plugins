@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 */
 
-#include "plugin.moc"
+#include "plugin_htmlexport.moc"
 
 // Qt includes
 
@@ -46,8 +46,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include "wizard.h"
 #include "kpbatchprogressdialog.h"
 
-using namespace KIPIHTMLExport;
 using namespace KIPIPlugins;
+
+namespace KIPIHTMLExport
+{
 
 K_PLUGIN_FACTORY(HTMLExportFactory, registerPlugin<Plugin_HTMLExport>();)
 K_EXPORT_PLUGIN(HTMLExportFactory("kipiplugin_htmlexport"))
@@ -76,8 +78,10 @@ void Plugin_HTMLExport::setup( QWidget* widget )
     d->mAction->setText(i18n("Export to &HTML..."));
     d->mAction->setIcon(KIcon("text-html"));
     d->mAction->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_H));
+
     connect(d->mAction, SIGNAL(triggered()),
-        SLOT(slotActivate()) );
+            this, SLOT(slotActivate()) );
+
     addAction(d->mAction);
 }
 
@@ -137,3 +141,5 @@ Category Plugin_HTMLExport::category(KAction* action) const
     kWarning() << "Unrecognized action for plugin category identification";
     return ExportPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIHTMLExport
