@@ -31,7 +31,7 @@ class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QButtonGroup;
-class QProgressBar;
+
 class KComboBox;
 class KPushButton;
 
