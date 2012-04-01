@@ -32,7 +32,6 @@ class QLabel;
 class QSpinBox;
 class QCheckBox;
 class QRadioButton;
-class QProgressBar;
 class KPushButton;
 class KComboBox;
 class KLineEdit;
@@ -46,6 +45,7 @@ namespace KIPI
 namespace KIPIPlugins
 {
     class KPImagesList;
+    class KPProgressWidget;
 }
 
 namespace KIPISmugPlugin
@@ -75,7 +75,7 @@ public:
 
     KIPIPlugins::KPImagesList* imagesList() const;
 
-    QProgressBar* progressBar() const;
+    KIPIPlugins::KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
 
@@ -116,8 +116,7 @@ private:
     KLineEdit*                 m_nickNameEdt;
     KLineEdit*                 m_sitePasswordEdt;
 
-    QProgressBar*              m_progressBar;
-
+    KIPIPlugins::KPProgressWidget* m_progressBar;
     KIPIPlugins::KPImagesList* m_imgList;
     KIPI::UploadWidget*        m_uploadWidget;
 

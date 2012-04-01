@@ -107,6 +107,7 @@ private Q_SLOTS:
     void slotNewAlbumRequest();
     void slotHelp();
     void slotStartTransfer();
+    void slotStopAndCloseProgressBar();
     void slotImageListChanged();
     void slotButtonClicked(int button);
     void slotTemplateSelectionChanged(int index);
