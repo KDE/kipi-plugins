@@ -373,7 +373,7 @@ void SmugWindow::writeSettings()
 
 void SmugWindow::slotLoginProgress(int step, int maxStep, const QString &label)
 {
-    QProgressBar* progressBar = m_widget->progressBar();
+    KPProgressWidget* progressBar = m_widget->progressBar();
 
     if (!label.isEmpty())
         progressBar->setFormat(label);

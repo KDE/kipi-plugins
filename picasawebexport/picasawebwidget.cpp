@@ -33,7 +33,6 @@
 #include <QGroupBox>
 #include <QButtonGroup>
 #include <QRadioButton>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -53,6 +52,7 @@
 // Local includes
 
 #include "picasawebimglist.h"
+#include "kpprogresswidget.h"
 
 namespace KIPIPicasawebExportPlugin
 {
@@ -219,7 +219,7 @@ PicasawebWidget::PicasawebWidget(QWidget* const parent, Interface* const iface, 
     optionsBoxLayout->setSpacing(KDialog::spacingHint());
     optionsBoxLayout->setMargin(KDialog::spacingHint());
 
-    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar = new KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
@@ -285,7 +285,7 @@ KPImagesList* PicasawebWidget::imagesList() const
     return m_imgList;
 }
 
-QProgressBar* PicasawebWidget::progressBar() const
+KPProgressWidget* PicasawebWidget::progressBar() const
 {
     return m_progressBar;
 }
