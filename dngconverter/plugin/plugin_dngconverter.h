@@ -33,21 +33,23 @@
 
 class KAction;
 
+using namespace KIPI;
+
 namespace KIPIDNGConverterPlugin
 {
-    class BatchDialog;
-}
 
-class Plugin_DNGConverter : public KIPI::Plugin
+class BatchDialog;
+
+class Plugin_DNGConverter : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_DNGConverter(QObject* parent, const QVariantList& args);
+    Plugin_DNGConverter(QObject* const parent, const QVariantList& args);
     ~Plugin_DNGConverter();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget* widget);
 
 private:
@@ -60,9 +62,11 @@ private Q_SLOTS:
 
 private:
 
-    KAction*                             m_action;
+    KAction*     m_action;
 
-    KIPIDNGConverterPlugin::BatchDialog* m_batchDlg;
+    BatchDialog* m_batchDlg;
 };
+
+} // namespace KIPIDNGConverterPlugin
 
 #endif /* PLUGIN_DNGCONVERTER_H */
