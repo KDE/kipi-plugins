@@ -31,7 +31,6 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QButtonGroup>
-#include <QProgressBar>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -64,6 +63,7 @@
 // Local includes
 
 #include "kpimageslist.h"
+#include "kpprogresswidget.h"
 #include "packagedelegate.h"
 #include "debshots.h"
 #include "kclickableimagelabel.h"
@@ -155,7 +155,7 @@ DsWidget::DsWidget(QWidget* const parent)
     sdnLayout->addWidget(descriptionLabel,      3, 0, 1, 1);
     sdnLayout->addWidget(m_descriptionLineEdit, 3, 1, 1, 4);
 
-    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar = new KIPIPlugins::KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
@@ -178,7 +178,7 @@ KIPIPlugins::KPImagesList* DsWidget::imagesList() const
     return m_imgList;
 }
 
-QProgressBar* DsWidget::progressBar() const
+KIPIPlugins::KPProgressWidget* DsWidget::progressBar() const
 {
     return m_progressBar;
 }

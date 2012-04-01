@@ -76,6 +76,7 @@ private Q_SLOTS:
     void slotButtonClicked(int button);
     void slotRequiredPackageInfoAvailableReceived(bool enabled);
     void slotAddScreenshotDone(int errCode, const QString& errMsg);
+    void slotStopAndCloseProgressBar();
 
 private:
 
