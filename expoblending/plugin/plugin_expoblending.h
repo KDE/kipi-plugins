@@ -6,7 +6,7 @@
  * Date        : 2009-12-13
  * Description : a tool to blend bracketed images.
  *
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,7 +27,6 @@
 // Qt includes
 
 #include <QVariant>
-#include <QPointer>
 
 // LibKIPI includes
 
@@ -37,27 +36,29 @@ class QWidget;
 
 class KAction;
 
-namespace KIPIExpoBlendingPlugin
-{
-class Manager;
-}
-
 namespace KIPI
 {
     class Interface;
 }
 
-class Plugin_ExpoBlending : public KIPI::Plugin
+using namespace KIPI;
+
+namespace KIPIExpoBlendingPlugin
+{
+
+class Manager;
+
+class Plugin_ExpoBlending : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_ExpoBlending(QObject* parent, const QVariantList& args);
+    Plugin_ExpoBlending(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_ExpoBlending();
 
-    KIPI::Category category( KAction* action ) const;
-    void setup( QWidget* );
+    Category category(KAction* action) const;
+    void setup(QWidget*);
 
 public Q_SLOTS:
 
@@ -65,13 +66,15 @@ public Q_SLOTS:
 
 private:
 
-    QWidget*                         m_parentWidget;
+    QWidget*   m_parentWidget;
 
-    KAction*                         m_action;
+    KAction*   m_action;
 
-    KIPIExpoBlendingPlugin::Manager* m_manager;
+    Manager*   m_manager;
 
-    KIPI::Interface*                 m_interface;
+    Interface* m_interface;
 };
+
+} // namespace KIPIExpoBlendingPlugin
 
 #endif /* PLUGIN_EXPOBLENDING_H */
