@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -34,21 +34,23 @@
 
 class KAction;
 
+using namespace KIPI;
+
 namespace KIPIFlickrExportPlugin
 {
-class FlickrWindow;
-}
 
-class Plugin_FlickrExport : public KIPI::Plugin
+class FlickrWindow;
+
+class Plugin_FlickrExport : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_FlickrExport(QObject* parent, const QVariantList& args);
+    Plugin_FlickrExport(QObject* const parent, const QVariantList& args);
     ~Plugin_FlickrExport();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget*);
 
 public Q_SLOTS:
@@ -59,13 +61,15 @@ public Q_SLOTS:
 
 private:
 
-    KAction*                              m_actionFlickr;
-    KAction*                              m_action23;
-    KAction*                              m_actionZooomr;
+    KAction*      m_actionFlickr;
+    KAction*      m_action23;
+    KAction*      m_actionZooomr;
 
-    KIPIFlickrExportPlugin::FlickrWindow* m_dlgFlickr;
-    KIPIFlickrExportPlugin::FlickrWindow* m_dlg23;
-    KIPIFlickrExportPlugin::FlickrWindow* m_dlgZooomr;
+    FlickrWindow* m_dlgFlickr;
+    FlickrWindow* m_dlg23;
+    FlickrWindow* m_dlgZooomr;
 };
+
+} //namespace KIPIFlickrExportPlugin
 
 #endif // PLUGIN_FLICKREXPORT_H
