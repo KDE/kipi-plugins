@@ -8,7 +8,7 @@
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
  * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
- * Copyright (C) 2006-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
  *
  * This program is free software; you can redistribute it
@@ -51,12 +51,15 @@
 #include "galleryconfig.h"
 #include "gallerywindow.h"
 
+namespace KIPIGalleryExportPlugin
+{
+
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_GalleryExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_galleryexport"))
 
-Plugin_GalleryExport::Plugin_GalleryExport(QObject *parent, const QVariantList&)
-                    : KIPI::Plugin(Factory::componentData(), parent, "GalleryExport"),
-                      m_action(0), mpGallery(0)
+Plugin_GalleryExport::Plugin_GalleryExport(QObject* const parent, const QVariantList&)
+    : Plugin(Factory::componentData(), parent, "GalleryExport"),
+      m_action(0), mpGallery(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GalleryExport plugin loaded";
 }
@@ -65,11 +68,11 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_galleryexport");
 
-    mpGallery = new KIPIGalleryExportPlugin::Gallery();
+    mpGallery = new Gallery();
 
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -96,38 +99,39 @@ Plugin_GalleryExport::~Plugin_GalleryExport()
 // this slot uses GalleryWindow Class
 void Plugin_GalleryExport::slotSync()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    QPointer<KIPIGalleryExportPlugin::GalleryEdit>   configDlg;
-    QPointer<KIPIGalleryExportPlugin::GalleryWindow> dlg;
+    QPointer<GalleryEdit>   configDlg;
+    QPointer<GalleryWindow> dlg;
 
     KConfig config("kipirc");
     if(!config.hasGroup("Gallery Settings") )
     {
-        configDlg = new KIPIGalleryExportPlugin::GalleryEdit(kapp->activeWindow(),
-                                                             mpGallery, i18n("Edit Gallery Data") );
+        configDlg = new GalleryEdit(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
         configDlg->exec();
     }
 
-    dlg = new KIPIGalleryExportPlugin::GalleryWindow(interface, kapp->activeWindow(), mpGallery);
+    dlg = new GalleryWindow(interface, kapp->activeWindow(), mpGallery);
     dlg->exec();
 
     delete configDlg;
     delete dlg;
 }
 
-KIPI::Category Plugin_GalleryExport::category(KAction* action) const
+Category Plugin_GalleryExport::category(KAction* action) const
 {
     if (action == m_action)
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
 //     if (action == m_action_configure)
-//         return KIPI::ToolsPlugin;
+//         return ToolsPlugin;
 //
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ExportPlugin;
+    return ExportPlugin;
 }
+
+} // namespace KIPIGalleryExportPlugin
