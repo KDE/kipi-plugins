@@ -33,21 +33,23 @@
 
 class KAction;
 
+using namespace KIPI;
+
 namespace KIPIImageshackExportPlugin
 {
-class Imageshack;
-}
 
-class Plugin_ImageshackExport : public KIPI::Plugin
+class Imageshack;
+
+class Plugin_ImageshackExport : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_ImageshackExport(QObject* parent, const QVariantList& args);
+    Plugin_ImageshackExport(QObject* const parent, const QVariantList& args);
     ~Plugin_ImageshackExport();
 
-    virtual KIPI::Category category(KAction* action) const;
+    virtual Category category(KAction* action) const;
     virtual void setup(QWidget*);
 
 public Q_SLOTS:
@@ -56,9 +58,10 @@ public Q_SLOTS:
 
 private:
 
-    KAction*                                m_action;
-    KIPIImageshackExportPlugin::Imageshack* m_pImageshack;
-
+    KAction*    m_action;
+    Imageshack* m_pImageshack;
 };
+
+} // namespace KIPIImageshackExportPlugin
 
 #endif /* PLUGIN_IMAGESHACKEXPORT_H */
