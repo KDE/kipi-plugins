@@ -37,27 +37,29 @@ class QWidget;
 
 class KAction;
 
-namespace KIPIFlashExportPlugin
-{
-class FlashManager;
-}
-
 namespace KIPI
 {
     class Interface;
 }
 
-class Plugin_FlashExport : public KIPI::Plugin
+using namespace KIPI;
+
+namespace KIPIFlashExportPlugin
+{
+
+class FlashManager;
+
+class Plugin_FlashExport : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_FlashExport(QObject* parent, const QVariantList& args);
+    Plugin_FlashExport(QObject* const parent, const QVariantList& args);
     virtual ~Plugin_FlashExport();
 
-    KIPI::Category category( KAction* action ) const;
-    void setup( QWidget* );
+    Category category(KAction* action) const;
+    void setup(QWidget*);
 
 public Q_SLOTS:
 
@@ -65,13 +67,15 @@ public Q_SLOTS:
 
 private:
 
-    QWidget*                         m_parentWidget;
+    QWidget*      m_parentWidget;
 
-    KAction*                         m_action;
+    KAction*      m_action;
 
-    KIPIFlashExportPlugin::FlashManager* m_manager;
+    FlashManager* m_manager;
 
-    KIPI::Interface*                 m_interface;
+    Interface*    m_interface;
 };
+
+} // namespace KIPIFlashExportPlugin
 
 #endif /* PLUGIN_FLASHEXPORT_H */
