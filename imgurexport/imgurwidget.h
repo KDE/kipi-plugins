@@ -26,7 +26,6 @@
 // Qt includes
 
 #include <QWidget>
-#include <QProgressBar>
 #include <QLabel>
 
 // KDE includes
@@ -37,13 +36,9 @@
 
 #include "imgurtalker.h"
 #include "imgurimageslist.h"
+#include "kpprogresswidget.h"
 
-namespace KIPI
-{
-    class Interface;
-}
-
-using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIImgurExportPlugin
 {
@@ -57,8 +52,8 @@ public:
     ImgurWidget(QWidget* const parent = 0);
     ~ImgurWidget();
 
-    ImgurImagesList* imagesList()  const;
-    QProgressBar*    progressBar() const;
+    ImgurImagesList*  imagesList()  const;
+    KPProgressWidget* progressBar() const;
 
 Q_SIGNALS:
 
@@ -72,10 +67,8 @@ public Q_SLOTS:
 
 private:
 
-    ImgurImagesList* m_imagesList;
-    QLabel*          m_headerLbl;
-    QLabel*          m_textLbl;
-    QProgressBar*    m_progressBar;
+    class ImgurWidgetPriv;
+    ImgurWidgetPriv* const d;
 };
 
 } // namespace KIPIImgurExportPlugin

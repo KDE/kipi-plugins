@@ -30,60 +30,80 @@
 
 #include <klocale.h>
 
-using namespace KIPIPlugins;
-
 namespace KIPIImgurExportPlugin
 {
 
+class ImgurWidget::ImgurWidgetPriv
+{
+public:
+
+    ImgurWidgetPriv()
+    {
+        headerLbl   = 0;
+        textLbl     = 0;
+        imagesList  = 0;
+        progressBar = 0;
+    }
+
+    QLabel*           headerLbl;
+    QLabel*           textLbl;
+    ImgurImagesList*  imagesList;
+    KPProgressWidget* progressBar;
+};
+
 ImgurWidget::ImgurWidget(QWidget* const parent)
-    : QWidget(parent)
+    : QWidget(parent), d(new ImgurWidgetPriv)
 {
     QHBoxLayout* mainLayout = new QHBoxLayout(this);
-    m_imagesList            = new ImgurImagesList(this);
+    d->imagesList           = new ImgurImagesList(this);
 
-    m_imagesList->loadImagesFromCurrentSelection();
-    m_imagesList->setAllowDuplicate(false);
-    m_imagesList->setAllowRAW(false);
+    d->imagesList->loadImagesFromCurrentSelection();
+    d->imagesList->setAllowDuplicate(false);
+    d->imagesList->setAllowRAW(false);
 
     QWidget* settingsBox           = new QWidget(this);
     QVBoxLayout* settingsBoxLayout = new QVBoxLayout(settingsBox);
 
-    m_headerLbl = new QLabel(settingsBox);
-    m_headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
-    m_headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
-    m_headerLbl->setOpenExternalLinks(true);
-    m_headerLbl->setFocusPolicy(Qt::NoFocus);
+    d->headerLbl = new QLabel(settingsBox);
+    d->headerLbl->setWhatsThis(i18n("This is a clickable link to open the Imgur home page in a web browser"));
+    d->headerLbl->setText(QString("<h2><a href='http://imgur.com'>imgur.com</a></h2>"));
+    d->headerLbl->setOpenExternalLinks(true);
+    d->headerLbl->setFocusPolicy(Qt::NoFocus);
 
-    m_textLbl = new QLabel(settingsBox);
-    m_textLbl->setText(i18n("You can retreive the image URLs from the Xmp tags:\n"
+    d->textLbl = new QLabel(settingsBox);
+    d->textLbl->setText(i18n("You can retreive the image URLs from the Xmp tags:\n"
                             "\"Imgur URL\" and \"Imgur Delete URL\". \n"));
-    m_textLbl->setFocusPolicy(Qt::NoFocus);
+    d->textLbl->setFocusPolicy(Qt::NoFocus);
 
-    m_progressBar = new QProgressBar(settingsBox);
-    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    m_progressBar->setVisible(false);
+    d->progressBar = new KPProgressWidget(settingsBox);
+    d->progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    d->progressBar->setVisible(false);
 
     // --------------------------------------------
 
-    settingsBoxLayout->addWidget(m_headerLbl);
-    settingsBoxLayout->addWidget(m_textLbl);
-
-    settingsBoxLayout->addWidget(m_progressBar);
+    settingsBoxLayout->addWidget(d->headerLbl);
+    settingsBoxLayout->addWidget(d->textLbl);
+    settingsBoxLayout->addWidget(d->progressBar);
     settingsBoxLayout->setSpacing(KDialog::spacingHint());
     settingsBoxLayout->setMargin(KDialog::spacingHint());
 
     // --------------------------------------------
 
-    mainLayout->addWidget(m_imagesList);
+    mainLayout->addWidget(d->imagesList);
     mainLayout->addWidget(settingsBox);
     mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->setMargin(0);
 
-    connect(m_imagesList, SIGNAL(signalAddItems(KUrl::List)),
+    connect(d->imagesList, SIGNAL(signalAddItems(KUrl::List)),
             this, SLOT(slotAddItems(KUrl::List)));
 
-    connect(m_imagesList, SIGNAL(signalImageListChanged()),
+    connect(d->imagesList, SIGNAL(signalImageListChanged()),
             this, SLOT(slotImageListChanged()));
+}
+
+ImgurWidget::~ImgurWidget()
+{
+    delete d;
 }
 
 void ImgurWidget::slotAddItems(const KUrl::List& list)
@@ -96,19 +116,14 @@ void ImgurWidget::slotImageListChanged()
     emit signalImageListChanged();
 }
 
-ImgurWidget::~ImgurWidget()
-{
-    // TODO
-}
-
 ImgurImagesList* ImgurWidget::imagesList() const
 {
-    return m_imagesList;
+    return d->imagesList;
 }
 
-QProgressBar* ImgurWidget::progressBar() const
+KPProgressWidget* ImgurWidget::progressBar() const
 {
-    return m_progressBar;
+    return d->progressBar;
 }
 
 } // namespace KIPIImgurExportPlugin

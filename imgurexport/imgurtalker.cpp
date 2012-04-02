@@ -47,17 +47,44 @@
 namespace KIPIImgurExportPlugin
 {
 
-ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
+class ImgurTalker::ImgurTalkerPriv
 {
-    m_parent               = parent;
-    m_interface            = interface;
+public:
 
-    m_job                  = 0;
-    m_userAgent            = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
+    ImgurTalkerPriv()
+    {
+        parent    = 0;
+        interface = 0;
+        job       = 0;
+        queue     = 0;
+    }
 
-    m_apiKey               = _IMGUR_API_KEY;
+    QString     apiKey;
+    QString     userAgent;
 
-    m_queue                = new KUrl::List();
+    QWidget*    parent;
+    Interface*  interface;
+    QByteArray  buffer;
+
+    State       state;
+    KUrl        currentUrl;
+    KIO::Job*   job;
+
+    KUrl::List* queue;
+};
+
+ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
+    : d(new ImgurTalkerPriv)
+{
+    d->parent               = parent;
+    d->interface            = interface;
+
+    d->job                  = 0;
+    d->userAgent            = QString("KIPI-Plugins-ImgurTalker/" + kipipluginsVersion());
+
+    d->apiKey               = _IMGUR_API_KEY;
+
+    d->queue                = new KUrl::List();
     ImageCollection images = interface->currentSelection();
 
     if (images.isValid())
@@ -68,11 +95,12 @@ ImgurTalker::ImgurTalker(Interface* const interface, QWidget* const parent)
 
 ImgurTalker::~ImgurTalker()
 {
-    if (m_job)
+    if (d->job)
     {
         kDebug() << "Killing job";
-        m_job->kill();
+        d->job->kill();
     }
+    delete d;
 }
 
 void ImgurTalker::slotData(KIO::Job* j, const QByteArray& data)
@@ -82,11 +110,11 @@ void ImgurTalker::slotData(KIO::Job* j, const QByteArray& data)
         return;
     }
 
-    int oldSize = m_buffer.size();
+    int oldSize = d->buffer.size();
     int newSize = data.size();
 
-    m_buffer.resize(m_buffer.size() + newSize);
-    memcpy(m_buffer.data()+oldSize, data.data(), newSize);
+    d->buffer.resize(d->buffer.size() + newSize);
+    memcpy(d->buffer.data()+oldSize, data.data(), newSize);
 
     emit signalUploadProgress(j->percent());
 }
@@ -105,20 +133,20 @@ void ImgurTalker::slotResult(KJob* kjob)
 
     bool parseOk = false;
 
-    switch(m_state)
+    switch(d->state)
     {
         case IE_REMOVEPHOTO:
-            parseOk = parseResponseImageRemove(m_buffer);
+            parseOk = parseResponseImageRemove(d->buffer);
             break;
 
         case IE_ADDPHOTO:
-            parseOk = parseResponseImageUpload(m_buffer);
+            parseOk = parseResponseImageUpload(d->buffer);
             break;
         default:
             break;
     }
 
-    m_buffer.resize(0);
+    d->buffer.resize(0);
 
     emit signalUploadDone();
     emit signalBusy(false);
@@ -323,12 +351,12 @@ bool ImgurTalker::parseResponseImageUpload(const QByteArray& data)
 bool ImgurTalker::imageUpload(const KUrl& filePath)
 {
     kDebug() << "Upload image" << filePath;
-    m_currentUrl   = filePath;
+    d->currentUrl   = filePath;
 
     MPForm form;
 
     KUrl exportUrl = KUrl("http://api.imgur.com/2/upload.json");
-    exportUrl.addQueryItem("key", m_apiKey);
+    exportUrl.addQueryItem("key", d->apiKey);
 
     exportUrl.addQueryItem("name", filePath.fileName());
     exportUrl.addQueryItem("title", filePath.fileName()); // this should be replaced with something the user submits
@@ -342,7 +370,7 @@ bool ImgurTalker::imageUpload(const KUrl& filePath)
     KIO::TransferJob* job = KIO::http_post(exportUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
     job->addMetaData("content-length", QString("Content-Length: %1").arg(form.formData().length()));
-    job->addMetaData("UserAgent", m_userAgent);
+    job->addMetaData("UserAgent", d->userAgent);
 
     connect(job, SIGNAL(data(KIO::Job*, const QByteArray&)),
             this, SLOT(slotData(KIO::Job*, const QByteArray&)));
@@ -350,7 +378,7 @@ bool ImgurTalker::imageUpload(const KUrl& filePath)
     connect(job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
-    m_state = IE_ADDPHOTO;
+    d->state = IE_ADDPHOTO;
 
     emit signalUploadStart(filePath);
     emit signalBusy(true);
@@ -370,9 +398,9 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
 
     KIO::TransferJob* job = KIO::http_post(removeUrl, form.formData(), KIO::HideProgressInfo);
     job->addMetaData("content-type", form.contentType());
-    job->addMetaData("UserAgent", m_userAgent);
+    job->addMetaData("UserAgent", d->userAgent);
 
-    m_state = IE_REMOVEPHOTO;
+    d->state = IE_REMOVEPHOTO;
 
     emit signalBusy(true);
 
@@ -381,10 +409,10 @@ bool ImgurTalker::imageRemove(const QString& delete_hash)
 
 void ImgurTalker::cancel()
 {
-    if (m_job)
+    if (d->job)
     {
-        m_job->kill();
-        m_job = 0;
+        d->job->kill();
+        d->job = 0;
     }
 
     emit signalBusy(false);
@@ -392,7 +420,7 @@ void ImgurTalker::cancel()
 
 //void ImgurTalker::startUpload()
 //{
-//    ImageCollection images = m_interface->currentSelection();
+//    ImageCollection images = d->interface->currentSelection();
 
 //    if (images.isValid())
 //    {
@@ -415,12 +443,12 @@ void ImgurTalker::slotAddItems(const KUrl::List& list)
     }
 
     kDebug() << "Appended" << list;
-    m_queue->append(list);
+    d->queue->append(list);
 }
 
 KUrl::List* ImgurTalker::imageQueue() const
 {
-    return m_queue;
+    return d->queue;
 }
 
 } // namespace KIPIImgurExportPlugin

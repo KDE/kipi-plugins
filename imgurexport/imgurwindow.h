@@ -71,7 +71,7 @@ public:
 
 public Q_SLOTS:
 
-//    void slotHelp();
+    void slotHelp();
     void slotImageListChanged();
     void slotStartUpload();
     void slotBusy(bool val);
@@ -90,11 +90,8 @@ private:
 
 private:
 
-    ImgurTalker* m_webService;
-    ImgurWidget* m_widget;
-
-    int          m_imagesCount;
-    int          m_imagesTotal;
+    class ImgurWindowPriv;
+    ImgurWindowPriv* const d;
 };
 
 } // namespace KIPIImgurExportPlugin

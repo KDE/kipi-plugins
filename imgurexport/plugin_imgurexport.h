@@ -36,7 +36,9 @@
 #include "imgurwindow.h"
 
 using namespace KIPI;
-using namespace KIPIImgurExportPlugin;
+
+namespace KIPIImgurExportPlugin
+{
 
 class Plugin_ImgurExport : public Plugin
 {
@@ -56,8 +58,10 @@ public Q_SLOTS:
 
 private:
 
-    KAction*     m_actionExport;
-    ImgurWindow* m_winExport;
+    class Plugin_ImgurExportPriv;
+    Plugin_ImgurExportPriv* const d;
 };
+
+} // namespace KIPIImgurExportPlugin
 
 #endif // PLUGIN_IMGUREXPORT_H
