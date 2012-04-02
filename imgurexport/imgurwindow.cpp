@@ -71,12 +71,13 @@ ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
     d->webService = new ImgurTalker(interface, this);
 
     setMainWidget(d->widget);
-
     setWindowIcon(KIcon("imgur"));
     setWindowTitle(i18n("Export to imgur.com"));
-
-    setDefaultButton(Close);
     setModal(false);
+
+    setButtons(Help | Close | User1);
+    setButtonGuiItem(User1, KGuiItem(i18n("Upload"), "network-workgroup", i18n("Start upload to Imgur")));
+    setDefaultButton(Close);
 
     connect(d->webService, SIGNAL(signalError(ImgurError)),
             this, SLOT(slotAddPhotoError(ImgurError)));
@@ -87,13 +88,7 @@ ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
     connect(d->widget, SIGNAL(signalAddItems(KUrl::List)),
             d->webService, SLOT(slotAddItems(KUrl::List)));
 
-    setButtons(KDialog::Close | KDialog::User1);
-
-    setButtonGuiItem(KDialog::User1,
-                     KGuiItem(i18n("Upload"), "network-workgroup",
-                              i18n("Start upload to Imgur")));
-
-    enableButton(KDialog::User1, !d->widget->imagesList()->imageUrls().isEmpty());
+    enableButton(User1, !d->widget->imagesList()->imageUrls().isEmpty());
 
     // ---------------------------------------------------------------
     // About data and help button.
