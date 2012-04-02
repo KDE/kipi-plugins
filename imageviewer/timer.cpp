@@ -27,7 +27,7 @@
 
 #include <kdebug.h>
 
-namespace KIPIviewer
+namespace KIPIViewerPlugin
 {
 
 Timer::Timer()
@@ -50,4 +50,4 @@ Timer::~Timer()
 {
 }
 
-} // namespace KIPIviewer
+} // namespace KIPIViewerPlugin

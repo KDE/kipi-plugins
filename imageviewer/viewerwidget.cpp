@@ -56,15 +56,14 @@
 #define GL_TEXTURE_RECTANGLE_NV    0x84F5
 #endif
 
-namespace KIPIviewer
+namespace KIPIViewerPlugin
 {
 
-ViewerWidget::ViewerWidget(KIPI::Interface* i)
+ViewerWidget::ViewerWidget(Interface* const  i)
 {
-    kipiInterface = i;
-
-    KIPI::ImageCollection selection = kipiInterface->currentSelection();
-    KIPI::ImageCollection album = kipiInterface->currentAlbum();
+    kipiInterface             = i;
+    ImageCollection selection = kipiInterface->currentSelection();
+    ImageCollection album     = kipiInterface->currentAlbum();
 
     KUrl::List myfiles; //pics which are displayed in imageviewer
     QString selectedImage; //selected pic in hostapp
@@ -164,6 +163,16 @@ ViewerWidget::ViewerWidget(KIPI::Interface* i)
 
     // other initialisations
     wheelAction = changeImage;
+}
+
+ViewerWidget::~ViewerWidget()
+{
+    glDeleteTextures(1,tex);
+    for(int i=0;i<CACHESIZE;++i)
+    {
+        cache[i].file_index=EMPTY;
+        delete cache[i].texture;
+    }
 }
 
 /*!
@@ -278,7 +287,7 @@ void ViewerWidget::resizeGL(int w, int h)
     \fn ViewerWidget::drawImage(Texture* texture)
     \brief render the image
  */
-void ViewerWidget::drawImage(Texture* texture)
+void ViewerWidget::drawImage(Texture* const texture)
 {
 // 	cout << "enter drawImage: target=" << texture->texnr() << " dim=" << texture->height() << " " << texture->width();
     glBindTexture(GL_TEXTURE_RECTANGLE_NV, texture->texnr());
@@ -467,7 +476,7 @@ void ViewerWidget::keyReleaseEvent(QKeyEvent* e)
     \fn ViewerWidget::downloadTex(Texture* tex)
     download texture to video memory
  */
-void ViewerWidget::downloadTex(Texture* tex)
+void ViewerWidget::downloadTex(Texture* const tex)
 {
     glBindTexture(GL_TEXTURE_RECTANGLE_NV, tex->texnr());
     // glTexParameterf(GL_TEXTURE_RECTANGLE_NV, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER_ARB);
@@ -833,4 +842,4 @@ bool ViewerWidget::isReallyFullScreen() const
     return (width() == screen_width);
 }
 
-} // namespace KIPIviewer
+} // namespace KIPIViewerPlugin

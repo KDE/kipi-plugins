@@ -61,10 +61,11 @@
 #define CACHESIZE 4
 #define EMPTY 99999
 
-namespace KIPIviewer
-{
-
+using namespace KIPI;
 using namespace std;
+
+namespace KIPIViewerPlugin
+{
 
 enum OGLstate
 {
@@ -79,19 +80,11 @@ class ViewerWidget : public QGLWidget
 
 public:
 
-    ViewerWidget(KIPI::Interface*);
-    ~ViewerWidget()
-    {
-        glDeleteTextures(1,tex);
-        for(int i=0;i<CACHESIZE;++i)
-        {
-            cache[i].file_index=EMPTY;
-            delete cache[i].texture;
-        }
-    }
+    ViewerWidget(Interface* const);
+    ~ViewerWidget();
 
-    void     drawImage(Texture* tex);
-    void     downloadTex(Texture* tex);
+    void     drawImage(Texture* const tex);
+    void     downloadTex(Texture* const tex);
     Texture* loadImage(int file_index);
     void     prevImage();
     void     nextImage();
@@ -119,6 +112,8 @@ protected:
         changeImage
     };
 
+protected:
+
     Texture*         texture;
     unsigned int     old_file_idx, file_idx, idx, oldidx;
     float            ratio_view_y, ratio_view_x, delta;
@@ -138,22 +133,23 @@ protected:
     float            zoomfactor_scrollwheel,  zoomfactor_mousemove,  zoomfactor_keyboard;
     QString          nullImage;
     int              screen_width;
-    KIPI::Interface* kipiInterface;
+    Interface*       kipiInterface;
 
 protected:
+
+    bool isReallyFullScreen() const;
 
     virtual void keyPressEvent(QKeyEvent* k);
     virtual void wheelEvent(QWheelEvent* e);
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseDoubleClickEvent(QMouseEvent* e);
-    bool isReallyFullScreen() const;
 
 private Q_SLOTS:
 
     void timeoutMouseMove();
 };
 
-} // namespace KIPIviewer
+} // namespace KIPIViewerPlugin
 
 #endif // VIEWERWIDGET_H

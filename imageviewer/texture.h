@@ -48,7 +48,7 @@ using namespace KIPIPlugins;
  * @version 0.2
  */
 
-namespace KIPIviewer
+namespace KIPIViewerPlugin
 {
 
 class Texture
@@ -56,11 +56,12 @@ class Texture
 
 public:
 
-    Texture(Interface*);
+    Texture(Interface* const);
     ~Texture();
 
     int  height() const;
-    int  width() const ;
+    int  width()  const;
+
     bool load(const QString& fn, const QSize& size, GLuint tn);
     bool load(const QImage& im, const QSize& size, GLuint tn);
 
@@ -98,6 +99,6 @@ protected:
     Interface*                   kipiInterface;
 };
 
-} // namespace KIPIviewer
+} // namespace KIPIViewerPlugin
 
 #endif // TEXTURE_H

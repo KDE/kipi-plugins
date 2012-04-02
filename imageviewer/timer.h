@@ -34,7 +34,7 @@
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
  * @version 0.2
  */
-namespace KIPIviewer
+namespace KIPIViewerPlugin
 {
 
 class Timer
@@ -53,6 +53,6 @@ protected:
     int   meantime;
 };
 
-} // namespace KIPIviewer
+} // namespace KIPIViewerPlugin
 
 #endif // TIMER_H

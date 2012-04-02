@@ -54,10 +54,10 @@
 
 using namespace KDcrawIface;
 
-namespace KIPIviewer
+namespace KIPIViewerPlugin
 {
 
-Texture::Texture(Interface* i)
+Texture::Texture(Interface* const i)
 {
     kipiInterface  = i;
     rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
@@ -451,4 +451,4 @@ void Texture::zoomToOriginal()
     zoom(zoomfactorToOriginal,QPoint(display_x/2,display_y/2));
 }
 
-} // namespace KIPIviewer
+} // namespace KIPIViewerPlugin

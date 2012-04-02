@@ -4,8 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using
- *               an OpenGL interface.
+ * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
  *
@@ -34,20 +33,26 @@
 
 class KAction;
 
+using namespace KIPI;
+
+namespace KIPIViewerPlugin
+{
+
 /**
  * @short integration with KIPI
  * @author Markus Leuthold <kusi (+at) forum.titlis.org>
  * @version 0.2
  */
-class Plugin_viewer :public KIPI::Plugin
+class Plugin_viewer :public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_viewer(QObject* parent, const QVariantList&);
+    Plugin_viewer(QObject* const parent, const QVariantList&);
+
     virtual void setup(QWidget* widget);
-    virtual KIPI::Category category(KAction* action) const;
+    virtual Category category(KAction* action) const;
 
 public Q_SLOTS:
 
@@ -55,8 +60,10 @@ public Q_SLOTS:
 
 protected:
 
-    KIPIviewer::ViewerWidget* widget;
-    KAction*                  actionViewer;
+    ViewerWidget* m_widget;
+    KAction*      m_actionViewer;
 };
+
+} // namespace KIPIViewerPlugin
 
 #endif /* PLUGIN_VIEWER_H */

@@ -45,20 +45,23 @@
 
 #include "viewerwidget.h"
 
+namespace KIPIViewerPlugin
+{
+
 K_PLUGIN_FACTORY(viewerFactory, registerPlugin<Plugin_viewer>();)
 K_EXPORT_PLUGIN(viewerFactory("kipiplugin_imageviewer"))
 
-Plugin_viewer::Plugin_viewer(QObject* parent, const QVariantList&)
-     : KIPI::Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer")
+Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
+     : Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer")
 {
     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
 }
 
 void Plugin_viewer::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
-    KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* pv_interface = dynamic_cast<Interface*>(parent());
 
     if ( !pv_interface )
     {
@@ -66,14 +69,14 @@ void Plugin_viewer::setup(QWidget* widget)
         return;
     }
 
-    actionViewer = actionCollection()->addAction("oglimageviewer");
-    actionViewer->setText(i18n("OpenGL Image Viewer..."));
-    actionViewer->setIcon(KIcon("ogl"));
+    m_actionViewer = actionCollection()->addAction("oglimageviewer");
+    m_actionViewer->setText(i18n("OpenGL Image Viewer..."));
+    m_actionViewer->setIcon(KIcon("ogl"));
 
-    connect(actionViewer, SIGNAL(triggered(bool)),
+    connect(m_actionViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(actionViewer);
+    addAction(m_actionViewer);
 }
 
 /*!
@@ -81,7 +84,7 @@ void Plugin_viewer::setup(QWidget* widget)
  */
 void  Plugin_viewer::slotActivate()
 {
-    KIPI::Interface* pv_interface = dynamic_cast<KIPI::Interface*>( parent() );
+    Interface* pv_interface = dynamic_cast<Interface*>(parent());
 
     if ( !pv_interface )
     {
@@ -89,41 +92,44 @@ void  Plugin_viewer::slotActivate()
         return;
     }
 
-    widget = new KIPIviewer::ViewerWidget(pv_interface);
-    if ( widget->listOfFilesIsEmpty() )
+    m_widget = new ViewerWidget(pv_interface);
+    if ( m_widget->listOfFilesIsEmpty() )
     {
-        delete widget;
+        delete m_widget;
         return;
     }
-    switch(widget->getOGLstate())
+
+    switch(m_widget->getOGLstate())
     {
-        case KIPIviewer::oglOK:
-            widget->show();
+        case oglOK:
+            m_widget->show();
             break;
 
-        case KIPIviewer::oglNoRectangularTexture:
+        case oglNoRectangularTexture:
             kError() << "GL_ARB_texture_rectangle not supported";
-            delete widget;
+            delete m_widget;
             QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
-        case KIPIviewer::oglNoContext:
+        case oglNoContext:
             kError() << "no OpenGL context found";
-            delete widget;
+            delete m_widget;
             QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("no OpenGL context found"));
             break;
     }
 }
 
-KIPI::Category Plugin_viewer::category(KAction* action) const
+Category Plugin_viewer::category(KAction* action) const
 {
-    if ( action == actionViewer )
+    if ( action == m_actionViewer )
     {
-        return KIPI::ToolsPlugin;
+        return ToolsPlugin;
     }
     else
     {
         kWarning() << "Unrecognized action for plugin category identification";
-        return KIPI::ToolsPlugin; // no warning from compiler, please
+        return ToolsPlugin; // no warning from compiler, please
     }
 }
+
+} // namespace KIPIViewerPlugin
