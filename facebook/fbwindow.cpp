@@ -727,6 +727,7 @@ void FbWindow::uploadNextPhoto()
     if (m_transferQueue.isEmpty())
     {
         m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         return;
     }
 
