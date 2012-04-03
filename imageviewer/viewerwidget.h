@@ -111,22 +111,8 @@ private:
 
 private:
 
-    GLuint           m_tex[3];
-    QStringList      m_files;
-    unsigned int     m_file_idx;
-    Cache            m_cache[CACHESIZE];
-    Texture*         m_texture;
-    float            m_ratio_view_y, m_ratio_view_x, m_delta;
-    float            m_vertex_height, m_vertex_width, m_vertex_left, m_vertex_top, m_vertex_right, m_vertex_bottom;
-    QPoint           m_startdrag, m_previous_pos;
-    WheelAction      m_wheelAction;
-    bool             m_firstImage;
-    QSize            m_zoomsize;
-    QTimer           m_timerMouseMove;
-    QCursor          m_moveCursor, m_zoomCursor;
-    float            m_zoomfactor_scrollwheel,  m_zoomfactor_mousemove, m_zoomfactor_keyboard;
-    QString          m_nullImage;
-    int              m_screen_width;
+    class ViewerWidgetPriv;
+    ViewerWidgetPriv* const d;
 };
 
 } // namespace KIPIViewerPlugin
