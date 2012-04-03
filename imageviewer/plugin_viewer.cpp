@@ -23,10 +23,6 @@
 
 #include "plugin_viewer.moc"
 
-// Qt includes
-
-#include <QMessageBox>
-
 // KDE includes
 
 #include <kaction.h>
@@ -35,6 +31,7 @@
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <kurl.h>
+#include <kmessagebox.h>
 
 // LibKIPI includes
 
@@ -57,13 +54,17 @@ Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
 }
 
+Plugin_viewer::~Plugin_viewer()
+{
+}
+
 void Plugin_viewer::setup(QWidget* widget)
 {
     Plugin::setup(widget);
 
-    Interface* pv_interface = dynamic_cast<Interface*>(parent());
+    Interface* iface = dynamic_cast<Interface*>(parent());
 
-    if ( !pv_interface )
+    if ( !iface )
     {
         kError() << "Kipi interface is null!";
         return;
@@ -79,20 +80,18 @@ void Plugin_viewer::setup(QWidget* widget)
     addAction(m_actionViewer);
 }
 
-/*!
-    \fn Plugin_viewer::slotActivate()
- */
 void  Plugin_viewer::slotActivate()
 {
-    Interface* pv_interface = dynamic_cast<Interface*>(parent());
+    Interface* iface = dynamic_cast<Interface*>(parent());
 
-    if ( !pv_interface )
+    if ( !iface )
     {
         kError() << "Kipi interface is null!";
         return;
     }
 
-    m_widget = new ViewerWidget(pv_interface);
+    m_widget = new ViewerWidget(iface);
+
     if ( m_widget->listOfFilesIsEmpty() )
     {
         delete m_widget;
@@ -108,13 +107,13 @@ void  Plugin_viewer::slotActivate()
         case oglNoRectangularTexture:
             kError() << "GL_ARB_texture_rectangle not supported";
             delete m_widget;
-            QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
+            KMessageBox::error(0, i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
         case oglNoContext:
             kError() << "no OpenGL context found";
             delete m_widget;
-            QMessageBox::critical(new QWidget(), i18n("OpenGL error"), i18n("no OpenGL context found"));
+            KMessageBox::error(0, i18n("OpenGL error"), i18n("no OpenGL context found"));
             break;
     }
 }

@@ -38,11 +38,6 @@ using namespace KIPI;
 namespace KIPIViewerPlugin
 {
 
-/**
- * @short integration with KIPI
- * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.2
- */
 class Plugin_viewer :public Plugin
 {
     Q_OBJECT
@@ -50,9 +45,10 @@ class Plugin_viewer :public Plugin
 public:
 
     Plugin_viewer(QObject* const parent, const QVariantList&);
-
-    virtual void setup(QWidget* widget);
-    virtual Category category(KAction* action) const;
+    ~Plugin_viewer();
+    
+    void setup(QWidget* widget);
+    Category category(KAction* action) const;
 
 public Q_SLOTS:
 
