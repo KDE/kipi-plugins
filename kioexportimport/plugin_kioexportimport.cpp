@@ -48,13 +48,14 @@
 #include "KioExportWindow.h"
 #include "KioImportWindow.h"
 
-using namespace KIPIKioExportPlugin;
+namespace KIPIKioExportPlugin
+{
 
 K_PLUGIN_FACTORY( KioFactory, registerPlugin<Plugin_KioExportImport>(); )
 K_EXPORT_PLUGIN ( KioFactory("kipiplugin_kioexportimport") )
 
-Plugin_KioExportImport::Plugin_KioExportImport(QObject *parent, const QVariantList&)
-                      : KIPI::Plugin(KioFactory::componentData(), parent, "KioExportImport")
+Plugin_KioExportImport::Plugin_KioExportImport(QObject* const parent, const QVariantList&)
+    : Plugin(KioFactory::componentData(), parent, "KioExportImport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_KioExportImport plugin loaded";
 }
@@ -64,7 +65,7 @@ void Plugin_KioExportImport::setup(QWidget* widget)
     m_dlgExport = 0;
     m_dlgImport = 0;
 
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     // export
     m_actionExport = actionCollection()->addAction("kioexport");
@@ -89,10 +90,10 @@ void Plugin_KioExportImport::setup(QWidget* widget)
     addAction(m_actionImport);
 
     // check interface availability
-    KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
+    Interface *interface = dynamic_cast<Interface*> (parent());
     if (!interface)
     {
-        kError() << "KIPI::Interface empty";
+        kError() << "Interface empty";
         m_actionExport->setEnabled(false);
         m_actionImport->setEnabled(false);
         return;
@@ -103,10 +104,10 @@ void Plugin_KioExportImport::slotActivateExport()
 {
     kDebug() << "Starting KIO export";
 
-    KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
+    Interface *interface = dynamic_cast<Interface*> (parent());
     if (!interface)
     {
-        kError() << "KIPI::Interface empty";
+        kError() << "Interface empty";
         return;
     }
 
@@ -130,10 +131,10 @@ void Plugin_KioExportImport::slotActivateImport()
 {
     kDebug() << "Starting KIO import";
 
-    KIPI::Interface *interface = dynamic_cast<KIPI::Interface*> (parent());
+    Interface *interface = dynamic_cast<Interface*> (parent());
     if (!interface)
     {
-        kError() << "KIPI::Interface empty";
+        kError() << "Interface empty";
         return;
     }
 
@@ -153,19 +154,21 @@ void Plugin_KioExportImport::slotActivateImport()
     m_dlgImport->show();
 }
 
-KIPI::Category Plugin_KioExportImport::category(KAction* action) const
+Category Plugin_KioExportImport::category(KAction* action) const
 {
     if (action == m_actionExport)
     {
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
     }
     else if (action == m_actionImport)
     {
-        return KIPI::ImportPlugin;
+        return ImportPlugin;
     }
     else
     {
         kWarning() << "Received unknown action";
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
     }
 }
+
+} // namespace KIPIKioExportPlugin
