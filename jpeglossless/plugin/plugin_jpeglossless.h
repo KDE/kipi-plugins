@@ -39,7 +39,9 @@
 #include "actions.h"
 
 using namespace KIPI;
-using namespace KIPIJPEGLossLessPlugin;
+
+namespace KIPIJPEGLossLessPlugin
+{
 
 class Plugin_JPEGLossless : public Plugin
 {
@@ -81,5 +83,7 @@ private:
     class Plugin_JPEGLosslessPriv;
     Plugin_JPEGLosslessPriv* const d;
 };
+
+} // namespace KIPIJPEGLossLessPlugin
 
 #endif /* PLUGIN_JPEGLOSSLESS_H */
