@@ -54,7 +54,7 @@ namespace KIPIViewerPlugin
 
 ViewerWidget::ViewerWidget(Interface* const iface)
 {
-    m_kipiInterface             = iface;
+    m_kipiInterface           = iface;
     ImageCollection selection = m_kipiInterface->currentSelection();
     ImageCollection album     = m_kipiInterface->currentAlbum();
 
@@ -62,8 +62,8 @@ ViewerWidget::ViewerWidget(Interface* const iface)
     QString selectedImage; //selected pic in hostapp
 
     int foundNumber = 0;
-    m_texture         = 0;
-    file_idx        = 0; //index of picture to be displayed
+    m_texture       = 0;
+    m_file_idx      = 0; //index of picture to be displayed
 
     //determine screen size for isReallyFullScreen
     QDesktopWidget dw;
@@ -78,7 +78,7 @@ ViewerWidget::ViewerWidget(Interface* const iface)
     {
         kDebug() << "one image selected, load entire album and start with selected image" ;
         selectedImage = selection.images().first().path();
-        myfiles = album.images();
+        myfiles       = album.images();
     }
     else if ( selection.images().count()>1 )
     {
@@ -86,7 +86,7 @@ ViewerWidget::ViewerWidget(Interface* const iface)
         myfiles = selection.images();
     }
 
-    // populate QStringList::files
+    // populate QStringList::m_files
     for(KUrl::List::Iterator it = myfiles.begin(); it != myfiles.end(); ++it)
     {
         // find selected image in album in order to determine the first displayed image
@@ -97,32 +97,32 @@ ViewerWidget::ViewerWidget(Interface* const iface)
         if ( s == selectedImage )
         {
             kDebug() << "selected img  " << selectedImage << " has idx=" << foundNumber ;
-            file_idx = foundNumber;
+            m_file_idx = foundNumber;
         }
 
-        // only add images to files
+        // only add images to m_files
         KMimeType::Ptr type = KMimeType::findByUrl(s);
         bool isImage        = type->name().contains("image", Qt::CaseInsensitive);
 
         if ( isImage )
         {
-            files.append(s);
+            m_files.append(s);
             foundNumber++;  //counter for searching the start image in case one image is selected
             kDebug() << s << " type=" << type->name() ;
         }
     }
 
     m_firstImage = true;
-    kDebug() << files.count() << "images loaded" ;
+    kDebug() << m_files.count() << "images loaded" ;
 
     // initialize cache
     for(int i = 0 ; i < CACHESIZE ; ++i)
     {
-        cache[i].file_index = EMPTY;
-        cache[i].texture    = new Texture(m_kipiInterface);
+        m_cache[i].file_index = EMPTY;
+        m_cache[i].texture    = new Texture(m_kipiInterface);
     }
 
-    if ( files.isEmpty() )
+    if ( m_files.isEmpty() )
         return;
 
     // define zoomfactors for one zoom step
@@ -132,9 +132,9 @@ ViewerWidget::ViewerWidget(Interface* const iface)
 
     // load cursors for zooming and panning
     QString file;
-    file       = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/zoom.png" );
+    file         = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/zoom.png" );
     m_zoomCursor = QCursor(QPixmap(file));
-    file       = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/hand.png" );
+    file         = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/hand.png" );
     m_zoomCursor = QCursor(QPixmap(file));
 
     // get path of nullImage in case QImage can't load the image
@@ -160,11 +160,11 @@ ViewerWidget::ViewerWidget(Interface* const iface)
 
 ViewerWidget::~ViewerWidget()
 {
-    glDeleteTextures(1,tex);
-    for(int i=0;i<CACHESIZE;++i)
+    glDeleteTextures(1, m_tex);
+    for(int i = 0 ; i < CACHESIZE ; ++i)
     {
-        cache[i].file_index=EMPTY;
-        delete cache[i].texture;
+        m_cache[i].file_index=EMPTY;
+        delete m_cache[i].texture;
     }
 }
 
@@ -180,17 +180,17 @@ void ViewerWidget::initializeGL()
     // Turn Blending On
     glEnable(GL_BLEND);
     // Blending Function For Translucency Based On Source Alpha Value
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     // Enable perspective vision
     glClearDepth(1.0f);
     // Generate m_texture
-    glGenTextures(1, tex);
+    glGenTextures(1, m_tex);
     //kDebug() << "width=" << width();
 }
 
 bool ViewerWidget::listOfFilesIsEmpty() const
 {
-    return files.isEmpty();
+    return m_files.isEmpty();
 }
 
 /*!
@@ -204,7 +204,7 @@ void ViewerWidget::paintGL()
     if (m_firstImage && isReallyFullScreen())
     {
         //kDebug() << "first image";
-        m_texture = loadImage(file_idx);
+        m_texture = loadImage(m_file_idx);
         m_texture->reset();
         downloadTex(m_texture);
 
@@ -222,9 +222,9 @@ void ViewerWidget::paintGL()
         //preload the 2nd image
         if (m_firstImage)
         {
-            if (file_idx < (unsigned int)(files.count()-1))
+            if (m_file_idx < (unsigned int)(m_files.count()-1))
             {
-                loadImage(file_idx+1);
+                loadImage(m_file_idx+1);
             }
             m_firstImage=false;
         }
@@ -484,25 +484,25 @@ void ViewerWidget::downloadTex(Texture* const tex)
 
 /*!
     \fn ViewerWidget::loadImage(int file_index)
-    \param file_index index to QStringList files
-    load files[file_index] into a texture object if it is not already cached
+    \param file_index index to QStringList m_files
+    load m_files[file_index] into a texture object if it is not already cached
  */
 Texture* ViewerWidget::loadImage(int file_index)
 {
     int imod = file_index%CACHESIZE; //index for cache
-    if (cache[imod].file_index==file_index)
+    if (m_cache[imod].file_index==file_index)
     {
         //image is already cached
         kDebug() << "image " << file_index << " is already in cache@" << imod ;
-        return cache[imod].texture;
+        return m_cache[imod].texture;
 
     }
     else
     {
         // image is net yet loaded
-        QString f = files[file_index];
+        QString f = m_files[file_index];
         kDebug() << "loading image " << f << "(idx=" << file_index << ") to cache@" << imod ;
-        cache[imod].file_index=file_index;
+        m_cache[imod].file_index=file_index;
 
         //when loadImage is called the first time, the frame is not yet fullscreen
         QSize size;
@@ -521,13 +521,13 @@ Texture* ViewerWidget::loadImage(int file_index)
         }
 
         // handle non-loadable images
-        if (!cache[imod].texture->load(f,size,tex[0]))
+        if (!m_cache[imod].texture->load(f, size, m_tex[0]))
         {
-            cache[imod].texture->load(m_nullImage,size,tex[0]);
+            m_cache[imod].texture->load(m_nullImage, size, m_tex[0]);
         }
 
-        cache[imod].texture->setViewport(size.width(),size.height());
-        return cache[imod].texture;
+        m_cache[imod].texture->setViewport(size.width(), size.height());
+        return m_cache[imod].texture;
     }
 }
 
@@ -648,8 +648,8 @@ void ViewerWidget::prevImage()
     Timer timer;
 #endif
 
-    if (file_idx>0)
-        file_idx--;
+    if (m_file_idx>0)
+        m_file_idx--;
     else
         return;
 
@@ -657,7 +657,7 @@ void ViewerWidget::prevImage()
     timer.start();
 #endif
 
-    m_texture = loadImage(file_idx);
+    m_texture = loadImage(m_file_idx);
     m_texture->reset();
 
 #ifdef PERFORMANCE_ANALYSIS
@@ -677,8 +677,8 @@ void ViewerWidget::prevImage()
 #endif
 
     //image preloading
-    if (file_idx>0)
-        loadImage(file_idx-1);
+    if (m_file_idx>0)
+        loadImage(m_file_idx-1);
 }
 
 /*!
@@ -690,8 +690,8 @@ void ViewerWidget::nextImage()
     Timer timer;
 #endif
 
-    if (file_idx < (unsigned int)(files.count()-1))
-        file_idx++;
+    if (m_file_idx < (unsigned int)(m_files.count()-1))
+        m_file_idx++;
     else
         return;
 
@@ -699,7 +699,7 @@ void ViewerWidget::nextImage()
     timer.start();
 #endif
 
-    m_texture = loadImage(file_idx);
+    m_texture = loadImage(m_file_idx);
     m_texture->reset();
 
 #ifdef PERFORMANCE_ANALYSIS
@@ -719,9 +719,9 @@ void ViewerWidget::nextImage()
 #endif
 
     //image preloading
-    if (file_idx < ((unsigned int)files.count()-1))
+    if (m_file_idx < ((unsigned int)m_files.count()-1))
     {
-        loadImage(file_idx+1);
+        loadImage(m_file_idx+1);
 
 #ifdef PERFORMANCE_ANALYSIS
         timer.at("preloading");

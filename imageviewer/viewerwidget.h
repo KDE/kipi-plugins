@@ -121,15 +121,12 @@ private:
 
 private:
 
-    unsigned int     old_file_idx, file_idx, idx, oldidx;
-    QTime            timer;
-    QStringList      files;
-    Cache            cache[CACHESIZE];
-    GLuint           tex[3];
-    unsigned char*   m_imageJPEGLIB;
+    GLuint           m_tex[3];
+    QStringList      m_files;
+    unsigned int     m_file_idx;
+    Cache            m_cache[CACHESIZE];
     Texture*         m_texture;
     float            m_ratio_view_y, m_ratio_view_x, m_delta;
-    QDir             m_directory;
     float            m_vertex_height, m_vertex_width, m_vertex_left, m_vertex_top, m_vertex_right, m_vertex_bottom;
     QPoint           m_startdrag, m_previous_pos;
     WheelAction      m_wheelAction;
