@@ -36,6 +36,10 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 
+// Libkipi includes
+
+#include <libkipi/imagecollection.h>
+
 // Local includes
 
 #include "timer.h"
@@ -55,9 +59,8 @@ namespace KIPIViewerPlugin
 
 ViewerWidget::ViewerWidget(Interface* const iface)
 {
-    m_kipiInterface           = iface;
-    ImageCollection selection = m_kipiInterface->currentSelection();
-    ImageCollection album     = m_kipiInterface->currentAlbum();
+    ImageCollection selection = iface->currentSelection();
+    ImageCollection album     = iface->currentAlbum();
 
     KUrl::List myfiles; //pics which are displayed in imageviewer
     QString selectedImage; //selected pic in hostapp

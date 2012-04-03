@@ -44,7 +44,6 @@
 
 // LibKIPI includes
 
-#include <libkipi/imagecollection.h>
 #include <libkipi/interface.h>
 
 // Local includes
@@ -128,7 +127,6 @@ private:
     float            m_zoomfactor_scrollwheel,  m_zoomfactor_mousemove, m_zoomfactor_keyboard;
     QString          m_nullImage;
     int              m_screen_width;
-    Interface*       m_kipiInterface;
 };
 
 } // namespace KIPIViewerPlugin
