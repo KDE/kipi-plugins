@@ -80,7 +80,7 @@ private:
 
 private:
 
-    float                        rdx, rdy, z, ux, uy, rtx, rty;
+    float                        m_rdx, m_rdy, m_z, m_ux, m_uy, m_rtx, m_rty;
     float                        m_vtop, m_vbottom, m_vleft, m_vright;
     int                          m_display_x, m_display_y;
     GLuint                       m_texnr;

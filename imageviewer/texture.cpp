@@ -173,13 +173,13 @@ bool Texture::loadInternal()
     h = m_glimage.height();
     if (h < w)
     {
-        rtx = 1;
-        rty = float(h)/float(w);
+        m_rtx = 1;
+        m_rty = float(h)/float(w);
     }
     else
     {
-        rtx = float(w)/float(h);
-        rty = 1;
+        m_rtx = float(w)/float(h);
+        m_rty = 1;
     }
     return true;
 }
@@ -216,19 +216,19 @@ void Texture::zoom(float delta, const QPoint& mousepos)
 //m: mouse pos normalized, cd=[0..rd]
 //c:  mouse pos normalized to zoom*l, c=[0..1]
 {
-    z        *= delta;
-    delta    =  z*(1.0/delta-1.0); //convert to real delta=z_old-z_new
+    m_z     *= delta;
+    delta    =  m_z*(1.0/delta-1.0); //convert to real delta=z_old-z_new
 
-    float mx = mousepos.x()/(float)m_display_x*rdx;
-    float cx = (mx-rdx/2.0+rtx/2.0)/rtx;
-    float vx = ux+cx*z;
-    ux       = ux+(vx-ux)*delta/z;
+    float mx = mousepos.x()/(float)m_display_x*m_rdx;
+    float cx = (mx-m_rdx/2.0+m_rtx/2.0)/m_rtx;
+    float vx = m_ux+cx*m_z;
+    m_ux     = m_ux+(vx-m_ux)*delta/m_z;
 
-    float my = mousepos.y()/(float)m_display_y*rdy;
-    float cy = (my-rdy/2.0+rty/2.0)/rty;
+    float my = mousepos.y()/(float)m_display_y*m_rdy;
+    float cy = (my-m_rdy/2.0+m_rty/2.0)/m_rty;
     cy       = 1-cy;
-    float vy = uy+cy*z;
-    uy       = uy+(vy-uy)*delta/z;
+    float vy = m_uy+cy*m_z;
+    m_uy     = m_uy+(vy-m_uy)*delta/m_z;
 
     calcVertex();
 }
@@ -249,20 +249,20 @@ void Texture::calcVertex()
 // the tex coord-sys goes from [-rtx..rtx] ([-1..1] for square texture)
 {
     // x part
-    float lx          = 2*rtx/z;  //length of tex
+    float lx          = 2*m_rtx/m_z;  //length of tex
     float tsx         = lx/(float)m_glimage.width(); //texelsize in glFrustum coordinates
     float halftexel_x = tsx/2.0;
-    float wx          = lx*(1-ux-z);
-    m_vleft           = -rtx-ux*lx - halftexel_x;  //left
-    m_vright          = rtx+wx - halftexel_x;      //right
+    float wx          = lx*(1-m_ux-m_z);
+    m_vleft           = -m_rtx-m_ux*lx - halftexel_x;  //left
+    m_vright          = m_rtx+wx - halftexel_x;      //right
 
     // y part
-    float ly          = 2*rty/z;
+    float ly          = 2*m_rty/m_z;
     float tsy         = ly/(float)m_glimage.height(); //texelsize in glFrustum coordinates
     float halftexel_y = tsy/2.0;
-    float wy          = ly*(1-uy-z);
-    m_vbottom         = -rty - uy*ly + halftexel_y; //bottom
-    m_vtop            = rty + wy + halftexel_y;     //top
+    float wy          = ly*(1-m_uy-m_z);
+    m_vbottom         = -m_rty - m_uy*ly + halftexel_y; //bottom
+    m_vtop            = m_rty + wy + halftexel_y;     //top
 }
 
 /*!
@@ -307,13 +307,13 @@ void Texture::setViewport(int w, int h)
 {
     if (h>w)
     {
-        rdx = 1.0;
-        rdy = h/float(w);
+        m_rdx = 1.0;
+        m_rdy = h/float(w);
     }
     else
     {
-        rdx = w/float(h);
-        rdy = 1.0;
+        m_rdx = w/float(h);
+        m_rdy = 1.0;
     }
     m_display_x = w;
     m_display_y = h;
@@ -325,8 +325,8 @@ void Texture::setViewport(int w, int h)
  */
 void Texture::move(const QPoint& diff)
 {
-    ux = ux-diff.x()/float(m_display_x)*z*rdx/rtx;
-    uy = uy+diff.y()/float(m_display_y)*z*rdy/rty;
+    m_ux = m_ux - diff.x()/float(m_display_x)*m_z*m_rdx/m_rtx;
+    m_uy = m_uy + diff.y()/float(m_display_y)*m_z*m_rdy/m_rty;
     calcVertex();
 }
 
@@ -335,33 +335,33 @@ void Texture::move(const QPoint& diff)
  */
 void Texture::reset()
 {
-    ux              = 0;
-    uy              = 0;
-    z               = 1.0;
+    m_ux            = 0;
+    m_uy            = 0;
+    m_z             = 1.0;
     float zoomdelta = 0;
 
-    if ((rtx < rty) && (rdx < rdy) && (rtx/rty < rdx/rdy))
+    if ((m_rtx < m_rty) && (m_rdx < m_rdy) && (m_rtx/m_rty < m_rdx/m_rdy))
     {
-        zoomdelta = z-rdx/rdy;
+        zoomdelta = m_z-m_rdx/m_rdy;
     }
 
-    if ((rtx < rty) && (rtx/rty > rdx/rdy))
+    if ((m_rtx < m_rty) && (m_rtx/m_rty > m_rdx/m_rdy))
     {
-        zoomdelta = z-rtx;
+        zoomdelta = m_z-m_rtx;
     }
 
-    if ((rtx >= rty) && (rdy < rdx) && (rty/rtx < rdy/rdx))
+    if ((m_rtx >= m_rty) && (m_rdy < m_rdx) && (m_rty/m_rtx < m_rdy/m_rdx))
     {
-        zoomdelta = z-rdy/rdx;
+        zoomdelta = m_z-m_rdy/m_rdx;
     }
 
-    if ((rtx >= rty) && (rty/rtx > rdy/rdx))
+    if ((m_rtx >= m_rty) && (m_rty/m_rtx > m_rdy/m_rdx))
     {
-        zoomdelta = z-rty;
+        zoomdelta = m_z-m_rty;
     }
 
-    QPoint p =  QPoint(m_display_x/2,m_display_y/2);
-    zoom(1.0-zoomdelta,p);
+    QPoint p =  QPoint(m_display_x/2, m_display_y/2);
+    zoom(1.0 - zoomdelta, p);
 
     calcVertex();
 }
