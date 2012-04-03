@@ -44,6 +44,8 @@
 class KAction;
 class KJob;
 
+using namespace KIPI;
+
 namespace KIPIWikiMediaPlugin
 {
 
@@ -51,7 +53,7 @@ class WMWindow;
 
 class Plugin_WikiMedia : public Plugin
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
