@@ -44,7 +44,7 @@ public:
 
 public:
 
-    explicit ImageList( ListType = UploadType, QWidget *parent = 0 );
+    explicit ImageList(ListType = UploadType, QWidget* const parent = 0);
 
     ListType getType() const
     {
@@ -53,7 +53,7 @@ public:
 
 Q_SIGNALS:
 
-    void signalAddedDropItems( const QStringList& filesPath );
+    void signalAddedDropItems(const QStringList& filesPath);
 
 protected:
 

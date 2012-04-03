@@ -30,8 +30,8 @@
 namespace KIPIIpodExportPlugin
 {
 
-IpodAlbumItem::IpodAlbumItem( QTreeWidget *parent, Itdb_PhotoAlbum *pa )
-             : QTreeWidgetItem( parent ), m_photoAlbum( pa )
+IpodAlbumItem::IpodAlbumItem(QTreeWidget* const parent, Itdb_PhotoAlbum* const pa )
+    : QTreeWidgetItem(parent), m_photoAlbum(pa)
 {
     // don't use setName, as it writes to the ipod
     m_name = pa->name;
@@ -43,12 +43,12 @@ IpodAlbumItem::IpodAlbumItem( QTreeWidget *parent, Itdb_PhotoAlbum *pa )
     setIcon( 0, KIcon("folder") );
 }
 
-void IpodAlbumItem::setPhotoAlbum( Itdb_PhotoAlbum *pa )
+void IpodAlbumItem::setPhotoAlbum(Itdb_PhotoAlbum* const pa)
 {
     m_photoAlbum = pa;
 }
 
-void IpodAlbumItem::setName( const QString& name )
+void IpodAlbumItem::setName(const QString& name)
 {
     if( name == m_name )
         return;
@@ -62,13 +62,13 @@ void IpodAlbumItem::setName( const QString& name )
 
 // ---------------------------------------------------------------------------
 
-IpodPhotoItem::IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *prev, Itdb_Artwork *art )
-             : QTreeWidgetItem( parent, prev ), m_artwork(art)
+IpodPhotoItem::IpodPhotoItem(IpodAlbumItem* const parent, IpodPhotoItem* const prev, Itdb_Artwork* const art)
+    : QTreeWidgetItem(parent, prev), m_artwork(art)
 {
     setIcon( 0, KIcon("image-jp2") );
 }
 
-void IpodPhotoItem::setArtwork( Itdb_Artwork *art )
+void IpodPhotoItem::setArtwork(Itdb_Artwork* const art)
 {
     m_artwork = art;
 }

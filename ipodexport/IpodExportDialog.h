@@ -83,17 +83,15 @@ public:
 
     UploadDialog(
 #if KIPI_PLUGIN
-                 Interface* interface,
+                 Interface* const interface,
 #endif
-                 const QString& caption, QWidget* parent=0 );
+                 const QString& caption, QWidget* const parent=0 );
 
     ~UploadDialog();
 
-    static UploadDialog* instance() { return s_instance; }
-
-    QString ipodModel() const;
-    QString mountPoint() { return m_mountPoint; }
-    QString deviceNode() { return m_deviceNode; }
+    QString ipodModel()  const;
+    QString mountPoint() const { return m_mountPoint; }
+    QString deviceNode() const { return m_deviceNode; }
 
     /**
      * Use this method to (re-)activate the dialog after it has been created
@@ -101,6 +99,8 @@ public:
      */
     void reactivate();
     void loadImagesFromCurrentSelection();
+
+    static UploadDialog* instance() { return s_instance; }
 
 private Q_SLOTS:
 
@@ -130,15 +130,15 @@ private Q_SLOTS:
 
 private:
 
-    void addUrlToList( const QString& file );
-    bool deleteIpodAlbum( IpodAlbumItem* album );
-    bool deleteIpodPhoto( IpodPhotoItem* photo );
+    void addUrlToList(const QString& file);
+    bool deleteIpodAlbum(IpodAlbumItem* const album) const;
+    bool deleteIpodPhoto(IpodPhotoItem* const photo) const;
     void getIpodAlbums();
-    void getIpodAlbumPhotos( IpodAlbumItem* item, Itdb_PhotoAlbum* album );
-    Itdb_Artwork *photoFromId( const uint id );
-    void reloadIpodAlbum( IpodAlbumItem* item, Itdb_PhotoAlbum* album );
-
+    void getIpodAlbumPhotos(IpodAlbumItem* const item, Itdb_PhotoAlbum* const album);
+    Itdb_Artwork *photoFromId(const uint id) const;
+    void reloadIpodAlbum(IpodAlbumItem* const item, Itdb_PhotoAlbum* const album);
     bool openDevice(); // connect to the ipod
+
     void closeEvent(QCloseEvent*);
 
 private:

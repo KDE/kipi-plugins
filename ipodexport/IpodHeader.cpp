@@ -40,12 +40,12 @@
 namespace KIPIIpodExportPlugin
 {
 
-IpodHeader::IpodHeader( QWidget *parent, Qt::WFlags f )
-          : QFrame( parent, f )
+IpodHeader::IpodHeader(QWidget* const parent, Qt::WFlags f)
+    : QFrame(parent, f)
 {
     setAutoFillBackground( true );
 
-    QVBoxLayout *layout = new QVBoxLayout( this );
+    QVBoxLayout* layout = new QVBoxLayout( this );
     layout->setContentsMargins( 10, 10, 10, 10 );
     layout->setSpacing( 5 );
 
@@ -54,8 +54,8 @@ IpodHeader::IpodHeader( QWidget *parent, Qt::WFlags f )
     m_messageLabel = new QLabel( QString(), this );
     m_messageLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
-    m_button = new KPushButton( this );
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    m_button                  = new KPushButton( this );
     m_button->hide();
 
     buttonLayout->addStretch( 1 );
@@ -66,7 +66,7 @@ IpodHeader::IpodHeader( QWidget *parent, Qt::WFlags f )
     layout->addLayout( buttonLayout );
 }
 
-void IpodHeader::setViewType( ViewType view )
+void IpodHeader::setViewType(ViewType view)
 {
     m_viewType = view;
 
@@ -94,7 +94,7 @@ void IpodHeader::setNoIpod()
     m_messageLabel->setText( i18n("<p align=\"center\"><b>No iPod was detected</b></p>" ) );
 
     QPalette p = palette();
-    p.setColor( QPalette::Window, QColor(147,18,18) );
+    p.setColor( QPalette::Window, QColor(147, 18, 18) );
     p.setColor( QPalette::WindowText, Qt::white );
     setPalette( p );
 
@@ -115,7 +115,7 @@ void IpodHeader::setIncompatibleIpod()
                                   "does not seem to support artwork.</b></p>", modelType ) );
 
     QPalette p = palette();
-    p.setColor( QPalette::Window, QColor(225,150,0) );
+    p.setColor( QPalette::Window, QColor(225, 150, 0) );
     p.setColor( QPalette::WindowText, Qt::white );
     setPalette( p );
 
@@ -144,7 +144,7 @@ void IpodHeader::setValidIpod()
                                  modelType) );
     }
     QPalette p = palette();
-    p.setColor( QPalette::Window, QColor(0,98,0) );
+    p.setColor( QPalette::Window, QColor(0, 98, 0) );
     p.setColor( QPalette::WindowText, Qt::white );
     setPalette( p );
 

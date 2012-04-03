@@ -33,18 +33,19 @@ namespace KIPIIpodExportPlugin
 
 class ImageListItem : public QTreeWidgetItem
 {
-    public:
-        ImageListItem(QTreeWidget* parent, const QString& pathSrc, const QString& name)
-            : QTreeWidgetItem(parent), m_pathSrc(pathSrc)
-        {
-            setText(0, name);
-        }
+public:
 
-        QString pathSrc() const { return m_pathSrc; }
+    ImageListItem(QTreeWidget* const parent, const QString& pathSrc, const QString& name)
+        : QTreeWidgetItem(parent), m_pathSrc(pathSrc)
+    {
+        setText(0, name);
+    }
 
-    private:
+    QString pathSrc() const { return m_pathSrc; }
 
-        QString m_pathSrc;
+private:
+
+    QString m_pathSrc;
 };
 
 } // namespace KIPIIpodExportPlugin

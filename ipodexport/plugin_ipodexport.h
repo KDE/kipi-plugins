@@ -39,21 +39,23 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIIpodExportPlugin
 {
-    class UploadDialog;
-}
 
-class Plugin_iPodExport : public KIPI::Plugin
+class UploadDialog;
+
+class Plugin_iPodExport : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_iPodExport(QObject *parent, const QVariantList& args);
+    Plugin_iPodExport(QObject* const parent, const QVariantList& args);
     ~Plugin_iPodExport() {};
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget* widget);
 
 private Q_SLOTS:
@@ -62,11 +64,13 @@ private Q_SLOTS:
 
 private:
 
-    KAction                            *m_actionImageUpload;
+    KAction*      m_actionImageUpload;
 
-    KIPI::Interface                    *m_interface;
+    Interface*    m_interface;
 
-    KIPIIpodExportPlugin::UploadDialog *m_dlgImageUpload;
+    UploadDialog* m_dlgImageUpload;
 };
+
+} // namespace KIPIIpodExportPlugin
 
 #endif // PLUGIN_IPODEXPORT_H

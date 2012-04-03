@@ -24,6 +24,7 @@
 
 // Qt includes
 
+#include <QObject>
 #include <QHeaderView>
 #include <QMimeData>
 #include <QUrl>
@@ -35,9 +36,8 @@
 namespace KIPIIpodExportPlugin
 {
 
-ImageList::ImageList( ListType type, QWidget *parent )
-         : QTreeWidget( parent ),
-           m_type( type )
+ImageList::ImageList(ListType type, QWidget* const parent)
+    : QTreeWidget(parent), m_type(type)
 {
     if( type == ImageList::UploadType )
     {
@@ -65,14 +65,14 @@ void ImageList::droppedImagesItems(const QList<QUrl>& urls)
 {
     QStringList filesPath;
 
-    Q_FOREACH( const QUrl &u, urls )
+    Q_FOREACH(const QUrl& u, urls)
     {
         filesPath << u.path();
     }
 
     if( !filesPath.isEmpty() )
     {
-       Q_EMIT signalAddedDropItems( filesPath );
+       Q_EMIT signalAddedDropItems(filesPath);
     }
 }
 

@@ -48,10 +48,10 @@ public:
 
 public:
 
-    explicit IpodHeader( QWidget *parent = 0, Qt::WFlags f = 0 );
+    explicit IpodHeader(QWidget* const parent = 0, Qt::WFlags f = 0 );
     ~IpodHeader() {};
 
-    void setViewType( ViewType view );
+    void     setViewType(ViewType view);
     ViewType viewType() const { return m_viewType; };
 
 Q_SIGNALS:
@@ -67,9 +67,9 @@ private:
 
 private:
 
-    QLabel      *m_messageLabel;
+    QLabel*      m_messageLabel;
 
-    KPushButton *m_button;
+    KPushButton* m_button;
 
     ViewType     m_viewType;
 };

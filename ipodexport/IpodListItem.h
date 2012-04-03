@@ -42,18 +42,18 @@ class IpodAlbumItem : public QTreeWidgetItem
 {
 public:
 
-    IpodAlbumItem( QTreeWidget *parent, Itdb_PhotoAlbum *pa );
+    IpodAlbumItem(QTreeWidget* const parent, Itdb_PhotoAlbum* const pa);
 
     QString          name()       const { return m_name;       }
-    Itdb_PhotoAlbum *photoAlbum() const { return m_photoAlbum; }
+    Itdb_PhotoAlbum* photoAlbum() const { return m_photoAlbum; }
 
-    void setPhotoAlbum( Itdb_PhotoAlbum *pa );
-    void setName( const QString & name );
+    void setPhotoAlbum(Itdb_PhotoAlbum* const pa);
+    void setName(const QString& name);
 
 private:
 
     QString          m_name;
-    Itdb_PhotoAlbum *m_photoAlbum;
+    Itdb_PhotoAlbum* m_photoAlbum;
 };
 
 // ----------------------------------------------------------------------------
@@ -62,10 +62,10 @@ class IpodPhotoItem : public QTreeWidgetItem
 {
 public:
 
-    IpodPhotoItem( IpodAlbumItem *parent, IpodPhotoItem *prev, Itdb_Artwork *art );
+    IpodPhotoItem(IpodAlbumItem* const parent, IpodPhotoItem* const prev, Itdb_Artwork* const art);
 
-    Itdb_Artwork *artwork() const { return m_artwork; }
-    void          setArtwork( Itdb_Artwork *art );
+    Itdb_Artwork* artwork() const { return m_artwork; }
+    void          setArtwork(Itdb_Artwork* const art);
 
 private:
 

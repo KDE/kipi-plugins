@@ -48,15 +48,17 @@ extern "C"
 
 #include "IpodExportDialog.h"
 
-using namespace KIPIIpodExportPlugin;
+namespace KIPIIpodExportPlugin
+{
 
 K_PLUGIN_FACTORY( IpodFactory, registerPlugin<Plugin_iPodExport>(); )
 K_EXPORT_PLUGIN ( IpodFactory("kipiplugin_ipodexport") )
 
-Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const QVariantList& )
-                 : KIPI::Plugin( IpodFactory::componentData(), parent, "iPodExport")
+Plugin_iPodExport::Plugin_iPodExport(QObject* const parent, const QVariantList&)
+    : Plugin( IpodFactory::componentData(), parent, "iPodExport")
 {
     m_dlgImageUpload = 0;
+    m_interface      = 0;
 
     kDebug(AREA_CODE_LOADING) << "Plugin_iPodExport plugin loaded" ;
 
@@ -65,7 +67,7 @@ Plugin_iPodExport::Plugin_iPodExport( QObject *parent, const QVariantList& )
 
 void Plugin_iPodExport::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     m_actionImageUpload = actionCollection()->addAction("ipodexport");
     m_actionImageUpload->setText(i18n("Export to &iPod..."));
@@ -77,7 +79,7 @@ void Plugin_iPodExport::setup(QWidget* widget)
 
     addAction(m_actionImageUpload);
 
-    m_interface = dynamic_cast< KIPI::Interface* >( parent() );
+    m_interface = dynamic_cast<Interface*>(parent());
 }
 
 void Plugin_iPodExport::slotImageUpload()
@@ -98,10 +100,12 @@ void Plugin_iPodExport::slotImageUpload()
     m_dlgImageUpload->reactivate();
 }
 
-KIPI::Category Plugin_iPodExport::category(KAction* action) const
+Category Plugin_iPodExport::category(KAction* action) const
 {
     if ( action == m_actionImageUpload )
-        return KIPI::ExportPlugin;
+        return ExportPlugin;
 
-    return KIPI::ExportPlugin; // no warning from compiler, please
+    return ExportPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIIpodExportPlugin

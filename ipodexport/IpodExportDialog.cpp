@@ -89,9 +89,9 @@ UploadDialog* UploadDialog::s_instance = 0;
 UploadDialog::UploadDialog
 (
 #if KIPI_PLUGIN
-    Interface* interface,
+    Interface* const interface,
 #endif
-    const QString& caption, QWidget* /*parent*/ )
+    const QString& caption, QWidget* const /*parent*/ )
     : KDialog(0)
     , m_transferring( false )
 #if KIPI_PLUGIN
@@ -106,7 +106,7 @@ UploadDialog::UploadDialog
 {
     s_instance   = this;
 
-    QWidget *box = new QWidget();
+    QWidget* box = new QWidget();
     setMainWidget( box );
     setCaption( caption );
     setButtons( Close|Help );
@@ -173,7 +173,7 @@ UploadDialog::UploadDialog
     m_imagePreview->setSizePolicy( QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred) );
     m_imagePreview->setWhatsThis( i18n("The preview of the selected image in the list.") );
 
-    QLabel *hdd_icon = new QLabel;
+    QLabel* hdd_icon = new QLabel;
     hdd_icon->setPixmap(KIconLoader::global()->loadIcon("computer",
                                                         KIconLoader::Desktop,
                                                         KIconLoader::SizeHuge));
@@ -297,7 +297,7 @@ void UploadDialog::slotClose()
     done(Close);
 }
 
-void UploadDialog::closeEvent(QCloseEvent *e)
+void UploadDialog::closeEvent(QCloseEvent* e)
 {
     if (!e) return;
 
@@ -352,22 +352,22 @@ void UploadDialog::getIpodAlbums()
     }
 }
 
-void UploadDialog::getIpodAlbumPhotos(IpodAlbumItem *item, Itdb_PhotoAlbum *album)
+void UploadDialog::getIpodAlbumPhotos(IpodAlbumItem* const item, Itdb_PhotoAlbum* const album)
 {
     if( !item || !album || !m_itdb )
         return;
 
-    IpodPhotoItem *last = 0;
-    for( GList *it = album->members; it; it = it->next )
+    IpodPhotoItem* last = 0;
+    for( GList* it = album->members; it; it = it->next )
     {
-        Itdb_Artwork *photo = (Itdb_Artwork*) it->data;
+        Itdb_Artwork* photo = (Itdb_Artwork*) it->data;
         gint photo_id       = photo->id;
         last                = new IpodPhotoItem( item, last, photo );
         last->setText( 0, QString::number( photo_id ) );
     }
 }
 
-void UploadDialog::reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album )
+void UploadDialog::reloadIpodAlbum(IpodAlbumItem* const item, Itdb_PhotoAlbum* const album )
 {
     if( !item ) return;
 
@@ -378,7 +378,7 @@ void UploadDialog::reloadIpodAlbum( IpodAlbumItem *item, Itdb_PhotoAlbum *album 
 
     for( GList* it = m_itdb->photoalbums; it; it = it->next )
     {
-        ipodAlbum = (Itdb_PhotoAlbum *)it->data;
+        ipodAlbum = (Itdb_PhotoAlbum*)it->data;
         if( strcmp( ipodAlbum->name, album->name ) == 0 )
             break; // we found the album
     }
@@ -462,7 +462,7 @@ void UploadDialog::startTransfer()
 
     reloadIpodAlbum( ipodAlbum, album );
 
-    IpodAlbumItem *library = static_cast<IpodAlbumItem*>( m_ipodAlbumList->topLevelItem(0) );
+    IpodAlbumItem* library = static_cast<IpodAlbumItem*>( m_ipodAlbumList->topLevelItem(0) );
     reloadIpodAlbum( library, library->photoAlbum() );
 
     m_transferring = false;
@@ -470,7 +470,7 @@ void UploadDialog::startTransfer()
     enableButtons();
 }
 
-void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
+void UploadDialog::ipodItemSelected(QTreeWidgetItem* item)
 {
     m_ipodPreview->clear();
 
@@ -484,8 +484,8 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
     if( !item )
         return;
 
-    Itdb_Artwork *artwork = item->artwork();
-    GdkPixbuf *gpixbuf = NULL;
+    Itdb_Artwork* artwork = item->artwork();
+    GdkPixbuf* gpixbuf    = 0;
 
     // First arg in itdb_artwork_get_pixbuf(...) is pointer to Itdb_Device struct,
     // in kipiplugin-ipodexport it is m_itdb->device. i hope it _is_ initialiezed
@@ -511,7 +511,7 @@ void UploadDialog::ipodItemSelected( QTreeWidgetItem *item )
     gdk_pixbuf_unref ( gpixbuf );
 }
 
-void UploadDialog::imageSelected( QTreeWidgetItem* item )
+void UploadDialog::imageSelected(QTreeWidgetItem* item)
 {
     if( !item || m_transferring )
     {
@@ -543,7 +543,7 @@ void UploadDialog::imageSelected( QTreeWidgetItem* item )
             this,   SLOT(gotImagePreview(const KFileItem*,QPixmap)) );
 }
 
-void UploadDialog::gotImagePreview( const KFileItem* url, const QPixmap& pixmap )
+void UploadDialog::gotImagePreview(const KFileItem* url, const QPixmap& pixmap)
 {
 #if KIPI_PLUGIN
     QPixmap pix( pixmap );
@@ -656,7 +656,7 @@ void UploadDialog::renameIpodAlbum()
     }
 }
 
-bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
+bool UploadDialog::deleteIpodPhoto(IpodPhotoItem* const photo) const
 {
     if( !photo )
         return false;
@@ -701,7 +701,7 @@ bool UploadDialog::deleteIpodPhoto( IpodPhotoItem *photo )
     return true;
 }
 
-bool UploadDialog::deleteIpodAlbum( IpodAlbumItem *album )
+bool UploadDialog::deleteIpodAlbum(IpodAlbumItem* const album) const
 {
     kDebug() << "deleting album: " << album->name() << ", and removing all photos" ;
     itdb_photodb_photoalbum_remove( m_itdb, album->photoAlbum(), true/*remove photos*/);
@@ -713,9 +713,9 @@ void UploadDialog::deleteIpodAlbum()
 {
     QList<QTreeWidgetItem*> selected = m_ipodAlbumList->selectedItems();
 
-    Q_FOREACH( QTreeWidgetItem *item, selected )
+    Q_FOREACH(QTreeWidgetItem* item, selected)
     {
-        IpodAlbumItem *album = dynamic_cast<IpodAlbumItem*>( item );
+        IpodAlbumItem* album = dynamic_cast<IpodAlbumItem*>( item );
         if( album )
         {
             if( deleteIpodAlbum( album ) )
@@ -723,7 +723,7 @@ void UploadDialog::deleteIpodAlbum()
             continue;
         }
 
-        IpodPhotoItem *photo = dynamic_cast<IpodPhotoItem*>( item );
+        IpodPhotoItem* photo = dynamic_cast<IpodPhotoItem*>( item );
         if( photo )
         {
             if( deleteIpodPhoto( photo ) )
@@ -736,7 +736,7 @@ void UploadDialog::deleteIpodAlbum()
     itdb_photodb_write( m_itdb, &err );
 }
 
-void UploadDialog::addDropItems( const QStringList& filesPath )
+void UploadDialog::addDropItems(const QStringList& filesPath)
 {
     if( filesPath.isEmpty() ) return;
 
@@ -749,7 +749,7 @@ void UploadDialog::addDropItems( const QStringList& filesPath )
     enableButton( KDialog::User1, m_uploadList->model()->hasChildren() > 0 );
 }
 
-void UploadDialog::addUrlToList( const QString& file )
+void UploadDialog::addUrlToList(const QString& file)
 {
     QFileInfo fi( file );
 
@@ -862,7 +862,7 @@ bool UploadDialog::openDevice()
     return true;
 }
 
-Itdb_Artwork *UploadDialog::photoFromId(const uint id)
+Itdb_Artwork* UploadDialog::photoFromId(const uint id) const
 {
     if( !m_itdb )
         return 0;
