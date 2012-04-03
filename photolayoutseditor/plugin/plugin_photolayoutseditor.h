@@ -36,38 +36,40 @@ namespace KIPI
     class Interface;
 }
 
+using namespace KIPI;
+
 namespace KIPIPhotoLayoutsEditor
 {
-    class PhotoLayoutsEditor;
-}
 
-class Plugin_PhotoLayoutsEditor : public KIPI::Plugin
+class PhotoLayoutsEditor;
+
+class Plugin_PhotoLayoutsEditor : public Plugin
 {
-        Q_OBJECT
+    Q_OBJECT
 
-    public:
+public:
 
-        Plugin_PhotoLayoutsEditor(QObject* parent, const QVariantList& args);
-        virtual ~Plugin_PhotoLayoutsEditor();
+    Plugin_PhotoLayoutsEditor(QObject* const parent, const QVariantList& args);
+    virtual ~Plugin_PhotoLayoutsEditor();
 
-        KIPI::Category category( KAction* action ) const;
-        void setup( QWidget* );
+    Category category(KAction* action) const;
+    void setup(QWidget*);
 
-        static Plugin_PhotoLayoutsEditor * self();
+public Q_SLOTS:
 
-    public Q_SLOTS:
+    void slotActivate();
 
-        void slotActivate();
+private:
 
-    private:
+    QWidget*            m_parentWidget;
 
-        QWidget*                                    m_parentWidget;
+    KAction*            m_action;
 
-        KAction*                                    m_action;
+    PhotoLayoutsEditor* m_manager;
 
-        KIPIPhotoLayoutsEditor::PhotoLayoutsEditor*   m_manager;
-
-        KIPI::Interface*                            m_interface;
+    Interface*          m_interface;
 };
+
+} // namespace KIPIPhotoLayoutsEditor
 
 #endif // PLUGIN_PHOTOLAYOUTSEDITOR_H
