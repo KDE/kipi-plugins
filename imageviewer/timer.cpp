@@ -23,6 +23,10 @@
 
 #include "timer.h"
 
+// Qt includes
+
+#include <QDateTime>
+
 // KDE includes
 
 #include <kdebug.h>
@@ -30,24 +34,39 @@
 namespace KIPIViewerPlugin
 {
 
+class Timer::TimerPriv
+{
+public:
+
+    TimerPriv()
+    {
+        meantime = 0;
+    }
+
+    QTime timer;
+    int   meantime;
+};
+
 Timer::Timer()
+    : d(new TimerPriv)
 {
 }
 
 Timer::~Timer()
 {
+    delete d;
 }
 
 void Timer::start()
 {
-    m_timer.start();
-    m_meantime = 0;
+    d->timer.start();
+    d->meantime = 0;
 }
 
 void Timer::at(const QString& s)
 {
-    m_meantime = m_timer.elapsed()-m_meantime;
-    kDebug() << "stopwatch:" << s << ": " << m_meantime << " ms    overall: " << m_timer.elapsed() << " ms";
+    d->meantime = d->timer.elapsed() - d->meantime;
+    kDebug() << "stopwatch:" << s << ": " << d->meantime << " ms    overall: " << d->timer.elapsed() << " ms";
 }
 
 } // namespace KIPIViewerPlugin

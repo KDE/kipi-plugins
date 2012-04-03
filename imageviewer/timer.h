@@ -26,7 +26,6 @@
 
 // Qt includes
 
-#include <QDateTime>
 #include <QString>
 
 namespace KIPIViewerPlugin
@@ -45,8 +44,8 @@ public:
 
 private:
 
-    QTime m_timer;
-    int   m_meantime;
+    class TimerPriv;
+    TimerPriv* const d;
 };
 
 } // namespace KIPIViewerPlugin

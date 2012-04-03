@@ -48,7 +48,6 @@ namespace KIPIViewerPlugin
 K_PLUGIN_FACTORY(viewerFactory, registerPlugin<Plugin_viewer>();)
 K_EXPORT_PLUGIN(viewerFactory("kipiplugin_imageviewer"))
 
-
 class Plugin_viewer::Plugin_viewerPriv
 {
 public:
