@@ -6,8 +6,8 @@
  * Date        : 2011-02-11
  * Description : a kipi plugin to export images to WikiMedia web service
  *
- * Copyright (C) 2011 by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
- * Copyright (C) 2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2011      by Alexandre Mendes <alex dot mendes1988 at gmail dot com>
+ * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,24 +42,23 @@
 #include <libmediawiki/mediawiki.h>
 
 class KAction;
+class KJob;
 
 namespace KIPIWikiMediaPlugin
 {
-    class WMWindow;
-}
 
-class KJob;
+class WMWindow;
 
-class Plugin_WikiMedia : public KIPI::Plugin
+class Plugin_WikiMedia : public Plugin
 {
 Q_OBJECT
 
 public:
 
-    Plugin_WikiMedia(QObject* parent, const QVariantList& args);
+    Plugin_WikiMedia(QObject* const parent, const QVariantList& args);
     ~Plugin_WikiMedia();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget*);
     void runMWindow();
 
@@ -69,8 +68,10 @@ public Q_SLOTS:
 
 private:
 
-    KAction*                       m_actionExport;
-    KIPIWikiMediaPlugin::WMWindow* m_dlgExport;
+    KAction*  m_actionExport;
+    WMWindow* m_dlgExport;
 };
+
+} // namespace KIPIWikiMediaPlugin
 
 #endif // PLUGIN_WIKIMEDIA_H
