@@ -13,7 +13,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Usage Image Viewer</string>
+   <string>Usage of OpenGL Image Viewer</string>
   </property>
   <property name="modal" >
    <bool>true</bool>
