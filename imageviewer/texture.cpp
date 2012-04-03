@@ -57,14 +57,14 @@ using namespace KDcrawIface;
 namespace KIPIViewerPlugin
 {
 
-Texture::Texture(Interface* const i)
+Texture::Texture(Interface* const iface)
 {
-    kipiInterface  = i;
-    rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
-    rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
-    rotate_list[2] = KPMetadata::ORIENTATION_ROT_270;
-    rotate_list[3] = KPMetadata::ORIENTATION_ROT_180;
-    rotate_idx     = 0;
+    m_kipiInterface  = iface;
+    m_rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
+    m_rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
+    m_rotate_list[2] = KPMetadata::ORIENTATION_ROT_270;
+    m_rotate_list[3] = KPMetadata::ORIENTATION_ROT_180;
+    m_rotate_idx     = 0;
     reset();
 }
 
@@ -100,7 +100,7 @@ int Texture::width() const
 bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 {
     filename     = fn;
-    initial_size = size;
+    m_initial_size = size;
     _texnr       = tn;
 
     // check if its a RAW file.
@@ -130,9 +130,9 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
         return false;
     }
 
-    _load();
+    loadInternal();
     reset();
-    rotate_idx = 0;
+    m_rotate_idx = 0;
     return true;
 }
 
@@ -148,11 +148,11 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 bool Texture::load(const QImage& im, const QSize& size, GLuint tn)
 {
     qimage       = im;
-    initial_size = size;
+    m_initial_size = size;
     _texnr       = tn;
-    _load();
+    loadInternal();
     reset();
-    rotate_idx   = 0;
+    m_rotate_idx   = 0;
     return true;
 }
 
@@ -161,10 +161,10 @@ bool Texture::load(const QImage& im, const QSize& size, GLuint tn)
     internal load function
     rt[xy] <= 1
  */
-bool Texture::_load()
+bool Texture::loadInternal()
 {
-    int w = initial_size.width();
-    int h = initial_size.height();
+    int w = m_initial_size.width();
+    int h = m_initial_size.height();
 
     if (w == 0 || w > qimage.width() || h > qimage.height())
     {
@@ -199,9 +199,9 @@ GLvoid* Texture::data()
 }
 
 /*!
-    \fn Texture::texnr()
+    \fn Texture::texnr() const
  */
-GLuint Texture::texnr()
+GLuint Texture::texnr() const
 {
     return _texnr;
 }
@@ -217,7 +217,7 @@ void Texture::zoom(float delta, const QPoint& mousepos)
 //u: start in texture, u=[0..1], u=0 is begin, u=1 is end of texture
 //z=[0..1], z=1 -> no zoom
 //l: length of tex in glFrustum coordinate system
-//rt: ratio of tex, rt<=1, see _load() for definition
+//rt: ratio of tex, rt<=1, see loadInternal() for definition
 //rd: ratio of display, rd>=1
 //m: mouse pos normalized, cd=[0..rd]
 //c:  mouse pos normalized to zoom*l, c=[0..1]
@@ -245,7 +245,7 @@ void Texture::zoom(float delta, const QPoint& mousepos)
     z, ux, uy are calculated in Texture::zoom()
  */
 void Texture::calcVertex()
-// rt: ratio of tex, rt<=1, see _load() for definition
+// rt: ratio of tex, rt<=1, see loadInternal() for definition
 // u: start in texture, u=[0..1], u=0 is begin, u=1 is end of texture
 // l: length of tex in glFrustum coordinate system
 // halftexel: the color of a texel is determined by a corner of the texel and not its center point
@@ -272,33 +272,33 @@ void Texture::calcVertex()
 }
 
 /*!
-    \fn Texture::vertex_bottom()
+    \fn Texture::vertex_bottom() const
  */
-GLfloat Texture::vertex_bottom()
+GLfloat Texture::vertex_bottom() const
 {
     return (GLfloat) vbottom;
 }
 
 /*!
-    \fn Texture::vertex_top()
+    \fn Texture::vertex_top() const
  */
-GLfloat Texture::vertex_top()
+GLfloat Texture::vertex_top() const
 {
     return (GLfloat) vtop;
 }
 
 /*!
-    \fn Texture::vertex_left()
+    \fn Texture::vertex_left() const
  */
-GLfloat Texture::vertex_left()
+GLfloat Texture::vertex_left() const
 {
     return (GLfloat) vleft;
 }
 
 /*!
-    \fn Texture::vertex_right()
+    \fn Texture::vertex_right() const
  */
-GLfloat Texture::vertex_right()
+GLfloat Texture::vertex_right() const
 {
     return (GLfloat) vright;
 }
@@ -415,16 +415,16 @@ bool Texture::setSize(QSize size)
  */
 void Texture::rotate()
 {
-    QMatrix matrix = RotationMatrix::toMatrix(rotate_list[rotate_idx%4]);
+    QMatrix matrix = RotationMatrix::toMatrix(m_rotate_list[m_rotate_idx%4]);
     qimage         = qimage.transformed(matrix);
-    _load();
+    loadInternal();
 
     //save new rotation in exif header
     KPImageInfo info(filename);
-    info.setOrientation(rotate_list[rotate_idx%4]);
+    info.setOrientation(m_rotate_list[m_rotate_idx%4]);
 
     reset();
-    rotate_idx++;
+    m_rotate_idx++;
 }
 
 /*!
