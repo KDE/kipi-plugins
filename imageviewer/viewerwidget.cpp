@@ -61,12 +61,26 @@ class ViewerWidget::ViewerWidgetPriv
 {
 public:
 
+    struct Cache
+    {
+        int      file_index;
+        Texture* texture;
+    };
+
+    enum WheelAction
+    {
+        zoomImage,
+        changeImage
+    };
+
+public:
+
     ViewerWidgetPriv()
     {
         texture    = 0;
         firstImage = true;
 
-        //index of picture to be displayed
+        // index of picture to be displayed
         file_idx   = 0;
 
         // define zoomfactors for one zoom step
@@ -185,7 +199,7 @@ ViewerWidget::ViewerWidget(Interface* const iface)
     setMouseTracking(true);
 
     // other initialisations
-    d->wheelAction = changeImage;
+    d->wheelAction = ViewerWidget::ViewerWidgetPriv::changeImage;
 }
 
 ViewerWidget::~ViewerWidget()
@@ -387,10 +401,10 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
 
         // toggle permanent between "show next image" and "zoom" on mousewheel change
         case Qt::Key_C:
-            if (d->wheelAction==zoomImage)
-                d->wheelAction=changeImage;
+            if (d->wheelAction==ViewerWidget::ViewerWidgetPriv::zoomImage)
+                d->wheelAction=ViewerWidget::ViewerWidgetPriv::changeImage;
             else
-                d->wheelAction=zoomImage;
+                d->wheelAction=ViewerWidget::ViewerWidgetPriv::zoomImage;
             break;
 
         // zoom	in
@@ -419,15 +433,15 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
 
         // toggle temorarily between "show next image" and "zoom" on mousewheel change
         case Qt::Key_Control:
-            if (d->wheelAction == zoomImage)
+            if (d->wheelAction == ViewerWidget::ViewerWidgetPriv::zoomImage)
             {
                 //scrollwheel changes to the next image
-                d->wheelAction = changeImage;
+                d->wheelAction = ViewerWidget::ViewerWidgetPriv::changeImage;
             }
             else
             {
                 //scrollwheel does zoom
-                d->wheelAction = zoomImage;
+                d->wheelAction = ViewerWidget::ViewerWidgetPriv::zoomImage;
                 setCursor(d->zoomCursor);
                 d->timerMouseMove.stop();
             }
@@ -470,10 +484,10 @@ void ViewerWidget::keyReleaseEvent(QKeyEvent* e)
             break;
 
         case Qt::Key_Control:
-            if (d->wheelAction == zoomImage)
-                d->wheelAction = changeImage;
+            if (d->wheelAction == ViewerWidget::ViewerWidgetPriv::zoomImage)
+                d->wheelAction = ViewerWidget::ViewerWidgetPriv::changeImage;
             else
-                d->wheelAction = zoomImage;
+                d->wheelAction = ViewerWidget::ViewerWidgetPriv::zoomImage;
                 unsetCursor();
                 d->timerMouseMove.start(2000);
             break;
@@ -556,13 +570,13 @@ void ViewerWidget::wheelEvent(QWheelEvent* e)
     switch(d->wheelAction)
     {
         // mousewheel triggers zoom
-        case zoomImage:
+        case ViewerWidget::ViewerWidgetPriv::zoomImage:
             setCursor(d->zoomCursor);
             zoom(e->delta(), e->pos(), d->zoomfactor_scrollwheel);
             break;
 
         // mousewheel triggers image change
-        case changeImage:
+        case ViewerWidget::ViewerWidgetPriv::changeImage:
             if (e->delta() < 0)
                 nextImage();
             else

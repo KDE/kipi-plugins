@@ -97,20 +97,6 @@ private Q_SLOTS:
 
 private:
 
-    struct Cache
-    {
-        int      file_index;
-        Texture* texture;
-    };
-
-    enum WheelAction
-    {
-        zoomImage,
-        changeImage
-    };
-
-private:
-
     class ViewerWidgetPriv;
     ViewerWidgetPriv* const d;
 };
