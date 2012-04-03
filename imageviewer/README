@@ -1,5 +1,5 @@
 -------------------------------
-KIPI image viewer plugin
+KIPI OpenGL image viewer plugin
 -------------------------------
 
 This image viewer was designed with speed and ease of usage in mind as well as for mouseless setups (notebooks). 
@@ -17,12 +17,12 @@ Handbook
 --------
 
 - select the images you'd like to view. Ctrl-A for all images
-		if no image is selected, all images of the album are loaded and the first image will be displayed
-		if one image is selected, all images are loaded and the selected image image will be displayed
-		if several images are selected, only the selected images are loaded
-- in Digikam, select Tool->Image viewer
-  in Gwenview, select Plugins->Tools->Image viewer
-- for convenience, create a shortcut in the host application. In Digikam, select Settings->Configure Shortcut, search for "image viewer"
+        if no image is selected, all images of the album are loaded and the first image will be displayed
+        if one image is selected, all images are loaded and the selected image image will be displayed
+        if several images are selected, only the selected images are loaded
+- in digiKam, select Tool->OpenGl Image viewer
+  in Gwenview, select Plugins->Tools->OpenGL Image viewer
+- for convenience, create a shortcut in the host application. In digiKam, select Settings->Configure Shortcut, search for "image viewer"
 
 
 2) Usage
@@ -71,5 +71,5 @@ Other programs/libraries: time of loading and displaying an image
 SDL :                      750ms
 Kuickshow: (imlib)         690ms (without smooth rendering)
 Kuickshow: (imlib)        1770ms (with smooth rendering)
-feh: (imlib2)              670ms 	
+feh: (imlib2)              670ms     
 this Image Viewer plugin:  720ms (implicit smooth rendering due to OGL)

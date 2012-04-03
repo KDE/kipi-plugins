@@ -7,6 +7,7 @@
  * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -19,8 +20,6 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-
-#include "texture.h"
 
 // Qt includes
 
@@ -43,6 +42,7 @@
 
 // Local includes
 
+#include "texture.h"
 #include "kpimageinfo.h"
 #include "timer.h"
 
@@ -410,7 +410,7 @@ bool Texture::setSize(QSize size)
 void Texture::rotate()
 {
     QMatrix matrix = RotationMatrix::toMatrix(m_rotate_list[m_rotate_idx%4]);
-    m_qimage         = m_qimage.transformed(matrix);
+    m_qimage       = m_qimage.transformed(matrix);
     loadInternal();
 
     //save new rotation in exif header

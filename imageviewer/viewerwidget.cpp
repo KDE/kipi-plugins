@@ -7,6 +7,7 @@
  * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -163,7 +164,7 @@ ViewerWidget::~ViewerWidget()
     glDeleteTextures(1, m_tex);
     for(int i = 0 ; i < CACHESIZE ; ++i)
     {
-        m_cache[i].file_index=EMPTY;
+        m_cache[i].file_index = EMPTY;
         delete m_cache[i].texture;
     }
 }

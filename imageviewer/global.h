@@ -21,34 +21,26 @@
  *
  * ============================================================ */
 
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef GLOBAL_H
+#define GLOBAL_H
 
-// Qt includes
+//Uncomment this line to enable performance checks.
+//#define PERFORMANCE_ANALYSIS
 
-#include <QDateTime>
-#include <QString>
+// Images cache settings. Keep in mind that one cache entry takes 20MB for a 5mpix pic
+#define CACHESIZE 4
+#define EMPTY 99999
 
 namespace KIPIViewerPlugin
 {
 
-class Timer
+enum OGLstate
 {
-
-public:
-
-    Timer();
-    ~Timer();
-
-    void start();
-    void at(const QString& s);
-
-private:
-
-    QTime m_timer;
-    int   m_meantime;
+    oglOK,
+    oglNoRectangularTexture,
+    oglNoContext
 };
 
 } // namespace KIPIViewerPlugin
 
-#endif // TIMER_H
+#endif // GLOBAL_H
