@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,9 +42,9 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, const QString &tmpPath,
-                           bool cropActionOrig, bool cropActionDest, const QString &EffectName,
-                           const QString &FileName, QWidget *parent)
+ImagePreview::ImagePreview(const QString& fileOrig, const QString& fileDest,
+                           bool cropActionOrig, const QString& EffectName,
+                           const QString& FileName, QWidget* const parent)
         : KDialog(parent)
 {
     setCaption(i18n("Batch Process Preview (%1 - %2)", EffectName, FileName));
@@ -53,15 +53,15 @@ ImagePreview::ImagePreview(const QString &fileOrig, const QString &fileDest, con
     setDefaultButton(Ok);
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch process images"),
-                                           QByteArray(),
-                                           KAboutData::License_GPL,
-                                           ki18n("An interface to preview the \"Batch Process Images\" "
-                                                 "Kipi plugin.\n"
-                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" "
-                                                 "package."),
-                                           ki18n("(c) 2003-2009, Gilles Caulier\n"
-                                                 "(c) 2007-2009, Aurélien Gateau"));
+    m_about = new KPAboutData(ki18n("Batch process images"),
+                                    QByteArray(),
+                                    KAboutData::License_GPL,
+                                    ki18n("An interface to preview the \"Batch Process Images\" "
+                                            "Kipi plugin.\n"
+                                            "This plugin uses the \"convert\" program from the \"ImageMagick\" "
+                                            "package."),
+                                    ki18n("(c) 2003-2009, Gilles Caulier\n"
+                                          "(c) 2007-2009, Aurélien Gateau"));
 
     m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
                        "caulier dot gilles at gmail dot com");
@@ -99,7 +99,7 @@ ImagePreview::~ImagePreview()
     delete m_about;
 }
 
-void ImagePreview::slotHelp(void)
+void ImagePreview::slotHelp()
 {
     KToolInvocation::invokeHelp("", "kipi-plugins");
 }

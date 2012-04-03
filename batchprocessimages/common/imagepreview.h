@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,12 +31,12 @@
 
 #include "ui_imagepreview.h"
 
-
 namespace KIPIPlugins
 {
-class KPAboutData;
+    class KPAboutData;
 }
 
+using namespace KIPIPlugins;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -47,19 +47,18 @@ class ImagePreview : public KDialog, private Ui_ImagePreview
 
 public:
 
-    ImagePreview(const QString &fileOrig, const QString &fileDest, const QString &tmpPath,
-                 bool cropActionOrig, bool cropActionDest, const QString &EffectName,
-                 const QString &FileName, QWidget *parent = 0);
+    ImagePreview(const QString& fileOrig, const QString& fileDest,
+                 bool cropActionOrig, const QString& EffectName,
+                 const QString& FileName, QWidget* const parent = 0);
     ~ImagePreview();
 
 private Q_SLOTS:
 
-    void slotHelp(void);
+    void slotHelp();
 
 private:
 
-    KIPIPlugins::KPAboutData    *m_about;
-
+    KPAboutData* m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

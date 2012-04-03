@@ -777,8 +777,8 @@ void BatchProcessImagesDialog::slotPreviewFinished()
             cropTitle = i18n(" - small preview");
 
         QPointer<ImagePreview> previewDialog = new ImagePreview(item->pathSrc(), m_tmpFolder + '/'
-                + QString::number(getpid()) + "preview.PNG", m_tmpFolder, m_ui->m_smallPreview->isChecked(),
-                false, m_Type->currentText() + cropTitle, item->nameSrc(), this);
+                + QString::number(getpid()) + "preview.PNG", m_ui->m_smallPreview->isChecked(),
+                m_Type->currentText() + cropTitle, item->nameSrc(), this);
         previewDialog->exec();
         delete previewDialog;
 
