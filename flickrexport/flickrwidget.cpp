@@ -59,6 +59,7 @@
 #include "comboboxdelegate.h"
 #include "comboboxintermediate.h"
 #include "flickrlist.h"
+#include "kpprogresswidget.h"
 
 namespace KIPIFlickrExportPlugin
 {
@@ -92,6 +93,12 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
                                   "<font color=\"#FF0084\">r</font></a>"
                                   " Export"
                                   "</h2></b>"));
+
+    // -- The common progress bar  --------------------------------------------------
+
+    m_progressBar = new KIPIPlugins::KPProgressWidget(this);
+    m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    m_progressBar->hide();
 
     // -- The image list tab --------------------------------------------------
 
@@ -354,6 +361,7 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
     flickrWidgetLayout->addWidget(line);
     flickrWidgetLayout->addWidget(m_tab, 5);
     flickrWidgetLayout->setSpacing(KDialog::spacingHint());
+    flickrWidgetLayout->addWidget(m_progressBar);
     flickrWidgetLayout->setMargin(0);
 
     m_tab->insertTab(FILELIST, m_imglst,           i18n("File List"));
@@ -433,6 +441,11 @@ FlickrWidget::FlickrWidget(QWidget* parent, const QString& serviceName)
 
 FlickrWidget::~FlickrWidget()
 {
+}
+
+KIPIPlugins::KPProgressWidget* FlickrWidget::progressBar() const
+{
+    return m_progressBar;
 }
 
 void FlickrWidget::slotOriginalChecked()

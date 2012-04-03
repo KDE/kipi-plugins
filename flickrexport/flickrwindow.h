@@ -42,7 +42,6 @@
 // LibKIPI includes
 
 #include <libkipi/interface.h>
-
 class QProgressDialog;
 class QPushButton;
 class QSpinBox;
@@ -119,7 +118,7 @@ private Q_SLOTS:
     void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoSetSucceeded();
     void slotListPhotoSetsFailed(const QString& msg);
-    void slotAddPhotoCancel();
+    void slotAddPhotoCancelAndClose();
     void slotAuthCancel();
     void slotHelp();
     void slotClose();
@@ -170,7 +169,6 @@ private:
 
     QLabel*                                m_userNameDisplayLabel;
 
-    QProgressDialog*                       m_progressDlg;
     QProgressDialog*                       m_authProgressDlg;
 
     QList< QPair<KUrl, FPhotoInfo> >       m_uploadQueue;

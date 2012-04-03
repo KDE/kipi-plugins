@@ -26,8 +26,8 @@
 
 // Qt includes
 
-#include <QProgressDialog>
 #include <QPushButton>
+#include <QProgressDialog>
 #include <QPixmap>
 #include <QCheckBox>
 #include <QStringList>
@@ -64,6 +64,7 @@
 #include "kpaboutdata.h"
 #include "kpimageinfo.h"
 #include "kpversion.h"
+#include "kpprogresswidget.h"
 #include "login.h"
 #include "flickrtalker.h"
 #include "flickritem.h"
@@ -193,6 +194,9 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     connect(m_talker, SIGNAL(signalTokenObtained(QString)),
             this, SLOT(slotTokenObtained(QString)));
 
+    connect(m_widget->progressBar(), SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotAddPhotoCancelAndClose()));
+
     //connect( m_talker, SIGNAL(signalAlbums(QValueList<GAlbum>)),
     //         SLOT(slotAlbums(QValueList<GAlbum>)) );
 
@@ -201,13 +205,6 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
 
     // --------------------------------------------------------------------------
 
-    m_progressDlg = new QProgressDialog(this);
-    m_progressDlg->setModal(true);
-    m_progressDlg->setAutoReset(true);
-    m_progressDlg->setAutoClose(true);
-
-    connect(m_progressDlg, SIGNAL(canceled()),
-            this, SLOT(slotAddPhotoCancel()));
 
     connect(m_changeUserButton, SIGNAL(clicked()),
             this, SLOT(slotUserChangeRequest()));
@@ -261,7 +258,6 @@ FlickrWindow::~FlickrWindow()
     //   if (m_wallet)
     //      delete m_wallet;
 
-    delete m_progressDlg;
     delete m_authProgressDlg;
     delete m_talker;
     delete m_widget;
@@ -275,9 +271,36 @@ void FlickrWindow::slotHelp()
 
 void FlickrWindow::slotClose()
 {
+    if (m_widget->progressBar()->isHidden())
+    {
+        writeSettings();
+        m_imglst->listView()->clear();
+        m_widget->progressBar()->progressCompleted();
+        done(Close);
+    }
+    else // cancel login/transfer
+    {
+        m_talker->cancel();
+        m_uploadQueue.clear();
+        m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
+    }
+
+}
+
+void FlickrWindow::slotAddPhotoCancelAndClose()
+{
     writeSettings();
     m_imglst->listView()->clear();
+    m_uploadQueue.clear();
+    m_widget->progressBar()->reset();
+    m_widget->progressBar()->hide();
+    m_widget->progressBar()->progressCompleted();
+    m_talker->cancel();
     done(Close);
+
+    // refresh the thumbnails
+    //slotTagSelected();
 }
 
 void FlickrWindow::closeEvent(QCloseEvent* e)
@@ -643,7 +666,7 @@ void FlickrWindow::slotUser1()
 
     m_uploadTotal = m_uploadQueue.count();
     m_uploadCount = 0;
-    m_progressDlg->reset();
+    m_widget->progressBar()->reset();
     slotAddPhotoNext();
     kDebug() << "SlotUploadImages done";
 }
@@ -652,8 +675,9 @@ void FlickrWindow::slotAddPhotoNext()
 {
     if (m_uploadQueue.isEmpty())
     {
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+        m_widget->progressBar()->reset();
+        m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         //slotAlbumSelected();
         return;
     }
@@ -702,11 +726,11 @@ void FlickrWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText(i18n("Uploading file %1", pathComments.first.fileName()));
-
-    if (m_progressDlg->isHidden())
+    if (m_widget->progressBar()->isHidden())
     {
-        m_progressDlg->show();
+        m_widget->progressBar()->show();
+        m_widget->progressBar()->progressScheduled(i18n("Flickr Export"), true, true);
+        m_widget->progressBar()->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
     }
 }
 
@@ -716,8 +740,8 @@ void FlickrWindow::slotAddPhotoSucceeded()
     m_imglst->removeItemByUrl(m_uploadQueue.first().first);
     m_uploadQueue.pop_front();
     m_uploadCount++;
-    m_progressDlg->setMaximum(m_uploadTotal);
-    m_progressDlg->setValue(m_uploadCount);
+    m_widget->progressBar()->setMaximum(m_uploadTotal);
+    m_widget->progressBar()->setValue(m_uploadCount);
     slotAddPhotoNext();
 }
 
@@ -733,8 +757,9 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
         != KMessageBox::Continue)
     {
         m_uploadQueue.clear();
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+        m_widget->progressBar()->reset();
+        m_widget->progressBar()->hide();
+        m_widget->progressBar()->progressCompleted();
         // refresh the thumbnails
         //slotTagSelected();
     }
@@ -742,8 +767,8 @@ void FlickrWindow::slotAddPhotoFailed(const QString& msg)
     {
         m_uploadQueue.pop_front();
         m_uploadTotal--;
-        m_progressDlg->setMaximum(m_uploadTotal);
-        m_progressDlg->setValue(m_uploadCount);
+        m_widget->progressBar()->setMaximum(m_uploadTotal);
+        m_widget->progressBar()->setValue(m_uploadCount);
         slotAddPhotoNext();
     }
 }
@@ -755,18 +780,6 @@ void FlickrWindow::slotAddPhotoSetSucceeded()
      * on Flickr. */
     slotPopulatePhotoSetComboBox();
     slotAddPhotoSucceeded();
-}
-
-void FlickrWindow::slotAddPhotoCancel()
-{
-    m_uploadQueue.clear();
-    m_progressDlg->reset();
-    m_progressDlg->hide();
-
-    m_talker->cancel();
-
-    // refresh the thumbnails
-    //slotTagSelected();
 }
 
 void FlickrWindow::slotImageListChanged()
