@@ -121,26 +121,26 @@ private:
 
 private:
 
-    Texture*         texture;
     unsigned int     old_file_idx, file_idx, idx, oldidx;
-    float            ratio_view_y, ratio_view_x, delta;
     QTime            timer;
-    QDir             directory;
     QStringList      files;
-    unsigned char*   imageJPEGLIB;
     Cache            cache[CACHESIZE];
     GLuint           tex[3];
-    float            vertex_height, vertex_width, vertex_left, vertex_top, vertex_right, vertex_bottom;
-    QPoint           startdrag, previous_pos;
-    WheelAction      wheelAction;
-    bool             firstImage;
-    QSize            zoomsize;
-    QTimer           timerMouseMove;
-    QCursor          moveCursor, zoomCursor;
-    float            zoomfactor_scrollwheel,  zoomfactor_mousemove,  zoomfactor_keyboard;
-    QString          nullImage;
-    int              screen_width;
-    Interface*       kipiInterface;
+    unsigned char*   m_imageJPEGLIB;
+    Texture*         m_texture;
+    float            m_ratio_view_y, m_ratio_view_x, m_delta;
+    QDir             m_directory;
+    float            m_vertex_height, m_vertex_width, m_vertex_left, m_vertex_top, m_vertex_right, m_vertex_bottom;
+    QPoint           m_startdrag, m_previous_pos;
+    WheelAction      m_wheelAction;
+    bool             m_firstImage;
+    QSize            m_zoomsize;
+    QTimer           m_timerMouseMove;
+    QCursor          m_moveCursor, m_zoomCursor;
+    float            m_zoomfactor_scrollwheel,  m_zoomfactor_mousemove, m_zoomfactor_keyboard;
+    QString          m_nullImage;
+    int              m_screen_width;
+    Interface*       m_kipiInterface;
 };
 
 } // namespace KIPIViewerPlugin
