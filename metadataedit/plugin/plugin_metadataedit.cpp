@@ -54,7 +54,9 @@
 #include "kpmetadata.h"
 
 using namespace KIPIPlugins;
-using namespace KIPIMetadataEditPlugin;
+
+namespace KIPIMetadataEditPlugin
+{
 
 K_PLUGIN_FACTORY( MetadataEditFactory, registerPlugin<Plugin_MetadataEdit>(); )
 K_EXPORT_PLUGIN ( MetadataEditFactory("kipiplugin_metadataedit") )
@@ -429,3 +431,5 @@ Category Plugin_MetadataEdit::category(KAction* action) const
     kWarning() << "Unrecognized action for plugin category identification";
     return ImagesPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIMetadataEditPlugin
