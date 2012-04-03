@@ -52,21 +52,24 @@
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
+namespace KIPIKopetePlugin
+{
+
 K_PLUGIN_FACTORY( KopeteFactory, registerPlugin<Plugin_Kopete>(); )
 K_EXPORT_PLUGIN ( KopeteFactory("kipiplugin_kopete") )
 
-Plugin_Kopete::Plugin_Kopete(QObject* parent, const QVariantList& /*args*/)
-             : KIPI::Plugin(KopeteFactory::componentData(),
-                            parent, "Kopete Export"),
-                            m_kopeteDBus("org.kde.kopete","/Kopete","org.kde.Kopete"),
-                            m_kopeteDBusTest("org.kde.kopete", "/Kopete", "org.freedesktop.DBus.Introspectable")
+Plugin_Kopete::Plugin_Kopete(QObject* const parent, const QVariantList& /*args*/)
+    : Plugin(KopeteFactory::componentData(),
+      parent, "Kopete Export"),
+      m_kopeteDBus("org.kde.kopete","/Kopete","org.kde.Kopete"),
+      m_kopeteDBusTest("org.kde.kopete", "/Kopete", "org.freedesktop.DBus.Introspectable")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_Kopete plugin loaded";
 }
 
 void Plugin_Kopete::setup(QWidget* widget)
 {
-    KIPI::Plugin::setup(widget);
+    Plugin::setup(widget);
 
     KIconLoader::global()->addAppDir("kipiplugin_kopete");
 
@@ -85,7 +88,7 @@ void Plugin_Kopete::setup(QWidget* widget)
     connect(contactsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotAboutToShowMenu()));
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -102,7 +105,7 @@ Plugin_Kopete::~Plugin_Kopete()
 
 void Plugin_Kopete::slotAboutToShowMenu()
 {
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
+    Interface* interface = dynamic_cast<Interface*>(parent());
     if (!interface)
     {
         kError() << "Kipi interface is null!";
@@ -169,15 +172,14 @@ void Plugin_Kopete::slotAboutToShowMenu()
 
         m_signalMapper->setMapping(action, contact);
     }
-
 }
 
 void Plugin_Kopete::slotTransferFiles(const QString& contactId)
 {
     kDebug() << "Received a request to transfer file(s) to contact " << contactId;
 
-    KIPI::Interface* interface = dynamic_cast<KIPI::Interface*>(parent());
-    KUrl::List imgList         = interface->currentSelection().images();
+    Interface* interface = dynamic_cast<Interface*>(parent());
+    KUrl::List imgList   = interface->currentSelection().images();
 
     // Check if Kopete is still running
     if ( contactId.isEmpty() || !kopeteRunning() )
@@ -202,11 +204,6 @@ void Plugin_Kopete::slotTransferFiles(const QString& contactId)
     }
 }
 
-KIPI::Category Plugin_Kopete::category( KAction* /* action */ ) const
-{
-    return KIPI::ExportPlugin;
-}
-
 bool Plugin_Kopete::kopeteRunning()
 {
     QDBusReply<QString> kopeteReply = m_kopeteDBusTest.call("Introspect");
@@ -216,3 +213,10 @@ bool Plugin_Kopete::kopeteRunning()
     }
     return false;
 }
+
+Category Plugin_Kopete::category( KAction* /* action */ ) const
+{
+    return ExportPlugin;
+}
+
+} // namespace KIPIKopetePlugin

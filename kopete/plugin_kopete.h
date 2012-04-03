@@ -38,18 +38,21 @@ class KMenu;
 
 class KJob;
 
-class Plugin_Kopete
-    : public KIPI::Plugin
+using namespace KIPI;
+
+namespace KIPIKopetePlugin
 {
 
+class Plugin_Kopete : public Plugin
+{
     Q_OBJECT
 
 public:
 
-    Plugin_Kopete(QObject* parent, const QVariantList& args);
+    Plugin_Kopete(QObject* const parent, const QVariantList& args);
     ~Plugin_Kopete();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget*);
 
 public Q_SLOTS:
@@ -68,5 +71,7 @@ private:
     KAction*       m_actionExport;
     QSignalMapper* m_signalMapper;
 };
+
+} // namespace KIPIKopetePlugin
 
 #endif // PLUGIN_KOPETE_H
