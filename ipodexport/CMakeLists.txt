@@ -3,7 +3,7 @@ INCLUDE_DIRECTORIES(${IPOD_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIR} ${GDK_INCLUDE_DIR}
 
 SET(kipiplugin_ipodexport_PART_SRCS
     plugin_ipodexport.cpp
-    ipodexportdialog.cpp
+    uploaddialog.cpp
     ipodheader.cpp
     ipodlistitem.cpp
     imagelist.cpp

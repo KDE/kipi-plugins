@@ -46,7 +46,7 @@ extern "C"
 
 // Local includes
 
-#include "ipodexportdialog.h"
+#include "uploaddialog.h"
 
 namespace KIPIIpodExportPlugin
 {

@@ -35,7 +35,7 @@
 
 // Locale includes
 
-#include "ipodexportdialog.h"
+#include "uploaddialog.h"
 
 namespace KIPIIpodExportPlugin
 {

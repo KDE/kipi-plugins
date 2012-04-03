@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "ipodexportdialog.moc"
+#include "uploaddialog.moc"
 
 // Libgdk includes
 
