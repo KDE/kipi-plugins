@@ -44,13 +44,14 @@ public:
 
     Timer();
     ~Timer();
+
     void start();
     void at(const QString& s);
 
-protected:
+private:
 
-    QTime timer;
-    int   meantime;
+    QTime m_timer;
+    int   m_meantime;
 };
 
 } // namespace KIPIViewerPlugin

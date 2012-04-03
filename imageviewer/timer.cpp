@@ -34,20 +34,20 @@ Timer::Timer()
 {
 }
 
+Timer::~Timer()
+{
+}
+
 void Timer::start()
 {
-    timer.start();
-    meantime = 0;
+    m_timer.start();
+    m_meantime = 0;
 }
 
 void Timer::at(const QString& s)
 {
-    meantime = timer.elapsed()-meantime;
-    kDebug() << "stopwatch:" << s << ": " << meantime << " ms    overall: " << timer.elapsed() << " ms";
-}
-
-Timer::~Timer()
-{
+    m_meantime = m_timer.elapsed()-m_meantime;
+    kDebug() << "stopwatch:" << s << ": " << m_meantime << " ms    overall: " << m_timer.elapsed() << " ms";
 }
 
 } // namespace KIPIViewerPlugin
