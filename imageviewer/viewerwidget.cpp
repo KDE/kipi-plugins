@@ -59,9 +59,9 @@
 namespace KIPIViewerPlugin
 {
 
-ViewerWidget::ViewerWidget(Interface* const  i)
+ViewerWidget::ViewerWidget(Interface* const iface)
 {
-    kipiInterface             = i;
+    kipiInterface             = iface;
     ImageCollection selection = kipiInterface->currentSelection();
     ImageCollection album     = kipiInterface->currentAlbum();
 
@@ -804,14 +804,14 @@ void ViewerWidget::timeoutMouseMove()
 }
 
 /*!
-    \fn ViewerWidget::getOGLstate()
+    \fn ViewerWidget::getOGLstate() const
     check if OpenGL engine is ready. This function is called from outside the widget.
     If OpenGL doen't work correctly, the widget can be destroyed
     \return OGLstate::oglNoContext No OpenGl context could be retrieved
     \return OGLstate::oglNoRectangularTexture GLGL_ARB_texture_rectangle is not supported
     \return OGLstate::oglOK all is fine
  */
-OGLstate ViewerWidget::getOGLstate()
+OGLstate ViewerWidget::getOGLstate() const
 {
     //no OpenGL context is found. Are the drivers ok?
     if ( !isValid() )

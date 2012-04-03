@@ -80,7 +80,7 @@ class ViewerWidget : public QGLWidget
 
 public:
 
-    ViewerWidget(Interface* const);
+    ViewerWidget(Interface* const iface);
     ~ViewerWidget();
 
     void     drawImage(Texture* const tex);
@@ -90,7 +90,7 @@ public:
     void     nextImage();
     bool     listOfFilesIsEmpty() const;
     void     zoom(int mdelta, const QPoint& pos, float factor);
-    OGLstate getOGLstate();
+    OGLstate getOGLstate() const;
 
     virtual void initializeGL();
     virtual void resizeGL(int w, int h);
@@ -98,7 +98,21 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
 
-protected:
+private:
+
+    bool isReallyFullScreen() const;
+
+    virtual void keyPressEvent(QKeyEvent* k);
+    virtual void wheelEvent(QWheelEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+    virtual void mousePressEvent(QMouseEvent* e);
+    virtual void mouseDoubleClickEvent(QMouseEvent* e);
+
+private Q_SLOTS:
+
+    void timeoutMouseMove();
+
+private:
 
     struct Cache
     {
@@ -112,7 +126,7 @@ protected:
         changeImage
     };
 
-protected:
+private:
 
     Texture*         texture;
     unsigned int     old_file_idx, file_idx, idx, oldidx;
@@ -134,20 +148,6 @@ protected:
     QString          nullImage;
     int              screen_width;
     Interface*       kipiInterface;
-
-protected:
-
-    bool isReallyFullScreen() const;
-
-    virtual void keyPressEvent(QKeyEvent* k);
-    virtual void wheelEvent(QWheelEvent* e);
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mousePressEvent(QMouseEvent* e);
-    virtual void mouseDoubleClickEvent(QMouseEvent* e);
-
-private Q_SLOTS:
-
-    void timeoutMouseMove();
 };
 
 } // namespace KIPIViewerPlugin
