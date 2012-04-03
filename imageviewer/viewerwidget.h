@@ -24,10 +24,6 @@
 #ifndef VIEWERWIDGET_H
 #define VIEWERWIDGET_H
 
-// C++ includes
-
-#include <iostream>
-
 // Qt includes
 
 #include <QCursor>
@@ -52,7 +48,6 @@
 #include "global.h"
 
 using namespace KIPI;
-using namespace std;
 
 namespace KIPIViewerPlugin
 {
@@ -93,7 +88,7 @@ private:
 
 private Q_SLOTS:
 
-    void timeoutMouseMove();
+    void slotTimeoutMouseMove();
 
 private:
 

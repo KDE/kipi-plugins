@@ -193,7 +193,7 @@ ViewerWidget::ViewerWidget(Interface* const iface)
 
     // let the cursor dissapear after 2sec of inactivity
     connect(&d->timerMouseMove, SIGNAL(timeout()),
-            this, SLOT(timeoutMouseMove()));
+            this, SLOT(slotTimeoutMouseMove()));
 
     d->timerMouseMove.start(2000);
     setMouseTracking(true);
@@ -804,7 +804,7 @@ void ViewerWidget::mouseReleaseEvent(QMouseEvent*)
 /*!
     being called if user didn't move the mouse for longer than 2 sec
  */
-void ViewerWidget::timeoutMouseMove()
+void ViewerWidget::slotTimeoutMouseMove()
 {
     setCursor(Qt::BlankCursor);
 }
