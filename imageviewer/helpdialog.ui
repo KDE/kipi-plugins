@@ -1,6 +1,6 @@
 <ui version="4.0" >
  <class>HelpDialog</class>
- <widget class="QDialog" name="HelpDialog" >
+ <widget class="QDialog" name="KIPIViewerPlugin::HelpDialog" >
   <property name="windowModality" >
    <enum>Qt::WindowModal</enum>
   </property>
