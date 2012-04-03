@@ -51,19 +51,43 @@ using namespace KDcrawIface;
 namespace KIPIViewerPlugin
 {
 
-Texture::Texture(Interface* const iface)
+class Texture::TexturePriv
 {
-    m_kipiInterface  = iface;
-    m_rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
-    m_rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
-    m_rotate_list[2] = KPMetadata::ORIENTATION_ROT_270;
-    m_rotate_list[3] = KPMetadata::ORIENTATION_ROT_180;
-    m_rotate_idx     = 0;
+public:
+
+    TexturePriv()
+    {
+        kipiInterface = 0;
+        rotate_idx    = 0;
+        rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
+        rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
+        rotate_list[2] = KPMetadata::ORIENTATION_ROT_270;
+        rotate_list[3] = KPMetadata::ORIENTATION_ROT_180;
+
+    }
+
+    float                        rdx, rdy, z, ux, uy, rtx, rty;
+    float                        vtop, vbottom, vleft, vright;
+    int                          display_x, display_y;
+    GLuint                       texnr;
+    QString                      filename;
+    QImage                       qimage, glimage;
+    QSize                        initial_size;
+    KPMetadata::ImageOrientation rotate_list[4];
+    int                          rotate_idx;
+    Interface*                   kipiInterface;
+};
+
+Texture::Texture(Interface* const iface)
+    : d(new TexturePriv)
+{
+    d->kipiInterface = iface;
     reset();
 }
 
 Texture::~Texture()
 {
+    delete d;
 }
 
 /*!
@@ -71,7 +95,7 @@ Texture::~Texture()
  */
 int Texture::height() const
 {
-    return m_glimage.height();
+    return d->glimage.height();
 }
 
 /*!
@@ -79,7 +103,7 @@ int Texture::height() const
  */
 int Texture::width() const
 {
-    return m_glimage.width();
+    return d->glimage.width();
 }
 
 /*!
@@ -93,9 +117,9 @@ int Texture::width() const
  */
 bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 {
-    m_filename     = fn;
-    m_initial_size = size;
-    m_texnr        = tn;
+    d->filename     = fn;
+    d->initial_size = size;
+    d->texnr        = tn;
 
     // check if its a RAW file.
     QString rawFilesExt(KDcraw::rawFiles());
@@ -103,30 +127,30 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcraw::loadDcrawPreview(m_qimage, m_filename);
+        KDcraw::loadDcrawPreview(d->qimage, d->filename);
     }
     else
     {
         // use the standard loader
-        m_qimage = QImage(m_filename);
+        d->qimage = QImage(d->filename);
     }
 
     //handle rotation
-    KPImageInfo info(m_filename);
+    KPImageInfo info(d->filename);
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
         QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
-        m_qimage       = m_qimage.transformed(matrix);
+        d->qimage      = d->qimage.transformed(matrix);
     }
 
-    if (m_qimage.isNull())
+    if (d->qimage.isNull())
     {
         return false;
     }
 
     loadInternal();
     reset();
-    m_rotate_idx = 0;
+    d->rotate_idx = 0;
     return true;
 }
 
@@ -141,12 +165,12 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
  */
 bool Texture::load(const QImage& im, const QSize& size, GLuint tn)
 {
-    m_qimage       = im;
-    m_initial_size = size;
-    m_texnr        = tn;
+    d->qimage       = im;
+    d->initial_size = size;
+    d->texnr        = tn;
     loadInternal();
     reset();
-    m_rotate_idx   = 0;
+    d->rotate_idx   = 0;
     return true;
 }
 
@@ -157,30 +181,32 @@ bool Texture::load(const QImage& im, const QSize& size, GLuint tn)
  */
 bool Texture::loadInternal()
 {
-    int w = m_initial_size.width();
-    int h = m_initial_size.height();
+    int w = d->initial_size.width();
+    int h = d->initial_size.height();
 
-    if (w == 0 || w > m_qimage.width() || h > m_qimage.height())
+    if (w == 0 || w > d->qimage.width() || h > d->qimage.height())
     {
-        m_glimage = QGLWidget::convertToGLFormat(m_qimage);
+        d->glimage = QGLWidget::convertToGLFormat(d->qimage);
     }
     else
     {
-        m_glimage = QGLWidget::convertToGLFormat(m_qimage.scaled(w,h,Qt::KeepAspectRatio,Qt::FastTransformation));
+        d->glimage = QGLWidget::convertToGLFormat(d->qimage.scaled(w,h,Qt::KeepAspectRatio,Qt::FastTransformation));
     }
 
-    w = m_glimage.width();
-    h = m_glimage.height();
+    w = d->glimage.width();
+    h = d->glimage.height();
+
     if (h < w)
     {
-        m_rtx = 1;
-        m_rty = float(h)/float(w);
+        d->rtx = 1;
+        d->rty = float(h)/float(w);
     }
     else
     {
-        m_rtx = float(w)/float(h);
-        m_rty = 1;
+        d->rtx = float(w)/float(h);
+        d->rty = 1;
     }
+
     return true;
 }
 
@@ -189,7 +215,7 @@ bool Texture::loadInternal()
  */
 GLvoid* Texture::data()
 {
-    return m_glimage.bits();
+    return d->glimage.bits();
 }
 
 /*!
@@ -197,7 +223,7 @@ GLvoid* Texture::data()
  */
 GLuint Texture::texnr() const
 {
-    return m_texnr;
+    return d->texnr;
 }
 
 /*!
@@ -216,19 +242,19 @@ void Texture::zoom(float delta, const QPoint& mousepos)
 //m: mouse pos normalized, cd=[0..rd]
 //c:  mouse pos normalized to zoom*l, c=[0..1]
 {
-    m_z     *= delta;
-    delta    =  m_z*(1.0/delta-1.0); //convert to real delta=z_old-z_new
+    d->z    *= delta;
+    delta    =  d->z*(1.0/delta-1.0); //convert to real delta=z_old-z_new
 
-    float mx = mousepos.x()/(float)m_display_x*m_rdx;
-    float cx = (mx-m_rdx/2.0+m_rtx/2.0)/m_rtx;
-    float vx = m_ux+cx*m_z;
-    m_ux     = m_ux+(vx-m_ux)*delta/m_z;
+    float mx = mousepos.x()/(float)d->display_x*d->rdx;
+    float cx = (mx-d->rdx/2.0+d->rtx/2.0)/d->rtx;
+    float vx = d->ux+cx*d->z;
+    d->ux    = d->ux+(vx-d->ux)*delta/d->z;
 
-    float my = mousepos.y()/(float)m_display_y*m_rdy;
-    float cy = (my-m_rdy/2.0+m_rty/2.0)/m_rty;
+    float my = mousepos.y()/(float)d->display_y*d->rdy;
+    float cy = (my-d->rdy/2.0+d->rty/2.0)/d->rty;
     cy       = 1-cy;
-    float vy = m_uy+cy*m_z;
-    m_uy     = m_uy+(vy-m_uy)*delta/m_z;
+    float vy = d->uy+cy*d->z;
+    d->uy    = d->uy+(vy-d->uy)*delta/d->z;
 
     calcVertex();
 }
@@ -249,20 +275,20 @@ void Texture::calcVertex()
 // the tex coord-sys goes from [-rtx..rtx] ([-1..1] for square texture)
 {
     // x part
-    float lx          = 2*m_rtx/m_z;  //length of tex
-    float tsx         = lx/(float)m_glimage.width(); //texelsize in glFrustum coordinates
+    float lx          = 2*d->rtx/d->z;  //length of tex
+    float tsx         = lx/(float)d->glimage.width(); //texelsize in glFrustum coordinates
     float halftexel_x = tsx/2.0;
-    float wx          = lx*(1-m_ux-m_z);
-    m_vleft           = -m_rtx-m_ux*lx - halftexel_x;  //left
-    m_vright          = m_rtx+wx - halftexel_x;      //right
+    float wx          = lx*(1-d->ux-d->z);
+    d->vleft          = -d->rtx-d->ux*lx - halftexel_x;  //left
+    d->vright         = d->rtx+wx - halftexel_x;      //right
 
     // y part
-    float ly          = 2*m_rty/m_z;
-    float tsy         = ly/(float)m_glimage.height(); //texelsize in glFrustum coordinates
+    float ly          = 2*d->rty/d->z;
+    float tsy         = ly/(float)d->glimage.height(); //texelsize in glFrustum coordinates
     float halftexel_y = tsy/2.0;
-    float wy          = ly*(1-m_uy-m_z);
-    m_vbottom         = -m_rty - m_uy*ly + halftexel_y; //bottom
-    m_vtop            = m_rty + wy + halftexel_y;     //top
+    float wy          = ly*(1-d->uy-d->z);
+    d->vbottom        = -d->rty - d->uy*ly + halftexel_y; //bottom
+    d->vtop           = d->rty + wy + halftexel_y;     //top
 }
 
 /*!
@@ -270,7 +296,7 @@ void Texture::calcVertex()
  */
 GLfloat Texture::vertex_bottom() const
 {
-    return (GLfloat) m_vbottom;
+    return (GLfloat) d->vbottom;
 }
 
 /*!
@@ -278,7 +304,7 @@ GLfloat Texture::vertex_bottom() const
  */
 GLfloat Texture::vertex_top() const
 {
-    return (GLfloat) m_vtop;
+    return (GLfloat) d->vtop;
 }
 
 /*!
@@ -286,7 +312,7 @@ GLfloat Texture::vertex_top() const
  */
 GLfloat Texture::vertex_left() const
 {
-    return (GLfloat) m_vleft;
+    return (GLfloat) d->vleft;
 }
 
 /*!
@@ -294,7 +320,7 @@ GLfloat Texture::vertex_left() const
  */
 GLfloat Texture::vertex_right() const
 {
-    return (GLfloat) m_vright;
+    return (GLfloat) d->vright;
 }
 
 /*!
@@ -305,18 +331,19 @@ GLfloat Texture::vertex_right() const
  */
 void Texture::setViewport(int w, int h)
 {
-    if (h>w)
+    if (h > w)
     {
-        m_rdx = 1.0;
-        m_rdy = h/float(w);
+        d->rdx = 1.0;
+        d->rdy = h/float(w);
     }
     else
     {
-        m_rdx = w/float(h);
-        m_rdy = 1.0;
+        d->rdx = w/float(h);
+        d->rdy = 1.0;
     }
-    m_display_x = w;
-    m_display_y = h;
+
+    d->display_x = w;
+    d->display_y = h;
 }
 
 /*!
@@ -325,8 +352,8 @@ void Texture::setViewport(int w, int h)
  */
 void Texture::move(const QPoint& diff)
 {
-    m_ux = m_ux - diff.x()/float(m_display_x)*m_z*m_rdx/m_rtx;
-    m_uy = m_uy + diff.y()/float(m_display_y)*m_z*m_rdy/m_rty;
+    d->ux = d->ux - diff.x()/float(d->display_x)*d->z*d->rdx/d->rtx;
+    d->uy = d->uy + diff.y()/float(d->display_y)*d->z*d->rdy/d->rty;
     calcVertex();
 }
 
@@ -335,32 +362,32 @@ void Texture::move(const QPoint& diff)
  */
 void Texture::reset()
 {
-    m_ux            = 0;
-    m_uy            = 0;
-    m_z             = 1.0;
+    d->ux           = 0;
+    d->uy           = 0;
+    d->z            = 1.0;
     float zoomdelta = 0;
 
-    if ((m_rtx < m_rty) && (m_rdx < m_rdy) && (m_rtx/m_rty < m_rdx/m_rdy))
+    if ((d->rtx < d->rty) && (d->rdx < d->rdy) && (d->rtx/d->rty < d->rdx/d->rdy))
     {
-        zoomdelta = m_z-m_rdx/m_rdy;
+        zoomdelta = d->z-d->rdx/d->rdy;
     }
 
-    if ((m_rtx < m_rty) && (m_rtx/m_rty > m_rdx/m_rdy))
+    if ((d->rtx < d->rty) && (d->rtx/d->rty > d->rdx/d->rdy))
     {
-        zoomdelta = m_z-m_rtx;
+        zoomdelta = d->z-d->rtx;
     }
 
-    if ((m_rtx >= m_rty) && (m_rdy < m_rdx) && (m_rty/m_rtx < m_rdy/m_rdx))
+    if ((d->rtx >= d->rty) && (d->rdy < d->rdx) && (d->rty/d->rtx < d->rdy/d->rdx))
     {
-        zoomdelta = m_z-m_rdy/m_rdx;
+        zoomdelta = d->z-d->rdy/d->rdx;
     }
 
-    if ((m_rtx >= m_rty) && (m_rty/m_rtx > m_rdy/m_rdx))
+    if ((d->rtx >= d->rty) && (d->rty/d->rtx > d->rdy/d->rdx))
     {
-        zoomdelta = m_z-m_rty;
+        zoomdelta = d->z-d->rty;
     }
 
-    QPoint p =  QPoint(m_display_x/2, m_display_y/2);
+    QPoint p = QPoint(d->display_x/2, d->display_y/2);
     zoom(1.0 - zoomdelta, p);
 
     calcVertex();
@@ -376,9 +403,9 @@ bool Texture::setSize(QSize size)
 {
     //don't allow larger textures than the original image. the image will be upsampled by
     //OpenGL if necessary and not by QImage::scale
-    size = size.boundedTo(m_qimage.size());
+    size = size.boundedTo(d->qimage.size());
 
-    if (m_glimage.width() == size.width())
+    if (d->glimage.width() == size.width())
     {
         return false;
     }
@@ -388,11 +415,11 @@ bool Texture::setSize(QSize size)
 
     if (w == 0)
     {
-        m_glimage = QGLWidget::convertToGLFormat(m_qimage);
+        d->glimage = QGLWidget::convertToGLFormat(d->qimage);
     }
     else
     {
-        m_glimage = QGLWidget::convertToGLFormat(m_qimage.scaled(w, h, Qt::KeepAspectRatio, Qt::FastTransformation));
+        d->glimage = QGLWidget::convertToGLFormat(d->qimage.scaled(w, h, Qt::KeepAspectRatio, Qt::FastTransformation));
     }
 
     //recalculate half-texel offset
@@ -409,16 +436,16 @@ bool Texture::setSize(QSize size)
  */
 void Texture::rotate()
 {
-    QMatrix matrix = RotationMatrix::toMatrix(m_rotate_list[m_rotate_idx%4]);
-    m_qimage       = m_qimage.transformed(matrix);
+    QMatrix matrix = RotationMatrix::toMatrix(d->rotate_list[d->rotate_idx%4]);
+    d->qimage      = d->qimage.transformed(matrix);
     loadInternal();
 
     //save new rotation in exif header
-    KPImageInfo info(m_filename);
-    info.setOrientation(m_rotate_list[m_rotate_idx%4]);
+    KPImageInfo info(d->filename);
+    info.setOrientation(d->rotate_list[d->rotate_idx%4]);
 
     reset();
-    m_rotate_idx++;
+    d->rotate_idx++;
 }
 
 /*!
@@ -431,18 +458,18 @@ void Texture::zoomToOriginal()
     float zoomfactorToOriginal;
     reset();
 
-    if (m_qimage.width()/m_qimage.height() > float(m_display_x)/float(m_display_y))
+    if (d->qimage.width()/d->qimage.height() > float(d->display_x)/float(d->display_y))
     {
         //image touches right and left edge of window
-        zoomfactorToOriginal = float(m_display_x)/m_qimage.width();
+        zoomfactorToOriginal = float(d->display_x)/d->qimage.width();
     }
     else
     {
         //image touches upper and lower edge of window
-        zoomfactorToOriginal = float(m_display_y)/m_qimage.height();
+        zoomfactorToOriginal = float(d->display_y)/d->qimage.height();
     }
 
-    zoom(zoomfactorToOriginal,QPoint(m_display_x/2,m_display_y/2));
+    zoom(zoomfactorToOriginal,QPoint(d->display_x/2,d->display_y/2));
 }
 
 } // namespace KIPIViewerPlugin

@@ -81,16 +81,8 @@ private:
 
 private:
 
-    float                        m_rdx, m_rdy, m_z, m_ux, m_uy, m_rtx, m_rty;
-    float                        m_vtop, m_vbottom, m_vleft, m_vright;
-    int                          m_display_x, m_display_y;
-    GLuint                       m_texnr;
-    QString                      m_filename;
-    QImage                       m_qimage, m_glimage;
-    QSize                        m_initial_size;
-    KPMetadata::ImageOrientation m_rotate_list[4];
-    int                          m_rotate_idx;
-    Interface*                   m_kipiInterface;
+    class TexturePriv;
+    TexturePriv* const d;
 };
 
 } // namespace KIPIViewerPlugin
