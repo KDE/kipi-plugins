@@ -24,15 +24,13 @@
 #ifndef PLUGIN_VIEWER_H
 #define PLUGIN_VIEWER_H
 
+// Qt includes
+
+#include <QVariant>
+
 // LibKIPI includes
 
 #include <libkipi/plugin.h>
-
-// Local includes
-
-#include "viewerwidget.h"
-
-class KAction;
 
 using namespace KIPI;
 
@@ -47,18 +45,18 @@ public:
 
     Plugin_viewer(QObject* const parent, const QVariantList&);
     ~Plugin_viewer();
-    
+
     void setup(QWidget* widget);
     Category category(KAction* action) const;
 
-public Q_SLOTS:
+private Q_SLOTS:
 
     void  slotActivate();
 
-protected:
+private:
 
-    ViewerWidget* m_widget;
-    KAction*      m_actionViewer;
+    class Plugin_viewerPriv;
+    Plugin_viewerPriv* const d;
 };
 
 } // namespace KIPIViewerPlugin

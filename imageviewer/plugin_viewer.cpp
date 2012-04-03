@@ -48,14 +48,31 @@ namespace KIPIViewerPlugin
 K_PLUGIN_FACTORY(viewerFactory, registerPlugin<Plugin_viewer>();)
 K_EXPORT_PLUGIN(viewerFactory("kipiplugin_imageviewer"))
 
+
+class Plugin_viewer::Plugin_viewerPriv
+{
+public:
+
+    Plugin_viewerPriv()
+    {
+        widget       = 0;
+        actionViewer = 0;
+    }
+
+    ViewerWidget* widget;
+    KAction*      actionViewer;
+};
+
 Plugin_viewer::Plugin_viewer(QObject* const parent, const QVariantList&)
-     : Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer")
+     : Plugin(viewerFactory::componentData(), parent, "kipiplugin_imageviewer"),
+       d(new Plugin_viewerPriv)
 {
     kDebug(AREA_CODE_LOADING) << "OpenGL viewer plugin loaded";
 }
 
 Plugin_viewer::~Plugin_viewer()
 {
+    delete d;
 }
 
 void Plugin_viewer::setup(QWidget* widget)
@@ -70,14 +87,14 @@ void Plugin_viewer::setup(QWidget* widget)
         return;
     }
 
-    m_actionViewer = actionCollection()->addAction("oglimageviewer");
-    m_actionViewer->setText(i18n("OpenGL Image Viewer..."));
-    m_actionViewer->setIcon(KIcon("ogl"));
+    d->actionViewer = actionCollection()->addAction("oglimageviewer");
+    d->actionViewer->setText(i18n("OpenGL Image Viewer..."));
+    d->actionViewer->setIcon(KIcon("ogl"));
 
-    connect(m_actionViewer, SIGNAL(triggered(bool)),
+    connect(d->actionViewer, SIGNAL(triggered(bool)),
             this, SLOT(slotActivate()));
 
-    addAction(m_actionViewer);
+    addAction(d->actionViewer);
 }
 
 void  Plugin_viewer::slotActivate()
@@ -90,29 +107,29 @@ void  Plugin_viewer::slotActivate()
         return;
     }
 
-    m_widget = new ViewerWidget(iface);
+    d->widget = new ViewerWidget(iface);
 
-    if ( m_widget->listOfFilesIsEmpty() )
+    if ( d->widget->listOfFilesIsEmpty() )
     {
-        delete m_widget;
+        delete d->widget;
         return;
     }
 
-    switch(m_widget->getOGLstate())
+    switch(d->widget->getOGLstate())
     {
         case oglOK:
-            m_widget->show();
+            d->widget->show();
             break;
 
         case oglNoRectangularTexture:
             kError() << "GL_ARB_texture_rectangle not supported";
-            delete m_widget;
+            delete d->widget;
             KMessageBox::error(0, i18n("OpenGL error"), i18n("GL_ARB_texture_rectangle not supported"));
             break;
 
         case oglNoContext:
             kError() << "no OpenGL context found";
-            delete m_widget;
+            delete d->widget;
             KMessageBox::error(0, i18n("OpenGL error"), i18n("no OpenGL context found"));
             break;
     }
@@ -120,7 +137,7 @@ void  Plugin_viewer::slotActivate()
 
 Category Plugin_viewer::category(KAction* action) const
 {
-    if ( action == m_actionViewer )
+    if ( action == d->actionViewer )
     {
         return ToolsPlugin;
     }
