@@ -120,7 +120,7 @@ ViewerWidget::ViewerWidget(Interface* const iface)
     for(int i = 0 ; i < CACHESIZE ; ++i)
     {
         m_cache[i].file_index = EMPTY;
-        m_cache[i].texture    = new Texture(m_kipiInterface);
+        m_cache[i].texture    = new Texture;
     }
 
     if ( m_files.isEmpty() )

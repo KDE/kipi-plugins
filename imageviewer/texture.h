@@ -30,16 +30,10 @@
 #include <QImage>
 #include <QString>
 
-// LibKipi includes
-
-#include <libkipi/imagecollection.h>
-#include <libkipi/interface.h>
-
 // Local includes
 
 #include "kpmetadata.h"
 
-using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIViewerPlugin
@@ -50,7 +44,7 @@ class Texture
 
 public:
 
-    Texture(Interface* const iface);
+    Texture();
     ~Texture();
 
     int  height() const;

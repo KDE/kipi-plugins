@@ -35,11 +35,6 @@
 #include <libkdcraw/version.h>
 #include <libkdcraw/kdcraw.h>
 
-// LibKIPI includes
-
-#include <libkipi/interface.h>
-#include <libkipi/imagecollection.h>
-
 // Local includes
 
 #include "texture.h"
@@ -57,7 +52,6 @@ public:
 
     TexturePriv()
     {
-        kipiInterface = 0;
         rotate_idx    = 0;
         rotate_list[0] = KPMetadata::ORIENTATION_ROT_90;
         rotate_list[1] = KPMetadata::ORIENTATION_ROT_180;
@@ -75,13 +69,11 @@ public:
     QSize                        initial_size;
     KPMetadata::ImageOrientation rotate_list[4];
     int                          rotate_idx;
-    Interface*                   kipiInterface;
 };
 
-Texture::Texture(Interface* const iface)
+Texture::Texture()
     : d(new TexturePriv)
 {
-    d->kipiInterface = iface;
     reset();
 }
 
