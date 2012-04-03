@@ -4,8 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using
- *               an OpenGL interface.
+ * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
  *
@@ -20,8 +19,6 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
-
-#undef PERFORMANCE_ANALYSIS
 
 #include "texture.h"
 
@@ -47,10 +44,7 @@
 // Local includes
 
 #include "kpimageinfo.h"
-
-#ifdef PERFORMANCE_ANALYSIS
 #include "timer.h"
-#endif
 
 using namespace KDcrawIface;
 

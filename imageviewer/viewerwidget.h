@@ -4,8 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2007-02-11
- * Description : a kipi plugin to show image using
- *               an OpenGL interface.
+ * Description : a kipi plugin to show image using an OpenGL interface.
  *
  * Copyright (C) 2007-2008 by Markus Leuthold <kusi at forum dot titlis dot org>
  *
@@ -50,12 +49,6 @@
 // Local includes
 
 #include "texture.h"
-
-/**
- * @short OpenGL widget for image viewer
- * @author Markus Leuthold <kusi (+at) forum.titlis.org>
- * @version 0.2
- */
 
 //keep in mind that one cache entry takes 20MB for a 5mpix pic
 #define CACHESIZE 4
