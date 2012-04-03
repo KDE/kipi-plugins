@@ -261,6 +261,8 @@ void CalWizard::print()
 {
     calProgressUI.totalProgress->setMaximum(months_.count());
     calProgressUI.totalProgress->setValue(0);
+    calProgressUI.totalProgress->progressScheduled(i18n("Making calendar"), false, true);
+    calProgressUI.totalProgress->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
     if (printThread_)
     {
@@ -314,6 +316,7 @@ void CalWizard::updatePage(int page)
 
 void CalWizard::printComplete()
 {
+    calProgressUI.totalProgress->progressCompleted();
     enableButton(KDialog::User3, true); // enable 'Back' button
     enableButton(KDialog::User1, true); // enable 'Finish' button
     calProgressUI.finishLabel->setText(i18n("Printing Complete"));
