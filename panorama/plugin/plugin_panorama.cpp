@@ -8,7 +8,7 @@
  * Acknowledge : based on the expoblending plugin
  *
  * Copyright (C) 2011-2012 by Benjamin Girault <benjamin dot girault at gmail dot com>
- * Copyright (C) 2009-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -49,13 +49,14 @@
 #include "manager/manager.h"
 #include "aboutdata.h"
 
-using namespace KIPIPanoramaPlugin;
+namespace KIPIPanoramaPlugin
+{
 
 K_PLUGIN_FACTORY( PanoramaFactory, registerPlugin<Plugin_Panorama>(); )
 K_EXPORT_PLUGIN ( PanoramaFactory("kipiplugin_panorama") )
 
-Plugin_Panorama::Plugin_Panorama(QObject* parent, const QVariantList&)
-                   : KIPI::Plugin(PanoramaFactory::componentData(), parent, "Panorama")
+Plugin_Panorama::Plugin_Panorama(QObject* const parent, const QVariantList&)
+    : Plugin(PanoramaFactory::componentData(), parent, "Panorama")
 {
     m_interface    = 0;
     m_action       = 0;
@@ -72,7 +73,7 @@ Plugin_Panorama::~Plugin_Panorama()
 void Plugin_Panorama::setup(QWidget* widget)
 {
     m_parentWidget = widget;
-    KIPI::Plugin::setup(m_parentWidget);
+    Plugin::setup(m_parentWidget);
 
     m_action = actionCollection()->addAction("panorama");
     m_action->setText(i18n("Stitch images into a panorama..."));
@@ -83,7 +84,7 @@ void Plugin_Panorama::setup(QWidget* widget)
 
     addAction(m_action);
 
-    m_interface = dynamic_cast< KIPI::Interface* >(parent());
+    m_interface = dynamic_cast< Interface* >(parent());
     if (!m_interface)
     {
        kError() << "Kipi interface is null!";
@@ -99,7 +100,7 @@ void Plugin_Panorama::slotActivate()
         return;
     }
 
-    KIPI::ImageCollection images = m_interface->currentSelection();
+    ImageCollection images = m_interface->currentSelection();
 
     if (!images.isValid() || images.images().isEmpty())
         return;
@@ -116,11 +117,13 @@ void Plugin_Panorama::slotActivate()
     m_manager->run();
 }
 
-KIPI::Category Plugin_Panorama::category( KAction* action ) const
+Category Plugin_Panorama::category( KAction* action ) const
 {
     if ( action == m_action )
-       return KIPI::ToolsPlugin;
+       return ToolsPlugin;
 
     kWarning() << "Unrecognized action for plugin category identification";
-    return KIPI::ToolsPlugin; // no warning from compiler, please
+    return ToolsPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIPanoramaPlugin
