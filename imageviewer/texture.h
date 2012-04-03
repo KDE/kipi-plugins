@@ -80,9 +80,9 @@ private:
 
 private:
 
-    int                          display_x, display_y;
     float                        rdx, rdy, z, ux, uy, rtx, rty;
-    float                        vtop, vbottom, vleft, vright;
+    float                        m_vtop, m_vbottom, m_vleft, m_vright;
+    int                          m_display_x, m_display_y;
     GLuint                       m_texnr;
     QString                      m_filename;
     QImage                       m_qimage, m_glimage;

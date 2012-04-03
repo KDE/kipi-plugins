@@ -219,12 +219,12 @@ void Texture::zoom(float delta, const QPoint& mousepos)
     z        *= delta;
     delta    =  z*(1.0/delta-1.0); //convert to real delta=z_old-z_new
 
-    float mx = mousepos.x()/(float)display_x*rdx;
+    float mx = mousepos.x()/(float)m_display_x*rdx;
     float cx = (mx-rdx/2.0+rtx/2.0)/rtx;
     float vx = ux+cx*z;
     ux       = ux+(vx-ux)*delta/z;
 
-    float my = mousepos.y()/(float)display_y*rdy;
+    float my = mousepos.y()/(float)m_display_y*rdy;
     float cy = (my-rdy/2.0+rty/2.0)/rty;
     cy       = 1-cy;
     float vy = uy+cy*z;
@@ -253,16 +253,16 @@ void Texture::calcVertex()
     float tsx         = lx/(float)m_glimage.width(); //texelsize in glFrustum coordinates
     float halftexel_x = tsx/2.0;
     float wx          = lx*(1-ux-z);
-    vleft             = -rtx-ux*lx - halftexel_x;  //left
-    vright            = rtx+wx - halftexel_x;      //right
+    m_vleft           = -rtx-ux*lx - halftexel_x;  //left
+    m_vright          = rtx+wx - halftexel_x;      //right
 
     // y part
     float ly          = 2*rty/z;
     float tsy         = ly/(float)m_glimage.height(); //texelsize in glFrustum coordinates
     float halftexel_y = tsy/2.0;
     float wy          = ly*(1-uy-z);
-    vbottom           = -rty - uy*ly + halftexel_y; //bottom
-    vtop              = rty + wy + halftexel_y;     //top
+    m_vbottom         = -rty - uy*ly + halftexel_y; //bottom
+    m_vtop            = rty + wy + halftexel_y;     //top
 }
 
 /*!
@@ -270,7 +270,7 @@ void Texture::calcVertex()
  */
 GLfloat Texture::vertex_bottom() const
 {
-    return (GLfloat) vbottom;
+    return (GLfloat) m_vbottom;
 }
 
 /*!
@@ -278,7 +278,7 @@ GLfloat Texture::vertex_bottom() const
  */
 GLfloat Texture::vertex_top() const
 {
-    return (GLfloat) vtop;
+    return (GLfloat) m_vtop;
 }
 
 /*!
@@ -286,7 +286,7 @@ GLfloat Texture::vertex_top() const
  */
 GLfloat Texture::vertex_left() const
 {
-    return (GLfloat) vleft;
+    return (GLfloat) m_vleft;
 }
 
 /*!
@@ -294,7 +294,7 @@ GLfloat Texture::vertex_left() const
  */
 GLfloat Texture::vertex_right() const
 {
-    return (GLfloat) vright;
+    return (GLfloat) m_vright;
 }
 
 /*!
@@ -315,8 +315,8 @@ void Texture::setViewport(int w, int h)
         rdx = w/float(h);
         rdy = 1.0;
     }
-    display_x = w;
-    display_y = h;
+    m_display_x = w;
+    m_display_y = h;
 }
 
 /*!
@@ -325,8 +325,8 @@ void Texture::setViewport(int w, int h)
  */
 void Texture::move(const QPoint& diff)
 {
-    ux = ux-diff.x()/float(display_x)*z*rdx/rtx;
-    uy = uy+diff.y()/float(display_y)*z*rdy/rty;
+    ux = ux-diff.x()/float(m_display_x)*z*rdx/rtx;
+    uy = uy+diff.y()/float(m_display_y)*z*rdy/rty;
     calcVertex();
 }
 
@@ -360,7 +360,7 @@ void Texture::reset()
         zoomdelta = z-rty;
     }
 
-    QPoint p =  QPoint(display_x/2,display_y/2);
+    QPoint p =  QPoint(m_display_x/2,m_display_y/2);
     zoom(1.0-zoomdelta,p);
 
     calcVertex();
@@ -431,18 +431,18 @@ void Texture::zoomToOriginal()
     float zoomfactorToOriginal;
     reset();
 
-    if (m_qimage.width()/m_qimage.height() > float(display_x)/float(display_y))
+    if (m_qimage.width()/m_qimage.height() > float(m_display_x)/float(m_display_y))
     {
         //image touches right and left edge of window
-        zoomfactorToOriginal = float(display_x)/m_qimage.width();
+        zoomfactorToOriginal = float(m_display_x)/m_qimage.width();
     }
     else
     {
         //image touches upper and lower edge of window
-        zoomfactorToOriginal = float(display_y)/m_qimage.height();
+        zoomfactorToOriginal = float(m_display_y)/m_qimage.height();
     }
 
-    zoom(zoomfactorToOriginal,QPoint(display_x/2,display_y/2));
+    zoom(zoomfactorToOriginal,QPoint(m_display_x/2,m_display_y/2));
 }
 
 } // namespace KIPIViewerPlugin
