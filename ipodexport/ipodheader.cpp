@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "IpodHeader.moc"
+#include "ipodheader.moc"
 
 // Qt includes
 
@@ -35,7 +35,7 @@
 
 // Locale includes
 
-#include "IpodExportDialog.h"
+#include "ipodexportdialog.h"
 
 namespace KIPIIpodExportPlugin
 {

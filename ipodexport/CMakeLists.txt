@@ -3,10 +3,10 @@ INCLUDE_DIRECTORIES(${IPOD_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIR} ${GDK_INCLUDE_DIR}
 
 SET(kipiplugin_ipodexport_PART_SRCS
     plugin_ipodexport.cpp
-    IpodExportDialog.cpp
-    IpodHeader.cpp
-    IpodListItem.cpp
-    ImageList.cpp
+    ipodexportdialog.cpp
+    ipodheader.cpp
+    ipodlistitem.cpp
+    imagelist.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_ipodexport ${kipiplugin_ipodexport_PART_SRCS})

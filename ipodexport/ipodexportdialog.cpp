@@ -21,7 +21,7 @@
  *
  * ============================================================ */
 
-#include "IpodExportDialog.moc"
+#include "ipodexportdialog.moc"
 
 // Libgdk includes
 
@@ -74,10 +74,10 @@ extern "C"
 
 // Local includes
 
-#include "IpodHeader.h"
-#include "ImageList.h"
-#include "ImageListItem.h"
-#include "IpodListItem.h"
+#include "ipodheader.h"
+#include "imagelist.h"
+#include "imagelistitem.h"
+#include "ipodlistitem.h"
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
 

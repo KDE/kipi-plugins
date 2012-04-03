@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "ImageList.moc"
+#include "imagelist.moc"
 
 // Qt includes
 

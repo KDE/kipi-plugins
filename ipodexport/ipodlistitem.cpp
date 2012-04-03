@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "IpodListItem.h"
+#include "ipodlistitem.h"
 
 // KDE includes
 
