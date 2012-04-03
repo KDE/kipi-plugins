@@ -54,10 +54,13 @@
 #include "kmlexport.h"
 #include "kmlexportconfig.h"
 
+namespace KIPIKMLExportPlugin
+{
+
 K_PLUGIN_FACTORY( KMLExportFactory, registerPlugin<Plugin_KMLExport>(); )
 K_EXPORT_PLUGIN ( KMLExportFactory("kipiplugin_kmlexport") )
 
-Plugin_KMLExport::Plugin_KMLExport(QObject* parent, const QVariantList&)
+Plugin_KMLExport::Plugin_KMLExport(QObject* const parent, const QVariantList&)
     : Plugin( KMLExportFactory::componentData(), parent, "KMLExport")
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_KMLExport plugin loaded" ;
@@ -95,7 +98,7 @@ void Plugin_KMLExport::slotKMLExport()
     }
     else
     {
-        KIPIKMLExportPlugin::KMLExportConfig* kmlExportConfigGui = new KIPIKMLExportPlugin::KMLExportConfig(kapp->activeWindow());
+        KMLExportConfig* kmlExportConfigGui = new KMLExportConfig(kapp->activeWindow());
 
         connect(kmlExportConfigGui, SIGNAL(okButtonClicked()),
                 this, SLOT(slotKMLGenerate()));
@@ -107,7 +110,7 @@ void Plugin_KMLExport::slotKMLExport()
 void Plugin_KMLExport::slotKMLGenerate()
 {
     ImageCollection selection = m_interface->currentSelection();
-    KIPIKMLExportPlugin::KmlExport myExport(m_interface);
+    KmlExport myExport(m_interface);
     if(!myExport.getConfig())
         return;
 
@@ -124,3 +127,5 @@ Category Plugin_KMLExport::category(KAction* action) const
     kWarning() << "Unrecognized action for plugin category identification" ;
     return ExportPlugin; // no warning from compiler, please
 }
+
+} // namespace KIPIKMLExportPlugin
