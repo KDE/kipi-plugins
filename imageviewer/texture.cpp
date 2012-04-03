@@ -71,7 +71,7 @@ Texture::~Texture()
  */
 int Texture::height() const
 {
-    return glimage.height();
+    return m_glimage.height();
 }
 
 /*!
@@ -79,7 +79,7 @@ int Texture::height() const
  */
 int Texture::width() const
 {
-    return glimage.width();
+    return m_glimage.width();
 }
 
 /*!
@@ -93,9 +93,9 @@ int Texture::width() const
  */
 bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
 {
-    filename     = fn;
+    m_filename     = fn;
     m_initial_size = size;
-    _texnr       = tn;
+    m_texnr        = tn;
 
     // check if its a RAW file.
     QString rawFilesExt(KDcraw::rawFiles());
@@ -103,23 +103,23 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
     if (rawFilesExt.toUpper().contains( fileInfo.suffix().toUpper() ))
     {
         // it's a RAW file, use the libkdcraw loader
-        KDcraw::loadDcrawPreview(qimage, filename);
+        KDcraw::loadDcrawPreview(m_qimage, m_filename);
     }
     else
     {
         // use the standard loader
-        qimage = QImage(filename);
+        m_qimage = QImage(m_filename);
     }
 
     //handle rotation
-    KPImageInfo info(filename);
+    KPImageInfo info(m_filename);
     if ( info.orientation() != KPMetadata::ORIENTATION_UNSPECIFIED )
     {
         QMatrix matrix = RotationMatrix::toMatrix(info.orientation());
-        qimage         = qimage.transformed(matrix);
+        m_qimage       = m_qimage.transformed(matrix);
     }
 
-    if (qimage.isNull())
+    if (m_qimage.isNull())
     {
         return false;
     }
@@ -141,9 +141,9 @@ bool Texture::load(const QString& fn, const QSize& size, GLuint tn)
  */
 bool Texture::load(const QImage& im, const QSize& size, GLuint tn)
 {
-    qimage       = im;
+    m_qimage       = im;
     m_initial_size = size;
-    _texnr       = tn;
+    m_texnr        = tn;
     loadInternal();
     reset();
     m_rotate_idx   = 0;
@@ -160,17 +160,17 @@ bool Texture::loadInternal()
     int w = m_initial_size.width();
     int h = m_initial_size.height();
 
-    if (w == 0 || w > qimage.width() || h > qimage.height())
+    if (w == 0 || w > m_qimage.width() || h > m_qimage.height())
     {
-        glimage = QGLWidget::convertToGLFormat(qimage);
+        m_glimage = QGLWidget::convertToGLFormat(m_qimage);
     }
     else
     {
-        glimage = QGLWidget::convertToGLFormat(qimage.scaled(w,h,Qt::KeepAspectRatio,Qt::FastTransformation));
+        m_glimage = QGLWidget::convertToGLFormat(m_qimage.scaled(w,h,Qt::KeepAspectRatio,Qt::FastTransformation));
     }
 
-    w = glimage.width();
-    h = glimage.height();
+    w = m_glimage.width();
+    h = m_glimage.height();
     if (h < w)
     {
         rtx = 1;
@@ -189,7 +189,7 @@ bool Texture::loadInternal()
  */
 GLvoid* Texture::data()
 {
-    return glimage.bits();
+    return m_glimage.bits();
 }
 
 /*!
@@ -197,7 +197,7 @@ GLvoid* Texture::data()
  */
 GLuint Texture::texnr() const
 {
-    return _texnr;
+    return m_texnr;
 }
 
 /*!
@@ -250,7 +250,7 @@ void Texture::calcVertex()
 {
     // x part
     float lx          = 2*rtx/z;  //length of tex
-    float tsx         = lx/(float)glimage.width(); //texelsize in glFrustum coordinates
+    float tsx         = lx/(float)m_glimage.width(); //texelsize in glFrustum coordinates
     float halftexel_x = tsx/2.0;
     float wx          = lx*(1-ux-z);
     vleft             = -rtx-ux*lx - halftexel_x;  //left
@@ -258,7 +258,7 @@ void Texture::calcVertex()
 
     // y part
     float ly          = 2*rty/z;
-    float tsy         = ly/(float)glimage.height(); //texelsize in glFrustum coordinates
+    float tsy         = ly/(float)m_glimage.height(); //texelsize in glFrustum coordinates
     float halftexel_y = tsy/2.0;
     float wy          = ly*(1-uy-z);
     vbottom           = -rty - uy*ly + halftexel_y; //bottom
@@ -376,9 +376,9 @@ bool Texture::setSize(QSize size)
 {
     //don't allow larger textures than the original image. the image will be upsampled by
     //OpenGL if necessary and not by QImage::scale
-    size = size.boundedTo(qimage.size());
+    size = size.boundedTo(m_qimage.size());
 
-    if (glimage.width() == size.width())
+    if (m_glimage.width() == size.width())
     {
         return false;
     }
@@ -388,11 +388,11 @@ bool Texture::setSize(QSize size)
 
     if (w == 0)
     {
-        glimage = QGLWidget::convertToGLFormat(qimage);
+        m_glimage = QGLWidget::convertToGLFormat(m_qimage);
     }
     else
     {
-        glimage = QGLWidget::convertToGLFormat(qimage.scaled(w, h, Qt::KeepAspectRatio, Qt::FastTransformation));
+        m_glimage = QGLWidget::convertToGLFormat(m_qimage.scaled(w, h, Qt::KeepAspectRatio, Qt::FastTransformation));
     }
 
     //recalculate half-texel offset
@@ -410,11 +410,11 @@ bool Texture::setSize(QSize size)
 void Texture::rotate()
 {
     QMatrix matrix = RotationMatrix::toMatrix(m_rotate_list[m_rotate_idx%4]);
-    qimage         = qimage.transformed(matrix);
+    m_qimage         = m_qimage.transformed(matrix);
     loadInternal();
 
     //save new rotation in exif header
-    KPImageInfo info(filename);
+    KPImageInfo info(m_filename);
     info.setOrientation(m_rotate_list[m_rotate_idx%4]);
 
     reset();
@@ -431,15 +431,15 @@ void Texture::zoomToOriginal()
     float zoomfactorToOriginal;
     reset();
 
-    if (qimage.width()/qimage.height() > float(display_x)/float(display_y))
+    if (m_qimage.width()/m_qimage.height() > float(display_x)/float(display_y))
     {
         //image touches right and left edge of window
-        zoomfactorToOriginal = float(display_x)/qimage.width();
+        zoomfactorToOriginal = float(display_x)/m_qimage.width();
     }
     else
     {
         //image touches upper and lower edge of window
-        zoomfactorToOriginal = float(display_y)/qimage.height();
+        zoomfactorToOriginal = float(display_y)/m_qimage.height();
     }
 
     zoom(zoomfactorToOriginal,QPoint(display_x/2,display_y/2));

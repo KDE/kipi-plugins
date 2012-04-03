@@ -81,11 +81,11 @@ private:
 private:
 
     int                          display_x, display_y;
-    GLuint                       _texnr;
-    QString                      filename;
-    QImage                       qimage, glimage;
     float                        rdx, rdy, z, ux, uy, rtx, rty;
     float                        vtop, vbottom, vleft, vright;
+    GLuint                       m_texnr;
+    QString                      m_filename;
+    QImage                       m_qimage, m_glimage;
     QSize                        m_initial_size;
     KPMetadata::ImageOrientation m_rotate_list[4];
     int                          m_rotate_idx;
