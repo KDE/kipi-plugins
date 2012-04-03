@@ -428,7 +428,7 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
             {
                 //scrollwheel does zoom
                 d->wheelAction = zoomImage;
-                setCursor (d->zoomCursor);
+                setCursor(d->zoomCursor);
                 d->timerMouseMove.stop();
             }
             break;
@@ -585,12 +585,12 @@ void ViewerWidget::mousePressEvent(QMouseEvent* e)
     d->timerMouseMove.stop(); //user is something up to, therefore keep the cursor
     if ( e->button() == Qt::LeftButton )
     {
-        setCursor (d->zoomCursor); //defined in constructor
+        setCursor(d->zoomCursor); //defined in constructor
     }
 
     if ( e->button() == Qt::RightButton )
     {
-        setCursor (d->zoomCursor);
+        setCursor(d->zoomCursor);
     }
 
     d->startdrag    = e->pos();
@@ -792,7 +792,7 @@ void ViewerWidget::mouseReleaseEvent(QMouseEvent*)
  */
 void ViewerWidget::timeoutMouseMove()
 {
-    setCursor (QCursor (Qt::BlankCursor));
+    setCursor(Qt::BlankCursor);
 }
 
 /*!
