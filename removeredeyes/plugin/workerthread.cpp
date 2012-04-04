@@ -82,7 +82,7 @@ void Task::run()
         case WorkerThread::Correction:
         {
             // backup metadata
-            KPMetadata meta(scr);
+            KPMetadata meta(src);
 
             // check if custom keyword should be added
             if (ld->settings.addKeyword)
