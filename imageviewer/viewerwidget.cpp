@@ -44,7 +44,7 @@
 
 #include "timer.h"
 #include "texture.h"
-#include "helpdialog.h"
+//#include "helpdialog.h"
 
 #ifndef GL_TEXTURE_RECTANGLE_ARB
 #define GL_TEXTURE_RECTANGLE_ARB   0x84F5
@@ -453,8 +453,8 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
 
         //key is not bound to any action, therefore show help dialog to enlighten the user
         default:
-            HelpDialog help;
-            help.exec();
+/*            HelpDialog help;
+            help.exec();*/
             break;
     }
 }
