@@ -74,7 +74,7 @@ void KPMetadata::init()
     KPHostSettings hset;
     setSettings(hset.metadataSettings());
 }
-    
+
 void KPMetadata::setSettings(const KPMetaSettings& settings)
 {
     setUseXMPSidecar4Reading(settings.useXMPSidecar4Reading);

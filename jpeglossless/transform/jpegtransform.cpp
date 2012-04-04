@@ -142,10 +142,6 @@ bool transformJPEG(const QString& src, const QString& dest, Matrix& userAction, 
     Matrix exifAction, action;
     JXFORM_CODE flip,rotate;
 
-#if KEXIV2_VERSION >= 0x000600
-    meta.setUpdateFileTimeStamp(updateFileTimeStamp);
-#endif
-
     meta.load(src);
     getExifAction(exifAction, meta.getImageOrientation());
 

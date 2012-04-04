@@ -230,11 +230,6 @@ bool ImageGrayScale::image2GrayScaleJPEG(const QString& src, const QString& dest
     // And set finaly update the metadata to target file.
 
     KPMetadata meta;
-
-#if KEXIV2_VERSION >= 0x000600
-    meta.setUpdateFileTimeStamp(updateFileTimeStamp);
-#endif
-
     QImage img(dest);
     QImage exifThumbnail = img.scaled(160, 120, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     meta.load(dest);

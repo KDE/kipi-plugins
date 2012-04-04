@@ -82,11 +82,7 @@ void Task::run()
         case WorkerThread::Correction:
         {
             // backup metadata
-            KPMetadata meta;
-#if KEXIV2_VERSION >= 0x000600
-            meta.setUpdateFileTimeStamp(ld->updateFileTimeStamp);
-#endif
-            meta.load(src);
+            KPMetadata meta(scr);
 
             // check if custom keyword should be added
             if (ld->settings.addKeyword)
