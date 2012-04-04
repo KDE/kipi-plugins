@@ -570,4 +570,64 @@ bool KPImageInfo::hasKeywords() const
     return false;
 }
 
+void KPImageInfo::setCreators(const QStringList& list)
+{
+    d->setAttribute("creators", list);
+}
+
+QStringList KPImageInfo::creators() const
+{
+    return d->attribute("creators").toStringList();
+}
+
+bool KPImageInfo::hasCreators() const
+{
+    return d->hasAttribute("creators");
+}
+
+void KPImageInfo::setCredit(const QString& val)
+{
+    d->setAttribute("credit", val);
+}
+
+QString KPImageInfo::credit() const
+{
+    return d->attribute("credit").toString();
+}
+
+bool KPImageInfo::hasCredit() const
+{
+    return d->hasAttribute("credit");
+}
+
+void KPImageInfo::setRights(const QString& val)
+{
+    d->setAttribute("rights", val);
+}
+
+QString KPImageInfo::rights() const
+{
+    return d->attribute("rights").toString();
+}
+
+bool KPImageInfo::hasRights() const
+{
+    return d->hasAttribute("rights");
+}
+
+void KPImageInfo::setSource(const QString& val)
+{
+    d->setAttribute("source", val);
+}
+
+QString KPImageInfo::source() const
+{
+    return d->attribute("source").toString();
+}
+
+bool KPImageInfo::hasSource() const
+{
+    return d->hasAttribute("source");
+}
+
 }  // namespace KIPIPlugins

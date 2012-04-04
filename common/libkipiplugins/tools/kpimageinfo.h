@@ -163,6 +163,30 @@ public:
     KPMetadata::ImageOrientation orientation() const;
     bool                         hasOrientation() const;
 
+    /** Manage creators information of item.
+     */
+    void        setCreators(const QStringList& list);
+    QStringList creators() const;
+    bool        hasCreators() const;
+
+    /** Manage credit information of item.
+     */
+    void    setCredit(const QString& val);
+    QString credit() const;
+    bool    hasCredit() const;
+
+    /** Manage rights information of item.
+     */
+    void    setRights(const QString& val);
+    QString rights() const;
+    bool    hasRights() const;
+
+    /** Manage source information of item.
+     */
+    void    setSource(const QString& val);
+    QString source() const;
+    bool    hasSource() const;
+
 private:
 
     class KPImageInfoPrivate;
