@@ -39,7 +39,6 @@ extern "C"
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QGroupBox>
-#include <QProgressBar>
 #include <QTimer>
 #include <QPointer>
 
@@ -71,6 +70,7 @@ extern "C"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
 #include "kpmetadata.h"
+#include "kpprogresswidget.h"
 #include "imagepreview.h"
 #include "ui_batchprocessimagesdialog.h"
 
@@ -212,6 +212,9 @@ void BatchProcessImagesDialog::setupUi()
 
     connect(m_ui->m_remImagesButton, SIGNAL(clicked()),
             this, SLOT(slotImagesFilesButtonRem()));
+
+    connect(m_ui->m_progress, SIGNAL(signalProgressCanceled()),
+            this, SLOT(slotProcessStop()));
 }
 
 BatchProcessImagesDialog::~BatchProcessImagesDialog()
@@ -354,6 +357,8 @@ void BatchProcessImagesDialog::slotProcessStart()
 
     enableWidgets(false);
     m_ui->m_progress->setVisible(true);
+    m_ui->m_progress->progressScheduled(i18n("Batch Image Effects"), true, true);
+    m_ui->m_progress->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 
     m_listFile2Process_iterator = new QTreeWidgetItemIterator(m_listFiles);
     startProcess();
@@ -815,6 +820,8 @@ void BatchProcessImagesDialog::slotProcessStop()
     if (m_convertStatus == UNDER_PROCESS)
         m_convertStatus = STOP_PROCESS;
 
+    m_ui->m_progress->progressCompleted();
+
     processAborted(true);
 }
 
@@ -943,6 +950,9 @@ void BatchProcessImagesDialog::endProcess()
     m_convertStatus = PROCESS_DONE;
     enableWidgets(true);
     QTimer::singleShot(500, m_ui->m_progress, SLOT(hide()));
+
+    m_ui->m_progress->progressCompleted();
+
     setButtonText(User1, i18n("&Close"));
 
     disconnect(this, SIGNAL(user1Clicked()),
