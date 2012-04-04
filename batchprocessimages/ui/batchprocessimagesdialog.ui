@@ -227,7 +227,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QProgressBar" name="m_progress">
+    <widget class="KIPIPlugins::KPProgressWidget" name="m_progress">
      <property name="value">
       <number>0</number>
      </property>
@@ -250,6 +250,12 @@
    <class>KIPIBatchProcessImagesPlugin::BatchProcessImagesList</class>
    <extends>QFrame</extends>
    <header>batchprocessimageslist.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KIPIPlugins::KPProgressWidget</class>
+   <extends>QProgressBar</extends>
+   <header>kpprogresswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
