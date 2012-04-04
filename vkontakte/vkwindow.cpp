@@ -30,19 +30,18 @@
 
 // Qt includes
 
-#include <QtCore/QFileInfo>
-#include <QtGui/QCheckBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QCloseEvent>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QLabel>
-#include <QtGui/QSpinBox>
-#include <QtGui/QRadioButton>
-#include <QtGui/QProgressBar>
-#include <QtGui/QGridLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QToolButton>
+#include <QFileInfo>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QCloseEvent>
+#include <QButtonGroup>
+#include <QLabel>
+#include <QSpinBox>
+#include <QRadioButton>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QToolButton>
 
 // KDE includes
 
@@ -92,6 +91,7 @@
 #include "kpversion.h"
 #include "kpimageslist.h"
 #include "vkalbumdialog.h"
+#include "kpprogresswidget.h"
 
 #define SLOT_JOB_DONE_INIT(JobClass) \
     JobClass *job = dynamic_cast<JobClass *>(kjob); \
@@ -242,7 +242,7 @@ VkontakteWindow::VkontakteWindow(Interface* const interface, bool import, QWidge
 //     QVBoxLayout *optionsBoxLayout = new QVBoxLayout(optionsBox);
 //     optionsBoxLayout->addWidget(m_checkKeepOriginal);
 
-    m_progressBar = new QProgressBar(settingsBox);
+    m_progressBar = new KPProgressWidget(settingsBox);
     m_progressBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_progressBar->hide();
 
@@ -837,6 +837,8 @@ void VkontakteWindow::slotStartTransfer()
     }
 
     m_progressBar->show();
+    m_progressBar->progressScheduled(i18n("Vkontakte Export"), false, true);
+    m_progressBar->progressThumbnailChanged(KIcon("kipi").pixmap(22, 22));
 }
 
 void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
@@ -844,6 +846,7 @@ void VkontakteWindow::slotPhotoUploadDone(KJob *kjob)
     SLOT_JOB_DONE_INIT(Vkontakte::UploadPhotosJob)
 
     m_progressBar->hide();
+    m_progressBar->progressCompleted();
     updateControls(true);
 }
 

@@ -44,7 +44,6 @@ class QCheckBox;
 class QGroupBox;
 class QButtonGroup;
 class QCloseEvent;
-class QProgressBar;
 class QToolButton;
 
 class KUrl;
@@ -63,6 +62,7 @@ namespace KIPI
 namespace KIPIPlugins
 {
     class KPImagesList;
+    class KPProgressWidget;
 }
 
 using namespace KIPI;
@@ -179,7 +179,7 @@ protected:
     KPImagesList*                  m_imgList;
     UploadWidget*                  m_uploadWidget;
 
-    QProgressBar*                  m_progressBar;
+    KPProgressWidget*              m_progressBar;
 
     /** Pointers to running jobs */
     QList<KJob*>                   m_jobs;
