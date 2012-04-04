@@ -3,11 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.digikam.org
  *
- * Date        : 2006-14-09
- * Description : Kipi-Plugins shared library.
+ * Date        : 2012-04-04
+ * Description : Tool dialog
  *
- * Copyright (C) 2006-2010 Angelo Naselli <anaselli at linux dot it>
- * Copyright (C) 2010-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -21,36 +20,43 @@
  *
  * ============================================================ */
 
-#ifndef KPABOUTDATA_H
-#define KPABOUTDATA_H
+#ifndef KPTOOLDIALOG_H
+#define KPTOOLDIALOG_H
 
 // KDE includes
 
-#include <kaboutdata.h>
+#include <kdialog.h>
 
 // Local includes
 
 #include "kipiplugins_export.h"
+#include "kpaboutdata.h"
 
 namespace KIPIPlugins
 {
 
-class KIPIPLUGINS_EXPORT KPAboutData : public KAboutData
+class KIPIPLUGINS_EXPORT KPToolDialog : public KDialog
 {
 
-public:
-
-    explicit KPAboutData(const KLocalizedString& pluginName,
-                        const QByteArray& pluginVersion            = QByteArray(),
-                        enum  LicenseKey licenseType               = License_Unknown,
-                        const KLocalizedString& pluginDescription  = KLocalizedString(),
-                        const KLocalizedString& copyrightStatement = ki18n("Copyright 2003-2012, kipi-plugins team"));
+Q_OBJECT
 
 public:
 
-    QString handbookEntry;
+    KPToolDialog(QWidget* const parent=0);
+    ~KPToolDialog();
+
+    void setAboutData(KPAboutData* const about);
+
+private Q_SLOTS:
+
+    void slotHelp();
+
+private:
+
+    class KPToolDialogPriv;
+    KPToolDialogPriv* const d;
 };
 
 } // namespace KIPIPlugins
 
-#endif //KPABOUTDATA_H
+#endif /* KPTOOLDIALOG_H */

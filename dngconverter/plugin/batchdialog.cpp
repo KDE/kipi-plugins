@@ -66,7 +66,6 @@
 #include "kpimageinfo.h"
 
 using namespace DNGIface;
-using namespace KIPIPlugins;
 
 namespace KIPIDNGConverterPlugin
 {
@@ -83,7 +82,6 @@ public:
         listView    = 0;
         thread      = 0;
         settingsBox = 0;
-        about       = 0;
     }
 
     bool                   busy;
@@ -99,21 +97,18 @@ public:
     ActionThread*          thread;
 
     SettingsWidget*        settingsBox;
-
-    DNGConverterAboutData* about;
 };
 
 BatchDialog::BatchDialog(DNGConverterAboutData* const about)
-    : KDialog(0), d(new BatchDialogPriv)
+    : KPToolDialog(0), d(new BatchDialogPriv)
 {
-    d->about = about;
-
     setWindowIcon(KIcon("dngconverter"));
     setButtons(Help | Default | Apply | Close);
     setDefaultButton(KDialog::Close);
     setButtonToolTip(Close, i18n("Exit DNG Converter"));
     setCaption(i18n("Batch convert RAW camera images to DNG"));
     setModal(false);
+    setAboutData(about);
 
     d->page = new QWidget( this );
     setMainWidget( d->page );
@@ -138,20 +133,6 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
     mainLayout->setRowStretch(2, 10);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(spacingHint());
-
-    // ---------------------------------------------------------------
-    // About data and help button.
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
 
     // ---------------------------------------------------------------
 
@@ -188,13 +169,7 @@ BatchDialog::BatchDialog(DNGConverterAboutData* const about)
 
 BatchDialog::~BatchDialog()
 {
-    delete d->about;
     delete d;
-}
-
-void BatchDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("dngconverter", "kipi-plugins");
 }
 
 void BatchDialog::closeEvent(QCloseEvent* e)

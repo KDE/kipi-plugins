@@ -62,6 +62,8 @@ public:
                       ki18n("(c) 2008-2012, Gilles Caulier\n"
                             "(c) 2010-2011, Jens Mueller"))
     {
+         handbookEntry = QString("dngconverter");
+
          addAuthor(ki18n("Gilles Caulier"),
                    ki18n("Author"),
                    "caulier dot gilles at gmail dot com");
