@@ -44,7 +44,7 @@
 
 #include "timer.h"
 #include "texture.h"
-#include "ui_helpdialog.h"
+#include "helpdialog.h"
 
 #ifndef GL_TEXTURE_RECTANGLE_ARB
 #define GL_TEXTURE_RECTANGLE_ARB   0x84F5
@@ -453,11 +453,8 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
 
         //key is not bound to any action, therefore show help dialog to enlighten the user
         default:
-            QPointer<QDialog> d = new QDialog(this);
-            Ui::HelpDialog hd;
-            hd.setupUi(d);
-            d->exec();
-            delete d;
+            HelpDialog help;
+            help.exec();
             break;
     }
 }

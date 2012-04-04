@@ -1,13 +1,12 @@
 SUBDIRS(icons cursors)
 
-SET(kipiplugin_imageviewer_PART_SRCS 
+SET(kipiplugin_imageviewer_PART_SRCS
     texture.cpp
     timer.cpp
     plugin_viewer.cpp
     viewerwidget.cpp
+    helpdialog.cpp
    )
-
-KDE4_ADD_UI_FILES(kipiplugin_imageviewer_PART_SRCS helpdialog.ui)
 
 KDE4_ADD_PLUGIN(kipiplugin_imageviewer ${kipiplugin_imageviewer_PART_SRCS})
 
