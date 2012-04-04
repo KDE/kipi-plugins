@@ -592,9 +592,10 @@ void ViewerWidget::mousePressEvent(QMouseEvent* e)
     }
 
     d->timerMouseMove.stop(); //user is something up to, therefore keep the cursor
+
     if ( e->button() == Qt::LeftButton )
     {
-        setCursor(d->zoomCursor);
+        setCursor(d->moveCursor);
     }
 
     if ( e->button() == Qt::RightButton )
@@ -644,7 +645,7 @@ void ViewerWidget::mouseMoveEvent(QMouseEvent* e)
         }
 
         setCursor(d->zoomCursor);
-        zoom(mdelta, d->startdrag, d->zoomfactor_mousemove );
+        zoom(mdelta, d->startdrag, d->zoomfactor_mousemove);
         d->previous_pos = e->pos();
     }
     else
