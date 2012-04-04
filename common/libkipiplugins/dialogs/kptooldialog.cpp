@@ -22,27 +22,19 @@
 
 #include "kptooldialog.moc"
 
-// Qt includes
-
-#include <QAction>
-
 // KDE includes
 
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kdebug.h>
+#include <kaction.h>
 #include <khelpmenu.h>
-#include <kiconloader.h>
+#include <kicon.h>
 #include <klocale.h>
 #include <kmenu.h>
-#include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <kstandarddirs.h>
 #include <ktoolinvocation.h>
 
 // Local includes
 
-#include "kpversion.h"
+#include "kpaboutdata.h"
 
 namespace KIPIPlugins
 {
@@ -80,7 +72,7 @@ void KPToolDialog::setAboutData(KPAboutData* const about)
 
     KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
+    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), this);
 
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));

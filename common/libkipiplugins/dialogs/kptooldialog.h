@@ -30,10 +30,11 @@
 // Local includes
 
 #include "kipiplugins_export.h"
-#include "kpaboutdata.h"
 
 namespace KIPIPlugins
 {
+
+class KPAboutData;
 
 class KIPIPLUGINS_EXPORT KPToolDialog : public KDialog
 {
