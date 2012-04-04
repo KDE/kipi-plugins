@@ -44,7 +44,7 @@
 
 #include "timer.h"
 #include "texture.h"
-#include "ui_helpdialog.h"
+#include "helpdialog.h"
 
 #ifndef GL_TEXTURE_RECTANGLE_ARB
 #define GL_TEXTURE_RECTANGLE_ARB   0x84F5
@@ -90,7 +90,7 @@ public:
 
         // load cursors for zooming and panning
         zoomCursor = QCursor(QPixmap(KStandardDirs::locate("data", "kipiplugin_imageviewer/pics/zoom.png")));
-        zoomCursor = QCursor(QPixmap(KStandardDirs::locate("data", "kipiplugin_imageviewer/pics/hand.png")));
+        moveCursor = QCursor(QPixmap(KStandardDirs::locate("data", "kipiplugin_imageviewer/pics/hand.png")));
 
         // get path of nullImage in case QImage can't load the image
         nullImage  = KStandardDirs::locate( "data", "kipiplugin_imageviewer/pics/nullImage.png" );
@@ -213,7 +213,7 @@ ViewerWidget::~ViewerWidget()
     delete d;
 }
 
-/*!
+/**
     \todo blending
  */
 void ViewerWidget::initializeGL()
@@ -247,7 +247,7 @@ void ViewerWidget::paintGL()
         //kDebug() << "first image";
         d->texture = loadImage(d->file_idx);
         d->texture->reset();
-        downloadTex(d->texture);
+        downloadTexture(d->texture);
 
         //kDebug() << "width=" << width();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -314,8 +314,8 @@ void ViewerWidget::resizeGL(int w, int h)
     }
 }
 
-/*!
-    \brief render the image
+/**
+    render the image
  */
 void ViewerWidget::drawImage(Texture* const tex)
 {
@@ -336,7 +336,7 @@ void ViewerWidget::drawImage(Texture* const tex)
     glEnd();
 }
 
-/*!
+/**
     Handle all keyboard events. All events which are not handled trigger
     a help window.
  */
@@ -366,7 +366,7 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
         // rotate image
         case Qt::Key_R:
             d->texture->rotate();
-            downloadTex(d->texture);
+            downloadTexture(d->texture);
             updateGL();
             break;
 
@@ -409,18 +409,18 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
 
         // zoom	in
         case Qt::Key_Plus:
-            middlepoint =  QPoint(width()/2,height()/2);
+            middlepoint = QPoint(width()/2,height()/2);
             if (d->texture->setSize( d->zoomsize ))
-                downloadTex(d->texture); //load full resolution image
+                downloadTexture(d->texture); //load full resolution image
 
             zoom(-1, middlepoint, d->zoomfactor_keyboard);
             break;
 
         // zoom out
         case Qt::Key_Minus:
-            middlepoint =  QPoint(width()/2,height()/2);
+            middlepoint = QPoint(width()/2,height()/2);
             if (d->texture->setSize( d->zoomsize ))
-                downloadTex(d->texture); //load full resolution image
+                downloadTexture(d->texture); //load full resolution image
 
             zoom(1, middlepoint, d->zoomfactor_keyboard);
             break;
@@ -453,11 +453,8 @@ void ViewerWidget::keyPressEvent(QKeyEvent* k)
 
         //key is not bound to any action, therefore show help dialog to enlighten the user
         default:
-            QPointer<QDialog> d = new QDialog(this);
-            Ui::HelpDialog hd;
-            hd.setupUi(d);
-            d->exec();
-            delete d;
+            HelpDialog help;
+            help.exec();
             break;
     }
 }
@@ -473,7 +470,7 @@ void ViewerWidget::keyReleaseEvent(QKeyEvent* e)
                 unsetCursor();
                 if (d->texture->setSize(QSize(0, 0)))
                 {
-                    downloadTex(d->texture); //load full resolution image
+                    downloadTexture(d->texture); //load full resolution image
                 }
                 updateGL();
             }
@@ -498,11 +495,10 @@ void ViewerWidget::keyReleaseEvent(QKeyEvent* e)
     }
 }
 
-/*!
-
+/**
     download texture to video memory
  */
-void ViewerWidget::downloadTex(Texture* const tex)
+void ViewerWidget::downloadTexture(Texture* const tex)
 {
     glBindTexture(GL_TEXTURE_RECTANGLE_NV, tex->texnr());
     // glTexParameterf(GL_TEXTURE_RECTANGLE_NV, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER_ARB);
@@ -515,9 +511,9 @@ void ViewerWidget::downloadTex(Texture* const tex)
                  GL_RGBA, GL_UNSIGNED_BYTE, tex->data());
 }
 
-/*!
-    \param file_index index to QStringList d->files
+/**
     load d->files[file_index] into a texture object if it is not already cached
+    \param file_index index to QStringList d->files
  */
 Texture* ViewerWidget::loadImage(int file_index)
 {
@@ -528,7 +524,6 @@ Texture* ViewerWidget::loadImage(int file_index)
         //image is already cached
         kDebug() << "image " << file_index << " is already in cache@" << imod ;
         return d->cache[imod].texture;
-
     }
     else
     {
@@ -593,13 +588,14 @@ void ViewerWidget::mousePressEvent(QMouseEvent* e)
     if (d->texture->setSize( d->zoomsize ))
     {
         //load downsampled image
-        downloadTex(d->texture);
+        downloadTexture(d->texture);
     }
 
     d->timerMouseMove.stop(); //user is something up to, therefore keep the cursor
+
     if ( e->button() == Qt::LeftButton )
     {
-        setCursor(d->zoomCursor); //defined in constructor
+        setCursor(d->moveCursor);
     }
 
     if ( e->button() == Qt::RightButton )
@@ -617,6 +613,7 @@ void ViewerWidget::mouseMoveEvent(QMouseEvent* e)
     if ( e->buttons() == Qt::LeftButton )
     {
         //panning
+        setCursor(d->moveCursor);
         QPoint diff = e->pos()-d->startdrag;
         d->texture->move(diff);
         updateGL();
@@ -647,7 +644,8 @@ void ViewerWidget::mouseMoveEvent(QMouseEvent* e)
             mdelta = d->previous_pos.y()-e->y();
         }
 
-        zoom(mdelta, d->startdrag, d->zoomfactor_mousemove );
+        setCursor(d->zoomCursor);
+        zoom(mdelta, d->startdrag, d->zoomfactor_mousemove);
         d->previous_pos = e->pos();
     }
     else
@@ -662,6 +660,27 @@ void ViewerWidget::mouseMoveEvent(QMouseEvent* e)
         }
     }
     return;
+}
+
+void ViewerWidget::mouseReleaseEvent(QMouseEvent*)
+{
+    d->timerMouseMove.start(2000);
+    unsetCursor();
+    if (d->texture->setSize(QSize(0,0)))
+    {
+        //load full resolution image
+        downloadTexture(d->texture);
+    }
+    updateGL();
+}
+
+/**
+    a double click resets the view (zoom and move)
+ */
+void ViewerWidget::mouseDoubleClickEvent(QMouseEvent*)
+{
+    d->texture->reset();
+    updateGL();
 }
 
 void ViewerWidget::prevImage()
@@ -686,10 +705,10 @@ void ViewerWidget::prevImage()
     timer.at("loadImage");
 #endif
 
-    downloadTex(d->texture);
+    downloadTexture(d->texture);
 
 #ifdef PERFORMANCE_ANALYSIS
-    timer.at("downloadTex");
+    timer.at("downloadTexture");
 #endif
 
     updateGL();
@@ -725,10 +744,10 @@ void ViewerWidget::nextImage()
     timer.at("loadImage");
 #endif
 
-    downloadTex(d->texture);
+    downloadTexture(d->texture);
 
 #ifdef PERFORMANCE_ANALYSIS
-    timer.at("downloadTex");
+    timer.at("downloadTexture");
 #endif
 
     updateGL();
@@ -748,7 +767,7 @@ void ViewerWidget::nextImage()
     }
 }
 
-/*!
+/**
     \param mdelta delta of mouse movement:
                                 mdelta>0: zoom in
                                 mdelta<0: zoom out
@@ -780,28 +799,7 @@ void ViewerWidget::zoom(int mdelta, const QPoint& pos, float factor)
     updateGL();
 }
 
-/*!
-    a double click resets the view (zoom and move)
- */
-void ViewerWidget::mouseDoubleClickEvent(QMouseEvent*)
-{
-    d->texture->reset();
-    updateGL();
-}
-
-void ViewerWidget::mouseReleaseEvent(QMouseEvent*)
-{
-    d->timerMouseMove.start(2000);
-    unsetCursor();
-    if (d->texture->setSize(QSize(0,0)))
-    {
-        //load full resolution image
-        downloadTex(d->texture);
-    }
-    updateGL();
-}
-
-/*!
+/**
     being called if user didn't move the mouse for longer than 2 sec
  */
 void ViewerWidget::slotTimeoutMouseMove()
@@ -809,7 +807,7 @@ void ViewerWidget::slotTimeoutMouseMove()
     setCursor(Qt::BlankCursor);
 }
 
-/*!
+/**
     check if OpenGL engine is ready. This function is called from outside the widget.
     If OpenGL doen't work correctly, the widget can be destroyed
     \return OGLstate::oglNoContext No OpenGl context could be retrieved
@@ -826,6 +824,7 @@ OGLstate ViewerWidget::getOGLstate() const
 
     //GL_ARB_texture_rectangle is not supported
     QString s = QString ( ( char* ) glGetString ( GL_EXTENSIONS ) );
+
     if ( !s.contains ( "GL_ARB_texture_rectangle",Qt::CaseInsensitive ) )
     {
         return oglNoRectangularTexture;
@@ -835,11 +834,11 @@ OGLstate ViewerWidget::getOGLstate() const
     return oglOK;
 }
 
-/*!
+/**
     QGLWidget::isFullscreen() returns true if the internal state is already true
     but the actually displayed size is still windowed. isReallyFullscreen() returns the
     value of the visible size.
-    \return true if screenwidth==widgedwidth
+    \return true if (screenwidth == widgedwidth)
  */
 bool ViewerWidget::isReallyFullScreen() const
 {

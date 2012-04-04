@@ -61,30 +61,33 @@ public:
     ViewerWidget(Interface* const iface);
     ~ViewerWidget();
 
-    void     drawImage(Texture* const tex);
-    void     downloadTex(Texture* const tex);
-    Texture* loadImage(int file_index);
-    void     prevImage();
-    void     nextImage();
-    bool     listOfFilesIsEmpty() const;
-    void     zoom(int mdelta, const QPoint& pos, float factor);
-    OGLstate getOGLstate() const;
+    void prevImage();
+    void nextImage();
+    bool listOfFilesIsEmpty() const;
 
-    virtual void initializeGL();
-    virtual void resizeGL(int w, int h);
-    virtual void paintGL();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void keyReleaseEvent(QKeyEvent* e);
+    OGLstate getOGLstate() const;
 
 private:
 
+    void initializeGL();
+    void resizeGL(int w, int h);
+    void paintGL();
+
     bool isReallyFullScreen() const;
 
-    virtual void keyPressEvent(QKeyEvent* k);
-    virtual void wheelEvent(QWheelEvent* e);
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mousePressEvent(QMouseEvent* e);
-    virtual void mouseDoubleClickEvent(QMouseEvent* e);
+    void keyPressEvent(QKeyEvent* k);
+    void keyReleaseEvent(QKeyEvent* e);
+    void wheelEvent(QWheelEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
+    void mousePressEvent(QMouseEvent* e);
+    void mouseDoubleClickEvent(QMouseEvent* e);
+    void mouseReleaseEvent(QMouseEvent* e);
+
+    Texture* loadImage(int file_index);
+    void     drawImage(Texture* const tex);
+    void     downloadTexture(Texture* const tex);
+
+    void zoom(int mdelta, const QPoint& pos, float factor);
 
 private Q_SLOTS:
 
