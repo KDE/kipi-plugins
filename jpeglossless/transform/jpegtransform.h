@@ -118,7 +118,7 @@ protected:
     int m[2][2];
 };
 
-bool transformJPEG(const QString& src, const QString& dest, Matrix &action, QString& err, bool updateFileTimeStamp);
+bool transformJPEG(const QString& src, const QString& dest, Matrix &action, QString& err);
 
 void convertTransform(Matrix& action, JXFORM_CODE& flip, JXFORM_CODE& rotate);
 

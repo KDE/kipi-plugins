@@ -70,8 +70,6 @@ private Q_SLOTS:
 
 private:
 
-    bool  m_updateFileStamp;
-
     class Task;
 };
 

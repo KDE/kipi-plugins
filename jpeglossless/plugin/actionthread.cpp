@@ -61,13 +61,10 @@ class ActionThread::Task : public Job
 {
 public:
 
-    Task(QObject* parent = 0, bool updateFileStamp = true)
+    Task(QObject* const parent = 0)
         :Job(parent)
     {
-        this->updateFileStamp = updateFileStamp;
     }
-
-    bool         updateFileStamp;
 
     QString      errString;
 
@@ -86,7 +83,7 @@ protected:
             case Rotate:
             {
                 ImageRotate imageRotate;
-                imageRotate.rotate(fileUrl.toLocalFile(), rotAction, errString, updateFileStamp);
+                imageRotate.rotate(fileUrl.toLocalFile(), rotAction, errString);
 
                 break;
             }
@@ -94,14 +91,14 @@ protected:
             {
 
                 ImageFlip imageFlip;
-                imageFlip.flip(fileUrl.toLocalFile(), flipAction, errString, updateFileStamp);
+                imageFlip.flip(fileUrl.toLocalFile(), flipAction, errString);
 
             }
             case GrayScale:
             {
 
                 ImageGrayScale imageGrayScale;
-                imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString, updateFileStamp);
+                imageGrayScale.image2GrayScale(fileUrl.toLocalFile(), errString);
 
 
                 break;
@@ -120,10 +117,6 @@ protected:
 ActionThread::ActionThread(QObject* const parent)
     : KPActionThreadBase(parent)
 {
-    m_updateFileStamp = false;
-
-    KPHostSettings hSettings;
-    m_updateFileStamp = hSettings.metadataSettings().updateFileTimeStamp;
 }
 
 ActionThread::~ActionThread()
@@ -137,7 +130,7 @@ void ActionThread::rotate(const KUrl::List& urlList, RotateAction val)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        Task* t      = new Task(this, m_updateFileStamp);
+        Task* t      = new Task(this);
         t->fileUrl   = *it;
         t->action    = Rotate;
         t->rotAction = val;
@@ -161,7 +154,7 @@ void ActionThread::flip(const KUrl::List& urlList, FlipAction val)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        Task* t       = new Task(this, m_updateFileStamp);
+        Task* t       = new Task(this);
         t->fileUrl    = *it;
         t->action     = Flip;
         t->flipAction = val;
@@ -185,7 +178,7 @@ void ActionThread::convert2grayscale(const KUrl::List& urlList)
     for (KUrl::List::const_iterator it = urlList.constBegin();
          it != urlList.constEnd(); ++it )
     {
-        ActionThread::Task* t = new Task(this, m_updateFileStamp);
+        ActionThread::Task* t = new Task(this);
         t->fileUrl            = *it;
         t->action             = GrayScale;
 
