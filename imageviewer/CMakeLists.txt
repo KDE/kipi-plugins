@@ -5,7 +5,7 @@ SET(kipiplugin_imageviewer_PART_SRCS
     timer.cpp
     plugin_viewer.cpp
     viewerwidget.cpp
-#    helpdialog.cpp
+    helpdialog.cpp
    )
 
 KDE4_ADD_PLUGIN(kipiplugin_imageviewer ${kipiplugin_imageviewer_PART_SRCS})
