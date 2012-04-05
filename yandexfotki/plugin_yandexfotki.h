@@ -35,16 +35,21 @@
 
 #include "yfwindow.h"
 
-class Plugin_YandexFotki : public KIPI::Plugin
+using namespace KIPI;
+
+namespace KIPIYandexFotkiPlugin
+{
+
+class Plugin_YandexFotki : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_YandexFotki(QObject* parent, const QVariantList& args);
+    Plugin_YandexFotki(QObject* const parent, const QVariantList& args);
     ~Plugin_YandexFotki();
 
-    virtual KIPI::Category category(KAction* action) const;
+    virtual Category category(KAction* action) const;
     virtual void setup(QWidget*);
 
 public Q_SLOTS:
@@ -54,11 +59,13 @@ public Q_SLOTS:
 
 private:
 
-    KAction*                                  m_actionExport;
-    KIPIYandexFotkiPlugin::YandexFotkiWindow* m_dlgExport;
+    KAction*           m_actionExport;
+    YandexFotkiWindow* m_dlgExport;
 
-//    KAction* m_actionImport;
+//    KAction*           m_actionImport;
 //    YandexFotkiWindow* m_dlgImport;
 };
+
+} // namespace KIPIYandexFotkiPlugin
 
 #endif // PLUGIN_YANDEXFOTKI_H

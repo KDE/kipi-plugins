@@ -44,19 +44,22 @@ class VkontakteAlbumDialog : public KDialog
     Q_OBJECT
 
 public:
-    VkontakteAlbumDialog(QWidget *parent, Vkontakte::AlbumInfoPtr album, bool editing = false);
+
+    VkontakteAlbumDialog(QWidget* const parent, Vkontakte::AlbumInfoPtr album, bool editing = false);
     ~VkontakteAlbumDialog();
 
     Vkontakte::AlbumInfoPtr album() const;
 
 protected Q_SLOTS:
+
     void slotButtonClicked(int button);
 
 protected:
-    KLineEdit *m_titleEdit;
-    KTextEdit *m_summaryEdit;
-    KComboBox *m_albumPrivacyCombo;
-    KComboBox *m_commentsPrivacyCombo;
+
+    KLineEdit*              m_titleEdit;
+    KTextEdit*              m_summaryEdit;
+    KComboBox*              m_albumPrivacyCombo;
+    KComboBox*              m_commentsPrivacyCombo;
 
     Vkontakte::AlbumInfoPtr m_album;
 };
