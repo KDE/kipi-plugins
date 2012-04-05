@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Picasa web service
  *
  * Copyright (C) 2007-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -56,11 +56,14 @@ extern "C"
 
 #include "picasawebwindow.h"
 
+namespace KIPIPicasawebExportPlugin
+{
+
 K_PLUGIN_FACTORY( PicasawebExportFactory, registerPlugin<Plugin_PicasawebExport>(); )
 K_EXPORT_PLUGIN ( PicasawebExportFactory("kipiplugin_picasawebexport") )
 
-Plugin_PicasawebExport::Plugin_PicasawebExport(QObject* parent, const QVariantList&)
-                      : Plugin(PicasawebExportFactory::componentData(), parent, "PicasawebExport")
+Plugin_PicasawebExport::Plugin_PicasawebExport(QObject* const parent, const QVariantList&)
+    : Plugin(PicasawebExportFactory::componentData(), parent, "PicasawebExport")
 {
     m_dlgExport = 0;
     m_dlgImport = 0;
@@ -126,7 +129,7 @@ void Plugin_PicasawebExport::slotExport()
     if (!m_dlgExport)
     {
         // We clean it up in the close button
-        m_dlgExport = new KIPIPicasawebExportPlugin::PicasawebWindow(interface, Tmp, false, kapp->activeWindow());
+        m_dlgExport = new PicasawebWindow(interface, Tmp, false, kapp->activeWindow());
     }
     else
     {
@@ -154,7 +157,7 @@ void Plugin_PicasawebExport::slotImport()
     if (!m_dlgImport)
     {
         // We clean it up in the close button
-        m_dlgImport = new KIPIPicasawebExportPlugin::PicasawebWindow(interface, tmp, true, kapp->activeWindow());
+        m_dlgImport = new PicasawebWindow(interface, tmp, true, kapp->activeWindow());
     }
     else
     {
@@ -177,3 +180,5 @@ Category Plugin_PicasawebExport::category( KAction* action ) const
     kWarning() << "Unrecognized action for plugin category identification" ;
     return ExportPlugin;
 }
+
+} // namespace KIPIPicasawebExportPlugin

@@ -35,22 +35,24 @@
 
 class KAction;
 
+using namespace KIPI;
+
 namespace KIPIRawConverterPlugin
 {
-    class SingleDialog;
-    class BatchDialog;
-}
 
-class Plugin_RawConverter : public KIPI::Plugin
+class SingleDialog;
+class BatchDialog;
+
+class Plugin_RawConverter : public Plugin
 {
     Q_OBJECT
 
 public:
 
-    Plugin_RawConverter(QObject* parent, const QVariantList& args);
+    Plugin_RawConverter(QObject* const parent, const QVariantList& args);
     ~Plugin_RawConverter();
 
-    KIPI::Category category(KAction* action) const;
+    Category category(KAction* action) const;
     void setup(QWidget* widget);
 
 private:
@@ -65,11 +67,13 @@ private Q_SLOTS:
 
 private:
 
-    KAction*                              m_singleAction;
-    KAction*                              m_batchAction;
+    KAction*      m_singleAction;
+    KAction*      m_batchAction;
 
-    KIPIRawConverterPlugin::SingleDialog* m_singleDlg;
-    KIPIRawConverterPlugin::BatchDialog*  m_batchDlg;
+    SingleDialog* m_singleDlg;
+    BatchDialog*  m_batchDlg;
 };
+
+} // namespace KIPIRawConverterPlugin
 
 #endif /* PLUGIN_RAWCONVERTER_H */
