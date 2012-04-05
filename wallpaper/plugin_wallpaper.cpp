@@ -58,6 +58,10 @@ Plugin_WallPaper::Plugin_WallPaper(QObject* const parent, const QVariantList&)
     kDebug(AREA_CODE_LOADING) << "Plugin_WallPaper plugin loaded";
 }
 
+Plugin_WallPaper::~Plugin_WallPaper()
+{
+}
+
 void Plugin_WallPaper::setup(QWidget* widget)
 {
     Plugin::setup( widget );
