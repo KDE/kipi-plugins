@@ -14,8 +14,6 @@ SET(kipiplugin_batchprocessimages_PART_SRCS
     common/batchprocessimagesitem.cpp
     common/batchprocessimageslist.cpp
     common/imagepreview.cpp
-    common/dialogutils.cpp
-    common/pixmapview.cpp
     tools/borderimagesdialog.cpp
     tools/borderoptionsdialog.cpp
     tools/colorimagesdialog.cpp

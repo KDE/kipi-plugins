@@ -20,56 +20,50 @@
  *
  * ============================================================ */
 
-#include "imagepreview.moc"
-
 // Qt includes
 
 #include <QImage>
-#include <QPixmap>
 
 // KDE includes
 
-#include <kdebug.h>
 #include <klocale.h>
-#include <ktoolinvocation.h>
 
 // Local includes
 
-#include "dialogutils.h"
+#include "imagepreview.h"
 #include "kpaboutdata.h"
 #include "kppreviewmanager.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ImagePreview::ImagePreview(const QString& fileOrig, const QString& fileDest,
-                           bool cropActionOrig, const QString& EffectName,
-                           const QString& FileName, QWidget* const parent)
-        : KDialog(parent)
+ImagePreview::ImagePreview(const QString& fileOrig, 
+                           const QString& fileDest,
+                           bool cropActionOrig, 
+                           const QString& EffectName,
+                           const QString& FileName, 
+                           QWidget* const parent)
+        : KPToolDialog(parent)
 {
     setCaption(i18n("Batch Process Preview (%1 - %2)", EffectName, FileName));
     setModal(true);
     setButtons(Ok | Help);
     setDefaultButton(Ok);
-    // About data and help button.
 
-    m_about = new KPAboutData(ki18n("Batch process images"),
-                                    QByteArray(),
-                                    KAboutData::License_GPL,
-                                    ki18n("An interface to preview the \"Batch Process Images\" "
-                                            "Kipi plugin.\n"
-                                            "This plugin uses the \"convert\" program from the \"ImageMagick\" "
-                                            "package."),
-                                    ki18n("(c) 2003-2009, Gilles Caulier\n"
-                                          "(c) 2007-2009, Aurélien Gateau"));
+    KPAboutData* about = new KPAboutData(ki18n("Batch Process Images"),
+                                         QByteArray(),
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin for batch process images using \"ImageMagick\""),
+                                         ki18n("(c) 2003-2012, Gilles Caulier\n"
+                                               "(c) 2007-2009, Aurélien Gateau"));
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
                        "caulier dot gilles at gmail dot com");
 
-    m_about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
+    about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
                        "aurelien dot gateau at free dot fr");
 
-    DialogUtils::setupHelpButton(this, m_about);
+    setAboutData(about);
 
     //---------------------------------------------
 
@@ -96,12 +90,6 @@ ImagePreview::ImagePreview(const QString& fileOrig, const QString& fileDest,
 
 ImagePreview::~ImagePreview()
 {
-    delete m_about;
-}
-
-void ImagePreview::slotHelp()
-{
-    KToolInvocation::invokeHelp("", "kipi-plugins");
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin

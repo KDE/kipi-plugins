@@ -69,12 +69,11 @@ extern "C"
 #include "kpversion.h"
 #include "kphostsettings.h"
 #include "kpimageinfo.h"
+#include "kpaboutdata.h"
 #include "kpmetadata.h"
 #include "kpprogresswidget.h"
 #include "imagepreview.h"
 #include "ui_batchprocessimagesdialog.h"
-
-using namespace KIPIPlugins;
 
 namespace KIPIBatchProcessImagesPlugin
 {
@@ -97,16 +96,31 @@ enum ProcessState
 
 BatchProcessImagesDialog::BatchProcessImagesDialog(const KUrl::List& urlList, Interface* const interface,
                                                    const QString& caption, QWidget* const parent)
-    : KDialog(parent),
-        m_listFile2Process_iterator(0),
-        m_selectedImageFiles(urlList),
-        m_interface(interface),
-        m_ui(new Ui::BatchProcessImagesDialog())
+    : KPToolDialog(parent),
+      m_listFile2Process_iterator(0),
+      m_selectedImageFiles(urlList),
+      m_interface(interface),
+      m_ui(new Ui::BatchProcessImagesDialog())
 {
     setCaption(caption);
     setButtons(Help | User1 | Cancel);
     setButtonText(User1, i18nc("start batch process images", "&Start"));
     showButtonSeparator(false);
+
+    KPAboutData* about = new KPAboutData(ki18n("Batch Process Images"),
+                                         QByteArray(),
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin for batch process images using \"ImageMagick\""),
+                                         ki18n("(c) 2003-2012, Gilles Caulier\n"
+                                               "(c) 2007-2009, Aurélien Gateau"));
+
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
+                     "caulier dot gilles at gmail dot com");
+
+    about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
+                     "aurelien dot gateau at free dot fr");
+
+    setAboutData(about);
 
     // Init. Tmp folder
 

@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,43 +45,21 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kprocess.h>
-#include <ktoolinvocation.h>
 #include <kurlrequester.h>
 
 // Local includes
 
 #include "batchprocessimageslist.h"
 #include "convertoptionsdialog.h"
-#include "dialogutils.h"
 #include "kpversion.h"
 #include "kpmetadata.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-ConvertImagesDialog::ConvertImagesDialog(const KUrl::List& urlList, Interface* interface, QWidget *parent)
+ConvertImagesDialog::ConvertImagesDialog(const KUrl::List& urlList, Interface* interface, QWidget* parent)
     : BatchProcessImagesDialog(urlList, interface, i18n("Batch Convert Images"), parent)
 {
-    // About data and help button.
-
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch convert images"),
-                                           QByteArray(),
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin for batch converting images.\n"
-                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
-                                           ki18n("(c) 2003-2009, Gilles Caulier\n"
-                                                 "(c) 2007-2009, Aurélien Gateau"));
-
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
-                       "caulier dot gilles at gmail dot com");
-
-    m_about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
-                       "aurelien dot gateau at free dot fr");
-
-    DialogUtils::setupHelpButton(this, m_about);
-
-    //---------------------------------------------
-
     setOptionBoxTitle(i18n("Image Conversion Options"));
 
     m_labelType->setText(i18n("Format:"));
@@ -140,12 +118,6 @@ ConvertImagesDialog::ConvertImagesDialog(const KUrl::List& urlList, Interface* i
 
 ConvertImagesDialog::~ConvertImagesDialog()
 {
-    delete m_about;
-}
-
-void ConvertImagesDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("convertimages", "kipi-plugins");
 }
 
 void ConvertImagesDialog::slotTypeChanged(int type)

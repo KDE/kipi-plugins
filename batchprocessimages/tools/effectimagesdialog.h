@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,7 +25,6 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
 #include "batchprocessimagesdialog.h"
 
 namespace KIPIBatchProcessImagesPlugin
@@ -39,12 +38,11 @@ class EffectImagesDialog : public BatchProcessImagesDialog
 
 public:
 
-    EffectImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget *parent = 0);
+    EffectImagesDialog(const KUrl::List& images, Interface* interface, QWidget* parent = 0);
     ~EffectImagesDialog();
 
 private Q_SLOTS:
 
-    void slotHelp();
     void slotOptionsClicked();
 
 protected:
@@ -74,10 +72,6 @@ protected:
     int  m_swirlDegrees;
     int  m_waveAmplitude;
     int  m_waveLenght;
-
-private:
-
-    KIPIPlugins::KPAboutData *m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

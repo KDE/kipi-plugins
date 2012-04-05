@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -42,40 +42,18 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kprocess.h>
-#include <ktoolinvocation.h>
 
 // Local includes
 
-#include "dialogutils.h"
-#include "kpaboutdata.h"
 #include "kpversion.h"
 #include "recompressoptionsdialog.h"
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-RecompressImagesDialog::RecompressImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface, QWidget *parent)
-                      : BatchProcessImagesDialog(urlList, interface, i18n("Batch Recompress Images"), parent)
+RecompressImagesDialog::RecompressImagesDialog(const KUrl::List& urlList, Interface* interface, QWidget* parent)
+    : BatchProcessImagesDialog(urlList, interface, i18n("Batch Recompress Images"), parent)
 {
-    // About data and help button.
-
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch recompress images"),
-                                           QByteArray(),
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to batch recompress images.\n"
-                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
-                                           ki18n("(c) 2003-2009, Gilles Caulier\n"
-                                                 "(c) 2007-2009, Aurélien Gateau"));
-
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
-                       "caulier dot gilles at gmail dot com");
-
-    m_about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
-                       "aurelien dot gateau at free dot fr");
-
-    DialogUtils::setupHelpButton(this, m_about);
-    //---------------------------------------------
-
     m_nbItem = m_selectedImageFiles.count();
 
     //---------------------------------------------
@@ -94,12 +72,6 @@ RecompressImagesDialog::RecompressImagesDialog(const KUrl::List& urlList, KIPI::
 
 RecompressImagesDialog::~RecompressImagesDialog()
 {
-    delete m_about;
-}
-
-void RecompressImagesDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("recompressimages", "kipi-plugins");
 }
 
 void RecompressImagesDialog::slotOptionsClicked()

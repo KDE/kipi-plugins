@@ -6,7 +6,7 @@
  * Date        : 2004-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -45,12 +45,9 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kprocess.h>
-#include <ktoolinvocation.h>
 
 // Local includes
 
-#include "dialogutils.h"
-#include "kpaboutdata.h"
 #include "kpversion.h"
 #include "resizeoptionsdialog.h"
 #include "resizecommandbuilder.h"
@@ -62,27 +59,28 @@ class ResizeTool
 {
 public:
 
-    ResizeTool(const QString& localizedName, ResizeCommandBuilder *commandBuilder,
-               ResizeOptionsBaseDialog *dialog) :
+    ResizeTool(const QString& localizedName, 
+               ResizeCommandBuilder* const commandBuilder,
+               ResizeOptionsBaseDialog* const dialog) :
         localizedName(localizedName), commandBuilder(commandBuilder), dialog(dialog)
     {
     }
 
-    QString localizedName;
-    ResizeCommandBuilder *commandBuilder;
-    ResizeOptionsBaseDialog *dialog;
+    QString                  localizedName;
+    ResizeCommandBuilder*    commandBuilder;
+    ResizeOptionsBaseDialog* dialog;
 };
 
-class ResizeImagesDialogPriv
-{
+// -----------------------------------------------------------------------------------------
 
+class ResizeImagesDialog::ResizeImagesDialogPriv
+{
 public:
 
     const static QString RCNAME;
     const static QString RC_GROUP_NAME;
 
-    ResizeImagesDialogPriv(ResizeImagesDialog *dialog) :
-        aboutData(0),
+    ResizeImagesDialogPriv(ResizeImagesDialog* const dialog) :
         m_dialog(dialog)
     {
     }
@@ -97,7 +95,7 @@ public:
     void addResizeType(QString localizedName)
     {
         C *commandBuilder = new C(m_dialog);
-        D *optionDialog = new D(m_dialog, commandBuilder);
+        D *optionDialog   = new D(m_dialog, commandBuilder);
         optionDialog->layout();
         // somehow gcc needs these casts. Otherwise the templates will not work
         resizeTools << ResizeTool(localizedName,
@@ -113,15 +111,17 @@ public:
      */
     ResizeTool getResizeToolByName(const QString& name)
     {
-        foreach(const ResizeTool &tool, resizeTools)
+        foreach(const ResizeTool& tool, resizeTools)
         {
             if (tool.localizedName == name)
             {
                 return tool;
             }
         }
+
         kError() << "Could not find a resize tool with localized name '"
-                        << name << "'. Using first one.";
+                 << name << "'. Using first one.";
+
         return resizeTools[0];
     }
 
@@ -131,22 +131,20 @@ public:
      */
     QList<ResizeTool> resizeTools;
 
-    KIPIPlugins::KPAboutData *aboutData;
-
 private:
 
-    ResizeImagesDialog *m_dialog;
+    ResizeImagesDialog* m_dialog;
 
 };
 
-const QString ResizeImagesDialogPriv::RCNAME = "kipirc";
-const QString ResizeImagesDialogPriv::RC_GROUP_NAME = "ResizeImages Settings";
+const QString ResizeImagesDialog::ResizeImagesDialogPriv::RCNAME        = "kipirc";
+const QString ResizeImagesDialog::ResizeImagesDialogPriv::RC_GROUP_NAME = "ResizeImages Settings";
 
 typedef QList<ResizeTool>::iterator ResizeToolIterator;
 
-ResizeImagesDialog::ResizeImagesDialog(const KUrl::List& urlList, KIPI::Interface* interface, QWidget *parent)
-                  : BatchProcessImagesDialog(urlList, interface, i18n("Batch Resize Images"), parent),
-                    d(new ResizeImagesDialogPriv(this))
+ResizeImagesDialog::ResizeImagesDialog(const KUrl::List& urlList, Interface* interface, QWidget* parent)
+    : BatchProcessImagesDialog(urlList, interface, i18n("Batch Resize Images"), parent),
+    d(new ResizeImagesDialogPriv(this))
 {
 
     kDebug() << "Creating resize dialog";
@@ -156,24 +154,6 @@ ResizeImagesDialog::ResizeImagesDialog(const KUrl::List& urlList, KIPI::Interfac
     d->addResizeType<TwoDimResizeCommandBuilder, TwoDimResizeOptionsDialog>(i18n("Proportional (2 dim.)"));
     d->addResizeType<NonProportionalResizeCommandBuilder, NonProportionalResizeOptionsDialog>(i18n("Non-Proportional"));
     d->addResizeType<PrintPrepareResizeCommandBuilder, PrintPrepareResizeOptionsDialog>(i18n("Prepare to Print"));
-
-    // About data and help button.
-    d->aboutData = new KIPIPlugins::KPAboutData(ki18n("Batch resize images"),
-                                           QByteArray(),
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to batch-resize images.\n"
-                                                 "This plugin uses the \"convert\" program from the \"ImageMagick\" package."),
-                                           ki18n("(c) 2003-2009, Gilles Caulier\n"
-                                                 "(c) 2007-2009, Aurélien Gateau"));
-
-    d->aboutData->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
-                       "caulier dot gilles at gmail dot com");
-    d->aboutData->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
-                       "aurelien dot gateau at free dot fr");
-    d->aboutData->addAuthor(ki18n("Johannes Wienke"), ki18n("Maintainer"),
-                           "languitar at semipol dot de");
-
-    DialogUtils::setupHelpButton(this, d->aboutData);
 
     //---------------------------------------------
 
@@ -208,13 +188,7 @@ ResizeImagesDialog::ResizeImagesDialog(const KUrl::List& urlList, KIPI::Interfac
 
 ResizeImagesDialog::~ResizeImagesDialog()
 {
-    delete d->aboutData;
     delete d;
-}
-
-void ResizeImagesDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("resizeimages", "kipi-plugins");
 }
 
 void ResizeImagesDialog::slotOptionsClicked()

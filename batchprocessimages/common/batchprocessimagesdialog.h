@@ -29,7 +29,6 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kio/job.h>
 #include <kurl.h>
 
@@ -39,6 +38,7 @@
 
 // Local includes
 
+#include "kptooldialog.h"
 #include "batchprocessimagesitem.h"
 
 class QFileInfo;
@@ -53,13 +53,14 @@ namespace Ui
 }
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
 class BatchProcessImagesList;
 
-class BatchProcessImagesDialog : public KDialog
+class BatchProcessImagesDialog : public KPToolDialog
 {
     Q_OBJECT
 

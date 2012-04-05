@@ -23,42 +23,28 @@
 #ifndef IMAGEPREVIEW_H
 #define IMAGEPREVIEW_H
 
-// KDE includes
-
-#include <kdialog.h>
-
 // Local includes
 
+#include "kptooldialog.h"
 #include "ui_imagepreview.h"
-
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
 
 using namespace KIPIPlugins;
 
 namespace KIPIBatchProcessImagesPlugin
 {
 
-class ImagePreview : public KDialog, private Ui_ImagePreview
+class ImagePreview : public KPToolDialog, private Ui_ImagePreview
 {
-    Q_OBJECT
 
 public:
 
-    ImagePreview(const QString& fileOrig, const QString& fileDest,
-                 bool cropActionOrig, const QString& EffectName,
-                 const QString& FileName, QWidget* const parent = 0);
+    ImagePreview(const QString& fileOrig, 
+                 const QString& fileDest,
+                 bool cropActionOrig, 
+                 const QString& EffectName,
+                 const QString& FileName, 
+                 QWidget* const parent = 0);
     ~ImagePreview();
-
-private Q_SLOTS:
-
-    void slotHelp();
-
-private:
-
-    KPAboutData* m_about;
 };
 
 }  // namespace KIPIBatchProcessImagesPlugin

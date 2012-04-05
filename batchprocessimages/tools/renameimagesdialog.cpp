@@ -6,8 +6,8 @@
  * Date        : 2003-10-01
  * Description : a kipi plugin to batch process images
  *
- * Copyright (C) 2003-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2005 by Owen Hirst <n8rider@sbcglobal.net>
+ * Copyright (C) 2003-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2005      by Owen Hirst <n8rider@sbcglobal.net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -35,11 +35,9 @@
 #include <khelpmenu.h>
 #include <kiconloader.h>
 #include <kmenu.h>
-#include <ktoolinvocation.h>
 
 // Local includes
 
-#include "dialogutils.h"
 #include "kpaboutdata.h"
 #include "kpversion.h"
 #include "renameimageswidget.h"
@@ -47,8 +45,8 @@
 namespace KIPIBatchProcessImagesPlugin
 {
 
-RenameImagesDialog::RenameImagesDialog(const KUrl::List& images, KIPI::Interface* interface, QWidget* parent)
-                  : KDialog(parent)
+RenameImagesDialog::RenameImagesDialog(const KUrl::List& images, Interface* interface, QWidget* parent)
+    : KPToolDialog(parent)
 {
     setCaption(i18n("Rename Images"));
     setModal(true);
@@ -58,20 +56,20 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images, KIPI::Interface
 
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Batch-rename images"),
-                                           QByteArray(),
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to batch-rename images"),
-                                           ki18n("(c) 2003-2009, Gilles Caulier\n"
-                                                 "(c) 2007-2009, Aurélien Gateau"));
+    KPAboutData* about = new KPAboutData(ki18n("Batch-rename images"),
+                                         QByteArray(),
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to batch-rename images"),
+                                         ki18n("(c) 2003-2012, Gilles Caulier\n"
+                                               "(c) 2007-2009, Aurélien Gateau"));
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author"),
+                     "caulier dot gilles at gmail dot com");
 
-    m_about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
-                       "aurelien dot gateau at free dot fr");
+    about->addAuthor(ki18n("Aurelien Gateau"), ki18n("Maintainer"),
+                     "aurelien dot gateau at free dot fr");
 
-    DialogUtils::setupHelpButton(this, m_about);
+    setAboutData(about);
 
     // gui
 
@@ -92,12 +90,6 @@ RenameImagesDialog::RenameImagesDialog(const KUrl::List& images, KIPI::Interface
 
 RenameImagesDialog::~RenameImagesDialog()
 {
-    delete m_about;
-}
-
-void RenameImagesDialog::slotHelp(void)
-{
-    KToolInvocation::invokeHelp("renameimages", "kipi-plugins");
 }
 
 }  // namespace KIPIBatchProcessImagesPlugin
