@@ -26,11 +26,8 @@
 
 #include <kdebug.h>
 #include <kmessagebox.h>
-#include <klocale.h>
 #include <kpushbutton.h>
-#include <kmenu.h>
-#include <khelpmenu.h>
-#include <ktoolinvocation.h>
+#include <klocale.h>
 
 // Local includes
 
@@ -52,7 +49,6 @@ public:
         imagesTotal = 0;
         webService  = 0;
         widget      = 0;
-        about       = 0;
     }
 
     int          imagesCount;
@@ -60,12 +56,10 @@ public:
 
     ImgurTalker* webService;
     ImgurWidget* widget;
-
-    KPAboutData* about;
 };
 
 ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
-    : KDialog(0), d(new ImgurWindowPriv)
+    : KPToolDialog(0), d(new ImgurWindowPriv)
 {
     d->widget     = new ImgurWidget(this);
     d->webService = new ImgurTalker(interface, this);
@@ -93,28 +87,20 @@ ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KPAboutData(ki18n("Imgur Export"),
-                               0,
-                               KAboutData::License_GPL,
-                               ki18n("A tool to export images to Imgur web service"),
-                               ki18n("(c) 2012, Marius Orcsik"));
+    KPAboutData* about = new KPAboutData(ki18n("Imgur Export"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A tool to export images to Imgur web service"),
+                             ki18n("(c) 2012, Marius Orcsik"));
 
-    d->about->addAuthor(ki18n("Marius Orcsik"), ki18n("Author and Maintainer"),
-                        "marius at habarnam dot ro");
+    about->addAuthor(ki18n("Marius Orcsik"), ki18n("Author and Maintainer"),
+                     "marius at habarnam dot ro");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
-                        "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("imgurexport");
+    setAboutData(about);
 
     // ------------------------------------------------------------
 
@@ -124,22 +110,16 @@ ImgurWindow::ImgurWindow(Interface* const interface, QWidget* const /*parent*/)
     connect(d->webService, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-//    connect(this, SIGNAL(user1Clicked()),
-//            this, SLOT(slotStartUpload()));
-
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
             this, SLOT(slotButtonClicked(KDialog::ButtonCode)));
+
+//    connect(this, SIGNAL(user1Clicked()),
+//            this, SLOT(slotStartUpload()));
 }
 
 ImgurWindow::~ImgurWindow()
 {
-    delete d->about;
     delete d;
-}
-
-void ImgurWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("imgurexport", "kipi-plugins");
 }
 
 void ImgurWindow::slotStartUpload() 

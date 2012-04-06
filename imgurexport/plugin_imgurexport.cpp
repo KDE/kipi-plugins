@@ -30,6 +30,7 @@
 
 #include <kdebug.h>
 #include <kapplication.h>
+#include <klocale.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kpluginfactory.h>

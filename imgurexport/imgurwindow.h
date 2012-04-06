@@ -27,11 +27,6 @@
 
 #include <QObject>
 
-// KDE includes
-
-#include <kdialog.h>
-#include <klocale.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
@@ -41,6 +36,7 @@
 #include "kpimageslist.h"
 #include "imgurtalker.h"
 #include "imgurwidget.h"
+#include "kptooldialog.h"
 
 namespace KIPIPlugins
 {
@@ -58,7 +54,7 @@ using namespace KIPIPlugins;
 namespace KIPIImgurExportPlugin
 {
 
-class ImgurWindow : public KDialog
+class ImgurWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -71,7 +67,6 @@ public:
 
 public Q_SLOTS:
 
-    void slotHelp();
     void slotImageListChanged();
     void slotStartUpload();
     void slotBusy(bool val);
