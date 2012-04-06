@@ -96,10 +96,8 @@ public:
     KUrlLabel*             logo;
 
     Interface*             interface;
-    
-    Gallery*               gallery;
 
-    KPAboutData*           about;
+    Gallery*               gallery;
 
     GalleryTalker*         talker;
 
@@ -215,7 +213,7 @@ GalleryWindow::Private::Private(GalleryWindow* const parent)
 // --------------------------------------------------------------------------------------------------------------
 
 GalleryWindow::GalleryWindow(Interface* const interface, QWidget* const parent, Gallery* const pGallery)
-    : KDialog(parent),
+    : KPToolDialog(parent),
       d(new Private(this))
 {
     d->interface = interface;
@@ -225,40 +223,29 @@ GalleryWindow::GalleryWindow(Interface* const interface, QWidget* const parent, 
     setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
     setModal(false);
 
-    // About data.
-    d->about = new KPAboutData(ki18n("Gallery Export"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
-                                           ki18n("(c) 2003-2005, Renchi Raju\n"
-                                                 "(c) 2006-2007, Colin Guthrie\n"
-                                                 "(c) 2006-2012, Gilles Caulier\n"
-                                                 "(c) 2008, Andrea Diamantini\n"));
+    KPAboutData* about = new KPAboutData(ki18n("Gallery Export"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export image collections to a remote Gallery server."),
+                                         ki18n("(c) 2003-2005, Renchi Raju\n"
+                                               "(c) 2006-2007, Colin Guthrie\n"
+                                               "(c) 2006-2012, Gilles Caulier\n"
+                                               "(c) 2008, Andrea Diamantini\n"));
 
-    d->about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
-                       "renchi dot raju at gmail dot com");
+    about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
+                     "renchi dot raju at gmail dot com");
 
-    d->about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
-                       "kde at colin dot guthr dot ie");
+    about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
+                     "kde at colin dot guthr dot ie");
 
-    d->about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
-                       "adjam7 at gmail dot com");
+    about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
+                     "adjam7 at gmail dot com");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    // help button
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("galleryexport");
+    setAboutData(about);
 
     // User1 Button : to conf gallery settings
     KPushButton* confButton = button( User1 );
@@ -298,7 +285,6 @@ GalleryWindow::~GalleryWindow()
     group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
 
     delete d->uploadList;
-    delete d->about;
 
     delete d;
 }
@@ -367,11 +353,6 @@ void GalleryWindow::readSettings()
         d->resizeCheckBox->setChecked(false);
         d->dimensionSpinBox->setEnabled(false);
     }
-}
-
-void GalleryWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("galleryexport", "kipi-plugins");
 }
 
 void GalleryWindow::slotDoLogin()
