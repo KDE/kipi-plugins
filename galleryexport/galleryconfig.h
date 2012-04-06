@@ -47,7 +47,7 @@ class GalleryEdit : public KDialog
 
 public:
 
-    GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& title);
+    GalleryEdit(QWidget* const pParent, Gallery* const pGallery, const QString& title);
     ~GalleryEdit();
 
 private Q_SLOTS:

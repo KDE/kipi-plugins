@@ -75,7 +75,7 @@ public:
     Gallery*   gallery;
 };
 
-GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& title)
+GalleryEdit::GalleryEdit(QWidget* const pParent, Gallery* const pGallery, const QString& title)
     : KDialog(pParent, Qt::Dialog), d(new Private())
 {
     d->gallery = pGallery;
