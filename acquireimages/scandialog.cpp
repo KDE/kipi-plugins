@@ -72,43 +72,30 @@ public:
     {
         saneWidget = 0;
         interface  = 0;
-        about      = 0;
         saveThread = 0;
     }
 
-    SaveImgThread*            saveThread;
+    SaveImgThread* saveThread;
 
-    KIPI::Interface*          interface;
+    Interface*     interface;
 
-    KIPIPlugins::KPAboutData* about;
-
-    KSaneIface::KSaneWidget*  saneWidget;
+    KSaneWidget*   saneWidget;
 };
 
-ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* saneWidget,
-                       QWidget* /*parent*/, ScanDialogAboutData *about)
-          : KDialog(0), d(new ScanDialogPriv)
+ScanDialog::ScanDialog(Interface* const kinterface, KSaneWidget* const saneWidget,
+                       QWidget* const /*parent*/, ScanDialogAboutData* const about)
+    : KPToolDialog(0), d(new ScanDialogPriv)
 {
     d->saneWidget = saneWidget;
     d->interface  = kinterface;
-    d->about      = about;
     d->saveThread = new SaveImgThread(this);
 
     setButtons(Help|Close);
     setCaption(i18n("Scan Image"));
     setModal(false);
+    setAboutData(about);
 
     setMainWidget(d->saneWidget);
-
-    // -- About data and help button ----------------------------------------
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
 
     // ------------------------------------------------------------------------
 
@@ -125,7 +112,6 @@ ScanDialog::ScanDialog(KIPI::Interface* kinterface, KSaneIface::KSaneWidget* san
 
 ScanDialog::~ScanDialog()
 {
-    delete d->about;
     delete d;
 }
 
@@ -149,11 +135,6 @@ void ScanDialog::closeEvent(QCloseEvent *e)
     d->saneWidget->closeDevice();
     saveSettings();
     e->accept();
-}
-
-void ScanDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("acquireimages", "kipi-plugins");
 }
 
 void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, int bytes_per_line, int ksaneformat)
@@ -262,7 +243,7 @@ void ScanDialog::slotSaveImage(QByteArray& ksane_data, int width, int height, in
 
     d->saveThread->setImageData(ksane_data, width, height, bytes_per_line, ksaneformat);
     d->saveThread->setPreviewImage(d->saneWidget->toQImage(ksane_data, width, height,
-                                   bytes_per_line, (KSaneIface::KSaneWidget::ImageFormat)ksaneformat));
+                                   bytes_per_line, (KSaneWidget::ImageFormat)ksaneformat));
     d->saveThread->setTargetFile(newURL, format);
     d->saveThread->setScannerModel(d->saneWidget->make(), d->saneWidget->model());
     d->saveThread->start();

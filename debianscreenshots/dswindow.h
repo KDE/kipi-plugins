@@ -23,13 +23,13 @@
 #ifndef DSWINDOW_H
 #define DSWINDOW_H
 
-// KDE includes
-
-#include <kdialog.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+
+// Local includes
+
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
@@ -45,13 +45,16 @@ namespace KIPIPlugins
     class KPAboutData;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPIDebianScreenshotsPlugin
 {
 
 class DsTalker;
 class DsWidget;
 
-class DsWindow : public KDialog
+class DsWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -59,7 +62,7 @@ class DsWindow : public KDialog
 
 public:
 
-    DsWindow(KIPI::Interface* const interface, const QString& tmpFolder, QWidget* const parent);
+    DsWindow(Interface* const interface, const QString& tmpFolder, QWidget* const parent);
     ~DsWindow();
 
     /**
@@ -70,7 +73,6 @@ public:
 
 private Q_SLOTS:
 
-    void slotHelp();
     void slotStartTransfer();
     void slotMaybeEnableUser1();
     void slotButtonClicked(int button);
@@ -97,21 +99,20 @@ private:
 
 private:
 
-    bool                      m_uploadEnabled;
+    bool         m_uploadEnabled;
 
-    unsigned int              m_imagesCount;
-    unsigned int              m_imagesTotal;
+    unsigned int m_imagesCount;
+    unsigned int m_imagesTotal;
 
-    QString                   m_tmpDir;
-    QString                   m_tmpPath;
+    QString      m_tmpDir;
+    QString      m_tmpPath;
 
-    KUrl::List                m_transferQueue;
+    KUrl::List   m_transferQueue;
 
-    KIPI::Interface*          m_interface;
-    KIPIPlugins::KPAboutData* m_about;
+    Interface*   m_interface;
 
-    DsTalker*                 m_talker;
-    DsWidget*                 m_widget;
+    DsTalker*    m_talker;
+    DsWidget*    m_widget;
 };
 
 } // namespace KIPIDebianScreenshotsPlugin
