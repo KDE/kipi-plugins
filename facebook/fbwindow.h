@@ -29,13 +29,13 @@
 
 #include <QList>
 
-// KDE includes
-
-#include <kdialog.h>
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+
+// Local includes
+
+#include "kptooldialog.h"
 
 class QCloseEvent;
 
@@ -64,7 +64,7 @@ class FbUser;
 class FbAlbum;
 class FbPhoto;
 
-class FbWindow : public KDialog
+class FbWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -100,7 +100,6 @@ private Q_SLOTS:
     void slotUserChangeRequest();
     void slotReloadAlbumsRequest(long long userID);
     void slotNewAlbumRequest();
-    void slotHelp();
     void slotStartTransfer();
     void slotImageListChanged();
     void slotButtonClicked(int button);
@@ -148,8 +147,6 @@ private:
     FbNewAlbum*  m_albumDlg;
 
     Interface*   m_interface;
-
-    KPAboutData* m_about;
 };
 
 } // namespace KIPIFacebookPlugin

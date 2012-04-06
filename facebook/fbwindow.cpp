@@ -32,15 +32,14 @@
 #include <QSpinBox>
 
 // KDE includes
+
 #include <kcombobox.h>
 #include <kmenu.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
-#include <khelpmenu.h>
 #include <kpushbutton.h>
 #include <kmessagebox.h>
-#include <ktoolinvocation.h>
 
 // LibKDcraw includes
 
@@ -69,7 +68,7 @@ namespace KIPIFacebookPlugin
 
 FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
                    bool import, QWidget* const /*parent*/)
-    : KDialog(0)
+    : KPToolDialog(0)
 {
     m_tmpPath.clear();
     m_tmpDir      = tmpFolder;
@@ -121,27 +120,19 @@ FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
 
     // ------------------------------------------------------------------------
 
-    m_about = new KPAboutData(ki18n("Facebook Import/Export"), 0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to import/export image collection "
-                                                 "to/from Facebook web service."),
-                                           ki18n("(c) 2005-2008, Vardhman Jain\n"
-                                                 "(c) 2008-2012, Gilles Caulier\n"
-                                                 "(c) 2008-2009, Luka Renko"));
+    KPAboutData* about = new KPAboutData(ki18n("Facebook Import/Export"), 0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to import/export image collection "
+                                               "to/from Facebook web service."),
+                                         ki18n("(c) 2005-2008, Vardhman Jain\n"
+                                               "(c) 2008-2012, Gilles Caulier\n"
+                                               "(c) 2008-2009, Luka Renko"));
 
-    m_about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
-                       "lure at kubuntu dot org");
+    about->addAuthor(ki18n("Luka Renko"), ki18n("Author and maintainer"),
+                     "lure at kubuntu dot org");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("facebook");
+    setAboutData(about);
 
     // ------------------------------------------------------------------------
 
@@ -192,12 +183,6 @@ FbWindow::FbWindow(Interface* const interface, const QString& tmpFolder,
 
 FbWindow::~FbWindow()
 {
-    delete m_about;
-}
-
-void FbWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("facebook", "kipi-plugins");
 }
 
 void FbWindow::slotStopAndCloseProgressBar()
