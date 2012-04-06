@@ -52,6 +52,16 @@ class GalleryEdit::Private
 {
 public:
 
+    Private()
+    {
+        galleryVersion = 0;
+        nameEdit       = 0;
+        urlEdit        = 0;
+        usernameEdit   = 0;
+        passwordEdit   = 0;
+        gallery        = 0;
+    }
+
     QCheckBox* galleryVersion;
 
     KLineEdit* nameEdit;
@@ -66,7 +76,7 @@ public:
 };
 
 GalleryEdit::GalleryEdit(QWidget* pParent, Gallery* pGallery, const QString& title)
-           : KDialog(pParent, Qt::Dialog), d(new Private())
+    : KDialog(pParent, Qt::Dialog), d(new Private())
 {
     d->gallery = pGallery;
 
