@@ -25,19 +25,21 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kurl.h>
 
 // Local includes
 
 #include "emailsettings.h"
+#include "kptooldialog.h"
 
 class QCloseEvent;
+
+using namespace KIPIPlugins;
 
 namespace KIPISendimagesPlugin
 {
 
-class SendImagesDialog : public KDialog
+class SendImagesDialog : public KPToolDialog
 {
     Q_OBJECT
 
@@ -55,7 +57,6 @@ protected:
 private Q_SLOTS:
 
     void slotOk();
-    void slotHelp();
     void slotCancel();
     void slotImagesCountChanged();
 

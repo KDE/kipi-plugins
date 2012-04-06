@@ -55,8 +55,6 @@
 #include "myimagelist.h"
 #include "settingswidget.h"
 
-using namespace KIPIPlugins;
-
 namespace KIPISendimagesPlugin
 {
 
@@ -67,7 +65,6 @@ public:
 
     SendImagesDialogPrivate()
     {
-        about          = 0;
         imagesList     = 0;
         settingsWidget = 0;
     }
@@ -76,12 +73,10 @@ public:
 
     MyImageList*    imagesList;
     SettingsWidget* settingsWidget;
-
-    KPAboutData*    about;
 };
 
 SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& urls)
-    : KDialog(0), d(new SendImagesDialogPrivate)
+    : KPToolDialog(0), d(new SendImagesDialogPrivate)
 {
     d->urls = urls;
 
@@ -107,31 +102,23 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KPAboutData(ki18n("Send Images"),
-                               0,
-                               KAboutData::License_GPL,
-                               ki18n("A plugin to e-mail items"),
-                               ki18n("(c) 2003-2012, Gilles Caulier"));
+    KPAboutData* about = new KPAboutData(ki18n("Send Images"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A plugin to e-mail items"),
+                             ki18n("(c) 2003-2012, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
-                        "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Author and Maintainer"),
+                     "caulier dot gilles at gmail dot com");
 
-    d->about->addAuthor(ki18n("Michael Hoechstetter"), ki18n("Developer"),
-                        "michael dot hoechstetter at gmx dot de");
+    about->addAuthor(ki18n("Michael Hoechstetter"), ki18n("Developer"),
+                     "michael dot hoechstetter at gmx dot de");
 
-    d->about->addAuthor(ki18n("Tom Albers"), ki18n("Developer"),
-                        "tomalbers at kde dot nl");
+    about->addAuthor(ki18n("Tom Albers"), ki18n("Developer"),
+                     "tomalbers at kde dot nl");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("sendimages");
+    setAboutData(about);
 
     // ------------------------------------------------------------
 
@@ -151,13 +138,7 @@ SendImagesDialog::SendImagesDialog(QWidget* const /*parent*/, const KUrl::List& 
 
 SendImagesDialog::~SendImagesDialog()
 {
-    delete d->about;
     delete d;
-}
-
-void SendImagesDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("sendimages", "kipi-plugins");
 }
 
 void SendImagesDialog::closeEvent(QCloseEvent *e)
