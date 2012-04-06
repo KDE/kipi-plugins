@@ -75,7 +75,7 @@ void Plugin_ExpoBlending::setup(QWidget* widget)
     Plugin::setup(m_parentWidget);
 
     m_action = actionCollection()->addAction("expoblending");
-    m_action->setText(i18n("Blend bracketed images..."));
+    m_action->setText(i18n("Blend Bracketed Images..."));
     m_action->setIcon(KIcon("expoblending"));
 
     connect(m_action, SIGNAL(triggered(bool)),
