@@ -93,15 +93,6 @@ private Q_SLOTS:
 
 private:
 
-    KPAboutData*     m_about;
-    GalleryTalker*   m_talker;
-
-    QProgressDialog* m_progressDlg;
-    unsigned int     m_uploadCount;
-    unsigned int     m_uploadTotal;
-    QStringList*     m_uploadList;
-    QString          m_firstAlbumName;
-
     class Private;
     Private* const d;
 };

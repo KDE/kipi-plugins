@@ -61,9 +61,8 @@ public Q_SLOTS:
 
 private:
 
-    KAction* m_action;
-
-    Gallery* mpGallery;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIGalleryExportPlugin

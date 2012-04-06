@@ -70,15 +70,8 @@ private:
 
 private:
 
-    unsigned int     mVersion;
-    unsigned int     mGalleryId;
-
-    QString          mName;
-    QString          mUrl;
-    QString          mUsername;
-    QString          mPassword;
-
-    KWallet::Wallet* mpWallet;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIGalleryExportPlugin

@@ -40,7 +40,25 @@
 namespace KIPIGalleryExportPlugin
 {
 
+class Gallery::Private
+{
+public:
+
+    unsigned int     mVersion;
+
+    unsigned int     mGalleryId;
+
+    QString          mName;
+
+    QString          mUrl;
+
+    QString          mUsername;
+
+    QString          mPassword;
+};
+
 Gallery::Gallery()
+    : d(new Private())
 {
         load();
 }
@@ -51,64 +69,64 @@ Gallery::~Gallery()
 
 QString Gallery::name() const
 {
-    return mName;
+    return d->mName;
 }
 
 QString Gallery::url() const
 {
-    return mUrl;
+    return d->mUrl;
 }
 
 QString Gallery::username() const
 {
-    return mUsername;
+    return d->mUsername;
 }
 
 QString Gallery::password() const
 {
-    return mPassword;
+    return d->mPassword;
 }
 
 unsigned int Gallery::version() const
 {
-    return mVersion;
+    return d->mVersion;
 }
 
 unsigned int Gallery::galleryId() const
 {
-    return mGalleryId;
+    return d->mGalleryId;
 }
 
 // -------------------------------------
 
 void Gallery::setName(const QString& name)
 {
-    mName = name;
+    d->mName = name;
 }
 
 void Gallery::setUrl(const QString& url)
 {
-    mUrl = url;
+    d->mUrl = url;
 }
 
 void Gallery::setUsername(const QString& username)
 {
-    mUsername = username;
+    d->mUsername = username;
 }
 
 void Gallery::setPassword(const QString& password)
 {
-    mPassword = password;
+    d->mPassword = password;
 }
 
 void Gallery::setVersion(unsigned int version)
 {
-    mVersion = version;
+    d->mVersion = version;
 }
 
 void Gallery::setGalleryId(unsigned int galleryId)
 {
-    mGalleryId = galleryId;
+    d->mGalleryId = galleryId;
 }
 
 void Gallery::load()
@@ -124,11 +142,11 @@ void Gallery::load()
 
     kDebug() << "Reading data from kipirc file..";
 
-    mName     = group.readEntry("Name",     QString() );
-    mUrl      = group.readEntry("URL",      QString() );
-    mUsername = group.readEntry("Username", QString() );
-    mVersion  = group.readEntry("Version",  QString().toInt() );
-    mPassword = group.readEntry("Password", QString() );
+    d->mName     = group.readEntry("Name",     QString() );
+    d->mUrl      = group.readEntry("URL",      QString() );
+    d->mUsername = group.readEntry("Username", QString() );
+    d->mVersion  = group.readEntry("Version",  QString().toInt() );
+    d->mPassword = group.readEntry("Password", QString() );
 }
 
 void Gallery::save()

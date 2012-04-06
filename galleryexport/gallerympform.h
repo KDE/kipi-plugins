@@ -57,8 +57,8 @@ private:
 
 private:
 
-    QByteArray m_buffer;
-    QByteArray m_boundary;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPIGalleryExportPlugin

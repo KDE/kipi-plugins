@@ -66,28 +66,56 @@ namespace KIPIGalleryExportPlugin
 bool GalleryTalker::s_using_gallery2 = true;
 QString GalleryTalker::s_authToken   = "";
 
+class GalleryTalker::Private
+{
+public:
+
+    Private(QWidget* parent);
+
+    QWidget*          widget;
+
+    State             state;
+
+    QString           cookie;
+
+    KUrl              galleryUrl;
+
+    KIO::TransferJob* job;
+
+    bool              loggedIn;
+
+    QByteArray        talker_buffer;
+};
+
+GalleryTalker::Private::Private(QWidget* parent)
+{
+    job = 0;
+    loggedIn = false;
+    widget = new QWidget(parent);
+}
+
 GalleryTalker::GalleryTalker(QWidget* parent)
-    : m_parent(parent),  m_job(0),  m_loggedIn(false)
+    : d(new Private(parent))
 {
 }
 
 GalleryTalker::~GalleryTalker()
 {
-    if (m_job)
-        m_job->kill();
+    if (d->job)
+        d->job->kill();
 }
 
 bool GalleryTalker::loggedIn() const
 {
-    return m_loggedIn;
+    return d->loggedIn;
 }
 
 void GalleryTalker::login(const KUrl& url, const QString& name, const QString& passwd)
 {
-    m_job   = 0;
-    m_url   = url;
-    m_state = GE_LOGIN;
-    m_talker_buffer.resize(0);
+    d->job   = 0;
+    d->galleryUrl   = url;
+    d->state = GE_LOGIN;
+    d->talker_buffer.resize(0);
 
     GalleryMPForm form;
     form.addPair("cmd", "login");
@@ -96,14 +124,14 @@ void GalleryTalker::login(const KUrl& url, const QString& name, const QString& p
     form.addPair("password", passwd);
     form.finish();
 
-    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    m_job->addMetaData("content-type", form.contentType());
-    m_job->addMetaData("cookies", "manual");
+    d->job = KIO::http_post(d->galleryUrl, form.formData(), KIO::HideProgressInfo);
+    d->job->addMetaData("content-type", form.contentType());
+    d->job->addMetaData("cookies", "manual");
 
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+    connect(d->job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob*)),
+    connect(d->job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
@@ -111,9 +139,9 @@ void GalleryTalker::login(const KUrl& url, const QString& name, const QString& p
 
 void GalleryTalker::listAlbums()
 {
-    m_job   = 0;
-    m_state = GE_LISTALBUMS;
-    m_talker_buffer.resize(0);
+    d->job   = 0;
+    d->state = GE_LISTALBUMS;
+    d->talker_buffer.resize(0);
 
     GalleryMPForm form;
     if (s_using_gallery2)
@@ -123,15 +151,15 @@ void GalleryTalker::listAlbums()
     form.addPair("protocol_version", "2.11");
     form.finish();
 
-    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    m_job->addMetaData("content-type", form.contentType());
-    m_job->addMetaData("cookies", "manual");
-    m_job->addMetaData("setcookies", m_cookie);
+    d->job = KIO::http_post(d->galleryUrl, form.formData(), KIO::HideProgressInfo);
+    d->job->addMetaData("content-type", form.contentType());
+    d->job->addMetaData("cookies", "manual");
+    d->job->addMetaData("setcookies", d->cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+    connect(d->job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob*)),
+    connect(d->job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
@@ -139,9 +167,9 @@ void GalleryTalker::listAlbums()
 
 void GalleryTalker::listPhotos(const QString& albumName)
 {
-    m_job   = 0;
-    m_state = GE_LISTPHOTOS;
-    m_talker_buffer.resize(0);
+    d->job   = 0;
+    d->state = GE_LISTPHOTOS;
+    d->talker_buffer.resize(0);
 
     GalleryMPForm form;
     form.addPair("cmd", "fetch-album-images");
@@ -149,15 +177,15 @@ void GalleryTalker::listPhotos(const QString& albumName)
     form.addPair("set_albumName", albumName);
     form.finish();
 
-    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    m_job->addMetaData("content-type", form.contentType());
-    m_job->addMetaData("cookies", "manual");
-    m_job->addMetaData("setcookies", m_cookie);
+    d->job = KIO::http_post(d->galleryUrl, form.formData(), KIO::HideProgressInfo);
+    d->job->addMetaData("content-type", form.contentType());
+    d->job->addMetaData("cookies", "manual");
+    d->job->addMetaData("setcookies", d->cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+    connect(d->job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob*)),
+    connect(d->job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
@@ -168,9 +196,9 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
                                 const QString& albumTitle,
                                 const QString& albumCaption)
 {
-    m_job   = 0;
-    m_state = GE_CREATEALBUM;
-    m_talker_buffer.resize(0);
+    d->job   = 0;
+    d->state = GE_CREATEALBUM;
+    d->talker_buffer.resize(0);
 
     GalleryMPForm form;
     form.addPair("cmd", "new-album");
@@ -188,15 +216,15 @@ void GalleryTalker::createAlbum(const QString& parentAlbumName,
 
     form.finish();
 
-    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    m_job->addMetaData("content-type", form.contentType());
-    m_job->addMetaData("cookies", "manual");
-    m_job->addMetaData("setcookies", m_cookie);
+    d->job = KIO::http_post(d->galleryUrl, form.formData(), KIO::HideProgressInfo);
+    d->job->addMetaData("content-type", form.contentType());
+    d->job->addMetaData("cookies", "manual");
+    d->job->addMetaData("setcookies", d->cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+    connect(d->job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob*)),
+    connect(d->job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
@@ -209,10 +237,10 @@ bool GalleryTalker::addPhoto(const QString& albumName,
                              bool  rescale,
                              int   maxDim)
 {
-    m_job        = 0;
+    d->job        = 0;
     QString path = photoPath;
-    m_state      = GE_ADDPHOTO;
-    m_talker_buffer.resize(0);
+    d->state      = GE_ADDPHOTO;
+    d->talker_buffer.resize(0);
 
     GalleryMPForm form;
     form.addPair("cmd", "add-item");
@@ -270,15 +298,15 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
     form.finish();
 
-    m_job = KIO::http_post(m_url, form.formData(), KIO::HideProgressInfo);
-    m_job->addMetaData("content-type", form.contentType());
-    m_job->addMetaData("cookies", "manual");
-    m_job->addMetaData("setcookies", m_cookie);
+    d->job = KIO::http_post(d->galleryUrl, form.formData(), KIO::HideProgressInfo);
+    d->job->addMetaData("content-type", form.contentType());
+    d->job->addMetaData("cookies", "manual");
+    d->job->addMetaData("setcookies", d->cookie);
 
-    connect(m_job, SIGNAL(data(KIO::Job*,QByteArray)),
+    connect(d->job, SIGNAL(data(KIO::Job*,QByteArray)),
             this, SLOT(slotTalkerData(KIO::Job*,QByteArray)));
 
-    connect(m_job, SIGNAL(result(KJob*)),
+    connect(d->job, SIGNAL(result(KJob*)),
             this, SLOT(slotResult(KJob*)));
 
     emit signalBusy(true);
@@ -288,10 +316,10 @@ bool GalleryTalker::addPhoto(const QString& albumName,
 
 void GalleryTalker::cancel()
 {
-    if (m_job)
+    if (d->job)
     {
-        m_job->kill();
-        m_job = 0;
+        d->job->kill();
+        d->job = 0;
     }
 }
 
@@ -300,9 +328,9 @@ void GalleryTalker::slotTalkerData(KIO::Job*, const QByteArray& data)
     if (data.isEmpty())
         return;
 
-    int oldSize = m_talker_buffer.size();
-    m_talker_buffer.resize(oldSize + data.size());
-    memcpy(m_talker_buffer.data() + oldSize, data.data(), data.size());
+    int oldSize = d->talker_buffer.size();
+    d->talker_buffer.resize(oldSize + data.size());
+    memcpy(d->talker_buffer.data() + oldSize, data.data(), data.size());
 }
 
 void GalleryTalker::slotResult(KJob *job)
@@ -311,19 +339,19 @@ void GalleryTalker::slotResult(KJob *job)
 
     if (tempjob->error())
     {
-        if (m_state == GE_LOGIN)
+        if (d->state == GE_LOGIN)
         {
             emit signalLoginFailed(tempjob->errorString());
         }
         else
         {
-            if (m_state == GE_ADDPHOTO)
+            if (d->state == GE_ADDPHOTO)
             {
                 emit signalAddPhotoFailed(tempjob->errorString());
             }
             else
             {
-                tempjob->ui()->setWindow(m_parent);
+                tempjob->ui()->setWindow(d->widget);
                 tempjob->ui()->showErrorMessage();
             }
         }
@@ -331,29 +359,29 @@ void GalleryTalker::slotResult(KJob *job)
         return;
     }
 
-    switch (m_state)
+    switch (d->state)
     {
         case(GE_LOGIN):
-            parseResponseLogin(m_talker_buffer);
+            parseResponseLogin(d->talker_buffer);
             break;
         case(GE_LISTALBUMS):
-            parseResponseListAlbums(m_talker_buffer);
+            parseResponseListAlbums(d->talker_buffer);
             break;
         case(GE_LISTPHOTOS):
-            parseResponseListPhotos(m_talker_buffer);
+            parseResponseListPhotos(d->talker_buffer);
             break;
         case(GE_CREATEALBUM):
-            parseResponseCreateAlbum(m_talker_buffer);
+            parseResponseCreateAlbum(d->talker_buffer);
             break;
         case(GE_ADDPHOTO):
-            parseResponseAddPhoto(m_talker_buffer);
+            parseResponseAddPhoto(d->talker_buffer);
             break;
     }
 
-    if (m_state == GE_LOGIN && m_loggedIn)
+    if (d->state == GE_LOGIN && d->loggedIn)
     {
         const QStringList cookielist = (tempjob->queryMetaData("setcookies")).split('\n');
-        m_cookie = "Cookie:";
+        d->cookie = "Cookie:";
 
 
         if(!cookielist.isEmpty())
@@ -372,7 +400,7 @@ void GalleryTalker::slotResult(KJob *job)
                     }
                 }
             }
-            m_cookie += app;
+            d->cookie += app;
         }
 
         tempjob->kill();
@@ -388,7 +416,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
     QTextStream ts(&str, QIODevice::ReadOnly);
     QString line;
     bool foundResponse = false;
-    m_loggedIn         = false;
+    d->loggedIn         = false;
 
     while (!ts.atEnd())
     {
@@ -404,7 +432,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
             {
                 if (("status" == strlist[0]) && ("0" == strlist[1]))
                 {
-                    m_loggedIn = true;
+                    d->loggedIn = true;
                 }
                 else
                 {
@@ -423,7 +451,7 @@ void GalleryTalker::parseResponseLogin(const QByteArray &data)
         return;
     }
 
-    if (!m_loggedIn)
+    if (!d->loggedIn)
     {
         emit signalLoginFailed(i18n("Incorrect username or password specified"));
     }

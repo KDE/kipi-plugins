@@ -57,9 +57,18 @@ namespace KIPIGalleryExportPlugin
 K_PLUGIN_FACTORY(Factory, registerPlugin<Plugin_GalleryExport>();)
 K_EXPORT_PLUGIN(Factory("kipiplugin_galleryexport"))
 
+class Plugin_GalleryExport::Private
+{
+public:
+
+    KAction* action;
+
+    Gallery* gallery;
+};
+
 Plugin_GalleryExport::Plugin_GalleryExport(QObject* const parent, const QVariantList&)
     : Plugin(Factory::componentData(), parent, "GalleryExport"),
-      m_action(0), mpGallery(0)
+      d(new Private())
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_GalleryExport plugin loaded";
 }
@@ -68,7 +77,7 @@ void Plugin_GalleryExport::setup(QWidget* widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_galleryexport");
 
-    mpGallery = new Gallery();
+    d->gallery = new Gallery();
 
     Plugin::setup(widget);
 
@@ -79,21 +88,21 @@ void Plugin_GalleryExport::setup(QWidget* widget)
         return;
     }
 
-    m_action = actionCollection()->addAction("galleryexport");
-    m_action->setText(i18n("Export to &Gallery..."));
-    m_action->setIcon(KIcon("gallery"));
-    m_action->setEnabled(true);
-    m_action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_G));
+    d->action = actionCollection()->addAction("galleryexport");
+    d->action->setText(i18n("Export to &Gallery..."));
+    d->action->setIcon(KIcon("gallery"));
+    d->action->setEnabled(true);
+    d->action->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::Key_G));
 
-    connect(m_action, SIGNAL(triggered(bool)),
+    connect(d->action, SIGNAL(triggered(bool)),
             this, SLOT(slotSync()));
 
-    addAction(m_action);
+    addAction(d->action);
 }
 
 Plugin_GalleryExport::~Plugin_GalleryExport()
 {
-    delete mpGallery;
+    delete d->gallery;
 }
 
 // this slot uses GalleryWindow Class
@@ -112,11 +121,11 @@ void Plugin_GalleryExport::slotSync()
     KConfig config("kipirc");
     if(!config.hasGroup("Gallery Settings") )
     {
-        configDlg = new GalleryEdit(kapp->activeWindow(), mpGallery, i18n("Edit Gallery Data") );
+        configDlg = new GalleryEdit(kapp->activeWindow(), d->gallery, i18n("Edit Gallery Data") );
         configDlg->exec();
     }
 
-    dlg = new GalleryWindow(interface, kapp->activeWindow(), mpGallery);
+    dlg = new GalleryWindow(interface, kapp->activeWindow(), d->gallery);
     dlg->exec();
 
     delete configDlg;
@@ -125,9 +134,9 @@ void Plugin_GalleryExport::slotSync()
 
 Category Plugin_GalleryExport::category(KAction* action) const
 {
-    if (action == m_action)
+    if (action == d->action)
         return ExportPlugin;
-//     if (action == m_action_configure)
+//     if (action == d->action_configure)
 //         return ToolsPlugin;
 //
     kWarning() << "Unrecognized action for plugin category identification";
