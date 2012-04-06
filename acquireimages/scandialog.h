@@ -6,7 +6,7 @@
  * Date        : 2007-09-09
  * Description : scanner dialog
  *
- * Copyright (C) 2007-2011 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -27,9 +27,9 @@
 
 #include <QCloseEvent>
 
-// KDE includes
+// local includes
 
-#include <kdialog.h>
+#include "kptooldialog.h"
 
 class QWidget;
 
@@ -43,19 +43,23 @@ namespace KSaneIface
     class KSaneWidget;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+using namespace KSaneIface;
+
 namespace KIPIAcquireImagesPlugin
 {
 
 class ScanDialogAboutData;
 
-class ScanDialog : public KDialog
+class ScanDialog : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    ScanDialog(KIPI::Interface* interface, KSaneIface::KSaneWidget* saneWidget,
-               QWidget* parent, ScanDialogAboutData *about);
+    ScanDialog(Interface* const interface, KSaneWidget* const saneWidget,
+               QWidget* const parent, ScanDialogAboutData* const about);
     ~ScanDialog();
 
 protected:
@@ -65,7 +69,6 @@ protected:
 private Q_SLOTS:
 
     void slotSaveImage(QByteArray&, int, int, int, int);
-    void slotHelp();
     void slotThreadDone(const KUrl&, bool);
 
 private:
