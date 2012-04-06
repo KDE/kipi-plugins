@@ -84,13 +84,9 @@ public:
 
     QTreeWidget*           albumView;
 
-    QPushButton*           addPhotoBtn;
+    QPushButton*           confButton;
 
-    QCheckBox*             captTitleCheckBox;
-    QCheckBox*             captDescrCheckBox;
     QCheckBox*             resizeCheckBox;
-    QCheckBox*             downloadHQCheckBox;
-
     QSpinBox*              dimensionSpinBox;
     QSpinBox*              thumbDimensionSpinBox;
 
@@ -127,20 +123,13 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     QFrame *optionFrame = new QFrame;
     QVBoxLayout *vlay   = new QVBoxLayout();
 
-    addPhotoBtn = new QPushButton;
-    addPhotoBtn->setText(i18n("&Add Selected Photos"));
-    addPhotoBtn->setIcon(KIcon("list-add"));
-    addPhotoBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    addPhotoBtn->setEnabled(false);
+    confButton = new QPushButton;
+    confButton->setText(i18n("Change Account"));
+    confButton->setIcon(KIcon("system-switch-user"));
+    confButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QGroupBox *optionsBox = new QGroupBox(i18n("Override Default Options"));
+    QGroupBox *optionsBox = new QGroupBox(i18n("Options"));
     QVBoxLayout *vlay2    = new QVBoxLayout();
-
-    captTitleCheckBox     = new QCheckBox(optionsBox);
-    captTitleCheckBox->setText(i18n("EXIF Comment (instead of file name) sets Title"));
-
-    captDescrCheckBox     = new QCheckBox(optionsBox);
-    captDescrCheckBox->setText(i18n("EXIF Comment (instead of file name) sets Comment"));
 
     resizeCheckBox        = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
@@ -150,7 +139,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     dimensionSpinBox      = new QSpinBox;
     dimensionSpinBox->setRange(1,1600);
-    dimensionSpinBox->setValue(600);
+    dimensionSpinBox->setValue(800);
 
     QHBoxLayout *hlay3    = new QHBoxLayout;
     QLabel *resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
@@ -158,16 +147,11 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     thumbDimensionSpinBox = new QSpinBox;
     thumbDimensionSpinBox->setRange(32,800);
     thumbDimensionSpinBox->setValue(128);
+    thumbDimensionSpinBox->setToolTip(i18n("Thumbnail size is ignored with Piwigo > 2.4"));
 
-    downloadHQCheckBox    = new QCheckBox(optionsBox);
-    downloadHQCheckBox->setText(i18n("Also download the full size version"));
-
-    captTitleCheckBox->setChecked(true);
-    captDescrCheckBox->setChecked(false);
     resizeCheckBox->setChecked(false);
     dimensionSpinBox->setEnabled(false);
     thumbDimensionSpinBox->setEnabled(true);
-    downloadHQCheckBox->setChecked(false);
 
     // ---------------------------------------------------------------------------
 
@@ -185,12 +169,10 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    vlay2->addWidget(captTitleCheckBox);
-    vlay2->addWidget(captDescrCheckBox);
     vlay2->addWidget(resizeCheckBox);
     vlay2->addLayout(hlay2);
     vlay2->addLayout(hlay3);
-    vlay2->addWidget(downloadHQCheckBox);
+    vlay2->addStretch(0);
     vlay2->setSpacing(KDialog::spacingHint());
     vlay2->setMargin(KDialog::spacingHint());
 
@@ -198,7 +180,7 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    vlay->addWidget(addPhotoBtn);
+    vlay->addWidget(confButton);
     vlay->addWidget(optionsBox);
     vlay->setSpacing(KDialog::spacingHint());
     vlay->setMargin(KDialog::spacingHint());
@@ -237,7 +219,7 @@ PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Pi
                                                  "(c) 2006-2007, Colin Guthrie\n"
                                                  "(c) 2006-2009, Gilles Caulier\n"
                                                  "(c) 2008, Andrea Diamantini\n"
-                                                 "(c) 2010, Frédéric Coiffier\n"));
+                                                 "(c) 2012, Frédéric Coiffier\n"));
 
     m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
                        "renchi dot raju at gmail dot com");
@@ -267,12 +249,13 @@ PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Pi
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
     button(Help)->setMenu(helpMenu->menu());
 
-    // User1 Button : to conf piwigo settings
-    KPushButton *confButton = button( User1 );
-    confButton->setText( i18n("Settings") );
-    confButton->setIcon( KIcon("configure") );
-    connect(confButton, SIGNAL(clicked()),
-            this, SLOT(slotSettings()) );
+    // User1 Button : to upload selected photos
+    KPushButton *addPhotoBtn = button( User1 );
+    addPhotoBtn->setText( i18n("Start Upload") );
+    addPhotoBtn->setIcon( KIcon("network-workgroup") );
+    addPhotoBtn->setEnabled(false);
+    connect(addPhotoBtn, SIGNAL(clicked()),
+            this, SLOT(slotAddPhoto()));
 
     // we need to let m_talker work..
     m_talker = new PiwigoTalker(d->widget);
@@ -302,9 +285,6 @@ PiwigoWindow::~PiwigoWindow()
     KConfigGroup group = config.group("PiwigoSync Galleries");
 
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
-    group.writeEntry("Set title",       d->captTitleCheckBox->isChecked());
-    group.writeEntry("Set description", d->captDescrCheckBox->isChecked());
-    group.writeEntry("Download HQ",     d->downloadHQCheckBox->isChecked());
     group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
     group.writeEntry("Thumbnail Width", d->thumbDimensionSpinBox->value());
 
@@ -321,8 +301,8 @@ void PiwigoWindow::connectSignals()
     connect(d->albumView, SIGNAL(itemSelectionChanged()),
             this , SLOT(slotAlbumSelected()) );
 
-    connect(d->addPhotoBtn, SIGNAL(clicked()),
-            this, SLOT(slotAddPhoto()));
+    connect(d->confButton, SIGNAL(clicked()), 
+             this, SLOT(slotSettings()) );
 
     connect(d->resizeCheckBox, SIGNAL(stateChanged(int)),
             this, SLOT(slotEnableSpinBox(int)));
@@ -378,21 +358,6 @@ void PiwigoWindow::readSettings()
         d->dimensionSpinBox->setEnabled(false);
     }
 
-    if (group.readEntry("Set title", true))
-        d->captTitleCheckBox->setChecked(true);
-    else
-        d->captTitleCheckBox->setChecked(false);
-
-    if (group.readEntry("Set description", false))
-        d->captDescrCheckBox->setChecked(true);
-    else
-        d->captDescrCheckBox->setChecked(false);
-
-    if (group.readEntry("Download HQ", false))
-        d->downloadHQCheckBox->setChecked(true);
-    else
-        d->downloadHQCheckBox->setChecked(false);
-
     d->thumbDimensionSpinBox->setValue(group.readEntry("Thumbnail Width", 128));
 }
 
@@ -447,13 +412,13 @@ void PiwigoWindow::slotBusy(bool val)
     if (val)
     {
         setCursor(Qt::WaitCursor);
-        d->addPhotoBtn->setEnabled(false);
+        button( User1 )->setEnabled(false);
     }
     else
     {
         setCursor(Qt::ArrowCursor);
         bool loggedIn = m_talker->loggedIn();
-        d->addPhotoBtn->setEnabled(loggedIn && d->albumView->currentItem());
+        button( User1 )->setEnabled(loggedIn && d->albumView->currentItem());
     }
 }
 
@@ -541,7 +506,7 @@ void PiwigoWindow::slotAlbumSelected()
 
     if (!item)
     {
-        d->addPhotoBtn->setEnabled(false);
+        button( User1 )->setEnabled(false);
     }
     else
     {
@@ -551,11 +516,11 @@ void PiwigoWindow::slotAlbumSelected()
         kDebug() << albumId << "\n";
         if (m_talker->loggedIn() && albumId )
         {
-            d->addPhotoBtn->setEnabled(true);
+            button( User1 )->setEnabled(true);
         }
         else
         {
-            d->addPhotoBtn->setEnabled(false);
+            button( User1 )->setEnabled(false);
         }
     }
 }
@@ -596,12 +561,8 @@ void PiwigoWindow::slotAddPhotoNext()
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
     QString photoPath     = mpUploadList->takeFirst();
-    QString photoName     = QFileInfo(photoPath).baseName();
-    bool res              = m_talker->addPhoto(album.ref_num, photoPath, photoName,
-                            d->captTitleCheckBox->isChecked(),
-                            d->captDescrCheckBox->isChecked(),
+    bool res              = m_talker->addPhoto(album.ref_num, photoPath,
                             d->resizeCheckBox->isChecked(),
-                            d->downloadHQCheckBox->isChecked(),
                             d->dimensionSpinBox->value(),
                             d->thumbDimensionSpinBox->value() );
 
