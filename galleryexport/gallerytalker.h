@@ -67,7 +67,7 @@ public:
 
 public:
 
-    GalleryTalker(QWidget* parent);
+    GalleryTalker(QWidget* const parent);
     ~GalleryTalker();
 
     static void setGallery2(bool usegallery2)

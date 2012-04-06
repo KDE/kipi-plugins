@@ -79,7 +79,7 @@ Plugin_GalleryExport::Plugin_GalleryExport(QObject* const parent, const QVariant
     kDebug(AREA_CODE_LOADING) << "Plugin_GalleryExport plugin loaded";
 }
 
-void Plugin_GalleryExport::setup(QWidget* widget)
+void Plugin_GalleryExport::setup(QWidget* const widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_galleryexport");
 
@@ -138,7 +138,7 @@ void Plugin_GalleryExport::slotSync()
     delete dlg;
 }
 
-Category Plugin_GalleryExport::category(KAction* action) const
+Category Plugin_GalleryExport::category(KAction* const action) const
 {
     if (action == d->action)
         return ExportPlugin;

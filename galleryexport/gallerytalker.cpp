@@ -70,7 +70,7 @@ class GalleryTalker::Private
 {
 public:
 
-    Private(QWidget* parent);
+    Private(QWidget* const parent);
 
     QWidget*          widget;
 
@@ -87,14 +87,14 @@ public:
     QByteArray        talker_buffer;
 };
 
-GalleryTalker::Private::Private(QWidget* parent)
+GalleryTalker::Private::Private(QWidget* const parent)
 {
     job = 0;
     loggedIn = false;
     widget = new QWidget(parent);
 }
 
-GalleryTalker::GalleryTalker(QWidget* parent)
+GalleryTalker::GalleryTalker(QWidget* const parent)
     : d(new Private(parent))
 {
 }
