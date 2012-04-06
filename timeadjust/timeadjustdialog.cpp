@@ -77,8 +77,6 @@ extern "C"
 #include "kpprogresswidget.h"
 #include "clockphotodialog.h"
 
-using namespace KIPIPlugins;
-
 namespace KIPITimeAdjustPlugin
 {
 
@@ -120,7 +118,6 @@ public:
         adjTimeInput           = 0;
         useCustomDateTodayBtn  = 0;
         progressBar            = 0;
-        about                  = 0;
     }
 
     QGroupBox*        useGroupBox;
@@ -167,12 +164,11 @@ public:
     KUrl::List        imageUrls;
     QList<QDateTime>  imageOriginalDates;
 
-    KPAboutData*      about;
     KPProgressWidget* progressBar;
 };
 
 TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
-    : KDialog(parent), d(new TimeAdjustDialogPrivate)
+    : KPToolDialog(parent), d(new TimeAdjustDialogPrivate)
 {
     setButtons(Help | Ok | Cancel);
     setDefaultButton(Ok);
@@ -184,31 +180,23 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
     // -- About data and help button ----------------------------------------
 
-    d->about = new KPAboutData(ki18n("Time Adjust"),
-                   0,
-                   KAboutData::License_GPL,
-                   ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
-                   ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
-                         "(c) 2006-2012, Gilles Caulier"));
+    KPAboutData* about = new KPAboutData(ki18n("Time Adjust"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
+                             ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
+                                   "(c) 2006-2012, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Jesper K. Pedersen"),
-                        ki18n("Author"),
-                        "blackie at kde dot org");
+    about->addAuthor(ki18n("Jesper K. Pedersen"),
+                     ki18n("Author"),
+                     "blackie at kde dot org");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"),
-                        ki18n("Developer and maintainer"),
-                        "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"),
+                     ki18n("Developer and maintainer"),
+                     "caulier dot gilles at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("timeadjust");
+    setAboutData(about);
 
     // -- Progress Bar ------------------------------------------------------------
 
@@ -412,7 +400,6 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
 
 TimeAdjustDialog::~TimeAdjustDialog()
 {
-    delete d->about;
     delete d;
 }
 
@@ -789,11 +776,6 @@ void TimeAdjustDialog::slotUpdateExample()
                                                 "Adjusted: <b>%3 %4</b>",
                                            formattedOriginalDate, originalTimeStr, formattedAdjustedDate, adjustedTimeStr));
     }
-}
-
-void TimeAdjustDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("timeadjust", "kipi-plugins");
 }
 
 void TimeAdjustDialog::slotOk()

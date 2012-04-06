@@ -30,13 +30,18 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <kurl.h>
+
+// Local includes
+
+#include "kptooldialog.h"
+
+using namespace KIPIPlugins;
 
 namespace KIPITimeAdjustPlugin
 {
 
-class TimeAdjustDialog : public KDialog
+class TimeAdjustDialog : public KPToolDialog
 {
     Q_OBJECT
 
@@ -58,7 +63,6 @@ private Q_SLOTS:
     void slotAdjustmentTypeChanged();
     void slotDetAdjustmentByClockPhoto();
     void slotUpdateExample();
-    void slotHelp();
     void slotOk();
     void slotCancel();
 
@@ -81,4 +85,3 @@ private:
 }  // namespace KIPITimeAdjustPlugin
 
 #endif /* TIMEADJUSTDIALOG_H */
-
