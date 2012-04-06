@@ -7,7 +7,7 @@
  * @date   2006-05-16
  * @brief  A plugin to synchronize pictures with a GPS device.
  *
- * @author Copyright (C) 2006-2011 by Gilles Caulier
+ * @author Copyright (C) 2006-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2010, 2011 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -115,7 +115,7 @@ struct SaveChangedImagesHelper
 {
 public:
     SaveChangedImagesHelper(KipiImageModel* const model)
-    : imageModel(model)
+        : imageModel(model)
     {
     }
 
@@ -132,11 +132,13 @@ public:
     }
 };
 
+// ---------------------------------------------------------------------------------
+
 struct LoadFileMetadataHelper
 {
 public:
     LoadFileMetadataHelper(KipiImageModel* const model)
-    : imageModel(model)
+        : imageModel(model)
     {
     }
 
@@ -173,8 +175,7 @@ public:
     }
 
     // General things
-    KIPI::Interface                         *interface;
-    KIPIPlugins::KPAboutData                *about;
+    Interface                               *interface;
     KipiImageModel                          *imageModel;
     QItemSelectionModel                     *selectionModel;
     bool                                     uiEnabled;
@@ -231,8 +232,8 @@ public:
     QMenu                                   *sortMenu;
 };
 
-GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
-             : KDialog(parent), d(new GPSSyncDialogPriv)
+GPSSyncDialog::GPSSyncDialog(Interface* interface, QWidget* parent)
+    : KPToolDialog(parent), d(new GPSSyncDialogPriv)
 {
     d->interface = interface;
 
@@ -292,7 +293,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
             this, SLOT(slotProgressCancelButtonClicked()));
 
     d->buttonBox = new KDialogButtonBox(hboxBottom);
-    QPushButton* helpButton = d->buttonBox->addButton(KStandardGuiItem::help(), QDialogButtonBox::HelpRole);
+    d->buttonBox->addButton(KStandardGuiItem::help(),      QDialogButtonBox::HelpRole);
     d->buttonBox->addButton(KStandardGuiItem::configure(), QDialogButtonBox::ActionRole, this, SLOT(slotConfigureClicked()));
     d->buttonBox->addButton(KStandardGuiItem::apply(),     QDialogButtonBox::AcceptRole, this, SLOT(slotApplyClicked()));
     d->buttonBox->addButton(KStandardGuiItem::close(),     QDialogButtonBox::RejectRole, this, SLOT(close()));
@@ -397,31 +398,26 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
     // ---------------------------------------------------------------
     // About data and help button.
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("GPS Sync"),
-                   0,
-                   KAboutData::License_GPL,
-                   ki18n("A Plugin to synchronize pictures' metadata with a GPS device"),
-                   ki18n("(c) 2006-2011, Gilles Caulier"));
+    KPAboutData* about = new KPAboutData(ki18n("GPS Sync"),
+                             0,
+                             KAboutData::License_GPL,
+                             ki18n("A Plugin to synchronize pictures' metadata with a GPS device"),
+                             ki18n("(c) 2006-2012, Gilles Caulier"));
 
-    d->about->addAuthor(ki18n("Michael G. Hansen"),
-                        ki18n("Developer and maintainer"),
-                              "mike at mghansen dot de");
+    about->addAuthor(ki18n("Michael G. Hansen"),
+                     ki18n("Developer and maintainer"),
+                           "mike at mghansen dot de");
 
-    d->about->addAuthor(ki18n("Gabriel Voicu"),
-                        ki18n("Developer"),
-                              "ping dot gabi at gmail dot com");
+    about->addAuthor(ki18n("Gabriel Voicu"),
+                     ki18n("Developer"),
+                           "ping dot gabi at gmail dot com");
 
-    d->about->addAuthor(ki18n("Gilles Caulier"),
-                        ki18n("Developer"),
-                              "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"),
+                     ki18n("Developer"),
+                           "caulier dot gilles at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    helpButton->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("gpssync");
+    setAboutData(about);
 
     // ---------------------------------------------------------------
 
@@ -504,13 +500,7 @@ GPSSyncDialog::GPSSyncDialog(KIPI::Interface* interface, QWidget* parent)
 
 GPSSyncDialog::~GPSSyncDialog()
 {
-    delete d->about;
     delete d;
-}
-
-void GPSSyncDialog::slotHelp()
-{
-    KToolInvocation::invokeHelp("gpssync", "kipi-plugins");
 }
 
 bool GPSSyncDialog::eventFilter(QObject* const o, QEvent* const e)
