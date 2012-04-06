@@ -115,8 +115,11 @@ public:
 GalleryWindow::Private::Private(GalleryWindow* const parent)
 {
 
-    interface = 0;
-    gallery   = 0;
+    interface   = 0;
+    gallery     = 0;
+    talker      = 0;
+    progressDlg = 0;
+    uploadList  = 0;
 
     widget = new QWidget(parent);
     parent->setMainWidget(widget);

@@ -61,6 +61,12 @@ class Plugin_GalleryExport::Private
 {
 public:
 
+    Private()
+    {
+        action  = 0;
+        gallery = 0;
+    }
+
     KAction* action;
 
     Gallery* gallery;
