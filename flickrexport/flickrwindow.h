@@ -7,7 +7,7 @@
  * Description : a kipi plugin to export images to Flickr web service
  *
  * Copyright (C) 2005-2008 by Vardhman Jain <vardhman at gmail dot com>
- * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -33,15 +33,15 @@
 
 // KDE includes
 
-#include <kdialog.h>
-
-// Local includes
-
-#include "comboboxintermediate.h"
-
 // LibKIPI includes
 
 #include <libkipi/interface.h>
+
+// Local includes
+
+#include "kptooldialog.h"
+#include "comboboxintermediate.h"
+
 class QProgressDialog;
 class QPushButton;
 class QSpinBox;
@@ -67,6 +67,9 @@ namespace KWallet
     class Wallet;
 }
 
+using namespace KIPI;
+using namespace KIPIPlugins;
+
 namespace KIPIFlickrExportPlugin
 {
 
@@ -81,7 +84,7 @@ class GAlbum;
 using namespace KIPI;
 using namespace KIPIPlugins;
 
-class FlickrWindow : public KDialog
+class FlickrWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -120,7 +123,6 @@ private Q_SLOTS:
     void slotListPhotoSetsFailed(const QString& msg);
     void slotAddPhotoCancelAndClose();
     void slotAuthCancel();
-    void slotHelp();
     void slotClose();
     void slotUser1();
     void slotImageListChanged();
@@ -159,7 +161,7 @@ private:
     ComboBoxIntermediate*                  m_contentTypeComboBox;
     ComboBoxIntermediate*                  m_safetyLevelComboBox;
 
-    //    QHash<int, GAlbumViewItem>             m_albumDict;
+//  QHash<int, GAlbumViewItem>             m_albumDict;
 
     QString                                m_token;
     QString                                m_username;
@@ -173,7 +175,7 @@ private:
 
     QList< QPair<KUrl, FPhotoInfo> >       m_uploadQueue;
 
-    //    KWallet::Wallet                       *m_wallet;
+//  KWallet::Wallet*                       m_wallet;
     KHTMLPart*                             m_photoView;
 
     KLineEdit*                             m_tagsLineEdit;
@@ -183,8 +185,7 @@ private:
 
     Interface*                             m_interface;
 
-    KPAboutData*                           m_about;
-    KIPIFlickrExportPlugin::FlickrList*    m_imglst;
+    FlickrList*                            m_imglst;
 };
 
 } // namespace KIPIFlickrExportPlugin

@@ -38,7 +38,6 @@
 
 #include <kcombobox.h>
 #include <klineedit.h>
-#include <khelpmenu.h>
 #include <kmenu.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -53,7 +52,6 @@
 #include <kdeversion.h>
 #include <kwallet.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -79,7 +77,7 @@ namespace KIPIFlickrExportPlugin
 
 FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder, 
                            QWidget* const /*parent*/, const QString& serviceName)
-    : KDialog(0)
+    : KPToolDialog(0)
 {
     m_serviceName = serviceName;
     setWindowTitle(i18n("Export to %1 Web Service", m_serviceName));
@@ -140,31 +138,23 @@ FlickrWindow::FlickrWindow(Interface* const interface, const QString& tmpFolder,
     // --------------------------------------------------------------------------
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Flickr/23/Zooomr Export"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export an image collection to a "
-                                                 "Flickr / 23 / Zooomr web service."),
-                                           ki18n("(c) 2005-2008, Vardhman Jain\n"
-                                                 "(c) 2008-2009, Gilles Caulier\n"
-                                                 "(c) 2009, Luka Renko"));
+    KPAboutData* about = new KPAboutData(ki18n("Flickr/23/Zooomr Export"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export an image collection to a "
+                                               "Flickr / 23 / Zooomr web service."),
+                                         ki18n("(c) 2005-2008, Vardhman Jain\n"
+                                               "(c) 2008-2012, Gilles Caulier\n"
+                                               "(c) 2009, Luka Renko"));
 
-    m_about->addAuthor(ki18n("Vardhman Jain"), ki18n("Author and maintainer"),
-                       "Vardhman at gmail dot com");
+    about->addAuthor(ki18n("Vardhman Jain"), ki18n("Author and maintainer"),
+                     "Vardhman at gmail dot com");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("flickrexport");
+    setAboutData(about);
 
     // --------------------------------------------------------------------------
 
@@ -261,12 +251,6 @@ FlickrWindow::~FlickrWindow()
     delete m_authProgressDlg;
     delete m_talker;
     delete m_widget;
-    delete m_about;
-}
-
-void FlickrWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("flickrexport", "kipi-plugins");
 }
 
 void FlickrWindow::slotClose()
@@ -590,7 +574,7 @@ void FlickrWindow::slotUser1()
         FlickrListViewItem* lvItem = dynamic_cast<FlickrListViewItem*>
                                      (m_imglst->listView()->topLevelItem(i));
 
-        KIPIPlugins::KPImageInfo info(lvItem->url());
+        KPImageInfo info(lvItem->url());
         kDebug() << "Adding images to the list";
         FPhotoInfo temp;
 
