@@ -100,7 +100,7 @@ public:
 
     bool addPhoto(int albumId,
                   const QString& photoPath,
-                  bool  rescale = false, int maxDim = 800, int thumbDim = 128);
+                  bool  rescale = false, int maxWidth = 800, int maxHeight = 600, int thumbDim = 128);
 
     void cancel();
 

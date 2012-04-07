@@ -87,7 +87,8 @@ public:
     QPushButton*           confButton;
 
     QCheckBox*             resizeCheckBox;
-    QSpinBox*              dimensionSpinBox;
+    QSpinBox*              widthSpinBox;
+    QSpinBox*              heightSpinBox;
     QSpinBox*              thumbDimensionSpinBox;
 
     QHash<QString, GAlbum> albumDict;
@@ -134,14 +135,20 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     resizeCheckBox        = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
 
+    QGridLayout *glay    = new QGridLayout;
+    QLabel *widthLabel    = new QLabel(i18n("Maximum width:"));
+
+    widthSpinBox          = new QSpinBox;
+    widthSpinBox->setRange(1,1600);
+    widthSpinBox->setValue(800);
+
+    QLabel *heightLabel   = new QLabel(i18n("Maximum height:"));
+
+    heightSpinBox         = new QSpinBox;
+    heightSpinBox->setRange(1,1600);
+    heightSpinBox->setValue(600);
+
     QHBoxLayout *hlay2    = new QHBoxLayout;
-    QLabel *resizeLabel   = new QLabel(i18n("Maximum dimension:"));
-
-    dimensionSpinBox      = new QSpinBox;
-    dimensionSpinBox->setRange(1,1600);
-    dimensionSpinBox->setValue(800);
-
-    QHBoxLayout *hlay3    = new QHBoxLayout;
     QLabel *resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
 
     thumbDimensionSpinBox = new QSpinBox;
@@ -150,28 +157,31 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     thumbDimensionSpinBox->setToolTip(i18n("Thumbnail size is ignored with Piwigo > 2.4"));
 
     resizeCheckBox->setChecked(false);
-    dimensionSpinBox->setEnabled(false);
+    widthSpinBox->setEnabled(false);
+    heightSpinBox->setEnabled(false);
     thumbDimensionSpinBox->setEnabled(true);
 
     // ---------------------------------------------------------------------------
 
-    hlay2->addWidget(resizeLabel);
-    hlay2->addWidget(dimensionSpinBox);
+    glay->addWidget(widthLabel, 0, 0);
+    glay->addWidget(widthSpinBox, 0, 1);
+    glay->addWidget(heightLabel, 1, 0);
+    glay->addWidget(heightSpinBox, 1, 1);
+    glay->setSpacing(KDialog::spacingHint());
+    glay->setMargin(KDialog::spacingHint());
+
+    // ---------------------------------------------------------------------------
+
+    hlay2->addWidget(resizeThumbLabel);
+    hlay2->addWidget(thumbDimensionSpinBox);
     hlay2->setSpacing(KDialog::spacingHint());
     hlay2->setMargin(KDialog::spacingHint());
 
     // ---------------------------------------------------------------------------
 
-    hlay3->addWidget(resizeThumbLabel);
-    hlay3->addWidget(thumbDimensionSpinBox);
-    hlay3->setSpacing(KDialog::spacingHint());
-    hlay3->setMargin(KDialog::spacingHint());
-
-    // ---------------------------------------------------------------------------
-
     vlay2->addWidget(resizeCheckBox);
+    vlay2->addLayout(glay);
     vlay2->addLayout(hlay2);
-    vlay2->addLayout(hlay3);
     vlay2->addStretch(0);
     vlay2->setSpacing(KDialog::spacingHint());
     vlay2->setMargin(KDialog::spacingHint());
@@ -285,7 +295,8 @@ PiwigoWindow::~PiwigoWindow()
     KConfigGroup group = config.group("PiwigoSync Galleries");
 
     group.writeEntry("Resize",          d->resizeCheckBox->isChecked());
-    group.writeEntry("Maximum Width",   d->dimensionSpinBox->value());
+    group.writeEntry("Maximum Width",   d->widthSpinBox->value());
+    group.writeEntry("Maximum Height",  d->heightSpinBox->value());
     group.writeEntry("Thumbnail Width", d->thumbDimensionSpinBox->value());
 
     delete m_talker;
@@ -349,14 +360,18 @@ void PiwigoWindow::readSettings()
     if (group.readEntry("Resize", false))
     {
         d->resizeCheckBox->setChecked(true);
-        d->dimensionSpinBox->setEnabled(true);
-        d->dimensionSpinBox->setValue(group.readEntry("Maximum Width", 600));
+        d->widthSpinBox->setEnabled(true);
+        d->heightSpinBox->setEnabled(true);
     }
     else
     {
         d->resizeCheckBox->setChecked(false);
-        d->dimensionSpinBox->setEnabled(false);
+        d->heightSpinBox->setEnabled(false);
+        d->widthSpinBox->setEnabled(false);
     }
+
+    d->widthSpinBox->setValue(group.readEntry("Maximum Width", 800));
+    d->heightSpinBox->setValue(group.readEntry("Maximum Height", 600));
 
     d->thumbDimensionSpinBox->setValue(group.readEntry("Thumbnail Width", 128));
 }
@@ -376,7 +391,7 @@ void PiwigoWindow::slotDoLogin()
     }
 
     // If we've done something clever, save it back to the piwigo.
-    if (mpPiwigo->url() != url.url())
+    if (!url.url().isEmpty() && mpPiwigo->url() != url.url())
     {
         mpPiwigo->setUrl(url.url());
         mpPiwigo->save();
@@ -563,7 +578,8 @@ void PiwigoWindow::slotAddPhotoNext()
     QString photoPath     = mpUploadList->takeFirst();
     bool res              = m_talker->addPhoto(album.ref_num, photoPath,
                             d->resizeCheckBox->isChecked(),
-                            d->dimensionSpinBox->value(),
+                            d->widthSpinBox->value(),
+                            d->heightSpinBox->value(),
                             d->thumbDimensionSpinBox->value() );
 
     if (!res)
@@ -628,7 +644,8 @@ void PiwigoWindow::slotEnableSpinBox(int n)
         b = false;
         break;
     }
-    d->dimensionSpinBox->setEnabled(b);
+    d->widthSpinBox->setEnabled(b);
+    d->heightSpinBox->setEnabled(b);
 }
 
 void PiwigoWindow::slotSettings()

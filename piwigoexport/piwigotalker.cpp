@@ -153,7 +153,8 @@ void PiwigoTalker::listAlbums()
 bool PiwigoTalker::addPhoto(int   albumId,
                             const QString& photoPath,
                             bool  rescale,
-                            int   maxDim,
+                            int   maxWidth,
+                            int   maxHeight,
                             int   thumbDim)
 {
     KUrl photoUrl = KUrl(photoPath);
@@ -198,9 +199,9 @@ bool PiwigoTalker::addPhoto(int   albumId,
         kDebug() << "Thumbnail to temp file: " << m_thumbpath ;
 
         // image file - see if we need to rescale it
-        if (image.width() > maxDim || image.height() > maxDim)
+        if (image.width() > maxWidth || image.height() > maxHeight)
         {
-            image = image.scaled(maxDim, maxDim, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            image = image.scaled(maxWidth, maxHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
         m_path = KStandardDirs::locateLocal("tmp", KUrl(photoPath).fileName());
