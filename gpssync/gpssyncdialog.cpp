@@ -822,6 +822,7 @@ void GPSSyncDialog::slotSetUIEnabled(const bool enabledState, QObject* const can
     {
         // hide the progress bar
         d->progressBar->setVisible(false);
+        d->progressBar->progressCompleted();
         d->progressCancelButton->setVisible(false);
     }
 
