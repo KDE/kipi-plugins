@@ -7,10 +7,10 @@
  * Description : a plugin to export to a remote Piwigo server.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+ * Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
- * Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+ * Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+ * Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,7 +46,6 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <khelpmenu.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <kmenu.h>
@@ -167,15 +166,15 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     glay->addWidget(widthSpinBox, 0, 1);
     glay->addWidget(heightLabel, 1, 0);
     glay->addWidget(heightSpinBox, 1, 1);
-    glay->setSpacing(KDialog::spacingHint());
-    glay->setMargin(KDialog::spacingHint());
+    glay->setSpacing(spacingHint());
+    glay->setMargin(spacingHint());
 
     // ---------------------------------------------------------------------------
 
     hlay2->addWidget(resizeThumbLabel);
     hlay2->addWidget(thumbDimensionSpinBox);
-    hlay2->setSpacing(KDialog::spacingHint());
-    hlay2->setMargin(KDialog::spacingHint());
+    hlay2->setSpacing(spacingHint());
+    hlay2->setMargin(spacingHint());
 
     // ---------------------------------------------------------------------------
 
@@ -183,8 +182,8 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     vlay2->addLayout(glay);
     vlay2->addLayout(hlay2);
     vlay2->addStretch(0);
-    vlay2->setSpacing(KDialog::spacingHint());
-    vlay2->setMargin(KDialog::spacingHint());
+    vlay2->setSpacing(spacingHint());
+    vlay2->setMargin(spacingHint());
 
     optionsBox->setLayout(vlay2);
 
@@ -192,8 +191,8 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     vlay->addWidget(confButton);
     vlay->addWidget(optionsBox);
-    vlay->setSpacing(KDialog::spacingHint());
-    vlay->setMargin(KDialog::spacingHint());
+    vlay->setSpacing(spacingHint());
+    vlay->setMargin(spacingHint());
 
     optionFrame->setLayout(vlay);
 
@@ -202,8 +201,8 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     hlay->addWidget(logo);
     hlay->addWidget(albumView);
     hlay->addWidget(optionFrame);
-    hlay->setSpacing(KDialog::spacingHint());
-    hlay->setMargin(KDialog::spacingHint());
+    hlay->setSpacing(spacingHint());
+    hlay->setMargin(spacingHint());
 
     widget->setLayout(hlay);
 }
@@ -211,56 +210,46 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 // --------------------------------------------------------------------------------------------------------------
 
 PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Piwigo* const pPiwigo)
-    : KDialog(parent),
+    : KPToolDialog(parent), 
       m_interface(interface),
-      mpPiwigo(pPiwigo),
+      m_pPiwigo(pPiwigo),
       d(new Private(this))
 {
     setWindowTitle( i18n("Piwigo Export") );
-    setButtons( KDialog::Close | KDialog::User1 | KDialog::Help);
+    setButtons(Close | User1 | Help);
     setModal(false);
 
     // About data.
-    m_about = new KPAboutData(ki18n("Piwigo Export"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to export image collections to a remote Piwigo server."),
-                                           ki18n("(c) 2003-2005, Renchi Raju\n"
-                                                 "(c) 2006-2007, Colin Guthrie\n"
-                                                 "(c) 2006-2009, Gilles Caulier\n"
-                                                 "(c) 2008, Andrea Diamantini\n"
-                                                 "(c) 2012, Frédéric Coiffier\n"));
+    KPAboutData* about = new KPAboutData(ki18n("Piwigo Export"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to export image collections to a remote Piwigo server."),
+                                         ki18n("(c) 2003-2005, Renchi Raju\n"
+                                               "(c) 2006-2007, Colin Guthrie\n"
+                                               "(c) 2006-2012, Gilles Caulier\n"
+                                               "(c) 2008, Andrea Diamantini\n"
+                                               "(c) 2012, Frédéric Coiffier\n"));
 
-    m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
-                       "renchi dot raju at gmail dot com");
+    about->addAuthor(ki18n("Renchi Raju"), ki18n("Author"),
+                     "renchi dot raju at gmail dot com");
 
-    m_about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
-                       "kde at colin dot guthr dot ie");
+    about->addAuthor(ki18n("Colin Guthrie"), ki18n("Maintainer"),
+                     "kde at colin dot guthr dot ie");
 
-    m_about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
-                       "adjam7 at gmail dot com");
+    about->addAuthor(ki18n("Andrea Diamantini"), ki18n("Developer"),
+                     "adjam7 at gmail dot com");
 
-    m_about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
-                       "caulier dot gilles at gmail dot com");
+    about->addAuthor(ki18n("Gilles Caulier"), ki18n("Developer"),
+                     "caulier dot gilles at gmail dot com");
 
-    m_about->addAuthor(ki18n("Frédéric Coiffier"), ki18n("Developer"),
-                       "fcoiffie at gmail dot com");
+    about->addAuthor(ki18n("Frédéric Coiffier"), ki18n("Developer"),
+                     "fcoiffie at gmail dot com");
 
-    // help button
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu *helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction *handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("piwigoexport");
+    setAboutData(about);
 
     // User1 Button : to upload selected photos
-    KPushButton *addPhotoBtn = button( User1 );
+    KPushButton* addPhotoBtn = button( User1 );
     addPhotoBtn->setText( i18n("Start Upload") );
     addPhotoBtn->setIcon( KIcon("network-workgroup") );
     addPhotoBtn->setEnabled(false);
@@ -277,7 +266,7 @@ PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Pi
     m_progressDlg->setAutoClose(true);
     m_uploadCount = 0;
     m_uploadTotal = 0;
-    mpUploadList  = new QStringList;
+    m_pUploadList = new QStringList;
 
     // connect functions
     connectSignals();
@@ -300,10 +289,7 @@ PiwigoWindow::~PiwigoWindow()
     group.writeEntry("Thumbnail Width", d->thumbDimensionSpinBox->value());
 
     delete m_talker;
-
-    delete mpUploadList;
-    delete m_about;
-
+    delete m_pUploadList;
     delete d;
 }
 
@@ -376,28 +362,23 @@ void PiwigoWindow::readSettings()
     d->thumbDimensionSpinBox->setValue(group.readEntry("Thumbnail Width", 128));
 }
 
-void PiwigoWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("piwigoexport", "kipi-plugins");
-}
-
 void PiwigoWindow::slotDoLogin()
 {
-    KUrl url(mpPiwigo->url());
+    KUrl url(m_pPiwigo->url());
     if (url.protocol().isEmpty())
     {
         url.setProtocol("http");
-        url.setHost(mpPiwigo->url());
+        url.setHost(m_pPiwigo->url());
     }
 
     // If we've done something clever, save it back to the piwigo.
-    if (!url.url().isEmpty() && mpPiwigo->url() != url.url())
+    if (!url.url().isEmpty() && m_pPiwigo->url() != url.url())
     {
-        mpPiwigo->setUrl(url.url());
-        mpPiwigo->save();
+        m_pPiwigo->setUrl(url.url());
+        m_pPiwigo->save();
     }
 
-    m_talker->login(url.url(), mpPiwigo->username(), mpPiwigo->password());
+    m_talker->login(url.url(), m_pPiwigo->username(), m_pPiwigo->password());
 }
 
 void PiwigoWindow::slotLoginFailed(const QString& msg)
@@ -412,7 +393,7 @@ void PiwigoWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), mpPiwigo, i18n("Edit Piwigo Data") );
+    QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), m_pPiwigo, i18n("Edit Piwigo Data") );
     if ( configDlg->exec() != QDialog::Accepted )
     {
         delete configDlg;
@@ -552,10 +533,10 @@ void PiwigoWindow::slotAddPhoto()
 
     for (KUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
-        mpUploadList->append( (*it).path() );
+        m_pUploadList->append( (*it).path() );
     }
 
-    m_uploadTotal = mpUploadList->count();
+    m_uploadTotal = m_pUploadList->count();
     m_progressDlg->reset();
     m_progressDlg->setMaximum(m_uploadTotal);
     m_uploadCount = 0;
@@ -564,7 +545,7 @@ void PiwigoWindow::slotAddPhoto()
 
 void PiwigoWindow::slotAddPhotoNext()
 {
-    if ( mpUploadList->isEmpty() )
+    if ( m_pUploadList->isEmpty() )
     {
         m_progressDlg->reset();
         m_progressDlg->hide();
@@ -575,7 +556,7 @@ void PiwigoWindow::slotAddPhotoNext()
     int column            = d->albumView->currentColumn();
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
-    QString photoPath     = mpUploadList->takeFirst();
+    QString photoPath     = m_pUploadList->takeFirst();
     bool res              = m_talker->addPhoto(album.ref_num, photoPath,
                             d->resizeCheckBox->isChecked(),
                             d->widthSpinBox->value(),
@@ -633,16 +614,16 @@ void PiwigoWindow::slotEnableSpinBox(int n)
     bool b;
     switch (n)
     {
-    case 0:
-        b = false;
-        break;
-    case 1:
-    case 2:
-        b = true;
-        break;
-    default:
-        b = false;
-        break;
+        case 0:
+            b = false;
+            break;
+        case 1:
+        case 2:
+            b = true;
+            break;
+        default:
+            b = false;
+            break;
     }
     d->widthSpinBox->setEnabled(b);
     d->heightSpinBox->setEnabled(b);
@@ -651,7 +632,7 @@ void PiwigoWindow::slotEnableSpinBox(int n)
 void PiwigoWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), mpPiwigo, i18n("Edit Piwigo Data") );
+    QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), m_pPiwigo, i18n("Edit Piwigo Data") );
     if ( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
@@ -659,8 +640,7 @@ void PiwigoWindow::slotSettings()
     delete dlg;
 }
 
-
-QString PiwigoWindow::cleanName(const QString& str)
+QString PiwigoWindow::cleanName(const QString& str) const
 {
     QString plain = str;
     plain.replace("&lt;", "<");

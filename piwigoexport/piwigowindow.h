@@ -7,10 +7,10 @@
 * Description : a plugin to export to a remote Piwigo server.
 *
 * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
-* Copyright (C) 2006 by Colin Guthrie <kde@colin.guthr.ie>
+* Copyright (C) 2006      by Colin Guthrie <kde@colin.guthr.ie>
 * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
-* Copyright (C) 2008 by Andrea Diamantini <adjam7 at gmail dot com>
-* Copyright (C) 2010 by Frederic Coiffier <frederic dot coiffier at free dot com>
+* Copyright (C) 2008      by Andrea Diamantini <adjam7 at gmail dot com>
+* Copyright (C) 2010      by Frederic Coiffier <frederic dot coiffier at free dot com>
 *
 * This program is free software; you can redistribute it
 * and/or modify it under the terms of the GNU General
@@ -27,10 +27,6 @@
 #ifndef PIWIGOWINDOW_H
 #define PIWIGOWINDOW_H
 
-// KDE includes
-
-#include <kdialog.h>
-
 // Qt includes
 
 #include <QList>
@@ -39,6 +35,10 @@
 // Debug
 #include <QTextStream>
 #include <QFile>
+
+// local includes
+
+#include "kptooldialog.h"
 
 namespace KIPI
 {
@@ -60,7 +60,7 @@ class PiwigoTalker;
 class GAlbum;
 class GPhoto;
 
-class PiwigoWindow : public KDialog
+class PiwigoWindow : public KPToolDialog
 {
     Q_OBJECT
 
@@ -73,7 +73,7 @@ private:
 
     void connectSignals();
     void readSettings();
-    QString cleanName(const QString&);
+    QString cleanName(const QString&) const;
 
 private Q_SLOTS:
 
@@ -89,7 +89,6 @@ private Q_SLOTS:
     void slotAddPhotoSucceeded();
     void slotAddPhotoFailed(const QString& msg);
     void slotAddPhotoCancel();
-    void slotHelp();
     void slotEnableSpinBox(int n);
     void slotSettings();
     void slotProcessUrl(const QString&);
@@ -97,15 +96,13 @@ private Q_SLOTS:
 private:
 
     Interface*          m_interface;
-    KPAboutData*        m_about;
     PiwigoTalker*       m_talker;
-    Piwigo*             mpPiwigo;
+    Piwigo*             m_pPiwigo;
 
     QProgressDialog*    m_progressDlg;
     unsigned int        m_uploadCount;
     unsigned int        m_uploadTotal;
-    QStringList*        mpUploadList;
-    QString             firstAlbumName;
+    QStringList*        m_pUploadList;
 
     class Private;
     Private* const d;
