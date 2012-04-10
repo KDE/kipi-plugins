@@ -60,7 +60,7 @@ K_EXPORT_PLUGIN(Factory("kipiplugin_piwigoexport"))
 
 Plugin_PiwigoExport::Plugin_PiwigoExport(QObject* const parent, const QVariantList&)
     : Plugin(Factory::componentData(), parent, "PiwigoExport"),
-      m_action(0), mpPiwigo(0)
+      m_action(0), m_pPiwigo(0)
 {
     kDebug(AREA_CODE_LOADING) << "Plugin_PiwigoExport plugin loaded";
 }
@@ -69,7 +69,7 @@ void Plugin_PiwigoExport::setup(QWidget* widget)
 {
     KIconLoader::global()->addAppDir("kipiplugin_piwigoexport");
 
-    mpPiwigo = new Piwigo();
+    m_pPiwigo = new Piwigo();
 
     Plugin::setup(widget);
 
@@ -93,7 +93,7 @@ void Plugin_PiwigoExport::setup(QWidget* widget)
 
 Plugin_PiwigoExport::~Plugin_PiwigoExport()
 {
-    delete mpPiwigo;
+    delete m_pPiwigo;
 }
 
 // this slot uses PiwigoWindow Class
@@ -113,11 +113,11 @@ void Plugin_PiwigoExport::slotSync()
     if (!config.hasGroup("Piwigo Settings") )
     {
         configDlg = new PiwigoEdit(kapp->activeWindow(),
-                        mpPiwigo, i18n("Edit Piwigo Data") );
+                        m_pPiwigo, i18n("Edit Piwigo Data") );
         configDlg->exec();
     }
 
-    dlg = new PiwigoWindow(interface, kapp->activeWindow(), mpPiwigo);
+    dlg = new PiwigoWindow(interface, kapp->activeWindow(), m_pPiwigo);
     dlg->exec();
 
     delete configDlg;

@@ -64,7 +64,7 @@ private:
 
     KAction* m_action;
 
-    Piwigo*  mpPiwigo;
+    Piwigo*  m_pPiwigo;
 };
 
 } // namespace KIPIPiwigoExportPlugin
