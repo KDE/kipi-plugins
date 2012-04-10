@@ -30,11 +30,6 @@
 // Qt includes
 
 #include <QList>
-#include <QProgressDialog>
-
-// Debug
-#include <QTextStream>
-#include <QFile>
 
 // local includes
 
@@ -45,20 +40,14 @@ namespace KIPI
     class Interface;
 }
 
-namespace KIPIPlugins
-{
-    class KPAboutData;
-}
-
 using namespace KIPI;
 using namespace KIPIPlugins;
 
 namespace KIPIPiwigoExportPlugin
 {
+
 class Piwigo;
-class PiwigoTalker;
 class GAlbum;
-class GPhoto;
 
 class PiwigoWindow : public KPToolDialog
 {
@@ -94,15 +83,6 @@ private Q_SLOTS:
     void slotProcessUrl(const QString&);
 
 private:
-
-    Interface*          m_interface;
-    PiwigoTalker*       m_talker;
-    Piwigo*             m_pPiwigo;
-
-    QProgressDialog*    m_progressDlg;
-    unsigned int        m_uploadCount;
-    unsigned int        m_uploadTotal;
-    QStringList*        m_pUploadList;
 
     class Private;
     Private* const d;

@@ -28,17 +28,20 @@
 
 // Qt includes
 
+#include <Qt>
 #include <QCheckBox>
 #include <QDialog>
 #include <QFileInfo>
 #include <QGroupBox>
 #include <QPushButton>
 #include <QSpinBox>
-#include <Qt>
 #include <QTreeWidgetItem>
 #include <QPointer>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QTextStream>
+#include <QFile>
+#include <QProgressDialog>
 
 // KDE includes
 
@@ -93,6 +96,17 @@ public:
     QHash<QString, GAlbum> albumDict;
 
     KUrlLabel*             logo;
+
+    Interface*             interface;
+
+    PiwigoTalker*          talker;
+    Piwigo*                pPiwigo;
+
+    QProgressDialog*       progressDlg;
+    unsigned int           uploadCount;
+    unsigned int           uploadTotal;
+    QStringList*           pUploadList;
+
 };
 
 PiwigoWindow::Private::Private(PiwigoWindow* const parent)
@@ -120,22 +134,22 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
     // ---------------------------------------------------------------------------
 
-    QFrame *optionFrame = new QFrame;
-    QVBoxLayout *vlay   = new QVBoxLayout();
+    QFrame* optionFrame = new QFrame;
+    QVBoxLayout* vlay   = new QVBoxLayout();
 
     confButton = new QPushButton;
     confButton->setText(i18n("Change Account"));
     confButton->setIcon(KIcon("system-switch-user"));
     confButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    QGroupBox *optionsBox = new QGroupBox(i18n("Options"));
-    QVBoxLayout *vlay2    = new QVBoxLayout();
+    QGroupBox* optionsBox = new QGroupBox(i18n("Options"));
+    QVBoxLayout* vlay2    = new QVBoxLayout();
 
     resizeCheckBox        = new QCheckBox(optionsBox);
     resizeCheckBox->setText(i18n("Resize photos before uploading"));
 
-    QGridLayout *glay    = new QGridLayout;
-    QLabel *widthLabel    = new QLabel(i18n("Maximum width:"));
+    QGridLayout* glay     = new QGridLayout;
+    QLabel* widthLabel    = new QLabel(i18n("Maximum width:"));
 
     widthSpinBox          = new QSpinBox;
     widthSpinBox->setRange(1,1600);
@@ -147,8 +161,8 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
     heightSpinBox->setRange(1,1600);
     heightSpinBox->setValue(600);
 
-    QHBoxLayout *hlay2    = new QHBoxLayout;
-    QLabel *resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
+    QHBoxLayout* hlay2    = new QHBoxLayout;
+    QLabel* resizeThumbLabel= new QLabel(i18n("Maximum thumbnail dimension:"));
 
     thumbDimensionSpinBox = new QSpinBox;
     thumbDimensionSpinBox->setRange(32,800);
@@ -211,10 +225,11 @@ PiwigoWindow::Private::Private(PiwigoWindow* const parent)
 
 PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Piwigo* const pPiwigo)
     : KPToolDialog(parent), 
-      m_interface(interface),
-      m_pPiwigo(pPiwigo),
       d(new Private(this))
 {
+    d->interface = interface;
+    d->pPiwigo   = pPiwigo;
+
     setWindowTitle( i18n("Piwigo Export") );
     setButtons(Close | User1 | Help);
     setModal(false);
@@ -256,17 +271,17 @@ PiwigoWindow::PiwigoWindow(Interface* const interface, QWidget* const parent, Pi
     connect(addPhotoBtn, SIGNAL(clicked()),
             this, SLOT(slotAddPhoto()));
 
-    // we need to let m_talker work..
-    m_talker = new PiwigoTalker(d->widget);
+    // we need to let d->talker work..
+    d->talker = new PiwigoTalker(d->widget);
 
     // setting progressDlg and its numeric hints
-    m_progressDlg = new QProgressDialog(this);
-    m_progressDlg->setModal(true);
-    m_progressDlg->setAutoReset(true);
-    m_progressDlg->setAutoClose(true);
-    m_uploadCount = 0;
-    m_uploadTotal = 0;
-    m_pUploadList = new QStringList;
+    d->progressDlg = new QProgressDialog(this);
+    d->progressDlg->setModal(true);
+    d->progressDlg->setAutoReset(true);
+    d->progressDlg->setAutoClose(true);
+    d->uploadCount = 0;
+    d->uploadTotal = 0;
+    d->pUploadList = new QStringList;
 
     // connect functions
     connectSignals();
@@ -288,8 +303,8 @@ PiwigoWindow::~PiwigoWindow()
     group.writeEntry("Maximum Height",  d->heightSpinBox->value());
     group.writeEntry("Thumbnail Width", d->thumbDimensionSpinBox->value());
 
-    delete m_talker;
-    delete m_pUploadList;
+    delete d->talker;
+    delete d->pUploadList;
     delete d;
 }
 
@@ -307,28 +322,28 @@ void PiwigoWindow::connectSignals()
     connect(d->logo, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotProcessUrl(QString)));
 
-    connect(m_progressDlg, SIGNAL(canceled()),
+    connect(d->progressDlg, SIGNAL(canceled()),
             this, SLOT(slotAddPhotoCancel()));
 
-    connect(m_talker, SIGNAL(signalProgressInfo(QString)),
+    connect(d->talker, SIGNAL(signalProgressInfo(QString)),
             this, SLOT(slotProgressInfo(QString)));
 
-    connect(m_talker, SIGNAL(signalError(QString)),
+    connect(d->talker, SIGNAL(signalError(QString)),
             this, SLOT(slotError(QString)));
 
-    connect(m_talker, SIGNAL(signalBusy(bool)),
+    connect(d->talker, SIGNAL(signalBusy(bool)),
             this, SLOT(slotBusy(bool)));
 
-    connect(m_talker, SIGNAL(signalLoginFailed(QString)),
+    connect(d->talker, SIGNAL(signalLoginFailed(QString)),
             this, SLOT(slotLoginFailed(QString)));
 
-    connect(m_talker, SIGNAL(signalAlbums(QList<GAlbum>)),
+    connect(d->talker, SIGNAL(signalAlbums(QList<GAlbum>)),
             this, SLOT(slotAlbums(QList<GAlbum>)));
 
-    connect(m_talker, SIGNAL(signalAddPhotoSucceeded()),
+    connect(d->talker, SIGNAL(signalAddPhotoSucceeded()),
             this, SLOT(slotAddPhotoSucceeded()));
 
-    connect(m_talker, SIGNAL(signalAddPhotoFailed(QString)),
+    connect(d->talker, SIGNAL(signalAddPhotoFailed(QString)),
             this, SLOT(slotAddPhotoFailed(QString)));
 }
 
@@ -364,21 +379,21 @@ void PiwigoWindow::readSettings()
 
 void PiwigoWindow::slotDoLogin()
 {
-    KUrl url(m_pPiwigo->url());
+    KUrl url(d->pPiwigo->url());
     if (url.protocol().isEmpty())
     {
         url.setProtocol("http");
-        url.setHost(m_pPiwigo->url());
+        url.setHost(d->pPiwigo->url());
     }
 
     // If we've done something clever, save it back to the piwigo.
-    if (!url.url().isEmpty() && m_pPiwigo->url() != url.url())
+    if (!url.url().isEmpty() && d->pPiwigo->url() != url.url())
     {
-        m_pPiwigo->setUrl(url.url());
-        m_pPiwigo->save();
+        d->pPiwigo->setUrl(url.url());
+        d->pPiwigo->save();
     }
 
-    m_talker->login(url.url(), m_pPiwigo->username(), m_pPiwigo->password());
+    d->talker->login(url.url(), d->pPiwigo->username(), d->pPiwigo->password());
 }
 
 void PiwigoWindow::slotLoginFailed(const QString& msg)
@@ -393,7 +408,7 @@ void PiwigoWindow::slotLoginFailed(const QString& msg)
         return;
     }
 
-    QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), m_pPiwigo, i18n("Edit Piwigo Data") );
+    QPointer<PiwigoEdit> configDlg = new PiwigoEdit(kapp->activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
     if ( configDlg->exec() != QDialog::Accepted )
     {
         delete configDlg;
@@ -413,19 +428,19 @@ void PiwigoWindow::slotBusy(bool val)
     else
     {
         setCursor(Qt::ArrowCursor);
-        bool loggedIn = m_talker->loggedIn();
+        bool loggedIn = d->talker->loggedIn();
         button( User1 )->setEnabled(loggedIn && d->albumView->currentItem());
     }
 }
 
 void PiwigoWindow::slotProgressInfo(const QString& msg)
 {
-    m_progressDlg->setLabelText(msg);
+    d->progressDlg->setLabelText(msg);
 }
 
 void PiwigoWindow::slotError(const QString& msg)
 {
-    m_progressDlg->hide();
+    d->progressDlg->hide();
     KMessageBox::error(this, msg);
 }
 
@@ -510,7 +525,7 @@ void PiwigoWindow::slotAlbumSelected()
 
         int albumId = item->data(1, Qt::UserRole).toInt();
         kDebug() << albumId << "\n";
-        if (m_talker->loggedIn() && albumId )
+        if (d->talker->loggedIn() && albumId )
         {
             button( User1 )->setEnabled(true);
         }
@@ -523,7 +538,7 @@ void PiwigoWindow::slotAlbumSelected()
 
 void PiwigoWindow::slotAddPhoto()
 {
-    const KUrl::List urls(m_interface->currentSelection().images());
+    const KUrl::List urls(d->interface->currentSelection().images());
 
     if ( urls.isEmpty())
     {
@@ -533,22 +548,22 @@ void PiwigoWindow::slotAddPhoto()
 
     for (KUrl::List::const_iterator it = urls.constBegin(); it != urls.constEnd(); ++it)
     {
-        m_pUploadList->append( (*it).path() );
+        d->pUploadList->append( (*it).path() );
     }
 
-    m_uploadTotal = m_pUploadList->count();
-    m_progressDlg->reset();
-    m_progressDlg->setMaximum(m_uploadTotal);
-    m_uploadCount = 0;
+    d->uploadTotal = d->pUploadList->count();
+    d->progressDlg->reset();
+    d->progressDlg->setMaximum(d->uploadTotal);
+    d->uploadCount = 0;
     slotAddPhotoNext();
 }
 
 void PiwigoWindow::slotAddPhotoNext()
 {
-    if ( m_pUploadList->isEmpty() )
+    if ( d->pUploadList->isEmpty() )
     {
-        m_progressDlg->reset();
-        m_progressDlg->hide();
+        d->progressDlg->reset();
+        d->progressDlg->hide();
         return;
     }
 
@@ -556,8 +571,8 @@ void PiwigoWindow::slotAddPhotoNext()
     int column            = d->albumView->currentColumn();
     QString albumTitle    = item->text(column);
     const GAlbum& album   = d->albumDict.value(albumTitle);
-    QString photoPath     = m_pUploadList->takeFirst();
-    bool res              = m_talker->addPhoto(album.ref_num, photoPath,
+    QString photoPath     = d->pUploadList->takeFirst();
+    bool res              = d->talker->addPhoto(album.ref_num, photoPath,
                             d->resizeCheckBox->isChecked(),
                             d->widthSpinBox->value(),
                             d->heightSpinBox->value(),
@@ -569,23 +584,23 @@ void PiwigoWindow::slotAddPhotoNext()
         return;
     }
 
-    m_progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
+    d->progressDlg->setLabelText( i18n("Uploading file %1", KUrl(photoPath).fileName()) );
 
-    if (m_progressDlg->isHidden())
-        m_progressDlg->show();
+    if (d->progressDlg->isHidden())
+        d->progressDlg->show();
 }
 
 void PiwigoWindow::slotAddPhotoSucceeded()
 {
-    m_uploadCount++;
-    m_progressDlg->setValue(m_uploadCount);
+    d->uploadCount++;
+    d->progressDlg->setValue(d->uploadCount);
     slotAddPhotoNext();
 }
 
 void PiwigoWindow::slotAddPhotoFailed(const QString& msg)
 {
-    m_progressDlg->reset();
-    m_progressDlg->hide();
+    d->progressDlg->reset();
+    d->progressDlg->hide();
 
     if (KMessageBox::warningContinueCancel(this,
                                            i18n("Failed to upload photo into "
@@ -604,9 +619,9 @@ void PiwigoWindow::slotAddPhotoFailed(const QString& msg)
 
 void PiwigoWindow::slotAddPhotoCancel()
 {
-    m_progressDlg->reset();
-    m_progressDlg->hide();
-    m_talker->cancel();
+    d->progressDlg->reset();
+    d->progressDlg->hide();
+    d->talker->cancel();
 }
 
 void PiwigoWindow::slotEnableSpinBox(int n)
@@ -632,7 +647,7 @@ void PiwigoWindow::slotEnableSpinBox(int n)
 void PiwigoWindow::slotSettings()
 {
     // TODO: reload albumlist if OK slot used.
-    QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), m_pPiwigo, i18n("Edit Piwigo Data") );
+    QPointer<PiwigoEdit> dlg = new PiwigoEdit(kapp->activeWindow(), d->pPiwigo, i18n("Edit Piwigo Data") );
     if ( dlg->exec() == QDialog::Accepted )
     {
         slotDoLogin();
