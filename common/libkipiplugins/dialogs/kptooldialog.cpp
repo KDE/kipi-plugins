@@ -34,61 +34,10 @@
 
 // Local includes
 
-#include "kpaboutdata.h"
+#include "kptooldialog_p.h"
 
 namespace KIPIPlugins
 {
-
-class KPToolDialog::KPToolDialogPriv
-{
-public:
-
-    KPToolDialogPriv(KDialog* const dlg)
-    {
-        about  = 0;
-        dialog = dlg;
-    }
-
-    ~KPToolDialogPriv()
-    {
-        delete about;
-    }
-
-    void setupHelpButton(KPAboutData* const data);
-    void callHelpHandbook();
-
-public:
-
-    KPAboutData* about;
-    KDialog*     dialog;
-};
-
-void KPToolDialog::KPToolDialogPriv::setupHelpButton(KPAboutData* const data)
-{
-    if (!data) return;
-
-    about = data;
-
-    QObject::disconnect(dialog, SIGNAL(helpClicked()),
-                        dialog, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(dialog, about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), dialog);
-
-    QObject::connect(handbook, SIGNAL(triggered(bool)),
-                     dialog, SLOT(slotHelp()));
-
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    dialog->button(KDialog::Help)->setMenu(helpMenu->menu());
-}
-
-void KPToolDialog::KPToolDialogPriv::callHelpHandbook()
-{
-    KToolInvocation::invokeHelp(about ? about->handbookEntry : QString(), "kipi-plugins");
-}
-
-// -----------------------------------------------------------------------------------
 
 KPToolDialog::KPToolDialog(QWidget* const parent)
     : KDialog(parent), d(new KPToolDialogPriv(this))
