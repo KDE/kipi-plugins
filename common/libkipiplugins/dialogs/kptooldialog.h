@@ -53,9 +53,13 @@ private Q_SLOTS:
 
     void slotHelp();
 
+public:
+
+    // Public because it's used by KPWizardDialog and KPPageDialog
+    class KPToolDialogPriv;
+
 private:
 
-    class KPToolDialogPriv;
     KPToolDialogPriv* const d;
 };
 
@@ -78,8 +82,7 @@ private Q_SLOTS:
 
 private:
 
-    class KPWizardDialogPriv;
-    KPWizardDialogPriv* const d;
+    KPToolDialog::KPToolDialogPriv* const d;
 };
 
 // -----------------------------------------------------------------------------------
@@ -101,8 +104,7 @@ private Q_SLOTS:
 
 private:
 
-    class KPPageDialogPriv;
-    KPPageDialogPriv* const d;
+    KPToolDialog::KPToolDialogPriv* const d;
 };
 
 } // namespace KIPIPlugins

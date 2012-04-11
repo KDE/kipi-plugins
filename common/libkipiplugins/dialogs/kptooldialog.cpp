@@ -39,135 +39,121 @@
 namespace KIPIPlugins
 {
 
-static void setupHelpButton(KDialog* const dlg, KPAboutData* const about)
+class KPToolDialog::KPToolDialogPriv
 {
-    QObject::disconnect(dlg, SIGNAL(helpClicked()),
-                        dlg, SLOT(slotHelp()));
+public:
 
-    KHelpMenu* helpMenu = new KHelpMenu(dlg, about, false);
+    KPToolDialogPriv(KDialog* const dlg)
+    {
+        about  = 0;
+        dialog = dlg;
+    }
+
+    ~KPToolDialogPriv()
+    {
+        delete about;
+    }
+
+    void setupHelpButton(KPAboutData* const data);
+    void callHelpHandbook();
+
+public:
+
+    KPAboutData* about;
+    KDialog*     dialog;
+};
+
+void KPToolDialog::KPToolDialogPriv::setupHelpButton(KPAboutData* const data)
+{
+    if (!data) return;
+
+    about = data;
+
+    QObject::disconnect(dialog, SIGNAL(helpClicked()),
+                        dialog, SLOT(slotHelp()));
+
+    KHelpMenu* helpMenu = new KHelpMenu(dialog, about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), dlg);
+    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), dialog);
 
     QObject::connect(handbook, SIGNAL(triggered(bool)),
-                     dlg, SLOT(slotHelp()));
+                     dialog, SLOT(slotHelp()));
 
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    dlg->button(KDialog::Help)->setMenu(helpMenu->menu());
+    dialog->button(KDialog::Help)->setMenu(helpMenu->menu());
 }
 
-static void callHelpHandbook(KPAboutData* const about)
+void KPToolDialog::KPToolDialogPriv::callHelpHandbook()
 {
     KToolInvocation::invokeHelp(about ? about->handbookEntry : QString(), "kipi-plugins");
 }
 
 // -----------------------------------------------------------------------------------
 
-class KPToolDialog::KPToolDialogPriv
-{
-public:
-
-    KPToolDialogPriv()
-    {
-        about = 0;
-    }
-
-    KPAboutData* about;
-};
-
 KPToolDialog::KPToolDialog(QWidget* const parent)
-    : KDialog(parent), d(new KPToolDialogPriv)
+    : KDialog(parent), d(new KPToolDialogPriv(this))
 {
     setButtons(Help | Ok);
 }
 
 KPToolDialog::~KPToolDialog()
 {
-    delete d->about;
     delete d;
 }
 
 void KPToolDialog::setAboutData(KPAboutData* const about)
 {
-    d->about = about;
-    setupHelpButton(this, about);
+    d->setupHelpButton(about);
 }
 
 void KPToolDialog::slotHelp()
 {
-    callHelpHandbook(d->about);
+    d->callHelpHandbook();
 }
 
 // -----------------------------------------------------------------------------------
 
-class KPWizardDialog::KPWizardDialogPriv
-{
-public:
-
-    KPWizardDialogPriv()
-    {
-        about = 0;
-    }
-
-    KPAboutData* about;
-};
-
 KPWizardDialog::KPWizardDialog(QWidget* const parent)
-    : KAssistantDialog(parent), d(new KPWizardDialogPriv)
+    : KAssistantDialog(parent), d(new KPToolDialog::KPToolDialogPriv(this))
 {
 }
 
 KPWizardDialog::~KPWizardDialog()
 {
-    delete d->about;
     delete d;
 }
 
 void KPWizardDialog::setAboutData(KPAboutData* const about)
 {
-    d->about = about;
-    setupHelpButton(this, about);
+    d->setupHelpButton(about);
 }
 
 void KPWizardDialog::slotHelp()
 {
-    callHelpHandbook(d->about);
+    d->callHelpHandbook();
 }
 
 // -----------------------------------------------------------------------------------
 
-class KPPageDialog::KPPageDialogPriv
-{
-public:
-
-    KPPageDialogPriv()
-    {
-        about = 0;
-    }
-
-    KPAboutData* about;
-};
-
 KPPageDialog::KPPageDialog(QWidget* const parent)
-    : KPageDialog(parent), d(new KPPageDialogPriv)
+    : KPageDialog(parent), d(new KPToolDialog::KPToolDialogPriv(this))
 {
     setButtons(Help | Ok);
 }
 
 KPPageDialog::~KPPageDialog()
 {
-    delete d->about;
     delete d;
 }
 
 void KPPageDialog::setAboutData(KPAboutData* const about)
 {
-    d->about = about;
-    setupHelpButton(this, about);
+    d->setupHelpButton(about);
 }
 
 void KPPageDialog::slotHelp()
 {
-    callHelpHandbook(d->about);
+    d->callHelpHandbook();
 }
 
 } // namespace KIPIPlugins
