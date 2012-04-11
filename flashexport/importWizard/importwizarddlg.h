@@ -31,11 +31,12 @@
 // KDE includes
 
 #include <kurl.h>
-#include <kassistantdialog.h>
+
+// Local includes
+
+#include "kptooldialog.h"
 #include "flashmanager.h"
 #include "simpleviewer.h"
-
-class KPageWidgetItem;
 
 namespace KIPI
 {
@@ -43,20 +44,20 @@ namespace KIPI
 }
 
 using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIFlashExportPlugin
 {
 
 class SimpleViewer;
-class ImportWizardDlgPriv;
 
-class ImportWizardDlg: public KAssistantDialog
+class ImportWizardDlg: public KPWizardDialog
 {
     Q_OBJECT
 
 public:
 
-    ImportWizardDlg(FlashManager* mngr, QWidget* parent=0);
+    ImportWizardDlg(FlashManager* const mngr, QWidget* const parent=0);
     ~ImportWizardDlg();
 
     FlashManager* manager() const;
@@ -73,12 +74,10 @@ private Q_SLOTS:
     
     void next();
     void back();
-    
-    void slotHelp();
-    
+
     //will activate the next button if a url was selected.
     void slotActivate();
-    
+
     //Allow acces to Finish only after processing is done
     void slotFinishEnable();
 
@@ -88,6 +87,6 @@ private:
     ImportWizardDlgPriv* const d;
 };
 
-}
+} // namespace KIPIFlashExportPlugin
 
 #endif // IMPORTWIZARDDLG_H

@@ -31,10 +31,8 @@
 
 #include <kurl.h>
 
-
 // Local includes
 
-//#include "actions.h"
 #include "simpleviewersettingscontainer.h"
 #include "simpleviewer.h"
 
@@ -48,9 +46,7 @@ using namespace KIPI;
 namespace KIPIFlashExportPlugin
 {
 
-class FlashExportAboutData;  // must write own flashexport aboutdata
 class SimpleViewer;
-class FlashManagerPriv;
 
 class FlashManager: public QObject
 {
@@ -60,10 +56,6 @@ public:
 
     FlashManager(QObject* const parent=0);
     ~FlashManager();
-
-// replace with flashexport
-    void setAbout(FlashExportAboutData* const about);
-    FlashExportAboutData* about() const;
 
     void setIface(Interface* const iface);
     Interface* iface() const;

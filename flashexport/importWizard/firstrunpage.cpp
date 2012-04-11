@@ -107,6 +107,7 @@ FirstRunPage::~FirstRunPage()
 {
     delete d;
 }
+
 void FirstRunPage::slotDownload(const QString& url)
 {
     KToolInvocation::invokeBrowser(url);

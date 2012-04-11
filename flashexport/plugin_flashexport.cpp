@@ -102,7 +102,6 @@ void Plugin_FlashExport::slotActivate()
     if (!m_manager)
     {
         m_manager = new FlashManager(this);
-        m_manager->setAbout(new FlashExportAboutData());
     }
 
     m_manager->setIface(m_interface);

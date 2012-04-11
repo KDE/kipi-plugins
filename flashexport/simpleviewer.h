@@ -92,6 +92,7 @@ private:
      * @return true=ok
      */
     bool exportImages();
+
     /**
      * Create images and thumbnail from every list on images
      * @param images - list with image's url
@@ -101,6 +102,7 @@ private:
      */
     void processKUrlList(KUrl::List& images, QDomDocument& xmlDoc,
                          QDomElement& galleryElem, QDomElement& photosElem);
+
     /**
      * Creates a simpleviewer thumbnail from images
      *

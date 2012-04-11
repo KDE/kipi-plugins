@@ -37,15 +37,16 @@ class FlashManager;
 
 class LookPage : public KPWizardPage
 {
-	Q_OBJECT
+    Q_OBJECT
+
 public:
 
-	LookPage(KAssistantDialog* const dlg);
+    LookPage(KAssistantDialog* const dlg);
     ~LookPage();
-    
+
     void setSettings(const SimpleViewerSettingsContainer* const settings);
     void settings(SimpleViewerSettingsContainer* const settings);
-    
+
     void setPageContent(int plugType);
 
 private:

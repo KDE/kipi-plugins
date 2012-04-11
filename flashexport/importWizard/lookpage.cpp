@@ -482,9 +482,9 @@ void LookPage::setPageContent(int plugType)
             break;
         }
 
-    default:
-        kDebug() << "Unknown plugin type";
-        break;
+        default:
+            kDebug() << "Unknown plugin type";
+            break;
     }
 
     // ------------------------------------------------------------------------

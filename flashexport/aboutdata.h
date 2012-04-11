@@ -35,36 +35,38 @@ class FlashExportAboutData : public KIPIPlugins::KPAboutData
 
 public:
 
-	FlashExportAboutData()
+    FlashExportAboutData()
         : KPAboutData(ki18n("Flash Export"), 0,
                       KAboutData::License_GPL,
                       ki18n("A Kipi plugin to export images to Flash using the SimpleViewer's components."),
                       ki18n("(c) 2005-2006, Joern Ahrens\n"
-                            "(c) 2008-2011, Gilles Caulier\n"
+                            "(c) 2008-2012, Gilles Caulier\n"
                             "(c) 2011, Veaceslav Munteanu"))
 
     {
-	    addAuthor(ki18n("Joern Ahrens"),
-	              ki18n("Author"),
-	              "joern dot ahrens at kdemail dot net");
+        handbookEntry = QString("flashexport");
 
-	    addAuthor(ki18n("Gilles Caulier"),
-	              ki18n("Developer and maintainer"),
-	              "caulier dot gilles at gmail dot com");
+        addAuthor(ki18n("Joern Ahrens"),
+                ki18n("Author"),
+                "joern dot ahrens at kdemail dot net");
 
-	    addAuthor(ki18n("Veaceslav Munteanu"),
-	              ki18n("Developer and maintainer"),
-	              "slavuttici at gmail dot com");
+        addAuthor(ki18n("Gilles Caulier"),
+                ki18n("Developer and maintainer"),
+                "caulier dot gilles at gmail dot com");
 
-	    addCredit(ki18n("Felix Turner"),
-	              ki18n("Author of the Simple Viewer Flash component"),
-	              0,
-	              "http://www.simpleviewer.net");
+        addAuthor(ki18n("Veaceslav Munteanu"),
+                ki18n("Developer and maintainer"),
+                "slavuttici at gmail dot com");
 
-	    addCredit(ki18n("Mikkel B. Stegmann"),
-	              ki18n("Basis for the index.html template"),
-	              0,
-	              "http://www.stegmann.dk/mikkel/porta");
+        addCredit(ki18n("Felix Turner"),
+                ki18n("Author of the Simple Viewer Flash component"),
+                0,
+                "http://www.simpleviewer.net");
+
+        addCredit(ki18n("Mikkel B. Stegmann"),
+                ki18n("Basis for the index.html template"),
+                0,
+                "http://www.stegmann.dk/mikkel/porta");
     }
 
     ~FlashExportAboutData(){}

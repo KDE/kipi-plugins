@@ -49,7 +49,8 @@ namespace KIPIFlashExportPlugin
  */
 class FirstRunPage : public KPWizardPage
 {
-	Q_OBJECT
+    Q_OBJECT
+
 public:
 
     FirstRunPage(KAssistantDialog* const dlg);
