@@ -7,10 +7,11 @@
  * Description : main dialog.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
+ * Copyright (C) 2006      by Tom Albers <tomalbers@kde.nl>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2011 by Andi Clemens <andi dot clemens at googlemail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2011      by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012      by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -39,10 +40,8 @@
 #include <kdebug.h>
 #include <kdeprintdialog.h>
 #include <kglobal.h>
-#include <khelpmenu.h>
 #include <klocale.h>
 #include <kmenu.h>
-#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -58,8 +57,8 @@
 namespace KIPICalendarPlugin
 {
 
-CalWizard::CalWizard(KIPI::Interface* interface, QWidget* parent)
-    : KAssistantDialog(parent),
+CalWizard::CalWizard(Interface* const interface, QWidget* const parent)
+    : KPWizardDialog(parent),
       interface_(interface)
 {
     setMaximumSize(800, 600);
@@ -94,33 +93,25 @@ CalWizard::CalWizard(KIPI::Interface* interface, QWidget* parent)
 
     // About data and help button.
 
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Calendar"),
-                                           0,
-                                           KAboutData::License_GPL,
-                                           ki18n("A Kipi plugin to create a calendar"),
-                                           ki18n("(c) 2003-2005, Renchi Raju\n"
-                                                 "(c) 2006 Tom Albers\n"
-                                                 "(c) 2007-2008 Orgad Shaneh"));
+    KPAboutData* about = new KPAboutData(ki18n("Calendar"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin to create a calendar"),
+                                         ki18n("(c) 2003-2005, Renchi Raju\n"
+                                               "(c) 2006 Tom Albers\n"
+                                               "(c) 2007-2008 Orgad Shaneh"));
 
-    m_about->addAuthor(ki18n("Orgad Shaneh"), ki18n("Author and maintainer"),
-                       "orgads@gmail.com");
+    about->addAuthor(ki18n("Orgad Shaneh"), ki18n("Author and maintainer"),
+                     "orgads@gmail.com");
 
-    m_about->addAuthor(ki18n("Tom Albers"), ki18n("Former author and maintainer"),
-                       "tomalbers@kde.nl");
+    about->addAuthor(ki18n("Tom Albers"), ki18n("Former author and maintainer"),
+                     "tomalbers@kde.nl");
 
-    m_about->addAuthor(ki18n("Renchi Raju"), ki18n("Former author and maintainer"),
-                       "renchi dot raju at gmail dot com");
+    about->addAuthor(ki18n("Renchi Raju"), ki18n("Former author and maintainer"),
+                     "renchi dot raju at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered()),
-            this, SLOT(slotHelp()));
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("calendar");
+    setAboutData(about);
 
     // ------------------------------------------
 
@@ -143,13 +134,11 @@ CalWizard::~CalWizard()
     }
 
     delete printer_;
-
-    delete m_about;
 }
 
-void CalWizard::slotHelp()
+Interface* CalWizard::interface() const
 {
-    KToolInvocation::invokeHelp("calendar", "kipi-plugins");
+    return interface_;
 }
 
 void CalWizard::slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* before)

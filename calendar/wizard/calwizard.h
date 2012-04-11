@@ -7,9 +7,10 @@
  * Description : main dialog.
  *
  * Copyright (C) 2003-2005 by Renchi Raju <renchi dot raju at gmail dot com>
- * Copyright (C) 2006 by Tom Albers <tomalbers@kde.nl>
+ * Copyright (C) 2006      by Tom Albers <tomalbers@kde.nl>
  * Copyright (C) 2007-2008 by Orgad Shaneh <orgads at gmail dot com>
- * Copyright (C) 2012 by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012      by Angelo Naselli <anaselli at linux dot it>
+ * Copyright (C) 2012      by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -30,27 +31,25 @@
 
 #include <QMap>
 
-// KDE includes
-
-#include <kassistantdialog.h>
-
 // UI includes
 
 #include "ui_calevents.h"
 #include "ui_calprogress.h"
+
+// Local includes
+
+#include "kptooldialog.h"
 
 class QLabel;
 class QPrinter;
 
 namespace KIPI
 {
-class Interface;
+    class Interface;
 }
 
-namespace KIPIPlugins
-{
-class KPAboutData;
-}
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPICalendarPlugin
 {
@@ -60,16 +59,16 @@ class CalPrinter;
 class CalSettings;
 class CalTemplate;
 
-class CalWizard : public KAssistantDialog
+class CalWizard : public KPWizardDialog
 {
     Q_OBJECT
 
 public:
 
-    explicit CalWizard(KIPI::Interface* interface, QWidget* parent=0);
+    explicit CalWizard(Interface* const interface, QWidget* const parent=0);
     virtual ~CalWizard();
     
-    KIPI::Interface* interface() {return interface_;}
+    Interface* interface() const;
 
 private:
 
@@ -78,7 +77,6 @@ private:
 private Q_SLOTS:
 
     void slotPageSelected(KPageWidgetItem* current, KPageWidgetItem* before);
-    void slotHelp();
     void printComplete();
     void updatePage(int page);
 
@@ -102,9 +100,7 @@ private:
 
     QMap<int, KUrl>           months_;
 
-    KIPI::Interface*          interface_;
-
-    KIPIPlugins::KPAboutData* m_about;
+    Interface*                interface_;
 };
 
 }  // NameSpace KIPICalendarPlugin
