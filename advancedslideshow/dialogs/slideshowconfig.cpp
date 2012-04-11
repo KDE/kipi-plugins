@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2008-2009 by Valerio Fuoglio <valerio dot fuoglio at gmail dot com>
  * Copyright (C) 2009      by Andi Clemens <andi dot clemens at googlemail dot com>
+ * Copyright (C) 2012      by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -32,12 +33,10 @@
 
 #include <kconfig.h>
 #include <kdebug.h>
-#include <khelpmenu.h>
 #include <kicon.h>
 #include <kiconloader.h>
 #include <kmenu.h>
 #include <kpushbutton.h>
-#include <ktoolinvocation.h>
 
 // LibKIPI includes
 
@@ -56,25 +55,23 @@
 namespace KIPIAdvancedSlideshowPlugin
 {
 
-class SlideShowConfigPrivate
+class SlideShowConfig::SlideShowConfigPrivate
 {
 
 public:
 
     SlideShowConfigPrivate()
     {
-        about      = 0;
         sharedData = 0;
         config     = 0;
     }
 
-    KIPIPlugins::KPAboutData* about;
-    SharedContainer*          sharedData;
-    KConfig*                  config;
+    SharedContainer* sharedData;
+    KConfig*         config;
 };
 
-SlideShowConfig::SlideShowConfig (QWidget* parent, SharedContainer* sharedData)
-               : KPageDialog(parent), d(new SlideShowConfigPrivate)
+SlideShowConfig::SlideShowConfig(QWidget* const parent, SharedContainer* const sharedData)
+    : KPPageDialog(parent), d(new SlideShowConfigPrivate)
 {
     setObjectName("Advanced Slideshow Settings");
     setWindowTitle(i18n("Advanced Slideshow"));
@@ -113,32 +110,24 @@ SlideShowConfig::SlideShowConfig (QWidget* parent, SharedContainer* sharedData)
 
     // --- About --
 
-    d->about = new KIPIPlugins::KPAboutData(ki18n("Advanced Slideshow"),
-                                            0,
-                                            KAboutData::License_GPL,
-                                            ki18n("A Kipi plugin for image slideshows"),
-                                            ki18n("(c) 2003-2004, Renchi Raju\n"
-                                                  "(c) 2006-2009, Valerio Fuoglio"));
+    KPAboutData* about = new KPAboutData(ki18n("Advanced Slideshow"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A Kipi plugin for image slideshows"),
+                                         ki18n("(c) 2003-2004, Renchi Raju\n"
+                                               "(c) 2006-2009, Valerio Fuoglio"));
 
-    d->about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
-                        "renchi dot raju at gmail dot com");
-    d->about->addAuthor(ki18n( "Valerio Fuoglio" ), ki18n("Author and maintainer"),
-                        "valerio.fuoglio@gmail.com");
+    about->addAuthor(ki18n( "Renchi Raju" ), ki18n("Author"),
+                     "renchi dot raju at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
+    about->addAuthor(ki18n( "Valerio Fuoglio" ), ki18n("Author and maintainer"),
+                     "valerio dot fuoglio at gmail dot com");
 
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    QAction* handbook   = new QAction(i18n("Handbook"), this);
-
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("slideshow");
+    setAboutData(about);
 
     // Slot connections
+
     connect(this, SIGNAL(user1Clicked()),
             this, SLOT(slotStartClicked()));
 
@@ -151,7 +140,6 @@ SlideShowConfig::SlideShowConfig (QWidget* parent, SharedContainer* sharedData)
 SlideShowConfig::~SlideShowConfig ()
 {
     delete d->config;
-    delete d->about;
     delete d;
 }
 
@@ -306,11 +294,6 @@ void SlideShowConfig::slotStartClicked()
         emit buttonStartClicked();
 
     return;
-}
-
-void SlideShowConfig::slotHelp()
-{
-    KToolInvocation::invokeHelp("slideshow", "kipi-plugins");
 }
 
 void SlideShowConfig::slotClose()
