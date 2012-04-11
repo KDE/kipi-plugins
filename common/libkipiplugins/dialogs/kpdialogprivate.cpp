@@ -20,7 +20,7 @@
  *
  * ============================================================ */
 
-#include "kptooldialog_p.h"
+#include "kpdialogprivate.moc"
 
 // KDE includes
 

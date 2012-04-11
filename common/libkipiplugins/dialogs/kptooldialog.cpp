@@ -33,7 +33,7 @@
 // Local includes
 
 #include "kptooldialog.h"
-#include "kptooldialog_p.h"
+#include "kpdialogprivate.h"
 
 namespace KIPIPlugins
 {
