@@ -23,6 +23,10 @@
 #ifndef KPTOOLDIALOG_PRIVATE_H
 #define KPTOOLDIALOG_PRIVATE_H
 
+// Qt includes
+
+#include <QObject>
+
 // Local includes
 
 #include "kptooldialog.h"
@@ -30,17 +34,22 @@
 namespace KIPIPlugins
 {
 
-class KPToolDialog::KPToolDialogPriv
+class KPDialogPrivate : public QObject
 {
-public:
-
-    KPToolDialogPriv(KDialog* const dlg);
-    ~KPToolDialogPriv();
-
-    void setupHelpButton(KPAboutData* const data);
-    void callHelpHandbook();
+    Q_OBJECT
 
 public:
+
+    KPDialogPrivate(KDialog* const dlg);
+    ~KPDialogPrivate();
+
+    void setAboutData(KPAboutData* const data);
+
+private Q_SLOTS:
+
+    void slotHelp();
+
+private:
 
     KPAboutData* about;
     KDialog*     dialog;

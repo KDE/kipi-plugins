@@ -20,8 +20,6 @@
  *
  * ============================================================ */
 
-#include "kptooldialog.moc"
-
 // KDE includes
 
 #include <kaction.h>
@@ -34,75 +32,58 @@
 
 // Local includes
 
+#include "kptooldialog.h"
 #include "kptooldialog_p.h"
 
 namespace KIPIPlugins
 {
 
 KPToolDialog::KPToolDialog(QWidget* const parent)
-    : KDialog(parent), d(new KPToolDialogPriv(this))
+    : KDialog(parent), d(new KPDialogPrivate(this))
 {
     setButtons(Help | Ok);
 }
 
 KPToolDialog::~KPToolDialog()
 {
-    delete d;
 }
 
 void KPToolDialog::setAboutData(KPAboutData* const about)
 {
-    d->setupHelpButton(about);
-}
-
-void KPToolDialog::slotHelp()
-{
-    d->callHelpHandbook();
+    d->setAboutData(about);
 }
 
 // -----------------------------------------------------------------------------------
 
 KPWizardDialog::KPWizardDialog(QWidget* const parent)
-    : KAssistantDialog(parent), d(new KPToolDialog::KPToolDialogPriv(this))
+    : KAssistantDialog(parent), d(new KPDialogPrivate(this))
 {
 }
 
 KPWizardDialog::~KPWizardDialog()
 {
-    delete d;
 }
 
 void KPWizardDialog::setAboutData(KPAboutData* const about)
 {
-    d->setupHelpButton(about);
-}
-
-void KPWizardDialog::slotHelp()
-{
-    d->callHelpHandbook();
+    d->setAboutData(about);
 }
 
 // -----------------------------------------------------------------------------------
 
 KPPageDialog::KPPageDialog(QWidget* const parent)
-    : KPageDialog(parent), d(new KPToolDialog::KPToolDialogPriv(this))
+    : KPageDialog(parent), d(new KPDialogPrivate(this))
 {
     setButtons(Help | Ok);
 }
 
 KPPageDialog::~KPPageDialog()
 {
-    delete d;
 }
 
 void KPPageDialog::setAboutData(KPAboutData* const about)
 {
-    d->setupHelpButton(about);
-}
-
-void KPPageDialog::slotHelp()
-{
-    d->callHelpHandbook();
+    d->setAboutData(about);
 }
 
 } // namespace KIPIPlugins

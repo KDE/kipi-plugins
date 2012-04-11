@@ -37,11 +37,10 @@ namespace KIPIPlugins
 {
 
 class KPAboutData;
+class KPDialogPrivate;
 
 class KIPIPLUGINS_EXPORT KPToolDialog : public KDialog
 {
-    Q_OBJECT
-
 public:
 
     KPToolDialog(QWidget* const parent=0);
@@ -49,26 +48,15 @@ public:
 
     void setAboutData(KPAboutData* const about);
 
-private Q_SLOTS:
-
-    void slotHelp();
-
-public:
-
-    // Public because it's used by KPWizardDialog and KPPageDialog
-    class KPToolDialogPriv;
-
 private:
 
-    KPToolDialogPriv* const d;
+    KPDialogPrivate* const d;
 };
 
 // -----------------------------------------------------------------------------------
 
 class KIPIPLUGINS_EXPORT KPWizardDialog : public KAssistantDialog
 {
-    Q_OBJECT
-
 public:
 
     KPWizardDialog(QWidget* const parent=0);
@@ -76,21 +64,15 @@ public:
 
     void setAboutData(KPAboutData* const about);
 
-private Q_SLOTS:
-
-    void slotHelp();
-
 private:
 
-    KPToolDialog::KPToolDialogPriv* const d;
+    KPDialogPrivate* const d;
 };
 
 // -----------------------------------------------------------------------------------
 
 class KIPIPLUGINS_EXPORT KPPageDialog : public KPageDialog
 {
-    Q_OBJECT
-
 public:
 
     KPPageDialog(QWidget* const parent=0);
@@ -98,13 +80,9 @@ public:
 
     void setAboutData(KPAboutData* const about);
 
-private Q_SLOTS:
-
-    void slotHelp();
-
 private:
 
-    KPToolDialog::KPToolDialogPriv* const d;
+    KPDialogPrivate* const d;
 };
 
 } // namespace KIPIPlugins
