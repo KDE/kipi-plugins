@@ -39,6 +39,29 @@
 namespace KIPIPlugins
 {
 
+static void setupHelpButton(KDialog* const dlg, KPAboutData* const about)
+{
+    QObject::disconnect(dlg, SIGNAL(helpClicked()),
+                        dlg, SLOT(slotHelp()));
+
+    KHelpMenu* helpMenu = new KHelpMenu(dlg, about, false);
+    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
+    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), dlg);
+
+    QObject::connect(handbook, SIGNAL(triggered(bool)),
+                     dlg, SLOT(slotHelp()));
+
+    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
+    dlg->button(KDialog::Help)->setMenu(helpMenu->menu());
+}
+
+static void callHelpHandbook(KPAboutData* const about)
+{
+    KToolInvocation::invokeHelp(about ? about->handbookEntry : QString(), "kipi-plugins");
+}
+
+// -----------------------------------------------------------------------------------
+
 class KPToolDialog::KPToolDialogPriv
 {
 public:
@@ -66,24 +89,85 @@ KPToolDialog::~KPToolDialog()
 void KPToolDialog::setAboutData(KPAboutData* const about)
 {
     d->about = about;
-
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, d->about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), this);
-
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    setupHelpButton(this, about);
 }
 
 void KPToolDialog::slotHelp()
 {
-    KToolInvocation::invokeHelp(d->about ? d->about->handbookEntry : QString(), "kipi-plugins");
+    callHelpHandbook(d->about);
+}
+
+// -----------------------------------------------------------------------------------
+
+class KPWizardDialog::KPWizardDialogPriv
+{
+public:
+
+    KPWizardDialogPriv()
+    {
+        about = 0;
+    }
+
+    KPAboutData* about;
+};
+
+KPWizardDialog::KPWizardDialog(QWidget* const parent)
+    : KAssistantDialog(parent), d(new KPWizardDialogPriv)
+{
+}
+
+KPWizardDialog::~KPWizardDialog()
+{
+    delete d->about;
+    delete d;
+}
+
+void KPWizardDialog::setAboutData(KPAboutData* const about)
+{
+    d->about = about;
+    setupHelpButton(this, about);
+}
+
+void KPWizardDialog::slotHelp()
+{
+    callHelpHandbook(d->about);
+}
+
+// -----------------------------------------------------------------------------------
+
+class KPPageDialog::KPPageDialogPriv
+{
+public:
+
+    KPPageDialogPriv()
+    {
+        about = 0;
+    }
+
+    KPAboutData* about;
+};
+
+KPPageDialog::KPPageDialog(QWidget* const parent)
+    : KPageDialog(parent), d(new KPPageDialogPriv)
+{
+    setButtons(Help | Ok);
+}
+
+KPPageDialog::~KPPageDialog()
+{
+    delete d->about;
+    delete d;
+}
+
+void KPPageDialog::setAboutData(KPAboutData* const about)
+{
+    d->about = about;
+    setupHelpButton(this, about);
+}
+
+void KPPageDialog::slotHelp()
+{
+    callHelpHandbook(d->about);
 }
 
 } // namespace KIPIPlugins
