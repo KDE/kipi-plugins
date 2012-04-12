@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2011-12-28
- * Description : Simple gui to select images
+ * Description : test for implementation of threadWeaver api
  *
  * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -27,15 +27,21 @@
 // KDE includes
 
 #include <kurl.h>
-#include <kdialog.h>
 
-class ImageSelector : public KDialog
+// Local includes
+
+#include "kpaboutdata.h"
+#include "kptooldialog.h"
+
+using namespace KIPIPlugins;
+
+class ImageSelector : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    ImageSelector();
+    ImageSelector(KPAboutData* const about);
     ~ImageSelector();
 
 private Q_SLOTS:

@@ -4,7 +4,7 @@
  * http://www.digikam.org
  *
  * Date        : 2011-12-28
- * Description : Simple gui to select images
+ * Description : test for implementation of threadWeaver api
  *
  * Copyright (C) 2011-2012 by A Janardhan Reddy <annapareddyjanardhanreddy at gmail dot com>
  * Copyright (C) 2011-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
@@ -39,7 +39,6 @@
 #include "actionthread.h"
 #include "kpimageslist.h"
 
-using namespace KIPIPlugins;
 using namespace KIPIJPEGLossLessPlugin;
 
 class ImageSelector::ImageSelectorPriv
@@ -63,13 +62,14 @@ public:
     ActionThread* thread;
 };
 
-ImageSelector::ImageSelector()
-    : KDialog(0), d(new ImageSelectorPriv)
+ImageSelector::ImageSelector(KPAboutData* const about)
+    : KPToolDialog(0), d(new ImageSelectorPriv)
 {
-    setButtons(Apply | Close);
+    setButtons(Help | Apply | Close);
     setButtonText(Apply, i18n("Rotate Items"));
     setDefaultButton(Close);
     setModal(false);
+    setAboutData(about);
 
     d->page                 = new QWidget(this);
     setMainWidget(d->page);
