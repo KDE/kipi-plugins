@@ -46,14 +46,12 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
-#include <khelpmenu.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
 #include <kpushbutton.h>
 #include <krun.h>
-#include <ktoolinvocation.h>
 #include <kurllabel.h>
 #include <kstandarddirs.h>
 #include <kcombobox.h>
@@ -74,8 +72,8 @@
 namespace KIPIImageshackExportPlugin
 {
 
-ImageshackWindow::ImageshackWindow(KIPI::Interface* const interface, QWidget* const parent, Imageshack* const imghack)
-    : KDialog(parent)
+ImageshackWindow::ImageshackWindow(Interface* const interface, QWidget* const parent, Imageshack* const imghack)
+    : KPToolDialog(parent)
 {
     m_interface  = interface;
     m_imageshack = imghack;
@@ -102,27 +100,17 @@ ImageshackWindow::ImageshackWindow(KIPI::Interface* const interface, QWidget* co
             this, SLOT(slotStartUpload()));
 
     // About data
-    m_about = new KIPIPlugins::KPAboutData(ki18n("Imageshack Export"),
-                                            0,
-                                            KAboutData::License_GPL,
-                                            ki18n("A kipi plugin to export images to Imageshack web service."),
-                                            ki18n("(c) 2012, Dodon Victor\n"));
-    m_about->addAuthor(ki18n("Dodon Victor"), ki18n("Author"),
-                      "dodonvictor at gmail dot com");
+    KPAboutData* about = new KPAboutData(ki18n("Imageshack Export"),
+                                         0,
+                                         KAboutData::License_GPL,
+                                         ki18n("A kipi plugin to export images to Imageshack web service."),
+                                         ki18n("(c) 2012, Dodon Victor\n"));
+    
+    about->addAuthor(ki18n("Dodon Victor"), ki18n("Author"),
+                     "dodonvictor at gmail dot com");
 
-    disconnect(this, SIGNAL(helpClicked()),
-               this, SLOT(slotHelp()));
-
-    // Help button
-
-    KHelpMenu* helpMenu = new KHelpMenu(this, m_about, false);
-    helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    QAction* handbook = new QAction(i18n("Handbook"), this);
-    connect(handbook, SIGNAL(triggered(bool)),
-            this, SLOT(slotHelp()));
-
-    helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    button(Help)->setMenu(helpMenu->menu());
+    about->handbookEntry = QString("imageshackexport");
+    setAboutData(about);
 
     // -----------------------------------------------------------
 
@@ -155,12 +143,6 @@ ImageshackWindow::ImageshackWindow(KIPI::Interface* const interface, QWidget* co
 
 ImageshackWindow::~ImageshackWindow()
 {
-    delete m_about;
-}
-
-void ImageshackWindow::slotHelp()
-{
-    KToolInvocation::invokeHelp("imageshackexport", "kipi-plugins");
 }
 
 void ImageshackWindow::slotImageListChanged()

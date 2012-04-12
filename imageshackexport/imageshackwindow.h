@@ -23,18 +23,15 @@
 #ifndef IMAGESHACKWINDOW_H
 #define IMAGESHACKWINDOW_H
 
-// KDE includes
-
-#include <kdialog.h>
-
 // Qt includes
 
 #include <QList>
-
-// Debug
-
 #include <QTextStream>
 #include <QFile>
+
+// Local includes
+
+#include "kptooldialog.h"
 
 namespace KIPI
 {
@@ -43,9 +40,11 @@ namespace KIPI
 
 namespace KIPIPlugins
 {
-    class KPAboutData;
     class KPImagesList;
 }
+
+using namespace KIPI;
+using namespace KIPIPlugins;
 
 namespace KIPIImageshackExportPlugin
 {
@@ -54,16 +53,16 @@ class Imageshack;
 class ImageshackWidget;
 class ImageshackTalker;
 
-class ImageshackWindow : public KDialog
+class ImageshackWindow : public KPToolDialog
 {
     Q_OBJECT
 
 public:
 
-    ImageshackWindow(KIPI::Interface* const interface, QWidget* const parent, Imageshack* const pImageshack);
+    ImageshackWindow(Interface* const interface, QWidget* const parent, Imageshack* const pImageshack);
     ~ImageshackWindow();
 
-    KIPIPlugins::KPImagesList* getImagesList() const;
+    KPImagesList* getImagesList() const;
 
 Q_SIGNALS:
 
@@ -71,7 +70,6 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 
-    void slotHelp();
     void slotImageListChanged();
     void slotStartTransfer();
     void slotBusy(bool val);
@@ -102,18 +100,17 @@ private Q_SLOTS:
 
 private:
 
-    bool                      m_import;
-    unsigned int              m_imagesCount;
-    unsigned int              m_imagesTotal;
+    bool                m_import;
+    unsigned int        m_imagesCount;
+    unsigned int        m_imagesTotal;
 
-    KUrl::List                m_transferQueue;
+    KUrl::List          m_transferQueue;
 
-    Imageshack*               m_imageshack;
-    ImageshackWidget*         m_widget;
-    ImageshackTalker*         m_talker;
+    Imageshack*         m_imageshack;
+    ImageshackWidget*   m_widget;
+    ImageshackTalker*   m_talker;
 
-    KIPI::Interface*          m_interface;
-    KIPIPlugins::KPAboutData* m_about;
+    Interface*          m_interface;
 };
 
 } // namespace KIPIImageshackExportPlugin
