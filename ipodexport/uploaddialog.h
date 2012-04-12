@@ -31,10 +31,6 @@
 #include <QPixmap>
 #include <QLabel>
 
-// KDE includes
-
-#include <kdialog.h>
-
 #if KIPI_PLUGIN
 
 // Kipi includes
@@ -45,7 +41,7 @@
 
 #include "kpaboutdata.h"
 #include "kpversion.h"
-#include "kpimagedialog.h"
+#include "kptooldialog.h"
 
 #endif // KIPI_PLUGIN
 
@@ -75,7 +71,7 @@ class IpodAlbumItem;
 class IpodPhotoItem;
 class IpodHeader;
 
-class UploadDialog : public KDialog
+class UploadDialog : public KPToolDialog
 {
     Q_OBJECT
 
@@ -125,7 +121,6 @@ private Q_SLOTS:
 
     void enableButtons();
 
-    void slotHelp();
     void slotClose();
 
 private:
@@ -135,7 +130,7 @@ private:
     bool deleteIpodPhoto(IpodPhotoItem* const photo) const;
     void getIpodAlbums();
     void getIpodAlbumPhotos(IpodAlbumItem* const item, Itdb_PhotoAlbum* const album);
-    Itdb_Artwork *photoFromId(const uint id) const;
+    Itdb_Artwork* photoFromId(const uint id) const;
     void reloadIpodAlbum(IpodAlbumItem* const item, Itdb_PhotoAlbum* const album);
     bool openDevice(); // connect to the ipod
 
