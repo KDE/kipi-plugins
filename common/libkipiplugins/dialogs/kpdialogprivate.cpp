@@ -41,38 +41,35 @@ namespace KIPIPlugins
 
 KPDialogPrivate::KPDialogPrivate(KDialog* const dlg)
 {
-    about  = 0;
-    dialog = dlg;
+    m_about  = 0;
+    m_dialog = dlg;
 }
 
 KPDialogPrivate::~KPDialogPrivate()
 {
-    delete about;
+    delete m_about;
 }
 
 void KPDialogPrivate::setAboutData(KPAboutData* const data)
 {
-    if (!data || !dialog) return;
+    if (!data || !m_dialog) return;
 
-    about = data;
+    m_about = data;
 
-    disconnect(dialog, SIGNAL(helpClicked()),
-               dialog, SLOT(slotHelp()));
-
-    KHelpMenu* helpMenu = new KHelpMenu(dialog, about, false);
+    KHelpMenu* helpMenu = new KHelpMenu(m_dialog, m_about, false);
     helpMenu->menu()->removeAction(helpMenu->menu()->actions().first());
-    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), dialog);
+    KAction* handbook   = new KAction(KIcon("help-contents"), i18n("Handbook"), m_dialog);
 
     connect(handbook, SIGNAL(triggered(bool)),
             this, SLOT(slotHelp()));
 
     helpMenu->menu()->insertAction(helpMenu->menu()->actions().first(), handbook);
-    dialog->button(KDialog::Help)->setMenu(helpMenu->menu());
+    m_dialog->button(KDialog::Help)->setMenu(helpMenu->menu());
 }
 
 void KPDialogPrivate::slotHelp()
 {
-    KToolInvocation::invokeHelp(about ? about->handbookEntry : QString(), "kipi-plugins");
+    KToolInvocation::invokeHelp(m_about ? m_about->handbookEntry : QString(), "kipi-plugins");
 }
 
 } // namespace KIPIPlugins

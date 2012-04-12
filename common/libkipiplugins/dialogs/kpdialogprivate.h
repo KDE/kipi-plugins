@@ -51,8 +51,8 @@ private Q_SLOTS:
 
 private:
 
-    KPAboutData* about;
-    KDialog*     dialog;
+    KPAboutData* m_about;
+    KDialog*     m_dialog;
 };
 
 } // namespace KIPIPlugins
