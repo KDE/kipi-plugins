@@ -261,10 +261,10 @@ UploadDialog::UploadDialog
     connect(m_uploadList, SIGNAL(signalAddedDropItems(QStringList)),
             this, SLOT(addDropItems(QStringList)) );
 
-    connect(m_uploadList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+    connect(m_uploadList, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
             this, SLOT(imageSelected(QTreeWidgetItem*)));
 
-    connect(m_ipodAlbumList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+    connect(m_ipodAlbumList, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
             this, SLOT(ipodItemSelected(QTreeWidgetItem*)));
 }
 
@@ -341,6 +341,7 @@ void UploadDialog::getIpodAlbumPhotos(IpodAlbumItem* const item, Itdb_PhotoAlbum
         return;
 
     IpodPhotoItem* last = 0;
+
     for( GList* it = album->members; it; it = it->next )
     {
         Itdb_Artwork* photo = (Itdb_Artwork*) it->data;
@@ -404,6 +405,7 @@ void UploadDialog::startTransfer()
 
     QTreeWidgetItem* selected = m_ipodAlbumList->currentItem();
     IpodAlbumItem* ipodAlbum  = dynamic_cast<IpodAlbumItem*>( selected );
+
     if( !selected || !ipodAlbum )
         return;
 
@@ -421,7 +423,8 @@ void UploadDialog::startTransfer()
         kDebug() << "Uploading "      << item->pathSrc()
                  << " to ipod album " << album->name ;
 
-        Itdb_Artwork *art = itdb_photodb_add_photo( m_itdb, QFile::encodeName( item->pathSrc() ), 0, 0, &err );
+        Itdb_Artwork* art = itdb_photodb_add_photo( m_itdb, QFile::encodeName( item->pathSrc() ), 0, 0, &err );
+
         if( !art )
         {
             if( err )
@@ -601,7 +604,7 @@ void UploadDialog::createIpodAlbum()
     {
         kDebug() << "creating album " << newAlbum ;
 
-        Itdb_PhotoAlbum *photoAlbum = itdb_photodb_photoalbum_create( m_itdb, QFile::encodeName( newAlbum ), -1/*end*/ );
+        Itdb_PhotoAlbum* photoAlbum = itdb_photodb_photoalbum_create( m_itdb, QFile::encodeName( newAlbum ), -1/*end*/ );
         // add the new album to the list view
         new IpodAlbumItem( m_ipodAlbumList, photoAlbum );
         m_ipodAlbumList->clearSelection();

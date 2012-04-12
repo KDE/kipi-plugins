@@ -142,7 +142,6 @@ private:
 
 #if KIPI_PLUGIN
     Interface*           m_interface;
-    KPAboutData*         m_about;
 #endif
 
     Itdb_PhotoDB*        m_itdb;
