@@ -1,11 +1,12 @@
 SUBDIRS(icons)
 
-SET(kipiplugin_timeadjust_PART_SRCS plugin_timeadjust.cpp timeadjustdialog.cpp clockphotodialog.cpp)
+SET(kipiplugin_timeadjust_PART_SRCS plugin_timeadjust.cpp timeadjustdialog.cpp clockphotodialog.cpp actionthread.cpp)
 
 KDE4_ADD_PLUGIN(kipiplugin_timeadjust ${kipiplugin_timeadjust_PART_SRCS})
 
 TARGET_LINK_LIBRARIES(kipiplugin_timeadjust 
                       ${KDE4_KPARTS_LIBS} 
+                      ${KDE4_THREADWEAVER_LIBRARIES}
                       ${QT_AND_KDECORE_LIBS} 
                       ${KIPI_LIBRARIES} 
                       ${KEXIV2_LIBRARIES} 
