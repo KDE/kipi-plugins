@@ -6,7 +6,7 @@
  * Date        : 2004-05-16
  * Description : a plugin to set time stamp of picture files.
  *
- * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *

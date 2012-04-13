@@ -66,7 +66,7 @@ public:
 Q_SIGNALS:
 
     void signalProgressChanged(int);
-    void signalErrorFilesUpdate(QString, QString);
+    void signalErrorFilesUpdate(const QString&, const QString&);
 
 public:
 
@@ -91,7 +91,7 @@ public:
 Q_SIGNALS:
 
     void signalProgressChanged(int);
-    void signalErrorFilesUpdate(QString, QString);
+    void signalErrorFilesUpdate(const QString&, const QString&);
 
 protected:
 

@@ -240,7 +240,6 @@ void Task::run()
     ld->progress++;
 
     emit signalProgressChanged(ld->progress);
-
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -267,7 +266,7 @@ void ActionThread::setImages(const KUrl::List& urlList)
             mapping[urlList[i]] = pd->imageOriginalDates[i];
     }
 
-    foreach(KUrl url, urlList)
+    foreach(const KUrl& url, urlList)
     {
 
         Task* t = 0;

@@ -6,7 +6,7 @@
  * Date        : 2004-05-16
  * Description : a plugin to set time stamp of picture files.
  *
- * Copyright (C) 2012 by Smit Mehta <smit dot meh at gmail dot com>
+ * Copyright (C) 2012      by Smit Mehta <smit dot meh at gmail dot com>
  * Copyright (C) 2003-2005 by Jesper Pedersen <blackie@kde.org>
  * Copyright (C) 2006-2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -199,8 +199,12 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
                      "blackie at kde dot org");
 
     about->addAuthor(ki18n("Gilles Caulier"),
-                     ki18n("Developer and maintainer"),
+                     ki18n("Developer"),
                      "caulier dot gilles at gmail dot com");
+
+    about->addAuthor(ki18n("Smit Mehta"),
+                     ki18n("Developer"),
+                     "smit dot meh at gmail dot com");
 
     about->handbookEntry = QString("timeadjust");
     setAboutData(about);
@@ -267,7 +271,6 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
     d->useButtonGroup->addButton(d->useMetaDateBtn,   2);
     d->useButtonGroup->addButton(d->useCustomDateBtn, 3);
     d->useApplDateBtn->setChecked(true);
-
 
     // -- Adjust-----------------------------------------------------------
 
@@ -437,28 +440,28 @@ void TimeAdjustDialog::readSettings()
     KConfigGroup group = config.group(QString("Time Adjust Settings"));
 
     int useTimestampType = group.readEntry("Use Timestamp Type", 0);
-    if (useTimestampType == 0) d->useApplDateBtn->setChecked(true);
+    if (useTimestampType == 0)      d->useApplDateBtn->setChecked(true);
     else if (useTimestampType == 1) d->useFileDateBtn->setChecked(true);
     else if (useTimestampType == 2) d->useMetaDateBtn->setChecked(true);
     else if (useTimestampType == 3) d->useCustomDateBtn->setChecked(true);
 
-    d->useFileDateTypeChooser->setCurrentIndex(group.readEntry("File Timestamp Type", 0));
-    d->useMetaDateTypeChooser->setCurrentIndex(group.readEntry("Meta Timestamp Type", 0));
-    d->useCustDateInput->setDateTime(group.readEntry("Custom Date", QDateTime::currentDateTime()));
-    d->useCustTimeInput->setDateTime(group.readEntry("Custom Time", QDateTime::currentDateTime()));
+    d->useFileDateTypeChooser->setCurrentIndex(group.readEntry("File Timestamp Type",   0));
+    d->useMetaDateTypeChooser->setCurrentIndex(group.readEntry("Meta Timestamp Type",   0));
+    d->useCustDateInput->setDateTime(group.readEntry("Custom Date",                     QDateTime::currentDateTime()));
+    d->useCustTimeInput->setDateTime(group.readEntry("Custom Time",                     QDateTime::currentDateTime()));
 
-    d->adjTypeChooser->setCurrentIndex(group.readEntry("Adjustment Type", 0));
-    d->adjDaysInput->setValue(group.readEntry("Adjustment Days", 0));
-    d->adjTimeInput->setDateTime(group.readEntry("Adjustment Time", QDateTime()));
+    d->adjTypeChooser->setCurrentIndex(group.readEntry("Adjustment Type",               0));
+    d->adjDaysInput->setValue(group.readEntry("Adjustment Days",                        0));
+    d->adjTimeInput->setDateTime(group.readEntry("Adjustment Time",                     QDateTime()));
 
-    d->updAppDateCheck->setChecked(group.readEntry("Update Application Time", false));
+    d->updAppDateCheck->setChecked(group.readEntry("Update Application Time",           false));
     d->updFileModDateCheck->setChecked(group.readEntry("Update File Modification Time", false));
     d->updEXIFModDateCheck->setChecked(group.readEntry("Update EXIF Modification Time", false));
-    d->updEXIFOriDateCheck->setChecked(group.readEntry("Update EXIF Original Time", false));
+    d->updEXIFOriDateCheck->setChecked(group.readEntry("Update EXIF Original Time",     false));
     d->updEXIFDigDateCheck->setChecked(group.readEntry("Update EXIF Digitization Time", false));
-    d->updIPTCDateCheck->setChecked(group.readEntry("Update IPTC Time", false));
-    d->updXMPDateCheck->setChecked(group.readEntry("Update XMP Creation Time", false));
-    d->updFileNameCheck->setChecked(group.readEntry("Update File Name", false));
+    d->updIPTCDateCheck->setChecked(group.readEntry("Update IPTC Time",                 false));
+    d->updXMPDateCheck->setChecked(group.readEntry("Update XMP Creation Time",          false));
+    d->updFileNameCheck->setChecked(group.readEntry("Update File Name",                 false));
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     restoreDialogSize(group2);
@@ -470,28 +473,29 @@ void TimeAdjustDialog::saveSettings()
     KConfigGroup group = config.group(QString("Time Adjust Settings"));
 
     int useTimestampType = 0; // default if d->useApplDateBtn->isChecked()
-    if (d->useFileDateBtn->isChecked()) useTimestampType = 1;
-    if (d->useMetaDateBtn->isChecked()) useTimestampType = 2;
+    if (d->useFileDateBtn->isChecked())   useTimestampType = 1;
+    if (d->useMetaDateBtn->isChecked())   useTimestampType = 2;
     if (d->useCustomDateBtn->isChecked()) useTimestampType = 3;
-    group.writeEntry("Use Timestamp Type", useTimestampType);
 
-    group.writeEntry("File Timestamp Type", d->useFileDateTypeChooser->currentIndex());
-    group.writeEntry("Meta Timestamp Type", d->useMetaDateTypeChooser->currentIndex());
-    group.writeEntry("Custom Date", d->useCustDateInput->dateTime());
-    group.writeEntry("Custom Time", d->useCustTimeInput->dateTime());
+    group.writeEntry("Use Timestamp Type",            useTimestampType);
 
-    group.writeEntry("Adjustment Type", d->adjTypeChooser->currentIndex());
-    group.writeEntry("Adjustment Days", d->adjDaysInput->value());
-    group.writeEntry("Adjustment Time", d->adjTimeInput->dateTime());
+    group.writeEntry("File Timestamp Type",           d->useFileDateTypeChooser->currentIndex());
+    group.writeEntry("Meta Timestamp Type",           d->useMetaDateTypeChooser->currentIndex());
+    group.writeEntry("Custom Date",                   d->useCustDateInput->dateTime());
+    group.writeEntry("Custom Time",                   d->useCustTimeInput->dateTime());
 
-    group.writeEntry("Update Application Time", d->updAppDateCheck->isChecked());
+    group.writeEntry("Adjustment Type",               d->adjTypeChooser->currentIndex());
+    group.writeEntry("Adjustment Days",               d->adjDaysInput->value());
+    group.writeEntry("Adjustment Time",               d->adjTimeInput->dateTime());
+
+    group.writeEntry("Update Application Time",       d->updAppDateCheck->isChecked());
     group.writeEntry("Update File Modification Time", d->updFileModDateCheck->isChecked());
     group.writeEntry("Update EXIF Modification Time", d->updEXIFModDateCheck->isChecked());
-    group.writeEntry("Update EXIF Original Time", d->updEXIFOriDateCheck->isChecked());
+    group.writeEntry("Update EXIF Original Time",     d->updEXIFOriDateCheck->isChecked());
     group.writeEntry("Update EXIF Digitization Time", d->updEXIFDigDateCheck->isChecked());
-    group.writeEntry("Update IPTC Time", d->updIPTCDateCheck->isChecked());
-    group.writeEntry("Update XMP Creation Time", d->updXMPDateCheck->isChecked());
-    group.writeEntry("Update File Name", d->updFileNameCheck->isChecked());
+    group.writeEntry("Update IPTC Time",              d->updIPTCDateCheck->isChecked());
+    group.writeEntry("Update XMP Creation Time",      d->updXMPDateCheck->isChecked());
+    group.writeEntry("Update File Name",              d->updFileNameCheck->isChecked());
 
     KConfigGroup group2 = config.group(QString("Time Adjust Dialog"));
     saveDialogSize(group2);
