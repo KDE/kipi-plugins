@@ -192,7 +192,8 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
                              KAboutData::License_GPL,
                              ki18n("A Kipi plugin for adjusting the timestamp of picture files"),
                              ki18n("(c) 2003-2005, Jesper K. Pedersen\n"
-                                   "(c) 2006-2012, Gilles Caulier"));
+                                   "(c) 2006-2012, Gilles Caulier\n"
+                                   "(c) 2012, Smit Mehta"));
 
     about->addAuthor(ki18n("Jesper K. Pedersen"),
                      ki18n("Author"),
