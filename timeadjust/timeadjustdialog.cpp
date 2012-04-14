@@ -206,6 +206,10 @@ TimeAdjustDialog::TimeAdjustDialog(QWidget* const parent)
                      ki18n("Developer"),
                      "smit dot meh at gmail dot com");
 
+    about->addAuthor(ki18n("Pieter Edelman"),
+                     ki18n("Developer"),
+                     "p dot edelman at gmx dot net");
+
     about->handbookEntry = QString("timeadjust");
     setAboutData(about);
 
