@@ -32,13 +32,6 @@
 
 #include <libkipi/plugin.h>
 
-class KAction;
-
-namespace KIPI
-{
-    class Interface;
-}
-
 using namespace KIPI;
 
 namespace KIPITimeAdjustPlugin
@@ -62,9 +55,8 @@ protected Q_SLOTS:
 
 private:
 
-    KAction*   m_actionTimeAjust;
-
-    Interface* m_interface;
+    class Plugin_TimeAdjustPriv;
+    Plugin_TimeAdjustPriv* const d;
 };
 
 }  // namespace KIPITimeAdjustPlugin
