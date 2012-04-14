@@ -46,7 +46,7 @@ public:
     KPToolDialog(QWidget* const parent=0);
     ~KPToolDialog();
 
-    void setAboutData(KPAboutData* const about);
+    void setAboutData(KPAboutData* const about, KPushButton* const help=0);
 
 private:
 
@@ -62,7 +62,7 @@ public:
     KPWizardDialog(QWidget* const parent=0);
     ~KPWizardDialog();
 
-    void setAboutData(KPAboutData* const about);
+    void setAboutData(KPAboutData* const about, KPushButton* const help=0);
 
 private:
 
@@ -78,7 +78,7 @@ public:
     KPPageDialog(QWidget* const parent=0);
     ~KPPageDialog();
 
-    void setAboutData(KPAboutData* const about);
+    void setAboutData(KPAboutData* const about, KPushButton* const help=0);
 
 private:
 

@@ -48,9 +48,9 @@ KPToolDialog::~KPToolDialog()
 {
 }
 
-void KPToolDialog::setAboutData(KPAboutData* const about)
+void KPToolDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
 {
-    d->setAboutData(about);
+    d->setAboutData(about, help);
 }
 
 // -----------------------------------------------------------------------------------
@@ -64,9 +64,9 @@ KPWizardDialog::~KPWizardDialog()
 {
 }
 
-void KPWizardDialog::setAboutData(KPAboutData* const about)
+void KPWizardDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
 {
-    d->setAboutData(about);
+    d->setAboutData(about, help);
 }
 
 // -----------------------------------------------------------------------------------
@@ -81,9 +81,9 @@ KPPageDialog::~KPPageDialog()
 {
 }
 
-void KPPageDialog::setAboutData(KPAboutData* const about)
+void KPPageDialog::setAboutData(KPAboutData* const about, KPushButton* const help)
 {
-    d->setAboutData(about);
+    d->setAboutData(about, help);
 }
 
 } // namespace KIPIPlugins

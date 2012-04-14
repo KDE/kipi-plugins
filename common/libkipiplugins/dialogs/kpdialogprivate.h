@@ -31,6 +31,8 @@
 
 #include "kptooldialog.h"
 
+class KPushButton;
+
 namespace KIPIPlugins
 {
 
@@ -43,7 +45,7 @@ public:
     KPDialogPrivate(KDialog* const dlg);
     ~KPDialogPrivate();
 
-    void setAboutData(KPAboutData* const data);
+    void setAboutData(KPAboutData* const data, KPushButton* help=0);
 
 private Q_SLOTS:
 

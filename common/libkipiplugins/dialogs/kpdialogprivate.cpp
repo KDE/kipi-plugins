@@ -50,11 +50,11 @@ KPDialogPrivate::~KPDialogPrivate()
     delete m_about;
 }
 
-void KPDialogPrivate::setAboutData(KPAboutData* const data)
+void KPDialogPrivate::setAboutData(KPAboutData* const data, KPushButton* help)
 {
     if (!data || !m_dialog) return;
 
-    KPushButton* help = m_dialog->button(KDialog::Help);
+    if (!help) help = m_dialog->button(KDialog::Help);
     if (!help) return;
     
     m_about = data;

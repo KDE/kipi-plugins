@@ -58,6 +58,7 @@ namespace KGeoMap
 
 using namespace KIPI;
 using namespace KIPIPlugins;
+using namespace KGeoMap;
 
 namespace KIPIGPSSyncPlugin
 {
@@ -65,7 +66,7 @@ namespace KIPIGPSSyncPlugin
 class KipiImageModel;
 class GPSUndoCommand;
 
-class GPSSyncKGeoMapModelHelper : public KGeoMap::ModelHelper
+class GPSSyncKGeoMapModelHelper : public ModelHelper
 {
     Q_OBJECT
 
@@ -76,16 +77,16 @@ public:
 
     virtual QAbstractItemModel* model() const;
     virtual QItemSelectionModel* selectionModel() const;
-    virtual bool itemCoordinates(const QModelIndex& index, KGeoMap::GeoCoordinates* const coordinates) const;
+    virtual bool itemCoordinates(const QModelIndex& index, GeoCoordinates* const coordinates) const;
     virtual Flags modelFlags() const;
 
     virtual QPixmap pixmapFromRepresentativeIndex(const QPersistentModelIndex& index, const QSize& size);
     virtual QPersistentModelIndex bestRepresentativeIndexFromList(const QList<QPersistentModelIndex>& list, const int sortKey);
 
     virtual void onIndicesMoved(const QList<QPersistentModelIndex>& movedMarkers, 
-                                const KGeoMap::GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
+                                const GeoCoordinates& targetCoordinates, const QPersistentModelIndex& targetSnapIndex);
 
-    void addUngroupedModelHelper(KGeoMap::ModelHelper* const newModelHelper);
+    void addUngroupedModelHelper(ModelHelper* const newModelHelper);
 
 private Q_SLOTS:
 
@@ -109,7 +110,7 @@ class GPSSyncDialog : public KPToolDialog
 
 public:
 
-    GPSSyncDialog(Interface* interface, QWidget* parent);
+    GPSSyncDialog(Interface* const interface, QWidget* const parent);
     ~GPSSyncDialog();
 
     void setImages(const KUrl::List& images);
@@ -117,14 +118,14 @@ public:
 protected:
 
     void closeEvent(QCloseEvent* e);
-    bool eventFilter( QObject *, QEvent *);
+    bool eventFilter(QObject*, QEvent*);
 
 private:
 
     void readSettings();
     void saveSettings();
     void saveChanges(const bool closeAfterwards);
-    KGeoMap::KGeoMapWidget* makeMapWidget(QWidget** const pvbox);
+    KGeoMapWidget* makeMapWidget(QWidget** const pvbox);
     void adjustMapLayout(const bool syncSettings);
 
 private Q_SLOTS:
