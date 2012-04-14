@@ -51,6 +51,7 @@ Name[ru]=Экспорт в KML
 Name[sv]=Export till KML
 Name[uk]=KMLExport
 Name[x-test]=xxKMLExportxx
+Name[zh_CN]=KML导出
 Name[zh_TW]=KML 匯出
 ServiceTypes=KIPI/Plugin
 Type=Service
